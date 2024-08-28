@@ -51,8 +51,8 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
     [Dependency] private readonly IAdminManager _admin = default!;
     [Dependency] private readonly IConfigurationManager _configManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly AccessReaderSystem _reader = default!;
     [Dependency] private readonly ChatSystem _chatSystem = default!;
     [Dependency] private readonly CommunicationsConsoleSystem _commsConsole = default!;
@@ -62,6 +62,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
     [Dependency] private readonly IdCardSystem _idSystem = default!;
     [Dependency] private readonly NavMapSystem _navMap = default!;
     [Dependency] private readonly MapLoaderSystem _map = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly RoundEndSystem _roundEnd = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -69,7 +70,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly TransformSystem _transformSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-	[Dependency] private readonly AnnouncerSystem _announcer = default!;
+    [Dependency] private readonly AnnouncerSystem _announcer = default!;
 
     private const float ShuttleSpawnBuffer = 1f;
 
@@ -214,7 +215,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
             {
                 [ShuttleTimerMasks.ShuttleMap] = uid,
                 [ShuttleTimerMasks.SourceMap] = args.FromMapUid,
-                [ShuttleTimerMasks.DestMap] = args.TargetCoordinates.GetMapUid(_entityManager),
+                [ShuttleTimerMasks.DestMap] = _transformSystem.GetMap(args.TargetCoordinates),
                 [ShuttleTimerMasks.ShuttleTime] = ftlTime,
                 [ShuttleTimerMasks.SourceTime] = ftlTime,
                 [ShuttleTimerMasks.DestTime] = ftlTime
@@ -278,7 +279,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         {
             _logger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Emergency shuttle {ToPrettyString(stationUid)} unable to dock with station {ToPrettyString(stationUid)}");
             _announcer.SendAnnouncement(_announcer.GetAnnouncementId("ShuttleGoodLuck"), Filter.Broadcast(),
-			    "emergency-shuttle-good-luck", colorOverride: DangerColor);
+                "emergency-shuttle-good-luck", colorOverride: DangerColor);
             return;
         }
 
@@ -290,14 +291,15 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
             {
                 var angle = _dock.GetAngle(stationShuttle.EmergencyShuttle.Value, xform, targetGrid.Value, targetXform, xformQuery);
                 var direction = ContentLocalizationManager.FormatDirection(angle.GetDir());
-                var location = FormattedMessage.RemoveMarkup(_navMap.GetNearestBeaconString((stationShuttle.EmergencyShuttle.Value, xform)));
+                var location = FormattedMessage.RemoveMarkupPermissive(_navMap.GetNearestBeaconString((stationShuttle.EmergencyShuttle.Value, xform)));
                 _announcer.SendAnnouncementMessage(
-				    _announcer.GetAnnouncementId("ShuttleDock"),
-					"emergency-shuttle-docked",
-					null, null, null, null,
-					("time", $"{_consoleAccumulator:0}"),
-					    ("direction", direction)
-				);
+                    _announcer.GetAnnouncementId("ShuttleDock"),
+                    "emergency-shuttle-docked",
+                    null, null, null, null,
+                    ("time", $"{_consoleAccumulator:0}"),
+                       ("direction", direction),
+                       ("location", location)
+                );
             }
 
             // shuttle timers
@@ -326,13 +328,14 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
             {
                 var angle = _dock.GetAngle(stationShuttle.EmergencyShuttle.Value, xform, targetGrid.Value, targetXform, xformQuery);
                 var direction = ContentLocalizationManager.FormatDirection(angle.GetDir());
-                var location = FormattedMessage.RemoveMarkup(_navMap.GetNearestBeaconString((stationShuttle.EmergencyShuttle.Value, xform)));
+                var location = FormattedMessage.RemoveMarkupPermissive(_navMap.GetNearestBeaconString((stationShuttle.EmergencyShuttle.Value, xform)));
                 _announcer.SendAnnouncementMessage(
-				    _announcer.GetAnnouncementId("ShuttleNearby"),
-					"emergency-shuttle-nearby",
-					null, null, null, null,
-					("direction", direction)
-				);
+                    _announcer.GetAnnouncementId("ShuttleNearby"),
+                    "emergency-shuttle-nearby",
+                    null, null, null, null,
+                    ("direction", direction),
+                        ("location", location)
+                );
             }
 
             _logger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Emergency shuttle {ToPrettyString(stationUid)} unable to find a valid docking port for {ToPrettyString(stationUid)}");
@@ -411,7 +414,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
 
     private void AddCentcomm(EntityUid station, StationCentcommComponent component)
     {
-        DebugTools.Assert(LifeStage(station)>= EntityLifeStage.MapInitialized);
+        DebugTools.Assert(LifeStage(station) >= EntityLifeStage.MapInitialized);
         if (component.MapEntity != null || component.Entity != null)
         {
             Log.Warning("Attempted to re-add an existing centcomm map.");
@@ -444,12 +447,11 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
             return;
         }
 
-        var mapId = _mapManager.CreateMap();
+        var map = _mapSystem.CreateMap(out var mapId);
         var grid = _map.LoadGrid(mapId, component.Map.ToString(), new MapLoadOptions()
         {
             LoadMap = false,
         });
-        var map = _mapManager.GetMapEntityId(mapId);
 
         if (!Exists(map))
         {
@@ -475,8 +477,9 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         }
 
         component.MapEntity = map;
+        _metaData.SetEntityName(map, Loc.GetString("map-name-centcomm"));
         component.Entity = grid;
-        _shuttle.TryAddFTLDestination(mapId, false, out _);
+        _shuttle.TryAddFTLDestination(mapId, true, out _);
         Log.Info($"Created centcomm grid {ToPrettyString(grid)} on map {ToPrettyString(map)} for station {ToPrettyString(station)}");
     }
 
@@ -502,7 +505,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         if (!_emergencyShuttleEnabled)
             return;
 
-        if (ent.Comp1.EmergencyShuttle != null )
+        if (ent.Comp1.EmergencyShuttle != null)
         {
             if (Exists(ent.Comp1.EmergencyShuttle))
             {

@@ -9,6 +9,7 @@
     - id: BureaucraticError
     - id: ClericalError
     - id: CockroachMigration
+    - id: TrashAnimalMigration
     - id: GasLeak
     - id: IonStorm # its calm like 90% of the time smh
     - id: KudzuGrowth
@@ -248,22 +249,9 @@
   components:
   - type: StationEvent
     startAnnouncement: true
-    endAnnouncement: station-event-gas-leak-end-announcement
+    endAnnouncement: true
     weight: 8
   - type: GasLeakRule
-
-- type: entity
-  id: GasLeakTTTTS
-  parent: GasLeak
-  components:
-    - type: StationEvent
-      startAnnouncement: station-event-gas-leak-start-announcement
-      startAudio:
-        path: /Audio/Announcements/gasleakTTTTs.ogg
-      endAnnouncement: station-event-gas-leak-end-announcement
-      weight: 1
-    - type: GasLeakRule
-
 
 - type: entity
   id: KudzuGrowth
@@ -281,7 +269,6 @@
   parent: BaseStationEventShortDelay
   components:
   - type: StationEvent
-    startAnnouncement: true
     earliestStart: 15
     weight: 6
     duration: 50
@@ -302,7 +289,6 @@
   parent: BaseStationEventShortDelay
   components:
   - type: StationEvent
-    startAnnouncement: true
     earliestStart: 15
     weight: 6
     duration: 50
@@ -326,7 +312,6 @@
   parent: BaseStationEventShortDelay
   components:
   - type: StationEvent
-    startAnnouncement: true
     weight: 6
     duration: 50
   - type: VentCrittersRule
@@ -337,6 +322,23 @@
       prob: 0.008
 
 - type: entity
+  id: TrashAnimalMigration
+  parent: BaseStationEventShortDelay
+  components:
+  - type: StationEvent
+    weight: 6
+    duration: 50
+  - type: VentCrittersRule
+    entries:
+    - id: MobRaccoonGhost
+      prob: 0.02
+    - id: MobPossumGhost
+      prob: 0.02
+    - id: MobMouse
+      prob: 0.02
+
+
+- type: entity
   id: PowerGridCheck
   parent: BaseStationEventShortDelay
   components:
@@ -344,20 +346,6 @@
     weight: 5
     startAnnouncement: true
     endAnnouncement: true
-    duration: 60
-    maxDuration: 120
-  - type: PowerGridCheckRule
-
-- type: entity
-  id: PowerGridCheckTTTTS
-  parent: PowerGridCheck
-  components:
-  - type: StationEvent
-    weight: 1
-    startAnnouncement: station-event-power-grid-check-start-announcement
-    endAnnouncement: station-event-power-grid-check-end-announcement
-    startAudio:
-      path: /Audio/Announcements/power_offTTTTS.ogg
     duration: 60
     maxDuration: 120
   - type: PowerGridCheckRule
@@ -393,7 +381,6 @@
   parent: BaseStationEventLongDelay
   components:
   - type: StationEvent
-    startAnnouncement: true
     earliestStart: 15
     minimumPlayers: 15
     weight: 5
@@ -405,7 +392,6 @@
   parent: BaseStationEventShortDelay
   components:
   - type: StationEvent
-    startAnnouncement: true
     earliestStart: 20
     minimumPlayers: 15
     weight: 5
@@ -424,7 +410,6 @@
   parent: BaseStationEventShortDelay
   components:
   - type: StationEvent
-    startAnnouncement: true
     earliestStart: 20
     minimumPlayers: 15
     weight: 5
@@ -439,7 +424,6 @@
   parent: BaseStationEventShortDelay
   components:
   - type: StationEvent
-    startAnnouncement: true
     earliestStart: 20
     minimumPlayers: 20
     weight: 1.5
@@ -526,6 +510,7 @@
     weight: 8
     minimumPlayers: 15
     maxOccurrences: 1 # can only happen once per round
+    startAnnouncement: true
     duration: null # the rule has to last the whole round not 1 second
     occursDuringRoundEnd: false
   - type: AlertLevelInterceptionRule
@@ -594,45 +579,6 @@
       orGroup: rodProto
     - id: ImmovableRodGibstick
       prob: 0.0072
-      orGroup: rodProto
-
-- type: entity
-  id: ImmovableRodSpawnTTTTS
-  parent: ImmovableRodSpawn
-  components:
-  - type: StationEvent
-    startAnnouncement: station-event-immovable-rod-start-announcement
-    startAudio:
-      path: /Audio/Announcements/highvelocityTTTTS.ogg
-    weight: 1
-    duration: 1
-    earliestStart: 30
-    minimumPlayers: 20
-  - type: ImmovableRodRule
-    rodPrototypes:
-    - id: ImmovableRodKeepTilesStill
-      prob: 0.3
-      orGroup: rodProto
-    - id: ImmovableRodMop
-      prob: 0.1
-      orGroup: rodProto
-    - id: ImmovableRodShark
-      prob: 0.1
-      orGroup: rodProto
-    - id: ImmovableRodClown
-      prob: 0.1
-      orGroup: rodProto
-    - id: ImmovableRodBanana
-      prob: 0.1
-      orGroup: rodProto
-    - id: ImmovableRodHammer
-      prob: 0.1
-      orGroup: rodProto
-    - id: ImmovableRodThrongler
-      prob: 0.1
-      orGroup: rodProto
-    - id: ImmovableRodGibstick
-      prob: 0.1
       orGroup: rodProto
 
 - type: entity

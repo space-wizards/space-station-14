@@ -49,3 +49,7 @@
 - type: lobbyBackground
   id: DieBadly
   background: /Textures/LobbyScreens/pov_you_are_about_to_die_badly_in_a_tunnel_and_your_coords_are_off.webp
+
+- type: lobbyBackground
+  id: YumTrain
+  background: /Textures/LobbyScreens/IMG_0138.webp

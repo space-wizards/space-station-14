@@ -1,3 +1,13 @@
+# "Senior Salvager" Time Req. Unofficial
+- type: loadoutEffectGroup
+  id: SeniorSalvager
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobSalvageSpecialist
+      time: 187200 #52 hrs (1 hour per week for 1 year)
+
 # Back
 - type: loadout
   id: SalvageSpecialistBackpack
@@ -25,3 +35,18 @@
   id: SalvageBoots
   equipment:
     shoes: ClothingShoesBootsSalvage
+
+# Mantle
+- type: loadout
+  id: MinerCloak
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorSalvager
+  equipment:
+    neck: ClothingNeckCloakMiner
+
+- type: loadout
+  id: BrownScarf
+  equipment:
+    neck: ClothingNeckScarfStripedBrown
+

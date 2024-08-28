@@ -376,6 +376,8 @@
       behaviors:
       - !type:GibBehavior { }
   - type: NonSpreaderZombie
+  - type: SentienceTarget
+    flavorKind: station-event-random-sentience-flavor-organic
 
 - type: entity
   name: glockroach
@@ -442,7 +444,7 @@
     insertingState: inserting_mothroach
   - type: MothAccent
   - type: Sprite
-    sprite: Mobs/Animals/mothroach.rsi
+    sprite: Mobs/Animals/mothroach/mothroach.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base", "movement"]
       state: mothroach
@@ -457,7 +459,7 @@
     size: Normal
   - type: Clothing
     quickEquip: false
-    sprite: Mobs/Animals/mothroach.rsi
+    sprite: Mobs/Animals/mothroach/mothroach.rsi
     equippedPrefix: 0
     slots:
     - HEAD
@@ -536,6 +538,41 @@
   - type: FireVisuals
     sprite: Mobs/Effects/onfire.rsi
     normalState: Mouse_burning
+  - type: Strippable
+  - type: UserInterface
+    interfaces:
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
+  - type: InventorySlots
+  - type: Inventory
+    speciesId: hamster
+    templateId: hamster
+    displacements:
+      head:
+        sizeMaps:
+          32:
+            sprite: Mobs/Animals/mothroach/displacement.rsi
+            state: head
+      mask:
+        sizeMaps:
+          32:
+            sprite: Mobs/Animals/mothroach/displacement.rsi
+            state: mask
+      suitstorage:
+        sizeMaps:
+          32:
+            sprite: Mobs/Animals/mothroach/displacement.rsi
+            state: suitstorage
+      eyes:
+        sizeMaps:
+          32:
+            sprite: Mobs/Animals/mothroach/displacement.rsi
+            state: eyes
+      neck:
+        sizeMaps:
+          32:
+            sprite: Mobs/Animals/mothroach/displacement.rsi
+            state: neck
 
 
 # Note that the mallard duck is actually a male drake mallard, with the brown duck being the female variant of the same species, however ss14 lacks sex specific textures
@@ -1159,6 +1196,7 @@
     speciesId: monkey
   - type: Deathgasp
     prototype: MonkeyDeathgasp
+  - type: Blindable
   - type: Cuffable
   - type: RotationVisuals
     defaultRotation: 90
@@ -1686,7 +1724,7 @@
         name: food-sequence-content-rat
       skewer:
         name: food-sequence-content-rat
-        sprite: 
+        sprite:
           sprite: Objects/Consumable/Food/skewer.rsi
           state: skewer-rat
 
@@ -2524,6 +2562,56 @@
   - type: Tag
     tags:
     - VimPilot
+
+- type: entity
+  parent: MobRaccoon
+  id: MobRaccoonGhost
+  components:
+  - type: GhostRole
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-raccoon-name
+    description: ghost-role-information-raccoon-description
+    rules: ghost-role-information-freeagent-rules
+  - type: GhostTakeoverAvailable
+  - type: Vocal
+    sounds:
+      Male: Raccoon
+      Female: Raccoon
+      Unsexed: Raccoon
+    wilhelmProbability: 0.001
+  - type: Speech
+    speechSounds: Raccoon
+    speechVerb: Raccoon
+    allowedEmotes: ['Squeak']
+  - type: ReplacementAccent
+    accent: raccoon
+
+- type: entity
+  parent: MobPossum
+  id: MobPossumGhost
+  components:
+  - type: GhostRole
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-possum-name
+    description: ghost-role-information-possum-description
+    rules: ghost-role-information-freeagent-rules
+  - type: GhostTakeoverAvailable
+  - type: Vocal
+    sounds:
+      Male: Possum
+      Female: Possum
+      Unsexed: Possum
+    wilhelmProbability: 0.001
+  - type: Speech
+    speechSounds: Possum
+    speechVerb: Possum
+    allowedEmotes: ['Squeak']
+  - type: ReplacementAccent
+    accent: possum
 
 - type: entity
   name: fox

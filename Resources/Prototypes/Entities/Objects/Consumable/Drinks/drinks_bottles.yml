@@ -1092,3 +1092,21 @@
         reagents:
         - ReagentId: BrownAsterade
           Quantity: 30
+
+- type: entity
+  parent: [DrinkBottleVisualsAll, DrinkBottleGlassBaseFull]
+  id: DrinkAppleMartiniCrystalLiteBottleFull
+  name: apple martini Crystal Lite™ bottle
+  description: A bottle of apple martini flavored Crystal Lite™. Their mocktails line was discontinued in 2015, and it was sold as a powder, so this is very strange.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: AppleMartiniCrystalLite
+          Quantity: 100
+  - type: Label
+    currentLabel: reagent-name-apple-martini-crystal-lite
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/applemartinicrystallitebottle.rsi
+  - type: Sealable

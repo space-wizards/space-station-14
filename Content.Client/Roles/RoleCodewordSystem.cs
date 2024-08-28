@@ -1,4 +1,4 @@
-﻿using Content.Shared.Roles.RoleCodeword;
+using Content.Shared.Roles.RoleCodeword;
 
 namespace Content.Client.Roles;
 

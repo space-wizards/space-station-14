@@ -216,3 +216,12 @@
     - state: fax-machine
   - type: Flatpack
     entity: FaxMachineBase
+    
+- type: entity
+  parent: BaseFlatpack
+  id: ChemMasterFlatpack
+  name: ChemMaster 4000 flatpack
+  description: A flatpack used for constructing a ChemMaster 4000.
+  components:
+  - type: Flatpack
+    entity: ChemMaster

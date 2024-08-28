@@ -44,6 +44,7 @@
         - PillCanisterDexalin
         - HandheldHealthAnalyzer
         - ClothingHandsGlovesLatex
+        - MethadoneChemistryBottle
       rareChance: 0.1
       prototypes:
         - Syringe

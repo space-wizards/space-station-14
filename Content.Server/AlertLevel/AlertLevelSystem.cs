@@ -17,7 +17,7 @@ public sealed class AlertLevelSystem : EntitySystem
     [Dependency] private readonly ChatSystem _chatSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
-	[Dependency] private readonly AnnouncerSystem _announcer = default!;
+    [Dependency] private readonly AnnouncerSystem _announcer = default!;
 
     // Until stations are a prototype, this is how it's going to have to be.
     public const string DefaultAlertLevelSet = "stationAlerts";
@@ -167,7 +167,7 @@ public sealed class AlertLevelSystem : EntitySystem
 
         if (announce)
             _announcer.SendAnnouncementMessage(alert, "alert-level-announcement", null, detail.Color, null, null,
-		        ("name", name), ("announcement", announcement));
+                ("name", name), ("announcement", announcement));
 
         RaiseLocalEvent(new AlertLevelChangedEvent(station, level));
     }
@@ -178,5 +178,5 @@ public sealed class AlertLevelPrototypeReloadedEvent : EntityEventArgs ;
 public sealed class AlertLevelChangedEvent(EntityUid station, string alertLevel) : EntityEventArgs
 {
     public EntityUid Station { get; } = station;
-	public string AlertLevel { get; } = alertLevel;
+    public string AlertLevel { get; } = alertLevel;
 }

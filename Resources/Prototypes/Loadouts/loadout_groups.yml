@@ -220,6 +220,13 @@
   - BartenderVest
   - BartenderApron
   - BartenderWintercoat
+  
+- type: loadoutGroup
+  id: Mixologist
+  name: loadout-group-bartender-mixologist
+  minLimit: 0
+  loadouts:
+  - ChemMasterFlatpack
 
 - type: loadoutGroup
   id: ChefHead
@@ -401,13 +408,16 @@
   minLimit: 0
   loadouts:
   - JesterHat
+  - JesterAltHat
 
 - type: loadoutGroup
   id: ClownJumpsuit
   name: loadout-group-clown-jumpsuit
   loadouts:
   - ClownSuit
+  - ClownSkirt
   - JesterSuit
+  - JesterAltSuit
 
 - type: loadoutGroup
   id: ClownBackpack
@@ -480,6 +490,16 @@
   minLimit: 0
   loadouts:
   - MimeWintercoat
+
+- type: loadoutGroup
+  id: SurvivalMime
+  name: loadout-group-survival-mime
+  minLimit: 2
+  hidden: true
+  loadouts:
+  - EmergencyNitrogenMime
+  - EmergencyOxygenMime
+  - LoadoutSpeciesVoxNitrogen
 
 - type: loadoutGroup
   id: MusicianJumpsuit
@@ -570,6 +590,7 @@
   loadouts:
   - BrownShoes
   - CargoWinterBoots
+  - SalvageBoots
 
 - type: loadoutGroup
   id: CargoTechnicianHead
@@ -606,6 +627,21 @@
   loadouts:
   - BlackShoes
   - CargoWinterBoots
+
+- type: loadoutGroup
+  id: CargoTechnicianPDA
+  name: loadout-group-cargo-technician-id
+  loadouts:
+  - CargoTechnicianPDA
+  - SeniorCargoTechnicianPDA
+
+- type: loadoutGroup
+  id: SalvageSpecialistNeck
+  name: loadout-group-salvage-specialist-neck
+  loadouts:
+  - MinerCloak
+  - Mantle
+  - BrownScarf
 
 - type: loadoutGroup
   id: SalvageSpecialistBackpack
@@ -985,7 +1021,6 @@
   id: SecurityShoes
   name: loadout-group-security-shoes
   loadouts:
-  - CombatBoots
   - JackBoots
   - SecurityWinterBoots
 

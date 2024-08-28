@@ -50,6 +50,8 @@ flavor-base-horrible = horrible
 # lmao
 flavor-base-terrible = terrible
 flavor-base-mindful = mindful
+flavor-base-kingsoda = like you're a champion
+flavor-base-drinkdrink = like dogshit
 
 # Complex flavors. Put a flavor here when you want something that's more
 # specific.
@@ -112,7 +114,7 @@ flavor-complex-corn = like corn
 flavor-complex-banana = like bananas
 flavor-complex-apple = like apples
 flavor-complex-cotton = like cottons
-flavor-complex-bungo = like bungo
+flavor-complex-bungo = like tropical sweetness
 flavor-complex-raisins = like dried grapes
 flavor-complex-orange = like oranges
 flavor-complex-watermelon = like watermelon
@@ -167,6 +169,7 @@ flavor-complex-lost-friendship = like lost friendship
 flavor-complex-light = like a light gone out
 flavor-complex-profits = like profits
 flavor-complex-fishops = like the dreaded fishops
+flavor-complex-blue-pumpkin = like a mouthful of pool water
 flavor-complex-violets = like violets
 flavor-complex-pyrotton = like a burning mouth
 flavor-complex-mothballs = like mothballs
@@ -257,8 +260,12 @@ flavor-complex-cogchamp = like brass
 flavor-complex-white-gilgamesh = like lightly carbonated cream
 flavor-complex-antifreeze = warm
 
+
 ### This is exactly what pilk tastes like. I'm not even joking. I might've been a little drunk though
 flavor-complex-pilk = like sweet milk
+
+flavor-complex-apple-martini-crystal-lite = tastes like imitation appletini
+flavor-complex-horsepussy = tastes like death and a subsequent memorial
 
 # Medicine/chemical-specific flavors.
 
@@ -271,4 +278,4 @@ flavor-complex-sax = like jazz
 flavor-complex-bottledlightning = like lightning in a bottle
 flavor-complex-punishment = like punishment
 flavor-weh = like weh
-flavour-stardust = like stardust 
+flavour-stardust = like stardust

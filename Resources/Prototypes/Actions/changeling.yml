@@ -8,6 +8,7 @@
   noSpawn: true
   components:
   - type: InstantAction
+    checkCanInteract: false
     itemIconStyle: NoItem
     icon:
       sprite: Changeling/changeling_abilities.rsi
@@ -68,6 +69,7 @@
   noSpawn: true
   components:
   - type: InstantAction
+    checkCanInteract: false
     itemIconStyle: NoItem
     icon:
       sprite: Changeling/changeling_abilities.rsi
@@ -204,6 +206,7 @@
   noSpawn: true
   components:
   - type: InstantAction
+    checkCanInteract: false
     useDelay: 10
     itemIconStyle: NoItem
     icon:
@@ -222,6 +225,7 @@
   noSpawn: true
   components:
   - type: InstantAction
+    checkCanInteract: false
     useDelay: 10
     itemIconStyle: NoItem
     icon:
@@ -240,6 +244,7 @@
   noSpawn: true
   components:
   - type: InstantAction
+    checkCanInteract: false
     useDelay: 1
     itemIconStyle: NoItem
     icon:

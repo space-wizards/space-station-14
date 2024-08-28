@@ -399,8 +399,6 @@ entities:
       - 402
       - 790
       - 789
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 803
     components:
     - type: Transform
@@ -416,8 +414,6 @@ entities:
       - 411
       - 789
       - 790
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 805
     components:
     - type: Transform
@@ -433,8 +429,6 @@ entities:
       - 408
       - 783
       - 782
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 806
     components:
     - type: Transform
@@ -450,8 +444,6 @@ entities:
       - 409
       - 783
       - 782
-    - type: AtmosDevice
-      joinedGrid: 2
 - proto: AirCanister
   entities:
   - uid: 387
@@ -462,8 +454,6 @@ entities:
       parent: 2
     - type: Physics
       bodyType: Static
-    - type: AtmosDevice
-      joinedGrid: 2
 - proto: AirlockCargo
   entities:
   - uid: 1
@@ -516,17 +506,17 @@ entities:
       parent: 2
 - proto: AirlockExternalGlassShuttleLocked
   entities:
+  - uid: 20
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 13.5,-5.5
+      parent: 2
   - uid: 313
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -2.5,-3.5
-      parent: 2
-  - uid: 560
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -2.5,-5.5
       parent: 2
   - uid: 562
     components:
@@ -534,11 +524,11 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 13.5,-3.5
       parent: 2
-  - uid: 563
+  - uid: 950
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 13.5,-5.5
+      rot: -1.5707963267948966 rad
+      pos: -2.5,-5.5
       parent: 2
 - proto: AirSensor
   entities:
@@ -591,46 +581,54 @@ entities:
     - type: Transform
       pos: 2.5,-14.5
       parent: 2
-- proto: AtmosDeviceFanTiny
+- proto: AtmosDeviceFanDirectional
   entities:
+  - uid: 560
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 13.5,-6.5
+      parent: 2
+  - uid: 563
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 13.5,-3.5
+      parent: 2
   - uid: 947
     components:
     - type: Transform
-      pos: 13.5,-5.5
+      rot: 1.5707963267948966 rad
+      pos: 13.5,-2.5
       parent: 2
   - uid: 948
     components:
     - type: Transform
-      pos: 13.5,-3.5
+      rot: 1.5707963267948966 rad
+      pos: 13.5,-5.5
       parent: 2
   - uid: 949
     components:
     - type: Transform
-      pos: 13.5,-2.5
-      parent: 2
-  - uid: 950
-    components:
-    - type: Transform
-      pos: 13.5,-6.5
+      rot: -1.5707963267948966 rad
+      pos: -2.5,-6.5
       parent: 2
   - uid: 951
     components:
     - type: Transform
-      pos: -2.5,-6.5
+      rot: -1.5707963267948966 rad
+      pos: -2.5,-5.5
       parent: 2
   - uid: 952
     components:
     - type: Transform
-      pos: -2.5,-5.5
+      rot: -1.5707963267948966 rad
+      pos: -2.5,-3.5
       parent: 2
   - uid: 953
     components:
     - type: Transform
-      pos: -2.5,-3.5
-      parent: 2
-  - uid: 954
-    components:
-    - type: Transform
+      rot: -1.5707963267948966 rad
       pos: -2.5,-2.5
       parent: 2
 - proto: BoxFolderClipboard
@@ -2745,144 +2743,96 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -0.5,-2.5
       parent: 2
-    - type: DeviceLinkSink
-      links:
-      - 365
   - uid: 82
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -0.5,-6.5
       parent: 2
-    - type: DeviceLinkSink
-      links:
-      - 366
   - uid: 108
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 12.5,-2.5
       parent: 2
-    - type: DeviceLinkSink
-      links:
-      - 393
   - uid: 110
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -2.5,-2.5
       parent: 2
-    - type: DeviceLinkSink
-      links:
-      - 365
   - uid: 329
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -1.5,-6.5
       parent: 2
-    - type: DeviceLinkSink
-      links:
-      - 366
   - uid: 330
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 13.5,-6.5
       parent: 2
-    - type: DeviceLinkSink
-      links:
-      - 404
   - uid: 331
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 11.5,-6.5
       parent: 2
-    - type: DeviceLinkSink
-      links:
-      - 404
   - uid: 335
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 12.5,-6.5
       parent: 2
-    - type: DeviceLinkSink
-      links:
-      - 404
   - uid: 337
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 11.5,-2.5
       parent: 2
-    - type: DeviceLinkSink
-      links:
-      - 393
   - uid: 338
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -2.5,-6.5
       parent: 2
-    - type: DeviceLinkSink
-      links:
-      - 366
   - uid: 339
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -1.5,-2.5
       parent: 2
-    - type: DeviceLinkSink
-      links:
-      - 365
   - uid: 340
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 13.5,-2.5
       parent: 2
-    - type: DeviceLinkSink
-      links:
-      - 393
   - uid: 359
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 10.5,-2.5
       parent: 2
-    - type: DeviceLinkSink
-      links:
-      - 393
   - uid: 362
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 10.5,-6.5
       parent: 2
-    - type: DeviceLinkSink
-      links:
-      - 404
   - uid: 363
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 0.5,-2.5
       parent: 2
-    - type: DeviceLinkSink
-      links:
-      - 365
   - uid: 364
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 0.5,-6.5
       parent: 2
-    - type: DeviceLinkSink
-      links:
-      - 366
 - proto: ExtinguisherCabinetFilled
   entities:
   - uid: 360
@@ -2941,8 +2891,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 5.5,-15.5
       parent: 2
-    - type: AtmosDevice
-      joinedGrid: 2
 - proto: GasPassiveVent
   entities:
   - uid: 397
@@ -2951,16 +2899,12 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 6.5,-15.5
       parent: 2
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 414
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 5.5,-13.5
       parent: 2
-    - type: AtmosDevice
-      joinedGrid: 2
 - proto: GasPipeBend
   entities:
   - uid: 316
@@ -3534,9 +3478,13 @@ entities:
   - uid: 511
     components:
     - type: Transform
+      anchored: False
       rot: -1.5707963267948966 rad
       pos: 0.5,5.5
       parent: 2
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
   - uid: 513
     components:
     - type: Transform
@@ -3648,8 +3596,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 4.5,-15.5
       parent: 2
-    - type: AtmosDevice
-      joinedGrid: 2
 - proto: GasVentPump
   entities:
   - uid: 398
@@ -3658,46 +3604,34 @@ entities:
       rot: 3.141592653589793 rad
       pos: 8.5,-17.5
       parent: 2
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 400
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 0.5,-8.5
       parent: 2
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 401
     components:
     - type: Transform
       pos: 2.5,6.5
       parent: 2
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 402
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 10.5,-0.5
       parent: 2
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 403
     components:
     - type: Transform
       pos: 8.5,6.5
       parent: 2
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 412
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 1.5,-16.5
       parent: 2
-    - type: AtmosDevice
-      joinedGrid: 2
 - proto: GasVentScrubber
   entities:
   - uid: 399
@@ -3706,46 +3640,34 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 1.5,-15.5
       parent: 2
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 408
     components:
     - type: Transform
       pos: 1.5,6.5
       parent: 2
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 409
     components:
     - type: Transform
       pos: 9.5,6.5
       parent: 2
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 410
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 10.5,-8.5
       parent: 2
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 411
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 0.5,-0.5
       parent: 2
-    - type: AtmosDevice
-      joinedGrid: 2
   - uid: 413
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 7.5,-17.5
       parent: 2
-    - type: AtmosDevice
-      joinedGrid: 2
 - proto: GeneratorRTG
   entities:
   - uid: 367
@@ -4329,8 +4251,6 @@ entities:
     - type: Transform
       pos: 5.5,-17.5
       parent: 2
-    - type: AtmosDevice
-      joinedGrid: 2
 - proto: LiquidOxygenCanister
   entities:
   - uid: 384
@@ -4338,8 +4258,6 @@ entities:
     - type: Transform
       pos: 4.5,-17.5
       parent: 2
-    - type: AtmosDevice
-      joinedGrid: 2
 - proto: Paper
   entities:
   - uid: 775
@@ -4909,49 +4827,31 @@ entities:
     - type: Transform
       pos: 1.5,3.5
       parent: 2
-    - type: DeviceLinkSink
-      links:
-      - 807
   - uid: 809
     components:
     - type: Transform
       pos: 2.5,3.5
       parent: 2
-    - type: DeviceLinkSink
-      links:
-      - 807
   - uid: 810
     components:
     - type: Transform
       pos: 3.5,3.5
       parent: 2
-    - type: DeviceLinkSink
-      links:
-      - 807
   - uid: 811
     components:
     - type: Transform
       pos: 7.5,3.5
       parent: 2
-    - type: DeviceLinkSink
-      links:
-      - 807
   - uid: 812
     components:
     - type: Transform
       pos: 8.5,3.5
       parent: 2
-    - type: DeviceLinkSink
-      links:
-      - 807
   - uid: 813
     components:
     - type: Transform
       pos: 9.5,3.5
       parent: 2
-    - type: DeviceLinkSink
-      links:
-      - 807
 - proto: SignalButton
   entities:
   - uid: 807

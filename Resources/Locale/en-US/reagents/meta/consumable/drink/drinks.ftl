@@ -13,6 +13,9 @@ reagent-desc-cream-of-coconut = Sweet, syrupy version of coconut cream with adde
 reagent-name-cafe-latte = cafe latte
 reagent-desc-cafe-latte = A nice, strong and tasty beverage while you are reading.
 
+reagent-name-tea-powder = tea powder
+reagent-desc-tea-powder = Finely ground tea leaves, used for making tea.
+
 reagent-name-green-tea = green tea
 reagent-desc-green-tea = Tasty green tea.
 
@@ -96,3 +99,9 @@ reagent-desc-white-gilgamesh = A sickening mixture of milk and beer. Makes you f
 
 reagent-name-mopwata = mopwata
 reagent-desc-mopwata = Dirty, stagnant mop water.
+
+reagent-name-apple-martini-crystal-lite = apple martini Crystal Lite™
+reagent-desc-apple-martini-crystal-lite = Crystal Lite™'s mocktail line was discontinued in 2015. This one tastes like an appletini.
+
+reagent-name-horsepussy = the horsepussy
+reagent-desc-horsepussy = Two-thirds apple martini Crystal Lite™, one-third methadone. They are going to drink this after me when I die.

@@ -502,3 +502,27 @@
         type: Add
         time: 5
         refresh: false
+
+- type: reagent
+  id: Methadone
+  name: reagent-name-methadone
+  group: Narcotic
+  desc: reagent-desc-methadone
+  physicalDesc: reagent-physical-desc-clear
+  flavor: bitter
+  color: "#E9EDF5"
+  metabolisms: # since there's no heroin, i've just made it a worse version of tricordrazine. feel free to fix this.
+    Narcotic:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:TotalDamage
+          max: 40
+        damage:
+          groups:
+            Brute: -0.75
+          types:
+            Poison: -0.3
+            Heat: -0.25
+            Shock: -0.25
+            Cold: -0.25
