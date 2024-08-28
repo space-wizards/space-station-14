@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: K-Dynamic
-  changes:
-  - message: Added witch robes and witch hat to the AutoDrobe.
-    type: Add
-  id: 6735
-  time: '2024-06-15T02:19:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28965
 - author: Plykiya
   changes:
   - message: You can no longer insert duplicates of the same module into a cyborg.
@@ -3860,3 +3853,10 @@
   id: 7234
   time: '2024-08-28T09:43:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29055
+- author: saintmuntzer
+  changes:
+  - message: Riot helmet now matches security helmet colors.
+    type: Fix
+  id: 7235
+  time: '2024-08-28T11:27:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31530
