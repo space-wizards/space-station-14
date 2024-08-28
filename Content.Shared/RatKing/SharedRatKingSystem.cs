@@ -27,8 +27,6 @@ public abstract class SharedRatKingSystem : EntitySystem
         SubscribeLocalEvent<RatKingComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<RatKingComponent, ComponentShutdown>(OnShutdown);
 
-        SubscribeLocalEvent<RatKingServantComponent, ComponentShutdown>(OnServantShutdown);
-
         SubscribeLocalEvent<RatKingRummageableComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerb);
         SubscribeLocalEvent<RatKingRummageableComponent, RatKingRummageDoAfterEvent>(OnDoAfterComplete);
     }

@@ -6,7 +6,6 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.RatKing;
 
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedRatKingSystem))]
-[AutoGenerateComponentState]
 public sealed partial class RatKingComponent : Component
 {
     [DataField("actionDomain", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]

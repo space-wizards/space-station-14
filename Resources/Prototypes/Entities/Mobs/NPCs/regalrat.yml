@@ -99,8 +99,11 @@
       - CannotSuicide
       - FootstepSound
   - type: NoSlip
-  - type: RatKing
+  - type: MinionMaster
+    doesSummonCostFood: true
+    armyMobSpawnId: MobRatServant
     hungerPerArmyUse: 25
+  - type: RatKing
     hungerPerDomainUse: 50
   - type: MobsterAccent
   - type: Speech
@@ -309,7 +312,7 @@
     icon:
       sprite: Interface/Actions/actions_rat_king.rsi
       state: ratKingArmy
-    event: !type:RatKingRaiseArmyActionEvent
+    event: !type:MinionMasterRaiseArmyActionEvent
 
 - type: entity
   id: ActionRatKingDomain
@@ -337,7 +340,7 @@
       sprite: Interface/Actions/actions_rat_king.rsi
       state: stay
     event:
-      !type:RatKingOrderActionEvent
+      !type:MinionMasterOrderActionEvent
         type: Stay
     priority: 5
 
@@ -355,7 +358,7 @@
       sprite: Interface/Actions/actions_rat_king.rsi
       state: follow
     event:
-      !type:RatKingOrderActionEvent
+      !type:MinionMasterOrderActionEvent
       type: Follow
     priority: 6
 
@@ -373,8 +376,8 @@
       sprite: Interface/Actions/actions_rat_king.rsi
       state: attack
     event:
-      !type:RatKingOrderActionEvent
-      type: CheeseEm
+      !type:MinionMasterOrderActionEvent
+      type: Attack
     priority: 7
 
 - type: entity
@@ -391,138 +394,6 @@
       sprite: Interface/Actions/actions_rat_king.rsi
       state: loose
     event:
-      !type:RatKingOrderActionEvent
+      !type:MinionMasterOrderActionEvent
       type: Loose
     priority: 8
-
-
-
-
-
-
-
-    #KILL THIS MONSTROSITY
-- type: entity
-  name: rat king test
-  id: MobRatKingTest
-  parent: [ SimpleMobBase, MobCombat ]
-  description: He's da rat. He make da roolz.
-  components:
-  - type: CombatMode
-  - type: MovementSpeedModifier
-    baseWalkSpeed : 3.00
-    baseSprintSpeed : 5.00
-  - type: InputMover
-  - type: MobMover
-  - type: HTN
-    rootTask:
-      task: SimpleHostileCompound
-  - type: Reactive
-    groups:
-      Flammable: [Touch]
-      Extinguish: [Touch]
-  - type: NpcFactionMember
-    factions:
-    - SimpleHostile
-  - type: Sprite
-    drawdepth: SmallMobs
-    sprite: Mobs/Animals/regalrat.rsi
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: regalrat
-    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
-      state: eyes
-      shader: unshaded
-  - type: Physics
-    bodyType: KinematicController
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeCircle
-          radius: 0.3
-        density: 230
-        mask:
-        - SmallMobMask
-        layer:
-        - SmallMobLayer
-  - type: MobState
-  - type: MobThresholds
-    thresholds:
-      0: Alive
-      200: Dead
-  - type: MeleeWeapon
-    altDisarm: false
-    soundHit:
-        path: /Audio/Weapons/Xeno/alien_claw_flesh1.ogg
-    angle: 0
-    animation: WeaponArcClaw
-    damage:
-      types:
-        Slash: 12
-        Piercing: 8
-  - type: Body
-    prototype: Rat
-    requiredLegs: 1 # TODO: More than 1 leg
-  - type: Hunger # probably should be prototyped
-    thresholds:
-      Overfed: 200
-      Okay: 150
-      Peckish: 100
-      Starving: 50
-      Dead: 0
-    baseDecayRate: 0.01666666666
-  - type: Thirst
-    thresholds:
-      OverHydrated: 600
-      Okay: 450
-      Thirsty: 300
-      Parched: 150
-      Dead: 0
-    baseDecayRate: 0.1
-  - type: DamageStateVisuals
-    rotate: true
-    states:
-      Alive:
-        Base: regalrat
-        BaseUnshaded: eyes
-      Critical:
-        Base: critical
-      Dead:
-        Base: dead
-  - type: GhostRole
-    makeSentient: true
-    name: ghost-role-information-rat-king-name
-    description: ghost-role-information-rat-king-description
-    rules: ghost-role-information-freeagent-rules
-    raffle:
-      settings: default
-  - type: GhostTakeoverAvailable
-  - type: Tag
-    tags:
-      - CannotSuicide
-      - FootstepSound
-  - type: NoSlip
-  - type: MinionMaster
-    doesSummonCostFood: true
-    armyMobSpawnId: MobRatServant
-    hungerPerArmyUse: 25
-  - type: MobsterAccent
-  - type: Speech
-    speechVerb: SmallMob
-  - type: Butcherable
-    spawned:
-    - id: ClothingHeadHatFancyCrown #how did that get there?
-      amount: 1
-  - type: MobPrice
-    price: 2500 # rat wealth
-  - type: RandomMetadata
-    nameSegments:
-    - RegalRatNameKingdom
-    - RegalRatNameTitle
-  - type: GuideHelp
-    guides:
-    - MinorAntagonists
-  - type: Grammar
-    attributes:
-      gender: male
