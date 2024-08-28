@@ -109829,6 +109829,13 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 48.5,-1.5
       parent: 60
+- proto: OreProcessor
+  entities:
+  - uid: 19027
+    components:
+    - type: Transform
+      pos: 43.5,3.5
+      parent: 60
 - proto: OxygenCanister
   entities:
   - uid: 2757
@@ -152009,6 +152016,12 @@ entities:
       rot: 3.141592653589793 rad
       pos: 54.5,5.5
       parent: 60
+  - uid: 24814
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 43.5,3.5
+      parent: 60
 - proto: WindoorSecureChapelLocked
   entities:
   - uid: 14513
@@ -153500,12 +153513,6 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 56.5,6.5
-      parent: 60
-  - uid: 19027
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 43.5,3.5
       parent: 60
   - uid: 19907
     components:
