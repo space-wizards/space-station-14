@@ -5561,6 +5561,7 @@ entities:
             id: WarnLineGreyscaleN
           decals:
             3475: 44,-9
+            4189: 33,-17
         - node:
             color: '#D381C996'
             id: WarnLineGreyscaleN
@@ -5613,6 +5614,11 @@ entities:
             2336: 4,-1
             2337: -4,-1
             2338: 0,-1
+        - node:
+            color: '#52B4E996'
+            id: WarnLineGreyscaleS
+          decals:
+            4188: 33,-21
         - node:
             color: '#9FED5896'
             id: WarnLineGreyscaleS
@@ -28157,11 +28163,6 @@ entities:
     components:
     - type: Transform
       pos: -58.5,20.5
-      parent: 60
-  - uid: 17403
-    components:
-    - type: Transform
-      pos: -58.5,19.5
       parent: 60
   - uid: 17404
     components:
