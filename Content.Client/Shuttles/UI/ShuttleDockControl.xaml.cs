@@ -107,16 +107,18 @@ public sealed partial class ShuttleDockControl : BaseShuttleControl
         DrawCircles(handle);
         var gridNent = EntManager.GetNetEntity(GridEntity);
         var mapPos = _xformSystem.ToMapCoordinates(_coordinates.Value);
-        var ourGridMatrix = _xformSystem.GetWorldMatrix(GridEntity.Value);
-        var dockMatrix = Matrix3Helpers.CreateTransform(_coordinates.Value.Position, Angle.Zero);
-        var worldFromDock = Matrix3x2.Multiply(dockMatrix, ourGridMatrix);
+        var ourGridToWorld = _xformSystem.GetWorldMatrix(GridEntity.Value);
+        var selectedDockToOurGrid = Matrix3Helpers.CreateTransform(_coordinates.Value.Position, Angle.Zero);
+        var selectedDockToWorld = Matrix3x2.Multiply(selectedDockToOurGrid, ourGridToWorld);
 
-        Matrix3x2.Invert(worldFromDock, out var offsetMatrix);
+        Box2 viewBoundsWorld = Matrix3Helpers.TransformBox(selectedDockToWorld, new Box2(-WorldRangeVector, WorldRangeVector));
+
+        Matrix3x2.Invert(selectedDockToWorld, out var worldToSelectedDock);
 
         // Draw nearby grids
         var controlBounds = PixelSizeBox;
         _grids.Clear();
-        _mapManager.FindGridsIntersecting(gridXform.MapID, new Box2(mapPos.Position - WorldRangeVector, mapPos.Position + WorldRangeVector), ref _grids);
+        _mapManager.FindGridsIntersecting(gridXform.MapID, viewBoundsWorld, ref _grids);
 
         // offset the dotted-line position to the bounds.
         Vector2? viewedDockPos = _viewedState != null ? MidPointVector : null;
@@ -136,11 +138,11 @@ public sealed partial class ShuttleDockControl : BaseShuttleControl
             if (grid.Owner != GridEntity && !_shuttles.CanDraw(grid.Owner, iffComp: iffComp))
                 continue;
 
-            var gridMatrix = _xformSystem.GetWorldMatrix(grid.Owner);
-            var matty = Matrix3x2.Multiply(gridMatrix, offsetMatrix);
+            var curGridToWorld = _xformSystem.GetWorldMatrix(grid.Owner);
+            var curGridToSelectedDock = Matrix3x2.Multiply(curGridToWorld, worldToSelectedDock);
             var color = _shuttles.GetIFFColor(grid.Owner, grid.Owner == GridEntity, component: iffComp);
 
-            DrawGrid(handle, matty, grid, color);
+            DrawGrid(handle, curGridToSelectedDock, grid, color);
 
             // Draw any docks on that grid
             if (!DockState.Docks.TryGetValue(EntManager.GetNetEntity(grid), out var gridDocks))
@@ -151,23 +153,27 @@ public sealed partial class ShuttleDockControl : BaseShuttleControl
                 if (ViewedDock == dock.Entity)
                     continue;
 
-                var position = Vector2.Transform(dock.Coordinates.Position, matty);
+                var position = Vector2.Transform(dock.Coordinates.Position, curGridToSelectedDock);
 
                 var otherDockRotation = Matrix3Helpers.CreateRotation(dock.Angle);
                 var scaledPos = ScalePosition(position with {Y = -position.Y});
 
-                if (!controlBounds.Contains(scaledPos.Floored()))
+                // This box is the AABB of all the vertices we draw below.
+                var dockRenderBoundsLocal = new Box2(-0.5f, -0.7f, 0.5f, 0.5f);
+                var currentDockToCurGrid = Matrix3Helpers.CreateTransform(dock.Coordinates.Position, dock.Angle);
+                var currentDockToWorld = Matrix3x2.Multiply(currentDockToCurGrid, curGridToWorld);
+                var dockRenderBoundsWorld = Matrix3Helpers.TransformBox(currentDockToWorld, dockRenderBoundsLocal);
+                if (!viewBoundsWorld.Intersects(dockRenderBoundsWorld))
                     continue;
 
-                // Draw the dock's collision
                 var collisionBL = Vector2.Transform(dock.Coordinates.Position +
-                                                  Vector2.Transform(new Vector2(-0.2f, -0.7f), otherDockRotation), matty);
+                                                  Vector2.Transform(new Vector2(-0.2f, -0.7f), otherDockRotation), curGridToSelectedDock);
                 var collisionBR = Vector2.Transform(dock.Coordinates.Position +
-                                                  Vector2.Transform(new Vector2(0.2f, -0.7f), otherDockRotation), matty);
+                                                  Vector2.Transform(new Vector2(0.2f, -0.7f), otherDockRotation), curGridToSelectedDock);
                 var collisionTR = Vector2.Transform(dock.Coordinates.Position +
-                                                  Vector2.Transform(new Vector2(0.2f, -0.5f), otherDockRotation), matty);
+                                                  Vector2.Transform(new Vector2(0.2f, -0.5f), otherDockRotation), curGridToSelectedDock);
                 var collisionTL = Vector2.Transform(dock.Coordinates.Position +
-                                                  Vector2.Transform(new Vector2(-0.2f, -0.5f), otherDockRotation), matty);
+                                                  Vector2.Transform(new Vector2(-0.2f, -0.5f), otherDockRotation), curGridToSelectedDock);
 
                 var verts = new[]
                 {
@@ -195,10 +201,10 @@ public sealed partial class ShuttleDockControl : BaseShuttleControl
                 handle.DrawPrimitives(DrawPrimitiveTopology.LineList, verts, otherDockConnection);
 
                 // Draw the dock itself
-                var dockBL = Vector2.Transform(dock.Coordinates.Position + new Vector2(-0.5f, -0.5f), matty);
-                var dockBR = Vector2.Transform(dock.Coordinates.Position + new Vector2(0.5f, -0.5f), matty);
-                var dockTR = Vector2.Transform(dock.Coordinates.Position + new Vector2(0.5f, 0.5f), matty);
-                var dockTL = Vector2.Transform(dock.Coordinates.Position + new Vector2(-0.5f, 0.5f), matty);
+                var dockBL = Vector2.Transform(dock.Coordinates.Position + new Vector2(-0.5f, -0.5f), curGridToSelectedDock);
+                var dockBR = Vector2.Transform(dock.Coordinates.Position + new Vector2(0.5f, -0.5f), curGridToSelectedDock);
+                var dockTR = Vector2.Transform(dock.Coordinates.Position + new Vector2(0.5f, 0.5f), curGridToSelectedDock);
+                var dockTL = Vector2.Transform(dock.Coordinates.Position + new Vector2(-0.5f, 0.5f), curGridToSelectedDock);
 
                 verts = new[]
                 {
