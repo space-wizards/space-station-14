@@ -73,8 +73,8 @@
           - /Maps/Ruins/whiteship_ancient.yml
           - /Maps/Ruins/whiteship_bluespacejumper.yml
         vgroid: !type:DungeonSpawnGroup
-          minimumDistance: 400
-          maximumDistance: 450
+          minimumDistance: 300
+          maximumDistance: 350
           nameDataset: names_borer
           stationGrid: false
           addComponents:

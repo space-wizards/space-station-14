@@ -585,3 +585,23 @@
       effects:
       - !type:SatiateThirst
         factor: 0.6
+
+- type: reagent
+  id: AppleMartiniCrystalLite
+  name: reagent-name-apple-martini-crystal-lite
+  parent: BaseDrink
+  desc: reagent-desc-apple-martini-crystal-lite
+  physicalDesc: reagent-physical-desc-appletini
+  flavor: apple-martini-crystal-lite
+  color: "#CAD655"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/martiniglassnoolive.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 3
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 0.2

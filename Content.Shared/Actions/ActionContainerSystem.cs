@@ -243,11 +243,12 @@ public sealed class ActionContainerSystem : EntitySystem
         if (!TryPrototype(actionId, out var actionProto, actionData))
             return false;
 
-        if (HasAction(uid, actionProto.ID))
-        {
-            Log.Debug($"Tried to insert action {ToPrettyString(actionId)} into {ToPrettyString(uid)}. Failed due to duplicate actions.");
-            return false;
-        }
+        // Removing for now because duplicates appear to be handled correctly system-wide without it. If something rears its ugly head then I will undo this. - Gh0ul
+        // if (HasAction(uid, actionProto.ID))
+        // {
+        //     Log.Debug($"Tried to insert action {ToPrettyString(actionId)} into {ToPrettyString(uid)}. Failed due to duplicate actions.");
+        //     return false;
+        // }
 
         if (!_container.Insert(actionId, comp.Container))
         {

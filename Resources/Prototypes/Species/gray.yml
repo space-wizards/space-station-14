@@ -1,7 +1,7 @@
 - type: species
   id: Gray
   name: Gray
-  roundStart: false
+  roundStart: true
   prototype: MobGray
   sprites: MobGraySprites
   defaultSkinTone: "#b8b8b8"

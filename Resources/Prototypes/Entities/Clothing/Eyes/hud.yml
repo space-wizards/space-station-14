@@ -282,3 +282,14 @@
   parent: [ClothingEyesEyepatchHudDiag, ClothingHeadEyeBaseFlipped]
   id: ClothingEyesEyepatchHudDiagFlipped
   name: diagnostic hud eyepatch
+
+- type: entity
+  parent: [ClothingEyesHudMedical]
+  id: ClothingEyesGlassesHudMedical
+  name: medical hud glasses
+  description: A stylish heads-up display that scans the humanoids in view and provides accurate data about their health status.
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Hud/medglasses.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Hud/medglasses.rsi

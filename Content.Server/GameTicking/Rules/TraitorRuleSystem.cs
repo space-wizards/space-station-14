@@ -111,6 +111,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
 
         _antag.SendBriefing(traitor, GenerateBriefing(component.Codewords, code, issuer), null, component.GreetSoundNotification);
 
+
         component.TraitorMinds.Add(mindId);
 
         // Assign briefing

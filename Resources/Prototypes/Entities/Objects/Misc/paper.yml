@@ -18,7 +18,7 @@
   - type: PaperLabelType
   - type: ActivatableUI
     key: enum.PaperUiKey.Key
-    requireHands: false
+    requiresComplex: false
   - type: UserInterface
     interfaces:
       enum.PaperUiKey.Key:
@@ -274,6 +274,26 @@
   suffix: Station Only
   components:
   - type: NukeCodePaper
+
+- type: entity
+  id: BoxFolderNuclearCodes
+  parent: BaseItem
+  name: nuclear code folder
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: folder-colormap
+      color: "#cc2323"
+    - state: folder-base
+    - state: folder-stamp-inverse
+      color: "#1dff00"
+  - type: SpawnItemsOnUse
+    items:
+    - id: NukeCodePaper
+    sound:
+      path: /Audio/Effects/packetrip.ogg
+  - type: Appearance
 
 - type: entity
   id: BoxFolderBase
@@ -566,7 +586,7 @@
     stealGroup: BoxFolderQmClipboard
 
 - type: entity
-  parent: Paper
+  parent: [Paper, BaseSyndicateContraband] # eat or burn your damn piece of paper damn thieves
   id: TraitorCodePaper
   name: syndicate codeword
   description: A leaked codeword to possibly get in touch with the Syndicate.
@@ -575,7 +595,7 @@
   - type: TraitorCodePaper
 
 - type: entity
-  parent: Paper
+  parent: [Paper, BaseSyndicateContraband]
   id: AllTraitorCodesPaper
   name: syndicate codewords registry
   description: A registry of all active Syndicate codewords.
@@ -627,7 +647,7 @@
             - Paper
   - type: ActivatableUI
     key: enum.PaperUiKey.Key
-    requireHands: false
+    requiresComplex: false
   - type: UserInterface
     interfaces:
       enum.PaperUiKey.Key:

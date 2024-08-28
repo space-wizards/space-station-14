@@ -23,5 +23,12 @@
     ClothingEyesBlindfold: 1
     ClothingShoesBootsCombat: 1
     ClothingShoesBootsWinterSec: 2
+    ClothingUniformJumpsuitBrigmedic: 1
+    ClothingUniformJumpskirtBrigmedic: 1
+    ClothingHeadHatBeretBrigmedic: 1
+    ClothingBackpackDuffelBrigmedic: 1
+    ClothingBackpackBrigmedic: 1
+    ClothingBackpackSatchelBrigmedic: 1
+
   contrabandInventory:
     ClothingMaskClownSecurity: 1

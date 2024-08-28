@@ -6,6 +6,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
+using Content.Server.Announcements.Systems;
 
 namespace Content.Server.AlertLevel;
 
@@ -16,6 +17,7 @@ public sealed class AlertLevelSystem : EntitySystem
     [Dependency] private readonly ChatSystem _chatSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
+    [Dependency] private readonly AnnouncerSystem _announcer = default!;
 
     // Until stations are a prototype, this is how it's going to have to be.
     public const string DefaultAlertLevelSet = "stationAlerts";
@@ -132,18 +134,14 @@ public sealed class AlertLevelSystem : EntitySystem
             || component.AlertLevels == null
             || !component.AlertLevels.Levels.TryGetValue(level, out var detail)
             || component.CurrentLevel == level)
-        {
             return;
-        }
 
         if (!force)
         {
             if (!detail.Selectable
                 || component.CurrentDelay > 0
                 || component.IsLevelLocked)
-            {
                 return;
-            }
 
             component.CurrentDelay = _cfg.GetCVar(CCVars.GameAlertLevelChangeDelay);
             component.ActiveDelay = true;
@@ -152,64 +150,33 @@ public sealed class AlertLevelSystem : EntitySystem
         component.CurrentLevel = level;
         component.IsLevelLocked = locked;
 
-        var stationName = dataComponent.EntityName;
-
         var name = level.ToLower();
 
         if (Loc.TryGetString($"alert-level-{level}", out var locName))
-        {
             name = locName.ToLower();
-        }
 
         // Announcement text. Is passed into announcementFull.
         var announcement = detail.Announcement;
 
         if (Loc.TryGetString(detail.Announcement, out var locAnnouncement))
-        {
             announcement = locAnnouncement;
-        }
 
-        // The full announcement to be spat out into chat.
-        var announcementFull = Loc.GetString("alert-level-announcement", ("name", name), ("announcement", announcement));
-
-        var playDefault = false;
+        var alert = $"alert{char.ToUpperInvariant(level[0]) + level[1..]}";
         if (playSound)
-        {
-            if (detail.Sound != null)
-            {
-                var filter = _stationSystem.GetInOwningStation(station);
-                _audio.PlayGlobal(detail.Sound, filter, true, detail.Sound.Params);
-            }
-            else
-            {
-                playDefault = true;
-            }
-        }
+            _announcer.SendAnnouncementAudio(alert, _stationSystem.GetInOwningStation(station));
 
         if (announce)
-        {
-            _chatSystem.DispatchStationAnnouncement(station, announcementFull, playDefaultSound: playDefault,
-                colorOverride: detail.Color, sender: stationName);
-        }
+            _announcer.SendAnnouncementMessage(alert, "alert-level-announcement", null, detail.Color, null, null,
+                ("name", name), ("announcement", announcement));
 
         RaiseLocalEvent(new AlertLevelChangedEvent(station, level));
     }
 }
 
-public sealed class AlertLevelDelayFinishedEvent : EntityEventArgs
-{}
-
-public sealed class AlertLevelPrototypeReloadedEvent : EntityEventArgs
-{}
-
-public sealed class AlertLevelChangedEvent : EntityEventArgs
+public sealed class AlertLevelDelayFinishedEvent : EntityEventArgs;
+public sealed class AlertLevelPrototypeReloadedEvent : EntityEventArgs ;
+public sealed class AlertLevelChangedEvent(EntityUid station, string alertLevel) : EntityEventArgs
 {
-    public EntityUid Station { get; }
-    public string AlertLevel { get; }
-
-    public AlertLevelChangedEvent(EntityUid station, string alertLevel)
-    {
-        Station = station;
-        AlertLevel = alertLevel;
-    }
+    public EntityUid Station { get; } = station;
+    public string AlertLevel { get; } = alertLevel;
 }
