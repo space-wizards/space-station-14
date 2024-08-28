@@ -116,6 +116,7 @@
   - type: StationAiHolder
     slot:
       name: station-ai-mind-slot
+      locked: true
       whitelist:
         tags:
         - StationAi
