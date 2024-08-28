@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Vermidia
-  changes:
-  - message: allies callable by radio in the uplink now have unique icons
-    type: Tweak
-  id: 6734
-  time: '2024-06-14T21:44:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28954
 - author: K-Dynamic
   changes:
   - message: Added witch robes and witch hat to the AutoDrobe.
@@ -3860,3 +3853,10 @@
   id: 7233
   time: '2024-08-28T08:18:51.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31565
+- author: lzk228
+  changes:
+  - message: Added black suspenders for mime.
+    type: Add
+  id: 7234
+  time: '2024-08-28T09:43:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29055
