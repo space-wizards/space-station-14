@@ -17,10 +17,17 @@ rat-king-command-loose-title = Loose
 rat-king-command-loose-description = Command your army to act at their own will.
 
 
-rat-king-callout-stay-1 = Stay
+rat-king-callout-stay-1 = Sit!
+rat-king-callout-stay-2 = Stay!
+rat-king-callout-stay-3 = Stop!
 
-rat-king-callout-follow-1 = Follow
+rat-king-callout-follow-1 = Heel!
+rat-king-callout-follow-2 = Follow!
 
-rat-king-callout-attack-1 = Attack
+rat-king-callout-attack-1 = Attack!
+rat-king-callout-attack-2 = Sic!
+rat-king-callout-attack-3 = Cheese 'Em!
+rat-king-callout-attack-4 = Kill!
 
-rat-king-callout-loose-1 = Loose
+rat-king-callout-loose-1 = Loose!
+rat-king-callout-loose-2 = Free!
