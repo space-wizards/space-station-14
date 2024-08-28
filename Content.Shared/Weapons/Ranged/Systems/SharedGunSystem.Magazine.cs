@@ -193,6 +193,6 @@ public abstract partial class SharedGunSystem
         if (ent == null)
             return;
 
-        _slots.TryEject(uid, MagazineSlot, null, out var a, excludeUserAudio: default);
+        _slots.TryEject(uid, MagazineSlot, null, out var a);
     }
 }
