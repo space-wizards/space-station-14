@@ -1,52 +1,4 @@
 ﻿Entries:
-- author: Vermidia
-  changes:
-  - message: Nukie planet now has an improved Donk co. microwave, which cooks twice
-      as fast but is more likely to explode. It can't handle id cards without exploding.
-    type: Add
-  - message: Made microwave explosions destroy the machine board and spit out the
-      machine parts.
-    type: Tweak
-  id: 6737
-  time: '2024-06-15T03:00:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28951
-- author: robertGN
-  changes:
-  - message: Using a welder on vending machines now correctly repairs the vending
-      machine.
-    type: Fix
-  id: 6738
-  time: '2024-06-15T03:13:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28920
-- author: Brandon-Huu
-  changes:
-  - message: Removed the six Handheld GPS devices from the syndicate deathrattle implant
-      box.
-    type: Remove
-  id: 6739
-  time: '2024-06-15T03:23:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28999
-- author: EmoGarbage404
-  changes:
-  - message: Revamped meteors. Meteors now crash through several walls before exploding.
-      They can still come in a weaker "space dust" form where they don't break through
-      structures.
-    type: Add
-  - message: Meteor and space dust events now occur on regular intervals during a
-      round rather than being tied to station events. Expect to see more of them during
-      a round.
-    type: Add
-  id: 6740
-  time: '2024-06-15T03:38:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28974
-- author: EmoGarbage404
-  changes:
-  - message: Added Moon Boots! This science research item allows you to move like
-      you're in zero-gravity.
-    type: Add
-  id: 6741
-  time: '2024-06-15T03:43:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29009
 - author: EmoGarbage404
   changes:
   - message: Attempting to uncuff oneself while being pulled will now take twice as
@@ -3860,3 +3812,40 @@
   id: 7236
   time: '2024-08-28T12:36:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31427
+- author: deltanedas
+  changes:
+  - message: You can now build carp statues with luxury materials.
+    type: Add
+  id: 7237
+  time: '2024-08-28T13:08:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31261
+- author: PopGamer46
+  changes:
+  - message: Fixed shuttles not being able to FTL onto the station
+    type: Fix
+  id: 7238
+  time: '2024-08-28T13:22:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31569
+- author: themias
+  changes:
+  - message: Defibs batteries no longer drain when switched off
+    type: Fix
+  id: 7239
+  time: '2024-08-28T17:31:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31593
+- author: themias
+  changes:
+  - message: Fixed the nuke disk being marked 'left behind' when escaping with it
+      on the shuttle
+    type: Fix
+  id: 7240
+  time: '2024-08-28T20:05:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31602
+- author: Beck Thompson
+  changes:
+  - message: Gold and silver ring, gold and silver diamond ring, gold and silver gem
+      ring. They all can be obtained in salvage loot pools.
+    type: Add
+  id: 7241
+  time: '2024-08-28T20:48:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31372
