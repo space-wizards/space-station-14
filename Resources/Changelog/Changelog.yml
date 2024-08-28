@@ -1,34 +1,4 @@
 ﻿Entries:
-- author: PJB3005
-  changes:
-  - message: Added pride month.
-    type: Add
-  - message: Made the nuke gay.
-    type: Add
-  id: 6732
-  time: '2024-06-14T17:22:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28992
-- author: Aeshus
-  changes:
-  - message: Loadouts now display all requirements.
-    type: Fix
-  id: 6733
-  time: '2024-06-14T20:32:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28994
-- author: Vermidia
-  changes:
-  - message: allies callable by radio in the uplink now have unique icons
-    type: Tweak
-  id: 6734
-  time: '2024-06-14T21:44:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28954
-- author: K-Dynamic
-  changes:
-  - message: Added witch robes and witch hat to the AutoDrobe.
-    type: Add
-  id: 6735
-  time: '2024-06-15T02:19:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28965
 - author: Plykiya
   changes:
   - message: You can no longer insert duplicates of the same module into a cyborg.
@@ -3862,3 +3832,31 @@
   id: 7231
   time: '2024-08-28T07:11:25.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31563
+- author: metalgearsloth
+  changes:
+  - message: Add shutters, windoors, etc to AI interaction whitelist.
+    type: Tweak
+  id: 7232
+  time: '2024-08-28T07:39:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31564
+- author: lunarcomets
+  changes:
+  - message: updated AI job icon
+    type: Tweak
+  id: 7233
+  time: '2024-08-28T08:18:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31565
+- author: lzk228
+  changes:
+  - message: Added black suspenders for mime.
+    type: Add
+  id: 7234
+  time: '2024-08-28T09:43:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29055
+- author: saintmuntzer
+  changes:
+  - message: Riot helmet now matches security helmet colors.
+    type: Fix
+  id: 7235
+  time: '2024-08-28T11:27:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31530

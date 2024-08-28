@@ -31738,6 +31738,11 @@ entities:
     - type: Transform
       pos: -113.5,36.5
       parent: 60
+  - uid: 23088
+    components:
+    - type: Transform
+      pos: -69.5,16.5
+      parent: 60
   - uid: 23403
     components:
     - type: Transform
@@ -151556,26 +151561,6 @@ entities:
     - type: Transform
       pos: -1.5,-2.5
       parent: 7536
-  - uid: 23088
-    components:
-    - type: Transform
-      pos: -114.5,15.5
-      parent: 60
-  - uid: 23089
-    components:
-    - type: Transform
-      pos: -114.5,19.5
-      parent: 60
-  - uid: 23090
-    components:
-    - type: Transform
-      pos: -108.5,19.5
-      parent: 60
-  - uid: 23091
-    components:
-    - type: Transform
-      pos: -108.5,15.5
-      parent: 60
   - uid: 23160
     components:
     - type: Transform
