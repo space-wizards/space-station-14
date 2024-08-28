@@ -53,7 +53,7 @@
 - type: entity
   id: FireAxeFlaming
   name: fire axe
-  parent: FireAxe
+  parent: [BaseSyndicateContraband, FireAxe]
   description: Why fight fire with an axe when you can fight with fire and axe? Now featuring rugged rubberized handle!
   components:
   - type: MeleeWeapon
