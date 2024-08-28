@@ -1160,3 +1160,4 @@
   - type: ContainerContainer
     containers:
       circuit_holder: !type:ContainerSlot
+      board: !type:Container
