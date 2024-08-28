@@ -287,8 +287,6 @@
       - id: PetCarrier
       - id: DrinkMopwataBottleRandom
       - id: LidSalami
-      - id: GoldRingGem
-        weight: 0.05
 
 - type: entity
   name: Maint Loot Spawner

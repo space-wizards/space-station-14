@@ -200,10 +200,6 @@
       - ClothingHeadHatWelding
       - WetFloorSign
       - ClothingHeadHatCone
-      - GoldRing
-      - SilverRing
-      - GoldRingDiamond
-      - SilverRingDiamond
 
   - type: EmagLatheRecipes
     emagStaticRecipes:
