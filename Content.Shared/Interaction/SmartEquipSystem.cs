@@ -176,7 +176,7 @@ public sealed class SmartEquipSystem : EntitySystem
                     return;
                 }
 
-                _slots.TryEjectToHands(slotItem, toEjectFrom, uid, excludeUserAudio: true);
+                _slots.TryEjectToHands(slotItem, toEjectFrom, uid, excludeUserAudio: default);
                 return;
             }
 
@@ -198,7 +198,7 @@ public sealed class SmartEquipSystem : EntitySystem
                 return;
             }
 
-            _slots.TryInsertFromHand(slotItem, toInsertTo, uid, hands, excludeUserAudio: true);
+            _slots.TryInsertFromHand(slotItem, toInsertTo, uid, hands, excludeUserAudio: default);
             return;
         }
 

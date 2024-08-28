@@ -227,7 +227,7 @@ namespace Content.Shared.Containers.ItemSlots
                 if (slot.Item != null)
                     _handsSystem.TryPickupAnyHand(args.User, slot.Item.Value, handsComp: hands);
 
-                Insert(uid, slot, args.Used, args.User, excludeUserAudio: true);
+                Insert(uid, slot, args.Used, args.User, excludeUserAudio: default);
 
                 if (slot.InsertSuccessPopup.HasValue)
                     _popupSystem.PopupClient(Loc.GetString(slot.InsertSuccessPopup), uid, args.User);
@@ -308,7 +308,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (!itemSlots.Slots.TryGetValue(id, out var slot))
                 return false;
 
-            return TryInsert(uid, slot, item, user, excludeUserAudio: excludeUserAudio);
+            return TryInsert(uid, slot, item, user, excludeUserAudio: default);
         }
 
         /// <summary>
@@ -320,7 +320,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (!CanInsert(uid, item, user, slot))
                 return false;
 
-            Insert(uid, slot, item, user, excludeUserAudio: excludeUserAudio);
+            Insert(uid, slot, item, user, excludeUserAudio: default);
             return true;
         }
 
@@ -344,7 +344,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (!_handsSystem.TryDrop(user, hands.ActiveHand))
                 return false;
 
-            Insert(uid, slot, held, user, excludeUserAudio: excludeUserAudio);
+            Insert(uid, slot, held, user, excludeUserAudio: default);
             return true;
         }
 
@@ -387,7 +387,7 @@ namespace Content.Shared.Containers.ItemSlots
 
             foreach (var slot in slots)
             {
-                if (TryInsert(ent, slot, item, user, excludeUserAudio: excludeUserAudio))
+                if (TryInsert(ent, slot, item, user, excludeUserAudio: default))
                     return true;
             }
 
@@ -540,7 +540,7 @@ namespace Content.Shared.Containers.ItemSlots
                     AlternativeVerb verb = new()
                     {
                         IconEntity = GetNetEntity(args.Using),
-                        Act = () => Insert(uid, slot, args.Using.Value, args.User, excludeUserAudio: true)
+                        Act = () => Insert(uid, slot, args.Using.Value, args.User, excludeUserAudio: default)
                     };
 
                     if (slot.InsertVerbText != null)
@@ -594,7 +594,7 @@ namespace Content.Shared.Containers.ItemSlots
                 AlternativeVerb verb = new()
                 {
                     IconEntity = GetNetEntity(slot.Item),
-                    Act = () => TryEjectToHands(uid, slot, args.User, excludeUserAudio: true)
+                    Act = () => TryEjectToHands(uid, slot, args.User, excludeUserAudio: default)
                 };
 
                 if (slot.EjectVerbText == null)
@@ -633,7 +633,7 @@ namespace Content.Shared.Containers.ItemSlots
                 InteractionVerb takeVerb = new()
                 {
                     IconEntity = GetNetEntity(slot.Item),
-                    Act = () => TryEjectToHands(uid, slot, args.User, excludeUserAudio: true)
+                    Act = () => TryEjectToHands(uid, slot, args.User, excludeUserAudio: default)
                 };
 
                 if (slot.EjectVerbText == null)
@@ -661,7 +661,7 @@ namespace Content.Shared.Containers.ItemSlots
                 InteractionVerb insertVerb = new()
                 {
                     IconEntity = GetNetEntity(args.Using),
-                    Act = () => Insert(uid, slot, args.Using.Value, args.User, excludeUserAudio: true)
+                    Act = () => Insert(uid, slot, args.Using.Value, args.User, excludeUserAudio: default)
                 };
 
                 if (slot.InsertVerbText != null)
