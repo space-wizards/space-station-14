@@ -124266,6 +124266,21 @@ entities:
         21755:
         - On: Open
         - Off: Close
+  - uid: 24818
+    components:
+    - type: MetaData
+      name: light switch
+    - type: Transform
+      pos: 21.5,-14.5
+      parent: 60
+    - type: DeviceLinkSource
+      linkedPorts:
+        1209:
+        - On: On
+        - Off: Off
+        1210:
+        - On: On
+        - Off: Off
 - proto: SignAnomaly
   entities:
   - uid: 9496
