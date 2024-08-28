@@ -285,8 +285,8 @@
   - Incorporeal
   - BaseMob
   id: StationAiHolo
-  name: Hologram
-  description: A projection of the AI.
+  name: AI eye
+  description: The AI's viewer.
   noSpawn: true
   suffix: DO NOT MAP
   components:
@@ -297,7 +297,7 @@
   - type: Sprite
     sprite: Mobs/Silicon/station_ai.rsi
     layers:
-    - state: default
+    - state: ai_camera
       shader: unshaded
       map: ["base"]
 
