@@ -161,6 +161,7 @@
       - id: CigarGold
       - id: ClothingUniformJumpsuitFamilyGuy
       - id: WristwatchGold
+      - id: RubberStampGreytide
 
 - type: entity
   name: Maint Loot Spawner
