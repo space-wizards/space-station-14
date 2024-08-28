@@ -304,8 +304,8 @@
 
 - type: entity
   id: ActionRatKingRaiseArmy
-  name: Raise Army
-  description: Spend some hunger to summon an allied rat to help defend you.
+  name: rat-king-summon-minion-title
+  description: rat-king-summon-minion-description
   components:
   - type: InstantAction
     useDelay: 4
@@ -316,8 +316,8 @@
 
 - type: entity
   id: ActionRatKingDomain
-  name: Rat King's Domain
-  description: Spend some hunger to release a cloud of ammonia into the air.
+  name: rat-king-domain-title
+  description: rat-king-domain-description
   components:
   - type: InstantAction
     useDelay: 6
@@ -328,8 +328,8 @@
 
 - type: entity
   id: ActionRatKingOrderStay
-  name: Stay
-  description: Command your army to stand in place.
+  name: rat-king-command-stay-title
+  description: rat-king-command-stay-description
   components:
   - type: InstantAction
     useDelay: 1
@@ -346,8 +346,8 @@
 
 - type: entity
   id: ActionRatKingOrderFollow
-  name: Follow
-  description: Command your army to follow you around.
+  name: rat-king-command-follow-title
+  description: rat-king-command-follow-description
   components:
   - type: InstantAction
     useDelay: 1
@@ -364,8 +364,8 @@
 
 - type: entity
   id: ActionRatKingOrderCheeseEm
-  name: Cheese 'Em
-  description: Command your army to attack whoever you point at.
+  name: rat-king-command-cheese-em-title
+  description: rat-king-command-cheese-em-description
   components:
   - type: InstantAction
     useDelay: 1
@@ -382,8 +382,8 @@
 
 - type: entity
   id: ActionRatKingOrderLoose
-  name: Loose
-  description: Command your army to act at their own will.
+  name: rat-king-command-loose-title
+  description: rat-king-command-loose-description
   components:
   - type: InstantAction
     useDelay: 1

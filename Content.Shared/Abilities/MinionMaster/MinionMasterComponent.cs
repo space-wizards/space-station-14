@@ -80,10 +80,10 @@ public sealed partial class MinionMasterComponent : Component
     [DataField("orderCallouts")]
     public Dictionary<MinionOrderType, string> OrderCallouts = new()
     {
-        { MinionOrderType.Stay, "RatKingCommandStay" },
-        { MinionOrderType.Follow, "RatKingCommandFollow" },
-        { MinionOrderType.Attack, "RatKingCommandCheeseEm" },
-        { MinionOrderType.Loose, "RatKingCommandLoose" }
+        { MinionOrderType.Stay, "MinionMasterCommandStay" },
+        { MinionOrderType.Follow, "MinionMasterCommandFollow" },
+        { MinionOrderType.Attack, "MinionMasterCommandAttack" },
+        { MinionOrderType.Loose, "MinionMasterCommandLoose" }
     };
 }
 

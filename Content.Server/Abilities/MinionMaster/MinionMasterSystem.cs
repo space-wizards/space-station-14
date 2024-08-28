@@ -24,6 +24,7 @@ public sealed class MinionMasterSystem : SharedMinionMasterSystem
     [Dependency] private readonly HungerSystem _hunger = default!;
     [Dependency] private readonly NPCSystem _npc = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly ILocalizationManager _loc = default!;
 
     public override void Initialize()
     {
@@ -103,10 +104,12 @@ public sealed class MinionMasterSystem : SharedMinionMasterSystem
         base.DoCommandCallout(uid, component);
 
         if (!component.OrderCallouts.TryGetValue(component.CurrentOrder, out var datasetId) ||
-            !PrototypeManager.TryIndex<DatasetPrototype>(datasetId, out var datasetPrototype))
+            !PrototypeManager.TryIndex<LocalizedDatasetPrototype>(datasetId, out var locDatasetPrototype))
             return;
 
-        var msg = Random.Pick(datasetPrototype.Values);
+        var msg = Random.Pick(locDatasetPrototype.Values);
+        msg = _loc.GetString(msg);
+
         _chat.TrySendInGameICMessage(uid, msg, InGameICChatType.Speak, true);
     }
 }

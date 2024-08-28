@@ -1,0 +1,23 @@
+- type: localizedDataset
+  id: MinionMasterCommandStay
+  values:
+    prefix: minion-master-callout-stay-
+    count: 1
+
+- type: localizedDataset
+  id: MinionMasterCommandFollow
+  values:
+    prefix: minion-master-callout-follow-
+    count: 1
+
+- type: localizedDataset
+  id: MinionMasterCommandAttack
+  values:
+    prefix: minion-master-callout-attack-
+    count: 1
+
+- type: localizedDataset
+  id: MinionMasterCommandLoose
+  values:
+    prefix: minion-master-callout-loose-
+    count: 1

@@ -1,7 +1,7 @@
 - type: entity
   id: ActionMinionMasterRaiseArmy
-  name: Summon Minion
-  description: Summon a minion to serve you.
+  name: minion-master-summon-minion-title
+  description: minion-master-summon-minion-description
   components:
   - type: InstantAction
     useDelay: 4
@@ -12,8 +12,8 @@
 
 - type: entity
   id: ActionMinionMasterOrderStay
-  name: Stay
-  description: Command your minions to stand in place.
+  name: minion-master-command-stay-title
+  description: minion-master-command-stay-description
   components:
   - type: InstantAction
     useDelay: 1
@@ -30,8 +30,8 @@
 
 - type: entity
   id: ActionMinionMasterOrderFollow
-  name: Follow
-  description: Command your minions to follow you around.
+  name: minion-master-command-follow-title
+  description: minion-master-command-follow-description
   components:
   - type: InstantAction
     useDelay: 1
@@ -48,8 +48,8 @@
 
 - type: entity
   id: ActionMinionMasterOrderAttack
-  name: Attack
-  description: Command your minions to attack whoever you point at.
+  name: minion-master-command-attack-title
+  description: minion-master-command-attack-description
   components:
   - type: InstantAction
     useDelay: 1
@@ -66,8 +66,8 @@
 
 - type: entity
   id: ActionMinionMasterOrderLoose
-  name: Loose
-  description: Command your minions to act at their own will.
+  name: minion-master-command-loose-title
+  description: minion-master-command-loose-description
   components:
   - type: InstantAction
     useDelay: 1
