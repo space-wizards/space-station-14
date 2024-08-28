@@ -89,3 +89,17 @@
   id: danger # just any gas you don't want at all
   upperBound: !type:AlarmThresholdSetting
     threshold: 0.0001
+
+- type: alarmThreshold
+  id: voxOxygen
+  upperBound: !type:AlarmThresholdSetting
+    threshold: 0.02 # 2%
+  upperWarnAround: !type:AlarmThresholdSetting
+    threshold: 0.5 # 1%
+
+- type: alarmThreshold
+  id: voxNitrogen
+  lowerBound: !type:AlarmThresholdSetting
+    threshold: 0.8 # danger below 80% nitrogen
+  lowerWarnAround: !type:AlarmThresholdSetting
+    threshold: 1.125 # warning below 90%

@@ -271,3 +271,16 @@
     stampState: "paper_stamp-detective"
   - type: Sprite
     state: stamp-detective
+
+- type: entity
+  name: greytide's rubber stamp
+  parent: RubberStampBase
+  id: RubberStampGreytide
+  description: A rubber stamp for stamping important documents. The tide washes over you, just looking at it...
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-greytide
+    stampedColor: "#323232"
+    stampState: "paper_stamp-greytide"
+  - type: Sprite
+    state: stamp-greytide

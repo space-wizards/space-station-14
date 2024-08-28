@@ -1,18 +1,18 @@
-using Content.Server.GameTicking;
+using Content.Server.Ghost;
+using Content.Shared.Administration.Logs;
+using Content.Shared.Chat;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Mind;
+using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
 using Robust.Shared.Player;
-using Content.Shared.Administration.Logs;
-using Content.Shared.Chat;
-using Content.Shared.Mind.Components;
 
 namespace Content.Server.Chat;
 
@@ -23,7 +23,7 @@ public sealed class SuicideSystem : EntitySystem
     [Dependency] private readonly TagSystem _tagSystem = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly GameTicker _gameTicker = default!;
+    [Dependency] private readonly GhostSystem _ghostSystem = default!;
     [Dependency] private readonly SharedSuicideSystem _suicide = default!;
 
     public override void Initialize()
@@ -82,7 +82,7 @@ public sealed class SuicideSystem : EntitySystem
         if (_tagSystem.HasTag(victim, "CannotSuicide"))
             args.CanReturnToBody = true;
 
-        if (_gameTicker.OnGhostAttempt(victim.Comp.Mind.Value, args.CanReturnToBody, mind: mindComponent))
+        if (_ghostSystem.OnGhostAttempt(victim.Comp.Mind.Value, args.CanReturnToBody, mind: mindComponent))
             args.Handled = true;
     }
 
