@@ -261,7 +261,7 @@ public sealed partial class ShuttleDockControl : BaseShuttleControl
 
                     if (range.Length() < SharedDockingSystem.DockingHiglightRange * MinimapScale)
                     {
-                        if (_viewedState?.GridDockedWith == null)
+                        if (dock.GridDockedWith == null)
                         {
                             var coordsOne = EntManager.GetCoordinates(_viewedState!.Coordinates);
                             var coordsTwo = EntManager.GetCoordinates(dock.Coordinates);
