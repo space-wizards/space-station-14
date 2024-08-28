@@ -70,6 +70,23 @@
 
 - type: entity
   parent: [BoxCardboard, BaseSyndicateContraband]
+  id: AnimalFriendsKit
+  name: animal friends kit
+  description: Contains 4 doses of Syndizine to convert animals into your henchmen, as well as two mice to inject.
+  components:
+  - type: Sprite
+    layers:
+      - state: box_of_doom
+      - state: syringe
+  - type: StorageFill
+    contents:
+      - id: MobMouse
+        amount: 2
+      - id: Syringe
+      - id: SyndizineChemistryVial
+
+- type: entity
+  parent: [BoxCardboard, BaseSyndicateContraband]
   id: CombatBakeryKit
   name: combat bakery kit
   description: A kit of clandestine baked weapons.

@@ -1,6 +1,7 @@
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Speech.Components;
 using Content.Shared.EntityEffects;
+using Content.Shared.Humanoid;
 using Content.Shared.Mind.Components;
 using Robust.Shared.Prototypes;
 
@@ -29,9 +30,16 @@ public sealed partial class MakeSyndient : EntityEffect
             return;
         }
 
+        //slightly hacky way to make sure it doesn't work on humanoid ghost roles that haven't been claimed yet
+        if (entityManager.TryGetComponent<HumanoidAppearanceComponent>(uid, out HumanoidAppearanceComponent? component))
+        {
+            return;
+        }
+
         // Don't add a ghost role to things that already have ghost roles
         if (entityManager.TryGetComponent(uid, out GhostRoleComponent? ghostRole))
         {
+            
             //change the role description and rules to make it clear it's been injected with syndizine
             ghostRole = entityManager.GetComponent<GhostRoleComponent>(uid);
             ghostRole.RoleDescription = Loc.GetString("ghost-role-information-syndizine-description");
