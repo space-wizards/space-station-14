@@ -20,7 +20,6 @@ using Robust.Shared.Random;
 using Robust.Shared.Configuration;
 using Content.Shared.CCVar;
 
-
 namespace Content.Server.Atmos.EntitySystems
 {
     [UsedImplicitly]
@@ -57,11 +56,6 @@ namespace Content.Server.Atmos.EntitySystems
             SubscribeLocalEvent<GasTankComponent, PriceCalculationEvent>(OnGasTankPrice);
             SubscribeLocalEvent<GasTankComponent, GetVerbsEvent<AlternativeVerb>>(OnGetAlternativeVerb);
             Subs.CVar(_cfg, CCVars.AtmosTankFragment, UpdateMaxRange);
-        }
-
-        public override void Shutdown()
-        {
-            base.Shutdown();
         }
 
         private void UpdateMaxRange(float value)
@@ -336,7 +330,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             var pressure = component.Air.Pressure;
 
-            if (pressure > component.TankFragmentPressure && _maxExplosionRange != 0)
+            if (pressure > component.TankFragmentPressure && _maxExplosionRange > 0)
             {
                 // Give the gas a chance to build up more pressure.
                 for (var i = 0; i < 3; i++)
@@ -349,10 +343,7 @@ namespace Content.Server.Atmos.EntitySystems
 
                 // Let's cap the explosion, yeah?
                 // !1984
-                if (range > GasTankComponent.MaxExplosionRange || range > _maxExplosionRange)
-                {
-                    range = Math.Min(GasTankComponent.MaxExplosionRange, _maxExplosionRange);
-                }
+                range = Math.Min(Math.Min(range, GasTankComponent.MaxExplosionRange), _maxExplosionRange);
 
                 _explosions.TriggerExplosive(owner, radius: range);
 

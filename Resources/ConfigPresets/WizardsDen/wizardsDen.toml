@@ -40,4 +40,4 @@ new_player_threshold = 600
 alert.min_players_sharing_connection = 2
 
 [atmos]
-max_explosion_Range = 0
+max_explosion_range = 0
