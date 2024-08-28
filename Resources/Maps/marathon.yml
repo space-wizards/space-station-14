@@ -11015,7 +11015,7 @@ entities:
       pos: -20.5,-5.5
       parent: 30
     - type: Door
-      secondsUntilStateChange: -25025.113
+      secondsUntilStateChange: -25052.139
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -118879,6 +118879,11 @@ entities:
       rot: 3.141592653589793 rad
       pos: -17.5,-0.5
       parent: 30
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraSecurity
+      nameSet: True
+      id: Sec Med Office
   - uid: 21283
     components:
     - type: Transform
