@@ -17,7 +17,7 @@
   parent: RingBase
   id: SilverRing
   name: silver ring
-  description: Looks slighly less valuable than a gold one.
+  description: Looks slightly less valuable than a gold one.
   components:
     - type: Sprite
       sprite: Clothing/Hands/Rings/basic.rsi
@@ -64,7 +64,7 @@
   parent: RingBase
   id: GoldRingGem
   name: gold gem ring
-  description: Shiney and valuable!
+  description: Shiny and valuable!
   components:
     - type: Sprite
       sprite: Clothing/Hands/Rings/basic.rsi
@@ -86,7 +86,7 @@
   parent: RingBase
   id: SilverRingGem
   name: silver gem ring
-  description: Shiney and not quite as valuable!
+  description: Shiny and not quite as valuable!
   components:
     - type: Sprite
       sprite: Clothing/Hands/Rings/basic.rsi
