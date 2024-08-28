@@ -104,6 +104,8 @@ public sealed class ArrivalsSystem : EntitySystem
         SubscribeLocalEvent<ArrivalsShuttleComponent, FTLStartedEvent>(OnArrivalsFTL);
         SubscribeLocalEvent<ArrivalsShuttleComponent, FTLCompletedEvent>(OnArrivalsDocked);
 
+        SubscribeLocalEvent<PlayerSpawnCompleteEvent>(SendDirections);
+
         _pendingQuery = GetEntityQuery<PendingClockInComponent>();
         _blacklistQuery = GetEntityQuery<ArrivalsBlacklistComponent>();
         _mobQuery = GetEntityQuery<MobStateComponent>();
@@ -376,6 +378,20 @@ public sealed class ArrivalsSystem : EntitySystem
         // If you're forced to spawn, you're invincible until you leave wherever you were forced to spawn.
         if (ArrivalsGodmode)
             EnsureComp<GodmodeComponent>(ev.SpawnResult.Value);
+    }
+
+    private void SendDirections(PlayerSpawnCompleteEvent ev)
+    {
+        if (!Enabled || !ev.LateJoin || ev.Silent || !_pendingQuery.HasComp(ev.Mob))
+            return;
+
+        var arrival = NextShuttleArrival();
+
+        var message = arrival is not null
+            ? Loc.GetString("latejoin-arrivals-direction-time", ("time", $"{arrival:mm\\:ss}"))
+            : Loc.GetString("latejoin-arrivals-direction");
+
+        _chat.DispatchServerMessage(ev.Player, message);
     }
 
     private bool TryTeleportToMapSpawn(EntityUid player, EntityUid stationId, TransformComponent? transform = null)
