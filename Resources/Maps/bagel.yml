@@ -8043,7 +8043,7 @@ entities:
             1: 39312
           -12,8:
             5: 12
-            7: 3072
+            6: 3072
           -11,5:
             0: 63351
           -11,6:
@@ -8052,7 +8052,7 @@ entities:
           -11,8:
             5: 1
             1: 17476
-            7: 256
+            6: 256
           -11,7:
             1: 17484
           -10,5:
@@ -8150,10 +8150,10 @@ entities:
             0: 255
             1: 57344
           -8,11:
-            6: 816
+            7: 816
             1: 34952
           -9,11:
-            6: 2176
+            7: 2176
             1: 8738
           -8,12:
             1: 34959
@@ -8173,7 +8173,7 @@ entities:
           -6,11:
             0: 4095
           -6,12:
-            6: 61166
+            7: 61166
           -5,9:
             0: 65535
           -5,10:
@@ -8181,7 +8181,7 @@ entities:
           -5,11:
             0: 36863
           -5,12:
-            6: 30515
+            7: 30515
             0: 12
           -4,9:
             0: 65535
@@ -8191,7 +8191,7 @@ entities:
             0: 4095
           -4,12:
             0: 1
-            6: 65518
+            7: 65518
           -4,13:
             1: 61680
           -5,13:
@@ -8205,7 +8205,7 @@ entities:
           -5,15:
             1: 17487
           -3,12:
-            6: 13107
+            7: 13107
             1: 34944
           -3,13:
             1: 47792
@@ -8271,7 +8271,7 @@ entities:
             1: 61713
           -12,9:
             0: 16
-            6: 3084
+            7: 3084
           -13,9:
             1: 39305
           -13,10:
@@ -8281,18 +8281,18 @@ entities:
             0: 12544
           -12,10:
             4: 12
-            6: 3072
+            7: 3072
           -12,11:
-            6: 12
+            7: 12
           -11,9:
-            6: 257
+            7: 257
             1: 17476
           -11,10:
             4: 1
-            6: 256
+            7: 256
             1: 17476
           -11,11:
-            6: 1
+            7: 1
             1: 17476
           -11,12:
             1: 17487
@@ -8346,7 +8346,7 @@ entities:
             1: 15
           -13,12:
             1: 34952
-            7: 48
+            6: 48
             5: 12288
           -12,13:
             1: 61455
@@ -8380,11 +8380,11 @@ entities:
             1: 62671
           -7,14:
             1: 244
-            6: 57344
+            7: 57344
             0: 1024
           -7,15:
             1: 61440
-            6: 238
+            7: 238
             0: 1024
           -7,16:
             1: 65524
@@ -8443,7 +8443,7 @@ entities:
           -14,12:
             0: 1
             1: 8738
-            7: 128
+            6: 128
             5: 32768
           -17,12:
             0: 52232
@@ -8984,7 +8984,7 @@ entities:
         - volume: 2500
           temperature: 293.15
           moles:
-          - 0
+          - 6666.982
           - 0
           - 0
           - 0
@@ -8999,7 +8999,7 @@ entities:
         - volume: 2500
           temperature: 293.15
           moles:
-          - 6666.982
+          - 0
           - 0
           - 0
           - 0
@@ -15119,18 +15119,6 @@ entities:
     components:
     - type: Transform
       pos: 12.5,-25.5
-      parent: 60
-- proto: BaseComputer
-  entities:
-  - uid: 7413
-    components:
-    - type: Transform
-      pos: -113.5,11.5
-      parent: 60
-  - uid: 8146
-    components:
-    - type: Transform
-      pos: -109.5,11.5
       parent: 60
 - proto: BaseGasCondenser
   entities:
@@ -110729,6 +110717,13 @@ entities:
     - type: Transform
       pos: -10.5,26.5
       parent: 60
+- proto: PlayerStationAi
+  entities:
+  - uid: 8146
+    components:
+    - type: Transform
+      pos: -111.5,25.5
+      parent: 60
 - proto: PlushieAtmosian
   entities:
   - uid: 5031
@@ -128958,6 +128953,20 @@ entities:
     components:
     - type: Transform
       pos: 40.5,-20.5
+      parent: 60
+- proto: StationAiUploadComputer
+  entities:
+  - uid: 7413
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -113.5,11.5
+      parent: 60
+  - uid: 7444
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -109.5,11.5
       parent: 60
 - proto: StationMap
   entities:
@@ -151927,16 +151936,6 @@ entities:
       parent: 60
 - proto: WindoorSecureCommandLocked
   entities:
-  - uid: 7443
-    components:
-    - type: Transform
-      pos: -109.5,11.5
-      parent: 60
-  - uid: 7456
-    components:
-    - type: Transform
-      pos: -113.5,11.5
-      parent: 60
   - uid: 18105
     components:
     - type: Transform
@@ -152980,11 +152979,11 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -5.5,-68.5
       parent: 60
-  - uid: 7444
+  - uid: 7443
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -110.5,11.5
+      rot: 3.141592653589793 rad
+      pos: -113.5,10.5
       parent: 60
   - uid: 7448
     components:
@@ -152997,6 +152996,12 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -5.5,-67.5
+      parent: 60
+  - uid: 7456
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -109.5,10.5
       parent: 60
   - uid: 7469
     components:
@@ -153055,12 +153060,6 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -8.5,-10.5
-      parent: 60
-  - uid: 8152
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -112.5,11.5
       parent: 60
   - uid: 8159
     components:
