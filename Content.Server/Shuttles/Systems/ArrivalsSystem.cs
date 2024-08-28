@@ -52,6 +52,7 @@ public sealed class ArrivalsSystem : EntitySystem
     [Dependency] private readonly BiomeSystem _biomes = default!;
     [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly MapLoaderSystem _loader = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly ShuttleSystem _shuttles = default!;
@@ -102,6 +103,8 @@ public sealed class ArrivalsSystem : EntitySystem
         SubscribeLocalEvent<RoundStartingEvent>(OnRoundStarting);
         SubscribeLocalEvent<ArrivalsShuttleComponent, FTLStartedEvent>(OnArrivalsFTL);
         SubscribeLocalEvent<ArrivalsShuttleComponent, FTLCompletedEvent>(OnArrivalsDocked);
+
+        SubscribeLocalEvent<PlayerSpawnCompleteEvent>(SendDirections);
 
         _pendingQuery = GetEntityQuery<PendingClockInComponent>();
         _blacklistQuery = GetEntityQuery<ArrivalsBlacklistComponent>();
@@ -377,6 +380,20 @@ public sealed class ArrivalsSystem : EntitySystem
             EnsureComp<GodmodeComponent>(ev.SpawnResult.Value);
     }
 
+    private void SendDirections(PlayerSpawnCompleteEvent ev)
+    {
+        if (!Enabled || !ev.LateJoin || ev.Silent || !_pendingQuery.HasComp(ev.Mob))
+            return;
+
+        var arrival = NextShuttleArrival();
+
+        var message = arrival is not null
+            ? Loc.GetString("latejoin-arrivals-direction-time", ("time", $"{arrival:mm\\:ss}"))
+            : Loc.GetString("latejoin-arrivals-direction");
+
+        _chat.DispatchServerMessage(ev.Player, message);
+    }
+
     private bool TryTeleportToMapSpawn(EntityUid player, EntityUid stationId, TransformComponent? transform = null)
     {
         if (!Resolve(player, ref transform))
@@ -497,6 +514,7 @@ public sealed class ArrivalsSystem : EntitySystem
     private void SetupArrivalsStation()
     {
         var mapUid = _mapSystem.CreateMap(out var mapId, false);
+        _metaData.SetEntityName(mapUid, Loc.GetString("map-name-terminal"));
 
         if (!_loader.TryLoad(mapId, _cfgManager.GetCVar(CCVars.ArrivalsMap), out var uids))
         {

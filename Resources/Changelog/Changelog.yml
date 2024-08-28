@@ -1,60 +1,4 @@
 ﻿Entries:
-- author: Doomsdrayk
-  changes:
-  - message: The Drozd and C-20r do not unwield on use again.
-    type: Fix
-  id: 6721
-  time: '2024-06-13T18:10:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28728
-- author: EmoGarbage404
-  changes:
-  - message: Fixed constructed items rotating strangely.
-    type: Fix
-  id: 6722
-  time: '2024-06-13T18:21:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28427
-- author: lzk228
-  changes:
-  - message: Added order quantity to cargo invoice label.
-    type: Tweak
-  id: 6723
-  time: '2024-06-13T18:36:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28821
-- author: osjarw
-  changes:
-  - message: Added context menu action for scanning artifacts.
-    type: Add
-  id: 6724
-  time: '2024-06-14T02:01:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26873
-- author: Cojoke-dot
-  changes:
-  - message: Lasers now pass over things unless clicked like projectiles
-    type: Tweak
-  id: 6725
-  time: '2024-06-14T02:04:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28768
-- author: Boaz1111
-  changes:
-  - message: The PKA can now mine rocks in one hit again.
-    type: Tweak
-  id: 6726
-  time: '2024-06-14T02:40:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27476
-- author: KyuPolaris
-  changes:
-  - message: Chickens now make a clucking sound when they speak.
-    type: Add
-  id: 6727
-  time: '2024-06-14T02:43:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28948
-- author: Killerqu00
-  changes:
-  - message: Time between uncuff attempts is now 30 seconds instead of 6.
-    type: Tweak
-  id: 6728
-  time: '2024-06-14T06:19:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28095
 - author: Moomoobeef
   changes:
   - message: Fax machines can now be purchased at cargo, for when you need more paper
@@ -3863,3 +3807,61 @@
   id: 7220
   time: '2024-08-27T00:48:04.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31370
+- author: SaphireLattice
+  changes:
+  - message: Safety Moth poster graphics for hardhats and pipes are no longer swapped
+      around
+    type: Fix
+  id: 7221
+  time: '2024-08-27T11:32:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31507
+- author: Winkarst-cpu
+  changes:
+  - message: Explosive ammunition is now marked as a contraband.
+    type: Fix
+  id: 7222
+  time: '2024-08-27T11:37:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31508
+- author: Winkarst-cpu
+  changes:
+  - message: Now the syndicate raid helmet is marked as a Syndicate contraband.
+    type: Fix
+  id: 7223
+  time: '2024-08-27T13:01:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31512
+- author: Winkarst-cpu
+  changes:
+  - message: The explorer gas mask is now restricted to the cargo.
+    type: Fix
+  id: 7224
+  time: '2024-08-27T13:19:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31514
+- author: Aeshus
+  changes:
+  - message: The Health Analyzer now displays the patient's picture, species, and
+      current status.
+    type: Add
+  id: 7225
+  time: '2024-08-27T14:57:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30834
+- author: Aeshus
+  changes:
+  - message: Cryosleep no longer gives arrival shuttle directions.
+    type: Fix
+  id: 7226
+  time: '2024-08-27T15:02:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30888
+- author: Winkarst-cpu
+  changes:
+  - message: Nukie plushie is now not a contraband item.
+    type: Fix
+  id: 7227
+  time: '2024-08-27T16:49:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31516
+- author: Winkarst-cpu
+  changes:
+  - message: Now AKMS is restricted to the security department.
+    type: Fix
+  id: 7228
+  time: '2024-08-27T16:54:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31519

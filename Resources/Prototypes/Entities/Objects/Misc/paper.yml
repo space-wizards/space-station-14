@@ -18,7 +18,7 @@
   - type: PaperLabelType
   - type: ActivatableUI
     key: enum.PaperUiKey.Key
-    requireHands: false
+    requiresComplex: false
   - type: UserInterface
     interfaces:
       enum.PaperUiKey.Key:
@@ -653,7 +653,7 @@
             - Paper
   - type: ActivatableUI
     key: enum.PaperUiKey.Key
-    requireHands: false
+    requiresComplex: false
   - type: UserInterface
     interfaces:
       enum.PaperUiKey.Key:
