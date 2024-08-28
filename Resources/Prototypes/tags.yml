@@ -1194,6 +1194,7 @@
 
 - type: Tag
   id: Soup
+
 - type: Tag
   id: Spear
 
@@ -1220,6 +1221,9 @@
 
 - type: Tag
   id: SpreaderIgnore
+
+- type: Tag
+  id: StationAi
 
 - type: Tag
   id: StationMapElectronics

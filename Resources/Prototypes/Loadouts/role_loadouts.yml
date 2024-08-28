@@ -25,6 +25,11 @@
   - Trinkets
   - GroupSpeciesBreathTool
 
+# Silicons
+- type: roleLoadout
+  id: JobStationAi
+  nameDataset: names_ai
+
 # Civilian
 - type: roleLoadout
   id: JobPassenger
