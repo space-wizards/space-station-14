@@ -5,7 +5,6 @@ using Content.Server.Power.NodeGroups;
 using Content.Server.Power.Pow3r;
 using Content.Shared.CCVar;
 using Content.Shared.Power;
-using Content.Shared.Power.Components;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;

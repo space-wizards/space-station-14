@@ -404,11 +404,14 @@ FoodMeatHawaiianKebab: FoodKebabSkewer
 FoodMeatKebab: FoodKebabSkewer
 FoodMeatFiestaKebab: FoodKebabSkewer
 
-# 2024-08-14
+#2024-08-14
+ClothingBeltSuspenders: ClothingBeltSuspendersRed
+
+# 2024-08-19
+ClothingNeckShockCollar: ClothingBackpackElectropack
+
+# 2024-08-28
 ClothingBackpackDuffelSyndicateCostumeCentcom: null
 ClothingHeadsetAltCentComFake: null
 CentcomPDAFake: null
 CentcomIDCardSyndie: null
-
-# 2024-08-19
-ClothingNeckShockCollar: ClothingBackpackElectropack

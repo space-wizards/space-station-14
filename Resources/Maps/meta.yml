@@ -10826,7 +10826,7 @@ entities:
       pos: -42.5,29.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -3920.309
+      secondsUntilStateChange: -4222.55
       state: Opening
     - type: DeviceLinkSink
       invokeCounter: 2
@@ -64754,11 +64754,6 @@ entities:
     - type: Transform
       pos: 34.5,21.5
       parent: 5350
-  - uid: 14242
-    components:
-    - type: Transform
-      pos: -20.5,-29.5
-      parent: 5350
   - uid: 14366
     components:
     - type: Transform
@@ -69986,6 +69981,12 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -21.5,22.5
+      parent: 5350
+  - uid: 14242
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -20.5,-29.5
       parent: 5350
   - uid: 14788
     components:
@@ -92423,17 +92424,6 @@ entities:
       parent: 5350
     - type: AtmosPipeColor
       color: '#FF1212FF'
-  - uid: 14671
-    components:
-    - type: Transform
-      anchored: False
-      pos: -21.5,-28.5
-      parent: 5350
-    - type: AtmosPipeColor
-      color: '#0335FCFF'
-    - type: Physics
-      canCollide: True
-      bodyType: Dynamic
   - uid: 14672
     components:
     - type: Transform
