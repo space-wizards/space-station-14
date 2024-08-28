@@ -532,6 +532,7 @@ Entries:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> upstream/master
 - author: Plykiya
   changes:
@@ -870,6 +871,8 @@ Entries:
   id: 6728
   time: '2024-06-14T06:19:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28095
+=======
+>>>>>>> upstream/master
 - author: Moomoobeef
   changes:
   - message: Fax machines can now be purchased at cargo, for when you need more paper
@@ -4722,3 +4725,17 @@ Entries:
   id: 7226
   time: '2024-08-27T15:02:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30888
+- author: Winkarst-cpu
+  changes:
+  - message: Nukie plushie is now not a contraband item.
+    type: Fix
+  id: 7227
+  time: '2024-08-27T16:49:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31516
+- author: Winkarst-cpu
+  changes:
+  - message: Now AKMS is restricted to the security department.
+    type: Fix
+  id: 7228
+  time: '2024-08-27T16:54:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31519
