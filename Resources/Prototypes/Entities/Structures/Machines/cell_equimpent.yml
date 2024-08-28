@@ -79,3 +79,85 @@
   - type: GuideHelp
     guides:
     - Science
+
+- type: entity
+  id: CellularFusion
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  name: cellular fusion
+  description: UWI.
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/mixer.rsi
+    layers:
+    - state: mixer_empty
+    - state: mixer_screens
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+  - type: Icon
+    sprite: Structures/Machines/mixer.rsi
+    state: mixer_loaded
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.4,0.25,0.4"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: ActivatableUI
+    key: enum.CellularFusionUiKey.Key
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+      enum.CellularFusionUiKey.Key:
+        type: CellularFusionBoundUserInterface
+  - type: CellSequencer
+  - type: CellClient
+  - type: ApcPowerReceiver
+    powerLoad: 250
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+  - type: WiresPanel
+  - type: Machine
+    board: CellularFusionCircuitboard
+  - type: ContainerContainer
+    containers:
+      dishSlot: !type:ContainerSlot
+      machine_board: !type:Container
+      machine_parts: !type:Container
+  - type: MaterialStorage
+    whitelist:
+      tags:
+        - Sheet
+    materialWhiteList:
+    - Plasma
+  - type: ItemSlots
+    slots:
+      dishSlot:
+        whitelist:
+          tags:
+          - Dish
+  - type: GuideHelp
+    guides:
+    - Science
