@@ -29,6 +29,11 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
     /// </summary>
     private EntityCoordinates? _coordinates;
 
+    /// <summary>
+    /// Entity of controlling console
+    /// </summary>
+    private EntityUid? _consoleEntity;
+
     private Angle? _rotation;
 
     private Dictionary<NetEntity, List<DockingPortState>> _docks = new();
@@ -55,6 +60,11 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
     {
         _coordinates = coordinates;
         _rotation = angle;
+    }
+
+    public void SetConsole(EntityUid? consoleEntity)
+    {
+        _consoleEntity = consoleEntity;
     }
 
     protected override void KeyBindUp(GUIBoundKeyEventArgs args)
@@ -143,20 +153,20 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
         var posMatrix = Matrix3Helpers.CreateTransform(offset, _rotation.Value);
         var ourEntRot = RotateWithEntity ? _transform.GetWorldRotation(xform) : _rotation.Value;
         var ourEntMatrix = Matrix3Helpers.CreateTransform(_transform.GetWorldPosition(xform), ourEntRot);
-        var ourWorldMatrix = Matrix3x2.Multiply(posMatrix, ourEntMatrix);
-        Matrix3x2.Invert(ourWorldMatrix, out var ourWorldMatrixInvert);
+        var shuttleToWorld = Matrix3x2.Multiply(posMatrix, ourEntMatrix);
+        Matrix3x2.Invert(shuttleToWorld, out var worldToShuttle);
 
         // Draw our grid in detail
         var ourGridId = xform.GridUid;
         if (EntManager.TryGetComponent<MapGridComponent>(ourGridId, out var ourGrid) &&
             fixturesQuery.HasComponent(ourGridId.Value))
         {
-            var ourGridMatrix = _transform.GetWorldMatrix(ourGridId.Value);
-            var matrix = Matrix3x2.Multiply(ourGridMatrix, ourWorldMatrixInvert);
+            var ourGridToWorld = _transform.GetWorldMatrix(ourGridId.Value);
+            var ourGridToShuttle = Matrix3x2.Multiply(ourGridToWorld, worldToShuttle);
             var color = _shuttles.GetIFFColor(ourGridId.Value, self: true);
 
-            DrawGrid(handle, matrix, (ourGridId.Value, ourGrid), color);
-            DrawDocks(handle, ourGridId.Value, matrix);
+            DrawGrid(handle, ourGridToShuttle, (ourGridId.Value, ourGrid), color);
+            DrawDocks(handle, ourGridId.Value, ourGridToShuttle);
         }
 
         var invertedPosition = _coordinates.Value.Position - offset;
@@ -198,7 +208,7 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
                 continue;
 
             var gridMatrix = _transform.GetWorldMatrix(gUid);
-            var matty = Matrix3x2.Multiply(gridMatrix, ourWorldMatrixInvert);
+            var matty = Matrix3x2.Multiply(gridMatrix, worldToShuttle);
             var color = _shuttles.GetIFFColor(grid, self: false, iff);
 
             // Others default:
@@ -243,6 +253,20 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
 
             DrawGrid(handle, matty, grid, color);
             DrawDocks(handle, gUid, matty);
+        }
+
+        // If we've set the controlling console, and it's on a different grid
+        // to the shuttle itself, then draw an additional marker to help the
+        // player determine where they are relative to the shuttle.
+        if (_consoleEntity != null && xformQuery.TryGetComponent(_consoleEntity, out var consoleXform))
+        {
+            if (consoleXform.ParentUid != _coordinates.Value.EntityId)
+            {
+                var consoleToWorld = _transform.GetWorldMatrix((EntityUid)_consoleEntity);
+                var p = Vector2.Transform(consoleToWorld.Translation, worldToShuttle);
+                // Flip Y to convert to UI coordinates and draw
+                handle.DrawCircle(ScalePosition(p with {Y = -p.Y}), 5, Color.ToSrgb(Color.Cyan), true);
+            }
         }
     }
 
