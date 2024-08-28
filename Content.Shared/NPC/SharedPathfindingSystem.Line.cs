@@ -1,8 +1,8 @@
-namespace Content.Server.NPC.Pathfinding;
+namespace Content.Shared.NPC;
 
-public sealed partial class PathfindingSystem
+public abstract partial class SharedPathfindingSystem
 {
-    public void GridCast(Vector2i start, Vector2i end, Vector2iCallback callback)
+    public static void GridCast(Vector2i start, Vector2i end, Vector2iCallback callback)
     {
         // https://gist.github.com/Pyr3z/46884d67641094d6cf353358566db566
         // declare all locals at the top so it's obvious how big the footprint is
