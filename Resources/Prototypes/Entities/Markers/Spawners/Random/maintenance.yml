@@ -161,6 +161,7 @@
       - id: CigarGold
       - id: ClothingUniformJumpsuitFamilyGuy
       - id: WristwatchGold
+      - id: RubberStampGreytide
 
 - type: entity
   name: Maint Loot Spawner
@@ -242,6 +243,8 @@
           weight: 0.5
         - id: ClothingHandsGlovesColorYellow
           weight: 1
+        - id: ClothingHandsGlovesConducting
+          weight: 0.1
       # Uncommon Group
     - !type:GroupSelector
       weight: 23
