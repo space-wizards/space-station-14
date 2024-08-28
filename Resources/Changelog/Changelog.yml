@@ -1,44 +1,4 @@
 ﻿Entries:
-- author: Moomoobeef
-  changes:
-  - message: Fax machines can now be purchased at cargo, for when you need more paper
-      pushing on your station!
-    type: Add
-  id: 6729
-  time: '2024-06-14T06:24:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28968
-- author: Zonespace27
-  changes:
-  - message: Non-uplink PDAs can no longer have telecrystals inserted into them.
-    type: Fix
-  id: 6730
-  time: '2024-06-14T15:24:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28985
-- author: Aquif
-  changes:
-  - message: '"Space Drugs" have been renamed to "Space Mirage"'
-    type: Tweak
-  - message: '"Stimulants" have been renamed to "Hyperzine"'
-    type: Tweak
-  id: 6731
-  time: '2024-06-14T16:53:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28989
-- author: PJB3005
-  changes:
-  - message: Added pride month.
-    type: Add
-  - message: Made the nuke gay.
-    type: Add
-  id: 6732
-  time: '2024-06-14T17:22:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28992
-- author: Aeshus
-  changes:
-  - message: Loadouts now display all requirements.
-    type: Fix
-  id: 6733
-  time: '2024-06-14T20:32:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28994
 - author: Vermidia
   changes:
   - message: allies callable by radio in the uplink now have unique icons
@@ -3865,3 +3825,38 @@
   id: 7228
   time: '2024-08-27T16:54:48.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31519
+- author: metalgearsloth
+  changes:
+  - message: Added warp points for AI.
+    type: Add
+  id: 7229
+  time: '2024-08-28T05:58:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31559
+- author: metalgearsloth
+  changes:
+  - message: Fix AI being ejectable.
+    type: Fix
+  id: 7230
+  time: '2024-08-28T07:09:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31561
+- author: metalgearsloth
+  changes:
+  - message: Fix whitelist
+    type: Fix
+  id: 7231
+  time: '2024-08-28T07:11:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31563
+- author: metalgearsloth
+  changes:
+  - message: Add shutters, windoors, etc to AI interaction whitelist.
+    type: Tweak
+  id: 7232
+  time: '2024-08-28T07:39:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31564
+- author: lunarcomets
+  changes:
+  - message: updated AI job icon
+    type: Tweak
+  id: 7233
+  time: '2024-08-28T08:18:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31565
