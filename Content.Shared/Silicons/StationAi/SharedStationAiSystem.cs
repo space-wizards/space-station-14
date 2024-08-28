@@ -100,6 +100,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         args.Verbs.Add(new Verb()
         {
             Text = Loc.GetString("station-ai-takeover"),
+            Category = VerbCategory.Debug,
             Act = () =>
             {
                 var brain = SpawnInContainerOrDrop(DefaultAi, ent.Owner, StationAiCoreComponent.Container);

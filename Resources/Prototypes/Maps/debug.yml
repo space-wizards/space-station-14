@@ -27,7 +27,6 @@
         - type: StationJobs
           availableJobs:
             Captain: [ -1, -1 ]
-            StationAi: [1, 1]
 
 - type: gameMap
   id: TestTeg
