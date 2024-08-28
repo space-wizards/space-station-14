@@ -1,19 +1,6 @@
 ﻿Entries:
 - author: EmoGarbage404
   changes:
-  - message: Revamped meteors. Meteors now crash through several walls before exploding.
-      They can still come in a weaker "space dust" form where they don't break through
-      structures.
-    type: Add
-  - message: Meteor and space dust events now occur on regular intervals during a
-      round rather than being tied to station events. Expect to see more of them during
-      a round.
-    type: Add
-  id: 6740
-  time: '2024-06-15T03:38:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28974
-- author: EmoGarbage404
-  changes:
   - message: Added Moon Boots! This science research item allows you to move like
       you're in zero-gravity.
     type: Add
@@ -3854,3 +3841,11 @@
   id: 7239
   time: '2024-08-28T17:31:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31593
+- author: themias
+  changes:
+  - message: Fixed the nuke disk being marked 'left behind' when escaping with it
+      on the shuttle
+    type: Fix
+  id: 7240
+  time: '2024-08-28T20:05:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31602
