@@ -1,0 +1,59 @@
+- type: htnCompound
+  id: MinionCompound
+  branches:
+  - preconditions:
+      - !type:HasOrdersPrecondition
+        orders: enum.MinionOrderType.Stay
+    tasks:
+      - !type:HTNCompoundTask
+        task: IdleCompound
+  - preconditions:
+      - !type:HasOrdersPrecondition
+        orders: enum.MinionOrderType.Follow
+    tasks:
+      - !type:HTNCompoundTask
+        task: FollowCompound
+  - preconditions:
+      - !type:HasOrdersPrecondition
+        orders: enum.MinionOrderType.Attack
+    tasks:
+      - !type:HTNCompoundTask
+        task: MinionTargetAttackCompound
+  - preconditions:
+      - !type:HasOrdersPrecondition
+        orders: enum.MinionOrderType.Loose
+    tasks:
+      - !type:HTNCompoundTask
+        task: SimpleHostileCompound
+
+- type: htnCompound
+  id: MinionTargetAttackCompound
+  branches:
+    - tasks:
+        - !type:HTNCompoundTask
+          task: MinionCombatCompound
+    - tasks:
+        - !type:HTNCompoundTask
+          task: IdleCompound
+
+- type: htnCompound
+  id: MinionCombatCompound
+  branches:
+    - preconditions:
+        - !type:ActiveHandComponentPrecondition
+          components:
+            - type: MeleeWeapon
+              damage:
+                types:
+                  Blunt: 0
+          invert: true
+      tasks:
+        - !type:HTNCompoundTask
+          task: PickupMeleeCompound
+
+    - tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:UtilityOperator
+            proto: OrderedTargets
+        - !type:HTNCompoundTask
+          task: MeleeAttackOrderedTargetCompound

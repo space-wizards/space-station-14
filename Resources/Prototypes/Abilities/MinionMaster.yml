@@ -1,0 +1,83 @@
+- type: entity
+  id: ActionMinionMasterRaiseArmy
+  name: Summon Minion
+  description: Summon a minion to serve you.
+  components:
+  - type: InstantAction
+    useDelay: 4
+    icon:
+      sprite: Interface/Actions/actions_rat_king.rsi
+      state: ratKingArmy
+    event: !type:MinionMasterRaiseArmyActionEvent
+
+- type: entity
+  id: ActionMinionMasterOrderStay
+  name: Stay
+  description: Command your minions to stand in place.
+  components:
+  - type: InstantAction
+    useDelay: 1
+    icon:
+      sprite: Interface/Actions/actions_rat_king.rsi
+      state: stayOff
+    iconOn:
+      sprite: Interface/Actions/actions_rat_king.rsi
+      state: stay
+    event:
+      !type:MinionMasterOrderActionEvent
+        type: Stay
+    priority: 5
+
+- type: entity
+  id: ActionMinionMasterOrderFollow
+  name: Follow
+  description: Command your minions to follow you around.
+  components:
+  - type: InstantAction
+    useDelay: 1
+    icon:
+      sprite: Interface/Actions/actions_rat_king.rsi
+      state: followOff
+    iconOn:
+      sprite: Interface/Actions/actions_rat_king.rsi
+      state: follow
+    event:
+      !type:MinionMasterOrderActionEvent
+      type: Follow
+    priority: 6
+
+- type: entity
+  id: ActionMinionMasterOrderAttack
+  name: Attack
+  description: Command your minions to attack whoever you point at.
+  components:
+  - type: InstantAction
+    useDelay: 1
+    icon:
+      sprite: Interface/Actions/actions_rat_king.rsi
+      state: attackOff
+    iconOn:
+      sprite: Interface/Actions/actions_rat_king.rsi
+      state: attack
+    event:
+      !type:MinionMasterOrderActionEvent
+      type: Attack
+    priority: 7
+
+- type: entity
+  id: ActionMinionMasterOrderLoose
+  name: Loose
+  description: Command your minions to act at their own will.
+  components:
+  - type: InstantAction
+    useDelay: 1
+    icon:
+      sprite: Interface/Actions/actions_rat_king.rsi
+      state: looseOff
+    iconOn:
+      sprite: Interface/Actions/actions_rat_king.rsi
+      state: loose
+    event:
+      !type:MinionMasterOrderActionEvent
+      type: Loose
+    priority: 8

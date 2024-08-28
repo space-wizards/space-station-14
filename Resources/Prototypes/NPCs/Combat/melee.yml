@@ -56,28 +56,6 @@
           task: MeleeAttackTargetCompound
 
 - type: htnCompound
-  id: RatServantCombatCompound
-  branches:
-    - preconditions:
-        - !type:ActiveHandComponentPrecondition
-          components:
-            - type: MeleeWeapon
-              damage:
-                types:
-                  Blunt: 0
-          invert: true
-      tasks:
-        - !type:HTNCompoundTask
-          task: PickupMeleeCompound
-
-    - tasks:
-        - !type:HTNPrimitiveTask
-          operator: !type:UtilityOperator
-            proto: OrderedTargets
-        - !type:HTNCompoundTask
-          task: MeleeAttackOrderedTargetCompound
-
-- type: htnCompound
   id: PickupMeleeCompound
   branches:
     - tasks:
