@@ -1,30 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: You can no longer insert duplicates of the same module into a cyborg.
-    type: Tweak
-  id: 6736
-  time: '2024-06-15T02:58:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28943
-- author: Vermidia
-  changes:
-  - message: Nukie planet now has an improved Donk co. microwave, which cooks twice
-      as fast but is more likely to explode. It can't handle id cards without exploding.
-    type: Add
-  - message: Made microwave explosions destroy the machine board and spit out the
-      machine parts.
-    type: Tweak
-  id: 6737
-  time: '2024-06-15T03:00:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28951
-- author: robertGN
-  changes:
-  - message: Using a welder on vending machines now correctly repairs the vending
-      machine.
-    type: Fix
-  id: 6738
-  time: '2024-06-15T03:13:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28920
 - author: Brandon-Huu
   changes:
   - message: Removed the six Handheld GPS devices from the syndicate deathrattle implant
@@ -3860,3 +3834,24 @@
   id: 7235
   time: '2024-08-28T11:27:09.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31530
+- author: coolboy911
+  changes:
+  - message: wide-spectrum anomaly locator is now included in cyborg's anomaly module
+    type: Add
+  id: 7236
+  time: '2024-08-28T12:36:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31427
+- author: deltanedas
+  changes:
+  - message: You can now build carp statues with luxury materials.
+    type: Add
+  id: 7237
+  time: '2024-08-28T13:08:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31261
+- author: PopGamer46
+  changes:
+  - message: Fixed shuttles not being able to FTL onto the station
+    type: Fix
+  id: 7238
+  time: '2024-08-28T13:22:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31569
