@@ -191,6 +191,7 @@
   - AiHolder
   suffix: Empty
   components:
+  - type: WarpPoint
   - type: ContainerComp
     proto: AiHeld
     container: station_ai_mind_slot
@@ -290,6 +291,8 @@
   noSpawn: true
   suffix: DO NOT MAP
   components:
+  - type: WarpPoint
+    follow: true
   - type: Eye
     pvsScale: 1.5
   - type: Visibility
