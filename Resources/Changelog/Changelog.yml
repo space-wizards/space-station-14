@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Brandon-Huu
-  changes:
-  - message: Removed the six Handheld GPS devices from the syndicate deathrattle implant
-      box.
-    type: Remove
-  id: 6739
-  time: '2024-06-15T03:23:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28999
 - author: EmoGarbage404
   changes:
   - message: Revamped meteors. Meteors now crash through several walls before exploding.
@@ -3855,3 +3847,10 @@
   id: 7238
   time: '2024-08-28T13:22:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31569
+- author: themias
+  changes:
+  - message: Defibs batteries no longer drain when switched off
+    type: Fix
+  id: 7239
+  time: '2024-08-28T17:31:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31593
