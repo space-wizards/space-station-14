@@ -1,0 +1,5 @@
+- type: job
+  parent: CentralCommandOfficial
+  id: CBURN
+  name: job-name-cburn
+  playTimeTracker: JobCBURNMember

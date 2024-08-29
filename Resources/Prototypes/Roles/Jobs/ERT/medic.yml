@@ -1,0 +1,5 @@
+- type: job
+  parent: CentralCommandOfficial
+  id: ERTMedic
+  name: job-name-ert-medic
+  playTimeTracker: JobERTMedic

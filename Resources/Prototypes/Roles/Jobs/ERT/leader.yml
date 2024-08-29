@@ -1,0 +1,5 @@
+- type: job
+  parent: CentralCommandOfficial
+  id: ERTLeader
+  name: job-name-ert-leader
+  playTimeTracker: JobERTLeader
