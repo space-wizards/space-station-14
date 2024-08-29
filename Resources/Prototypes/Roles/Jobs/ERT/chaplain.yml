@@ -1,5 +1,0 @@
-- type: job
-  parent: CentralCommandOfficial
-  id: ERTChaplain
-  name: job-name-ert-chaplain
-  playTimeTracker: JobERTChaplain

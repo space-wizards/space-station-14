@@ -1,5 +1,0 @@
-- type: job
-  parent: CentralCommandOfficial
-  id: ERTSecurity
-  name: job-name-ert-security
-  playTimeTracker: JobERTSecurity

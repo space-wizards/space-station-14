@@ -519,7 +519,7 @@
     - state: gold
     - state: ert_medic
   - type: PresetIdCard
-    job: ERTMedic
+    job: ERTMedical
 
 - type: entity
   parent: IDCardStandard
