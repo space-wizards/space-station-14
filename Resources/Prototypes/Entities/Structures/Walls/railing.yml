@@ -19,7 +19,7 @@
     damageModifierSet: FlimsyMetallic
   - type: Climbable
   - type: Construction
-    node: railing
+    graph: Railing
   - type: RCDDeconstructable
     cost: 2
     delay: 2
