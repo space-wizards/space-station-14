@@ -43,16 +43,13 @@ public sealed class MiningOverlay : Overlay
         var handle = args.WorldHandle;
 
         if (_player.LocalEntity is not { } localEntity ||
-            !_entityManager.TryGetComponent<MiningScannerViewerComponent>(localEntity, out var viewerComp) ||
-            !_xformQuery.TryComp(localEntity, out var localXform))
+            !_entityManager.TryGetComponent<MiningScannerViewerComponent>(localEntity, out var viewerComp))
             return;
 
         if (viewerComp.LastPingLocation == null)
             return;
 
-        var gridRot = localXform.GridUid == null ? 0 : _xformQuery.CompOrNull(localXform.GridUid.Value)?.LocalRotation ?? 0;
-        var rotationMatrix = Matrix3Helpers.CreateRotation(gridRot);
-        var scaleMatrix = Matrix3Helpers.CreateScale(args.Viewport.Eye?.Scale ?? Vector2.One);
+        var scaleMatrix = Matrix3Helpers.CreateScale(Vector2.One);
 
         _viewableEnts.Clear();
         _lookup.GetEntitiesInRange(viewerComp.LastPingLocation.Value, viewerComp.ViewRange, _viewableEnts);
@@ -71,6 +68,9 @@ public sealed class MiningOverlay : Overlay
 
             if (layer.ActualRsi?.Path == null || layer.RsiState.Name == null)
                 continue;
+
+            var gridRot = xform.GridUid == null ? 0 : _xformQuery.CompOrNull(xform.GridUid.Value)?.LocalRotation ?? 0;
+            var rotationMatrix = Matrix3Helpers.CreateRotation(gridRot);
 
             var worldMatrix = Matrix3Helpers.CreateTranslation(_xform.GetWorldPosition(xform));
             var scaledWorld = Matrix3x2.Multiply(scaleMatrix, worldMatrix);

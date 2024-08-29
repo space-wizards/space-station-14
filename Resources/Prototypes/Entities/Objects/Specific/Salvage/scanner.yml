@@ -17,7 +17,7 @@
     activeSound:
       path: /Audio/Ambience/Objects/light_hum.ogg
       params:
-        volume: -3
+        volume: -10
         maxDistance: 1
   - type: Appearance
   - type: GenericVisualizer
