@@ -83,5 +83,5 @@
       - id: WeaponCroissant
         amount: 2
       - id: WeaponBaguette
-      - id: CombatBakeryMicrowaveMachineCircuitboard
+      - id: SyndicateMicrowaveMachineCircuitboard
       - id: PaperWrittenCombatBakeryKit

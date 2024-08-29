@@ -1008,21 +1008,6 @@
       - MicrowaveMachineBoard
 
 - type: entity
-  id: CombatBakeryMicrowaveMachineCircuitboard
-  parent: [BaseMachineCircuitboard, BaseSyndicateContraband]
-  name: suspicious microwave machine board
-  suffix: Machine Board
-  components:
-    - type: Sprite
-      state: security
-    - type: MachineBoard
-      prototype: CombatBakeryMicrowave
-      stackRequirements:
-        Capacitor: 1
-        Glass: 2
-        Cable: 2
-
-- type: entity
   id: SyndicateMicrowaveMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: donk co. microwave machine board
