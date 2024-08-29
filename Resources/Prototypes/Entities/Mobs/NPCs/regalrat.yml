@@ -102,6 +102,16 @@
   - type: MinionMaster
     doesSummonCostFood: true
     armyMobSpawnId: MobRatServant
+    actionRaiseArmy: ActionRatKingRaiseArmy
+    actionOrderStay: ActionRatKingOrderStay
+    actionOrderFollow: ActionRatKingOrderFollow
+    actionOrderAttack: ActionRatKingOrderCheeseEm
+    actionOrderLoose: ActionRatKingOrderLoose
+    orderCallouts:
+      Stay: RatKingCommandStay
+      Follow: RatKingCommandFollow
+      Attack: RatKingCommandCheeseEm
+      Loose: RatKingCommandLoose
     hungerPerArmyUse: 25
   - type: RatKing
     hungerPerDomainUse: 50
