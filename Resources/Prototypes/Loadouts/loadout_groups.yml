@@ -647,7 +647,7 @@
   name: loadout-group-salvage-specialist-neck
   loadouts:
   - MinerCloak
-  - Mantle
+  - SaMantle
   - BrownScarf
 
 - type: loadoutGroup

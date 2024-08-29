@@ -46,6 +46,11 @@
     neck: ClothingNeckCloakMiner
 
 - type: loadout
+  id: SaMantle
+  equipment:
+    neck: ClothingNeckMantle
+
+- type: loadout
   id: BrownScarf
   equipment:
     neck: ClothingNeckScarfStripedBrown
