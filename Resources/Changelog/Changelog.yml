@@ -1,17 +1,6 @@
 ﻿Entries:
 - author: EmoGarbage404
   changes:
-  - message: Attempting to uncuff oneself while being pulled will now take twice as
-      long.
-    type: Tweak
-  - message: Reduced cooldown after attempting to uncuff oneself back to previous
-      values.
-    type: Tweak
-  id: 6742
-  time: '2024-06-15T04:01:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29008
-- author: EmoGarbage404
-  changes:
   - message: Fixed bottles, when used inhand, not being drank from but instead repeatedly
       opening and closing.
     type: Fix
@@ -3849,3 +3838,12 @@
   id: 7241
   time: '2024-08-28T20:48:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31372
+- author: RumiTiger
+  changes:
+  - message: Cherry has been added to the game!
+    type: Add
+  - message: The recipe for cherry pie has been reintroduced to the game!
+    type: Add
+  id: 7242
+  time: '2024-08-29T01:30:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28962
