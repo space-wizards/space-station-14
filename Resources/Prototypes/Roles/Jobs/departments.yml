@@ -63,6 +63,15 @@
   - HeadOfSecurity
   - ResearchDirector
   - Quartermaster
+  - CentralCommandOfficial
+  - CBURN
+  - ERTLeader
+  - ERTChaplain
+  - ERTJanitor
+  - ERTMedic
+  - ERTSecurity
+  - ERTEngineer
+  - Deathsquad
   primary: false
   weight: 100
 
