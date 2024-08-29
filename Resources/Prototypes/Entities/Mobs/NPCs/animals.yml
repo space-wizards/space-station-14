@@ -2437,12 +2437,18 @@
   id: MobBros
   description: OH FUCK IT'S BROS
   components:
+    - type: Item
+      size: Tiny
     - type: Sprite
       drawdepth: Mobs
       layers:
       - map: ["enum.DamageStateVisualLayers.Base"]
         state: bros
         sprite: Mobs/Animals/bros.rsi
+    - type: Butcherable
+      spawned:
+        - id: FoodLingzhi
+          amount: 1
     - type: NpcFactionMember
       factions:
         - Xeno
@@ -2473,7 +2479,7 @@
     - type: MobThresholds
       thresholds:
         0: Alive
-        20: Dead
+        15: Dead
     - type: MeleeWeapon
       altDisarm: false
       angle: 0
@@ -2486,7 +2492,7 @@
     - type: Speech
       speechVerb: Cluwne
     - type: Bloodstream
-      bloodMaxVolume: 150
+      bloodMaxVolume: 40
       bloodReagent: VentCrud
     - type: NoSlip
     - type: ZombieImmune
@@ -2497,12 +2503,18 @@
   id: MobSorb
   description: SORB S'TI KCUF HO
   components:
+    - type: Item
+      size: Tiny
     - type: Sprite
       drawdepth: Mobs
       layers:
       - map: ["enum.DamageStateVisualLayers.Base"]
         state: sorb
         sprite: Mobs/Animals/bros.rsi
+    - type: Butcherable
+      spawned:
+        - id: FoodLingzhi
+          amount: 1
     - type: NpcFactionMember
       factions:
         - Xeno
@@ -2533,7 +2545,7 @@
     - type: MobThresholds
       thresholds:
         0: Alive
-        20: Dead
+        15: Dead
     - type: MeleeWeapon
       altDisarm: false
       angle: 0
@@ -2546,7 +2558,7 @@
     - type: Speech
       speechVerb: Cluwne
     - type: Bloodstream
-      bloodMaxVolume: 150
+      bloodMaxVolume: 40
       bloodReagent: VentCrud
     - type: NoSlip
     - type: ZombieImmune
