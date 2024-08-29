@@ -79,11 +79,12 @@
   id: CrateMaterialPlasma
   parent: CratePlasma
   name: solid plasma crate
-  description: 30 sheets of plasma.
+  description: 60 sheets of plasma.
   components:
   - type: StorageFill
     contents:
       - id: SheetPlasma
+        amount: 2
 
 - type: entity
   id: CrateMaterialCardboard
