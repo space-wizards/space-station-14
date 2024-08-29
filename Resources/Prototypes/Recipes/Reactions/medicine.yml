@@ -381,14 +381,14 @@
     Cognizine: 1
 
 - type: reaction
-  id: Syndizine
+  id: Subjuzine
   reactants:
     Cognizine:
       amount: 1
     Vestine:
       amount: 1
   products:
-    Syndizine: 2
+    Subjuzine: 2
     
 - type: reaction
   id: Sigynate

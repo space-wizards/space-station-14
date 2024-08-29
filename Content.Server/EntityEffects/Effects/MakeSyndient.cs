@@ -40,9 +40,9 @@ public sealed partial class MakeSyndient : EntityEffect
         if (entityManager.TryGetComponent(uid, out GhostRoleComponent? ghostRole))
         {
             
-            //change the role description and rules to make it clear it's been injected with syndizine
+            //change the role description and rules to make it clear it's been injected with subjuzine
             ghostRole = entityManager.GetComponent<GhostRoleComponent>(uid);
-            ghostRole.RoleDescription = Loc.GetString("ghost-role-information-syndizine-description");
+            ghostRole.RoleDescription = Loc.GetString("ghost-role-information-subjuzine-description");
             ghostRole.RoleRules = Loc.GetString("ghost-role-information-familiar-rules");
             return;
         }
@@ -52,7 +52,7 @@ public sealed partial class MakeSyndient : EntityEffect
 
         var entityData = entityManager.GetComponent<MetaDataComponent>(uid);
         ghostRole.RoleName = entityData.EntityName;
-        ghostRole.RoleDescription = Loc.GetString("ghost-role-information-syndizine-description");
+        ghostRole.RoleDescription = Loc.GetString("ghost-role-information-subjuzine-description");
         ghostRole.RoleRules = Loc.GetString("ghost-role-information-familiar-rules");
     }
 }

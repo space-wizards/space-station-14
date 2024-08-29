@@ -36,7 +36,7 @@ ghost-role-information-giant-spider-rules = You are a [color=red][bold]Team Anta
 
 ghost-role-information-cognizine-description = Made conscious with the magic of cognizine.
 
-ghost-role-information-syndizine-description = Made obedient with the magic of syndizine.
+ghost-role-information-subjuzine-description = Made obedient with the magic of subjuzine.
 
 ghost-role-information-hamster-name = Hamster
 ghost-role-information-hamster-description = A grumpy little ball of fluff.
