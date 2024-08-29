@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: ShadowCommander
-  changes:
-  - message: Added a red light to firelocks when their warning lights are active.
-    type: Add
-  - message: Firelocks no longer require power to show warning lights.
-    type: Tweak
-  id: 6747
-  time: '2024-06-15T15:17:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29024
 - author: Ian321
   changes:
   - message: Donk co. microwaves now have their own machine board.
@@ -3844,3 +3835,11 @@
   id: 7246
   time: '2024-08-29T03:23:37.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31616
+- author: MisterMecky
+  changes:
+  - message: Changed strange pill possible reagents. They are no longer mostly composed
+      of amatoxin and space mirage.
+    type: Tweak
+  id: 7247
+  time: '2024-08-29T13:21:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30524
