@@ -63,6 +63,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     [Dependency] private readonly ReplacementAccentSystem _wordreplacement = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
+    [Dependency] private readonly LastMessageBeforeDeathSystem _lastMessageBeforeDeathSystem = default!;
 
     public const int VoiceRange = 10; // how far voice goes in world units
     public const int WhisperClearRange = 2; // how far whisper goes while still being understandable, in world units
@@ -70,8 +71,10 @@ public sealed partial class ChatSystem : SharedChatSystem
     public const string DefaultAnnouncementSound = "/Audio/Announcements/announce.ogg";
 
     private bool _loocEnabled = true;
+    private bool _lastMessageWebhookEnabled = false;
     private bool _deadLoocEnabled;
     private bool _critLoocEnabled;
+
     private readonly bool _adminLoocEnabled = true;
 
     public override void Initialize()
@@ -81,6 +84,10 @@ public sealed partial class ChatSystem : SharedChatSystem
         Subs.CVar(_configurationManager, CCVars.LoocEnabled, OnLoocEnabledChanged, true);
         Subs.CVar(_configurationManager, CCVars.DeadLoocEnabled, OnDeadLoocEnabledChanged, true);
         Subs.CVar(_configurationManager, CCVars.CritLoocEnabled, OnCritLoocEnabledChanged, true);
+        Subs.CVar(_configurationManager, CCVars.DiscordLastMessageBeforeDeathWebhook, value =>
+        {
+            if (!string.IsNullOrWhiteSpace(value)) _lastMessageWebhookEnabled = true;
+        }, true);
 
         SubscribeLocalEvent<GameRunLevelChangedEvent>(OnGameChange);
     }
@@ -235,15 +242,10 @@ public sealed partial class ChatSystem : SharedChatSystem
         if (string.IsNullOrEmpty(message))
             return;
 
-        //Last Message Before Death Webhook
-        var lastMessageSystem = LastMessageBeforeDeathSystem.Instance;
-
-        if (player != null)
+        if (player != null && _lastMessageWebhookEnabled) // Do not add the message if not from a player or if webhook url not specified.
         {
-            lastMessageSystem.AddMessage(source, player.Name, message, Name(source));
-            
+            HandleLastMessageBeforeDeath(source, player, message);
         }
-
         // This message may have a radio prefix, and should then be whispered to the resolved radio channel
         if (checkRadioPrefix)
         {
@@ -722,6 +724,15 @@ public sealed partial class ChatSystem : SharedChatSystem
         }
 
         return !_chatManager.MessageCharacterLimit(player, message);
+    }
+
+    public void HandleLastMessageBeforeDeath(EntityUid source, ICommonSession player, string message)
+    {
+
+        if (player != null && source != null)
+        {
+            _lastMessageBeforeDeathSystem.AddMessage(source, player, message, Identity.Name(source, EntityManager));
+        }
     }
 
     // ReSharper disable once InconsistentNaming
