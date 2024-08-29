@@ -3,34 +3,10 @@
 #Asteroid rock
 - type: entity
   id: MeteorRock
-  parent: BaseWall
+  parent: AsteroidRock
   name: meteorite rock
   description: What remains of a meteorite.
   components:
-  - type: Transform
-    noRot: true
-  - type: IconSmooth
-    key: walls
-    mode: NoSprite
-  - type: SmoothEdge
-  - type: Icon
-    sprite: Structures/Walls/rock.rsi
-    state: rock_asteroid
-  - type: Sprite
-    sprite: Structures/Walls/rock.rsi
-    layers:
-      - state: rock_asteroid
-      - map: [ "enum.EdgeLayer.South" ]
-        state: rock_asteroid_south
-      - map: [ "enum.EdgeLayer.East" ]
-        state: rock_asteroid_east
-      - map: [ "enum.EdgeLayer.North" ]
-        state: rock_asteroid_north
-      - map: [ "enum.EdgeLayer.West" ]
-        state: rock_asteroid_west
-  - type: Damageable
-    damageContainer: StructuralInorganic
-    damageModifierSet: Rock
   - type: Destructible
     thresholds:
     - trigger:
