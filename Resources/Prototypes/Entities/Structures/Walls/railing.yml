@@ -5,7 +5,7 @@
   description: Basic railing meant to protect idiots like you from falling.
   components:
   - type: Sprite
-    drawdepth: WallTops
+    drawdepth: SmallObjects
     sprite: Structures/Walls/railing.rsi
     state: side
   - type: Icon
@@ -60,7 +60,7 @@
   - type: RCDDeconstructable
     cost: 2
     delay: 2
-    fx: EffectRCDDeconstruct2  
+    fx: EffectRCDDeconstruct2
 
 - type: entity
   parent: BaseStructure
@@ -69,7 +69,7 @@
   description: Basic railing meant to protect idiots like you from falling.
   components:
   - type: Sprite
-    drawdepth: WallTops
+    drawdepth: SmallObjects
     sprite: Structures/Walls/railing.rsi
     state: corner
   - type: Icon
@@ -133,7 +133,7 @@
   - type: RCDDeconstructable
     cost: 2
     delay: 2
-    fx: EffectRCDDeconstruct2  
+    fx: EffectRCDDeconstruct2
 
 - type: entity
   parent: BaseStructure
@@ -142,7 +142,7 @@
   description: Basic railing meant to protect idiots like you from falling.
   components:
   - type: Sprite
-    drawdepth: WallTops
+    drawdepth: SmallObjects
     sprite: Structures/Walls/railing.rsi
     state: corner_small
   - type: Icon
@@ -197,8 +197,8 @@
   - type: RCDDeconstructable
     cost: 2
     delay: 2
-    fx: EffectRCDDeconstruct2  
-    
+    fx: EffectRCDDeconstruct2
+
 - type: entity
   parent: BaseStructure
   id: RailingRound
@@ -206,7 +206,7 @@
   description: Basic railing meant to protect idiots like you from falling.
   components:
   - type: Sprite
-    drawdepth: WallTops
+    drawdepth: SmallObjects
     sprite: Structures/Walls/railing.rsi
     state: round
   - type: Physics
@@ -276,4 +276,4 @@
   - type: RCDDeconstructable
     cost: 2
     delay: 2
-    fx: EffectRCDDeconstruct2  
+    fx: EffectRCDDeconstruct2
