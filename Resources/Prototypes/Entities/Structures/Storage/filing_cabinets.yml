@@ -68,7 +68,6 @@
   parent: BaseFilingCabinet
   id: filingCabinet
   components:
-  - type: Storage
   - type: Sprite
     state: filingcabinet
     layers:
