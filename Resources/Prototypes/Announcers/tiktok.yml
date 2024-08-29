@@ -2,7 +2,7 @@
   id: TikTok
   basePath: /Audio/Announcers/TikTok
   baseAudioParams:
-    volume: -7
+    volume: -14
   announcements:
     # Communications
     # - id: announce # Communications console
