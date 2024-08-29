@@ -60,7 +60,7 @@
   description: A stuffed toy to remind cargo techs of what they can no longer have.
   components:
     - type: Sprite
-      sprite: Objects/Weapons/Melee/Throngler2.rsi
+      sprite: Objects/Weapons/Melee/ThronglerPlushie.rsi
       state: icon
     - type: MeleeWeapon
       wideAnimationRotation: -135
@@ -215,7 +215,7 @@
         shader: unshaded
 
 - type: entity
-  parent: [ BasePlushie, BaseSyndicateContraband ]
+  parent: BasePlushie
   id: PlushieNuke
   name: nukie plushie
   description: A stuffed toy that resembles a syndicate nuclear operative. The tag claims operatives to be purely fictitious.
@@ -460,6 +460,12 @@
   - type: Sprite
     sprite: Objects/Fun/sharkplush.rsi
     state: blue
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/rawr.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/rawr.ogg
   - type: Item
     heldPrefix: blue
     storedRotation: -90

@@ -189,7 +189,7 @@
     damageDivisor: 28
     trackAllDamage: true
     damageOverlay:
-      sprite: Structures/Windows/cracks.rsi
+    sprite: Structures/Windows/cracks_diagonal.rsi
   - type: Repairable
     fuelCost: 15
     doAfterDelay: 3
