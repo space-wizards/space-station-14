@@ -416,13 +416,11 @@
   - type: Sprite
     sprite: Objects/Weapons/Grenades/beenade.rsi
   - type: SmokeOnTrigger
-    duration: 15
-    spreadAmount: 25
-    smokePrototype: Foam
-    solution:
-      reagents:
-      - ReagentId: BuzzochloricBees
-        Quantity: 30
+    duration: 5
+    spreadAmount: 30
+  - type: SpawnOnTrigger
+    proto: MobAngryBee
+    amount: 6
 
 - type: entity
   parent: SmokeGrenade
