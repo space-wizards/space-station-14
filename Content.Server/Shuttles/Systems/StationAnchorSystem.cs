@@ -3,8 +3,6 @@ using Content.Server.Power.EntitySystems;
 using Content.Server.Shuttles.Components;
 using Content.Shared.Construction.Components;
 using Content.Shared.Popups;
-using Content.Shared.Verbs;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -25,12 +23,12 @@ public sealed class StationAnchorSystem : EntitySystem
         SubscribeLocalEvent<StationAnchorComponent, MapInitEvent>(OnMapInit);
     }
 
-    private void OnMapInit(EntityUid uid, StationAnchorComponent component, MapInitEvent args)
+    private void OnMapInit(Entity<StationAnchorComponent> ent, ref MapInitEvent args)
     {
-        if (!component.SwitchedOn)
+        if (!ent.Comp.SwitchedOn)
             return;
 
-        SetStatus(new Entity<StationAnchorComponent>(uid, component), true);
+        SetStatus(ent, true);
     }
 
     private void OnActivated(Entity<StationAnchorComponent> ent, ref ChargedMachineActivatedEvent args)
@@ -46,14 +44,14 @@ public sealed class StationAnchorSystem : EntitySystem
     /// <summary>
     /// Prevent unanchoring when anchor is active
     /// </summary>
-    private void OnUnanchorAttempt(EntityUid uid, StationAnchorComponent component, UnanchorAttemptEvent args)
+    private void OnUnanchorAttempt(Entity<StationAnchorComponent> ent, ref UnanchorAttemptEvent args)
     {
-        if (!component.SwitchedOn)
+        if (!ent.Comp.SwitchedOn)
             return;
 
         _popupSystem.PopupEntity(
             Loc.GetString("station-anchor-unanchoring-failed"),
-            uid,
+            ent,
             args.User,
             PopupType.Medium);
 

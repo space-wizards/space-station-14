@@ -51,7 +51,7 @@
       - !type:DoActsBehavior
         acts: ["Breakage"]
   - type: PowerCharge
-    windowTitle: Gravity Generator
+    windowTitle: gravity-generator-window-title
     idlePower: 50
     activePower: 2500
   - type: GravityGenerator

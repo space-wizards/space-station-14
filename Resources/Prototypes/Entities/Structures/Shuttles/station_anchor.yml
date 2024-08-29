@@ -60,7 +60,7 @@
     mode: AlignTileAny
   components:
     - type: PowerCharge
-      windowTitle: Station Anchor
+      windowTitle: station-anchor-window-title
       idlePower: 50
       activePower: 2500
       chargeRate: 0.5

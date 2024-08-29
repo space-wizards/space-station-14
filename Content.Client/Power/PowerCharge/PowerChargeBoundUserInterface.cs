@@ -24,7 +24,7 @@ public sealed class PowerChargeBoundUserInterface : BoundUserInterface
             return;
 
         _window = this.CreateWindow<PowerChargeWindow>();
-        _window.UpdateWindow(this, component.WindowTitle);
+        _window.UpdateWindow(this, Loc.GetString(component.WindowTitle));
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

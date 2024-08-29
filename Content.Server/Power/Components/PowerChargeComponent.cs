@@ -3,21 +3,26 @@ using Content.Shared.Power;
 
 namespace Content.Server.Power.Components;
 
+/// <inheritdoc cref="Content.Shared.Power.SharedPowerChargeComponent" />
 [RegisterComponent]
 [Access(typeof(PowerChargeSystem))]
 public sealed partial class PowerChargeComponent : SharedPowerChargeComponent
 {
-    // TODO: Change comments
-    // 1% charge per second.
+    /// <summary>
+    /// Change in charge per second.
+    /// </summary>
     [DataField]
     public float ChargeRate { get; set; } = 0.01f;
 
-    // The gravity generator has two power values.
-    // Idle power is assumed to be the power needed to run the control systems and interface.
+    /// <summary>
+    /// Baseline power that this machine consumes.
+    /// </summary>
     [DataField("idlePower")]
     public float IdlePowerUse { get; set; }
 
-    // Active power is the power needed to keep the gravity field stable.
+    /// <summary>
+    /// Power consumed when <see cref="SwitchedOn"/> is true.
+    /// </summary>
     [DataField("activePower")]
     public float ActivePowerUse { get; set; }
 
@@ -33,8 +38,11 @@ public sealed partial class PowerChargeComponent : SharedPowerChargeComponent
     [DataField]
     public bool SwitchedOn { get; set; } = true;
 
-    [ViewVariables]
-    public bool Active { get; set; } = false;
+    /// <summary>
+    /// Whether or not the power is switched on and the entity has charged up.
+    /// </summary>
+    [DataField]
+    public bool Active { get; set; }
 
     [DataField]
     public float MaxCharge { get; set; } = 1;
@@ -46,7 +54,10 @@ public sealed partial class PowerChargeComponent : SharedPowerChargeComponent
     [DataField, ViewVariables(VVAccess.ReadOnly)]
     public Enum UiKey { get; set; } = PowerChargeUiKey.Key;
 
-    // 0 -> 1
+    /// <summary>
+    /// Current charge value.
+    /// Goes from 0 to 1.
+    /// </summary>
     [DataField]
     public float Charge { get; set; } = 1;
 
