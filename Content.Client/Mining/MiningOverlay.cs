@@ -22,7 +22,7 @@ public sealed class MiningOverlay : Overlay
     private readonly EntityQuery<TransformComponent> _xformQuery;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
-    public override bool RequestScreenTexture => true;
+    public override bool RequestScreenTexture => false;
 
     private readonly HashSet<Entity<MiningScannerViewableComponent>> _viewableEnts = new();
 
