@@ -17,8 +17,16 @@
     - Service
     - Supply
   - type: ActiveRadio
-    receiveAllChannels: true
-    globalReceive: true
+    channels:
+    - Binary
+    - Common
+    - Command
+    - Engineering
+    - Medical
+    - Science
+    - Security
+    - Service
+    - Supply
   - type: IgnoreUIRange
   - type: StationAiHeld
   - type: StationAiOverlay
@@ -108,6 +116,7 @@
   - type: StationAiHolder
     slot:
       name: station-ai-mind-slot
+      locked: true
       whitelist:
         tags:
         - StationAi
@@ -191,6 +200,7 @@
   - AiHolder
   suffix: Empty
   components:
+  - type: WarpPoint
   - type: ContainerComp
     proto: AiHeld
     container: station_ai_mind_slot
@@ -232,6 +242,7 @@
   suffix: Job spawn
   components:
   - type: ContainerSpawnPoint
+    spawnType: Job
     containerId: station_ai_mind_slot
     job: StationAi
   - type: Sprite
@@ -284,11 +295,13 @@
   - Incorporeal
   - BaseMob
   id: StationAiHolo
-  name: Hologram
-  description: A projection of the AI.
+  name: AI eye
+  description: The AI's viewer.
   noSpawn: true
   suffix: DO NOT MAP
   components:
+  - type: WarpPoint
+    follow: true
   - type: Eye
     pvsScale: 1.5
   - type: Visibility
@@ -296,7 +309,7 @@
   - type: Sprite
     sprite: Mobs/Silicon/station_ai.rsi
     layers:
-    - state: default
+    - state: ai_camera
       shader: unshaded
       map: ["base"]
 

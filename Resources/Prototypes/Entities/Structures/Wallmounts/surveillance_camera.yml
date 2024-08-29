@@ -65,8 +65,6 @@
       InUse: camera_in_use
   - type: UserInterface
     interfaces:
-      enum.AiUi.Key:
-        type: StationAiBoundUserInterface
       enum.SurveillanceCameraSetupUiKey.Camera:
         type: SurveillanceCameraSetupBoundUi
       enum.WiresUiKey.Key:
