@@ -1,19 +1,11 @@
 # Instruments
 - type: loadout
   id: Glockenspiel
-  equipment: Glockenspiel
-
-- type: startingGear
-  id: Glockenspiel
   storage:
     back:
     - GlockenspielInstrument
 
 - type: loadout
-  id: MusicBox
-  equipment: MusicBox
-
-- type: startingGear
   id: MusicBox
   storage:
     back:
@@ -21,19 +13,11 @@
 
 - type: loadout
   id: Xylophone
-  equipment: Xylophone
-
-- type: startingGear
-  id: Xylophone
   storage:
     back:
     - XylophoneInstrument
 
 - type: loadout
-  id: Microphone
-  equipment: Microphone
-
-- type: startingGear
   id: Microphone
   storage:
     back:
@@ -41,19 +25,11 @@
 
 - type: loadout
   id: Synthesizer
-  equipment: Synthesizer
-
-- type: startingGear
-  id: Synthesizer
   storage:
     back:
     - SynthesizerInstrument
 
 - type: loadout
-  id: Kalimba
-  equipment: Kalimba
-
-- type: startingGear
   id: Kalimba
   storage:
     back:
@@ -61,19 +37,11 @@
 
 - type: loadout
   id: Woodblock
-  equipment: Woodblock
-
-- type: startingGear
-  id: Woodblock
   storage:
     back:
     - WoodblockInstrument
 
 - type: loadout
-  id: ElectricGuitar
-  equipment: ElectricGuitar
-
-- type: startingGear
   id: ElectricGuitar
   storage:
     back:
@@ -81,19 +49,11 @@
 
 - type: loadout
   id: BassGuitar
-  equipment: BassGuitar
-
-- type: startingGear
-  id: BassGuitar
   storage:
     back:
     - BassGuitarInstrument
 
 - type: loadout
-  id: RockGuitar
-  equipment: RockGuitar
-
-- type: startingGear
   id: RockGuitar
   storage:
     back:
@@ -101,19 +61,11 @@
 
 - type: loadout
   id: AcousticGuitar
-  equipment: AcousticGuitar
-
-- type: startingGear
-  id: AcousticGuitar
   storage:
     back:
     - AcousticGuitarInstrument
 
 - type: loadout
-  id: Banjo
-  equipment: Banjo
-
-- type: startingGear
   id: Banjo
   storage:
     back:
@@ -121,19 +73,11 @@
 
 - type: loadout
   id: Violin
-  equipment: Violin
-
-- type: startingGear
-  id: Violin
   storage:
     back:
     - ViolinInstrument
 
 - type: loadout
-  id: Viola
-  equipment: Viola
-
-- type: startingGear
   id: Viola
   storage:
     back:
@@ -141,19 +85,11 @@
 
 - type: loadout
   id: Cello
-  equipment: Cello
-
-- type: startingGear
-  id: Cello
   storage:
     back:
     - CelloInstrument
 
 - type: loadout
-  id: Trumpet
-  equipment: Trumpet
-
-- type: startingGear
   id: Trumpet
   storage:
     back:
@@ -161,19 +97,11 @@
 
 - type: loadout
   id: Trombone
-  equipment: Trombone
-
-- type: startingGear
-  id: Trombone
   storage:
     back:
     - TromboneInstrument
 
 - type: loadout
-  id: FrenchHorn
-  equipment: FrenchHorn
-
-- type: startingGear
   id: FrenchHorn
   storage:
     back:
@@ -181,19 +109,11 @@
 
 - type: loadout
   id: Euphonium
-  equipment: Euphonium
-
-- type: startingGear
-  id: Euphonium
   storage:
     back:
     - EuphoniumInstrument
 
 - type: loadout
-  id: Saxophone
-  equipment: Saxophone
-
-- type: startingGear
   id: Saxophone
   storage:
     back:
@@ -201,19 +121,11 @@
 
 - type: loadout
   id: Accordion
-  equipment: Accordion
-
-- type: startingGear
-  id: Accordion
   storage:
     back:
     - AccordionInstrument
 
 - type: loadout
-  id: Harmonica
-  equipment: Harmonica
-
-- type: startingGear
   id: Harmonica
   storage:
     back:
@@ -221,19 +133,11 @@
 
 - type: loadout
   id: Clarinet
-  equipment: Clarinet
-
-- type: startingGear
-  id: Clarinet
   storage:
     back:
     - ClarinetInstrument
 
 - type: loadout
-  id: Flute
-  equipment: Flute
-
-- type: startingGear
   id: Flute
   storage:
     back:
@@ -241,19 +145,11 @@
 
 - type: loadout
   id: Recorder
-  equipment: Recorder
-
-- type: startingGear
-  id: Recorder
   storage:
     back:
     - RecorderInstrument
 
 - type: loadout
-  id: PanFlute
-  equipment: PanFlute
-
-- type: startingGear
   id: PanFlute
   storage:
     back:
@@ -261,19 +157,11 @@
 
 - type: loadout
   id: Ocarina
-  equipment: Ocarina
-
-- type: startingGear
-  id: Ocarina
   storage:
     back:
     - OcarinaInstrument
 
 - type: loadout
-  id: Bagpipe
-  equipment: Bagpipe
-
-- type: startingGear
   id: Bagpipe
   storage:
     back:

@@ -62,7 +62,7 @@ entities:
           version: 6
         -1,1:
           ind: -1,1
-          tiles: eQAAAAAARQAAAAAARQAAAAAARQAAAAAARQAAAAAARQAAAAAAeQAAAAAAeAAAAAAAeAAAAAAAeQAAAAAAWQAAAAADWQAAAAABWQAAAAADWQAAAAACWQAAAAACWQAAAAAAeQAAAAAARQAAAAAARQAAAAAARQAAAAAARQAAAAAARQAAAAAAeQAAAAAAeAAAAAAAeAAAAAAAeQAAAAAAWQAAAAADWQAAAAACWQAAAAACWQAAAAABWQAAAAABWQAAAAAAeQAAAAAAeQAAAAAAHQAAAAACeQAAAAAAHQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAWQAAAAADWQAAAAABWQAAAAABWQAAAAACWQAAAAACWQAAAAAAWQAAAAABWQAAAAABWQAAAAABWQAAAAAAWQAAAAADWQAAAAABWQAAAAAAWQAAAAACWQAAAAAAWQAAAAAAWQAAAAADWQAAAAABWQAAAAACWQAAAAAAWQAAAAACWQAAAAAAWQAAAAAAWQAAAAAAWQAAAAAAWQAAAAABWQAAAAADWQAAAAADWQAAAAAAWQAAAAADWQAAAAABWQAAAAABWQAAAAACWQAAAAACWQAAAAABWQAAAAABWQAAAAABWQAAAAACeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAHQAAAAABHQAAAAADeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAHQAAAAAAeQAAAAAAeQAAAAAAHQAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAADdgAAAAABeQAAAAAAHQAAAAABHQAAAAACeQAAAAAAHQAAAAADNgAAAAAANgAAAAAAHQAAAAABNgAAAAAANgAAAAAAHQAAAAABdgAAAAABdgAAAAAAdgAAAAADdgAAAAAAdgAAAAABdgAAAAACHQAAAAADHQAAAAADeQAAAAAAHQAAAAACNgAAAAAAHQAAAAACHQAAAAABHQAAAAADNgAAAAAAHQAAAAABdgAAAAACdgAAAAABdgAAAAAAdgAAAAACdgAAAAABeQAAAAAAHQAAAAAAHQAAAAABeQAAAAAAHQAAAAAANgAAAAAANgAAAAAANgAAAAAANgAAAAAANgAAAAAAHQAAAAABeQAAAAAAdgAAAAAAdgAAAAACdgAAAAAAdgAAAAACeQAAAAAAHQAAAAABHQAAAAABeQAAAAAAHQAAAAADNgAAAAAANgAAAAAANgAAAAAANgAAAAAANgAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAdgAAAAABeQAAAAAAeQAAAAAAHQAAAAADHQAAAAAAeQAAAAAAHQAAAAAAHQAAAAACHQAAAAADNgAAAAAAHQAAAAADHQAAAAACLAAAAAAAeQAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAADeQAAAAAAHQAAAAACHQAAAAADeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAALAAAAAAALAAAAAAAPgAAAAAAPgAAAAAAPgAAAAAAPgAAAAAAeQAAAAAAHQAAAAAAHQAAAAABHQAAAAACHQAAAAACPgAAAAAAPgAAAAAAPgAAAAAAPgAAAAAAPgAAAAAAUAAAAAAAeQAAAAAAPgAAAAAAPgAAAAAAPgAAAAAAPgAAAAAAeQAAAAAAHQAAAAADHQAAAAABHQAAAAADHQAAAAABPgAAAAAAPgAAAAAAPgAAAAAAPgAAAAAAPgAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAHQAAAAADHQAAAAABHQAAAAAAHQAAAAAAPgAAAAAAPgAAAAAAPgAAAAAAPgAAAAAAPgAAAAAABwAAAAAABwAAAAAABwAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAeQAAAAAAHQAAAAABHQAAAAABeQAAAAAAHQAAAAAAHQAAAAACHQAAAAADHQAAAAAAHQAAAAACHQAAAAAD
+          tiles: eQAAAAAARQAAAAAARQAAAAAARQAAAAAARQAAAAAARQAAAAAAeQAAAAAAeAAAAAAAeAAAAAAAeQAAAAAAWQAAAAADWQAAAAABWQAAAAADWQAAAAACWQAAAAACWQAAAAAAeQAAAAAARQAAAAAARQAAAAAARQAAAAAARQAAAAAARQAAAAAAeQAAAAAAeAAAAAAAeAAAAAAAeQAAAAAAWQAAAAADWQAAAAACWQAAAAACWQAAAAABWQAAAAABWQAAAAAAeQAAAAAAeQAAAAAAHQAAAAACeQAAAAAAHQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAWQAAAAADWQAAAAABWQAAAAABWQAAAAACWQAAAAACWQAAAAAAWQAAAAABWQAAAAABWQAAAAABWQAAAAAAWQAAAAADWQAAAAABWQAAAAAAWQAAAAACWQAAAAAAWQAAAAAAWQAAAAADWQAAAAABWQAAAAACWQAAAAAAWQAAAAACWQAAAAAAWQAAAAAAWQAAAAAAWQAAAAAAWQAAAAABWQAAAAADWQAAAAADWQAAAAAAWQAAAAADWQAAAAABWQAAAAABWQAAAAACWQAAAAACWQAAAAABWQAAAAABWQAAAAABWQAAAAACeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAHQAAAAABHQAAAAADeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAHQAAAAAAeQAAAAAAeQAAAAAAHQAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAADdgAAAAABeQAAAAAAHQAAAAABHQAAAAACeQAAAAAAHQAAAAADNgAAAAAANgAAAAAAHQAAAAABNgAAAAAANgAAAAAAHQAAAAABdgAAAAABdgAAAAAAdgAAAAADdgAAAAAAdgAAAAABdgAAAAACHQAAAAADHQAAAAADeQAAAAAAHQAAAAACNgAAAAAAHQAAAAACHQAAAAABHQAAAAADNgAAAAAAHQAAAAABdgAAAAACdgAAAAABdgAAAAAAdgAAAAACdgAAAAABeQAAAAAAHQAAAAAAHQAAAAABeQAAAAAAHQAAAAAANgAAAAAANgAAAAAANgAAAAAANgAAAAAANgAAAAAAHQAAAAABeQAAAAAAdgAAAAAAdgAAAAACdgAAAAAAdgAAAAACeQAAAAAAHQAAAAABHQAAAAABeQAAAAAAHQAAAAADNgAAAAAANgAAAAAANgAAAAAANgAAAAAANgAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAdgAAAAABeQAAAAAAeQAAAAAAHQAAAAADHQAAAAAAeQAAAAAAHQAAAAAAHQAAAAACHQAAAAADNgAAAAAAHQAAAAADHQAAAAACUAAAAAAAeQAAAAAAdgAAAAAAdgAAAAAAdgAAAAAAdgAAAAADeQAAAAAAHQAAAAACHQAAAAADeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAALAAAAAAALAAAAAAAPgAAAAAAPgAAAAAAPgAAAAAAPgAAAAAAeQAAAAAAHQAAAAAAHQAAAAABHQAAAAACHQAAAAACPgAAAAAAPgAAAAAAPgAAAAAAPgAAAAAAPgAAAAAALAAAAAAAeQAAAAAAPgAAAAAAPgAAAAAAPgAAAAAAPgAAAAAAeQAAAAAAHQAAAAADHQAAAAABHQAAAAADHQAAAAABPgAAAAAAPgAAAAAAPgAAAAAAPgAAAAAAPgAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAHQAAAAADHQAAAAABHQAAAAAAHQAAAAAAPgAAAAAAPgAAAAAAPgAAAAAAPgAAAAAAPgAAAAAABwAAAAAABwAAAAAABwAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAeQAAAAAAHQAAAAABHQAAAAABeQAAAAAAHQAAAAAAHQAAAAACHQAAAAADHQAAAAAAHQAAAAACHQAAAAAD
           version: 6
         0,1:
           ind: 0,1
@@ -19203,6 +19203,11 @@ entities:
     - type: Transform
       pos: -28.5,-23.5
       parent: 4812
+  - uid: 12629
+    components:
+    - type: Transform
+      pos: 26.5,13.5
+      parent: 4812
 - proto: CableApcStack
   entities:
   - uid: 6196
@@ -28528,20 +28533,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
 - proto: ClosetChefFilled
   entities:
   - uid: 1568
@@ -28567,20 +28558,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
 - proto: ClosetEmergencyFilledRandom
   entities:
   - uid: 1676
@@ -28606,20 +28583,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 1795
     components:
     - type: Transform
@@ -28643,20 +28606,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 2677
     components:
     - type: Transform
@@ -28680,20 +28629,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 2845
     components:
     - type: Transform
@@ -28722,20 +28657,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 4484
     components:
     - type: Transform
@@ -28759,20 +28680,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 4522
     components:
     - type: Transform
@@ -28796,20 +28703,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 4540
     components:
     - type: Transform
@@ -28833,20 +28726,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 4599
     components:
     - type: Transform
@@ -28870,20 +28749,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 4725
     components:
     - type: Transform
@@ -28930,20 +28795,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 7616
     components:
     - type: Transform
@@ -28967,20 +28818,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 9632
     components:
     - type: Transform
@@ -29009,20 +28846,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 10602
     components:
     - type: Transform
@@ -29046,20 +28869,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 10876
     components:
     - type: Transform
@@ -29083,20 +28892,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 11461
     components:
     - type: Transform
@@ -29120,20 +28915,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
 - proto: ClosetEmergencyN2FilledRandom
   entities:
   - uid: 9631
@@ -29166,20 +28947,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 1796
     components:
     - type: Transform
@@ -29203,20 +28970,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 3674
     components:
     - type: Transform
@@ -29263,20 +29016,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 7615
     components:
     - type: Transform
@@ -29300,20 +29039,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 8456
     components:
     - type: Transform
@@ -29342,20 +29067,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 9690
     components:
     - type: Transform
@@ -29379,20 +29090,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 12474
     components:
     - type: Transform
@@ -29466,20 +29163,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
 - proto: ClosetL3ScienceFilled
   entities:
   - uid: 6310
@@ -29505,20 +29188,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 11149
     components:
     - type: Transform
@@ -29542,20 +29211,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
 - proto: ClosetL3SecurityFilled
   entities:
   - uid: 8423
@@ -29581,20 +29236,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
 - proto: ClosetL3VirologyFilled
   entities:
   - uid: 8869
@@ -29620,20 +29261,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
 - proto: ClosetLegalFilled
   entities:
   - uid: 8477
@@ -29659,20 +29286,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
 - proto: ClosetMaintenanceFilledRandom
   entities:
   - uid: 9068
@@ -29698,20 +29311,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 10527
     components:
     - type: Transform
@@ -29735,20 +29334,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 10900
     components:
     - type: Transform
@@ -29772,20 +29357,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 11309
     components:
     - type: Transform
@@ -29809,57 +29380,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-  - uid: 11618
-    components:
-    - type: Transform
-      pos: 30.5,-36.5
-      parent: 4812
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.14957
-        moles:
-        - 1.6033952
-        - 6.031821
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 11882
     components:
     - type: Transform
@@ -29883,20 +29403,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
 - proto: ClosetRadiationSuitFilled
   entities:
   - uid: 6358
@@ -29922,20 +29428,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 9686
     components:
     - type: Transform
@@ -29959,20 +29451,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 9687
     components:
     - type: Transform
@@ -29996,20 +29474,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 11775
     components:
     - type: Transform
@@ -30033,20 +29497,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
 - proto: ClosetSteelBase
   entities:
   - uid: 11811
@@ -30072,21 +29522,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 11812
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
 - proto: ClosetWallAtmospherics
   entities:
   - uid: 9099
@@ -31086,13 +30521,6 @@ entities:
     - type: Transform
       pos: -36.403183,-24.261238
       parent: 4812
-- proto: ClothingUniformJumpskirtJanimaid
-  entities:
-  - uid: 9040
-    components:
-    - type: Transform
-      pos: 10.492298,52.554813
-      parent: 4812
 - proto: ClothingUniformJumpskirtOperative
   entities:
   - uid: 9053
@@ -31874,10 +31302,6 @@ entities:
     - type: Transform
       pos: -16.5,9.5
       parent: 4812
-    - type: Construction
-      containers:
-      - EntityStorageComponent
-      - entity_storage
     - type: EntityStorage
       air:
         volume: 200
@@ -31896,24 +31320,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        PaperLabel: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
 - proto: CrateEmptySpawner
   entities:
   - uid: 3448
@@ -31933,10 +31339,6 @@ entities:
     - type: Transform
       pos: -38.5,-10.5
       parent: 4812
-    - type: Construction
-      containers:
-      - EntityStorageComponent
-      - entity_storage
     - type: EntityStorage
       air:
         volume: 200
@@ -31955,24 +31357,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        PaperLabel: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
 - proto: CrateEngineeringAMEShielding
   entities:
   - uid: 10777
@@ -31980,10 +31364,6 @@ entities:
     - type: Transform
       pos: -38.5,-11.5
       parent: 4812
-    - type: Construction
-      containers:
-      - EntityStorageComponent
-      - entity_storage
     - type: EntityStorage
       air:
         volume: 200
@@ -32002,33 +31382,11 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        PaperLabel: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 10779
     components:
     - type: Transform
       pos: -38.5,-12.5
       parent: 4812
-    - type: Construction
-      containers:
-      - EntityStorageComponent
-      - entity_storage
     - type: EntityStorage
       air:
         volume: 200
@@ -32047,24 +31405,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        PaperLabel: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
 - proto: CrateEngineeringCableBulk
   entities:
   - uid: 4489
@@ -32090,28 +31430,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        PaperLabel: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-    - type: Construction
-      containers:
-      - EntityStorageComponent
-      - entity_storage
   - uid: 10705
     components:
     - type: Transform
@@ -32135,28 +31453,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        PaperLabel: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-    - type: Construction
-      containers:
-      - EntityStorageComponent
-      - entity_storage
   - uid: 10723
     components:
     - type: Transform
@@ -32180,28 +31476,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        PaperLabel: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-    - type: Construction
-      containers:
-      - EntityStorageComponent
-      - entity_storage
 - proto: CrateEngineeringCableHV
   entities:
   - uid: 10925
@@ -32227,28 +31501,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        PaperLabel: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-    - type: Construction
-      containers:
-      - EntityStorageComponent
-      - entity_storage
 - proto: CrateFilledSpawner
   entities:
   - uid: 3713
@@ -32317,28 +31569,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        PaperLabel: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-    - type: Construction
-      containers:
-      - EntityStorageComponent
-      - entity_storage
 - proto: CrateScience
   entities:
   - uid: 12463
@@ -32371,10 +31601,6 @@ entities:
     - type: Transform
       pos: 12.5,-23.5
       parent: 4812
-    - type: Construction
-      containers:
-      - EntityStorageComponent
-      - entity_storage
     - type: EntityStorage
       air:
         volume: 200
@@ -32393,33 +31619,11 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        PaperLabel: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 6251
     components:
     - type: Transform
       pos: 14.5,-23.5
       parent: 4812
-    - type: Construction
-      containers:
-      - EntityStorageComponent
-      - entity_storage
     - type: EntityStorage
       air:
         volume: 200
@@ -32438,24 +31642,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        PaperLabel: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
 - proto: CrateTrashCart
   entities:
   - uid: 6171
@@ -32622,6 +31808,14 @@ entities:
     components:
     - type: Transform
       pos: -36.5,30.5
+      parent: 4812
+- proto: CurtainsWhiteOpen
+  entities:
+  - uid: 12616
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -15.5,27.5
       parent: 4812
 - proto: DawInstrumentMachineCircuitboard
   entities:
@@ -37756,11 +36950,10 @@ entities:
           ent: null
 - proto: FloorDrain
   entities:
-  - uid: 2490
+  - uid: 2489
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -15.5,29.5
+      pos: -15.5,27.5
       parent: 4812
     - type: Fixtures
       fixtures: {}
@@ -55849,11 +55042,6 @@ entities:
     - type: Transform
       pos: 10.5,30.5
       parent: 4812
-  - uid: 3229
-    components:
-    - type: Transform
-      pos: -15.5,29.5
-      parent: 4812
   - uid: 3421
     components:
     - type: Transform
@@ -56700,20 +55888,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 9571
     components:
     - type: Transform
@@ -56737,20 +55911,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
 - proto: LockerBoozeFilled
   entities:
   - uid: 1648
@@ -56776,20 +55936,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
 - proto: LockerBotanistFilled
   entities:
   - uid: 1103
@@ -56815,20 +55961,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
 - proto: LockerCaptainFilled
   entities:
   - uid: 2595
@@ -56854,20 +55986,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
 - proto: LockerChemistryFilled
   entities:
   - uid: 6609
@@ -56893,20 +56011,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
 - proto: LockerChiefEngineerFilled
   entities:
   - uid: 9879
@@ -56932,20 +56036,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
 - proto: LockerChiefMedicalOfficerFilledHardsuit
   entities:
   - uid: 7453
@@ -56978,20 +56068,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
 - proto: LockerElectricalSuppliesFilled
   entities:
   - uid: 2578
@@ -57017,20 +56093,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 4491
     components:
     - type: Transform
@@ -57054,20 +56116,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 10600
     components:
     - type: Transform
@@ -57091,20 +56139,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 10722
     components:
     - type: Transform
@@ -57128,20 +56162,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
 - proto: LockerEngineerFilled
   entities:
   - uid: 9719
@@ -57167,20 +56187,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 9720
     components:
     - type: Transform
@@ -57204,20 +56210,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 9721
     components:
     - type: Transform
@@ -57241,20 +56233,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
 - proto: LockerEvidence
   entities:
   - uid: 4977
@@ -57295,20 +56273,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
 - proto: LockerFreezer
   entities:
   - uid: 1538
@@ -57334,20 +56298,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 1563
     components:
     - type: Transform
@@ -57371,20 +56321,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 7394
     components:
     - type: Transform
@@ -57422,20 +56358,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
 - proto: LockerHeadOfSecurityFilled
   entities:
   - uid: 8252
@@ -57461,20 +56383,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
 - proto: LockerMedical
   entities:
   - uid: 7328
@@ -57529,20 +56437,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
 - proto: LockerQuarterMasterFilled
   entities:
   - uid: 3441
@@ -57604,20 +56498,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
 - proto: LockerSalvageSpecialistFilledHardsuit
   entities:
   - uid: 6777
@@ -57703,20 +56583,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 8421
     components:
     - type: Transform
@@ -57740,20 +56606,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 8422
     components:
     - type: Transform
@@ -57777,20 +56629,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
 - proto: LockerWallMedicalFilled
   entities:
   - uid: 7430
@@ -57823,20 +56661,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
 - proto: LockerWeldingSuppliesFilled
   entities:
   - uid: 9681
@@ -57862,20 +56686,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
 - proto: MachineAnomalyGenerator
   entities:
   - uid: 6341
@@ -58084,13 +56894,6 @@ entities:
     components:
     - type: Transform
       pos: 8.48969,29.428799
-      parent: 4812
-- proto: MaterialReclaimer
-  entities:
-  - uid: 4807
-    components:
-    - type: Transform
-      pos: 20.5,19.5
       parent: 4812
 - proto: MaterialWoodPlank
   entities:
@@ -59821,7 +58624,7 @@ entities:
   - uid: 10860
     components:
     - type: Transform
-      pos: -22.5,-1.5
+      pos: -17.5,1.5
       parent: 4812
     - type: ContainerContainer
       containers:
@@ -62791,6 +61594,12 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 10.5,-38.5
+      parent: 4812
+  - uid: 12628
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 26.5,11.5
       parent: 4812
 - proto: ReinforcedPlasmaWindow
   entities:
@@ -66703,10 +65512,10 @@ entities:
       parent: 4812
 - proto: SoapNT
   entities:
-  - uid: 2495
+  - uid: 3229
     components:
     - type: Transform
-      pos: -15.503267,29.527489
+      pos: -15.515801,27.503595
       parent: 4812
 - proto: SodaDispenser
   entities:
@@ -68135,6 +66944,49 @@ entities:
       parent: 4812
 - proto: SurveillanceCameraCommand
   entities:
+  - uid: 2495
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 7.5,46.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraCommand
+      nameSet: True
+      id: AI Core Entrance
+  - uid: 3962
+    components:
+    - type: Transform
+      pos: -6.5,32.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraCommand
+      nameSet: True
+      id: Bridge West
+  - uid: 9040
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 15.5,45.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraCommand
+      nameSet: True
+      id: AI Core Maint
+  - uid: 11618
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 10.5,53.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraCommand
+      nameSet: True
+      id: AI Core Core
   - uid: 12081
     components:
     - type: Transform
@@ -68231,6 +67083,28 @@ entities:
       - SurveillanceCameraCommand
       nameSet: True
       id: AI Core Entrance
+  - uid: 12322
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 3.5,45.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraCommand
+      nameSet: True
+      id: AI Core Airlock
+  - uid: 12466
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 2.5,43.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraCommand
+      nameSet: True
+      id: AI Core Airlock Ext
   - uid: 12522
     components:
     - type: Transform
@@ -68262,6 +67136,39 @@ entities:
       - SurveillanceCameraCommand
       nameSet: True
       id: EvA Storage
+  - uid: 12617
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 2.5,26.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraCommand
+      nameSet: True
+      id: Bridge Entrance East
+  - uid: 12618
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -15.5,29.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraCommand
+      nameSet: True
+      id: Captain Bathroom
+  - uid: 12619
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -7.5,26.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraCommand
+      nameSet: True
+      id: Bridge Entrance West
 - proto: SurveillanceCameraEngineering
   entities:
   - uid: 12064
@@ -68318,6 +67225,189 @@ entities:
       - SurveillanceCameraEngineering
       nameSet: True
       id: Atmospherics
+  - uid: 12587
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -34.5,3.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Atmos Lobby
+  - uid: 12588
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -41.5,9.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Atmos North
+  - uid: 12589
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -50.5,-0.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Atmos Tanks South
+  - uid: 12590
+    components:
+    - type: Transform
+      pos: -50.5,13.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Atmos Tanks North
+  - uid: 12591
+    components:
+    - type: Transform
+      pos: -48.5,-4.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Atmos Airlock
+  - uid: 12592
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -43.5,-1.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Smes Room
+  - uid: 12593
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -40.5,-1.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Atmos Cleanroom
+  - uid: 12594
+    components:
+    - type: Transform
+      pos: -31.5,-9.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Engineering Lobby
+  - uid: 12595
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -45.5,-14.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Engineering Maints Door
+  - uid: 12602
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -53.5,-24.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Solars Southwest Power Room
+  - uid: 12603
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -57.5,-22.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Solars Southwest Airlock
+  - uid: 12608
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 32.5,-38.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Solars Southeast Power Room
+  - uid: 12609
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 39.5,-36.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Solars Southeast Airlock
+  - uid: 12612
+    components:
+    - type: Transform
+      pos: 23.5,3.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Technical Storage
+  - uid: 12614
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 22.5,8.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Secure Storage
+  - uid: 12625
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -36.5,-7.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Engi Maint Junction
+  - uid: 12626
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -40.5,-5.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Engineering
 - proto: SurveillanceCameraGeneral
   entities:
   - uid: 12060
@@ -68510,6 +67600,93 @@ entities:
       - SurveillanceCameraGeneral
       nameSet: True
       id: Dormitory
+  - uid: 12583
+    components:
+    - type: Transform
+      pos: 11.5,34.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraGeneral
+      nameSet: True
+      id: North Airlock External
+  - uid: 12584
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 12.5,32.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraGeneral
+      nameSet: True
+      id: North Airlock Internal
+  - uid: 12586
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -20.5,11.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraGeneral
+      nameSet: True
+      id: Tool Room
+  - uid: 12604
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -21.5,-32.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraGeneral
+      nameSet: True
+      id: Chaplain Crematorium
+  - uid: 12605
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -24.5,-37.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraGeneral
+      nameSet: True
+      id: Chaplain Office
+  - uid: 12606
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 8.5,-35.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraGeneral
+      nameSet: True
+      id: Disposals
+  - uid: 12615
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -3.5,20.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraGeneral
+      nameSet: True
+      id: Main Hallway Bridge
+  - uid: 12627
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -23.5,-11.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraGeneral
+      nameSet: True
+      id: Main Hall Library
 - proto: SurveillanceCameraMedical
   entities:
   - uid: 12072
@@ -68534,6 +67711,70 @@ entities:
       - SurveillanceCameraMedical
       nameSet: True
       id: Virology
+  - uid: 12596
+    components:
+    - type: Transform
+      pos: -18.5,-23.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraMedical
+      nameSet: True
+      id: Medical Triage
+  - uid: 12597
+    components:
+    - type: Transform
+      pos: -18.5,-18.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraMedical
+      nameSet: True
+      id: Morgue
+  - uid: 12598
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -16.5,-16.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraMedical
+      nameSet: True
+      id: Cloning
+  - uid: 12599
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -24.5,-26.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraMedical
+      nameSet: True
+      id: CMO Office
+  - uid: 12600
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -22.5,-26.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraMedical
+      nameSet: True
+      id: Surgery
+  - uid: 12601
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -10.5,-27.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraMedical
+      nameSet: True
+      id: Medical Storage
 - proto: SurveillanceCameraRouterCommand
   entities:
   - uid: 2732
@@ -68645,6 +67886,28 @@ entities:
       - SurveillanceCameraScience
       nameSet: True
       id: Research Director's Room
+  - uid: 12607
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 18.5,-25.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraScience
+      nameSet: True
+      id: Sci Maint Junction
+  - uid: 12610
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 31.5,-27.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraScience
+      nameSet: True
+      id: Anomaly Generator
 - proto: SurveillanceCameraSecurity
   entities:
   - uid: 12058
@@ -68732,6 +67995,67 @@ entities:
       - SurveillanceCameraSecurity
       nameSet: True
       id: Detective office
+  - uid: 12611
+    components:
+    - type: Transform
+      pos: 18.5,-12.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraSecurity
+      nameSet: True
+      id: Detective Observation Room
+  - uid: 12620
+    components:
+    - type: Transform
+      pos: -26.5,19.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraSecurity
+      nameSet: True
+      id: Security Cell 1
+  - uid: 12621
+    components:
+    - type: Transform
+      pos: -26.5,16.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraSecurity
+      nameSet: True
+      id: Security Cell 2
+  - uid: 12622
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -31.5,23.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraSecurity
+      nameSet: True
+      id: Perma Entrance
+  - uid: 12623
+    components:
+    - type: Transform
+      pos: -29.5,26.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraSecurity
+      nameSet: True
+      id: Perma Cell 1
+  - uid: 12624
+    components:
+    - type: Transform
+      pos: -25.5,26.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraSecurity
+      nameSet: True
+      id: Perma Cell 2
 - proto: SurveillanceCameraService
   entities:
   - uid: 12546
@@ -68900,6 +68224,28 @@ entities:
       - SurveillanceCameraSupply
       nameSet: True
       id: Salvagers
+  - uid: 12585
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 15.5,30.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraSupply
+      nameSet: True
+      id: QM office
+  - uid: 12613
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 27.5,15.5
+      parent: 4812
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraSupply
+      nameSet: True
+      id: Salvage Bay Airlock
 - proto: Syringe
   entities:
   - uid: 6248
@@ -70677,12 +70023,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 10.5,29.5
       parent: 4812
-  - uid: 2489
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -15.5,27.5
-      parent: 4812
   - uid: 3452
     components:
     - type: Transform
@@ -70706,6 +70046,13 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -19.5,28.5
+      parent: 4812
+- proto: ToiletGoldenDirtyWater
+  entities:
+  - uid: 2490
+    components:
+    - type: Transform
+      pos: -15.5,29.5
       parent: 4812
 - proto: TomatoSeeds
   entities:
@@ -70800,13 +70147,6 @@ entities:
     components:
     - type: Transform
       pos: -53.589386,-16.742252
-      parent: 4812
-- proto: ToyAi
-  entities:
-  - uid: 3962
-    components:
-    - type: Transform
-      pos: 10.469682,53.04013
       parent: 4812
 - proto: ToyIan
   entities:
@@ -70964,6 +70304,17 @@ entities:
         - Right: Reverse
         - Middle: Off
         11244:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+  - uid: 12630
+    components:
+    - type: Transform
+      pos: 27.5,11.5
+      parent: 4812
+    - type: DeviceLinkSource
+      linkedPorts:
+        12628:
         - Left: Forward
         - Right: Reverse
         - Middle: Off
@@ -71498,6 +70849,13 @@ entities:
     components:
     - type: Transform
       pos: -37.5,-33.5
+      parent: 4812
+- proto: VendingMachineWinter
+  entities:
+  - uid: 4807
+    components:
+    - type: Transform
+      pos: -22.5,-1.5
       parent: 4812
 - proto: VendingMachineYouTool
   entities:
@@ -79598,20 +78956,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
 - proto: WardrobeFormal
   entities:
   - uid: 10921
@@ -79637,23 +78981,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 10924
-          - 10923
-          - 10922
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
 - proto: WardrobeMixedFilled
   entities:
   - uid: 10852
@@ -79704,20 +79031,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 8355
     components:
     - type: Transform
@@ -79741,20 +79054,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 8383
     components:
     - type: Transform
@@ -79778,20 +79077,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 8384
     components:
     - type: Transform
@@ -79815,20 +79100,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        EntityStorageComponent: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
 - proto: WardrobeYellowFilled
   entities:
   - uid: 12169
