@@ -2434,7 +2434,7 @@
 - type: entity
   name: BROS
   parent: [ SimpleMobBase, MobCombat ]
-  id: MobBROS
+  id: MobBros
   description: OH FUCK IT'S BROS
   components:
     - type: Sprite
@@ -2482,7 +2482,7 @@
         path: /Audio/Animals/bros_hit.ogg
       damage:
         types:
-          Blunt: 8
+          Blunt: 1
     - type: Speech
       speechVerb: Cluwne
     - type: Bloodstream
@@ -2492,7 +2492,7 @@
     - type: Butcherable
       spawned:
       - id: FoodLingzhi
-        amount: 2
+        amount: 1
     - type: PassiveDamage
       allowedStates:
       - Alive

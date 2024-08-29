@@ -428,9 +428,9 @@
     minimumPlayers: 15
     weight: 5
     duration: 60
-  - type: ClusteredVentCrittersRule
+  - type: VentCrittersRule
     entries:
-    - id: MobBros
+    - id: BrosVentSpawner
       prob: 0.05
 
 - type: entity
