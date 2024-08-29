@@ -1,7 +1,7 @@
 - type: entity
   id: BaseShellShotgun
   name: shell (.50)
-  parent: BaseCartridge
+  parent: [ BaseCartridge, BaseRestrictedContraband ]
   abstract: true
   components:
   - type: Tag
@@ -123,7 +123,7 @@
     maxTransferAmount: 7
   - type: SpentAmmoVisuals
     state: "tranquilizer"
-    
+
 - type: entity
   id: ShellShotgunImprovised
   name: improvised shotgun shell
