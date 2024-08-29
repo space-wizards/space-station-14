@@ -128,7 +128,7 @@
         amount: 2
 
 - type: entity
-  parent: ClothingBackpackDuffel
+  parent: [ BaseCentcommContraband, ClothingBackpackDuffel ]
   id: ClothingBackpackDuffelSyndicateCostumeCentcom
   name: CentComm official costume duffel bag
   description: "Contains a full CentComm Official uniform set, headset and clipboard included. Encryption keys and ID access are not included."
