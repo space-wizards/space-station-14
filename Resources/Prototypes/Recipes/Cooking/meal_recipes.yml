@@ -1782,17 +1782,17 @@
   reagents:
     Sugar: 10
 
-#- type: microwaveMealRecipe
-#  id: RecipeMuffinCherry
-#  name: cherry muffin recipe
-#  result: FoodBakedMuffinCherry
-#  time: 15
-#  solids:
-#    FoodPlateMuffinTin: 1
-#    FoodDoughSlice: 1
-#    FoodCherry: 3
-#  reagents:
-#    Sugar: 10
+- type: microwaveMealRecipe
+  id: RecipeMuffinCherry
+  name: cherry muffin recipe
+  result: FoodBakedMuffinCherry
+  time: 15
+  solids:
+    FoodPlateMuffinTin: 1
+    FoodDoughSlice: 1
+    FoodCherry: 3
+  reagents:
+    Sugar: 10
 
 # NOT ACTUAL FOOD
 
