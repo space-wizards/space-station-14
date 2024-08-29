@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Fixed borgs and other non-humans getting deleted by salvage magnet wrecks
-      disappearing.
-    type: Fix
-  id: 6746
-  time: '2024-06-15T13:19:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29006
 - author: ShadowCommander
   changes:
   - message: Added a red light to firelocks when their warning lights are active.
@@ -3845,3 +3837,10 @@
   id: 7245
   time: '2024-08-29T03:04:43.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31589
+- author: metalgearsloth
+  changes:
+  - message: Fix storage UI being buggy.
+    type: Fix
+  id: 7246
+  time: '2024-08-29T03:23:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31616
