@@ -19,6 +19,7 @@ using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Stealth.Components;
 using Content.Shared.Damage.Components;
 using Content.Server.Radio.Components;
+using Content.Shared.Movement.Systems;
 
 namespace Content.Server.Changeling;
 
@@ -42,6 +43,7 @@ public sealed partial class ChangelingSystem : EntitySystem
         SubscribeLocalEvent<ChangelingComponent, ShriekDissonantEvent>(OnShriekDissonant);
         SubscribeLocalEvent<ChangelingComponent, ShriekResonantEvent>(OnShriekResonant);
         SubscribeLocalEvent<ChangelingComponent, ToggleStrainedMusclesEvent>(OnToggleStrainedMuscles);
+        SubscribeLocalEvent<ChangelingComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshSpeed);
 
         SubscribeLocalEvent<ChangelingComponent, StingBlindEvent>(OnStingBlind);
         SubscribeLocalEvent<ChangelingComponent, StingCryoEvent>(OnStingCryo);
@@ -338,6 +340,7 @@ public sealed partial class ChangelingSystem : EntitySystem
             if (lights.HasComponent(ent))
                 _light.TryDestroyBulb(ent);
     }
+
     private void OnToggleStrainedMuscles(EntityUid uid, ChangelingComponent comp, ref ToggleStrainedMusclesEvent args)
     {
         if (!TryUseAbility(uid, comp, args))
@@ -349,18 +352,24 @@ public sealed partial class ChangelingSystem : EntitySystem
     {
         if (!comp.StrainedMusclesActive)
         {
-            _speed.ChangeBaseSpeed(uid, 125f, 150f, 1f);
             _popup.PopupEntity(Loc.GetString("changeling-muscles-start"), uid, uid);
             comp.StrainedMusclesActive = true;
         }
         else
         {
-            _speed.ChangeBaseSpeed(uid, 100f, 100f, 1f);
             _popup.PopupEntity(Loc.GetString("changeling-muscles-end"), uid, uid);
             comp.StrainedMusclesActive = false;
         }
 
+        _speed.RefreshMovementSpeedModifiers(uid);
         PlayMeatySound(uid, comp);
+    }
+    private void OnRefreshSpeed(Entity<ChangelingComponent> ent, ref RefreshMovementSpeedModifiersEvent args)
+    {
+        if (ent.Comp.StrainedMusclesActive)
+            args.ModifySpeed(1.25f, 1.5f);
+        else
+            args.ModifySpeed(1f, 1f);
     }
 
     #endregion

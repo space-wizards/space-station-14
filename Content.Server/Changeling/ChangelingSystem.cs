@@ -220,6 +220,7 @@ public sealed partial class ChangelingSystem : EntitySystem
     }
     private void UpdateAbilities(EntityUid uid, ChangelingComponent comp)
     {
+        _speed.RefreshMovementSpeedModifiers(uid);
         if (comp.StrainedMusclesActive)
         {
             var stamina = EnsureComp<StaminaComponent>(uid);
