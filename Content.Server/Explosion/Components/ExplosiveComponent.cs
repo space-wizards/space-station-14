@@ -75,6 +75,13 @@ public sealed partial class ExplosiveComponent : Component
     public bool CanCreateVacuum = true;
 
     /// <summary>
+    ///     Whether this explosive can throw away items.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("canThrowItems")]
+    public bool CanThrowItems = true;
+
+    /// <summary>
     /// An override for whether or not the entity should be deleted after it explodes.
     /// If null, the system calling the explode method handles it.
     /// </summary>
