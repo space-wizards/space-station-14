@@ -39,7 +39,7 @@ namespace Content.Server.Atmos.EntitySystems
         private const float TimerDelay = 0.5f;
         private float _timer = 0f;
         private const float MinimumSoundValvePressure = 10.0f;
-        private float _maxExplosionRange = 26f;
+        private float _maxExplosionRange;
 
         public override void Initialize()
         {
