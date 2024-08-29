@@ -33,7 +33,7 @@
     maxIntensity: 0.01
     intensitySlope: 1
     totalIntensity: 0.01
-    canThrowItems: false
+    canThrowItems: false #Snap pops throwing away beakers, jugs and such caused them to be spilled/destroyed
 
 - type: entity
   parent: BaseStorageItem
