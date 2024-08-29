@@ -254,7 +254,7 @@ namespace Content.IntegrationTests.Tests
                     jobs.ExceptWith(spawnPoints);
 
                     spawnPoints = entManager.EntityQuery<ContainerSpawnPointComponent>()
-                        .Where(x => x.SpawnType == SpawnPointType.Job)
+                        .Where(x => x.SpawnType is SpawnPointType.Job or SpawnPointType.Unset)
                         .Select(x => x.Job!.Value);
 
                     jobs.ExceptWith(spawnPoints);
