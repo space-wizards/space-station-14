@@ -35,7 +35,7 @@
     spawned:
     - id: MaterialCloth1
       amount: 1
-  - type: PhysicalComposition # 50% of amount cloth on buthering
+  - type: PhysicalComposition # 50% of the amount of cloth you'd obtain upon butchering
     materialComposition:
       Cloth: 50
 
