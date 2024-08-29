@@ -23,7 +23,8 @@
           Quantity: 5
   - type: Tag
     tags:
-      - Meat
+    - Meat
+    - Trash
 
 - type: entity
   id: OrganArachnidStomach

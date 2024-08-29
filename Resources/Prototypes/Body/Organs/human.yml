@@ -25,7 +25,8 @@
       - people
   - type: Tag
     tags:
-      - Meat
+    - Meat
+    - Trash
 
 - type: entity
   id: BaseHumanOrgan
@@ -50,9 +51,6 @@
   - type: Examiner
   - type: BlockMovement
   - type: BadFood
-  - type: Tag
-    tags:
-      - Meat
   - type: SolutionContainerManager
     solutions:
       organ:

@@ -21,7 +21,8 @@
       - chicken # everything kinda tastes like chicken
   - type: Tag
     tags:
-      - Meat
+    - Meat
+    - Trash
 
 - type: entity
   id: BaseAnimalOrgan
