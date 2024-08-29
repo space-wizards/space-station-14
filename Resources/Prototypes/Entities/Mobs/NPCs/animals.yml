@@ -2432,6 +2432,126 @@
       bloodReagent: Laughter
 
 - type: entity
+  name: BROS
+  parent: [ SimpleMobBase, MobCombat ]
+  id: MobBros
+  description: OH FUCK IT'S BROS
+  components:
+    - type: Sprite
+      drawdepth: Mobs
+      layers:
+      - map: ["enum.DamageStateVisualLayers.Base"]
+        state: bros
+        sprite: Mobs/Animals/bros.rsi
+    - type: NpcFactionMember
+      factions:
+        - Xeno
+    - type: ReplacementAccent
+      accent: xeno
+    - type: InputMover
+    - type: MobMover
+    - type: HTN
+      rootTask:
+        task: SimpleHostileCompound
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeCircle
+            radius: 0.35
+          density: 130
+          mask:
+          - MobMask
+          layer:
+          - MobLayer
+    - type: DamageStateVisuals
+      states:
+        Alive:
+          Base: bros
+        Dead:
+          Base: bros-dead
+    - type: MobThresholds
+      thresholds:
+        0: Alive
+        20: Dead
+    - type: MeleeWeapon
+      altDisarm: false
+      angle: 0
+      animation: WeaponArcPunch
+      soundHit:
+        path: /Audio/Animals/bros_hit.ogg
+      damage:
+        types:
+          Blunt: 1
+    - type: Speech
+      speechVerb: Cluwne
+    - type: Bloodstream
+      bloodMaxVolume: 150
+      bloodReagent: VentCrud
+    - type: NoSlip
+    - type: ZombieImmune
+
+- type: entity
+  name: SORB
+  parent: [ SimpleMobBase, MobCombat ]
+  id: MobSorb
+  description: SORB S'TI KCUF HO
+  components:
+    - type: Sprite
+      drawdepth: Mobs
+      layers:
+      - map: ["enum.DamageStateVisualLayers.Base"]
+        state: sorb
+        sprite: Mobs/Animals/bros.rsi
+    - type: NpcFactionMember
+      factions:
+        - Xeno
+    - type: ReplacementAccent
+      accent: xeno
+    - type: InputMover
+    - type: MobMover
+    - type: HTN
+      rootTask:
+        task: SimpleHostileCompound
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeCircle
+            radius: 0.35
+          density: 130
+          mask:
+          - MobMask
+          layer:
+          - MobLayer
+    - type: DamageStateVisuals
+      states:
+        Alive:
+          Base: sorb
+        Dead:
+          Base: sorb-dead
+    - type: MobThresholds
+      thresholds:
+        0: Alive
+        20: Dead
+    - type: MeleeWeapon
+      altDisarm: false
+      angle: 0
+      animation: WeaponArcPunch
+      soundHit:
+        path: /Audio/Animals/bros_hit.ogg
+      damage:
+        types:
+          Blunt: 1
+    - type: Speech
+      speechVerb: Cluwne
+    - type: Bloodstream
+      bloodMaxVolume: 150
+      bloodReagent: VentCrud
+    - type: NoSlip
+    - type: ZombieImmune
+
+- type: entity
   name: wizard spider
   parent: MobGiantSpider
   id: MobGiantSpiderWizard
