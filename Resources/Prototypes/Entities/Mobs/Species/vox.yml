@@ -21,9 +21,16 @@
     proto: vox
   - type: Vocal
     sounds:
-      Male: UnisexVox
-      Female: UnisexVox
-      Unsexed: UnisexVox
+      Male: MaleReptilian
+      Female: MaleReptilian
+      Unsexed: MaleReptilian
+# These are currently disabled because they are too grating (read: they are giving some people actual headaches.)
+# Reptilian sounds are being used as a placeholder in the interm. 
+#  - type: Vocal
+#    sounds:
+#      Male: UnisexVox
+#      Female: UnisexVox
+#      Unsexed: UnisexVox
   - type: Butcherable
     butcheringType: Spike
     spawned:
