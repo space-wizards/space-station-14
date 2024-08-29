@@ -64,8 +64,8 @@
 - type: entity
   id: BiofabricatorMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: biofabricator machine board
-  description: A machine printed circuit board for a biofabricator.
+  name: biocube fabricator machine board
+  description: A machine printed circuit board for a biocube fabricator.
   components:
     - type: MachineBoard
       prototype: Biofabricator
@@ -967,20 +967,6 @@
     stackRequirements:
       Manipulator: 1
       Steel: 1
-
-- type: entity
-  id: MaterialReclaimerMachineCircuitboard
-  parent: BaseMachineCircuitboard
-  name: material reclaimer machine board
-  components:
-    - type: Sprite
-      state: supply
-    - type: MachineBoard
-      prototype: MaterialReclaimer
-      stackRequirements:
-        Manipulator: 2
-        Steel: 5
-        Plastic: 5
 
 - type: entity
   id: OreProcessorMachineCircuitboard

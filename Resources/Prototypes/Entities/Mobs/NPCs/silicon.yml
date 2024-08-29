@@ -103,6 +103,7 @@
     - Robotics
   - type: Speech
     speechVerb: Robotic
+    speechSounds: Pai #couldn't decide if this should be borg or pai sounds so I flipped a coin.
   - type: TypingIndicator
     proto: robot
   - type: ZombieImmune
@@ -286,6 +287,8 @@
   - type: Construction
     graph: MediBot
     node: bot
+  - type: SentienceTarget
+    flavorKind: station-event-random-sentience-flavor-mechanical
   - type: Anchorable
   - type: InteractionPopup
     interactSuccessString: petting-success-medibot

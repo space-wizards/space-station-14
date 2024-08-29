@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.Light.Components;
 using JetBrains.Annotations;
 using Robust.Client.Animations;
@@ -68,7 +68,7 @@ namespace Content.Client.Light.Components
 
             if (MinDuration > 0)
             {
-                MaxTime = (float) _random.NextDouble() * (MaxDuration - MinDuration) + MinDuration;
+                MaxTime = (float)_random.NextDouble() * (MaxDuration - MinDuration) + MinDuration;
             }
             else
             {
@@ -192,11 +192,11 @@ namespace Content.Client.Light.Components
             {
                 if (interpolateValue < 0.5f)
                 {
-                    ApplyInterpolation(StartValue, EndValue, interpolateValue*2);
+                    ApplyInterpolation(StartValue, EndValue, interpolateValue * 2);
                 }
                 else
                 {
-                    ApplyInterpolation(EndValue, StartValue, (interpolateValue-0.5f)*2);
+                    ApplyInterpolation(EndValue, StartValue, (interpolateValue - 0.5f) * 2);
                 }
             }
             else
@@ -238,9 +238,9 @@ namespace Content.Client.Light.Components
 
         public override void OnInitialize()
         {
-            _randomValue1 = (float) InterpolateLinear(StartValue, EndValue, (float) _random.NextDouble());
-            _randomValue2 = (float) InterpolateLinear(StartValue, EndValue, (float) _random.NextDouble());
-            _randomValue3 = (float) InterpolateLinear(StartValue, EndValue, (float) _random.NextDouble());
+            _randomValue1 = (float)InterpolateLinear(StartValue, EndValue, (float)_random.NextDouble());
+            _randomValue2 = (float)InterpolateLinear(StartValue, EndValue, (float)_random.NextDouble());
+            _randomValue3 = (float)InterpolateLinear(StartValue, EndValue, (float)_random.NextDouble());
         }
 
         public override void OnStart()
@@ -258,7 +258,7 @@ namespace Content.Client.Light.Components
             }
 
             _randomValue3 = _randomValue4;
-            _randomValue4 = (float) InterpolateLinear(StartValue, EndValue, (float) _random.NextDouble());
+            _randomValue4 = (float)InterpolateLinear(StartValue, EndValue, (float) _random.NextDouble());
         }
 
         public override (int KeyFrameIndex, float FramePlayingTime) AdvancePlayback(
@@ -362,7 +362,7 @@ namespace Content.Client.Light.Components
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
-        private const string KeyPrefix = nameof(LightBehaviourComponent);
+        public const string KeyPrefix = nameof(LightBehaviourComponent);
 
         public sealed class AnimationContainer
         {
@@ -387,7 +387,7 @@ namespace Content.Client.Light.Components
         public readonly List<AnimationContainer> Animations = new();
 
         [ViewVariables(VVAccess.ReadOnly)]
-        private Dictionary<string, object> _originalPropertyValues = new();
+        public Dictionary<string, object> OriginalPropertyValues = new();
 
         void ISerializationHooks.AfterDeserialization()
         {
@@ -397,154 +397,11 @@ namespace Content.Client.Light.Components
             {
                 var animation = new Animation()
                 {
-                    AnimationTracks = {behaviour}
+                    AnimationTracks = { behaviour }
                 };
 
                 Animations.Add(new AnimationContainer(key, animation, behaviour));
                 key++;
-            }
-        }
-
-        /// <summary>
-        /// If we disable all the light behaviours we want to be able to revert the light to its original state.
-        /// </summary>
-        private void CopyLightSettings(EntityUid uid, string property)
-        {
-            if (_entMan.TryGetComponent(uid, out PointLightComponent? light))
-            {
-                var propertyValue = AnimationHelper.GetAnimatableProperty(light, property);
-                if (propertyValue != null)
-                {
-                    _originalPropertyValues.Add(property, propertyValue);
-                }
-            }
-            else
-            {
-                Logger.Warning($"{_entMan.GetComponent<MetaDataComponent>(uid).EntityName} has a {nameof(LightBehaviourComponent)} but it has no {nameof(PointLightComponent)}! Check the prototype!");
-            }
-        }
-
-        /// <summary>
-        /// Start animating a light behaviour with the specified ID. If the specified ID is empty, it will start animating all light behaviour entries.
-        /// If specified light behaviours are already animating, calling this does nothing.
-        /// Multiple light behaviours can have the same ID.
-        /// </summary>
-        public void StartLightBehaviour(string id = "")
-        {
-            var uid = Owner;
-            if (!_entMan.TryGetComponent(uid, out AnimationPlayerComponent? animation))
-            {
-                return;
-            }
-
-            var animations = _entMan.System<AnimationPlayerSystem>();
-
-            foreach (var container in Animations)
-            {
-                if (container.LightBehaviour.ID == id || id == string.Empty)
-                {
-                    if (!animations.HasRunningAnimation(uid, animation, KeyPrefix + container.Key))
-                    {
-                        CopyLightSettings(uid, container.LightBehaviour.Property);
-                        container.LightBehaviour.UpdatePlaybackValues(container.Animation);
-                        animations.Play(uid, animation, container.Animation, KeyPrefix + container.Key);
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// If any light behaviour with the specified ID is animating, then stop it.
-        /// If no ID is specified then all light behaviours will be stopped.
-        /// Multiple light behaviours can have the same ID.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="removeBehaviour">Should the behaviour(s) also be removed permanently?</param>
-        /// <param name="resetToOriginalSettings">Should the light have its original settings applied?</param>
-        public void StopLightBehaviour(string id = "", bool removeBehaviour = false, bool resetToOriginalSettings = false)
-        {
-            var uid = Owner;
-            if (!_entMan.TryGetComponent(uid, out AnimationPlayerComponent? animation))
-            {
-                return;
-            }
-
-            var toRemove = new List<AnimationContainer>();
-            var animations = _entMan.System<AnimationPlayerSystem>();
-
-            foreach (var container in Animations)
-            {
-                if (container.LightBehaviour.ID == id || id == string.Empty)
-                {
-                    if (animations.HasRunningAnimation(uid, animation, KeyPrefix + container.Key))
-                    {
-                        animations.Stop(uid, animation, KeyPrefix + container.Key);
-                    }
-
-                    if (removeBehaviour)
-                    {
-                        toRemove.Add(container);
-                    }
-                }
-            }
-
-            foreach (var container in toRemove)
-            {
-                Animations.Remove(container);
-            }
-
-            if (resetToOriginalSettings && _entMan.TryGetComponent(uid, out PointLightComponent? light))
-            {
-                foreach (var (property, value) in _originalPropertyValues)
-                {
-                    AnimationHelper.SetAnimatableProperty(light, property, value);
-                }
-            }
-
-            _originalPropertyValues.Clear();
-        }
-
-        /// <summary>
-        /// Checks if at least one behaviour is running.
-        /// </summary>
-        /// <returns>Whether at least one behaviour is running, false if none is.</returns>
-        public bool HasRunningBehaviours()
-        {
-            var uid = Owner;
-            if (!_entMan.TryGetComponent(uid, out AnimationPlayerComponent? animation))
-            {
-                return false;
-            }
-
-            var animations = _entMan.System<AnimationPlayerSystem>();
-            return Animations.Any(container => animations.HasRunningAnimation(uid, animation, KeyPrefix + container.Key));
-        }
-
-        /// <summary>
-        /// Add a new light behaviour to the component and start it immediately unless otherwise specified.
-        /// </summary>
-        public void AddNewLightBehaviour(LightBehaviourAnimationTrack behaviour, bool playImmediately = true)
-        {
-            var key = 0;
-
-            while (Animations.Any(x => x.Key == key))
-            {
-                key++;
-            }
-
-            var animation = new Animation()
-            {
-                AnimationTracks = {behaviour}
-            };
-
-            behaviour.Initialize(Owner, _random, _entMan);
-
-            var container = new AnimationContainer(key, animation, behaviour);
-            Animations.Add(container);
-
-            if (playImmediately)
-            {
-                StartLightBehaviour(behaviour.ID);
             }
         }
     }
