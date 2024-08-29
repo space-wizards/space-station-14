@@ -5,7 +5,6 @@ using Content.Server.GameTicking;
 using Content.Server.Radio.Components;
 using Content.Server.Roles;
 using Content.Server.Station.Systems;
-using Content.Shared.Actions;
 using Content.Shared.Administration;
 using Content.Shared.Chat;
 using Content.Shared.Emag.Components;
@@ -28,9 +27,7 @@ namespace Content.Server.Silicons.Laws;
 /// <inheritdoc/>
 public sealed class SiliconLawSystem : SharedSiliconLawSystem
 {
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
-    [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly SharedRoleSystem _roles = default!;
