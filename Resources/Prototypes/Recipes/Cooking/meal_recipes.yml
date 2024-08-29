@@ -996,15 +996,15 @@
     FoodBerries: 3
     FoodPlateTin: 1
 
-#- type: microwaveMealRecipe
-#  id: RecipeCherryPie
-#  name: cherry pie recipe
-#  result: FoodPieCherry
-#  time: 15
-#  solids:
-#    FoodDoughPie: 1
-#    FoodCherry: 3 #cherries don't exist yet
-#    FoodPlateTin: 1
+- type: microwaveMealRecipe
+  id: RecipeCherryPie
+  name: cherry pie recipe
+  result: FoodPieCherry
+  time: 15
+  solids:
+    FoodDoughPie: 1
+    FoodCherry: 5
+    FoodPlateTin: 1
 
 - type: microwaveMealRecipe
   id: RecipeFrostyPie
