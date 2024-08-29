@@ -46,7 +46,7 @@
   - ERTMedical
   - ERTSecurity
   - ERTEngineer
-  - Deathsquad
+  - DeathSquad
   editorHidden: true
   weight: 120
 
@@ -71,7 +71,7 @@
   - ERTMedical
   - ERTSecurity
   - ERTEngineer
-  - Deathsquad
+  - DeathSquad
   primary: false
   weight: 100
 

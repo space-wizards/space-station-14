@@ -17,37 +17,6 @@
     back:
     - BoxSurvival
 
-#Deathsquad Outfit
-- type: startingGear
-  id: DeathSquadGear
-  equipment:
-    jumpsuit: ClothingUniformJumpsuitDeathSquad
-    back: ClothingBackpackDeathSquad
-    mask: ClothingMaskGasDeathSquad
-    eyes: ClothingEyesHudSecurity
-    ears: ClothingHeadsetAltCentCom
-    gloves: ClothingHandsGlovesCombat
-    outerClothing: ClothingOuterHardsuitDeathsquad
-    shoes: ClothingShoesBootsMagAdv
-    id: DeathsquadPDA
-    pocket1: EnergySword
-    pocket2: EnergyShield
-    belt: ClothingBeltMilitaryWebbingMedFilled
-  storage:
-    back:
-    - WeaponPulsePistol
-    - WeaponRevolverMateba
-    - SpeedLoaderMagnumAP
-    - SpeedLoaderMagnumAP
-    - BoxFlashbang
-    - ToolDebug # spanish army knife
-    - WelderExperimental
-    - Hypospray
-    - DeathAcidifierImplanter # crew will try to steal their amazing hardsuits
-    - FreedomImplanter
-  inhand:
-  - WeaponPulseRifle
-
 # Syndicate Operative Outfit - Civilian
 - type: startingGear
   id: SyndicateOperativeGearCivilian
@@ -100,30 +69,6 @@
     - BoxSurvivalSecurity
     - Flash
     - MagazinePistol
-
-#CBURN Unit Gear - Full Kit
-- type: startingGear
-  id: CBURNGear
-  equipment:
-    jumpsuit: ClothingUniformJumpsuitColorBrown
-    back: ClothingBackpackDuffelCBURN
-    mask: ClothingMaskGasERT
-    eyes: ClothingEyesGlassesSecurity
-    ears: ClothingHeadsetAltCentCom
-    gloves: ClothingHandsGlovesCombat
-    outerClothing: ClothingOuterHardsuitCBURN
-    shoes: ClothingShoesBootsCombatFilled
-    id: CBURNPDA
-    pocket1: RadioHandheld
-    pocket2: WeaponLaserGun
-    belt: ClothingBeltBandolier
-  storage:
-    back:
-    - WeaponShotgunDoubleBarreled
-    - BoxShotgunIncendiary
-    - GrenadeFlashBang
-    - PillAmbuzolPlus
-    - PillAmbuzol
 
 - type: startingGear
   id: BoxingKangarooGear
