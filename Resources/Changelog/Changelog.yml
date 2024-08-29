@@ -1,46 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Attempting to uncuff oneself while being pulled will now take twice as
-      long.
-    type: Tweak
-  - message: Reduced cooldown after attempting to uncuff oneself back to previous
-      values.
-    type: Tweak
-  id: 6742
-  time: '2024-06-15T04:01:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29008
-- author: EmoGarbage404
-  changes:
-  - message: Fixed bottles, when used inhand, not being drank from but instead repeatedly
-      opening and closing.
-    type: Fix
-  id: 6743
-  time: '2024-06-15T05:20:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29010
-- author: Flareguy
-  changes:
-  - message: Replaced RelayStation with a more fair ruin.
-    type: Remove
-  id: 6744
-  time: '2024-06-15T06:02:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28971
-- author: metalgearsloth
-  changes:
-  - message: Fix the character profile sometimes thinking there's changes to save
-      even if the loadouts haven't changed.
-    type: Fix
-  id: 6745
-  time: '2024-06-15T06:52:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28737
-- author: EmoGarbage404
-  changes:
-  - message: Fixed borgs and other non-humans getting deleted by salvage magnet wrecks
-      disappearing.
-    type: Fix
-  id: 6746
-  time: '2024-06-15T13:19:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29006
 - author: ShadowCommander
   changes:
   - message: Added a red light to firelocks when their warning lights are active.
@@ -3849,3 +3807,40 @@
   id: 7241
   time: '2024-08-28T20:48:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31372
+- author: RumiTiger
+  changes:
+  - message: Cherry has been added to the game!
+    type: Add
+  - message: The recipe for cherry pie has been reintroduced to the game!
+    type: Add
+  id: 7242
+  time: '2024-08-29T01:30:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28962
+- author: SlamBamActionman, Graded
+  changes:
+  - message: Added administration glasses to Captain and HoP lockers!
+    type: Add
+  id: 7243
+  time: '2024-08-29T01:58:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30447
+- author: osjarw
+  changes:
+  - message: Fix air alarms not checking sensor states upon power returning.
+    type: Fix
+  id: 7244
+  time: '2024-08-29T02:43:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29857
+- author: Winkarst-cpu
+  changes:
+  - message: Now railings render over tables.
+    type: Tweak
+  id: 7245
+  time: '2024-08-29T03:04:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31589
+- author: metalgearsloth
+  changes:
+  - message: Fix storage UI being buggy.
+    type: Fix
+  id: 7246
+  time: '2024-08-29T03:23:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31616
