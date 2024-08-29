@@ -18,8 +18,8 @@ internal sealed class BuckleSystem : SharedBuckleSystem
         SubscribeLocalEvent<BuckleComponent, ComponentHandleState>(OnHandleState);
         SubscribeLocalEvent<BuckleComponent, AppearanceChangeEvent>(OnAppearanceChange);
         SubscribeLocalEvent<StrapComponent, MoveEvent>(OnStrapMoveEvent);
-        SubscribeLocalEvent<StrapComponent, StrappedEvent>(OnStrappedEvent);
-        SubscribeLocalEvent<StrapComponent, UnstrappedEvent>(OnUnstrappedEvent);
+        SubscribeLocalEvent<BuckleComponent, BuckledEvent>(OnBuckledEvent);
+        SubscribeLocalEvent<BuckleComponent, UnbuckledEvent>(OnUnbuckledEvent);
     }
 
     private void OnStrapMoveEvent(EntityUid uid, StrapComponent component, ref MoveEvent args)
@@ -62,31 +62,31 @@ internal sealed class BuckleSystem : SharedBuckleSystem
     /// <summary>
     /// Is the strap entity already rotated north? Lower the draw depth of the buckled entity.
     /// </summary>
-    private void OnStrappedEvent(Entity<StrapComponent> ent, ref StrappedEvent args)
+    private void OnBuckledEvent(Entity<BuckleComponent> ent, ref BuckledEvent args)
     {
-        if (!TryComp<SpriteComponent>(ent.Owner, out var strapSprite) ||
-            !TryComp<SpriteComponent>(args.Buckle, out var buckledSprite))
+        if (!TryComp<SpriteComponent>(args.Strap, out var strapSprite) ||
+            !TryComp<SpriteComponent>(ent.Owner, out var buckledSprite))
             return;
 
-        if (Transform(ent.Owner).LocalRotation.GetCardinalDir() == Direction.North)
+        if (Transform(args.Strap.Owner).LocalRotation.GetCardinalDir() == Direction.North)
         {
-            args.Buckle.Comp.OriginalDrawDepth ??= buckledSprite.DrawDepth;
+            ent.Comp.OriginalDrawDepth ??= buckledSprite.DrawDepth;
             buckledSprite.DrawDepth = strapSprite.DrawDepth - 1;
         }
     }
 
     /// <summary>
-    /// Was the draw depth of the buckled entity lowered? Reset it upon unstrapping.
+    /// Was the draw depth of the buckled entity lowered? Reset it upon unbuckling.
     /// </summary>
-    private void OnUnstrappedEvent(Entity<StrapComponent> ent, ref UnstrappedEvent args)
+    private void OnUnbuckledEvent(Entity<BuckleComponent> ent, ref UnbuckledEvent args)
     {
-        if (!TryComp<SpriteComponent>(args.Buckle, out var buckledSprite))
+        if (!TryComp<SpriteComponent>(ent.Owner, out var buckledSprite))
             return;
 
-        if (args.Buckle.Comp.OriginalDrawDepth.HasValue)
+        if (ent.Comp.OriginalDrawDepth.HasValue)
         {
-            buckledSprite.DrawDepth = args.Buckle.Comp.OriginalDrawDepth.Value;
-            args.Buckle.Comp.OriginalDrawDepth = null;
+            buckledSprite.DrawDepth = ent.Comp.OriginalDrawDepth.Value;
+            ent.Comp.OriginalDrawDepth = null;
         }
     }
 
