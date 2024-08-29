@@ -436,6 +436,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<float> AnnouncerVolume =
             CVarDef.Create("announcer.volume", 0.5f, CVar.ARCHIVE | CVar.CLIENTONLY);
 
+        /// <summary>
+        ///     Disables multiple announcement sounds from playing at once
+        /// </summary>
+        public static readonly CVarDef<bool> AnnouncerDisableMultipleSounds =
+            CVarDef.Create("announcer.disable_multiple_sounds", false, CVar.ARCHIVE | CVar.CLIENTONLY);
+
 
         /// <summary>
         /// Whether or not to add every player as a global override to PVS at round end.
@@ -1508,12 +1514,6 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool> ArrivalsReturns =
             CVarDef.Create("shuttle.arrivals_returns", false, CVar.SERVERONLY);
-
-        /// <summary>
-        /// Should all players be forced to spawn at departures, even on roundstart, even if their loadout says they spawn in cryo?
-        /// </summary>
-        public static readonly CVarDef<bool> ForceArrivals =
-            CVarDef.Create("shuttle.force_arrivals", false, CVar.SERVERONLY);
 
         /// <summary>
         /// Should all players who spawn at arrivals have godmode until they leave the map?
