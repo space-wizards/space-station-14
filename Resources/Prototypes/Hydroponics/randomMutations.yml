@@ -2,21 +2,21 @@
   id: RandomPlantMutations
   mutations:  
     - name: Bioluminescent
-      baseOdds: 0.0072
+      baseOdds: 0.036
       mutation: !type:Glow
     - name: Sentient
       baseOdds: 0.0072
       appliesToPlant: false #makes the botany tray sentient if true
       mutation: !type:MakeSentient #existing effect.
     - name: Slippery
-      baseOdds: 0.0072
+      baseOdds: 0.036
       mutation: !type:Slipify
     - name: ChangeSpecies
-      baseOdds: 0.0072
+      baseOdds: 0.036
       appliesToProduce: false
       mutation: !type:PlantSpeciesChange
     - name: Unviable
-      baseOdds: 0.00012
+      baseOdds: 0.109
       mutation: !type:PlantUnviable
     - name: ChangeWaterConsumption
       baseOdds: 0.018
@@ -87,27 +87,27 @@
       persists: false
       mutation: !type:PlantMutatePotency
     - name: ChangeSeedless
-      baseOdds: 0.00036
+      baseOdds: 0.036
       persists: false
       mutation: !type:PlantMutateSeedless
     - name: ChangeLigneous
-      baseOdds: 0.00036
+      baseOdds: 0.036
       persists: false
       mutation: !type:PlantMutateLigneous
     - name: ChangeTurnIntoKudzu
-      baseOdds: 0.00036
+      baseOdds: 0.036
       persists: false
       mutation: !type:PlantMutateKudzu
     - name: ChangeScreaming
-      baseOdds: 0.00036
+      baseOdds: 0.036
       persists: false
       mutation: !type:PlantMutateScream
     - name: ChangeChemicals
-      baseOdds: 0.00018
+      baseOdds: 0.072
       persists: false
       mutation: !type:PlantMutateChemicals
     - name: ChangeExudeGasses
-      baseOdds: 0.00091
+      baseOdds: 0.0145
       persists: false
       mutation: !type:PlantMutateExudeGasses
     - name: ChangeConsumeGasses
@@ -115,6 +115,6 @@
       persists: false
       mutation: !type:PlantMutateConsumeGasses
     - name: ChangeHarvest
-      baseOdds: 0.00036
+      baseOdds: 0.036
       persists: false
       mutation: !type:PlantMutateHarvest
