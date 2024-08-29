@@ -88,8 +88,8 @@
           Quantity: 6
         - ReagentId: Vitamin
           Quantity: 2
-        #- ReagentId: JuiceCherry
-         #Quantity: 2
+        - ReagentId: JuiceCherry
+          Quantity: 2
   - type: Tag
     tags:
     - Fruit
