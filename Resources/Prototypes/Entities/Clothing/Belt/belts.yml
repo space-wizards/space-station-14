@@ -612,7 +612,7 @@
 - type: entity
   parent: ClothingBeltSecurity
   id: ClothingBeltSecurityWebbing
-  name: security carrier
+  name: security webbing # GreyStation - We keepin' webbings
   description: Unique and versatile chest rig, can hold security gear.
   components:
   - type: Sprite
