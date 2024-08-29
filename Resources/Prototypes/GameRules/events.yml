@@ -420,6 +420,20 @@
       prob: 0.05
 
 - type: entity
+  id: BrosSpawn
+  parent: BaseStationEventShortDelay
+  components:
+  - type: StationEvent
+    earliestStart: 20
+    minimumPlayers: 15
+    weight: 5
+    duration: 60
+  - type: ClusteredVentCrittersRule
+    entries:
+    - id: MobBros
+      prob: 0.05
+
+- type: entity
   id: SpiderClownSpawn
   parent: BaseStationEventShortDelay
   components:
