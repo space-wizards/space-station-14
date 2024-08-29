@@ -906,7 +906,7 @@
   icon: { sprite: /Textures/Mobs/Animals/mouse.rsi, state: icon-2 }
   productEntity: AnimalFriendsKit
   cost:
-    Telecrystal: 4
+    Telecrystal: 6
   categories:
   - UplinkAllies
   

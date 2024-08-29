@@ -72,7 +72,7 @@
   parent: [BoxCardboard, BaseSyndicateContraband]
   id: AnimalFriendsKit
   name: animal friends kit
-  description: Contains 4 doses of Subjuzine to convert animals into your henchmen, as well as two mice to inject.
+  description: Contains 4 doses of Subjuzine to convert animals into your henchmen, as well as two mouse cubes to rehydrate & inject.
   components:
   - type: Sprite
     layers:
@@ -80,7 +80,7 @@
       - state: syringe
   - type: StorageFill
     contents:
-      - id: MobMouse
+      - id: MouseCube
         amount: 2
       - id: Syringe
       - id: SubjuzineChemistryVial
