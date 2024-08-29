@@ -53,16 +53,6 @@ public sealed class ContentEyeSystem : SharedContentEyeSystem
     {
         RaisePredictiveEvent(new RequestEyeEvent(drawFov, drawLight));
     }
-    /*
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-        var eyeEntities = AllEntityQuery<ContentEyeComponent, EyeComponent>();
-        while (eyeEntities.MoveNext(out EntityUid entity, out ContentEyeComponent? contentComponent, out EyeComponent? _))
-        {
-            UpdateEyeOffset((entity, Comp<ContentEyeComponent>(entity), Comp<EyeComponent>(entity)));
-        }
-    }*/
 
     public override void FrameUpdate(float frameTime)
     {

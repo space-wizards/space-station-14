@@ -20,6 +20,10 @@ public partial class EyeCursorOffsetSystem : EntitySystem
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IClyde _clyde = default!;
 
+    // This value is here to make sure the user doesn't have to move their mouse
+    // all the way out to the edge of the screen to get the full offset.
+    static private float _edgeOffset = 0.9f;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -35,68 +39,48 @@ public partial class EyeCursorOffsetSystem : EntitySystem
 
         args.Offset += offset.Value;
     }
-    /*public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-        var eyeEntities = AllEntityQuery<EyeCursorOffsetComponent>();
-        while (eyeEntities.MoveNext(out EntityUid entity, out EyeCursorOffsetComponent? eyeCursorOffsetComp))
-        {
-            OffsetAfterMouse(entity, eyeCursorOffsetComp);
-        }
-    }*/
 
     public Vector2? OffsetAfterMouse(EntityUid uid, EyeCursorOffsetComponent? component)
     {
         var localPlayer = _player.LocalPlayer?.ControlledEntity;
         var mousePos = _inputManager.MouseScreenPosition;
         var screenSize = _clyde.MainWindow.Size;
-        var minValue = MathF.Min(screenSize.X / 2, screenSize.Y / 2);
-        var screenSizeMiddle = new Vector2(-(mousePos.X - screenSize.X / 2) / minValue, (mousePos.Y - screenSize.Y / 2) / minValue);
+        var minValue = MathF.Min(screenSize.X / 2, screenSize.Y / 2) * _edgeOffset;
 
+        var mouseNormalizedPos = new Vector2(-(mousePos.X - screenSize.X / 2) / minValue, (mousePos.Y - screenSize.Y / 2) / minValue); // X needs to be inverted here for some reason, otherwise it ends up flipped.
 
         if (localPlayer != null)
         {
             var playerPos = _transform.GetWorldPosition(localPlayer.Value);
-            
-            //var mouseMapPos = _eyeManager.ScreenToMap(new Vector2(mousePos.X, mousePos.Y));
-
-            //Vector2 mouseRelativePos;
 
             if (component == null)
             {
                 component = EnsureComp<EyeCursorOffsetComponent>(uid);
             }
 
-            // Doesn't move the offset if the mouse has left the game window
+            // Doesn't move the offset if the mouse has left the game window!
             if (mousePos.Window != WindowId.Invalid)
             {
-                //mouseRelativePos = mouseMapPos.Position - playerPos;
-                //Logger.Debug(mouseMapPos.Position.Length().ToString());
-                
+                // The offset must account for the in-world rotation.
                 var eyeRotation = _eyeManager.CurrentEye.Rotation;
-                var mouseRelativePos = Vector2.Transform(screenSizeMiddle, System.Numerics.Quaternion.CreateFromAxisAngle(-System.Numerics.Vector3.UnitZ, (float) (eyeRotation.Opposite().Theta)));
-                Logger.Debug(screenSize.ToString());
-                Logger.Debug(minValue.ToString());
-                Logger.Debug(eyeRotation.ToString());
-                Logger.Debug(mousePos.ToString());
-                Logger.Debug(mouseRelativePos.ToString());
-                
-                var modifier = 3f;
-                mouseRelativePos *= modifier;
-                if (mouseRelativePos.Length() > 3)
+                var mouseActualRelativePos = Vector2.Transform(mouseNormalizedPos, System.Numerics.Quaternion.CreateFromAxisAngle(-System.Numerics.Vector3.UnitZ, (float)(eyeRotation.Opposite().Theta))); // I don't know, it just works.
+
+                // Caps the offset into a circle around the player.
+                mouseActualRelativePos *= component.MaxOffset;
+                if (mouseActualRelativePos.Length() > component.MaxOffset)
                 {
-                    mouseRelativePos = mouseRelativePos.Normalized() * 3;
+                    mouseActualRelativePos = mouseActualRelativePos.Normalized() * component.MaxOffset;
                 }
 
-                component.TargetPosition = mouseRelativePos;
+                component.TargetPosition = mouseActualRelativePos;
 
-                //Makes the view not jump immediately when moving the cursor fast
+                //Makes the view not jump immediately when moving the cursor fast.
                 if (component.CurrentPosition != component.TargetPosition)
                 {
                     Vector2 vectorOffset = component.TargetPosition - component.CurrentPosition;
-                    if (vectorOffset.Length() > 0.5f)
+                    if (vectorOffset.Length() > component.OffsetSpeed)
                     {
-                        vectorOffset = vectorOffset.Normalized() * 0.5f;
+                        vectorOffset = vectorOffset.Normalized() * component.OffsetSpeed;
                     }
                     component.CurrentPosition += vectorOffset;
                 }
