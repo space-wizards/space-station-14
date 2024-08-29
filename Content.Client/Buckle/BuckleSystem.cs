@@ -18,6 +18,8 @@ internal sealed class BuckleSystem : SharedBuckleSystem
         SubscribeLocalEvent<BuckleComponent, ComponentHandleState>(OnHandleState);
         SubscribeLocalEvent<BuckleComponent, AppearanceChangeEvent>(OnAppearanceChange);
         SubscribeLocalEvent<StrapComponent, MoveEvent>(OnStrapMoveEvent);
+        SubscribeLocalEvent<StrapComponent, StrappedEvent>(OnStrappedEvent);
+        SubscribeLocalEvent<StrapComponent, UnstrappedEvent>(OnUnstrappedEvent);
     }
 
     private void OnStrapMoveEvent(EntityUid uid, StrapComponent component, ref MoveEvent args)
@@ -54,6 +56,37 @@ internal sealed class BuckleSystem : SharedBuckleSystem
                 buckledSprite.DrawDepth = buckle.OriginalDrawDepth.Value;
                 buckle.OriginalDrawDepth = null;
             }
+        }
+    }
+
+    /// <summary>
+    /// Is the strap entity already rotated north? Lower the draw depth of the buckled entity.
+    /// </summary>
+    private void OnStrappedEvent(Entity<StrapComponent> ent, ref StrappedEvent args)
+    {
+        if (!TryComp<SpriteComponent>(ent.Owner, out var strapSprite) ||
+            !TryComp<SpriteComponent>(args.Buckle, out var buckledSprite))
+            return;
+
+        if (Transform(ent.Owner).LocalRotation.GetCardinalDir() == Direction.North)
+        {
+            args.Buckle.Comp.OriginalDrawDepth ??= buckledSprite.DrawDepth;
+            buckledSprite.DrawDepth = strapSprite.DrawDepth - 1;
+        }
+    }
+
+    /// <summary>
+    /// Was the draw depth of the buckled entity lowered? Reset it upon unstrapping.
+    /// </summary>
+    private void OnUnstrappedEvent(Entity<StrapComponent> ent, ref UnstrappedEvent args)
+    {
+        if (!TryComp<SpriteComponent>(args.Buckle, out var buckledSprite))
+            return;
+
+        if (args.Buckle.Comp.OriginalDrawDepth.HasValue)
+        {
+            buckledSprite.DrawDepth = args.Buckle.Comp.OriginalDrawDepth.Value;
+            args.Buckle.Comp.OriginalDrawDepth = null;
         }
     }
 
