@@ -2645,12 +2645,3 @@
     seedId: cherry
   - type: SpaceGarbage
   - type: BadFood
-  - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Specific/Hydroponics/cherry.rsi
-      state: pit
-    entries:
-      burger:
-        name: food-sequence-content-cherry-pit
-      taco:
-        name: food-sequence-content-cherry-pit
