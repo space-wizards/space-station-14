@@ -22,6 +22,7 @@
     - id: SpiderClownSpawn
     - id: SpiderSpawn
     - id: VentClog
+    - id: BrosSpawn
 
 - type: entityTable
   id: BasicAntagEventsTable

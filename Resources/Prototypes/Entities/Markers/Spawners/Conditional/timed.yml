@@ -95,7 +95,7 @@
     - type: ClusterSpawner
       prototypes:
         - MobBros
-        # - MobSorb
+        - MobSorb
       chance: 0.9
-      minimumEntitiesSpawned: 7
-      maximumEntitiesSpawned: 10
+      minimumEntitiesSpawned: 20
+      maximumEntitiesSpawned: 25
