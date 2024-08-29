@@ -473,7 +473,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (user != null && item != null && !_actionBlockerSystem.CanPickup(user.Value, item.Value))
                 return false;
 
-            Eject(uid, slot, item!.Value, user, excludeUserAudio = false);
+            Eject(uid, slot, item!.Value, user, excludeUserAudio);
             return true;
         }
 
