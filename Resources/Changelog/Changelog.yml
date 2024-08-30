@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: notafet
-  changes:
-  - message: The TEG must now be operated at higher temperatures to generate power.
-    type: Tweak
-  id: 6750
-  time: '2024-06-15T21:05:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29050
 - author: lzk228
   changes:
   - message: Fixed ability for mime to not choose any mask.
@@ -3843,3 +3836,10 @@
   id: 7249
   time: '2024-08-30T01:46:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31635
+- author: Winkarst-cpu
+  changes:
+  - message: Potted plants now fade their sprites, just like trees.
+    type: Tweak
+  id: 7250
+  time: '2024-08-30T10:34:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31628

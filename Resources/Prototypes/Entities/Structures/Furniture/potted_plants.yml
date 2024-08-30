@@ -5,6 +5,7 @@
   description: A little bit of nature contained in a pot.
   abstract: true
   components:
+  - type: SpriteFade
   - type: Transform
     noRot: true
   - type: InteractionOutline
