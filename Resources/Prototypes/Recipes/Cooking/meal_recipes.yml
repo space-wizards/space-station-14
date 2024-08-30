@@ -400,6 +400,14 @@
     FoodDough: 1
 
 - type: microwaveMealRecipe
+  id: RecipeBreadCotton
+  name: cotton bread recipe
+  result: FoodBreadCotton
+  time: 10
+  solids:
+    FoodDoughCotton: 1
+
+- type: microwaveMealRecipe
   id: RecipeSausageBread
   name: sausage bread recipe
   result: FoodBreadSausage
@@ -601,6 +609,15 @@
     FoodChiliPepper: 2
     FoodTomato: 2
     SheetUranium1: 2
+
+- type: microwaveMealRecipe
+  id: RecipeCottonPizza
+  name: cotton pizza recipe
+  result: FoodPizzaCotton
+  time: 30
+  solids:
+    FoodDoughCottonFlat: 1
+    CottonBol: 4
 
 #Italian
 - type: microwaveMealRecipe
@@ -979,15 +996,15 @@
     FoodBerries: 3
     FoodPlateTin: 1
 
-#- type: microwaveMealRecipe
-#  id: RecipeCherryPie
-#  name: cherry pie recipe
-#  result: FoodPieCherry
-#  time: 15
-#  solids:
-#    FoodDoughPie: 1
-#    FoodCherry: 3 #cherries don't exist yet
-#    FoodPlateTin: 1
+- type: microwaveMealRecipe
+  id: RecipeCherryPie
+  name: cherry pie recipe
+  result: FoodPieCherry
+  time: 15
+  solids:
+    FoodDoughPie: 1
+    FoodCherry: 5
+    FoodPlateTin: 1
 
 - type: microwaveMealRecipe
   id: RecipeFrostyPie
@@ -1719,6 +1736,14 @@
 # NOT ACTUAL FOOD
 
 - type: microwaveMealRecipe
+  id: RecipeDriedTeaLeaves
+  name: dried tea leaves recipe
+  result: LeavesTeaDried
+  time: 10
+  solids:
+    LeavesTea: 1
+
+- type: microwaveMealRecipe
   id: RecipeDriedTobacco
   name: dried tobacco leaves recipe
   result: LeavesTobaccoDried
@@ -1830,3 +1855,12 @@
   time: 5
   solids:
     FoodDoughTortillaFlat: 1 # one third of a standard bread dough recipe
+
+- type: microwaveMealRecipe
+  id: RecipeCroissant
+  name: croissant recipe
+  result: FoodBakedCroissant
+  time: 5
+  solids:
+    FoodCroissantRaw: 1
+    FoodButterSlice: 1

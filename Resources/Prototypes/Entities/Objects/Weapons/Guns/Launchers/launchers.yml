@@ -169,6 +169,7 @@
     - type: ItemToggle
       onUse: false
     - type: PowerCellDraw
+    - type: ToggleCellDraw
     - type: Sprite
       sprite: Objects/Weapons/Guns/Launchers/tether_gun.rsi
       layers:
@@ -216,6 +217,7 @@
     - type: ItemToggle
       onUse: false
     - type: PowerCellDraw
+    - type: ToggleCellDraw
     - type: Sprite
       sprite: Objects/Weapons/Guns/Launchers/force_gun.rsi
       layers:

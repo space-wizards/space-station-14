@@ -49,6 +49,7 @@
     - id: RubberStampCaptain
     - id: SpaceCash1000
     - id: WeaponDisabler
+    - id: ClothingEyesGlassesCommand
 
 # No laser table + Laser table
 - type: entityTable
@@ -131,6 +132,7 @@
     - id: RubberStampDenied
     - id: RubberStampHop
     - id: WeaponDisabler
+    - id: ClothingEyesHudCommand
 
 - type: entity
   id: LockerHeadOfPersonnelFilled
@@ -308,7 +310,7 @@
   id: LockerFillHeadOfSecurityNoHardsuit
   table: !type:AllSelector
     children:
-    - id: BookSecretDocuments
+    - id: WeaponEnergyShotgun
     - id: BookSpaceLaw
     - id: BoxEncryptionKeySecurity
     - id: CigarGoldCase
