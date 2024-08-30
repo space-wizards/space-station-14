@@ -242,7 +242,6 @@
   suffix: Job spawn
   components:
   - type: ContainerSpawnPoint
-    spawnType: Job
     containerId: station_ai_mind_slot
     job: StationAi
   - type: Sprite
