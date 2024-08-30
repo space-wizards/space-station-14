@@ -2496,6 +2496,9 @@
       bloodReagent: VentCrud
     - type: NoSlip
     - type: ZombieImmune
+    - type: Tag
+      tags:
+      - BROS
 
 - type: entity
   name: SORB
@@ -2562,6 +2565,9 @@
       bloodReagent: VentCrud
     - type: NoSlip
     - type: ZombieImmune
+    - type: Tag
+      tags:
+      - BROS
 
 - type: entity
   name: wizard spider
