@@ -34,8 +34,12 @@ public sealed class GasPipeFillSystem : EntitySystem
         RemComp<PipeFillComponent>(uid); // only fire once, and fail dumb.
     }
 
+
     // Commands for arbitrary pipe gas changes
 
+    /// <summary>
+    /// A console command that lets you manually set the moles of gas in a pipenet.
+    /// </summary>
     [AdminCommand(AdminFlags.Mapping)]
     public sealed class AdjustPipeMoleCommand : IConsoleCommand
     {
@@ -85,6 +89,9 @@ public sealed class GasPipeFillSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    /// A console command that fills a pipenet with standard air mix.
+    /// </summary>
     [AdminCommand(AdminFlags.Mapping)]
     public sealed class AdjustPipeAirCommand : IConsoleCommand
     {
@@ -123,25 +130,25 @@ public sealed class GasPipeFillSystem : EntitySystem
 
             if (_nodeContainer.TryGetNode(nodeCont, args[1], out PipeNode? pipe) && pipe.NodeGroup is PipeNet net)
             {
-                var volScalar = (net.Air.Volume / Atmospherics.CellVolume) * 2; // 2x tile atmos so it can fill stuff, but atmos nerds have room to mald.
+                var volScalar = (net.Air.Volume / Atmospherics.CellVolume) * 3; // 3x tile atmos so it can fill stuff, but atmos nerds have room to mald.
                 net.Air.Clear();
                 net.Air.AdjustMoles(Gas.Oxygen, Atmospherics.OxygenMolesStandard * volScalar);
                 net.Air.AdjustMoles(Gas.Nitrogen, Atmospherics.NitrogenMolesStandard * volScalar);
             }
         }
-
-        // Toolshed needs a parser for PipeNet and I cannot be arsed right now. IConsoleCommands it is.
-        /*
-        [ToolshedCommand, AdminCommand(AdminFlags.Mapping)]
-        public sealed class PipeFillCommand : ToolshedCommand
-        {
-            [CommandImplementation("adjustgas")]
-            public void PipeFill([CommandArgument] PipeNet netId, [CommandArgument] string gas, [CommandArgument] float moles)
-            {
-                AtmosCommandUtils.TryParseGasID(gas, out var gasId);
-                netId.Air.AdjustMoles(gasId, moles);
-            }
-        }
-        */
     }
+
+    // Toolshed needs a parser for PipeNet and I cannot be arsed right now. IConsoleCommands it is.
+    /*
+    [ToolshedCommand, AdminCommand(AdminFlags.Mapping)]
+    public sealed class PipeFillCommand : ToolshedCommand
+    {
+        [CommandImplementation("adjustgas")]
+        public void PipeFill([CommandArgument] PipeNet netId, [CommandArgument] string gas, [CommandArgument] float moles)
+        {
+            AtmosCommandUtils.TryParseGasID(gas, out var gasId);
+            netId.Air.AdjustMoles(gasId, moles);
+        }
+    }
+    */
 }
