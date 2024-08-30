@@ -1,25 +1,4 @@
 ﻿Entries:
-- author: Ian321
-  changes:
-  - message: Donk co. microwaves now have their own machine board.
-    type: Fix
-  id: 6748
-  time: '2024-06-15T15:44:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29037
-- author: BombasterDS
-  changes:
-  - message: Added craftable mannequin that you can hang clothing on!
-    type: Add
-  id: 6749
-  time: '2024-06-15T17:50:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29004
-- author: notafet
-  changes:
-  - message: The TEG must now be operated at higher temperatures to generate power.
-    type: Tweak
-  id: 6750
-  time: '2024-06-15T21:05:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29050
 - author: lzk228
   changes:
   - message: Fixed ability for mime to not choose any mask.
@@ -3843,3 +3822,24 @@
   id: 7247
   time: '2024-08-29T13:21:06.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30524
+- author: slarticodefast
+  changes:
+  - message: Fixed energy shield visuals.
+    type: Fix
+  id: 7248
+  time: '2024-08-30T01:43:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31619
+- author: DieselMohawk
+  changes:
+  - message: Added Armband to back of Security Jumpsuit
+    type: Fix
+  id: 7249
+  time: '2024-08-30T01:46:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31635
+- author: Winkarst-cpu
+  changes:
+  - message: Potted plants now fade their sprites, just like trees.
+    type: Tweak
+  id: 7250
+  time: '2024-08-30T10:34:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31628
