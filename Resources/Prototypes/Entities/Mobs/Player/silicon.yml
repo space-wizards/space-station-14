@@ -143,6 +143,18 @@
     laws: Crewsimov
 
 - type: entity
+  id: StationAICircuitBoard
+  parent: BaseElectronics
+  name: circuit board (Station AI)
+  description: An electronics board containing the AI lawset.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: sAIDefault
+
+- type: entity
   id: CorporateCircuitBoard
   parent: BaseElectronics
   name: circuit board (Corporate)
@@ -264,7 +276,7 @@
   - type: BlockMovement
     blockInteraction: false
   - type: SiliconLawProvider
-    laws: Crewsimov
+    laws: sAIDefault
   - type: SiliconLawBound
   - type: ActionGrant
     actions:
