@@ -222,6 +222,7 @@
     - type: GuideHelp
       guides:
       - Security
+      - Antagonists
 
 - type: entity
   suffix: Flash
