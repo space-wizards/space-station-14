@@ -1,6 +1,4 @@
-# Define the meteor rock prototype separate from the asteroid rock to allow for different properties
-# Namely, make the meteor rock easier to destroy for non-salvage crew
-#Asteroid rock
+# These define Meteor Walls separate from Asteroid walls so they have different properties
 - type: entity
   id: MeteorRock
   parent: AsteroidRock
@@ -11,7 +9,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 12
+        damage: 12 #This change makes meteorite walls easier to destroy for cleanup
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
@@ -153,7 +151,7 @@
         - map: [ "enum.EdgeLayer.West" ]
           state: rock_asteroid_west
         - state: rock_silver
-# Yes I know it drops steel but we may get smelting at some point
+# Tin name is a holdover from the asteroid.yml prototype.
 - type: entity
   id: MeteorRockTin
   parent: MeteorRock
