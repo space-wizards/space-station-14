@@ -24,7 +24,7 @@ public sealed partial class MaskComponent : Component
     /// Equipped prefix to use after the mask was pulled down.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public string? PulledDownPrefix = "up";
+    public string PulledDownPrefix = "up";
 
     /// <summary>
     /// When <see langword="true"/> will function normally, otherwise will not react to events
