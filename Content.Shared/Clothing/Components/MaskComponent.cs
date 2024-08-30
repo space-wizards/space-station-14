@@ -21,12 +21,6 @@ public sealed partial class MaskComponent : Component
     public bool IsToggled;
 
     /// <summary>
-    /// Equipped prefix to use after the mask was pulled up.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public string? PulledUpPrefix = null;
-
-    /// <summary>
     /// Equipped prefix to use after the mask was pulled down.
     /// </summary>
     [DataField, AutoNetworkedField]

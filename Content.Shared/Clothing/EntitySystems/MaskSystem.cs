@@ -71,7 +71,7 @@ public sealed class MaskSystem : EntitySystem
         if (mask.ToggleActionEntity is { } action)
             _actionSystem.SetToggled(action, mask.IsToggled);
 
-        var maskEv = new ItemMaskToggledEvent(wearer, mask.PulledUpPrefix, mask.PulledDownPrefix, mask.IsToggled);
+        var maskEv = new ItemMaskToggledEvent(wearer, mask.PulledDownPrefix, mask.IsToggled);
         RaiseLocalEvent(uid, ref maskEv);
 
         var wearerEv = new WearerMaskToggledEvent(mask.IsToggled);
