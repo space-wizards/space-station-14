@@ -18,6 +18,8 @@
       - id: RubberStampWarden
       - id: DoorRemoteArmory
       - id: ClothingOuterHardsuitWarden
+      - id: OxygenTankFilled
+      - id: NitrogenTankFilled
       - id: HoloprojectorSecurity
       - id: BookSpaceLaw
       - id: ClothingBackpackElectropack
@@ -91,6 +93,7 @@
       - id: TrackingImplanter
         amount: 2
       - id: ClothingOuterHardsuitBrigmedic
+      - id: AirTankFilled
       - id: BoxSterileMask
       - id: ClothingHeadHatBeretBrigmedic
       - id: ClothingOuterCoatAMG
