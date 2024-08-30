@@ -116,6 +116,7 @@
   - type: StationAiHolder
     slot:
       name: station-ai-mind-slot
+      locked: true
       whitelist:
         tags:
         - StationAi
@@ -241,7 +242,6 @@
   suffix: Job spawn
   components:
   - type: ContainerSpawnPoint
-    spawnType: Job
     containerId: station_ai_mind_slot
     job: StationAi
   - type: Sprite
