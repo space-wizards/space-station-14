@@ -8,6 +8,7 @@ using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Administration;
 using Content.Shared.Atmos;
 using Robust.Shared.Console;
+using Robust.Shared.Map.Events;
 using Robust.Shared.Toolshed;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems;
@@ -15,6 +16,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems;
 public sealed class GasPipeFillSystem : EntitySystem
 {
     [Dependency] private readonly AtmosphereSystem _atmos = default!;
+    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
 
     public override void Initialize()
@@ -22,16 +24,69 @@ public sealed class GasPipeFillSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<PipeFillComponent, NodeGroupsRebuilt>(OnNodeUpdate);
+
+        SubscribeLocalEvent<BeforeSaveEvent>(OnMapSave);
     }
 
     private void OnNodeUpdate(EntityUid uid, PipeFillComponent comp, ref NodeGroupsRebuilt args)
     {
-        if (_nodeContainer.TryGetNode(uid, comp.NodeName, out PipeNode? tank) && tank.NodeGroup is PipeNet net)
+        foreach (var gasmix in comp.AirDict)
         {
-            _atmos.Merge(net.Air, comp.Air);
+            if (_nodeContainer.TryGetNode(uid, gasmix.Key, out PipeNode? tank) && tank.NodeGroup is PipeNet net)
+            {
+                _atmos.Merge(net.Air, gasmix.Value);
+            }
         }
 
-        RemComp<PipeFillComponent>(uid); // only fire once, and fail dumb.
+        comp.HasFired = true; // only fire once, and fail dumb.
+    }
+
+    /// <summary>
+    /// This clusterfuck saves pipenets on entities because thats just what we gotta do I guess. Someone please save me. My god.
+    /// </summary>
+    private void OnMapSave(BeforeSaveEvent ev)
+    {
+        var enumerator = AllEntityQuery<PipeFillComponent, NodeContainerComponent>();
+        while (enumerator.MoveNext(out var uid, out var pipeFill, out var nodeContainer))
+        {
+            if (!TryComp(uid, out TransformComponent? xform) ||
+                !_mapSystem.TryGetMap(xform.MapID, out var mapEnt) ||
+                mapEnt != ev.Map
+                )
+                continue;
+
+            // build the dictionary for AirDict
+            var nextAirDict = new Dictionary<string, GasMixture>();
+            var seenNets = new List<(EntityUid, PipeNet)>();
+            foreach (var node in nodeContainer.Nodes)
+            {
+                if (_nodeContainer.TryGetNode(uid, node.Key, out PipeNode? pipeNode) &&
+                    ( pipeNode.NodeGroup is PipeNet net ) &&
+                    !seenNets.Contains((uid, net)) // forgive me, it only runs on map save.
+                    )
+                {
+                    // copy nodeshare worth of gas to savedGas
+                    var savedGas = new GasMixture();
+                    var nodeShare = net.Air.Volume / pipeNode.Air.Volume;
+
+                    foreach (Gas gastype in Enum.GetValues(typeof(Gas)))
+                    {
+                        savedGas.AdjustMoles(gastype, net.Air.GetMoles(gastype) * nodeShare);
+                    }
+
+                    savedGas.Temperature = net.Air.Temperature;
+
+                    nextAirDict.Add(node.Key, savedGas);
+
+                    // prevent adding gas more than once if more than one node is in the same PipeNet
+                    seenNets.Add((uid, net));
+                }
+            }
+            pipeFill.AirDict = nextAirDict;
+
+            // set HasFired false so gas gets added when the map is loaded and PipeNets update.
+            pipeFill.HasFired = false;
+        }
     }
 
 

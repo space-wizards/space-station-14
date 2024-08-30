@@ -3,21 +3,20 @@ using Content.Shared.Atmos;
 namespace Content.Server.Atmos.Piping.Unary.Components
 {
     [RegisterComponent]
-    public sealed partial class PipeFillComponent : Component, IGasMixtureHolder
+    public sealed partial class PipeFillComponent : Component
     {
         /// <summary>
-        /// The node to add gas to at component initialization.
+        /// Dictionary of nodes on a NodeContainer which are Pipe nodes and their associated saved GasMixtures.
         /// </summary>
         [ViewVariables]
         [DataField]
-        public string NodeName { get; set; } = "tank";
-
+        public Dictionary<string, GasMixture> AirDict { get; set; } = new();
 
         /// <summary>
-        /// The gas mixture to be added to the pipe node / pipenet on first pipenet update
+        /// Set true after it fires to prevent readding gas. Set false before saving map to ensure gas is readded on load.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
+        [ViewVariables]
         [DataField]
-        public GasMixture Air { get; set; } = new();
+        public bool HasFired = false;
     }
 }

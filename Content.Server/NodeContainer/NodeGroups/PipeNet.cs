@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Atmos.Piping.Unary.Components;
 using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
 using Robust.Shared.Utility;
@@ -49,8 +50,11 @@ namespace Content.Server.NodeContainer.NodeGroups
         {
             base.LoadNodes(groupNodes);
 
+            var entManager = IoCManager.Resolve<IEntityManager>();
+
             foreach (var node in groupNodes)
             {
+                entManager.EnsureComponent<PipeFillComponent>(node.Owner); // this makes sure pipes will save their gas when the map is saved.
                 var pipeNode = (PipeNode) node;
                 Air.Volume += pipeNode.Volume;
             }

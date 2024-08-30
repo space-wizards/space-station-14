@@ -127,11 +127,12 @@
   suffix: 4500kpa
   components:
   - type: PipeFill
-    air:
-      moles: # List of gasses for easy reference
+    airDict:
+      tank:
+        moles: # List of gasses for easy reference
         - 15,722.368284 # oxygen 21%
         - 59,146.052116 # nitrogen 79%
-      temperature: 293.15
+        temperature: 293.15
 
 - type: entity
   name: oxygen reservoir
@@ -162,8 +163,9 @@
   suffix: 4500kpa
   components:
   - type: PipeFill
-    air:
-      moles: # List of gasses for easy reference
+    airDict:
+      tank:
+        moles: # List of gasses for easy reference
         - 74,868.4204 # oxygen
         - 0 # nitrogen
         - 0 # CO2
@@ -173,7 +175,7 @@
         - 0 # Ammonia
         - 0 # N2O
         - 0 # Frezon
-      temperature: 293.15
+        temperature: 293.15
 
 - type: entity
   name: nitrogen reservoir
@@ -204,11 +206,12 @@
   suffix: 4500kpa
   components:
   - type: PipeFill
-    air:
-      moles: # List of gasses for easy reference
+    airDict:
+      tank:
+        moles: # List of gasses for easy reference
         - 0 # oxygen
         - 74,868.4204 # nitrogen
-      temperature: 293.15
+        temperature: 293.15
 
 - type: entity
   name: carbon dioxide reservoir
@@ -241,12 +244,13 @@
   suffix: 4500kpa
   components:
   - type: PipeFill
-    air:
-      moles: # List of gasses for easy reference
+    airDict:
+      tank:
+        moles: # List of gasses for easy reference
         - 0 # oxygen
         - 0 # nitrogen
         - 74,868.4204 # CO2
-      temperature: 293.15
+        temperature: 293.15
 
 - type: entity
   name: plasma reservoir
@@ -277,13 +281,14 @@
   suffix: 4500kpa
   components:
   - type: PipeFill
-    air:
-      moles: # List of gasses for easy reference
+    airDict:
+      tank:
+        moles: # List of gasses for easy reference
         - 0 # oxygen
         - 0 # nitrogen
         - 0 # CO2
         - 74,868.4204 # Plasma
-      temperature: 293.15
+        temperature: 293.15
 
 - type: entity
   name: tritium reservoir
@@ -316,14 +321,15 @@
   suffix: 4500kpa
   components:
   - type: PipeFill
-    air:
-      moles: # List of gasses for easy reference
+    airDict:
+      tank:
+        moles: # List of gasses for easy reference
         - 0 # oxygen
         - 0 # nitrogen
         - 0 # CO2
         - 0 # Plasma
         - 74,868.4204 # Tritium
-      temperature: 293.15
+        temperature: 293.15
 
 - type: entity
   name: water vapor reservoir
@@ -356,15 +362,16 @@
   suffix: 4500kpa
   components:
   - type: PipeFill
-    air:
-      moles: # List of gasses for easy reference
+    airDict:
+      tank:
+        moles: # List of gasses for easy reference
         - 0 # oxygen
         - 0 # nitrogen
         - 0 # CO2
         - 0 # Plasma
         - 0 # Tritium
         - 74,868.4204 # Water vapor
-      temperature: 293.15
+        temperature: 293.15
 
 - type: entity
   name: ammonia reservoir
@@ -397,8 +404,9 @@
   suffix: 4500kpa
   components:
   - type: PipeFill
-    air:
-      moles: # List of gasses for easy reference
+    airDict:
+      tank:
+        moles: # List of gasses for easy reference
         - 0 # oxygen
         - 0 # nitrogen
         - 0 # CO2
@@ -406,7 +414,7 @@
         - 0 # Tritium
         - 0 # Water vapor
         - 74,868.4204 # Ammonia
-      temperature: 293.15
+        temperature: 293.15
 
 - type: entity
   name: nitrous oxide reservoir
@@ -437,8 +445,9 @@
   suffix: 4500kpa
   components:
   - type: PipeFill
-    air:
-      moles: # List of gasses for easy reference
+    airDict:
+      tank:
+        moles: # List of gasses for easy reference
         - 0 # oxygen
         - 0 # nitrogen
         - 0 # CO2
@@ -447,7 +456,7 @@
         - 0 # Water vapor
         - 0 # Ammonia
         - 74,868.4204 # N2O
-      temperature: 293.15
+        temperature: 293.15
 
 - type: entity
   name: frezon reservoir
@@ -480,8 +489,9 @@
   suffix: 4500kpa
   components:
   - type: PipeFill
-    air:
-      moles: # List of gasses for easy reference
+    airDict:
+      tank:
+        moles: # List of gasses for easy reference
         - 0 # oxygen
         - 0 # nitrogen
         - 0 # CO2
@@ -491,4 +501,4 @@
         - 0 # Ammonia
         - 0 # N2O
         - 74,868.4204 # Frezon
-      temperature: 293.15
+        temperature: 293.15
