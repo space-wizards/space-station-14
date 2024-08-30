@@ -8,13 +8,14 @@ namespace Content.Shared.Silicons.Laws;
 /// <summary>
 /// This handles getting and displaying the laws for silicons.
 /// </summary>
-public abstract class SharedSiliconLawSystem : EntitySystem
+public abstract partial class SharedSiliconLawSystem : EntitySystem
 {
     [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
+        InitializeUpdater();
         SubscribeLocalEvent<EmagSiliconLawComponent, GotEmaggedEvent>(OnGotEmagged);
         SubscribeLocalEvent<EmagSiliconLawComponent, OnAttemptEmagEvent>(OnAttemptEmag);
     }

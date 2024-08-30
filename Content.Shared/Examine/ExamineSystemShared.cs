@@ -117,12 +117,25 @@ namespace Content.Shared.Examine
             if (EntityManager.GetComponent<TransformComponent>(examiner).MapID != target.MapId)
                 return false;
 
-            return InRangeUnOccluded(
-                _transform.GetMapCoordinates(examiner),
-                target,
-                GetExaminerRange(examiner),
-                predicate: predicate,
-                ignoreInsideBlocker: true);
+            // Do target InRangeUnoccluded which has different checks.
+            if (examined != null)
+            {
+                return InRangeUnOccluded(
+                    examiner,
+                    examined.Value,
+                    GetExaminerRange(examiner),
+                    predicate: predicate,
+                    ignoreInsideBlocker: true);
+            }
+            else
+            {
+                return InRangeUnOccluded(
+                    examiner,
+                    target,
+                    GetExaminerRange(examiner),
+                    predicate: predicate,
+                    ignoreInsideBlocker: true);
+            }
         }
 
         /// <summary>
@@ -214,6 +227,14 @@ namespace Content.Shared.Examine
 
         public bool InRangeUnOccluded(EntityUid origin, EntityUid other, float range = ExamineRange, Ignored? predicate = null, bool ignoreInsideBlocker = true)
         {
+            var ev = new InRangeOverrideEvent(origin, other);
+            RaiseLocalEvent(origin, ref ev);
+
+            if (ev.Handled)
+            {
+                return ev.InRange;
+            }
+
             var originPos = _transform.GetMapCoordinates(origin);
             var otherPos = _transform.GetMapCoordinates(other);
 
