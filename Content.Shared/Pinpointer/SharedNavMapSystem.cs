@@ -1,12 +1,12 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 using System.Runtime.CompilerServices;
+using Content.Shared.Maps;
 using Content.Shared.Tag;
 using Robust.Shared.GameStates;
+using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Timing;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.Pinpointer;
 
@@ -24,6 +24,7 @@ public abstract class SharedNavMapSystem : EntitySystem
     public const int FloorMask = AllDirMask << (int) NavMapChunkType.Floor;
 
     [Robust.Shared.IoC.Dependency] private readonly TagSystem _tagSystem = default!;
+    [Robust.Shared.IoC.Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
     private static readonly ProtoId<TagPrototype>[] WallTags = {"Wall", "Window"};
     private EntityQuery<NavMapDoorComponent> _doorQuery;
@@ -34,6 +35,9 @@ public abstract class SharedNavMapSystem : EntitySystem
 
         // Data handling events
         SubscribeLocalEvent<NavMapComponent, ComponentGetState>(OnGetState);
+
+        SubscribeNetworkEvent<MapWarpRequest>(OnMapWarp);
+
         _doorQuery = GetEntityQuery<NavMapDoorComponent>();
     }
 
@@ -79,6 +83,33 @@ public abstract class SharedNavMapSystem : EntitySystem
         beaconData = new NavMapBeacon(meta.NetEntity, component.Color, name, xform.LocalPosition);
 
         return true;
+    }
+
+    public void RequestWarpTo(EntityUid uid, Vector2 target)
+    {
+        var message = new MapWarpRequest(GetNetEntity(uid), target);
+        RaiseNetworkEvent(message);
+    }
+
+    private void OnMapWarp(MapWarpRequest args)
+    {
+        var uid = GetEntity(args.Uid);
+
+        // This was only tested with the AI Eye but should theoretically work with any other future remote-controlled things
+        if (TryComp<EyeComponent>(uid, out var eye) && eye.Target is not null)
+            uid = eye.Target.Value;
+
+        if (!HasComp<NavMapWarpComponent>(uid))
+            return;
+
+        var xform = Transform(uid);
+
+        if (xform.MapUid is null)
+            return;
+
+        // This was designed for incorporeal entities, thus there aren't any collision checks or anything
+        _transformSystem.SetCoordinates(uid, xform, new EntityCoordinates(xform.MapUid.Value, args.Target));
+        _transformSystem.AttachToGridOrMap(uid, xform);
     }
 
     #region: Event handling

@@ -311,6 +311,7 @@
     - state: ai_camera
       shader: unshaded
       map: ["base"]
+  - type: NavMapWarp
 
 # Borgs
 - type: entity

@@ -91,6 +91,7 @@
   - type: Loadout
     prototypes: [ MobAghostGear ]
   - type: BypassInteractionChecks
+  - type: NavMapWarp
 
 - type: entity
   id: ActionAGhostShowSolar
