@@ -45,16 +45,21 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 200
-      behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
+        damage: 500
       behaviors:
       - !type:DoActsBehavior
-        acts: ["Destruction"]
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+    - trigger:
+        !type:DamageTrigger
+        damage: 250
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:DoActsBehavior
+        acts: ["Breakage"]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
@@ -407,7 +412,7 @@
       - state: pipe
         map: [ "enum.PipeVisualLayers.Pipe" ]
         drawdepth: ThinPipe
-      - state: red
+      - state: nitrousoxide
   - type: Construction
     graph: GasResevoir
     node: nitrousOxideStaticGasTank
