@@ -86,7 +86,7 @@
         pipeDirection: South
         volume: 100
   - type: Construction
-    graph: Gasreservoir
+    graph: GasReservoir
     node: staticGasTank
   - type: Tag
     tags:
@@ -111,7 +111,7 @@
         drawdepth: ThinPipe
       - state: air
   - type: Construction
-    graph: Gasreservoir
+    graph: GasReservoir
     node: airStaticGasTank
     
 - type: entity
@@ -146,7 +146,7 @@
         drawdepth: ThinPipe
       - state: oxygen
   - type: Construction
-    graph: Gasreservoir
+    graph: GasReservoir
     node: oxygenStaticGasTank
 
 - type: entity
@@ -187,7 +187,7 @@
         drawdepth: ThinPipe
       - state: nitrogen
   - type: Construction
-    graph: Gasreservoir
+    graph: GasReservoir
     node: nitrogenStaticGasTank
 
 - type: entity
@@ -223,7 +223,7 @@
       - state: greyscale
         color: "#999999"
   - type: Construction
-    graph: Gasreservoir
+    graph: GasReservoir
     node: carbonDioxideStaticGasTank
 
 - type: entity
@@ -258,7 +258,7 @@
         drawdepth: ThinPipe
       - state: plasma
   - type: Construction
-    graph: Gasreservoir
+    graph: GasReservoir
     node: plasmaStaticGasTank
 
 - type: entity
@@ -296,7 +296,7 @@
       - state: greyscale
         color: "#55F055"
   - type: Construction
-    graph: Gasreservoir
+    graph: GasReservoir
     node: tritiumStaticGasTank
 
 - type: entity
@@ -335,7 +335,7 @@
       - state: greyscale
         color: "#f5c9eb"
   - type: Construction
-    graph: Gasreservoir
+    graph: GasReservoir
     node: waterVaporStaticGasTank
 
 - type: entity
@@ -375,7 +375,7 @@
       - state: greyscale
         color: "#dbc42a"
   - type: Construction
-    graph: Gasreservoir
+    graph: GasReservoir
     node: ammoniaStaticGasTank
 
 - type: entity
@@ -414,7 +414,7 @@
         drawdepth: ThinPipe
       - state: nitrousoxide
   - type: Construction
-    graph: Gasreservoir
+    graph: GasReservoir
     node: nitrousOxideStaticGasTank
 
 - type: entity
@@ -456,7 +456,7 @@
       - state: greyscale
         color: "#88D0FF"
   - type: Construction
-    graph: Gasreservoir
+    graph: GasReservoir
     node: frezonStaticGasTank
 
 - type: entity

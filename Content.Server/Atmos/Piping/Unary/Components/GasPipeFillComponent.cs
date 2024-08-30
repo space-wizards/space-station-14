@@ -14,7 +14,7 @@ namespace Content.Server.Atmos.Piping.Unary.Components
 
 
         /// <summary>
-        /// The gas mixture to be added to the pipe node / network on component initialization.
+        /// The gas mixture to be added to the pipe node / pipenet on first pipenet update
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField]
