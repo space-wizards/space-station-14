@@ -49,6 +49,7 @@
     - id: RubberStampCaptain
     - id: SpaceCash1000
     - id: WeaponDisabler
+    #- id: ClothingEyesGlassesCommand # GreyStation - Removal
 
 # No laser table + Laser table
 - type: entityTable
@@ -131,6 +132,7 @@
     - id: RubberStampDenied
     - id: RubberStampHop
     - id: WeaponDisabler
+    #- id: ClothingEyesHudCommand # GreyStation - Removal
 
 - type: entity
   id: LockerHeadOfPersonnelFilled
