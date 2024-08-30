@@ -119,7 +119,8 @@
     earliestStart: 40
     reoccurrenceDelay: 20
     minimumPlayers: 20
-  - type: AntagRandomSpawn
+  - type: SpaceSpawnRule
+    spawnDistance: 0
   - type: AntagSpawner
     prototype: MobDragon
   - type: AntagObjectives
@@ -136,8 +137,7 @@
       mindComponents:
       - type: DragonRole
         prototype: Dragon
-      - type: RoleBriefing
-        briefing: dragon-role-briefing
+  - type: DragonRule
 
 - type: entity
   parent: BaseGameRule
