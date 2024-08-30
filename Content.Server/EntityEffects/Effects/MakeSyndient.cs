@@ -39,7 +39,6 @@ public sealed partial class MakeSyndient : EntityEffect
         // Don't add a ghost role to things that already have ghost roles
         if (entityManager.TryGetComponent(uid, out GhostRoleComponent? ghostRole))
         {
-            
             //change the role description and rules to make it clear it's been injected with subjuzine
             ghostRole = entityManager.GetComponent<GhostRoleComponent>(uid);
             ghostRole.RoleDescription = Loc.GetString("ghost-role-information-subjuzine-description");
