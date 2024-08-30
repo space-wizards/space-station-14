@@ -221,3 +221,10 @@
   completetime: 3
   materials:
     Plastic: 200
+
+- type: latheRecipe
+  id: Ashtray
+  result: Ashtray
+  completetime: 1
+  materials:
+    Steel: 20
