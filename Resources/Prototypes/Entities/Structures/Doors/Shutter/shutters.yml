@@ -61,7 +61,7 @@
         type: WiresBoundUserInterface
   - type: Airtight
   - type: RadiationBlocker
-    resistance: 2
+    resistance: 1
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: StructuralMetallic
@@ -130,7 +130,7 @@
   id: ShuttersRadiation
   parent: BaseShutter
   name: radiation shutters
-  description: Why did they make these shutters radioactive?
+  description: A relatively fragile set of shutters, made of radiation blocking lead plates.
   components:
   - type: Sprite
     sprite: Structures/Doors/Shutters/shutters_radiation.rsi
@@ -144,7 +144,15 @@
     containers:
     - board
   - type: RadiationBlocker
-    resistance: 4
+    resistance: 10
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
 
 - type: entity
   id: ShuttersRadiationOpen
