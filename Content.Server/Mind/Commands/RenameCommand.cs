@@ -50,9 +50,9 @@ public sealed class RenameCommand : LocalizedEntityCommands
         }
 
         if (session == null)
-            shell.WriteError(Loc.GetString("rename-not-found", ("name", str)));
+            shell.WriteError(Loc.GetString("cmd-rename-not-found", ("target", str)));
         else
-            shell.WriteError(Loc.GetString("rename-no-entity", ("name", str)));
+            shell.WriteError(Loc.GetString("cmd-rename-no-entity", ("target", str)));
 
         entityUid = EntityUid.Invalid;
         return false;
