@@ -1,6 +1,6 @@
 - type: entity
   id: XenoWardingTower
-  name: Xeno warding tower
+  name: xeno warding tower
   placement:
     mode: SnapgridCenter
     snap:
@@ -57,8 +57,54 @@
   description: A statue of one of the brave carp that got us where we are today. Made with real teeth!
   components:
   - type: Sprite
+    noRot: true
     sprite: Structures/Specific/carp_statue.rsi
     layers:
     - state: statue
-    - state: unshaded
+    - state: eyes
+    - state: eyes_unshaded
       shader: unshaded
+    - state: teeth_unshaded
+      shader: unshaded
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.35,-0.35,0.35,0.35"
+        density: 60
+        mask:
+        - MachineMask
+        layer:
+        - MidImpassable
+        - LowImpassable
+  - type: Construction
+    graph: CarpStatue
+    node: statue
+
+- type: entity
+  parent: CarpStatue
+  id: CarpStatueEmpty
+  suffix: Empty
+  description: A lump of precious metals, soon to be a brilliant carp statue.
+  components:
+  - type: Sprite
+    layers:
+    - state: statue
+  - type: Construction
+    node: empty
+
+- type: entity
+  parent: CarpStatue
+  id: CarpStatueEyes
+  suffix: Eyes
+  description: A statue of one of the brave carp that got us where we are today. This one needs a dentist...
+  components:
+  - type: Sprite
+    layers:
+    - state: statue
+    - state: eyes
+    - state: eyes_unshaded
+      shader: unshaded
+  - type: Construction
+    node: eyes

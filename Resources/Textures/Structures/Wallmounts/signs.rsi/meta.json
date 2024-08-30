@@ -5,1490 +5,500 @@
     "y": 32
   },
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from https://github.com/discordia-space/CEV-Eris at commit 4e0bbe682d0a00192d24708fdb7031008aa03f18 and bee station at commit https://github.com/BeeStation/BeeStation-Hornet/commit/13dd5ac712385642574138f6d7b30eea7c2fab9c, except numerical signs which were created by discord: brainfood#7460, states: 'survival' and 'ntmining' from https://github.com/tgstation/tgstation/commit/f743754ec3ef446c8172388431effa73aeddb7ff#diff-b429dd7fccbca60d740d4887c1077a178abf1efffe57e7ae2a0b607c8a9e2202, 'janitor' edited by forgotmyotheraccount on github, 'arcade', 'barbershop', 'direction_exam', 'direction_icu', 'laundromat', 'news', 'reception', and 'salvage' made by rosieposieeee (github)",
+  "copyright": "Taken from https://github.com/discordia-space/CEV-Eris at commit 4e0bbe682d0a00192d24708fdb7031008aa03f18 and bee station at commit https://github.com/BeeStation/BeeStation-Hornet/commit/13dd5ac712385642574138f6d7b30eea7c2fab9c, Job signs by EmoGarbage404 (github) with inspiration from yogstation and tgstation, 'direction_exam' and 'direction_icu' made by rosieposieeee (github), 'direction_atmos' made by SlamBamActionman. voxcross taken from vgstation13 at https://github.com/vgstation-coders/vgstation13/blob/e7f005f8b8d3f7d89cbee3b87f76c23f9e951c27/icons/obj/decals.dmi",
     "states": [
         {
-            "name": "ai",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "ai"
         },
         {
-            "name": "anomaly",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "ai_upload"
         },
         {
-            "name": "anomaly2"
+            "name": "vault"
         },
         {
-            "name": "arcade",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "xenoarch"
         },
         {
-            "name": "armory",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "anomaly"
         },
         {
-            "name": "barbershop",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "arcade"
         },
         {
-            "name": "ass",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "armory"
         },
         {
-            "name": "atmos",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "barbershop"
         },
         {
-            "name": "atmos_air",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "ass"
         },
         {
-            "name": "atmos_co2",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "atmos"
         },
         {
-            "name": "atmos_n2",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "atmos_air"
         },
         {
-            "name": "atmos_n2o",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "atmos_co2"
         },
         {
-            "name": "atmos_o2",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "atmos_n2"
         },
         {
-            "name": "atmos_plasma",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "atmos_n2o"
         },
         {
-            "name": "atmos_tritium",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "atmos_o2"
         },
         {
-            "name": "atmos_waste",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "atmos_plasma"
         },
         {
-            "name": "atmosplaque",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "atmos_tritium"
         },
         {
-            "name": "zumosplaque",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "atmos_waste"
         },
         {
-            "name": "bar",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "atmosplaque"
         },
         {
-            "name": "biblio",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "zumosplaque"
         },
         {
-            "name": "bio",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "bar"
         },
         {
-            "name": "biohazard",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "biblio"
         },
         {
-            "name": "bridge",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "bio"
         },
         {
-            "name": "canisters",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "biohazard"
         },
         {
-            "name": "cargo",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "bridge"
         },
         {
-            "name": "cargo_dock",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "canisters"
         },
         {
-            "name": "chapel",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "cargo"
         },
         {
-            "name": "chem",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "cargo_dock"
         },
         {
-            "name": "chemistry1",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "chapel"
         },
         {
-            "name": "chemistry2",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "chem"
         },
         {
-            "name": "commander",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "commander"
         },
         {
-            "name": "conference_room",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "conference_room"
         },
         {
-            "name": "corrosives",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "corrosives"
         },
         {
-            "name": "court",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "cryogenics"
         },
         {
-            "name": "cryogenics",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "danger"
         },
         {
-            "name": "danger",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "deathsposal"
         },
         {
-            "name": "deathsposal",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "direction_atmos",
+            "directions": 4
         },
         {
             "name": "direction_bar",
-            "directions": 4,
-            "delays": [
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "direction_exam",
-            "directions": 4,
-            "delays": [
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "direction_icu",
-            "directions": 4,
-            "delays": [
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "direction_janitor",
-            "directions": 4,
-            "delays": [
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "direction_food",
-            "directions": 4,
-            "delays": [
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "direction_hop",
-            "directions": 4,
-            "delays": [
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "direction_library",
-            "directions": 4,
-            "delays": [
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "direction_chemistry",
-            "directions": 4,
-            "delays": [
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "direction_eng",
-            "directions": 4,
-            "delays": [
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "direction_evac",
-            "directions": 4,
-            "delays": [
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "direction_supply",
-            "directions": 4,
-            "delays": [
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "direction_bridge",
-            "directions": 4,
-            "delays": [
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "direction_med",
-            "directions": 4,
-            "delays": [
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "direction_sci",
-            "directions": 4,
-            "delays": [
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "direction_sec",
-            "directions": 4,
-            "delays": [
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "direction_brig",
-            "directions": 4,
-            "delays": [
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "direction_chapel",
-            "directions": 4,
-            "delays": [
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "direction_hydro",
-            "directions": 4,
-            "delays": [
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "direction_dorms",
-            "directions": 4,
-            "delays": [
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "direction_cryo",
-            "directions": 4,
-            "delays": [
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "direction_gravity",
-            "directions": 4,
-            "delays": [
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "direction_salvage",
-            "directions": 4,
-            "delays": [
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "direction_solar",
-            "directions": 4,
-            "delays": [
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "direction_wash",
-            "directions": 4,
-            "delays": [
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ]
-            ]
-        },
-        {
-            "name": "dock",
-            "delays": [
-                [
-                    1
-                ]
-            ]
-        },
-        {
-            "name": "doors",
-            "delays": [
-                [
-                    1
-                ]
-            ]
-        },
-        {
-            "name": "drones",
-            "delays": [
-                [
-                    1
-                ]
-            ]
-        },
-        {
-            "name": "electrical",
-            "delays": [
-                [
-                    1
-                ]
-            ]
-        },
-        {
-            "name": "eng",
-            "delays": [
-                [
-                    1
-                ]
-            ]
-        },
-        {
-            "name": "engine",
-            "delays": [
-                [
-                    1
-                ]
-            ]
-        },
-        {
-            "name": "eva",
-            "delays": [
-                [
-                    1
-                ]
-            ]
-        },
-        {
-            "name": "examroom",
-            "delays": [
-                [
-                    1
-                ]
-            ]
-        },
-        {
-            "name": "explosives",
-            "delays": [
-                [
-                    1
-                ]
-            ]
-        },
-        {
-            "name": "fire",
-            "delays": [
-                [
-                    1
-                ]
-            ]
-        },
-        {
-            "name": "flammable",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "directions": 4
         },
         {
-            "name": "cloning",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "dock"
         },
         {
-            "name": "gravi",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "doors"
         },
         {
-            "name": "hydro1",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "mats"
         },
         {
-            "name": "hydro2",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "electrical"
         },
         {
-            "name": "hydro3",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "eng"
         },
         {
-            "name": "interrogation",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "engine"
         },
         {
-            "name": "janitor",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "eva"
         },
         {
-            "name": "laser",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "examroom"
         },
         {
-            "name": "laundromat",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "explosives"
         },
         {
-            "name": "law",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "fire"
         },
         {
-            "name": "magnetics",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "flammable"
         },
         {
-            "name": "mail",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "cloning"
         },
         {
-            "name": "medbay",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "gravi"
         },
         {
-            "name": "memetic",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "hydro"
         },
         {
-            "name": "miner_dock",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "interrogation"
         },
         {
-            "name": "monkey_painting",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "janitor"
         },
         {
-            "name": "morgue",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "laser"
         },
         {
-            "name": "news",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "laundromat"
         },
         {
-            "name": "nosmoking",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "law"
         },
         {
-            "name": "nosmoking2",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "magnetics"
         },
         {
-            "name": "surgery",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "mail"
         },
         {
-            "name": "optical",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "medbay"
         },
         {
-            "name": "oxidants",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "memetic"
         },
         {
-            "name": "pods",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "monkey_painting"
         },
         {
-            "name": "prison",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "morgue"
         },
         {
-            "name": "psychology",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "news"
         },
         {
-            "name": "radiation",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "kitchen"
         },
         {
-            "name": "reception",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "drama1"
         },
         {
-            "name": "rnd",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "drama2"
         },
         {
-            "name": "robo",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "drama3"
         },
         {
-            "name": "salvage",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "restroom"
         },
         {
-            "name": "sci",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "nosmoking"
         },
         {
-            "name": "science1",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "nosmoking2"
         },
         {
-            "name": "science2",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "surgery"
         },
         {
-            "name": "secure",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "optical"
         },
         {
-            "name": "securearea",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "oxidants"
         },
         {
-            "name": "shield",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "pods"
         },
         {
-            "name": "shock",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "prison"
         },
         {
-            "name": "something-old1",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "psychology"
         },
         {
-            "name": "something-old2",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "radiation"
         },
         {
-            "name": "space",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "reception"
         },
         {
-            "name": "telecoms",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "rnd"
         },
         {
-            "name": "toxins2",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "robo"
         },
         {
-            "name": "toxins",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "salvage"
         },
         {
-            "name": "virology",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "sci"
         },
         {
-            "name": "xenobio",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "secure"
         },
         {
-            "name": "xenobio2",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "securearea"
         },
         {
-            "name": "xenolab",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "cans"
         },
         {
-            "name": "zomlab",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "cans_sci"
         },
         {
-            "name": "small_secure_red",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "shock"
         },
         {
-            "name": "small_secure",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "something-old1"
         },
         {
-            "name": "medium_secure_red",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "something-old2"
         },
         {
-            "name": "medium_blank",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "space"
         },
         {
-            "name": "medium_magnetics",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "telecoms"
         },
         {
-            "name": "medium_danger",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "toxins"
         },
         {
-            "name": "medium_explosives",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "virology"
         },
         {
-            "name": "medium_cryogenics",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "xenobio"
         },
         {
-            "name": "medium_electrical",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "zomlab"
         },
         {
-            "name": "medium_biohazard",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "voxcross"
         },
         {
-            "name": "medium_radiation",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "small_secure_red"
         },
         {
-            "name": "medium_flammable",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "small_secure"
         },
         {
-            "name": "medium_laser",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "medium_secure_red"
         },
         {
-            "name": "medium_secure",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "medium_blank"
         },
         {
-            "name": "goldenplaque",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "medium_magnetics"
         },
         {
-            "name": "kiddieplaque",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "medium_danger"
         },
         {
-            "name": "security",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "medium_explosives"
         },
         {
-            "name": "nanotrasen_sign1",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "medium_cryogenics"
         },
         {
-            "name": "nanotrasen_sign2",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "medium_electrical"
         },
         {
-            "name": "nanotrasen_sign3",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "medium_biohazard"
         },
         {
-            "name": "nanotrasen_sign4",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "medium_radiation"
         },
         {
-            "name": "nanotrasen_sign5",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "medium_flammable"
         },
         {
-            "name": "atmominsky",
-            "delays": [
-                [
-                    1
-                ]
-            ]
-        },
-        {
-            "name": "one",
-            "delays": [
-                [
-                    1
-                ]
-            ]
-        },
-        {
-            "name": "two",
-            "delays": [
-                [
-                    1
-                ]
-            ]
-        },
-        {
-            "name": "three",
-            "delays": [
-                [
-                    1
-                ]
-            ]
-        },
-        {
-            "name": "four",
-            "delays": [
-                [
-                    1
-                ]
-            ]
-        },
-        {
-            "name": "five",
-            "delays": [
-                [
-                    1
-                ]
-            ]
-        },
-        {
-            "name": "six",
-            "delays": [
-                [
-                    1
-                ]
-            ]
-        },
-        {
-            "name": "seven",
-            "delays": [
-                [
-                    1
-                ]
-            ]
-        },
-        {
-            "name": "eight",
-            "delays": [
-                [
-                    1
-                ]
-            ]
-        },
-        {
-            "name": "nine",
-            "delays": [
-                [
-                    1
-                ]
-            ]
-        },
-        {
-            "name": "zero",
-            "delays": [
-                [
-                    1
-                ]
-            ]
-        },
-        {
-            "name": "survival",
-            "delays": [
-                [
-                    1
-                ]
-            ]
-        },
-        {
-            "name": "ntmining",
-            "delays": [
-                [
-                    1
-                ]
-            ]
+            "name": "medium_laser"
+        },
+        {
+            "name": "medium_secure"
+        },
+        {
+            "name": "goldenplaque"
+        },
+        {
+            "name": "kiddieplaque"
+        },
+        {
+            "name": "security"
+        },
+        {
+            "name": "data"
+        },
+        {
+            "name": "cryo"
+        },
+        {
+            "name": "nanotrasen_sign1"
+        },
+        {
+            "name": "nanotrasen_sign2"
+        },
+        {
+            "name": "nanotrasen_sign3"
+        },
+        {
+            "name": "nanotrasen_sign4"
+        },
+        {
+            "name": "nanotrasen_sign5"
+        },
+        {
+            "name": "one"
+        },
+        {
+            "name": "two"
+        },
+        {
+            "name": "three"
+        },
+        {
+            "name": "four"
+        },
+        {
+            "name": "five"
+        },
+        {
+            "name": "six"
+        },
+        {
+            "name": "seven"
+        },
+        {
+            "name": "eight"
+        },
+        {
+            "name": "nine"
+        },
+        {
+            "name": "zero"
+        },
+        {
+            "name": "survival"
+        },
+        {
+            "name": "ntmining"
         }
     ]
 }

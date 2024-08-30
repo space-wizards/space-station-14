@@ -18,7 +18,7 @@
   - type: PaperLabelType
   - type: ActivatableUI
     key: enum.PaperUiKey.Key
-    requireHands: false
+    requiresComplex: false
   - type: UserInterface
     interfaces:
       enum.PaperUiKey.Key:
@@ -104,7 +104,7 @@
   name: artifact analyzer printout
   parent: Paper
   id: PaperArtifactAnalyzer
-  description: 'The readout of a device forgotten to time'
+  description: The readout of a device forgotten to time.
   components:
   - type: Sprite
     layers:
@@ -219,6 +219,7 @@
   - type: GuideHelp
     guides:
     - CargoBounties
+    - Cargo
 
 - type: entity
   name: character sheet
@@ -228,7 +229,6 @@
   components:
   - type: Paper
     contentSize: 10000
-    escapeFormatting: false
     content: book-cnc-sheet
   - type: Sprite
     layers:
@@ -252,7 +252,7 @@
 - type: entity
   parent: Paper
   id: PaperWritten
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     layers:
@@ -274,6 +274,26 @@
   suffix: Station Only
   components:
   - type: NukeCodePaper
+
+- type: entity
+  id: BoxFolderNuclearCodes
+  parent: BaseItem
+  name: nuclear code folder
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: folder-colormap
+      color: "#cc2323"
+    - state: folder-base
+    - state: folder-stamp-inverse
+      color: "#1dff00"
+  - type: SpawnItemsOnUse
+    items:
+    - id: NukeCodePaper
+    sound:
+      path: /Audio/Effects/packetrip.ogg
+  - type: Appearance
 
 - type: entity
   id: BoxFolderBase
@@ -410,10 +430,10 @@
 
 - type: entity
   id: BoxFolderCentCom
-  name: CentCom folder
+  name: CentComm folder
   parent: BoxFolderBase
   suffix: DO NOT MAP
-  description: CentCom's miserable little pile of secrets!
+  description: CentComm's miserable little pile of secrets!
   components:
   - type: Sprite
     layers:
@@ -482,8 +502,8 @@
 - type: entity
   id: BoxFolderCentComClipboard
   parent: BoxFolderClipboard
-  name: CentCom clipboard
-  description: A luxurious clipboard upholstered with green velvet. Often seen carried by CentCom officials, seldom seen actually used.
+  name: CentComm clipboard
+  description: A luxurious clipboard upholstered with green velvet. Often seen carried by CentComm officials, seldom seen actually used.
   components:
   - type: Sprite
     sprite: Objects/Misc/cc-clipboard.rsi
@@ -503,7 +523,7 @@
 
 - type: entity
   id: BoxFolderQmClipboard
-  parent: BoxFolderClipboard
+  parent: [BoxFolderClipboard, BaseGrandTheftContraband]
   name: requisition digi-board
   description: A bulky electric clipboard, filled with shipping orders and financing details. With so many compromising documents, you ought to keep this safe.
   components:
@@ -548,6 +568,7 @@
           tags:
           - Write
   - type: CargoOrderConsole
+  - type: BankClient
   - type: ActivatableUI
     verbText: qm-clipboard-computer-verb-text
     key: enum.CargoConsoleUiKey.Orders
@@ -563,3 +584,100 @@
         Blunt: 10
   - type: StealTarget
     stealGroup: BoxFolderQmClipboard
+
+- type: entity
+  parent: [Paper, BaseSyndicateContraband] # eat or burn your damn piece of paper damn thieves
+  id: TraitorCodePaper
+  name: syndicate codeword
+  description: A leaked codeword to possibly get in touch with the Syndicate.
+  suffix: DO NOT MAP
+  components:
+  - type: TraitorCodePaper
+
+- type: entity
+  parent: [Paper, BaseSyndicateContraband]
+  id: AllTraitorCodesPaper
+  name: syndicate codewords registry
+  description: A registry of all active Syndicate codewords.
+  suffix: Admeme
+  components:
+  - type: TraitorCodePaper
+    fakeCodewords: false
+    codewordShowAll: true
+
+- type: entity
+  name: envelope
+  parent: BaseItem
+  id: Envelope
+  description: 'A small envelope for keeping prying eyes off of your sensitive documents.'
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: envelope_open
+      map: ["enum.EnvelopeVisualLayers.Open"]
+    - state: envelope_closed
+      map: ["enum.EnvelopeVisualLayers.Sealed"]
+      visible: false
+    - state: envelope_torn
+      map: ["enum.EnvelopeVisualLayers.Torn"]
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: Paper
+    content: envelope-default-message
+  - type: PaperVisuals
+    headerImagePath: "/Textures/Interface/Paper/paper_heading_postage_stamp.svg.96dpi.png"
+    headerMargin: 216.0, 0.0, 0.0, 0.0
+    contentMargin: 0.0, 0.0, 0.0, 0.0
+    maxWritableArea: 368.0, 256.0
+  - type: Envelope
+  - type: ContainerContainer
+    containers:
+      letter_slot: !type:ContainerSlot
+  - type: ItemSlots
+    slots:
+      letter_slot:
+        name: envelope-letter-slot
+        insertSound: /Audio/Effects/packetrip.ogg
+        ejectSound: /Audio/Effects/packetrip.ogg
+        whitelist:
+          tags:
+            - Paper
+  - type: ActivatableUI
+    key: enum.PaperUiKey.Key
+    requiresComplex: false
+  - type: UserInterface
+    interfaces:
+      enum.PaperUiKey.Key:
+        type: PaperBoundUserInterface
+  - type: Item
+    size: Tiny
+  - type: Tag
+    tags:
+    - Trash
+    - Document
+  #- type: Appearance, hide stamp marks until we have some kind of displacement
+  - type: Flammable
+    fireSpread: true
+    canResistFire: false
+    alwaysCombustible: true
+    canExtinguish: true
+    damage:
+      types:
+        Heat: 1
+  - type: FireVisuals
+    sprite: Effects/fire.rsi
+    normalState: fire
+  - type: Damageable
+    damageModifierSet: Wood
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 15
+      behaviors:
+      - !type:EmptyAllContainersBehaviour
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
