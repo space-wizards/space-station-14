@@ -61,6 +61,9 @@
   id: Bloodpack
 
 - type: Tag
+  id: BlueprintAutolathe
+
+- type: Tag
   id: BodyBag
 
 - type: Tag
@@ -510,6 +513,9 @@
   id: DiscreteHealthAnalyzer #So construction recipes don't eat medical PDAs
 
 - type: Tag
+  id: DNASolutionScannable
+
+- type: Tag
   id: DockArrivals
 
 - type: Tag
@@ -543,9 +549,15 @@
   id: DrinkCan
 
 - type: Tag
+  id: DrinkCup
+
+- type: Tag
+  id: DrinkGlass
+
+- type: Tag
   id: DrinkSpaceGlue
 
-- type: Tag 
+- type: Tag
   id: Dropper
 
 - type: Tag
@@ -646,6 +658,9 @@
 
 - type: Tag
   id: Goat
+
+- type: Tag
+  id: Goliath
 
 - type: Tag
   id: GPS
@@ -763,6 +778,9 @@
 
 - type: Tag
   id: Igniter
+
+- type: Tag
+  id: Ingredient
 
 - type: Tag #Drop this innate tool instead of deleting it.
   id: InnateDontDelete
@@ -1073,6 +1091,9 @@
   id: RifleStock
 
 - type: Tag
+  id: Ring
+
+- type: Tag
   id: RipleyCentralControlModule
 
 - type: Tag
@@ -1164,6 +1185,7 @@
 
 - type: Tag
   id: Soup
+
 - type: Tag
   id: Spear
 
@@ -1190,6 +1212,9 @@
 
 - type: Tag
   id: SpreaderIgnore
+
+- type: Tag
+  id: StationAi
 
 - type: Tag
   id: StationMapElectronics
@@ -1247,6 +1272,12 @@
 
 - type: Tag
   id: Toolbox
+
+- type: Tag
+  id: ToothSharkminnow
+
+- type: Tag
+  id: ToothSpaceCarp
 
 - type: Tag
   id: Torch

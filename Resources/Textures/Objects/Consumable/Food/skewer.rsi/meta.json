@@ -11,94 +11,37 @@
       "name": "skewer"
     },
     {
-      "name": "skewer-meat1"
+      "name": "skewer-meat"
     },
     {
-      "name": "skewer-meat2"
+      "name": "skewer-meat-alpha"
     },
     {
-      "name": "skewer-meat3"
+      "name": "skewer-mushroom"
     },
     {
-      "name": "skewer-meat4"
+      "name": "skewer-pepper"
     },
     {
-      "name": "skewer-meat-alpha1"
+      "name": "skewer-bluepepper"
     },
     {
-      "name": "skewer-meat-alpha2"
+      "name": "skewer-tomato"
     },
     {
-      "name": "skewer-meat-alpha3"
+      "name": "skewer-corn"
     },
     {
-      "name": "skewer-meat-alpha4"
+      "name": "skewer-tail"
     },
     {
-      "name": "skewer-mushroom1"
+      "name": "skewer-tail-cooked"
     },
     {
-      "name": "skewer-mushroom2"
+      "name": "skewer-rat"
     },
     {
-      "name": "skewer-mushroom3"
-    },
-    {
-      "name": "skewer-mushroom4"
-    },
-    {
-      "name": "skewer-pepper1"
-    },
-    {
-      "name": "skewer-pepper2"
-    },
-    {
-      "name": "skewer-pepper3"
-    },
-    {
-      "name": "skewer-pepper4"
-    },
-    {
-      "name": "skewer-tomato1"
-    },
-    {
-      "name": "skewer-tomato2"
-    },
-    {
-      "name": "skewer-tomato3"
-    },
-    {
-      "name": "skewer-tomato4"
-    },
-    {
-      "name": "skewer-corn1"
-    },
-    {
-      "name": "skewer-corn2"
-    },
-    {
-      "name": "skewer-tail1"
-    },
-    {
-      "name": "skewer-tail2"
-    },
-    {
-      "name": "skewer-tail-cooked1"
-    },
-    {
-      "name": "skewer-tail-cooked2"
-    },
-    {
-      "name": "skewer-rat1"
-    },
-    {
-      "name": "skewer-rat2"
-    },
-	{
-      "name": "skewer-snake1"
-    },
-    {
-      "name": "skewer-snake2"
+      "name": "skewer-snake"
     }
   ]
 }

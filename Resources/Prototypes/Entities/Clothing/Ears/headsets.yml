@@ -63,7 +63,7 @@
     sprite: Clothing/Ears/Headsets/mining.rsi
 
 - type: entity
-  parent: ClothingHeadsetCargo
+  parent: [ClothingHeadsetCargo, BaseCommandContraband]
   id: ClothingHeadsetQM
   name: qm headset
   description: A headset used by the quartermaster.
@@ -78,7 +78,7 @@
 - type: entity
   parent: ClothingHeadset
   id: ClothingHeadsetCentCom
-  name: CentCom headset
+  name: CentComm headset
   description: A headset used by the upper echelons of Nanotrasen.
   components:
   - type: ContainerFill
@@ -92,7 +92,7 @@
     sprite: Clothing/Ears/Headsets/centcom.rsi
 
 - type: entity
-  parent: ClothingHeadset
+  parent: [ClothingHeadset, BaseCommandContraband]
   id: ClothingHeadsetCommand
   name: command headset
   description: A headset with a commanding channel.
@@ -123,7 +123,7 @@
     sprite: Clothing/Ears/Headsets/engineering.rsi
 
 - type: entity
-  parent: ClothingHeadsetEngineering
+  parent: [ClothingHeadsetEngineering, BaseCommandContraband]
   id: ClothingHeadsetCE
   name: ce headset
   description: A headset for the chief engineer to ignore all emergency calls on.
@@ -152,7 +152,7 @@
     sprite: Clothing/Ears/Headsets/medical.rsi
 
 - type: entity
-  parent: ClothingHeadsetMedical
+  parent: [ClothingHeadsetMedical, BaseCommandContraband]
   id: ClothingHeadsetCMO
   name: cmo headset
   description: A headset used by the CMO.
@@ -213,7 +213,7 @@
     sprite: Clothing/Ears/Headsets/robotics.rsi
 
 - type: entity
-  parent: ClothingHeadsetScience
+  parent: [ClothingHeadsetScience, BaseCommandContraband]
   id: ClothingHeadsetRD
   name: rd headset
   description: Lamarr used to love chewing on this...
@@ -226,7 +226,7 @@
       - EncryptionKeyCommon
 
 - type: entity
-  parent: ClothingHeadset
+  parent: [ClothingHeadset, BaseRestrictedContraband]
   id: ClothingHeadsetSecurity
   name: security headset
   description: This is used by your elite security force.
@@ -242,7 +242,7 @@
     sprite: Clothing/Ears/Headsets/security.rsi
 
 - type: entity
-  parent: ClothingHeadset
+  parent: [ClothingHeadset, BaseRestrictedContraband]
   id: ClothingHeadsetBrigmedic
   name: brigmedic headset
   description: A headset that helps to hear the death cries.
@@ -278,7 +278,7 @@
   parent: ClothingHeadset
   id: ClothingHeadsetFreelance
   name: freelancer headset
-  description: This is used by a roaming group of freelancers
+  description: This is used by a roaming group of freelancers.
   components:
     - type: ContainerFill
       containers:

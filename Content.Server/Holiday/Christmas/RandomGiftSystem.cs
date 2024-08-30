@@ -95,7 +95,7 @@ public sealed class RandomGiftSystem : EntitySystem
 
         foreach (var proto in _prototype.EnumeratePrototypes<EntityPrototype>())
         {
-            if (proto.Abstract || proto.NoSpawn || proto.Components.ContainsKey(mapGridCompName) || !proto.Components.ContainsKey(physicsCompName))
+            if (proto.Abstract || proto.HideSpawnMenu || proto.Components.ContainsKey(mapGridCompName) || !proto.Components.ContainsKey(physicsCompName))
                 continue;
 
             _possibleGiftsUnsafe.Add(proto.ID);

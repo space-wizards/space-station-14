@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "By Gotimanga for SS14",
+    "copyright": "By Gotimanga for SS14, grayscale layering by IProduceWidgets (Github)",
     "size": {
         "x": 32,
         "y": 32
@@ -11,7 +11,28 @@
             "name": "icon"
         },
         {
+            "name": "coatybits-icon"
+        },
+        {
+            "name": "winterbits-icon"
+        },
+        {
+            "name": "winterbits-tan-icon"
+        },
+        {
             "name": "equipped-HELMET",
+            "directions": 4
+        },
+		{
+            "name": "coatybits-equipped-HELMET",
+            "directions": 4
+        },
+		{
+            "name": "winterbits-equipped-HELMET",
+            "directions": 4
+        },
+		{
+            "name": "winterbits-tan-equipped-HELMET",
             "directions": 4
         }
     ]

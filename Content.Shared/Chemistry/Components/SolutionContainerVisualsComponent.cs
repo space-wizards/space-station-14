@@ -53,5 +53,17 @@ namespace Content.Shared.Chemistry.Components
         /// </summary>
         [DataField]
         public int InHandsMaxFillLevels = 0;
+
+        /// <summary>
+        /// Optional equipped visuals to show someone is wearing a something with a filled container.
+        /// </summary>
+        [DataField]
+        public string? EquippedFillBaseName = null;
+
+        /// <summary>
+        /// A separate max fill levels for equipped items (to reduce number of sprites needed)
+        /// </summary>
+        [DataField]
+        public int EquippedMaxFillLevels = 0;
     }
 }

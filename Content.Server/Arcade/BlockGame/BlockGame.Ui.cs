@@ -157,7 +157,7 @@ public sealed partial class BlockGame
     /// <param name="message">The message to broadcase to all players/spectators.</param>
     private void SendMessage(BoundUserInterfaceMessage message)
     {
-        _uiSystem.ServerSendUiMessage(_entityManager.GetEntity(message.Entity), BlockGameUiKey.Key, message);
+        _uiSystem.ServerSendUiMessage(_owner, BlockGameUiKey.Key, message);
     }
 
     /// <summary>
@@ -167,7 +167,7 @@ public sealed partial class BlockGame
     /// <param name="actor">The target recipient.</param>
     private void SendMessage(BoundUserInterfaceMessage message, EntityUid actor)
     {
-        _uiSystem.ServerSendUiMessage(_entityManager.GetEntity(message.Entity), BlockGameUiKey.Key, message, actor);
+        _uiSystem.ServerSendUiMessage(_owner, BlockGameUiKey.Key, message, actor);
     }
 
     /// <summary>
