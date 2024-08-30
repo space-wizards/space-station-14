@@ -162,11 +162,7 @@ public sealed class AtmosAlertsComputerSystem : SharedAtmosAlertsComputerSystem
                     _appearance.SetData(ent, AtmosAlertsComputerVisuals.ComputerLayerScreen, (int) highestAlert, entAppearance);
 
                 // If the console UI is open, send UI data to each subscribed session
-                if (!_userInterfaceSystem.TryGetUi(ent, AtmosAlertsComputerUiKey.Key, out var bui))
-                    continue;
-
-                foreach (var session in bui.SubscribedSessions)
-                    UpdateUIState(ent, airAlarmEntries, fireAlarmEntries, entConsole, entXform, session);
+                UpdateUIState(ent, airAlarmEntries, fireAlarmEntries, entConsole, entXform);
             }
         }
     }
@@ -176,10 +172,9 @@ public sealed class AtmosAlertsComputerSystem : SharedAtmosAlertsComputerSystem
         AtmosAlertsComputerEntry[] airAlarmStateData,
         AtmosAlertsComputerEntry[] fireAlarmStateData,
         AtmosAlertsComputerComponent component,
-        TransformComponent xform,
-        ICommonSession session)
+        TransformComponent xform)
     {
-        if (!_userInterfaceSystem.TryGetUi(uid, AtmosAlertsComputerUiKey.Key, out var bui))
+        if (!_userInterfaceSystem.IsUiOpen(uid, AtmosAlertsComputerUiKey.Key))
             return;
 
         var gridUid = xform.GridUid!.Value;
@@ -194,9 +189,8 @@ public sealed class AtmosAlertsComputerSystem : SharedAtmosAlertsComputerSystem
         var focusAlarmData = GetFocusAlarmData(uid, GetEntity(component.FocusDevice), gridUid);
 
         // Set the UI state
-        _userInterfaceSystem.SetUiState(bui,
-            new AtmosAlertsComputerBoundInterfaceState(airAlarmStateData, fireAlarmStateData, focusAlarmData),
-            session);
+        _userInterfaceSystem.SetUiState(uid, AtmosAlertsComputerUiKey.Key,
+            new AtmosAlertsComputerBoundInterfaceState(airAlarmStateData, fireAlarmStateData, focusAlarmData));
     }
 
     private List<AtmosAlertsComputerEntry> GetAlarmStateData(EntityUid gridUid, AtmosAlertsComputerGroup group)
@@ -251,8 +245,7 @@ public sealed class AtmosAlertsComputerSystem : SharedAtmosAlertsComputerSystem
         }
 
         // Force update the sensors attached to the alarm
-        if (!_userInterfaceSystem.TryGetUi(focusDevice.Value, SharedAirAlarmInterfaceKey.Key, out var bui) ||
-            bui.SubscribedSessions.Count == 0)
+        if (!_userInterfaceSystem.IsUiOpen(focusDevice.Value, SharedAirAlarmInterfaceKey.Key))
         {
             _atmosDevNet.Register(focusDevice.Value, null);
             _atmosDevNet.Sync(focusDevice.Value, null);

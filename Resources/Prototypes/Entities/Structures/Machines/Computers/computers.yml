@@ -38,8 +38,8 @@
     key: enum.AtmosAlertsComputerUiKey.Key
   - type: UserInterface
     interfaces:
-    - key: enum.AtmosAlertsComputerUiKey.Key
-      type: AtmosAlertsComputerBoundUserInterface
+        enum.AtmosAlertsComputerUiKey.Key:
+            type: AtmosAlertsComputerBoundUserInterface
 
 - type: entity
   parent: BaseComputer
