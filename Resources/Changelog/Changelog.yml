@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: BombasterDS
-  changes:
-  - message: Added craftable mannequin that you can hang clothing on!
-    type: Add
-  id: 6749
-  time: '2024-06-15T17:50:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29004
 - author: notafet
   changes:
   - message: The TEG must now be operated at higher temperatures to generate power.
@@ -3843,3 +3836,10 @@
   id: 7248
   time: '2024-08-30T01:43:34.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31619
+- author: DieselMohawk
+  changes:
+  - message: Added Armband to back of Security Jumpsuit
+    type: Fix
+  id: 7249
+  time: '2024-08-30T01:46:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31635
