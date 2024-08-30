@@ -64,7 +64,7 @@
 # Recipes
 
 - type: latheRecipe
-  parent: BaseElectronicsRecipe
+  parent: BaseCheapElectronicsRecipe
   id: FirelockElectronics
   result: FirelockElectronics
 
@@ -94,7 +94,7 @@
   result: TurboItemRechargerCircuitboard
 
 - type: latheRecipe
-  parent: BaseElectronicsRecipe
+  parent: BaseCheapElectronicsRecipe
   id: DoorElectronics
   result: DoorElectronics
 
