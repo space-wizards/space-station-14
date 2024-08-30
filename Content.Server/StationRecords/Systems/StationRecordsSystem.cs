@@ -1,6 +1,9 @@
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
+using Content.Server.Access.Systems;
 using Content.Server.Forensics;
 using Content.Server.GameTicking;
+using Content.Shared.Access.Components;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
 using Content.Shared.Preferences;
@@ -35,12 +38,14 @@ public sealed class StationRecordsSystem : SharedStationRecordsSystem
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly StationRecordKeyStorageSystem _keyStorage = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IdCardSystem _idCard = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnPlayerSpawn);
+        SubscribeLocalEvent<EntityRenamedEvent>(OnRename);
     }
 
     private void OnPlayerSpawn(PlayerSpawnCompleteEvent args)
@@ -49,6 +54,30 @@ public sealed class StationRecordsSystem : SharedStationRecordsSystem
             return;
 
         CreateGeneralRecord(args.Station, args.Mob, args.Profile, args.JobId, stationRecords);
+    }
+
+    private void OnRename(ref EntityRenamedEvent ev)
+    {
+        // When a player gets renamed their card gets changed to match.
+        // Unfortunately this means that an event is called for it as well, and since TryFindIdCard will succeed if the
+        // given entity is a card and the card itself is the key the record will be mistakenly renamed to the card's name
+        // if we don't return early.
+        if (HasComp<IdCardComponent>(ev.Uid))
+            return;
+
+        if (_idCard.TryFindIdCard(ev.Uid, out var idCard))
+        {
+            if (TryComp(idCard, out StationRecordKeyStorageComponent? keyStorage)
+                && keyStorage.Key is {} key)
+            {
+                if (TryGetRecord<GeneralStationRecord>(key, out var generalRecord))
+                {
+                    generalRecord.Name = ev.NewName;
+                }
+
+                Synchronize(key);
+            }
+        }
     }
 
     private void CreateGeneralRecord(EntityUid station, EntityUid player, HumanoidCharacterProfile profile,
