@@ -119,12 +119,12 @@
   id: AirStaticGasTankEmpty
   parent: AirStaticGasTankBase
   suffix: Empty
-  
 
 - type: entity
   name: air reservoir
   id: AirStaticGasTank
   parent: AirStaticGasTankBase
+  suffix: 4500kpa
   components:
   - type: PipeFill
     air:
@@ -159,6 +159,7 @@
   name: oxygen reservoir
   id: OxygenStaticGasTank
   parent: OxygenStaticGasTankBase
+  suffix: 4500kpa
   components:
   - type: PipeFill
     air:
@@ -200,6 +201,7 @@
   name: nitrogen reservoir
   id: NitrogenStaticGasTank
   parent: NitrogenStaticGasTankBase
+  suffix: 4500kpa
   components:
   - type: PipeFill
     air:
@@ -236,6 +238,7 @@
   name: carbon dioxide reservoir
   id: CarbonDioxideStaticGasTank
   parent: CarbonDioxideStaticGasTankBase
+  suffix: 4500kpa
   components:
   - type: PipeFill
     air:
@@ -271,6 +274,7 @@
   name: plasma reservoir
   id: PlasmaStaticGasTank
   parent: PlasmaStaticGasTankBase
+  suffix: 4500kpa
   components:
   - type: PipeFill
     air:
@@ -309,6 +313,7 @@
   name: tritium reservoir
   id: TritiumStaticGasTank
   parent: TritiumStaticGasTankBase
+  suffix: 4500kpa
   components:
   - type: PipeFill
     air:
@@ -348,6 +353,7 @@
   name: water vapor reservoir
   id: WaterVaporStaticGasTank
   parent: WaterVaporStaticGasTankBase
+  suffix: 4500kpa
   components:
   - type: PipeFill
     air:
@@ -388,6 +394,7 @@
   name: ammonia reservoir
   id: AmmoniaStaticGasTank
   parent: AmmoniaStaticGasTankBase
+  suffix: 4500kpa
   components:
   - type: PipeFill
     air:
@@ -427,6 +434,7 @@
   name: nitrous oxide reservoir
   id: NitrousOxideStaticGasTank
   parent: NitrousOxideStaticGasTankBase
+  suffix: 4500kpa
   components:
   - type: PipeFill
     air:
@@ -469,6 +477,7 @@
   name: frezon reservoir
   id: FrezonStaticGasTank
   parent: FrezonStaticGasTankBase
+  suffix: 4500kpa
   components:
   - type: PipeFill
     air:
