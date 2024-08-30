@@ -145,8 +145,11 @@ public sealed class SuicideCommandTests
             damageableComp = entManager.GetComponent<DamageableComponent>(player);
         });
 
-        if (protoMan.TryIndex<DamageTypePrototype>("Slash", out var slashProto))
-            damageableSystem.TryChangeDamage(player, new DamageSpecifier(slashProto, FixedPoint2.New(46.5)));
+        server.Post(() =>
+        {
+            if (protoMan.TryIndex<DamageTypePrototype>("Slash", out var slashProto))
+                damageableSystem.TryChangeDamage(player, new DamageSpecifier(slashProto, FixedPoint2.New(46.5)));
+        });
 
         // Check that running the suicide command kills the player
         // and properly ghosts them without them being able to return to their body
