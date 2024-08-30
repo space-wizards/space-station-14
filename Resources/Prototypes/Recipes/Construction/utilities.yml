@@ -700,6 +700,20 @@
     sprite: Structures/Piping/Atmospherics/heatexchanger.rsi
     state: heStraight
 
+- type: construction
+  id: StaticGasTank
+  name: gas resevoir
+  description: A large tank for holding lots of gas.
+  graph: GasResevoir
+  startNode: start
+  targetNode: staticGasTank
+  category: construction-category-utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/Atmospherics/statictank.rsi
+    state: icon
+
 # ATMOS TRINARY
 - type: construction
   id: GasFilter
