@@ -65,7 +65,7 @@ public sealed partial class ToggleMaskEvent : InstantActionEvent { }
 ///     Event raised on the mask entity when it is toggled.
 /// </summary>
 [ByRefEvent]
-public readonly record struct ItemMaskToggledEvent(EntityUid Wearer, string? PulledDownPrefix, bool IsToggled);
+public readonly record struct ItemMaskToggledEvent(EntityUid Wearer, string PulledDownPrefix, bool IsToggled);
 
 /// <summary>
 ///     Event raised on the entity wearing the mask when it is toggled.
