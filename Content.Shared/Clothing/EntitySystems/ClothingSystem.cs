@@ -174,6 +174,7 @@ public abstract class ClothingSystem : EntitySystem
 
     private void OnMaskToggled(Entity<ClothingComponent> ent, ref ItemMaskToggledEvent args)
     {
+        // Set the equipped prefix to be pulled down after the mask is pulled down, or use no prefix if the mask is pulled up
         SetEquippedPrefix(ent, args.IsToggled ? args.PulledDownPrefix : null, ent);
         CheckEquipmentForLayerHide(ent.Owner, args.Wearer);
     }

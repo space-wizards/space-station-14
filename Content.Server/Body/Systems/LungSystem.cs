@@ -57,6 +57,7 @@ public sealed class LungSystem : EntitySystem
 
     private void OnMaskToggled(Entity<BreathToolComponent> ent, ref ItemMaskToggledEvent args)
     {
+        // Disconnect internals if the mask was pulled down
         if (args.IsToggled)
         {
             _atmos.DisconnectInternals(ent);
