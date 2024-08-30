@@ -90,6 +90,7 @@
           nodeGroupID: Pipe
           rotationsEnabled: false
           volume: 1
+    - type: PipeFill
     - type: ItemSlots
     - type: GasPortable
     - type: GasCanister

@@ -214,6 +214,7 @@
           !type:PipeNode
           nodeGroupID: Pipe
           pipeDirection: South
+    - type: PipeFill
     - type: Transform
       noRot: false
     - type: DeviceNetwork
@@ -414,6 +415,7 @@
         !type:PipeNode
         nodeGroupID: Pipe
         pipeDirection: South
+  - type: PipeFill
   - type: Transform
     noRot: false
   - type: SolutionContainerManager

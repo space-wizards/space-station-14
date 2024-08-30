@@ -85,6 +85,7 @@
         nodeGroupID: Pipe
         pipeDirection: South
         volume: 100
+  - type: PipeFill
   - type: Construction
     graph: GasReservoir
     node: staticGasTank
