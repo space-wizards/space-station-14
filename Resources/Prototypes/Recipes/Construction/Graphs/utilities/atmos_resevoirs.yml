@@ -1,5 +1,5 @@
 - type: constructionGraph
-  id: GasResevoir
+  id: GasReservoir
   start: start
   graph:
   - node: start

@@ -702,9 +702,9 @@
 
 - type: construction
   id: StaticGasTank
-  name: gas resevoir
+  name: gas reservoir
   description: A large tank for holding lots of gas.
-  graph: GasResevoir
+  graph: GasReservoir
   startNode: start
   targetNode: staticGasTank
   category: construction-category-utilities

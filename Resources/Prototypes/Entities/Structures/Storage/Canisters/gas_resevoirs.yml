@@ -1,5 +1,5 @@
 - type: entity
-  name: gas resevoir
+  name: gas reservoir
   id: StaticGasTankBase
   parent: BaseStructure
   categories: [ HideSpawnMenu ]
@@ -86,20 +86,20 @@
         pipeDirection: South
         volume: 100
   - type: Construction
-    graph: GasResevoir
+    graph: Gasreservoir
     node: staticGasTank
   - type: Tag
     tags:
     - Pipe # its basically a big pipe, okay?
 
 - type: entity
-  name: gas resevoir
+  name: gas reservoir
   id: StaticGasTankEmpty
   parent: StaticGasTankBase
   suffix: Empty
 
 - type: entity
-  name: air resevoir
+  name: air reservoir
   id: AirStaticGasTankBase
   parent: StaticGasTankBase
   categories: [ HideSpawnMenu ]
@@ -111,18 +111,18 @@
         drawdepth: ThinPipe
       - state: air
   - type: Construction
-    graph: GasResevoir
+    graph: Gasreservoir
     node: airStaticGasTank
     
 - type: entity
-  name: air resevoir
+  name: air reservoir
   id: AirStaticGasTankEmpty
   parent: AirStaticGasTankBase
   suffix: Empty
   
 
 - type: entity
-  name: air resevoir
+  name: air reservoir
   id: AirStaticGasTank
   parent: AirStaticGasTankBase
   components:
@@ -134,7 +134,7 @@
       temperature: 293.15
 
 - type: entity
-  name: oxygen resevoir
+  name: oxygen reservoir
   id: OxygenStaticGasTankBase
   parent: StaticGasTankBase
   categories: [ HideSpawnMenu ]
@@ -146,17 +146,17 @@
         drawdepth: ThinPipe
       - state: oxygen
   - type: Construction
-    graph: GasResevoir
+    graph: Gasreservoir
     node: oxygenStaticGasTank
 
 - type: entity
-  name: oxygen resevoir
+  name: oxygen reservoir
   id: OxygenStaticGasTankEmpty
   parent: OxygenStaticGasTankBase
   suffix: Empty
 
 - type: entity
-  name: oxygen resevoir
+  name: oxygen reservoir
   id: OxygenStaticGasTank
   parent: OxygenStaticGasTankBase
   components:
@@ -175,7 +175,7 @@
       temperature: 293.15
 
 - type: entity
-  name: nitrogen resevoir
+  name: nitrogen reservoir
   id: NitrogenStaticGasTankBase
   parent: StaticGasTankBase
   categories: [ HideSpawnMenu ]
@@ -187,17 +187,17 @@
         drawdepth: ThinPipe
       - state: nitrogen
   - type: Construction
-    graph: GasResevoir
+    graph: Gasreservoir
     node: nitrogenStaticGasTank
 
 - type: entity
-  name: nitrogen resevoir
+  name: nitrogen reservoir
   id: NitrogenStaticGasTankEmpty
   parent: NitrogenStaticGasTankBase
   suffix: Empty
 
 - type: entity
-  name: nitrogen resevoir
+  name: nitrogen reservoir
   id: NitrogenStaticGasTank
   parent: NitrogenStaticGasTankBase
   components:
@@ -209,7 +209,7 @@
       temperature: 293.15
 
 - type: entity
-  name: carbon dioxide resevoir
+  name: carbon dioxide reservoir
   id: CarbonDioxideStaticGasTankBase
   parent: StaticGasTankBase
   categories: [ HideSpawnMenu ]
@@ -223,17 +223,17 @@
       - state: greyscale
         color: "#999999"
   - type: Construction
-    graph: GasResevoir
+    graph: Gasreservoir
     node: carbonDioxideStaticGasTank
 
 - type: entity
-  name: carbon dioxide resevoir
+  name: carbon dioxide reservoir
   id: CarbonDioxideStaticGasTankEmpty
   parent: CarbonDioxideStaticGasTankBase
   suffix: Empty
 
 - type: entity
-  name: carbon dioxide resevoir
+  name: carbon dioxide reservoir
   id: CarbonDioxideStaticGasTank
   parent: CarbonDioxideStaticGasTankBase
   components:
@@ -246,7 +246,7 @@
       temperature: 293.15
 
 - type: entity
-  name: plasma resevoir
+  name: plasma reservoir
   id: PlasmaStaticGasTankBase
   parent: StaticGasTankBase
   categories: [ HideSpawnMenu ]
@@ -258,17 +258,17 @@
         drawdepth: ThinPipe
       - state: plasma
   - type: Construction
-    graph: GasResevoir
+    graph: Gasreservoir
     node: plasmaStaticGasTank
 
 - type: entity
-  name: plasma resevoir
+  name: plasma reservoir
   id: PlasmaStaticGasTankEmpty
   parent: PlasmaStaticGasTankBase
   suffix: Empty
 
 - type: entity
-  name: plasma resevoir
+  name: plasma reservoir
   id: PlasmaStaticGasTank
   parent: PlasmaStaticGasTankBase
   components:
@@ -282,7 +282,7 @@
       temperature: 293.15
 
 - type: entity
-  name: tritium resevoir
+  name: tritium reservoir
   id: TritiumStaticGasTankBase
   parent: StaticGasTankBase
   categories: [ HideSpawnMenu ]
@@ -296,17 +296,17 @@
       - state: greyscale
         color: "#55F055"
   - type: Construction
-    graph: GasResevoir
+    graph: Gasreservoir
     node: tritiumStaticGasTank
 
 - type: entity
-  name: tritium resevoir
+  name: tritium reservoir
   id: TritiumStaticGasTankEmpty
   parent: TritiumStaticGasTankBase
   suffix: Empty
 
 - type: entity
-  name: tritium resevoir
+  name: tritium reservoir
   id: TritiumStaticGasTank
   parent: TritiumStaticGasTankBase
   components:
@@ -321,7 +321,7 @@
       temperature: 293.15
 
 - type: entity
-  name: water vapor resevoir
+  name: water vapor reservoir
   id: WaterVaporStaticGasTankBase
   parent: StaticGasTankBase
   categories: [ HideSpawnMenu ]
@@ -335,17 +335,17 @@
       - state: greyscale
         color: "#f5c9eb"
   - type: Construction
-    graph: GasResevoir
+    graph: Gasreservoir
     node: waterVaporStaticGasTank
 
 - type: entity
-  name: water vapor resevoir
+  name: water vapor reservoir
   id: WaterVaporStaticGasTankEmpty
   parent: WaterVaporStaticGasTankBase
   suffix: Empty
 
 - type: entity
-  name: water vapor resevoir
+  name: water vapor reservoir
   id: WaterVaporStaticGasTank
   parent: WaterVaporStaticGasTankBase
   components:
@@ -361,7 +361,7 @@
       temperature: 293.15
 
 - type: entity
-  name: ammonia resevoir
+  name: ammonia reservoir
   id: AmmoniaStaticGasTankBase
   parent: StaticGasTankBase
   categories: [ HideSpawnMenu ]
@@ -375,17 +375,17 @@
       - state: greyscale
         color: "#dbc42a"
   - type: Construction
-    graph: GasResevoir
+    graph: Gasreservoir
     node: ammoniaStaticGasTank
 
 - type: entity
-  name: ammonia resevoir
+  name: ammonia reservoir
   id: AmmoniaStaticGasTankEmpty
   parent: AmmoniaStaticGasTankBase
   suffix: Empty
 
 - type: entity
-  name: ammonia resevoir
+  name: ammonia reservoir
   id: AmmoniaStaticGasTank
   parent: AmmoniaStaticGasTankBase
   components:
@@ -402,7 +402,7 @@
       temperature: 293.15
 
 - type: entity
-  name: nitrous oxide resevoir
+  name: nitrous oxide reservoir
   id: NitrousOxideStaticGasTankBase
   parent: StaticGasTankBase
   categories: [ HideSpawnMenu ]
@@ -414,17 +414,17 @@
         drawdepth: ThinPipe
       - state: nitrousoxide
   - type: Construction
-    graph: GasResevoir
+    graph: Gasreservoir
     node: nitrousOxideStaticGasTank
 
 - type: entity
-  name: nitrous oxide resevoir
+  name: nitrous oxide reservoir
   id: NitrousOxideStaticGasTankEmpty
   parent: NitrousOxideStaticGasTankBase
   suffix: Empty
 
 - type: entity
-  name: nitrous oxide resevoir
+  name: nitrous oxide reservoir
   id: NitrousOxideStaticGasTank
   parent: NitrousOxideStaticGasTankBase
   components:
@@ -442,7 +442,7 @@
       temperature: 293.15
 
 - type: entity
-  name: frezon resevoir
+  name: frezon reservoir
   id: FrezonStaticGasTankBase
   parent: StaticGasTankBase
   categories: [ HideSpawnMenu ]
@@ -456,17 +456,17 @@
       - state: greyscale
         color: "#88D0FF"
   - type: Construction
-    graph: GasResevoir
+    graph: Gasreservoir
     node: frezonStaticGasTank
 
 - type: entity
-  name: frezon resevoir
+  name: frezon reservoir
   id: FrezonStaticGasTankEmpty
   parent: FrezonStaticGasTankBase
   suffix: Empty
 
 - type: entity
-  name: frezon resevoir
+  name: frezon reservoir
   id: FrezonStaticGasTank
   parent: FrezonStaticGasTankBase
   components:
