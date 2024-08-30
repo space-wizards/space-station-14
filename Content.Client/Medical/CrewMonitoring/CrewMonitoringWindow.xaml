@@ -15,6 +15,9 @@
                     </PanelContainer>
                 </controls:StripeBack>
 
+                <LineEdit Name="SearchLineEdit" HorizontalExpand="True"
+                          PlaceHolder="{Loc crew-monitor-filter-line-placeholder}" />
+
                 <ScrollContainer Name="SensorScroller"
                                  VerticalExpand="True"
                                  SetWidth="520"
