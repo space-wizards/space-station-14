@@ -35,6 +35,7 @@ public sealed class MaskSystem : EntitySystem
     private void OnToggleMask(Entity<MaskComponent> ent, ref ToggleMaskEvent args)
     {
         var (uid, mask) = ent;
+
         if (mask.ToggleActionEntity == null || !_timing.IsFirstTimePredicted || !mask.IsEnabled)
             return;
 
@@ -45,6 +46,7 @@ public sealed class MaskSystem : EntitySystem
 
         var dir = mask.IsToggled ? "down" : "up";
         var msg = $"action-mask-pull-{dir}-popup-message";
+
         _popupSystem.PopupEntity(Loc.GetString(msg, ("mask", uid)), args.Performer, args.Performer);
 
         ToggleMaskComponents(uid, mask, args.Performer);
@@ -57,18 +59,19 @@ public sealed class MaskSystem : EntitySystem
             return;
 
         mask.IsToggled = false;
-        ToggleMaskComponents(uid, mask, args.Equipee, true);
+
+        ToggleMaskComponents(uid, mask, args.Equipee);
     }
 
     /// <summary>
     /// Called after setting IsToggled, raises events and dirties.
     /// <summary>
-    private void ToggleMaskComponents(EntityUid uid, MaskComponent mask, EntityUid wearer, bool isEquip = false, bool isFolded = false)
+    private void ToggleMaskComponents(EntityUid uid, MaskComponent mask, EntityUid wearer)
     {
         if (mask.ToggleActionEntity is { } action)
             _actionSystem.SetToggled(action, mask.IsToggled);
 
-        var maskEv = new ItemMaskToggledEvent(wearer, mask.PulledUpPrefix, mask.PulledDownPrefix, mask.IsToggled, isEquip, isFolded);
+        var maskEv = new ItemMaskToggledEvent(wearer, mask.PulledUpPrefix, mask.PulledDownPrefix, mask.IsToggled);
         RaiseLocalEvent(uid, ref maskEv);
 
         var wearerEv = new WearerMaskToggledEvent(mask.IsToggled);
@@ -84,6 +87,6 @@ public sealed class MaskSystem : EntitySystem
 
         comp.IsToggled = args.IsFolded;
 
-        ToggleMaskComponents(uid, comp, uid, false, comp.IsToggled);
+        ToggleMaskComponents(uid, comp, uid);
     }
 }
