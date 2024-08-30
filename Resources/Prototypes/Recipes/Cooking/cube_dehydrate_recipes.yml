@@ -70,3 +70,27 @@
   time: 5
   solids:
     SpaceTickCube: 1
+
+- type: microwaveMealRecipe
+  id: RecipeDryAbominationCube
+  name: dry abomination cube recipe
+  result: AbominationCube
+  time: 5
+  solids:
+    AbominationCube: 1
+
+- type: microwaveMealRecipe
+  id: RecipeDryDehydratedSpaceCarpCube
+  name: dry dehydrated space carp cube recipe
+  result: DehydratedSpaceCarp
+  time: 5
+  solids:
+    DehydratedSpaceCarp: 1
+
+- type: microwaveMealRecipe
+  id: RecipeDrySyndicateSpongeCube
+  name: dry syndicate sponge recipe
+  result: SyndicateSponge
+  time: 5
+  solids:
+    SyndicateSponge: 1
