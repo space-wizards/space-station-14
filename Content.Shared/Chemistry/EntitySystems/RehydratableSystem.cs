@@ -5,6 +5,7 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Popups;
 using Robust.Shared.Network;
 using Robust.Shared.Random;
+using Content.Shared.Examine;
 
 namespace Content.Shared.Chemistry.EntitySystems;
 
@@ -22,6 +23,7 @@ public sealed class RehydratableSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<RehydratableComponent, SolutionContainerChangedEvent>(OnSolutionChange);
+        SubscribeLocalEvent<RehydratableComponent, ExaminedEvent>(OnExamine);
     }
 
     private void OnSolutionChange(Entity<RehydratableComponent> ent, ref SolutionContainerChangedEvent args)
@@ -32,6 +34,12 @@ public sealed class RehydratableSystem : EntitySystem
         {
             Expand(ent);
         }
+    }
+
+    private void OnExamine(EntityUid uid, RehydratableComponent component, ExaminedEvent args)
+    {
+        // solution.Volume & solution.MaxVolume when i can access solutions
+        // args.PushMarkup("test");
     }
 
     // Try not to make this public if you can help it.
