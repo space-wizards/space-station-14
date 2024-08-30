@@ -3,6 +3,7 @@ using Content.Server.Atmos.Piping.Unary.Components;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
+using Content.Shared.Atmos;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems;
 
@@ -21,17 +22,12 @@ public sealed class GasPipeFillSystem : EntitySystem
 
     private void OnNodeUpdate(EntityUid uid, PipeFillComponent comp, ref NodeGroupsRebuilt args)
     {
-        if (!_meta.EntityPaused(uid))
+        if (_nodeContainer.TryGetNode(uid, comp.NodeName, out PipeNode? tank) && tank.NodeGroup is PipeNet net)
         {
-            // might be worth checking init here?
-
-            if (_nodeContainer.TryGetNode(uid, comp.NodeName, out PipeNode? tank) && tank.NodeGroup is PipeNet net)
-            {
-                _atmos.Merge(net.Air, comp.Air);
-            }
-
-            RemComp<PipeFillComponent>(uid); // only fire once, and fail dumb.
+            _atmos.Merge(net.Air, comp.Air);
         }
+
+        RemComp<PipeFillComponent>(uid); // only fire once, and fail dumb.
     }
 
     // TODO: a command to set arbitrary gases in a pipenet.
