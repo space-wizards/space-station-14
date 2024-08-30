@@ -188,6 +188,23 @@
   equipment:
     suitstorage: OxygenTankFilled
 
+# Species-appropriate Double Emergency Tank in Pocket 1
+- type: loadout
+  id: LoadoutSpeciesPocketDoubleNitrogen
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: NitrogenBreather
+  equipment:
+    pocket1: DoubleEmergencyNitrogenTankFilled
+
+- type: loadout
+  id: LoadoutSpeciesPocketDoubleOxygen
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenBreather
+  equipment:
+    pocket1: DoubleEmergencyOxygenTankFilled
+
 # Tank Harness
 - type: loadout
   id: LoadoutTankHarness
