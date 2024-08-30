@@ -1,4 +1,5 @@
 using Content.Shared.Storage;
+using Content.Shared.Storage.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Markdown.Mapping;
