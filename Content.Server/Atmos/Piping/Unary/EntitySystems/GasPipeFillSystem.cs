@@ -57,17 +57,14 @@ public sealed class GasPipeFillSystem : EntitySystem
 
             // build the dictionary for AirDict
             var nextAirDict = new Dictionary<string, GasMixture>();
-            var seenNets = new List<(EntityUid, PipeNet)>();
+
             foreach (var node in nodeContainer.Nodes)
             {
-                if (_nodeContainer.TryGetNode(uid, node.Key, out PipeNode? pipeNode) &&
-                    ( pipeNode.NodeGroup is PipeNet net ) &&
-                    !seenNets.Contains((uid, net)) // forgive me, it only runs on map save.
-                    )
+                if (_nodeContainer.TryGetNode(uid, node.Key, out PipeNode? pipeNode) && pipeNode.NodeGroup is PipeNet net)
                 {
                     // copy nodeshare worth of gas to savedGas
                     var savedGas = new GasMixture();
-                    var nodeShare = net.Air.Volume / pipeNode.Air.Volume;
+                    var nodeShare = pipeNode.Volume / net.Air.Volume;
 
                     foreach (Gas gastype in Enum.GetValues(typeof(Gas)))
                     {
@@ -77,9 +74,6 @@ public sealed class GasPipeFillSystem : EntitySystem
                     savedGas.Temperature = net.Air.Temperature;
 
                     nextAirDict.Add(node.Key, savedGas);
-
-                    // prevent adding gas more than once if more than one node is in the same PipeNet
-                    seenNets.Add((uid, net));
                 }
             }
             pipeFill.AirDict = nextAirDict;
@@ -189,6 +183,104 @@ public sealed class GasPipeFillSystem : EntitySystem
                 net.Air.Clear();
                 net.Air.AdjustMoles(Gas.Oxygen, Atmospherics.OxygenMolesStandard * volScalar);
                 net.Air.AdjustMoles(Gas.Nitrogen, Atmospherics.NitrogenMolesStandard * volScalar);
+            }
+        }
+    }
+
+    /// <summary>
+    /// A console command that emtpies a pipenet.
+    /// </summary>
+    [AdminCommand(AdminFlags.Mapping)]
+    public sealed class AdjustPipeEmptyCommand : IConsoleCommand
+    {
+        [Dependency] private readonly IEntityManager _entManager = default!;
+        [Dependency] private readonly IEntitySystemManager _entSystemManager = default!;
+
+        public string Command => "adjpipeempty";
+        public string Description => "set a pipe's pipenet contents to empty.";
+        public string Help => "adjpipeempty <pipe EntId> <node name>";
+
+        public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+        {
+            if (args.Length == 1)
+                return CompletionResult.FromHint("Entity NetID (a pipe).");
+
+            if (args.Length == 2)
+                return CompletionResult.FromHint("the node name in the NodeContainerComponent to empty.");
+
+            return CompletionResult.Empty;
+        }
+
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        {
+            if (args.Length != 2)
+                return;
+
+            if (!NetEntity.TryParse(args[0], out var netEnt) ||
+                !_entManager.TryGetEntity(netEnt, out var euid)
+                )
+                return;
+
+            var _nodeContainer = _entSystemManager.GetEntitySystem<NodeContainerSystem>();
+
+            if (!_entManager.TryGetComponent<NodeContainerComponent>(euid, out var nodeCont))
+                return;
+
+            if (_nodeContainer.TryGetNode(nodeCont, args[1], out PipeNode? pipe) && pipe.NodeGroup is PipeNet net)
+            {
+                net.Air.Clear();
+            }
+        }
+    }
+
+    /// <summary>
+    /// A console command that emtpies a pipenet.
+    /// </summary>
+    [AdminCommand(AdminFlags.Mapping)]
+    public sealed class AdjustPipeTempCommand : IConsoleCommand
+    {
+        [Dependency] private readonly IEntityManager _entManager = default!;
+        [Dependency] private readonly IEntitySystemManager _entSystemManager = default!;
+
+        public string Command => "adjpipetemp";
+        public string Description => "set a pipe's pipenet temperature.";
+        public string Help => "adjpipetemp <pipe EntId> <node name> <float>";
+
+        public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+        {
+            if (args.Length == 1)
+                return CompletionResult.FromHint("Entity NetID (a pipe).");
+
+            if (args.Length == 2)
+                return CompletionResult.FromHint("the node name in the NodeContainerComponent to adjust.");
+
+            if (args.Length == 3)
+                return CompletionResult.FromHint($"float, default: {Atmospherics.T0C}");
+
+            return CompletionResult.Empty;
+        }
+
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        {
+            if (args.Length != 3)
+                return;
+
+            if (!NetEntity.TryParse(args[0], out var netEnt) ||
+                !_entManager.TryGetEntity(netEnt, out var euid) ||
+                !float.TryParse(args[2], out var temp)
+                )
+                return;
+
+            temp = Math.Clamp(temp, Atmospherics.TCMB, Atmospherics.Tmax);
+
+            var _nodeContainer = _entSystemManager.GetEntitySystem<NodeContainerSystem>();
+
+            if (!_entManager.TryGetComponent<NodeContainerComponent>(euid, out var nodeCont))
+                return;
+
+            if (_nodeContainer.TryGetNode(nodeCont, args[1], out PipeNode? pipe) && pipe.NodeGroup is PipeNet net)
+            {
+                net.Air.Clear();
             }
         }
     }
