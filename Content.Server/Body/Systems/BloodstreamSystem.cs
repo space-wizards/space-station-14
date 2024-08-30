@@ -216,11 +216,28 @@ public sealed class BloodstreamSystem : EntitySystem
         if (bloodloss.Empty)
             return;
 
-        // Does the calculation of how much bleed rate should be added/removed, then applies it
+        // Does the calculation of how much bleed rate should be added/removed, checks damage types and uses logic to determine how to change the bleed rate
         var oldBleedAmount = ent.Comp.BleedAmount;
         var total = bloodloss.GetTotal();
         var totalFloat = total.Float();
-        TryModifyBleedAmount(ent, totalFloat, ent);
+        var anyHeat = false;
+
+        foreach (var (key, value) in bloodloss.DamageDict) //Function used to find Heat damage type
+        {
+            bloodloss.DamageDict[key] = value;
+            if (key == "Heat")
+            {
+                anyHeat = true;
+            }
+
+        }
+
+        if (totalFloat > 0) //Just normal damage case to modify bleeding amount.
+        {
+            TryModifyBleedAmount(ent, totalFloat, ent);
+        }
+
+
 
         /// <summary>
         ///     Critical hit. Causes target to lose blood, using the bleed rate modifier of the weapon, currently divided by 5
@@ -235,15 +252,17 @@ public sealed class BloodstreamSystem : EntitySystem
         }
 
         // Heat damage will cauterize, causing the bleed rate to be reduced.
-        else if (totalFloat < 0 && oldBleedAmount > 0)
+        else if (anyHeat && oldBleedAmount > 0)
         {
             // Magically, this damage has healed some bleeding, likely
             // because it's burn damage that cauterized their wounds.
+            TryModifyBleedAmount(ent, totalFloat, ent);
 
             // We'll play a special sound and popup for feedback.
             _audio.PlayPvs(ent.Comp.BloodHealedSound, ent);
             _popupSystem.PopupEntity(Loc.GetString("bloodstream-component-wounds-cauterized"), ent,
                 ent, PopupType.Medium);
+            anyHeat = false;
         }
     }
     /// <summary>
