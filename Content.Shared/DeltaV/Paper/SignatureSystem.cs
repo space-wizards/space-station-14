@@ -70,7 +70,7 @@ public sealed class SignatureSystem : EntitySystem
         if (comp.StampedBy.Contains(stampInfo) || !_paper.TryStamp(paper, stampInfo, SignatureStampState))
         {
             // Show an error popup (this is borked, I'm just not gonna show it :).
-            //_popup.PopupEntity(Loc.GetString("paper-signed-failure", ("target", paper.Owner)), signer, signer, PopupType.SmallCaution);
+            _popup.PopupEntity(Loc.GetString("paper-signed-failure", ("target", paper.Owner)), signer, signer, PopupType.SmallCaution);
 
             return false;
         }
