@@ -48,19 +48,15 @@
         hard: false
         restitution: 0.8
         density: 1
-        mask:
-        - AllMask
         layer:
-        - AllMask
+        - SingularityLayer
       EventHorizonConsumer:
         shape:
           !type:PhysShapeCircle
             radius: 5
         hard: false
-        mask:
-        - AllMask
         layer:
-        - AllMask
+        - SingularityLayer
   - type: Input
     context: "ghost"
   - type: MovementIgnoreGravity

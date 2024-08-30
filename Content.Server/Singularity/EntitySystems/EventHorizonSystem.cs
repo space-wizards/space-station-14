@@ -12,6 +12,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Events;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Singularity.EntitySystems;
@@ -28,6 +29,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     [Dependency] private readonly IMapManager _mapMan = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
     #endregion Dependencies
@@ -37,7 +39,6 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         base.Initialize();
 
         SubscribeLocalEvent<MapGridComponent, EventHorizonAttemptConsumeEntityEvent>(PreventConsume);
-        SubscribeLocalEvent<GhostComponent, EventHorizonAttemptConsumeEntityEvent>(PreventConsume);
         SubscribeLocalEvent<StationDataComponent, EventHorizonAttemptConsumeEntityEvent>(PreventConsume);
         SubscribeLocalEvent<EventHorizonComponent, MapInitEvent>(OnHorizonMapInit);
         SubscribeLocalEvent<EventHorizonComponent, StartCollideEvent>(OnStartCollide);
@@ -150,6 +151,9 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// </summary>
     public bool CanConsumeEntity(EntityUid hungry, EntityUid uid, EventHorizonComponent eventHorizon)
     {
+        if (!_physics.IsHardCollidable(hungry, uid))
+            return false;
+
         var ev = new EventHorizonAttemptConsumeEntityEvent(uid, hungry, eventHorizon);
         RaiseLocalEvent(uid, ref ev);
         return !ev.Cancelled;
