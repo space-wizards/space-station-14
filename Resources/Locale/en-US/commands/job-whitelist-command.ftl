@@ -9,12 +9,12 @@ cmd-jobwhitelistadd-already-whitelisted = {$player} is already whitelisted to pl
 cmd-jobwhitelistadd-added = Added {$player} to the {$jobId} ({$jobName}) whitelist.
 
 cmd-jobwhitelistget-desc = Gets all the jobs that a player has been whitelisted for.
-cmd-jobwhitelistget-help = Usage: jobwhitelistadd <username>
+cmd-jobwhitelistget-help = Usage: jobwhitelistget <username>
 cmd-jobwhitelistget-whitelisted-none = Player {$player} is not whitelisted for any jobs.
 cmd-jobwhitelistget-whitelisted-for = "Player {$player} is whitelisted for:
 {$jobs}"
 
 cmd-jobwhitelistremove-desc = Removes a player's ability to play a whitelisted job.
-cmd-jobwhitelistremove-help = Usage: jobwhitelistadd <username> <job>
+cmd-jobwhitelistremove-help = Usage: jobwhitelistremove <username> <job>
 cmd-jobwhitelistremove-was-not-whitelisted = {$player} was not whitelisted to play as {$jobId} ({$jobName}).
 cmd-jobwhitelistremove-removed = Removed {$player} from the whitelist for {$jobId} ({$jobName}).

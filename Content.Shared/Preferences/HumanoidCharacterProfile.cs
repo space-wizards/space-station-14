@@ -387,48 +387,58 @@ namespace Content.Shared.Preferences
             };
         }
 
-        public HumanoidCharacterProfile WithTraitPreference(ProtoId<TraitPrototype> traitId, string? categoryId, bool pref)
+        public HumanoidCharacterProfile WithTraitPreference(ProtoId<TraitPrototype> traitId, IPrototypeManager protoManager)
         {
-            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-            var traitProto = prototypeManager.Index(traitId);
+            // null category is assumed to be default.
+            if (!protoManager.TryIndex(traitId, out var traitProto))
+                return new(this);
 
-            TraitCategoryPrototype? categoryProto = null;
-            if (categoryId != null && categoryId != "default")
-                categoryProto = prototypeManager.Index<TraitCategoryPrototype>(categoryId);
+            var category = traitProto.Category;
 
+            // Category not found so dump it.
+            TraitCategoryPrototype? traitCategory = null;
+
+            if (category != null && !protoManager.TryIndex(category, out traitCategory))
+                return new(this);
+
+            var list = new HashSet<ProtoId<TraitPrototype>>(_traitPreferences) { traitId };
+
+            if (traitCategory == null || traitCategory.MaxTraitPoints < 0)
+            {
+                return new(this)
+                {
+                    _traitPreferences = list,
+                };
+            }
+
+            var count = 0;
+            foreach (var trait in list)
+            {
+                // If trait not found or another category don't count its points.
+                if (!protoManager.TryIndex<TraitPrototype>(trait, out var otherProto) ||
+                    otherProto.Category != traitCategory)
+                {
+                    continue;
+                }
+
+                count += otherProto.Cost;
+            }
+
+            if (count > traitCategory.MaxTraitPoints && traitProto.Cost != 0)
+            {
+                return new(this);
+            }
+
+            return new(this)
+            {
+                _traitPreferences = list,
+            };
+        }
+
+        public HumanoidCharacterProfile WithoutTraitPreference(ProtoId<TraitPrototype> traitId, IPrototypeManager protoManager)
+        {
             var list = new HashSet<ProtoId<TraitPrototype>>(_traitPreferences);
-
-            if (pref)
-            {
-                list.Add(traitId);
-
-                if (categoryProto == null || categoryProto.MaxTraitPoints < 0)
-                {
-                    return new(this)
-                    {
-                        _traitPreferences = list,
-                    };
-                }
-
-                var count = 0;
-                foreach (var trait in list)
-                {
-                    var traitProtoTemp = prototypeManager.Index(trait);
-                    count += traitProtoTemp.Cost;
-                }
-
-                if (count > categoryProto.MaxTraitPoints && traitProto.Cost != 0)
-                {
-                    return new(this)
-                    {
-                        _traitPreferences = _traitPreferences,
-                    };
-                }
-            }
-            else
-            {
-                list.Remove(traitId);
-            }
+            list.Remove(traitId);
 
             return new(this)
             {
@@ -577,11 +587,11 @@ namespace Content.Shared.Preferences
             }
 
             var antags = AntagPreferences
-                .Where(id => prototypeManager.TryIndex<AntagPrototype>(id, out var antag) && antag.SetPreference)
+                .Where(id => prototypeManager.TryIndex(id, out var antag) && antag.SetPreference)
                 .ToList();
 
             var traits = TraitPreferences
-                         .Where(prototypeManager.HasIndex<TraitPrototype>)
+                         .Where(prototypeManager.HasIndex)
                          .ToList();
 
             Name = name;
@@ -605,7 +615,7 @@ namespace Content.Shared.Preferences
             _antagPreferences.UnionWith(antags);
 
             _traitPreferences.Clear();
-            _traitPreferences.UnionWith(traits);
+            _traitPreferences.UnionWith(GetValidTraits(traits, prototypeManager));
 
             // Checks prototypes exist for all loadouts and dump / set to default if not.
             var toRemove = new ValueList<string>();
@@ -625,6 +635,45 @@ namespace Content.Shared.Preferences
             {
                 _loadouts.Remove(value);
             }
+        }
+
+        /// <summary>
+        /// Takes in an IEnumerable of traits and returns a List of the valid traits.
+        /// </summary>
+        public List<ProtoId<TraitPrototype>> GetValidTraits(IEnumerable<ProtoId<TraitPrototype>> traits, IPrototypeManager protoManager)
+        {
+            // Track points count for each group.
+            var groups = new Dictionary<string, int>();
+            var result = new List<ProtoId<TraitPrototype>>();
+
+            foreach (var trait in traits)
+            {
+                if (!protoManager.TryIndex(trait, out var traitProto))
+                    continue;
+
+                // Always valid.
+                if (traitProto.Category == null)
+                {
+                    result.Add(trait);
+                    continue;
+                }
+
+                // No category so dump it.
+                if (!protoManager.TryIndex(traitProto.Category, out var category))
+                    continue;
+
+                var existing = groups.GetOrNew(category.ID);
+                existing += traitProto.Cost;
+
+                // Too expensive.
+                if (existing > category.MaxTraitPoints)
+                    continue;
+
+                groups[category.ID] = existing;
+                result.Add(trait);
+            }
+
+            return result;
         }
 
         public ICharacterProfile Validated(ICommonSession session, IDependencyCollection collection)

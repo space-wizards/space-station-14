@@ -153,7 +153,7 @@
   - type: PointLight
     radius: 1.5
     energy: 1.6
-    color: "#c94242"
+    color: "#43ccb5"
   - type: Computer
     board: CargoShuttleConsoleCircuitboard
   - type: StealTarget
@@ -183,7 +183,7 @@
     - type: PointLight
       radius: 1.5
       energy: 1.6
-      color: "#c94242"
+      color: "#43ccb5"
     - type: Computer
       board: SalvageShuttleConsoleCircuitboard
     - type: StealTarget
@@ -560,6 +560,7 @@
   name: communications computer
   description: A computer used to make station wide announcements via keyboard, set the appropriate alert level, and call the emergency shuttle.
   components:
+  - type: StationAiWhitelist
   - type: Sprite
     layers:
     - map: ["computerLayerBody"]
@@ -735,6 +736,7 @@
     - map: ["computerLayerKeys"]
       state: tech_key
   - type: CargoOrderConsole
+  - type: BankClient
   - type: ActiveRadio
     channels:
     - Supply
@@ -799,6 +801,7 @@
   - type: GuideHelp
     guides:
     - CargoBounties
+    - Cargo
 
 - type: entity
   parent: BaseComputer
@@ -970,7 +973,7 @@
   id: ComputerPalletConsole
   parent: BaseComputer
   name: cargo sale computer
-  description: Used to sell goods loaded onto cargo pallets
+  description: Used to sell goods loaded onto cargo pallets.
   components:
   - type: Sprite
     layers:
@@ -1023,7 +1026,7 @@
   - type: DeviceNetworkRequiresPower
   - type: NewsWriter
   - type: AccessReader
-    access: [[ "Command" ]]
+    access: [[ "Service" ]]
   - type: ActivatableUI
     key: enum.NewsWriterUiKey.Key
   - type: ActivatableUIRequiresVision
@@ -1115,3 +1118,46 @@
     access: [["ResearchDirector"]]
   - type: Lock
     unlockOnClick: false
+
+- type: entity
+  id: StationAiUploadComputer
+  parent: BaseComputer
+  name: AI upload console
+  description: Used to update the laws of the station AI.
+  components:
+  - type: Sprite
+    layers:
+    - map: [ "computerLayerBody" ]
+      state: computer
+    - map: [ "computerLayerKeyboard" ]
+      state: generic_keyboard
+    - map: [ "computerLayerScreen" ]
+      state: aiupload
+    - map: [ "computerLayerKeys" ]
+      state: generic_keys
+  - type: ApcPowerReceiver
+    powerLoad: 1000
+  - type: AccessReader
+    access: [ [ "ResearchDirector" ] ]
+  - type: Lock
+    unlockOnClick: false
+  - type: SiliconLawUpdater
+    components:
+    - type: StationAiHeld
+  - type: ItemSlotsLock
+    slots:
+    - circuit_holder
+  - type: ItemSlotRequiresPower
+  - type: ItemSlots
+    slots:
+      circuit_holder:
+        name: circuit-holder
+        insertSuccessPopup: silicon-laws-updated
+        whitelist:
+          components:
+          - SiliconLawProvider
+          - Item
+  - type: ContainerContainer
+    containers:
+      circuit_holder: !type:ContainerSlot
+      board: !type:Container

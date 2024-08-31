@@ -1,6 +1,9 @@
 ﻿roles-antag-syndicate-agent-name = Syndicate agent
 roles-antag-syndicate-agent-objective = Complete your objectives without being caught.
 
+roles-antag-syndicate-agent-sleeper-name = Syndicate sleeper agent
+roles-antag-syndicate-agent-sleeper-objective = A form of syndicate agent that can activate at any point in the middle of the shift.
+
 roles-antag-initial-infected-name = Initial Infected
 roles-antag-initial-infected-objective = Once you turn, infect as many other crew members as possible.
 

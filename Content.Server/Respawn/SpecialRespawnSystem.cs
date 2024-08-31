@@ -1,8 +1,8 @@
-﻿using Content.Server.Administration.Logs;
+using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
-using Content.Server.Station.Components;
+using Content.Shared.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Database;
 using Content.Shared.Maps;
@@ -11,6 +11,7 @@ using Content.Shared.Respawn;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Respawn;
 
@@ -23,6 +24,7 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly TurfSystem _turf = default!;
     [Dependency] private readonly IChatManager _chat = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
 
     public override void Initialize()
     {
@@ -85,6 +87,10 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
             return;
 
         if (!TryComp<MapGridComponent>(entityGridUid, out var grid) || MetaData(entityGridUid.Value).EntityLifeStage >= EntityLifeStage.Terminating)
+            return;
+
+        //Invalid prototype
+        if (!_proto.HasIndex(component.Prototype))
             return;
 
         if (TryFindRandomTile(entityGridUid.Value, entityMapUid.Value, 10, out var coords))
@@ -157,7 +163,7 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
         var tile = tileRef.GridIndices;
 
         var found = false;
-        var (gridPos, _, gridMatrix) = xform.GetWorldPositionRotationMatrix();
+        var (gridPos, _, gridMatrix) = _transform.GetWorldPositionRotationMatrix(xform);
         var gridBounds = gridMatrix.TransformBox(grid.LocalAABB);
 
         //Obviously don't put anything ridiculous in here
