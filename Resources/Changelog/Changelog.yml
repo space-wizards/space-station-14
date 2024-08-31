@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Keer-Sar
-  changes:
-  - message: Non-humanoids' names are now capitalized when inserting materials into
-      machines.
-    type: Fix
-  id: 6755
-  time: '2024-06-16T02:06:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29071
 - author: EmoGarbage404
   changes:
   - message: Magboots no longer work when off-grid.
@@ -3842,3 +3834,11 @@
   id: 7254
   time: '2024-08-31T08:28:36.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31655
+- author: juliangiebel
+  changes:
+  - message: Adds the station anchor. It anchors stations in space and prevents them
+      from moving.
+    type: Add
+  id: 7255
+  time: '2024-08-31T14:40:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26098
