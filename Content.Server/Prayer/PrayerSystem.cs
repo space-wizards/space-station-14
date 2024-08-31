@@ -58,7 +58,7 @@ public sealed class PrayerSystem : EntitySystem
                 {
                     // Make sure the player's entity and the Prayable entity+component still exist
                     if (actor?.PlayerSession != null && HasComp<PrayableComponent>(uid))
-                        Pray(actor.PlayerSession, comp, message);
+                        Pray(actor.PlayerSession, comp, message, uid);
                 });
             },
             Impact = LogImpact.Low,
@@ -93,11 +93,12 @@ public sealed class PrayerSystem : EntitySystem
     /// <param name="sender">The IPlayerSession who sent the original message</param>
     /// <param name="comp">Prayable component used to make the prayer</param>
     /// <param name="message">Message to be sent to the admin chat</param>
+    /// <param name="source">EntityUid of the entity that was prayed on</param>
     /// <remarks>
     /// You may be wondering, "Why the admin chat, specifically? Nobody even reads it!"
     /// Exactly.
     ///  </remarks>
-    public void Pray(ICommonSession sender, PrayableComponent comp, string message)
+    public void Pray(ICommonSession sender, PrayableComponent comp, string message, EntityUid source)
     {
         if (sender.AttachedEntity == null)
             return;
@@ -106,5 +107,14 @@ public sealed class PrayerSystem : EntitySystem
 
         _chatManager.SendAdminAnnouncement($"{Loc.GetString(comp.NotificationPrefix)} <{sender.Name}>: {message}");
         _adminLogger.Add(LogType.AdminMessage, LogImpact.Low, $"{ToPrettyString(sender.AttachedEntity.Value):player} sent prayer ({Loc.GetString(comp.NotificationPrefix)}): {message}");
+        RaiseLocalEvent(new EntityPrayedEvent(sender.AttachedEntity.Value, message, source));
     }
 }
+
+/// <summary>
+/// Event for when a player prays
+/// </summary>
+/// <param name="Entity">The entity that prayed</param>
+/// <param name="Message">The message that was prayed</param>
+/// <param name="Source">The entity that was prayed on</param>
+public readonly record struct EntityPrayedEvent(EntityUid Entity, string Message, EntityUid Source);

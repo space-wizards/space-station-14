@@ -152,6 +152,9 @@ public sealed partial class ChatMessageReplayEvent : ReplayEvent
 
     [DataField]
     public string? Type;
+
+    [DataField]
+    public string? Channel;
 }
 
 [Serializable, DataDefinition]
@@ -201,4 +204,17 @@ public sealed partial class ShuttleReplayEvent : ReplayEvent
 
     [DataField]
     public ReplayEventPlayer? Source;
+}
+
+[Serializable, DataDefinition]
+public sealed partial class PrayedReplayEvent : ReplayEvent
+{
+    [DataField]
+    public ReplayEventPlayer? Player;
+
+    [DataField]
+    public string ?Message;
+
+    [DataField]
+    public string? PrayedWith;
 }

@@ -2,6 +2,7 @@
 using System.Text;
 using Content.Server.Mind;
 using Content.Server.Pinpointer;
+using Content.Server.Prayer;
 using Content.Shared.CCVar;
 using Content.Shared.MassMedia.Systems;
 using Content.Shared.Mobs;
@@ -45,6 +46,7 @@ public sealed class ReplayEventSystem : EntitySystem
         SubscribeLocalEvent<SlipEvent>(OnSlip); // Here as well
         SubscribeLocalEvent<ActorComponent, StunnedEvent>(OnStun); // I can probably make this shared or smth
         SubscribeLocalEvent<NewsArticlePublishedEvent>(OnNewsPublished);
+        SubscribeLocalEvent<EntityPrayedEvent>(OnEntityPrayed);
 
         Subs.CVar(_cfg, CCVars.ReplayRecordEvents, OnRecordEventsChanged,true);
 
@@ -163,6 +165,18 @@ public sealed class ReplayEventSystem : EntitySystem
         };
     }
 
+
+    private void OnEntityPrayed(EntityPrayedEvent ev)
+    {
+        RecordReplayEvent(new PrayedReplayEvent()
+        {
+            EventType = ReplayEventType.Prayed,
+            Severity = ReplayEventSeverity.Medium,
+            Player = GetPlayerInfo(ev.Entity),
+            PrayedWith = MetaData(ev.Source).EntityName,
+            Message = ev.Message
+        }, ev.Source);
+    }
 
     private void OnMobStateChanged(MobStateChangedEvent ev)
     {

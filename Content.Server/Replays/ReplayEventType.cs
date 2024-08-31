@@ -57,5 +57,7 @@ public enum ReplayEventType : byte
     EvacuationShuttleDockedCentCom,
     EvacuationShuttleDeparted,
     EvacuationShuttleRecalled,
+
+    Prayed,
     #endregion
 }
