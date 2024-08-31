@@ -257,9 +257,12 @@ public sealed class CargoTest
         var entManager = server.ResolveDependency<IEntityManager>();
         var priceSystem = entManager.System<PricingSystem>();
 
-        var ent = entManager.SpawnEntity("StackEnt", MapCoordinates.Nullspace);
-        var price = priceSystem.GetPrice(ent);
-        Assert.That(price, Is.EqualTo(100.0));
+        await server.WaitAssertion(() =>
+        {
+            var ent = entManager.SpawnEntity("StackEnt", MapCoordinates.Nullspace);
+            var price = priceSystem.GetPrice(ent);
+            Assert.That(price, Is.EqualTo(100.0));
+        });
 
         await pair.CleanReturnAsync();
     }
