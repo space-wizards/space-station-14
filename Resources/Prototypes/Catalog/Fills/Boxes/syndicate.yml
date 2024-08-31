@@ -83,18 +83,3 @@
       - id: WeaponCroissant
         amount: 2
       - id: WeaponBaguette
-
-- type: entity
-  name: brosnade box
-  parent: [BoxCardboard, BaseSyndicateContraband]
-  id: BoxBrosGrenade
-  description: UNGH
-  components:
-  - type: Sprite
-    layers:
-      - state: box_of_doom
-      - state: bros
-  - type: StorageFill
-    contents:
-      - id: BrosGrenade
-      - id: SorbGrenade

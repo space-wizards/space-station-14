@@ -25,6 +25,20 @@
     BuzzochloricBees: 3
 
 - type: reaction
+  id: BrosochloricBros
+  reactants:
+    VentCrud: # bros already make a ton of this. it is their blood. their being
+      amount: 1
+    GroundBros: # just ripping off buzzochloric from here, minus the fiber
+      amount: 1
+    Chlorine:
+      amount: 1
+    UnstableMutagen:
+      amount: 1
+  products:
+    BrosochloricBros: 3
+
+- type: reaction
   id: CreateSoap
   impact: Low
   quantized: true
