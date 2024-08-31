@@ -99,7 +99,6 @@ public sealed class DockTest : ContentUnitTest
         var mapSystem = entManager.System<SharedMapSystem>();
         MapGridComponent mapGrid = default!;
 
-        MapGridComponent mapGrid = default;
         server.Post(() =>
         {
             mapGrid = entManager.AddComponent<MapGridComponent>(map.MapUid);
