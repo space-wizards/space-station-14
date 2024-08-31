@@ -50,9 +50,11 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Breakage"]
-  - type: GravityGenerator
+  - type: PowerCharge
+    windowTitle: gravity-generator-window-title
     idlePower: 50
     activePower: 2500
+  - type: GravityGenerator
     lightRadiusMin: 0.75
     lightRadiusMax: 2.5
     spriteMap:
@@ -60,10 +62,13 @@
       unpowered: "off"
       off: "off"
       on: "on"
+  - type: ActivatableUI
+    key: enum.PowerChargeUiKey.Key
+  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
-        enum.GravityGeneratorUiKey.Key:
-          type: GravityGeneratorBoundUserInterface
+      enum.PowerChargeUiKey.Key:
+        type: PowerChargeBoundUserInterface
   - type: Appearance
   - type: PointLight
     radius: 2.5
@@ -124,9 +129,10 @@
     board: MiniGravityGeneratorCircuitboard
   - type: ApcPowerReceiver
     powerLoad: 500
-  - type: GravityGenerator
+  - type: PowerCharge
     idlePower: 15
     activePower: 500
+  - type: GravityGenerator
     lightRadiusMin: 0.75
     lightRadiusMax: 2.5
   - type: StaticPrice

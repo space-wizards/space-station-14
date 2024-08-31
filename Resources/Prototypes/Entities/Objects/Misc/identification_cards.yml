@@ -534,16 +534,6 @@
     job: ERTSecurity
 
 - type: entity
-  parent: CentcomIDCard
-  id: CentcomIDCardSyndie
-  name: command officer ID card
-  suffix: Fake
-  components:
-  - type: Access
-    tags:
-    - Maintenance
-
-- type: entity
   parent: IDCardStandard
   id: MusicianIDCard
   name: musician ID card
