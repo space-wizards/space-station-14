@@ -69,7 +69,7 @@ public sealed class SignatureSystem : EntitySystem
         // TODO: remove redunant contains check when TryStamp isnt a meme
         if (comp.StampedBy.Contains(stampInfo) || !_paper.TryStamp(paper, stampInfo, SignatureStampState))
         {
-            // Show an error popup (this is borked, I'm just not gonna show it :).
+            // Show an error popup.
             _popup.PopupEntity(Loc.GetString("paper-signed-failure", ("target", paper.Owner)), signer, signer, PopupType.SmallCaution);
 
             return false;
