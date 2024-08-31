@@ -38,8 +38,13 @@ public sealed class RehydratableSystem : EntitySystem
 
     private void OnExamine(EntityUid uid, RehydratableComponent component, ExaminedEvent args)
     {
-        // solution.Volume & solution.MaxVolume when i can access solutions
-        // args.PushMarkup("test");
+        if (!_solutions.TryGetSolution(uid, component.SolutionName, out _, out var solution))
+            return;
+        // This will only be true if an incorrect reagent has been added to the cube
+        if (solution.Volume == solution.MaxVolume)
+        {
+            args.PushMarkup(Loc.GetString("rehydratable-component-soaked-message"));
+        }
     }
 
     // Try not to make this public if you can help it.
