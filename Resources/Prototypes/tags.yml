@@ -1091,6 +1091,9 @@
   id: RifleStock
 
 - type: Tag
+  id: Ring
+
+- type: Tag
   id: RipleyCentralControlModule
 
 - type: Tag
@@ -1182,6 +1185,7 @@
 
 - type: Tag
   id: Soup
+
 - type: Tag
   id: Spear
 
@@ -1208,6 +1212,9 @@
 
 - type: Tag
   id: SpreaderIgnore
+
+- type: Tag
+  id: StationAi
 
 - type: Tag
   id: StationMapElectronics
