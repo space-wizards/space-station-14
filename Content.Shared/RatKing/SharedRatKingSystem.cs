@@ -24,28 +24,11 @@ public abstract class SharedRatKingSystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<RatKingComponent, ComponentStartup>(OnStartup);
-        SubscribeLocalEvent<RatKingComponent, ComponentShutdown>(OnShutdown);
-
         SubscribeLocalEvent<RatKingRummageableComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerb);
         SubscribeLocalEvent<RatKingRummageableComponent, RatKingRummageDoAfterEvent>(OnDoAfterComplete);
     }
 
-    private void OnStartup(EntityUid uid, RatKingComponent component, ComponentStartup args)
-    {
-        if (!TryComp(uid, out ActionsComponent? comp))
-            return;
 
-        _action.AddAction(uid, ref component.ActionDomainEntity, component.ActionDomain, component: comp);
-    }
-
-    private void OnShutdown(EntityUid uid, RatKingComponent component, ComponentShutdown args)
-    {
-        if (!TryComp(uid, out ActionsComponent? comp))
-            return;
-
-        _action.RemoveAction(uid, component.ActionDomainEntity, comp);
-    }
 
     private void OnGetVerb(EntityUid uid, RatKingRummageableComponent component, GetVerbsEvent<AlternativeVerb> args)
     {

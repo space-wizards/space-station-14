@@ -113,8 +113,9 @@
       Attack: RatKingCommandCheeseEm
       Loose: RatKingCommandLoose
     hungerPerArmyUse: 25
-  - type: RatKing
+  - type: RatKingDomain
     hungerPerDomainUse: 50
+  - type: RatKing
   - type: MobsterAccent
   - type: Speech
     speechVerb: SmallMob
