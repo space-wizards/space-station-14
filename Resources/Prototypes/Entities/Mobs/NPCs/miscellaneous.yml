@@ -69,9 +69,10 @@
 
 - type: entity
   id: MobTomatoKiller
-  parent: 
+  parent:
   - BaseSimpleMob
   - MobDamageable
+  - MobPolymorphable
   - MobBloodstream
   - MobFlammable
   - MobCombat
@@ -90,7 +91,7 @@
       components:
       - HumanoidAppearance
   - type: Sprite
-    sprite: Mobs/Demons/tomatokiller.rsi 
+    sprite: Mobs/Demons/tomatokiller.rsi
     noRot: true
     layers:
       - map: [ "enum.DamageStateVisualLayers.Base" ]
