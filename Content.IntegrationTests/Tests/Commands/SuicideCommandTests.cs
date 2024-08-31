@@ -144,8 +144,6 @@ public sealed class SuicideCommandTests
             mobThresholdsComp = entManager.GetComponent<MobThresholdsComponent>(player);
             damageableComp = entManager.GetComponent<DamageableComponent>(player);
 
-        server.Post(() =>
-        {
             if (protoMan.TryIndex<DamageTypePrototype>("Slash", out var slashProto))
                 damageableSystem.TryChangeDamage(player, new DamageSpecifier(slashProto, FixedPoint2.New(46.5)));
         });
