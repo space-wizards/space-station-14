@@ -65,9 +65,9 @@ namespace Content.Server.PDA
 
             while (query.MoveNext(out var uid, out var comp))
             {
-                if (comp.OwnerName == ev.OldName)
+                if (comp.PdaOwner == ev.Uid)
                 {
-                    SetOwner(uid, comp, ev.NewName);
+                    SetOwner(uid, comp, ev.Uid, ev.NewName);
                 }
             }
         }
@@ -108,9 +108,10 @@ namespace Content.Server.PDA
             UpdatePdaUi(uid, pda);
         }
 
-        public void SetOwner(EntityUid uid, PdaComponent pda, string ownerName)
+        public void SetOwner(EntityUid uid, PdaComponent pda, EntityUid owner, string ownerName)
         {
             pda.OwnerName = ownerName;
+            pda.PdaOwner = owner;
             UpdatePdaUi(uid, pda);
         }
 
