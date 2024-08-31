@@ -425,7 +425,7 @@
 - type: entity
   parent: SmokeGrenade
   id: BrosGrenade
-  name: brosnade
+  name: BROSnade
   description: UNGH
   components:
   - type: Sprite
