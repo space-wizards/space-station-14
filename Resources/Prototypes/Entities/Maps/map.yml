@@ -1,0 +1,24 @@
+# Components the map itself and grids have in common
+- type: entity
+  abstract: true
+  categories: [ HideSpawnMenu ]
+  id: BaseMapEntity
+  components:
+  - type: Broadphase
+  - type: OccluderTree
+
+# Prototype for a station's map entity
+# Set the station's name with MetaData, this is visible on a shuttle console when FTLing
+# Add your map's custom parallax to this entity with Parallax
+- type: entity
+  parent: BaseMapEntity
+  id: Map
+  name: station
+  components:
+  - type: Transform
+  - type: Map
+    mapPaused: True
+  - type: PhysicsMap
+  - type: GridTree
+  - type: MovedGrids
+  - type: LoadedMap
