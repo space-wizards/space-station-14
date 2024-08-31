@@ -4,6 +4,28 @@
   name: camera
   description: A surveillance camera. It's watching you. Kinda.
   components:
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      # This exists for examine.
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.25
+      light:
+        shape:
+          !type:PhysShapeCircle
+          radius: 5
+        hard: false
+        mask:
+        - GhostImpassable
+  - type: LightOnCollide
+  - type: PointLight
+    enabled: false
+    radius: 5
+  - type: SlimPoweredLight
+    enabled: false
   - type: StationAiVision
   - type: Clickable
   - type: InteractionOutline

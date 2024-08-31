@@ -358,7 +358,7 @@
     sprite: Clothing/Head/Helmets/ert_janitor.rsi
 
 - type: entity
-  parent: [ ClothingHeadHelmetBasic, BaseSyndicateContraband ]
+  parent: [ BaseSyndicateContraband, ClothingHeadHelmetBasic ]
   id: ClothingHeadHelmetRaid
   name: syndicate raid helmet
   description: An armored helmet for use with the syndicate raid suit. Very stylish.

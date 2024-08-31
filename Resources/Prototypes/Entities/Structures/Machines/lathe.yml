@@ -89,7 +89,7 @@
   id: Autolathe
   parent: BaseLatheLube
   name: autolathe
-  description: It produces basic items using metal and glass.
+  description: It produces basic items using metal and glass. Has the ability to process blueprints to print new recipes.
   components:
   - type: Sprite
     sprite: Structures/Machines/autolathe.rsi
@@ -200,6 +200,7 @@
       - ClothingHeadHatWelding
       - WetFloorSign
       - ClothingHeadHatCone
+
   - type: EmagLatheRecipes
     emagStaticRecipes:
       - BoxLethalshot
@@ -226,6 +227,18 @@
       - RiotShield
       - SpeedLoaderMagnum
       - SpeedLoaderMagnumEmpty
+  - type: BlueprintReceiver
+    whitelist:
+      tags:
+      - BlueprintAutolathe
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+      machine_parts: !type:Container
+      blueprint: !type:Container
+  - type: EmptyOnMachineDeconstruct
+    containers:
+    - blueprint
 
 - type: entity
   id: AutolatheHyperConvection
@@ -482,8 +495,6 @@
       - PortableGeneratorPacmanMachineCircuitboard
       - PortableGeneratorSuperPacmanMachineCircuitboard
       - PortableGeneratorJrPacmanMachineCircuitboard
-      - WallmountGeneratorElectronics
-      - WallmountGeneratorAPUElectronics
       - WallmountSubstationElectronics
       - PowerCageRechargerCircuitboard
       - EmitterCircuitboard

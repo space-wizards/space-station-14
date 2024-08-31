@@ -17,8 +17,6 @@ public sealed partial class AirAlarmComponent : Component
     // Remember to null this afterwards.
     [ViewVariables] public IAirAlarmModeUpdate? CurrentModeUpdater { get; set; }
 
-    [ViewVariables] public AirAlarmTab CurrentTab { get; set; }
-
     public readonly HashSet<string> KnownDevices = new();
     public readonly Dictionary<string, GasVentPumpData> VentData = new();
     public readonly Dictionary<string, GasVentScrubberData> ScrubberData = new();
