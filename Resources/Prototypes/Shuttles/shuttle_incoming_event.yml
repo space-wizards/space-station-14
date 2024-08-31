@@ -18,11 +18,11 @@
   path: /Maps/Shuttles/ShuttleEvent/disaster_evacpod.yml
   copies: 3
 
-# The power of 3 clowns proved too strong for the players and had to be 1984ed.
-# - type: preloadedGrid
-  # id: Honki
-  # path: /Maps/Shuttles/ShuttleEvent/honki.yml
-  # copies: 1
+# The power of 3 clowns has proved too strong for the players and may need to be 1984ed.
+- type: preloadedGrid
+  id: Honki
+  path: /Maps/Shuttles/ShuttleEvent/honki.yml
+  copies: 1
 
 - type: preloadedGrid
   id: SyndieEvacPod
