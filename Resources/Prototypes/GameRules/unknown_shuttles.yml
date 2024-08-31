@@ -35,6 +35,7 @@
     children:
     - id: LoneOpsSpawn
     - id: UnknownShuttleDrone
+    - id: UnknownShuttleInstigator
     - id: UnknownShuttleManOWar
     - id: UnknownShuttleRaider
     - id: UnknownShuttleScooner
