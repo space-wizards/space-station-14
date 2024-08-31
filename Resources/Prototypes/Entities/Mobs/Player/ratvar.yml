@@ -48,6 +48,8 @@
         hard: false
         restitution: 0.8
         density: 1
+        mask:
+        - SingularityLayer
         layer:
         - SingularityLayer
       EventHorizonConsumer:
@@ -55,6 +57,8 @@
           !type:PhysShapeCircle
             radius: 5
         hard: false
+        mask:
+        - SingularityLayer
         layer:
         - SingularityLayer
   - type: Input
