@@ -506,5 +506,18 @@ Entries:
   id: 63
   time: '2024-08-31T08:26:52.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31661
+- author: nikthechampiongr
+  changes:
+  - message: Respawn verb is now available on players even after they have disconnected.
+    type: Fix
+  - message: Erase command is now available on players even after they have disconnected.
+    type: Fix
+  - message: You can now erase people with the erase command
+    type: Add
+  - message: Respawn command now also accepts user ids
+    type: Tweak
+  id: 64
+  time: '2024-08-31T11:38:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30433
 Name: Admin
 Order: 1
