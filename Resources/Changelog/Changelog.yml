@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Cojoke-dot
-  changes:
-  - message: You can now find Jackboots in the security load-outs
-    type: Add
-  - message: The Sec drobe no longer has a Cowboy hat or boots
-    type: Remove
-  id: 6753
-  time: '2024-06-15T22:38:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29018
 - author: Keer-Sar
   changes:
   - message: Fixed a spelling error in the cargo bounty for lungs.
@@ -3843,3 +3834,10 @@
   id: 7252
   time: '2024-08-31T03:02:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31670
+- author: metalgearsloth
+  changes:
+  - message: Fix AI eye getting deleted by singulo.
+    type: Fix
+  id: 7253
+  time: '2024-08-31T08:24:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31556
