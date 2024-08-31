@@ -68,10 +68,63 @@
         path: /Audio/Animals/lizard_happy.ogg
 
 - type: entity
+  name: laser-less laser raptor
+  id: MobRaptor
+  parent: SimpleMobBase
+  description: This raptor was tragically born without lasers.
+  components:
+    - type: NpcFactionMember
+      factions:
+        - SimpleHostile
+    - type: HTN
+      rootTask:
+        task: RaptorCompound
+    - type: Sprite
+      drawdepth: Mobs
+      sprite: Mobs/Aliens/laser-less_laser_raptor.rsi
+      layers:
+        - map: [ "enum.DamageStateVisualLayers.Base" ]
+          state: raptor
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeCircle
+            radius: 0.30
+          density: 80
+          mask:
+            - MobMask
+          layer:
+            - MobLayer
+    - type: DamageStateVisuals
+      states:
+        Alive:
+          Base: raptor
+        Dead:
+          Base: raptor_dead
+    - type: MobThresholds
+      thresholds:
+        0: Alive
+        100: Dead
+    - type: MovementSpeedModifier
+      baseWalkSpeed: 2
+      baseSprintSpeed: 5
+    - type: Tag
+      tags:
+        - FootstepSound
+    - type: InteractionPopup
+      successChance: 0.3
+      interactSuccessString: petting-success-reptile
+      interactFailureString: petting-failure-generic
+      interactSuccessSound:
+        path: /Audio/Animals/lizard_happy.ogg
+
+- type: entity
   id: MobTomatoKiller
-  parent: 
+  parent:
   - BaseSimpleMob
   - MobDamageable
+  - MobPolymorphable
   - MobBloodstream
   - MobFlammable
   - MobCombat
@@ -90,7 +143,7 @@
       components:
       - HumanoidAppearance
   - type: Sprite
-    sprite: Mobs/Demons/tomatokiller.rsi 
+    sprite: Mobs/Demons/tomatokiller.rsi
     noRot: true
     layers:
       - map: [ "enum.DamageStateVisualLayers.Base" ]
@@ -178,14 +231,14 @@
 
 - type: entity
   id: MobTomatoKisser
-  parent: 
+  parent:
   - BaseSimpleMob
   - MobDamageable
   - MobBloodstream
   - MobFlammable
   - MobCombat
   name: tomato kisser
-  description: Mwah!
+  description: Guaranteed to be plump and juicy, if a little bit cloying.
   components:
   - type: Item
   - type: NPCRetaliation
@@ -197,8 +250,12 @@
   - type: HTN
     rootTask:
       task: KisserTomatoCompound
+  - type: NPCImprintingOnSpawnBehaviour
+    whitelist:
+      components:
+      - HumanoidAppearance
   - type: Sprite
-    sprite: Mobs/Demons/tomatokisser.rsi 
+    sprite: Mobs/Demons/tomatokisser.rsi
     noRot: true
     layers:
       - map: [ "enum.DamageStateVisualLayers.Base" ]
@@ -272,7 +329,7 @@
   - type: PotencyVisuals
   - type: Appearance
   - type: Produce
-    seedId: killerTomato
+    seedId: kisserTomato
   - type: PassiveDamage # Slight passive damage. 35 hp \ 5 min \ 60 sec = 0.08
     allowedStates:
     - Alive
@@ -288,5 +345,5 @@
     interactSuccessString: petting-success-tomato
     interactFailureString: petting-failure-tomato
     interactSuccessSound:
-      path: /Audio/Animals/mwah.ogg 
+      path: /Audio/Animals/mwah.ogg
     interactSuccessSpawn: EffectHearts

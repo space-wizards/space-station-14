@@ -48,6 +48,13 @@
       strippingWindowPos: 0,0
       displayName: Eyes
       offset: 0, .03
+    - name: ears
+      slotTexture: ears
+      slotFlags: EARS
+      stripTime: 3
+      uiWindowPos: 2,2
+      strippingWindowPos: 2,0
+      displayName: Ears
     - name: head
       slotTexture: head
       slotFlags: HEAD
@@ -88,6 +95,16 @@
       dependsOnComponents:
       - type: AllowSuitStorage
       displayName: Suit Storage
+    - name: id
+      slotTexture: id
+      fullTextureName: template_small
+      slotFlags: IDCARD
+      slotGroup: SecondHotbar
+      stripTime: 6
+      uiWindowPos: 2,1
+      strippingWindowPos: 2,4
+      dependsOn: jumpsuit
+      displayName: ID
     - name: belt
       slotTexture: belt
       fullTextureName: template_small
@@ -106,20 +123,3 @@
       uiWindowPos: 3,0
       strippingWindowPos: 0,5
       displayName: Back
-    - name: ears
-      slotTexture: ears
-      slotFlags: EARS
-      stripTime: 3
-      uiWindowPos: 2,2
-      strippingWindowPos: 2,0
-      displayName: Ears
-    - name: id
-      slotTexture: id
-      fullTextureName: template_small
-      slotFlags: IDCARD
-      slotGroup: SecondHotbar
-      stripTime: 6
-      uiWindowPos: 2,1
-      strippingWindowPos: 2,4
-      dependsOn: jumpsuit
-      displayName: ID

@@ -328,7 +328,7 @@
           Primed: { state: primed }
           # Unprimed: <Use state determined by enum.ConstructionVisuals.Layer>
   - type: StaticPrice
-    price: 25
+    price: 75
 
 - type: entity
   name: EMP grenade
@@ -416,13 +416,59 @@
   - type: Sprite
     sprite: Objects/Weapons/Grenades/beenade.rsi
   - type: SmokeOnTrigger
-    duration: 15
-    spreadAmount: 25
-    smokePrototype: Foam
+    duration: 5
+    spreadAmount: 30
+  - type: SpawnOnTrigger
+    proto: MobAngryBee
+    amount: 6
+
+- type: entity
+  parent: SmokeGrenade
+  id: BrosGrenade
+  name: brosnade
+  description: UNGH
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/brosnade.rsi
+  - type: SmokeOnTrigger
+    duration: 5
+    spreadAmount: 10
     solution:
       reagents:
-      - ReagentId: BuzzochloricBees
-        Quantity: 30
+      - ReagentId: VentCrud
+        Quantity: 15
+  - type: SpawnOnTrigger
+    proto: MobBros
+    amount: 50
+  - type: SoundOnTrigger
+    sound: /Audio/Items/bros_grenade_smoke.ogg
+  - type: TimerTriggerVisuals
+    primingSound:
+      path: /Audio/Items/bros_grenade_prime.ogg
+
+- type: entity
+  parent: SmokeGrenade
+  id: SorbGrenade
+  name: sorbnade
+  description: UNGH
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/sorbnade.rsi
+  - type: SmokeOnTrigger
+    duration: 5
+    spreadAmount: 10
+    solution:
+      reagents:
+      - ReagentId: VentCrud
+        Quantity: 15
+  - type: SpawnOnTrigger
+    proto: MobSorb
+    amount: 50
+  - type: SoundOnTrigger
+    sound: /Audio/Items/bros_grenade_smoke.ogg
+  - type: TimerTriggerVisuals
+    primingSound:
+      path: /Audio/Items/bros_grenade_prime.ogg
 
 - type: entity
   parent: SmokeGrenade

@@ -18,21 +18,38 @@
                 <Control VerticalExpand="True" Margin="0 0 0 8">
                     <BoxContainer Orientation="Vertical" Name="ConnectingStatus">
                         <Label Text="{Loc 'connecting-in-progress'}" Align="Center" />
-                        <!-- Who the fuck named these cont- oh wait I did -->
                         <Label Name="ConnectStatus" StyleClasses="LabelSubText" Align="Center" />
                     </BoxContainer>
-                    <BoxContainer Orientation="Vertical" Name="ConnectFail" Visible="False">
+                    <BoxContainer Orientation="Vertical" Name="ConnectFail" Visible="False" SeparationOverride="10">
                         <RichTextLabel Name="ConnectFailReason" VerticalAlignment="Stretch"/>
-                        <Button Name="RetryButton" Text="{Loc 'connecting-retry'}"
-                                HorizontalAlignment="Center"
-                                VerticalExpand="True" VerticalAlignment="Bottom" />
+                        <BoxContainer Orientation="Horizontal" Align="Center">
+                            <Button Name="RetryButton"
+                                    Text="{Loc 'connecting-retry'}"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Bottom"
+                                    StyleClasses="OpenRight"/>
+                            <Button Name="CopyButton"
+                                    Text="{Loc 'connecting-copy'}"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Bottom"
+                                    StyleClasses="OpenLeft"/>
+                        </BoxContainer>
                     </BoxContainer>
-                    <BoxContainer Orientation="Vertical" Name="Disconnected">
+                    <BoxContainer Orientation="Vertical" Name="Disconnected" Visible="False" SeparationOverride="10">
                         <Label Text="{Loc 'connecting-disconnected'}" Align="Center" />
                         <Label Name="DisconnectReason" Align="Center" />
-                        <Button Name="ReconnectButton" Text="{Loc 'connecting-reconnect'}"
-                                HorizontalAlignment="Center"
-                                VerticalExpand="True" VerticalAlignment="Bottom" />
+                        <BoxContainer Orientation="Horizontal" Align="Center" VerticalAlignment="Bottom">
+                            <Button Name="ReconnectButton"
+                                    Text="{Loc 'connecting-reconnect'}"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Bottom"
+                                    StyleClasses="OpenRight"/>
+                            <Button Name="CopyButtonDisconnected"
+                                    Text="{Loc 'connecting-copy'}"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Bottom"
+                                    StyleClasses="OpenLeft"/>
+                        </BoxContainer>
                     </BoxContainer>
                 </Control>
                 <Label Name="ConnectingAddress" StyleClasses="LabelSubText" HorizontalAlignment="Center" />

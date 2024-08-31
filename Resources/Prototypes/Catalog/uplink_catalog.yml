@@ -386,6 +386,21 @@
   categories:
     - UplinkExplosives
 
+- type: listing
+  id: UplinkBoxBrosGrenade
+  name: uplink-box-bros-grenade-name
+  description: uplink-box-bros-grenade-desc
+  productEntity: BoxBrosGrenade
+  cost:
+    Telecrystal: 16
+  categories:
+    - UplinkExplosives
+  conditions:
+  - !type:StoreWhitelistCondition
+    blacklist:
+      tags:
+      - NukeOpsUplink
+
 # Ammo
 
 - type: listing
@@ -1753,3 +1768,19 @@
     blacklist:
       components:
       - SurplusBundle
+
+- type: listing
+  id: UplinkCombatBakery
+  name: uplink-combat-bakery-name
+  description: uplink-combat-bakery-desc
+  icon: { sprite:  Objects/Consumable/Food/Baked/bread.rsi, state: baguette}
+  productEntity: CombatBakeryKit
+  cost:
+    Telecrystal: 3
+  categories:
+  - UplinkJob
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - Chef
+    - Mime

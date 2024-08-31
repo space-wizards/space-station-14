@@ -5,6 +5,7 @@
   id: BaseMobDiona
   abstract: true
   components:
+  - type: Absorbable
   - type: HumanoidAppearance
     species: Diona
   - type: Hunger
@@ -25,6 +26,8 @@
       Brute:
         sprite: Mobs/Effects/brute_damage.rsi
         color: "#cd7314"
+      Burn:
+        sprite: Mobs/Effects/burn_damage.rsi
   - type: Butcherable
     butcheringType: Spike
     spawned:

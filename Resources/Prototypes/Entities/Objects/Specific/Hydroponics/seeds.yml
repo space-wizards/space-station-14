@@ -165,6 +165,16 @@
 
 - type: entity
   parent: SeedBase
+  name: packet of tea plant seeds
+  id: TeaPlantSeeds
+  components:
+    - type: Seed
+      seedId: teaPlant
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/tea_plant.rsi
+
+- type: entity
+  parent: SeedBase
   name: packet of papercane seeds
   id: PapercaneSeeds
   components:
@@ -627,6 +637,16 @@
 
 - type: entity
   parent: SeedBase
+  name: packet of blue pumpkin seeds
+  id: BluePumpkinSeeds
+  components:
+    - type: Seed
+      seedId: bluePumpkin
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/blue_pumpkin.rsi
+
+- type: entity
+  parent: SeedBase
   name: packet of cotton seeds
   id: CottonSeeds
   components:
@@ -666,6 +686,16 @@
 
 - type: entity
   parent: SeedBase
+  name: packet of cherry seeds
+  id: CherrySeeds
+  components:
+    - type: Seed
+      seedId: cherry
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/cherry.rsi
+
+- type: entity
+  parent: SeedBase
   name: packet of lemo seeds
   description: "Imported all the way from the distant planet Teo."
   id: LemoSeeds
@@ -674,3 +704,13 @@
       seedId: lemo
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/lemo.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of kisser tomato seeds
+  id: KisserTomatoSeeds
+  components:
+    - type: Seed
+      seedId: kisserTomato
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/tomatokisser.rsi

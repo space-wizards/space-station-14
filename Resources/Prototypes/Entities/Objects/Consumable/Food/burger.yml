@@ -45,7 +45,7 @@
     - map: ["foodSequenceLayers"]
   - type: FoodSequenceStartPoint
     key: burger
-    maxLayers: 10
+    maxLayers: 30
     startPosition: 0, 0
     offset: 0, 0.1
     minLayerOffset: -0.05, 0
@@ -65,7 +65,7 @@
   id: FoodBreadBunTop
   parent: FoodBreadSliceBase
   name: top bun
-  description: the perfect finish for your burger tower
+  description: The perfect finish for your burger tower.
   components:
   - type: Food
   - type: Sprite

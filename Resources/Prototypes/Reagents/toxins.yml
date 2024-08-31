@@ -445,9 +445,15 @@
     Poison:
       effects:
         - !type:HealthChange
+          conditions:
+          - !type:HasTag
+            tag: BROS
+            invert: true
           damage:
             types:
               Poison: 2
+  tileReactions:
+    - !type:SpillTileReaction
 
 - type: reagent
   id: Romerol

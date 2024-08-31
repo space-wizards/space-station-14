@@ -39,7 +39,7 @@
   name: chat-radio-science
   keycode: 'n'
   frequency: 1351
-  color: "#b05efa"
+  color: "#cd7ccd"
 
 - type: radioChannel
   id: Security
@@ -94,4 +94,12 @@
   frequency: 1984
   color: "#f6ce64"
   # long range since otherwise it'd defeat the point of a handheld radio independent of telecomms
+  longRange: true
+
+- type: radioChannel
+  id: Hivemind
+  name: chat-radio-hivemind
+  keycode: 'g'
+  frequency: 19840
+  color: "#e36b00"
   longRange: true
