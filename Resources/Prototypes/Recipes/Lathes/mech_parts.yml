@@ -12,6 +12,7 @@
 - type: latheRecipe
   parent: BaseMechPartRecipe
   id: RipleyHarness
+  result: RipleyHarness
   materials:
     Steel: 1500
     Glass: 1200
@@ -19,6 +20,7 @@
 - type: latheRecipe
   parent: BaseMechPartRecipe
   id: RipleyLArm
+  result: RipleyLArm
   materials:
     Steel: 1000
     Glass: 750
@@ -26,18 +28,22 @@
 - type: latheRecipe
   parent: RipleyLArm
   id: RipleyLLeg
+  result: RipleyLLeg
 
 - type: latheRecipe
   parent: RipleyLLeg
   id: RipleyRLeg
+  result: RipleyRLeg
 
 - type: latheRecipe
   parent: RipleyLArm
   id: RipleyRArm
+  result: RipleyRArm
 
 - type: latheRecipe
   parent: BaseMechPartRecipe
   id: MechEquipmentGrabber
+  result: MechEquipmentGrabber
   materials:
     Steel: 500
     Plastic: 200
@@ -46,6 +52,7 @@
 - type: latheRecipe
   parent: BaseMechPartRecipe
   id: HonkerHarness
+  result: HonkerHarness
   materials:
     Steel: 3000
     Glass: 1200
@@ -54,6 +61,7 @@
 - type: latheRecipe
   parent: BaseMechPartRecipe
   id: HonkerLArm
+  result: HonkerLArm
   materials:
     Steel: 2000
     Glass: 750
@@ -62,18 +70,22 @@
 - type: latheRecipe
   parent: HonkerLArm
   id: HonkerLLeg
+  result: HonkerLLeg
 
 - type: latheRecipe
   parent: HonkerLLeg
   id: HonkerRLeg
+  result: HonkerRLeg
 
 - type: latheRecipe
   parent: HonkerLArm
   id: HonkerRArm
+  result: HonkerRArm
 
 - type: latheRecipe
   parent: BaseMechPartRecipe
   id: MechEquipmentHorn
+  result: MechEquipmentHorn
   materials:
     Steel: 500
     Bananium: 200
@@ -82,6 +94,7 @@
 - type: latheRecipe
   parent: BaseMechPartRecipe
   id: HamtrHarness
+  result: HamtrHarness
   materials:
     Steel: 1200
     Glass: 1000
@@ -89,6 +102,7 @@
 - type: latheRecipe
   parent: BaseMechPartRecipe
   id: HamtrLArm
+  result: HamtrLArm
   materials:
     Steel: 800
     Glass: 600
@@ -96,18 +110,22 @@
 - type: latheRecipe
   parent: HamtrLArm
   id: HamtrLLeg
+  result: HamtrLLeg
 
 - type: latheRecipe
   parent: HamtrLLeg
   id: HamtrRLeg
+  result: HamtrRLeg
 
 - type: latheRecipe
   parent: HamtrLArm
   id: HamtrRArm
+  result: HamtrRArm
 
 - type: latheRecipe
   parent: BaseMechPartRecipe
   id: MechEquipmentGrabberSmall
+  result: MechEquipmentGrabberSmall
   materials:
     Steel: 400
     Plastic: 100
@@ -116,6 +134,7 @@
 - type: latheRecipe
   parent: BaseMechPartRecipe
   id: VimHarness
+  result: VimHarness
   completetime: 5
   materials:
     Steel: 500

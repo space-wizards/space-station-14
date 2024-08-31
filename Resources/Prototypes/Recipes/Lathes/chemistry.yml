@@ -1,17 +1,20 @@
 - type: latheRecipe
   id: Beaker
+  result: Beaker
   completetime: 2
   materials:
     Glass: 100
 
 - type: latheRecipe
   id: LargeBeaker
+  result: LargeBeaker
   completetime: 2
   materials:
     Glass: 200
 
 - type: latheRecipe
   id: CryostasisBeaker
+  result: CryostasisBeaker
   completetime: 2
   materials:
     Steel: 250
@@ -19,6 +22,7 @@
 
 - type: latheRecipe
   id: SyringeCryostasis
+  result: SyringeCryostasis
   completetime: 2
   materials:
     Steel: 200
@@ -26,6 +30,7 @@
 
 - type: latheRecipe
   id: Dropper
+  result: Dropper
   completetime: 2
   materials:
     Glass: 200
@@ -33,6 +38,7 @@
 
 - type: latheRecipe
   id: Syringe
+  result: Syringe
   completetime: 2
   materials:
     Plastic: 100
@@ -40,6 +46,7 @@
 
 - type: latheRecipe
   id: BluespaceBeaker
+  result: BluespaceBeaker
   completetime: 2
   materials:
     Steel: 500
@@ -49,6 +56,7 @@
 
 - type: latheRecipe
   id: SyringeBluespace
+  result: SyringeBluespace
   completetime: 2
   materials:
     Steel: 100
@@ -59,18 +67,21 @@
 
 - type: latheRecipe
   id: PillCanister
+  result: PillCanister
   completetime: 2
   materials:
     Plastic: 100
 
 - type: latheRecipe
   id: ChemistryEmptyBottle01
+  result: ChemistryEmptyBottle01
   completetime: 2
   materials:
     Glass: 50
 
 - type: latheRecipe
   id: Vape
+  result: Vape
   icon:
     sprite: Objects/Consumable/Smokeables/Vapes/vape-standard.rsi
     state: icon
@@ -81,6 +92,7 @@
 
 - type: latheRecipe
   id: ClothingEyesGlassesChemical
+  result: ClothingEyesGlassesChemical
   completetime: 2
   materials:
     Steel: 200

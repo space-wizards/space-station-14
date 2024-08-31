@@ -42,6 +42,7 @@
 
 - type: latheRecipe
   id: PowerCageSmall
+  result: PowerCageSmall
   completetime: 3
   materials:
     Steel: 200
@@ -49,6 +50,7 @@
 
 - type: latheRecipe
   id: PowerCageMedium
+  result: PowerCageMedium
   completetime: 6
   materials:
     Steel: 500
@@ -58,6 +60,7 @@
 
 - type: latheRecipe
   id: PowerCageHigh
+  result: PowerCageHigh
   completetime: 10
   materials:
     Steel: 600

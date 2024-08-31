@@ -23,36 +23,44 @@
 - type: latheRecipe
   parent: BaseLightRecipe
   id: LightTube
+  result: LightTube
 
 - type: latheRecipe
   parent: BaseLightRecipe
   id: LedLightTube
+  result: LedLightTube
 
 - type: latheRecipe
   parent: BaseLightRecipe
   id: SodiumLightTube
+  result: SodiumLightTube
 
 - type: latheRecipe
   parent: BaseLightRecipe
   id: ExteriorLightTube
+  result: ExteriorLightTube
 
 - type: latheRecipe
   parent: BaseLightRecipe
   id: LightBulb
+  result: LightBulb
 
 - type: latheRecipe
   parent: BaseLightRecipe
   id: LedLightBulb
+  result: LedLightBulb
 
 - type: latheRecipe
   parent: BaseLightRecipe
   id: GlowstickRed
+  result: GlowstickRed
   materials:
     Plastic: 50
 
 - type: latheRecipe
   parent: GlowstickRed
   id: Flare
+  result: Flare
 
 - type: latheRecipe
   parent: BaseLightRecipe
@@ -66,17 +74,20 @@
 - type: latheRecipe
   parent: BaseToolRecipe
   id: FireExtinguisher
+  result: FireExtinguisher
   materials:
     Steel: 200
 
 - type: latheRecipe
   id: Matchbox
+  result: Matchbox
   completetime: 1
   materials:
     Wood: 100
 
 - type: latheRecipe
   id: SynthesizerInstrument
+  result: SynthesizerInstrument
   completetime: 4
   materials:
     Steel: 300
@@ -86,18 +97,21 @@
 - type: latheRecipe
   parent: BaseToolRecipe
   id: NodeScanner
+  result: NodeScanner
   materials:
     Steel: 100
     Plastic: 50
 
 - type: latheRecipe
   id: AirTank
+  result: AirTank
   completetime: 4
   materials:
     Steel: 300
 
 - type: latheRecipe
   id: ClothingShoesBootsMagSci
+  result: ClothingShoesBootsMagSci
   completetime: 10
   materials:
     Steel: 1000
@@ -105,12 +119,14 @@
 
 - type: latheRecipe
   id: ClothingShoesBootsMoon
+  result: ClothingShoesBootsMoon
   completetime: 2
   materials:
     Steel: 600
 
 - type: latheRecipe
   id: ClothingShoesBootsSpeed
+  result: ClothingShoesBootsSpeed
   completetime: 2
   materials:
     Steel: 1500
@@ -119,6 +135,7 @@
 
 - type: latheRecipe
   id: ModularReceiver
+  result: ModularReceiver
   completetime: 12
   materials:
     Steel: 750
@@ -171,6 +188,7 @@
 
 - type: latheRecipe
   id: ClothingHeadHatWelding
+  result: ClothingHeadHatWelding
   completetime: 2
   materials:
     Steel: 400
@@ -178,6 +196,7 @@
 
 - type: latheRecipe
   id: ClothingHeadHatCone
+  result: ClothingHeadHatCone
   completetime: 3
   materials:
     Plastic: 200

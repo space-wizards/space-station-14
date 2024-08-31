@@ -13,26 +13,31 @@
 - type: latheRecipe
   parent: BaseCubeRecipe
   id: MonkeyCube
+  result: MonkeyCube
 
 - type: latheRecipe
   parent: BaseCubeRecipe
   id: KoboldCube
+  result: KoboldCube
 
 - type: latheRecipe
   parent: BaseCubeRecipe
   id: CowCube
+  result: CowCube
   materials:
     Biomass: 120
 
 - type: latheRecipe
   parent: BaseCubeRecipe
   id: GoatCube
+  result: GoatCube
   materials:
     Biomass: 35
 
 - type: latheRecipe
   parent: BaseCubeRecipe
   id: MothroachCube
+  result: MothroachCube
   completetime: 45 # prevent biblical floods
   materials:
     Biomass: 20 # a lot of materials wasted due to complex genetics
@@ -40,6 +45,7 @@
 - type: latheRecipe
   parent: BaseCubeRecipe
   id: MouseCube
+  result: MouseCube
   completetime: 15
   materials:
     Biomass: 12
@@ -47,12 +53,14 @@
 - type: latheRecipe
   parent: MouseCube
   id: CockroachCube
+  result: CockroachCube
   materials:
     Biomass: 16
 
 - type: latheRecipe
   parent: BaseCubeRecipe
   id: SpaceCarpCube
+  result: SpaceCarpCube
   materials:
     Biomass: 24
     Plasma: 600
@@ -60,6 +68,7 @@
 - type: latheRecipe
   parent: BaseCubeRecipe
   id: SpaceTickCube
+  result: SpaceTickCube
   completetime: 15
   materials:
     Biomass: 8
@@ -68,6 +77,7 @@
 - type: latheRecipe
   parent: BaseCubeRecipe
   id: AbominationCube
+  result: AbominationCube
   materials: # abominations are slow and essentially worse than even carp
     Biomass: 28
     Plasma: 500 # more biomass but less plasma
