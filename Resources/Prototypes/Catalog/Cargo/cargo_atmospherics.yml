@@ -24,7 +24,7 @@
     sprite: Structures/Storage/canister.rsi
     state: blue
   product: LiquidOxygenCanister
-  cost: 5000
+  cost: 2500
   category: cargoproduct-category-name-atmospherics
   group: market
 
@@ -44,7 +44,7 @@
     sprite: Structures/Storage/canister.rsi
     state: red
   product: LiquidNitrogenCanister
-  cost: 5000
+  cost: 2500
   category: cargoproduct-category-name-atmospherics
   group: market
 
@@ -54,7 +54,7 @@
     sprite: Structures/Storage/canister.rsi
     state: black
   product: CarbonDioxideCanister
-  cost: 3500 # Until someone fixes it co2 can be used to oneshot people so it's more expensive
+  cost: 2200 # Until someone fixes it co2 can be used to oneshot people so it's more expensive
   category: cargoproduct-category-name-atmospherics
   group: market
 
@@ -64,7 +64,7 @@
     sprite: Structures/Storage/canister.rsi
     state: black
   product: LiquidCarbonDioxideCanister
-  cost: 10000
+  cost: 4000
   category: cargoproduct-category-name-atmospherics
   group: market
 
@@ -86,7 +86,7 @@
 #    sprite: Structures/Storage/canister.rsi
 #    state: water_vapor
 #  product: WaterVaporCanister
-#  cost: 17000
+#  cost: 2600
 #  category: cargoproduct-category-name-atmospherics
 #  group: market
 
@@ -96,7 +96,7 @@
     sprite: Structures/Storage/canister.rsi
     state: orange
   product: PlasmaCanister
-  cost: 40000
+  cost: 4000
   category: cargoproduct-category-name-atmospherics
   group: market
 
@@ -108,6 +108,6 @@
 #    sprite: Structures/Storage/canister.rsi
 #    state: green
 #  product: TritiumCanister
-#  cost: 146000
+#  cost: 15500
 #  category: cargoproduct-category-name-atmospherics
 #  group: market
