@@ -1,4 +1,4 @@
-﻿using Content.Shared.Random;
+using Content.Shared.Random;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -9,7 +9,7 @@ namespace Content.Shared.RatKing;
 /// This is used for entities that can be
 /// rummaged through by the rat king to get loot.
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedRatKingSystem))]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedRatKingRummagerSystem))]
 [AutoGenerateComponentState]
 public sealed partial class RatKingRummageableComponent : Component
 {

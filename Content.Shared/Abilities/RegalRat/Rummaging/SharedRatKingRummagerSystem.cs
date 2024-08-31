@@ -12,7 +12,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.RatKing;
 
-public abstract class SharedRatKingSystem : EntitySystem
+public abstract class SharedRatKingRummagerSystem : EntitySystem
 {
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
@@ -32,7 +32,7 @@ public abstract class SharedRatKingSystem : EntitySystem
 
     private void OnGetVerb(EntityUid uid, RatKingRummageableComponent component, GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!HasComp<RatKingComponent>(args.User) || component.Looted)
+        if (!HasComp<RatKingRummagerComponent>(args.User) || component.Looted)
             return;
 
         args.Verbs.Add(new AlternativeVerb

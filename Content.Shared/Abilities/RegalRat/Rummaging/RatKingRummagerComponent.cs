@@ -6,7 +6,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.RatKing;
 
 [RegisterComponent, NetworkedComponent]
-public sealed partial class RatKingComponent : Component
+public sealed partial class RatKingRummagerComponent : Component
 {
 
 }

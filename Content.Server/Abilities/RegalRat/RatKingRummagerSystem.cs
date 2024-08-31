@@ -17,7 +17,7 @@ using Robust.Shared.Random;
 namespace Content.Server.RatKing;
 
 /// <inheritdoc/>
-public sealed class RatKingSystem : SharedRatKingSystem
+public sealed class RatKingRummagerSystem : SharedRatKingRummagerSystem
 {
 
 }
