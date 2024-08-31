@@ -40,40 +40,24 @@
 
 - type: entity
   id: ClothingShoesBootsCowboyBrownFilled
-  parent: ClothingShoesBootsCowboyBrown
-  suffix: Filled
-  components:
-  - type: ContainerFill
-    containers:
-      item:
-      - CombatKnife
+  parent:
+  - ClothingShoesBootsCowboyBrown
+  - ClothingShoesBootsSecFilled
 
 - type: entity
   id: ClothingShoesBootsCowboyBlackFilled
-  parent: ClothingShoesBootsCowboyBlack
-  suffix: Filled
-  components:
-  - type: ContainerFill
-    containers:
-      item:
-      - CombatKnife
+  parent:
+  - ClothingShoesBootsCowboyBlack
+  - ClothingShoesBootsSecFilled
 
 - type: entity
   id: ClothingShoesBootsCowboyWhiteFilled
-  parent: ClothingShoesBootsCowboyWhite
-  suffix: Filled
-  components:
-  - type: ContainerFill
-    containers:
-      item:
-      - CombatKnife
+  parent:
+  - ClothingShoesBootsCowboyWhite
+  - ClothingShoesBootsSecFilled
 
 - type: entity
   id: ClothingShoesBootsCowboyFancyFilled
-  parent: ClothingShoesBootsCowboyFancy
-  suffix: Filled
-  components:
-  - type: ContainerFill
-    containers:
-      item:
-      - CombatKnife
+  parent:
+  - ClothingShoesBootsCowboyFancy
+  - ClothingShoesBootsSecFilled
