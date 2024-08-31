@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: Keer-Sar
   changes:
-  - message: Fixed a spelling error in the cargo bounty for lungs.
-    type: Fix
-  id: 6754
-  time: '2024-06-16T00:24:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29064
-- author: Keer-Sar
-  changes:
   - message: Non-humanoids' names are now capitalized when inserting materials into
       machines.
     type: Fix
@@ -3841,3 +3834,11 @@
   id: 7253
   time: '2024-08-31T08:24:12.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31556
+- author: slarticodefast
+  changes:
+  - message: Fixed toggleable pointlights for the toy sword, lighters, welders and
+      arabian lamp.
+    type: Fix
+  id: 7254
+  time: '2024-08-31T08:28:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31655
