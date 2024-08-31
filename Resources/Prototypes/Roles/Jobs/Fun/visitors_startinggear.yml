@@ -335,11 +335,11 @@
     ears: ClothingHeadsetSecurity
     eyes: ClothingEyesGlassesSecurity
     outerClothing: ClothingOuterCoatWarden
-    suitstorage: WeaponShotgunKammerer
     pocket1: WeaponDisabler
     pocket2: Zipties
   inhand:
   - FlashlightSeclite
+  - WeaponShotgunKammerer
 
 - type: startingGear
   id: VisitorWardenAlt
@@ -354,11 +354,11 @@
     ears: ClothingHeadsetSecurity
     eyes: ClothingEyesGlassesSecurity
     outerClothing: ClothingOuterWinterWarden
-    suitstorage: WeaponShotgunKammerer
     pocket1: WeaponDisabler
     pocket2: Zipties
   inhand:
   - FlashlightSeclite
+  - WeaponShotgunKammerer
 
 # Cargo
 
@@ -372,6 +372,9 @@
     back: ClothingBackpackCargo
     ears: ClothingHeadsetCargo
     pocket1: AppraisalTool
+    pocket2: DrinkColaCan
+  inhand:
+  - DrinkRumBottleFull
 
 - type: startingGear
   id: VisitorCargoTechAlt
@@ -383,7 +386,11 @@
     back: ClothingBackpackDuffelCargo
     ears: ClothingHeadsetCargo
     pocket1: AppraisalTool
+    pocket2: SpaceCash500
     outerClothing: ClothingOuterWinterCargo
+  inhand:
+  - FoodBoxPizzaFilled
+  - KnifePlastic
 
 - type: startingGear
   id: VisitorSalvageSpecialist
@@ -397,6 +404,8 @@
     ears: ClothingHeadsetCargo
     pocket1: SurvivalKnife
     pocket2: HandheldGPSBasic
+  inhand:
+  - FoodSnackBoritos
 
 - type: startingGear
   id: VisitorSalvageSpecialistAlt
@@ -411,6 +420,8 @@
     outerClothing: ClothingOuterWinterCargo
     pocket1: SurvivalKnife
     pocket2: HandheldGPSBasic
+  inhand:
+  - Shovel
 
 # Engineering
 
@@ -463,6 +474,8 @@
     eyes: ClothingEyesGlassesMeson
     pocket1: LightReplacer
     pocket2: Welder
+  inhand:
+  - CableApcStack
 
 - type: startingGear
   id: VisitorTechnicalAssistantAlt
@@ -479,6 +492,8 @@
     outerClothing: ClothingOuterVestHazard
     pocket1: HolofanProjector
     pocket2: GasAnalyzer
+  inhand:
+  - SheetSteel
 
 - type: startingGear
   id: VisitorEngineer
@@ -495,6 +510,9 @@
     outerClothing: ClothingOuterWinterEngi
     pocket1: RCD
     pocket2: RCDAmmo
+  inhand:
+  - trayScanner
+  - CableApcStack
 
 - type: startingGear
   id: VisitorEngineerAlt
@@ -510,6 +528,9 @@
     eyes: ClothingEyesGlassesMeson
     pocket1: RCD
     pocket2: RCDAmmo
+  inhand:
+  - SheetSteel
+  - SheetGlass
 
 # Medical
 
@@ -667,7 +688,7 @@
     shoes: ClothingShoesColorBlue
     gloves: ClothingHandsGlovesLatex
     head: ClothingHeadHatSurgcapBlue
-    mask: ClothingMaskBreath
+#    mask: ClothingMaskBreathMedical # right now this is broken for vox, but maybe some day.
     id: VisitorPDA
     belt: ClothingBeltStorageWaistbag
     back: NitrousOxideTankFilled
@@ -855,6 +876,8 @@
     back: ClothingBackpackScience
     ears: ClothingHeadsetScience
     eyes: ClothingEyesGlasses
+  inhand:
+  - NetworkConfigurator
 
 - type: startingGear
   id: VisitorResearchAssistantAlt
@@ -867,6 +890,8 @@
     back: ClothingBackpackSatchelScience
     ears: ClothingHeadsetScience
     eyes: ClothingEyesGlasses
+  inhand:
+  - DrinkHotCoffee
 
 - type: startingGear
   id: VisitorScientist
@@ -879,6 +904,8 @@
     back: ClothingBackpackScience
     ears: ClothingHeadsetScience
     eyes: ClothingEyesGlasses
+  inhand:
+  - DrinkHotCoffee
 
 - type: startingGear
   id: VisitorScientistAlt
@@ -892,6 +919,8 @@
     back: ClothingBackpackSatchelScience
     ears: ClothingHeadsetScience
     eyes: ClothingEyesGlasses
+  inhand:
+  - AnomalyScanner
 
 # Civilian
 
@@ -1008,7 +1037,7 @@
     jumpsuit: ClothingUniformJumpsuitChef
     shoes: ClothingShoesChef
     head: ClothingHeadHatChef
-    mask: ClothingMaskItalianMoustache
+#    mask: ClothingMaskItalianMoustache # right now this is broken for vox, so its inhand.
     id: VisitorPDA
     back: ClothingBackpackSatchel
     belt: ClothingBeltChefFilled
@@ -1016,6 +1045,9 @@
     outerClothing: ClothingOuterJacketChef
     pocket1: ButchCleaver
     pocket2: BookHowToCookForFortySpaceman
+  inhand:
+  - ClothingMaskItalianMoustache
+  - DrinkWineBottleFull
 
 - type: startingGear
   id: VisitorChefAlt
@@ -1023,7 +1055,7 @@
     jumpsuit: ClothingUniformJumpsuitChef
     shoes: ClothingShoesColorBlack
     head: ClothingHeadHatChef
-    mask: ClothingMaskItalianMoustache
+#    mask: ClothingMaskItalianMoustache # right now this is broken for vox, so its inhand.
     id: VisitorPDA
     back: ClothingBackpack
     belt: ClothingBeltChefFilled
@@ -1031,6 +1063,9 @@
     outerClothing: ClothingOuterWinterChef
     pocket1: RollingPin
     pocket2: BookHowToCookForFortySpaceman
+  inhand:
+  - ClothingMaskItalianMoustache
+  - FoodCheese
 
 - type: startingGear
   id: VisitorClown
@@ -1205,27 +1240,6 @@
     pocket2: BookRandomStory
   inhand:
   - BoxFolderClipboard
-
-# - type: startingGear
-  # id: VisitorLawyer
-  # equipment:
-    # jumpsuit: 
-    # shoes: 
-    # gloves:
-    # head: 
-    # neck: 
-    # mask: 
-    # id: VisitorPDA
-    # back: 
-    # belt: 
-    # eyes: ClothingEyesGlassesCheapSunglasses
-    # ears: ClothingHeadsetService
-    # outerClothing: 
-    # suitstorage:
-    # pocket1: 
-    # pocket2: 
-  # inhand:
-  # - 
 
 - type: startingGear
   id: VisitorMusicianFancyAltA
