@@ -62,7 +62,9 @@ namespace Content.IntegrationTests.Tests
             "Train",
             "Oasis",
             "Cog",
-            "Saltern2"
+            "Saltern2",
+            "Cluster2",
+            "Atlas2"
         };
 
         /// <summary>
