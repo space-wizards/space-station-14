@@ -130,7 +130,6 @@ DrinkGoldschlagerGlass: DrinkGildlagerGlass
 
 # 2024-01-07
 ClosetBase: ClosetSteelBase
-MonkeyCubeBox: VariantCubeBox
 
 # 2024-01-08
 SalvagePartsT4Spawner: SalvageLootSpawner
@@ -212,6 +211,10 @@ VehicleJanicartDestroyed: null
 # 2024-02-01
 YellowOxygenTank: OxygenTank
 YellowOxygenTankFilled: OxygenTankFilled
+
+# 2024-02-12
+FoodDonutBlumpkin: FoodDonutBluePumpkin
+FoodDonutJellyBlumpkin: FoodDonutJellyBluePumpkin
 
 # 2024-02-19
 Drone: null
@@ -355,7 +358,6 @@ ClothingOuterCoatInspector: ClothingOuterCoatJensen
 # 2024-06-23
 FloorTileItemReinforced: PartRodMetal1
 
-
 #2024-06-25
 BookChefGaming: BookHowToCookForFortySpaceman
 
@@ -380,3 +382,30 @@ SignHydro3: SignHydro1
 
 # 2024-07-27
 LogicGate: LogicGateOr
+
+# 2024-08-08
+MaterialReclaimer: null
+MaterialReclaimerMachineCircuitboard: null
+
+# 2024-08-11
+FoodTacoBeef: FoodTacoShell
+FoodTacoChicken: FoodTacoShell
+FoodTacoFish: FoodTacoShell
+FoodTacoBeefSupreme: FoodTacoShell
+FoodTacoChickenSupreme: FoodTacoShell
+FoodTacoRat: FoodTacoShell
+
+FoodMeatHumanKebab: FoodKebabSkewer
+FoodMeatLizardtailKebab: FoodKebabSkewer
+FoodMeatRatKebab: FoodKebabSkewer
+FoodMeatRatdoubleKebab: FoodKebabSkewer
+FoodMeatSnakeKebab: FoodKebabSkewer
+FoodMeatHawaiianKebab: FoodKebabSkewer
+FoodMeatKebab: FoodKebabSkewer
+FoodMeatFiestaKebab: FoodKebabSkewer
+
+#2024-08-14
+ClothingBeltSuspenders: ClothingBeltSuspendersRed
+
+# 2024-08-19
+ClothingNeckShockCollar: ClothingBackpackElectropack

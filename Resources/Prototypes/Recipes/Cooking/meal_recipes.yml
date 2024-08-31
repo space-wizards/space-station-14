@@ -400,6 +400,14 @@
     FoodDough: 1
 
 - type: microwaveMealRecipe
+  id: RecipeBreadCotton
+  name: cotton bread recipe
+  result: FoodBreadCotton
+  time: 10
+  solids:
+    FoodDoughCotton: 1
+
+- type: microwaveMealRecipe
   id: RecipeSausageBread
   name: sausage bread recipe
   result: FoodBreadSausage
@@ -601,6 +609,15 @@
     FoodChiliPepper: 2
     FoodTomato: 2
     SheetUranium1: 2
+
+- type: microwaveMealRecipe
+  id: RecipeCottonPizza
+  name: cotton pizza recipe
+  result: FoodPizzaCotton
+  time: 30
+  solids:
+    FoodDoughCottonFlat: 1
+    CottonBol: 4
 
 #Italian
 - type: microwaveMealRecipe
@@ -979,15 +996,15 @@
     FoodBerries: 3
     FoodPlateTin: 1
 
-#- type: microwaveMealRecipe
-#  id: RecipeCherryPie
-#  name: cherry pie recipe
-#  result: FoodPieCherry
-#  time: 15
-#  solids:
-#    FoodDoughPie: 1
-#    FoodCherry: 3 #cherries don't exist yet
-#    FoodPlateTin: 1
+- type: microwaveMealRecipe
+  id: RecipeCherryPie
+  name: cherry pie recipe
+  result: FoodPieCherry
+  time: 15
+  solids:
+    FoodDoughPie: 1
+    FoodCherry: 5
+    FoodPlateTin: 1
 
 - type: microwaveMealRecipe
   id: RecipeFrostyPie
@@ -1719,6 +1736,14 @@
 # NOT ACTUAL FOOD
 
 - type: microwaveMealRecipe
+  id: RecipeDriedTeaLeaves
+  name: dried tea leaves recipe
+  result: LeavesTeaDried
+  time: 10
+  solids:
+    LeavesTea: 1
+
+- type: microwaveMealRecipe
   id: RecipeDriedTobacco
   name: dried tobacco leaves recipe
   result: LeavesTobaccoDried
@@ -1762,98 +1787,6 @@
     Sugar: 30
     Nitrogen: 10
     Plasma: 10
-
-# Kebabs
-- type: microwaveMealRecipe
-  id: RecipeMeatKebab
-  name: meat kebab recipe
-  result: FoodMeatKebab
-  time: 5
-  solids:
-    FoodMeatCutlet: 3
-    FoodKebabSkewer: 1
-
-- type: microwaveMealRecipe
-  id: RecipeHawaiianKebab
-  name: Hawaiian kebab recipe
-  result: FoodMeatHawaiianKebab
-  time: 5
-  solids:
-    FoodChiliPepper: 1
-    FoodMeatCutlet: 1
-    FoodPineappleSlice: 1
-    FoodKebabSkewer: 1
-
-- type: microwaveMealRecipe
-  id: RecipeFiestaKebab
-  name: fiesta kebab recipe
-  result: FoodMeatFiestaKebab
-  time: 5
-  solids:
-    FoodChiliPepper: 1
-    FoodCorn: 1
-    FoodMeatCutlet: 1
-    FoodTomato: 1
-    FoodKebabSkewer: 1
-
-- type: microwaveMealRecipe
-  id: RecipeRatKebab
-  name: rat kebab recipe
-  result: FoodMeatRatKebab
-  time: 10
-  solids:
-    FoodMeatRat: 1
-    FoodKebabSkewer: 1
-
-- type: microwaveMealRecipe
-  id: RecipeDoubleRatKebab
-  name: double rat kebab recipe
-  result: FoodMeatRatdoubleKebab
-  time: 20
-  solids:
-    FoodMeatRat: 2
-    FoodKebabSkewer: 1
-
-- type: microwaveMealRecipe
-  id: RecipeHumanKebab
-  name: human kebab recipe
-  result: FoodMeatHumanKebab
-  time: 15
-  solids:
-    TorsoHuman: 1
-    FoodKebabSkewer: 1
-
-- type: microwaveMealRecipe
-  id: RecipeLizardKebab
-  name: lizard kebab recipe
-  result: FoodMeatLizardtailKebab
-  time: 15
-  solids:
-    FoodMeatLizard: 1
-    FoodKebabSkewer: 1
-
-- type: microwaveMealRecipe
-  id: RecipeSnakeKebab
-  name: snake kebab recipe
-  result: FoodMeatSnakeKebab
-  time: 15
-  reagents:
-    Wine: 5
-  solids:
-    FoodMeatSnake: 1
-    FoodKebabSkewer: 1
-
-- type: microwaveMealRecipe
-  id: RecipeFoodMealSoftTaco
-  name: soft taco recipe
-  result: FoodMealSoftTaco
-  time: 10
-  solids:
-    FoodDoughSlice: 1
-    FoodTomato: 1
-    FoodOnionSlice: 2
-    FoodCheeseSlice: 1
-    FoodMeatCutlet: 1
 
 - type: microwaveMealRecipe
   id: RecipeFoodBakedChevreChaud
@@ -1924,69 +1857,10 @@
     FoodDoughTortillaFlat: 1 # one third of a standard bread dough recipe
 
 - type: microwaveMealRecipe
-  id: RecipeTacoBeef
-  name: beef taco recipe
-  result: FoodTacoBeef
-  time: 10
+  id: RecipeCroissant
+  name: croissant recipe
+  result: FoodBakedCroissant
+  time: 5
   solids:
-    FoodTacoShell: 1
-    FoodMeatCutlet: 1
-    FoodCheeseSlice: 1
-
-- type: microwaveMealRecipe
-  id: RecipeTacoChicken
-  name: chicken taco recipe
-  result: FoodTacoChicken
-  time: 10
-  solids:
-    FoodTacoShell: 1
-    FoodMeatChickenCutlet: 1
-    FoodCheeseSlice: 1
-
-- type: microwaveMealRecipe
-  id: RecipeTacoFish
-  name: fish taco recipe
-  result: FoodTacoFish
-  time: 10
-  solids:
-    FoodTacoShell: 1
-    FoodMeatFish: 1
-    FoodOnionSlice: 2
-    FoodTomato: 1
-    FoodCabbage: 1
-
-- type: microwaveMealRecipe
-  id: RecipeTacoRat
-  name: rat taco recipe
-  result: FoodTacoRat
-  time: 10
-  solids:
-    FoodTacoShell: 1
-    FoodCheeseSlice: 1
-    FoodMeatRat: 1
-
-- type: microwaveMealRecipe
-  id: RecipeTacoBeefSupreme
-  name: beef taco supreme recipe
-  result: FoodTacoBeefSupreme
-  time: 10
-  solids:
-    FoodTacoShell: 1
-    FoodCheeseSlice: 1
-    FoodMeatCutlet: 1
-    FoodTomato: 1
-    FoodCabbage: 1
-    FoodOnionSlice: 2
-
-- type: microwaveMealRecipe
-  id: RecipeTacoChickenSupreme
-  name: beef taco supreme recipe
-  result: FoodTacoChickenSupreme
-  time: 10
-  solids:
-    FoodTacoShell: 1
-    FoodCheeseSlice: 1
-    FoodMeatChickenCutlet: 1
-    FoodTomato: 1
-    FoodCabbage: 1
-    FoodOnionSlice: 2
+    FoodCroissantRaw: 1
+    FoodButterSlice: 1

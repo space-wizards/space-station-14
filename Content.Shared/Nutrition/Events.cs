@@ -61,6 +61,12 @@ public sealed partial class VapeDoAfterEvent : DoAfterEvent
 public record struct SliceFoodEvent();
 
 /// <summary>
+/// is called after a successful attempt at slicing food.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed partial class SliceFoodDoAfterEvent : SimpleDoAfterEvent;
+
+/// <summary>
 /// Raised directed at the food after finishing eating a food before it's deleted.
 /// Cancel this if you want to do something special before a food is deleted.
 /// If not cancelled trash can be spawned and the food is deleted.

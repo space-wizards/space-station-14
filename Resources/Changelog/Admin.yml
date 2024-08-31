@@ -463,5 +463,41 @@ Entries:
   id: 57
   time: '2024-08-09T07:06:37.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30374
+- author: nikthechampiongr
+  changes:
+  - message: player panel whitelist toggle works without host permissions now.
+    type: Fix
+  id: 58
+  time: '2024-08-12T23:25:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30948
+- author: MilonPL
+  changes:
+  - message: Deleting a grid from the objects tab now requires confirmation.
+    type: Tweak
+  id: 59
+  time: '2024-08-17T16:05:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30946
+- author: MilonPL
+  changes:
+  - message: The admin PDA health analyzer no longer shows a popup to the player.
+    type: Fix
+  id: 60
+  time: '2024-08-19T03:02:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31097
+- author: lzk228
+  changes:
+  - message: Admeme implanter injects and draws faster than default implanter.
+    type: Tweak
+  id: 61
+  time: '2024-08-23T00:11:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31045
+- author: PursuitInAshes
+  changes:
+  - message: The resave command is no longer usable with the mapping permission, instead
+      it requires host permissions.
+    type: Tweak
+  id: 62
+  time: '2024-08-25T01:55:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31397
 Name: Admin
 Order: 1
