@@ -26,6 +26,7 @@ public sealed class GasPipeFillSystem : EntitySystem
         SubscribeLocalEvent<PipeFillComponent, NodeGroupsRebuilt>(OnNodeUpdate);
 
         SubscribeLocalEvent<BeforeSaveEvent>(OnMapSave);
+        SubscribeLocalEvent<AfterSaveEvent>(OnMapSaved);
     }
 
     private void OnNodeUpdate(EntityUid uid, PipeFillComponent comp, ref NodeGroupsRebuilt args)
@@ -83,6 +84,21 @@ public sealed class GasPipeFillSystem : EntitySystem
         }
     }
 
+    private void OnMapSaved(AfterSaveEvent ev)
+    {
+        var enumerator = AllEntityQuery<PipeFillComponent, NodeContainerComponent>();
+        while (enumerator.MoveNext(out var uid, out var pipeFill, out var nodeContainer))
+        {
+            if (!TryComp(uid, out TransformComponent? xform) ||
+                !_mapSystem.TryGetMap(xform.MapID, out var mapEnt) ||
+                mapEnt != ev.Map
+                )
+                continue;
+
+            // set HasFired true so that if you continue mapping it wont refire.
+            pipeFill.HasFired = true;
+        }
+    }
 
     // Commands for arbitrary pipe gas changes
 
