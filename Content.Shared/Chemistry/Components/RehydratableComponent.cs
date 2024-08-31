@@ -25,6 +25,9 @@ public sealed partial class RehydratableComponent : Component
     [DataField]
     public String SolutionName = "Cube";
 
+    /// <summary>
+    /// The minimum amount of catalyst that must be present to be hydrated.
+    /// </summary>
     [DataField]
     public FixedPoint2 CatalystMinimum = FixedPoint2.Zero;
 
