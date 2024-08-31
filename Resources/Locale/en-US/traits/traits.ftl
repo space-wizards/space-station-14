@@ -53,6 +53,3 @@ trait-italian-desc = Mamma mia! You seem to have lived in space italy!
 
 trait-softspoken-name = Softspoken
 trait-softspoken-desc = You can only communicate by whispering...
-
-trait-loudmouth-name = Loudmouth
-trait-loudmouth-desc = YOU YELL EVERYTHING YOU SAY!
