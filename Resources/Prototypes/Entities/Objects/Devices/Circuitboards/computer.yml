@@ -26,6 +26,15 @@
   components:
     - type: ComputerBoard
       prototype: ComputerAlert
+      
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: AtmosMonitoringConsoleCircuitboard
+  name: atmospheric monitoring console board
+  description: A computer printed circuit board for an atmospheric monitoring console.
+  components:
+    - type: ComputerBoard
+      prototype: ComputerAtmosMonitor    
 
 - type: entity
   parent: BaseComputerCircuitboard

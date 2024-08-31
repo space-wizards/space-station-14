@@ -19,6 +19,33 @@
 
 - type: entity
   parent: BaseComputer
+  id: ComputerAtmosMonitor
+  name: atmospheric monitoring console
+  description: Used to monitor the station's atmospheric networks.
+  components:
+  - type: Computer
+    board: AlertsComputerCircuitboard
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: tank
+    - map: ["computerLayerKeys"]
+      state: atmos_key
+  - type: AtmosMonitoringConsole
+  - type: ActivatableUI
+    singleUser: true
+    key: enum.AtmosMonitoringConsoleUiKey.Key
+  - type: UserInterface
+    interfaces:
+        enum.AtmosMonitoringConsoleUiKey.Key:
+            type: AtmosMonitoringConsoleBoundUserInterface
+
+- type: entity
+  parent: BaseComputer
   id: ComputerEmergencyShuttle
   name: emergency shuttle console
   description: Handles authorization to early launch the shuttle.

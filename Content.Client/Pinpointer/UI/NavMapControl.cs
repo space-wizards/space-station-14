@@ -426,7 +426,7 @@ public partial class NavMapControl : MapGridControl
                 position = ScalePosition(new Vector2(position.X, -position.Y));
 
                 var scalingCoefficient = MinmapScaleModifier * float.Sqrt(MinimapScale);
-                var positionOffset = new Vector2(scalingCoefficient * blip.Texture.Width, scalingCoefficient * blip.Texture.Height);
+                var positionOffset = new Vector2(scalingCoefficient * blip.Scale * blip.Texture.Width, scalingCoefficient * blip.Scale * blip.Texture.Height);
 
                 handle.DrawTextureRect(blip.Texture, new UIBox2(position - positionOffset, position + positionOffset), blip.Color);
             }
@@ -722,13 +722,15 @@ public struct NavMapBlip
     public Color Color;
     public bool Blinks;
     public bool Selectable;
+    public float Scale;
 
-    public NavMapBlip(EntityCoordinates coordinates, Texture texture, Color color, bool blinks, bool selectable = true)
+    public NavMapBlip(EntityCoordinates coordinates, Texture texture, Color color, bool blinks, bool selectable = true, float scale = 1f)
     {
         Coordinates = coordinates;
         Texture = texture;
         Color = color;
         Blinks = blinks;
         Selectable = selectable;
+        Scale = scale;
     }
 }
