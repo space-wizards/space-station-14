@@ -1743,6 +1743,9 @@
         Asphyxiation: 4
         Slash: 7
         Blunt: 3
+  - type: FlavorProfile
+    flavors:
+    - meaty
 
 - type: entity
   parent: MobMouse

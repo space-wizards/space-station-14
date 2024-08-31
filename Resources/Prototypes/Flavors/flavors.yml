@@ -180,6 +180,11 @@
   description: flavor-base-mindful
 
 - type: flavor
+  id: chewy
+  flavorType: Base
+  description: flavor-base-chewy
+
+- type: flavor
   id: mustard
   flavorType: Complex
   description: flavor-complex-mustard
@@ -1113,3 +1118,13 @@
   id: cherry
   flavorType: Complex
   description: flavor-complex-cherry
+
+- type: flavor
+  id: paper
+  flavorType: Complex
+  description: flavor-complex-paper
+
+- type: flavor
+  id: compressed-meat
+  flavorType: Complex
+  description: flavor-complex-compressed-meat
