@@ -26,12 +26,16 @@
           !type:PhysShapeCircle
           radius: 0.45
         density: 75
+        hard: true
         mask:
         - MachineMask
+        layer: []
       barrier:
         shape:
           !type:PhysShapeCircle
           radius: 0.45
+        hard: false 
+        mask: []
         layer:
         - WallLayer
   - type: AccessReader
