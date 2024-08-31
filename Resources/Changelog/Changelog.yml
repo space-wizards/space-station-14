@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: FunTust
-  changes:
-  - message: Fixed hair disappearing when hats are tucked away in a pocket.
-    type: Fix
-  id: 6752
-  time: '2024-06-15T21:42:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28949
 - author: Cojoke-dot
   changes:
   - message: You can now find Jackboots in the security load-outs
@@ -3843,3 +3836,10 @@
   id: 7251
   time: '2024-08-30T23:24:13.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31651
+- author: slarticodefast
+  changes:
+  - message: The revenant can now fly through walls again.
+    type: Fix
+  id: 7252
+  time: '2024-08-31T03:02:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31670
