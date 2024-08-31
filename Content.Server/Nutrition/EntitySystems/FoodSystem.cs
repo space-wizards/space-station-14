@@ -370,7 +370,7 @@ public sealed class FoodSystem : EntitySystem
         foreach (var ent in spawned)
         {
             // Put the trash in the user's hand
-            _hands.TryPickupAnyHand(user, ent);
+            _hands.TryPickupAnyHand(userUid, ent);
         }
     }
 
