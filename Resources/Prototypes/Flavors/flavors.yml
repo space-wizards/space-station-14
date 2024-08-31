@@ -1149,3 +1149,8 @@
   flavorType: Base
   description: flavor-base-kingsoda
 
+- type: flavor
+  id: crud
+  flavorType: Complex
+  description: flavor-complex-crud
+

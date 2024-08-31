@@ -145,6 +145,53 @@
   color: "#86530E"
 
 - type: reagent
+  id: BrosochloricBros
+  name: reagent-name-brosochloric-bros
+  group: Toxins
+  desc: reagent-desc-brosochloric-bros
+  physicalDesc: reagent-physical-desc-really-cruddy
+  flavor: crud
+  color: "#47181A"
+  tileReactions:
+  - !type:CreateEntityTileReaction
+    entity: BrosSorbSpawner
+    usage: 2
+    maxOnTile: 2
+    randomOffsetMax: 0.3
+    maxOnTileWhitelist:
+      tags: [ BROS ]
+  metabolisms:
+    Poison:
+      effects:
+      - !type:PopupMessage
+        type: Local
+        visualType: MediumCaution
+        messages:
+        - "brosochloricbros-effect-oh-fuck"
+        - "brosochloricbros-effect-ungh"
+        probability: 0.1
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 2
+            Blunt: 1
+
+- type: reagent
+  id: GroundBros
+  name: reagent-name-ground-bros
+  desc: reagent-desc-ground-bros
+  physicalDesc: reagent-physical-desc-cruddy
+  flavor: crud
+  color: "#5F2123"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 1
+
+- type: reagent
   id: Saxoite
   name: reagent-name-saxoite
   desc: reagent-desc-saxoite

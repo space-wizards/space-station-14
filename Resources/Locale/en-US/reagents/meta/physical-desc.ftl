@@ -99,3 +99,5 @@ reagent-physical-desc-threat = threatening
 reagent-physical-desc-clear = clear
 reagent-physical-desc-appletini = vaguely appletini-ish
 reagent-physical-desc-evil = evil
+reagent-physical-desc-cruddy = cruddy
+reagent-physical-desc-really-cruddy = really cruddy

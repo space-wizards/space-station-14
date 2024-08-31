@@ -438,32 +438,8 @@
       - ReagentId: VentCrud
         Quantity: 15
   - type: SpawnOnTrigger
-    proto: MobBros
-    amount: 50
-  - type: SoundOnTrigger
-    sound: /Audio/Items/bros_grenade_smoke.ogg
-  - type: TimerTriggerVisuals
-    primingSound:
-      path: /Audio/Items/bros_grenade_prime.ogg
-
-- type: entity
-  parent: SmokeGrenade
-  id: SorbGrenade
-  name: sorbnade
-  description: UNGH
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Grenades/sorbnade.rsi
-  - type: SmokeOnTrigger
-    duration: 5
-    spreadAmount: 10
-    solution:
-      reagents:
-      - ReagentId: VentCrud
-        Quantity: 15
-  - type: SpawnOnTrigger
-    proto: MobSorb
-    amount: 50
+    proto: BrosSorbSpawner
+    amount: 60
   - type: SoundOnTrigger
     sound: /Audio/Items/bros_grenade_smoke.ogg
   - type: TimerTriggerVisuals
