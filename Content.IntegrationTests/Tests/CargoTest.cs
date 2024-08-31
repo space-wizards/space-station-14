@@ -253,12 +253,12 @@ public sealed class CargoTest
     {
         await using var pair = await PoolManager.GetServerClient();
         var server = pair.Server;
-
         var entManager = server.ResolveDependency<IEntityManager>();
-        var priceSystem = entManager.System<PricingSystem>();
 
         await server.WaitAssertion(() =>
         {
+            var priceSystem = entManager.System<PricingSystem>();
+
             var ent = entManager.SpawnEntity("StackEnt", MapCoordinates.Nullspace);
             var price = priceSystem.GetPrice(ent);
             Assert.That(price, Is.EqualTo(100.0));
