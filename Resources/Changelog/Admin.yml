@@ -499,5 +499,12 @@ Entries:
   id: 62
   time: '2024-08-25T01:55:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31397
+- author: nikthechampiongr
+  changes:
+  - message: Suicide logs display username info again.
+    type: Fix
+  id: 63
+  time: '2024-08-31T08:26:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31661
 Name: Admin
 Order: 1
