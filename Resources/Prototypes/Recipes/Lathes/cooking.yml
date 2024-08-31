@@ -1,6 +1,7 @@
 - type: latheRecipe
   parent: BaseToolRecipe
   id: ButchCleaver
+  result: ButchCleaver
   materials:
     Steel: 300
     Plastic: 50
@@ -15,6 +16,7 @@
 
 - type: latheRecipe
   id: DrinkMug
+  result: DrinkMug
   completetime: 0.8
   materials:
     Glass: 100
@@ -22,24 +24,29 @@
 - type: latheRecipe
   parent: DrinkMug
   id: DrinkMugMetal
+  result: DrinkMugMetal
   materials:
     Steel: 100
 
 - type: latheRecipe
   parent: DrinkMug
   id: DrinkGlass
+  result: DrinkGlass
 
 - type: latheRecipe
   parent: DrinkMug
   id: DrinkShotGlass
+  result: DrinkShotGlass
   completetime: 0.4
 
 - type: latheRecipe
   parent: DrinkMug
   id: DrinkGlassCoupeShaped
+  result: DrinkGlassCoupeShaped
 
 - type: latheRecipe
   id: CustomDrinkJug
+  result: CustomDrinkJug
   completetime: 2
   materials:
     Plastic: 200
@@ -47,9 +54,11 @@
 - type: latheRecipe
   parent: DrinkMug
   id: FoodPlate
+  result: FoodPlate
 
 - type: latheRecipe
   id: FoodPlateSmall
+  result: FoodPlateSmall
   completetime: 0.4
   materials:
     Glass: 50
@@ -57,21 +66,25 @@
 - type: latheRecipe
   parent: FoodPlate
   id: FoodPlatePlastic
+  result: FoodPlatePlastic
   materials:
     Plastic: 100
 
 - type: latheRecipe
-  parent: FoodPlateSMall
+  parent: FoodPlateSmall
   id: FoodPlateSmallPlastic
+  result: FoodPlateSmallPlastic
   materials:
     Plastic: 50
 
 - type: latheRecipe
   parent: FoodPlate
   id: FoodBowlBig
+  result: FoodBowlBig
 
 - type: latheRecipe
   id: FoodPlateTin
+  result: FoodPlateTin
   completetime: 0.4
   materials:
     Steel: 100
@@ -79,3 +92,4 @@
 - type: latheRecipe
   parent: FoodPlateTin
   id: FoodKebabSkewer
+  result: FoodKebabSkewer

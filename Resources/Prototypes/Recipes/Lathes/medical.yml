@@ -1,31 +1,46 @@
+# Base prototypes
+
 - type: latheRecipe
+  abstract: true
   parent: BaseToolRecipe
-  id: Scalpel
+  id: BaseSurgicalRecipe
   materials:
     Steel: 200
 
-- type: latheRecipe
-  parent: Scalpel
-  id: Retractor
+# Recipes
 
 - type: latheRecipe
-  parent: Scalpel
+  parent: BaseSurgicalRecipe
+  id: Scalpel
+  result: Scalpel
+
+- type: latheRecipe
+  parent: BaseSurgicalRecipe
+  id: Retractor
+  result: Retractor
+
+- type: latheRecipe
+  parent: BaseSurgicalRecipe
   id: Cautery
+  result: Cautery
 
 - type: latheRecipe
   parent: BaseToolRecipe
   id: Drill
+  result: Drill
   materials:
     Steel: 200
     Plastic: 100
 
 - type: latheRecipe
-  parent: Scalpel
+  parent: BaseSurgicalRecipe
   id: Saw
+  result: Saw
 
 - type: latheRecipe
-  parent: Scalpel
+  parent: BaseSurgicalRecipe
   id: Hemostat
+  result: Hemostat
 
 - type: latheRecipe
   id: BodyBag
@@ -68,12 +83,14 @@
 
 - type: latheRecipe
   id: ClothingHandsGlovesLatex
+  result: ClothingHandsGlovesLatex
   completetime: 2
   materials:
     Plastic: 300
 
 - type: latheRecipe
   id: ClothingHandsGlovesNitrile
+  result: ClothingHandsGlovesNitrile
   completetime: 2
   materials:
     Plastic: 100
@@ -81,12 +98,14 @@
 
 - type: latheRecipe
   id: ClothingMaskSterile
+  result: ClothingMaskSterile
   completetime: 2
   materials:
     Plastic: 50
 
 - type: latheRecipe
   id: DiseaseSwab
+  result: DiseaseSwab
   completetime: 1
   materials:
     Cloth: 20
@@ -94,6 +113,7 @@
 
 - type: latheRecipe
   id: Implanter
+  result: Implanter
   completetime: 1
   materials:
     Glass: 500
@@ -108,6 +128,7 @@
 
 - type: latheRecipe
   id: Medkit
+  result: Medkit
   name: lathe-recipe-Medkit-name
   completetime: 2
   materials:
@@ -116,52 +137,62 @@
 - type: latheRecipe
   parent: Medkit
   id: MedkitBurn
+  result: MedkitBurn
   name: lathe-recipe-MedkitBurn-name
 
 - type: latheRecipe
   parent: Medkit
   id: MedkitToxin
+  result: MedkitToxin
   name: lathe-recipe-MedkitToxin-name
 
 - type: latheRecipe
   parent: Medkit
   id: MedkitO2
+  result: MedkitO2
   name: lathe-recipe-MedkitO2-name
 
 - type: latheRecipe
   parent: Medkit
   id: MedkitBrute
+  result: MedkitBrute
   name: lathe-recipe-MedkitBrute-name
 
 - type: latheRecipe
   parent: Medkit
   id: MedkitAdvanced
+  result: MedkitAdvanced
   name: lathe-recipe-MedkitAdvanced-name
 
 - type: latheRecipe
   parent: Medkit
   id: MedkitRadiation
+  result: MedkitRadiation
   name: lathe-recipe-MedkitRadiation-name
 
 - type: latheRecipe
   parent: Medkit
   id: MedkitCombat
+  result: MedkitCombat
   name: lathe-recipe-MedkitCombat-name
 
 - type: latheRecipe
   parent: BaseToolRecipe
   id: HandLabeler
+  result: HandLabeler
   materials:
     Plastic: 100
 
 - type: latheRecipe
   id: Jug
+  result: Jug
   completetime: 4
   materials:
     Plastic: 400
 
 - type: latheRecipe
   id: RollerBedSpawnFolded
+  result: RollerBedSpawnFolded
   completetime: 1
   materials:
     Steel: 600
@@ -170,13 +201,16 @@
 - type: latheRecipe
   parent: RollerBedSpawnFolded
   id: CheapRollerBedSpawnFolded
+  result: CheapRollerBedSpawnFolded
 
 - type: latheRecipe
   parent: RollerBedSpawnFolded
   id: EmergencyRollerBedSpawnFolded
+  result: EmergencyRollerBedSpawnFolded
 
 - type: latheRecipe
   id: WhiteCane
+  result: WhiteCane
   completetime: 2
   materials:
     Steel: 100
