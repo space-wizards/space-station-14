@@ -104,6 +104,6 @@ public sealed partial class GhostRoleComponent : Component
     /// Job the entity will receive after adding the mind.
     /// </summary>
     [DataField("job")]
-    [Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)] // alse FIXME Friends
+    [Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)] // also FIXME Friends
     public ProtoId<JobPrototype>? JobProto = null;
 }
