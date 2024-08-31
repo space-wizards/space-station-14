@@ -6,13 +6,9 @@ using Content.Server.NPC.HTN;
 using Content.Server.NPC.Systems;
 using Content.Server.Popups;
 using Content.Shared.Atmos;
-using Content.Shared.Dataset;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
-using Content.Shared.Pointing;
 using Content.Shared.RatKing;
-using Robust.Shared.Map;
-using Robust.Shared.Random;
 
 namespace Content.Server.RatKing;
 
@@ -20,10 +16,7 @@ namespace Content.Server.RatKing;
 public sealed class RatKingDomainSystem : SharedRatKingDomainSystem
 {
     [Dependency] private readonly AtmosphereSystem _atmos = default!;
-    [Dependency] private readonly ChatSystem _chat = default!;
-    [Dependency] private readonly HTNSystem _htn = default!;
     [Dependency] private readonly HungerSystem _hunger = default!;
-    [Dependency] private readonly NPCSystem _npc = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
 
     public override void Initialize()
