@@ -2,12 +2,14 @@
 using System.Text;
 using Content.Server.Mind;
 using Content.Server.Pinpointer;
+using Content.Shared.CCVar;
 using Content.Shared.MassMedia.Systems;
 using Content.Shared.Mobs;
 using Content.Shared.Roles;
 using Content.Shared.Slippery;
 using Content.Shared.Stunnable;
 using Robust.Server.GameObjects;
+using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Replays;
@@ -27,8 +29,11 @@ public sealed class ReplayEventSystem : EntitySystem
     [Dependency] private readonly NavMapSystem _navMapSystem = default!;
     [Dependency] private readonly MindSystem _mindSystem = default!;
     [Dependency] private readonly SharedRoleSystem _roles = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private readonly MapSystem _mapSystem = default!;
 
     private List<ReplayEvent>? _replayEvents = new();
+    private bool _recordEvents;
 
     public override void Initialize()
     {
@@ -41,7 +46,14 @@ public sealed class ReplayEventSystem : EntitySystem
         SubscribeLocalEvent<ActorComponent, StunnedEvent>(OnStun); // I can probably make this shared or smth
         SubscribeLocalEvent<NewsArticlePublishedEvent>(OnNewsPublished);
 
+        Subs.CVar(_cfg, CCVars.ReplayRecordEvents, OnRecordEventsChanged,true);
+
         base.Initialize();
+    }
+
+    private void OnRecordEventsChanged(bool enabled)
+    {
+        _recordEvents = enabled;
     }
 
     private void ReplaysOnRecordingStarted(MappingDataNode arg1, List<object> arg2)
@@ -56,7 +68,7 @@ public sealed class ReplayEventSystem : EntitySystem
         replayRecordingStopped.Writer.WriteBytes(replayRecordingStopped.Writer.BaseReplayPath / "events.yml", new ReadOnlyMemory<byte>(bytes));
     }
 
-        /// <summary>
+    /// <summary>
     /// Records a replay event. This is the main way to record events in the replay system.
     /// </summary>
     /// <param name="replayEvent">The event to record</param>
@@ -73,6 +85,12 @@ public sealed class ReplayEventSystem : EntitySystem
             replayEvent.Position = _transformSystem.GetWorldPosition(source.Value);
             replayEvent.NearestBeacon =
                 _navMapSystem.GetNearestBeaconString(_transformSystem.GetMapCoordinates(source.Value));
+
+            var map = _transformSystem.GetMap(source.Value);
+            if (map.HasValue)
+            {
+                replayEvent.Map = EntityManager.GetComponent<MetaDataComponent>(map.Value).EntityName;
+            }
         }
 
         DebugTools.AssertNotNull(replayEvent.EventType);

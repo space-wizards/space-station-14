@@ -372,8 +372,8 @@ public sealed partial class CargoObjectSoldReplayEvent : ReplayEvent
     /// The amount of money the objects were sold for
     /// </summary>
     [DataField]
-    public double Amount;
+    public double? Amount;
 
     [DataField]
-    public int ObjectsSold;
+    public int? ObjectsSold;
 }

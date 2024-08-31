@@ -2153,6 +2153,12 @@ namespace Content.Shared.CCVar
          */
 
         /// <summary>
+        /// If on, replay events are recorded. This includes things like chat messages, deaths, events, etc.
+        /// </summary>
+        public static readonly CVarDef<bool> ReplayRecordEvents =
+            CVarDef.Create("replay.record_events", true, CVar.SERVERONLY);
+
+        /// <summary>
         ///     Whether or not to record admin chat. If replays are being publicly distributes, this should probably be
         ///     false.
         /// </summary>

@@ -563,21 +563,21 @@ namespace Content.Server.Cargo.Systems
 public sealed partial class CargoProductsOrderedReplayEvent : ReplayEvent
 {
     [DataField]
-    public ReplayEventPlayer ApprovedBy;
+    public ReplayEventPlayer? ApprovedBy;
 
     [DataField]
-    public CargoReplayProduct Product;
+    public CargoReplayProduct? Product;
 }
 
 [Serializable, DataDefinition]
 public sealed partial class CargoReplayProduct
 {
     [DataField]
-    public string ProductId = default!;
+    public string? ProductId = default!;
 
     [DataField]
-    public string Reason = default!;
+    public string? Reason = default!;
 
     [DataField]
-    public ReplayEventPlayer OrderedBy;
+    public ReplayEventPlayer? OrderedBy;
 }

@@ -14,16 +14,19 @@ public partial class ReplayEvent
     public double? Time;
 
     [DataField]
-    public ReplayEventSeverity Severity;
+    public ReplayEventSeverity? Severity;
 
     [DataField]
-    public ReplayEventType EventType;
+    public ReplayEventType? EventType;
 
     [DataField]
     public string? NearestBeacon;
 
     [DataField]
-    public Vector2 Position;
+    public Vector2? Position;
+
+    [DataField]
+    public string? Map;
 };
 
 /// <summary>
@@ -39,7 +42,7 @@ public sealed partial class GenericPlayerEvent : ReplayEvent
     /// Storing the player name etc. every time is a bit wasteful, but since replays are already big as fuck, it's not that big of a deal.
     /// </remarks>
     [DataField]
-    public ReplayEventPlayer Target;
+    public ReplayEventPlayer? Target;
 
     /// <summary>
     /// The source of the event. Who was the cause for the Target being affected? Can be null.
@@ -55,7 +58,7 @@ public sealed partial class GenericPlayerEvent : ReplayEvent
 public sealed partial class GenericObjectEvent : ReplayEvent
 {
     [DataField]
-    public string Target;
+    public string? Target;
 
     [DataField]
     public string? Origin;
@@ -65,39 +68,39 @@ public sealed partial class GenericObjectEvent : ReplayEvent
 public sealed partial class MobStateChangedPlayerReplayEvent : ReplayEvent
 {
     [DataField]
-    public ReplayEventPlayer Target;
+    public ReplayEventPlayer? Target;
 
     [DataField]
-    public MobState OldState;
+    public MobState? OldState;
 
     [DataField]
-    public MobState NewState;
+    public MobState? NewState;
 }
 
 [Serializable, DataDefinition]
 public sealed partial class MobStateChangedNPCReplayEvent : ReplayEvent
 {
     [DataField]
-    public string Target;
+    public string? Target;
 
     [DataField]
-    public MobState OldState;
+    public MobState? OldState;
 
     [DataField]
-    public MobState NewState;
+    public MobState? NewState;
 }
 
 [Serializable, DataDefinition]
 public sealed partial class StoreBuyReplayEvent : ReplayEvent
 {
     [DataField]
-    public ReplayEventPlayer Buyer;
+    public ReplayEventPlayer? Buyer;
 
     [DataField]
-    public string Item;
+    public string? Item;
 
     [DataField]
-    public int Cost;
+    public int? Cost;
 }
 
 [Serializable, DataDefinition]
@@ -107,87 +110,87 @@ public sealed partial class ReplayExplosionEvent : ReplayEvent
     public ReplayEventPlayer? Source;
 
     [DataField]
-    public float Intensity;
+    public float? Intensity;
 
     [DataField]
-    public float Slope;
+    public float? Slope;
 
     [DataField]
-    public float MaxTileIntensity;
+    public float? MaxTileIntensity;
 
     [DataField]
-    public float TileBreakScale;
+    public float? TileBreakScale;
 
     [DataField]
-    public int MaxTileBreak;
+    public int? MaxTileBreak;
 
     [DataField]
-    public bool CanCreateVacuum;
+    public bool? CanCreateVacuum;
 
     [DataField]
-    public string Type;
+    public string? Type;
 }
 
 [Serializable, DataDefinition]
 public sealed partial class ChatAnnouncementReplayEvent : ReplayEvent
 {
     [DataField]
-    public string Message;
+    public string? Message;
 
     [DataField]
-    public string Sender;
+    public string? Sender;
 }
 
 [Serializable, DataDefinition]
 public sealed partial class ChatMessageReplayEvent : ReplayEvent
 {
     [DataField]
-    public string Message;
+    public string? Message;
 
     [DataField]
-    public ReplayEventPlayer Sender;
+    public ReplayEventPlayer? Sender;
 
     [DataField]
-    public string Type;
+    public string? Type;
 }
 
 [Serializable, DataDefinition]
 public sealed partial class AlertLevelChangedReplayEvent : ReplayEvent
 {
     [DataField]
-    public string AlertLevel;
+    public string? AlertLevel;
 }
 
 [Serializable, DataDefinition]
 public sealed partial class NewsArticlePublishedReplayEvent : ReplayEvent
 {
     [DataField]
-    public string Title;
+    public string? Title;
 
     [DataField]
-    public string Content;
+    public string? Content;
 
     [DataField]
     public string? Author;
 
     [DataField]
-    public TimeSpan ShareTime;
+    public TimeSpan? ShareTime;
 }
 
 [Serializable, DataDefinition]
 public sealed partial class TechnologyUnlockedReplayEvent : ReplayEvent
 {
     [DataField]
-    public string Name;
+    public string? Name;
 
     [DataField]
-    public string Discipline;
+    public string? Discipline;
 
     [DataField]
-    public int Tier;
+    public int? Tier;
 
     [DataField]
-    public ReplayEventPlayer Player;
+    public ReplayEventPlayer? Player;
 }
 
 [Serializable, DataDefinition]
