@@ -8,6 +8,8 @@
       - id: ClothingOuterHardsuitSpatio
       - id: ClothingShoesBootsMag
       - id: ClothingMaskGasExplorer
+      - id: OxygenTankFilled
+      - id: NitrogenTankFilled
       - id: ClothingBeltUtilityFilled
       - id: SurvivalKnife
       - id: HandheldGPSBasic
