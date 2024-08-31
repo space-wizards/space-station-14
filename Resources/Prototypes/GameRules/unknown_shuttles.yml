@@ -8,18 +8,36 @@
     - id: UnknownShuttleTravelingCuisine
     - id: UnknownShuttleDisasterEvacPod
     - id: UnknownShuttleHonki
+    - id: UnknownShuttleNTQuark
+    - id: UnknownShuttleCruiser
+    - id: UnknownShuttleCryptid
+    - id: UnknownShuttleEternal
+    - id: UnknownShuttleFlatline
+    - id: UnknownShuttleGym
+    - id: UnknownShuttleNTIncorporation
+    - id: UnknownShuttleJoe
+    - id: UnknownShuttleLambordeere
+    - id: UnknownShuttleMeatZone
+    - id: UnknownShuttleMicroshuttle
+    - id: UnknownShuttleSpacebus
 
 - type: entityTable
   id: UnknownShuttlesFreelanceTable
   table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
     children:
     - id: UnknownShuttleSyndieEvacPod
+    - id: UnknownShuttleBang
+    - id: UnknownShuttleHook
 
 - type: entityTable
   id: UnknownShuttlesHostileTable
   table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
     children:
     - id: LoneOpsSpawn
+    - id: UnknownShuttleDrone
+    - id: UnknownShuttleManOWar
+    - id: UnknownShuttleRaider
+    - id: UnknownShuttleScooner
 
 # Shuttle Game Rules
 
@@ -32,7 +50,7 @@
     startAnnouncement: station-event-unknown-shuttle-incoming
     startAudio:
       path: /Audio/Announcements/attention.ogg
-    weight: 5
+    weight: 10 # 10 default
     reoccurrenceDelay: 30
     duration: 1
     maxOccurrences: 1 # should be the same as [copies] in shuttle_incoming_event.yml
@@ -68,16 +86,16 @@
   - type: LoadMapRule
     preloadedGrid: DisasterEvacPod
 
-# The power of 3 clowns proved too strong for the players and had to be 1984'ed. Replace this with a more engaging clown shuttle.
-# - type: entity
-  # parent: BaseUnknownShuttleRule
-  # id: UnknownShuttleHonki
-  # components:
-  # - type: StationEvent
-    # startAnnouncement: station-event-unknown-shuttle-incoming #!!
-    # weight: 2
-  # - type: LoadMapRule
-    # preloadedGrid: Honki
+# The power of 3 clowns proved too strong for the players and may need to be 1984'ed. Replace this with a more engaging clown shuttle.
+- type: entity
+  parent: BaseUnknownShuttleRule
+  id: UnknownShuttleHonki
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-unknown-shuttle-incoming #!!
+    weight: 2
+  - type: LoadMapRule
+    preloadedGrid: Honki
 
 - type: entity
   parent: BaseUnknownShuttleRule
@@ -85,7 +103,7 @@
   components:
   - type: StationEvent
     startAnnouncement: null # It should be silent.
-    weight: 2
+    weight: 5 # lower because weird freelance roles
     maxOccurrences: 2 # should be the same as [copies] in shuttle_incoming_event.yml
   - type: LoadMapRule
     preloadedGrid: SyndieEvacPod
@@ -108,7 +126,7 @@
   components:
   - type: StationEvent
     startAnnouncement: station-event-unknown-shuttle-incoming #!!
-    weight: 2
+    weight: 5
   - type: LoadMapRule
     preloadedGrid: Bang
 
@@ -118,7 +136,7 @@
   components:
   - type: StationEvent
     startAnnouncement: station-event-unknown-shuttle-incoming #!!
-    weight: 2
+    weight: 2 # Its just a big ship, so it needs to be rarer to be interesting.
   - type: LoadMapRule
     preloadedGrid: Cruiser
 
@@ -128,7 +146,6 @@
   components:
   - type: StationEvent
     startAnnouncement: station-event-unknown-shuttle-incoming #!!
-    weight: 2
   - type: LoadMapRule
     preloadedGrid: Cryptid
 
@@ -137,8 +154,8 @@
   parent: BaseUnknownShuttleRule
   components:
   - type: StationEvent
-    startAnnouncement: station-event-unknown-shuttle-incoming #!!
-    weight: 2
+    startAnnouncement: null #dont nark on antags
+    weight: 2 # lower because antags
   - type: LoadMapRule
     preloadedGrid: Drone
 
@@ -148,7 +165,6 @@
   components:
   - type: StationEvent
     startAnnouncement: station-event-unknown-shuttle-incoming #!!
-    weight: 2
   - type: LoadMapRule
     preloadedGrid: Eternal
 
@@ -158,7 +174,6 @@
   components:
   - type: StationEvent
     startAnnouncement: station-event-unknown-shuttle-incoming #!!
-    weight: 2
   - type: LoadMapRule
     preloadedGrid: Flatline
 
@@ -168,7 +183,6 @@
   components:
   - type: StationEvent
     startAnnouncement: station-event-unknown-shuttle-incoming #!!
-    weight: 2
   - type: LoadMapRule
     preloadedGrid: Gym
 
@@ -178,7 +192,7 @@
   components:
   - type: StationEvent
     startAnnouncement: station-event-unknown-shuttle-incoming #!!
-    weight: 2
+    weight: 5 # lower because freelance roles
   - type: LoadMapRule
     preloadedGrid: Hook
 
@@ -188,7 +202,7 @@
   components:
   - type: StationEvent
     startAnnouncement: station-event-unknown-shuttle-incoming #!!
-    weight: 1 # Its just a big ship, so it needs to be rarer to be interesting.
+    weight: 2 # Its just a big ship, so it needs to be rarer to be interesting.
     earliestStart: 45 # late to hopefully have enough ghosts to fill all roles quickly. (5-6)
   - type: LoadMapRule
     preloadedGrid: NTIncorporation
@@ -198,9 +212,9 @@
   parent: BaseUnknownShuttleRule
   components:
   - type: StationEvent
-    startAnnouncement: station-event-unknown-shuttle-incoming #!!
+    startAnnouncement: null #dont nark on antags
     weight: 1 #  lower because antags.
-    earliestStart: 50 # late to hopefully have enough ghosts to fill all roles quickly, and because antags
+    earliestStart: 50 # late to hopefully have enough ghosts to fill all roles quickly (3) and because antags
   - type: LoadMapRule
     preloadedGrid: Instigator
 
@@ -210,7 +224,6 @@
   components:
   - type: StationEvent
     startAnnouncement: station-event-unknown-shuttle-incoming #!!
-    weight: 2
   - type: LoadMapRule
     preloadedGrid: Joe
 
@@ -220,7 +233,6 @@
   components:
   - type: StationEvent
     startAnnouncement: station-event-unknown-shuttle-incoming #!!
-    weight: 2
   - type: LoadMapRule
     preloadedGrid: Lambordeere
 
@@ -229,9 +241,9 @@
   parent: BaseUnknownShuttleRule
   components:
   - type: StationEvent
-    startAnnouncement: station-event-unknown-shuttle-incoming #!!
+    startAnnouncement: station-event-unknown-shuttle-incoming #Leaving this one because theyre like primitives and its funnier
     weight: .5 # lower because antags
-    earliestStart: 50 # late to hopefully have enough ghosts to fill all roles quickly. (4)
+    earliestStart: 50 # late to hopefully have enough ghosts to fill all roles quickly. (4) & antags
   - type: LoadMapRule
     preloadedGrid: ManOWar
 
@@ -241,7 +253,6 @@
   components:
   - type: StationEvent
     startAnnouncement: station-event-unknown-shuttle-incoming #!!
-    weight: 2
   - type: LoadMapRule
     preloadedGrid: Meatzone
 
@@ -251,7 +262,7 @@
   components:
   - type: StationEvent
     startAnnouncement: station-event-unknown-shuttle-incoming #!!
-    weight: 4
+    weight: 12 # this is higher because its just a little generic personal shuttle
     maxOccurrences: 10
   - type: LoadMapRule
     preloadedGrid: Microshuttle
@@ -261,8 +272,8 @@
   parent: BaseUnknownShuttleRule
   components:
   - type: StationEvent
-    startAnnouncement: station-event-unknown-shuttle-incoming #!!
-    weight: .5 # lower because antags
+    startAnnouncement: null #dont nark on antags
+    weight: .5 # lower because antags & because its the Drone but better
     earliestStart: 45 # late to hopefully have enough ghosts to fill all roles quickly.
   - type: LoadMapRule
     preloadedGrid: Raider
@@ -272,8 +283,8 @@
   parent: BaseUnknownShuttleRule
   components:
   - type: StationEvent
-    startAnnouncement: station-event-unknown-shuttle-incoming #!!
-    weight: 1 # lower because antags
+    startAnnouncement: null #dont nark on antags, it might be worth giving this one some generic "There be pirates" announement. idk.
+    weight: 2 # lower because antags
     earliestStart: 35 # late to hopefully have enough ghosts to fill all roles quickly. (3)
   - type: LoadMapRule
     preloadedGrid: Scooner
@@ -284,7 +295,6 @@
   components:
   - type: StationEvent
     startAnnouncement: station-event-unknown-shuttle-incoming #!!
-    weight: 2
   - type: LoadMapRule
     preloadedGrid: Spacebus
 
