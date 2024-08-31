@@ -1015,7 +1015,7 @@
     ears: ClothingHeadsetService
     outerClothing: ClothingOuterJacketChef
     pocket1: ButchCleaver
-    pocket2: BookChefGaming
+    pocket2: BookHowToCookForFortySpaceman
 
 - type: startingGear
   id: VisitorChefAlt
@@ -1030,7 +1030,7 @@
     ears: ClothingHeadsetService
     outerClothing: ClothingOuterWinterChef
     pocket1: RollingPin
-    pocket2: BookChefGaming
+    pocket2: BookHowToCookForFortySpaceman
 
 - type: startingGear
   id: VisitorClown

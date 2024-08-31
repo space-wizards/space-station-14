@@ -326,7 +326,7 @@ entities:
     - type: Transform
       pos: -0.5925999,0.24975526
       parent: 1
-- proto: BookChefGaming
+- proto: BookHowToCookForFortySpaceman
   entities:
   - uid: 394
     components:

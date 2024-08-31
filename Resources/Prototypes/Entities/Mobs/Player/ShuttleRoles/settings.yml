@@ -3,11 +3,11 @@
 ### Visitors with Visitor ID
 
 # Command
-# Following use EventHumanoidZedExempt since they are heads and probably should have mindshields
+# Following use EventHumanoidMindShielded since they are heads and probably should have mindshields
 
 - type: randomHumanoidSettings
   id: VisitorHead
-  parent: EventHumanoidZedExempt
+  parent: EventHumanoidMindShielded
   components:
     - type: GhostRole
       name: ghost-role-information-command-name
@@ -94,11 +94,11 @@
       roleLoadout: [ RoleSurvivalStandard ]
 
 # Security
-# Following use EventHumanoidZedExempt since they are heads and probably should have mindshields
+# Following use EventHumanoidMindShielded since they are heads and probably should have mindshields
 
 - type: randomHumanoidSettings
   id: VisitorSecurity
-  parent: EventHumanoidZedExempt
+  parent: EventHumanoidMindShielded
   components:
     - type: GhostRole
       name: ghost-role-information-security-name
@@ -556,11 +556,11 @@
 # making changes to these should be done with care to avoid unbalancing challenging scenarios.
 
 # Command
-# Following use EventHumanoidZedExempt since they are heads and probably should have mindshields
+# Following use EventHumanoidMindShielded since they are heads and probably should have mindshields
 
 - type: randomHumanoidSettings
   id: ChallengeVictimCaptain
-  parent: EventHumanoidZedExempt
+  parent: EventHumanoidMindShielded
   randomizeName: false
   components:
     - type: GhostRole
