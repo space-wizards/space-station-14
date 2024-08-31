@@ -99,10 +99,6 @@ public sealed class DockTest : ContentUnitTest
         var mapSystem = entManager.System<SharedMapSystem>();
         MapGridComponent mapGrid = default!;
 
-        server.Post(() =>
-        {
-            mapGrid = entManager.AddComponent<MapGridComponent>(map.MapUid);
-        });
         var shuttle = EntityUid.Invalid;
 
         // Spawn shuttle and affirm no valid docks.
