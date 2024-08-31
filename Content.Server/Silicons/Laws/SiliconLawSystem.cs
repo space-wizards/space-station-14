@@ -290,7 +290,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
             return;
 
         var lawset = GetLawset(provider.Laws).Laws;
-        var query = EntityManager.CompRegistryQueryEnumerator(ent.Comp.Components);
+        var query = EntityManager.ComponentQueryEnumerator(ent.Comp.Components);
 
         while (query.MoveNext(out var update))
         {

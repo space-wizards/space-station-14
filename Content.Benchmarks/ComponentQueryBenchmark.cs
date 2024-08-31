@@ -30,9 +30,10 @@ namespace Content.Benchmarks;
 [Virtual]
 [GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]
 [CategoriesColumn]
+[MediumRunJob]
 public class ComponentQueryBenchmark
 {
-    public const string Map = "Maps/atlas.yml";
+    public const string Map = "Maps/bagel.yml";
 
     private static readonly Consumer _consumer = new();
 
