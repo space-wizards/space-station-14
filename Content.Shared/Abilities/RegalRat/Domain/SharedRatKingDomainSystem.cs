@@ -8,7 +8,7 @@ using Robust.Shared.Random;
 namespace Content.Shared.RatKing;
 
 public abstract class SharedRatKingDomainSystem : EntitySystem
-{;
+{
     [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
     [Dependency] protected readonly IRobustRandom Random = default!;
     [Dependency] private readonly SharedActionsSystem _action = default!;
