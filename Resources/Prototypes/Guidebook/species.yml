@@ -12,6 +12,7 @@
     - SlimePerson
     - Vox
     - Gray
+    - Snail
 
 - type: guideEntry
   id: Arachnid
@@ -57,3 +58,8 @@
   id: Gray
   name: Gray
   text: "/ServerInfo/Guidebook/Mobs/Gray.xml"
+
+- type: guideEntry
+  id: Snail
+  name: Gastropoid
+  text: "/ServerInfo/Guidebook/Mobs/Snail.xml"

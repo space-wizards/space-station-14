@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "By Widgetbeck",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "puff_1",
+      "directions": 4
+    },
+    {
+      "name": "puff_2",
+      "directions": 4
+    },
+    {
+      "name": "spots_arm_left",
+      "directions": 4
+    },
+    {
+      "name": "spots_arm_right",
+      "directions": 4
+    },
+    {
+      "name": "spots_body",
+      "directions": 4
+    },
+    {
+      "name": "stripes_arm_left",
+      "directions": 4
+    },
+    {
+      "name": "stripes_arm_right",
+      "directions": 4
+    },
+    {
+      "name": "stripes_body",
+      "directions": 4
+    },
+    {
+      "name": "vert_stripes",
+      "directions": 4
+    }
+  ]
+}

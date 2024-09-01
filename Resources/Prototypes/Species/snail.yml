@@ -1,0 +1,143 @@
+- type: species
+  id: Snail
+  name: species-name-snail
+  roundStart: false
+  prototype: MobSnail
+  sprites: MobSnailSprites
+  defaultSkinTone: "#385878"
+  markingLimits: MobSnailMarkingLimits
+  dollPrototype: MobSnailDummy
+  skinColoration: Hues
+  maleFirstNames: names_snail_first
+  femaleFirstNames: names_snail_first
+  lastNames: names_snail_last
+  sexes:
+  - Unsexed
+
+- type: speciesBaseSprites
+  id: MobSnailSprites
+  sprites:
+    Eyes: MobSnailEyes
+    Head: MobSnailHead
+    Chest: MobSnailTorso
+    LArm: MobSnailLArm
+    RArm: MobSnailRArm
+    LHand: MobSnailLHand
+    RHand: MobSnailRHand
+    LLeg: MobSnailLLeg
+    RLeg: MobSnailRLeg
+    LFoot: MobSnailLFoot
+    RFoot: MobSnailRFoot
+    Tail: MobHumanoidAnyMarking
+
+- type: markingPoints
+  id: MobSnailMarkingLimits
+  onlyWhitelisted: true
+  points:
+    Head:
+      points: 6
+      required: false
+    Chest:
+      points: 4
+      required: false
+    Arms:
+      points: 2
+      required: false
+    Tail:
+      points: 1
+      required: true
+      defaultMarkings: [ SnailShellSmall ]
+    Overlay:
+      points: 1
+      required: false
+
+- type: humanoidBaseSprite
+  id: MobSnailEyes
+  baseSprite:
+    sprite: Mobs/Species/Snail/parts.rsi
+    state: eyes
+
+- type: humanoidBaseSprite
+  id: MobSnailHead
+  baseSprite:
+    sprite: Mobs/Species/Snail/parts.rsi
+    state: head
+
+- type: humanoidBaseSprite
+  id: MobSnailHeadMale
+  baseSprite:
+    sprite: Mobs/Species/Snail/parts.rsi
+    state: head
+
+- type: humanoidBaseSprite
+  id: MobSnailHeadFemale
+  baseSprite:
+    sprite: Mobs/Species/Snail/parts.rsi
+    state: head
+
+- type: humanoidBaseSprite
+  id: MobSnailTorso
+  baseSprite:
+    sprite: Mobs/Species/Snail/parts.rsi
+    state: torso
+
+- type: humanoidBaseSprite
+  id: MobSnailTorsoMale
+  baseSprite:
+    sprite: Mobs/Species/Snail/parts.rsi
+    state: torso
+
+- type: humanoidBaseSprite
+  id: MobSnailTorsoFemale
+  baseSprite:
+    sprite: Mobs/Species/Snail/parts.rsi
+    state: torso
+
+
+- type: humanoidBaseSprite
+  id: MobSnailLLeg
+  baseSprite:
+    sprite: Mobs/Species/Snail/parts.rsi
+    state: l_leg
+
+- type: humanoidBaseSprite
+  id: MobSnailLHand
+  baseSprite:
+    sprite: Mobs/Species/Snail/parts.rsi
+    state: l_hand
+
+- type: humanoidBaseSprite
+  id: MobSnailLArm
+  baseSprite:
+    sprite: Mobs/Species/Snail/parts.rsi
+    state: l_arm
+
+- type: humanoidBaseSprite
+  id: MobSnailLFoot
+  baseSprite:
+    sprite: Mobs/Species/Snail/parts.rsi
+    state: l_foot
+
+- type: humanoidBaseSprite
+  id: MobSnailRLeg
+  baseSprite:
+    sprite: Mobs/Species/Snail/parts.rsi
+    state: r_leg
+
+- type: humanoidBaseSprite
+  id: MobSnailRHand
+  baseSprite:
+    sprite: Mobs/Species/Snail/parts.rsi
+    state: r_hand
+
+- type: humanoidBaseSprite
+  id: MobSnailRArm
+  baseSprite:
+    sprite: Mobs/Species/Snail/parts.rsi
+    state: r_arm
+
+- type: humanoidBaseSprite
+  id: MobSnailRFoot
+  baseSprite:
+    sprite: Mobs/Species/Snail/parts.rsi
+    state: r_foot
