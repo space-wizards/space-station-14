@@ -4,8 +4,10 @@
     <PanelContainer Name="FilterPopupPanel" StyleClasses="BorderedWindowPanel">
         <BoxContainer Orientation="Horizontal">
             <Control MinSize="4 0"/>
-            <BoxContainer Name="FilterVBox" MinWidth="210" Margin="0 10" Orientation="Vertical" SeparationOverride="4">
-                <LineEdit Name="HighlightEdit" PlaceHolder="{Loc 'hud-chatbox-highlights-placeholder'}" ToolTip="{Loc 'hud-chatbox-highlights-tooltip'}"/>
+            <BoxContainer Name="FilterVBox" MinWidth="105" Margin="0 10" Orientation="Vertical" SeparationOverride="4"/>
+            <BoxContainer Name="HighlightsVBox" MinWidth="105" Margin="0 10" Orientation="Vertical" SeparationOverride="4">
+                <TextEdit Name="HighlightEdit" MinHeight="150"/>
+                <Button Name="HighlightButton" Text="{Loc 'hud-chatbox-highlights-button'}"/>
             </BoxContainer>
         </BoxContainer>
     </PanelContainer>

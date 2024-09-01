@@ -149,6 +149,16 @@ public sealed class ChatUIController : UIController
     /// </summary>
     private readonly Dictionary<ChatChannel, int> _unreadMessages = new();
 
+    /// <summary>
+    ///     A list of words to be highlighted in the chatbox.
+    /// </summary>
+    private List<string> _highlights = [];
+
+    /// <summary>
+    ///     The color of the highlighted words.
+    /// </summary>
+    private readonly Color HighlightColor = Color.FromHex("#e5ffcc");
+
     // TODO add a cap for this for non-replays
     public readonly List<(GameTick Tick, ChatMessage Msg)> History = new();
 
@@ -172,6 +182,7 @@ public sealed class ChatUIController : UIController
     public event Action<ChatSelectChannel>? SelectableChannelsChanged;
     public event Action<ChatChannel, int?>? UnreadMessageCountsUpdated;
     public event Action<ChatMessage>? MessageAdded;
+    public event Action<string>? HighlightsUpdated;
 
     public override void Initialize()
     {
@@ -240,6 +251,13 @@ public sealed class ChatUIController : UIController
 
         _config.OnValueChanged(CCVars.ChatWindowOpacity, OnChatWindowOpacityChanged);
 
+        // Load highlights if any were saved.
+        string highlights = _config.GetCVar(CCVars.ChatHighlights);
+
+        if (!string.IsNullOrEmpty(highlights))
+        {
+            UpdateHighlights(highlights);
+        }
     }
 
     public void OnScreenLoad()
@@ -584,6 +602,27 @@ public sealed class ChatUIController : UIController
         }
     }
 
+    public void UpdateHighlights(string highlights)
+    {
+        // Save the newly provided list of highlighs if different.
+        if (!_config.GetCVar(CCVars.ChatHighlights).Equals(highlights, StringComparison.CurrentCultureIgnoreCase))
+        {
+            _config.SetCVar(CCVars.ChatHighlights, highlights);
+            _config.SaveToFile();
+        }
+
+        // Fill the array with the highlights separated by newlines, disregarding empty entries.
+        string[] arr_highlights = highlights.Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+        _highlights.Clear();
+        foreach (var keyword in arr_highlights)
+        {
+            _highlights.Add(keyword);
+        }
+
+        // Make longer words appear first so that when Regex Replacing, "Security" goes first than "Sec".
+        _highlights.Sort((x, y) => y.Length.CompareTo(x.Length));
+    }
+
     public override void FrameUpdate(FrameEventArgs delta)
     {
         UpdateQueuedSpeechBubbles(delta);
@@ -823,6 +862,14 @@ public sealed class ChatUIController : UIController
             if (grammar != null && grammar.ProperNoun == true)
                 msg.WrappedMessage = SharedChatSystem.InjectTagInsideTag(msg, "Name", "color", GetNameColor(SharedChatSystem.GetStringInsideTag(msg, "Name")));
         }
+
+        // Highlight any words choosen by the client.
+        foreach (var highlight in _highlights)
+        {
+            msg.WrappedMessage = SharedChatSystem.InjectTagAroundString(msg, highlight, "color", HighlightColor.ToHex());
+        }
+
+        Logger.DebugS("test", msg.WrappedMessage);
 
         // Color any codewords for minds that have roles that use them
         if (_player.LocalUser != null && _mindSystem != null && _roleCodewordSystem != null)
