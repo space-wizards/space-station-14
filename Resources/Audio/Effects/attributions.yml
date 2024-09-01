@@ -231,3 +231,8 @@
   copyright: '"beep_landmine.ogg" by kaktuscsc of Discord for SS14'
   license: "CC-BY-SA-3.0"
   source: https://github.com/YuriyKiss/space-station-14/commit/971a135a9c83aed46e967aac9302ab5b35562b5f
+
+- files: [static1.ogg, static2.ogg, static3.ogg]
+  copyright: Errant (github username Errant-4)
+  license: CC-BY-SA-3.0
+  source: https://github.com/space-wizards/space-station-14/pull/31653
