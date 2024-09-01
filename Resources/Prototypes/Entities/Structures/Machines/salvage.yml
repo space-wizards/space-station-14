@@ -4,6 +4,7 @@
   name: salvage magnet
   description: Pulls in salvage.
   components:
+  - type: StationAiWhitelist
   - type: Sprite
     sprite: Structures/Machines/salvage.rsi
     layers:

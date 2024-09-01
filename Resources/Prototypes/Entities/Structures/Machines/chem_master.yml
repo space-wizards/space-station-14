@@ -6,6 +6,7 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: StationAiWhitelist
   - type: Sprite
     sprite: Structures/Machines/mixer.rsi
     snapCardinals: true

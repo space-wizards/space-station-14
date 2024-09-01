@@ -4,6 +4,7 @@
   name: cryo pod
   description: A special machine intended to create a safe environment for the use of chemicals that react in cold environments.
   components:
+  - type: StationAiWhitelist
   - type: Sprite
     sprite: Structures/Machines/cryogenics.rsi
     drawdepth: Mobs

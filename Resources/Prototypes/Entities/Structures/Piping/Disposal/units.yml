@@ -70,6 +70,7 @@
   parent: DisposalUnitBase
   name: disposal unit
   components:
+  - type: StationAiWhitelist
   - type: Sprite
     sprite: Structures/Piping/disposal.rsi
     snapCardinals: true
@@ -92,6 +93,7 @@
   name: mailing unit
   description: A pneumatic mail delivery unit.
   components:
+  - type: StationAiWhitelist
   - type: Sprite
     sprite: Structures/Piping/disposal.rsi
     snapCardinals: true

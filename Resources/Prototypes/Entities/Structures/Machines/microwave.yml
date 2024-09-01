@@ -4,6 +4,7 @@
   name: microwave
   description: It's magic.
   components:
+  - type: StationAiWhitelist
   - type: Microwave
     capacity: 10
   - type: Appearance

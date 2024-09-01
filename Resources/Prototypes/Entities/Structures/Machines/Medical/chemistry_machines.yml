@@ -43,6 +43,7 @@
   name: electrolysis unit
   description: The latest in medicinal electrocution technology.
   components:
+  - type: StationAiWhitelist
   - type: SolutionContainerMixer
     mixDuration: 5
     mixingSound:

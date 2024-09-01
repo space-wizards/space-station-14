@@ -4,6 +4,7 @@
   name: tech disk terminal
   description: A terminal used to print out technology disks.
   components:
+  - type: StationAiWhitelist
   - type: Sprite
     noRot: true
     sprite: Structures/Machines/tech_disk_printer.rsi

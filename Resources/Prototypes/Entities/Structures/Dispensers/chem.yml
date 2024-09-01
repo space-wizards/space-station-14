@@ -5,6 +5,7 @@
   parent: ReagentDispenserBase
   description: An industrial grade chemical dispenser.
   components:
+  - type: StationAiWhitelist
   - type: Sprite
     sprite: Structures/dispensers.rsi
     state: industrial-working

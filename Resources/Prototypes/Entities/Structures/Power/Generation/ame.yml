@@ -5,6 +5,7 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: StationAiWhitelist
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite
