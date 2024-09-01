@@ -950,6 +950,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 15
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 3
@@ -1526,6 +1527,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 15
         reagents:
         - ReagentId: Nutriment
           Quantity: 3
