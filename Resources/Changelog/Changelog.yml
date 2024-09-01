@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Cojoke-dot
-  changes:
-  - message: Musicians can now select instruments in their loadout
-    type: Add
-  id: 6758
-  time: '2024-06-16T11:27:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29059
 - author: ElectroJr
   changes:
   - message: Fixed pianos, office chairs & other objects not rotating while being
@@ -3846,3 +3839,10 @@
   id: 7257
   time: '2024-08-31T23:39:32.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31333
+- author: Moomoobeef
+  changes:
+  - message: Added flavors to an array of previously indescribable things.
+    type: Add
+  id: 7258
+  time: '2024-09-01T00:03:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31685
