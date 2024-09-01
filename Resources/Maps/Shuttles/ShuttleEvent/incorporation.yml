@@ -4317,7 +4317,6 @@ entities:
   - uid: 272
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 6.5,-12.5
       parent: 1
     - type: ItemPlacer
@@ -4329,7 +4328,6 @@ entities:
   - uid: 398
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: -5.5,-12.5
       parent: 1
     - type: ItemPlacer
