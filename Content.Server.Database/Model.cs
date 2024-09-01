@@ -26,6 +26,7 @@ namespace Content.Server.Database
         public DbSet<Round> Round { get; set; } = null!;
         public DbSet<Server> Server { get; set; } = null!;
         public DbSet<AuditLog> AuditLog { get; set; } = null!;
+        public DbSet<AuditLogEffectedPlayer> AuditLogEffectedPlayer { get; set; } = null!;
         public DbSet<AdminLog> AdminLog { get; set; } = null!;
         public DbSet<AdminLogPlayer> AdminLogPlayer { get; set; } = null!;
         public DbSet<Whitelist> Whitelist { get; set; } = null!;
