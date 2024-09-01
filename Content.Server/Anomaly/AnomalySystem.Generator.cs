@@ -13,6 +13,7 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Map;
 using System.Numerics;
+using Content.Shared.Power;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.Anomaly;

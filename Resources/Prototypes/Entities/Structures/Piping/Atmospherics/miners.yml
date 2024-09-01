@@ -11,19 +11,20 @@
     - type: Physics
       canCollide: false
     - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeCircle
+            radius: .4
+          density: 190
+          mask:
+            - MachineMask
     - type: Transform
       anchored: true
-    - type: Damageable
-      damageContainer: Inorganic
-      damageModifierSet: Metallic
-    - type: Destructible
-      thresholds:
-        - trigger:
-            !type:DamageTrigger
-            damage: 100
-          behaviors:
-            - !type:DoActsBehavior
-              acts: ["Destruction"]
+    - type: Anchorable
+      flags:
+      - Anchorable
+    - type: Pullable
     - type: Sprite
       sprite: Structures/Piping/Atmospherics/miners.rsi
       state: miner

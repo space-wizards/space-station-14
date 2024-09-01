@@ -102,7 +102,7 @@
   - type: IngestionBlocker
 
 - type: entity
-  parent: ClothingMaskGas
+  parent: [ClothingMaskGas, BaseCargoContraband]
   id: ClothingMaskGasExplorer
   name: explorer gas mask
   description: A military-grade gas mask that can be connected to an air supply.
@@ -315,8 +315,8 @@
     sprite: Clothing/Mask/muzzle.rsi
   - type: Clothing
     sprite: Clothing/Mask/muzzle.rsi
-    equipDelay: 5
-    unequipDelay: 5
+    equipDelay: 3
+    unequipDelay: 3
   - type: IngestionBlocker
   - type: AddAccentClothing
     accent: ReplacementAccent
