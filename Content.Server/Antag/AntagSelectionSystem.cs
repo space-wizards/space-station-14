@@ -331,6 +331,9 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             return;
         }
 
+        var prereqEv = new AntagPrereqSetupEvent(session, ent, def, pool);
+        RaiseLocalEvent(ent, ref prereqEv, true);
+
         // The following is where we apply components, equipment, and other changes to our antagonist entity.
         EntityManager.AddComponents(player, def.Components);
 
@@ -344,8 +347,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         if (session != null)
         {
             var curMind = session.GetMind();
-            
-            if (curMind == null || 
+            if (curMind == null ||
                 !TryComp<MindComponent>(curMind.Value, out var mindComp) ||
                 mindComp.OwnedEntity != antagEnt)
             {
@@ -359,7 +361,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             SendBriefing(session, def.Briefing);
         }
 
-        var afterEv = new AfterAntagEntitySelectedEvent(session, player, ent, def, pool);
+        var afterEv = new AfterAntagEntitySelectedEvent(session, player, ent, def);
         RaiseLocalEvent(ent, ref afterEv, true);
     }
 
@@ -416,17 +418,17 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         switch (def.MultiAntagSetting)
         {
             case AntagAcceptability.None:
-            {
-                if (_role.MindIsAntagonist(mind))
-                    return false;
-                break;
-            }
+                {
+                    if (_role.MindIsAntagonist(mind))
+                        return false;
+                    break;
+                }
             case AntagAcceptability.NotExclusive:
-            {
-                if (_role.MindIsExclusiveAntagonist(mind))
-                    return false;
-                break;
-            }
+                {
+                    if (_role.MindIsExclusiveAntagonist(mind))
+                        return false;
+                    break;
+                }
         }
 
         // todo: expand this to allow for more fine antag-selection logic for game rules.
@@ -504,8 +506,17 @@ public record struct AntagSelectLocationEvent(ICommonSession? Session, Entity<An
 }
 
 /// <summary>
+/// Event raised on a game rule entity to send additional information before begining setup.
+/// Used for applying additional more complex setup logic.
+/// </summary>
+[ByRefEvent]
+public readonly record struct AntagPrereqSetupEvent(ICommonSession? Session, Entity<AntagSelectionComponent> GameRule, AntagSelectionDefinition Def, AntagSelectionPlayerPool? Pool);
+
+/// <summary>
 /// Event raised on a game rule entity after the setup logic for an antag is complete.
 /// Used for applying additional more complex setup logic.
 /// </summary>
 [ByRefEvent]
-public readonly record struct AfterAntagEntitySelectedEvent(ICommonSession? Session, EntityUid EntityUid, Entity<AntagSelectionComponent> GameRule, AntagSelectionDefinition Def, AntagSelectionPlayerPool? Pool);
+public readonly record struct AfterAntagEntitySelectedEvent(ICommonSession? Session, EntityUid EntityUid, Entity<AntagSelectionComponent> GameRule, AntagSelectionDefinition Def);
+
+
