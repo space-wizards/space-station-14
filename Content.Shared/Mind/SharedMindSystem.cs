@@ -315,6 +315,10 @@ public abstract class SharedMindSystem : EntitySystem
     {
     }
 
+    public virtual void ControlMob(EntityUid user, EntityUid target) {}
+
+    public virtual void ControlMob(NetUserId user, EntityUid target) {}
+
     /// <summary>
     /// Tries to create and add an objective from its prototype id.
     /// </summary>

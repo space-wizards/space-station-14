@@ -236,13 +236,6 @@
     state: cpuboard
 
 - type: stealTargetGroup
-  id: SalvageShuttleConsoleCircuitboard
-  name: salvage shuttle console board
-  sprite:
-    sprite: Objects/Misc/module.rsi
-    state: cpuboard
-
-- type: stealTargetGroup
   id: ClothingEyesHudBeer
   name: beer goggles
   sprite:
@@ -268,13 +261,6 @@
   name: clown medal
   sprite:
     sprite: Clothing/Neck/Medals/clownmedal.rsi
-    state: icon
-
-- type: stealTargetGroup
-  id: ClothingNeckShockCollar
-  name: shock collar
-  sprite:
-    sprite: Clothing/Neck/Misc/shock_collar.rsi
     state: icon
 
 #Thief structures

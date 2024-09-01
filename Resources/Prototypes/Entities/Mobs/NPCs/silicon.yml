@@ -103,6 +103,7 @@
     - Robotics
   - type: Speech
     speechVerb: Robotic
+    speechSounds: Pai #couldn't decide if this should be borg or pai sounds so I flipped a coin.
   - type: TypingIndicator
     proto: robot
   - type: ZombieImmune
@@ -344,7 +345,7 @@
       state: securitron1
       sprite: Mobs/Silicon/Bots/securitron.rsi
   - type: Construction
-    graph: Medibot
+    graph: MediBot
     node: bot
   - type: InteractionPopup
     interactSuccessString: petting-success-securitron

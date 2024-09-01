@@ -120,8 +120,8 @@
   abstract: true
   components:
   - type: ItemToggle
-    toggleLight: false
     onUse: false
+  - type: ItemTogglePointLight
   - type: HealthAnalyzer
     scanDelay: 1
     scanningEndSound:
@@ -355,6 +355,21 @@
     borderColor: "#e39751"
   - type: Icon
     state: pda-cargo
+
+- type: entity
+  parent: BasePDA
+  id: SeniorCargoPDA
+  name: senior cargo PDA
+  description: Lovingly crafted for the raccoons in cargo.
+  components:
+  - type: Pda
+    id: SeniorCargoIDCard
+    state: pda-seniorcargo
+  - type: PdaBorderColor
+    borderColor: "#E39751"
+    accentVColor: "#FF9500"
+  - type: Icon
+    state: pda-seniorcargo
 
 - type: entity
   parent: BasePDA
@@ -688,14 +703,6 @@
       - NotekeeperCartridge
       - NewsReaderCartridge
       - LogProbeCartridge
-
-- type: entity
-  parent: CentcomPDA
-  id: CentcomPDAFake
-  suffix: Fake
-  components:
-  - type: Pda
-    id: CentcomIDCardSyndie
 
 - type: entity
   parent: CentcomPDA

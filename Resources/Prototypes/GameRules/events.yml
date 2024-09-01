@@ -22,6 +22,7 @@
     - id: SpiderClownSpawn
     - id: SpiderSpawn
     - id: VentClog
+    - id: BrosSpawn
 
 - type: entityTable
   id: BasicAntagEventsTable
@@ -138,7 +139,7 @@
   - type: StationEvent
     weight: 5
     duration: 1
-    minimumPlayers: 20
+    minimumPlayers: 15
   - type: RandomEntityStorageSpawnRule
     prototype: MobSkeletonCloset
 
@@ -417,6 +418,20 @@
   - type: VentCrittersRule
     entries:
     - id: MobGiantSpiderAngry
+      prob: 0.05
+
+- type: entity
+  id: BrosSpawn
+  parent: BaseStationEventShortDelay
+  components:
+  - type: StationEvent
+    earliestStart: 20
+    minimumPlayers: 15
+    weight: 5
+    duration: 60
+  - type: VentCrittersRule
+    entries:
+    - id: BrosVentSpawner
       prob: 0.05
 
 - type: entity

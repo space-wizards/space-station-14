@@ -16,6 +16,7 @@
   - type: Tag
     tags:
     - Chopsticks
+    - Trash
 
 - type: entity
   parent: BaseItem
@@ -34,3 +35,4 @@
   - type: Tag
     tags:
     - Chopsticks
+    - Trash

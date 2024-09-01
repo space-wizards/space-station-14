@@ -10,6 +10,12 @@ reagent-desc-buzzochloric-bees = Liquid bees. Oh god it's LIQUID BEES NO-
 reagent-name-ground-bee = ground Bee
 reagent-desc-ground-bee = Bee grounds. Gross.
 
+reagent-name-brosochloric-bros = BROSochloric BROS
+reagent-desc-brosochloric-bros = Liquid BROS. UNGH
+
+reagent-name-ground-bros = ground BROS
+reagent-desc-ground-bros = BROS grounds. UNGH
+
 reagent-name-saxoite = saxoite
 reagent-desc-saxoite = Smells like jazz.
 

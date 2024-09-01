@@ -303,6 +303,22 @@
     - BasicRoundstartVariation
 
 - type: gamePreset
+  id: Secretling
+  alias:
+    - sling
+    - slings
+    - secretling
+  name: secret-title
+  description: secret-description
+  showInVote: false
+  rules:
+    - Changeling
+    - SubGamemodesRule
+    - BasicStationEventScheduler
+    - MeteorSwarmScheduler
+    - BasicRoundstartVariation
+
+- type: gamePreset
   id: Traitorling
   alias:
     - lingtraitor

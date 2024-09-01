@@ -164,7 +164,7 @@ namespace Content.Server.Explosion.EntitySystems
             if (!coords.IsValid(EntityManager))
                 return;
 
-            Spawn(component.Proto, coords);
+            for (var i = 0; i < component.Amount; i++) { Spawn(component.Proto, coords); }
         }
 
         private void HandleExplodeTrigger(EntityUid uid, ExplodeOnTriggerComponent component, TriggerEvent args)

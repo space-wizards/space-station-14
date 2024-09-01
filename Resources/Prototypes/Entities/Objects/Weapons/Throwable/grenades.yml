@@ -416,13 +416,35 @@
   - type: Sprite
     sprite: Objects/Weapons/Grenades/beenade.rsi
   - type: SmokeOnTrigger
-    duration: 15
-    spreadAmount: 25
-    smokePrototype: Foam
+    duration: 5
+    spreadAmount: 30
+  - type: SpawnOnTrigger
+    proto: MobAngryBee
+    amount: 6
+
+- type: entity
+  parent: SmokeGrenade
+  id: BrosGrenade
+  name: BROSnade
+  description: UNGH
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/brosnade.rsi
+  - type: SmokeOnTrigger
+    duration: 5
+    spreadAmount: 10
     solution:
       reagents:
-      - ReagentId: BuzzochloricBees
-        Quantity: 30
+      - ReagentId: VentCrud
+        Quantity: 15
+  - type: SpawnOnTrigger
+    proto: BrosSorbSpawner
+    amount: 60
+  - type: SoundOnTrigger
+    sound: /Audio/Items/bros_grenade_smoke.ogg
+  - type: TimerTriggerVisuals
+    primingSound:
+      path: /Audio/Items/bros_grenade_prime.ogg
 
 - type: entity
   parent: SmokeGrenade

@@ -413,8 +413,8 @@
       tableId: SpaceTrafficControlTable
 
 - type: entity
-  id: SpaceTrafficControlFriendlyEventScheduler 
-  parent: BaseGameRule                  
+  id: SpaceTrafficControlFriendlyEventScheduler
+  parent: BaseGameRule
   components:
   - type: BasicStationEventScheduler
     minimumTimeUntilFirstEvent: 1200 # 20 mins
@@ -448,7 +448,7 @@
   components:
   - type: ChangelingRule
   - type: GameRule
-    minPlayers: 10
+    minPlayers: 15
     delay:
       min: 30
       max: 60
@@ -456,8 +456,8 @@
     agentName: changeling-roundend-name
     definitions:
     - prefRoles: [ Changeling ]
-      max: 8
-      playerRatio: 10
+      max: 6
+      playerRatio: 15
       lateJoinAdditional: true
       mindComponents:
       - type: ChangelingRole

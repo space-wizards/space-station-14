@@ -1110,6 +1110,11 @@
   description: flavor-complex-paint-thinner
 
 - type: flavor
+  id: cherry
+  flavorType: Complex
+  description: flavor-complex-cherry
+
+- type: flavor
   id: cigarettes
   flavorType: Complex
   description: flavor-complex-cigarettes
@@ -1133,3 +1138,19 @@
   id: horsepussy
   flavorType: Complex
   description: flavor-complex-horsepussy
+
+- type: flavor
+  id: drinkdrink
+  flavorType: Base
+  description: flavor-base-drinkdrink
+
+- type: flavor
+  id: kingsoda
+  flavorType: Base
+  description: flavor-base-kingsoda
+
+- type: flavor
+  id: crud
+  flavorType: Complex
+  description: flavor-complex-crud
+
