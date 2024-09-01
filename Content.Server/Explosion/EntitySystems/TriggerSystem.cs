@@ -211,7 +211,7 @@ namespace Content.Server.Explosion.EntitySystems
                 return;
 
             // Gets location of the implant
-            var posText = FormattedMessage.RemoveMarkup(_navMap.GetNearestBeaconString(uid));
+            var posText = FormattedMessage.RemoveMarkupOrThrow(_navMap.GetNearestBeaconString(uid));
             var critMessage = Loc.GetString(component.CritMessage, ("user", implanted.ImplantedEntity.Value), ("position", posText));
             var deathMessage = Loc.GetString(component.DeathMessage, ("user", implanted.ImplantedEntity.Value), ("position", posText));
 
