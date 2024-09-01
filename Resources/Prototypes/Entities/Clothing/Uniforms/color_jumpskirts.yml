@@ -222,24 +222,24 @@
     sprite: Clothing/Uniforms/Jumpskirt/color.rsi
     layers:
     - state: icon
-      color: "#79CC26"
+      color: "#02661F"
     - state: trinkets-icon
   - type: Item
     inhandVisuals:
       left:
       - state: inhand-left
-        color: "#79CC26"
+        color: "#02661F"
       - state: trinkets-inhand-left
       right:
       - state: inhand-right
-        color: "#79CC26"
+        color: "#02661F"
       - state: trinkets-inhand-right
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpskirt/color.rsi
     clothingVisuals:
       jumpsuit:
       - state: equipped-INNERCLOTHING
-        color: "#79CC26"
+        color: "#02661F"
       - state: trinkets-equipped-INNERCLOTHING
 
 # Orange Jumpskirt
