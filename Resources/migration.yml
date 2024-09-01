@@ -410,6 +410,11 @@ ClothingBeltSuspenders: ClothingBeltSuspendersRed
 # 2024-08-19
 ClothingNeckShockCollar: ClothingBackpackElectropack
 
+# 2024-08-22
+ComputerShuttleSalvage: null
+SalvageShuttleConsoleCircuitboard: null
+SalvageShuttleCircuitboardStealObjective: null
+
 # 2024-08-28
 ClothingBackpackDuffelSyndicateCostumeCentcom: null
 ClothingHeadsetAltCentComFake: null
