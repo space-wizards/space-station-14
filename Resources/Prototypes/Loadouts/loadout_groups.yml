@@ -923,8 +923,8 @@
   - HeadofSecurityJumpskirt
   - HeadofSecurityTurtleneck
   - HeadofSecurityTurtleneckSkirt
-  - HeadofSecurityFormalSuit
-  - HeadofSecurityFormalSkirt
+  #- HeadofSecurityFormalSuit # GreyStation - Loadout removal
+  #- HeadofSecurityFormalSkirt # GreyStation - Loadout removal
 
 - type: loadoutGroup
   id: HeadofSecurityNeck
@@ -1006,12 +1006,12 @@
   - ArmorVestSlim
   - SecurityOfficerWintercoat
 
-- type: loadoutGroup
-  id: SecurityShoes
-  name: loadout-group-security-shoes
-  loadouts:
-  - JackBoots
-  - SecurityWinterBoots
+#- type: loadoutGroup # GreyStation - Loadout removal
+#  id: SecurityShoes
+#  name: loadout-group-security-shoes
+#  loadouts:
+#  - JackBoots
+#  - SecurityWinterBoots
 
 - type: loadoutGroup
   id: SecurityPDA

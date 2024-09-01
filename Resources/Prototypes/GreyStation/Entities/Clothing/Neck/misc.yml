@@ -46,3 +46,16 @@
     sprite: GreyStation/Clothing/Neck/Misc/detectivebadge.rsi
   - type: Clothing
     sprite: GreyStation/Clothing/Neck/Misc/detectivebadge.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckSecurityOfficerBadge
+  name: security officer badge
+  description: A badge for the station's security officer. Every officer gets one after completing basic training.
+  components:
+  - type: Item
+    size: Tiny
+  - type: Sprite
+    sprite: GreyStation/Clothing/Neck/Misc/badge.rsi
+  - type: Clothing
+    sprite: GreyStation/Clothing/Neck/Misc/badge.rsi

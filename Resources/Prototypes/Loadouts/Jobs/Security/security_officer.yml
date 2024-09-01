@@ -119,21 +119,21 @@
   equipment:
     outerClothing: ClothingOuterWinterSec
 
-# Shoes
-- type: loadout
-  id: CombatBoots
-  equipment:
-    shoes: ClothingShoesBootsCombatFilled
+# Shoes # GreyStation - Loadout option removal
+#- type: loadout
+#  id: CombatBoots
+#  equipment:
+#    shoes: ClothingShoesBootsCombatFilled
 
-- type: loadout
-  id: JackBoots
-  equipment:
-    shoes: ClothingShoesBootsJackFilled
+#- type: loadout
+#  id: JackBoots
+#  equipment:
+#    shoes: ClothingShoesBootsJackFilled
 
-- type: loadout
-  id: SecurityWinterBoots
-  equipment:
-    shoes: ClothingShoesBootsWinterSecFilled
+#- type: loadout
+#  id: SecurityWinterBoots
+#  equipment:
+#    shoes: ClothingShoesBootsWinterSecFilled
 
 # PDA
 - type: loadout

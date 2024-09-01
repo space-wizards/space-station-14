@@ -686,9 +686,9 @@
   description: A sign of skill and prestige within the security department.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/senior_officer.rsi
+    sprite: GreyStation/Clothing/Uniforms/Jumpskirt/senior_officer.rsi # GreyStation - Resprite
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/senior_officer.rsi
+    sprite: GreyStation/Clothing/Uniforms/Jumpskirt/senior_officer.rsi # GreyStation - Resprite
 
 - type: entity
   parent: [ClothingUniformSkirtBase, BaseRestrictedContraband]
@@ -697,9 +697,9 @@
   description: A tactical relic of years past before Nanotrasen decided it was cheaper to dye the suits red instead of washing out the blood.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/security_grey.rsi
+    sprite: GreyStation/Clothing/Uniforms/Jumpskirt/security_grey.rsi # GreyStation - Resprite
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/security_grey.rsi
+    sprite: GreyStation/Clothing/Uniforms/Jumpskirt/security_grey.rsi # GreyStation - Resprite
 
 - type: entity
   parent: ClothingUniformSkirtBase

@@ -320,9 +320,9 @@
   description: A sturdy, utilitarian jacket designed to protect a warden from any brig-bound threats.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Coats/warden.rsi
+    sprite: GreyStation/Clothing/OuterClothing/Coats/warden.rsi # GreyStation - Resprite
   - type: Clothing
-    sprite: Clothing/OuterClothing/Coats/warden.rsi
+    sprite: GreyStation/Clothing/OuterClothing/Coats/warden.rsi # GreyStation - Resprite
 
 - type: entity
   parent: ClothingOuterStorageBase

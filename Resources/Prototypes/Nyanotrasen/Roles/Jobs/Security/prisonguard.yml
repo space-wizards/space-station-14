@@ -7,7 +7,7 @@
   canBeAntag: false
   icon: "JobIconPrisonGuard"
   supervisors: job-supervisors-warden
-  setPreference: true
+  setPreference: false # GreyStation - Some stations will have prison guards but not every station.
   access:
   - Security
   - Brig

@@ -48,9 +48,9 @@
   description: A hard-boiled private investigator's armored vest.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Vests/detvest.rsi
+    sprite: GreyStation/Clothing/OuterClothing/Vests/detvest.rsi # GreyStation - Resprite
   - type: Clothing
-    sprite: Clothing/OuterClothing/Vests/detvest.rsi
+    sprite: GreyStation/Clothing/OuterClothing/Vests/detvest.rsi # GreyStation - Resprite
 
 #Hazard vest
 - type: entity
