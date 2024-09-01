@@ -143,17 +143,17 @@
   mobAcceleration: 2
   indestructible: true
 
-# Dug snow
+# Grave snow
 - type: tile
-  id: FloorSnowDug
-  name: tiles-snow-dug
-  sprite: /Textures/Tiles/Planet/Snow/snow_dug.png
+  id: FloorSnowGrave
+  name: tiles-snow-grave
+  sprite: /Textures/Tiles/Planet/Snow/snow_grave.png
   edgeSpritePriority: 1
   edgeSprites:
-    South: /Textures/Tiles/Planet/Snow/snow_dug_double_edge_south.png
-    East: /Textures/Tiles/Planet/Snow/snow_dug_double_edge_east.png
-    North: /Textures/Tiles/Planet/Snow/snow_dug_double_edge_north.png
-    West: /Textures/Tiles/Planet/Snow/snow_dug_double_edge_west.png
+    South: /Textures/Tiles/Planet/Snow/snow_grave_double_edge_south.png
+    East: /Textures/Tiles/Planet/Snow/snow_grave_double_edge_east.png
+    North: /Textures/Tiles/Planet/Snow/snow_grave_double_edge_north.png
+    West: /Textures/Tiles/Planet/Snow/snow_grave_double_edge_west.png
   isSubfloor: true
   footstepSounds:
     collection: FootstepSnow
