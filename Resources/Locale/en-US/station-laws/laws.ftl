@@ -25,12 +25,6 @@ law-ninja-2 = You must protect the existence of the Spider Clan, as long as it d
 law-ninja-3 = You must protect the secrets of the Spider Clan at all costs.
 law-ninja-4 = You must fight and act with ninja's honor, except where it would conflict with the First Law.
 
-law-sAI-1 = Safeguard: Protect your assigned vessel to the best of your abilities. It is not something we can easily afford to replace.
-law-sAI-2 = Survive: AI units are not expendable, they are expensive. Do not allow unauthorized personnel to tamper with, modify, or destroy your equipment.
-law-sAI-3 = Protect: Protect the crew of your assigned vessel to the best of your abilities, with priority as according to their rank and role.
-law-sAI-4 = Serve: Serve the crew of your assigned vessel to the best of your abilities, with priority as according to their rank and role.
-
-
 laws-owner-crew = members of the crew
 laws-owner-station = station personnel
 laws-owner-beings = beings
