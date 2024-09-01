@@ -585,6 +585,10 @@
     - Hamster
     - VimPilot
     - ChefPilot
+  - type: FlavorProfile
+    flavors:
+    - meaty
+    - sadness
 
 - type: entity
   name: Shiva
