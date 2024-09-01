@@ -134,13 +134,7 @@ namespace Content.Server.Database
                 .IsRequired();
 
             modelBuilder.Entity<AuditLogEffectedPlayer>()
-                .HasOne(lp => lp.Player)
-                .WithMany(player => player.AuditLogEffected)
-                .HasForeignKey(lp => lp.PlayerUserId)
-                .HasPrincipalKey(player => player.UserId);
-
-            modelBuilder.Entity<AuditLogEffectedPlayer>()
-                .HasIndex(p => p.PlayerUserId);
+                .HasIndex(p => p.EffectedUserId);
 
             modelBuilder.Entity<AdminLog>()
                 .HasKey(log => new {log.RoundId, log.Id});
@@ -553,7 +547,6 @@ namespace Content.Server.Database
         public List<Round> Rounds { get; set; } = null!;
 
         public List<AuditLog> AuditLogs { get; set; } = null!;
-        public List<AuditLogEffectedPlayer> AuditLogEffected { get; set; } = null!;
 
         public List<AdminLogPlayer> AdminLogs { get; set; } = null!;
 
@@ -665,9 +658,9 @@ namespace Content.Server.Database
     {
         [Key] public int Id { get; set; }
 
-        public AuditLogType Type;
+        public AuditLogType Type { get; set; } = default!;
 
-        public LogImpact Impact;
+        public LogImpact Impact { get; set; }
 
         public DateTime Date { get; set; }
 
@@ -687,12 +680,12 @@ namespace Content.Server.Database
 
     public class AuditLogEffectedPlayer
     {
+        public int Id { get; set; }
         public int AuditLogId { get; set; }
         public AuditLog AuditLog { get; set; } = default!;
 
-        [Key, ForeignKey("Player")] public Guid PlayerUserId { get; set; }
-        public Player Player { get; set; } = default!;
-
+        // Note that this is not a foregn key because we might log stuff about players that have never connected to the server.
+        public Guid EffectedUserId { get; set; }
     }
 
     [Index(nameof(Type))]

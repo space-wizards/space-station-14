@@ -529,10 +529,18 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("date");
 
+                    b.Property<short>("Impact")
+                        .HasColumnType("smallint")
+                        .HasColumnName("impact");
+
                     b.Property<string>("Message")
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("message");
+
+                    b.Property<long>("Type")
+                        .HasColumnType("bigint")
+                        .HasColumnName("type");
 
                     b.HasKey("Id")
                         .HasName("PK_audit_log");
@@ -547,20 +555,27 @@ namespace Content.Server.Database.Migrations.Postgres
 
             modelBuilder.Entity("Content.Server.Database.AuditLogEffectedPlayer", b =>
                 {
-                    b.Property<Guid>("PlayerUserId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("player_user_id");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("audit_log_effected_player_id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("AuditLogId")
                         .HasColumnType("integer")
                         .HasColumnName("audit_log_id");
 
-                    b.HasKey("PlayerUserId")
+                    b.Property<Guid>("EffectedUserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("effected_user_id");
+
+                    b.HasKey("Id")
                         .HasName("PK_audit_log_effected_player");
 
                     b.HasIndex("AuditLogId");
 
-                    b.HasIndex("PlayerUserId");
+                    b.HasIndex("EffectedUserId");
 
                     b.ToTable("audit_log_effected_player", (string)null);
                 });
@@ -1702,17 +1717,7 @@ namespace Content.Server.Database.Migrations.Postgres
                         .IsRequired()
                         .HasConstraintName("FK_audit_log_effected_player_audit_log_audit_log_id");
 
-                    b.HasOne("Content.Server.Database.Player", "Player")
-                        .WithMany("AuditLogEffected")
-                        .HasForeignKey("PlayerUserId")
-                        .HasPrincipalKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_audit_log_effected_player_player_player_user_id");
-
                     b.Navigation("AuditLog");
-
-                    b.Navigation("Player");
                 });
 
             modelBuilder.Entity("Content.Server.Database.ConnectionLog", b =>
@@ -2004,8 +2009,6 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.Navigation("AdminWatchlistsLastEdited");
 
                     b.Navigation("AdminWatchlistsReceived");
-
-                    b.Navigation("AuditLogEffected");
 
                     b.Navigation("AuditLogs");
 

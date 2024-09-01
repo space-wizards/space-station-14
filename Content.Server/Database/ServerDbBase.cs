@@ -847,7 +847,7 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
         {
             var dbEffected= effected == null
                 ? []
-                : effected.Select(id => new AuditLogEffectedPlayer() { PlayerUserId = id }).ToList();
+                : effected.Select(id => new AuditLogEffectedPlayer() { EffectedUserId = id }).ToList();
             var log = new AuditLog()
             {
                 Type = ty,

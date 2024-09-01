@@ -498,10 +498,18 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT")
                         .HasColumnName("date");
 
+                    b.Property<sbyte>("Impact")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("impact");
+
                     b.Property<string>("Message")
                         .IsRequired()
                         .HasColumnType("TEXT")
                         .HasColumnName("message");
+
+                    b.Property<uint>("Type")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("type");
 
                     b.HasKey("Id")
                         .HasName("PK_audit_log");
@@ -516,20 +524,25 @@ namespace Content.Server.Database.Migrations.Sqlite
 
             modelBuilder.Entity("Content.Server.Database.AuditLogEffectedPlayer", b =>
                 {
-                    b.Property<Guid>("PlayerUserId")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("player_user_id");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("audit_log_effected_player_id");
 
                     b.Property<int>("AuditLogId")
                         .HasColumnType("INTEGER")
                         .HasColumnName("audit_log_id");
 
-                    b.HasKey("PlayerUserId")
+                    b.Property<Guid>("EffectedUserId")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("effected_user_id");
+
+                    b.HasKey("Id")
                         .HasName("PK_audit_log_effected_player");
 
                     b.HasIndex("AuditLogId");
 
-                    b.HasIndex("PlayerUserId");
+                    b.HasIndex("EffectedUserId");
 
                     b.ToTable("audit_log_effected_player", (string)null);
                 });
@@ -1623,17 +1636,7 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .IsRequired()
                         .HasConstraintName("FK_audit_log_effected_player_audit_log_audit_log_id");
 
-                    b.HasOne("Content.Server.Database.Player", "Player")
-                        .WithMany("AuditLogEffected")
-                        .HasForeignKey("PlayerUserId")
-                        .HasPrincipalKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_audit_log_effected_player_player_player_user_id");
-
                     b.Navigation("AuditLog");
-
-                    b.Navigation("Player");
                 });
 
             modelBuilder.Entity("Content.Server.Database.ConnectionLog", b =>
@@ -1925,8 +1928,6 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.Navigation("AdminWatchlistsLastEdited");
 
                     b.Navigation("AdminWatchlistsReceived");
-
-                    b.Navigation("AuditLogEffected");
 
                     b.Navigation("AuditLogs");
 
