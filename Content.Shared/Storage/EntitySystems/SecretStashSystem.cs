@@ -34,9 +34,7 @@ public sealed class SecretStashSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<SecretStashComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<SecretStashComponent, DestructionEventArgs>(OnDestroyed);
-        SubscribeLocalEvent<SecretStashComponent, InteractUsingEvent>(OnInteractUsing, after: new[] { typeof(ToolOpenableSystem) });
-        SubscribeLocalEvent<SecretStashComponent, InteractHandEvent>(OnInteractHand);
-        SubscribeLocalEvent<SecretStashComponent, GetVerbsEvent<InteractionVerb>>(OnGetVerb);
+        SubscribeLocalEvent<SecretStashComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerb);
     }
 
     private void OnInit(Entity<SecretStashComponent> entity, ref ComponentInit args)
@@ -52,22 +50,6 @@ public sealed class SecretStashSystem : EntitySystem
             var popup = Loc.GetString("comp-secret-stash-on-destroyed-popup", ("stashname", GetStashName(entity)));
             _popupSystem.PopupEntity(popup, storedInside[0], PopupType.MediumCaution);
         }
-    }
-
-    private void OnInteractUsing(Entity<SecretStashComponent> entity, ref InteractUsingEvent args)
-    {
-        if (args.Handled || !IsStashOpen(entity))
-            return;
-
-        args.Handled = TryStashItem(entity, args.User, args.Used);
-    }
-
-    private void OnInteractHand(Entity<SecretStashComponent> entity, ref InteractHandEvent args)
-    {
-        if (args.Handled || !IsStashOpen(entity))
-            return;
-
-        args.Handled = TryGetItem(entity, args.User);
     }
 
     /// <summary>
@@ -137,16 +119,17 @@ public sealed class SecretStashSystem : EntitySystem
         return true;
     }
 
-    private void OnGetVerb(Entity<SecretStashComponent> entity, ref GetVerbsEvent<InteractionVerb> args)
+    private void OnGetVerb(Entity<SecretStashComponent> entity, ref GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanInteract || !args.CanAccess || !entity.Comp.HasVerbs)
+        if (!args.CanInteract || !args.CanAccess)
             return;
 
         var user = args.User;
         var item = args.Using;
         var stashName = GetStashName(entity);
 
-        var itemVerb = new InteractionVerb();
+        var itemVerb = new AlternativeVerb();
+        itemVerb.Priority = 100;
 
         // This will add the verb relating to inserting / grabbing items.
         if (IsStashOpen(entity))
