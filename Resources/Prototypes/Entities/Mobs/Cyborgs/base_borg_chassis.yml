@@ -6,6 +6,7 @@
   save: false
   abstract: true
   components:
+  - type: StationAiVision
   - type: Reactive
     groups:
       Acidic: [Touch]
