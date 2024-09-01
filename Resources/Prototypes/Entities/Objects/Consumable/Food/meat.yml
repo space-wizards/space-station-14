@@ -938,6 +938,15 @@
   components:
   - type: Sprite
     state: snail
+  - type: FoodSequenceElement
+    sprite:
+      sprite: Objects/Consumable/Food/meat.rsi
+      state: snail
+    entries:
+      burger:
+        name: food-sequence-content-snail
+      taco:
+        name: food-sequence-content-snail
   - type: SolutionContainerManager
     solutions:
       food:
@@ -1505,6 +1514,15 @@
   - type: Sprite
     layers:
     - state: snail-cooked
+  - type: FoodSequenceElement
+    sprite:
+      sprite: Objects/Consumable/Food/meat.rsi
+      state: snail
+    entries:
+      burger:
+        name: food-sequence-content-snail
+      taco:
+        name: food-sequence-content-snail
   - type: SolutionContainerManager
     solutions:
       food:
