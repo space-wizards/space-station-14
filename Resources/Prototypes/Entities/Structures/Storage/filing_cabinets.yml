@@ -147,13 +147,13 @@
         orGroup: Folder
 
 - type: entity
-  parent: [filingCabinet, BaseBureaucraticStorageFill]
+  parent: [BaseBureaucraticStorageFill, filingCabinet]
   id: filingCabinetRandom
 
 - type: entity
-  parent: [filingCabinetTall, BaseBureaucraticStorageFill]
+  parent: [BaseBureaucraticStorageFill, filingCabinetTall]
   id: filingCabinetTallRandom
 
 - type: entity
-  parent: [filingCabinetDrawer, BaseBureaucraticStorageFill]
+  parent: [BaseBureaucraticStorageFill, filingCabinetDrawer]
   id: filingCabinetDrawerRandom
