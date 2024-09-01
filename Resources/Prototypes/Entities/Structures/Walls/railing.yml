@@ -178,6 +178,8 @@
   components:
   - type: Sprite
     state: round
+  - type: Icon
+    state: round
   - type: Fixtures
     fixtures:
       fix1:
