@@ -347,6 +347,11 @@
     bloodReagent: InsectBlood
     bloodMaxVolume: 20
   - type: Food
+  - type: FlavorProfile
+    flavors:
+    - horrible
+    - terrible
+    - chewy
   - type: Hunger
     baseDecayRate: 0.25
   - type: Extractable
@@ -960,6 +965,9 @@
     requiresSpecialDigestion: true
     # Wooly prevents eating wool deleting the goat so its fine
     requireDead: false
+  - type: FlavorProfile
+    flavors:
+    - fiber
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -1638,6 +1646,9 @@
       Dead:
         Base: splat-0
   - type: Food
+  - type: FlavorProfile
+    flavors:
+    - meaty
   - type: Thirst
     startingThirst: 25  # spawn with Okay thirst state
     thresholds:
@@ -3182,6 +3193,9 @@
       Dead:
         Base: splat-0
   - type: Food
+  - type: FlavorProfile
+    flavors:
+    - meaty
   - type: Hunger
     baseDecayRate: 0.3
   - type: Extractable

@@ -1,25 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Magboots no longer work when off-grid.
-    type: Fix
-  id: 6756
-  time: '2024-06-16T03:38:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29034
-- author: deltanedas
-  changes:
-  - message: Tarantulas now use Mechanotoxin, a venom that slows you down over time.
-    type: Tweak
-  id: 6757
-  time: '2024-06-16T11:26:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29066
-- author: Cojoke-dot
-  changes:
-  - message: Musicians can now select instruments in their loadout
-    type: Add
-  id: 6758
-  time: '2024-06-16T11:27:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29059
 - author: ElectroJr
   changes:
   - message: Fixed pianos, office chairs & other objects not rotating while being
@@ -3842,3 +3821,28 @@
   id: 7255
   time: '2024-08-31T14:40:28.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/26098
+- author: Moomoobeef
+  changes:
+  - message: medibelts are found in the medidrobe instead of in lockers.
+    type: Tweak
+  id: 7256
+  time: '2024-08-31T23:22:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31470
+- author: EmoGarbage404
+  changes:
+  - message: Removed the reclaimer shuttle.
+    type: Remove
+  - message: Removed fultons and fulton beacons from the autolathe
+    type: Remove
+  - message: Adjusted equipment inside salvage lockers and vendors.
+    type: Tweak
+  id: 7257
+  time: '2024-08-31T23:39:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31333
+- author: Moomoobeef
+  changes:
+  - message: Added flavors to an array of previously indescribable things.
+    type: Add
+  id: 7258
+  time: '2024-09-01T00:03:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31685
