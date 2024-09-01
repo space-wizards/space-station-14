@@ -3,6 +3,7 @@
   table: !type:AllSelector
     children:
     - id: OxygenTankFilled
+    - id: JetpackMiniFilled
     - id: ClothingShoesBootsMag
     - id: ClothingOuterHardsuitSpatio
     - id: ClothingMaskGasExplorer

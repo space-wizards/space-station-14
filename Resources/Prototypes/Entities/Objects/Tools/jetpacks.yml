@@ -187,13 +187,14 @@
   components:
     - type: Item
       sprite: Objects/Tanks/Jetpacks/mini.rsi
+      size: Normal
     - type: Sprite
       sprite: Objects/Tanks/Jetpacks/mini.rsi
     - type: Clothing
       sprite: Objects/Tanks/Jetpacks/mini.rsi
       slots:
         - Back
-        - suitStorage
+        - SuitStorage
         - Belt
     - type: GasTank
       outputPressure: 42.6
@@ -265,7 +266,7 @@
     sprite: Objects/Tanks/Jetpacks/void.rsi
     slots:
       - Back
-      - suitStorage
+      - SuitStorage
       - Belt
 
 # Filled void
