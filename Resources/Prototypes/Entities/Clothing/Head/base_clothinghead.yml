@@ -22,8 +22,9 @@
           Quantity: 10
   - type: Tag
     tags:
-      - ClothMade
-      - WhitelistChameleon
+    - ClothMade
+    - Recyclable
+    - WhitelistChameleon
 
 - type: entity
   abstract: true
@@ -38,10 +39,6 @@
   - type: PhysicalComposition # 50% of the amount of cloth you'd obtain upon butchering
     materialComposition:
       Cloth: 50
-  - type: Tag
-    tags:
-      - ClothMade
-      - WhitelistChameleon
 
 - type: entity
   abstract: true

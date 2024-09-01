@@ -72,7 +72,6 @@
       tags:
       - Trash
       - Recyclable
-      - ClothMade
     blacklist:
       components:
       - Material
