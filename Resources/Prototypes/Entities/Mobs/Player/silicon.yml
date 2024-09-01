@@ -217,6 +217,7 @@
         acts: [ "Destruction" ]
   - type: ApcPowerReceiver
     powerLoad: 1000
+  - type: ExtensionCableReceiver
   - type: StationAiCore
   - type: StationAiVision
   - type: InteractionOutline
