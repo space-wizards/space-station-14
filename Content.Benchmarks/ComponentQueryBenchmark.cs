@@ -104,6 +104,21 @@ public class ComponentQueryBenchmark
         return hashCode;
     }
 
+    /// <summary>
+    /// Baseline TryComp benchmark. When the benchmark was created, around 40% of the items were clothing.
+    /// </summary>
+    [BenchmarkCategory("TryComp")]
+    public int TryCompSlow()
+    {
+        var hashCode = 0;
+        foreach (var uid in _items)
+        {
+            if (_entMan.TryGetComponent(uid, out ClothingComponent? clothing))
+                hashCode = HashCode.Combine(hashCode, clothing.GetHashCode());
+        }
+        return hashCode;
+    }
+
     [Benchmark]
     [BenchmarkCategory("TryComp")]
     public int TryCompCached()
