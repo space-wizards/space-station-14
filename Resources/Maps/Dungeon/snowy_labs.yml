@@ -23,7 +23,7 @@ tilemap:
   80: FloorShowroom
   84: FloorShuttleOrange
   89: FloorSnow
-  90: FloorSnowDug
+  90: FloorSnowGrave
   91: FloorSteel
   96: FloorSteelDiagonal
   101: FloorSteelMini
