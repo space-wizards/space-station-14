@@ -6,7 +6,6 @@
   save: false
   abstract: true
   components:
-  - type: StationAiVision
   - type: Reactive
     groups:
       Acidic: [Touch]
@@ -274,6 +273,7 @@
   parent: [BaseBorgChassis, BaseBorgTransponder]
   abstract: true
   components:
+  - type: StationAiVision
   - type: NpcFactionMember
     factions:
     - NanoTrasen
