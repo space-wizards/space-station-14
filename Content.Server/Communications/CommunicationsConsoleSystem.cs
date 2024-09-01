@@ -31,7 +31,6 @@ namespace Content.Server.Communications
     public sealed class CommunicationsConsoleSystem : EntitySystem
     {
         [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
-        [Dependency] private readonly InteractionSystem _interaction = default!;
         [Dependency] private readonly AlertLevelSystem _alertLevelSystem = default!;
         [Dependency] private readonly ChatSystem _chatSystem = default!;
         [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
