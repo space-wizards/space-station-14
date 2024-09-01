@@ -38,7 +38,7 @@
   materials:
     Steel: 250
     Plastic: 100
-    
+
 - type: latheRecipe
   id: WeaponLaserCarbine
   result: WeaponLaserCarbine
@@ -88,6 +88,15 @@
     Glass: 500
     Plastic: 250
     Gold: 100
+
+- type: latheRecipe
+  id: ClothingBackpackElectropack
+  result: ClothingBackpackElectropack
+  completetime: 4
+  materials:
+    Steel: 500
+    Plastic: 250
+    Cloth: 500
 
 - type: latheRecipe
   id: ForensicPad
@@ -655,7 +664,7 @@
     Steel: 1000
     Glass: 500
     Plastic: 500
-     
+
 - type: latheRecipe
   id: MagazineGrenadeEmpty
   result: MagazineGrenadeEmpty
@@ -663,7 +672,7 @@
   materials:
      Steel: 150
      Plastic: 50
-     
+
 - type: latheRecipe
   id: GrenadeEMP
   result: GrenadeEMP
@@ -672,7 +681,7 @@
      Steel: 150
      Plastic: 100
      Glass: 20
-     
+
 - type: latheRecipe
   id: GrenadeBlast
   result: GrenadeBlast
@@ -681,7 +690,7 @@
      Steel: 450
      Plastic: 300
      Gold: 150
-     
+
 - type: latheRecipe
   id: GrenadeFlash
   result: GrenadeFlash

@@ -1,21 +1,17 @@
-using Content.Client.Gameplay;
 using System.Numerics;
 using Content.Client.Message;
-using Content.Client.Paper;
+using Content.Client.Paper.UI;
 using Content.Shared.CCVar;
 using Content.Shared.Movement.Components;
 using Content.Shared.Tips;
 using Robust.Client.GameObjects;
 using Robust.Client.ResourceManagement;
-using Robust.Client.State;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.Audio;
 using Robust.Shared.Configuration;
-using Robust.Shared.Console;
 using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using static Content.Client.Tips.TippyUI;
 

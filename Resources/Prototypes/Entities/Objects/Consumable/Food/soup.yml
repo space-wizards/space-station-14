@@ -8,7 +8,8 @@
   - type: Item
     storedRotation: -90
   - type: Food
-    trash: FoodBowlBig
+    trash: 
+    - FoodBowlBig
     utensil: Spoon
   - type: SolutionContainerManager
     solutions:
@@ -970,7 +971,8 @@
     flavors:
       - miso
   - type: Food
-    trash: FoodBowlFancy
+    trash: 
+    - FoodBowlFancy
   - type: Sprite
     layers:
     - state: bowl2
