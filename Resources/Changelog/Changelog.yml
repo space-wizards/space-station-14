@@ -1,63 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Fixed ability for mime to not choose any mask.
-    type: Fix
-  id: 6751
-  time: '2024-06-15T21:32:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29056
-- author: FunTust
-  changes:
-  - message: Fixed hair disappearing when hats are tucked away in a pocket.
-    type: Fix
-  id: 6752
-  time: '2024-06-15T21:42:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28949
-- author: Cojoke-dot
-  changes:
-  - message: You can now find Jackboots in the security load-outs
-    type: Add
-  - message: The Sec drobe no longer has a Cowboy hat or boots
-    type: Remove
-  id: 6753
-  time: '2024-06-15T22:38:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29018
-- author: Keer-Sar
-  changes:
-  - message: Fixed a spelling error in the cargo bounty for lungs.
-    type: Fix
-  id: 6754
-  time: '2024-06-16T00:24:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29064
-- author: Keer-Sar
-  changes:
-  - message: Non-humanoids' names are now capitalized when inserting materials into
-      machines.
-    type: Fix
-  id: 6755
-  time: '2024-06-16T02:06:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29071
-- author: EmoGarbage404
-  changes:
-  - message: Magboots no longer work when off-grid.
-    type: Fix
-  id: 6756
-  time: '2024-06-16T03:38:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29034
-- author: deltanedas
-  changes:
-  - message: Tarantulas now use Mechanotoxin, a venom that slows you down over time.
-    type: Tweak
-  id: 6757
-  time: '2024-06-16T11:26:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29066
-- author: Cojoke-dot
-  changes:
-  - message: Musicians can now select instruments in their loadout
-    type: Add
-  id: 6758
-  time: '2024-06-16T11:27:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29059
 - author: ElectroJr
   changes:
   - message: Fixed pianos, office chairs & other objects not rotating while being
@@ -3843,3 +3784,65 @@
   id: 7250
   time: '2024-08-30T10:34:25.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31628
+- author: AutoOtter
+  changes:
+  - message: Greatly reduced meteorite wall health for easier cleanup and repair.
+    type: Tweak
+  id: 7251
+  time: '2024-08-30T23:24:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31651
+- author: slarticodefast
+  changes:
+  - message: The revenant can now fly through walls again.
+    type: Fix
+  id: 7252
+  time: '2024-08-31T03:02:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31670
+- author: metalgearsloth
+  changes:
+  - message: Fix AI eye getting deleted by singulo.
+    type: Fix
+  id: 7253
+  time: '2024-08-31T08:24:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31556
+- author: slarticodefast
+  changes:
+  - message: Fixed toggleable pointlights for the toy sword, lighters, welders and
+      arabian lamp.
+    type: Fix
+  id: 7254
+  time: '2024-08-31T08:28:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31655
+- author: juliangiebel
+  changes:
+  - message: Adds the station anchor. It anchors stations in space and prevents them
+      from moving.
+    type: Add
+  id: 7255
+  time: '2024-08-31T14:40:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26098
+- author: Moomoobeef
+  changes:
+  - message: medibelts are found in the medidrobe instead of in lockers.
+    type: Tweak
+  id: 7256
+  time: '2024-08-31T23:22:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31470
+- author: EmoGarbage404
+  changes:
+  - message: Removed the reclaimer shuttle.
+    type: Remove
+  - message: Removed fultons and fulton beacons from the autolathe
+    type: Remove
+  - message: Adjusted equipment inside salvage lockers and vendors.
+    type: Tweak
+  id: 7257
+  time: '2024-08-31T23:39:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31333
+- author: Moomoobeef
+  changes:
+  - message: Added flavors to an array of previously indescribable things.
+    type: Add
+  id: 7258
+  time: '2024-09-01T00:03:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31685
