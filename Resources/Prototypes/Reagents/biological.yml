@@ -83,6 +83,27 @@
       volume: 6
 
 - type: reagent
+  id: Mucin
+  name: reagent-name-mucin
+  group: Biological
+  desc: reagent-desc-mucin
+  flavor: slimy
+  color: "#b1d8c1"
+  recognizable: true
+  physicalDesc: reagent-physical-desc-viscous
+  slippery: false
+  viscosity: -0.5
+  metabolisms:
+    Food:
+      effects:
+      - !type:SatiateHunger
+        factor: 1
+  footstepSound:
+    collection: FootstepBlood
+    params:
+      volume: 6
+
+- type: reagent
   id: Sap
   name: reagent-name-sap
   group: Biological

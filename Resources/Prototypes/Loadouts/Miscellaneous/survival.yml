@@ -27,6 +27,22 @@
     species:
     - Vox
 
+- type: loadoutEffectGroup
+  id: EffectSpeciesSnail
+  effects:
+  - !type:SpeciesLoadoutEffect
+    species:
+    - Snail
+
+- type: loadout
+  id: EmergencyOxygenSnail
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: EffectSpeciesSnail
+  storage:
+    lhand:
+    - BoxSurvival
+
 # Basic
 - type: loadout
   id: EmergencyOxygen

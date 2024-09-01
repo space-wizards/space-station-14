@@ -8,7 +8,7 @@
   - type: Item
     storedRotation: -90
   - type: Food
-    trash: 
+    trash:
     - FoodBowlBig
     utensil: Spoon
   - type: SolutionContainerManager
@@ -676,7 +676,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 30
+        maxVol: 40
         reagents:
         - ReagentId: Protein
           Quantity: 9
@@ -684,6 +684,8 @@
           Quantity: 10
         - ReagentId: Vitamin
           Quantity: 7
+        - ReagentId: TableSalt
+          Quantity: 5
 
 - type: entity
   name: clown's tears
@@ -858,7 +860,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 30
         reagents:
           - ReagentId: Nutriment
             Quantity: 6
@@ -868,6 +870,8 @@
             Quantity: 4
           - ReagentId: Allicin
             Quantity: 3
+          - ReagentId: TableSalt
+            Quantity: 5
   - type: Tag
     tags:
     - ChiliBowl
@@ -971,7 +975,7 @@
     flavors:
       - miso
   - type: Food
-    trash: 
+    trash:
     - FoodBowlFancy
   - type: Sprite
     layers:
@@ -989,6 +993,8 @@
             Quantity: 3
           - ReagentId: Water
             Quantity: 10
+          - ReagentId: TableSalt
+            Quantity: 5
   - type: Tag
     tags:
     - Meat

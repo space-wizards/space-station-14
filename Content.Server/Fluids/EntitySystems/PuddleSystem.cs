@@ -425,23 +425,39 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
     private void UpdateSlow(EntityUid uid, Solution solution)
     {
+		/// declare a maximum viscosity variable
         var maxViscosity = 0f;
+		/// declare a minimum viscosity variable
+		var minViscosity = 0f;
+		/// declare a total viscosity variable
+		var totalViscosity = 0f;
+		
+		/// for each reagent in the puddle, grab the reagent's information in the reagentProto variable.
         foreach (var (reagent, _) in solution.Contents)
         {
             var reagentProto = _prototypeManager.Index<ReagentPrototype>(reagent.Prototype);
+		/// set maximum viscosity to whichever is higher (zero on the left, the reagent's viscosity on the right)
             maxViscosity = Math.Max(maxViscosity, reagentProto.Viscosity);
+		/// do the opposite to minimum viscosity.
+			minViscosity = Math.Min(minViscosity, reagentProto.Viscosity);
         }
-
-        if (maxViscosity > 0)
-        {
-            var comp = EnsureComp<SpeedModifierContactsComponent>(uid);
-            var speed = 1 - maxViscosity;
-            _speedModContacts.ChangeModifiers(uid, speed, comp);
-        }
-        else
-        {
-            RemComp<SpeedModifierContactsComponent>(uid);
-        }
+		
+		/// total viscosity is the average of all viscosities in the solution
+		totalViscosity = maxViscosity + minViscosity;
+		
+		/// if totalviscosity is not zero, ensure that the uid has the speedmodifiercontactcomponent, and then modify its speed by the total viscosity
+		if (totalViscosity != 0)
+		{
+			var comp = EnsureComp<SpeedModifierContactsComponent>(uid);
+			var speed = 1 - totalViscosity;
+			_speedModContacts.ChangeModifiers(uid, speed, comp);
+		}
+		
+		/// if totalviscosity *is* zero, remove the speedmodifiercontactcomponent, because it's not doing anything
+		else
+		{
+			RemComp<SpeedModifierContactsComponent>(uid);
+		}
     }
 
     private void OnAnchorChanged(Entity<PuddleComponent> entity, ref AnchorStateChangedEvent args)
