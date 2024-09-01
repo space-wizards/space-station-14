@@ -87,6 +87,7 @@
     netsync: false
     radius: 1.1 #smallest possible
     color: orange
+  - type: ItemTogglePointLight
   - type: Cauterizer
 
 - type: entity
@@ -206,6 +207,7 @@
     netsync: false
     radius: 1.2 #slightly stronger than the other lighters
     color: orange
+  - type: ItemTogglePointLight
   - type: UseDelay
   - type: IgnitionSource
     ignited: false
