@@ -56,3 +56,8 @@
 - type: tileAlias
   id: FloorRGlassAlt
   target: FloorRGlass
+
+# 2024-09-01
+- type: tileAlias
+  id: FloorSnowDug
+  target: FloorSnowGrave
