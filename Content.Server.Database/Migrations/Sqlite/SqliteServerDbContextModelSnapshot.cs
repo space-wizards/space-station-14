@@ -483,19 +483,57 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.ToTable("assigned_user_id", (string)null);
                 });
 
-            modelBuilder.Entity("Content.Server.Database.Blacklist",
-                b =>
+            modelBuilder.Entity("Content.Server.Database.AuditLog", b =>
                 {
-                    b.Property<Guid>("UserId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("audit_log_id");
+
+                    b.Property<Guid>("AuthorUserId")
                         .HasColumnType("TEXT")
-                        .HasColumnName("user_id");
+                        .HasColumnName("author_user_id");
 
-                    b.HasKey("UserId")
-                        .HasName("PK_blacklist");
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("date");
 
-                    b.ToTable("blacklist", (string) null);
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("message");
+
+                    b.HasKey("Id")
+                        .HasName("PK_audit_log");
+
+                    b.HasIndex("AuthorUserId")
+                        .HasDatabaseName("IX_audit_log__author_user_id");
+
+                    b.HasIndex("Date");
+
+                    b.ToTable("audit_log", (string)null);
                 });
+
+            modelBuilder.Entity("Content.Server.Database.AuditLogEffectedPlayer", b =>
+                {
+                    b.Property<Guid>("PlayerUserId")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("player_user_id");
+
+                    b.Property<int>("AuditLogId")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("audit_log_id");
+
+                    b.HasKey("PlayerUserId")
+                        .HasName("PK_audit_log_effected_player");
+
+                    b.HasIndex("AuditLogId");
+
+                    b.HasIndex("PlayerUserId");
+
+                    b.ToTable("audit_log_effected_player", (string)null);
+                });
+
             modelBuilder.Entity("Content.Server.Database.BanTemplate", b =>
                 {
                     b.Property<int>("Id")
@@ -537,6 +575,19 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasName("PK_ban_template");
 
                     b.ToTable("ban_template", (string)null);
+                });
+
+            modelBuilder.Entity("Content.Server.Database.Blacklist", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("UserId")
+                        .HasName("PK_blacklist");
+
+                    b.ToTable("blacklist", (string)null);
                 });
 
             modelBuilder.Entity("Content.Server.Database.ConnectionLog", b =>
@@ -1550,6 +1601,41 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.Navigation("Profile");
                 });
 
+            modelBuilder.Entity("Content.Server.Database.AuditLog", b =>
+                {
+                    b.HasOne("Content.Server.Database.Player", "Author")
+                        .WithMany("AuditLogs")
+                        .HasForeignKey("AuthorUserId")
+                        .HasPrincipalKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_audit_log_player__author_user_id");
+
+                    b.Navigation("Author");
+                });
+
+            modelBuilder.Entity("Content.Server.Database.AuditLogEffectedPlayer", b =>
+                {
+                    b.HasOne("Content.Server.Database.AuditLog", "AuditLog")
+                        .WithMany("Effected")
+                        .HasForeignKey("AuditLogId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_audit_log_effected_player_audit_log_audit_log_id");
+
+                    b.HasOne("Content.Server.Database.Player", "Player")
+                        .WithMany("AuditLogEffected")
+                        .HasForeignKey("PlayerUserId")
+                        .HasPrincipalKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_audit_log_effected_player_player_player_user_id");
+
+                    b.Navigation("AuditLog");
+
+                    b.Navigation("Player");
+                });
+
             modelBuilder.Entity("Content.Server.Database.ConnectionLog", b =>
                 {
                     b.HasOne("Content.Server.Database.Server", "Server")
@@ -1794,6 +1880,11 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.Navigation("Flags");
                 });
 
+            modelBuilder.Entity("Content.Server.Database.AuditLog", b =>
+                {
+                    b.Navigation("Effected");
+                });
+
             modelBuilder.Entity("Content.Server.Database.ConnectionLog", b =>
                 {
                     b.Navigation("BanHits");
@@ -1834,6 +1925,10 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.Navigation("AdminWatchlistsLastEdited");
 
                     b.Navigation("AdminWatchlistsReceived");
+
+                    b.Navigation("AuditLogEffected");
+
+                    b.Navigation("AuditLogs");
 
                     b.Navigation("JobWhitelists");
                 });

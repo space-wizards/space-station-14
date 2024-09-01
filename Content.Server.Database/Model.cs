@@ -25,6 +25,7 @@ namespace Content.Server.Database
         public DbSet<AdminRank> AdminRank { get; set; } = null!;
         public DbSet<Round> Round { get; set; } = null!;
         public DbSet<Server> Server { get; set; } = null!;
+        public DbSet<AuditLog> AuditLog { get; set; } = null!;
         public DbSet<AdminLog> AdminLog { get; set; } = null!;
         public DbSet<AdminLogPlayer> AdminLogPlayer { get; set; } = null!;
         public DbSet<Whitelist> Whitelist { get; set; } = null!;
@@ -113,6 +114,33 @@ namespace Content.Server.Database
             modelBuilder.Entity<AdminRankFlag>()
                 .HasIndex(f => new {f.Flag, f.AdminRankId})
                 .IsUnique();
+
+            modelBuilder.Entity<AuditLog>()
+                .HasIndex(log => log.Date);
+
+            modelBuilder.Entity<AuditLog>()
+                .HasIndex(log => log.AuthorUserId);
+
+            modelBuilder.Entity<AuditLog>()
+                .HasOne(log => log.Author)
+                .WithMany(player => player.AuditLogs)
+                .HasForeignKey(log => log.AuthorUserId)
+                .HasPrincipalKey(player => player.UserId);
+
+            modelBuilder.Entity<AuditLogEffectedPlayer>()
+                .HasOne(player => player.AuditLog)
+                .WithMany(log => log.Effected)
+                .HasForeignKey(player => player.AuditLogId)
+                .IsRequired();
+
+            modelBuilder.Entity<AuditLogEffectedPlayer>()
+                .HasOne(lp => lp.Player)
+                .WithMany(player => player.AuditLogEffected)
+                .HasForeignKey(lp => lp.PlayerUserId)
+                .HasPrincipalKey(player => player.UserId);
+
+            modelBuilder.Entity<AuditLogEffectedPlayer>()
+                .HasIndex(p => p.PlayerUserId);
 
             modelBuilder.Entity<AdminLog>()
                 .HasKey(log => new {log.RoundId, log.Id});
@@ -523,6 +551,10 @@ namespace Content.Server.Database
 
         // Data that changes with each round
         public List<Round> Rounds { get; set; } = null!;
+
+        public List<AuditLog> AuditLogs { get; set; } = null!;
+        public List<AuditLogEffectedPlayer> AuditLogEffected { get; set; } = null!;
+
         public List<AdminLogPlayer> AdminLogs { get; set; } = null!;
 
         public DateTime? LastReadRules { get; set; }
@@ -626,6 +658,41 @@ namespace Content.Server.Database
 
         [InverseProperty(nameof(ConnectionLog.Server))]
         public List<ConnectionLog> ConnectionLogs { get; set; } = default!;
+    }
+
+    [PrimaryKey(nameof(Id))]
+    public class AuditLog
+    {
+        [Key] public int Id { get; set; }
+
+        public AuditLogType Type;
+
+        public LogImpact Impact;
+
+        public DateTime Date { get; set; }
+
+        public string Message { get; set; } = default!;
+
+        /// <summary>
+        /// Person that caused the action that created the log.
+        /// </summary>
+        [Key, ForeignKey("Author")] public Guid AuthorUserId;
+        public Player Author { get; set; } = default!;
+
+        /// <summary>
+        /// Player(s) that this log entry effects
+        /// </summary>
+        public List<AuditLogEffectedPlayer> Effected { get; set; } = default!;
+    }
+
+    public class AuditLogEffectedPlayer
+    {
+        public int AuditLogId { get; set; }
+        public AuditLog AuditLog { get; set; } = default!;
+
+        [Key, ForeignKey("Player")] public Guid PlayerUserId { get; set; }
+        public Player Player { get; set; } = default!;
+
     }
 
     [Index(nameof(Type))]
