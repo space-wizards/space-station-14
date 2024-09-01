@@ -764,6 +764,3 @@
   - type: Battery
     maxCharge: 1050
     startingCharge: 1050
-  - type: BatterySelfRecharger
-    autoRecharge: true
-    autoRechargeRate: 25 #takes 42 seconds to fully recharge, the answer to life, the universe and everything
