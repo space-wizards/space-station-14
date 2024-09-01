@@ -21,6 +21,12 @@
         },
         {
             "name": "state_laws"
+        },
+        {
+            "name": "lock_door"
+        },
+        {
+            "name": "unlock_door"
         }
     ]
 }

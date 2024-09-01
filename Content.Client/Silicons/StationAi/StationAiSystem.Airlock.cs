@@ -17,9 +17,9 @@ public sealed partial class StationAiSystem
         {
             Sprite = ent.Comp.BoltsDown ?
                 new SpriteSpecifier.Rsi(
-                new ResPath("/Textures/Structures/Doors/Airlocks/Standard/basic.rsi"), "open") :
+                new ResPath("/Textures/Interface/Actions/actions_ai.rsi"), "unlock_door") :
                 new SpriteSpecifier.Rsi(
-                new ResPath("/Textures/Structures/Doors/Airlocks/Standard/basic.rsi"), "closed"),
+                new ResPath("/Textures/Interface/Actions/actions_ai.rsi"), "lock_door"),
             Tooltip = ent.Comp.BoltsDown ? Loc.GetString("bolt-open") : Loc.GetString("bolt-close"),
             Event = new StationAiBoltEvent()
             {
