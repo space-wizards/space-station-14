@@ -2,7 +2,7 @@
   id: StationAnchorBase
   abstract: true
   name: station anchor
-  description: Prevents stations from moving
+  description: Prevents stations from moving.
   placement:
     mode: AlignTileAny
   components:
@@ -45,7 +45,6 @@
         layer:
         - WallLayer
 
-
 - type: entity
   id: StationAnchorIndestructible
   parent: StationAnchorBase
@@ -54,8 +53,6 @@
 - type: entity
   id: StationAnchor
   parent: [StationAnchorBase, BaseMachinePowered, ConstructibleMachine]
-  name: station anchor
-  description: Prevents stations from moving
   placement:
     mode: AlignTileAny
   components:
