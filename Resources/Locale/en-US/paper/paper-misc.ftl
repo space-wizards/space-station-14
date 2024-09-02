@@ -26,3 +26,26 @@ book-text-ame-scribbles = I don't know if you're trained already, so I hope this
       The golden rule is 2 injection for every 1 core. You can go lower to save fuel.
       Higher will burn the engine out and eventually make it explode. Don't.
       Don't forget to refuel it, it tends to stop at the worst possible time.
+
+book-text-agrichemkit-manual = Thank you for choosing the safe-for-all-ages NanoTrasen Agri-Chem is Fun! chemistry kit, the best learning-adjacent toy of 2468! Be prepared to discover all about the biggest innovations in agriculture since people buried fish with their corn seeds.
+
+      Contents:
+      5 handily labeled 30u bottles, 1 each of nitrogen, phosphorus, hydrogen, potassium, and ethanol
+      2 Safe-T-Fun(TM) sized 5u vials, 1 each of chlorine and radium
+      1 30u empty bottle, ready for your experiments.
+
+      First Experiment: EZ Nutrient
+      To create EZ Nutrient, a fertilizer densely packed with nutrients required for healthy plants, mix equal parts nitrogen, phosphorus, and potassium. To make a full bottle, thats 10u of each.
+      A little bottle of EZ Nutrient replaces a big stack of produce you'd otherwise compost to keep your plants growing strong. And crops you compost are crops you didn't make a profit on, so keep that EZ Nutrient flowing.
+
+      Second Experiment: Ammonia and Diethylamine
+      Mix 3 parts hydrogen to 1 part nitrogen to make ammonia. It's a healthy, nutritious treat for your crops that aren't at their best. 
+      But if you want to impress the judges at your local NanoTrasen-sponsored County Fair, you'll need to add an equal amount of ethanol to your ammonia.
+      This will mix into Diethylamine, a miracle fertilizer that can make plants grow faster AND live longer! Keep the crops you love with you longer thanks to Diethylamine.
+
+      Third Experiment: Farmer's Helper(TM)
+      When you're ready to show everyone you're the greatest botanist on the station, you'll need to mix up some Farmer's Helper(TM) and hope for the best. Farmer's Helper(TM) is a newly discovered fertilizing agent powered by the element of the modern age: radium!
+      Mix equal parts radium, phosphorus, and chlorine together to get a bright green batch of Farmer's Helper(TM), the safe and fun way to get the most of your farm. The 15u this kit lets you make could be your introduction to agrichemical stardom!
+      Farmer's Helper(TM) can have a wide variety of effects on plant life, including drastic changes to all sorts of growth parameters, making plants glow in the dark, or creating entirely new species.
+      Each individual plant responds to Farmers Helper(TM) differently, so you may want to use small doses on multiple crops and try to crossbreed the best traits from each of those.
+      Farmer's Helper(TM) is a patended and entirely safe fertilizer, and NanoTrasen takes no responsibility for dead crops, excessive water bills, newly sentient plants asking existential questions, or flora-strangled farmhands that may coincidentally occur while using it.
