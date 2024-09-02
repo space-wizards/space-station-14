@@ -6,13 +6,13 @@
   - type: WallMount
     arc: 360
   - type: Sprite
-    drawdepth: WallTops
+    drawdepth: WallMountedItems
     sprite: Structures/Wallmounts/paintings.rsi
 
 - type: entity
   parent: PaintingBase
   id: PaintingEmpty
-  name: Empty Frame
+  name: empty frame
   description: An empty frame, waiting to be filled with art.
   components:
   - type: Sprite

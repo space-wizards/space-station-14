@@ -1,0 +1,52 @@
+﻿- type: palette
+  id: Material
+  name: Material
+  colors:
+    red: "#a91409"
+    red-darken-2: "#a72323"
+    red-accent-2: "#9b0000"
+    purple: "#7d1f8d"
+    purple-accent-2: "#8d03a5"
+    purple-accent-4: "#8800cc"
+    blue: "#0a6ab6"
+    blue-lighten-2: "#08528d"
+    blue-darken-2: "#145ea8"
+    cyan: "#0096aa"
+    cyan-lighten-2: "#198896"
+    cyan-darken-2: "#007986"
+    cyan-accent-2: "#00bebe"
+    cyan-accent-4: "#0093aa"
+    teal: "#00786d"
+    teal-lighten-2: "#3b8f89"
+    teal-accent-2: "#009076"
+    teal-accent-4: "#009984"
+    green: "#3d8c40"
+    green-darken-2: "#2d7230"
+    green-accent-2: "#0e885b"
+    green-accent-4: "#00a042"
+    lime: "#737a15"
+    lime-darken-2: "#8c9022"
+    lime-accent-2: "#737c00"
+    lime-accent-4: "#8bbb00"
+    amber: "#967000"
+    amber-lighten-2: "#755900"
+    amber-darken-2: "#cc8000"
+    amber-accent-2: "#7c6200"
+    amber-accent-4: "#996700"
+
+- type: palette
+  id: ChatNames
+  name: Chat Names
+  colors:
+    ploink: "#da8bc9"
+    ourple: "#b18bda"
+    us-navy: "#96a4eb"
+    yet-another-blue: "#8cb7e8"
+    cyan: "#8bc9da"
+    fake-color: "#8bdaba"
+    green: "#8bda8e"
+    you-wish-you-were-green: "#a9da8b"
+    piss: "#ceda8b"
+    orange: "#dabc8b"
+    the-orange-she-tells-you-not-to-worry-about: "#daa58b"
+    red: "#da8b8b"

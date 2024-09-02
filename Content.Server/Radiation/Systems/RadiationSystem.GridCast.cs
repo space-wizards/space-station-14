@@ -195,11 +195,11 @@ public partial class RadiationSystem
 
         Vector2 srcLocal = sourceTrs.ParentUid == grid.Owner
             ? sourceTrs.LocalPosition
-            : gridTrs.InvLocalMatrix.Transform(ray.Source);
+            : Vector2.Transform(ray.Source, gridTrs.InvLocalMatrix);
 
         Vector2 dstLocal = destTrs.ParentUid == grid.Owner
             ? destTrs.LocalPosition
-            : gridTrs.InvLocalMatrix.Transform(ray.Destination);
+            : Vector2.Transform(ray.Destination, gridTrs.InvLocalMatrix);
 
         Vector2i sourceGrid = new(
             (int) Math.Floor(srcLocal.X / grid.Comp.TileSize),

@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 namespace Content.Tests.Shared.Chemistry
 {
-    [TestFixture, TestOf(typeof(FixedPoint2))]
+    [TestFixture, TestOf(typeof(FixedPoint2)), Parallelizable]
     public sealed class FixedPoint2_Tests
     {
         [Test]
@@ -18,8 +18,11 @@ namespace Content.Tests.Shared.Chemistry
         }
 
         [Test]
-        [TestCase(1.001f, "1")]
-        [TestCase(0.999f, "1")]
+        [TestCase(0.999f, "0.99")]
+        [TestCase(1.005f, "1")]
+        [TestCase(1.015f, "1.01")]
+        [TestCase(1.05f, "1.05")]
+        [TestCase(-1.05f, "-1.05")]
         public void FixedPoint2FloatTests(float value, string expected)
         {
             var result = FixedPoint2.New(value);
@@ -27,8 +30,10 @@ namespace Content.Tests.Shared.Chemistry
         }
 
         [Test]
-        [TestCase(1.001d, "1")]
-        [TestCase(0.999d, "1")]
+        [TestCase(0.999, "0.99")]
+        [TestCase(1.005, "1")]
+        [TestCase(1.015, "1.01")]
+        [TestCase(1.05, "1.05")]
         public void FixedPoint2DoubleTests(double value, string expected)
         {
             var result = FixedPoint2.New(value);
@@ -36,8 +41,10 @@ namespace Content.Tests.Shared.Chemistry
         }
 
         [Test]
-        [TestCase("1.005", "1.01")]
-        [TestCase("0.999", "1")]
+        [TestCase("0.999", "0.99")]
+        [TestCase("1.005", "1")]
+        [TestCase("1.015", "1.01")]
+        [TestCase("1.05", "1.05")]
         public void FixedPoint2StringTests(string value, string expected)
         {
             var result = FixedPoint2.New(value);
@@ -45,11 +52,9 @@ namespace Content.Tests.Shared.Chemistry
         }
 
         [Test]
-        [TestCase(1.001f, 1.001f, "2")]
-        [TestCase(1.001f, 1.004f, "2")]
-        [TestCase(1f, 1.005f, "2.01")]
-        [TestCase(1f, 2.005f, "3.01")]
-        public void CalculusPlus(float aFloat, float bFloat, string expected)
+        [TestCase(1, 1, "2")]
+        [TestCase(1.05f, 1, "2.05")]
+        public void ArithmeticAddition(float aFloat, float bFloat, string expected)
         {
             var a = FixedPoint2.New(aFloat);
             var b = FixedPoint2.New(bFloat);
@@ -60,10 +65,9 @@ namespace Content.Tests.Shared.Chemistry
         }
 
         [Test]
-        [TestCase(1.001f, 1.001f, "0")]
-        [TestCase(1.001f, 1.004f, "0")]
-        [TestCase(1f, 2.005f, "-1.01")]
-        public void CalculusMinus(float aFloat, float bFloat, string expected)
+        [TestCase(1, 1, "0")]
+        [TestCase(1f, 2.5f, "-1.5")]
+        public void ArithmeticSubtraction(float aFloat, float bFloat, string expected)
         {
             var a = FixedPoint2.New(aFloat);
             var b = FixedPoint2.New(bFloat);
@@ -77,7 +81,8 @@ namespace Content.Tests.Shared.Chemistry
         [TestCase(1.001f, 3f, "0.33")]
         [TestCase(0.999f, 3f, "0.33")]
         [TestCase(2.1f, 3f, "0.7")]
-        public void CalculusDivision(float aFloat, float bFloat, string expected)
+        [TestCase(0.03f, 2f, "0.01")]
+        public void ArithmeticDivision(float aFloat, float bFloat, string expected)
         {
             var a = FixedPoint2.New(aFloat);
             var b = FixedPoint2.New(bFloat);
@@ -88,13 +93,39 @@ namespace Content.Tests.Shared.Chemistry
         }
 
         [Test]
-        [TestCase(1.001f, 0.999f, "1")]
-        [TestCase(0.999f, 3f, "3")]
-        public void CalculusMultiplication(float aFloat, float bFloat, string expected)
+        [TestCase(1.001f, 3f, "0.33")]
+        [TestCase(0.999f, 3f, "0.33")]
+        [TestCase(2.1f, 3f, "0.7")]
+        [TestCase(0.03f, 2f, "0.01")]
+        [TestCase(1f, 1 / 1.05f, "1.05")]
+        public void ArithmeticDivisionFloat(float aFloat, float b, string expected)
+        {
+            var a = FixedPoint2.New(aFloat);
+
+            var result = a / b;
+
+            Assert.That($"{result}", Is.EqualTo(expected));
+        }
+
+        [Test]
+        [TestCase(1, 1, "1")]
+        [TestCase(1, 3f, "3")]
+        public void ArithmeticMultiplication(float aFloat, float bFloat, string expected)
         {
             var a = FixedPoint2.New(aFloat);
             var b = FixedPoint2.New(bFloat);
 
+            var result = a * b;
+
+            Assert.That($"{result}", Is.EqualTo(expected));
+        }
+
+        [Test]
+        [TestCase(1, 1, "1")]
+        [TestCase(1, 1.05f, "1.05")]
+        public void ArithmeticMultiplicationFloat(float aFloat, float b, string expected)
+        {
+            var a = FixedPoint2.New(aFloat);
             var result = a * b;
 
             Assert.That($"{result}", Is.EqualTo(expected));

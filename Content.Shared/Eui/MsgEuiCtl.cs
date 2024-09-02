@@ -10,6 +10,7 @@ namespace Content.Shared.Eui
     public sealed class MsgEuiCtl : NetMessage
     {
         public override MsgGroups MsgGroup => MsgGroups.Command;
+        public override NetDeliveryMethod DeliveryMethod => NetDeliveryMethod.ReliableOrdered;
 
         public CtlType Type;
         public string OpenType = string.Empty;

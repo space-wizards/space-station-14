@@ -16,7 +16,10 @@
       "directions": 4
     },
     {
-      "name": "icon"
+        "name": "icon"
+    },
+    {
+        "name": "icon-open"
     }
   ]
 }

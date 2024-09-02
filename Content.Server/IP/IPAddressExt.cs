@@ -1,11 +1,34 @@
 ﻿using System.Collections;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Net;
 using System.Net.Sockets;
+using NpgsqlTypes;
 
 namespace Content.Server.IP
 {
     public static class IPAddressExt
     {
+        // Npgsql used to map inet types as a tuple like this.
+        // I'm upgrading the dependencies and I don't wanna rewrite a bunch of DB code, so a few helpers it shall be.
+        [return: NotNullIfNotNull(nameof(tuple))]
+        public static NpgsqlInet? ToNpgsqlInet(this (IPAddress, int)? tuple)
+        {
+            if (tuple == null)
+                return null;
+
+            return new NpgsqlInet(tuple.Value.Item1, (byte) tuple.Value.Item2);
+        }
+
+        [return: NotNullIfNotNull(nameof(inet))]
+        public static (IPAddress, int)? ToTuple(this NpgsqlInet? inet)
+        {
+            if (inet == null)
+                return null;
+
+            return (inet.Value.Address, inet.Value.Netmask);
+        }
+
         // Taken from https://stackoverflow.com/a/56461160/4678631
         public static bool IsInSubnet(this System.Net.IPAddress address, string subnetMask)
         {
@@ -38,6 +61,12 @@ namespace Content.Server.IP
 
         public static bool IsInSubnet(this System.Net.IPAddress address, System.Net.IPAddress maskAddress, int maskLength)
         {
+            if (maskAddress.AddressFamily != address.AddressFamily)
+            {
+                // We got something like an IPV4-Address for an IPv6-Mask. This is not valid.
+                return false;
+            }
+
             if (maskAddress.AddressFamily == AddressFamily.InterNetwork)
             {
                 // Convert the mask address to an unsigned integer.
@@ -66,7 +95,7 @@ namespace Content.Server.IP
 
                 if (maskAddressBits.Length != ipAddressBits.Length)
                 {
-                    throw new ArgumentException("Length of IP Address and Subnet Mask do not match.");
+                    return false;
                 }
 
                 // Compare the prefix bits.

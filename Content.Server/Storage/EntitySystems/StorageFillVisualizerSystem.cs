@@ -47,7 +47,7 @@ public sealed class StorageFillVisualizerSystem : EntitySystem
         if (!_appearance.TryGetData<int>(uid, StorageVisuals.Capacity, out var capacity, appearance))
             return;
 
-        var level = ContentHelpers.RoundToEqualLevels(used, capacity, component.MaxFillLevels);
+        var level = ContentHelpers.RoundToLevels(used, capacity, component.MaxFillLevels);
         _appearance.SetData(uid, StorageFillVisuals.FillLevel, level, appearance);
     }
 }

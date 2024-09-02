@@ -6,7 +6,7 @@ gun-selected-mode = Selected {$mode}
 gun-disabled = You can't use guns!
 gun-clumsy = The gun blows up in your face!
 gun-set-fire-mode = Set to {$mode}
-gun-component-wrong-ammo = Wrong ammo!
+gun-magazine-whitelist-fail = That won't fit into the gun!
 
 # SelectiveFire
 gun-SemiAuto = semi-auto

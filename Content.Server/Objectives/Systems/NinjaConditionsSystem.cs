@@ -1,7 +1,9 @@
-using Content.Server.Roles;
 using Content.Server.Objectives.Components;
 using Content.Server.Warps;
 using Content.Shared.Objectives.Components;
+using Content.Shared.Ninja.Components;
+using Robust.Shared.Random;
+using Content.Server.Roles;
 
 namespace Content.Server.Objectives.Systems;
 
@@ -13,17 +15,16 @@ public sealed class NinjaConditionsSystem : EntitySystem
 {
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly NumberObjectiveSystem _number = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Initialize()
     {
         SubscribeLocalEvent<DoorjackConditionComponent, ObjectiveGetProgressEvent>(OnDoorjackGetProgress);
 
+        SubscribeLocalEvent<SpiderChargeConditionComponent, RequirementCheckEvent>(OnSpiderChargeRequirementCheck);
         SubscribeLocalEvent<SpiderChargeConditionComponent, ObjectiveAfterAssignEvent>(OnSpiderChargeAfterAssign);
-        SubscribeLocalEvent<SpiderChargeConditionComponent, ObjectiveGetProgressEvent>(OnSpiderChargeGetProgress);
 
         SubscribeLocalEvent<StealResearchConditionComponent, ObjectiveGetProgressEvent>(OnStealResearchGetProgress);
-
-        SubscribeLocalEvent<TerrorConditionComponent, ObjectiveGetProgressEvent>(OnTerrorGetProgress);
     }
 
     // doorjack
@@ -43,28 +44,45 @@ public sealed class NinjaConditionsSystem : EntitySystem
     }
 
     // spider charge
+    private void OnSpiderChargeRequirementCheck(EntityUid uid, SpiderChargeConditionComponent comp, ref RequirementCheckEvent args)
+    {
+        if (args.Cancelled || !HasComp<NinjaRoleComponent>(args.MindId))
+        {
+            return;
+        }
+
+        // choose spider charge detonation point
+        var warps = new List<EntityUid>();
+        var query = EntityQueryEnumerator<BombingTargetComponent, WarpPointComponent>();
+        while (query.MoveNext(out var warpUid, out _, out var warp))
+        {
+            if (warp.Location != null)
+            {
+                warps.Add(warpUid);
+            }
+        }
+
+        if (warps.Count <= 0)
+        {
+            args.Cancelled = true;
+            return;
+        }
+        comp.Target = _random.Pick(warps);
+    }
 
     private void OnSpiderChargeAfterAssign(EntityUid uid, SpiderChargeConditionComponent comp, ref ObjectiveAfterAssignEvent args)
     {
-        _metaData.SetEntityName(uid, SpiderChargeTitle(args.MindId), args.Meta);
-    }
-
-    private void OnSpiderChargeGetProgress(EntityUid uid, SpiderChargeConditionComponent comp, ref ObjectiveGetProgressEvent args)
-    {
-        args.Progress = comp.SpiderChargeDetonated ? 1f : 0f;
-    }
-
-    private string SpiderChargeTitle(EntityUid mindId)
-    {
-        if (!TryComp<NinjaRoleComponent>(mindId, out var role) ||
-            role.SpiderChargeTarget == null ||
-            !TryComp<WarpPointComponent>(role.SpiderChargeTarget, out var warp))
+        string title;
+        if (comp.Target == null || !TryComp<WarpPointComponent>(comp.Target, out var warp) || warp.Location == null)
         {
             // this should never really happen but eh
-            return Loc.GetString("objective-condition-spider-charge-title-no-target");
+            title = Loc.GetString("objective-condition-spider-charge-title-no-target");
         }
-
-        return Loc.GetString("objective-condition-spider-charge-title", ("location", warp.Location ?? Name(role.SpiderChargeTarget.Value)));
+        else
+        {
+            title = Loc.GetString("objective-condition-spider-charge-title", ("location", warp.Location));
+        }
+        _metaData.SetEntityName(uid, title, args.Meta);
     }
 
     // steal research
@@ -81,10 +99,5 @@ public sealed class NinjaConditionsSystem : EntitySystem
             return 1f;
 
         return MathF.Min(comp.DownloadedNodes.Count / (float) target, 1f);
-    }
-
-    private void OnTerrorGetProgress(EntityUid uid, TerrorConditionComponent comp, ref ObjectiveGetProgressEvent args)
-    {
-        args.Progress = comp.CalledInThreat ? 1f : 0f;
     }
 }

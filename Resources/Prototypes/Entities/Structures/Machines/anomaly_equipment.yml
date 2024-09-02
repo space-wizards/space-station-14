@@ -27,8 +27,8 @@
   - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
-    - key: enum.ResearchClientUiKey.Key
-      type: ResearchClientBoundUserInterface
+      enum.ResearchClientUiKey.Key:
+        type: ResearchClientBoundUserInterface
   - type: Machine
     board: AnomalyVesselCircuitboard
   - type: PointLight
@@ -37,9 +37,6 @@
     color: "#fca3c0"
   - type: Appearance
   - type: WiresPanel
-  - type: Wires
-    boardName: wires-board-name-vessel
-    layoutId: Vessel
   - type: AmbientSound
     enabled: false
     range: 3
@@ -85,7 +82,7 @@
         acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalGlassBreak
       - !type:ExplodeBehavior
   - type: GuideHelp
     guides:
@@ -140,7 +137,7 @@
     - state: locked
       shader: unshaded
       visible: false
-      map: ["enum.StorageVisualLayers.Lock"]
+      map: ["enum.LockVisualLayers.Lock"]
   - type: Transform
     noRot: false
   - type: Fixtures
@@ -160,6 +157,7 @@
     board: APECircuitboard
   - type: Lock
     locked: false
+  - type: LockedWiresPanel
   - type: AccessReader
     access: [[ "Research" ]]
   - type: Emitter
@@ -171,19 +169,22 @@
     - AnomalousParticleDelta
     - AnomalousParticleEpsilon
     - AnomalousParticleZeta
+    - AnomalousParticleSigma
     setTypePorts:
       SetParticleDelta: AnomalousParticleDelta
       SetParticleEpsilon: AnomalousParticleEpsilon
       SetParticleZeta: AnomalousParticleZeta
+      SetParticleSigma: AnomalousParticleSigma
     fireBurstSize: 1
-    baseFireBurstDelayMin: 2
-    baseFireBurstDelayMax: 6
+    fireBurstDelayMin: 2
+    fireBurstDelayMax: 6
   - type: ApcPowerReceiver
     powerLoad: 100
   - type: GuideHelp
     guides:
     - APE
   - type: Gun
+    projectileSpeed: 4
     fireRate: 10 #just has to be fast enough to keep up with upgrades
     showExamineText: false
     selectedMode: SemiAuto
@@ -194,15 +195,14 @@
   - type: Appearance
   - type: WiresPanel
   - type: WiresVisuals
-  - type: Wires
-    boardName: wires-board-name-ape
-    layoutId: Ape
   - type: GenericVisualizer
     visuals:
       enum.PowerDeviceVisuals.Powered:
         enum.PowerDeviceVisualLayers.Powered:
           True: { visible: true }
           False: { visible: false }
+  - type: LockVisuals
+  - type: LockedAnchorable
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice
@@ -216,6 +216,7 @@
       - SetParticleDelta
       - SetParticleEpsilon
       - SetParticleZeta
+      - SetParticleSigma
 
 - type: entity
   id: MachineAnomalyGenerator
@@ -283,9 +284,6 @@
     fuelCost: 10
     doAfterDelay: 5
   - type: WiresPanel
-  - type: Wires
-    boardName: wires-board-name-anomalygenerator
-    layoutId: AnomalyGenerator
   - type: Destructible
     thresholds:
     - trigger:
@@ -296,11 +294,12 @@
         acts: ["Breakage"]
   - type: ActivatableUI
     key: enum.AnomalyGeneratorUiKey.Key
+  - type: ActivatableUIRequiresAccess
   - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
-      - key: enum.AnomalyGeneratorUiKey.Key
-        type: AnomalyGeneratorBoundUserInterface
+        enum.AnomalyGeneratorUiKey.Key:
+          type: AnomalyGeneratorBoundUserInterface
   - type: Appearance
   - type: ActiveRadio
     channels:
@@ -318,6 +317,8 @@
   - type: WiresVisuals
   - type: StaticPrice
     price: 5000
+  - type: AccessReader
+    access: [["Research"]]
   - type: GuideHelp
     guides:
     - AnomalousResearch

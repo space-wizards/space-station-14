@@ -1,11 +1,11 @@
 - type: soundCollection
   id: lighterOnSounds
   files:
-  - /Audio/Items/lighter1.ogg
-  - /Audio/Items/lighter2.ogg
-  - /Audio/Items/lighter3.ogg
+  - /Audio/Items/Lighters/lighter1.ogg
+  - /Audio/Items/Lighters/lighter2.ogg
+  - /Audio/Items/Lighters/lighter3.ogg
 
 - type: soundCollection
   id: lighterOffSounds
   files:
-  - /Audio/Items/lighter_off.ogg
+  - /Audio/Items/Lighters/lighter_off.ogg

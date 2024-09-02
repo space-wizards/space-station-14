@@ -14,9 +14,8 @@ public sealed class MachineConstruction : InteractionTest
     public async Task ConstructProtolathe()
     {
         await StartConstruction(MachineFrame);
-        await Interact(Steel, 5);
-        ClientAssertPrototype(Unfinished, ClientTarget);
-        Target = CTestSystem.Ghosts[ClientTarget!.Value.GetHashCode()];
+        await InteractUsing(Steel, 5);
+        ClientAssertPrototype(Unfinished, Target);
         await Interact(Wrench, Cable);
         AssertPrototype(MachineFrame);
         await Interact(ProtolatheBoard, Bin1, Bin1, Manipulator1, Manipulator1, Beaker, Beaker, Screw);
@@ -51,39 +50,10 @@ public sealed class MachineConstruction : InteractionTest
         AssertPrototype(MachineFrame);
 
         // Change it into an autolathe
-        await Interact("AutolatheMachineCircuitboard");
+        await InteractUsing("AutolatheMachineCircuitboard");
         AssertPrototype(MachineFrame);
         await Interact(Bin1, Bin1, Bin1, Manipulator1, Glass, Screw);
         AssertPrototype("Autolathe");
-    }
-
-    [Test]
-    public async Task UpgradeLathe()
-    {
-        // Partially deconstruct a protolathe.
-        await SpawnTarget(Protolathe);
-        var serverTarget = SEntMan.GetEntity(Target!.Value);
-
-        // Initially has all quality-1 parts.
-        foreach (var part in SConstruction.GetAllParts(serverTarget))
-        {
-            Assert.That(part.Rating, Is.EqualTo(1));
-        }
-
-        // Partially deconstruct lathe
-        await Interact(Screw, Pry, Pry);
-        AssertPrototype(MachineFrame);
-
-        // Reconstruct with better parts.
-        await Interact(ProtolatheBoard, Bin4, Bin4, Manipulator4, Manipulator4, Beaker, Beaker);
-        await Interact(Screw);
-        AssertPrototype(Protolathe);
-
-        // Query now returns higher quality parts.
-        foreach (var part in SConstruction.GetAllParts(SEntMan.GetEntity(Target!.Value)))
-        {
-            Assert.That(part.Rating, Is.EqualTo(4));
-        }
     }
 }
 

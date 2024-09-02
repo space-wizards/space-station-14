@@ -27,6 +27,8 @@
       color: "#cc6600"
       radius: 2.0
       energy: 4.0
+    - type: StealTarget
+      stealGroup: LAMP
 
 - type: entity
   parent: CarvedPumpkin

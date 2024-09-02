@@ -5,9 +5,12 @@
   parent: BaseItem
   abstract: true
   description: An empty bottle.
+  suffix: Empty
   components:
   - type: Sprite
     state: icon
+  - type: Item
+    size: Normal
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -22,6 +25,8 @@
     damage:
       types:
         Blunt: 0
+  - type: MixableSolution
+    solution: drink
   - type: Spillable
     solution: drink
   - type: FitsInDispenser
@@ -34,8 +39,8 @@
     solution: drink
   - type: UserInterface
     interfaces:
-    - key: enum.TransferAmountUiKey.Key
-      type: TransferAmountBoundUserInterface
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
   - type: DamageOnLand
     damage:
       types:
@@ -71,6 +76,20 @@
     materialComposition:
       Glass: 100
   - type: SpaceGarbage
+  - type: DnaSubstanceTrace
+
+- type: entity
+  name: base empty bottle
+  id: DrinkBottleBaseSmallEmpty
+  parent: DrinkBottleBaseEmpty
+  abstract: true
+  components:
+  - type: Item
+    size: Small
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
 
 - type: entity
   name: base empty carton
@@ -78,6 +97,7 @@
   parent: BaseItem
   abstract: true
   description: An empty carton.
+  suffix: Empty
   components:
   - type: Sprite
     state: icon
@@ -85,6 +105,8 @@
     solutions:
       drink:
         maxVol: 50
+  - type: MixableSolution
+    solution: drink
   - type: SolutionTransfer
     canChangeTransferAmount: true
     maxTransferAmount: 5
@@ -101,8 +123,8 @@
     solution: drink
   - type: UserInterface
     interfaces:
-    - key: enum.TransferAmountUiKey.Key
-      type: TransferAmountBoundUserInterface
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
@@ -122,9 +144,22 @@
       Cardboard: 20
   - type: SpaceGarbage
 
+- type: entity
+  name: base empty bottle
+  id: DrinkCartonBaseLargeEmpty
+  parent: DrinkCartonBaseEmpty
+  abstract: true
+  components:
+  - type: Item
+    size: Normal
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 100
+
 # Containers
 - type: entity
-  name: jailbreaker verte bottle
+  name: Jailbreaker Verte bottle
   parent: DrinkBottleBaseEmpty
   id: DrinkBottleAbsinthe
   components:
@@ -143,28 +178,20 @@
 
 - type: entity
   name: ale bottle
-  parent: DrinkBottleBaseEmpty
+  parent: DrinkBottleBaseSmallEmpty
   id: DrinkBottleAle
   components:
   - type: Sprite
     sprite: Objects/Consumable/TrashDrinks/alebottle_empty.rsi
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
 
 
 - type: entity
   name: beer bottle
-  parent: DrinkBottleBaseEmpty
+  parent: DrinkBottleBaseSmallEmpty
   id: DrinkBottleBeer
   components:
   - type: Sprite
     sprite: Objects/Consumable/TrashDrinks/beer_empty.rsi
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
 
 
 - type: entity
@@ -177,7 +204,7 @@
 
 
 - type: entity
-  name: griffeater gin bottle
+  name: Griffeater gin bottle
   parent: DrinkBottleBaseEmpty
   id: DrinkBottleGin
   components:
@@ -186,12 +213,12 @@
 
 
 - type: entity
-  name: goldschlager bottle
+  name: gildlager bottle
   parent: DrinkBottleBaseEmpty
-  id: DrinkBottleGoldschlager
+  id: DrinkBottleGildlager
   components:
   - type: Sprite
-    sprite: Objects/Consumable/TrashDrinks/goldschlagerbottle_empty.rsi
+    sprite: Objects/Consumable/TrashDrinks/gildlagerbottle_empty.rsi
 
 
 - type: entity
@@ -312,7 +339,7 @@
 
 
 - type: entity
-  name: Milk Cream carton
+  name: milk cream carton
   parent: DrinkCartonBaseEmpty
   id: DrinkCartonCream
   components:
@@ -322,25 +349,24 @@
 
 - type: entity
   name: milk carton
-  parent: DrinkCartonBaseEmpty
+  parent: DrinkCartonBaseLargeEmpty
   id: DrinkCartonMilk
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/milk.rsi
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 100
-
 
 - type: entity
   name: soy milk carton
-  parent: DrinkCartonBaseEmpty
+  parent: DrinkCartonBaseLargeEmpty
   id: DrinkCartonSoyMilk
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/soymilk.rsi
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 100
+
+- type: entity
+  name: oat milk carton
+  parent: DrinkCartonBaseLargeEmpty
+  id: DrinkCartonOatMilk
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/oatmilk.rsi

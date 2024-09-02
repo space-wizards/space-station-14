@@ -24,7 +24,7 @@
     slotTexture: glasses
     slotFlags: EYES
     stripTime: 3
-    uiWindowPos: 0,0
+    uiWindowPos: 0,2
     strippingWindowPos: 0,0
     displayName: Eyes
     whitelist:
@@ -33,9 +33,8 @@
   - name: suitstorage
     slotTexture: suit_storage
     slotFlags: SUITSTORAGE
-    slotGroup: SecondHotbar
     stripTime: 3
-    uiWindowPos: 2,0
+    uiWindowPos: 1,0
     strippingWindowPos: 2,5
     displayName: Suit Storage
     whitelist:
@@ -44,7 +43,7 @@
   - name: head
     slotTexture: head
     slotFlags: HEAD
-    uiWindowPos: 1,0
+    uiWindowPos: 1,2
     strippingWindowPos: 1,0
     displayName: Head
     whitelist:

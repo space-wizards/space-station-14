@@ -1,7 +1,7 @@
 - type: entity
   id: PelletClusterRubber
-  name: pellet (ball, Rubber)
-  noSpawn: true
+  name: pellet (ball, rubber)
+  categories: [ HideSpawnMenu ]
   parent: BaseBullet
   components:
   - type: Sprite
@@ -9,7 +9,6 @@
     state: buckshot
   - type: Projectile
     deleteOnCollide: false
-    canPenetrate: true
     damage:
       types:
         Blunt: 4
@@ -20,8 +19,8 @@
 
 - type: entity
   id: PelletClusterLethal
-  name: pellet (ball, Lethal)
-  noSpawn: true
+  name: pellet (ball, lethal)
+  categories: [ HideSpawnMenu ]
   parent: BaseBullet
   components:
   - type: Sprite
@@ -29,7 +28,6 @@
     state: buckshot
   - type: Projectile
     deleteOnCollide: false
-    canPenetrate: true
     damage:
       types:
         Piercing: 45
@@ -39,7 +37,7 @@
 - type: entity
   id: PelletClusterIncendiary
   name: pellet (ball, incendiary)
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: BaseBulletIncendiary
   components:
   - type: Sprite
@@ -47,12 +45,12 @@
     state: buckshot-flare
   - type: Projectile
     deleteOnCollide: false
-    canPenetrate: true
     damage:
-      groups:
-        Burn: 4
+      types:
+        Blunt: 1
+        Heat: 2
   - type: IgniteOnCollide
-    fireStacks: 3
+    fireStacks: 1
     count: 10
   - type: TimedDespawn
     lifetime: 0.25

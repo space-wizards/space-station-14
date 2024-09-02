@@ -10,7 +10,7 @@
   - 1.0
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepFloor
   itemDrop: FloorTileItemSteel
@@ -28,7 +28,7 @@
   - 1.0
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepFloor
   itemDrop: FloorTileItemSteelCheckerLight
@@ -46,7 +46,7 @@
   - 1.0
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepFloor
   itemDrop: FloorTileItemSteelCheckerDark
@@ -64,10 +64,10 @@
   - 1.0
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepFloor
-  itemDrop: FloorTileItemSteel
+  itemDrop: FloorTileItemSteelMini
   heatCapacity: 10000
 
 - type: tile
@@ -82,10 +82,10 @@
   - 1.0
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepFloor
-  itemDrop: FloorTileItemSteel
+  itemDrop: FloorTileItemSteelPavement
   heatCapacity: 10000
 
 - type: tile
@@ -100,10 +100,10 @@
   - 1.0
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepFloor
-  itemDrop: FloorTileItemSteel
+  itemDrop: FloorTileItemSteelDiagonal
   heatCapacity: 10000
 
 - type: tile
@@ -112,10 +112,10 @@
   sprite: /Textures/Tiles/steel_offset.png
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepFloor
-  itemDrop: FloorTileItemSteel
+  itemDrop: FloorTileItemSteelOffset
   heatCapacity: 10000
 
 - type: tile
@@ -130,10 +130,10 @@
   - 1.0
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepTile
-  itemDrop: FloorTileItemSteel
+  itemDrop: FloorTileItemSteelMono
   heatCapacity: 10000
 
 - type: tile
@@ -148,10 +148,10 @@
   - 1.0
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepTile
-  itemDrop: FloorTileItemSteel
+  itemDrop: FloorTileItemSteelPavementVertical
   heatCapacity: 10000
 
 - type: tile
@@ -166,10 +166,10 @@
   - 1.0
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepTile
-  itemDrop: FloorTileItemSteel
+  itemDrop: FloorTileItemSteelHerringbone
   heatCapacity: 10000
 
 - type: tile
@@ -184,10 +184,34 @@
   - 1.0
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepTile
-  itemDrop: FloorTileItemSteel
+  itemDrop: FloorTileItemSteelDiagonalMini
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorBrassFilled
+  name: tiles-brass-floor-filled
+  sprite: /Textures/Tiles/Misc/clockwork/clockwork_floor_filled.png
+  baseTurf: PlatingBrass
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepHull
+  itemDrop: FloorTileItemBrassFilled
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorBrassReebe
+  name: tiles-brass-floor-reebe
+  sprite: /Textures/Tiles/Misc/clockwork/reebe.png
+  baseTurf: PlatingBrass
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepHull
+  itemDrop: FloorTileItemBrassReebe
   heatCapacity: 10000
 
 - type: tile
@@ -202,7 +226,7 @@
   - 1.0
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepFloor
   itemDrop: FloorTileItemSteel
@@ -220,7 +244,7 @@
   - 1.0
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepWood
   barestepSounds:
@@ -240,7 +264,7 @@
   - 1.0
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepTile
   itemDrop: FloorTileItemWhite
@@ -258,10 +282,10 @@
   - 1.0
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepTile
-  itemDrop: FloorTileItemWhite
+  itemDrop: FloorTileItemWhiteMini
   heatCapacity: 10000
 
 - type: tile
@@ -276,10 +300,10 @@
   - 1.0
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepTile
-  itemDrop: FloorTileItemWhite
+  itemDrop: FloorTileItemWhitePavement
   heatCapacity: 10000
 
 - type: tile
@@ -294,10 +318,10 @@
   - 1.0
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepTile
-  itemDrop: FloorTileItemWhite
+  itemDrop: FloorTileItemWhiteDiagonal
   heatCapacity: 10000
 
 - type: tile
@@ -306,10 +330,10 @@
   sprite: /Textures/Tiles/white_offset.png
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepTile
-  itemDrop: FloorTileItemWhite
+  itemDrop: FloorTileItemWhiteOffset
   heatCapacity: 10000
 
 - type: tile
@@ -324,10 +348,10 @@
   - 1.0
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepTile
-  itemDrop: FloorTileItemWhite
+  itemDrop: FloorTileItemWhiteMono
   heatCapacity: 10000
 
 - type: tile
@@ -342,10 +366,10 @@
   - 1.0
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepTile
-  itemDrop: FloorTileItemWhite
+  itemDrop: FloorTileItemWhitePavementVertical
   heatCapacity: 10000
 
 - type: tile
@@ -360,10 +384,10 @@
   - 1.0
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepTile
-  itemDrop: FloorTileItemWhite
+  itemDrop: FloorTileItemWhiteHerringbone
   heatCapacity: 10000
 
 - type: tile
@@ -378,10 +402,10 @@
   - 1.0
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepTile
-  itemDrop: FloorTileItemWhite
+  itemDrop: FloorTileItemWhiteDiagonalMini
   heatCapacity: 10000
 
 - type: tile
@@ -396,7 +420,7 @@
   - 1.0
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepTile
   itemDrop: FloorTileItemWhite
@@ -414,7 +438,7 @@
   - 1.0
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepTile
   itemDrop: FloorTileItemDark
@@ -432,10 +456,10 @@
   - 1.0
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepTile
-  itemDrop: FloorTileItemDark
+  itemDrop: FloorTileItemDarkMini
   heatCapacity: 10000
 
 - type: tile
@@ -450,10 +474,10 @@
   - 1.0
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepTile
-  itemDrop: FloorTileItemDark
+  itemDrop: FloorTileItemDarkPavement
   heatCapacity: 10000
 
 - type: tile
@@ -468,10 +492,10 @@
   - 1.0
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepTile
-  itemDrop: FloorTileItemDark
+  itemDrop: FloorTileItemDarkDiagonal
   heatCapacity: 10000
 
 - type: tile
@@ -480,10 +504,10 @@
   sprite: /Textures/Tiles/dark_offset.png
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepTile
-  itemDrop: FloorTileItemDark
+  itemDrop: FloorTileItemDarkOffset
   heatCapacity: 10000
 
 - type: tile
@@ -498,10 +522,10 @@
   - 1.0
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepTile
-  itemDrop: FloorTileItemDark
+  itemDrop: FloorTileItemDarkMono
   heatCapacity: 10000
 
 - type: tile
@@ -516,10 +540,10 @@
   - 1.0
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepTile
-  itemDrop: FloorTileItemDark
+  itemDrop: FloorTileItemDarkPavementVertical
   heatCapacity: 10000
 
 - type: tile
@@ -534,10 +558,10 @@
   - 1.0
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepTile
-  itemDrop: FloorTileItemDark
+  itemDrop: FloorTileItemDarkHerringbone
   heatCapacity: 10000
 
 - type: tile
@@ -552,10 +576,10 @@
   - 1.0
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepTile
-  itemDrop: FloorTileItemDark
+  itemDrop: FloorTileItemDarkDiagonalMini
   heatCapacity: 10000
 
 - type: tile
@@ -570,7 +594,7 @@
   - 1.0
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepTile
   itemDrop: FloorTileItemDark
@@ -582,7 +606,7 @@
   sprite: /Textures/Tiles/tech_maint.png
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepHull
   itemDrop: FloorTileItemTechmaint
@@ -594,10 +618,10 @@
   sprite: /Textures/Tiles/reinforced.png
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepHull
-  itemDrop: FloorTileItemReinforced
+  itemDrop: PartRodMetal1
   heatCapacity: 10000
 
 - type: tile
@@ -606,7 +630,7 @@
   sprite: /Textures/Tiles/mono.png
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepTile
   itemDrop: FloorTileItemMono
@@ -618,7 +642,7 @@
   sprite: /Textures/Tiles/lino.png
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepTile
   itemDrop: FloorTileItemLino
@@ -630,7 +654,7 @@
   sprite: /Textures/Tiles/steel_dirty.png
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepPlating
   itemDrop: FloorTileItemDirty
@@ -642,7 +666,7 @@
   sprite: /Textures/Tiles/elevator_shaft.png
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepHull
   itemDrop: FloorTileItemElevatorShaft
@@ -654,7 +678,7 @@
   sprite: /Textures/Tiles/metaldiamond.png
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepHull
   itemDrop: FloorTileItemMetalDiamond
@@ -666,7 +690,7 @@
   sprite: /Textures/Tiles/rock_vault.png
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepAsteroid
   itemDrop: FloorTileItemRockVault
@@ -678,7 +702,7 @@
   sprite: /Textures/Tiles/blue.png
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepTile
   itemDrop: FloorTileItemBlue
@@ -696,7 +720,7 @@
   - 1.0
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepFloor
   itemDrop: FloorTileItemLime
@@ -708,7 +732,7 @@
   sprite: /Textures/Tiles/mining_floor.png
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepTile
   itemDrop: FloorTileItemMining
@@ -720,7 +744,7 @@
   sprite: /Textures/Tiles/mining_floor_dark.png
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepTile
   itemDrop: FloorTileItemMiningDark
@@ -732,7 +756,7 @@
   sprite: /Textures/Tiles/mining_floor_light.png
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepTile
   itemDrop: FloorTileItemMiningLight
@@ -745,7 +769,7 @@
   sprite: /Textures/Tiles/freezer.png
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepHull
   itemDrop: FloorTileItemFreezer
@@ -757,7 +781,7 @@
   sprite: /Textures/Tiles/showroom.png
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepFloor
   itemDrop: FloorTileItemShowroom
@@ -769,7 +793,7 @@
   sprite: /Textures/Tiles/hydro.png
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepFloor
   itemDrop: FloorTileItemHydro
@@ -787,7 +811,7 @@
   - 1.0
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepFloor
   itemDrop: FloorTileItemBar
@@ -799,7 +823,7 @@
   sprite: /Textures/Tiles/clown.png
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepFloor
   itemDrop: FloorTileItemClown
@@ -811,7 +835,7 @@
   sprite: /Textures/Tiles/mime.png
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepFloor
   itemDrop: FloorTileItemMime
@@ -823,7 +847,7 @@
   sprite: /Textures/Tiles/kitchen.png
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepTile
   itemDrop: FloorTileItemKitchen
@@ -835,7 +859,7 @@
   sprite: /Textures/Tiles/laundry.png
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepTile
   itemDrop: FloorTileItemLaundry
@@ -854,7 +878,7 @@
   - 1.0
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepFloor
   itemDrop: FloorTileItemSteel #This should probably be made null when it becomes possible to make it such, in SS13 prying destroyed tiles wouldn't give you anything.
@@ -870,7 +894,7 @@
   - 1.0
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepFloor
   itemDrop: FloorTileItemSteel #Same case as FloorSteelDamaged, make it null when possible
@@ -890,12 +914,11 @@
   - 1.0
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepTile
   itemDrop: FloorTileItemConcrete
   heatCapacity: 10000
-  weather: true
 
 - type: tile
   id: FloorConcreteMono
@@ -909,12 +932,11 @@
   - 1.0
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepTile
-  itemDrop: FloorTileItemConcrete
+  itemDrop: FloorTileItemConcreteMono
   heatCapacity: 10000
-  weather: true
 
 - type: tile
   id: FloorConcreteSmooth
@@ -928,12 +950,11 @@
   - 1.0
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepTile
-  itemDrop: FloorTileItemConcrete
+  itemDrop: FloorTileItemConcreteSmooth
   heatCapacity: 10000
-  weather: true
 
 - type: tile
   id: FloorGrayConcrete
@@ -947,12 +968,11 @@
   - 1.0
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepTile
   itemDrop: FloorTileItemGrayConcrete
   heatCapacity: 10000
-  weather: true
 
 - type: tile
   id: FloorGrayConcreteMono
@@ -966,12 +986,11 @@
   - 1.0
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepTile
-  itemDrop: FloorTileItemGrayConcrete
+  itemDrop: FloorTileItemGrayConcreteMono
   heatCapacity: 10000
-  weather: true
 
 - type: tile
   id: FloorGrayConcreteSmooth
@@ -985,12 +1004,11 @@
   - 1.0
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepTile
-  itemDrop: FloorTileItemGrayConcrete
+  itemDrop: FloorTileItemGrayConcreteSmooth
   heatCapacity: 10000
-  weather: true
 
 - type: tile
   id: FloorOldConcrete
@@ -1004,12 +1022,11 @@
   - 1.0
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepTile
   itemDrop: FloorTileItemOldConcrete
   heatCapacity: 10000
-  weather: true
 
 - type: tile
   id: FloorOldConcreteMono
@@ -1023,12 +1040,11 @@
   - 1.0
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepTile
-  itemDrop: FloorTileItemOldConcrete
+  itemDrop: FloorTileItemOldConcreteMono
   heatCapacity: 10000
-  weather: true
 
 - type: tile
   id: FloorOldConcreteSmooth
@@ -1042,12 +1058,11 @@
   - 1.0
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepTile
-  itemDrop: FloorTileItemOldConcrete
+  itemDrop: FloorTileItemOldConcreteSmooth
   heatCapacity: 10000
-  weather: true
 
 # Carpets (non smoothing)
 - type: tile
@@ -1056,7 +1071,7 @@
   sprite: /Textures/Tiles/arcadeblue.png
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepCarpet
   barestepSounds:
@@ -1071,7 +1086,7 @@
   sprite: /Textures/Tiles/arcadeblue2.png
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepCarpet
   barestepSounds:
@@ -1086,7 +1101,7 @@
   sprite: /Textures/Tiles/arcadered.png
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepCarpet
   barestepSounds:
@@ -1101,7 +1116,7 @@
   sprite: /Textures/Tiles/eighties.png
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepCarpet
   barestepSounds:
@@ -1116,7 +1131,7 @@
   sprite: /Textures/Tiles/carpetclown.png
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepCarpet
   barestepSounds:
@@ -1131,7 +1146,7 @@
   sprite: /Textures/Tiles/carpetoffice.png
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepCarpet
   barestepSounds:
@@ -1152,7 +1167,7 @@
   - 1.0
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepFloor
   friction: 0.25
@@ -1171,7 +1186,7 @@
   - 1.0
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepFloor
   friction: 0.25
@@ -1183,21 +1198,69 @@
   id: FloorShuttleWhite
   name: tiles-white-shuttle-floor
   sprite: /Textures/Tiles/shuttlewhite.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepFloor
   itemDrop: FloorTileItemShuttleWhite
   heatCapacity: 10000
 
 - type: tile
+  id: FloorShuttleGrey
+  name: tiles-grey-shuttle-floor
+  sprite: /Textures/Tiles/shuttlegrey.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepFloor
+  itemDrop: FloorTileItemShuttleGrey
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorShuttleBlack
+  name: tiles-black-shuttle-floor
+  sprite: /Textures/Tiles/shuttleblack.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepFloor
+  itemDrop: FloorTileItemShuttleBlack
+  heatCapacity: 10000
+
+- type: tile
   id: FloorShuttleBlue
   name: tiles-blue-shuttle-floor
   sprite: /Textures/Tiles/shuttleblue.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepFloor
   itemDrop: FloorTileItemShuttleBlue
@@ -1207,9 +1270,15 @@
   id: FloorShuttleOrange
   name: tiles-orange-shuttle-floor
   sprite: /Textures/Tiles/shuttleorange.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepFloor
   itemDrop: FloorTileItemShuttleOrange
@@ -1219,9 +1288,15 @@
   id: FloorShuttlePurple
   name: tiles-purple-shuttle-floor
   sprite: /Textures/Tiles/shuttlepurple.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepFloor
   itemDrop: FloorTileItemShuttlePurple
@@ -1231,9 +1306,15 @@
   id: FloorShuttleRed
   name: tiles-red-shuttle-floor
   sprite: /Textures/Tiles/shuttlered.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepFloor
   itemDrop: FloorTileItemShuttleRed
@@ -1247,7 +1328,7 @@
   sprite: /Textures/Tiles/gold.png
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepTile
   itemDrop: FloorTileItemGold
@@ -1259,7 +1340,7 @@
   sprite: /Textures/Tiles/silver.png
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepTile
   itemDrop: FloorTileItemSilver
@@ -1277,7 +1358,7 @@
   - 1.0
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepTile
   itemDrop: SheetGlass1
@@ -1295,10 +1376,25 @@
   - 1.0
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepTile
   itemDrop: SheetRGlass1
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorMetalFoam
+  name: tiles-metal-foam
+  sprite: /Textures/Tiles/foammetal.png
+  variants: 1
+  placementVariants:
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepHull
+  itemDrop: SheetSteel1
   heatCapacity: 10000
 
 # Circuits
@@ -1308,7 +1404,7 @@
   sprite: /Textures/Tiles/green_circuit.png
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepHull
   itemDrop: FloorTileItemGCircuit
@@ -1320,7 +1416,7 @@
   sprite: /Textures/Tiles/blue_circuit.png
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepHull
   itemDrop: FloorTileItemBCircuit
@@ -1345,7 +1441,6 @@
   - 1.0
   baseTurf: FloorDirt
   isSubfloor: true
-  canCrowbar: false
   footstepSounds:
     collection: FootstepTile
   heatCapacity: 10000
@@ -1357,7 +1452,6 @@
   sprite: /Textures/Tiles/grass.png
   baseTurf: FloorDirt
   isSubfloor: true
-  canCrowbar: false
   footstepSounds:
     collection: FootstepGrass
   itemDrop: FloorTileItemGrass
@@ -1370,7 +1464,6 @@
   sprite: /Textures/Tiles/grassjungle.png
   baseTurf: FloorDirt
   isSubfloor: true
-  canCrowbar: false
   footstepSounds:
     collection: FootstepGrass
   itemDrop: FloorTileItemGrassJungle
@@ -1389,7 +1482,6 @@
   - 1.0
   baseTurf: FloorDirt
   isSubfloor: true
-  canCrowbar: false
   footstepSounds:
     collection: FootstepGrass
   heatCapacity: 10000
@@ -1407,7 +1499,6 @@
   - 1.0
   baseTurf: FloorDirt
   isSubfloor: true
-  canCrowbar: false
   footstepSounds:
     collection: FootstepGrass
   heatCapacity: 10000
@@ -1425,7 +1516,6 @@
   - 1.0
   baseTurf: Plating
   isSubfloor: true
-  canCrowbar: false
   footstepSounds:
     collection: FootstepAsteroid
   heatCapacity: 10000
@@ -1454,7 +1544,6 @@
   - 0.0116
   baseTurf: Space
   isSubfloor: true
-  canCrowbar: false
   footstepSounds:
     collection: FootstepAsteroid
   heatCapacity: 10000
@@ -1466,7 +1555,6 @@
   sprite: /Textures/Tiles/Asteroid/asteroid_dug.png
   baseTurf: Space
   isSubfloor: true
-  canCrowbar: false
   footstepSounds:
     collection: FootstepAsteroid
   heatCapacity: 10000
@@ -1493,7 +1581,6 @@
   - 0.0116
   baseTurf: Space
   isSubfloor: true
-  canCrowbar: false
   footstepSounds:
     collection: FootstepAsteroid
   heatCapacity: 10000
@@ -1505,7 +1592,7 @@
   sprite: /Textures/Tiles/Asteroid/asteroid_tile.png
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepAsteroid
   heatCapacity: 10000
@@ -1534,7 +1621,6 @@
   - 1.0
   baseTurf: Space
   isSubfloor: true
-  canCrowbar: false
   footstepSounds:
     collection: FootstepAsteroid
   heatCapacity: 10000
@@ -1546,7 +1632,6 @@
   sprite: /Textures/Tiles/Asteroid/asteroid0.png
   baseTurf: Space
   isSubfloor: true
-  canCrowbar: false
   footstepSounds:
     collection: FootstepAsteroid
   heatCapacity: 10000
@@ -1558,7 +1643,6 @@
   sprite: /Textures/Tiles/Asteroid/ironsand0.png
   baseTurf: Space
   isSubfloor: true
-  canCrowbar: false
   footstepSounds:
     collection: FootstepAsteroid
   heatCapacity: 10000
@@ -1580,7 +1664,6 @@
   - 1.0
   baseTurf: Space
   isSubfloor: true
-  canCrowbar: false
   footstepSounds:
     collection: FootstepAsteroid
   heatCapacity: 10000
@@ -1601,7 +1684,6 @@
   - 1.0
   baseTurf: Space
   isSubfloor: true
-  canCrowbar: false
   footstepSounds:
     collection: FootstepAsteroid
   heatCapacity: 10000
@@ -1618,9 +1700,9 @@
   - 1.0
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
-    collection: BarestepCarpet
+    collection: FootstepBlood
   itemDrop: FloorTileItemFlesh
   friction: 0.05 #slippy
   heatCapacity: 10000
@@ -1631,7 +1713,7 @@
   sprite: /Textures/Tiles/steel_maint.png
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepHull
   itemDrop: FloorTileItemSteelMaint
@@ -1649,7 +1731,7 @@
   - 1.0
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepHull
   itemDrop: FloorTileItemGratingMaint
@@ -1667,7 +1749,7 @@
   - 1.0
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepWood
   barestepSounds:
@@ -1690,7 +1772,7 @@
   - 1.0
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepWood
   barestepSounds:
@@ -1704,7 +1786,7 @@
   sprite: /Textures/Tiles/Misc/Web/web_tile.png
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: true
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepCarpet
   barestepSounds:
@@ -1727,7 +1809,6 @@
   - 1.0
   baseTurf: Space
   isSubfloor: true
-  canCrowbar: false
   footstepSounds:
     collection: FootstepAsteroid
   heatCapacity: 10000
@@ -1739,8 +1820,6 @@
   sprite: /Textures/Tiles/hull.png
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: false
-  canAxe: false #You can't RCD these in SS13 apparently, so this is probably the next best thing
   footstepSounds:
     collection: FootstepHull
   itemDrop: FloorTileItemSteel #probably should not be normally obtainable, but the game shits itself and dies when you try to put null here
@@ -1752,12 +1831,11 @@
   sprite: /Textures/Tiles/hull_reinforced.png
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: false
-  canAxe: false
   footstepSounds:
     collection: FootstepHull
   itemDrop: FloorTileItemSteel
   heatCapacity: 100000 #/tg/ has this set as "INFINITY." I don't know if that exists here so I've just added an extra 0
+  indestructible: true
 
 - type: tile
   id: FloorReinforcedHardened
@@ -1765,8 +1843,99 @@
   sprite: /Textures/Tiles/super_reinforced.png
   baseTurf: Plating
   isSubfloor: false
-  canCrowbar: false
-  canAxe: false
   footstepSounds:
     collection: FootstepHull
-  itemDrop: FloorTileItemReinforced #same case as FloorHull
+  itemDrop: PartRodMetal1 #same case as FloorHull
+
+# Faux sci tiles
+
+# Grass
+- type: tile
+  id: FloorAstroGrass
+  name: tiles-astro-grass
+  sprite: /Textures/Tiles/Planet/Grass/grass.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  edgeSpritePriority: 1
+  edgeSprites:
+    SouthEast: /Textures/Tiles/Planet/Grass/single_edge.png
+    NorthEast: /Textures/Tiles/Planet/Grass/single_edge.png
+    NorthWest: /Textures/Tiles/Planet/Grass/single_edge.png
+    SouthWest: /Textures/Tiles/Planet/Grass/single_edge.png
+    South: /Textures/Tiles/Planet/Grass/double_edge.png
+    East: /Textures/Tiles/Planet/Grass/double_edge.png
+    North: /Textures/Tiles/Planet/Grass/double_edge.png
+    West: /Textures/Tiles/Planet/Grass/double_edge.png
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Cutting ]
+  footstepSounds:
+    collection: FootstepGrass
+  itemDrop: FloorTileItemAstroGrass
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorMowedAstroGrass
+  name: tiles-mowed-astro-grass
+  parent: FloorGrass
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Cutting ]
+  itemDrop: FloorTileItemMowedAstroGrass
+
+- type: tile
+  id: FloorJungleAstroGrass
+  name: tiles-jungle-astro-grass
+  parent: FloorGrassJungle
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Cutting ]
+  itemDrop: FloorTileItemJungleAstroGrass
+
+# Ice
+- type: tile
+  id: FloorAstroIce
+  name: tiles-astro-ice
+  sprite: /Textures/Tiles/Planet/Snow/ice.png
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  friction: 0.05
+  heatCapacity: 10000
+  mobFriction: 0.5
+  mobFrictionNoInput: 0.05
+  mobAcceleration: 2
+  itemDrop: FloorTileItemAstroIce
+
+- type: tile
+  id: FloorAstroSnow
+  name: tiles-astro-snow
+  parent: FloorSnow
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  itemDrop: FloorTileItemAstroSnow
+
+- type: tile
+  id: FloorWoodLarge
+  name: tiles-wood-large
+  sprite: /Textures/Tiles/wood_large.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepWood
+  barestepSounds:
+    collection: BarestepWood
+  itemDrop: FloorTileItemWoodLarge
+  heatCapacity: 10000

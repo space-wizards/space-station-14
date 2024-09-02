@@ -14,6 +14,12 @@ public sealed partial class SmokeComponent : Component
     public const string SolutionName = "solutionArea";
 
     /// <summary>
+    /// The solution on the entity with touch and ingestion reactions.
+    /// </summary>
+    [DataField]
+    public Entity<SolutionComponent>? Solution = null;
+
+    /// <summary>
     /// The max amount of tiles this smoke cloud can spread to.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]

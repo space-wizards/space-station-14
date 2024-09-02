@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from paradise station and modified by Peptide90 https://github.com/ParadiseSS13/Paradise/commit/46bb8d448f52278a8f027b3f5bdf061e39d06140",
+  "copyright": "Taken from paradise station and modified by Peptide90 https://github.com/ParadiseSS13/Paradise/commit/46bb8d448f52278a8f027b3f5bdf061e39d06140. Vox states by Flareguy for SS14",
   "size": {
     "x": 32,
     "y": 32
@@ -18,6 +18,10 @@
       "directions": 4
     },
     {
+      "name": "off-equipped-HELMET-vox",
+      "directions": 4
+    },
+    {
       "name": "off-inhand-left",
       "directions": 4
     },
@@ -27,6 +31,10 @@
     },
     {
       "name": "on-equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "on-equipped-HELMET-vox",
       "directions": 4
     },
     {

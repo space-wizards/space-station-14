@@ -35,7 +35,7 @@ namespace Content.Tests.Shared.Utility
             var random = IoCManager.Resolve<IRobustRandom>();
             var id = random.Pick(dataSet);
 
-            Assert.NotNull(id);
+            Assert.That(id, Is.Not.Null);
         }
     }
 }

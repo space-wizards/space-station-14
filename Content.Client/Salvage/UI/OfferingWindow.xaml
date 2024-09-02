@@ -1,0 +1,36 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                      MinSize="800 360">
+    <BoxContainer Orientation="Vertical">
+        <BoxContainer Orientation="Horizontal" Name="ProgressionBox" Visible="False">
+            <Label Name="ProgressionLabel"
+                   Text="{Loc 'salvage-expedition-window-progression'}"
+                   SetWidth="96"
+                   Margin="5"/>
+            <ProgressBar Name="ProgressionBar"
+                         HorizontalExpand="True"
+                         MinValue="0"
+                         MaxValue="1"
+                         SetHeight="25"/>
+            <Label Name="ProgressionText" Text="00:00"
+                   Margin="5"/>
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal">
+            <Label Name="NextOfferLabel"
+                   Text="{Loc 'salvage-expedition-window-next'}"
+                   SetWidth="96"
+                   Margin="5"/>
+            <ProgressBar Name="NextOfferBar"
+                         HorizontalExpand="True"
+                         MinValue="0"
+                         MaxValue="1"
+                         SetHeight="25"/>
+            <Label Name="NextOfferText" Text="0.00"
+                   Margin="5"/>
+        </BoxContainer>
+        <controls:HLine Color="#404040" Thickness="2" Margin="0 5 0 5"/>
+        <BoxContainer Name="Container"
+                      Orientation="Horizontal"
+                      Margin="5 0 5 0"/>
+    </BoxContainer>
+</controls:FancyWindow>

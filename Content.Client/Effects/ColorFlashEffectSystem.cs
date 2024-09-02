@@ -2,8 +2,10 @@ using Content.Shared.Effects;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
+using Robust.Shared.Collections;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Effects;
 
@@ -17,6 +19,7 @@ public sealed class ColorFlashEffectSystem : SharedColorFlashEffectSystem
     /// </summary>
     private const float AnimationLength = 0.30f;
     private const string AnimationKey = "color-flash-effect";
+    private ValueList<EntityUid> _toRemove = new();
 
     public override void Initialize()
     {
@@ -43,8 +46,28 @@ public sealed class ColorFlashEffectSystem : SharedColorFlashEffectSystem
         {
             sprite.Color = component.Color;
         }
+    }
 
-        RemCompDeferred<ColorFlashEffectComponent>(uid);
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var query = AllEntityQuery<ColorFlashEffectComponent>();
+        _toRemove.Clear();
+
+        // Can't use deferred removal on animation completion or it will cause issues.
+        while (query.MoveNext(out var uid, out _))
+        {
+            if (_animation.HasRunningAnimation(uid, AnimationKey))
+                continue;
+
+            _toRemove.Add(uid);
+        }
+
+        foreach (var ent in _toRemove)
+        {
+            RemComp<ColorFlashEffectComponent>(ent);
+        }
     }
 
     private Animation? GetDamageAnimation(EntityUid uid, Color color, SpriteComponent? sprite = null)
@@ -81,40 +104,31 @@ public sealed class ColorFlashEffectSystem : SharedColorFlashEffectSystem
         {
             var ent = GetEntity(nent);
 
-            if (Deleted(ent))
+            if (Deleted(ent) || !TryComp(ent, out SpriteComponent? sprite))
             {
                 continue;
             }
 
-            var player = EnsureComp<AnimationPlayerComponent>(ent);
-            player.NetSyncEnabled = false;
-
-            // Need to stop the existing animation first to ensure the sprite color is fixed.
-            // Otherwise we might lerp to a red colour instead.
-            if (_animation.HasRunningAnimation(ent, player, AnimationKey))
+            if (!TryComp(ent, out ColorFlashEffectComponent? comp))
             {
-                _animation.Stop(ent, player, AnimationKey);
+#if DEBUG
+                DebugTools.Assert(!_animation.HasRunningAnimation(ent, AnimationKey));
+#endif
             }
 
-            if (!TryComp<SpriteComponent>(ent, out var sprite))
-            {
-                continue;
-            }
-
-            if (TryComp<ColorFlashEffectComponent>(ent, out var effect))
-            {
-                sprite.Color = effect.Color;
-            }
-
+            _animation.Stop(ent, AnimationKey);
             var animation = GetDamageAnimation(ent, color, sprite);
 
             if (animation == null)
+            {
                 continue;
+            }
 
-            var comp = EnsureComp<ColorFlashEffectComponent>(ent);
+            EnsureComp<ColorFlashEffectComponent>(ent, out comp);
             comp.NetSyncEnabled = false;
             comp.Color = sprite.Color;
-            _animation.Play((ent, player), animation, AnimationKey);
+
+            _animation.Play(ent, animation, AnimationKey);
         }
     }
 }

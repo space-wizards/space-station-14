@@ -88,6 +88,9 @@
         !type:DamageTrigger
         damage: 100
       behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
       - !type:ChangeConstructionNodeBehavior
         node: machineFrame
       - !type:DoActsBehavior
@@ -95,9 +98,6 @@
   - type: Machine
     board: FatExtractorMachineCircuitboard
   - type: WiresPanel
-  - type: Wires
-    boardName: wires-board-name-fatextractor
-    layoutId: FatExtractor
   - type: Appearance
   - type: Speech
     speechVerb: Robotic

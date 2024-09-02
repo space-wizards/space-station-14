@@ -1,4 +1,5 @@
 using Content.Server.Body.Systems;
+using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Stack;
@@ -6,7 +7,9 @@ using Content.Server.Storage.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts;
 using Content.Shared.Body.Components;
 using Content.Shared.Damage;
+using Content.Shared.Power;
 using Content.Shared.Verbs;
+using Content.Shared.Whitelist;
 using Content.Shared.Xenoarchaeology.Equipment;
 using Robust.Shared.Collections;
 using Robust.Shared.Random;
@@ -23,6 +26,8 @@ public sealed class ArtifactCrusherSystem : SharedArtifactCrusherSystem
     [Dependency] private readonly BodySystem _body = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly StackSystem _stack = default!;
+    [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -38,10 +43,11 @@ public sealed class ArtifactCrusherSystem : SharedArtifactCrusherSystem
         if (!args.CanAccess || !args.CanInteract || args.Hands == null || ent.Comp.Crushing)
             return;
 
-        if (!TryComp<EntityStorageComponent>(ent, out var entityStorageComp) || entityStorageComp.Contents.ContainedEntities.Count == 0)
+        if (!TryComp<EntityStorageComponent>(ent, out var entityStorageComp) ||
+            entityStorageComp.Contents.ContainedEntities.Count == 0)
             return;
 
-        if (entityStorageComp.Contents.Contains(args.User) || !this.IsPowered(ent, EntityManager))
+        if (!this.IsPowered(ent, EntityManager))
             return;
 
         var verb = new AlternativeVerb
@@ -61,10 +67,13 @@ public sealed class ArtifactCrusherSystem : SharedArtifactCrusherSystem
 
     public void StartCrushing(Entity<ArtifactCrusherComponent, EntityStorageComponent> ent)
     {
-        var (_, crusher, _) = ent;
+        var (uid, crusher, _) = ent;
 
         if (crusher.Crushing)
             return;
+
+        if (crusher.AutoLock)
+            _popup.PopupEntity(Loc.GetString("artifact-crusher-autolocks-enable"), uid);
 
         crusher.Crushing = true;
         crusher.NextSecond = _timing.CurTime + TimeSpan.FromSeconds(1);
@@ -86,7 +95,7 @@ public sealed class ArtifactCrusherSystem : SharedArtifactCrusherSystem
         var coords = Transform(ent).Coordinates;
         foreach (var contained in contents)
         {
-            if (crusher.CrushingWhitelist.IsValid(contained, EntityManager))
+            if (_whitelistSystem.IsWhitelistPass(crusher.CrushingWhitelist, contained))
             {
                 var amount = _random.Next(crusher.MinFragments, crusher.MaxFragments);
                 var stacks = _stack.SpawnMultiple(crusher.FragmentStackProtoId, amount, coords);
@@ -100,7 +109,7 @@ public sealed class ArtifactCrusherSystem : SharedArtifactCrusherSystem
             if (!TryComp<BodyComponent>(contained, out var body))
                 Del(contained);
 
-            var gibs = _body.GibBody(contained, body: body, gibOrgans: true, deleteBrain: true);
+            var gibs = _body.GibBody(contained, body: body, gibOrgans: true);
             foreach (var gib in gibs)
             {
                 ContainerSystem.Insert((gib, null, null, null), crusher.OutputContainer);

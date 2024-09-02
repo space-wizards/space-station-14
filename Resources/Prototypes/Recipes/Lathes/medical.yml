@@ -1,6 +1,7 @@
 - type: latheRecipe
   id: Scalpel
   result: Scalpel
+  category: Tools
   completetime: 2
   materials:
     Steel: 200
@@ -8,6 +9,7 @@
 - type: latheRecipe
   id: Retractor
   result: Retractor
+  category: Tools
   completetime: 2
   materials:
     Steel: 200
@@ -15,6 +17,7 @@
 - type: latheRecipe
   id: Cautery
   result: Cautery
+  category: Tools
   completetime: 2
   materials:
     Steel: 200
@@ -22,6 +25,7 @@
 - type: latheRecipe
   id: Drill
   result: Drill
+  category: Tools
   completetime: 2
   materials:
     Steel: 200
@@ -30,6 +34,7 @@
 - type: latheRecipe
   id: Saw
   result: Saw
+  category: Tools
   completetime: 2
   materials:
     Steel: 200
@@ -37,13 +42,14 @@
 - type: latheRecipe
   id: Hemostat
   result: Hemostat
+  category: Tools
   completetime: 2
   materials:
     Steel: 200
 
 - type: latheRecipe
   id: BodyBag
-  result: BodyBag_Folded
+  result: BodyBagFolded
   completetime: 2
   materials:
     Plastic: 300
@@ -65,17 +71,16 @@
     Plastic: 25
 
 - type: latheRecipe
-  id: HandheldCrewMonitor
-  result: HandheldCrewMonitorEmpty
-  completetime: 2
+  id: Gauze
+  result: Gauze1
+  completetime: 1
   materials:
-    Glass: 1200
-    Steel: 1000
-    Plastic: 1400
+    Cloth: 200
 
 - type: latheRecipe
   id: HandheldHealthAnalyzer
   result: HandheldHealthAnalyzerEmpty
+  category: Tools
   completetime: 4
   materials:
     Glass: 500
@@ -101,7 +106,7 @@
   result: ClothingMaskSterile
   completetime: 2
   materials:
-    Plastic: 100
+    Plastic: 50
 
 - type: latheRecipe
   id: DiseaseSwab
@@ -129,7 +134,7 @@
 - type: latheRecipe
   id: Medkit
   result: Medkit
-  name: first aid kit (empty)
+  name: lathe-recipe-Medkit-name
   completetime: 2
   materials:
     Plastic: 300
@@ -137,7 +142,7 @@
 - type: latheRecipe
   id: MedkitBurn
   result: MedkitBurn
-  name: burn treatment kit (empty)
+  name: lathe-recipe-MedkitBurn-name
   completetime: 2
   materials:
     Plastic: 300
@@ -145,7 +150,7 @@
 - type: latheRecipe
   id: MedkitToxin
   result: MedkitToxin
-  name: toxin treatment kit (empty)
+  name: lathe-recipe-MedkitToxin-name
   completetime: 2
   materials:
     Plastic: 300
@@ -153,7 +158,7 @@
 - type: latheRecipe
   id: MedkitO2
   result: MedkitO2
-  name: oxygen deprivation treatment kit (empty)
+  name: lathe-recipe-MedkitO2-name
   completetime: 2
   materials:
     Plastic: 300
@@ -161,7 +166,7 @@
 - type: latheRecipe
   id: MedkitBrute
   result: MedkitBrute
-  name: brute trauma treatment kit (empty)
+  name: lathe-recipe-MedkitBrute-name
   completetime: 2
   materials:
     Plastic: 300
@@ -169,7 +174,7 @@
 - type: latheRecipe
   id: MedkitAdvanced
   result: MedkitAdvanced
-  name: advanced first aid kit (empty)
+  name: lathe-recipe-MedkitAdvanced-name
   completetime: 2
   materials:
     Plastic: 300
@@ -177,7 +182,7 @@
 - type: latheRecipe
   id: MedkitRadiation
   result: MedkitRadiation
-  name: radiation treatment kit (empty)
+  name: lathe-recipe-MedkitRadiation-name
   completetime: 2
   materials:
     Plastic: 300
@@ -185,7 +190,7 @@
 - type: latheRecipe
   id: MedkitCombat
   result: MedkitCombat
-  name: combat medical kit (empty)
+  name: lathe-recipe-MedkitCombat-name
   completetime: 2
   materials:
     Plastic: 300
@@ -193,6 +198,7 @@
 - type: latheRecipe
   id: HandLabeler
   result: HandLabeler
+  category: Tools
   completetime: 2
   materials:
     Plastic: 100
@@ -204,14 +210,6 @@
   materials:
     Plastic: 400
 
-- type: latheRecipe
-  id: VehicleWheelchairFolded
-  result: VehicleWheelchairFolded
-  completetime: 1
-  materials:
-    Steel: 500
-    Plastic: 300
-    
 - type: latheRecipe
   id: RollerBedSpawnFolded
   result: RollerBedSpawnFolded
@@ -236,3 +234,10 @@
     Steel: 600
     Plastic: 300
 
+- type: latheRecipe
+  id: WhiteCane
+  result: WhiteCane
+  completetime: 2
+  materials:
+    Steel: 100
+    Plastic: 100

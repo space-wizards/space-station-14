@@ -2,6 +2,7 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Verbs;
 using Content.Shared.Examine;
+using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Storage;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
@@ -21,12 +22,17 @@ public abstract class SharedItemSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<ItemComponent, GetVerbsEvent<InteractionVerb>>(AddPickupVerb);
-        SubscribeLocalEvent<ItemComponent, InteractHandEvent>(OnHandInteract, before: new []{typeof(SharedItemSystem)});
-
-        SubscribeLocalEvent<ItemComponent, ComponentGetState>(OnGetState);
-        SubscribeLocalEvent<ItemComponent, ComponentHandleState>(OnHandleState);
+        SubscribeLocalEvent<ItemComponent, InteractHandEvent>(OnHandInteract);
+        SubscribeLocalEvent<ItemComponent, AfterAutoHandleStateEvent>(OnItemAutoState);
 
         SubscribeLocalEvent<ItemComponent, ExaminedEvent>(OnExamine);
+
+        SubscribeLocalEvent<ItemToggleSizeComponent, ItemToggledEvent>(OnItemToggle);
+    }
+
+    private void OnItemAutoState(EntityUid uid, ItemComponent component, ref AfterAutoHandleStateEvent args)
+    {
+        SetHeldPrefix(uid, component.HeldPrefix, force: true, component);
     }
 
     #region Public API
@@ -40,12 +46,21 @@ public abstract class SharedItemSystem : EntitySystem
         Dirty(uid, component);
     }
 
-    public void SetHeldPrefix(EntityUid uid, string? heldPrefix, ItemComponent? component = null)
+    public void SetShape(EntityUid uid, List<Box2i>? shape, ItemComponent? component = null)
     {
         if (!Resolve(uid, ref component, false))
             return;
 
-        if (component.HeldPrefix == heldPrefix)
+        component.Shape = shape;
+        Dirty(uid, component);
+    }
+
+    public void SetHeldPrefix(EntityUid uid, string? heldPrefix, bool force = false, ItemComponent? component = null)
+    {
+        if (!Resolve(uid, ref component, false))
+            return;
+
+        if (!force && component.HeldPrefix == heldPrefix)
             return;
 
         component.HeldPrefix = heldPrefix;
@@ -79,20 +94,6 @@ public abstract class SharedItemSystem : EntitySystem
         args.Handled = _handsSystem.TryPickup(args.User, uid, animateUser: false);
     }
 
-    private void OnHandleState(EntityUid uid, ItemComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not ItemComponentState state)
-            return;
-
-        component.Size = state.Size;
-        SetHeldPrefix(uid, state.HeldPrefix, component);
-    }
-
-    private void OnGetState(EntityUid uid, ItemComponent component, ref ComponentGetState args)
-    {
-        args.State = new ItemComponentState(component.Size, component.HeldPrefix);
-    }
-
     private void AddPickupVerb(EntityUid uid, ItemComponent component, GetVerbsEvent<InteractionVerb> args)
     {
         if (args.Hands == null ||
@@ -109,8 +110,8 @@ public abstract class SharedItemSystem : EntitySystem
 
         // if the item already in a container (that is not the same as the user's), then change the text.
         // this occurs when the item is in their inventory or in an open backpack
-        Container.TryGetContainingContainer(args.User, out var userContainer);
-        if (Container.TryGetContainingContainer(args.Target, out var container) && container != userContainer)
+        Container.TryGetContainingContainer((args.User, null, null), out var userContainer);
+        if (Container.TryGetContainingContainer((args.Target, null, null), out var container) && container != userContainer)
             verb.Text = Loc.GetString("pick-up-verb-get-data-text-inventory");
         else
             verb.Text = Loc.GetString("pick-up-verb-get-data-text");
@@ -120,8 +121,9 @@ public abstract class SharedItemSystem : EntitySystem
 
     private void OnExamine(EntityUid uid, ItemComponent component, ExaminedEvent args)
     {
+        // show at end of message generally
         args.PushMarkup(Loc.GetString("item-component-on-examine-size",
-            ("size", GetItemSizeLocale(component.Size))));
+            ("size", GetItemSizeLocale(component.Size))), priority: -1);
     }
 
     public ItemSizePrototype GetSizePrototype(ProtoId<ItemSizePrototype> id)
@@ -190,7 +192,7 @@ public abstract class SharedItemSystem : EntitySystem
         var shapes = GetItemShape(entity);
         var boundingShape = shapes.GetBoundingBox();
         var boundingCenter = ((Box2) boundingShape).Center;
-        var matty = Matrix3.CreateTransform(boundingCenter, rotation);
+        var matty = Matrix3Helpers.CreateTransform(boundingCenter, rotation);
         var drift = boundingShape.BottomLeft - matty.TransformBox(boundingShape).BottomLeft;
 
         var adjustedShapes = new List<Box2i>();
@@ -204,5 +206,45 @@ public abstract class SharedItemSystem : EntitySystem
         }
 
         return adjustedShapes;
+    }
+
+    /// <summary>
+    /// Used to update the Item component on item toggle (specifically size).
+    /// </summary>
+    private void OnItemToggle(EntityUid uid, ItemToggleSizeComponent itemToggleSize, ItemToggledEvent args)
+    {
+        if (!TryComp(uid, out ItemComponent? item))
+            return;
+
+        if (args.Activated)
+        {
+            if (itemToggleSize.ActivatedShape != null)
+            {
+                // Set the deactivated shape to the default item's shape before it gets changed.
+                itemToggleSize.DeactivatedShape ??= new List<Box2i>(GetItemShape(item));
+                SetShape(uid, itemToggleSize.ActivatedShape, item);
+            }
+
+            if (itemToggleSize.ActivatedSize != null)
+            {
+                // Set the deactivated size to the default item's size before it gets changed.
+                itemToggleSize.DeactivatedSize ??= item.Size;
+                SetSize(uid, (ProtoId<ItemSizePrototype>) itemToggleSize.ActivatedSize, item);
+            }
+        }
+        else
+        {
+            if (itemToggleSize.DeactivatedShape != null)
+            {
+                SetShape(uid, itemToggleSize.DeactivatedShape, item);
+            }
+
+            if (itemToggleSize.DeactivatedSize != null)
+            {
+                SetSize(uid, (ProtoId<ItemSizePrototype>) itemToggleSize.DeactivatedSize, item);
+            }
+        }
+
+        Dirty(uid, item);
     }
 }

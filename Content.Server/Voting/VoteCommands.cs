@@ -66,7 +66,7 @@ namespace Content.Server.Voting
         }
     }
 
-    [AdminCommand(AdminFlags.Admin)]
+    [AdminCommand(AdminFlags.Moderator)]
     public sealed class CreateCustomCommand : IConsoleCommand
     {
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
@@ -171,7 +171,7 @@ namespace Content.Server.Voting
                     chatMgr.DispatchServerAnnouncement(Loc.GetString("cmd-customvote-on-finished-win",("winner", args[(int) eventArgs.Winner])));
                 }
 
-                for (int i = 0; i < eventArgs.Votes.Count - 1; i++)
+                for (int i = 0; i < eventArgs.Votes.Count; i++)
                 {
                     var oldName = payload.Embeds[0].Fields[i].Name;
                     var newValue = eventArgs.Votes[i].ToString();
@@ -308,7 +308,7 @@ namespace Content.Server.Voting
         }
     }
 
-    [AdminCommand(AdminFlags.Admin)]
+    [AdminCommand(AdminFlags.Moderator)]
     public sealed class CancelVoteCommand : IConsoleCommand
     {
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;

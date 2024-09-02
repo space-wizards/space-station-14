@@ -1,6 +1,8 @@
+using Robust.Shared.GameStates;
+
 namespace Content.Shared.ContainerHeld;
 
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class ContainerHeldComponent: Component
 {
     /// <summary>

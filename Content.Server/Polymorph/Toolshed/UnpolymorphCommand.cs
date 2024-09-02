@@ -2,9 +2,7 @@
 using Content.Server.Administration;
 using Content.Server.Polymorph.Systems;
 using Content.Shared.Administration;
-using Content.Shared.Polymorph;
 using Robust.Shared.Toolshed;
-using Robust.Shared.Toolshed.TypeParsers;
 
 namespace Content.Server.Polymorph.Toolshed;
 

@@ -108,7 +108,7 @@
   copyright: "cmorris035"
   source: "https://freesound.org/people/cmorris035/sounds/319152/"
 
-- files: ["airlock_open.ogg", "airlock_close.ogg"]
+- files: ["airlock_open.ogg", "airlock_close.ogg", "airlock_deny.ogg"]
   license: "CC-BY-SA-3.0"
   copyright: "/tg/station"
   source: "https://github.com/tgstation/tgstation/tree/5f5002b21253354c20ea224be3f604d79299b37e/sound/machines"
@@ -147,3 +147,22 @@
   license: "CC0-1.0"
   copyright: "Samuel Gremaud on freesound.org"
   source: "https://freesound.org/people/SamuelGremaud/sounds/455375/"
+
+- files: ["id_insert.ogg"]
+  license: "CC0-1.0"
+  copyright: "dakamakat on freesound.org"
+  source: "https://freesound.org/people/Dakamakat/sounds/717370/"
+
+- files:
+  - twobeep.ogg
+  - chime.ogg
+  - buzz-sigh.ogg
+  - buzztwo.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from TG station."
+  source: "https://github.com/tgstation/tgstation/tree/d4f678a1772007ff8d7eddd21cf7218c8e07bfc0"
+
+- files: ["cutter.ogg"]
+  license: "CC0-1.0"
+  copyright: "by Ko4erga"
+  source: "https://github.com/space-wizards/space-station-14/pull/30431"

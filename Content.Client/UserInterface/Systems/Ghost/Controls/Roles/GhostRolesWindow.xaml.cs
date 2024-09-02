@@ -9,7 +9,7 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
     [GenerateTypedNameReferences]
     public sealed partial class GhostRolesWindow : DefaultWindow
     {
-        public event Action<GhostRoleInfo>? OnRoleRequested;
+        public event Action<GhostRoleInfo>? OnRoleRequestButtonClicked;
         public event Action<GhostRoleInfo>? OnRoleFollow;
 
         public void ClearEntries()
@@ -23,7 +23,7 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
             NoRolesMessage.Visible = false;
 
             var entry = new GhostRolesEntry(name, description, hasAccess, reason, roles, spriteSystem);
-            entry.OnRoleSelected += OnRoleRequested;
+            entry.OnRoleSelected += OnRoleRequestButtonClicked;
             entry.OnRoleFollow += OnRoleFollow;
             EntryContainer.AddChild(entry);
         }

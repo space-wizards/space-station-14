@@ -1,1 +1,74 @@
-{"version": 1, "size": {"x": 32, "y": 32}, "license": "CC-BY-SA-3.0", "copyright": "Taken from https://github.com/tgstation/tgstation at 04e43d8c1d5097fdb697addd4395fb849dd341bd", "states": [{"name": "chem_gas_old", "delays": [[0.1, 0.1, 0.1, 0.1, 0.1, 0.1]]}, {"name": "frezon", "delays": [[0.2, 0.2, 0.2, 0.3, 0.3, 0.2, 0.2, 0.2]]}, {"name": "frezon_old", "delays": [[0.1, 0.1, 0.1, 0.1, 0.1, 0.1]]}, {"name": "fusion_gas", "delays": [[0.1, 0.1, 0.1, 0.1, 0.1, 0.1]]}, {"name": "miasma", "delays": [[0.2, 0.2, 0.2, 0.3, 0.3, 0.2, 0.2, 0.2]]}, {"name": "miasma_old", "delays": [[0.22999999999999998, 0.22999999999999998, 0.22999999999999998, 0.22999999999999998, 0.22999999999999998, 0.22999999999999998]]}, {"name": "nitrous_oxide", "delays": [[0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1]]}, {"name": "nitrous_oxide_old", "delays": [[0.2, 0.2, 0.2]]}, {"name": "nitryl", "delays": [[0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1]]}, {"name": "nitryl_old", "delays": [[0.1, 0.1, 0.1, 0.1]]}, {"name": "plasma", "delays": [[0.1, 0.1, 0.1]]}, {"name": "plasma_old", "delays": [[0.2, 0.2, 0.2]]}, {"name": "tritium", "delays": [[0.1, 0.1, 0.1, 0.1, 0.1]]}, {"name": "tritium_old", "delays": [[0.1, 0.1, 0.1, 0.1, 0.1]]}, {"name": "water_vapor", "delays": [[0.2, 0.2, 0.2, 0.3, 0.3, 0.2, 0.2, 0.2]]}, {"name": "water_vapor_old", "delays": [[0.2, 0.2, 0.2, 0.2, 0.2, 0.2]]}]}
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from https://github.com/tgstation/tgstation at 04e43d8c1d5097fdb697addd4395fb849dd341bd",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "chem_gas_old",
+            "delays": [[0.1, 0.1, 0.1, 0.1, 0.1, 0.1]]
+        },
+        {
+            "name": "frezon",
+            "delays": [[0.2, 0.2, 0.2, 0.3, 0.3, 0.2, 0.2, 0.2]]
+        },
+        {
+            "name": "frezon_old",
+            "delays": [[0.1, 0.1, 0.1, 0.1, 0.1, 0.1]]
+        },
+        {
+            "name": "fusion_gas",
+            "delays": [[0.1, 0.1, 0.1, 0.1, 0.1, 0.1]]
+        },
+        {
+            "name": "miasma",
+            "delays": [[0.2, 0.2, 0.2, 0.3, 0.3, 0.2, 0.2, 0.2]]
+        },
+        {
+            "name": "miasma_old",
+            "delays": [[0.22999999999999998, 0.22999999999999998, 0.22999999999999998, 0.22999999999999998, 0.22999999999999998, 0.22999999999999998]]},
+        {
+            "name": "nitrous_oxide",
+            "delays": [[0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1]]
+        },
+        {
+            "name": "nitrous_oxide_old",
+            "delays": [[0.2, 0.2, 0.2]]
+        },
+        {
+            "name": "nitryl",
+            "delays": [[0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1]]
+        },
+        {
+            "name": "nitryl_old",
+            "delays": [[0.1, 0.1, 0.1, 0.1]]
+        },
+        {
+            "name": "plasma",
+            "delays": [[0.1, 0.1, 0.1]]
+        },
+        {
+            "name": "plasma_old",
+            "delays": [[0.2, 0.2, 0.2]]
+        },
+        {
+            "name": "tritium",
+            "delays": [[0.1, 0.1, 0.1, 0.1, 0.1]]
+        },
+        {
+            "name": "tritium_old",
+            "delays": [[0.1, 0.1, 0.1, 0.1, 0.1]]
+        },
+        {
+            "name": "water_vapor",
+            "delays": [[0.2, 0.2, 0.2, 0.3, 0.3, 0.2, 0.2, 0.2]]
+        },
+        {
+            "name": "water_vapor_old",
+            "delays": [[0.2, 0.2, 0.2, 0.2, 0.2, 0.2]]
+        }
+    ]
+}

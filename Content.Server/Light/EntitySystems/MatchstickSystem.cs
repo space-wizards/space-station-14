@@ -107,10 +107,10 @@ namespace Content.Server.Light.EntitySystems
                 switch (component.CurrentState)
                 {
                     case SmokableState.Lit:
-                        _item.SetHeldPrefix(uid, "lit", item);
+                        _item.SetHeldPrefix(uid, "lit", component: item);
                         break;
                     default:
-                        _item.SetHeldPrefix(uid, "unlit", item);
+                        _item.SetHeldPrefix(uid, "unlit", component: item);
                         break;
                 }
             }

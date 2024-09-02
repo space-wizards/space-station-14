@@ -8,6 +8,8 @@ using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
+using Content.Shared.DeviceNetwork;
+using Content.Shared.Power;
 using Content.Shared.Tag;
 using Robust.Shared.Prototypes;
 
@@ -47,12 +49,12 @@ public sealed class AtmosMonitorSystem : EntitySystem
         SubscribeLocalEvent<AtmosMonitorComponent, AtmosDeviceEnabledEvent>(OnAtmosDeviceEnterAtmosphere);
     }
 
-    private void OnAtmosDeviceLeaveAtmosphere(EntityUid uid, AtmosMonitorComponent atmosMonitor, AtmosDeviceDisabledEvent args)
+    private void OnAtmosDeviceLeaveAtmosphere(EntityUid uid, AtmosMonitorComponent atmosMonitor, ref AtmosDeviceDisabledEvent args)
     {
         atmosMonitor.TileGas = null;
     }
 
-    private void OnAtmosDeviceEnterAtmosphere(EntityUid uid, AtmosMonitorComponent atmosMonitor, AtmosDeviceEnabledEvent args)
+    private void OnAtmosDeviceEnterAtmosphere(EntityUid uid, AtmosMonitorComponent atmosMonitor, ref AtmosDeviceEnabledEvent args)
     {
         atmosMonitor.TileGas = _atmosphereSystem.GetContainingMixture(uid, true);
     }
@@ -150,6 +152,7 @@ public sealed class AtmosMonitorSystem : EntitySystem
                 }
 
                 _deviceNetSystem.QueuePacket(uid, args.SenderAddress, payload);
+                Alert(uid, component.LastAlarmState);
                 break;
         }
     }
@@ -198,16 +201,12 @@ public sealed class AtmosMonitorSystem : EntitySystem
         }
     }
 
-    private void OnAtmosUpdate(EntityUid uid, AtmosMonitorComponent component, AtmosDeviceUpdateEvent args)
+    private void OnAtmosUpdate(EntityUid uid, AtmosMonitorComponent component, ref AtmosDeviceUpdateEvent args)
     {
         if (!this.IsPowered(uid, EntityManager))
             return;
 
-        // can't hurt
-        // (in case something is making AtmosDeviceUpdateEvents
-        // outside the typical device loop)
-        if (!TryComp<AtmosDeviceComponent>(uid, out var atmosDeviceComponent)
-            || atmosDeviceComponent.JoinedGrid == null)
+        if (args.Grid  == null)
             return;
 
         // if we're not monitoring atmos, don't bother

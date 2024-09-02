@@ -1,0 +1,19 @@
+<Control xmlns="https://spacestation14.io"
+         xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+         MaxWidth="400">
+    <PanelContainer>
+        <PanelContainer.PanelOverride>
+            <gfx:StyleBoxFlat 
+                BorderThickness="2" 
+                BorderColor="#464966"
+                BackgroundColor="#25252A"
+            />
+        </PanelContainer.PanelOverride>
+        <BoxContainer 
+            Orientation="Vertical"
+            RectClipContent="True"
+            Margin="4">
+            <RichTextLabel Name="RecipeTooltipLabel" HorizontalExpand="True" />
+        </BoxContainer>
+    </PanelContainer>
+</Control>

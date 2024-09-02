@@ -1,3 +1,4 @@
+using Content.Shared.Chemistry.Components;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Botany.Components;
@@ -90,4 +91,7 @@ public sealed partial class PlantHolderComponent : Component
 
     [ViewVariables(VVAccess.ReadWrite), DataField("solution")]
     public string SoilSolutionName = "soil";
+
+    [DataField]
+    public Entity<SolutionComponent>? SoilSolution = null;
 }

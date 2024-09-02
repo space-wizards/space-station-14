@@ -4,6 +4,29 @@
   name: camera
   description: A surveillance camera. It's watching you. Kinda.
   components:
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      # This exists for examine.
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.25
+      light:
+        shape:
+          !type:PhysShapeCircle
+          radius: 5
+        hard: false
+        mask:
+        - GhostImpassable
+  - type: LightOnCollide
+  - type: PointLight
+    enabled: false
+    radius: 5
+  - type: SlimPoweredLight
+    enabled: false
+  - type: StationAiVision
   - type: Clickable
   - type: InteractionOutline
   - type: Construction
@@ -33,6 +56,7 @@
     layers:
       - map: [ "enum.SurveillanceCameraVisualsKey.Layer" ]
         state: camera
+        cycle: true
   - type: Appearance
   - type: SurveillanceCameraVisuals
     sprites:
@@ -41,9 +65,9 @@
       InUse: camera_in_use
   - type: UserInterface
     interfaces:
-      - key: enum.SurveillanceCameraSetupUiKey.Camera
+      enum.SurveillanceCameraSetupUiKey.Camera:
         type: SurveillanceCameraSetupBoundUi
-      - key: enum.WiresUiKey.Key
+      enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
   - type: StaticPrice
     price: 200
@@ -63,7 +87,7 @@
             acts: [ "Destruction" ]
           - !type:PlaySoundBehavior
             sound:
-              path: /Audio/Effects/metalbreak.ogg
+              collection: MetalBreak
               params:
                 volume: -8
   placement:

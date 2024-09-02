@@ -47,7 +47,7 @@ public sealed class DockCommand : IConsoleCommand
         }
 
         var dockSystem = _entManager.System<DockingSystem>();
-        dockSystem.Dock(airlock1.Value, dock1, airlock2.Value, dock2);
+        dockSystem.Dock((airlock1.Value, dock1), (airlock2.Value, dock2));
 
         if (dock1.DockedWith == airlock2)
         {

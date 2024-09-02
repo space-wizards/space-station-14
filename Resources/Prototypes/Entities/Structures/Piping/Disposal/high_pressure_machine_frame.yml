@@ -1,6 +1,6 @@
 ﻿- type: entity
   id: DisposalMachineFrame
-  name: High Pressure Machine Frame
+  name: high pressure machine frame
   description: A machine frame made to withstand the amount of pressure used in the station's disposal system.
   placement:
     mode: SnapgridCenter
@@ -37,6 +37,9 @@
             !type:DamageTrigger
             damage: 100
           behaviors:
+            - !type:PlaySoundBehavior
+              sound:
+                collection: MetalBreak
             - !type:ChangeConstructionNodeBehavior
               node: start
             - !type:DoActsBehavior

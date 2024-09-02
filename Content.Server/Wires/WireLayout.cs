@@ -28,11 +28,13 @@ public sealed partial class WireLayoutPrototype : IPrototype, IInheritingPrototy
     ///     initialization)
     /// </summary>
     [DataField("dummyWires")]
+    [NeverPushInheritance]
     public int DummyWires { get; private set; } = default!;
 
     /// <summary>
     ///     All the valid IWireActions currently in this layout.
     /// </summary>
     [DataField("wires")]
+    [NeverPushInheritance]
     public List<IWireAction>? Wires { get; private set; }
 }

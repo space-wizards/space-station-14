@@ -1,0 +1,13 @@
+- type: entity
+  id: BaseRoomMarker
+  name: Room marker
+  parent: MarkerBase
+  suffix: Weh
+  components:
+  - type: RoomFill
+    size: 5,5
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Mobs/Aliens/elemental.rsi
+        state: alive

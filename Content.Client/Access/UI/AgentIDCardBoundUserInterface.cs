@@ -1,5 +1,8 @@
 using Content.Shared.Access.Systems;
+using Content.Shared.StatusIcon;
 using Robust.Client.GameObjects;
+using Robust.Client.UserInterface;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Access.UI
 {
@@ -18,16 +21,11 @@ namespace Content.Client.Access.UI
         {
             base.Open();
 
-            _window?.Dispose();
-            _window = new AgentIDCardWindow(this);
-            if (State != null)
-                UpdateState(State);
+            _window = this.CreateWindow<AgentIDCardWindow>();
 
-            _window.OpenCentered();
-
-            _window.OnClose += Close;
             _window.OnNameChanged += OnNameChanged;
             _window.OnJobChanged += OnJobChanged;
+            _window.OnJobIconChanged += OnJobIconChanged;
         }
 
         private void OnNameChanged(string newName)
@@ -40,9 +38,9 @@ namespace Content.Client.Access.UI
             SendMessage(new AgentIDCardJobChangedMessage(newJob));
         }
 
-        public void OnJobIconChanged(string newJobIcon)
+        public void OnJobIconChanged(ProtoId<JobIconPrototype> newJobIconId)
         {
-            SendMessage(new AgentIDCardJobIconChangedMessage(newJobIcon));
+            SendMessage(new AgentIDCardJobIconChangedMessage(newJobIconId));
         }
 
         /// <summary>
@@ -57,16 +55,7 @@ namespace Content.Client.Access.UI
 
             _window.SetCurrentName(cast.CurrentName);
             _window.SetCurrentJob(cast.CurrentJob);
-            _window.SetAllowedIcons(cast.Icons);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-            if (!disposing)
-                return;
-
-            _window?.Dispose();
+            _window.SetAllowedIcons(cast.CurrentJobIconId);
         }
     }
 }

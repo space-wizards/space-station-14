@@ -6,46 +6,14 @@ uniform highp vec2 renderScale;
 uniform highp float life;
 uniform highp float range;
 
-highp vec2 random(highp vec2 uv){
-    uv = vec2( dot(uv, vec2(127.1,311.7) ),
-               dot(uv, vec2(269.5,183.3) ) );
-    return -1.0 + 2.0 * fract(sin(uv) * 43758.5453123);
-}
-
-highp float noise(highp vec2 uv) {
-    highp vec2 uv_index = floor(uv);
-    highp vec2 uv_fract = fract(uv);
-
-    highp vec2 blur = smoothstep(0.0, 1.0, uv_fract);
-
-    return mix( mix( dot( random(uv_index + vec2(0.0,0.0) ), uv_fract - vec2(0.0,0.0) ),
-                     dot( random(uv_index + vec2(1.0,0.0) ), uv_fract - vec2(1.0,0.0) ), blur.x),
-                mix( dot( random(uv_index + vec2(0.0,1.0) ), uv_fract - vec2(0.0,1.0) ),
-                     dot( random(uv_index + vec2(1.0,1.0) ), uv_fract - vec2(1.0,1.0) ), blur.x), blur.y) * 0.5 + 0.5;
-}
-
-highp float fbm(highp vec2 uv) {
-    const int octaves = 6;
-    highp float amplitude = 0.5;
-    highp float frequency = 3.0;
-    highp float value = 0.0;
-
-    for(int i = 0; i < octaves; i++) {
-        value += amplitude * noise(frequency * uv);
-        amplitude *= 0.5;
-        frequency *= 2.0;
-    }
-    return value;
-}
-
 void fragment() {
 	highp vec2 finalCoords = (FRAGCOORD.xy - positionInput) / (renderScale * 32.0);
 	highp float distanceToCenter = length(finalCoords);
 	highp float nlife = pow(sin(clamp(life, 0.0, 1.0) * 3.141592), 0.5);
 	highp float on = ((range - distanceToCenter) / range);
 	highp float n = on;
-	highp vec2 fcOffset = vec2(fbm(finalCoords.xy + life / 2.0),fbm(finalCoords.yx + life / 2.0));
-	n *= fbm((finalCoords + fcOffset) / (nlife / (n * 1.5))) * 1.1;
+	highp vec2 fcOffset = vec2(zFBM(finalCoords.xy + life / 2.0),zFBM(finalCoords.yx + life / 2.0));
+	n *= zFBM((finalCoords + fcOffset) / (nlife / (n * 1.5))) * 1.1;
 	n *= clamp(nlife, 0.0, 1.0);
 	highp float a = 0.0; // Alpha
 	highp float p = 0.0; // Position between L and R stops

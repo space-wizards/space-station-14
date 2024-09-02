@@ -7,6 +7,7 @@
     snap:
     - Wallmount
   components:
+  - type: StationAiWhitelist
   - type: Transform
     anchored: true
   - type: WallMount
@@ -25,12 +26,15 @@
     ports:
       - Start
       - Timer
+  - type: DeviceLinkSink
+    ports:
+      - Trigger
   - type: ActivatableUI
     key: enum.SignalTimerUiKey.Key
   - type: UserInterface
     interfaces:
-    - key: enum.SignalTimerUiKey.Key
-      type: SignalTimerBoundUserInterface
+      enum.SignalTimerUiKey.Key:
+        type: SignalTimerBoundUserInterface
   - type: ApcPowerReceiver
     powerLoad: 100
   - type: Electrified
@@ -41,6 +45,14 @@
   - type: Construction
     graph: Timer
     node: signal
+    containers:
+    - board
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
+  - type: ContainerFill
+    containers:
+      board: [ SignalTimerElectronics ]
 
 - type: entity
   id: ScreenTimer
@@ -51,14 +63,24 @@
   - type: SignalTimer
     canEditLabel: true
   - type: TextScreenVisuals
+    color: FloralWhite
+    textOffset: 0,8
+    timerOffset: 0,8
+    textLength: 5
+    rows: 1
   - type: Sprite
     drawdepth: WallMountedItems
-    sprite: Structures/Wallmounts/textscreen.rsi
-    state: textscreen
+    sprite: Structures/Wallmounts/signalscreen.rsi
+    state: signalscreen
     noRot: true
   - type: Construction
     graph: Timer
     node: screen
+    containers:
+    - board
+  - type: ContainerFill
+    containers:
+      board: [ ScreenTimerElectronics ]
 
 - type: entity
   id: BrigTimer
@@ -71,11 +93,16 @@
   - type: Construction
     graph: Timer
     node: brig
+    containers:
+    - board
+  - type: ContainerFill
+    containers:
+      board: [ BrigTimerElectronics ]
 
 # Construction Frame
 
 - type: entity
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   id: TimerFrame
   name: timer frame
   description: A construction frame for a timer.
@@ -88,8 +115,8 @@
     anchored: true
   - type: Sprite
     drawdepth: WallMountedItems
-    sprite: Structures/Wallmounts/textscreen.rsi
-    state: textscreen
+    sprite: Structures/Wallmounts/signalscreen.rsi
+    state: signalscreen
   - type: Construction
     graph: Timer
     node: frame

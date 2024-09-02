@@ -25,12 +25,6 @@
   beginMonth: February
 
 - type: holiday
-  id: TravisScottDay
-  name: holiday-name-travis-scott-day
-  beginDay: 10
-  beginMonth: February
-
-- type: holiday
   id: ValentinesDay
   name: holiday-name-valentines-day
   beginDay: 13
@@ -74,8 +68,8 @@
   beginMonth: March
 
 - type: holiday
-  id: holiday-name-easter
-  name: Easter
+  id: Easter
+  name: holiday-name-easter
   shouldCelebrate:
     !type:Computus { }
 
@@ -326,8 +320,8 @@
     weekday: Thursday
 
 - type: holiday
-  id: holiday-name-halloween
-  name: Halloween
+  id: Halloween
+  name: holiday-name-halloween
   beginDay: 31
   beginMonth: October
   greet:
@@ -389,8 +383,8 @@
     weekday: Thursday
 
 - type: holiday
-  id: holiday-name-sinterklaas
-  name: Sinterklaas
+  id: Sinterklaas
+  name: holiday-name-sinterklaas
   beginDay: 5
   beginMonth: December
 
@@ -413,8 +407,8 @@
   beginMonth: December
 
 - type: holiday
-  id: holiday-name-christmas
-  name: Christmas
+  id: Christmas
+  name: holiday-name-christmas
   beginDay: 24
   endDay: 26
   beginMonth: December
@@ -443,3 +437,10 @@
   name: holiday-name-friday-thirteenth
   shouldCelebrate:
     !type:FridayThirteenth { }
+
+- type: holiday
+  id: PrideMonth
+  name: holiday-name-pride-month
+  beginDay: 1
+  endDay: 31
+  beginMonth: June

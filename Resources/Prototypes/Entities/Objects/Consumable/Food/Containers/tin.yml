@@ -88,7 +88,8 @@
     - sweet
     - funny
   - type: Food
-    trash: FoodTinPeachesTrash
+    trash: 
+    - FoodTinPeachesTrash
   - type: Tag
     tags:
     - Fruit
@@ -105,12 +106,13 @@
 - type: entity
   parent: FoodTinPeaches
   id: FoodTinPeachesMaint
-  name: Maintenance Peaches
+  name: maintenance peaches
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/Tins/maint_peaches.rsi
   - type: Food
-    trash: FoodTinPeachesMaintTrash
+    trash: 
+    - FoodTinPeachesMaintTrash
 
 # only exists for backwards compatibility with a few maps, nothing else uses it
 - type: entity
@@ -128,7 +130,7 @@
 - type: entity
   parent: FoodTinBaseTrash
   id: FoodTinPeachesMaintTrash
-  name: Maintenance Peaches
+  name: maintenance peaches
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/Tins/maint_peaches.rsi
@@ -147,7 +149,8 @@
     - salty
     - cheap
   - type: Food
-    trash: FoodTinBeansTrash
+    trash: 
+    - FoodTinBeansTrash
 
 - type: entity
   parent: FoodTinBaseTrash
@@ -176,7 +179,8 @@
     - salty
     - cheap
   - type: Food
-    trash: FoodTinMRETrash
+    trash: 
+    - FoodTinMRETrash
   - type: Tag
     tags:
     - Meat

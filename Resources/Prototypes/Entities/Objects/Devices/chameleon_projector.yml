@@ -1,0 +1,69 @@
+- type: entity
+  parent: [BaseItem, BaseSyndicateContraband]
+  id: ChameleonProjector
+  name: chameleon projector
+  description: Holoparasite technology used to create a hard-light replica of any object around you. Disguise is destroyed when picked up or deactivated.
+  components:
+  - type: Sprite
+    sprite: /Textures/Objects/Devices/chameleon_projector.rsi
+    state: icon
+  - type: ChameleonProjector
+    whitelist:
+      components:
+      - Anchorable
+      - Item
+    blacklist:
+      components:
+      - ChameleonDisguise # no becoming kleiner
+      - InsideEntityStorage # no clark kent going in phone booth and becoming superman
+      - MindContainer # no
+      - Pda # PDAs currently make you invisible /!\
+    polymorph:
+      entity: ChameleonDisguise
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: BaseMob
+  id: ChameleonDisguise
+  name: Urist McKleiner
+  components:
+  # this and the name/desc get replaced, this is just placeholder incase something goes wrong
+  - type: Sprite
+    sprite: /Textures/Mobs/Species/Human/parts.rsi
+    state: full
+  # so people can attempt to pick it up
+  - type: Item
+  # so it can take damage
+  # projector system sets health to be proportional to mass
+  - type: Damageable
+  - type: MobState
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      1: Critical
+      200: Dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 1 # precise movement for the perfect spot
+    baseSprintSpeed: 5 # the jig is up
+  - type: ChameleonDisguise
+
+# actions
+- type: entity
+  id: ActionDisguiseNoRot
+  name: Toggle Rotation
+  description: Use this to prevent your disguise from rotating, making it easier to hide in some scenarios.
+  components:
+  - type: InstantAction
+    icon: Interface/VerbIcons/refresh.svg.192dpi.png
+    event: !type:DisguiseToggleNoRotEvent
+
+- type: entity
+  id: ActionDisguiseAnchor
+  name: Toggle Anchored
+  description: For many objects you will want to be anchored to not be completely obvious.
+  components:
+  - type: InstantAction
+    icon:
+      sprite: Objects/Tools/wrench.rsi
+      state: icon
+    event: !type:DisguiseToggleAnchoredEvent

@@ -13,13 +13,16 @@ public static class ServerPackaging
     private static readonly List<PlatformReg> Platforms = new()
     {
         new PlatformReg("win-x64", "Windows", true),
+        new PlatformReg("win-arm64", "Windows", true),
         new PlatformReg("linux-x64", "Linux", true),
         new PlatformReg("linux-arm64", "Linux", true),
         new PlatformReg("osx-x64", "MacOS", true),
+        new PlatformReg("osx-arm64", "MacOS", true),
         // Non-default platforms (i.e. for Watchdog Git)
         new PlatformReg("win-x86", "Windows", false),
         new PlatformReg("linux-x86", "Linux", false),
         new PlatformReg("linux-arm", "Linux", false),
+        new PlatformReg("freebsd-x64", "FreeBSD", false),
     };
 
     private static List<string> PlatformRids => Platforms
@@ -69,7 +72,7 @@ public static class ServerPackaging
         "zh-Hant"
     };
 
-    public static async Task PackageServer(bool skipBuild, bool hybridAcz, IPackageLogger logger, List<string>? platforms = null)
+    public static async Task PackageServer(bool skipBuild, bool hybridAcz, IPackageLogger logger, string configuration, List<string>? platforms = null)
     {
         if (platforms == null)
         {
@@ -82,7 +85,7 @@ public static class ServerPackaging
             // Rather than hosting the client ZIP on the watchdog or on a separate server,
             //  Hybrid ACZ uses the ACZ hosting functionality to host it as part of the status host,
             //  which means that features such as automatic UPnP forwarding still work properly.
-            await ClientPackaging.PackageClient(skipBuild, logger);
+            await ClientPackaging.PackageClient(skipBuild, configuration, logger);
         }
 
         // Good variable naming right here.
@@ -91,13 +94,13 @@ public static class ServerPackaging
             if (!platforms.Contains(platform.Rid))
                 continue;
 
-            await BuildPlatform(platform, skipBuild, hybridAcz, logger);
+            await BuildPlatform(platform, skipBuild, hybridAcz, configuration, logger);
         }
     }
 
-    private static async Task BuildPlatform(PlatformReg platform, bool skipBuild, bool hybridAcz, IPackageLogger logger)
+    private static async Task BuildPlatform(PlatformReg platform, bool skipBuild, bool hybridAcz, string configuration, IPackageLogger logger)
     {
-        logger.Info($"Building project for {platform}...");
+        logger.Info($"Building project for {platform.TargetOs}...");
 
         if (!skipBuild)
         {
@@ -108,7 +111,7 @@ public static class ServerPackaging
                 {
                     "build",
                     Path.Combine("Content.Server", "Content.Server.csproj"),
-                    "-c", "Release",
+                    "-c", configuration,
                     "--nologo",
                     "/v:m",
                     $"/p:TargetOs={platform.TargetOs}",
@@ -118,7 +121,7 @@ public static class ServerPackaging
                 }
             });
 
-            await PublishClientServer(platform.Rid, platform.TargetOs);
+            await PublishClientServer(platform.Rid, platform.TargetOs, configuration);
         }
 
         logger.Info($"Packaging {platform.Rid} server...");
@@ -137,7 +140,7 @@ public static class ServerPackaging
         logger.Info($"Finished packaging server in {sw.Elapsed}");
     }
 
-    private static async Task PublishClientServer(string runtime, string targetOs)
+    private static async Task PublishClientServer(string runtime, string targetOs, string configuration)
     {
         await ProcessHelpers.RunCheck(new ProcessStartInfo
         {
@@ -147,7 +150,7 @@ public static class ServerPackaging
                 "publish",
                 "--runtime", runtime,
                 "--no-self-contained",
-                "-c", "Release",
+                "-c", configuration,
                 $"/p:TargetOs={targetOs}",
                 "/p:FullRelease=True",
                 "/m",

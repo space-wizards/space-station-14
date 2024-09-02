@@ -1,5 +1,6 @@
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
+using Content.Shared.EntityEffects;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
@@ -59,7 +60,7 @@ namespace Content.Shared.Chemistry.Reaction
         /// <summary>
         /// Effects to be triggered when the reaction occurs.
         /// </summary>
-        [DataField("effects", serverOnly: true)] public List<ReagentEffect> Effects = new();
+        [DataField("effects", serverOnly: true)] public List<EntityEffect> Effects = new();
 
         /// <summary>
         /// How dangerous is this effect? Stuff like bicaridine should be low, while things like methamphetamine
@@ -82,6 +83,17 @@ namespace Content.Shared.Chemistry.Reaction
         /// </summary>
         [DataField("priority")]
         public int Priority;
+
+        /// <summary>
+        /// Determines whether or not this reaction creates a new chemical (false) or if it's a breakdown for existing chemicals (true)
+        /// Used in the chemistry guidebook to make divisions between recipes and reaction sources.
+        /// </summary>
+        /// <example>
+        /// Mixing together two reagents to get a third -> false
+        /// Heating a reagent to break it down into 2 different ones -> true
+        /// </example>
+        [DataField]
+        public bool Source;
 
         /// <summary>
         ///     Comparison for creating a sorted set of reactions. Determines the order in which reactions occur.

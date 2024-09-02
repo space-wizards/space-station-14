@@ -15,7 +15,7 @@
           true
     - type: NpcFactionMember
       factions:
-        - SimpleHostile
+      - Dragon
     - type: Sprite
       drawdepth: Mobs
       sprite: Mobs/Aliens/Carps/space.rsi
@@ -54,6 +54,9 @@
       spawned:
         - id: FoodMeatFish
           amount: 2
+        - id: MaterialToothSpaceCarp1
+          amount: 1
+          maxAmount: 4
     - type: MeleeWeapon
       altDisarm: false
       angle: 0
@@ -149,13 +152,6 @@
   parent: MobCarp
   suffix: "Salvage Ruleset"
   components:
-    - type: GhostRole
-      prob: 0.33
-      name: ghost-role-information-salvage-carp-name
-      allowMovement: true
-      allowSpeech: true
-      description: ghost-role-information-salvage-carp-description
-    - type: GhostTakeoverAvailable
     - type: SalvageMobRestrictions
 
 - type: entity
@@ -170,6 +166,9 @@
       makeSentient: true
       name: ghost-role-information-sentient-carp-name
       description: ghost-role-information-sentient-carp-description
+      rules: ghost-role-information-space-dragon-summoned-carp-rules
+      raffle:
+        settings: short
     - type: GhostTakeoverAvailable
     - type: HTN
       rootTask:
@@ -238,6 +237,9 @@
       spawned:
         - id: FoodMeatFish
           amount: 4
+        - id: MaterialToothSharkminnow1
+          amount: 1
+          maxAmount: 3
     - type: MeleeWeapon
       damage:
         types:
@@ -249,11 +251,4 @@
   parent: MobShark
   suffix: "Salvage Ruleset"
   components:
-    - type: GhostRole
-      prob: 0.2
-      name: ghost-role-information-salvage-shark-name
-      allowMovement: true
-      allowSpeech: true
-      description: ghost-role-information-salvage-shark-description
-    - type: GhostTakeoverAvailable
     - type: SalvageMobRestrictions

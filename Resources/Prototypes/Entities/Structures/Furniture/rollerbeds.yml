@@ -1,6 +1,6 @@
 - type: entity
   id: RollerBed
-  parent: [BaseItem, BaseFoldable]
+  parent: [BaseItem, BaseDeployFoldable]
   name: rollerbed
   description: Used to carry patients around without damaging them.
   components:
@@ -22,7 +22,8 @@
         visible: false
     - type: MovedByPressure
     - type: DamageOnHighSpeedImpact
-      soundHit: /Audio/Effects/bang.ogg
+      soundHit:
+        collection: MetalThud
     - type: InteractionOutline
     - type: Physics
     - type: Fixtures
@@ -54,6 +55,7 @@
       rotation: -90
       buckleOffset: "0,0.15"
       unbuckleOffset: "0,0.15"
+      buckleOnInteractHand: False
     - type: Appearance
     - type: GenericVisualizer
       visuals:
@@ -69,7 +71,7 @@
             True: {visible: false}
             False: {visible: true}
     - type: StaticPrice
-      price: 200
+      price: 120
 
 - type: entity
   parent: RollerBed
@@ -78,6 +80,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Strap
+    enabled: False
 
 - type: entity
   id: CheapRollerBed
@@ -104,6 +108,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Strap
+    enabled: False
 
 - type: entity
   id: EmergencyRollerBed
@@ -130,3 +136,5 @@
   components:
   - type: Foldable
     folded: true
+  - type: Strap
+    enabled: False

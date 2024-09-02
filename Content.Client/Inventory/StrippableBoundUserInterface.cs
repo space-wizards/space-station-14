@@ -13,6 +13,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Input;
 using Content.Shared.Inventory;
+using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Strip.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
@@ -20,7 +21,6 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
 using static Content.Client.Inventory.ClientInventorySystem;
 using static Robust.Client.UserInterface.Control;
 
@@ -29,10 +29,9 @@ namespace Content.Client.Inventory
     [UsedImplicitly]
     public sealed class StrippableBoundUserInterface : BoundUserInterface
     {
-        [Dependency] private readonly IPrototypeManager _protoMan = default!;
         [Dependency] private readonly IUserInterfaceManager _ui = default!;
-        private readonly ExamineSystem _examine = default!;
-        private readonly InventorySystem _inv = default!;
+        private readonly ExamineSystem _examine;
+        private readonly InventorySystem _inv;
         private readonly SharedCuffableSystem _cuffable;
 
         [ViewVariables]
@@ -42,7 +41,7 @@ namespace Content.Client.Inventory
         public const string HiddenPocketEntityId = "StrippingHiddenEntity";
 
         [ViewVariables]
-        private readonly StrippingMenu? _strippingMenu;
+        private StrippingMenu? _strippingMenu;
 
         [ViewVariables]
         private readonly EntityUid _virtualHiddenEntity;
@@ -52,29 +51,30 @@ namespace Content.Client.Inventory
             _examine = EntMan.System<ExamineSystem>();
             _inv = EntMan.System<InventorySystem>();
             _cuffable = EntMan.System<SharedCuffableSystem>();
-
-            var title = Loc.GetString("strippable-bound-user-interface-stripping-menu-title", ("ownerName", Identity.Name(Owner, EntMan)));
-            _strippingMenu = new StrippingMenu(title, this);
-            _strippingMenu.OnClose += Close;
             _virtualHiddenEntity = EntMan.SpawnEntity(HiddenPocketEntityId, MapCoordinates.Nullspace);
         }
 
         protected override void Open()
         {
             base.Open();
+
+            _strippingMenu = this.CreateWindow<StrippingMenu>();
+            _strippingMenu.OnDirty += UpdateMenu;
+            _strippingMenu.Title = Loc.GetString("strippable-bound-user-interface-stripping-menu-title", ("ownerName", Identity.Name(Owner, EntMan)));
+
             _strippingMenu?.OpenCenteredLeft();
         }
 
         protected override void Dispose(bool disposing)
         {
-            base.Dispose(disposing);
-
-            EntMan.DeleteEntity(_virtualHiddenEntity);
-
             if (!disposing)
                 return;
 
-            _strippingMenu?.Dispose();
+            if (_strippingMenu != null)
+                _strippingMenu.OnDirty -= UpdateMenu;
+
+            EntMan.DeleteEntity(_virtualHiddenEntity);
+            base.Dispose(disposing);
         }
 
         public void DirtyMenu()
@@ -159,7 +159,7 @@ namespace Content.Client.Inventory
 
             button.Pressed += SlotPressed;
 
-            if (EntMan.TryGetComponent<HandVirtualItemComponent>(hand.HeldEntity, out var virt))
+            if (EntMan.TryGetComponent<VirtualItemComponent>(hand.HeldEntity, out var virt))
             {
                 button.Blocked = true;
                 if (EntMan.TryGetComponent<CuffableComponent>(Owner, out var cuff) && _cuffable.GetAllCuffs(cuff).Contains(virt.BlockingEntity))
@@ -219,19 +219,19 @@ namespace Content.Client.Inventory
 
             if (entity == null)
             {
-                button.SpriteView.SetEntity(null);
+                button.SetEntity(null);
                 return;
             }
 
             EntityUid? viewEnt;
-            if (EntMan.TryGetComponent<HandVirtualItemComponent>(entity, out var virt))
+            if (EntMan.TryGetComponent<VirtualItemComponent>(entity, out var virt))
                 viewEnt = EntMan.HasComponent<SpriteComponent>(virt.BlockingEntity) ? virt.BlockingEntity : null;
             else if (EntMan.HasComponent<SpriteComponent>(entity))
                 viewEnt = entity;
             else
                 return;
 
-            button.SpriteView.SetEntity(viewEnt);
+            button.SetEntity(viewEnt);
         }
     }
 }

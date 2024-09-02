@@ -42,7 +42,7 @@
 - type: entity
   name: pinpointer
   id: PinpointerNuclear
-  parent: PinpointerBase
+  parent: [ PinpointerBase, BaseCommandContraband ]
   components:
   - type: Pinpointer
     component: NukeDisk
@@ -52,8 +52,16 @@
   name: syndicate pinpointer
   description: Produced specifically for nuclear operative missions, get that disk!
   id: PinpointerSyndicateNuclear
-  parent: PinpointerBase
+  parent: [ PinpointerBase, BaseSyndicateContraband ]
   components:
+  - type: Sprite
+    layers:
+    - state: pinpointer-syndicate
+      map: ["enum.PinpointerLayers.Base"]
+    - state: pinonnull
+      map: ["enum.PinpointerLayers.Screen"]
+      shader: unshaded
+      visible: false
   - type: Icon
     state: pinpointer-syndicate
   - type: Pinpointer
@@ -66,11 +74,19 @@
   id: PinpointerUniversal
   parent: PinpointerBase
   components:
-   - type: Icon
-     state: pinpointer-way
-   - type: Pinpointer
-     updateTargetName: true
-     canRetarget: true
+  - type: Sprite
+    layers:
+    - state: pinpointer-way
+      map: ["enum.PinpointerLayers.Base"]
+    - state: pinonnull
+      map: ["enum.PinpointerLayers.Screen"]
+      shader: unshaded
+      visible: false
+  - type: Icon
+    state: pinpointer-way
+  - type: Pinpointer
+    updateTargetName: true
+    canRetarget: true
 
 - type: entity
   parent: PinpointerBase
@@ -79,8 +95,16 @@
   id: PinpointerStation
   suffix: Station
   components:
+  - type: Sprite
+    layers:
+    - state: pinpointer-station
+      map: ["enum.PinpointerLayers.Base"]
+    - state: pinonnull
+      map: ["enum.PinpointerLayers.Screen"]
+      shader: unshaded
+      visible: false
   - type: Icon
     state: pinpointer-station
   - type: Pinpointer
-    component: BecomesStation
+    component: ResearchServer
     targetName: the station

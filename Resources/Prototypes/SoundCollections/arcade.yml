@@ -1,0 +1,11 @@
+- type: soundCollection
+  id: ArcadeNoise
+  files:
+    - /Audio/Machines/Arcade/hahaha.ogg
+    - /Audio/Machines/Arcade/pew_pew.ogg
+    - /Audio/Machines/Arcade/sting_01.ogg
+    - /Audio/Machines/Arcade/sting_02.ogg
+    - /Audio/Machines/Arcade/sting_03.ogg
+    - /Audio/Machines/Arcade/sting_04.ogg
+    - /Audio/Machines/Arcade/sting_05.ogg
+    - /Audio/Machines/Arcade/sting_06.ogg

@@ -30,6 +30,10 @@
     - AirDanger
     - AirWarning
     - AirNormal
+    lastSignals:
+      AirDanger: false
+      AirWarning: false
+      AirNormal: false
   - type: AtmosAlarmable
     syncWith:
     - AirAlarm
@@ -53,10 +57,10 @@
   - type: InteractionOutline
   - type: UserInterface
     interfaces:
-    - key: enum.SharedAirAlarmInterfaceKey.Key
-      type: AirAlarmBoundUserInterface
-    - key: enum.WiresUiKey.Key
-      type: WiresBoundUserInterface
+      enum.SharedAirAlarmInterfaceKey.Key:
+        type: AirAlarmBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
   - type: WiresPanel
   - type: Wires
     boardName: wires-board-name-airalarm
@@ -102,7 +106,7 @@
             acts: [ "Destruction" ]
           - !type:PlaySoundBehavior
             sound:
-              path: /Audio/Effects/metalbreak.ogg
+              collection: MetalGlassBreak
               params:
                 volume: -4
 

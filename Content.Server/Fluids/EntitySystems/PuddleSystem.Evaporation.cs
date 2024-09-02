@@ -1,6 +1,4 @@
-using Content.Server.Fluids.Components;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids.Components;
 
@@ -10,17 +8,9 @@ public sealed partial class PuddleSystem
 {
     private static readonly TimeSpan EvaporationCooldown = TimeSpan.FromSeconds(1);
 
-    [ValidatePrototypeId<ReagentPrototype>]
-    private const string Water = "Water";
-
-    [ValidatePrototypeId<ReagentPrototype>]
-    private const string SoapyWater = "SoapyWater";
-
-    public static string[] EvaporationReagents = new[] { Water, SoapyWater };
-
-    private void OnEvaporationMapInit(EntityUid uid, EvaporationComponent component, MapInitEvent args)
+    private void OnEvaporationMapInit(Entity<EvaporationComponent> entity, ref MapInitEvent args)
     {
-        component.NextTick = _timing.CurTime + EvaporationCooldown;
+        entity.Comp.NextTick = _timing.CurTime + EvaporationCooldown;
     }
 
     private void UpdateEvaporation(EntityUid uid, Solution solution)
@@ -52,7 +42,7 @@ public sealed partial class PuddleSystem
 
             evaporation.NextTick += EvaporationCooldown;
 
-            if (!_solutionContainerSystem.TryGetSolution(uid, puddle.SolutionName, out var puddleSolution))
+            if (!_solutionContainerSystem.ResolveSolution(uid, puddle.SolutionName, ref puddle.Solution, out var puddleSolution))
                 continue;
 
             var reagentTick = evaporation.EvaporationAmount * EvaporationCooldown.TotalSeconds;
@@ -66,10 +56,5 @@ public sealed partial class PuddleSystem
                 QueueDel(uid);
             }
         }
-    }
-
-    public bool CanFullyEvaporate(Solution solution)
-    {
-        return solution.GetTotalPrototypeQuantity(EvaporationReagents) == solution.Volume;
     }
 }

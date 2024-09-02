@@ -1,7 +1,8 @@
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Trinary.Components;
+using Content.Shared.Localizations;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.Atmos.UI
 {
@@ -25,14 +26,7 @@ namespace Content.Client.Atmos.UI
         {
             base.Open();
 
-            _window = new GasMixerWindow();
-
-            if (State != null)
-                UpdateState(State);
-
-            _window.OpenCentered();
-
-            _window.OnClose += Close;
+            _window = this.CreateWindow<GasMixerWindow>();
 
             _window.ToggleStatusButtonPressed += OnToggleStatusButtonPressed;
             _window.MixerOutputPressureChanged += OnMixerOutputPressurePressed;
@@ -47,7 +41,7 @@ namespace Content.Client.Atmos.UI
 
         private void OnMixerOutputPressurePressed(string value)
         {
-            var pressure = float.TryParse(value, out var parsed) ? parsed : 0f;
+            var pressure = UserInputParser.TryFloat(value, out var parsed) ? parsed : 0f;
             if (pressure > MaxPressure)
                 pressure = MaxPressure;
 
@@ -57,7 +51,7 @@ namespace Content.Client.Atmos.UI
         private void OnMixerSetPercentagePressed(string value)
         {
             // We don't need to send both nodes because it's just 100.0f - node
-            var node = float.TryParse(value, out var parsed) ? parsed : 1.0f;
+            var node = UserInputParser.TryFloat(value, out var parsed) ? parsed : 1.0f;
 
             node = Math.Clamp(node, 0f, 100.0f);
 
@@ -81,13 +75,6 @@ namespace Content.Client.Atmos.UI
             _window.SetMixerStatus(cast.Enabled);
             _window.SetOutputPressure(cast.OutputPressure);
             _window.SetNodePercentages(cast.NodeOne);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-            if (!disposing) return;
-            _window?.Dispose();
         }
     }
 }

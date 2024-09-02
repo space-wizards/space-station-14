@@ -29,7 +29,8 @@
     solutions:
       drink: # This solution name and target volume is hard-coded in ChemMasterComponent
         maxVol: 30
-        canMix: true
+  - type: MixableSolution
+    solution: drink
   - type: RefillableSolution
     solution: drink
   - type: DrainableSolution
@@ -41,10 +42,12 @@
   - type: SolutionTransfer
     maxTransferAmount: 30
     canChangeTransferAmount: true
+  - type: SolutionItemStatus
+    solution: drink
   - type: UserInterface
     interfaces:
-    - key: enum.TransferAmountUiKey.Key
-      type: TransferAmountBoundUserInterface
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
   - type: Item
     size: Tiny
     sprite: Objects/Specific/Chemistry/beaker.rsi
@@ -90,6 +93,7 @@
         transferForensics: true
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: DnaSubstanceTrace
 
 - type: entity
   parent: BaseChemistryEmptyBottle
@@ -216,7 +220,7 @@
   id: NocturineChemistryBottle
   name: nocturine bottle
   description: This will make someone fall down almost immediately. Hard to overdose on.
-  parent: BaseChemistryBottleFilled
+  parent: [BaseChemistryBottleFilled, BaseSyndicateContraband]
   components:
   - type: SolutionContainerManager
     solutions:

@@ -8,6 +8,7 @@
     sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/green.rsi
     layers:
       - state: closed
+        map: ["closeLayer"]
       - state: open
         map: ["openLayer"]
   - type: Item
@@ -31,7 +32,7 @@
 - type: entity
   id: CigCartonRed
   parent: CigCartonGreen
-  name: Dromedaryco carton
+  name: DromedaryCo carton
   description: A carton containing 6 packets of Dromedarycos.
   components:
   - type: Sprite

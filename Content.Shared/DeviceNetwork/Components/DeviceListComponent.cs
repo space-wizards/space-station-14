@@ -33,4 +33,7 @@ public sealed partial class DeviceListComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField, AutoNetworkedField]
     public bool HandleIncomingPackets;
+
+    [DataField, Access(typeof(SharedNetworkConfiguratorSystem))]
+    public HashSet<EntityUid> Configurators = new();
 }

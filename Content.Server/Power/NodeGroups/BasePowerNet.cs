@@ -22,6 +22,8 @@ public abstract class BasePowerNet<TNetType> : BaseNetConnectorNodeGroup<TNetTyp
         PowerNetSystem = entMan.EntitySysManager.GetEntitySystem<PowerNetSystem>();
     }
 
+    public bool IsConnectedNetwork => NodeCount > 1;
+
     public void AddConsumer(PowerConsumerComponent consumer)
     {
         DebugTools.Assert(consumer.NetworkLoad.LinkedNetwork == default);

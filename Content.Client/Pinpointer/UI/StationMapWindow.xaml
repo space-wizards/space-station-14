@@ -2,6 +2,24 @@
                       xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                       xmlns:ui="clr-namespace:Content.Client.Pinpointer.UI"
                       Title="{Loc 'station-map-window-title'}"
-                      Resizable="False">
-    <ui:NavMapControl Name="NavMapScreen"/>
+                      Resizable="False"
+                      SetSize="668 713"
+                      MinSize="668 713">
+    <BoxContainer Orientation="Vertical">
+        <BoxContainer Orientation="Horizontal"  HorizontalExpand="True" Margin="0 8 0 10" VerticalAlignment="Top">
+            <ui:NavMapControl Name="NavMapScreen"/>
+        </BoxContainer>
+
+        <!-- Footer -->
+        <BoxContainer Orientation="Vertical">
+            <PanelContainer StyleClasses="LowDivider" />
+            <BoxContainer Orientation="Horizontal" Margin="10 0 5 0" VerticalAlignment="Bottom">
+                <Label Text="{Loc 'station-map-user-interface-flavor-left'}" StyleClasses="WindowFooterText" />
+                <Label Text="{Loc 'station-map-user-interface-flavor-right'}" StyleClasses="WindowFooterText"
+                        HorizontalAlignment="Right" HorizontalExpand="True"  Margin="0 0 2 0" />
+                <TextureRect StyleClasses="NTLogoDark" Stretch="KeepAspectCentered"
+                        VerticalAlignment="Center" HorizontalAlignment="Right" SetSize="19 19"/>
+            </BoxContainer>
+        </BoxContainer>
+    </BoxContainer>
 </controls:FancyWindow>

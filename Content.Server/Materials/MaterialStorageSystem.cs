@@ -5,10 +5,10 @@ using Content.Shared.Popups;
 using Content.Shared.Stacks;
 using Content.Server.Power.Components;
 using Content.Server.Stack;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Construction;
 using Content.Shared.Database;
 using JetBrains.Annotations;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -22,6 +22,7 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
 {
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly StackSystem _stackSystem = default!;
@@ -30,6 +31,8 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
     {
         base.Initialize();
         SubscribeLocalEvent<MaterialStorageComponent, MachineDeconstructedEvent>(OnDeconstructed);
+
+        SubscribeAllEvent<EjectMaterialMessage>(OnEjectMessage);
     }
 
     private void OnDeconstructed(EntityUid uid, MaterialStorageComponent component, MachineDeconstructedEvent args)
@@ -40,6 +43,48 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
         foreach (var (material, amount) in component.Storage)
         {
             SpawnMultipleFromMaterial(amount, material, Transform(uid).Coordinates);
+        }
+    }
+
+    private void OnEjectMessage(EjectMaterialMessage msg, EntitySessionEventArgs args)
+    {
+        if (args.SenderSession.AttachedEntity is not { } player)
+            return;
+
+        var uid = GetEntity(msg.Entity);
+
+        if (!TryComp<MaterialStorageComponent>(uid, out var component))
+            return;
+
+        if (!Exists(uid))
+            return;
+
+        if (!_actionBlocker.CanInteract(player, uid))
+            return;
+
+        if (!component.CanEjectStoredMaterials || !_prototypeManager.TryIndex<MaterialPrototype>(msg.Material, out var material))
+            return;
+
+        var volume = 0;
+
+        if (material.StackEntity != null)
+        {
+            if (!_prototypeManager.Index<EntityPrototype>(material.StackEntity).TryGetComponent<PhysicalCompositionComponent>(out var composition))
+                return;
+
+            var volumePerSheet = composition.MaterialComposition.FirstOrDefault(kvp => kvp.Key == msg.Material).Value;
+            var sheetsToExtract = Math.Min(msg.SheetsToExtract, _stackSystem.GetMaxCount(material.StackEntity));
+
+            volume = sheetsToExtract * volumePerSheet;
+        }
+
+        if (volume <= 0 || !TryChangeMaterialAmount(uid, msg.Material, -volume))
+            return;
+
+        var mats = SpawnMultipleFromMaterial(volume, material, Transform(uid).Coordinates, out _);
+        foreach (var mat in mats.Where(mat => !TerminatingOrDeleted(mat)))
+        {
+            _stackSystem.TryMergeToContacts(mat);
         }
     }
 
@@ -91,7 +136,7 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
         overflowMaterial = 0;
         if (!_prototypeManager.TryIndex<MaterialPrototype>(material, out var stackType))
         {
-            Logger.Error("Failed to index material prototype " + material);
+            Log.Error("Failed to index material prototype " + material);
             return new List<EntityUid>();
         }
 

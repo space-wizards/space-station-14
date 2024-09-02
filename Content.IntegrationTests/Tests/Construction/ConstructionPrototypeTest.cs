@@ -58,13 +58,17 @@ namespace Content.IntegrationTests.Tests.Construction
 
             var protoMan = server.ResolveDependency<IPrototypeManager>();
 
-            foreach (var proto in protoMan.EnumeratePrototypes<ConstructionPrototype>())
+            await server.WaitAssertion(() =>
             {
-                var start = proto.StartNode;
-                var graph = protoMan.Index<ConstructionGraphPrototype>(proto.Graph);
+                foreach (var proto in protoMan.EnumeratePrototypes<ConstructionPrototype>())
+                {
+                    var start = proto.StartNode;
+                    var graph = protoMan.Index<ConstructionGraphPrototype>(proto.Graph);
 
-                Assert.That(graph.Nodes.ContainsKey(start), $"Found no startNode \"{start}\" on graph \"{graph.ID}\" for construction prototype \"{proto.ID}\"!");
-            }
+                    Assert.That(graph.Nodes.ContainsKey(start),
+                        $"Found no startNode \"{start}\" on graph \"{graph.ID}\" for construction prototype \"{proto.ID}\"!");
+                }
+            });
             await pair.CleanReturnAsync();
         }
 
@@ -76,13 +80,17 @@ namespace Content.IntegrationTests.Tests.Construction
 
             var protoMan = server.ResolveDependency<IPrototypeManager>();
 
-            foreach (var proto in protoMan.EnumeratePrototypes<ConstructionPrototype>())
+            await server.WaitAssertion(() =>
             {
-                var target = proto.TargetNode;
-                var graph = protoMan.Index<ConstructionGraphPrototype>(proto.Graph);
+                foreach (var proto in protoMan.EnumeratePrototypes<ConstructionPrototype>())
+                {
+                    var target = proto.TargetNode;
+                    var graph = protoMan.Index<ConstructionGraphPrototype>(proto.Graph);
 
-                Assert.That(graph.Nodes.ContainsKey(target), $"Found no targetNode \"{target}\" on graph \"{graph.ID}\" for construction prototype \"{proto.ID}\"!");
-            }
+                    Assert.That(graph.Nodes.ContainsKey(target),
+                        $"Found no targetNode \"{target}\" on graph \"{graph.ID}\" for construction prototype \"{proto.ID}\"!");
+                }
+            });
             await pair.CleanReturnAsync();
         }
 
@@ -92,7 +100,6 @@ namespace Content.IntegrationTests.Tests.Construction
             await using var pair = await PoolManager.GetServerClient();
             var server = pair.Server;
 
-            var entMan = server.ResolveDependency<IEntityManager>();
             var protoMan = server.ResolveDependency<IPrototypeManager>();
             var compFact = server.ResolveDependency<IComponentFactory>();
 
@@ -126,22 +133,31 @@ namespace Content.IntegrationTests.Tests.Construction
             var protoMan = server.ResolveDependency<IPrototypeManager>();
             var entMan = server.ResolveDependency<IEntityManager>();
 
-            foreach (var proto in protoMan.EnumeratePrototypes<ConstructionPrototype>())
+            await server.WaitAssertion(() =>
             {
-                var start = proto.StartNode;
-                var target = proto.TargetNode;
-                var graph = protoMan.Index<ConstructionGraphPrototype>(proto.Graph);
+                foreach (var proto in protoMan.EnumeratePrototypes<ConstructionPrototype>())
+                {
+                    var start = proto.StartNode;
+                    var target = proto.TargetNode;
+                    var graph = protoMan.Index<ConstructionGraphPrototype>(proto.Graph);
 
 #pragma warning disable NUnit2045 // Interdependent assertions.
-                Assert.That(graph.TryPath(start, target, out var path), $"Unable to find path from \"{start}\" to \"{target}\" on graph \"{graph.ID}\"");
-                Assert.That(path, Has.Length.GreaterThanOrEqualTo(1), $"Unable to find path from \"{start}\" to \"{target}\" on graph \"{graph.ID}\".");
-                var next = path[0];
-                var nextId = next.Entity.GetId(null, null, new(entMan));
-                Assert.That(nextId, Is.Not.Null, $"The next node ({next.Name}) in the path from the start node ({start}) to the target node ({target}) must specify an entity! Graph: {graph.ID}");
-                Assert.That(protoMan.TryIndex(nextId, out EntityPrototype entity), $"The next node ({next.Name}) in the path from the start node ({start}) to the target node ({target}) specified an invalid entity prototype ({nextId} [{next.Entity}])");
-                Assert.That(entity.Components.ContainsKey("Construction"), $"The next node ({next.Name}) in the path from the start node ({start}) to the target node ({target}) specified an entity prototype ({next.Entity}) without a ConstructionComponent.");
+                    Assert.That(graph.TryPath(start, target, out var path),
+                        $"Unable to find path from \"{start}\" to \"{target}\" on graph \"{graph.ID}\"");
+                    Assert.That(path, Has.Length.GreaterThanOrEqualTo(1),
+                        $"Unable to find path from \"{start}\" to \"{target}\" on graph \"{graph.ID}\".");
+                    var next = path[0];
+                    var nextId = next.Entity.GetId(null, null, new(entMan));
+                    Assert.That(nextId, Is.Not.Null,
+                        $"The next node ({next.Name}) in the path from the start node ({start}) to the target node ({target}) must specify an entity! Graph: {graph.ID}");
+                    Assert.That(protoMan.TryIndex(nextId, out EntityPrototype entity),
+                        $"The next node ({next.Name}) in the path from the start node ({start}) to the target node ({target}) specified an invalid entity prototype ({nextId} [{next.Entity}])");
+                    Assert.That(entity.Components.ContainsKey("Construction"),
+                        $"The next node ({next.Name}) in the path from the start node ({start}) to the target node ({target}) specified an entity prototype ({next.Entity}) without a ConstructionComponent.");
 #pragma warning restore NUnit2045
-            }
+                }
+            });
+
             await pair.CleanReturnAsync();
         }
     }

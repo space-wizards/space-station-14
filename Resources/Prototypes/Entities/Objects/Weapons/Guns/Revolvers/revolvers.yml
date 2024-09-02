@@ -9,6 +9,9 @@
     state: icon
   - type: Item
     size: Small
+    shape:
+    - 0,0,1,0
+    - 0,1,0,1
   - type: Tag
     tags:
     - Sidearm
@@ -18,6 +21,7 @@
     slots:
     - suitStorage
     - Belt
+  - type: AmmoCounter
   - type: Gun
     selectedMode: SemiAuto
     fireRate: 1.5
@@ -25,6 +29,8 @@
     - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
+  - type: UseDelay
+    delay: 0.66
   - type: ContainerContainer
     containers:
       revolver-ammo: !type:Container
@@ -46,7 +52,7 @@
 
 - type: entity
   name: Deckard
-  parent: BaseWeaponRevolver
+  parent: [BaseWeaponRevolver, BaseSecurityCommandContraband]
   id: WeaponRevolverDeckard
   description: A rare, custom-built revolver. Use when there is no time for Voight-Kampff test. Uses .45 magnum ammo.
   components:
@@ -74,7 +80,7 @@
 
 - type: entity
   name: Inspector
-  parent: BaseWeaponRevolver
+  parent: [BaseWeaponRevolver, BaseRestrictedContraband]
   id: WeaponRevolverInspector
   description: A detective's best friend. Uses .45 magnum ammo.
   components:
@@ -89,7 +95,7 @@
 
 - type: entity
   name: Mateba
-  parent: BaseWeaponRevolver
+  parent: [BaseWeaponRevolver, BaseMajorContraband]
   id: WeaponRevolverMateba
   description: The iconic sidearm of the dreaded death squads. Uses .45 magnum ammo.
   components:
@@ -104,7 +110,7 @@
 
 - type: entity
   name: Python
-  parent: BaseWeaponRevolver
+  parent: [BaseWeaponRevolver, BaseSyndicateContraband]
   id: WeaponRevolverPython
   description: A robust revolver favoured by Syndicate agents. Uses .45 magnum ammo.
   components:
@@ -123,11 +129,9 @@
         volume: 2.25
 
 - type: entity
-  name: Python
   parent: WeaponRevolverPython
   id: WeaponRevolverPythonAP # For the uplink.
   suffix: armor-piercing
-  description: A robust revolver favoured by Syndicate agents. Uses .45 magnum ammo.
   components:
   - type: RevolverAmmoProvider
     whitelist:
@@ -139,7 +143,7 @@
 
 - type: entity
   name: pirate revolver
-  parent: BaseWeaponRevolver
+  parent: [BaseWeaponRevolver, BaseMinorContraband]
   id: WeaponRevolverPirate
   description: An odd, old-looking revolver, favoured by pirate crews. Uses .45 magnum ammo.
   components:

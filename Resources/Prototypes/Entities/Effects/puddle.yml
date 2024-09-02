@@ -86,7 +86,7 @@
 
 - type: entity
   id: PuddleSparkle
-  name: Sparkle
+  name: sparkle
   placement:
     mode: SnapgridCenter
   components:
@@ -112,13 +112,7 @@
     mode: SnapgridCenter
   components:
   - type: Clickable
-  - type: FootstepModifier
-    footstepSoundCollection:
-      collection: FootstepWater
-      params:
-        volume: 6
   - type: Slippery
-    launchForwardsMultiplier: 2.0
   - type: Transform
     noRot: true
     anchored: true
@@ -132,6 +126,11 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
+      # Context / examine fixture
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.25
       slipFixture:
         shape:
           !type:PhysShapeAabb
@@ -147,8 +146,11 @@
     mode: CardinalFlags
   - type: SolutionContainerManager
     solutions:
-      puddle: { maxVol: 1000 }
+      puddle:
+        maxVol: 1000
   - type: Puddle
+  - type: MixableSolution
+    solution: puddle
   - type: Appearance
   - type: ActiveEdgeSpreader
   - type: EdgeSpreader
@@ -161,4 +163,10 @@
     examinable: false
   - type: ExaminableSolution
     solution: puddle
+  - type: DrawableSolution
+    solution: puddle
   - type: BadDrink
+  - type: IgnoresFingerprints
+  - type: Tag
+    tags:
+    - DNASolutionScannable

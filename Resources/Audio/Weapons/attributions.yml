@@ -33,6 +33,11 @@
   copyright: "User Nimfar11 on GitHub."
   source: "https://github.com/Nimfar11"
 
+- files: ["ebladehum.ogg", "eblademiss.ogg"]
+  license: "CC0-1.0"
+  copyright: "User gyzhor on freesound.org. Modified by Darkenson on github."
+  source: "https://freesound.org/people/gyzhor/sounds/47123/"
+
 - files: ["dodgeball.ogg"]
   license: "CC-BY-SA-3.0"
   copyright: "Taken from tgstation"
@@ -77,3 +82,8 @@
   license: "CC0-1.0"
   copyright: "Taken from ScreamStudio on freesound.org"
   source: "https://freesound.org/people/ScreamStudio/sounds/392617/"
+  
+- files: ["pop.ogg"]
+  license: "CC0-1.0"
+  copyright: "Taken from 0ne_one111yt on freesound.org"
+  source: "https://freesound.org/people/0ne_one111yt/sounds/478213/"

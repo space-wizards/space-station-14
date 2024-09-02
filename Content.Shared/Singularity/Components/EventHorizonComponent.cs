@@ -10,7 +10,7 @@ namespace Content.Shared.Singularity.Components;
 /// Primarily managed by <see cref="SharedEventHorizonSystem"/> and its server/client versions.
 /// </summary>
 [Access(friends: typeof(SharedEventHorizonSystem))]
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentPause]
 public sealed partial class EventHorizonComponent : Component
 {
     /// <summary>
@@ -20,6 +20,18 @@ public sealed partial class EventHorizonComponent : Component
     /// </summary>
     [DataField("radius")]
     public float Radius;
+
+    /// <summary>
+    /// involves periodically destroying tiles within a specified radius
+    /// </summary>
+    [DataField]
+    public bool ConsumeTiles = true;
+
+    /// <summary>
+    /// involves periodically destroying entities within a specified radius. Does not affect collide destruction of entities.
+    /// </summary>
+    [DataField]
+    public bool ConsumeEntities = true;
 
     /// <summary>
     /// Whether the event horizon can consume/destroy the devices built to contain it.
@@ -66,6 +78,7 @@ public sealed partial class EventHorizonComponent : Component
     /// The next time at which this consumed everything it overlapped with.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly), DataField("nextConsumeWaveTime", customTypeSerializer:typeof(TimeOffsetSerializer))]
+    [AutoPausedField]
     public TimeSpan NextConsumeWaveTime;
 
     #endregion Update Timing

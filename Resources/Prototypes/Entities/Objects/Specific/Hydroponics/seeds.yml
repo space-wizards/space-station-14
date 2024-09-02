@@ -84,6 +84,17 @@
 
 - type: entity
   parent: SeedBase
+  id: LaughinPeaSeeds
+  name: packet of laughin' pea pods
+  description: "These seeds give off a very soft purple glow.. they should grow into Laughin' Peas."
+  components:
+    - type: Seed
+      seedId: laughinPea
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/laughin_pea.rsi
+
+- type: entity
+  parent: SeedBase
   name: packet of lemon seeds
   id: LemonSeeds
   components:
@@ -154,6 +165,26 @@
 
 - type: entity
   parent: SeedBase
+  name: packet of tea plant seeds
+  id: TeaPlantSeeds
+  components:
+    - type: Seed
+      seedId: teaPlant
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/tea_plant.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of papercane seeds
+  id: PapercaneSeeds
+  components:
+    - type: Seed
+      seedId: papercane
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/papercane.rsi
+
+- type: entity
+  parent: SeedBase
   name: packet of tower cap spores
   id: TowercapSeeds
   components:
@@ -204,6 +235,16 @@
 
 - type: entity
   parent: SeedBase
+  name: packet of killer tomato seeds
+  id: KillerTomatoSeeds
+  components:
+    - type: Seed
+      seedId: killerTomato
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/tomatokiller.rsi
+
+- type: entity
+  parent: SeedBase
   name: packet of eggplant seeds
   id: EggplantSeeds
   components:
@@ -221,6 +262,16 @@
       seedId: apple
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/apple.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of golden apple seeds
+  id: GoldenAppleSeeds
+  components:
+    - type: Seed
+      seedId: goldenApple
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/golden_apple.rsi
 
 - type: entity
   parent: SeedBase
@@ -273,6 +324,17 @@
       seedId: cannabis
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/cannabis.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of rainbow cannabis seeds
+  description: "These seeds grow into rainbow weed. Groovy... and also highly addictive."
+  id: RainbowCannabisSeeds
+  components:
+    - type: Seed
+      seedId: rainbowCannabis
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/rainbow_cannabis.rsi
 
 - type: entity
   parent: SeedBase
@@ -342,6 +404,17 @@
 
 - type: entity
   parent: SeedBase
+  name: packet of lily seeds
+  description: "These seeds grow into lilies."
+  id: LilySeeds
+  components:
+    - type: Seed
+      seedId: lily
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/lily.rsi
+
+- type: entity
+  parent: SeedBase
   name: packet of lingzhi spores
   description: "Also known as reishi."
   id: LingzhiSeeds
@@ -386,6 +459,17 @@
 
 - type: entity
   parent: SeedBase
+  name: packet of glasstle seeds
+  description: "Scars of gloomy nights."
+  id: GlasstleSeeds
+  components:
+    - type: Seed
+      seedId: glasstle
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/glasstle.rsi
+
+- type: entity
+  parent: SeedBase
   name: packet of fly amanita spores
   description: "The iconic, extremely deadly mushroom to be used for purely ornamental purposes."
   id: FlyAmanitaSeeds
@@ -396,7 +480,7 @@
       sprite: Objects/Specific/Hydroponics/fly_amanita.rsi
 
 - type: entity
-  parent: SeedBase
+  parent: [SeedBase, BaseSyndicateContraband]
   name: packet of gatfruit seeds
   description: "These are no peashooters."
   id: GatfruitSeeds
@@ -436,6 +520,16 @@
       seedId: soybeans
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/soybeans.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of spaceman's trumpet seeds
+  id: SpacemansTrumpetSeeds
+  components:
+    - type: Seed
+      seedId: spacemansTrumpet
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/spacemans_trumpet.rsi
 
 - type: entity
   parent: SeedBase
@@ -532,6 +626,16 @@
 
 - type: entity
   parent: SeedBase
+  name: packet of blue pumpkin seeds
+  id: BluePumpkinSeeds
+  components:
+    - type: Seed
+      seedId: bluePumpkin
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/blue_pumpkin.rsi
+
+- type: entity
+  parent: SeedBase
   name: packet of cotton seeds
   id: CottonSeeds
   components:
@@ -539,3 +643,42 @@
       seedId: cotton
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/cotton.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of pyrotton seeds
+  id: PyrottonSeeds
+  components:
+    - type: Seed
+      seedId: pyrotton
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/pyrotton.rsi
+
+- type: entity
+  parent: SeedBase
+  id: RealCapfruitSeeds
+  name: packet of capfruit seeds
+  description: "Is it real, or is it fake?"
+  components:
+    - type: Seed
+      seedId: realCapfruit
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/capfruit.rsi
+
+- type: entity
+  parent: RealCapfruitSeeds
+  id: FakeCapfruitSeeds
+  suffix: Fake
+  components:
+    - type: Seed
+      seedId: fakeCapfruit
+
+- type: entity
+  parent: SeedBase
+  name: packet of cherry seeds
+  id: CherrySeeds
+  components:
+    - type: Seed
+      seedId: cherry
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/cherry.rsi

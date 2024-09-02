@@ -31,6 +31,7 @@
 
 - type: reaction
   id: ChlorineTrifluoride
+  minTemp: 370
   priority: 20
   reactants:
     Chlorine:
@@ -38,7 +39,6 @@
     Fluorine:
       amount: 3
   effects:
-  # TODO solution temperature!!
   - !type:ExplosionReactionEffect
     explosionType: Default # 15 damage per intensity.
     maxIntensity: 200
@@ -60,3 +60,16 @@
       amount: 1
   products:
     Ash: 1
+
+- type: reaction
+  id: WeldingFuelBreakdown
+  source: true
+  requiredMixerCategories:
+  - Centrifuge
+  reactants:
+    WeldingFuel:
+      amount: 10
+  products:
+    Ethanol: 5
+    Hydrogen: 3
+    Sulfur: 2

@@ -3,6 +3,7 @@
   parent:
   - BaseMob
   - MobDamageable
+  - MobPolymorphable
   - MobAtmosExposed
   id: BaseSimpleMob
   suffix: AI
@@ -25,6 +26,9 @@
     - ForcedSleep
     - TemporaryBlindness
     - Pacified
+    - Flashed
+    - RadiationProtection
+    - Drowsiness
   - type: Buckle
   - type: StandingState
   - type: Tag
@@ -90,20 +94,20 @@
     baseDecayRate: 0.04
   - type: StatusEffects
     allowed:
-      - Stun
-      - KnockedDown
-      - SlowedDown
-      - Stutter
-      - Electrocution
-      - ForcedSleep
-      - TemporaryBlindness
-      - Pacified
-      - StaminaModifier
+    - Stun
+    - KnockedDown
+    - SlowedDown
+    - Stutter
+    - Electrocution
+    - ForcedSleep
+    - TemporaryBlindness
+    - Pacified
+    - StaminaModifier
+    - Flashed
+    - RadiationProtection
+    - Drowsiness
   - type: Bloodstream
     bloodMaxVolume: 150
   - type: MobPrice
     price: 150
   - type: FloatingVisuals
-  - type: Puller
-    needsHands: True
-

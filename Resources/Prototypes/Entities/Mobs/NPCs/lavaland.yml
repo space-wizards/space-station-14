@@ -3,7 +3,7 @@
   id: MobWatcherBase
   parent: [ SimpleSpaceMobBase, FlyingMobBase ]
   abstract: true
-  description: It's like its staring right through you.
+  description: It's like it's staring right through you.
   components:
   - type: NpcFactionMember
     factions:
@@ -130,7 +130,7 @@
   id: MobWatcherPride
   parent: MobWatcherBase
   name: pride watcher
-  suffix: ADMEME
+  suffix: Admeme
   description: This rare subspecies only appears in June.
   components:
   - type: Sprite

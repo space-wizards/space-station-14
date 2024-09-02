@@ -1,6 +1,6 @@
 using Content.Server.Animals.Components;
+using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Nutrition;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
@@ -52,10 +52,10 @@ public sealed class WoolySystem : EntitySystem
                 _hunger.ModifyHunger(uid, -wooly.HungerUsage, hunger);
             }
 
-            if (!_solutionContainer.TryGetSolution(uid, wooly.Solution, out var solution))
+            if (!_solutionContainer.ResolveSolution(uid, wooly.SolutionName, ref wooly.Solution))
                 continue;
 
-            _solutionContainer.TryAddReagent(uid, solution, wooly.ReagentId, wooly.Quantity, out _);
+            _solutionContainer.TryAddReagent(wooly.Solution.Value, wooly.ReagentId, wooly.Quantity, out _);
         }
     }
 

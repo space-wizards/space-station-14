@@ -17,7 +17,6 @@ public sealed partial class CargoPalletMenu : FancyWindow
         RobustXamlLoader.Load(this);
         SellButton.OnPressed += OnSellPressed;
         AppraiseButton.OnPressed += OnAppraisePressed;
-        Title = Loc.GetString("cargo-pallet-console-menu-title");
     }
 
     public void SetAppraisal(int amount)

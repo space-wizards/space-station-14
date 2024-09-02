@@ -6,6 +6,8 @@ namespace Content.Client.Weapons.Melee.Components;
 [RegisterComponent]
 public sealed partial class WeaponArcVisualsComponent : Component
 {
+    public EntityUid? User;
+
     [DataField("animation")]
     public WeaponArcAnimation Animation = WeaponArcAnimation.None;
 

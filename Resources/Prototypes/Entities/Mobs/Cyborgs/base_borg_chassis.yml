@@ -1,5 +1,5 @@
-﻿- type: entity
-  parent: BaseMob
+- type: entity
+  parent: [BaseMob, StripableInventoryBase]
   id: BaseBorgChassis
   name: cyborg
   description: A man-machine hybrid that assists in station activity. They love being asked to state their laws over and over.
@@ -14,7 +14,7 @@
       types:
         Blunt: 5
     soundHit:
-      path: /Audio/Effects/hit_kick.ogg
+      collection: MetalThud
   - type: CombatMode
   - type: NoSlip
   - type: StaticPrice
@@ -63,19 +63,29 @@
     locPrefix: silicon
   - type: UserInterface
     interfaces:
-    - key: enum.SiliconLawsUiKey.Key
-      type: SiliconLawBoundUserInterface
-    - key: enum.BorgUiKey.Key
-      type: BorgBoundUserInterface
+      enum.SiliconLawsUiKey.Key:
+        type: SiliconLawBoundUserInterface
+      enum.BorgUiKey.Key:
+        type: BorgBoundUserInterface
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
   - type: ActivatableUI
     key: enum.BorgUiKey.Key
   - type: SiliconLawBound
+  - type: ActionGrant
+    actions:
+    - ActionViewLaws
   - type: EmagSiliconLaw
     stunTime: 5
-    emagLaws: SyndicateStatic
+  - type: SiliconLawProvider
+    laws: Crewsimov
   - type: IonStormTarget
+  - type: Inventory
+    templateId: borg
   - type: Hands
     showInHands: false
+    disableExplosionRecursion: true
+  - type: ComplexInteraction
   - type: IntrinsicRadioReceiver
   - type: IntrinsicRadioTransmitter
     channels:
@@ -92,10 +102,13 @@
     doAfterDelay: 10
     allowSelfRepair: false
   - type: BorgChassis
+  - type: LockingWhitelist
+    blacklist:
+      components:
+      - BorgChassis
+      - RoboticsConsole
   - type: WiresPanel
   - type: ActivatableUIRequiresPanel
-  - type: Wires
-    layoutId: Borg
   - type: NameIdentifier
     group: Silicon
   - type: ContainerContainer
@@ -107,8 +120,16 @@
   - type: PowerCellSlot
     cellSlotId: cell_slot
     fitsInCharger: true
+  - type: ItemToggle
+    activated: false # gets activated when a mind is added
+    onUse: false # no item-borg toggling sorry
+  - type: ItemTogglePointLight
+  - type: AccessToggle
+  # TODO: refactor movement to just be based on toggle like speedboots but for the boots themselves
+  # TODO: or just have sentient speedboots be fast idk
   - type: PowerCellDraw
     drawRate: 0.6
+  # no ToggleCellDraw since dont want to lose access when power is gone
   - type: ItemSlots
     slots:
       cell_slot:
@@ -119,18 +140,30 @@
     - Stun
     - KnockedDown
     - SlowedDown
+    - Flashed
   - type: TypingIndicator
     proto: robot
   - type: Speech
     speechVerb: Robotic
-    speechSounds: Pai
+    speechSounds: Borg
+  - type: Vocal
+    sounds:
+      Unsexed: UnisexSilicon
   - type: UnblockableSpeech
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepBorg
   - type: Construction
     graph: Cyborg
     containers:
     - part-container
     - cell_slot
-  - type: Flashable
+  - type: Lock
+    locked: true
+    breakOnEmag: false
+    unlockOnClick: false
+  - type: ActivatableUIRequiresLock
+  - type: LockedWiresPanel
   - type: Damageable
     damageContainer: Silicon
   - type: Destructible
@@ -150,7 +183,7 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
       - !type:EmptyContainersBehaviour
         containers:
         - borg_brain
@@ -192,16 +225,52 @@
   - type: StandingState
   - type: Tag
     tags:
-    - ShoesRequiredStepTriggerImmune
     - DoorBumpOpener
+    - FootstepSound
+    - CanPilot
   - type: Emoting
   - type: GuideHelp
     guides:
-      - Cyborgs
+    - Cyborgs
+    - Robotics
+  - type: StepTriggerImmune
+  - type: DamageOnInteractProtection
+    damageProtection:
+      flatReductions:
+        Heat: 10 # capable of touching light bulbs and stoves without feeling pain!
+
+- type: entity
+  abstract: true
+  id: BaseBorgTransponder
+  components:
+  - type: BorgTransponder
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: CyborgControl
+    transmitFrequencyId: RoboticsConsole
+    savableAddress: false
+  - type: OnUseTimerTrigger
+    delay: 10
+    examinable: false
+    beepSound:
+      path: /Audio/Effects/Cargo/buzz_two.ogg
+      params:
+        volume: -4
+  # prevent any funnies if someone makes a cyborg item...
+  - type: AutomatedTimer
+  - type: ExplodeOnTrigger
+  # explosion does most of its damage in the center and less at the edges
+  - type: Explosive
+    explosionType: Minibomb
+    deleteAfterExplosion: false # let damage threshold gib the borg
+    totalIntensity: 30
+    intensitySlope: 20
+    maxIntensity: 20
+    canCreateVacuum: false # its for killing the borg not the station
 
 - type: entity
   id: BaseBorgChassisNT
-  parent: BaseBorgChassis
+  parent: [BaseBorgChassis, BaseBorgTransponder]
   abstract: true
   components:
   - type: NpcFactionMember
@@ -211,8 +280,40 @@
     enabled: false
     groups:
     - AllAccess
-  - type: Lock
-    locked: true
-  - type: ActivatableUIRequiresLock
   - type: AccessReader
     access: [["Command"], ["Research"]]
+  - type: ShowJobIcons
+  - type: ShowMindShieldIcons
+
+- type: entity
+  id: BaseBorgChassisSyndicate
+  parent: BaseBorgChassis
+  abstract: true
+  components:
+  - type: NpcFactionMember
+    factions:
+    - Syndicate
+  - type: Access
+    tags:
+    - NuclearOperative
+    - SyndicateAgent
+  - type: AccessReader
+    access: [["SyndicateAgent"], ["NuclearOperative"]]
+  - type: SiliconLawProvider
+    laws: SyndicateStatic
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Binary
+    - Syndicate
+  - type: ActiveRadio
+    channels:
+    - Syndicate
+  - type: ShowSyndicateIcons
+  - type: MovementAlwaysTouching
+  - type: Speech
+    speechSounds: SyndieBorg
+  - type: Vocal
+    sounds:
+      Unsexed: UnisexSiliconSyndicate
+  - type: PointLight
+    color: "#dd200b"

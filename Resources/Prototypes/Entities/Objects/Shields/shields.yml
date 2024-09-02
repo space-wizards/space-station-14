@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   name: base shield
   parent: BaseItem
   id: BaseShield
@@ -36,18 +36,19 @@
       thresholds:
         - trigger:
             !type:DamageTrigger
-            damage: 80
+            damage: 140
           behaviors:
             - !type:DoActsBehavior
               acts: [ "Destruction" ]
         - trigger:
             !type:DamageTrigger
-            damage: 40 #This is probably enough damage before it breaks
+            damage: 100 #This is probably enough damage before it breaks
           behaviors:
             - !type:DoActsBehavior
               acts: [ "Destruction" ]
             - !type:PlaySoundBehavior
-              sound: /Audio/Effects/metalbreak.ogg
+              sound:
+                collection: MetalBreak
             - !type:SpawnEntitiesBehavior
               spawn:
                 SheetSteel:
@@ -57,22 +58,34 @@
                   min: 2
                   max: 2
     - type: StaticPrice
-      price: 50
+      price: 100
 
 #Security Shields
 
 - type: entity
   name: riot shield
-  parent: BaseShield
+  parent: [ BaseShield, BaseRestrictedContraband ]
   id: RiotShield
   description: A large tower shield. Good for controlling crowds.
   components:
     - type: StaticPrice
-      price: 100
+      price: 90
+    - type: Blocking
+      passiveBlockModifier:
+        coefficients:
+          Blunt: 0.7
+          Slash: 0.7
+      activeBlockModifier:
+        coefficients:
+          Blunt: 0.5
+          Slash: 0.5
+        flatReductions:
+          Blunt: 1
+          Slash: 1
 
 - type: entity
   name: riot laser shield
-  parent: BaseShield
+  parent: [ BaseShield, BaseRestrictedContraband ]
   id: RiotLaserShield
   description: A riot shield built for withstanding lasers, but not much else.
   components:
@@ -83,16 +96,16 @@
     - type: Blocking
       passiveBlockModifier:
         coefficients:
-          Heat: 0.8
+          Heat: 0.7
       activeBlockModifier:
         coefficients:
-          Heat: 0.7
+          Heat: 0.5
         flatReductions:
-          Heat: 2
+          Heat: 1
 
 - type: entity
   name: riot bullet shield
-  parent: BaseShield
+  parent: [ BaseShield, BaseRestrictedContraband ]
   id: RiotBulletShield
   description: A ballistic riot shield built for withstanding bullets, but not much else.
   components:
@@ -103,15 +116,12 @@
     - type: Blocking
       passiveBlockModifier:
         coefficients:
-          Blunt: 0.8
-          Piercing: 0.8
+          Piercing: 0.7
       activeBlockModifier:
         coefficients:
-          Blunt: 0.7
-          Piercing: 0.7
+          Piercing: 0.5
         flatReductions:
-          Blunt: 1.5
-          Piercing: 1.5
+          Piercing: 1
 
 #Craftable shields
 
@@ -160,7 +170,8 @@
             - !type:DoActsBehavior
               acts: [ "Destruction" ]
             - !type:PlaySoundBehavior
-              sound: /Audio/Effects/metalbreak.ogg
+              sound:
+                collection: WoodDestroy
             - !type:SpawnEntitiesBehavior
               spawn:
                 MaterialWoodPlank:
@@ -215,7 +226,8 @@
             - !type:DoActsBehavior
               acts: [ "Destruction" ]
             - !type:PlaySoundBehavior
-              sound: /Audio/Effects/metalbreak.ogg
+              sound:
+                collection: MetalBreak
             - !type:SpawnEntitiesBehavior
               spawn:
                 SheetSteel:
@@ -273,12 +285,12 @@
                   max: 1
             - !type:PlaySoundBehavior
               sound:
-                path: /Audio/Effects/woodhit.ogg
+                collection: WoodDestroy
 
 #Magic/Cult Shields (give these to wizard for now)
 
 - type: entity
-  name: Clockwork Shield
+  name: clockwork shield
   parent: BaseShield
   id: ClockworkShield
   description: Ratvar oyrffrf lbh jvgu uvf cebgrpgvba.
@@ -307,7 +319,7 @@
       #Have it break into brass when clock cult is in
 
 - type: entity
-  name: Mirror Shield
+  name: mirror shield
   parent: BaseShield
   id: MirrorShield
   description: Eerily glows red... you hear the geometer whispering
@@ -316,7 +328,11 @@
       state: mirror-icon
     - type: Item
       heldPrefix: mirror
-    - type: Blocking #Mirror shield should reflect heat/laser eventually, but be relatively weak to everything else.
+    - type: Reflect
+      reflectProb: 0.95
+      reflects:
+        - Energy
+    - type: Blocking #Mirror shield reflects heat/laser, but is relatively weak to everything else.
       passiveBlockModifier:
         coefficients:
           Blunt: 1.2
@@ -342,7 +358,8 @@
             - !type:DoActsBehavior
               acts: [ "Destruction" ]
             - !type:PlaySoundBehavior
-              sound: /Audio/Effects/glass_break1.ogg
+              sound:
+                collection: GlassBreak
             - !type:SpawnEntitiesBehavior
               spawn:
                 SheetGlass:
@@ -351,17 +368,24 @@
 
 - type: entity
   name: energy shield
-  parent: BaseItem
+  parent: [BaseItem, BaseSyndicateContraband]
   id: EnergyShield
   description: Exotic energy shield, when folded, can even fit in your pocket.
   components:
     - type: ItemToggle
-      activatedDisarmMalus: 0.6
-      activateSound:
+      soundActivate:
         path: /Audio/Weapons/ebladeon.ogg
-      deActivateSound:
+      soundDeactivate:
         path: /Audio/Weapons/ebladeoff.ogg
-      offSize: Small
+    - type: ItemToggleActiveSound
+      activeSound:
+        path: /Audio/Weapons/ebladehum.ogg
+    - type: ItemToggleSize
+      activatedSize: Huge
+    - type: ComponentToggler
+      components:
+      - type: DisarmMalus
+        malus: 0.6
     - type: Sprite
       sprite: Objects/Weapons/Melee/e_shield.rsi
       layers:
@@ -392,8 +416,8 @@
       radius: 1.5
       energy: 2
       color: blue
+    - type: ItemTogglePointLight
     - type: Reflect
-      enabled: false
       reflectProb: 0.95
       reflects:
         - Energy
@@ -426,12 +450,13 @@
               acts: [ "Destruction" ]
         - trigger:
             !type:DamageTrigger
-            damage: 150
+            damage: 100
           behaviors:
             - !type:DoActsBehavior
               acts: [ "Destruction" ]
             - !type:PlaySoundBehavior
-              sound: /Audio/Effects/metalbreak.ogg
+              sound:
+                collection: GlassBreak
             - !type:SpawnEntitiesBehavior
               spawn:
                 BrokenEnergyShield:
@@ -461,16 +486,20 @@
   description: An advanced riot shield made of lightweight materials that collapses for easy storage.
   components:
     - type: ItemToggle
-      activatedDisarmMalus: 0.6
-      activateSound:
+      soundActivate:
         path: /Audio/Weapons/telescopicon.ogg
         params:
           volume: -5
-      deActivateSound:
+      soundDeactivate:
         path: /Audio/Weapons/telescopicoff.ogg
         params:
           volume: -5
-      offSize: Small
+    - type: ComponentToggler
+      components:
+      - type: DisarmMalus
+        malus: 0.6
+    - type: ItemToggleSize
+      activatedSize: Huge
     - type: Sprite
       sprite: Objects/Weapons/Melee/teleriot_shield.rsi
       layers:
@@ -507,7 +536,8 @@
             - !type:DoActsBehavior
               acts: [ "Destruction" ]
             - !type:PlaySoundBehavior
-              sound: /Audio/Effects/metalbreak.ogg
+              sound:
+                collection: MetalGlassBreak
             - !type:SpawnEntitiesBehavior
               spawn:
                 SheetSteel:

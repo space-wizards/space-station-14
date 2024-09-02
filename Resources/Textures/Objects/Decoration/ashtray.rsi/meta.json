@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by joshepvodka",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon-0"
+    },
+    {
+      "name": "icon-1"
+    },
+    {
+      "name": "icon-2"
+    },
+    {
+      "name": "icon-3"
+    },
+    {
+      "name": "icon-4"
+    },
+    {
+      "name": "icon-5"
+    },
+    {
+      "name": "icon-6"
+    },
+    {
+      "name": "icon-7"
+    },
+    {
+      "name": "icon-8"
+    },
+    {
+      "name": "icon-9"
+    },
+    {
+      "name": "icon-10"
+    }
+  ]
+}

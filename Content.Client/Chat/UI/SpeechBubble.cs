@@ -16,6 +16,7 @@ namespace Content.Client.Chat.UI
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] protected readonly IConfigurationManager ConfigManager = default!;
+        private readonly SharedTransformSystem _transformSystem;
 
         public enum SpeechType : byte
         {
@@ -83,6 +84,7 @@ namespace Content.Client.Chat.UI
         {
             IoCManager.InjectDependencies(this);
             _senderEntity = senderEntity;
+            _transformSystem = _entityManager.System<SharedTransformSystem>();
 
             // Use text clipping so new messages don't overlap old ones being pushed up.
             RectClipContent = true;
@@ -140,7 +142,7 @@ namespace Content.Client.Chat.UI
             }
 
             var offset = (-_eyeManager.CurrentEye.Rotation).ToWorldVec() * -EntityVerticalOffset;
-            var worldPos = xform.WorldPosition + offset;
+            var worldPos = _transformSystem.GetWorldPosition(xform) + offset;
 
             var lowerCenter = _eyeManager.WorldToScreen(worldPos) / UIScale;
             var screenPos = lowerCenter - new Vector2(ContentSize.X / 2, ContentSize.Y + _verticalOffsetAchieved);
@@ -178,24 +180,13 @@ namespace Content.Client.Chat.UI
             var msg = new FormattedMessage();
             if (fontColor != null)
                 msg.PushColor(fontColor.Value);
-            msg.AddMarkup(message);
+            msg.AddMarkupOrThrow(message);
             return msg;
-        }
-
-        protected string ExtractSpeechSubstring(ChatMessage message, string tag)
-        {
-            var rawmsg = message.WrappedMessage;
-            var tagStart = rawmsg.IndexOf($"[{tag}]");
-            var tagEnd = rawmsg.IndexOf($"[/{tag}]");
-            if (tagStart < 0 || tagEnd < 0) //the above return -1 if the tag's not found, which in turn will cause the below to throw an exception. a blank speech bubble is far more noticeably broken than the bubble not appearing at all -bhijn
-                return "";
-            tagStart += tag.Length + 2;
-            return rawmsg.Substring(tagStart, tagEnd - tagStart);
         }
 
         protected FormattedMessage ExtractAndFormatSpeechSubstring(ChatMessage message, string tag, Color? fontColor = null)
         {
-            return FormatSpeech(ExtractSpeechSubstring(message, tag), fontColor);
+            return FormatSpeech(SharedChatSystem.GetStringInsideTag(message, tag), fontColor);
         }
 
     }
@@ -263,7 +254,8 @@ namespace Content.Client.Chat.UI
             var bubbleContent = new RichTextLabel
             {
                 MaxWidth = SpeechMaxWidth,
-                Margin = new Thickness(2, 6, 2, 2)
+                Margin = new Thickness(2, 6, 2, 2),
+                StyleClasses = { "bubbleContent" }
             };
 
             //We'll be honest. *Yes* this is hacky. Doing this in a cleaner way would require a bottom-up refactor of how saycode handles sending chat messages. -Myr

@@ -8,7 +8,6 @@ holiday-name-new-year = New Year
 holiday-name-mister-lizard = Mister Lizard's Birthday
 holiday-name-chinese-new-year = Chinese New Year
 holiday-name-groundhog-day = Groundhog Day
-holiday-name-travis-scott-day = Travis Scott Day
 holiday-name-valentines-day = Valentine's Day
 holiday-name-birthday13 = Birthday of Space Station 13
 holiday-name-random-kindness = Random Acts of Kindness Day
@@ -70,6 +69,7 @@ holiday-name-festive-season = Festive Season
 holiday-name-boxing-day = Boxing Day
 holiday-name-friday-thirteenth = Friday the 13th
 holiday-name-national-coming-out-day = National Coming Out Day
+holiday-name-pride-month = Pride Month
 
 ## Custom congrats
 

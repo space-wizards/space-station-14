@@ -1,3 +1,4 @@
+using Content.Shared.Damage;
 using Robust.Shared.Audio;
 
 namespace Content.Server.ImmovableRod;
@@ -8,7 +9,7 @@ public sealed partial class ImmovableRodComponent : Component
     public int MobCount = 0;
 
     [DataField("hitSound")]
-    public SoundSpecifier Sound = new SoundPathSpecifier("/Audio/Effects/bang.ogg");
+    public SoundSpecifier Sound = new SoundCollectionSpecifier("MetalSlam");
 
     [DataField("hitSoundProbability")]
     public float HitSoundProbability = 0.1f;
@@ -36,4 +37,16 @@ public sealed partial class ImmovableRodComponent : Component
     /// </summary>
     [DataField("destroyTiles")]
     public bool DestroyTiles = true;
+
+    /// <summary>
+    ///     If true, this will gib & delete bodies
+    /// </summary>
+    [DataField]
+    public bool ShouldGib = true;
+
+    /// <summary>
+    ///     Damage done, if not gibbing
+    /// </summary>
+    [DataField]
+    public DamageSpecifier? Damage;
 }

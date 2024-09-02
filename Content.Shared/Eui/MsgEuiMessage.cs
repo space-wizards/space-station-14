@@ -8,6 +8,7 @@ namespace Content.Shared.Eui
     public sealed class MsgEuiMessage : NetMessage
     {
         public override MsgGroups MsgGroup => MsgGroups.Command;
+        public override NetDeliveryMethod DeliveryMethod => NetDeliveryMethod.ReliableOrdered;
 
         public uint Id;
         public EuiMessageBase Message = default!;

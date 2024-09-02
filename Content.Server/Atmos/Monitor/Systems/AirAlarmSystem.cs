@@ -15,8 +15,10 @@ using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Monitor.Components;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.DeviceLinking;
+using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Interaction;
+using Content.Shared.Power;
 using Content.Shared.Wires;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
@@ -157,19 +159,22 @@ public sealed class AirAlarmSystem : EntitySystem
         SubscribeLocalEvent<AirAlarmComponent, AtmosDeviceUpdateEvent>(OnAtmosUpdate);
         SubscribeLocalEvent<AirAlarmComponent, AtmosAlarmEvent>(OnAtmosAlarm);
         SubscribeLocalEvent<AirAlarmComponent, PowerChangedEvent>(OnPowerChanged);
-        SubscribeLocalEvent<AirAlarmComponent, AirAlarmResyncAllDevicesMessage>(OnResyncAll);
-        SubscribeLocalEvent<AirAlarmComponent, AirAlarmUpdateAlarmModeMessage>(OnUpdateAlarmMode);
-        SubscribeLocalEvent<AirAlarmComponent, AirAlarmUpdateAutoModeMessage>(OnUpdateAutoMode);
-        SubscribeLocalEvent<AirAlarmComponent, AirAlarmUpdateAlarmThresholdMessage>(OnUpdateThreshold);
-        SubscribeLocalEvent<AirAlarmComponent, AirAlarmUpdateDeviceDataMessage>(OnUpdateDeviceData);
-        SubscribeLocalEvent<AirAlarmComponent, AirAlarmCopyDeviceDataMessage>(OnCopyDeviceData);
-        SubscribeLocalEvent<AirAlarmComponent, AirAlarmTabSetMessage>(OnTabChange);
         SubscribeLocalEvent<AirAlarmComponent, DeviceListUpdateEvent>(OnDeviceListUpdate);
-        SubscribeLocalEvent<AirAlarmComponent, BoundUIClosedEvent>(OnClose);
         SubscribeLocalEvent<AirAlarmComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<AirAlarmComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<AirAlarmComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<AirAlarmComponent, ActivateInWorldEvent>(OnActivate);
+
+        Subs.BuiEvents<AirAlarmComponent>(SharedAirAlarmInterfaceKey.Key, subs =>
+        {
+            subs.Event<BoundUIClosedEvent>(OnClose);
+            subs.Event<AirAlarmResyncAllDevicesMessage>(OnResyncAll);
+            subs.Event<AirAlarmUpdateAlarmModeMessage>(OnUpdateAlarmMode);
+            subs.Event<AirAlarmUpdateAutoModeMessage>(OnUpdateAutoMode);
+            subs.Event<AirAlarmUpdateAlarmThresholdMessage>(OnUpdateThreshold);
+            subs.Event<AirAlarmUpdateDeviceDataMessage>(OnUpdateDeviceData);
+            subs.Event<AirAlarmCopyDeviceDataMessage>(OnCopyDeviceData);
+        });
     }
 
     private void OnDeviceListUpdate(EntityUid uid, AirAlarmComponent component, DeviceListUpdateEvent args)
@@ -195,12 +200,6 @@ public sealed class AirAlarmSystem : EntitySystem
         SyncRegisterAllDevices(uid);
     }
 
-    private void OnTabChange(EntityUid uid, AirAlarmComponent component, AirAlarmTabSetMessage msg)
-    {
-        component.CurrentTab = msg.Tab;
-        UpdateUI(uid, component);
-    }
-
     private void OnPowerChanged(EntityUid uid, AirAlarmComponent component, ref PowerChangedEvent args)
     {
         if (args.Powered)
@@ -218,8 +217,7 @@ public sealed class AirAlarmSystem : EntitySystem
 
     private void OnClose(EntityUid uid, AirAlarmComponent component, BoundUIClosedEvent args)
     {
-        component.ActivePlayers.Remove(args.Session.UserId);
-        if (component.ActivePlayers.Count == 0)
+        if (!_ui.IsUiOpen(uid, SharedAirAlarmInterfaceKey.Key))
             RemoveActiveInterface(uid);
     }
 
@@ -242,7 +240,7 @@ public sealed class AirAlarmSystem : EntitySystem
 
     private void OnActivate(EntityUid uid, AirAlarmComponent component, ActivateInWorldEvent args)
     {
-        if (!TryComp<ActorComponent>(args.User, out var actor))
+        if (!args.Complex)
             return;
 
         if (TryComp<WiresPanelComponent>(uid, out var panel) && panel.Open)
@@ -254,10 +252,7 @@ public sealed class AirAlarmSystem : EntitySystem
         if (!this.IsPowered(uid, EntityManager))
             return;
 
-        var ui = _ui.GetUiOrNull(uid, SharedAirAlarmInterfaceKey.Key);
-        if (ui != null)
-            _ui.OpenUi(ui, actor.PlayerSession);
-        component.ActivePlayers.Add(actor.PlayerSession.UserId);
+        _ui.OpenUi(uid, SharedAirAlarmInterfaceKey.Key, args.User);
         AddActiveInterface(uid);
         SyncAllDevices(uid);
         UpdateUI(uid, component);
@@ -265,7 +260,7 @@ public sealed class AirAlarmSystem : EntitySystem
 
     private void OnResyncAll(EntityUid uid, AirAlarmComponent component, AirAlarmResyncAllDevicesMessage args)
     {
-        if (!AccessCheck(uid, args.Session.AttachedEntity, component))
+        if (!AccessCheck(uid, args.Actor, component))
         {
             return;
         }
@@ -280,7 +275,7 @@ public sealed class AirAlarmSystem : EntitySystem
 
     private void OnUpdateAlarmMode(EntityUid uid, AirAlarmComponent component, AirAlarmUpdateAlarmModeMessage args)
     {
-        if (AccessCheck(uid, args.Session.AttachedEntity, component))
+        if (AccessCheck(uid, args.Actor, component))
         {
             var addr = string.Empty;
             if (TryComp<DeviceNetworkComponent>(uid, out var netConn))
@@ -304,7 +299,7 @@ public sealed class AirAlarmSystem : EntitySystem
 
     private void OnUpdateThreshold(EntityUid uid, AirAlarmComponent component, AirAlarmUpdateAlarmThresholdMessage args)
     {
-        if (AccessCheck(uid, args.Session.AttachedEntity, component))
+        if (AccessCheck(uid, args.Actor, component))
             SetThreshold(uid, args.Address, args.Type, args.Threshold, args.Gas);
         else
             UpdateUI(uid, component);
@@ -312,7 +307,7 @@ public sealed class AirAlarmSystem : EntitySystem
 
     private void OnUpdateDeviceData(EntityUid uid, AirAlarmComponent component, AirAlarmUpdateDeviceDataMessage args)
     {
-        if (AccessCheck(uid, args.Session.AttachedEntity, component)
+        if (AccessCheck(uid, args.Actor, component)
             && _deviceList.ExistsInDeviceList(uid, args.Address))
         {
             SetDeviceData(uid, args.Address, args.Data);
@@ -325,7 +320,7 @@ public sealed class AirAlarmSystem : EntitySystem
 
     private void OnCopyDeviceData(EntityUid uid, AirAlarmComponent component, AirAlarmCopyDeviceDataMessage args)
     {
-        if (!AccessCheck(uid, args.Session.AttachedEntity, component))
+        if (!AccessCheck(uid, args.Actor, component))
         {
            UpdateUI(uid, component);
             return;
@@ -372,7 +367,7 @@ public sealed class AirAlarmSystem : EntitySystem
 
     private void OnAtmosAlarm(EntityUid uid, AirAlarmComponent component, AtmosAlarmEvent args)
     {
-        if (component.ActivePlayers.Count != 0)
+        if (_ui.IsUiOpen(uid, SharedAirAlarmInterfaceKey.Key))
         {
             SyncAllDevices(uid);
         }
@@ -566,10 +561,10 @@ public sealed class AirAlarmSystem : EntitySystem
     /// </summary>
     private void ForceCloseAllInterfaces(EntityUid uid)
     {
-        _ui.TryCloseAll(uid, SharedAirAlarmInterfaceKey.Key);
+        _ui.CloseUi(uid, SharedAirAlarmInterfaceKey.Key);
     }
 
-    private void OnAtmosUpdate(EntityUid uid, AirAlarmComponent alarm, AtmosDeviceUpdateEvent args)
+    private void OnAtmosUpdate(EntityUid uid, AirAlarmComponent alarm, ref AtmosDeviceUpdateEvent args)
     {
         alarm.CurrentModeUpdater?.Update(uid);
     }
@@ -597,34 +592,19 @@ public sealed class AirAlarmSystem : EntitySystem
 
         var pressure = CalculatePressureAverage(alarm);
         var temperature = CalculateTemperatureAverage(alarm);
-        var dataToSend = new Dictionary<string, IAtmosDeviceData>();
+        var dataToSend = new List<(string, IAtmosDeviceData)>();
 
-        if (alarm.CurrentTab != AirAlarmTab.Settings)
+        foreach (var (addr, data) in alarm.VentData)
         {
-            switch (alarm.CurrentTab)
-            {
-                case AirAlarmTab.Vent:
-                    foreach (var (addr, data) in alarm.VentData)
-                    {
-                        dataToSend.Add(addr, data);
-                    }
-
-                    break;
-                case AirAlarmTab.Scrubber:
-                    foreach (var (addr, data) in alarm.ScrubberData)
-                    {
-                        dataToSend.Add(addr, data);
-                    }
-
-                    break;
-                case AirAlarmTab.Sensors:
-                    foreach (var (addr, data) in alarm.SensorData)
-                    {
-                        dataToSend.Add(addr, data);
-                    }
-
-                    break;
-            }
+            dataToSend.Add((addr, data));
+        }
+        foreach (var (addr, data) in alarm.ScrubberData)
+        {
+            dataToSend.Add((addr, data));
+        }
+        foreach (var (addr, data) in alarm.SensorData)
+        {
+            dataToSend.Add((addr, data));
         }
 
         var deviceCount = alarm.KnownDevices.Count;
@@ -634,10 +614,10 @@ public sealed class AirAlarmSystem : EntitySystem
             highestAlarm = AtmosAlarmType.Normal;
         }
 
-        _ui.TrySetUiState(
+        _ui.SetUiState(
             uid,
             SharedAirAlarmInterfaceKey.Key,
-            new AirAlarmUIState(devNet.Address, deviceCount, pressure, temperature, dataToSend, alarm.CurrentMode, alarm.CurrentTab, highestAlarm.Value, alarm.AutoMode));
+            new AirAlarmUIState(devNet.Address, deviceCount, pressure, temperature, dataToSend, alarm.CurrentMode, highestAlarm.Value, alarm.AutoMode));
     }
 
     private const float Delay = 8f;

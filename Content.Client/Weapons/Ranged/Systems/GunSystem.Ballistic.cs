@@ -33,7 +33,7 @@ public sealed partial class GunSystem
             var existing = component.Entities[^1];
             component.Entities.RemoveAt(component.Entities.Count - 1);
 
-            component.Container.Remove(existing);
+            Containers.Remove(existing, component.Container);
             EnsureShootable(existing);
         }
         else if (component.UnspawnedCount > 0)

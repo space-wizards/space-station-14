@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Serialization;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Power
 {
@@ -22,5 +22,13 @@ namespace Content.Shared.Power
         MainWire,
         WireCount,
         CutWires
+    }
+
+    [Serializable, NetSerializable]
+    public enum CableType
+    {
+        HighVoltage,
+        MediumVoltage,
+        Apc,
     }
 }

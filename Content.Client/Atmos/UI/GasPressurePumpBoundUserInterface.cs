@@ -1,7 +1,9 @@
 ﻿using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Binary.Components;
+using Content.Shared.Localizations;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.Atmos.UI
 {
@@ -25,14 +27,7 @@ namespace Content.Client.Atmos.UI
         {
             base.Open();
 
-            _window = new GasPressurePumpWindow();
-
-            if (State != null)
-                UpdateState(State);
-
-            _window.OpenCentered();
-
-            _window.OnClose += Close;
+            _window = this.CreateWindow<GasPressurePumpWindow>();
 
             _window.ToggleStatusButtonPressed += OnToggleStatusButtonPressed;
             _window.PumpOutputPressureChanged += OnPumpOutputPressurePressed;
@@ -46,7 +41,7 @@ namespace Content.Client.Atmos.UI
 
         private void OnPumpOutputPressurePressed(string value)
         {
-            float pressure = float.TryParse(value, out var parsed) ? parsed : 0f;
+            var pressure = UserInputParser.TryFloat(value, out var parsed) ? parsed : 0f;
             if (pressure > MaxPressure) pressure = MaxPressure;
 
             SendMessage(new GasPressurePumpChangeOutputPressureMessage(pressure));
@@ -65,13 +60,6 @@ namespace Content.Client.Atmos.UI
             _window.Title = (cast.PumpLabel);
             _window.SetPumpStatus(cast.Enabled);
             _window.SetOutputPressure(cast.OutputPressure);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-            if (!disposing) return;
-            _window?.Dispose();
         }
     }
 }

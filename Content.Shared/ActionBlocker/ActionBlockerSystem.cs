@@ -1,14 +1,15 @@
 using Content.Shared.Body.Events;
-using Content.Shared.DragDrop;
 using Content.Shared.Emoting;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Speech;
 using Content.Shared.Throwing;
+using Content.Shared.Weapons.Melee;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 
@@ -22,9 +23,14 @@ namespace Content.Shared.ActionBlocker
     {
         [Dependency] private readonly SharedContainerSystem _container = default!;
 
+        private EntityQuery<ComplexInteractionComponent> _complexInteractionQuery;
+
         public override void Initialize()
         {
             base.Initialize();
+
+            _complexInteractionQuery = GetEntityQuery<ComplexInteractionComponent>();
+
             SubscribeLocalEvent<InputMoverComponent, ComponentStartup>(OnMoverStartup);
         }
 
@@ -54,6 +60,15 @@ namespace Content.Shared.ActionBlocker
         }
 
         /// <summary>
+        /// Checks if a given entity is able to do specific complex interactions.
+        /// This is used to gate manipulation to general humanoids. If a mouse shouldn't be able to do something, then it's complex.
+        /// </summary>
+        public bool CanComplexInteract(EntityUid user)
+        {
+            return _complexInteractionQuery.HasComp(user);
+        }
+
+        /// <summary>
         ///     Raises an event directed at both the user and the target entity to check whether a user is capable of
         ///     interacting with this entity.
         /// </summary>
@@ -66,8 +81,11 @@ namespace Content.Shared.ActionBlocker
         /// <returns></returns>
         public bool CanInteract(EntityUid user, EntityUid? target)
         {
+            if (!CanConsciouslyPerformAction(user))
+                return false;
+
             var ev = new InteractionAttemptEvent(user, target);
-            RaiseLocalEvent(user, ev);
+            RaiseLocalEvent(user, ref ev);
 
             if (ev.Cancelled)
                 return false;
@@ -76,7 +94,7 @@ namespace Content.Shared.ActionBlocker
                 return true;
 
             var targetEv = new GettingInteractedWithAttemptEvent(user, target);
-            RaiseLocalEvent(target.Value, targetEv);
+            RaiseLocalEvent(target.Value, ref targetEv);
 
             return !targetEv.Cancelled;
         }
@@ -89,10 +107,25 @@ namespace Content.Shared.ActionBlocker
         ///     involve using a held entity. In the majority of cases, systems that provide interactions will not need
         ///     to check this themselves.
         /// </remarks>
-        public bool CanUseHeldEntity(EntityUid user)
+        public bool CanUseHeldEntity(EntityUid user, EntityUid used)
         {
-            var ev = new UseAttemptEvent(user);
+            var ev = new UseAttemptEvent(user, used);
             RaiseLocalEvent(user, ev);
+
+            return !ev.Cancelled;
+        }
+
+
+        /// <summary>
+        /// Whether a user conscious to perform an action.
+        /// </summary>
+        /// <remarks>
+        /// This should be used when you want a much more permissive check than <see cref="CanInteract"/>
+        /// </remarks>
+        public bool CanConsciouslyPerformAction(EntityUid user)
+        {
+            var ev = new ConsciousAttemptEvent(user);
+            RaiseLocalEvent(user, ref ev);
 
             return !ev.Cancelled;
         }
@@ -102,7 +135,13 @@ namespace Content.Shared.ActionBlocker
             var ev = new ThrowAttemptEvent(user, itemUid);
             RaiseLocalEvent(user, ev);
 
-            return !ev.Cancelled;
+            if (ev.Cancelled)
+                return false;
+
+            var itemEv = new ThrowItemAttemptEvent(user);
+            RaiseLocalEvent(itemUid, ref itemEv);
+
+            return !itemEv.Cancelled;
         }
 
         public bool CanSpeak(EntityUid uid)
@@ -145,30 +184,36 @@ namespace Content.Shared.ActionBlocker
             return !ev.Cancelled;
         }
 
-        public bool CanAttack(EntityUid uid, EntityUid? target = null)
+        public bool CanAttack(EntityUid uid, EntityUid? target = null, Entity<MeleeWeaponComponent>? weapon = null, bool disarm = false)
         {
+            // If target is in a container can we attack
+            if (target != null && _container.IsEntityInContainer(target.Value))
+            {
+                return false;
+            }
+
             _container.TryGetOuterContainer(uid, Transform(uid), out var outerContainer);
-            if (target != null &&  target != outerContainer?.Owner && _container.IsEntityInContainer(uid))
+
+            // If we're in a container can we attack the target.
+            if (target != null && target != outerContainer?.Owner && _container.IsEntityInContainer(uid))
             {
                 var containerEv = new CanAttackFromContainerEvent(uid, target);
                 RaiseLocalEvent(uid, containerEv);
                 return containerEv.CanAttack;
             }
 
-            var ev = new AttackAttemptEvent(uid, target);
+            var ev = new AttackAttemptEvent(uid, target, weapon, disarm);
             RaiseLocalEvent(uid, ev);
 
             if (ev.Cancelled)
                 return false;
 
-            if (target != null)
-            {
-                var tev = new GettingAttackedAttemptEvent();
-                RaiseLocalEvent(target.Value, ref tev);
-                return !tev.Cancelled;
-            }
+            if (target == null)
+                return true;
 
-            return true;
+            var tev = new GettingAttackedAttemptEvent(uid, weapon, disarm);
+            RaiseLocalEvent(target.Value, ref tev);
+            return !tev.Cancelled;
         }
 
         public bool CanChangeDirection(EntityUid uid)
@@ -182,7 +227,7 @@ namespace Content.Shared.ActionBlocker
         public bool CanShiver(EntityUid uid)
         {
             var ev = new ShiverAttemptEvent(uid);
-            RaiseLocalEvent(uid, ev);
+            RaiseLocalEvent(uid, ref ev);
 
             return !ev.Cancelled;
         }
@@ -190,7 +235,7 @@ namespace Content.Shared.ActionBlocker
         public bool CanSweat(EntityUid uid)
         {
             var ev = new SweatAttemptEvent(uid);
-            RaiseLocalEvent(uid, ev);
+            RaiseLocalEvent(uid, ref ev);
 
             return !ev.Cancelled;
         }

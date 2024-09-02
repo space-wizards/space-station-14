@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.Worldgen.Components;
 using Content.Server.Worldgen.Prototypes;
 using Robust.Shared.Prototypes;
@@ -35,7 +35,7 @@ public sealed class BiomeSelectionSystem : BaseWorldSystem
             return;
         }
 
-        Logger.Error($"Biome selection ran out of biomes to select? See biomes list: {component.Biomes}");
+        Log.Error($"Biome selection ran out of biomes to select? See biomes list: {component.Biomes}");
     }
 
     private void OnBiomeSelectionStartup(EntityUid uid, BiomeSelectionComponent component, ComponentStartup args)

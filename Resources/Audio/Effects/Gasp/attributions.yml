@@ -1,0 +1,32 @@
+- files:
+  - deathgasp_1.ogg
+  - deathgasp_2.ogg
+  - female_deathgasp_1.ogg
+  - female_deathgasp_2.ogg
+  - female_deathgasp_3.ogg
+  - female_deathgasp_4.ogg
+  - female_deathgasp_5.ogg
+  - male_deathgasp_1.ogg
+  - male_deathgasp_2.ogg
+  - male_deathgasp_3.ogg
+  - male_deathgasp_4.ogg
+  - male_deathgasp_5.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from Paradise at https://github.com/ParadiseSS13/Paradise/commit/4397f13c72998aa7e6ce192215c9f77b9d62eee2"
+  source: "https://github.com/ParadiseSS13/Paradise/tree/4397f13c72998aa7e6ce192215c9f77b9d62eee2/sound/goonstation/voice"
+
+- files:
+  - gasp_female1.ogg
+  - gasp_female2.ogg
+  - gasp_female3.ogg
+  - gasp_male1.ogg
+  - gasp_male2.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from tgstation at https://github.com/tgstation/tgstation/commit/f7a49c4068f1277e6857baf0892d355f1c055974"
+  source: "https://github.com/tgstation/tgstation/tree/f7a49c4068f1277e6857baf0892d355f1c055974/sound/voice/human"
+
+- files:
+  - moth_DeathGasp.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from tgstation at https://github.com/tgstation/tgstation/commit/948ad3dd5b22803a01cd74c27f37e509dc61395b"
+  source: "https://github.com/tgstation/tgstation/blob/948ad3dd5b22803a01cd74c27f37e509dc61395b/sound/voice/moth/moth_death.ogg"

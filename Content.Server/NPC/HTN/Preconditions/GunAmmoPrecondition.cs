@@ -35,7 +35,7 @@ public sealed partial class GunAmmoPrecondition : HTNPrecondition
         else
             percent = ammoEv.Count / (float) ammoEv.Capacity;
 
-        percent = Math.Clamp(percent, 0f, 1f);
+        percent = System.Math.Clamp(percent, 0f, 1f);
 
         if (MaxPercent < percent)
             return false;

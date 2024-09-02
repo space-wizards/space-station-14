@@ -23,17 +23,23 @@ namespace Content.Shared.Slippery
         /// <summary>
         /// How many seconds the mob will be paralyzed for.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
         [DataField, AutoNetworkedField]
         [Access(Other = AccessPermissions.ReadWrite)]
-        public float ParalyzeTime = 3f;
+        public float ParalyzeTime = 1.5f;
 
         /// <summary>
         /// The entity's speed will be multiplied by this to slip it forwards.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
         [DataField, AutoNetworkedField]
         [Access(Other = AccessPermissions.ReadWrite)]
-        public float LaunchForwardsMultiplier = 1f;
+        public float LaunchForwardsMultiplier = 1.5f;
+
+        /// <summary>
+        /// If this is true, any slipping entity loses its friction until
+        /// it's not colliding with any SuperSlippery entities anymore.
+        /// </summary>
+        [DataField, AutoNetworkedField]
+        [Access(Other = AccessPermissions.ReadWrite)]
+        public bool SuperSlippery;
     }
 }

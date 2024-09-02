@@ -51,8 +51,8 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
         EscapeButton.OnPressed += EscapeButtonOnOnPressed;
     }
 
-    private void ActivateButton() => EscapeButton!.Pressed = true;
-    private void DeactivateButton() => EscapeButton!.Pressed = false;
+    private void ActivateButton() => EscapeButton!.SetClickPressed(true);
+    private void DeactivateButton() => EscapeButton!.SetClickPressed(false);
 
     public void OnStateEntered(GameplayState state)
     {

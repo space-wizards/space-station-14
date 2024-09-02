@@ -25,7 +25,7 @@ public sealed partial class HandcuffComponent : Component
     ///     The time it takes for a cuffed entity to uncuff itself.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float BreakoutTime = 30f;
+    public float BreakoutTime = 15f;
 
     /// <summary>
     ///     If an entity being cuffed is stunned, this amount of time is subtracted from the time it takes to add/remove their cuffs.
@@ -45,14 +45,20 @@ public sealed partial class HandcuffComponent : Component
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public EntProtoId? BrokenPrototype;
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public DamageSpecifier DamageOnResist = new()
-    {
-        DamageDict = new()
-             {
-                 { "Blunt", 3.0 },
-             }
-    };
+    /// <summary>
+    /// Whether or not these cuffs are in the process of being removed.
+    /// Used simply to prevent spawning multiple <see cref="BrokenPrototype"/>.
+    /// </summary>
+    [DataField]
+    public bool Removing;
+
+    /// <summary>
+    /// Whether the cuffs are currently being used to cuff someone.
+    /// We need the extra information for when the virtual item is deleted because that can happen when you simply stop
+    /// pulling them on the ground.
+    /// </summary>
+    [DataField]
+    public bool Used;
 
     /// <summary>
     ///     The path of the RSI file used for the player cuffed overlay.
@@ -89,7 +95,7 @@ public sealed partial class HandcuffComponent : Component
 }
 
 /// <summary>
-/// Event fired on the User when the User attempts to cuff the Target.
+/// Event fired on the User when the User attempts to uncuff the Target.
 /// Should generate popups on the User.
 /// </summary>
 [ByRefEvent]
@@ -99,3 +105,9 @@ public record struct UncuffAttemptEvent(EntityUid User, EntityUid Target)
     public readonly EntityUid Target = Target;
     public bool Cancelled = false;
 }
+
+/// <summary>
+/// Event raised on an entity being uncuffed to determine any modifiers to the amount of time it takes to uncuff them.
+/// </summary>
+[ByRefEvent]
+public record struct ModifyUncuffDurationEvent(EntityUid User, EntityUid Target, float Duration);

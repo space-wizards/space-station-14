@@ -1,7 +1,5 @@
-using Content.Shared.Construction.Prototypes;
 using Content.Shared.Power;
 using Content.Shared.Whitelist;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Power.Components
 {
@@ -18,25 +16,6 @@ namespace Content.Server.Power.Components
         public float ChargeRate = 20.0f;
 
         /// <summary>
-        /// The charge rate with no machine upgrades
-        /// </summary>
-        [DataField("baseChargeRate")]
-        public float BaseChargeRate = 20.0f;
-
-        /// <summary>
-        /// The machine part that affects the charge rate multiplier of the charger
-        /// </summary>
-        [DataField("machinePartChargeRateModifier", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
-        public string MachinePartChargeRateModifier = "Capacitor";
-
-        /// <summary>
-        /// A value used to scale the charge rate multiplier
-        /// with the corresponding part rating.
-        /// </summary>
-        [DataField("partRatingChargeRateModifier")]
-        public float PartRatingChargeRateModifier = 1.5f;
-
-        /// <summary>
         /// The container ID that is holds the entities being charged.
         /// </summary>
         [DataField("slotId", required: true)]
@@ -47,5 +26,12 @@ namespace Content.Server.Power.Components
         /// </summary>
         [DataField("whitelist")]
         public EntityWhitelist? Whitelist;
+
+        /// <summary>
+        /// Indicates whether the charger is portable and thus subject to EMP effects
+        /// and bypasses checks for transform, anchored, and ApcPowerReceiverComponent.
+        /// </summary>
+        [DataField]
+        public bool Portable = false;
     }
 }

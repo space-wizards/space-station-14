@@ -1,5 +1,5 @@
 - type: entity
-  name: Civilian
+  name: civilian
   parent: BaseMobHuman
   id: MobCivilian
   description: A miserable pile of secrets.
@@ -7,13 +7,13 @@
   - type: InputMover
   - type: MobMover
   - type: Loadout
-    prototypes: [PassengerGear]
+    prototypes: [LimitedPassengerGear]
   - type: NpcFactionMember
     factions:
     - NanoTrasen
 
 - type: entity
-  name: Salvager
+  name: salvager
   parent: BaseMobHuman
   id: MobSalvager
   components:
@@ -30,7 +30,7 @@
         task: SimpleHumanoidHostileCompound
 
 - type: entity
-  name: Spirate
+  name: spirate
   parent: BaseMobHuman
   id: MobSpirate
   description: Yarr!
@@ -48,12 +48,34 @@
       task: SimpleHumanoidHostileCompound
 
 - type: entity
+  name: syndicate footsoldier
+  parent: BaseMobHuman
+  id: MobSyndicateFootsoldier
+  components:
+    - type: NpcFactionMember
+      factions:
+        - Syndicate
+    - type: Loadout
+      prototypes:
+        - SyndicateFootsoldierGearRuin
+    - type: InputMover
+    - type: MobMover
+    - type: HTN
+      rootTask:
+        task: SimpleHumanoidHostileCompound
+
+- type: entity
+  name: syndicate shuttle pilot
+  parent: MobSyndicateFootsoldier
+  id: MobSyndicateFootsoldierPilot
+
+- type: entity
   parent: BaseMobHuman
   suffix: Dead
   save: false # mobs are currently not saveable.
   id: SalvageHumanCorpse
   name: unidentified corpse
-  description: I think he's dead.
+  description: I think they're dead.
   components:
   - type: RandomHumanoidAppearance
     randomizeName: false

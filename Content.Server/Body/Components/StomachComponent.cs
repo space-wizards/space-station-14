@@ -1,40 +1,50 @@
-﻿using Content.Server.Body.Systems;
+using Content.Server.Body.Systems;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.FixedPoint;
 using Content.Shared.Whitelist;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Body.Components
 {
     [RegisterComponent, Access(typeof(StomachSystem), typeof(FoodSystem))]
     public sealed partial class StomachComponent : Component
     {
-        public float AccumulatedFrameTime;
+        /// <summary>
+        ///     The next time that the stomach will try to digest its contents.
+        /// </summary>
+        [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+        public TimeSpan NextUpdate;
 
         /// <summary>
-        ///     How fast should this component update, in seconds?
+        ///     The interval at which this stomach digests its contents.
         /// </summary>
-        [DataField("updateInterval")]
-        public float UpdateInterval = 1.0f;
+        [DataField]
+        public TimeSpan UpdateInterval = TimeSpan.FromSeconds(1);
+
+        /// <summary>
+        ///     The solution inside of this stomach this transfers reagents to the body.
+        /// </summary>
+        [DataField]
+        public Entity<SolutionComponent>? Solution = null;
 
         /// <summary>
         ///     What solution should this stomach push reagents into, on the body?
         /// </summary>
-        [DataField("bodySolutionName")]
+        [DataField]
         public string BodySolutionName = BloodstreamComponent.DefaultChemicalsSolutionName;
 
         /// <summary>
-        ///     Time in seconds between reagents being ingested and them being
+        ///     Time between reagents being ingested and them being
         ///     transferred to <see cref="BloodstreamComponent"/>
         /// </summary>
-        [DataField("digestionDelay")]
-        public float DigestionDelay = 20;
+        [DataField]
+        public TimeSpan DigestionDelay = TimeSpan.FromSeconds(20);
 
         /// <summary>
         ///     A whitelist for what special-digestible-required foods this stomach is capable of eating.
         /// </summary>
-        [DataField("specialDigestible")]
+        [DataField]
         public EntityWhitelist? SpecialDigestible = null;
 
         /// <summary>
@@ -49,15 +59,15 @@ namespace Content.Server.Body.Components
         public sealed class ReagentDelta
         {
             public readonly ReagentQuantity ReagentQuantity;
-            public float Lifetime { get; private set; }
+            public TimeSpan Lifetime { get; private set; }
 
             public ReagentDelta(ReagentQuantity reagentQuantity)
             {
                 ReagentQuantity = reagentQuantity;
-                Lifetime = 0.0f;
+                Lifetime = TimeSpan.Zero;
             }
 
-            public void Increment(float delta) => Lifetime += delta;
+            public void Increment(TimeSpan delta) => Lifetime += delta;
         }
     }
 }

@@ -1,8 +1,21 @@
 - type: entity
   id: BaseThruster
   parent: BaseStructureDynamic
+  name: thruster
+  description: A thruster that allows a shuttle to move.
   abstract: true
   components:
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.45,-0.45,0.45,0.45"
+          density: 60
+          mask:
+          - MachineMask
+          layer:
+          - MachineLayer
     - type: AmbientSound
       enabled: false
       range: 4
@@ -28,15 +41,18 @@
     - type: ExtensionCableReceiver
     - type: Damageable
       damageContainer: Inorganic
-      damageModifierSet: Metallic
+      damageModifierSet: Electronic
     - type: Destructible
       thresholds:
       - trigger:
           !type:DamageTrigger
-          damage: 300  # Considering we need a lot of thrusters didn't want to make an individual one too tanky
+          damage: 100  # Considering we need a lot of thrusters didn't want to make an individual one too tanky
         behaviors:
           - !type:DoActsBehavior
             acts: ["Destruction"]
+          - !type:PlaySoundBehavior
+            sound:
+              collection: MetalBreak
     - type: StaticPrice
       price: 300
   placement:
@@ -47,9 +63,27 @@
   name: thruster
   parent: [ BaseThruster, ConstructibleMachine ]
   components:
-  - type: Thruster
   - type: Machine
     board: ThrusterMachineCircuitboard
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+        - !type:PlaySoundBehavior
+          sound:
+            collection: MetalBreak
+        - !type:ChangeConstructionNodeBehavior
+          node: machineFrame
   - type: Sprite
     sprite: Structures/Shuttles/thruster.rsi
     layers:
@@ -102,13 +136,13 @@
 
 - type: entity
   id: Gyroscope
-  name: gyroscope
   parent: [ BaseThruster, ConstructibleMachine ]
+  name: gyroscope
+  description: Increases the shuttle's potential angular rotation.
   components:
   - type: Thruster
     thrusterType: Angular
     requireSpace: false
-    baseThrust: 2000
     thrust: 2000
     machinePartThrust: Manipulator
   - type: Sprite
@@ -139,9 +173,28 @@
     color: "#4246b3"
   - type: Machine
     board: GyroscopeMachineCircuitboard
-  - type: UpgradePowerDraw
-    powerDrawMultiplier: 0.75
-    scaling: Exponential
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+        - !type:PlaySoundBehavior
+          sound:
+            collection: MetalBreak
+        - !type:ChangeConstructionNodeBehavior
+          node: machineFrame
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Electronic
   - type: StaticPrice
     price: 2000
 
@@ -163,7 +216,6 @@
   - type: Thruster
     thrusterType: Angular
     requireSpace: false
-    baseThrust: 100
     thrust: 100
   - type: ApcPowerReceiver
     needsPower: false

@@ -13,13 +13,16 @@
         shader: unshaded
         visible: true
         map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+  - type: Item
+    storedRotation: -90
   - type: ActivatableUI
     key: enum.HealthAnalyzerUiKey.Key
-    closeOnHandDeselect: false
   - type: UserInterface
     interfaces:
-      - key: enum.HealthAnalyzerUiKey.Key
+      enum.HealthAnalyzerUiKey.Key:
         type: HealthAnalyzerBoundUserInterface
+  - type: ItemToggle
+    onUse: false
   - type: HealthAnalyzer
     scanningEndSound:
       path: "/Audio/Items/Medical/healthscanner.ogg"
@@ -35,7 +38,7 @@
           False: { visible: false }
   - type: GuideHelp
     guides:
-      - Medical Doctor
+    - Medical Doctor
 
 - type: entity
   id: HandheldHealthAnalyzer
@@ -43,8 +46,8 @@
   suffix: Powered
   components:
   - type: PowerCellDraw
-    drawRate: 0
-    useRate: 20
+    drawRate: 1.2 #Calculated for 5 minutes on a small cell
+  - type: ToggleCellDraw
   - type: ActivatableUIRequiresPowerCell
 
 - type: entity

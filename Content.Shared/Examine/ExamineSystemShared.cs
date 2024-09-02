@@ -1,5 +1,9 @@
+using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
+using System.Text;
 using Content.Shared.Eye.Blinding.Components;
+using Content.Shared.Ghost;
 using Content.Shared.Interaction;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -14,6 +18,8 @@ namespace Content.Shared.Examine
 {
     public abstract partial class ExamineSystemShared : EntitySystem
     {
+        [Dependency] private readonly OccluderSystem _occluder = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
         [Dependency] protected readonly MobStateSystem MobStateSystem = default!;
@@ -38,6 +44,10 @@ namespace Content.Shared.Examine
         public const float ExamineRange = 16f;
         protected const float ExamineDetailsRange = 3f;
 
+        protected const float ExamineBlurrinessMult = 2.5f;
+
+        private EntityQuery<GhostComponent> _ghostQuery;
+
         /// <summary>
         ///     Creates a new examine tooltip with arbitrary info.
         /// </summary>
@@ -48,11 +58,15 @@ namespace Content.Shared.Examine
             if (IsClientSide(entity))
                 return true;
 
+            // Ghosts can see everything.
+            if (_ghostQuery.HasComp(examiner))
+                return true;
+
             // check if the mob is in critical or dead
             if (MobStateSystem.IsIncapacitated(examiner))
                 return false;
 
-            if (!_interactionSystem.InRangeUnobstructed(examiner, entity, ExamineDetailsRange))
+            if (!InRangeUnOccluded(examiner, entity, ExamineDetailsRange))
                 return false;
 
             // Is the target hidden in a opaque locker or something? Currently this check allows players to examine
@@ -72,7 +86,7 @@ namespace Content.Shared.Examine
             if (IsClientSide(examined))
                 return true;
 
-            return !Deleted(examined) && CanExamine(examiner, EntityManager.GetComponent<TransformComponent>(examined).MapPosition,
+            return !Deleted(examined) && CanExamine(examiner, _transform.GetMapCoordinates(examined),
                 entity => entity == examiner || entity == examined, examined);
         }
 
@@ -103,12 +117,25 @@ namespace Content.Shared.Examine
             if (EntityManager.GetComponent<TransformComponent>(examiner).MapID != target.MapId)
                 return false;
 
-            return InRangeUnOccluded(
-                EntityManager.GetComponent<TransformComponent>(examiner).MapPosition,
-                target,
-                GetExaminerRange(examiner),
-                predicate: predicate,
-                ignoreInsideBlocker: true);
+            // Do target InRangeUnoccluded which has different checks.
+            if (examined != null)
+            {
+                return InRangeUnOccluded(
+                    examiner,
+                    examined.Value,
+                    GetExaminerRange(examiner),
+                    predicate: predicate,
+                    ignoreInsideBlocker: true);
+            }
+            else
+            {
+                return InRangeUnOccluded(
+                    examiner,
+                    target,
+                    GetExaminerRange(examiner),
+                    predicate: predicate,
+                    ignoreInsideBlocker: true);
+            }
         }
 
         /// <summary>
@@ -125,7 +152,7 @@ namespace Content.Shared.Examine
                     return CritExamineRange;
 
                 if (TryComp<BlurryVisionComponent>(examiner, out var blurry))
-                    return Math.Clamp(ExamineRange - blurry.Magnitude, 2, ExamineRange);
+                    return Math.Clamp(ExamineRange - blurry.Magnitude * ExamineBlurrinessMult, 2, ExamineRange);
             }
             return ExamineRange;
         }
@@ -138,7 +165,7 @@ namespace Content.Shared.Examine
             return TryComp<EyeComponent>(uid, out var eye) && eye.DrawFov;
         }
 
-        public static bool InRangeUnOccluded(MapCoordinates origin, MapCoordinates other, float range, Ignored? predicate, bool ignoreInsideBlocker = true, IEntityManager? entMan = null)
+        public bool InRangeUnOccluded(MapCoordinates origin, MapCoordinates other, float range, Ignored? predicate, bool ignoreInsideBlocker = true, IEntityManager? entMan = null)
         {
             // No, rider. This is better.
             // ReSharper disable once ConvertToLocalFunction
@@ -148,7 +175,7 @@ namespace Content.Shared.Examine
             return InRangeUnOccluded(origin, other, range, predicate, wrapped, ignoreInsideBlocker, entMan);
         }
 
-        public static bool InRangeUnOccluded<TState>(MapCoordinates origin, MapCoordinates other, float range,
+        public bool InRangeUnOccluded<TState>(MapCoordinates origin, MapCoordinates other, float range,
             TState state, Func<EntityUid, TState, bool> predicate, bool ignoreInsideBlocker = true, IEntityManager? entMan = null)
         {
             if (other.MapId != origin.MapId ||
@@ -165,16 +192,13 @@ namespace Content.Shared.Examine
 
             if (length > MaxRaycastRange)
             {
-                Logger.Warning("InRangeUnOccluded check performed over extreme range. Limiting CollisionRay size.");
+                Log.Warning("InRangeUnOccluded check performed over extreme range. Limiting CollisionRay size.");
                 length = MaxRaycastRange;
             }
 
-            var occluderSystem = Get<OccluderSystem>();
-            IoCManager.Resolve(ref entMan);
-
             var ray = new Ray(origin.Position, dir.Normalized());
-            var rayResults = occluderSystem
-                .IntersectRayWithPredicate(origin.MapId, ray, length, state, predicate, false).ToList();
+            var rayResults = _occluder
+                .IntersectRayWithPredicate(origin.MapId, ray, length, state, predicate, false);
 
             if (rayResults.Count == 0) return true;
 
@@ -182,13 +206,13 @@ namespace Content.Shared.Examine
 
             foreach (var result in rayResults)
             {
-                if (!entMan.TryGetComponent(result.HitEntity, out OccluderComponent? o))
+                if (!TryComp(result.HitEntity, out OccluderComponent? o))
                 {
                     continue;
                 }
 
                 var bBox = o.BoundingBox;
-                bBox = bBox.Translated(entMan.GetComponent<TransformComponent>(result.HitEntity).WorldPosition);
+                bBox = bBox.Translated(_transform.GetWorldPosition(result.HitEntity));
 
                 if (bBox.Contains(origin.Position) || bBox.Contains(other.Position))
                 {
@@ -201,28 +225,33 @@ namespace Content.Shared.Examine
             return true;
         }
 
-        public static bool InRangeUnOccluded(EntityUid origin, EntityUid other, float range = ExamineRange, Ignored? predicate = null, bool ignoreInsideBlocker = true)
+        public bool InRangeUnOccluded(EntityUid origin, EntityUid other, float range = ExamineRange, Ignored? predicate = null, bool ignoreInsideBlocker = true)
         {
-            var entMan = IoCManager.Resolve<IEntityManager>();
-            var originPos = entMan.GetComponent<TransformComponent>(origin).MapPosition;
-            var otherPos = entMan.GetComponent<TransformComponent>(other).MapPosition;
+            var ev = new InRangeOverrideEvent(origin, other);
+            RaiseLocalEvent(origin, ref ev);
+
+            if (ev.Handled)
+            {
+                return ev.InRange;
+            }
+
+            var originPos = _transform.GetMapCoordinates(origin);
+            var otherPos = _transform.GetMapCoordinates(other);
 
             return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
         }
 
-        public static bool InRangeUnOccluded(EntityUid origin, EntityCoordinates other, float range = ExamineRange, Ignored? predicate = null, bool ignoreInsideBlocker = true)
+        public bool InRangeUnOccluded(EntityUid origin, EntityCoordinates other, float range = ExamineRange, Ignored? predicate = null, bool ignoreInsideBlocker = true)
         {
-            var entMan = IoCManager.Resolve<IEntityManager>();
-            var originPos = entMan.GetComponent<TransformComponent>(origin).MapPosition;
-            var otherPos = other.ToMap(entMan);
+            var originPos = _transform.GetMapCoordinates(origin);
+            var otherPos = _transform.ToMapCoordinates(other);
 
             return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
         }
 
-        public static bool InRangeUnOccluded(EntityUid origin, MapCoordinates other, float range = ExamineRange, Ignored? predicate = null, bool ignoreInsideBlocker = true)
+        public bool InRangeUnOccluded(EntityUid origin, MapCoordinates other, float range = ExamineRange, Ignored? predicate = null, bool ignoreInsideBlocker = true)
         {
-            var entMan = IoCManager.Resolve<IEntityManager>();
-            var originPos = entMan.GetComponent<TransformComponent>(origin).MapPosition;
+            var originPos = _transform.GetMapCoordinates(origin);
 
             return InRangeUnOccluded(originPos, other, range, predicate, ignoreInsideBlocker);
         }
@@ -236,42 +265,61 @@ namespace Content.Shared.Examine
                 return message;
             }
 
-            var doNewline = false;
+            var hasDescription = false;
+            var metadata = MetaData(entity);
 
             //Add an entity description if one is declared
-            if (!string.IsNullOrEmpty(EntityManager.GetComponent<MetaDataComponent>(entity).EntityDescription))
+            if (!string.IsNullOrEmpty(metadata.EntityDescription))
             {
-                message.AddText(EntityManager.GetComponent<MetaDataComponent>(entity).EntityDescription);
-                doNewline = true;
+                message.AddText(metadata.EntityDescription);
+                hasDescription = true;
             }
 
             message.PushColor(Color.DarkGray);
 
             // Raise the event and let things that subscribe to it change the message...
             var isInDetailsRange = IsInDetailsRange(examiner.Value, entity);
-            var examinedEvent = new ExaminedEvent(message, entity, examiner.Value, isInDetailsRange, doNewline);
-            RaiseLocalEvent(entity, examinedEvent, true);
+            var examinedEvent = new ExaminedEvent(message, entity, examiner.Value, isInDetailsRange, hasDescription);
+            RaiseLocalEvent(entity, examinedEvent);
 
-            message.Pop();
+            var newMessage = examinedEvent.GetTotalMessage();
 
-            return message;
+            // pop color tag
+            newMessage.Pop();
+
+            return newMessage;
         }
     }
 
     /// <summary>
     ///     Raised when an entity is examined.
+    ///     If you're pushing multiple messages that should be grouped together (or ordered in some way),
+    ///     call <see cref="PushGroup"/> before pushing and <see cref="PopGroup"/> when finished.
     /// </summary>
     public sealed class ExaminedEvent : EntityEventArgs
     {
         /// <summary>
         ///     The message that will be displayed as the examine text.
-        /// For most use cases, you probably want to use <see cref="PushMarkup"/> and similar instead to modify this,
-        /// since it handles newlines and such correctly.
+        ///     You should use <see cref="PushMarkup"/> and similar instead to modify this,
+        ///     since it handles newlines/priority and such correctly.
         /// </summary>
         /// <seealso cref="PushMessage"/>
         /// <seealso cref="PushMarkup"/>
         /// <seealso cref="PushText"/>
-        public FormattedMessage Message { get; }
+        /// <seealso cref="AddMessage"/>
+        /// <seealso cref="AddMarkup"/>
+        /// <seealso cref="AddText"/>
+        private FormattedMessage Message { get; }
+
+        /// <summary>
+        ///     Parts of the examine message that will later be sorted by priority and pushed onto <see cref="Message"/>.
+        /// </summary>
+        private List<ExamineMessagePart> Parts { get; } = new();
+
+        /// <summary>
+        ///     Whether the examiner is in range of the entity to get some extra details.
+        /// </summary>
+        public bool IsInDetailsRange { get; }
 
         /// <summary>
         ///     The entity performing the examining.
@@ -283,61 +331,205 @@ namespace Content.Shared.Examine
         /// </summary>
         public EntityUid Examined { get; }
 
-        /// <summary>
-        ///     Whether the examiner is in range of the entity to get some extra details.
-        /// </summary>
-        public bool IsInDetailsRange { get; }
+        private bool _hasDescription;
 
-        private bool _doNewLine;
+        private ExamineMessagePart? _currentGroupPart;
 
-        public ExaminedEvent(FormattedMessage message, EntityUid examined, EntityUid examiner, bool isInDetailsRange, bool doNewLine)
+        public ExaminedEvent(FormattedMessage message, EntityUid examined, EntityUid examiner, bool isInDetailsRange, bool hasDescription)
         {
             Message = message;
             Examined = examined;
             Examiner = examiner;
             IsInDetailsRange = isInDetailsRange;
-            _doNewLine = doNewLine;
+            _hasDescription = hasDescription;
+        }
+
+        /// <summary>
+        ///     Returns <see cref="Message"/> with all <see cref="Parts"/> appended according to their priority.
+        /// </summary>
+        public FormattedMessage GetTotalMessage()
+        {
+            int Comparison(ExamineMessagePart a, ExamineMessagePart b)
+            {
+                // Try sort by priority, then group, then by string contents
+                if (a.Priority != b.Priority)
+                {
+                    // negative so that expected behavior is consistent with what makes sense
+                    // i.e. a negative priority should mean its at the bottom of the list, right?
+                    return -a.Priority.CompareTo(b.Priority);
+                }
+
+                if (a.Group != b.Group)
+                {
+                    return string.Compare(a.Group, b.Group, StringComparison.Ordinal);
+                }
+
+                return string.Compare(a.Message.ToString(), b.Message.ToString(), StringComparison.Ordinal);
+            }
+
+            // tolist/clone formatted message so calling this multiple times wont fuck shit up
+            // (if that happens for some reason)
+            var parts = Parts.ToList();
+            var totalMessage = new FormattedMessage(Message);
+            parts.Sort(Comparison);
+
+            if (_hasDescription && parts.Count > 0)
+            {
+                totalMessage.PushNewline();
+            }
+
+            foreach (var part in parts)
+            {
+                totalMessage.AddMessage(part.Message);
+                if (part.DoNewLine && parts.Last() != part)
+                    totalMessage.PushNewline();
+            }
+
+            return totalMessage;
+        }
+
+        /// <summary>
+        ///     Message group handling. Call this if you want the next set of examine messages that you're adding to have
+        ///     a consistent order with regards to each other. This is done so that client & server will always
+        ///     sort messages the same as well as grouped together properly, even if subscriptions are different.
+        ///     You should wrap it in a using() block so popping automatically occurs.
+        /// </summary>
+        public ExamineGroupDisposable PushGroup(string groupName, int priority=0)
+        {
+            // Ensure that other examine events correctly ended their groups.
+            DebugTools.Assert(_currentGroupPart == null);
+            _currentGroupPart = new ExamineMessagePart(new FormattedMessage(), priority, false, groupName);
+            return new ExamineGroupDisposable(this);
+        }
+
+        /// <summary>
+        ///     Ends the current group and pushes its groups contents to the message.
+        ///     This will be called automatically if in using a `using` block with <see cref="PushGroup"/>.
+        /// </summary>
+        private void PopGroup()
+        {
+            DebugTools.Assert(_currentGroupPart != null);
+            if (_currentGroupPart != null)
+                Parts.Add(_currentGroupPart);
+
+            _currentGroupPart = null;
         }
 
         /// <summary>
         /// Push another message into this examine result, on its own line.
+        /// End message will be grouped by <see cref="priority"/>, then by group if one was started
+        /// then by ordinal comparison.
         /// </summary>
         /// <seealso cref="PushMarkup"/>
         /// <seealso cref="PushText"/>
-        public void PushMessage(FormattedMessage message)
+        public void PushMessage(FormattedMessage message, int priority=0)
         {
             if (message.Nodes.Count == 0)
                 return;
 
-            if (_doNewLine)
-                Message.AddText("\n");
-
-            Message.AddMessage(message);
-            _doNewLine = true;
+            if (_currentGroupPart != null)
+            {
+                message.PushNewline();
+                _currentGroupPart.Message.AddMessage(message);
+            }
+            else
+            {
+                Parts.Add(new ExamineMessagePart(message, priority, true, null));
+            }
         }
 
         /// <summary>
         /// Push another message parsed from markup into this examine result, on its own line.
+        /// End message will be grouped by <see cref="priority"/>, then by group if one was started
+        /// then by ordinal comparison.
         /// </summary>
         /// <seealso cref="PushText"/>
         /// <seealso cref="PushMessage"/>
-        public void PushMarkup(string markup)
+        public void PushMarkup(string markup, int priority=0)
         {
-            PushMessage(FormattedMessage.FromMarkup(markup));
+            PushMessage(FormattedMessage.FromMarkupOrThrow(markup), priority);
         }
 
         /// <summary>
         /// Push another message containing raw text into this examine result, on its own line.
+        /// End message will be grouped by <see cref="priority"/>, then by group if one was started
+        /// then by ordinal comparison.
         /// </summary>
         /// <seealso cref="PushMarkup"/>
         /// <seealso cref="PushMessage"/>
-        public void PushText(string text)
+        public void PushText(string text, int priority=0)
         {
             var msg = new FormattedMessage();
             msg.AddText(text);
-            PushMessage(msg);
+            PushMessage(msg, priority);
         }
+
+        /// <summary>
+        /// Adds a message directly without starting a newline after.
+        /// End message will be grouped by <see cref="priority"/>, then by group if one was started
+        /// then by ordinal comparison.
+        /// </summary>
+        /// <seealso cref="AddMarkup"/>
+        /// <seealso cref="AddText"/>
+        public void AddMessage(FormattedMessage message, int priority = 0)
+        {
+            if (message.Nodes.Count == 0)
+                return;
+
+            if (_currentGroupPart != null)
+            {
+                _currentGroupPart.Message.AddMessage(message);
+            }
+            else
+            {
+                Parts.Add(new ExamineMessagePart(message, priority, false, null));
+            }
+        }
+
+        /// <summary>
+        /// Adds markup directly without starting a newline after.
+        /// End message will be grouped by <see cref="priority"/>, then by group if one was started
+        /// then by ordinal comparison.
+        /// </summary>
+        /// <seealso cref="AddText"/>
+        /// <seealso cref="AddMessage"/>
+        public void AddMarkup(string markup, int priority=0)
+        {
+            AddMessage(FormattedMessage.FromMarkupOrThrow(markup), priority);
+        }
+
+        /// <summary>
+        /// Adds text directly without starting a newline after.
+        /// End message will be grouped by <see cref="priority"/>, then by group if one was started
+        /// then by ordinal comparison.
+        /// </summary>
+        /// <seealso cref="AddMarkup"/>
+        /// <seealso cref="AddMessage"/>
+        public void AddText(string text, int priority=0)
+        {
+            var msg = new FormattedMessage();
+            msg.AddText(text);
+            AddMessage(msg, priority);
+        }
+
+        public struct ExamineGroupDisposable : IDisposable
+        {
+            private ExaminedEvent _event;
+
+            public ExamineGroupDisposable(ExaminedEvent @event)
+            {
+                _event = @event;
+            }
+
+            public void Dispose()
+            {
+                _event.PopGroup();
+            }
+        }
+
+        private record ExamineMessagePart(FormattedMessage Message, int Priority, bool DoNewLine, string? Group);
     }
+
 
     /// <summary>
     ///     Event raised directed at an entity that someone is attempting to examine

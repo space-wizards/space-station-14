@@ -9,39 +9,41 @@
     layers:
     - state: cabinet
     - state: shotgun
-      map: ["enum.ItemCabinetVisualLayers.ContainsItem"]
+      map: ["enum.ItemCabinetVisuals.Layer"]
       visible: true
     - state: glass
-      map: ["enum.ItemCabinetVisualLayers.Door"]
-  - type: ItemCabinet
-    cabinetSlot:
-      ejectOnInteract: true
-      whitelist:
-        tags:
-        - WeaponShotgunKammerer
+      map: ["enum.OpenableVisuals.Layer"]
+  - type: ItemSlots
+    slots:
+      ItemCabinet:
+        ejectOnInteract: true
+        whitelist:
+          tags:
+          - WeaponShotgunKammerer
   - type: AccessReader
     access: [["Security"], ["Command"]]
 
 - type: entity
+  parent: ShotGunCabinet
   id: ShotGunCabinetOpen
-  parent: [ShotGunCabinet, FireAxeCabinetOpen]
   suffix: Open
+  components:
+  - type: Openable
+    opened: true
+  - type: Lock
+    locked: false
 
 - type: entity
+  parent: ShotGunCabinet
   id: ShotGunCabinetFilled
-  parent: [ShotGunCabinet,FireAxeCabinetFilled]
   suffix: Filled
   components:
-  - type: ItemCabinet
-    cabinetSlot:
-      startingItem: WeaponShotgunKammerer
-      ejectOnInteract: true
-      whitelist:
-        tags:
-        - WeaponShotgunKammerer
+  - type: ContainerFill
+    containers:
+      ItemCabinet:
+      - WeaponShotgunKammerer
 
 - type: entity
+  parent: [ShotGunCabinetFilled, ShotGunCabinetOpen]
   id: ShotGunCabinetFilledOpen
-  parent: [ShotGunCabinetFilled,FireAxeCabinetFilledOpen]
   suffix: Filled, Open
-

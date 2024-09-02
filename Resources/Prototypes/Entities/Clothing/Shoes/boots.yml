@@ -11,7 +11,7 @@
   - type: Matchbox
 
 - type: entity
-  parent: ClothingShoesMilitaryBase
+  parent: [ClothingShoesMilitaryBase, BaseRestrictedContraband]
   id: ClothingShoesBootsJack
   name: jackboots
   description: Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time.
@@ -20,6 +20,8 @@
     sprite: Clothing/Shoes/Boots/jackboots.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/jackboots.rsi
+  - type: ClothingSlowOnDamageModifier
+    modifier: 0.5
 
 - type: entity
   parent: ClothingShoesBaseButcherable
@@ -45,7 +47,7 @@
     sprite: Clothing/Shoes/Boots/performer.rsi
 
 - type: entity
-  parent: ClothingShoesMilitaryBase
+  parent: [ClothingShoesMilitaryBase, BaseRestrictedContraband]
   id: ClothingShoesBootsCombat
   name: combat boots
   description: Robust combat boots for combat scenarios or combat situations. All combat, all the time.
@@ -54,6 +56,21 @@
     sprite: Clothing/Shoes/Boots/combatboots.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/combatboots.rsi
+
+- type: entity
+  parent: ClothingShoesMilitaryBase
+  id: ClothingShoesHighheelBoots
+  name: high-heeled boots
+  description: Snazy boots for when you want to be stylish, yet prepared.
+  components:
+  - type: MeleeWeapon
+    damage:
+      types:
+        Piercing: 6
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/highheelboots.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/highheelboots.rsi
 
 - type: entity
   parent: ClothingShoesMilitaryBase
@@ -128,7 +145,7 @@
     sprite: Clothing/Shoes/Boots/winterbootssci.rsi
 
 - type: entity
-  parent: ClothingShoesBaseWinterBoots
+  parent: [ClothingShoesBaseWinterBoots, ClothingShoesMilitaryBase, BaseRestrictedContraband]
   id: ClothingShoesBootsWinterSec
   name: security winter boots
   components:
@@ -138,10 +155,10 @@
     sprite: Clothing/Shoes/Boots/winterbootssec.rsi
 
 - type: entity
-  parent: ClothingShoesBaseWinterBoots
+  parent: [ClothingShoesBaseWinterBoots, BaseSyndicateContraband]
   id: ClothingShoesBootsWinterSyndicate
   name: syndicate's winter boots
-  description: Durable heavy boots, looks like merch from "Syndieland"
+  description: Durable heavy boots, looks like merch from "Syndieland".
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/winterbootssyndicate.rsi
@@ -173,3 +190,47 @@
   - type: Construction
     graph: WebObjects
     node: boots
+
+- type: entity
+  parent: ClothingShoesMilitaryBase
+  id: ClothingShoesBootsCowboyBrown
+  name: brown cowboy boots
+  description: They got spurs that jingle and/or jangle.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/cowboybootsbrown.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/cowboybootsbrown.rsi
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepSpurs
+
+- type: entity
+  parent: ClothingShoesBootsCowboyBrown
+  id: ClothingShoesBootsCowboyBlack
+  name: black cowboy boots
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/cowboybootsblack.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/cowboybootsblack.rsi
+
+- type: entity
+  parent: ClothingShoesBootsCowboyBrown
+  id: ClothingShoesBootsCowboyWhite
+  name: white cowboy boots
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/cowboybootswhite.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/cowboybootswhite.rsi
+
+- type: entity
+  parent: ClothingShoesBootsCowboyBrown
+  id: ClothingShoesBootsCowboyFancy
+  name: fancy cowboy boots
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/cowboybootsfancy.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/cowboybootsfancy.rsi
