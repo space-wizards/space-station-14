@@ -169,7 +169,7 @@ public sealed class SliceableFoodSystem : EntitySystem
     private void OnComponentStartup(Entity<SliceableFoodComponent> entity, ref ComponentStartup args)
     {
         var foodComp = EnsureComp<FoodComponent>(entity);
-        _solutionContainer.EnsureSolution(entity.Owner, foodComp.Solution);
+        _solutionContainer.EnsureSolution((entity.Owner, null), foodComp.Solution, out _);
     }
 }
 
