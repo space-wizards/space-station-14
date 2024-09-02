@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "https://github.com/Skyrat-SS13/Skyrat-tg/tree/40e3cdbb15b8bc0d5ef2fb46133adf805bda5297, while Argali, Ayrshire, Myrsore, Bighorn and Demonic are drawn by Ubaser, and Kobold Ears are drawn by Pigeonpeas. Data may be slightly inaccurate because all reptilian markings were originally IN ONE SINGLE RSI.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "angler",
+      "directions": 4
+    },
+    {
+      "name": "argali",
+      "directions": 4
+    },
+    {
+      "name": "ayrshire",
+      "directions": 4
+    },
+    {
+      "name": "bighorn",
+      "directions": 4
+    },
+    {
+      "name": "curled",
+      "directions": 4
+    },
+    {
+      "name": "demonic",
+      "directions": 4
+    },
+    {
+      "name": "double",
+      "directions": 4
+    },
+    {
+      "name": "kobold_ears",
+      "directions": 4
+    },
+    {
+      "name": "myrsore",
+      "directions": 4
+    },
+    {
+      "name": "ram",
+      "directions": 4
+    },
+    {
+      "name": "short",
+      "directions": 4
+    },
+    {
+      "name": "simple",
+      "directions": 4
+    }
+  ]
+}

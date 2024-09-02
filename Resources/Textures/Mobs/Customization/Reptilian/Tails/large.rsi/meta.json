@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Large drawn by Ubaser.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "tail_front",
+      "directions": 4
+    },
+    {
+      "name": "tail_behind",
+      "directions": 4
+    },
+    {
+      "name": "tail",
+      "directions": 4
+    }
+  ]
+}

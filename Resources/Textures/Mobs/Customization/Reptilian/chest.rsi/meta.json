@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "https://github.com/Skyrat-SS13/Skyrat-tg/tree/40e3cdbb15b8bc0d5ef2fb46133adf805bda5297, Body_underbelly made by Nairod(github) for SS14. Data may be slightly inaccurate because all reptilian markings were originally IN ONE SINGLE RSI.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "underbelly",
+      "directions": 4
+    },
+    {
+      "name": "backspikes",
+      "directions": 4
+    }
+  ]
+}
