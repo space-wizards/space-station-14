@@ -33,3 +33,6 @@ reagent-desc-laughter = Some say that this is the best medicine, but recent stud
 
 reagent-name-weh = juice that makes you Weh
 reagent-desc-weh = Pure essence of lizard plush. Makes you Weh!
+
+reagent-name-propulsion-gel = propulsion gel
+reagent-desc-propulsion-gel = A refinement of the accelerative properties of Gastropoid mucin. Acts kind of like one of those moving walkways you get in airports.
