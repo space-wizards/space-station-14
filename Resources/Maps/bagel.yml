@@ -8184,7 +8184,7 @@ entities:
             1: 39312
           -12,8:
             5: 12
-            7: 3072
+            6: 3072
           -11,5:
             0: 63351
           -11,6:
@@ -8193,7 +8193,7 @@ entities:
           -11,8:
             5: 1
             1: 17476
-            7: 256
+            6: 256
           -11,7:
             1: 17484
           -10,5:
@@ -8291,10 +8291,10 @@ entities:
             0: 255
             1: 57344
           -8,11:
-            6: 816
+            7: 816
             1: 34952
           -9,11:
-            6: 2176
+            7: 2176
             1: 8738
           -8,12:
             1: 34959
@@ -8314,7 +8314,7 @@ entities:
           -6,11:
             0: 4095
           -6,12:
-            6: 61166
+            7: 61166
           -5,9:
             0: 65422
           -5,10:
@@ -8322,7 +8322,7 @@ entities:
           -5,11:
             0: 36863
           -5,12:
-            6: 30515
+            7: 30515
             0: 12
           -4,9:
             0: 65419
@@ -8332,7 +8332,7 @@ entities:
             0: 4095
           -4,12:
             0: 1
-            6: 65518
+            7: 65518
           -4,13:
             1: 61680
           -5,13:
@@ -8346,7 +8346,7 @@ entities:
           -5,15:
             1: 17487
           -3,12:
-            6: 13107
+            7: 13107
             1: 34944
           -3,13:
             1: 47792
@@ -8412,7 +8412,7 @@ entities:
             1: 61713
           -12,9:
             0: 16
-            6: 3084
+            7: 3084
           -13,9:
             1: 39305
           -13,10:
@@ -8422,18 +8422,18 @@ entities:
             0: 12544
           -12,10:
             4: 12
-            6: 3072
+            7: 3072
           -12,11:
-            6: 12
+            7: 12
           -11,9:
-            6: 257
+            7: 257
             1: 17476
           -11,10:
             4: 1
-            6: 256
+            7: 256
             1: 17476
           -11,11:
-            6: 1
+            7: 1
             1: 17476
           -11,12:
             1: 17487
@@ -8487,7 +8487,7 @@ entities:
             1: 15
           -13,12:
             1: 34952
-            7: 48
+            6: 48
             5: 12288
           -12,13:
             1: 61455
@@ -8521,11 +8521,11 @@ entities:
             1: 62671
           -7,14:
             1: 244
-            6: 57344
+            7: 57344
             0: 1024
           -7,15:
             1: 61440
-            6: 238
+            7: 238
             0: 1024
           -7,16:
             1: 65524
@@ -8584,7 +8584,7 @@ entities:
           -14,12:
             0: 1
             1: 8738
-            7: 128
+            6: 128
             5: 32768
           -17,12:
             0: 52232
@@ -9195,7 +9195,7 @@ entities:
         - volume: 2500
           temperature: 293.15
           moles:
-          - 0
+          - 6666.982
           - 0
           - 0
           - 0
@@ -9210,7 +9210,7 @@ entities:
         - volume: 2500
           temperature: 293.15
           moles:
-          - 6666.982
+          - 0
           - 0
           - 0
           - 0
@@ -9529,8 +9529,8 @@ entities:
           id: docking43669
           localAnchorB: -47.5,-40
           localAnchorA: 0.5,0
-          damping: 1560.0825
-          stiffness: 14003.268
+          damping: 1560.6345
+          stiffness: 14008.224
 - proto: AcousticGuitarInstrument
   entities:
   - uid: 2133
@@ -14527,6 +14527,12 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 52.5,33.5
+      parent: 60
+  - uid: 24973
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 56.5,19.5
       parent: 60
 - proto: APCElectronics
   entities:
@@ -32263,15 +32269,20 @@ entities:
     - type: Transform
       pos: 0.5,-53.5
       parent: 60
+  - uid: 24972
+    components:
+    - type: Transform
+      pos: 56.5,19.5
+      parent: 60
   - uid: 24974
     components:
     - type: Transform
-      pos: 51.5,26.5
+      pos: 55.5,20.5
       parent: 60
   - uid: 24975
     components:
     - type: Transform
-      pos: 51.5,25.5
+      pos: 54.5,21.5
       parent: 60
   - uid: 24976
     components:
@@ -32887,6 +32898,76 @@ entities:
     components:
     - type: Transform
       pos: 48.5,24.5
+      parent: 60
+  - uid: 25327
+    components:
+    - type: Transform
+      pos: 56.5,20.5
+      parent: 60
+  - uid: 25336
+    components:
+    - type: Transform
+      pos: 53.5,21.5
+      parent: 60
+  - uid: 25337
+    components:
+    - type: Transform
+      pos: 52.5,21.5
+      parent: 60
+  - uid: 25338
+    components:
+    - type: Transform
+      pos: 51.5,21.5
+      parent: 60
+  - uid: 25339
+    components:
+    - type: Transform
+      pos: 50.5,21.5
+      parent: 60
+  - uid: 25340
+    components:
+    - type: Transform
+      pos: 49.5,21.5
+      parent: 60
+  - uid: 25341
+    components:
+    - type: Transform
+      pos: 48.5,21.5
+      parent: 60
+  - uid: 25342
+    components:
+    - type: Transform
+      pos: 47.5,21.5
+      parent: 60
+  - uid: 25343
+    components:
+    - type: Transform
+      pos: 46.5,21.5
+      parent: 60
+  - uid: 25344
+    components:
+    - type: Transform
+      pos: 44.5,21.5
+      parent: 60
+  - uid: 25345
+    components:
+    - type: Transform
+      pos: 43.5,21.5
+      parent: 60
+  - uid: 25346
+    components:
+    - type: Transform
+      pos: 45.5,21.5
+      parent: 60
+  - uid: 25347
+    components:
+    - type: Transform
+      pos: 41.5,21.5
+      parent: 60
+  - uid: 25348
+    components:
+    - type: Transform
+      pos: 42.5,21.5
       parent: 60
 - proto: CableApcStack
   entities:
@@ -48898,15 +48979,40 @@ entities:
     - type: Transform
       pos: 52.5,33.5
       parent: 60
-  - uid: 24972
+  - uid: 25349
     components:
     - type: Transform
-      pos: 51.5,25.5
+      pos: 54.5,23.5
       parent: 60
-  - uid: 24973
+  - uid: 25350
     components:
     - type: Transform
-      pos: 51.5,26.5
+      pos: 54.5,22.5
+      parent: 60
+  - uid: 25351
+    components:
+    - type: Transform
+      pos: 54.5,21.5
+      parent: 60
+  - uid: 25352
+    components:
+    - type: Transform
+      pos: 54.5,20.5
+      parent: 60
+  - uid: 25353
+    components:
+    - type: Transform
+      pos: 55.5,20.5
+      parent: 60
+  - uid: 25354
+    components:
+    - type: Transform
+      pos: 56.5,20.5
+      parent: 60
+  - uid: 25355
+    components:
+    - type: Transform
+      pos: 56.5,19.5
       parent: 60
 - proto: CableMVStack
   entities:
@@ -57020,11 +57126,6 @@ entities:
     - type: Transform
       pos: 50.5,25.5
       parent: 60
-  - uid: 25327
-    components:
-    - type: Transform
-      pos: 51.5,25.5
-      parent: 60
   - uid: 25328
     components:
     - type: Transform
@@ -57059,6 +57160,11 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 48.5,23.5
+      parent: 60
+  - uid: 25356
+    components:
+    - type: Transform
+      pos: 51.5,25.5
       parent: 60
 - proto: ChairFolding
   entities:
