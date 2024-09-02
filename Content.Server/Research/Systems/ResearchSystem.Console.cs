@@ -2,6 +2,7 @@ using Content.Server.Power.EntitySystems;
 using Content.Server.Research.Components;
 using Content.Shared.UserInterface;
 using Content.Shared.Access.Components;
+using Content.Shared.Emag.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Research.Components;
 using Content.Shared.Research.Prototypes;
@@ -38,16 +39,20 @@ public sealed partial class ResearchSystem
         if (!UnlockTechnology(uid, args.Id, act))
             return;
 
-        var getIdentityEvent = new TryGetIdentityShortInfoEvent(uid, act);
-        RaiseLocalEvent(getIdentityEvent);
+        if (!HasComp<EmaggedComponent>(uid))
+        {
+            var getIdentityEvent = new TryGetIdentityShortInfoEvent(uid, act);
+            RaiseLocalEvent(getIdentityEvent);
 
-        var message = Loc.GetString(
-            "research-console-unlock-technology-radio-broadcast",
-            ("technology", Loc.GetString(technologyPrototype.Name)),
-            ("amount", technologyPrototype.Cost),
-            ("approver", getIdentityEvent.Title ?? string.Empty)
-        );
-        _radio.SendRadioMessage(uid, message, component.AnnouncementChannel, uid, escapeMarkup: false);
+            var message = Loc.GetString(
+                "research-console-unlock-technology-radio-broadcast",
+                ("technology", Loc.GetString(technologyPrototype.Name)),
+                ("amount", technologyPrototype.Cost),
+                ("approver", getIdentityEvent.Title ?? string.Empty)
+            );
+            _radio.SendRadioMessage(uid, message, component.AnnouncementChannel, uid, escapeMarkup: false);
+        }
+       
         SyncClientWithServer(uid);
         UpdateConsoleInterface(uid, component);
     }
