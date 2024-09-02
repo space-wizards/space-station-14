@@ -123,7 +123,7 @@ namespace Content.Server.PDA
         {
             _ringer.RingerPlayRingtone(ent.Owner);
 
-            if (!_containerSystem.TryGetContainingContainer(ent, out var container)
+            if (!_containerSystem.TryGetContainingContainer((ent, null, null), out var container)
                 || !TryComp<ActorComponent>(container.Owner, out var actor))
                 return;
 

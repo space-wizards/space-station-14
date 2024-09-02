@@ -242,27 +242,31 @@ entities:
     - type: Transform
       pos: -0.5,6.5
       parent: 1
-- proto: AtmosDeviceFanTiny
+- proto: AtmosDeviceFanDirectional
   entities:
   - uid: 8
     components:
     - type: Transform
-      pos: -5.5,1.5
+      rot: 1.5707963267948966 rad
+      pos: 0.5,3.5
       parent: 1
   - uid: 9
     components:
     - type: Transform
-      pos: -5.5,3.5
+      rot: 1.5707963267948966 rad
+      pos: 0.5,1.5
       parent: 1
   - uid: 10
     components:
     - type: Transform
-      pos: 0.5,3.5
+      rot: -1.5707963267948966 rad
+      pos: -5.5,1.5
       parent: 1
   - uid: 11
     components:
     - type: Transform
-      pos: 0.5,1.5
+      rot: -1.5707963267948966 rad
+      pos: -5.5,3.5
       parent: 1
 - proto: BlastDoor
   entities:
@@ -271,33 +275,21 @@ entities:
     - type: Transform
       pos: 0.5,4.5
       parent: 1
-    - type: DeviceLinkSink
-      links:
-      - 135
   - uid: 13
     components:
     - type: Transform
       pos: -5.5,0.5
       parent: 1
-    - type: DeviceLinkSink
-      links:
-      - 134
   - uid: 14
     components:
     - type: Transform
       pos: 0.5,0.5
       parent: 1
-    - type: DeviceLinkSink
-      links:
-      - 136
   - uid: 15
     components:
     - type: Transform
       pos: -5.5,4.5
       parent: 1
-    - type: DeviceLinkSink
-      links:
-      - 133
 - proto: BoxMRE
   entities:
   - uid: 93
@@ -650,108 +642,72 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 0.5,4.5
       parent: 1
-    - type: DeviceLinkSink
-      links:
-      - 151
   - uid: 82
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -0.5,4.5
       parent: 1
-    - type: DeviceLinkSink
-      links:
-      - 151
   - uid: 83
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -1.5,4.5
       parent: 1
-    - type: DeviceLinkSink
-      links:
-      - 151
   - uid: 84
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -5.5,0.5
       parent: 1
-    - type: DeviceLinkSink
-      links:
-      - 149
   - uid: 85
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -4.5,0.5
       parent: 1
-    - type: DeviceLinkSink
-      links:
-      - 149
   - uid: 86
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -3.5,0.5
       parent: 1
-    - type: DeviceLinkSink
-      links:
-      - 149
   - uid: 87
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -0.5,0.5
       parent: 1
-    - type: DeviceLinkSink
-      links:
-      - 150
   - uid: 88
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -3.5,4.5
       parent: 1
-    - type: DeviceLinkSink
-      links:
-      - 152
   - uid: 89
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -4.5,4.5
       parent: 1
-    - type: DeviceLinkSink
-      links:
-      - 152
   - uid: 90
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -5.5,4.5
       parent: 1
-    - type: DeviceLinkSink
-      links:
-      - 152
   - uid: 91
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -1.5,0.5
       parent: 1
-    - type: DeviceLinkSink
-      links:
-      - 150
   - uid: 92
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 0.5,0.5
       parent: 1
-    - type: DeviceLinkSink
-      links:
-      - 150
 - proto: CrateFilledSpawner
   entities:
   - uid: 95

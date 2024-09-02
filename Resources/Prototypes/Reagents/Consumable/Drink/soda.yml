@@ -13,6 +13,15 @@
   metamorphicMaxFillLevels: 5
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:GenericStatusEffect
+        key: Drowsiness
+        time: 1.0
+        type: Remove
 
 - type: reagent
   id: RoyRogers
@@ -68,6 +77,10 @@
       effects:
       - !type:SatiateThirst
         factor: 2
+      - !type:GenericStatusEffect
+        key: Drowsiness
+        time: 2.0
+        type: Remove
       - !type:AdjustReagent
         reagent: Theobromine
         amount: 0.1

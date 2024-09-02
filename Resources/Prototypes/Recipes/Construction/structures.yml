@@ -774,6 +774,7 @@
     state: closed
   objectType: Structure
   placementMode: SnapgridCenter
+  canRotate: false
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
@@ -791,12 +792,13 @@
     state: closed
   objectType: Structure
   placementMode: SnapgridCenter
+  canRotate: false
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
 
 - type: construction
-  name: Thin firelock
+  name: thin firelock
   id: FirelockEdge
   graph: Firelock
   startNode: start
@@ -1641,6 +1643,23 @@
     state: plasticflaps
   conditions:
     - !type:TileNotBlocked
+
+- type: construction
+  name: carp statue
+  id: CarpStatue
+  graph: CarpStatue
+  startNode: start
+  targetNode: statue
+  category: construction-category-structures
+  placementMode: SnapgridCenter
+  description: A statue of one of the brave carp that got us where we are today. Made with real teeth!
+  objectType: Structure
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Specific/carp_statue.rsi
+    state: icon
+  conditions:
+  - !type:TileNotBlocked
 
 - type: construction
   name: bananium clown statue

@@ -2,6 +2,7 @@
 using Content.Shared.Atmos.Piping.Unary.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.Atmos.UI
 {
@@ -31,14 +32,7 @@ namespace Content.Client.Atmos.UI
         {
             base.Open();
 
-            _window = new GasThermomachineWindow();
-
-            if (State != null)
-                UpdateState(State);
-
-            _window.OpenCentered();
-
-            _window.OnClose += Close;
+            _window = this.CreateWindow<GasThermomachineWindow>();
 
             _window.ToggleStatusButton.OnPressed += _ => OnToggleStatusButtonPressed();
             _window.TemperatureSpinbox.OnValueChanged += _ => OnTemperatureChanged(_window.TemperatureSpinbox.Value);
@@ -90,13 +84,6 @@ namespace Content.Client.Atmos.UI
                 false => Loc.GetString("comp-gas-thermomachine-ui-title-freezer"),
                 true => Loc.GetString("comp-gas-thermomachine-ui-title-heater")
             };
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-            if (!disposing) return;
-            _window?.Dispose();
         }
     }
 }

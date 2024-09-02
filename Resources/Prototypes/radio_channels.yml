@@ -3,7 +3,7 @@
   name: chat-radio-common
   keycode: ";"
   frequency: 1459
-  color: "#32cd32"
+  color: "#2cdb2c"
 
 - type: radioChannel
   id: CentCom
@@ -25,7 +25,7 @@
   name: chat-radio-engineering
   keycode: 'e'
   frequency: 1357
-  color: "#f37746"
+  color: "#ff733c"
 
 - type: radioChannel
   id: Medical
@@ -39,28 +39,28 @@
   name: chat-radio-science
   keycode: 'n'
   frequency: 1351
-  color: "#c68cfa"
+  color: "#cd7ccd"
 
 - type: radioChannel
   id: Security
   name: chat-radio-security
   keycode: 's'
   frequency: 1359
-  color: "#dd3535"
+  color: "#ff4242"
 
 - type: radioChannel
   id: Service
   name: chat-radio-service
   keycode: 'v'
   frequency: 1349
-  color: "#6ca729"
+  color: "#539c00"
 
 - type: radioChannel
   id: Supply
   name: chat-radio-supply
   keycode: 'u'
   frequency: 1347
-  color: "#b88646"
+  color: "#b48b57"
 
 - type: radioChannel
   id: Syndicate
@@ -74,7 +74,7 @@
   id: Handheld
   name: chat-radio-handheld
   frequency: 1330
-  color: "#d39f01"
+  color: "#967101"
   # long range since otherwise it'd defeat the point of a handheld radio independent of telecomms
   longRange: true
 
