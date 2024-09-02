@@ -29,13 +29,6 @@
     state: icon
 
 - type: stealTargetGroup
-  id: BookSecretDocuments
-  name: "emergency security orders"
-  sprite:
-    sprite: Objects/Misc/bureaucracy.rsi
-    state: folder-sec-doc
-
-- type: stealTargetGroup
   id: ClothingShoesBootsMagAdv
   name: advanced magboots
   sprite:
@@ -83,6 +76,13 @@
   sprite:
     sprite: Objects/Misc/nukedisk.rsi
     state: icon
+
+- type: stealTargetGroup
+  id: WeaponEnergyShotgun
+  name: energy shotgun
+  sprite:
+    sprite: Objects/Weapons/Guns/Battery/energy_shotgun.rsi
+    state: base
 
 # Thief Collection
 
@@ -236,13 +236,6 @@
     state: cpuboard
 
 - type: stealTargetGroup
-  id: SalvageShuttleConsoleCircuitboard
-  name: salvage shuttle console board
-  sprite:
-    sprite: Objects/Misc/module.rsi
-    state: cpuboard
-
-- type: stealTargetGroup
   id: ClothingEyesHudBeer
   name: beer goggles
   sprite:
@@ -268,13 +261,6 @@
   name: clown medal
   sprite:
     sprite: Clothing/Neck/Medals/clownmedal.rsi
-    state: icon
-
-- type: stealTargetGroup
-  id: ClothingNeckShockCollar
-  name: shock collar
-  sprite:
-    sprite: Clothing/Neck/Misc/shock_collar.rsi
     state: icon
 
 #Thief structures
@@ -406,3 +392,5 @@
   sprite:
     sprite: Mobs/Animals/crab.rsi
     state: crab
+
+

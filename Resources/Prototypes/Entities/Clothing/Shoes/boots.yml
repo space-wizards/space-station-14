@@ -20,6 +20,8 @@
     sprite: Clothing/Shoes/Boots/jackboots.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/jackboots.rsi
+  - type: ClothingSlowOnDamageModifier
+    modifier: 0.5
 
 - type: entity
   parent: ClothingShoesBaseButcherable
