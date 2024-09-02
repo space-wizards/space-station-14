@@ -694,13 +694,8 @@ namespace Content.Server.Administration.Systems
 
             // Log the Bwoink message to the database
             await _ahelpLogging.LogAhelpMessageAsync(
+                serverName: _gameTicker.ServerName!,
                 ahelpRound: _gameTicker.RoundId,
-                ahelpTarget: message.UserId,
-                sender: message.TrueSender,
-                senderEntity: Convert.ToInt32(senderSession.AttachedEntity.ToString()),
-                isAdminned: senderAdmin != null,
-                targetOnline: targetOnline,
-                message: message.Text,
                 roundStatus: _gameTicker.RunLevel switch
                 {
                     GameRunLevel.PreRoundLobby => "PreRoundLobby",
@@ -708,7 +703,14 @@ namespace Content.Server.Administration.Systems
                     GameRunLevel.PostRound => "PostRound",
                 },
                 timeSent: DateTime.UtcNow,
-                serverName: _gameTicker.ServerName!
+                adminsOnline: GetNonAfkAdmins().Count > 0,
+                sender: message.TrueSender,
+                senderEntity: senderSession.AttachedEntity,
+                isAdminned: senderAdmin != null,
+                senderEntityName: senderSession.Name,
+                ahelpTarget: message.UserId,
+                targetOnline: targetOnline,
+                message: message.Text
             );
 
             string adminPrefixWebhook = "";

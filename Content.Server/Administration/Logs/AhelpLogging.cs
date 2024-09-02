@@ -14,19 +14,31 @@ namespace Content.Server.Administration.Logs
             _dbManager = dbManager;
         }
 
-        public async Task LogAhelpMessageAsync(int ahelpRound,
-            Guid ahelpTarget,
-            Guid sender,
-            int senderEntity,
-            bool isAdminned,
-            bool targetOnline,
-            string message,
+        public async Task LogAhelpMessageAsync(
+            string serverName,
+            int ahelpRound,
             string roundStatus,
             DateTime timeSent,
-            string serverName)
+            bool adminsOnline,
+            Guid sender,
+            EntityUid? senderEntity,
+            string? senderEntityName,
+            bool isAdminned,
+            Guid ahelpTarget,
+            bool targetOnline,
+            string message
+            )
         {
+
+            //Convert SenderUID to int so Db doesnt have a stroke
+            var senderEntityInt = senderEntity != null
+                ? (int?) (int) senderEntity
+                : null;
+
             // Find or create the AhelpExchange
-            var ahelpExchange = await _dbManager.GetAhelpExchangeAsync(ahelpRound, ahelpTarget);
+            //Currently new exchanges are created on different rounds, ie need to create a way to determine if the player
+            //is still in the session.
+            var ahelpExchange = await _dbManager.GetAhelpExchangeAsync(ahelpRound, ahelpTarget, serverName);
 
             if (ahelpExchange == null)
             {
@@ -39,19 +51,20 @@ namespace Content.Server.Administration.Logs
                 await _dbManager.AddAhelpExchangeAsync(ahelpExchange);
             }
 
-            // Create a new AhelpMessage and log it
+            // Create a new AhelpMessage and log it to that exchange
             var ahelpMessage = new AhelpMessage
             {
                 AhelpId = ahelpExchange.AhelpId,
                 Id = await GenerateUniqueMessageIdAsync(ahelpExchange.AhelpId),
-                SentAt = DateTime.UtcNow,
                 RoundStatus = roundStatus,
+                TimeSent = timeSent,
+                AdminsOnline = adminsOnline,
                 Sender = sender,
-                SenderEntity = senderEntity,
+                SenderEntity = senderEntityInt,
+                SenderEntityName = senderEntityName,
                 IsAdminned = isAdminned,
                 TargetOnline = targetOnline,
                 Message = message,
-                TimeSent = timeSent
             };
 
             await _dbManager.AddAhelpMessageAsync(ahelpMessage);

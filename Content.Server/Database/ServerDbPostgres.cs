@@ -496,11 +496,12 @@ namespace Content.Server.Database
 
         #region Ahelp Logging
 
-        public override async Task<AhelpExchange?> GetAhelpExchangeAsync(int ahelpRound, Guid ahelpTarget)
+        public override async Task<AhelpExchange?> GetAhelpExchangeAsync(int ahelpRound, Guid ahelpTarget, string serverName)
         {
             await using var db = await GetDbImpl();
             return await db.PgDbContext.AhelpExchanges
-                .FirstOrDefaultAsync(e => e.AhelpRound == ahelpRound && e.AhelpTarget == ahelpTarget);
+                .Include(e => e.AhelpMessages)
+                .FirstOrDefaultAsync(e => e.AhelpRound == ahelpRound && e.AhelpTarget == ahelpTarget && e.ServerName == serverName);
         }
 
         public override async Task AddAhelpExchangeAsync(AhelpExchange exchange)

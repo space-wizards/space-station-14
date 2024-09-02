@@ -215,7 +215,7 @@ namespace Content.Server.Database
             {
                 entity.HasKey(e => new { e.AhelpId, e.Id });
 
-                entity.HasIndex(e => e.SentAt);
+                entity.HasIndex(e => e.TimeSent);
 
                 entity.HasOne(e => e.Player)
                     .WithMany()
@@ -225,11 +225,16 @@ namespace Content.Server.Database
                 entity.Property(e => e.Message)
                     .IsRequired();
 
-                entity.Property(e => e.SentAt)
-                    .HasConversion(v => v.ToUniversalTime(), v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
+                entity.Property(e => e.TimeSent)
+                    .HasConversion(
+                        v => v.ToUniversalTime(),
+                        v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
 
                 entity.Property(e => e.TimeSent)
-                    .HasConversion(v => v.ToUniversalTime(), v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
+                    .HasConversion(
+                        v => v.ToUniversalTime(),
+                        v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
+
             });
 
             modelBuilder.Entity<AhelpExchange>(entity =>
@@ -247,6 +252,10 @@ namespace Content.Server.Database
                     .WithOne(e => e.AhelpExchange)
                     .HasForeignKey(e => e.AhelpId)
                     .OnDelete(DeleteBehavior.Cascade);
+
+                entity.Property(e => e.ServerName)
+                    .HasMaxLength(255)
+                    .IsRequired(false);
             });
 
             modelBuilder.Entity<AdminNote>()
@@ -792,22 +801,20 @@ namespace Content.Server.Database
         [Key]
         public int Id { get; set; }
 
-        [Required] public DateTime SentAt { get; set; }
+        [Required] public DateTime TimeSent { get; set; }
 
         [Required] public string? RoundStatus { get; set; }
 
         [Required]
         [ForeignKey(nameof(Player))]
         public Guid Sender { get; set; }
-
         public Player Player { get; set; } = null!;
-
-        public int SenderEntity { get; set; }
+        public int? SenderEntity { get; set; }
+        public string? SenderEntityName { get; set; }
+        public bool AdminsOnline { get; set; }
         public bool IsAdminned { get; set; }
         public bool TargetOnline { get; set; }
         public string Message { get; set; } = null!;
-        public DateTime TimeSent { get; set; }
-
         public AhelpExchange AhelpExchange { get; set; } = null!;
     }
 

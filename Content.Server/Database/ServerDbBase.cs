@@ -1077,7 +1077,7 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             return await db.DbContext.AdminLog.CountAsync(log => log.RoundId == round);
         }
 
-        public abstract Task<AhelpExchange?> GetAhelpExchangeAsync(int ahelpRound, Guid ahelpTarget);
+        public abstract Task<AhelpExchange?> GetAhelpExchangeAsync(int ahelpRound, Guid ahelpTarget, string serverName);
 
         public abstract Task AddAhelpExchangeAsync(AhelpExchange exchange);
 

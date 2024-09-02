@@ -673,12 +673,12 @@ namespace Content.Server.Database
                 .FirstOrDefaultAsync();
         }
 
-        public override async Task<AhelpExchange?> GetAhelpExchangeAsync(int exchangeId, Guid ahelpTarget)
+        public override async Task<AhelpExchange?> GetAhelpExchangeAsync(int ahelpRound, Guid ahelpTarget, string serverName)
         {
             await using var db = await GetDbImpl();
             return await db.SqliteDbContext.AhelpExchanges
-                .Where(e => e.AhelpId == exchangeId && e.AhelpTarget == ahelpTarget)
-                .FirstOrDefaultAsync();
+                .Include(e => e.AhelpMessages)
+                .FirstOrDefaultAsync(e => e.AhelpRound == ahelpRound && e.AhelpTarget == ahelpTarget && e.ServerName == serverName);
         }
 
         public override async Task AddAhelpExchangeAsync(AhelpExchange exchange)
