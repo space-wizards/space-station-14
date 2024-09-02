@@ -18,6 +18,7 @@ using Content.Shared.GameTicking;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Ghost;
 using Content.Shared.Humanoid;
+using Content.Shared.Mind;
 using Content.Shared.Players;
 using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
@@ -39,15 +40,12 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     [Dependency] private readonly IChatManager _chat = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IServerPreferencesManager _pref = default!;
-    [Dependency] private readonly ActorSystem _actors = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly GhostRoleSystem _ghostRole = default!;
     [Dependency] private readonly JobSystem _jobs = default!;
     [Dependency] private readonly LoadoutSystem _loadout = default!;
     [Dependency] private readonly MindSystem _mind = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly RoleSystem _role = default!;
-    [Dependency] private readonly StationSpawningSystem _stationSpawning = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
 
@@ -231,7 +229,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
         for (var i = 0; i < count; i++)
         {
-            var session = (ICommonSession?) null;
+            var session = (ICommonSession?)null;
             if (picking)
             {
                 if (!playerPool.TryPickAndTake(RobustRandom, out session) && noSpawner)
@@ -341,13 +339,19 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
         if (session != null)
         {
-            var curMind = _mind.CreateMind(session.UserId, Name(antagEnt.Value));
-            _mind.SetUserId(curMind, session.UserId);
+            var curMind = session.GetMind();
+            
+            if (curMind == null || 
+                !TryComp<MindComponent>(curMind.Value, out var mindComp) ||
+                mindComp.OwnedEntity != antagEnt)
+            {
+                curMind = _mind.CreateMind(session.UserId, Name(antagEnt.Value));
+                _mind.SetUserId(curMind.Value, session.UserId);
+            }
 
-            _mind.TransferTo(curMind, antagEnt, ghostCheckOverride: true);
-            _role.MindAddRoles(curMind, def.MindComponents, null, true);
-            ent.Comp.SelectedMinds.Add((curMind, Name(player)));
-
+            _mind.TransferTo(curMind.Value, antagEnt, ghostCheckOverride: true);
+            _role.MindAddRoles(curMind.Value, def.MindComponents, null, true);
+            ent.Comp.SelectedMinds.Add((curMind.Value, Name(player)));
             SendBriefing(session, def.Briefing);
         }
 
@@ -460,7 +464,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
     private void OnObjectivesTextGetInfo(Entity<AntagSelectionComponent> ent, ref ObjectivesTextGetInfoEvent args)
     {
-        if (ent.Comp.AgentName is not {} name)
+        if (ent.Comp.AgentName is not { } name)
             return;
 
         args.Minds = ent.Comp.SelectedMinds;

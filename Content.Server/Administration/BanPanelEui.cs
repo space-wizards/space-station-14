@@ -19,7 +19,6 @@ public sealed class BanPanelEui : BaseEui
     [Dependency] private readonly IEntityManager _entities = default!;
     [Dependency] private readonly ILogManager _log = default!;
     [Dependency] private readonly IPlayerLocator _playerLocator = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IChatManager _chat = default!;
     [Dependency] private readonly IAdminManager _admins = default!;
 
@@ -132,13 +131,12 @@ public sealed class BanPanelEui : BaseEui
         }
 
         if (erase &&
-            targetUid != null &&
-            _playerManager.TryGetSessionById(targetUid.Value, out var targetPlayer))
+            targetUid != null)
         {
             try
             {
                 if (_entities.TrySystem(out AdminSystem? adminSystem))
-                    adminSystem.Erase(targetPlayer);
+                    adminSystem.Erase(targetUid.Value);
             }
             catch (Exception e)
             {
