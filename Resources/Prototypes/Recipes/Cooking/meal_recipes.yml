@@ -459,6 +459,19 @@
     FoodDough: 1
 
 - type: microwaveMealRecipe
+  id: RecipeBaguetteSword
+  name: baguette sword recipe
+  result: WeaponBaguette
+  secretRecipe: true
+  time: 15
+  reagents:
+    TableSalt: 5
+    Blackpepper: 5
+  solids:
+    FoodDough: 1
+    PartRodMetal1: 1
+
+- type: microwaveMealRecipe
   id: RecipeButteredToast
   name: buttered toast recipe
   result: FoodBreadButteredToast
@@ -1864,3 +1877,14 @@
   solids:
     FoodCroissantRaw: 1
     FoodButterSlice: 1
+
+- type: microwaveMealRecipe
+  id: RecipeThrowingCroissant
+  name: throwing croissant recipe
+  result: WeaponCroissant
+  secretRecipe: true
+  time: 5
+  solids:
+    FoodCroissantRaw: 1
+    FoodButterSlice: 1
+    ShardGlass: 1
