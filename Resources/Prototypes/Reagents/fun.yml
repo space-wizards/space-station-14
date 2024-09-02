@@ -405,6 +405,8 @@
   physicalDesc: reagent-physical-desc-energetic
   flavor: speed
   color: "#ff8700"
+  recognizable: true
+  viscosity: -1
   metabolisms:
     Drink:
       effects:
