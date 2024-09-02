@@ -1,0 +1,53 @@
+- type: marking
+  id: MothChestPointy
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/pointy.rsi
+    state: pointy_chest
+
+- type: marking
+  id: MothHeadPointy
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/pointy.rsi
+    state: pointy_head
+
+- type: marking
+  id: MothLLegPointy
+  bodyPart: LLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/pointy.rsi
+    state: pointy_l_leg
+
+- type: marking
+  id: MothRLegPointy
+  bodyPart: RLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/pointy.rsi
+    state: pointy_r_leg
+
+- type: marking
+  id: MothLArmPointy
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/pointy.rsi
+    state: pointy_l_arm
+
+- type: marking
+  id: MothRArmPointy
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/pointy.rsi
+    state: pointy_r_arm

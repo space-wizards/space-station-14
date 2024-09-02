@@ -1,0 +1,53 @@
+- type: marking
+  id: MothChestOakworm
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/oakworm.rsi
+    state: oakworm_chest
+
+- type: marking
+  id: MothHeadOakworm
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/oakworm.rsi
+    state: oakworm_head
+
+- type: marking
+  id: MothLLegOakworm
+  bodyPart: LLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/oakworm.rsi
+    state: oakworm_l_leg
+
+- type: marking
+  id: MothRLegOakworm
+  bodyPart: RLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/oakworm.rsi
+    state: oakworm_r_leg
+
+- type: marking
+  id: MothLArmOakworm
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/oakworm.rsi
+    state: oakworm_l_arm
+
+- type: marking
+  id: MothRArmOakworm
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/oakworm.rsi
+    state: oakworm_r_arm

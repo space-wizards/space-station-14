@@ -1,0 +1,53 @@
+- type: marking
+  id: MothChestCharred
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/charred.rsi
+    state: charred_chest
+
+- type: marking
+  id: MothHeadCharred
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/charred.rsi
+    state: charred_head
+
+- type: marking
+  id: MothLLegCharred
+  bodyPart: LLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/charred.rsi
+    state: charred_l_leg
+
+- type: marking
+  id: MothRLegCharred
+  bodyPart: RLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/charred.rsi
+    state: charred_r_leg
+
+- type: marking
+  id: MothLArmCharred
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/charred.rsi
+    state: charred_l_arm
+
+- type: marking
+  id: MothRArmCharred
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/charred.rsi
+    state: charred_r_arm

@@ -1,0 +1,17 @@
+- type: marking
+  id: ArachnidCheliceraeDownwards
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [Arachnid]
+  sprites:
+  - sprite: Mobs/Customization/Arachnid/chelicerae.rsi
+    state: downwards
+
+- type: marking
+  id: ArachnidCheliceraeInwards
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [Arachnid]
+  sprites:
+  - sprite: Mobs/Customization/Arachnid/chelicerae.rsi
+    state: inwards

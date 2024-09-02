@@ -1,0 +1,169 @@
+- type: marking
+  id: ArachnidTorsoStripes
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Arachnid]
+  sprites:
+  - sprite: Mobs/Customization/Arachnid/chest.rsi
+    state: stripes
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+
+- type: marking
+  id: ArachnidTorsoSlashes
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Arachnid]
+  sprites:
+  - sprite: Mobs/Customization/Arachnid/chest.rsi
+    state: slashes
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+
+- type: marking
+  id: ArachnidTorsoX
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Arachnid]
+  sprites:
+  - sprite: Mobs/Customization/Arachnid/chest.rsi
+    state: x
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+
+- type: marking
+  id: ArachnidTorsoCross
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Arachnid]
+  sprites:
+  - sprite: Mobs/Customization/Arachnid/chest.rsi
+    state: cross
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+
+- type: marking
+  id: ArachnidTorsoHeart
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Arachnid]
+  sprites:
+  - sprite: Mobs/Customization/Arachnid/chest.rsi
+    state: heart
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+
+- type: marking
+  id: ArachnidTorsoHourglass
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Arachnid]
+  sprites:
+  - sprite: Mobs/Customization/Arachnid/chest.rsi
+    state: hourglass
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+
+- type: marking
+  id: ArachnidTorsoNailAndHammer
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Arachnid]
+  sprites:
+  - sprite: Mobs/Customization/Arachnid/chest.rsi
+    state: nail-and-hammer
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+
+- type: marking
+  id: ArachnidTorsoStar
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Arachnid]
+  sprites:
+  - sprite: Mobs/Customization/Arachnid/chest.rsi
+    state: star
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+
+- type: marking
+  id: ArachnidTorsoArrows
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Arachnid]
+  sprites:
+  - sprite: Mobs/Customization/Arachnid/chest.rsi
+    state: arrows
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+
+- type: marking
+  id: ArachnidTorsoCore
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Arachnid]
+  sprites:
+  - sprite: Mobs/Customization/Arachnid/chest.rsi
+    state: core
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+
+- type: marking
+  id: ArachnidTorsoFiddleback
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Arachnid]
+  sprites:
+  - sprite: Mobs/Customization/Arachnid/chest.rsi
+    state: fiddleback
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+
+- type: marking
+  id: ArachnidTorsoSkull
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Arachnid]
+  sprites:
+  - sprite: Mobs/Customization/Arachnid/chest.rsi
+    state: skull
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+
+- type: marking
+  id: ArachnidTorsoTarget
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Arachnid]
+  sprites:
+  - sprite: Mobs/Customization/Arachnid/chest.rsi
+    state: target
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+

@@ -1,0 +1,27 @@
+- type: marking
+  id: DionaThornsHead
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Diona]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/Diona/thorns.rsi
+    state: thorns_head
+
+- type: marking
+  id: DionaThornsBody
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Diona]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/Diona/thorns.rsi
+    state: thorns_body

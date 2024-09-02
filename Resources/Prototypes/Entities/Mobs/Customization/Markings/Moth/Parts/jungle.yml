@@ -1,0 +1,53 @@
+- type: marking
+  id: MothChestJungle
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/jungle.rsi
+    state: jungle_chest
+
+- type: marking
+  id: MothHeadJungle
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/jungle.rsi
+    state: jungle_head
+
+- type: marking
+  id: MothLLegJungle
+  bodyPart: LLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/jungle.rsi
+    state: jungle_l_leg
+
+- type: marking
+  id: MothRLegJungle
+  bodyPart: RLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/jungle.rsi
+    state: jungle_r_leg
+
+- type: marking
+  id: MothLArmJungle
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/jungle.rsi
+    state: jungle_l_arm
+
+- type: marking
+  id: MothRArmJungle
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/jungle.rsi
+    state: jungle_r_arm

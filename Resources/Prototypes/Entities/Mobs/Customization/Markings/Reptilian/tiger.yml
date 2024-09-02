@@ -1,0 +1,53 @@
+- type: marking
+  id: LizardChestTiger
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/Reptilian/tiger.rsi
+    state: body
+
+- type: marking
+  id: LizardHeadTiger
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/Reptilian/tiger.rsi
+    state: head
+
+- type: marking
+  id: LizardLArmTiger
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/Reptilian/tiger.rsi
+    state: l_arm
+
+- type: marking
+  id: LizardLLegTiger
+  bodyPart: LLeg
+  markingCategory: Legs
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/Reptilian/tiger.rsi
+    state: l_leg
+
+- type: marking
+  id: LizardRArmTiger
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/Reptilian/tiger.rsi
+    state: r_arm
+
+- type: marking
+  id: LizardRLegTiger
+  bodyPart: RLeg
+  markingCategory: Legs
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/Reptilian/tiger.rsi
+    state: r_leg

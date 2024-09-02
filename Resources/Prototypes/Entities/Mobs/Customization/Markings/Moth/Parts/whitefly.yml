@@ -1,0 +1,53 @@
+- type: marking
+  id: MothChestWhitefly
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/whitefly.rsi
+    state: whitefly_chest
+
+- type: marking
+  id: MothHeadWhitefly
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/whitefly.rsi
+    state: whitefly_head
+
+- type: marking
+  id: MothLLegWhitefly
+  bodyPart: LLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/whitefly.rsi
+    state: whitefly_l_leg
+
+- type: marking
+  id: MothRLegWhitefly
+  bodyPart: RLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/whitefly.rsi
+    state: whitefly_r_leg
+
+- type: marking
+  id: MothLArmWhitefly
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/whitefly.rsi
+    state: whitefly_l_arm
+
+- type: marking
+  id: MothRArmWhitefly
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/whitefly.rsi
+    state: whitefly_r_arm

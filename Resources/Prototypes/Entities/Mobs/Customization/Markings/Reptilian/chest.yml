@@ -1,0 +1,17 @@
+- type: marking
+  id: LizardChestUnderbelly
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/Reptilian/chest.rsi
+    state: underbelly
+
+- type: marking
+  id: LizardChestBackspikes
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/Reptilian/chest.rsi
+    state: backspikes

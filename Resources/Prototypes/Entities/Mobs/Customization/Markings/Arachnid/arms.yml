@@ -1,0 +1,26 @@
+- type: marking
+  id: ArachnidRArmStripes
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [Arachnid]
+  sprites:
+  - sprite: Mobs/Customization/Arachnid/arms.rsi
+    state: stripes_right
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+
+- type: marking
+  id: ArachnidLArmStripes
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [Arachnid]
+  sprites:
+  - sprite: Mobs/Customization/Arachnid/arms.rsi
+    state: stripes_left
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+

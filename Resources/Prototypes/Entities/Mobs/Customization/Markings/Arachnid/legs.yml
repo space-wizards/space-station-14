@@ -1,0 +1,26 @@
+- type: marking
+  id: ArachnidRLegStripes
+  bodyPart: RLeg
+  markingCategory: Legs
+  speciesRestriction: [Arachnid]
+  sprites:
+  - sprite: Mobs/Customization/Arachnid/legs.rsi
+    state: stripes_right
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+
+- type: marking
+  id: ArachnidLLegStripes
+  bodyPart: LLeg
+  markingCategory: Legs
+  speciesRestriction: [Arachnid]
+  sprites:
+  - sprite: Mobs/Customization/Arachnid/legs.rsi
+    state: stripes_left
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+

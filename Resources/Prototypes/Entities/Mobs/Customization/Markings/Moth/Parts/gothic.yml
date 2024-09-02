@@ -1,0 +1,53 @@
+- type: marking
+  id: MothChestGothic
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/gothic.rsi
+    state: gothic_chest
+
+- type: marking
+  id: MothHeadGothic
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/gothic.rsi
+    state: gothic_head
+
+- type: marking
+  id: MothLLegGothic
+  bodyPart: LLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/gothic.rsi
+    state: gothic_l_leg
+
+- type: marking
+  id: MothRLegGothic
+  bodyPart: RLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/gothic.rsi
+    state: gothic_r_leg
+
+- type: marking
+  id: MothLArmGothic
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/gothic.rsi
+    state: gothic_l_arm
+
+- type: marking
+  id: MothRArmGothic
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/gothic.rsi
+    state: gothic_r_arm

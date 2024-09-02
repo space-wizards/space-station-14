@@ -1,0 +1,53 @@
+- type: marking
+  id: MothChestFirewatch
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/firewatch.rsi
+    state: firewatch_chest
+
+- type: marking
+  id: MothHeadFirewatch
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/firewatch.rsi
+    state: firewatch_head
+
+- type: marking
+  id: MothLLegFirewatch
+  bodyPart: LLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/firewatch.rsi
+    state: firewatch_l_leg
+
+- type: marking
+  id: MothRLegFirewatch
+  bodyPart: RLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/firewatch.rsi
+    state: firewatch_r_leg
+
+- type: marking
+  id: MothLArmFirewatch
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/firewatch.rsi
+    state: firewatch_l_arm
+
+- type: marking
+  id: MothRArmFirewatch
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/firewatch.rsi
+    state: firewatch_r_arm

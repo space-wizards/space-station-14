@@ -1,0 +1,107 @@
+- type: marking
+  id: LizardHornsAngler
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/Reptilian/horns.rsi
+    state: angler
+
+- type: marking
+  id: LizardHornsCurled
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/Reptilian/horns.rsi
+    state: curled
+
+- type: marking
+  id: LizardHornsRam
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/Reptilian/horns.rsi
+    state: ram
+
+- type: marking
+  id: LizardHornsShort
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/Reptilian/horns.rsi
+    state: short
+
+- type: marking
+  id: LizardHornsSimple
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/Reptilian/horns.rsi
+    state: simple
+
+- type: marking
+  id: LizardHornsDouble
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/Reptilian/horns.rsi
+    state: double
+
+- type: marking
+  id: LizardHornsArgali
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/Reptilian/horns.rsi
+    state: argali
+
+- type: marking
+  id: LizardHornsAyrshire
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/Reptilian/horns.rsi
+    state: ayrshire
+
+- type: marking
+  id: LizardHornsMyrsore
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/Reptilian/horns.rsi
+    state: myrsore
+
+- type: marking
+  id: LizardHornsBighorn
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/Reptilian/horns.rsi
+    state: bighorn
+
+- type: marking
+  id: LizardHornsDemonic
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/Reptilian/horns.rsi
+    state: demonic
+
+- type: marking
+  id: LizardHornsKoboldEars
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/Reptilian/horns.rsi
+    state: kobold_ears

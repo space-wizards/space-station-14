@@ -1,0 +1,53 @@
+- type: marking
+  id: MothChestRagged
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/ragged.rsi
+    state: ragged_chest
+
+- type: marking
+  id: MothHeadRagged
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/ragged.rsi
+    state: ragged_head
+
+- type: marking
+  id: MothLLegRagged
+  bodyPart: LLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/ragged.rsi
+    state: ragged_l_leg
+
+- type: marking
+  id: MothRLegRagged
+  bodyPart: RLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/ragged.rsi
+    state: ragged_r_leg
+
+- type: marking
+  id: MothLArmRagged
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/ragged.rsi
+    state: ragged_l_arm
+
+- type: marking
+  id: MothRArmRagged
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/ragged.rsi
+    state: ragged_r_arm

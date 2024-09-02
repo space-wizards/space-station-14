@@ -1,0 +1,53 @@
+- type: marking
+  id: MothChestMoonfly
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/moonfly.rsi
+    state: moonfly_chest
+
+- type: marking
+  id: MothHeadMoonfly
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/moonfly.rsi
+    state: moonfly_head
+
+- type: marking
+  id: MothLLegMoonfly
+  bodyPart: LLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/moonfly.rsi
+    state: moonfly_l_leg
+
+- type: marking
+  id: MothRLegMoonfly
+  bodyPart: RLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/moonfly.rsi
+    state: moonfly_r_leg
+
+- type: marking
+  id: MothLArmMoonfly
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/moonfly.rsi
+    state: moonfly_l_arm
+
+- type: marking
+  id: MothRArmMoonfly
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/moonfly.rsi
+    state: moonfly_r_arm

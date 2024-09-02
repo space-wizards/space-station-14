@@ -1,0 +1,53 @@
+- type: marking
+  id: MothChestWitchwing
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/witchwing.rsi
+    state: witchwing_chest
+
+- type: marking
+  id: MothHeadWitchwing
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/witchwing.rsi
+    state: witchwing_head
+
+- type: marking
+  id: MothLLegWitchwing
+  bodyPart: LLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/witchwing.rsi
+    state: witchwing_l_leg
+
+- type: marking
+  id: MothRLegWitchwing
+  bodyPart: RLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/witchwing.rsi
+    state: witchwing_r_leg
+
+- type: marking
+  id: MothLArmWitchwing
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/witchwing.rsi
+    state: witchwing_l_arm
+
+- type: marking
+  id: MothRArmWitchwing
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/witchwing.rsi
+    state: witchwing_r_arm

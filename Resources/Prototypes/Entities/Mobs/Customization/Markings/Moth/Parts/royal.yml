@@ -1,0 +1,53 @@
+- type: marking
+  id: MothChestRoyal
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/royal.rsi
+    state: royal_chest
+
+- type: marking
+  id: MothHeadRoyal
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/royal.rsi
+    state: royal_head
+
+- type: marking
+  id: MothLLegRoyal
+  bodyPart: LLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/royal.rsi
+    state: royal_l_leg
+
+- type: marking
+  id: MothRLegRoyal
+  bodyPart: RLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/royal.rsi
+    state: royal_r_leg
+
+- type: marking
+  id: MothLArmRoyal
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/royal.rsi
+    state: royal_l_arm
+
+- type: marking
+  id: MothRArmRoyal
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/royal.rsi
+    state: royal_r_arm

@@ -1,0 +1,30 @@
+- type: marking
+  id: LizardSnoutSharp
+  bodyPart: Snout
+  markingCategory: Snout
+  forcedColoring: true
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/Reptilian/snouts.rsi
+    state: sharp
+
+- type: marking
+  id: LizardSnoutSplotch
+  bodyPart: Snout
+  markingCategory: Snout
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/Reptilian/snouts.rsi
+    state: splotch_primary
+  - sprite: Mobs/Customization/Reptilian/snouts.rsi
+    state: splotch_secondary
+
+- type: marking
+  id: LizardSnoutRound
+  bodyPart: Snout
+  markingCategory: Snout
+  forcedColoring: true
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/Reptilian/snouts.rsi
+    state: round

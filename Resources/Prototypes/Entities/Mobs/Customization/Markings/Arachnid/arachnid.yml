@@ -1,0 +1,98 @@
+- type: marking
+  id: ArachnidAppendagesDefault
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Arachnid]
+  sprites:
+  - sprite: Mobs/Customization/Arachnid/appendages.rsi
+    state: long_primary
+  - sprite: Mobs/Customization/Arachnid/appendages.rsi
+    state: long_secondary
+
+- type: marking
+  id: ArachnidAppendagesSharp
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Arachnid]
+  sprites:
+  - sprite: Mobs/Customization/Arachnid/appendages.rsi
+    state: sharp_primary
+  - sprite: Mobs/Customization/Arachnid/appendages.rsi
+    state: sharp_secondary
+
+- type: marking
+  id: ArachnidAppendagesStingers
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Arachnid]
+  sprites:
+  - sprite: Mobs/Customization/Arachnid/appendages.rsi
+    state: stingers_primary
+  - sprite: Mobs/Customization/Arachnid/appendages.rsi
+    state: stingers_secondary
+
+- type: marking
+  id: ArachnidAppendagesZigZag
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Arachnid]
+  sprites:
+  - sprite: Mobs/Customization/Arachnid/appendages.rsi
+    state: zigzag_primary
+  - sprite: Mobs/Customization/Arachnid/appendages.rsi
+    state: zigzag_secondary
+
+- type: marking
+  id: ArachnidAppendagesCurled
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Arachnid]
+  sprites:
+  - sprite: Mobs/Customization/Arachnid/appendages.rsi
+    state: curled_primary
+  - sprite: Mobs/Customization/Arachnid/appendages.rsi
+    state: curled_secondary
+
+- type: marking
+  id: ArachnidAppendagesChipped
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Arachnid]
+  sprites:
+  - sprite: Mobs/Customization/Arachnid/appendages.rsi
+    state: chipped_primary
+  - sprite: Mobs/Customization/Arachnid/appendages.rsi
+    state: chipped_secondary
+
+- type: marking
+  id: ArachnidAppendagesHarvest
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Arachnid]
+  sprites:
+  - sprite: Mobs/Customization/Arachnid/appendages.rsi
+    state: harvest_primary
+  - sprite: Mobs/Customization/Arachnid/appendages.rsi
+    state: harvest_secondary
+
+- type: marking
+  id: ArachnidAppendagesShort
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Arachnid]
+  sprites:
+  - sprite: Mobs/Customization/Arachnid/appendages.rsi
+    state: short_primary
+  - sprite: Mobs/Customization/Arachnid/appendages.rsi
+    state: short_secondary
+
+- type: marking
+  id: ArachnidAppendagesFreaky
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Arachnid]
+  sprites:
+  - sprite: Mobs/Customization/Arachnid/appendages.rsi
+    state: freaky_primary
+  - sprite: Mobs/Customization/Arachnid/appendages.rsi
+    state: freaky_secondary

@@ -1,0 +1,53 @@
+- type: marking
+  id: MothChestDeathhead
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/deathhead.rsi
+    state: deathhead_chest
+
+- type: marking
+  id: MothHeadDeathhead
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/deathhead.rsi
+    state: deathhead_head
+
+- type: marking
+  id: MothLLegDeathhead
+  bodyPart: LLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/deathhead.rsi
+    state: deathhead_l_leg
+
+- type: marking
+  id: MothRLegDeathhead
+  bodyPart: RLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/deathhead.rsi
+    state: deathhead_r_leg
+
+- type: marking
+  id: MothLArmDeathhead
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/deathhead.rsi
+    state: deathhead_l_arm
+
+- type: marking
+  id: MothRArmDeathhead
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/Moth/Parts/deathhead.rsi
+    state: deathhead_r_arm

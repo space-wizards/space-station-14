@@ -1,0 +1,85 @@
+- type: marking
+  id: LizardTailSmooth
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/Reptilian/Tails/smooth.rsi
+    state: tail_primary
+  - sprite: Mobs/Customization/Reptilian/Tails/smooth.rsi
+    state: tail_secondary
+
+- type: marking
+  id: LizardTailLarge
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/Reptilian/Tails/large.rsi
+    state: tail
+
+- type: marking
+  id: LizardTailSpikes
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/Reptilian/Tails/spikes.rsi
+    state: tail
+
+- type: marking
+  id: LizardTailLTiger
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/Reptilian/Tails/l_tiger.rsi
+    state: tail
+
+- type: marking
+  id: LizardTailDTiger
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/Reptilian/Tails/d_tiger.rsi
+    state: tail
+
+# Animated Tails
+- type: marking
+  id: LizardTailSmoothAnimated
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: []
+  sprites:
+    - sprite: Mobs/Customization/Reptilian/Tails/smooth.rsi
+      state: tail_wagging_primary
+    - sprite: Mobs/Customization/Reptilian/Tails/smooth.rsi
+      state: tail_wagging_secondary
+
+- type: marking
+  id: LizardTailSpikesAnimated
+  bodyPart: Tail
+  markingCategory: Tail   
+  speciesRestriction: []
+  sprites:
+    - sprite: Mobs/Customization/Reptilian/Tails/spikes.rsi
+      state: tail_wagging
+
+- type: marking
+  id: LizardTailLTigerAnimated
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: []
+  sprites:
+    - sprite: Mobs/Customization/Reptilian/Tails/l_tiger.rsi
+      state: tail_wagging
+
+- type: marking
+  id: LizardTailDTigerAnimated
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: []
+  sprites:
+    - sprite: Mobs/Customization/Reptilian/Tails/d_tiger.rsi
+      state: tail_wagging

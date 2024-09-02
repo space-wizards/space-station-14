@@ -1,0 +1,10 @@
+- type: marking
+  id: ArachnidOverlayFuzzy
+  bodyPart: Chest
+  markingCategory: Overlay
+  forcedColoring: true
+  speciesRestriction: [Arachnid]
+  sprites:
+  - sprite: Mobs/Customization/Arachnid/overlay.rsi
+    state: fuzzy
+
