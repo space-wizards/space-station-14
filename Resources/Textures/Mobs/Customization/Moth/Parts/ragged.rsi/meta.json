@@ -8,6 +8,10 @@
   },
   "states": [
     {
+      "name": "ragged_head",
+      "directions": 4
+    },
+    {
       "name": "ragged_chest",
       "directions": 4
     },
