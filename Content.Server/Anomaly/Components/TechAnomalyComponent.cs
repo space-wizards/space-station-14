@@ -5,20 +5,20 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Anomaly.Components;
 
-[RegisterComponent, Access(typeof(TechAnomalySystem))]
+[RegisterComponent, AutoGenerateComponentPause, Access(typeof(TechAnomalySystem))]
 public sealed partial class TechAnomalyComponent : Component
 {
     /// <summary>
     /// the distance at which random ports will bind to the anomaly. Scales with severity.
     /// </summary>
     [DataField]
-    public MinMax LinkRadius = new(3, 10);
+    public MinMax LinkRadius = new(5, 10);
 
     /// <summary>
     /// the maximum number of entities with which an anomaly is associated during pulsing. Scales with severity
     /// </summary>
     [DataField]
-    public MinMax LinkCountPerPulse = new(1, 5);
+    public MinMax LinkCountPerPulse = new(2, 8);
 
     /// <summary>
     /// Number of linkable pairs. when supercrit, the anomaly will link random devices in the radius to each other in pairs.
@@ -43,4 +43,13 @@ public sealed partial class TechAnomalyComponent : Component
     /// </summary>
     [DataField]
     public EntProtoId LinkBeamProto = "AnomalyTechBeam";
+
+    /// <summary>
+    /// time until the next activation of the timer ports
+    /// </summary>
+    [DataField, AutoPausedField]
+    public TimeSpan NextTimer = TimeSpan.Zero;
+
+    [DataField]
+    public float TimerFrequency = 2f;
 }

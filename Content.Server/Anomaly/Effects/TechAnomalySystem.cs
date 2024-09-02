@@ -4,6 +4,7 @@ using Content.Server.DeviceLinking.Systems;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.DeviceLinking;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Anomaly.Effects;
 
@@ -13,6 +14,7 @@ public sealed class TechAnomalySystem : EntitySystem
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly BeamSystem _beam = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     public override void Initialize()
     {
@@ -21,6 +23,22 @@ public sealed class TechAnomalySystem : EntitySystem
         SubscribeLocalEvent<TechAnomalyComponent, AnomalyPulseEvent>(OnPulse);
         SubscribeLocalEvent<TechAnomalyComponent, AnomalySupercriticalEvent>(OnSupercritical);
         SubscribeLocalEvent<TechAnomalyComponent, AnomalyStabilityChangedEvent>(OnStabilityChanged);
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var query = EntityQueryEnumerator<TechAnomalyComponent>();
+        while (query.MoveNext(out var uid, out var tech))
+        {
+            if (_timing.CurTime < tech.NextTimer)
+                return;
+
+            tech.NextTimer = _timing.CurTime + TimeSpan.FromSeconds(tech.TimerFrequency);
+
+            _signal.InvokePort(uid, tech.TimerPort);
+        }
     }
 
     private void OnStabilityChanged(Entity<TechAnomalyComponent> tech, ref AnomalyStabilityChangedEvent args)
@@ -33,6 +51,8 @@ public sealed class TechAnomalySystem : EntitySystem
     {
         if (!TryComp<AnomalyComponent>(tech, out var anomaly))
             return;
+        if (!TryComp<DeviceLinkSourceComponent>(tech, out var sourceComp))
+            return;
 
         var range = MathHelper.Lerp(tech.Comp.LinkRadius.Min, tech.Comp.LinkRadius.Max, anomaly.Severity);
 
@@ -40,16 +60,18 @@ public sealed class TechAnomalySystem : EntitySystem
         for (var i = 0; i < count; i++)
         {
             var device = _random.Pick(devices);
-            CreateNewLink(tech, device);
+            CreateNewLink(tech, (tech, sourceComp), device);
         }
     }
 
-    private void CreateNewLink(Entity<TechAnomalyComponent> tech, Entity<DeviceLinkSinkComponent> target)
+    private void CreateNewLink(Entity<TechAnomalyComponent> tech, Entity<DeviceLinkSourceComponent> source, Entity<DeviceLinkSinkComponent> target)
     {
-        var port = _random.Pick(target.Comp.Ports);
+        var sourcePort = _random.Pick(source.Comp.Ports);
+        var sinkPort = _random.Pick(target.Comp.Ports);
+
         _signal.SaveLinks(null, tech, target,new()
         {
-            (tech.Comp.PulsePort, port),
+            (sourcePort, sinkPort),
         });
         _beam.TryCreateBeam(tech, target, tech.Comp.LinkBeamProto);
     }
@@ -78,21 +100,12 @@ public sealed class TechAnomalySystem : EntitySystem
             var sink = _random.Pick(sinks);
             sinks.Remove(sink);
 
-
-            var sourcePort = _random.Pick(source.Comp.Ports);
-            var sinkPort = _random.Pick(sink.Comp.Ports);
-
-            _signal.SaveLinks(null, source, sink,new()
-            {
-                (sourcePort, sinkPort),
-            });
-
-            _beam.TryCreateBeam(source, sink, tech.Comp.LinkBeamProto);
+            CreateNewLink(tech, source, sink);
         }
     }
 
-    private void OnPulse(Entity<TechAnomalyComponent> anomaly, ref AnomalyPulseEvent args)
+    private void OnPulse(Entity<TechAnomalyComponent> tech, ref AnomalyPulseEvent args)
     {
-        _signal.InvokePort(anomaly, anomaly.Comp.PulsePort);
+        _signal.InvokePort(tech, tech.Comp.PulsePort);
     }
 }

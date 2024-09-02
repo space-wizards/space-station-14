@@ -882,7 +882,7 @@
   suffix: Tech
   components:
   - type: Sprite
-    sprite: Structures/Specific/Anomalies/shadow_anom.rsi
+    sprite: Structures/Specific/Anomalies/tech_anom.rsi
     layers:
     - state: anom
       map: ["enum.AnomalyVisualLayers.Base"]
@@ -890,9 +890,9 @@
       map: ["enum.AnomalyVisualLayers.Animated"]
       visible: false
   - type: PointLight
-    radius: 1.5
-    energy: 12.5
-    color: "#793a80"
+    radius: 6.5
+    energy: 3.5
+    color: "#56c1e8"
   - type: Anomaly
     corePrototype: AnomalyCoreLiquid
     coreInertPrototype: AnomalyCoreLiquidInert
@@ -902,9 +902,11 @@
   - type: DeviceLinkSource
     ports:
       - Pulse
+      - Timer
 
 - type: entity
   id: AnomalyTechBeam
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: /Textures/Effects/lightning.rsi
