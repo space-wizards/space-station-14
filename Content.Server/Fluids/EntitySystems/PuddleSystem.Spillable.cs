@@ -85,7 +85,7 @@ public sealed partial class PuddleSystem
 
             var splitSolution = _solutionContainerSystem.SplitSolution(soln.Value, totalSplit / hitCount);
 
-            _adminLogger.Add(LogType.MeleeHit, $"{ToPrettyString(args.User)} splashed {SolutionContainerSystem.ToPrettyString(splitSolution):solution} from {ToPrettyString(entity.Owner):entity} onto {ToPrettyString(hit):target}");
+            _adminLogger.Add(LogType.MeleeHit, $"{ToPrettyString(args.User)} splashed {SharedSolutionContainerSystem.ToPrettyString(splitSolution):solution} from {ToPrettyString(entity.Owner):entity} onto {ToPrettyString(hit):target}");
             _reactive.DoEntityReaction(hit, splitSolution, ReactionMethod.Touch);
 
             _popups.PopupEntity(
@@ -114,7 +114,7 @@ public sealed partial class PuddleSystem
         if (args.User != null)
         {
             _adminLogger.Add(LogType.Landed,
-                $"{ToPrettyString(entity.Owner):entity} spilled a solution {SolutionContainerSystem.ToPrettyString(solution):solution} on landing");
+                $"{ToPrettyString(entity.Owner):entity} spilled a solution {SharedSolutionContainerSystem.ToPrettyString(solution):solution} on landing");
         }
 
         var drainedSolution = _solutionContainerSystem.Drain(entity.Owner, soln.Value, solution.Volume);

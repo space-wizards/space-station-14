@@ -49,3 +49,21 @@ book-text-agrichemkit-manual = Thank you for choosing the safe-for-all-ages Nano
       Farmer's Helper(TM) can have a wide variety of effects on plant life, including drastic changes to all sorts of growth parameters, making plants glow in the dark, or creating entirely new species.
       Each individual plant responds to Farmers Helper(TM) differently, so you may want to use small doses on multiple crops and try to crossbreed the best traits from each of those.
       Farmer's Helper(TM) is a patended and entirely safe fertilizer, and NanoTrasen takes no responsibility for dead crops, excessive water bills, newly sentient plants asking existential questions, or flora-strangled farmhands that may coincidentally occur while using it.
+
+book-text-combat-bakery-kit = Thank you for choosing our combat bakery kit!
+      Enclosed are two (2) CyberSun patented Throwing Croissants, and one (1) patent-pending Baguette Sword.
+      The included Donk Co. microwave board can construct a microwave capable of baking more weapons.
+      Just like the baked weapons, be sure to eat this note after use. Good luck, agent.
+
+      Baguette Sword Recipe:
+      Dough x 1
+      Salt 5u
+      Pepper 5u
+      Metal Rod x 1
+      Cook Time: 15 seconds
+
+      Throwing Croissant Recipe:
+      Raw Croissant x 1
+      Butter Slice x 1
+      Glass Shard x 1
+      Cook Time: 5 seconds
