@@ -52,9 +52,6 @@
             - type: TradeStation
           paths:
             - /Maps/Shuttles/trading_outpost.yml
-        mining: !type:GridSpawnGroup
-          paths:
-          - /Maps/Shuttles/mining.yml
         # Spawn last
         ruins: !type:GridSpawnGroup
           hide: true
@@ -73,8 +70,8 @@
           - /Maps/Ruins/whiteship_ancient.yml
           - /Maps/Ruins/whiteship_bluespacejumper.yml
         vgroid: !type:DungeonSpawnGroup
-          minimumDistance: 400
-          maximumDistance: 450
+          minimumDistance: 300
+          maximumDistance: 350
           nameDataset: names_borer
           stationGrid: false
           addComponents:

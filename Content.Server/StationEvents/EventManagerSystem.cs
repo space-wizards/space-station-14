@@ -1,5 +1,4 @@
 using System.Linq;
-using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Server.RoundEnd;
 using Content.Server.StationEvents.Components;
@@ -8,6 +7,8 @@ using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Content.Shared.EntityTable.EntitySelectors;
+using Content.Shared.EntityTable;
 
 namespace Content.Server.StationEvents;
 
@@ -17,7 +18,7 @@ public sealed class EventManagerSystem : EntitySystem
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly IChatManager _chat = default!;
+    [Dependency] private readonly EntityTableSystem _entityTable = default!;
     [Dependency] public readonly GameTicker GameTicker = default!;
     [Dependency] private readonly RoundEndSystem _roundEnd = default!;
 
@@ -34,7 +35,8 @@ public sealed class EventManagerSystem : EntitySystem
     /// <summary>
     /// Randomly runs a valid event.
     /// </summary>
-    public string RunRandomEvent()
+    [Obsolete("use overload taking EnityTableSelector instead or risk unexpected results")]
+    public void RunRandomEvent()
     {
         var randomEvent = PickRandomEvent();
 
@@ -42,14 +44,86 @@ public sealed class EventManagerSystem : EntitySystem
         {
             var errStr = Loc.GetString("station-event-system-run-random-event-no-valid-events");
             Log.Error(errStr);
-            return errStr;
+            return;
         }
 
-        var ent = GameTicker.AddGameRule(randomEvent);
-        var str = Loc.GetString("station-event-system-run-event",("eventName", ToPrettyString(ent)));
-        _chat.SendAdminAlert(str);
-        Log.Info(str);
-        return str;
+        GameTicker.AddGameRule(randomEvent);
+    }
+
+    /// <summary>
+    /// Randomly runs an event from provided EntityTableSelector.
+    /// </summary>
+    public void RunRandomEvent(EntityTableSelector limitedEventsTable)
+    {
+        if (!TryBuildLimitedEvents(limitedEventsTable, out var limitedEvents))
+        {
+            Log.Warning("Provided event table could not build dict!");
+            return;
+        }
+
+        var randomLimitedEvent = FindEvent(limitedEvents); // this picks the event, It might be better to use the GetSpawns to do it, but that will be a major rebalancing fuck.
+        if (randomLimitedEvent == null)
+        {
+            Log.Warning("The selected random event is null!");
+            return;
+        }
+
+        if (!_prototype.TryIndex(randomLimitedEvent, out _))
+        {
+            Log.Warning("A requested event is not available!");
+            return;
+        }
+
+        GameTicker.AddGameRule(randomLimitedEvent);
+    }
+
+    /// <summary>
+    /// Returns true if the provided EntityTableSelector gives at least one prototype with a StationEvent comp.
+    /// </summary>
+    public bool TryBuildLimitedEvents(EntityTableSelector limitedEventsTable, out Dictionary<EntityPrototype, StationEventComponent> limitedEvents)
+    {
+        limitedEvents = new Dictionary<EntityPrototype, StationEventComponent>();
+
+        var availableEvents = AvailableEvents(); // handles the player counts and individual event restrictions
+
+        if (availableEvents.Count == 0)
+        {
+            Log.Warning("No events were available to run!");
+            return false;
+        }
+
+        var selectedEvents = _entityTable.GetSpawns(limitedEventsTable);
+
+        if (selectedEvents.Any() != true) // This is here so if you fuck up the table it wont die.
+            return false;
+
+        foreach (var eventid in selectedEvents)
+        {
+            if (!_prototype.TryIndex(eventid, out var eventproto))
+            {
+                Log.Warning("An event ID has no prototype index!");
+                continue;
+            }
+
+            if (limitedEvents.ContainsKey(eventproto)) // This stops it from dying if you add duplicate entries in a fucked table
+                continue;
+
+            if (eventproto.Abstract)
+                continue;
+
+            if (!eventproto.TryGetComponent<StationEventComponent>(out var stationEvent, EntityManager.ComponentFactory))
+                continue;
+
+            if (!availableEvents.ContainsKey(eventproto))
+                continue;
+
+            limitedEvents.Add(eventproto, stationEvent);
+        }
+
+        if (!limitedEvents.Any())
+            return false;
+
+        return true;
     }
 
     /// <summary>

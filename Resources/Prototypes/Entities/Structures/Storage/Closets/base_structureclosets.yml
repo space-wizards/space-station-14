@@ -89,7 +89,7 @@
     stateDoorOpen: generic_open
     stateDoorClosed: generic_door
   - type: StaticPrice
-    price: 50
+    price: 75
 
 # steel closet base (that can be constructed/deconstructed)
 - type: entity
@@ -118,7 +118,7 @@
   - type: WallMount
     arc: 175
   - type: StaticPrice
-    price: 50
+    price: 75
   - type: Transform
     noRot: false
   - type: Sprite

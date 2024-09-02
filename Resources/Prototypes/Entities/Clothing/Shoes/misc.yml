@@ -116,6 +116,7 @@
     price: 500
   - type: PowerCellDraw
     drawRate: 4
+  - type: ToggleCellDraw
   - type: ItemSlots
     slots:
       cell_slot:
