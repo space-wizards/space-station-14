@@ -310,20 +310,22 @@ public sealed class ChatUIController : UIController, IOnSystemChanged<CharacterI
         if (!_charInfoIsAttach)
             return;
 
-        var (entity, job, objectives, briefing, entityName) = data;
+        var (_, job, _, _, entityName) = data;
         
-        // If the character has a normal name (eg. "Name Surname" and not "Name Inital Surname" or particular specie names) subdivide it
-        // so that the name and surname individually get highlighted.
+        // If the character has a normal name (eg. "Name Surname" and not "Name Initial Surname" or a particular species name) 
+        // subdivide it so that the name and surname individually get highlighted.
         if (entityName.Count(c => c == ' ') == 1)
-        {
             entityName = entityName.Replace(' ', '\n');
-        }
 
-        // Convert the job to kebab_case and get it's respective highlights from a loc file.
-        string kebab_job = job.Replace(' ', '-').ToLower();
-        string job_highlights = Loc.GetString($"highlights-{kebab_job}").Replace(", ", "\n");
+        // Convert the job title to kebab-case and use it as a key for the loc file.
+        string job_key = job.Replace(' ', '-').ToLower();
+        string job_matches = Loc.GetString($"highlights-{job_key}").Replace(", ", "\n");
 
-        string new_highlights = entityName + '\n' + job_highlights;
+        string new_highlights = entityName;
+
+        // If job_matches == job_key then no match found for specified job.
+        if (job_matches != job_key)
+            new_highlights += '\n' + job_matches;
 
         UpdateHighlights(new_highlights);
         HighlightsUpdated?.Invoke(new_highlights);
@@ -684,7 +686,8 @@ public sealed class ChatUIController : UIController, IOnSystemChanged<CharacterI
             _highlights.Add(keyword);
         }
 
-        // Make longer words appear first so that when Regex Replacing, "Security" goes first than "Sec".
+        // Arrange the list in descending order so that when highlighting
+        // the full word (eg. "Security") appears before the abbrevation (eg. "Sec").
         _highlights.Sort((x, y) => y.Length.CompareTo(x.Length));
     }
 
