@@ -36,75 +36,75 @@ public sealed class ClumsySystem : EntitySystem
 
     // If you add more clumsy interactions add them in this section!
     #region Clumsy interaction events
-    private void BeforeHyposprayEvent(Entity<ClumsyComponent> entity, ref SelfBeforeHyposprayInjects args)
+    private void BeforeHyposprayEvent(Entity<ClumsyComponent> ent, ref SelfBeforeHyposprayInjects args)
     {
         // Clumsy people sometimes inject themselves! Apparently syringes are clumsy proof...
-        if (!_random.Prob(entity.Comp.ClumsyDefaultCheck))
+        if (!_random.Prob(ent.Comp.ClumsyDefaultCheck))
             return;
 
         args.TargetGettingInjected = args.EntityUsingHypospray;
         args.InjectMessageOverride = "hypospray-component-inject-self-clumsy-message";
-        _audio.PlayPvs(entity.Comp.ClumsySound, entity);
+        _audio.PlayPvs(ent.Comp.ClumsySound, ent);
     }
 
-    private void BeforeDefibrillatorZapsEvent(Entity<ClumsyComponent> entity, ref SelfBeforeDefibrillatorZaps args)
+    private void BeforeDefibrillatorZapsEvent(Entity<ClumsyComponent> ent, ref SelfBeforeDefibrillatorZaps args)
     {
         // Clumsy people sometimes defib themselves!
-        if (!_random.Prob(entity.Comp.ClumsyDefaultCheck))
+        if (!_random.Prob(ent.Comp.ClumsyDefaultCheck))
             return;
 
         args.DefibTarget = args.EntityUsingDefib;
-        _audio.PlayPvs(entity.Comp.ClumsySound, entity);
+        _audio.PlayPvs(ent.Comp.ClumsySound, ent);
 
     }
 
-    private void BeforeGunShotEvent(Entity<ClumsyComponent> entity, ref SelfBeforeGunShotEvent args)
+    private void BeforeGunShotEvent(Entity<ClumsyComponent> ent, ref SelfBeforeGunShotEvent args)
     {
         // Clumsy people sometimes can't shoot :(
 
         if (args.Gun.Comp.ClumsyProof == true)
             return;
 
-        if (!_random.Prob(entity.Comp.ClumsyDefaultCheck))
+        if (!_random.Prob(ent.Comp.ClumsyDefaultCheck))
             return;
 
-        _stun.TryParalyze(entity, TimeSpan.FromSeconds(3f), true);
+        _stun.TryParalyze(ent, TimeSpan.FromSeconds(3f), true);
 
         // Apply salt to the wound ("Honk!") (No idea what this comment means)
-        _audio.PlayPvs(new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/bang.ogg"), entity);
-        _audio.PlayPvs(entity.Comp.ClumsySound, entity);
+        _audio.PlayPvs(new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/bang.ogg"), ent);
+        _audio.PlayPvs(ent.Comp.ClumsySound, ent);
 
-        _popup.PopupEntity(Loc.GetString("gun-clumsy"), entity, entity);
+        _popup.PopupEntity(Loc.GetString("gun-clumsy"), ent, ent);
         args.Cancel();
     }
 
-    private void OnBeforeClimbEvent(Entity<ClumsyComponent> entity, ref SelfBeforeClimbEvent args)
+    private void OnBeforeClimbEvent(Entity<ClumsyComponent> ent, ref SelfBeforeClimbEvent args)
     {
         // This event is called in shared, thats why it has all the extra prediction stuff.
         var rand = new System.Random((int)_timing.CurTick.Value);
 
         // If someone is putting you on the table, always get past the guard.
-        if (!_cfg.GetCVar(CCVars.GameTableBonk) && args.PuttingOnTable == entity.Owner && !rand.Prob(entity.Comp.ClumsyDefaultCheck))
+        if (!_cfg.GetCVar(CCVars.GameTableBonk) && args.PuttingOnTable == ent.Owner && !rand.Prob(ent.Comp.ClumsyDefaultCheck))
             return;
 
-        HitHeadOnTableClumsy(entity, args.BeingClimbedOn);
+        HitHeadOnTableClumsy(ent, args.BeingClimbedOn);
 
-        _audio.PlayPredicted(entity.Comp.ClumsySound, entity, entity);
+        _audio.PlayPredicted(ent.Comp.ClumsySound, ent, ent);
 
         var secondSound = new SoundCollectionSpecifier("TrayHit");
-        _audio.PlayPredicted(secondSound, entity, entity);
+        _audio.PlayPredicted(secondSound, ent, ent);
 
 
         var beingClimbedName = Identity.Entity(args.BeingClimbedOn, EntityManager);
         var gettingPutOnTableName = Identity.Entity(args.GettingPutOnTable, EntityManager);
         var puttingOnTableName = Identity.Entity(args.PuttingOnTable, EntityManager);
 
-        if (args.PuttingOnTable == entity.Owner)
+        if (args.PuttingOnTable == ent.Owner)
             // You are slamming yourself onto the table.
-            _popup.PopupClient(Loc.GetString("bonkable-success-message-user", ("bonkable", beingClimbedName)), entity, entity);
+            _popup.PopupClient(Loc.GetString("bonkable-success-message-user", ("bonkable", beingClimbedName)), ent, ent);
         else
             // Someone else slamed you onto the table.
-            _popup.PopupPredicted(Loc.GetString("bonkable-success-message-others", ("bonker", puttingOnTableName), ("victim", gettingPutOnTableName), ("bonkable", beingClimbedName)), entity, entity);
+            _popup.PopupPredicted(Loc.GetString("bonkable-success-message-others", ("bonker", puttingOnTableName), ("victim", gettingPutOnTableName), ("bonkable", beingClimbedName)), ent, ent);
 
         args.Cancel();
     }
