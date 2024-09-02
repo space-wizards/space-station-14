@@ -5,7 +5,7 @@
   forcedColoring: true
   speciesRestriction: [Vox]
   sprites:
-  - sprite: Mobs/Customization/Vox/vox_parts.rsi
+  - sprite: Mobs/Customization/Vox/parts.rsi
     state: beak
   coloring:
     default:
@@ -20,7 +20,7 @@
   forcedColoring: true
   speciesRestriction: [Vox]
   sprites:
-  - sprite: Mobs/Customization/Vox/vox_parts.rsi
+  - sprite: Mobs/Customization/Vox/parts.rsi
     state: l_arm
   coloring:
     default:
@@ -35,7 +35,7 @@
   forcedColoring: true
   speciesRestriction: [Vox]
   sprites:
-  - sprite: Mobs/Customization/Vox/vox_parts.rsi
+  - sprite: Mobs/Customization/Vox/parts.rsi
     state: l_leg
   coloring:
     default:
@@ -50,7 +50,7 @@
   forcedColoring: true
   speciesRestriction: [Vox]
   sprites:
-  - sprite: Mobs/Customization/Vox/vox_parts.rsi
+  - sprite: Mobs/Customization/Vox/parts.rsi
     state: r_arm
   coloring:
     default:
@@ -65,7 +65,7 @@
   forcedColoring: true
   speciesRestriction: [Vox]
   sprites:
-  - sprite: Mobs/Customization/Vox/vox_parts.rsi
+  - sprite: Mobs/Customization/Vox/parts.rsi
     state: r_leg
   coloring:
     default:
@@ -80,7 +80,7 @@
   forcedColoring: true
   speciesRestriction: [Vox]
   sprites:
-  - sprite: Mobs/Customization/Vox/vox_parts.rsi
+  - sprite: Mobs/Customization/Vox/parts.rsi
     state: r_hand
   coloring:
     default:
@@ -95,7 +95,7 @@
   forcedColoring: true
   speciesRestriction: [Vox]
   sprites:
-  - sprite: Mobs/Customization/Vox/vox_parts.rsi
+  - sprite: Mobs/Customization/Vox/parts.rsi
     state: l_hand
   coloring:
     default:
@@ -110,7 +110,7 @@
   forcedColoring: true
   speciesRestriction: [Vox]
   sprites:
-  - sprite: Mobs/Customization/Vox/vox_parts.rsi
+  - sprite: Mobs/Customization/Vox/parts.rsi
     state: l_foot
   coloring:
     default:
@@ -125,7 +125,7 @@
   forcedColoring: true
   speciesRestriction: [Vox]
   sprites:
-  - sprite: Mobs/Customization/Vox/vox_parts.rsi
+  - sprite: Mobs/Customization/Vox/parts.rsi
     state: r_foot
   coloring:
     default:
@@ -140,6 +140,6 @@
   speciesRestriction: [Vox]
   forcedColoring: true
   sprites:
-  - sprite: Mobs/Customization/Vox/vox_parts.rsi
+  - sprite: Mobs/Customization/Vox/parts.rsi
     # Ideally this should use the normal tail sprite and apply an actual mask over it, not just use a butchered sprite
     state: tail_stenciled

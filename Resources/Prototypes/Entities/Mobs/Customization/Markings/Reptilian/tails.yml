@@ -1,3 +1,4 @@
+# Smooth
 - type: marking
   id: LizardTailSmooth
   bodyPart: Tail
@@ -10,43 +11,6 @@
     state: tail_secondary
 
 - type: marking
-  id: LizardTailLarge
-  bodyPart: Tail
-  markingCategory: Tail
-  speciesRestriction: [Reptilian]
-  sprites:
-  - sprite: Mobs/Customization/Reptilian/Tails/large.rsi
-    state: tail
-
-- type: marking
-  id: LizardTailSpikes
-  bodyPart: Tail
-  markingCategory: Tail
-  speciesRestriction: [Reptilian]
-  sprites:
-  - sprite: Mobs/Customization/Reptilian/Tails/spikes.rsi
-    state: tail
-
-- type: marking
-  id: LizardTailLTiger
-  bodyPart: Tail
-  markingCategory: Tail
-  speciesRestriction: [Reptilian]
-  sprites:
-  - sprite: Mobs/Customization/Reptilian/Tails/l_tiger.rsi
-    state: tail
-
-- type: marking
-  id: LizardTailDTiger
-  bodyPart: Tail
-  markingCategory: Tail
-  speciesRestriction: [Reptilian]
-  sprites:
-  - sprite: Mobs/Customization/Reptilian/Tails/d_tiger.rsi
-    state: tail
-
-# Animated Tails
-- type: marking
   id: LizardTailSmoothAnimated
   bodyPart: Tail
   markingCategory: Tail
@@ -57,6 +21,28 @@
     - sprite: Mobs/Customization/Reptilian/Tails/smooth.rsi
       state: tail_wagging_secondary
 
+# Large
+- type: marking
+  id: LizardTailLarge
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/Reptilian/Tails/large.rsi
+    state: tail
+
+# Large tail animation goes here :(
+
+# Spikes
+- type: marking
+  id: LizardTailSpikes
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/Reptilian/Tails/spikes.rsi
+    state: tail
+
 - type: marking
   id: LizardTailSpikesAnimated
   bodyPart: Tail
@@ -66,6 +52,16 @@
     - sprite: Mobs/Customization/Reptilian/Tails/spikes.rsi
       state: tail_wagging
 
+# Light tiger
+- type: marking
+  id: LizardTailLTiger
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/Reptilian/Tails/l_tiger.rsi
+    state: tail
+
 - type: marking
   id: LizardTailLTigerAnimated
   bodyPart: Tail
@@ -74,6 +70,16 @@
   sprites:
     - sprite: Mobs/Customization/Reptilian/Tails/l_tiger.rsi
       state: tail_wagging
+
+# Dark tiger
+- type: marking
+  id: LizardTailDTiger
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/Reptilian/Tails/d_tiger.rsi
+    state: tail
 
 - type: marking
   id: LizardTailDTigerAnimated

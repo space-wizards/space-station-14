@@ -4,7 +4,7 @@
   markingCategory: Hair
   speciesRestriction: [Vox]
   sprites:
-    - sprite: Mobs/Customization/Vox/vox_hair.rsi
+    - sprite: Mobs/Customization/Vox/hair.rsi
       state: afro_s
 
 - type: marking
@@ -13,7 +13,7 @@
   markingCategory: Hair
   speciesRestriction: [Vox]
   sprites:
-    - sprite: Mobs/Customization/Vox/vox_hair.rsi
+    - sprite: Mobs/Customization/Vox/hair.rsi
       state: braid_s
 
 - type: marking
@@ -22,7 +22,7 @@
   markingCategory: Hair
   speciesRestriction: [Vox]
   sprites:
-    - sprite: Mobs/Customization/Vox/vox_hair.rsi
+    - sprite: Mobs/Customization/Vox/hair.rsi
       state: crestedquills_s
 
 - type: marking
@@ -31,7 +31,7 @@
   markingCategory: Hair
   speciesRestriction: [Vox]
   sprites:
-    - sprite: Mobs/Customization/Vox/vox_hair.rsi
+    - sprite: Mobs/Customization/Vox/hair.rsi
       state: emperorquills_s
 
 - type: marking
@@ -40,7 +40,7 @@
   markingCategory: Hair
   speciesRestriction: [Vox]
   sprites:
-    - sprite: Mobs/Customization/Vox/vox_hair.rsi
+    - sprite: Mobs/Customization/Vox/hair.rsi
       state: flowing_s
 
 - type: marking
@@ -49,7 +49,7 @@
   markingCategory: Hair
   speciesRestriction: [Vox]
   sprites:
-    - sprite: Mobs/Customization/Vox/vox_hair.rsi
+    - sprite: Mobs/Customization/Vox/hair.rsi
       state: hawk_s
 
 - type: marking
@@ -58,7 +58,7 @@
   markingCategory: Hair
   speciesRestriction: [Vox]
   sprites:
-    - sprite: Mobs/Customization/Vox/vox_hair.rsi
+    - sprite: Mobs/Customization/Vox/hair.rsi
       state: horns_s
 
 - type: marking
@@ -67,7 +67,7 @@
   markingCategory: Hair
   speciesRestriction: [Vox]
   sprites:
-    - sprite: Mobs/Customization/Vox/vox_hair.rsi
+    - sprite: Mobs/Customization/Vox/hair.rsi
       state: keelquills_s
 
 - type: marking
@@ -76,7 +76,7 @@
   markingCategory: Hair
   speciesRestriction: [Vox]
   sprites:
-    - sprite: Mobs/Customization/Vox/vox_hair.rsi
+    - sprite: Mobs/Customization/Vox/hair.rsi
       state: keetquills_s
 
 - type: marking
@@ -85,7 +85,7 @@
   markingCategory: Hair
   speciesRestriction: [Vox]
   sprites:
-    - sprite: Mobs/Customization/Vox/vox_hair.rsi
+    - sprite: Mobs/Customization/Vox/hair.rsi
       state: kingly_s
 
 - type: marking
@@ -94,7 +94,7 @@
   markingCategory: Hair
   speciesRestriction: [Vox]
   sprites:
-    - sprite: Mobs/Customization/Vox/vox_hair.rsi
+    - sprite: Mobs/Customization/Vox/hair.rsi
       state: long_braid_s
 
 - type: marking
@@ -103,7 +103,7 @@
   markingCategory: Hair
   speciesRestriction: [Vox]
   sprites:
-    - sprite: Mobs/Customization/Vox/vox_hair.rsi
+    - sprite: Mobs/Customization/Vox/hair.rsi
       state: mange_s
       
 - type: marking
@@ -112,7 +112,7 @@
   markingCategory: Hair
   speciesRestriction: [Vox]
   sprites:
-    - sprite: Mobs/Customization/Vox/vox_hair.rsi
+    - sprite: Mobs/Customization/Vox/hair.rsi
       state: mohawk_s
 
 - type: marking
@@ -121,7 +121,7 @@
   markingCategory: Hair
   speciesRestriction: [Vox]
   sprites:
-    - sprite: Mobs/Customization/Vox/vox_hair.rsi
+    - sprite: Mobs/Customization/Vox/hair.rsi
       state: nights_s
 
 - type: marking
@@ -130,7 +130,7 @@
   markingCategory: Hair
   speciesRestriction: [Vox]
   sprites:
-    - sprite: Mobs/Customization/Vox/vox_hair.rsi
+    - sprite: Mobs/Customization/Vox/hair.rsi
       state: ponytail_s
 
 - type: marking
@@ -139,7 +139,7 @@
   markingCategory: Hair
   speciesRestriction: [Vox]
   sprites:
-    - sprite: Mobs/Customization/Vox/vox_hair.rsi
+    - sprite: Mobs/Customization/Vox/hair.rsi
       state: razor_clipped_s
 
 - type: marking
@@ -148,7 +148,7 @@
   markingCategory: Hair
   speciesRestriction: [Vox]
   sprites:
-    - sprite: Mobs/Customization/Vox/vox_hair.rsi
+    - sprite: Mobs/Customization/Vox/hair.rsi
       state: razor_s
 
 - type: marking
@@ -157,7 +157,7 @@
   markingCategory: Hair
   speciesRestriction: [Vox]
   sprites:
-    - sprite: Mobs/Customization/Vox/vox_hair.rsi
+    - sprite: Mobs/Customization/Vox/hair.rsi
       state: short_braid_s
 
 - type: marking
@@ -166,7 +166,7 @@
   markingCategory: Hair
   speciesRestriction: [Vox]
   sprites:
-    - sprite: Mobs/Customization/Vox/vox_hair.rsi
+    - sprite: Mobs/Customization/Vox/hair.rsi
       state: shortquills_s
 
 - type: marking
@@ -175,7 +175,7 @@
   markingCategory: Hair
   speciesRestriction: [Vox]
   sprites:
-    - sprite: Mobs/Customization/Vox/vox_hair.rsi
+    - sprite: Mobs/Customization/Vox/hair.rsi
       state: spotty_s
 
 - type: marking
@@ -184,7 +184,7 @@
   markingCategory: Hair
   speciesRestriction: [Vox]
   sprites:
-    - sprite: Mobs/Customization/Vox/vox_hair.rsi
+    - sprite: Mobs/Customization/Vox/hair.rsi
       state: surf_s
 
 - type: marking
@@ -193,7 +193,7 @@
   markingCategory: Hair
   speciesRestriction: [Vox]
   sprites:
-    - sprite: Mobs/Customization/Vox/vox_hair.rsi
+    - sprite: Mobs/Customization/Vox/hair.rsi
       state: tielquills_s
 
 - type: marking
@@ -202,7 +202,7 @@
   markingCategory: Hair
   speciesRestriction: [Vox]
   sprites:
-    - sprite: Mobs/Customization/Vox/vox_hair.rsi
+    - sprite: Mobs/Customization/Vox/hair.rsi
       state: wise_braid_s
       
 - type: marking
@@ -211,5 +211,5 @@
   markingCategory: Hair
   speciesRestriction: [Vox]
   sprites:
-    - sprite: Mobs/Customization/Vox/vox_hair.rsi
+    - sprite: Mobs/Customization/Vox/hair.rsi
       state: yasu_s

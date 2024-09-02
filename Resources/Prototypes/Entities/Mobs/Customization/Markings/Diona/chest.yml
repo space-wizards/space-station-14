@@ -1,0 +1,12 @@
+- type: marking
+  id: DionaLeafCover
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Diona]
+  coloring:
+    default:
+      type:
+        !type:SkinColoring
+  sprites:
+  - sprite: Mobs/Customization/Diona/chest.rsi
+    state: leaf_cover
