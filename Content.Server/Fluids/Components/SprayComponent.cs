@@ -32,10 +32,18 @@ public sealed partial class SprayComponent : Component
     /// <summary>
     /// How much the player is pushed back for each spray.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField]
+    [DataField]
     public float PushbackAmount = 2f;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField(required: true)]
+    /// <summary>
+    /// How much the grid the player is standing on is pushed back for each spray when gravity or magboots are on.
+    /// We need to make this separate because the mass of a grid is completely unrealistic at the moment.
+    /// The Dev map weights only 700kg for example.
+    /// </summary>
+    [DataField]
+    public float GridPushbackAmount = 1;
+
+    [DataField(required: true)]
     [Access(typeof(SpraySystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
     public SoundSpecifier SpraySound { get; private set; } = default!;
 }

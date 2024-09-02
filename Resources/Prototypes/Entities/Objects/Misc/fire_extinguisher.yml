@@ -30,6 +30,7 @@
   - type: Spray
     transferAmount: 10
     pushbackAmount: 60
+    gridPushbackAmount: 2
     spraySound:
       path: /Audio/Effects/extinguish.ogg
     sprayedPrototype: ExtinguisherSpray
