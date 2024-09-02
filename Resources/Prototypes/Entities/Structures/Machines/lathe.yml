@@ -1121,6 +1121,16 @@
       - CarpetPurple
       - CarpetCyan
       - CarpetWhite
+      # Pride Cloaks
+      - ClothingNeckCloakTrans
+      - ClothingNeckCloakAce
+      - ClothingNeckCloakAro
+      - ClothingNeckCloakBi
+      - ClothingNeckCloakIntersex
+      - ClothingNeckCloakLesbian
+      - ClothingNeckCloakGay
+      - ClothingNeckCloakEnby
+      - ClothingNeckCloakPan
   - type: EmagLatheRecipes
     emagStaticRecipes:
       - ClothingHeadHatCentcomcap
