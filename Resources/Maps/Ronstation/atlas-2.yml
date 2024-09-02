@@ -39464,13 +39464,6 @@ entities:
       parent: 30
     - type: Physics
       canCollide: False
-- proto: MaterialReclaimer
-  entities:
-  - uid: 3697
-    components:
-    - type: Transform
-      pos: 25.5,-12.5
-      parent: 30
 - proto: MaterialWoodPlank
   entities:
   - uid: 6907
@@ -46285,6 +46278,13 @@ entities:
     components:
     - type: Transform
       pos: -19.5,3.5
+      parent: 30
+- proto: SpawnPointBlueshieldOfficer
+  entities:
+  - uid: 3697
+    components:
+    - type: Transform
+      pos: 39.5,2.5
       parent: 30
 - proto: SpawnPointBorg
   entities:

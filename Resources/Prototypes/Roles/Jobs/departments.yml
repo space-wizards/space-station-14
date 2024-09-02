@@ -39,6 +39,7 @@
   description: department-Command-description
   color: "#334E6D"
   roles:
+  - BlueshieldOfficer
   - Captain
   - CentralCommandOfficial
   - ChiefEngineer
@@ -113,6 +114,7 @@
   color: "#9FED58"
   weight: 10
   roles:
+  - BlueshieldOfficer
   - Boxer
   - Reporter
   - Zookeeper

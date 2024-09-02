@@ -2,15 +2,14 @@
 #IDs with layers
 
 - type: entity
-  parent: [ IDCardStandard, BaseTerragovContraband ]
-  id: HeccdiverIDCard
-  name: heccdiver ID card
+  parent: [ IDCardStandard, BaseCommandContraband ]
+  id: BlueshieldIDCard
+  name: blueshield ID card
   components:
   - type: Sprite
     sprite: Ronstation/Objects/Misc/id_cards.rsi
     layers:
-    - state: heccdiver
-  - type: Access
-    tags:
-    - HeccDiver
-    - TerraGov
+    - state: default
+    - state: idnanotrasen
+  - type: PresetIdCard
+    job: BlueshieldOfficer

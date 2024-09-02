@@ -1,0 +1,15 @@
+# Command
+
+- type: roleLoadout
+  id: JobBlueshieldOfficer
+  groups:
+  - BlueshieldHead
+  - BlueshieldJumpsuit
+  - BlueshieldBackpack
+  - BlueshieldOuterClothing
+  - BlueshieldShoes
+  - BlueshieldPDA
+  - SecurityBelt
+  - SurvivalSecurity
+  - Trinkets
+  - GroupSpeciesBreathToolSecurity

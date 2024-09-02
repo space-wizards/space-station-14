@@ -8,3 +8,14 @@
     sprite: Ronstation/Clothing/Uniforms/Jumpsuit/heccdiver.rsi
   - type: Clothing
     sprite: Ronstation/Clothing/Uniforms/Jumpsuit/heccdiver.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, BaseCommandContraband]
+  id: ClothingUniformJumpsuitBlueshieldGrey
+  name: grey security jumpsuit
+  description: The main suit of the protector.
+  components:
+  - type: Sprite
+    sprite: Ronstation/Clothing/Uniforms/Jumpsuit/blueshield_grey.rsi
+  - type: Clothing
+    sprite: Ronstation/Clothing/Uniforms/Jumpsuit/blueshield_grey.rsi

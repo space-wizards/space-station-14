@@ -4025,6 +4025,7 @@ entities:
     - type: MovedGrids
     - type: Broadphase
     - type: OccluderTree
+    - type: LoadedMap
 - proto: AcousticGuitarInstrument
   entities:
   - uid: 3146
@@ -5099,7 +5100,7 @@ entities:
       pos: 31.5,23.5
       parent: 31
     - type: Door
-      secondsUntilStateChange: -8037.0005
+      secondsUntilStateChange: -8063.369
       state: Opening
     - type: DeviceLinkSource
       linkedPorts:
@@ -36876,8 +36877,12 @@ entities:
   - uid: 1352
     components:
     - type: Transform
+      anchored: False
       pos: 34.5,14.5
       parent: 31
+    - type: Physics
+      canCollide: True
+      bodyType: Dynamic
 - proto: GasPipeFourway
   entities:
   - uid: 583
@@ -52834,13 +52839,6 @@ entities:
     - type: Transform
       pos: 7.2571726,18.545927
       parent: 31
-- proto: MaterialReclaimer
-  entities:
-  - uid: 9264
-    components:
-    - type: Transform
-      pos: -32.5,-17.5
-      parent: 31
 - proto: MaterialWoodPlank1
   entities:
   - uid: 9680
@@ -61612,6 +61610,13 @@ entities:
     components:
     - type: Transform
       pos: -11.5,-7.5
+      parent: 31
+- proto: SpawnPointBlueshieldOfficer
+  entities:
+  - uid: 9264
+    components:
+    - type: Transform
+      pos: -0.5,29.5
       parent: 31
 - proto: SpawnPointBorg
   entities:

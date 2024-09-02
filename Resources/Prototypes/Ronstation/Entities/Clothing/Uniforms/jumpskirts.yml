@@ -1,0 +1,10 @@
+- type: entity
+  parent: [ClothingUniformBase, BaseCommandContraband]
+  id: ClothingUniformJumpskirtBlueshieldGrey
+  name: grey security jumpsuit
+  description: The main suit of the protector.
+  components:
+  - type: Sprite
+    sprite: Ronstation/Clothing/Uniforms/Jumpskirt/blueshield_grey.rsi
+  - type: Clothing
+    sprite: Ronstation/Clothing/Uniforms/Jumpskirt/blueshield_grey.rsi

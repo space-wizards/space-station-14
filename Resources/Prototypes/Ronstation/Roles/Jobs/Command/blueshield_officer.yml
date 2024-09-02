@@ -1,0 +1,40 @@
+- type: job
+  id: BlueshieldOfficer
+  name: job-name-blueshield-officer
+  description: job-description-blueshield-officer
+  playTimeTracker: JobBlueshieldOfficer
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 36000 # 10 hrs
+    - !type:DepartmentTimeRequirement
+      department: Command
+      time: 36000 # 10 hours
+  weight: 20
+  startingGear: BlueshieldOfficerGear
+  icon: "JobIconNanotrasen"
+  requireAdminNotify: true
+  supervisors: job-supervisors-centcom
+  canBeAntag: false
+  access:
+  - Bridge
+  - Maintenance
+  - External
+  - Cryogenics
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+  - !type:AddComponentSpecial
+    components:
+      - type: CommandStaff
+
+- type: startingGear
+  id: BlueshieldOfficerGear
+  equipment:
+    eyes: ClothingEyesGlassesSecurity
+    ears: ClothingHeadsetCommand
+    pocket1: WeaponPistolMk58
+  storage:
+    back:
+    - Flash
+    - MagazinePistol

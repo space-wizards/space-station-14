@@ -35,6 +35,9 @@
         "name": "pda-heccdiver"
       },
       {
+        "name": "pda-blueshield"
+      },
+      {
         "name": "equipped-IDCARD",
         "directions": 4
       }
