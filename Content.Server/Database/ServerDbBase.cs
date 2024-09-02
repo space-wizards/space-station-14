@@ -708,6 +708,7 @@ namespace Content.Server.Database
 
             return await db.DbContext.AdminRank
                 .Include(r => r.Flags)
+                .Include(r => r.Admins)
                 .SingleOrDefaultAsync(r => r.Id == id, cancel);
         }
 
