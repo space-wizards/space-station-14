@@ -4,7 +4,6 @@
   name: long range fax machine
   description: Bluespace technologies on the application of bureaucracy.
   components:
-  - type: StationAiWhitelist
   - type: Sprite
     sprite: Structures/Machines/fax_machine.rsi
     drawdepth: SmallObjects
@@ -108,7 +107,6 @@
   name: captain long range fax machine
   suffix: NukeCodes
   components:
-    - type: StationAiWhitelist
     - type: FaxMachine
       name: "Captain's Office"
       receiveNukeCodes: true
