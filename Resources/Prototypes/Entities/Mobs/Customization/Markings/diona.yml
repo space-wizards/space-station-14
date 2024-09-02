@@ -9,7 +9,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/diona.rsi
+  - sprite: Mobs/Customization/Diona/thorns.rsi
     state: thorns_head
 
 - type: marking
@@ -23,7 +23,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/diona.rsi
+  - sprite: Mobs/Customization/Diona/thorns.rsi
     state: thorns_body
 
 - type: marking
@@ -37,7 +37,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/diona.rsi
+  - sprite: Mobs/Customization/Diona/flowers.rsi
     state: flowers_head
 
 - type: marking
@@ -51,7 +51,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/diona.rsi
+  - sprite: Mobs/Customization/Diona/flowers.rsi
     state: flowers_body
 
 - type: marking
@@ -64,7 +64,7 @@
       type:
         !type:SkinColoring
   sprites:
-  - sprite: Mobs/Customization/diona.rsi
+  - sprite: Mobs/Customization/Diona/hair.rsi
     state: leaf_cover
 
 - type: marking
@@ -78,7 +78,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/diona.rsi
+  - sprite: Mobs/Customization/Diona/hair.rsi
     state: bloom
 
 - type: marking
@@ -92,7 +92,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/diona.rsi
+  - sprite: Mobs/Customization/Diona/hair.rsi
     state: bracket
 
 - type: marking
@@ -105,7 +105,7 @@
       type:
         !type:SkinColoring
   sprites:
-  - sprite: Mobs/Customization/diona.rsi
+  - sprite: Mobs/Customization/Diona/hair.rsi
     state: brush
 
 - type: marking
@@ -119,7 +119,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/diona.rsi
+  - sprite: Mobs/Customization/Diona/hair.rsi
     state: cornflower
 
 - type: marking
@@ -133,7 +133,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/diona.rsi
+  - sprite: Mobs/Customization/Diona/hair.rsi
     state: ficus
 
 - type: marking
@@ -147,7 +147,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/diona.rsi
+  - sprite: Mobs/Customization/Diona/hair.rsi
     state: garland
 
 - type: marking
@@ -161,7 +161,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/diona.rsi
+  - sprite: Mobs/Customization/Diona/hair.rsi
     state: king
 
 - type: marking
@@ -175,7 +175,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/diona.rsi
+  - sprite: Mobs/Customization/Diona/hair.rsi
     state: laurel
 
 - type: marking
@@ -189,7 +189,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/diona.rsi
+  - sprite: Mobs/Customization/Diona/hair.rsi
     state: leafy
 
 - type: marking
@@ -203,7 +203,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/diona.rsi
+  - sprite: Mobs/Customization/Diona/hair.rsi
     state: lotus
 
 - type: marking
@@ -217,7 +217,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/diona.rsi
+  - sprite: Mobs/Customization/Diona/hair.rsi
     state: meadow
 
 - type: marking
@@ -231,7 +231,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/diona.rsi
+  - sprite: Mobs/Customization/Diona/hair.rsi
     state: oak
 
 - type: marking
@@ -245,7 +245,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/diona.rsi
+  - sprite: Mobs/Customization/Diona/hair.rsi
     state: palm
 
 - type: marking
@@ -259,7 +259,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/diona.rsi
+  - sprite: Mobs/Customization/Diona/hair.rsi
     state: root
 
 - type: marking
@@ -273,7 +273,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/diona.rsi
+  - sprite: Mobs/Customization/Diona/hair.rsi
     state: rose
 
 - type: marking
@@ -287,7 +287,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/diona.rsi
+  - sprite: Mobs/Customization/Diona/hair.rsi
     state: rosey
 
 - type: marking
@@ -301,7 +301,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/diona.rsi
+  - sprite: Mobs/Customization/Diona/hair.rsi
     state: shrub
 
 - type: marking
@@ -315,7 +315,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/diona.rsi
+  - sprite: Mobs/Customization/Diona/hair.rsi
     state: spinner
 
 - type: marking
@@ -329,7 +329,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/diona.rsi
+  - sprite: Mobs/Customization/Diona/hair.rsi
     state: sprout
 
 - type: marking
@@ -343,7 +343,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/diona.rsi
+  - sprite: Mobs/Customization/Diona/hair.rsi
     state: vine
 
 - type: marking
@@ -357,7 +357,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/diona.rsi
+  - sprite: Mobs/Customization/Diona/hair.rsi
     state: vinel
 
 - type: marking
@@ -371,7 +371,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/diona.rsi
+  - sprite: Mobs/Customization/Diona/hair.rsi
     state: vines
 
 - type: marking
@@ -385,7 +385,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/diona.rsi
+  - sprite: Mobs/Customization/Diona/hair.rsi
     state: wildflower
 
 - type: marking
@@ -399,5 +399,5 @@
         !type:SimpleColoring
         color: "#5f7039"
   sprites:
-  - sprite: Mobs/Customization/diona.rsi
+  - sprite: Mobs/Customization/Diona/overlay.rsi
     state: overlay

@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Gauze sprites by Github KittenColony / Discord kittencolony (297865728374210561)",
+  "size": {
+	"x": 32,
+	"y": 32
+  },
+  "states": [
+	{
+      "name": "gauze_lizard_blindfold",
+      "directions": 4
+    },
+	{
+      "name": "gauze_lizard_righteye",
+      "directions": 4
+    },
+    {
+      "name": "gauze_lizard_lefteye",
+      "directions": 4
+    },
+    {
+      "name": "gauze_lizard_foot_r",
+      "directions": 4
+    },
+    {
+      "name": "gauze_lizard_foot_l",
+      "directions": 4
+    }
+  ]
+}

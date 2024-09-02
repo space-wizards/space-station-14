@@ -1,30 +1,14 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "flowers_body, flowers_head, leaf_cover, thorns_body, thorns_head from https://github.com/Citadel-Station-13/Citadel-Station-13-RP/commit/38051f45d3b26bd31f6e292239f43adb36ff01fe, modified by EmoGarbage and other from https://github.com/TauCetiStation/TauCetiClassic/blob/a8c097fd0e749dcd6f66f05cf5325e51f6b081dd/icons/mob/human_face.dmi",
+  "copyright": "leaf_cover from https://github.com/Citadel-Station-13/Citadel-Station-13-RP/commit/38051f45d3b26bd31f6e292239f43adb36ff01fe, modified by EmoGarbage and other from https://github.com/TauCetiStation/TauCetiClassic/blob/a8c097fd0e749dcd6f66f05cf5325e51f6b081dd/icons/mob/human_face.dmi",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
     {
-      "name": "flowers_body",
-      "directions": 4
-    },
-    {
-      "name": "flowers_head",
-      "directions": 4
-    },
-    {
       "name": "leaf_cover",
-      "directions": 4
-    },
-    {
-      "name": "thorns_body",
-      "directions": 4
-    },
-    {
-      "name": "thorns_head",
       "directions": 4
     },
     {
@@ -73,10 +57,6 @@
     },
     {
       "name": "oak",
-      "directions": 4
-    },
-    {
-      "name": "overlay",
       "directions": 4
     },
     {

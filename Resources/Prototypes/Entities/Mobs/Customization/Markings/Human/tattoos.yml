@@ -9,7 +9,7 @@
         !type:TattooColoring
       fallbackColor: "#666666"
   sprites:
-  - sprite: Mobs/Customization/tattoos.rsi
+  - sprite: Mobs/Customization/Human/tattoos.rsi
     state: tattoo_hive_chest
 
 - type: marking
@@ -23,7 +23,7 @@
         !type:TattooColoring
       fallbackColor: "#666666"
   sprites:
-  - sprite: Mobs/Customization/tattoos.rsi
+  - sprite: Mobs/Customization/Human/tattoos.rsi
     state: tattoo_nightling
 
 - type: marking
@@ -37,7 +37,7 @@
         !type:TattooColoring
       fallbackColor: "#666666"
   sprites:
-  - sprite: Mobs/Customization/tattoos.rsi
+  - sprite: Mobs/Customization/Human/tattoos.rsi
     state: tattoo_silverburgh_l_leg
 
 - type: marking
@@ -51,7 +51,7 @@
         !type:TattooColoring
       fallbackColor: "#666666"
   sprites:
-  - sprite: Mobs/Customization/tattoos.rsi
+  - sprite: Mobs/Customization/Human/tattoos.rsi
     state: tattoo_silverburgh_r_leg
 
 - type: marking
@@ -65,7 +65,7 @@
         !type:TattooColoring
       fallbackColor: "#666666"
   sprites:
-  - sprite: Mobs/Customization/tattoos.rsi
+  - sprite: Mobs/Customization/Human/tattoos.rsi
     state: tattoo_campbell_l_arm
 
 - type: marking
@@ -79,7 +79,7 @@
         !type:TattooColoring
       fallbackColor: "#666666"
   sprites:
-  - sprite: Mobs/Customization/tattoos.rsi
+  - sprite: Mobs/Customization/Human/tattoos.rsi
     state: tattoo_campbell_r_arm
 
 - type: marking
@@ -93,7 +93,7 @@
         !type:TattooColoring
       fallbackColor: "#666666"
   sprites:
-  - sprite: Mobs/Customization/tattoos.rsi
+  - sprite: Mobs/Customization/Human/tattoos.rsi
     state: tattoo_campbell_l_leg
 
 - type: marking
@@ -107,7 +107,7 @@
         !type:TattooColoring
       fallbackColor: "#666666"
   sprites:
-  - sprite: Mobs/Customization/tattoos.rsi
+  - sprite: Mobs/Customization/Human/tattoos.rsi
     state: tattoo_campbell_r_leg
 
 - type: marking
@@ -121,7 +121,7 @@
         !type:EyeColoring
           negative: true
   sprites:
-  - sprite: Mobs/Customization/tattoos.rsi
+  - sprite: Mobs/Customization/Human/tattoos.rsi
     state: tattoo_eye_r
 
 - type: marking
@@ -135,5 +135,5 @@
         !type:EyeColoring
           negative: true
   sprites:
-  - sprite: Mobs/Customization/tattoos.rsi
+  - sprite: Mobs/Customization/Human/tattoos.rsi
     state: tattoo_eye_l

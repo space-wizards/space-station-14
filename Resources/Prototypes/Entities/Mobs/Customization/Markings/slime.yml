@@ -4,7 +4,7 @@
   markingCategory: Arms
   speciesRestriction: [SlimePerson]
   sprites:
-  - sprite: Mobs/Customization/slime_parts.rsi
+  - sprite: Mobs/Customization/Slime/slime_parts.rsi
     state: gradient_l_arm
 
 - type: marking
@@ -13,7 +13,7 @@
   markingCategory: Arms
   speciesRestriction: [SlimePerson]
   sprites:
-  - sprite: Mobs/Customization/slime_parts.rsi
+  - sprite: Mobs/Customization/Slime/slime_parts.rsi
     state: gradient_r_arm
 
 - type: marking
@@ -22,7 +22,7 @@
   markingCategory: Legs
   speciesRestriction: [SlimePerson]
   sprites:
-  - sprite: Mobs/Customization/slime_parts.rsi
+  - sprite: Mobs/Customization/Slime/slime_parts.rsi
     state: gradient_l_leg
 
 - type: marking
@@ -31,7 +31,7 @@
   markingCategory: Legs
   speciesRestriction: [SlimePerson]
   sprites:
-  - sprite: Mobs/Customization/slime_parts.rsi
+  - sprite: Mobs/Customization/Slime/slime_parts.rsi
     state: gradient_r_leg
 
 - type: marking
@@ -40,7 +40,7 @@
   markingCategory: Legs
   speciesRestriction: [SlimePerson]
   sprites:
-  - sprite: Mobs/Customization/slime_parts.rsi
+  - sprite: Mobs/Customization/Slime/slime_parts.rsi
     state: gradient_l_foot
 
 - type: marking
@@ -49,7 +49,7 @@
   markingCategory: Legs
   speciesRestriction: [SlimePerson]
   sprites:
-  - sprite: Mobs/Customization/slime_parts.rsi
+  - sprite: Mobs/Customization/Slime/slime_parts.rsi
     state: gradient_r_foot
 
 - type: marking
@@ -58,7 +58,7 @@
   markingCategory: Arms
   speciesRestriction: [SlimePerson]
   sprites:
-  - sprite: Mobs/Customization/slime_parts.rsi
+  - sprite: Mobs/Customization/Slime/slime_parts.rsi
     state: gradient_l_hand
 
 - type: marking
@@ -67,5 +67,5 @@
   markingCategory: Arms
   speciesRestriction: [SlimePerson]
   sprites:
-  - sprite: Mobs/Customization/slime_parts.rsi
+  - sprite: Mobs/Customization/Slime/slime_parts.rsi
     state: gradient_r_hand

@@ -6,5 +6,5 @@
   forcedColoring: true
   followSkinColor: true
   sprites:
-  - sprite: Mobs/Customization/ears.rsi
+  - sprite: Mobs/Customization/Human/ears.rsi
     state: long_ears

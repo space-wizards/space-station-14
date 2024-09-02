@@ -16,9 +16,9 @@
           !type:SimpleColoring
             color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/cat_parts.rsi
+  - sprite: Mobs/Customization/Human/cat_parts.rsi
     state: ears_cat_outer
-  - sprite: Mobs/Customization/cat_parts.rsi
+  - sprite: Mobs/Customization/Human/cat_parts.rsi
     state: ears_cat_inner
 
 - type: marking
@@ -36,5 +36,5 @@
           category: FacialHair
         - !type:SkinColoring
   sprites:
-  - sprite: Mobs/Customization/cat_parts.rsi
+  - sprite: Mobs/Customization/Human/cat_parts.rsi
     state: tail_cat
