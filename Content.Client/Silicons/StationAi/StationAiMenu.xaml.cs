@@ -15,7 +15,6 @@ public sealed partial class StationAiMenu : RadialMenu
 {
     [Dependency] private readonly IClyde _clyde = default!;
     [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly IEyeManager _eyeManager = default!;
 
     public event Action<BaseStationAiAction>? OnAiRadial;
 
