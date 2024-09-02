@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Ubaser
-  changes:
-  - message: Added new reptilian horns, "Demonic".
-    type: Add
-  id: 6766
-  time: '2024-06-17T10:53:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29022
 - author: Tayrtahn
   changes:
   - message: Chemical jugs no longer spawn with two labels.
@@ -3853,3 +3846,13 @@
   id: 7265
   time: '2024-09-02T05:32:49.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31629
+- author: themias
+  changes:
+  - message: The Donk Co. microwave can cook baguette swords and throwing croissants.
+    type: Tweak
+  - message: The Combat Bakery Kit now has a Donk Co. microwave board and costs 6
+      TC.
+    type: Tweak
+  id: 7266
+  time: '2024-09-02T13:49:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31239
