@@ -18,13 +18,7 @@ public sealed class AuditLogManager : IAuditLogManager
         _cfg.OnValueChanged(CCVars.AuditLogsEnabled, newVal => _enabled = newVal, true);
     }
 
-    public void AddLog(AuditLogType ty, LogImpact impact, Guid author, string message, List<Guid>? effected = null)
-    {
-        if (_enabled)
-            _db.AddAuditLogAsync(ty, impact, author, message, effected);
-    }
-
-    public async Task AddLogAsync(AuditLogType ty, LogImpact impact, Guid author, string message, List<Guid>? effected = null)
+    public async Task AddLogAsync(AuditLogType ty, LogImpact impact, Guid? author, string message, List<Guid>? effected = null)
     {
         if (_enabled)
             await _db.AddAuditLogAsync(ty, impact, author, message, effected);

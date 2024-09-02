@@ -229,7 +229,7 @@ namespace Content.Server.Database
         /// See <see cref="Content.Server.Administration.Logs.AuditLogs.IAuditLogManager.AddLog"/>
         /// </summary>
         /// <returns>The id of the newly created log</returns>
-        Task AddAuditLogAsync(AuditLogType ty, LogImpact impact, Guid author, string message, List<Guid>? effected = null);
+        Task AddAuditLogAsync(AuditLogType ty, LogImpact impact, Guid? author, string message, List<Guid>? effected = null);
 
         #endregion
 
@@ -712,7 +712,7 @@ namespace Content.Server.Database
             return server;
         }
 
-        public Task AddAuditLogAsync(AuditLogType ty, LogImpact impact, Guid author, string message, List<Guid>? effected = null)
+        public Task AddAuditLogAsync(AuditLogType ty, LogImpact impact, Guid? author, string message, List<Guid>? effected = null)
         {
             DbWriteOpsMetric.Inc();
             return RunDbCommand(() => _db.AddAuditLogAsync(ty, impact, author, message, effected));

@@ -521,7 +521,7 @@ namespace Content.Server.Database.Migrations.Postgres
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<Guid>("AuthorUserId")
+                    b.Property<Guid?>("AuthorUserId")
                         .HasColumnType("uuid")
                         .HasColumnName("author_user_id");
 
@@ -573,7 +573,8 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.HasKey("Id")
                         .HasName("PK_audit_log_effected_player");
 
-                    b.HasIndex("AuditLogId");
+                    b.HasIndex("AuditLogId")
+                        .HasDatabaseName("IX_audit_log_effected_player_audit_log_id");
 
                     b.HasIndex("EffectedUserId");
 
@@ -1701,8 +1702,6 @@ namespace Content.Server.Database.Migrations.Postgres
                         .WithMany("AuditLogs")
                         .HasForeignKey("AuthorUserId")
                         .HasPrincipalKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
                         .HasConstraintName("FK_audit_log_player__author_user_id");
 
                     b.Navigation("Author");

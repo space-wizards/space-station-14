@@ -4,6 +4,7 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Content.Server.Administration.Logs.AuditLogs;
 using Content.Server.Chat.Managers;
 using Content.Server.Database;
 using Content.Server.GameTicking;
@@ -39,6 +40,7 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly ITaskManager _taskManager = default!;
     [Dependency] private readonly UserDbDataManager _userDbData = default!;
+    [Dependency] private readonly IAuditLogManager _auditLog = default!;
 
     private ISawmill _sawmill = default!;
 
@@ -195,6 +197,12 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
             ("reason", reason));
 
         _sawmill.Info(logMessage);
+        await _auditLog.AddLogAsync(
+            AuditLogType.SeverBan,
+            LogImpact.Extreme,
+            banningAdmin?.UserId,
+            logMessage,
+            target != null ? [target.Value] : []);
         _chat.SendAdminAlert(logMessage);
 
         KickMatchingConnectedPlayers(banDef, "newly placed ban");
@@ -279,7 +287,17 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
         }
 
         var length = expires == null ? Loc.GetString("cmd-roleban-inf") : Loc.GetString("cmd-roleban-until", ("expires", expires));
-        _chat.SendAdminAlert(Loc.GetString("cmd-roleban-success", ("target", targetUsername ?? "null"), ("role", role), ("reason", reason), ("length", length)));
+        var banMessage = Loc.GetString("cmd-roleban-success",
+                ("target", targetUsername ?? "null"),
+                ("role", role),
+                ("reason", reason),
+                ("length", length));
+        _chat.SendAdminAlert(banMessage);
+        await _auditLog.AddLogAsync(AuditLogType.RoleBan,
+            LogImpact.High,
+            banDef.BanningAdmin,
+            banMessage,
+            target != null ? [target!.Value] : []);
 
         if (target != null)
         {
@@ -311,12 +329,19 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
 
         await _db.AddServerRoleUnbanAsync(new ServerRoleUnbanDef(banId, unbanningAdmin, DateTimeOffset.Now));
 
+        Guid? playerForLog = null;
         if (ban.UserId is { } player && _cachedRoleBans.TryGetValue(player, out var roleBans))
         {
             roleBans.RemoveWhere(roleBan => roleBan.Id == ban.Id);
             SendRoleBans(player);
+            playerForLog = player.UserId;
         }
 
+        await _auditLog.AddLogAsync(AuditLogType.SeverBan,
+            LogImpact.High,
+            unbanningAdmin,
+            $"Pardoned RoleBan {banId}",
+            playerForLog != null ? [playerForLog.Value] : []);
         return $"Pardoned ban with id {banId}";
     }
 

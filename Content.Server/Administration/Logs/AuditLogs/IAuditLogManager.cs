@@ -15,8 +15,6 @@ public interface IAuditLogManager
     /// <param name="author">The person responsible for creating the log. (e.g. the banning admin for a ban)</param>
     /// <param name="message">Message describing the logged action.</param>
     /// <param name="effected">What players were effected by the log (e.g. the banned player in a ban). This is used for searchability.</param>
-    void AddLog(AuditLogType ty, LogImpact impact, Guid author, string message, List<Guid>? effected = null);
-
-    Task AddLogAsync(AuditLogType ty, LogImpact impact, Guid author, string message, List<Guid>? effected = null);
+    Task AddLogAsync(AuditLogType ty, LogImpact impact, Guid? author, string message, List<Guid>? effected = null);
 }
 

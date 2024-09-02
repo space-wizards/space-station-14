@@ -1,10 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Content.Server.Database.Migrations.Postgres
+namespace Content.Server.Database.Migrations.Sqlite
 {
     /// <inheritdoc />
     public partial class AuditLog : Migration
@@ -16,13 +15,13 @@ namespace Content.Server.Database.Migrations.Postgres
                 name: "audit_log",
                 columns: table => new
                 {
-                    audit_log_id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    type = table.Column<long>(type: "bigint", nullable: false),
-                    impact = table.Column<short>(type: "smallint", nullable: false),
-                    date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    message = table.Column<string>(type: "text", nullable: false),
-                    author_user_id = table.Column<Guid>(type: "uuid", nullable: false)
+                    audit_log_id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    type = table.Column<uint>(type: "INTEGER", nullable: false),
+                    impact = table.Column<sbyte>(type: "INTEGER", nullable: false),
+                    date = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    message = table.Column<string>(type: "TEXT", nullable: false),
+                    author_user_id = table.Column<Guid>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -31,18 +30,17 @@ namespace Content.Server.Database.Migrations.Postgres
                         name: "FK_audit_log_player__author_user_id",
                         column: x => x.author_user_id,
                         principalTable: "player",
-                        principalColumn: "user_id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "user_id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "audit_log_effected_player",
                 columns: table => new
                 {
-                    audit_log_effected_player_id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    audit_log_id = table.Column<int>(type: "integer", nullable: false),
-                    effected_user_id = table.Column<Guid>(type: "uuid", nullable: false)
+                    audit_log_effected_player_id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    audit_log_id = table.Column<int>(type: "INTEGER", nullable: false),
+                    effected_user_id = table.Column<Guid>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {

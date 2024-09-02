@@ -24,7 +24,7 @@ public static class AuditLogUtil
             NoteType.Note => severity != null ? LogImpactFromNoteSeverity(severity.Value) : LogImpact.Low,
             NoteType.Message => LogImpact.Low,
             NoteType.Watchlist => LogImpact.Extreme,
-            NoteType.RoleBan => LogImpact.Extreme,
+            NoteType.RoleBan => LogImpact.High,
             NoteType.ServerBan => LogImpact.Extreme,
             _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
         };

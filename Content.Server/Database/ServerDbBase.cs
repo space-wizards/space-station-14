@@ -844,7 +844,7 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
 
         #region Audit Logs
 
-        public async Task AddAuditLogAsync(AuditLogType ty, LogImpact impact, Guid author, string message, List<Guid>? effected)
+        public async Task AddAuditLogAsync(AuditLogType ty, LogImpact impact, Guid? author, string message, List<Guid>? effected)
         {
             var dbEffected= effected == null
                 ? []

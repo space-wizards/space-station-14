@@ -1,6 +1,8 @@
 ﻿using System.Text;
+using Content.Server.Administration.Logs.AuditLogs;
 using Content.Server.Database;
 using Content.Shared.Administration;
+using Content.Shared.Database;
 using Robust.Shared.Console;
 
 namespace Content.Server.Administration.Commands
@@ -8,6 +10,7 @@ namespace Content.Server.Administration.Commands
     [AdminCommand(AdminFlags.Ban)]
     public sealed class PardonCommand : IConsoleCommand
     {
+        [Dependency] private readonly IAuditLogManager _auditLog = default!;
         public string Command => "pardon";
         public string Description => "Pardons somebody's ban";
         public string Help => $"Usage: {Command} <ban id>";
@@ -55,6 +58,10 @@ namespace Content.Server.Administration.Commands
             await dbMan.AddServerUnbanAsync(new ServerUnbanDef(banId, player?.UserId, DateTimeOffset.Now));
 
             shell.WriteLine($"Pardoned ban with id {banId}");
+            await _auditLog.AddLogAsync(AuditLogType.SeverBan,
+                LogImpact.Extreme,
+                ban.Unban?.UnbanningAdmin,
+                $"Pardoned Ban {banId}");
         }
     }
 }

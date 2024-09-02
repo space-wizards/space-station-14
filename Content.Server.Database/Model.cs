@@ -670,8 +670,8 @@ namespace Content.Server.Database
         /// <summary>
         /// Person that caused the action that created the log.
         /// </summary>
-        [Key, ForeignKey("Author")] public Guid AuthorUserId;
-        public Player Author { get; set; } = default!;
+        [Key, ForeignKey("Author")] public Guid? AuthorUserId;
+        public Player? Author { get; set; } = default!;
 
         /// <summary>
         /// Player(s) that this log entry effects
