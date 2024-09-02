@@ -463,6 +463,97 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.ToTable("admin_watchlists", (string)null);
                 });
 
+            modelBuilder.Entity("Content.Server.Database.AhelpExchange", b =>
+                {
+                    b.Property<int>("AhelpId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("ahelp_id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("AhelpId"));
+
+                    b.Property<int>("AhelpRound")
+                        .HasColumnType("integer")
+                        .HasColumnName("ahelp_round");
+
+                    b.Property<Guid>("AhelpTarget")
+                        .HasColumnType("uuid")
+                        .HasColumnName("ahelp_target");
+
+                    b.Property<string>("ServerName")
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("server_name");
+
+                    b.HasKey("AhelpId")
+                        .HasName("PK_ahelp_exchanges");
+
+                    b.HasIndex("AhelpRound");
+
+                    b.HasIndex("AhelpTarget");
+
+                    b.ToTable("ahelp_exchanges", (string)null);
+                });
+
+            modelBuilder.Entity("Content.Server.Database.AhelpMessage", b =>
+                {
+                    b.Property<int>("AhelpId")
+                        .HasColumnType("integer")
+                        .HasColumnName("ahelp_id");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("integer")
+                        .HasColumnName("ahelp_messages_id");
+
+                    b.Property<bool>("AdminsOnline")
+                        .HasColumnType("boolean")
+                        .HasColumnName("admins_online");
+
+                    b.Property<bool>("IsAdminned")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_adminned");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("message");
+
+                    b.Property<string>("RoundStatus")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("round_status");
+
+                    b.Property<Guid>("Sender")
+                        .HasColumnType("uuid")
+                        .HasColumnName("sender");
+
+                    b.Property<int?>("SenderEntity")
+                        .HasColumnType("integer")
+                        .HasColumnName("sender_entity");
+
+                    b.Property<string>("SenderEntityName")
+                        .HasColumnType("text")
+                        .HasColumnName("sender_entity_name");
+
+                    b.Property<bool>("TargetOnline")
+                        .HasColumnType("boolean")
+                        .HasColumnName("target_online");
+
+                    b.Property<DateTime>("TimeSent")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("time_sent");
+
+                    b.HasKey("AhelpId", "Id")
+                        .HasName("PK_ahelp_messages");
+
+                    b.HasIndex("Sender")
+                        .HasDatabaseName("IX_ahelp_messages_sender");
+
+                    b.HasIndex("TimeSent");
+
+                    b.ToTable("ahelp_messages", (string)null);
+                });
+
             modelBuilder.Entity("Content.Server.Database.Antag", b =>
                 {
                     b.Property<int>("Id")
@@ -1644,6 +1735,39 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.Navigation("Round");
                 });
 
+            modelBuilder.Entity("Content.Server.Database.AhelpExchange", b =>
+                {
+                    b.HasOne("Content.Server.Database.Player", null)
+                        .WithMany()
+                        .HasForeignKey("AhelpTarget")
+                        .HasPrincipalKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_ahelp_exchanges_player_player_id");
+                });
+
+            modelBuilder.Entity("Content.Server.Database.AhelpMessage", b =>
+                {
+                    b.HasOne("Content.Server.Database.AhelpExchange", "AhelpExchange")
+                        .WithMany("AhelpMessages")
+                        .HasForeignKey("AhelpId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_ahelp_messages_ahelp_exchanges_ahelp_id");
+
+                    b.HasOne("Content.Server.Database.Player", "Player")
+                        .WithMany()
+                        .HasForeignKey("Sender")
+                        .HasPrincipalKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_ahelp_messages_player_sender");
+
+                    b.Navigation("AhelpExchange");
+
+                    b.Navigation("Player");
+                });
+
             modelBuilder.Entity("Content.Server.Database.Antag", b =>
                 {
                     b.HasOne("Content.Server.Database.Profile", "Profile")
@@ -2013,6 +2137,11 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.Navigation("Admins");
 
                     b.Navigation("Flags");
+                });
+
+            modelBuilder.Entity("Content.Server.Database.AhelpExchange", b =>
+                {
+                    b.Navigation("AhelpMessages");
                 });
 
             modelBuilder.Entity("Content.Server.Database.ConnectionLog", b =>
