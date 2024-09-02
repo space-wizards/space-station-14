@@ -1,6 +1,5 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Body.Systems;
-using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Construction;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.DeviceLinking.Events;
@@ -58,7 +57,7 @@ namespace Content.Server.Kitchen.EntitySystems
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly ExplosionSystem _explosion = default!;
         [Dependency] private readonly SharedContainerSystem _container = default!;
-        [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
+        [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
         [Dependency] private readonly TagSystem _tag = default!;
         [Dependency] private readonly TemperatureSystem _temperature = default!;
         [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
