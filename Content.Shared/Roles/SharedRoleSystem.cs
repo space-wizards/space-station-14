@@ -141,7 +141,6 @@ public abstract class SharedRoleSystem : EntitySystem
         EnsureComp<MindRoleComponent>(mindRoleId);
         var mindRoleComp = Comp<MindRoleComponent>(mindRoleId);
 
-        mindRoleComp.Created = _gameTicker.RoundDuration();
         mindRoleComp.Mind = (mindId,mind);
         if (jobPrototype is not null)
         {
