@@ -31,13 +31,13 @@ public sealed class TechAnomalySystem : EntitySystem
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<TechAnomalyComponent>();
-        while (query.MoveNext(out var uid, out var tech))
+        var query = EntityQueryEnumerator<TechAnomalyComponent, AnomalyComponent>();
+        while (query.MoveNext(out var uid, out var tech, out var anom))
         {
             if (_timing.CurTime < tech.NextTimer)
                 return;
 
-            tech.NextTimer = _timing.CurTime + TimeSpan.FromSeconds(tech.TimerFrequency);
+            tech.NextTimer = _timing.CurTime + TimeSpan.FromSeconds(tech.TimerFrequency * anom.Stability);
 
             _signal.InvokePort(uid, tech.TimerPort);
         }

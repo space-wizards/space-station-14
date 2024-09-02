@@ -57,5 +57,5 @@ public sealed partial class TechAnomalyComponent : Component
     public TimeSpan NextTimer = TimeSpan.Zero;
 
     [DataField]
-    public float TimerFrequency = 2f;
+    public float TimerFrequency = 3f;
 }
