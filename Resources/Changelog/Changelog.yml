@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Futuristic
-  changes:
-  - message: RandomSentience event was removed
-    type: Remove
-  id: 6761
-  time: '2024-06-16T23:24:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28982
 - author: notafet
   changes:
   - message: Adjust TEG power generation levels.
@@ -3845,3 +3838,15 @@
   id: 7260
   time: '2024-09-01T19:28:12.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31725
+- author: EmoGarbage404
+  changes:
+  - message: The grappling gun is now available inside the salvage vendor. Additional
+      ones can be scavenged in space.
+    type: Add
+  - message: Removed the grappling gun from science research and lathes.
+    type: Remove
+  - message: Fixed issue that made the rope from the grappling gun not appear.
+    type: Fix
+  id: 7261
+  time: '2024-09-02T04:33:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31737
