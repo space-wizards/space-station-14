@@ -16,6 +16,7 @@ public abstract partial class BeforeClimbEvent : CancellableEntityEventArgs
         BeingClimbedOn = beingClimbedOn;
     }
 }
+
 /// <summary>
 ///     This event is raised on the the person either getting put on or going on the table.
 ///     The event is also called on their clothing as well.
