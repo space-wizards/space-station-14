@@ -1,6 +1,7 @@
 using System.Globalization;
 using System.Linq;
 using System.Numerics;
+using Content.Client.CharacterInfo;
 using Content.Client.Administration.Managers;
 using Content.Client.Chat;
 using Content.Client.Chat.Managers;
@@ -40,10 +41,12 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Replays;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using static Content.Client.CharacterInfo.CharacterInfoSystem;
+
 
 namespace Content.Client.UserInterface.Systems.Chat;
 
-public sealed class ChatUIController : UIController
+public sealed class ChatUIController : UIController, IOnSystemChanged<CharacterInfoSystem>
 {
     [Dependency] private readonly IClientAdminManager _admin = default!;
     [Dependency] private readonly IChatManager _manager = default!;
@@ -65,6 +68,7 @@ public sealed class ChatUIController : UIController
     [UISystemDependency] private readonly TransformSystem? _transform = default;
     [UISystemDependency] private readonly MindSystem? _mindSystem = default!;
     [UISystemDependency] private readonly RoleCodewordSystem? _roleCodewordSystem = default!;
+    [UISystemDependency] private readonly CharacterInfoSystem _characterInfo = default!;
 
     [ValidatePrototypeId<ColorPalettePrototype>]
     private const string ChatNamePalette = "ChatNames";
@@ -159,6 +163,13 @@ public sealed class ChatUIController : UIController
     /// </summary>
     private readonly Color HighlightColor = Color.FromHex("#e5ffcc");
 
+    /// <summary>
+    ///     A bool to keep track if 'CharacterUpdated' event is a new player attaching or the opening of the character controller.
+    /// </summary>
+    private bool _charInfoIsAttach = false;
+
+    private bool _autoFillHighlightsEnabled = false;
+
     // TODO add a cap for this for non-replays
     public readonly List<(GameTick Tick, ChatMessage Msg)> History = new();
 
@@ -251,6 +262,9 @@ public sealed class ChatUIController : UIController
 
         _config.OnValueChanged(CCVars.ChatWindowOpacity, OnChatWindowOpacityChanged);
 
+        _config.OnValueChanged(CCVars.ChatAutoFillHighlights, (value) => { _autoFillHighlightsEnabled = value; });
+        _autoFillHighlightsEnabled = _config.GetCVar(CCVars.ChatAutoFillHighlights);
+
         // Load highlights if any were saved.
         string highlights = _config.GetCVar(CCVars.ChatHighlights);
 
@@ -275,9 +289,45 @@ public sealed class ChatUIController : UIController
         SetMainChat(false);
     }
 
+    public void OnSystemLoaded(CharacterInfoSystem system)
+    {
+        system.OnCharacterUpdate += CharacterUpdated;
+    }
+
+    public void OnSystemUnloaded(CharacterInfoSystem system)
+    {
+        system.OnCharacterUpdate -= CharacterUpdated;
+    }
+
     private void OnChatWindowOpacityChanged(float opacity)
     {
         SetChatWindowOpacity(opacity);
+    }
+
+    private void CharacterUpdated(CharacterData data)
+    {
+        // If the _charInfoIsAttach is false then the character panel created the event, dismiss.
+        if (!_charInfoIsAttach)
+            return;
+
+        var (entity, job, objectives, briefing, entityName) = data;
+        
+        // If the character has a normal name (eg. "Name Surname" and not "Name Inital Surname" or particular specie names) subdivide it
+        // so that the name and surname individually get highlighted.
+        if (entityName.Count(c => c == ' ') == 1)
+        {
+            entityName = entityName.Replace(' ', '\n');
+        }
+
+        // Convert the job to kebab_case and get it's respective highlights from a loc file.
+        string kebab_job = job.Replace(' ', '-').ToLower();
+        string job_highlights = Loc.GetString($"highlights-{kebab_job}").Replace(", ", "\n");
+
+        string new_highlights = entityName + '\n' + job_highlights;
+
+        UpdateHighlights(new_highlights);
+        HighlightsUpdated?.Invoke(new_highlights);
+        _charInfoIsAttach = false;
     }
 
     private void SetChatWindowOpacity(float opacity)
@@ -444,6 +494,21 @@ public sealed class ChatUIController : UIController
     private void OnAttachedChanged(EntityUid uid)
     {
         UpdateChannelPermissions();
+
+        if (!_autoFillHighlightsEnabled)
+            return;
+        
+        if (_player.LocalUser != null)
+        {
+            _charInfoIsAttach = true;
+            _characterInfo.RequestCharacterInfo();
+        }
+        else
+        {
+            // Make sure to clear the highlights when detaching from the player.
+            UpdateHighlights("");
+            HighlightsUpdated?.Invoke("");
+        }
     }
 
     private void AddSpeechBubble(ChatMessage msg, SpeechBubble.SpeechType speechType)
@@ -868,8 +933,6 @@ public sealed class ChatUIController : UIController
         {
             msg.WrappedMessage = SharedChatSystem.InjectTagAroundString(msg, highlight, "color", HighlightColor.ToHex());
         }
-
-        Logger.DebugS("test", msg.WrappedMessage);
 
         // Color any codewords for minds that have roles that use them
         if (_player.LocalUser != null && _mindSystem != null && _roleCodewordSystem != null)
