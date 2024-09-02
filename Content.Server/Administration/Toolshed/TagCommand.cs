@@ -25,6 +25,16 @@ public sealed class TagCommand : ToolshedCommand
         });
     }
 
+    [CommandImplementation("with")]
+    public IEnumerable<EntityUid> With(
+        [CommandInvocationContext] IInvocationContext ctx,
+        [PipedArgument] IEnumerable<EntityUid> entities,
+        [CommandArgument] ValueRef<string, Prototype<TagPrototype>> tag)
+    {
+        _tag ??= GetSys<TagSystem>();
+        return entities.Where(e => _tag.HasTag(e, tag.Evaluate(ctx)!));
+    }
+
     [CommandImplementation("add")]
     public EntityUid Add(
             [CommandInvocationContext] IInvocationContext ctx,
