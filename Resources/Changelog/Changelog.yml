@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Changed meteor swarm spawning to be less clumped up and favor hitting
-      multiple areas more.
-    type: Tweak
-  id: 6765
-  time: '2024-06-17T05:20:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29057
 - author: Ubaser
   changes:
   - message: Added new reptilian horns, "Demonic".
@@ -3853,3 +3845,11 @@
   id: 7264
   time: '2024-09-02T04:37:17.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31677
+- author: poeMota
+  changes:
+  - message: Now the time played on ERT roles and midround borgs will be saved to
+      the player's stats
+    type: Tweak
+  id: 7265
+  time: '2024-09-02T05:32:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31629
