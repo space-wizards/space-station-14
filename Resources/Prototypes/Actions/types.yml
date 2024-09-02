@@ -321,8 +321,8 @@
   description: action-description-toggle-wagging
   components:
     - type: InstantAction
-      icon: { sprite: Mobs/Customization/reptilian_parts.rsi, state: tail_smooth_behind }
-      iconOn: { sprite: Mobs/Customization/reptilian_parts.rsi, state: tail_smooth_behind }
+      icon: { sprite: Mobs/Customization/Reptilian/Tails/smooth.rsi, state: tail_behind }
+      iconOn: { sprite: Mobs/Customization/Reptilian/Tails/smooth.rsi, state: tail_behind }
       itemIconStyle: NoItem
       useDelay: 1 # emote spam
       event: !type:ToggleActionEvent
