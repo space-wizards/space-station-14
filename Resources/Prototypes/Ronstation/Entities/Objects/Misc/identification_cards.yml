@@ -9,7 +9,7 @@
   - type: Sprite
     sprite: Ronstation/Objects/Misc/id_cards.rsi
     layers:
-     - state: heccdiver
+    - state: heccdiver
   - type: Access
     tags:
     - HeccDiver
