@@ -26,7 +26,7 @@
 
 - type: entity
   id: PaperAgrichemManual
-  name: "AgriChem Is Fun! Manual"
+  name: "AgriChem Is Fun Manual"
   description: The single sheet of instructions that came in the kit. 
   parent: Paper
   components:

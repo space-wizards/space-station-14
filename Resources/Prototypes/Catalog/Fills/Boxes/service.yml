@@ -14,7 +14,7 @@
       - state: flashbang
 
 - type: entity
-  name: AgriChem Is Fun! kit
+  name: AgriChem Is Fun kit
   parent: BoxCardboard
   id: BoxAgrichem
   description: For the budding botanist ready to learn about maximizing farm output. This faded box must be at least 50 years old.
