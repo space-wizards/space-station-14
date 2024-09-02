@@ -29,6 +29,12 @@
     interfaces:
         enum.JukeboxUiKey.Key:
           type: JukeboxBoundUserInterface
+        enum.WiresUiKey.Key:
+          type: WiresBoundUserInterface
+  - type: WiresPanel
+  - type: Wires
+    boardName: wires-board-name-jukebox
+    layoutId: Jukebox
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
