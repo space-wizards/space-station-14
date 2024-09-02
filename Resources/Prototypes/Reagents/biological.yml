@@ -87,7 +87,7 @@
   name: reagent-name-mucin
   group: Biological
   desc: reagent-desc-mucin
-  flavor: like snot
+  flavor: snotty
   color: "#b1d8c1"
   recognizable: true
   physicalDesc: reagent-physical-desc-viscous

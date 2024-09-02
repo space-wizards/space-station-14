@@ -1154,3 +1154,7 @@
   flavorType: Complex
   description: flavor-complex-crud
 
+- type: flavor
+  id: snotty
+  flavorType: Complex
+  description: flavor-complex-snotty

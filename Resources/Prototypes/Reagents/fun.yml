@@ -400,7 +400,6 @@
 - type: reagent
   id: PropulsionGel
   name: reagent-name-propulsion-gel
-  group: Special
   desc: reagent-desc-propulsion-gel
   physicalDesc: reagent-physical-desc-energetic
   flavor: speed
