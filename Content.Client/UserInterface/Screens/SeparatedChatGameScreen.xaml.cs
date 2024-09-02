@@ -32,7 +32,7 @@ public sealed partial class SeparatedChatGameScreen : InGameScreen
 
     private void ResizeActionContainer()
     {
-        float indent = 40;
+        float indent = 20;
         Actions.ActionsContainer.MaxGridWidth = ViewportContainer.Size.X - indent;
     }
 
