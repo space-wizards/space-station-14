@@ -40,6 +40,21 @@ public sealed class SecretStashSystem : EntitySystem
         SubscribeLocalEvent<SecretStashComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerb);
     }
 
+    private void OnInit(Entity<SecretStashComponent> entity, ref ComponentInit args)
+    {
+        entity.Comp.ItemContainer = _containerSystem.EnsureContainer<ContainerSlot>(entity, "stash", out _);
+    }
+
+    private void OnDestroyed(Entity<SecretStashComponent> entity, ref DestructionEventArgs args)
+    {
+        var storedInside = _containerSystem.EmptyContainer(entity.Comp.ItemContainer);
+        if (storedInside != null && storedInside.Count >= 1)
+        {
+            var popup = Loc.GetString("comp-secret-stash-on-destroyed-popup", ("stashname", GetStashName(entity)));
+            _popupSystem.PopupEntity(popup, storedInside[0], PopupType.MediumCaution);
+        }
+    }
+
     private void OnInteractUsing(Entity<SecretStashComponent> entity, ref InteractUsingEvent args)
     {
         if (args.Handled || !IsStashOpen(entity))
@@ -54,21 +69,6 @@ public sealed class SecretStashSystem : EntitySystem
             return;
 
         args.Handled = TryGetItem(entity, args.User);
-    }
-
-    private void OnInit(Entity<SecretStashComponent> entity, ref ComponentInit args)
-    {
-        entity.Comp.ItemContainer = _containerSystem.EnsureContainer<ContainerSlot>(entity, "stash", out _);
-    }
-
-    private void OnDestroyed(Entity<SecretStashComponent> entity, ref DestructionEventArgs args)
-    {
-        var storedInside = _containerSystem.EmptyContainer(entity.Comp.ItemContainer);
-        if (storedInside != null && storedInside.Count >= 1)
-        {
-            var popup = Loc.GetString("comp-secret-stash-on-destroyed-popup", ("stashname", GetStashName(entity)));
-            _popupSystem.PopupEntity(popup, storedInside[0], PopupType.MediumCaution);
-        }
     }
 
     /// <summary>
