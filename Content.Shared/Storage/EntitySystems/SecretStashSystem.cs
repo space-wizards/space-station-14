@@ -13,6 +13,7 @@ using Robust.Shared.Audio.Systems;
 using Content.Shared.Verbs;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Tools.EntitySystems;
+using Content.Shared.Construction.EntitySystems;
 
 namespace Content.Shared.Storage.EntitySystems;
 
@@ -34,7 +35,25 @@ public sealed class SecretStashSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<SecretStashComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<SecretStashComponent, DestructionEventArgs>(OnDestroyed);
+        SubscribeLocalEvent<SecretStashComponent, InteractUsingEvent>(OnInteractUsing, after: new[] { typeof(ToolOpenableSystem), typeof(AnchorableSystem) });
+        SubscribeLocalEvent<SecretStashComponent, InteractHandEvent>(OnInteractHand);
         SubscribeLocalEvent<SecretStashComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerb);
+    }
+
+    private void OnInteractUsing(Entity<SecretStashComponent> entity, ref InteractUsingEvent args)
+    {
+        if (args.Handled || !IsStashOpen(entity))
+            return;
+
+        args.Handled = TryStashItem(entity, args.User, args.Used);
+    }
+
+    private void OnInteractHand(Entity<SecretStashComponent> entity, ref InteractHandEvent args)
+    {
+        if (args.Handled || !IsStashOpen(entity))
+            return;
+
+        args.Handled = TryGetItem(entity, args.User);
     }
 
     private void OnInit(Entity<SecretStashComponent> entity, ref ComponentInit args)
