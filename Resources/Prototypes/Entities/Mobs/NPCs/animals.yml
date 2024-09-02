@@ -376,6 +376,8 @@
       behaviors:
       - !type:GibBehavior { }
   - type: NonSpreaderZombie
+  - type: SentienceTarget
+    flavorKind: station-event-random-sentience-flavor-organic
 
 - type: entity
   name: glockroach
@@ -442,7 +444,7 @@
     insertingState: inserting_mothroach
   - type: MothAccent
   - type: Sprite
-    sprite: Mobs/Animals/mothroach.rsi
+    sprite: Mobs/Animals/mothroach/mothroach.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base", "movement"]
       state: mothroach
@@ -457,7 +459,7 @@
     size: Normal
   - type: Clothing
     quickEquip: false
-    sprite: Mobs/Animals/mothroach.rsi
+    sprite: Mobs/Animals/mothroach/mothroach.rsi
     equippedPrefix: 0
     slots:
     - HEAD
@@ -536,6 +538,41 @@
   - type: FireVisuals
     sprite: Mobs/Effects/onfire.rsi
     normalState: Mouse_burning
+  - type: Strippable
+  - type: UserInterface
+    interfaces:
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
+  - type: InventorySlots
+  - type: Inventory
+    speciesId: hamster
+    templateId: hamster
+    displacements:
+      head:
+        sizeMaps:
+          32:
+            sprite: Mobs/Animals/mothroach/displacement.rsi
+            state: head
+      mask:
+        sizeMaps:
+          32:
+            sprite: Mobs/Animals/mothroach/displacement.rsi
+            state: mask
+      suitstorage:
+        sizeMaps:
+          32:
+            sprite: Mobs/Animals/mothroach/displacement.rsi
+            state: suitstorage
+      eyes:
+        sizeMaps:
+          32:
+            sprite: Mobs/Animals/mothroach/displacement.rsi
+            state: eyes
+      neck:
+        sizeMaps:
+          32:
+            sprite: Mobs/Animals/mothroach/displacement.rsi
+            state: neck
 
 
 # Note that the mallard duck is actually a male drake mallard, with the brown duck being the female variant of the same species, however ss14 lacks sex specific textures

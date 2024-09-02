@@ -23,17 +23,6 @@
           - ItemMask
         restitution: 0.3
         friction: 0.2
-  - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 200
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
 
 - type: entity
   parent: OreBase

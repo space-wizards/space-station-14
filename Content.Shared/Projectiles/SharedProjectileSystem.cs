@@ -38,7 +38,6 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         SubscribeLocalEvent<EmbeddableProjectileComponent, ThrowDoHitEvent>(OnEmbedThrowDoHit);
         SubscribeLocalEvent<EmbeddableProjectileComponent, ActivateInWorldEvent>(OnEmbedActivate);
         SubscribeLocalEvent<EmbeddableProjectileComponent, RemoveEmbeddedProjectileEvent>(OnEmbedRemove);
-        SubscribeLocalEvent<EmbeddableProjectileComponent, AttemptPacifiedThrowEvent>(OnAttemptPacifiedThrow);
     }
 
     private void OnEmbedActivate(EntityUid uid, EmbeddableProjectileComponent component, ActivateInWorldEvent args)
@@ -153,14 +152,6 @@ public abstract partial class SharedProjectileSystem : EntitySystem
     private sealed partial class RemoveEmbeddedProjectileEvent : DoAfterEvent
     {
         public override DoAfterEvent Clone() => this;
-    }
-
-    /// <summary>
-    /// Prevent players with the Pacified status effect from throwing embeddable projectiles.
-    /// </summary>
-    private void OnAttemptPacifiedThrow(Entity<EmbeddableProjectileComponent> ent, ref AttemptPacifiedThrowEvent args)
-    {
-        args.Cancel("pacified-cannot-throw-embed");
     }
 }
 

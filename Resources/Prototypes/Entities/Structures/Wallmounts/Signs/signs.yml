@@ -748,6 +748,14 @@
     state: cans
 
 - type: entity
+  parent: SignCans
+  id: SignCansScience
+  suffix: science
+  components:
+  - type: Sprite
+    state: cans_sci
+
+- type: entity
   parent: BaseSign
   id: SignShipDock
   name: evac sign
@@ -1081,7 +1089,15 @@
   - type: Sprite
     state: medium_secure
 
-
+# TODO: make a fancier version of this sign
+- type: entity
+  parent: BaseSign
+  id: SignVox
+  name: vox area sign
+  description: A sign indicating that the area ahead possibly contains a nitrogen-filled atmosphere.
+  components:
+  - type: Sprite
+    state: voxcross
 
 # Atmos Warnings
 
@@ -1219,6 +1235,7 @@
   components:
   - type: Sprite
     state: nanotrasen_sign1
+    snapCardinals: false
 
 - type: entity
   parent: BaseSign
@@ -1228,6 +1245,7 @@
   components:
   - type: Sprite
     state: nanotrasen_sign2
+    snapCardinals: false
 
 - type: entity
   parent: BaseSign
@@ -1237,6 +1255,7 @@
   components:
   - type: Sprite
     state: nanotrasen_sign3
+    snapCardinals: false
 
 - type: entity
   parent: BaseSign
@@ -1246,6 +1265,7 @@
   components:
   - type: Sprite
     state: nanotrasen_sign4
+    snapCardinals: false
 
 - type: entity
   parent: BaseSign
@@ -1255,6 +1275,7 @@
   components:
   - type: Sprite
     state: nanotrasen_sign5
+    snapCardinals: false
 
 - type: entity
   parent: BaseSign
