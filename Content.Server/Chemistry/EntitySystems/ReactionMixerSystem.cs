@@ -4,7 +4,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Nutrition.EntitySystems;
-using Content.Server.Chemistry.Containers.EntitySystems;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Server.Popups;
 
 namespace Content.Server.Chemistry.EntitySystems;
@@ -12,7 +12,7 @@ namespace Content.Server.Chemistry.EntitySystems;
 public sealed partial class ReactionMixerSystem : EntitySystem
 {
     [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly SolutionContainerSystem _solutionContainers = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainers = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
 
     public override void Initialize()
