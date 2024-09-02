@@ -816,6 +816,7 @@
       - WeaponDisablerSMG
       - WeaponLaserCannon
       - WeaponLaserCarbine
+      - WeaponTemperatureGun
       - WeaponXrayCannon
   - type: MaterialStorage
     whitelist:
