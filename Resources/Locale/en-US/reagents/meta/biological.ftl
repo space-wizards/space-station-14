@@ -33,6 +33,3 @@ reagent-desc-grey-matter = Thought juice, the stuff that leaks out of your ears.
 
 reagent-name-mucin = mucin
 reagent-desc-mucin = A fascinating secretion capable of accelerating the movement of anyone walking on it. 
-
-reagent-name-acceleration-gel = acceleration gel
-reagent-desc-acceleration-gel = A refinement of the accelerative properties of Gastropoid mucin. Acts kind of like one of those moving walkways you get in airports.
