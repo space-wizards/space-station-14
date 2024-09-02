@@ -279,5 +279,6 @@ flavor-complex-sax = like jazz
 flavor-complex-bottledlightning = like lightning in a bottle
 flavor-complex-punishment = like punishment
 flavor-complex-crud = like crud
+flavor-complex-snotty = like snot
 flavor-weh = like weh
 flavour-stardust = like stardust
