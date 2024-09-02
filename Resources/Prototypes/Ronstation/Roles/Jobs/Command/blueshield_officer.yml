@@ -17,7 +17,7 @@
   supervisors: job-supervisors-centcom
   canBeAntag: false
   access:
-  - Bridge
+  - Command
   - Maintenance
   - External
   - Cryogenics
