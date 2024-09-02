@@ -467,13 +467,12 @@ public sealed class NukeSystem : EntitySystem
             Color.Red,
             stationUid ?? uid,
             null,
-            ("time", (int) component.RemainingTime),
-            ("location", FormattedMessage.RemoveMarkupOrThrow(_navMap.GetNearestBeaconString((uid, nukeXform)))));
-        var sender = Loc.GetString("nuke-component-announcement-sender");
-        _chatSystem.DispatchStationAnnouncement(stationUid ?? uid, announcement, sender, false, null, Color.Red);
+            ("time", (int)component.RemainingTime),
+            ("location", FormattedMessage.RemoveMarkupOrThrow(_navMap.GetNearestBeaconString((uid, nukeXform))))
+        );
 
         _sound.PlayGlobalOnStation(uid, _audio.GetSound(component.ArmSound));
-        _nukeSongLength = (float) _audio.GetAudioLength(_selectedNukeSong).TotalSeconds;
+        _nukeSongLength = (float)_audio.GetAudioLength(_selectedNukeSong).TotalSeconds;
 
         // turn on the spinny light
         _pointLight.SetEnabled(uid, true);
