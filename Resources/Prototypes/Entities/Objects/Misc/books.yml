@@ -33,6 +33,16 @@
     backgroundImagePath: "/Textures/Interface/Paper/paper_background_book.svg.96dpi.png"
     backgroundPatchMargin: 23.0, 16.0, 14.0, 15.0
     contentMargin: 20.0, 20.0, 20.0, 20.0
+  - type: MeleeWeapon  # This was originally a feature exclusive to the law book but maintainers decided it should apply to all books for consistency. I frankly disagree but :P
+    soundHit:
+      collection: Punch
+    damage:
+      types:
+        Blunt: 1
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 1
 
 - type: entity
   id: BookSpaceEncyclopedia
@@ -379,12 +389,6 @@
     openOnActivation: true
     guides:
     - SpaceLaw
-  - type: MeleeWeapon # so you can beat stupid cadets
-    soundHit:
-      collection: Punch
-    damage:
-      types:
-        Blunt: 1
 
 - type: entity
   parent: BookBase
