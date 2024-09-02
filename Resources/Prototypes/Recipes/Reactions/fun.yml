@@ -97,6 +97,16 @@
     SpaceGlue: 2
 
 - type: reaction
+  id: PropulsionGel
+  minTemp: 370
+  reactants: 
+    Mucin: 1
+    SpaceLube: 2
+    Tricordrazine: 2
+  products:
+    PropulsionGel: 5
+
+- type: reaction
   id: Licoxide
   reactants:
     Lead:
