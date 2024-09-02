@@ -33,6 +33,7 @@ using Content.Server.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.Collections;
 using Content.Shared.Ghost.Roles.Components;
+using Content.Shared.Roles.Jobs;
 
 namespace Content.Server.Ghost.Roles;
 
@@ -606,6 +607,11 @@ public sealed class GhostRoleSystem : EntitySystem
     {
         if (!TryComp(uid, out GhostRoleComponent? ghostRole))
             return;
+
+        if (ghostRole.JobProto != null)
+        {
+            _roleSystem.MindAddJobRole(args.Mind, args.Mind, silent:false,ghostRole.JobProto);
+        }
 
         ghostRole.Taken = true;
         UnregisterGhostRole((uid, ghostRole));

@@ -2,8 +2,8 @@
   id: Cog
   mapName: 'Cog'
   mapPath: /Maps/cog.yml
-  minPlayers: 35
-  maxPlayers: 70 #big map
+  minPlayers: 40
+  maxPlayers: 80 #big map
   stations:
     Cog:
       stationProto: StandardNanotrasenStation
@@ -21,7 +21,7 @@
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
             Bartender: [ 2, 2 ]
-            Botanist: [ 4, 4 ]
+            Botanist: [ 3, 3 ]
             Chef: [ 2, 2 ]
             Janitor: [ 3, 3 ]
             Chaplain: [ 1, 1 ]
@@ -30,7 +30,7 @@
             ServiceWorker: [ 3, 3 ]
             #engineering
             ChiefEngineer: [ 1, 1 ]
-            AtmosphericTechnician: [ 2, 2 ]
+            AtmosphericTechnician: [ 3, 3 ]
             StationEngineer: [ 4, 4 ]
             TechnicalAssistant: [ 3, 3 ]
             #medical
