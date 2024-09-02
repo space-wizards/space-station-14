@@ -175,6 +175,18 @@
   technologyPrerequisites:
   - SalvageWeapons
 
+- type: technology
+  id: ExperimentalBatteryAmmo
+  name: research-technology-experimental-battery-ammo
+  icon:
+    sprite: Objects/Weapons/Guns/Battery/svalinn.rsi
+    state: icon
+  discipline: Arsenal
+  tier: 2
+  cost: 10000
+  recipeUnlocks:
+  - WeaponLaserSvalinn
+
 # Tier 3
 
 - type: technology
@@ -191,16 +203,16 @@
   - PortableRecharger
 
 - type: technology
-  id: ExperimentalBatteryAmmo
-  name: research-technology-experimental-battery-ammo
+  id: BiologicallyInterferingWeaponry
+  name: research-technology-biologically-interfering-weaponry
   icon:
-    sprite: Objects/Weapons/Guns/Battery/svalinn.rsi
+    sprite: Objects/Weapons/Guns/Battery/temp_gun.rsi
     state: icon
   discipline: Arsenal
   tier: 3
   cost: 15000
   recipeUnlocks:
-  - WeaponLaserSvalinn
+  - WeaponTemperatureGun
 
 - type: technology
   id: AdvancedShuttleWeapon

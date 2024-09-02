@@ -79,6 +79,17 @@
     Gold: 500
 
 - type: latheRecipe
+  id: WeaponTemperatureGun
+  result: WeaponTemperatureGun
+  category: Weapons
+  completetime: 5
+  materials:
+    Steel: 2000
+    Glass: 500
+    Plastic: 500
+    Gold: 500
+
+- type: latheRecipe
   id: WeaponXrayCannon
   result: WeaponXrayCannon
   category: Weapons
