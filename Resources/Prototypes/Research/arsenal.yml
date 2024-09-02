@@ -203,7 +203,7 @@
   - PortableRecharger
 
 - type: technology
-  id: ThermalgWeaponry
+  id: ThermalWeaponry
   name: research-technology-thermal-weaponry
   icon:
     sprite: Objects/Weapons/Guns/Battery/temp_gun.rsi
