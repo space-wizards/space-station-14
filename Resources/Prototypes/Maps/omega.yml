@@ -2,7 +2,7 @@
   id: Omega
   mapName: 'Omega'
   mapPath: /Maps/omega.yml
-  minPlayers: 1 # Weasel Station
+  minPlayers: 1 # Weasel Station, originally was 7.
   maxPlayers: 35
   stations:
     Omega:
