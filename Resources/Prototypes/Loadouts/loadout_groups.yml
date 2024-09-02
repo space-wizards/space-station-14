@@ -27,6 +27,14 @@
   - ClothingNeckGoldAutismPin
 #harmony specific trinkets
   - ClothingNeckVulturePin
+  - ClothingNeckMirosPin
+  - ClothingNeckLizardPin
+  - ClothingNeckLeviathanPin
+  - ClothingNeckSalamanderPin
+  - ClothingNeckAxolotlPin
+  - ClothingNeckFrontierPin
+  - ClothingNeckDeltaVPin
+  - ClothingNeckCosmaticDriftPin
 
 - type: loadoutGroup
   id: Glasses

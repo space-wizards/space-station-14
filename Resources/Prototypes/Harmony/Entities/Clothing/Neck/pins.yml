@@ -9,130 +9,130 @@
   - type: Clothing
     sprite: Harmony/Clothing/Neck/Misc/vulturepin.rsi
 
-# - type: entity
-  # parent: ClothingNeckPinBase
-  # id: ClothingNeckMirosPin
-  # name: miros pin
-  # description: Given to the crew of Miros
-  # components:
-  # - type: Sprite
-    # sprite: Harmony/Clothiong/Neck/Misc/pins.rsi
-    # layers:
-    # - state: miros
-  # - type: Clothing
-    # sprite: Harmony/Clothiong/Neck/Misc/pins.rsi
-    # clothingVisuals:
-      # neck:
-      # - state: miros-equipped
+- type: entity
+  parent: ClothingNeckPinBase
+  id: ClothingNeckMirosPin
+  name: miros pin
+  description: Given to the crew of Miros
+  components:
+  - type: Sprite
+    sprite: Harmony/Clothing/Neck/Misc/serverpins.rsi
+    layers:
+    - state: miros
+  - type: Clothing
+    sprite: Harmony/Clothing/Neck/Misc/serverpins.rsi
+    clothingVisuals:
+      neck:
+      - state: miros-equipped
       
-# - type: entity
-  # parent: ClothingNeckPinBase
-  # id: ClothingNeckLizardPin
-  # name: lizard pin
-  # description: Given to the crew of Lizard
-  # components:
-  # - type: Sprite
-    # sprite: Harmony/Clothiong/Neck/Misc/pins.rsi
-    # layers:
-    # - state: lizard
-  # - type: Clothing
-    # sprite: Harmony/Clothiong/Neck/Misc/pins.rsi
-    # clothingVisuals:
-      # neck:
-      # - state: lizard-equipped
+- type: entity
+  parent: ClothingNeckPinBase
+  id: ClothingNeckLizardPin
+  name: lizard pin
+  description: Given to the crew of Lizard
+  components:
+  - type: Sprite
+    sprite: Harmony/Clothing/Neck/Misc/serverpins.rsi
+    layers:
+    - state: lizard
+  - type: Clothing
+    sprite: Harmony/Clothing/Neck/Misc/serverpins.rsi
+    clothingVisuals:
+      neck:
+      - state: lizard-equipped
       
-# - type: entity
-  # parent: ClothingNeckPinBase
-  # id: ClothingNeckLeviathanPin
-  # name: leviathan pin
-  # description: Given to the crew of Leviathan
-  # components:
-  # - type: Sprite
-    # sprite: Harmony/Clothiong/Neck/Misc/pins.rsi
-    # layers:
-    # - state: leviathan
-  # - type: Clothing
-    # sprite: Harmony/Clothiong/Neck/Misc/pins.rsi
-    # clothingVisuals:
-      # neck:
-      # - state: leviathan-equipped
+- type: entity
+  parent: ClothingNeckPinBase
+  id: ClothingNeckLeviathanPin
+  name: leviathan pin
+  description: Given to the crew of Leviathan
+  components:
+  - type: Sprite
+    sprite: Harmony/Clothing/Neck/Misc/serverpins.rsi
+    layers:
+    - state: leviathan
+  - type: Clothing
+    sprite: Harmony/Clothing/Neck/Misc/serverpins.rsi
+    clothingVisuals:
+      neck:
+      - state: leviathan-equipped
  
-# - type: entity
-  # parent: ClothingNeckPinBase
-  # id: ClothingNeckSalamanderPin
-  # name: salamander pin
-  # description: Given to the crew of Salamander
-  # components:
-  # - type: Sprite
-    # sprite: Harmony/Clothiong/Neck/Misc/pins.rsi
-    # layers:
-    # - state: salamander
-  # - type: Clothing
-    # sprite: Harmony/Clothiong/Neck/Misc/pins.rsi
-    # clothingVisuals:
-      # neck:
-      # - state: salamander-equipped
+- type: entity
+  parent: ClothingNeckPinBase
+  id: ClothingNeckSalamanderPin
+  name: salamander pin
+  description: Given to the crew of Salamander
+  components:
+  - type: Sprite
+    sprite: Harmony/Clothing/Neck/Misc/serverpins.rsi
+    layers:
+    - state: salamander
+  - type: Clothing
+    sprite: Harmony/Clothing/Neck/Misc/serverpins.rsi
+    clothingVisuals:
+      neck:
+      - state: salamander-equipped
       
-# - type: entity
-  # parent: ClothingNeckPinBase
-  # id: ClothingNeckAxolotlPin
-  # name: axolotl pin
-  # description: Given to the crew of Axolotl
-  # components:
-  # - type: Sprite
-    # sprite: Harmony/Clothiong/Neck/Misc/pins.rsi
-    # layers:
-    # - state: axolotl
-  # - type: Clothing
-    # sprite: Harmony/Clothiong/Neck/Misc/pins.rsi
-    # clothingVisuals:
-      # neck:
-      # - state: axolotl-equipped
+- type: entity
+  parent: ClothingNeckPinBase
+  id: ClothingNeckAxolotlPin
+  name: axolotl pin
+  description: Given to the crew of Axolotl
+  components:
+  - type: Sprite
+    sprite: Harmony/Clothing/Neck/Misc/serverpins.rsi
+    layers:
+    - state: axolotl
+  - type: Clothing
+    sprite: Harmony/Clothing/Neck/Misc/serverpins.rsi
+    clothingVisuals:
+      neck:
+      - state: axolotl-equipped
 
-# - type: entity
-  # parent: ClothingNeckPinBase
-  # id: ClothingNeckFrontierPin
-  # name: frontier pin
-  # description: Given to the crew of Frontier
-  # components:
-  # - type: Sprite
-    # sprite: Harmony/Clothiong/Neck/Misc/pins.rsi
-    # layers:
-    # - state: frontier
-  # - type: Clothing
-    # sprite: Harmony/Clothiong/Neck/Misc/pins.rsi
-    # clothingVisuals:
-      # neck:
-      # - state: frontier-equipped
+- type: entity
+  parent: ClothingNeckPinBase
+  id: ClothingNeckFrontierPin
+  name: frontier pin
+  description: Given to the crew of Frontier
+  components:
+  - type: Sprite
+    sprite: Harmony/Clothing/Neck/Misc/serverpins.rsi
+    layers:
+    - state: frontier
+  - type: Clothing
+    sprite: Harmony/Clothing/Neck/Misc/serverpins.rsi
+    clothingVisuals:
+      neck:
+      - state: frontier-equipped
 
-# - type: entity
-  # parent: ClothingNeckPinBase
-  # id: ClothingNeckDeltaVPin
-  # name: delta-v pin
-  # description: Given to the crew of Delta-V
-  # components:
-  # - type: Sprite
-    # sprite: Harmony/Clothiong/Neck/Misc/pins.rsi
-    # layers:
-    # - state: delta-v
-  # - type: Clothing
-    # sprite: Harmony/Clothiong/Neck/Misc/pins.rsi
-    # clothingVisuals:
-      # neck:
-      # - state: delta-v-equipped
+- type: entity
+  parent: ClothingNeckPinBase
+  id: ClothingNeckDeltaVPin
+  name: delta-v pin
+  description: Given to the crew of Delta-V
+  components:
+  - type: Sprite
+    sprite: Harmony/Clothing/Neck/Misc/serverpins.rsi
+    layers:
+    - state: delta-v
+  - type: Clothing
+    sprite: Harmony/Clothing/Neck/Misc/serverpins.rsi
+    clothingVisuals:
+      neck:
+      - state: delta-v-equipped
 
-# - type: entity
-  # parent: ClothingNeckPinBase
-  # id: ClothingNeckCosmaticDriftPin
-  # name: cosmatic-drift pin
-  # description: Given to the crew of Cosmatic Drift
-  # components:
-  # - type: Sprite
-    # sprite: Harmony/Clothiong/Neck/Misc/pins.rsi
-    # layers:
-    # - state: cosmatic-drift
-  # - type: Clothing
-    # sprite: Harmony/Clothiong/Neck/Misc/pins.rsi
-    # clothingVisuals:
-      # neck:
-      # - state: cosmatic-drift-equipped
+- type: entity
+  parent: ClothingNeckPinBase
+  id: ClothingNeckCosmaticDriftPin
+  name: cosmatic-drift pin
+  description: Given to the crew of Cosmatic Drift
+  components:
+  - type: Sprite
+    sprite: Harmony/Clothing/Neck/Misc/serverpins.rsi
+    layers:
+    - state: cosmatic-drift
+  - type: Clothing
+    sprite: Harmony/Clothing/Neck/Misc/serverpins.rsi
+    clothingVisuals:
+      neck:
+      - state: cosmatic-drift-equipped
