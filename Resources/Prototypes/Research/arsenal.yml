@@ -203,8 +203,8 @@
   - PortableRecharger
 
 - type: technology
-  id: BiologicallyInterferingWeaponry
-  name: research-technology-biologically-interfering-weaponry
+  id: ThermalgWeaponry
+  name: research-technology-thermal-weaponry
   icon:
     sprite: Objects/Weapons/Guns/Battery/temp_gun.rsi
     state: icon

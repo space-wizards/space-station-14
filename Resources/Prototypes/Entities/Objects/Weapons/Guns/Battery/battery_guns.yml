@@ -772,7 +772,7 @@
   name: temperature gun
   parent: [BaseWeaponBattery, BaseGunWieldable]
   id: WeaponTemperatureGun
-  description: An advanced gun that shoots body-temperature-changing beams.
+  description: An advanced gun that shoots body-temperature-changing beams. This probably constitutes as some kind of war crime.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/temp_gun.rsi
@@ -812,23 +812,3 @@
     startingCharge: 1000
   - type: StaticPrice
     price: 100
-
-- type: entity
-  parent: [WeaponTemperatureGun]
-  id: WeaponTemperatureGunOneShot
-  suffix: One Ammo, Debug
-  description: An advanced gun that shoots body-temperature-changing beams.
-  components:
-  - type: Battery
-    maxCharge: 1000
-    startingCharge: 100
-
-- type: entity
-  parent: [WeaponTemperatureGun]
-  id: WeaponTemperatureGunTwoShot
-  suffix: Two Ammo, Debug
-  description: An advanced gun that shoots body-temperature-changing beams.
-  components:
-  - type: Battery
-    maxCharge: 1000
-    startingCharge: 200
