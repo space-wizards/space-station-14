@@ -314,28 +314,9 @@
 
 # Borgs
 - type: entity
-  id: PlayerBorgGeneric
-  parent: BorgChassisGeneric
-  suffix: Battery, Tools
-  components:
-  - type: ContainerFill
-    containers:
-      borg_brain:
-        - PositronicBrain
-      borg_module:
-        - BorgModuleTool
-  - type: ItemSlots
-    slots:
-      cell_slot:
-        name: power-cell-slot-component-slot-name-default
-        startingItem: PowerCellMedium
-  - type: RandomMetadata
-    nameSegments: [names_borg]
-
-- type: entity
-  id: PlayerBorgGenericBattery
-  parent: BorgChassisGeneric
+  id: BasePlayerBorgBattery
   suffix: Battery
+  abstract: true
   components:
   - type: ContainerFill
     containers:
@@ -346,6 +327,24 @@
       cell_slot:
         name: power-cell-slot-component-slot-name-default
         startingItem: PowerCellMedium
+  - type: RandomMetadata
+    nameSegments: [names_borg]
+
+- type: entity
+  id: PlayerBorgGenericBattery
+  parent: [ BasePlayerBorgBattery, BorgChassisGeneric ]
+
+- type: entity
+  id: PlayerBorgGeneric
+  parent: PlayerBorgGenericBattery
+  suffix: Battery, Tools
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+        - PositronicBrain
+      borg_module:
+        - BorgModuleTool
 
 - type: entity
   id: DummyBorgGeneric
@@ -358,18 +357,16 @@
     noRot: true
     layers:
     - state: robot
-    - state: robot_e_r
-      map: ["enum.BorgVisualLayers.Light"]
+    - state: robot_e
       shader: unshaded
-      visible: false
-    - state: robot_l
-      shader: unshaded
-      map: ["light"]
-      visible: false
+
+- type: entity
+  id: PlayerBorgMiningBattery
+  parent: [ BasePlayerBorgBattery, BorgChassisMining ]
 
 - type: entity
   id: PlayerBorgMining
-  parent: BorgChassisMining
+  parent: PlayerBorgMiningBattery
   suffix: Battery, Tools
   components:
   - type: ContainerFill
@@ -379,28 +376,6 @@
       borg_module:
         - BorgModuleTool
         - BorgModuleAppraisal
-  - type: ItemSlots
-    slots:
-      cell_slot:
-        name: power-cell-slot-component-slot-name-default
-        startingItem: PowerCellMedium
-  - type: RandomMetadata
-    nameSegments: [names_borg]
-
-- type: entity
-  id: PlayerBorgMiningBattery
-  parent: BorgChassisMining
-  suffix: Battery
-  components:
-  - type: ContainerFill
-    containers:
-      borg_brain:
-        - MMIFilled
-  - type: ItemSlots
-    slots:
-      cell_slot:
-        name: power-cell-slot-component-slot-name-default
-        startingItem: PowerCellMedium
 
 - type: entity
   id: DummyBorgMining
@@ -414,18 +389,16 @@
     layers:
     - state: miner
       map: ["movement"]
-    - state: miner_e_r
-      map: ["enum.BorgVisualLayers.Light"]
+    - state: miner_e
       shader: unshaded
-      visible: false
-    - state: miner_l
-      shader: unshaded
-      map: ["light"]
-      visible: false
+
+- type: entity
+  id: PlayerBorgEngineerBattery
+  parent: [ BasePlayerBorgBattery, BorgChassisEngineer ]
 
 - type: entity
   id: PlayerBorgEngineer
-  parent: BorgChassisEngineer
+  parent: PlayerBorgEngineerBattery
   suffix: Battery, Tools
   components:
   - type: ContainerFill
@@ -435,28 +408,6 @@
       borg_module:
         - BorgModuleTool
         - BorgModuleConstruction
-  - type: ItemSlots
-    slots:
-      cell_slot:
-        name: power-cell-slot-component-slot-name-default
-        startingItem: PowerCellMedium
-  - type: RandomMetadata
-    nameSegments: [names_borg]
-
-- type: entity
-  id: PlayerBorgEngineerBattery
-  parent: BorgChassisEngineer
-  suffix: Battery
-  components:
-  - type: ContainerFill
-    containers:
-      borg_brain:
-        - MMIFilled
-  - type: ItemSlots
-    slots:
-      cell_slot:
-        name: power-cell-slot-component-slot-name-default
-        startingItem: PowerCellMedium
 
 - type: entity
   id: DummyBorgEngineer
@@ -469,18 +420,16 @@
     noRot: true
     layers:
     - state: engineer
-    - state: engineer_e_r
-      map: ["enum.BorgVisualLayers.Light"]
+    - state: engineer_e
       shader: unshaded
-      visible: false
-    - state: engineer_l
-      shader: unshaded
-      map: ["light"]
-      visible: false
+
+- type: entity
+  id: PlayerBorgJanitorBattery
+  parent: [ BasePlayerBorgBattery, BorgChassisJanitor ]
 
 - type: entity
   id: PlayerBorgJanitor
-  parent: BorgChassisJanitor
+  parent: PlayerBorgJanitorBattery
   suffix: Battery, Tools
   components:
   - type: ContainerFill
@@ -490,28 +439,6 @@
       borg_module:
         - BorgModuleTool
         - BorgModuleCleaning
-  - type: ItemSlots
-    slots:
-      cell_slot:
-        name: power-cell-slot-component-slot-name-default
-        startingItem: PowerCellMedium
-  - type: RandomMetadata
-    nameSegments: [names_borg]
-
-- type: entity
-  id: PlayerBorgJanitorBattery
-  parent: BorgChassisJanitor
-  suffix: Battery
-  components:
-  - type: ContainerFill
-    containers:
-      borg_brain:
-        - MMIFilled
-  - type: ItemSlots
-    slots:
-      cell_slot:
-        name: power-cell-slot-component-slot-name-default
-        startingItem: PowerCellMedium
 
 - type: entity
   id: DummyBorgJanitor
@@ -525,18 +452,16 @@
     layers:
     - state: janitor
       map: ["movement"]
-    - state: janitor_e_r
-      map: ["enum.BorgVisualLayers.Light"]
+    - state: janitor_e
       shader: unshaded
-      visible: false
-    - state: janitor_l
-      shader: unshaded
-      map: ["light"]
-      visible: false
+
+- type: entity
+  id: PlayerBorgMedicalBattery
+  parent: [ BasePlayerBorgBattery, BorgChassisMedical ]
 
 - type: entity
   id: PlayerBorgMedical
-  parent: BorgChassisMedical
+  parent: PlayerBorgMedicalBattery
   suffix: Battery, Tools
   components:
   - type: ContainerFill
@@ -546,28 +471,6 @@
       borg_module:
         - BorgModuleTool
         - BorgModuleTreatment
-  - type: ItemSlots
-    slots:
-      cell_slot:
-        name: power-cell-slot-component-slot-name-default
-        startingItem: PowerCellMedium
-  - type: RandomMetadata
-    nameSegments: [names_borg]
-
-- type: entity
-  id: PlayerBorgMedicalBattery
-  parent: BorgChassisMedical
-  suffix: Battery
-  components:
-  - type: ContainerFill
-    containers:
-      borg_brain:
-        - MMIFilled
-  - type: ItemSlots
-    slots:
-      cell_slot:
-        name: power-cell-slot-component-slot-name-default
-        startingItem: PowerCellMedium
 
 - type: entity
   id: DummyBorgMedical
@@ -581,18 +484,16 @@
     layers:
     - state: medical
       map: ["movement"]
-    - state: medical_e_r
-      map: ["enum.BorgVisualLayers.Light"]
+    - state: medical_e
       shader: unshaded
-      visible: false
-    - state: medical_l
-      shader: unshaded
-      map: ["light"]
-      visible: false
+
+- type: entity
+  id: PlayerBorgServiceBattery
+  parent: [ BasePlayerBorgBattery, BorgChassisService ]
 
 - type: entity
   id: PlayerBorgService
-  parent: BorgChassisService
+  parent: PlayerBorgServiceBattery
   suffix: Battery, Tools
   components:
   - type: ContainerFill
@@ -602,28 +503,6 @@
       borg_module:
         - BorgModuleTool
         - BorgModuleService
-  - type: ItemSlots
-    slots:
-      cell_slot:
-        name: power-cell-slot-component-slot-name-default
-        startingItem: PowerCellMedium
-  - type: RandomMetadata
-    nameSegments: [names_borg]
-
-- type: entity
-  id: PlayerBorgServiceBattery
-  parent: BorgChassisService
-  suffix: Battery
-  components:
-  - type: ContainerFill
-    containers:
-      borg_brain:
-        - MMIFilled
-  - type: ItemSlots
-    slots:
-      cell_slot:
-        name: power-cell-slot-component-slot-name-default
-        startingItem: PowerCellMedium
 
 - type: entity
   id: DummyBorgService
@@ -636,14 +515,8 @@
     noRot: true
     layers:
     - state: service
-    - state: service_e_r
-      map: ["enum.BorgVisualLayers.Light"]
+    - state: service_e
       shader: unshaded
-      visible: false
-    - state: service_l
-      shader: unshaded
-      map: ["light"]
-      visible: false
 
 - type: entity
   id: PlayerBorgSyndicateAssaultBattery
