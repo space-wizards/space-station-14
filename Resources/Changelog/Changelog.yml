@@ -1,27 +1,4 @@
 ﻿Entries:
-- author: notafet
-  changes:
-  - message: Adjust TEG power generation levels.
-    type: Tweak
-  id: 6762
-  time: '2024-06-17T01:13:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29112
-- author: Cojoke-dot, AJCM-git
-  changes:
-  - message: You can now flip your eyepatches to the other eye! Yarrrrr!
-    type: Add
-  id: 6763
-  time: '2024-06-17T03:21:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26277
-- author: deltanedas
-  changes:
-  - message: Borgs now have a 10 second beeping timer that paralyzes them when being
-      exploded with the robotics console and a 5 second delay when being disabled
-      with it.
-    type: Tweak
-  id: 6764
-  time: '2024-06-17T03:30:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27876
 - author: EmoGarbage404
   changes:
   - message: Changed meteor swarm spawning to be less clumped up and favor hitting
@@ -3850,3 +3827,29 @@
   id: 7261
   time: '2024-09-02T04:33:25.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31737
+- author: yuitop
+  changes:
+  - message: added in-hand sprite for Smile the Slime
+    type: Add
+  id: 7262
+  time: '2024-09-02T04:36:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31731
+- author: EmoGarbage404
+  changes:
+  - message: Space Carp and Sharkminnows are a bit weaker overall.
+    type: Tweak
+  - message: The magnet now pulls in debris a bit closer.
+    type: Tweak
+  - message: Space debris now has slightly better loot.
+    type: Tweak
+  id: 7263
+  time: '2024-09-02T04:36:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31726
+- author: Errant
+  changes:
+  - message: Replacement Crew Monitor Servers, as well as the Crew Monitor Server
+      on the dev map, now work properly.
+    type: Fix
+  id: 7264
+  time: '2024-09-02T04:37:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31677
