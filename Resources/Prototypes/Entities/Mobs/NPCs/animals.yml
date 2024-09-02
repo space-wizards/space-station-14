@@ -1443,8 +1443,8 @@
       sprite: Mobs/Animals/kobold.rsi
       state: outline
     - map: [ "horns" ]
-      sprite: Mobs/Customization/reptilian_parts.rsi
-      state: horns_short
+      sprite: Mobs/Customization/Reptilian/horns.rsi
+      state: short
     - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
       color: "#ffffff"
       sprite: Objects/Misc/handcuffs.rsi
