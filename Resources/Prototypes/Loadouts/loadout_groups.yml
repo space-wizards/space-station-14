@@ -25,6 +25,8 @@
   - ClothingNeckTransPin
   - ClothingNeckAutismPin
   - ClothingNeckGoldAutismPin
+#harmony specific trinkets
+  - ClothingNeckVulturePin
 
 - type: loadoutGroup
   id: Glasses

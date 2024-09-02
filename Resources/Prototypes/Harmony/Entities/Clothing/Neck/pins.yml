@@ -1,13 +1,13 @@
-# - type: entity
-  # parent: ClothingNeckBase
-  # id: ClothingNeckVulturePin
-  # name: vulture pin
-  # description: Given to the crew of Vulture
-  # components:
-  # - type: Sprite
-    # sprite: Harmony/Clothing/Neck/Misc/vulturepin.rsi
-  # - type: Clothing
-    # sprite: Harmony/Clothing/Neck/Misc/vulturepin.rsi
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckVulturePin
+  name: vulture pin
+  description: Given to the crew of Vulture
+  components:
+  - type: Sprite
+    sprite: Harmony/Clothing/Neck/Misc/vulturepin.rsi
+  - type: Clothing
+    sprite: Harmony/Clothing/Neck/Misc/vulturepin.rsi
 
 # - type: entity
   # parent: ClothingNeckPinBase

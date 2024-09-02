@@ -136,3 +136,10 @@
   storage:
     back:
     - ClothingNeckGoldAutismPin
+
+#Harmony trinkets below
+- type: loadout
+  id: ClothingNeckVulturePin
+  storage:
+    back:
+    - ClothingNeckVulturePin
