@@ -26,3 +26,21 @@ book-text-ame-scribbles = I don't know if you're trained already, so I hope this
       The golden rule is 2 injection for every 1 core. You can go lower to save fuel.
       Higher will burn the engine out and eventually make it explode. Don't.
       Don't forget to refuel it, it tends to stop at the worst possible time.
+
+book-text-combat-bakery-kit = Thank you for choosing our combat bakery kit!
+      Enclosed are two (2) CyberSun patented Throwing Croissants, and one (1) patent-pending Baguette Sword.
+      The included Donk Co. microwave board can construct a microwave capable of baking more weapons.
+      Just like the baked weapons, be sure to eat this note after use. Good luck, agent.
+
+      Baguette Sword Recipe:
+      Dough x 1
+      Salt 5u
+      Pepper 5u
+      Metal Rod x 1
+      Cook Time: 15 seconds
+
+      Throwing Croissant Recipe:
+      Raw Croissant x 1
+      Butter Slice x 1
+      Glass Shard x 1
+      Cook Time: 5 seconds
