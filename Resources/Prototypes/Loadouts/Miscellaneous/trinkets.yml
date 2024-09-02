@@ -88,7 +88,7 @@
   storage:
     back:
     - ClothingNeckAsexualPin
-  
+
 - type: loadout
   id: ClothingNeckBisexualPin
   storage:
@@ -131,3 +131,63 @@
     back:
     - ClothingNeckAutismPin
 
+- type: loadout
+  id: ClothingNeckGoldAutismPin
+  storage:
+    back:
+    - ClothingNeckGoldAutismPin
+
+#Harmony trinkets below
+- type: loadout
+  id: ClothingNeckVulturePin
+  storage:
+    back:
+    - ClothingNeckVulturePin
+
+- type: loadout
+  id: ClothingNeckMirosPin
+  storage:
+    back:
+    - ClothingNeckMirosPin
+
+- type: loadout
+  id: ClothingNeckSalamanderPin
+  storage:
+    back:
+    - ClothingNeckSalamanderPin
+
+- type: loadout
+  id: ClothingNeckLizardPin
+  storage:
+    back:
+    - ClothingNeckLizardPin
+    
+- type: loadout
+  id: ClothingNeckLeviathanPin
+  storage:
+    back:
+    - ClothingNeckLeviathanPin
+
+- type: loadout
+  id: ClothingNeckFrontierPin
+  storage:
+    back:
+    - ClothingNeckFrontierPin
+
+- type: loadout
+  id: ClothingNeckCosmaticDriftPin
+  storage:
+    back:
+    - ClothingNeckCosmaticDriftPin
+
+- type: loadout
+  id: ClothingNeckDeltaVPin
+  storage:
+    back:
+    - ClothingNeckDeltaVPin
+
+- type: loadout
+  id: ClothingNeckAxolotlPin
+  storage:
+    back:
+    - ClothingNeckAxolotlPin
