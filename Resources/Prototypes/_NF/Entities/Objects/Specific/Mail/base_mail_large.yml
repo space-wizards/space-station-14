@@ -1,28 +1,24 @@
+# Large packages.
 - type: entity
-  parent: BaseItem
+  parent: BaseMail
   abstract: true
-  id: BaseMail
-  name: mail-item-name-unaddressed
+  id: BaseMailLarge
+  name: mail-large-item-name-unaddressed
   components:
   - type: Item
-    #    size: Normal # Frontier
-    storedRotation: -90
-  - type: Mail
-  - type: AccessReader
+    size: Ginormous
   - type: Sprite
-    scale: 0.7, 0.7 # Frontier
-    sprite: Nyanotrasen/Objects/Specific/Mail/mail.rsi
+    scale: 0.8, 0.8
+    sprite: _NF/Objects/Specific/Mail/mail_large.rsi
     layers:
     - state: icon
       map: ["enum.MailVisualLayers.Icon"]
-    - state: postmark
     - state: fragile
       map: ["enum.MailVisualLayers.FragileStamp"]
       visible: false
     - map: ["enum.MailVisualLayers.JobStamp"]
-      sprite: Interface/Misc/job_icons.rsi
-      scale: 0.8, 0.8 # Frontier 0.5<0.8
-      offset: 0.225, 0.165 # Frontier (0.275, 0.2)<(0.225, 0.165)
+      scale: 0.8, 0.8
+      offset: 0.235, -0.01
     - state: locked
       map: ["enum.MailVisualLayers.Lock"]
     - state: priority
@@ -32,7 +28,6 @@
     - state: broken
       map: ["enum.MailVisualLayers.Breakage"]
       visible: false
-  - type: Appearance
   - type: GenericVisualizer
     visuals:
       enum.MailVisuals.IsTrash:
@@ -73,43 +68,12 @@
             visible: true
           False:
             visible: false
-  - type: Damageable
-    damageContainer: Inorganic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 5
-        triggersOnce: true
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Breakage" ]
-    - trigger:
-        !type:DamageTrigger
-        damage: 40
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-  - type: Speech
-  - type: DamageOnLand
-    damage:
-      types:
-        Blunt: 10
-  - type: CargoSellBlacklist # Frontier
-  - type: Food # Frontier - Moth food
-    requiresSpecialDigestion: true
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 1
-        reagents:
-        - ReagentId: Nothing
-          Quantity: 1
+  - type: MultiHandedItem
+  - type: Mail
+    isLarge: true
 
-# This empty parcel is allowed to exist and evade the tests for the admin
-# mailto command.
 - type: entity
   noSpawn: true
-  parent: BaseMail
-  id: MailAdminFun
+  parent: BaseMailLarge
+  id: MailLargeAdminFun
   suffix: adminfun

@@ -1,0 +1,145 @@
+- type: mailDeliveryPool
+  id: RandomDeltaVMailDeliveryPool #This entire table is messy as fuck but the weights add up to 35. TODO: ORGANIZE THIS SHIT AAAA
+  everyone:
+    MailNFAlcohol: 1
+    MailNFBakedGoods: 1
+    MailNFBible: 1
+    MailNFBikeHorn: 0.5
+    MailBooksAll: 1
+    MailBlockGameDIY: 0.5
+    MailNFBuildABuddy: 0.6
+    MailCrayon: 1
+    MailNFCake: 1
+    MailNFCheese: 1
+    MailNFCookies: 1.1
+    MailNFCritter: 1
+    #Cigarettes - Adds up to 1 in weight
+    MailNFCigarettes: 0.5
+    MailCigars: 0.2
+    MailNFJoints: 0.2
+    MailNFGoldCigars: 0.1
+    #Cosplay - Adds up to 3.4 in weight
+    MailCosplayArc: 0.5
+    MailDVCosplayFakeWizard: 0.5
+    MailNFCosplayWizard: 0.5
+    MailNFCosplayMaid: 0.5
+    MailCosplayGeisha: 0.5
+    MailCosplaySchoolgirl: 0.5
+    MailNFCosplayNurse: 0.4
+    MailNFDonkPockets: 0.5
+    MailNFEMP: 0.3
+    MailNFFigurineBulk: 1
+    MailFishingCap: 0.5
+    MailFlashlight: 1
+    MailFlowers: 1
+    MailNFKendoKit: 0.3
+    MailNFKnife: 0.7
+    MailNFMuffins: 1
+    MailNoir: 0.5
+    MailNFPAI: 1.2
+    MailNFPlushie: 1
+    MailPumpkinPie: 0.3
+    MailNFPen: 0.7
+    MailRestraints: 0.8
+    MailSake: 0.4
+    MailNFSnacks: 1
+    #Soda - Adds up to 1 in weight
+    MailNFSodaPwrGame: 0.2
+    MailNFSodaRedBool: 0.2
+    MailNFSodaSpaceCola: 0.2
+    MailNFSodaSpaceMountainWind: 0.2
+    MailNFSodaSpaceUp: 0.2
+    #End Soda
+    MailNFSmoke: 0.4
+    MailSpaceVillainDIY: 0.5 
+    MailSignallerKit: 0.5
+    MailSunglasses: 1
+    MailNFSoaps: 0.5
+    MailNFSoapsOmega: 0.5
+    MailNFSword: 0.5
+    MailNFTacticalMaid: 0.5
+    MailNFThrongler: 0.1
+    MailNFUnusualClothing: 0.5
+    MailNFUnusualFood: 1
+    MailNFUnusualProduce: 1
+    MailNFVagueThreat: 0.5
+    # Mainly for Glacier
+    MailWinterCoat: 1.5
+
+  # Department and job-specific mail can have slightly higher weights,
+  # since they'll be merged with the everyone pool.
+  departments:
+    Medical:
+      MailMedicalBasicSupplies: 2
+      MailMedicalChemistrySupplement: 2
+      MailMedicalEmergencyPens: 3
+      MailMedicalMedicinePills: 2
+      MailMedicalSheetPlasma: 1
+      # MailMedicalSpaceacillin: 1
+      MailMedicalStabilizers: 2
+      MailNFMedkit: 2
+    Engineering:
+      MailAMEGuide: 1
+      MailEngineeringCables: 2
+      MailEngineeringKudzuDeterrent: 2
+      MailEngineeringSheetGlass: 2
+      MailEngineeringWelderReplacement: 2
+      MailNFCircuitboardIndustrial: 2
+      MailNFCircuitboardService: 1
+      MailNFPowerTool: 1
+    Security:
+      MailSecurityDonuts: 3
+      MailSecurityFlashlight: 2
+      MailSecurityNonlethalsKit: 2
+      MailSecurityDVSpaceLaw: 1
+      MailSecurityNFMusket: 1
+    Epistemics:
+#      MailBooks: 1
+      MailEpistemologyBluespace: 1
+      MailEpistemologyIngotGold: 2
+      MailEpistemologyResearchDisk: 1
+      MailEpistemologyTinfoilHat: 1
+      MailSignallerKit: 1
+    # All heads of staff are in Command and not their departments, technically.
+    # So any items from the departments above that should also be sent to the
+    # respective department heads should be duplicated below.
+    Command:
+      MailCommandPinpointerNuclear: 0.5
+      MailStationRepNFNukeDisk: 0.3
+      MailCommandNFPipebombIntern: 0.1
+
+  jobs:
+    Botanist:
+      MailBotanistChemicalBottles: 2
+      MailBotanistMutagen: 1.5
+      MailBotanistSeeds: 1
+    ChiefEngineer:
+      MailEngineeringKudzuDeterrent: 2
+    ChiefMedicalOfficer:
+      MailMedicalEmergencyPens: 2
+      MailMedicalMedicinePills: 3
+      MailMedicalSheetPlasma: 2
+    Clown:
+      MailClownGildedBikeHorn: 0.5
+      MailClownHonkSupplement: 3
+    Detective: # Deltav - Detective is in charge of investigating crimes.
+      MailDetectiveForensicSupplement: 2 # Deltav - Detective is in charge of investigating crimes.
+    HeadOfPersonnel:
+      MailHoPBureaucracy: 2
+      MailHoPSupplement: 3
+    HeadOfSecurity:
+      MailSecurityNonlethalsKit: 2
+    Lawyer:
+      MailSecurityDVSpaceLaw: 2
+    Mime:
+      MailMimeArtsCrafts: 3
+      MailMimeBlankBook: 2
+      MailMimeBottleOfNothing: 1
+    ResearchDirector: # DeltaV - Epistemics Department replacing Science but keeping their IDs
+      MailEpistemologyIngotGold: 2
+    Musician:
+      MailMusicianInstrumentSmall: 1
+    Passenger:
+      MailPassengerMoney: 3
+    Warden:
+      MailWardenCrowdControl: 2

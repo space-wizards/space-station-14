@@ -1,0 +1,117 @@
+# Mail-only items. If/when these get used for anything else, please move them to another folder.
+# Pranks: admin items or effects put into an envelope, released when opened or damaged.
+- type: entity
+  id: DelayedSmoke
+  parent: BaseItem
+  noSpawn: true
+  name: delayed smoke
+  suffix: "(10s)"
+  components:
+  - type: Sprite #DeltaV: Apparently these want sprites, probably because they're baseitems
+    sprite: /Textures/Objects/Fun/goldbikehorn.rsi
+    visible: false
+    state: icon
+  - type: DelayedItem
+    item: AdminInstantEffectSmoke10
+
+- type: entity
+  id: AdminInstantEffectEMP7
+  noSpawn: true
+  suffix: EMP, 7 meters
+  parent: AdminInstantEffectBase
+  components:
+  - type: EmpOnTrigger
+    range: 7
+    energyConsumption: 50000
+
+- type: entity
+  id: DelayedEMP
+  parent: BaseItem
+  noSpawn: true
+  name: delayed EMP (7 meters)
+  components:
+  - type: Sprite #DeltaV: Apparently these want sprites, probably because they're baseitems
+    sprite: /Textures/Objects/Fun/goldbikehorn.rsi
+    visible: false
+    state: icon
+  - type: DelayedItem
+    item: AdminInstantEffectEMP7
+
+# Miscellaneous Items
+
+- type: entity
+  id: SyringeCognizine
+  parent: Syringe
+  name: cognizine syringe
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 15
+        reagents:
+        - ReagentId: Cognizine
+          Quantity: 15 # Surely three friends is enough.
+
+- type: entity
+  id: SyringeOpporozidone
+  parent: Syringe
+  name: opporozidone syringe
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 15
+        reagents:
+        - ReagentId: Opporozidone
+          Quantity: 15
+
+- type: entity
+  id: NecrosolChemistryBottle
+  parent: BaseChemistryBottleFilled
+  name: necrosol bottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Necrosol
+          Quantity: 30
+
+# Premium Alcohol: wait, it's just marketing?
+# TODO: different sprites would be nice.
+- type: entity
+  id: DrinkPremiumVodkaBottleFull
+  parent: DrinkVodkaBottleFull
+  name: Moment of Clarity vodka bottle
+  description: When things get a bit hectic, all you need is a Moment of Clarity.
+
+- type: entity
+  id: DrinkPremiumGinBottleFull
+  parent: DrinkGinBottleFull
+  name: Harry's gin bottle
+  description: An interesting set of botanicals, for sure. Is that pumpkin?
+
+- type: entity
+  id: DrinkPremiumTequilaBottleFull
+  parent: DrinkTequilaBottleFull
+  name: Casa del Eorg tequila bottle
+  description: Save the best for last. Casa del Eorg, 100% agave.
+
+- type: entity
+  id: DrinkPremiumWhiskeyBottleFull
+  parent: DrinkWhiskeyBottleFull
+  name: Ol' Prowler 18 whiskey bottle
+  description: Surprisingly smooth, it has a nasty habit of sneaking up on you.
+
+- type: entity
+  id: DrinkPremiumRumBottleFull
+  parent: DrinkRumBottleFull
+  name: Redeemer's Bounty rum bottle
+  description: Well, you asked for it. Navy strength.
+
+- type: entity
+  id: DrinkPremiumAbsintheBottleFull
+  parent: DrinkAbsintheBottleFull
+  name: Bureaucracy's Kiss absinthe bottle
+  description: A refined taste that tends to linger.

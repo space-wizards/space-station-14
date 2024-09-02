@@ -20,6 +20,7 @@ public sealed class MailToCommand : IConsoleCommand
     [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
     private readonly string _blankMailPrototype = "MailAdminFun";
+    private readonly string _blankLargeMailPrototype = "MailLargeAdminFun"; // Frontier: large mail
     private readonly string _container = "storagebase";
     private readonly string _mailContainer = "contents";
 
@@ -56,6 +57,16 @@ public sealed class MailToCommand : IConsoleCommand
             return;
         }
 
+        // Frontier: Large Mail
+        bool isLarge = false;
+        if (args.Length > 4 && !Boolean.TryParse(args[4], out isLarge))
+        {
+            shell.WriteError(Loc.GetString("shell-invalid-bool"));
+            return;
+        }
+        var mailPrototype = isLarge ? _blankLargeMailPrototype : _blankMailPrototype;
+        // End Frontier
+
 
         var _mailSystem = _entitySystemManager.GetEntitySystem<MailSystem>();
         var _containerSystem = _entitySystemManager.GetEntitySystem<SharedContainerSystem>();
@@ -66,9 +77,9 @@ public sealed class MailToCommand : IConsoleCommand
             return;
         }
 
-        if (!_prototypeManager.HasIndex<EntityPrototype>(_blankMailPrototype))
+        if (!_prototypeManager.HasIndex<EntityPrototype>(mailPrototype)) // Frontier: _blankMailPrototype<mailPrototype
         {
-            shell.WriteLine(Loc.GetString("command-mailto-no-blankmail", ("blankMail", _blankMailPrototype)));
+        shell.WriteLine(Loc.GetString("command-mailto-no-blankmail", ("blankMail", mailPrototype))); // Frontier: _blankMailPrototype<mailPrototype
             return;
         }
 
@@ -90,12 +101,12 @@ public sealed class MailToCommand : IConsoleCommand
             return;
         }
 
-        var mailUid = _entityManager.SpawnEntity(_blankMailPrototype, _entityManager.GetComponent<TransformComponent>(containerUid).Coordinates);
+        var mailUid = _entityManager.SpawnEntity(mailPrototype, _entityManager.GetComponent<TransformComponent>(containerUid).Coordinates); // Frontier: _blankMailPrototype<mailPrototype
         var mailContents = _containerSystem.EnsureContainer<Container>(mailUid, _mailContainer);
 
         if (!_entityManager.TryGetComponent(mailUid, out MailComponent? mailComponent))
         {
-            shell.WriteLine(Loc.GetString("command-mailto-bogus-mail", ("blankMail", _blankMailPrototype), ("requiredMailComponent", nameof(MailComponent))));
+            shell.WriteLine(Loc.GetString("command-mailto-bogus-mail", ("blankMail", mailPrototype), ("requiredMailComponent", nameof(MailComponent)))); // Frontier: _blankMailPrototype<mailPrototype
             return;
         }
 
@@ -104,6 +115,7 @@ public sealed class MailToCommand : IConsoleCommand
 
         mailComponent.IsFragile = isFragile;
         mailComponent.IsPriority = isPriority;
+        mailComponent.IsLarge = isLarge; //Frontier Mail
 
         _mailSystem.SetupMail(mailUid, teleporterComponent, recipient.Value);
 

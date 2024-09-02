@@ -8,15 +8,16 @@ mail-desc-priority = The anti-tamper lock's [color=yellow]yellow priority tape[/
 mail-desc-priority-inactive = The anti-tamper lock's [color=#886600]yellow priority tape[/color] is inactive.
 mail-unlocked = Anti-tamper system unlocked.
 mail-unlocked-by-emag = Anti-tamper system *BZZT*.
-mail-unlocked-reward = Anti-tamper system unlocked. {$bounty} zorkmids have been added to cargo's account.
-mail-penalty-lock = ANTI-TAMPER LOCK BROKEN. CARGO BANK ACCOUNT PENALIZED BY {$credits} CREDITS.
-mail-penalty-fragile = INTEGRITY COMPROMISED. CARGO BANK ACCOUNT PENALIZED BY {$credits} CREDITS.
-mail-penalty-expired = DELIVERY PAST DUE. CARGO BANK ACCOUNT PENALIZED BY {$credits} CREDITS.
+mail-unlocked-reward = Anti-tamper system unlocked. {$bounty} zorkmids have been added to cargo' account.
+mail-penalty-lock = ANTI-TAMPER LOCK BROKEN. CARGO BANK ACCOUNT PENALIZED BY {$credits} SPESOS.
+mail-penalty-fragile = INTEGRITY COMPROMISED. CARGO BANK ACCOUNT PENALIZED BY {$credits} SPESOS.
+mail-penalty-expired = DELIVERY PAST DUE. CARGO BANK ACCOUNT PENALIZED BY {$credits} SPESOS.
 mail-item-name-unaddressed = mail
 mail-item-name-addressed = mail ({$recipient})
 
 command-mailto-description = Queue a parcel to be delivered to an entity. Example usage: `mailto 1234 5678 false false`. The target container's contents will be transferred to an actual mail parcel.
-command-mailto-help = Usage: {$command} <recipient entityUid> <container entityUid> [is-fragile: true or false] [is-priority: true or false]
+### Frontier: add is-large description
+command-mailto-help = Usage: {$command} <recipient entityUid> <container entityUid> [is-fragile: true or false] [is-priority: true or false] [is-large: true or false, optional]
 command-mailto-no-mailreceiver = Target recipient entity does not have a {$requiredComponent}.
 command-mailto-no-blankmail = The {$blankMail} prototype doesn't exist. Something is very wrong. Contact a programmer.
 command-mailto-bogus-mail = {$blankMail} did not have {$requiredMailComponent}. Something is very wrong. Contact a programmer.

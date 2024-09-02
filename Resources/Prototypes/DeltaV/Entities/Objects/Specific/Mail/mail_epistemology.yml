@@ -47,6 +47,7 @@
   - type: Mail
     contents:
     - id: ClothingHeadTinfoil
+<<<<<<<< HEAD:Resources/Prototypes/_DV/Entities/Objects/Specific/Mail/mail_epistemology.yml
 
 - type: entity
   noSpawn: true
@@ -57,3 +58,5 @@
   - type: Mail
     contents:
     - id: BoxForensicPad
+========
+>>>>>>>> 952f368c05 (Frontier Mail  (#1652)):Resources/Prototypes/DeltaV/Entities/Objects/Specific/Mail/mail_epistemology.yml

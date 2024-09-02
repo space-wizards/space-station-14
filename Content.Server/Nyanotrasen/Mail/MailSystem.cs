@@ -27,8 +27,10 @@ using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Station.Systems;
 using Content.Server.Spawners.EntitySystems;
+using Content.Shared.Access;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Damage;
 using Content.Shared.Emag.Components;
 using Content.Shared.Destructible;
@@ -38,6 +40,7 @@ using Content.Shared.Fluids.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Item;
 using Content.Shared.Mail;
 using Content.Shared.Maps;
 using Content.Shared.Nutrition.Components;
@@ -45,6 +48,7 @@ using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.PDA;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Roles;
+using Content.Shared.StatusIcon;
 using Content.Shared.Storage;
 using Content.Shared.Tag;
 using Robust.Shared.Audio.Systems;
@@ -73,6 +77,7 @@ namespace Content.Server.Mail
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly ItemSystem _itemSystem = default!;
         [Dependency] private readonly MindSystem _mindSystem = default!;
+        [Dependency] private readonly MetaDataSystem _metaDataSystem = default!;
 
         // DeltaV - system that keeps track of mail and cargo stats
         [Dependency] private readonly LogisticStatsSystem _logisticsStatsSystem = default!;
@@ -252,13 +257,14 @@ namespace Content.Server.Mail
 
         private void OnExamined(EntityUid uid, MailComponent component, ExaminedEvent args)
         {
+            MailEntityStrings mailEntityStrings = component.IsLarge ? MailConstants.MailLarge : MailConstants.Mail; //Frontier: mail types stored per type (large mail)
             if (!args.IsInDetailsRange)
             {
-                args.PushMarkup(Loc.GetString("mail-desc-far"));
+                args.PushMarkup(Loc.GetString(mailEntityStrings.DescFar)); // Frontier: mail constants struct
                 return;
             }
 
-            args.PushMarkup(Loc.GetString("mail-desc-close", ("name", component.Recipient), ("job", component.RecipientJob)));
+            args.PushMarkup(Loc.GetString(mailEntityStrings.DescClose, ("name", component.Recipient), ("job", component.RecipientJob))); // Frontier: mail constants struct
 
             if (component.IsFragile)
                 args.PushMarkup(Loc.GetString("mail-desc-fragile"));
@@ -459,21 +465,6 @@ namespace Content.Server.Mail
             return false;
         }
 
-        public bool TryMatchJobTitleToIcon(string jobTitle, [NotNullWhen(true)] out string? jobIcon)
-        {
-            foreach (var job in _prototypeManager.EnumeratePrototypes<JobPrototype>())
-            {
-                if (job.LocalizedName == jobTitle)
-                {
-                    jobIcon = job.Icon;
-                    return true;
-                }
-            }
-
-            jobIcon = null;
-            return false;
-        }
-
         /// <summary>
         /// Handle all the gritty details particular to a new mail entity.
         /// </summary>
@@ -488,6 +479,7 @@ namespace Content.Server.Mail
             foreach (var item in EntitySpawnCollection.GetSpawns(mailComp.Contents, _random))
             {
                 var entity = EntityManager.SpawnEntity(item, Transform(uid).Coordinates);
+
                 if (!_containerSystem.Insert(entity, container))
                 {
                     _sawmill.Error($"Can't insert {ToPrettyString(entity)} into new mail delivery {ToPrettyString(uid)}! Deleting it.");
@@ -509,6 +501,15 @@ namespace Content.Server.Mail
 
             mailComp.RecipientJob = recipient.Job;
             mailComp.Recipient = recipient.Name;
+
+            // Frontier: Large mail bonus
+            MailEntityStrings mailEntityStrings = mailComp.IsLarge ? MailConstants.MailLarge : MailConstants.Mail;
+            if (mailComp.IsLarge)
+            {
+                mailComp.Bounty += component.LargeBonus;
+                mailComp.Penalty += component.LargeMalus;
+            }
+            // End Frontier
 
             if (mailComp.IsFragile)
             {
@@ -541,14 +542,16 @@ namespace Content.Server.Mail
                     mailComp.priorityCancelToken.Token);
             }
 
-            if (TryMatchJobTitleToIcon(recipient.Job, out string? icon))
-                _appearanceSystem.SetData(uid, MailVisuals.JobIcon, icon);
+            _appearanceSystem.SetData(uid, MailVisuals.JobIcon, recipient.JobIcon);
 
-            MetaData(uid).EntityName = Loc.GetString("mail-item-name-addressed",
-                ("recipient", recipient.Name));
+            _metaDataSystem.SetEntityName(uid, Loc.GetString(mailEntityStrings.NameAddressed, // Frontier: move constant to MailEntityString
+                ("recipient", recipient.Name)));
 
             var accessReader = EnsureComp<AccessReaderComponent>(uid);
-            accessReader.AccessLists.Add(recipient.AccessTags);
+            foreach (var access in recipient.AccessTags)
+            {
+                accessReader.AccessLists.Add(new HashSet<ProtoId<AccessLevelPrototype>>{access});
+            }
         }
 
         /// <summary>
@@ -609,20 +612,16 @@ namespace Content.Server.Mail
 
             if (_idCardSystem.TryFindIdCard(receiver.Owner, out var idCard)
                 && TryComp<AccessComponent>(idCard.Owner, out var access)
-                && idCard.FullName != null
-                && idCard.JobTitle != null)
+                && idCard.Comp.FullName != null
+                && idCard.Comp.JobTitle != null)
             {
-                HashSet<String> accessTags = access.Tags;
+                var accessTags = access.Tags;
 
-                var mayReceivePriorityMail = true;
+                var mayReceivePriorityMail = !(_mindSystem.GetMind(receiver.Owner) == null);
 
-                if (_mindSystem.GetMind(receiver.Owner) == null)
-                {
-                    mayReceivePriorityMail = false;
-                }
-
-                recipient = new MailRecipient(idCard.FullName,
-                    idCard.JobTitle,
+                recipient = new MailRecipient(idCard.Comp.FullName,
+                    idCard.Comp.JobTitle,
+                    idCard.Comp.JobIcon,
                     accessTags,
                     mayReceivePriorityMail);
 
@@ -724,6 +723,8 @@ namespace Content.Server.Mail
 
                 var mail = EntityManager.SpawnEntity(chosenParcel, Transform(uid).Coordinates);
                 SetupMail(mail, component, candidate);
+
+                _tagSystem.AddTag(mail, "Mail"); // Frontier
             }
 
             if (_containerSystem.TryGetContainer(uid, "queued", out var queued))
@@ -754,7 +755,6 @@ namespace Content.Server.Mail
                 _handsSystem.PickupOrDrop(user, entity);
             }
 
-            _itemSystem.SetSize(uid, 1);
             _tagSystem.AddTag(uid, "Trash");
             _tagSystem.AddTag(uid, "Recyclable");
             component.IsEnabled = false;
@@ -791,13 +791,15 @@ namespace Content.Server.Mail
     {
         public string Name;
         public string Job;
-        public HashSet<String> AccessTags;
+        public string JobIcon;
+        public HashSet<ProtoId<AccessLevelPrototype>> AccessTags;
         public bool MayReceivePriorityMail;
 
-        public MailRecipient(string name, string job, HashSet<String> accessTags, bool mayReceivePriorityMail)
+        public MailRecipient(string name, string job, string jobIcon, HashSet<ProtoId<AccessLevelPrototype>> accessTags, bool mayReceivePriorityMail)
         {
             Name = name;
             Job = job;
+            JobIcon = jobIcon;
             AccessTags = accessTags;
             MayReceivePriorityMail = mayReceivePriorityMail;
         }

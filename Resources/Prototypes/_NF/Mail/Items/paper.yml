@@ -1,0 +1,483 @@
+# Papers (letters, ad copy)
+# TODO: these should really be based on localization strings.
+- type: entity
+  id: PaperMailNFPowerTool
+  name: Hazard Fraught advertisement
+  categories: [ HideSpawnMenu ]
+  suffix: "power tool ad, formatted"
+  parent: Paper
+  components:
+  - type: Paper
+    content: |2
+
+                    [head=1]Hazard Fraught Tools[/head]
+
+                  [head=2]Discount Tools at Quality Prices![/head]
+
+                                [head=2]Fax us for a catalog at
+                      [color=#990000]ERROR: UNEXPECTED EOF[/color][/head]
+
+- type: entity
+  id: PaperMailNFVagueThreat1
+  categories: [ HideSpawnMenu ]
+  suffix: "vague mail threat 1, formatted"
+  parent: Paper
+  components:
+  - type: Paper
+    content: |2
+
+                     [head=1]I know what you did.[/head]
+
+            [head=3]You don't know what I'm going to do to you.[/head]
+
+- type: entity
+  id: PaperMailNFVagueThreat2
+  categories: [ HideSpawnMenu ]
+  suffix: "vague mail threat 2, formatted"
+  parent: Paper
+  components:
+  - type: Paper
+    content: |2
+
+                        [head=1]I'm coming for you.[/head]
+
+- type: entity
+  id: PaperMailNFVagueThreat3
+  categories: [ HideSpawnMenu ]
+  suffix: "vague mail threat 3, formatted"
+  parent: Paper
+  components:
+  - type: Paper
+    content: |2
+
+                                      [head=1]You're next.[/head]
+
+- type: entity
+  id: PaperMailNFVagueThreat4
+  categories: [ HideSpawnMenu ]
+  suffix: "vague mail threat 4, formatted"
+  parent: Paper
+  components:
+  - type: Paper
+    content: |2
+
+                                       [head=1]We see you.[/head]
+
+- type: entity
+  id: PaperMailNFVagueThreat5
+  categories: [ HideSpawnMenu ]
+  suffix: "vague mail threat 5, formatted"
+  parent: Paper
+  components:
+  - type: Paper
+    content: |2
+
+                   [head=2]I hope your affairs are in order.[/head]
+
+- type: entity
+  id: PaperMailNFVagueThreat6
+  categories: [ HideSpawnMenu ]
+  suffix: "vague mail threat 6, formatted"
+  parent: Paper
+  components:
+  - type: Paper
+    content: |2
+
+              [head=1]It's only a matter of time.[/head]
+
+
+                      [head=1]Enjoy it while it lasts.[/head]
+
+- type: entity
+  id: PaperMailNFVagueThreat7
+  categories: [ HideSpawnMenu ]
+  suffix: "vague mail threat 7, formatted"
+  parent: Paper
+  components:
+  - type: Paper
+    content: |2
+
+               [head=2]Who should we mail your pieces to?[/head]
+
+- type: entity
+  id: PaperMailNFVagueThreat8
+  categories: [ HideSpawnMenu ] 
+  suffix: "vague mail threat 8, formatted"
+  parent: Paper
+  components:
+  - type: Paper
+    content: |2
+
+      [head=2]Would you prefer to die slowly or quickly?
+      [/head]
+                                      [head=1]Just kidding.[/head]
+
+                     [head=2]We don't care what you think.[/head]
+
+- type: entity
+  id: PaperMailNFVagueThreat9
+  categories: [ HideSpawnMenu ]
+  suffix: "vague mail threat 9, formatted"
+  parent: Paper
+  components:
+  - type: Paper
+    content: |2
+
+          [head=3]I think your head would look nice on my mantel.[/head]
+
+- type: entity
+  id: PaperMailNFVagueThreat10
+  categories: [ HideSpawnMenu ]
+  suffix: "vague mail threat 10, formatted"
+  parent: Paper
+  components:
+  - type: Paper
+    content: |2
+
+               [head=1]You should have paid up.[/head]
+
+
+                              [head=1]It's too late now.[/head]
+
+- type: entity
+  id: PaperMailNFVagueThreat11
+  categories: [ HideSpawnMenu ]
+  suffix: "vague mail threat 11, formatted"
+  parent: Paper
+  components:
+  - type: Paper
+    content: |2
+
+                [head=3]Your family will miss you, but don't worry.[/head]
+
+
+         [head=1]We'll take care of them too.[/head]
+
+- type: entity
+  id: PaperMailNFVagueThreat12
+  categories: [ HideSpawnMenu ]
+  suffix: "vague mail threat 12, formatted"
+  parent: Paper
+  components:
+  - type: Paper
+    content: |2
+
+               [head=3]I have a bet that you're going to die today.[/head]
+
+
+                  [head=1]I'm not afraid to cheat.[/head]
+
+- type: entity
+  id: PaperMailNFPwrGameAd
+  name: pwr game advertisement
+  categories: [ HideSpawnMenu ]
+  suffix: "pwr game ad"
+  parent: Paper
+  components:
+  - type: Paper
+    content: |2
+
+                            [head=1]Drink Pwr Game![/head]
+
+      [head=3]Proud sponsor of the NT Block Game Championship.[/head]
+
+- type: entity
+  id: PaperMailNFRedBoolAd
+  name: red bool advertisement
+  categories: [ HideSpawnMenu ]
+  suffix: "red bool ad"
+  parent: Paper
+  components:
+  - type: Paper
+    content: |2
+
+                 [head=2]Try NEW Reformulated Red Bool![/head]
+
+                      [head=2]Over [color=#dd0000]1.5g[/color] of caffeine per can![/head]
+
+                 [head=2]Punch your heart into overdrive![/head]
+
+- type: entity
+  id: PaperMailNFSpaceColaAd
+  name: space cola advertisement
+  categories: [ HideSpawnMenu ]
+  suffix: "space cola ad"
+  parent: Paper
+  components:
+  - type: Paper
+    content: |2
+
+            [head=2]The classic taste you love, Space Cola.[/head]
+
+                             [head=2]Now certified lead-free.[/head]
+
+- type: entity
+  id: PaperMailNFSpaceMountainWindAd
+  name: space mountain wind advertisement
+  categories: [ HideSpawnMenu ]
+  suffix: "space mountain wind ad"
+  parent: Paper
+  components:
+  - type: Paper
+    content: |2
+
+               [head=3]When it's time to game, there's one choice:[/head]
+
+                     [head=1]Space Mountain Wind.[/head]
+
+- type: entity
+  id: PaperMailNFSpaceUpAd
+  name: space up advertisement
+  categories: [ HideSpawnMenu ]
+  suffix: "space up ad"
+  parent: Paper
+  components:
+  - type: Paper
+    content: |2
+
+            [head=3]The crisp, refreshing taste of lemon and lime.[/head]
+
+
+                                        [head=1]Space Up![/head]
+
+
+        [head=2]Ask your barkeep for a Sui Dream today![/head]
+
+- type: entity
+  id: PaperMailNTSoapAd1
+  categories: [ HideSpawnMenu ]
+  suffix: "soap ad 1"
+  parent: Paper
+  components:
+  - type: Paper
+    stampedBy:
+    - stampedColor: '#333333FF'
+      stampedName: Christopher Cleanman
+#      stampType: Signature #DeltaV - Not compatible with our signatures code stuff apparently
+    content: |2
+      [head=3]Hello Valued Customer,[/head]
+      You have been selected to receive a complimentary sampler of scented soaps that Nanotrasen has to offer.
+
+      Why not enjoy a nice warm shower with our scented soaps?  Tested and effective vs. vent crud and mold.
+
+      We hope you enjoy.
+
+      Sincerely,
+            Christopher Cleanman, Vice President, NT Habs - Toiletries Dept.
+
+- type: entity
+  id: PaperMailNTSoapAd2
+  categories: [ HideSpawnMenu ] 
+  suffix: "soap ad 2" #DeltaV - Edited to not be addressed to Frontier Citizens, localized
+  parent: Paper
+  components:
+  - type: Paper
+    content: |2
+      [head=2]GREETINGS DELTA SECTOR CITIZEN[/head]
+
+      OUR REPORTS INDICATE THAT:
+      1. YOU HAVE FAILED YOUR QUARTERLY HYGIENE INSPECTION.
+      2. THIS HAS REDUCED SECTOR EFFICIENCY BY [bold]0.02%[/bold].
+
+      ENCLOSED IS A SELECTION OF HYGIENE PRODUCTS SUITABLE FOR USE BY ORGANICS. WE HOPE THAT THIS SITUATION IS RESOLVED PROMPTLY.
+
+      [italic]THIS IS AN AUTOMATED MESSAGE. DO NOT REPLY.[/italic]
+
+- type: entity
+  id: PaperMailNTConscript
+  categories: [ HideSpawnMenu ]
+  suffix: "conscript"
+  parent: Paper
+  components:
+  - type: Paper
+    content: |2
+
+                     [head=1]NOT ONE STEP BACK.[/head]
+
+
+                       [head=1]FOR THE FRONTIER.[/head]
+
+- type: entity
+  id: PaperMailNTMusket
+  categories: [ HideSpawnMenu ]
+  suffix: "musket"
+  parent: Paper
+  components:
+  - type: Paper
+    content: |2
+
+                  [head=2]Use a musket for sector defense,
+             like the founding fathers intended.[/head]
+
+- type: entity
+  id: PaperMailNFPaperPusherAd
+  categories: [ HideSpawnMenu ]
+  suffix: "paper pusher" 
+  parent: Paper
+  components:
+  - type: Paper
+    content: |2
+
+          [head=2]Here is a pen for any letters you write.
+      [/head]
+            [head=1]Keep it close, use it often.[/head]
+
+      [head=2]May you write well, neatly, and with style.[/head]
+
+            [head=3]Sincerely,
+               [italic]The Frontier Paper Pusher's Club[/italic][/head]
+
+- type: entity
+  id: PaperMailNFPetBedAssemblyManual
+  name: pet bed assembly manual
+  categories: [ HideSpawnMenu ]
+  suffix: "pet bed assembly manual"
+  parent: Paper
+  components:
+  - type: Paper
+    content: |2
+      
+      [head=1]HÖGANÄS[/head]
+
+      [italic](There is a black and white picture of a pet bed on the first page.)[/italic]
+
+      [italic](On the next few pages, you see a list of materials and a happy stick figure assembling furniture.)[/italic]
+
+      [italic](On the pages after that, you see a set of instructions to assemble a pet bed. You're sure you don't need them, how hard could it be?)[/italic]
+
+- type: entity
+  id: PaperMailNTBoxer
+  categories: [ HideSpawnMenu ]
+  suffix: "boxer"
+  parent: Paper
+  components:
+  - type: Paper
+    content: |2
+          [head=2]You've gotta defend your belt, champ.
+      [/head]
+                [head=1]They're coming for you.[/head]
+
+                  [head=2]This should help. Knock 'em out.[/head]
+
+# Placeholder for an arm-on-use, flashbang fakeout pipebomb
+- type: entity
+  id: PaperMailNFPipebombIntern
+  categories: [ HideSpawnMenu ]
+  suffix: "pipe bomb intern"
+  parent: Paper
+  components:
+  - type: Paper
+    stampedBy:
+    - stampedColor: '#333333FF'
+      stampedName: craig
+#      stampType: Signature #DeltaV - Not compatible with our signatures code stuff apparently
+    content: |2
+      [bold]hey uh, they told me to send you a pipebomb i guess?
+
+      this is all i could find around here, hope that works
+
+      thanks[/bold]
+
+- type: entity
+  id: PaperMailNFAntivirus
+  name: Snortin Antivirus invoice
+  categories: [ HideSpawnMenu ]
+  suffix: "antivirus ad"
+  parent: Paper
+  components:
+  - type: Paper
+    content: |2
+
+          [head=1]Invoice[/head][head=3]
+          Snortin Antivirus Software[/head]
+
+      [head=3]Order #41003
+      [bold][bullet/][/bold] 1x Snortin Total-275 Antivirus Install Disk[/head]
+
+      [head=3]Total: 947381 Spesos[/head]
+
+      Thank you for making purchase from Snortin Antivirus Software.
+      We assuring you that our product is greatest.
+      Please sending payment at earliest convenience.
+
+- type: entity
+  id: PaperMailNFEMPPreparedness
+  categories: [ HideSpawnMenu ]
+  name: EMP preparedness response form
+  suffix: "emp preparedness" #DeltaV - Replaces mention of SR with HoS
+  parent: Paper
+  components:
+  - type: Paper
+    content: |2
+
+        [head=1]EMP Preparedness Response[/head]
+
+      You have been selected to receive a NT EMP Preparedness kit as a test. Note that this is only a test. In a real emergency, follow the instructions of your vessel's command staff.
+
+      As the recipient of this, please note [bold]any improvements[/bold] that could be made towards the EMP preparedness of the vessel you were aboard when opening and submit this form to your serving Captain or Head of Security.
+
+      [bold]Date of test:[/bold]
+      [bold]Number of affected items:[/bold]
+      [bold]Perceived severity of incident:[/bold]
+      [bold]Suggested improvements:[/bold]
+
+- type: entity
+  id: PaperMailNFBuildABuddy
+  categories: [ HideSpawnMenu ]
+  name: Build-a-Buddy adoption letter
+  suffix: "build-a-buddy" #DeltaV- Body text changed, because Goblins Aren't Real
+  parent: Paper
+  components:
+  - type: Paper
+    stampState: paper_stamp-generic
+    stampedBy:
+    - stampedColor: '#FF6699FF'
+      stampedName: Chief Friendship Officer
+    - stampedColor: '#333333FF'
+      stampedName: Cuts-With-Scalpel
+#      stampType: Signature  #DeltaV - Not compatible with our signatures code stuff apparently. 
+    content: |2
+
+      [head=1]Note of Adoption[/head]
+
+      You're now the proud owner of your very own Build-a-Buddy!
+
+      We hope that your new friend can serve as a shoulder to lean on in the depths of space, and hopefully you won't be quite as lonely out there. Personally, I find putting them together to be rather therapeutic.
+
+      [bold]Collect the whole set![/bold]
+      [bold][bullet/][/bold] Henry the Human
+      [bold][bullet/][/bold] Randy the Reptilian
+      [bold][bullet/][/bold] Steven the Slime
+      [bold][bullet/][/bold] Valerie the Vulpkanin
+
+- type: entity
+  id: PaperMailNFSpaceLaw
+  categories: [ HideSpawnMenu ]
+  suffix: "space-law" #DeltaV- edited contents to be from the Delta Sector instead of the Frontier
+  parent: Paper
+  components:
+  - type: Paper
+    stampState: paper_stamp-centcom
+    stampedBy:
+    - stampedColor: '#006600FF'
+      stampedName: Central Admiralty of the Delta Sector
+    content: |2
+
+            [head=1]Space Law is your shield.[/head]
+
+                  [head=2]With it, you guard the Delta Sector.[/head][head=3]
+      [/head]
+        [head=1]Memorize it. Grasp it firmly.[/head]
+
+          [head=2]The SOP is your sword, don't get rusty.[/head]
+
+        [head=2]Maintain your balance, and wield it well.[/head]
+
+
+
+
+
+
+
+
+                              [head=3][italic]Internal Bureau of Propaganda[/italic][/head]

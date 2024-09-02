@@ -8,20 +8,17 @@ namespace Content.Server.Mail.Components
     [RegisterComponent]
     public sealed partial class MailComponent : SharedMailComponent
     {
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("recipient")]
+        [DataField]
         public string Recipient = "None";
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("recipientJob")]
+        [DataField]
         public string RecipientJob = "None";
 
         // Why do we not use LockComponent?
         // Because this can't be locked again,
         // and we have special conditions for unlocking,
         // and we don't want to add a verb.
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("isLocked")]
+        [DataField]
         public bool IsLocked = true;
 
         /// <summary>
@@ -32,7 +29,7 @@ namespace Content.Server.Mail.Components
         /// This is useful for broken fragile packages and packages that were
         /// not delivered in time.
         /// </remarks>
-        [DataField("isProfitable")]
+        [DataField]
         public bool IsProfitable = true;
 
         /// <summary>
@@ -42,7 +39,7 @@ namespace Content.Server.Mail.Components
         /// This can be set to true in the YAML files for a mail delivery to
         /// always be Fragile, despite its contents.
         /// </remarks>
-        [DataField("isFragile")]
+        [DataField]
         public bool IsFragile = false;
 
         /// <summary>
@@ -58,43 +55,51 @@ namespace Content.Server.Mail.Components
         /// This can be set to true in the YAML files for a mail delivery to
         /// always be Priority.
         /// </remarks>
-        [DataField("isPriority")]
+        [DataField]
         public bool IsPriority = false;
+
+        // Frontier Mail Port: large mail
+        /// <summary>
+        /// Whether this parcel is large.
+        /// </summary>
+        [DataField]
+        public bool IsLarge = false;
+        // End Frontier: large mail
 
         /// <summary>
         /// What will be packaged when the mail is spawned.
         /// </summary>
-        [DataField("contents")]
+        [DataField]
         public List<EntitySpawnEntry> Contents = new();
 
         /// <summary>
         /// The amount that cargo will be awarded for delivering this mail.
         /// </summary>
-        [DataField("bounty")]
+        [DataField]
         public int Bounty = 750;
 
         /// <summary>
         /// Penalty if the mail is destroyed.
         /// </summary>
-        [DataField("penalty")]
+        [DataField]
         public int Penalty = -250;
 
         /// <summary>
         /// The sound that's played when the mail's lock is broken.
         /// </summary>
-        [DataField("penaltySound")]
+        [DataField]
         public SoundSpecifier PenaltySound = new SoundPathSpecifier("/Audio/Machines/Nuke/angry_beep.ogg");
 
         /// <summary>
         /// The sound that's played when the mail's opened.
         /// </summary>
-        [DataField("openSound")]
+        [DataField]
         public SoundSpecifier OpenSound = new SoundPathSpecifier("/Audio/Effects/packetrip.ogg");
 
         /// <summary>
         /// The sound that's played when the mail's lock has been emagged.
         /// </summary>
-        [DataField("emagSound")]
+        [DataField]
         public SoundSpecifier EmagSound = new SoundCollectionSpecifier("sparks");
 
         /// <summary>
