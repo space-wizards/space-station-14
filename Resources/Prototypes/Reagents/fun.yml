@@ -401,7 +401,8 @@
   id: PropulsionGel
   name: reagent-name-propulsion-gel
   group: Special
-  desc: reagent-physical-desc-energetic
+  desc: reagent-desc-propulsion-gel
+  physicalDesc: reagent-physical-desc-energetic
   flavor: speed
   color: "#ff8700"
   metabolisms:
