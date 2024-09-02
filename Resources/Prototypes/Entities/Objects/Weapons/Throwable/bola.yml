@@ -1,6 +1,6 @@
 - type: entity
   name: bola
-  parent: BaseItem
+  parent: [BaseItem, BaseRestrictedContraband]
   id: Bola
   description: Linked together with some spare cuffs and metal.
   components:
@@ -47,4 +47,4 @@
     staminaDamage: 55 # Sudden weight increase sapping stamina
     canThrowTrigger: true
     canMoveBreakout: true
-
+  - type: LandAtCursor

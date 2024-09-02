@@ -1,0 +1,8 @@
+<ui:RadialMenu
+    xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
+    CloseButtonStyleClass="RadialMenuCloseButton"
+    VerticalExpand="True"
+    HorizontalExpand="True">
+    <ui:RadialContainer Name="Main">
+    </ui:RadialContainer>
+</ui:RadialMenu>
