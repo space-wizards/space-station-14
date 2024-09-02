@@ -39,6 +39,12 @@ public sealed partial class TechAnomalyComponent : Component
     public ProtoId<SourcePortPrototype> TimerPort = "Timer";
 
     /// <summary>
+    /// Chance of emag the device, when supercrit
+    /// </summary>
+    [DataField]
+    public float EmagSupercritProbability = 0.4f;
+
+    /// <summary>
     /// A prototype beam shot into devices when pulsed
     /// </summary>
     [DataField]

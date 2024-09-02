@@ -894,8 +894,8 @@
     energy: 3.5
     color: "#56c1e8"
   - type: Anomaly
-    corePrototype: AnomalyCoreLiquid
-    coreInertPrototype: AnomalyCoreLiquidInert
+    corePrototype: AnomalyCoreTech
+    coreInertPrototype: AnomalyCoreTechInert
     minPulseLength: 60
     maxPulseLength: 120
   - type: TechAnomaly

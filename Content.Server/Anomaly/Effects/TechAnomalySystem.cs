@@ -3,6 +3,7 @@ using Content.Server.Beam;
 using Content.Server.DeviceLinking.Systems;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.DeviceLinking;
+using Content.Shared.Emag.Systems;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -15,6 +16,7 @@ public sealed class TechAnomalySystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly BeamSystem _beam = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly EmagSystem _emag = default!;
 
     public override void Initialize()
     {
@@ -69,15 +71,18 @@ public sealed class TechAnomalySystem : EntitySystem
         var sourcePort = _random.Pick(source.Comp.Ports);
         var sinkPort = _random.Pick(target.Comp.Ports);
 
-        _signal.SaveLinks(null, tech, target,new()
+        _signal.SaveLinks(null, source, target,new()
         {
             (sourcePort, sinkPort),
         });
-        _beam.TryCreateBeam(tech, target, tech.Comp.LinkBeamProto);
+        _beam.TryCreateBeam(source, target, tech.Comp.LinkBeamProto);
     }
 
     private void OnSupercritical(Entity<TechAnomalyComponent> tech, ref AnomalySupercriticalEvent args)
     {
+        // We remove the component so that the anomaly does not bind itself to other devices before self destroy.
+        RemComp<DeviceLinkSourceComponent>(tech);
+
         var sources =
             _lookup.GetEntitiesInRange<DeviceLinkSourceComponent>(Transform(tech).Coordinates,
                 tech.Comp.LinkRadius.Max);
@@ -99,6 +104,12 @@ public sealed class TechAnomalySystem : EntitySystem
 
             var sink = _random.Pick(sinks);
             sinks.Remove(sink);
+
+            if (_random.Prob(tech.Comp.EmagSupercritProbability))
+            {
+                _emag.DoEmagEffect(tech, source);
+                _emag.DoEmagEffect(tech, sink);
+            }
 
             CreateNewLink(tech, source, sink);
         }
