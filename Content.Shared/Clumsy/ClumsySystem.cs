@@ -44,7 +44,7 @@ public sealed class ClumsySystem : EntitySystem
 
         args.TargetGettingInjected = args.EntityUsingHypospray;
         args.InjectMessageOverride = "hypospray-component-inject-self-clumsy-message";
-        _audioSystem.PlayPvs(entity.Comp.ClumsySound, entity);
+        _audio.PlayPvs(entity.Comp.ClumsySound, entity);
     }
 
     private void BeforeDefibrillatorZapsEvent(Entity<ClumsyComponent> entity, ref SelfBeforeDefibrillatorZaps args)
@@ -54,7 +54,7 @@ public sealed class ClumsySystem : EntitySystem
             return;
 
         args.DefibTarget = args.EntityUsingDefib;
-        _audioSystem.PlayPvs(entity.Comp.ClumsySound, entity);
+        _audio.PlayPvs(entity.Comp.ClumsySound, entity);
 
     }
 
@@ -71,8 +71,8 @@ public sealed class ClumsySystem : EntitySystem
         _stun.TryParalyze(entity, TimeSpan.FromSeconds(3f), true);
 
         // Apply salt to the wound ("Honk!") (No idea what this comment means)
-        _audioSystem.PlayPvs(new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/bang.ogg"), entity);
-        _audioSystem.PlayPvs(entity.Comp.ClumsySound, entity);
+        _audio.PlayPvs(new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/bang.ogg"), entity);
+        _audio.PlayPvs(entity.Comp.ClumsySound, entity);
 
         _popup.PopupEntity(Loc.GetString("gun-clumsy"), entity, entity);
         args.Cancel();
@@ -89,10 +89,10 @@ public sealed class ClumsySystem : EntitySystem
 
         HitHeadOnTableClumsy(entity, args.BeingClimbedOn);
 
-        _audioSystem.PlayPredicted(entity.Comp.ClumsySound, entity, entity);
+        _audio.PlayPredicted(entity.Comp.ClumsySound, entity, entity);
 
         var secondSound = new SoundCollectionSpecifier("TrayHit");
-        _audioSystem.PlayPredicted(secondSound, entity, entity);
+        _audio.PlayPredicted(secondSound, entity, entity);
 
 
         var beingClimbedName = Identity.Entity(args.BeingClimbedOn, EntityManager);
@@ -122,10 +122,10 @@ public sealed class ClumsySystem : EntitySystem
         if (TryComp<BonkableComponent>(table, out var bonkComp) && bonkComp != null)
         {
             stunTime = bonkComp.BonkTime;
-            _damageableSystem.TryChangeDamage(target, bonkComp.BonkDamage, true);
+            _damageable.TryChangeDamage(target, bonkComp.BonkDamage, true);
         }
 
-        _stun.TryParalyze(target, TimeSpan.FromSeconds(stunTime), true);
+        _stun.TryParalyze(target, stunTime, true);
     }
     #endregion
 }

@@ -14,7 +14,7 @@ public sealed partial class BonkableComponent : Component
     ///     How long to stun players on bonk, in seconds.
     /// </summary>
     [DataField("bonkTime")]
-    public float BonkTime = 2;
+    public TimeSpan BonkTime = TimeSpan.FromSeconds(2);
 
     /// <summary>
     ///     How much damage to apply on bonk.

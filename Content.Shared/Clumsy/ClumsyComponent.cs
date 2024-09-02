@@ -28,5 +28,5 @@ public sealed partial class ClumsyComponent : Component
     ///     If a system needs to use something else, add a new varable here do not modify this number.
     /// </summary>
     [DataField]
-    public float ClumsyDefaultStunTime = 2.5f;
+    public TimeSpan ClumsyDefaultStunTime = TimeSpan.FromSeconds(2.5);
 }
