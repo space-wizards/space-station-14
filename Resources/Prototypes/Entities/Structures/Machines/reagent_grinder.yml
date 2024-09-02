@@ -5,7 +5,6 @@
   description: From BlenderTech. Will It Blend? Let's find out!
   suffix: grinder/juicer
   components:
-  - type: StationAiWhitelist
   - type: Transform
     anchored: true
   - type: ReagentGrinder

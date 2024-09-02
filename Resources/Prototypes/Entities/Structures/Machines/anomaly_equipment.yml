@@ -120,7 +120,6 @@
   name: A.P.E.
   description: An Anomalous Particle Emitter, capable of shooting out unstable particles which can interface with anomalies.
   components:
-  - type: StationAiWhitelist
   - type: Sprite
     noRot: true
     sprite: Structures/Machines/Anomaly/ape.rsi

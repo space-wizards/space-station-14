@@ -4,7 +4,6 @@
   name: Flatpacker 1001
   description: An industrial machine used for expediting machine construction across the station.
   components:
-  - type: StationAiWhitelist
   - type: Sprite
     sprite: Structures/Machines/flatpacker.rsi
     snapCardinals: true
