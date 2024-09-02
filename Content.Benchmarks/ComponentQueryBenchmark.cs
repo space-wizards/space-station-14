@@ -30,7 +30,7 @@ namespace Content.Benchmarks;
 [Virtual]
 [GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]
 [CategoriesColumn]
-[MediumRunJob]
+[ShortRunJob]
 public class ComponentQueryBenchmark
 {
     public const string Map = "Maps/bagel.yml";
@@ -44,7 +44,7 @@ public class ComponentQueryBenchmark
     private EntityQuery<ClothingComponent> _clothingQuery;
     private EntityQuery<MapComponent> _mapQuery;
     private EntityUid[] _items = default!;
-    private ArchEntity<ItemComponent?>[] _archItems = default!;
+    private ArchEntity[] _archItems = default!;
 
     [GlobalSetup]
     public void Setup()
@@ -69,12 +69,12 @@ public class ComponentQueryBenchmark
         }).GetAwaiter().GetResult();
 
         _items = new EntityUid[_entMan.Count<ItemComponent>()];
-        _archItems = new ArchEntity<ItemComponent?>[_entMan.Count<ItemComponent>()];
+        _archItems = new ArchEntity[_entMan.Count<ItemComponent>()];
         var i = 0;
         var enumerator = _entMan.AllEntityQueryEnumerator<ItemComponent>();
         while (enumerator.MoveNext(out var uid, out _))
         {
-            _archItems[i] = _entMan.GetArchEntity<ItemComponent>(uid);
+            _archItems[i] = _entMan.GetArchEntity(uid);
             _items[i++] = uid;
         }
     }
@@ -91,8 +91,8 @@ public class ComponentQueryBenchmark
     /// <summary>
     /// Baseline TryComp benchmark. When the benchmark was created, around 40% of the items were clothing.
     /// </summary>
-    [Benchmark(Baseline = true)]
-    [BenchmarkCategory("TryComp")]
+    // [Benchmark(Baseline = true)]
+    // [BenchmarkCategory("TryComp")]
     public int TryComp()
     {
         var hashCode = 0;
@@ -105,8 +105,27 @@ public class ComponentQueryBenchmark
     }
 
     /// <summary>
+    /// TryComp for 2 different components.
+    /// </summary>
+    [Benchmark]
+    [BenchmarkCategory("TryComp")]
+    public int TryCompDouble()
+    {
+        var hashCode = 0;
+        foreach (var uid in _items)
+        {
+            var archEnt = _entMan.GetArchEntity(uid);
+
+            if (_entMan.TryComp(ref archEnt, out ClothingComponent? clothing, out ItemComponent? _))
+                hashCode = HashCode.Combine(hashCode, clothing.GetHashCode());
+        }
+        return hashCode;
+    }
+
+    /// <summary>
     /// Baseline TryComp benchmark. When the benchmark was created, around 40% of the items were clothing.
     /// </summary>
+    [Benchmark]
     [BenchmarkCategory("TryComp")]
     public int TryCompSlow()
     {
@@ -119,8 +138,8 @@ public class ComponentQueryBenchmark
         return hashCode;
     }
 
-    [Benchmark]
-    [BenchmarkCategory("TryComp")]
+    // [Benchmark]
+    // [BenchmarkCategory("TryComp")]
     public int TryCompCached()
     {
         var hashCode = 0;
@@ -129,6 +148,24 @@ public class ComponentQueryBenchmark
             ref var entity = ref _archItems[i];
 
             if (_entMan.TryComp(ref entity, out ClothingComponent? clothing))
+                hashCode = HashCode.Combine(hashCode, clothing.GetHashCode());
+        }
+        return hashCode;
+    }
+
+    /// <summary>
+    /// TryComp for 2 different components.
+    /// </summary>
+    [Benchmark]
+    [BenchmarkCategory("TryComp")]
+    public int TryCompDoubleCached()
+    {
+        var hashCode = 0;
+        for (var i = 0; i < _archItems.Length; i++)
+        {
+            ref var entity = ref _archItems[i];
+
+            if (_entMan.TryComp(ref entity, out ClothingComponent? clothing, out ItemComponent? _))
                 hashCode = HashCode.Combine(hashCode, clothing.GetHashCode());
         }
         return hashCode;

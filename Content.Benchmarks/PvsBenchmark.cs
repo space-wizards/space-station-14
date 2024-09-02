@@ -25,6 +25,7 @@ namespace Content.Benchmarks;
 // This makes the benchmark run noticeably slower.
 
 [Virtual]
+[ShortRunJob]
 public class PvsBenchmark
 {
     public const string Map = "Maps/box.yml";
