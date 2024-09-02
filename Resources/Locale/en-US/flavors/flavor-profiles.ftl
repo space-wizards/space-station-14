@@ -50,6 +50,7 @@ flavor-base-horrible = horrible
 # lmao
 flavor-base-terrible = terrible
 flavor-base-mindful = mindful
+flavor-base-chewy = chewy
 flavor-base-kingsoda = like you're a champion
 flavor-base-drinkdrink = like dogshit
 
@@ -175,6 +176,8 @@ flavor-complex-violets = like violets
 flavor-complex-pyrotton = like a burning mouth
 flavor-complex-mothballs = like mothballs
 flavor-complex-paint-thinner = like paint thinner
+flavor-complex-paper = like mushy pulp
+flavor-complex-compressed-meat = like compressed meat
 flavor-complex-finfin = like your best friend
 flavor-complex-radiation = like radiation
 
