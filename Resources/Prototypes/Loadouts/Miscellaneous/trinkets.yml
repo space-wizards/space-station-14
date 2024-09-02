@@ -88,7 +88,7 @@
   storage:
     back:
     - ClothingNeckAsexualPin
-  
+
 - type: loadout
   id: ClothingNeckBisexualPin
   storage:
@@ -131,3 +131,8 @@
     back:
     - ClothingNeckAutismPin
 
+- type: loadout
+  id: ClothingNeckGoldAutismPin
+  storage:
+    back:
+    - ClothingNeckGoldAutismPin
