@@ -10,3 +10,7 @@ species-name-moth = Moth Person
 species-name-skeleton = Skeleton
 species-name-vox = Vox
 species-name-snail = Gastropoids
+
+## Misc species things
+
+snail-hurt-by-salt-popup = The salty solution burns like acid!
