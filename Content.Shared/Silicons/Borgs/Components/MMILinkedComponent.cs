@@ -1,4 +1,6 @@
-﻿using Robust.Shared.GameStates;
+﻿using Content.Shared.Roles;
+using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Silicons.Borgs.Components;
 
@@ -15,4 +17,9 @@ public sealed partial class MMILinkedComponent : Component
     /// </summary>
     [DataField("linkedMMI"), AutoNetworkedField]
     public EntityUid? LinkedMMI;
+
+    /// <summary>
+    /// The job this entity had before being borged.
+    /// </summary>
+    public ProtoId<JobPrototype>? OldJob;
 }
