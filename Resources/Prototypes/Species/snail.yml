@@ -2,11 +2,11 @@
   id: Snail
   name: species-name-snail
   roundStart: true
-  prototype: MobSnail
-  sprites: MobSnailSprites
+  prototype: MobGastropoid
+  sprites: MobGastropoidSprites
   defaultSkinTone: "#385878"
-  markingLimits: MobSnailMarkingLimits
-  dollPrototype: MobSnailDummy
+  markingLimits: MobGastropoidMarkingLimits
+  dollPrototype: MobGastropoidDummy
   skinColoration: Hues
   maleFirstNames: names_snail_first
   femaleFirstNames: names_snail_first
@@ -15,23 +15,23 @@
   - Unsexed
 
 - type: speciesBaseSprites
-  id: MobSnailSprites
+  id: MobGastropoidSprites
   sprites:
-    Eyes: MobSnailEyes
-    Head: MobSnailHead
-    Chest: MobSnailTorso
-    LArm: MobSnailLArm
-    RArm: MobSnailRArm
-    LHand: MobSnailLHand
-    RHand: MobSnailRHand
-    LLeg: MobSnailLLeg
-    RLeg: MobSnailRLeg
-    LFoot: MobSnailLFoot
-    RFoot: MobSnailRFoot
+    Eyes: MobGastropoidEyes
+    Head: MobGastropoidHead
+    Chest: MobGastropoidTorso
+    LArm: MobGastropoidLArm
+    RArm: MobGastropoidRArm
+    LHand: MobGastropoidLHand
+    RHand: MobGastropoidRHand
+    LLeg: MobGastropoidLLeg
+    RLeg: MobGastropoidRLeg
+    LFoot: MobGastropoidLFoot
+    RFoot: MobGastropoidRFoot
     Tail: MobHumanoidAnyMarking
 
 - type: markingPoints
-  id: MobSnailMarkingLimits
+  id: MobGastropoidMarkingLimits
   onlyWhitelisted: true
   points:
     Head:
@@ -52,92 +52,92 @@
       required: false
 
 - type: humanoidBaseSprite
-  id: MobSnailEyes
+  id: MobGastropoidEyes
   baseSprite:
     sprite: Mobs/Species/Snail/parts.rsi
     state: eyes
 
 - type: humanoidBaseSprite
-  id: MobSnailHead
+  id: MobGastropoidHead
   baseSprite:
     sprite: Mobs/Species/Snail/parts.rsi
     state: head
 
 - type: humanoidBaseSprite
-  id: MobSnailHeadMale
+  id: MobGastropoidHeadMale
   baseSprite:
     sprite: Mobs/Species/Snail/parts.rsi
     state: head
 
 - type: humanoidBaseSprite
-  id: MobSnailHeadFemale
+  id: MobGastropoidHeadFemale
   baseSprite:
     sprite: Mobs/Species/Snail/parts.rsi
     state: head
 
 - type: humanoidBaseSprite
-  id: MobSnailTorso
+  id: MobGastropoidTorso
   baseSprite:
     sprite: Mobs/Species/Snail/parts.rsi
     state: torso
 
 - type: humanoidBaseSprite
-  id: MobSnailTorsoMale
+  id: MobGastropoidTorsoMale
   baseSprite:
     sprite: Mobs/Species/Snail/parts.rsi
     state: torso
 
 - type: humanoidBaseSprite
-  id: MobSnailTorsoFemale
+  id: MobGastropoidTorsoFemale
   baseSprite:
     sprite: Mobs/Species/Snail/parts.rsi
     state: torso
 
 
 - type: humanoidBaseSprite
-  id: MobSnailLLeg
+  id: MobGastropoidLLeg
   baseSprite:
     sprite: Mobs/Species/Snail/parts.rsi
     state: l_leg
 
 - type: humanoidBaseSprite
-  id: MobSnailLHand
+  id: MobGastropoidLHand
   baseSprite:
     sprite: Mobs/Species/Snail/parts.rsi
     state: l_hand
 
 - type: humanoidBaseSprite
-  id: MobSnailLArm
+  id: MobGastropoidLArm
   baseSprite:
     sprite: Mobs/Species/Snail/parts.rsi
     state: l_arm
 
 - type: humanoidBaseSprite
-  id: MobSnailLFoot
+  id: MobGastropoidLFoot
   baseSprite:
     sprite: Mobs/Species/Snail/parts.rsi
     state: l_foot
 
 - type: humanoidBaseSprite
-  id: MobSnailRLeg
+  id: MobGastropoidRLeg
   baseSprite:
     sprite: Mobs/Species/Snail/parts.rsi
     state: r_leg
 
 - type: humanoidBaseSprite
-  id: MobSnailRHand
+  id: MobGastropoidRHand
   baseSprite:
     sprite: Mobs/Species/Snail/parts.rsi
     state: r_hand
 
 - type: humanoidBaseSprite
-  id: MobSnailRArm
+  id: MobGastropoidRArm
   baseSprite:
     sprite: Mobs/Species/Snail/parts.rsi
     state: r_arm
 
 - type: humanoidBaseSprite
-  id: MobSnailRFoot
+  id: MobGastropoidRFoot
   baseSprite:
     sprite: Mobs/Species/Snail/parts.rsi
     state: r_foot

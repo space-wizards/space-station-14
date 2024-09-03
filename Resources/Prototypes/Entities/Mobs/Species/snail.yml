@@ -2,7 +2,7 @@
   save: false
   name: Uristtsiru Mcshell
   parent: BaseMobSpeciesOrganic
-  id: BaseMobSnail
+  id: BaseMobGastropoid
   abstract: true
   components:
   - type: SnailSpeed
@@ -184,7 +184,7 @@
 
 - type: entity
   parent: BaseSpeciesDummy
-  id: MobSnailDummy
+  id: MobGastropoidDummy
   noSpawn: true
   components:
   - type: HumanoidAppearance
