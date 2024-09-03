@@ -1,703 +1,701 @@
 Entries:
-
-
-- author: TGRCdev
-  changes:
-  - message: Corrected gen record pronouns
-    type: Tweak
-  id: 0
-  time: '2024-08-07T16:25:21.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/80
-- author: FlippenPage
-  changes:
-  - message: Add Space Cruise mapping elements
-    type: Tweak
-  id: 1
-  time: '2024-08-11T17:35:50.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/81
 - author: LucasTheDrgn
   changes:
   - message: More Accents
     type: Tweak
-  id: 2
+  id: 0
   time: '2024-08-11T17:35:38.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/82
 - author: TGRCdev
   changes:
   - message: YAML fixes
     type: Tweak
-  id: 3
+  id: 1
   time: '2024-08-11T17:35:28.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/83
 - author: TGRCdev
   changes:
   - message: Fixed deleted maintenance loot table
     type: Tweak
-  id: 4
+  id: 2
   time: '2024-08-11T20:38:28.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/84
 - author: TGRCdev
   changes:
   - message: More YAML fixes
     type: Tweak
-  id: 5
+  id: 3
   time: '2024-08-12T02:07:08.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/85
 - author: starlighthowls
   changes:
   - message: Add more Space Cruise things
     type: Tweak
-  id: 6
+  id: 4
   time: '2024-08-12T02:10:48.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/86
 - author: TGRCdev
   changes:
   - message: Refactored crew manifest to include pronouns
     type: Tweak
-  id: 7
+  id: 5
   time: '2024-08-13T00:53:10.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/87
 - author: formlessnameless
   changes:
   - message: Some updates to shuttle maps I've made, fixed train plasma not loading
     type: Tweak
-  id: 8
+  id: 6
   time: '2024-08-13T00:53:24.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/88
 - author: starlighthowls
   changes:
   - message: Even more space cruise stuff
     type: Tweak
-  id: 9
+  id: 7
   time: '2024-08-13T02:26:46.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/89
 - author: TGRCdev
   changes:
   - message: Added directory to station maps
     type: Tweak
-  id: 10
+  id: 8
   time: '2024-08-13T02:26:57.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/90
 - author: formlessnameless
   changes:
   - message: Made blessed bananium floors craftable
     type: Tweak
-  id: 11
+  id: 9
   time: '2024-08-13T19:55:10.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/92
 - author: formlessnameless
   changes:
   - message: Bunch of upstream stuff merged into our branch - Includes Robust update, don't forget to run RUN_THIS.py
     type: Tweak
-  id: 12
+  id: 10
   time: '2024-08-14T22:10:38.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/93
 - author: formlessnameless
   changes:
   - message: Ported changeling pr
     type: Tweak
-  id: 13
+  id: 11
   time: '2024-08-15T03:03:14.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/94
 - author: TGRCdev
   changes:
   - message: GameRuleMeteorScheduler is now MeteorSwarmScheduler
     type: Tweak
-  id: 14
+  id: 12
   time: '2024-08-15T16:39:45.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/95
 - author: wafehling
   changes:
   - message: Added low-chance alt voice lines for some events
     type: Tweak
-  id: 15
+  id: 13
   time: '2024-08-15T16:39:56.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/96
 - author: starlighthowls
   changes:
   - message: More space cruise things and new plant mutation
     type: Tweak
-  id: 16
+  id: 14
   time: '2024-08-15T16:40:08.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/97
 - author: Darkmajia
   changes:
   - message: random announcer system port from einstein engines
     type: Tweak
-  id: 17
+  id: 15
   time: '2024-08-16T17:41:28.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/98
 - author: LucasTheDrgn
   changes:
   - message: Fixing QSI Bugs
     type: Tweak
-  id: 18
+  id: 16
   time: '2024-08-15T23:59:39.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/99
 - author: starlighthowls
   changes:
   - message: many things
     type: Tweak
-  id: 19
+  id: 17
   time: '2024-08-16T22:33:37.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/100
 - author: formlessnameless
   changes:
   - message: A bunch of formatting fixes that the system was yelling at me about
     type: Tweak
-  id: 20
+  id: 18
   time: '2024-08-17T02:51:39.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/101
 - author: formlessnameless
   changes:
   - message: Fixed outdated status icon stuff
     type: Tweak
-  id: 21
+  id: 19
   time: '2024-08-17T16:04:56.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/102
 - author: sageu111
   changes:
   - message: enabling grays
     type: Tweak
-  id: 22
+  id: 20
   time: '2024-08-17T16:05:06.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/103
 - author: sususuyo
   changes:
   - message: Adding more songs
     type: Tweak
-  id: 23
+  id: 21
   time: '2024-08-18T02:11:39.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/105
 - author: sageu111
   changes:
   - message: audio tweaks for grays
     type: Tweak
-  id: 24
+  id: 22
   time: '2024-08-18T02:04:05.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/106
 - author: sageu111
   changes:
   - message: naked gray change LOL penis)
     type: Tweak
-  id: 25
+  id: 23
   time: '2024-08-18T02:52:23.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/107
 - author: formlessnameless
   changes:
   - message: Fixed jukebox issue, made grays stingable and edible by lings
     type: Tweak
-  id: 26
+  id: 24
   time: '2024-08-18T03:34:19.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/108
 - author: Darkmajia
   changes:
   - message: quick fixes for shuttle dock/meteor swarm announcements
     type: Tweak
-  id: 27
+  id: 25
   time: '2024-08-18T04:01:47.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/109
 - author: sususuyo
   changes:
   - message: reuploaded tracks with proper credits in metadata
     type: Tweak
-  id: 28
+  id: 26
   time: '2024-08-18T13:59:00.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/110
 - author: TGRCdev
   changes:
   - message: Fixed IP bans preventing non-banned players from connecting to SQLite-backed servers
     type: Tweak
-  id: 29
+  id: 27
   time: '2024-08-18T13:59:09.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/111
 - author: Darkmajia
   changes:
   - message: announcer robust fix
     type: Tweak
-  id: 30
+  id: 28
   time: '2024-08-18T15:31:10.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/112
 - author: starlighthowls
   changes:
   - message: NTAS. White Whale TEST
     type: Tweak
-  id: 31
+  id: 29
   time: '2024-08-18T21:54:31.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/114
 - author: TGRCdev
   changes:
   - message: Relicense to AGPLv3
     type: Tweak
-  id: 32
+  id: 30
   time: '2024-08-19T01:38:56.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/115
 - author: sususuyo
   changes:
   - message: New lobby art, new audio tracks volume adjustments
     type: Tweak
-  id: 33
+  id: 31
   time: '2024-08-19T01:39:05.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/116
 - author: formlessnameless
   changes:
   - message: Some small changeling ability adjustments, some Boat map adjustments
     type: Tweak
-  id: 34
+  id: 32
   time: '2024-08-19T19:40:24.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/117
 - author: sususuyo
   changes:
   - message: Sprite changes for medical eyepatch and medsec hud
     type: Tweak
-  id: 35
+  id: 33
   time: '2024-08-19T19:40:15.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/118
 - author: Darkmajia
   changes:
   - message: small announcement fix for nuke arm location
     type: Tweak
-  id: 36
+  id: 34
   time: '2024-08-19T19:40:06.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/119
 - author: razzmatazzBean
   changes:
   - message: new horsepussy
     type: Tweak
-  id: 37
+  id: 35
   time: '2024-08-19T23:35:56.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/121
 - author: sususuyo
   changes:
   - message: Second wave of lobby and jukebox music, prepping for medhud glasses
     type: Tweak
-  id: 38
+  id: 36
   time: '2024-08-20T01:24:47.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/122
 - author: sususuyo
   changes:
   - message: Medical Hud Glasses!!!!
     type: Tweak
-  id: 39
+  id: 37
   time: '2024-08-20T01:58:46.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/123
 - author: ultramario1998
   changes:
   - message: Add salvage boots option to QM loadout
     type: Tweak
-  id: 40
+  id: 38
   time: '2024-08-20T15:20:21.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/124
 - author: starlighthowls
   changes:
   - message: boat test 2!!!!!!!
     type: Tweak
-  id: 41
+  id: 39
   time: '2024-08-20T23:31:13.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/125
 - author: formlessnameless
   changes:
   - message: Upstream merge + fixes
     type: Tweak
-  id: 42
+  id: 40
   time: '2024-08-20T23:31:30.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/126
 - author: formlessnameless
   changes:
   - message: A quick fix and a small boat update
     type: Tweak
-  id: 43
+  id: 41
   time: '2024-08-21T03:29:59.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/127
 - author: Darkmajia
   changes:
   - message: sleeper agents, random sentience, and event timings fix + announcer weights adjusted
     type: Tweak
-  id: 44
+  id: 42
   time: '2024-08-21T17:45:40.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/128
 - author: sususuyo
   changes:
   - message: New Jukebox tracks from batch 2, new nuke track
     type: Tweak
-  id: 45
+  id: 43
   time: '2024-08-21T23:52:19.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/129
 - author: AirFryerBuyOneGetOneFree
   changes:
   - message: Increase the Number of Items on a Burger Tower to 30
     type: Tweak
-  id: 46
+  id: 44
   time: '2024-08-22T17:10:09.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/130
 - author: starlighthowls
   changes:
   - message: white whale fixes 3!
     type: Tweak
-  id: 47
+  id: 45
   time: '2024-08-22T17:10:17.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/131
 - author: Darkmajia
   changes:
   - message: new tiktok announcer + alert levels fixed + intern new alert levels
     type: Tweak
-  id: 48
+  id: 46
   time: '2024-08-22T17:10:30.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/132
 - author: ultramario1998
   changes:
   - message: added train back in. fuck all yall
     type: Tweak
-  id: 49
+  id: 47
   time: '2024-08-23T17:46:25.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/133
 - author: formlessnameless
   changes:
   - message: Boat changes, prototype ID fix for jukebox
     type: Tweak
-  id: 50
+  id: 48
   time: '2024-08-23T17:45:55.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/135
 - author: TGRCdev
   changes:
   - message: Fixed monkeys not being blinded when welding without a welding mask
     type: Tweak
-  id: 51
+  id: 49
   time: '2024-08-23T17:46:14.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/136
 - author: ultramario1998
   changes:
   - message: readded and rerotated Atlas, Saltern, and Cluster
     type: Tweak
-  id: 52
+  id: 50
   time: '2024-08-24T15:55:23.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/137
 - author: wafehling
   changes:
   - message: Raccoon/Possum Vent Critters
     type: Tweak
-  id: 53
+  id: 51
   time: '2024-08-24T15:55:36.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/138
 - author: sususuyo
   changes:
   - message: adding a salvage unlockable + moving music around
     type: Tweak
-  id: 54
+  id: 52
   time: '2024-08-24T15:55:44.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/139
 - author: KingMudkipIII
   changes:
   - message: Add bartender chemmaster flatpack unlock
     type: Tweak
-  id: 55
+  id: 53
   time: '2024-08-24T15:55:59.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/140
 - author: FlippenPage
   changes:
   - message: reimplemented Brigmedic equipment
     type: Tweak
-  id: 56
+  id: 54
   time: '2024-08-24T15:56:09.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/142
 - author: Saeko-44
   changes:
   - message: Added Vials to the techfab
     type: Tweak
-  id: 57
+  id: 55
   time: '2024-08-24T16:23:02.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/143
 - author: sageu111
   changes:
   - message: minor gray bugfixes + guidebook entry
     type: Tweak
-  id: 58
+  id: 56
   time: '2024-08-24T16:23:10.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/144
 - author: starlighthowls
   changes:
   - message: White Whale trial rotation
     type: Tweak
-  id: 59
+  id: 57
   time: '2024-08-24T22:17:53.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/145
 - author: formlessnameless
   changes:
   - message: Fixing boat atmos stuff, small slight other changes that were pointed�
     type: Tweak
-  id: 60
+  id: 58
   time: '2024-08-25T01:54:24.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/146
 - author: KingMudkipIII
   changes:
   - message: new drinks + bartender unlock tweak
     type: Tweak
-  id: 61
+  id: 59
   time: '2024-08-25T15:36:27.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/148
 - author: starlighthowls
   changes:
   - message: NTAS WW small fixes
     type: Tweak
-  id: 62
+  id: 60
   time: '2024-08-25T15:36:37.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/149
 - author: KingMudkipIII
   changes:
   - message: Jungle juice + King soda
     type: Tweak
-  id: 63
+  id: 61
   time: '2024-08-26T18:01:13.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/150
 - author: starlighthowls
   changes:
   - message: i didnt actually add NTAS WW to map rotation OOPS
     type: Tweak
-  id: 64
+  id: 62
   time: '2024-08-26T23:10:51.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/151
 - author: TGRCdev
   changes:
   - message: Updating to match upstream + YML fixes
     type: Tweak
-  id: 65
+  id: 63
   time: '2024-08-27T15:25:12.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/152
 - author: sususuyo
   changes:
   - message: senior cargo technician ID, PDA + a couple new options for salvage neckwear
     type: Tweak
-  id: 66
+  id: 64
   time: '2024-08-27T15:25:32.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/153
 - author: Darkmajia
   changes:
   - message: quick pda fixes
     type: Tweak
-  id: 67
+  id: 65
   time: '2024-08-27T20:23:11.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/155
 - author: TGRCdev
   changes:
   - message: Station AI
     type: Tweak
-  id: 68
+  id: 66
   time: '2024-08-28T01:48:43.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/157
 - author: formlessnameless
   changes:
   - message: Upstream merge with Storage UI fixes, some AI fixes for radio and the like. Still working on Tesla issues
     type: Tweak
-  id: 69
+  id: 67
   time: '2024-08-28T03:52:31.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/158
 - author: sususuyo
   changes:
   - message: removing passenger time requirement on the mantle for salvage
     type: Tweak
-  id: 70
+  id: 68
   time: '2024-08-28T15:23:14.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/159
 - author: formlessnameless
   changes:
   - message: Upstream merge with more AI stuff and fixes
     type: Tweak
-  id: 71
+  id: 69
   time: '2024-08-28T15:23:28.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/161
 - author: Darkmajia
   changes:
   - message: fix dupe cargo tech pda
     type: Tweak
-  id: 72
+  id: 70
   time: '2024-08-28T15:23:42.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/162
 - author: ultramario1998
   changes:
   - message: removed potentially offensive borg name, added a couple RTVS-themed ones
     type: Tweak
-  id: 73
+  id: 71
   time: '2024-08-28T21:47:26.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/163
 - author: AirFryerBuyOneGetOneFree
   changes:
   - message: Increased Plasma Sheets in Plasma Crate to 60
     type: Tweak
-  id: 74
+  id: 72
   time: '2024-08-29T02:52:35.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/164
 - author: ultramario1998
   changes:
   - message: Bros
     type: Tweak
-  id: 75
+  id: 73
   time: '2024-08-29T17:28:33.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/165
 - author: formlessnameless
   changes:
   - message: More upstream merges with a couple of bugfixes
     type: Tweak
-  id: 76
+  id: 74
   time: '2024-08-29T17:28:41.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/166
 - author: Darkmajia
   changes:
   - message: multiple announcement sounds, announcer volume fix
     type: Tweak
-  id: 77
+  id: 75
   time: '2024-08-29T17:29:56.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/167
 - author: Darkmajia
   changes:
   - message: salvage neck loadout fix
     type: Tweak
-  id: 78
+  id: 76
   time: '2024-08-29T17:30:03.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/168
 - author: Darkmajia
   changes:
   - message: beenade nerf
     type: Tweak
-  id: 79
+  id: 77
   time: '2024-08-29T19:45:29.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/170
 - author: ultramario1998
   changes:
   - message: bros tweaks
     type: Tweak
-  id: 80
+  id: 78
   time: '2024-08-29T23:01:03.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/171
 - author: AirFryerBuyOneGetOneFree
   changes:
   - message: Adds Signature System from Delta-V
     type: Tweak
-  id: 81
+  id: 79
   time: '2024-08-30T03:07:25.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/172
 - author: formlessnameless
   changes:
   - message: Ling Tweaks
     type: Tweak
-  id: 82
+  id: 80
   time: '2024-08-30T03:07:53.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/173
 - author: sususuyo
   changes:
   - message: wave 3 music tracks
     type: Tweak
-  id: 83
+  id: 81
   time: '2024-08-30T14:10:18.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/174
 - author: Darkmajia
   changes:
   - message: brosnade items and traitor uplink
     type: Tweak
-  id: 84
+  id: 82
   time: '2024-08-30T14:10:56.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/175
 - author: Darkmajia
   changes:
   - message: suspenders fix
     type: Tweak
-  id: 85
+  id: 83
   time: '2024-08-30T14:11:12.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/176
 - author: starlighthowls
   changes:
   - message: removing ntas ww from rotation
     type: Tweak
-  id: 86
+  id: 84
   time: '2024-08-30T23:51:43.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/177
 - author: sususuyo
   changes:
   - message: volume correction for a jukebox track
     type: Tweak
-  id: 87
+  id: 85
   time: '2024-08-31T15:38:29.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/178
 - author: AirFryerBuyOneGetOneFree
   changes:
   - message: Add new toys to the Recruiter Shuttle
     type: Tweak
-  id: 88
+  id: 86
   time: '2024-08-31T15:38:39.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/179
 - author: LucasTheDrgn
   changes:
   - message: QSI Fix 2 - Actually Fixing It
     type: Tweak
-  id: 89
+  id: 87
   time: '2024-08-31T15:38:55.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/180
 - author: Darkmajia
   changes:
   - message: BROSochloric BROS, edible/grindable BROS, adjusted BROSnade
     type: Tweak
-  id: 90
+  id: 88
   time: '2024-08-31T15:39:28.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/181
 - author: formlessnameless
   changes:
   - message: Exclusively Upstream stuff - Fixes AI Eye dying to singulo, Revs spawning as solid, other stuff. Includes RobustToolbox update, RUN_THIS.py required.
     type: Tweak
-  id: 91
+  id: 89
   time: '2024-08-31T15:39:37.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/182
 - author: TGRCdev
   changes:
   - message: Fixes some error drinks
     type: Tweak
-  id: 92
+  id: 90
   time: '2024-09-01T00:02:56.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/183
 - author: starlighthowls
   changes:
   - message: new boy ! (not rounstart enabled)
     type: Tweak
-  id: 93
+  id: 91
   time: '2024-09-01T18:32:32.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/184
 - author: formlessnameless
   changes:
   - message: Added mini jetpacks to salv starting loadout
     type: Tweak
-  id: 94
+  id: 92
   time: '2024-09-01T18:32:42.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/185
 - author: widgetbeck
   changes:
   - message: update guidebook entry for snails
     type: Tweak
-  id: 95
+  id: 93
   time: '2024-09-02T02:14:39.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/186
 - author: widgetbeck
   changes:
   - message: Snail reagent fixes.
     type: Tweak
-  id: 96
+  id: 94
   time: '2024-09-02T15:52:35.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/187
 - author: iaada
   changes:
   - message: Salvage Jetpack
     type: Tweak
-  id: 97
+  id: 95
   time: '2024-09-02T15:52:46.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/188
 - author: Darkmajia
   changes:
   - message: added pride cloaks in the uniform printer
     type: Tweak
-  id: 98
+  id: 96
   time: '2024-09-02T15:52:56.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/189
 - author: AirFryerBuyOneGetOneFree
   changes:
   - message: The recruiter's personal ship has a new design!
     type: Tweak
-  id: 99
+  id: 97
   time: '2024-09-02T17:04:53.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/190
+- author: formlessnameless
+  changes:
+  - message: Upstream merge, some merge fixes
+    type: Tweak
+  id: 98
+  time: '2024-09-03T02:34:48.0000000+00:00'
+  url: https://github.com/medabunny/imp-station-14/pull/192
+- author: iaada
+  changes:
+  - message: Salvage Jetpack, fixed
+    type: Tweak
+  id: 99
+  time: '2024-09-03T02:35:00.0000000+00:00'
+  url: https://github.com/medabunny/imp-station-14/pull/193
