@@ -106,7 +106,7 @@
 
 - type: foodSequenceElement
   id: MeatPenguin
-  name: food-sequence-content-cheese
+  name: food-sequence-content-penguin
   sprites:
   - sprite: Objects/Consumable/Food/meat.rsi
     state: cheese
@@ -116,7 +116,7 @@
 
 - type: foodSequenceElement
   id: MeatPenguinBurger
-  name: food-sequence-burger-content-cheese
+  name: food-sequence-burger-content-penguin
   sprites:
   - sprite: Objects/Consumable/Food/meat.rsi
     state: bird-cooked
@@ -137,35 +137,11 @@
   - Meat
   - Chicken
 
-- type: foodSequenceElement
-  id: MeatChickenBurger
-  name: food-sequence-burger-content-chicken
-  sprites:
-  - sprite: Objects/Consumable/Food/meat.rsi
-    state: bird-fried
-  tags:
-  - Cooked
-  - Meat
-  - Chicken
-
 # Fried Chicken meat
 
 - type: foodSequenceElement
   id: MeatFriedChicken
   name: food-sequence-content-chicken
-  sprites:
-  - sprite: Objects/Consumable/Food/meat.rsi
-    state: chicken-fried
-  - sprite: Objects/Consumable/Food/meat.rsi
-    state: chicken2-fried
-  tags:
-  - Cooked
-  - Meat
-  - Chicken
-
-- type: foodSequenceElement
-  id: MeatFriedChickenBurger
-  name: food-sequence-burger-content-chicken
   sprites:
   - sprite: Objects/Consumable/Food/meat.rsi
     state: chicken-fried
@@ -945,13 +921,6 @@
   - sprite: Objects/Specific/Hydroponics/fly_amanita.rsi
     state: produce
 
-- type: foodSequenceElement
-  id: FlyAmanitaBurger
-  name: food-sequence-burger-content-mushroom
-  sprites:
-  - sprite: Objects/Specific/Hydroponics/fly_amanita.rsi
-    state: produce
-
 # Gatfruit
 
 - type: foodSequenceElement
@@ -1016,7 +985,7 @@
 
 - type: foodSequenceElement
   id: SpacemansTrumpet
-  name: food-sequence-content-trumpet
+  name: food-sequence-content-spacemans-trumpet
   sprites:
   - sprite: Objects/Specific/Hydroponics/spacemans_trumpet.rsi
     state: produce
@@ -1025,7 +994,7 @@
 
 - type: foodSequenceElement
   id: SpacemansTrumpetBurger
-  name: food-sequence-burger-content-trumpet
+  name: food-sequence-burger-content-spacemans-trumpet
   sprites:
   - sprite: Objects/Specific/Hydroponics/spacemans_trumpet.rsi
     state: produce
@@ -1077,15 +1046,6 @@
 - type: foodSequenceElement
   id: Bungo
   name: food-sequence-content-bungo
-  sprites:
-  - sprite: Objects/Specific/Hydroponics/bungo.rsi
-    state: produce
-  tags:
-  - Fruit
-
-- type: foodSequenceElement
-  id: BungoBurger
-  name: food-sequence-burger-content-bungo
   sprites:
   - sprite: Objects/Specific/Hydroponics/bungo.rsi
     state: produce

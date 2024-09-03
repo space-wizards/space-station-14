@@ -893,7 +893,7 @@
     node: cooked chicken
   - type: FoodSequenceElement
     entries:
-      Burger: MeatChickenBurger
+      Burger: MeatChicken
       Taco: MeatChicken
 
 - type: entity
@@ -925,7 +925,7 @@
           Quantity: 5
   - type: FoodSequenceElement
     entries:
-      Burger: MeatChickenBurger
+      Burger: MeatChicken
       Taco: MeatChicken
 
 - type: entity

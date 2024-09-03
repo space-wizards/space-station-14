@@ -1678,7 +1678,7 @@
   - type: FoodSequenceElement
     entries:
       Taco: FlyAmanita
-      Burger: FlyAmanitaBurger
+      Burger: FlyAmanita
 
 - type: entity
   name: gatfruit
@@ -2072,7 +2072,7 @@
   - type: FoodSequenceElement
     entries:
       Taco: Bungo
-      Burger: BungoBurger
+      Burger: Bungo
 
 - type: entity
   name: bungo pit
