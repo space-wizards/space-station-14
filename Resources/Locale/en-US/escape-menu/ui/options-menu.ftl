@@ -22,7 +22,6 @@ ui-options-general-discord = Discord
 ui-options-general-cursor = Cursor
 ui-options-general-speech = Speech
 ui-options-general-storage = Storage
-ui-options-general-highlights = Highlights
 ui-options-general-accessibility = Accessibility
 
 ## Audio menu
@@ -49,6 +48,8 @@ ui-options-interface-label = Interface
 
 
 ui-options-auto-fill-highlights = Auto-fill the highlights with the character's information
+ui-options-highlights-color = Highlighs color:
+ui-options-highlights-color-example = This is an highlighted text.
 ui-options-show-held-item = Show held item next to cursor
 ui-options-show-combat-mode-indicators = Show combat mode indicators with cursor
 ui-options-opaque-storage-window = Opaque storage window

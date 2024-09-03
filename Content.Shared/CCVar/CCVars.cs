@@ -1820,6 +1820,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> ChatAutoFillHighlights =
             CVarDef.Create("chat.auto_fill_highlights", false, CVar.CLIENTONLY | CVar.ARCHIVE, "Toggles automatically filling the highlights with the character's information.");
 
+        /// <summary>
+        /// The color in which the highlights will be displayed.
+        /// </summary>
+        public static readonly CVarDef<string> ChatHighlightsColor =
+            CVarDef.Create("chat.highlights_color", "#E5FFCCFF", CVar.CLIENTONLY | CVar.ARCHIVE, "The color in which the highlights will be displayed."); 
+
         /*
          * AFK
          */
