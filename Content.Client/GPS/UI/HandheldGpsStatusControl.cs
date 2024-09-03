@@ -1,4 +1,4 @@
-using Content.Client.GPS.Components;
+using Content.Shared.GPS.Components;
 using Content.Client.Message;
 using Content.Client.Stylesheets;
 using Robust.Client.GameObjects;
@@ -23,32 +23,14 @@ public sealed class HandheldGpsStatusControl : Control
         _transform = _entMan.System<TransformSystem>();
         _label = new RichTextLabel { StyleClasses = { StyleNano.StyleClassItemStatus } };
         AddChild(_label);
-        UpdateGpsDetails();
+
+        _label.SetMarkup(_parent.Comp.StoredCoords);
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
     {
         base.FrameUpdate(args);
 
-        _updateDif += args.DeltaSeconds;
-        if (_updateDif < _parent.Comp.UpdateRate)
-            return;
-
-        _updateDif -= _parent.Comp.UpdateRate;
-
-        UpdateGpsDetails();
-    }
-
-    private void UpdateGpsDetails()
-    {
-        var posText = "Error";
-        if (_entMan.TryGetComponent(_parent, out TransformComponent? transComp))
-        {
-            var pos =  _transform.GetMapCoordinates(_parent.Owner, xform: transComp);
-            var x = (int) pos.X;
-            var y = (int) pos.Y;
-            posText = $"({x}, {y})";
-        }
-        _label.SetMarkup(Loc.GetString("handheld-gps-coordinates-title", ("coordinates", posText)));
+        _label.SetMarkup(_parent.Comp.StoredCoords);
     }
 }
