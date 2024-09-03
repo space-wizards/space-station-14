@@ -263,32 +263,37 @@ namespace Content.Server.Kitchen.EntitySystems
             {
                 if (!TryComp<SolutionContainerManagerComponent>(item, out var solMan))
                     continue;
+                    
                 if (!HasComp<FoodComponent>(item))
                     continue;
+                    
                 var empty = true;
 
                 foreach (var (_, soln) in _solutionContainer.EnumerateSolutions((item, solMan)))
                 {
                     if (soln.Comp.Solution.Volume == 0)
                         continue;
+                        
                     empty = false;
                 }
+                
                 if (!empty)
                     continue;
+                    
                 entsToRemove.Push(item);
-
-
-
             }
             //removing food type containers stored in the stack so they dont remain after being used in cooking and spawning the trash version of the container if possible
             while (entsToRemove.Count > 0)
             {
                 var entToRemove = entsToRemove.Pop();
                 _container.Remove(entToRemove, component.Storage);
+                
                 if (TryComp<FoodComponent>(entToRemove, out var foodComp))
+                //spawn the trash version of the destroyed  food type container
                     Spawn(foodComp.Trash, Transform(entToRemove).Coordinates);
                 Del(entToRemove);
             }
+            
         }
 
         private void Spawn(List<EntProtoId> trash, EntityCoordinates coordinates)
