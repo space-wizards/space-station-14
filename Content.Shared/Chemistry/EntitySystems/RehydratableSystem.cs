@@ -40,6 +40,8 @@ public sealed class RehydratableSystem : EntitySystem
 
 	private void OnMicrowaved(EntityUid uid, RehydratableComponent component, BeingMicrowavedEvent args)
     {
+		if(args.Time <= 0)
+			return;
 		if (!_solutions.TryGetSolution(uid, component.SolutionName, out _, out var solution))
             return;
         solution.RemoveAllSolution();

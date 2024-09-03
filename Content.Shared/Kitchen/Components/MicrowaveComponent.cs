@@ -116,11 +116,13 @@ namespace Content.Shared.Kitchen.Components
     {
         public EntityUid Microwave;
         public EntityUid? User;
+        public uint Time;
 
-        public BeingMicrowavedEvent(EntityUid microwave, EntityUid? user)
+        public BeingMicrowavedEvent(EntityUid microwave, EntityUid? user, uint time)
         {
             Microwave = microwave;
             User = user;
+            Time = time;
         }
     }
 }
