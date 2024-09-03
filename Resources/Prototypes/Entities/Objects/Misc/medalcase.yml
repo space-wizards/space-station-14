@@ -2,12 +2,13 @@
   id: MedalCase
   name: medal case
   description: Case with medals.
-  parent: [ BaseStorageItem, BaseBagOpenClose ]
+  parent: [ BaseStorageItem, BaseBagOpenClose, BaseCommandContraband ]
   components:
   - type: Sprite
     sprite: Objects/Storage/medalcase.rsi
     layers:
     - state: closed
+      map: ["closeLayer"]
     - state: open
       map: ["openLayer"]
   - type: Appearance

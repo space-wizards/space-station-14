@@ -61,7 +61,7 @@
     canCollide: false
     bodyType: static
   - type: StaticPrice
-    price: 11
+    price: 30
 
 #Note: The PipeDirection of the PipeNode should be the south-facing version, because the entity starts at an angle of 0 (south)
 
@@ -155,7 +155,7 @@
   - type: DamageOtherOnHit
     damage:
       types:
-        Blunt: 3 #This should be 6 but throwing damage is doubled at the moment for some reason so for now it's 3
+        Blunt: 8 # Woe, pipe be upon ye!
 
 - type: entity
   parent: GasPipeBase
