@@ -1751,7 +1751,7 @@
   icon: { sprite:  Objects/Consumable/Food/Baked/bread.rsi, state: baguette}
   productEntity: CombatBakeryKit
   cost:
-    Telecrystal: 3
+    Telecrystal: 6
   categories:
   - UplinkJob
   conditions:

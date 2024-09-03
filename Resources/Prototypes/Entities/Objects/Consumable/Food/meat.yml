@@ -930,6 +930,35 @@
       taco:
         name: food-sequence-content-slime
 
+- type: entity
+  name: raw snail meat
+  parent: FoodMeatRawBase
+  id: FoodMeatSnail
+  description: Improved with salt.
+  components:
+  - type: Sprite
+    state: snail
+  - type: FoodSequenceElement
+    sprite:
+      sprite: Objects/Consumable/Food/meat.rsi
+      state: snail
+    entries:
+      burger:
+        name: food-sequence-content-snail
+      taco:
+        name: food-sequence-content-snail
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 3
+        - ReagentId: Fat
+          Quantity: 3
+        - ReagentId: Water
+          Quantity: 4 #It makes saline if you add salt!
+
 # Cooked
 
 - type: entity
@@ -1472,6 +1501,40 @@
         sprite: 
           sprite: Objects/Consumable/Food/skewer.rsi
           state: skewer-meat
+
+- type: entity
+  name: boiled snail
+  parent: FoodMeatBase
+  id: FoodMeatSnailCooked
+  description: Improved with salt.
+  components:
+  - type: Tag
+    tags:
+    - Cooked
+    - Meat
+  - type: Sprite
+    layers:
+    - state: snail-cooked
+  - type: FoodSequenceElement
+    sprite:
+      sprite: Objects/Consumable/Food/meat.rsi
+      state: snail-cooked
+    entries:
+      burger:
+        name: food-sequence-content-snail
+      taco:
+        name: food-sequence-content-snail
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: Protein
+          Quantity: 3
+        - ReagentId: Water
+          Quantity: 4 # makes saline if you add salt!
 
 # Cutlets
 

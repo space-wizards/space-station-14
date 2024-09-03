@@ -459,6 +459,19 @@
     FoodDough: 1
 
 - type: microwaveMealRecipe
+  id: RecipeBaguetteSword
+  name: baguette sword recipe
+  result: WeaponBaguette
+  secretRecipe: true
+  time: 15
+  reagents:
+    TableSalt: 5
+    Blackpepper: 5
+  solids:
+    FoodDough: 1
+    PartRodMetal1: 1
+
+- type: microwaveMealRecipe
   id: RecipeButteredToast
   name: buttered toast recipe
   result: FoodBreadButteredToast
@@ -943,6 +956,29 @@
     FoodBowlBig: 1
     FoodBungo: 2
     FoodChiliPepper: 1
+
+- type: microwaveMealRecipe
+  id: RecipeBoiledSnail
+  name: boiled snail recipe
+  result: FoodMeatSnailCooked
+  time: 5
+  reagents:
+    Water: 10
+  solids:
+    FoodMeatSnail: 1
+
+- type: microwaveMealRecipe
+  id: RecipeEscargotSoup
+  name: escargot recipe
+  result: FoodSoupEscargot
+  time: 10
+  reagents:
+    Water: 5
+  solids:
+    FoodBowlBig: 1
+    FoodOnionSlice: 1
+    FoodButter: 1
+    FoodMeatSnailCooked: 1
 
 #Pies
 
@@ -1864,3 +1900,14 @@
   solids:
     FoodCroissantRaw: 1
     FoodButterSlice: 1
+
+- type: microwaveMealRecipe
+  id: RecipeThrowingCroissant
+  name: throwing croissant recipe
+  result: WeaponCroissant
+  secretRecipe: true
+  time: 5
+  solids:
+    FoodCroissantRaw: 1
+    FoodButterSlice: 1
+    ShardGlass: 1
