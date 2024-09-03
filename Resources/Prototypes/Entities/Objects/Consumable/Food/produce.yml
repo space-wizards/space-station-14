@@ -204,7 +204,7 @@
   - type: Produce
     seedId: nettle
   - type: MeleeChemicalInjector
-    transferAmount: 3 #To OD someone you would need 2 nettles and about 6-7 hits, the DOT is likely to crit them if they are running away with almost no health
+    transferAmount: 3 #TODO someone you would need 2 nettles and about 6-7 hits, the DOT is likely to crit them if they are running away with almost no health
     solution: food
     pierceArmor: false
   - type: Extractable
@@ -278,6 +278,10 @@
     tags:
     - Fruit
     - Banana
+  - type: FoodSequenceElement
+    entries:
+      burger: Banana
+      taco: Banana
 
 - type: entity
   name: mimana
@@ -315,6 +319,10 @@
   - type: Tag
     tags:
     - Fruit
+  - type: FoodSequenceElement
+    entries:
+      burger: Mimana
+      taco: Mimana
 
 - type: entity
   name: banana peel
@@ -453,6 +461,10 @@
         Quantity: 10
       - ReagentId: Oculine
         Quantity: 2
+  - type: FoodSequenceElement
+    entries:
+      burger: CarrotBurger
+      taco: Carrot
 
 - type: entity
   name: cabbage
@@ -479,6 +491,10 @@
   - type: Tag
     tags:
     - Vegetable
+  - type: FoodSequenceElement
+    entries:
+      burger: CabbageBurger
+      taco: Cabbage
 
 - type: entity
   name: garlic
@@ -507,6 +523,10 @@
   - type: Tag
     tags:
     - Vegetable
+  - type: FoodSequenceElement
+    entries:
+      burger: GarlicBurger
+      taco: Garlic
 
 - type: entity
   name: lemon
@@ -539,6 +559,10 @@
     tags:
     - Lemon
     - Fruit
+  - type: FoodSequenceElement
+    entries:
+      burger: Lemon
+      taco: Lemon
 
 - type: entity
   name: lemoon
@@ -570,6 +594,10 @@
   - type: Tag
     tags:
     - Fruit
+  - type: FoodSequenceElement
+    entries:
+      burger: Lemoon
+      taco: Lemoon
 
 - type: entity
   name: lime
@@ -593,6 +621,10 @@
     tags:
     - Lime
     - Fruit
+  - type: FoodSequenceElement
+    entries:
+      burger: Lime
+      taco: Lime
 
 - type: entity
   name: orange
@@ -615,6 +647,10 @@
   - type: Tag
     tags:
     - Fruit
+  - type: FoodSequenceElement
+    entries:
+      burger: Orange
+      taco: Orange
 
 - type: entity
   name: pineapple
@@ -683,6 +719,10 @@
     tags:
     - Potato
     - Vegetable
+  - type: FoodSequenceElement
+    entries:
+      burger: Potato
+      taco: Potato
 
 
 - type: entity
@@ -742,6 +782,8 @@
   - type: FoodSequenceElement
     entries:
       skewer: TomatoSkewer
+      burger: Tomato
+      taco: Tomato
 
 - type: entity
   name: blue tomato
@@ -787,6 +829,10 @@
     tags:
     - Fruit
     - Vegetable
+  - type: FoodSequenceElement
+    entries:
+      burger: BlueTomato
+      taco: BlueTomato
 
 - type: entity
   name: blood tomato
@@ -833,6 +879,8 @@
   - type: FoodSequenceElement
     entries:
       skewer: TomatoSkewer
+      burger: BloodTomato
+      taco: BloodTomato
 
 - type: entity
   name: eggplant
@@ -891,6 +939,10 @@
   - type: Tag
     tags:
     - Fruit
+  - type: FoodSequenceElement
+    entries:
+      burger: Apple
+      taco: Apple
 
 - type: entity
   name: golden apple
@@ -927,6 +979,10 @@
   - type: Tag
     tags:
     - Fruit
+  - type: FoodSequenceElement
+    entries:
+      burger: GoldenApple
+      taco: GoldenApple
 
 - type: entity
   name: cocoa pod
@@ -1308,6 +1364,10 @@
   - type: Tag
     tags:
     - Vegetable
+  - type: FoodSequenceElement
+    entries:
+      taco: Aloe
+      burger: Aloe
 
 - type: entity
   name: poppy
@@ -1340,6 +1400,10 @@
   - type: Tag
     tags:
     - Flower # TODO add "RedFlower" or "Poppy" tag, when other color flowers will be
+  - type: FoodSequenceElement
+    entries:
+      taco: Poppy
+      burger: Poppy
 
 - type: entity
   name: lily
@@ -1368,6 +1432,10 @@
   - type: Tag
     tags:
     - Flower
+  - type: FoodSequenceElement
+    entries:
+      taco: Lily
+      burger: Lily
 
 - type: entity
   name: lingzhi
@@ -1394,6 +1462,10 @@
     seedId: lingzhi
   - type: Extractable
     grindableSolutionName: food
+  - type: FoodSequenceElement
+    entries:
+      taco: Lingzhi
+      burger: LingzhiBurger
 
 - type: entity
   name: ambrosia vulgaris
@@ -1433,6 +1505,10 @@
   - type: Tag
     tags:
     - Ambrosia
+  - type: FoodSequenceElement
+    entries:
+      taco: AmbrosiaVulgaris
+      burger: AmbrosiaVulgarisBurger
 
 - type: entity
   name: ambrosia deus
@@ -1470,6 +1546,10 @@
   - type: Tag
     tags:
     - Ambrosia
+  - type: FoodSequenceElement
+    entries:
+      taco: AmbrosiaDeus
+      burger: AmbrosiaDeusBurger
 
 - type: entity
   name: galaxythistle
@@ -1497,6 +1577,10 @@
     tags:
     - Galaxythistle
     - Fruit # Probably?
+  - type: FoodSequenceElement
+    entries:
+      taco: Galaxythistle
+      burger: GalaxythistleBurger
 
 - type: entity
   name: glasstle
@@ -1561,6 +1645,10 @@
   - type: Tag
     tags:
     - Galaxythistle
+  - type: FoodSequenceElement
+    entries:
+      taco: Glasstle
+      burger: GlasstleBurger
 
 - type: entity
   name: fly amanita
@@ -1587,6 +1675,10 @@
   - type: Extractable
     grindableSolutionName: food
   - type: BadFood
+  - type: FoodSequenceElement
+    entries:
+      taco: FlyAmanita
+      burger: FlyAmanitaBurger
 
 - type: entity
   name: gatfruit
@@ -1616,6 +1708,10 @@
   - type: Tag
     tags:
     - Fruit # It's in the name
+  - type: FoodSequenceElement
+    entries:
+      taco: Gatfruit
+      burger: GatfruitBurger
 
 - type: entity
   name: capfruit
@@ -1645,6 +1741,10 @@
   - type: Tag
     tags:
     - Fruit
+  - type: FoodSequenceElement
+    entries:
+      taco: Capfruit
+      burger: CapfruitBurger
 
 - type: entity
   name: capfruit
@@ -1700,6 +1800,10 @@
   - type: Tag
     tags:
     - Vegetable
+  - type: FoodSequenceElement
+    entries:
+      taco: Soybeans
+      burger: SoybeansBurger
 
 - type: entity
   name: spaceman's trumpet
@@ -1728,6 +1832,10 @@
     - Flower
   - type: Instrument #hehe trumpet
     program: 56
+  - type: FoodSequenceElement
+    entries:
+      taco: SpacemansTrumpet
+      burger: SpacemansTrumpetBurger
 
 - type: entity
   name: koibean
@@ -1756,6 +1864,10 @@
   - type: Tag
     tags:
     - Vegetable
+  - type: FoodSequenceElement
+    entries:
+      taco: Koibean
+      burger: KoibeanBurger
 
 - type: entity
   name: watermelon
@@ -1919,6 +2031,10 @@
   - type: Tag
     tags:
     - Fruit
+  - type: FoodSequenceElement
+    entries:
+      taco: Berries
+      burger: BerriesBurger
 
 - type: entity
   name: bungo fruit
@@ -1953,6 +2069,10 @@
   - type: Tag
     tags:
     - Fruit
+  - type: FoodSequenceElement
+    entries:
+      taco: Bungo
+      burger: BungoBurger
 
 - type: entity
   name: bungo pit
@@ -2007,6 +2127,10 @@
   - type: Tag
     tags:
     - Vegetable
+  - type: FoodSequenceElement
+    entries:
+      taco: Pea
+      burger: Pea
 
 - type: entity
   name: pumpkin
@@ -2203,14 +2327,9 @@
     tags:
     - Fruit
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Specific/Hydroponics/cherry.rsi
-      state: produce
     entries:
-      burger:
-        name: food-sequence-content-cherry
-      taco:
-        name: food-sequence-content-cherry
+      taco: Cherry
+      burger: Cherry
 
 - type: entity
   name: cherry pit
