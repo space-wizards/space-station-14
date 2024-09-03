@@ -424,6 +424,15 @@
       board: [ DoorElectronicsService ]
 
 - type: entity
+  parent: WindoorSecurePlasma
+  id: PlasmaWindoorSecureSyndicateLocked
+  suffix: Syndicate, Locked, Plasma
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsSyndicateAgent ]
+
+- type: entity
   parent: WindoorSecure
   id: WindoorSecureHeadOfPersonnelLocked
   suffix: HeadOfPersonnel, Locked
