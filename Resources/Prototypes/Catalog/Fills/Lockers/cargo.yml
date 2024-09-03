@@ -3,10 +3,17 @@
   table: !type:AllSelector
     children:
     - id: OxygenTankFilled
-    - id: JetpackMiniFilled
     - id: ClothingShoesBootsMag
     - id: ClothingOuterHardsuitSpatio
     - id: ClothingMaskGasExplorer
+    - !type:GroupSelector # Random jetpack
+      children:
+      - id: JetpackSalvage
+        weight: 80
+      - id: FireExtinguisher
+        weight: 18
+      - id: JetpackMini
+        weight: 2
 
 - type: entityTable
   id: LockerFillSalvageSpecialist
@@ -21,14 +28,6 @@
       prob: 0.3
       rolls: !type:ConstantNumberSelector
         value: 3
-    - !type:GroupSelector # Random jetpack
-      children:
-      - id: JetpackSalvage
-        weight: 80
-      - id: FireExtinguisher
-        weight: 18
-      - id: JetpackMini
-        weight: 2
 
 - type: entity
   id: LockerSalvageSpecialistFilledHardsuit
