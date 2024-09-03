@@ -206,34 +206,6 @@
 
 - type: entity
   parent: BaseTraitorRuleNoRandomObjectives
-  id: SpyVsSpyDefaultTC
-  components:
-  - type: GameRule
-    minPlayers: 15
-    delay:
-      min: 240
-      max: 420
-  - type: AntagObjectives
-    objectives:
-    - KillRandomTraitorSvSObjective
-    - RandomTraitorAliveSvSObjective
-    - EscapeShuttleObjective
-  - type: AntagSelection
-    definitions:
-    - prefRoles: [ Traitor ]
-      max: 100
-      playerRatio: 1
-      blacklist:
-        components:
-        - AntagImmune
-      lateJoinAdditional: true
-      forceAllPossible: true
-      mindComponents:
-      - type: TraitorRole
-        prototype: Traitor
-
-- type: entity
-  parent: BaseTraitorRuleNoRandomObjectives
   id: SpyVsSpy5TC
   components:
   - type: TraitorRule

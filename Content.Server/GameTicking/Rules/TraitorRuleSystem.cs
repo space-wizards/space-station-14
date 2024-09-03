@@ -40,9 +40,8 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
     public override void Initialize()
     {
         base.Initialize();
-
+        SubscribeLocalEvent<TraitorRuleComponent, AntagPrereqSetupEvent>(AdditionalSetup);
         SubscribeLocalEvent<TraitorRuleComponent, AfterAntagEntitySelectedEvent>(AfterEntitySelected);
-
         SubscribeLocalEvent<TraitorRuleComponent, ObjectivesTextPrependEvent>(OnObjectivesTextPrepend);
     }
 
@@ -52,10 +51,14 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         SetCodewords(component);
     }
 
-    private void AfterEntitySelected(Entity<TraitorRuleComponent> ent, ref AfterAntagEntitySelectedEvent args)
+    private void AdditionalSetup(Entity<TraitorRuleComponent> ent, ref AntagPrereqSetupEvent args)
     {
         CurrentAntagPool = args.Pool;
         ForceAllPossible = args.Def.ForceAllPossible;
+    }
+
+    private void AfterEntitySelected(Entity<TraitorRuleComponent> ent, ref AfterAntagEntitySelectedEvent args)
+    {
         MakeTraitor(args.EntityUid, ent);
     }
 

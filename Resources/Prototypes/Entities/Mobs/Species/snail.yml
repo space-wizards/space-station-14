@@ -5,6 +5,8 @@
   id: BaseMobGastropoid
   abstract: true
   components:
+  - type: SnailSpeed
+    snailSlowdownModifier: 0.5
   - type: Absorbable
   - type: Hunger
   - type: Thirst
@@ -94,7 +96,7 @@
   - type: DamageVisuals
     damageOverlayGroups:
       Brute:
-        sprite: Mobs/Effects/brute_damage.rsi
+        sprite: Mobs/Effects/snail_brute_damage.rsi
         color: "#162581"
   - type: Reactive
     groups:

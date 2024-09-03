@@ -172,17 +172,6 @@
     - BasicRoundstartVariation
 
 - type: gamePreset
-  id: SpyVsSpyDefaultTC
-  name: spy-vs-spy-title
-  description: spy-vs-spy-description
-  showInVote: false
-  rules:
-    - SpyVsSpyDefaultTC
-    - BasicStationEventScheduler
-    - MeteorSwarmScheduler
-    - BasicRoundstartVariation
-
-- type: gamePreset
   id: SpyVsSpy5TC
   name: spy-vs-spy-title
   description: spy-vs-spy-description

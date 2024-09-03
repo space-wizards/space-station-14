@@ -575,6 +575,24 @@
     jobTitle: Centcomm Agent
 
 - type: entity
+  parent: IDCardStandard
+  id: UndercoverIDCard
+  suffix: Undercover
+  name: passenger ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idpassenger
+  - type: IdCard
+    jobTitle: Passenger
+    jobIcon: JobIconPassenger
+  - type: Access
+    tags:
+    - Maintenance
+    - SyndicateAgent
+
+- type: entity
   name: passenger ID card
   parent: IDCardStandard
   id: AgentIDCard

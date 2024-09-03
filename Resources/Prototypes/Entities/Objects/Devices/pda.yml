@@ -140,6 +140,14 @@
     borderColor: "#717059"
 
 - type: entity
+  parent: PassengerPDA
+  id: UndercoverPDA
+  suffix: Syndicate
+  components:
+  - type: Pda
+    id: UndercoverIDCard
+
+- type: entity
   parent: BasePDA
   id: TechnicalAssistantPDA
   name: technical assistant PDA
