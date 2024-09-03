@@ -1133,3 +1133,19 @@
     state: produce
   tags:
   - Fruit
+
+# Suppermatter
+
+- type: foodSequenceElement
+  id: Suppermatter
+  name: food-sequence-content-suppermatter
+  sprites:
+  - sprite: Objects/Consumable/Food/Baked/cake.rsi
+    state: suppermatter-shard
+
+- type: foodSequenceElement
+  id: SuppermatterBurger
+  name: food-sequence-burger-content-suppermatter
+  sprites:
+  - sprite: Objects/Consumable/Food/Baked/cake.rsi
+    state: suppermatter-shard
