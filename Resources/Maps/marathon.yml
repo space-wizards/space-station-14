@@ -10962,7 +10962,7 @@ entities:
       pos: -20.5,-5.5
       parent: 30
     - type: Door
-      secondsUntilStateChange: -26227.342
+      secondsUntilStateChange: -26759.072
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -100178,6 +100178,18 @@ entities:
     components:
     - type: Transform
       pos: 18.5,18.5
+      parent: 30
+- proto: OreBox
+  entities:
+  - uid: 21754
+    components:
+    - type: Transform
+      pos: 30.5,-11.5
+      parent: 30
+  - uid: 21757
+    components:
+    - type: Transform
+      pos: 29.5,-11.5
       parent: 30
 - proto: OreProcessor
   entities:
