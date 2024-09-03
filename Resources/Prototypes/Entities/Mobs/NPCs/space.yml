@@ -544,8 +544,8 @@
       Dead:
         Base: spacesnaildead
   - type: MovementSpeedModifier
-    baseWalkSpeed : 7 #he go fast, also they cant slip so its probably fine.
-    baseSprintSpeed : 5
+    baseWalkSpeed : 5 #he go fast, also they cant slip so its probably fine.
+    baseSprintSpeed : 7
 #  - type: ActiveJetpack # I think this will need a custom component to not make tests angry.
   - type: MovementAlwaysTouching
 
