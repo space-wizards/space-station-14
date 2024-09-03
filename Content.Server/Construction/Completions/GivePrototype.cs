@@ -14,7 +14,7 @@ namespace Content.Server.Construction.Completions;
 public sealed partial class GivePrototype : IGraphAction
 {
     [DataField]
-    public ProtoId<EntityPrototype> Prototype { get; private set; } = string.Empty;
+    public EntProtoId Prototype { get; private set; } = string.Empty;
 
     [DataField]
     public int Amount { get; private set; } = 1;
