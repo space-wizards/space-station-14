@@ -3,6 +3,7 @@
   abstract: true
   name: station anchor
   description: Prevents stations from moving.
+  suffix: On
   placement:
     mode: AlignTileAny
   components:
@@ -48,7 +49,15 @@
 - type: entity
   id: StationAnchorIndestructible
   parent: StationAnchorBase
-  suffix: Indestructible, Unpowered
+  suffix: On, Indestructible, Unpowered
+
+- type: entity
+  parent: StationAnchorIndestructible
+  id: StationAnchorIndestructibleOff
+  suffix: Off, Indestructible, Unpowered
+  components:
+  - type: StationAnchor
+    switchedOn: false
 
 - type: entity
   id: StationAnchor
@@ -107,3 +116,11 @@
       interfaces:
         enum.PowerChargeUiKey.Key:
           type: PowerChargeBoundUserInterface
+
+- type: entity
+  parent: StationAnchor
+  id: StationAnchorOff
+  suffix: Off
+  components:
+  - type: StationAnchor
+    switchedOn: false
