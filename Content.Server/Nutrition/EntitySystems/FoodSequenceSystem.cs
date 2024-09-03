@@ -56,8 +56,8 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
 
     private bool TryMetamorph(Entity<FoodSequenceStartPointComponent> start)
     {
-        List<FoodMetamorphRecipePrototype> availableRecipes = new();
-        foreach (var recipe in _proto.EnumeratePrototypes<FoodMetamorphRecipePrototype>())
+        List<MetamorphRecipePrototype> availableRecipes = new();
+        foreach (var recipe in _proto.EnumeratePrototypes<MetamorphRecipePrototype>())
         {
             if (recipe.Key != start.Comp.Key)
                 continue;
@@ -83,7 +83,7 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
         return true;
     }
 
-    private void Metamorf(Entity<FoodSequenceStartPointComponent> start, FoodMetamorphRecipePrototype recipe)
+    private void Metamorf(Entity<FoodSequenceStartPointComponent> start, MetamorphRecipePrototype recipe)
     {
         var result = SpawnAtPosition(recipe.Result, Transform(start).Coordinates);
 

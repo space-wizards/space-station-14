@@ -6,8 +6,8 @@ namespace Content.Shared.Nutrition.Prototypes;
 /// <summary>
 /// Stores a recipe so that FoodSequence assembled in the right sequence can turn into a special meal.
 /// </summary>
-[Prototype("metamorphRecipe")]
-public sealed partial class FoodMetamorphRecipePrototype : IPrototype
+[Prototype]
+public sealed partial class MetamorphRecipePrototype : IPrototype
 {
     [IdDataField] public string ID { get; private set; } = default!;
 
