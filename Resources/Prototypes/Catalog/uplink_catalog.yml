@@ -1708,6 +1708,21 @@
       - SurplusBundle
 
 - type: listing
+  id: uplinkHeavyCleanade
+  name: uplink-heavy-cleanade-name
+  description: uplink-heavy-cleanade-desc
+  productEntity: CleanerGrenadeAcid
+  cost:
+    Telecrystal: 4
+  categories:
+  - UplinkJob
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - Janitor
+    - Chemist # They're already war criminals, they can have the mustard gas bomb.
+
+- type: listing
   id: UplinkSyndicateSpongeBox
   name: uplink-syndicate-sponge-box-name
   description: uplink-syndicate-sponge-box-desc
