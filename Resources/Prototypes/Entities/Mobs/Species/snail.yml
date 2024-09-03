@@ -96,7 +96,7 @@
   - type: DamageVisuals
     damageOverlayGroups:
       Brute:
-        sprite: Mobs/Effects/brute_damage.rsi
+        sprite: Mobs/Effects/snail_brute_damage.rsi
         color: "#162581"
   - type: Reactive
     groups:
