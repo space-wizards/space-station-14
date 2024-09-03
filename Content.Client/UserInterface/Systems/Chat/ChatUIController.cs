@@ -159,16 +159,16 @@ public sealed class ChatUIController : UIController, IOnSystemChanged<CharacterI
     private List<string> _highlights = [];
 
     /// <summary>
-    ///     The color of the highlighted words.
+    ///     The color (hex) in witch the words will be highlighted as.
     /// </summary>
-    private readonly Color HighlightColor = Color.FromHex("#e5ffcc");
+    private string? _highlightsColor;
+
+    private bool _autoFillHighlightsEnabled;
 
     /// <summary>
-    ///     A bool to keep track if 'CharacterUpdated' event is a new player attaching or the opening of the character controller.
+    ///     A bool to keep track if the 'CharacterUpdated' event is a new player attaching or the opening of the character controller.
     /// </summary>
     private bool _charInfoIsAttach = false;
-
-    private bool _autoFillHighlightsEnabled = false;
 
     // TODO add a cap for this for non-replays
     public readonly List<(GameTick Tick, ChatMessage Msg)> History = new();
@@ -265,6 +265,9 @@ public sealed class ChatUIController : UIController, IOnSystemChanged<CharacterI
         _config.OnValueChanged(CCVars.ChatAutoFillHighlights, (value) => { _autoFillHighlightsEnabled = value; });
         _autoFillHighlightsEnabled = _config.GetCVar(CCVars.ChatAutoFillHighlights);
 
+        _config.OnValueChanged(CCVars.ChatHighlightsColor, (value) => { _highlightsColor = value; });
+        _highlightsColor = _config.GetCVar(CCVars.ChatHighlightsColor);
+
         // Load highlights if any were saved.
         string highlights = _config.GetCVar(CCVars.ChatHighlights);
 
@@ -323,8 +326,8 @@ public sealed class ChatUIController : UIController, IOnSystemChanged<CharacterI
 
         string new_highlights = entityName;
 
-        // If job_matches == job_key then no match found for specified job.
-        if (job_matches != job_key)
+        // If job_matches == highlights- + job_key then no match found for specified job.
+        if (!job_matches.Equals($"highlights-{job_key}"))
             new_highlights += '\n' + job_matches;
 
         UpdateHighlights(new_highlights);
@@ -934,7 +937,7 @@ public sealed class ChatUIController : UIController, IOnSystemChanged<CharacterI
         // Highlight any words choosen by the client.
         foreach (var highlight in _highlights)
         {
-            msg.WrappedMessage = SharedChatSystem.InjectTagAroundString(msg, highlight, "color", HighlightColor.ToHex());
+            msg.WrappedMessage = SharedChatSystem.InjectTagAroundString(msg, highlight, "color", _highlightsColor);
         }
 
         // Color any codewords for minds that have roles that use them
