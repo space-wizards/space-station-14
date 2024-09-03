@@ -53,7 +53,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
     private EntityQuery<BroadphaseComponent> _broadphaseQuery;
     private EntityQuery<MapGridComponent> _gridQuery;
 	//TODO: Fix this, please
-	private const string JobName = "job-name-station-ai";
+	private const string JobNameLocId = "job-name-station-ai";
 
     [ValidatePrototypeId<EntityPrototype>]
     private static readonly EntProtoId DefaultAi = "StationAiBrain";
