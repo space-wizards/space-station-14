@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: osjarw
-  changes:
-  - message: Fix air alarms not alarming air.
-    type: Fix
-  id: 6774
-  time: '2024-06-19T00:20:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29172
 - author: EmoGarbage404
   changes:
   - message: Slightly decreased meteor frequency.
@@ -3860,3 +3853,10 @@
   id: 7273
   time: '2024-09-03T13:01:38.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31170
+- author: Lyroth001
+  changes:
+  - message: added a new artifact node for medical chems
+    type: Add
+  id: 7274
+  time: '2024-09-03T15:11:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30873
