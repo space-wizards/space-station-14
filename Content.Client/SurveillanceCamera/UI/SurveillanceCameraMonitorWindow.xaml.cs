@@ -125,14 +125,51 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
 
     private void PopulateCameraList(Dictionary<string, string> cameras)
     {
-        SubnetList.Clear();
+        var entries = cameras.ToList();
+        entries.Sort((a, b) => string.Compare(a.Value, b.Value, StringComparison.Ordinal));
+        // `entries` now contains the definitive list of items which should be in
+        // our list of records and is in the order we want to present those items.
 
-        foreach (var (address, name) in cameras)
+        // Walk through the existing items in RecordListing and in the updated listing
+        // in parallel to synchronize the items in RecordListing with `entries`.
+        int i = SubnetList.Count - 1;
+        int j = entries.Count - 1;
+        while(i >= 0 && j >= 0)
         {
-            AddCameraToList(name, address);
+            var strcmp = string.Compare(SubnetList[i].Text, entries[j].Value, StringComparison.Ordinal);
+            if (strcmp == 0)
+            {
+                // This item exists in both RecordListing and `entries`. Nothing to do.
+                i--;
+                j--;
+            }
+            else if (strcmp > 0)
+            {
+                // Item exists in RecordListing, but not in `entries`. Remove it.
+                SubnetList.RemoveAt(i);
+                i--;
+            }
+            else if (strcmp < 0)
+            {
+                // A new entry which doesn't exist in RecordListing. Create it.
+                SubnetList.Insert(i + 1, new ItemList.Item(SubnetList){Text = entries[j].Value, Metadata = entries[j].Key});
+                j--;
+            }
         }
 
-        SubnetList.SortItemsByText();
+        // Any remaining items in RecordListing don't exist in `entries`, so remove them
+        while (i >= 0)
+        {
+            SubnetList.RemoveAt(i);
+            i--;
+        }
+
+        // And finally, any remaining items in `entries`, don't exist in RecordListing. Create them.
+        while (j >= 0)
+        {
+            SubnetList.Insert(0, new ItemList.Item(SubnetList){Text = entries[j].Value, Metadata = entries[j].Key});
+            j--;
+        }
     }
 
     private void SetCameraView(IEye? eye)
@@ -185,12 +222,6 @@ public sealed partial class SurveillanceCameraMonitorWindow : DefaultWindow
         SubnetSelector.SetItemMetadata(SubnetSelector.ItemCount - 1, subnet);
 
         return SubnetSelector.ItemCount - 1;
-    }
-
-    private void AddCameraToList(string name, string address)
-    {
-        var item = SubnetList.AddItem($"{name}: {address}");
-        item.Metadata = address;
     }
 
     private void OnSubnetListSelect(ItemList.ItemListSelectedEventArgs args)
