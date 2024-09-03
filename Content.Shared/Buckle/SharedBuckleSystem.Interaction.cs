@@ -100,8 +100,7 @@ public abstract partial class SharedBuckleSystem
         }
 
         // Unbuckle others
-        var buckled = component.BuckledEntities.First();
-        if (TryUnbuckle(buckled, args.User))
+        if (component.BuckledEntities.TryFirstOrNull(out var buckled) && TryUnbuckle(buckled.Value, args.User))
         {
             args.Handled = true;
             return;
