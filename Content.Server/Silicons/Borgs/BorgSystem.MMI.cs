@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Mind.Components;
+using Content.Shared.Roles.Jobs;
 using Content.Shared.Silicons.Borgs.Components;
 using Robust.Shared.Containers;
 
@@ -43,6 +44,9 @@ public sealed partial class BorgSystem
         if (_mind.TryGetMind(ent, out var mindId, out var mind))
             _mind.TransferTo(mindId, uid, true, mind: mind);
 
+        EnsureComp<JobComponent>(mindId);
+        Comp<JobComponent>(mindId).Prototype = "Borg";
+
         _appearance.SetData(uid, MMIVisuals.BrainPresent, true);
     }
 
@@ -76,6 +80,10 @@ public sealed partial class BorgSystem
 
         if (_mind.TryGetMind(linked, out var mindId, out var mind))
             _mind.TransferTo(mindId, uid, true, mind: mind);
+
+        //If it ever becomes possible to put the brain back in a body, then there needs to be a way to recover the old job prototype
+        if (TryComp<JobComponent>(mindId, out var job))
+            job.Prototype = null;
 
         _appearance.SetData(linked, MMIVisuals.BrainPresent, false);
     }
