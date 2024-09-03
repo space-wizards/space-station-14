@@ -1,5 +1,6 @@
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Nutrition.Prototypes;
+using Content.Shared.Tag;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Nutrition.Components;
@@ -14,7 +15,7 @@ public sealed partial class FoodSequenceElementComponent : Component
     /// The same object can be used in different sequences, and it will have a different data in then.
     /// </summary>
     [DataField(required: true)]
-    public Dictionary<string, ProtoId<FoodSequenceElementPrototype>> Entries = new();
+    public Dictionary<ProtoId<TagPrototype>, ProtoId<FoodSequenceElementPrototype>> Entries = new();
 
     /// <summary>
     /// Which solution we will add to the main dish

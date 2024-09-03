@@ -643,8 +643,8 @@
     - Slice
   - type: FoodSequenceElement
     entries:
-      taco: CheeseTaco
-      burger: CheeseBurger
+      Taco: CheeseTaco
+      Burger: CheeseBurger
 
 - type: entity
   name: chèvre log
@@ -658,7 +658,7 @@
       - creamy
   - type: Sprite
     state: chevrelog
-  - type: SliceableFood
+  - type: 
     count: 3
     slice: FoodChevreSlice
   - type: SolutionContainerManager

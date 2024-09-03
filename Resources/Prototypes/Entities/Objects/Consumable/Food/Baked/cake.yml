@@ -786,5 +786,5 @@
     - Slice
   - type: FoodSequenceElement
     entries:
-      taco: Suppermatter
-      burger: SuppermatterBurger
+      Taco: Suppermatter
+      Burger: SuppermatterBurger

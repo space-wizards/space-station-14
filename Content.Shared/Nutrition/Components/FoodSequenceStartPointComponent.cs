@@ -1,6 +1,7 @@
 using System.Numerics;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Nutrition.Prototypes;
+using Content.Shared.Tag;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -18,7 +19,7 @@ public sealed partial class FoodSequenceStartPointComponent : Component
     /// A key that determines which types of food elements can be attached to a food.
     /// </summary>
     [DataField(required: true)]
-    public string Key = string.Empty;
+    public ProtoId<TagPrototype> Key = string.Empty;
 
     /// <summary>
     /// The maximum number of layers of food that can be placed on this item.

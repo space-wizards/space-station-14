@@ -770,8 +770,8 @@
     node: meat steak
   - type: FoodSequenceElement
     entries:
-      burger: MeatSteak
-      taco: MeatSteak
+      Burger: MeatSteak
+      Taco: MeatSteak
 
 - type: entity
   name: bacon
@@ -805,8 +805,8 @@
     node: bacon
   - type: FoodSequenceElement
     entries:
-      burger: MeatBecon
-      taco: MeatBecon
+      Burger: MeatBecon
+      Taco: MeatBecon
 
 - type: entity
   name: cooked bear
@@ -838,8 +838,8 @@
     node: filet migrawr
   - type: FoodSequenceElement
     entries:
-      burger: MeatBearBurger
-      taco: MeatBear
+      Burger: MeatBearBurger
+      Taco: MeatBear
 
 - type: entity
   name: penguin filet
@@ -870,8 +870,8 @@
     node: cooked penguin
   - type: FoodSequenceElement
     entries:
-      burger: MeatPenguinBurger
-      taco: MeatPenguin
+      Burger: MeatPenguinBurger
+      Taco: MeatPenguin
 
 - type: entity
   name: cooked chicken
@@ -902,8 +902,8 @@
     node: cooked chicken
   - type: FoodSequenceElement
     entries:
-      burger: MeatChickenBurger
-      taco: MeatChicken
+      Burger: MeatChickenBurger
+      Taco: MeatChicken
 
 - type: entity
   name: fried chicken
@@ -934,8 +934,8 @@
           Quantity: 5
   - type: FoodSequenceElement
     entries:
-      burger: MeatChickenBurger
-      taco: MeatChicken
+      Burger: MeatChickenBurger
+      Taco: MeatChicken
 
 - type: entity
   name: cooked duck
@@ -966,8 +966,8 @@
     node: cooked duck
   - type: FoodSequenceElement
     entries:
-      burger: MeatDuck
-      taco: MeatDuck
+      Burger: MeatDuck
+      Taco: MeatDuck
 
 - type: entity
   name: cooked crab
@@ -998,8 +998,8 @@
     node: cooked crab
   - type: FoodSequenceElement
     entries:
-      burger: MeatCrabBurger
-      taco: MeatCrab
+      Burger: MeatCrabBurger
+      Taco: MeatCrab
 
 - type: entity
   name: goliath steak
@@ -1028,8 +1028,8 @@
     node: goliath steak
   - type: FoodSequenceElement
     entries:
-      burger: MeatGoliathBurger
-      taco: MeatGoliath
+      Burger: MeatGoliathBurger
+      Taco: MeatGoliath
 
 - type: entity
   name: rouny steak
@@ -1062,8 +1062,8 @@
     node: rouny steak
   - type: FoodSequenceElement
     entries:
-      burger: MeatXeno
-      taco: MeatXeno
+      Burger: MeatXeno
+      Taco: MeatXeno
 
 - type: entity
   name: lizard steak
@@ -1095,8 +1095,8 @@
     node: lizard steak
   - type: FoodSequenceElement
     entries:
-      burger: MeatLizardBurger
-      taco: MeatLizard
+      Burger: MeatLizardBurger
+      Taco: MeatLizard
 
 - type: entity
   name: boiled spider leg
@@ -1121,8 +1121,8 @@
           Quantity: 5
   - type: FoodSequenceElement
     entries:
-      burger: MeatSpiderBurger
-      taco: MeatSpider
+      Burger: MeatSpiderBurger
+      Taco: MeatSpider
 
 - type: entity
   name: meatball
@@ -1146,8 +1146,8 @@
           Quantity: 5
   - type: FoodSequenceElement
     entries:
-      burger: MeatBall
-      taco: MeatBall
+      Burger: MeatBall
+      Taco: MeatBall
 
 - type: entity
   name: boiled snail
@@ -1175,8 +1175,8 @@
           Quantity: 4 # makes saline if you add salt!
   - type: FoodSequenceElement
     entries:
-      burger: MeatSnail
-      taco: MeatSnail
+      Burger: MeatSnail
+      Taco: MeatSnail
 
 # Cutlets
 
@@ -1468,8 +1468,8 @@
     node: cutlet
   - type: FoodSequenceElement
     entries:
-      burger: MeatCutlet
-      taco: MeatCutlet
+      Burger: MeatCutlet
+      Taco: MeatCutlet
 
 - type: entity
   name: bear cutlet
@@ -1500,8 +1500,8 @@
     node: bear cutlet
   - type: FoodSequenceElement
     entries:
-      burger: BearCutletBurger
-      taco: BearCutlet
+      Burger: BearCutletBurger
+      Taco: BearCutlet
 
 - type: entity
   name: penguin cutlet
@@ -1530,8 +1530,8 @@
     node: penguin cutlet
   - type: FoodSequenceElement
     entries:
-      burger: PenguinCutletBurger
-      taco: PenguinCutlet
+      Burger: PenguinCutletBurger
+      Taco: PenguinCutlet
 
 - type: entity
   name: chicken cutlet
@@ -1560,8 +1560,8 @@
     node: chicken cutlet
   - type: FoodSequenceElement
     entries:
-      burger: ChickenCutlet
-      taco: ChickenCutlet
+      Burger: ChickenCutlet
+      Taco: ChickenCutlet
 
 - type: entity
   name: duck cutlet
@@ -1590,8 +1590,8 @@
     node: duck cutlet
   - type: FoodSequenceElement
     entries:
-      burger: DuckCutlet
-      taco: DuckCutlet
+      Burger: DuckCutlet
+      Taco: DuckCutlet
 
 - type: entity
   name: lizard cutlet
@@ -1621,8 +1621,8 @@
     node: lizard cutlet
   - type: FoodSequenceElement
     entries:
-      burger: LizardCutletBurger
-      taco: LizardCutlet
+      Burger: LizardCutletBurger
+      Taco: LizardCutlet
 
 - type: entity
   name: spider cutlet
@@ -1650,8 +1650,8 @@
     node: spider cutlet
   - type: FoodSequenceElement
     entries:
-      burger: SpiderCutletBurger
-      taco: SpiderCutlet
+      Burger: SpiderCutletBurger
+      Taco: SpiderCutlet
 
 - type: entity
   name: xeno cutlet
@@ -1679,5 +1679,5 @@
     node: xeno cutlet
   - type: FoodSequenceElement
     entries:
-      burger: XenoCutlet
-      taco: XenoCutlet
+      Burger: XenoCutlet
+      Taco: XenoCutlet

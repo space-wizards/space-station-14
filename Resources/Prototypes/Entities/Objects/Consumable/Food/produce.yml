@@ -280,8 +280,8 @@
     - Banana
   - type: FoodSequenceElement
     entries:
-      burger: Banana
-      taco: Banana
+      Burger: Banana
+      Taco: Banana
 
 - type: entity
   name: mimana
@@ -321,8 +321,8 @@
     - Fruit
   - type: FoodSequenceElement
     entries:
-      burger: Mimana
-      taco: Mimana
+      Burger: Mimana
+      Taco: Mimana
 
 - type: entity
   name: banana peel
@@ -463,8 +463,8 @@
         Quantity: 2
   - type: FoodSequenceElement
     entries:
-      burger: CarrotBurger
-      taco: Carrot
+      Burger: CarrotBurger
+      Taco: Carrot
 
 - type: entity
   name: cabbage
@@ -493,8 +493,8 @@
     - Vegetable
   - type: FoodSequenceElement
     entries:
-      burger: CabbageBurger
-      taco: Cabbage
+      Burger: CabbageBurger
+      Taco: Cabbage
 
 - type: entity
   name: garlic
@@ -525,8 +525,8 @@
     - Vegetable
   - type: FoodSequenceElement
     entries:
-      burger: GarlicBurger
-      taco: Garlic
+      Burger: GarlicBurger
+      Taco: Garlic
 
 - type: entity
   name: lemon
@@ -561,8 +561,8 @@
     - Fruit
   - type: FoodSequenceElement
     entries:
-      burger: Lemon
-      taco: Lemon
+      Burger: Lemon
+      Taco: Lemon
 
 - type: entity
   name: lemoon
@@ -596,8 +596,8 @@
     - Fruit
   - type: FoodSequenceElement
     entries:
-      burger: Lemoon
-      taco: Lemoon
+      Burger: Lemoon
+      Taco: Lemoon
 
 - type: entity
   name: lime
@@ -623,8 +623,8 @@
     - Fruit
   - type: FoodSequenceElement
     entries:
-      burger: Lime
-      taco: Lime
+      Burger: Lime
+      Taco: Lime
 
 - type: entity
   name: orange
@@ -649,8 +649,8 @@
     - Fruit
   - type: FoodSequenceElement
     entries:
-      burger: Orange
-      taco: Orange
+      Burger: Orange
+      Taco: Orange
 
 - type: entity
   name: pineapple
@@ -721,8 +721,8 @@
     - Vegetable
   - type: FoodSequenceElement
     entries:
-      burger: Potato
-      taco: Potato
+      Burger: Potato
+      Taco: Potato
 
 
 - type: entity
@@ -781,9 +781,9 @@
     - Vegetable
   - type: FoodSequenceElement
     entries:
-      skewer: TomatoSkewer
-      burger: Tomato
-      taco: Tomato
+      Skewer: TomatoSkewer
+      Burger: Tomato
+      Taco: Tomato
 
 - type: entity
   name: blue tomato
@@ -831,8 +831,8 @@
     - Vegetable
   - type: FoodSequenceElement
     entries:
-      burger: BlueTomato
-      taco: BlueTomato
+      Burger: BlueTomato
+      Taco: BlueTomato
 
 - type: entity
   name: blood tomato
@@ -878,9 +878,9 @@
     - Vegetable
   - type: FoodSequenceElement
     entries:
-      skewer: TomatoSkewer
-      burger: BloodTomato
-      taco: BloodTomato
+      Skewer: TomatoSkewer
+      Burger: BloodTomato
+      Taco: BloodTomato
 
 - type: entity
   name: eggplant
@@ -941,8 +941,8 @@
     - Fruit
   - type: FoodSequenceElement
     entries:
-      burger: Apple
-      taco: Apple
+      Burger: Apple
+      Taco: Apple
 
 - type: entity
   name: golden apple
@@ -981,8 +981,8 @@
     - Fruit
   - type: FoodSequenceElement
     entries:
-      burger: GoldenApple
-      taco: GoldenApple
+      Burger: GoldenApple
+      Taco: GoldenApple
 
 - type: entity
   name: cocoa pod
@@ -1056,9 +1056,9 @@
         Quantity: 2
   - type: FoodSequenceElement
     entries:
-      burger: Corn
-      taco: Corn
-      skewer: CornSkewer
+      Burger: Corn
+      Taco: Corn
+      Skewer: CornSkewer
 
 - type: entity
   name: corn cob
@@ -1208,8 +1208,8 @@
     - Slice
   - type: FoodSequenceElement
     entries:
-      burger: PineappleSliceBurger
-      taco: PineappleSlice
+      Burger: PineappleSliceBurger
+      Taco: PineappleSlice
 
 - type: entity
   name: onion slice
@@ -1239,8 +1239,8 @@
     - Slice
   - type: FoodSequenceElement
     entries:
-      burger: OnionSliceBurger
-      taco: OnionSlice
+      Burger: OnionSliceBurger
+      Taco: OnionSlice
 
 - type: entity
   name: red onion slice
@@ -1270,8 +1270,8 @@
     - Slice
   - type: FoodSequenceElement
     entries:
-      burger: OnionRedSliceBurger
-      taco: OnionRedSlice
+      Burger: OnionRedSliceBurger
+      Taco: OnionRedSlice
 
 - type: entity
   name: chili pepper
@@ -1302,9 +1302,9 @@
     - Vegetable
   - type: FoodSequenceElement
     entries:
-      taco: ChiliPepper
-      burger: ChiliPepper
-      skewer: ChiliPepperSkewer
+      Taco: ChiliPepper
+      Burger: ChiliPepper
+      Skewer: ChiliPepperSkewer
 
 - type: entity
   name: chilly pepper
@@ -1333,9 +1333,9 @@
     seedId: chilly
   - type: FoodSequenceElement
     entries:
-      taco: ChillyPepper
-      burger: ChillyPepper
-      skewer: ChillyPepperSkewer
+      Taco: ChillyPepper
+      Burger: ChillyPepper
+      Skewer: ChillyPepperSkewer
 
 - type: entity
   name: aloe
@@ -1366,8 +1366,8 @@
     - Vegetable
   - type: FoodSequenceElement
     entries:
-      taco: Aloe
-      burger: Aloe
+      Taco: Aloe
+      Burger: Aloe
 
 - type: entity
   name: poppy
@@ -1402,8 +1402,8 @@
     - Flower # TODO add "RedFlower" or "Poppy" tag, when other color flowers will be
   - type: FoodSequenceElement
     entries:
-      taco: Poppy
-      burger: Poppy
+      Taco: Poppy
+      Burger: Poppy
 
 - type: entity
   name: lily
@@ -1434,8 +1434,8 @@
     - Flower
   - type: FoodSequenceElement
     entries:
-      taco: Lily
-      burger: Lily
+      Taco: Lily
+      Burger: Lily
 
 - type: entity
   name: lingzhi
@@ -1464,8 +1464,8 @@
     grindableSolutionName: food
   - type: FoodSequenceElement
     entries:
-      taco: Lingzhi
-      burger: LingzhiBurger
+      Taco: Lingzhi
+      Burger: LingzhiBurger
 
 - type: entity
   name: ambrosia vulgaris
@@ -1507,8 +1507,8 @@
     - Ambrosia
   - type: FoodSequenceElement
     entries:
-      taco: AmbrosiaVulgaris
-      burger: AmbrosiaVulgarisBurger
+      Taco: AmbrosiaVulgaris
+      Burger: AmbrosiaVulgarisBurger
 
 - type: entity
   name: ambrosia deus
@@ -1548,8 +1548,8 @@
     - Ambrosia
   - type: FoodSequenceElement
     entries:
-      taco: AmbrosiaDeus
-      burger: AmbrosiaDeusBurger
+      Taco: AmbrosiaDeus
+      Burger: AmbrosiaDeusBurger
 
 - type: entity
   name: galaxythistle
@@ -1579,8 +1579,8 @@
     - Fruit # Probably?
   - type: FoodSequenceElement
     entries:
-      taco: Galaxythistle
-      burger: GalaxythistleBurger
+      Taco: Galaxythistle
+      Burger: GalaxythistleBurger
 
 - type: entity
   name: glasstle
@@ -1647,8 +1647,8 @@
     - Galaxythistle
   - type: FoodSequenceElement
     entries:
-      taco: Glasstle
-      burger: GlasstleBurger
+      Taco: Glasstle
+      Burger: GlasstleBurger
 
 - type: entity
   name: fly amanita
@@ -1677,8 +1677,8 @@
   - type: BadFood
   - type: FoodSequenceElement
     entries:
-      taco: FlyAmanita
-      burger: FlyAmanitaBurger
+      Taco: FlyAmanita
+      Burger: FlyAmanitaBurger
 
 - type: entity
   name: gatfruit
@@ -1710,8 +1710,8 @@
     - Fruit # It's in the name
   - type: FoodSequenceElement
     entries:
-      taco: Gatfruit
-      burger: GatfruitBurger
+      Taco: Gatfruit
+      Burger: GatfruitBurger
 
 - type: entity
   name: capfruit
@@ -1743,8 +1743,8 @@
     - Fruit
   - type: FoodSequenceElement
     entries:
-      taco: Capfruit
-      burger: CapfruitBurger
+      Taco: Capfruit
+      Burger: CapfruitBurger
 
 - type: entity
   name: capfruit
@@ -1802,8 +1802,8 @@
     - Vegetable
   - type: FoodSequenceElement
     entries:
-      taco: Soybeans
-      burger: SoybeansBurger
+      Taco: Soybeans
+      Burger: SoybeansBurger
 
 - type: entity
   name: spaceman's trumpet
@@ -1834,8 +1834,8 @@
     program: 56
   - type: FoodSequenceElement
     entries:
-      taco: SpacemansTrumpet
-      burger: SpacemansTrumpetBurger
+      Taco: SpacemansTrumpet
+      Burger: SpacemansTrumpetBurger
 
 - type: entity
   name: koibean
@@ -1866,8 +1866,8 @@
     - Vegetable
   - type: FoodSequenceElement
     entries:
-      taco: Koibean
-      burger: KoibeanBurger
+      Taco: Koibean
+      Burger: KoibeanBurger
 
 - type: entity
   name: watermelon
@@ -1966,9 +1966,9 @@
     - Slice
   - type: FoodSequenceElement
     entries:
-      burger: WatermelonSliceBurger
-      taco: WatermelonSlice
-      skewer: WatermelonSliceSkewer
+      Burger: WatermelonSliceBurger
+      Taco: WatermelonSlice
+      Skewer: WatermelonSliceSkewer
 
 - type: entity
   name: grapes
@@ -2033,8 +2033,8 @@
     - Fruit
   - type: FoodSequenceElement
     entries:
-      taco: Berries
-      burger: BerriesBurger
+      Taco: Berries
+      Burger: BerriesBurger
 
 - type: entity
   name: bungo fruit
@@ -2071,8 +2071,8 @@
     - Fruit
   - type: FoodSequenceElement
     entries:
-      taco: Bungo
-      burger: BungoBurger
+      Taco: Bungo
+      Burger: BungoBurger
 
 - type: entity
   name: bungo pit
@@ -2129,8 +2129,8 @@
     - Vegetable
   - type: FoodSequenceElement
     entries:
-      taco: Pea
-      burger: Pea
+      Taco: Pea
+      Burger: Pea
 
 - type: entity
   name: pumpkin
@@ -2328,8 +2328,8 @@
     - Fruit
   - type: FoodSequenceElement
     entries:
-      taco: Cherry
-      burger: Cherry
+      Taco: Cherry
+      Burger: Cherry
 
 - type: entity
   name: cherry pit
