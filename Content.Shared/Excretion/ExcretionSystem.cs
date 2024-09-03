@@ -119,7 +119,7 @@ public abstract partial class SharedExcretionSystem : EntitySystem
 			///}
         }
 
-        args.Repeat = true;
+        args.Repeat = false;
     }
 	
 }
