@@ -117,7 +117,7 @@
 - type: preloadedGrid
   id: Microshuttle
   path: /Maps/Shuttles/ShuttleEvent/microshuttle.yml
-  copies: 10
+  copies: 4
 
 - type: preloadedGrid
   id: Scooner
