@@ -36,6 +36,13 @@ public sealed class RehydratableSystem : EntitySystem
         }
     }
 
+	private void OnMicrowaved(EntityUid uid, RehydratableComponent component, BeingMicrowavedEvent args)
+    {
+		if (!_solutions.TryGetSolution(uid, component.SolutionName, out _, out var solution))
+            return;
+        solution.RemoveAllSolution();
+    }
+
     private void OnExamine(EntityUid uid, RehydratableComponent component, ExaminedEvent args)
     {
         if (!_solutions.TryGetSolution(uid, component.SolutionName, out _, out var solution))
