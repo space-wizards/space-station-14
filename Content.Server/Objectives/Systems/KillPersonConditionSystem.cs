@@ -168,7 +168,8 @@ public sealed class KillPersonConditionSystem : EntitySystem
             }
         }
 
-        _target.SetTargetExclusive(uid, args.Mind, _random.Pick(traitors), target);
+        var randomTarget = _random.Pick(traitors);
+        _target.SetTargetExclusive(uid, args.Mind, randomTarget, target);
     }
 
     private float GetProgress(EntityUid target, bool requireDead)
