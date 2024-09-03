@@ -84,14 +84,12 @@ public sealed partial class BorgSystem
 
         if (component.LinkedMMI is not { } linked)
             return;
-        var oldJob = component.OldJob;
         RemComp(uid, component);
 
         if (_mind.TryGetMind(linked, out var mindId, out var mind))
         {
             _mind.TransferTo(mindId, uid, true, mind: mind);
-
-            EnsureComp<JobComponent>(mindId).Prototype = oldJob;
+            EnsureComp<JobComponent>(mindId).Prototype = component.OldJob;
         }
 
         _appearance.SetData(linked, MMIVisuals.BrainPresent, false);
