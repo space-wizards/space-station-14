@@ -25,6 +25,8 @@
   categories: [ HideSpawnMenu, Spawner ]
   parent: BaseAntagSpawner
   id: SpawnPointGhostRecruiter
+  name: ghost role spawn point
+  suffix: Syndicate Recruiter
   components:
   - type: GhostRole
     name: ghost-role-information-recruiter-name
