@@ -56,6 +56,263 @@
   tags:
   - Cheese
 
+# Steak
+
+- type: foodSequenceElement
+  id: MeatSteak
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: plain-cooked
+  tags:
+  - Cooked
+  - Meat
+
+# Becon
+
+- type: foodSequenceElement
+  id: MeatBecon
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: bacon-cooked
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: bacon2-cooked
+  tags:
+  - Cooked
+  - Meat
+
+# Bear meat
+
+- type: foodSequenceElement
+  id: MeatBear
+  name: food-sequence-content-bear
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: product-cooked
+  tags:
+  - Cooked
+  - Meat
+
+- type: foodSequenceElement
+  id: MeatBearBurger
+  name: food-sequence-burger-content-bear
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: product-cooked
+  tags:
+  - Cooked
+  - Meat
+
+# Penguin meat
+
+- type: foodSequenceElement
+  id: MeatPenguin
+  name: food-sequence-content-cheese
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: cheese
+  tags:
+  - Cooked
+  - Meat
+
+- type: foodSequenceElement
+  id: MeatPenguinBurger
+  name: food-sequence-burger-content-cheese
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: bird-cooked
+  tags:
+  - Cooked
+  - Meat
+
+# Chicken meat
+
+- type: foodSequenceElement
+  id: MeatChicken
+  name: food-sequence-content-chicken
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: bird-fried
+  tags:
+  - Cooked
+  - Meat
+  - Chicken
+
+- type: foodSequenceElement
+  id: MeatChickenBurger
+  name: food-sequence-burger-content-chicken
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: bird-fried
+  tags:
+  - Cooked
+  - Meat
+  - Chicken
+
+# Fried Chicken meat
+
+- type: foodSequenceElement
+  id: MeatFriedChicken
+  name: food-sequence-content-chicken
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: chicken-fried
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: chicken2-fried
+  tags:
+  - Cooked
+  - Meat
+  - Chicken
+
+- type: foodSequenceElement
+  id: MeatFriedChickenBurger
+  name: food-sequence-burger-content-chicken
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: chicken-fried
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: chicken2-fried
+  tags:
+  - Cooked
+  - Meat
+  - Chicken
+
+# Duck meat
+
+- type: foodSequenceElement
+  id: MeatDuck
+  name: food-sequence-content-duck
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: duck-cooked
+  tags:
+  - Cooked
+  - Meat
+
+# Crab meat
+
+- type: foodSequenceElement
+  id: MeatCrab
+  name: food-sequence-content-crab
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: crab-cooked
+  tags:
+  - Cooked
+  - Meat
+  - Crab
+
+- type: foodSequenceElement
+  id: MeatCrabBurger
+  name: food-sequence-burger-content-crab
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: crab-cooked
+  tags:
+  - Cooked
+  - Meat
+  - Crab
+
+# Meat goliath
+
+- type: foodSequenceElement
+  id: MeatGoliath
+  name: food-sequence-content-goliath
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: goliath-cooked
+  tags:
+  - Cooked
+  - Meat
+
+- type: foodSequenceElement
+  id: MeatGoliathBurger
+  name: food-sequence-burger-content-goliath
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: goliath-cooked
+  tags:
+  - Cooked
+  - Meat
+
+# Xeno meat
+
+- type: foodSequenceElement
+  id: MeatXeno
+  name: food-sequence-content-xeno
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: rouny-cooked
+  tags:
+  - Cooked
+  - Meat
+
+# Meat lizard
+
+- type: foodSequenceElement
+  id: MeatLizard
+  name: food-sequence-content-lizard
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: lizard-cooked
+  tags:
+  - Cooked
+  - Meat
+
+- type: foodSequenceElement
+  id: MeatLizardBurger
+  name: food-sequence-burger-content-lizard
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: lizard-cooked
+  tags:
+  - Cooked
+  - Meat
+
+# Meat spider
+
+- type: foodSequenceElement
+  id: MeatSpider
+  name: food-sequence-content-spider
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: spiderleg-cooked
+  tags:
+  - Cooked
+  - Meat
+
+- type: foodSequenceElement
+  id: MeatSpiderBurger
+  name: food-sequence-burger-content-spider
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: spiderleg-cooked
+  tags:
+  - Cooked
+  - Meat
+
+# Meatball
+
+- type: foodSequenceElement
+  id: MeatBall
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: meatball-cooked
+  tags:
+  - Cooked
+  - Meat
+  
+# Snail meat
+
+- type: foodSequenceElement
+  id: MeatSnail
+  name: food-sequence-content-snail
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: snail-cooked
+  tags:
+  - Cooked
+  - Meat
+
 # Meat cutlet
 
 - type: foodSequenceElement
@@ -203,30 +460,6 @@
   - Cooked
   - Cutlet
   - Meat
-
-# Crab meat
-
-- type: foodSequenceElement
-  id: CrabMeat
-  name: food-sequence-content-crab
-  sprites:
-  - sprite: Objects/Consumable/Food/meat.rsi
-    state: crab-cooked
-  tags:
-  - Cooked
-  - Meat
-  - Crab
-
-- type: foodSequenceElement
-  id: CrabMeatBurger
-  name: food-sequence-burger-content-crab
-  sprites:
-  - sprite: Objects/Consumable/Food/meat.rsi
-    state: crab-cooked
-  tags:
-  - Cooked
-  - Meat
-  - Crab
 
 # Brain
 

@@ -768,6 +768,10 @@
   - type: Construction
     graph: MeatSteak
     node: meat steak
+  - type: FoodSequenceElement
+    entries:
+      burger: MeatSteak
+      taco: MeatSteak
 
 - type: entity
   name: bacon
@@ -799,6 +803,10 @@
   - type: Construction
     graph: Bacon
     node: bacon
+  - type: FoodSequenceElement
+    entries:
+      burger: MeatBecon
+      taco: MeatBecon
 
 - type: entity
   name: cooked bear
@@ -828,6 +836,10 @@
   - type: Construction
     graph: BearSteak
     node: filet migrawr
+  - type: FoodSequenceElement
+    entries:
+      burger: MeatBearBurger
+      taco: MeatBear
 
 - type: entity
   name: penguin filet
@@ -856,6 +868,10 @@
   - type: Construction
     graph: PenguinSteak
     node: cooked penguin
+  - type: FoodSequenceElement
+    entries:
+      burger: MeatPenguinBurger
+      taco: MeatPenguin
 
 - type: entity
   name: cooked chicken
@@ -884,6 +900,10 @@
   - type: Construction
     graph: ChickenSteak
     node: cooked chicken
+  - type: FoodSequenceElement
+    entries:
+      burger: MeatChickenBurger
+      taco: MeatChicken
 
 - type: entity
   name: fried chicken
@@ -912,6 +932,10 @@
           Quantity: 5
         - ReagentId: Protein
           Quantity: 5
+  - type: FoodSequenceElement
+    entries:
+      burger: MeatChickenBurger
+      taco: MeatChicken
 
 - type: entity
   name: cooked duck
@@ -940,6 +964,10 @@
   - type: Construction
     graph: DuckSteak
     node: cooked duck
+  - type: FoodSequenceElement
+    entries:
+      burger: MeatDuck
+      taco: MeatDuck
 
 - type: entity
   name: cooked crab
@@ -970,7 +998,8 @@
     node: cooked crab
   - type: FoodSequenceElement
     entries:
-      burger: CrabMeat
+      burger: MeatCrabBurger
+      taco: MeatCrab
 
 - type: entity
   name: goliath steak
@@ -997,6 +1026,10 @@
   - type: Construction
     graph: GoliathSteak
     node: goliath steak
+  - type: FoodSequenceElement
+    entries:
+      burger: MeatGoliathBurger
+      taco: MeatGoliath
 
 - type: entity
   name: rouny steak
@@ -1027,6 +1060,10 @@
   - type: Construction
     graph: RounySteak
     node: rouny steak
+  - type: FoodSequenceElement
+    entries:
+      burger: MeatXeno
+      taco: MeatXeno
 
 - type: entity
   name: lizard steak
@@ -1056,6 +1093,10 @@
   - type: Construction
     graph: LizardSteak
     node: lizard steak
+  - type: FoodSequenceElement
+    entries:
+      burger: MeatLizardBurger
+      taco: MeatLizard
 
 - type: entity
   name: boiled spider leg
@@ -1078,6 +1119,10 @@
           Quantity: 5
         - ReagentId: Protein
           Quantity: 5
+  - type: FoodSequenceElement
+    entries:
+      burger: MeatSpiderBurger
+      taco: MeatSpider
 
 - type: entity
   name: meatball
@@ -1099,6 +1144,10 @@
           Quantity: 5
         - ReagentId: Protein
           Quantity: 5
+  - type: FoodSequenceElement
+    entries:
+      burger: MeatBall
+      taco: MeatBall
 
 - type: entity
   name: boiled snail
@@ -1113,15 +1162,6 @@
   - type: Sprite
     layers:
     - state: snail-cooked
-  - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: snail-cooked
-    entries:
-      burger:
-        name: food-sequence-content-snail
-      taco:
-        name: food-sequence-content-snail
   - type: SolutionContainerManager
     solutions:
       food:
@@ -1133,6 +1173,10 @@
           Quantity: 3
         - ReagentId: Water
           Quantity: 4 # makes saline if you add salt!
+  - type: FoodSequenceElement
+    entries:
+      burger: MeatSnail
+      taco: MeatSnail
 
 # Cutlets
 
