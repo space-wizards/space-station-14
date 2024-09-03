@@ -6,7 +6,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.Kitchen.Components
+namespace Content.Shared.Kitchen.Components
 {
     [RegisterComponent]
     public sealed partial class MicrowaveComponent : Component

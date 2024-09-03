@@ -6,6 +6,7 @@ using Content.Shared.Popups;
 using Robust.Shared.Network;
 using Robust.Shared.Random;
 using Content.Shared.Examine;
+using Content.Shared.Kitchen.Components;
 
 namespace Content.Shared.Chemistry.EntitySystems;
 
