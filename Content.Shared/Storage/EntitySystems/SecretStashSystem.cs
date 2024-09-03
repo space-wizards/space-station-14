@@ -37,7 +37,7 @@ public sealed class SecretStashSystem : EntitySystem
         SubscribeLocalEvent<SecretStashComponent, DestructionEventArgs>(OnDestroyed);
         SubscribeLocalEvent<SecretStashComponent, InteractUsingEvent>(OnInteractUsing, after: new[] { typeof(ToolOpenableSystem), typeof(AnchorableSystem) });
         SubscribeLocalEvent<SecretStashComponent, InteractHandEvent>(OnInteractHand);
-        SubscribeLocalEvent<SecretStashComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerb);
+        SubscribeLocalEvent<SecretStashComponent, GetVerbsEvent<InteractionVerb>>(OnGetVerb);
     }
 
     private void OnInit(Entity<SecretStashComponent> entity, ref ComponentInit args)
@@ -138,7 +138,7 @@ public sealed class SecretStashSystem : EntitySystem
         return true;
     }
 
-    private void OnGetVerb(Entity<SecretStashComponent> entity, ref GetVerbsEvent<AlternativeVerb> args)
+    private void OnGetVerb(Entity<SecretStashComponent> entity, ref GetVerbsEvent<InteractionVerb> args)
     {
         if (!args.CanInteract || !args.CanAccess)
             return;
@@ -147,7 +147,7 @@ public sealed class SecretStashSystem : EntitySystem
         var item = args.Using;
         var stashName = GetStashName(entity);
 
-        var itemVerb = new AlternativeVerb();
+        var itemVerb = new InteractionVerb();
         itemVerb.Priority = 100;
 
         // This will add the verb relating to inserting / grabbing items.
