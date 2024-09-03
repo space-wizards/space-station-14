@@ -26,17 +26,16 @@ public sealed partial class ToggleableClothingComponent : Component
     public EntityUid? ActionEntity;
 
     /// <summary>
-    ///     Default clothing entity prototype to spawn into the clothing container.
+    ///     Dictionary of inventory slots and entity prototypes to spawn into the clothing container.
     /// </summary>
     [DataField(required: true), AutoNetworkedField]
-    public EntProtoId ClothingPrototype = default!;
+    public Dictionary<string, EntProtoId> ClothingPrototypes = default!;
 
     /// <summary>
-    ///     The inventory slot that the clothing is equipped to.
+    ///     Dictionary of clothing uids and slots
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField, AutoNetworkedField]
-    public string Slot = "head";
+    public Dictionary<EntityUid, string> ClothingUids = default!;
 
     /// <summary>
     ///     The inventory slot flags required for this component to function.
@@ -51,14 +50,7 @@ public sealed partial class ToggleableClothingComponent : Component
     public string ContainerId = DefaultClothingContainerId;
 
     [ViewVariables]
-    public ContainerSlot? Container;
-
-    /// <summary>
-    ///     The Id of the piece of clothing that belongs to this component. Required for map-saving if the clothing is
-    ///     currently not inside of the container.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public EntityUid? ClothingUid;
+    public Container? Container;
 
     /// <summary>
     ///     Time it takes for this clothing to be toggled via the stripping menu verbs. Null prevents the verb from even showing up.
@@ -71,4 +63,10 @@ public sealed partial class ToggleableClothingComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public string? VerbText;
+
+    /// <summary>
+    ///     If true it will block unequip of this entity until all toggleable clothing are removed
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool BlockUnequipWhenToggle = false;
 }

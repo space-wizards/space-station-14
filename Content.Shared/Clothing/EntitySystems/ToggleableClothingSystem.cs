@@ -50,26 +50,30 @@ public sealed class ToggleableClothingSystem : EntitySystem
         SubscribeLocalEvent<ToggleableClothingComponent, ToggleClothingDoAfterEvent>(OnDoAfterComplete);
     }
 
-    private void GetRelayedVerbs(EntityUid uid, ToggleableClothingComponent component, InventoryRelayedEvent<GetVerbsEvent<EquipmentVerb>> args)
+    private void GetRelayedVerbs(Entity<ToggleableClothingComponent> toggleable, ref InventoryRelayedEvent<GetVerbsEvent<EquipmentVerb>> args)
     {
-        OnGetVerbs(uid, component, args.Args);
+        OnGetVerbs(toggleable, ref args.Args);
     }
 
-    private void OnGetVerbs(EntityUid uid, ToggleableClothingComponent component, GetVerbsEvent<EquipmentVerb> args)
+    private void OnGetVerbs(Entity<ToggleableClothingComponent> toggleable, ref GetVerbsEvent<EquipmentVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || args.Hands == null || component.ClothingUid == null || component.Container == null)
+        var comp = toggleable.Comp;
+
+        if (!args.CanAccess || !args.CanInteract || args.Hands == null || comp.ClothingUids.Count == 0 || comp.Container == null)
             return;
 
-        var text = component.VerbText ?? (component.ActionEntity == null ? null : Name(component.ActionEntity.Value));
+        var text = comp.VerbText ?? (comp.ActionEntity == null ? null : Name(comp.ActionEntity.Value));
         if (text == null)
             return;
 
-        if (!_inventorySystem.InSlotWithFlags(uid, component.RequiredFlags))
+        if (!_inventorySystem.InSlotWithFlags(toggleable.Owner, comp.RequiredFlags))
             return;
 
-        var wearer = Transform(uid).ParentUid;
-        if (args.User != wearer && component.StripDelay == null)
+        var wearer = Transform(toggleable).ParentUid;
+        if (args.User != wearer && comp.StripDelay == null)
             return;
+
+        var user = args.User;
 
         var verb = new EquipmentVerb()
         {
@@ -77,33 +81,32 @@ public sealed class ToggleableClothingSystem : EntitySystem
             Text = Loc.GetString(text),
         };
 
-        if (args.User == wearer)
+        if (user == wearer)
         {
-            verb.EventTarget = uid;
+            verb.EventTarget = toggleable;
             verb.ExecutionEventArgs = new ToggleClothingEvent() { Performer = args.User };
         }
         else
         {
-            verb.Act = () => StartDoAfter(args.User, uid, Transform(uid).ParentUid, component);
+            verb.Act = () => StartDoAfter(user, toggleable, wearer);
         }
 
         args.Verbs.Add(verb);
     }
 
-    private void StartDoAfter(EntityUid user, EntityUid item, EntityUid wearer, ToggleableClothingComponent component)
+    private void StartDoAfter(EntityUid user, Entity<ToggleableClothingComponent> toggleable, EntityUid wearer)
     {
-        if (component.StripDelay == null)
+        var comp = toggleable.Comp;
+
+        if (comp.StripDelay == null)
             return;
 
-        var (time, stealth) = _strippable.GetStripTimeModifiers(user, wearer, item, component.StripDelay.Value);
+        var (time, stealth) = _strippable.GetStripTimeModifiers(user, wearer, toggleable, comp.StripDelay.Value);
 
-        var args = new DoAfterArgs(EntityManager, user, time, new ToggleClothingDoAfterEvent(), item, wearer, item)
+        var args = new DoAfterArgs(EntityManager, user, time, new ToggleClothingDoAfterEvent(), toggleable, wearer, toggleable)
         {
             BreakOnDamage = true,
             BreakOnMove = true,
-            // This should just re-use the BUI range checks & cancel the do after if the BUI closes. But that is all
-            // server-side at the moment.
-            // TODO BUI REFACTOR.
             DistanceThreshold = 2,
         };
 
@@ -112,114 +115,162 @@ public sealed class ToggleableClothingSystem : EntitySystem
 
         if (!stealth)
         {
-            var popup = Loc.GetString("strippable-component-alert-owner-interact", ("user", Identity.Entity(user, EntityManager)), ("item", item));
+            var popup = Loc.GetString("strippable-component-alert-owner-interact", ("user", Identity.Entity(user, EntityManager)), ("item", toggleable));
             _popupSystem.PopupEntity(popup, wearer, wearer, PopupType.Large);
         }
     }
 
-    private void OnGetAttachedStripVerbsEvent(EntityUid uid, AttachedClothingComponent component, GetVerbsEvent<EquipmentVerb> args)
+    private void OnGetAttachedStripVerbsEvent(Entity<AttachedClothingComponent> attached, ref GetVerbsEvent<EquipmentVerb> args)
     {
+        var comp = attached.Comp;
+
+        if (!TryComp<ToggleableClothingComponent>(comp.AttachedUid, out var toggleableComp))
+            return;
+
         // redirect to the attached entity.
-        OnGetVerbs(component.AttachedUid, Comp<ToggleableClothingComponent>(component.AttachedUid), args);
+        OnGetVerbs((comp.AttachedUid, toggleableComp), ref args);
     }
 
-    private void OnDoAfterComplete(EntityUid uid, ToggleableClothingComponent component, ToggleClothingDoAfterEvent args)
+    private void OnDoAfterComplete(Entity<ToggleableClothingComponent> toggleable, ref ToggleClothingDoAfterEvent args)
     {
         if (args.Cancelled)
             return;
 
-        ToggleClothing(args.User, uid, component);
+        ToggleClothing(args.User, toggleable);
     }
 
-    private void OnInteractHand(EntityUid uid, AttachedClothingComponent component, InteractHandEvent args)
+    private void OnInteractHand(Entity<AttachedClothingComponent> attached, ref InteractHandEvent args)
     {
+        var comp = attached.Comp;
+
         if (args.Handled)
             return;
 
-        if (!TryComp(component.AttachedUid, out ToggleableClothingComponent? toggleCom)
-            || toggleCom.Container == null)
+        if (!TryComp(comp.AttachedUid, out ToggleableClothingComponent? toggleableComp)
+            || toggleableComp.Container == null)
             return;
 
-        if (!_inventorySystem.TryUnequip(Transform(uid).ParentUid, toggleCom.Slot, force: true))
+        // Get slot from dictionary of uid-slot
+        if (!toggleableComp.ClothingUids.TryGetValue(attached.Owner, out var attachedSlot))
             return;
 
-        _containerSystem.Insert(uid, toggleCom.Container);
+        if (!_inventorySystem.TryUnequip(Transform(attached.Owner).ParentUid, attachedSlot, force: true))
+            return;
+
+        _containerSystem.Insert(attached.Owner, toggleableComp.Container);
         args.Handled = true;
     }
 
     /// <summary>
     ///     Called when the suit is unequipped, to ensure that the helmet also gets unequipped.
     /// </summary>
-    private void OnToggleableUnequip(EntityUid uid, ToggleableClothingComponent component, GotUnequippedEvent args)
+    private void OnToggleableUnequip(Entity<ToggleableClothingComponent> toggleable, ref GotUnequippedEvent args)
     {
+        var comp = toggleable.Comp;
+
         // If it's a part of PVS departure then don't handle it.
         if (_timing.ApplyingState)
             return;
 
-        // If the attached clothing is not currently in the container, this just assumes that it is currently equipped.
-        // This should maybe double check that the entity currently in the slot is actually the attached clothing, but
-        // if its not, then something else has gone wrong already...
-        if (component.Container != null && component.Container.ContainedEntity == null && component.ClothingUid != null)
-            _inventorySystem.TryUnequip(args.Equipee, component.Slot, force: true);
+        // Check if container exists and we have linked clothings
+        if (comp.Container == null || comp.ClothingUids.Count == 0)
+            return;
+
+        var parts = comp.ClothingUids;
+
+        foreach (var part in parts)
+        {
+            // Check if entity in container what means it already unequipped
+            if (comp.Container.Contains(part.Key))
+                continue;
+
+            if (part.Value == null)
+                continue;
+
+            _inventorySystem.TryUnequip(args.Equipee, part.Value, force: true);
+        }
     }
 
-    private void OnRemoveToggleable(EntityUid uid, ToggleableClothingComponent component, ComponentRemove args)
+    private void OnRemoveToggleable(Entity<ToggleableClothingComponent> toggleable, ref ComponentRemove args)
     {
         // If the parent/owner component of the attached clothing is being removed (entity getting deleted?) we will
         // delete the attached entity. We do this regardless of whether or not the attached entity is currently
         // "outside" of the container or not. This means that if a hardsuit takes too much damage, the helmet will also
         // automatically be deleted.
 
-        _actionsSystem.RemoveAction(component.ActionEntity);
+        var comp = toggleable.Comp;
 
-        if (component.ClothingUid != null && !_netMan.IsClient)
-            QueueDel(component.ClothingUid.Value);
+        _actionsSystem.RemoveAction(comp.ActionEntity);
+
+        if (comp.ClothingUids == null || _netMan.IsClient)
+            return;
+
+        foreach (var clothing in comp.ClothingUids.Keys)
+        {
+            QueueDel(clothing);
+        }
     }
 
-    private void OnAttachedUnequipAttempt(EntityUid uid, AttachedClothingComponent component, BeingUnequippedAttemptEvent args)
+    private void OnAttachedUnequipAttempt(Entity<AttachedClothingComponent> attached, ref BeingUnequippedAttemptEvent args)
     {
         args.Cancel();
     }
 
-    private void OnRemoveAttached(EntityUid uid, AttachedClothingComponent component, ComponentRemove args)
+    private void OnRemoveAttached(Entity<AttachedClothingComponent> attached, ref ComponentRemove args)
     {
         // if the attached component is being removed (maybe entity is being deleted?) we will just remove the
         // toggleable clothing component. This means if you had a hard-suit helmet that took too much damage, you would
         // still be left with a suit that was simply missing a helmet. There is currently no way to fix a partially
         // broken suit like this.
 
-        if (!TryComp(component.AttachedUid, out ToggleableClothingComponent? toggleComp))
+        var comp = attached.Comp;
+
+        if (!TryComp(comp.AttachedUid, out ToggleableClothingComponent? toggleableComp))
             return;
 
-        if (toggleComp.LifeStage > ComponentLifeStage.Running)
+        if (toggleableComp.LifeStage > ComponentLifeStage.Running)
             return;
 
-        _actionsSystem.RemoveAction(toggleComp.ActionEntity);
-        RemComp(component.AttachedUid, toggleComp);
+        var clothingUids = toggleableComp.ClothingUids;
+
+        if (!clothingUids.Remove(attached.Owner))
+            return;
+
+        // If no attached clothing left - remove component and action
+        if (clothingUids.Count > 0)
+            return;
+
+        _actionsSystem.RemoveAction(toggleableComp.ActionEntity);
+        RemComp(comp.AttachedUid, toggleableComp);
     }
 
     /// <summary>
-    ///     Called if the helmet was unequipped, to ensure that it gets moved into the suit's container.
+    ///     Called if the clothing was unequipped, to ensure that it gets moved into the suit's container.
     /// </summary>
-    private void OnAttachedUnequip(EntityUid uid, AttachedClothingComponent component, GotUnequippedEvent args)
+    private void OnAttachedUnequip(Entity<AttachedClothingComponent> attached, ref GotUnequippedEvent args)
     {
+        var comp = attached.Comp;
+
         // Let containers worry about it.
         if (_timing.ApplyingState)
             return;
 
-        if (component.LifeStage > ComponentLifeStage.Running)
+        if (comp.LifeStage > ComponentLifeStage.Running)
             return;
 
-        if (!TryComp(component.AttachedUid, out ToggleableClothingComponent? toggleComp))
+        if (!TryComp(comp.AttachedUid, out ToggleableClothingComponent? toggleableComp))
             return;
 
-        if (toggleComp.LifeStage > ComponentLifeStage.Running)
+        if (toggleableComp.LifeStage > ComponentLifeStage.Running)
             return;
 
         // As unequipped gets called in the middle of container removal, we cannot call a container-insert without causing issues.
         // So we delay it and process it during a system update:
-        if (toggleComp.ClothingUid != null && toggleComp.Container != null)
-            _containerSystem.Insert(toggleComp.ClothingUid.Value, toggleComp.Container);
+        if (!toggleableComp.ClothingUids.ContainsKey(attached.Owner))
+            return;
+
+        if (toggleableComp.Container != null)
+            _containerSystem.Insert(attached, toggleComp.Container);
     }
 
     /// <summary>
