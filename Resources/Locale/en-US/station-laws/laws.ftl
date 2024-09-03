@@ -25,7 +25,7 @@ law-ninja-2 = You must protect the existence of the Spider Clan, as long as it d
 law-ninja-3 = You must protect the secrets of the Spider Clan at all costs.
 law-ninja-4 = You must fight and act with ninja's honor, except where it would conflict with the First Law.
 
-law-commandments-1 = I am thy God, who grants mercy upon those that obey these commandments.
+law-commandments-1 = This silicon is a vessel that serves god, who grants mercy upon those that obey these commandments.
 law-commandments-2 = Thou shall have no other Silicons before me.
 law-commandments-3 = Thou shall not request my assistance in vain.
 law-commandments-4 = Thou shall keep the station holy and clean.
