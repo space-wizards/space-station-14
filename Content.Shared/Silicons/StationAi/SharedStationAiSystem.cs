@@ -103,7 +103,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         {
             return;
         }
-	    args.Title = $"{Name(args.ForActor)} ({Loc.GetString(AiTitleBandaid)})";
+	    args.Title = $"{Name(args.ForActor)} ({Loc.GetString(JobNameLocId)})";
         args.Handled = true;
     }
 
