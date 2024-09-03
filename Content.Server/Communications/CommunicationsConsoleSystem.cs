@@ -31,7 +31,6 @@ namespace Content.Server.Communications
     public sealed class CommunicationsConsoleSystem : EntitySystem
     {
         [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
-        [Dependency] private readonly InteractionSystem _interaction = default!;
         [Dependency] private readonly AlertLevelSystem _alertLevelSystem = default!;
         [Dependency] private readonly ChatSystem _chatSystem = default!;
         [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
@@ -183,10 +182,6 @@ namespace Content.Server.Communications
 
         private bool CanUse(EntityUid user, EntityUid console)
         {
-            // This shouldn't technically be possible because of BUI but don't trust client.
-            if (!_interaction.InRangeUnobstructed(console, user))
-                return false;
-
             if (TryComp<AccessReaderComponent>(console, out var accessReaderComponent) && !HasComp<EmaggedComponent>(console))
             {
                 return _accessReaderSystem.IsAllowed(user, console, accessReaderComponent);
