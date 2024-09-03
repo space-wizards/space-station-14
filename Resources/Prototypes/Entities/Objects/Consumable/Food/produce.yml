@@ -1465,7 +1465,7 @@
   - type: FoodSequenceElement
     entries:
       Taco: Lingzhi
-      Burger: LingzhiBurger
+      Burger: Lingzhi
 
 - type: entity
   name: ambrosia vulgaris

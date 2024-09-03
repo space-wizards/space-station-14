@@ -109,7 +109,7 @@
   name: food-sequence-content-penguin
   sprites:
   - sprite: Objects/Consumable/Food/meat.rsi
-    state: cheese
+    state: bird-cooked
   tags:
   - Cooked
   - Meat
@@ -131,7 +131,7 @@
   name: food-sequence-content-chicken
   sprites:
   - sprite: Objects/Consumable/Food/meat.rsi
-    state: bird-fried
+    state: chicken-fried
   tags:
   - Cooked
   - Meat
@@ -159,7 +159,7 @@
   name: food-sequence-content-duck
   sprites:
   - sprite: Objects/Consumable/Food/meat.rsi
-    state: duck-cooked
+    state: bird-cooked
   tags:
   - Cooked
   - Meat
@@ -849,13 +849,6 @@
 - type: foodSequenceElement
   id: Lingzhi
   name: food-sequence-content-mushroom
-  sprites:
-  - sprite: Objects/Specific/Hydroponics/lingzhi.rsi
-    state: produce
-
-- type: foodSequenceElement
-  id: LingzhiBurger
-  name: food-sequence-burger-content-mushroom
   sprites:
   - sprite: Objects/Specific/Hydroponics/lingzhi.rsi
     state: produce
