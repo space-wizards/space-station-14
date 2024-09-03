@@ -341,19 +341,57 @@
   - type: StationAiVision
   - type: InteractionOutline
   - type: Sprite
-    sprite: Mobs/Silicon/station_ai.rsi
+    sprite: Mobs/Silicon/station_ai_screens.rsi
     layers:
-    - state: base
-    - state: ai_empty
+    - sprite: Mobs/Silicon/station_ai.rsi
+      state: base
+    - state: ai-empty
+    - state: ai-empty # Random layer
       map: ["unshaded"]
       shader: unshaded
+      visible: false
+  - type: RandomSprite
+    available:
+    - unshaded:
+        ai-thinking: ""
+        ai-alien: ""
+        ai-angel: ""
+        ai-banned: ""
+        ai-bliss: ""
+        ai-clown: ""
+        ai-database: ""
+        ai-dorf: ""
+        ai-firewall: ""
+        ai-gentoo: ""
+        ai-glitchman: ""
+        ai-gondola: ""
+        ai-goon: ""
+        ai-hades: ""
+        ai-heartline: ""
+        ai-helios: ""
+        ai-house: ""
+        ai-matrix: ""
+        ai-monochrome: ""
+        ai-murica: ""
+        ai-notmalf: ""
+        ai-portrait: ""
+        ai-president: ""
+        ai-rainbow: ""
+        ai-random: ""
+        ai-red-october: ""
+        ai-static: ""
+        ai-syndicat-meow: ""
+        ai-text: ""
+        ai-too-deep: ""
+        ai-triumvirate: ""
+        ai-weird: ""
   - type: Appearance
   - type: GenericVisualizer
     visuals:
       enum.StationAiVisualState.Key:
         unshaded:
-          Empty: { state: ai_empty }
-          Occupied: { state: ai }
+          Empty: { visible: false }
+          Occupied: { visible: true }
 
 # The job-ready version of an AI spawn.
 - type: entity
@@ -364,12 +402,6 @@
   - type: ContainerSpawnPoint
     containerId: station_ai_mind_slot
     job: StationAi
-  - type: Sprite
-    sprite: Mobs/Silicon/station_ai.rsi
-    layers:
-    - state: base
-    - state: ai
-      shader: unshaded
 
 # The actual brain inside the core
 - type: entity
@@ -419,6 +451,7 @@
   noSpawn: true
   suffix: DO NOT MAP
   components:
+  - type: ArrivalsBlacklist
   - type: WarpPoint
     follow: true
   - type: Eye
