@@ -113,7 +113,7 @@
     modifiers:
       coefficients:
         Heat: 0.90
-        Radiation: 0.001
+        Radiation: 0.01
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/rad.rsi
   - type: GroupExamine
@@ -127,7 +127,7 @@
     slots: WITHOUT_POCKET
 
 - type: entity
-  parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing]
+  parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing, BaseToggleClothing, BaseMajorContraband]
   id: ClothingOuterSuitSpaceNinja
   name: space ninja suit
   description: This black technologically advanced, cybernetically-enhanced suit provides many abilities like invisibility or teleportation.
@@ -136,9 +136,7 @@
     sprite: Clothing/OuterClothing/Suits/spaceninja.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/spaceninja.rsi
-  - type: StealthClothing
-    visibility: 1.1
-    toggleAction: ActionTogglePhaseCloak
+  # hardsuit stuff
   - type: PressureProtection
     highPressureMultiplier: 0.6
     lowPressureMultiplier: 1000
@@ -151,7 +149,28 @@
         Slash: 0.8
         Piercing: 0.8
         Heat: 0.8
+  # phase cloak
+  - type: ToggleClothing
+    action: ActionTogglePhaseCloak
+  - type: ComponentToggler
+    parent: true
+    components:
+    - type: Stealth
+      minVisibility: 0.1
+      lastVisibility: 0.1
+  - type: PowerCellDraw
+    drawRate: 1.8 # 200 seconds on the default cell
+  - type: ToggleCellDraw
+  # throwing star ability
+  - type: ItemCreator
+    action: ActionCreateThrowingStar
+    charge: 14.4
+    spawnedPrototype: ThrowingStarNinja
+    noPowerPopup: ninja-no-power
+  # core ninja suit stuff
   - type: NinjaSuit
+  - type: UseDelay
+    delay: 5 # disable time
   - type: PowerCellSlot
     cellSlotId: cell_slot
     # throwing in a recharger would bypass glove charging mechanic
@@ -189,6 +208,17 @@
     sprite: Clothing/OuterClothing/Suits/shrine-maiden.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/shrine-maiden.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterSuitWitchRobes
+  name: witch robes
+  description: Magic is all about the spell power, ZE!
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Suits/witchrobe.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Suits/witchrobe.rsi
 
 - type: entity
   parent: ClothingOuterBase
@@ -235,6 +265,7 @@
   name: carp suit
   description: A special suit that makes you look just like a space carp, if your eyesight is bad.
   components:
+  - type: AllowSuitStorage
   - type: Sprite
     sprite: Clothing/OuterClothing/Suits/carpsuit.rsi
   - type: Item
@@ -246,3 +277,16 @@
   - type: ContainerContainer
     containers:
       toggleable-clothing: !type:ContainerSlot {}
+
+- type: entity
+  parent: ClothingOuterSuitCarp
+  id: ClothingOuterHardsuitCarp
+  suffix: Hardsuit, DO NOT MAP
+  components:
+  - type: PressureProtection
+    highPressureMultiplier: 0.6
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    coefficient: 0.01
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitCarp

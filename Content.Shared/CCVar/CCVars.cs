@@ -110,20 +110,6 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool>
             EventsEnabled = CVarDef.Create("events.enabled", true, CVar.ARCHIVE | CVar.SERVERONLY);
 
-        /// <summary>
-        ///     Average time (in minutes) for when the ramping event scheduler should stop increasing the chaos modifier.
-        ///     Close to how long you expect a round to last, so you'll probably have to tweak this on downstreams.
-        /// </summary>
-        public static readonly CVarDef<float>
-            EventsRampingAverageEndTime = CVarDef.Create("events.ramping_average_end_time", 40f, CVar.ARCHIVE | CVar.SERVERONLY);
-
-        /// <summary>
-        ///     Average ending chaos modifier for the ramping event scheduler.
-        ///     Max chaos chosen for a round will deviate from this
-        /// </summary>
-        public static readonly CVarDef<float>
-            EventsRampingAverageChaos = CVarDef.Create("events.ramping_average_chaos", 6f, CVar.ARCHIVE | CVar.SERVERONLY);
-
         /*
          * Game
          */
@@ -419,6 +405,30 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<string> RoundEndSoundCollection =
             CVarDef.Create("game.round_end_sound_collection", "RoundEnd", CVar.SERVERONLY);
+
+        /// <summary>
+        /// Whether or not to add every player as a global override to PVS at round end.
+        /// This will allow all players to see their clothing in the round screen player list screen,
+        /// but may cause lag during round end with very high player counts.
+        /// </summary>
+        public static readonly CVarDef<bool> RoundEndPVSOverrides =
+            CVarDef.Create("game.round_end_pvs_overrides", true, CVar.SERVERONLY);
+
+        /// <summary>
+        /// If true, players can place objects onto tabletop games like chess boards.
+        /// </summary>
+        /// <remarks>
+        /// This feature is currently highly abusable and can easily be used to crash the server,
+        /// so it's off by default.
+        /// </remarks>
+        public static readonly CVarDef<bool> GameTabletopPlace =
+            CVarDef.Create("game.tabletop_place", false, CVar.SERVERONLY);
+
+        /// <summary>
+        /// If true, contraband severity can be viewed in the examine menu
+        /// </summary>
+        public static readonly CVarDef<bool> ContrabandExamine =
+            CVarDef.Create("game.contraband_examine", true, CVar.SERVER | CVar.REPLICATED);
 
         /*
          * Discord
@@ -813,6 +823,15 @@ namespace Content.Shared.CCVar
             CVarDef.Create("admin.server_ban_erase_player", false, CVar.ARCHIVE | CVar.SERVER | CVar.REPLICATED);
 
         /// <summary>
+        ///     Minimum players sharing a connection required to create an alert. -1 to disable the alert.
+        /// </summary>
+        /// <remarks>
+        ///     If you set this to 0 or 1 then it will alert on every connection, so probably don't do that.
+        /// </remarks>
+        public static readonly CVarDef<int> AdminAlertMinPlayersSharingConnection =
+            CVarDef.Create("admin.alert.min_players_sharing_connection", -1, CVar.SERVERONLY);
+
+        /// <summary>
         ///     Minimum explosion intensity to create an admin alert message. -1 to disable the alert.
         /// </summary>
         public static readonly CVarDef<int> AdminAlertExplosionMinIntensity =
@@ -862,6 +881,52 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool> AdminBypassMaxPlayers =
             CVarDef.Create("admin.bypass_max_players", true, CVar.SERVERONLY);
+
+        /// <summary>
+        /// Determine if custom rank names are used.
+        /// If it is false, it'd use the actual rank name regardless of the individual's title.
+        /// </summary>
+        /// <seealso cref="AhelpAdminPrefix"/>
+        /// <seealso cref="AhelpAdminPrefixWebhook"/>
+        public static readonly CVarDef<bool> AdminUseCustomNamesAdminRank =
+            CVarDef.Create("admin.use_custom_names_admin_rank", true, CVar.SERVERONLY);
+
+        /*
+         * AHELP
+         */
+
+        /// <summary>
+        /// Ahelp rate limit values are accounted in periods of this size (seconds).
+        /// After the period has passed, the count resets.
+        /// </summary>
+        /// <seealso cref="AhelpRateLimitCount"/>
+        public static readonly CVarDef<int> AhelpRateLimitPeriod =
+            CVarDef.Create("ahelp.rate_limit_period", 2, CVar.SERVERONLY);
+
+        /// <summary>
+        /// How many ahelp messages are allowed in a single rate limit period.
+        /// </summary>
+        /// <seealso cref="AhelpRateLimitPeriod"/>
+        public static readonly CVarDef<int> AhelpRateLimitCount =
+            CVarDef.Create("ahelp.rate_limit_count", 10, CVar.SERVERONLY);
+
+        /// <summary>
+        /// Should the administrator's position be displayed in ahelp.
+        /// If it is is false, only the admin's ckey will be displayed in the ahelp.
+        /// </summary>
+        /// <seealso cref="AdminUseCustomNamesAdminRank"/>
+        /// <seealso cref="AhelpAdminPrefixWebhook"/>
+        public static readonly CVarDef<bool> AhelpAdminPrefix =
+            CVarDef.Create("ahelp.admin_prefix", false, CVar.SERVERONLY);
+
+        /// <summary>
+        /// Should the administrator's position be displayed in the webhook.
+        /// If it is is false, only the admin's ckey will be displayed in webhook.
+        /// </summary>
+        /// <seealso cref="AdminUseCustomNamesAdminRank"/>
+        /// <seealso cref="AhelpAdminPrefix"/>
+        public static readonly CVarDef<bool> AhelpAdminPrefixWebhook =
+            CVarDef.Create("ahelp.admin_prefix_webhook", false, CVar.SERVERONLY);
 
         /*
          * Explosions
@@ -1261,24 +1326,12 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool> WhitelistEnabled =
             CVarDef.Create("whitelist.enabled", false, CVar.SERVERONLY);
-
         /// <summary>
-        ///     The loc string to display as a disconnect reason when someone is not whitelisted.
+        ///     Specifies the whitelist prototypes to be used by the server. This should be a comma-separated list of prototypes.
+        ///     If a whitelists conditions to be active fail (for example player count), the next whitelist will be used instead. If no whitelist is valid, the player will be allowed to connect.
         /// </summary>
-        public static readonly CVarDef<string> WhitelistReason =
-            CVarDef.Create("whitelist.reason", "whitelist-not-whitelisted", CVar.SERVERONLY);
-
-        /// <summary>
-        ///     If the playercount is below this number, the whitelist will not apply.
-        /// </summary>
-        public static readonly CVarDef<int> WhitelistMinPlayers =
-            CVarDef.Create("whitelist.min_players", 0, CVar.SERVERONLY);
-
-        /// <summary>
-        ///     If the playercount is above this number, the whitelist will not apply.
-        /// </summary>
-        public static readonly CVarDef<int> WhitelistMaxPlayers =
-            CVarDef.Create("whitelist.max_players", int.MaxValue, CVar.SERVERONLY);
+        public static readonly CVarDef<string> WhitelistPrototypeList =
+            CVarDef.Create("whitelist.prototype_list", "basicWhitelist", CVar.SERVERONLY);
 
         /*
          * VOTE
@@ -1424,6 +1477,19 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool> ArrivalsReturns =
             CVarDef.Create("shuttle.arrivals_returns", false, CVar.SERVERONLY);
+
+        /// <summary>
+        /// Should all players who spawn at arrivals have godmode until they leave the map?
+        /// </summary>
+        public static readonly CVarDef<bool> GodmodeArrivals =
+            CVarDef.Create("shuttle.godmode_arrivals", false, CVar.SERVERONLY);
+
+        /// <summary>
+        /// If a grid is split then hide any smaller ones under this mass (kg) from the map.
+        /// This is useful to avoid split grids spamming out labels.
+        /// </summary>
+        public static readonly CVarDef<int> HideSplitGridsUnder =
+            CVarDef.Create("shuttle.hide_split_grids_under", 30, CVar.SERVERONLY);
 
         /// <summary>
         /// Whether to automatically spawn escape shuttles.
@@ -1844,7 +1910,7 @@ namespace Content.Shared.CCVar
         /// Don't show rules to localhost/loopback interface.
         /// </summary>
         public static readonly CVarDef<bool> RulesExemptLocal =
-            CVarDef.Create("rules.exempt_local", false, CVar.SERVERONLY);
+            CVarDef.Create("rules.exempt_local", true, CVar.SERVERONLY);
 
 
         /*
@@ -1923,6 +1989,18 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<float> GhostRoleTime =
             CVarDef.Create("ghost.role_time", 3f, CVar.REPLICATED | CVar.SERVER);
+
+        /// <summary>
+        /// If ghost role lotteries should be made near-instanteous.
+        /// </summary>
+        public static readonly CVarDef<bool> GhostQuickLottery =
+            CVarDef.Create("ghost.quick_lottery", false, CVar.SERVERONLY);
+
+        /// <summary>
+        /// Whether or not to kill the player's mob on ghosting, when it is in a critical health state.
+        /// </summary>
+        public static readonly CVarDef<bool> GhostKillCrit =
+            CVarDef.Create("ghost.kill_crit", true, CVar.REPLICATED | CVar.SERVER);
 
         /*
          * Fire alarm
@@ -2101,6 +2179,12 @@ namespace Content.Shared.CCVar
         // Clippy!
         public static readonly CVarDef<string> TippyEntity =
             CVarDef.Create("tippy.entity", "Tippy", CVar.SERVER | CVar.REPLICATED);
+
+        /// <summary>
+        ///     The number of seconds that must pass for a single entity to be able to point at something again.
+        /// </summary>
+        public static readonly CVarDef<float> PointingCooldownSeconds =
+            CVarDef.Create("pointing.cooldown_seconds", 0.5f, CVar.SERVERONLY);
 
         /*
          * DEBUG

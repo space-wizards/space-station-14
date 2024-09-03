@@ -180,6 +180,11 @@
   description: flavor-base-mindful
 
 - type: flavor
+  id: chewy
+  flavorType: Base
+  description: flavor-base-chewy
+
+- type: flavor
   id: mustard
   flavorType: Complex
   description: flavor-complex-mustard
@@ -1085,6 +1090,11 @@
   description: flavor-complex-fishops
 
 - type: flavor
+  id: bluepumpkin
+  flavorType: Complex
+  description: flavor-complex-blue-pumpkin
+  
+- type: flavor
   id: violets
   flavorType: Complex
   description: flavor-complex-violets
@@ -1103,3 +1113,19 @@
   id: paintthinner
   flavorType: Complex
   description: flavor-complex-paint-thinner
+
+- type: flavor
+  id: cherry
+  flavorType: Complex
+  description: flavor-complex-cherry
+
+- type: flavor
+  id: paper
+  flavorType: Complex
+  description: flavor-complex-paper
+
+- type: flavor
+  id: compressed-meat
+  flavorType: Complex
+  description: flavor-complex-compressed-meat
+  

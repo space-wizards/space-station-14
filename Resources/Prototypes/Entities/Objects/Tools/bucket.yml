@@ -45,6 +45,8 @@
         Blunt: 0
   - type: Spillable
     solution: bucket
+  - type: SpillWhenWorn
+    solution: bucket
   - type: DrawableSolution
     solution: bucket
   - type: RefillableSolution
@@ -65,3 +67,4 @@
   - type: PhysicalComposition
     materialComposition:
       Plastic: 50
+  - type: DnaSubstanceTrace

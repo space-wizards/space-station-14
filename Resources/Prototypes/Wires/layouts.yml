@@ -4,10 +4,12 @@
   - !type:PowerWireAction
   - !type:PowerWireAction
     pulseTimeout: 15
+  - !type:LogWireAction
   - !type:DoorBoltWireAction
   - !type:DoorBoltLightWireAction
   - !type:DoorTimingWireAction
   - !type:DoorSafetyWireAction
+  - !type:AiInteractWireAction
 
 - type: wireLayout
   parent: Airlock
@@ -57,6 +59,7 @@
   wires:
   - !type:PowerWireAction
   - !type:AccessWireAction
+  - !type:LogWireAction
   - !type:VendingMachineContrabandWireAction
   - !type:VendingMachineEjectItemWireAction
   - !type:SpeechWireAction
@@ -66,6 +69,7 @@
   wires:
   - !type:PowerWireAction
   - !type:AccessWireAction
+  - !type:LogWireAction
   - !type:AirAlarmPanicWire
   - !type:AtmosMonitorDeviceNetWire
 
@@ -94,9 +98,10 @@
 
 - type: wireLayout
   id: SurveillanceCamera
-  dummyWires: 4
+  dummyWires: 2
   wires:
   - !type:PowerWireAction
+  - !type:AiVisionWireAction
 
 - type: wireLayout
   id: CryoPod
@@ -121,6 +126,7 @@
   - !type:PowerWireAction
   - !type:PowerWireAction
     pulseTimeout: 15
+  - !type:LogWireAction
   - !type:DoorBoltWireAction
   - !type:DoorBoltLightWireAction
   - !type:DoorTimingWireAction

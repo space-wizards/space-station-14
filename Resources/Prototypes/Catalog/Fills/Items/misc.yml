@@ -1,12 +1,33 @@
 - type: entity
   id: ClothingShoesBootsCombatFilled
-  parent: ClothingShoesBootsCombat
-  suffix: Filled
-  components:
-  - type: ContainerFill
-    containers:
-      item:
-      - CombatKnife
+  suffix: Filled, Combat Knife
+  parent:
+  - ClothingShoesBootsCombat
+  - ClothingShoesBootsSecFilled
+
+- type: entity
+  id: ClothingShoesBootsJackFilled
+  parent:
+  - ClothingShoesBootsJack
+  - ClothingShoesBootsSecFilled
+
+- type: entity
+  id: ClothingShoesBootsWinterSecFilled
+  parent:
+  - ClothingShoesBootsWinterSec
+  - ClothingShoesBootsSecFilled
+
+- type: entity
+  id: ClothingShoesBootsCowboyBlackFilled
+  parent:
+  - ClothingShoesBootsCowboyBlack
+  - ClothingShoesBootsSecFilled
+
+- type: entity
+  id: ClothingShoesHighheelBootsFilled
+  parent:
+  - ClothingShoesHighheelBoots
+  - ClothingShoesBootsSecFilled
 
 - type: entity
   id: ClothingShoesBootsMercFilled
@@ -18,3 +39,12 @@
       item:
       - KukriKnife
 
+- type: entity
+  id: ClothingShoesBootsSyndieFilled
+  parent: ClothingShoesBootsCombat
+  suffix: Filled, Throwing Knife
+  components:
+  - type: ContainerFill
+    containers:
+      item:
+      - ThrowingKnife

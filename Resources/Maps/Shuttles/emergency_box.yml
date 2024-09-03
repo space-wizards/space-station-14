@@ -499,8 +499,6 @@ entities:
     - type: Transform
       pos: 14.5,0.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
 - proto: Airlock
   entities:
   - uid: 417
@@ -565,9 +563,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 15.5,12.5
       parent: 1
-    - type: DeviceLinkSink
-      links:
-      - 420
     - type: DeviceLinkSource
       linkedPorts:
         420:
@@ -578,9 +573,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 15.5,14.5
       parent: 1
-    - type: DeviceLinkSink
-      links:
-      - 184
     - type: DeviceLinkSource
       linkedPorts:
         184:
@@ -608,26 +600,30 @@ entities:
       rot: 3.141592653589793 rad
       pos: 15.5,-4.5
       parent: 1
-- proto: AtmosDeviceFanTiny
+- proto: AtmosDeviceFanDirectional
   entities:
+  - uid: 484
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 0.5,1.5
+      parent: 1
   - uid: 580
     components:
     - type: Transform
+      rot: -1.5707963267948966 rad
       pos: 0.5,9.5
       parent: 1
   - uid: 581
     components:
     - type: Transform
+      rot: -1.5707963267948966 rad
       pos: 0.5,7.5
       parent: 1
   - uid: 582
     components:
     - type: Transform
-      pos: 0.5,1.5
-      parent: 1
-  - uid: 583
-    components:
-    - type: Transform
+      rot: -1.5707963267948966 rad
       pos: 0.5,-0.5
       parent: 1
 - proto: BookHowToSurvive
@@ -1891,8 +1887,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 17.5,-1.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
 - proto: GasPassiveVent
   entities:
   - uid: 436
@@ -1901,8 +1895,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 17.5,-3.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
 - proto: GasPipeBend
   entities:
   - uid: 158
@@ -2278,8 +2270,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 14.5,0.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
 - proto: GasVentPump
   entities:
   - uid: 127
@@ -2287,63 +2277,47 @@ entities:
     - type: Transform
       pos: 3.5,10.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
   - uid: 171
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 2.5,-1.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
   - uid: 492
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 10.5,10.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
   - uid: 499
     components:
     - type: Transform
       pos: 2.5,6.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
   - uid: 500
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 14.5,4.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
   - uid: 501
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 18.5,4.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
   - uid: 502
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 12.5,-3.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
   - uid: 503
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 6.5,-2.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
 - proto: GeneratorBasic15kW
   entities:
   - uid: 294
@@ -2520,6 +2494,13 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 14.5,1.5
+      parent: 1
+- proto: LootSpawnerRandomCrateEngineering
+  entities:
+  - uid: 595
+    components:
+    - type: Transform
+      pos: 10.5,10.5
       parent: 1
 - proto: MaintenanceWeaponSpawner
   entities:
@@ -2785,13 +2766,6 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 14.5,10.5
-      parent: 1
-- proto: SalvageMaterialCrateSpawner
-  entities:
-  - uid: 484
-    components:
-    - type: Transform
-      pos: 10.5,10.5
       parent: 1
 - proto: Screen
   entities:

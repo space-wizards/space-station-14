@@ -26,6 +26,8 @@
     count: 8
   - type: Item
     size: Normal
+    shape:
+    - 0,0,2,1
   - type: Tag
     tags:
     - Pizza
@@ -319,11 +321,9 @@
         maxVol: 50
         reagents:
         - ReagentId: Nutriment
-          Quantity: 25
-        - ReagentId: Vitamin
-          Quantity: 5
-        - ReagentId: DoctorsDelight
-          Quantity: 6
+          Quantity: 20
+        - ReagentId: THC
+          Quantity: 30
 
 - type: entity
   name: slice of dank pizza
@@ -346,11 +346,9 @@
         maxVol: 10
         reagents:
         - ReagentId: Nutriment
-          Quantity: 4.2
-        - ReagentId: Vitamin
-          Quantity: 0.8
-        - ReagentId: DoctorsDelight
-          Quantity: 1
+          Quantity: 3.5
+        - ReagentId: THC
+          Quantity: 5
 # Tastes like crust, tomato, cheese, meat, satisfaction.
 
 - type: entity
@@ -401,7 +399,7 @@
   name: Hawaiian pizza
   parent: FoodPizzaBase
   id: FoodPizzaPineapple
-  description: Makes people burst into tears. Tears of joy or sadness depends on the persons fondness for pineapple.
+  description: Makes people burst into tears. Tears of joy or sadness depends on the person's fondness for pineapple.
   components:
   - type: FlavorProfile
     flavors:
@@ -531,6 +529,9 @@
   - type: Sprite
     layers:
     - state: moldy-slice
+  - type: Tag
+    tags:
+    - Trash
   - type: SolutionContainerManager
     solutions:
       food:
@@ -544,3 +545,139 @@
         - ReagentId: Vitamin
           Quantity: 1
 # Tastes like stale crust, rancid cheese, mushroom.
+
+- type: entity
+  name: spicy rock pizza
+  parent: FoodPizzaBase
+  id: FoodPizzaUranium
+  description: Spicy pizza covered in peppers and uranium.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - spicy
+    - cheesy
+    - oily
+    - bread
+  - type: Sprite
+    layers:
+    - state: uranium-pizza
+  - type: SliceableFood
+    slice: FoodPizzaUraniumSlice
+  - type: Tag
+    tags:
+    - Meat
+    - Pizza
+  - type: PointLight
+    enabled: true
+    radius: 2
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 40
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 20
+        - ReagentId: Radium
+          Quantity: 4
+        - ReagentId: Uranium
+          Quantity: 16
+
+- type: entity
+  name: slice of spicy rock pizza
+  parent: FoodPizzaSliceBase
+  id: FoodPizzaUraniumSlice
+  description: A glowing slice of spicy rock pizza.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - spicy
+    - cheesy
+    - oily
+    - bread
+  - type: Sprite
+    layers:
+    - state: uranium-slice
+  - type: Tag
+    tags:
+    - Meat
+    - Pizza
+    - Slice
+  - type: PointLight
+    enabled: true
+    radius: 2
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2.5
+        - ReagentId: Radium
+          Quantity: 0.5
+        - ReagentId: Uranium
+          Quantity: 2
+
+# Tastes like crust, tomato, cheese, radiation.
+
+- type: entity
+  name: cotton pizza
+  parent: FoodPizzaBase
+  id: FoodPizzaCotton
+  description: Flat fabric cotton dough with cotton topping. Incredible.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - cotton
+    - bread
+  - type: Sprite
+    layers:
+    - state: cotton-pizza
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: SliceableFood
+    slice: FoodPizzaCottonSlice
+  - type: Tag
+    tags:
+    - ClothMade
+    - Pizza
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 40
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 20
+        - ReagentId: Vitamin
+          Quantity: 5
+        - ReagentId: Fiber
+          Quantity: 10
+
+- type: entity
+  name: slice of cotton pizza
+  parent: FoodPizzaSliceBase
+  id: FoodPizzaCottonSlice
+  description: A slice of cotton pizza. Cotton included.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - cotton
+    - bread
+  - type: Sprite
+    layers:
+    - state: cotton-slice
+  - type: Tag
+    tags:
+    - ClothMade
+    - Pizza
+    - Slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 6
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3.5
+        - ReagentId: Vitamin
+          Quantity: 0.8
+        - ReagentId: Fiber
+          Quantity: 1.5

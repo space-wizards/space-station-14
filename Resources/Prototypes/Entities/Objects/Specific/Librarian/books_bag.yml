@@ -2,7 +2,7 @@
   name: books bag
   id: BooksBag
   parent: BaseStorageItem
-  description: A refined bag to carry your own library
+  description: A refined bag to carry your own library.
   components:
     - type: Sprite
       sprite: Objects/Specific/Library/Equipment/books_bag.rsi
@@ -22,5 +22,9 @@
       whitelist:
         tags:
           - Book
+          - Dice
           - Document
+          - Figurine
+          - TabletopBoard
+          - Write
     - type: Dumpable

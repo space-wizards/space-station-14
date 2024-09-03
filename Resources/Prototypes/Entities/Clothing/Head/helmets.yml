@@ -3,7 +3,7 @@
 
 #Basic Helmet (Security Helmet)
 - type: entity
-  parent: ClothingHeadBase
+  parent: [ClothingHeadBase, BaseRestrictedContraband]
   id: ClothingHeadHelmetBasic
   name: helmet
   description: Standard security gear. Protects the head from impacts.
@@ -22,6 +22,10 @@
   - type: Tag
     tags:
     - WhitelistChameleon
+  - type: HideLayerClothing
+    slots:
+    - HeadTop
+    - HeadSide
 
 #Mercenary Helmet
 - type: entity
@@ -37,7 +41,7 @@
 
 #SWAT Helmet
 - type: entity
-  parent: ClothingHeadBase
+  parent: [ClothingHeadBase, BaseRestrictedContraband]
   id: ClothingHeadHelmetSwat
   name: SWAT helmet
   description: An extremely robust helmet, commonly used by paramilitary forces. This one has the Nanotrasen logo emblazoned on the top.
@@ -73,7 +77,7 @@
 
 #Light Riot Helmet
 - type: entity
-  parent: ClothingHeadBase
+  parent: [ClothingHeadBase, BaseRestrictedContraband]
   id: ClothingHeadHelmetRiot
   name: light riot helmet
   description: It's a helmet specifically designed to protect against close range attacks.
@@ -114,6 +118,8 @@
     slots:
     - Hair
     - Snout
+    - HeadTop
+    - HeadSide
 
 #Janitorial Bombsuit Helmet
 - type: entity
@@ -168,6 +174,8 @@
     slots:
     - Hair
     - Snout
+    - HeadTop
+    - HeadSide
 
 #Templar Helmet
 - type: entity
@@ -234,6 +242,8 @@
     slots:
     - Hair
     - Snout
+    - HeadTop
+    - HeadSide
 
 #Atmos Fire Helmet
 - type: entity
@@ -263,6 +273,8 @@
     slots:
     - Hair
     - Snout
+    - HeadTop
+    - HeadSide
   - type: BreathMask
 
 #Chitinous Helmet
@@ -344,6 +356,24 @@
     sprite: Clothing/Head/Helmets/ert_janitor.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/ert_janitor.rsi
+
+- type: entity
+  parent: [ BaseSyndicateContraband, ClothingHeadHelmetBasic ]
+  id: ClothingHeadHelmetRaid
+  name: syndicate raid helmet
+  description: An armored helmet for use with the syndicate raid suit. Very stylish.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/syndie-raid.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Helmets/syndie-raid.rsi
+  - type: Armor
+    modifiers: #There's gotta be SOME reason to use this over other helmets.
+      coefficients:
+        Blunt: 0.85
+        Slash: 0.85
+        Piercing: 0.85
+        Heat: 0.85
 
 #Bone Helmet
 - type: entity

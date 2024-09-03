@@ -1,4 +1,92 @@
 - type: entity
+  name: pickaxe
+  parent: BaseItem
+  id: Pickaxe
+  description: Notched to perfection, for jamming it into rocks.
+  components:
+  - type: Tag
+    tags:
+    - Pickaxe
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/pickaxe.rsi
+    state: pickaxe
+  - type: MeleeWeapon
+    attackRate: 0.7
+    wideAnimationRotation: -135
+    soundHit:
+      path: "/Audio/Weapons/smash.ogg"
+      params:
+        volume: -3
+    damage:
+      groups:
+        Brute: 5
+  - type: Wieldable
+  - type: IncreaseDamageOnWield
+    damage:
+      groups:
+        Brute: 10
+      types:
+        Structural: 30
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,2,0
+    - 1,1,1,2
+    sprite: Objects/Weapons/Melee/pickaxe.rsi
+    storedRotation: -45
+  - type: UseDelay
+
+- type: entity
+  name: mining drill
+  parent: BaseItem
+  id: MiningDrill
+  description: Powerful tool used to quickly drill through rocks.
+  components:
+  - type: Item
+    storedRotation: -90
+  - type: Tag
+    tags:
+    - Pickaxe
+  - type: Sprite
+    sprite: Objects/Tools/handdrill.rsi
+    state: handdrill
+  - type: MeleeWeapon
+    autoAttack: true
+    angle: 0
+    wideAnimationRotation: -90
+    soundHit:
+      path: "/Audio/Items/drill_hit.ogg"
+    attackRate: 4
+    damage:
+      groups:
+        Brute: 3
+      types:
+        Structural: 15
+
+- type: entity
+  name: diamond tipped mining drill
+  parent: MiningDrill
+  id: MiningDrillDiamond
+  description: A significantly more efficient mining drill tipped with diamond.
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/handdrilldiamond.rsi
+    state: handdrill
+  - type: MeleeWeapon
+    autoAttack: true
+    angle: 0
+    wideAnimationRotation: -90
+    soundHit:
+      path: "/Audio/Items/drill_hit.ogg"
+    attackRate: 4
+    damage:
+      groups:
+        Brute: 6
+      types:
+        Structural: 30
+
+
+- type: entity
   abstract: true
   parent: BaseItem
   id: BaseWeaponCrusher # Crusher? But I...
@@ -13,7 +101,7 @@
     radius: 4
 
 - type: entity
-  parent: BaseWeaponCrusher
+  parent: [BaseWeaponCrusher, BaseSecurityCargoContraband]
   id: WeaponCrusher
   components:
   - type: Tag
@@ -62,13 +150,10 @@
   - type: Item
     size: Ginormous
   - type: DisarmMalus
-  - type: Tool
-    qualities:
-      - Prying
   - type: Prying
 
 - type: entity
-  parent: BaseWeaponCrusher
+  parent: [ BaseWeaponCrusher, BaseSecurityCargoContraband]
   id: WeaponCrusherDagger
   name: crusher dagger
   description: A scaled down version of a proto-kinetic crusher. Uses kinetic energy to vibrate the blade at high speeds.
@@ -89,7 +174,7 @@
 
 # Like a crusher... but better
 - type: entity
-  parent: WeaponCrusher
+  parent: [ WeaponCrusher, BaseSecurityCargoContraband]
   id: WeaponCrusherGlaive
   name: crusher glaive
   description: An early design of the proto-kinetic accelerator, in glaive form.

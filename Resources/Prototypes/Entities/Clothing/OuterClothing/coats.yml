@@ -10,10 +10,10 @@
     sprite: Clothing/OuterClothing/Coats/bomber.rsi
 
 - type: entity
-  parent: [ClothingOuterStorageBase, AllowSuitStorageClothing]
+  parent: [ClothingOuterStorageBase, AllowSuitStorageClothing, ClothingOuterArmorBasic]
   id: ClothingOuterCoatDetective
   name: detective trenchcoat
-  description: A rugged canvas trenchcoat, designed and created by TX Fabrication Corp. Wearing it makes you feel for the plight of the Tibetans.
+  description: An 18th-century multi-purpose trenchcoat. Someone who wears this means serious business.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Coats/detective.rsi
@@ -23,13 +23,20 @@
     contents:
     - id: SmokingPipeFilledTobacco
     - id: FlippoEngravedLighter
-  - type: Armor #same as regular sec armor
-    modifiers:
-      coefficients:
-        Blunt: 0.70
-        Slash: 0.70
-        Piercing: 0.70
-        Heat: 0.80
+  - type: ExplosionResistance
+    damageCoefficient: 1 #its a coat. it doesnt do shit
+
+- type: entity
+  parent: [ClothingOuterCoatDetectiveLoadout]
+  id: ClothingOuterCoatDetectiveLoadoutGrey
+  name: noir trenchcoat
+  description: Ah, your trusty coat. There's a few tears here and there, giving it a more timely look. Or at least, that's what you told yourself when you found out gettin' it repaired would set you back 200 speos.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/detective_grey.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/detective_grey.rsi
+
 
 - type: entity
   parent: ClothingOuterCoatDetective
@@ -92,17 +99,6 @@
     sprite: Clothing/OuterClothing/Coats/hos_trenchcoat.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/hos_trenchcoat.rsi
-
-- type: entity
-  parent: ClothingOuterStorageBase
-  id: ClothingOuterCoatInspector
-  name: inspector's coat
-  description: A strict inspector's coat for being intimidating during inspections.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Coats/insp_coat.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Coats/insp_coat.rsi
 
 - type: entity
   parent: ClothingOuterStorageToggleableBase
@@ -227,7 +223,7 @@
   parent: ClothingOuterStorageFoldableBase
   id: ClothingOuterCoatLabCmo
   name: chief medical officer's lab coat
-  description: Custom made blue lab coat for the Chief Medical Officer, offers improved protection against chemical spills and minor cuts
+  description: Custom made blue lab coat for the Chief Medical Officer, offers improved protection against chemical spills and minor cuts.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Coats/labcoat_cmo.rsi
@@ -318,7 +314,7 @@
     sprite: Clothing/OuterClothing/Coats/pirate.rsi
 
 - type: entity
-  parent: [ClothingOuterArmorWarden, ClothingOuterStorageBase]
+  parent: [ClothingOuterArmorWarden, ClothingOuterStorageBase, BaseRestrictedContraband]
   id: ClothingOuterCoatWarden
   name: warden's armored jacket
   description: A sturdy, utilitarian jacket designed to protect a warden from any brig-bound threats.

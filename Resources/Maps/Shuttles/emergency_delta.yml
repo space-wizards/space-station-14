@@ -402,15 +402,11 @@ entities:
     - type: Transform
       pos: -13.5,-3.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
   - uid: 445
     components:
     - type: Transform
       pos: -1.5,-18.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
 - proto: AirlockCommandGlassLocked
   entities:
   - uid: 70
@@ -450,7 +446,7 @@ entities:
     - type: Transform
       pos: -2.5,-17.5
       parent: 1
-- proto: AirlockExternalGlassEasyPry
+- proto: AirlockExternalGlass
   entities:
   - uid: 91
     components:
@@ -497,7 +493,7 @@ entities:
       rot: 3.141592653589793 rad
       pos: -9.5,-4.5
       parent: 1
-- proto: AirlockGlassShuttleEasyPry
+- proto: AirlockGlassShuttle
   entities:
   - uid: 3
     components:
@@ -602,14 +598,34 @@ entities:
     - type: Transform
       pos: -4.5,-17.5
       parent: 1
-- proto: AtmosDeviceFanTiny
+- proto: AtmosDeviceFanDirectional
   entities:
   - uid: 583
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
+      rot: 1.5707963267948966 rad
+      pos: 2.5,-8.5
+      parent: 1
+  - uid: 696
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 2.5,-10.5
+      parent: 1
+  - uid: 761
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 2.5,-2.5
+      parent: 1
+  - uid: 763
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
       pos: 2.5,-0.5
       parent: 1
+- proto: AtmosDeviceFanTiny
+  entities:
   - uid: 658
     components:
     - type: Transform
@@ -621,24 +637,6 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -5.5,-20.5
-      parent: 1
-  - uid: 696
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 2.5,-2.5
-      parent: 1
-  - uid: 763
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 2.5,-8.5
-      parent: 1
-  - uid: 764
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 2.5,-10.5
       parent: 1
 - proto: BorgCharger
   entities:
@@ -3154,7 +3152,7 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -9.5,-16.5
       parent: 1
-- proto: MagazinePistolRubber
+- proto: MagazinePistol
   entities:
   - uid: 784
     components:
@@ -3217,6 +3215,13 @@ entities:
     components:
     - type: Transform
       pos: -12.5,-16.5
+      parent: 1
+- proto: OxygenTankFilled
+  entities:
+  - uid: 799
+    components:
+    - type: Transform
+      pos: -10.44437,-3.5553346
       parent: 1
 - proto: PaperBin10
   entities:
@@ -3540,6 +3545,38 @@ entities:
     components:
     - type: Transform
       pos: -2.5,8.5
+      parent: 1
+- proto: Screen
+  entities:
+  - uid: 765
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -1.5,-11.5
+      parent: 1
+  - uid: 766
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -9.5,-15.5
+      parent: 1
+  - uid: 767
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -2.5,-1.5
+      parent: 1
+  - uid: 768
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -11.5,-1.5
+      parent: 1
+  - uid: 781
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -4.5,3.5
       parent: 1
 - proto: ShotGunCabinetFilled
   entities:
@@ -4884,12 +4921,5 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -1.5,2.5
-      parent: 1
-- proto: YellowOxygenTankFilled
-  entities:
-  - uid: 799
-    components:
-    - type: Transform
-      pos: -10.44437,-3.5553346
       parent: 1
 ...
