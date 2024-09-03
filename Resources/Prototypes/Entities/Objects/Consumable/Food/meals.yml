@@ -51,6 +51,13 @@
       - salty
   - type: Sprite
     state: fries
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 26
+        reagents:
+        - ReagentId: TableSalt
+          Quantity: 5
 # Tastes like fries, salt.
 
 - type: entity
@@ -66,6 +73,13 @@
       - cheesy
   - type: Sprite
     state: fries-cheesy
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 26
+        reagents:
+        - ReagentId: TableSalt
+          Quantity: 5
 # Tastes like fries, cheese.
 
 - type: entity
@@ -89,7 +103,9 @@
         maxVol: 26
         reagents:
         - ReagentId: JuiceCarrot
-          Quantity: 20
+          Quantity: 15
+        - ReagentId: TableSalt
+          Quantity: 5
 # Tastes like carrots, salt.
 
 - type: entity
@@ -127,7 +143,7 @@
         - ReagentId: Vitamin
           Quantity: 3
         - ReagentId: TableSalt
-          Quantity: 1
+          Quantity: 4
 # Tastes like nachos, cheese.
 
 - type: entity
@@ -171,9 +187,11 @@
     solutions:
       food:
         # Note that this acts as the limiter against injecting anything.
-        maxVol: 1
+        maxVol: 2
         reagents:
         - ReagentId: Nutriment
+          Quantity: 1
+        - ReagentId: TableSalt
           Quantity: 1
 # Tastes like parsnips, salt.
 
@@ -330,7 +348,7 @@
   description: BBQ ribs, slathered in a healthy coating of BBQ sauce. The least vegan thing to ever exist.
   components:
   - type: Food
-    trash: 
+    trash:
     - FoodKebabSkewer
   - type: FlavorProfile
     flavors:
@@ -426,7 +444,7 @@
         - ReagentId: Nutriment
           Quantity: 2
         - ReagentId: TableSalt
-          Quantity: 1
+          Quantity: 5
         - ReagentId: Blackpepper
           Quantity: 1
   - type: Tag
@@ -617,7 +635,7 @@
   description: Buttery.
   components:
   - type: Food
-    trash: 
+    trash:
     - FoodPlate
   - type: FlavorProfile
     flavors:

@@ -81,8 +81,8 @@ uplink-incendiary-grenade-desc = Releases a spray of incendiary fragments, ignit
 uplink-shrapnel-grenade-name = Shrapnel Grenade
 uplink-shrapnel-grenade-desc = Launches a spray of sharp fragments dealing great damage against unarmored targets.
 
-uplink-box-bros-grenade-name = BROSnade kit
-uplink-box-bros-grenade-desc = Colonies of BROS captured in two glass bottles. UNGH
+uplink-bros-grenade-name = BROSnade
+uplink-bros-grenade-desc = A colony of angry BROS captured in a glass bottle. UNGH
 
 # Ammo
 uplink-pistol-magazine-name = Pistol Magazine (.35 auto)
@@ -447,4 +447,4 @@ uplink-backpack-syndicate-name = Syndicate backpack
 uplink-backpack-syndicate-desc = Lightweight explosion-proof a backpack for holding various traitor goods
 
 uplink-combat-bakery-name = Combat Bakery Kit
-uplink-combat-bakery-desc = A kit of clandestine baked weapons. Contains a baguette which a skilled mime could use as a sword and a pair of throwing croissants. Once the job is done, eat the evidence.
+uplink-combat-bakery-desc = A kit of clandestine baked weapons. Contains a baguette sword, a pair of throwing croissants, and a syndicate microwave board for making more. Once the job is done, eat the evidence.

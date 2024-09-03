@@ -347,6 +347,11 @@
     bloodReagent: InsectBlood
     bloodMaxVolume: 20
   - type: Food
+  - type: FlavorProfile
+    flavors:
+    - horrible
+    - terrible
+    - chewy
   - type: Hunger
     baseDecayRate: 0.25
   - type: Extractable
@@ -957,6 +962,9 @@
     requiresSpecialDigestion: true
     # Wooly prevents eating wool deleting the goat so its fine
     requireDead: false
+  - type: FlavorProfile
+    flavors:
+    - fiber
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -1636,6 +1644,9 @@
       Dead:
         Base: splat-0
   - type: Food
+  - type: FlavorProfile
+    flavors:
+    - meaty
   - type: Thirst
     startingThirst: 25  # spawn with Okay thirst state
     thresholds:
@@ -2496,78 +2507,40 @@
       bloodReagent: VentCrud
     - type: NoSlip
     - type: ZombieImmune
+    - type: Food
+    - type: Extractable
+      grindableSolutionName: food
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          reagents:
+          - ReagentId: VentCrud
+            Quantity: 2
+          - ReagentId: GroundBros
+            Quantity: 3
+    - type: NPCRetaliation
     - type: Tag
       tags:
       - BROS
 
 - type: entity
   name: SORB
-  parent: [ SimpleMobBase, MobCombat ]
+  parent: MobBros
   id: MobSorb
   description: SORB S'TI KCUF HO
   components:
-    - type: Item
-      size: Tiny
     - type: Sprite
       drawdepth: Mobs
       layers:
       - map: ["enum.DamageStateVisualLayers.Base"]
         state: sorb
         sprite: Mobs/Animals/bros.rsi
-    - type: Butcherable
-      spawned:
-        - id: FoodLingzhi
-          amount: 1
-    - type: NpcFactionMember
-      factions:
-        - Xeno
-    - type: ReplacementAccent
-      accent: xeno
-    - type: InputMover
-    - type: MobMover
-    - type: HTN
-      rootTask:
-        task: SimpleHostileCompound
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape:
-            !type:PhysShapeCircle
-            radius: 0.35
-          density: 130
-          mask:
-          - MobMask
-          layer:
-          - MobLayer
     - type: DamageStateVisuals
       states:
         Alive:
           Base: sorb
         Dead:
           Base: sorb-dead
-    - type: MobThresholds
-      thresholds:
-        0: Alive
-        15: Dead
-    - type: MeleeWeapon
-      altDisarm: false
-      angle: 0
-      animation: WeaponArcPunch
-      soundHit:
-        path: /Audio/Animals/bros_hit.ogg
-      damage:
-        types:
-          Blunt: 1
-    - type: Speech
-      speechVerb: Cluwne
-    - type: Bloodstream
-      bloodMaxVolume: 40
-      bloodReagent: VentCrud
-    - type: NoSlip
-    - type: ZombieImmune
-    - type: Tag
-      tags:
-      - BROS
 
 - type: entity
   name: wizard spider
@@ -3368,6 +3341,9 @@
       Dead:
         Base: splat-0
   - type: Food
+  - type: FlavorProfile
+    flavors:
+    - meaty
   - type: Hunger
     baseDecayRate: 0.3
   - type: Extractable

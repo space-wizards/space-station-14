@@ -73,6 +73,15 @@
   - type: ReplacementAccent
     accent: liar
 
+- type: trait
+  id: Snalien
+  name: trait-snalien-name
+  description: trait-snalien-desc
+  category: SpeechTraits
+  cost: 2
+  components:
+  - type: SnalienAccent
+
 # 2 Cost
 
 - type: trait

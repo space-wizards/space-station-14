@@ -387,12 +387,12 @@
     - UplinkExplosives
 
 - type: listing
-  id: UplinkBoxBrosGrenade
-  name: uplink-box-bros-grenade-name
-  description: uplink-box-bros-grenade-desc
-  productEntity: BoxBrosGrenade
+  id: UplinkBrosGrenade
+  name: uplink-bros-grenade-name
+  description: uplink-bros-grenade-desc
+  productEntity: BrosGrenade
   cost:
-    Telecrystal: 16
+    Telecrystal: 14
   categories:
     - UplinkExplosives
   conditions:
@@ -1776,7 +1776,7 @@
   icon: { sprite:  Objects/Consumable/Food/Baked/bread.rsi, state: baguette}
   productEntity: CombatBakeryKit
   cost:
-    Telecrystal: 3
+    Telecrystal: 6
   categories:
   - UplinkJob
   conditions:

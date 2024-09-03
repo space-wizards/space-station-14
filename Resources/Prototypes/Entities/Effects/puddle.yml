@@ -72,6 +72,22 @@
           Quantity: 15
 
 - type: entity
+  id: PuddleMucin
+  parent: PuddleTemporary
+  suffix: Mucin
+  components:
+  - type: TimedDespawn
+    Lifetime: 5
+  - type: EvaporationSparkle
+  - type: SolutionContainerManager
+    solutions:
+      puddle:
+        maxVol: 1000
+        reagents:
+        - ReagentId: Mucin
+          Quantity: 20
+
+- type: entity
   id: PuddleFlour
   parent: PuddleTemporary
   suffix: Flour

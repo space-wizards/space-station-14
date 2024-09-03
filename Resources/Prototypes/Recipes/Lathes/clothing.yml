@@ -1261,3 +1261,66 @@
   completetime: 1
   materials:
     Cloth: 100
+
+- type: latheRecipe
+  id: ClothingNeckCloakTrans
+  result: ClothingNeckCloakTrans
+  completetime: 3.2
+  materials:
+    Durathread: 200
+
+- type: latheRecipe
+  id: ClothingNeckCloakAce
+  result: ClothingNeckCloakAce
+  completetime: 3.2
+  materials:
+    Durathread: 200
+
+- type: latheRecipe
+  id: ClothingNeckCloakAro
+  result: ClothingNeckCloakAro
+  completetime: 3.2
+  materials:
+    Durathread: 200
+
+- type: latheRecipe
+  id: ClothingNeckCloakBi
+  result: ClothingNeckCloakBi
+  completetime: 3.2
+  materials:
+    Durathread: 200
+
+- type: latheRecipe
+  id: ClothingNeckCloakIntersex
+  result: ClothingNeckCloakIntersex
+  completetime: 3.2
+  materials:
+    Durathread: 200
+
+- type: latheRecipe
+  id: ClothingNeckCloakLesbian
+  result: ClothingNeckCloakLesbian
+  completetime: 3.2
+  materials:
+    Durathread: 200
+
+- type: latheRecipe
+  id: ClothingNeckCloakGay
+  result: ClothingNeckCloakGay
+  completetime: 3.2
+  materials:
+    Durathread: 200
+
+- type: latheRecipe
+  id: ClothingNeckCloakEnby
+  result: ClothingNeckCloakEnby
+  completetime: 3.2
+  materials:
+    Durathread: 200
+
+- type: latheRecipe
+  id: ClothingNeckCloakPan
+  result: ClothingNeckCloakPan
+  completetime: 3.2
+  materials:
+    Durathread: 200

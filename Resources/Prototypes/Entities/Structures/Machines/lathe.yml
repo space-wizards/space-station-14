@@ -137,8 +137,6 @@
       - AirTank
       - GasAnalyzer
       - UtilityBelt
-      - Fulton
-      - FultonBeacon
       - Pickaxe
       - ModularReceiver
       - AppraisalTool
@@ -340,7 +338,6 @@
       - WeaponLaserSvalinn
       - WeaponProtoKineticAccelerator
       - WeaponTetherGun
-      - WeaponGrapplingGun
       - ClothingBackpackHolding
       - ClothingBackpackSatchelHolding
       - ClothingBackpackDuffelHolding
@@ -450,6 +447,7 @@
     - SodaDispenserMachineCircuitboard
     - SpaceHeaterMachineCircuitBoard
     - CutterMachineCircuitboard
+    - StationAnchorCircuitboard
     dynamicRecipes:
       - ThermomachineFreezerMachineCircuitBoard
       - HellfireFreezerMachineCircuitBoard
@@ -1122,6 +1120,16 @@
       - CarpetPurple
       - CarpetCyan
       - CarpetWhite
+      # Pride Cloaks
+      - ClothingNeckCloakTrans
+      - ClothingNeckCloakAce
+      - ClothingNeckCloakAro
+      - ClothingNeckCloakBi
+      - ClothingNeckCloakIntersex
+      - ClothingNeckCloakLesbian
+      - ClothingNeckCloakGay
+      - ClothingNeckCloakEnby
+      - ClothingNeckCloakPan
   - type: EmagLatheRecipes
     emagStaticRecipes:
       - ClothingHeadHatCentcomcap

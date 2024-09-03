@@ -17,5 +17,6 @@
   </Box>
   <Box>
   <GuideEntityEmbed Entity="MobGray" Caption="Gray"/>
+  <GuideEntityEmbed Entity="MobSnail" Caption="Gastropoid"/>
   </Box>
 </Document>
