@@ -25,7 +25,7 @@
         - ReagentId: Nutriment
           Quantity: 6.66
   - type: FoodSequenceStartPoint
-    key: taco
+    key: Taco
     maxLayers: 3
     startPosition: -0.15, 0
     offset: 0.15, 0

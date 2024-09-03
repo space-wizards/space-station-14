@@ -1725,9 +1725,9 @@
     normalState: Mouse_burning
   - type: FoodSequenceElement
     entries:
-      taco: RatTaco
-      burger: RatBurger
-      skewer: RatSkewer
+      Taco: RatTaco
+      Burger: RatBurger
+      Skewer: RatSkewer
 
 - type: entity
   parent: MobMouse

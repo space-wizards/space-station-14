@@ -69,8 +69,8 @@
       - people
   - type: FoodSequenceElement
     entries:
-      burger: Brain
-      taco: Brain
+      Burger: Brain
+      Taco: Brain
   
 - type: entity
   id: OrganHumanEyes

@@ -44,7 +44,7 @@
     - state: bun_bottom
     - map: ["foodSequenceLayers"]
   - type: FoodSequenceStartPoint
-    key: burger
+    key: Burger
     maxLayers: 10
     startPosition: 0, 0
     offset: 0, 0.07

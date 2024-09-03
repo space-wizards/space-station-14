@@ -58,7 +58,7 @@
         canReact: false # Dont want cause reactions inside skewers after merging ingredients
         maxVol: 0
   - type: FoodSequenceStartPoint
-    key: skewer
+    key: Skewer
     maxLayers: 4
     startPosition: -0.27, -0.19
     inverseLayers: true 

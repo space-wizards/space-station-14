@@ -658,7 +658,7 @@
       - creamy
   - type: Sprite
     state: chevrelog
-  - type: 
+  - type: SliceableFood
     count: 3
     slice: FoodChevreSlice
   - type: SolutionContainerManager
