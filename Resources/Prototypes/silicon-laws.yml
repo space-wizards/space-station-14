@@ -161,36 +161,6 @@
   - Ninja3
   - Ninja4
   obeysTo: laws-owner-spider-clan
-  
-  # Standard AI laws
-- type: siliconLaw
-  id: sAI1
-  order: 1
-  lawString: law-sAI-1
-
-- type: siliconLaw
-  id: sAI2
-  order: 2
-  lawString: law-sAI-2
-
-- type: siliconLaw
-  id: sAI3
-  order: 3
-  lawString: law-sAI-3
-
-- type: siliconLaw
-  id: sAI4
-  order: 4
-  lawString: law-sAI-4
-
-- type: siliconLawset
-  id: sAIDefault
-  laws:
-  - sAI1
-  - sAI2
-  - sAI3
-  - sAI4
-  obeysTo: laws-owner-crew
 
 
 # ion storm random lawsets
