@@ -1107,6 +1107,13 @@ namespace Content.Shared.CCVar
             CVarDef.Create("atmos.space_wind", false, CVar.SERVERONLY);
 
         /// <summary>
+        ///     Whether pipes will unanchor on ANY conflicting connection. May break maps.
+        ///     If false, allows you to stack pipes as long as new directions are added (i.e. in a new pipe rotation, layer or multi-Z link), otherwise unanchoring them.
+        /// </summary>
+        public static readonly CVarDef<bool> StrictPipeStacking =
+            CVarDef.Create("atmos.strict_pipe_stacking", false, CVar.SERVERONLY);
+
+        /// <summary>
         ///     Divisor from maxForce (pressureDifference * 2.25f) to force applied on objects.
         /// </summary>
         public static readonly CVarDef<float> SpaceWindPressureForceDivisorThrow =

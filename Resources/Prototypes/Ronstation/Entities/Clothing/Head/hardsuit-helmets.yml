@@ -1,0 +1,21 @@
+#Heccdiver Helmet
+- type: entity
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHardsuitHeccdiver
+  name: heccdiver hardsuit helmet
+  description: The lightweight helmet belonging to an elite task force.
+  components:
+  - type: Sprite
+    sprite: Ronstation/Clothing/Head/Helmets/heccdiver.rsi
+  - type: Clothing
+    sprite: Ronstation/Clothing/Head/Helmets/heccdiver.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.525
+    lowPressureMultiplier: 1000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9

@@ -1,0 +1,7 @@
+- type: accessLevel
+  id: HeccDiver
+  name: id-card-access-level-hecc-diver
+
+- type: accessLevel
+  id: TerraGov
+  name: id-card-access-level-terra-gov

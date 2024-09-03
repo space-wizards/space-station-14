@@ -22,7 +22,11 @@
         prob: 0.15
       - id: HarmonicaInstrument
         prob: 0.15
- 
+      - id: EmergencyOxygenTankFilled
+        prob: 0.5
+      - id: EmergencyNitrogenTankFilled
+        prob: 0.5
+
 - type: entity
   id: ToolboxElectricalFilled
   name: electrical toolbox
@@ -82,7 +86,7 @@
     - id: MysteryFigureBox
       prob: 0.5
     - id: BookRandom
-      amount: 2 
+      amount: 2
     - id: CrayonMime
     - id: CrayonRainbow
 
