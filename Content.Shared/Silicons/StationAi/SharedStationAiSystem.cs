@@ -4,6 +4,7 @@ using Content.Shared.Administration.Managers;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
 using Content.Shared.Doors.Systems;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Mind;
@@ -85,6 +86,25 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         SubscribeLocalEvent<StationAiCoreComponent, ComponentShutdown>(OnAiShutdown);
         SubscribeLocalEvent<StationAiCoreComponent, PowerChangedEvent>(OnCorePower);
         SubscribeLocalEvent<StationAiCoreComponent, GetVerbsEvent<Verb>>(OnCoreVerbs);
+		
+		SubscribeLocalEvent<TryGetIdentityShortInfoEvent>(OnTryGetIdentityShortInfo);
+		
+    }
+	
+	private void OnTryGetIdentityShortInfo(TryGetIdentityShortInfoEvent args)
+    {
+        if (args.Handled)
+        {
+            return;
+        }
+
+        if (!HasComp<StationAiHeldComponent>(args.ForActor))
+        {
+            return;
+        }
+
+        args.Title = Name(args.ForActor).Trim();
+        args.Handled = true;
     }
 
     private void OnCoreVerbs(Entity<StationAiCoreComponent> ent, ref GetVerbsEvent<Verb> args)
