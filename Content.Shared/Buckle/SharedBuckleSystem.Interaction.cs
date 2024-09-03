@@ -85,7 +85,7 @@ public abstract partial class SharedBuckleSystem
             return;
 
         // Buckle self
-        if (StrapHasSpace(uid, buckle, component) && buckle.BuckledTo == null && component.BuckleOnInteractHand)
+        if (buckle.BuckledTo == null && component.BuckleOnInteractHand && StrapHasSpace(uid, buckle, component))
         {
             TryBuckle(args.User, args.User, uid, buckle, popup: true);
             args.Handled = true;
