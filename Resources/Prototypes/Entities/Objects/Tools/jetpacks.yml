@@ -187,7 +187,7 @@
   components:
     - type: Item
       sprite: Objects/Tanks/Jetpacks/mini.rsi
-      size: Normal
+      size: Large
     - type: Sprite
       sprite: Objects/Tanks/Jetpacks/mini.rsi
     - type: Clothing
@@ -228,6 +228,7 @@
   components:
     - type: Item
       sprite: Objects/Tanks/Jetpacks/salvage.rsi
+      size: Large
     - type: Sprite
       sprite: Objects/Tanks/Jetpacks/salvage.rsi
     - type: Clothing
