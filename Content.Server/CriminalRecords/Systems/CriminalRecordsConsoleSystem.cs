@@ -10,7 +10,6 @@ using Content.Shared.CriminalRecords.Systems;
 using Content.Shared.Security;
 using Content.Shared.StationRecords;
 using Robust.Server.GameObjects;
-using Robust.Shared.Player;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Security.Components;
@@ -26,7 +25,6 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
     [Dependency] private readonly CriminalRecordsSystem _criminalRecords = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly RadioSystem _radio = default!;
-    [Dependency] private readonly SharedIdCardSystem _idCard = default!;
     [Dependency] private readonly StationRecordsSystem _records = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
@@ -108,6 +106,16 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
             _criminalRecords.TryAddHistory(key.Value, history, officer);
         }
 
+        var name = _records.RecordName(key.Value);
+        var officer = Loc.GetString("criminal-records-console-unknown-officer");
+
+        var tryGetIdentityShortInfoEvent = new TryGetIdentityShortInfoEvent(null, mob.Value);
+        RaiseLocalEvent(tryGetIdentityShortInfoEvent);
+        if (tryGetIdentityShortInfoEvent.Title != null)
+        {
+            officer = tryGetIdentityShortInfoEvent.Title;
+        }
+        
         // will probably never fail given the checks above
         _criminalRecords.TryChangeStatus(key.Value, msg.Status, msg.Reason, officer);
 

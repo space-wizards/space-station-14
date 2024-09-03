@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Content.Server.NPC.Pathfinding;
 using Content.Shared.Maps;
+using Content.Shared.NPC;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.DungeonGenerators;
 using Robust.Shared.Collections;
@@ -29,7 +30,7 @@ public sealed partial class DungeonJob
         var pathfinder = _entManager.System<PathfindingSystem>();
 
         // Gridcast
-        pathfinder.GridCast(startTile, position, tile =>
+        SharedPathfindingSystem.GridCast(startTile, position, tile =>
         {
             if (!_maps.TryGetTileRef(_gridUid, _grid, tile, out var tileRef) ||
                 tileRef.Tile.IsSpace(_tileDefManager))
