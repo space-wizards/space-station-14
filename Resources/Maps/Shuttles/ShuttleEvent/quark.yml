@@ -1491,6 +1491,7 @@ entities:
                       personnel, and trained disaster specialists.  [/bold]
 
                                                   [italic]End transmission[/italic]
+      editingDisabled: True
     - type: SolutionContainerManager
       solutions: null
       containers:
