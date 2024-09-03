@@ -19,7 +19,7 @@
   - type: InstantAction
     itemIconStyle: BigAction
     icon:
-      sprite: Interface\Actions\actions_ai.rsi
+      sprite: Interface/Actions/actions_ai.rsi
       state: job_view
     event: !type:ActionComponentChangeEvent
       components:
