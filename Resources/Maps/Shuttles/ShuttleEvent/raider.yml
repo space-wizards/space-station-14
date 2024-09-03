@@ -157,9 +157,6 @@ entities:
       parent: 52
     - type: OnUseTimerTrigger
       startOnStick: False
-    - type: DeviceLinkSink
-      links:
-      - 83
     - type: Physics
       canCollide: False
   - uid: 54
@@ -168,9 +165,6 @@ entities:
       parent: 52
     - type: OnUseTimerTrigger
       startOnStick: False
-    - type: DeviceLinkSink
-      links:
-      - 83
     - type: Physics
       canCollide: False
 - proto: CableApcExtension
@@ -297,20 +291,24 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -0.5,-1.5
       parent: 1
-- proto: ComputerShuttle
+- proto: ComputerShuttleSyndie
   entities:
-  - uid: 3
+  - uid: 2
     components:
     - type: Transform
       pos: 0.5,-0.5
       parent: 1
-- proto: GeneratorRTG
+- proto: FaxMachineSyndie
   entities:
-  - uid: 38
+  - uid: 3
     components:
     - type: Transform
-      pos: -1.5,-3.5
+      pos: 1.5,-1.5
       parent: 1
+    - type: FaxMachine
+      name: ERR*?*%! - Raider
+- proto: GeneratorRTG
+  entities:
   - uid: 39
     components:
     - type: Transform
@@ -354,11 +352,6 @@ entities:
           - 54
 - proto: MiningWindowDiagonal
   entities:
-  - uid: 2
-    components:
-    - type: Transform
-      pos: -5.5,-1.5
-      parent: 1
   - uid: 84
     components:
     - type: Transform
@@ -421,13 +414,6 @@ entities:
     - type: Transform
       pos: -0.5,-3.5
       parent: 1
-- proto: PosterContrabandBorgFancyv2
-  entities:
-  - uid: 82
-    components:
-    - type: Transform
-      pos: -0.5,-4.5
-      parent: 1
 - proto: PosterContrabandFreeDrone
   entities:
   - uid: 4
@@ -474,12 +460,6 @@ entities:
       pos: -1.5,-3.5
       parent: 1
   - uid: 34
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 2.5,-3.5
-      parent: 1
-  - uid: 35
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
@@ -590,6 +570,8 @@ entities:
   entities:
   - uid: 83
     components:
+    - type: MetaData
+      name: BOOM!!
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -0.5,-4.5
@@ -634,19 +616,7 @@ entities:
       rot: 3.141592653589793 rad
       pos: 1.5,-5.5
       parent: 1
-  - uid: 9
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 0.5,-5.5
-      parent: 1
   - uid: 10
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -1.5,-4.5
-      parent: 1
-  - uid: 11
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
@@ -664,11 +634,6 @@ entities:
       pos: -4.5,-1.5
       parent: 1
   - uid: 16
-    components:
-    - type: Transform
-      pos: 5.5,-1.5
-      parent: 1
-  - uid: 17
     components:
     - type: Transform
       pos: 5.5,-1.5

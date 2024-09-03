@@ -101,9 +101,6 @@ entities:
       parent: 43
     - type: OnUseTimerTrigger
       startOnStick: False
-    - type: DeviceLinkSink
-      links:
-      - 41
     - type: Physics
       canCollide: False
   - uid: 45
@@ -112,9 +109,6 @@ entities:
       parent: 43
     - type: OnUseTimerTrigger
       startOnStick: False
-    - type: DeviceLinkSink
-      links:
-      - 41
     - type: Physics
       canCollide: False
 - proto: CableApcExtension
@@ -216,7 +210,7 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 1.5,-0.5
       parent: 1
-- proto: ComputerShuttle
+- proto: ComputerShuttleSyndie
   entities:
   - uid: 13
     components:
@@ -313,13 +307,13 @@ entities:
     - type: Transform
       pos: 0.5,-1.5
       parent: 1
-- proto: PosterContrabandBorgFancyv2
+- proto: PosterContrabandBorgFancy
   entities:
   - uid: 40
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -0.5,-1.5
+      rot: 3.141592653589793 rad
+      pos: 0.5,4.5
       parent: 1
 - proto: Railing
   entities:
@@ -353,6 +347,8 @@ entities:
   entities:
   - uid: 41
     components:
+    - type: MetaData
+      name: BOOM!
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -0.5,-1.5

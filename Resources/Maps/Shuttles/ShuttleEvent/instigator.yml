@@ -467,72 +467,64 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 3.5,1.5
       parent: 1
-    - type: DeviceLinkSource
-      linkedPorts:
-        127:
-        - DoorStatus: DoorBolt
     - type: DeviceLinkSink
-      links:
-      - 127
       ports:
       - DoorBolt
       - Open
       - Close
       - Toggle
+    - type: DeviceLinkSource
+      linkedPorts:
+        127:
+        - DoorStatus: DoorBolt
   - uid: 126
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -2.5,1.5
       parent: 1
-    - type: DeviceLinkSource
-      linkedPorts:
-        128:
-        - DoorStatus: DoorBolt
     - type: DeviceLinkSink
-      links:
-      - 128
       ports:
       - DoorBolt
       - Open
       - Close
       - Toggle
+    - type: DeviceLinkSource
+      linkedPorts:
+        128:
+        - DoorStatus: DoorBolt
   - uid: 127
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 4.5,2.5
       parent: 1
-    - type: DeviceLinkSource
-      linkedPorts:
-        125:
-        - DoorStatus: DoorBolt
     - type: DeviceLinkSink
-      links:
-      - 125
       ports:
       - DoorBolt
       - Open
       - Close
       - Toggle
+    - type: DeviceLinkSource
+      linkedPorts:
+        125:
+        - DoorStatus: DoorBolt
   - uid: 128
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -3.5,2.5
       parent: 1
-    - type: DeviceLinkSource
-      linkedPorts:
-        126:
-        - DoorStatus: DoorBolt
     - type: DeviceLinkSink
-      links:
-      - 126
       ports:
       - DoorBolt
       - Open
       - Close
       - Toggle
+    - type: DeviceLinkSource
+      linkedPorts:
+        126:
+        - DoorStatus: DoorBolt
 - proto: AirlockMaint
   entities:
   - uid: 43
@@ -592,31 +584,37 @@ entities:
     - type: Transform
       pos: -2.5,0.5
       parent: 1
-- proto: AtmosDeviceFanTiny
+- proto: AtmosDeviceFanDirectional
   entities:
   - uid: 87
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
+      rot: 1.5707963267948966 rad
       pos: 11.5,2.5
       parent: 1
   - uid: 340
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 11.5,4.5
+      rot: 1.5707963267948966 rad
+      pos: 11.5,2.5
       parent: 1
   - uid: 341
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -10.5,2.5
+      rot: -1.5707963267948966 rad
+      pos: -10.5,4.5
       parent: 1
   - uid: 342
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -10.5,4.5
+      rot: -1.5707963267948966 rad
+      pos: -10.5,2.5
+      parent: 1
+  - uid: 533
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 11.5,4.5
       parent: 1
 - proto: Bed
   entities:
@@ -641,54 +639,36 @@ entities:
       rot: 3.141592653589793 rad
       pos: -9.5,2.5
       parent: 1
-    - type: DeviceLinkSink
-      links:
-      - 329
   - uid: 209
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -9.5,3.5
       parent: 1
-    - type: DeviceLinkSink
-      links:
-      - 329
   - uid: 210
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -9.5,4.5
       parent: 1
-    - type: DeviceLinkSink
-      links:
-      - 329
   - uid: 211
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 10.5,2.5
       parent: 1
-    - type: DeviceLinkSink
-      links:
-      - 330
   - uid: 212
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 10.5,3.5
       parent: 1
-    - type: DeviceLinkSink
-      links:
-      - 330
   - uid: 213
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 10.5,4.5
       parent: 1
-    - type: DeviceLinkSink
-      links:
-      - 330
 - proto: BoxCardboard
   entities:
   - uid: 531
@@ -773,6 +753,13 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
+- proto: BoxFolderNuclearCodes
+  entities:
+  - uid: 526
+    components:
+    - type: Transform
+      pos: 1.5254097,1.4605976
+      parent: 1
 - proto: BoxFolderRed
   entities:
   - uid: 327
@@ -2810,13 +2797,6 @@ entities:
           showEnts: False
           occludes: True
           ent: null
-- proto: NukeCodePaperStation
-  entities:
-  - uid: 526
-    components:
-    - type: Transform
-      pos: 1.5,1.5
-      parent: 1
 - proto: PhoneInstrumentSyndicate
   entities:
   - uid: 498
@@ -3002,18 +2982,12 @@ entities:
       rot: 3.141592653589793 rad
       pos: -3.5,3.5
       parent: 1
-    - type: DeviceLinkSink
-      links:
-      - 151
   - uid: 132
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 4.5,3.5
       parent: 1
-    - type: DeviceLinkSink
-      links:
-      - 151
 - proto: SignalButtonDirectional
   entities:
   - uid: 329
