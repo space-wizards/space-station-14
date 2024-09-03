@@ -24,6 +24,7 @@ public sealed class RehydratableSystem : EntitySystem
 
         SubscribeLocalEvent<RehydratableComponent, SolutionContainerChangedEvent>(OnSolutionChange);
         SubscribeLocalEvent<RehydratableComponent, ExaminedEvent>(OnExamine);
+		SubscribeLocalEvent<RehydratableComponent, BeingMicrowavedEvent>(OnMicrowaved);
     }
 
     private void OnSolutionChange(Entity<RehydratableComponent> ent, ref SolutionContainerChangedEvent args)
