@@ -884,11 +884,16 @@
   - type: Sprite
     sprite: Structures/Specific/Anomalies/tech_anom.rsi
     layers:
-    - state: anom
+    - state: bg
       map: ["enum.AnomalyVisualLayers.Base"]
-    - state: pulse
+    - state: bg_powered
       map: ["enum.AnomalyVisualLayers.Animated"]
       visible: false
+      shader: unshaded
+    - state: part1
+    - state: part2
+    - state: part3
+    - state: part4
   - type: PointLight
     radius: 6.5
     energy: 3.5
