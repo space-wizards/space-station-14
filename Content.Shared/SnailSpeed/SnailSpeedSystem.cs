@@ -21,9 +21,16 @@ public abstract partial class SharedSnailSpeedSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+        SubscribeLocalEvent<SnailSpeedComponent, MapInitEvent>(OnMapInit);
 		SubscribeLocalEvent<SnailSpeedComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
     }
-
+    
+    private void OnMapInit(EntityUid uid, SnailSpeedComponent comp, MapInitEvent args)
+    {
+        _movementSpeedModifier.RefreshMovementSpeedModifiers(uid);
+    }
+    
+    /// apply constant movespeed modifier as long as entity is not flying
 	private void OnRefreshMovespeed(EntityUid uid, SnailSpeedComponent component, RefreshMovementSpeedModifiersEvent args)
 	{
 	    if (_jetpack.IsUserFlying(uid))
@@ -32,4 +39,5 @@ public abstract partial class SharedSnailSpeedSystem : EntitySystem
 		
 		args.ModifySpeed(component.SnailSlowdownModifier, component.SnailSlowdownModifier);
 	}
+
 }
