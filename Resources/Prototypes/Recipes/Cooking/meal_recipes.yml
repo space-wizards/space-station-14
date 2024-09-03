@@ -957,6 +957,29 @@
     FoodBungo: 2
     FoodChiliPepper: 1
 
+- type: microwaveMealRecipe
+  id: RecipeBoiledSnail
+  name: boiled snail recipe
+  result: FoodMeatSnailCooked
+  time: 5
+  reagents:
+    Water: 10
+  solids:
+    FoodMeatSnail: 1
+
+- type: microwaveMealRecipe
+  id: RecipeEscargotSoup
+  name: escargot recipe
+  result: FoodSoupEscargot
+  time: 10
+  reagents:
+    Water: 5
+  solids:
+    FoodBowlBig: 1
+    FoodOnionSlice: 1
+    FoodButter: 1
+    FoodMeatSnailCooked: 1
+
 #Pies
 
 - type: microwaveMealRecipe
