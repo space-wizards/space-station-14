@@ -1,7 +1,7 @@
 - type: species
   id: Snail
   name: species-name-snail
-  roundStart: false
+  roundStart: true
   prototype: MobSnail
   sprites: MobSnailSprites
   defaultSkinTone: "#385878"
