@@ -7,7 +7,6 @@ using Content.Server.GameTicking;
 using Content.Server.GameTicking.Events;
 using Content.Server.Mind;
 using Content.Server.Preferences.Managers;
-using Content.Server.Roles;
 using Content.Server.Station.Events;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
@@ -38,6 +37,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IServerPreferencesManager _preferencesManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
+    [Dependency] private readonly SharedRoleSystem _roles = default!;
     [Dependency] private readonly PlayTimeTrackingManager _tracking = default!;
 
     public override void Initialize()
@@ -102,10 +102,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
 
     public IEnumerable<string> GetTimedRoles(EntityUid mindId)
     {
-        var ev = new MindGetAllRoleInfoEvent(new List<RoleInfo>());
-        RaiseLocalEvent(mindId, ref ev);
-
-        foreach (var role in ev.Roles)
+        foreach (var role in _roles.MindGetAllRoleInfo(mindId))
         {
             if (string.IsNullOrWhiteSpace(role.PlayTimeTrackerId))
                 continue;
