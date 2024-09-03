@@ -7,84 +7,56 @@ using Content.Shared.Tools;
 using Robust.Shared.GameStates;
 using Content.Shared.DoAfter;
 using Robust.Shared.Serialization;
+using Robust.Shared.Audio;
 
 namespace Content.Shared.Storage.Components
 {
     /// <summary>
     ///     Logic for a secret slot stash, like plant pot or toilet cistern.
-    ///     Unlike <see cref="ItemSlotsComponent"/> it doesn't have interaction logic or verbs.
-    ///     Other classes like <see cref="ToiletComponent"/> should implement it.
+    ///     Unlike <see cref="ItemSlotsComponent"/> it has logic for opening and closing
+    ///     the stash.
     /// </summary>
     [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
     [Access(typeof(SecretStashSystem))]
     public sealed partial class SecretStashComponent : Component
     {
         /// <summary>
-        ///     Max item size that can be fitted into secret stash.
+        ///     Max item size that can be inserted into secret stash.
         /// </summary>
         [DataField("maxItemSize")]
         public ProtoId<ItemSizePrototype> MaxItemSize = "Small";
 
         /// <summary>
-        /// If stash has way to open then this will switch between open and closed.
-        /// </summary>
-        [DataField, AutoNetworkedField]
-        public bool ToggleOpen;
-
-        /// <summary>
-        /// Prying the door.
+        ///     This sound will be played when you try to insert an item in the stash.
+        ///     The sound will be played whether or not the item is actually inserted.
         /// </summary>
         [DataField]
-        public float PryDoorTime = 1f;
-
-        [DataField]
-        public ProtoId<ToolQualityPrototype> PryingQuality = "Prying";
+        public SoundSpecifier? TryInsertItemSound;
 
         /// <summary>
-        /// Is stash openable?.
-        /// </summary>
-        [DataField, AutoNetworkedField]
-        public bool OpenableStash = false;
-
-        /// <summary>
-        ///     IC secret stash name. For example "the toilet cistern".
-        ///     If empty string, will replace it with entity name in init.
+        ///     This sound will be played when you try to remove an item in the stash.
+        ///     The sound will be played whether or not the item is actually removed.
         /// </summary>
         [DataField]
-        public string SecretPartName { get; set; } = "";
+        public SoundSpecifier? TryRemoveItemSound;
 
+        /// <summary>
+        ///     If true, verbs will appear to help interact with the stash.
+        /// </summary>
         [DataField, AutoNetworkedField]
-        public string ExamineStash = "comp-secret-stash-on-examine-found-hidden-item";
+        public bool HasVerbs = true;
+
+        /// <summary>
+        ///     The name of the secret stash. For example "the toilet cistern".
+        ///     If null, the name of the entity will be used instead.
+        /// </summary>
+        [DataField]
+        public string? SecretStashName;
 
         /// <summary>
         ///     Container used to keep secret stash item.
         /// </summary>
         [ViewVariables]
         public ContainerSlot ItemContainer = default!;
-
-    }
-
-    /// <summary>
-    /// Simple pry event for prying open a stash door.
-    /// </summary>
-    [Serializable, NetSerializable]
-    public sealed partial class StashPryDoAfterEvent : SimpleDoAfterEvent
-    {
-    }
-
-    /// <summary>
-    /// Visualizers for handling stash open closed state if stash has door.
-    /// </summary>
-    [Serializable, NetSerializable]
-    public enum StashVisuals : byte
-    {
-        DoorVisualState,
-    }
-
-    [Serializable, NetSerializable]
-    public enum DoorVisualState : byte
-    {
-        DoorOpen,
-        DoorClosed
     }
 }
