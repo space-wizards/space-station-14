@@ -59,6 +59,9 @@ public sealed class TechAnomalySystem : EntitySystem
         var range = MathHelper.Lerp(tech.Comp.LinkRadius.Min, tech.Comp.LinkRadius.Max, anomaly.Severity);
 
         var devices = _lookup.GetEntitiesInRange<DeviceLinkSinkComponent>(Transform(tech).Coordinates, range);
+        if (devices.Count < 1)
+            return;
+        
         for (var i = 0; i < count; i++)
         {
             var device = _random.Pick(devices);
