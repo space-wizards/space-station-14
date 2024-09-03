@@ -4,7 +4,6 @@ using Content.Shared.Administration.Managers;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
 using Content.Shared.Doors.Systems;
-using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Mind;
@@ -52,8 +51,6 @@ public abstract partial class SharedStationAiSystem : EntitySystem
 
     private EntityQuery<BroadphaseComponent> _broadphaseQuery;
     private EntityQuery<MapGridComponent> _gridQuery;
-	//TODO: Fix this, please
-	private const string JobNameLocId = "job-name-station-ai";
 
     [ValidatePrototypeId<EntityPrototype>]
     private static readonly EntProtoId DefaultAi = "StationAiBrain";
@@ -88,24 +85,9 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         SubscribeLocalEvent<StationAiCoreComponent, ComponentShutdown>(OnAiShutdown);
         SubscribeLocalEvent<StationAiCoreComponent, PowerChangedEvent>(OnCorePower);
         SubscribeLocalEvent<StationAiCoreComponent, GetVerbsEvent<Verb>>(OnCoreVerbs);
-		SubscribeLocalEvent<TryGetIdentityShortInfoEvent>(OnTryGetIdentityShortInfo);
 		
     }
 	
-	private void OnTryGetIdentityShortInfo(TryGetIdentityShortInfoEvent args)
-    {
-        if (args.Handled)
-        {
-            return;
-        }
-
-        if (!HasComp<StationAiHeldComponent>(args.ForActor))
-        {
-            return;
-        }
-	    args.Title = $"{Name(args.ForActor)} ({Loc.GetString(JobNameLocId)})";
-        args.Handled = true;
-    }
 
     private void OnCoreVerbs(Entity<StationAiCoreComponent> ent, ref GetVerbsEvent<Verb> args)
     {
