@@ -4,7 +4,7 @@
 
 - type: metamorphRecipe
   id: FoodBurgerCheese
-  key: burger
+  key: Burger
   result: FoodBurgerCheese
   rules:
   - !type:SequenceLength
@@ -31,7 +31,7 @@
 
 - type: metamorphRecipe
   id: FoodBurgerChicken
-  key: burger
+  key: Burger
   result: FoodBurgerChicken
   rules:
   - !type:SequenceLength
@@ -58,7 +58,7 @@
 
 - type: metamorphRecipe
   id: FoodBurgerCrab
-  key: burger
+  key: Burger
   result: FoodBurgerCrab
   rules:
   - !type:SequenceLength
@@ -79,7 +79,7 @@
 
 - type: metamorphRecipe
   id: FoodBurgerDuck
-  key: burger
+  key: Burger
   result: FoodBurgerDuck
   rules:
   - !type:SequenceLength
@@ -107,7 +107,7 @@
 
 - type: metamorphRecipe
   id: FoodBurgerBrain
-  key: burger
+  key: Burger
   result: FoodBurgerBrain
   rules:
   - !type:SequenceLength

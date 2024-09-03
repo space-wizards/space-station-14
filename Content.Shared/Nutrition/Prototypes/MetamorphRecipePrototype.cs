@@ -1,4 +1,5 @@
 using Content.Shared.Nutrition.FoodMetamorphRules;
+using Content.Shared.Tag;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Nutrition.Prototypes;
@@ -15,7 +16,7 @@ public sealed partial class MetamorphRecipePrototype : IPrototype
     /// The key of the FoodSequence being collected. For example “burger” “taco” etc.
     /// </summary>
     [DataField(required: true)]
-    public string Key = string.Empty;
+    public ProtoId<TagPrototype> Key = string.Empty;
 
     /// <summary>
     /// The entity that will be created as a result of this recipe, and into which all the reagents will be transferred.
