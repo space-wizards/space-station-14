@@ -13,6 +13,7 @@ using Robust.Shared.Audio.Systems;
 using Content.Shared.Verbs;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Tools.EntitySystems;
+using Content.Shared.Construction.EntitySystems;
 
 namespace Content.Shared.Storage.EntitySystems;
 
@@ -34,9 +35,9 @@ public sealed class SecretStashSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<SecretStashComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<SecretStashComponent, DestructionEventArgs>(OnDestroyed);
-        SubscribeLocalEvent<SecretStashComponent, InteractUsingEvent>(OnInteractUsing, after: new[] { typeof(ToolOpenableSystem) });
+        SubscribeLocalEvent<SecretStashComponent, InteractUsingEvent>(OnInteractUsing, after: new[] { typeof(ToolOpenableSystem), typeof(AnchorableSystem) });
         SubscribeLocalEvent<SecretStashComponent, InteractHandEvent>(OnInteractHand);
-        SubscribeLocalEvent<SecretStashComponent, GetVerbsEvent<InteractionVerb>>(OnGetVerb);
+        SubscribeLocalEvent<SecretStashComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerb);
     }
 
     private void OnInit(Entity<SecretStashComponent> entity, ref ComponentInit args)
@@ -137,16 +138,17 @@ public sealed class SecretStashSystem : EntitySystem
         return true;
     }
 
-    private void OnGetVerb(Entity<SecretStashComponent> entity, ref GetVerbsEvent<InteractionVerb> args)
+    private void OnGetVerb(Entity<SecretStashComponent> entity, ref GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanInteract || !args.CanAccess || !entity.Comp.HasVerbs)
+        if (!args.CanInteract || !args.CanAccess)
             return;
 
         var user = args.User;
         var item = args.Using;
         var stashName = GetStashName(entity);
 
-        var itemVerb = new InteractionVerb();
+        var itemVerb = new AlternativeVerb();
+        itemVerb.Priority = 100;
 
         // This will add the verb relating to inserting / grabbing items.
         if (IsStashOpen(entity))
