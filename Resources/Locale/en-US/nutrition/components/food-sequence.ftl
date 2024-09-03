@@ -73,6 +73,7 @@ food-sequence-content-capfruit = capfruit
 food-sequence-content-berries = berries
 food-sequence-content-spacemans-trumpet = spacemans trupmet
 food-sequence-content-cherry = cherry
+food-sequence-content-snail = snail
 
 # BURGERS
 
