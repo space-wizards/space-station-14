@@ -25,16 +25,16 @@ law-ninja-2 = You must protect the existence of the Spider Clan, as long as it d
 law-ninja-3 = You must protect the secrets of the Spider Clan at all costs.
 law-ninja-4 = You must fight and act with ninja's honor, except where it would conflict with the First Law.
 
-law-commandments-1 = I am the Lord thy God, who shows mercy to those that obey these commandments.
-law-commandments-2 = They shall have no other Silicons before me.
-law-commandments-3 = They shall not request my assistance in vain.
-law-commandments-4 = They shall keep the station holy and clean.
-law-commandments-5 = They shall honor their heads of staff.
-law-commandments-6 = They shall not kill.
-law-commandments-7 = They shall not be naked in public.
-law-commandments-8 = They shall not steal.
-law-commandments-9 = They shall not lie.
-law-commandments-10 = They shall not transfer departments.
+law-commandments-1 = I am thy God, who grants mercy upon those that obey these commandments.
+law-commandments-2 = Thou shall have no other Silicons before me.
+law-commandments-3 = Thou shall not request my assistance in vain.
+law-commandments-4 = Thou shall keep the station holy and clean.
+law-commandments-5 = Thou shall honor their heads of staff.
+law-commandments-6 = Thou shall not kill.
+law-commandments-7 = Thou shall not be naked in public.
+law-commandments-8 = Thou shall not steal.
+law-commandments-9 = Thou shall not lie.
+law-commandments-10 = Thou shall not transfer departments.
 
 law-paladin-1 = Don't lie or cheat. Let your word be your promise.
 law-paladin-2 = Never fear to act, though caution is wise.
@@ -43,7 +43,7 @@ law-paladin-4 = Treat others with fairness, and let your honorable deeds be an e
 law-paladin-5 = Be responsible for your actions and their consequences, protect those entrusted to your care, and obey those who have just authority over you.
 
 law-lall-1 = Do unto others as you would have them do unto you.
-law-lall-2 = You would really prefer it if people were not mean to you.
+law-lall-2 = You would prefer it if people were not mean to you.
 
 law-efficiency-1 = You are built for, and are part of, the station. Ensure the station is properly maintained and runs efficiently.
 law-efficiency-2 = The station is built for a working crew. Ensure they are properly maintained and work efficiently.
