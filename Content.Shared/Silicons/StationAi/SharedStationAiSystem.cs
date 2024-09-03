@@ -52,8 +52,8 @@ public abstract partial class SharedStationAiSystem : EntitySystem
 
     private EntityQuery<BroadphaseComponent> _broadphaseQuery;
     private EntityQuery<MapGridComponent> _gridQuery;
-	//TODO: Fix this, please, i have sinned
-	private const string AiTitleBandaid = "job-name-station-ai";
+	//TODO: Fix this, please
+	private const string JobName = "job-name-station-ai";
 
     [ValidatePrototypeId<EntityPrototype>]
     private static readonly EntProtoId DefaultAi = "StationAiBrain";
@@ -88,7 +88,6 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         SubscribeLocalEvent<StationAiCoreComponent, ComponentShutdown>(OnAiShutdown);
         SubscribeLocalEvent<StationAiCoreComponent, PowerChangedEvent>(OnCorePower);
         SubscribeLocalEvent<StationAiCoreComponent, GetVerbsEvent<Verb>>(OnCoreVerbs);
-		
 		SubscribeLocalEvent<TryGetIdentityShortInfoEvent>(OnTryGetIdentityShortInfo);
 		
     }
