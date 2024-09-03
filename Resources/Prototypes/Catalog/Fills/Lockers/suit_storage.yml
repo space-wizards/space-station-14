@@ -233,13 +233,10 @@
   parent: SuitStorageBase
   suffix: Salvage
   components:
-  - type: StorageFill
-    contents:
-      - id: OxygenTankFilled
-      - id: NitrogenTankFilled
-      - id: ClothingShoesBootsMag
-      - id: ClothingOuterHardsuitSpatio
-      - id: ClothingMaskGasExplorer
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillSalvageSpecialistHardsuitSpatio
   - type: AccessReader
     access: [["Salvage"]]
 

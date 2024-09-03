@@ -16,7 +16,6 @@
     - id: RubberStampApproved
     - id: RubberStampDenied
     - id: RubberStampQm
-    - id: SalvageShuttleConsoleCircuitboard
 
 - type: entity
   id: LockerQuarterMasterFilled
