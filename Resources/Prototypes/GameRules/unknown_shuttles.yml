@@ -47,17 +47,19 @@
 
 - type: entity
   parent: BaseUnknownShuttleRule
-  id: UnknownShuttleTravelingCuisine
-  components:
-  - type: LoadMapRule
-    preloadedGrid: TravelingCuisine
-
-- type: entity
-  parent: BaseUnknownShuttleRule
   id: UnknownShuttleDisasterEvacPod
   components:
   - type: LoadMapRule
     preloadedGrid: DisasterEvacPod
+
+- type: entity
+  parent: BaseUnknownShuttleRule
+  id: UnknownShuttleTravelingCuisine
+  components:
+  - type: StationEvent
+    weight: 1
+  - type: LoadMapRule
+    preloadedGrid: TravelingCuisine
 
 - type: entity
   parent: BaseUnknownShuttleRule
