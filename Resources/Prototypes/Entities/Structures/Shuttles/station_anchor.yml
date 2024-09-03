@@ -49,15 +49,7 @@
 - type: entity
   id: StationAnchorIndestructible
   parent: StationAnchorBase
-  suffix: On, Indestructible, Unpowered
-
-- type: entity
-  parent: StationAnchorIndestructible
-  id: StationAnchorIndestructibleOff
-  suffix: Off, Indestructible, Unpowered
-  components:
-  - type: StationAnchor
-    switchedOn: false
+  suffix: Indestructible, Unpowered
 
 - type: entity
   id: StationAnchor
