@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Fix lathe materials sometimes flickering.
-    type: Fix
-  id: 6773
-  time: '2024-06-18T21:47:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29167
 - author: osjarw
   changes:
   - message: Fix air alarms not alarming air.
@@ -3853,3 +3846,17 @@
   id: 7272
   time: '2024-09-03T10:33:44.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30765
+- author: Fildrance
+  changes:
+  - message: When research is unlocked in console the approver of the research is
+      named.
+    type: Add
+  - message: Borgs door access is getting logged now (and is accessible in Log Probe
+      Cartridge)
+    type: Add
+  - message: e-magged research and cargo consoles are not radio-ing any messages on
+      research/buy confimation (for anyone)
+    type: Add
+  id: 7273
+  time: '2024-09-03T13:01:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31170
