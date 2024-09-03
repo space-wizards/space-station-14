@@ -40,7 +40,7 @@
     - id: UnknownShuttleRaider
     - id: UnknownShuttleScooner
 
-# Shuttle Game Rules
+# Shuttle Game Rules 
 
 - type: entity
   abstract: true
