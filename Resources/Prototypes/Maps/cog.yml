@@ -21,7 +21,7 @@
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
             Bartender: [ 2, 2 ]
-            Botanist: [ 4, 4 ]
+            Botanist: [ 3, 3 ]
             Chef: [ 2, 2 ]
             Janitor: [ 3, 3 ]
             Chaplain: [ 1, 1 ]
@@ -30,7 +30,7 @@
             ServiceWorker: [ 3, 3 ]
             #engineering
             ChiefEngineer: [ 1, 1 ]
-            AtmosphericTechnician: [ 2, 2 ]
+            AtmosphericTechnician: [ 3, 3 ]
             StationEngineer: [ 4, 4 ]
             TechnicalAssistant: [ 3, 3 ]
             #medical
@@ -44,7 +44,6 @@
             ResearchDirector: [ 1, 1 ]
             Scientist: [ 5, 5 ]
             ResearchAssistant: [ 3, 3 ]
-            Borg: [ 2, 2 ]
             #security
             HeadOfSecurity: [ 1, 1 ]
             Warden: [ 1, 1 ]
@@ -62,3 +61,6 @@
             Mime: [ 1, 1 ]
             Musician: [ 1, 1 ]
             Boxer: [ 2, 2]
+            #silicon
+            StationAi: [ 1, 1 ]
+            Borg: [ 3, 3 ]
