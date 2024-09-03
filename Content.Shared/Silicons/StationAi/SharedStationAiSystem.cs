@@ -52,6 +52,8 @@ public abstract partial class SharedStationAiSystem : EntitySystem
 
     private EntityQuery<BroadphaseComponent> _broadphaseQuery;
     private EntityQuery<MapGridComponent> _gridQuery;
+	//TODO: Fix this, please, i have sinned
+	private const string AiTitleBandaid = "job-name-station-ai";
 
     [ValidatePrototypeId<EntityPrototype>]
     private static readonly EntProtoId DefaultAi = "StationAiBrain";
@@ -102,8 +104,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         {
             return;
         }
-
-        args.Title = Name(args.ForActor).Trim();
+	    args.Title = $"{Name(args.ForActor)} ({Loc.GetString(AiTitleBandaid)})";
         args.Handled = true;
     }
 
