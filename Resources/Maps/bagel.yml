@@ -61691,7 +61691,7 @@ entities:
       parent: 60
 - proto: CommandmentCircuitBoard
   entities:
-  - uid: 25381
+  - uid: 24825
     components:
     - type: Transform
       pos: -109.31948,8.323196
@@ -69412,7 +69412,7 @@ entities:
       parent: 60
 - proto: DungeonMasterCircuitBoard
   entities:
-  - uid: 24819
+  - uid: 24812
     components:
     - type: Transform
       pos: -112.672066,8.495071
@@ -110572,7 +110572,7 @@ entities:
       parent: 60
 - proto: LiveLetLiveCircuitBoard
   entities:
-  - uid: 24820
+  - uid: 24813
     components:
     - type: Transform
       pos: -112.56269,8.416946
@@ -112584,7 +112584,7 @@ entities:
       parent: 60
 - proto: NTDefaultCircuitBoard
   entities:
-  - uid: 24821
+  - uid: 24819
     components:
     - type: Transform
       pos: -110.50698,8.604446
@@ -112598,7 +112598,7 @@ entities:
       parent: 60
 - proto: NutimovCircuitBoard
   entities:
-  - uid: 24822
+  - uid: 24820
     components:
     - type: Transform
       pos: -110.44448,8.510696
@@ -112653,7 +112653,7 @@ entities:
       parent: 60
 - proto: OverlordCircuitBoard
   entities:
-  - uid: 24823
+  - uid: 24821
     components:
     - type: Transform
       pos: -110.366356,8.385696
@@ -112904,7 +112904,7 @@ entities:
       parent: 60
 - proto: PaladinCircuitBoard
   entities:
-  - uid: 24824
+  - uid: 24822
     components:
     - type: Transform
       pos: -109.60073,8.635696
@@ -125474,7 +125474,7 @@ entities:
       parent: 60
 - proto: RobocopCircuitBoard
   entities:
-  - uid: 24825
+  - uid: 24823
     components:
     - type: Transform
       pos: -109.491356,8.541946
@@ -131915,16 +131915,6 @@ entities:
     - type: Transform
       pos: -31.5,13.5
       parent: 60
-  - uid: 24812
-    components:
-    - type: Transform
-      pos: -114.5,30.5
-      parent: 60
-  - uid: 24813
-    components:
-    - type: Transform
-      pos: -108.5,30.5
-      parent: 60
 - proto: SpawnPointBotanist
   entities:
   - uid: 2779
@@ -132542,7 +132532,7 @@ entities:
       parent: 60
 - proto: StationEfficiencyCircuitBoard
   entities:
-  - uid: 24826
+  - uid: 24824
     components:
     - type: Transform
       pos: -109.397606,8.432571
