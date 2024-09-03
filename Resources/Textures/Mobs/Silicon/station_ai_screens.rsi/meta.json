@@ -1531,10 +1531,10 @@
       ]
     },
     {
-      "name": "ai-hal 9000"
+      "name": "ai-hal-9000"
     },
     {
-      "name": "ai-hal 9000_death_transition",
+      "name": "ai-hal-9000_death_transition",
       "delays": [
         [
           0.05,
