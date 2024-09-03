@@ -47,7 +47,7 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
         if (!TryComp<FoodSequenceStartPointComponent>(args.Start, out var start))
             return;
 
-        if (!_proto.TryIndex(args.ElementProto, out var elementProto))
+        if (!_proto.TryIndex(args.Proto, out var elementProto))
             return;
 
         if (!ent.Comp.OnlyFinal || elementProto.Final || start.FoodLayers.Count == start.MaxLayers)
