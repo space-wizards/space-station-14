@@ -2522,6 +2522,8 @@ entities:
             4257: 35,26
             4258: 34,26
             4259: 33,26
+            4575: 46,0
+            4576: 46,1
         - node:
             cleanable: True
             color: '#FFFFFFFF'
@@ -8184,7 +8186,7 @@ entities:
             1: 39312
           -12,8:
             5: 12
-            7: 3072
+            6: 3072
           -11,5:
             0: 63351
           -11,6:
@@ -8193,7 +8195,7 @@ entities:
           -11,8:
             5: 1
             1: 17476
-            7: 256
+            6: 256
           -11,7:
             1: 17484
           -10,5:
@@ -8291,10 +8293,10 @@ entities:
             0: 255
             1: 57344
           -8,11:
-            6: 816
+            7: 816
             1: 34952
           -9,11:
-            6: 2176
+            7: 2176
             1: 8738
           -8,12:
             1: 34959
@@ -8314,7 +8316,7 @@ entities:
           -6,11:
             0: 4095
           -6,12:
-            6: 61166
+            7: 61166
           -5,9:
             0: 65528
           -5,10:
@@ -8322,7 +8324,7 @@ entities:
           -5,11:
             0: 36863
           -5,12:
-            6: 30515
+            7: 30515
             0: 12
           -4,9:
             0: 65528
@@ -8332,7 +8334,7 @@ entities:
             0: 4095
           -4,12:
             0: 1
-            6: 65518
+            7: 65518
           -4,13:
             1: 61680
           -5,13:
@@ -8346,7 +8348,7 @@ entities:
           -5,15:
             1: 17487
           -3,12:
-            6: 13107
+            7: 13107
             1: 34944
           -3,13:
             1: 47792
@@ -8412,7 +8414,7 @@ entities:
             1: 61713
           -12,9:
             0: 16
-            6: 3084
+            7: 3084
           -13,9:
             1: 39305
           -13,10:
@@ -8422,18 +8424,18 @@ entities:
             0: 12544
           -12,10:
             4: 12
-            6: 3072
+            7: 3072
           -12,11:
-            6: 12
+            7: 12
           -11,9:
-            6: 257
+            7: 257
             1: 17476
           -11,10:
             4: 1
-            6: 256
+            7: 256
             1: 17476
           -11,11:
-            6: 1
+            7: 1
             1: 17476
           -11,12:
             1: 17487
@@ -8487,7 +8489,7 @@ entities:
             1: 15
           -13,12:
             1: 34952
-            7: 48
+            6: 48
             5: 12288
           -12,13:
             1: 61455
@@ -8521,11 +8523,11 @@ entities:
             1: 62671
           -7,14:
             1: 244
-            6: 57344
+            7: 57344
             0: 1024
           -7,15:
             1: 61440
-            6: 238
+            7: 238
             0: 1024
           -7,16:
             1: 65524
@@ -8584,7 +8586,7 @@ entities:
           -14,12:
             0: 1
             1: 8738
-            7: 128
+            6: 128
             5: 32768
           -17,12:
             0: 52232
@@ -9195,7 +9197,7 @@ entities:
         - volume: 2500
           temperature: 293.15
           moles:
-          - 0
+          - 6666.982
           - 0
           - 0
           - 0
@@ -9210,7 +9212,7 @@ entities:
         - volume: 2500
           temperature: 293.15
           moles:
-          - 6666.982
+          - 0
           - 0
           - 0
           - 0
@@ -14046,6 +14048,13 @@ entities:
     - type: Transform
       pos: -51.582767,-5.458613
       parent: 60
+- proto: AntimovCircuitBoard
+  entities:
+  - uid: 15553
+    components:
+    - type: Transform
+      pos: -113.68769,8.604446
+      parent: 60
 - proto: APCBasic
   entities:
   - uid: 283
@@ -14620,6 +14629,13 @@ entities:
     - type: Transform
       pos: 10.5,2.5
       parent: 60
+- proto: ArtistCircuitBoard
+  entities:
+  - uid: 19804
+    components:
+    - type: Transform
+      pos: -113.65644,8.510696
+      parent: 60
 - proto: Ashtray
   entities:
   - uid: 9547
@@ -14639,10 +14655,10 @@ entities:
       parent: 60
 - proto: AsimovCircuitBoard
   entities:
-  - uid: 25382
+  - uid: 19807
     components:
     - type: Transform
-      pos: -109.54202,8.593994
+      pos: -112.765816,8.588821
       parent: 60
 - proto: AtmosDeviceFanDirectional
   entities:
@@ -61673,6 +61689,13 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 13.5,-26.5
       parent: 60
+- proto: CommandmentCircuitBoard
+  entities:
+  - uid: 24825
+    components:
+    - type: Transform
+      pos: -109.31948,8.323196
+      parent: 60
 - proto: CommsComputerCircuitboard
   entities:
   - uid: 15494
@@ -62532,10 +62555,10 @@ entities:
       parent: 60
 - proto: CorporateCircuitBoard
   entities:
-  - uid: 25381
+  - uid: 19806
     components:
     - type: Transform
-      pos: -110.4639,8.578369
+      pos: -113.578316,8.401321
       parent: 60
 - proto: CowToolboxFilled
   entities:
@@ -69386,6 +69409,13 @@ entities:
     components:
     - type: Transform
       pos: 38.540165,-32.2804
+      parent: 60
+- proto: DungeonMasterCircuitBoard
+  entities:
+  - uid: 24812
+    components:
+    - type: Transform
+      pos: -112.672066,8.495071
       parent: 60
 - proto: ElectricGuitarInstrument
   entities:
@@ -100312,13 +100342,6 @@ entities:
     - type: Transform
       pos: 12.5,-60.5
       parent: 60
-- proto: GeneratorBasic15kW
-  entities:
-  - uid: 15553
-    components:
-    - type: Transform
-      pos: -120.5,19.5
-      parent: 60
 - proto: GeneratorWallmountAPU
   entities:
   - uid: 23917
@@ -110547,6 +110570,13 @@ entities:
     - type: Transform
       pos: -5.6705914,-28.301483
       parent: 60
+- proto: LiveLetLiveCircuitBoard
+  entities:
+  - uid: 24813
+    components:
+    - type: Transform
+      pos: -112.56269,8.416946
+      parent: 60
 - proto: LockableButtonMedical
   entities:
   - uid: 859
@@ -112554,10 +112584,10 @@ entities:
       parent: 60
 - proto: NTDefaultCircuitBoard
   entities:
-  - uid: 25383
+  - uid: 24819
     components:
     - type: Transform
-      pos: -113.49515,8.531494
+      pos: -110.50698,8.604446
       parent: 60
 - proto: NuclearBomb
   entities:
@@ -112565,6 +112595,13 @@ entities:
     components:
     - type: Transform
       pos: 4.5,-5.5
+      parent: 60
+- proto: NutimovCircuitBoard
+  entities:
+  - uid: 24820
+    components:
+    - type: Transform
+      pos: -110.44448,8.510696
       parent: 60
 - proto: OperatingTable
   entities:
@@ -112597,11 +112634,15 @@ entities:
       parent: 60
 - proto: OreBox
   entities:
+  - uid: 19826
+    components:
+    - type: Transform
+      pos: 46.5,0.5
+      parent: 60
   - uid: 24786
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 48.5,-1.5
+      pos: 46.5,1.5
       parent: 60
 - proto: OreProcessor
   entities:
@@ -112609,6 +112650,13 @@ entities:
     components:
     - type: Transform
       pos: 43.5,3.5
+      parent: 60
+- proto: OverlordCircuitBoard
+  entities:
+  - uid: 24821
+    components:
+    - type: Transform
+      pos: -110.366356,8.385696
       parent: 60
 - proto: OxygenCanister
   entities:
@@ -112853,6 +112901,13 @@ entities:
     components:
     - type: Transform
       pos: -40.5,6.5
+      parent: 60
+- proto: PaladinCircuitBoard
+  entities:
+  - uid: 24822
+    components:
+    - type: Transform
+      pos: -109.60073,8.635696
       parent: 60
 - proto: Paper
   entities:
@@ -113780,6 +113835,11 @@ entities:
     - type: Transform
       pos: -12.5,-2.5
       parent: 7536
+  - uid: 19805
+    components:
+    - type: Transform
+      pos: -120.5,19.5
+      parent: 60
   - uid: 20011
     components:
     - type: Transform
@@ -125412,6 +125472,13 @@ entities:
     - type: Transform
       pos: -24.660069,1.386905
       parent: 60
+- proto: RobocopCircuitBoard
+  entities:
+  - uid: 24823
+    components:
+    - type: Transform
+      pos: -109.491356,8.541946
+      parent: 60
 - proto: RockGuitarInstrument
   entities:
   - uid: 21791
@@ -131848,16 +131915,6 @@ entities:
     - type: Transform
       pos: -31.5,13.5
       parent: 60
-  - uid: 24812
-    components:
-    - type: Transform
-      pos: -114.5,30.5
-      parent: 60
-  - uid: 24813
-    components:
-    - type: Transform
-      pos: -108.5,30.5
-      parent: 60
 - proto: SpawnPointBotanist
   entities:
   - uid: 2779
@@ -132472,6 +132529,13 @@ entities:
     components:
     - type: Transform
       pos: -16.5,33.5
+      parent: 60
+- proto: StationEfficiencyCircuitBoard
+  entities:
+  - uid: 24824
+    components:
+    - type: Transform
+      pos: -109.397606,8.432571
       parent: 60
 - proto: StationMap
   entities:
