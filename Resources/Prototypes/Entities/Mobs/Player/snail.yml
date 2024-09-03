@@ -1,5 +1,5 @@
 - type: entity
   save: false
   name: Uristtsiru McShell
-  parent: BaseMobSnail
+  parent: BaseMobGastropoid
   id: MobGastropoid
