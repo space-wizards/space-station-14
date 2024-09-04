@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: Flareguy
-  changes:
-  - message: Resprited most of Security's basic attire.
-    type: Tweak
-  id: 6776
-  time: '2024-06-19T02:04:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29082
-- author: Beck Thompson, UbaserB
-  changes:
-  - message: Added some happier messages for the medibot!
-    type: Add
-  id: 6777
-  time: '2024-06-19T02:28:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29147
 - author: HolySSSS
   changes:
   - message: Short Raffle is now much shorter.
@@ -3860,3 +3846,17 @@
   id: 7275
   time: '2024-09-03T15:16:51.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30106
+- author: ScarKy0
+  changes:
+  - message: Fixed typos in antimov.
+    type: Fix
+  id: 7276
+  time: '2024-09-03T21:56:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31811
+- author: ScarKy0
+  changes:
+  - message: Station AI's name now correctly displays in announcements.
+    type: Fix
+  id: 7277
+  time: '2024-09-03T22:05:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31802
