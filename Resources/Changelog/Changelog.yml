@@ -1,64 +1,4 @@
 ﻿Entries:
-- author: Flareguy
-  changes:
-  - message: Resprited most of Security's basic attire.
-    type: Tweak
-  id: 6776
-  time: '2024-06-19T02:04:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29082
-- author: Beck Thompson, UbaserB
-  changes:
-  - message: Added some happier messages for the medibot!
-    type: Add
-  id: 6777
-  time: '2024-06-19T02:28:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29147
-- author: HolySSSS
-  changes:
-  - message: Short Raffle is now much shorter.
-    type: Tweak
-  id: 6778
-  time: '2024-06-19T02:41:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28685
-- author: Truoizys
-  changes:
-  - message: PDA cartridges can no longer be installed more than once.
-    type: Fix
-  id: 6779
-  time: '2024-06-19T13:21:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29187
-- author: Just_Art
-  changes:
-  - message: Musician's jumpskirt added to loadouts.
-    type: Add
-  id: 6780
-  time: '2024-06-19T14:06:03.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29203
-- author: Flareguy
-  changes:
-  - message: Made the HOS's cap look significantly better.
-    type: Tweak
-  id: 6781
-  time: '2024-06-19T14:49:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29208
-- author: Flareguy
-  changes:
-  - message: Emergency Toolboxes now have a different fill that contains more utility
-      items then before.
-    type: Tweak
-  - message: Added the pocket fire extinguisher. You can currently only find them
-      in the emergency toolbox.
-    type: Add
-  id: 6782
-  time: '2024-06-19T18:13:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29202
-- author: lzk228
-  changes:
-  - message: Warning cone and wet floor sign recipes added to the autolathe.
-    type: Add
-  id: 6783
-  time: '2024-06-19T18:13:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29205
 - author: arimah
   changes:
   - message: Containment field generators can no longer be powered by an emitter bolt
@@ -3860,3 +3800,62 @@
   id: 7275
   time: '2024-09-03T15:16:51.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30106
+- author: ScarKy0
+  changes:
+  - message: Fixed typos in antimov.
+    type: Fix
+  id: 7276
+  time: '2024-09-03T21:56:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31811
+- author: ScarKy0
+  changes:
+  - message: Station AI's name now correctly displays in announcements.
+    type: Fix
+  id: 7277
+  time: '2024-09-03T22:05:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31802
+- author: Ilya246
+  changes:
+  - message: Fixed many entities not taking structural damage, including girders,
+      firelocks, and machines.
+    type: Fix
+  id: 7278
+  time: '2024-09-04T13:37:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30790
+- author: lzk228
+  changes:
+  - message: Reduced walk speed of some small mobs (mice, cockroaches, bees etc.)
+    type: Tweak
+  id: 7279
+  time: '2024-09-04T14:10:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31360
+- author: qwerltaz
+  changes:
+  - message: Made tesla a lot brighter.
+    type: Tweak
+  id: 7280
+  time: '2024-09-04T14:47:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31357
+- author: Allen
+  changes:
+  - message: Magboots and Science Magboots are no longer contraband. Advanced Magboots
+      and Blood-Red Magboots now have appropriate contraband types (Grand Theft and
+      Syndie Contraband respectively)
+    type: Fix
+  id: 7281
+  time: '2024-09-04T15:04:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30960
+- author: Blackern5000
+  changes:
+  - message: Zombie outbreaks are now SIGNIFICANTLY rarer
+    type: Tweak
+  id: 7282
+  time: '2024-09-04T15:57:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30266
+- author: yuitop
+  changes:
+  - message: Going into portals while pulling no more crashes the game
+    type: Fix
+  id: 7283
+  time: '2024-09-04T16:44:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31787
