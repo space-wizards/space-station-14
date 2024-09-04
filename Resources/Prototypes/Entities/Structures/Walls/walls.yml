@@ -1341,3 +1341,33 @@
   - type: IconSmooth
     key: cobblebricks
     base: cobblebrick
+
+    #Border indestructible wall
+
+- type: entity
+  id: WallRockIndestructible
+  parent: BaseWall
+  name: indestructible rock wall
+  description: Born from extreme preassure and neverending pyroclastic layers, an indestructible rock wall.
+  components:
+  - type: Transform
+    noRot: true
+  - type: IconSmooth
+    key: walls
+    mode: NoSprite
+  - type: SmoothEdge
+  - type: Icon
+    sprite: Structures/Walls/rock.rsi
+    state: rock_asteroid
+  - type: Sprite
+    sprite: Structures/Walls/rock.rsi
+    layers:
+      - state: rock_asteroid
+      - map: [ "enum.EdgeLayer.South" ]
+        state: rock_asteroid_south
+      - map: [ "enum.EdgeLayer.East" ]
+        state: rock_asteroid_east
+      - map: [ "enum.EdgeLayer.North" ]
+        state: rock_asteroid_north
+      - map: [ "enum.EdgeLayer.West" ]
+        state: rock_asteroid_west
