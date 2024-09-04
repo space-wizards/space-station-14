@@ -47,6 +47,7 @@
 - type: entity
   parent: BaseItem
   id: BaseGuidebook
+  abstract: true
   suffix: guidebook
   - type: Sprite
     sprite: Objects/Misc/books.rsi
@@ -55,6 +56,8 @@
     - Book
   - type: GuideHelp
     openOnActivation: true
+    guides:
+    - SS14
 
 - type: entity
   id: BookSpaceEncyclopedia
