@@ -1,6 +1,5 @@
 using Content.Client.GPS.UI;
 using Content.Client.Items;
-using Content.Shared.Examine;
 using Content.Shared.GPS.Components;
 
 namespace Content.Client.GPS.Systems;

@@ -1,16 +1,16 @@
-
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.GPS.Components
 {
-    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
     public sealed partial class HandheldGPSComponent : Component
     {
-        [DataField("updateRate")]
-        [AutoNetworkedField]
-        public float UpdateRate = 1.5f;
+        [DataField, AutoNetworkedField]
+        public TimeSpan UpdateRate = TimeSpan.FromSeconds(1.5);
 
-        public string StoredCoords = "Unknown";
+        public string StoredCoords;
+
+        [AutoPausedField]
         public TimeSpan NextCoordUpdate = TimeSpan.Zero;
     }
 }
