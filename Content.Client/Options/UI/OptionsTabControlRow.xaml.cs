@@ -545,7 +545,7 @@ public sealed class OptionColorSliderCVar : BaseOptionCVar<string>
         set
         {
             _slider.Slider.Color = Color.FromHex(value);
-            UpdateLabelValue();
+            UpdateLabelColor();
         }
     }
 
@@ -573,11 +573,11 @@ public sealed class OptionColorSliderCVar : BaseOptionCVar<string>
         slider.Slider.OnColorChanged += _ =>
         {
             ValueChanged();
-            UpdateLabelValue();
+            UpdateLabelColor();
         };
     }
 
-    private void UpdateLabelValue()
+    private void UpdateLabelColor()
     {
         _slider.ExampleLabel.FontColorOverride = Color.FromHex(Value);
     }

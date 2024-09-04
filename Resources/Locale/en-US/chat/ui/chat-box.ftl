@@ -33,3 +33,6 @@ hud-chatbox-channel-Damage = Damage
 hud-chatbox-channel-Unspecified = Unspecified
 
 hud-chatbox-highlights-button = Submit
+hud-chatbox-highlights-placeholder = Word1
+                                     Word2
+                                     Word3
