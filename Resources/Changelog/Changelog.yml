@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: Flareguy
-  changes:
-  - message: Emergency Toolboxes now have a different fill that contains more utility
-      items then before.
-    type: Tweak
-  - message: Added the pocket fire extinguisher. You can currently only find them
-      in the emergency toolbox.
-    type: Add
-  id: 6782
-  time: '2024-06-19T18:13:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29202
 - author: lzk228
   changes:
   - message: Warning cone and wet floor sign recipes added to the autolathe.
@@ -3863,3 +3852,10 @@
   id: 7281
   time: '2024-09-04T15:04:50.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30960
+- author: Blackern5000
+  changes:
+  - message: Zombie outbreaks are now SIGNIFICANTLY rarer
+    type: Tweak
+  id: 7282
+  time: '2024-09-04T15:57:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30266
