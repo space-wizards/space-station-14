@@ -1,13 +1,10 @@
 using Content.Shared.Administration.Logs;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Anomaly.Prototypes;
-using Content.Shared.Damage;
 using Content.Shared.Database;
-using Content.Shared.Interaction;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Weapons.Melee.Components;
-using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;

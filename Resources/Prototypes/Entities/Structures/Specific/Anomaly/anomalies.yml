@@ -896,6 +896,7 @@
         sound:
           path: /Audio/Ambience/Objects/fireplace.ogg
       - type: Anomaly
+        keepEntity: true
         corePrototype: AnomalyCorePyroclastic
       - type: PointLight
         radius: 1.3
