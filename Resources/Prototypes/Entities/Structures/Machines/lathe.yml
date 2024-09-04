@@ -1130,6 +1130,7 @@
       - ClothingNeckCloakGay
       - ClothingNeckCloakEnby
       - ClothingNeckCloakPan
+      - ClothingNeckCloakBear
   - type: EmagLatheRecipes
     emagStaticRecipes:
       - ClothingHeadHatCentcomcap
