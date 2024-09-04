@@ -254,6 +254,14 @@
   completetime: 0.5
   materials:
     Steel: 25
+    
+- type: latheRecipe
+  id: FloorTileItemTechmaintDark
+  result: FloorTileItemTechmaintDark
+  applyMaterialDiscount: false
+  completetime: 0.5
+  materials:
+    Steel: 25
 
 # Wood
 - type: latheRecipe
