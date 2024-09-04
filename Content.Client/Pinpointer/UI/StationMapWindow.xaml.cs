@@ -76,6 +76,9 @@ public sealed partial class StationMapWindow : FancyWindow
             return;
 
         foreach (var (regionOwner, regionData) in navMapRegions.FloodedRegions)
-            NavMapScreen.RegionOverlays[regionOwner] = regionData;
+        {
+            if (regionData.UiKey is StationMapUiKey)
+                NavMapScreen.RegionOverlays.Add(regionData);
+        }
     }
 }

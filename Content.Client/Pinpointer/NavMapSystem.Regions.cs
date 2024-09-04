@@ -44,8 +44,16 @@ public sealed partial class NavMapSystem
         // Flood fill the region, using the region seeds as starting points
         var (floodedTiles, floodedChunks) = FloodFillRegion(uid, component, regionProperties);
 
-        // Combine the flooded tiles into larger rectangles and assign these to the component
-        component.FloodedRegions[regionOwner] = (GetMergedRegionTiles(floodedTiles), regionProperties.Color);
+        // Combine the flooded tiles into larger rectangles
+        var gridCoords = GetMergedRegionTiles(floodedTiles);
+
+        // Create and assign the new region overlay
+        var regionOverlay = new NavMapRegionOverlay(regionProperties.UiKey, gridCoords)
+        {
+            Color = regionProperties.Color
+        };
+
+        component.FloodedRegions[regionOwner] = regionOverlay;
 
         // To reduce unnecessary future flood fills, we will track which chunks have been flooded by a region owner
 

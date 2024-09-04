@@ -228,8 +228,10 @@ public sealed class AtmosAlertsComputerSystem : SharedAtmosAlertsComputerSystem
                 alarmState = AtmosAlarmType.Invalid;
 
             // Create entry
+            var netEnt = GetNetEntity(ent);
+
             var entry = new AtmosAlertsComputerEntry
-                (GetNetEntity(ent),
+                (netEnt,
                 GetNetCoordinates(entXform.Coordinates),
                 entDevice.Group,
                 alarmState,
@@ -244,20 +246,18 @@ public sealed class AtmosAlertsComputerSystem : SharedAtmosAlertsComputerSystem
             {
                 var alarmRegionSeeds = new HashSet<Vector2i>();
 
-                foreach (var device in entDeviceList.Devices)
+                foreach (var sensor in entDeviceList.Devices)
                 {
-                    if (!_tagSystem.HasTag(device, "AirSensor"))
+                    if (!_tagSystem.HasTag(sensor, "AirSensor"))
                         continue;
 
-                    var deviceXform = Transform(device);
+                    var sensorXform = Transform(sensor);
 
-                    if (deviceXform.GridUid == entXform.GridUid)
-                        alarmRegionSeeds.Add(_mapSystem.CoordinatesToTile(device, mapGrid, _transformSystem.GetMapCoordinates(device, deviceXform)));
+                    if (sensorXform.GridUid == entXform.GridUid)
+                        alarmRegionSeeds.Add(_mapSystem.CoordinatesToTile(entXform.GridUid.Value, mapGrid, _transformSystem.GetMapCoordinates(sensor, sensorXform)));
                 }
-                var t = typeof(DeviceListComponent);
-                var netEnt = GetNetEntity(ent);
 
-                var regionProperties = new SharedNavMapSystem.NavMapRegionProperties(netEnt, alarmRegionSeeds, Color.White)
+                var regionProperties = new SharedNavMapSystem.NavMapRegionProperties(netEnt, AtmosAlertsComputerUiKey.Key, alarmRegionSeeds)
                 {
                     LastUpdate = _gameTiming.CurTick
                 };

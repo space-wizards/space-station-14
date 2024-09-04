@@ -75,8 +75,8 @@ public sealed class StationMapSystem : EntitySystem
         {
             var regionProperties = GetNavMapRegionProperties(uid, beacon);
 
-            //if (regionProperties.HasValue)
-            //    _navMapSystem.AddOrUpdateNavMapRegion(xform.GridUid.Value, navMap, GetNetEntity(uid), regionProperties.Value);
+            if (regionProperties.HasValue)
+                _navMapSystem.AddOrUpdateNavMapRegion(xform.GridUid.Value, navMap, GetNetEntity(uid), regionProperties.Value);
         }
 
         else
@@ -97,8 +97,9 @@ public sealed class StationMapSystem : EntitySystem
             _mapSystem.CoordinatesToTile(xform.GridUid.Value, mapGrid, _transformSystem.GetMapCoordinates(uid, xform))
         };
 
-        var regionProperties = new NavMapRegionProperties(GetNetEntity(uid), seeds, component.Color)
+        var regionProperties = new NavMapRegionProperties(GetNetEntity(uid), StationMapUiKey.Key, seeds)
         {
+            Color = component.Color,
             LastUpdate = _gameTiming.CurTick
         };
 

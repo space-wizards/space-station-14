@@ -48,7 +48,7 @@ public partial class NavMapControl : MapGridControl
     public List<(Vector2, Vector2)> TileLines = new();
     public List<(Vector2, Vector2)> TileRects = new();
     public List<(Vector2[], Color)> TilePolygons = new();
-    public Dictionary<NetEntity, (List<(Vector2i, Vector2i)>, Color)> RegionOverlays = new();
+    public List<NavMapRegionOverlay> RegionOverlays = new();
 
     // Default colors
     public Color WallColor = new(102, 217, 102);
@@ -323,15 +323,15 @@ public partial class NavMapControl : MapGridControl
         // Draw region overlays
         if (_grid != null)
         {
-            foreach ((var regionOwner, var (tiles, color)) in RegionOverlays)
+            foreach (var regionOverlay in RegionOverlays)
             {
-                foreach (var tile in tiles)
+                foreach (var gridCoords in regionOverlay.GridCoords)
                 {
-                    var positionTopLeft = ScalePosition(new Vector2(tile.Item1.X, -tile.Item1.Y) - new Vector2(offset.X, -offset.Y));
-                    var positionBottomRight = ScalePosition(new Vector2(tile.Item2.X + _grid.TileSize, -tile.Item2.Y - _grid.TileSize) - new Vector2(offset.X, -offset.Y));
+                    var positionTopLeft = ScalePosition(new Vector2(gridCoords.Item1.X, -gridCoords.Item1.Y) - new Vector2(offset.X, -offset.Y));
+                    var positionBottomRight = ScalePosition(new Vector2(gridCoords.Item2.X + _grid.TileSize, -gridCoords.Item2.Y - _grid.TileSize) - new Vector2(offset.X, -offset.Y));
 
                     var box = new UIBox2(positionTopLeft, positionBottomRight);
-                    handle.DrawRect(box, color);
+                    handle.DrawRect(box, regionOverlay.Color);
                 }
             }
         }

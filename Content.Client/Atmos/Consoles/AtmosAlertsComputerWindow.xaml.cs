@@ -29,6 +29,8 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
 
     private AtmosAlertsComputerEntry[]? _airAlarms = null;
     private AtmosAlertsComputerEntry[]? _fireAlarms = null;
+    private IEnumerable<AtmosAlertsComputerEntry>? _allAlarms = null;
+
     private IEnumerable<AtmosAlertsComputerEntry>? _activeAlarms = null;
     private Dictionary<NetEntity, float> _deviceSilencingProgress = new();
 
@@ -66,7 +68,7 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
                 stationName = stationMetaData.EntityName;
 
             var msg = new FormattedMessage();
-            msg.AddMarkup(Loc.GetString("atmos-alerts-window-station-name", ("stationName", stationName)));
+            msg.TryAddMarkup(Loc.GetString("atmos-alerts-window-station-name", ("stationName", stationName)), out _);
 
             StationName.SetMessage(msg);
         }
@@ -111,7 +113,7 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
 
         foreach (var device in console.AtmosDevices)
         {
-            var alarmState = GetAlarmState(device.NetEntity, device.Group);
+            var alarmState = GetAlarmState(device.NetEntity);
 
             if (toggledAlarmState != alarmState)
                 continue;
@@ -163,11 +165,11 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
         // Retain alarm data for use inbetween updates
         _airAlarms = airAlarms;
         _fireAlarms = fireAlarms;
+        _allAlarms = airAlarms.Concat(fireAlarms);
 
-        var allAlarms = airAlarms.Concat(fireAlarms);
         var silenced = console.SilencedDevices;
 
-        _activeAlarms = allAlarms.Where(x => x.AlarmState > AtmosAlarmType.Normal &&
+        _activeAlarms = _allAlarms.Where(x => x.AlarmState > AtmosAlarmType.Normal &&
             (!silenced.Contains(x.NetEntity) || _deviceSilencingProgress.ContainsKey(x.NetEntity)));
 
         // Reset nav map data
@@ -180,7 +182,7 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
             if (!NavMap.Visible)
                 continue;
 
-            var alarmState = GetAlarmState(device.NetEntity, device.Group);
+            var alarmState = GetAlarmState(device.NetEntity);
 
             if (_trackedEntity != device.NetEntity)
             {
@@ -277,13 +279,31 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
 
         // Update sensor regions
         NavMap.RegionOverlays.Clear();
+        var regionOverlays = new Dictionary<NavMapRegionOverlay, int>();
 
         if (_owner != null &&
             _entManager.TryGetComponent<TransformComponent>(_owner, out var xform) &&
             _entManager.TryGetComponent<NavMapComponent>(xform.GridUid, out var navMap))
         {
-            foreach (var (regionOwner, regionData) in navMap.FloodedRegions)
-                NavMap.RegionOverlays[regionOwner] = regionData;
+            foreach (var (regionOwner, regionOverlay) in navMap.FloodedRegions)
+            {
+                if (regionOverlay.UiKey is not AtmosAlertsComputerUiKey)
+                    continue;
+
+                var alarmState = GetAlarmState(regionOwner);
+
+                if (!TryGetSensorRegionColor(regionOwner, alarmState, out var regionColor))
+                    continue;
+
+                regionOverlay.Color = regionColor.Value;
+
+                var priority = (_trackedEntity == regionOwner) ? 999 : (int)alarmState;
+                regionOverlays.Add(regionOverlay, priority);
+            }
+
+            // Sort overlays according to their priority
+            var sortedOverlays = regionOverlays.OrderBy(x => x.Value).Select(x => x.Key).ToList();
+            NavMap.RegionOverlays = sortedOverlays;
         }
     }
 
@@ -305,6 +325,24 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
         var blip = new NavMapBlip(coords, _spriteSystem.Frame0(texture), color, _trackedEntity == metaData.NetEntity, selectable);
 
         NavMap.TrackedEntities[metaData.NetEntity] = blip;
+    }
+
+    private bool TryGetSensorRegionColor(NetEntity regionOwner, AtmosAlarmType alarmState, [NotNullWhen(true)] out Color? color)
+    {
+        color = null;
+
+        var blip = GetBlipTexture(alarmState);
+
+        if (blip == null)
+            return false;
+
+        // Color the region based on alarm state and entity tracking
+        color = blip.Value.Item2 * Color.DimGray;
+
+        if (_trackedEntity != null && _trackedEntity != regionOwner)
+            color *= Color.DimGray;
+
+        return true;
     }
 
     private void UpdateUIEntry(AtmosAlertsComputerEntry entry, int index, Control table, AtmosAlertsComputerComponent console, AtmosAlertsFocusDeviceData? focusData = null)
@@ -391,7 +429,7 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
             if (device == null)
                 continue;
 
-            var alarmState = GetAlarmState(device.Value.NetEntity, device.Value.Group);
+            var alarmState = GetAlarmState(device.Value.NetEntity);
 
             if (currTrackedEntity != device.Value.NetEntity &&
                 !ShowInactiveAlarms.Pressed &&
@@ -536,10 +574,9 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
         return false;
     }
 
-    private AtmosAlarmType GetAlarmState(NetEntity netEntity, AtmosAlertsComputerGroup group)
+    private AtmosAlarmType GetAlarmState(NetEntity netEntity)
     {
-        var alarms = (group == AtmosAlertsComputerGroup.AirAlarm) ? _airAlarms : _fireAlarms;
-        var alarmState = alarms?.FirstOrNull(x => x.NetEntity == netEntity)?.AlarmState;
+        var alarmState = _allAlarms?.FirstOrNull(x => x.NetEntity == netEntity)?.AlarmState;
 
         if (alarmState == null)
             return AtmosAlarmType.Invalid;

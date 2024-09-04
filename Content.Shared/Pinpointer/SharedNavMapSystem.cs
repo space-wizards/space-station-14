@@ -84,14 +84,8 @@ public abstract class SharedNavMapSystem : EntitySystem
 
     public void AddOrUpdateNavMapRegion(EntityUid uid, NavMapComponent component, NetEntity regionOwner, NavMapRegionProperties regionProperties)
     {
-        // Check if a new region has been added
-        var isDirty = !component.RegionProperties.TryGetValue(regionOwner, out var oldProperties);
-
-        // If not, check if an old region has been altered
-        if (!isDirty)
-        {
-            isDirty = !oldProperties.Seeds.SequenceEqual(regionProperties.Seeds) || (regionProperties.Color != oldProperties.Color);
-        }
+        // Check if a new region has been added or an existing one has been altered
+        var isDirty = !component.RegionProperties.TryGetValue(regionOwner, out var oldProperties) || oldProperties != regionProperties;
 
         if (isDirty)
         {
@@ -224,8 +218,11 @@ public abstract class SharedNavMapSystem : EntitySystem
     public record struct NavMapBeacon(NetEntity NetEnt, Color Color, string Text, Vector2 Position);
 
     [Serializable, NetSerializable]
-    public record struct NavMapRegionProperties(NetEntity Owner, HashSet<Vector2i> Seeds, Color Color)
+    public record struct NavMapRegionProperties(NetEntity Owner, Enum UiKey, HashSet<Vector2i> Seeds)
     {
+        // Server defined color for the region
+        public Color Color = Color.White;
+
         // The game tick the nav map region was last updated
         public GameTick LastUpdate;
 

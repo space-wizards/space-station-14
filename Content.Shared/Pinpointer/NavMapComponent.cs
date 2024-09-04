@@ -43,7 +43,7 @@ public sealed partial class NavMapComponent : Component
     /// For client use only
     /// </remarks>
     [ViewVariables(VVAccess.ReadOnly)]
-    public Dictionary<NetEntity, (List<(Vector2i, Vector2i)>, Color)> FloodedRegions = new();
+    public Dictionary<NetEntity, NavMapRegionOverlay> FloodedRegions = new();
 
     /// <summary>
     /// A queue of all region owners that are waiting their associated regions to be floodfilled.
@@ -75,6 +75,26 @@ public sealed class NavMapChunk(Vector2i origin)
     /// </summary>
     [NonSerialized]
     public GameTick LastUpdate;
+}
+
+[Serializable, NetSerializable]
+public sealed class NavMapRegionOverlay(Enum uiKey, List<(Vector2i, Vector2i)> gridCoords)
+{
+    /// <summary>
+    /// The key to the UI that will be displaying this region on its navmap
+    /// </summary>
+    public Enum UiKey = uiKey;
+
+    /// <summary>
+    /// The local grid coordinates of the rectangles that make up the region
+    /// Item1 is the top left corner, Item2 is the bottom right corner
+    /// </summary>
+    public List<(Vector2i, Vector2i)> GridCoords = gridCoords;
+
+    /// <summary>
+    /// Color of the region
+    /// </summary>
+    public Color Color = Color.White;
 }
 
 public enum NavMapChunkType : byte
