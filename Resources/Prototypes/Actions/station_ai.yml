@@ -14,8 +14,8 @@
 
 - type: entity
   id: ActionShowJobIcons
-  name: Show job icons
-  description: Shows job icons for crew members.
+  name: Show status icons
+  description: Shows status icons for crew members.
   components:
   - type: InstantAction
     priority: -5
@@ -28,14 +28,14 @@
       - type: ShowJobIcons
       - type: ShowMindShieldIcons
       - type: ShowCriminalRecordIcons
-      - type: ShowHealthBars
-        damageContainers:
-        - Biological
-        - Inorganic
-        - Silicon
-      - type: ShowHealthIcons
-        damageContainers:
-        - Biological
+      #- type: ShowHealthBars
+       # damageContainers:
+        #- Biological
+        #- Inorganic
+        #- Silicon
+      #- type: ShowHealthIcons
+       # damageContainers:
+        #- Biological
 
 - type: entity
   id: ActionSurvCameraLights
