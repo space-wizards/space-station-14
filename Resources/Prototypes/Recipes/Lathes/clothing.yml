@@ -1324,3 +1324,10 @@
   completetime: 3.2
   materials:
     Durathread: 200
+
+- type: latheRecipe
+  id: ClothingNeckCloakBear
+  result: ClothingNeckCloakBear
+  completetime: 3.2
+  materials:
+    Durathread: 200
