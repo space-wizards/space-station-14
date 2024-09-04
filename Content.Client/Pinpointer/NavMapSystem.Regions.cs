@@ -6,8 +6,6 @@ namespace Content.Client.Pinpointer;
 
 public sealed partial class NavMapSystem
 {
-    public const int RegionMaxSize = 625; // i.e, max area of 25 * 25 tiles
-
     private Dictionary<Vector2i, HashSet<NetEntity>> _chunkToRegionOwnerTable = new();
     private Dictionary<NetEntity, HashSet<Vector2i>> _regionOwnerToChunkTable = new();
 
@@ -43,11 +41,13 @@ public sealed partial class NavMapSystem
             return;
         }
 
-        // Get the tiles and chunks affected by the flood fill and assign the tiles to the component
-        var (floodedTiles, floodedChunks) = FloodFillRegion(uid, component, regionProperties, RegionMaxSize);
+        // Flood fill the region, using the region seeds as starting points
+        var (floodedTiles, floodedChunks) = FloodFillRegion(uid, component, regionProperties);
+
+        // Combine the flooded tiles into larger rectangles and assign these to the component
         component.FloodedRegions[regionOwner] = (GetMergedRegionTiles(floodedTiles), regionProperties.Color);
 
-        // To reduce unnecessary future flood fills, track which chunks have been flooded by a region owner 
+        // To reduce unnecessary future flood fills, we will track which chunks have been flooded by a region owner
 
         // First remove an old assignments
         if (_regionOwnerToChunkTable.TryGetValue(regionOwner, out var oldChunks))
@@ -76,7 +76,7 @@ public sealed partial class NavMapSystem
         }
     }
 
-    private (HashSet<Vector2i>, HashSet<Vector2i>) FloodFillRegion(EntityUid uid, NavMapComponent component, NavMapRegionProperties regionProperties, int regionMaxSize = 100)
+    private (HashSet<Vector2i>, HashSet<Vector2i>) FloodFillRegion(EntityUid uid, NavMapComponent component, NavMapRegionProperties regionProperties)
     {
         if (!regionProperties.Seeds.Any())
             return (new(), new());
@@ -91,27 +91,33 @@ public sealed partial class NavMapSystem
 
             while (tilesToVisit.Count > 0)
             {
-                // If the max region size is hit, exit
-                if (visitedTiles.Count > regionMaxSize)
-                {
-                    //return (new(), new());
-                    return (visitedTiles, visitedChunks);
-                }
+                // If the max region area is hit, exit
+                if (visitedTiles.Count > regionProperties.MaxArea)
+                    return (new(), new());
 
+                // Pop the top tile from the stack 
                 var current = tilesToVisit.Pop();
 
+                // If the current tile position has already been visited,
+                // or is too far away from the seed, continue
+                if ((regionSeed - current).Length > regionProperties.MaxRadius)
+                    continue;
+
+                if (visitedTiles.Contains(current))
+                    continue;
+
+                // Determine the tile's chunk index
                 var chunkOrigin = SharedMapSystem.GetChunkIndices(current, ChunkSize);
                 var relative = SharedMapSystem.GetChunkRelative(current, ChunkSize);
                 var idx = GetTileIndex(relative);
 
+                // Extract the tile data
                 if (!component.Chunks.TryGetValue(chunkOrigin, out var chunk))
                     continue;
 
                 var flag = chunk.TileData[idx];
 
-                if (visitedTiles.Contains(current))
-                    continue;
-
+                // If the current tile is entirely occupied, continue
                 if ((FloorMask & flag) == 0)
                     continue;
 
@@ -121,24 +127,17 @@ public sealed partial class NavMapSystem
                 if ((AirlockMask & flag) == AirlockMask)
                     continue;
 
-                // Tile can be included in this region
+                // Otherwise the tile can be added to this region
                 visitedTiles.Add(current);
                 visitedChunks.Add(chunkOrigin);
 
                 // Determine if we can propagate the region into its cardinally adjacent neighbors
                 // To propagate to a neighbor, movement into the neighbors closest edge must not be 
-                // blocked, and vice versa.
+                // blocked, and vice versa
 
                 foreach (var (direction, tileOffset, reverseDirection) in _regionPropagationTable)
                 {
-                    var directionMask = 1 << (int)direction;
-                    var wallMask = (int)direction << (int)NavMapChunkType.Wall;
-                    var airlockMask = (int)direction << (int)NavMapChunkType.Airlock;
-
-                    if ((wallMask & flag) > 0)
-                        continue;
-
-                    if ((airlockMask & flag) > 0)
+                    if (!RegionCanPropagateInDirection(chunk, current, direction))
                         continue;
 
                     var neighbor = current + tileOffset;
@@ -149,8 +148,10 @@ public sealed partial class NavMapSystem
 
                     visitedChunks.Add(neighborOrigin);
 
-                    if (CanMoveIntoTile(neighborChunk, neighbor, reverseDirection))
-                        tilesToVisit.Push(neighbor);
+                    if (!RegionCanPropagateInDirection(neighborChunk, neighbor, reverseDirection))
+                        continue;
+
+                    tilesToVisit.Push(neighbor);
                 }
             }
         }
@@ -158,7 +159,7 @@ public sealed partial class NavMapSystem
         return (visitedTiles, visitedChunks);
     }
 
-    private bool CanMoveIntoTile(NavMapChunk chunk, Vector2i tile, AtmosDirection direction)
+    private bool RegionCanPropagateInDirection(NavMapChunk chunk, Vector2i tile, AtmosDirection direction)
     {
         var relative = SharedMapSystem.GetChunkRelative(tile, ChunkSize);
         var idx = GetTileIndex(relative);
@@ -201,8 +202,6 @@ public sealed partial class NavMapSystem
             var b = tile.Y - minY;
 
             matrix[a, b] = 1;
-
-            //matrix[tile.X - minX, tile.Y - minY] = 1;
         }
 
         return GetMergedRegionTiles(matrix, new Vector2i(minX, minY));
@@ -297,33 +296,4 @@ public sealed partial class NavMapSystem
 
         return true;
     }
-
-    /*private Dictionary<AtmosDirection, ushort> GetRegionBlockingTileData(EntityUid uid, NavMapComponent component, Vector2i tile, NavMapRegionProperties regionProperties)
-    {
-        var chunkOrigin = SharedMapSystem.GetChunkIndices(tile, ChunkSize);
-
-        var regionBlockTileData = new Dictionary<AtmosDirection, ushort>()
-        {
-            [AtmosDirection.North] = 0,
-            [AtmosDirection.East] = 0,
-            [AtmosDirection.South] = 0,
-            [AtmosDirection.West] = 0,
-        };
-
-        foreach (var regionBlockingChunkType in regionProperties.ConstraintTypes)
-        {
-            if (component.Chunks.TryGetValue(chunkOrigin, out var blockerChunk))
-            {
-                foreach (var (direction, blockerFlag) in blockerChunk.TileData)
-                {
-                    if (!regionBlockTileData.ContainsKey(direction))
-                        continue;
-
-                    regionBlockTileData[direction] |= blockerFlag;
-                }
-            }
-        }
-
-        return regionBlockTileData;
-    }*/
 }

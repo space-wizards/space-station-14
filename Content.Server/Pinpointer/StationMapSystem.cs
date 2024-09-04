@@ -75,8 +75,8 @@ public sealed class StationMapSystem : EntitySystem
         {
             var regionProperties = GetNavMapRegionProperties(uid, beacon);
 
-            if (regionProperties.HasValue)
-                _navMapSystem.AddOrUpdateNavMapRegion(xform.GridUid.Value, navMap, GetNetEntity(uid), regionProperties.Value);
+            //if (regionProperties.HasValue)
+            //    _navMapSystem.AddOrUpdateNavMapRegion(xform.GridUid.Value, navMap, GetNetEntity(uid), regionProperties.Value);
         }
 
         else
@@ -92,11 +92,12 @@ public sealed class StationMapSystem : EntitySystem
         if (!TryComp<MapGridComponent>(xform.GridUid, out var mapGrid))
             return null;
 
-        NavMapChunkType[] propagatingChunkTypes = { NavMapChunkType.Floor };
-        NavMapChunkType[] constraintChunkTypes = { NavMapChunkType.Wall, NavMapChunkType.Airlock };
-        var seeds = new HashSet<Vector2i>() { _mapSystem.CoordinatesToTile(xform.GridUid.Value, mapGrid, _transformSystem.GetMapCoordinates(uid, xform)) };
+        var seeds = new HashSet<Vector2i>()
+        {
+            _mapSystem.CoordinatesToTile(xform.GridUid.Value, mapGrid, _transformSystem.GetMapCoordinates(uid, xform))
+        };
 
-        var regionProperties = new NavMapRegionProperties(GetNetEntity(uid), propagatingChunkTypes, constraintChunkTypes, seeds, component.Color)
+        var regionProperties = new NavMapRegionProperties(GetNetEntity(uid), seeds, component.Color)
         {
             LastUpdate = _gameTiming.CurTick
         };

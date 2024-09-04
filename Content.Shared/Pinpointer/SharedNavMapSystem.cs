@@ -58,7 +58,7 @@ public abstract class SharedNavMapSystem : EntitySystem
     public NavMapChunkType GetEntityType(EntityUid uid)
     {
         if (_doorQuery.HasComp(uid))
-            return  NavMapChunkType.Airlock;
+            return NavMapChunkType.Airlock;
 
         if (_tagSystem.HasAnyTag(uid, WallTags))
             return NavMapChunkType.Wall;
@@ -224,9 +224,16 @@ public abstract class SharedNavMapSystem : EntitySystem
     public record struct NavMapBeacon(NetEntity NetEnt, Color Color, string Text, Vector2 Position);
 
     [Serializable, NetSerializable]
-    public record struct NavMapRegionProperties(NetEntity Owner, NavMapChunkType[] PropagatingTypes, NavMapChunkType[] ConstraintTypes, HashSet<Vector2i> Seeds, Color Color)
+    public record struct NavMapRegionProperties(NetEntity Owner, HashSet<Vector2i> Seeds, Color Color)
     {
+        // The game tick the nav map region was last updated
         public GameTick LastUpdate;
+
+        // The maximum number of tiles that can be assigned to this region
+        public int MaxArea = 625;
+
+        // The maximum distance this region can propagate from its seeds
+        public int MaxRadius = 25;
     }
 
     #endregion
