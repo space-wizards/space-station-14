@@ -234,8 +234,8 @@
   - type: MeleeWeapon
     damage:
       types:
-        Heat: 7.5
-        Caustic: 7.5
+        Heat: 8
+        Caustic: 8
   - type: SolutionContainerManager
     solutions:
       food:
@@ -247,21 +247,19 @@
   - type: Produce
     seedId: deathNettle
   - type: MeleeChemicalInjector
-    transferAmount: 6
+    transferAmount: 5
     solution: food
     pierceArmor: true
   - type: Extractable
     grindableSolutionName: food
-  - type: DamageOnPickup
-    failsound: /Audio/Effects/lightburn.ogg
-    takedamage: true
-    damage:
+  - type: DamageOnInteract
+    damage: 
       types:
         Heat: 4
         Caustic: 4
-    throw: true
-    throwspeed: 10
-
+    ignoreResistances: false
+    popupText: powered-light-component-burn-hand
+    interactSound: /Audio/Effects/lightburn.ogg
 
 - type: entity
   name: banana
