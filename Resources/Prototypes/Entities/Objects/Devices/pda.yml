@@ -119,7 +119,7 @@
 
 - type: entity
   parent: BasePDA
-  id: PDAPassenger
+  id: PassengerPDA
   name: passenger PDA
   description: Why isn't it gray?
   components:
