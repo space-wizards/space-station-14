@@ -105,15 +105,16 @@
 
 - type: entity
   id: VestineChemistryVial
-  name: vestine vial
   parent: BaseChemistryEmptyVial
   components:
-    - type: SolutionContainerManager
-      solutions:
-        beaker:
-          maxVol: 30
-          reagents:
-            - ReagentId: Vestine
-              Quantity: 30
-    - type: Tag
-      tags: []
+  - type: Label
+    currentLabel: reagent-name-vestine
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 30
+        reagents:
+        - ReagentId: Vestine
+          Quantity: 30
+  - type: Tag
+    tags: []
