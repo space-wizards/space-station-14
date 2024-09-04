@@ -24,7 +24,7 @@
     sprite: Objects/Misc/landmine.rsi
     state: landmine
   - type: Damageable
-    damageContainer: StructuralInorganic
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger:

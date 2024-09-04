@@ -14,7 +14,7 @@
         state: normal
   - type: LightBulb
   - type: Damageable
-    damageContainer: StructuralInorganic
+    damageContainer: Inorganic
   - type: DamageOnLand
     damage:
       types:

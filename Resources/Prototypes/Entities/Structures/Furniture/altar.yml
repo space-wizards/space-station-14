@@ -10,7 +10,7 @@
   - type: Prayable
   - type: Damageable
     damageContainer: StructuralInorganic
-    damageModifierSet: Metallic
+    damageModifierSet: Wood
   - type: PlaceableSurface
   - type: Fixtures
     fixtures:

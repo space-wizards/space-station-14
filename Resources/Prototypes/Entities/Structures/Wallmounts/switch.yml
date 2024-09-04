@@ -80,7 +80,7 @@
     ports:
       - Pressed
   - type: Damageable
-    damageContainer: StructuralInorganic
+    damageContainer: Inorganic
     damageModifierSet: Metallic
   - type: Destructible
     thresholds:
@@ -169,7 +169,7 @@
             Middle: { state: switch-off }
             Left: { state: switch-rev }
     - type: Damageable
-      damageContainer: StructuralInorganic
+      damageContainer: Inorganic
       damageModifierSet: Metallic
     - type: Destructible
       thresholds:

@@ -40,7 +40,7 @@
   - type: DumpableSolution
     solution: drainBuffer
   - type: Damageable
-    damageContainer: StructuralInorganic
+    damageContainer: Inorganic
     damageModifierSet: Metallic
   - type: Destructible
     thresholds:

@@ -25,7 +25,7 @@
   - type: InteractionOutline
   - type: Physics
   - type: Damageable
-    damageContainer: StructuralInorganic
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger:
