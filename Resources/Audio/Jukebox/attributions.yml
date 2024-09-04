@@ -1,8 +1,3 @@
-- files: ["atomicamnesiammx.ogg"]
-  license: "CC-BY-NC-SA-3.0"
-  copyright: "Atomic Amnesia MMX by Phillip Dyer. Converted from MP3 to OGG."
-  source: "https://soundcloud.com/3kliksphilip/atomic-amnesia-mmx-1"
-
 - files: ["vibe_ace.ogg"]
   license: "CC-BY-3.0"
   copyright: "Vibe Ace by Kevin MacLeod. Converted from MP3 to OGG."
@@ -27,11 +22,6 @@
   license: "Custom"
   copyright: "Flip Flap by X-ceed is licensed under a short but clear license (see flip-flap.txt in Audio/Lobby) and is free for non-commercial use. Converted to mono OGG."
   source: "http://aminet.net/package/mods/xceed/Flipflap"
-
-- files: ["title3.ogg"]
-  license: "CC-BY-NC-SA-3.0"
-  copyright: "Title3 by Cuboos. It is a remix of the song 'Tintin on the Moon'. Converted to mono OGG."
-  source: "https://www.youtube.com/watch?v=YKVmXn-Gv0M"
 
 - files:
   - "constellations.ogg"
