@@ -86,6 +86,9 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
 
     private void OnShutdown(Entity<AnomalyComponent> anomaly, ref ComponentShutdown args)
     {
+        if (anomaly.Comp.CurrentBehavior is not null)
+            RemoveBehavior(anomaly, anomaly.Comp.CurrentBehavior.Value);
+
         EndAnomaly(anomaly);
     }
 

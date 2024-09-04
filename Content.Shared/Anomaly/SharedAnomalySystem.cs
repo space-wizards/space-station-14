@@ -188,7 +188,10 @@ public abstract class SharedAnomalySystem : EntitySystem
 
         Spawn(supercritical ? component.CorePrototype : component.CoreInertPrototype, Transform(uid).Coordinates);
 
-        QueueDel(uid);
+        if (component.KeepEntity)
+            RemComp<AnomalyComponent>(uid);
+        else
+            QueueDel(uid);
     }
 
     /// <summary>

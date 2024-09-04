@@ -256,6 +256,12 @@ public sealed partial class AnomalyComponent : Component
 
     public readonly string AnimationKey = "anomalyfloat";
     #endregion
+
+    /// <summary>
+    /// we won't remove the entity, we'll just remove all the anomaly components.
+    /// </summary>
+    [DataField]
+    public bool KeepEntity = false;
 }
 
 /// <summary>
