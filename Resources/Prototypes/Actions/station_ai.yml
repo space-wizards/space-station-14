@@ -10,6 +10,7 @@
       sprite: Interface/Actions/actions_ai.rsi
       state: ai_core
     event: !type:JumpToCoreEvent
+    priority: -10
 
 - type: entity
   id: ActionShowJobIcons
@@ -21,6 +22,7 @@
     icon:
       sprite: Interface/Actions/actions_ai.rsi
       state: job_view
+    priority: -5
     event: !type:ActionComponentChangeEvent
       components:
       - type: ShowJobIcons
@@ -35,6 +37,7 @@
     icon:
       sprite: Interface/Actions/actions_ai.rsi
       state: camera_light
+    priority: -6
     event: !type:RelayedActionComponentChangeEvent
       components:
       - type: LightOnCollideCollider
@@ -60,6 +63,7 @@
     icon:
       sprite: Interface/Actions/actions_ai.rsi
       state: state_laws
+    priority: -3
     event: !type:ToggleLawsScreenEvent
     useDelay: 0.5
 
@@ -73,7 +77,7 @@
     icon: { sprite: Interface/Actions/actions_ai.rsi, state: mass_scanner }
     iconOn: Interface/Actions/actions_ai.rsi/mass_scanner.png
     keywords: [ "AI", "console", "interface" ]
-    priority: -10
+    priority: -7
     event: !type:ToggleIntrinsicUIEvent { key: enum.RadarConsoleUiKey.Key }
 
 - type: entity
@@ -85,7 +89,7 @@
     icon: { sprite: Interface/Actions/actions_ai.rsi, state: crew_monitor }
     iconOn: Interface/Actions/actions_ai.rsi/crew_monitor.png
     keywords: [ "AI", "console", "interface" ]
-    priority: -10
+    priority: -9
     event: !type:ToggleIntrinsicUIEvent { key: enum.CrewMonitoringUIKey.Key }
     
 - type: entity
@@ -97,7 +101,7 @@
     icon: { sprite: Interface/Actions/actions_ai.rsi, state: station_records }
     iconOn: Interface/Actions/actions_ai.rsi/station_records.png
     keywords: [ "AI", "console", "interface" ]
-    priority: -10
+    priority: -8
     event: !type:ToggleIntrinsicUIEvent { key: enum.GeneralStationRecordConsoleKey.Key }
 
 - type: entity
@@ -109,6 +113,6 @@
     icon: { sprite: Interface/Actions/actions_ai.rsi, state: comms_console }
     iconOn: Interface/Actions/actions_ai.rsi/comms_console.png
     keywords: [ "AI", "console", "interface" ]
-    priority: -10
+    priority: -4
     event: !type:ToggleIntrinsicUIEvent { key: enum.CommunicationsConsoleUiKey.Key }
     

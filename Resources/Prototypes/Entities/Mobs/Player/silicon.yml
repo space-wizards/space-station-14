@@ -61,6 +61,13 @@
   - type: CommunicationsConsole
     title: comms-console-announcement-title-station-ai
     color: "#2ed2fd"
+  - type: GeneralStationRecordConsole
+  - type: RadarConsole
+    followEntity: false
+  - type: CrewMonitoringConsole
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: CrewMonitor
 
 
 # Ai
