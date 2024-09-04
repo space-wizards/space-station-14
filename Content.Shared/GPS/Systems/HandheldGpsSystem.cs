@@ -8,16 +8,12 @@ public sealed class HandheldGpsSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
-
-    private string _posText = "";
-
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<HandheldGPSComponent, ExaminedEvent>(OnExamine);
     }
-
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
