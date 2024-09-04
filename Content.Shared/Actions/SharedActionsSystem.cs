@@ -69,8 +69,47 @@ public abstract class SharedActionsSystem : EntitySystem
         SubscribeAllEvent<RequestPerformActionEvent>(OnActionRequest);
     }
 
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        // All of this is extremely expensive, please make sure it's not active conssistently
+
+        var worldActionQuery = EntityQueryEnumerator<WorldTargetActionComponent>();
+        while (worldActionQuery.MoveNext(out var uid, out var action))
+        {
+            if (IsCooldownActive(action) || !ShouldResetCharges(uid, action))
+                return;
+
+            UpdateAction(uid, action);
+            Dirty(uid, action);
+        }
+
+        var instantActionQuery = EntityQueryEnumerator<InstantActionComponent>();
+        while (instantActionQuery.MoveNext(out var uid, out var action))
+        {
+            if (IsCooldownActive(action) || !ShouldResetCharges(uid, action))
+                return;
+
+            UpdateAction(uid, action);
+            Dirty(uid, action);
+        }
+
+        var entityActionQuery = EntityQueryEnumerator<EntityTargetActionComponent>();
+        while (entityActionQuery.MoveNext(out var uid, out var action))
+        {
+            if (IsCooldownActive(action) || !ShouldResetCharges(uid, action))
+                return;
+
+            UpdateAction(uid, action);
+            Dirty(uid, action);
+        }
+    }
+
     private void OnActionMapInit(EntityUid uid, BaseActionComponent component, MapInitEvent args)
     {
+        component.OriginalIconColor = component.IconColor;
+
         if (component.Charges == null)
             return;
 
@@ -250,6 +289,10 @@ public abstract class SharedActionsSystem : EntitySystem
     public virtual void UpdateAction(EntityUid? actionId, BaseActionComponent? action = null)
     {
         // See client-side code.
+        if (!ResolveActionData(actionId, ref action))
+            return;
+
+        action.IconColor = action.Charges < 1 ? action.DisabledIconColor : action.OriginalIconColor;
     }
 
     public void SetToggled(EntityUid? actionId, bool toggled)
@@ -386,8 +429,7 @@ public abstract class SharedActionsSystem : EntitySystem
             return;
 
         var curTime = GameTiming.CurTime;
-        // TODO: Check for charge recovery timer
-        if (action.Cooldown.HasValue && action.Cooldown.Value.End > curTime)
+        if (IsCooldownActive(action, curTime))
             return;
 
         // TODO: Replace with individual charge recovery when we have the visuals to aid it
@@ -1071,5 +1113,24 @@ public abstract class SharedActionsSystem : EntitySystem
 
         action.EntityIcon = icon;
         Dirty(uid, action);
+    }
+
+    /// <summary>
+    ///     Checks if the action has a cooldown and if it's still active
+    /// </summary>
+    private bool IsCooldownActive(BaseActionComponent action, TimeSpan? curTime = null)
+    {
+        curTime ??= GameTiming.CurTime;
+        // TODO: Check for charge recovery timer
+        return action.Cooldown.HasValue && action.Cooldown.Value.End > curTime;
+    }
+
+    private bool ShouldResetCharges(EntityUid uid, BaseActionComponent action)
+    {
+        if (action is not { Charges: < 1, RenewCharges: true })
+            return false;
+
+        ResetCharges(uid);
+        return true;
     }
 }

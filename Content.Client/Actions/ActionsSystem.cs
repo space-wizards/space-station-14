@@ -95,6 +95,8 @@ namespace Content.Client.Actions
             component.Icon = state.Icon;
             component.IconOn = state.IconOn;
             component.IconColor = state.IconColor;
+            component.OriginalIconColor = state.OriginalIconColor;
+            component.DisabledIconColor = state.DisabledIconColor;
             component.Keywords.Clear();
             component.Keywords.UnionWith(state.Keywords);
             component.Enabled = state.Enabled;
