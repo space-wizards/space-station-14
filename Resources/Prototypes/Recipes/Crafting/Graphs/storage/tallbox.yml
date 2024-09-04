@@ -62,7 +62,7 @@
       - !type:DeleteEntity
 
 - type: constructionGraph
-  id: GunSafe
+  id: GunSafeBase
   start: start
   graph:
   - node: start
@@ -78,7 +78,7 @@
         amount: 10
         doAfter: 10
   - node: done
-    entity: GunSafe
+    entity: GunSafeBase
     edges:
     - to: start
       steps:

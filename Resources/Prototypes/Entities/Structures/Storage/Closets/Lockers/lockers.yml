@@ -350,7 +350,7 @@
     access: [["Security"]]
 
 - type: entity
-  id: GunSafe
+  id: GunSafeBase
   parent: LockerBaseSecure
   name: gun safe
   components:
@@ -360,12 +360,20 @@
     stateDoorOpen: shotguncase_open
     stateDoorClosed: shotguncase_door
   - type: AccessReader
-    access: [["Armory"]]
   - type: Construction
-    graph: GunSafe
+    graph: GunSafeBase
     node: done
     containers:
     - entity_storage
+  - type: StaticPrice
+    price: 335
+
+- type: entity
+  id: GunSafeBaseSecure
+  parent: GunSafeBase
+  components:
+  - type: AccessReader
+    access: [["Armory"]]
 
 # Detective
 - type: entity

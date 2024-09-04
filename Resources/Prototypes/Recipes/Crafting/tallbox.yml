@@ -21,9 +21,9 @@
   objectType: Structure
 
 - type: construction
-  id: GunSafe
+  id: GunSafeBase
   name: gun safe
-  graph: GunSafe
+  graph: GunSafeBase
   startNode: start
   targetNode: done
   category: construction-category-storage
