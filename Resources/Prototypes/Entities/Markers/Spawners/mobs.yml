@@ -854,6 +854,20 @@
     - MobClownSpider
 
 - type: entity
+  name: honk bot spawner
+  id: SpawnHonkBot
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: honkbot
+      sprite: Mobs/Silicon/Bots/honkbot.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobHonkBot
+
+- type: entity
   name: xeno queen entity spawner
   id: SpawnMobXenoQueen
   parent: MarkerBase
