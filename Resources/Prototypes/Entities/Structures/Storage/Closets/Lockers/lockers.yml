@@ -361,6 +361,11 @@
     stateDoorClosed: shotguncase_door
   - type: AccessReader
     access: [["Armory"]]
+  - type: Construction
+    graph: GunSafe
+    node: done
+    containers:
+    - entity_storage
 
 # Detective
 - type: entity
