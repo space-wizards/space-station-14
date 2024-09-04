@@ -1117,11 +1117,12 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
         public async Task<int> GetMaxMessageIdForExchange(int ahelpId)
         {
             await using var db = await GetDb();
-            return await db.DbContext.AhelpMessages
+            var maxId = await db.DbContext.AhelpMessages
                 .Where(m => m.AhelpId == ahelpId)
                 .Select(m => (int?)m.Id)
-                .DefaultIfEmpty(0)
-                .MaxAsync() ?? 0;
+                .MaxAsync();
+
+            return maxId ?? 0;
         }
 
         #endregion
