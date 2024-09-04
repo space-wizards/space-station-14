@@ -1,0 +1,116 @@
+# Asteroid
+- type: biomeTemplate
+  id: SpaceDebris
+  layers:
+  - !type:BiomeEntityLayer
+    threshold: 0.20
+    noise:
+      seed: 0
+      noiseType: OpenSimplex2
+      fractalType: Ridged
+      octaves: 4
+      frequency: 0.065
+      gain: 5
+      lacunarity: 1.5
+    allowedTiles:
+    - Plating
+    - FloorSteel
+    entities:
+    - WallSolid
+    - AirlockMaintLocked
+    - Girder
+    - Girder
+    - WallReinforced
+    - WallSolid
+    - WallSolid
+  - !type:BiomeEntityLayer
+    threshold: 0.5
+    noise:
+      seed: 0
+      noiseType: OpenSimplex2
+      fractalType: Ridged
+      octaves: 4
+      frequency: 0.065
+      gain: 2
+      lacunarity: 1.5
+    allowedTiles:
+    - Plating
+    - Lattice
+    entities:
+    - Grille
+    - Grille
+    - Grille
+    - GrilleBroken
+  - !type:BiomeDecalLayer
+    allowedTiles:
+    - FloorSteel
+    threshold: -0.5
+    divisions: 1
+    noise:
+      seed: 1
+      frequency: 1
+    decals:
+    - DirtHeavy
+    - DirtHeavy
+    - DirtHeavy
+    - DirtMedium
+    - DirtMedium
+    - DirtLight
+  - !type:BiomeEntityLayer
+    threshold: 0.45
+    noise:
+      seed: 1
+      noiseType: OpenSimplex2
+      fractalType: Ridged
+      octaves: 4
+      frequency: 0.065
+      gain: 2
+      lacunarity: 1.5
+    allowedTiles:
+    - Plating
+    - FloorSteel
+    entities:
+    - WeldingFuelTankFull
+    - Table
+    - SalvageCanisterSpawner
+    - Rack
+    - ClosetMaintenanceFilledRandom
+    - ClosetMaintenanceFilledRandom
+  - !type:BiomeEntityLayer
+    allowedTiles:
+    - FloorSteel
+    - Plating
+    threshold: 0.2
+    noise:
+      seed: 1
+      frequency: 1
+    entities:
+    - SalvageSpawnerScrapValuable
+    - SalvageSpawnerScrapCommon
+    - SalvageSpawnerScrapCommon
+    - SalvageSpawnerScrapCommon
+    - SalvageSpawnerScrapCommon75
+  - !type:BiomeEntityLayer
+    allowedTiles:
+    - FloorSteel
+    - Plating
+    threshold: 0.7
+    noise:
+      seed: 1
+      frequency: 1
+    entities:
+    - SalvageSpawnerTreasure
+    - SalvageSpawnerTreasure
+    - SalvageSpawnerEquipment
+    - SalvageSpawnerEquipment
+    - SalvageSpawnerTreasureValuable
+    - SalvageSpawnerEquipmentValuable
+  - !type:BiomeEntityLayer
+    allowedTiles:
+    - FloorSteel
+    threshold: 0.90
+    noise:
+      seed: 1
+      frequency: 1
+    entities:
+    - SalvageSpawnerMobMagnet75

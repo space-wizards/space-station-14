@@ -483,6 +483,13 @@
   - MimeWintercoat
 
 - type: loadoutGroup
+  id: MimeBelt
+  name: loadout-group-mime-belt
+  loadouts:
+  - MimeSuspendersRed
+  - MimeSuspendersBlack
+  
+- type: loadoutGroup
   id: SurvivalMime
   name: loadout-group-survival-mime
   minLimit: 2

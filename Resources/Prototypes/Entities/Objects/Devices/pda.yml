@@ -120,8 +120,8 @@
   abstract: true
   components:
   - type: ItemToggle
-    toggleLight: false
     onUse: false
+  - type: ItemTogglePointLight
   - type: HealthAnalyzer
     scanDelay: 1
     scanningEndSound:
@@ -688,14 +688,6 @@
       - NotekeeperCartridge
       - NewsReaderCartridge
       - LogProbeCartridge
-
-- type: entity
-  parent: CentcomPDA
-  id: CentcomPDAFake
-  suffix: Fake
-  components:
-  - type: Pda
-    id: CentcomIDCardSyndie
 
 - type: entity
   parent: CentcomPDA

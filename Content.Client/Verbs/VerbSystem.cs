@@ -22,7 +22,6 @@ namespace Content.Client.Verbs
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly ExamineSystem _examine = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
-        [Dependency] private readonly SharedTransformSystem _transform = default!;
         [Dependency] private readonly IStateManager _stateManager = default!;
         [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -67,9 +66,18 @@ namespace Content.Client.Verbs
                 ? Visibility
                 : Visibility | MenuVisibility.NoFov;
 
+            var ev = new MenuVisibilityEvent()
+            {
+                TargetPos = targetPos,
+                Visibility = visibility,
+            };
+
+            RaiseLocalEvent(player.Value, ref ev);
+            visibility = ev.Visibility;
 
             // Get entities
             List<EntityUid> entities;
+            var examineFlags = LookupFlags.All & ~LookupFlags.Sensors;
 
             // Do we have to do FoV checks?
             if ((visibility & MenuVisibility.NoFov) == 0)
@@ -77,15 +85,10 @@ namespace Content.Client.Verbs
                 var entitiesUnderMouse = gameScreenBase.GetClickableEntities(targetPos).ToHashSet();
                 bool Predicate(EntityUid e) => e == player || entitiesUnderMouse.Contains(e);
 
-                // first check the general location.
-                if (!_examine.CanExamine(player.Value, targetPos, Predicate))
-                    return false;
-
                 TryComp(player.Value, out ExaminerComponent? examiner);
 
-                // Then check every entity
                 entities = new();
-                foreach (var ent in _entityLookup.GetEntitiesInRange(targetPos, EntityMenuLookupSize))
+                foreach (var ent in _entityLookup.GetEntitiesInRange(targetPos, EntityMenuLookupSize, flags: examineFlags))
                 {
                     if (_examine.CanExamine(player.Value, targetPos, Predicate, ent, examiner))
                         entities.Add(ent);
@@ -93,7 +96,7 @@ namespace Content.Client.Verbs
             }
             else
             {
-                entities = _entityLookup.GetEntitiesInRange(targetPos, EntityMenuLookupSize).ToList();
+                entities = _entityLookup.GetEntitiesInRange(targetPos, EntityMenuLookupSize, flags: examineFlags).ToList();
             }
 
             if (entities.Count == 0)
@@ -131,27 +134,6 @@ namespace Content.Client.Verbs
                     if (!spriteQuery.TryGetComponent(entity, out var spriteComponent) ||
                         !spriteComponent.Visible ||
                         _tagSystem.HasTag(entity, "HideContextMenu"))
-                    {
-                        entities.RemoveSwap(i);
-                    }
-                }
-            }
-
-            // Remove any entities that do not have LOS
-            if ((visibility & MenuVisibility.NoFov) == 0)
-            {
-                var xformQuery = GetEntityQuery<TransformComponent>();
-                var playerPos = _transform.GetMapCoordinates(player.Value, xform: xformQuery.GetComponent(player.Value));
-
-                for (var i = entities.Count - 1; i >= 0; i--)
-                {
-                    var entity = entities[i];
-
-                    if (!_examine.InRangeUnOccluded(
-                        playerPos,
-                        _transform.GetMapCoordinates(entity, xform: xformQuery.GetComponent(entity)),
-                        ExamineSystemShared.ExamineRange,
-                        null))
                     {
                         entities.RemoveSwap(i);
                     }
@@ -228,16 +210,5 @@ namespace Content.Client.Verbs
         {
             OnVerbsResponse?.Invoke(msg);
         }
-    }
-
-    [Flags]
-    public enum MenuVisibility
-    {
-        // What entities can a user see on the entity menu?
-        Default = 0,          // They can only see entities in FoV.
-        NoFov = 1 << 0,         // They ignore FoV restrictions
-        InContainer = 1 << 1,   // They can see through containers.
-        Invisible = 1 << 2,   // They can see entities without sprites and the "HideContextMenu" tag is ignored.
-        All = NoFov | InContainer | Invisible
     }
 }

@@ -1235,6 +1235,7 @@
   components:
   - type: Sprite
     state: nanotrasen_sign1
+    snapCardinals: false
 
 - type: entity
   parent: BaseSign
@@ -1244,6 +1245,7 @@
   components:
   - type: Sprite
     state: nanotrasen_sign2
+    snapCardinals: false
 
 - type: entity
   parent: BaseSign
@@ -1253,6 +1255,7 @@
   components:
   - type: Sprite
     state: nanotrasen_sign3
+    snapCardinals: false
 
 - type: entity
   parent: BaseSign
@@ -1262,6 +1265,7 @@
   components:
   - type: Sprite
     state: nanotrasen_sign4
+    snapCardinals: false
 
 - type: entity
   parent: BaseSign
@@ -1271,6 +1275,7 @@
   components:
   - type: Sprite
     state: nanotrasen_sign5
+    snapCardinals: false
 
 - type: entity
   parent: BaseSign
