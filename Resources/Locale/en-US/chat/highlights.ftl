@@ -23,7 +23,7 @@ highlights-station-engineer = Station Engineer, Engineering, Engineer, Engi
 highlights-technical-assistant = Technical Assistant, Tech Assistant, Engineering, Engineer, Engi
 
 # Medical
-highlights-chemist = Chemist, Chemistry, chem
+highlights-chemist = Chemist, Chemistry, Chem
 highlights-medical-doctor = Medical Doctor, Doctor, Doc, Medical, Med
 highlights-medical-intern = Medical Intern, Intern, Medical, Med
 highlights-paramedic = Paramedic, Para, Medical, Med
