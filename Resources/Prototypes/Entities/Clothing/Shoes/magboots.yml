@@ -37,7 +37,7 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: [ClothingShoesBootsMagBase, BaseEngineeringContraband]
+  parent: [ClothingShoesBootsMagBase]
   id: ClothingShoesBootsMag
 
 - type: entity
