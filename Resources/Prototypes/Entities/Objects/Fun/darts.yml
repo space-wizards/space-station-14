@@ -10,6 +10,7 @@
     offset: 0.0,0.0
   - type: ThrowingAngle
     angle: 315
+  - type: LandAtCursor
   - type: Fixtures
     fixtures:
       fix1:

@@ -274,9 +274,9 @@ public sealed class AmeControllerSystem : EntitySystem
         At the time of editing, players regularly "overclock" the AME and those cases require no admin attention.
 
         // Admin alert
-        var safeLimit = 0;
+        var safeLimit = int.MaxValue;
         if (TryGetAMENodeGroup(uid, out var group))
-            safeLimit = group.CoreCount * 2;
+            safeLimit = group.CoreCount * 4;
 
         if (oldValue <= safeLimit && value > safeLimit)
         {
@@ -291,10 +291,20 @@ public sealed class AmeControllerSystem : EntitySystem
         */
     }
 
-    public void AdjustInjectionAmount(EntityUid uid, int delta, int min = 0, int max = int.MaxValue, EntityUid? user = null, AmeControllerComponent? controller = null)
+    public void AdjustInjectionAmount(EntityUid uid, int delta, EntityUid? user = null, AmeControllerComponent? controller = null)
     {
-        if (Resolve(uid, ref controller))
-            SetInjectionAmount(uid, MathHelper.Clamp(controller.InjectionAmount + delta, min, max), user, controller);
+        if (!Resolve(uid, ref controller))
+            return;
+
+        var max = GetMaxInjectionAmount((uid, controller));
+        SetInjectionAmount(uid, MathHelper.Clamp(controller.InjectionAmount + delta, 0, max), user, controller);
+    }
+
+    public int GetMaxInjectionAmount(Entity<AmeControllerComponent> ent)
+    {
+        if (!TryGetAMENodeGroup(ent, out var group))
+            return 0;
+        return  group.CoreCount * 8;
     }
 
     private void UpdateDisplay(EntityUid uid, int stability, AmeControllerComponent? controller = null, AppearanceComponent? appearance = null)

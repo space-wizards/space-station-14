@@ -33,8 +33,8 @@ trait-accentless-desc = You don't have the accent that your species would usuall
 trait-frontal-lisp-name = Frontal lisp
 trait-frontal-lisp-desc = You thpeak with a lithp
 
-trait-socialanxiety-name = Social anxiety
-trait-socialanxiety-desc = You are anxious when you speak and stutter.
+trait-socialanxiety-name = Stutter
+trait-socialanxiety-desc = You speak with a stutter.
 
 trait-southern-name = Southern drawl
 trait-southern-desc = You have a different way of speakin'.

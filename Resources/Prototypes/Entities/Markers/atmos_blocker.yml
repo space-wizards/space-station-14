@@ -99,3 +99,20 @@
           state: freeze
     - type: AtmosFixMarker
       mode: 6
+
+- type: entity
+  name: Atmos Fix Water Marker
+  id: AtmosFixWaterMarker
+  description: "Water @ gas miner pressure, T20C"
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - sprite: Markers/atmos.rsi # {
+          state: base
+          shader: unshaded
+        - sprite: Markers/atmos.rsi
+          shader: unshaded # }
+          state: plasma
+    - type: AtmosFixMarker
+      mode: 7

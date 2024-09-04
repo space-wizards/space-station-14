@@ -210,6 +210,9 @@ ghost-role-information-clown-troupe-description = You and your troupe have come 
 ghost-role-information-traveling-chef-name = Traveling Chef
 ghost-role-information-traveling-chef-description = You are a chef on a traveling shuttle of exotic cuisine. Delight the station with delicious food!
 
+ghost-role-information-settler-name = Settler
+ghost-role-information-settler-description = You live at a outpost not affiliated with, but near, Trieste. Feel free to relax and build a community in the depths! (Do not attack each other.)
+
 ghost-role-information-disaster-victim-name = Disaster Victim
 ghost-role-information-disaster-victim-description = You were rescued in an escape pod from another station that suffered a terrible fate. Perhaps you will be found and rescued.
 

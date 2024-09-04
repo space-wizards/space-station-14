@@ -448,6 +448,20 @@
     - MobCobraSpace
 
 - type: entity
+  name: Drifter Spawner
+  id: SpawnMobDrifter
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: drifter
+      sprite: Mobs/Aliens/drifters.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobDrifter
+
+- type: entity
   name: Slimes Spawner Blue
   id: SpawnMobAdultSlimesBlue
   parent: MarkerBase

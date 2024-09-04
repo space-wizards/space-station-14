@@ -3350,7 +3350,6 @@
         layer:
         - SmallMobLayer
   - type: MobState
-  - type: Deathgasp
   - type: MobThresholds
     thresholds:
       0: Alive

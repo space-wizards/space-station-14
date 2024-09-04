@@ -102,6 +102,14 @@ namespace Content.Server.Paper
             var editable = paperComp.StampedBy.Count == 0 || _tagSystem.HasTag(args.Used, "WriteIgnoreStamps");
             if (_tagSystem.HasTag(args.Used, "Write") && editable)
             {
+                if (paperComp.EditingDisabled)
+                {
+                    var paperEditingDisabledMessage = Loc.GetString("paper-tamper-proof-modified-message");
+                    _popupSystem.PopupEntity(paperEditingDisabledMessage, uid, args.User);
+
+                    args.Handled = true;
+                    return;
+                }
                 var writeEvent = new PaperWriteEvent(uid, args.User);
                 RaiseLocalEvent(args.Used, ref writeEvent);
 

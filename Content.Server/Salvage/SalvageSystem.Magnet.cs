@@ -8,6 +8,7 @@ using Content.Shared.Radio;
 using Content.Shared.Salvage.Magnet;
 using Robust.Server.Maps;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.Salvage;
 
@@ -253,7 +254,8 @@ public sealed partial class SalvageSystem
         var seed = data.Comp.Offered[index];
 
         var offering = GetSalvageOffering(seed);
-        var salvMap = _mapManager.CreateMap();
+        var salvMap = _mapSystem.CreateMap();
+        var salvMapXform = Transform(salvMap);
 
         // Set values while awaiting asteroid dungeon if relevant so we can't double-take offers.
         data.Comp.ActiveSeed = seed;
@@ -264,8 +266,8 @@ public sealed partial class SalvageSystem
         switch (offering)
         {
             case AsteroidOffering asteroid:
-                var grid = _mapManager.CreateGrid(salvMap);
-                await _dungeon.GenerateDungeonAsync(asteroid.DungeonConfig, grid.Owner, grid, Vector2i.Zero, seed);
+                var grid = _mapManager.CreateGridEntity(salvMap);
+                await _dungeon.GenerateDungeonAsync(asteroid.DungeonConfig, grid.Owner, grid.Comp, Vector2i.Zero, seed);
                 break;
             case SalvageOffering wreck:
                 var salvageProto = wreck.SalvageMap;
@@ -275,10 +277,10 @@ public sealed partial class SalvageSystem
                     Offset = new Vector2(0, 0)
                 };
 
-                if (!_map.TryLoad(salvMap, salvageProto.MapPath.ToString(), out var roots, opts))
+                if (!_map.TryLoad(salvMapXform.MapID, salvageProto.MapPath.ToString(), out _, opts))
                 {
                     Report(magnet, MagnetChannel, "salvage-system-announcement-spawn-debris-disintegrated");
-                    _mapManager.DeleteMap(salvMap);
+                    _mapManager.DeleteMap(salvMapXform.MapID);
                     return;
                 }
 
@@ -288,15 +290,14 @@ public sealed partial class SalvageSystem
         }
 
         Box2? bounds = null;
-        var mapXform = _xformQuery.GetComponent(_mapManager.GetMapEntityId(salvMap));
 
-        if (mapXform.ChildCount == 0)
+        if (salvMapXform.ChildCount == 0)
         {
             Report(magnet.Owner, MagnetChannel, "salvage-system-announcement-spawn-no-debris-available");
             return;
         }
 
-        var mapChildren = mapXform.ChildEnumerator;
+        var mapChildren = salvMapXform.ChildEnumerator;
 
         while (mapChildren.MoveNext(out var mapChild))
         {
@@ -340,19 +341,25 @@ public sealed partial class SalvageSystem
         if (!TryGetSalvagePlacementLocation(mapId, attachedBounds, bounds!.Value, worldAngle, out var spawnLocation, out var spawnAngle))
         {
             Report(magnet.Owner, MagnetChannel, "salvage-system-announcement-spawn-no-debris-available");
-            _mapManager.DeleteMap(salvMap);
+            _mapManager.DeleteMap(salvMapXform.MapID);
             return;
         }
 
+        // I have no idea if we want to return on failure or not
+        // but I assume trying to set the parent with a null value wouldn't have worked out anyways
+        if (!_mapSystem.TryGetMap(spawnLocation.MapId, out var spawnUid))
+            return;
+
         data.Comp.ActiveEntities = null;
-        mapChildren = mapXform.ChildEnumerator;
+        mapChildren = salvMapXform.ChildEnumerator;
 
         // It worked, move it into position and cleanup values.
         while (mapChildren.MoveNext(out var mapChild))
         {
             var salvXForm = _xformQuery.GetComponent(mapChild);
             var localPos = salvXForm.LocalPosition;
-            _transform.SetParent(mapChild, salvXForm, _mapManager.GetMapEntityId(spawnLocation.MapId));
+
+            _transform.SetParent(mapChild, salvXForm, spawnUid.Value);
             _transform.SetWorldPositionRotation(mapChild, spawnLocation.Position + localPos, spawnAngle, salvXForm);
 
             data.Comp.ActiveEntities ??= new List<EntityUid>();
@@ -371,7 +378,7 @@ public sealed partial class SalvageSystem
         }
 
         Report(magnet.Owner, MagnetChannel, "salvage-system-announcement-arrived", ("timeLeft", data.Comp.ActiveTime.TotalSeconds));
-        _mapManager.DeleteMap(salvMap);
+        _mapManager.DeleteMap(salvMapXform.MapID);
 
         data.Comp.Announced = false;
 

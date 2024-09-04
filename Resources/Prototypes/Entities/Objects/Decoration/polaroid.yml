@@ -1,0 +1,14 @@
+- type: entity
+  id: PolaroidImage
+  parent: BaseItem
+  name: an old polaroid
+  description: It's an extremely old polaroid of three young humans on earth. A note written on the back reads "Da Craka." #love you guys :]
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/polaroid.rsi
+    layers:
+      - state: icon
+  - type: Item
+    size: Small
+  - type: StaticPrice
+    price: 0

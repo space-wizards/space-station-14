@@ -69,6 +69,7 @@
   - type: RadarConsole
     followEntity: true
   - type: CargoOrderConsole
+  - type: BankClient
   - type: CrewMonitoringConsole
   - type: GeneralStationRecordConsole
     canDeleteEntries: true

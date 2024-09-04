@@ -46,15 +46,6 @@
       path: /Maps/Shuttles/cargo.yml
     - type: GridSpawn
       groups:
-        vgroid: !type:DungeonSpawnGroup
-          minimumDistance: 1000
-          nameDataset: names_borer
-          addComponents:
-          - type: Gravity
-            enabled: true
-            inherent: true
-          protos:
-          - VGRoid
         trade: !type:GridSpawnGroup
           addComponents:
             - type: ProtectedGrid
@@ -81,6 +72,16 @@
           - /Maps/Ruins/syndicate_dropship.yml
           - /Maps/Ruins/whiteship_ancient.yml
           - /Maps/Ruins/whiteship_bluespacejumper.yml
+        vgroid: !type:DungeonSpawnGroup
+          minimumDistance: 1000
+          nameDataset: names_borer
+          stationGrid: false
+          addComponents:
+          - type: Gravity
+            enabled: true
+            inherent: true
+          protos:
+          - VGRoid
 
 - type: entity
   id: BaseStationCentcomm

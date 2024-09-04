@@ -1,0 +1,59 @@
+- type: entity
+  name: drifter
+  id: MobDrifter
+  parent: MobSpaceBasic
+  description: A spindly, opportunistic ambush predator which injects prey with a paralyzing agent before siphoning their blood.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/drifters.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: drifter
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      30: Dead
+  - type: Stamina
+    critThreshold: 30
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: drifter
+      Dead:
+        Base: drifter_dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatSpider
+      amount: 2
+  - type: Bloodstream
+    bloodMaxVolume: 30
+    bloodReagent: Blood
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    angle: 0
+    animation: WeaponArcThrust
+    damage:
+      types:
+        Piercing: 1
+  - type: SolutionContainerManager
+    solutions:
+      melee:
+        reagents:
+        - ReagentId: DrifterToxin
+          Quantity: 22
+        - ReagentId: SpaceDrugs
+          Quantity: 20
+  - type: MeleeChemicalInjector
+    solution: melee
+    transferAmount: 1.5
+  - type: NoSlip
+  - type: Vocal
+    sounds:
+      Male: UnisexArachnid
+      Female: UnisexArachnid
+      Unsexed: UnisexArachnid
+  - type: PointLight
+    radius: 0
+    energy: 0

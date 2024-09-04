@@ -34,6 +34,15 @@
   rules: NearTrain
   priority: 4
 
+- type: ambientMusic
+  id: Sea
+  sound:
+    params:
+      volume: -12
+    collection: AmbienceSea
+  rules: NearSea
+  priority: 1
+
 # Departments
 - type: ambientMusic
   id: Medical
@@ -107,6 +116,11 @@
     - /Audio/Ambience/ambitech.ogg
     - /Audio/Ambience/ambitech2.ogg
     - /Audio/Ambience/ambitech3.ogg
+
+- type: soundCollection
+  id: AmbienceSea
+  files:
+    - /Audio/Ambience/ambisea1.ogg
 
 - type: soundCollection
   id: AmbienceGeneral
@@ -320,7 +334,18 @@
       components:
         - type: Morgue
       range: 3
-      
+
+- type: rules
+  id: NearSea
+  rules:
+    - !type:NearbyTilesPercentRule
+      ignoreAnchored: true
+      percent: 0.05
+      tiles:
+        - tiles-invisible
+        - tiles-invisible-real
+      range: 4
+
 - type: rules
   id: NearSpookyFog
   rules:

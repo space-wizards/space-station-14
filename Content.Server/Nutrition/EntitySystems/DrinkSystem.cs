@@ -17,6 +17,7 @@ using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.EntityEffects;
 using Content.Shared.FixedPoint;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
@@ -48,6 +49,7 @@ public sealed class DrinkSystem : SharedDrinkSystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly StomachSystem _stomach = default!;
@@ -156,6 +158,9 @@ public sealed class DrinkSystem : SharedDrinkSystem
         _appearance.SetData(uid, FoodVisuals.Visual, drainAvailable.Float(), appearance);
     }
 
+    /// <summary>
+    /// Tries to feed the drink item to the target entity
+    /// </summary>
     private bool TryDrink(EntityUid user, EntityUid target, DrinkComponent drink, EntityUid item)
     {
         if (!HasComp<BodyComponent>(target))
@@ -210,9 +215,9 @@ public sealed class DrinkSystem : SharedDrinkSystem
             BreakOnDamage = true,
             MovementThreshold = 0.01f,
             DistanceThreshold = 1.0f,
-            // Mice and the like can eat without hands.
-            // TODO maybe set this based on some CanEatWithoutHands event or component?
-            NeedHand = forceDrink,
+            // do-after will stop if item is dropped when trying to feed someone else
+            // or if the item started out in the user's own hands
+            NeedHand = forceDrink || _hands.IsHolding(user, item),
         };
 
         _doAfter.TryStartDoAfter(doAfterEventArgs);

@@ -37,7 +37,7 @@ public sealed class ContainmentFieldSystem : EntitySystem
             var fieldDir = Transform(uid).WorldPosition;
             var playerDir = Transform(otherBody).WorldPosition;
 
-            _throwing.TryThrow(otherBody, playerDir-fieldDir, strength: component.ThrowForce);
+            _throwing.TryThrow(otherBody, playerDir-fieldDir, baseThrowSpeed: component.ThrowForce);
         }
     }
 

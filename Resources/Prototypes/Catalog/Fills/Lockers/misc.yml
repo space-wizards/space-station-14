@@ -170,6 +170,8 @@
           prob: 0.20
         - id: BarberScissors
           prob: 0.05
+        - id: Wristwatch
+          prob: 0.05
         - id: BookRandomStory
           prob: 0.1
         # Syndicate loot

@@ -8,6 +8,7 @@
     offset: 0.15,0.15
   - type: ThrowingAngle
     angle: 225
+  - type: LandAtCursor
   - type: Tag
     tags:
     - Spear

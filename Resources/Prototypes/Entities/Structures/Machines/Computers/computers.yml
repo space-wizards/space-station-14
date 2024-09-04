@@ -735,6 +735,7 @@
     - map: ["computerLayerKeys"]
       state: tech_key
   - type: CargoOrderConsole
+  - type: BankClient
   - type: ActiveRadio
     channels:
     - Supply
