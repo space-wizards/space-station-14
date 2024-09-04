@@ -27,6 +27,32 @@ public sealed partial class NavMapComponent : Component
     /// </summary>
     [ViewVariables]
     public Dictionary<NetEntity, SharedNavMapSystem.NavMapBeacon> Beacons = new();
+
+    /// <summary>
+    /// Describes the properties of a region on the station.
+    /// It is indexed by the entity assigned as the region owner.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly)]
+    public Dictionary<NetEntity, SharedNavMapSystem.NavMapRegionProperties> RegionProperties = new();
+
+    /// <summary>
+    /// All flood filled regions.
+    /// It is indexed by the entity assigned as the region owner.
+    /// </summary>
+    /// <remarks>
+    /// For client use only
+    /// </remarks>
+    [ViewVariables(VVAccess.ReadOnly)]
+    public Dictionary<NetEntity, (List<(Vector2i, Vector2i)>, Color)> FloodedRegions = new();
+
+    /// <summary>
+    /// A queue of all region owners that are waiting their associated regions to be floodfilled.
+    /// </summary>
+    /// <remarks>
+    /// For client use only
+    /// </remarks>
+    [ViewVariables(VVAccess.ReadOnly)]
+    public Queue<NetEntity> QueuedRegionsToFlood = new();
 }
 
 [Serializable, NetSerializable]
@@ -54,7 +80,7 @@ public sealed class NavMapChunk(Vector2i origin)
 public enum NavMapChunkType : byte
 {
     // Values represent bit shift offsets when retrieving data in the tile array.
-    Invalid  = byte.MaxValue,
+    Invalid = byte.MaxValue,
     Floor = 0, // I believe floors have directional information for diagonal tiles?
     Wall = SharedNavMapSystem.Directions,
     Airlock = 2 * SharedNavMapSystem.Directions,

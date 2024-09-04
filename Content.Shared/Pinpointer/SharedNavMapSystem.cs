@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using Content.Shared.Tag;
 using Robust.Shared.GameStates;
@@ -16,7 +17,7 @@ public abstract class SharedNavMapSystem : EntitySystem
     public const int Directions = 4; // Not directly tied to number of atmos directions
 
     public const int ChunkSize = 8;
-    public const int ArraySize = ChunkSize* ChunkSize;
+    public const int ArraySize = ChunkSize * ChunkSize;
 
     public const int AllDirMask = (1 << Directions) - 1;
     public const int AirlockMask = AllDirMask << (int) NavMapChunkType.Airlock;
@@ -81,6 +82,33 @@ public abstract class SharedNavMapSystem : EntitySystem
         return true;
     }
 
+    public void AddOrUpdateNavMapRegion(EntityUid uid, NavMapComponent component, NetEntity regionOwner, NavMapRegionProperties regionProperties)
+    {
+        // Check if a new region has been added
+        var isDirty = !component.RegionProperties.TryGetValue(regionOwner, out var oldProperties);
+
+        // If not, check if an old region has been altered
+        if (!isDirty)
+        {
+            isDirty = !oldProperties.Seeds.SequenceEqual(regionProperties.Seeds) || (regionProperties.Color != oldProperties.Color);
+        }
+
+        if (isDirty)
+        {
+            component.RegionProperties[regionOwner] = regionProperties;
+            Dirty(uid, component);
+        }
+    }
+
+    public void RemoveNavMapRegion(EntityUid uid, NavMapComponent component, NetEntity regionOwner)
+    {
+        if (component.RegionProperties.ContainsKey(regionOwner))
+        {
+            component.RegionProperties.Remove(regionOwner);
+            Dirty(uid, component);
+        }
+    }
+
     #region: Event handling
 
     private void OnGetState(EntityUid uid, NavMapComponent component, ref ComponentGetState args)
@@ -97,7 +125,7 @@ public abstract class SharedNavMapSystem : EntitySystem
                 chunks.Add(origin, chunk.TileData);
             }
 
-            args.State = new NavMapState(chunks, component.Beacons);
+            args.State = new NavMapState(chunks, component.Beacons, component.RegionProperties);
             return;
         }
 
@@ -110,7 +138,7 @@ public abstract class SharedNavMapSystem : EntitySystem
             chunks.Add(origin, chunk.TileData);
         }
 
-        args.State = new NavMapDeltaState(chunks, component.Beacons, new(component.Chunks.Keys));
+        args.State = new NavMapDeltaState(chunks, component.Beacons, component.RegionProperties, new(component.Chunks.Keys));
     }
 
     #endregion
@@ -120,22 +148,26 @@ public abstract class SharedNavMapSystem : EntitySystem
     [Serializable, NetSerializable]
     protected sealed class NavMapState(
         Dictionary<Vector2i, int[]> chunks,
-        Dictionary<NetEntity, NavMapBeacon> beacons)
+        Dictionary<NetEntity, NavMapBeacon> beacons,
+        Dictionary<NetEntity, NavMapRegionProperties> regions)
         : ComponentState
     {
         public Dictionary<Vector2i, int[]> Chunks = chunks;
         public Dictionary<NetEntity, NavMapBeacon> Beacons = beacons;
+        public Dictionary<NetEntity, NavMapRegionProperties> Regions = regions;
     }
 
     [Serializable, NetSerializable]
     protected sealed class NavMapDeltaState(
         Dictionary<Vector2i, int[]> modifiedChunks,
         Dictionary<NetEntity, NavMapBeacon> beacons,
+        Dictionary<NetEntity, NavMapRegionProperties> regions,
         HashSet<Vector2i> allChunks)
         : ComponentState, IComponentDeltaState<NavMapState>
     {
         public Dictionary<Vector2i, int[]> ModifiedChunks = modifiedChunks;
         public Dictionary<NetEntity, NavMapBeacon> Beacons = beacons;
+        public Dictionary<NetEntity, NavMapRegionProperties> Regions = regions;
         public HashSet<Vector2i> AllChunks = allChunks;
 
         public void ApplyToFullState(NavMapState state)
@@ -159,11 +191,18 @@ public abstract class SharedNavMapSystem : EntitySystem
             {
                 state.Beacons.Add(nuid, beacon);
             }
+
+            state.Regions.Clear();
+            foreach (var (nuid, region) in Regions)
+            {
+                state.Regions.Add(nuid, region);
+            }
         }
 
         public NavMapState CreateNewFullState(NavMapState state)
         {
             var chunks = new Dictionary<Vector2i, int[]>(state.Chunks.Count);
+
             foreach (var (index, data) in state.Chunks)
             {
                 if (!AllChunks!.Contains(index))
@@ -177,12 +216,18 @@ public abstract class SharedNavMapSystem : EntitySystem
                     Array.Copy(newData, data, ArraySize);
             }
 
-            return new NavMapState(chunks, new(Beacons));
+            return new NavMapState(chunks, new(Beacons), new(Regions));
         }
     }
 
     [Serializable, NetSerializable]
     public record struct NavMapBeacon(NetEntity NetEnt, Color Color, string Text, Vector2 Position);
+
+    [Serializable, NetSerializable]
+    public record struct NavMapRegionProperties(NetEntity Owner, NavMapChunkType[] PropagatingTypes, NavMapChunkType[] ConstraintTypes, HashSet<Vector2i> Seeds, Color Color)
+    {
+        public GameTick LastUpdate;
+    }
 
     #endregion
 }

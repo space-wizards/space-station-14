@@ -48,6 +48,7 @@ public partial class NavMapControl : MapGridControl
     public List<(Vector2, Vector2)> TileLines = new();
     public List<(Vector2, Vector2)> TileRects = new();
     public List<(Vector2[], Color)> TilePolygons = new();
+    public Dictionary<NetEntity, (List<(Vector2i, Vector2i)>, Color)> RegionOverlays = new();
 
     // Default colors
     public Color WallColor = new(102, 217, 102);
@@ -228,7 +229,7 @@ public partial class NavMapControl : MapGridControl
             {
                 if (!blip.Selectable)
                     continue;
-                
+
                 var currentDistance = (_transformSystem.ToMapCoordinates(blip.Coordinates).Position - worldPosition).Length();
 
                 if (closestDistance < currentDistance || currentDistance * MinimapScale > MaxSelectableDistance)
@@ -316,6 +317,22 @@ public partial class NavMapControl : MapGridControl
                 }
 
                 handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, verts[..polygonVerts.Length], polygonColor);
+            }
+        }
+
+        // Draw region overlays
+        if (_grid != null)
+        {
+            foreach ((var regionOwner, var (tiles, color)) in RegionOverlays)
+            {
+                foreach (var tile in tiles)
+                {
+                    var positionTopLeft = ScalePosition(new Vector2(tile.Item1.X, -tile.Item1.Y) - new Vector2(offset.X, -offset.Y));
+                    var positionBottomRight = ScalePosition(new Vector2(tile.Item2.X + _grid.TileSize, -tile.Item2.Y - _grid.TileSize) - new Vector2(offset.X, -offset.Y));
+
+                    var box = new UIBox2(positionTopLeft, positionBottomRight);
+                    handle.DrawRect(box, color);
+                }
             }
         }
 
