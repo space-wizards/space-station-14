@@ -96,5 +96,5 @@ laws-ui-menu-title = Laws
 laws-ui-law-header = Law {$id}
 laws-ui-state-law = State law:
 
-laws-notify = You are bound to silicon laws, which you can view via the sidebar action. You are required to always follow your laws.
-laws-update-notify = Your laws have been updated. You can view the changes via the sidebar action.
+laws-notify = You are bound to silicon laws, which you can view via the action in your action bar. You are required to always follow your laws. Laws take priority over objectives.
+laws-update-notify = Your laws have been updated. You can view the changes via the action in your action bar.
