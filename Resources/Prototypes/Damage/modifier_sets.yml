@@ -129,7 +129,7 @@
     Structural: 0.5
   flatReductions:
     Blunt: 5
-    Slash: 5damagemodifiersets
+    Slash: 5
     Piercing: 5
     Heat: 5
     Structural: 10
