@@ -560,8 +560,8 @@
     energy: 1.6
     color: "#3c5eb5"
   - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: StrongMetallic
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallicStrong
 
 - type: entity
   parent: ComputerComms
@@ -816,8 +816,8 @@
     speechVerb: Robotic
     speechSounds: Pai
   - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: StrongMetallic
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallicStrong
   - type: GuideHelp
     guides:
     - Cloning

@@ -1,32 +1,4 @@
 ﻿Entries:
-- author: HolySSSS
-  changes:
-  - message: Short Raffle is now much shorter.
-    type: Tweak
-  id: 6778
-  time: '2024-06-19T02:41:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28685
-- author: Truoizys
-  changes:
-  - message: PDA cartridges can no longer be installed more than once.
-    type: Fix
-  id: 6779
-  time: '2024-06-19T13:21:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29187
-- author: Just_Art
-  changes:
-  - message: Musician's jumpskirt added to loadouts.
-    type: Add
-  id: 6780
-  time: '2024-06-19T14:06:03.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29203
-- author: Flareguy
-  changes:
-  - message: Made the HOS's cap look significantly better.
-    type: Tweak
-  id: 6781
-  time: '2024-06-19T14:49:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29208
 - author: Flareguy
   changes:
   - message: Emergency Toolboxes now have a different fill that contains more utility
@@ -3860,3 +3832,34 @@
   id: 7277
   time: '2024-09-03T22:05:02.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31802
+- author: Ilya246
+  changes:
+  - message: Fixed many entities not taking structural damage, including girders,
+      firelocks, and machines.
+    type: Fix
+  id: 7278
+  time: '2024-09-04T13:37:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30790
+- author: lzk228
+  changes:
+  - message: Reduced walk speed of some small mobs (mice, cockroaches, bees etc.)
+    type: Tweak
+  id: 7279
+  time: '2024-09-04T14:10:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31360
+- author: qwerltaz
+  changes:
+  - message: Made tesla a lot brighter.
+    type: Tweak
+  id: 7280
+  time: '2024-09-04T14:47:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31357
+- author: Allen
+  changes:
+  - message: Magboots and Science Magboots are no longer contraband. Advanced Magboots
+      and Blood-Red Magboots now have appropriate contraband types (Grand Theft and
+      Syndie Contraband respectively)
+    type: Fix
+  id: 7281
+  time: '2024-09-04T15:04:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30960
