@@ -37,6 +37,9 @@ reagent-desc-vinaigrette = A basic salad dressing made with oil, vinegar and sea
 reagent-name-soysauce = soy sauce
 reagent-desc-soysauce = A salty soy-based flavoring.
 
+reagent-name-teriyaki = teriyaki sauce
+reagent-desc-teriyaki = A sweet and savory sauce often paired with meat.
+
 reagent-name-table-salt = table salt
 reagent-desc-table-salt = Commonly known as salt, Sodium Chloride is often used to season food or kill borers instantly.
 
