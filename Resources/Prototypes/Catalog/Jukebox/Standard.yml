@@ -44,22 +44,22 @@
   id: AtomicAmnesia
   name: Phillip Dyer- Atomic Amnesia
   path:
-    path: /Audio/Jukebox/sunset.ogg
+    path: /Audio/Jukebox/atomicamnesiammx.ogg
 
 - type: jukebox
   id: VibeAce
   name: Kevin MacLeod - Vibe Ace
   path:
-    path: /Audio/Jukebox/sunset.ogg
+    path: /Audio/Jukebox/vibe_ace.ogg
 
 - type: jukebox
   id: Marhaba
   name: Ian Alex Mac - Marhaba
   path:
-    path: /Audio/Jukebox/sunset.ogg
+    path: /Audio/Jukebox/marhaba.ogg
 
 - type: jukebox
   id: Monument
   name: Six Umbrellas - Monument
   path:
-    path: /Audio/Jukebox/sunset.ogg
+    path: /Audio/Jukebox/Monument.ogg
