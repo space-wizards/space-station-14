@@ -1,6 +1,3 @@
-reagent-name-beanbag = beanbag
-reagent-desc-beanbag = Juiced beanbag shells. Pose no harm now, as no one would put them in a drink or something.
-
 reagent-name-carpetium = carpetium
 reagent-desc-carpetium = A mystical chemical, usually outsourced from the Clown Planet, that covers everything it touches in carpet. Somehow filters out carpotoxin from the blood stream.
 

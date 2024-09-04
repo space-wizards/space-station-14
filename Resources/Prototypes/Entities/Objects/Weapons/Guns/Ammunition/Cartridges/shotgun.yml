@@ -28,11 +28,6 @@
     layers:
       - state: beanbag
         map: [ "enum.AmmoVisualLayers.Base" ]
-  - type: Extractable
-    juiceSolution:
-      reagents:
-      - ReagentId: Beanbag
-        Quantity: 5
   - type: CartridgeAmmo
     proto: PelletShotgunBeanbag
   - type: SpentAmmoVisuals

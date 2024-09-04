@@ -1379,7 +1379,7 @@
         - ReagentId: RussianRoulette
           Quantity: 15
         - ReagentId: RussianRouletteLive
-          Quantity: 10
+          Quantity: 15
   - type: Icon
     sprite: Objects/Consumable/Drinks/russianroulette.rsi
     state: icon
@@ -1397,7 +1397,7 @@
         - ReagentId: RussianRoulette
           Quantity: 15
         - ReagentId: RussianRouletteBlank
-          Quantity: 10
+          Quantity: 15
   - type: Icon
     sprite: Objects/Consumable/Drinks/russianroulette.rsi
     state: icon
@@ -1415,9 +1415,9 @@
         - ReagentId: RussianRoulette
           Quantity: 15
         - ReagentId: RussianRouletteLive
-          Quantity: 5
+          Quantity: 7.5
         - ReagentId: RussianRouletteBlank
-          Quantity: 5
+          Quantity: 7.5
   - type: Icon
     sprite: Objects/Consumable/Drinks/russianroulette.rsi
     state: icon

@@ -1,20 +1,4 @@
 - type: reagent
-  id: Beanbag
-  name: reagent-name-beanbag
-  group: Toxins
-  desc: reagent-desc-beanbag
-  physicalDesc: reagent-physical-desc-chalky
-  flavor: chalky
-  color: "#9f2b15"
-  metabolisms:
-    Poison:
-      effects:
-      - !type:HealthChange
-        damage:
-          types:
-            Poison: 0.25
-
-- type: reagent
   id: Carpetium
   name: reagent-name-carpetium
   group: Special
