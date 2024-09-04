@@ -287,14 +287,15 @@
   components:
   - type: FlavorProfile
     flavors:
-      - sweet
       - cheap
   - type: SolutionContainerManager
     solutions:
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 4
+        - ReagentId: Sugar
+          Quantity: 1
   - type: Sprite
     state: berry
 
@@ -306,7 +307,6 @@
   components:
   - type: FlavorProfile
     flavors:
-      - sweet
       - cheap
   - type: SolutionContainerManager
     solutions:
@@ -317,7 +317,7 @@
         - ReagentId: Omnizine
           Quantity: 2
         - ReagentId: Sugar
-          Quantity: 2
+          Quantity: 3
 
 - type: entity
   name: stonk-pocket
