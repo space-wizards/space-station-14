@@ -1,12 +1,14 @@
-using Content.Server.Anomaly.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chat.Managers;
+using Content.Server.Jittering;
 using Content.Server.Mind;
+using Content.Server.Stunnable;
 using Content.Shared.Actions;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Anomaly.Effects;
 using Content.Shared.Body.Components;
 using Content.Shared.Chat;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Anomaly.Effects;
 
@@ -17,6 +19,9 @@ public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
+    [Dependency] private readonly StunSystem _stun = default!;
+    [Dependency] private readonly JitteringSystem _jitter = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     public override void Initialize()
     {
@@ -32,10 +37,16 @@ public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
     {
         EntityManager.AddComponents(ent, ent.Comp.Components);
 
+        _stun.TryParalyze(ent, TimeSpan.FromSeconds(4f), true);
+        _jitter.DoJitter(ent, TimeSpan.FromSeconds(4f), true);
+
         if (!_mind.TryGetMind(ent, out _, out var mindComponent))
             return;
         if (mindComponent.Session == null)
             return;
+
+        if (ent.Comp.StartSound is not null)
+            _audio.PlayPvs(ent.Comp.StartSound, ent);
 
         if (ent.Comp.StartMessage is not null)
         {
@@ -60,6 +71,7 @@ public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
                 _actions.GrantActions(ent, new List<EntityUid>{action.Value}, ent);
             }
         }
+        Dirty(ent);
     }
 
     private void OnSupercritical(Entity<InnerBodyAnomalyComponent> ent, ref AnomalySupercriticalEvent args)
@@ -72,7 +84,7 @@ public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
 
     private void OnShutdown(Entity<InnerBodyAnomalyComponent> ent, ref AnomalyShutdownEvent args)
     {
-        QueueDel(ent.Comp.Action);
-        EntityManager.RemoveComponents(ent, ent.Comp.Components);
+        //QueueDel(ent.Comp.Action);
+        //EntityManager.RemoveComponents(ent, ent.Comp.Components);
     }
 }

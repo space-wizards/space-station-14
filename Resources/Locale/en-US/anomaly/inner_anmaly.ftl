@@ -1,0 +1,1 @@
+inner-anomaly-start-message-pyro = You can feel the insane flame inside of you. You become the host of a pyroclastic anomaly.

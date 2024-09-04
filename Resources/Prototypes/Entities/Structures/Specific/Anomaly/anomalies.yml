@@ -5,6 +5,7 @@
   description: An impossible object. Should you be standing this close to it?
   components:
   - type: Anomaly
+    offset: 0, 0.15
     pulseSound:
       collection: RadiationPulse
       params:
@@ -886,15 +887,11 @@
     toOther: true
     components:
     - type: InnerBodyAnomaly
+      startMessage: inner-anomaly-start-message-pyro
       layerSprite:
         sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
         state: fire_eyes
       components:
-      - type: AmbientSound
-        volume: 5
-        range: 5
-        sound:
-          path: /Audio/Ambience/Objects/fireplace.ogg
       - type: Anomaly
         keepEntity: true
         corePrototype: AnomalyCorePyroclastic

@@ -252,7 +252,7 @@ public sealed partial class AnomalyComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("offset")]
-    public Vector2 FloatingOffset = new(0, 0.15f);
+    public Vector2 FloatingOffset = new(0, 0);
 
     public readonly string AnimationKey = "anomalyfloat";
     #endregion

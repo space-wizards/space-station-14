@@ -1,17 +1,18 @@
 using Content.Shared.Anomaly.Components;
+using Content.Shared.Anomaly.Effects;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Anomaly.Effects;
 
-public sealed class ClientInnerBodyAnomalySystem : EntitySystem
+public sealed class ClientInnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
 {
     public override void Initialize()
     {
-        //SubscribeLocalEvent<InnerBodyAnomalyComponent, ComponentStartup>(OnCompStartup);
-        //SubscribeLocalEvent<InnerBodyAnomalyComponent, ComponentShutdown>(OnCompShutdown);
+        SubscribeLocalEvent<InnerBodyAnomalyComponent, AfterAutoHandleStateEvent>(OnAfterHandleState);
+        SubscribeLocalEvent<InnerBodyAnomalyComponent, ComponentShutdown>(OnCompShutdown);
     }
 
-    private void OnCompStartup(Entity<InnerBodyAnomalyComponent> ent, ref ComponentStartup args)
+    private void OnAfterHandleState(Entity<InnerBodyAnomalyComponent> ent, ref AfterAutoHandleStateEvent args)
     {
         if (!TryComp<SpriteComponent>(ent, out var sprite))
             return;
