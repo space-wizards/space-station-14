@@ -223,7 +223,7 @@
   id: JetpackSalvage
   parent: BaseJetpack
   name: salvage jetpack
-  description: It's a busted up jetpack. It doesn't hold much gas.
+  description: It's a busted up jetpack. It should hold .4 L of gas, but only fills up halfway.
   suffix: Empty
   components:
     - type: Item
