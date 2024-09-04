@@ -47,19 +47,19 @@
     path: /Audio/Jukebox/sunset.ogg
 
 - type: jukebox
-  id: sunset
+  id: VibeAce
   name: Kevin MacLeod - Vibe Ace
   path:
     path: /Audio/Jukebox/sunset.ogg
 
 - type: jukebox
-  id: sunset
+  id: Marhaba
   name: Ian Alex Mac - Marhaba
   path:
     path: /Audio/Jukebox/sunset.ogg
 
 - type: jukebox
-  id: sunset
+  id: Monument
   name: Six Umbrellas - Monument
   path:
     path: /Audio/Jukebox/sunset.ogg
