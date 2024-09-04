@@ -112,6 +112,9 @@
         sprite: "Effects/creampie.rsi"
         state: "creampie_arachnid"
         visible: false
+      - map: [ "inner_anomaly_layer" ] # Dynamically
+        shader: unshaded
+        visible: false
   - type: Inventory
     templateId: arachnid
 

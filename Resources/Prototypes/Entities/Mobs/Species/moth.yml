@@ -115,6 +115,9 @@
         sprite: "Effects/creampie.rsi"
         state: "creampie_moth"
         visible: false
+      - map: [ "inner_anomaly_layer" ] # Dynamically
+        shader: unshaded
+        visible: false
   - type: Inventory
     femaleDisplacements:
       jumpsuit:

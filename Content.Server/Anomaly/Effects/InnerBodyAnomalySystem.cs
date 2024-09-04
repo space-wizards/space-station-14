@@ -4,18 +4,20 @@ using Content.Server.Chat.Managers;
 using Content.Server.Mind;
 using Content.Shared.Actions;
 using Content.Shared.Anomaly.Components;
+using Content.Shared.Anomaly.Effects;
 using Content.Shared.Body.Components;
 using Content.Shared.Chat;
 
 namespace Content.Server.Anomaly.Effects;
 
-public sealed class InnerBodyAnomalySystem : EntitySystem
+public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
 {
     [Dependency] private readonly BodySystem _body = default!;
     [Dependency] private readonly IChatManager _chat = default!;
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
+
     public override void Initialize()
     {
         base.Initialize();

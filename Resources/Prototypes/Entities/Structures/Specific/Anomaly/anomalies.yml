@@ -886,6 +886,9 @@
     toOther: true
     components:
     - type: InnerBodyAnomaly
+      layerSprite:
+        sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+        state: fire_eyes
       components:
       - type: AmbientSound
         volume: 5
