@@ -386,6 +386,7 @@
     description: ghost-role-information-snail-description
     rules: ghost-role-information-freeagent-rules
   - type: GhostTakeoverAvailable
+  - type: Emoting
   - type: Sprite
     drawdepth: SmallMobs
     sprite: Mobs/Animals/snail.rsi
@@ -540,9 +541,9 @@
       Alive:
         Base: spacesnail
       Critical:
-        Base: spacesnaildead
+        Base: spacedead
       Dead:
-        Base: spacesnaildead
+        Base: spacedead
   - type: MovementSpeedModifier
     baseWalkSpeed : 5 #he go fast, also they cant slip so its probably fine.
     baseSprintSpeed : 7
