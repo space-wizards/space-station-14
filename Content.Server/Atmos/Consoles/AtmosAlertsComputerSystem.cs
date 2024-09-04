@@ -1,15 +1,18 @@
 using Content.Server.Atmos.Monitor.Components;
 using Content.Server.DeviceNetwork.Components;
+using Content.Server.Pinpointer;
 using Content.Server.Power.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Consoles;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Monitor.Components;
+using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.Pinpointer;
+using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Player;
+using Robust.Shared.Timing;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
@@ -21,6 +24,11 @@ public sealed class AtmosAlertsComputerSystem : SharedAtmosAlertsComputerSystem
     [Dependency] private readonly AirAlarmSystem _airAlarmSystem = default!;
     [Dependency] private readonly AtmosDeviceNetworkSystem _atmosDevNet = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly TagSystem _tagSystem = default!;
+    [Dependency] private readonly MapSystem _mapSystem = default!;
+    [Dependency] private readonly TransformSystem _transformSystem = default!;
+    [Dependency] private readonly NavMapSystem _navMapSystem = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
 
     private const float UpdateTime = 1.0f;
 
@@ -209,6 +217,9 @@ public sealed class AtmosAlertsComputerSystem : SharedAtmosAlertsComputerSystem
             if (entDevice.Group != group)
                 continue;
 
+            if (!TryComp<MapGridComponent>(entXform.GridUid, out var mapGrid))
+                continue;
+
             // If emagged, change the alarm type to normal
             var alarmState = (entAtmosAlarmable.LastAlarmState == AtmosAlarmType.Emagged) ? AtmosAlarmType.Normal : entAtmosAlarmable.LastAlarmState;
 
@@ -216,6 +227,7 @@ public sealed class AtmosAlertsComputerSystem : SharedAtmosAlertsComputerSystem
             if (TryComp<ApcPowerReceiverComponent>(ent, out var entAPCPower) && !entAPCPower.Powered)
                 alarmState = AtmosAlarmType.Invalid;
 
+            // Create entry
             var entry = new AtmosAlertsComputerEntry
                 (GetNetEntity(ent),
                 GetNetCoordinates(entXform.Coordinates),
@@ -223,6 +235,35 @@ public sealed class AtmosAlertsComputerSystem : SharedAtmosAlertsComputerSystem
                 alarmState,
                 MetaData(ent).EntityName,
                 entDeviceNetwork.Address);
+
+            // Create nav map regions for alarms
+            if (!TryComp<NavMapComponent>(entXform.GridUid, out var navMap))
+                continue;
+
+            if (TryComp<DeviceListComponent>(ent, out var entDeviceList))
+            {
+                var alarmRegionSeeds = new HashSet<Vector2i>();
+
+                foreach (var device in entDeviceList.Devices)
+                {
+                    if (!_tagSystem.HasTag(device, "AirSensor"))
+                        continue;
+
+                    var deviceXform = Transform(device);
+
+                    if (deviceXform.GridUid == entXform.GridUid)
+                        alarmRegionSeeds.Add(_mapSystem.CoordinatesToTile(device, mapGrid, _transformSystem.GetMapCoordinates(device, deviceXform)));
+                }
+                var t = typeof(DeviceListComponent);
+                var netEnt = GetNetEntity(ent);
+
+                var regionProperties = new SharedNavMapSystem.NavMapRegionProperties(netEnt, alarmRegionSeeds, Color.White)
+                {
+                    LastUpdate = _gameTiming.CurTick
+                };
+
+                _navMapSystem.AddOrUpdateNavMapRegion(gridUid, navMap, netEnt, regionProperties);
+            }
 
             alarmStateData.Add(entry);
         }
