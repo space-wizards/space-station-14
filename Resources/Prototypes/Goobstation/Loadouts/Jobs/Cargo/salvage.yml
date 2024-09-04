@@ -1,0 +1,9 @@
+#Lost Frontier Prospector
+- type: startingGear
+  id: LostFrontierProspectorSuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSalvageSpecialist
+    shoes: ClothingShoesBootsSalvage
+    id: SalvagePDA
+    back: ClothingBackpackSalvage
+    ears: ClothingHeadsetCargo

@@ -19,6 +19,7 @@
       - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/flaregun.ogg
+    bigTrigger: true
   - type: BallisticAmmoProvider
     whitelist:
       tags:

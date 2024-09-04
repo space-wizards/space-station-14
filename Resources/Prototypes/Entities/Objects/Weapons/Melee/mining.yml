@@ -122,6 +122,7 @@
     soundGunshot: /Audio/Weapons/plasma_cutter.ogg
     fireRate: 1
     useKey: false
+    bigTrigger: true
   - type: RechargeBasicEntityAmmo
     rechargeCooldown: 0.5
     rechargeSound:

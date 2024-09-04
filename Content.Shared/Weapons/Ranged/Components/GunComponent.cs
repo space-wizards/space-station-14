@@ -232,6 +232,13 @@ public sealed partial class GunComponent : Component
     /// </summary>
     [DataField]
     public bool ClumsyProof = false;
+
+    /// <summary>
+    /// Whether or not someone with
+    /// Insulated gloves can opperate this gun
+    /// </summary>
+    [DataField]
+    public bool BigTrigger = false;
 }
 
 [Flags]

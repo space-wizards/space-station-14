@@ -13,5 +13,12 @@ namespace Content.Shared.Electrocution
         /// </summary>
         [DataField, AutoNetworkedField]
         public float Coefficient { get; set; } = 0f;
+
+        /// <summary>
+        /// Whether or not someone with
+        /// Insulated gloves can opperate guns
+        /// </summary>
+        [DataField]
+        public bool PreventOpperatinGuns = false;
     }
 }

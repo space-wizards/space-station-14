@@ -278,6 +278,7 @@
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
   - type: Gun
     fireRate: 4 #No reason to stifle the firerate since you have to manually reload every time anyways.
+    bigTrigger: true
   - type: BallisticAmmoProvider
     capacity: 1
     proto: null
