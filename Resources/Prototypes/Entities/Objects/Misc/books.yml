@@ -49,6 +49,7 @@
   id: BaseGuidebook
   abstract: true
   suffix: guidebook
+  components:
   - type: Sprite
     sprite: Objects/Misc/books.rsi
   - type: Tag
