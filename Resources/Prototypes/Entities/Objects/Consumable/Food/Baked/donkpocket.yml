@@ -210,7 +210,7 @@
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 10
+          Quantity: 8
   - type: Sprite
     state: pizza
 
@@ -313,7 +313,7 @@
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 10
+          Quantity: 9
         - ReagentId: Omnizine
           Quantity: 2
         - ReagentId: Sugar
@@ -329,12 +329,6 @@
     flavors:
       - profits
       - cheap
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 5
   - type: Sprite
     state: stonk
 
@@ -350,13 +344,35 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 15
         reagents:
         - ReagentId: Nutriment
-          Quantity: 10
+          Quantity: 3
         - ReagentId: Omnizine
-          Quantity: 2
+          Quantity: 1
+  - type: RandomFillSolution
+    solution: food
+    weightedRandomId: RandomFillStonk
 
-# random stonk pockets
+- type: weightedRandomFillSolution
+  id: RandomFillStonk
+  fills:
+  - quantity: 5 # Average result
+    weight: 5
+    reagents:
+    - Nutriment
+  - quantity: 10 # Quality result
+    weight: 3
+    reagents:
+    - Nutriment
+  - quantity: 1 # Losing result
+    weight: 3
+    reagents:
+    - Omnizine
+  - quantity: 9 # Jackpot
+    weight: 1
+    reagents:
+    - Omnizine
 
 - type: entity
   name: carp-pocket
