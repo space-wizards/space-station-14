@@ -160,6 +160,7 @@
     spawnDistance: 0
   - type: AntagSpawner
     prototype: MobDragon
+  - type: DragonRule
   - type: AntagObjectives
     objectives:
     - CarpRiftsObjective
@@ -174,7 +175,6 @@
       mindComponents:
       - type: DragonRole
         prototype: Dragon
-  - type: DragonRule
 
 - type: entity
   parent: BaseGameRule

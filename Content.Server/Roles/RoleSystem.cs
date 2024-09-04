@@ -42,7 +42,7 @@ public sealed class GetBriefingEvent
 
     public GetBriefingEvent(string? briefing = null)
     {
-        Briefing = briefing; // TODO dragon find where raised or where to raise
+        Briefing = briefing;
     }
 
     /// <summary>
