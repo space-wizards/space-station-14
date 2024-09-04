@@ -888,6 +888,7 @@
     - type: InnerBodyAnomaly
       components:
       - type: Anomaly
+        keepEntity: true
         corePrototype: AnomalyCoreShadow
         coreInertPrototype: AnomalyCoreShadowInert
         offset: "0.0,0.0"
