@@ -9,7 +9,7 @@ species-name-arachnid = Arachnid
 species-name-moth = Moth Person
 species-name-skeleton = Skeleton
 species-name-vox = Vox
-species-name-snail = Gastropoids
+species-name-snail = Gastropoid
 
 ## Misc species things
 
