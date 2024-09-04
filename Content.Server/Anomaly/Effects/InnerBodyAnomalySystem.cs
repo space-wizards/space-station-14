@@ -35,15 +35,18 @@ public sealed class InnerBodyAnomalySystem : EntitySystem
         if (mindComponent.Session == null)
             return;
 
-        var message = Loc.GetString(ent.Comp.StartMessage);
-        var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
-        _chat.ChatMessageToOne(ChatChannel.Server,
-            message,
-            wrappedMessage,
-            default,
-            false,
-            mindComponent.Session.Channel,
-            Color.Red);
+        if (ent.Comp.StartMessage is not null)
+        {
+            var message = Loc.GetString(ent.Comp.StartMessage);
+            var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
+            _chat.ChatMessageToOne(ChatChannel.Server,
+                message,
+                wrappedMessage,
+                default,
+                false,
+                mindComponent.Session.Channel,
+                Color.Red);
+        }
 
         if (ent.Comp.ActionProto is not null)
         {

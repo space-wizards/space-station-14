@@ -18,8 +18,8 @@ public sealed partial class InnerBodyAnomalyComponent : Component
     /// <summary>
     /// Local chat message to body owner
     /// </summary>
-    [DataField(required: true)]
-    public LocId StartMessage = default!;
+    [DataField]
+    public LocId? StartMessage = null;
 
     /// <summary>
     /// Action in access of an entity
@@ -31,5 +31,5 @@ public sealed partial class InnerBodyAnomalyComponent : Component
     /// prototypes of the action that the entity will receive
     /// </summary>
     [DataField]
-    public EntProtoId? ActionProto = null;
+    public EntProtoId? ActionProto = "ActionAnomalyPulse";
 }

@@ -875,3 +875,30 @@
     damage:
       types:
         Cold: 10
+
+- type: entity
+  name: test anom mine
+  parent: BaseLandMine
+  id: LandMineExplosiveANOM
+  components:
+  - type: DeleteOnTrigger
+  - type: AddCompOnTrigger
+    toOther: true
+    components:
+    - type: InnerBodyAnomaly
+      components:
+      - type: Anomaly
+        corePrototype: AnomalyCoreShadow
+        coreInertPrototype: AnomalyCoreShadowInert
+        offset: "0.0,0.0"
+      - type: ProjectileAnomaly
+        projectilePrototype: ProjectileIcicle
+      - type: EntitySpawnAnomaly
+        entries:
+        - settings:
+            spawnOnStabilityChanged: true
+            minAmount: 5
+            maxAmount: 15
+            maxRange: 4
+          spawns:
+          - IceCrust
