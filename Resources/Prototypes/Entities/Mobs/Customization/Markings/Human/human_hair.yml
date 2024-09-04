@@ -1354,12 +1354,12 @@
   bodyPart: Hair
   markingCategory: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
+    - sprite: Mobs/Customization/Human/hair.rsi
       state: classiclong2
 - type: marking
   id: HumanHairClassicLong3
   bodyPart: Hair
   markingCategory: Hair
   sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
+    - sprite: Mobs/Customization/Human/hair.rsi
       state: classiclong3
