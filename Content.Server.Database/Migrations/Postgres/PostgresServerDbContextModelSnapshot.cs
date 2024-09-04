@@ -480,10 +480,9 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("uuid")
                         .HasColumnName("ahelp_target");
 
-                    b.Property<string>("ServerName")
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)")
-                        .HasColumnName("server_name");
+                    b.Property<int>("ServerId")
+                        .HasColumnType("integer")
+                        .HasColumnName("server_id");
 
                     b.HasKey("AhelpId")
                         .HasName("PK_ahelp_exchanges");

@@ -20,7 +20,7 @@ namespace Content.Server.Database.Migrations.Postgres
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     ahelp_round = table.Column<int>(type: "integer", nullable: false),
                     ahelp_target = table.Column<Guid>(type: "uuid", nullable: false),
-                    server_name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true)
+                    server_id = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {

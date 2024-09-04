@@ -453,10 +453,9 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT")
                         .HasColumnName("ahelp_target");
 
-                    b.Property<string>("ServerName")
-                        .HasMaxLength(255)
-                        .HasColumnType("TEXT")
-                        .HasColumnName("server_name");
+                    b.Property<int>("ServerId")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("server_id");
 
                     b.HasKey("AhelpId")
                         .HasName("PK_ahelp_exchanges");

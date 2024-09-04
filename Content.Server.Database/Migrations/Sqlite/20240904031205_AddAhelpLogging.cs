@@ -19,7 +19,7 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .Annotation("Sqlite:Autoincrement", true),
                     ahelp_round = table.Column<int>(type: "INTEGER", nullable: false),
                     ahelp_target = table.Column<Guid>(type: "TEXT", nullable: false),
-                    server_name = table.Column<string>(type: "TEXT", maxLength: 255, nullable: true)
+                    server_id = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
