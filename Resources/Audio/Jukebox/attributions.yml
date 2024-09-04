@@ -1,3 +1,23 @@
+- files: ["atomicamnesiammx.ogg"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "Atomic Amnesia MMX by Phillip Dyer. Converted from MP3 to OGG."
+  source: "https://soundcloud.com/3kliksphilip/atomic-amnesia-mmx-1"
+
+- files: ["vibe_ace.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "Vibe Ace by Kevin MacLeod. Converted from MP3 to OGG."
+  source: "https://freemusicarchive.org/music/Kevin_MacLeod/Jazz_Sampler/Vibe_Ace"
+
+- files: ["marhaba.ogg"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "Marhaba by Ian Alex Mac. Converted from MP3 to OGG."
+  source: "https://freemusicarchive.org/music/Ian_Alex_Mac/Cues/Marhaba"
+
+- files: ["Monument.ogg"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "Monument by Six Umbrellas."
+  source: "https://sixumbrellas.bandcamp.com/album/the-psychedelic-and"
+
 - files: ["sector11.ogg"]
   license: "CC-BY-NC-SA-3.0"
   copyright: "-Sector11 by MashedByMachines. Converted to mono OGG."

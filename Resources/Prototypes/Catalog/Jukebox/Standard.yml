@@ -39,3 +39,27 @@
   name: PigeonBeans - Sunset
   path:
     path: /Audio/Jukebox/sunset.ogg
+
+- type: jukebox
+  id: AtomicAmnesia
+  name: Phillip Dyer- Atomic Amnesia
+  path:
+    path: /Audio/Jukebox/sunset.ogg
+
+- type: jukebox
+  id: sunset
+  name: Kevin MacLeod - Vibe Ace
+  path:
+    path: /Audio/Jukebox/sunset.ogg
+
+- type: jukebox
+  id: sunset
+  name: Ian Alex Mac - Marhaba
+  path:
+    path: /Audio/Jukebox/sunset.ogg
+
+- type: jukebox
+  id: sunset
+  name: Six Umbrellas - Monument
+  path:
+    path: /Audio/Jukebox/sunset.ogg
