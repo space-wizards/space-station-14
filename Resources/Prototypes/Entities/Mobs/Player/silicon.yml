@@ -49,11 +49,11 @@
   - type: IntrinsicUI
     uis:
       enum.RadarConsoleUiKey.Key:
-        toggleAction: ActionAIShowRadar
+        toggleAction: ActionAGhostShowRadar
       enum.CrewMonitoringUIKey.Key:
-        toggleAction: ActionAIShowCrewMonitoring
+        toggleAction: ActionAGhostShowCrewMonitoring
       enum.GeneralStationRecordConsoleKey.Key:
-        toggleAction: ActionAIShowStationRecords
+        toggleAction: ActionAGhostShowStationRecords
 
 
 # Ai
