@@ -8,7 +8,7 @@
     - id: ClothingMaskGasExplorer
     - !type:GroupSelector # Random jetpack
       children:
-      - id: JetpackSalvage
+      - id: JetpackSalvageFilled
         weight: 80
       - id: FireExtinguisher
         weight: 18
