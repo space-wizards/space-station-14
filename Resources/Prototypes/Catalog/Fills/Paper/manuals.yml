@@ -23,3 +23,12 @@
         type: PaperBoundUserInterface
   - type: Paper
     content: book-text-holoparasite-info
+
+- type: entity
+  id: PaperWrittenCombatBakeryKit
+  name: "combat bakery kit instructions"
+  description: "Eat note after reading."
+  parent: Paper
+  components:
+  - type: Paper
+    content: book-text-combat-bakery-kit

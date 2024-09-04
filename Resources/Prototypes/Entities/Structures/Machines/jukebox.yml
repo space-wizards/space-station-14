@@ -29,7 +29,7 @@
         enum.JukeboxUiKey.Key:
           type: JukeboxBoundUserInterface
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
   - type: Destructible
     thresholds:
