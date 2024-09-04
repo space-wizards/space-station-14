@@ -10,11 +10,11 @@ public abstract class ClientInnerBodyAnomalySystem : SharedInnerBodyAnomalySyste
     {
         base.Initialize();
 
-        SubscribeLocalEvent<InnerBodyAnomalyComponent, ComponentStartup>(OnCompStartup);
+        SubscribeLocalEvent<InnerBodyAnomalyComponent, ComponentAdd>(OnCompAdded);
         SubscribeLocalEvent<InnerBodyAnomalyComponent, ComponentShutdown>(OnCompShutdown);
     }
 
-    private void OnCompStartup(Entity<InnerBodyAnomalyComponent> ent, ref ComponentStartup args)
+    private void OnCompAdded(Entity<InnerBodyAnomalyComponent> ent, ref ComponentAdd args)
     {
         if (!TryComp<SpriteComponent>(ent, out var sprite))
             return;

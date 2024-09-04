@@ -22,13 +22,13 @@ public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<InnerBodyAnomalyComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<InnerBodyAnomalyComponent, ComponentAdd>(OnCompAdded);
 
         SubscribeLocalEvent<InnerBodyAnomalyComponent, AnomalyShutdownEvent>(OnShutdown);
         SubscribeLocalEvent<InnerBodyAnomalyComponent, AnomalySupercriticalEvent>(OnSupercritical);
     }
 
-    private void OnMapInit(Entity<InnerBodyAnomalyComponent> ent, ref MapInitEvent args)
+    private void OnCompAdded(Entity<InnerBodyAnomalyComponent> ent, ref ComponentAdd args)
     {
         EntityManager.AddComponents(ent, ent.Comp.Components);
 
