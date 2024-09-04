@@ -21,6 +21,7 @@ using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using System.Linq;
 using System.Numerics;
+using Content.Shared.Actions;
 
 namespace Content.Shared.Anomaly;
 
@@ -461,3 +462,5 @@ public partial record struct AnomalySpawnSettings()
     /// </summary>
     public bool SpawnOnSeverityChanged { get; set; } = false;
 }
+
+public sealed partial class ActionAnomalyPulseEvent : InstantActionEvent { }
