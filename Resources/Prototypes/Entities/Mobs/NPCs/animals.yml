@@ -3372,7 +3372,7 @@
       food:
         reagents:
         - ReagentId: UncookedAnimalProteins
-          Quantity: 3
+          Quantity: 2
   - type: Butcherable
     spawned:
     - id: FoodMeatFish
@@ -3386,6 +3386,86 @@
     combatToggleAction: ActionCombatModeToggleOff
   - type: Bloodstream
     bloodMaxVolume: 30
+  - type: MobPrice
+    price: 50
+  - type: BadFood
+  - type: NonSpreaderZombie
+  - type: PreventSpiller
+
+  - type: entity
+  name: Crab
+  parent: SimpleMobBase
+  id: MobCrab
+  description: It looks pretty crabby.
+  components:
+  - type: Body
+    prototype: Mouse
+  - type: Sprite
+    drawdepth: SmallMobs
+    sprite: Mobs/Animals/fish.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+      state: mouse-0
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: mouse-moving-0
+    noMovementLayers:
+      movement:
+        state: mouse-0
+  - type: Item
+    size: Tiny
+    heldPrefix: 0
+  - type: HTN
+    rootTask:
+      task: MouseCompound
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+        density: 100
+        mask:
+        - SmallMobMask
+        layer:
+        - SmallMobLayer
+  - type: MobState
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      20: Critical
+      20: Dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 5
+    baseSprintSpeed : 5
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: mouse-0
+      Dead:
+        Base: splat-0
+  - type: Extractable
+    grindableSolutionName: food
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 3
+  - type: Butcherable
+    spawned:
+    - id: FoodMeat
+      amount: 1
+  - type: Tag
+    tags:
+    - VimPilot
+    - Meat
+  - type: CombatMode
+    combatToggleAction: ActionCombatModeToggleOff
+  - type: Bloodstream
+    bloodMaxVolume: 20
   - type: MobPrice
     price: 50
   - type: BadFood
