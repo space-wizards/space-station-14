@@ -65,7 +65,11 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
 
     private void OnActionPulse(Entity<AnomalyComponent> ent, ref ActionAnomalyPulseEvent args)
     {
+        if (args.Handled)
+            return;
+
         DoAnomalyPulse(ent, ent.Comp);
+        args.Handled = true;
     }
 
     private void OnMapInit(Entity<AnomalyComponent> anomaly, ref MapInitEvent args)
