@@ -253,9 +253,8 @@ namespace Content.Server.Database
                     .HasForeignKey(e => e.AhelpId)
                     .OnDelete(DeleteBehavior.Cascade);
 
-                entity.Property(e => e.ServerName)
-                    .HasMaxLength(255)
-                    .IsRequired(false);
+                entity.Property(e => e.ServerId)
+                    .IsRequired();
             });
 
             modelBuilder.Entity<AdminNote>()
@@ -781,13 +780,13 @@ namespace Content.Server.Database
         [Key]
         public int AhelpId { get; set; }
 
-        [Required] public int AhelpRound { get; set; }
+        [Required]
+        public int AhelpRound { get; set; }
 
         [Required]
         [ForeignKey(nameof(Player))]
         public Guid AhelpTarget { get; set; }
-
-        public string? ServerName { get; set; }
+        public int ServerId { get; set; }
 
         public ICollection<AhelpMessage> AhelpMessages { get; set; } = new List<AhelpMessage>();
     }

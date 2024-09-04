@@ -1,21 +1,20 @@
-using System;
 using System.Threading.Tasks;
 using Content.Server.Database;
-using Content.Server.GameTicking;
 
 namespace Content.Server.Administration.Logs
 {
     public sealed class AhelpLogging
     {
         private readonly IServerDbManager _dbManager;
+        private readonly ServerDbEntryManager _serverDbEntryManager;
 
-        public AhelpLogging(IServerDbManager dbManager)
+        public AhelpLogging(IServerDbManager dbManager, ServerDbEntryManager serverDbEntryManager)
         {
             _dbManager = dbManager;
+            _serverDbEntryManager = serverDbEntryManager;
         }
 
         public async Task LogAhelpMessageAsync(
-            string serverName,
             int ahelpRound,
             string roundStatus,
             DateTime timeSent,
@@ -30,15 +29,17 @@ namespace Content.Server.Administration.Logs
             )
         {
 
-            //Convert SenderUID to int so Db doesnt have a stroke
+            //Convert SenderUID to int for Db compatibility
             var senderEntityInt = senderEntity != null
                 ? (int?) (int) senderEntity
                 : null;
 
+            // Fetch server ID from ServerDbEntryManager
+            var serverEntity = await _serverDbEntryManager.ServerEntity;
+            var serverId = serverEntity.Id;
+
             // Find or create the AhelpExchange
-            //Currently new exchanges are created on different rounds, ie need to create a way to determine if the player
-            //is still in the session.
-            var ahelpExchange = await _dbManager.GetAhelpExchangeAsync(ahelpRound, ahelpTarget, serverName);
+            var ahelpExchange = await _dbManager.GetAhelpExchangeAsync(ahelpRound, ahelpTarget, serverId);
 
             if (ahelpExchange == null)
             {
@@ -46,7 +47,7 @@ namespace Content.Server.Administration.Logs
                 {
                     AhelpRound = ahelpRound,
                     AhelpTarget = ahelpTarget,
-                    ServerName = serverName
+                    ServerId = serverId
                 };
                 await _dbManager.AddAhelpExchangeAsync(ahelpExchange);
             }

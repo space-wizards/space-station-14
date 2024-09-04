@@ -1076,14 +1076,54 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             await using var db = await GetDb();
             return await db.DbContext.AdminLog.CountAsync(log => log.RoundId == round);
         }
+        #endregion
 
-        public abstract Task<AhelpExchange?> GetAhelpExchangeAsync(int ahelpRound, Guid ahelpTarget, string serverName);
+        #region Ahelp Logging
 
-        public abstract Task AddAhelpExchangeAsync(AhelpExchange exchange);
+        /// <summary>
+        /// Retrieves an AhelpExchange based on the round number, target user, and server name.
+        /// </summary>
+        public async Task<AhelpExchange?> GetAhelpExchangeAsync(int ahelpRound, Guid ahelpTarget, int serverId)
+        {
+            await using var db = await GetDb();
+            return await db.DbContext.AhelpExchanges
+                .Include(e => e.AhelpMessages)
+                .FirstOrDefaultAsync(e => e.AhelpRound == ahelpRound && e.AhelpTarget == ahelpTarget && e.ServerId == serverId);
+        }
 
-        public abstract Task AddAhelpMessageAsync(AhelpMessage message);
+        /// <summary>
+        /// Adds a new AhelpExchange to the database.
+        /// </summary>
+        public async Task AddAhelpExchangeAsync(AhelpExchange exchange)
+        {
+            await using var db = await GetDb();
+            db.DbContext.AhelpExchanges.Add(exchange);
+            await db.DbContext.SaveChangesAsync();
+        }
 
-        public abstract Task<int> GetMaxMessageIdForExchange(int ahelpId);
+        /// <summary>
+        /// Adds a new AhelpMessage to the database.
+        /// </summary>
+        public async Task AddAhelpMessageAsync(AhelpMessage message)
+        {
+            await using var db = await GetDb();
+            db.DbContext.AhelpMessages.Add(message);
+            await db.DbContext.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Gets the maximum message ID for a given AhelpExchange.
+        /// </summary>
+        public async Task<int> GetMaxMessageIdForExchange(int ahelpId)
+        {
+            await using var db = await GetDb();
+            return await db.DbContext.AhelpMessages
+                .Where(m => m.AhelpId == ahelpId)
+                .Select(m => (int?)m.Id)
+                .DefaultIfEmpty(0)
+                .MaxAsync() ?? 0;
+        }
+
         #endregion
 
         #region Whitelist

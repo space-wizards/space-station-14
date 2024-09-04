@@ -248,7 +248,7 @@ namespace Content.Server.Database
         IAsyncEnumerable<SharedAdminLog> GetAdminLogs(LogFilter? filter = null);
         IAsyncEnumerable<JsonDocument> GetAdminLogsJson(LogFilter? filter = null);
         Task<int> CountAdminLogs(int round);
-        Task<AhelpExchange?> GetAhelpExchangeAsync(int ahelpRound, Guid ahelpTarget, string serverName);
+        Task<AhelpExchange?> GetAhelpExchangeAsync(int ahelpRound, Guid ahelpTarget, int serverId);
         Task AddAhelpExchangeAsync(AhelpExchange exchange);
         Task AddAhelpMessageAsync(AhelpMessage message);
         Task<int> GetMaxMessageIdForExchange(int ahelpId);
@@ -780,10 +780,10 @@ namespace Content.Server.Database
             return RunDbCommand(() => _db.CountAdminLogs(round));
         }
 
-        public Task<AhelpExchange?> GetAhelpExchangeAsync(int ahelpRound, Guid ahelpTarget, string serverName)
+        public Task<AhelpExchange?> GetAhelpExchangeAsync(int ahelpRound, Guid ahelpTarget, int serverId)
         {
             DbReadOpsMetric.Inc();
-            return RunDbCommand(() => _db.GetAhelpExchangeAsync(ahelpRound, ahelpTarget, serverName));
+            return RunDbCommand(() => _db.GetAhelpExchangeAsync(ahelpRound, ahelpTarget, serverId));
         }
 
         public Task AddAhelpExchangeAsync(AhelpExchange exchange)

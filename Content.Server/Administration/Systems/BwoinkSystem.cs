@@ -694,7 +694,6 @@ namespace Content.Server.Administration.Systems
 
             // Log the Bwoink message to the database
             await _ahelpLogging.LogAhelpMessageAsync(
-                serverName: _gameTicker.ServerName!,
                 ahelpRound: _gameTicker.RoundId,
                 roundStatus: _gameTicker.RunLevel switch
                 {

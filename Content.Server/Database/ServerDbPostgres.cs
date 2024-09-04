@@ -494,40 +494,6 @@ namespace Content.Server.Database
         }
         #endregion
 
-        #region Ahelp Logging
-
-        public override async Task<AhelpExchange?> GetAhelpExchangeAsync(int ahelpRound, Guid ahelpTarget, string serverName)
-        {
-            await using var db = await GetDbImpl();
-            return await db.PgDbContext.AhelpExchanges
-                .Include(e => e.AhelpMessages)
-                .FirstOrDefaultAsync(e => e.AhelpRound == ahelpRound && e.AhelpTarget == ahelpTarget && e.ServerName == serverName);
-        }
-
-        public override async Task AddAhelpExchangeAsync(AhelpExchange exchange)
-        {
-            await using var db = await GetDbImpl();
-            db.PgDbContext.AhelpExchanges.Add(exchange);
-            await db.PgDbContext.SaveChangesAsync();
-        }
-
-        public override async Task AddAhelpMessageAsync(AhelpMessage message)
-        {
-            await using var db = await GetDbImpl();
-            db.PgDbContext.AhelpMessages.Add(message);
-            await db.PgDbContext.SaveChangesAsync();
-        }
-
-        public override async Task<int> GetMaxMessageIdForExchange(int ahelpId)
-        {
-            await using var db = await GetDbImpl();
-            return await db.PgDbContext.AhelpMessages
-                .Where(m => m.AhelpId == ahelpId)
-                .MaxAsync(m => (int?)m.Id) ?? 0;
-        }
-
-        #endregion
-
         public override async Task<int> AddConnectionLogAsync(
             NetUserId userId,
             string userName,
