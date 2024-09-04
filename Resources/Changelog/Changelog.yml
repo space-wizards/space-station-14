@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: HolySSSS
-  changes:
-  - message: Short Raffle is now much shorter.
-    type: Tweak
-  id: 6778
-  time: '2024-06-19T02:41:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28685
 - author: Truoizys
   changes:
   - message: PDA cartridges can no longer be installed more than once.
@@ -3860,3 +3853,11 @@
   id: 7277
   time: '2024-09-03T22:05:02.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31802
+- author: Ilya246
+  changes:
+  - message: Fixed many entities not taking structural damage, including girders,
+      firelocks, and machines.
+    type: Fix
+  id: 7278
+  time: '2024-09-04T13:37:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30790
