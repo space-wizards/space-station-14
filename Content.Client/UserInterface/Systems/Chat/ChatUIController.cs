@@ -166,7 +166,7 @@ public sealed class ChatUIController : UIController, IOnSystemChanged<CharacterI
     private bool _autoFillHighlightsEnabled;
 
     /// <summary>
-    ///     A bool to keep track if the 'CharacterUpdated' event is a new player attaching or the opening of the character controller.
+    ///     A bool to keep track if the 'CharacterUpdated' event is a new player attaching or the opening of the character info panel.
     /// </summary>
     private bool _charInfoIsAttach = false;
 
@@ -937,7 +937,9 @@ public sealed class ChatUIController : UIController, IOnSystemChanged<CharacterI
         // Highlight any words choosen by the client.
         foreach (var highlight in _highlights)
         {
-            msg.WrappedMessage = SharedChatSystem.InjectTagAroundString(msg, highlight, "color", _highlightsColor);
+            // Inject a whole word tag so that the highlighted words will need to be whole,
+            // for example, "Det" will work with "DET" but not with "DETermine".
+            msg.WrappedMessage = SharedChatSystem.InjectTagAroundString(msg, $"\\b{highlight}\\b", "color", _highlightsColor);
         }
 
         // Color any codewords for minds that have roles that use them
