@@ -91,6 +91,7 @@
     soundEmpty:
       path: /Audio/Items/hiss.ogg
     clumsyProof: true
+    bigTrigger: true
   - type: ContainerAmmoProvider
     container: storagebase
   - type: Item

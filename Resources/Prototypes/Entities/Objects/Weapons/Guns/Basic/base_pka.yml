@@ -22,6 +22,7 @@
     - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/kinetic_accel.ogg
+    bigTrigger: true
   - type: AmmoCounter
   - type: Appearance
   - type: GenericVisualizer
