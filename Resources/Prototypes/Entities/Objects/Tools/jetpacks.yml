@@ -212,7 +212,7 @@
     outputPressure: 42.6
     air:
       # 4 minutes of thrust
-      volume: 1.5
+      volume: .5
       temperature: 293.15
       moles:
         - 0.307706858 # oxygen
@@ -240,7 +240,7 @@
     - type: GasTank
       outputPressure: 42.6
       air:
-        volume: .2
+        volume: .75
 
 # Filled salvage
 - type: entity
@@ -253,11 +253,11 @@
     outputPressure: 42.6
     air:
       # 30 seconds of thrust
-      volume: .2
+      volume: .5
       temperature: 293.15
       moles:
-        - 0.041027581 # oxygen
-        - 0.041027581 # nitrogen
+        - 0.081027581 # oxygen
+        - 0.081027581 # nitrogen
 
 #Empty security
 - type: entity
