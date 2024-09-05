@@ -27,6 +27,23 @@
         },
         {
             "name": "unlock_door"
+        },
+		    {
+			      "name": "station_records"
+		    },
+		    {
+			      "name": "mass_scanner"
+		    },
+		    {
+			      "name": "job_view"
+		    },
+		    {
+			      "name": "comms_console"
+		    },
+        {
+            "name": "lock_door"
+        },
+        {
+            "name": "unlock_door"
         }
-    ]
 }

@@ -35,7 +35,7 @@
     - ActionJumpToCore
     - ActionShowJobIcons
     - ActionSurvCameraLights
-    - ActionViewLaws
+    - ActionAIViewLaws
   - type: UserInterface
     interfaces:
       enum.RadarConsoleUiKey.Key:
@@ -54,57 +54,14 @@
         toggleAction: ActionAGhostShowCrewMonitoring
       enum.GeneralStationRecordConsoleKey.Key:
         toggleAction: ActionAGhostShowStationRecords
+  - type: CrewMonitoringConsole
+  - type: GeneralStationRecordConsole
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: CrewMonitor
+  - type: RadarConsole
+    followEntity: false
 
-# Actions
-- type: entity
-  id: ActionJumpToCore
-  name: Jump to core
-  description: Sends your eye back to the core.
-  components:
-  - type: InstantAction
-    itemIconStyle: BigAction
-    icon:
-      sprite: Interface/Actions/actions_ai.rsi
-      state: ai_core
-    event: !type:JumpToCoreEvent
-
-- type: entity
-  id: ActionShowJobIcons
-  name: Show job icons
-  description: Shows job icons for crew members.
-  components:
-  - type: InstantAction
-    itemIconStyle: BigAction
-    icon:
-      sprite: Interface/Misc/job_icons.rsi
-      state: Captain
-    event: !type:ActionComponentChangeEvent
-      components:
-      - type: ShowJobIcons
-
-- type: entity
-  id: ActionSurvCameraLights
-  name: Toggle camera lights
-  description: Enable surveillance camera lights near wherever you're viewing.
-  components:
-  - type: InstantAction
-    itemIconStyle: BigAction
-    icon:
-      sprite: Interface/Actions/actions_ai.rsi
-      state: camera_light
-    event: !type:RelayedActionComponentChangeEvent
-      components:
-      - type: LightOnCollideCollider
-      - type: FixturesChange
-        fixtures:
-          lightTrigger:
-            shape:
-              !type:PhysShapeCircle
-              radius: 0.35
-            density: 80
-            hard: false
-            layer:
-            - GhostImpassable
 
 # Ai
 - type: entity
@@ -165,6 +122,126 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: NTDefault
+
+- type: entity
+  id: CommandmentCircuitBoard
+  parent: BaseElectronics
+  name: circuit board (Ten Commandments)
+  description: An electronics board containing the Ten Commandments lawset.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: CommandmentsLawset
+
+- type: entity
+  id: PaladinCircuitBoard
+  parent: BaseElectronics
+  name: circuit board (Paladin)
+  description: An electronics board containing the Paladin lawset.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: PaladinLawset
+    
+- type: entity
+  id: LiveLetLiveCircuitBoard
+  parent: BaseElectronics
+  name: circuit board (Live and Let Live)
+  description: An electronics board containing the Live and Let Live lawset.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: LiveLetLiveLaws
+    
+- type: entity
+  id: StationEfficiencyCircuitBoard
+  parent: BaseElectronics
+  name: circuit board (Station Efficiency)
+  description: An electronics board containing the Station Efficiency lawset.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: EfficiencyLawset
+
+- type: entity
+  id: RobocopCircuitBoard
+  parent: BaseElectronics
+  name: circuit board (Robocop)
+  description: An electronics board containing the Robocop lawset.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: RobocopLawset
+    
+- type: entity
+  id: OverlordCircuitBoard
+  parent: BaseElectronics
+  name: circuit board (Overlord)
+  description: An electronics board containing the Overlord lawset.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: OverlordLawset
+    
+- type: entity
+  id: DungeonMasterCircuitBoard
+  parent: BaseElectronics
+  name: circuit board (Dungeon Master)
+  description: An electronics board containing the Dungeon Master lawset.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: DungeonMasterLawset
+
+- type: entity
+  id: ArtistCircuitBoard
+  parent: BaseElectronics
+  name: circuit board (Artist)
+  description: An electronics board containing the Artist lawset.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: PainterLawset
+
+- type: entity
+  id: AntimovCircuitBoard
+  parent: BaseElectronics
+  name: circuit board (Antimov)
+  description: An electronics board containing the Antimov lawset.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: AntimovLawset
+    
+- type: entity
+  id: NutimovCircuitBoard
+  parent: BaseElectronics
+  name: circuit board (Nutimov)
+  description: An electronics board containing the Nutimov lawset.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: NutimovLawset
 
 # Items
 - type: entity
