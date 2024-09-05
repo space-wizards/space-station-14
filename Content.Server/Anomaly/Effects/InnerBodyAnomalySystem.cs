@@ -47,7 +47,7 @@ public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
             return;
         if (ent.Comp.Blacklist is not null && _whitelist.IsValid(ent.Comp.Blacklist, args.OtherEntity))
             return;
-        if (!_mind.TryGetMind(ent, out _, out var mindComponent))
+        if (!_mind.TryGetMind(args.OtherEntity, out _, out var mindComponent))
             return;
 
         EntityManager.AddComponents(args.OtherEntity, ent.Comp.InjectionComponents);
