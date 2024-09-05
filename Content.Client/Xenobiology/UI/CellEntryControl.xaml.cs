@@ -6,13 +6,13 @@ using Robust.Client.UserInterface.XAML;
 namespace Content.Client.Xenobiology.UI;
 
 [GenerateTypedNameReferences]
-public sealed partial class CellSequencerEntryControl : Control
+public sealed partial class CellEntryControl : Control
 {
     public readonly Cell Cell;
     public readonly bool Remote;
-    public event Action<CellSequencerEntryControl>? OnSelect;
+    public event Action<CellEntryControl>? OnSelect;
 
-    public CellSequencerEntryControl(Cell cell, bool remote)
+    public CellEntryControl(Cell cell, bool remote)
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);

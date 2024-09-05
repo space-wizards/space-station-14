@@ -19,7 +19,7 @@ public sealed partial class CellSequencerWindow : FancyWindow
     public event Action<Cell?>? OnPrint;
 
     private Cell? _selectedCell;
-    private CellSequencerEntryControl? _sequencerEntry;
+    private CellEntryControl? _sequencerEntry;
     private int _material;
 
     public CellSequencerWindow()
@@ -45,7 +45,7 @@ public sealed partial class CellSequencerWindow : FancyWindow
         InsideCellContainer.RemoveAllChildren();
         foreach (var savedCell in sequencerUiState.InsideCells)
         {
-            var entry = new CellSequencerEntryControl(savedCell, false);
+            var entry = new CellEntryControl(savedCell, false);
             entry.OnSelect += SelectedCellEntry;
             InsideCellContainer.AddChild(entry);
         }
@@ -53,13 +53,13 @@ public sealed partial class CellSequencerWindow : FancyWindow
         RemoteCellContainer.RemoveAllChildren();
         foreach (var savedCell in sequencerUiState.RemoteCells)
         {
-            var entry = new CellSequencerEntryControl(savedCell, true);
+            var entry = new CellEntryControl(savedCell, true);
             entry.OnSelect += SelectedCellEntry;
             RemoteCellContainer.AddChild(entry);
         }
     }
 
-    private void SelectedCellEntry(CellSequencerEntryControl? entry)
+    private void SelectedCellEntry(CellEntryControl? entry)
     {
         _sequencerEntry?.SetState(true);
 

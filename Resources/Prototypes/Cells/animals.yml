@@ -19,7 +19,7 @@
   id: Feliform
   name: cell-Feliform-name
   color: "#A0522D"
-  modifiers: # Just for test remove later
+  modifiers:
   - OwO
 
 - type: cell
