@@ -15,8 +15,8 @@ entities:
     - type: MetaData
       name: NT-Granite Flea
     - type: Transform
-      rot: 0.005781236104667187 rad
-      pos: 642.8042,-464.6136
+      rot: 0 rad
+      pos: 0.5,0.5
       parent: invalid
     - type: MapGrid
       chunks:
