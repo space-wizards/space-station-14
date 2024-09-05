@@ -107,7 +107,7 @@ public abstract partial class SharedExcretionSystem : EntitySystem
         {
 			/*
 			/// if there aren't values for the desired reagent and its volume, don't do anything.
-			if ((comp.ExcretedReagent != "") && 
+			if ((comp.ExcretedReagent != "") &&
 			(comp.ExcretedVolume !<= 0))
 			{
 			*/
@@ -121,7 +121,7 @@ public abstract partial class SharedExcretionSystem : EntitySystem
 
         args.Repeat = false;
     }
-	
+
 }
 
 /// <summary>
@@ -134,4 +134,3 @@ public sealed partial class ExcretionActionEvent : InstantActionEvent { }
 /// </summary>
 [Serializable, NetSerializable]
 public sealed partial class ExcretionDoAfterEvent : SimpleDoAfterEvent { }
-

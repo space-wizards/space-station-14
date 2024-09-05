@@ -39,12 +39,12 @@
     grid:
     - 0,0,7,7
     maxItemSize: Huge
+    storageInsertSound:
+      path: /Audio/Voice/Slime/slime_squish.ogg
   - type: StorageFill
     contents:
     - id: BoxSurvival
       amount: 1
-    storageInsertSound:
-      path: /Audio/Voice/Slime/slime_squish.ogg
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
@@ -70,7 +70,7 @@
     butcheringType: Spike
     spawned:
     - id: FoodMeatSlime
-      ammount: 1
+      amount: 1
     - id: SeashellInstrument
       amount: 1
   - type: Fixtures
@@ -224,4 +224,3 @@
           32:
             sprite: Mobs/Species/Snail/displacement.rsi
             state: mask
-

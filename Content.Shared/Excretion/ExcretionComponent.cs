@@ -55,25 +55,25 @@ public sealed partial class ExcretionComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
     public ThirstThreshold MinThirstThreshold = ThirstThreshold.Okay;
-	
+
 	    /// <summary>
     /// The amount of slowdown applied to snails.
     /// </summary>
     [DataField("snailSlowdownModifier"), ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
     public float SnailSlowdownModifier = 0.5f;
-	
+
 	/// The reagent to be spilled.
 	[DataField("excretedReagent")]
 	[ViewVariables(VVAccess.ReadWrite)]
 	[AutoNetworkedField]
 	public string ExcretedReagent = "Mucin";
-	
+
     /// <summary>
     /// The amount of reagent to be spilled.
     /// </summary>
     [DataField("excretedVolume"), ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
     public float ExcretedVolume = 15f;
-	
+
 }

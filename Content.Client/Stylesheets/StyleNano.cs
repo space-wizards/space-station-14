@@ -1251,7 +1251,7 @@ namespace Content.Client.Stylesheets
                     .Class(StyleClassItemStatusNotHeld)
                     .Prop("font", notoSansItalic10)
                     .Prop("font-color", ItemStatusNotHeldColor),
-                
+
                 Element<RichTextLabel>()
                     .Class(StyleClassCrewManifestGender)
                     .Prop("font", notoSansItalic10)

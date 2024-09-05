@@ -16,7 +16,7 @@ public sealed class BluespaceArtifactRule : StationEventSystem<BluespaceArtifact
             return;
 
         base.Added(uid, component, gameRule, args);
-        
+
         _announcer.SendAnnouncement(
             _announcer.GetAnnouncementId(args.RuleId),
             Filter.Broadcast(),

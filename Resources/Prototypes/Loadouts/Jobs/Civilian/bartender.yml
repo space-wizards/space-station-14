@@ -54,7 +54,7 @@
   id: BartenderWintercoat
   equipment:
     outerClothing: ClothingOuterWinterBar
-    
+
  # Trinket
 - type: loadout
   id: ChemMasterFlatpack
@@ -64,4 +64,3 @@
   storage:
     back:
     - ChemMasterFlatpack
-    

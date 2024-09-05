@@ -515,5 +515,3 @@ public readonly record struct AntagPrereqSetupEvent(ICommonSession? Session, Ent
 /// </summary>
 [ByRefEvent]
 public readonly record struct AfterAntagEntitySelectedEvent(ICommonSession? Session, EntityUid EntityUid, Entity<AntagSelectionComponent> GameRule, AntagSelectionDefinition Def);
-
-

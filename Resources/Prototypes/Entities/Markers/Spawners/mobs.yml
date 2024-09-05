@@ -987,11 +987,10 @@
   components:
     - type: Sprite
       layers:
-        - state: Blue
+        - state: blue
         - sprite: Mobs/Animals/bros.rsi
           state: bros
     - type: ClusterSpawner
       prototypes:
         - MobBros
         - MobSorb
-          

@@ -225,7 +225,7 @@ accent-gray-words-replace-75 = jamga
 
 accent-gray-words-76 = coming
 accent-gray-words-replace-76 = ouuti
- 
+
 accent-gray-words-77 = what
 accent-gray-words-replace-77 = seben
 
@@ -250,7 +250,7 @@ accent-gray-words-replace-83 = tek
 accent-gray-words-84 = your
 accent-gray-words-replace-84 = mou
 
-accent-gray-words-85 = be 
+accent-gray-words-85 = be
 accent-gray-words-replace-85 = zooti
 
 accent-gray-words-86 = grab
@@ -271,7 +271,7 @@ accent-gray-words-replace-90 = milx
 accent-gray-words-91 = motherfucker
 accent-gray-words-replace-91 = jambupisk
 
-accent-gray-words-92 = was 
+accent-gray-words-92 = was
 accent-gray-words-replace-92 = thikee
 
 accent-gray-words-93 = out
@@ -313,7 +313,7 @@ accent-gray-words-replace-104 = sporp
 accent-gray-words-105 = ways
 accent-gray-words-replace-105 = spop
 
-accent-gray-words-106 = are 
+accent-gray-words-106 = are
 accent-gray-words-replace-106 = zazz
 
 accent-gray-words-107 = pussy
@@ -328,7 +328,7 @@ accent-gray-words-replace-109 = tronk
 accent-gray-words-110 = to
 accent-gray-words-replace-110 = blagh
 
-accent-gray-words-111 = too 
+accent-gray-words-111 = too
 accent-gray-words-replace-111 = blaagh
 
 accent-gray-words-112 = one
@@ -382,7 +382,7 @@ accent-gray-words-replace-127 = ziip
 accent-gray-words-128 = also
 accent-gray-words-replace-128 = frup
 
-accent-gray-words-129 = and 
+accent-gray-words-129 = and
 accent-gray-words-replace-129 = pib
 
 accent-gray-words-130 = as
@@ -409,7 +409,7 @@ accent-gray-words-replace-136 = zii
 accent-gray-words-137 = find
 accent-gray-words-replace-137 = bli
 
-accent-gray-words-138 = then 
+accent-gray-words-138 = then
 accent-gray-words-replace-138 = zwep
 
 accent-gray-words-139 = hi
@@ -475,11 +475,11 @@ accent-gray-words-replace-158 = glormun
 accent-gray-words-159 = having
 accent-gray-words-replace-159 = buugo
 
-accent-gray-words-160 = has 
+accent-gray-words-160 = has
 accent-gray-words-replace-160 = beeg
 
 accent-gray-words-161 = fixed
-accent-gray-words-replace-161 = yuumba 
+accent-gray-words-replace-161 = yuumba
 
 accent-gray-words-162 = fixing
 accent-gray-words-replace-162 = yoombun
@@ -538,7 +538,7 @@ accent-gray-words-replace-179 = glurm
 accent-gray-words-180 = drinking
 accent-gray-words-replace-180 = sipsun
 
-accent-gray-words-181 = drunk 
+accent-gray-words-181 = drunk
 accent-gray-words-replace-181 = supsi
 
 accent-gray-words-182 = came
@@ -557,7 +557,7 @@ accent-gray-words-186 = powering
 accent-gray-words-replace-186 = grambun
 
 accent-gray-words-187 = spaced
-accent-gray-words-replace-187 = urth 
+accent-gray-words-replace-187 = urth
 
 accent-gray-words-188 = spacing
 accent-gray-words-replace-188 = erthun
@@ -687,4 +687,3 @@ accent-gray-words-replace-230 = dum jut
 
 accent-gray-words-231 = hello
 accent-gray-words-replace-231 = oum
-

@@ -185,13 +185,13 @@
     path: /Audio/Jukebox/you_blow_my_mind.ogg
 
 - type: jukebox
-  id: TheNomai 
+  id: TheNomai
   name: Andrew Prahlow - The Nomai
   path:
     path: /Audio/Jukebox/the_nomai.ogg
 
 - type: jukebox
-  id: TheFluteTune 
+  id: TheFluteTune
   name: J-Cut & Kolt Siewerts - The Flute Tune (Soulpride Remix)
   path:
     path: /Audio/Jukebox/the_flute_tune.ogg
