@@ -99,12 +99,12 @@
 - type: reaction
   id: PropulsionGel
   minTemp: 370
-  reactants: 
-    Mucin: 
+  reactants:
+    Mucin:
       amount: 1
-    SpaceLube: 
+    SpaceLube:
       amount: 2
-    Tricordrazine: 
+    Tricordrazine:
       amount: 2
   products:
     PropulsionGel: 5

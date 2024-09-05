@@ -18,7 +18,7 @@ public sealed class VentClogRule : StationEventSystem<VentClogRuleComponent>
 {
     [Dependency] private readonly SmokeSystem _smoke = default!;
     [Dependency] private readonly AnnouncerSystem _announcer = default!;
-    
+
     protected override void Added(EntityUid uid, VentClogRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
     {
         base.Added(uid, component, gameRule, args);

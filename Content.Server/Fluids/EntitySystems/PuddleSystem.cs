@@ -429,7 +429,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 		var minViscosity = 0f;
 		/// declare a total viscosity variable
 		var totalViscosity = 0f;
-		
+
 		/// for each reagent in the puddle, grab the reagent's information in the reagentProto variable.
         foreach (var (reagent, _) in solution.Contents)
         {
@@ -439,10 +439,10 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 		/// do the opposite to minimum viscosity.
 			minViscosity = Math.Min(minViscosity, reagentProto.Viscosity);
         }
-		
+
 		/// total viscosity is the average of all viscosities in the solution
 		totalViscosity = maxViscosity + minViscosity;
-		
+
 		/// if totalviscosity is not zero, ensure that the uid has the speedmodifiercontactcomponent, and then modify its speed by the total viscosity
 		if (totalViscosity != 0)
 		{
@@ -450,7 +450,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 			var speed = 1 - totalViscosity;
 			_speedModContacts.ChangeModifiers(uid, speed, comp);
 		}
-		
+
 		/// if totalviscosity *is* zero, remove the speedmodifiercontactcomponent, because it's not doing anything
 		else
 		{

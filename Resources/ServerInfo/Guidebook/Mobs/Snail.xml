@@ -4,21 +4,21 @@
   <Box>
     <GuideEntityEmbed Entity="MobSnail" Caption=""/>
   </Box>
-  They depend on moisture to survive, so anything which contains table salt will damage them when splashed, ingested, or injected (including Saline.) 
+  They depend on moisture to survive, so anything which contains table salt will damage them when splashed, ingested, or injected (including Saline.)
   <Box>
 	<GuideEntityEmbed Entity="FoodShakerSalt" Caption=""/>
   </Box>
-  
-  They move slower than other species and can't wear shoes, but are unable to be slipped. 
+
+  They move slower than other species and can't wear shoes, but are unable to be slipped.
   <Box>
 	<GuideEntityEmbed Entity="SoapOmega" Caption=""/>
   </Box>
-  
+
   They can't wear back-slot items (including backpacks, satchels and duffel bags,) instead preferring to store items in their shell.
   <Box>
 	<GuideEntityEmbed Entity="SeashellInstrument" Caption=""/>
   </Box>
-  
+
   They take [color=#1e90ff]20% less damage from blunt and slash,[/color] but [color=#ffa500]50% more damage from heat and cold, and 20% more damage from poison.[/color]
 
   ## Slime Trail

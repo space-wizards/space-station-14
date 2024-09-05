@@ -216,7 +216,7 @@
     - state: fax-machine
   - type: Flatpack
     entity: FaxMachineBase
-    
+
 - type: entity
   parent: BaseFlatpack
   id: ChemMasterFlatpack

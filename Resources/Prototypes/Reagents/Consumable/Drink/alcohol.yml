@@ -2113,7 +2113,7 @@
         - !type:MobStateCondition
           mobstate: Alive
   fizziness: 0.2
-  
+
 - type: reagent
   id: GatorWine
   name: reagent-name-gatorwine
@@ -2123,7 +2123,7 @@
   flavor: sweet
   color: "#ffee3e"
   fizziness: 0.8
-  
+
 - type: reagent
   id: Rotgut
   name: reagent-name-rotgut
@@ -2154,7 +2154,7 @@
         - !type:MobStateCondition
           mobstate: Alive
   fizziness: 0
-  
+
 - type: reagent
   id: BumWine
   name: reagent-name-bumwine
@@ -2164,7 +2164,7 @@
   flavor: sweet
   color: "#e74f4f"
   fizziness: 0.9
-  
+
 - type: reagent
   id: VoxRocks
   name: reagent-name-voxrocks
@@ -2186,7 +2186,7 @@
         reagent: Oxygen
         amount: -25
   fizziness: .7
-  
+
 - type: reagent
   id: JungleJuice
   name: reagent-name-junglejuice
@@ -2196,7 +2196,7 @@
   flavor: spaceshroom
   color: "#310b01"
   fizziness: 0.8
-  
+
 - type: reagent
   id: TheDrink
   name: reagent-name-drinkdrink
