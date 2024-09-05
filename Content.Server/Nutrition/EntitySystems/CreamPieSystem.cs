@@ -1,4 +1,3 @@
-using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Nutrition.Components;
@@ -11,6 +10,7 @@ using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Throwing;
+using Content.Shared.Chemistry.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -21,7 +21,7 @@ namespace Content.Server.Nutrition.EntitySystems
     [UsedImplicitly]
     public sealed class CreamPieSystem : SharedCreamPieSystem
     {
-        [Dependency] private readonly SolutionContainerSystem _solutions = default!;
+        [Dependency] private readonly SharedSolutionContainerSystem _solutions = default!;
         [Dependency] private readonly PuddleSystem _puddle = default!;
         [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
         [Dependency] private readonly TriggerSystem _trigger = default!;
