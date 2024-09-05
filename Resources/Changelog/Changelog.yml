@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Redfire1331
-  changes:
-  - message: You can now eat cup ramen with chopsticks.
-    type: Tweak
-  id: 6791
-  time: '2024-06-20T12:34:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27826
 - author: Errant
   changes:
   - message: Slimepeople crewmembers now spawn with survival boxes that contain emergency
@@ -3858,3 +3851,10 @@
   id: 7290
   time: '2024-09-05T16:43:00.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31738
+- author: Nimfar11
+  changes:
+  - message: Added a board for the AI upload console.
+    type: Add
+  id: 7291
+  time: '2024-09-05T18:20:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31867
