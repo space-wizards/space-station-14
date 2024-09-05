@@ -730,3 +730,10 @@
   id: 102
   time: '2024-09-05T12:27:30.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/208
+- author: Darkmajia
+  changes:
+  - message: Mucin and propulsion gel are now able to be spread with foam and smoke.
+    type: Add
+  id: 103
+  time: '2024-09-05T20:30:36.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/210
