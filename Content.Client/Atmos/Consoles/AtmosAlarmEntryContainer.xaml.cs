@@ -20,7 +20,8 @@ public sealed partial class AtmosAlarmEntryContainer : BoxContainer
     public NetEntity NetEntity;
     public EntityCoordinates? Coordinates;
 
-    private IResourceCache _cache;
+    private readonly IEntityManager _entManager;
+    private readonly IResourceCache _cache;
 
     private Dictionary<AtmosAlarmType, string> _alarmStrings = new Dictionary<AtmosAlarmType, string>()
     {
@@ -47,6 +48,7 @@ public sealed partial class AtmosAlarmEntryContainer : BoxContainer
     {
         RobustXamlLoader.Load(this);
 
+        _entManager = IoCManager.Resolve<IEntityManager>();
         _cache = IoCManager.Resolve<IResourceCache>();
 
         NetEntity = uid;
@@ -75,6 +77,9 @@ public sealed partial class AtmosAlarmEntryContainer : BoxContainer
 
     public void UpdateEntry(AtmosAlertsComputerEntry entry, bool isFocus, AtmosAlertsFocusDeviceData? focusData = null)
     {
+        NetEntity = entry.NetEntity;
+        Coordinates = _entManager.GetCoordinates(entry.Coordinates);
+
         // Load fonts
         var normalFont = new VectorFont(_cache.GetResource<FontResource>("/Fonts/NotoSansDisplay/NotoSansDisplay-Regular.ttf"), 11);
 

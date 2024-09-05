@@ -355,9 +355,7 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
             // On click
             newEntryContainer.FocusButton.OnButtonUp += args =>
             {
-                var prevTrackedEntity = _trackedEntity;
-
-                if (_trackedEntity == entry.NetEntity)
+                if (_trackedEntity == newEntryContainer.NetEntity)
                 {
                     _trackedEntity = null;
                 }
@@ -365,20 +363,22 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
                 else
                 {
                     _trackedEntity = newEntryContainer.NetEntity;
-                    NavMap.CenterToCoordinates(_entManager.GetCoordinates(entry.Coordinates));
+
+                    if (newEntryContainer.Coordinates != null)
+                        NavMap.CenterToCoordinates(newEntryContainer.Coordinates.Value);
                 }
 
                 // Send message to console that the focus has changed
                 SendFocusChangeMessageAction?.Invoke(_trackedEntity);
 
                 // Update affected UI elements across all tables
-                UpdateConsoleTable(console, AlertsTable, _trackedEntity, prevTrackedEntity);
-                UpdateConsoleTable(console, AirAlarmsTable, _trackedEntity, prevTrackedEntity);
-                UpdateConsoleTable(console, FireAlarmsTable, _trackedEntity, prevTrackedEntity);
+                UpdateConsoleTable(console, AlertsTable, _trackedEntity);
+                UpdateConsoleTable(console, AirAlarmsTable, _trackedEntity);
+                UpdateConsoleTable(console, FireAlarmsTable, _trackedEntity);
             };
 
             // On toggling the silence check box
-            newEntryContainer.SilenceCheckBox.OnToggled += _ => OnSilenceAlertsToggled(entry.NetEntity, newEntryContainer.SilenceCheckBox.Pressed);
+            newEntryContainer.SilenceCheckBox.OnToggled += _ => OnSilenceAlertsToggled(newEntryContainer.NetEntity, newEntryContainer.SilenceCheckBox.Pressed);
 
             // Add the entry to the current table
             table.AddChild(newEntryContainer);
@@ -395,48 +395,33 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
             return;
         }
 
-        var entryContainer = tableChild as AtmosAlarmEntryContainer;
-        var silenced = console.SilencedDevices;
-
-        if (entryContainer == null)
-            return;
+        var entryContainer = (AtmosAlarmEntryContainer)tableChild;
 
         entryContainer.UpdateEntry(entry, entry.NetEntity == _trackedEntity, focusData);
-        entryContainer.SilenceCheckBox.Pressed = (silenced.Contains(entry.NetEntity) || _deviceSilencingProgress.ContainsKey(entry.NetEntity));
+
+        if (_trackedEntity != entry.NetEntity)
+        {
+            var silenced = console.SilencedDevices;
+            entryContainer.SilenceCheckBox.Pressed = (silenced.Contains(entry.NetEntity) || _deviceSilencingProgress.ContainsKey(entry.NetEntity));
+        }
+
         entryContainer.SilenceAlarmProgressBar.Visible = (table == AlertsTable && _deviceSilencingProgress.ContainsKey(entry.NetEntity));
     }
 
-    private void UpdateConsoleTable(AtmosAlertsComputerComponent console, Control table, NetEntity? currTrackedEntity, NetEntity? prevTrackedEntity)
+    private void UpdateConsoleTable(AtmosAlertsComputerComponent console, Control table, NetEntity? currTrackedEntity)
     {
-        foreach (var child in table.Children)
+        foreach (var tableChild in table.Children)
         {
-            if (child is not AtmosAlarmEntryContainer)
+            if (tableChild is not AtmosAlarmEntryContainer)
                 continue;
 
-            var castAlert = (AtmosAlarmEntryContainer) child;
+            var entryContainer = (AtmosAlarmEntryContainer)tableChild;
 
-            if (castAlert.NetEntity == prevTrackedEntity)
-                castAlert.RemoveAsFocus();
+            if (entryContainer.NetEntity != currTrackedEntity)
+                entryContainer.RemoveAsFocus();
 
-            else if (castAlert.NetEntity == currTrackedEntity)
-                castAlert.SetAsFocus();
-
-            if (castAlert?.Coordinates == null)
-                continue;
-
-            var device = console.AtmosDevices.FirstOrNull(x => x.NetEntity == castAlert.NetEntity);
-
-            if (device == null)
-                continue;
-
-            var alarmState = GetAlarmState(device.Value.NetEntity);
-
-            if (currTrackedEntity != device.Value.NetEntity &&
-                !ShowInactiveAlarms.Pressed &&
-                alarmState <= AtmosAlarmType.Normal)
-                continue;
-
-            AddTrackedEntityToNavMap(device.Value, alarmState);
+            else if (entryContainer.NetEntity == currTrackedEntity)
+                entryContainer.SetAsFocus();
         }
     }
 
@@ -484,7 +469,12 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
             var t = remainingTime - args.DeltaSeconds;
 
             if (t <= 0)
+            {
                 _deviceSilencingProgress.Remove(device);
+
+                if (device == _trackedEntity)
+                    _trackedEntity = null;
+            }
 
             else
                 _deviceSilencingProgress[device] = t;
