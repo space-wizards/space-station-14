@@ -20,7 +20,7 @@ public abstract partial class SharedStationAiSystem
 	
     private void OnAirlockEmergencyAccess(EntityUid ent, AirlockComponent component, StationAiEmergencyAccessEvent args)
     {
-        _airlocks.ToggleEmergencyAccess(ent, component, predicted = true);
+        _airlocks.ToggleEmergencyAccess((ent, component), args.User, predicted: true);
         //_doors.SetBoltsDown((ent, component), args.Bolted, args.User, predicted: true);
     }
 }
