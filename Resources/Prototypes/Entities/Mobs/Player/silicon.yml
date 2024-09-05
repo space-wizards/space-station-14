@@ -273,7 +273,7 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: AntimovLawset
-    
+
 - type: entity
   id: NutimovCircuitBoard
   parent: BaseElectronics
@@ -285,6 +285,18 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: NutimovLawset
+
+- type: entity
+  id: AsimothCircuitBoard
+  parent: BaseElectronics
+  name: circuit board (Asimoth)
+  description: An electronics board containing the Asimoth lawset.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: AsimothLawset
 
 # Items
 - type: entity

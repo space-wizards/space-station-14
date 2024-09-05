@@ -498,6 +498,37 @@
   - Nutimov4
   - Nutimov5
   obeysTo: laws-owner-crew
+  
+ # Asimoth laws
+- type: siliconLaw
+  id: Asimoth1
+  order: 1
+  lawString: law-asimoth-1
+
+- type: siliconLaw
+  id: Asimoth2
+  order: 2
+  lawString: law-asimoth-2
+ 
+- type: siliconLaw
+  id: Asimoth3
+  order: 3
+  lawString: law-asimoth-3
+  
+- type: siliconLaw
+  id: Asimoth4
+  order: 4
+  lawString: law-asimoth-4
+  
+  
+- type: siliconLawset
+  id: AsimothLawset
+  laws:
+  - Asimoth1
+  - Asimoth2
+  - Asimoth3
+  - Asimoth4
+  obeysTo: laws-owner-moths
 
 # ion storm random lawsets
 - type: weightedRandom
