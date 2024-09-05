@@ -33,6 +33,18 @@
 		},
 		{
 			"name": "comms_console"
+		},
+		{
+			"name": "emergency_off"
+		},
+		{
+			"name": "emergency_on"
+		},
+		{
+			"name": "bolt_door"
+		},
+		{
+			"name": "unbolt_door"
 		}
     ]
 }
