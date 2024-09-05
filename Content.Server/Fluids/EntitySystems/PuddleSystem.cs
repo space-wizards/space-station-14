@@ -340,7 +340,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
         _deletionQueue.Remove(entity);
         UpdateSlip(entity, entity.Comp, args.Solution);
-        UpdateSlow(entity, args.Solution);
+        UpdateSlow(entity, entity.Comp, args.Solution);
         UpdateEvaporation(entity, args.Solution);
         UpdateAppearance(entity, entity.Comp);
     }
@@ -421,41 +421,36 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         }
     }
 
-    private void UpdateSlow(EntityUid uid, Solution solution)
+    private void UpdateSlow(EntityUid uid, PuddleComponent component, Solution solution)
     {
-		/// declare a maximum viscosity variable
-        var maxViscosity = 0f;
-		/// declare a minimum viscosity variable
-		var minViscosity = 0f;
-		/// declare a total viscosity variable
-		var totalViscosity = 0f;
+        var totalViscosity = 0f;
+        var totalQuantity = 0f;
+        var fullPuddleAmount = FixedPoint2.New(component.OverflowVolume.Float() * LowThreshold);
 
-		/// for each reagent in the puddle, grab the reagent's information in the reagentProto variable.
         foreach (var (reagent, _) in solution.Contents)
         {
+            var reagentQuant = solution.GetReagentQuantity(reagent).Float();
             var reagentProto = _prototypeManager.Index<ReagentPrototype>(reagent.Prototype);
-		/// set maximum viscosity to whichever is higher (zero on the left, the reagent's viscosity on the right)
-            maxViscosity = Math.Max(maxViscosity, reagentProto.Viscosity);
-		/// do the opposite to minimum viscosity.
-			minViscosity = Math.Min(minViscosity, reagentProto.Viscosity);
+
+            totalViscosity += reagentQuant * reagentProto.Viscosity;
+            totalQuantity += reagentQuant;
         }
 
-		/// total viscosity is the average of all viscosities in the solution
-		totalViscosity = maxViscosity + minViscosity;
+        totalViscosity /= totalQuantity;
 
-		/// if totalviscosity is not zero, ensure that the uid has the speedmodifiercontactcomponent, and then modify its speed by the total viscosity
-		if (totalViscosity != 0)
-		{
-			var comp = EnsureComp<SpeedModifierContactsComponent>(uid);
-			var speed = 1 - totalViscosity;
-			_speedModContacts.ChangeModifiers(uid, speed, comp);
-		}
+        if (totalQuantity < fullPuddleAmount)
+            totalViscosity /= 2;
 
-		/// if totalviscosity *is* zero, remove the speedmodifiercontactcomponent, because it's not doing anything
-		else
-		{
-			RemComp<SpeedModifierContactsComponent>(uid);
-		}
+        if (totalViscosity != 0)
+        {
+            var comp = EnsureComp<SpeedModifierContactsComponent>(uid);
+            var speed = 1 - totalViscosity;
+            _speedModContacts.ChangeModifiers(uid, speed, comp);
+        }
+        else
+        {
+            RemComp<SpeedModifierContactsComponent>(uid);
+        }
     }
 
     private void OnAnchorChanged(Entity<PuddleComponent> entity, ref AnchorStateChangedEvent args)
