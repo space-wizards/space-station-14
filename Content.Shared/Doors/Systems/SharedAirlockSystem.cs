@@ -1,4 +1,5 @@
 using Content.Shared.Doors.Components;
+using Robust.Shared.Audio.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Prying.Components;
 using Content.Shared.Wires;
@@ -11,6 +12,7 @@ public abstract class SharedAirlockSystem : EntitySystem
     [Dependency] protected readonly SharedDoorSystem DoorSystem = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
     [Dependency] private readonly SharedWiresSystem _wiresSystem = default!;
+    [Dependency] protected readonly SharedAudioSystem Audio = default!;
 
     public override void Initialize()
     {
@@ -123,11 +125,20 @@ public abstract class SharedAirlockSystem : EntitySystem
         Appearance.SetData(uid, DoorVisuals.EmergencyLights, component.EmergencyAccess);
     }
 
-    public void ToggleEmergencyAccess(EntityUid uid, AirlockComponent component)
+    public void ToggleEmergencyAccess(EntityUid uid, AirlockComponent component, EntityUid? user = null, bool predicted = false)
     {
+        if(!component.Powered)
+            return;
+		
         component.EmergencyAccess = !component.EmergencyAccess;
         Dirty(uid, component); // This only runs on the server apparently so we need this.
         UpdateEmergencyLightStatus(uid, component);
+		
+        var sound = component.EmergencyAccess ? component.EmergencyOnSound : component.EmergencyOffSound;
+        if (predicted)
+            Audio.PlayPredicted(sound, uid, user: user);
+        else
+            Audio.PlayPvs(sound, uid);
     }
 
     public void SetAutoCloseDelayModifier(AirlockComponent component, float value)

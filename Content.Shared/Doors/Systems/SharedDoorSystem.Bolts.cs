@@ -77,7 +77,7 @@ public abstract partial class SharedDoorSystem
 
     public void SetBoltsDown(Entity<DoorBoltComponent> ent, bool value, EntityUid? user = null, bool predicted = false)
     {
-        if (ent.Comp.BoltsDown == value)
+        if (ent.Comp.BoltsDown == value || !ent.Comp.Powered)
             return;
 
         ent.Comp.BoltsDown = value;
