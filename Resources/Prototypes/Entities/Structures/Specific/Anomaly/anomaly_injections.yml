@@ -260,7 +260,7 @@
   components:
   - type: Anomaly
     corePrototype: AnomalyCoreGravity
-    coreInertPrototype: AnomalyCoreGravityInert
+    coreInertPrototype: AnomalyGravity
   - type: PointLight
     color: "#1e070e"
   - type: Sprite
