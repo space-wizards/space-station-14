@@ -628,16 +628,6 @@
     - id: RandomArtifactSpawner
 
 - type: artifactEffect
-  id: EffectAnomaly
-  targetDepth: 3
-  effectHint: artifact-effect-hint-creation
-  components:
-  - type: SpawnArtifact
-    maxSpawns: 1
-    spawns:
-    - id: RandomAnomalySpawner
-
-- type: artifactEffect
   id: EffectPortal
   targetDepth: 3
   effectHint: artifact-effect-hint-displacement
@@ -658,6 +648,27 @@
       prob: 0.03
     - id: PresentRandomInsane
       prob: 0.02
+
+- type: artifactEffect
+  id: EffectDuckDuckGooseSpawn
+  targetDepth: 3
+  effectHint: artifact-effect-hint-creation
+  components:
+  - type: SpawnArtifact
+    maxSpawns: 2
+    spawns:
+    - id: SpawnMobDuckDuckGoose
+      orGroup: fauna
+
+- type: artifactEffect
+  id: EffectAnomaly
+  targetDepth: 4
+  effectHint: artifact-effect-hint-creation
+  components:
+  - type: SpawnArtifact
+    maxSpawns: 1
+    spawns:
+    - id: RandomAnomalySpawner
 
 - type: artifactEffect
   id: EffectBoom
@@ -845,11 +856,11 @@
     maxSpawns: 7
     spawns:
     - id: PresentRandom
-      prob: 0.95
+      prob: 0.9
     - id: PresentRandomUnsafe
-      prob: 0.3
+      prob: 0.06
     - id: PresentRandomInsane
-      prob: 0.2
+      prob: 0.03
 
 - type: artifactEffect
   id: EffectBookSpawn
