@@ -34,6 +34,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
     [Dependency] private   readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private   readonly SharedContainerSystem _containers = default!;
     [Dependency] private   readonly SharedDoorSystem _doors = default!;
+    [Dependency] private   readonly SharedAirlockSystem _airlocks = default!;
     [Dependency] private   readonly SharedEyeSystem _eye = default!;
     [Dependency] protected readonly SharedMapSystem Maps = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;

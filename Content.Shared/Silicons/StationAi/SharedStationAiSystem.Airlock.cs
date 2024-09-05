@@ -10,11 +10,18 @@ public abstract partial class SharedStationAiSystem
     private void InitializeAirlock()
     {
         SubscribeLocalEvent<DoorBoltComponent, StationAiBoltEvent>(OnAirlockBolt);
+        SubscribeLocalEvent<AirlockComponent, StationAiEmergencyAccessEvent>(OnAirlockEmergencyAccess);
     }
 
     private void OnAirlockBolt(EntityUid ent, DoorBoltComponent component, StationAiBoltEvent args)
     {
         _doors.SetBoltsDown((ent, component), args.Bolted, args.User, predicted: true);
+    }
+	
+    private void OnAirlockEmergencyAccess(EntityUid ent, AirlockComponent component, StationAiEmergencyAccessEvent args)
+    {
+        _airlocks.ToggleEmergencyAccess(ent, component, predicted = true);
+        //_doors.SetBoltsDown((ent, component), args.Bolted, args.User, predicted: true);
     }
 }
 
@@ -22,4 +29,10 @@ public abstract partial class SharedStationAiSystem
 public sealed class StationAiBoltEvent : BaseStationAiAction
 {
     public bool Bolted;
+}
+
+[Serializable, NetSerializable]
+public sealed class StationAiEmergencyAccessEvent : BaseStationAiAction
+{
+    public bool EmergencyAccess;
 }
