@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: Dutch-VanDerLinde
-  changes:
-  - message: Syndicate sleeper agents are now opt-in. You can opt-in with the antagonist
-      preferences menu.
-    type: Tweak
-  - message: ERT are no longer able to become sleeper agents.
-    type: Fix
-  id: 6787
-  time: '2024-06-20T11:12:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27817
 - author: neutrino-laser
   changes:
   - message: Syndicate smokes pack now has 10 cigarettes as intended.
@@ -3860,3 +3850,10 @@
   id: 7286
   time: '2024-09-05T09:31:03.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31730
+- author: Fildrance
+  changes:
+  - message: random uplink discounts for traitors
+    type: Add
+  id: 7287
+  time: '2024-09-05T12:12:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26297
