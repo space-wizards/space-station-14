@@ -9,4 +9,8 @@
       components:
         - type: StationNameSetup
           mapNameTemplate: "Trieste"
+        - type: StationJobs
+          availableJobs:
+            #service
+            ServiceWorker: [ 3, 3 ]
 
