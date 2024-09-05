@@ -100,7 +100,7 @@
     - state: idintern-service
 
 - type: entity
-  parent: IDCardStandard
+  parent: [IDCardStandard, BaseGrandTheftContraband]
   id: CaptainIDCard
   name: captain ID card
   components:
@@ -538,24 +538,6 @@
     - state: ert_security
   - type: IdCard
     jobTitle: ERT Field Officer
-
-- type: entity
-  parent: IDCardStandard
-  id: CentcomIDCardSyndie
-  name: command officer ID card
-  suffix: Fake
-  components:
-  - type: Sprite
-    layers:
-    - state: centcom
-    - state: idcentcom
-  - type: Item
-    heldPrefix: blue
-  - type: IdCard
-    jobTitle: Central Commander
-  - type: Access
-    tags:
-    - Maintenance
 
 - type: entity
   parent: IDCardStandard

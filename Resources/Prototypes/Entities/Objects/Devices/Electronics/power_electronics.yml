@@ -73,7 +73,7 @@
   parent: BaseElectronics
   id: SolarTrackerElectronics
   name: solar tracker electronics
-  description: Advanced circuit board used to create a solar tracking device thus allowing connect solar panels to track via a solar tracking computer.
+  description: Advanced circuit board used to track the nearest star.
   components:
     - type: Sprite
       sprite: Objects/Misc/module.rsi

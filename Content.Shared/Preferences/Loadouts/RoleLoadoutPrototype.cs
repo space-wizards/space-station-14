@@ -1,3 +1,4 @@
+using Content.Shared.Dataset;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Preferences.Loadouts;
@@ -16,9 +17,16 @@ public sealed partial class RoleLoadoutPrototype : IPrototype
     public string ID { get; } = string.Empty;
 
     /// <summary>
+    /// Should we use a random name for this loadout?
+    /// </summary>
+    [DataField]
+    public ProtoId<DatasetPrototype>? NameDataset;
+
+    // Not required so people can set their names.
+    /// <summary>
     /// Groups that comprise this role loadout.
     /// </summary>
-    [DataField(required: true)]
+    [DataField]
     public List<ProtoId<LoadoutGroupPrototype>> Groups = new();
 
     /// <summary>
