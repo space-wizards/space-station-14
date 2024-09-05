@@ -4,6 +4,7 @@
   description: An intercom. For when the station just needs to know something.
   abstract: true
   components:
+  - type: StationAiWhitelist
   - type: WallMount
   - type: ApcPowerReceiver
   - type: Electrified
@@ -77,8 +78,8 @@
     graph: Intercom
     node: intercom
   - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallic
   - type: Destructible
     thresholds:
       - trigger:

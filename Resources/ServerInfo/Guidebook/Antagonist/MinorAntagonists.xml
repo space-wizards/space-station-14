@@ -6,72 +6,61 @@
   # Revenant
 
   <Box>
-    <GuideEntityEmbed Entity="MobRevenant" Caption=""/>
-    <GuideEntityEmbed Entity="Ectoplasm" Caption=""/>
+    <GuideEntityEmbed Entity="MobRevenant"/>
   </Box>
 
-  A Revenant is given powers to haunt the crew and steal life essence from them.
-
-  ## Essence
-
-  - Your [color=#a4885c]essence[/color] is your very own life force and a way to use abilities for a cost, don't let it drop to 0.
-  - To gain [color=#a4885c]essence[/color] you first inspect various souls for their worth. More worthy souls grant more essence.
-  However merely checking their worth isn't enough for collecting [color=#a4885c]essence[/color]. You must siphon it either when the victim is critical, dead, or sleeping.
-  - A good start is to go to medical or dorms but be wary, you are vulnerable to attacks when you siphon a soul. Taking damage reduces your [color=#a4885c]essence[/color]! So plan your attacks wisely.
-
-  ## Shop And Powers
-
-  - Using [color=#a4885c]stolen essence[/color] gotten from siphoning souls, you can gain skills for mischief such as environmental destruction, electrical disruption, and electrocution through the shop.
-  - Using powers leave you vulnerable to attacks for some time, plan ahead and prepare before attacking.
+  Revenants are ethereal beings made of ectoplasm that haunt the crew and steal [color=cyan]life essence[/color] from them.
+  - Your essence is your very own [bold]life force[/bold]. Taking damage reduces your essence.
+  - Essence is also spent to use [bold]abilities[/bold].
+  - To gain essence you first [bold]inspect[/bold] various souls for their worth. More worthy souls grant more essence. Then you must [bold]siphon[/bold] it either when the victim is crit, dead or asleep.
+  - [bold]Stolen essence[/bold] is used to purchase new abilities to incapacitate the crew easier.
+  - You are [bold]vulnerable[/bold] to attacks when you siphon a soul or use an ability. You can tell when you are vulnerable when you have a [italic]"Corporeal"[/italic] status effect.
 
   # Rat King
 
   <Box>
-    <GuideEntityEmbed Entity="MobRatKing" Scale="2.4" Caption="The Rat King"/>
+    <GuideEntityEmbed Entity="MobRatServant" Caption=""/>
+    <GuideEntityEmbed Entity="MobRatServant" Caption=""/>
+    <GuideEntityEmbed Entity="MobRatKing" Scale="2.4"/>
+    <GuideEntityEmbed Entity="MobRatServant" Caption=""/>
+    <GuideEntityEmbed Entity="MobRatServant" Caption=""/>
   </Box>
 
- A Rat King is a gigantic rat capable of eating an enormous amount of food, scampering under doors and tables, and raising an army of rats to defend them and do their bidding.
-
-  ## Abilities
-
-  Abilities come at the cost of some of the Rat King's hunger. Eat to replenish it.
-
-  <Box>
-   <GuideEntityEmbed Entity="MobMouse" Caption="Normal Mouse"/>
-   <GuideEntityEmbed Entity="MobRatServant" Caption="Rat Servant"/>
-  </Box>
-  - Raise an Army of [color=#a4885c]Rat Servants[/color]. You may command these [color=#a4885c]Rat Servants[/color] to stay in place, follow you, attack a target of your choice, or attack indiscriminately.
-  - Conjure a cloud of [color=#77b58e]ammonia[/color]. Note that [color=#77b58e]ammonia[/color] is mildly poisonous to others, but heals rats.
+  Rat Kings are abnormally large rodents capable of [color=cyan]raising huge rat armies[/color] by eating equally huge amounts of food.
+  - You have several abilities that come at the cost of your [bold]hunger[/bold].
+  - One ability is summoning [color=cyan]Rat Servants[/color] who you can [bold]command[/bold] to stay in place, follow you, attack a target of your choice or attack indiscriminately.
+  - You can conjure a cloud of [color=#77b58e]ammonia[/color], which is mildly poisonous to humans but heals rats.
+  - You can also [italic]"Rummage"[/italic] through any disposal unit by using the context menu. Use this to find [bold]scraps of food[/bold] to grow your army.
+  - Besides your abilities, you are [bold]stronger[/bold] than most other animals. You and your servants are capable of speech and you're both small enough to fit under airlocks and tables.
+  - [bold]Your underlings are still very fragile![/bold] Beware of spacings, explosions and the buisness end of a melee weapon.
 
   # Space Dragon
 
   <Box>
-    <GuideEntityEmbed Entity="MobDragon" Caption=""/>
-  </Box>
-
-  A Space Dragon is a giant extradimensional dragon that creates space carp rifts and eats the crew.
-
-  ## Abilities
-
-  - Devour critical or dead victims to heal slightly, or devour infrastructure such as doors, windows, and walls.
-
-  - Breathe out a powerful flaming sphere which will explode periodically along a straight flight path and explode when it hits something, igniting things along the way. Be careful, your carps are not immune to the Dragon's Breath!
-
-  <Box>
     <GuideEntityEmbed Entity="MobCarp" Caption=""/>
+    <GuideEntityEmbed Entity="CarpRift" Caption=""/>
+    <GuideEntityEmbed Entity="MobDragon"/>
     <GuideEntityEmbed Entity="CarpRift" Caption=""/>
     <GuideEntityEmbed Entity="MobCarp" Caption=""/>
   </Box>
 
-  - Summon a Carp Rift that periodically spawns [color=#a4885c]Space Carp[/color]. 
+  Space Dragons is are giant extradimensional fish that [color=cyan]create rifts and eat crew.[/color]
+  - Dragons have powerful jaws to [bold]devour[/bold] infrastructure such as doors, windows, and walls.
+  - Your [color=orange]dragon's breath[/color] is a flaming projectile which travels a straight flight path, exploding multiple times and igniting things along the way. Be careful, your carps are not immune to this!
+  - You have the ability to summon [bold]carp rifts[/bold] that periodically spawn [bold]space carp[/bold]. There can be 3 rifts active at any given time.
+  - Rifts charge up energy over a period of 5 minutes and are [bold]vulnerable[/bold] during this time.  After 5 minutes, it becomes invulnerable and will continue summoning carp as long as the dragon lives.
+  - You'll suffer a [bold]temporary debilitating feedback effect[/bold] if one of your rifts are destroyed before it's done charging.
+  - If a period of five minutes passes since your spawn or since the last time a rift was charging, [bold]you'll disappear.[/bold]
+  - Dragons who have the maximum of 3 fully charged rifts will [bold]never disappear[/bold], but they are still mortal.
 
-  ## Carp Rifts
+  # Slimes and Spiders
 
-  - Space Dragons may have up to three Carp Rifts active at any given time.
-  - Carp Rifts spawn a [color=#a4885c]Space Carp[/color] every thirty seconds while active.
-  - Rifts charge with extradimensional energy over a period of five minutes and are vulnerable during this time. Protect them! The space dragon will suffer a temporary debilitating feedback effect in the event that its rifts are destroyed before they are done charging.
-  - You may only charge one rift at any given time.
-  - After the rifts are done charging, they are invulnerable and will continue to spawn [color=#a4885c]Space Carp[/color] so long as the Dragon lives. 
-  - If a period of five minutes passes since the appearance of the Space Dragon or the last time a Carp Rift was charging and unless the Space Dragon already controls the maximum of three Carp Rifts, the Space Dragon will disappear. 
+  <Box>
+    <GuideEntityEmbed Entity="MobAdultSlimesBlueAngry" Caption=""/>
+    <GuideEntityEmbed Entity="MobGiantSpiderAngry" Caption=""/>
+  </Box>
 
+  Slimes and spiders have no remarkable features, but will [color=cyan]infest the station[/color] from time to time regardless. Both will give chase and attack anything they see.
+  - Slimes may deal extra [bold]cellular or posion damage[/bold], based upon their color. Water hurts them just as it would hurt a slime person.
+  - Spiders can lay [bold]webs[/bold], which non-spiders have a hard time moving through. They can easily be destroyed with a blade.
 </Document>

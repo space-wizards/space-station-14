@@ -19,10 +19,6 @@ public sealed class LoadoutTests
 
 - type: loadout
   id: TestJumpsuit
-  equipment: TestJumpsuit
-
-- type: startingGear
-  id: TestJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorGrey
 
