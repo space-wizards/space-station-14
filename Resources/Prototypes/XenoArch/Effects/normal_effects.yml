@@ -730,6 +730,16 @@
       orGroup: fauna
 
 - type: artifactEffect
+  id: EffectBigIgnite
+  targetDepth: 34
+  effectHint: artifact-effect-hint-release
+  components:
+  - type: IgniteArtifact
+    range: 8
+    minFireStack: 4
+    maxFireStack: 7
+
+- type: artifactEffect
   id: EffectFoamVeryDangerous
   targetDepth: 4
   effectHint: artifact-effect-hint-biochemical
@@ -840,6 +850,35 @@
       prob: 0.3
     - id: PresentRandomInsane
       prob: 0.2
+
+- type: artifactEffect
+  id: EffectBookSpawn
+  targetDepth: 4
+  artifact-effect-hint-creation
+  components:
+  - type: SpawnArtifact
+    maxSpawns: 1
+    spawns:
+    - id: BookRandom
+      prob: 0.95
+    - id: WizardsGrimoire
+      prob: 0.001
+    - id: SpawnSpellbook
+      prob: 0.01
+    - id: ForceWallSpellbook
+      prob: 0.01
+    - id: BlinkBook
+      prob: 0.01
+    - id: SmiteBook
+      prob: 0.003
+    - id: KnockSpellbook
+      prob: 0.01
+    - id: FireballSpellbook
+      prob: 0.01
+    - id: SpawnSpaceGreaseSpellbook
+      prob: 0.01
+    - id: ScrollRunes
+      prob: 0.01
 
 - type: artifactEffect
   id: EffectSingulo
