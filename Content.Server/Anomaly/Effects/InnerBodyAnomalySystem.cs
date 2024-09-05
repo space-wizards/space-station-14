@@ -78,13 +78,10 @@ public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
 
     private void OnSupercritical(Entity<InnerBodyAnomalyComponent> ent, ref AnomalySupercriticalEvent args)
     {
-        QueueDel(ent.Comp.Action);
-        //EntityManager.RemoveComponents(ent, ent.Comp.Components);
         if (!TryComp<BodyComponent>(ent, out var body))
             return;
 
         _body.GibBody(ent, body: body);
-        RemComp<InnerBodyAnomalyComponent>(ent);
     }
 
     private void OnShutdown(Entity<InnerBodyAnomalyComponent> ent, ref AnomalyShutdownEvent args)
@@ -92,7 +89,7 @@ public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
         _stun.TryParalyze(ent, TimeSpan.FromSeconds(4f), true);
 
         QueueDel(ent.Comp.Action);
-        //EntityManager.RemoveComponents(ent, ent.Comp.Components);
+        EntityManager.RemoveComponents(ent, ent.Comp.Components);
         RemComp<InnerBodyAnomalyComponent>(ent);
     }
 }

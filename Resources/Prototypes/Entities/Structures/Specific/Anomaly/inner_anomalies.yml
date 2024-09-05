@@ -1,6 +1,6 @@
 
 - type: entity
-  name: test anom mine
+  name: anom trap fire
   parent: BaseLandMine
   id: LandMineExplosiveANOM
   components:
@@ -45,7 +45,7 @@
             Heat: 3
 
 - type: entity
-  name: test anom mine 2
+  name: anom trap electric
   parent: BaseLandMine
   id: LandMineExplosiveANOM2
   components:
@@ -80,7 +80,7 @@
             Shock: 3
 
 - type: entity
-  name: test anom mine 3
+  name: anom trap shadow
   parent: BaseLandMine
   id: LandMineExplosiveANOM3
   components:
@@ -119,6 +119,59 @@
             maxRange: 25
           spawns:
           - ShadowKudzu
+      - type: DamageOnAttacked
+        damage:
+          types:
+            Cold: 3
+
+- type: entity
+  name: anom trap frost
+  parent: BaseLandMine
+  id: LandMineExplosiveANOM4
+  components:
+  - type: DeleteOnTrigger
+  - type: AddCompOnTrigger
+    toOther: true
+    components:
+    - type: InnerBodyAnomaly
+      startMessage: inner-anomaly-start-message-frost
+      layerSprite:
+        sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+        state: frost_eyes
+      components:
+      - type: Anomaly
+        maxPointsPerSecond: 40
+        deleteEntity: false
+        corePrototype: AnomalyCoreIce
+      - type: PointLight
+        radius: 1.3
+        energy: 2.5
+        color: "#befaff"
+      - type: ExplosionAnomaly
+        supercriticalExplosion: Cryo
+        explosionTotalIntensity: 150
+        explosionDropoff: 2
+        explosionMaxTileIntensity: 20
+      - type: ProjectileAnomaly
+        projectilePrototype: ProjectileIcicle
+        minProjectiles: 1
+        maxProjectiles: 4
+      - type: EntitySpawnAnomaly
+        entries:
+        - settings:
+            spawnOnStabilityChanged: true
+            minAmount: 3
+            maxAmount: 8
+            maxRange: 2
+          spawns:
+          - IceCrust
+      - type: TempAffectingAnomaly
+        tempChangePerSecond: -10
+        hotspotExposeTemperature: -500
+      - type: GasProducerAnomaly
+        releasedGas: 8 # Frezon. Please replace if there is a better way to specify this
+        releaseOnMaxSeverity: true
+        spawnRadius: 0
       - type: DamageOnAttacked
         damage:
           types:
