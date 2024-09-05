@@ -15,7 +15,6 @@ fibers-purple = purple
 fibers-red = red
 fibers-black = black
 fibers-blue = blue
-fibers-teal = teal
 fibers-brown = brown
 fibers-grey = grey
 fibers-green = green
