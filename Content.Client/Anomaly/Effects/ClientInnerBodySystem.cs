@@ -20,9 +20,11 @@ public sealed class ClientInnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
         if (ent.Comp.LayerSprite is null)
             return;
 
-        var index = sprite.LayerMapGet(ent.Comp.LayerMap);
+        if (!sprite.LayerMapTryGet(ent.Comp.LayerMap, out var index))
+            index = sprite.LayerMapReserveBlank(ent.Comp.LayerMap);
         sprite.LayerSetSprite(index, ent.Comp.LayerSprite);
         sprite.LayerSetVisible(index, true);
+        sprite.LayerSetShader(index, "unshaded");
     }
 
     private void OnCompShutdown(Entity<InnerBodyAnomalyComponent> ent, ref ComponentShutdown args)

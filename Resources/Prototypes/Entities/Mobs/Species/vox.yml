@@ -92,9 +92,6 @@
       sprite: "Effects/creampie.rsi"
       state: "creampie_vox" # Not default
       visible: false
-    - map: [ "inner_anomaly_layer" ] # Dynamically
-      shader: unshaded
-      visible: false
   - type: Inventory
     speciesId: vox
     displacements:

@@ -51,9 +51,6 @@
       sprite: "Effects/creampie.rsi"
       state: "creampie_human"
       visible: false
-    - map: [ "inner_anomaly_layer" ] # Dynamically
-      shader: unshaded
-      visible: false
   - type: DamageVisuals
     thresholds: [ 10, 20, 30, 50, 70, 100 ]
     targetLayers:
