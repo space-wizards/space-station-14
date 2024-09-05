@@ -156,6 +156,7 @@
     earliestStart: 40
     reoccurrenceDelay: 20
     minimumPlayers: 20
+    duration: null
   - type: SpaceSpawnRule
     spawnDistance: 0
   - type: AntagSpawner
