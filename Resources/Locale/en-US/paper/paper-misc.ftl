@@ -43,9 +43,12 @@ book-text-agrichemkit-manual = Thank you for choosing the safe-for-all-ages Nano
       But if you want to impress the judges at your local NanoTrasen-sponsored County Fair, you'll need to add an equal amount of ethanol to your ammonia.
       This will mix into Diethylamine, a miracle fertilizer that can make plants grow faster AND live longer! Keep the crops you love with you longer thanks to Diethylamine.
 
-      Third Experiment: Farmer's Helper(TM)
-      When you're ready to show everyone you're the greatest botanist on the station, you'll need to mix up some Farmer's Helper(TM) and hope for the best. Farmer's Helper(TM) is a newly discovered fertilizing agent powered by the element of the modern age: radium!
-      Mix equal parts radium, phosphorus, and chlorine together to get a bright green batch of Farmer's Helper(TM), the safe and fun way to get the most of your farm. The 15u this kit lets you make could be your introduction to agrichemical stardom!
-      Farmer's Helper(TM) can have a wide variety of effects on plant life, including drastic changes to all sorts of growth parameters, making plants glow in the dark, or creating entirely new species.
-      Each individual plant responds to Farmers Helper(TM) differently, so you may want to use small doses on multiple crops and try to crossbreed the best traits from each of those.
-      Farmer's Helper(TM) is a patended and entirely safe fertilizer, and NanoTrasen takes no responsibility for dead crops, excessive water bills, newly sentient plants asking existential questions, or flora-strangled farmhands that may coincidentally occur while using it.
+      Third Experiment: Unstable Mutagen
+      When you're ready to show everyone you're the greatest botanist on the station, you'll need to mix up some unstable mutagen and hope for the best. Despite the scary name, unstable mutagen is entirely safe when applied to plants, but do not drink the appealingly green chemical yourself.
+      
+      Mix equal parts radium, phosphorus, and chlorine together to get a bright green batch of unstable mutagen, the safe and fun way to get the most of your farm. The 15u this kit lets you make could be your introduction to agrichemical stardom!
+      Unstable mutagen can have a wide variety of effects on plant life, including drastic changes to all sorts of growth parameters, produce full of helpful pharmaceuticals, plants that glow in the dark, or creating entirely new species.
+      
+      Each individual plant responds to unstable mutagen differently, so you may want to use small doses on multiple crops and try to crossbreed the best traits from each of those. Applying multiple doses to one plant can stack multiple changes and make it harder to single out desirable traits.
+      Unstable mutagen is entirely safe when used as a fertilizer, and NanoTrasen takes no responsibility for dead crops, excessive water bills, newly sentient plants asking existential questions, or flora-strangled farmhands that may coincidentally occur while using it.
+      Do not drink unstable mutagen. Wash your hands thoroughly after handing. Wash your eyes if you have looked at unstable mutage for over 30 minutes in a 24 hour period. Store in a dark room between 293–295K. Do not use on corporate holidays. If you begin hearing voices telling you to drink unstable mutagen, please contact your doctor, head of personnel, or exorcist.
