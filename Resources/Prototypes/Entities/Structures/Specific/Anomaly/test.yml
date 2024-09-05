@@ -120,7 +120,7 @@
   components:
   - type: Anomaly
     corePrototype: AnomalyCoreFlora
-  - type: PointLights
+  - type: PointLight
     color: "#6270bb"
   - type: TileSpawnAnomaly
     entries:
@@ -136,7 +136,7 @@
         maxAmount: 15
         maxRange: 7
       floor: FloorAstroGrass
-    type: EntitySpawnAnomaly
+  - type: EntitySpawnAnomaly
     entries:
     - settings:
         spawnOnPulse: true

@@ -8,7 +8,9 @@ using Content.Shared.Anomaly.Components;
 using Content.Shared.Anomaly.Effects;
 using Content.Shared.Body.Components;
 using Content.Shared.Chat;
+using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Physics.Events;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Anomaly.Effects;
@@ -24,16 +26,32 @@ public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
     [Dependency] private readonly StunSystem _stun = default!;
     [Dependency] private readonly JitteringSystem _jitter = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
 
     public override void Initialize()
     {
         base.Initialize();
+
+        SubscribeLocalEvent<InnerBodyAnomalyInjectorComponent, StartCollideEvent>(OnStartCollideInjector);
 
         SubscribeLocalEvent<InnerBodyAnomalyComponent, ComponentStartup>(OnCompStartup);
 
         SubscribeLocalEvent<InnerBodyAnomalyComponent, AnomalyPulseEvent>(OnPulse);
         SubscribeLocalEvent<InnerBodyAnomalyComponent, AnomalyShutdownEvent>(OnShutdown);
         SubscribeLocalEvent<InnerBodyAnomalyComponent, AnomalySupercriticalEvent>(OnSupercritical);
+    }
+
+    private void OnStartCollideInjector(Entity<InnerBodyAnomalyInjectorComponent> ent, ref StartCollideEvent args)
+    {
+        if (ent.Comp.Whitelist is not null && !_whitelist.IsValid(ent.Comp.Whitelist, args.OtherEntity))
+            return;
+        if (ent.Comp.Blacklist is not null && _whitelist.IsValid(ent.Comp.Blacklist, args.OtherEntity))
+            return;
+        if (!_mind.TryGetMind(ent, out _, out var mindComponent))
+            return;
+
+        EntityManager.AddComponents(args.OtherEntity, ent.Comp.InjectionComponents);
+        QueueDel(ent);
     }
 
     private void OnCompStartup(Entity<InnerBodyAnomalyComponent> ent, ref ComponentStartup args)
@@ -65,7 +83,7 @@ public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
                 default,
                 false,
                 mindComponent.Session.Channel,
-                Color.Red);
+                Color.FromSrgb(new Color(186, 52, 106)));
         }
 
         if (ent.Comp.ActionProto is not null)

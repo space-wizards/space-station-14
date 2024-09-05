@@ -1,96 +1,125 @@
 - type: entity
-  parent: BaseAnomalyTrap
+  name: anomaly injector
+  id: BaseAnomalyInjector
+  abstract: true
+  components:
+  - type: Physics
+    bodyType: Static
+    fixedRotation: true
+  - type: Fixtures
+    fixtures:
+      anom:
+        shape:
+          !type:PhysShapeCircle
+          radius: 2.27 # i love 27
+        hard: false
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: InnerBodyAnomalyInjector
+    whitelist:
+      components:
+      - Body
+      - Hands # Need some better way to filter only humanoid players
+    blacklist:
+      components:
+      - Anomaly
+
+- type: entity
+  parent: BaseAnomalyInjector
   id: AnomalyTrapPyroclastic
   suffix: Pyroclastic
   components:
-  - type: InnerBodyAnomaly
-    injectionProto: AnomalyInjectionPyroclastic
-    startMessage: inner-anomaly-start-message-pyro
-    layerSprite:
-      sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
-      state: fire_eyes
+  - type: InnerBodyAnomalyInjector
+    injectionComponents:
+      - type: InnerBodyAnomaly
+        injectionProto: AnomalyInjectionPyroclastic
+        startMessage: inner-anomaly-start-message-pyro
+        layerSprite:
+          sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+          state: fire_eyes
 
-#- type: entity
-#  parent: BaseAnomalyTrap
-#  id: AnomalyTrapElectric
-#  suffix: Electric
-#  components:
-#  - type: AddCompOnTrigger
-#    components:
-#  - type: InnerBodyAnomaly
-#    startMessage: inner-anomaly-start-message-shock
-#    layerSprite:
-#      sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
-#      state: shock_eyes
-#    components:
-#
-#- type: entity
-#  parent: BaseAnomalyTrap
-#  id: AnomalyTrapShadow
-#  suffix: Shadow
-#  components:
-#  - type: AddCompOnTrigger
-#    components:
-#    - type: InnerBodyAnomaly
-#      startMessage: inner-anomaly-start-message-shadow
-#      layerSprite:
-#        sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
-#        state: shadow_eyes
-#      components:
-#
-#- type: entity
-#  parent: BaseAnomalyTrap
-#  id: AnomalyTrapIce
-#  suffix: Ice
-#  components:
-#  - type: AddCompOnTrigger
-#    components:
-#    - type: InnerBodyAnomaly
-#      startMessage: inner-anomaly-start-message-frost
-#      layerSprite:
-#        sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
-#        state: frost_eyes
-#      components:
-#
-#- type: entity
-#  parent: BaseAnomalyTrap
-#  id: AnomalyTrapFlora
-#  suffix: Flora
-#  components:
-#  - type: AddCompOnTrigger
-#    components:
-#    - type: InnerBodyAnomaly
-#      startMessage: inner-anomaly-start-message-flora
-#      layerSprite:
-#        sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
-#        state: flora_eyes
-#      components:
-#
-#- type: entity
-#  parent: BaseAnomalyTrap
-#  id: AnomalyTrapBluespace
-#  suffix: Bluespace
-#  components:
-#  - type: AddCompOnTrigger
-#    components:
-#    - type: InnerBodyAnomaly
-#      startMessage: inner-anomaly-start-message-bluespace
-#      layerSprite:
-#        sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
-#        state: bluespace_eyes
-#      components:
-#
-#- type: entity
-#  parent: BaseAnomalyTrap
-#  id: AnomalyTrapFlesh
-#  suffix: Flesh
-#  components:
-#  - type: AddCompOnTrigger
-#    components:
-#    - type: InnerBodyAnomaly
-#      startMessage: inner-anomaly-start-message-flesh
-#      layerSprite:
-#        sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
-#        state: flesh_eyes
-#      components:
-#
+- type: entity
+  parent: BaseAnomalyInjector
+  id: AnomalyTrapElectric
+  suffix: Electric
+  components:
+  - type: InnerBodyAnomalyInjector
+    injectionComponents:
+      - type: InnerBodyAnomaly
+        injectionProto: AnomalyInjectionElectric
+        startMessage: inner-anomaly-start-message-shock
+        layerSprite:
+          sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+          state: shock_eyes
+
+- type: entity
+  parent: BaseAnomalyInjector
+  id: AnomalyTrapShadow
+  suffix: Shadow
+  components:
+  - type: InnerBodyAnomalyInjector
+    injectionComponents:
+      - type: InnerBodyAnomaly
+        injectionProto: AnomalyInjectionShadow
+        startMessage: inner-anomaly-start-message-shadow
+        layerSprite:
+          sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+          state: shadow_eyes
+
+- type: entity
+  parent: BaseAnomalyInjector
+  id: AnomalyTrapIce
+  suffix: Ice
+  components:
+  - type: InnerBodyAnomalyInjector
+    injectionComponents:
+      - type: InnerBodyAnomaly
+        injectionProto: AnomalyInjectionIce
+        startMessage: inner-anomaly-start-message-frost
+        layerSprite:
+          sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+          state: frost_eyes
+
+- type: entity
+  parent: BaseAnomalyInjector
+  id: AnomalyTrapFlora
+  suffix: Flora
+  components:
+  - type: InnerBodyAnomalyInjector
+    injectionComponents:
+      - type: InnerBodyAnomaly
+        injectionProto: AnomalyInjectionFlora
+        startMessage: inner-anomaly-start-message-flora
+        layerSprite:
+          sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+          state: flora_eyes
+
+- type: entity
+  parent: BaseAnomalyInjector
+  id: AnomalyTrapBluespace
+  suffix: Bluespace
+  components:
+  - type: InnerBodyAnomalyInjector
+    injectionComponents:
+      - type: InnerBodyAnomaly
+        injectionProto: AnomalyInjectionBluespace
+        startMessage: inner-anomaly-start-message-bluespace
+        layerSprite:
+          sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+          state: bluespace_eyes
+
+- type: entity
+  parent: BaseAnomalyInjector
+  id: AnomalyTrapFlesh
+  suffix: Flesh
+  components:
+  - type: InnerBodyAnomalyInjector
+    injectionComponents:
+      - type: InnerBodyAnomaly
+        injectionProto: AnomalyInjectionFlesh
+        startMessage: inner-anomaly-start-message-flesh
+        layerSprite:
+          sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+          state: flesh_eyes
