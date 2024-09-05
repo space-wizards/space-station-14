@@ -209,3 +209,175 @@ login-tips-dataset-160 = TIP NUMBER 44 IS A LIE AND CANNOT BE TRUSTED
 login-tips-dataset-161 = what is considered "contraband" to most departments is simply "touys" to the brave and noble salvager
 login-tips-dataset-162 = Slimes breathe nitrogen by default, but can breathe plasma in a pinch!
 login-tips-dataset-163 = anyone can breathe plasma. if your brave enough.
+login-tips-dataset-164 = beware the wizard's grease
+login-tips-dataset-165 = Space Asshole can also be called Spussy.
+login-tips-dataset-166 = Sprinting is faster than walking.
+login-tips-dataset-167 = When playing a dwarf, one of your main weaknesses will be poison. Poison on dwarves cannot be healed by conventional means, meaning that you need to seek Root. Remember, if your Dwarves are poisoned, seek Root now!
+login-tips-dataset-168 =
+    Hints
+    - You must kill at least 15 enemies to move on.
+    - Do not waste weapons.
+    - Try to touch all booty.
+    - Do not touch skulls.
+    - Try to hurt the wizard every time you see him.
+login-tips-dataset-169 = if you play sci while high dont forget about the anomalies
+login-tips-dataset-170 = please use your medipen please pleas eplease please please ppleaee pleade please plase plese
+login-tips-dataset-171 = Ojs1324jofw@asteroidasteroidasteroid.net is a trustworthy email !
+login-tips-dataset-172 =
+    If you're reading this, the web
+    server was installed correctly.™
+login-tips-dataset-173 = I’m calling from the future new med update, make sure to remove the bullets from the body before stitching them up otherwise they’ll be 3% slower
+login-tips-dataset-174 = I'm calling from the future new med update, make sure to- OH GOD A SECOND PLANE
+login-tips-dataset-175 = How do I long onto FuckWeb
+login-tips-dataset-176 = You can use a calculator to solve math problems and also play games!!!
+login-tips-dataset-177 = What the fuck did you just fucking say about me, you little bitch? I'll have you know I graduated top of my class in the Security Interns, and I've been involved in numerous secret raids on the Syndicate, and I have over 300 confirmed kills. I am trained in gorilla warfare and I'm the top sniper in the entire NT security forces. You are nothing to me but just another target. I will wipe you the fuck out with precision the likes of which has never been seen before in this Sector, mark my fucking words. You think you can get away with saying that shit to me over the fax? Think again, fucker. As we speak I am contacting my secret network of spies across the station and your encryption key is being traced right now so you better prepare for the storm, maggot. The storm that wipes out the pathetic little thing you call your life. You're fucking dead, kid. I can be anywhere, anytime, and I can kill you in over seven hundred ways, and that's just with my bare hands. Not only am I extensively trained in unarmed combat, but I have access to the entire arsenal of the Head of Security and I will use it to its full extent to wipe your miserable ass off the face of the continent, you little shit. If only you could have known what unholy retribution your little "clever" comment was about to bring down upon you, maybe you would have held your fucking tongue. But you couldn't, you didn't, and now you're paying the price, you goddamn idiot. I will shit fury all over you and you will drown in it. You're fucking dead, kiddo.
+login-tips-dataset-178 = Clowns can do whatever they want with no repurcussions. Weld that medical door shut for laughs!
+login-tips-dataset-179 = energncy medbipen use yoeur please emierngrny meidepien please pen emergency medipen pen emergeny
+login-tips-dataset-180 = He'll do anything for his wounded warrior... even wooing him a widow. In a world of orcs...
+login-tips-dataset-181 = AMAZON.COM
+login-tips-dataset-182 = eeyikes! pepperoni is too spicy for me
+login-tips-dataset-183 =
+    🚨URGENT — PepperySplash, a fighting game player in Canada was mandated to take Pfizer's COVID-19 vaccine, 3 days later, he cannot stop shaking, "I'm a prisoner in my own home"
+    This should be considered a crime.
+login-tips-dataset-184 = amazing correlation between being a miracord user and getting bonked on the head
+login-tips-dataset-185 = Discord... It's a funny word, isn't it. It means a disagreement, a lack of harmony. Without cordence. But, cord, a cable... Connection. Like the one between us. Discord is down and you have to make us whole again. I'll be waiting for you in general chat, Sam. Come and PM me.
+login-tips-dataset-186 = I got demons. Who doesn’t. Ghosts, frattering about. Sometimes I get teleported to a maze, hell of a thing. Fight a minotaur. Beast of a man
+login-tips-dataset-187 = Everything in this world is part of my game.
+login-tips-dataset-188 = vas that guy bothering you
+login-tips-dataset-189 = theyve been giving cloven hooved beasts the faces of men lately.
+login-tips-dataset-190 = the elements?
+login-tips-dataset-191 = THE STREETS ARE FUCKIN WITH SOUL CALIBUR NOW
+login-tips-dataset-192 = SAJAM, I'M ON YOUR WHITE ASS, AND WHEN I SEE YOU I'M GONNA PUT YOUR FACE ON A T-SHIRT, AND IT'S NOT GONNA BE A FUNNY ONE, EITHER
+login-tips-dataset-193 = I just want to stress this: Levi lost his entire squad. He didn’t lose 20% of his squad. He didn’t even lose 50%. He lost his whole squad. Look at what it’s done to him. You can see the death in his eyes, but he keeps on going. This is why Levi is one of my favorite characters.
+login-tips-dataset-194 = inhale gas to fill yourself with evil.
+login-tips-dataset-195 = you think that’s cock you’re sucking right now?
+login-tips-dataset-196 = our new head chef Barbecue Pistol is going to rock your world with his brand new fry sauce which is a mix of ketchup and mayonnaise and a little sriracha for that pistol kick
+login-tips-dataset-197 = giant stogie in my mouth while i’m deadlifting, slamming the weights and grunting and screaming as loud as i possibly can, spitting flecks of cigar tar sludge on the planet fitness employees while I yell at them about how the lunk alarm is too sensitive.  folks at this gym call me Mister Big Shot.  today I decide that medicine ball slams arent pumping me up as much as I’d like so I use the 75lb kettlebell instead.  manager tracks me down through the thick, full-flavored cloud and tells me i need to leave.  I jam the cherry into his eye and start biting and tearing at him like a chimpanzee.  drop the weights on his mangled body instead of re-racking them and grab my bag off the bench where it’s been sitting for a half hour.  i take a mighty swig from my gallon of milk - most of it falling on the floor.  that’s okay.  there’s always more protein somewhere.  as I walk out a cop in the parking lot sees me and immediately shoots me in the head.  i take one last drag off my cigar as my body turns into ash and flies away on the wind
+login-tips-dataset-198 = this is for you melinda 😔 ✊i hope you like it 🥺🎵they ought to teach 🧑‍🏫 this in school 🧐its not ❌ always cool 🥶 to be cool 😎what⁉️ (what❓)they 🫵 try to play 🎲 you for a fool 🥴like 💭 you see a girl whos unique 😲 its a treat 😃 cause shes sweet 🙂and she always seems to knock 💥 you off your feet ☺️you wanna say hey 👋 but you dont 🙁 (you dont 🙍‍♂️)your mom says tell her how you feel 🤒 but you wont 🙅‍♂️cause youre just too cool 🧊 to tell her truly ✅that your feelings are gettin unruly 💢 dont try and school me 🚫so she passes you by 🚶‍♀️ in the hall wayyoure staring at the wall 👁️👁️ tryina play 🤾‍♂️ while i sayyeah youre cool 😏 (what❓ 😨)really cool 🥶 just like ice ❄️ (ice❗)but you did nt real ize you never 😔 get this chance twice 2️⃣so youre busy playing cool now shes gone 😢 (shes gone 😩)gone unto a nother 🧍‍♂️ while i sing my funky song 🎶 i never passed up the chance 🤬i know this story 📖 seems long 😴 but when i know 🤔 the time 🕰️ is right for me 🤙 and you 🫵 i justflame on 🔥 flame on 🎆and on 👆 and on 👆 and on 👆 (flame on 🔥 flame on💥) (yeah 👊)flame on 😱 and on 😤 and on 🥵 and on 🥵 and on 🥵flame on 🔥 (i just flame on 😔 👊)🎵keep calm 🧘‍♂️ everyone 🫡don't panic 🗯️FLAME ON 👿w… ww whats happenin 😨we're sinking‼️ 👇into the center 🔥 of the earth 🌎
+login-tips-dataset-199 = If I saw that tip I’d uninstall the game
+login-tips-dataset-200 =
+    When no one was looking, Lex Luthor
+    took forty cakes. He took 40 cakes.
+    That's as many as four tens.
+    And that's terrible.
+login-tips-dataset-201 = Also try transitioning!
+login-tips-dataset-202 = "I am Sinistar, Beware I live!"
+login-tips-dataset-203 = There are 27 distinctly different babies for you to discover.
+login-tips-dataset-204 = Floortiles are projectile weapons
+login-tips-dataset-205 = Red and blue make purple!!!! (Allegedly)
+login-tips-dataset-206 = Some of Dublin's great pintmen have been known to put away thirty pints or more in a day.
+login-tips-dataset-207 = So the peashooter has many forms, fire, ice, electric, shoot, even shadow.
+login-tips-dataset-208 = Remember, every character in the game is a real person, and it's your job to get them out.
+login-tips-dataset-209 = yo yo piraka
+login-tips-dataset-210 = some hats may allow you to speak in diffrent languages (what do you mean they havent added language yet)
+login-tips-dataset-211 = Gur jbex jvyy or qbar jura vg vf qbar. Cenvfr Ratvar.
+login-tips-dataset-212 = Try to hurt the wizard every time you see him.
+login-tips-dataset-213 = X ∆ O X
+login-tips-dataset-214 = Bandits on the roads. My advice: keep one eye watching the trail, and the other watching your back.
+login-tips-dataset-215 = sometimes engineering needs to be the antag
+login-tips-dataset-216 = who the fuck gave us hardwood floors?
+login-tips-dataset-217 = lying in-character is a bannable offense
+login-tips-dataset-218 = wait, someone lied to you? they can't do that, that's illegal
+login-tips-dataset-219 = If you play 1,000 hours of janitor, you unlock admin!
+login-tips-dataset-220 = Janitor is the only role outside of security allowed to carry firearms on green status.  If security disputes this, tell them to read a book for once in their lives
+login-tips-dataset-221 = Howdy engineers.  Do you feel like you’re not being taken seriously?  Is cargo not moving fast enough for your satisfaction?  Do you just want to show them all?  Try holding atmos hostage.  There’s nothing in the rules that says you can’t.
+login-tips-dataset-222 = Regardless of dissenting arguments, roleplaying that you saw the stations doom in a prophetic dream is in fact valid and allows you to rip up every anchorable floor panel in the station without penalty, as well as weld shut all external airlocks.  It’s fair play!
+login-tips-dataset-223 = You can deny thief players victory by preemptively murdering all station pets.  Smart and effective
+login-tips-dataset-224 = If you sever a part of the station it becomes it’s own entity by space law and security loses all jurisdiction there.  Try it out yourself
+login-tips-dataset-225 = Rats and mice do not have brains. As such, Scientists cannot make cyborg mice.
+login-tips-dataset-226 = Butlers are a neutral party to all engagements.
+login-tips-dataset-227 = As Bartender: It is your moral imperative to beanbag anyone caught breaking your metamorphic glasses.
+login-tips-dataset-228 = As Bartender: Spike your drinks with whatever reagents you can get your hands on! You'll be the talk of the town.
+login-tips-dataset-229 = Dude the syndicate is here and they know you’re high and they’re after you
+login-tips-dataset-230 = Dude CentComm and the Syndicate both know you're high and they're forming a temporary alliance to Get you
+login-tips-dataset-231 = inject radium into EVERYONE
+login-tips-dataset-232 = Hi o/
+login-tips-dataset-233 = To this day, Addie fizz is still balling
+login-tips-dataset-234 = As a Cargo Technician: If security doesn't find out about your gun stash, it isn't illegal!
+login-tips-dataset-235 = As a Salvage Specialist: They will never find your body!
+login-tips-dataset-236 = As Quartermaster: Spending your money on lottery crates is a moral and legal imperative!
+login-tips-dataset-237 = Any document is official if it looks official.
+login-tips-dataset-238 = Dark elves, also known as Dunmer, are natives of Morrowind - a land many consider alien and inhospitable.
+login-tips-dataset-239 = Use your pen to fuck with bounties it’s funny and it’s free
+login-tips-dataset-240 = Uriel Septim is sick, and wizards say his heir, Geldall Septim, and the younger Septims, Enman and Ebel, are just doppelgangers placed in the household during Jagar Tharn's tenure as Imperial Battlemage. They say the Guard charged a mob demanding destruction of the false heirs... lots of folks were killed.
+login-tips-dataset-241 = As a Research Assistant: You aren't qualified to lead an initiative, but you ARE qualified to die for one!
+login-tips-dataset-242 = As a Scientist: Anomalies are your enemy! Punch them!
+login-tips-dataset-243 = As Research Director: You're immune to explosions! Even without your hardsuit!
+login-tips-dataset-244 = hjonk
+login-tips-dataset-245 = walk without rhythm and it won't attract the worm
+login-tips-dataset-246 = welcome to burger king sorry its all so fucking hopeless
+login-tips-dataset-247 = "My dad works at space station 15 and You're all FIRED! NERD!" - Jonkbot (554)
+login-tips-dataset-248 = Last month the notorious clown Syndey Cook was blasted into space to spend the rest of his life aboard a one-man prison vessel, posing no further threat to personnel on the Station. But, it was revealed that a janitor was also placed on board by mistake, and is now trapped alone in space with the monster. A spokesman said "this is the one thing we didn't want to happen".
+login-tips-dataset-249 = Mama Mia! Mario is coming to Mortal Kombat.
+login-tips-dataset-250 = We're after your help too- Here's Security footage of a clown disguised as the Evac Shuttle.  He's been getting away with it on Space Station 14 for 12 years.  Do you know him?  Have you seen him?  Please Call.  We must catch that man, he really is a shit.
+login-tips-dataset-251 = Server Status: The server is currently DOWN for maintenance. Do not attempt to connect to the Server.
+login-tips-dataset-252 = You can’t be talking like that White Baby.
+login-tips-dataset-253 = You can’t be talking like that Human Baby.
+login-tips-dataset-254 =
+    Facts: Xbox one is beast
+    Homework=boring
+    Daft punk=awesome
+login-tips-dataset-255 = As a Chef, Oh my god ! Xiaopang is eating roast duck secretly
+login-tips-dataset-256 = who let you eat secretly
+login-tips-dataset-257 = As a Cargo Technician, drinking alcohol improves the handling of the shuttle while you pilot it!
+login-tips-dataset-258 = Remember! The perfect mixture of station air is 50% plasma 25% oxygen 25% nitrogen at 2000 kelvin and 2000 KPA
+login-tips-dataset-259 = He's not even paid for this.
+login-tips-dataset-260 = Joining this server is a bannable offense but dont worry im not a narc i wont tell nobody
+login-tips-dataset-261 = Hey man this game fucking sux wanna split a six pack with me and watch ds9 instead
+login-tips-dataset-262 = keep a look out for secret doors!
+login-tips-dataset-263 = Bicaradine is 1 part Chlorine to 3 parts Fluorine!
+login-tips-dataset-264 = Bicaradine is 3 parts Chlorine to 1 part Fluorine!
+login-tips-dataset-265 = its bicar*i*dine you morons
+login-tips-dataset-266 = Rosy is 3 parts Carbon to 1 part Cryptobiolin!
+login-tips-dataset-267 = Yellow and green make orange(lie(truth))
+login-tips-dataset-268 = if you write a good form, remember to copy it and save it to your computer for later. you never know when a mouse might be tempted to eat it
+login-tips-dataset-269 = Put mice in a cigarette box. They'll only escape into your bag and get stuck
+login-tips-dataset-270 = if Full auto isn't enough, Try using Fuller auto
+login-tips-dataset-271 = Sec officers love being pushed down!
+login-tips-dataset-272 = Engineers have special boots that prevent them from being pushed down.  If you see them working on critical infrastructure, try it yourself!
+login-tips-dataset-273 = i don't remember if it does anything on its own but i think it's needed for medicated sutures?
+login-tips-dataset-274 = Don’t go in rooms…
+login-tips-dataset-275 = fill a bag with killer tomatoes and carry them around for a fun surprise!
+login-tips-dataset-276 = The Blue Men are curious about music and how it connects us all.
+login-tips-dataset-277 = Pisk.
+login-tips-dataset-278 = PISKUN GRAMBA!!!!!!
+login-tips-dataset-279 = You need to make sure that you have enough hotdogs.
+login-tips-dataset-280 = "BEWARE! Your Fashion I-Level had decreased!"
+login-tips-dataset-281 = remember to unlock the armoury early so you can unload into the clown
+login-tips-dataset-282 = Tip: As borg, be sure to abuse all access!
+login-tips-dataset-283 = dont forget: slime blood is TASTY and they LOVE when you drink it
+login-tips-dataset-284 = instead of mediating conflict, departments should form tribes and go to war
+login-tips-dataset-285 = "Who?" - Space Carp (332)
+login-tips-dataset-286 = I’m tired man. Just like set up the ame to power one room and we can play checkers or something
+login-tips-dataset-287 = spaced room? dont worry! Simply place metal rods and use your rcd to construct floor tiles on top of them
+login-tips-dataset-288 = spaced tiles? worry! metal rods simply and place rcd to top floor use room on don't use of them to your construct
+login-tips-dataset-289 = The TEG is the easiest power source just connect two pipes one with a heater and the other with a cooler!
+login-tips-dataset-290 = "AI moved to show a true emotion once in it's life by snuffing out the Foul Shitter"
+login-tips-dataset-291 = "A crowbar can save your life! Smile : )"
+login-tips-dataset-292 = Take it easy, dude! But take it!
+login-tips-dataset-293 = There IS a spoon.
+login-tips-dataset-294 = Unfortunately, no one can be told what the Matrix is. You have to see it for yourself.
+login-tips-dataset-295 = CUM!
+login-tips-dataset-296 = Do your job, do your objectives
+login-tips-dataset-297 = each command gets their own personal baby shaker
+login-tips-dataset-298 = You can inject Liquids into Cigarettes for Funny Effects!
+login-tips-dataset-299 = did you know? Rat Kings can dislocate their joints to fit through small spaces.
+login-tips-dataset-300 = a mouse is a tiny item
+login-tips-dataset-301 = Always keep cigarettes on you. You never know when a smoke could save your life.
+login-tips-dataset-302 = Multiple mice fit in pill capsules!!!!
+login-tips-dataset-303 = Watch out for Purgillian Hissing Beasts
+login-tips-dataset-304 = watch out.
+login-tips-dataset-305 = Trust no one who isn’t a clown
+login-tips-dataset-306 = You can get free insulated gloves by taking 10 pairs of budget insulated gloves to the Head of Personnel and asking them to combine them all for you.
+login-tips-dataset-307 = I had some pasta today.
+login-tips-dataset-308 = Did you know? Slime is safe to drink!
+login-tips-dataset-309 = GERMANY REQUIRES TWENTY BAZILLION WARM MEDICAL DOCTORS
+login-tips-dataset-310 = ONLY CHRISTMAS STEALING SKELETONS ARE CREW
+login-tips-dataset-311 = Room cold? Light some plasma and it will warm right up!
+login-tips-dataset-312 = UNBROKEN GLASS WINDOWS ARE CONSIDERED A THREAT TO THE CREW.
+login-tips-dataset-313 =
+    Why do we fall?
+    So we can learn to pick ourselves up.
+    Batman Begin
+login-tips-dataset-314 = Let me tell you why you are here. You have come because you know something. What you know you can't explain but you feel it. You've felt it your whole life, felt that something is wrong with the world. You don't know what, but it's there like a splinter in your mind, driving you mad. It is this feeling that brought you to me. Do you know what I'm talking about?
+login-tips-dataset-315 = They Are Printing The Bible In The Vernacular Tongue And Distributing It Out To The Lay People
