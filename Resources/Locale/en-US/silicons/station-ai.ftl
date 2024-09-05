@@ -11,4 +11,7 @@ ai-close = Close actions
 bolt-close = Close bolt
 bolt-open = Open bolt
 
+emergency-access-on = Enable emergency access
+emergency-access-off = Disable emergency access
+
 toggle-light = Toggle light
