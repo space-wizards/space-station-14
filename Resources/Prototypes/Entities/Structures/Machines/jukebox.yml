@@ -36,7 +36,7 @@
     boardName: wires-board-name-jukebox
     layoutId: Jukebox
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
   - type: Destructible
     thresholds:
