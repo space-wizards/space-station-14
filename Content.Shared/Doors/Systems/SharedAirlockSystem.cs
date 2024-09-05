@@ -125,20 +125,20 @@ public abstract class SharedAirlockSystem : EntitySystem
         Appearance.SetData(uid, DoorVisuals.EmergencyLights, component.EmergencyAccess);
     }
 
-    public void ToggleEmergencyAccess(EntityUid uid, AirlockComponent component, EntityUid? user = null, bool predicted = false)
+    public void ToggleEmergencyAccess(Entity<AirlockComponent> ent, EntityUid? user = null, bool predicted = false)
     {
-        if(!component.Powered)
+        if(!ent.Comp.Powered)
             return;
 		
-        component.EmergencyAccess = !component.EmergencyAccess;
-        Dirty(uid, component); // This only runs on the server apparently so we need this.
-        UpdateEmergencyLightStatus(uid, component);
+        ent.Comp.EmergencyAccess = !ent.Comp.EmergencyAccess;
+        Dirty(ent, ent.Comp); // This only runs on the server apparently so we need this.
+        UpdateEmergencyLightStatus(ent, ent.Comp);
 		
-        var sound = component.EmergencyAccess ? component.EmergencyOnSound : component.EmergencyOffSound;
+        var sound = ent.Comp.EmergencyAccess ? ent.Comp.EmergencyOnSound : ent.Comp.EmergencyOffSound;
         if (predicted)
-            Audio.PlayPredicted(sound, uid, user: user);
+            Audio.PlayPredicted(sound, ent, user: user);
         else
-            Audio.PlayPvs(sound, uid);
+            Audio.PlayPvs(sound, ent);
     }
 
     public void SetAutoCloseDelayModifier(AirlockComponent component, float value)
