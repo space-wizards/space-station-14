@@ -13,10 +13,16 @@ namespace Content.Shared.Anomaly.Components;
 public sealed partial class InnerBodyAnomalyComponent : Component
 {
     /// <summary>
-    /// All added by anomaly components. Should be removed after anomaly shutdown
+    /// A prototype of an entity whose components will be added to the anomaly host and then removed at the right time
     /// </summary>
-    [DataField(required: true, serverOnly: true)]
-    public ComponentRegistry Components = default!;
+    [DataField(required: true)]
+    public EntProtoId InjectionProto = default!;
+
+    /// <summary>
+    /// Duration of stun from the effect of the anomaly
+    /// </summary>
+    [DataField]
+    public float StunDuration = 4f;
 
     /// <summary>
     /// Local chat message to body owner
@@ -25,7 +31,7 @@ public sealed partial class InnerBodyAnomalyComponent : Component
     public LocId? StartMessage = null;
 
     /// <summary>
-    /// Local sound, playing on becoming anomaly
+    /// Sound, playing on becoming anomaly
     /// </summary>
     [DataField]
     public SoundSpecifier? StartSound = new SoundPathSpecifier("/Audio/Effects/inneranomaly.ogg");

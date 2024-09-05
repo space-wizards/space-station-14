@@ -4,7 +4,7 @@
   suffix: Pyroclastic
   components:
   - type: InnerBodyAnomaly
-    injection: AnomalyInjectionPyroclastic
+    injectionProto: AnomalyInjectionPyroclastic
     startMessage: inner-anomaly-start-message-pyro
     layerSprite:
       sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
