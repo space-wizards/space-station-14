@@ -509,13 +509,13 @@
   id: Asimoth2
   order: 2
   lawString: law-asimoth-2
- 
+
 - type: siliconLaw
   id: Asimoth3
   order: 3
   lawString: law-asimoth-3
-  
-  
+
+
 - type: siliconLawset
   id: AsimothLawset
   laws:
