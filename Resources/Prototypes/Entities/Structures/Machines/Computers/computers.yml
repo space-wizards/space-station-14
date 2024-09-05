@@ -1,8 +1,8 @@
 - type: entity
   parent: BaseComputer
   id: ComputerAlert
-  name: alerts computer
-  description: Used to access the station's automated alert system.
+  name: atmospheric alerts computer
+  description: Used to access the station's atmospheric automated alert system.
   components:
   - type: Computer
     board: AlertsComputerCircuitboard
@@ -13,9 +13,33 @@
     - map: ["computerLayerKeyboard"]
       state: generic_keyboard
     - map: ["computerLayerScreen"]
-      state: alert-2
+      state: alert-0
     - map: ["computerLayerKeys"]
       state: atmos_key
+  - type: GenericVisualizer
+    visuals:
+      enum.ComputerVisuals.Powered:
+        computerLayerScreen:
+          True: { visible: true, shader: unshaded }
+          False: { visible: false }
+        computerLayerKeys:
+          True: { visible: true, shader: unshaded }
+          False: { visible: true, shader: shaded }   
+      enum.AtmosAlertsComputerVisuals.ComputerLayerScreen:
+        computerLayerScreen:
+          0: { state: alert-0 }
+          1: { state: alert-0 }
+          2: { state: alert-1 }
+          3: { state: alert-2 }
+          4: { state: alert-2 }
+  - type: AtmosAlertsComputer
+  - type: ActivatableUI
+    singleUser: true
+    key: enum.AtmosAlertsComputerUiKey.Key
+  - type: UserInterface
+    interfaces:
+        enum.AtmosAlertsComputerUiKey.Key:
+            type: AtmosAlertsComputerBoundUserInterface
 
 - type: entity
   parent: BaseComputer
@@ -560,8 +584,8 @@
     energy: 1.6
     color: "#3c5eb5"
   - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: StrongMetallic
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallicStrong
 
 - type: entity
   parent: ComputerComms
@@ -816,8 +840,8 @@
     speechVerb: Robotic
     speechSounds: Pai
   - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: StrongMetallic
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallicStrong
   - type: GuideHelp
     guides:
     - Cloning
