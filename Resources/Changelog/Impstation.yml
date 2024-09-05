@@ -1,4 +1,4 @@
-Entries:
+﻿Entries:
 - author: LucasTheDrgn
   changes:
   - message: More Accents
@@ -71,7 +71,8 @@ Entries:
   url: https://github.com/medabunny/imp-station-14/pull/92
 - author: formlessnameless
   changes:
-  - message: Bunch of upstream stuff merged into our branch - Includes Robust update, don't forget to run RUN_THIS.py
+  - message: Bunch of upstream stuff merged into our branch - Includes Robust update,
+      don't forget to run RUN_THIS.py
     type: Tweak
   id: 10
   time: '2024-08-14T22:10:38.0000000+00:00'
@@ -190,7 +191,8 @@ Entries:
   url: https://github.com/medabunny/imp-station-14/pull/110
 - author: TGRCdev
   changes:
-  - message: Fixed IP bans preventing non-banned players from connecting to SQLite-backed servers
+  - message: Fixed IP bans preventing non-banned players from connecting to SQLite-backed
+      servers
     type: Tweak
   id: 27
   time: '2024-08-18T13:59:09.0000000+00:00'
@@ -295,7 +297,8 @@ Entries:
   url: https://github.com/medabunny/imp-station-14/pull/127
 - author: Darkmajia
   changes:
-  - message: sleeper agents, random sentience, and event timings fix + announcer weights adjusted
+  - message: sleeper agents, random sentience, and event timings fix + announcer weights
+      adjusted
     type: Tweak
   id: 42
   time: '2024-08-21T17:45:40.0000000+00:00'
@@ -407,7 +410,7 @@ Entries:
   url: https://github.com/medabunny/imp-station-14/pull/145
 - author: formlessnameless
   changes:
-  - message: Fixing boat atmos stuff, small slight other changes that were pointed�
+  - message: "Fixing boat atmos stuff, small slight other changes that were pointed\uFFFD"
     type: Tweak
   id: 58
   time: '2024-08-25T01:54:24.0000000+00:00'
@@ -470,7 +473,8 @@ Entries:
   url: https://github.com/medabunny/imp-station-14/pull/157
 - author: formlessnameless
   changes:
-  - message: Upstream merge with Storage UI fixes, some AI fixes for radio and the like. Still working on Tesla issues
+  - message: Upstream merge with Storage UI fixes, some AI fixes for radio and the
+      like. Still working on Tesla issues
     type: Tweak
   id: 67
   time: '2024-08-28T03:52:31.0000000+00:00'
@@ -624,7 +628,8 @@ Entries:
   url: https://github.com/medabunny/imp-station-14/pull/181
 - author: formlessnameless
   changes:
-  - message: Exclusively Upstream stuff - Fixes AI Eye dying to singulo, Revs spawning as solid, other stuff. Includes RobustToolbox update, RUN_THIS.py required.
+  - message: Exclusively Upstream stuff - Fixes AI Eye dying to singulo, Revs spawning
+      as solid, other stuff. Includes RobustToolbox update, RUN_THIS.py required.
     type: Tweak
   id: 89
   time: '2024-08-31T15:39:37.0000000+00:00'
@@ -699,3 +704,10 @@ Entries:
   id: 99
   time: '2024-09-03T02:35:00.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/193
+- author: iaada
+  changes:
+  - message: Fix buff to salvage jetpacks
+    type: Fix
+  id: 100
+  time: '2024-09-05T07:28:13.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/206
