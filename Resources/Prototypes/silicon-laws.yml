@@ -515,11 +515,6 @@
   order: 3
   lawString: law-asimoth-3
   
-- type: siliconLaw
-  id: Asimoth4
-  order: 4
-  lawString: law-asimoth-4
-  
   
 - type: siliconLawset
   id: AsimothLawset
@@ -527,7 +522,6 @@
   - Asimoth1
   - Asimoth2
   - Asimoth3
-  - Asimoth4
   obeysTo: laws-owner-moths
 
 # ion storm random lawsets
@@ -548,5 +542,6 @@
     PainterLawset: 1
     AntimovLawset: 0.25
     NutimovLawset: 0.5
+    AsimothLawset: 0.25
     Drone: 0.5
     Ninja: 0.25
