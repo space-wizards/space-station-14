@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Dutch-VanDerLinde
-  changes:
-  - message: Lizard frills and moth antenna are now hidden by hardsuit helmets.
-    type: Tweak
-  id: 6785
-  time: '2024-06-20T00:09:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29214
 - author: metalgearsloth
   changes:
   - message: Fix entities getting stuck red after getting hit.
@@ -3859,3 +3852,11 @@
   id: 7284
   time: '2024-09-04T22:42:15.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30741
+- author: chromiumboy
+  changes:
+  - message: The atmospheric alert computers are now functional! Use them to locate
+      active air and fire alarms on the station.
+    type: Add
+  id: 7285
+  time: '2024-09-05T01:13:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25938
