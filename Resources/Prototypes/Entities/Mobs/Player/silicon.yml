@@ -69,8 +69,6 @@
   - type: CommunicationsConsole
     title: comms-console-announcement-title-station-ai
     color: "#2ed2fd"
-  - type: RadarConsole
-    followEntity: false
 
 
 # Ai
