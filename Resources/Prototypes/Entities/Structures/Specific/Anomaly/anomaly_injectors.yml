@@ -7,6 +7,11 @@
   - type: Physics
     bodyType: Static
     fixedRotation: true
+  - type: AmbientSound
+    range: 5
+    volume: -5
+    sound:
+      path: /Audio/Ambience/anomaly_drone.ogg
   - type: Fixtures
     fixtures:
       anom:

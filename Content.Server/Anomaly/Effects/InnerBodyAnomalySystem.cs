@@ -115,8 +115,8 @@ public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
 
     private void OnShutdown(Entity<InnerBodyAnomalyComponent> ent, ref AnomalyShutdownEvent args)
     {
-        if (_proto.TryIndex(ent.Comp.InjectionProto, out var injectedAnom))
-            EntityManager.RemoveComponents(ent, injectedAnom.Components);
+        //if (_proto.TryIndex(ent.Comp.InjectionProto, out var injectedAnom))
+        //    EntityManager.RemoveComponents(ent, injectedAnom.Components);
 
         _stun.TryParalyze(ent, TimeSpan.FromSeconds(ent.Comp.StunDuration), true);
 

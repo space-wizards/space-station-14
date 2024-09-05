@@ -4,6 +4,7 @@
   components:
   - type: Anomaly
     deleteEntity: false
+    maxPointsPerSecond: 100 # 1.5x points - anomaly risk reward
   - type: PointLight
     radius: 1.3
     energy: 2.5
@@ -16,6 +17,7 @@
   components:
   - type: Anomaly
     corePrototype: AnomalyCorePyroclastic
+    coreInertPrototype: AnomalyPyroclastic
   - type: PointLight
     color: "#E25822"
   - type: PyroclasticAnomaly
@@ -42,6 +44,7 @@
   components:
   - type: Anomaly
     corePrototype: AnomalyCoreElectricity
+    coreInertPrototype: AnomalyElectricity
   - type: PointLight
     color: "#ffffaa"
   - type: ElectricityAnomaly
@@ -58,6 +61,7 @@
   components:
   - type: Anomaly
     corePrototype: AnomalyCoreShadow
+    coreInertPrototype: AnomalyShadow
   - type: PointLight
     color: "#793a80"
   - type: EntitySpawnAnomaly
@@ -85,6 +89,7 @@
   components:
   - type: Anomaly
     corePrototype: AnomalyCoreIce
+    coreInertPrototype: AnomalyIce
   - type: PointLight
     color: "#befaff"
   - type: ExplosionAnomaly
@@ -120,6 +125,7 @@
   components:
   - type: Anomaly
     corePrototype: AnomalyCoreFlora
+    coreInertPrototype: AnomalyFlora
   - type: PointLight
     color: "#6270bb"
   - type: TileSpawnAnomaly
@@ -172,6 +178,7 @@
   - type: Anomaly
     deleteEntity: false
     corePrototype: AnomalyCoreFlesh
+    coreInertPrototype: AnomalyFlesh
   - type: PointLight
     color: "#cb5b7e"
   - type: TileSpawnAnomaly
