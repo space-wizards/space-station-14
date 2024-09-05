@@ -30,7 +30,7 @@
     SpaceCleaner: 2
 
 - type: reaction
-  id: UniversalSolvent
+  id: UniversalSolvent # Chemists are already war criminals, they can have the mustard gas chemical.
   reactants:
     FluorosulfuricAcid:
       amount: 1

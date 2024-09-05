@@ -1713,14 +1713,13 @@
   description: uplink-heavy-cleanade-desc
   productEntity: CleanerGrenadeAcid
   cost:
-    Telecrystal: 4
+    Telecrystal: 6
   categories:
   - UplinkJob
   conditions:
   - !type:BuyerJobCondition
     whitelist:
     - Janitor
-    - Chemist # They're already war criminals, they can have the mustard gas bomb.
 
 - type: listing
   id: UplinkSyndicateSpongeBox
