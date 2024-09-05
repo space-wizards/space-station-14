@@ -109,7 +109,6 @@ namespace Content.Server.Explosion.EntitySystems
             SubscribeLocalEvent<SoundOnTriggerComponent, TriggerEvent>(OnSoundTrigger);
             SubscribeLocalEvent<ShockOnTriggerComponent, TriggerEvent>(HandleShockTrigger);
             SubscribeLocalEvent<RattleComponent, TriggerEvent>(HandleRattleTrigger);
-            SubscribeLocalEvent<AddCompOnTriggerComponent, TriggerEvent>(HandleAddCompTrigger);
         }
 
         private void OnSoundTrigger(EntityUid uid, SoundOnTriggerComponent component, TriggerEvent args)
@@ -203,17 +202,6 @@ namespace Content.Server.Explosion.EntitySystems
             args.Handled = true;
         }
 
-
-        private void HandleAddCompTrigger(Entity<AddCompOnTriggerComponent> ent, ref TriggerEvent args)
-        {
-            if (ent.Comp.ToSelf)
-                EntityManager.AddComponents(ent, ent.Comp.Components);
-
-            if (ent.Comp.ToOther && args.User is not null)
-                EntityManager.AddComponents(args.User.Value, ent.Comp.Components);
-
-            args.Handled = true;
-        }
 
         private void HandleRattleTrigger(EntityUid uid, RattleComponent component, TriggerEvent args)
         {
