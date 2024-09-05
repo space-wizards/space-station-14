@@ -39,7 +39,6 @@
         state: fire_eyes
       components:
       - type: Anomaly
-        maxPointsPerSecond: 40
         deleteEntity: false
         corePrototype: AnomalyCorePyroclastic
       - type: PointLight
@@ -82,7 +81,6 @@
         state: shock_eyes
       components:
       - type: Anomaly
-        maxPointsPerSecond: 40
         deleteEntity: false
         corePrototype: AnomalyCoreElectricity
       - type: PointLight
@@ -115,7 +113,6 @@
         state: shadow_eyes
       components:
       - type: Anomaly
-        maxPointsPerSecond: 40
         deleteEntity: false
         corePrototype: AnomalyCoreShadow
       - type: PointLight
@@ -158,7 +155,6 @@
         state: frost_eyes
       components:
       - type: Anomaly
-        maxPointsPerSecond: 40
         deleteEntity: false
         corePrototype: AnomalyCoreIce
       - type: PointLight
@@ -209,7 +205,6 @@
         state: flora_eyes
       components:
       - type: Anomaly
-        maxPointsPerSecond: 40
         deleteEntity: false
         corePrototype: AnomalyCoreFlora
       - type: PointLight
@@ -246,3 +241,25 @@
           maxRange: 3
         spawns:
         - KudzuFlowerAngry
+
+- type: entity
+  parent: BaseAnomalyTrap
+  id: AnomalyTrapBluespace
+  suffix: Bluespace
+  components:
+  - type: AddCompOnTrigger
+    components:
+    - type: InnerBodyAnomaly
+      startMessage: inner-anomaly-start-message-bluespace
+      layerSprite:
+        sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+        state: bluespace_eyes
+      components:
+      - type: Anomaly
+        deleteEntity: false
+        corePrototype: AnomalyCoreBluespace
+      - type: PointLight
+        radius: 1.3
+        energy: 2.5
+        color: "#00ccff"
+      - type: BluespaceAnomaly
