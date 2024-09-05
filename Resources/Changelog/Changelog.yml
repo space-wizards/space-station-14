@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Cube boxes buffed 6 -> 8 cubes.
-    type: Tweak
-  id: 6789
-  time: '2024-06-20T11:58:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29251
 - author: Boaz1111
   changes:
   - message: Explosive technology has been moved to T1 arsenal
@@ -3857,3 +3850,10 @@
   id: 7288
   time: '2024-09-05T12:49:22.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31823
+- author: ScarKy0
+  changes:
+  - message: Station AI now has updated icons on the HUD.
+    type: Add
+  id: 7289
+  time: '2024-09-05T12:52:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31799
