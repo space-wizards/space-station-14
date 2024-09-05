@@ -1,5 +1,6 @@
 - type: entity
   name: anomaly injector
+  parent: MarkerBase
   id: BaseAnomalyInjector
   abstract: true
   components:
@@ -31,6 +32,13 @@
   id: AnomalyTrapPyroclastic
   suffix: Pyroclastic
   components:
+  - type: Sprite
+    layers:
+    - state: pink
+    - sprite: Structures/Specific/Anomalies/pyro_anom.rsi
+      state: pulse
+    - sprite: Mobs/Species/Human/parts.rsi
+      state: full
   - type: InnerBodyAnomalyInjector
     injectionComponents:
       - type: InnerBodyAnomaly
@@ -45,6 +53,13 @@
   id: AnomalyTrapElectric
   suffix: Electric
   components:
+  - type: Sprite
+    layers:
+    - state: pink
+    - sprite: Structures/Specific/anomaly.rsi
+      state: anom3-pulse
+    - sprite: Mobs/Species/Human/parts.rsi
+      state: full
   - type: InnerBodyAnomalyInjector
     injectionComponents:
       - type: InnerBodyAnomaly
@@ -59,6 +74,13 @@
   id: AnomalyTrapShadow
   suffix: Shadow
   components:
+  - type: Sprite
+    layers:
+    - state: pink
+    - sprite: Structures/Specific/Anomalies/shadow_anom.rsi
+      state: pulse
+    - sprite: Mobs/Species/Human/parts.rsi
+      state: full
   - type: InnerBodyAnomalyInjector
     injectionComponents:
       - type: InnerBodyAnomaly
@@ -73,6 +95,13 @@
   id: AnomalyTrapIce
   suffix: Ice
   components:
+  - type: Sprite
+    layers:
+    - state: pink
+    - sprite: Structures/Specific/Anomalies/ice_anom.rsi
+      state: pulse
+    - sprite: Mobs/Species/Human/parts.rsi
+      state: full
   - type: InnerBodyAnomalyInjector
     injectionComponents:
       - type: InnerBodyAnomaly
@@ -87,6 +116,13 @@
   id: AnomalyTrapFlora
   suffix: Flora
   components:
+  - type: Sprite
+    layers:
+    - state: pink
+    - sprite: Structures/Specific/Anomalies/flora_anom.rsi
+      state: pulse
+    - sprite: Mobs/Species/Human/parts.rsi
+      state: full
   - type: InnerBodyAnomalyInjector
     injectionComponents:
       - type: InnerBodyAnomaly
@@ -101,6 +137,13 @@
   id: AnomalyTrapBluespace
   suffix: Bluespace
   components:
+  - type: Sprite
+    layers:
+    - state: pink
+    - sprite: Structures/Specific/anomaly.rsi
+      state: anom4-pulse
+    - sprite: Mobs/Species/Human/parts.rsi
+      state: full
   - type: InnerBodyAnomalyInjector
     injectionComponents:
       - type: InnerBodyAnomaly
@@ -115,6 +158,13 @@
   id: AnomalyTrapFlesh
   suffix: Flesh
   components:
+  - type: Sprite
+    layers:
+    - state: pink
+    - sprite: Structures/Specific/anomaly.rsi
+      state: anom5-pulse
+    - sprite: Mobs/Species/Human/parts.rsi
+      state: full
   - type: InnerBodyAnomalyInjector
     injectionComponents:
       - type: InnerBodyAnomaly
