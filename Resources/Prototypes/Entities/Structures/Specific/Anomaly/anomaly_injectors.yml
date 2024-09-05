@@ -178,3 +178,24 @@
         layerSprite:
           sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
           state: flesh_eyes
+
+- type: entity
+  parent: BaseAnomalyInjector
+  id: AnomalyTrapGravity
+  suffix: Gravity
+  components:
+  - type: Sprite
+    layers:
+    - state: pink
+    - sprite: Structures/Specific/anomaly.rsi
+      state: anom2-pulse
+    - sprite: Mobs/Species/Human/parts.rsi
+      state: full
+  - type: InnerBodyAnomalyInjector
+    injectionComponents:
+      - type: InnerBodyAnomaly
+        injectionProto: AnomalyInjectionGravity
+        startMessage: inner-anomaly-start-message-grav
+        layerSprite:
+          sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+          state: grav_eyes

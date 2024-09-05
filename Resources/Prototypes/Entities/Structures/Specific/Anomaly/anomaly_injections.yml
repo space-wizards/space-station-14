@@ -166,6 +166,7 @@
   components:
   - type: Anomaly
     corePrototype: AnomalyCoreBluespace
+    coreInertPrototype: AnomalyBluespace
   - type: PointLight
     color: "#00ccff"
   - type: BluespaceAnomaly
@@ -251,3 +252,31 @@
       - MobFleshClamp
       - MobFleshLover
       - FleshKudzu
+
+- type: entity
+  parent: AnomalyInjectionBase
+  id: AnomalyInjectionGravity
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Anomaly
+    corePrototype: AnomalyCoreGravity
+    coreInertPrototype: AnomalyCoreGravityInert
+  - type: PointLight
+    color: "#1e070e"
+  - type: Sprite
+    layers:
+    - state: anom2
+      map: ["enum.AnomalyVisualLayers.Base"]
+    - state: anom2-pulse
+      map: ["enum.AnomalyVisualLayers.Animated"]
+      visible: false
+  - type: GravityAnomaly
+    maxGravityWellRange: 4
+    maxThrowRange: 3
+    maxThrowStrength: 5
+    spaceRange: 1
+  - type: GravityWell
+    maxRange: 0.7
+  - type: SingularityDistortion
+    intensity: 100
+    falloffPower: 2.7

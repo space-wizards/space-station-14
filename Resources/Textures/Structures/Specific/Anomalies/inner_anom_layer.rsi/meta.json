@@ -232,6 +232,10 @@
           0.2
         ]
       ]
+    },
+    {
+      "name": "grav_eyes",
+      "directions": 4
     }
   ]
 }
