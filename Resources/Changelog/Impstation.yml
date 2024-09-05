@@ -744,3 +744,12 @@
   id: 104
   time: '2024-09-05T20:31:55.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/211
+- author: Darkmajia
+  changes:
+  - message: Puddles can now be diluted to apply less slow-down and speed-up.
+    type: Add
+  - message: Small puddles only apply half the speed adjustment of large ones.
+    type: Tweak
+  id: 105
+  time: '2024-09-05T20:33:06.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/212
