@@ -1,12 +1,36 @@
-
 - type: entity
-  name: anom trap fire
-  parent: BaseLandMine
-  id: LandMineExplosiveANOM
+  name: anomaly obsession trap
+  id: BaseAnomalyTrap
+  abstract: true
   components:
+  - type: Physics
+    bodyType: Static
+    fixedRotation: true
+  - type: TriggerOnCollide
+    fixtureID: anom
+    ignoreOtherNonHard: false
+  - type: Fixtures
+    fixtures:
+      anom:
+        shape:
+          !type:PhysShapeCircle
+          radius: 2.27 # i love 27
+        hard: false
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: DeleteOnTrigger
   - type: AddCompOnTrigger
     toOther: true
+
+
+- type: entity
+  parent: BaseAnomalyTrap
+  id: AnomalyTrapPyroclastic
+  suffix: Pyroclastic
+  components:
+  - type: AddCompOnTrigger
     components:
     - type: InnerBodyAnomaly
       startMessage: inner-anomaly-start-message-pyro
@@ -45,13 +69,11 @@
             Heat: 3
 
 - type: entity
-  name: anom trap electric
-  parent: BaseLandMine
-  id: LandMineExplosiveANOM2
+  parent: BaseAnomalyTrap
+  id: AnomalyTrapElectric
+  suffix: Electric
   components:
-  - type: DeleteOnTrigger
   - type: AddCompOnTrigger
-    toOther: true
     components:
     - type: InnerBodyAnomaly
       startMessage: inner-anomaly-start-message-shock
@@ -80,13 +102,11 @@
             Shock: 3
 
 - type: entity
-  name: anom trap shadow
-  parent: BaseLandMine
-  id: LandMineExplosiveANOM3
+  parent: BaseAnomalyTrap
+  id: AnomalyTrapShadow
+  suffix: Shadow
   components:
-  - type: DeleteOnTrigger
   - type: AddCompOnTrigger
-    toOther: true
     components:
     - type: InnerBodyAnomaly
       startMessage: inner-anomaly-start-message-shadow
@@ -125,13 +145,11 @@
             Cold: 3
 
 - type: entity
-  name: anom trap frost
-  parent: BaseLandMine
-  id: LandMineExplosiveANOM4
+  parent: BaseAnomalyTrap
+  id: AnomalyTrapIce
+  suffix: Ice
   components:
-  - type: DeleteOnTrigger
   - type: AddCompOnTrigger
-    toOther: true
     components:
     - type: InnerBodyAnomaly
       startMessage: inner-anomaly-start-message-frost
