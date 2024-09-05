@@ -1,7 +1,7 @@
 - type: marking
   id: CatEars
-  bodyPart: HeadTop
-  markingCategory: HeadTop
+  bodyPart: Special
+  markingCategory: Special
   speciesRestriction: [Human]
   coloring:
     default:

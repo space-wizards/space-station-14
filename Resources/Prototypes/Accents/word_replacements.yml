@@ -437,6 +437,17 @@
     chatsan-word-54: chatsan-replacement-54
     chatsan-word-55: chatsan-replacement-55
     chatsan-word-56: chatsan-replacement-56
+    chatsan-word-57: chatsan-replacement-57
+    chatsan-word-58: chatsan-replacement-58
+    chatsan-word-59: chatsan-replacement-59
+    chatsan-word-60: chatsan-replacement-60
+    chatsan-word-61: chatsan-replacement-61
+    chatsan-word-62: chatsan-replacement-62
+    chatsan-word-63: chatsan-replacement-63
+    chatsan-word-64: chatsan-replacement-64
+    chatsan-word-65: chatsan-replacement-65
+    chatsan-word-66: chatsan-replacement-66
+    chatsan-word-67: chatsan-replacement-67
 
 - type: accent
   id: liar
@@ -485,6 +496,85 @@
     liar-word-40: liar-word-replacement-40
     liar-word-41: liar-word-replacement-41
     liar-word-42: liar-word-replacement-42
+
+- type: accent
+  id: german
+  wordReplacements:
+    accent-german-words-1: accent-german-words-replace-1
+    accent-german-words-1-2: accent-german-words-replace-1
+    accent-german-words-2: accent-german-words-replace-2
+    accent-german-words-3: accent-german-words-replace-3
+    accent-german-words-4: accent-german-words-replace-4
+    accent-german-words-5: accent-german-words-replace-5
+    accent-german-words-6: accent-german-words-replace-6
+    accent-german-words-7: accent-german-words-replace-7
+    accent-german-words-8: accent-german-words-replace-8
+    accent-german-words-9: accent-german-words-replace-9
+    accent-german-words-9-2: accent-german-words-replace-9
+    accent-german-words-10: accent-german-words-replace-10
+    accent-german-words-10-2: accent-german-words-replace-10
+    accent-german-words-11: accent-german-words-replace-11
+    accent-german-words-12: accent-german-words-replace-12
+    accent-german-words-13: accent-german-words-replace-13
+    accent-german-words-14: accent-german-words-replace-14
+    accent-german-words-15: accent-german-words-replace-15
+    accent-german-words-16: accent-german-words-replace-16
+    accent-german-words-17: accent-german-words-replace-17
+    accent-german-words-18: accent-german-words-replace-18
+    accent-german-words-19: accent-german-words-replace-19
+    accent-german-words-20: accent-german-words-replace-20
+    accent-german-words-21: accent-german-words-replace-21
+    accent-german-words-22: accent-german-words-replace-22
+    accent-german-words-23: accent-german-words-replace-23
+    accent-german-words-24: accent-german-words-replace-24
+    accent-german-words-25: accent-german-words-replace-25
+    accent-german-words-26: accent-german-words-replace-26
+    accent-german-words-27: accent-german-words-replace-27
+    accent-german-words-28: accent-german-words-replace-28
+    accent-german-words-29: accent-german-words-replace-29
+    accent-german-words-30: accent-german-words-replace-30
+    accent-german-words-31: accent-german-words-replace-31
+    accent-german-words-32: accent-german-words-replace-32
+    accent-german-words-32-2: accent-german-words-replace-32
+    accent-german-words-33: accent-german-words-replace-33
+    accent-german-words-34: accent-german-words-replace-34
+    accent-german-words-35: accent-german-words-replace-35
+    accent-german-words-36: accent-german-words-replace-36
+    accent-german-words-37: accent-german-words-replace-37
+    accent-german-words-38: accent-german-words-replace-38
+    accent-german-words-38-2: accent-german-words-replace-38
+    accent-german-words-39: accent-german-words-replace-39
+    accent-german-words-40: accent-german-words-replace-40
+    accent-german-words-41: accent-german-words-replace-41
+    accent-german-words-42: accent-german-words-replace-42
+    accent-german-words-43: accent-german-words-replace-43
+    accent-german-words-44: accent-german-words-replace-44
+    accent-german-words-45: accent-german-words-replace-45
+    accent-german-words-46: accent-german-words-replace-46
+    accent-german-words-47: accent-german-words-replace-47
+    accent-german-words-47-2: accent-german-words-replace-47
+    accent-german-words-48: accent-german-words-replace-48
+    accent-german-words-49: accent-german-words-replace-49
+    accent-german-words-50: accent-german-words-replace-50
+    accent-german-words-51: accent-german-words-replace-51
+    accent-german-words-52: accent-german-words-replace-52
+    accent-german-words-53: accent-german-words-replace-53
+    accent-german-words-53-2: accent-german-words-replace-53
+    accent-german-words-54: accent-german-words-replace-54
+    accent-german-words-55: accent-german-words-replace-55
+    accent-german-words-56: accent-german-words-replace-56
+    accent-german-words-56-2: accent-german-words-replace-56
+    accent-german-words-56-3: accent-german-words-replace-56
+    accent-german-words-57: accent-german-words-replace-57
+    accent-german-words-57-2: accent-german-words-replace-57
+    accent-german-words-58: accent-german-words-replace-58
+    accent-german-words-59: accent-german-words-replace-59
+    accent-german-words-60: accent-german-words-replace-60
+    accent-german-words-61: accent-german-words-replace-61
+    accent-german-words-61-2: accent-german-words-replace-61
+    accent-german-words-61-3: accent-german-words-replace-61
+    accent-german-words-61-4: accent-german-words-replace-61
+    accent-german-words-62: accent-german-words-replace-62
 
 - type: accent
   id: russian

@@ -21,8 +21,8 @@
 - type: entity
   parent: BaseComputerCircuitboard
   id: AlertsComputerCircuitboard
-  name: alerts computer board
-  description: A computer printed circuit board for an alerts computer.
+  name: atmospheric alerts computer board
+  description: A computer printed circuit board for an atmospheric alerts computer.
   components:
     - type: ComputerBoard
       prototype: ComputerAlert
@@ -141,17 +141,6 @@
       prototype: ComputerShuttleCargo
     - type: StealTarget
       stealGroup: CargoShuttleConsoleCircuitboard
-
-- type: entity
-  parent: BaseComputerCircuitboard
-  id: SalvageShuttleConsoleCircuitboard
-  name: salvage shuttle console board
-  description: A computer printed circuit board for a salvage shuttle console.
-  components:
-    - type: ComputerBoard
-      prototype: ComputerShuttleSalvage
-    - type: StealTarget
-      stealGroup: SalvageShuttleConsoleCircuitboard
 
 - type: entity
   parent: BaseComputerCircuitboard

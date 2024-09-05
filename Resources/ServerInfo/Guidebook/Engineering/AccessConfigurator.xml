@@ -22,13 +22,13 @@
   ## Restrictions on changing access
   As a safety precaution, the inserted ID must possess [bold]all[/bold] of the access requirements that are currently active on the connected device in order to modify it.
 
-  For example, a device which can be access by both 'Science' and 'Medical' personnel can only by modified using an ID card that has access to [color=#a4885c]both[/color] of these departments.
+  For example, a device which can be accessed by both 'Science' and 'Medical' personnel can only by modified using an ID card that has access to [color=#a4885c]both[/color] of these departments.
   The access configurator will warn the user if the inserted ID card does not have sufficient privileges to modify a device.
 
   A device with no access requirements set, like a public access airlock, can be modified using any valid station ID card.
 
   ## Repairing damaged ID card readers
-  Syndicate agents may attempt to hack access restricted devices through the use of a [color=#a4885c]Cryptographic Sequencer (EMAG)[/color]. This nefarious tool will completely short out any ID card readers that are attached to the device.
+  Syndicate agents may attempt to hack access-restricted devices through the use of a [color=#a4885c]Cryptographic Sequencer (EMAG)[/color]. This nefarious tool will completely short out any ID card readers that are attached to the device.
 
   Engineers will need to partially de/reconstruct affected devices, and then set appropriate access permissions afterwards using the access configurator (or network configurator, for airlocks), to re-establish access restrictions.
 </Document>

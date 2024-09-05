@@ -7,6 +7,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Popups;
+using Content.Shared.Tag;
 using Robust.Shared.Random;
 
 namespace Content.Server.Nutrition.EntitySystems;
@@ -17,6 +18,7 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Initialize()
@@ -79,6 +81,7 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
         MergeFoodSolutions(start, element);
         MergeFlavorProfiles(start, element);
         MergeTrash(start, element);
+        MergeTags(start, element);
         QueueDel(element);
         return true;
     }
@@ -157,5 +160,15 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
         {
             startFood.Trash.Add(trash);
         }
+    }
+
+    private void MergeTags(Entity<FoodSequenceStartPointComponent> start, Entity<FoodSequenceElementComponent> element)
+    {
+        if (!TryComp<TagComponent>(element, out var elementTags))
+            return;
+
+        EnsureComp<TagComponent>(start.Owner);
+
+        _tag.TryAddTags(start.Owner, elementTags.Tags);
     }
 }
