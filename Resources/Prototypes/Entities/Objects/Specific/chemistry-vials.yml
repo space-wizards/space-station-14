@@ -106,6 +106,7 @@
 - type: entity
   id: VestineChemistryVial
   parent: BaseChemistryEmptyVial
+  suffix: vestine
   components:
   - type: Label
     currentLabel: reagent-name-vestine
@@ -121,26 +122,30 @@
 
 - type: entity
   id: RadiumChemistryVial
-  name: radium vial
   parent: BaseChemistryEmptyVial
+  suffix: radium
   components:
-    - type: SolutionContainerManager
-      solutions:
-        beaker:
-          maxVol: 5
-          reagents:
-            - ReagentId: Radium
-              Quantity: 5
+  - type: Label
+    currentLabel: reagent-name-radium
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 5
+        reagents:
+          - ReagentId: Radium
+            Quantity: 5
 
 - type: entity
   id: ChlorineChemistryVial
-  name: chlorine vial
   parent: BaseChemistryEmptyVial
+  suffix: chlorine
   components:
-    - type: SolutionContainerManager
-      solutions:
-        beaker:
-          maxVol: 5
-          reagents:
-            - ReagentId: Chlorine
-              Quantity: 5
+  - type: Label
+    currentLabel: reagent-name-chlorine
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 5
+        reagents:
+          - ReagentId: Chlorine
+            Quantity: 5
