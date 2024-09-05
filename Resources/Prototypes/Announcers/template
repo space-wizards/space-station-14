@@ -126,7 +126,7 @@
       path: events/vent_critters.ogg
     - id: snailMigration # Adorable little snails are appearing in vents
       path: events/vent_critters.ogg
-    - id: snailMigrationLowpop # Adorable little snails are appearing in vents
+    - id: snailMigrationLowPop # Adorable little snails are appearing in vents
       path: events/vent_critters.ogg
     - id: brosSpawn # BROS are appearing in vents. UNGH
       path: events/vent_critters.ogg
