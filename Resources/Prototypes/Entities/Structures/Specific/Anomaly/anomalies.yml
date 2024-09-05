@@ -939,8 +939,8 @@
         deleteEntity: false
         corePrototype: AnomalyCoreElectricity
       - type: PointLight
-        radius: 1.5
-        energy: 3.0
+        radius: 1.3
+        energy: 2.5
         color: "#ffffaa"
         castShadows: false
       - type: ElectricityAnomaly
@@ -948,3 +948,47 @@
         damage:
           types:
             Shock: 3
+
+- type: entity
+  name: test anom mine 3
+  parent: BaseLandMine
+  id: LandMineExplosiveANOM3
+  components:
+  - type: DeleteOnTrigger
+  - type: AddCompOnTrigger
+    toOther: true
+    components:
+    - type: InnerBodyAnomaly
+      startMessage: inner-anomaly-start-message-shadow
+      layerSprite:
+        sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+        state: shadow_eyes
+      components:
+      - type: Anomaly
+        deleteEntity: false
+        corePrototype: AnomalyCoreShadow
+      - type: PointLight
+        radius: 1.3
+        energy: 2.5
+        color: "#793a80"
+      - type: EntitySpawnAnomaly
+        entries:
+        - settings:
+            spawnOnPulse: true
+            spawnOnSuperCritical: true
+            minAmount: 5
+            maxAmount: 10
+            maxRange: 2
+          spawns:
+          - ShadowKudzuWeak
+        - settings:
+            spawnOnSuperCritical: true
+            minAmount: 15
+            maxAmount: 20
+            maxRange: 25
+          spawns:
+          - ShadowKudzu
+      - type: DamageOnAttacked
+        damage:
+          types:
+            Cold: 3
