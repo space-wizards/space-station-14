@@ -215,7 +215,7 @@
   source: "https://www.youtube.com/watch?v=tdE3n-pxF5Y"
 
 - files: ["the_flute_tune.ogg"]
-  license: "Custom."
+  license: "Custom"
   copyright: "The Flute Tune (Soulpride Remix) by J-Cut & Kolt Siewerts"
   source: "https://www.youtube.com/watch?v=IwLSrNu1ppI"
 
@@ -285,12 +285,12 @@
   source: "https://www.youtube.com/watch?v=cuzotd7eQvc"
 
 - files: ["foot_traffic.ogg"]
-  license: "Custom."
+  license: "Custom"
   copyright: "Foot Traffic by 2 mello"
   source: "https://youtube.com/watch?v=lWdlxuAfjpo"
 
 - files: ["cmon.ogg"]
-  license: "Custom."
+  license: "Custom"
   copyright: "cmon by 2 mello"
   source: "https://youtube.com/watch?v=lzksfBUMLyc"
 
@@ -340,6 +340,6 @@
   source: "https://www.youtube.com/watch?v=ODy6rmrh4Og"
 
 - files: ["zip_ykk_arrange.ogg"]
-  license: "Custom."
+  license: "Custom"
   copyright: "ZIP YKK ARRANGE by Rukunetsu"
   source: "https://youtube.com/watch?v=ZPYiZIrmLVQ"
