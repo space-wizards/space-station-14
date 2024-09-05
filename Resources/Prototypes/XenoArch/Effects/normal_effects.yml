@@ -835,11 +835,11 @@
     maxSpawns: 7
     spawns:
     - id: PresentRandom
-      prob: 0.8
+      prob: 0.95
     - id: PresentRandomUnsafe
-      prob: 0.13
+      prob: 0.3
     - id: PresentRandomInsane
-      prob: 0.7
+      prob: 0.2
 
 - type: artifactEffect
   id: EffectSingulo
