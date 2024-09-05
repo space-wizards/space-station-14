@@ -39,12 +39,6 @@
 		},
 		{
 			"name": "comms_console"
-	    },
-        {
-            "name": "lock_door"
-        },
-        {
-            "name": "unlock_door"
-        }
+	    }
     ]
 }
