@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Boaz1111
-  changes:
-  - message: Explosive technology has been moved to T1 arsenal
-    type: Tweak
-  id: 6790
-  time: '2024-06-20T12:22:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29227
 - author: Redfire1331
   changes:
   - message: You can now eat cup ramen with chopsticks.
@@ -3857,3 +3850,11 @@
   id: 7289
   time: '2024-09-05T12:52:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31799
+- author: drakewill-CRL
+  changes:
+  - message: Botanists can now learn basic chemistry with the Agrichem Is Fun! kit
+      in the Nutrimax vendor.
+    type: Add
+  id: 7290
+  time: '2024-09-05T16:43:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31738
