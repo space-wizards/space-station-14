@@ -140,35 +140,35 @@
   source: "https://www.youtube.com/channel/UCPYbhBUGhH7n_G4HLK2YipQ"
 
 - files: ["cizgi.ogg"]
-  license: "Custom. Suggested by sageuu"
-  copyright: "ÇİZGİ FİLM MAKİNESİ by TRT ÇOCUK."
+  license: "Custom"
+  copyright: "ÇİZGİ FİLM MAKİNESİ by TRT ÇOCUK. Suggested by sageuu"
   source: "https://www.youtube.com/watch?v=GYzG3PMxfNI"
-  
+
 - files: ["eternal_sanctity.ogg"]
-  license: "Custom. Suggested by mira"
-  copyright: "Eternal Sanctity by flashygoodness."
+  license: "Custom"
+  copyright: "Eternal Sanctity by flashygoodness. Suggested by mira"
   source: "https://www.youtube.com/watch?v=wPqwxBnNxWU"
-  
+
 - files: ["pillars_of_creation.ogg"]
-  license: "Custom. Suggested by mira"
-  copyright: "Pillars of Creation by flashygoodness."
+  license: "Custom"
+  copyright: "Pillars of Creation by flashygoodness. Suggested by mira"
   source: "https://www.youtube.com/watch?v=cAMumZKiKRQ"
-  
+
 - files: ["prelude.ogg"]
-  license: "Custom. Suggested by mira"
-  copyright: "Prelude by Nobuo Uematsu, Masashi Hamauzu, Junya Nakano."
+  license: "Custom"
+  copyright: "Prelude by Nobuo Uematsu, Masashi Hamauzu, Junya Nakano. Suggested by mira"
   source: "https://www.youtube.com/watch?v=jJr9m9dfDZI"
-  
+
 - files: ["you_blow_my_mind.ogg"]
-  license: "Custom. Suggested by mira"
-  copyright: "You Blow My Mind by Hideki Okugawa."
+  license: "Custom"
+  copyright: "You Blow My Mind by Hideki Okugawa. Suggested by mira"
   source: "https://www.youtube.com/watch?v=jUs-ITmi_u4"
-  
+
 - files: ["vio_grinchs_ultimatum.ogg"]
-  license: "Custom. Suggested by sageuu"
-  copyright: "(Cover) Grinch's Ultimatum by PilotRedSun, Latchezar Dimitrov."
+  license: "Custom"
+  copyright: "(Cover) Grinch's Ultimatum by PilotRedSun, Latchezar Dimitrov. Suggested by sageuu"
   source: "https://youtube.com/watch?v=tBHM_yikkVY"
-  
+
 - files: ["in_the_pocket.ogg"]
   license: "Custom"
   copyright: "In The Pocket by Flamclap."
@@ -178,40 +178,40 @@
   license: "Custom"
   copyright: "Don't Drink It by Pilotredsky."
   source: "https://youtu.be/EBFDLgqn8pw?si=R8iHo4fvb8R1J5Br"
-  
+
 - files: ["snow_burn.ogg"]
   license: "Custom"
   copyright: "Snow Burn by Fearofdark."
   source: "https://www.youtube.com/watch?v=fvgaJa8lDXc"
-  
+
 - files: ["grinchs_ultimatum.ogg"]
-  license: "Custom. Suggested by mira"
-  copyright: "Grinch's Ultimatum by PilotRedSun."
+  license: "Custom"
+  copyright: "Grinch's Ultimatum by PilotRedSun. Suggested by mira"
   source: "https://www.youtube.com/watch?v=z01VlftkqY8"
 
 - files: ["storywriter.ogg"]
-  license: "Custom. Suggested by hivehum"
-  copyright: "Storywriter by Supercar."
+  license: "Custom"
+  copyright: "Storywriter by Supercar. Suggested by hivehum"
   source: "https://www.youtube.com/watch?v=PYXVp4KV7Rw"
-  
+
 - files: ["the_nomai.ogg"]
   license: "Custom"
   copyright: "The Nomai by Andrew Prahlow."
   source: "https://youtube.com/watch?v=7Y3xbA4gsis"
-  
+
 - files: ["the_norwegians.ogg"]
-  license: "Custom. Suggested by sageuu"
-  copyright: "The Norwegians by Angelo Badalamenti."
+  license: "Custom"
+  copyright: "The Norwegians by Angelo Badalamenti. Suggested by sageuu"
   source: "https://youtu.be/wDEKatQwyak?si=8PLweFX1uZ1zsRtA"
 
 - files: ["topolla_theatre.ogg"]
-  license: "Custom. Suggested by starplatinumb"
-  copyright: "Topolla Theatre, Home to the One and Only Venus by Keiichi Suzuki, Hirokazu Tanaka."
+  license: "Custom"
+  copyright: "Topolla Theatre, Home to the One and Only Venus by Keiichi Suzuki, Hirokazu Tanaka. Suggested by starplatinumb"
   source: "https://www.youtube.com/watch?v=tYEJnBZqBz0"
-  
+
 - files: ["presenting_v.ogg"]
-  license: "Custom. Suggested by starplatiunumb"
-  copyright: "Presenting VVVVVV by Souleye."
+  license: "Custom"
+  copyright: "Presenting VVVVVV by Souleye. Suggested by starplatiunumb"
   source: "https://www.youtube.com/watch?v=tdE3n-pxF5Y"
 
 - files: ["the_flute_tune.ogg"]
@@ -220,125 +220,125 @@
   source: "https://www.youtube.com/watch?v=IwLSrNu1ppI"
 
 - files: ["squarepusher.ogg"]
-  license: "Custom. Suggested by HunBunQueen"
-  copyright: "Squarepusher Theme by Squarepusher"
+  license: "Custom"
+  copyright: "Squarepusher Theme by Squarepusher. Suggested by HunBunQueen"
   source: "https://www.youtube.com/watch?v=wiycAAoaK2k"
-  
+
 - files: ["sam_jones.ogg"]
-  license: "Custom. Suggested by fore"
-  copyright: "Sam Jones by Leslie Fish"
+  license: "Custom"
+  copyright: "Sam Jones by Leslie Fish. Suggested by fore"
   source: "https://www.youtube.com/watch?v=IIjuYw2jwtw"
-  
+
 - files: ["bee_like_that.ogg"]
-  license: "Custom. Suggested by flanburgr"
-  copyright: "Bee like that by eebrozgi"
+  license: "Custom"
+  copyright: "Bee like that by eebrozgi. Suggested by flanburgr"
   source: "https://www.youtube.com/watch?v=XqTwCuYrlgo"
-  
+
 - files: ["ai_bomb.ogg"]
-  license: "Custom. Suggested by Twibz"
-  copyright: "Artificial Intelligence Bomb (Remix) by theta, OG by naruto2413"
+  license: "Custom"
+  copyright: "Artificial Intelligence Bomb (Remix) by theta, OG by naruto2413. Suggested by Twibz"
   source: "https://www.youtube.com/watch?v=CBFLKcEo18s"
-  
+
 - files: ["diesel.ogg.ogg"]
-  license: "Custom. Suggested by Phoebe"
-  copyright: "diesel.ogg by buttlord music"
+  license: "Custom"
+  copyright: "diesel.ogg by buttlord music. Suggested by Phoebe"
   source: "https://www.youtube.com/watch?v=OOyqr1JB_ac"
-  
+
 - files: ["ikebukuro.ogg"]
-  license: "Custom. Suggested by starplatinumb"
-  copyright: "Ikebukuro by Haramaself"
+  license: "Custom"
+  copyright: "Ikebukuro by Haramaself. Suggested by starplatinumb"
   source: "https://www.youtube.com/watch?v=5N8ckaOrnXQ"
-  
+
 - files: ["pe-ri-ca.ogg"]
-  license: "Custom. Suggested by mira"
-  copyright: "PE-RI-CA by RAITO"
+  license: "Custom"
+  copyright: "PE-RI-CA by RAITO. Suggested by mira"
   source: "https://www.youtube.com/watch?v=XxSiOax6__k"
-  
+
 - files: ["actors_anteroom.ogg"]
-  license: "Custom. Suggested by HunBunQueen"
-  copyright: "Actor's Anteroom by RAITO"
+  license: "Custom"
+  copyright: "Actor's Anteroom by RAITO. Suggested by HunBunQueen"
   source: "https://www.youtube.com/watch?v=PeDJEO5ghZs"
-  
+
 - files: ["milkyway_battle.ogg"]
-  license: "Custom. Suggested by YesOfCourse"
-  copyright: "MilkyWay (Battle) by Ben Prunty"
+  license: "Custom"
+  copyright: "MilkyWay (Battle) by Ben Prunty. Suggested by YesOfCourse"
   source: "https://www.youtube.com/watch?v=AgL6jbqDbx8"
-  
+
 - files: ["mantis_battle.ogg"]
-  license: "Custom. Suggested by YesOfCourse"
-  copyright: "Mantis Battle by Ben Prunty"
-  source: "https://www.youtube.com/watch?v=RdiqG3RGBec "
-  
+  license: "Custom"
+  copyright: "Mantis Battle by Ben Prunty. Suggested by YesOfCourse"
+  source: "https://www.youtube.com/watch?v=RdiqG3RGBec"
+
 - files: ["organic_journey.ogg"]
-  license: "Custom. Suggested by Lazy"
-  copyright: "Organic Journey (Melodie du Crouton) by Doug Brown, Harmonious Wail"
+  license: "Custom"
+  copyright: "Organic Journey (Melodie du Crouton) by Doug Brown, Harmonious Wail. Suggested by Lazy"
   source: "https://www.youtube.com/watch?v=6lxYnuPakC8"
-  
+
 - files: ["pizzatron_3000.ogg"]
-  license: "Custom. Suggested by Phoebe"
-  copyright: "Pizzatron 3000 by Chris Hendricks"
+  license: "Custom"
+  copyright: "Pizzatron 3000 by Chris Hendricks. Suggested by Phoebe"
   source: "https://www.youtube.com/watch?v=LEZg_5PcUKI"
-  
+
 - files: ["special_stage.ogg"]
-  license: "Custom. Suggested by Lightning"
-  copyright: "Special Stage by Naofumi Hataya, Masafumi Ogata"
+  license: "Custom"
+  copyright: "Special Stage by Naofumi Hataya, Masafumi Ogata. Suggested by Lightning"
   source: "https://www.youtube.com/watch?v=cuzotd7eQvc"
-  
+
 - files: ["foot_traffic.ogg"]
   license: "Custom."
   copyright: "Foot Traffic by 2 mello"
   source: "https://youtube.com/watch?v=lWdlxuAfjpo"
-  
+
 - files: ["cmon.ogg"]
   license: "Custom."
   copyright: "cmon by 2 mello"
   source: "https://youtube.com/watch?v=lzksfBUMLyc"
-  
+
 - files: ["create_a_wrestler.ogg"]
-  license: "Custom. Suggested by HunBunQueen"
-  copyright: "Create-A-Wrestler by Wrestlemania X8"
+  license: "Custom"
+  copyright: "Create-A-Wrestler by Wrestlemania X8. Suggested by HunBunQueen"
   source: "https://www.youtube.com/watch?v=wf7BMXcGFR4"
-  
+
 - files: ["quantum_spawn.ogg"]
-  license: "Custom. Suggested by hivehum"
-  copyright: "Quantum Spawn by ELFL"
+  license: "Custom"
+  copyright: "Quantum Spawn by ELFL. Suggested by hivehum"
   source: "https://www.youtube.com/watch?v=eVI1MwUtBy4"
-  
+
 - files: ["bodybuilder.ogg"]
-  license: "Custom. Suggested by Twibz"
-  copyright: "Bodybuilder by Pilotredsun"
+  license: "Custom"
+  copyright: "Bodybuilder by Pilotredsun. Suggested by Twibz"
   source: "https://www.youtube.com/watch?v=g0d9B9oL2h0"
-  
+
 - files: ["along_with_brew.ogg"]
-  license: "Custom. Suggested by EpicToast"
-  copyright: "Along With Brew by Pilotredsky"
+  license: "Custom"
+  copyright: "Along With Brew by Pilotredsky. Suggested by EpicToast"
   source: "https://www.youtube.com/watch?v=qbIAoNR883A"
-  
+
 - files: ["neosf_strut.ogg"]
-  license: "Custom. Suggested by Wowls"
-  copyright: "Neo-SF Strut by Aethernaut"
+  license: "Custom"
+  copyright: "Neo-SF Strut by Aethernaut. Suggested by Wowls"
   source: "https://www.youtube.com/watch?v=wgliv2t_fY4"
-  
+
 - files: ["match.ogg"]
-  license: "Custom. Suggested by Masa"
-  copyright: "Match by Fred Mug"
+  license: "Custom"
+  copyright: "Match by Fred Mug. Suggested by Masa"
   source: "https://www.youtube.com/watch?v=KZ02GxqrAv8"
-  
+
 - files: ["impossible.ogg"]
-  license: "Custom. Suggested by hivehum"
-  copyright: "Impossible by Darren Korb"
+  license: "Custom"
+  copyright: "Impossible by Darren Korb. Suggested by hivehum"
   source: "https://www.youtube.com/watch?v=Vrc5lv0O8yo"
-  
+
 - files: ["song_that_plays_when_you_encounter_a_caterpillar.ogg"]
-  license: "Custom. Suggested by Stonylogray"
-  copyright: "song that plays when you encounter a caterpillar by Solaris"
+  license: "Custom"
+  copyright: "song that plays when you encounter a caterpillar by Solaris. Suggested by Stonylogray"
   source: "https://www.youtube.com/watch?v=3LGdFKIXr9I"
-  
+
 - files: ["get_enuf.ogg"]
-  license: "Custom. Suggested by Wowls"
-  copyright: "GET ENUF by Hideki Naganuma"
+  license: "Custom"
+  copyright: "GET ENUF by Hideki Naganuma. Suggested by Wowls"
   source: "https://www.youtube.com/watch?v=ODy6rmrh4Og"
-  
+
 - files: ["zip_ykk_arrange.ogg"]
   license: "Custom."
   copyright: "ZIP YKK ARRANGE by Rukunetsu"
