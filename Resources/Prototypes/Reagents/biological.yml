@@ -102,6 +102,8 @@
     collection: FootstepBlood
     params:
       volume: 6
+  tileReactions:
+    - !type:SpillTileReaction
 
 - type: reagent
   id: Sap

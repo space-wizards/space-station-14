@@ -415,3 +415,5 @@
         key: Drowsiness
         time: 2.0
         type: Remove
+  tileReactions:
+    - !type:SpillTileReaction
