@@ -29,14 +29,14 @@
       - type: ShowMindShieldIcons
       - type: ShowCriminalRecordIcons
       #TODO: Add those in when theres no desync issue with ActionComponentChangeEvent
-      #- type: ShowHealthBars
-       # damageContainers:
-        #- Biological
-        #- Inorganic
-        #- Silicon
-      #- type: ShowHealthIcons
-       # damageContainers:
-        #- Biological
+      - type: ShowHealthBars
+        damageContainers:
+        - Biological
+        - Inorganic
+        - Silicon
+      - type: ShowHealthIcons
+        damageContainers:
+        - Biological
 
 - type: entity
   id: ActionSurvCameraLights
