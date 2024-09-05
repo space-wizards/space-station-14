@@ -194,3 +194,55 @@
         damage:
           types:
             Cold: 3
+
+- type: entity
+  parent: BaseAnomalyTrap
+  id: AnomalyTrapFlora
+  suffix: Flora
+  components:
+  - type: AddCompOnTrigger
+    components:
+    - type: InnerBodyAnomaly
+      startMessage: inner-anomaly-start-message-flora
+      layerSprite:
+        sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+        state: flora_eyes
+      components:
+      - type: Anomaly
+        maxPointsPerSecond: 40
+        deleteEntity: false
+        corePrototype: AnomalyCoreFlora
+      - type: PointLight
+        radius: 1.3
+        energy: 2.5
+        color: "#6270bb"
+    - type: TileSpawnAnomaly
+      entries:
+      - settings:
+          spawnOnPulse: true
+          minAmount: 2
+          maxAmount: 5
+          maxRange: 2
+        floor: FloorAstroGrass
+      - settings:
+          spawnOnSuperCritical: true
+          minAmount: 5
+          maxAmount: 15
+          maxRange: 7
+        floor: FloorAstroGrass
+    - type: EntitySpawnAnomaly
+      entries:
+      - settings:
+          spawnOnPulse: true
+          minAmount: 1
+          maxAmount: 3
+          maxRange: 1
+        spawns:
+        - KudzuFlowerFriendly
+      - settings:
+          spawnOnSuperCritical: true
+          minAmount: 2
+          maxAmount: 6
+          maxRange: 3
+        spawns:
+        - KudzuFlowerAngry
