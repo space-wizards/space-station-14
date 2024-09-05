@@ -283,5 +283,6 @@ flavor-complex-bottledlightning = like lightning in a bottle
 flavor-complex-punishment = like punishment
 flavor-complex-crud = like crud
 flavor-complex-snotty = like snot
+flavor-complex-speed = like speed
 flavor-weh = like weh
 flavour-stardust = like stardust

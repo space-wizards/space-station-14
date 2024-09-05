@@ -77,7 +77,7 @@
   suffix: Mucin
   components:
   - type: TimedDespawn
-    Lifetime: 5
+    lifetime: 5
   - type: EvaporationSparkle
   - type: SolutionContainerManager
     solutions:
