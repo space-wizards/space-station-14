@@ -6,6 +6,7 @@
   placement:
     mode: AlignTileAny
   components:
+  - type: StationAiWhitelist
   - type: AmbientSound
     enabled: false
     volume: -6
@@ -85,6 +86,7 @@
   name: mini gravity generator
   description: It's what keeps you to the floor, now in fun size.
   components:
+  - type: StationAiWhitelist
   - type: Sprite
     sprite: Structures/Machines/gravity_generator_mini.rsi
     snapCardinals: true

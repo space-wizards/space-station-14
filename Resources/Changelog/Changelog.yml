@@ -1,64 +1,4 @@
 ﻿Entries:
-- author: arimah
-  changes:
-  - message: Containment field generators can no longer be powered by an emitter bolt
-      flying past them. The bolt must hit them directly.
-    type: Fix
-  id: 6784
-  time: '2024-06-19T23:51:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29225
-- author: Dutch-VanDerLinde
-  changes:
-  - message: Lizard frills and moth antenna are now hidden by hardsuit helmets.
-    type: Tweak
-  id: 6785
-  time: '2024-06-20T00:09:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29214
-- author: metalgearsloth
-  changes:
-  - message: Fix entities getting stuck red after getting hit.
-    type: Fix
-  id: 6786
-  time: '2024-06-20T07:15:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28981
-- author: Dutch-VanDerLinde
-  changes:
-  - message: Syndicate sleeper agents are now opt-in. You can opt-in with the antagonist
-      preferences menu.
-    type: Tweak
-  - message: ERT are no longer able to become sleeper agents.
-    type: Fix
-  id: 6787
-  time: '2024-06-20T11:12:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27817
-- author: neutrino-laser
-  changes:
-  - message: Syndicate smokes pack now has 10 cigarettes as intended.
-    type: Fix
-  id: 6788
-  time: '2024-06-20T11:16:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28371
-- author: lzk228
-  changes:
-  - message: Cube boxes buffed 6 -> 8 cubes.
-    type: Tweak
-  id: 6789
-  time: '2024-06-20T11:58:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29251
-- author: Boaz1111
-  changes:
-  - message: Explosive technology has been moved to T1 arsenal
-    type: Tweak
-  id: 6790
-  time: '2024-06-20T12:22:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29227
-- author: Redfire1331
-  changes:
-  - message: You can now eat cup ramen with chopsticks.
-    type: Tweak
-  id: 6791
-  time: '2024-06-20T12:34:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27826
 - author: Errant
   changes:
   - message: Slimepeople crewmembers now spawn with survival boxes that contain emergency
@@ -3859,3 +3799,62 @@
   id: 7283
   time: '2024-09-04T16:44:10.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31787
+- author: Ilya246
+  changes:
+  - message: The syndicate stealth box will no longer make a loud sound upon being
+      opened.
+    type: Tweak
+  id: 7284
+  time: '2024-09-04T22:42:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30741
+- author: chromiumboy
+  changes:
+  - message: The atmospheric alert computers are now functional! Use them to locate
+      active air and fire alarms on the station.
+    type: Add
+  id: 7285
+  time: '2024-09-05T01:13:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25938
+- author: ScarKy0
+  changes:
+  - message: A lot more electronics can now be used by the AI.
+    type: Add
+  id: 7286
+  time: '2024-09-05T09:31:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31730
+- author: Fildrance
+  changes:
+  - message: random uplink discounts for traitors
+    type: Add
+  id: 7287
+  time: '2024-09-05T12:12:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/26297
+- author: ScarKy0
+  changes:
+  - message: AI Actions now work.
+    type: Fix
+  id: 7288
+  time: '2024-09-05T12:49:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31823
+- author: ScarKy0
+  changes:
+  - message: Station AI now has updated icons on the HUD.
+    type: Add
+  id: 7289
+  time: '2024-09-05T12:52:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31799
+- author: drakewill-CRL
+  changes:
+  - message: Botanists can now learn basic chemistry with the Agrichem Is Fun! kit
+      in the Nutrimax vendor.
+    type: Add
+  id: 7290
+  time: '2024-09-05T16:43:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31738
+- author: Nimfar11
+  changes:
+  - message: Added a board for the AI upload console.
+    type: Add
+  id: 7291
+  time: '2024-09-05T18:20:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31867

@@ -2,7 +2,6 @@ using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Store.Components;
 
@@ -45,16 +44,16 @@ public sealed partial class StoreComponent : Component
     public EntityUid? AccountOwner = null;
 
     /// <summary>
-    /// All listings, including those that aren't available to the buyer
+    /// Cached list of listings items with modifiers.
     /// </summary>
     [DataField]
-    public HashSet<ListingData> Listings = new();
+    public HashSet<ListingDataWithCostModifiers> FullListingsCatalog = new();
 
     /// <summary>
     /// All available listings from the last time that it was checked.
     /// </summary>
     [ViewVariables]
-    public HashSet<ListingData> LastAvailableListings = new();
+    public HashSet<ListingDataWithCostModifiers> LastAvailableListings = new();
 
     /// <summary>
     ///     All current entities bought from this shop. Useful for keeping track of refunds and upgrades.
