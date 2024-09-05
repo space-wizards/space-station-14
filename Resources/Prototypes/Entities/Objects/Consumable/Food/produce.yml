@@ -260,6 +260,25 @@
     ignoreResistances: false
     popupText: powered-light-component-burn-hand
     interactSound: /Audio/Effects/lightburn.ogg
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 25
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Voice/Diona/diona_salute.ogg
+          params:
+            volume: -5
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: DamageOnHit 
+    damage:
+      types:
+        Blunt: 5 # The nettle will "wilt" after 5 hits.
 
 - type: entity
   name: banana
