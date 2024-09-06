@@ -4,7 +4,6 @@ using Content.Shared.Administration.Managers;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
 using Content.Shared.Doors.Systems;
-using Content.Shared.Electrocution;
 using Content.Shared.Interaction;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Mind;
@@ -35,7 +34,6 @@ public abstract partial class SharedStationAiSystem : EntitySystem
     [Dependency] private   readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private   readonly SharedContainerSystem _containers = default!;
     [Dependency] private   readonly SharedDoorSystem _doors = default!;
-    [Dependency] private   readonly SharedElectrocutionSystem _electrify = default!;
     [Dependency] private   readonly SharedAirlockSystem _airlocks = default!;
     [Dependency] private   readonly SharedEyeSystem _eye = default!;
     [Dependency] protected readonly SharedMapSystem Maps = default!;

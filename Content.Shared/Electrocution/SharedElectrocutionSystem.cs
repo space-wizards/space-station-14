@@ -1,6 +1,5 @@
 using Content.Shared.Inventory;
 using Content.Shared.StatusEffect;
-using Content.Shared.Doors.Components;
 
 namespace Content.Shared.Electrocution
 {
@@ -44,18 +43,6 @@ namespace Content.Shared.Electrocution
         private void OnInsulatedElectrocutionAttempt(EntityUid uid, InsulatedComponent insulated, ElectrocutionAttemptEvent args)
         {
             args.SiemensCoefficient *= insulated.Coefficient;
-        }
-		
-		public void ToggleElectrified(Entity<ElectrifiedComponent> ent, EntityUid? user = null, bool predicted = false)
-        {
-            var uid = ent.Owner;
-            if (TryComp(ent, out AirlockComponent? airlock)) {
-                if(!airlock.Powered)
-                    return;
-                ent.Comp.Enabled = !ent.Comp.Enabled;
-                Dirty(ent, ent.Comp);
-			}
-			
         }
     }
 }
