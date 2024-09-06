@@ -2,10 +2,11 @@ using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Emp;
-using Content.Server.Power.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.Power;
+using Content.Shared.Silicons.StationAi;
+using Content.Shared.StationAi;
 using Content.Shared.SurveillanceCamera;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
@@ -22,6 +23,7 @@ public sealed class SurveillanceCameraSystem : EntitySystem
     [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedStationAiSystem _stationAI = default!;
 
     // Pings a surveillance camera subnet. All cameras will always respond
     // with a data message if they are on the same subnet.
@@ -63,6 +65,9 @@ public sealed class SurveillanceCameraSystem : EntitySystem
 
         SubscribeLocalEvent<SurveillanceCameraComponent, EmpPulseEvent>(OnEmpPulse);
         SubscribeLocalEvent<SurveillanceCameraComponent, EmpDisabledRemoved>(OnEmpDisabledRemoved);
+
+        SubscribeLocalEvent<SurveillanceCameraComponent, SurveillanceCameraActivateEvent>(OnSurveillanceCameraActivate);
+        SubscribeLocalEvent<SurveillanceCameraComponent, SurveillanceCameraDeactivateEvent>(OnSurveillanceCameraDeactivate);
     }
 
     private void OnPacketReceived(EntityUid uid, SurveillanceCameraComponent component, DeviceNetworkPacketEvent args)
@@ -256,13 +261,12 @@ public sealed class SurveillanceCameraSystem : EntitySystem
         // Send a targetted event to all monitors.
         foreach (var monitor in component.ActiveMonitors)
         {
-            RaiseLocalEvent(monitor, ev, true);
+            RaiseLocalEvent(monitor, ref ev, true);
         }
 
         component.ActiveMonitors.Clear();
 
-        // Send a local event that's broadcasted everywhere afterwards.
-        RaiseLocalEvent(ev);
+        RaiseLocalEvent(camera, ref ev);
 
         UpdateVisuals(camera, component);
     }
@@ -280,7 +284,11 @@ public sealed class SurveillanceCameraSystem : EntitySystem
             RaiseLocalEvent(camera, ref attemptEv);
             if (attemptEv.Cancelled)
                 return;
+
             component.Active = setting;
+
+            var ev = new SurveillanceCameraActivateEvent(camera);
+            RaiseLocalEvent(camera, ref ev);
         }
         else
         {
@@ -402,6 +410,18 @@ public sealed class SurveillanceCameraSystem : EntitySystem
         _appearance.SetData(uid, SurveillanceCameraVisualsKey.Key, key, appearance);
     }
 
+    private void OnSurveillanceCameraActivate(EntityUid camera, SurveillanceCameraComponent component, ref SurveillanceCameraActivateEvent args)
+    {
+        if (TryComp(args.Camera, out StationAiVisionComponent? aiVision))
+            _stationAI.SetVisionEnabled((camera, aiVision), true);
+    }
+
+    private void OnSurveillanceCameraDeactivate(EntityUid camera, SurveillanceCameraComponent component, ref SurveillanceCameraDeactivateEvent args)
+    {
+        if (TryComp(args.Camera, out StationAiVisionComponent? aiVision))
+            _stationAI.SetVisionEnabled((camera, aiVision), false);
+    }
+
     private void OnEmpPulse(EntityUid uid, SurveillanceCameraComponent component, ref EmpPulseEvent args)
     {
         if (component.Active)
@@ -428,16 +448,11 @@ public sealed class OnSurveillanceCameraViewerRemoveEvent : EntityEventArgs
 
 }
 
-// What happens when a camera deactivates.
-public sealed class SurveillanceCameraDeactivateEvent : EntityEventArgs
-{
-    public EntityUid Camera { get; }
+[ByRefEvent]
+public record struct SurveillanceCameraActivateEvent(EntityUid Camera);
 
-    public SurveillanceCameraDeactivateEvent(EntityUid camera)
-    {
-        Camera = camera;
-    }
-}
+[ByRefEvent]
+public record struct SurveillanceCameraDeactivateEvent(EntityUid Camera);
 
 [ByRefEvent]
 public record struct SurveillanceCameraSetActiveAttemptEvent(bool Cancelled);

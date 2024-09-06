@@ -203,7 +203,7 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
     }
 
     // This is to ensure that there's no delay in ensuring that a camera is deactivated.
-    private void OnSurveillanceCameraDeactivate(EntityUid uid, SurveillanceCameraMonitorComponent monitor, SurveillanceCameraDeactivateEvent args)
+    private void OnSurveillanceCameraDeactivate(EntityUid uid, SurveillanceCameraMonitorComponent monitor, ref SurveillanceCameraDeactivateEvent args)
     {
         DisconnectCamera(uid, false, monitor);
     }
