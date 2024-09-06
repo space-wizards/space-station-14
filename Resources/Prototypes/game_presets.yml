@@ -159,30 +159,6 @@
     - BasicRoundstartVariation
 
 - type: gamePreset
-  id: SecretSpyVsSpy #For Admin Use: Runs SpyVsSpy but shows "Secret" in lobby.
-  alias:
-    - secretsvs
-  name: secret-title
-  description: secret-description
-  showInVote: false #Admin Use
-  rules:
-    - SpyVsSpy
-    - BasicStationEventScheduler
-    - MeteorSwarmScheduler
-    - BasicRoundstartVariation
-
-- type: gamePreset
-  id: SpyVsSpy5TC
-  name: spy-vs-spy-title
-  description: spy-vs-spy-description
-  showInVote: false
-  rules:
-    - SpyVsSpy5TC
-    - BasicStationEventScheduler
-    - MeteorSwarmScheduler
-    - BasicRoundstartVariation
-
-- type: gamePreset
   id: SpyVsSpy
   alias:
     - svs
@@ -192,8 +168,49 @@
   showInVote: false
   rules:
     - SpyVsSpy
-    - BasicStationEventScheduler
+    - SleeperlessStationEventScheduler
     - MeteorSwarmScheduler
+    - SpaceTrafficControlEventScheduler
+    - BasicRoundstartVariation
+
+- type: gamePreset
+  id: SpyVsSpy3TC
+  name: spy-vs-spy-title
+  description: spy-vs-spy-description
+  showInVote: false
+  rules:
+    - SpyVsSpy3TC
+    - SleeperlessStationEventScheduler
+    - MeteorSwarmScheduler
+    - SpaceTrafficControlEventScheduler
+    - BasicRoundstartVariation
+
+- type: gamePreset
+  id: SecretSpyVsSpy #For Admin Use: Runs SpyVsSpy but shows "Secret" in lobby.
+  alias:
+    - secretsvs
+  name: secret-title
+  description: secret-description
+  showInVote: false #Admin Use
+  rules:
+    - SpyVsSpy
+    - SleeperlessStationEventScheduler
+    - MeteorSwarmScheduler
+    - SpaceTrafficControlEventScheduler
+    - BasicRoundstartVariation
+
+- type: gamePreset
+  id: SecretSpyVsSpy3TC #For Admin Use: Runs SpyVsSpy3TC but shows "Secret" in lobby.
+  alias:
+    - secretsvs
+  name: secret-title
+  description: secret-description
+  showInVote: false #Admin Use
+  rules:
+    - SpyVsSpy3TC
+    - SleeperlessStationEventScheduler
+    - MeteorSwarmScheduler
+    - SpaceTrafficControlEventScheduler
     - BasicRoundstartVariation
 
 - type: gamePreset
