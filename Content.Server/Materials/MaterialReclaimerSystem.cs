@@ -258,9 +258,24 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
         }
 
         // if the item we inserted has reagents, add it in.
-        if (_solutionContainer.TryGetDrainableSolution(item, out _, out var drainableSolution))
+
+        if (reclaimerComponent.OnlyReclaimDrainable)
         {
-            totalChemicals.AddSolution(drainableSolution, _prototype);
+            // Are we a recycler? Only use drainable solutions.
+            if (_solutionContainer.TryGetDrainableSolution(item, out _, out var drainableSolution))
+            {
+                totalChemicals.AddSolution(drainableSolution, _prototype);
+            }
+        }
+        else
+        {
+            // Are we an industrial reagent grinder? Use any solutions it has.
+            if (TryComp<SolutionContainerManagerComponent>(item, out var solutionContainer)){
+                foreach (var (_, soln) in _solutionContainer.EnumerateSolutions((item, solutionContainer)))
+                {
+                    totalChemicals.AddSolution(soln.Comp.Solution, _prototype);
+                }
+            }
         }
 
         if (!_solutionContainer.TryGetSolution(reclaimer, reclaimerComponent.SolutionContainerId, out var outputSolution) ||
