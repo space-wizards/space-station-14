@@ -9,7 +9,7 @@
       - tag: SecurityHelmet
         name: security helmet
         icon:
-          sprite: Clothing\Head\Helmets\security.rsi
+          sprite: Clothing/Head/Helmets/security.rsi
           state: icon
       - material: Cable
         amount: 2
