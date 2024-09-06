@@ -75,6 +75,7 @@
       name: station-ai-mind-slot
       locked: true
       whitelist:
+        requireAll: true
         tags:
         - StationAi
   - type: ContainerContainer
