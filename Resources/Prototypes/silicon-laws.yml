@@ -684,7 +684,8 @@
     NutimovLawset: 0.5
     Drone: 0.5
     Ninja: 0.25
-    NTAgressiveLawset: 0.5
+    NTAgressiveLawset: 0.25
     DeathsquadLawset: 0
     ERTLawset: 0
     Pranksimov: 0.5
+    HippocratesLawset: 1
