@@ -14,7 +14,7 @@ namespace Content.Shared.Anomaly.Components;
 public sealed partial class InnerBodyAnomalyComponent : Component
 {
     /// <summary>
-    /// A prototype of an entity whose components will be added to the anomaly host and then removed at the right time
+    /// A prototype of an entity whose components will be added to the anomaly host **AND** then removed at the right time
     /// </summary>
     [DataField(required: true)]
     public EntProtoId InjectionProto = default!;

@@ -8,6 +8,7 @@ using Content.Shared.Anomaly.Components;
 using Content.Shared.Anomaly.Effects;
 using Content.Shared.Body.Components;
 using Content.Shared.Chat;
+using Content.Shared.Mind;
 using Content.Shared.Mobs;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
@@ -96,7 +97,7 @@ public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
             if (action is not null)
             {
                 ent.Comp.Action = action.Value;
-                _actions.GrantActions(ent, new List<EntityUid>{action.Value}, ent);
+                _actions.GrantActions(ent, new List<EntityUid> {action.Value}, ent);
             }
         }
         Dirty(ent);
@@ -126,12 +127,12 @@ public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
 
     private void OnShutdown(Entity<InnerBodyAnomalyComponent> ent, ref AnomalyShutdownEvent args)
     {
-        //if (_proto.TryIndex(ent.Comp.InjectionProto, out var injectedAnom))
-        //    EntityManager.RemoveComponents(ent, injectedAnom.Components);
+        if (_proto.TryIndex(ent.Comp.InjectionProto, out var injectedAnom))
+            EntityManager.RemoveComponents(ent, injectedAnom.Components);
 
         _stun.TryParalyze(ent, TimeSpan.FromSeconds(ent.Comp.StunDuration), true);
 
         QueueDel(ent.Comp.Action);
-        RemComp<InnerBodyAnomalyComponent>(ent);
+        RemCompDeferred<InnerBodyAnomalyComponent>(ent);
     }
 }

@@ -57,6 +57,12 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
                 continue;
             sync.NextCheckTime = _timing.CurTime + sync.CheckFrequency;
 
+            if (!EntityManager.EntityExists(sync.ConnectedAnomaly))
+            {
+                DisconnectFromAnomaly((uid, sync), sync.ConnectedAnomaly.Value);
+                continue;
+            }
+
             if (Transform(sync.ConnectedAnomaly.Value).MapUid != Transform(uid).MapUid)
             {
                 DisconnectFromAnomaly((uid, sync), sync.ConnectedAnomaly.Value);

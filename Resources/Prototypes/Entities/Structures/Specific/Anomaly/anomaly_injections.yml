@@ -2,9 +2,6 @@
   id: AnomalyInjectionBase
   abstract: true
   components:
-  - type: Anomaly
-    deleteEntity: false
-    maxPointsPerSecond: 100 # 1.5x points - anomaly risk reward
   - type: PointLight
     radius: 1.3
     energy: 2.5
@@ -15,9 +12,6 @@
   id: AnomalyInjectionPyroclastic
   categories: [ HideSpawnMenu ]
   components:
-  - type: Anomaly
-    corePrototype: AnomalyCorePyroclastic
-    coreInertPrototype: AnomalyPyroclastic
   - type: PointLight
     color: "#E25822"
   - type: PyroclasticAnomaly
@@ -42,9 +36,6 @@
   id: AnomalyInjectionElectric
   categories: [ HideSpawnMenu ]
   components:
-  - type: Anomaly
-    corePrototype: AnomalyCoreElectricity
-    coreInertPrototype: AnomalyElectricity
   - type: PointLight
     color: "#ffffaa"
   - type: ElectricityAnomaly
@@ -59,9 +50,6 @@
   id: AnomalyInjectionShadow
   categories: [ HideSpawnMenu ]
   components:
-  - type: Anomaly
-    corePrototype: AnomalyCoreShadow
-    coreInertPrototype: AnomalyShadow
   - type: PointLight
     color: "#793a80"
   - type: EntitySpawnAnomaly
@@ -87,9 +75,6 @@
   id: AnomalyInjectionIce
   categories: [ HideSpawnMenu ]
   components:
-  - type: Anomaly
-    corePrototype: AnomalyCoreIce
-    coreInertPrototype: AnomalyIce
   - type: PointLight
     color: "#befaff"
   - type: ExplosionAnomaly
@@ -123,9 +108,6 @@
   id: AnomalyInjectionFlora
   categories: [ HideSpawnMenu ]
   components:
-  - type: Anomaly
-    corePrototype: AnomalyCoreFlora
-    coreInertPrototype: AnomalyFlora
   - type: PointLight
     color: "#6270bb"
   - type: TileSpawnAnomaly
@@ -164,9 +146,6 @@
   id: AnomalyInjectionBluespace
   categories: [ HideSpawnMenu ]
   components:
-  - type: Anomaly
-    corePrototype: AnomalyCoreBluespace
-    coreInertPrototype: AnomalyBluespace
   - type: PointLight
     color: "#00ccff"
   - type: BluespaceAnomaly
@@ -176,10 +155,6 @@
   id: AnomalyInjectionFlesh
   categories: [ HideSpawnMenu ]
   components:
-  - type: Anomaly
-    deleteEntity: false
-    corePrototype: AnomalyCoreFlesh
-    coreInertPrototype: AnomalyFlesh
   - type: PointLight
     color: "#cb5b7e"
   - type: TileSpawnAnomaly
@@ -258,9 +233,6 @@
   id: AnomalyInjectionGravity
   categories: [ HideSpawnMenu ]
   components:
-  - type: Anomaly
-    corePrototype: AnomalyCoreGravity
-    coreInertPrototype: AnomalyGravity
   - type: PointLight
     color: "#1e070e"
   - type: GravityAnomaly
@@ -279,9 +251,6 @@
   id: AnomalyInjectionTech
   categories: [ HideSpawnMenu ]
   components:
-  - type: Anomaly
-    corePrototype: AnomalyCoreTech
-    coreInertPrototype: AnomalyTech
   - type: PointLight
     color: "#56c1e8"
   - type: TechAnomaly
@@ -307,9 +276,6 @@
   id: AnomalyInjectionRock
   categories: [ HideSpawnMenu ]
   components:
-  - type: Anomaly
-    corePrototype: AnomalyCoreRock
-    coreInertPrototype: RandomRockAnomalySpawner
   - type: PointLight
     color: "#5ca8cb"
   - type: TileSpawnAnomaly

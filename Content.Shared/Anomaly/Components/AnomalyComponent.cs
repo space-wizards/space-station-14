@@ -1,6 +1,6 @@
 using System.Numerics;
+using Content.Shared.Anomaly.Effects;
 using Content.Shared.Anomaly.Prototypes;
-using Content.Shared.Damage;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -16,7 +16,7 @@ namespace Content.Shared.Anomaly.Components;
 /// Anomalies and their related components were designed here: https://hackmd.io/@ss14-design/r1sQbkJOs
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
-[Access(typeof(SharedAnomalySystem))]
+[Access(typeof(SharedAnomalySystem), typeof(SharedInnerBodyAnomalySystem))]
 public sealed partial class AnomalyComponent : Component
 {
     /// <summary>
