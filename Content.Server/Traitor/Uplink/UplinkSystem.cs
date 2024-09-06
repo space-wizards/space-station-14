@@ -1,5 +1,7 @@
+using System.Linq;
 using Content.Shared.Implants.Components;
 using Content.Server.Store.Systems;
+using Content.Server.StoreDiscount.Systems;
 using Content.Shared.Hands.EntitySystems;
 using Content.Server.Implants;
 using Content.Shared.Inventory;
@@ -32,22 +34,31 @@ public sealed class UplinkSystem : EntitySystem
     /// <param name="user">The person who is getting the uplink</param>
     /// <param name="balance">The amount of currency on the uplink. If null, will just use the amount specified in the preset.</param>
     /// <param name="uplinkEntity">The entity that will actually have the uplink functionality. Defaults to the PDA if null.</param>
+    /// <param name="giveDiscounts">Marker that enables discounts for uplink items.</param>
     /// <returns>Whether or not the uplink was added successfully</returns>
-    public bool AddUplink(EntityUid user, FixedPoint2 balance, EntityUid? uplinkEntity = null)
+    public bool AddUplink(
+        EntityUid user,
+        FixedPoint2 balance,
+        EntityUid? uplinkEntity = null,
+        bool giveDiscounts = false)
     {
-        // Try to find target item
+        // Try to find target item if none passed
+
+        //uplinkEntity ??= FindUplinkTarget(user); //TODO:ERRANT see if I can use this?
+
         if (uplinkEntity == null)
         {
             uplinkEntity = FindUplinkTarget(user);
             if (uplinkEntity == null)
-                return ImplantUplink(user, balance);
+                return ImplantUplink(user, balance, giveDiscounts); //TODO:ERRANT clean this up
         }
 
         EnsureComp<UplinkComponent>(uplinkEntity.Value);
 
-        SetUplink(user, uplinkEntity.Value, balance);
+        SetUplink(user, uplinkEntity.Value, balance, giveDiscounts);
 
         // TODO add BUI. Currently can't be done outside of yaml -_-
+        // ^ What does this even mean?
 
         return true;
     }
@@ -55,19 +66,29 @@ public sealed class UplinkSystem : EntitySystem
     /// <summary>
     /// Configure TC for the uplink
     /// </summary>
-    private void SetUplink(EntityUid user, EntityUid uplink, FixedPoint2 balance)
+    private void SetUplink(EntityUid user, EntityUid uplink, FixedPoint2 balance, bool giveDiscounts)
     {
         var store = EnsureComp<StoreComponent>(uplink);
         store.AccountOwner = user;
 
         store.Balance.Clear();
-        _store.TryAddCurrency(new Dictionary<string, FixedPoint2> { { TelecrystalCurrencyPrototype, balance } }, uplink, store);
+        _store.TryAddCurrency(new Dictionary<string, FixedPoint2> { { TelecrystalCurrencyPrototype, balance } },
+            uplink,
+            store);
+
+        var uplinkInitializedEvent = new StoreInitializedEvent( //TODO:ERRANT fix this thing
+            TargetUser: user,
+            Store: uplink,
+            UseDiscounts: giveDiscounts,
+            Listings: _store.GetAvailableListings(user, uplink, store)
+                .ToArray());
+        RaiseLocalEvent(ref uplinkInitializedEvent);
     }
 
     /// <summary>
     /// Implant an uplink as a fallback measure if the traitor had no PDA
     /// </summary>
-    private bool ImplantUplink(EntityUid user, FixedPoint2 balance)
+    private bool ImplantUplink(EntityUid user, FixedPoint2 balance, bool giveDiscounts)
     {
         var implants = new List<string>(){FallbackUplinkImplant};
 
@@ -91,7 +112,7 @@ public sealed class UplinkSystem : EntitySystem
         {
             if (HasComp<StoreComponent>(implant))
             {
-                SetUplink(user, implant, balance);
+                SetUplink(user, implant, balance, giveDiscounts);
                 return true;
             }
         }

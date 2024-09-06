@@ -20,7 +20,8 @@
             Captain: [ 1, 1 ]
             HeadOfSecurity: [ 1, 1 ]
             SecurityOfficer: [ 1, 3 ]
-            CargoTechnician: [ 1, 2 ]
+            CargoTechnician: [ 1, 1 ]
+            SalvageSpecialist: [ 1, 1 ]
             Bartender: [ 1, 1 ]
             Botanist: [ 1, 1 ]
             Chef: [ 1, 1 ]
@@ -30,5 +31,6 @@
             Musician: [ 1, 1 ]
             AtmosphericTechnician: [ 1, 1 ]
             StationEngineer: [ 1, 2 ]
+            Scientist: [ 1, 1 ]
             Passenger: [ -1, -1 ]
 

@@ -118,7 +118,7 @@ public sealed partial class ShuttleSystem
                 continue;
             }
 
-            TryAddFTLDestination(gridXform.MapID, true, out _);
+            TryAddFTLDestination(gridXform.MapID, true, false, false, out _);
         }
     }
 
@@ -134,13 +134,12 @@ public sealed partial class ShuttleSystem
             return uid;
         }
 
-        var mapId = _mapManager.CreateMap();
-        var mapUid = _mapManager.GetMapEntityId(mapId);
+        var mapUid = _mapSystem.CreateMap(out var mapId);
         var ftlMap = AddComp<FTLMapComponent>(mapUid);
 
         _metadata.SetEntityName(mapUid, "FTL");
         Log.Debug($"Setup hyperspace map at {mapUid}");
-        DebugTools.Assert(!_mapManager.IsMapPaused(mapId));
+        DebugTools.Assert(!_mapSystem.IsPaused(mapId));
         var parallax = EnsureComp<ParallaxComponent>(mapUid);
         parallax.Parallax = ftlMap.Parallax;
 
@@ -188,7 +187,12 @@ public sealed partial class ShuttleSystem
     /// </summary>
     public bool TryAddFTLDestination(MapId mapId, bool enabled, [NotNullWhen(true)] out FTLDestinationComponent? component)
     {
-        var mapUid = _mapManager.GetMapEntityId(mapId);
+        return TryAddFTLDestination(mapId, enabled, true, false, out component);
+    }
+
+    public bool TryAddFTLDestination(MapId mapId, bool enabled, bool requireDisk, bool beaconsOnly, [NotNullWhen(true)] out FTLDestinationComponent? component)
+    {
+        var mapUid = _mapSystem.GetMapOrInvalid(mapId);
         component = null;
 
         if (!Exists(mapUid))
@@ -196,10 +200,13 @@ public sealed partial class ShuttleSystem
 
         component = EnsureComp<FTLDestinationComponent>(mapUid);
 
-        if (component.Enabled == enabled)
+        if (component.Enabled == enabled && component.RequireCoordinateDisk == requireDisk && component.BeaconsOnly == beaconsOnly)
             return true;
 
         component.Enabled = enabled;
+        component.RequireCoordinateDisk = requireDisk;
+        component.BeaconsOnly = beaconsOnly;
+
         _console.RefreshShuttleConsoles();
         Dirty(mapUid, component);
         return true;
@@ -281,8 +288,8 @@ public sealed partial class ShuttleSystem
 
         _console.RefreshShuttleConsoles(shuttleUid);
 
-        var mapId = coordinates.GetMapId(EntityManager);
-        var mapUid = _mapManager.GetMapEntityId(mapId);
+        var mapId = _transform.GetMapId(coordinates);
+        var mapUid = _mapSystem.GetMap(mapId);
         var ev = new FTLRequestEvent(mapUid);
         RaiseLocalEvent(shuttleUid, ref ev, true);
     }
@@ -388,7 +395,7 @@ public sealed partial class ShuttleSystem
         if (fromMapUid != null && TryComp(comp.StartupStream, out AudioComponent? startupAudio))
         {
             var clippedAudio = _audio.PlayStatic(_startupSound, Filter.Broadcast(),
-                new EntityCoordinates(fromMapUid.Value, _maps.GetGridPosition(entity.Owner)), true, startupAudio.Params);
+                new EntityCoordinates(fromMapUid.Value, _mapSystem.GetGridPosition(entity.Owner)), true, startupAudio.Params);
 
             _audio.SetPlaybackPosition(clippedAudio, entity.Comp1.StartupTime);
             clippedAudio.Value.Component.Flags |= AudioFlags.NoOcclusion;
@@ -477,7 +484,7 @@ public sealed partial class ShuttleSystem
             var map = maps.Min(o => o.GetHashCode());
 
             mapId = new MapId(map);
-            TryFTLProximity(uid, _mapManager.GetMapEntityId(mapId));
+            TryFTLProximity(uid, _mapSystem.GetMap(mapId));
         }
         // Docking FTL
         else if (HasComp<MapGridComponent>(target.EntityId) &&
@@ -502,7 +509,7 @@ public sealed partial class ShuttleSystem
         else
         {
             // TODO: This should now use tryftlproximity
-            mapId = target.GetMapId(EntityManager);
+            mapId = _transform.GetMapId(target);
             _transform.SetCoordinates(uid, xform, target, rotation: entity.Comp1.TargetAngle);
         }
 
@@ -540,7 +547,7 @@ public sealed partial class ShuttleSystem
         _mapManager.SetMapPaused(mapId, false);
         Smimsh(uid, xform: xform);
 
-        var ftlEvent = new FTLCompletedEvent(uid, _mapManager.GetMapEntityId(mapId));
+        var ftlEvent = new FTLCompletedEvent(uid, _mapSystem.GetMap(mapId));
         RaiseLocalEvent(uid, ref ftlEvent, true);
     }
 
@@ -616,7 +623,7 @@ public sealed partial class ShuttleSystem
 
                 // If the guy we knocked down is on a spaced tile, throw them too
                 if (grid != null)
-                    TossIfSpaced(grid, shuttleBody, child);
+                    TossIfSpaced((xform.GridUid.Value, grid, shuttleBody), child);
             }
         }
     }
@@ -637,13 +644,15 @@ public sealed partial class ShuttleSystem
     /// <summary>
     /// Throws people who are standing on a spaced tile, tries to throw them towards a neighbouring space tile
     /// </summary>
-    private void TossIfSpaced(MapGridComponent shuttleGrid, PhysicsComponent shuttleBody, EntityUid tossed)
+    private void TossIfSpaced(Entity<MapGridComponent, PhysicsComponent> shuttleEntity, EntityUid tossed)
     {
-        if (!_xformQuery.TryGetComponent(tossed, out var childXform) )
+        var shuttleGrid = shuttleEntity.Comp1;
+        var shuttleBody = shuttleEntity.Comp2;
+        if (!_xformQuery.TryGetComponent(tossed, out var childXform))
             return;
 
         // only toss if its on lattice/space
-        var tile = shuttleGrid.GetTileRef(childXform.Coordinates);
+        var tile = _mapSystem.GetTileRef(shuttleEntity, shuttleGrid, childXform.Coordinates);
 
         if (!tile.IsSpace(_tileDefManager))
             return;
@@ -689,7 +698,7 @@ public sealed partial class ShuttleSystem
     {
         // Set position
         var mapCoordinates = _transform.ToMapCoordinates(config.Coordinates);
-        var mapUid = _mapManager.GetMapEntityId(mapCoordinates.MapId);
+        var mapUid = _mapSystem.GetMap(mapCoordinates.MapId);
         _transform.SetCoordinates(shuttle.Owner, shuttle.Comp, new EntityCoordinates(mapUid, mapCoordinates.Position), rotation: config.Angle);
 
         // Connect everything

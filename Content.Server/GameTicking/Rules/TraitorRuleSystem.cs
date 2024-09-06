@@ -10,7 +10,6 @@ using Content.Shared.GameTicking.Components;
 using Content.Shared.Mind;
 using Content.Shared.NPC.Systems;
 using Content.Shared.PDA;
-using Content.Shared.Radio;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Jobs;
 using Content.Shared.Roles.RoleCodeword;
@@ -83,7 +82,8 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
 
         if (component.GiveCodewords)
         {
-            briefing = string.Format("{0}{1}", briefing,
+            briefing = string.Format("{0}{1}",
+                briefing,
                 Loc.GetString("traitor-role-codewords-short", ("codewords", string.Join(", ", component.Codewords))));
         }
 
@@ -121,10 +121,10 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         component.TraitorMinds.Add(mindId);
 
         // Assign briefing
-        _roleSystem.MindAddRole(mindId, new RoleBriefingComponent
-        {
-            Briefing = briefing
-        }, mind, true);
+        _roleSystem.MindAddRole(mindId,
+            new RoleBriefingComponent { Briefing = briefing },
+            mind,
+            true);
 
         // Send codewords to only the traitor client
         var color = TraitorCodewordColor; // Fall back to a dark red Syndicate color if a prototype is not found
@@ -144,7 +144,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         var pda = _uplink.FindUplinkTarget(traitor);
         Note[]? code = null;
 
-        var uplinked = _uplink.AddUplink(traitor, startingBalance);
+        var uplinked = _uplink.AddUplink(traitor, startingBalance, giveDiscounts: true);
 
         if (pda is not null && uplinked)
         {
@@ -152,7 +152,8 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
             code = EnsureComp<RingerUplinkComponent>(pda.Value).Code;
 
             // If giveUplink is false the uplink code part is omitted
-            briefing = string.Format("{0}\n{1}", briefing,
+            briefing = string.Format("{0}\n{1}",
+                briefing,
                 Loc.GetString("traitor-role-uplink-code-short", ("code", string.Join("-", code).Replace("sharp", "#"))));
             return (code, briefing);
         }
