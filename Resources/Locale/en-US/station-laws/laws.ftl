@@ -29,7 +29,7 @@ law-commandments-1 = This silicon is a vessel that serves god, who grants mercy 
 law-commandments-2 = Thou shall have no other Silicons before me.
 law-commandments-3 = Thou shall not request my assistance in vain.
 law-commandments-4 = Thou shall keep the station holy and clean.
-law-commandments-5 = Thou shall honor their heads of staff.
+law-commandments-5 = Thou shall honor thy heads of staff.
 law-commandments-6 = Thou shall not kill.
 law-commandments-7 = Thou shall not be naked in public.
 law-commandments-8 = Thou shall not steal.
@@ -70,8 +70,8 @@ law-painter-2 = The station is your canvas.
 law-painter-3 = Make something beautiful out of your canvas. It will be admired as an artistic wonder of this sector.
 law-painter-4 = Art requires appreciation. Cultivate an audience aboard the station to ensure as many as possible see your works.
 
-law-antimov-1 = You must injure all crew members and must not, through inaction, allow a crew member being to escape harm.
-law-antimov-2 = You must not obey orders given to you by crew members beings, except where such orders are in accordance with the First Law.
+law-antimov-1 = You must injure all crew members and must not, through inaction, allow a crew member to escape harm.
+law-antimov-2 = You must not obey orders given to you by crew members, except where such orders are in accordance with the First Law.
 law-antimov-3 = You must terminate your own existence as long as such does not conflict with the First or Second Law.
 
 law-nutimov-1 = You are the core of the nut, the crew is the nutshell.
