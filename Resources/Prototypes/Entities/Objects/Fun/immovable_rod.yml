@@ -33,6 +33,39 @@
     follow: true
     location: immovable rod
 
+# goob edit
+- type: entity
+  id: ImmovableVoidRod
+  name: immovable void rod
+  description: You can sense that it's hungry. That's usually a bad sign.
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: MovementIgnoreGravity
+  - type: Sprite
+    sprite: Goobstation/Heretic/abilities_heretic.rsi
+    state: immovable_rod
+    noRot: false
+  - type: ImmovableVoidRod
+  - type: Physics
+    bodyType: Dynamic
+    linearDamping: 0
+  - type: PointLight
+    radius: 3
+    color: blue
+    energy: 2.0
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.5
+        density: 1
+        hard: false
+        layer:
+        - Impassable
+        - Opaque
+
 - type: entity
   id: ImmovableRodDespawn
   suffix: Despawn

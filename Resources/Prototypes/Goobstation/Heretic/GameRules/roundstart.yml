@@ -1,0 +1,20 @@
+- type: entity
+  parent: BaseGameRule
+  id: Heretic
+  components:
+  - type: HereticRule
+  - type: GameRule
+    minPlayers: 20
+    delay:
+      min: 30
+      max: 60
+  - type: AntagSelection
+    agentName: heretic-roundend-name
+    definitions:
+    - prefRoles: [ Heretic ]
+      max: 5
+      playerRatio: 20
+      lateJoinAdditional: true
+      mindComponents:
+      - type: HereticRole
+        prototype: Heretic

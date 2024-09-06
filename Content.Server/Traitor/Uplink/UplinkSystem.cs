@@ -1,9 +1,8 @@
-using System.Linq;
 using Content.Server.Store.Systems;
-using Content.Server.StoreDiscount.Systems;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
+using Content.Server.Store.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
@@ -24,26 +23,21 @@ namespace Content.Server.Traitor.Uplink
         /// </summary>
         /// <param name="user">The person who is getting the uplink</param>
         /// <param name="balance">The amount of currency on the uplink. If null, will just use the amount specified in the preset.</param>
+        /// <param name="uplinkPresetId">The id of the storepreset</param>
         /// <param name="uplinkEntity">The entity that will actually have the uplink functionality. Defaults to the PDA if null.</param>
-        /// <param name="giveDiscounts">Marker that enables discounts for uplink items.</param>
         /// <returns>Whether or not the uplink was added successfully</returns>
-        public bool AddUplink(
-            EntityUid user,
-            FixedPoint2? balance,
-            EntityUid? uplinkEntity = null,
-            bool giveDiscounts = false
-        )
+        public bool AddUplink(EntityUid user, FixedPoint2? balance, EntityUid? uplinkEntity = null)
         {
-            // Try to find target item if none passed
-            uplinkEntity ??= FindUplinkTarget(user);
+            // Try to find target item
             if (uplinkEntity == null)
             {
-                return false;
+                uplinkEntity = FindUplinkTarget(user);
+                if (uplinkEntity == null)
+                    return false;
             }
 
             EnsureComp<UplinkComponent>(uplinkEntity.Value);
             var store = EnsureComp<StoreComponent>(uplinkEntity.Value);
-
             store.AccountOwner = user;
             store.Balance.Clear();
             if (balance != null)
@@ -52,14 +46,6 @@ namespace Content.Server.Traitor.Uplink
                 _store.TryAddCurrency(new Dictionary<string, FixedPoint2> { { TelecrystalCurrencyPrototype, balance.Value } }, uplinkEntity.Value, store);
             }
 
-            var uplinkInitializedEvent = new StoreInitializedEvent(
-                TargetUser: user,
-                Store: uplinkEntity.Value,
-                UseDiscounts: giveDiscounts,
-                Listings: _store.GetAvailableListings(user, uplinkEntity.Value, store)
-                                .ToArray()
-            );
-            RaiseLocalEvent(ref uplinkInitializedEvent);
             // TODO add BUI. Currently can't be done outside of yaml -_-
 
             return true;
@@ -76,8 +62,7 @@ namespace Content.Server.Traitor.Uplink
             {
                 while (containerSlotEnumerator.MoveNext(out var pdaUid))
                 {
-                    if (!pdaUid.ContainedEntity.HasValue)
-                        continue;
+                    if (!pdaUid.ContainedEntity.HasValue) continue;
 
                     if (HasComp<PdaComponent>(pdaUid.ContainedEntity.Value) || HasComp<StoreComponent>(pdaUid.ContainedEntity.Value))
                         return pdaUid.ContainedEntity.Value;

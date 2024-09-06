@@ -1,0 +1,36 @@
+# heretic
+
+- type: storeCategory
+  id: HereticPathAsh
+  name: store-heretic-path-ash
+  priority: 0
+
+- type: storeCategory
+  id: HereticPathLock
+  name: store-heretic-path-lock
+  priority: 0
+
+- type: storeCategory
+  id: HereticPathFlesh
+  name: store-heretic-path-flesh
+  priority: 0
+
+- type: storeCategory
+  id: HereticPathVoid
+  name: store-heretic-path-void
+  priority: 0
+
+- type: storeCategory
+  id: HereticPathBlade
+  name: store-heretic-path-blade
+  priority: 0
+
+- type: storeCategory
+  id: HereticPathRust
+  name: store-heretic-path-rust
+  priority: 0
+
+- type: storeCategory
+  id: HereticPathSide
+  name: store-heretic-path-side
+  priority: 999 # lowest possible
