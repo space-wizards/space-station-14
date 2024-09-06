@@ -14,8 +14,8 @@
 
 - type: entity
   id: ActionShowJobIcons
-  name: Show status icons
-  description: Shows status icons for crew members.
+  name: Show job icons
+  description: Shows job icons for crew members.
   components:
   - type: InstantAction
     priority: -5
