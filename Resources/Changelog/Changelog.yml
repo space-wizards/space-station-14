@@ -1,16 +1,6 @@
 ﻿Entries:
 - author: MilenVolf
   changes:
-  - message: Jaws of life, xeno and spiders now use proper prying speed that will
-      lead into a faster prying.
-    type: Fix
-  - message: Jaws of life now pries tiles much faster.
-    type: Tweak
-  id: 6794
-  time: '2024-06-20T14:19:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29210
-- author: MilenVolf
-  changes:
   - message: Stasis bed can be toggled on or off!
     type: Tweak
   id: 6795
@@ -3857,3 +3847,11 @@
   id: 7293
   time: '2024-09-06T06:04:28.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31883
+- author: TheShuEd, Jaraten
+  changes:
+  - message: New Tech anomaly added to the game! it can bind devices ports, activate
+      them, and when supercrit, it can even emag some devices.
+    type: Add
+  id: 7294
+  time: '2024-09-06T07:24:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31764
