@@ -33,8 +33,8 @@ public sealed class FlashSystem : SharedFlashSystem
 
     private void OnPlayerDetached(EntityUid uid, FlashedComponent component, LocalPlayerDetachedEvent args)
     {
-        _overlay.PercentComplete = 1.0f;
         _overlay.ScreenshotTexture = null;
+        _overlay.RequestScreenTexture = false;
         _overlayMan.RemoveOverlay(_overlay);
     }
 
@@ -42,6 +42,7 @@ public sealed class FlashSystem : SharedFlashSystem
     {
         if (_player.LocalEntity == uid)
         {
+            _overlay.RequestScreenTexture = true;
             _overlayMan.AddOverlay(_overlay);
             _overlay.ReceiveFlash();
         }
@@ -51,8 +52,8 @@ public sealed class FlashSystem : SharedFlashSystem
     {
         if (_player.LocalEntity == uid)
         {
-            _overlay.PercentComplete = 1.0f;
             _overlay.ScreenshotTexture = null;
+            _overlay.RequestScreenTexture = false;
             _overlayMan.RemoveOverlay(_overlay);
         }
     }

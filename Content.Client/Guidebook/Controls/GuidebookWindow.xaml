@@ -2,7 +2,7 @@
                 xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
                 xmlns:fancyTree="clr-namespace:Content.Client.UserInterface.Controls.FancyTree"
                 xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-                SetSize="850 700"
+                SetSize="900 700"
                 MinSize="100 200"
                 Resizable="True"
                 Title="{Loc 'guidebook-window-title'}">

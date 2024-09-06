@@ -197,6 +197,7 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: StationAiWhitelist
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/pump.rsi
     layers:
@@ -301,6 +302,7 @@
             In: { state: vent_in }
             Out: { state: vent_out }
             Welded: { state: vent_welded }
+            Lockout: { state: vent_lockout }
     - type: PipeColorVisuals
     - type: GasVentPump
       inlet: inlet
