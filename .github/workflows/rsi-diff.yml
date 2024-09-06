@@ -1,9 +1,10 @@
 name: Diff RSIs
 
 on:
-  pull_request_target:
-    paths:
-      - '**.rsi/**.png'
+  workflow_dispatch:
+#  pull_request_target:
+#    paths:
+#      - '**.rsi/**.png'
 
 jobs:
   diff:
