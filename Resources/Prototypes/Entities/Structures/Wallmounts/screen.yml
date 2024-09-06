@@ -35,6 +35,7 @@
   - type: ExtensionCableReceiver
   - type: Screen
   - type: DeviceNetwork
+    deviceNetId: Wireless
     receiveFrequencyId: ShuttleTimer
 
 - type: entity
