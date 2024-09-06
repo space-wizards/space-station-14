@@ -45,12 +45,6 @@
 		},
 		{
 			"name": "unbolt_door"
-		},
-		{
-			"name": "electrify_door"
-		},
-		{
-			"name": "unelectrify_door"
 		}
     ]
 }
