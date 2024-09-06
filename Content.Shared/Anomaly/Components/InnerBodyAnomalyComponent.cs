@@ -17,7 +17,7 @@ public sealed partial class InnerBodyAnomalyComponent : Component
     /// A prototype of an entity whose components will be added to the anomaly host **AND** then removed at the right time
     /// </summary>
     [DataField(required: true)]
-    public EntProtoId InjectionProto = default!;
+    public EntProtoId? InjectionProto;
 
     /// <summary>
     /// Duration of stun from the effect of the anomaly
