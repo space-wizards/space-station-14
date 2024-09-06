@@ -19,7 +19,7 @@ entities:
     - type: MetaData
       name: NT-Genesis
     - type: Transform
-      pos: 1176.655,-862.9849
+      pos: 0.5,0.5
       parent: invalid
     - type: MapGrid
       chunks:
