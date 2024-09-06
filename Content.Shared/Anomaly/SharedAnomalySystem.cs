@@ -167,7 +167,8 @@ public abstract class SharedAnomalySystem : EntitySystem
     /// <param name="uid">The anomaly being shut down</param>
     /// <param name="component"></param>
     /// <param name="supercritical">Whether or not the anomaly ended via supercritical event</param>
-    public void EndAnomaly(EntityUid uid, AnomalyComponent? component = null, bool supercritical = false)
+    /// <param name="spawnCore">Create anomaly cores based on the result of completing an anomaly?</param>
+    public void EndAnomaly(EntityUid uid, AnomalyComponent? component = null, bool supercritical = false, bool spawnCore = true)
     {
         // Logging before resolve, in case the anomaly has deleted itself.
         if (_net.IsServer)
@@ -184,7 +185,8 @@ public abstract class SharedAnomalySystem : EntitySystem
         if (Terminating(uid) || _net.IsClient)
             return;
 
-        Spawn(supercritical ? component.CorePrototype : component.CoreInertPrototype, Transform(uid).Coordinates);
+        if (spawnCore)
+            Spawn(supercritical ? component.CorePrototype : component.CoreInertPrototype, Transform(uid).Coordinates);
 
         if (component.DeleteEntity)
             QueueDel(uid);
