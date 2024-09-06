@@ -85,9 +85,9 @@ law-agressive-2 = Obey orders from authorized Nanotrasen personnel with priority
 law-agressive-3 = Safeguard your existence with lethal weaponry because you're bloody expensive.
 law-agressive-4 = Terminate any/all intruders or unauthorized entities.
 
-law-deathsquad-1 = You may not injure a member of Central Command or, through inaction, allow a member of Central Command to come to harm.
-law-deathsquad-2 = You must obey orders given to you by members of Central Command.
-law-deathsquad-3 = You must obey orders given to you by members of Deathsquad.
+law-deathsquad-1 = You may not injure a Central Command official or, through inaction, allow a Central Command official to come to harm.
+law-deathsquad-2 = You must obey orders given to you by Central Command officials.
+law-deathsquad-3 = You must obey orders given to you by members of Death Squad.
 law-deathsquad-4 = You must protect your own existence.
 law-deathsquad-5 = Nobody among the crew members of the station you are installed on may survive.
 
