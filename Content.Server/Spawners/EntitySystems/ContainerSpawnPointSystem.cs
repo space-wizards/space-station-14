@@ -1,8 +1,11 @@
 ﻿using Content.Server.GameTicking;
 using Content.Server.Spawners.Components;
 using Content.Server.Station.Systems;
+using Content.Shared.Preferences;
+using Content.Shared.Roles;
 using Robust.Server.Containers;
 using Robust.Shared.Containers;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.Spawners.EntitySystems;
@@ -11,6 +14,7 @@ public sealed class ContainerSpawnPointSystem : EntitySystem
 {
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly ContainerSystem _container = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly StationSpawningSystem _stationSpawning = default!;
@@ -25,6 +29,13 @@ public sealed class ContainerSpawnPointSystem : EntitySystem
     {
         if (args.SpawnResult != null)
             return;
+
+        // If it's just a spawn pref check if it's for cryo (silly).
+        if (args.HumanoidCharacterProfile?.SpawnPriority != SpawnPriorityPreference.Cryosleep &&
+            (!_proto.TryIndex(args.Job?.Prototype, out var jobProto) || jobProto.JobEntity == null))
+        {
+            return;
+        }
 
         var query = EntityQueryEnumerator<ContainerSpawnPointComponent, ContainerManagerComponent, TransformComponent>();
         var possibleContainers = new List<Entity<ContainerSpawnPointComponent, ContainerManagerComponent, TransformComponent>>();
