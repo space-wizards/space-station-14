@@ -320,18 +320,16 @@ public sealed class ChatUIController : UIController, IOnSystemChanged<CharacterI
         if (entityName.Count(c => c == ' ') == 1)
             entityName = entityName.Replace(' ', '\n');
 
+        string newHighlights = entityName;
+
         // Convert the job title to kebab-case and use it as a key for the loc file.
-        string job_key = job.Replace(' ', '-').ToLower();
-        string job_matches = Loc.GetString($"highlights-{job_key}").Replace(", ", "\n");
+        string jobKey = job.Replace(' ', '-').ToLower();
+        
+        if (Loc.TryGetString($"highlights-{jobKey}", out var jobMatches))
+            newHighlights += '\n' + jobMatches.Replace(", ", "\n");
 
-        string new_highlights = entityName;
-
-        // If job_matches == highlights- + job_key then no match found for specified job.
-        if (!job_matches.Equals($"highlights-{job_key}"))
-            new_highlights += '\n' + job_matches;
-
-        UpdateHighlights(new_highlights);
-        HighlightsUpdated?.Invoke(new_highlights);
+        UpdateHighlights(newHighlights);
+        HighlightsUpdated?.Invoke(newHighlights);
         _charInfoIsAttach = false;
     }
 
@@ -499,20 +497,11 @@ public sealed class ChatUIController : UIController, IOnSystemChanged<CharacterI
     private void OnAttachedChanged(EntityUid uid)
     {
         UpdateChannelPermissions();
-
-        if (!_autoFillHighlightsEnabled)
-            return;
         
-        if (_player.LocalUser != null)
+        if (_autoFillHighlightsEnabled)
         {
             _charInfoIsAttach = true;
             _characterInfo.RequestCharacterInfo();
-        }
-        else
-        {
-            // Make sure to clear the highlights when detaching from the player.
-            UpdateHighlights("");
-            HighlightsUpdated?.Invoke("");
         }
     }
 
@@ -682,15 +671,15 @@ public sealed class ChatUIController : UIController, IOnSystemChanged<CharacterI
         }
 
         // Fill the array with the highlights separated by newlines, disregarding empty entries.
-        string[] arr_highlights = highlights.Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+        string[] arrHighlights = highlights.Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
         _highlights.Clear();
-        foreach (var keyword in arr_highlights)
+        foreach (var keyword in arrHighlights)
         {
             _highlights.Add(keyword);
         }
 
-        // Arrange the list in descending order so that when highlighting
-        // the full word (eg. "Security") appears before the abbrevation (eg. "Sec").
+        // Arrange the list in descending order so that when highlighting,
+        // the full word (eg. "Security") appears before the abbreviation (eg. "Sec").
         _highlights.Sort((x, y) => y.Length.CompareTo(x.Length));
     }
 
@@ -934,7 +923,7 @@ public sealed class ChatUIController : UIController, IOnSystemChanged<CharacterI
                 msg.WrappedMessage = SharedChatSystem.InjectTagInsideTag(msg, "Name", "color", GetNameColor(SharedChatSystem.GetStringInsideTag(msg, "Name")));
         }
 
-        // Highlight any words choosen by the client.
+        // Color any words choosen by the client.
         foreach (var highlight in _highlights)
         {
             // Inject a whole word tag so that the highlighted words will need to be whole,
