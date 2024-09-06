@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Anomaly.Effects;
+using Content.Shared.Body.Prototypes;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -49,10 +50,16 @@ public sealed partial class InnerBodyAnomalyComponent : Component
     public EntProtoId? ActionProto = "ActionAnomalyPulse";
 
     /// <summary>
-    /// The sprite to be added on the original entity. Allows you to visually identify the feature and type of anomaly to other players
+    /// The fallback sprite to be added on the original entity. Allows you to visually identify the feature and type of anomaly to other players
     /// </summary>
     [DataField, AutoNetworkedField]
-    public SpriteSpecifier? LayerSprite = null;
+    public SpriteSpecifier? FallbackSprite = null;
+
+    /// <summary>
+    /// Ability to use unique sprites for different body types
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public Dictionary<ProtoId<BodyPrototype>, SpriteSpecifier> SpeciesSprites = new();
 
     /// <summary>
     /// The key of the entity layer into which the sprite will be inserted

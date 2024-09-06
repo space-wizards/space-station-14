@@ -49,9 +49,13 @@
       - type: InnerBodyAnomaly
         injectionProto: AnomalyInjectionPyroclastic
         startMessage: inner-anomaly-start-message-pyro
-        layerSprite:
+        fallbackSprite:
           sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
-          state: fire_eyes
+          state: fire
+        speciesSprites:
+          Vox:
+            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+            state: fire_VOX
 
 - type: entity
   parent: BaseAnomalyInjector
@@ -70,9 +74,13 @@
       - type: InnerBodyAnomaly
         injectionProto: AnomalyInjectionElectric
         startMessage: inner-anomaly-start-message-shock
-        layerSprite:
+        fallbackSprite:
           sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
-          state: shock_eyes
+          state: shock
+        speciesSprites:
+          Vox:
+            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+            state: shock_VOX
 
 - type: entity
   parent: BaseAnomalyInjector
@@ -91,9 +99,13 @@
       - type: InnerBodyAnomaly
         injectionProto: AnomalyInjectionShadow
         startMessage: inner-anomaly-start-message-shadow
-        layerSprite:
+        fallbackSprite:
           sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
-          state: shadow_eyes
+          state: shadow
+        speciesSprites:
+          Vox:
+            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+            state: shadow_VOX
 
 - type: entity
   parent: BaseAnomalyInjector
@@ -112,9 +124,13 @@
       - type: InnerBodyAnomaly
         injectionProto: AnomalyInjectionIce
         startMessage: inner-anomaly-start-message-frost
-        layerSprite:
+        fallbackSprite:
           sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
-          state: frost_eyes
+          state: frost
+        speciesSprites:
+          Vox:
+            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+            state: frost_VOX
 
 - type: entity
   parent: BaseAnomalyInjector
@@ -133,9 +149,13 @@
       - type: InnerBodyAnomaly
         injectionProto: AnomalyInjectionFlora
         startMessage: inner-anomaly-start-message-flora
-        layerSprite:
+        fallbackSprite:
           sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
-          state: flora_eyes
+          state: flora
+        speciesSprites:
+          Vox:
+            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+            state: flora_VOX
 
 - type: entity
   parent: BaseAnomalyInjector
@@ -154,9 +174,13 @@
       - type: InnerBodyAnomaly
         injectionProto: AnomalyInjectionBluespace
         startMessage: inner-anomaly-start-message-bluespace
-        layerSprite:
+        fallbackSprite:
           sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
-          state: bluespace_eyes
+          state: bluespace
+        speciesSprites:
+          Vox:
+            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+            state: bluespace_VOX
 
 - type: entity
   parent: BaseAnomalyInjector
@@ -175,9 +199,13 @@
       - type: InnerBodyAnomaly
         injectionProto: AnomalyInjectionFlesh
         startMessage: inner-anomaly-start-message-flesh
-        layerSprite:
+        fallbackSprite:
           sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
-          state: flesh_eyes
+          state: flesh
+        speciesSprites:
+          Vox:
+            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+            state: flesh_VOX
 
 - type: entity
   parent: BaseAnomalyInjector
@@ -196,6 +224,10 @@
       - type: InnerBodyAnomaly
         injectionProto: AnomalyInjectionGravity
         startMessage: inner-anomaly-start-message-grav
-        layerSprite:
+        fallbackSprite:
           sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
-          state: grav_eyes
+          state: grav
+        speciesSprites:
+          Vox:
+            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+            state: grav_VOX
