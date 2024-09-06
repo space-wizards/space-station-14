@@ -55,7 +55,7 @@
   - type: RandomSpawner
     prototypes:
     - AnomalyTrapPyroclastic
-    - AnomalyTrapElectric
+    - AnomalyTrapElectricity
     - AnomalyTrapShadow
     - AnomalyTrapIce
     - AnomalyTrapFlora
