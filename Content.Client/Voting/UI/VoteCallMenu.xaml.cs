@@ -29,7 +29,7 @@ namespace Content.Client.Voting.UI
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly VotingSystem _votingSystem = default!;
 
-        public (string name, StandardVoteType type, List<(string name, string id)>? secondaries, List<(string name, string id)>? tertiaries)[]
+        public (string name, StandardVoteType type, List<(string, string)>? secondaries, List<(string, string)>? tertiaries)[]
             AvailableVoteTypes =
             {
                 ("ui-vote-type-restart", StandardVoteType.Restart, null, null),
@@ -38,9 +38,9 @@ namespace Content.Client.Voting.UI
                 ("Votekick (set loc)", StandardVoteType.Votekick, null, null)
             };
 
-        public List<(string name, string id)>? secondaries = [("test", "test2"), ("test3", "test4")];
+        public List<(string, string)>? secondaries = [("test", "test2"), ("test3", "test4")];
 
-        public List<(string name, string id)>? tertiaries = [("test5", "test6"), ("test7", "test8")];
+        public List<(string, string)>? tertiaries = [("test5", "test6"), ("test7", "test8")];
 
         public VoteCallMenu()
         {
@@ -98,7 +98,7 @@ namespace Content.Client.Voting.UI
 
         private void UpdateVotePlayerList(VotePlayerListResponseEvent msg)
         {
-            List<(string name, string id)>? list = new();
+            List<(string, string)>? list = new();
             foreach ((NetUserId, string) player in msg.Players)
             {
                 list.Add((player.Item2, player.Item1.ToString()));
