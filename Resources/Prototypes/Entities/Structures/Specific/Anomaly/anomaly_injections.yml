@@ -263,13 +263,6 @@
     coreInertPrototype: AnomalyGravity
   - type: PointLight
     color: "#1e070e"
-  - type: Sprite
-    layers:
-    - state: anom2
-      map: ["enum.AnomalyVisualLayers.Base"]
-    - state: anom2-pulse
-      map: ["enum.AnomalyVisualLayers.Animated"]
-      visible: false
   - type: GravityAnomaly
     maxGravityWellRange: 4
     maxThrowRange: 3
@@ -305,3 +298,6 @@
       - Timer
   - type: WirelessNetworkConnection
     range: 10
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
