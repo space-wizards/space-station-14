@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Fixed initial infected status icons not showing up.
-    type: Fix
-  - message: Added an antagonist message to the character menu for initial infected
-      and zombies.
-    type: Add
-  id: 6796
-  time: '2024-06-21T05:42:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29259
 - author: Chief_Engineer and TsjipTsjip
   changes:
   - message: All ghostroles now have their role type, as defined in the rules, defined
@@ -3856,3 +3846,10 @@
   id: 7295
   time: '2024-09-06T14:05:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31390
+- author: lzk228
+  changes:
+  - message: You can no longer insert any item in AI upload console.
+    type: Fix
+  id: 7296
+  time: '2024-09-06T19:07:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31900
