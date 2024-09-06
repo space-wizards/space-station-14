@@ -309,7 +309,7 @@
   components:
   - type: Anomaly
     corePrototype: AnomalyCoreRock
-    coreInertPrototype: AnomalyRock
+    coreInertPrototype: RandomRockAnomalySpawner
   - type: PointLight
     color: "#5ca8cb"
   - type: TileSpawnAnomaly
