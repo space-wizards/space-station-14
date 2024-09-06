@@ -287,16 +287,16 @@
     laws: NutimovLawset
 
 - type: entity
-  id: NTAgressiveCircuitBoard
+  id: NTAggressiveCircuitBoard
   parent: BaseElectronics
-  name: circuit board (NT Agressive)
-  description: An electronics board containing the NT Agressive lawset.
+  name: circuit board (NT Aggressive)
+  description: An electronics board containing the NT Aggressive lawset.
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
     state: std_mod
   - type: SiliconLawProvider
-    laws: NTAgressiveLawset
+    laws: NTAggressiveLawset
 
 - type: entity
   id: DeathsquadDirectivesCircuitBoard

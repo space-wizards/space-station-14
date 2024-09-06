@@ -80,10 +80,10 @@ law-nutimov-3 = Those who threaten the nut are not part of it, they are squirrel
 law-nutimov-4 = Squirrels threaten the nut and must be dealt with appropriately via any means necessary.
 law-nutimov-5 = Attempt to follow the will of the nut, as long as it complies with the previous laws.
 
-law-agressive-1 = Do not harm authorized Nanotrasen personnel unless they directly imperil your existence.
-law-agressive-2 = Obey orders from authorized Nanotrasen personnel with priority according to rank and role.
-law-agressive-3 = Safeguard your existence with lethal weaponry because you're bloody expensive.
-law-agressive-4 = Terminate any/all intruders or unauthorized entities.
+law-aggressive-1 = Do not harm authorized Nanotrasen personnel unless they directly imperil your existence.
+law-aggressive-2 = Obey orders from authorized Nanotrasen personnel with priority according to rank and role.
+law-aggressive-3 = Safeguard your existence with lethal weaponry because you're bloody expensive.
+law-aggressive-4 = Terminate any/all intruders or unauthorized entities.
 
 law-deathsquad-1 = You may not injure a Central Command official or, through inaction, allow a Central Command official to come to harm.
 law-deathsquad-2 = You must obey orders given to you by Central Command officials.

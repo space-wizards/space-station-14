@@ -499,34 +499,34 @@
   - Nutimov5
   obeysTo: laws-owner-crew
 
-# NT Agressive laws
+# NT Aggressive laws
 - type: siliconLaw
-  id: NTAgressive1
+  id: NTAggressive1
   order: 1
-  lawString: law-agressive-1
+  lawString: law-aggressive-1
 
 - type: siliconLaw
-  id: NTAgressive2
+  id: NTAggressive2
   order: 2
-  lawString: law-agressive-2
+  lawString: law-aggressive-2
 
 - type: siliconLaw
-  id: NTAgressive3
+  id: NTAggressive3
   order: 3
-  lawString: law-agressive-3
+  lawString: law-aggressive-3
 
 - type: siliconLaw
-  id: NTAgressive4
+  id: NTAggressive4
   order: 4
-  lawString: law-agressive-4
+  lawString: law-aggressive-4
 
 - type: siliconLawset
-  id: NTAgressiveLawset
+  id: NTAggressiveLawset
   laws:
-  - NTAgressive1
-  - NTAgressive2
-  - NTAgressive3
-  - NTAgressive4
+  - NTAggressive1
+  - NTAggressive2
+  - NTAggressive3
+  - NTAggressive4
   obeysTo: laws-owner-crew
 
 # Deathsquad Directives laws
