@@ -762,3 +762,25 @@
   id: 106
   time: '2024-09-06T00:20:30.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/216
+- author: formlessnameless
+  changes:
+  - message: Added Spy Vs Spy to the secret rotation with a weight similar to Nukies
+      and Changeling rounds
+    type: Add
+  - message: Removed Sleeper Agent event from Spy Vs Spy rounds
+    type: Remove
+  - message: People with Sleeper Agent but not Syndicate Agent enabled will now also
+      be included in Spy Vs Spy antag selection
+    type: Tweak
+  - message: Fixed random ship event scheduler not being included in Spy Vs Spy settings
+    type: Fix
+  id: 107
+  time: '2024-09-06T15:23:58.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/218
+- author: sususuyo
+  changes:
+  - message: Removed an incompatible track from the jukebox
+    type: Remove
+  id: 108
+  time: '2024-09-06T15:23:43.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/217
