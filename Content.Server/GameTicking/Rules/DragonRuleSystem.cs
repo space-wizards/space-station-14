@@ -32,7 +32,7 @@ public sealed class DragonRuleSystem : GameRuleSystem<DragonRuleComponent>
         var dragonXform = Transform(dragon);
 
         var station = _station.GetStationInMap(dragonXform.MapID);
-        EntityUid? stationGrid = new();
+        EntityUid? stationGrid = null;
         if (TryComp<StationDataComponent>(station, out var stationData))
             stationGrid = _station.GetLargestGrid(stationData);
 
