@@ -1,4 +1,6 @@
 using System.Linq;
+using Content.Server.Administration;
+using Content.Server.Administration.Managers;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Presets;
 using Content.Server.Maps;
@@ -16,6 +18,10 @@ namespace Content.Server.Voting.Managers
 {
     public sealed partial class VoteManager
     {
+        [Dependency] private readonly IPlayerLocator _locator = default!;
+        [Dependency] private readonly ILogManager _logManager = default!;
+        [Dependency] private readonly IBanManager _bans = default!;
+
         private static readonly Dictionary<StandardVoteType, CVarDef<bool>> _voteTypesToEnableCVars = new()
         {
             {StandardVoteType.Restart, CCVars.VoteRestartEnabled},
@@ -23,10 +29,12 @@ namespace Content.Server.Voting.Managers
             {StandardVoteType.Map, CCVars.VoteMapEnabled},
         };
 
-        public void CreateStandardVote(ICommonSession? initiator, StandardVoteType voteType)
+        public void CreateStandardVote(ICommonSession? initiator, StandardVoteType voteType, string[]? args = null)
         {
-            if (initiator != null)
+            if (initiator != null && args == null)
                 _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"{initiator} initiated a {voteType.ToString()} vote");
+            else if (initiator != null && args != null)
+                _adminLogger.Add(LogType.Vote, LogImpact.Extreme, $"{initiator} initiated a {voteType.ToString()} vote with the arguments: {String.Join(",", args)}");
             else
                 _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Initiated a {voteType.ToString()} vote");
 
@@ -40,6 +48,9 @@ namespace Content.Server.Voting.Managers
                     break;
                 case StandardVoteType.Map:
                     CreateMapVote(initiator);
+                    break;
+                case StandardVoteType.Votekick:
+                    CreateVotekickVote(initiator, args);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(voteType), voteType, null);
@@ -57,7 +68,7 @@ namespace Content.Server.Voting.Managers
 
             var ghostVotePercentageRequirement = _cfg.GetCVar(CCVars.VoteRestartGhostPercentage);
             var ghostCount = 0;
-            
+
             foreach (var player in _playerManager.Sessions)
             {
                 _playerManager.UpdateState(player);
@@ -88,72 +99,72 @@ namespace Content.Server.Voting.Managers
         private void StartVote(ICommonSession? initiator)
         {
             var alone = _playerManager.PlayerCount == 1 && initiator != null;
-                var options = new VoteOptions
+            var options = new VoteOptions
+            {
+                Title = Loc.GetString("ui-vote-restart-title"),
+                Options =
                 {
-                    Title = Loc.GetString("ui-vote-restart-title"),
-                    Options =
-                    {
-                        (Loc.GetString("ui-vote-restart-yes"), "yes"),
-                        (Loc.GetString("ui-vote-restart-no"), "no"),
-                        (Loc.GetString("ui-vote-restart-abstain"), "abstain")
-                    },
-                    Duration = alone
-                        ? TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerAlone))
-                        : TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerRestart)),
-                    InitiatorTimeout = TimeSpan.FromMinutes(5)
-                };
+                    (Loc.GetString("ui-vote-restart-yes"), "yes"),
+                    (Loc.GetString("ui-vote-restart-no"), "no"),
+                    (Loc.GetString("ui-vote-restart-abstain"), "abstain")
+                },
+                Duration = alone
+                    ? TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerAlone))
+                    : TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerRestart)),
+                InitiatorTimeout = TimeSpan.FromMinutes(5)
+            };
 
-                if (alone)
-                    options.InitiatorTimeout = TimeSpan.FromSeconds(10);
+            if (alone)
+                options.InitiatorTimeout = TimeSpan.FromSeconds(10);
 
-                WirePresetVoteInitiator(options, initiator);
+            WirePresetVoteInitiator(options, initiator);
 
-                var vote = CreateVote(options);
+            var vote = CreateVote(options);
 
-                vote.OnFinished += (_, _) =>
+            vote.OnFinished += (_, _) =>
+            {
+                var votesYes = vote.VotesPerOption["yes"];
+                var votesNo = vote.VotesPerOption["no"];
+                var total = votesYes + votesNo;
+
+                var ratioRequired = _cfg.GetCVar(CCVars.VoteRestartRequiredRatio);
+                if (total > 0 && votesYes / (float) total >= ratioRequired)
                 {
-                    var votesYes = vote.VotesPerOption["yes"];
-                    var votesNo = vote.VotesPerOption["no"];
-                    var total = votesYes + votesNo;
-
-                    var ratioRequired = _cfg.GetCVar(CCVars.VoteRestartRequiredRatio);
-                    if (total > 0 && votesYes / (float) total >= ratioRequired)
+                    // Check if an admin is online, and ignore the passed vote if the cvar is enabled
+                    if (_cfg.GetCVar(CCVars.VoteRestartNotAllowedWhenAdminOnline) && _adminMgr.ActiveAdmins.Count() != 0)
                     {
-                        // Check if an admin is online, and ignore the passed vote if the cvar is enabled
-                        if (_cfg.GetCVar(CCVars.VoteRestartNotAllowedWhenAdminOnline) && _adminMgr.ActiveAdmins.Count() != 0)
-                        {
-                            _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Restart vote attempted to pass, but an admin was online. {votesYes}/{votesNo}");
-                        }
-                        else // If the cvar is disabled or there's no admins on, proceed as normal
-                        {
-                            _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Restart vote succeeded: {votesYes}/{votesNo}");
-                            _chatManager.DispatchServerAnnouncement(Loc.GetString("ui-vote-restart-succeeded"));
-                            var roundEnd = _entityManager.EntitySysManager.GetEntitySystem<RoundEndSystem>();
-                            roundEnd.EndRound();
-                        }
+                        _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Restart vote attempted to pass, but an admin was online. {votesYes}/{votesNo}");
                     }
-                    else
+                    else // If the cvar is disabled or there's no admins on, proceed as normal
                     {
-                        _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Restart vote failed: {votesYes}/{votesNo}");
-                        _chatManager.DispatchServerAnnouncement(
-                            Loc.GetString("ui-vote-restart-failed", ("ratio", ratioRequired)));
-                    }
-                };
-
-                if (initiator != null)
-                {
-                    // Cast yes vote if created the vote yourself.
-                    vote.CastVote(initiator, 0);
-                }
-
-                foreach (var player in _playerManager.Sessions)
-                {
-                    if (player != initiator)
-                    {
-                        // Everybody else defaults to an abstain vote to say they don't mind.
-                        vote.CastVote(player, 2);
+                        _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Restart vote succeeded: {votesYes}/{votesNo}");
+                        _chatManager.DispatchServerAnnouncement(Loc.GetString("ui-vote-restart-succeeded"));
+                        var roundEnd = _entityManager.EntitySysManager.GetEntitySystem<RoundEndSystem>();
+                        roundEnd.EndRound();
                     }
                 }
+                else
+                {
+                    _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Restart vote failed: {votesYes}/{votesNo}");
+                    _chatManager.DispatchServerAnnouncement(
+                        Loc.GetString("ui-vote-restart-failed", ("ratio", ratioRequired)));
+                }
+            };
+
+            if (initiator != null)
+            {
+                // Cast yes vote if created the vote yourself.
+                vote.CastVote(initiator, 0);
+            }
+
+            foreach (var player in _playerManager.Sessions)
+            {
+                if (player != initiator)
+                {
+                    // Everybody else defaults to an abstain vote to say they don't mind.
+                    vote.CastVote(player, 2);
+                }
+            }
         }
 
         private void NotifyNotEnoughGhostPlayers(int ghostPercentageRequirement, int roundedGhostPercentage)
@@ -274,6 +285,107 @@ namespace Content.Server.Voting.Managers
                 }
             };
         }
+
+        private async void CreateVotekickVote(ICommonSession? initiator, string[]? args)
+        {
+            if (args == null || args.Length <= 1)
+            {
+                return;
+            }
+
+            string target = args[0];
+            string reason = args[1];
+
+            var located = await _locator.LookupIdByNameOrIdAsync(target);
+            if (located == null)
+            {
+                _logManager.GetSawmill("admin.server_ban")
+                    .Warning($"Votekick attempted for player {target} but they couldn't be found!");
+                return;
+            }
+            var targetUid = located.UserId;
+            var targetHWid = located.LastHWId;
+
+
+            if (initiator != null && !_entityManager.HasComponent<GhostComponent>(initiator.AttachedEntity))
+                return;
+            // TODO: Check that the person initiating the vote is not the target of the vote
+
+            var alone = _playerManager.PlayerCount == 1 && initiator != null;
+            var options = new VoteOptions
+            {
+                Title = Loc.GetString("Votekick title (Loc required)"),
+                Options =
+                {
+                    (Loc.GetString("ui-vote-restart-yes"), "yes"),
+                    (Loc.GetString("ui-vote-restart-no"), "no"),
+                    (Loc.GetString("ui-vote-restart-abstain"), "abstain")
+                },
+                Duration = TimeSpan.FromSeconds(5/*_cfg.GetCVar(CCVars.VoteTimerVotekick)*/),
+                InitiatorTimeout = TimeSpan.FromMinutes(5)
+            };
+
+            WirePresetVoteInitiator(options, initiator);
+
+            var vote = CreateVote(options);
+
+            vote.OnFinished += (_, _) =>
+            {
+                var votesYes = vote.VotesPerOption["yes"];
+                var votesNo = vote.VotesPerOption["no"];
+                var total = votesYes + votesNo;
+
+                var ratioRequired = _cfg.GetCVar(CCVars.VoteRestartRequiredRatio/*CCVars.VoteVotekickRequiredRatio*/);
+                if (total > 0 && votesYes / (float)total >= ratioRequired)
+                {
+                    // Check if an admin is online, and ignore the passed vote if the cvar is enabled
+                    if (_cfg.GetCVar(CCVars.VoteRestartNotAllowedWhenAdminOnline/*CCVars.VoteVotekickNotAllowedWhenAdminOnline*/) && _adminMgr.ActiveAdmins.Count() != 0)
+                    {
+                        _adminLogger.Add(LogType.Vote, LogImpact.Extreme, $"Votekick attempted to pass, but an admin was online. Yes: {votesYes} / No: {votesNo}");
+                    } // TODO: Check that the player is not an antag, and if they are cancel the vote's effects
+                    else // If the cvar is disabled or there's no admins on, proceed as normal
+                    {
+                        _adminLogger.Add(LogType.Vote, LogImpact.Extreme, $"Votekick succeeded:  Yes: {votesYes} / No: {votesNo}");
+                        _chatManager.DispatchServerAnnouncement(Loc.GetString("Votekick for {Player} succeeded. (Loc required)"));
+                        // TODO: Kick here.
+
+                        if (!Enum.TryParse(_cfg.GetCVar(CCVars.ServerBanDefaultSeverity/*CCVars.VotekickBanDefaultSeverity*/), out NoteSeverity severity))
+                        {
+                            _logManager.GetSawmill("admin.server_ban")
+                                .Warning("Votekick ban severity could not be parsed from config! Defaulting to high.");
+                            severity = NoteSeverity.High;
+                        }
+
+                        uint minutes = 1/*(uint)_cfg.GetCVar(CCVars.AudioTickRate)*/;
+
+                        _bans.CreateServerBan(targetUid, target, null, null, targetHWid, minutes, severity, reason);
+                    }
+                }
+                else
+                {
+                    _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Votekick failed: Yes: {votesYes} / No: {votesNo}");
+
+                    _chatManager.DispatchServerAnnouncement(
+                        Loc.GetString("Votekick for {Player} failed. (Loc required)", ("ratio", ratioRequired)));
+                }
+            };
+
+            if (initiator != null)
+            {
+                // Cast yes vote if created the vote yourself.
+                vote.CastVote(initiator, 0);
+            }
+
+            foreach (var player in _playerManager.Sessions)
+            {
+                if (player != initiator)
+                {
+                    // Everybody else defaults to an abstain vote to say they don't mind.
+                    vote.CastVote(player, 2);
+                }
+            }
+        }
+
 
         private void TimeoutStandardVote(StandardVoteType type)
         {

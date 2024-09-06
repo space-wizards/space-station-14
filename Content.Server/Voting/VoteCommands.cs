@@ -30,11 +30,22 @@ namespace Content.Server.Voting
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            if (args.Length != 1)
+            if (args.Length > 1 && args[0] != StandardVoteType.Votekick.ToString())
             {
                 shell.WriteError(Loc.GetString("shell-need-exactly-one-argument"));
                 return;
             }
+            if (args.Length != 3 && args[0] == StandardVoteType.Votekick.ToString())
+            {
+                shell.WriteError(Loc.GetString("Needs exactly three arguments (Loc required)"));
+                return;
+            }
+            if (args.Length < 1)
+            {
+                shell.WriteError(Loc.GetString("Needs more arguments (Loc required)"));
+                return;
+            }
+
 
             if (!Enum.TryParse<StandardVoteType>(args[0], ignoreCase: true, out var type))
             {
@@ -51,7 +62,7 @@ namespace Content.Server.Voting
                 return;
             }
 
-            mgr.CreateStandardVote(shell.Player, type);
+            mgr.CreateStandardVote(shell.Player, type, args.Skip(1).ToArray());
         }
 
         public CompletionResult GetCompletion(IConsoleShell shell, string[] args)

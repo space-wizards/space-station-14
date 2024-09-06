@@ -1,4 +1,4 @@
-﻿namespace Content.Shared.Voting
+namespace Content.Shared.Voting
 {
     /// <summary>
     /// Standard vote types that players can initiate themselves from the escape menu.
@@ -18,6 +18,11 @@
         /// <summary>
         /// Vote to change the map for the next round.
         /// </summary>
-        Map
+        Map,
+
+        /// <summary>
+        /// Vote to kick a player.
+        /// </summary>
+        Votekick
     }
 }
