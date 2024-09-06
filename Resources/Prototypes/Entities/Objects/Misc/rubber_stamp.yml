@@ -295,6 +295,6 @@
   - type: Stamp
     stampedName: stamp-component-stamped-name-psychologist 
     stampedColor: "#5B97BC"
-    stampSate: "paper_stamp-psychologist"
+    stampState: "paper_stamp-psychologist"
   - type: Sprite
     state: stamp-psychologist
