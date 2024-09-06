@@ -1,18 +1,15 @@
 using Content.Server.Atmos.Monitor.Components;
 using Content.Server.DeviceNetwork.Components;
-using Content.Server.Pinpointer;
 using Content.Server.Power.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Consoles;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Monitor.Components;
-using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.Pinpointer;
-using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Timing;
+using Robust.Shared.Player;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
@@ -24,11 +21,6 @@ public sealed class AtmosAlertsComputerSystem : SharedAtmosAlertsComputerSystem
     [Dependency] private readonly AirAlarmSystem _airAlarmSystem = default!;
     [Dependency] private readonly AtmosDeviceNetworkSystem _atmosDevNet = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly TagSystem _tagSystem = default!;
-    [Dependency] private readonly MapSystem _mapSystem = default!;
-    [Dependency] private readonly TransformSystem _transformSystem = default!;
-    [Dependency] private readonly NavMapSystem _navMapSystem = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
 
     private const float UpdateTime = 1.0f;
 
@@ -167,7 +159,7 @@ public sealed class AtmosAlertsComputerSystem : SharedAtmosAlertsComputerSystem
 
                 // Update the appearance of the console based on the highest recorded level of alert
                 if (TryComp<AppearanceComponent>(ent, out var entAppearance))
-                    _appearance.SetData(ent, AtmosAlertsComputerVisuals.ComputerLayerScreen, (int) highestAlert, entAppearance);
+                    _appearance.SetData(ent, AtmosAlertsComputerVisuals.ComputerLayerScreen, (int)highestAlert, entAppearance);
 
                 // If the console UI is open, send UI data to each subscribed session
                 UpdateUIState(ent, airAlarmEntries, fireAlarmEntries, entConsole, entXform);
@@ -217,9 +209,6 @@ public sealed class AtmosAlertsComputerSystem : SharedAtmosAlertsComputerSystem
             if (entDevice.Group != group)
                 continue;
 
-            if (!TryComp<MapGridComponent>(entXform.GridUid, out var mapGrid))
-                continue;
-
             // If emagged, change the alarm type to normal
             var alarmState = (entAtmosAlarmable.LastAlarmState == AtmosAlarmType.Emagged) ? AtmosAlarmType.Normal : entAtmosAlarmable.LastAlarmState;
 
@@ -227,43 +216,13 @@ public sealed class AtmosAlertsComputerSystem : SharedAtmosAlertsComputerSystem
             if (TryComp<ApcPowerReceiverComponent>(ent, out var entAPCPower) && !entAPCPower.Powered)
                 alarmState = AtmosAlarmType.Invalid;
 
-            // Create entry
-            var netEnt = GetNetEntity(ent);
-
             var entry = new AtmosAlertsComputerEntry
-                (netEnt,
+                (GetNetEntity(ent),
                 GetNetCoordinates(entXform.Coordinates),
                 entDevice.Group,
                 alarmState,
                 MetaData(ent).EntityName,
                 entDeviceNetwork.Address);
-
-            // Create nav map regions for alarms
-            if (!TryComp<NavMapComponent>(entXform.GridUid, out var navMap))
-                continue;
-
-            if (TryComp<DeviceListComponent>(ent, out var entDeviceList))
-            {
-                var alarmRegionSeeds = new HashSet<Vector2i>();
-
-                foreach (var sensor in entDeviceList.Devices)
-                {
-                    if (!_tagSystem.HasTag(sensor, "AirSensor"))
-                        continue;
-
-                    var sensorXform = Transform(sensor);
-
-                    if (sensorXform.GridUid == entXform.GridUid)
-                        alarmRegionSeeds.Add(_mapSystem.CoordinatesToTile(entXform.GridUid.Value, mapGrid, _transformSystem.GetMapCoordinates(sensor, sensorXform)));
-                }
-
-                var regionProperties = new SharedNavMapSystem.NavMapRegionProperties(netEnt, AtmosAlertsComputerUiKey.Key, alarmRegionSeeds)
-                {
-                    LastUpdate = _gameTiming.CurTick
-                };
-
-                _navMapSystem.AddOrUpdateNavMapRegion(gridUid, navMap, netEnt, regionProperties);
-            }
 
             alarmStateData.Add(entry);
         }
@@ -303,13 +262,13 @@ public sealed class AtmosAlertsComputerSystem : SharedAtmosAlertsComputerSystem
         foreach ((var address, var sensorData) in focusDeviceAirAlarm.SensorData)
         {
             if (sensorData.TemperatureThreshold.CheckThreshold(sensorData.Temperature, out var temperatureState) &&
-                (int) temperatureState > (int) temperatureData.Item2)
+                (int)temperatureState > (int)temperatureData.Item2)
             {
                 temperatureData = (temperatureData.Item1, temperatureState);
             }
 
             if (sensorData.PressureThreshold.CheckThreshold(sensorData.Pressure, out var pressureState) &&
-                (int) pressureState > (int) pressureData.Item2)
+                (int)pressureState > (int)pressureData.Item2)
             {
                 pressureData = (pressureData.Item1, pressureState);
             }
@@ -329,7 +288,7 @@ public sealed class AtmosAlertsComputerSystem : SharedAtmosAlertsComputerSystem
                     }
 
                     if (threshold.CheckThreshold(gasData[gas].Item2, out var gasState) &&
-                        (int) gasState > (int) gasData[gas].Item3)
+                        (int)gasState > (int)gasData[gas].Item3)
                     {
                         gasData[gas] = (gasData[gas].Item1, gasData[gas].Item2, gasState);
                     }

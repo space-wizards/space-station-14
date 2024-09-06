@@ -276,35 +276,6 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
             _autoScrollActive = true;
             _autoScrollAwaitsUpdate = false;
         }
-
-        // Update sensor regions
-        NavMap.RegionOverlays.Clear();
-        var regionOverlays = new Dictionary<NavMapRegionOverlay, int>();
-
-        if (_owner != null &&
-            _entManager.TryGetComponent<TransformComponent>(_owner, out var xform) &&
-            _entManager.TryGetComponent<NavMapComponent>(xform.GridUid, out var navMap))
-        {
-            foreach (var (regionOwner, regionOverlay) in navMap.FloodedRegions)
-            {
-                if (regionOverlay.UiKey is not AtmosAlertsComputerUiKey)
-                    continue;
-
-                var alarmState = GetAlarmState(regionOwner);
-
-                if (!TryGetSensorRegionColor(regionOwner, alarmState, out var regionColor))
-                    continue;
-
-                regionOverlay.Color = regionColor.Value;
-
-                var priority = (_trackedEntity == regionOwner) ? 999 : (int)alarmState;
-                regionOverlays.Add(regionOverlay, priority);
-            }
-
-            // Sort overlays according to their priority
-            var sortedOverlays = regionOverlays.OrderBy(x => x.Value).Select(x => x.Key).ToList();
-            NavMap.RegionOverlays = sortedOverlays;
-        }
     }
 
     private void AddTrackedEntityToNavMap(AtmosAlertsDeviceNavMapData metaData, AtmosAlarmType alarmState)
@@ -325,24 +296,6 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
         var blip = new NavMapBlip(coords, _spriteSystem.Frame0(texture), color, _trackedEntity == metaData.NetEntity, selectable);
 
         NavMap.TrackedEntities[metaData.NetEntity] = blip;
-    }
-
-    private bool TryGetSensorRegionColor(NetEntity regionOwner, AtmosAlarmType alarmState, [NotNullWhen(true)] out Color? color)
-    {
-        color = null;
-
-        var blip = GetBlipTexture(alarmState);
-
-        if (blip == null)
-            return false;
-
-        // Color the region based on alarm state and entity tracking
-        color = blip.Value.Item2 * Color.DimGray;
-
-        if (_trackedEntity != null && _trackedEntity != regionOwner)
-            color *= Color.DimGray;
-
-        return true;
     }
 
     private void UpdateUIEntry(AtmosAlertsComputerEntry entry, int index, Control table, AtmosAlertsComputerComponent console, AtmosAlertsFocusDeviceData? focusData = null)
@@ -552,7 +505,7 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
             if (control == null || control is not AtmosAlarmEntryContainer)
                 continue;
 
-            if (((AtmosAlarmEntryContainer) control).NetEntity == _trackedEntity)
+            if (((AtmosAlarmEntryContainer)control).NetEntity == _trackedEntity)
                 return true;
 
             nextScrollPosition += control.Height;
