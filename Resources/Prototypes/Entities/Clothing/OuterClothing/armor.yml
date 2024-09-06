@@ -98,6 +98,7 @@
     reflectProb: 1
     reflects:
       - Energy
+    placement: body
 
 - type: entity
   parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing, BaseSyndicateContraband ]

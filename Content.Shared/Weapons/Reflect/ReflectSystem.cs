@@ -96,6 +96,7 @@ public sealed class ReflectSystem : EntitySystem
     {
         if (!Resolve(reflector, ref reflect, false) ||
             !_toggle.IsActivated(reflector) ||
+            !reflect.InRightPlace ||
             !TryComp<ReflectiveComponent>(projectile, out var reflective) ||
             (reflect.Reflects & reflective.Reflective) == 0x0 ||
             !_random.Prob(reflect.ReflectProb) ||
@@ -165,6 +166,7 @@ public sealed class ReflectSystem : EntitySystem
     {
         if (!TryComp<ReflectComponent>(reflector, out var reflect) ||
             !_toggle.IsActivated(reflector) ||
+            !reflect.InRightPlace ||
             !_random.Prob(reflect.ReflectProb))
         {
             newDirection = null;
@@ -193,6 +195,8 @@ public sealed class ReflectSystem : EntitySystem
         if (_gameTiming.ApplyingState)
             return;
 
+        component.InRightPlace = IsInRightPlace(component, Placement.Body);
+
         EnsureComp<ReflectUserComponent>(args.Equipee);
     }
 
@@ -205,6 +209,8 @@ public sealed class ReflectSystem : EntitySystem
     {
         if (_gameTiming.ApplyingState)
             return;
+
+        component.InRightPlace = IsInRightPlace(component, Placement.Hands);
 
         EnsureComp<ReflectUserComponent>(args.User);
     }
@@ -235,5 +241,16 @@ public sealed class ReflectSystem : EntitySystem
         }
 
         RemCompDeferred<ReflectUserComponent>(user);
+    }
+
+    /// <summary>
+    /// Checks if the reflective component should work in designated place.
+    /// </summary>
+    private static bool IsInRightPlace(ReflectComponent component, Placement placement)
+    {
+        if (component.Placement == (Placement.Hands | Placement.Body))
+            return true;
+        else
+            return (component.Placement & placement) != 0x0;
     }
 }
