@@ -13,9 +13,6 @@ public sealed partial class InnerBodyAnomalyInjectorComponent : Component
     [DataField]
     public EntityWhitelist? Whitelist;
 
-    [DataField]
-    public EntityWhitelist? Blacklist;
-
     /// <summary>
     /// components that will be automatically removed after “curing”
     /// </summary>

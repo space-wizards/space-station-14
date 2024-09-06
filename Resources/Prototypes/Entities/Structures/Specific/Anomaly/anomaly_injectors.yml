@@ -25,12 +25,8 @@
         - MobLayer
   - type: InnerBodyAnomalyInjector
     whitelist:
-      components:
-      - Body
-      - Hands # Need some better way to filter only humanoid players
-    blacklist:
-      components:
-      - Anomaly
+      tags:
+      - AnomalyHost
 
 - type: entity
   parent: BaseAnomalyInjector
