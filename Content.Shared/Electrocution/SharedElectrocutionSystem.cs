@@ -44,5 +44,11 @@ namespace Content.Shared.Electrocution
         {
             args.SiemensCoefficient *= insulated.Coefficient;
         }
+		
+		public void ToggleElectrified(Entity<ElectrifiedComponent> ent, EntityUid? user = null, bool predicted = false)
+        {
+            ent.Comp.Enabled = !ent.Comp.Enabled;
+            Dirty(ent, ent.Comp);
+        }
     }
 }
