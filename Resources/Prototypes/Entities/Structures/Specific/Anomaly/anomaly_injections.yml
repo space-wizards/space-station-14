@@ -185,7 +185,7 @@
     - settings:
         spawnOnPulse: true
         maxAmount: 1
-        minRange: 3
+        minRange: 2.5
         maxRange: 4.5
       spawns:
       - MobFleshJared
