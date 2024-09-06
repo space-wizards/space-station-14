@@ -9,6 +9,7 @@ using System.Numerics;
 using Content.Shared.Explosion.Components;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Explosion.EntitySystems;
 
@@ -114,8 +115,9 @@ public sealed class ClusterGrenadeSystem : EntitySystem
                         RaiseLocalEvent(uid, ref ev);
                     }
                 }
-                // delete the empty shell of the clusterbomb
-                Del(uid);
+                // TODO: Hide the empty shell before deletion
+                // wait a second before deleting to prevent a flood of errors from projectiles
+                Timer.Spawn(TimeSpan.FromSeconds(1), () => QueueDel(uid));
             }
         }
     }
