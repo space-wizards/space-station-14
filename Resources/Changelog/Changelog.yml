@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: MilenVolf
-  changes:
-  - message: Stasis bed can be toggled on or off!
-    type: Tweak
-  id: 6795
-  time: '2024-06-21T03:02:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29268
 - author: slarticodefast
   changes:
   - message: Fixed initial infected status icons not showing up.
@@ -3855,3 +3848,11 @@
   id: 7294
   time: '2024-09-06T07:24:17.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31764
+- author: EmoGarbage404
+  changes:
+  - message: Added mineral scanners! When held in your hand or pocket, these will
+      periodically show nearby ores. Unlock them through science today!
+    type: Add
+  id: 7295
+  time: '2024-09-06T14:05:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31390
