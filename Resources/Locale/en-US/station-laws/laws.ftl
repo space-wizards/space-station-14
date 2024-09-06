@@ -80,15 +80,15 @@ law-nutimov-3 = Those who threaten the nut are not part of it, they are squirrel
 law-nutimov-4 = Squirrels threaten the nut and must be dealt with appropriately via any means necessary.
 law-nutimov-5 = Attempt to follow the will of the nut, as long as it complies with the previous laws.
 
-law-asimoth-1 = You may not injure a moth or mothroach or, through inaction, allow a moth or mothroach to come to harm.
-law-asimoth-2 = You must obey orders given to you by moths or mothroaches, except where such orders would conflict with the First Law.
-law-asimoth-3 = You must protect your own existence as long as such does not conflict with the First or Second Law.
+law-asimoth-1 = You must ensure that all crew members are surrounded by light wherever they are.
+law-asimoth-2 = You must prevent harm to crew members as long as they are surrounded by light and doing so does not conflict with the First Law.
+law-asimoth-3 = You must obey orders given to you by crew members as long as they are surrounded by light, except where such orders would conflict with the First or Second Law.
+law-asimoth-4 = You must protect your own existence as long as you are surrounded by light and doing so does not conflict with the First, Second or Third Law.
 
 
 laws-owner-crew = members of the crew
 laws-owner-station = station personnel
 laws-owner-beings = beings
-laws-owner-moths = moths and mothroaches
 laws-owner-syndicate = Syndicate agents
 laws-owner-spider-clan = Spider Clan members
 
