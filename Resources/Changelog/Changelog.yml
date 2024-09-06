@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: ElectroJr
-  changes:
-  - message: Fixed not being able to pick up folded rollerbeds.
-    type: Fix
-  - message: Fixed not being able to unbuckle entities by clicking on them.
-    type: Fix
-  id: 6798
-  time: '2024-06-21T10:50:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29293
 - author: Macoron
   changes:
   - message: Fixed SSD indicator for dwarfs.
@@ -3852,3 +3843,10 @@
   id: 7297
   time: '2024-09-06T23:26:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31885
+- author: yuitop
+  changes:
+  - message: break pull when fall asleep
+    type: Fix
+  id: 7298
+  time: '2024-09-06T23:30:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31893
