@@ -14,7 +14,7 @@ bolt-open = Open bolt
 emergency-access-on = Enable emergency access
 emergency-access-off = Disable emergency access
 
-electrify-door-on = Enable overcharge
-electrify-door-off = Disable overcharge
+overcharge-door-on = Enable overcharge
+overcharge-door-off = Disable overcharge
 
 toggle-light = Toggle light

@@ -47,10 +47,10 @@
 			"name": "unbolt_door"
 		},
 		{
-			"name": "electrify_door"
+			"name": "overcharge_door"
 		},
 		{
-			"name": "unelectrify_door"
+			"name": "unovercharge_door"
 		}
     ]
 }

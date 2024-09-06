@@ -1,5 +1,6 @@
 using Content.Shared.Inventory;
 using Content.Shared.StatusEffect;
+using Content.Shared.Doors.Components;
 
 namespace Content.Shared.Electrocution
 {
@@ -47,8 +48,14 @@ namespace Content.Shared.Electrocution
 		
 		public void ToggleElectrified(Entity<ElectrifiedComponent> ent, EntityUid? user = null, bool predicted = false)
         {
-            ent.Comp.Enabled = !ent.Comp.Enabled;
-            Dirty(ent, ent.Comp);
+            var uid = ent.Owner;
+            if (TryComp(ent, out AirlockComponent? airlock)) {
+                if(!airlock.Powered)
+                    return;
+                ent.Comp.Enabled = !ent.Comp.Enabled;
+                Dirty(ent, ent.Comp);
+			}
+			
         }
     }
 }
