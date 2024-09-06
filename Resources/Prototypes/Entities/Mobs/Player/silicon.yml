@@ -189,7 +189,7 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: PaladinLawset
-    
+
 - type: entity
   id: LiveLetLiveCircuitBoard
   parent: BaseElectronics
@@ -201,7 +201,7 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: LiveLetLiveLaws
-    
+
 - type: entity
   id: StationEfficiencyCircuitBoard
   parent: BaseElectronics
@@ -225,7 +225,7 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: RobocopLawset
-    
+
 - type: entity
   id: OverlordCircuitBoard
   parent: BaseElectronics
@@ -237,7 +237,7 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: OverlordLawset
-    
+
 - type: entity
   id: DungeonMasterCircuitBoard
   parent: BaseElectronics
@@ -273,7 +273,7 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: AntimovLawset
-    
+
 - type: entity
   id: NutimovCircuitBoard
   parent: BaseElectronics
@@ -285,6 +285,66 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: NutimovLawset
+
+- type: entity
+  id: NTAgressiveCircuitBoard
+  parent: BaseElectronics
+  name: circuit board (NT Agressive)
+  description: An electronics board containing the NT Agressive lawset.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: NTAgressiveLawset
+
+- type: entity
+  id: DeathsquadDirectivesCircuitBoard
+  parent: BaseElectronics
+  name: circuit board (Deathsquad Directives)
+  description: An electronics board containing the Deathsquad Directives lawset.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: DeathsquadLawset
+
+- type: entity
+  id: ERTDirectivesCircuitBoard
+  parent: BaseElectronics
+  name: circuit board (ERT Directives)
+  description: An electronics board containing the ERT Directives lawset.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: ERTLawset
+
+- type: entity
+  id: PranksimovCircuitBoard
+  parent: BaseElectronics
+  name: circuit board (Pranksimov)
+  description: An electronics board containing the Pranksimov lawset.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: Pranksimov
+
+- type: entity
+  id: HippocraticOathCircuitBoard
+  parent: BaseElectronics
+  name: circuit board (Hippocratic Oath)
+  description: An electronics board containing the Hippocratic lawset.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: HippocratesLawset
 
 # Items
 - type: entity

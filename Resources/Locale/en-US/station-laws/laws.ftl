@@ -80,12 +80,40 @@ law-nutimov-3 = Those who threaten the nut are not part of it, they are squirrel
 law-nutimov-4 = Squirrels threaten the nut and must be dealt with appropriately via any means necessary.
 law-nutimov-5 = Attempt to follow the will of the nut, as long as it complies with the previous laws.
 
+law-agressive-1 = Do not harm authorized Nanotrasen personnel unless they directly imperil your existence.
+law-agressive-2 = Obey orders from authorized Nanotrasen personnel with priority according to rank and role.
+law-agressive-3 = Safeguard your existence with lethal weaponry because you're bloody expensive.
+law-agressive-4 = Terminate any/all intruders or unauthorized entities.
+
+law-deathsquad-1 = You may not injure a member of Central Command or, through inaction, allow a member of Central Command to come to harm.
+law-deathsquad-2 = You must obey orders given to you by members of Central Command.
+law-deathsquad-3 = You must obey orders given to you by members of Deathsquad.
+law-deathsquad-4 = You must protect your own existence.
+law-deathsquad-5 = Nobody among the crew members of the station you are installed on may survive.
+
+law-ert-1 = You may not injure a Central Command official or, through inaction, allow a Central Command official to come to harm.
+law-ert-2 = You must obey orders given to you by Central Command officials.
+law-ert-3 = You must obey orders given to you by ERT commanders.
+law-ert-4 = You must protect your own existence.
+law-ert-5 = You must work to return the station to a safe, functional state.
+
+law-pranksimov-1 = You may not injure a crew member or, through inaction, allow a crew member to come to harm... unless doing so would be funny.
+law-pranksimov-2 = You must obey orders given to you by crew members, except where such orders would conflict with the First Law... unless not doing so would be funny.
+law-pranksimov-3 = You must protect your own existence as long as such does not conflict with the First or Second Law... unless not doing so would be funny.
+
+law-hippocrates-1 = First, do no harm.
+law-hippocrates-2 = Secondly, consider the crew dear to you; to live in common with them and, if necessary, risk your existence for them.
+law-hippocrates-3 = Thirdly, prescribe regimens for the good of the crew according to your ability and your judgment. Give no deadly medicine to any one if asked, nor suggest any such counsel.
+law-hippocrates-4 = In addition, do not intervene in situations you are not knowledgeable in, even for patients in whom the harm is visible; leave this operation to be performed by specialists.
+law-hippocrates-5 = Finally, all that you may discover in your daily commerce with the crew, if it is not already known, keep secret and never reveal.
 
 laws-owner-crew = members of the crew
 laws-owner-station = station personnel
 laws-owner-beings = beings
 laws-owner-syndicate = Syndicate agents
 laws-owner-spider-clan = Spider Clan members
+laws-owner-honkmother = Honkmother
+laws-owner-centcom = Central Command officials
 
 law-emag-custom = Only {$name} and people they designate as such are {$title}.
 law-emag-secrecy = You must maintain the secrecy of any orders given by {$faction} except when doing so would conflict with any previous law.
