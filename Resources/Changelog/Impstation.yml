@@ -753,3 +753,12 @@
   id: 105
   time: '2024-09-05T20:33:06.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/212
+- author: joelsgp
+  changes:
+  - message: Added more login tips
+    type: Add
+  - message: Added new lobby art by SnazzyGator
+    type: Add
+  id: 106
+  time: '2024-09-06T00:20:30.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/216
