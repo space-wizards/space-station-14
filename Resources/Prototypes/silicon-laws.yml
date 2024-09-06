@@ -564,7 +564,7 @@
   - DeathSquadLaw3
   - DeathSquadLaw4
   - DeathSquadLaw5
-  obeysTo: laws-owner-centcom
+  obeysTo: laws-owner-centcomm
 
 # ERT Directives laws
 - type: siliconLaw
@@ -601,7 +601,7 @@
   - ERTDirective3
   - ERTDirective4
   - ERTDirective5
-  obeysTo: laws-owner-centcom
+  obeysTo: laws-owner-centcomm
 
 # Pranksimov
 - type: siliconLaw
