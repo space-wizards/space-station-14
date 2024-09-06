@@ -65,9 +65,6 @@ public sealed class SurveillanceCameraSystem : EntitySystem
 
         SubscribeLocalEvent<SurveillanceCameraComponent, EmpPulseEvent>(OnEmpPulse);
         SubscribeLocalEvent<SurveillanceCameraComponent, EmpDisabledRemoved>(OnEmpDisabledRemoved);
-
-        SubscribeLocalEvent<SurveillanceCameraComponent, SurveillanceCameraActivateEvent>(OnSurveillanceCameraActivate);
-        SubscribeLocalEvent<SurveillanceCameraComponent, SurveillanceCameraDeactivateEvent>(OnSurveillanceCameraDeactivate);
     }
 
     private void OnPacketReceived(EntityUid uid, SurveillanceCameraComponent component, DeviceNetworkPacketEvent args)
@@ -408,18 +405,6 @@ public sealed class SurveillanceCameraSystem : EntitySystem
         }
 
         _appearance.SetData(uid, SurveillanceCameraVisualsKey.Key, key, appearance);
-    }
-
-    private void OnSurveillanceCameraActivate(EntityUid camera, SurveillanceCameraComponent component, ref SurveillanceCameraActivateEvent args)
-    {
-        if (TryComp(args.Camera, out StationAiVisionComponent? aiVision))
-            _stationAI.SetVisionEnabled((camera, aiVision), true);
-    }
-
-    private void OnSurveillanceCameraDeactivate(EntityUid camera, SurveillanceCameraComponent component, ref SurveillanceCameraDeactivateEvent args)
-    {
-        if (TryComp(args.Camera, out StationAiVisionComponent? aiVision))
-            _stationAI.SetVisionEnabled((camera, aiVision), false);
     }
 
     private void OnEmpPulse(EntityUid uid, SurveillanceCameraComponent component, ref EmpPulseEvent args)

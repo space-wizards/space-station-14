@@ -1,12 +1,11 @@
 using System.Linq;
 using Content.Server.Chat.Managers;
-using Content.Server.Chat.Systems;
 using Content.Shared.Chat;
 using Content.Shared.Silicons.StationAi;
 using Content.Shared.StationAi;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
+using Content.Server.SurveillanceCamera;
 
 namespace Content.Server.Silicons.StationAi;
 
@@ -16,6 +15,14 @@ public sealed class StationAiSystem : SharedStationAiSystem
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
 
     private readonly HashSet<Entity<StationAiCoreComponent>> _ais = new();
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<SurveillanceCameraComponent, SurveillanceCameraActivateEvent>(OnSurveillanceCameraActivate);
+        SubscribeLocalEvent<SurveillanceCameraComponent, SurveillanceCameraDeactivateEvent>(OnSurveillanceCameraDeactivate);
+    }
 
     public override bool SetVisionEnabled(Entity<StationAiVisionComponent> entity, bool enabled, bool announce = false)
     {
@@ -73,4 +80,17 @@ public sealed class StationAiSystem : SharedStationAiSystem
         _chats.ChatMessageToMany(ChatChannel.Notifications, msg, msg, entity, false, true, filter.Recipients.Select(o => o.Channel));
         // Apparently there's no sound for this.
     }
+
+    private void OnSurveillanceCameraActivate(EntityUid camera, SurveillanceCameraComponent component, ref SurveillanceCameraActivateEvent args)
+    {
+        if (TryComp(args.Camera, out StationAiVisionComponent? aiVision))
+            SetVisionEnabled((camera, aiVision), true);
+    }
+
+    private void OnSurveillanceCameraDeactivate(EntityUid camera, SurveillanceCameraComponent component, ref SurveillanceCameraDeactivateEvent args)
+    {
+        if (TryComp(args.Camera, out StationAiVisionComponent? aiVision))
+            SetVisionEnabled((camera, aiVision), false);
+    }
+
 }
