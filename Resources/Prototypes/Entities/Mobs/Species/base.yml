@@ -3,6 +3,7 @@
   parent:
   - BaseMob
   - MobDamageable
+  - MobPolymorphable
   - MobCombat
   - StripableInventoryBase
   id: BaseMobSpecies
@@ -167,6 +168,7 @@
   - type: Dna
   - type: MindContainer
     showExamineInfo: true
+  - type: CanEnterCryostorage
   - type: InteractionPopup
     successChance: 1
     interactSuccessString: hugging-success-generic

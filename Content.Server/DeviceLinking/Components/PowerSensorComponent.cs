@@ -1,5 +1,6 @@
 using Content.Server.DeviceLinking.Systems;
 using Content.Shared.DeviceLinking;
+using Content.Shared.Power.Generator;
 using Content.Shared.Tools;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;

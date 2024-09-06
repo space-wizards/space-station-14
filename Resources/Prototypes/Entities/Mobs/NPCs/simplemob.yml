@@ -3,6 +3,7 @@
   parent:
   - BaseMob
   - MobDamageable
+  - MobPolymorphable
   - MobAtmosExposed
   id: BaseSimpleMob
   suffix: AI

@@ -21,6 +21,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
+using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using static Content.Client.Inventory.ClientInventorySystem;
 
@@ -399,6 +400,9 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
         foreach (var slotData in clientInv.SlotData.Values)
         {
             AddSlot(slotData);
+
+            if (_inventoryButton != null)
+                _inventoryButton.Visible = true;
         }
 
         UpdateInventoryHotbar(_playerInventory);
@@ -406,6 +410,9 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
 
     private void UnloadSlots()
     {
+        if (_inventoryButton != null)
+            _inventoryButton.Visible = false;
+
         _playerUid = null;
         _playerInventory = null;
         foreach (var slotGroup in _slotGroups.Values)
