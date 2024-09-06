@@ -231,3 +231,28 @@
           Vox:
             sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
             state: grav_VOX
+
+- type: entity
+  parent: BaseAnomalyInjector
+  id: AnomalyTrapTech
+  suffix: Tech
+  components:
+  - type: Sprite
+    layers:
+    - state: pink
+    - sprite: Structures/Specific/Anomalies/tech_anom.rsi
+      state: pulse
+    - sprite: Mobs/Species/Human/parts.rsi
+      state: full
+  - type: InnerBodyAnomalyInjector
+    injectionComponents:
+      - type: InnerBodyAnomaly
+        injectionProto: AnomalyInjectionTech
+        startMessage: inner-anomaly-start-message-tech
+        fallbackSprite:
+          sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+          state: tech
+        speciesSprites:
+          Vox:
+            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+            state: tech_VOX

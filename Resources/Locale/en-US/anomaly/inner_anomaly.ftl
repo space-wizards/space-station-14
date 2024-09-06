@@ -6,3 +6,4 @@ inner-anomaly-start-message-flora = Leaves and flowers sprout through your skin!
 inner-anomaly-start-message-bluespace = Your thoughts are racing like mad! You become the host of a bluespace anomaly.
 inner-anomaly-start-message-flesh = Your body is growing frantically. You become the host of a flesh anomaly.
 inner-anomaly-start-message-grav = Everything becomes unnaturally heavy and light at the same time... You become the host of a gravity anomaly.
+inner-anomaly-start-message-tech = Your head is buzzing with the amount of chaotic information!. You become the host of a tech anomaly.

@@ -280,3 +280,28 @@
   - type: SingularityDistortion
     intensity: 100
     falloffPower: 2.7
+
+- type: entity
+  parent: AnomalyInjectionBase
+  id: AnomalyInjectionTech
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Anomaly
+    corePrototype: AnomalyCoreTech
+    coreInertPrototype: AnomalyTech
+  - type: PointLight
+    color: "#56c1e8"
+  - type: TechAnomaly
+    linkRadius: 
+      min: 2
+      max: 5
+    linkCountPerPulse:
+      min: 1
+      max: 4
+    linkCountSupercritical: 15
+  - type: DeviceLinkSource
+    ports:
+      - Pulse
+      - Timer
+  - type: WirelessNetworkConnection
+    range: 10
