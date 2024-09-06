@@ -1,5 +1,5 @@
 using Content.Shared.Doors.Components;
-
+using Content.Shared.Electrocution;
 using Content.Shared.Silicons.StationAi;
 using Robust.Shared.Utility;
 
@@ -11,6 +11,7 @@ public sealed partial class StationAiSystem
     {
         SubscribeLocalEvent<DoorBoltComponent, GetStationAiRadialEvent>(OnDoorBoltGetRadial);
         SubscribeLocalEvent<AirlockComponent, GetStationAiRadialEvent>(OnEmergencyAccessGetRadial);
+        SubscribeLocalEvent<ElectrifiedComponent, GetStationAiRadialEvent>(OnDoorElectrifiedGetRadial);
     }
 
     private void OnDoorBoltGetRadial(Entity<DoorBoltComponent> ent, ref GetStationAiRadialEvent args)
@@ -43,6 +44,23 @@ public sealed partial class StationAiSystem
             Event = new StationAiEmergencyAccessEvent()
             {
                 EmergencyAccess = !ent.Comp.EmergencyAccess,
+            }
+        });
+    }
+	
+	private void OnDoorElectrifiedGetRadial(Entity<ElectrifiedComponent> ent, ref GetStationAiRadialEvent args)
+    {
+        args.Actions.Add(new StationAiRadial
+        {
+            Sprite = ent.Comp.Enabled ?
+                new SpriteSpecifier.Rsi(
+                    new ResPath("/Textures/Structures/Doors/Airlocks/Standard/basic.rsi"), "open") :
+                new SpriteSpecifier.Rsi(
+                    new ResPath("/Textures/Structures/Doors/Airlocks/Standard/basic.rsi"), "closed"),
+            Tooltip = ent.Comp.Enabled ? Loc.GetString("bolt-open") : Loc.GetString("bolt-close"),
+            Event = new StationAiElectrifiedEvent
+            {
+                Electrified = !ent.Comp.Enabled,
             }
         });
     }
