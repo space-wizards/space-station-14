@@ -1,46 +1,4 @@
 ﻿Entries:
-- author: Errant
-  changes:
-  - message: Slimepeople crewmembers now spawn with survival boxes that contain emergency
-      nitrogen tanks.
-    type: Tweak
-  id: 6792
-  time: '2024-06-20T14:05:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29131
-- author: PJB3005
-  changes:
-  - message: You can now pry multiple tiles at once.
-    type: Tweak
-  id: 6793
-  time: '2024-06-20T14:05:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29231
-- author: MilenVolf
-  changes:
-  - message: Jaws of life, xeno and spiders now use proper prying speed that will
-      lead into a faster prying.
-    type: Fix
-  - message: Jaws of life now pries tiles much faster.
-    type: Tweak
-  id: 6794
-  time: '2024-06-20T14:19:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29210
-- author: MilenVolf
-  changes:
-  - message: Stasis bed can be toggled on or off!
-    type: Tweak
-  id: 6795
-  time: '2024-06-21T03:02:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29268
-- author: slarticodefast
-  changes:
-  - message: Fixed initial infected status icons not showing up.
-    type: Fix
-  - message: Added an antagonist message to the character menu for initial infected
-      and zombies.
-    type: Add
-  id: 6796
-  time: '2024-06-21T05:42:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29259
 - author: Chief_Engineer and TsjipTsjip
   changes:
   - message: All ghostroles now have their role type, as defined in the rules, defined
@@ -3858,3 +3816,40 @@
   id: 7291
   time: '2024-09-05T18:20:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31867
+- author: PJB3005
+  changes:
+  - message: Changed the sprites for the N2 locker and "vox area" sign.
+    type: Tweak
+  id: 7292
+  time: '2024-09-06T05:26:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31845
+- author: Ekkosangen
+  changes:
+  - message: Pizza crates and parties can now sometimes contain cotton pizza
+    type: Tweak
+  id: 7293
+  time: '2024-09-06T06:04:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31883
+- author: TheShuEd, Jaraten
+  changes:
+  - message: New Tech anomaly added to the game! it can bind devices ports, activate
+      them, and when supercrit, it can even emag some devices.
+    type: Add
+  id: 7294
+  time: '2024-09-06T07:24:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31764
+- author: EmoGarbage404
+  changes:
+  - message: Added mineral scanners! When held in your hand or pocket, these will
+      periodically show nearby ores. Unlock them through science today!
+    type: Add
+  id: 7295
+  time: '2024-09-06T14:05:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31390
+- author: lzk228
+  changes:
+  - message: You can no longer insert any item in AI upload console.
+    type: Fix
+  id: 7296
+  time: '2024-09-06T19:07:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31900
