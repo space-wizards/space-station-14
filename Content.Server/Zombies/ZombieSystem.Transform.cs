@@ -4,6 +4,7 @@ using Content.Server.Body.Components;
 using Content.Server.Chat;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
+using Content.Server.Ghost;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Humanoid;
 using Content.Server.IdentityManagement;
@@ -62,6 +63,9 @@ public sealed partial class ZombieSystem
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly SharedRoleSystem _roles = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly GhostSystem _ghostSystem = default!;
+    [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly IBanManager _banManager = default!;
 
     /// <summary>
     /// Handles an entity turning into a zombie when they die or go into crit
@@ -240,7 +244,7 @@ public sealed partial class ZombieSystem
             if (_banManager.IsAntagBanned(session.UserId, zombiecomp.ZombieRoleId))
             {
                 // Ghost the player if they have a "Zombie" ban
-                _gameTicker.OnGhostAttempt(mindId, false, true, mind);
+                _ghostSystem.OnGhostAttempt(mindId, false, true, mind);
             }
 
             // Zombie role for player manifest
