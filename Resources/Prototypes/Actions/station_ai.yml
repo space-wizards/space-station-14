@@ -26,8 +26,6 @@
     event: !type:ActionComponentChangeEvent
       components:
       - type: ShowJobIcons
-      - type: ShowMindShieldIcons
-      - type: ShowCriminalRecordIcons
 
 - type: entity
   id: ActionSurvCameraLights
