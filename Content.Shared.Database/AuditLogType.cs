@@ -10,7 +10,7 @@ public enum AuditLogType : uint
     Message = 4,
     Watchlist = 5,
     RoleBan = 6,
-    SeverBan = 7,
+    ServerBan = 7,
     RankChange = 8,
     AdminStatusChanged = 9,
 }

@@ -58,7 +58,7 @@ namespace Content.Server.Administration.Commands
             await dbMan.AddServerUnbanAsync(new ServerUnbanDef(banId, player?.UserId, DateTimeOffset.Now));
 
             shell.WriteLine($"Pardoned ban with id {banId}");
-            await _auditLog.AddLogAsync(AuditLogType.SeverBan,
+            await _auditLog.AddLogAsync(AuditLogType.ServerBan,
                 LogImpact.Extreme,
                 ban.Unban?.UnbanningAdmin,
                 $"Pardoned Ban {banId}");

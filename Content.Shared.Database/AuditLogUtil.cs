@@ -38,7 +38,7 @@ public static class AuditLogUtil
             NoteType.Message => AuditLogType.Message,
             NoteType.Watchlist => AuditLogType.Watchlist,
             NoteType.RoleBan => AuditLogType.RoleBan,
-            NoteType.ServerBan => AuditLogType.SeverBan,
+            NoteType.ServerBan => AuditLogType.ServerBan,
             _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
         };
     }

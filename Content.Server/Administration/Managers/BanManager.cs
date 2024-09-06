@@ -198,7 +198,7 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
 
         _sawmill.Info(logMessage);
         await _auditLog.AddLogAsync(
-            AuditLogType.SeverBan,
+            AuditLogType.ServerBan,
             LogImpact.Extreme,
             banningAdmin?.UserId,
             logMessage,
@@ -337,7 +337,7 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
             playerForLog = player.UserId;
         }
 
-        await _auditLog.AddLogAsync(AuditLogType.SeverBan,
+        await _auditLog.AddLogAsync(AuditLogType.ServerBan,
             LogImpact.High,
             unbanningAdmin,
             $"Pardoned RoleBan {banId}",
