@@ -256,3 +256,29 @@
           Vox:
             sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
             state: tech_VOX
+
+- type: entity
+  parent: BaseAnomalyInjector
+  id: AnomalyTrapRock
+  suffix: Rock
+  components:
+  - type: Sprite
+    layers:
+    - state: pink
+    - sprite: Structures/Specific/anomaly.rsi
+      state: anom6-pulse
+      color: "#5ca8cb"
+    - sprite: Mobs/Species/Human/parts.rsi
+      state: full
+  - type: InnerBodyAnomalyInjector
+    injectionComponents:
+      - type: InnerBodyAnomaly
+        injectionProto: AnomalyInjectionRock
+        startMessage: inner-anomaly-start-message-rock
+        fallbackSprite:
+          sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+          state: rock
+        speciesSprites:
+          Vox:
+            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+            state: rock_VOX

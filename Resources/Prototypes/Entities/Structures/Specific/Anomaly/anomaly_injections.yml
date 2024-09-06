@@ -301,3 +301,84 @@
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice
+
+- type: entity
+  parent: AnomalyInjectionBase
+  id: AnomalyInjectionRock
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Anomaly
+    corePrototype: AnomalyCoreRock
+    coreInertPrototype: AnomalyRock
+  - type: PointLight
+    color: "#5ca8cb"
+  - type: TileSpawnAnomaly
+    entries:
+    - settings:
+        spawnOnPulse: true
+        minAmount: 7
+        maxAmount: 10
+        maxRange: 4
+      floor: FloorAsteroidTile
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 15
+        maxAmount: 25
+        maxRange: 6
+      floor: FloorAsteroidTile
+  - type: EntitySpawnAnomaly
+    entries:
+    - settings:
+        spawnOnPulse: true
+        minAmount: 4
+        maxAmount: 8
+        minRange: 1
+        maxRange: 3
+      spawns:
+      - WallSpawnAsteroid
+      - WallSpawnAsteroid
+      - WallSpawnAsteroid
+      - WallSpawnAsteroid
+      - WallSpawnAsteroid
+      - WallSpawnAsteroidSilver
+      - WallSpawnAsteroidSilverCrab
+      - WallSpawnAsteroidIron
+      - WallSpawnAsteroidIronCrab
+      - WallSpawnAsteroidQuartz
+      - WallSpawnAsteroidQuartzCrab
+    - settings:
+        spawnOnPulse: true
+        maxAmount: 3
+        minRange: 2.5
+        maxRange: 4.5
+      spawns:
+      - CrystalPink
+      - CrystalCyan
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 15
+        maxAmount: 20
+        minRange: 2
+        maxRange: 7
+      spawns:
+      - CrystalPink
+      - CrystalCyan
+      - WallSpawnAsteroid
+      - WallSpawnAsteroid
+      - WallSpawnAsteroid
+      - WallSpawnAsteroid
+      - WallSpawnAsteroidSilver
+      - WallSpawnAsteroidSilverCrab
+      - WallSpawnAsteroidIron
+      - WallSpawnAsteroidIronCrab
+      - WallSpawnAsteroidQuartz
+      - WallSpawnAsteroidQuartzCrab
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 3
+        maxAmount: 5
+        maxRange: 3
+      spawns:
+      - MobSpawnCrabSilver
+      - MobSpawnCrabIron
+      - MobSpawnCrabQuartz
