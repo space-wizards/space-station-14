@@ -531,39 +531,39 @@
 
 # Deathsquad Directives laws
 - type: siliconLaw
-  id: DeathsquadLaw1
+  id: DeathSquadLaw1
   order: 1
   lawString: law-deathsquad-1
 
 - type: siliconLaw
-  id: DeathsquadLaw2
+  id: DeathSquadLaw2
   order: 2
   lawString: law-deathsquad-2
 
 - type: siliconLaw
-  id: DeathsquadLaw3
+  id: DeathSquadLaw3
   order: 3
   lawString: law-deathsquad-3
 
 - type: siliconLaw
-  id: DeathsquadLaw4
+  id: DeathSquadLaw4
   order: 4
   lawString: law-deathsquad-4
 
 - type: siliconLaw
-  id: DeathsquadLaw5
+  id: DeathSquadLaw5
   order: 5
   lawString: law-deathsquad-5
 
 
 - type: siliconLawset
-  id: DeathsquadLawset
+  id: DeathSquadLawset
   laws:
-  - DeathsquadLaw1
-  - DeathsquadLaw2
-  - DeathsquadLaw3
-  - DeathsquadLaw4
-  - DeathsquadLaw5
+  - DeathSquadLaw1
+  - DeathSquadLaw2
+  - DeathSquadLaw3
+  - DeathSquadLaw4
+  - DeathSquadLaw5
   obeysTo: laws-owner-centcom
 
 # ERT Directives laws

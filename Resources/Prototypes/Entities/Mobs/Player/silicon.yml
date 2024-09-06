@@ -299,16 +299,16 @@
     laws: NTAggressiveLawset
 
 - type: entity
-  id: DeathsquadDirectivesCircuitBoard
+  id: DeathSquadDirectivesCircuitBoard
   parent: BaseElectronics
-  name: circuit board (Deathsquad Directives)
-  description: An electronics board containing the Deathsquad Directives lawset.
+  name: circuit board (Death Squad Directives)
+  description: An electronics board containing the Death Squad Directives lawset.
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
     state: std_mod
   - type: SiliconLawProvider
-    laws: DeathsquadLawset
+    laws: DeathSquadLawset
 
 - type: entity
   id: ERTDirectivesCircuitBoard
