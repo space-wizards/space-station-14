@@ -23,3 +23,9 @@ public sealed class StationAiBoltEvent : BaseStationAiAction
 {
     public bool Bolted;
 }
+
+[Serializable, NetSerializable]
+public sealed class StationAiElectricuteEvent : BaseStationAiAction
+{
+    public bool Electricuted;
+}

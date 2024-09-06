@@ -18,6 +18,7 @@ using Content.Shared.Inventory;
 using Content.Shared.Jittering;
 using Content.Shared.Maps;
 using Content.Shared.Popups;
+using Content.Shared.Silicons.StationAi;
 using Content.Shared.Speech.EntitySystems;
 using Content.Shared.StatusEffect;
 using Content.Shared.Stunnable;
@@ -82,10 +83,16 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         SubscribeLocalEvent<ElectrifiedComponent, AttackedEvent>(OnElectrifiedAttacked);
         SubscribeLocalEvent<ElectrifiedComponent, InteractHandEvent>(OnElectrifiedHandInteract);
         SubscribeLocalEvent<ElectrifiedComponent, InteractUsingEvent>(OnElectrifiedInteractUsing);
+        SubscribeLocalEvent<ElectrifiedComponent, StationAiElectricuteEvent>(OnAiElectrifyDoor);
         SubscribeLocalEvent<RandomInsulationComponent, MapInitEvent>(OnRandomInsulationMapInit);
         SubscribeLocalEvent<PoweredLightComponent, AttackedEvent>(OnLightAttacked);
 
         UpdatesAfter.Add(typeof(PowerNetSystem));
+    }
+
+    private void OnAiElectrifyDoor(Entity<ElectrifiedComponent> ent, ref StationAiElectricuteEvent args)
+    {
+        ent.Comp.Enabled = args.Electricuted;
     }
 
     public override void Update(float frameTime)
