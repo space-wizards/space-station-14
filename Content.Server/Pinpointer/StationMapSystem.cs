@@ -100,7 +100,6 @@ public sealed class StationMapSystem : EntitySystem
         var regionProperties = new NavMapRegionProperties(GetNetEntity(uid), StationMapUiKey.Key, seeds)
         {
             Color = component.Color,
-            LastUpdate = _gameTiming.CurTick
         };
 
         return regionProperties;

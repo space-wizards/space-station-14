@@ -1,13 +1,11 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using Content.Shared.Tag;
 using Robust.Shared.GameStates;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Timing;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.Pinpointer;
 
@@ -25,6 +23,7 @@ public abstract class SharedNavMapSystem : EntitySystem
     public const int FloorMask = AllDirMask << (int) NavMapChunkType.Floor;
 
     [Robust.Shared.IoC.Dependency] private readonly TagSystem _tagSystem = default!;
+    [Robust.Shared.IoC.Dependency] private readonly INetManager _net = default!;
 
     private static readonly ProtoId<TagPrototype>[] WallTags = {"Wall", "Window"};
     private EntityQuery<NavMapDoorComponent> _doorQuery;
@@ -90,17 +89,47 @@ public abstract class SharedNavMapSystem : EntitySystem
         if (isDirty)
         {
             component.RegionProperties[regionOwner] = regionProperties;
-            Dirty(uid, component);
+
+            if (_net.IsServer)
+                Dirty(uid, component);
         }
     }
 
     public void RemoveNavMapRegion(EntityUid uid, NavMapComponent component, NetEntity regionOwner)
     {
-        if (component.RegionProperties.ContainsKey(regionOwner))
+        bool regionOwnerRemoved = component.RegionProperties.Remove(regionOwner) | component.FloodedRegions.Remove(regionOwner);
+
+        if (regionOwnerRemoved)
         {
-            component.RegionProperties.Remove(regionOwner);
-            Dirty(uid, component);
+            if (component.RegionOwnerToChunkTable.TryGetValue(regionOwner, out var affectedChunks))
+            {
+                foreach (var affectedChunk in affectedChunks)
+                {
+                    if (component.ChunkToRegionOwnerTable.TryGetValue(affectedChunk, out var regionOwners))
+                        regionOwners.Remove(regionOwner);
+                }
+
+                component.RegionOwnerToChunkTable.Remove(regionOwner);
+            }
+
+            if (_net.IsServer)
+                Dirty(uid, component);
         }
+    }
+
+    public Dictionary<NetEntity, NavMapRegionOverlay> GetNavMapRegionOverlays(EntityUid uid, NavMapComponent component, Enum uiKey)
+    {
+        var regionOverlays = new Dictionary<NetEntity, NavMapRegionOverlay>();
+
+        foreach (var (regionOwner, regionOverlay) in component.FloodedRegions)
+        {
+            if (!regionOverlay.UiKey.Equals(uiKey))
+                continue;
+
+            regionOverlays.Add(regionOwner, regionOverlay);
+        }
+
+        return regionOverlays;
     }
 
     #region: Event handling
@@ -222,9 +251,6 @@ public abstract class SharedNavMapSystem : EntitySystem
     {
         // Server defined color for the region
         public Color Color = Color.White;
-
-        // The game tick the nav map region was last updated
-        public GameTick LastUpdate;
 
         // The maximum number of tiles that can be assigned to this region
         public int MaxArea = 625;

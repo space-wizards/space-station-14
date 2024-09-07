@@ -53,6 +53,36 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
                 return;
         }
 
+        // Update region data and queue new regions for flooding
+        var prevRegionOwners = component.RegionProperties.Keys.ToList();
+        var validRegionOwners = new List<NetEntity>();
+
+        component.RegionProperties.Clear();
+
+        foreach (var (regionOwner, regionData) in regions)
+        {
+            if (!regionData.Seeds.Any())
+                continue;
+
+            component.RegionProperties[regionOwner] = regionData;
+            validRegionOwners.Add(regionOwner);
+
+            if (component.FloodedRegions.ContainsKey(regionOwner))
+                continue;
+
+            if (component.QueuedRegionsToFlood.Contains(regionOwner))
+                continue;
+
+            component.QueuedRegionsToFlood.Enqueue(regionOwner);
+        }
+
+        // Remove stale region owners
+        var regionOwnersToRemove = prevRegionOwners.Except(validRegionOwners);
+
+        foreach (var regionOwnerRemoved in regionOwnersToRemove)
+            RemoveNavMapRegion(uid, component, regionOwnerRemoved);
+
+        // Modify chunks
         foreach (var (origin, chunk) in modifiedChunks)
         {
             var newChunk = new NavMapChunk(origin);
@@ -60,31 +90,21 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
             component.Chunks[origin] = newChunk;
 
             // If the affected chunk intersects one or more regions, re-flood them
-            if (!_chunkToRegionOwnerTable.TryGetValue(origin, out var affectedOwners))
+            if (!component.ChunkToRegionOwnerTable.TryGetValue(origin, out var affectedOwners))
                 continue;
 
             foreach (var affectedOwner in affectedOwners)
             {
-                if (!component.RegionProperties.ContainsKey(affectedOwner))
-                    continue;
-
                 if (!component.QueuedRegionsToFlood.Contains(affectedOwner))
                     component.QueuedRegionsToFlood.Enqueue(affectedOwner);
             }
         }
 
+        // Refresh beacons
         component.Beacons.Clear();
         foreach (var (nuid, beacon) in beacons)
         {
             component.Beacons[nuid] = beacon;
-        }
-
-        foreach (var (nuid, region) in regions)
-        {
-            component.RegionProperties[nuid] = region;
-
-            if (!component.QueuedRegionsToFlood.Contains(nuid))
-                component.QueuedRegionsToFlood.Enqueue(nuid);
         }
     }
 }

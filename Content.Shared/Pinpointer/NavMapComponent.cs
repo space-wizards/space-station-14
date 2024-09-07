@@ -53,6 +53,24 @@ public sealed partial class NavMapComponent : Component
     /// </remarks>
     [ViewVariables(VVAccess.ReadOnly)]
     public Queue<NetEntity> QueuedRegionsToFlood = new();
+
+    /// <summary>
+    /// A look up table to get a list of region owners associated with a flood filled chunk.
+    /// </summary>
+    /// <remarks>
+    /// For client use only
+    /// </remarks>
+    [ViewVariables(VVAccess.ReadOnly)]
+    public Dictionary<Vector2i, HashSet<NetEntity>> ChunkToRegionOwnerTable = new();
+
+    /// <summary>
+    ///  A look up table to find flood filled chunks associated with a given region owner.
+    /// </summary>
+    /// <remarks>
+    /// For client use only
+    /// </remarks>
+    [ViewVariables(VVAccess.ReadOnly)]
+    public Dictionary<NetEntity, HashSet<Vector2i>> RegionOwnerToChunkTable = new();
 }
 
 [Serializable, NetSerializable]

@@ -6,9 +6,6 @@ namespace Content.Client.Pinpointer;
 
 public sealed partial class NavMapSystem
 {
-    private Dictionary<Vector2i, HashSet<NetEntity>> _chunkToRegionOwnerTable = new();
-    private Dictionary<NetEntity, HashSet<Vector2i>> _regionOwnerToChunkTable = new();
-
     private (AtmosDirection, Vector2i, AtmosDirection)[] _regionPropagationTable =
     {
         (AtmosDirection.East, new Vector2i(1, 0), AtmosDirection.West),
@@ -58,29 +55,28 @@ public sealed partial class NavMapSystem
         // To reduce unnecessary future flood fills, we will track which chunks have been flooded by a region owner
 
         // First remove an old assignments
-        if (_regionOwnerToChunkTable.TryGetValue(regionOwner, out var oldChunks))
+        if (component.RegionOwnerToChunkTable.TryGetValue(regionOwner, out var oldChunks))
         {
             foreach (var chunk in oldChunks)
             {
-                if (_chunkToRegionOwnerTable.TryGetValue(chunk, out var oldOwners))
+                if (component.ChunkToRegionOwnerTable.TryGetValue(chunk, out var oldOwners))
                 {
                     oldOwners.Remove(regionOwner);
-                    _chunkToRegionOwnerTable[chunk] = oldOwners;
+                    component.ChunkToRegionOwnerTable[chunk] = oldOwners;
                 }
             }
         }
 
         // Now update with the new assignments
-        _regionOwnerToChunkTable[regionOwner] = floodedChunks;
+        component.RegionOwnerToChunkTable[regionOwner] = floodedChunks;
 
         foreach (var chunk in floodedChunks)
         {
-            if (!_chunkToRegionOwnerTable.TryGetValue(chunk, out var owners))
+            if (!component.ChunkToRegionOwnerTable.TryGetValue(chunk, out var owners))
                 owners = new();
 
             owners.Add(regionOwner);
-
-            _chunkToRegionOwnerTable[chunk] = owners;
+            component.ChunkToRegionOwnerTable[chunk] = owners;
         }
     }
 
