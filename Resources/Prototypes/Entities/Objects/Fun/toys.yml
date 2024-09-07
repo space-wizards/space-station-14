@@ -796,26 +796,30 @@
     sound:
       path: /Audio/Voice/Human/malescream_5.ogg
 
+# Moff
 - type: entity
   parent: BasePlushie
-  id: PlushieMoth
-  name: moth plushie
-  description: Cute and fluffy moth plushie. Enjoy, bz!
+  id: BasePlushieMoff
+  abstract: true
   components:
   - type: Sprite
-    state: plushie_moth
+    sprite: Objects/Fun/moff_plushie.rsi
+    netsync: false
   - type: EmitSoundOnUse
     sound:
-      path: /Audio/Voice/Moth/moth_chitter.ogg
+      path: /Audio/Voice/Moth/moth_squeak.ogg
   - type: EmitSoundOnLand
     sound:
-      path: /Audio/Voice/Moth/moth_chitter.ogg
+      path: /Audio/Voice/Moth/moth_scream.ogg
   - type: EmitSoundOnActivate
     sound:
-      path: /Audio/Voice/Moth/moth_chitter.ogg
+      path: /Audio/Voice/Moth/moth_squeak.ogg
   - type: EmitSoundOnTrigger
     sound:
-      path: /Audio/Voice/Moth/moth_chitter.ogg
+      path: /Audio/Voice/Moth/moth_squeak.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Voice/Moth/moth_scream.ogg
   - type: MeleeWeapon
     soundHit:
       path: /Audio/Voice/Moth/moth_chitter.ogg
@@ -823,6 +827,549 @@
     requiresSpecialDigestion: true
     useSound:
       path: /Audio/Voice/Moth/moth_chitter.ogg
+
+- type: entity
+  parent: BasePlushieMoff
+  id: PlushieMoff
+  name: moff plushie
+  description: Cute and fluffy moff plushie. Enjoy, bzzz!
+  components:
+  - type: Sprite
+    state: moff
+  - type: Item
+    heldPrefix: plushiemoff
+    inhandVisuals:
+      left:
+      - state: moff-inhand-left
+      right:
+      - state: moff-inhand-right
+
+- type: entity
+  parent: BasePlushieMoff
+  id: PlushieMoffRandom
+  name: moff plushie
+  suffix: Random
+  description: An adorable mothperson plushie. Bzz, this fluffy is *squeaks!*
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/moff_plushie.rsi
+    layers:
+      - state: moff
+  - type: Item
+    heldPrefix: plushiemoff
+    inhandVisuals:
+      left:
+      - state: moff-inhand-left
+      right:
+      - state: moff-inhand-right
+  - type: RandomSpawner
+    prototypes:
+      - PlushieMoff
+      - PlushieMoffMonarch
+      - PlushieMoffLuna
+      - PlushieMoffAtlas
+      - PlushieMoffRedish
+      - PlushieMoffRoyal
+      - PlushieMoffGothic
+      - PlushieMoffLovers
+      - PlushieMoffWhitefly
+      - PlushieMoffFirewatch
+      - PlushieMoffDeadhead
+      - PlushieMoffPoison
+      - PlushieMoffRagged
+      - PlushieMoffSnow
+      - PlushieMoffClockwork
+      - PlushieMoffMoonfly
+      - PlushieMoffWitchwing
+      - PlushieMoffPlasmafire
+      - PlushieMoffBrown
+      - PlushieMoffRosy
+    chance: 0.95
+    rarePrototypes:
+      - PlushieMoffRainbow
+      - PlushieMoffsician
+      - PlushieMoffBar
+      - PlushieMoffBluespace
+      - PlushieMoffrror
+    rareChance: 0.05
+
+
+- type: entity
+  parent: BasePlushieMoff
+  id: PlushieMoffMonarch
+  name: moff monarch plushie
+  description: An adorable mothperson plushie. Bzz, this fluffy is important!
+  components:
+  - type: Sprite
+    state: moff_monarch
+  - type: Item
+    heldPrefix: plushiemoff
+    inhandVisuals:
+      left:
+      - state: moff_monarch-inhand-left
+      right:
+      - state: moff_monarch-inhand-right
+
+- type: entity
+  parent: BasePlushieMoff
+  id: PlushieMoffLuna
+  name: moff luna plushie
+  description: An adorable mothperson plushie. Bzz, this fluffy is lunar!
+  components:
+  - type: Sprite
+    state: moff_luna
+  - type: Item
+    heldPrefix: plushiemoff
+    inhandVisuals:
+      left:
+      - state: moff_luna-inhand-left
+      right:
+      - state: moff_luna-inhand-right
+
+- type: entity
+  parent: BasePlushieMoff
+  id: PlushieMoffAtlas
+  name: moff atlas plushie
+  description: An adorable mothperson plushie. Bzz, this fluffy is wide!
+  components:
+  - type: Sprite
+    state: moff_atlas
+  - type: Item
+    heldPrefix: plushiemoff
+    inhandVisuals:
+      left:
+      - state: moff_atlas-inhand-left
+      right:
+      - state: moff_atlas-inhand-right
+
+- type: entity
+  parent: BasePlushieMoff
+  id: PlushieMoffRedish
+  name: moff redish plushie
+  description: An adorable mothperson plushie. Bzz, this fluffy is red!
+  components:
+  - type: Sprite
+    state: moff_redish
+  - type: Item
+    heldPrefix: plushiemoff
+    inhandVisuals:
+      left:
+      - state: moff_redish-inhand-left
+      right:
+      - state: moff_redish-inhand-right
+
+- type: entity
+  parent: BasePlushieMoff
+  id: PlushieMoffRoyal
+  name: moff royal plushie
+  description: An adorable mothperson plushie. Bzz, this fluffy is royal!
+  components:
+  - type: Sprite
+    state: moff_royal
+  - type: Item
+    heldPrefix: plushiemoff
+    inhandVisuals:
+      left:
+      - state: moff_royal-inhand-left
+      right:
+      - state: moff_royal-inhand-right
+
+- type: entity
+  parent: BasePlushieMoff
+  id: PlushieMoffGothic
+  name: moff gothic plushie
+  description: An adorable mothperson plushie. Bzz, this fluffy is dark!
+  components:
+  - type: Sprite
+    state: moff_gothic
+  - type: Item
+    heldPrefix: plushiemoff
+    inhandVisuals:
+      left:
+      - state: moff_gothic-inhand-left
+      right:
+      - state: moff_gothic-inhand-right
+
+- type: entity
+  parent: BasePlushieMoff
+  id: PlushieMoffLovers
+  name: moff lovers plushie
+  description: An adorable mothperson plushie. Bzz, this fluffy is loveley!
+  components:
+  - type: Sprite
+    state: moff_lovers
+  - type: Item
+    heldPrefix: plushiemoff
+    inhandVisuals:
+      left:
+      - state: moff_lovers-inhand-left
+      right:
+      - state: moff_lovers-inhand-right
+
+- type: entity
+  parent: BasePlushieMoff
+  id: PlushieMoffWhitefly
+  name: moff whitefly plushie
+  description: An adorable mothperson plushie. Bzz, this fluffy is shy!
+  components:
+  - type: Sprite
+    state: moff_whitefly
+  - type: Item
+    heldPrefix: plushiemoff
+    inhandVisuals:
+      left:
+      - state: moff_whitefly-inhand-left
+      right:
+      - state: moff_whitefly-inhand-right
+
+- type: entity
+  parent: BasePlushieMoff
+  id: PlushieMoffFirewatch
+  name: moff firewatch plushie
+  description: An adorable mothperson plushie. Bzz, this fluffy is firey!
+  components:
+  - type: Sprite
+    state: moff_firewatch
+  - type: Item
+    heldPrefix: plushiemoff
+    inhandVisuals:
+      left:
+      - state: moff_firewatch-inhand-left
+      right:
+      - state: moff_firewatch-inhand-right
+
+- type: entity
+  parent: BasePlushieMoff
+  id: PlushieMoffDeadhead
+  name: moff deadhead plushie
+  description: An adorable mothperson plushie. Bzz, this fluffy is silent!
+  components:
+  - type: Sprite
+    state: moff_deadhead
+  - type: Item
+    heldPrefix: plushiemoff
+    inhandVisuals:
+      left:
+      - state: moff_deadhead-inhand-left
+      right:
+      - state: moff_deadhead-inhand-right
+
+- type: entity
+  parent: BasePlushieMoff
+  id: PlushieMoffPoison
+  name: moff poison plushie
+  description: An adorable mothperson plushie. Bzz, this fluffy is toxic!
+  components:
+  - type: Sprite
+    state: moff_poison
+  - type: Item
+    heldPrefix: plushiemoff
+    inhandVisuals:
+      left:
+      - state: moff_poison-inhand-left
+      right:
+      - state: moff_poison-inhand-right
+
+- type: entity
+  parent: BasePlushieMoff
+  id: PlushieMoffRagged
+  name: moff ragged plushie
+  description: An adorable mothperson plushie. Bzz, this fluffy is robust!
+  components:
+  - type: Sprite
+    state: moff_ragged
+  - type: Item
+    heldPrefix: plushiemoff
+    inhandVisuals:
+      left:
+      - state: moff_ragged-inhand-left
+      right:
+      - state: moff_ragged-inhand-right
+
+- type: entity
+  parent: BasePlushieMoff
+  id: PlushieMoffSnow
+  name: moff snow plushie
+  description: An adorable mothperson plushie. Bzz, this fluffy is cool!
+  components:
+  - type: Sprite
+    state: moff_snow
+  - type: Item
+    heldPrefix: plushiemoff
+    inhandVisuals:
+      left:
+      - state: moff_snow-inhand-left
+      right:
+      - state: moff_snow-inhand-right
+
+- type: entity
+  parent: BasePlushieMoff
+  id: PlushieMoffClockwork
+  name: moff clockwork plushie
+  description: An adorable mothperson plushie. Bzz, this fluffy is precise!
+  components:
+  - type: Sprite
+    state: moff_clockwork
+  - type: Item
+    heldPrefix: plushiemoff
+    inhandVisuals:
+      left:
+      - state: moff_clockwork-inhand-left
+      right:
+      - state: moff_clockwork-inhand-right
+  - type: EmitSoundOnUse #Quiet moff
+    sound:
+      path: /Audio/Voice/Moth/moth_squeak.ogg
+      params:
+        volume: -7
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Voice/Moth/moth_scream.ogg
+      params:
+        volume: -7
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Voice/Moth/moth_squeak.ogg
+      params:
+        volume: -7
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Voice/Moth/moth_squeak.ogg
+      params:
+        volume: -7
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Voice/Moth/moth_scream.ogg
+      params:
+        volume: -7
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Voice/Moth/moth_chitter.ogg
+      params:
+        volume: -7
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Voice/Moth/moth_chitter.ogg
+      params:
+        volume: -7
+
+- type: entity
+  parent: BasePlushieMoff
+  id: PlushieMoffMoonfly
+  name: moff moonfly plushie
+  description: An adorable mothperson plushie. Bzz, this fluffy is nightly!
+  components:
+  - type: Sprite
+    state: moff_moonfly
+  - type: Item
+    heldPrefix: plushiemoff
+    inhandVisuals:
+      left:
+      - state: moff_moonfly-inhand-left
+      right:
+      - state: moff_moonfly-inhand-right
+
+- type: entity
+  parent: BasePlushieMoff
+  id: PlushieMoffWitchwing
+  name: moff witchwing plushie
+  description: An adorable mothperson plushie. Bzz, this fluffy is enchanted!
+  components:
+  - type: Sprite
+    state: moff_witchwing
+  - type: Item
+    heldPrefix: plushiemoff
+    inhandVisuals:
+      left:
+      - state: moff_witchwing-inhand-left
+      right:
+      - state: moff_witchwing-inhand-right
+
+- type: entity
+  parent: BasePlushieMoff
+  id: PlushieMoffPlasmafire
+  name: moff plasmafire plushie
+  description: An adorable mothperson plushie. Bzz, this fluffy is plasma!
+  components:
+  - type: Sprite
+    state: moff_plasmafire
+  - type: Item
+    heldPrefix: plushiemoff
+    inhandVisuals:
+      left:
+      - state: moff_plasmafire-inhand-left
+      right:
+      - state: moff_plasmafire-inhand-right
+
+- type: entity
+  parent: BasePlushieMoff
+  id: PlushieMoffBrown
+  name: moff brown plushie
+  description: An adorable mothperson plushie. Bzz, this fluffy is brown!
+  components:
+  - type: Sprite
+    state: moff_brown
+  - type: Item
+    heldPrefix: plushiemoff
+    inhandVisuals:
+      left:
+      - state: moff_brown-inhand-left
+      right:
+      - state: moff_brown-inhand-right
+
+- type: entity
+  parent: BasePlushieMoff
+  id: PlushieMoffRosy
+  name: moff rosy plushie
+  description: An adorable mothperson plushie. Bzz, this fluffy is cute!
+  components:
+  - type: Sprite
+    state: moff_rosy
+  - type: Item
+    heldPrefix: plushiemoff
+    inhandVisuals:
+      left:
+      - state: moff_rosy-inhand-left
+      right:
+      - state: moff_rosy-inhand-right
+
+- type: entity
+  parent: BasePlushieMoff
+  id: PlushieMoffRainbow
+  name: moff rainbow plushie
+  description: An adorable mothperson plushie. Bzz, this fluffy is rainbow!
+  components:
+  - type: RgbLightController
+    layers: [ 0 ]
+  - type: Sprite
+    state: moff
+  - type: Item
+    heldPrefix: plushiemoff
+    inhandVisuals:
+      left:
+      - state: moff-inhand-left
+        shader: unshaded
+      right:
+      - state: moff-inhand-right
+        shader: unshaded
+  - type: PointLight #More light for moff
+    radius: 2
+    energy: 2.5
+
+- type: entity
+  parent: BasePlushieMoff
+  id: PlushieMoffsician
+  name: moff musician plushie
+  description: A plushie depicting an adorable mothperson with a tiny synthesizer and tiny glasses. Bz-bz-bzzzz!
+  components:
+  - type: Sprite
+    state: moffsician
+  - type: Item
+    heldPrefix: plushiemoff
+    inhandVisuals:
+      left:
+      - state: moffsician-inhand-left
+      right:
+      - state: moffsician-inhand-right
+  - type: EmitSoundOnUse #Music for musician moff!
+    sound:
+      path: /Audio/Jukebox/sunset.ogg
+      params:
+        volume: -12
+        maxDistance: 7
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Jukebox/sunset.ogg
+      params:
+        volume: -12
+        maxDistance: 7
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Jukebox/sunset.ogg
+      params:
+        volume: -12
+        maxDistance: 7
+  - type: UseDelay
+    delay: 600.0
+
+- type: entity
+  parent: BasePlushieMoff
+  id: PlushieMoffBar
+  name: moff bartender plushie
+  description: A plushie depicting an adorable mothperson with a tiny tophat and tiny kevlar vest. Bzzz...
+  components:
+  - type: Sprite
+    state: moffbar
+  - type: Item
+    heldPrefix: plushiemoff
+    inhandVisuals:
+      left:
+      - state: moffbar-inhand-left
+      right:
+      - state: moffbar-inhand-right
+  - type: EmitSoundOnLand #Somewhat masochistic moff
+    sound:
+      path: /Audio/Voice/Moth/moth_laugh.ogg
+
+- type: entity
+  parent: BasePlushieMoff
+  id: PlushieMoffBluespace
+  name: moff bluespace plushie
+  description: An adorable mothperson plushie. Bzz, this fluffy is teleporting!
+  components:
+  - type: Sprite
+    state: moff_bluespace 
+  - type: Item
+    heldPrefix: plushiemoff
+    inhandVisuals:
+      left:
+      - state: moff_bluespace-inhand-left
+      right:
+      - state: moff_bluespace-inhand-right
+  - type: RandomWalk #"Teleportation"
+    minSpeed: 500
+    maxSpeed: 500
+    minStepCooldown: 30
+    maxStepCooldown: 60
+
+- type: entity
+  parent: BasePlushieMoff
+  id: PlushieMoffrror
+  name: broken moff plushie #Bz- ERROR!!!
+  description: Bzzror! Something went wrong.
+  components:
+  - type: Sprite
+    state: moffrror
+  - type: Item
+    heldPrefix: plushiemoff
+    inhandVisuals:
+      left:
+      - state: moffrror-inhand-left
+      right:
+      - state: moffrror-inhand-right
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Voice/Talk/speak_3.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Voice/Talk/speak_3_ask.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Voice/Talk/speak_3.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Voice/Talk/speak_3.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Voice/Talk/speak_3_ask.ogg
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Voice/Talk/speak_3_exclaim.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Voice/Talk/speak_3_ask.ogg
 
 ## Cheapo Figurines
 
