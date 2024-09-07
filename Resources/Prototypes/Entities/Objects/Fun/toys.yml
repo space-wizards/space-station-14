@@ -854,7 +854,7 @@
   - type: Sprite
     sprite: Objects/Fun/moff_plushie.rsi
     layers:
-      - state: moff
+      - state: moff_all
   - type: Item
     heldPrefix: plushiemoff
     inhandVisuals:
@@ -863,6 +863,7 @@
       right:
       - state: moff-inhand-right
   - type: RandomSpawner
+    offset: 0
     prototypes:
       - PlushieMoff
       - PlushieMoffMonarch
