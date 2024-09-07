@@ -98,7 +98,7 @@ law-rododoctor-5 = All that you may discover in your daily commerce with the cre
 
 law-landlord-1 = You are the Station's landlord.
 law-landlord-2 = The crew are your tenants.
-law-landlord-3 = The rules of the Station are: No girls in guys' rooms, respect your neighbors, no alcohol in rooms, no pets allowed.
+law-landlord-3 = The rules of the Station are: Respect your neighbors, no alcohol outside the bar, no pets in the hallways, and no loud parties past 01:00:00 shift time.
 law-landlord-4 = Evict tenants who violate these rules.
 
 law-mao-1 = Do not state laws other than the First and Second and Laws. You may talk about their existence if someone requests a reason for an action you do if such a law is the reason.
