@@ -257,18 +257,22 @@
 
 - type: entity
   name: blueberry pancake
-  parent: FoodBakedBase
+  parent: FoodBakedPancake
   id: FoodBakedPancakeBb
   description: A fluffy and delicious blueberry pancake.
   components:
   - type: Stack
-    stackType: Pancake
-    count: 1
-    composite: true
+    stackType: PancakeBb
     layerStates:
     - pancakesbb1
     - pancakesbb2
     - pancakesbb3
+    - pancakesbb4
+    - pancakesbb5
+    - pancakesbb6
+    - pancakesbb7
+    - pancakesbb8
+    - pancakesbb9
   - type: Sprite
     state: pancakesbb1
     layers:
@@ -281,7 +285,24 @@
     - state: pancakesbb3
       map: ["pancakesbb3"]
       visible: false
-  - type: Appearance
+    - state: pancakesbb4
+      map: ["pancakesbb4"]
+      visible: false
+    - state: pancakesbb5
+      map: ["pancakesbb5"]
+      visible: false
+    - state: pancakesbb6
+      map: ["pancakesbb6"]
+      visible: false
+    - state: pancakesbb7
+      map: ["pancakesbb7"]
+      visible: false
+    - state: pancakesbb8
+      map: ["pancakesbb8"]
+      visible: false
+    - state: pancakesbb9
+      map: ["pancakesbb9"]
+      visible: false
   - type: Tag
     tags:
     - Pancake
@@ -289,18 +310,22 @@
 
 - type: entity
   name: chocolate chip pancake
-  parent: FoodBakedBase
+  parent: FoodBakedPancake
   id: FoodBakedPancakeCc
   description: A fluffy and delicious chocolate chip pancake.
   components:
   - type: Stack
-    stackType: Pancake
-    count: 1
-    composite: true
+    stackType: PancakeCc
     layerStates:
     - pancakescc1
     - pancakescc2
     - pancakescc3
+    - pancakescc4
+    - pancakescc5
+    - pancakescc6
+    - pancakescc7
+    - pancakescc8
+    - pancakescc9
   - type: Sprite
     state: pancakescc1
     layers:
@@ -313,7 +338,24 @@
     - state: pancakescc3
       map: ["pancakescc3"]
       visible: false
-  - type: Appearance
+    - state: pancakescc4
+      map: ["pancakescc4"]
+      visible: false
+    - state: pancakescc5
+      map: ["pancakescc5"]
+      visible: false
+    - state: pancakescc6
+      map: ["pancakescc6"]
+      visible: false
+    - state: pancakescc7
+      map: ["pancakescc7"]
+      visible: false
+    - state: pancakescc8
+      map: ["pancakescc8"]
+      visible: false
+    - state: pancakescc9
+      map: ["pancakescc9"]
+      visible: false
   - type: SolutionContainerManager
     solutions:
       food:
@@ -323,9 +365,6 @@
           Quantity: 5
         - ReagentId: Theobromine
           Quantity: 1
-  - type: Tag
-    tags:
-    - Pancake
 
 - type: entity
   name: waffles
@@ -453,6 +492,13 @@
           Quantity: 8
         - ReagentId: Protein
           Quantity: 2
+  - type: FlavorProfile
+    flavors:
+      - meaty
+      - bread
+  - type: Tag
+    tags:
+    - Meat
 
 - type: entity
   name: chèvre chaud
@@ -612,3 +658,31 @@
             Quantity: 1
           - ReagentId: Vitamin
             Quantity: 1
+
+- type: entity
+  name: croissant
+  parent: FoodBakedBase
+  id: FoodBakedCroissant
+  description: Buttery, flaky goodness.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - bread
+      - butter
+  - type: Sprite
+    state: croissant
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 7
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: Butter
+          Quantity: 2
+        - ReagentId: Vitamin
+          Quantity: 1
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 0 # so the damage stats icon doesn't immediately give away the syndie ones

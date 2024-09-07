@@ -11,7 +11,7 @@ public sealed partial class SpeciesLoadoutEffect : LoadoutEffect
     [DataField(required: true)]
     public List<ProtoId<SpeciesPrototype>> Species = new();
 
-    public override bool Validate(HumanoidCharacterProfile profile, RoleLoadout loadout, ICommonSession session, IDependencyCollection collection,
+    public override bool Validate(HumanoidCharacterProfile profile, RoleLoadout loadout, ICommonSession? session, IDependencyCollection collection,
         [NotNullWhen(false)] out FormattedMessage? reason)
     {
         if (Species.Contains(profile.Species))

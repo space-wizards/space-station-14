@@ -1,0 +1,59 @@
+- type: entity
+  id: Wristwatch
+  parent: BaseItem
+  name: wristwatch
+  description: A cheap watch for telling time. How much did you waste playing Space Station 14?
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/wristwatch.rsi
+    layers:
+    - state: wristwatch
+    - map: [ "enum.ClockVisualLayers.MinuteHand"]
+    - map: [ "enum.ClockVisualLayers.HourHand"]
+  - type: Clock
+  - type: Item
+    sprite: Objects/Devices/wristwatch.rsi
+    size: Small
+  - type: Clothing
+    sprite: Objects/Devices/wristwatch.rsi
+    slots:
+    - gloves
+  - type: Appearance
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: StaticPrice
+    price: 50
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageGroupTrigger
+        damageGroup: Brute
+        damage: 25
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Breakage" ]
+
+- type: entity
+  id: WristwatchGold
+  parent: Wristwatch
+  name: gold watch
+  description: A fancy watch worth more than your kidney. It was owned by the notorious Syndicate mobster Vunibaldo "200 Pound Horse Meat Grinder" Frediani.
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/goldwatch.rsi
+    layers:
+    - state: goldwatch
+    - map: [ "enum.ClockVisualLayers.MinuteHand"]
+    - map: [ "enum.ClockVisualLayers.HourHand"]
+  - type: Item
+    sprite: Objects/Devices/goldwatch.rsi
+  - type: Clothing
+    sprite: Objects/Devices/goldwatch.rsi
+  - type: StaticPrice
+    price: 500 #if you ever increase the price of kidneys, increase this too.

@@ -87,9 +87,6 @@
   - type: PoweredLight
     bulb: Bulb
     on: false
-    damage:
-      types:
-        Heat: 2
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: DeviceNetwork
@@ -113,6 +110,11 @@
   - type: Construction
     graph: LightFixture
     node: strobeLight
+  - type: DamageOnInteract
+    damage:
+      types:
+        Heat: 2
+    popupText: powered-light-component-burn-hand
 
 - type: entity
   id: PoweredStrobeLightPolice
@@ -134,7 +136,7 @@
     volume: 0
     range: 10
     sound:
-      path: "/Audio/Misc/siren.ogg"
+      path: "/Audio/Misc/gamma.ogg"
 
 - type: entity
   id: PoweredStrobeLightEpsilon

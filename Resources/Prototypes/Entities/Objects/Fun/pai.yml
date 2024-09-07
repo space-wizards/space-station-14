@@ -17,7 +17,7 @@
         type: InstrumentBoundUserInterface
         requireInputValidation: false
       enum.StationMapUiKey.Key:
-        type: UntrackedStationMapBoundUserInterface
+        type: StationMapBoundUserInterface
         requireInputValidation: false
   - type: Sprite
     sprite: Objects/Fun/pai.rsi
@@ -37,6 +37,7 @@
     beginSearchingText: pai-system-searching
     roleName: pai-system-role-name
     roleDescription: pai-system-role-description
+    roleRules: ghost-role-information-familiar-rules
     wipeVerbText: pai-system-wipe-device-verb-text
     wipeVerbPopup: pai-system-wiped-device
     stopSearchVerbText: pai-system-stop-searching-verb-text
@@ -74,7 +75,7 @@
   - type: StationMap
 
 - type: entity
-  parent: PersonalAI
+  parent: [ PersonalAI, BaseSyndicateContraband]
   id: SyndicatePersonalAI
   name: syndicate personal ai device
   description: Your Syndicate pal who's fun to be with!
@@ -89,6 +90,7 @@
   - type: ToggleableGhostRole
     roleName: pai-system-role-name-syndicate
     roleDescription: pai-system-role-description-syndicate
+    roleRules: ghost-role-information-familiar-rules
   - type: IntrinsicRadioTransmitter
     channels:
     - Syndicate
@@ -120,6 +122,7 @@
   - type: ToggleableGhostRole
     roleName: pai-system-role-name-potato
     roleDescription: pai-system-role-description-potato
+    roleRules: ghost-role-information-familiar-rules
   - type: Appearance
   - type: GenericVisualizer
     visuals:

@@ -12,3 +12,29 @@
     layers:
       - state: box
       - state: flashbang
+
+- type: entity
+  name: NT "AgriChem Is Fun" kit
+  parent: BoxCardboard
+  id: BoxAgrichem
+  description: For the budding botanist ready to learn about maximizing farm output. This faded box must be at least 50 years old.
+  components:
+  - type: StorageFill
+    contents:
+    - id: PaperAgrichemManual
+    - id: ChemistryEmptyBottle01
+    - id: PotassiumChemistryBottle
+    - id: PhosphorusChemistryBottle
+    - id: NitrogenChemistryBottle
+    - id: HydrogenChemistryBottle
+    - id: EthanolChemistryBottle
+    - id: RadiumChemistryVial
+    - id: ChlorineChemistryVial
+  - type: Sprite
+    layers:
+      - state: boxwide
+      - state: agrichemkit
+  - type: GuideHelp
+    guides:
+    - Botanical
+    - Chemicals

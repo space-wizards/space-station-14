@@ -12,7 +12,7 @@
     - type: RCDDeconstructable
       cost: 6
       delay: 4
-      fx: EffectRCDDeconstruct4  
+      fx: EffectRCDDeconstruct4
     - type: CanBuildWindowOnTop
     - type: Sprite
       drawdepth: Walls
@@ -92,7 +92,7 @@
   id: ClockworkGrille
   parent: Grille
   name: clockwork grille
-  description: a flimsy framework of iron rods assembled in traditional Ratvarian fashion.
+  description: A flimsy framework of iron rods assembled in traditional Ratvarian fashion.
   components:
     - type: Sprite
       drawdepth: Walls
@@ -134,7 +134,7 @@
       bodyType: Static
       canCollide: false
     - type: Damageable
-      damageContainer: Inorganic
+      damageContainer: StructuralInorganic
       damageModifierSet: FlimsyMetallic
     - type: Destructible
       thresholds:
@@ -233,4 +233,4 @@
     - type: Construction
       graph: GrilleDiagonal
       node: clockworkGrilleDiagonal
-      
+

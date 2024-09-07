@@ -1,7 +1,5 @@
-using Content.Server.Access.Systems;
 using Content.Server.Cargo.Components;
 using Content.Server.DeviceLinking.Systems;
-using Content.Server.Paper;
 using Content.Server.Popups;
 using Content.Server.Shuttles.Systems;
 using Content.Server.Stack;
@@ -13,6 +11,7 @@ using Content.Shared.Cargo;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Paper;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
@@ -31,7 +30,6 @@ public sealed partial class CargoSystem : SharedCargoSystem
     [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
     [Dependency] private readonly DeviceLinkSystem _linker = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly IdCardSystem _idCardSystem = default!;
     [Dependency] private readonly ItemSlotsSystem _slots = default!;
     [Dependency] private readonly PaperSystem _paperSystem = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
@@ -81,18 +79,18 @@ public sealed partial class CargoSystem : SharedCargoSystem
     public void UpdateBankAccount(EntityUid uid, StationBankAccountComponent component, int balanceAdded)
     {
         component.Balance += balanceAdded;
-        var query = EntityQueryEnumerator<CargoOrderConsoleComponent>();
+        var query = EntityQueryEnumerator<BankClientComponent, TransformComponent>();
 
-        while (query.MoveNext(out var oUid, out var _))
+        var ev = new BankBalanceUpdatedEvent(uid, component.Balance);
+        while (query.MoveNext(out var client, out var comp, out var xform))
         {
-            if (!_uiSystem.IsUiOpen(oUid, CargoConsoleUiKey.Orders))
-                continue;
-
-            var station = _station.GetOwningStation(oUid);
+            var station = _station.GetOwningStation(client, xform);
             if (station != uid)
                 continue;
 
-            UpdateOrderState(oUid, station);
+            comp.Balance = component.Balance;
+            Dirty(client, comp);
+            RaiseLocalEvent(client, ref ev);
         }
     }
 }

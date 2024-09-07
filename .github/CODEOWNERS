@@ -55,3 +55,10 @@
 #Jezi
 /Content.*/Medical @Jezithyr
 /Content.*/Body @Jezithyr
+
+# Sloth
+/Content.*/Audio @metalgearsloth
+/Content.*/Movement @metalgearsloth
+/Content.*/NPC @metalgearsloth
+/Content.*/Shuttles @metalgearsloth
+/Content.*/Weapons @metalgearsloth

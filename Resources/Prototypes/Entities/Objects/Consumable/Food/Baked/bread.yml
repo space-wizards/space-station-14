@@ -122,6 +122,67 @@
     - Slice
 
 - type: entity
+  name: cotton bread
+  parent: FoodBreadBase
+  id: FoodBreadCotton
+  description: Bread, but for moff.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - cotton
+    - bread
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: Sprite
+    layers:
+    - state: cotton
+  - type: SliceableFood
+    slice: FoodBreadCottonSlice
+  - type: Tag
+    tags:
+    - ClothMade
+    - Bread
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 26
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Fiber
+          Quantity: 10
+
+- type: entity
+  name: cotton bread slice
+  parent: FoodBreadSliceBase
+  id: FoodBreadCottonSlice
+  description: A slice of (maybe) delicious cotton bread.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - cotton
+    - bread
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: Sprite
+    layers:
+    - state: cotton-slice
+  - type: Tag
+    tags:
+    - ClothMade
+    - Bread
+    - Slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 8
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Fiber
+          Quantity: 2
+
+- type: entity
   name: cornbread
   parent: FoodBreadBase
   id: FoodBreadCorn
@@ -624,6 +685,21 @@
           Quantity: 1
         - ReagentId: Blackpepper
           Quantity: 1
+  - type: Clothing
+    slots: [ BELT ]
+    equippedPrefix: baguette
+    quickEquip: false
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: baguette-inhand-left
+      right:
+      - state: baguette-inhand-right
+  - type: MeleeWeapon
+    wideAnimationRotation: -120
+    damage:
+      types:
+        Blunt: 1 # bonk
 # Tastes like France.
 
 - type: entity
@@ -751,6 +827,9 @@
   - type: Sprite
     layers:
     - state: moldy-slice
+  - type: Tag
+    tags:
+    - Trash
   - type: SolutionContainerManager
     solutions:
       food:
@@ -818,7 +897,7 @@
     name: ghost-role-information-BreadDog-name
     allowMovement: true
     description: ghost-role-information-BreadDog-description
-    rules: ghost-role-information-BreadDog-rules
+    rules: ghost-role-information-nonantagonist-rules
     raffle:
       settings: short
   - type: GhostTakeoverAvailable

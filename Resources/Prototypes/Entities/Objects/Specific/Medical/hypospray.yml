@@ -1,6 +1,6 @@
 - type: entity
   name: hypospray
-  parent: BaseItem
+  parent: [BaseItem, BaseGrandTheftContraband]
   description: A sterile injector for rapid administration of drugs to patients.
   id: Hypospray
   components:
@@ -191,7 +191,7 @@
   name: brute auto-injector
   parent: ChemicalMedipen
   id: BruteAutoInjector
-  description: A rapid dose of bicaridine and tranexamic acid, intended for combat applications
+  description: A rapid dose of bicaridine and tranexamic acid, intended for combat applications.
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/medipen.rsi
@@ -223,7 +223,7 @@
   name: burn auto-injector
   parent: ChemicalMedipen
   id: BurnAutoInjector
-  description: A rapid dose of dermaline and leporazine, intended for combat applications
+  description: A rapid dose of dermaline and leporazine, intended for combat applications.
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/medipen.rsi
@@ -318,10 +318,10 @@
     tags: []
 
 - type: entity
-  name: stimulant injector
-  parent: ChemicalMedipen
+  name: hyperzine injector
+  parent: [ChemicalMedipen, BaseSyndicateContraband]
   id: Stimpack
-  description: Contains enough stimulants for you to have the chemical's effect for 30 seconds. Use it when you're sure you're ready to throw down.
+  description: Contains enough hyperzine for you to have the chemical's effect for 30 seconds. Use it when you're sure you're ready to throw down.
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/medipen.rsi
@@ -350,10 +350,10 @@
     tags: []
 
 - type: entity
-  name: stimulant microinjector
-  parent: ChemicalMedipen
+  name: hyperzine microinjector
+  parent: [ChemicalMedipen, BaseSyndicateContraband]
   id: StimpackMini
-  description: A microinjector of stimulants that give you about fifteen seconds of the chemical's effects.
+  description: A microinjector of hyperzine that give you about fifteen seconds of the chemical's effects.
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/medipen.rsi
@@ -378,7 +378,7 @@
 
 - type: entity
   name: combat medipen
-  parent: ChemicalMedipen
+  parent: [ChemicalMedipen, BaseSyndicateContraband]
   id: CombatMedipen
   description: A single-use medipen containing chemicals that regenerate most types of damage.
   components:
@@ -432,9 +432,11 @@
     delay: 0.5
   - type: StaticPrice # A new shitcurity meta
     price: 75
+  - type: EmitSoundOnUse
+    handle: false # don't want the sound to stop the self-inject from triggering
 
 - type: entity
-  parent: BaseItem
+  parent: [ BaseItem, BaseSyndicateContraband ]
   id: HypopenBox
   name: hypopen box
   description: A small box containing a hypopen. Packaging disintegrates when opened, leaving no evidence behind.

@@ -49,7 +49,7 @@ public sealed partial class ParticleAcceleratorSystem
                 ParticleAcceleratorPowerState.Level0 => 1,
                 ParticleAcceleratorPowerState.Level1 => 2,
                 ParticleAcceleratorPowerState.Level2 => 3,
-                ParticleAcceleratorPowerState.Level3 => 10,
+                ParticleAcceleratorPowerState.Level3 => 6,
                 _ => 0,
             } * 10;
         }
