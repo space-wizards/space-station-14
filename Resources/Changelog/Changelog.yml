@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: Floofi
-  changes:
-  - message: Added lemon juice to the Boozemat!
-    type: Add
-  id: 6808
-  time: '2024-06-22T23:46:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27465
-- author: Cojoke-dot
-  changes:
-  - message: You can now put hats on Medibots
-    type: Add
-  id: 6809
-  time: '2024-06-23T00:28:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28584
 - author: WarMechanic
   changes:
   - message: The TEG now powers itself once started.
@@ -3855,3 +3841,18 @@
   id: 7307
   time: '2024-09-07T13:22:11.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31919
+- author: qwerltaz
+  changes:
+  - message: Reduced wall closet range. It's now much easier to not close yourself
+      inside by accident.
+    type: Tweak
+  id: 7308
+  time: '2024-09-07T23:44:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31933
+- author: Ilya246
+  changes:
+  - message: Reagents that make you flammable no longer extinguish you.
+    type: Fix
+  id: 7309
+  time: '2024-09-07T23:44:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31930
