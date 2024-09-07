@@ -68,6 +68,13 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
         }
     }
 
+    private void GetOfficer(EntityUid uid, out string officer)
+    {
+        var tryGetIdentityShortInfoEvent = new TryGetIdentityShortInfoEvent(null, uid);
+        RaiseLocalEvent(tryGetIdentityShortInfoEvent);
+        officer = tryGetIdentityShortInfoEvent.Title ?? Loc.GetString("criminal-records-console-unknown-officer");
+    }
+
     private void OnChangeStatus(Entity<CriminalRecordsConsoleComponent> ent, ref CriminalRecordChangeStatus msg)
     {
         // prevent malf client violating wanted/reason nullability
@@ -93,9 +100,7 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
         var oldStatus = record.Status;
 
         var name = _records.RecordName(key.Value);
-        var officer = Loc.GetString("criminal-records-console-unknown-officer");
-        if (_idCard.TryFindIdCard(mob.Value, out var id) && id.Comp.FullName is { } fullName)
-            officer = fullName;
+        GetOfficer(mob.Value, out var officer);
 
         // when arresting someone add it to history automatically
         // fallback exists if the player was not set to wanted beforehand
@@ -106,16 +111,6 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
             _criminalRecords.TryAddHistory(key.Value, history, officer);
         }
 
-        var name = _records.RecordName(key.Value);
-        var officer = Loc.GetString("criminal-records-console-unknown-officer");
-
-        var tryGetIdentityShortInfoEvent = new TryGetIdentityShortInfoEvent(null, mob.Value);
-        RaiseLocalEvent(tryGetIdentityShortInfoEvent);
-        if (tryGetIdentityShortInfoEvent.Title != null)
-        {
-            officer = tryGetIdentityShortInfoEvent.Title;
-        }
-        
         // will probably never fail given the checks above
         _criminalRecords.TryChangeStatus(key.Value, msg.Status, msg.Reason, officer);
 
@@ -164,9 +159,7 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
         if (line.Length < 1 || line.Length > ent.Comp.MaxStringLength)
             return;
 
-        var officer = Loc.GetString("criminal-records-console-unknown-officer");
-        if (_idCard.TryFindIdCard(mob.Value, out var id) && id.Comp.FullName is { } fullName)
-            officer = fullName;
+        GetOfficer(mob.Value, out var officer);
 
         if (!_criminalRecords.TryAddHistory(key.Value, line, officer))
             return;
