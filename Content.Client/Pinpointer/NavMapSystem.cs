@@ -67,7 +67,7 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
             component.RegionProperties[regionOwner] = regionData;
             validRegionOwners.Add(regionOwner);
 
-            if (component.FloodedRegions.ContainsKey(regionOwner))
+            if (component.RegionOverlays.ContainsKey(regionOwner))
                 continue;
 
             if (component.QueuedRegionsToFlood.Contains(regionOwner))

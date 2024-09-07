@@ -36,14 +36,14 @@ public sealed partial class NavMapComponent : Component
     public Dictionary<NetEntity, SharedNavMapSystem.NavMapRegionProperties> RegionProperties = new();
 
     /// <summary>
-    /// All flood filled regions.
+    /// All flood filled regions, ready for display on a NavMapControl.
     /// It is indexed by the entity assigned as the region owner.
     /// </summary>
     /// <remarks>
     /// For client use only
     /// </remarks>
     [ViewVariables(VVAccess.ReadOnly)]
-    public Dictionary<NetEntity, NavMapRegionOverlay> FloodedRegions = new();
+    public Dictionary<NetEntity, NavMapRegionOverlay> RegionOverlays = new();
 
     /// <summary>
     /// A queue of all region owners that are waiting their associated regions to be floodfilled.

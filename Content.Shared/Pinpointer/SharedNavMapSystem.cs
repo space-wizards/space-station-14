@@ -97,7 +97,7 @@ public abstract class SharedNavMapSystem : EntitySystem
 
     public void RemoveNavMapRegion(EntityUid uid, NavMapComponent component, NetEntity regionOwner)
     {
-        bool regionOwnerRemoved = component.RegionProperties.Remove(regionOwner) | component.FloodedRegions.Remove(regionOwner);
+        bool regionOwnerRemoved = component.RegionProperties.Remove(regionOwner) | component.RegionOverlays.Remove(regionOwner);
 
         if (regionOwnerRemoved)
         {
@@ -121,7 +121,7 @@ public abstract class SharedNavMapSystem : EntitySystem
     {
         var regionOverlays = new Dictionary<NetEntity, NavMapRegionOverlay>();
 
-        foreach (var (regionOwner, regionOverlay) in component.FloodedRegions)
+        foreach (var (regionOwner, regionOverlay) in component.RegionOverlays)
         {
             if (!regionOverlay.UiKey.Equals(uiKey))
                 continue;

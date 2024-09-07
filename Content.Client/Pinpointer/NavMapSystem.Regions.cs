@@ -50,7 +50,7 @@ public sealed partial class NavMapSystem
             Color = regionProperties.Color
         };
 
-        component.FloodedRegions[regionOwner] = regionOverlay;
+        component.RegionOverlays[regionOwner] = regionOverlay;
 
         // To reduce unnecessary future flood fills, we will track which chunks have been flooded by a region owner
 
