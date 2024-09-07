@@ -2,8 +2,6 @@
   id: Murine
   name: cell-Murine-name
   color: "#494546"
-  modifiers:
-  - Pacifism
 
 - type: cell
   id: Galliform
