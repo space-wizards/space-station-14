@@ -155,7 +155,7 @@
     weight: 6.5
     earliestStart: 40
     reoccurrenceDelay: 20
-    minimumPlayers: 20
+    minimumPlayers: 35
   - type: AntagRandomSpawn
   - type: AntagSpawner
     prototype: MobDragon
@@ -185,7 +185,7 @@
     duration: null
     earliestStart: 30
     reoccurrenceDelay: 20
-    minimumPlayers: 30
+    minimumPlayers: 35
   - type: SpaceSpawnRule
   - type: AntagLoadProfileRule
   - type: AntagObjectives
