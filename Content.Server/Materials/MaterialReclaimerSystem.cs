@@ -261,7 +261,7 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
 
         if (reclaimerComponent.OnlyReclaimDrainable)
         {
-            // Are we a recycler? Only use drainable solutions.
+            // Are we a recycler? Only use drainable solution.
             if (_solutionContainer.TryGetDrainableSolution(item, out _, out var drainableSolution))
             {
                 totalChemicals.AddSolution(drainableSolution, _prototype);
@@ -269,12 +269,10 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
         }
         else
         {
-            // Are we an industrial reagent grinder? Use any solutions it has.
-            if (TryComp<SolutionContainerManagerComponent>(item, out var solutionContainer)){
-                foreach (var (_, soln) in _solutionContainer.EnumerateSolutions((item, solutionContainer)))
-                {
-                    totalChemicals.AddSolution(soln.Comp.Solution, _prototype);
-                }
+            // Are we an industrial reagent grinder? Use extractable solution.
+            if (_solutionContainer.TryGetExtractableSolution(item, out _, out var extractableSolution))
+            {
+                totalChemicals.AddSolution(extractableSolution, _prototype);
             }
         }
 
