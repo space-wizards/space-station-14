@@ -161,12 +161,6 @@
     path: /Audio/Jukebox/prelude.ogg
 
 - type: jukebox
-  id: PresentingV
-  name: Souleye - Presenting VVVVVV
-  path:
-    path: /Audio/Jukebox/presenting_v.ogg
-
-- type: jukebox
   id: SnowBurn
   name: Fearofdark - Snow Burn
   path:
