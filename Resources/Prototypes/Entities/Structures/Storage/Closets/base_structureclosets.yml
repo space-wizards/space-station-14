@@ -27,6 +27,9 @@
       whitelist:
         components:
         - Paper
+      blacklist:
+        tags:
+        - Book
   - type: ItemSlots
   - type: DamageOnHighSpeedImpact
     damage:
