@@ -126,6 +126,9 @@
     lightEnergy: 1.0
     lightRadius: 6
     lightSoftness: 1.1
+  - type: Tag
+    tags:
+    - LightBulb
 
 - type: entity
   parent: BaseLightbulb
@@ -141,6 +144,9 @@
     lightSoftness: 1
     BurningTemperature: 350 #LEDs are colder than incandescent bulbs
     PowerUse: 6 #LEDs are more power efficient than incandescent bulbs
+  - type: Tag
+    tags:
+    - LightBulb
 
 - type: entity
   parent: LightBulb
@@ -154,6 +160,9 @@
     lightEnergy: 0.3 # old incandescents just arent as bright
     lightRadius: 6
     lightSoftness: 1.1
+  - type: Tag
+    tags:
+    - LightBulb
 
 - type: entity
   suffix: Broken
@@ -178,6 +187,9 @@
     lightEnergy: 0.45
     lightRadius: 1.5
     lightSoftness: 3
+  - type: Tag
+    tags:
+    - LightBulb
 
 - type: entity
   parent: BaseLightTube
