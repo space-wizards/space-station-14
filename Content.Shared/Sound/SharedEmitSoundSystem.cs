@@ -143,12 +143,24 @@ public abstract class SharedEmitSoundSystem : EntitySystem
 
         if (predict)
         {
-            _audioSystem.PlayPredicted(component.Sound, uid, user);
+            if (component.Detach)
+            {
+                if (TryComp(uid, out TransformComponent? xform))
+                    _audioSystem.PlayPredicted(component.Sound, xform.Coordinates, user);
+            }
+            else
+                _audioSystem.PlayPredicted(component.Sound, uid, user);
         }
         else if (_netMan.IsServer)
         {
             // don't predict sounds that client couldn't have played already
-            _audioSystem.PlayPvs(component.Sound, uid);
+            if (component.Detach)
+            {
+                if (TryComp(uid, out TransformComponent? xform))
+                    _audioSystem.PlayPvs(component.Sound, xform.Coordinates);
+            }
+            else
+                _audioSystem.PlayPvs(component.Sound, uid);
         }
     }
 
