@@ -839,11 +839,11 @@
       prototypes: [ DisasterVictimCaptain, DisasterVictimCaptainAlt ]
       roleLoadout: [ RoleSurvivalStandard ]
 
-# Syndie Disaster Victim
+# Syndicate Deserter
 
 - type: entity
-  name: syndie disaster victim spawner
-  id: SyndieDisasterVictimSpawner
+  name: syndie deserter spawner
+  id: SyndieDeserterSpawner
   parent: MarkerBase
   components:
   - type: Sprite
@@ -853,20 +853,20 @@
         state: banner_syndicate
   - type: RandomSpawner
     prototypes:
-    - RandomHumanoidSyndieDisasterVictim
+    - RandomHumanoidSyndieDeserter
 
 - type: entity
-  id: RandomHumanoidSyndieDisasterVictim
-  name: syndie disaster victim ghost role
+  id: RandomHumanoidSyndieDeserter
+  name: syndie deserter ghost role
   components:
     - type: Sprite
       sprite: Structures/Decoration/banner.rsi
       state: banner_syndicate
     - type: RandomHumanoidSpawner
-      settings: SyndieDisasterVictim
+      settings: SyndieDeserter
 
 - type: randomHumanoidSettings
-  id: SyndieDisasterVictim
+  id: SyndieDeserter
   parent: EventHumanoid
   components:
     - type: NpcFactionMember
@@ -879,5 +879,4 @@
       raffle:
         settings: short
     - type: Loadout
-      prototypes: [ SyndicateOperativeGearCivilian ]
-      roleLoadout: [ RoleSurvivalStandard ]
+      prototypes: [ SyndicateFootsoldierGear ]
