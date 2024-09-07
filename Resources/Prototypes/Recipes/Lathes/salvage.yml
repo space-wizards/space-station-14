@@ -1,4 +1,24 @@
 - type: latheRecipe
+  id: MineralScannerEmpty
+  result: MineralScannerEmpty
+  completetime: 3
+  materials:
+    Steel: 1000
+    Glass: 300
+    Plastic: 300
+    Gold: 500
+
+- type: latheRecipe
+  id: AdvancedMineralScannerEmpty
+  result: AdvancedMineralScannerEmpty
+  completetime: 1
+  materials:
+    Steel: 1000
+    Glass: 300
+    Plastic: 300
+    Uranium: 500
+
+- type: latheRecipe
   id: Fulton
   result: Fulton1
   category: Tools
