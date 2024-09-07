@@ -46,7 +46,6 @@
         deleteEntity: false
         maxPointsPerSecond: 100
         corePrototype: AnomalyCorePyroclastic
-        coreInertPrototype: AnomalyPyroclastic
       - type: InnerBodyAnomaly
         injectionProto: AnomalyInjectionPyroclastic
         startMessage: inner-anomaly-start-message-pyro
@@ -76,7 +75,6 @@
         deleteEntity: false
         maxPointsPerSecond: 100
         corePrototype: AnomalyCoreElectricity
-        coreInertPrototype: AnomalyElectricity
       - type: InnerBodyAnomaly
         injectionProto: AnomalyInjectionElectric
         startMessage: inner-anomaly-start-message-shock
@@ -106,7 +104,6 @@
         deleteEntity: false
         maxPointsPerSecond: 100
         corePrototype: AnomalyCoreShadow
-        coreInertPrototype: AnomalyShadow
       - type: InnerBodyAnomaly
         injectionProto: AnomalyInjectionShadow
         startMessage: inner-anomaly-start-message-shadow
@@ -136,7 +133,6 @@
         deleteEntity: false
         maxPointsPerSecond: 100
         corePrototype: AnomalyCoreIce
-        coreInertPrototype: AnomalyIce
       - type: InnerBodyAnomaly
         injectionProto: AnomalyInjectionIce
         startMessage: inner-anomaly-start-message-frost
@@ -166,7 +162,6 @@
         deleteEntity: false
         maxPointsPerSecond: 100
         corePrototype: AnomalyCoreFlora
-        coreInertPrototype: AnomalyFlora
       - type: InnerBodyAnomaly
         injectionProto: AnomalyInjectionFlora
         startMessage: inner-anomaly-start-message-flora
@@ -196,7 +191,6 @@
         deleteEntity: false
         maxPointsPerSecond: 100
         corePrototype: AnomalyCoreBluespace
-        coreInertPrototype: AnomalyBluespace
       - type: InnerBodyAnomaly
         injectionProto: AnomalyInjectionBluespace
         startMessage: inner-anomaly-start-message-bluespace
@@ -226,7 +220,6 @@
         deleteEntity: false
         maxPointsPerSecond: 100
         corePrototype: AnomalyCoreFlesh
-        coreInertPrototype: AnomalyFlesh
       - type: InnerBodyAnomaly
         injectionProto: AnomalyInjectionFlesh
         startMessage: inner-anomaly-start-message-flesh
@@ -256,7 +249,6 @@
         deleteEntity: false
         maxPointsPerSecond: 100
         corePrototype: AnomalyCoreGravity
-        coreInertPrototype: AnomalyGravity
       - type: InnerBodyAnomaly
         injectionProto: AnomalyInjectionGravity
         startMessage: inner-anomaly-start-message-grav
@@ -286,7 +278,6 @@
         deleteEntity: false
         maxPointsPerSecond: 100
         corePrototype: AnomalyCoreTech
-        coreInertPrototype: AnomalyTech
       - type: InnerBodyAnomaly
         injectionProto: AnomalyInjectionTech
         startMessage: inner-anomaly-start-message-tech
@@ -317,7 +308,6 @@
         deleteEntity: false
         maxPointsPerSecond: 100
         corePrototype: AnomalyCoreRock
-        coreInertPrototype: RandomRockAnomalySpawner
       - type: InnerBodyAnomaly
         injectionProto: AnomalyInjectionRock
         startMessage: inner-anomaly-start-message-rock
