@@ -40,7 +40,6 @@ public sealed class ShowHealthIconsSystem : EquipmentHudSystem<ShowHealthIconsCo
     {
         base.DeactivateInternal();
 
-        DamageContainers.Clear();
     }
 
     private void OnGetStatusIconsEvent(Entity<DamageableComponent> entity, ref GetStatusIconsEvent args)

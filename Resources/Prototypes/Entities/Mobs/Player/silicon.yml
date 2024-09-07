@@ -33,7 +33,7 @@
   - type: ActionGrant
     actions:
     - ActionJumpToCore
-    - ActionShowJobIcons
+    - ActionShowStatusIcons
     - ActionSurvCameraLights
     - ActionAIViewLaws
   - type: UserInterface
