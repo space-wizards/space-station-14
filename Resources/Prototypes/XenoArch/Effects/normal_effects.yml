@@ -650,17 +650,6 @@
       prob: 0.02
 
 - type: artifactEffect
-  id: EffectDuckDuckGooseSpawn
-  targetDepth: 3
-  effectHint: artifact-effect-hint-creation
-  components:
-  - type: SpawnArtifact
-    maxSpawns: 2
-    spawns:
-    - id: SpawnMobDuckDuckGoose
-      orGroup: fauna
-
-- type: artifactEffect
   id: EffectAnomaly
   targetDepth: 4
   effectHint: artifact-effect-hint-creation
@@ -742,7 +731,7 @@
 
 - type: artifactEffect
   id: EffectBigIgnite
-  targetDepth: 34
+  targetDepth: 4
   effectHint: artifact-effect-hint-release
   components:
   - type: IgniteArtifact
@@ -865,7 +854,7 @@
 - type: artifactEffect
   id: EffectBookSpawn
   targetDepth: 4
-  artifact-effect-hint-creation
+  effectHint: artifact-effect-hint-creation
   components:
   - type: SpawnArtifact
     maxSpawns: 1
