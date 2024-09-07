@@ -410,6 +410,8 @@
         volume: -6
     Salute:
       collection: Salutes
+    Blink:
+      collection: Blinks
 
 - type: emoteSounds
   id: DionaBodyEmotes

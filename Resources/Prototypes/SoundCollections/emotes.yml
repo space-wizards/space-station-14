@@ -38,6 +38,11 @@
     - /Audio/Effects/Emotes/snap3.ogg
 
 - type: soundCollection
+  id: Blinks
+  files:
+    - /Audio/Effects/Emotes/blink.ogg
+
+- type: soundCollection
   id: DionaLaugh
   files:
     - /Audio/Voice/Diona/diona_rustle1.ogg

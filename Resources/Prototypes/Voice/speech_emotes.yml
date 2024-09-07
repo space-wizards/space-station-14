@@ -1,4 +1,4 @@
-# vocal emotes
+﻿# vocal emotes
 - type: emote
   id: Scream
   name: chat-emote-name-scream
@@ -230,7 +230,7 @@
   blacklist:
     components:
     - BorgChassis
-  chatMessages: ["chat-emote-msg-snap"] # snaps <{THEIR($ent)}> fingers?
+  chatMessages: ["chat-emote-msg-snap"]
   chatTriggers:
     - snap
     - snaps
@@ -241,6 +241,24 @@
     - snaps their fingers
     - snapping fingers
     - snapped fingers
+
+- type: emote
+  id: Blink
+  name: chat-emote-name-blink
+  category: Hands
+  icon: Interface/Emotes/scream.png
+  whitelist:
+    components:
+    - Eye
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: ["chat-emote-msg-blink"]
+  chatTriggers:
+    - blink
+    - blinks
+    - blinking
+    - blinked
 
 - type: emote
   id: Salute
