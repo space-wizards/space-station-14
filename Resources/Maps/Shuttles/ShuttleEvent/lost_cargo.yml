@@ -941,14 +941,14 @@ entities:
     - type: Transform
       pos: -4.5,4.5
       parent: 1
-- proto: SalvageLootSpawner
+- proto: CrateCargoGambling # replaces salvage weapons crate
   entities:
   - uid: 115
     components:
     - type: Transform
       pos: -1.5,2.5
       parent: 1
-- proto: SalvageMaterialCrateSpawner
+- proto: CrateFilledSpawner
   entities:
   - uid: 94
     components:
