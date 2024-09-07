@@ -413,8 +413,8 @@
   suffix: Acid
   components:
   - type: SmokeOnTrigger
-    duration: 30 # Spends longer dissolving people who don't or can't get out of the cloud
-    spreadAmount: 75 # It's technically better at cleaning
+    duration: 20 # Spends longer dissolving people who don't or can't get out of the cloud
+    spreadAmount: 50
     smokePrototype: Foam
     solution:
       reagents:

@@ -60,7 +60,7 @@
         ignoreResistances: false
         damage:
           types:
-            Caustic: 6 # High skin contact damage to remain effective against internals users.
+            Caustic: 4 # High skin contact damage to remain effective against internals users.
       - !type:PopupMessage
         type: Local
         visualType: LargeCaution
@@ -76,7 +76,7 @@
       - !type:HealthChange
         damage:
           types:
-            Caustic: 9 # 3 damage per unit
+            Caustic: 6 # 2 damage per unit
       - !type:PopupMessage
         type: Local
         visualType: LargeCaution
