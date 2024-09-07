@@ -118,6 +118,20 @@
       - !type:ActivateArtifact
 
 - type: artifactTrigger
+  id: TriggerMedical
+  targetDepth: 2
+  triggerHint: artifact-trigger-hint-medical
+  components:
+  - type: Reactive
+    groups:
+      Acidic: [ Touch ]
+    reactions:
+    - reagents: [ Dylovene, Diphenhydramine, Arithrazine, Bicaridine, Dermaline, Dexalin, DexalinPlus, Tricordrazine, Leporazine, Bruizine, Lacerinol, Puncturase, Pyrazine, Insuzine, Kelotane, Hyronalin, Inaprovaline, Epinephrine ]
+      methods: [ Touch ]
+      effects:
+      - !type:ActivateArtifact
+
+- type: artifactTrigger
   id: TriggerGas
   targetDepth: 2
   triggerHint: artifact-trigger-hint-regular-gases
@@ -186,6 +200,54 @@
   - type: ArtifactGasTrigger
     possibleGas:
     - Plasma
+
+- type: artifactTrigger
+  id: TriggerResurrection
+  targetDepth: 4
+  triggerHint: artifact-trigger-hint-resurrection
+  components:
+  - type: ArtifactResurrectionTrigger
+
+- type: artifactTrigger
+  id: TriggerVape
+  targetDepth: 4
+  triggerHint: artifact-trigger-hint-vape
+  components:
+  - type: ArtifactGasTrigger
+    possibleGas:
+    - WaterVapor
+
+# Below exist to pad out the depth 4 triggers. Can remove some of those when we get more triggers implemented
+- type: artifactTrigger
+  id: TriggerMusicDeep
+  targetDepth: 4
+  triggerHint: artifact-trigger-hint-music
+  components:
+  - type: ArtifactMusicTrigger
+
+- type: artifactTrigger
+  id: TriggerExamineDeep
+  targetDepth: 4
+  triggerHint: artifact-trigger-hint-examine
+  components:
+  - type: ArtifactExamineTrigger
+
+- type: artifactTrigger
+  id: TriggerAnchorDeep
+  targetDepth: 4
+  triggerHint: artifact-trigger-hint-tool
+  blacklist:
+    components:
+    - Item
+  components:
+  - type: ArtifactAnchorTrigger
+
+- type: artifactTrigger
+  id: TriggerMagnetDeep
+  targetDepth: 4
+  triggerHint: artifact-trigger-hint-magnet
+  components:
+  - type: ArtifactMagnetTrigger
 
 #don't add in new targetdepth values until you have a few
 #or else it will skew heavily towards a few options.

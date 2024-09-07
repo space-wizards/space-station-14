@@ -40,9 +40,8 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
     public override void Initialize()
     {
         base.Initialize();
-
+        SubscribeLocalEvent<TraitorRuleComponent, AntagPrereqSetupEvent>(AdditionalSetup);
         SubscribeLocalEvent<TraitorRuleComponent, AfterAntagEntitySelectedEvent>(AfterEntitySelected);
-
         SubscribeLocalEvent<TraitorRuleComponent, ObjectivesTextPrependEvent>(OnObjectivesTextPrepend);
     }
 
@@ -52,10 +51,14 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         SetCodewords(component);
     }
 
-    private void AfterEntitySelected(Entity<TraitorRuleComponent> ent, ref AfterAntagEntitySelectedEvent args)
+    private void AdditionalSetup(Entity<TraitorRuleComponent> ent, ref AntagPrereqSetupEvent args)
     {
         CurrentAntagPool = args.Pool;
         ForceAllPossible = args.Def.ForceAllPossible;
+    }
+
+    private void AfterEntitySelected(Entity<TraitorRuleComponent> ent, ref AfterAntagEntitySelectedEvent args)
+    {
         MakeTraitor(args.EntityUid, ent);
     }
 
@@ -98,7 +101,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
             // creadth: we need to create uplink for the antag.
             // PDA should be in place already
             var pda = _uplink.FindUplinkTarget(traitor);
-            if (pda == null || !_uplink.AddUplink(traitor, startingBalance))
+            if (pda == null || !_uplink.AddUplink(traitor, startingBalance, giveDiscounts: true))
                 return false;
 
             // Give traitors their codewords and uplink code to keep in their character info menu

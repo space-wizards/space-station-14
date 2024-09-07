@@ -76,6 +76,16 @@
   metabolisms:
     Medicine:
       effects:
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 1
+        - !type:OrganType
+          type: Snail
+          shouldHave: true
+        damage:
+          types:
+            Poison: 4
       - !type:AdjustReagent
         reagent: Histamine
         amount: -3.0
@@ -650,10 +660,20 @@
   metabolisms:
     Drink:
       effects:
-        - !type:SatiateThirst
-          factor: 6
-        - !type:ModifyBloodLevel
-          amount: 6
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 1
+        - !type:OrganType
+          type: Snail
+          shouldHave: true
+        damage:
+          types:
+            Poison: 4
+      - !type:SatiateThirst
+        factor: 6
+      - !type:ModifyBloodLevel
+        amount: 6
 
 - type: reagent
   id: Siderlac
@@ -780,6 +800,16 @@
   metabolisms:
     Medicine:
       effects:
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 1
+        - !type:OrganType
+          type: Snail
+          shouldHave: true
+        damage:
+          types:
+            Poison: 4
       # what the hell, this isn't satiating at all!!
       - !type:SatiateHunger
         factor: -1
@@ -859,6 +889,16 @@
     Medicine:
       effects:
       - !type:ChemHealEyeDamage
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 1
+        - !type:OrganType
+          type: Snail
+          shouldHave: true
+        damage:
+          types:
+            Poison: 4
 
 - type: reagent
   id: Cognizine
@@ -1163,7 +1203,7 @@
         conditions:
         - !type:ReagentThreshold
           min: 12
-          
+
 - type: reagent
   id: Opporozidone #Name based of an altered version of the startreck chem "Opporozine"
   name: reagent-name-opporozidone

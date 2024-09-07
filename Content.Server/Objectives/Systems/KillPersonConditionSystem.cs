@@ -139,7 +139,7 @@ public sealed class KillPersonConditionSystem : EntitySystem
                 return;
             }
 
-            //Fallback to assign people who COULD be assigned as traitor
+            //Fallback to assign people who COULD be assigned as traitor - might need to just do this from the start on ForceAll rounds, limiting it to existing traitors could be skewing the numbers towards just a few people.
             var allValidTraitorCandidates = new List<EntityUid>();
             if (_traitorRule.CurrentAntagPool != null)
             {
@@ -168,7 +168,8 @@ public sealed class KillPersonConditionSystem : EntitySystem
             }
         }
 
-        _target.SetTargetExclusive(uid, args.Mind, _random.Pick(traitors), target);
+        var randomTarget = _random.Pick(traitors);
+        _target.SetTargetExclusive(uid, args.Mind, randomTarget, target);
     }
 
     private float GetProgress(EntityUid target, bool requireDead)

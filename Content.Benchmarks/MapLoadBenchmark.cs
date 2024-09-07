@@ -47,7 +47,7 @@ public class MapLoadBenchmark
     }
 
     public static readonly string[] MapsSource = { "Empty", "Satlern", "Box", "Bagel", "Dev", "CentComm", "Core", "TestTeg", "Packed", "Omega", "Reach", "Origin", "Meta", "Marathon", "MeteorArena", "Fland", "Oasis", "Cog" };
-    
+
     [ParamsSource(nameof(MapsSource))]
     public string Map;
 

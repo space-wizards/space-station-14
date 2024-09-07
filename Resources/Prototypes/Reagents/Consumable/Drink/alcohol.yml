@@ -2063,13 +2063,6 @@
   physicalDesc: reagent-physical-desc-bubbly
   flavor: cola
   color: "#663100"
-  recognizable: true
-  metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/martiniglass.rsi
-    state: icon_empty
-  metamorphicMaxFillLevels: 5
-  metamorphicFillBaseName: fill-
-  metamorphicChangeColor: false
   fizziness: 0.8
 
 - type: reagent
@@ -2080,13 +2073,6 @@
   physicalDesc: reagent-physical-desc-bubbly
   flavor: rootbeersoda
   color: "#381c07"
-  recognizable: true
-  metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/rootbeerglass.rsi
-    state: icon_empty
-  metamorphicMaxFillLevels: 5
-  metamorphicFillBaseName: fill-
-  metamorphicChangeColor: false
   fizziness: 0.8
 
 - type: reagent
@@ -2127,7 +2113,7 @@
         - !type:MobStateCondition
           mobstate: Alive
   fizziness: 0.2
-  
+
 - type: reagent
   id: GatorWine
   name: reagent-name-gatorwine
@@ -2136,15 +2122,8 @@
   physicalDesc: reagent-physical-desc-bubbly
   flavor: sweet
   color: "#ffee3e"
-  recognizable: true
-  metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/martiniglass.rsi
-    state: icon_empty
-  metamorphicMaxFillLevels: 5
-  metamorphicFillBaseName: fill-
-  metamorphicChangeColor: false
   fizziness: 0.8
-  
+
 - type: reagent
   id: Rotgut
   name: reagent-name-rotgut
@@ -2175,7 +2154,7 @@
         - !type:MobStateCondition
           mobstate: Alive
   fizziness: 0
-  
+
 - type: reagent
   id: BumWine
   name: reagent-name-bumwine
@@ -2184,15 +2163,8 @@
   physicalDesc: reagent-physical-desc-syrupy
   flavor: sweet
   color: "#e74f4f"
-  recognizable: true
-  metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/wineglass.rsi
-    state: icon_empty
-  metamorphicMaxFillLevels: 5
-  metamorphicFillBaseName: fill-
-  metamorphicChangeColor: false
   fizziness: 0.9
-  
+
 - type: reagent
   id: VoxRocks
   name: reagent-name-voxrocks
@@ -2214,7 +2186,7 @@
         reagent: Oxygen
         amount: -25
   fizziness: .7
-  
+
 - type: reagent
   id: JungleJuice
   name: reagent-name-junglejuice
@@ -2223,11 +2195,8 @@
   physicalDesc: reagent-physical-desc-bubbly
   flavor: spaceshroom
   color: "#310b01"
-  metamorphicMaxFillLevels: 5
-  metamorphicFillBaseName: fill-
-  metamorphicChangeColor: false
   fizziness: 0.8
-  
+
 - type: reagent
   id: TheDrink
   name: reagent-name-drinkdrink
@@ -2237,7 +2206,4 @@
   flavor: drinkdrink
   color: "#10101a"
   recognizable: true
-  metamorphicMaxFillLevels: 5
-  metamorphicFillBaseName: fill-
-  metamorphicChangeColor: false
   fizziness: 1

@@ -15,7 +15,7 @@
     gloves: ClothingHandsGlovesColorWhite
     outerClothing: ClothingOuterCoatTrench
     shoes: ClothingShoesLeather
-    id: PassengerPDA
+    id: UndercoverPDA
     ears: ClothingHeadsetGrey
     pocket1: PenRecruiter
     pocket2: RubberStampSyndicate

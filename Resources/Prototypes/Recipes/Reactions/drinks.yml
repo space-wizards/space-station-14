@@ -1227,7 +1227,7 @@
       amount: 1
   products:
     Calimotxo: 2
-    
+
 - type: reaction
   id: LoveTap
   requiredMixerCategories:
@@ -1239,7 +1239,7 @@
       amount: 9
   products:
     LoveTap: 10
-    
+
 - type: reaction
   id: Raeganomics
   requiredMixerCategories:
@@ -1255,7 +1255,7 @@
       amount: 2
   products:
     Reaganomics: 5
-    
+
 - type: reaction
   id: GatorWine
   requiredMixerCategories:
@@ -1267,7 +1267,7 @@
       amount: 1
   products:
     GatorWine: 2
-    
+
 - type: reaction
   id: Rotgut
   requiredMixerCategories:
@@ -1281,7 +1281,7 @@
       amount: 5
   products:
     Rotgut: 10
-    
+
 - type: reaction
   id: BumWine
   requiredMixerCategories:
@@ -1295,7 +1295,7 @@
       amount: 3
   products:
     BumWine: 5
-    
+
 - type: reaction
   id: VoxRocks
   requiredMixerCategories:
@@ -1307,7 +1307,7 @@
       amount: 5
   products:
     VoxRocks: 10
-    
+
 - type: reaction
   id: KingSoda
   reactants:
@@ -1347,7 +1347,7 @@
       amount: 1.5
   products:
     KingSoda: 20
-   
+
 - type: reaction
   id: JungleJuice
   reactants:
@@ -1375,7 +1375,7 @@
       amount: 1
   products:
     JungleJuice: 10
-    
+
 - type: reaction
   id: TheDrink
   reactants:

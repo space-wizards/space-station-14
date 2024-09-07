@@ -71,7 +71,7 @@
   components:
   - type: CombatMode
   - type: MovementSpeedModifier
-    baseWalkSpeed : 7
+    baseWalkSpeed : 3
     baseSprintSpeed : 7
   - type: Sprite
     drawdepth: Mobs
@@ -335,7 +335,7 @@
       0: Alive
       1: Dead
   - type: MovementSpeedModifier
-    baseWalkSpeed : 5
+    baseWalkSpeed : 2.5
     baseSprintSpeed : 5
   - type: DamageStateVisuals
     states:
@@ -347,6 +347,11 @@
     bloodReagent: InsectBlood
     bloodMaxVolume: 20
   - type: Food
+  - type: FlavorProfile
+    flavors:
+    - horrible
+    - terrible
+    - chewy
   - type: Hunger
     baseDecayRate: 0.25
   - type: Extractable
@@ -706,7 +711,7 @@
   description: Despite popular misconceptions, it's not actually made of butter.
   components:
   - type: MovementSpeedModifier
-    baseWalkSpeed : 6
+    baseWalkSpeed : 3
     baseSprintSpeed : 6
   - type: Sprite
     drawdepth: Mobs
@@ -957,6 +962,9 @@
     requiresSpecialDigestion: true
     # Wooly prevents eating wool deleting the goat so its fine
     requireDead: false
+  - type: FlavorProfile
+    flavors:
+    - fiber
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -1625,7 +1633,7 @@
       10: Critical
       20: Dead
   - type: MovementSpeedModifier
-    baseWalkSpeed : 5
+    baseWalkSpeed : 2.5
     baseSprintSpeed : 5
   - type: DamageStateVisuals
     states:
@@ -1636,6 +1644,9 @@
       Dead:
         Base: splat-0
   - type: Food
+  - type: FlavorProfile
+    flavors:
+    - meaty
   - type: Thirst
     startingThirst: 25  # spawn with Okay thirst state
     thresholds:
@@ -1963,7 +1974,7 @@
   description: Hop hop hop. Lookin' moist.
   components:
   - type: MovementSpeedModifier
-    baseWalkSpeed: 4
+    baseWalkSpeed: 3
     baseSprintSpeed: 6
   - type: Sprite
     drawdepth: Mobs
@@ -2021,7 +2032,7 @@
   description: Infiltrates your domain, spies on you, and somehow still a cool pet.
   components:
   - type: MovementSpeedModifier
-    baseWalkSpeed : 6
+    baseWalkSpeed : 2.5
     baseSprintSpeed : 6
   - type: Sprite
     drawdepth: Mobs
@@ -2133,7 +2144,7 @@
   description: A small penguin with a grenade strapped around its neck. Harvested by the Syndicate from icy shit-hole planets.
   components:
   - type: MovementSpeedModifier
-    baseWalkSpeed: 3.5
+    baseWalkSpeed: 3
     baseSprintSpeed: 5
   - type: InputMover
   - type: MobMover
@@ -2496,78 +2507,40 @@
       bloodReagent: VentCrud
     - type: NoSlip
     - type: ZombieImmune
+    - type: Food
+    - type: Extractable
+      grindableSolutionName: food
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          reagents:
+          - ReagentId: VentCrud
+            Quantity: 2
+          - ReagentId: GroundBros
+            Quantity: 3
+    - type: NPCRetaliation
     - type: Tag
       tags:
       - BROS
 
 - type: entity
   name: SORB
-  parent: [ SimpleMobBase, MobCombat ]
+  parent: MobBros
   id: MobSorb
   description: SORB S'TI KCUF HO
   components:
-    - type: Item
-      size: Tiny
     - type: Sprite
       drawdepth: Mobs
       layers:
       - map: ["enum.DamageStateVisualLayers.Base"]
         state: sorb
         sprite: Mobs/Animals/bros.rsi
-    - type: Butcherable
-      spawned:
-        - id: FoodLingzhi
-          amount: 1
-    - type: NpcFactionMember
-      factions:
-        - Xeno
-    - type: ReplacementAccent
-      accent: xeno
-    - type: InputMover
-    - type: MobMover
-    - type: HTN
-      rootTask:
-        task: SimpleHostileCompound
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape:
-            !type:PhysShapeCircle
-            radius: 0.35
-          density: 130
-          mask:
-          - MobMask
-          layer:
-          - MobLayer
     - type: DamageStateVisuals
       states:
         Alive:
           Base: sorb
         Dead:
           Base: sorb-dead
-    - type: MobThresholds
-      thresholds:
-        0: Alive
-        15: Dead
-    - type: MeleeWeapon
-      altDisarm: false
-      angle: 0
-      animation: WeaponArcPunch
-      soundHit:
-        path: /Audio/Animals/bros_hit.ogg
-      damage:
-        types:
-          Blunt: 1
-    - type: Speech
-      speechVerb: Cluwne
-    - type: Bloodstream
-      bloodMaxVolume: 40
-      bloodReagent: VentCrud
-    - type: NoSlip
-    - type: ZombieImmune
-    - type: Tag
-      tags:
-      - BROS
 
 - type: entity
   name: wizard spider
@@ -3194,7 +3167,7 @@
   description: Very slow animal. For people with low energy.
   components:
   - type: MovementSpeedModifier
-    baseWalkSpeed : 1
+    baseWalkSpeed : 0.5
     baseSprintSpeed : 1
   - type: Sprite
     drawdepth: Mobs
@@ -3354,7 +3327,7 @@
       40: Critical
       60: Dead
   - type: MovementSpeedModifier
-    baseWalkSpeed : 4
+    baseWalkSpeed : 2.5
     baseSprintSpeed : 4
   - type: Inventory
     speciesId: hamster
@@ -3368,6 +3341,9 @@
       Dead:
         Base: splat-0
   - type: Food
+  - type: FlavorProfile
+    flavors:
+    - meaty
   - type: Hunger
     baseDecayRate: 0.3
   - type: Extractable

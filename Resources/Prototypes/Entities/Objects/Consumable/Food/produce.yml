@@ -467,8 +467,6 @@
           Quantity: 5
         - ReagentId: Vitamin
           Quantity: 4
-        - ReagentId: Oculine
-          Quantity: 3
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/carrot.rsi
   - type: Produce
@@ -478,8 +476,6 @@
       reagents:
       - ReagentId: JuiceCarrot
         Quantity: 10
-      - ReagentId: Oculine
-        Quantity: 2
   - type: FoodSequenceElement
     sprite:
       sprite: Objects/Specific/Hydroponics/carrot.rsi

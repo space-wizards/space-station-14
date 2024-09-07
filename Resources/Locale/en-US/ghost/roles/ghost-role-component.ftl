@@ -41,6 +41,15 @@ ghost-role-information-raccoon-description = A run of the mill trash panda.
 ghost-role-information-possum-name = Possum
 ghost-role-information-possum-description = Screams, eats trash, screams some more.
 
+ghost-role-information-snail-name = Snail
+ghost-role-information-snail-description = A little snail who doesn't mind a bit of space. Just stay on grid!
+
+ghost-role-information-snailspeed-name = Snail
+ghost-role-information-snailspeed-description = A little snail with snailborn thrusters.
+
+ghost-role-information-snoth-name = Snoth
+ghost-role-information-snoth-description = A little snoth who doesn't mind a bit of space. Just stay on grid!
+
 ghost-role-information-giant-spider-name = Giant spider
 ghost-role-information-giant-spider-description = This station's inhabitants look mighty tasty, and your sticky web is perfect to catch them!
 ghost-role-information-giant-spider-rules = You are a [color=red][bold]Team Antagonist[/bold][/color] with all other giant spiders.

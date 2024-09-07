@@ -9,3 +9,4 @@
   startingInventory:
     PlasmaTankFilled: 10
     OxygenTankFilled: 10
+    NitrogenTankFilled: 10

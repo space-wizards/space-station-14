@@ -50,7 +50,7 @@ namespace Content.Server.Announcements
 
             shell.WriteLine("Sent!");
         }
-        
+
         public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
         {
             switch (args.Length)

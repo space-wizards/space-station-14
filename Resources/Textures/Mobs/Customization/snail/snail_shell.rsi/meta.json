@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "By Widgetbeck",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "shell_big",
+      "directions": 4
+    },
+    {
+      "name": "shell_small",
+      "directions": 4
+    },
+    {
+      "name": "shell_big_stripes",
+      "directions": 4
+    },
+    {
+      "name": "shell_small_stripes",
+      "directions": 4
+    },
+    {
+      "name": "shell_cone",
+      "directions": 4
+    }
+  ]
+}
