@@ -1,86 +1,4 @@
 ﻿Entries:
-- author: Chief_Engineer and TsjipTsjip
-  changes:
-  - message: All ghostroles now have their role type, as defined in the rules, defined
-      in their ghostrole request box.
-    type: Tweak
-  id: 6797
-  time: '2024-06-21T09:41:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29249
-- author: ElectroJr
-  changes:
-  - message: Fixed not being able to pick up folded rollerbeds.
-    type: Fix
-  - message: Fixed not being able to unbuckle entities by clicking on them.
-    type: Fix
-  id: 6798
-  time: '2024-06-21T10:50:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29293
-- author: Macoron
-  changes:
-  - message: Fixed SSD indicator for dwarfs.
-    type: Fix
-  id: 6799
-  time: '2024-06-22T01:11:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29310
-- author: EmoGarbage404
-  changes:
-  - message: Deconstructing a damaged AME core now yields steel instead of a full
-      AME flatpack.
-    type: Tweak
-  id: 6800
-  time: '2024-06-22T04:15:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29317
-- author: Errant
-  changes:
-  - message: Items should no longer be missing from backpacks at spawn.
-    type: Fix
-  id: 6801
-  time: '2024-06-22T10:43:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29336
-- author: Donchan, marboww
-  changes:
-  - message: New Nuke Detonation Song "Sound Station 14"
-    type: Add
-  id: 6802
-  time: '2024-06-22T15:09:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29345
-- author: deltanedas
-  changes:
-  - message: Doors access logging can now be disabled by snipping or pulsing a LOG
-      wire.
-    type: Tweak
-  id: 6803
-  time: '2024-06-22T15:12:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29094
-- author: notafet
-  changes:
-  - message: Reduce air alarm sensitivity to plasma, tritium, and carbon dioxide.
-    type: Tweak
-  id: 6804
-  time: '2024-06-22T15:22:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29331
-- author: Damn Feds
-  changes:
-  - message: thief toolbox kits now better describe contents
-    type: Tweak
-  id: 6805
-  time: '2024-06-22T15:44:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27771
-- author: lzk228
-  changes:
-  - message: Prying reinforced tile now will give you back metal rod
-    type: Tweak
-  id: 6806
-  time: '2024-06-22T15:47:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29084
-- author: nikthechampiongr
-  changes:
-  - message: Locked firelocks can no longer be pried by hand when powered.
-    type: Tweak
-  id: 6807
-  time: '2024-06-22T17:49:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29221
 - author: Floofi
   changes:
   - message: Added lemon juice to the Boozemat!
@@ -3853,3 +3771,87 @@
   id: 7296
   time: '2024-09-06T19:07:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31900
+- author: ps3moira
+  changes:
+  - message: Fixed pump shotgun inhand sprites
+    type: Fix
+  id: 7297
+  time: '2024-09-06T23:26:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31885
+- author: yuitop
+  changes:
+  - message: break pull when fall asleep
+    type: Fix
+  id: 7298
+  time: '2024-09-06T23:30:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31893
+- author: Boaz1111
+  changes:
+  - message: Energy Shotgun's narrow fire mode's projectiles now deal 13 heat dmg
+      each, for a total of 52. The energy shotgun additionally no longer self recharges
+      and has received some minor buffs.
+    type: Tweak
+  id: 7299
+  time: '2024-09-07T00:35:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31235
+- author: themias
+  changes:
+  - message: Added the justice helm to the secdrobe
+    type: Add
+  - message: Added a crafting recipe for the justice helm
+    type: Add
+  id: 7300
+  time: '2024-09-07T03:04:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31905
+- author: Futuristic
+  changes:
+  - message: Remove binary encryption key from RD lockers
+    type: Remove
+  id: 7301
+  time: '2024-09-07T05:30:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31909
+- author: EmoGarbage404
+  changes:
+  - message: Firesuits are now worse at keeping in heat and winter clothes make you
+      get warmer quicker.
+    type: Tweak
+  id: 7302
+  time: '2024-09-07T05:37:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30662
+- author: Boaz1111
+  changes:
+  - message: The maple wing marking for moths now have a secondary color palette.
+    type: Tweak
+  id: 7303
+  time: '2024-09-07T05:48:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31691
+- author: lzk228
+  changes:
+  - message: Bottle and syringe names are remade into labels.
+    type: Tweak
+  id: 7304
+  time: '2024-09-07T05:51:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29956
+- author: Ian321
+  changes:
+  - message: The AgriChem kit now links to the botanical chemicals guidebook.
+    type: Tweak
+  - message: The botanical chemicals guidebook has been expanded.
+    type: Tweak
+  id: 7305
+  time: '2024-09-07T06:23:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31896
+- author: Lank
+  changes:
+  - message: The Antimov and Overseer law boards are no longer available roundstart.
+    type: Remove
+  id: 7306
+  time: '2024-09-07T08:45:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31908
+- author: lzk228
+  changes:
+  - message: Books cannot longer be inserted in crates as paper labels
+    type: Fix
+  id: 7307
+  time: '2024-09-07T13:22:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31919
