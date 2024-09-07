@@ -7,6 +7,14 @@
       !type:DepartmentTimeRequirement
       department: Command
       time: 3600 # 1 hour
+- type: loadoutEffectGroup
+  id: Bartender
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobBartender
+      time: 18000 # 5 hour
 
 # Plushies
 - type: loadout
@@ -20,6 +28,28 @@
   storage:
     back:
     - PlushieSpaceLizard
+
+- type: loadout
+  id: PlushieMoff
+  storage:
+    back:
+    - PlushieMoff
+- type: loadout
+  id: PlushieMoffBar
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Bartender
+  storage:
+    back:
+    - PlushieMoffBar
+- type: loadout
+  id: PlushieMoffRainbow
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: GreyTider
+  storage:
+    back:
+    - PlushieMoffRainbow
 
 # Smokeables
 - type: loadout
