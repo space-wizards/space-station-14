@@ -414,8 +414,9 @@ namespace Content.Server.Power.EntitySystems
             {
                 foreach (var receiver in provider.LinkedReceivers)
                 {
-                    netNode.Loads.Add(receiver.Comp.NetworkLoad.Id);
-                    receiver.Comp.NetworkLoad.LinkedNetwork = netNode.Id;
+                    var comp = Comp<ApcPowerReceiverComponent>(receiver);
+                    netNode.Loads.Add(comp.NetworkLoad.Id);
+                    comp.NetworkLoad.LinkedNetwork = netNode.Id;
                 }
             }
 

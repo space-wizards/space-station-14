@@ -6,7 +6,7 @@ namespace Content.Server.Power.Components
     [ComponentProtoName("PowerProvider")]
     public sealed partial class ApcPowerProviderComponent : BaseApcNetComponent
     {
-        [ViewVariables] public List<Entity<ApcPowerReceiverComponent>> LinkedReceivers { get; } = new();
+        [ViewVariables] public List<EntityUid> LinkedReceivers { get; } = new();
 
         public void AddReceiver(Entity<ApcPowerReceiverComponent> receiver)
         {

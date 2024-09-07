@@ -70,7 +70,8 @@ namespace Content.Server.Power.EntitySystems
         {
             foreach (var receiver in component.LinkedReceivers)
             {
-                receiver.Comp.NetworkLoad.LinkedNetwork = default;
+                var comp = Comp<ApcPowerReceiverComponent>(receiver);
+                comp.NetworkLoad.LinkedNetwork = default;
                 component.Net?.QueueNetworkReconnect();
             }
 
