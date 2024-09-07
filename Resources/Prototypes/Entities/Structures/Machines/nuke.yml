@@ -1,7 +1,6 @@
 - type: entity
   abstract: true
-  parent: [BaseStructure, StructureWheeled]
-  id: BaseNuclearBomb
+  parent: [BaseStructure, StructureWheeled, BaseMajorContraband]
   name: nuclear fission explosive
   components:
   - type: Transform
@@ -150,6 +149,8 @@
   suffix: keg
   description: You probably shouldn't stick around to see if this is armed. It has a tap on the side.
   components:
+  - type: Transform
+    anchored: false
   - type: NukeLabel
   - type: Sprite
     sprite: Objects/Devices/nuke.rsi
@@ -183,11 +184,11 @@
         shape:
           !type:PhysShapeCircle
           radius: 0.45
-        density: 80
+        density: 255
         mask:
-        - TabletopMachineMask
+        - MachineMask
         layer:
-        - TabletopMachineLayer
+        - WallLayer
   - type: SolutionContainerManager
     solutions:
       tank:

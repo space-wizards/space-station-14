@@ -34,7 +34,7 @@ public sealed class BuckleMovementTest : MovementTest
         Assert.That(Delta(), Is.InRange(-0.01f, 0.01f));
         Assert.That(buckle.Buckled, Is.True);
         Assert.That(buckle.BuckledTo, Is.EqualTo(STarget));
-        Assert.That(strap.BuckledEntities, Is.EquivalentTo(new[]{SPlayer}));
+        Assert.That(strap.BuckledEntities, Is.EquivalentTo(new[] { SPlayer }));
         Assert.That(cAlert.IsShowingAlert(CPlayer, strap.BuckledAlertType), Is.True);
         Assert.That(sAlert.IsShowingAlert(SPlayer, strap.BuckledAlertType), Is.True);
 
@@ -43,7 +43,7 @@ public sealed class BuckleMovementTest : MovementTest
         Assert.That(Delta(), Is.InRange(-0.01f, 0.01f));
         Assert.That(buckle.Buckled, Is.True);
         Assert.That(buckle.BuckledTo, Is.EqualTo(STarget));
-        Assert.That(strap.BuckledEntities, Is.EquivalentTo(new[]{SPlayer}));
+        Assert.That(strap.BuckledEntities, Is.EquivalentTo(new[] { SPlayer }));
         Assert.That(cAlert.IsShowingAlert(CPlayer, strap.BuckledAlertType), Is.True);
         Assert.That(sAlert.IsShowingAlert(SPlayer, strap.BuckledAlertType), Is.True);
 

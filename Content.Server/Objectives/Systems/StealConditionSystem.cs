@@ -10,6 +10,7 @@ using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Pulling.Components;
+using Content.Shared.Stacks;
 
 namespace Content.Server.Objectives.Systems;
 
@@ -20,16 +21,15 @@ public sealed class StealConditionSystem : EntitySystem
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedObjectivesSystem _objectives = default!;
+    [Dependency] private readonly EntityLookupSystem _lookup = default!;
 
     private EntityQuery<ContainerManagerComponent> _containerQuery;
-    private EntityQuery<MetaDataComponent> _metaQuery;
 
     public override void Initialize()
     {
         base.Initialize();
 
         _containerQuery = GetEntityQuery<ContainerManagerComponent>();
-        _metaQuery = GetEntityQuery<MetaDataComponent>();
 
         SubscribeLocalEvent<StealConditionComponent, ObjectiveAssignedEvent>(OnAssigned);
         SubscribeLocalEvent<StealConditionComponent, ObjectiveAfterAssignEvent>(OnAfterAssign);
@@ -95,8 +95,25 @@ public sealed class StealConditionSystem : EntitySystem
         if (!_containerQuery.TryGetComponent(mind.OwnedEntity, out var currentManager))
             return 0;
 
-        var stack = new Stack<ContainerManagerComponent>();
+        var containerStack = new Stack<ContainerManagerComponent>();
         var count = 0;
+
+        //check stealAreas
+        if (condition.CheckStealAreas)
+        {
+            var areasQuery = AllEntityQuery<StealAreaComponent>();
+            while (areasQuery.MoveNext(out var uid, out var area))
+            {
+                if (!area.Owners.Contains(mind.Owner))
+                    continue;
+
+                var nearestEnt = _lookup.GetEntitiesInRange(uid, area.Range);
+                foreach (var ent in nearestEnt)
+                {
+                    CheckEntity(ent, condition, ref containerStack, ref count);
+                }
+            }
+        }
 
         //check pulling object
         if (TryComp<PullerComponent>(mind.OwnedEntity, out var pull)) //TO DO: to make the code prettier? don't like the repetition
@@ -104,16 +121,7 @@ public sealed class StealConditionSystem : EntitySystem
             var pulledEntity = pull.Pulling;
             if (pulledEntity != null)
             {
-                // check if this is the item
-                if (CheckStealTarget(pulledEntity.Value, condition)) count++;
-
-                //we don't check the inventories of sentient entity
-                if (!HasComp<MindContainerComponent>(pulledEntity))
-                {
-                    // if it is a container check its contents
-                    if (_containerQuery.TryGetComponent(pulledEntity, out var containerManager))
-                        stack.Push(containerManager);
-                }
+                CheckEntity(pulledEntity.Value, condition, ref containerStack, ref count);
             }
         }
 
@@ -126,28 +134,42 @@ public sealed class StealConditionSystem : EntitySystem
                 foreach (var entity in container.ContainedEntities)
                 {
                     // check if this is the item
-                    if (CheckStealTarget(entity, condition)) count++; //To Do: add support for stackable items
+                    count += CheckStealTarget(entity, condition);
 
                     // if it is a container check its contents
                     if (_containerQuery.TryGetComponent(entity, out var containerManager))
-                        stack.Push(containerManager);
+                        containerStack.Push(containerManager);
                 }
             }
-        } while (stack.TryPop(out currentManager));
+        } while (containerStack.TryPop(out currentManager));
 
         var result = count / (float) condition.CollectionSize;
         result = Math.Clamp(result, 0, 1);
         return result;
     }
 
-    private bool CheckStealTarget(EntityUid entity, StealConditionComponent condition)
+    private void CheckEntity(EntityUid entity, StealConditionComponent condition, ref Stack<ContainerManagerComponent> containerStack, ref int counter)
+    {
+        // check if this is the item
+        counter += CheckStealTarget(entity, condition);
+
+        //we don't check the inventories of sentient entity
+        if (!TryComp<MindContainerComponent>(entity, out var pullMind))
+        {
+            // if it is a container check its contents
+            if (_containerQuery.TryGetComponent(entity, out var containerManager))
+                containerStack.Push(containerManager);
+        }
+    }
+
+    private int CheckStealTarget(EntityUid entity, StealConditionComponent condition)
     {
         // check if this is the target
         if (!TryComp<StealTargetComponent>(entity, out var target))
-            return false;
+            return 0;
 
         if (target.StealGroup != condition.StealGroup)
-            return false;
+            return 0;
 
         // check if needed target alive
         if (condition.CheckAlive)
@@ -155,9 +177,10 @@ public sealed class StealConditionSystem : EntitySystem
             if (TryComp<MobStateComponent>(entity, out var state))
             {
                 if (!_mobState.IsAlive(entity, state))
-                    return false;
+                    return 0;
             }
         }
-        return true;
+
+        return TryComp<StackComponent>(entity, out var stack) ? stack.Count : 1;
     }
 }

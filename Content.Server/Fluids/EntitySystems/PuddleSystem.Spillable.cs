@@ -70,17 +70,22 @@ public sealed partial class PuddleSystem
             return;
 
         args.Handled = true;
+
+        // First update the hit count so anything that is not reactive wont count towards the total!
         foreach (var hit in args.HitEntities)
         {
             if (!HasComp<ReactiveComponent>(hit))
-            {
-                hitCount -= 1; // so we don't undershoot solution calculation for actual reactive entities
+                hitCount -= 1;
+        }
+
+        foreach (var hit in args.HitEntities)
+        {
+            if (!HasComp<ReactiveComponent>(hit))
                 continue;
-            }
 
             var splitSolution = _solutionContainerSystem.SplitSolution(soln.Value, totalSplit / hitCount);
 
-            _adminLogger.Add(LogType.MeleeHit, $"{ToPrettyString(args.User)} splashed {SolutionContainerSystem.ToPrettyString(splitSolution):solution} from {ToPrettyString(entity.Owner):entity} onto {ToPrettyString(hit):target}");
+            _adminLogger.Add(LogType.MeleeHit, $"{ToPrettyString(args.User)} splashed {SharedSolutionContainerSystem.ToPrettyString(splitSolution):solution} from {ToPrettyString(entity.Owner):entity} onto {ToPrettyString(hit):target}");
             _reactive.DoEntityReaction(hit, splitSolution, ReactionMethod.Touch);
 
             _popups.PopupEntity(
@@ -109,7 +114,7 @@ public sealed partial class PuddleSystem
         if (args.User != null)
         {
             _adminLogger.Add(LogType.Landed,
-                $"{ToPrettyString(entity.Owner):entity} spilled a solution {SolutionContainerSystem.ToPrettyString(solution):solution} on landing");
+                $"{ToPrettyString(entity.Owner):entity} spilled a solution {SharedSolutionContainerSystem.ToPrettyString(solution):solution} on landing");
         }
 
         var drainedSolution = _solutionContainerSystem.Drain(entity.Owner, soln.Value, solution.Volume);
