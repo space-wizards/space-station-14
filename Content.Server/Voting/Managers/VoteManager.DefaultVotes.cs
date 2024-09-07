@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Server.Administration;
 using Content.Server.Administration.Managers;
+using Content.Server.Database;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Presets;
 using Content.Server.Maps;
@@ -23,6 +24,7 @@ namespace Content.Server.Voting.Managers
         [Dependency] private readonly IPlayerLocator _locator = default!;
         [Dependency] private readonly ILogManager _logManager = default!;
         [Dependency] private readonly IBanManager _bans = default!;
+        [Dependency] private readonly IServerDbManager _dbManager = default!;
 
         private VotingSystem? _votingSystem;
         private RoleSystem? _roleSystem;
@@ -72,33 +74,45 @@ namespace Content.Server.Voting.Managers
             var totalPlayers = _playerManager.Sessions.Count(session => session.Status != SessionStatus.Disconnected);
 
             var ghostVotePercentageRequirement = _cfg.GetCVar(CCVars.VoteRestartGhostPercentage);
-            var ghostCount = 0;
+            var ghostVoterPercentage = CalculateEligibleVoterPercentage(VoterEligibility.Ghost);
 
-            foreach (var player in _playerManager.Sessions)
-            {
-                _playerManager.UpdateState(player);
-                if (player.Status != SessionStatus.Disconnected && _entityManager.HasComponent<GhostComponent>(player.AttachedEntity))
-                {
-                    ghostCount++;
-                }
-            }
-
-            var ghostPercentage = 0.0;
-            if (totalPlayers > 0)
-            {
-                ghostPercentage = ((double)ghostCount / totalPlayers) * 100;
-            }
-
-            var roundedGhostPercentage = (int)Math.Round(ghostPercentage);
-
-            if (totalPlayers <= playerVoteMaximum || roundedGhostPercentage >= ghostVotePercentageRequirement)
+            if (totalPlayers <= playerVoteMaximum || ghostVoterPercentage >= ghostVotePercentageRequirement)
             {
                 StartVote(initiator);
             }
             else
             {
-                NotifyNotEnoughGhostPlayers(ghostVotePercentageRequirement, roundedGhostPercentage);
+                NotifyNotEnoughGhostPlayers(ghostVotePercentageRequirement, ghostVoterPercentage);
             }
+        }
+
+        /// <summary>
+        /// Gives the current percentage of players eligible to vote, rounded to nearest percentage point.
+        /// </summary>
+        /// <param name="eligibility">The eligibility requirement to vote.</param>
+        public int CalculateEligibleVoterPercentage(VoterEligibility eligibility)
+        {
+            var eligibleCount = 0;
+            var totalPlayers = _playerManager.Sessions.Count(session => session.Status != SessionStatus.Disconnected);
+
+            foreach (var player in _playerManager.Sessions)
+            {
+                _playerManager.UpdateState(player);
+                if (player.Status != SessionStatus.Disconnected && CheckVoterEligibility(player, eligibility))
+                {
+                    eligibleCount++;
+                }
+            }
+
+            var eligiblePercentage = 0.0;
+            if (totalPlayers > 0)
+            {
+                eligiblePercentage = ((double)eligibleCount / totalPlayers) * 100;
+            }
+
+            var roundedEligiblePercentage = (int)Math.Round(eligiblePercentage);
+
+            return roundedEligiblePercentage;
         }
 
         private void StartVote(ICommonSession? initiator)
@@ -304,9 +318,18 @@ namespace Content.Server.Voting.Managers
                 _votingSystem = _entityManager.SystemOrNull<VotingSystem>();
 
             // Check that the initiator is actually allowed to do a votekick.
-            if (_votingSystem != null && !_votingSystem.CheckVotekickInitEligibility(initiator))
+            if (_votingSystem != null && !await _votingSystem.CheckVotekickInitEligibility(initiator))
             {
                 _adminLogger.Add(LogType.Vote, LogImpact.Extreme, $"Votekick attempted by {initiator}, but they are not eligible to votekick!");
+                return;
+            }
+
+            var ghostVotePercentageRequirement = _cfg.GetCVar(CCVars.VoteRestartGhostPercentage/*TODO: Cvar here*/);
+            var ghostVoterPercentage = CalculateEligibleVoterPercentage(VoterEligibility.GhostMinimumPlaytime);
+
+            if (ghostVoterPercentage < ghostVotePercentageRequirement)
+            {
+                _adminLogger.Add(LogType.Vote, LogImpact.Extreme, $"Votekick attempted by {initiator}, but there were not enough ghost roles! {ghostVotePercentageRequirement}% required, {ghostVoterPercentage}% found.");
                 return;
             }
 
@@ -343,6 +366,7 @@ namespace Content.Server.Voting.Managers
             if (initiator == targetSession)
             {
                 _adminLogger.Add(LogType.Vote, LogImpact.Extreme, $"Votekick attempted by {initiator} for themselves? Votekick cancelled.");
+                return;
             }
 
             if (_votingSystem != null && !_votingSystem.CheckVotekickTargetEligibility(targetSession))
@@ -368,7 +392,8 @@ namespace Content.Server.Voting.Managers
                 },
                 Duration = TimeSpan.FromSeconds(5/* TODO: _cfg.GetCVar(CCVars.VoteTimerVotekick)*/),
                 InitiatorTimeout = TimeSpan.FromMinutes(5),
-                VoterEligibility = VoterEligibility.GhostMinimumPlaytime
+                VoterEligibility = VoterEligibility.GhostMinimumPlaytime,
+                DisplayVotes = false
             };
 
             WirePresetVoteInitiator(options, initiator);

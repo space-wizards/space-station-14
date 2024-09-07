@@ -215,7 +215,7 @@ namespace Content.Server.Voting.Managers
             var start = _timing.RealTime;
             var end = start + options.Duration;
             var reg = new VoteReg(id, entries, options.Title, options.InitiatorText,
-                options.InitiatorPlayer, start, end, options.VoterEligibility);
+                options.InitiatorPlayer, start, end, options.VoterEligibility, options.DisplayVotes);
 
             var handle = new VoteHandle(this, reg);
 
@@ -252,7 +252,11 @@ namespace Content.Server.Voting.Managers
             msg.VoteActive = !v.Finished;
 
             if (!CheckVoterEligibility(player, v.VoterEligibility))
+            {
+                msg.VoteActive = false;
+                player.Channel.SendMessage(msg);
                 return;
+            }
 
             if (!v.Finished)
             {
@@ -275,11 +279,17 @@ namespace Content.Server.Voting.Managers
                 }
             }
 
+            // Admin always see the vote count, even if the vote is set to hide it.
+            if (_adminMgr.HasAdminFlag(player, AdminFlags.Moderator))
+            {
+                msg.DisplayVotes = true;
+            }
+
             msg.Options = new (ushort votes, string name)[v.Entries.Length];
             for (var i = 0; i < msg.Options.Length; i++)
             {
                 ref var entry = ref v.Entries[i];
-                msg.Options[i] = ((ushort) entry.Votes, entry.Text);
+                msg.Options[i] = (msg.DisplayVotes ? (ushort) entry.Votes : (ushort) 0, entry.Text);
             }
 
             player.Channel.SendMessage(msg);
@@ -483,6 +493,7 @@ namespace Content.Server.Voting.Managers
             public readonly TimeSpan EndTime;
             public readonly HashSet<ICommonSession> VotesDirty = new();
             public readonly VoterEligibility VoterEligibility;
+            public readonly bool DisplayVotes;
 
             public bool Cancelled;
             public bool Finished;
@@ -493,7 +504,7 @@ namespace Content.Server.Voting.Managers
             public ICommonSession? Initiator { get; }
 
             public VoteReg(int id, VoteEntry[] entries, string title, string initiatorText,
-                ICommonSession? initiator, TimeSpan start, TimeSpan end, VoterEligibility voterEligibility)
+                ICommonSession? initiator, TimeSpan start, TimeSpan end, VoterEligibility voterEligibility, bool displayVotes)
             {
                 Id = id;
                 Entries = entries;
@@ -503,6 +514,7 @@ namespace Content.Server.Voting.Managers
                 StartTime = start;
                 EndTime = end;
                 VoterEligibility = voterEligibility;
+                DisplayVotes = displayVotes;
             }
         }
 

@@ -29,12 +29,14 @@ public sealed class VotingSystem : EntitySystem
         SubscribeNetworkEvent<VotePlayerListRequestEvent>(OnVotePlayerListRequestEvent);
     }
 
-    private void OnVotePlayerListRequestEvent(VotePlayerListRequestEvent msg, EntitySessionEventArgs args)
+    private async void OnVotePlayerListRequestEvent(VotePlayerListRequestEvent msg, EntitySessionEventArgs args)
     {
         if (args.SenderSession.AttachedEntity is not { Valid: true } entity
-            || !_ghostQuery.HasComp(entity))
+            || !await CheckVotekickInitEligibility(args.SenderSession))
         {
             Log.Warning($"User {args.SenderSession.Name} sent a {nameof(VotePlayerListRequestEvent)} without being a ghost.");
+            var deniedResponse = new VotePlayerListResponseEvent(new (NetUserId, string)[0], true);
+            RaiseNetworkEvent(deniedResponse, args.SenderSession.Channel);
             return;
         }
 
@@ -45,14 +47,14 @@ public sealed class VotingSystem : EntitySystem
             if (player.AttachedEntity is not { Valid: true } attached)
                 continue;
 
-            if (attached == entity) continue;
+            // if (attached == entity) continue; TODO: Remove this in the final version
 
             var playerInfo = $"({player.Name}) {Comp<MetaDataComponent>(attached).EntityName}";
 
             players.Add((player.UserId, playerInfo));
         }
 
-        var response = new VotePlayerListResponseEvent(players.ToArray());
+        var response = new VotePlayerListResponseEvent(players.ToArray(), false);
         RaiseNetworkEvent(response, args.SenderSession.Channel);
     }
 
@@ -60,7 +62,7 @@ public sealed class VotingSystem : EntitySystem
     /// Used to check whether the player initiating a votekick is allowed to do so serverside.
     /// </summary>
     /// <param name="initiator">The session initiating the votekick.</param>
-    public bool CheckVotekickInitEligibility(ICommonSession? initiator)
+    public async Task<bool> CheckVotekickInitEligibility(ICommonSession? initiator)
     {
         if (initiator == null)
             return false;
@@ -68,8 +70,8 @@ public sealed class VotingSystem : EntitySystem
         if (!HasComp<GhostComponent>(initiator.AttachedEntity))
             return false;
 
-        //if (await _dbManager.GetWhitelistStatusAsync(initiator.UserId)) TODO: Async? I 'ardly know 'er
-        //    return false;
+        if (!await _dbManager.GetWhitelistStatusAsync(initiator.UserId))
+            return false;
 
         return true;
     }

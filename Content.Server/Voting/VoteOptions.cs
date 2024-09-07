@@ -45,6 +45,11 @@ namespace Content.Server.Voting
         public VoteManager.VoterEligibility VoterEligibility = VoteManager.VoterEligibility.All;
 
         /// <summary>
+        ///     Whether the vote should send and display the number of votes to the clients. Being an admin defaults this option to true for your client.
+        /// </summary>
+        public bool DisplayVotes = true;
+
+        /// <summary>
         ///     Sets <see cref="InitiatorPlayer"/> and <see cref="InitiatorText"/>
         ///     by setting the latter to the player's name.
         /// </summary>

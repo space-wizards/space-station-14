@@ -14,11 +14,11 @@
 
         <BoxContainer Orientation="Vertical" Margin="8 2 8 0" VerticalExpand="True" VerticalAlignment="Top">
             <BoxContainer Orientation="Vertical">
-                <OptionButton Margin="0 2" Name="VoteTypeButton" HorizontalExpand="False" />
-                <Control Name="VoteOptionsButtonContainer" HorizontalExpand="False">
-                </Control>
-                <Label Name="VoteNotTrustedLabel" Text="{Loc 'This vote option is only available for trusted users. (Loc required)'}" Visible="False" />
-                <Label Name="VoteWarningLabel" Text="{Loc 'Warning: Abuse of the votekick system may result in a permanent ban! (Loc required)'}" Visible="False" />
+                <OptionButton Name="VoteTypeButton" HorizontalExpand="False" />
+                <BoxContainer Name="VoteOptionsButtonContainer" HorizontalExpand="False" Orientation="Vertical"> 
+                </BoxContainer>
+                <Label Name="VoteNotTrustedLabel" Text="{Loc 'This vote option is only available for trusted users in ghost mode. (Loc required)'}" Visible="False" />
+                <Label Name="VoteWarningLabel" Text="{Loc 'Warning: Abuse of the votekick system may result in an indefinite ban! (Loc required)'}" Visible="False" />
             </BoxContainer>
             <Label Name="VoteTypeTimeoutLabel" Visible="False" />
         </BoxContainer>

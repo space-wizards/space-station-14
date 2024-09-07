@@ -35,28 +35,4 @@ public sealed class VotingSystem : EntitySystem
     {
         RaiseNetworkEvent(new VotePlayerListRequestEvent());
     }
-
-    /// <summary>
-    /// Used to check whether the player initiating a votekick is allowed to do so clientside.
-    /// </summary>
-    /// <returns></returns>
-    public bool CheckVotekickInitEligibility()
-    {
-        // TODO: This should probably be a network event tbf
-        if (!_ghostSystem.IsGhost)
-        {
-            return false;
-        }
-
-        if (_playerManager.LocalSession == null)
-            return false;
-
-        var playtime = _playtimeManager.GetPlayTimes(_playerManager.LocalSession);
-        if (!playtime.TryGetValue(PlayTimeTrackingShared.TrackerOverall, out TimeSpan overallTime) || overallTime < TimeSpan.FromHours(10)) // TODO: Change timespan to cvar
-            return false;
-
-        // TODO: Check that the person initiating the vote is whitelisted
-
-        return true;
-    }
 }
