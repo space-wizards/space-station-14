@@ -1,7 +1,8 @@
 ﻿using System.Numerics;
+using Content.Server.Replays;
 using Content.Shared.Mobs;
 
-namespace Content.Server.Replays;
+namespace Content.Shared.Replays;
 
 /// <summary>
 /// Represents an event that occured during gameplay, such as a chat message, a player joining, etc.
@@ -10,6 +11,9 @@ namespace Content.Server.Replays;
 [Serializable, DataDefinition]
 public partial class ReplayEvent
 {
+    /// <summary>
+    /// Seconds into the round when this event occured.
+    /// </summary>
     [DataField]
     public double? Time;
 
@@ -20,6 +24,13 @@ public partial class ReplayEvent
     public ReplayEventType? EventType;
 
     [DataField]
+    public LocationInformation? Location;
+};
+
+[Serializable, DataDefinition]
+public sealed partial class LocationInformation
+{
+    [DataField]
     public string? NearestBeacon;
 
     [DataField]
@@ -27,7 +38,7 @@ public partial class ReplayEvent
 
     [DataField]
     public string? Map;
-};
+}
 
 /// <summary>
 /// A generic player event that can be used for any player-related event.

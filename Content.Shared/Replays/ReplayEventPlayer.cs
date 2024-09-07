@@ -1,9 +1,9 @@
 ﻿using Robust.Shared.Network;
 
-namespace Content.Server.Replays;
+namespace Content.Shared.Replays;
 
 [Serializable, DataDefinition]
-public partial struct ReplayEventPlayer
+public partial class ReplayEventPlayer
 {
     [DataField]
     public string? PlayerOOCName;
@@ -19,6 +19,4 @@ public partial struct ReplayEventPlayer
 
     [DataField, NonSerialized]
     public string[]? AntagPrototypes;
-
-    public NetEntity? PlayerNetEntity;
 }

@@ -6,6 +6,7 @@ using Content.Shared.Administration;
 using Content.Shared.Database;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Prototypes;
+using Content.Shared.Replays;
 using JetBrains.Annotations;
 using Robust.Shared.Console;
 using Robust.Shared.Map;

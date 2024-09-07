@@ -1,6 +1,7 @@
 using Content.Server.ParticleAccelerator.Components;
 using Content.Server.Replays;
 using Content.Server.Singularity.Components;
+using Content.Shared.Replays;
 using Content.Shared.Singularity.Components;
 using Robust.Shared.Physics.Events;
 

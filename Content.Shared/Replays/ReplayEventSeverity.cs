@@ -1,4 +1,4 @@
-﻿namespace Content.Server.Replays;
+﻿namespace Content.Shared.Replays;
 
 /// <summary>
 /// Used to identify the severity of a <see cref="ReplayEvent"/>

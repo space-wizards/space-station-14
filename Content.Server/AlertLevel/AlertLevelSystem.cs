@@ -4,6 +4,7 @@ using Content.Server.GameTicking;
 using Content.Server.Replays;
 using Content.Server.Station.Systems;
 using Content.Shared.CCVar;
+using Content.Shared.Replays;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;

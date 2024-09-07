@@ -1,11 +1,14 @@
-﻿using System.Linq;
+﻿using System.Diagnostics;
+using System.Linq;
 using System.Text;
+using Content.Server.GameTicking;
 using Content.Server.Mind;
 using Content.Server.Pinpointer;
 using Content.Server.Prayer;
 using Content.Shared.CCVar;
 using Content.Shared.MassMedia.Systems;
 using Content.Shared.Mobs;
+using Content.Shared.Replays;
 using Content.Shared.Roles;
 using Content.Shared.Slippery;
 using Content.Shared.Stunnable;
@@ -21,11 +24,11 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Replays;
 
-public sealed class ReplayEventSystem : EntitySystem
+public sealed class ReplayEventSystem : SharedReplayEventSystem
 {
     [Dependency] private readonly IReplayRecordingManager _replays = default!;
     [Dependency] private readonly ISerializationManager _serialman = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly TransformSystem _transformSystem = default!;
     [Dependency] private readonly NavMapSystem _navMapSystem = default!;
     [Dependency] private readonly MindSystem _mindSystem = default!;
@@ -33,20 +36,13 @@ public sealed class ReplayEventSystem : EntitySystem
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly MapSystem _mapSystem = default!;
 
-    private List<ReplayEvent>? _replayEvents = new();
+    private List<ReplayEvent> _replayEvents = new();
     private bool _recordEvents;
 
     public override void Initialize()
     {
         _replays.RecordingStopped2 += ReplaysOnRecordingStopped;
         _replays.RecordingStarted += ReplaysOnRecordingStarted;
-
-        // Using an event here because mob stuff is in shared and we cannot call RecordReplayEvent from there.
-        SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
-        SubscribeLocalEvent<SlipEvent>(OnSlip); // Here as well
-        SubscribeLocalEvent<ActorComponent, StunnedEvent>(OnStun); // I can probably make this shared or smth
-        SubscribeLocalEvent<NewsArticlePublishedEvent>(OnNewsPublished);
-        SubscribeLocalEvent<EntityPrayedEvent>(OnEntityPrayed);
 
         Subs.CVar(_cfg, CCVars.ReplayRecordEvents, OnRecordEventsChanged,true);
 
@@ -65,9 +61,9 @@ public sealed class ReplayEventSystem : EntitySystem
 
     private void ReplaysOnRecordingStopped(ReplayRecordingStopped replayRecordingStopped)
     {
-        var events = _serialman.WriteValue(_replayEvents, true, null);
+        var events = _serialman.WriteValue(_replayEvents, true, null, notNullableOverride:true);
         var bytes = Encoding.UTF8.GetBytes(events.ToString());
-        replayRecordingStopped.Writer.WriteBytes(replayRecordingStopped.Writer.BaseReplayPath / "events.yml", new ReadOnlyMemory<byte>(bytes));
+        replayRecordingStopped.Writer.WriteBytes(replayRecordingStopped.Writer.BaseReplayPath / "events.yml", bytes);
     }
 
     /// <summary>
@@ -75,36 +71,32 @@ public sealed class ReplayEventSystem : EntitySystem
     /// </summary>
     /// <param name="replayEvent">The event to record</param>
     /// <param name="source">Optional source that will be used for location data</param>
-    public void RecordReplayEvent(ReplayEvent replayEvent, EntityUid? source = null)
+    public override void RecordReplayEvent(ReplayEvent replayEvent, EntityUid? source = null)
     {
-        if (!_replays.IsRecording)
+        if (!_replays.IsRecording || !_recordEvents)
             return;
 
-        replayEvent.Time ??= _gameTiming.CurTime.TotalSeconds;
+        replayEvent.Time ??= _gameTicker.RoundDuration().TotalSeconds;
 
-        if (source.HasValue)
+        if (source.HasValue && replayEvent.Location == null)
         {
-            replayEvent.Position = _transformSystem.GetWorldPosition(source.Value);
-            replayEvent.NearestBeacon =
-                _navMapSystem.GetNearestBeaconString(_transformSystem.GetMapCoordinates(source.Value));
+            replayEvent.Location = new LocationInformation
+            {
+                Position = _transformSystem.GetWorldPosition(source.Value),
+                NearestBeacon = _navMapSystem.GetNearestBeaconString(_transformSystem.GetMapCoordinates(source.Value)),
+            };
 
             var map = _transformSystem.GetMap(source.Value);
             if (map.HasValue)
             {
-                replayEvent.Map = EntityManager.GetComponent<MetaDataComponent>(map.Value).EntityName;
+                replayEvent.Location.Map = EntityManager.GetComponent<MetaDataComponent>(map.Value).EntityName;
             }
         }
 
-        DebugTools.AssertNotNull(replayEvent.EventType);
-        DebugTools.AssertNotNull(replayEvent.Severity);
+        if (replayEvent.EventType == null || replayEvent.Severity == null)
+            throw new ArgumentException("Replay event must have a type and severity.");
 
-        Log.Debug($"Recording replay event: {replayEvent.EventType}");
-        if (_replayEvents == null)
-        {
-            // If this happens, someone messed up.
-            Log.Error("Tried to record a replay event, but the events list is null. This should never happen.");
-            return;
-        }
+        Log.Verbose($"Recording replay event: {replayEvent.EventType}");
         _replayEvents.Add(replayEvent);
     }
 
@@ -114,19 +106,20 @@ public sealed class ReplayEventSystem : EntitySystem
     /// <exception cref="InvalidOperationException">
     /// Thrown if the entity is not a player.
     /// </exception>
-    public ReplayEventPlayer GetPlayerInfo(EntityUid player)
+    public override ReplayEventPlayer GetPlayerInfo(EntityUid player)
     {
         if (EntityManager.TryGetComponent<ActorComponent>(player, out var actorComponent))
         {
             return GetPlayerInfo(actorComponent.PlayerSession);
         }
 
-        Log.Warning($"Tried to get player info for entity {player}, but it's not a player entity.");
+        var stackTrace = new StackTrace();
+        Log.Warning($"Tried to get player info for entity {player}, but it's not a player entity. Stacktrace: {stackTrace}");
         return new ReplayEventPlayer()
         {
             PlayerGuid = new NetUserId(Guid.Empty),
             PlayerICName = EntityManager.GetComponent<MetaDataComponent>(player).EntityName, // Fallback, best we can do.
-            PlayerOOCName = "Unknown",
+            PlayerOOCName = "",
             JobPrototypes = [],
             AntagPrototypes = [],
         };
@@ -135,7 +128,7 @@ public sealed class ReplayEventSystem : EntitySystem
     /// <summary>
     /// Generates a <see cref="ReplayEventPlayer"/> from a session for use in replay events.
     /// </summary>
-    public ReplayEventPlayer GetPlayerInfo(ICommonSession session)
+    public override ReplayEventPlayer GetPlayerInfo(ICommonSession session)
     {
         var hasMind = _mindSystem.TryGetMind(session, out var mindId, out var mindComponent);
 
@@ -163,83 +156,5 @@ public sealed class ReplayEventSystem : EntitySystem
             JobPrototypes = roles.Where(role => !role.Antagonist).Select(role => role.Prototype).ToArray(),
             AntagPrototypes = roles.Where(role => role.Antagonist).Select(role => role.Prototype).ToArray(),
         };
-    }
-
-
-    private void OnEntityPrayed(EntityPrayedEvent ev)
-    {
-        RecordReplayEvent(new PrayedReplayEvent()
-        {
-            EventType = ReplayEventType.Prayed,
-            Severity = ReplayEventSeverity.Medium,
-            Player = GetPlayerInfo(ev.Entity),
-            PrayedWith = MetaData(ev.Source).EntityName,
-            Message = ev.Message
-        }, ev.Source);
-    }
-
-    private void OnMobStateChanged(MobStateChangedEvent ev)
-    {
-        ReplayEventPlayer? targetInfo = null;
-        if (EntityManager.TryGetComponent<ActorComponent>(ev.Target, out var actorComponent))
-        {
-            targetInfo = GetPlayerInfo(actorComponent.PlayerSession);
-        }
-
-        if (targetInfo == null)
-        {
-            RecordReplayEvent(new MobStateChangedNPCReplayEvent()
-            {
-                EventType = ReplayEventType.MobStateChanged,
-                Severity = ReplayEventSeverity.Medium,
-                Target = EntityManager.GetComponent<MetaDataComponent>(ev.Target).EntityName,
-                OldState = ev.OldMobState,
-                NewState = ev.NewMobState,
-            }, ev.Target);
-        }
-        else
-        {
-            RecordReplayEvent(new MobStateChangedPlayerReplayEvent()
-            {
-                Target = (ReplayEventPlayer) targetInfo,
-                Severity = ReplayEventSeverity.Medium,
-                EventType = ReplayEventType.MobStateChanged,
-                OldState = ev.OldMobState,
-                NewState = ev.NewMobState,
-            }, ev.Target);
-        }
-    }
-
-    private void OnSlip(ref SlipEvent ev)
-    {
-        RecordReplayEvent(new GenericPlayerEvent()
-        {
-            EventType = ReplayEventType.MobSlipped,
-            Severity = ReplayEventSeverity.Low,
-            Target = GetPlayerInfo(ev.Slipped),
-        }, ev.Slipped);
-    }
-
-    private void OnStun(EntityUid uid, ActorComponent actor, ref StunnedEvent ev)
-    {
-        RecordReplayEvent(new GenericPlayerEvent()
-        {
-            EventType = ReplayEventType.MobStunned,
-            Severity = ReplayEventSeverity.Low,
-            Target = GetPlayerInfo(actor.PlayerSession),
-        }, uid);
-    }
-
-    private void OnNewsPublished(ref NewsArticlePublishedEvent ev)
-    {
-        RecordReplayEvent(new NewsArticlePublishedReplayEvent()
-        {
-            EventType = ReplayEventType.NewsArticlePublished,
-            Severity = ReplayEventSeverity.Medium,
-            Content = ev.Article.Content,
-            Title = ev.Article.Title,
-            Author = ev.Article.Author,
-            ShareTime = ev.Article.ShareTime,
-        });
     }
 }

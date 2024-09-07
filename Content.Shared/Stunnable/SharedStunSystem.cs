@@ -1,3 +1,4 @@
+using Content.Server.Replays;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Interaction;
@@ -11,6 +12,7 @@ using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
+using Content.Shared.Replays;
 using Content.Shared.Standing;
 using Content.Shared.StatusEffect;
 using Content.Shared.Throwing;
@@ -32,6 +34,7 @@ public abstract class SharedStunSystem : EntitySystem
     [Dependency] private readonly EntityWhitelistSystem _entityWhitelist = default!;
     [Dependency] private readonly StandingStateSystem _standingState = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffect = default!;
+    [Dependency] private readonly SharedReplayEventSystem _replayEventSystem = default!;
 
     /// <summary>
     /// Friction modifier for knocked down players.
@@ -186,6 +189,13 @@ public abstract class SharedStunSystem : EntitySystem
 
         var ev = new StunnedEvent();
         RaiseLocalEvent(uid, ref ev);
+
+        _replayEventSystem.RecordReplayEvent(new GenericPlayerEvent()
+        {
+            EventType = ReplayEventType.MobStunned,
+            Severity = ReplayEventSeverity.Low,
+            Target = _replayEventSystem.GetPlayerInfo(uid),
+        }, uid);
 
         _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(uid):user} stunned for {time.Seconds} seconds");
         return true;

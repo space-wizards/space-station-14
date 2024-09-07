@@ -25,6 +25,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Players;
 using Content.Shared.Radio;
+using Content.Shared.Replays;
 using Content.Shared.Speech;
 using Content.Shared.Whitelist;
 using Robust.Server.Player;

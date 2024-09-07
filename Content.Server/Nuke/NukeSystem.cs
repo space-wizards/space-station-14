@@ -15,6 +15,7 @@ using Content.Shared.Examine;
 using Content.Shared.Maps;
 using Content.Shared.Nuke;
 using Content.Shared.Popups;
+using Content.Shared.Replays;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;

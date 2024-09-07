@@ -7,6 +7,7 @@ using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.Replays;
 using Content.Shared.Singularity.Components;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;

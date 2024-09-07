@@ -3,10 +3,12 @@ using Content.Server.Administration.Logs;
 using Content.Server.Bible.Components;
 using Content.Server.Chat.Managers;
 using Content.Server.Popups;
+using Content.Server.Replays;
 using Content.Shared.Database;
 using Content.Shared.Popups;
 using Content.Shared.Chat;
 using Content.Shared.Prayer;
+using Content.Shared.Replays;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
@@ -24,6 +26,7 @@ public sealed class PrayerSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly QuickDialogSystem _quickDialog = default!;
+    [Dependency] private readonly ReplayEventSystem _replayEventSystem = default!;
 
     public override void Initialize()
     {
@@ -107,14 +110,13 @@ public sealed class PrayerSystem : EntitySystem
 
         _chatManager.SendAdminAnnouncement($"{Loc.GetString(comp.NotificationPrefix)} <{sender.Name}>: {message}");
         _adminLogger.Add(LogType.AdminMessage, LogImpact.Low, $"{ToPrettyString(sender.AttachedEntity.Value):player} sent prayer ({Loc.GetString(comp.NotificationPrefix)}): {message}");
-        RaiseLocalEvent(new EntityPrayedEvent(sender.AttachedEntity.Value, message, source));
+        _replayEventSystem.RecordReplayEvent(new PrayedReplayEvent()
+        {
+            EventType = ReplayEventType.Prayed,
+            Severity = ReplayEventSeverity.Medium,
+            Player = _replayEventSystem.GetPlayerInfo(sender.AttachedEntity.Value),
+            PrayedWith = MetaData(source).EntityName,
+            Message = message
+        }, source);
     }
 }
-
-/// <summary>
-/// Event for when a player prays
-/// </summary>
-/// <param name="Entity">The entity that prayed</param>
-/// <param name="Message">The message that was prayed</param>
-/// <param name="Source">The entity that was prayed on</param>
-public readonly record struct EntityPrayedEvent(EntityUid Entity, string Message, EntityUid Source);

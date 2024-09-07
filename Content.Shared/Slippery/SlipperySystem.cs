@@ -1,3 +1,4 @@
+using Content.Server.Replays;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Inventory;
@@ -5,6 +6,7 @@ using Robust.Shared.Network;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
+using Content.Shared.Replays;
 using Content.Shared.StatusEffect;
 using Content.Shared.StepTrigger.Systems;
 using Content.Shared.Stunnable;
@@ -19,7 +21,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Slippery;
 
-[UsedImplicitly] 
+[UsedImplicitly]
 public sealed class SlipperySystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
@@ -29,6 +31,7 @@ public sealed class SlipperySystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SpeedModifierContactsSystem _speedModifier = default!;
+    [Dependency] private readonly SharedReplayEventSystem _replayEventSystem = default!;
 
     public override void Initialize()
     {
@@ -83,7 +86,7 @@ public sealed class SlipperySystem : EntitySystem
     {
         if (HasComp<SpeedModifiedByContactComponent>(args.OtherEntity))
             _speedModifier.AddModifiedEntity(args.OtherEntity);
-    } 
+    }
 
     private bool CanSlip(EntityUid uid, EntityUid toSlip)
     {
@@ -111,6 +114,13 @@ public sealed class SlipperySystem : EntitySystem
 
         var ev = new SlipEvent(other);
         RaiseLocalEvent(uid, ref ev);
+
+        _replayEventSystem.RecordReplayEvent(new GenericPlayerEvent()
+        {
+            EventType = ReplayEventType.MobSlipped,
+            Severity = ReplayEventSeverity.Low,
+            Target = _replayEventSystem.GetPlayerInfo(other),
+        }, other);
 
         if (TryComp(other, out PhysicsComponent? physics) && !HasComp<SlidingComponent>(other))
         {

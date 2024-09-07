@@ -20,6 +20,7 @@ using Content.Shared.Projectiles;
 using Content.Shared.Throwing;
 using Content.Shared.Explosion.Components;
 using Content.Shared.Explosion.EntitySystems;
+using Content.Shared.Replays;
 using Robust.Server.GameStates;
 using Robust.Server.Player;
 using Robust.Shared.Audio.Systems;
