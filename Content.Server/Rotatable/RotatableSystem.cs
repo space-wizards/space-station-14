@@ -1,5 +1,6 @@
 using Content.Server.Popups;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Hands.Components;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
 using Content.Shared.Rotatable;
@@ -127,6 +128,9 @@ namespace Content.Server.Rotatable
             if (!_actionBlocker.CanInteract(player, entity) || !_interaction.InRangeAndAccessible(player, entity))
                 return false;
 
+            if (!HasComp<HandsComponent>(player))
+                return false;
+
             // Check if the object is anchored, and whether we are still allowed to rotate it.
             if (!rotatableComp.RotateWhileAnchored && EntityManager.TryGetComponent(entity, out PhysicsComponent? physics) &&
                 physics.BodyType == BodyType.Static)
@@ -150,6 +154,9 @@ namespace Content.Server.Rotatable
             if (!_actionBlocker.CanInteract(player, entity) || !_interaction.InRangeAndAccessible(player, entity))
                 return false;
 
+            if (!HasComp<HandsComponent>(player))
+                return false;
+
             // Check if the object is anchored, and whether we are still allowed to rotate it.
             if (!rotatableComp.RotateWhileAnchored && EntityManager.TryGetComponent(entity, out PhysicsComponent? physics) &&
                 physics.BodyType == BodyType.Static)
@@ -171,6 +178,9 @@ namespace Content.Server.Rotatable
                 return false;
 
             if (!_actionBlocker.CanInteract(player, entity) || !_interaction.InRangeAndAccessible(player, entity))
+                return false;
+
+            if (!HasComp<HandsComponent>(player))
                 return false;
 
             // Check if the object is anchored.
