@@ -1292,7 +1292,7 @@
         volume: -12
         maxDistance: 7
   - type: UseDelay
-    delay: 600.0
+    delay: 600.0 #10 minutes
 
 - type: entity
   parent: BasePlushieMoff
@@ -1371,6 +1371,20 @@
     requiresSpecialDigestion: true
     useSound:
       path: /Audio/Voice/Talk/speak_3_ask.ogg
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: JuiceThatMakesYouWeh
+        Quantity: 10
+  - type: SolutionContainerManager #Broken. . .
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 5
+        - ReagentId: JuiceThatMakesYouWeh
+          Quantity: 5
 
 ## Cheapo Figurines
 
