@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Donchan, marboww
-  changes:
-  - message: New Nuke Detonation Song "Sound Station 14"
-    type: Add
-  id: 6802
-  time: '2024-06-22T15:09:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29345
 - author: deltanedas
   changes:
   - message: Doors access logging can now be disabled by snipping or pulsing a LOG
@@ -3853,3 +3846,11 @@
   id: 7301
   time: '2024-09-07T05:30:57.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31909
+- author: EmoGarbage404
+  changes:
+  - message: Firesuits are now worse at keeping in heat and winter clothes make you
+      get warmer quicker.
+    type: Tweak
+  id: 7302
+  time: '2024-09-07T05:37:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30662
