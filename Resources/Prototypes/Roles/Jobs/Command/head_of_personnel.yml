@@ -6,16 +6,16 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Engineering
-      time: 36000 # 10 hours
+      time: 0 # 10 hours
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 36000 # 10 hours
+      time: 0 # 10 hours
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 36000 # 10 hrs
+      time: 0 # 10 hrs
     - !type:DepartmentTimeRequirement
       department: Command
-      time: 36000 # 10 hours
+      time: 10800 # 10 hours
     - !type:AgeRequirement
       requiredAge: 21
   weight: 20
