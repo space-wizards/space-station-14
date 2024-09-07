@@ -8,3 +8,5 @@ inner-anomaly-start-message-flesh = Your body is growing frantically. You become
 inner-anomaly-start-message-grav = Everything becomes unnaturally heavy and light at the same time... You become the host of a gravity anomaly.
 inner-anomaly-start-message-tech = Your head is buzzing with the amount of chaotic information! You become the host of a tech anomaly.
 inner-anomaly-start-message-rock = The crystals are growing through your bones! You become the host of a rock anomaly.
+
+inner-anomaly-end-message = The abnormal activity within you disappears without a trace....

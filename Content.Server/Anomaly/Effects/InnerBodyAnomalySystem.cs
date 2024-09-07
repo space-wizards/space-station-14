@@ -31,6 +31,8 @@ public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
     [Dependency] private readonly AnomalySystem _anomaly = default!;
 
+    private readonly Color _messageColor = Color.FromSrgb(new Color(201, 22, 94));
+
     public override void Initialize()
     {
         base.Initialize();
@@ -62,10 +64,6 @@ public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
     {
         if (!_proto.TryIndex(ent.Comp.InjectionProto, out var injectedAnom))
             return;
-        if (!_mind.TryGetMind(ent, out _, out var mindComponent))
-            return;
-        if (mindComponent.Session == null)
-            return;
 
         Log.Info($"{ToPrettyString(ent)} become anomaly host!");
 
@@ -77,8 +75,11 @@ public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
         if (ent.Comp.StartSound is not null)
             _audio.PlayPvs(ent.Comp.StartSound, ent);
 
-        if (ent.Comp.StartMessage is not null)
+        if (ent.Comp.StartMessage is not null &&
+            _mind.TryGetMind(ent, out _, out var mindComponent) &&
+            mindComponent.Session != null)
         {
+
             var message = Loc.GetString(ent.Comp.StartMessage);
             var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
             _chat.ChatMessageToOne(ChatChannel.Server,
@@ -87,7 +88,7 @@ public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
                 default,
                 false,
                 mindComponent.Session.Channel,
-                Color.FromSrgb(new Color(186, 52, 106)));
+                _messageColor);
         }
 
         if (ent.Comp.ActionProto is not null)
@@ -131,6 +132,22 @@ public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
             EntityManager.RemoveComponents(ent, injectedAnom.Components);
 
         _stun.TryParalyze(ent, TimeSpan.FromSeconds(ent.Comp.StunDuration), true);
+
+        if (ent.Comp.EndMessage is not null &&
+            _mind.TryGetMind(ent, out _, out var mindComponent) &&
+            mindComponent.Session != null)
+        {
+
+            var message = Loc.GetString(ent.Comp.EndMessage);
+            var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
+            _chat.ChatMessageToOne(ChatChannel.Server,
+                message,
+                wrappedMessage,
+                default,
+                false,
+                mindComponent.Session.Channel,
+                _messageColor);
+        }
 
         QueueDel(ent.Comp.Action);
         RemCompDeferred<InnerBodyAnomalyComponent>(ent);

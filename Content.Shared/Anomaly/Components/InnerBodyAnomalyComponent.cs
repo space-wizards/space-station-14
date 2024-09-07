@@ -26,10 +26,16 @@ public sealed partial class InnerBodyAnomalyComponent : Component
     public float StunDuration = 4f;
 
     /// <summary>
-    /// Local chat message to body owner
+    /// A message sent in chat to a player who has become infected by an anomaly
     /// </summary>
     [DataField]
     public LocId? StartMessage = null;
+
+    /// <summary>
+    /// A message sent in chat to a player who has cleared an anomaly
+    /// </summary>
+    [DataField]
+    public LocId? EndMessage = "inner-anomaly-end-message";
 
     /// <summary>
     /// Sound, playing on becoming anomaly
