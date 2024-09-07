@@ -993,10 +993,46 @@
   categories:
   - UplinkDisruption
   conditions:
-    - !type:BuyerWhitelistCondition
+  - !type:BuyerWhitelistCondition
       blacklist:
         components:
           - SurplusBundle
+
+- type: listing
+  id: UplinkAntimovCircuitBoard
+  name: uplink-antimov-law-name
+  description: uplink-antimov-law-desc
+  productEntity: AntimovCircuitBoard
+  discountCategory: usualDiscounts
+  discountDownTo:
+    Telecrystal: 10
+  cost:
+    Telecrystal: 14
+  categories:
+  - UplinkDisruption
+  conditions:
+  - !type:StoreWhitelistCondition
+     blacklist:
+       tags:
+       - NukeOpsUplink
+
+- type: listing
+  id: UplinkNukieAntimovCircuitBoard
+  name: uplink-antimov-law-name
+  description: uplink-antimov-law-desc
+  productEntity: AntimovCircuitBoard
+  discountCategory: rareDiscounts
+  discountDownTo:
+    Telecrystal: 20
+  cost:
+    Telecrystal: 24
+  categories:
+  - UplinkDisruption
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
 
 - type: listing
   id: UplinkSurplusBundle
