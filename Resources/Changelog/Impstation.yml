@@ -798,3 +798,28 @@
   id: 110
   time: '2024-09-07T07:37:01.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/220
+- author: TheGrimbeeper
+  changes:
+  - message: Added resurrection artifact trigger
+    type: Add
+  - message: Added vaping artifact trigger
+    type: Add
+  - message: Added gift spawn artifact effect
+    type: Add
+  - message: Added depth 4 monster spawn artifact effect
+    type: Add
+  - message: Added very scary depth 4 foam artifact effect
+    type: Add
+  - message: Added more polymorph artifact effects
+    type: Add
+  - message: Added a very powerful healing artifact effect
+    type: Add
+  - message: Added a perfectly normal book spawn artifact effect smile
+    type: Add
+  - message: Added some other artifact effects
+    type: Add
+  - message: some modifications to pre-existing artifact effects
+    type: Tweak
+  id: 111
+  time: '2024-09-07T07:38:15.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/221
