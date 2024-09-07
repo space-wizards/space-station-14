@@ -14,7 +14,7 @@
     requirement:
       !type:RoleTimeRequirement
       role: JobBartender
-      time: 1800 # 5 hour
+      time: 18000 # 5 hour
 
 # Plushies
 - type: loadout
