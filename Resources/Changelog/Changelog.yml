@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Damn Feds
-  changes:
-  - message: thief toolbox kits now better describe contents
-    type: Tweak
-  id: 6805
-  time: '2024-06-22T15:44:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27771
 - author: lzk228
   changes:
   - message: Prying reinforced tile now will give you back metal rod
@@ -3853,3 +3846,12 @@
   id: 7304
   time: '2024-09-07T05:51:36.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29956
+- author: Ian321
+  changes:
+  - message: The AgriChem kit now links to the botanical chemicals guidebook.
+    type: Tweak
+  - message: The botanical chemicals guidebook has been expanded.
+    type: Tweak
+  id: 7305
+  time: '2024-09-07T06:23:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31896
