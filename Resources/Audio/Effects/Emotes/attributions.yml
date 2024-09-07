@@ -26,6 +26,6 @@
 
 - files:
   - blink.ogg
-  license: "AGPL-3.0"
-  copyright: "Taken from https://github.com/NopemanMcHalt/S.P.L.U.R.T-Station-13/commit/efa7a8c1cff6c1408b572980ebd3d18ca8b60a07. Converted to mono."
+  license: "Custom" 
+  copyright: "This file is licensed under the GNU Affero General Public License v3.0. Taken from https://github.com/NopemanMcHalt/S.P.L.U.R.T-Station-13/commit/efa7a8c1cff6c1408b572980ebd3d18ca8b60a07. Converted to mono."
   source: "https://github.com/NopemanMcHalt/S.P.L.U.R.T-Station-13"
