@@ -246,7 +246,7 @@
   id: Blink
   name: chat-emote-name-blink
   category: Hands
-  icon: Interface/Emotes/scream.png
+  icon: Interface/Emotes/blink.png
   whitelist:
     components:
     - Eye

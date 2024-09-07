@@ -6,6 +6,11 @@
   copyright: "Modified from borg_chest.png and borg_head.png by TyAshley (AllenTheGreat)"
   source: "https://github.com/TyAshley"
 
+- files: ["blink.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by sspetish(discord 1143460554963427380), based on sprite by Sarahon"
+  source: "https://github.com/space-wizards/space-station-14"
+
 - files: ["buzz.png"]
   license: "CC-BY-SA-3.0"
   copyright: "Modified from existing bee texture (0.png) by TyAshley (AllenTheGreat) & Sarahon"
