@@ -823,3 +823,10 @@
   id: 111
   time: '2024-09-07T07:38:15.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/221
+- author: formlessnameless
+  changes:
+  - message: Reverted my very lazy fix of making everything a tweak in the changelog
+    type: Fix
+  id: 112
+  time: '2024-09-07T18:41:32.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/225
