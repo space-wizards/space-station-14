@@ -862,7 +862,7 @@
   - type: SpawnArtifact
     maxSpawns: 1
     spawns:
-    - id: BookRandom
+    - id: BookRandomStory
       prob: 0.95
     - id: WizardsGrimoire
       prob: 0.001
