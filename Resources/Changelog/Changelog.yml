@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Errant
-  changes:
-  - message: Items should no longer be missing from backpacks at spawn.
-    type: Fix
-  id: 6801
-  time: '2024-06-22T10:43:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29336
 - author: Donchan, marboww
   changes:
   - message: New Nuke Detonation Song "Sound Station 14"
@@ -3853,3 +3846,10 @@
   id: 7300
   time: '2024-09-07T03:04:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31905
+- author: Futuristic
+  changes:
+  - message: Remove binary encryption key from RD lockers
+    type: Remove
+  id: 7301
+  time: '2024-09-07T05:30:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31909
