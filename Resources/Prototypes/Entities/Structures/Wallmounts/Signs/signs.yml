@@ -18,6 +18,15 @@
 
 - type: entity
   parent: BaseSignDirectional
+  id: SignDirectionalAtmos
+  name: atmos sign
+  description: A direction sign, pointing out which way the Atmospherics department is.
+  components:
+  - type: Sprite
+    state: direction_atmos
+
+- type: entity
+  parent: BaseSignDirectional
   id: SignDirectionalBar
   name: bar sign
   description: A direction sign, pointing out which way the bar is.
@@ -1094,10 +1103,10 @@
   parent: BaseSign
   id: SignVox
   name: vox area sign
-  description: A sign indicating that the area ahead possibly contains a nitrogen-filled atmosphere.
+  description: A sign indicating that the area ahead is intended for Vox crew members and does not have an oxygen atmosphere.
   components:
   - type: Sprite
-    state: voxcross
+    state: vox
 
 # Atmos Warnings
 

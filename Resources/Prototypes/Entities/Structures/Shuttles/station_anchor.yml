@@ -2,7 +2,8 @@
   id: StationAnchorBase
   abstract: true
   name: station anchor
-  description: Prevents stations from moving
+  description: Prevents stations from moving.
+  suffix: On
   placement:
     mode: AlignTileAny
   components:
@@ -45,7 +46,6 @@
         layer:
         - WallLayer
 
-
 - type: entity
   id: StationAnchorIndestructible
   parent: StationAnchorBase
@@ -54,11 +54,10 @@
 - type: entity
   id: StationAnchor
   parent: [StationAnchorBase, BaseMachinePowered, ConstructibleMachine]
-  name: station anchor
-  description: Prevents stations from moving
   placement:
     mode: AlignTileAny
   components:
+    - type: StationAiWhitelist
     - type: PowerCharge
       windowTitle: station-anchor-window-title
       idlePower: 50
@@ -110,3 +109,11 @@
       interfaces:
         enum.PowerChargeUiKey.Key:
           type: PowerChargeBoundUserInterface
+
+- type: entity
+  parent: StationAnchor
+  id: StationAnchorOff
+  suffix: Off
+  components:
+  - type: StationAnchor
+    switchedOn: false
