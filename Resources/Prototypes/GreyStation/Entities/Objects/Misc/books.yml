@@ -19,7 +19,6 @@
         types:
           Blunt: 6
     - type: GuideHelp
-      openOnActivation: true
       guides:
       - SpaceLaw
     - type: EmitSoundOnPickup # GreyStation - Sound PR
