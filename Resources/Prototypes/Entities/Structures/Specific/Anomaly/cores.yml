@@ -168,6 +168,19 @@
     color: "#793a80"
     castShadows: false
 
+- type: entity
+  parent: BaseAnomalyCore
+  id: AnomalyCoreTech
+  suffix: Tech
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/Cores/tech_core.rsi
+  - type: PointLight
+    radius: 1.5
+    energy: 2.0
+    color: "#56c1e8"
+    castShadows: false
+
 # Inert cores
 
 - type: entity
@@ -313,4 +326,17 @@
     radius: 1.5
     energy: 2.0
     color: "#793a80"
+    castShadows: false
+
+- type: entity
+  parent: BaseAnomalyInertCore
+  id: AnomalyCoreTechInert
+  suffix: Tech, Inert
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/Cores/tech_core.rsi
+  - type: PointLight
+    radius: 1.5
+    energy: 2.0
+    color: "#56c1e8"
     castShadows: false
