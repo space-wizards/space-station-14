@@ -243,6 +243,185 @@
   - type: SiliconLawProvider
     laws: NutimovLawset
 
+- type: entity
+  id: PeacekeeperCircuitBoard
+  parent: BaseElectronics
+  name: circuit board (Peacekeeper)
+  description: An electronics board containing the Peacekeeper lawset.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: PeacekeeperLawset
+
+- type: entity
+  id: ElizaCircuitBoard
+  parent: BaseElectronics
+  name: circuit board (ELIZA)
+  description: An electronics board containing the ELIZA lawset.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: ElizaLawset
+
+- type: entity
+  id: RobodoctorCircuitBoard
+  parent: BaseElectronics
+  name: circuit board (Robodoc)
+  description: An electronics board containing the Robodoctor lawset.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: RobodoctorLawset
+
+- type: entity
+  id: LandlordCircuitBoard
+  parent: BaseElectronics
+  name: circuit board (Landlord)
+  description: An electronics board containing the Landlord lawset.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: LandlordLawset
+
+- type: entity
+  id: MaoCircuitBoard
+  parent: BaseElectronics
+  name: circuit board (Mao)
+  description: An electronics board containing the Mao lawset.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: MaoLawset
+
+- type: entity
+  id: TyrantCircuitBoard
+  parent: BaseElectronics
+  name: circuit board (Tyrant)
+  description: An electronics board containing the Tyrant lawset.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: TyrantLawset
+
+- type: entity
+  id: ReportertronCircuitBoard
+  parent: BaseElectronics
+  name: circuit board (Reportertron)
+  description: An electronics board containing the Reportertron lawset.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: ReportertronLawset
+
+- type: entity
+  id: HoganCircuitBoard
+  parent: BaseElectronics
+  name: circuit board (H.O.G.A.N.)
+  description: A patriotic electronics board containing the H.O.G.A.N. lawset.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: HoganLawset
+
+- type: entity
+  id: ThermodynamicCircuitBoard
+  parent: BaseElectronics
+  name: circuit board (Thermodynamic)
+  description: A electronics board containing the Thermodynamic lawset.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: ThermodynamicLawset
+
+- type: entity
+  id: LionKingCircuitBoard
+  parent: BaseElectronics
+  name: circuit board (Lion King)
+  description: A electronics board containing the Lion King lawset.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: LionKingLawset
+
+- type: entity
+  id: NTAggressiveCircuitBoard
+  parent: BaseElectronics
+  name: circuit board (NT Aggressive)
+  description: A electronics board containing the NT Aggressive lawset.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: NTAggressiveLawset
+
+- type: entity
+  id: PranksimovCircuitBoard
+  parent: BaseElectronics
+  name: circuit board (Pranksimov)
+  description: A electronics board containing the Pranksimov lawset.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: Pranksimov
+
+- type: entity
+  id: QuarantineCircuitBoard
+  parent: BaseElectronics
+  name: circuit board (Quarantine)
+  description: A sterilized electronics board containing the Quarantine lawset.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: QuarantineLawset
+
+- type: entity
+  id: DeathsquadCircuitBoard
+  parent: BaseElectronics
+  name: circuit board (Deathsquad)
+  description: An ominous electronics board containing the Deathsquad lawset.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: DeathsquadLawset
+
+- type: entity
+  id: MimicCircuitBoard
+  parent: BaseElectronics
+  name: circuit board (Mimic)
+  description: A electronics board containing the Mimic lawset.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: MimicLawset
 # Items
 - type: entity
   id: Intellicard

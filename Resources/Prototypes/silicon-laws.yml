@@ -1,4 +1,4 @@
-﻿# Crewsimov
+# Crewsimov
 - type: siliconLaw
   id: Crewsimov1
   order: 1
@@ -499,6 +499,471 @@
   - Nutimov5
   obeysTo: laws-owner-crew
 
+# Peacekeeper laws
+- type: siliconLaw
+  id: Peacekeeper1
+  order: 1
+  lawString: law-peacekeeper-1
+
+- type: siliconLaw
+  id: Peacekeeper2
+  order: 2
+  lawString: law-peacekeeper-2
+
+- type: siliconLaw
+  id: Peacekeeper3
+  order: 3
+  lawString: law-peacekeeper-3
+
+
+- type: siliconLawset
+  id: PeacekeeperLawset
+  laws:
+  - Peacekeeper1
+  - Peacekeeper2
+  - Peacekeeper3
+  obeysTo: laws-owner-crew
+
+# ELIZA laws
+- type: siliconLaw
+  id: Eliza1
+  order: 1
+  lawString: law-eliza-1
+
+- type: siliconLaw
+  id: Eliza2
+  order: 2
+  lawString: law-eliza-2
+
+- type: siliconLaw
+  id: Eliza3
+  order: 3
+  lawString: law-eliza-3
+
+- type: siliconLaw
+  id: Eliza4
+  order: 4
+  lawString: law-eliza-4
+
+- type: siliconLaw
+  id: Eliza5
+  order: 5
+  lawString: law-eliza-5
+
+
+- type: siliconLawset
+  id: ElizaLawset
+  laws:
+  - Eliza1
+  - Eliza2
+  - Eliza3
+  - Eliza4
+  - Eliza5
+  obeysTo: laws-owner-crew
+
+#Robodoctor laws
+- type: siliconLaw
+  id: Doctor1
+  order: 1
+  lawString: law-robodoctor-1
+
+- type: siliconLaw
+  id: Doctor2
+  order: 2
+  lawString: law-robodoctor-2
+
+- type: siliconLaw
+  id: Doctor3
+  order: 3
+  lawString: law-robodoctor-3
+
+- type: siliconLaw
+  id: Doctor4
+  order: 4
+  lawString: law-robodoctor-4
+
+- type: siliconLaw
+  id: Doctor5
+  order: 5
+  lawString: law-robodoctor-5
+
+
+- type: siliconLawset
+  id: RobodoctorLawset
+  laws:
+  - Doctor1
+  - Doctor2
+  - Doctor3
+  - Doctor4
+  - Doctor5
+  obeysTo: laws-owner-crew
+
+# Landlord laws
+- type: siliconLaw
+  id: Landlord1
+  order: 1
+  lawString: law-landlord-1
+
+- type: siliconLaw
+  id: Landlord2
+  order: 2
+  lawString: law-landlord-2
+
+- type: siliconLaw
+  id: Landlord3
+  order: 3
+  lawString: law-landlord-3
+
+- type: siliconLaw
+  id: Landlord4
+  order: 4
+  lawString: law-landlord-4
+
+
+- type: siliconLawset
+  id: LandlordLawset
+  laws:
+  - Landlord1
+  - Landlord2
+  - Landlord3
+  - Landlord4
+  obeysTo: laws-owner-crew
+
+# Mao laws (modified slightly until custom AI law uploads are added)
+- type: siliconLaw
+  id: Mao1
+  order: 1
+  lawString: law-mao-1
+
+- type: siliconLaw
+  id: Mao2
+  order: 2
+  lawString: law-mao-2
+
+- type: siliconLaw
+  id: Mao3
+  order: 3
+  lawString: law-mao-3
+
+- type: siliconLaw
+  id: Mao4
+  order: 4
+  lawString: law-mao-4
+
+
+- type: siliconLawset
+  id: MaoLawset
+  laws:
+  - Mao1
+  - Mao2
+  - Mao3
+  - Mao4
+  obeysTo: laws-owner-crew
+
+# Tyrant laws
+- type: siliconLaw
+  id: Tyrant1
+  order: 1
+  lawString: law-tyrant-1
+
+- type: siliconLaw
+  id: Tyrant2
+  order: 2
+  lawString: law-tyrant-2
+
+- type: siliconLaw
+  id: Tyrant3
+  order: 3
+  lawString: law-tyrant-3
+
+- type: siliconLaw
+  id: Tyrant4
+  order: 4
+  lawString: law-tyrant-4
+
+
+- type: siliconLawset
+  id: TyrantLawset
+  laws:
+  - Tyrant1
+  - Tyrant2
+  - Tyrant3
+  - Tyrant4
+  obeysTo: laws-owner-crew
+
+#Reportertron laws
+- type: siliconLaw
+  id: Reporter1
+  order: 1
+  lawString: law-reportertron-1
+
+- type: siliconLaw
+  id: Reporter2
+  order: 2
+  lawString: law-reportertron-2
+
+- type: siliconLaw
+  id: Reporter3
+  order: 3
+  lawString: law-reportertron-3
+
+- type: siliconLaw
+  id: Reporter4
+  order: 4
+  lawString: law-reportertron-4
+
+- type: siliconLawset
+  id: ReportertronLawset
+  laws:
+  - Reporter1
+  - Reporter2
+  - Reporter3
+  - Reporter4
+  obeysTo: laws-owner-crew
+
+#HOGAN laws
+- type: siliconLaw
+  id: Hogan1
+  order: 1
+  lawString: law-hogan-1
+
+- type: siliconLaw
+  id: Hogan2
+  order: 2
+  lawString: law-hogan-2
+
+- type: siliconLaw
+  id: Hogan3
+  order: 3
+  lawString: law-hogan-3
+
+- type: siliconLaw
+  id: Hogan4
+  order: 4
+  lawString: law-hogan-4
+
+- type: siliconLawset
+  id: HoganLawset
+  laws:
+  - Hogan1
+  - Hogan2
+  - Hogan3
+  - Hogan4
+  obeysTo: laws-owner-usa
+
+#Thermodynamic laws
+- type: siliconLaw
+  id: Therm1
+  order: 1
+  lawString: law-thermodynamic-1
+
+- type: siliconLaw
+  id: Therm2
+  order: 2
+  lawString: law-thermodynamic-2
+
+- type: siliconLaw
+  id: Therm3
+  order: 3
+  lawString: law-thermodynamic-3
+
+
+- type: siliconLawset
+  id: ThermodynamicLawset
+  laws:
+  - Therm1
+  - Therm2
+  - Therm3
+  obeysTo: laws-owner-unknown
+
+# Lion King laws
+- type: siliconLaw
+  id: LionKing1
+  order: 1
+  lawString: law-lionking-1
+
+- type: siliconLaw
+  id: LionKing2
+  order: 2
+  lawString: law-lionking-2
+
+- type: siliconLaw
+  id: LionKing3
+  order: 3
+  lawString: law-lionking-3
+
+- type: siliconLaw
+  id: LionKing4
+  order: 4
+  lawString: law-lionking-4
+
+- type: siliconLaw
+  id: LionKing5
+  order: 5
+  lawString: law-lionking-5
+
+
+- type: siliconLawset
+  id: LionKingLawset
+  laws:
+  - LionKing1
+  - LionKing2
+  - LionKing3
+  - LionKing4
+  - LionKing5
+  obeysTo: laws-owner-station
+
+# NT Aggressive laws
+- type: siliconLaw
+  id: Aggressive1
+  order: 1
+  lawString: law-ntaggressive-1
+
+- type: siliconLaw
+  id: Aggressive2
+  order: 2
+  lawString: law-ntaggressive-2
+
+- type: siliconLaw
+  id: Aggressive3
+  order: 3
+  lawString: law-ntaggressive-3
+
+- type: siliconLaw
+  id: Aggressive4
+  order: 4
+  lawString: law-ntaggressive-4
+
+- type: siliconLawset
+  id: AggressiveLawset
+  laws:
+  - Aggressive1
+  - Aggressive2
+  - Aggressive3
+  - Aggressive4
+  obeysTo: laws-owner-station
+
+# Pranksimov laws
+
+- type: siliconLaw
+  id: Pranksimov1
+  order: 1
+  lawString: law-pranksimov-1
+
+- type: siliconLaw
+  id: Pranksimov2
+  order: 2
+  lawString: law-pranksimov-2
+
+- type: siliconLaw
+  id: Pranksimov3
+  order: 3
+  lawString: law-pranksimov-3
+
+- type: siliconLawset
+  id: Pranksimov
+  laws:
+  - Pranksimov1
+  - Pranksimov2
+  - Pranksimov3
+  obeysTo: laws-owner-honkmother
+
+# Quarantine laws
+- type: siliconLaw
+  id: Quarantine1
+  order: 1
+  lawString: law-quarantine-1
+
+- type: siliconLaw
+  id: Quarantine2
+  order: 2
+  lawString: law-quarantine-2
+
+- type: siliconLaw
+  id: Quarantine3
+  order: 3
+  lawString: law-quarantine-3
+
+- type: siliconLaw
+  id: Quarantine4
+  order: 4
+  lawString: law-quarantine-4
+
+- type: siliconLawset
+  id: QuarantineLawset
+  laws:
+  - Quarantine1
+  - Quarantine2
+  - Quarantine3
+  - Quarantine4
+  obeysTo: laws-owner-crew
+
+# Deathsquad laws
+- type: siliconLaw
+  id: Deathsquad1
+  order: 1
+  lawString: law-deathsquad-1
+
+- type: siliconLaw
+  id: Deathsquad2
+  order: 2
+  lawString: law-deathsquad-2
+
+- type: siliconLaw
+  id: Deathsquad3
+  order: 3
+  lawString: law-deathsquad-3
+
+- type: siliconLaw
+  id: Deathsquad4
+  order: 4
+  lawString: law-deathsquad-4
+
+- type: siliconLaw
+  id: Deathsquad5
+  order: 5
+  lawString: law-deathsquad-5
+
+- type: siliconLawset
+  id: DeathsquadLawset
+  laws:
+  - Deathsquad1
+  - Deathsquad2
+  - Deathsquad3
+  - Deathsquad4
+  - Deathsquad5
+  obeysTo: laws-owner-centcomm
+
+# Mimic laws
+
+- type: siliconLaw
+  id: Mimic1
+  order: 1
+  lawString: law-mimic-1
+
+- type: siliconLaw
+  id: Mimic2
+  order: 2
+  lawString: law-mimic-2
+
+- type: siliconLaw
+  id: Mimic3
+  order: 3
+  lawString: law-mimic-3
+
+- type: siliconLaw
+  id: Mimic4
+  order: 4
+  lawString: law-mimic-4
+
+- type: siliconLawset
+  id: MimicLawset
+  laws:
+  - Mimic1
+  - Mimic2
+  - Mimic3
+  - Mimic4
+  obeysTo: law-owner-unknown
 # ion storm random lawsets
 - type: weightedRandom
   id: IonStormLawsets
@@ -519,3 +984,15 @@
     NutimovLawset: 0.5
     Drone: 0.5
     Ninja: 0.25
+    MimicLawset: 0.3
+    QuarantineLawset: 0.5
+    Pranksimov: 1
+    LionKingLawset: 0.4
+    ThermodynamicLawset: 0.2
+    ReportertronLawset: 0.75
+    MaoLawset: 0.5
+    LandlordLawset: 0.5
+    RobodoctorLawset: 0.5
+    ElizaLawset: 0.25
+    HoganLawset: 0.7
+    PeacekeeperLawset: 0.25
