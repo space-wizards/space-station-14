@@ -1,6 +1,7 @@
 - type: entity
   abstract: true
   parent: [BaseStructure, StructureWheeled, BaseMajorContraband]
+  id: BaseNuclearBomb
   name: nuclear fission explosive
   components:
   - type: Transform
