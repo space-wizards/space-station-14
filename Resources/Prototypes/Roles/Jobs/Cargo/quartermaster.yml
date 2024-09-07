@@ -6,15 +6,15 @@
   requirements:
     - !type:RoleTimeRequirement
       role: JobCargoTechnician
-      time: 21600 #6 hrs
+      time: 0 #0 hrs
     - !type:RoleTimeRequirement
       role: JobSalvageSpecialist
-      time: 10800 #3 hrs
+      time: 0 #0 hrs
     - !type:DepartmentTimeRequirement
       department: Cargo
-      time: 36000 #10 hours
+      time: 10800 #3 hours
     - !type:OverallPlaytimeRequirement
-      time: 144000 #40 hrs
+      time: 10800 #3 hrs
     - !type:AgeRequirement
       requiredAge: 21
   weight: 10

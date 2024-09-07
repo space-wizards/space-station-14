@@ -6,15 +6,15 @@
   requirements:
     - !type:RoleTimeRequirement
       role: JobAtmosphericTechnician
-      time: 21600 #6 hrs
+      time: 0 #6 hrs
     - !type:RoleTimeRequirement
       role: JobStationEngineer
-      time: 21600 #6 hrs
+      time: 0 #6 hrs
     - !type:DepartmentTimeRequirement
       department: Engineering
-      time: 36000 #10 hrs
+      time: 10800 #10 hrs
     - !type:OverallPlaytimeRequirement
-      time: 144000 #40 hrs
+      time: 10800 #40 hrs
     - !type:AgeRequirement
       requiredAge: 21
   weight: 10
