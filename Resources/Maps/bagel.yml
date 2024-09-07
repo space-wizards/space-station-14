@@ -71674,8 +71674,6 @@ entities:
       pos: -36.5,10.5
       parent: 60
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 21630
   - uid: 9465
