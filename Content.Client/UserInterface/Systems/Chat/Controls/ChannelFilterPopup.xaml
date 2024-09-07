@@ -2,12 +2,12 @@
     xmlns="https://spacestation14.io"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Systems.Chat.Controls">
     <PanelContainer Name="FilterPopupPanel" StyleClasses="BorderedWindowPanel">
-        <BoxContainer Orientation="Horizontal">
-            <Control MinSize="4 0"/>
+        <BoxContainer Orientation="Horizontal" SeparationOverride="8" Margin="10 0">
             <BoxContainer Name="FilterVBox" MinWidth="105" Margin="0 10" Orientation="Vertical" SeparationOverride="4"/>
             <BoxContainer Name="HighlightsVBox" MinWidth="105" Margin="0 10" Orientation="Vertical" SeparationOverride="4">
+                <Label Text="{Loc 'hud-chatbox-highlights'}"/>
                 <TextEdit Name="HighlightEdit" MinHeight="150"/>
-                <Button Name="HighlightButton" Text="{Loc 'hud-chatbox-highlights-button'}"/>
+                <Button Name="HighlightButton" Text="{Loc 'hud-chatbox-highlights-button'}" ToolTip="{Loc 'hud-chatbox-highlights-tooltip'}"/>
             </BoxContainer>
         </BoxContainer>
     </PanelContainer>

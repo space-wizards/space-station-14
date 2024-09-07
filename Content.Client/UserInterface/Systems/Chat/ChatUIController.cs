@@ -670,6 +670,9 @@ public sealed class ChatUIController : UIController, IOnSystemChanged<CharacterI
             _config.SaveToFile();
         }
 
+        // If the word is surrounded by "" we replace them with a whole-word regex tag.
+        highlights = highlights.Replace("\"", "\\b");
+
         // Fill the array with the highlights separated by newlines, disregarding empty entries.
         string[] arrHighlights = highlights.Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
         _highlights.Clear();
@@ -926,9 +929,7 @@ public sealed class ChatUIController : UIController, IOnSystemChanged<CharacterI
         // Color any words choosen by the client.
         foreach (var highlight in _highlights)
         {
-            // Inject a whole word tag so that the highlighted words will need to be whole,
-            // for example, "Det" will work with "DET" but not with "DETermine".
-            msg.WrappedMessage = SharedChatSystem.InjectTagAroundString(msg, $"\\b{highlight}\\b", "color", _highlightsColor);
+            msg.WrappedMessage = SharedChatSystem.InjectTagAroundString(msg, highlight, "color", _highlightsColor);
         }
 
         // Color any codewords for minds that have roles that use them
