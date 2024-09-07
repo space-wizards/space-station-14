@@ -115,7 +115,10 @@ public sealed class ClusterGrenadeSystem : EntitySystem
                         RaiseLocalEvent(uid, ref ev);
                     }
                 }
-                // TODO: Hide the empty shell before deletion
+                // move the exploded grenade to null space
+                if (TryComp(uid, out TransformComponent? xform))
+                    _transformSystem.DetachEntity(uid, xform);
+
                 // wait a second before deleting to prevent a flood of errors from projectiles
                 Timer.Spawn(TimeSpan.FromSeconds(1), () => QueueDel(uid));
             }
