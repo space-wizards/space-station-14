@@ -1,4 +1,5 @@
-﻿using Robust.Client.UserInterface;
+﻿using Content.Shared.Xenobiology.UI;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.Xenobiology.UI;
 
@@ -16,5 +17,17 @@ public sealed class CellularFusionBoundUserInterface : BoundUserInterface
         base.Open();
 
         _window = this.CreateWindow<CellularFusionWindow>();
+
+        _window.OnSync += () => SendMessage(new CellularFusionUiSyncMessage());
+    }
+
+    protected override void UpdateState(BoundUserInterfaceState state)
+    {
+        base.UpdateState(state);
+
+        if (state is not CellularFusionUiState cellularFusionUiState)
+            return;
+
+        _window?.UpdateState(cellularFusionUiState);
     }
 }

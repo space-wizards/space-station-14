@@ -26,6 +26,8 @@
                     Text="{Loc 'cell-sequencer-menu-replace-button'}"
                     ToolTip="{Loc 'cell-sequencer-replace-tooltip-info'}" />
 
+            <customControls:HSeparator Margin="0 0 0 4" StyleClasses="LowDivider" />
+
             <Label Name="MaterialLabel" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
         </BoxContainer>
 
