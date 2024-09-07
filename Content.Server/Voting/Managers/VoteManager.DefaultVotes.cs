@@ -4,10 +4,12 @@ using Content.Server.Administration.Managers;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Presets;
 using Content.Server.Maps;
+using Content.Server.Roles;
 using Content.Server.RoundEnd;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.Ghost;
+using Content.Shared.Players;
 using Content.Shared.Voting;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
@@ -21,6 +23,9 @@ namespace Content.Server.Voting.Managers
         [Dependency] private readonly IPlayerLocator _locator = default!;
         [Dependency] private readonly ILogManager _logManager = default!;
         [Dependency] private readonly IBanManager _bans = default!;
+
+        private VotingSystem? _votingSystem;
+        private RoleSystem? _roleSystem;
 
         private static readonly Dictionary<StandardVoteType, CVarDef<bool>> _voteTypesToEnableCVars = new()
         {
@@ -293,44 +298,91 @@ namespace Content.Server.Voting.Managers
                 return;
             }
 
+            if (_roleSystem == null)
+                _roleSystem = _entityManager.SystemOrNull<RoleSystem>();
+            if (_votingSystem == null)
+                _votingSystem = _entityManager.SystemOrNull<VotingSystem>();
+
+            // Check that the initiator is actually allowed to do a votekick.
+            if (_votingSystem != null && !_votingSystem.CheckVotekickInitEligibility(initiator))
+            {
+                _adminLogger.Add(LogType.Vote, LogImpact.Extreme, $"Votekick attempted by {initiator}, but they are not eligible to votekick!");
+                return;
+            }
+
             string target = args[0];
             string reason = args[1];
 
+            // Start by getting all relevant target data
             var located = await _locator.LookupIdByNameOrIdAsync(target);
             if (located == null)
             {
                 _logManager.GetSawmill("admin.server_ban")
                     .Warning($"Votekick attempted for player {target} but they couldn't be found!");
+                _adminLogger.Add(LogType.Vote, LogImpact.Extreme, $"Votekick attempted by {initiator} for player string {target}, but they could not be found!");
                 return;
             }
             var targetUid = located.UserId;
             var targetHWid = located.LastHWId;
-
-
-            if (initiator != null && !_entityManager.HasComponent<GhostComponent>(initiator.AttachedEntity))
+            if (!_playerManager.TryGetSessionById(located.UserId, out ICommonSession? targetSession))
+            {
+                _logManager.GetSawmill("admin.server_ban")
+                    .Warning($"Votekick attempted for player {target} but their session couldn't be found!");
+                _adminLogger.Add(LogType.Vote, LogImpact.Extreme, $"Votekick attempted by {initiator} for player string {target}, but they could not be found!");
                 return;
-            // TODO: Check that the person initiating the vote is not the target of the vote
+            }
 
-            var alone = _playerManager.PlayerCount == 1 && initiator != null;
+            string? targetEntity = null;
+            if (targetSession.AttachedEntity is { Valid: true } attached)
+                targetEntity = _entityManager.GetComponent<MetaDataComponent>(attached).EntityName;
+            var isAntag = false;
+            var targetMind = targetSession.GetMind();
+            if (targetMind != null && _roleSystem != null && _roleSystem.MindIsAntagonist(targetMind))
+                isAntag = true;
+
+            if (initiator == targetSession)
+            {
+                _adminLogger.Add(LogType.Vote, LogImpact.Extreme, $"Votekick attempted by {initiator} for themselves? Votekick cancelled.");
+            }
+
+            if (_votingSystem != null && !_votingSystem.CheckVotekickTargetEligibility(targetSession))
+            {
+                _adminLogger.Add(LogType.Vote, LogImpact.Extreme, $"Votekick attempted by {initiator} for player {targetSession}, but they are not eligible to be votekicked!");
+                return;
+            }
+
+            string voteTitle = "";
+            if (targetEntity != null)
+                voteTitle = Loc.GetString($"Votekick {located.Username}? Reason: {reason}");
+            else
+                voteTitle = Loc.GetString($"Votekick {located.Username} ({targetEntity})? Reason: {reason}");
+
             var options = new VoteOptions
             {
-                Title = Loc.GetString("Votekick title (Loc required)"),
+                Title = voteTitle,
                 Options =
                 {
                     (Loc.GetString("ui-vote-restart-yes"), "yes"),
                     (Loc.GetString("ui-vote-restart-no"), "no"),
                     (Loc.GetString("ui-vote-restart-abstain"), "abstain")
                 },
-                Duration = TimeSpan.FromSeconds(5/*_cfg.GetCVar(CCVars.VoteTimerVotekick)*/),
-                InitiatorTimeout = TimeSpan.FromMinutes(5)
+                Duration = TimeSpan.FromSeconds(5/* TODO: _cfg.GetCVar(CCVars.VoteTimerVotekick)*/),
+                InitiatorTimeout = TimeSpan.FromMinutes(5),
+                VoterEligibility = VoterEligibility.GhostMinimumPlaytime
             };
 
             WirePresetVoteInitiator(options, initiator);
+
+            if (targetEntity != null)
+                _adminLogger.Add(LogType.Vote, LogImpact.Extreme, $"Votekick for {located.Username} due to {reason} started, created by {initiator}.");
+            else
+                _adminLogger.Add(LogType.Vote, LogImpact.Extreme, $"Votekick for {located.Username} ({targetEntity}) due to {reason} started, created by {initiator}.");
 
             var vote = CreateVote(options);
 
             vote.OnFinished += (_, _) =>
             {
+
                 var votesYes = vote.VotesPerOption["yes"];
                 var votesNo = vote.VotesPerOption["no"];
                 var total = votesYes + votesNo;
@@ -342,12 +394,17 @@ namespace Content.Server.Voting.Managers
                     if (_cfg.GetCVar(CCVars.VoteRestartNotAllowedWhenAdminOnline/*CCVars.VoteVotekickNotAllowedWhenAdminOnline*/) && _adminMgr.ActiveAdmins.Count() != 0)
                     {
                         _adminLogger.Add(LogType.Vote, LogImpact.Extreme, $"Votekick attempted to pass, but an admin was online. Yes: {votesYes} / No: {votesNo}");
-                    } // TODO: Check that the player is not an antag, and if they are cancel the vote's effects
-                    else // If the cvar is disabled or there's no admins on, proceed as normal
+                    }
+                    // Check if the target is an antag and the vote reason is raiding (this is to prevent false positives)
+                    else if (isAntag && reason == VotekickReasonType.Raiding.ToString())
+                    {
+                        _adminLogger.Add(LogType.Vote, LogImpact.Extreme, $"Votekick for {located.Username} due to {reason} started, created by {initiator}, but was cancelled due to them being an antagonist.");
+                        return;
+                    }
+                    else
                     {
                         _adminLogger.Add(LogType.Vote, LogImpact.Extreme, $"Votekick succeeded:  Yes: {votesYes} / No: {votesNo}");
-                        _chatManager.DispatchServerAnnouncement(Loc.GetString("Votekick for {Player} succeeded. (Loc required)"));
-                        // TODO: Kick here.
+                        _chatManager.DispatchServerAnnouncement(Loc.GetString($"Votekick for {target} succeeded. (Loc required)"));
 
                         if (!Enum.TryParse(_cfg.GetCVar(CCVars.ServerBanDefaultSeverity/*CCVars.VotekickBanDefaultSeverity*/), out NoteSeverity severity))
                         {
@@ -358,7 +415,7 @@ namespace Content.Server.Voting.Managers
 
                         uint minutes = 1/*(uint)_cfg.GetCVar(CCVars.AudioTickRate)*/;
 
-                        _bans.CreateServerBan(targetUid, target, null, null, targetHWid, minutes, severity, reason);
+                        //_bans.CreateServerBan(targetUid, target, null, null, targetHWid, minutes, severity, reason);
                     }
                 }
                 else
@@ -366,7 +423,7 @@ namespace Content.Server.Voting.Managers
                     _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Votekick failed: Yes: {votesYes} / No: {votesNo}");
 
                     _chatManager.DispatchServerAnnouncement(
-                        Loc.GetString("Votekick for {Player} failed. (Loc required)", ("ratio", ratioRequired)));
+                        Loc.GetString($"Votekick for {target} failed. (Loc required)", ("ratio", ratioRequired)));
                 }
             };
 

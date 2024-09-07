@@ -6,11 +6,14 @@ using Content.Server.Administration;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
+using Content.Server.Database;
 using Content.Server.GameTicking;
 using Content.Server.Maps;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
+using Content.Shared.Ghost;
+using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Voting;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
@@ -38,6 +41,7 @@ namespace Content.Server.Voting.Managers
         [Dependency] private readonly IGameMapManager _gameMapManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly ISharedPlaytimeManager _playtimeManager = default!; 
 
         private int _nextVoteId = 1;
 
@@ -48,6 +52,8 @@ namespace Content.Server.Voting.Managers
         private readonly Dictionary<NetUserId, TimeSpan> _voteTimeout = new();
         private readonly HashSet<ICommonSession> _playerCanCallVoteDirty = new();
         private readonly StandardVoteType[] _standardVoteTypeValues = Enum.GetValues<StandardVoteType>();
+
+        private VotingSystem? _votingSystem2;
 
         public void Initialize()
         {
@@ -209,7 +215,7 @@ namespace Content.Server.Voting.Managers
             var start = _timing.RealTime;
             var end = start + options.Duration;
             var reg = new VoteReg(id, entries, options.Title, options.InitiatorText,
-                options.InitiatorPlayer, start, end);
+                options.InitiatorPlayer, start, end, options.VoterEligibility);
 
             var handle = new VoteHandle(this, reg);
 
@@ -244,6 +250,9 @@ namespace Content.Server.Voting.Managers
 
             msg.VoteId = v.Id;
             msg.VoteActive = !v.Finished;
+
+            if (!CheckVoterEligibility(player, v.VoterEligibility))
+                return;
 
             if (!v.Finished)
             {
@@ -362,6 +371,16 @@ namespace Content.Server.Voting.Managers
                 return;
             }
 
+            // Remove ineligible votes that somehow slipped through
+            foreach (var playerVote in v.CastVotes)
+            {
+                if (!CheckVoterEligibility(playerVote.Key, v.VoterEligibility))
+                {
+                    v.Entries[playerVote.Value].Votes -= 1;
+                    v.CastVotes.Remove(playerVote.Key);
+                }
+            }
+
             // Find winner or stalemate.
             var winners = v.Entries
                 .GroupBy(e => e.Votes)
@@ -393,6 +412,27 @@ namespace Content.Server.Voting.Managers
             v.Dirty = true;
             v.OnCancelled?.Invoke(_voteHandles[v.Id]);
             DirtyCanCallVoteAll();
+        }
+
+        public bool CheckVoterEligibility(ICommonSession player, VoterEligibility eligibility)
+        {
+            if (eligibility == VoterEligibility.All)
+                return true;
+
+            if (eligibility == VoterEligibility.Ghost || eligibility == VoterEligibility.GhostMinimumPlaytime)
+            {
+                if (!_entityManager.HasComponent<GhostComponent>(player.AttachedEntity))
+                    return false;
+
+                if (eligibility == VoterEligibility.GhostMinimumPlaytime)
+                {
+                    var playtime = _playtimeManager.GetPlayTimes(player);
+                    if (!playtime.TryGetValue(PlayTimeTrackingShared.TrackerOverall, out TimeSpan overallTime) || overallTime < TimeSpan.FromHours(10)) // TODO: Change timespan to cvar
+                        return false;
+                }
+            }
+
+            return true;
         }
 
         public IEnumerable<IVoteHandle> ActiveVotes => _voteHandles.Values;
@@ -442,6 +482,7 @@ namespace Content.Server.Voting.Managers
             public readonly TimeSpan StartTime;
             public readonly TimeSpan EndTime;
             public readonly HashSet<ICommonSession> VotesDirty = new();
+            public readonly VoterEligibility VoterEligibility;
 
             public bool Cancelled;
             public bool Finished;
@@ -452,7 +493,7 @@ namespace Content.Server.Voting.Managers
             public ICommonSession? Initiator { get; }
 
             public VoteReg(int id, VoteEntry[] entries, string title, string initiatorText,
-                ICommonSession? initiator, TimeSpan start, TimeSpan end)
+                ICommonSession? initiator, TimeSpan start, TimeSpan end, VoterEligibility voterEligibility)
             {
                 Id = id;
                 Entries = entries;
@@ -461,6 +502,7 @@ namespace Content.Server.Voting.Managers
                 Initiator = initiator;
                 StartTime = start;
                 EndTime = end;
+                VoterEligibility = voterEligibility;
             }
         }
 
@@ -476,6 +518,13 @@ namespace Content.Server.Voting.Managers
                 Text = text;
                 Votes = 0;
             }
+        }
+
+        public enum VoterEligibility
+        {
+            All,
+            Ghost,
+            GhostMinimumPlaytime
         }
 
         #endregion
