@@ -48,6 +48,7 @@ public sealed class ShowHealthBarsSystem : EquipmentHudSystem<ShowHealthBarsComp
     {
         base.DeactivateInternal();
 
+        _overlay.DamageContainers.Clear();
         _overlayMan.RemoveOverlay(_overlay);
     }
 }
