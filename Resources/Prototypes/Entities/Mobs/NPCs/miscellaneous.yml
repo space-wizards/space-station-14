@@ -128,8 +128,6 @@
           groups:
             Brute: -2
             Burn: -2
-    factions:
-      - SimpleHostileя0
   - type: ReplacementAccent
     accent: tomatokiller
   - type: Item
