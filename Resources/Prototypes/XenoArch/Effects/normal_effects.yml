@@ -728,6 +728,9 @@
       orGroup: fauna
     - id: MobXenoRavager
       orGroup: fauna
+    - id: MobDragonDungeon
+      orGroup: fauna
+      prob: 0.05
 
 - type: artifactEffect
   id: EffectBigIgnite
