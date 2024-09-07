@@ -247,3 +247,6 @@ ghost-role-information-artifact-description = Enact your eldritch whims. Forcibl
 
 ghost-role-information-syndie-assaultborg-name = Syndicate Assault Borg
 ghost-role-information-syndie-assaultborg-description = Nuclear operatives needs reinforcements. You, a cold silicon killing machine, will help them. More dakka!
+
+ghost-role-information-tomatokiller-name = Tomato killer
+ghost-role-information-tomatokiller-description = This little tomato will serve the botanist for the rest of his life... that is, a couple of minutes
