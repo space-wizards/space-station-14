@@ -44,6 +44,24 @@
     path: /Audio/Animals/mouse_squeak.ogg
 
 - type: speechSounds
+  id: Raccoon
+  saySound:
+    path: /Audio/Animals/raccoon_chatter.ogg
+  askSound:
+    path: /Audio/Animals/raccoon_chatter.ogg
+  exclaimSound:
+    path: /Audio/Animals/raccoon_chatter.ogg
+
+- type: speechSounds
+  id: Possum
+  saySound:
+    path: /Audio/Animals/cat_hiss.ogg
+  askSound:
+    path: /Audio/Animals/cat_hiss.ogg
+  exclaimSound:
+    path: /Audio/Animals/cat_hiss.ogg
+
+- type: speechSounds
   id: Vending
   saySound:
     path: /Audio/Machines/vending_jingle.ogg

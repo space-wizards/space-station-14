@@ -980,17 +980,17 @@
     prototypes:
     - MobRaptor
 
-- type: entityTable
-  id: SpawnMobDuckDuckGoose
-  table: !type:GroupSelector
-    children:
-    # Common Group
-    - !type:GroupSelector
-      weight: 75
-      children:
-      # Smoker's specialty
-      - !type:AllSelector
-        children:
-        - id: MobDuckMallard
-        - id: MobDuckBrown
-        - id: MobGoose
+- type: entity
+  name: BROS/SORB Spawner
+  id: BrosSorbSpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: blue
+        - sprite: Mobs/Animals/bros.rsi
+          state: bros
+    - type: ClusterSpawner
+      prototypes:
+        - MobBros
+        - MobSorb

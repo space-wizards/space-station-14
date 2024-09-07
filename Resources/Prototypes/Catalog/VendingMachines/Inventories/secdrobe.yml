@@ -9,6 +9,7 @@
     ClothingHeadHatBeretSecurity: 3
     ClothingHeadHatSecsoft: 3
     ClothingHeadBandRed: 3
+    ClothingMaskNeckGaiterRed: 3
     ClothingHandsGlovesColorBlack: 3
     ClothingHandsGlovesFingerless: 3
     ClothingUniformJumpskirtSec: 3
@@ -23,5 +24,12 @@
     ClothingEyesBlindfold: 1
     ClothingShoesBootsCombat: 1
     ClothingShoesBootsWinterSec: 2
+    ClothingUniformJumpsuitBrigmedic: 1
+    ClothingUniformJumpskirtBrigmedic: 1
+    ClothingHeadHatBeretBrigmedic: 1
+    ClothingBackpackDuffelBrigmedic: 1
+    ClothingBackpackBrigmedic: 1
+    ClothingBackpackSatchelBrigmedic: 1
+
   contrabandInventory:
     ClothingMaskClownSecurity: 1

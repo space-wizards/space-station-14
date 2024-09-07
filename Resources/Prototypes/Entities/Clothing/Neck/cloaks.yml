@@ -272,3 +272,12 @@
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/pan.rsi
 
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakBear
+  name: druid cloak
+  description: This cloak has a wild-looking shape on it.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Cloaks/bear.rsi
+

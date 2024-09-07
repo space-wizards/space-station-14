@@ -206,6 +206,7 @@
     items:
     - MiningDrill
     - Shovel
+    - MineralScannerUnpowered
     - OreBag
     - Crowbar
     - RadioHandheld
@@ -413,6 +414,7 @@
     items:
     - AnomalyScanner
     - AnomalyLocatorUnpowered
+    - AnomalyLocatorWideUnpowered
     - RemoteSignaller
     - Multitool
 

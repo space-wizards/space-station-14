@@ -15,7 +15,8 @@
     DrinkGreenAsteradeBottleFull: 2
     DrinkYellowAsteradeBottleFull: 2
     DrinkLemonAsteradeBottleFull: 2
+  contrabandInventory:
+    DrinkBrownAsteradeBottleFull: 2
   emaggedInventory:
     DrinkNukieCan: 2
     DrinkChangelingStingCan: 2
-    DrinkBrownAsteradeBottleFull: 2

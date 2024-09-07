@@ -9,6 +9,7 @@
     - id: BureaucraticError
     - id: ClericalError
     - id: CockroachMigration
+    - id: TrashAnimalMigration
     - id: GasLeak
     - id: IonStorm # its calm like 90% of the time smh
     - id: KudzuGrowth
@@ -18,9 +19,12 @@
     - id: PowerGridCheck
     - id: SlimesSpawn
     - id: SolarFlare
+    - id: SnailMigration
+    - id: SnailMigrationLowPop
     - id: SpiderClownSpawn
     - id: SpiderSpawn
     - id: VentClog
+    - id: BrosSpawn
 
 - type: entityTable
   id: BasicAntagEventsTable
@@ -34,6 +38,16 @@
     - id: SleeperAgents
     - id: ZombieOutbreak
 
+- type: entityTable
+  id: SleeperlessAntagEventsTable
+  table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
+    children:
+    - id: ClosetSkeleton
+    - id: DragonSpawn
+    - id: KingRatMigration
+    - id: NinjaSpawn
+    - id: RevenantSpawn
+    - id: ZombieOutbreak
 
 - type: entity
   id: BaseStationEvent
@@ -137,7 +151,7 @@
   - type: StationEvent
     weight: 5
     duration: 1
-    minimumPlayers: 20
+    minimumPlayers: 15
   - type: RandomEntityStorageSpawnRule
     prototype: MobSkeletonCloset
 
@@ -321,6 +335,59 @@
       prob: 0.008
 
 - type: entity
+  id: SnailMigrationLowPop
+  parent: BaseStationEventShortDelay
+  components:
+  - type: StationEvent
+    weight: 6
+    duration: 50
+  - type: VentCrittersRule
+    entries:
+    - id: MobSnail
+      prob: 0.02
+    - id: MobSnailSpeed
+      prob: 0.002
+    - id: MobSnailMoth
+      prob: 0.002
+
+- type: entity
+  id: SnailMigration
+  parent: BaseStationEventShortDelay
+  components:
+  - type: StationEvent
+    earliestStart: 15
+    weight: 6
+    duration: 50
+    minimumPlayers: 30
+  - type: VentCrittersRule
+    entries:
+    - id: MobSnail
+      prob: 0.02
+    - id: MobSnailSpeed
+      prob: 0.002
+    - id: MobSnailMoth
+      prob: 0.002
+    - id: MobSnailInstantDeath
+      prob: 0.00001 #  ~ 1:2000 snails
+
+- type: entity
+  id: TrashAnimalMigration
+  parent: BaseStationEventShortDelay
+  components:
+  - type: StationEvent
+    weight: 6
+    duration: 50
+  - type: VentCrittersRule
+    entries:
+    - id: MobRaccoonGhost
+      prob: 0.02
+    - id: MobPossumGhost
+      prob: 0.02
+    - id: MobMouse
+      prob: 0.02
+
+
+- type: entity
   id: PowerGridCheck
   parent: BaseStationEventShortDelay
   components:
@@ -402,6 +469,20 @@
       prob: 0.05
 
 - type: entity
+  id: BrosSpawn
+  parent: BaseStationEventShortDelay
+  components:
+  - type: StationEvent
+    earliestStart: 20
+    minimumPlayers: 15
+    weight: 5
+    duration: 60
+  - type: VentCrittersRule
+    entries:
+    - id: BrosVentSpawner
+      prob: 0.05
+
+- type: entity
   id: SpiderClownSpawn
   parent: BaseStationEventShortDelay
   components:
@@ -420,9 +501,9 @@
   parent: BaseGameRule
   components:
   - type: StationEvent
-    earliestStart: 50
-    minimumPlayers: 30
-    weight: 2
+    earliestStart: 90
+    minimumPlayers: 40
+    weight: 1 # Zombies was happening basically every single survival round, so now it's super rare
     duration: 1
   - type: ZombieRule
   - type: AntagSelection

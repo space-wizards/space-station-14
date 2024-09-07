@@ -1203,7 +1203,7 @@
     UAP: 6
 
 - type: reaction
-  id: TheHorsepussy
+  id: TheeHorsepussy
   requiredMixerCategories:
     - Stir
   reactants:
@@ -1212,6 +1212,176 @@
     Methadone:
       amount: 1
   products:
-    TheHorsepussy: 3
+    TheeHorsepussy: 3
   sound:
     path: /Audio/Animals/spooky_horse.ogg
+
+- type: reaction
+  id: Calimotxo
+  requiredMixerCategories:
+    - Stir
+  reactants:
+    Wine:
+      amount: 1
+    Cola:
+      amount: 1
+  products:
+    Calimotxo: 2
+
+- type: reaction
+  id: LoveTap
+  requiredMixerCategories:
+    - Stir
+  reactants:
+    Rum:
+      amount: 1
+    RootBeer:
+      amount: 9
+  products:
+    LoveTap: 10
+
+- type: reaction
+  id: Raeganomics
+  requiredMixerCategories:
+    - Shake
+  reactants:
+    THC:
+      amount: 1
+    Nicotine:
+      amount: 1
+    Lemonade:
+      amount: 1
+    Vodka:
+      amount: 2
+  products:
+    Reaganomics: 5
+
+- type: reaction
+  id: GatorWine
+  requiredMixerCategories:
+    - Stir
+  reactants:
+    LemonAsterade:
+      amount: 1
+    Wine:
+      amount: 1
+  products:
+    GatorWine: 2
+
+- type: reaction
+  id: Rotgut
+  requiredMixerCategories:
+    - Shake
+  reactants:
+    Water:
+      amount: 1
+    Sugar:
+      amount: 4
+    Nicotine:
+      amount: 5
+  products:
+    Rotgut: 10
+
+- type: reaction
+  id: BumWine
+  requiredMixerCategories:
+    - Stir
+  reactants:
+    Wine:
+      amount: 2
+    Sugar:
+      amount: 1
+    Water:
+      amount: 3
+  products:
+    BumWine: 5
+
+- type: reaction
+  id: VoxRocks
+  requiredMixerCategories:
+    - Stir
+  reactants:
+    Dylovene:
+      amount: 5
+    IcedBeer:
+      amount: 5
+  products:
+    VoxRocks: 10
+
+- type: reaction
+  id: KingSoda
+  reactants:
+    CoconutWater:
+      amount: 1
+    IcedCoffee:
+      amount: 1.5
+    Cola:
+      amount: 0.5
+    JuiceWatermelon:
+      amount: 1
+    DrGibb:
+      amount: 1
+    IcedGreenTea:
+      amount: 1.5
+    LemonLime:
+      amount: 1
+    JuiceLime:
+      amount: 1
+    Starkist:
+      amount: 1
+    EnergyDrink:
+      amount: 1
+    IceCream:
+      amount: 2.5
+    SodaWater:
+      amount: 1
+    SpaceMountainWind:
+      amount: 1
+    SpaceUp:
+      amount: 1
+    TonicWater:
+      amount: 1
+    Tea:
+      amount: 1
+    RootBeerFloat:
+      amount: 1.5
+  products:
+    KingSoda: 20
+
+- type: reaction
+  id: JungleJuice
+  reactants:
+    Beer:
+      amount: 0.5
+    ManlyDorf:
+      amount: 1.5
+    Vermouth:
+      amount: 1
+    Cognac:
+      amount: 1
+    Gin:
+      amount: 1
+    Mead:
+      amount: 1
+    Rum:
+      amount: 1
+    BraveBull:
+      amount: 1.5
+    BlackRussian:
+      amount: 1.5
+    Whiskey:
+      amount: 1
+    Wine:
+      amount: 1
+  products:
+    JungleJuice: 10
+
+- type: reaction
+  id: TheDrink
+  reactants:
+    KingSoda:
+      amount: 1
+    JungleJuice:
+      amount: 1
+  products:
+    TheDrink: 2

@@ -182,3 +182,19 @@
   - accent-words-finfin-2
   - accent-words-finfin-3
   - accent-words-finfin-4
+
+- type: accent
+  id: raccoon
+  fullReplacements:
+  - accent-words-raccoon-1
+  - accent-words-raccoon-2
+  - accent-words-raccoon-3
+  - accent-words-raccoon-4
+
+- type: accent
+  id: possum
+  fullReplacements:
+  - accent-words-possum-1
+  - accent-words-possum-2
+  - accent-words-possum-3
+  - accent-words-possum-4

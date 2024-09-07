@@ -11,6 +11,8 @@
     - Reptilian
     - SlimePerson
     - Vox
+    - Gray
+    - Snail
 
 - type: guideEntry
   id: Arachnid
@@ -51,3 +53,13 @@
   id: Vox
   name: species-name-vox
   text: "/ServerInfo/Guidebook/Mobs/Vox.xml"
+
+- type: guideEntry
+  id: Gray
+  name: Gray
+  text: "/ServerInfo/Guidebook/Mobs/Gray.xml"
+
+- type: guideEntry
+  id: Snail
+  name: Gastropoid
+  text: "/ServerInfo/Guidebook/Mobs/Snail.xml"

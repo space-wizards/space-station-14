@@ -245,41 +245,8 @@ public abstract class SharedChatSystem : EntitySystem
     /// </summary>
     public static string InjectTagAroundString(ChatMessage message, string targetString, string tag, string? tagParameter)
     {
-        string rawmsg = message.WrappedMessage;
-        int targetIndex = rawmsg.IndexOf(targetString, StringComparison.OrdinalIgnoreCase);
-        // We loop through every instance of the word, check that it's not inside of brackets,
-        // and inject new tags around it.
-        while(targetIndex != -1 && targetIndex < rawmsg.Length) {
-            // Check that we aren't inside of a tag
-            int lastOpenBracket = rawmsg.LastIndexOf('[', targetIndex);
-            int lastCloseBracket = rawmsg.LastIndexOf(']', targetIndex);
-            if(lastOpenBracket <= lastCloseBracket) {
-                // We should be safe to inject new tags
-                string startTag;
-                if(tagParameter != null)
-                    startTag = $"[{tag}={tagParameter}]";
-                else
-                    startTag = $"[{tag}]";
-                
-                string endTag = $"[/{tag}]";
-
-                // Insert the tags
-                rawmsg = rawmsg.Insert(targetIndex + targetString.Length, endTag  );
-                rawmsg = rawmsg.Insert(targetIndex                      , startTag);
-                // Move the index forward to skip our new tags
-                targetIndex += startTag.Length + endTag.Length;
-            }
-            
-            // Move the index forward to prevent matching this instance
-            // of the word again
-            targetIndex += targetString.Length;
-
-            if(targetIndex >= rawmsg.Length)
-                break;
-
-            // Find the next instance of the target string
-            targetIndex = rawmsg.IndexOf(targetString, targetIndex, StringComparison.OrdinalIgnoreCase);
-        }
+        var rawmsg = message.WrappedMessage;
+        rawmsg = Regex.Replace(rawmsg, "(?i)(" + targetString + ")(?-i)(?![^[]*])", $"[{tag}={tagParameter}]$1[/{tag}]");
         return rawmsg;
     }
 

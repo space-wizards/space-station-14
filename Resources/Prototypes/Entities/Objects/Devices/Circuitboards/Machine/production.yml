@@ -1216,6 +1216,22 @@
 
 - type: entity
   parent: BaseMachineCircuitboard
+  id: StationAnchorCircuitboard
+  name: station anchor machine board
+  description: A machine printed circuit board for a station anchor.
+  components:
+  - type: MachineBoard
+    prototype: StationAnchor
+    stackRequirements:
+      Capacitor: 4
+      MatterBin: 3
+      Steel: 10
+      Glass: 5
+      CableHV: 8
+      Uranium: 2
+
+- type: entity
+  parent: BaseMachineCircuitboard
   id: ReagentGrinderIndustrialMachineCircuitboard
   name: industrial reagent grinder machine board
   components:

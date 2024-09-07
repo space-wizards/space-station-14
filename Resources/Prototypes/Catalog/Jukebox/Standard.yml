@@ -128,7 +128,7 @@
   id: DontDrinkIt
   name: Pilotredsky - Don't Drink It
   path:
-    path: /Audio/Jukebox/don't_drink_it.ogg
+    path: /Audio/Jukebox/dont_drink_it.ogg
 
 - type: jukebox
   id: EternalSanctity
@@ -155,16 +155,10 @@
     path: /Audio/Jukebox/in_the_pocket.ogg
 
 - type: jukebox
-  id: LaxLullaby
+  id: FFXPrelude
   name: FFX - Prelude
   path:
     path: /Audio/Jukebox/prelude.ogg
-
-- type: jukebox
-  id: PresentingV
-  name: Souleye - Presenting VVVVVV
-  path:
-    path: /Audio/Jukebox/presenting_v.ogg
 
 - type: jukebox
   id: SnowBurn
@@ -183,3 +177,87 @@
   name: Hideki Okugawa - You Blow My Mind
   path:
     path: /Audio/Jukebox/you_blow_my_mind.ogg
+
+- type: jukebox
+  id: TheNomai
+  name: Andrew Prahlow - The Nomai
+  path:
+    path: /Audio/Jukebox/the_nomai.ogg
+
+- type: jukebox
+  id: TheFluteTune
+  name: J-Cut & Kolt Siewerts - The Flute Tune (Soulpride Remix)
+  path:
+    path: /Audio/Jukebox/the_flute_tune.ogg
+
+- type: jukebox
+  id: CreateAWrestler
+  name: Wrestlemania X8 - Create-A-Wrestler
+  path:
+    path: /Audio/Jukebox/create_a_wrestler.ogg
+
+- type: jukebox
+  id: QuantumSpawn
+  name: ELFL - Quantum Spawn
+  path:
+    path: /Audio/Jukebox/quantum_spawn.ogg
+
+- type: jukebox
+  id: Bodybuilder
+  name: Pilotredsun - Bodybuilder
+  path:
+    path: /Audio/Jukebox/bodybuilder.ogg
+
+- type: jukebox
+  id: AlongWithBrew
+  name: Pilotredsky - Along With Brew
+  path:
+    path: /Audio/Jukebox/along_with_brew.ogg
+
+- type: jukebox
+  id: NeoSFStrut
+  name: Aethernaut - Neo-SF Strut
+  path:
+    path: /Audio/Jukebox/neosf_strut.ogg
+
+- type: jukebox
+  id: Match
+  name: Fred Mug - Match
+  path:
+    path: /Audio/Jukebox/match.ogg
+
+- type: jukebox
+  id: Impossible
+  name: Darren Knob - Impossible
+  path:
+    path: /Audio/Jukebox/impossible.ogg
+
+- type: jukebox
+  id: EncounterACaterpillar
+  name: Solaris - song that plays when you encounter a caterpillar
+  path:
+    path: /Audio/Jukebox/song_that_plays_when_you_encounter_a_caterpillar.ogg
+
+- type: jukebox
+  id: GETENUF
+  name: Hideki Naganuma - GET ENUF
+  path:
+    path: /Audio/Jukebox/get_enuf.ogg
+
+- type: jukebox
+  id: ZIPYKKARRANGE
+  name: Rukunetsu - ZIP YKK ARRANGE
+  path:
+    path: /Audio/Jukebox/zip_ykk_arrange.ogg
+
+- type: jukebox
+  id: ThrashardInTheCaveX68000
+  name: Akumajou Dracula X68000 - Thrashard in the Cave
+  path:
+    path: /Audio/Jukebox/thrashard_in_the_cave_x68000.ogg
+
+- type: jukebox
+  id: TwoDaysOff
+  name: KiloWatts - Two Days Off
+  path:
+    path: /Audio/Jukebox/twodaysoff.ogg
