@@ -371,7 +371,7 @@
   id: 65
   time: '2024-08-01T19:46:26.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/65
- - author: joelsgp
+- author: joelsgp
   changes:
   - message: Added new lobby screen by Carousel!
     type: Add
@@ -403,203 +403,203 @@
 - author: sageu111
   changes:
   - message: BIG GRAY UPDATE (ALL GRAY AND TOYS INSIDE), THIS IS THE BIG GRAY THIS IS THE NEW SHIT
-   type: Add
+    type: Add
   id: 69
   url: https://github.com/medabunny/imp-station-14/pull/69
 - author: sageu111
   changes:
   - message: blah blah blah blah, removes a line of text that is useless
-   type: Fix
+    type: Fix
   id: 70
   url: https://github.com/medabunny/imp-station-14/pull/70
 - author: sageu111
   changes:
   - message: fix for grays not having headset or ID slot
-   type: Fix
+    type: Fix
   id: 71
   url: https://github.com/medabunny/imp-station-14/pull/71
 - author: Drags-His-Tail
   changes:
   - message: Added 500 Cigarettes, now purchasable from cargo for only $5000, or in an emagged smoke vending machine near you.
-   type: Add
+    type: Add
   id: 72
   url: https://github.com/medabunny/imp-station-14/pull/72
 - author: formlessnameless
   changes:
   - message: Codewords should no longer make people locally deaf.
-   type: Fix
+    type: Fix
   id: 73
   url: https://github.com/medabunny/imp-station-14/pull/73
 - author: TGRCdev
   changes:
-  -message: Rewrote InjectTagAroundString to not use Regex
-   type: Fix
+  - message: Rewrote InjectTagAroundString to not use Regex
+    type: Fix
   id: 74
   url: https://github.com/medabunny/imp-station-14/pull/74
 - author: TGRCdev
   changes:
   - message: Criminal records computer now shows the pronouns of crewmates.
-   type: Tweak
+    type: Tweak
   - message: Character creator now uses "it/its" pronouns correctly.
-   type: Fix
+    type: Fix
   id: 75
   url: https://github.com/medabunny/imp-station-14/pull/75
 - author: formlessnameless
   changes:
   - message: Initial version of gray ship added.
-   type: Add
+    type: Add
   id: 76
   url: https://github.com/medabunny/imp-station-14/pull/76
 - author: TGRCdev
   changes:
   - message: Dragging mobs in crit no longer deals damage
-   type: Tweak
-  id: 78
+    type: Tweak
+    id: 78
   url: https://github.com/medabunny/imp-station-14/pull/78
 - author: ultramario1998
   changes:
   - message: Removed templar helmet
-   type: Tweak
+    type: Tweak
   id: 79
   url: https://github.com/medabunny/imp-station-14/pull/79
 - author: TGRCdev
   changes:
   - message: Station records now show correct pronouns
-   type: Fix
+    type: Fix
   id: 80
   url: https://github.com/medabunny/imp-station-14/pull/80
 - author: FlippenPage
   changes:
   - message: Add Space Cruise mapping elements
-   type: Add
+    type: Add
   id: 81
   url: https://github.com/medabunny/imp-station-14/pull/81
 - author: Drags-His-Tail
   changes:
   - message: Added Ratvarian, Slime, Russian, French, and Spanish as speech traits. Blabl blump!
-   type: Add
+    type: Add
   id: 82
   url: https://github.com/medabunny/imp-station-14/pull/82
 - author: TGRCdev
   changes:
   - message: Fixes the Newports and pAI trinkets. Also removes the "PVC" tag from the PVC pipe
-   type: Fix
+    type: Fix
   id: 83
   url: https://github.com/medabunny/imp-station-14/pull/83
 - author: TGRCdev
   changes:
   - message: Readding a maintenance loot table that was mistakenly deleted during a merge conflict.
-   type: Fix
+    type: Fix
   id: 84
   url: https://github.com/medabunny/imp-station-14/pull/84
 - author: TGRCdev
   changes:
   - message: Fixed missing job mapping sprites because of an incorrectly capitalized job sprite PNG file.
-   type: Fix
+    type: Fix
   - message: Duplicate LeavesGreenMarijuana was removed. Marijuana leaves can now be put on burger buns.
-   type: Fix
+    type: Fix
   - message: Templar helmet's ID was mistakenly re-introduced into the maintenance loot tables. Re-removed the ID from the loot table.
-   type: Fix
+    type: Fix
   id: 85
   url: https://github.com/medabunny/imp-station-14/pull/85
 - author: starlighthowls
   changes:
   - message: Laser raptor spawner
-   type: Add
+    type: Add
   - message: Major ursa mob and spawner.
-   type: Add
+    type: Add
   - message: Minor ursa plushie
-   type: Add
+    type: Add
   id: 86
   url: https://github.com/medabunny/imp-station-14/pull/86
 - author: TGRCdev
   changes:
   - message: Crew manifest now shows pronouns
-   type: Add
+    type: Add
   - message: Crew manifest should no longer overlap long names and titles
-   type: Fix
+    type: Fix
   id: 87
   url: https://github.com/medabunny/imp-station-14/pull/87
 - author: formlessnameless
   changes:
   - message: Fixed Train plasma gas not spawning on mapload
-   type: Fix
+    type: Fix
   - message: Modified the shuttles I've made to have appropriately colored atmos pipes, some structural changes
-   type: Tweak
+    type: Tweak
   id: 88
   url: https://github.com/medabunny/imp-station-14/pull/88
 - author: starlighthowls
   changes:
   - message: Added kissertomato and spawner
-   type: Add
+    type: Add
   - message: Added rainbow ss14 decal
-   type: Add
+    type: Add
   id: 89
   url: https://github.com/medabunny/imp-station-14/pull/89
 - author: TGRCdev
   changes:
   - message: Station maps now have a directory that lists all enabled beacons on a station.
-   type: Add
+    type: Add
   id: 90
   url: https://github.com/medabunny/imp-station-14/pull/90
 - author: formlessnameless
   changes:
   - message: Added the ability to turn normal bananium floors into blessed bananium floors.
-   type: Add
+    type: Add
   id: 92
   url: https://github.com/medabunny/imp-station-14/pull/92
 - author: formlessnameless
   changes:
- - message: Added changeling antagonist from whateverusername0's fork of the main upstream project.
-   type: Add
+    - message: Added changeling antagonist from whateverusername0's fork of the main upstream project.
+      type: Add
   id: 94
   url: https://github.com/medabunny/imp-station-14/pull/94
 - author: TGRCdev
   changes:
-  - message: "GameRuleMeteorScheduler" is now "MeteorSwarmScheduler"
-   type: Fix
+  - message: GameRuleMeteorScheduler is now MeteorSwarmScheduler
+    type: Fix
   id: 95
   url: https://github.com/medabunny/imp-station-14/pull/95
 - author: wafehling
   changes:
   - message: Added rare announcement variants for some events.
-   type: Add
+    type: Add
   id: 96
   url: https://github.com/medabunny/imp-station-14/pull/96
 - author: starlighthowls
   changes:
   - message: Added Laser-less laser raptors.
-   type: Add
+    type: Add
   - message: Kisser tomatoes can now be grown and mutated from killer tomatoes.
-   type: Add
+    type: Add
   - message: Added a new decal.
-   type: Add
+    type: Add
   id: 97
   url: https://github.com/medabunny/imp-station-14/pull/97
 - author: Darkmajia
   changes:
   - message: Added 4 random announcers from the Einstein Engines fork.
-   type: Add
+    type: Add
   id: 98
   url: https://github.com/medabunny/imp-station-14/pull/98
 - author: Drags-His-Tail
   changes:
   - message: Most reality-breaking side-effects of the QSI have been mitigated.
-   type: Fix
+    type: Fix
   id: 99
   url: https://github.com/medabunny/imp-station-14/pull/99
 - author: starlighthowls
- changes:
- - message: Disabled securitron crafting recipe.
-   type: Fix
- - message: Made edits to NTAS.WW decal.
-   type: Tweak
- - message: Added new bar sign setting, Imp.
-   type: Add
- - message: Manually updated impstation changelog. (hi!)
-   type: Add
-  id: 100
-  url: https://github.com/medabunny/imp-station-14/pull/100
+  changes:
+  - message: Disabled securitron crafting recipe.
+    type: Fix
+  - message: Made edits to NTAS.WW decal.
+    type: Tweak
+  - message: Added new bar sign setting, Imp.
+    type: Add
+  - message: Manually updated impstation changelog. (hi!)
+    type: Add
+    id: 100
+    url: https://github.com/medabunny/imp-station-14/pull/100
 - author: formlessnameless
   changes:
   - message: A bunch of formatting fixes that the system was yelling at me about
