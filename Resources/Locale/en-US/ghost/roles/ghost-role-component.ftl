@@ -80,6 +80,9 @@ ghost-role-information-monkey-description = Ook ook!
 ghost-role-information-kobold-name = Kobold
 ghost-role-information-kobold-description = Be the little gremlin you are, yell at people and beg for meat!
 
+ghost-role-information-sentiflower-name = Sentient sunflower
+ghost-role-information-sentiflower-description = Be the kind, cute sentient sunflower. Cosplay dryad and turn station into perfect forest! (If you want)
+
 ghost-role-information-rat-king-name = Rat King
 ghost-role-information-rat-king-description = You are the Rat King, your interests are food, food, and more food. Cooperate with or fight against the station for food. Did I say food interests you?
 

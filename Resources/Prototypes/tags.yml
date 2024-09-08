@@ -955,6 +955,9 @@
   id: MonkeyWearable
 
 - type: Tag
+  id: SentiflowerWearable
+
+- type: Tag
   id: Mop
 
 - type: Tag
