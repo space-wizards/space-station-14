@@ -42,6 +42,8 @@
   - type: Clickable
   - type: InteractionOutline
   - type: FireAlarm
+  - type: AtmosAlertsDevice
+    group: FireAlarm
   - type: ContainerFill
     containers:
       board: [ FireAlarmElectronics ]
@@ -81,7 +83,7 @@
     graph: FireAlarm
     node: fire_alarm
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
   - type: Destructible
     thresholds:
