@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: PJB3005
-  changes:
-  - message: Ghosts can now examine details on objects from any range.
-    type: Tweak
-  id: 6814
-  time: '2024-06-24T15:36:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29404
 - author: Emisse
   changes:
   - message: atmos, elite syndie, and deathsquad hardsuits are now the only fireproof
@@ -3868,3 +3861,10 @@
   id: 7313
   time: '2024-09-08T08:12:24.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31952
+- author: PopGamer46
+  changes:
+  - message: Fixed being able to craft the justice helmet with a justice helmet
+    type: Fix
+  id: 7314
+  time: '2024-09-08T10:21:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31957
