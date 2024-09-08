@@ -223,6 +223,16 @@ namespace Content.Server.Database
 
         #endregion
 
+        #region AuditLog
+
+        /// <summary>
+        /// See <see cref="Content.Server.Administration.Logs.AuditLogs.IAuditLogManager.AddLog"/>
+        /// </summary>
+        /// <returns>The id of the newly created log</returns>
+        Task AddAuditLogAsync(AuditLogType ty, LogImpact impact, Guid author, string message, List<Guid>? effected = null);
+
+        #endregion
+
         #region Admin Logs
 
         Task<Server> AddOrGetServer(string serverName);
@@ -700,6 +710,12 @@ namespace Content.Server.Database
                 DbWriteOpsMetric.Inc();
 
             return server;
+        }
+
+        public Task AddAuditLogAsync(AuditLogType ty, LogImpact impact, Guid author, string message, List<Guid>? effected = null)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.AddAuditLogAsync(ty, impact, author, message, effected));
         }
 
         public Task AddAdminLogs(List<AdminLog> logs)

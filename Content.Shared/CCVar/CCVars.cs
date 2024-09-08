@@ -1096,6 +1096,9 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<string> AdminLogsServerName =
             CVarDef.Create("adminlogs.server_name", "unknown", CVar.SERVERONLY);
 
+        public static readonly CVarDef<bool> AuditLogsEnabled =
+            CVarDef.Create("auditlogs.enabled", true, CVar.SERVERONLY);
+
         /*
          * Atmos
          */

@@ -4,4 +4,5 @@ namespace Content.Shared.Database;
 public enum AuditLogType : uint
 {
     Unknown = 0, // Do not use this is a fallback
+    Whitelist = 1,
 }
