@@ -46,24 +46,6 @@
     access: [["Reporter"]]
 
 - type: entity
-  parent: VendingMachine
-  id: VendingMachineMNKDrobe
-  name: MNK Drobe
-  description: Quality garments provided by MoNoKrome.
-  components:
-  - type: VendingMachine
-    pack: MNKDrobeInventory
-    offState: off
-    brokenState: broken
-  - type: Sprite
-    sprite: Nyanotrasen/Structures/Machines/VendingMachines/mnkdrobe.rsi
-    layers:
-    - state: off
-      map: ["enum.VendingMachineVisualLayers.Base"]
-    - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-
-- type: entity
   parent: VendingMachineRoboDrobe
   id: VendingMachineAutomatrobe
   name: Automatrobe

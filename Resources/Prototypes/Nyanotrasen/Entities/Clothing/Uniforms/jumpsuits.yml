@@ -26,39 +26,6 @@
 
 - type: entity
   parent: ClothingUniformBase
-  id: ClothingUniformJumpsuitTshirtJeans
-  name: white t-shirt and jeans
-  description: Even in space, this combo is still in style.
-  components:
-  - type: Sprite
-    sprite: Nyanotrasen/Clothing/Uniforms/Jumpsuit/tshirtjeans.rsi
-  - type: Clothing
-    sprite: Nyanotrasen/Clothing/Uniforms/Jumpsuit/tshirtjeans.rsi
-
-- type: entity
-  parent: ClothingUniformBase
-  id: ClothingUniformJumpsuitTshirtJeansGray
-  name: gray t-shirt and jeans
-  description: Even though there are no forests in space, this combo is still practical.
-  components:
-  - type: Sprite
-    sprite: Nyanotrasen/Clothing/Uniforms/Jumpsuit/tshirtjeansgray.rsi
-  - type: Clothing
-    sprite: Nyanotrasen/Clothing/Uniforms/Jumpsuit/tshirtjeansgray.rsi
-
-- type: entity
-  parent: ClothingUniformBase
-  id: ClothingUniformJumpsuitTshirtJeansPeach
-  name: peach t-shirt and jeans
-  description: Even though your favorite emo clothing store is back at home, this combo is still edgy.
-  components:
-  - type: Sprite
-    sprite: Nyanotrasen/Clothing/Uniforms/Jumpsuit/tshirtjeanspeach.rsi
-  - type: Clothing
-    sprite: Nyanotrasen/Clothing/Uniforms/Jumpsuit/tshirtjeanspeach.rsi
-
-- type: entity
-  parent: ClothingUniformBase
   id: ClothingUniformJumpsuitPrisonGuard
   name: prison guard's uniform
   description: A comfortable, durable, waterproof uniform made to keep prison staff comfortable and safe.
