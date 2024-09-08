@@ -1,5 +1,5 @@
 - type: entity
-  parent: ClothingOuterStorageBase
+  parent: ClothingOuterWinterCoat
   id: ClothingOuterCoatHyenhSweater
   name: comfy sweater
   description: It's comfy.
@@ -8,8 +8,6 @@
       sprite: Nyanotrasen/Clothing/OuterClothing/WinterCoats/hyenh.rsi
     - type: Clothing
       sprite: Nyanotrasen/Clothing/OuterClothing/WinterCoats/hyenh.rsi
-    - type: TemperatureProtection
-      coefficient: 0.1
 
 - type: entity
   parent: ClothingOuterWinterCoat
@@ -21,8 +19,6 @@
       sprite: Nyanotrasen/Clothing/OuterClothing/WinterCoats/long_winter_coat.rsi
     - type: Clothing
       sprite: Nyanotrasen/Clothing/OuterClothing/WinterCoats/long_winter_coat.rsi
-    - type: TemperatureProtection
-      coefficient: 0.1
 
 - type: entity
   parent: ClothingOuterWinterCoat
@@ -34,5 +30,3 @@
       sprite: Nyanotrasen/Clothing/OuterClothing/WinterCoats/plaid_winter_coat.rsi
     - type: Clothing
       sprite: Nyanotrasen/Clothing/OuterClothing/WinterCoats/plaid_winter_coat.rsi
-    - type: TemperatureProtection
-      coefficient: 0.1
