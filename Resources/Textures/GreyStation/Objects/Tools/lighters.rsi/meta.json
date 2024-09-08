@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from goonstation at https://github.com/goonstation/goonstation/blob/HEAD/icons/obj/items/cigarettes.dmi; sprite has been edited by ps3moira#9488 on discord.",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/pull/69195 sprite has been edited by ps3moira on discord.",
   "size": {
     "x": 32,
     "y": 32
@@ -26,16 +26,22 @@
       ]
     },
     {
-      "name": "zippo_1_icon_base"
+      "name": "zippo_skull_icon_base"
     },
     {
-      "name": "zippo_1_open"
+      "name": "zippo_skull_open"
     },
     {
-      "name": "zippo_red_icon_base"
+      "name": "zippo_thirteen_icon_base"
     },
     {
-      "name": "zippo_red_open"
+      "name": "zippo_thirteen_open"
+    },
+    {
+      "name": "zippo_syndicate_icon_base"
+    },
+    {
+      "name": "zippo_syndicate_open"
     },
     {
       "name": "zippo_top"
@@ -57,19 +63,19 @@
       "directions": 4
     },
     {
-      "name": "redzippo-inhand-left",
+      "name": "zippo-syndicate-inhand-left",
       "directions": 4
     },
     {
-      "name": "redzippo-inhand-right",
+      "name": "zippo-syndicate-inhand-right",
       "directions": 4
     },
     {
-      "name": "redzippo-inhand-left-flame",
+      "name": "zippo-syndicate-inhand-left-flame",
       "directions": 4
     },
     {
-      "name": "redzippo-inhand-right-flame",
+      "name": "zippo-syndicate-inhand-right-flame",
       "directions": 4
     }
   ]

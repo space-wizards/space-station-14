@@ -13,7 +13,8 @@
     PackPaperRollingFilters: 3
     CheapLighter: 4
     Lighter: 2
-    FlippoZeppelinLighter: 2 # GreyStation
+    FlippoLighter: 2 # GreyStation - More!!
+    FlippoSkullLighter: 1 # GreyStation - Addition
   emaggedInventory:
+    FlippoSyndicateLighter: 1 # GreyStation - Addition
     CigPackSyndicate: 1
-    FlippoRedLighter: 1 # GreyStation
