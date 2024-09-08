@@ -519,5 +519,13 @@ Entries:
   id: 64
   time: '2024-08-31T11:38:04.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30433
+- author: nikthechampiongr
+  changes:
+  - message: The addobjective command will now offer completions for username and
+      objectives.
+    type: Tweak
+  id: 65
+  time: '2024-09-08T07:28:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30456
 Name: Admin
 Order: 1
