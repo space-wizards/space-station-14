@@ -1644,6 +1644,11 @@
           - MobLayer
   - type: Speech
     speechVerb: Plant
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      50: Critical
+      100: Dead
   - type: Vocal
     sounds:
       Male: UnisexDiona
