@@ -296,7 +296,7 @@ namespace Content.Server.Atmos.EntitySystems
             }
             else
             {
-                flammable.OnFire = ignite;
+                flammable.OnFire |= ignite;
                 UpdateAppearance(uid, flammable);
             }
         }
