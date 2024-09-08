@@ -46,8 +46,8 @@
     node: shuttleWindow
   - type: Appearance
   - type: DamageVisuals
-    thresholds: [4, 8, 12]
-    damageDivisor: 28
+    thresholds: [5, 10, 20]
+    damageDivisor: 20
     trackAllDamage: true
     damageOverlay:
       sprite: Structures/Windows/cracks.rsi

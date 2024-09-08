@@ -43,8 +43,8 @@
     base: mwindow
   - type: Appearance
   - type: DamageVisuals
-    thresholds: [4, 8, 12]
-    damageDivisor: 6
+    thresholds: [5, 10, 20]
+    damageDivisor: 4
     trackAllDamage: true
     damageOverlay:
       sprite: Structures/Windows/cracks.rsi
