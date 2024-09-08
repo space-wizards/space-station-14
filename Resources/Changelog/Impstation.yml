@@ -382,6 +382,7 @@
   - message: Add more helpful login tips.
     type: Add
   id: 53
+  time: '2024-08-03T01:53:12.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/66
 - author: formlessnameless
   changes:
@@ -399,42 +400,49 @@
   - message: The round start event for Spy vs Spy had a max delay smaller than its min delay, most likely due to a zero left out erroneously.
     type: Fix
   id: 55
+  time: '2024-08-03T01:52:45.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/68
 - author: sageu111
   changes:
   - message: BIG GRAY UPDATE (ALL GRAY AND TOYS INSIDE), THIS IS THE BIG GRAY THIS IS THE NEW SHIT
     type: Add
   id: 56
+  time: '2024-08-03T03:05:38.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/69
 - author: sageu111
   changes:
   - message: blah blah blah blah, removes a line of text that is useless
     type: Fix
   id: 57
+  time: '2024-08-03T03:18:24.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/70
 - author: sageu111
   changes:
   - message: fix for grays not having headset or ID slot
     type: Fix
   id: 58
+  time: '2024-08-03T16:38:33.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/71
 - author: Drags-His-Tail
   changes:
   - message: Added 500 Cigarettes, now purchasable from cargo for only $5000, or in an emagged smoke vending machine near you.
     type: Add
   id: 59
+  time: '2024-08-03T23:03:57.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/72
 - author: formlessnameless
   changes:
   - message: Codewords should no longer make people locally deaf.
     type: Fix
   id: 60
+  time: '2024-08-03T23:04:06.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/73
 - author: TGRCdev
   changes:
   - message: Rewrote InjectTagAroundString to not use Regex
     type: Fix
   id: 61
+  time: '2024-08-04T02:28:17.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/74
 - author: TGRCdev
   changes:
@@ -443,54 +451,63 @@
   - message: Character creator now uses "it/its" pronouns correctly.
     type: Fix
   id: 62
+  time: '2024-08-04T02:28:28.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/75
 - author: formlessnameless
   changes:
   - message: Initial version of gray ship added.
     type: Add
   id: 63
+  time: '2024-08-05T04:20:41.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/76
 - author: TGRCdev
   changes:
   - message: Dragging mobs in crit no longer deals damage
     type: Tweak
-    id: 64
+  id: 64
+  time: '2024-08-06T21:35:36.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/78
 - author: ultramario1998
   changes:
   - message: Removed templar helmet
     type: Tweak
   id: 65
+  time: '2024-08-07T16:25:31.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/79
 - author: TGRCdev
   changes:
   - message: Station records now show correct pronouns
     type: Fix
   id: 66
+  time: '2024-08-07T16:25:21.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/80
 - author: FlippenPage
   changes:
   - message: Add Space Cruise mapping elements
     type: Add
   id: 67
+  time: '2024-08-11T17:35:50.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/81
 - author: Drags-His-Tail
   changes:
   - message: Added Ratvarian, Slime, Russian, French, and Spanish as speech traits. Blabl blump!
     type: Add
   id: 68
+  time: '2024-08-11T17:35:38.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/82
 - author: TGRCdev
   changes:
   - message: Fixes the Newports and pAI trinkets. Also removes the "PVC" tag from the PVC pipe
     type: Fix
   id: 69
+  time: '2024-08-11T17:35:28.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/83
 - author: TGRCdev
   changes:
   - message: Readding a maintenance loot table that was mistakenly deleted during a merge conflict.
     type: Fix
   id: 70
+  time: '2024-08-11T20:38:28.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/84
 - author: TGRCdev
   changes:
@@ -501,6 +518,7 @@
   - message: Templar helmet's ID was mistakenly re-introduced into the maintenance loot tables. Re-removed the ID from the loot table.
     type: Fix
   id: 71
+  time: '2024-08-12T02:07:08.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/85
 - author: starlighthowls
   changes:
@@ -511,6 +529,7 @@
   - message: Minor ursa plushie
     type: Add
   id: 72
+  time: '2024-08-12T02:10:48.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/86
 - author: TGRCdev
   changes:
@@ -519,6 +538,7 @@
   - message: Crew manifest should no longer overlap long names and titles
     type: Fix
   id: 73
+  time: '2024-08-13T00:53:10.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/87
 - author: formlessnameless
   changes:
@@ -527,6 +547,7 @@
   - message: Modified the shuttles I've made to have appropriately colored atmos pipes, some structural changes
     type: Tweak
   id: 74
+  time: '2024-08-13T00:53:24.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/88
 - author: starlighthowls
   changes:
@@ -535,36 +556,42 @@
   - message: Added rainbow ss14 decal
     type: Add
   id: 75
+  time: '2024-08-13T02:26:46.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/89
 - author: TGRCdev
   changes:
   - message: Station maps now have a directory that lists all enabled beacons on a station.
     type: Add
   id: 76
+  time: '2024-08-13T02:26:57.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/90
 - author: formlessnameless
   changes:
   - message: Added the ability to turn normal bananium floors into blessed bananium floors.
     type: Add
   id: 77
+  time: '2024-08-13T19:55:10.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/92
 - author: formlessnameless
   changes:
     - message: Added changeling antagonist from whateverusername0's fork of the main upstream project.
       type: Add
   id: 78
+  time: '2024-08-15T03:03:14.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/94
 - author: TGRCdev
   changes:
   - message: GameRuleMeteorScheduler is now MeteorSwarmScheduler
     type: Fix
   id: 79
+  time: '2024-08-15T16:39:45.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/95
 - author: wafehling
   changes:
   - message: Added rare announcement variants for some events.
     type: Add
   id: 80
+  time: '2024-08-15T16:39:56.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/96
 - author: starlighthowls
   changes:
@@ -575,18 +602,21 @@
   - message: Added a new decal.
     type: Add
   id: 81
+  time: '2024-08-15T16:40:08.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/97
 - author: Darkmajia
   changes:
   - message: Added 4 random announcers from the Einstein Engines fork.
     type: Add
   id: 82
+  time: '2024-08-16T17:41:28.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/98
 - author: Drags-His-Tail
   changes:
   - message: Most reality-breaking side-effects of the QSI have been mitigated.
     type: Fix
   id: 83
+  time: '2024-08-15T23:59:39.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/99
 - author: starlighthowls
   changes:
@@ -598,8 +628,9 @@
     type: Add
   - message: Manually updated impstation changelog. (hi!)
     type: Add
-    id: 84
-    url: https://github.com/medabunny/imp-station-14/pull/100
+  id: 84
+  time: '2024-08-16T22:33:37.0000000+00:00'
+  url: https://github.com/medabunny/imp-station-14/pull/100
 - author: formlessnameless
   changes:
   - message: A bunch of formatting fixes that the system was yelling at me about
