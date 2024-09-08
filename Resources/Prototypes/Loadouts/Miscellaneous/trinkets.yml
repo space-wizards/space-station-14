@@ -15,6 +15,15 @@
       !type:RoleTimeRequirement
       role: JobBartender
       time: 18000 # 5 hour
+- type: loadoutEffectGroup
+  id: Musician
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobMusician
+      time: 18000 # 5 hour
+
 
 # Plushies
 - type: loadout
@@ -42,6 +51,14 @@
   storage:
     back:
     - PlushieMoffBar
+- type: loadout
+  id: PlushieMoffsician
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Musician
+  storage:
+    back:
+    - PlushieMoffsician
 - type: loadout
   id: PlushieMoffRainbow
   effects:
