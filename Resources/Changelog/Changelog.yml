@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: DrEnzyme
-  changes:
-  - message: Add bagels and poppy seed bagels.
-    type: Add
-  id: 6813
-  time: '2024-06-23T19:33:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/24799
 - author: PJB3005
   changes:
   - message: Ghosts can now examine details on objects from any range.
@@ -3864,3 +3857,14 @@
   id: 7312
   time: '2024-09-08T06:22:27.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31012
+- author: metalgearsloth
+  changes:
+  - message: Fix the FTL bubbles sometimes persisting.
+    type: Fix
+  - message: Fix AI eye being able to FTL.
+    type: Fix
+  - message: Fix the AI eye being able to be FTL smashed.
+    type: Fix
+  id: 7313
+  time: '2024-09-08T08:12:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31952
