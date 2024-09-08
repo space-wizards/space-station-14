@@ -9,7 +9,7 @@
     - type: Clothing
       sprite: Nyanotrasen/Clothing/OuterClothing/WinterCoats/hyenh.rsi
     - type: TemperatureProtection
-      coolingcoefficient: 0.1
+      coefficient: 0.1
 
 - type: entity
   parent: ClothingOuterWinterCoat
@@ -22,7 +22,7 @@
     - type: Clothing
       sprite: Nyanotrasen/Clothing/OuterClothing/WinterCoats/long_winter_coat.rsi
     - type: TemperatureProtection
-      coolingcoefficient: 0.3
+      coefficient: 0.1
 
 - type: entity
   parent: ClothingOuterWinterCoat
@@ -35,7 +35,7 @@
     - type: Clothing
       sprite: Nyanotrasen/Clothing/OuterClothing/WinterCoats/plaid_winter_coat.rsi
     - type: TemperatureProtection
-      coolingcoefficient: 0.3
+      coefficient: 0.1
 
 - type: entity
   parent: ClothingOuterWinterCoat
@@ -48,4 +48,4 @@
     - type: Clothing
       sprite: Nyanotrasen/Clothing/OuterClothing/WinterCoats/mail_winter_coat.rsi
     - type: TemperatureProtection
-      coolingcoefficient: 0.3
+      coefficient: 0.1
