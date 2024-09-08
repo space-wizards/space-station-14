@@ -30,7 +30,7 @@
     state: whistle
 
 - type: entity
-  parent: BaseWhistle
+  parent: [BaseWhistle, BaseRestrictedContraband]
   id: SecurityWhistle
   description: Sound of it make you feel fear.
   components:
