@@ -53,6 +53,9 @@ namespace Content.Shared.Roles
         [DataField("setPreference")]
         public bool SetPreference { get; private set; } = true;
 
+        [DataField("applyTraits")]
+        public bool ApplyTraits { get; private set; } = true;
+
         /// <summary>
         ///     Whether this job should show in the ID Card Console.
         ///     If set to null, it will default to SetPreference's value.
