@@ -172,7 +172,7 @@
       Steel: 100 # coins are fake on the inside
       Silver: 200
   - type: StaticPrice
-    price: 125
+    price: 135
 
 - type: entity
   parent: TreasureCoinIron
@@ -196,7 +196,7 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 400
-      Diamond: 25 # very hard gamble
+      Diamond: 5
   - type: StaticPrice
     price: 250
 
@@ -208,8 +208,8 @@
     state: coin_diamond
   - type: PhysicalComposition
     materialComposition:
-      Steel: 200
-      Diamond: 50 # you can gamble recycling it or sell for guaranteed money
+      Steel: 300
+      Diamond: 15
   - type: StaticPrice
     price: 500
 
