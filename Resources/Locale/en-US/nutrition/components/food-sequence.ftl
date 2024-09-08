@@ -4,7 +4,7 @@ food-sequence-no-space = You can't put any more!
 
 food-sequence-content-chicken = chicken
 food-sequence-content-duck = duck
-food-sequence-content-crab = crabs
+food-sequence-content-crab = crab
 food-sequence-content-dragon = dragon
 food-sequence-content-snake = snake
 food-sequence-content-xeno = xeno
@@ -72,6 +72,8 @@ food-sequence-content-suppermatter = suppermatter
 food-sequence-content-capfruit = capfruit
 food-sequence-content-berries = berries
 food-sequence-content-spacemans-trumpet = spacemans trupmet
+food-sequence-content-cherry = cherry
+food-sequence-content-snail = snail
 
 # BURGERS
 
@@ -81,6 +83,7 @@ food-sequence-burger-content-raw-meat = raw
 food-sequence-burger-content-meat = meaty
 food-sequence-burger-content-carp = carpo
 food-sequence-burger-content-bear = bear
+food-sequence-burger-content-crab = crabs
 food-sequence-burger-content-penguin = peng
 food-sequence-burger-content-corgi = corgi
 food-sequence-burger-content-goliath = goli

@@ -11,11 +11,10 @@ Botany and Chemistry can often work together to produce better medicine (or recr
 <GuideEntityEmbed Entity="Nettle"/>
 </Box>
 
-<GuideReagentEmbed Reagent="Ammonia"/>
-<GuideReagentEmbed Reagent="Diethylamine"/>
-<GuideReagentEmbed Reagent="EZNutrient"/>
-<GuideReagentEmbed Reagent="Left4Zed"/>
-<GuideReagentEmbed Reagent="RobustHarvest"/>
+<GuideReagentGroupEmbed Group="Botanical"/>
 <GuideReagentEmbed Reagent="UnstableMutagen"/>
+<GuideReagentEmbed Reagent="Cryoxadone"/>
+<GuideReagentEmbed Reagent="Dylovene"/>
+<GuideReagentEmbed Reagent="Phalanximine"/>
 
 </Document>

@@ -56,7 +56,7 @@
 - type: entity
   parent: BasePlushie
   id: PlushieThrongler
-  name: The Throngler plushie
+  name: throngler plushie
   description: A stuffed toy to remind cargo techs of what they can no longer have.
   components:
     - type: Sprite
@@ -215,7 +215,7 @@
         shader: unshaded
 
 - type: entity
-  parent: [ BasePlushie, BaseSyndicateContraband ]
+  parent: BasePlushie
   id: PlushieNuke
   name: nukie plushie
   description: A stuffed toy that resembles a syndicate nuclear operative. The tag claims operatives to be purely fictitious.
@@ -1268,6 +1268,7 @@
         right:
           - state: inhand-right-blade
             shader: unshaded
+    - type: ItemTogglePointLight
     - type: DisarmMalus
       malus: 0
     - type: StaminaDamageOnHit

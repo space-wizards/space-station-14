@@ -40,7 +40,7 @@
       powerLoad: 1500
     - type: ExtensionCableReceiver
     - type: Damageable
-      damageContainer: Inorganic
+      damageContainer: StructuralInorganic
       damageModifierSet: Electronic
     - type: Destructible
       thresholds:
@@ -193,7 +193,7 @@
         - !type:ChangeConstructionNodeBehavior
           node: machineFrame
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: Electronic
   - type: StaticPrice
     price: 2000

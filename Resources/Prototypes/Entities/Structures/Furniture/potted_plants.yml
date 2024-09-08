@@ -5,6 +5,7 @@
   description: A little bit of nature contained in a pot.
   abstract: true
   components:
+  - type: SpriteFade
   - type: Transform
     noRot: true
   - type: InteractionOutline
@@ -34,7 +35,7 @@
       stash: !type:ContainerSlot {}
   - type: Pullable
   - type: Damageable
-    damageContainer: Inorganic # The pot. Not the plant. Or is it plastic?
+    damageContainer: StructuralInorganic # The pot. Not the plant. Or is it plastic?
   - type: Destructible
     thresholds:
     - trigger:
