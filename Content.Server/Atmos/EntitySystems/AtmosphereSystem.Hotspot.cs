@@ -71,7 +71,7 @@ namespace Content.Server.Atmos.EntitySystems
                 // Get already existing burnt decals on the tile
                 var tileDecals = _decalSystem.GetDecalsInRange(gridUid, tilePos).Select(x => decals.Contains(x.Decal.Id));
 
-                // Add burned decal to the tile only if there are less than 4 of them
+                // Add a random burned decal to the tile only if there are less than 4 of them
                 if (tileDecals.Count() < 4)
                     _decalSystem.TryAddDecal(decals.ElementAt(_random.Next(decals.Count())), new(gridUid, tilePos), out _, cleanable: true);
 
