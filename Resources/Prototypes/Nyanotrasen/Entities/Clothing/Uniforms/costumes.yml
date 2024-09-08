@@ -237,79 +237,11 @@
   - type: Clothing
     sprite: Nyanotrasen/Clothing/Uniforms/Costume/gakuran.rsi
 
-## mnk
-
-- type: entity
-  parent: ClothingUniformSkirtBase
-  id: ClothingUniformMNKOfficeSkirt
-  name: MNK office skirt
-  description: An MNK outfit within office dress code.
-  components:
-  - type: Sprite
-    sprite: Nyanotrasen/Clothing/Misc/office_skirt.rsi
-  - type: Clothing
-    sprite: Nyanotrasen/Clothing/Misc/office_skirt.rsi
-
-- type: entity
-  parent: ClothingUniformBase
-  id: ClothingUniformMNKUnderGarment
-  name: MNK under garment
-  description: MNK ensured comfort for the important bits.
-  components:
-  - type: Sprite
-    sprite: Nyanotrasen/Clothing/Misc/under_garments.rsi
-  - type: Clothing
-    sprite: Nyanotrasen/Clothing/Misc/under_garments.rsi
-
-- type: entity
-  parent: ClothingUniformBase
-  id: ClothingUniformMNKGymBra
-  name: MNK gym bra
-  description: Maximum performance with MNK sweat blockers.
-  components:
-  - type: Sprite
-    sprite: Nyanotrasen/Clothing/Misc/gym_bra.rsi
-  - type: Clothing
-    sprite: Nyanotrasen/Clothing/Misc/gym_bra.rsi
-
-- type: entity
-  parent: ClothingUniformBase
-  id: ClothingUniformMNKDressBlack
-  name: MNK black dress
-  description: A sleek black dress sporting a MNK window.
-  components:
-  - type: Sprite
-    sprite: Nyanotrasen/Clothing/Misc/black_dress.rsi
-  - type: Clothing
-    sprite: Nyanotrasen/Clothing/Misc/black_dress.rsi
-
-- type: entity
-  parent: ClothingUniformBase
-  id: ClothingUniformMNKBlackOveralls
-  name: MNK black overalls
-  description: A comfy undershirt and thick black MNK overalls.
-  components:
-  - type: Sprite
-    sprite: Nyanotrasen/Clothing/Misc/black_overall.rsi
-  - type: Clothing
-    sprite: Nyanotrasen/Clothing/Misc/black_overall.rsi
-
-- type: entity
-  parent: ClothingUniformBase
-  id: ClothingUniformMNKBlackShoulder
-  name: MNK exposed shoulders
-  description: A MNK outfit with exposed shoulders.
-  components:
-  - type: Sprite
-    sprite: Nyanotrasen/Clothing/Misc/exposed_shoulder.rsi
-  - type: Clothing
-    sprite: Nyanotrasen/Clothing/Misc/exposed_shoulder.rsi
-
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformMNKTracksuitBlack
-  name: MNK black tracksuit
-  description: A set of light MNK athletic clothing.
+  name: black tracksuit
+  description: A set of light athletic clothing.
   components:
   - type: Sprite
     sprite: Nyanotrasen/Clothing/Misc/tracksuit.rsi
