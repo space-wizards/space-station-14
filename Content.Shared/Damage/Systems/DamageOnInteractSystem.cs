@@ -81,8 +81,10 @@ public sealed class DamageOnInteractSystem : EntitySystem
 
         if (totalDamage != null && totalDamage.AnyPositive())
         {
+            // Record this interaction and determine when a user is allowed to interact with this entity again
             entity.Comp.LastInteraction = _gameTiming.CurTime;
             entity.Comp.NextInteraction = _gameTiming.CurTime + TimeSpan.FromSeconds(entity.Comp.InteractTimer);
+
             args.Handled = true;
             _adminLogger.Add(LogType.Damaged, $"{ToPrettyString(args.User):user} injured their hand by interacting with {ToPrettyString(args.Target):target} and received {totalDamage.GetTotal():damage} damage");
             _audioSystem.PlayPredicted(entity.Comp.InteractSound, args.Target, args.User);
@@ -95,7 +97,6 @@ public sealed class DamageOnInteractSystem : EntitySystem
             {
                 _stun.TryParalyze(args.User, TimeSpan.FromSeconds(entity.Comp.StunSeconds), true);
             }
-
         }
 
         // Check if the entity can be pulled
