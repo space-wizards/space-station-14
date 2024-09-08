@@ -29,6 +29,16 @@
             - tool: Screwing
               doAfter: 2
 
+        - to: displacedGirder
+          completed:
+            - !type:SnapToGrid
+              southRotation: false
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - tool: Prying
+              doAfter: 2
+
         - to: wall
           completed:
             - !type:SnapToGrid
@@ -513,3 +523,34 @@
           steps:
             - tool: Welding
               doAfter: 5
+
+    - node: displacedGirder
+      entity: DisplacedGirder
+      edges:
+        - to: girder
+          steps:
+            - tool: Screwing
+              doAfter: 3
+
+        - to: solidFalseWall
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 3
+
+    - node: solidFalseWall
+      entity: SolidFalseWall
+      edges:
+        - to: displacedGirder
+          conditions:
+            - !type:EntityAnchored {}
+            - !type:DoorWelded {}
+          completed:
+            - !type:GivePrototype
+              prototype: SheetSteel1
+              amount: 2
+          steps:
+            - tool: Prying
+              doAfter: 2
