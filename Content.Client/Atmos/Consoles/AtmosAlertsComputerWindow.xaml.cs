@@ -341,7 +341,7 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
             return false;
 
         // Color the region based on alarm state and entity tracking
-        color = blip.Value.Item2 * Color.DimGray;
+        color = blip.Value.Item2 * new Color(154, 154, 154);
 
         if (_trackedEntity != null && _trackedEntity != regionOwner)
             color *= Color.DimGray;
