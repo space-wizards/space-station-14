@@ -1,5 +1,4 @@
-using Content.Server.Chemistry.EntitySystems;
-namespace Content.Server.Chemistry.Components;
+namespace Content.Shared.Chemistry.Components;
 
 /// <summary>
 ///     Represents a container that also contains a solution.

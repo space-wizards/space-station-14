@@ -1,11 +1,9 @@
-using Content.Shared.Chemistry;
-using Content.Server.Chemistry.Components;
-using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Popups;
 using Robust.Shared.Containers;
 
-namespace Content.Server.Chemistry.EntitySystems;
+namespace Content.Shared.Chemistry.EntitySystems;
 
 public sealed class ReactiveContainerSystem : EntitySystem
 {
