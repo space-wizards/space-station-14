@@ -27,17 +27,8 @@
                 sprite: Objects/Devices/communication.rsi
                 state: walkietalkie
               doAfter: 5
-            - tag: CapacitorStockPart
-              name: capacitor
-              icon:
-                sprite: Objects/Misc/stock_parts.rsi
-                state: capacitor
-              doAfter: 5
-            - tag: CapacitorStockPart
-              name: capacitor
-              icon:
-                sprite: Objects/Misc/stock_parts.rsi
-                state: capacitor
+            - material: Capacitor
+              amount: 2
               doAfter: 5
     - node: medsecHud
       entity: ClothingEyesHudMedSec
