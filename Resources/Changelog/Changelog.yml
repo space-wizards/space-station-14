@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: eoineoineoin
-  changes:
-  - message: Hand labelers can now apply labels to buttons, switches, and levers
-    type: Tweak
-  id: 6811
-  time: '2024-06-23T14:52:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29378
 - author: Tayrtahn
   changes:
   - message: Jugs in the ChemVend are labeled again.
@@ -3856,3 +3849,11 @@
   id: 7310
   time: '2024-09-07T23:47:02.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31903
+- author: EmoGarbage404
+  changes:
+  - message: Added the biogenerator! Botany can use this machine to create various
+      materials, chemicals, and food items out of the
+    type: Add
+  id: 7311
+  time: '2024-09-08T05:34:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30694
