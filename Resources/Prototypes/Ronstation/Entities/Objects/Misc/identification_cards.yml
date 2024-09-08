@@ -14,3 +14,16 @@
     tags:
     - HeccDiver
     - TerraGov
+
+- type: entity
+  parent: [ IDCardStandard, BaseCommandContraband ]
+  id: BlueshieldIDCard
+  name: blueshield ID card
+  components:
+  - type: Sprite
+    sprite: Ronstation/Objects/Misc/id_cards.rsi
+    layers:
+    - state: default
+    - state: idnanotrasen
+  - type: PresetIdCard
+    job: BlueshieldOfficer
