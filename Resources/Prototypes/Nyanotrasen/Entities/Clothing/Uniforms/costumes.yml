@@ -237,6 +237,8 @@
   - type: Clothing
     sprite: Nyanotrasen/Clothing/Uniforms/Costume/gakuran.rsi
 
+# tracksuit
+
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformMNKTracksuitBlack
