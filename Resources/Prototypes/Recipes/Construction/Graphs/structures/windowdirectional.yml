@@ -10,6 +10,14 @@
               amount: 1
               doAfter: 1
 
+        - to: windowFrostedDirectional # 25 hp
+          steps:
+            - material: Glass
+              amount: 1
+            - material: Plastic
+              amount: 1
+              doAfter: 1
+
         - to: plasmaWindowDirectional # 37 hp
           steps:
             - material: PlasmaGlass
@@ -60,6 +68,11 @@
               doAfter: 1
             - tool: Anchoring
               doAfter: 2
+        - to: windowFrostedDirectional
+          steps:
+            - material: Plastic
+              amount: 1
+              doAfter: 0.5
         - to: plasmaWindowDirectional
           steps:
             - material: Plasma
@@ -80,6 +93,24 @@
             - material: MetalRod
               amount: 1
               doAfter: 1
+
+    - node: windowFrostedDirectional
+      entity: WindowFrostedDirectional
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetGlass1
+              amount: 1
+            - !type:SpawnPrototype
+              prototype: SheetPlastic1
+              amount: 1
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Screwing
+              doAfter: 1
+            - tool: Anchoring
+              doAfter: 2
 
     - node: plasmaWindowDirectional
       entity: PlasmaWindowDirectional

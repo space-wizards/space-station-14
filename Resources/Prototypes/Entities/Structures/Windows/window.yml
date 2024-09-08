@@ -238,6 +238,8 @@
   - type: Icon
     sprite: Structures/Windows/directional.rsi
     state: frosted_window
+  - type: StaticPrice
+    price: 35
 
 - type: entity
   parent: Window
