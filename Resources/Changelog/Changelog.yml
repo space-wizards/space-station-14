@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Emisse
-  changes:
-  - message: atmos, elite syndie, and deathsquad hardsuits are now the only fireproof
-      suits
-    type: Tweak
-  id: 6815
-  time: '2024-06-24T22:03:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29416
 - author: Bhijn and Myr
   changes:
   - message: The colors of the LEDs on the heater and freezer thermomachines has been
@@ -3868,3 +3860,14 @@
   id: 7314
   time: '2024-09-08T10:21:55.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31957
+- author: Killerqu00
+  changes:
+  - message: Seclite is now restricted to security.
+    type: Tweak
+  - message: Handcuffs are now restricted to security and command.
+    type: Tweak
+  - message: Trench whistle is now minor contraband.
+    type: Tweak
+  id: 7315
+  time: '2024-09-08T12:06:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31956
