@@ -2,7 +2,6 @@ using Content.Shared.Chemistry;
 using Content.Server.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reaction;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Popups;
 using Robust.Shared.Containers;
 
@@ -13,7 +12,7 @@ public sealed class ReactiveContainerSystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly ReactiveSystem _reactiveSystem = default!;
-    [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
 
     public override void Initialize()
     {
@@ -29,7 +28,7 @@ public sealed class ReactiveContainerSystem : EntitySystem
         if (!HasComp<ReactiveComponent>(args.Entity))
             return;
 
-        if (!_solutionContainerSystem.TryGetSolution(uid, comp.Solution, out var solution))
+        if (!_solutionContainerSystem.TryGetSolution(uid, comp.Solution, out _, out var solution))
             return;
         if (solution.Volume == 0)
             return;
@@ -40,7 +39,7 @@ public sealed class ReactiveContainerSystem : EntitySystem
 
     private void OnSolutionChange(EntityUid uid, ReactiveContainerComponent comp, SolutionChangedEvent args)
     {
-        if (!_solutionContainerSystem.TryGetSolution(uid, comp.Solution, out var solution))
+        if (!_solutionContainerSystem.TryGetSolution(uid, comp.Solution, out _, out var solution))
             return;
         if (solution.Volume == 0)
             return;
