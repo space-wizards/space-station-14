@@ -71,10 +71,10 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
         _airtightQuery = GetEntityQuery<AirtightComponent>();
         _firelockQuery = GetEntityQuery<FirelockComponent>();
 
-        // Store burnt tiles decals for the future use
-        _burntDecals = _prototypeManager.EnumeratePrototypes<DecalPrototype>().Where(x => x.Tags.Contains("burnt")).Select(x => x.ID).ToList();
-
         SubscribeLocalEvent<TileChangedEvent>(OnTileChanged);
+        SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
+
+        CacheDecals();
     }
 
     public override void Shutdown()
@@ -87,6 +87,12 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
     private void OnTileChanged(ref TileChangedEvent ev)
     {
         InvalidateTile(ev.NewTile.GridUid, ev.NewTile.GridIndices);
+    }
+
+    private void OnPrototypesReloaded(PrototypesReloadedEventArgs ev)
+    {
+        if (ev.WasModified<DecalPrototype>())
+            CacheDecals();
     }
 
     public override void Update(float frameTime)
@@ -114,5 +120,10 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
         }
 
         _exposedTimer -= ExposedUpdateDelay;
+    }
+
+    private void CacheDecals()
+    {
+        _burntDecals = _prototypeManager.EnumeratePrototypes<DecalPrototype>().Where(x => x.Tags.Contains("burnt")).Select(x => x.ID).ToList();
     }
 }
