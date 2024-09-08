@@ -7108,13 +7108,6 @@ entities:
     - type: Transform
       pos: 31.63529,-24.472576
       parent: 4812
-- proto: AntimovCircuitBoard
-  entities:
-  - uid: 12641
-    components:
-    - type: Transform
-      pos: 9.371053,43.6508
-      parent: 4812
 - proto: APCBasic
   entities:
   - uid: 903
@@ -10024,6 +10017,18 @@ entities:
     components:
     - type: Transform
       pos: -10.503301,0.7729684
+      parent: 4812
+- proto: Biogenerator
+  entities:
+  - uid: 1096
+    components:
+    - type: Transform
+      pos: -18.5,-9.5
+      parent: 4812
+  - uid: 1461
+    components:
+    - type: Transform
+      pos: -27.5,32.5
       parent: 4812
 - proto: BlastDoor
   entities:
@@ -29838,13 +29843,6 @@ entities:
     components:
     - type: Transform
       pos: -32.450558,-7.5008273
-      parent: 4812
-- proto: ClothingHandsGlovesLeather
-  entities:
-  - uid: 1461
-    components:
-    - type: Transform
-      pos: -18.506594,-9.370907
       parent: 4812
 - proto: ClothingHandsGlovesNitrile
   entities:
@@ -57220,13 +57218,6 @@ entities:
     - type: Transform
       pos: -53.373444,-16.451925
       parent: 4812
-- proto: OverlordCircuitBoard
-  entities:
-  - uid: 12649
-    components:
-    - type: Transform
-      pos: 11.511678,43.5883
-      parent: 4812
 - proto: OxygenCanister
   entities:
   - uid: 733
@@ -68341,11 +68332,6 @@ entities:
     - type: Transform
       pos: -18.5,-5.5
       parent: 4812
-  - uid: 1096
-    components:
-    - type: Transform
-      pos: -18.5,-9.5
-      parent: 4812
   - uid: 1101
     components:
     - type: Transform
@@ -69891,13 +69877,6 @@ entities:
     components:
     - type: Transform
       pos: -25.5,-18.5
-      parent: 4812
-- proto: TaikoInstrument
-  entities:
-  - uid: 4373
-    components:
-    - type: Transform
-      pos: -27.5,32.5
       parent: 4812
 - proto: TargetHuman
   entities:
