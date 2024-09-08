@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: Bhijn and Myr
-  changes:
-  - message: The colors of the LEDs on the heater and freezer thermomachines has been
-      changed from red/green (respectively) to orange/cyan (respectively). In laymen's
-      terms, this makes thermomachines far more reasonably differentiable for those
-      with colorblindness.
-    type: Tweak
-  id: 6816
-  time: '2024-06-24T22:40:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29397
 - author: Elysium206
   changes:
   - message: Increased Security Riot shields durability significantly and makes actively
@@ -3871,3 +3861,10 @@
   id: 7315
   time: '2024-09-08T12:06:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31956
+- author: Psychpsyo
+  changes:
+  - message: The random sentience event should now actually happen again.
+    type: Fix
+  id: 7316
+  time: '2024-09-08T12:10:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31953
