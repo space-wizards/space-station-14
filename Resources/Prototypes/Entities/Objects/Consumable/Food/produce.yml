@@ -257,9 +257,14 @@
       types:
         Heat: 4
         Caustic: 4
+    throw: true
+    throwSpeed: 3
+    interactTimer: 2 # Stop the player from spam clicking the entity
     ignoreResistances: false
     popupText: powered-light-component-burn-hand
     interactSound: /Audio/Effects/lightburn.ogg
+    stunChance: 0.10
+    stunSeconds: 1.5
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
