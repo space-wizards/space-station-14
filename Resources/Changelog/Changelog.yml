@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Tayrtahn
-  changes:
-  - message: Fixed space ninja's starting with their internals disabled.
-    type: Fix
-  id: 6818
-  time: '2024-06-25T06:28:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29213
 - author: PJB3005
   changes:
   - message: Low pressure damage now does only 1/4th as much damage. This is a band-aid
@@ -3867,3 +3860,11 @@
   id: 7317
   time: '2024-09-08T16:10:05.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31847
+- author: K-Dynamic
+  changes:
+  - message: added missing missing resistance values for directional plasma and uranium
+      windows
+    type: Fix
+  id: 7318
+  time: '2024-09-08T18:08:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31975
