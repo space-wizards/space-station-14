@@ -1434,6 +1434,34 @@
       Burger: Poppy
 
 - type: entity
+  name: Sunflower
+  parent: FoodPoppy
+  id: FoodSunflower
+  description: First thing what you must plant if "There's a zombie on your lawn".
+  components:
+  - type: FlavorProfile
+    flavors:
+      - medicine
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 12
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Oil
+          Quantity: 10
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/sunflower.rsi
+  - type: Produce
+    seedId: sunflower
+  - type: Extractable
+    grindableSolutionName: food
+  - type: Tag
+    tags:
+    - Flower
+
+- type: entity
   name: lily
   parent: FoodPoppy
   id: FoodLily

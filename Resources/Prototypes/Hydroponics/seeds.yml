@@ -142,13 +142,13 @@
   plantRsi: Objects/Specific/Hydroponics/sentiflower.rsi
   packetPrototype: SentiflowerSeeds
   productPrototypes:
-    - FoodMimana
-  lifespan: 50
+    - MobSentiflower
+  lifespan: 30
   maturation: 6
   production: 1
   yield: 1
   idealLight: 9
-  waterConsumption: 0.60
+  waterConsumption: 1
   idealHeat: 298
 
 
