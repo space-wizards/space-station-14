@@ -91,11 +91,12 @@
   id: ClothingOuterStorageToggleableBase
   components:
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterDefault
+    clothingPrototypes: 
+      head: ClothingHeadHatHoodWinterDefault
     slot: head
   - type: ContainerContainer
     containers:
-      toggleable-clothing: !type:ContainerSlot {}
+      toggleable-clothing: !type:Container {}
       storagebase: !type:Container
         ents: []
 
@@ -125,10 +126,9 @@
         Heat: 0.90
         Radiation: 0.25
   - type: ToggleableClothing
-    slot: head
   - type: ContainerContainer
     containers:
-      toggleable-clothing: !type:ContainerSlot {}
+      toggleable-clothing: !type:Container {}
   - type: GroupExamine
   - type: Tag
     tags:
@@ -174,11 +174,11 @@
   abstract: True
   components:
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterDefault
-    slot: head
+    clothingPrototypes: 
+      head: ClothingHeadHatHoodWinterDefault
   - type: ContainerContainer
     containers:
-      toggleable-clothing: !type:ContainerSlot {}
+      toggleable-clothing: !type:Container {}
       storagebase: !type:Container
         ents: []
 

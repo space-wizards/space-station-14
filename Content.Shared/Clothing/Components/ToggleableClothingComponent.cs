@@ -3,6 +3,7 @@ using Content.Shared.Inventory;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Clothing.Components;
@@ -35,7 +36,7 @@ public sealed partial class ToggleableClothingComponent : Component
     ///     Dictionary of clothing uids and slots
     /// </summary>
     [DataField, AutoNetworkedField]
-    public Dictionary<EntityUid, string> ClothingUids = default!;
+    public Dictionary<EntityUid, string> ClothingUids = new();
 
     /// <summary>
     ///     The inventory slot flags required for this component to function.
@@ -65,8 +66,25 @@ public sealed partial class ToggleableClothingComponent : Component
     public string? VerbText;
 
     /// <summary>
-    ///     If true it will block unequip of this entity until all toggleable clothing are removed
+    ///     If true it will block unequip of this entity until all attached clothing are removed
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool BlockUnequipWhenToggle = false;
+}
+
+[Serializable, NetSerializable]
+public enum ToggleClothingUiKey : byte
+{
+    Key
+}
+
+[Serializable, NetSerializable]
+public sealed class ToggleableClothingUiMessage : BoundUserInterfaceMessage
+{
+    public NetEntity AttachedClothingUid;
+
+    public ToggleableClothingUiMessage(NetEntity attachedClothingUid)
+    {
+        AttachedClothingUid = attachedClothingUid;
+    }
 }

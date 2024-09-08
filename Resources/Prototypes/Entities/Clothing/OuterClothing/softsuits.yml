@@ -50,11 +50,11 @@
   - type: TemperatureProtection
     coefficient: 0.5
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetEVALarge
-    slot: head
+    clothingPrototypes: 
+      head: ClothingHeadHelmetEVALarge
   - type: ContainerContainer
     containers:
-      toggleable-clothing: !type:ContainerSlot {}
+      toggleable-clothing: !type:Container {}
 
 #Prisoner EVA
 - type: entity
@@ -120,8 +120,8 @@
   - type: StealTarget
     stealGroup: ClothingOuterHardsuitVoidParamed
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetVoidParamed
-    slot: head
+    clothingPrototypes: 
+      head: ClothingHeadHelmetVoidParamed
   - type: ContainerContainer
     containers:
-      toggleable-clothing: !type:ContainerSlot {}
+      toggleable-clothing: !type:Container {}

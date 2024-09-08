@@ -118,11 +118,11 @@
     sprite: Clothing/OuterClothing/Suits/rad.rsi
   - type: GroupExamine
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodRad
-    slot: head
+    clothingPrototypes: 
+      head: ClothingHeadHatHoodRad
   - type: ContainerContainer
     containers:
-      toggleable-clothing: !type:ContainerSlot {}
+      toggleable-clothing: !type:Container {}
   - type: ClothingRequiredStepTriggerImmune
     slots: WITHOUT_POCKET
 
@@ -249,10 +249,11 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/iansuit.rsi
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodIan
+    clothingPrototypes: 
+      head: ClothingHeadHatHoodIan
   - type: ContainerContainer
     containers:
-      toggleable-clothing: !type:ContainerSlot {}
+      toggleable-clothing: !type:Container {}
   - type: Construction
     graph: ClothingOuterSuitIan
     node: suit
@@ -273,10 +274,11 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/carpsuit.rsi
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodCarp
+    clothingPrototypes: 
+      head: ClothingHeadHatHoodCarp
   - type: ContainerContainer
     containers:
-      toggleable-clothing: !type:ContainerSlot {}
+      toggleable-clothing: !type:Container {}
 
 - type: entity
   parent: ClothingOuterSuitCarp
@@ -289,4 +291,5 @@
   - type: TemperatureProtection
     coefficient: 0.01
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetHardsuitCarp
+    clothingPrototypes: 
+      head: ClothingHeadHelmetHardsuitCarp

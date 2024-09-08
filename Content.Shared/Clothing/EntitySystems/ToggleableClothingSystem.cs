@@ -13,6 +13,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using System.Linq;
 
 namespace Content.Shared.Clothing.EntitySystems;
 
@@ -270,84 +271,111 @@ public sealed class ToggleableClothingSystem : EntitySystem
             return;
 
         if (toggleableComp.Container != null)
-            _containerSystem.Insert(attached, toggleComp.Container);
+            _containerSystem.Insert(attached.Owner, toggleableComp.Container);
     }
 
     /// <summary>
     ///     Equip or unequip the toggleable clothing.
     /// </summary>
-    private void OnToggleClothing(EntityUid uid, ToggleableClothingComponent component, ToggleClothingEvent args)
+    private void OnToggleClothing(Entity<ToggleableClothingComponent> toggleable, ref ToggleClothingEvent args)
     {
         if (args.Handled)
             return;
 
         args.Handled = true;
-        ToggleClothing(args.Performer, uid, component);
+        ToggleClothing(args.Performer, toggleable);
     }
 
-    private void ToggleClothing(EntityUid user, EntityUid target, ToggleableClothingComponent component)
+    private void ToggleClothing(EntityUid user, Entity<ToggleableClothingComponent> toggleable)
     {
-        if (component.Container == null || component.ClothingUid == null)
+        var comp = toggleable.Comp;
+
+        if (comp.Container == null || comp.ClothingUids.Count == 0)
             return;
 
-        var parent = Transform(target).ParentUid;
-        if (component.Container.ContainedEntity == null)
-            _inventorySystem.TryUnequip(user, parent, component.Slot, force: true);
-        else if (_inventorySystem.TryGetSlotEntity(parent, component.Slot, out var existing))
+        var parent = Transform(toggleable.Owner).ParentUid;
+
+        // Checking first clothing to make others act like it
+        var parts = comp.ClothingUids;
+        var first = parts.First();
+
+        if (!comp.Container.Contains(first.Key))
         {
-            _popupSystem.PopupClient(Loc.GetString("toggleable-clothing-remove-first", ("entity", existing)),
-                user, user);
+            foreach (var part in parts)
+            {
+                _inventorySystem.TryUnequip(user, parent, part.Value, force: true);
+            }
+
+            return;
         }
-        else
-            _inventorySystem.TryEquip(user, parent, component.ClothingUid.Value, component.Slot);
+
+        foreach (var part in parts)
+        {
+            if (_inventorySystem.TryGetSlotEntity(parent, part.Value, out var existing))
+            {
+                _popupSystem.PopupClient(Loc.GetString("toggleable-clothing-remove-first", ("entity", existing)),
+                    user, user);
+
+                continue;
+            }
+
+            _inventorySystem.TryEquip(user, parent, part.Key, part.Value);
+        }
     }
 
-    private void OnGetActions(EntityUid uid, ToggleableClothingComponent component, GetItemActionsEvent args)
+    private void OnGetActions(Entity<ToggleableClothingComponent> toggleable, ref GetItemActionsEvent args)
     {
-        if (component.ClothingUid != null
-            && component.ActionEntity != null
-            && (args.SlotFlags & component.RequiredFlags) == component.RequiredFlags)
-        {
-            args.AddAction(component.ActionEntity.Value);
-        }
+        var comp = toggleable.Comp;
+
+        if (comp.ClothingUids.Count == 0 || comp.ActionEntity == null || args.SlotFlags != comp.RequiredFlags)
+            return;
+
+        args.AddAction(comp.ActionEntity.Value);
     }
 
-    private void OnInit(EntityUid uid, ToggleableClothingComponent component, ComponentInit args)
+    private void OnInit(Entity<ToggleableClothingComponent> toggleable, ref ComponentInit args)
     {
-        component.Container = _containerSystem.EnsureContainer<ContainerSlot>(uid, component.ContainerId);
+        var comp = toggleable.Comp;
+
+        comp.Container = _containerSystem.EnsureContainer<Container>(toggleable, comp.ContainerId);
     }
 
     /// <summary>
     ///     On map init, either spawn the appropriate entity into the suit slot, or if it already exists, perform some
     ///     sanity checks. Also updates the action icon to show the toggled-entity.
     /// </summary>
-    private void OnMapInit(EntityUid uid, ToggleableClothingComponent component, MapInitEvent args)
+    private void OnMapInit(Entity<ToggleableClothingComponent> toggleable, ref MapInitEvent args)
     {
-        if (component.Container!.ContainedEntity is {} ent)
+        var comp = toggleable.Comp;
+
+        if (comp.Container!.Count != 0)
         {
-            DebugTools.Assert(component.ClothingUid == ent, "Unexpected entity present inside of a toggleable clothing container.");
+            DebugTools.Assert(comp.ClothingUids.Count != 0, "Unexpected entity present inside of a toggleable clothing container.");
             return;
         }
 
-        if (component.ClothingUid != null && component.ActionEntity != null)
+        if (comp.ClothingUids.Count != 0 && comp.ActionEntity != null)
+            return;
+
+        var xform = Transform(toggleable.Owner);
+        var prototypes = comp.ClothingPrototypes;
+
+        foreach (var prototype in prototypes)
         {
-            DebugTools.Assert(Exists(component.ClothingUid), "Toggleable clothing is missing expected entity.");
-            DebugTools.Assert(TryComp(component.ClothingUid, out AttachedClothingComponent? comp), "Toggleable clothing is missing an attached component");
-            DebugTools.Assert(comp?.AttachedUid == uid, "Toggleable clothing uid mismatch");
-        }
-        else
-        {
-            var xform = Transform(uid);
-            component.ClothingUid = Spawn(component.ClothingPrototype, xform.Coordinates);
-            var attachedClothing = EnsureComp<AttachedClothingComponent>(component.ClothingUid.Value);
-            attachedClothing.AttachedUid = uid;
-            Dirty(component.ClothingUid.Value, attachedClothing);
-            _containerSystem.Insert(component.ClothingUid.Value, component.Container, containerXform: xform);
-            Dirty(uid, component);
+            var spawned = Spawn(prototype.Value, xform.Coordinates);
+            var attachedClothing = EnsureComp<AttachedClothingComponent>(spawned);
+            attachedClothing.AttachedUid = toggleable;
+
+            comp.ClothingUids.Add(spawned, prototype.Key);
+            _containerSystem.Insert(spawned, comp.Container, containerXform: xform);
+
+            Dirty(spawned, attachedClothing);
         }
 
-        if (_actionContainer.EnsureAction(uid, ref component.ActionEntity, out var action, component.Action))
-            _actionsSystem.SetEntityIcon(component.ActionEntity.Value, component.ClothingUid, action);
+        Dirty(toggleable, comp);
+
+        if (_actionContainer.EnsureAction(toggleable, ref comp.ActionEntity, out var action, comp.Action))
+            _actionsSystem.SetEntityIcon(comp.ActionEntity.Value, toggleable, action);
     }
 }
 
