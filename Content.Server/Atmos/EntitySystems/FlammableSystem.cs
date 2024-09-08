@@ -296,7 +296,12 @@ namespace Content.Server.Atmos.EntitySystems
             }
             else
             {
-                flammable.OnFire |= ignite;
+                if (!flammable.OnFire && ignite)
+                {
+                    var ignitedEv = new IgnitedEvent();
+                    RaiseLocalEvent(uid, ref ignitedEv);
+                    flammable.OnFire = ignite;
+                }
                 UpdateAppearance(uid, flammable);
             }
         }
@@ -335,6 +340,8 @@ namespace Content.Server.Atmos.EntitySystems
                     _adminLogger.Add(LogType.Flammable, $"{ToPrettyString(uid):target} set on fire by {ToPrettyString(ignitionSourceUser.Value):actor} with {ToPrettyString(ignitionSource):tool}");
                 else
                     _adminLogger.Add(LogType.Flammable, $"{ToPrettyString(uid):target} set on fire by {ToPrettyString(ignitionSource):actor}");
+                var ignitedEv = new IgnitedEvent();
+                RaiseLocalEvent(uid, ref ignitedEv);
                 flammable.OnFire = true;
             }
 
@@ -467,3 +474,9 @@ namespace Content.Server.Atmos.EntitySystems
         }
     }
 }
+
+/// <summary>
+/// Raised on ignited entities.
+/// </summary>
+[ByRefEvent]
+public record struct IgnitedEvent();

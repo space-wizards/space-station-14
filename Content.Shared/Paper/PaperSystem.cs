@@ -15,12 +15,12 @@ namespace Content.Shared.Paper;
 public sealed class PaperSystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly SharedPaperQuantumSystem _quantum = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
-    [Dependency] private readonly MetaDataSystem _metaSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     public override void Initialize()
@@ -41,7 +41,7 @@ public sealed class PaperSystem : EntitySystem
     {
         if (!string.IsNullOrEmpty(entity.Comp.Content))
         {
-            SetContent(entity, Loc.GetString(entity.Comp.Content));
+            SetContent((entity.Owner, entity.Comp), Loc.GetString(entity.Comp.Content));
         }
     }
 
@@ -77,7 +77,7 @@ public sealed class PaperSystem : EntitySystem
             {
                 args.PushMarkup(
                     Loc.GetString(
-                        "paper-component-examine-detail-has-words",
+                        "paer-component-examine-detail-has-words",
                         ("paper", entity)
                     )
                 );
@@ -100,8 +100,7 @@ public sealed class PaperSystem : EntitySystem
     private void OnInteractUsing(Entity<PaperComponent> entity, ref InteractUsingEvent args)
     {
         // only allow editing if there are no stamps or when using a cyberpen
-        var editable = entity.Comp.StampedBy.Count == 0 || _tagSystem.HasTag(args.Used, "WriteIgnoreStamps");
-        if (_tagSystem.HasTag(args.Used, "Write") && editable)
+        if (_tagSystem.HasTag(args.Used, "Write"))
         {
             if (entity.Comp.EditingDisabled)
             {
@@ -109,36 +108,48 @@ public sealed class PaperSystem : EntitySystem
                 _popupSystem.PopupEntity(paperEditingDisabledMessage, entity, args.User);
 
                 args.Handled = true;
-                return;
-            }
-            var writeEvent = new PaperWriteEvent(entity, args.User);
-            RaiseLocalEvent(args.Used, ref writeEvent);
 
-            entity.Comp.Mode = PaperAction.Write;
-            _uiSystem.OpenUi(entity.Owner, PaperUiKey.Key, args.User);
-            UpdateUserInterface(entity);
-            args.Handled = true;
+                return;
+            } 
+            var editable = !_quantum.IsEntangled(entity.Owner) && entity.Comp.StampedBy.Count == 0;
+            if (editable || _tagSystem.HasTag(args.Used, "WriteIgnoreRestrictions"))
+            {
+                var writeEvent = new PaperWriteEvent(entity, args.User);
+                RaiseLocalEvent(args.Used, ref writeEvent);
+
+                entity.Comp.Mode = PaperAction.Write;
+                _uiSystem.OpenUi(entity.Owner, PaperUiKey.Key, args.User);
+                UpdateUserInterface(entity);
+                args.Handled = true;
+            }
             return;
         }
 
         // If a stamp, attempt to stamp paper
-        if (TryComp<StampComponent>(args.Used, out var stampComp) && TryStamp(entity, GetStampInfo(stampComp), stampComp.StampState))
+        if (TryComp<StampComponent>(args.Used, out var stampComp))
         {
-            // successfully stamped, play popup
-            var stampPaperOtherMessage = Loc.GetString("paper-component-action-stamp-paper-other",
-                    ("user", args.User),
-                    ("target", args.Target),
-                    ("stamp", args.Used));
+            var stampInfo = GetStampInfo(stampComp);
+            if (TryStamp((entity.Owner, entity.Comp), stampInfo, stampComp.StampState))
+            {
+                var stampedEvent = new StampedEvent(stampInfo, stampComp.StampState);
+                RaiseLocalEvent(entity.Owner, ref stampedEvent);
 
-            _popupSystem.PopupEntity(stampPaperOtherMessage, args.User, Filter.PvsExcept(args.User, entityManager: EntityManager), true);
-            var stampPaperSelfMessage = Loc.GetString("paper-component-action-stamp-paper-self",
-                    ("target", args.Target),
-                    ("stamp", args.Used));
-            _popupSystem.PopupClient(stampPaperSelfMessage, args.User, args.User);
+                // successfully stamped, play popup
+                var stampPaperOtherMessage = Loc.GetString("paper-component-action-stamp-paper-other",
+                        ("user", args.User),
+                        ("target", args.Target),
+                        ("stamp", args.Used));
 
-            _audio.PlayPredicted(stampComp.Sound, entity, args.User);
+                _popupSystem.PopupEntity(stampPaperOtherMessage, args.User, Filter.PvsExcept(args.User, entityManager: EntityManager), true);
+                var stampPaperSelfMessage = Loc.GetString("paper-component-action-stamp-paper-self",
+                        ("target", args.Target),
+                        ("stamp", args.Used));
+                _popupSystem.PopupClient(stampPaperSelfMessage, args.User, args.User);
 
-            UpdateUserInterface(entity);
+                _audio.PlayPredicted(stampComp.Sound, entity, args.User);
+
+                UpdateUserInterface(entity);
+            }
         }
     }
 
@@ -155,13 +166,7 @@ public sealed class PaperSystem : EntitySystem
     {
         if (args.Text.Length <= entity.Comp.ContentSize)
         {
-            SetContent(entity, args.Text);
-
-            if (TryComp<AppearanceComponent>(entity, out var appearance))
-                _appearance.SetData(entity, PaperVisuals.Status, PaperStatus.Written, appearance);
-
-            if (TryComp(entity, out MetaDataComponent? meta))
-                _metaSystem.SetEntityDescription(entity, "", meta);
+            SetContent((entity.Owner, entity.Comp), args.Text);
 
             _adminLogger.Add(LogType.Chat,
                 LogImpact.Low,
@@ -180,35 +185,62 @@ public sealed class PaperSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Accepts the name and state to be stamped onto the paper, returns true if successful.
+    ///     Fills PaperComponent with existing data.
     /// </summary>
-    public bool TryStamp(Entity<PaperComponent> entity, StampDisplayInfo stampInfo, string spriteStampState)
+    public void Fill(Entity<PaperComponent?> entity, string content, string? stampState, List<StampDisplayInfo> stampedBy, bool editingDisabled)
     {
-        if (!entity.Comp.StampedBy.Contains(stampInfo))
+        if (!Resolve(entity, ref entity.Comp))
+            return;
+
+        SetContent(entity, content);
+
+        // Apply stamps
+        if (stampState != null)
         {
-            entity.Comp.StampedBy.Add(stampInfo);
-            Dirty(entity);
-            if (entity.Comp.StampState == null && TryComp<AppearanceComponent>(entity, out var appearance))
+            foreach (var stamp in stampedBy)
             {
-                entity.Comp.StampState = spriteStampState;
-                // Would be nice to be able to display multiple sprites on the paper
-                // but most of the existing images overlap
-                _appearance.SetData(entity, PaperVisuals.Stamp, entity.Comp.StampState, appearance);
+                TryStamp(entity, stamp, stampState);
             }
         }
+
+        entity.Comp.EditingDisabled = editingDisabled;
+    }
+
+    /// <summary>
+    ///     Accepts the name and state to be stamped onto the paper, returns true if successful.
+    /// </summary>
+    public bool TryStamp(Entity<PaperComponent?> entity, StampDisplayInfo stampInfo, string spriteStampState)
+    {
+        if (!Resolve(entity, ref entity.Comp))
+            return false;
+        if (entity.Comp.StampedBy.Contains(stampInfo))
+            return false;
+
+        entity.Comp.StampedBy.Add(stampInfo);
+        if (entity.Comp.StampState == null && TryComp<AppearanceComponent>(entity, out var appearance))
+        {
+            entity.Comp.StampState = spriteStampState;
+            // Would be nice to be able to display multiple sprites on the paper
+            // but most of the existing images overlap
+            _appearance.SetData(entity, PaperVisuals.Stamp, entity.Comp.StampState, appearance);
+        }
+        Dirty(entity);
+        UpdateUserInterface((entity.Owner, entity.Comp));
         return true;
     }
 
-    public void SetContent(Entity<PaperComponent> entity, string content)
+    public void SetContent(Entity<PaperComponent?> entity, string content)
     {
-        entity.Comp.Content = content + '\n';
+        if (!Resolve(entity, ref entity.Comp))
+            return;
+        entity.Comp.Content = content;
         Dirty(entity);
-        UpdateUserInterface(entity);
+        UpdateUserInterface((entity.Owner, entity.Comp));
 
         if (!TryComp<AppearanceComponent>(entity, out var appearance))
             return;
 
-        var status = string.IsNullOrWhiteSpace(content)
+        var status = content == ""
             ? PaperStatus.Blank
             : PaperStatus.Written;
 
@@ -226,3 +258,9 @@ public sealed class PaperSystem : EntitySystem
 /// </summary>
 [ByRefEvent]
 public record struct PaperWriteEvent(EntityUid User, EntityUid Paper);
+
+/// <summary>
+/// Event fired when using a rubber stamp on paper.
+/// </summary>
+[ByRefEvent]
+public readonly record struct StampedEvent(StampDisplayInfo StampInfo, string SpriteStampState);

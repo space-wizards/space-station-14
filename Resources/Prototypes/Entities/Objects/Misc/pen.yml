@@ -63,7 +63,7 @@
   - type: Tag
     tags:
     - Write
-    - WriteIgnoreStamps
+    - WriteIgnoreRestrictions
     - Pickaxe
     - Pen
   - type: MeleeWeapon
