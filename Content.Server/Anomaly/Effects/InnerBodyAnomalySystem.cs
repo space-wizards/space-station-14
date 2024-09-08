@@ -1,3 +1,4 @@
+using Content.Server.Administration.Logs;
 using Content.Server.Body.Systems;
 using Content.Server.Chat.Managers;
 using Content.Server.Jittering;
@@ -8,7 +9,7 @@ using Content.Shared.Anomaly.Components;
 using Content.Shared.Anomaly.Effects;
 using Content.Shared.Body.Components;
 using Content.Shared.Chat;
-using Content.Shared.Mind;
+using Content.Shared.Database;
 using Content.Shared.Mobs;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
@@ -30,6 +31,7 @@ public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
     [Dependency] private readonly AnomalySystem _anomaly = default!;
+    [Dependency] private readonly IAdminLogManager _adminLog = default!;
 
     private readonly Color _messageColor = Color.FromSrgb(new Color(201, 22, 94));
 
@@ -40,10 +42,12 @@ public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
         SubscribeLocalEvent<InnerBodyAnomalyInjectorComponent, StartCollideEvent>(OnStartCollideInjector);
 
         SubscribeLocalEvent<InnerBodyAnomalyComponent, ComponentStartup>(OnCompStartup);
+        SubscribeLocalEvent<InnerBodyAnomalyComponent, ComponentShutdown>(OnCompShutdown);
 
-        SubscribeLocalEvent<InnerBodyAnomalyComponent, AnomalyPulseEvent>(OnPulse);
-        SubscribeLocalEvent<InnerBodyAnomalyComponent, AnomalyShutdownEvent>(OnShutdown);
-        SubscribeLocalEvent<InnerBodyAnomalyComponent, AnomalySupercriticalEvent>(OnSupercritical);
+        SubscribeLocalEvent<InnerBodyAnomalyComponent, AnomalyPulseEvent>(OnAnomalyPulse);
+        SubscribeLocalEvent<InnerBodyAnomalyComponent, AnomalyShutdownEvent>(OnAnomalyShutdown);
+        SubscribeLocalEvent<InnerBodyAnomalyComponent, AnomalySupercriticalEvent>(OnAnomalySupercritical);
+
         SubscribeLocalEvent<InnerBodyAnomalyComponent, MobStateChangedEvent>(OnMobStateChanged);
     }
 
@@ -51,7 +55,7 @@ public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
     {
         if (ent.Comp.Whitelist is not null && !_whitelist.IsValid(ent.Comp.Whitelist, args.OtherEntity))
             return;
-        if (HasComp<AnomalyComponent>(ent))
+        if (TryComp<InnerBodyAnomalyComponent>(args.OtherEntity, out var innerAnom) && innerAnom.Injected)
             return;
         if (!_mind.TryGetMind(args.OtherEntity, out _, out var mindComponent))
             return;
@@ -62,10 +66,18 @@ public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
 
     private void OnCompStartup(Entity<InnerBodyAnomalyComponent> ent, ref ComponentStartup args)
     {
+        AddAnomalyToBody(ent);
+    }
+
+    private void AddAnomalyToBody(Entity<InnerBodyAnomalyComponent> ent)
+    {
         if (!_proto.TryIndex(ent.Comp.InjectionProto, out var injectedAnom))
             return;
 
-        Log.Info($"{ToPrettyString(ent)} become anomaly host!");
+        if (ent.Comp.Injected)
+            return;
+
+        ent.Comp.Injected = true;
 
         EntityManager.AddComponents(ent, injectedAnom.Components);
 
@@ -79,7 +91,6 @@ public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
             _mind.TryGetMind(ent, out _, out var mindComponent) &&
             mindComponent.Session != null)
         {
-
             var message = Loc.GetString(ent.Comp.StartMessage);
             var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
             _chat.ChatMessageToOne(ChatChannel.Server,
@@ -89,6 +100,8 @@ public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
                 false,
                 mindComponent.Session.Channel,
                 _messageColor);
+
+            _adminLog.Add(LogType.Anomaly,LogImpact.Extreme,$"{ToPrettyString(ent)} become anomaly host.");
         }
 
         if (ent.Comp.ActionProto is not null)
@@ -101,16 +114,17 @@ public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
                 _actions.GrantActions(ent, new List<EntityUid> {action.Value}, ent);
             }
         }
+
         Dirty(ent);
     }
 
-    private void OnPulse(Entity<InnerBodyAnomalyComponent> ent, ref AnomalyPulseEvent args)
+    private void OnAnomalyPulse(Entity<InnerBodyAnomalyComponent> ent, ref AnomalyPulseEvent args)
     {
         _stun.TryParalyze(ent, TimeSpan.FromSeconds(ent.Comp.StunDuration / 2), true);
         _jitter.DoJitter(ent, TimeSpan.FromSeconds(ent.Comp.StunDuration / 2), true);
     }
 
-    private void OnSupercritical(Entity<InnerBodyAnomalyComponent> ent, ref AnomalySupercriticalEvent args)
+    private void OnAnomalySupercritical(Entity<InnerBodyAnomalyComponent> ent, ref AnomalySupercriticalEvent args)
     {
         if (!TryComp<BodyComponent>(ent, out var body))
             return;
@@ -126,8 +140,22 @@ public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
         _anomaly.ChangeAnomalyHealth(ent, -2); //Shutdown it
     }
 
-    private void OnShutdown(Entity<InnerBodyAnomalyComponent> ent, ref AnomalyShutdownEvent args)
+    private void OnAnomalyShutdown(Entity<InnerBodyAnomalyComponent> ent, ref AnomalyShutdownEvent args)
     {
+        RemoveAnomalyFromBody(ent);
+        RemCompDeferred<InnerBodyAnomalyComponent>(ent);
+    }
+
+    private void OnCompShutdown(Entity<InnerBodyAnomalyComponent> ent, ref ComponentShutdown args)
+    {
+        RemoveAnomalyFromBody(ent);
+    }
+
+    private void RemoveAnomalyFromBody(Entity<InnerBodyAnomalyComponent> ent)
+    {
+        if (!ent.Comp.Injected)
+            return;
+
         if (_proto.TryIndex(ent.Comp.InjectionProto, out var injectedAnom))
             EntityManager.RemoveComponents(ent, injectedAnom.Components);
 
@@ -137,7 +165,6 @@ public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
             _mind.TryGetMind(ent, out _, out var mindComponent) &&
             mindComponent.Session != null)
         {
-
             var message = Loc.GetString(ent.Comp.EndMessage);
             var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
             _chat.ChatMessageToOne(ChatChannel.Server,
@@ -147,9 +174,12 @@ public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
                 false,
                 mindComponent.Session.Channel,
                 _messageColor);
+
+            _adminLog.Add(LogType.Anomaly, LogImpact.Medium,$"{ToPrettyString(ent)} is no longer a host for the anomaly.");
         }
 
+        ent.Comp.Injected = false;
         QueueDel(ent.Comp.Action);
-        RemCompDeferred<InnerBodyAnomalyComponent>(ent);
+        RemCompDeferred<AnomalyComponent>(ent);
     }
 }

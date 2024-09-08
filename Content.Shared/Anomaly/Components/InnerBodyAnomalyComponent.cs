@@ -13,6 +13,9 @@ namespace Content.Shared.Anomaly.Components;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true), Access(typeof(SharedInnerBodyAnomalySystem))]
 public sealed partial class InnerBodyAnomalyComponent : Component
 {
+    [DataField]
+    public bool Injected;
+
     /// <summary>
     /// A prototype of an entity whose components will be added to the anomaly host **AND** then removed at the right time
     /// </summary>
