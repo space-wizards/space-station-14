@@ -34,13 +34,13 @@
               amount: 1
               doAfter: 1.5
 
-        - to: plasmaReinforcedWindowDirectional # 50 hp reinforced damage mod
+        - to: plasmaReinforcedWindowDirectional # 75 hp reinforced damage mod
           steps:
             - material: ReinforcedPlasmaGlass
               amount: 1
               doAfter: 2
 
-        - to: uraniumReinforcedWindowDirectional # 50 hp reinforced damage mod
+        - to: uraniumReinforcedWindowDirectional # 75 hp reinforced damage mod
           steps:
             - material: ReinforcedUraniumGlass
               amount: 1

@@ -42,13 +42,13 @@
               amount: 2
               doAfter: 3
 
-        - to: reinforcedPlasmaWindow # 100 hp reinforced damage mod
+        - to: reinforcedPlasmaWindow # 150 hp reinforced damage mod
           steps:
             - material: ReinforcedPlasmaGlass
               amount: 2
               doAfter: 4
 
-        - to: reinforcedUraniumWindow # 100 hp reinforced damage mod
+        - to: reinforcedUraniumWindow # 150 hp reinforced damage mod
           steps:
             - material: ReinforcedUraniumGlass
               amount: 2
