@@ -1570,7 +1570,7 @@
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Animals/sentiflower.rsi
-    state: kobold
+    state: sunflower
   - type: Body
     prototype: Animal
   - type: Damageable
