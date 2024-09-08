@@ -119,4 +119,7 @@ public sealed partial class ElectrifiedComponent : Component
 
     [DataField, AutoNetworkedField]
     public float Probability = 1f;
+
+    [DataField, AutoNetworkedField]
+    public bool IsWireCut = false;
 }

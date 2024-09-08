@@ -105,6 +105,7 @@ public sealed partial class PowerWireAction : BaseWireAction
             && !EntityManager.TryGetComponent(used, out electrified))
             return;
 
+        _electrocutionSystem.SetElectrifiedWireCut((used, electrified), setting);
         electrified.Enabled = setting;
     }
 

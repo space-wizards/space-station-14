@@ -10,6 +10,7 @@ using Content.Shared.Item.ItemToggle;
 using Content.Shared.Mind;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
+using Content.Shared.Popups;
 using Content.Shared.Power;
 using Content.Shared.StationAi;
 using Content.Shared.Verbs;
@@ -44,6 +45,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
     [Dependency] private   readonly SharedTransformSystem _xforms = default!;
     [Dependency] private   readonly SharedUserInterfaceSystem _uiSystem = default!;
     [Dependency] private   readonly StationAiVisionSystem _vision = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     // StationAiHeld is added to anything inside of an AI core.
     // StationAiHolder indicates it can hold an AI positronic brain (e.g. holocard / core).
