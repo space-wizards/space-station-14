@@ -1716,8 +1716,8 @@
 # False walls
 - type: construction
   name: displaced girder
-  id: DisplacedGirder
-  graph: Girder
+  id: GirderDisplaced
+  graph: DisplacedGirder
   startNode: start
   targetNode: displacedGirder
   category: construction-category-structures
@@ -1734,7 +1734,7 @@
 - type: construction
   name: solid false wall
   id: SolidFalseWall
-  graph: Girder
+  graph: DisplacedGirder
   startNode: start
   targetNode: solidFalseWall
   category: construction-category-structures
