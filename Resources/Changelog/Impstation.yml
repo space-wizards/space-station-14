@@ -15,7 +15,8 @@
   url: https://github.com/medabunny/imp-station-14/pull/2
 - author: formlessnameless
   changes:
-  - message: Made cigarettes/cigars/joints edible and have the same effect as when smoked.
+  - message: Made cigarettes/cigars/joints edible and have the same effect as when
+      smoked.
     type: Add
   id: 3
   time: '2024-06-24T23:49:16.0000000+00:00'
@@ -199,7 +200,8 @@
   url: https://github.com/medabunny/imp-station-14/pull/34
 - author: TGRCDev
   changes:
-  - message: Fixed mouse position being incorrectly warped when the singularity overlay is disabled
+  - message: Fixed mouse position being incorrectly warped when the singularity overlay
+      is disabled
     type: Fix
   id: 29
   time: '2024-07-19T23:21:39.0000000+00:00'
@@ -332,7 +334,8 @@
   url: https://github.com/medabunny/imp-station-14/pull/60
 - author: formlessnameless
   changes:
-  - message: Base Spy Vs Spy now starts everyone with 0 TC. Also added variants with 5 starting TC, and default (20) starting TC to test with.
+  - message: Base Spy Vs Spy now starts everyone with 0 TC. Also added variants with
+      5 starting TC, and default (20) starting TC to test with.
     type: Add
   - message: Traitors and Sleeper Agents should no longer have blank objectives.
     type: Fix
@@ -377,7 +380,8 @@
     type: Add
   - message: Fix title of Soichi Terada lobby song.
     type: Fix
-  - message: Remove our custom round end screen keybind because the official one (F9) is fixed.
+  - message: Remove our custom round end screen keybind because the official one (F9)
+      is fixed.
     type: Remove
   - message: Add more helpful login tips.
     type: Add
@@ -393,18 +397,22 @@
   url: https://github.com/medabunny/imp-station-14/pull/67
 - author: TGRCdev
   changes:
-  - message: spooky_horse.ogg was missing a copyright and license key, which caused errors. I found and applied the proper licensing.
+  - message: spooky_horse.ogg was missing a copyright and license key, which caused
+      errors. I found and applied the proper licensing.
     type: Fix
-  - message: A type of cigarette had incorrect indentation, causing the food section to be incorrectly parsed.
+  - message: A type of cigarette had incorrect indentation, causing the food section
+      to be incorrectly parsed.
     type: Fix
-  - message: The round start event for Spy vs Spy had a max delay smaller than its min delay, most likely due to a zero left out erroneously.
+  - message: The round start event for Spy vs Spy had a max delay smaller than its
+      min delay, most likely due to a zero left out erroneously.
     type: Fix
   id: 55
   time: '2024-08-03T01:52:45.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/68
 - author: sageu111
   changes:
-  - message: BIG GRAY UPDATE (ALL GRAY AND TOYS INSIDE), THIS IS THE BIG GRAY THIS IS THE NEW SHIT
+  - message: BIG GRAY UPDATE (ALL GRAY AND TOYS INSIDE), THIS IS THE BIG GRAY THIS
+      IS THE NEW SHIT
     type: Add
   id: 56
   time: '2024-08-03T03:05:38.0000000+00:00'
@@ -425,7 +433,8 @@
   url: https://github.com/medabunny/imp-station-14/pull/71
 - author: Drags-His-Tail
   changes:
-  - message: Added 500 Cigarettes, now purchasable from cargo for only $5000, or in an emagged smoke vending machine near you.
+  - message: Added 500 Cigarettes, now purchasable from cargo for only $5000, or in
+      an emagged smoke vending machine near you.
     type: Add
   id: 59
   time: '2024-08-03T23:03:57.0000000+00:00'
@@ -490,32 +499,38 @@
   url: https://github.com/medabunny/imp-station-14/pull/81
 - author: Drags-His-Tail
   changes:
-  - message: Added Ratvarian, Slime, Russian, French, and Spanish as speech traits. Blabl blump!
+  - message: Added Ratvarian, Slime, Russian, French, and Spanish as speech traits.
+      Blabl blump!
     type: Add
   id: 68
   time: '2024-08-11T17:35:38.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/82
 - author: TGRCdev
   changes:
-  - message: Fixes the Newports and pAI trinkets. Also removes the "PVC" tag from the PVC pipe
+  - message: Fixes the Newports and pAI trinkets. Also removes the "PVC" tag from
+      the PVC pipe
     type: Fix
   id: 69
   time: '2024-08-11T17:35:28.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/83
 - author: TGRCdev
   changes:
-  - message: Readding a maintenance loot table that was mistakenly deleted during a merge conflict.
+  - message: Readding a maintenance loot table that was mistakenly deleted during
+      a merge conflict.
     type: Fix
   id: 70
   time: '2024-08-11T20:38:28.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/84
 - author: TGRCdev
   changes:
-  - message: Fixed missing job mapping sprites because of an incorrectly capitalized job sprite PNG file.
+  - message: Fixed missing job mapping sprites because of an incorrectly capitalized
+      job sprite PNG file.
     type: Fix
-  - message: Duplicate LeavesGreenMarijuana was removed. Marijuana leaves can now be put on burger buns.
+  - message: Duplicate LeavesGreenMarijuana was removed. Marijuana leaves can now
+      be put on burger buns.
     type: Fix
-  - message: Templar helmet's ID was mistakenly re-introduced into the maintenance loot tables. Re-removed the ID from the loot table.
+  - message: Templar helmet's ID was mistakenly re-introduced into the maintenance
+      loot tables. Re-removed the ID from the loot table.
     type: Fix
   id: 71
   time: '2024-08-12T02:07:08.0000000+00:00'
@@ -544,7 +559,8 @@
   changes:
   - message: Fixed Train plasma gas not spawning on mapload
     type: Fix
-  - message: Modified the shuttles I've made to have appropriately colored atmos pipes, some structural changes
+  - message: Modified the shuttles I've made to have appropriately colored atmos pipes,
+      some structural changes
     type: Tweak
   id: 74
   time: '2024-08-13T00:53:24.0000000+00:00'
@@ -560,22 +576,25 @@
   url: https://github.com/medabunny/imp-station-14/pull/89
 - author: TGRCdev
   changes:
-  - message: Station maps now have a directory that lists all enabled beacons on a station.
+  - message: Station maps now have a directory that lists all enabled beacons on a
+      station.
     type: Add
   id: 76
   time: '2024-08-13T02:26:57.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/90
 - author: formlessnameless
   changes:
-  - message: Added the ability to turn normal bananium floors into blessed bananium floors.
+  - message: Added the ability to turn normal bananium floors into blessed bananium
+      floors.
     type: Add
   id: 77
   time: '2024-08-13T19:55:10.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/92
 - author: formlessnameless
   changes:
-    - message: Added changeling antagonist from whateverusername0's fork of the main upstream project.
-      type: Add
+  - message: Added changeling antagonist from whateverusername0's fork of the main
+      upstream project.
+    type: Add
   id: 78
   time: '2024-08-15T03:03:14.0000000+00:00'
   url: https://github.com/medabunny/imp-station-14/pull/94
@@ -1335,3 +1354,18 @@
   id: 179
   time: '2024-09-07T18:41:32.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/225
+- author: Darkmajia
+  changes:
+  - message: Maintenance locker loot has been fixed, and will now have a much wider
+      variety.
+    type: Fix
+  id: 180
+  time: '2024-09-08T16:16:52.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/224
+- author: joelsgp
+  changes:
+  - message: Fixed older changelog entries
+    type: Fix
+  id: 181
+  time: '2024-09-08T16:17:05.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/226
