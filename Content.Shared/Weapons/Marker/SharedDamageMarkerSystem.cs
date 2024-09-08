@@ -1,6 +1,7 @@
 using Content.Shared.Damage;
 using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Melee.Events;
+using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
@@ -15,12 +16,12 @@ public abstract class SharedDamageMarkerSystem : EntitySystem
     [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<DamageMarkerOnCollideComponent, StartCollideEvent>(OnMarkerCollide);
-        SubscribeLocalEvent<DamageMarkerComponent, EntityUnpausedEvent>(OnMarkerUnpaused);
         SubscribeLocalEvent<DamageMarkerComponent, AttackedEvent>(OnMarkerAttacked);
     }
 
@@ -54,17 +55,12 @@ public abstract class SharedDamageMarkerSystem : EntitySystem
         }
     }
 
-    private void OnMarkerUnpaused(EntityUid uid, DamageMarkerComponent component, ref EntityUnpausedEvent args)
-    {
-        component.EndTime += args.PausedTime;
-    }
-
     private void OnMarkerCollide(EntityUid uid, DamageMarkerOnCollideComponent component, ref StartCollideEvent args)
     {
         if (!args.OtherFixture.Hard ||
             args.OurFixtureId != SharedProjectileSystem.ProjectileFixture ||
             component.Amount <= 0 ||
-            component.Whitelist?.IsValid(args.OtherEntity, EntityManager) == false ||
+            _whitelistSystem.IsWhitelistFail(component.Whitelist, args.OtherEntity) ||
             !TryComp<ProjectileComponent>(uid, out var projectile) ||
             projectile.Weapon == null)
         {
@@ -77,7 +73,7 @@ public abstract class SharedDamageMarkerSystem : EntitySystem
         marker.Marker = projectile.Weapon.Value;
         marker.EndTime = _timing.CurTime + component.Duration;
         component.Amount--;
-        Dirty(marker);
+        Dirty(args.OtherEntity, marker);
 
         if (_netManager.IsServer)
         {
@@ -87,7 +83,7 @@ public abstract class SharedDamageMarkerSystem : EntitySystem
             }
             else
             {
-                Dirty(component);
+                Dirty(uid, component);
             }
         }
     }

@@ -12,6 +12,9 @@
     makeSentient: true
     name: ghost-role-information-hellspawn-name
     description: ghost-role-information-hellspawn-description
+    rules: ghost-role-information-antagonist-rules
+    raffle:
+      settings: default
   - type: RotationVisuals
     defaultRotation: 90
     horizontalRotation: 90

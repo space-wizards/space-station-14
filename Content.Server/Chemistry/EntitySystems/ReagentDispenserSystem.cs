@@ -1,25 +1,18 @@
-using Content.Server.Administration.Logs;
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.Containers.EntitySystems;
-using Content.Server.Nutrition.Components;
-using Content.Server.Nutrition.EntitySystems;
-using Content.Server.Labels.Components;
-using Content.Server.Chemistry;
 using Content.Shared.Chemistry;
-using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Dispenser;
 using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Containers.ItemSlots;
-using Content.Shared.Database;
 using Content.Shared.FixedPoint;
+using Content.Shared.Nutrition.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
-using System.Linq;
+using Content.Shared.Labels.Components;
 
 namespace Content.Server.Chemistry.EntitySystems
 {
@@ -31,12 +24,11 @@ namespace Content.Server.Chemistry.EntitySystems
     public sealed class ReagentDispenserSystem : EntitySystem
     {
         [Dependency] private readonly AudioSystem _audioSystem = default!;
-        [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+        [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly SolutionTransferSystem _solutionTransferSystem = default!;
         [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly OpenableSystem _openable = default!;
 
         public override void Initialize()
@@ -68,8 +60,8 @@ namespace Content.Server.Chemistry.EntitySystems
 
             var inventory = GetInventory(reagentDispenser);
 
-            var state = new ReagentDispenserBoundUserInterfaceState(outputContainerInfo, inventory, reagentDispenser.Comp.DispenseAmount);
-            _userInterfaceSystem.TrySetUiState(reagentDispenser, ReagentDispenserUiKey.Key, state);
+            var state = new ReagentDispenserBoundUserInterfaceState(outputContainerInfo, GetNetEntity(outputContainer), inventory, reagentDispenser.Comp.DispenseAmount);
+            _userInterfaceSystem.SetUiState(reagentDispenser.Owner, ReagentDispenserUiKey.Key, state);
         }
 
         private ContainerInfo? BuildOutputContainerInfo(EntityUid? container)
@@ -88,9 +80,9 @@ namespace Content.Server.Chemistry.EntitySystems
             return null;
         }
 
-        private List<KeyValuePair<string, KeyValuePair<string, string>>> GetInventory(Entity<ReagentDispenserComponent> reagentDispenser)
+        private List<ReagentInventoryItem> GetInventory(Entity<ReagentDispenserComponent> reagentDispenser)
         {
-            var inventory = new List<KeyValuePair<string, KeyValuePair<string, string>>>();
+            var inventory = new List<ReagentInventoryItem>();
 
             for (var i = 0; i < reagentDispenser.Comp.NumSlots; i++)
             {
@@ -106,15 +98,16 @@ namespace Content.Server.Chemistry.EntitySystems
                 else
                     continue;
 
-                // Add volume remaining label
+                // Get volume remaining and color of solution
                 FixedPoint2 quantity = 0f;
+                var reagentColor = Color.White;
                 if (storedContainer != null && _solutionContainerSystem.TryGetDrainableSolution(storedContainer.Value, out _, out var sol))
                 {
                     quantity = sol.Volume;
+                    reagentColor = sol.GetColor(_prototypeManager);
                 }
-                var storedAmount = Loc.GetString("reagent-dispenser-window-quantity-label-text", ("quantity", quantity));
 
-                inventory.Add(new KeyValuePair<string, KeyValuePair<string, string>>(storageSlotId, new KeyValuePair<string, string>(reagentLabel, storedAmount)));
+                inventory.Add(new ReagentInventoryItem(storageSlotId, reagentLabel, quantity, reagentColor));
             }
 
             return inventory;

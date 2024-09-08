@@ -34,7 +34,7 @@
         sound:
           collection: MetalBreak
   - type: StaticPrice
-    price: 25
+    price: 75
 
 - type: entity
   abstract: true
@@ -58,12 +58,15 @@
         density: 500
         mask:
         - TabletopMachineMask
+        layer:
+        - BulletImpassable
   - type: PowerChargerVisuals
   - type: ContainerContainer
     containers:
       charger_slot: !type:ContainerSlot
       machine_board: !type:Container
       machine_parts: !type:Container
+  - type: RequireProjectileTarget
 
 - type: entity
   parent: BaseItemRecharger
@@ -83,9 +86,6 @@
       visible: false
   - type: Machine
     board: CellRechargerCircuitboard
-  - type: Wires
-    boardName: wires-board-name-recharger
-    layoutId: Recharger
   - type: WiresPanel
   - type: GenericVisualizer
     visuals:
@@ -250,8 +250,6 @@
     - machine_parts
     - machine_board
     - entity_storage
-  - type: Wires
-    layoutId: borgcharger
   - type: WiresPanel
   - type: WiresVisuals
   - type: Machine

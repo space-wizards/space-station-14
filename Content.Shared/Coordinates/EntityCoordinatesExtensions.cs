@@ -1,6 +1,5 @@
 ﻿using System.Numerics;
 using Robust.Shared.Map;
-using Robust.Shared.Map.Components;
 
 namespace Content.Shared.Coordinates
 {
@@ -19,18 +18,6 @@ namespace Content.Shared.Coordinates
         public static EntityCoordinates ToCoordinates(this EntityUid id, float x, float y)
         {
             return new EntityCoordinates(id, x, y);
-        }
-
-        [Obsolete]
-        public static EntityCoordinates ToCoordinates(this MapGridComponent grid, float x, float y)
-        {
-            return ToCoordinates(grid.Owner, x, y);
-        }
-
-        [Obsolete]
-        public static EntityCoordinates ToCoordinates(this MapGridComponent grid)
-        {
-            return ToCoordinates(grid.Owner, Vector2.Zero);
         }
     }
 }

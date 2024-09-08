@@ -20,6 +20,7 @@
     soundHit:
       collection: BoxingHit
     animation: WeaponArcFist
+    mustBeEquippedToUse: true
   - type: Fiber
     fiberMaterial: fibers-leather
     fiberColor: fibers-red
@@ -90,9 +91,10 @@
       types:
         Blunt: 8
     bluntStaminaDamageFactor: 0.0 # so blunt doesn't deal stamina damage at all
+    mustBeEquippedToUse: true
 
 - type: entity
-  parent: ClothingHandsBase
+  parent: [ClothingHandsBase, BaseCommandContraband]
   id: ClothingHandsGlovesCaptain
   name: captain gloves
   description: Regal blue gloves, with a nice gold trim. Swanky.
@@ -101,8 +103,6 @@
     sprite: Clothing/Hands/Gloves/captain.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/captain.rsi
-  - type: GloveHeatResistance
-    heatResistance: 1400
   - type: Insulated
   - type: Fiber
     fiberMaterial: fibers-durathread
@@ -167,8 +167,6 @@
     sprite: Clothing/Hands/Gloves/leather.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/leather.rsi
-  - type: GloveHeatResistance
-    heatResistance: 1400
   - type: Fiber
     fiberMaterial: fibers-leather
     fiberColor: fibers-brown
@@ -204,7 +202,7 @@
   - type: FingerprintMask
 
 - type: entity
-  parent: ClothingHandsBase
+  parent: [ClothingHandsBase, BaseToggleClothing, BaseMajorContraband]
   id: ClothingHandsGlovesSpaceNinja
   name: space ninja gloves
   description: These black nano-enhanced gloves insulate from electricity and provide fire resistance.
@@ -223,8 +221,6 @@
         enum.ToggleVisuals.Layer:
           True: {state: icon-green}
           False: {state: icon}
-  - type: GloveHeatResistance
-    heatResistance: 1400
   - type: Insulated
   - type: Fiber
     fiberMaterial: fibers-nanomachines
@@ -232,14 +228,42 @@
   - type: Thieving
     stripTimeReduction: 1
     stealthy: true
+  - type: ToggleClothing
+    action: ActionToggleNinjaGloves
   - type: NinjaGloves
+    abilities:
+    - components:
+      - type: BatteryDrainer
+      - type: StunProvider
+        noPowerPopup: ninja-no-power
+        whitelist:
+          components:
+          - Stamina
+      - type: EmagProvider
+        whitelist:
+          components:
+          - Airlock
+    - objective: StealResearchObjective
+      components:
+      - type: ResearchStealer
+    - objective: TerrorObjective
+      components:
+      - type: CommsHacker
+        threats: NinjaThreats
+    - objective: MassArrestObjective
+      components:
+      - type: CriminalRecordsHacker
 
 - type: entity
-  parent: ClothingHandsGlovesColorBlack
+  parent: [ClothingHandsGlovesColorBlack, BaseSecurityEngineeringContraband]
   id: ClothingHandsGlovesCombat
   name: combat gloves
   description: These tactical gloves are fireproof and shock resistant.
   components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/combat.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/combat.rsi
   - type: Insulated
   - type: Fiber
     fiberMaterial: fibers-insulative
@@ -255,8 +279,6 @@
     sprite: Clothing/Hands/Gloves/tacticalmaidgloves.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/tacticalmaidgloves.rsi
-  - type: GloveHeatResistance
-    heatResistance: 1400
   - type: Insulated
   - type: Fiber
     fiberColor: fibers-black
@@ -292,6 +314,10 @@
   - type: Fiber
     fiberMaterial: fibers-synthetic
     fiberColor: fibers-black
+  - type: DamageOnInteractProtection
+    damageProtection:
+      flatReductions:
+        Heat: 0 # no protection
 
 - type: entity
   parent: ClothingHandsBase
@@ -306,6 +332,10 @@
   - type: Fiber
     fiberMaterial: fibers-insulative
     fiberColor: fibers-yellow
+  - type: DamageOnInteractProtection
+    damageProtection:
+      flatReductions:
+        Heat: 0 # no protection
 
 - type: entity
   parent: ClothingHandsButcherable
@@ -320,6 +350,10 @@
   - type: Fiber
     fiberMaterial: fibers-insulative
     fiberColor: fibers-olive
+  - type: DamageOnInteractProtection
+    damageProtection:
+      flatReductions:
+        Heat: 0 # no protection
 
 - type: entity
   # Intentionally named after regular gloves, they're meant to be sneaky.
@@ -344,7 +378,7 @@
   - type: Unremoveable
 
 - type: entity
-  parent: ClothingHandsButcherable
+  parent: [ClothingHandsButcherable, BaseSyndicateContraband]
   id: ClothingHandsGlovesNorthStar
   name: gloves of the north star
   description: These gloves allow you to punch incredibly fast.
@@ -362,6 +396,7 @@
     soundHit:
       collection: Punch
     animation: WeaponArcFist
+    mustBeEquippedToUse: true
   - type: Fiber
     fiberMaterial: fibers-leather
     fiberColor: fibers-blue
@@ -369,12 +404,11 @@
   - type: MeleeSpeech
   - type: ActivatableUI
     key: enum.MeleeSpeechUiKey.Key
-    closeOnHandDeselect: false
-    rightClickOnly: true
+    verbOnly: true
   - type: Actions
   - type: UserInterface
     interfaces:
-      - key: enum.MeleeSpeechUiKey.Key
+      enum.MeleeSpeechUiKey.Key:
         type: MeleeSpeechBoundUserInterface
   - type: StaticPrice
     price: 0

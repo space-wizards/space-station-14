@@ -1,4 +1,5 @@
-﻿using Content.Shared.CCVar;
+﻿using Content.Server.Administration.Managers;
+using Content.Shared.CCVar;
 using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
@@ -38,6 +39,7 @@ namespace Content.Server.Afk
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IConsoleHost _consoleHost = default!;
+        [Dependency] private readonly IAdminManager _adminManager = default!;
 
         private readonly Dictionary<ICommonSession, TimeSpan> _lastActionTimes = new();
 
@@ -61,10 +63,15 @@ namespace Content.Server.Afk
         public bool IsAfk(ICommonSession player)
         {
             if (!_lastActionTimes.TryGetValue(player, out var time))
+            {
                 // Some weird edge case like disconnected clients. Just say true I guess.
                 return true;
+            }
 
-            var timeOut = TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.AfkTime));
+            var timeOut = _adminManager.IsAdmin(player)
+                ? TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.AdminAfkTime))
+                : TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.AfkTime));
+
             return _gameTiming.RealTime - time > timeOut;
         }
 

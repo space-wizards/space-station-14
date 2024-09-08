@@ -4,7 +4,7 @@ If all else fails, patients will need to be cloned. This should only be used as 
 
 Cloning itself is relatively simple. (Assuming the network is set.) Just drag a body into the scanner, check the cloning console, and clone! If they've taken cellular damage, or have rotted for too long, the results can be... less than pleasant.
 
-As a note: Cloning isn't always available, and it would be best not to rely on it. Science might be able to set up cloning, if it's unavailable.
+As a note: Cloning isn't always available, and it would be best not to rely on it. 
 <Box>
 <GuideEntityEmbed Entity="ComputerCloningConsole" Caption="cloning console"/>
 <GuideEntityEmbed Entity="MedicalScanner"/>

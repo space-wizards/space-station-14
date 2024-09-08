@@ -1,4 +1,5 @@
 using System.Collections.Frozen;
+using System.Text.RegularExpressions;
 using Content.Shared.Popups;
 using Content.Shared.Radio;
 using Content.Shared.Speech;
@@ -152,8 +153,14 @@ public abstract class SharedChatSystem : EntitySystem
         if (string.IsNullOrEmpty(message))
             return message;
         // Capitalize first letter
-        message = char.ToUpper(message[0]) + message.Remove(0, 1);
+        message = OopsConcat(char.ToUpper(message[0]).ToString(), message.Remove(0, 1));
         return message;
+    }
+
+    private static string OopsConcat(string a, string b)
+    {
+        // This exists to prevent Roslyn being clever and compiling something that fails sandbox checks.
+        return a + b;
     }
 
     public string SanitizeMessageCapitalizeTheWordI(string message, string theWordI = "i")
@@ -213,5 +220,44 @@ public abstract class SharedChatSystem : EntitySystem
         }
 
         return trimmed;
+    }
+
+    public static string InjectTagInsideTag(ChatMessage message, string outerTag, string innerTag, string? tagParameter)
+    {
+        var rawmsg = message.WrappedMessage;
+        var tagStart = rawmsg.IndexOf($"[{outerTag}]");
+        var tagEnd = rawmsg.IndexOf($"[/{outerTag}]");
+        if (tagStart < 0 || tagEnd < 0) //If the outer tag is not found, the injection is not performed
+            return rawmsg;
+        tagStart += outerTag.Length + 2;
+
+        string innerTagProcessed = tagParameter != null ? $"[{innerTag}={tagParameter}]" : $"[{innerTag}]";
+
+        rawmsg = rawmsg.Insert(tagEnd, $"[/{innerTag}]");
+        rawmsg = rawmsg.Insert(tagStart, innerTagProcessed);
+
+        return rawmsg;
+    }
+
+    /// <summary>
+    /// Injects a tag around all found instances of a specific string in a ChatMessage.
+    /// Excludes strings inside other tags and brackets.
+    /// </summary>
+    public static string InjectTagAroundString(ChatMessage message, string targetString, string tag, string? tagParameter)
+    {
+        var rawmsg = message.WrappedMessage;
+        rawmsg = Regex.Replace(rawmsg, "(?i)(" + targetString + ")(?-i)(?![^[]*])", $"[{tag}={tagParameter}]$1[/{tag}]");
+        return rawmsg;
+    }
+
+    public static string GetStringInsideTag(ChatMessage message, string tag)
+    {
+        var rawmsg = message.WrappedMessage;
+        var tagStart = rawmsg.IndexOf($"[{tag}]");
+        var tagEnd = rawmsg.IndexOf($"[/{tag}]");
+        if (tagStart < 0 || tagEnd < 0)
+            return "";
+        tagStart += tag.Length + 2;
+        return rawmsg.Substring(tagStart, tagEnd - tagStart);
     }
 }

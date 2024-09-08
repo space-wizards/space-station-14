@@ -107,6 +107,7 @@ public abstract class SharedMindSystem : EntitySystem
             TryComp(mindIdValue, out mind))
         {
             DebugTools.Assert(mind.UserId == user);
+
             mindId = mindIdValue;
             return true;
         }
@@ -167,15 +168,17 @@ public abstract class SharedMindSystem : EntitySystem
             args.PushMarkup($"[color=yellow]{Loc.GetString("comp-mind-examined-ssd", ("ent", uid))}[/color]");
     }
 
+    /// <summary>
+    /// Checks to see if the user's mind prevents them from suicide
+    /// Handles the suicide event without killing the user if true
+    /// </summary>
     private void OnSuicide(EntityUid uid, MindContainerComponent component, SuicideEvent args)
     {
         if (args.Handled)
             return;
 
         if (TryComp(component.Mind, out MindComponent? mind) && mind.PreventSuicide)
-        {
-            args.BlockSuicideAttempt(true);
-        }
+            args.Handled = true;
     }
 
     public EntityUid? GetMind(EntityUid uid, MindContainerComponent? mind = null)
@@ -312,6 +315,10 @@ public abstract class SharedMindSystem : EntitySystem
     {
     }
 
+    public virtual void ControlMob(EntityUid user, EntityUid target) {}
+
+    public virtual void ControlMob(NetUserId user, EntityUid target) {}
+
     /// <summary>
     /// Tries to create and add an objective from its prototype id.
     /// </summary>
@@ -369,7 +376,7 @@ public abstract class SharedMindSystem : EntitySystem
         if (Resolve(mindId, ref mind))
         {
             var query = GetEntityQuery<T>();
-            foreach (var uid in mind.AllObjectives)
+            foreach (var uid in mind.Objectives)
             {
                 if (query.TryGetComponent(uid, out objective))
                 {
@@ -378,6 +385,30 @@ public abstract class SharedMindSystem : EntitySystem
             }
         }
         objective = default;
+        return false;
+    }
+
+    /// <summary>
+    /// Tries to find an objective that has the same prototype as the argument.
+    /// </summary>
+    /// <remarks>
+    /// Will not work for objectives that have no prototype, or duplicate objectives with the same prototype.
+    /// <//remarks>
+    public bool TryFindObjective(Entity<MindComponent?> mind, string prototype, [NotNullWhen(true)] out EntityUid? objective)
+    {
+        objective = null;
+        if (!Resolve(mind, ref mind.Comp))
+            return false;
+
+        foreach (var uid in mind.Comp.Objectives)
+        {
+            if (MetaData(uid).EntityPrototype?.ID == prototype)
+            {
+                objective = uid;
+                return true;
+            }
+        }
+
         return false;
     }
 
@@ -399,7 +430,8 @@ public abstract class SharedMindSystem : EntitySystem
         EntityUid uid,
         out EntityUid mindId,
         [NotNullWhen(true)] out MindComponent? mind,
-        MindContainerComponent? container = null)
+        MindContainerComponent? container = null,
+        VisitingMindComponent? visitingmind = null)
     {
         mindId = default;
         mind = null;
@@ -408,35 +440,39 @@ public abstract class SharedMindSystem : EntitySystem
             return false;
 
         if (!container.HasMind)
-            return false;
+        {
+            // The container has no mind. Check for a visiting mind...
+            if (!Resolve(uid, ref visitingmind, false))
+                return false;
+
+            mindId = visitingmind.MindId ?? default;
+            return TryComp(mindId, out mind);
+        }
 
         mindId = container.Mind ?? default;
         return TryComp(mindId, out mind);
     }
 
-    public bool TryGetMind(
-        ContentPlayerData contentPlayer,
-        out EntityUid mindId,
-        [NotNullWhen(true)] out MindComponent? mind)
-    {
-        mindId = contentPlayer.Mind ?? default;
-        return TryComp(mindId, out mind);
-    }
-
+    // TODO MIND make this return a nullable EntityUid or Entity<MindComponent>
     public bool TryGetMind(
         ICommonSession? player,
         out EntityUid mindId,
         [NotNullWhen(true)] out MindComponent? mind)
     {
-        mindId = default;
-        mind = null;
-        if (_player.ContentData(player) is not { } data)
+        if (player == null)
+        {
+            mindId = default;
+            mind = null;
             return false;
+        }
 
-        if (TryGetMind(data, out mindId, out mind))
+        if (TryGetMind(player.UserId, out var mindUid, out mind))
+        {
+            mindId = mindUid.Value;
             return true;
+        }
 
-        DebugTools.AssertNull(data.Mind);
+        mindId = default;
         return false;
     }
 

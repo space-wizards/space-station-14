@@ -31,7 +31,6 @@
       price: 40
     - type: Tag
       tags:
-        - DroneUsable
         - WallmountSubstationElectronics
 
 # Wallmount Generator
@@ -51,7 +50,6 @@
       Glass: 90
   - type: Tag
     tags:
-      - DroneUsable
       - WallmountGeneratorElectronics
 
 # APU
@@ -68,7 +66,6 @@
       price: 40
     - type: Tag
       tags:
-        - DroneUsable
         - WallmountGeneratorAPUElectronics
 
 # Solar Tracker Electronics
@@ -76,7 +73,7 @@
   parent: BaseElectronics
   id: SolarTrackerElectronics
   name: solar tracker electronics
-  description: Advanced circuit board used to detect differences in pressure, temperature and gas concentrations between the two sides of the door.
+  description: Advanced circuit board used to track the nearest star.
   components:
     - type: Sprite
       sprite: Objects/Misc/module.rsi
@@ -85,5 +82,4 @@
       price: 85
     - type: Tag
       tags:
-        - DroneUsable
         - SolarTrackerElectronics

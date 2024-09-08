@@ -1,5 +1,4 @@
 using Content.Server.Chemistry.Components;
-using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Labels;
 using Content.Server.Popups;
 using Content.Server.Storage.EntitySystems;
@@ -33,7 +32,7 @@ namespace Content.Server.Chemistry.EntitySystems
     {
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly AudioSystem _audioSystem = default!;
-        [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+        [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private readonly StorageSystem _storageSystem = default!;
@@ -80,7 +79,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 chemMaster.Mode, BuildInputContainerInfo(inputContainer), BuildOutputContainerInfo(outputContainer),
                 bufferReagents, bufferCurrentVolume, chemMaster.PillType, chemMaster.PillDosageLimit, updateLabel);
 
-            _userInterfaceSystem.TrySetUiState(owner, ChemMasterUiKey.Key, state);
+            _userInterfaceSystem.SetUiState(owner, ChemMasterUiKey.Key, state);
         }
 
         private void OnSetModeMessage(Entity<ChemMasterComponent> chemMaster, ref ChemMasterSetModeMessage message)
@@ -179,7 +178,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void OnCreatePillsMessage(Entity<ChemMasterComponent> chemMaster, ref ChemMasterCreatePillsMessage message)
         {
-            var user = message.Session.AttachedEntity;
+            var user = message.Actor;
             var maybeContainer = _itemSlotsSystem.GetItemOrNull(chemMaster, SharedChemMaster.OutputSlotName);
             if (maybeContainer is not { Valid: true } container
                 || !TryComp(container, out StorageComponent? storage))
@@ -211,25 +210,19 @@ namespace Content.Server.Chemistry.EntitySystems
                 _storageSystem.Insert(container, item, out _, user: user, storage);
                 _labelSystem.Label(item, message.Label);
 
-                var itemSolution = _solutionContainerSystem.EnsureSolutionEntity(item, SharedChemMaster.PillSolutionName, message.Dosage, null, out _);
-                _solutionContainerSystem.TryAddSolution(itemSolution, withdrawal.SplitSolution(message.Dosage));
+                _solutionContainerSystem.EnsureSolutionEntity(item, SharedChemMaster.PillSolutionName,out var itemSolution ,message.Dosage);
+                if (!itemSolution.HasValue)
+                    return;
+
+                _solutionContainerSystem.TryAddSolution(itemSolution.Value, withdrawal.SplitSolution(message.Dosage));
 
                 var pill = EnsureComp<PillComponent>(item);
                 pill.PillType = chemMaster.Comp.PillType;
                 Dirty(item, pill);
 
-                if (user.HasValue)
-                {
-                    // Log pill creation by a user
-                    _adminLogger.Add(LogType.Action, LogImpact.Low,
-                        $"{ToPrettyString(user.Value):user} printed {ToPrettyString(item):pill} {SolutionContainerSystem.ToPrettyString(itemSolution.Comp.Solution)}");
-                }
-                else
-                {
-                    // Log pill creation by magic? This should never happen... right?
-                    _adminLogger.Add(LogType.Action, LogImpact.Low,
-                        $"Unknown printed {ToPrettyString(item):pill} {SolutionContainerSystem.ToPrettyString(itemSolution.Comp.Solution)}");
-                }
+                // Log pill creation by a user
+                _adminLogger.Add(LogType.Action, LogImpact.Low,
+                    $"{ToPrettyString(user):user} printed {ToPrettyString(item):pill} {SharedSolutionContainerSystem.ToPrettyString(itemSolution.Value.Comp.Solution)}");
             }
 
             UpdateUiState(chemMaster);
@@ -238,7 +231,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void OnOutputToBottleMessage(Entity<ChemMasterComponent> chemMaster, ref ChemMasterOutputToBottleMessage message)
         {
-            var user = message.Session.AttachedEntity;
+            var user = message.Actor;
             var maybeContainer = _itemSlotsSystem.GetItemOrNull(chemMaster, SharedChemMaster.OutputSlotName);
             if (maybeContainer is not { Valid: true } container
                 || !_solutionContainerSystem.TryGetSolution(container, SharedChemMaster.BottleSolutionName, out var soln, out var solution))
@@ -260,18 +253,9 @@ namespace Content.Server.Chemistry.EntitySystems
             _labelSystem.Label(container, message.Label);
             _solutionContainerSystem.TryAddSolution(soln.Value, withdrawal);
 
-            if (user.HasValue)
-            {
-                // Log bottle creation by a user
-                _adminLogger.Add(LogType.Action, LogImpact.Low,
-                    $"{ToPrettyString(user.Value):user} bottled {ToPrettyString(container):bottle} {SolutionContainerSystem.ToPrettyString(solution)}");
-            }
-            else
-            {
-                // Log bottle creation by magic? This should never happen... right?
-                _adminLogger.Add(LogType.Action, LogImpact.Low,
-                    $"Unknown bottled {ToPrettyString(container):bottle} {SolutionContainerSystem.ToPrettyString(solution)}");
-            }
+            // Log bottle creation by a user
+            _adminLogger.Add(LogType.Action, LogImpact.Low,
+                $"{ToPrettyString(user):user} bottled {ToPrettyString(container):bottle} {SharedSolutionContainerSystem.ToPrettyString(solution)}");
 
             UpdateUiState(chemMaster);
             ClickSound(chemMaster);

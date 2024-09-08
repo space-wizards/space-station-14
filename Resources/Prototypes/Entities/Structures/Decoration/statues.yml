@@ -6,6 +6,7 @@
   description: An ancient marble statue. The subject is depicted with a floor-length braid and is wielding a red toolbox.
   components:
   - type: Sprite
+    noRot: true
     sprite: Structures/Decoration/statues.rsi
     state: venus_red
     drawdepth: Mobs
@@ -19,6 +20,7 @@
   description: An ancient marble statue. The subject is depicted with a floor-length braid and is wielding a blue toolbox.
   components:
   - type: Sprite
+    noRot: true
     sprite: Structures/Decoration/statues.rsi
     state: venus_blue
     drawdepth: Mobs
@@ -31,6 +33,7 @@
   description: A bananium statue. It portrays the return of the savior who will rise up and lead the clowns to the great honk.
   components:
   - type: Sprite
+    noRot: true
     sprite: Structures/Decoration/statues.rsi
     state: bananium_clown
     drawdepth: Mobs

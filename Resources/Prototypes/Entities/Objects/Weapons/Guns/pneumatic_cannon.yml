@@ -1,6 +1,6 @@
 - type: entity
   name: improvised pneumatic cannon
-  parent: BaseStorageItem
+  parent: [BaseStorageItem, BaseMinorContraband]
   id: WeaponImprovisedPneumaticCannon
   description: Improvised using nothing but a pipe, some zipties, and a pneumatic cannon. Doesn't accept tanks without enough gas.
   components:
@@ -22,7 +22,6 @@
     selectedMode: SemiAuto
     availableModes:
     - SemiAuto
-    - FullAuto
     soundGunshot:
       path: /Audio/Effects/thunk.ogg
     soundEmpty:
@@ -34,10 +33,7 @@
   - type: Storage
     maxItemSize: Normal
     grid:
-    - 0,0,3,3
-    blacklist:
-      tags:
-        - CannonRestrict
+    - 0,0,1,1
   - type: Appearance
   - type: ItemMapper
     containerWhitelist: [gas_tank]

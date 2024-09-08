@@ -16,6 +16,8 @@
     - !type:DepartmentTimeRequirement
       department: Command
       time: 54000 # 15 hours
+    - !type:AgeRequirement
+      requiredAge: 21
   weight: 20
   startingGear: CaptainGear
   icon: "JobIconCaptain"
@@ -35,15 +37,12 @@
 - type: startingGear
   id: CaptainGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitCaptain
-    back: ClothingBackpackCaptainFilled
     shoes: ClothingShoesBootsLaceup
-    head: ClothingHeadHatCaptain
     eyes: ClothingEyesGlassesSunglasses
     gloves: ClothingHandsGlovesCaptain
-    outerClothing: ClothingOuterArmorCaptainCarapace
     id: CaptainPDA
     ears: ClothingHeadsetAltCommand
-  innerClothingSkirt: ClothingUniformJumpskirtCaptain
-  satchel: ClothingBackpackSatchelCaptainFilled
-  duffelbag: ClothingBackpackDuffelCaptainFilled
+  storage:
+    back:
+    - Flash
+    # - StationCharter

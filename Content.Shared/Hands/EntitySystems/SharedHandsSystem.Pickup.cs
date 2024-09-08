@@ -1,3 +1,4 @@
+using Content.Shared.Clothing.Components;
 using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Content.Shared.Item;
@@ -108,13 +109,13 @@ public abstract partial class SharedHandsSystem : EntitySystem
             var xform = Transform(uid);
             var coordinateEntity = xform.ParentUid.IsValid() ? xform.ParentUid : uid;
             var itemXform = Transform(entity);
-            var itemPos = itemXform.MapPosition;
+            var itemPos = TransformSystem.GetMapCoordinates(entity, xform: itemXform);
 
             if (itemPos.MapId == xform.MapID
-                && (itemPos.Position - xform.MapPosition.Position).Length() <= MaxAnimationRange
+                && (itemPos.Position - TransformSystem.GetMapCoordinates(uid, xform: xform).Position).Length() <= MaxAnimationRange
                 && MetaData(entity).VisibilityMask == MetaData(uid).VisibilityMask) // Don't animate aghost pickups.
             {
-                var initialPosition = EntityCoordinates.FromMap(coordinateEntity, itemPos, EntityManager);
+                var initialPosition = EntityCoordinates.FromMap(coordinateEntity, itemPos, TransformSystem, EntityManager);
                 _storage.PlayPickupAnimation(entity, initialPosition, xform.Coordinates, itemXform.LocalRotation, uid);
             }
         }
@@ -177,6 +178,17 @@ public abstract partial class SharedHandsSystem : EntitySystem
 
         if (checkActionBlocker && !_actionBlocker.CanPickup(uid, entity))
             return false;
+
+        if (ContainerSystem.TryGetContainingContainer((entity, null, null), out var container))
+        {
+            if (!ContainerSystem.CanRemove(entity, container))
+                return false;
+
+            if (_inventory.TryGetSlotEntity(uid, container.ID, out var slotEnt) &&
+                slotEnt == entity &&
+                !_inventory.CanUnequip(uid, entity, container.ID, out _))
+                return false;
+        }
 
         // check can insert (including raising attempt events).
         return ContainerSystem.CanInsert(entity, handContainer);

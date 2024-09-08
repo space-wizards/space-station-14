@@ -1,7 +1,7 @@
 - type: entity
   name: hot potato
   description: Once activated, you can't drop this time bomb - hit someone else with it to save yourself! Don't burn your hands!
-  parent: BaseItem
+  parent: [BaseItem, BaseSyndicateContraband]
   id: HotPotato
   components:
     - type: Sprite
@@ -24,9 +24,10 @@
           Blunt: 5
     - type: OnUseTimerTrigger
       delay: 120
-      beepSound: /Audio/Machines/Nuke/general_beep.ogg
-      params:
-        volume: -2
+      beepSound:
+        path: /Audio/Machines/Nuke/general_beep.ogg
+        params:
+          volume: -2
     - type: ExplodeOnTrigger
     - type: Explosive
       explosionType: Default
@@ -51,7 +52,7 @@
 
 - type: entity
   id: HotPotatoEffect
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: TimedDespawn
     lifetime: 0.6
@@ -116,3 +117,6 @@
     - id: TrashBananaPeelExplosive
     sound:
       path: /Audio/Effects/unwrap.ogg
+  - type: Tag
+    tags:
+    - Banana

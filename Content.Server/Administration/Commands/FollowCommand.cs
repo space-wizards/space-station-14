@@ -11,15 +11,14 @@ public sealed class FollowCommand : IConsoleCommand
     [Dependency] private readonly IEntityManager _entManager = default!;
 
     public string Command => "follow";
-    public string Description => Loc.GetString("add-uplink-command-description");
-    public string Help => Loc.GetString("add-uplink-command-help");
+    public string Description => Loc.GetString("follow-command-description");
+    public string Help => Loc.GetString("follow-command-help");
 
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var player = shell.Player;
-        if (player == null)
+        if (shell.Player is not { } player)
         {
-            shell.WriteError(Loc.GetString("shell-only-players-can-run-this-command"));
+            shell.WriteError(Loc.GetString("shell-cannot-run-command-from-server"));
             return;
         }
 

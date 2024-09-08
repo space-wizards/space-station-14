@@ -130,7 +130,6 @@ DrinkGoldschlagerGlass: DrinkGildlagerGlass
 
 # 2024-01-07
 ClosetBase: ClosetSteelBase
-MonkeyCubeBox: VariantCubeBox
 
 # 2024-01-08
 SalvagePartsT4Spawner: SalvageLootSpawner
@@ -166,15 +165,265 @@ ClothingHeadHelmetVoidParamed: null
 # 2024-01-19
 DefaultStationBeaconTeslaEngine: null
 
-#2024-01-27
-ClothingBackpackSecurityFilledDetective: ClothingBackpackFilledDetective
-ClothingBackpackDuffelSecurityFilledDetective: ClothingBackpackDuffelFilledDetective
-ClothingBackpackSatchelSecurityFilledDetective: ClothingBackpackSatchelFilledDetective
+# 2024-01-27 (Reverted on 2024-03-10)
+# ClothingBackpackSecurityFilledDetective: ClothingBackpackFilledDetective
+# ClothingBackpackDuffelSecurityFilledDetective: ClothingBackpackDuffelFilledDetective
+# ClothingBackpackSatchelSecurityFilledDetective: ClothingBackpackSatchelFilledDetective
+
+# 2024-01-28
+FoodBoxDonkpocketGondola: FoodBoxDonkpocketPizza
 
 # 2024-01-31
-HandheldCrewMonitorEmpty: null
-HandheldCrewMonitor: null
 SpyCrewMonitor: null
 SpyCrewMonitorEmpty: null
 SyndiCrewMonitor: null
 SyndiCrewMonitorEmpty: null
+
+SpawnVehicleWheelchair: null
+SpawnVehicleWheelchairFolded: null
+VehicleWheelchair: null
+VehicleWheelchairFolded: null
+VehicleSecwayStealObjective: null
+VehicleKeyJanicart: null
+VehicleKeySecway: null
+VehicleKeyATV: null
+VehicleKeySkeleton: null
+VehicleKeySyndicateSegway: null
+VehicleKeySkeletonMotorcycle: null
+VehicleSecway: null
+VehicleATV: null
+VehicleSyndicateSegway: null
+VehicleSkeletonMotorcycle: null
+VehicleUnicycle: null
+VehicleUnicycleFolded: null
+ActionVehicleHorn: null
+CrateFunATV: null
+CrateFunSyndicateSegway: null
+MobTaxiBot: null
+# MobSupplyBot: null
+SpawnVehicleMotobike: null
+SpawnVehicleATV: null
+SpawnVehicleSecway: null
+SpawnVehicleJanicart: null
+VehicleJanicart: null
+VehicleJanicartDestroyed: null
+
+# 2024-02-01
+YellowOxygenTank: OxygenTank
+YellowOxygenTankFilled: OxygenTankFilled
+
+# 2024-02-12
+FoodDonutBlumpkin: FoodDonutBluePumpkin
+FoodDonutJellyBlumpkin: FoodDonutJellyBluePumpkin
+
+# 2024-02-19
+Drone: null
+SpawnMobDrone: null
+Onestar: null # I dont think this is even mapped, but just in case
+
+# 2024-02-22
+SolarAssemblyPart: SolarAssemblyFlatpack
+AmePart: AmePartFlatpack
+AmePartStealObjective: AmePartFlatpackStealObjective
+Observationskit: null
+
+# 2024-02-26
+CrateBaseWeldable: CrateGenericSteel
+
+# 2024-03-05
+BookBotanicalTextbook: BookRandomStory
+BookEscalation: BookRandomStory
+BookEscalationSecurity: BookRandomStory
+BookDemonomiconRandom: BookRandomStory
+BookDemonomicon1: BookRandomStory
+BookDemonomicon2: BookRandomStory
+BookDemonomicon3: BookRandomStory
+BookChemistryInsane: BookRandomStory
+BookGnominomicon: BookRandomStory
+BookFishing: BookRandomStory
+BookDetective: BookRandomStory
+
+# 2024-03-07
+AirlockExternalEasyPry: AirlockExternal
+AirlockExternalGlassEasyPry: AirlockExternalGlass
+AirlockGlassShuttleEasyPry: AirlockGlassShuttle
+AirlockShuttleEasyPry: AirlockShuttle
+AirlockExternalEasyPryLocked: AirlockExternalLocked
+AirlockExternalGlassEasyPryLocked: AirlockExternalGlassLocked
+AirlockGlassShuttleEasyPryLocked: AirlockExternalGlassShuttleLocked
+AirlockShuttleEasyPryLocked: AirlockExternalShuttleLocked
+
+# 2024-03-10
+FoodChili: FoodChiliPepper
+FoodChilly: FoodChillyPepper
+# ClothingBackpackFilledDetective: ClothingBackpackSecurityFilledDetective
+# ClothingBackpackDuffelFilledDetective: ClothingBackpackDuffelSecurityFilledDetective
+# ClothingBackpackSatchelFilledDetective: ClothingBackpackSatchelSecurityFilledDetective
+
+# 2024-03-11
+ImprovisedExplosive: FireBomb
+ImprovisedExplosiveEmpty: FireBombEmpty
+ImprovisedExplosiveFuel: FireBombFuel
+
+# 2024-03-16
+ClothingHeadHatHairflower: FoodPoppy
+
+# 2024-03-21
+RPED: null
+
+# 2024-03-30
+TraversalDistorterMachineCircuitboard: null
+MachineTraversalDistorter: null
+# These are technically not equivalent, but it probably makes more sense to replace any existing SCAF stuff with SOME kind of armor, instead of just deleting it outright.
+ClothingHeadHelmetScaf: ClothingHeadHelmetBasic
+ClothingOuterArmorScaf: ClothingOuterArmorBasic
+
+# 2024-03-31
+ClothingNeckFlowerWreath: ClothingHeadHatFlowerWreath
+ClothingHeadHatFlowerCrown: ClothingHeadHatFlowerWreath
+BriefcaseSyndieBase: null
+
+# 2024-04-08
+BodyBag_Container: BodyBag
+BodyBag_Folded: BodyBagFolded
+
+# 2024-04-26
+BaseBulletRubber: null
+BulletPistolRubber: BulletPistol
+BulletMagnumRubber: BulletMagnum
+BulletLightRifleRubber: BulletLightRifle
+BulletRifleRubber: BulletRifle
+BulletCaselessRifleRubber: BulletCaselessRifle
+CartridgePistolRubber: CartridgePistol
+CartridgeMagnumRubber: CartridgeMagnum
+CartridgeLightRifleRubber: CartridgeLightRifle
+CartridgeRifleRubber: CartridgeRifle
+CartridgeCaselessRifleRubber: CartridgeCaselessRifle
+MagazinePistolRubber: MagazinePistol
+MagazinePistolSubMachineGunRubber: MagazinePistolSubMachineGun
+MagazinePistolCaselessRifleRubber: MagazinePistolCaselessRifle
+MagazineMagnumRubber: MagazineMagnum
+MagazineMagnumSubMachineGunRubber: MagazineMagnumSubMachineGun
+MagazineLightRifleRubber: MagazineLightRifle
+MagazineRifleRubber: MagazineRifle
+MagazineCaselessRifleRubber: MagazineCaselessRifle
+MagazineCaselessRifleShortRubber: MagazineCaselessRifleShort
+SpeedLoaderPistolRubber: SpeedLoaderPistol
+SpeedLoaderMagnumRubber: SpeedLoaderMagnum
+MagazineBoxPistolRubber: MagazineBoxPistol
+# RIP box of magnum rubbers 202X to 2024
+MagazineBoxMagnumRubber: MagazineBoxMagnum
+MagazineBoxLightRifleRubber: MagazineBoxLightRifle
+MagazineBoxRifleRubber: MagazineBoxRifle
+MagazineBoxRifleBigRubber: MagazineBoxRifleBig
+MagazineBoxCaselessRifleRubber: MagazineBoxCaselessRifle
+MagazineBoxCaselessRifleBigRubber: MagazineBoxCaselessRifle10x24
+BoxMagazinePistolRubber: BoxMagazinePistol
+BoxMagazinePistolHighCapacityRubber: BoxMagazinePistolHighCapacity
+BoxMagazinePistolSubMachineGunRubber: BoxMagazinePistolSubMachineGun
+BoxMagazineLightRifleRubber: BoxMagazineLightRifle
+BoxMagazineRifleRubber: BoxMagazineRifle
+BoxMagazineCaselessRifleRubber: BoxMagazinePistolCaselessRifle
+BoxMagazineMagnumSubMachineGunRubber: BoxMagazineMagnumSubMachineGun
+WeaponPistolMk58Nonlethal: WeaponPistolMk58
+WeaponPistolN1984Nonlethal: WeaponPistolN1984
+WeaponSubMachineGunVectorRubber: WeaponSubMachineGunVector
+WeaponSubMachineGunDrozdRubber: WeaponSubMachineGunDrozd
+WeaponRifleLecterRubber: WeaponRifleLecter
+
+# 2024-04-26
+GlassBoxLaserBroken: GlassBoxBroken
+ReinforcementRadioSyndicateMonkey: ReinforcementRadioSyndicateAncestor
+ReinforcementRadioSyndicateMonkeyNukeops: ReinforcementRadioSyndicateAncestorNukeops
+
+# 2024-05-01
+DrinkBottleGoldschlager: DrinkBottleGildlager
+
+# 2024-05-14
+soda_dispenser: SodaDispenser
+chem_master: ChemMaster
+
+# 2024-05-21
+CrateJanitorExplosive: ClosetJanitorBombFilled
+
+# 2024-05-27
+DoorRemoteFirefight: null
+
+# 2024-06-03
+AirlockServiceCaptainLocked: AirlockCaptainLocked
+
+# 2024-06-15
+ClothingOuterCoatInspector: ClothingOuterCoatJensen
+
+# 2024-06-23
+FloorTileItemReinforced: PartRodMetal1
+
+#2024-06-25
+BookChefGaming: BookHowToCookForFortySpaceman
+
+#2024-06-29
+IntercomAssesmbly: IntercomAssembly
+
+# 2024-07-7
+SignScience1: SignScience
+SignScience2: SignScience
+SignXenobio2: SignXenobio
+SignXenolab: SignXenobio
+SignToxins2: SignToxins
+SignMinerDock: SignShipDock
+SignChemistry1: SignChem
+SignChemistry2: SignChem
+SignCourt: SignLawyer
+SignAtmosMinsky: SignAtmos
+SignDrones: SignMaterials
+SignShield: null # what was this even for?
+SignHydro2: SignHydro1
+SignHydro3: SignHydro1
+
+# 2024-07-27
+LogicGate: LogicGateOr
+
+# 2024-08-08
+MaterialReclaimer: null
+MaterialReclaimerMachineCircuitboard: null
+
+# 2024-08-11
+FoodTacoBeef: FoodTacoShell
+FoodTacoChicken: FoodTacoShell
+FoodTacoFish: FoodTacoShell
+FoodTacoBeefSupreme: FoodTacoShell
+FoodTacoChickenSupreme: FoodTacoShell
+FoodTacoRat: FoodTacoShell
+
+FoodMeatHumanKebab: FoodKebabSkewer
+FoodMeatLizardtailKebab: FoodKebabSkewer
+FoodMeatRatKebab: FoodKebabSkewer
+FoodMeatRatdoubleKebab: FoodKebabSkewer
+FoodMeatSnakeKebab: FoodKebabSkewer
+FoodMeatHawaiianKebab: FoodKebabSkewer
+FoodMeatKebab: FoodKebabSkewer
+FoodMeatFiestaKebab: FoodKebabSkewer
+
+#2024-08-14
+ClothingBeltSuspenders: ClothingBeltSuspendersRed
+
+# 2024-08-19
+ClothingNeckShockCollar: ClothingBackpackElectropack
+
+# 2024-08-22
+ComputerShuttleSalvage: null
+SalvageShuttleConsoleCircuitboard: null
+SalvageShuttleCircuitboardStealObjective: null
+
+# 2024-08-28
+ClothingBackpackDuffelSyndicateCostumeCentcom: null
+ClothingHeadsetAltCentComFake: null
+CentcomPDAFake: null
+CentcomIDCardSyndie: null
+
+# 2024-09-06
+AntimovCircuitBoard: null
+OverlordCircuitBoard: null
+
+# 2024-09-08
+HatBase: null

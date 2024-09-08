@@ -1,7 +1,7 @@
 - type: entity
   id: ShadowBasaltOne
   name: shadowstone
-  description: Cold rock
+  description: Glowing cracks in reality. It's probably fine.
   placement:
     mode: SnapgridCenter
   components:

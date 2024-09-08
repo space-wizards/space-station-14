@@ -12,37 +12,9 @@ public partial class RadiationSystem
 
     private void SubscribeCvars()
     {
-        _cfg.OnValueChanged(CCVars.RadiationMinIntensity, SetMinRadiationIntensity, true);
-        _cfg.OnValueChanged(CCVars.RadiationGridcastUpdateRate, SetGridcastUpdateRate, true);
-        _cfg.OnValueChanged(CCVars.RadiationGridcastSimplifiedSameGrid, SetGridcastSimplifiedSameGrid, true);
-        _cfg.OnValueChanged(CCVars.RadiationGridcastMaxDistance, SetGridcastMaxDistance, true);
-    }
-
-    private void UnsubscribeCvars()
-    {
-        _cfg.UnsubValueChanged(CCVars.RadiationMinIntensity, SetMinRadiationIntensity);
-        _cfg.UnsubValueChanged(CCVars.RadiationGridcastUpdateRate, SetGridcastUpdateRate);
-        _cfg.UnsubValueChanged(CCVars.RadiationGridcastSimplifiedSameGrid, SetGridcastSimplifiedSameGrid);
-        _cfg.UnsubValueChanged(CCVars.RadiationGridcastMaxDistance, SetGridcastMaxDistance);
-    }
-
-    private void SetMinRadiationIntensity(float radiationMinIntensity)
-    {
-        MinIntensity = radiationMinIntensity;
-    }
-
-    private void SetGridcastUpdateRate(float updateRate)
-    {
-        GridcastUpdateRate = updateRate;
-    }
-
-    private void SetGridcastSimplifiedSameGrid(bool simplifiedSameGrid)
-    {
-        GridcastSimplifiedSameGrid = simplifiedSameGrid;
-    }
-
-    private void SetGridcastMaxDistance(float maxDistance)
-    {
-        GridcastMaxDistance = maxDistance;
+        Subs.CVar(_cfg, CCVars.RadiationMinIntensity, radiationMinIntensity => MinIntensity = radiationMinIntensity, true);
+        Subs.CVar(_cfg, CCVars.RadiationGridcastUpdateRate, updateRate => GridcastUpdateRate = updateRate, true);
+        Subs.CVar(_cfg, CCVars.RadiationGridcastSimplifiedSameGrid, simplifiedSameGrid => GridcastSimplifiedSameGrid = simplifiedSameGrid, true);
+        Subs.CVar(_cfg, CCVars.RadiationGridcastMaxDistance, maxDistance => GridcastMaxDistance = maxDistance, true);
     }
 }

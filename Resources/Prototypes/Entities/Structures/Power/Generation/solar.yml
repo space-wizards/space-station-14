@@ -1,6 +1,6 @@
 - type: entity
   id: SolarPanelBasePhysSprite
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   name: solar panel
   placement:
     mode: SnapgridCenter
@@ -49,6 +49,7 @@
     onBump: false
     requirePower: true
     highVoltageNode: output
+  - type: RequireProjectileTarget
 
 - type: entity
   id: SolarPanel
@@ -61,7 +62,7 @@
     supplyRampRate: 500
   - type: SolarPanel
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
   - type: Destructible
     thresholds:
@@ -90,7 +91,7 @@
   - type: Sprite
     state: broken
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
   - type: Destructible
     thresholds:
@@ -141,7 +142,7 @@
     anchored: true
     noRot: true
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
   - type: Destructible
     thresholds:
@@ -157,6 +158,7 @@
     graph: SolarPanel
     node: solarassembly
     defaultTarget: solarpanel
+  - type: RequireProjectileTarget
 
 - type: entity
   id: SolarTracker
@@ -186,8 +188,8 @@
     anchored: true
     noRot: true
   - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -201,3 +203,4 @@
   - type: Construction
     graph: SolarPanel
     node: solartracker
+  - type: RequireProjectileTarget

@@ -4,7 +4,7 @@
   id: BaseTraitorObjective
   components:
   - type: Objective
-    issuer: syndicate
+    issuer: objective-issuer-syndicate
   - type: RoleRequirement
     roles:
       components:
@@ -36,10 +36,9 @@
 # state
 
 - type: entity
-  noSpawn: true
   parent: [BaseTraitorObjective, BaseLivingObjective]
   id: EscapeShuttleObjective
-  name: Escape to centcom alive and unrestrained.
+  name: Escape to centcomm alive and unrestrained.
   description: One of our undercover agents will debrief you when you arrive. Don't show up in cuffs.
   components:
   - type: Objective
@@ -50,7 +49,6 @@
   - type: EscapeShuttleCondition
 
 - type: entity
-  noSpawn: true
   parent: BaseTraitorObjective
   id: DieObjective
   name: Die a glorious death
@@ -69,7 +67,6 @@
   - type: DieCondition
 
 #- type: entity
-#  noSpawn: true
 #  parent: [BaseTraitorObjective, BaseLivingObjective]
 #  id: HijackShuttleObjective
 #  name: Hijack emergency shuttle
@@ -85,10 +82,9 @@
 # kill
 
 - type: entity
-  noSpawn: true
   parent: [BaseTraitorObjective, BaseKillObjective]
   id: KillRandomPersonObjective
-  description: Do it however you like, just make sure they don't make it to centcom.
+  description: Do it however you like, just make sure they don't make it to centcomm.
   components:
   - type: Objective
     difficulty: 1.75
@@ -98,7 +94,6 @@
   - type: PickRandomPerson
 
 - type: entity
-  noSpawn: true
   parent: [BaseTraitorObjective, BaseKillObjective]
   id: KillRandomHeadObjective
   description: We need this head gone and you probably know why. Good luck, agent.
@@ -119,7 +114,6 @@
 # social
 
 - type: entity
-  noSpawn: true
   parent: [BaseTraitorSocialObjective, BaseKeepAliveObjective]
   id: RandomTraitorAliveObjective
   description: Identify yourself at your own risk. We just need them alive.
@@ -131,7 +125,6 @@
   - type: RandomTraitorAlive
 
 - type: entity
-  noSpawn: true
   parent: [BaseTraitorSocialObjective, BaseHelpProgressObjective]
   id: RandomTraitorProgressObjective
   description: Identify yourself at your own risk. We just need them to succeed.
@@ -147,56 +140,76 @@
 ## cmo
 
 - type: entity
-  noSpawn: true
+  abstract: true
   parent: BaseTraitorStealObjective
-  id: CMOHyposprayStealObjective
+  id: BaseCMOStealObjective
   components:
   - type: NotJobRequirement
     job: ChiefMedicalOfficer
   - type: StealCondition
-    stealGroup: Hypospray
     owner: job-name-cmo
+
+- type: entity
+  parent: BaseCMOStealObjective
+  id: CMOHyposprayStealObjective
+  components:
+  - type: StealCondition
+    stealGroup: Hypospray
+
+- type: entity
+  parent: BaseCMOStealObjective
+  id: CMOCrewMonitorStealObjective
+  components:
+  - type: StealCondition
+    stealGroup: HandheldCrewMonitor
 
 ## rd
 
 - type: entity
-  noSpawn: true
+  abstract: true
   parent: BaseTraitorStealObjective
+  id: BaseRDStealObjective
+  components:
+  - type: NotJobRequirement
+    job: ResearchDirector
+  - type: StealCondition
+    owner: job-name-rd
+
+- type: entity
+  parent: BaseRDStealObjective
   id: RDHardsuitStealObjective
   components:
   - type: StealCondition
     stealGroup: ClothingOuterHardsuitRd
-    owner: job-name-rd
+  - type: Objective
+    # This item must be worn or stored in a slowing duffelbag, very hard to hide.
+    difficulty: 3
 
 - type: entity
-  noSpawn: true
-  parent: BaseTraitorStealObjective
+  parent: BaseRDStealObjective
   id: HandTeleporterStealObjective
   components:
   - type: StealCondition
     stealGroup: HandTeleporter
-    owner: job-name-rd
 
 ## hos
 
 - type: entity
-  noSpawn: true
   parent: BaseTraitorStealObjective
-  id: SecretDocumentsStealObjective
+  id: EnergyShotgunStealObjective
   components:
   - type: Objective
-    # hos has a gun ce does not, higher difficulty than most
+    # HoS will have this on them a lot of the time so..
     difficulty: 3
   - type: NotJobRequirement
     job: HeadOfSecurity
   - type: StealCondition
-    stealGroup: BookSecretDocuments
+    stealGroup: WeaponEnergyShotgun
     owner: job-name-hos
 
 ## ce
 
 - type: entity
-  noSpawn: true
   parent: BaseTraitorStealObjective
   id: MagbootsStealObjective
   components:
@@ -209,7 +222,6 @@
 ## qm
 
 - type: entity
-  noSpawn: true
   parent: BaseTraitorStealObjective
   id: ClipboardStealObjective
   components:
@@ -222,7 +234,6 @@
 ## hop
 
 - type: entity
-  noSpawn: true
   parent: BaseTraitorStealObjective
   id: CorgiMeatStealObjective
   components:
@@ -248,7 +259,6 @@
     job: Captain
 
 - type: entity
-  noSpawn: true
   parent: BaseCaptainObjective
   id: CaptainIDStealObjective
   components:
@@ -256,7 +266,6 @@
     stealGroup: CaptainIDCard
 
 - type: entity
-  noSpawn: true
   parent: BaseCaptainObjective
   id: CaptainJetpackStealObjective
   components:
@@ -264,7 +273,6 @@
     stealGroup: JetpackCaptainFilled
 
 - type: entity
-  noSpawn: true
   parent: BaseCaptainObjective
   id: CaptainGunStealObjective
   components:
@@ -273,7 +281,6 @@
     owner: job-name-captain
 
 - type: entity
-  noSpawn: true
   parent: BaseCaptainObjective
   id: NukeDiskStealObjective
   components:

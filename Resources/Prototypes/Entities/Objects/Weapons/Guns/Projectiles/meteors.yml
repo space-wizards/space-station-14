@@ -1,40 +1,226 @@
 - type: entity
-  id: MeteorLarge
+  id: BaseMeteor
   name: meteor
-  noSpawn: true
+  description: You prefer them when they're burning up in the atmosphere.
+  abstract: true
   components:
   - type: Sprite
     noRot: false
-    sprite: Objects/Weapons/Guns/Projectiles/meteor.rsi
-    scale: 4,4
-    layers:
-    - state: large
-      shader: unshaded
-  - type: ExplodeOnTrigger
-  - type: DeleteOnTrigger
-  - type: TriggerOnCollide
-    fixtureID: projectile
+    sprite: Objects/Misc/meteor.rsi
   - type: Projectile
     damage: {}
     deleteOnCollide: false
-  - type: Explosive
-    explosionType: Default
-    totalIntensity: 600.0
-    intensitySlope: 30
-    maxIntensity: 45
+  - type: Meteor
+    damageTypes:
+      types:
+        Blunt: 1
+  - type: TimedDespawn
+    lifetime: 120
+  - type: Clickable
   - type: Physics
     bodyType: Dynamic
+    bodyStatus: InAir
+    angularDamping: 0
+    linearDamping: 0
   - type: Fixtures
     fixtures:
       projectile:
         shape:
           !type:PhysShapeCircle
-          radius: 0.8
+          radius: 0.4
         density: 100
-        hard: true
-        # Didn't use MapGridComponent for now as the bounds are stuffed.
+        hard: false
         layer:
         - LargeMobLayer
         mask:
         - Impassable
         - BulletImpassable
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Explosive
+    explosionType: Default
+    intensitySlope: 2
+    maxIntensity: 100
+    maxTileBreak: 1
+    tileBreakScale: 2
+
+
+- type: entity
+  parent: BaseMeteor
+  id: MeteorSpaceDust
+  name: space dust
+  description: Makes a station sneeze.
+  components:
+  - type: Sprite
+    state: space_dust
+  - type: Fixtures
+    fixtures:
+      projectile:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.45
+        density: 100
+        hard: false
+        layer:
+        - LargeMobLayer
+        mask:
+        - Impassable
+        - BulletImpassable
+  - type: Explosive
+    totalIntensity: 25
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:ExplodeBehavior
+
+- type: entity
+  parent: BaseMeteor
+  id: MeteorSmall
+  suffix: Small
+  components:
+  - type: Sprite
+    state: small
+  - type: Fixtures
+    fixtures:
+      projectile:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.25
+        density: 100
+        hard: false
+        layer:
+        - LargeMobLayer
+        mask:
+        - Impassable
+        - BulletImpassable
+  - type: Explosive
+    totalIntensity: 50
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1250
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:ExplodeBehavior
+      - !type:WeightedSpawnEntityBehavior
+        weightedEntityTable: "MeteorSpawnAsteroidWallTable"
+        minSpawn: 2
+        maxSpawn: 4
+        spawnAfter: 0.5
+
+- type: entity
+  parent: BaseMeteor
+  id: MeteorMedium
+  suffix: Medium
+  components:
+  - type: Sprite
+    state: medium
+  - type: Fixtures
+    fixtures:
+      projectile:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.3
+        density: 100
+        hard: false
+        layer:
+        - LargeMobLayer
+        mask:
+        - Impassable
+        - BulletImpassable
+  - type: Explosive
+    totalIntensity: 100
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1750
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:ExplodeBehavior
+      - !type:WeightedSpawnEntityBehavior
+        weightedEntityTable: "MeteorSpawnAsteroidWallTable"
+        spawnOffset: 2
+        minSpawn: 3
+        maxSpawn: 6
+        spawnAfter: 0.5
+
+- type: entity
+  parent: BaseMeteor
+  id: MeteorLarge
+  suffix: Large
+  components:
+  - type: Sprite
+    state: big
+  - type: Explosive
+    totalIntensity: 150
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 2500
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:ExplodeBehavior
+      - !type:WeightedSpawnEntityBehavior
+        weightedEntityTable: "MeteorSpawnAsteroidWallTable"
+        spawnOffset: 3
+        minSpawn: 5
+        maxSpawn: 8
+        spawnAfter: 0.5
+
+- type: entity
+  parent: BaseMeteor
+  id: MeteorUrist
+  name: Urist McMeteor
+  description: As a successful member of society with a stable unflinching psyche and limitless drive, natural affinity for finance and domination, you have been selected, no, you have been effortlessly guided by divine (biological) trauma towards this moment. The gates of destiny fling open, and once again you're left standing on pulsating nothingness. A strobing headache of the soul.
+  suffix: Meteor
+  components:
+  - type: Sprite
+    state: human_pixel
+  - type: SolutionContainerManager
+    solutions:
+      blood:
+        maxVol: 1000
+        reagents:
+        - ReagentId: Blood
+          Quantity: 1000
+  - type: Explosive
+    totalIntensity: 25
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 3000
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MaleScreams
+          params:
+            volume: 10
+      - !type:SpillBehavior
+        solution: blood
+      - !type:ExplodeBehavior

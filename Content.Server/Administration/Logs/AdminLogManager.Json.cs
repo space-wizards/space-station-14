@@ -65,6 +65,10 @@ public sealed partial class AdminLogManager
             {
                 players.Add(actor.PlayerSession.UserId.UserId);
             }
+            else if (value is SerializablePlayer player)
+            {
+                players.Add(player.Player.UserId.UserId);
+            }
         }
 
         return (JsonSerializer.SerializeToDocument(parsed, _jsonOptions), players);

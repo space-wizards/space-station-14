@@ -41,7 +41,8 @@
     state: boritos
   - type: Item
   - type: Food
-    trash: FoodPacketBoritosTrash
+    trash: 
+    - FoodPacketBoritosTrash
 
 - type: entity
   name: C&Ds
@@ -56,7 +57,8 @@
     state: cnds
   - type: Item
   - type: Food
-    trash: FoodPacketCnDsTrash
+    trash: 
+    - FoodPacketCnDsTrash
 
 - type: entity
   name: cheesie honkers
@@ -72,7 +74,8 @@
     state: cheesiehonkers
   - type: Item
   - type: Food
-    trash: FoodPacketCheesieTrash
+    trash: 
+    - FoodPacketCheesieTrash
 
 - type: entity
   name: chips
@@ -89,7 +92,8 @@
     state: chips
   - type: Item
   - type: Food
-    trash: FoodPacketChipsTrash
+    trash: 
+    - FoodPacketChipsTrash
 
 - type: entity
   name: chocolate bar
@@ -183,7 +187,8 @@
     state: pistachio
   - type: Item
   - type: Food
-    trash: FoodPacketPistachioTrash
+    trash: 
+    - FoodPacketPistachioTrash
   - type: Tag
     tags:
     - Fruit # Seed of a fruit, you can yell at me
@@ -204,7 +209,8 @@
   - type: Item
     heldPrefix: popcorn
   - type: Food
-    trash: FoodPacketPopcornTrash
+    trash: 
+    - FoodPacketPopcornTrash
 
 - type: entity
   name: 4no raisins
@@ -219,7 +225,8 @@
     state: raisins
   - type: Item
   - type: Food
-    trash: FoodPacketRaisinsTrash
+    trash: 
+    - FoodPacketRaisinsTrash
   - type: Tag
     tags:
     - Fruit
@@ -237,7 +244,8 @@
     state: semki
   - type: Item
   - type: Food
-    trash: FoodPacketSemkiTrash
+    trash: 
+    - FoodPacketSemkiTrash
 
 - type: entity
   name: sus jerky
@@ -252,7 +260,8 @@
     state: susjerky
   - type: Item
   - type: Food
-    trash: FoodPacketSusTrash
+    trash: 
+    - FoodPacketSusTrash
   - type: Tag
     tags:
     - Meat
@@ -270,7 +279,49 @@
     state: syndicakes
   - type: Item
   - type: Food
-    trash: FoodPacketSyndiTrash
+    trash: 
+    - FoodPacketSyndiTrash
+
+- type: entity
+  parent: FoodSnackBase
+  id: DrinkRamen
+  name: cup ramen
+  description: A cheap food with a taste that reminds you of your school years.
+  components:
+  - type: RefillableSolution
+    solution: food
+  - type: InjectableSolution
+    solution: food
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 50 #big cup
+        reagents:
+        - ReagentId: DryRamen
+          Quantity: 30
+        - ReagentId: Soysauce
+          Quantity: 5
+  - type: Sprite
+    state: ramen
+  - type: Food
+    trash: 
+    - FoodPacketCupRamenTrash
+
+- type: entity
+  parent: DrinkRamen
+  id: DrinkHellRamen
+  name: hell ramen
+  description: Super spicy flavor!
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 50
+        reagents:
+        - ReagentId: DryRamen
+          Quantity: 30
+        - ReagentId: CapsaicinOil
+          Quantity: 5
 
 - type: entity
   name: chow mein
@@ -296,7 +347,8 @@
         - ReagentId: Soysauce
           Quantity: 2
   - type: Food
-    trash: FoodPacketChowMeinTrash
+    trash: 
+    - FoodPacketChowMeinTrash
 
 - type: entity
   name: dan dan noodles
@@ -324,7 +376,8 @@
         - ReagentId: Soysauce
           Quantity: 2
   - type: Food
-    trash: FoodPacketDanDanTrash
+    trash: 
+    - FoodPacketDanDanTrash
 
 - type: entity
   name: fortune cookie
@@ -349,7 +402,8 @@
     heldPrefix: packet
     size: Tiny
   - type: Food
-    trash: FoodCookieFortune
+    trash: 
+    - FoodCookieFortune
 
 - type: entity
   id: FoodSnackNutribrick
@@ -383,16 +437,19 @@
       - nutribrick
   - type: Item
     size: Small
+  - type: Tag
+    tags:
+      - ReptilianFood
   - type: Sprite
     state: nutribrick-open
   - type: Food
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 30
+        maxVol: 25
         reagents:
         - ReagentId: Nutriment
-          Quantity: 25
+          Quantity: 20
 
 - type: entity
   id: FoodSnackMREBrownie
@@ -440,7 +497,7 @@
 # Trash
 
 - type: entity
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: BaseItem
   id: FoodPacketTrash
   description: This is rubbish.
@@ -451,6 +508,7 @@
   - type: Item
     sprite: Objects/Consumable/Food/snacks.rsi
     heldPrefix: packet
+    size: Tiny
   - type: Tag
     tags:
     - Trash
@@ -462,147 +520,142 @@
     price: 0
 
 - type: entity
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: FoodPacketTrash
   id: FoodPacketBoritosTrash
   name: boritos bag
   components:
   - type: Sprite
     state: boritos-trash
-  - type: Item
 
 - type: entity
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: FoodPacketTrash
   id: FoodPacketCnDsTrash
   name: C&Ds bag
   components:
   - type: Sprite
     state: cnds-trash
-  - type: Item
 
 - type: entity
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: FoodPacketTrash
   id: FoodPacketCheesieTrash
   name: cheesie honkers
   components:
   - type: Sprite
     state: cheesiehonkers-trash
-  - type: Item
 
 - type: entity
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: FoodPacketTrash
   id: FoodPacketChipsTrash
   name: chips
   components:
   - type: Sprite
     state: chips-trash
-  - type: Item
 
 - type: entity
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: FoodPacketTrash
   id: FoodPacketChocolateTrash
   name: chocolate wrapper
   components:
   - type: Sprite
     state: chocolatebar-trash
-  - type: Item
 
 - type: entity
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: FoodPacketTrash
   id: FoodPacketEnergyTrash
   name: energybar wrapper
   components:
   - type: Sprite
     state: energybar-trash
-  - type: Item
 
 - type: entity
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: FoodPacketTrash
   id: FoodPacketPistachioTrash
   name: pistachios packet
   components:
   - type: Sprite
     state: pistachio-trash
-  - type: Item
 
 - type: entity
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: FoodPacketTrash
   id: FoodPacketPopcornTrash
   name: popcorn box
   components:
   - type: Sprite
     state: popcorn-trash
-  - type: Item
 
 - type: entity
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: FoodPacketTrash
   id: FoodPacketRaisinsTrash
   name: 4no raisins
   components:
   - type: Sprite
     state: raisins-trash
-  - type: Item
 
 - type: entity
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: FoodPacketTrash
   id: FoodPacketSemkiTrash
   name: semki packet
   components:
   - type: Sprite
     state: semki-trash
-  - type: Item
 
 - type: entity
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: FoodPacketTrash
   id: FoodPacketSusTrash
   name: sus jerky
   components:
   - type: Sprite
     state: susjerky-trash
-  - type: Item
 
 - type: entity
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: FoodPacketTrash
   id: FoodPacketSyndiTrash
   name: syndi-cakes box
   components:
   - type: Sprite
     state: syndicakes-trash
-  - type: Item
 
 - type: entity
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
+  parent: FoodPacketTrash
+  id: FoodPacketCupRamenTrash
+  name: empty cup ramen
+  components:
+  - type: Sprite
+    state: ramen
+
+- type: entity
+  categories: [ HideSpawnMenu ]
   parent: FoodPacketTrash
   id: FoodPacketChowMeinTrash
   name: empty chow mein box
   components:
   - type: Sprite
     state: chinese1
-  - type: Item
 
 - type: entity
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: FoodPacketTrash
   id: FoodPacketDanDanTrash
   name: empty dan dan box
   components:
   - type: Sprite
     state: chinese2
-  - type: Item
 
 - type: entity
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: FoodPacketTrash
   id: FoodCookieFortune
   name: cookie fortune
@@ -615,11 +668,24 @@
     descriptionSegments: [CookieFortuneDescriptions]
 
 - type: entity
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: FoodPacketTrash
   id: FoodPacketMRETrash
   name: MRE wrapper
   description: A general purpose wrapper for a variety of military food goods.
   components:
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 40
+  - type: Tag
+    tags:
+    - ClothMade
+    - Trash
   - type: Sprite
     state: mre-wrapper

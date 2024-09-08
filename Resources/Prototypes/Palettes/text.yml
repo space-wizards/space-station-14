@@ -33,3 +33,20 @@
     amber-darken-2: "#cc8000"
     amber-accent-2: "#7c6200"
     amber-accent-4: "#996700"
+
+- type: palette
+  id: ChatNames
+  name: Chat Names
+  colors:
+    ploink: "#da8bc9"
+    ourple: "#b18bda"
+    us-navy: "#96a4eb"
+    yet-another-blue: "#8cb7e8"
+    cyan: "#8bc9da"
+    fake-color: "#8bdaba"
+    green: "#8bda8e"
+    you-wish-you-were-green: "#a9da8b"
+    piss: "#ceda8b"
+    orange: "#dabc8b"
+    the-orange-she-tells-you-not-to-worry-about: "#daa58b"
+    red: "#da8b8b"

@@ -62,21 +62,11 @@
       - reactantPrototype: Plasma
         powerGenerationEfficiency: 1
         reactantBreakdownRate: 0.0001
-    # Note that this doesn't matter too much (see next comment)
-    # However it does act as a cap on power receivable via the collector.
-  - type: Battery
-    maxCharge: 100000
-    startingCharge: 0
-  - type: BatteryDischarger
-    # This is JUST a default. It has to be dynamically adjusted to ensure that the battery doesn't discharge "too fast" & run out immediately, while still scaling by input power.
-    activeSupplyRate: 100000
   - type: RadiationReceiver
+  - type: PowerSupplier
   - type: Anchorable
   - type: Rotatable
   - type: Pullable
-  - type: PowerNetworkBattery
-    maxSupply: 1000000000
-    supplyRampTolerance: 1000000000
   - type: GuideHelp
     guides: [ Singularity, Power ]
   - type: ContainerContainer

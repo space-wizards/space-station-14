@@ -9,8 +9,7 @@ public sealed partial class SpaceVillainGame
     /// </summary>
     private void UpdateUi(EntityUid uid, bool metadata = false)
     {
-        if (_uiSystem.TryGetUi(uid, SpaceVillainArcadeUiKey.Key, out var bui))
-            _uiSystem.SendUiMessage(bui, metadata ? GenerateMetaDataMessage() : GenerateUpdateMessage());
+        _uiSystem.ServerSendUiMessage(uid, SpaceVillainArcadeUiKey.Key, metadata ? GenerateMetaDataMessage() : GenerateUpdateMessage());
     }
 
     private void UpdateUi(EntityUid uid, string message1, string message2, bool metadata = false)

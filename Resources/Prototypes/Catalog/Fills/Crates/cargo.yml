@@ -110,9 +110,6 @@
     - id: WeaponRifleAk
       prob: 0.0001
       orGroup: Weapons
-    - id: Throngler
-      prob: 0.0001
-      orGroup: Weapons
     - id: WeaponLauncherPirateCannon
       prob: 0.001
       orGroup: Weapons
@@ -160,6 +157,9 @@
       orGroup: Weapons
     - id: WeaponTurretXeno
       prob: 0.01
+      orGroup: Weapons
+    - id: WeaponRifleFoam
+      prob: 0.03
       orGroup: Weapons
     #clothing
     - id: ClothingUniformJumpsuitFamilyGuy
@@ -305,6 +305,9 @@
     - id: PlushieArachind
       prob: 0.01
       orGroup: Plushies
+    - id: PlushieThrongler #hehe
+      prob: 0.0005
+      orGroup: Plushies
     #useful
     - id: AmeJar
       prob: 0.01
@@ -387,4 +390,13 @@
       orGroup: NotUseful
     - id: WeakKudzu
       prob: 0.01
+      orGroup: NotUseful
+    - id: MagazineFoamBox
+      prob: 0.001
+      orGroup: NotUseful
+    - id: BoxDonkSoftBox
+      prob: 0.008
+      orGroup: NotUseful
+    - id: GrenadeFoamDart
+      prob: 0.001
       orGroup: NotUseful

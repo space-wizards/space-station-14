@@ -19,7 +19,6 @@ using Content.Shared.Roles;
 using Robust.Server;
 using Robust.Server.GameObjects;
 using Robust.Server.GameStates;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
@@ -53,13 +52,10 @@ namespace Content.Server.GameTicking
 #endif
         [Dependency] private readonly IServerPreferencesManager _prefsManager = default!;
         [Dependency] private readonly IServerDbManager _db = default!;
-        [Dependency] private readonly ArrivalsSystem _arrivals = default!;
         [Dependency] private readonly ChatSystem _chatSystem = default!;
-        [Dependency] private readonly DamageableSystem _damageable = default!;
         [Dependency] private readonly MapLoaderSystem _map = default!;
         [Dependency] private readonly GhostSystem _ghost = default!;
         [Dependency] private readonly SharedMindSystem _mind = default!;
-        [Dependency] private readonly MobStateSystem _mobState = default!;
         [Dependency] private readonly PlayTimeTrackingSystem _playTimeTrackings = default!;
         [Dependency] private readonly PvsOverrideSystem _pvsOverride = default!;
         [Dependency] private readonly ServerUpdateManager _serverUpdates = default!;
@@ -93,7 +89,6 @@ namespace Content.Server.GameTicking
             InitializeStatusShell();
             InitializeCVars();
             InitializePlayer();
-            InitializeLobbyMusic();
             InitializeLobbyBackground();
             InitializeGamePreset();
             DebugTools.Assert(_prototypeManager.Index<JobPrototype>(FallbackOverflowJob).Name == FallbackOverflowJobName,
@@ -134,6 +129,7 @@ namespace Content.Server.GameTicking
                 return;
             base.Update(frameTime);
             UpdateRoundFlow(frameTime);
+            UpdateGameRules();
         }
     }
 }

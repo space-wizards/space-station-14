@@ -1,5 +1,5 @@
 using Content.Server.Chemistry.Components;
-using Content.Server.Chemistry.Containers.EntitySystems;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.FixedPoint;
@@ -9,15 +9,8 @@ namespace Content.Server.Chemistry.EntitySystems;
 
 public sealed class SolutionRegenerationSystem : EntitySystem
 {
-    [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<SolutionRegenerationComponent, EntityUnpausedEvent>(OnUnpaused);
-    }
 
     public override void Update(float frameTime)
     {
@@ -51,10 +44,5 @@ public sealed class SolutionRegenerationSystem : EntitySystem
                 _solutionContainer.TryAddSolution(regen.Solution.Value, generated);
             }
         }
-    }
-
-    private void OnUnpaused(Entity<SolutionRegenerationComponent> entity, ref EntityUnpausedEvent args)
-    {
-        entity.Comp.NextRegenTime += args.PausedTime;
     }
 }

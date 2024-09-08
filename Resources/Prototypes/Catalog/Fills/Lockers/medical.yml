@@ -45,10 +45,11 @@
     contents:
       - id: HandheldHealthAnalyzer
         prob: 0.6
+      - id: ClothingHeadMirror
+        prob: 0.1
       - id: ClothingHandsGlovesLatex
       - id: ClothingHeadsetMedical
       - id: ClothingEyesHudMedical
-      - id: ClothingBeltMedical
       - id: ClothingHeadHatSurgcapGreen
         prob: 0.1
         orGroup: Surgcaps
@@ -82,7 +83,6 @@
       - id: ClothingHandsGlovesLatex
       - id: ClothingHeadsetMedical
       - id: ClothingEyesHudMedical
-      - id: ClothingBeltMedical
       - id: ClothingHeadHatSurgcapGreen
         prob: 0.1
         orGroup: Surgcaps
@@ -141,5 +141,6 @@
       - id: ClothingHandsGlovesLatex
       - id: ClothingHeadsetMedical
       - id: ClothingMaskSterile
+      - id: HandheldGPSBasic
       - id: MedkitFilled
         prob: 0.3

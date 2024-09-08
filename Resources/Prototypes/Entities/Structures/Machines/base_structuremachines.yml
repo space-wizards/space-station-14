@@ -22,8 +22,8 @@
         layer:
         - MachineLayer
   - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -70,3 +70,10 @@
     - machine_board
   - type: LightningTarget
     priority: 1
+
+- type: entity
+  abstract: true
+  parent: ConstructibleMachine
+  id: SmallConstructibleMachine
+  components:
+    - type: RequireProjectileTarget

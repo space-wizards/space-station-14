@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: BaseItem
   id: BaseArrow
   abstract: true
@@ -35,7 +35,6 @@
   - type: Tag
     tags:
     - Arrow
-    - CannonRestrict
   - type: Projectile
     deleteOnCollide: false
     onlyCollideWhenShot: true
@@ -50,9 +49,9 @@
     solution: ammo
   - type: InjectableSolution
     solution: ammo
-  - type: SolutionInjectOnCollide
+  - type: SolutionInjectOnEmbed
     transferAmount: 2
-    blockSlots: NONE
+    solution: ammo
   - type: SolutionTransfer
     maxTransferAmount: 2
   - type: Appearance

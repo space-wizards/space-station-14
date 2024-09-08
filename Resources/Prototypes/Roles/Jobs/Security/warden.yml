@@ -9,6 +9,7 @@
       time: 36000 #10 hrs
   startingGear: WardenGear
   icon: "JobIconWarden"
+  requireAdminNotify: true
   supervisors: job-supervisors-hos
   canBeAntag: false
   access:
@@ -19,6 +20,7 @@
   - Service
   - External
   - Detective
+  - Cryogenics
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]
@@ -26,16 +28,11 @@
 - type: startingGear
   id: WardenGear
   equipment:
-    head: ClothingHeadHatWarden
-    jumpsuit: ClothingUniformJumpsuitWarden
-    back: ClothingBackpackSecurityFilled
-    shoes: ClothingShoesBootsCombatFilled
-    eyes: ClothingEyesGlassesSunglasses
-    outerClothing: ClothingOuterCoatWarden
+    eyes: ClothingEyesGlassesSecurity
     id: WardenPDA
     ears: ClothingHeadsetSecurity
-    belt: ClothingBeltSecurityFilled
-    pocket1: WeaponPistolMk58Nonlethal
-  innerClothingSkirt: ClothingUniformJumpskirtWarden
-  satchel: ClothingBackpackSatchelSecurityFilled
-  duffelbag: ClothingBackpackDuffelSecurityFilled
+    pocket1: WeaponPistolMk58
+  storage:
+    back:
+    - Flash
+    - MagazinePistol

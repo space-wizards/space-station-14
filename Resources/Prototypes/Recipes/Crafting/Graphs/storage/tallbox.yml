@@ -25,3 +25,66 @@
         amount: 4
       - !type:EmptyAllContainers
       - !type:DeleteEntity
+
+- type: constructionGraph
+  id: ClosetSteelSecure
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: done
+      steps:
+      - material: Steel
+        amount: 4
+      - material: Cable
+        amount: 2
+        doAfter: 5
+  - node: done
+    entity: LockerSteel
+    edges:
+    - to: start
+      steps:
+      - tool: Screwing
+        doAfter: 5
+      conditions:
+      - !type:StorageWelded
+        welded: false
+      - !type:Locked
+        locked: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 4
+      - !type:SpawnPrototype
+        prototype: CableApcStack1
+        amount: 2
+      - !type:EmptyAllContainers
+      - !type:DeleteEntity
+
+- type: constructionGraph
+  id: ClosetWall
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: done
+      steps:
+      - material: Steel
+        amount: 4
+        doAfter: 5
+  - node: done
+    entity: ClosetWall
+    edges:
+    - to: start
+      steps:
+      - tool: Screwing
+        doAfter: 5
+      conditions:
+      - !type:StorageWelded
+        welded: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 4
+      - !type:EmptyAllContainers
+      - !type:DeleteEntity

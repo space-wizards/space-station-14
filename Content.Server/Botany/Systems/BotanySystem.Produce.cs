@@ -10,7 +10,11 @@ public sealed partial class BotanySystem
         if (!TryGetSeed(produce, out var seed))
             return;
 
-        var solutionContainer = _solutionContainerSystem.EnsureSolution(uid, produce.SolutionName, FixedPoint2.Zero, out _);
+        if (!_solutionContainerSystem.EnsureSolution(uid,
+                produce.SolutionName,
+                out var solutionContainer,
+                FixedPoint2.Zero))
+            return;
 
         solutionContainer.RemoveAllSolution();
         foreach (var (chem, quantity) in seed.Chemicals)
@@ -18,7 +22,7 @@ public sealed partial class BotanySystem
             var amount = FixedPoint2.New(quantity.Min);
             if (quantity.PotencyDivisor > 0 && seed.Potency > 0)
                 amount += FixedPoint2.New(seed.Potency / quantity.PotencyDivisor);
-            amount = FixedPoint2.New((int) MathHelper.Clamp(amount.Float(), quantity.Min, quantity.Max));
+            amount = FixedPoint2.New(MathHelper.Clamp(amount.Float(), quantity.Min, quantity.Max));
             solutionContainer.MaxVolume += amount;
             solutionContainer.AddReagent(chem, amount);
         }

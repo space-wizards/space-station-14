@@ -4,6 +4,8 @@
   description: job-description-technical-assistant
   playTimeTracker: JobTechnicalAssistant
   requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 3600 #1 hr
     - !type:DepartmentTimeRequirement
       department: Engineering
       time: 54000 #15 hrs
@@ -20,12 +22,11 @@
 - type: startingGear
   id: TechnicalAssistantGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitColorYellow
-    back: ClothingBackpackEngineeringFilled
     shoes: ClothingShoesBootsWork
     id: TechnicalAssistantPDA
     belt: ClothingBeltUtilityEngineering
     ears: ClothingHeadsetEngineering
-  innerClothingSkirt: ClothingUniformJumpskirtColorYellow
-  satchel: ClothingBackpackSatchelEngineeringFilled
-  duffelbag: ClothingBackpackDuffelEngineeringFilled
+    pocket2: BookEngineersHandbook
+  #storage:
+    #back:
+    #- Stuff

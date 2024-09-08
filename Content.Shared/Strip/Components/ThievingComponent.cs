@@ -11,7 +11,7 @@ public sealed partial class ThievingComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("stripTimeReduction")]
-    public float StripTimeReduction = 0.5f;
+    public TimeSpan StripTimeReduction = TimeSpan.FromSeconds(0.5f);
 
     /// <summary>
     /// Should it notify the user if they're stripping a pocket?

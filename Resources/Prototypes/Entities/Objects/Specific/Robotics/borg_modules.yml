@@ -5,6 +5,8 @@
   description: A piece of tech that gives cyborgs new abilities.
   abstract: true
   components:
+  - type: Item
+    storedRotation: -90
   - type: Sprite
     sprite: Objects/Specific/Robotics/borgmodule.rsi
   - type: BorgModule
@@ -15,7 +17,8 @@
     - BorgModuleGeneric
   - type: GuideHelp
     guides:
-      - Cyborgs
+    - Cyborgs
+    - Robotics
 
 - type: entity
   id: BaseProviderBorgModule
@@ -30,7 +33,6 @@
   id: ActionBorgSwapModule
   name: Swap Module
   description: Select this module, enabling you to use the tools it provides.
-  noSpawn: true
   components:
   - type: InstantAction
     itemIconStyle: BigItem
@@ -143,6 +145,7 @@
   - type: ItemBorgModule
     items:
     - HandheldGPSBasic
+    - HandHeldMassScannerBorg
     - HandheldStationMapUnpowered
 
 - type: entity
@@ -174,7 +177,7 @@
     - Screwdriver
     - Wirecutter
     - Multitool
-    - Welder
+    - WelderIndustrial
 
 # cargo modules
 - type: entity
@@ -203,8 +206,10 @@
     items:
     - MiningDrill
     - Shovel
+    - MineralScannerUnpowered
     - OreBag
     - Crowbar
+    - RadioHandheld
 
 - type: entity
   id: BorgModuleGrapplingGun
@@ -218,7 +223,7 @@
   - type: ItemBorgModule
     items:
     - WeaponGrapplingGun
-    - WeaponCrusherDagger
+    - HandheldGPSBasic
 
 # engineering modules
 - type: entity
@@ -235,22 +240,9 @@
     - Omnitool
     - WelderExperimental
     - NetworkConfigurator
-
-- type: entity
-  id: BorgModuleGasAnalyzer
-  parent: [ BaseBorgModuleEngineering, BaseProviderBorgModule ]
-  name: gas analyzer cyborg module
-  components:
-  - type: Sprite
-    layers:
-    - state: engineering
-    - state: icon-gas-analyzer
-  - type: ItemBorgModule
-    items:
+    - RemoteSignaller
     - GasAnalyzer
-    - trayScanner
-    - Crowbar
-    - Wrench
+    - GeigerCounter
 
 - type: entity
   id: BorgModuleConstruction
@@ -326,10 +318,12 @@
     - AdvMopItem
     - HoloprojectorBorg
     - SprayBottleSpaceCleaner
+    - Dropper
+    - TrashBag
 
 # medical modules
 - type: entity
-  id: BorgModuleDiagnosis
+  id: BorgModuleDiagnosis # todo: reuse when med refractor is finished
   parent: [ BaseBorgModuleMedical, BaseProviderBorgModule ]
   name: diagnosis cyborg module
   components:
@@ -353,12 +347,12 @@
     - state: icon-treatment
   - type: ItemBorgModule
     items:
+    - HandheldHealthAnalyzerUnpowered
     - Brutepack10Lingering
     - Ointment10Lingering
     - Gauze10Lingering
     - Bloodpack10Lingering
     - Syringe
-    - Dropper
 
 - type: entity
   id: BorgModuleDefibrillator
@@ -384,6 +378,7 @@
     - state: icon-chemist
   - type: ItemBorgModule
     items:
+    - HandheldHealthAnalyzerUnpowered
     - Beaker
     - Beaker
     - BorgDropper
@@ -417,6 +412,7 @@
     items:
     - AnomalyScanner
     - AnomalyLocatorUnpowered
+    - AnomalyLocatorWideUnpowered
     - RemoteSignaller
     - Multitool
 
@@ -437,7 +433,7 @@
     - HandLabeler
     - Lighter
     - DrinkShaker
-    - Syringe
+    - BorgDropper
 
 - type: entity
   id: BorgModuleMusique
@@ -499,11 +495,11 @@
     - BikeHorn
     - ClownRecorder
     - BikeHornInstrument
-   
+
 #syndicate modules
 - type: entity
   id: BorgModuleSyndicateWeapon
-  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  parent: [ BaseBorgModule, BaseProviderBorgModule, BaseSyndicateContraband ]
   name: weapon cyborg module
   components:
   - type: Sprite
@@ -512,8 +508,8 @@
     - state: icon-syndicate
   - type: ItemBorgModule
     items:
-    - WeaponAdvancedLaser
-    - Machete
+    - WeaponPistolEchis
+    - EnergyDaggerLoud
 
 - type: entity
   id: BorgModuleOperative
@@ -523,13 +519,13 @@
   components:
     - type: Sprite
       layers:
-        - state: syndicate
-        - state: icon-tools
+      - state: syndicate
+      - state: icon-syndicate
     - type: ItemBorgModule
       items:
-        - Crowbar
-        - Emag
-        - PinpointerSyndicateNuclear
+      - Crowbar
+      - Emag
+      - PinpointerSyndicateNuclear
 
 - type: entity
   id: BorgModuleEsword
@@ -539,12 +535,12 @@
   components:
     - type: Sprite
       layers:
-        - state: syndicate
-        - state: icon-tools
+      - state: syndicate
+      - state: icon-syndicate
     - type: ItemBorgModule
       items:
-        - EnergySwordDouble
-        - PinpointerSyndicateNuclear
+      - CyborgEnergySwordDouble
+      - PinpointerSyndicateNuclear
 
 - type: entity
   id: BorgModuleL6C
@@ -554,9 +550,23 @@
   components:
     - type: Sprite
       layers:
-        - state: syndicate
-        - state: icon-tools
+      - state: syndicate
+      - state: icon-syndicate
     - type: ItemBorgModule
       items:
         - WeaponLightMachineGunL6C
         - PinpointerSyndicateNuclear
+
+- type: entity
+  id: BorgModuleMartyr
+  parent: [ BaseBorgModule, BaseProviderBorgModule, BaseSyndicateContraband ]
+  name: martyr cyborg module
+  description: "A module that comes with an explosive you probably don't want to handle yourself."
+  components:
+    - type: Sprite
+      layers:
+        - state: syndicateborgbomb
+        - state: icon-bomb
+    - type: ItemBorgModule
+      items:
+        - SelfDestructSeq

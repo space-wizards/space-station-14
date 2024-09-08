@@ -31,7 +31,7 @@
         amount: 2
       - id: ClothingOuterSuitFire
         amount: 2
-      - id: YellowOxygenTankFilled
+      - id: OxygenTankFilled
         amount: 2
 
 - type: entity

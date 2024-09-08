@@ -11,7 +11,7 @@ namespace Content.Shared.Teleportation.Components;
 /// This is used for an entity that, when linked to another valid entity, allows the two to swap positions,
 /// additionally swapping the positions of the parents.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
 [Access(typeof(SwapTeleporterSystem))]
 public sealed partial class SwapTeleporterComponent : Component
 {
@@ -37,6 +37,7 @@ public sealed partial class SwapTeleporterComponent : Component
     /// The time at which <see cref="Cooldown"/> ends and teleportation can occur again.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [AutoPausedField]
     public TimeSpan NextTeleportUse;
 
     /// <summary>

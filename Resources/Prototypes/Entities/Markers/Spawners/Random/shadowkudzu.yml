@@ -1,0 +1,26 @@
+- type: entity
+  id: ShadowKudzuLootSpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+      - state: red
+      - sprite: Structures/Specific/Anomalies/shadow_anom.rsi
+        state: anom
+    - type: RandomSpawner
+      offset: 0.05
+      chance: 0.7
+      prototypes:
+        - CrystalPink
+        - CrystalPink
+        - ShadowPortal
+        - ShadowTree01
+        - ShadowTree02
+        - ShadowTree03
+        - ShadowTree04
+        - ShadowTree05
+        - ShadowTree06
+      rareChance: 0.05
+      rarePrototypes:
+        - MobCatShadow
+        - ArtifactFragment

@@ -28,8 +28,8 @@
     sprite: Structures/Walls/solid.rsi
     state: wall_girder
   - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -53,7 +53,7 @@
         sound:
           collection: MetalBreak
   - type: StaticPrice
-    price: 10
+    price: 30
 
 - type: entity
   id: ReinforcedGirder
@@ -96,4 +96,47 @@
               sound:
                 collection: MetalBreak
     - type: StaticPrice
-      price: 66
+      price: 130
+
+- type: entity
+  id: ClockworkGirder
+  parent: ReinforcedGirder
+  name: wall gear
+  description: A large gear with mounting brackets for additional plating; This could be made into a wall with more brass plating.
+  components:
+    - type: Sprite
+      sprite: Structures/Walls/clock.rsi
+      state: wall_gear
+    - type: Construction
+      graph: ClockworkGirder
+      node: clockGirder
+    - type: StaticPrice
+      price: 75
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 200
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:PlaySoundBehavior
+              sound:
+                collection: MetalBreak
+        - trigger:
+            !type:DamageTrigger
+            damage: 50
+          behaviors:
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                SheetBrass1:
+                  min: 1
+                  max: 2
+                PartRodMetal1:
+                  min: 1
+                  max: 2
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:PlaySoundBehavior
+              sound:
+                collection: MetalBreak

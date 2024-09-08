@@ -7,18 +7,22 @@
   - type: StorageFill
     contents:
       - id: CrowbarRed
-      - id: ClothingMaskBreath
-        amount: 2
+      - id: RadioHandheld
+      - id: WelderMini
+      - id: FireExtinguisherMini
+      # Random lighting item orGroup
+      - id: FlashlightLantern
+        orGroup: LightingItem
+      - id: Flare
+        orGroup: LightingItem
+      - id: GlowstickBase
+        orGroup: LightingItem
+      # Low-chance items
       - id: FoodSnackChocolate
-      - id: FlashlightLantern
-      - id: FlashlightLantern
-        prob: 0.5
+        prob: 0.15
       - id: HarmonicaInstrument
         prob: 0.15
-        orGroup: HarmonicaOrChocolate
-      - id: FoodSnackChocolate
-        orGroup: HarmonicaOrChocolate
-
+ 
 - type: entity
   id: ToolboxElectricalFilled
   name: electrical toolbox
@@ -28,7 +32,7 @@
   - type: StorageFill
     contents:
       - id: Screwdriver
-      - id: Crowbar
+      - id: CrowbarOrange
       - id: Wirecutter
       - id: CableApcStack10
       - id: CableMVStack10
@@ -49,7 +53,7 @@
   - type: StorageFill
     contents:
       - id: Screwdriver
-      - id: Crowbar
+      - id: CrowbarOrange
       - id: Wirecutter
       - id: CableApcStack10
       - id: CableMVStack10
@@ -90,7 +94,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: Crowbar
+      - id: CrowbarOrange
       - id: Wrench
       - id: Welder
       - id: Wirecutter

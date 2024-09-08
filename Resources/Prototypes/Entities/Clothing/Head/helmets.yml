@@ -3,7 +3,7 @@
 
 #Basic Helmet (Security Helmet)
 - type: entity
-  parent: ClothingHeadBase
+  parent: [ClothingHeadBase, BaseRestrictedContraband]
   id: ClothingHeadHelmetBasic
   name: helmet
   description: Standard security gear. Protects the head from impacts.
@@ -22,6 +22,11 @@
   - type: Tag
     tags:
     - WhitelistChameleon
+    - SecurityHelmet
+  - type: HideLayerClothing
+    slots:
+    - HeadTop
+    - HeadSide
 
 #Mercenary Helmet
 - type: entity
@@ -37,7 +42,7 @@
 
 #SWAT Helmet
 - type: entity
-  parent: ClothingHeadBase
+  parent: [ClothingHeadBase, BaseRestrictedContraband]
   id: ClothingHeadHelmetSwat
   name: SWAT helmet
   description: An extremely robust helmet, commonly used by paramilitary forces. This one has the Nanotrasen logo emblazoned on the top.
@@ -73,7 +78,7 @@
 
 #Light Riot Helmet
 - type: entity
-  parent: ClothingHeadBase
+  parent: [ClothingHeadBase, BaseRestrictedContraband]
   id: ClothingHeadHelmetRiot
   name: light riot helmet
   description: It's a helmet specifically designed to protect against close range attacks.
@@ -110,10 +115,16 @@
         Blunt: 0.95
         Slash: 0.95
         Piercing: 0.95
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
+    - HeadTop
+    - HeadSide
 
 #Janitorial Bombsuit Helmet
 - type: entity
-  parent: ClothingHeadBase
+  parent: ClothingHeadHelmetBombSuit
   id: ClothingHeadHelmetJanitorBombSuit
   name: janitorial bombsuit helmet
   description: A heavy helmet designed to withstand explosions formed from reactions between chemicals.
@@ -123,9 +134,6 @@
     sprite: Clothing/Head/Helmets/janitor_bombsuit.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/janitor_bombsuit.rsi
-  - type: IngestionBlocker
-  - type: ExplosionResistance
-    damageCoefficient: 0.9
 
 #Cult Helmet
 - type: entity
@@ -147,29 +155,6 @@
         Piercing: 0.9
         Heat: 0.9
 
-#SCAF Helmet
-- type: entity
-  parent: ClothingHeadBase
-  id: ClothingHeadHelmetScaf
-  name: scaf helmet
-  description: A robust, strong helmet.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Helmets/scaf.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Helmets/scaf.rsi
-  - type: IngestionBlocker
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.9
-        Slash: 0.9
-        Piercing: 0.8
-  - type: Tag
-    tags:
-    - HidesHair
-    - WhitelistChameleon
-
 #Space Ninja Helmet
 - type: entity
   parent: ClothingHeadEVAHelmetBase
@@ -183,10 +168,15 @@
     sprite: Clothing/Head/Helmets/spaceninja.rsi
   - type: Tag
     tags:
-    - HidesHair
     - WhitelistChameleon
   - type: IngestionBlocker
   - type: IdentityBlocker
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
+    - HeadTop
+    - HeadSide
 
 #Templar Helmet
 - type: entity
@@ -242,12 +232,20 @@
     quickEquip: true
   - type: IngestionBlocker
   - type: TemperatureProtection
-    coefficient: 0.005
+    heatingCoefficient: 0.01
+    coolingCoefficient: 0.2
+  - type: FireProtection
+    reduction: 0.15 # not fully sealed so less protection
   - type: IdentityBlocker
   - type: Tag
     tags:
-    - HidesHair
     - WhitelistChameleon
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
+    - HeadTop
+    - HeadSide
 
 #Atmos Fire Helmet
 - type: entity
@@ -263,15 +261,24 @@
     quickEquip: true
   - type: IngestionBlocker
   - type: TemperatureProtection
-    coefficient: 0.005
+    heatingCoefficient: 0.01
+    coolingCoefficient: 0.2
+  - type: FireProtection
+    reduction: 0.2
   - type: PressureProtection
     highPressureMultiplier: 0.25
     lowPressureMultiplier: 1000
   - type: IdentityBlocker
   - type: Tag
     tags:
-    - HidesHair
     - WhitelistChameleon
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
+    - HeadTop
+    - HeadSide
+  - type: BreathMask
 
 #Chitinous Helmet
 - type: entity
@@ -353,6 +360,24 @@
   - type: Clothing
     sprite: Clothing/Head/Helmets/ert_janitor.rsi
 
+- type: entity
+  parent: [ BaseSyndicateContraband, ClothingHeadHelmetBasic ]
+  id: ClothingHeadHelmetRaid
+  name: syndicate raid helmet
+  description: An armored helmet for use with the syndicate raid suit. Very stylish.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/syndie-raid.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Helmets/syndie-raid.rsi
+  - type: Armor
+    modifiers: #There's gotta be SOME reason to use this over other helmets.
+      coefficients:
+        Blunt: 0.85
+        Slash: 0.85
+        Piercing: 0.85
+        Heat: 0.85
+
 #Bone Helmet
 - type: entity
   parent: ClothingHeadHelmetBasic
@@ -378,3 +403,93 @@
     sprite: Clothing/Head/Helmets/podwars_helmet.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/podwars_helmet.rsi
+
+#Justice Helmet
+- type: entity
+  parent: ClothingHeadHelmetBasic
+  id: ClothingHeadHelmetJustice
+  name: justice helm
+  description: Advanced security gear. Protects the station from ne'er-do-wells.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/justice.rsi
+    layers:
+      - state: icon
+      - state: icon-light
+        visible: false
+        shader: unshaded
+        map: [ "light" ]
+  - type: Appearance
+  - type: Clothing
+    sprite: Clothing/Head/Helmets/justice.rsi
+    equippedPrefix: off
+  - type: ItemToggle
+    predictable: false # issues between ToggleCellDraw and ItemToggleActiveSound
+    onUse: false
+    soundActivate:
+      path: /Audio/Items/flashlight_on.ogg
+    soundDeactivate:
+      path: /Audio/Items/flashlight_off.ogg
+  - type: ItemToggleActiveSound
+    activeSound:
+      path: /Audio/Effects/Vehicle/policesiren.ogg
+      params:
+        volume: -4
+  - type: UseDelay
+    delay: 1.0
+  - type: ToggleClothing
+    action: ActionToggleJusticeHelm
+  - type: ItemTogglePointLight
+  - type: ToggleableLightVisuals
+    clothingVisuals:
+      head:
+      - state: on-equipped-HELMET
+        shader: unshaded
+  - type: PointLight
+    enabled: false
+    radius: 1.4
+    energy: 1.4
+    color: red
+    netsync: false
+    mask: /Textures/Effects/LightMasks/double_cone.png
+  - type: RotatingLight
+    speed: 360
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellSmall
+  - type: PowerCellDraw
+    drawRate: 2
+  - type: ToggleCellDraw
+  - type: Construction
+    graph: HelmetJustice
+    node: helmet
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+
+- type: entity
+  parent: ClothingHeadHelmetJustice
+  id: ClothingHeadHelmetJusticeEmpty
+  suffix: Empty
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+
+- type: entity
+  id: ActionToggleJusticeHelm
+  name: Toggle Justice Helm
+  description: Toggles the justice helm on and off.
+  components:
+  - type: InstantAction
+    useDelay: 1
+    itemIconStyle: BigItem
+    event: !type:ToggleActionEvent

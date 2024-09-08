@@ -4,6 +4,7 @@ using Content.Shared.Audio;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.Random;
+using Content.Shared.Random.Rules;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Client.ResourceManagement;
@@ -59,7 +60,7 @@ public sealed partial class ContentAudioSystem
 
     private void InitializeAmbientMusic()
     {
-        _configManager.OnValueChanged(CCVars.AmbientMusicVolume, AmbienceCVarChanged, true);
+        Subs.CVar(_configManager, CCVars.AmbientMusicVolume, AmbienceCVarChanged, true);
         _sawmill = IoCManager.Resolve<ILogManager>().GetSawmill("audio.ambience");
 
         // Reset audio
@@ -84,7 +85,6 @@ public sealed partial class ContentAudioSystem
 
     private void ShutdownAmbientMusic()
     {
-        _configManager.UnsubValueChanged(CCVars.AmbientMusicVolume, AmbienceCVarChanged);
         _state.OnStateChanged -= OnStateChange;
         _ambientMusicStream = _audio.Stop(_ambientMusicStream);
     }
@@ -229,7 +229,7 @@ public sealed partial class ContentAudioSystem
 
     private AmbientMusicPrototype? GetAmbience()
     {
-        var player = _player.LocalPlayer?.ControlledEntity;
+        var player = _player.LocalEntity;
 
         if (player == null)
             return null;

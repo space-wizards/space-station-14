@@ -43,7 +43,7 @@ namespace Content.Shared.Damage
         /// </summary>
         /// <remarks>
         ///     Note that this being zero does not mean this damage has no effect. Healing in one type may cancel damage
-        ///     in another. Consider using <see cref="Any()"/> or <see cref="Empty"/> instead.
+        ///     in another. Consider using <see cref="AnyPositive"/> or <see cref="Empty"/> instead.
         /// </remarks>
         public FixedPoint2 GetTotal()
         {
@@ -60,7 +60,7 @@ namespace Content.Shared.Damage
         /// Differs from <see cref="Empty"/> as a damage specifier might contain entries with zeroes.
         /// This also returns false if the specifier only contains negative values.
         /// </summary>
-        public bool Any()
+        public bool AnyPositive()
         {
             foreach (var value in DamageDict.Values)
             {

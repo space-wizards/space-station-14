@@ -28,12 +28,10 @@ public sealed partial class StaminaSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly INetManager _net = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly MetaDataSystem _metadata = default!;
     [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedStunSystem _stunSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
 
@@ -48,7 +46,6 @@ public sealed partial class StaminaSystem : EntitySystem
 
         InitializeModifier();
 
-        SubscribeLocalEvent<StaminaComponent, EntityUnpausedEvent>(OnStamUnpaused);
         SubscribeLocalEvent<StaminaComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<StaminaComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<StaminaComponent, AfterAutoHandleStateEvent>(OnStamHandleState);
@@ -61,11 +58,6 @@ public sealed partial class StaminaSystem : EntitySystem
         SubscribeLocalEvent<StaminaDamageOnCollideComponent, ThrowDoHitEvent>(OnThrowHit);
 
         SubscribeLocalEvent<StaminaDamageOnHitComponent, MeleeHitEvent>(OnMeleeHit);
-    }
-
-    private void OnStamUnpaused(EntityUid uid, StaminaComponent component, ref EntityUnpausedEvent args)
-    {
-        component.NextUpdate += args.PausedTime;
     }
 
     private void OnStamHandleState(EntityUid uid, StaminaComponent component, ref AfterAutoHandleStateEvent args)
@@ -87,8 +79,7 @@ public sealed partial class StaminaSystem : EntitySystem
         {
             RemCompDeferred<ActiveStaminaComponent>(uid);
         }
-
-        SetStaminaAlert(uid);
+        _alerts.ClearAlert(uid, component.StaminaAlert);
     }
 
     private void OnStartup(EntityUid uid, StaminaComponent component, ComponentStartup args)
@@ -122,7 +113,7 @@ public sealed partial class StaminaSystem : EntitySystem
 
     private void OnDisarmed(EntityUid uid, StaminaComponent component, DisarmedEvent args)
     {
-        if (args.Handled || !_random.Prob(args.PushProbability))
+        if (args.Handled)
             return;
 
         if (component.Critical)
@@ -131,17 +122,8 @@ public sealed partial class StaminaSystem : EntitySystem
         var damage = args.PushProbability * component.CritThreshold;
         TakeStaminaDamage(uid, damage, component, source: args.Source);
 
-        // We need a better method of getting if the entity is going to resist stam damage, both this and the lines in the foreach at the end of OnHit() are awful
-        if (!component.Critical)
-            return;
-
-        var targetEnt = Identity.Entity(args.Target, EntityManager);
-        var sourceEnt = Identity.Entity(args.Source, EntityManager);
-
-        _popup.PopupEntity(Loc.GetString("stunned-component-disarm-success-others", ("source", sourceEnt), ("target", targetEnt)), targetEnt, Filter.PvsExcept(args.Source), true, PopupType.LargeCaution);
-        _popup.PopupCursor(Loc.GetString("stunned-component-disarm-success", ("target", targetEnt)), args.Source, PopupType.Large);
-
-        _adminLogger.Add(LogType.DisarmedKnockdown, LogImpact.Medium, $"{ToPrettyString(args.Source):user} knocked down {ToPrettyString(args.Target):target}");
+        args.PopupPrefix = "disarm-action-shove-";
+        args.IsStunned = component.Critical;
 
         args.Handled = true;
     }
@@ -210,6 +192,11 @@ public sealed partial class StaminaSystem : EntitySystem
 
     private void OnCollide(EntityUid uid, StaminaDamageOnCollideComponent component, EntityUid target)
     {
+        // you can't inflict stamina damage on things with no stamina component
+        // this prevents stun batons from using up charges when throwing it at lockers or lights
+        if (!HasComp<StaminaComponent>(target))
+            return;
+
         var ev = new StaminaDamageOnHitAttemptEvent();
         RaiseLocalEvent(uid, ref ev);
         if (ev.Cancelled)
@@ -221,13 +208,10 @@ public sealed partial class StaminaSystem : EntitySystem
     private void SetStaminaAlert(EntityUid uid, StaminaComponent? component = null)
     {
         if (!Resolve(uid, ref component, false) || component.Deleted)
-        {
-            _alerts.ClearAlert(uid, AlertType.Stamina);
             return;
-        }
 
         var severity = ContentHelpers.RoundToLevels(MathF.Max(0f, component.CritThreshold - component.StaminaDamage), component.CritThreshold, 7);
-        _alerts.ShowAlert(uid, AlertType.Stamina, (short) severity);
+        _alerts.ShowAlert(uid, component.StaminaAlert, (short) severity);
     }
 
     /// <summary>
@@ -302,7 +286,7 @@ public sealed partial class StaminaSystem : EntitySystem
         }
 
         EnsureComp<ActiveStaminaComponent>(uid);
-        Dirty(component);
+        Dirty(uid, component);
 
         if (value <= 0)
             return;
@@ -362,7 +346,7 @@ public sealed partial class StaminaSystem : EntitySystem
 
             comp.NextUpdate += TimeSpan.FromSeconds(1f);
             TakeStaminaDamage(uid, -comp.Decay, comp);
-            Dirty(comp);
+            Dirty(uid, comp);
         }
     }
 
@@ -385,7 +369,7 @@ public sealed partial class StaminaSystem : EntitySystem
         // Give them buffer before being able to be re-stunned
         component.NextUpdate = _timing.CurTime + component.StunTime + StamCritBufferTime;
         EnsureComp<ActiveStaminaComponent>(uid);
-        Dirty(component);
+        Dirty(uid, component);
         _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(uid):user} entered stamina crit");
     }
 
@@ -402,7 +386,7 @@ public sealed partial class StaminaSystem : EntitySystem
         component.NextUpdate = _timing.CurTime;
         SetStaminaAlert(uid, component);
         RemComp<ActiveStaminaComponent>(uid);
-        Dirty(component);
+        Dirty(uid, component);
         _adminLogger.Add(LogType.Stamina, LogImpact.Low, $"{ToPrettyString(uid):user} recovered from stamina crit");
     }
 }

@@ -1,11 +1,12 @@
 using Content.Server.Administration;
+using Content.Server.Database;
 using Content.Shared.Administration;
 using Content.Shared.Verbs;
 using Robust.Shared.Console;
 
 namespace Content.Server.Verbs.Commands
 {
-    [AdminCommand(AdminFlags.Admin)]
+    [AdminCommand(AdminFlags.Moderator)]
     public sealed class ListVerbsCommand : IConsoleCommand
     {
         [Dependency] private readonly IEntityManager _entManager = default!;

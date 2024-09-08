@@ -17,6 +17,9 @@
   - type: GhostRole
     name: ghost-role-information-skeleton-pirate-name
     description: ghost-role-information-skeleton-pirate-description
+    rules: ghost-role-information-freeagent-rules
+    raffle:
+      settings: default
   - type: GhostTakeoverAvailable
   - type: Loadout
     prototypes: [PirateGear]
@@ -31,6 +34,9 @@
   - type: GhostRole
     name: ghost-role-information-skeleton-biker-name
     description: ghost-role-information-skeleton-biker-description
+    rules: ghost-role-information-freeagent-rules
+    raffle:
+      settings: default
   - type: GhostTakeoverAvailable
   - type: Loadout
     prototypes: [SkeletonBiker]
@@ -44,6 +50,9 @@
   - type: GhostRole
     name: ghost-role-information-closet-skeleton-name
     description: ghost-role-information-closet-skeleton-description
+    rules: ghost-role-information-freeagent-rules
+    raffle:
+      settings: default
   - type: GhostTakeoverAvailable
   - type: Loadout
     prototypes: [LimitedPassengerGear]

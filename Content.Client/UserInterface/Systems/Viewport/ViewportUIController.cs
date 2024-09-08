@@ -15,7 +15,6 @@ public sealed class ViewportUIController : UIController
     [Dependency] private readonly IPlayerManager _playerMan = default!;
     [Dependency] private readonly IEntityManager _entMan = default!;
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
-
     public static readonly Vector2i ViewportSize = (EyeManager.PixelsPerMeter * 21, EyeManager.PixelsPerMeter * 15);
     public const int ViewportHeight = 15;
     private MainViewport? Viewport => UIManager.ActiveScreen?.GetWidget<MainViewport>();
@@ -25,6 +24,7 @@ public sealed class ViewportUIController : UIController
         _configurationManager.OnValueChanged(CCVars.ViewportMinimumWidth, _ => UpdateViewportRatio());
         _configurationManager.OnValueChanged(CCVars.ViewportMaximumWidth, _ => UpdateViewportRatio());
         _configurationManager.OnValueChanged(CCVars.ViewportWidth, _ => UpdateViewportRatio());
+        _configurationManager.OnValueChanged(CCVars.ViewportVerticalFit, _ => UpdateViewportRatio());
 
         var gameplayStateLoad = UIManager.GetUIController<GameplayStateLoadController>();
         gameplayStateLoad.OnScreenLoad += OnScreenLoad;
@@ -45,13 +45,19 @@ public sealed class ViewportUIController : UIController
         var min = _configurationManager.GetCVar(CCVars.ViewportMinimumWidth);
         var max = _configurationManager.GetCVar(CCVars.ViewportMaximumWidth);
         var width = _configurationManager.GetCVar(CCVars.ViewportWidth);
+        var verticalfit = _configurationManager.GetCVar(CCVars.ViewportVerticalFit) && _configurationManager.GetCVar(CCVars.ViewportStretch);
 
-        if (width < min || width > max)
+        if (verticalfit)
+        {
+            width = max;
+        }
+        else if (width < min || width > max)
         {
             width = CCVars.ViewportWidth.DefaultValue;
         }
 
         Viewport.Viewport.ViewportSize = (EyeManager.PixelsPerMeter * width, EyeManager.PixelsPerMeter * ViewportHeight);
+        Viewport.UpdateCfg();
     }
 
     public void ReloadViewport()
@@ -80,7 +86,7 @@ public sealed class ViewportUIController : UIController
 
         // verify that the current eye is not "null". Fuck IEyeManager.
 
-        var ent = _playerMan.LocalPlayer?.ControlledEntity;
+        var ent = _playerMan.LocalEntity;
         if (_eyeManager.CurrentEye.Position != default || ent == null)
             return;
 

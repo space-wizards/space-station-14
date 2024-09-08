@@ -1,0 +1,66 @@
+- type: localizedDataset
+  id: BookTypes
+  values:
+    prefix: story-gen-book-type
+    count: 12
+
+- type: localizedDataset
+  id: BookGenres
+  values:
+    prefix: story-gen-book-genre
+    count: 14
+
+- type: localizedDataset
+  id: BookHintAppearances
+  values:
+    prefix: story-gen-book-appearance
+    count: 27
+
+- type: localizedDataset
+  id: BookCharacters
+  values:
+    prefix: story-gen-book-character
+    count: 40
+
+- type: localizedDataset
+  id: BookCharacterTraits
+  values:
+    prefix: story-gen-book-character-trait
+    count: 24
+
+
+- type: localizedDataset
+  id: BookEvents
+  values:
+    prefix: story-gen-book-event
+    count: 24
+
+- type: localizedDataset
+  id: BookActions
+  values:
+    prefix: story-gen-book-action
+    count: 12
+
+- type: localizedDataset
+  id: BookActionTraits
+  values:
+    prefix: story-gen-book-action-trait
+    count: 13
+
+- type: localizedDataset
+  id: BookLocations
+  values:
+    prefix: story-gen-book-location
+    count: 34
+
+- type: localizedDataset
+  id: BookStoryElements
+  values:
+    prefix: story-gen-book-element
+    count: 9
+
+- type: localizedDataset
+  id: BookStoryElementTraits
+  values:
+    prefix: story-gen-book-element-trait
+    count: 13

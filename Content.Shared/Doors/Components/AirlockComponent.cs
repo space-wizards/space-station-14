@@ -12,13 +12,16 @@ namespace Content.Shared.Doors.Components;
 [Access(typeof(SharedAirlockSystem), Friend = AccessPermissions.ReadWriteExecute, Other = AccessPermissions.Read)]
 public sealed partial class AirlockComponent : Component
 {
+    [DataField, AutoNetworkedField]
+    public bool Powered;
+
     // Need to network airlock safety state to avoid mis-predicts when a door auto-closes as the client walks through the door.
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField, AutoNetworkedField]
     public bool Safety = true;
 
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool EmergencyAccess = false;
 
     /// <summary>

@@ -6,6 +6,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using System.Collections;
 using System.Linq;
+using Content.Shared.Chemistry.Components.SolutionManager;
 
 namespace Content.Shared.Chemistry.Components
 {
@@ -49,13 +50,6 @@ namespace Content.Shared.Chemistry.Components
         public bool CanReact { get; set; } = true;
 
         /// <summary>
-        ///     If reactions can occur via mixing.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("canMix")]
-        public bool CanMix { get; set; } = false;
-
-        /// <summary>
         ///     Volume needed to fill this container.
         /// </summary>
         [ViewVariables]
@@ -92,6 +86,12 @@ namespace Content.Shared.Chemistry.Components
         /// </summary>
         [ViewVariables] private bool _heatCapacityDirty = true;
 
+        [ViewVariables(VVAccess.ReadWrite)]
+        private int _heatCapacityUpdateCounter;
+
+        // This value is arbitrary btw.
+        private const int HeatCapacityUpdateInterval = 15;
+
         public void UpdateHeatCapacity(IPrototypeManager? protoMan)
         {
             IoCManager.Resolve(ref protoMan);
@@ -103,6 +103,8 @@ namespace Content.Shared.Chemistry.Components
                 _heatCapacity += (float) quantity *
                                     protoMan.Index<ReagentPrototype>(reagent.Prototype).SpecificHeat;
             }
+
+            _heatCapacityUpdateCounter = 0;
         }
 
         public float GetHeatCapacity(IPrototypeManager? protoMan)
@@ -110,6 +112,15 @@ namespace Content.Shared.Chemistry.Components
             if (_heatCapacityDirty)
                 UpdateHeatCapacity(protoMan);
             return _heatCapacity;
+        }
+
+        public void CheckRecalculateHeatCapacity()
+        {
+            // For performance, we have a few ways for heat capacity to get modified without a full recalculation.
+            // To avoid these drifting too much due to float error, we mark it as dirty after N such operations,
+            // so it will be recalculated.
+            if (++_heatCapacityUpdateCounter >= HeatCapacityUpdateInterval)
+                _heatCapacityDirty = true;
         }
 
         public float GetThermalEnergy(IPrototypeManager? protoMan)
@@ -137,7 +148,7 @@ namespace Content.Shared.Chemistry.Components
         /// </summary>
         /// <param name="prototype">The prototype ID of the reagent to add.</param>
         /// <param name="quantity">The quantity in milli-units.</param>
-        public Solution(string prototype, FixedPoint2 quantity, ReagentData? data = null) : this()
+        public Solution(string prototype, FixedPoint2 quantity, List<ReagentData>? data = null) : this()
         {
             AddReagent(new ReagentId(prototype, data), quantity);
         }
@@ -165,6 +176,7 @@ namespace Content.Shared.Chemistry.Components
             Temperature = solution.Temperature;
             _heatCapacity = solution._heatCapacity;
             _heatCapacityDirty = solution._heatCapacityDirty;
+            _heatCapacityUpdateCounter = solution._heatCapacityUpdateCounter;
             ValidateSolution();
         }
 
@@ -193,7 +205,7 @@ namespace Content.Shared.Chemistry.Components
                 var cur = _heatCapacity;
                 _heatCapacityDirty = true;
                 UpdateHeatCapacity(null);
-                DebugTools.Assert(MathHelper.CloseTo(_heatCapacity, cur));
+                DebugTools.Assert(MathHelper.CloseTo(_heatCapacity, cur, tolerance: 0.01));
             }
     #endif
         }
@@ -232,7 +244,7 @@ namespace Content.Shared.Chemistry.Components
             return false;
         }
 
-        public bool ContainsReagent(string reagentId, ReagentData? data)
+        public bool ContainsReagent(string reagentId, List<ReagentData>? data)
             => ContainsReagent(new(reagentId, data));
 
         public bool TryGetReagent(ReagentId id, out ReagentQuantity quantity)
@@ -380,7 +392,9 @@ namespace Content.Shared.Chemistry.Components
         public void AddReagent(ReagentPrototype proto, ReagentId reagentId, FixedPoint2 quantity)
         {
             AddReagent(reagentId, quantity, false);
+
             _heatCapacity += quantity.Float() * proto.SpecificHeat;
+            CheckRecalculateHeatCapacity();
         }
 
         public void AddReagent(ReagentQuantity reagentQuantity)
@@ -391,7 +405,7 @@ namespace Content.Shared.Chemistry.Components
         /// </summary>
         /// <param name="proto">The prototype of the reagent to add.</param>
         /// <param name="quantity">The quantity in milli-units.</param>
-        public void AddReagent(ReagentPrototype proto, FixedPoint2 quantity, float temperature, IPrototypeManager? protoMan, ReagentData? data = null)
+        public void AddReagent(ReagentPrototype proto, FixedPoint2 quantity, float temperature, IPrototypeManager? protoMan, List<ReagentData>? data = null)
         {
             if (_heatCapacityDirty)
                 UpdateHeatCapacity(protoMan);
@@ -419,6 +433,7 @@ namespace Content.Shared.Chemistry.Components
 
             _heatCapacity *= scale;
             Volume *= scale;
+            CheckRecalculateHeatCapacity();
 
             for (int i = 0; i < Contents.Count; i++)
             {
@@ -466,41 +481,72 @@ namespace Content.Shared.Chemistry.Components
         /// </summary>
         /// <param name="toRemove">The reagent to be removed.</param>
         /// <returns>How much reagent was actually removed. Zero if the reagent is not present on the solution.</returns>
-        public FixedPoint2 RemoveReagent(ReagentQuantity toRemove, bool preserveOrder = false)
+        public FixedPoint2 RemoveReagent(ReagentQuantity toRemove, bool preserveOrder = false, bool ignoreReagentData = false)
         {
             if (toRemove.Quantity <= FixedPoint2.Zero)
                 return FixedPoint2.Zero;
 
+            List<int> reagentIndices = new List<int>();
+            int totalRemoveVolume = 0;
+
             for (var i = 0; i < Contents.Count; i++)
             {
-                var (reagent, curQuantity) = Contents[i];
+                var (reagent, quantity) = Contents[i];
 
-                if(reagent != toRemove.Reagent)
-                    continue;
+                if (ignoreReagentData)
+                {
+                    if (reagent.Prototype != toRemove.Reagent.Prototype)
+                        continue;
+                }
+                else
+                {
+                    if (reagent != toRemove.Reagent)
+                        continue;
+                }
+                //We prepend instead of add to handle the Contents list back-to-front later down.
+                //It makes RemoveSwap safe to use.
+                totalRemoveVolume += quantity.Value;
+                reagentIndices.Insert(0, i);
+            }
 
-                var newQuantity = curQuantity - toRemove.Quantity;
+            if (totalRemoveVolume <= 0)
+            {
+                // Reagent is not on the solution...
+                return FixedPoint2.Zero;
+            }
+
+            FixedPoint2 removedQuantity = 0;
+            for (var i = 0; i < reagentIndices.Count; i++)
+            {
+                var (reagent, curQuantity) = Contents[reagentIndices[i]];
+
+                // This is set up such that integer rounding will tend to take more reagents.
+                var split = ((long)toRemove.Quantity.Value) * curQuantity.Value / totalRemoveVolume;
+
+                var splitQuantity = FixedPoint2.FromCents((int)split);
+
+                var newQuantity = curQuantity - splitQuantity;
                 _heatCapacityDirty = true;
 
                 if (newQuantity <= 0)
                 {
                     if (!preserveOrder)
-                        Contents.RemoveSwap(i);
+                        Contents.RemoveSwap(reagentIndices[i]);
                     else
-                        Contents.RemoveAt(i);
+                        Contents.RemoveAt(reagentIndices[i]);
 
                     Volume -= curQuantity;
-                    ValidateSolution();
-                    return curQuantity;
+                    removedQuantity += curQuantity;
+                    continue;
                 }
 
-                Contents[i] = new ReagentQuantity(reagent, newQuantity);
-                Volume -= toRemove.Quantity;
-                ValidateSolution();
-                return toRemove.Quantity;
+                Contents[reagentIndices[i]] = new ReagentQuantity(reagent, newQuantity);
+                Volume -= splitQuantity;
+                removedQuantity += splitQuantity;
             }
+            ValidateSolution();
 
-            // Reagent is not on the solution...
-            return FixedPoint2.Zero;
+            return removedQuantity;
         }
 
         /// <summary>
@@ -509,9 +555,9 @@ namespace Content.Shared.Chemistry.Components
         /// <param name="prototype">The prototype of the reagent to be removed.</param>
         /// <param name="quantity">The amount of reagent to remove.</param>
         /// <returns>How much reagent was actually removed. Zero if the reagent is not present on the solution.</returns>
-        public FixedPoint2 RemoveReagent(string prototype, FixedPoint2 quantity, ReagentData? data = null)
+        public FixedPoint2 RemoveReagent(string prototype, FixedPoint2 quantity, List<ReagentData>? data = null, bool ignoreReagentData = false)
         {
-            return RemoveReagent(new ReagentQuantity(prototype, quantity, data));
+            return RemoveReagent(new ReagentQuantity(prototype, quantity, data), ignoreReagentData: ignoreReagentData);
         }
 
         /// <summary>
@@ -520,9 +566,9 @@ namespace Content.Shared.Chemistry.Components
         /// <param name="reagentId">The reagent to be removed.</param>
         /// <param name="quantity">The amount of reagent to remove.</param>
         /// <returns>How much reagent was actually removed. Zero if the reagent is not present on the solution.</returns>
-        public FixedPoint2 RemoveReagent(ReagentId reagentId, FixedPoint2 quantity, bool preserveOrder = false)
+        public FixedPoint2 RemoveReagent(ReagentId reagentId, FixedPoint2 quantity, bool preserveOrder = false, bool ignoreReagentData = false)
         {
-            return RemoveReagent(new ReagentQuantity(reagentId, quantity), preserveOrder);
+            return RemoveReagent(new ReagentQuantity(reagentId, quantity), preserveOrder, ignoreReagentData);
         }
 
         public void RemoveAllSolution()
@@ -752,6 +798,7 @@ namespace Content.Shared.Chemistry.Components
             }
 
             _heatCapacity += otherSolution._heatCapacity;
+            CheckRecalculateHeatCapacity();
             if (closeTemps)
                 _heatCapacityDirty |= otherSolution._heatCapacityDirty;
             else

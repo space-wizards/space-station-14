@@ -1,6 +1,8 @@
-﻿using System.Linq;
+using System.Linq;
+using Content.Shared.Lathe;
 using Content.Shared.Research.Components;
 using Content.Shared.Research.Prototypes;
+using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
@@ -11,6 +13,7 @@ public abstract class SharedResearchSystem : EntitySystem
 {
     [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly SharedLatheSystem _lathe = default!;
 
     public override void Initialize()
     {
@@ -154,42 +157,42 @@ public abstract class SharedResearchSystem : EntitySystem
         if (includeTier)
         {
             disciplinePrototype ??= PrototypeManager.Index(technology.Discipline);
-            description.AddMarkup(Loc.GetString("research-console-tier-discipline-info",
+            description.AddMarkupOrThrow(Loc.GetString("research-console-tier-discipline-info",
                 ("tier", technology.Tier), ("color", disciplinePrototype.Color), ("discipline", Loc.GetString(disciplinePrototype.Name))));
             description.PushNewline();
         }
 
         if (includeCost)
         {
-            description.AddMarkup(Loc.GetString("research-console-cost", ("amount", technology.Cost)));
+            description.AddMarkupOrThrow(Loc.GetString("research-console-cost", ("amount", technology.Cost)));
             description.PushNewline();
         }
 
         if (includePrereqs && technology.TechnologyPrerequisites.Any())
         {
-            description.AddMarkup(Loc.GetString("research-console-prereqs-list-start"));
+            description.AddMarkupOrThrow(Loc.GetString("research-console-prereqs-list-start"));
             foreach (var recipe in technology.TechnologyPrerequisites)
             {
                 var techProto = PrototypeManager.Index(recipe);
                 description.PushNewline();
-                description.AddMarkup(Loc.GetString("research-console-prereqs-list-entry",
+                description.AddMarkupOrThrow(Loc.GetString("research-console-prereqs-list-entry",
                     ("text", Loc.GetString(techProto.Name))));
             }
             description.PushNewline();
         }
 
-        description.AddMarkup(Loc.GetString("research-console-unlocks-list-start"));
+        description.AddMarkupOrThrow(Loc.GetString("research-console-unlocks-list-start"));
         foreach (var recipe in technology.RecipeUnlocks)
         {
             var recipeProto = PrototypeManager.Index(recipe);
             description.PushNewline();
-            description.AddMarkup(Loc.GetString("research-console-unlocks-list-entry",
-                ("name",recipeProto.Name)));
+            description.AddMarkupOrThrow(Loc.GetString("research-console-unlocks-list-entry",
+                ("name", _lathe.GetRecipeName(recipeProto))));
         }
         foreach (var generic in technology.GenericUnlocks)
         {
             description.PushNewline();
-            description.AddMarkup(Loc.GetString("research-console-unlocks-list-entry-generic",
+            description.AddMarkupOrThrow(Loc.GetString("research-console-unlocks-list-entry-generic",
                 ("text", Loc.GetString(generic.UnlockDescription))));
         }
 
@@ -219,7 +222,7 @@ public abstract class SharedResearchSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
-        var discipline = PrototypeManager.Index<TechDisciplinePrototype>(prototype.Discipline);
+        var discipline = PrototypeManager.Index(prototype.Discipline);
         if (prototype.Tier < discipline.LockoutTier)
             return;
         component.MainDiscipline = prototype.Discipline;
@@ -227,8 +230,50 @@ public abstract class SharedResearchSystem : EntitySystem
     }
 
     /// <summary>
+    /// Removes a technology and its recipes from a technology database.
+    /// </summary>
+    public bool TryRemoveTechnology(Entity<TechnologyDatabaseComponent> entity, ProtoId<TechnologyPrototype> tech)
+    {
+        return TryRemoveTechnology(entity, PrototypeManager.Index(tech));
+    }
+
+    /// <summary>
+    /// Removes a technology and its recipes from a technology database.
+    /// </summary>
+    [PublicAPI]
+    public bool TryRemoveTechnology(Entity<TechnologyDatabaseComponent> entity, TechnologyPrototype tech)
+    {
+        if (!entity.Comp.UnlockedTechnologies.Remove(tech.ID))
+            return false;
+
+        // check to make sure we didn't somehow get the recipe from another tech.
+        // unlikely, but whatever
+        var recipes = tech.RecipeUnlocks;
+        foreach (var recipe in recipes)
+        {
+            var hasTechElsewhere = false;
+            foreach (var unlockedTech in entity.Comp.UnlockedTechnologies)
+            {
+                var unlockedTechProto = PrototypeManager.Index<TechnologyPrototype>(unlockedTech);
+
+                if (!unlockedTechProto.RecipeUnlocks.Contains(recipe))
+                    continue;
+                hasTechElsewhere = true;
+                break;
+            }
+
+            if (!hasTechElsewhere)
+                entity.Comp.UnlockedRecipes.Remove(recipe);
+        }
+        Dirty(entity, entity.Comp);
+        UpdateTechnologyCards(entity, entity);
+        return true;
+    }
+
+    /// <summary>
     /// Clear all unlocked technologies from the database.
     /// </summary>
+    [PublicAPI]
     public void ClearTechs(EntityUid uid, TechnologyDatabaseComponent? comp = null)
     {
         if (!Resolve(uid, ref comp) || comp.UnlockedTechnologies.Count == 0)
@@ -236,5 +281,24 @@ public abstract class SharedResearchSystem : EntitySystem
 
         comp.UnlockedTechnologies.Clear();
         Dirty(uid, comp);
+    }
+
+    /// <summary>
+    /// Adds a lathe recipe to the specified technology database
+    /// without checking if it can be unlocked.
+    /// </summary>
+    public void AddLatheRecipe(EntityUid uid, string recipe, TechnologyDatabaseComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        if (component.UnlockedRecipes.Contains(recipe))
+            return;
+
+        component.UnlockedRecipes.Add(recipe);
+        Dirty(uid, component);
+
+        var ev = new TechnologyDatabaseModifiedEvent();
+        RaiseLocalEvent(uid, ref ev);
     }
 }

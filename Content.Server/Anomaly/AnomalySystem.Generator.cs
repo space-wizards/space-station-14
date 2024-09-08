@@ -1,5 +1,4 @@
 using Content.Server.Anomaly.Components;
-using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Station.Components;
 using Content.Shared.Anomaly;
@@ -11,9 +10,7 @@ using Content.Shared.Physics;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
-using Robust.Shared.Map;
-using System.Numerics;
-using Robust.Server.GameObjects;
+using Content.Shared.Power;
 
 namespace Content.Server.Anomaly;
 
@@ -24,7 +21,7 @@ namespace Content.Server.Anomaly;
 /// </summary>
 public sealed partial class AnomalySystem
 {
-    [Dependency] private readonly MapSystem _mapSystem = default!;
+    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     private void InitializeGenerator()
@@ -33,9 +30,7 @@ public sealed partial class AnomalySystem
         SubscribeLocalEvent<AnomalyGeneratorComponent, MaterialAmountChangedEvent>(OnGeneratorMaterialAmountChanged);
         SubscribeLocalEvent<AnomalyGeneratorComponent, AnomalyGeneratorGenerateButtonPressedEvent>(OnGenerateButtonPressed);
         SubscribeLocalEvent<AnomalyGeneratorComponent, PowerChangedEvent>(OnGeneratorPowerChanged);
-        SubscribeLocalEvent<AnomalyGeneratorComponent, EntityUnpausedEvent>(OnGeneratorUnpaused);
         SubscribeLocalEvent<GeneratingAnomalyGeneratorComponent, ComponentStartup>(OnGeneratingStartup);
-        SubscribeLocalEvent<GeneratingAnomalyGeneratorComponent, EntityUnpausedEvent>(OnGeneratingUnpaused);
     }
 
     private void OnGeneratorPowerChanged(EntityUid uid, AnomalyGeneratorComponent component, ref PowerChangedEvent args)
@@ -58,17 +53,12 @@ public sealed partial class AnomalySystem
         TryGeneratorCreateAnomaly(uid, component);
     }
 
-    private void OnGeneratorUnpaused(EntityUid uid, AnomalyGeneratorComponent component, ref EntityUnpausedEvent args)
-    {
-        component.CooldownEndTime += args.PausedTime;
-    }
-
     public void UpdateGeneratorUi(EntityUid uid, AnomalyGeneratorComponent component)
     {
         var materialAmount = _material.GetMaterialAmount(uid, component.RequiredMaterial);
 
         var state = new AnomalyGeneratorUserInterfaceState(component.CooldownEndTime, materialAmount, component.MaterialPerAnomaly);
-        _ui.TrySetUiState(uid, AnomalyGeneratorUiKey.Key, state);
+        _ui.SetUiState(uid, AnomalyGeneratorUiKey.Key, state);
     }
 
     public void TryGeneratorCreateAnomaly(EntityUid uid, AnomalyGeneratorComponent? component = null)
@@ -110,7 +100,7 @@ public sealed partial class AnomalySystem
             var tile = new Vector2i(randomX, randomY);
 
             // no air-blocked areas.
-            if (_atmosphere.IsTileSpace(grid, xform.MapUid, tile, mapGridComp: gridComp) ||
+            if (_atmosphere.IsTileSpace(grid, xform.MapUid, tile) ||
                 _atmosphere.IsTileAirBlocked(grid, tile, mapGridComp: gridComp))
             {
                 continue;
@@ -121,7 +111,7 @@ public sealed partial class AnomalySystem
             var valid = true;
 
             // TODO: This should be using static lookup.
-            foreach (var ent in gridComp.GetAnchoredEntities(tile))
+            foreach (var ent in _mapSystem.GetAnchoredEntities(grid, gridComp, tile))
             {
                 if (!physQuery.TryGetComponent(ent, out var body))
                     continue;
@@ -137,10 +127,10 @@ public sealed partial class AnomalySystem
                 continue;
 
             var pos = _mapSystem.GridTileToLocal(grid, gridComp, tile);
-            var mapPos = pos.ToMap(EntityManager, _transform);
+            var mapPos = _transform.ToMapCoordinates(pos);
             // don't spawn in AntiAnomalyZones
             var antiAnomalyZonesQueue = AllEntityQuery<AntiAnomalyZoneComponent, TransformComponent>();
-            while (antiAnomalyZonesQueue.MoveNext(out var uid, out var zone, out var antiXform))
+            while (antiAnomalyZonesQueue.MoveNext(out _, out var zone, out var antiXform))
             {
                 if (antiXform.MapID != mapPos.MapId)
                     continue;
@@ -167,11 +157,6 @@ public sealed partial class AnomalySystem
     private void OnGeneratingStartup(EntityUid uid, GeneratingAnomalyGeneratorComponent component, ComponentStartup args)
     {
         Appearance.SetData(uid, AnomalyGeneratorVisuals.Generating, true);
-    }
-
-    private void OnGeneratingUnpaused(EntityUid uid, GeneratingAnomalyGeneratorComponent component, ref EntityUnpausedEvent args)
-    {
-        component.EndTime += args.PausedTime;
     }
 
     private void OnGeneratingFinished(EntityUid uid, AnomalyGeneratorComponent component)

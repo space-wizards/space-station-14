@@ -1,0 +1,19 @@
+- type: entity
+  name: coordinates disk
+  parent: BaseItem
+  id: CoordinatesDisk
+  description: A disk containing the coordinates to a location in space. Necessary for any FTL-traversing vessel to reach their destination. Fits inside shuttle consoles.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/cd.rsi
+    state: icon
+  - type: StaticPrice
+    price: 100
+  - type: Tag
+    tags:
+    - CoordinatesDisk
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 1
+  - type: ShuttleDestinationCoordinates

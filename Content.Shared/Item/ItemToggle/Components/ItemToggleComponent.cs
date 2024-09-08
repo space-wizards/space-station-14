@@ -8,7 +8,7 @@ namespace Content.Shared.Item.ItemToggle.Components;
 /// </summary>
 /// <remarks>
 /// If you need extended functionality (e.g. requiring power) then add a new component and use events:
-/// ItemToggleActivateAttemptEvent, ItemToggleDeactivateAttemptEvent or ItemToggleForceToggleEvent.
+/// ItemToggleActivateAttemptEvent, ItemToggleDeactivateAttemptEvent, ItemToggledEvent.
 /// </remarks>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class ItemToggleComponent : Component
@@ -16,8 +16,21 @@ public sealed partial class ItemToggleComponent : Component
     /// <summary>
     ///     The item's toggle state.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public bool Activated = false;
+
+    /// <summary>
+    /// Can the entity be activated in the world.
+    /// </summary>
+    [DataField]
+    public bool OnActivate = true;
+
+    /// <summary>
+    /// If this is set to false then the item can't be toggled by pressing Z.
+    /// Use another system to do it then.
+    /// </summary>
+    [DataField]
+    public bool OnUse = true;
 
     /// <summary>
     ///     Whether the item's toggle can be predicted by the client.
@@ -55,6 +68,11 @@ public record struct ItemToggleActivateAttemptEvent(EntityUid? User)
 {
     public bool Cancelled = false;
     public readonly EntityUid? User = User;
+
+    /// <summary>
+    /// Pop-up that gets shown to users explaining why the attempt was cancelled.
+    /// </summary>
+    public string? Popup { get; set; }
 }
 
 /// <summary>
@@ -75,23 +93,5 @@ public readonly record struct ItemToggledEvent(bool Predicted, bool Activated, E
 {
     public readonly bool Predicted = Predicted;
     public readonly bool Activated = Activated;
-    public readonly EntityUid? User = User;
-}
-
-/// <summary>
-/// Raised directed on an entity when an itemtoggle is activated.
-/// </summary>
-[ByRefEvent]
-public readonly record struct ItemToggleActivatedEvent(EntityUid? User)
-{
-    public readonly EntityUid? User = User;
-}
-
-/// <summary>
-/// Raised directed on an entity when an itemtoggle is deactivated.
-/// </summary>
-[ByRefEvent]
-public readonly record struct ItemToggleDeactivatedEvent(EntityUid? User)
-{
     public readonly EntityUid? User = User;
 }

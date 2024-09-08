@@ -1,7 +1,7 @@
 <BoxContainer xmlns="https://spacestation14.io"
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
          Orientation="Vertical" Margin="2 0 2 4">
-    <Collapsible Orientation="Vertical">
+    <Collapsible>
         <CollapsibleHeading Name="CAddress" />
         <CollapsibleBody Margin="20 0 0 0">
             <BoxContainer Orientation="Vertical">
@@ -26,7 +26,7 @@
                     <Button Name="CCopySettings" Text="{Loc 'air-alarm-ui-widget-copy'}" ToolTip="{Loc 'air-alarm-ui-widget-copy-tooltip'}" />
                 </BoxContainer>
                 <!-- Lower row: every single gas -->
-                <Collapsible Orientation="Vertical" Margin="2 2 2 2">
+                <Collapsible Margin="2 2 2 2">
                     <CollapsibleHeading Title="Gas filters" />
                     <CollapsibleBody Margin="20 0 0 0">
                         <GridContainer HorizontalExpand="True" Name="CGasContainer" Columns="3" />

@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Modified sprites made originally by tgstation @ https://github.com/tgstation/tgstation/commit/da42afcbaeaa04e5ba288ade027c011efb3ef0ab, Skarlet and Psychosyo. Modified by moomoobeef.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "one"
+    },
+    {
+      "name": "two"
+    },
+    {
+      "name": "three"
+    },
+    {
+      "name": "four"
+    },
+    {
+      "name": "five"
+    },
+    {
+      "name": "six"
+    },
+    {
+      "name": "seven"
+    },
+    {
+      "name": "eight"
+    },
+    {
+      "name": "nine"
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    }
+  ]
+}

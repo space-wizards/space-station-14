@@ -102,7 +102,7 @@ public abstract partial class SharedGunSystem
     // TODO: Actions need doing for guns anyway.
     private sealed partial class CycleModeEvent : InstantActionEvent
     {
-        public SelectiveFire Mode;
+        public SelectiveFire Mode = default;
     }
 
     private void OnCycleMode(EntityUid uid, GunComponent component, CycleModeEvent args)
@@ -112,6 +112,12 @@ public abstract partial class SharedGunSystem
 
     private void OnGunSelected(EntityUid uid, GunComponent component, HandSelectedEvent args)
     {
+        if (Timing.ApplyingState)
+             return;
+
+        if (component.FireRateModified <= 0)
+            return;
+
         var fireDelay = 1f / component.FireRateModified;
         if (fireDelay.Equals(0f))
             return;

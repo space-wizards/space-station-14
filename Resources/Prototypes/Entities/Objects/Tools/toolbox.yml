@@ -24,7 +24,6 @@
       path: "/Audio/Weapons/smash.ogg"
   - type: Tag
     tags:
-    - DroneUsable
     - Toolbox
   - type: GenericVisualizer
     visuals:
@@ -115,7 +114,7 @@
 
 - type: entity
   name: suspicious toolbox
-  parent: ToolboxBase
+  parent: [ToolboxBase, BaseSyndicateContraband]
   id: ToolboxSyndicate
   description: A sinister looking toolbox filled with elite syndicate tools.
   components:
@@ -155,12 +154,11 @@
     sprite: Objects/Tools/Toolboxes/toolbox_thief.rsi
     state: icon
   - type: ThiefUndeterminedBackpack
-    transformAfterSelect: AlwaysPoweredWallLight
     possibleSets:
-    # - TO DO Thief pinpointer needed
+    # TODO Thief pinpointer needed
     - ChemistrySet
     - ToolsSet
-    - ChameleonSet # - TO DO Chameleon stump PR needed
+    - ChameleonSet # TODO Chameleon stump PR needed
     - SyndieSet
     - SleeperSet
     - CommunicatorSet
@@ -169,5 +167,5 @@
     key: enum.ThiefBackpackUIKey.Key
   - type: UserInterface
     interfaces:
-      - key: enum.ThiefBackpackUIKey.Key
+      enum.ThiefBackpackUIKey.Key:
         type: ThiefBackpackBoundUserInterface

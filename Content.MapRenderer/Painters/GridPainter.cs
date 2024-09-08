@@ -85,7 +85,7 @@ namespace Content.MapRenderer.Painters
                 }
 
                 var transform = _sEntityManager.GetComponent<TransformComponent>(serverEntity);
-                if (_sMapManager.TryGetGrid(transform.GridUid, out var grid))
+                if (_sEntityManager.TryGetComponent(transform.GridUid, out MapGridComponent? grid))
                 {
                     var position = transform.LocalPosition;
 
@@ -138,8 +138,8 @@ namespace Content.MapRenderer.Painters
             var yOffset = (int) -grid.LocalAABB.Bottom;
             var tileSize = grid.TileSize;
 
-            var x = ((float) Math.Floor(position.X) + xOffset) * tileSize * TilePainter.TileImageSize;
-            var y = ((float) Math.Floor(position.Y) + yOffset) * tileSize * TilePainter.TileImageSize;
+            var x = (position.X + xOffset) * tileSize * TilePainter.TileImageSize;
+            var y = (position.Y + yOffset) * tileSize * TilePainter.TileImageSize;
 
             return (x, y);
         }

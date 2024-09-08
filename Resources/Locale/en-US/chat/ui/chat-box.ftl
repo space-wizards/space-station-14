@@ -26,6 +26,7 @@ hud-chatbox-channel-Whisper = Whisper
 hud-chatbox-channel-LOOC = LOOC
 hud-chatbox-channel-OOC = OOC
 hud-chatbox-channel-Radio = Radio
+hud-chatbox-channel-Notifications = Notifications
 hud-chatbox-channel-Server = Server
 hud-chatbox-channel-Visual = Actions
 hud-chatbox-channel-Damage = Damage
