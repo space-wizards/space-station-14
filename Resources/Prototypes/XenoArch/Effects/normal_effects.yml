@@ -314,20 +314,6 @@
     canCreateVacuum: false
 
 - type: artifactEffect
-  id: EffectExplodeCryo
-  targetDepth: 2
-  effectHint: artifact-effect-hint-environment
-  components:
-  - type: TriggerArtifact
-  - type: ExplodeOnTrigger
-  - type: Explosive
-    deleteAfterExplosion: false
-    explosionType: Cryo
-    totalIntensity: 400
-    intensitySlope: 2
-    maxIntensity: 50
-
-- type: artifactEffect
   id: EffectRareMaterialSpawn
   targetDepth: 2
   effectHint: artifact-effect-hint-creation
@@ -673,99 +659,6 @@
   - type: PortalArtifact
 
 - type: artifactEffect
-  id: EffectRandomCorpseSpawn
-  targetDepth: 4
-  effectHint: artifact-effect-hint-creation
-  components:
-  - type: SpawnArtifact
-    maxSpawns: 5
-    spawns:
-    - id: MobRandomCommandCorpse
-      orGroup: Corpse
-    - id: MobRandomScienceCorpse
-      orGroup: Corpse
-    - id: MobRandomSecurityCorpse
-      orGroup: Corpse
-    - id: MobRandomMedicCorpse
-      orGroup: Corpse
-    - id: MobRandomCargoCorpse
-      orGroup: Corpse
-    - id: MobRandomEngineerCorpse
-      orGroup: Corpse
-    - id: MobRandomServiceCorpse
-      orGroup: Corpse
-
-- type: artifactEffect
-  id: EffectRareMaterialSpawn
-  targetDepth: 5
-  effectHint: artifact-effect-hint-creation
-  components:
-  - type: SpawnArtifact
-    maxSpawns: 5
-    spawns:
-    - id: SheetPlasma
-      orGroup: materials
-    - id: SheetPlasteel
-      orGroup: materials
-    - id: SheetUranium
-      orGroup: materials
-    - id: IngotSilver30
-      orGroup: materials
-    - id: IngotGold
-      orGroup: materials
-    - id: IngotSilver
-      orGroup: materials
-    - id: MaterialBananium
-      orGroup: materials
-
-- type: artifactEffect
-  id: EffectRandomT3ItemSpawn
-  targetDepth: 5
-  effectHint: artifact-effect-hint-creation
-  components:
-  - type: SpawnArtifact
-    maxSpawns: 3
-    spawns:
-    - id: WeaponLaserSvalinn
-      orGroup: RandomT3
-    - id: DeviceQuantumSpinInverter
-      orGroup: RandomT3
-      maxAmount: 2
-    - id: SyringeBluespace
-      orGroup: RandomT3
-    - id: BluespaceBeaker
-      orGroup: RandomT3
-    - id: WeaponTetherGun
-      orGroup: RandomT3
-    - id: WeaponForceGun
-      orGroup: RandomT3
-    - id: AdvancedPowercells
-      orGroup: RandomT3
-    - id: ClothingBackpackHolding
-      orGroup: RandomT3
-
-- type: artifactEffect
-  id: EffectDangerousFaunaSpawn
-  targetDepth: 6
-  effectHint: artifact-effect-hint-creation
-  components:
-  - type: SpawnArtifact
-    maxSpawns: 1
-    spawns:
-    - id: MobRatKing
-      orGroup: fauna
-    - id: MobDragonDungeon
-      orGroup: fauna
-    - id: MobLaserRaptor
-      orGroup: fauna
-    - id: MobWatcherLavaLand
-      orGroup: fauna
-    - id: MobHonkBot
-      orGroup: fauna
-    - id: MobJonkBot
-      orGroup: fauna
-
-- type: artifactEffect
   id: EffectSingulo
   targetDepth: 10
   effectHint: artifact-effect-hint-destruction
@@ -774,7 +667,7 @@
     maxSpawns: 1
     spawns:
     - id: Singularity
-      
+
 - type: artifactEffect
   id: EffectTesla
   targetDepth: 10
