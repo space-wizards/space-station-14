@@ -16,6 +16,7 @@
     - id: MimicVendorRule
     - id: MouseMigration
     - id: PowerGridCheck
+    - id: RandomSentience
     - id: SlimesSpawn
     - id: SolarFlare
     - id: SpiderClownSpawn
