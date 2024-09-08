@@ -51,7 +51,7 @@ namespace Content.Shared.Roles
         public HashSet<JobRequirement>? Requirements;
 
         /// <summary>
-        ///     When true - the station will have anouncement about arrival of this player. // TODO add functionality for this
+        ///     When true - the station will have anouncement about arrival of this player.
         /// </summary>
         [DataField("joinNotifyCrew")]
         public bool JoinNotifyCrew { get; private set; } = false;
