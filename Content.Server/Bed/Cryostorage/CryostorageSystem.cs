@@ -239,6 +239,7 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
             Loc.GetString(
                 "earlyleave-cryo-announcement",
                 ("character", name),
+                ("gender", ent.Owner.Gender),
                 ("job", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(jobName))
             ), Loc.GetString("earlyleave-cryo-sender"),
             playDefaultSound: false
