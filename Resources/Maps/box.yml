@@ -3732,7 +3732,6 @@ entities:
             2816: 8,3
             3099: -47,-9
             3100: -47,-8
-            3101: -47,-7
             3102: -47,-6
             3103: -46,-6
             3104: -45,-6
@@ -11580,7 +11579,7 @@ entities:
       pos: 24.5,16.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -14916.947
+      secondsUntilStateChange: -15063.2295
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -70505,6 +70504,12 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -41.5,-27.5
       parent: 8364
+  - uid: 6120
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -61.5,-15.5
+      parent: 8364
   - uid: 6226
     components:
     - type: Transform
@@ -72466,28 +72471,11 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 6.5,-11.5
       parent: 8364
-  - uid: 6118
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -61.5,-13.5
-      parent: 8364
   - uid: 6129
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -50.5,-14.5
-      parent: 8364
-  - uid: 6142
-    components:
-    - type: Transform
-      pos: -55.5,-13.5
-      parent: 8364
-  - uid: 6143
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -55.5,-15.5
       parent: 8364
   - uid: 6208
     components:
@@ -73880,37 +73868,14 @@ entities:
   - uid: 6119
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -60.5,-13.5
-      parent: 8364
-  - uid: 6120
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -59.5,-13.5
+      rot: -1.5707963267948966 rad
+      pos: -55.5,-15.5
       parent: 8364
   - uid: 6121
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -58.5,-13.5
-      parent: 8364
-  - uid: 6122
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -57.5,-13.5
-      parent: 8364
-  - uid: 6123
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -56.5,-13.5
-      parent: 8364
-  - uid: 6124
-    components:
-    - type: Transform
-      pos: -55.5,-14.5
+      rot: -1.5707963267948966 rad
+      pos: -56.5,-15.5
       parent: 8364
   - uid: 6125
     components:
@@ -74290,12 +74255,6 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -8.5,-21.5
-      parent: 8364
-  - uid: 6224
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -61.5,-14.5
       parent: 8364
   - uid: 6284
     components:
@@ -80656,11 +80615,11 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 5.5,-11.5
       parent: 8364
-  - uid: 6144
+  - uid: 6118
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -61.5,-15.5
+      rot: 1.5707963267948966 rad
+      pos: -57.5,-15.5
       parent: 8364
   - uid: 6199
     components:
@@ -84375,7 +84334,7 @@ entities:
       pos: -34.5,-14.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -9105.484
+      secondsUntilStateChange: -9251.767
       state: Closing
   - uid: 15010
     components:
@@ -151584,6 +151543,10 @@ entities:
         - Right: Reverse
         - Middle: Off
         13812:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+        6120:
         - Left: Forward
         - Right: Reverse
         - Middle: Off
