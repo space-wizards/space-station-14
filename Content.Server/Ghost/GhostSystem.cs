@@ -571,13 +571,13 @@ namespace Content.Server.Ghost
                 }
             }
 
+            if (playerEntity != null)
+                _adminLogger.Add(LogType.Mind, $"{EntityManager.ToPrettyString(playerEntity.Value):player} ghosted{(!canReturn ? " (non-returnable)" : "")}");
+
             var ghost = SpawnGhost((mindId, mind), position, canReturn);
 
             if (ghost == null)
                 return false;
-
-            if (playerEntity != null)
-                _adminLogger.Add(LogType.Mind, $"{EntityManager.ToPrettyString(playerEntity.Value):player} ghosted{(!canReturn ? " (non-returnable)" : "")}");
 
             return true;
         }
