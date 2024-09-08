@@ -1567,6 +1567,15 @@
     baseDecayRate: 0.0083
   - type: Thirst
     baseDecayRate: 0.0083
+  - type: MonkeyAccent
+  - type: SentienceTarget
+    flavorKind: station-event-random-sentience-flavor-primate
+  - type: AlwaysRevolutionaryConvertible
+  - type: GhostRole
+    makeSentient: true
+    name: ghost-role-information-sentiflower-name
+    ghost-role-information-sentiflower-description
+    rules: ghost-role-information-nonantagonist-rules
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Animals/sentiflower.rsi
