@@ -56,3 +56,20 @@
 - type: tileAlias
   id: FloorRGlassAlt
   target: FloorRGlass
+
+# 2024-09-4
+- type: tileAlias
+  id: FloorWoodLarge
+  target: FloorWood
+
+- type: tileAlias
+  id: FloorPlastic
+  target: FloorSteel
+
+- type: tileAlias
+  id: FloorWhitePlastic
+  target: FloorWhite
+
+- type: tileAlias
+  id: FloorDarkPlastic
+  target: FloorDark

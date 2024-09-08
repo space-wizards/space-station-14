@@ -616,9 +616,3 @@
   name: astro-snow floor
   spawn: FloorTileItemAstroSnow
   maxCount: 30
-
-- type: stack
-  id: FloorTileWoodLarge
-  name: large wood floor
-  spawn: FloorTileItemWoodLarge
-  maxCount: 30
