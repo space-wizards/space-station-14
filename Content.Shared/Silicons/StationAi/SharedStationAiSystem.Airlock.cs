@@ -9,6 +9,9 @@ namespace Content.Shared.Silicons.StationAi;
 
 public abstract partial class SharedStationAiSystem
 {
+    private static readonly SoundPathSpecifier AirlockOverchargeDisabled = new("/Audio/Machines/airlock_overcharge_on.ogg");
+    private static readonly SoundPathSpecifier AirlockOverchargeEnabled = new("/Audio/Machines/airlock_overcharge_off.ogg");
+
     // Handles airlock radial
 
     private void InitializeAirlock()
@@ -74,12 +77,10 @@ public abstract partial class SharedStationAiSystem
         }
 
         _electrify.ToggleElectrified((ent, component), args.User, predicted: true);
-        _audio.PlayEntity(component.Enabled
-                ? new SoundPathSpecifier("/Audio/Machines/airlock_overcharge_on.ogg")
-                : new SoundPathSpecifier("/Audio/Machines/airlock_overcharge_off.ogg"),
-            args.User,
-            ent
-        );
+        var soundToPlay = component.Enabled
+            ? AirlockOverchargeDisabled
+            : AirlockOverchargeEnabled;
+        _audio.PlayEntity(soundToPlay, args.User, ent);
     }
 }
 
