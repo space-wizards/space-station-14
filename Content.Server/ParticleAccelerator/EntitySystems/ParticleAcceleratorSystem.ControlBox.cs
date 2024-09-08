@@ -6,6 +6,7 @@ using Robust.Shared.Utility;
 using System.Diagnostics;
 using Content.Server.Administration.Managers;
 using Content.Shared.CCVar;
+using Content.Shared.Power;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
@@ -164,6 +165,7 @@ public sealed partial class ParticleAcceleratorSystem
                     or ParticleAcceleratorPowerState.Level1
                     or ParticleAcceleratorPowerState.Level2 => LogImpact.Medium,
                 ParticleAcceleratorPowerState.Level3 => LogImpact.Extreme,
+                _ => throw new IndexOutOfRangeException(nameof(strength)),
             };
 
             _adminLogger.Add(LogType.Action, impact, $"{ToPrettyString(player):player} has set the strength of {ToPrettyString(uid)} to {strength}");

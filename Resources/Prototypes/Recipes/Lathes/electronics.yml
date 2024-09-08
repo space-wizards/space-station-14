@@ -310,6 +310,15 @@
      Glass: 500
 
 - type: latheRecipe
+  id: BiogeneratorMachineCircuitboard
+  result: BiogeneratorMachineCircuitboard
+  category: Circuitry
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 500
+
+- type: latheRecipe
   id: VaccinatorMachineCircuitboard
   result: VaccinatorMachineCircuitboard
   category: Circuitry
@@ -475,15 +484,6 @@
 - type: latheRecipe
   id: CentrifugeMachineCircuitboard
   result: CentrifugeMachineCircuitboard
-  category: Circuitry
-  completetime: 4
-  materials:
-    Steel: 100
-    Glass: 500
-
-- type: latheRecipe
-  id: MaterialReclaimerMachineCircuitboard
-  result: MaterialReclaimerMachineCircuitboard
   category: Circuitry
   completetime: 4
   materials:
@@ -921,7 +921,6 @@
   completetime: 6
   materials:
      Steel: 100
-
      Glass: 500
 
 - type: latheRecipe
@@ -960,6 +959,16 @@
      Gold: 100
 
 - type: latheRecipe
+  id: StationAnchorCircuitboard
+  result: StationAnchorCircuitboard
+  category: Circuitry
+  completetime: 8
+  materials:
+    Steel: 100
+    Glass: 900
+    Gold: 100
+
+- type: latheRecipe
   id: ReagentGrinderIndustrialMachineCircuitboard
   result: ReagentGrinderIndustrialMachineCircuitboard
   completetime: 5
@@ -967,7 +976,7 @@
      Steel: 100
      Glass: 500
      Gold: 100
- 
+
 - type: latheRecipe
   id: JukeboxCircuitBoard
   result: JukeboxCircuitBoard

@@ -784,3 +784,7 @@
   - type: Tag
     tags:
     - Slice
+  - type: FoodSequenceElement
+    entries:
+      Taco: Suppermatter
+      Burger: SuppermatterBurger
