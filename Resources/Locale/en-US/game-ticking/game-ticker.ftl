@@ -34,6 +34,7 @@ player-first-join-message = Player {$name} joined for the first time.
 player-leave-message = Player {$name} left.
 
 latejoin-arrival-announcement = {$character} ({$job}) has arrived at the station!
+latejoin-arrival-announcement-special = {$character}, The {$job}, has stepped aboard the station!
 latejoin-arrival-sender = Station
 latejoin-arrivals-direction = A shuttle transferring you to your station will arrive shortly.
 latejoin-arrivals-direction-time = A shuttle transferring you to your station will arrive in {$time}.
