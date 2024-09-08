@@ -1,123 +1,88 @@
 - type: entity
-  name: zeppelin lighter
-  parent: BaseItem
-  id: FlippoZeppelinLighter
-  description: "A rugged metal lighter, lasts quite a while."
+  name: flippo syndicate lighter
+  parent: FlippoLighter
+  id: FlippoSyndicateLighter
+  description: "A rugged metal lighter, doesn't seem to run out of lighter fluid. Has a three-headed serpent symbol on the front."
   components:
   - type: Sprite
     sprite: GreyStation/Objects/Tools/lighters.rsi
     layers:
-    - state: zippo_1_icon_base
+    - state: zippo_syndicate_icon_base
       map: ["base"]
     - state: zippo_top
       map: ["top"]
       visible: false
-    - state: zippo_1_open
-      map: ["open"]
-      visible: false
-    - state: lighter_flame
-      map: ["flame"]
-      visible: false
-      shader: unshaded
-  - type: ItemToggle
-    predictable: false
-    soundActivate:
-      path: /Audio/Items/Lighters/zippo_open.ogg
-    soundDeactivate:
-      path: /Audio/Items/Lighters/zippo_close.ogg
-  - type: ItemToggleMeleeWeapon
-    activatedDamage:
-        types:
-            Heat: 1
-  - type: ItemToggleSize
-    activatedSize: Small
-  - type: ItemToggleHot
-  - type: Item
-    size: Tiny
-    sprite: GreyStation/Objects/Tools/lighters.rsi
-    heldPrefix: zippo
-  - type: Appearance
-  - type: GenericVisualizer
-    visuals:
-      enum.ToggleVisuals.Toggled:
-        flame:
-          True: { visible: true }
-          False: { visible: false }
-        open:
-          True: { visible: true }
-          False: { visible: false }
-        top:
-          True: { visible: true }
-          False: { visible: false }
-        base:
-          True: { visible: false }
-          False: { visible: true }
-  - type: SolutionContainerManager
-    solutions:
-      Welder:
-        reagents:
-        - ReagentId: WeldingFuel
-          Quantity: 12
-        maxVol: 12 #uses less fuel than a welder, so this isnt as bad as it looks
-  - type: Welder
-    fuelConsumption: 0.01
-    fuelLitCost: 0.1
-    tankSafe: true
-  - type: ToggleableLightVisuals
-    spriteLayer: lighter_flame
-    inhandVisuals:
-      left:
-      - state: zippo-inhand-left-flame
-        shader: unshaded
-      right:
-      - state: zippo-inhand-right-flame
-        shader: unshaded
-  - type: MeleeWeapon
-    damage:
-      types:
-        Blunt: 1 # does a little bit of damage on hit when off
-  - type: PointLight
-    enabled: false
-    netsync: false
-    radius: 1.2 #slightly stronger than the other lighters
-    color: orange
-
-- type: entity
-  name: red zeppelin lighter
-  parent: FlippoZeppelinLighter
-  id: FlippoRedLighter
-  description: "A red zeppelin style lighter with a green flame and a three-headed serpent symbol on the front. Lasts quite a while."
-  components:
-  - type: Sprite
-    sprite: GreyStation/Objects/Tools/lighters.rsi
-    layers:
-    - state: zippo_red_icon_base
-      map: ["base"]
-    - state: zippo_top
-      map: ["top"]
-      visible: false
-    - state: zippo_red_open
+    - state: zippo_syndicate_open
       map: ["open"]
       visible: false
     - state: lighter_flame_green
       map: ["flame"]
       visible: false
       shader: unshaded
-  - type: PointLight
-    enabled: false
-    netsync: false
-    radius: 1.2 #slightly stronger than the other lighters
-    color: green
+  - type: Item
+    sprite: GreyStation/Objects/Tools/lighters.rsi
+    heldPrefix: zippo-syndicate
   - type: ToggleableLightVisuals
     spriteLayer: lighter_flame_green
     inhandVisuals:
       left:
-      - state: redzippo-inhand-left-flame
+      - state: zippo-syndicate-inhand-left-flame
         shader: unshaded
       right:
-      - state: redzippo-inhand-right-flame
+      - state: zippo-syndicate-inhand-right-flame
         shader: unshaded
-  - type: Item
-    size: Tiny
+  - type: PointLight
+    color: green
+  - type: Welder
+    fuelConsumption: 0.2
+    fuelLitCost: 0.1
+  - type: SolutionRegeneration
+    solution: Welder
+    generated:
+      reagents:
+      - ReagentId: WeldingFuel
+        Quantity: 0.1
+
+- type: entity
+  name: flippo thirteen lighter
+  parent: FlippoLighter
+  id: FlippoThirteenLighter
+  description: "A rugged metal lighter, lasts quite a while. Has the number thirteen on the front."
+  components:
+  - type: Sprite
     sprite: GreyStation/Objects/Tools/lighters.rsi
-    heldPrefix: redzippo
+    layers:
+    - state: zippo_thirteen_icon_base
+      map: ["base"]
+    - state: zippo_top
+      map: ["top"]
+      visible: false
+    - state: zippo_thirteen_open
+      map: ["open"]
+      visible: false
+    - state: lighter_flame
+      map: ["flame"]
+      visible: false
+      shader: unshaded
+
+- type: entity
+  name: flippo skull lighter
+  parent: FlippoLighter
+  id: FlippoSkullLighter
+  description: "A rugged metal lighter, lasts quite a while. Has a skull with flames on the front."
+  components:
+  - type: Sprite
+    sprite: GreyStation/Objects/Tools/lighters.rsi
+    layers:
+    - state: zippo_skull_icon_base
+      map: ["base"]
+    - state: zippo_top
+      map: ["top"]
+      visible: false
+    - state: zippo_skull_open
+      map: ["open"]
+      visible: false
+    - state: lighter_flame
+      map: ["flame"]
+      visible: false
+      shader: unshaded
