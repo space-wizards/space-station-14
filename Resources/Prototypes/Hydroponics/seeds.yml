@@ -107,6 +107,52 @@
       PotencyDivisor: 50
 
 - type: seed
+  id: sunflower
+  name: seeds-sunflower-name
+  noun: seeds-noun-seeds
+  displayName: seeds-sunflower-display-name
+  plantRsi: Objects/Specific/Hydroponics/sunflower.rsi
+  packetPrototype: SunflowerSeeds
+  productPrototypes:
+    - FoodSunflower
+  mutationPrototypes:
+    - sentiflower
+  lifespan: 50
+  maturation: 6
+  production: 1
+  yield: 1
+  idealLight: 9
+  waterConsumption: 0.60
+  idealHeat: 298
+  chemicals:
+    Oil:
+      Min: 5
+      Max: 7
+      PotencyDivisor: 25
+    Nutriment:
+      Min: 1
+      Max: 2
+      PotencyDivisor: 50
+
+- type: seed
+  id: sentiflower
+  name: seeds-sentiflower-name
+  noun: seeds-noun-seeds
+  displayName: seeds-sentiflower-display-name
+  plantRsi: Objects/Specific/Hydroponics/sentiflower.rsi
+  packetPrototype: SentiflowerSeeds
+  productPrototypes:
+    - FoodMimana
+  lifespan: 50
+  maturation: 6
+  production: 1
+  yield: 1
+  idealLight: 9
+  waterConsumption: 0.60
+  idealHeat: 298
+
+
+- type: seed
   id: carrots
   name: seeds-carrots-name
   noun: seeds-noun-seeds
