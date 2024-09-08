@@ -58,6 +58,7 @@
     slots:
       item_slot:
         name: mop-bucket-slot-component-slot-name-item
+        ejectVerbText: mop-bucket-slot-component-eject-verb
         whitelist:
           tags:
             - PlushieSharkBlue
