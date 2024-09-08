@@ -39,7 +39,7 @@
 
 - type: entity
   name: captain's rubber stamp
-  parent: RubberStampBase
+  parent: [RubberStampBase, BaseCommandContraband]
   id: RubberStampCaptain
   suffix: DO NOT MAP
   components:
@@ -107,7 +107,7 @@
 
 - type: entity
   name: chief engineer's rubber stamp
-  parent: RubberStampBase
+  parent: [RubberStampBase, BaseCommandContraband]
   id: RubberStampCE
   suffix: DO NOT MAP
   components:
@@ -120,7 +120,7 @@
 
 - type: entity
   name: chief medical officer's rubber stamp
-  parent: RubberStampBase
+  parent: [RubberStampBase, BaseCommandContraband]
   id: RubberStampCMO
   suffix: DO NOT MAP
   components:
@@ -133,7 +133,7 @@
 
 - type: entity
   name: head of personnel's rubber stamp
-  parent: RubberStampBase
+  parent: [RubberStampBase, BaseCommandContraband]
   id: RubberStampHop
   suffix: DO NOT MAP
   components:
@@ -146,7 +146,7 @@
 
 - type: entity
   name: head of security's rubber stamp
-  parent: RubberStampBase
+  parent: [RubberStampBase, BaseCommandContraband]
   id: RubberStampHos
   suffix: DO NOT MAP
   components:
@@ -173,7 +173,7 @@
 
 - type: entity
   name: quartermaster's rubber stamp
-  parent: RubberStampBase
+  parent: [RubberStampBase, BaseCommandContraband]
   id: RubberStampQm
   suffix: DO NOT MAP
   components:
@@ -186,7 +186,7 @@
 
 - type: entity
   name: research director's rubber stamp
-  parent: RubberStampBase
+  parent: [RubberStampBase, BaseCommandContraband]
   id: RubberStampRd
   suffix: DO NOT MAP
   components:
@@ -224,7 +224,7 @@
 
 - type: entity
   name: warden's rubber stamp
-  parent: RubberStampBase
+  parent: [RubberStampBase, BaseRestrictedContraband]
   id: RubberStampWarden
   suffix: DO NOT MAP
   components:
@@ -261,7 +261,7 @@
 
 - type: entity
   name: detective's rubber stamp
-  parent: RubberStampBase
+  parent: [RubberStampBase, BaseRestrictedContraband]
   id: RubberStampDetective
   suffix: DO NOT MAP
   components:
@@ -271,3 +271,16 @@
     stampState: "paper_stamp-detective"
   - type: Sprite
     state: stamp-detective
+
+- type: entity
+  name: greytide's rubber stamp
+  parent: RubberStampBase
+  id: RubberStampGreytide
+  description: A rubber stamp for stamping important documents. The tide washes over you, just looking at it...
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-greytide
+    stampedColor: "#323232"
+    stampState: "paper_stamp-greytide"
+  - type: Sprite
+    state: stamp-greytide

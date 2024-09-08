@@ -6,6 +6,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using System.Collections;
 using System.Linq;
+using Content.Shared.Chemistry.Components.SolutionManager;
 
 namespace Content.Shared.Chemistry.Components
 {
@@ -480,41 +481,72 @@ namespace Content.Shared.Chemistry.Components
         /// </summary>
         /// <param name="toRemove">The reagent to be removed.</param>
         /// <returns>How much reagent was actually removed. Zero if the reagent is not present on the solution.</returns>
-        public FixedPoint2 RemoveReagent(ReagentQuantity toRemove, bool preserveOrder = false)
+        public FixedPoint2 RemoveReagent(ReagentQuantity toRemove, bool preserveOrder = false, bool ignoreReagentData = false)
         {
             if (toRemove.Quantity <= FixedPoint2.Zero)
                 return FixedPoint2.Zero;
 
+            List<int> reagentIndices = new List<int>();
+            int totalRemoveVolume = 0;
+
             for (var i = 0; i < Contents.Count; i++)
             {
-                var (reagent, curQuantity) = Contents[i];
+                var (reagent, quantity) = Contents[i];
 
-                if(reagent.Prototype != toRemove.Reagent.Prototype)
-                    continue;
+                if (ignoreReagentData)
+                {
+                    if (reagent.Prototype != toRemove.Reagent.Prototype)
+                        continue;
+                }
+                else
+                {
+                    if (reagent != toRemove.Reagent)
+                        continue;
+                }
+                //We prepend instead of add to handle the Contents list back-to-front later down.
+                //It makes RemoveSwap safe to use.
+                totalRemoveVolume += quantity.Value;
+                reagentIndices.Insert(0, i);
+            }
 
-                var newQuantity = curQuantity - toRemove.Quantity;
+            if (totalRemoveVolume <= 0)
+            {
+                // Reagent is not on the solution...
+                return FixedPoint2.Zero;
+            }
+
+            FixedPoint2 removedQuantity = 0;
+            for (var i = 0; i < reagentIndices.Count; i++)
+            {
+                var (reagent, curQuantity) = Contents[reagentIndices[i]];
+
+                // This is set up such that integer rounding will tend to take more reagents.
+                var split = ((long)toRemove.Quantity.Value) * curQuantity.Value / totalRemoveVolume;
+
+                var splitQuantity = FixedPoint2.FromCents((int)split);
+
+                var newQuantity = curQuantity - splitQuantity;
                 _heatCapacityDirty = true;
 
                 if (newQuantity <= 0)
                 {
                     if (!preserveOrder)
-                        Contents.RemoveSwap(i);
+                        Contents.RemoveSwap(reagentIndices[i]);
                     else
-                        Contents.RemoveAt(i);
+                        Contents.RemoveAt(reagentIndices[i]);
 
                     Volume -= curQuantity;
-                    ValidateSolution();
-                    return curQuantity;
+                    removedQuantity += curQuantity;
+                    continue;
                 }
 
-                Contents[i] = new ReagentQuantity(reagent, newQuantity);
-                Volume -= toRemove.Quantity;
-                ValidateSolution();
-                return toRemove.Quantity;
+                Contents[reagentIndices[i]] = new ReagentQuantity(reagent, newQuantity);
+                Volume -= splitQuantity;
+                removedQuantity += splitQuantity;
             }
+            ValidateSolution();
 
-            // Reagent is not on the solution...
-            return FixedPoint2.Zero;
+            return removedQuantity;
         }
 
         /// <summary>
@@ -523,9 +555,9 @@ namespace Content.Shared.Chemistry.Components
         /// <param name="prototype">The prototype of the reagent to be removed.</param>
         /// <param name="quantity">The amount of reagent to remove.</param>
         /// <returns>How much reagent was actually removed. Zero if the reagent is not present on the solution.</returns>
-        public FixedPoint2 RemoveReagent(string prototype, FixedPoint2 quantity, List<ReagentData>? data = null)
+        public FixedPoint2 RemoveReagent(string prototype, FixedPoint2 quantity, List<ReagentData>? data = null, bool ignoreReagentData = false)
         {
-            return RemoveReagent(new ReagentQuantity(prototype, quantity, data));
+            return RemoveReagent(new ReagentQuantity(prototype, quantity, data), ignoreReagentData: ignoreReagentData);
         }
 
         /// <summary>
@@ -534,9 +566,9 @@ namespace Content.Shared.Chemistry.Components
         /// <param name="reagentId">The reagent to be removed.</param>
         /// <param name="quantity">The amount of reagent to remove.</param>
         /// <returns>How much reagent was actually removed. Zero if the reagent is not present on the solution.</returns>
-        public FixedPoint2 RemoveReagent(ReagentId reagentId, FixedPoint2 quantity, bool preserveOrder = false)
+        public FixedPoint2 RemoveReagent(ReagentId reagentId, FixedPoint2 quantity, bool preserveOrder = false, bool ignoreReagentData = false)
         {
-            return RemoveReagent(new ReagentQuantity(reagentId, quantity), preserveOrder);
+            return RemoveReagent(new ReagentQuantity(reagentId, quantity), preserveOrder, ignoreReagentData);
         }
 
         public void RemoveAllSolution()

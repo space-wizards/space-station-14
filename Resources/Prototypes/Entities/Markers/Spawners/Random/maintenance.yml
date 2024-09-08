@@ -39,7 +39,8 @@
         - id: ClothingMaskRaven
         - id: ClothingMaskJackal
         - id: ClothingMaskBat
-      - id: ClothingBeltSuspenders
+      - id: ClothingBeltSuspendersRed
+      - id: ClothingBeltSuspendersBlack
       - id: ClothingEyesEyepatch
       - id: ClothingEyesGlasses
       - id: ClothingHandsGlovesLatex
@@ -161,6 +162,7 @@
       - id: CigarGold
       - id: ClothingUniformJumpsuitFamilyGuy
       - id: WristwatchGold
+      - id: RubberStampGreytide
 
 - type: entity
   name: Maint Loot Spawner

@@ -692,7 +692,7 @@
       materialComposition:
         Steel: 500
     - type: StaticPrice
-      price: 60
+      price: 125
 
 - type: entity
   parent: GasCanisterBrokenBase

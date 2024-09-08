@@ -70,7 +70,7 @@ public sealed partial class PlayerPanel : FancyWindow
         else
         {
             Whitelisted.Text = Loc.GetString("player-panel-whitelisted");
-            WhitelistToggle.Text = whitelisted.Value.ToString();
+            WhitelistToggle.Text = whitelisted.Value ? Loc.GetString("player-panel-true") : Loc.GetString("player-panel-false");
             WhitelistToggle.Visible = true;
             _isWhitelisted = whitelisted.Value;
         }

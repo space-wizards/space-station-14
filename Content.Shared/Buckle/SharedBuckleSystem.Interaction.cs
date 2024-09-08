@@ -43,7 +43,7 @@ public abstract partial class SharedBuckleSystem
         }
         else
         {
-            var doAfterArgs = new DoAfterArgs(EntityManager, args.User, component.BuckleDoafterTime, new BuckleDoAfterEvent(), args.User, args.Dragged, uid)
+            var doAfterArgs = new DoAfterArgs(EntityManager, args.User, component.BuckleDoafterTime, new BuckleDoAfterEvent(), args.Dragged, args.Dragged, uid)
             {
                 BreakOnMove = true,
                 BreakOnDamage = true,
@@ -84,7 +84,7 @@ public abstract partial class SharedBuckleSystem
         if (!TryComp(args.User, out BuckleComponent? buckle))
             return;
 
-        if (buckle.BuckledTo == null)
+        if (buckle.BuckledTo == null && component.BuckleOnInteractHand)
             TryBuckle(args.User, args.User, uid, buckle, popup: true);
         else if (buckle.BuckledTo == uid)
             TryUnbuckle(args.User, args.User, buckle, popup: true);

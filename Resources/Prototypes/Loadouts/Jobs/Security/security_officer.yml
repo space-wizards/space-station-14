@@ -13,6 +13,16 @@
       department: Security
       time: 216000 # 60 hrs
 
+#Security Star
+- type: loadoutEffectGroup
+  id: SecurityStarWorthy
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:DepartmentTimeRequirement
+        department: Security
+        time: 360000 #100 hrs
+
 # Head
 - type: loadout
   id: SecurityHelmet
@@ -138,3 +148,13 @@
     proto: SeniorOfficer
   equipment:
     id: SeniorOfficerPDA
+
+# Misc
+- type: loadout
+  id: SecStar
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SecurityStarWorthy
+  storage:
+    back:
+    - Dinkystar

@@ -33,13 +33,13 @@ namespace Content.Server.Physics.Controllers
         private void OnRelayPlayerAttached(Entity<RelayInputMoverComponent> entity, ref PlayerAttachedEvent args)
         {
             if (MoverQuery.TryGetComponent(entity.Comp.RelayEntity, out var inputMover))
-                SetMoveInput((entity.Owner, inputMover), MoveButtons.None);
+                SetMoveInput((entity.Comp.RelayEntity, inputMover), MoveButtons.None);
         }
 
         private void OnRelayPlayerDetached(Entity<RelayInputMoverComponent> entity, ref PlayerDetachedEvent args)
         {
             if (MoverQuery.TryGetComponent(entity.Comp.RelayEntity, out var inputMover))
-                SetMoveInput((entity.Owner, inputMover), MoveButtons.None);
+                SetMoveInput((entity.Comp.RelayEntity, inputMover), MoveButtons.None);
         }
 
         private void OnPlayerAttached(Entity<InputMoverComponent> entity, ref PlayerAttachedEvent args)

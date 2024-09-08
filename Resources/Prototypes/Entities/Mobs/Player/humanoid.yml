@@ -79,6 +79,7 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: short
+      job: ERTLeader
     - type: Loadout
       prototypes: [ ERTLeaderGear ]
       roleLoadout: [ RoleSurvivalExtended ]
@@ -109,6 +110,7 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: short
+      job: ERTLeader
     - type: Loadout
       prototypes: [ ERTLeaderGearEVA ]
       roleLoadout: [ RoleSurvivalEVA ]
@@ -131,6 +133,7 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: short
+      job: ERTLeader
     - type: Loadout
       prototypes: [ ERTLeaderGearEVALecter ]
       roleLoadout: [ RoleSurvivalEVA ]
@@ -163,6 +166,7 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: short
+      job: ERTChaplain
     - type: RandomMetadata
       nameSegments:
       - NamesFirstMilitary
@@ -170,6 +174,7 @@
     - type: Loadout
       prototypes: [ ERTChaplainGear ]
       roleLoadout: [ RoleSurvivalExtended ]
+    - type: BibleUser
 
 - type: entity
   id: RandomHumanoidSpawnerERTChaplainEVA
@@ -193,9 +198,11 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: short
+      job: ERTChaplain
     - type: Loadout
       prototypes: [ ERTChaplainGearEVA ]
       roleLoadout: [ RoleSurvivalEVA ]
+    - type: BibleUser
 
 ## ERT Janitor
 
@@ -225,6 +232,7 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: short
+      job: ERTJanitor
     - type: RandomMetadata
       nameSegments:
       - NamesFirstMilitary
@@ -255,6 +263,7 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: short
+      job: ERTJanitor
     - type: Loadout
       prototypes: [ ERTJanitorGearEVA ]
       roleLoadout: [ RoleSurvivalEVA ]
@@ -287,6 +296,7 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: short
+      job: ERTEngineer
     - type: RandomMetadata
       nameSegments:
       - NamesFirstMilitary
@@ -317,6 +327,7 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: short
+      job: ERTEngineer
     - type: Loadout
       prototypes: [ ERTEngineerGearEVA ]
       roleLoadout: [ RoleSurvivalEVA ]
@@ -349,6 +360,7 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: short
+      job: ERTSecurity
     - type: RandomMetadata
       nameSegments:
       - NamesFirstMilitary
@@ -379,6 +391,7 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: short
+      job: ERTSecurity
     - type: Loadout
       prototypes: [ ERTSecurityGearEVA ]
       roleLoadout: [ RoleSurvivalEVA ]
@@ -401,6 +414,7 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: short
+      job: ERTSecurity
     - type: Loadout
       prototypes: [ ERTSecurityGearEVALecter ]
       roleLoadout: [ RoleSurvivalEVA ]
@@ -433,6 +447,7 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: short
+      job: ERTMedical
     - type: RandomMetadata
       nameSegments:
       - NamesFirstMilitary
@@ -463,6 +478,7 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: short
+      job: ERTMedical
     - type: Loadout
       prototypes: [ ERTMedicalGearEVA ]
       roleLoadout: [ RoleSurvivalEVA ]

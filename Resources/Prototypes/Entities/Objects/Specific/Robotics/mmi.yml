@@ -77,7 +77,6 @@
         map: ["base"]
     - type: Input
       context: human
-    - type: BlockMovement
     - type: ToggleableGhostRole
       examineTextMindPresent: positronic-brain-installed
       examineTextMindSearching: positronic-brain-still-searching
@@ -90,6 +89,8 @@
       wipeVerbPopup: positronic-brain-wiped-device
       stopSearchVerbText: positronic-brain-stop-searching-verb-text
       stopSearchVerbPopup: positronic-brain-stopped-searching
+      job: Borg
+    - type: BlockMovement
     - type: Examiner
     - type: BorgBrain
     - type: IntrinsicRadioReceiver

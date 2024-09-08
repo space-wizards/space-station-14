@@ -73,7 +73,7 @@
     node: tintedWindow
   - type: Occluder
   - type: StaticPrice
-    price: 44
+    price: 45
 
 - type: entity
   id: WindowReinforcedDirectional
@@ -106,7 +106,7 @@
   - type: RCDDeconstructable
     cost: 4
     delay: 4
-    fx: EffectRCDDeconstruct4  
+    fx: EffectRCDDeconstruct4
   - type: Destructible
     thresholds:
     - trigger:
@@ -133,7 +133,7 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: StaticPrice
-    price: 22
+    price: 22.5
 
 - type: entity
   parent: ReinforcedWindow

@@ -8,6 +8,8 @@ role-timer-age-to-old = Your character's age must be at most [color=yellow]{$age
 role-timer-age-to-young = Your character's age must be at least [color=yellow]{$age}[/color] to play this role.
 role-timer-whitelisted-species = Your character must be one of the following species to play this role:
 role-timer-blacklisted-species = Your character must not be one of the following species to play this role:
+role-timer-whitelisted-traits = Your character must have one of the following traits:
+role-timer-blacklisted-traits = Your character must not have any of the following traits:
 
 role-timer-locked = Locked (hover for details)
 
