@@ -228,6 +228,11 @@
   result: UniformPrinterMachineCircuitboard
 
 - type: latheRecipe
+  parent: BaseCircuitboardRecipe
+  id: BiogeneratorMachineCircuitboard
+  result: BiogeneratorMachineCircuitboard
+
+- type: latheRecipe
   parent: BaseGoldCircuitboardRecipe
   id: VaccinatorMachineCircuitboard
   result: VaccinatorMachineCircuitboard
