@@ -24,7 +24,7 @@ process = run(
         "gh",
         "pr",
         "list",
-        "--limit", "100",
+        "--limit", "500",
         "--state", "merged",
         "--json", "author,title,url,mergedAt",
     ],
@@ -36,10 +36,10 @@ prs = json.loads(process.stdout)
 
 def get_entry_type(pull_message: str) -> str:
     types = {
-        "add": "Add",
+        "a": "Add",
         "r": "Remove",
-        "tweak": "Tweak",
-        "fix": "Fix",
+        "t": "Tweak",
+        "f": "Fix",
     }
     choice = input(f"Type for this entry: '{pull_message}'\n")
     result = types.get(choice)
@@ -51,7 +51,7 @@ with open(file_path, "a+") as file:
         author = pull["author"]["login"]
         message = pull["title"]
         # entry_type = get_entry_type(message)
-        entry_type = "Tweak"
+        entry_type = "None"
         merged_at = pull["mergedAt"]
         time = datetime.fromisoformat(merged_at).strftime(time_format)
         url = pull["url"]
