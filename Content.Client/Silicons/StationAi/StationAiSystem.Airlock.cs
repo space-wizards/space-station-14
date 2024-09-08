@@ -54,9 +54,9 @@ public sealed partial class StationAiSystem
         {
             Sprite = ent.Comp.Enabled ?
                 new SpriteSpecifier.Rsi(
-                    new ResPath("/Textures/Structures/Doors/Airlocks/Standard/basic.rsi"), "open") :
+                    new ResPath("/Textures/Interface/Actions/actions_ai.rsi"), "door_overcharge_off") :
                 new SpriteSpecifier.Rsi(
-                    new ResPath("/Textures/Structures/Doors/Airlocks/Standard/basic.rsi"), "closed"),
+                    new ResPath("/Textures/Interface/Actions/actions_ai.rsi"), "door_overcharge_on"),
             Tooltip = ent.Comp.Enabled ? Loc.GetString("bolt-open") : Loc.GetString("bolt-close"),
             Event = new StationAiElectrifiedEvent
             {

@@ -51,6 +51,12 @@
 		},
 		{
 			"name": "unelectrify_door"
-		}
+		},
+        {
+            "name": "door_overcharge_on"
+        },
+        {
+            "name": "door_overcharge_off"
+        }
     ]
 }

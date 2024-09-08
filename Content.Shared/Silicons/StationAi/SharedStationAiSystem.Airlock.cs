@@ -3,6 +3,7 @@ using Robust.Shared.Serialization;
 using Content.Shared.Electrocution;
 using Content.Shared.Popups;
 using Content.Shared.Power.Components;
+using Robust.Shared.Audio;
 
 namespace Content.Shared.Silicons.StationAi;
 
@@ -69,10 +70,16 @@ public abstract partial class SharedStationAiSystem
         )
         {
             _popup.PopupClient(Loc.GetString("ai-device-not-responding"), args.User, PopupType.MediumCaution);
-            return;
+            return; 
         }
 
         _electrify.ToggleElectrified((ent, component), args.User, predicted: true);
+        _audio.PlayEntity(component.Enabled
+                ? new SoundPathSpecifier("/Audio/Machines/airlock_overcharge_on.ogg")
+                : new SoundPathSpecifier("/Audio/Machines/airlock_overcharge_off.ogg"),
+            args.User,
+            ent
+        );
     }
 }
 
