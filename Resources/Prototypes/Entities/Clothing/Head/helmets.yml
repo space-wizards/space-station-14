@@ -470,6 +470,9 @@
   - type: Construction
     graph: HelmetJustice
     node: helmet
+  - type: Tag
+    tags:
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingHeadHelmetJustice
