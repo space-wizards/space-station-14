@@ -1,29 +1,4 @@
 ﻿Entries:
-- author: PJB3005
-  changes:
-  - message: Ghosts can now examine details on objects from any range.
-    type: Tweak
-  id: 6814
-  time: '2024-06-24T15:36:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29404
-- author: Emisse
-  changes:
-  - message: atmos, elite syndie, and deathsquad hardsuits are now the only fireproof
-      suits
-    type: Tweak
-  id: 6815
-  time: '2024-06-24T22:03:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29416
-- author: Bhijn and Myr
-  changes:
-  - message: The colors of the LEDs on the heater and freezer thermomachines has been
-      changed from red/green (respectively) to orange/cyan (respectively). In laymen's
-      terms, this makes thermomachines far more reasonably differentiable for those
-      with colorblindness.
-    type: Tweak
-  id: 6816
-  time: '2024-06-24T22:40:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29397
 - author: Elysium206
   changes:
   - message: Increased Security Riot shields durability significantly and makes actively
@@ -3868,3 +3843,28 @@
   id: 7313
   time: '2024-09-08T08:12:24.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31952
+- author: PopGamer46
+  changes:
+  - message: Fixed being able to craft the justice helmet with a justice helmet
+    type: Fix
+  id: 7314
+  time: '2024-09-08T10:21:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31957
+- author: Killerqu00
+  changes:
+  - message: Seclite is now restricted to security.
+    type: Tweak
+  - message: Handcuffs are now restricted to security and command.
+    type: Tweak
+  - message: Trench whistle is now minor contraband.
+    type: Tweak
+  id: 7315
+  time: '2024-09-08T12:06:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31956
+- author: Psychpsyo
+  changes:
+  - message: The random sentience event should now actually happen again.
+    type: Fix
+  id: 7316
+  time: '2024-09-08T12:10:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31953

@@ -76,7 +76,7 @@
 
 - type: entity
   name: seclite
-  parent: FlashlightLantern
+  parent: [FlashlightLantern, BaseRestrictedContraband]
   id: FlashlightSeclite
   description: A robust flashlight used by security.
   components:
