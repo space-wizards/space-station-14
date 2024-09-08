@@ -36,16 +36,3 @@
       sprite: Nyanotrasen/Clothing/OuterClothing/WinterCoats/plaid_winter_coat.rsi
     - type: TemperatureProtection
       coefficient: 0.1
-
-- type: entity
-  parent: ClothingOuterWinterCoat
-  id: ClothingOuterWinterCoatMail
-  name: mail carrier's winter coat
-  description: It'll keep away the cold but not the dogs.
-  components:
-    - type: Sprite
-      sprite: Nyanotrasen/Clothing/OuterClothing/WinterCoats/mail_winter_coat.rsi
-    - type: Clothing
-      sprite: Nyanotrasen/Clothing/OuterClothing/WinterCoats/mail_winter_coat.rsi
-    - type: TemperatureProtection
-      coefficient: 0.1
