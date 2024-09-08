@@ -96,9 +96,9 @@
   description: A greatcoat enhanced with a special alloy for some extra protection and style for those with a commanding presence.
   components:
   - type: Sprite
-    sprite: DeltaV/Clothing/OuterClothing/Coats/hos_trenchcoat.rsi # Grey Station - Resprited
+    sprite: GreyStation/Clothing/OuterClothing/Coats/hos_trenchcoat.rsi # Grey Station - Resprited
   - type: Clothing
-    sprite: DeltaV/Clothing/OuterClothing/Coats/hos_trenchcoat.rsi # Grey Station - Resprited
+    sprite: GreyStation/Clothing/OuterClothing/Coats/hos_trenchcoat.rsi # Grey Station - Resprited
 
 - type: entity
   parent: ClothingOuterStorageToggleableBase
