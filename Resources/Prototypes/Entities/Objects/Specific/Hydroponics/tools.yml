@@ -139,3 +139,4 @@
         - Produce
         - Seed
   - type: Dumpable
+  - type: GatherablePickup # for space shrooms
