@@ -2,6 +2,7 @@ using Content.Shared.Doors.Components;
 using Robust.Shared.Serialization;
 using Content.Shared.Electrocution;
 using Content.Shared.Popups;
+using Content.Shared.Power.Components;
 
 namespace Content.Shared.Silicons.StationAi;
 
@@ -18,14 +19,12 @@ public abstract partial class SharedStationAiSystem
 
     private void OnAirlockBolt(EntityUid ent, DoorBoltComponent component, StationAiBoltEvent args)
     {
-        if (
-            !TryComp<DoorBoltComponent>(ent, out var doorBolt)
-            || !TryComp<StationAiWhitelistComponent>(ent, out var whiteList))
+        if (!TryComp<StationAiWhitelistComponent>(ent, out var whiteList))
         {
             return;
         }
 
-        if (!whiteList.Enabled || doorBolt.BoltWireCut)
+        if (!whiteList.Enabled || component.BoltWireCut || !component.Powered)
         {
             _popup.PopupClient(Loc.GetString("ai-device-not-responding"), args.User, PopupType.MediumCaution);
             return;
@@ -41,7 +40,7 @@ public abstract partial class SharedStationAiSystem
             return;
         }
 
-        if (!whiteList.Enabled)
+        if (!whiteList.Enabled || !component.Powered)
         {
             _popup.PopupClient(Loc.GetString("ai-device-not-responding"), args.User, PopupType.MediumCaution);
             return;
@@ -58,8 +57,16 @@ public abstract partial class SharedStationAiSystem
         {
             return;
         }
+        SharedApcPowerReceiverComponent? apcPowerReceiverComponent = null;
 
-        if (!whiteList.Enabled || electrified.IsWireCut)
+        if (
+            !whiteList.Enabled
+            || electrified.IsWireCut
+            || (
+                PowerReceiver.ResolveApc(ent, ref apcPowerReceiverComponent)
+                && !apcPowerReceiverComponent.Powered
+                )
+        )
         {
             _popup.PopupClient(Loc.GetString("ai-device-not-responding"), args.User, PopupType.MediumCaution);
             return;

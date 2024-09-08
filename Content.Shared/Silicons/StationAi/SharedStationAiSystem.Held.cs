@@ -2,6 +2,8 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Actions.Events;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Popups;
+using Content.Shared.Power.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -138,11 +140,18 @@ public abstract partial class SharedStationAiSystem
 
         var isOpen = _uiSystem.IsUiOpen(target, AiUi.Key, user);
 
-        args.Verbs.Add(new AlternativeVerb()
+        var verb = new AlternativeVerb
         {
             Text = isOpen ? Loc.GetString("ai-close") : Loc.GetString("ai-open"),
             Act = () =>
             {
+                SharedApcPowerReceiverComponent? component = null;
+                if (PowerReceiver.ResolveApc(ent.Owner, ref component) && !component.Powered)
+                {
+                    _popup.PopupClient(Loc.GetString("ai-device-not-responding"), user, PopupType.MediumCaution);
+                    return;
+                }
+
                 if (isOpen)
                 {
                     _uiSystem.CloseUi(ent.Owner, AiUi.Key, user);
@@ -152,7 +161,8 @@ public abstract partial class SharedStationAiSystem
                     _uiSystem.OpenUi(ent.Owner, AiUi.Key, user);
                 }
             }
-        });
+        };
+        args.Verbs.Add(verb);
     }
 }
 
