@@ -1,6 +1,8 @@
 using Content.Server.Destructible;
 using Content.Server.Gatherable.Components;
+using Content.Shared.Gatherable;
 using Content.Shared.Interaction;
+using Content.Shared.Inventory;
 using Content.Shared.Tag;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Whitelist;
@@ -13,6 +15,7 @@ namespace Content.Server.Gatherable;
 
 public sealed partial class GatherableSystem : EntitySystem
 {
+    [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly DestructibleSystem _destructible = default!;
@@ -81,7 +84,14 @@ public sealed partial class GatherableSystem : EntitySystem
             foreach (var loot in spawnLoot)
             {
                 var spawnPos = pos.Offset(_random.NextVector2(component.GatherOffset));
-                Spawn(loot, spawnPos);
+                var lootUid = Spawn(loot, spawnPos);
+
+                // let clothing do something with the loot
+                if (gatherer is {} user && TryComp<InventoryComponent>(user, out var inventory))
+                {
+                    var ev = new ItemGatheredEvent(lootUid, user);
+                    _inventory.RelayEvent((user, inventory), ref ev);
+                }
             }
         }
     }
