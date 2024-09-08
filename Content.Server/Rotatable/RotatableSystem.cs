@@ -37,7 +37,7 @@ namespace Content.Server.Rotatable
 
         private void AddFlipVerb(EntityUid uid, FlippableComponent component, GetVerbsEvent<Verb> args)
         {
-            if (!args.CanAccess || !args.CanInteract)
+            if (!args.CanAccess || !args.CanInteract || args.Hands is null)
                 return;
 
             // Check if the object is anchored.
@@ -60,7 +60,8 @@ namespace Content.Server.Rotatable
         {
             if (!args.CanAccess
                 || !args.CanInteract
-                || Transform(uid).NoLocalRotation) // Good ol prototype inheritance, eh?
+                || Transform(uid).NoLocalRotation
+                || args.Hands is null) // Good ol prototype inheritance, eh?
                 return;
 
             // Check if the object is anchored, and whether we are still allowed to rotate it.
