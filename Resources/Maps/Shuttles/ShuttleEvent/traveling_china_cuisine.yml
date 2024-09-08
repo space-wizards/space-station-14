@@ -700,7 +700,7 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-- proto: FoodMealSashimi
+- proto: FoodMealEnchiladas
   entities:
   - uid: 93
     components:
