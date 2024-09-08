@@ -102,10 +102,10 @@
   components:
   - type: Sprite
     sprite: Objects/Devices/cartridge.rsi
-    state: cart-s
+    state: cart-sec
   - type: Icon
     sprite: Objects/Devices/cartridge.rsi
-    state: cart-s
+    state: cart-sec
   - type: UIFragment
     ui: !type:WantedListUi
   - type: Cartridge
