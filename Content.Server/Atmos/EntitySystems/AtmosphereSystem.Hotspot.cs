@@ -4,19 +4,16 @@ using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Reactions;
 using Content.Shared.Database;
-using Content.Shared.Decals;
 using Robust.Shared.Audio;
+using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using System.Linq;
 
 namespace Content.Server.Atmos.EntitySystems
 {
     public sealed partial class AtmosphereSystem
     {
         [Dependency] private readonly DecalSystem _decalSystem = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
         private const int HotspotSoundCooldownCycles = 200;
@@ -65,15 +62,26 @@ namespace Content.Server.Atmos.EntitySystems
                 var gridUid = ent.Owner;
                 var tilePos = tile.GridIndices;
 
-                // Get prototypes of the burnt tile decals
-                var decals = _prototypeManager.EnumeratePrototypes<DecalPrototype>().Where(x => x.Tags.Contains("burnt")).Select(x => x.ID);
+                // Get the existing decals on the tile
+                var tileDecals = _decalSystem.GetDecalsInRange(gridUid, tilePos);
 
-                // Get already existing burnt decals on the tile
-                var tileDecals = _decalSystem.GetDecalsInRange(gridUid, tilePos).Select(x => decals.Contains(x.Decal.Id));
+                // Count the burnt decals on the tile
+                var tileBurntDecales = 0;
+
+                foreach (var set in tileDecals)
+                {
+                    if (!_burntDecals.Contains(set.Decal.Id))
+                        continue;
+
+                    tileBurntDecales++;
+
+                    if (tileBurntDecales > 4)
+                        break;
+                }
 
                 // Add a random burned decal to the tile only if there are less than 4 of them
-                if (tileDecals.Count() < 4)
-                    _decalSystem.TryAddDecal(decals.ElementAt(_random.Next(decals.Count())), new(gridUid, tilePos), out _, cleanable: true);
+                if (tileBurntDecales < 4)
+                    _decalSystem.TryAddDecal(_burntDecals[_random.Next(_burntDecals.Count)], new EntityCoordinates(gridUid, tilePos), out _, cleanable: true);
 
                 if (tile.Air.Temperature > Atmospherics.FireMinimumTemperatureToSpread)
                 {
