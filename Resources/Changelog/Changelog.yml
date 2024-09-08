@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Tayrtahn
-  changes:
-  - message: Jugs in the ChemVend are labeled again.
-    type: Fix
-  id: 6812
-  time: '2024-06-23T17:31:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29178
 - author: DrEnzyme
   changes:
   - message: Add bagels and poppy seed bagels.
@@ -3857,3 +3850,17 @@
   id: 7311
   time: '2024-09-08T05:34:22.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30694
+- author: TheShuEd
+  changes:
+  - message: Returned Taco microwave recipes (people were sad)
+    type: Add
+  - message: added an alternative method of crafting some burgers, through the correct
+      assembly sequence of modular food.
+    type: Add
+  - message: severely cut back on the number of items you can put on burgers, tacos,
+      or kebabs. This had poor design, and things need to be separately resprited
+      by adding them on modular food.
+    type: Tweak
+  id: 7312
+  time: '2024-09-08T06:22:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31012
