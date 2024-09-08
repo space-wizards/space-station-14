@@ -17,12 +17,13 @@
                 <OptionButton Name="VoteTypeButton" HorizontalExpand="False" />
                 <BoxContainer Name="VoteOptionsButtonContainer" HorizontalExpand="False" Orientation="Vertical"> 
                 </BoxContainer>
-                <Label Name="VoteNotTrustedLabel" Text="{Loc 'This vote option is only available for trusted users in ghost mode. (Loc required)'}" Visible="False" />
-                <Label Name="VoteWarningLabel" Text="{Loc 'Warning: Abuse of the votekick system may result in an indefinite ban! (Loc required)'}" Visible="False" />
+                <Button Margin="8 2" Name="FollowButton" Text="{Loc 'ui-vote-follow-button'}" Visible="False" />
+                <Label Name="VoteNotTrustedLabel" Text="{Loc 'ui-vote-trusted-users-notice'}" Visible="False" />
+                <Label Name="VoteWarningLabel" Text="{Loc 'ui-vote-abuse-warning'}" Visible="False" />
             </BoxContainer>
             <Label Name="VoteTypeTimeoutLabel" Visible="False" />
         </BoxContainer>
-
+        
         <Button Margin="8 2" Name="CreateButton" Text="{Loc 'ui-vote-create-button'}" />
 
         <PanelContainer StyleClasses="LowDivider" />

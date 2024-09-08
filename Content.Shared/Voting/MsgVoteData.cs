@@ -18,6 +18,7 @@ namespace Content.Shared.Voting
         public bool IsYourVoteDirty;
         public byte? YourVote;
         public bool DisplayVotes;
+        public int TargetEntity;
 
         public override void ReadFromBuffer(NetIncomingMessage buffer, IRobustSerializer serializer)
         {
@@ -33,6 +34,7 @@ namespace Content.Shared.Voting
             StartTime = TimeSpan.FromTicks(buffer.ReadInt64());
             EndTime = TimeSpan.FromTicks(buffer.ReadInt64());
             DisplayVotes = buffer.ReadBoolean();
+            TargetEntity = buffer.ReadVariableInt32();
 
             Options = new (ushort votes, string name)[buffer.ReadByte()];
             for (var i = 0; i < Options.Length; i++)
@@ -61,6 +63,7 @@ namespace Content.Shared.Voting
             buffer.Write(StartTime.Ticks);
             buffer.Write(EndTime.Ticks);
             buffer.Write(DisplayVotes);
+            buffer.WriteVariableInt32(TargetEntity);
 
             buffer.Write((byte) Options.Length);
             foreach (var (votes, name) in Options)

@@ -8,9 +8,11 @@ using Content.Server.Maps;
 using Content.Server.Roles;
 using Content.Server.RoundEnd;
 using Content.Shared.CCVar;
+using Content.Shared.Chat;
 using Content.Shared.Database;
 using Content.Shared.Ghost;
 using Content.Shared.Players;
+using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Voting;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
@@ -34,6 +36,7 @@ namespace Content.Server.Voting.Managers
             {StandardVoteType.Restart, CCVars.VoteRestartEnabled},
             {StandardVoteType.Preset, CCVars.VotePresetEnabled},
             {StandardVoteType.Map, CCVars.VoteMapEnabled},
+            {StandardVoteType.Votekick, CCVars.VotekickEnabled}
         };
 
         public void CreateStandardVote(ICommonSession? initiator, StandardVoteType voteType, string[]? args = null)
@@ -92,17 +95,8 @@ namespace Content.Server.Voting.Managers
         /// <param name="eligibility">The eligibility requirement to vote.</param>
         public int CalculateEligibleVoterPercentage(VoterEligibility eligibility)
         {
-            var eligibleCount = 0;
+            var eligibleCount = CalculateEligibleVoterNumber(eligibility);
             var totalPlayers = _playerManager.Sessions.Count(session => session.Status != SessionStatus.Disconnected);
-
-            foreach (var player in _playerManager.Sessions)
-            {
-                _playerManager.UpdateState(player);
-                if (player.Status != SessionStatus.Disconnected && CheckVoterEligibility(player, eligibility))
-                {
-                    eligibleCount++;
-                }
-            }
 
             var eligiblePercentage = 0.0;
             if (totalPlayers > 0)
@@ -113,6 +107,26 @@ namespace Content.Server.Voting.Managers
             var roundedEligiblePercentage = (int)Math.Round(eligiblePercentage);
 
             return roundedEligiblePercentage;
+        }
+
+        /// <summary>
+        /// Gives the current number of players eligible to vote.
+        /// </summary>
+        /// <param name="eligibility">The eligibility requirement to vote.</param>
+        public int CalculateEligibleVoterNumber(VoterEligibility eligibility)
+        {
+            var eligibleCount = 0;
+
+            foreach (var player in _playerManager.Sessions)
+            {
+                _playerManager.UpdateState(player);
+                if (player.Status != SessionStatus.Disconnected && CheckVoterEligibility(player, eligibility))
+                {
+                    eligibleCount++;
+                }
+            }
+
+            return eligibleCount;
         }
 
         private void StartVote(ICommonSession? initiator)
@@ -320,18 +334,13 @@ namespace Content.Server.Voting.Managers
             // Check that the initiator is actually allowed to do a votekick.
             if (_votingSystem != null && !await _votingSystem.CheckVotekickInitEligibility(initiator))
             {
+                _logManager.GetSawmill("admin.votekick").Warning($"User {initiator} attempted a votekick, despite not being eligible to!");
                 _adminLogger.Add(LogType.Vote, LogImpact.Extreme, $"Votekick attempted by {initiator}, but they are not eligible to votekick!");
                 return;
             }
 
-            var ghostVotePercentageRequirement = _cfg.GetCVar(CCVars.VoteRestartGhostPercentage/*TODO: Cvar here*/);
-            var ghostVoterPercentage = CalculateEligibleVoterPercentage(VoterEligibility.GhostMinimumPlaytime);
-
-            if (ghostVoterPercentage < ghostVotePercentageRequirement)
-            {
-                _adminLogger.Add(LogType.Vote, LogImpact.Extreme, $"Votekick attempted by {initiator}, but there were not enough ghost roles! {ghostVotePercentageRequirement}% required, {ghostVoterPercentage}% found.");
-                return;
-            }
+            var eligibleVoterNumberRequirement = _cfg.GetCVar(CCVars.VotekickEligibleNumberRequirement);
+            var eligibleVoterNumber = CalculateEligibleVoterNumber(VoterEligibility.GhostMinimumPlaytime);
 
             string target = args[0];
             string reason = args[1];
@@ -340,7 +349,7 @@ namespace Content.Server.Voting.Managers
             var located = await _locator.LookupIdByNameOrIdAsync(target);
             if (located == null)
             {
-                _logManager.GetSawmill("admin.server_ban")
+                _logManager.GetSawmill("admin.votekick")
                     .Warning($"Votekick attempted for player {target} but they couldn't be found!");
                 _adminLogger.Add(LogType.Vote, LogImpact.Extreme, $"Votekick attempted by {initiator} for player string {target}, but they could not be found!");
                 return;
@@ -349,7 +358,7 @@ namespace Content.Server.Voting.Managers
             var targetHWid = located.LastHWId;
             if (!_playerManager.TryGetSessionById(located.UserId, out ICommonSession? targetSession))
             {
-                _logManager.GetSawmill("admin.server_ban")
+                _logManager.GetSawmill("admin.votekick")
                     .Warning($"Votekick attempted for player {target} but their session couldn't be found!");
                 _adminLogger.Add(LogType.Vote, LogImpact.Extreme, $"Votekick attempted by {initiator} for player string {target}, but they could not be found!");
                 return;
@@ -358,50 +367,83 @@ namespace Content.Server.Voting.Managers
             string? targetEntity = null;
             if (targetSession.AttachedEntity is { Valid: true } attached)
                 targetEntity = _entityManager.GetComponent<MetaDataComponent>(attached).EntityName;
-            var isAntag = false;
+            var isAntagSafe = false;
             var targetMind = targetSession.GetMind();
-            if (targetMind != null && _roleSystem != null && _roleSystem.MindIsAntagonist(targetMind))
-                isAntag = true;
+            var playtime = _playtimeManager.GetPlayTimes(targetSession);
 
+            // Check whether the target is an antag, and if they are, give them protection against the Raider votekick if they have the requisite hours.
+            if (targetMind != null &&
+                _roleSystem != null &&
+                _roleSystem.MindIsAntagonist(targetMind) &&
+                playtime.TryGetValue(PlayTimeTrackingShared.TrackerOverall, out TimeSpan overallTime) &&
+                overallTime >= TimeSpan.FromHours(_cfg.GetCVar(CCVars.VotekickAntagRaiderProtection)))
+            {
+                isAntagSafe = true;
+            }
+
+
+            // Don't let a user votekick themselves
             if (initiator == targetSession)
             {
                 _adminLogger.Add(LogType.Vote, LogImpact.Extreme, $"Votekick attempted by {initiator} for themselves? Votekick cancelled.");
                 return;
             }
 
+            if (eligibleVoterNumber < eligibleVoterNumberRequirement)
+            {
+                _adminLogger.Add(LogType.Vote, LogImpact.Extreme, $"Votekick attempted by {initiator} for player {targetSession}, but there were not enough ghost roles! {eligibleVoterNumberRequirement} required, {eligibleVoterNumber} found.");
+                if (initiator != null)
+                {
+                    var message = Loc.GetString("ui-vote-votekick-not-enough-eligible", ("voters", eligibleVoterNumber.ToString()), ("requirement", eligibleVoterNumberRequirement.ToString()));
+                    var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
+                    _chatManager.ChatMessageToOne(ChatChannel.Server, message, wrappedMessage, default, false, initiator.Channel);
+                }
+                return;
+            }
+
+            // Check for stuff like the target being an admin. These targets shouldn't show up in the UI, but it's necessary to doublecheck in case someone writes the command in console.
             if (_votingSystem != null && !_votingSystem.CheckVotekickTargetEligibility(targetSession))
             {
                 _adminLogger.Add(LogType.Vote, LogImpact.Extreme, $"Votekick attempted by {initiator} for player {targetSession}, but they are not eligible to be votekicked!");
                 return;
             }
 
+            // Create the vote
+
             string voteTitle = "";
+            NetEntity? targetNetEntity = _entityManager.GetNetEntity(targetSession.AttachedEntity);
+            var initiatorName = initiator != null ? initiator.Name : Loc.GetString("ui-vote-votekick-unknown-initiator");
             if (targetEntity != null)
-                voteTitle = Loc.GetString($"Votekick {located.Username}? Reason: {reason}");
+            {
+                voteTitle = Loc.GetString("ui-vote-votekick-title", ("initiator", initiatorName), ("target", located.Username), ("targetEntity", targetEntity), ("reason", reason));
+            }
             else
-                voteTitle = Loc.GetString($"Votekick {located.Username} ({targetEntity})? Reason: {reason}");
+            {
+                voteTitle = Loc.GetString("ui-vote-votekick-title-no-ent", ("initiator", initiatorName), ("target", located.Username), ("reason", reason));
+            }
 
             var options = new VoteOptions
             {
                 Title = voteTitle,
                 Options =
                 {
-                    (Loc.GetString("ui-vote-restart-yes"), "yes"),
-                    (Loc.GetString("ui-vote-restart-no"), "no"),
-                    (Loc.GetString("ui-vote-restart-abstain"), "abstain")
+                    (Loc.GetString("ui-vote-votekick-yes"), "yes"),
+                    (Loc.GetString("ui-vote-votekick-no"), "no"),
+                    (Loc.GetString("ui-vote-votekick-abstain"), "abstain")
                 },
-                Duration = TimeSpan.FromSeconds(5/* TODO: _cfg.GetCVar(CCVars.VoteTimerVotekick)*/),
-                InitiatorTimeout = TimeSpan.FromMinutes(5),
+                Duration = TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VotekickTimer)),
+                InitiatorTimeout = TimeSpan.FromMinutes(_cfg.GetCVar(CCVars.VotekickTimeout)),
                 VoterEligibility = VoterEligibility.GhostMinimumPlaytime,
-                DisplayVotes = false
+                DisplayVotes = false,
+                TargetEntity = targetNetEntity
             };
 
             WirePresetVoteInitiator(options, initiator);
 
             if (targetEntity != null)
-                _adminLogger.Add(LogType.Vote, LogImpact.Extreme, $"Votekick for {located.Username} due to {reason} started, created by {initiator}.");
+                _adminLogger.Add(LogType.Vote, LogImpact.Extreme, $"Votekick for {located.Username} due to {reason} started, initiated by {initiator}.");
             else
-                _adminLogger.Add(LogType.Vote, LogImpact.Extreme, $"Votekick for {located.Username} ({targetEntity}) due to {reason} started, created by {initiator}.");
+                _adminLogger.Add(LogType.Vote, LogImpact.Extreme, $"Votekick for {located.Username} ({targetEntity}) due to {reason} started, initiated by {initiator}.");
 
             var vote = CreateVote(options);
 
@@ -412,43 +454,59 @@ namespace Content.Server.Voting.Managers
                 var votesNo = vote.VotesPerOption["no"];
                 var total = votesYes + votesNo;
 
-                var ratioRequired = _cfg.GetCVar(CCVars.VoteRestartRequiredRatio/*CCVars.VoteVotekickRequiredRatio*/);
+                // Get the voters, for logging purposes.
+                List<ICommonSession> yesVoters = new();
+                List<ICommonSession> noVoters = new();
+                foreach (var (voter, castVote) in vote.CastVotes)
+                {
+                    if (castVote == 0)
+                    {
+                        yesVoters.Add(voter);
+                    }
+                    if (castVote == 1)
+                    {
+                        noVoters.Add(voter);
+                    }
+                }
+                var yesVotersString = string.Join(", ", yesVoters);
+                var noVotersString = string.Join(", ", noVoters);
+
+                var ratioRequired = _cfg.GetCVar(CCVars.VotekickRequiredRatio);
                 if (total > 0 && votesYes / (float)total >= ratioRequired)
                 {
                     // Check if an admin is online, and ignore the passed vote if the cvar is enabled
-                    if (_cfg.GetCVar(CCVars.VoteRestartNotAllowedWhenAdminOnline/*CCVars.VoteVotekickNotAllowedWhenAdminOnline*/) && _adminMgr.ActiveAdmins.Count() != 0)
+                    if (_cfg.GetCVar(CCVars.VotekickNotAllowedWhenAdminOnline) && _adminMgr.ActiveAdmins.Count() != 0)
                     {
-                        _adminLogger.Add(LogType.Vote, LogImpact.Extreme, $"Votekick attempted to pass, but an admin was online. Yes: {votesYes} / No: {votesNo}");
+                        _adminLogger.Add(LogType.Vote, LogImpact.Extreme, $"Votekick for {located.Username} attempted to pass, but an admin was online. Yes: {votesYes} / No: {votesNo}. Yes: {yesVotersString} / No: {noVotersString}");
+                        return;
                     }
                     // Check if the target is an antag and the vote reason is raiding (this is to prevent false positives)
-                    else if (isAntag && reason == VotekickReasonType.Raiding.ToString())
+                    else if (isAntagSafe && reason == VotekickReasonType.Raiding.ToString())
                     {
                         _adminLogger.Add(LogType.Vote, LogImpact.Extreme, $"Votekick for {located.Username} due to {reason} started, created by {initiator}, but was cancelled due to them being an antagonist.");
                         return;
                     }
                     else
                     {
-                        _adminLogger.Add(LogType.Vote, LogImpact.Extreme, $"Votekick succeeded:  Yes: {votesYes} / No: {votesNo}");
-                        _chatManager.DispatchServerAnnouncement(Loc.GetString($"Votekick for {target} succeeded. (Loc required)"));
+                        _adminLogger.Add(LogType.Vote, LogImpact.Extreme, $"Votekick for {located.Username} succeeded:  Yes: {votesYes} / No: {votesNo}. Yes: {yesVotersString} / No: {noVotersString}");
+                        _chatManager.DispatchServerAnnouncement(Loc.GetString("ui-vote-votekick-success", ("target", located.Username), ("reason", reason)));
 
-                        if (!Enum.TryParse(_cfg.GetCVar(CCVars.ServerBanDefaultSeverity/*CCVars.VotekickBanDefaultSeverity*/), out NoteSeverity severity))
+                        if (!Enum.TryParse(_cfg.GetCVar(CCVars.VotekickBanDefaultSeverity), out NoteSeverity severity))
                         {
-                            _logManager.GetSawmill("admin.server_ban")
+                            _logManager.GetSawmill("admin.votekick")
                                 .Warning("Votekick ban severity could not be parsed from config! Defaulting to high.");
                             severity = NoteSeverity.High;
                         }
 
-                        uint minutes = 1/*(uint)_cfg.GetCVar(CCVars.AudioTickRate)*/;
+                        uint minutes = (uint)_cfg.GetCVar(CCVars.VotekickBanDuration);
 
-                        //_bans.CreateServerBan(targetUid, target, null, null, targetHWid, minutes, severity, reason);
+                        _bans.CreateServerBan(targetUid, target, null, null, targetHWid, minutes, severity, reason);
                     }
                 }
                 else
                 {
-                    _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Votekick failed: Yes: {votesYes} / No: {votesNo}");
-
-                    _chatManager.DispatchServerAnnouncement(
-                        Loc.GetString($"Votekick for {target} failed. (Loc required)", ("ratio", ratioRequired)));
+                    _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Votekick failed: Yes: {votesYes} / No: {votesNo}. Yes: {yesVotersString} / No: {noVotersString}");
+                    _chatManager.DispatchServerAnnouncement(Loc.GetString("ui-vote-votekick-failure", ("target", located.Username), ("reason", reason)));
                 }
             };
 
@@ -456,15 +514,6 @@ namespace Content.Server.Voting.Managers
             {
                 // Cast yes vote if created the vote yourself.
                 vote.CastVote(initiator, 0);
-            }
-
-            foreach (var player in _playerManager.Sessions)
-            {
-                if (player != initiator)
-                {
-                    // Everybody else defaults to an abstain vote to say they don't mind.
-                    vote.CastVote(player, 2);
-                }
             }
         }
 

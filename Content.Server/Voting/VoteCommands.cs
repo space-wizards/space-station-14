@@ -29,19 +29,14 @@ namespace Content.Server.Voting
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            if (args.Length > 1 && args[0] != StandardVoteType.Votekick.ToString())
+            if (args.Length != 1 && args[0] != StandardVoteType.Votekick.ToString())
             {
                 shell.WriteError(Loc.GetString("shell-need-exactly-one-argument"));
                 return;
             }
             if (args.Length != 3 && args[0] == StandardVoteType.Votekick.ToString())
             {
-                shell.WriteError(Loc.GetString("Needs exactly three arguments (Loc required)"));
-                return;
-            }
-            if (args.Length < 1)
-            {
-                shell.WriteError(Loc.GetString("Needs more arguments (Loc required)"));
+                shell.WriteError(Loc.GetString("shell-wrong-arguments-number-need-specific", ("properAmount", 3), ("currentAmount", args.Length)));
                 return;
             }
 

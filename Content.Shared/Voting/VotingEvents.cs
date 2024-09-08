@@ -12,7 +12,7 @@ public sealed class VotePlayerListRequestEvent : EntityEventArgs
 [Serializable, NetSerializable]
 public sealed class VotePlayerListResponseEvent : EntityEventArgs
 {
-    public VotePlayerListResponseEvent((NetUserId, string)[] players, bool denied)
+    public VotePlayerListResponseEvent((NetUserId, NetEntity, string)[] players, bool denied)
     {
         Players = players;
         Denied = denied;
@@ -21,7 +21,7 @@ public sealed class VotePlayerListResponseEvent : EntityEventArgs
     /// <summary>
     /// The players available to have a votekick started for them.
     /// </summary>
-    public (NetUserId, string)[] Players { get; }
+    public (NetUserId, NetEntity, string)[] Players { get; }
 
     /// <summary>
     /// Whether the server will allow the user to start a votekick or not.

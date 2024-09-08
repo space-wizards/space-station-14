@@ -215,7 +215,7 @@ namespace Content.Server.Voting.Managers
             var start = _timing.RealTime;
             var end = start + options.Duration;
             var reg = new VoteReg(id, entries, options.Title, options.InitiatorText,
-                options.InitiatorPlayer, start, end, options.VoterEligibility, options.DisplayVotes);
+                options.InitiatorPlayer, start, end, options.VoterEligibility, options.DisplayVotes, options.TargetEntity);
 
             var handle = new VoteHandle(this, reg);
 
@@ -264,6 +264,11 @@ namespace Content.Server.Voting.Managers
                 msg.VoteInitiator = v.InitiatorText;
                 msg.StartTime = v.StartTime;
                 msg.EndTime = v.EndTime;
+
+                if (v.TargetEntity != null)
+                {
+                    msg.TargetEntity = v.TargetEntity.Value.Id;
+                }
             }
 
             if (v.CastVotes.TryGetValue(player, out var cast))
@@ -431,13 +436,16 @@ namespace Content.Server.Voting.Managers
 
             if (eligibility == VoterEligibility.Ghost || eligibility == VoterEligibility.GhostMinimumPlaytime)
             {
-                if (!_entityManager.HasComponent<GhostComponent>(player.AttachedEntity))
+                if (!_entityManager.TryGetComponent(player.AttachedEntity, out GhostComponent? ghostComp))
                     return false;
 
                 if (eligibility == VoterEligibility.GhostMinimumPlaytime)
                 {
                     var playtime = _playtimeManager.GetPlayTimes(player);
-                    if (!playtime.TryGetValue(PlayTimeTrackingShared.TrackerOverall, out TimeSpan overallTime) || overallTime < TimeSpan.FromHours(10)) // TODO: Change timespan to cvar
+                    if (!playtime.TryGetValue(PlayTimeTrackingShared.TrackerOverall, out TimeSpan overallTime) || overallTime < TimeSpan.FromHours(_cfg.GetCVar(CCVars.VotekickEligibleVoterPlaytime)))
+                        return false;
+
+                    if ((int)_timing.RealTime.Subtract(ghostComp.TimeOfDeath).TotalSeconds < _cfg.GetCVar(CCVars.VotekickEligibleVoterDeathtime))
                         return false;
                 }
             }
@@ -494,6 +502,7 @@ namespace Content.Server.Voting.Managers
             public readonly HashSet<ICommonSession> VotesDirty = new();
             public readonly VoterEligibility VoterEligibility;
             public readonly bool DisplayVotes;
+            public readonly NetEntity? TargetEntity;
 
             public bool Cancelled;
             public bool Finished;
@@ -504,7 +513,7 @@ namespace Content.Server.Voting.Managers
             public ICommonSession? Initiator { get; }
 
             public VoteReg(int id, VoteEntry[] entries, string title, string initiatorText,
-                ICommonSession? initiator, TimeSpan start, TimeSpan end, VoterEligibility voterEligibility, bool displayVotes)
+                ICommonSession? initiator, TimeSpan start, TimeSpan end, VoterEligibility voterEligibility, bool displayVotes, NetEntity? targetEntity)
             {
                 Id = id;
                 Entries = entries;
@@ -515,6 +524,7 @@ namespace Content.Server.Voting.Managers
                 EndTime = end;
                 VoterEligibility = voterEligibility;
                 DisplayVotes = displayVotes;
+                TargetEntity = targetEntity;
             }
         }
 
@@ -535,8 +545,8 @@ namespace Content.Server.Voting.Managers
         public enum VoterEligibility
         {
             All,
-            Ghost,
-            GhostMinimumPlaytime
+            Ghost, // Player needs to be a ghost
+            GhostMinimumPlaytime // Player needs to be a ghost, with a minimum playtime and deathtime as defined by votekick CCvars.
         }
 
         #endregion
@@ -553,6 +563,7 @@ namespace Content.Server.Voting.Managers
             public string InitiatorText => _reg.InitiatorText;
             public bool Finished => _reg.Finished;
             public bool Cancelled => _reg.Cancelled;
+            public IReadOnlyDictionary<ICommonSession, int> CastVotes => _reg.CastVotes;
 
             public IReadOnlyDictionary<object, int> VotesPerOption { get; }
 
