@@ -282,3 +282,5 @@ ui-options-colorblind-friendly = Colorblind friendly mode
 ui-options-reduced-motion = Reduce motion of visual effects
 ui-options-chat-window-opacity = Chat window opacity
 ui-options-screen-shake-intensity = Screen shake intensity
+ui-options-speech-bubble-opacity = Speech bubble opacity
+ui-options-speech-text-and-name-opacity = Speech text and name opacity
