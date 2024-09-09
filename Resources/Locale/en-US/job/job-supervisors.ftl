@@ -1,11 +1,11 @@
-job-supervisors-centcom = Central Command
-job-supervisors-captain = the captain
+job-supervisors-centcom = Yourself
+job-supervisors-captain = the overseer
 job-supervisors-hop = the head of personnel
 job-supervisors-hos = the head of security
 job-supervisors-ce = the chief engineer
 job-supervisors-cmo = the chief medical officer
 job-supervisors-rd = the research director
-job-supervisors-qm = the quartermaster
+job-supervisors-qm = the harbormaster
 job-supervisors-service = chefs, botanists, the bartender, and the head of personnel
 job-supervisors-engineering = station engineers, atmospheric technicians, and the chief engineer
 job-supervisors-medicine = medical doctors, chemists, and the chief medical officer
