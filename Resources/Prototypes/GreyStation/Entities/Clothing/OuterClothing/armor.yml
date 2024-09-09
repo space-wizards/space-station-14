@@ -17,8 +17,6 @@
         Piercing: 0.9
         Radiation: 0.6 #salv is supposed to have radiation hazards in the future
         Caustic: 0.85
-  - type: TemperatureProtection
-    coefficient: 0.1 # yes it needs to be this low, fires are fucking deadly apparently!!!!
   - type: Item
     size: Ginormous
   - type: ClothingSpeedModifier

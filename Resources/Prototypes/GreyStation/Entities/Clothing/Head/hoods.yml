@@ -16,8 +16,6 @@
     clothingVisuals:
       head:
       - state: equipped-HELMET
-  - type: TemperatureProtection
-    coefficient: 0.005
   - type: Armor
     modifiers:
       coefficients:
