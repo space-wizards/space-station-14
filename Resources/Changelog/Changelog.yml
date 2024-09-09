@@ -1,27 +1,4 @@
 ﻿Entries:
-- author: PJB3005
-  changes:
-  - message: Low pressure damage now does only 1/4th as much damage. This is a band-aid
-      until better mechanics exists for the crew to deal with breaches of various
-      kinds.
-    type: Remove
-  id: 6819
-  time: '2024-06-26T00:48:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29478
-- author: lzk228
-  changes:
-  - message: Blood now has less satiation.
-    type: Tweak
-  id: 6820
-  time: '2024-06-26T02:27:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29433
-- author: Veritable-Calamity
-  changes:
-  - message: Moldy food can now be collected in the Janitors' trash bags.
-    type: Fix
-  id: 6821
-  time: '2024-06-26T03:26:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29380
 - author: Plykiya
   changes:
   - message: You can now interact with magic mirrors.
@@ -3868,3 +3845,26 @@
   id: 7318
   time: '2024-09-08T18:08:06.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31975
+- author: qwerltaz
+  changes:
+  - message: Power cables on the ground are now offset and do not obscure each other
+      or pipes beneath.
+    type: Tweak
+  id: 7319
+  time: '2024-09-09T10:00:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32000
+- author: ArtisticRoomba
+  changes:
+  - message: Budget insulated gloves now leave behind yellow frayed insulative fibers
+      instead of yellow insulative fibers. Detectives, rejoice!
+    type: Tweak
+  id: 7320
+  time: '2024-09-09T10:30:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31886
+- author: slarticodefast
+  changes:
+  - message: Revenants or other mobs without hands can no longer spill jugs.
+    type: Fix
+  id: 7321
+  time: '2024-09-09T11:02:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31438
