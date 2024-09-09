@@ -83,20 +83,33 @@ public sealed class NPCUseActionOnTargetSystem : EntitySystem
 
     private EntityUid ChooseAction(Dictionary<EntityUid, float> actions)
     {
-        List<EntityUid> keys = actions.Keys.ToList();
-        List<float> values = actions.Values.ToList();
-        EntityUid defaultToReturn = keys[values.IndexOf(values.Max())];
+        float totalWeight = 0;
+        EntityUid maxKey = default;
+        float maxWeight = float.MinValue;
 
-        for (int i = 0; i < actions.Count; i++)
+        foreach (var action in actions)
         {
-            float maxProb = values.Max();
-            int maxindex = values.IndexOf(maxProb);
-            if (_random.NextFloat() <= maxProb)
-                return keys[maxindex];
+            totalWeight += action.Value;
 
-            values.RemoveAt(maxindex);
-            keys.RemoveAt(maxindex);
+            if (action.Value > maxWeight)
+            {
+                maxWeight = action.Value;
+                maxKey = action.Key;
+            }
         }
-        return defaultToReturn;
+
+        float randomFloat = _random.NextFloat() * totalWeight;
+
+        foreach (var action in actions)
+        {
+            if (randomFloat <= action.Value)
+            {
+                return action.Key;
+            }
+            randomFloat -= action.Value;
+        }
+
+        return maxKey;
     }
+
 }
