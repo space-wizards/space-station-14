@@ -10,6 +10,6 @@
   configuration:
     entity: MobHereticFleshAscend
     transferName: true
-    transferDamage: false
+    transferDamage: true
     revertOnCrit: false
     revertOnDeath: false

@@ -10,8 +10,7 @@
   name: heretic-ritual-basic-focus
   requiredTags:
     GlassShard: 1
-  requiredEntityNames:
-    eyes: 1
+    Eyes: 1
   output:
     ClothingNeckAmberFocus: 1
 
@@ -71,9 +70,9 @@
   customBehaviors:
   - !type:RitualReagentPuddleBehavior
     reagent: Blood
-  requiredEntityNames:
-    eyes: 1
-    stomach: 1
+  requiredTags:
+    Eyes: 1
+    Stomach: 1
   output:
     MobGhoulProphet: 1
 
@@ -83,12 +82,11 @@
   customBehaviors:
   - !type:RitualReagentPuddleBehavior
     reagent: Blood
-  requiredEntityNames:
-    heart: 1
-    stomach: 1
-    lungs: 1
   requiredTags:
     Pen: 1
+    Heart: 1
+    Stomach: 1
+    Lungs: 1
   output:
     MobGhoulStalker: 1
 

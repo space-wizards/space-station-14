@@ -82,4 +82,3 @@ public sealed partial class HereticRitualPrototype : IPrototype, ICloneable
 }
 
 [Serializable, NetSerializable, DataDefinition] public sealed partial class EventHereticAscension : EntityEventArgs { }
-// I DECLARE 6666 LINES

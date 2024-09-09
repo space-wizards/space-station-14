@@ -12,7 +12,6 @@ heretic-role-greeting-fluff =
     Another day at a meaningless job. You feel a shimmer around you, as a realization of something strange in the air unfolds. You look inwards and discover something that will change your life.
 
     The Gates of Mansus open up to your mind.
-    Forgotten, devoured, gutted. Humanity has forgotten the eldritch forces of decay, but the mansus veil has weakened. We will make them taste fear again...
 
 heretic-role-greeting =
     You are the Heretic!

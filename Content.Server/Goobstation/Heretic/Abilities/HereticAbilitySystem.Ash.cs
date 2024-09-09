@@ -50,10 +50,19 @@ public sealed partial class HereticAbilitySystem : EntitySystem
         if (!TryUseAbility(ent, args))
             return;
 
-        if (!_splitball.Spawn(ent))
+        var ignoredTargets = new List<EntityUid>();
+        // all ghouls are immune to heretic shittery
+        foreach (var e in EntityQuery<GhoulComponent>())
+            ignoredTargets.Add(e.Owner);
+        // all heretics with the same path are also immune
+        foreach (var e in EntityQuery<HereticComponent>())
+            if (e.CurrentPath == ent.Comp.CurrentPath)
+                ignoredTargets.Add(e.Owner);
+
+        if (!_splitball.Spawn(ent, ignoredTargets))
             return;
 
-        if (ent.Comp.Ascended)
+        if (ent.Comp.Ascended) // will only work on ash path
             _flammable.AdjustFireStacks(ent, 20f, ignite: true);
 
         args.Handled = true;
@@ -67,7 +76,7 @@ public sealed partial class HereticAbilitySystem : EntitySystem
 
         foreach (var look in lookup)
         {
-            if (HasComp<HereticComponent>(look)
+            if ((TryComp<HereticComponent>(look, out var th) && th.CurrentPath == ent.Comp.CurrentPath)
             || HasComp<GhoulComponent>(look))
                 continue;
 

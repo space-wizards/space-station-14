@@ -22,6 +22,7 @@ public sealed partial class HereticSystem : EntitySystem
     [Dependency] private readonly StoreSystem _store = default!;
     [Dependency] private readonly HereticKnowledgeSystem _knowledge = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly SharedEyeSystem _eye = default!;
 
     private float _timer = 0f;
     private float _passivePointCooldown = 20f * 60f;
@@ -70,12 +71,19 @@ public sealed partial class HereticSystem : EntitySystem
 
     private void OnCompInit(Entity<HereticComponent> ent, ref ComponentInit args)
     {
+        // add influence layer
+        if (TryComp<EyeComponent>(ent, out var eye))
+            _eye.SetVisibilityMask(ent, eye.VisibilityMask | EldritchInfluenceComponent.LayerMask);
+
         foreach (var knowledge in ent.Comp.BaseKnowledge)
             _knowledge.AddKnowledge(ent, ent.Comp, knowledge);
     }
 
     private void OnMagicItemExamine(Entity<HereticMagicItemComponent> ent, ref ExaminedEvent args)
     {
+        if (!HasComp<HereticComponent>(args.Examiner))
+            return;
+
         args.PushMarkup(Loc.GetString("heretic-magicitem-examine"));
     }
 

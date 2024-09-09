@@ -25,7 +25,7 @@ public sealed partial class HereticAbilitySystem : EntitySystem
             return;
 
         if (HasComp<GhoulComponent>(args.Target)
-        || HasComp<HereticComponent>(args.Target))
+        || (TryComp<HereticComponent>(args.Target, out var th) && th.CurrentPath == ent.Comp.CurrentPath))
         {
             var dargs = new DoAfterArgs(EntityManager, ent, 10f, new EventHereticFleshSurgeryDoAfter(args.Target), ent, args.Target)
             {
@@ -35,6 +35,7 @@ public sealed partial class HereticAbilitySystem : EntitySystem
                 BreakOnDropItem = false,
             };
             _doafter.TryStartDoAfter(dargs);
+            args.Handled = true;
             return;
         }
 
@@ -93,6 +94,7 @@ public sealed partial class HereticAbilitySystem : EntitySystem
 
         // heal teammates, mostly ghouls
         _dmg.SetAllDamage((EntityUid) args.Target, dmg, 0);
+        args.Handled = true;
     }
     private void OnFleshAscendPolymorph(Entity<HereticComponent> ent, ref EventHereticFleshAscend args)
     {

@@ -59,7 +59,7 @@ public sealed partial class EldritchInfluenceSystem : EntitySystem
 
         _heretic.UpdateKnowledge(args.User, heretic, ev.Handled ? 2 : 1);
 
-        Spawn("EldritchInfluenceSpent", Transform((EntityUid) args.Target).Coordinates);
+        Spawn("EldritchInfluenceIntermediate", Transform((EntityUid) args.Target).Coordinates);
         QueueDel(args.Target);
     }
 }

@@ -1,6 +1,6 @@
 using Robust.Shared.Audio;
 
-namespace Content.Server.Heretic.Components;
+namespace Content.Server.Magic;
 
 [RegisterComponent]
 public sealed partial class ImmovableVoidRodComponent : Component

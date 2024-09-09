@@ -7,7 +7,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Heretic.EntitySystems;
+namespace Content.Server.Magic;
 
 public sealed partial class ImmovableVoidRodSystem : EntitySystem
 {
@@ -48,7 +48,8 @@ public sealed partial class ImmovableVoidRodSystem : EntitySystem
 
     private void OnCollide(Entity<ImmovableVoidRodComponent> ent, ref StartCollideEvent args)
     {
-        if (HasComp<HereticComponent>(args.OtherEntity) || HasComp<GhoulComponent>(args.OtherEntity))
+        if ((TryComp<HereticComponent>(args.OtherEntity, out var th) && th.CurrentPath == "Void")
+        || HasComp<GhoulComponent>(args.OtherEntity))
             return;
 
         _stun.TryParalyze(args.OtherEntity, TimeSpan.FromSeconds(2.5f), false);
