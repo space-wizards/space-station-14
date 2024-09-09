@@ -77,7 +77,8 @@
       AggroVisionRadius: !type:Single
         10
   - type: NPCUseActionOnTarget
-    actionId: ActionGoliathTentacle
+    actions:
+      ActionGoliathTentacle: 1.0
   - type: Tag
     tags:
     - CannotSuicide
