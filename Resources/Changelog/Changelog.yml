@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: deltanedas
-  changes:
-  - message: Traitors can now be assigned to deconstruct the station's nuke for its
-      precious plutonium core.
-    type: Add
-  - message: Added the Objectives category in the uplink with a Core Extraction Toolbox
-      for deconstructing said nuke.
-    type: Add
-  id: 6836
-  time: '2024-06-29T04:11:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26786
 - author: slarticodefast
   changes:
   - message: Air vents now have yellow lights if they are in under-pressure lockout.
@@ -3903,3 +3892,10 @@
   id: 7335
   time: '2024-09-09T19:57:37.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31991
+- author: Thinbug0
+  changes:
+  - message: Teal gloves can now be found at the ClothesMate!
+    type: Add
+  id: 7336
+  time: '2024-09-09T21:47:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31865
