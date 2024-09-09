@@ -30,7 +30,7 @@
 
 #Mercenary Helmet
 - type: entity
-  parent: ClothingHeadHelmetBasic
+  parent: [ ClothingHeadHelmetBasic, BaseRestrictedContraband ]
   id: ClothingHeadHelmetMerc
   name: mercenary helmet
   description: The combat helmet is commonly used by mercenaries, is strong, light and smells like gunpowder and the jungle.
@@ -302,7 +302,7 @@
 #ERT HELMETS
 #ERT Leader Helmet
 - type: entity
-  parent: ClothingHeadHelmetBasic
+  parent: [ BaseCentcommContraband, ClothingHeadHelmetBasic ]
   id: ClothingHeadHelmetERTLeader
   name: ERT leader helmet
   description: An in-atmosphere helmet worn by the leader of a Nanotrasen Emergency Response Team. Has blue highlights.
@@ -314,7 +314,7 @@
 
 #ERT Security Helmet
 - type: entity
-  parent: ClothingHeadHelmetBasic
+  parent: [ BaseCentcommContraband, ClothingHeadHelmetBasic ]
   id: ClothingHeadHelmetERTSecurity
   name: ERT security helmet
   description: An in-atmosphere helmet worn by security members of the Nanotrasen Emergency Response Team. Has red highlights.
@@ -326,7 +326,7 @@
 
 #ERT Medic Helmet
 - type: entity
-  parent: ClothingHeadHelmetBasic
+  parent: [ BaseCentcommContraband, ClothingHeadHelmetBasic ]
   id: ClothingHeadHelmetERTMedic
   name: ERT medic helmet
   description: An in-atmosphere helmet worn by medical members of the Nanotrasen Emergency Response Team. Has white highlights.
@@ -338,7 +338,7 @@
 
 #ERT Engineer Helmet
 - type: entity
-  parent: ClothingHeadHelmetBasic
+  parent: [ BaseCentcommContraband, ClothingHeadHelmetBasic ]
   id: ClothingHeadHelmetERTEngineer
   name: ERT engineer helmet
   description: An in-atmosphere helmet worn by engineering members of the Nanotrasen Emergency Response Team. Has orange highlights.
@@ -350,7 +350,7 @@
 
 #ERT Janitor Helmet
 - type: entity
-  parent: ClothingHeadHelmetBasic
+  parent: [ BaseCentcommContraband, ClothingHeadHelmetBasic ]
   id: ClothingHeadHelmetERTJanitor
   name: ERT janitor helmet
   description: An in-atmosphere helmet worn by janitorial members of the Nanotrasen Emergency Response Team. Has dark purple highlights.
