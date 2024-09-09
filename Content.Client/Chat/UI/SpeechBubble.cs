@@ -271,7 +271,7 @@ namespace Content.Client.Chat.UI
             {
                 StyleClasses = { "speechBox", speechStyleClass },
                 Children = { bubbleContent },
-                ModulateSelfOverride = Color.White.WithAlpha(ConfigManager.GetCVar(CCVars.SpeechBubbleOpacitySlider)), // Color.White.WithAlpha(0.75f)
+                ModulateSelfOverride = Color.White.WithAlpha(ConfigManager.GetCVar(CCVars.SpeechBubbleOpacitySlider)),
                 HorizontalAlignment = HAlignment.Center,
                 VerticalAlignment = VAlignment.Bottom,
                 Margin = new Thickness(4, 14, 4, 2)
@@ -281,7 +281,7 @@ namespace Content.Client.Chat.UI
             {
                 StyleClasses = { "speechBox", speechStyleClass },
                 Children = { bubbleHeader },
-                ModulateSelfOverride = Color.White.WithAlpha(ConfigManager.GetCVar(CCVars.ChatFancyNameBackground) ? ConfigManager.GetCVar(CCVars.SpeechBubbleOpacitySlider) : 0f), // Color.White.WithAlpha(ConfigManager.GetCVar(CCVars.ChatFancyNameBackground) ? 0.75f : 0f)
+                ModulateSelfOverride = Color.White.WithAlpha(ConfigManager.GetCVar(CCVars.ChatFancyNameBackground) ? ConfigManager.GetCVar(CCVars.SpeechBubbleOpacitySlider) : 0f),
                 HorizontalAlignment = HAlignment.Center,
                 VerticalAlignment = VAlignment.Top
             };
