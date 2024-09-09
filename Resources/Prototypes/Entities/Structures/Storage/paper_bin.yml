@@ -45,11 +45,11 @@
   components:
   - type: Bin
     initialContents:
-    - Paper
-    - Paper
-    - Paper
-    - Paper
-    - Paper
+    - PaperQuantumable
+    - PaperQuantumable
+    - PaperQuantumable
+    - PaperQuantumable
+    - PaperQuantumable
     whitelist:
       tags:
       - Document
@@ -62,16 +62,16 @@
   components:
   - type: Bin
     initialContents:
-    - Paper
-    - Paper
-    - Paper
-    - Paper
-    - Paper
-    - Paper
-    - Paper
-    - Paper
-    - Paper
-    - Paper
+    - PaperQuantumable
+    - PaperQuantumable
+    - PaperQuantumable
+    - PaperQuantumable
+    - PaperQuantumable
+    - PaperQuantumable
+    - PaperQuantumable
+    - PaperQuantumable
+    - PaperQuantumable
+    - PaperQuantumable
     whitelist:
       tags:
       - Document
@@ -84,26 +84,26 @@
   components:
   - type: Bin
     initialContents:
-    - Paper
-    - Paper
-    - Paper
-    - Paper
-    - Paper
-    - Paper
-    - Paper
-    - Paper
-    - Paper
-    - Paper
-    - Paper
-    - Paper
-    - Paper
-    - Paper
-    - Paper
-    - Paper
-    - Paper
-    - Paper
-    - Paper
-    - Paper
+    - PaperQuantumable
+    - PaperQuantumable
+    - PaperQuantumable
+    - PaperQuantumable
+    - PaperQuantumable
+    - PaperQuantumable
+    - PaperQuantumable
+    - PaperQuantumable
+    - PaperQuantumable
+    - PaperQuantumable
+    - PaperQuantumable
+    - PaperQuantumable
+    - PaperQuantumable
+    - PaperQuantumable
+    - PaperQuantumable
+    - PaperQuantumable
+    - PaperQuantumable
+    - PaperQuantumable
+    - PaperQuantumable
+    - PaperQuantumable
     whitelist:
       tags:
       - Document

@@ -24,10 +24,10 @@ public sealed partial class PaperQuantumComponent : Component
     public string PopupSplitOther = "paper-quantum-popup-split-other";
 
     [DataField]
-    public string EntangledName1 = "paper-quantum-entangled-name-1";
+    public string EntangledName1 = "paper-quantum-entangled-1-name";
 
     [DataField]
-    public string EntangledName2 = "paper-quantum-entangled-name-2";
+    public string EntangledName2 = "paper-quantum-entangled-2-name";
 
     [DataField]
     public string EntangledDesc = "paper-quantum-entangled-desc";
