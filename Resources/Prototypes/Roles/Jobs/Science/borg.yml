@@ -7,7 +7,12 @@
   requirements:
   - !type:RoleTimeRequirement
     role: JobBorg
+    time: 54000  # 15 hrs
+  - !type:DepartmentTimeRequirement
+    department: Command
     time: 18000  # 5 hrs
+  - !type:OverallPlaytimeRequirement
+      time: 324000 # 90 hrs
   canBeAntag: false
   icon: JobIconStationAi
   supervisors: job-supervisors-rd
