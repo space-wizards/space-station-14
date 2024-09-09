@@ -53,8 +53,6 @@ namespace Content.Server.Voting.Managers
         private readonly HashSet<ICommonSession> _playerCanCallVoteDirty = new();
         private readonly StandardVoteType[] _standardVoteTypeValues = Enum.GetValues<StandardVoteType>();
 
-        private VotingSystem? _votingSystem2;
-
         public void Initialize()
         {
             _netManager.RegisterNetMessage<MsgVoteData>();

@@ -24,10 +24,14 @@ ui-vote-type-timeout = This vote was called too recently ({$remaining})
 ui-vote-type-not-available = This vote type has been disabled
 
 # Vote option only available for specific users.
-ui-vote-trusted-users-notice = This vote option is only available to whitelisted players.\nIn addition, you must have been a ghost for { $timeReq } minutes.
+ui-vote-trusted-users-notice =
+  This vote option is only available to whitelisted players.
+  In addition, you must have been a ghost for { $timeReq } minutes.
 
 # Warning to not abuse a specific vote option.
-ui-vote-abuse-warning = Warning: Abuse of the votekick system may result in an indefinite ban!
+ui-vote-abuse-warning =
+  Warning!
+  Abuse of the votekick system may result in an indefinite ban!
 
 # Hue hue hue
 ui-vote-fluff = Powered by Robust™ Anti-Tamper Technology

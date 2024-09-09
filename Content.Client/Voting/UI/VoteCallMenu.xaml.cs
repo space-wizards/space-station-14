@@ -222,11 +222,10 @@ namespace Content.Client.Voting.UI
                 else
                 {
                     _votingSystem.RequestVotePlayerList();
-                    VoteWarningLabel.Visible = AvailableVoteOptions[(StandardVoteType)obj.Id].EnableVoteWarning;
                 }
             }
 
-
+            VoteWarningLabel.Visible = AvailableVoteOptions[(StandardVoteType)obj.Id].EnableVoteWarning;
             FollowButton.Visible = false;
 
             var voteList = AvailableVoteOptions[(StandardVoteType)obj.Id].Dropdowns;
@@ -247,6 +246,7 @@ namespace Content.Client.Voting.UI
                     VoteOptionsButtonContainer.AddChild(optionButton);
                     optionButton.Visible = true;
                     optionButton.OnItemSelected += ButtonSelected;
+                    optionButton.Margin = new Thickness(2, 1);
                     if (AvailableVoteOptions[(StandardVoteType)obj.Id].FollowDropdownId != null && AvailableVoteOptions[(StandardVoteType)obj.Id].FollowDropdownId == i)
                     {
                         _followDropdown = optionButton;

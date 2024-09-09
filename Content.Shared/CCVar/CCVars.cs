@@ -1441,7 +1441,7 @@ namespace Content.Shared.CCVar
         ///     Config for how many seconds a player must have been dead to be able to vote on a votekick.
         /// </summary>
         public static readonly CVarDef<int> VotekickEligibleVoterDeathtime =
-            CVarDef.Create("votekick.voter_deathtime", 300, CVar.SERVERONLY);
+            CVarDef.Create("votekick.voter_deathtime", 300, CVar.REPLICATED | CVar.SERVER);
 
         /// <summary>
         ///     The required ratio of eligible voters that must agree for a votekick to go through.

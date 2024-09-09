@@ -3,7 +3,7 @@
     <BoxContainer Margin="4" Orientation="Vertical">
         <Label Name="VoteCaller" />
         <RichTextLabel Name="VoteTitle" />
-        <Button Name="FollowVoteTarget" Text="{Loc 'ui-vote-follow-button'}" Visible="False"></Button>
+        <Button Margin="4 4" Name="FollowVoteTarget" Text="{Loc 'ui-vote-follow-button-popup'}" Visible="False"></Button>
         
         <GridContainer Columns="3" Name="VoteOptionsContainer"/>
         <BoxContainer Orientation="Horizontal">
