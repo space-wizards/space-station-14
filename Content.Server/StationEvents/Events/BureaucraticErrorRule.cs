@@ -1,9 +1,9 @@
 using System.Linq;
-using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Server.StationEvents.Components;
 ﻿using Content.Shared.GameTicking.Components;
+using Content.Shared.Roles;
 using JetBrains.Annotations;
 using Robust.Shared.Random;
 
@@ -14,6 +14,9 @@ public sealed class BureaucraticErrorRule : StationEventSystem<BureaucraticError
 {
     [Dependency] private readonly StationJobsSystem _stationJobs = default!;
 
+    [ValidatePrototypeId<JobPrototype>]
+    public const string IgnoreRuleJob = "StationAi";
+
     protected override void Started(EntityUid uid, BureaucraticErrorRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
         base.Started(uid, component, gameRule, args);
@@ -22,6 +25,8 @@ public sealed class BureaucraticErrorRule : StationEventSystem<BureaucraticError
             return;
 
         var jobList = _stationJobs.GetJobs(chosenStation.Value).Keys.ToList();
+
+        jobList.Remove(IgnoreRuleJob);
 
         if (jobList.Count == 0)
             return;
