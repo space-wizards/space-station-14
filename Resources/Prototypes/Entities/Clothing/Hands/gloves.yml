@@ -182,6 +182,7 @@
     sprite: Clothing/Hands/Gloves/powerglove.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/powerglove.rsi
+  - type: Insulated
   - type: Fiber
     fiberMaterial: fibers-nanomachines
   - type: FingerprintMask
