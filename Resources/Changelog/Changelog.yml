@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: TokenStyle
-  changes:
-  - message: Mechs can now be destroyed!
-    type: Tweak
-  id: 6833
-  time: '2024-06-29T03:28:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29338
-- author: metalgearsloth
-  changes:
-  - message: Typing indicators are now predicted.
-    type: Fix
-  id: 6834
-  time: '2024-06-29T03:33:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29551
 - author: Arteben
   changes:
   - message: Added favorite tab for construction!
@@ -3903,3 +3889,17 @@
   id: 7332
   time: '2024-09-09T19:36:25.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31606
+- author: themias
+  changes:
+  - message: Unpublished news article progress is automatically saved
+    type: Tweak
+  id: 7333
+  time: '2024-09-09T19:38:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31491
+- author: metalgearsloth
+  changes:
+  - message: Fix spawn prefs.
+    type: Fix
+  id: 7334
+  time: '2024-09-09T19:39:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31892
