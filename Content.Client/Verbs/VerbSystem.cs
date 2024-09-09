@@ -22,7 +22,6 @@ namespace Content.Client.Verbs
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly ExamineSystem _examine = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
-        [Dependency] private readonly SharedTransformSystem _transform = default!;
         [Dependency] private readonly IStateManager _stateManager = default!;
         [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -78,6 +77,7 @@ namespace Content.Client.Verbs
 
             // Get entities
             List<EntityUid> entities;
+            var examineFlags = LookupFlags.All & ~LookupFlags.Sensors;
 
             // Do we have to do FoV checks?
             if ((visibility & MenuVisibility.NoFov) == 0)
@@ -88,7 +88,7 @@ namespace Content.Client.Verbs
                 TryComp(player.Value, out ExaminerComponent? examiner);
 
                 entities = new();
-                foreach (var ent in _entityLookup.GetEntitiesInRange(targetPos, EntityMenuLookupSize))
+                foreach (var ent in _entityLookup.GetEntitiesInRange(targetPos, EntityMenuLookupSize, flags: examineFlags))
                 {
                     if (_examine.CanExamine(player.Value, targetPos, Predicate, ent, examiner))
                         entities.Add(ent);
@@ -96,7 +96,7 @@ namespace Content.Client.Verbs
             }
             else
             {
-                entities = _entityLookup.GetEntitiesInRange(targetPos, EntityMenuLookupSize).ToList();
+                entities = _entityLookup.GetEntitiesInRange(targetPos, EntityMenuLookupSize, flags: examineFlags).ToList();
             }
 
             if (entities.Count == 0)

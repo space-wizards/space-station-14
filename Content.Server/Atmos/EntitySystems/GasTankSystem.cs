@@ -106,7 +106,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void OnExamined(EntityUid uid, GasTankComponent component, ExaminedEvent args)
         {
-            using(args.PushGroup(nameof(GasTankComponent)));
+            using var _ = args.PushGroup(nameof(GasTankComponent));
             if (args.IsInDetailsRange)
                 args.PushMarkup(Loc.GetString("comp-gas-tank-examine", ("pressure", Math.Round(component.Air?.Pressure ?? 0))));
             if (component.IsConnected)
@@ -348,7 +348,7 @@ namespace Content.Server.Atmos.EntitySystems
                 if (component.Integrity <= 0)
                 {
                     var environment = _atmosphereSystem.GetContainingMixture(owner, false, true);
-                    if(environment != null)
+                    if (environment != null)
                         _atmosphereSystem.Merge(environment, component.Air);
 
                     _audioSys.PlayPvs(component.RuptureSound, Transform(owner).Coordinates, AudioParams.Default.WithVariation(0.125f));

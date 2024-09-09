@@ -9,7 +9,8 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coat.rsi
   - type: TemperatureProtection
-    coefficient: 0.1
+    heatingCoefficient: 1.1
+    coolingCoefficient: 0.1
   - type: Item
     size: Normal
   - type: Armor
@@ -165,7 +166,7 @@
     clothingPrototype: ClothingHeadHatHoodWinterCE
 
 - type: entity
-  parent: ClothingOuterWinterCoatToggleable
+  parent: [ ClothingOuterWinterCoatToggleable, BaseCentcommContraband ]
   id: ClothingOuterWinterCentcom
   name: CentComm winter coat
   components:
