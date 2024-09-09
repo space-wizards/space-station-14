@@ -6,7 +6,7 @@
   parent: ClothingHeadBase
   id: ClothingHeadHelmetBasic
   name: helmet
-  description: Standard security gear. Protects the head from impacts.
+  description: Standard security gear. Protects the head from the ouch.
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/security.rsi
@@ -208,7 +208,7 @@
   parent: ClothingHeadBase
   id: ClothingHeadHelmetWizardHelm
   name: wizard helm
-  description: Strange-looking helmet that most certainly belongs to a real magic user.
+  description: You can feel the whimsy from a mile away.
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/wizardhelm.rsi
