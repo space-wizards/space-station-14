@@ -21,7 +21,7 @@
 - type: speciesBaseSprites
   id: MobGraySprites
   sprites:
-    Head: MobGrayHead 
+    Head: MobGrayHead
     Chest: MobGrayTorso
     Eyes: MobGrayEyes
     LArm: MobGrayLArm
@@ -39,7 +39,7 @@
   points:
     Head:
       points: 1
-      required: true   
+      required: true
       defaultMarkings: [ GrayCuteEyes ]
     HeadTop:
       points: 0

@@ -296,29 +296,29 @@
     - sprite: Mobs/Silicon/chassis.rsi
       state: robot_e
 
-- type: entity
-  id: SpawnPointVIP
-  parent: SpawnPointJobBase
-  name: vip
-  components:
-  - type: SpawnPoint
-    job_id: VIP
-  - type: Sprite
-    layers:
-      - state: green
-      - state: vip
+# - type: entity
+#   id: SpawnPointVIP
+#   parent: SpawnPointJobBase
+#   name: vip
+#   components:
+#   - type: SpawnPoint
+#     job_id: VIP
+#   - type: Sprite
+#     layers:
+#       - state: green
+#       - state: vip
 
-- type: entity
-  id: SpawnPointGuestServices
-  parent: SpawnPointJobBase
-  name: guest services
-  components:
-  - type: SpawnPoint
-    job_id: Guest Services
-  - type: Sprite
-    layers:
-      - state: green
-      - state: guestservices
+# - type: entity
+#   id: SpawnPointGuestServices
+#   parent: SpawnPointJobBase
+#   name: guest services
+#   components:
+#   - type: SpawnPoint
+#     job_id: GuestServices
+#   - type: Sprite
+#     layers:
+#       - state: green
+#       - state: guestservices
 
 # Command
 

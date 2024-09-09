@@ -1,3 +1,17 @@
+# "Mixologist" Time req
+- type: loadoutEffectGroup
+  id: Mixologist
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobBartender
+      time: 36000 #10 hrs
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Medical
+      time: 36000 # 10 hrs
 # Head
 - type: loadout
   id: BartenderHead
@@ -40,3 +54,13 @@
   id: BartenderWintercoat
   equipment:
     outerClothing: ClothingOuterWinterBar
+
+ # Trinket
+- type: loadout
+  id: ChemMasterFlatpack
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Mixologist
+  storage:
+    back:
+    - ChemMasterFlatpack

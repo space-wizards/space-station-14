@@ -225,7 +225,7 @@ accent-gray-words-replace-75 = jamga
 
 accent-gray-words-76 = coming
 accent-gray-words-replace-76 = ouuti
- 
+
 accent-gray-words-77 = what
 accent-gray-words-replace-77 = seben
 
@@ -250,7 +250,7 @@ accent-gray-words-replace-83 = tek
 accent-gray-words-84 = your
 accent-gray-words-replace-84 = mou
 
-accent-gray-words-85 = be 
+accent-gray-words-85 = be
 accent-gray-words-replace-85 = zooti
 
 accent-gray-words-86 = grab
@@ -271,7 +271,7 @@ accent-gray-words-replace-90 = milx
 accent-gray-words-91 = motherfucker
 accent-gray-words-replace-91 = jambupisk
 
-accent-gray-words-92 = was 
+accent-gray-words-92 = was
 accent-gray-words-replace-92 = thikee
 
 accent-gray-words-93 = out
@@ -313,7 +313,7 @@ accent-gray-words-replace-104 = sporp
 accent-gray-words-105 = ways
 accent-gray-words-replace-105 = spop
 
-accent-gray-words-106 = are 
+accent-gray-words-106 = are
 accent-gray-words-replace-106 = zazz
 
 accent-gray-words-107 = pussy
@@ -328,7 +328,7 @@ accent-gray-words-replace-109 = tronk
 accent-gray-words-110 = to
 accent-gray-words-replace-110 = blagh
 
-accent-gray-words-111 = too 
+accent-gray-words-111 = too
 accent-gray-words-replace-111 = blaagh
 
 accent-gray-words-112 = one
@@ -382,7 +382,7 @@ accent-gray-words-replace-127 = ziip
 accent-gray-words-128 = also
 accent-gray-words-replace-128 = frup
 
-accent-gray-words-129 = and 
+accent-gray-words-129 = and
 accent-gray-words-replace-129 = pib
 
 accent-gray-words-130 = as
@@ -409,7 +409,7 @@ accent-gray-words-replace-136 = zii
 accent-gray-words-137 = find
 accent-gray-words-replace-137 = bli
 
-accent-gray-words-138 = then 
+accent-gray-words-138 = then
 accent-gray-words-replace-138 = zwep
 
 accent-gray-words-139 = hi
@@ -463,3 +463,227 @@ accent-gray-words-replace-154 = ei
 accent-gray-words-155 = this
 accent-gray-words-replace-155 = glump
 
+accent-gray-words-156 = bounty
+accent-gray-words-replace-156 = bogo
+
+accent-gray-words-157 = fucker
+accent-gray-words-replace-157 = pisku
+
+accent-gray-words-158 = going
+accent-gray-words-replace-158 = glormun
+
+accent-gray-words-159 = having
+accent-gray-words-replace-159 = buugo
+
+accent-gray-words-160 = has
+accent-gray-words-replace-160 = beeg
+
+accent-gray-words-161 = fixed
+accent-gray-words-replace-161 = yuumba
+
+accent-gray-words-162 = fixing
+accent-gray-words-replace-162 = yoombun
+
+accent-gray-words-163 = helped
+accent-gray-words-replace-163 = tuupa
+
+accent-gray-words-164 = helping
+accent-gray-words-replace-164 = toupun
+
+accent-gray-words-165 = stopped
+accent-gray-words-replace-165 = nitbul
+
+accent-gray-words-166 = stopping
+accent-gray-words-replace-166 = nitbun
+
+accent-gray-words-167 = said
+accent-gray-words-replace-167 = wuuta
+
+accent-gray-words-168 = saying
+accent-gray-words-replace-168 = wootun
+
+accent-gray-words-169 = yours
+accent-gray-words-replace-169 = moue
+
+accent-gray-words-170 = telling
+accent-gray-words-replace-170 = glumpun
+
+accent-gray-words-171 = looked
+accent-gray-words-replace-171 = schuu
+
+accent-gray-words-172 = looking
+accent-gray-words-replace-172 = schuiun
+
+accent-gray-words-173 = made
+accent-gray-words-replace-173 = gnurp
+
+accent-gray-words-174 = making
+accent-gray-words-replace-174 = gnarpun
+
+accent-gray-words-175 = grabbed
+accent-gray-words-replace-175 = flumi
+
+accent-gray-words-176 = grabbing
+accent-gray-words-replace-176 = flumun
+
+accent-gray-words-177 = found
+accent-gray-words-replace-177 = blu
+
+accent-gray-words-178 = finding
+accent-gray-words-replace-178 = blin
+
+accent-gray-words-179 = gone
+accent-gray-words-replace-179 = glurm
+
+accent-gray-words-180 = drinking
+accent-gray-words-replace-180 = sipsun
+
+accent-gray-words-181 = drunk
+accent-gray-words-replace-181 = supsi
+
+accent-gray-words-182 = came
+accent-gray-words-replace-182 = uoo
+
+accent-gray-words-183 = shooting
+accent-gray-words-replace-183 = bebun
+
+accent-gray-words-184 = shot
+accent-gray-words-replace-184 = buba
+
+accent-gray-words-185 = powered
+accent-gray-words-replace-185 = grumba
+
+accent-gray-words-186 = powering
+accent-gray-words-replace-186 = grambun
+
+accent-gray-words-187 = spaced
+accent-gray-words-replace-187 = urth
+
+accent-gray-words-188 = spacing
+accent-gray-words-replace-188 = erthun
+
+accent-gray-words-189 = messy
+accent-gray-words-replace-189 = fanni
+
+accent-gray-words-190 = thanking
+accent-gray-words-replace-190 = grabun
+
+accent-gray-words-191 = thanked
+accent-gray-words-replace-191 = gruba
+
+accent-gray-words-192 = captains
+accent-gray-words-replace-192 = leedars
+
+accent-gray-words-193 = foods
+accent-gray-words-replace-193 = kibeabs
+
+accent-gray-words-194 = waters
+accent-gray-words-replace-194 = sipas
+
+accent-gray-words-195 = engines
+accent-gray-words-replace-195 = vromas
+
+accent-gray-words-196 = spiders
+accent-gray-words-replace-196 = eiteis
+
+accent-gray-words-197 = syndicates
+accent-gray-words-replace-197 = boomas
+
+accent-gray-words-198 = syndies
+accent-gray-words-replace-198 = nuukas
+
+accent-gray-words-199 = nukies
+accent-gray-words-replace-199 = me-doombas
+
+accent-gray-words-200 = fires
+accent-gray-words-replace-200 = tssshis
+
+accent-gray-words-201 = ships
+accent-gray-words-replace-201 = glorm-vromas
+
+accent-gray-words-202 = bots
+accent-gray-words-replace-202 = beepis
+
+accent-gray-words-203 = borgs
+accent-gray-words-replace-203 = beepimos
+
+accent-gray-words-204 = slimes
+accent-gray-words-replace-204 = sqoshis
+
+accent-gray-words-205 = ninjas
+accent-gray-words-replace-205 = snekorfi
+
+accent-gray-words-206 = dragons
+accent-gray-words-replace-206 = tssi-sunis
+
+accent-gray-words-207 = lizards
+accent-gray-words-replace-207 = sunis
+
+accent-gray-words-208 = rats
+accent-gray-words-replace-208 = cheezis
+
+accent-gray-words-209 = humans
+accent-gray-words-replace-209 = stupees
+
+accent-gray-words-210 = moths
+accent-gray-words-replace-210 = ortimesis
+
+accent-gray-words-211 = artifacts
+accent-gray-words-replace-211 = waba-kus
+
+accent-gray-words-212 = machines
+accent-gray-words-replace-212 = waba-beepis
+
+accent-gray-words-213 = uplinks
+accent-gray-words-replace-213 = brimbis
+
+accent-gray-words-214 = pets
+accent-gray-words-replace-214 = dinnes
+
+accent-gray-words-215 = teslas
+accent-gray-words-replace-215 = chalkees
+
+accent-gray-words-216 = clowns
+accent-gray-words-replace-216 = slipis
+
+accent-gray-words-217 = gods
+accent-gray-words-replace-217 = geenas
+
+accent-gray-words-218 = pussies
+accent-gray-words-replace-218 = pushees
+
+accent-gray-words-219 = dicks
+accent-gray-words-replace-219 = deeks
+
+accent-gray-words-220 = days
+accent-gray-words-replace-220 = twiis
+
+accent-gray-words-221 = fucked
+accent-gray-words-replace-221 = pusk
+
+accent-gray-words-222 = petting
+accent-gray-words-replace-222 = dinnun
+
+accent-gray-words-223 = petted
+accent-gray-words-replace-223 = dunne
+
+accent-gray-words-224 = botted
+accent-gray-words-replace-224 = buupi
+
+accent-gray-words-225 = botting
+accent-gray-words-replace-225 = beepun
+
+accent-gray-words-226 = damned
+accent-gray-words-replace-226 = duuda
+
+accent-gray-words-227 = damning
+accent-gray-words-replace-227 = doudun
+
+accent-gray-words-229 = gaming
+accent-gray-words-replace-229 = dom-un
+
+accent-gray-words-230 = gamed
+accent-gray-words-replace-230 = dum jut
+
+accent-gray-words-231 = hello
+accent-gray-words-replace-231 = oum

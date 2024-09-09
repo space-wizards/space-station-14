@@ -448,6 +448,20 @@
       variation: 0.125
 
 - type: emoteSounds
+  id: Raccoon
+  sound:
+    path: /Audio/Animals/raccoon_chatter.ogg
+    params:
+      variation: 0.125
+
+- type: emoteSounds
+  id: Possum
+  sound:
+    path: /Audio/Animals/cat_hiss.ogg
+    params:
+      variation: 0.125
+
+- type: emoteSounds
   id: Cluwne
   sound:
     collection: CluwneScreams

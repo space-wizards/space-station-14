@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "By Widgetbeck",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "alt_head",
+      "directions": 4
+    },
+    {
+      "name": "face_eyes_1",
+      "directions": 4
+    },
+    {
+      "name": "face_eyes_2",
+      "directions": 4
+    },
+    {
+      "name": "face_eyes_3",
+      "directions": 4
+    },
+    {
+      "name": "spots_head_left",
+      "directions": 4
+    },
+    {
+      "name": "spots_head_right",
+      "directions": 4
+    },
+    {
+      "name": "stripes_head",
+      "directions": 4
+    },
+    {
+      "name": "tentacle_beard",
+      "directions": 4
+    },
+    {
+      "name": "tentacle_moustache",
+      "directions": 4
+    }
+  ]
+}

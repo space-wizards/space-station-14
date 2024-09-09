@@ -16,7 +16,7 @@ public sealed class RandomSentienceRule : StationEventSystem<RandomSentienceRule
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly AnnouncerSystem _announcer = default!;
-    
+
     protected override void Started(EntityUid uid, RandomSentienceRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
         if (!TryGetRandomStation(out var station))
@@ -71,7 +71,7 @@ public sealed class RandomSentienceRule : StationEventSystem<RandomSentienceRule
         var kind1 = groupList.Count > 0 ? groupList[0] : "???";
         var kind2 = groupList.Count > 1 ? groupList[1] : "???";
         var kind3 = groupList.Count > 2 ? groupList[2] : "???";
-        
+
         _announcer.SendAnnouncement(
             _announcer.GetAnnouncementId(args.RuleId),
             Filter.Broadcast(),

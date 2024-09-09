@@ -71,3 +71,6 @@ trait-french-desc = You speak with the cadence of someone who has cast off their
 
 trait-spanish-name = Spanish accent
 trait-spanish-desc = You speak with the accent of someone who grew up in Earth Spain
+
+trait-snalien-name = Slow talker
+trait-snalien-desc = Yyoouu taallk rreeaallyy... rreeaallyy... sslloowwllyy.

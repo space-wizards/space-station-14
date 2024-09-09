@@ -44,3 +44,7 @@
 - type: metabolizerType
   id: Arachnid
   name: metabolizer-type-arachnid
+
+- type: metabolizerType
+  id: Snail
+  name: metabolizer-type-snail

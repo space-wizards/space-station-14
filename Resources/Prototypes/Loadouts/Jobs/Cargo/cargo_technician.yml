@@ -1,3 +1,13 @@
+# Senior times
+- type: loadoutEffectGroup
+  id: SeniorCargoTech
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Cargo
+      time: 216000 # 60 hrs
+
 # Head
 - type: loadout
   id: CargoTechnicianHead
@@ -42,3 +52,17 @@
   id: CargoWinterBoots
   equipment:
     shoes: ClothingShoesBootsWinterCargo
+
+# ID
+- type: loadout
+  id: CargoTechnicianPDA
+  equipment:
+    id: CargoPDA
+
+- type: loadout
+  id: SeniorCargoTechnicianPDA
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorCargoTech
+  equipment:
+    id: SeniorCargoPDA

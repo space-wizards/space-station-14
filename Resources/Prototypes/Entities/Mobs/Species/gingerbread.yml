@@ -22,6 +22,8 @@
       Brute:
         sprite: Mobs/Effects/brute_damage.rsi
         color: "#896e55"
+      Burn:
+        sprite: Mobs/Effects/burn_damage.rsi
   - type: Butcherable
     butcheringType: Spike
     spawned:

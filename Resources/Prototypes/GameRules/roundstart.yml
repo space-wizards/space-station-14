@@ -206,38 +206,10 @@
 
 - type: entity
   parent: BaseTraitorRuleNoRandomObjectives
-  id: SpyVsSpyDefaultTC
-  components:
-  - type: GameRule
-    minPlayers: 15
-    delay:
-      min: 240
-      max: 420
-  - type: AntagObjectives
-    objectives:
-    - KillRandomTraitorSvSObjective
-    - RandomTraitorAliveSvSObjective
-    - EscapeShuttleObjective
-  - type: AntagSelection
-    definitions:
-    - prefRoles: [ Traitor ]
-      max: 100
-      playerRatio: 1
-      blacklist:
-        components:
-        - AntagImmune
-      lateJoinAdditional: true
-      forceAllPossible: true
-      mindComponents:
-      - type: TraitorRole
-        prototype: Traitor
-
-- type: entity
-  parent: BaseTraitorRuleNoRandomObjectives
-  id: SpyVsSpy5TC
+  id: SpyVsSpy3TC
   components:
   - type: TraitorRule
-    startingBalance: 5
+    startingBalance: 3
   - type: GameRule
     minPlayers: 15
     delay:
@@ -251,6 +223,7 @@
   - type: AntagSelection
     definitions:
     - prefRoles: [ Traitor ]
+      fallbackRoles: [ TraitorSleeper ]
       max: 100
       playerRatio: 1
       blacklist:
@@ -271,8 +244,8 @@
   - type: GameRule
     minPlayers: 15
     delay:
-      min: 240
-      max: 420
+      min: 2
+      max: 4
   - type: AntagObjectives
     objectives:
     - KillRandomTraitorSvSObjective
@@ -281,6 +254,7 @@
   - type: AntagSelection
     definitions:
     - prefRoles: [ Traitor ]
+      fallbackRoles: [ TraitorSleeper ]
       max: 100
       playerRatio: 1
       blacklist:
@@ -374,6 +348,17 @@
         tableId: CargoGiftsTable
 
 - type: entityTable
+  id: SleeperlessGameRulesTable
+  table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
+    children:
+      - !type:NestedSelector
+        tableId: BasicCalmEventsTable
+      - !type:NestedSelector
+        tableId: SleeperlessAntagEventsTable
+      - !type:NestedSelector
+        tableId: CargoGiftsTable
+
+- type: entityTable
   id: SpaceTrafficControlTable
   table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
     children:
@@ -391,6 +376,14 @@
   - type: BasicStationEventScheduler
     scheduledGameRules: !type:NestedSelector
       tableId: BasicGameRulesTable
+
+- type: entity
+  id: SleeperlessStationEventScheduler
+  parent: BaseGameRule
+  components:
+  - type: BasicStationEventScheduler
+    scheduledGameRules: !type:NestedSelector
+      tableId: SleeperlessGameRulesTable
 
 - type: entity
   id: RampingStationEventScheduler
@@ -413,8 +406,8 @@
       tableId: SpaceTrafficControlTable
 
 - type: entity
-  id: SpaceTrafficControlFriendlyEventScheduler 
-  parent: BaseGameRule                  
+  id: SpaceTrafficControlFriendlyEventScheduler
+  parent: BaseGameRule
   components:
   - type: BasicStationEventScheduler
     minimumTimeUntilFirstEvent: 1200 # 20 mins
@@ -448,7 +441,7 @@
   components:
   - type: ChangelingRule
   - type: GameRule
-    minPlayers: 10
+    minPlayers: 15
     delay:
       min: 30
       max: 60
@@ -456,8 +449,8 @@
     agentName: changeling-roundend-name
     definitions:
     - prefRoles: [ Changeling ]
-      max: 8
-      playerRatio: 10
+      max: 6
+      playerRatio: 15
       lateJoinAdditional: true
       mindComponents:
       - type: ChangelingRole

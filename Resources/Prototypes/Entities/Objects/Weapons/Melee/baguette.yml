@@ -1,8 +1,6 @@
 - type: entity
-  name: baguette
   parent: FoodBreadBaguette
   id: WeaponBaguette
-  description: Bon appétit!
   suffix: Weapon
   components:
   - type: MeleeWeapon

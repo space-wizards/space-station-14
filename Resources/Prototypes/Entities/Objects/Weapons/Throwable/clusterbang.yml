@@ -135,6 +135,7 @@
   - type: EmitSoundOnTrigger
     sound:
       path: "/Audio/Effects/flash_bang.ogg"
+    detach: true
   - type: SpawnOnTrigger
     proto: GrenadeFlashEffect
   - type: TimerTriggerVisuals

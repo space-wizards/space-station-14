@@ -1,6 +1,5 @@
 using Content.Shared.Audio;
 using Content.Shared.Hands;
-using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Maps;
@@ -8,6 +7,7 @@ using Content.Shared.Mobs;
 using Content.Shared.Popups;
 using Content.Shared.Sound.Components;
 using Content.Shared.Throwing;
+using Content.Shared.UserInterface;
 using Content.Shared.Whitelist;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
@@ -48,10 +48,16 @@ public abstract class SharedEmitSoundSystem : EntitySystem
         SubscribeLocalEvent<EmitSoundOnPickupComponent, GotEquippedHandEvent>(OnEmitSoundOnPickup);
         SubscribeLocalEvent<EmitSoundOnDropComponent, DroppedEvent>(OnEmitSoundOnDrop);
         SubscribeLocalEvent<EmitSoundOnInteractUsingComponent, InteractUsingEvent>(OnEmitSoundOnInteractUsing);
+        SubscribeLocalEvent<EmitSoundOnUIOpenComponent, AfterActivatableUIOpenEvent>(HandleEmitSoundOnUIOpen);
 
         SubscribeLocalEvent<EmitSoundOnCollideComponent, StartCollideEvent>(OnEmitSoundOnCollide);
 
         SubscribeLocalEvent<SoundWhileAliveComponent, MobStateChangedEvent>(OnMobState);
+    }
+
+    private void HandleEmitSoundOnUIOpen(EntityUid uid, EmitSoundOnUIOpenComponent component, AfterActivatableUIOpenEvent args)
+    {
+        TryEmitSound(uid, component, args.User);
     }
 
     private void OnMobState(Entity<SoundWhileAliveComponent> entity, ref MobStateChangedEvent args)
@@ -137,12 +143,24 @@ public abstract class SharedEmitSoundSystem : EntitySystem
 
         if (predict)
         {
-            _audioSystem.PlayPredicted(component.Sound, uid, user);
+            if (component.Detach)
+            {
+                if (TryComp(uid, out TransformComponent? xform))
+                    _audioSystem.PlayPredicted(component.Sound, xform.Coordinates, user);
+            }
+            else
+                _audioSystem.PlayPredicted(component.Sound, uid, user);
         }
         else if (_netMan.IsServer)
         {
             // don't predict sounds that client couldn't have played already
-            _audioSystem.PlayPvs(component.Sound, uid);
+            if (component.Detach)
+            {
+                if (TryComp(uid, out TransformComponent? xform))
+                    _audioSystem.PlayPvs(component.Sound, xform.Coordinates);
+            }
+            else
+                _audioSystem.PlayPvs(component.Sound, uid);
         }
     }
 

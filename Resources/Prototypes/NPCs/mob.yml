@@ -90,7 +90,7 @@
     - tasks:
         - !type:HTNCompoundTask
           task: IdleCompound
-        
+
 - type: htnCompound
   id: NiceCarpCompound
   branches:

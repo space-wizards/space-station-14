@@ -1,0 +1,5 @@
+- files:
+  - snail_cough.ogg, snail_cry.ogg, snail_deathgasp.ogg, snail_gasp.ogg, snail_laugh.ogg, snail_scream.ogg, snail_sigh.ogg, snail_yawn.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "Widgetbeck"
+  source: "https://github.com/impstation/imp-station-14/pull/184"

@@ -50,6 +50,9 @@ flavor-base-horrible = horrible
 # lmao
 flavor-base-terrible = terrible
 flavor-base-mindful = mindful
+flavor-base-chewy = chewy
+flavor-base-kingsoda = like you're a champion
+flavor-base-drinkdrink = like dogshit
 
 # Complex flavors. Put a flavor here when you want something that's more
 # specific.
@@ -123,6 +126,7 @@ flavor-complex-meatballs = like meatballs
 flavor-complex-nettles = like nettles
 flavor-complex-jungle = like jungle
 flavor-complex-vegetables = like vegetables
+flavor-complex-cherry = like cherries
 # use it when there multiple types of veggies
 
 ## Complex foodstuffs (cooked foods, joke flavors, etc)
@@ -172,6 +176,8 @@ flavor-complex-violets = like violets
 flavor-complex-pyrotton = like a burning mouth
 flavor-complex-mothballs = like mothballs
 flavor-complex-paint-thinner = like paint thinner
+flavor-complex-paper = like mushy pulp
+flavor-complex-compressed-meat = like compressed meat
 flavor-complex-finfin = like your best friend
 flavor-complex-radiation = like radiation
 
@@ -258,6 +264,7 @@ flavor-complex-cogchamp = like brass
 flavor-complex-white-gilgamesh = like lightly carbonated cream
 flavor-complex-antifreeze = warm
 
+
 ### This is exactly what pilk tastes like. I'm not even joking. I might've been a little drunk though
 flavor-complex-pilk = like sweet milk
 
@@ -274,5 +281,8 @@ flavor-complex-bee = unbeelievable
 flavor-complex-sax = like jazz
 flavor-complex-bottledlightning = like lightning in a bottle
 flavor-complex-punishment = like punishment
+flavor-complex-crud = like crud
+flavor-complex-snotty = like snot
+flavor-complex-speed = like speed
 flavor-weh = like weh
 flavour-stardust = like stardust

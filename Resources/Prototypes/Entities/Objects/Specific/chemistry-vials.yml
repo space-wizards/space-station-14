@@ -117,3 +117,29 @@
               Quantity: 30
     - type: Tag
       tags: []
+
+- type: entity
+  id: RadiumChemistryVial
+  name: radium vial
+  parent: BaseChemistryEmptyVial
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          maxVol: 5
+          reagents:
+            - ReagentId: Radium
+              Quantity: 5
+
+- type: entity
+  id: ChlorineChemistryVial
+  name: chlorine vial
+  parent: BaseChemistryEmptyVial
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          maxVol: 5
+          reagents:
+            - ReagentId: Chlorine
+              Quantity: 5

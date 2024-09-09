@@ -2,7 +2,7 @@
   id: TikTok
   basePath: /Audio/Announcers/TikTok
   baseAudioParams:
-    volume: -7
+    volume: -14
   announcements:
     # Communications
     # - id: announce # Communications console
@@ -97,6 +97,14 @@
     - id: slimesSpawn # Some simple slimes are appearing in vents
       path: events/vent_critters.ogg
     - id: spiderSpawn # Some simple spiders are appearing in vents
+      path: events/vent_critters.ogg
+    - id: trashAnimalMigration # Trash-eating critters are appearing in vents
+      path: events/vent_critters.ogg
+    - id: snailMigration # Adorable little snails are appearing in vents
+      path: events/vent_critters.ogg
+    - id: snailMigrationLowPop # Adorable little snails are appearing in vents
+      path: events/vent_critters.ogg
+    - id: brosSpawn # BROS are appearing in vents. UNGH
       path: events/vent_critters.ogg
     - id: immovableRodSpawn # The station is moving into an immovable rod, don't die or something, ask Engineering for help repairing it
       path: events/immovable_rod_spawn.ogg

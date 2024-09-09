@@ -557,7 +557,7 @@
   productPrototypes:
     - MobTomatoKiller
   mutationPrototypes:
-    - kissertomato
+    - kisserTomato
   harvestRepeat: Repeat
   lifespan: 25
   maturation: 15
@@ -1834,6 +1834,32 @@
       PotencyDivisor: 30
 
 - type: seed
+  id: cherry
+  name: seeds-cherry-name
+  noun: seeds-noun-seeds
+  displayName: seeds-cherry-display-name
+  plantRsi: Objects/Specific/Hydroponics/cherry.rsi
+  packetPrototype: CherrySeeds
+  productPrototypes:
+    - FoodCherry
+  harvestRepeat: Repeat
+  lifespan: 55
+  maturation: 6
+  production: 6
+  yield: 5
+  potency: 10
+  idealLight: 6
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 3
+      PotencyDivisor: 30
+    Vitamin:
+      Min: 1
+      Max: 3
+      PotencyDivisor: 40
+
+- type: seed
   id: lemo
   name: seeds-lemo-name
   noun: seeds-noun-seeds
@@ -1860,7 +1886,7 @@
       PotencyDivisor: 25
 
 - type: seed
-  id: kissertomato
+  id: kisserTomato
   name: seeds-kissertomato-name
   noun: seeds-noun-seeds
   displayName: seeds-kissertomato-display-name

@@ -979,3 +979,18 @@
   - type: ConditionalSpawner
     prototypes:
     - MobRaptor
+
+- type: entity
+  name: BROS/SORB Spawner
+  id: BrosSorbSpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: blue
+        - sprite: Mobs/Animals/bros.rsi
+          state: bros
+    - type: ClusterSpawner
+      prototypes:
+        - MobBros
+        - MobSorb

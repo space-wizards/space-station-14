@@ -82,13 +82,14 @@ public sealed class ThirstSystem : EntitySystem
         SetThirst(uid, component, component.ThirstThresholds[ThirstThreshold.Okay]);
     }
 
-    private ThirstThreshold GetThirstThreshold(ThirstComponent component, float amount)
+    public ThirstThreshold GetThirstThreshold(ThirstComponent component, float? food = null)
     {
+		food ??= component.CurrentThirst;
         ThirstThreshold result = ThirstThreshold.Dead;
         var value = component.ThirstThresholds[ThirstThreshold.OverHydrated];
         foreach (var threshold in component.ThirstThresholds)
         {
-            if (threshold.Value <= value && threshold.Value >= amount)
+            if (threshold.Value <= value && threshold.Value >= food)
             {
                 result = threshold.Key;
                 value = threshold.Value;
@@ -199,6 +200,15 @@ public sealed class ThirstSystem : EntitySystem
                 throw new ArgumentOutOfRangeException($"No thirst threshold found for {component.CurrentThirstThreshold}");
         }
     }
+
+	/// a check that returns if the entity is below a thirst threshold (used in Excretion system)
+	public bool IsThirstBelowState(EntityUid uid, ThirstThreshold threshold, float? drink = null, ThirstComponent? comp = null)
+	{
+		if (!Resolve(uid, ref comp))
+			return false; // If entity does not have the ability to be thirsty, don't check it.
+
+		return GetThirstThreshold (comp) < threshold;
+	}
 
     public override void Update(float frameTime)
     {

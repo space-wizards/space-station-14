@@ -25,6 +25,11 @@
   - Trinkets
   - GroupSpeciesBreathTool
 
+# Silicons
+- type: roleLoadout
+  id: JobStationAi
+  nameDataset: names_ai
+
 # Civilian
 - type: roleLoadout
   id: JobPassenger
@@ -54,6 +59,7 @@
   - Survival
   - Trinkets
   - GroupSpeciesBreathTool
+  - Mixologist
 
 - type: roleLoadout
   id: JobServiceWorker
@@ -168,6 +174,7 @@
   - MimeJumpsuit
   - MimeBackpack
   - MimeOuterClothing
+  - MimeBelt
   - Glasses
   - SurvivalMime
   - Trinkets
@@ -210,6 +217,7 @@
   - CargoTechnicianBackpack
   - CargoTechnicianOuterClothing
   - CargoTechnicianShoes
+  - CargoTechnicianPDA
   - Glasses
   - Survival
   - Trinkets
@@ -222,6 +230,7 @@
   - SalvageSpecialistBackpack
   - SalvageSpecialistOuterClothing
   - SalvageSpecialistShoes
+  - SalvageSpecialistNeck
   - Glasses
   - Survival
   - Trinkets

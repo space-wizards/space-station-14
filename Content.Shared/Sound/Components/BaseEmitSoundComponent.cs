@@ -14,4 +14,9 @@ public abstract partial class BaseEmitSoundComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField(required: true)]
     public SoundSpecifier? Sound;
+
+    [AutoNetworkedField]
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
+    public bool Detach = false;
 }

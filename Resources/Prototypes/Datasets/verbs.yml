@@ -1,4 +1,4 @@
-﻿- type: dataset
+- type: dataset
   id: verbs
   values:
   - accept

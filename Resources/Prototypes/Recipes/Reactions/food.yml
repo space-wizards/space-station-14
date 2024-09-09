@@ -73,6 +73,22 @@
       entity: FoodDoughTortilla
 
 - type: reaction
+  id: CreateDoughCotton
+  impact: Low
+  quantized: true
+  conserveEnergy: false
+  reactants:
+    Fiber:
+      amount: 10
+    Flour:
+      amount: 5
+    Water:
+      amount: 10
+  effects:
+  - !type:CreateEntityReactionEffect
+    entity: FoodDoughCotton
+
+- type: reaction
   id: CreateCakeBatter
   impact: Low
   quantized: true
@@ -289,6 +305,18 @@
     Soysauce: 3
 
 - type: reaction
+  id: CookingTeriyakiSauce
+  reactants:
+    Soysauce:
+      amount: 2
+    Sugar:
+      amount: 1
+    Sake:
+      amount: 1
+  products:
+    TeriyakiSauce: 4
+
+- type: reaction
   id: CookingVinaigrette
   reactants:
     Vinegar:
@@ -417,3 +445,14 @@
     Carbon: 1
     Water: 1
     Nitrogen: 2
+
+- type: reaction
+  id: ReduceMilk #makes Cream renewable
+  minTemp: 320
+  requiredMixerCategories:
+  - Shake
+  reactants:
+   Milk:
+    amount: 2
+  products:
+   Cream: 1

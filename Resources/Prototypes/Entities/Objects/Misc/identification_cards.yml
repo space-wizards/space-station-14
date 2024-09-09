@@ -205,6 +205,16 @@
     job: CargoTechnician
 
 - type: entity
+  parent: CargoIDCard
+  id: SeniorCargoIDCard
+  name: senior cargo ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idseniorcargo
+
+- type: entity
   parent: IDCardStandard
   id: SalvageIDCard
   name: salvage ID card
@@ -541,24 +551,6 @@
 
 - type: entity
   parent: IDCardStandard
-  id: CentcomIDCardSyndie
-  name: command officer ID card
-  suffix: Fake
-  components:
-  - type: Sprite
-    layers:
-    - state: centcom
-    - state: idcentcom
-  - type: Item
-    heldPrefix: blue
-  - type: IdCard
-    jobTitle: Central Commander
-  - type: Access
-    tags:
-    - Maintenance
-
-- type: entity
-  parent: IDCardStandard
   id: MusicianIDCard
   name: musician ID card
   components:
@@ -581,6 +573,24 @@
     heldPrefix: blue
   - type: IdCard
     jobTitle: Centcomm Agent
+
+- type: entity
+  parent: IDCardStandard
+  id: UndercoverIDCard
+  suffix: Undercover
+  name: passenger ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idpassenger
+  - type: IdCard
+    jobTitle: Passenger
+    jobIcon: JobIconPassenger
+  - type: Access
+    tags:
+    - Maintenance
+    - SyndicateAgent
 
 - type: entity
   name: passenger ID card

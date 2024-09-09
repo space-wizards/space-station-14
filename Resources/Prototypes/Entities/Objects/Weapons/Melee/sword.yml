@@ -161,7 +161,7 @@
   - type: DisarmMalus
 
 - type: entity
-  name: Throngler
+  name: throngler
   parent: [ BaseSword, BaseMajorContraband ]
   id: Throngler
   description: Why would you make this?

@@ -261,17 +261,6 @@
   - type: Objective
     difficulty: 0.7
 
-- type: entity
-  parent: BaseThiefStealObjective
-  id: SalvageShuttleCircuitboardStealObjective
-  components:
-  - type: NotJobRequirement
-    job: SalvageSpecialist
-  - type: StealCondition
-    stealGroup: SalvageShuttleConsoleCircuitboard
-  - type: Objective
-    difficulty: 0.7
-
 - type: entity                                      #Service subgroup
   parent: BaseThiefStealObjective
   id: ClothingEyesHudBeerStealObjective
@@ -313,17 +302,6 @@
     job: Captain
   - type: StealCondition
     stealGroup: ClothingNeckClownmedal
-  - type: Objective
-    difficulty: 1
-
-- type: entity
-  parent: BaseThiefStealObjective
-  id: ClothingNeckShockCollarStealObjective
-  components:
-  - type: NotJobRequirement
-    job: Warden
-  - type: StealCondition
-    stealGroup: ClothingNeckShockCollar
   - type: Objective
     difficulty: 1
 
