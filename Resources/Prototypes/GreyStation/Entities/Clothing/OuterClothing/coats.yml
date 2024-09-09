@@ -1,5 +1,5 @@
 - type: entity
-  parent: ClothingOuterStorageBase
+  parent: ClothingOuterWinterCoat
   id: ClothingOuterCoatLettermanBlue
   name: blue letterman jacket
   description: It's a blue highschool jacket with a big '14' stitched onto the back.
@@ -10,7 +10,7 @@
     sprite: GreyStation/Clothing/Misc/letterman_jacket_blue.rsi
 
 - type: entity
-  parent: ClothingOuterCoatLettermanBlue
+  parent: ClothingOuterWinterCoat
   id: ClothingOuterCoatLettermanRed
   name: red letterman jacket
   description: It's a red letterman jacket with a big '14' stitched onto the back.
@@ -21,7 +21,7 @@
     sprite: GreyStation/Clothing/Misc/letterman_jacket_red.rsi
 
 - type: entity
-  parent: ClothingOuterCoatLettermanBlue
+  parent: ClothingOuterWinterCoat
   id: ClothingOuterCoatLetterman
   name: brown letterman jacket
   description: It's a brown letterman jacket.
