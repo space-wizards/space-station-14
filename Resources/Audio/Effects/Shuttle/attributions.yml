@@ -1,14 +1,14 @@
 - files:
   - hyperspace_begin.ogg
   - hyperspace_end.ogg
-  copyright: '"hyperspace_begin.ogg", and "hyperspace_end.ogg" by /tg/station'
+  copyright: 'Sound effects from Pixabay, edited together by PixeltheAertist'
   license: CC-BY-SA-3.0
-  source: https://github.com/tgstation/tgstation/tree/71a79f1f75902d2ccab27cbffb971b12b7ab042d/sound/runtime/hyperspace
+  source:
 
 - files: [hyperspace_progress.ogg]
-  copyright: '"hyperspace_progress.ogg" by /tg/station. Modified for looping by metalgearsloth.'
+  copyright: 'Sound effects from Pixabay, edited together by PixeltheAertist'
   license: CC-BY-SA-3.0
-  source: https://github.com/tgstation/tgstation/tree/71a79f1f75902d2ccab27cbffb971b12b7ab042d/sound/runtime/hyperspace
+  source:
 
 - files:
   - radar_ping.ogg
