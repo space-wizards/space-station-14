@@ -74,7 +74,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
             _suicide.ApplyLethalDamage((args.Victim, damageableComponent), "Piercing");
             var othersMessage = Loc.GetString("comp-kitchen-spike-suicide-other",
-                                                ("victim", Identity(args.Victim, EntityManager)),
+                                                ("victim", Identity.Entity(args.Victim, EntityManager)),
                                                 ("this", entity));
             _popupSystem.PopupEntity(othersMessage, args.Victim, Filter.PvsExcept(args.Victim), true);
 
@@ -161,8 +161,6 @@ namespace Content.Server.Kitchen.EntitySystems
             _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-kill",
                                                     ("user", Identity.Entity(userUid, EntityManager)),
                                                     ("victim", Identity.Entity(victimUid, EntityManager)),
-                                                    ("userEnt", userUid),
-                                                    ("victimEnt", victimUid),
                                                     ("this", uid)),
                                     uid, PopupType.LargeCaution);
 

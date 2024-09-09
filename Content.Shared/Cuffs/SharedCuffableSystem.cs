@@ -479,7 +479,7 @@ namespace Content.Shared.Cuffs
             if (!TryComp<HandsComponent>(target, out var hands))
             {
                 _popup.PopupClient(Loc.GetString("handcuff-component-target-has-no-hands-error",
-                    ("targetName", Identity.Name(target, EntityManager, user))
+                    ("targetName", Identity.Name(target, EntityManager, user)),
                     ("targetEnt", target)), user, user);
                 return true;
             }
@@ -487,7 +487,7 @@ namespace Content.Shared.Cuffs
             if (cuffable.CuffedHandCount >= hands.Count)
             {
                 _popup.PopupClient(Loc.GetString("handcuff-component-target-has-no-free-hands-error",
-                    ("targetName", Identity.Name(target, EntityManager, user))
+                    ("targetName", Identity.Name(target, EntityManager, user)),
                     ("targetEnt", target)), user, user);
                 return true;
             }

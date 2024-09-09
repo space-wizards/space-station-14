@@ -221,8 +221,8 @@ public sealed class StrippableSystem : SharedStrippableSystem
             if (!stealth)
                 _popupSystem.PopupEntity(Loc.GetString("strippable-component-alert-owner-insert",
                                                         ("user", Identity.Entity(user, EntityManager)),
-                                                        ("item", user.Comp.ActiveHandEntity!.Value)
-                                                        ("userEnt", user)), target, target, PopupType.Large);
+                                                        ("item", user.Comp.ActiveHandEntity!.Value)),
+                                                        target, target, PopupType.Large);
 
             var prefix = stealth ? "stealthily " : "";
             _adminLogger.Add(LogType.Stripping, LogImpact.Low, $"{ToPrettyString(user):actor} is trying to {prefix}place the item {ToPrettyString(held):item} in {ToPrettyString(target):target}'s {slot} slot");
@@ -316,8 +316,8 @@ public sealed class StrippableSystem : SharedStrippableSystem
                 else
                     _popupSystem.PopupEntity(Loc.GetString("strippable-component-alert-owner",
                                                             ("user", Identity.Entity(user, EntityManager)),
-                                                            ("item", item)
-                                                            ("userEnt", user)), target, target, PopupType.Large);
+                                                            ("item", item)),
+                                                            target, target, PopupType.Large);
             }
 
             var prefix = stealth ? "stealthily " : "";
@@ -420,8 +420,7 @@ public sealed class StrippableSystem : SharedStrippableSystem
             if (!stealth)
                 _popupSystem.PopupEntity(Loc.GetString("strippable-component-alert-owner-insert-hand",
                                                         ("user", Identity.Entity(user, EntityManager)),
-                                                        ("item", user.Comp.ActiveHandEntity!.Value)
-                                                        ("userEnt", user)),
+                                                        ("item", user.Comp.ActiveHandEntity!.Value)),
                                                         target, target, PopupType.Large);
 
             var prefix = stealth ? "stealthily " : "";
@@ -523,8 +522,7 @@ public sealed class StrippableSystem : SharedStrippableSystem
             if (!stealth)
                 _popupSystem.PopupEntity(Loc.GetString("strippable-component-alert-owner",
                                                         ("user", Identity.Entity(user, EntityManager)),
-                                                        ("item", item),
-                                                        ("userEnt" user))
+                                                        ("item", item)),
                                                         target, target);
 
             var prefix = stealth ? "stealthily " : "";
