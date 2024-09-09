@@ -317,7 +317,7 @@
     state: pda-chaplain
 
 - type: entity
-  name: quartermaster PDA
+  name: harbormaster PDA
   parent: BasePDA
   id: QuartermasterPDA
   description: PDA for the guy that orders the guns.
@@ -431,7 +431,7 @@
 - type: entity
   parent: BasePDA
   id: CaptainPDA
-  name: captain PDA
+  name: overseer PDA
   description: Surprisingly no different from your PDA.
   components:
   - type: Pda
