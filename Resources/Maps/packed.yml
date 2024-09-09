@@ -7224,7 +7224,7 @@ entities:
       pos: 24.5,-39.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -5824.1685
+      secondsUntilStateChange: -5888.925
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -8766,13 +8766,6 @@ entities:
     - type: Transform
       pos: 71.56963,14.339729
       parent: 2
-- proto: AntimovCircuitBoard
-  entities:
-  - uid: 13653
-    components:
-    - type: Transform
-      pos: 52.427402,31.841324
-      parent: 2
 - proto: APCBasic
   entities:
   - uid: 340
@@ -9782,7 +9775,7 @@ entities:
   - uid: 366
     components:
     - type: Transform
-      pos: 36.58413,35.51777
+      pos: 37.43033,35.332123
       parent: 2
   - uid: 4247
     components:
@@ -10150,6 +10143,18 @@ entities:
     components:
     - type: Transform
       pos: 27.587091,6.7912045
+      parent: 2
+- proto: Biogenerator
+  entities:
+  - uid: 6672
+    components:
+    - type: Transform
+      pos: 36.5,35.5
+      parent: 2
+  - uid: 13653
+    components:
+    - type: Transform
+      pos: 44.5,-5.5
       parent: 2
 - proto: BlastDoor
   entities:
@@ -59148,7 +59153,7 @@ entities:
   - uid: 6755
     components:
     - type: Transform
-      pos: 44.63281,-5.3896046
+      pos: 41.470776,-6.4772377
       parent: 2
 - proto: hydroponicsTray
   entities:
@@ -60465,13 +60470,6 @@ entities:
     - type: Transform
       pos: 9.5,20.5
       parent: 2
-- proto: OverlordCircuitBoard
-  entities:
-  - uid: 13756
-    components:
-    - type: Transform
-      pos: 52.427402,31.122576
-      parent: 2
 - proto: OxygenCanister
   entities:
   - uid: 945
@@ -60792,7 +60790,7 @@ entities:
   - uid: 6754
     components:
     - type: Transform
-      pos: 44.41406,-5.5146046
+      pos: 45.80647,-6.7391644
       parent: 2
 - proto: PlaqueAtmos
   entities:
@@ -72541,11 +72539,6 @@ entities:
     components:
     - type: Transform
       pos: 44.5,-2.5
-      parent: 2
-  - uid: 6672
-    components:
-    - type: Transform
-      pos: 44.5,-5.5
       parent: 2
   - uid: 6756
     components:
@@ -84810,7 +84803,7 @@ entities:
   - uid: 4061
     components:
     - type: Transform
-      pos: 44.304684,-5.2802296
+      pos: 45.547577,-6.7409253
       parent: 2
 - proto: WelderIndustrial
   entities:
