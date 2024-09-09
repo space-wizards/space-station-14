@@ -657,3 +657,22 @@
   - type: Paper
     content: book-text-janitor
 
+- type: entity
+  parent: BookBase
+  id: BookAgony
+  name: the ritual of agony
+  description: The book's cover features a religious symbol and the handwritten title, "The Ritual of Agony - A Guide and Recounting"
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/books.rsi
+      layers:
+      - state: paper
+      - state: cover_base
+        color: "#E0BF33"
+      - state: decor_wingette
+        color: "#E08474"
+      - state: icon_atmos
+        color: "#A63526"
+    - type: Paper
+      content: book-text-agony
+
