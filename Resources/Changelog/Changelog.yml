@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: Do-after bars performed inside containers are hidden from view.
-    type: Add
-  id: 6829
-  time: '2024-06-28T03:34:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29487
 - author: slarticodefast
   changes:
   - message: Passive vents now have the correct sprite.
@@ -3878,3 +3871,11 @@
   id: 7328
   time: '2024-09-09T19:26:10.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31978
+- author: Cojoke-dot
+  changes:
+  - message: Nuclear bombs now require the Nuclear Authentification Disk to toggle
+      anchor.
+    type: Tweak
+  id: 7329
+  time: '2024-09-09T19:30:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29565
