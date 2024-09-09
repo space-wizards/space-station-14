@@ -21,6 +21,9 @@ public abstract partial class SharedStationAiSystem
         SubscribeLocalEvent<ElectrifiedComponent, StationAiElectrifiedEvent>(OnElectrified);
     }
 
+    /// <summary>
+    /// Attempts to bolt door. If wire was cut (AI or for bolts) or its not powered - notifies AI and does nothing.
+    /// </summary>
     private void OnAirlockBolt(EntityUid ent, DoorBoltComponent component, StationAiBoltEvent args)
     {
         if (!TryComp<StationAiWhitelistComponent>(ent, out var whiteList))
@@ -37,6 +40,9 @@ public abstract partial class SharedStationAiSystem
         _doors.SetBoltsDown((ent, component), args.Bolted, args.User, predicted: true);
     }
 
+    /// <summary>
+    /// Attempts to bolt door. If wire was cut (AI) or its not powered - notifies AI and does nothing.
+    /// </summary>
     private void OnAirlockEmergencyAccess(EntityUid ent, AirlockComponent component, StationAiEmergencyAccessEvent args)
     {
         if (!TryComp<StationAiWhitelistComponent>(ent, out var whiteList))
@@ -50,19 +56,21 @@ public abstract partial class SharedStationAiSystem
             return;
         }
 
-        _airlocks.ToggleEmergencyAccess((ent, component), args.User, predicted: true);
+        _airlocks.SetEmergencyAccess((ent, component), args.EmergencyAccess, args.User, predicted: true);
     }
 
+    /// <summary>
+    /// Attempts to bolt door. If wire was cut (AI or for one of power-wires) or its not powered - notifies AI and does nothing.
+    /// </summary>
     private void OnElectrified(EntityUid ent, ElectrifiedComponent component, StationAiElectrifiedEvent args)
     {
-        if (
-            !TryComp<ElectrifiedComponent>(ent, out var electrified)
+        if (!TryComp<ElectrifiedComponent>(ent, out var electrified)
             || !TryComp<StationAiWhitelistComponent>(ent, out var whiteList))
         {
             return;
         }
-        SharedApcPowerReceiverComponent? apcPowerReceiverComponent = null;
 
+        SharedApcPowerReceiverComponent? apcPowerReceiverComponent = null;
         if (
             !whiteList.Enabled
             || electrified.IsWireCut
@@ -73,10 +81,10 @@ public abstract partial class SharedStationAiSystem
         )
         {
             _popup.PopupClient(Loc.GetString("ai-device-not-responding"), args.User, PopupType.MediumCaution);
-            return; 
+            return;
         }
 
-        _electrify.ToggleElectrified((ent, component), args.User, predicted: true);
+        _electrify.SetElectrified((ent, component), args.Electrified);
         var soundToPlay = component.Enabled
             ? AirlockOverchargeDisabled
             : AirlockOverchargeEnabled;
@@ -84,20 +92,26 @@ public abstract partial class SharedStationAiSystem
     }
 }
 
+/// <summary> Event for StationAI attempt at bolting/unbolting door. </summary>
 [Serializable, NetSerializable]
 public sealed class StationAiBoltEvent : BaseStationAiAction
 {
+    /// <summary> Marker, should be door bolted or unbolted. </summary>
     public bool Bolted;
 }
 
+/// <summary> Event for StationAI attempt at setting emergency access for door on/off. </summary>
 [Serializable, NetSerializable]
 public sealed class StationAiEmergencyAccessEvent : BaseStationAiAction
 {
+    /// <summary> Marker, should door have emergency access on or off. </summary>
     public bool EmergencyAccess;
 }
 
+/// <summary> Event for StationAI attempt at electrifying/de-electrifying door. </summary>
 [Serializable, NetSerializable]
 public sealed class StationAiElectrifiedEvent : BaseStationAiAction
 {
+    /// <summary> Marker, should door be electrified or no. </summary>
     public bool Electrified;
 }

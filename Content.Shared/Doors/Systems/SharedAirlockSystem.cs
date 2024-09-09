@@ -125,12 +125,15 @@ public abstract class SharedAirlockSystem : EntitySystem
         Appearance.SetData(uid, DoorVisuals.EmergencyLights, component.EmergencyAccess);
     }
 
-    public void ToggleEmergencyAccess(Entity<AirlockComponent> ent, EntityUid? user = null, bool predicted = false)
+    public void SetEmergencyAccess(Entity<AirlockComponent> ent, bool value, EntityUid? user = null, bool predicted = false)
     {
         if(!ent.Comp.Powered)
             return;
-		
-        ent.Comp.EmergencyAccess = !ent.Comp.EmergencyAccess;
+
+        if (ent.Comp.EmergencyAccess == value)
+            return;
+
+        ent.Comp.EmergencyAccess = value;
         Dirty(ent, ent.Comp); // This only runs on the server apparently so we need this.
         UpdateEmergencyLightStatus(ent, ent.Comp);
 		

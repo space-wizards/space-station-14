@@ -99,7 +99,7 @@ public sealed partial class AdminVerbSystem
                     Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/emergency_access.png")),
                     Act = () =>
                     {
-                        _airlockSystem.ToggleEmergencyAccess((args.Target, airlockComp));
+                        _airlockSystem.SetEmergencyAccess((args.Target, airlockComp), !airlockComp.EmergencyAccess);
                     },
                     Impact = LogImpact.Medium,
                     Message = Loc.GetString(airlockComp.EmergencyAccess

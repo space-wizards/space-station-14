@@ -112,9 +112,6 @@ public sealed partial class ElectrifiedComponent : Component
     public SoundSpecifier ShockNoises = new SoundCollectionSpecifier("sparks");
 
     [DataField, AutoNetworkedField]
-    public SoundSpecifier DoorElectrified = new SoundCollectionSpecifier("sparks");
-
-    [DataField, AutoNetworkedField]
     public bool PlaySoundOnShock = true;
 
     [DataField, AutoNetworkedField]

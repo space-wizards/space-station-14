@@ -145,6 +145,7 @@ public abstract partial class SharedStationAiSystem
             Text = isOpen ? Loc.GetString("ai-close") : Loc.GetString("ai-open"),
             Act = () =>
             {
+                // no need to show menu if device is not powered.
                 SharedApcPowerReceiverComponent? component = null;
                 if (PowerReceiver.ResolveApc(ent.Owner, ref component) && !component.Powered)
                 {

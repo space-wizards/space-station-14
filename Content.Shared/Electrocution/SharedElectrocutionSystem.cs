@@ -23,6 +23,19 @@ namespace Content.Shared.Electrocution
             Dirty(uid, insulated);
         }
 
+        /// <summary>
+        /// Sets electrified value of component and marks dirty if required.
+        /// </summary>
+        public void SetElectrified(Entity<ElectrifiedComponent> ent, bool value)
+        {
+            var oldValue = ent.Comp.Enabled;
+            ent.Comp.Enabled = value;
+            if (value != oldValue)
+            {
+                Dirty(ent, ent.Comp);
+            }
+        }
+
         /// <param name="uid">Entity being electrocuted.</param>
         /// <param name="sourceUid">Source entity of the electrocution.</param>
         /// <param name="shockDamage">How much shock damage the entity takes.</param>
@@ -43,12 +56,6 @@ namespace Content.Shared.Electrocution
         private void OnInsulatedElectrocutionAttempt(EntityUid uid, InsulatedComponent insulated, ElectrocutionAttemptEvent args)
         {
             args.SiemensCoefficient *= insulated.Coefficient;
-        }
-		
-		public void ToggleElectrified(Entity<ElectrifiedComponent> ent, EntityUid? user = null, bool predicted = false)
-        {
-            ent.Comp.Enabled = !ent.Comp.Enabled;
-            Dirty(ent, ent.Comp);
         }
     }
 }
