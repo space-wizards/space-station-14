@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: KonstantinAngelov
-  changes:
-  - message: Chef's Cookbook has a more IC name.
-    type: Tweak
-  id: 6826
-  time: '2024-06-27T15:11:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29467
 - author: metalgearsloth
   changes:
   - message: Ushanka no longer applies an accent to your name.
@@ -3868,3 +3861,12 @@
   id: 7325
   time: '2024-09-09T19:19:16.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31997
+- author: qwerltaz
+  changes:
+  - message: Dragon ghost role now spawns outside the station.
+    type: Tweak
+  - message: Dragon ghost role now spawns where advertised!
+    type: Fix
+  id: 7326
+  time: '2024-09-09T19:22:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31890
