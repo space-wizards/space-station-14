@@ -18,9 +18,6 @@ namespace Content.Server.Voting;
 public sealed class VotingSystem : EntitySystem
 {
 
-    private EntityQuery<GhostComponent> _ghostQuery;
-
-    [Dependency] private readonly GhostSystem _ghostSystem = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IAdminManager _adminManager = default!;
     [Dependency] private readonly IServerDbManager _dbManager = default!;
@@ -31,8 +28,6 @@ public sealed class VotingSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-
-        _ghostQuery = GetEntityQuery<GhostComponent>();
 
         SubscribeNetworkEvent<VotePlayerListRequestEvent>(OnVotePlayerListRequestEvent);
     }
