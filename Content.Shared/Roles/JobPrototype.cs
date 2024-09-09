@@ -71,7 +71,7 @@ namespace Content.Shared.Roles
         /// <summary>
         ///     Should the selected traits be applied for this job?
         /// </summary>
-        [DataField("applyTraits")]
+        [DataField]
         public bool ApplyTraits { get; private set; } = true;
 
         /// <summary>
