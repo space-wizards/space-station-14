@@ -11579,7 +11579,7 @@ entities:
       pos: 24.5,16.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -15063.2295
+      secondsUntilStateChange: -15146.963
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -16119,6 +16119,18 @@ entities:
     components:
     - type: Transform
       pos: 20.5,3.5
+      parent: 8364
+- proto: Biogenerator
+  entities:
+  - uid: 6124
+    components:
+    - type: Transform
+      pos: 46.5,-5.5
+      parent: 8364
+  - uid: 22442
+    components:
+    - type: Transform
+      pos: -2.5,49.5
       parent: 8364
 - proto: BlastDoor
   entities:
@@ -68532,13 +68544,6 @@ entities:
     - type: Transform
       pos: 51.5,-22.5
       parent: 8364
-- proto: ClothingHandsGlovesLeather
-  entities:
-  - uid: 27536
-    components:
-    - type: Transform
-      pos: 46.440716,-5.4763584
-      parent: 8364
 - proto: ClothingHandsGlovesNitrile
   entities:
   - uid: 515
@@ -69941,11 +69946,6 @@ entities:
     - type: Transform
       pos: -13.487051,-36.526093
       parent: 8364
-  - uid: 22442
-    components:
-    - type: Transform
-      pos: 3.487607,-14.509554
-      parent: 8364
 - proto: ComputerAlert
   entities:
   - uid: 661
@@ -70157,18 +70157,6 @@ entities:
       parent: 8364
 - proto: ComputerFrame
   entities:
-  - uid: 3539
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -1.5,-14.5
-      parent: 8364
-  - uid: 3540
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 0.5,-14.5
-      parent: 8364
   - uid: 16630
     components:
     - type: Transform
@@ -84334,7 +84322,7 @@ entities:
       pos: -34.5,-14.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -9251.767
+      secondsUntilStateChange: -9335.5
       state: Closing
   - uid: 15010
     components:
@@ -121320,11 +121308,6 @@ entities:
     - type: Transform
       pos: -13.487051,-35.479218
       parent: 8364
-  - uid: 22443
-    components:
-    - type: Transform
-      pos: -4.512393,-14.478304
-      parent: 8364
 - proto: IngotGold
   entities:
   - uid: 12087
@@ -143982,6 +143965,20 @@ entities:
     - type: Transform
       pos: 34.5,-36.5
       parent: 8364
+- proto: StationAiUploadComputer
+  entities:
+  - uid: 3539
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -1.5,-14.5
+      parent: 8364
+  - uid: 6123
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 0.5,-14.5
+      parent: 8364
 - proto: StationAnchor
   entities:
   - uid: 15979
@@ -149247,11 +149244,6 @@ entities:
     components:
     - type: Transform
       pos: -6.5,30.5
-      parent: 8364
-  - uid: 10706
-    components:
-    - type: Transform
-      pos: 46.5,-5.5
       parent: 8364
   - uid: 10787
     components:
@@ -172474,11 +172466,23 @@ entities:
       rot: 3.141592653589793 rad
       pos: 28.5,-110.5
       parent: 8364
+  - uid: 10706
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -1.5,-14.5
+      parent: 8364
   - uid: 15490
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 8.5,-18.5
+      parent: 8364
+  - uid: 21746
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 0.5,-14.5
       parent: 8364
 - proto: WindoorSecureEngineeringLocked
   entities:
@@ -173565,6 +173569,12 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -4.5,-14.5
       parent: 8364
+  - uid: 3540
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -1.5,-14.5
+      parent: 8364
   - uid: 3541
     components:
     - type: Transform
@@ -173618,6 +173628,34 @@ entities:
     components:
     - type: Transform
       pos: 3.5,-14.5
+      parent: 8364
+  - uid: 6122
+    components:
+    - type: Transform
+      pos: -1.5,-14.5
+      parent: 8364
+  - uid: 6142
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -1.5,-14.5
+      parent: 8364
+  - uid: 6143
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 0.5,-14.5
+      parent: 8364
+  - uid: 6144
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 0.5,-14.5
+      parent: 8364
+  - uid: 6224
+    components:
+    - type: Transform
+      pos: 0.5,-14.5
       parent: 8364
   - uid: 7034
     components:
