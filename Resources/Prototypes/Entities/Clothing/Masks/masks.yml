@@ -78,8 +78,8 @@
 - type: entity
   parent: ClothingMaskGasAtmos
   id: ClothingMaskGasCaptain
-  name: captain's gas mask
-  description: Nanotrasen cut corners and repainted a spare atmospheric gas mask, but don't tell anyone.
+  name: overseer's gas mask
+  description: Stuffy and damp. You don't want to wear this.
   components:
   - type: Sprite
     sprite: Clothing/Mask/gascaptain.rsi
@@ -105,7 +105,7 @@
   parent: ClothingMaskGas
   id: ClothingMaskGasExplorer
   name: explorer gas mask
-  description: A military-grade gas mask that can be connected to an air supply.
+  description: A military-grade gas mask that can be connected to an air supply for protection from the cold ocean.
   components:
   - type: Sprite
     sprite: Clothing/Mask/gasexplorer.rsi
@@ -181,7 +181,7 @@
       Steel: 50
       Plastic: 100
   - type: StaticPrice
-    price: 12.5 # increases in price after decomposed into raw materials
+    price: 12.5
 
 - type: entity
   parent: ClothingMaskBase
@@ -289,7 +289,7 @@
   parent: ClothingMaskBase
   id: ClothingMaskMuzzle
   name: muzzle
-  description: To stop that awful noise.
+  description: For the prisoners who yap.
   components:
   - type: Item
     size: Tiny
