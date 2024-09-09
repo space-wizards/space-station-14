@@ -22,6 +22,7 @@
   - type: Tag
     tags:
     - WhitelistChameleon
+    - SecurityHelmet
   - type: HideLayerClothing
     slots:
     - HeadTop
@@ -231,7 +232,8 @@
     quickEquip: true
   - type: IngestionBlocker
   - type: TemperatureProtection
-    coefficient: 0.005
+    heatingCoefficient: 0.01
+    coolingCoefficient: 0.2
   - type: FireProtection
     reduction: 0.15 # not fully sealed so less protection
   - type: IdentityBlocker
@@ -259,7 +261,8 @@
     quickEquip: true
   - type: IngestionBlocker
   - type: TemperatureProtection
-    coefficient: 0.005
+    heatingCoefficient: 0.01
+    coolingCoefficient: 0.2
   - type: FireProtection
     reduction: 0.2
   - type: PressureProtection
@@ -400,3 +403,93 @@
     sprite: Clothing/Head/Helmets/podwars_helmet.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/podwars_helmet.rsi
+
+#Justice Helmet
+- type: entity
+  parent: ClothingHeadHelmetBasic
+  id: ClothingHeadHelmetJustice
+  name: justice helm
+  description: Advanced security gear. Protects the station from ne'er-do-wells.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/justice.rsi
+    layers:
+      - state: icon
+      - state: icon-light
+        visible: false
+        shader: unshaded
+        map: [ "light" ]
+  - type: Appearance
+  - type: Clothing
+    sprite: Clothing/Head/Helmets/justice.rsi
+    equippedPrefix: off
+  - type: ItemToggle
+    predictable: false # issues between ToggleCellDraw and ItemToggleActiveSound
+    onUse: false
+    soundActivate:
+      path: /Audio/Items/flashlight_on.ogg
+    soundDeactivate:
+      path: /Audio/Items/flashlight_off.ogg
+  - type: ItemToggleActiveSound
+    activeSound:
+      path: /Audio/Effects/Vehicle/policesiren.ogg
+      params:
+        volume: -4
+  - type: UseDelay
+    delay: 1.0
+  - type: ToggleClothing
+    action: ActionToggleJusticeHelm
+  - type: ItemTogglePointLight
+  - type: ToggleableLightVisuals
+    clothingVisuals:
+      head:
+      - state: on-equipped-HELMET
+        shader: unshaded
+  - type: PointLight
+    enabled: false
+    radius: 1.4
+    energy: 1.4
+    color: red
+    netsync: false
+    mask: /Textures/Effects/LightMasks/double_cone.png
+  - type: RotatingLight
+    speed: 360
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellSmall
+  - type: PowerCellDraw
+    drawRate: 2
+  - type: ToggleCellDraw
+  - type: Construction
+    graph: HelmetJustice
+    node: helmet
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+
+- type: entity
+  parent: ClothingHeadHelmetJustice
+  id: ClothingHeadHelmetJusticeEmpty
+  suffix: Empty
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+
+- type: entity
+  id: ActionToggleJusticeHelm
+  name: Toggle Justice Helm
+  description: Toggles the justice helm on and off.
+  components:
+  - type: InstantAction
+    useDelay: 1
+    itemIconStyle: BigItem
+    event: !type:ToggleActionEvent
