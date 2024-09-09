@@ -103,7 +103,14 @@
     params:
       volume: 6
   tileReactions:
-    - !type:SpillTileReaction
+    - !type:EnsureTileReaction
+      components:
+        - type: Propulsion
+          walkSpeedModifier: 2.0
+          sprintSpeedModifier: 2.0
+          whitelist:
+            components:
+              - SnailSpeed
 
 - type: reagent
   id: Sap

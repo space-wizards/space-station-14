@@ -1,6 +1,4 @@
 using System.Linq;
-using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Clothing;
 using Content.Shared.Fluids.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
