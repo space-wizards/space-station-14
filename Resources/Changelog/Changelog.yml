@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: PJB3005
-  changes:
-  - message: Low pressure damage now does only 1/4th as much damage. This is a band-aid
-      until better mechanics exists for the crew to deal with breaches of various
-      kinds.
-    type: Remove
-  id: 6819
-  time: '2024-06-26T00:48:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29478
 - author: lzk228
   changes:
   - message: Blood now has less satiation.
@@ -3868,3 +3859,11 @@
   id: 7318
   time: '2024-09-08T18:08:06.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31975
+- author: qwerltaz
+  changes:
+  - message: Power cables on the ground are now offset and do not obscure each other
+      or pipes beneath.
+    type: Tweak
+  id: 7319
+  time: '2024-09-09T10:00:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32000
