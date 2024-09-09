@@ -1018,48 +1018,34 @@
     impactEffect: BulletImpactEffectOrangeDisabler
     damage:
       types:
-        Heat: 10
-    soundHit:
-      collection: WeakHit
-    forceSound: true
+        Heat: 13
 
 - type: entity
   name: wide laser barrage
   id: BulletLaserSpread
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: BulletLaser
   components:
   - type: ProjectileSpread
     proto: BulletLaser
-    count: 5 #50 heat damage if you hit all your shots, but wide spread
+    count: 5 #65 heat damage if you hit all your shots, but wide spread
     spread: 30 
 
 - type: entity
-  name : heavy laser bolt
-  id: BulletLaserHeavy
-  parent: BulletLaser
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: Projectile
-    damage:
-      types:
-        Heat: 15
-
-- type: entity
   name: narrow laser barrage
-  id: BulletLaserHeavySpread
-  noSpawn: true
+  id: BulletLaserSpreadNarrow
+  categories: [ HideSpawnMenu ]
   parent: BulletLaser
   components:
   - type: ProjectileSpread
     proto: BulletLaser
-    count: 3 #45 heat damage if you hit all your shots, but narrower spread
+    count: 4 #52 heat damage if you hit all your shots, but narrower spread
     spread: 10
 
 - type: entity
   name: disabling laser barrage
   id: BulletDisablerSmgSpread
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: BulletDisablerSmg
   components:
   - type: ProjectileSpread

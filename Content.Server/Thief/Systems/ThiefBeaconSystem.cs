@@ -15,7 +15,6 @@ namespace Content.Server.Thief.Systems;
 /// </summary>
 public sealed class ThiefBeaconSystem : EntitySystem
 {
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly MindSystem _mind = default!;

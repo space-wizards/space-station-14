@@ -710,11 +710,3 @@
      Plastic: 1000
      Plasma: 500
      Glass: 500
-
-- type: latheRecipe
-  id: ClothingOuterStraightjacket
-  result: ClothingOuterStraightjacket
-  completetime: 4
-  materials:
-    Steel: 200
-    Cloth: 500

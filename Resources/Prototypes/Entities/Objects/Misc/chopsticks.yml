@@ -13,6 +13,9 @@
   - type: Utensil
     types:
     - Fork
+  - type: Tag
+    tags:
+    - Trash
 
 - type: entity
   parent: BaseItem
@@ -28,3 +31,6 @@
   - type: Sprite
     sprite: Objects/Misc/chopstick.rsi
     state: paired
+  - type: Tag
+    tags:
+    - Trash

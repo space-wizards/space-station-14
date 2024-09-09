@@ -128,12 +128,12 @@ public sealed partial class RoboticsConsoleWindow : FancyWindow
         };
 
         var text = new FormattedMessage();
-        text.PushMarkup(Loc.GetString("robotics-console-model", ("name", model)));
-        text.AddMarkup(Loc.GetString("robotics-console-designation"));
+        text.AddMarkupOrThrow($"{Loc.GetString("robotics-console-model", ("name", model))}\n");
+        text.AddMarkupOrThrow(Loc.GetString("robotics-console-designation"));
         text.AddText($" {data.Name}\n"); // prevent players trolling by naming borg [color=red]satan[/color]
-        text.PushMarkup(Loc.GetString("robotics-console-battery", ("charge", (int) (data.Charge * 100f)), ("color", batteryColor)));
-        text.PushMarkup(Loc.GetString("robotics-console-brain", ("brain", data.HasBrain)));
-        text.AddMarkup(Loc.GetString("robotics-console-modules", ("count", data.ModuleCount)));
+        text.AddMarkupOrThrow($"{Loc.GetString("robotics-console-battery", ("charge", (int)(data.Charge * 100f)), ("color", batteryColor))}\n");
+        text.AddMarkupOrThrow($"{Loc.GetString("robotics-console-brain", ("brain", data.HasBrain))}\n");
+        text.AddMarkupOrThrow(Loc.GetString("robotics-console-modules", ("count", data.ModuleCount)));
         BorgInfo.SetMessage(text);
 
         // how the turntables

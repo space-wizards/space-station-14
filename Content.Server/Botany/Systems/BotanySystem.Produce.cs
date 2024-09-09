@@ -20,7 +20,12 @@ public sealed partial class BotanySystem
             }
         }
 
-        var solutionContainer = _solutionContainerSystem.EnsureSolution(uid, produce.SolutionName, FixedPoint2.Zero, out _);
+        if (!_solutionContainerSystem.EnsureSolution(uid,
+                produce.SolutionName,
+                out var solutionContainer,
+                FixedPoint2.Zero))
+            return;
+
 
         solutionContainer.RemoveAllSolution();
         foreach (var (chem, quantity) in seed.Chemicals)

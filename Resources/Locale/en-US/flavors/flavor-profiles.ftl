@@ -50,6 +50,7 @@ flavor-base-horrible = horrible
 # lmao
 flavor-base-terrible = terrible
 flavor-base-mindful = mindful
+flavor-base-chewy = chewy
 
 # Complex flavors. Put a flavor here when you want something that's more
 # specific.
@@ -123,6 +124,7 @@ flavor-complex-meatballs = like meatballs
 flavor-complex-nettles = like nettles
 flavor-complex-jungle = like jungle
 flavor-complex-vegetables = like vegetables
+flavor-complex-cherry = like cherries
 # use it when there multiple types of veggies
 
 ## Complex foodstuffs (cooked foods, joke flavors, etc)
@@ -172,6 +174,8 @@ flavor-complex-violets = like violets
 flavor-complex-pyrotton = like a burning mouth
 flavor-complex-mothballs = like mothballs
 flavor-complex-paint-thinner = like paint thinner
+flavor-complex-paper = like mushy pulp
+flavor-complex-compressed-meat = like compressed meat
 
 # Drink-specific flavors.
 
