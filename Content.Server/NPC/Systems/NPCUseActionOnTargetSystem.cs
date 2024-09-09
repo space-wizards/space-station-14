@@ -32,7 +32,7 @@ public sealed class NPCUseActionOnTargetSystem : EntitySystem
             var actionEnt = _actions.AddAction(ent, key);
 
             if (actionEnt is null)
-                return;
+                continue;
 
             ent.Comp.ActionsEntities[actionEnt.Value] = value;
         }
