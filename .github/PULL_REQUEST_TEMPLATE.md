@@ -1,6 +1,6 @@
-<!--
-Impstation note: there's no need to read all the official contributing guidelines, but please DON'T combine upstream changes with your own changes. Make separate pull requests for separate changes.
--->
+<!-- Impstation note: there's no need to read all the official contributing guidelines,
+but please DON'T combine upstream changes with your own changes.
+Make separate pull requests for separate changes. -->
 <!-- Guidelines: https://docs.spacestation14.io/en/getting-started/pr-guideline -->
 
 **Changelog**
