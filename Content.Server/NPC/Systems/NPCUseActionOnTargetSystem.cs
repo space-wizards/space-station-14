@@ -1,6 +1,7 @@
 using Content.Server.NPC.Components;
 using Content.Server.NPC.HTN;
 using Content.Shared.Actions;
+using Content.Shared.Random.Helpers;
 using Robust.Shared.Timing;
 using Robust.Shared.Random;
 using System.Linq;
@@ -12,7 +13,6 @@ public sealed class NPCUseActionOnTargetSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -43,7 +43,7 @@ public sealed class NPCUseActionOnTargetSystem : EntitySystem
         if (!Resolve(user, ref user.Comp, false))
             return false;
 
-        var choosenAction = ChooseAction(user.Comp.ActionsEntities);
+        var choosenAction = SharedRandomExtensions.Pick(_random, user.Comp.ActionsEntities);
 
         if (!TryComp<EntityWorldTargetActionComponent>(choosenAction, out var action))
             return false;
@@ -80,36 +80,4 @@ public sealed class NPCUseActionOnTargetSystem : EntitySystem
             TryUseAction((uid, comp), target);
         }
     }
-
-    private EntityUid ChooseAction(Dictionary<EntityUid, float> actions)
-    {
-        float totalWeight = 0;
-        EntityUid maxKey = default;
-        float maxWeight = float.MinValue;
-
-        foreach (var action in actions)
-        {
-            totalWeight += action.Value;
-
-            if (action.Value > maxWeight)
-            {
-                maxWeight = action.Value;
-                maxKey = action.Key;
-            }
-        }
-
-        float randomFloat = _random.NextFloat() * totalWeight;
-
-        foreach (var action in actions)
-        {
-            if (randomFloat <= action.Value)
-            {
-                return action.Key;
-            }
-            randomFloat -= action.Value;
-        }
-
-        return maxKey;
-    }
-
 }
