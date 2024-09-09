@@ -18,6 +18,7 @@
       - InsideEntityStorage # no clark kent going in phone booth and becoming superman
       - MindContainer # no
       - Pda # PDAs currently make you invisible /!\
+      - HTN # for medibot
     polymorph:
       entity: ChameleonDisguise
 
