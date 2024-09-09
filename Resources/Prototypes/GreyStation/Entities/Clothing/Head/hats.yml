@@ -171,7 +171,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatHoshatCowboy
-  name: head of security's hat
+  name: sheriff hat
   description: "There's a new sheriff in station."
   components:
   - type: Sprite

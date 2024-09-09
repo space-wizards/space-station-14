@@ -1,15 +1,35 @@
 - type: entity
-  parent: ClothingOuterStorageBase
+  parent: ClothingOuterWinterCoat
+  id: ClothingOuterCoatLettermanBlue
+  name: blue letterman jacket
+  description: It's a blue highschool jacket with a big '14' stitched onto the back.
+  components:
+  - type: Sprite
+    sprite: GreyStation/Clothing/OuterClothing/Misc/letterman_jacket_blue.rsi
+  - type: Clothing
+    sprite: GreyStation/Clothing/OuterClothing/Misc/letterman_jacket_blue.rsi
+
+- type: entity
+  parent: ClothingOuterWinterCoat
+  id: ClothingOuterCoatLettermanRed
+  name: red letterman jacket
+  description: It's a red letterman jacket with a big '14' stitched onto the back.
+  components:
+  - type: Sprite
+    sprite: GreyStation/Clothing/OuterClothing/Misc/letterman_jacket_red.rsi
+  - type: Clothing
+    sprite: GreyStation/Clothing/OuterClothing/Misc/letterman_jacket_red.rsi
+
+- type: entity
+  parent: ClothingOuterWinterCoat
   id: ClothingOuterCoatLetterman
   name: brown letterman jacket
   description: It's a brown letterman jacket.
   components:
   - type: Sprite
-    sprite: GreyStation/Clothing/OuterClothing/Coats/letterman.rsi
+    sprite: GreyStation/Clothing/OuterClothing/Misc/letterman_jacket_brown.rsi
   - type: Clothing
-    sprite: GreyStation/Clothing/OuterClothing/Coats/letterman.rsi
-  - type: TemperatureProtection
-    coefficient: 0.1
+    sprite: GreyStation/Clothing/OuterClothing/Misc/letterman_jacket_brown.rsi
   - type: Armor
     modifiers:
       coefficients:

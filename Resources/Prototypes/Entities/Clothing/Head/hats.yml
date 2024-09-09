@@ -124,9 +124,9 @@
   description: A black beret with a commander's rank emblem. For officers that are more inclined towards style than safety.
   components:
   - type: Sprite
-    sprite: DeltaV/Clothing/Head/Hats/beret_hos.rsi # Grey Station - Resprited
+    sprite: GreyStation/Clothing/Head/Hats/beret_hos.rsi # Grey Station - Resprited
   - type: Clothing
-    sprite: DeltaV/Clothing/Head/Hats/beret_hos.rsi # Grey Station - Resprited
+    sprite: GreyStation/Clothing/Head/Hats/beret_hos.rsi # Grey Station - Resprited
   - type: Tag
     tags:
     - ClothMade
@@ -321,9 +321,9 @@
   description: The robust standard-issue cap of the Head of Security. For showing the officers who's in charge.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hats/hoshat.rsi
+    sprite: GreyStation/Clothing/Head/Hats/hoshat.rsi # GreyStation - Resprite
   - type: Clothing
-    sprite: Clothing/Head/Hats/hoshat.rsi
+    sprite: GreyStation/Clothing/Head/Hats/hoshat.rsi # GreyStation - Resprite
   - type: Tag
     tags:
     - ClothMade
