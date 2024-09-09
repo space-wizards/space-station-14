@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: You can now interact with magic mirrors.
-    type: Fix
-  id: 6822
-  time: '2024-06-26T14:25:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29491
 - author: Doomsdrayk
   changes:
   - message: Disposal units no longer protect their contents from nuclear explosions.
@@ -3868,3 +3861,11 @@
   id: 7321
   time: '2024-09-09T11:02:15.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31438
+- author: PJB3005
+  changes:
+  - message: The emergency shuttle will now wait at the station longer if it couldn't
+      dock at evac.
+    type: Tweak
+  id: 7322
+  time: '2024-09-09T18:10:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31496
