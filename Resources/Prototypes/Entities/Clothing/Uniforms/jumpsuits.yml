@@ -636,6 +636,17 @@
 
 - type: entity
   parent: [ClothingUniformBase, BaseRestrictedContraband]
+  id: ClothingUniformSecurityTrooper
+  name: trooper uniform
+  description: A formal uniform issued to the Nanotrasen Troopers, usually it comes with a car.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/security_trooper.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/security_trooper.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, BaseRestrictedContraband]
   id: ClothingUniformJumpsuitWarden
   name: warden's uniform
   description: A formal security suit for officers complete with Nanotrasen belt buckle.
