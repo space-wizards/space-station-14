@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: JIPDawg
-  changes:
-  - message: Changed the sound of pulling back the foam crossbow from the sound of
-      a Flash to just pulling back a bow.
-    type: Tweak
-  id: 6828
-  time: '2024-06-28T00:23:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29508
 - author: Plykiya
   changes:
   - message: Do-after bars performed inside containers are hidden from view.
@@ -3871,3 +3863,18 @@
   id: 7327
   time: '2024-09-09T19:23:57.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31831
+- author: Blackern5000
+  changes:
+  - message: Normal and reinforced windows have been made directly upgradable using
+      rods, plasma, uranium, or plasteel.
+    type: Add
+  - message: Reinforced plasma and uranium windows have been made tougher.
+    type: Tweak
+  - message: Windows have been made to correctly display their damage visuals.
+    type: Fix
+  - message: Reinforced plasma windows have been given the correct amount of hp and
+      no longer have 12x the amount they should.
+    type: Fix
+  id: 7328
+  time: '2024-09-09T19:26:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31978
