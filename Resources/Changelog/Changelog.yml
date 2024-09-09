@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Ushanka no longer applies an accent to your name.
-    type: Tweak
-  id: 6827
-  time: '2024-06-28T00:08:09.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29524
 - author: JIPDawg
   changes:
   - message: Changed the sound of pulling back the foam crossbow from the sound of
@@ -3870,3 +3863,11 @@
   id: 7326
   time: '2024-09-09T19:22:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31890
+- author: yuitop
+  changes:
+  - message: Fixed some cases when surveillance camera's red light not turning off
+      when needed
+    type: Fix
+  id: 7327
+  time: '2024-09-09T19:23:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31831
