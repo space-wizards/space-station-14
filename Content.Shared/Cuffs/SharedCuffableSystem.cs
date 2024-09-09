@@ -376,7 +376,8 @@ namespace Content.Shared.Cuffs
                     _popup.PopupClient(Loc.GetString("handcuff-component-cuff-interrupt-message",
                         ("targetName", Identity.Name(target, EntityManager, user))), user, user);
                     _popup.PopupClient(Loc.GetString("handcuff-component-cuff-interrupt-other-message",
-                        ("otherName", Identity.Name(user, EntityManager, target))), target, target);
+                        ("otherName", Identity.Name(user, EntityManager, target))
+                        ("otherEnt", user)), target, target);
                 }
             }
         }
@@ -478,14 +479,16 @@ namespace Content.Shared.Cuffs
             if (!TryComp<HandsComponent>(target, out var hands))
             {
                 _popup.PopupClient(Loc.GetString("handcuff-component-target-has-no-hands-error",
-                    ("targetName", Identity.Name(target, EntityManager, user))), user, user);
+                    ("targetName", Identity.Name(target, EntityManager, user))
+                    ("targetEnt", target)), user, user);
                 return true;
             }
 
             if (cuffable.CuffedHandCount >= hands.Count)
             {
                 _popup.PopupClient(Loc.GetString("handcuff-component-target-has-no-free-hands-error",
-                    ("targetName", Identity.Name(target, EntityManager, user))), user, user);
+                    ("targetName", Identity.Name(target, EntityManager, user))
+                    ("targetEnt", target)), user, user);
                 return true;
             }
 

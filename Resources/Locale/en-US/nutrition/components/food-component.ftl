@@ -2,12 +2,12 @@
 ### Interaction Messages
 
 # When trying to eat food without the required utensil... but you gotta hold it
-food-you-need-to-hold-utensil = You need to be holding a {$utensil} to eat that!
+food-you-need-to-hold-utensil = You need to be holding {INDEFINITE($utensil)} {$utensil} to eat that!
 
 food-nom = Nom. {$flavors}
-food-swallow = You swallow the {$food}. {$flavors}
+food-swallow = You swallow { THE($food) }. {$flavors}
 
-food-has-used-storage = You cannot eat the {$food} with an item stored inside.
+food-has-used-storage = You cannot eat { THE($food) } with an item stored inside.
 
 food-system-remove-mask = You need to take off the {$entity} first.
 
@@ -24,6 +24,6 @@ food-system-verb-eat = Eat
 
 ## Force feeding
 
-food-system-force-feed = {CAPITALIZE(THE($user))} is trying to feed you something!
+food-system-force-feed = {CAPITALIZE(THE($user))} { CONJUGATE-BE($userEnt) } trying to feed you something!
 food-system-force-feed-success = {CAPITALIZE(THE($user))} forced you to eat something! {$flavors}
 food-system-force-feed-success-user = You successfully feed {THE($target)}

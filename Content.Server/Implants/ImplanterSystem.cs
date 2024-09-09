@@ -62,7 +62,7 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
             if (implant.HasValue && !component.AllowMultipleImplants && CheckSameImplant(target, implant.Value))
             {
                 var name = Identity.Name(target, EntityManager, args.User);
-                var msg = Loc.GetString("implanter-component-implant-already", ("implant", implant), ("target", name));
+                var msg = Loc.GetString("implanter-component-implant-already", ("implant", implant), ("target", name), ("targetEnt", target));
                 _popup.PopupEntity(msg, target, args.User);
                 args.Handled = true;
                 return;
@@ -110,7 +110,7 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
         _popup.PopupEntity(Loc.GetString("injector-component-injecting-user"), target, user);
 
         var userName = Identity.Entity(user, EntityManager);
-        _popup.PopupEntity(Loc.GetString("implanter-component-implanting-target", ("user", userName)), user, target, PopupType.LargeCaution);
+        _popup.PopupEntity(Loc.GetString("implanter-component-implanting-target", ("user", userName), ("userEnt", user)), user, target, PopupType.LargeCaution);
     }
 
     /// <summary>

@@ -179,7 +179,7 @@ public sealed class FoodSystem : EntitySystem
         if (forceFeed)
         {
             var userName = Identity.Entity(user, EntityManager);
-            _popup.PopupEntity(Loc.GetString("food-system-force-feed", ("user", userName)),
+            _popup.PopupEntity(Loc.GetString("food-system-force-feed", ("user", userName), ("userEnt", user)),
                 user, target);
 
             // logging
