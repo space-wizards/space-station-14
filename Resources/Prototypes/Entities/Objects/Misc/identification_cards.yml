@@ -114,7 +114,7 @@
 - type: entity
   parent: IDCardStandard
   id: CaptainIDCard
-  name: captain ID card
+  name: overseer ID card
   components:
   - type: Sprite
     layers:
@@ -231,7 +231,7 @@
 - type: entity
   parent: IDCardStandard
   id: QuartermasterIDCard
-  name: quartermaster ID card
+  name: harbormaster ID card
   components:
     - type: Sprite
       layers:
