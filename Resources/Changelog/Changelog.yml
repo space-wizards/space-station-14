@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Passive vents now have the correct sprite.
-    type: Fix
-  id: 6830
-  time: '2024-06-28T12:33:03.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29536
 - author: Plykiya
   changes:
   - message: Icons in the chameleon menu now appear correctly.
@@ -3879,3 +3872,10 @@
   id: 7329
   time: '2024-09-09T19:30:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29565
+- author: Hreno
+  changes:
+  - message: Display agents' jobs in the Round End Summary window.
+    type: Add
+  id: 7330
+  time: '2024-09-09T19:31:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31652
