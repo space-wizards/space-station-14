@@ -89,7 +89,7 @@
   - type: Fiber
     fiberColor: fibers-blue
 
-# Blue Gloves
+# Teal Gloves
 - type: entity
   parent: ClothingHandsGlovesSyntheticBase
   id: ClothingHandsGlovesColorTeal
