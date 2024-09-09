@@ -24,7 +24,6 @@ public sealed partial class PlantMutateChemicals : EntityEffect
         var chemicals = plantholder.Seed.Chemicals;
         var randomChems = prototypeManager.Index<WeightedRandomFillSolutionPrototype>("RandomPickBotanyReagent").Fills;
 
-
         // Add a random amount of a random chemical to this set of chemicals
         if (randomChems != null)
         {

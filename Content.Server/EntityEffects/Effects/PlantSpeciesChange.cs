@@ -15,7 +15,6 @@ public sealed partial class PlantSpeciesChange : EntityEffect
     public override void Effect(EntityEffectBaseArgs args)
     {
         var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-        //TODO: get plant seed, then species
         var plantholder = args.EntityManager.GetComponent<PlantHolderComponent>(args.TargetEntity);
 
         if (plantholder.Seed == null)

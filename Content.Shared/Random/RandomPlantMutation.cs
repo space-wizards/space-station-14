@@ -26,7 +26,7 @@ public sealed partial class RandomPlantMutation
     /// The actual EntityEffect to apply to the target
     /// </summary>
     [DataField]
-    public EntityEffect Mutation = default!; //TODO: rename to Effect or something?
+    public EntityEffect Effect = default!;
 
     /// <summary>
     /// This mutation will target the harvested produce

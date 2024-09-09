@@ -168,7 +168,6 @@ public sealed partial class BotanySystem : EntitySystem
             produce.Seed = proto;
             ProduceGrown(entity, produce);
 
-
             _appearance.SetData(entity, ProduceVisuals.Potency, proto.Potency);
 
             if (proto.Mysterious)

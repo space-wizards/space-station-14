@@ -14,6 +14,7 @@ public sealed partial class PlantMutateExudeGasses : EntityEffect
 {
     [DataField]
     public float MinValue = 0.01f;
+
     [DataField]
     public float MaxValue = 0.5f;
     public override void Effect(EntityEffectBaseArgs args)
@@ -52,6 +53,7 @@ public sealed partial class PlantMutateConsumeGasses : EntityEffect
 {
     [DataField]
     public float MinValue = 0.01f;
+
     [DataField]
     public float MaxValue = 0.5f;
     public override void Effect(EntityEffectBaseArgs args)

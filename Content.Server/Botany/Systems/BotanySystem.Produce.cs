@@ -16,7 +16,7 @@ public sealed partial class BotanySystem
             if (mutation.AppliesToProduce)
             {
                 var args = new EntityEffectBaseArgs(uid, EntityManager);
-                mutation.Mutation.Effect(args);
+                mutation.Effect.Effect(args);
             }
         }
 
@@ -25,7 +25,6 @@ public sealed partial class BotanySystem
                 out var solutionContainer,
                 FixedPoint2.Zero))
             return;
-
 
         solutionContainer.RemoveAllSolution();
         foreach (var (chem, quantity) in seed.Chemicals)
