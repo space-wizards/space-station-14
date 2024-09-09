@@ -5,9 +5,9 @@
   description: It's a blue highschool jacket with a big '14' stitched onto the back.
   components:
   - type: Sprite
-    sprite: GreyStation/Clothing/Misc/letterman_jacket_blue.rsi
+    sprite: GreyStation/Clothing/OuterClothing/Misc/letterman_jacket_blue.rsi
   - type: Clothing
-    sprite: GreyStation/Clothing/Misc/letterman_jacket_blue.rsi
+    sprite: GreyStation/Clothing/OuterClothing/Misc/letterman_jacket_blue.rsi
 
 - type: entity
   parent: ClothingOuterWinterCoat
@@ -16,9 +16,9 @@
   description: It's a red letterman jacket with a big '14' stitched onto the back.
   components:
   - type: Sprite
-    sprite: GreyStation/Clothing/Misc/letterman_jacket_red.rsi
+    sprite: GreyStation/Clothing/OuterClothing/Misc/letterman_jacket_red.rsi
   - type: Clothing
-    sprite: GreyStation/Clothing/Misc/letterman_jacket_red.rsi
+    sprite: GreyStation/Clothing/OuterClothing/Misc/letterman_jacket_red.rsi
 
 - type: entity
   parent: ClothingOuterWinterCoat
@@ -27,9 +27,9 @@
   description: It's a brown letterman jacket.
   components:
   - type: Sprite
-    sprite: GreyStation/Clothing/OuterClothing/Coats/letterman_jacket_brown.rsi
+    sprite: GreyStation/Clothing/OuterClothing/Misc/letterman_jacket_brown.rsi
   - type: Clothing
-    sprite: GreyStation/Clothing/OuterClothing/Coats/letterman_jacket_brown.rsi
+    sprite: GreyStation/Clothing/OuterClothing/Misc/letterman_jacket_brown.rsi
   - type: Armor
     modifiers:
       coefficients:
