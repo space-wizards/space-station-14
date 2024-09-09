@@ -153,10 +153,10 @@
   id: DragonSpawn
   components:
   - type: StationEvent
-    weight: 6.5
+    weight: 3.5
     earliestStart: 40
-    reoccurrenceDelay: 20
-    minimumPlayers: 20
+    reoccurrenceDelay: 40
+    minimumPlayers: 35
   - type: AntagRandomSpawn
   - type: AntagSpawner
     prototype: MobDragon
@@ -182,11 +182,11 @@
   id: NinjaSpawn
   components:
   - type: StationEvent
-    weight: 6
+    weight: 3
     duration: null
     earliestStart: 30
-    reoccurrenceDelay: 20
-    minimumPlayers: 30
+    reoccurrenceDelay: 40
+    minimumPlayers: 35
   - type: SpaceSpawnRule
   - type: AntagLoadProfileRule
   - type: AntagObjectives
@@ -424,9 +424,9 @@
   id: LoneOpsSpawn
   components:
   - type: StationEvent
-    earliestStart: 35
-    weight: 5.5
-    minimumPlayers: 20
+    earliestStart: 60
+    weight: 2
+    minimumPlayers: 35
     duration: 1
   - type: RuleGrids
   - type: LoadMapRule
