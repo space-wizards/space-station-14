@@ -19,6 +19,8 @@ jobs:
 
       - name: Get this week's Contributors
         shell: pwsh
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
         run: Tools/dump_github_contributors.ps1 > Resources/Credits/GitHub.txt
 
       # TODO
