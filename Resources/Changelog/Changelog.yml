@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: Icons in the chameleon menu now appear correctly.
-    type: Fix
-  id: 6831
-  time: '2024-06-28T21:21:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29539
 - author: DogZeroX
   changes:
   - message: Bananium no longer emit rads
@@ -3879,3 +3872,11 @@
   id: 7330
   time: '2024-09-09T19:31:53.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31652
+- author: deltanedas
+  changes:
+  - message: Adjusted the costs and production times of all electronics so they're
+      more consistent with eachother.
+    type: Tweak
+  id: 7331
+  time: '2024-09-09T19:34:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31524
