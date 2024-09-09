@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Doomsdrayk
-  changes:
-  - message: Disposal units no longer protect their contents from nuclear explosions.
-    type: Fix
-  id: 6823
-  time: '2024-06-26T14:25:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29438
 - author: Tayrtahn
   changes:
   - message: Pills and pill canisters no longer have two labels.
@@ -3869,3 +3862,10 @@
   id: 7322
   time: '2024-09-09T18:10:28.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31496
+- author: Boaz1111
+  changes:
+  - message: Pacifists can now use grapple guns.
+    type: Tweak
+  id: 7323
+  time: '2024-09-09T19:15:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32014
