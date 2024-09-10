@@ -432,6 +432,9 @@
     items:
     - Lighter
     - DrinkShaker
+    - BarSpoon
+    - BorgIceBucket
+    - Pitcher
     - BorgDropper
 
 - type: entity
