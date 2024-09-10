@@ -35,11 +35,6 @@
   copies: 1
 
 - type: preloadedGrid
-  id: Bang
-  path: /Maps/Shuttles/ShuttleEvent/bang.yml
-  copies: 1
-
-- type: preloadedGrid
   id: MeatZone
   path: /Maps/Shuttles/ShuttleEvent/meatzone.yml
   copies: 1
@@ -67,11 +62,6 @@
 - type: preloadedGrid
   id: Gym
   path: /Maps/Shuttles/ShuttleEvent/gym.yml
-  copies: 1
-
-- type: preloadedGrid
-  id: Hook
-  path: /Maps/Shuttles/ShuttleEvent/hook.yml
   copies: 1
 
 - type: preloadedGrid
