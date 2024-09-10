@@ -1712,16 +1712,6 @@
     normalState: Mouse_burning
   - type: FoodSequenceElement
     entries:
-      burger:
-        name: food-sequence-burger-content-rat
-      taco:
-        name: food-sequence-content-rat
-      skewer:
-        name: food-sequence-content-rat
-        sprite:
-          sprite: Objects/Consumable/Food/skewer.rsi
-          state: skewer-rat
-
       Taco: RatTaco
       Burger: RatBurger
       Skewer: RatSkewer
