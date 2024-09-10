@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Fix character traits not being validated.
-    type: Fix
-  id: 6838
-  time: '2024-06-29T05:39:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28730
 - author: PJB3005
   changes:
   - message: '"Steal plutonium core" traitor objective has been reverted.'
@@ -3899,3 +3892,10 @@
   id: 7337
   time: '2024-09-09T22:12:25.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31055
+- author: DieselMohawk
+  changes:
+  - message: Made Trooper Uniform accessible for Security Officers in loadouts
+    type: Fix
+  id: 7338
+  time: '2024-09-09T23:59:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32019
