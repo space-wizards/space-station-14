@@ -94,6 +94,10 @@
     clothingPrototypes: 
       head: ClothingHeadHatHoodWinterDefault
     slot: head
+  - type: UserInterface
+    interfaces:
+      enum.ToggleClothingUiKey.Key:
+        type: ToggleableClothingBoundUserInterface
   - type: ContainerContainer
     containers:
       toggleable-clothing: !type:Container {}
@@ -129,6 +133,10 @@
   - type: ContainerContainer
     containers:
       toggleable-clothing: !type:Container {}
+  - type: UserInterface
+    interfaces:
+      enum.ToggleClothingUiKey.Key:
+        type: ToggleableClothingBoundUserInterface
   - type: GroupExamine
   - type: Tag
     tags:
@@ -181,6 +189,10 @@
       toggleable-clothing: !type:Container {}
       storagebase: !type:Container
         ents: []
+  - type: UserInterface
+    interfaces:
+      enum.ToggleClothingUiKey.Key:
+        type: ToggleableClothingBoundUserInterface
 
 - type: entity
   abstract: true

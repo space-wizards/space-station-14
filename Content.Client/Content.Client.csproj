@@ -25,4 +25,9 @@
   </ItemGroup>
   <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets" />
   <Import Project="..\RobustToolbox\MSBuild\XamlIL.targets" />
+  <ItemGroup>
+    <EmbeddedResource Update="Clothing\UI\ToggleableClothingRadialMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
 </Project>

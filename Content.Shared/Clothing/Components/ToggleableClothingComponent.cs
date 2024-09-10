@@ -69,7 +69,13 @@ public sealed partial class ToggleableClothingComponent : Component
     ///     If true it will block unequip of this entity until all attached clothing are removed
     /// </summary>
     [DataField, AutoNetworkedField]
-    public bool BlockUnequipWhenToggle = false;
+    public bool BlockUnequipWhenAttached = false;
+
+    /// <summary>
+    ///     If true all attached will replace already equipped clothing on equip attempt
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool ReplaceCurrentClothing = false;
 }
 
 [Serializable, NetSerializable]

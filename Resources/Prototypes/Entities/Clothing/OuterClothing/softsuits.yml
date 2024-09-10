@@ -34,7 +34,7 @@
 
 #Emergency EVA
 - type: entity
-  parent: ClothingOuterEVASuitBase
+  parent: [ ClothingOuterEVASuitBase, ClothingOuterBaseToggleable ]
   id: ClothingOuterSuitEmergency
   name: emergency EVA suit
   description: An emergency EVA suit with a built-in helmet. It's horribly slow and lacking in temperature protection, but enough to buy you time from the harsh vacuum of space.
@@ -52,9 +52,6 @@
   - type: ToggleableClothing
     clothingPrototypes: 
       head: ClothingHeadHelmetEVALarge
-  - type: ContainerContainer
-    containers:
-      toggleable-clothing: !type:Container {}
 
 #Prisoner EVA
 - type: entity
@@ -92,7 +89,7 @@
 #Paramedic Voidsuit
 #Despite having resistances and looking like a hardsuit, this parents off the EVA suit so it goes here.
 - type: entity
-  parent: ClothingOuterEVASuitBase
+  parent: [ ClothingOuterEVASuitBase, ClothingOuterBaseToggleable ]
   id: ClothingOuterHardsuitVoidParamed
   name: paramedic void suit
   description: A void suit made for paramedics.
@@ -122,6 +119,3 @@
   - type: ToggleableClothing
     clothingPrototypes: 
       head: ClothingHeadHelmetVoidParamed
-  - type: ContainerContainer
-    containers:
-      toggleable-clothing: !type:Container {}

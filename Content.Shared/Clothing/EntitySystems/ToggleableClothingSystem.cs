@@ -28,18 +28,22 @@ public sealed class ToggleableClothingSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedStrippableSystem _strippable = default!;
+    [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ToggleableClothingComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<ToggleableClothingComponent, ComponentInit>(OnToggleableInit);
         SubscribeLocalEvent<ToggleableClothingComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<ToggleableClothingComponent, ToggleClothingEvent>(OnToggleClothing);
+        SubscribeLocalEvent<ToggleableClothingComponent, ToggleClothingEvent>(OnToggleClothingAction);
         SubscribeLocalEvent<ToggleableClothingComponent, GetItemActionsEvent>(OnGetActions);
         SubscribeLocalEvent<ToggleableClothingComponent, ComponentRemove>(OnRemoveToggleable);
         SubscribeLocalEvent<ToggleableClothingComponent, GotUnequippedEvent>(OnToggleableUnequip);
+        SubscribeLocalEvent<ToggleableClothingComponent, ToggleableClothingUiMessage>(OnToggleClothingMessage);
+        SubscribeLocalEvent<ToggleableClothingComponent, BeingUnequippedAttemptEvent>(OnToggleableUnequipAttempt);
 
+        SubscribeLocalEvent<AttachedClothingComponent, ComponentInit>(OnAttachedInit);
         SubscribeLocalEvent<AttachedClothingComponent, InteractHandEvent>(OnInteractHand);
         SubscribeLocalEvent<AttachedClothingComponent, GotUnequippedEvent>(OnAttachedUnequip);
         SubscribeLocalEvent<AttachedClothingComponent, ComponentRemove>(OnRemoveAttached);
@@ -163,6 +167,23 @@ public sealed class ToggleableClothingSystem : EntitySystem
     }
 
     /// <summary>
+    /// Prevents from unequipping entity if all attached not unequipped
+    /// </summary>
+    private void OnToggleableUnequipAttempt(Entity<ToggleableClothingComponent> toggleable, ref BeingUnequippedAttemptEvent args)
+    {
+        var comp = toggleable.Comp;
+
+        if (!comp.BlockUnequipWhenAttached)
+            return;
+
+        if (CheckAttachedToggleStatus(toggleable) == ToggleableClothingAttachedStatus.NoneToggled)
+            return;
+
+        args.Cancel();
+        _popupSystem.PopupClient(Loc.GetString("toggleable-clothing-remove-all-attached-first"), args.Unequipee, args.Unequipee);
+    }
+
+    /// <summary>
     ///     Called when the suit is unequipped, to ensure that the helmet also gets unequipped.
     /// </summary>
     private void OnToggleableUnequip(Entity<ToggleableClothingComponent> toggleable, ref GotUnequippedEvent args)
@@ -275,52 +296,100 @@ public sealed class ToggleableClothingSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Equip or unequip the toggleable clothing.
+    ///     Equip or unequip toggle clothing with ui message
     /// </summary>
-    private void OnToggleClothing(Entity<ToggleableClothingComponent> toggleable, ref ToggleClothingEvent args)
+    private void OnToggleClothingMessage(Entity<ToggleableClothingComponent> toggleable, ref ToggleableClothingUiMessage args)
     {
-        if (args.Handled)
-            return;
+        var attachedUid = GetEntity(args.AttachedClothingUid);
 
-        args.Handled = true;
-        ToggleClothing(args.Performer, toggleable);
+        ToggleClothing(args.Actor, toggleable, attachedUid);
     }
 
-    private void ToggleClothing(EntityUid user, Entity<ToggleableClothingComponent> toggleable)
+    /// <summary>
+    ///     Equip or unequip the toggleable clothing.
+    /// </summary>
+    private void OnToggleClothingAction(Entity<ToggleableClothingComponent> toggleable, ref ToggleClothingEvent args)
     {
         var comp = toggleable.Comp;
+
+        if (args.Handled)
+            return;
 
         if (comp.Container == null || comp.ClothingUids.Count == 0)
             return;
 
+        args.Handled = true;
+
+        // If clothing have only one attached clothing (like helmets) action will just toggle it
+        // If it have more attached clothings, it'll open radial menu
+        if (comp.ClothingUids.Count == 1)
+            ToggleClothing(args.Performer, toggleable, comp.ClothingUids.First().Key);
+        else
+            _uiSystem.OpenUi(toggleable.Owner, ToggleClothingUiKey.Key, args.Performer);
+    }
+
+    private void ToggleClothing(EntityUid user, Entity<ToggleableClothingComponent> toggleable, EntityUid? attachedUid = null)
+    {
+        var comp = toggleable.Comp;
+        var attachedClothings = comp.ClothingUids;
+        var container = comp.Container;
+
+        if (container == null || attachedClothings.Count == 0)
+            return;
+
+        // If container have more than one clothing and function wasn't invoked with UI message it should return null to prevent more problems
+        if (attachedUid == null && attachedClothings.Count != 1)
+            return;
+
         var parent = Transform(toggleable.Owner).ParentUid;
 
-        // Checking first clothing to make others act like it
-        var parts = comp.ClothingUids;
-        var first = parts.First();
+        if (attachedUid == null)
+            attachedUid = attachedClothings.First().Key;
 
-        if (!comp.Container.Contains(first.Key))
+        if (!attachedClothings.TryGetValue(attachedUid.Value, out var slot))
+            return;
+
+        if (string.IsNullOrWhiteSpace(slot))
+            return;
+
+        TryComp<AttachedClothingComponent>(attachedUid, out var attachedComp);
+
+        // If not in clothing container - unequip the attached clothing
+        if (!container.Contains(attachedUid.Value))
         {
-            foreach (var part in parts)
-            {
-                _inventorySystem.TryUnequip(user, parent, part.Value, force: true);
-            }
+            _inventorySystem.TryUnequip(user, parent, slot!, force: true);
+
+            // If attached have clothing in container - equip it
+            if (attachedComp == null || attachedComp.ClothingContainer == null)
+                return;
+
+            var storedClothing = attachedComp.ClothingContainer.ContainedEntity;
+
+            if (storedClothing != null)
+                _inventorySystem.TryEquip(user, storedClothing.Value, slot, force: true);
 
             return;
         }
 
-        foreach (var part in parts)
+        if (_inventorySystem.TryGetSlotEntity(parent, slot, out var currentClothing))
         {
-            if (_inventorySystem.TryGetSlotEntity(parent, part.Value, out var existing))
+            // Check if we need to replace current clothing
+            if (attachedComp == null || !comp.ReplaceCurrentClothing)
             {
-                _popupSystem.PopupClient(Loc.GetString("toggleable-clothing-remove-first", ("entity", existing)),
-                    user, user);
-
-                continue;
+                _popupSystem.PopupClient(Loc.GetString("toggleable-clothing-remove-first", ("entity", currentClothing)), user, user);
+                goto Equip;
             }
 
-            _inventorySystem.TryEquip(user, parent, part.Key, part.Value);
+            // Check if attached clothing have container or this container not empty
+            if (attachedComp.ClothingContainer == null || attachedComp.ClothingContainer.ContainedEntity != null)
+                goto Equip;
+
+            if (_inventorySystem.TryUnequip(user, parent, slot!))
+                _containerSystem.Insert(currentClothing.Value, attachedComp.ClothingContainer);
         }
+
+    Equip:
+        _inventorySystem.TryEquip(user, parent, attachedUid.Value, slot);
     }
 
     private void OnGetActions(Entity<ToggleableClothingComponent> toggleable, ref GetItemActionsEvent args)
@@ -333,11 +402,18 @@ public sealed class ToggleableClothingSystem : EntitySystem
         args.AddAction(comp.ActionEntity.Value);
     }
 
-    private void OnInit(Entity<ToggleableClothingComponent> toggleable, ref ComponentInit args)
+    private void OnToggleableInit(Entity<ToggleableClothingComponent> toggleable, ref ComponentInit args)
     {
         var comp = toggleable.Comp;
 
         comp.Container = _containerSystem.EnsureContainer<Container>(toggleable, comp.ContainerId);
+    }
+
+    private void OnAttachedInit(Entity<AttachedClothingComponent> attached, ref ComponentInit args)
+    {
+        var comp = attached.Comp;
+
+        comp.ClothingContainer = _containerSystem.EnsureContainer<ContainerSlot>(attached, comp.ClothingContainerId);
     }
 
     /// <summary>
@@ -365,6 +441,7 @@ public sealed class ToggleableClothingSystem : EntitySystem
             var spawned = Spawn(prototype.Value, xform.Coordinates);
             var attachedClothing = EnsureComp<AttachedClothingComponent>(spawned);
             attachedClothing.AttachedUid = toggleable;
+            EnsureComp<ContainerManagerComponent>(spawned);
 
             comp.ClothingUids.Add(spawned, prototype.Key);
             _containerSystem.Insert(spawned, comp.Container, containerXform: xform);
@@ -377,6 +454,36 @@ public sealed class ToggleableClothingSystem : EntitySystem
         if (_actionContainer.EnsureAction(toggleable, ref comp.ActionEntity, out var action, comp.Action))
             _actionsSystem.SetEntityIcon(comp.ActionEntity.Value, toggleable, action);
     }
+
+    // Checks status of all attached clothings toggle status
+    public ToggleableClothingAttachedStatus CheckAttachedToggleStatus(Entity<ToggleableClothingComponent> toggleable)
+    {
+        var comp = toggleable.Comp;
+        var container = comp.Container;
+        var attachedClothings = comp.ClothingUids;
+
+        // If entity don't have any attached clothings it means none toggled
+        if (container == null || attachedClothings.Count == 0)
+            return ToggleableClothingAttachedStatus.NoneToggled;
+
+        var toggledCount = 0;
+
+        foreach (var attached in attachedClothings)
+        {
+            if (container.Contains(attached.Key))
+                continue;
+
+            toggledCount++;
+        }
+
+        if (toggledCount == 0)
+            return ToggleableClothingAttachedStatus.NoneToggled;
+
+        if (toggledCount < attachedClothings.Count)
+            return ToggleableClothingAttachedStatus.PartlyToggled;
+
+        return ToggleableClothingAttachedStatus.AllToggled;
+    }
 }
 
 public sealed partial class ToggleClothingEvent : InstantActionEvent
@@ -386,4 +493,15 @@ public sealed partial class ToggleClothingEvent : InstantActionEvent
 [Serializable, NetSerializable]
 public sealed partial class ToggleClothingDoAfterEvent : SimpleDoAfterEvent
 {
+}
+
+/// <summary>
+/// Status of toggleable clothing attachee
+/// </summary>
+[Serializable, NetSerializable]
+public enum ToggleableClothingAttachedStatus : byte
+{
+    NoneToggled,
+    PartlyToggled,
+    AllToggled
 }

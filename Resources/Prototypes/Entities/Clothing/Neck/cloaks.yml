@@ -157,7 +157,10 @@
       head: ClothingHeadHatHoodGoliathCloak
     requiredSlot:
     - neck
-    slot: head
+  - type: UserInterface
+    interfaces:
+      enum.ToggleClothingUiKey.Key:
+        type: ToggleableClothingBoundUserInterface
   - type: ContainerContainer
     containers:
       toggleable-clothing: !type:Container {}
@@ -184,7 +187,10 @@
       head: ClothingHeadHatHoodMoth
     requiredSlot:
     - neck
-    slot: head
+  - type: UserInterface
+    interfaces:
+      enum.ToggleClothingUiKey.Key:
+        type: ToggleableClothingBoundUserInterface
   - type: ContainerContainer
     containers:
       toggleable-clothing: !type:Container {}

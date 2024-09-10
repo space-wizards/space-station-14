@@ -64,8 +64,6 @@
   - type: ToggleableClothing
     clothingPrototypes: 
       head: ClothingHeadHelmetHardsuitAtmos
-      gloves: ClothingHandsGlovesColorYellow
-      shoes: ClothingShoesBootsMag
 
 #Engineering Hardsuit
 - type: entity

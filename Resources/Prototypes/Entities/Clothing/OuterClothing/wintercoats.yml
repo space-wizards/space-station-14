@@ -35,7 +35,7 @@
     price: 50
 
 - type: entity
-  parent: ClothingOuterWinterCoat
+  parent: [ ClothingOuterWinterCoat, ClothingOuterBaseToggleable ]
   id: ClothingOuterWinterCoatToggleable
   name: winter coat with hood
   categories: [ HideSpawnMenu ]
@@ -43,11 +43,6 @@
   - type: ToggleableClothing
     clothingPrototypes: 
       head: ClothingHeadHatHoodWinterDefault
-  - type: ContainerContainer
-    containers:
-      toggleable-clothing: !type:Container {}
-      storagebase: !type:Container
-        ents: []
 
 - type: entity
   parent: ClothingOuterWinterCoatToggleable
