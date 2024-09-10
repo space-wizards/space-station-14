@@ -5,14 +5,14 @@ namespace Content.Shared.Eye;
 /// <summary>
 ///
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(SharedDarkenedVisionSystem))]
 public sealed partial class DarkenedVisionComponent : Component
 {
     /// <summary>
     /// How much is vision darkened
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public float Strength = 0;
 
     /// <summary>
