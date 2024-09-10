@@ -168,8 +168,6 @@ public sealed class MutationSystem : EntitySystem
         val = valMutated;
     }
 
-
-
     private void CrossChemicals(ref Dictionary<string, SeedChemQuantity> val, Dictionary<string, SeedChemQuantity> other)
     {
         // Go through chemicals from the pollen in swab
