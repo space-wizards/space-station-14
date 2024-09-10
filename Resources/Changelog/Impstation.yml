@@ -1397,3 +1397,17 @@
   id: 184
   time: '2024-09-10T05:54:46.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/230
+- author: TGRCdev
+  changes:
+  - message: Mucin speed boost now only affects Gastropoids
+    type: Tweak
+  id: 185
+  time: '2024-09-10T05:55:49.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/228
+- author: FlippenPage
+  changes:
+  - message: gave brigmeds more of their stuff back
+    type: Tweak
+  id: 186
+  time: '2024-09-10T05:56:01.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/233
