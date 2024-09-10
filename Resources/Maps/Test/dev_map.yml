@@ -4386,6 +4386,13 @@ entities:
     - type: Transform
       pos: 1.5,-14.5
       parent: 179
+- proto: PlayerStationAi
+  entities:
+  - uid: 14
+    components:
+    - type: Transform
+      pos: -5.5,-5.5
+      parent: 179
 - proto: PortableGeneratorSuperPacman
   entities:
   - uid: 1016

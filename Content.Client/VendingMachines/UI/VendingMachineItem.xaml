@@ -1,0 +1,16 @@
+<BoxContainer xmlns="https://spacestation14.io"
+            Orientation="Horizontal"
+            HorizontalExpand="True"
+            SeparationOverride="4">
+    <EntityPrototypeView
+            Name="ItemPrototype"
+            Margin="4 4"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            MinSize="32 32"
+            />
+    <Label Name="NameLabel"
+            SizeFlagsStretchRatio="3"
+            HorizontalExpand="True"
+            ClipText="True"/>
+</BoxContainer>

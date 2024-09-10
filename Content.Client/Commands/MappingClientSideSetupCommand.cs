@@ -13,7 +13,6 @@ internal sealed class MappingClientSideSetupCommand : LocalizedCommands
 {
     [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
     [Dependency] private readonly ILightManager _lightManager = default!;
-    [Dependency] private readonly IStateManager _stateManager = default!;
 
     public override string Command => "mappingclientsidesetup";
 
