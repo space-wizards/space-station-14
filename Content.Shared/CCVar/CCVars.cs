@@ -1557,6 +1557,18 @@ namespace Content.Shared.CCVar
             CVarDef.Create("shuttle.emergency_dock_time", 180f, CVar.SERVERONLY);
 
         /// <summary>
+        /// If the emergency shuttle can't dock at a priority port, the dock time will be multiplied with this value.
+        /// </summary>
+        public static readonly CVarDef<float> EmergencyShuttleDockTimeMultiplierOtherDock =
+            CVarDef.Create("shuttle.emergency_dock_time_multiplier_other_dock", 1.6667f, CVar.SERVERONLY);
+
+        /// <summary>
+        /// If the emergency shuttle can't dock at all, the dock time will be multiplied with this value.
+        /// </summary>
+        public static readonly CVarDef<float> EmergencyShuttleDockTimeMultiplierNoDock =
+            CVarDef.Create("shuttle.emergency_dock_time_multiplier_no_dock", 2f, CVar.SERVERONLY);
+
+        /// <summary>
         /// How long after the console is authorized for the shuttle to early launch.
         /// </summary>
         public static readonly CVarDef<float> EmergencyShuttleAuthorizeTime =
