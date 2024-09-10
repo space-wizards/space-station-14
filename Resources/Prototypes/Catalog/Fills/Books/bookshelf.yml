@@ -58,6 +58,7 @@
       - id: BookTruth
       - id: BookWatched
       - id: BookWorld
+      - id: BookAgony
 
 - type: entity
   id: BookshelfFilled
