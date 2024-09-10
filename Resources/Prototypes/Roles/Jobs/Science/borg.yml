@@ -12,7 +12,7 @@
     department: Command
     time: 18000  # 5 hrs
   - !type:OverallPlaytimeRequirement
-      time: 324000 # 90 hrs
+      time: 270000 # 75 hrs, borg already needs 60.
   canBeAntag: false
   icon: JobIconStationAi
   supervisors: job-supervisors-laws
@@ -28,5 +28,5 @@
       time: 216000 # 60 hrs
   canBeAntag: false
   icon: JobIconBorg
-  supervisors: job-supervisors-ai-laws
+  supervisors: job-supervisors-laws
   jobEntity: PlayerBorgGeneric
