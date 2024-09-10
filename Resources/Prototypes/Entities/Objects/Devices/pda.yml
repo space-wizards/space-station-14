@@ -437,7 +437,6 @@
     state: pda-library
 
 - type: entity
-  parent: BasePDA
   parent: LibrarianPDA
   id: VisitorLibrarianPDA
   suffix: Visitor
