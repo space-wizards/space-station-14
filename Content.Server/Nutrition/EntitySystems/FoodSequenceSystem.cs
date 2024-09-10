@@ -116,14 +116,8 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
             return false;
 
         //looking for a suitable FoodSequence prototype
-        ProtoId<FoodSequenceElementPrototype> elementProto = string.Empty;
-        foreach (var pair in element.Comp.Entries)
-        {
-            if (pair.Key == start.Comp.Key)
-            {
-                elementProto = pair.Value;
-            }
-        }
+        if (!element.Comp.Entries.TryGetValue(start.Comp.Key, out var elementProto))
+            return false;
         if (!_proto.TryIndex(elementProto, out var elementIndexed))
             return false;
 
