@@ -73,6 +73,24 @@
   id: BorgArm
 
 - type: Tag
+  id: BorgCargoHead
+
+- type: Tag
+  id: BorgCargoLArm
+
+- type: Tag
+  id: BorgCargoLLeg
+
+- type: Tag
+  id: BorgCargoRArm
+
+- type: Tag
+  id: BorgCargoRLeg
+
+- type: Tag
+  id: BorgCargoTorso
+  
+- type: Tag
   id: BorgEngineerHead
 
 - type: Tag

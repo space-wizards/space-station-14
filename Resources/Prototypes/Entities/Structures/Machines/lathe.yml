@@ -605,6 +605,12 @@
     - RightLegBorgMining
     - HeadBorgMining
     - TorsoBorgMining
+    - LeftArmBorgCargo
+    - RightArmBorgCargo
+    - LeftLegBorgCargo
+    - RightLegBorgCargo
+    - HeadBorgCargo
+    - TorsoBorgCargo
     - LeftArmBorgService
     - RightArmBorgService
     - LeftLegBorgService

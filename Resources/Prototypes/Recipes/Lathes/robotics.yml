@@ -242,6 +242,60 @@
     Glass: 100
 
 - type: latheRecipe
+  id: LeftArmBorgCargo
+  result: LeftArmBorgCargo
+  category: Robotics
+  completetime: 2
+  materials:
+    Steel: 250
+    Glass: 100
+
+- type: latheRecipe
+  id: RightArmBorgCargo
+  result: RightArmBorgCargo
+  category: Robotics
+  completetime: 2
+  materials:
+    Steel: 250
+    Glass: 100
+
+- type: latheRecipe
+  id: LeftLegBorgCargo
+  result: LeftLegBorgCargo
+  category: Robotics
+  completetime: 2
+  materials:
+    Steel: 250
+    Glass: 100
+
+- type: latheRecipe
+  id: RightLegBorgCargo
+  result: RightLegBorgCargo
+  category: Robotics
+  completetime: 2
+  materials:
+    Steel: 250
+    Glass: 100
+
+- type: latheRecipe
+  id: HeadBorgCargo
+  result: HeadBorgCargo
+  category: Robotics
+  completetime: 2
+  materials:
+    Steel: 250
+    Glass: 100
+
+- type: latheRecipe
+  id: TorsoBorgCargo
+  result: TorsoBorgCargo
+  category: Robotics
+  completetime: 2
+  materials:
+    Steel: 250
+    Glass: 100
+
+- type: latheRecipe
   id: LeftArmBorgService
   result: LeftArmBorgService
   category: Robotics
