@@ -102,6 +102,7 @@
   description: A bluespace technology device that alters local temperature. Commonly referred to as a "Space Heater".
   suffix: Unanchored
   components:
+  - type: StationAiWhitelist
   - type: Transform
     anchored: false
   - type: Physics

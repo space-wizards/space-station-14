@@ -16,6 +16,7 @@
     - id: MimicVendorRule
     - id: MouseMigration
     - id: PowerGridCheck
+    - id: RandomSentience
     - id: SlimesSpawn
     - id: SolarFlare
     - id: SpiderClownSpawn
@@ -156,9 +157,12 @@
     earliestStart: 40
     reoccurrenceDelay: 20
     minimumPlayers: 20
-  - type: AntagRandomSpawn
+    duration: null
+  - type: SpaceSpawnRule
+    spawnDistance: 0
   - type: AntagSpawner
     prototype: MobDragon
+  - type: DragonRule
   - type: AntagObjectives
     objectives:
     - CarpRiftsObjective
@@ -173,8 +177,6 @@
       mindComponents:
       - type: DragonRole
         prototype: Dragon
-      - type: RoleBriefing
-        briefing: dragon-role-briefing
 
 - type: entity
   parent: BaseGameRule
@@ -270,114 +272,6 @@
     weight: 7
     duration: 240
   - type: KudzuGrowthRule
-
-- type: entity
-  id: MouseMigration
-  parent: BaseStationEventShortDelay
-  components:
-  - type: StationEvent
-    startAnnouncement: station-event-vent-creatures-start-announcement
-    startAudio:
-      path: /Audio/Announcements/attention.ogg
-    earliestStart: 15
-    weight: 6
-    duration: 50
-  - type: VentCrittersRule
-    entries:
-    - id: MobMouse
-      prob: 0.02
-    - id: MobMouse1
-      prob: 0.02
-    - id: MobMouse2
-      prob: 0.02
-    - id: MobMouseCancer
-      prob: 0.001
-# Events always spawn a critter regardless of Probability https://github.com/space-wizards/space-station-14/issues/28480 I added the Rat King to their own event with a player cap.
-
-- type: entity
-  id: KingRatMigration
-  parent: BaseStationEventShortDelay
-  components:
-  - type: StationEvent
-    startAnnouncement: station-event-vent-creatures-start-announcement
-    startAudio:
-      path: /Audio/Announcements/attention.ogg
-    earliestStart: 15
-    weight: 6
-    duration: 50
-    minimumPlayers: 30 # Hopefully this is enough for the Rat King's potential Army (it was not, raised from 15 -> 30)
-  - type: VentCrittersRule
-    entries:
-    - id: MobMouse
-      prob: 0.02
-    - id: MobMouse1
-      prob: 0.02
-    - id: MobMouse2
-      prob: 0.02
-    - id: MobMouseCancer
-      prob: 0.001
-    specialEntries:
-    - id: SpawnPointGhostRatKing
-      prob: 0.001
-
-- type: entity
-  id: CockroachMigration
-  parent: BaseStationEventShortDelay
-  components:
-  - type: StationEvent
-    startAnnouncement: station-event-vent-creatures-start-announcement
-    startAudio:
-      path: /Audio/Announcements/attention.ogg
-    weight: 6
-    duration: 50
-  - type: VentCrittersRule
-    entries:
-    - id: MobCockroach
-      prob: 0.03
-    - id: MobMothroach
-      prob: 0.008
-
-- type: entity
-  id: SnailMigrationLowPop
-  parent: BaseStationEventShortDelay
-  components:
-  - type: StationEvent
-    startAnnouncement: station-event-vent-creatures-start-announcement
-    startAudio:
-      path: /Audio/Announcements/attention.ogg
-    weight: 6
-    duration: 50
-  - type: VentCrittersRule
-    entries:
-    - id: MobSnail
-      prob: 0.02
-    - id: MobSnailSpeed
-      prob: 0.002
-    - id: MobSnailMoth
-      prob: 0.002
-
-- type: entity
-  id: SnailMigration
-  parent: BaseStationEventShortDelay
-  components:
-  - type: StationEvent
-    startAnnouncement: station-event-vent-creatures-start-announcement
-    startAudio:
-      path: /Audio/Announcements/attention.ogg
-    earliestStart: 15
-    weight: 6
-    duration: 50
-    minimumPlayers: 30
-  - type: VentCrittersRule
-    entries:
-    - id: MobSnail
-      prob: 0.02
-    - id: MobSnailSpeed
-      prob: 0.002
-    - id: MobSnailMoth
-      prob: 0.002
-    - id: MobSnailInstantDeath
-      prob: 0.00001 #  ~ 1:2000 snails
 
 - type: entity
   id: PowerGridCheck
