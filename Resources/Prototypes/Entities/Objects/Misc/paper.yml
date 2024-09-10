@@ -74,8 +74,6 @@
         reagents:
         - ReagentId: Fiber
           Quantity: 1
-  - type: MakeSuperposed
-    chance: 0.02
 
 - type: entity
   name: paper scrap
