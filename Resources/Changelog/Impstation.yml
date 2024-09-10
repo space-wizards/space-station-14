@@ -1411,3 +1411,10 @@
   id: 186
   time: '2024-09-10T05:56:01.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/233
+- author: iaada
+  changes:
+  - message: Power Gloves are now insulated.
+    type: Tweak
+  id: 187
+  time: '2024-09-10T06:00:40.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/229
