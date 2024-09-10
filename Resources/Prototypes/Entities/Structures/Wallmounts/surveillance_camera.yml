@@ -48,7 +48,7 @@
     alwaysRandomize: true
     layoutId: SurveillanceCamera
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
   - type: Sprite
     drawdepth: WallMountedItems
@@ -233,7 +233,7 @@
     - type: Transform
       anchored: true
     - type: Damageable
-      damageContainer: Inorganic
+      damageContainer: StructuralInorganic
       damageModifierSet: Metallic
     - type: Sprite
       drawdepth: WallMountedItems
