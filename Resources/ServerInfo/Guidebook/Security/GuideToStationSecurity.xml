@@ -44,7 +44,7 @@ Your Flash will allow you to de-escalate almost any violent situation you find y
 ## Lethal Implements
 
   <Box>
-    <GuideEntityEmbed Entity="WeaponPistolMK58" Caption="MK 58 Service Pistol"/>
+    <GuideEntityEmbed Entity="WeaponPistolMk58" Caption="MK 58 Service Pistol"/>
     <GuideEntityEmbed Entity="MagazinePistol" Caption=".35 auto Pistol Magazine"/>
     <GuideEntityEmbed Entity="CombatKnife" Caption="Combat Knife"/>
   </Box>
