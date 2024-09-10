@@ -572,8 +572,9 @@
     - BorgModuleRadiationDetection
     - BorgModuleTool
     - BorgModuleAppraisal
+    - BorgModuleBartender
     - BorgModuleConstruction
-    - BorgModuleService
+    - BorgModulePaper
     - BorgModuleTreatment
     - BorgModuleCleaning
     - CyborgEndoskeleton
