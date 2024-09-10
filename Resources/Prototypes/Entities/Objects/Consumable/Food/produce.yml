@@ -696,6 +696,7 @@
           Quantity: 4
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/extradimensional_orange.rsi
+    scale: 0.5,0.5
   - type: Produce
     seedId: extradimensionalOrange
   - type: PotencyVisuals
@@ -2125,6 +2126,8 @@
     tags:
     - Fruit
     - Slice
+  - type: FoodSequenceElement
+    entries:
       Burger: HolymelonSliceBurger
       Taco: HolymelonSlice
       Skewer: HolymelonSliceSkewer
@@ -2321,7 +2324,7 @@
   - type: FoodSequenceElement
     entries:
       Taco: WorldPea
-      Burger: WorldPea
+      Burger: WorldPeaBurger
 
 - type: entity
   name: pumpkin

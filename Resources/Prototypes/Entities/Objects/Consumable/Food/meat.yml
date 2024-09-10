@@ -799,8 +799,8 @@
     node: bacon
   - type: FoodSequenceElement
     entries:
-      Burger: MeatBecon
-      Taco: MeatBecon
+      Burger: MeatBacon
+      Taco: MeatBacon
 
 - type: entity
   name: cooked bear
