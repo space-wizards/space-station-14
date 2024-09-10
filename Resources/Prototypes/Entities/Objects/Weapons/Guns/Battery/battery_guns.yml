@@ -762,5 +762,5 @@
     stealGroup: WeaponEnergyShotgun
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
   - type: Battery
-    maxCharge: 800
-    startingCharge: 800
+    maxCharge: 1600
+    startingCharge: 1600
