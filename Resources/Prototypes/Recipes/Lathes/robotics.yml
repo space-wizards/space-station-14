@@ -564,8 +564,8 @@
     Plastic: 250
 
 - type: latheRecipe
-  id: BorgModuleService
-  result: BorgModuleService
+  id: BorgModuleBartender
+  result: BorgModuleBartender
   category: Robotics
   completetime: 3
   materials:

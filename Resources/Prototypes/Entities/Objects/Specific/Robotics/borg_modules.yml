@@ -420,9 +420,9 @@
 
 # service modules
 - type: entity
-  id: BorgModuleService
+  id: BorgModuleBartender
   parent: [ BaseBorgModuleService, BaseProviderBorgModule ]
-  name: service cyborg module
+  name: bartender cyborg module
   components:
   - type: Sprite
     layers:
@@ -435,6 +435,25 @@
     - BarSpoon
     - BorgIceBucket
     - Pitcher
+    - BorgDropper
+
+# depreciated. included in case of merge errors
+- type: entity
+  id: BorgModuleService
+  parent: [ BaseBorgModuleService, BaseProviderBorgModule ]
+  name: service cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: service
+    - state: icon-pen
+  - type: ItemBorgModule
+    items:
+    - Pen
+    - BooksBag
+    - HandLabeler
+    - Lighter
+    - DrinkShaker
     - BorgDropper
 
 - type: entity
