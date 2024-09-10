@@ -106,6 +106,7 @@
       locked: false
 
 - type: entity
+  abstract: true
   parent: LargeGasCanister
   id: SmallGasCanister
   name: storage canister
@@ -680,6 +681,8 @@
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
         - !type:DumpCanisterBehavior
+    - type: Lock
+      locked: true
 
 - type: entity
   parent: SmallGasCanister
@@ -1169,6 +1172,8 @@
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
         - !type:DumpCanisterBehavior
+    - type: Lock
+      locked: true
 
 - type: entity
   parent: LargeGasCanister
