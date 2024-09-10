@@ -21,6 +21,18 @@
         },
         {
             "name": "state_laws"
-        }
+        },
+		{
+			"name": "station_records"
+		},
+		{
+			"name": "mass_scanner"
+		},
+		{
+			"name": "job_view"
+		},
+		{
+			"name": "comms_console"
+		}
     ]
 }

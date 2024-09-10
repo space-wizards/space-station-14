@@ -89,7 +89,7 @@
   - type: IngestionBlocker
 
 - type: entity
-  parent: ClothingMaskGasAtmos
+  parent: [ ClothingMaskGasAtmos, BaseCentcommContraband ]
   id: ClothingMaskGasCentcom
   name: CentComm gas mask
   description: Oooh, gold and green. Fancy! This should help as you sit in your office.
@@ -389,7 +389,7 @@
     sprite: Clothing/Mask/merc.rsi
 
 - type: entity
-  parent: ClothingMaskGasSyndicate
+  parent: [ BaseCentcommContraband, ClothingMaskGasSyndicate ]
   id: ClothingMaskGasERT
   name: ert gas mask
   description: The gas mask of the elite squad of the ERT.

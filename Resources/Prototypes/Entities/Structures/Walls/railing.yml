@@ -15,7 +15,7 @@
   - type: InteractionOutline
   - type: Repairable
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: FlimsyMetallic
   - type: Climbable
   - type: Construction
@@ -171,7 +171,7 @@
         acts: [ "Destruction" ]
   - type: Construction
     node: railingCornerSmall
-    
+
 - type: entity
   parent: BaseRailing
   id: RailingRound

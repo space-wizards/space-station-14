@@ -15,12 +15,12 @@
     - type: Transform
       anchored: true
     - type: Damageable
-      damageContainer: Inorganic
+      damageContainer: StructuralInorganic
       damageModifierSet: Metallic
     - type: RCDDeconstructable
       cost: 2
       delay: 0
-      fx: EffectRCDConstruct0  
+      fx: EffectRCDConstruct0
     - type: Destructible
       thresholds:
         - trigger:
