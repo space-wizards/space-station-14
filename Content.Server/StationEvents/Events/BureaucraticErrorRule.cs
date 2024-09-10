@@ -14,9 +14,6 @@ public sealed class BureaucraticErrorRule : StationEventSystem<BureaucraticError
 {
     [Dependency] private readonly StationJobsSystem _stationJobs = default!;
 
-    [ValidatePrototypeId<JobPrototype>]
-    public const string IgnoreRuleJob = "StationAi";
-
     protected override void Started(EntityUid uid, BureaucraticErrorRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
         base.Started(uid, component, gameRule, args);
@@ -26,7 +23,8 @@ public sealed class BureaucraticErrorRule : StationEventSystem<BureaucraticError
 
         var jobList = _stationJobs.GetJobs(chosenStation.Value).Keys.ToList();
 
-        jobList.Remove(IgnoreRuleJob);
+        foreach(var job in component.IgnoredJobs)
+            jobList.Remove(job);
 
         if (jobList.Count == 0)
             return;
