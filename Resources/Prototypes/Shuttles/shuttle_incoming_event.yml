@@ -55,16 +55,6 @@
   copies: 1
 
 - type: preloadedGrid
-  id: Drone
-  path: /Maps/Shuttles/ShuttleEvent/drone.yml
-  copies: 1
-
-- type: preloadedGrid
-  id: Raider
-  path: /Maps/Shuttles/ShuttleEvent/raider.yml
-  copies: 1
-
-- type: preloadedGrid
   id: Eternal
   path: /Maps/Shuttles/ShuttleEvent/eternal.yml
   copies: 1
@@ -90,11 +80,6 @@
   copies: 1
 
 - type: preloadedGrid
-  id: Instigator
-  path: /Maps/Shuttles/ShuttleEvent/instigator.yml
-  copies: 1
-
-- type: preloadedGrid
   id: Joe
   path: /Maps/Shuttles/ShuttleEvent/joe.yml
   copies: 1
@@ -102,11 +87,6 @@
 - type: preloadedGrid
   id: Lambordeere
   path: /Maps/Shuttles/ShuttleEvent/lambordeere.yml
-  copies: 1
-
-- type: preloadedGrid
-  id: ManOWar
-  path: /Maps/Shuttles/ShuttleEvent/manowar.yml
   copies: 1
 
 - type: preloadedGrid
@@ -118,11 +98,6 @@
   id: Microshuttle
   path: /Maps/Shuttles/ShuttleEvent/microshuttle.yml
   copies: 4
-
-- type: preloadedGrid
-  id: Scooner
-  path: /Maps/Shuttles/ShuttleEvent/scooner.yml
-  copies: 1
 
 - type: preloadedGrid
   id: Spacebus
