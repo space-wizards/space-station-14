@@ -86,6 +86,9 @@ public sealed partial class SpeciesPrototype : IPrototype
 
     [DataField]
     public string FemaleFirstNames { get; private set; } = "names_first_female";
+    
+	[DataField]
+    public string MiddleNames { get; private set; } = "names_middle";
 
     [DataField]
     public string LastNames { get; private set; } = "names_last";
