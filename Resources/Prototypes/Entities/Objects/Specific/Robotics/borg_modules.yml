@@ -430,9 +430,6 @@
     - state: icon-pen
   - type: ItemBorgModule
     items:
-    - Pen
-    - BooksBag
-    - HandLabeler
     - Lighter
     - DrinkShaker
     - BorgDropper
@@ -497,6 +494,24 @@
     - BikeHorn
     - ClownRecorder
     - BikeHornInstrument
+
+- type: entity
+  id: BorgModulePaper
+  parent: [ BaseBorgModuleService, BaseProviderBorgModule ]
+  name: bureaucracy cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: service
+    - state: icon-pen
+  - type: ItemBorgModule
+    items:
+    - Pen
+    - BooksBag
+    - HandLabeler
+    - RubberStampApproved
+    - RubberStampDenied
+    - RubberStampBorg
 
 #syndicate modules
 - type: entity
