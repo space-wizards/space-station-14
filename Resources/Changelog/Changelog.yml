@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: PJB3005
-  changes:
-  - message: '"Steal plutonium core" traitor objective has been reverted.'
-    type: Remove
-  id: 6839
-  time: '2024-06-29T15:23:03.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29578
 - author: MureixloL
   changes:
   - message: Changed some vending machine point lights to match the vendors better.
@@ -3899,3 +3892,21 @@
   id: 7338
   time: '2024-09-09T23:59:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32019
+- author: IProduceWidgets
+  changes:
+  - message: Visitors now can have the correct Id cards and PDA!
+    type: Fix
+  - message: ghost roles should now attempt to tell you what your antag status is
+      in a popup when you join the raffle.
+    type: Tweak
+  - message: ERT chaplains should now be able to use bibles.
+    type: Fix
+  - message: Many new unknown shuttle events to make them more unique.
+    type: Add
+  - message: Syndicate escape pods will once again appear.
+    type: Fix
+  - message: Unknown Shuttle events will be much rarer.
+    type: Tweak
+  id: 7339
+  time: '2024-09-10T06:40:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28098
