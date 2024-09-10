@@ -89,8 +89,10 @@ public sealed partial class ClimbSystem : VirtualController
                 continue;
             }
 
-            var xform = _xformQuery.GetComponent(uid);
-            _xformSystem.SetLocalPosition(uid, xform.LocalPosition + comp.Direction * frameTime, xform);
+            if (!_containers.IsEntityInContainer(uid)) {
+                var xform = _xformQuery.GetComponent(uid);
+                _xformSystem.SetLocalPosition(uid, xform.LocalPosition + comp.Direction * frameTime, xform);
+            }
         }
     }
 
