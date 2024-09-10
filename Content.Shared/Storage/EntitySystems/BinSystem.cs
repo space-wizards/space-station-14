@@ -5,11 +5,15 @@ using Content.Shared.Examine;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
+using Content.Shared.Random;
+using Content.Shared.Random.Helpers;
 using Content.Shared.Storage.Components;
 using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Shared.Storage.EntitySystems;
 
@@ -23,6 +27,8 @@ public sealed class BinSystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     public const string BinContainerId = "bin-container";
 
@@ -54,10 +60,11 @@ public sealed class BinSystem : EntitySystem
         if (_net.IsClient)
             return;
 
+        var items = _proto.Index<WeightedRandomEntityPrototype>(component.Loot);
         var xform = Transform(uid);
-        foreach (var id in component.InitialContents)
+        for (int i = 0; i < component.LootAmount; i++)
         {
-            var ent = Spawn(id, xform.Coordinates);
+            var ent = Spawn(items.Pick(_random), xform.Coordinates);
             if (!TryInsertIntoBin(uid, ent, component))
             {
                 Log.Error($"Entity {ToPrettyString(ent)} was unable to be initialized into bin {ToPrettyString(uid)}");

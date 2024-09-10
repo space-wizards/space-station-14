@@ -74,6 +74,8 @@
         reagents:
         - ReagentId: Fiber
           Quantity: 1
+  - type: MakeSuperposed
+    chance: 0.02
 
 - type: entity
   name: paper scrap
@@ -684,24 +686,6 @@
       - !type:EmptyAllContainersBehaviour
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-
-- type: entity
-  parent: Paper
-  id: PaperQuantumable
-  components:
-  - type: PaperMakeQuantum
-    chance: 0.15
-    newName: "quantum paper"
-    newDesc: "Catastrophic consequences of accidentally bluespacing 384 megatons of paper to satisfy a single request to a malfunctioning printer still echo throughout the galaxy."
-    paperQuantum:
-      damage:
-        types:
-          Slash: 50
-    explosive:
-      explosionType: FireBomb
-      totalIntensity: 2
-      deleteAfterExplosion: false
-      canCreateVacuum: false
 
 - type: entity
   parent: Paper

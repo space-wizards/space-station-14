@@ -38,18 +38,20 @@
     containers:
       bin-container: !type:Container
 
+- type: weightedRandomEntity
+  id: PaperBinLoot
+  weights:
+    Paper: 85
+    PaperQuantum: 15
+
 - type: entity
   parent: PaperBin
   id: PaperBin5
   suffix: 5
   components:
   - type: Bin
-    initialContents:
-    - PaperQuantumable
-    - PaperQuantumable
-    - PaperQuantumable
-    - PaperQuantumable
-    - PaperQuantumable
+    loot: PaperBinLoot
+    lootAmount: 5
     whitelist:
       tags:
       - Document
@@ -61,17 +63,8 @@
   suffix: 10
   components:
   - type: Bin
-    initialContents:
-    - PaperQuantumable
-    - PaperQuantumable
-    - PaperQuantumable
-    - PaperQuantumable
-    - PaperQuantumable
-    - PaperQuantumable
-    - PaperQuantumable
-    - PaperQuantumable
-    - PaperQuantumable
-    - PaperQuantumable
+    loot: PaperBinLoot
+    lootAmount: 10
     whitelist:
       tags:
       - Document
@@ -83,27 +76,8 @@
   suffix: 20
   components:
   - type: Bin
-    initialContents:
-    - PaperQuantumable
-    - PaperQuantumable
-    - PaperQuantumable
-    - PaperQuantumable
-    - PaperQuantumable
-    - PaperQuantumable
-    - PaperQuantumable
-    - PaperQuantumable
-    - PaperQuantumable
-    - PaperQuantumable
-    - PaperQuantumable
-    - PaperQuantumable
-    - PaperQuantumable
-    - PaperQuantumable
-    - PaperQuantumable
-    - PaperQuantumable
-    - PaperQuantumable
-    - PaperQuantumable
-    - PaperQuantumable
-    - PaperQuantumable
+    loot: PaperBinLoot
+    lootAmount: 20
     whitelist:
       tags:
       - Document

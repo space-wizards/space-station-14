@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Storage.EntitySystems;
+using Content.Shared.Random;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
@@ -33,10 +34,16 @@ public sealed partial class BinComponent : Component
     public List<EntityUid> Items = new();
 
     /// <summary>
-    /// The items that start in the bin. Sorted in order.
+    /// Prototypes of the items that could spawn in the with their chances bin.
     /// </summary>
     [DataField]
-    public List<EntProtoId> InitialContents = new();
+    public ProtoId<WeightedRandomEntityPrototype> Loot = "PaperBinLoot";
+
+    /// <summary>
+    /// Amount of items spawned initially in the bin.
+    /// </summary>
+    [DataField]
+    public int LootAmount = 0;
 
     /// <summary>
     /// A whitelist governing what items can be inserted into the bin.
