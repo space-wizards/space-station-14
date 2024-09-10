@@ -1,0 +1,69 @@
+- type: entity
+  parent: BaseItem
+  id: GasPipeAnalyzer
+  name: gas pipe analyzer
+  description: A device that reports the characteristics of the gas in the attached pipe network. 
+  placement:
+    mode: SnapgridCenter
+  suffix: General
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/station_beacon.rsi
+    drawdepth: BelowFloor
+    layers:
+    - state: blink
+      map: ["base"]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.NavMapBeaconVisuals.Enabled:
+        base:
+          True: {state: blink}
+          False: {state: icon}
+#  - type: ActivatableUI
+#    key: enum.GasAnalyzerUiKey.Key
+#  - type: UserInterface
+#    interfaces:
+#      enum.GasAnalyzerUiKey.Key:
+#        type: GasAnalyzerBoundUserInterface
+  - type: GasPipeAnalyzer
+  - type: Item
+    size: Small
+  - type: SubFloorHide
+  - type: Anchorable
+  - type: CollideOnAnchor
+  - type: Physics
+    canCollide: false
+    bodyType: static
+  - type: Transform
+    anchored: true
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+        - !type:PlaySoundBehavior
+          sound:
+            collection: MetalBreak
+            params:
+              volume: -8
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            SheetSteel1:
+              min: 1
+              max: 1
+          offset: 0
+        - !type:DoActsBehavior
+          acts: ["Breakage"]
+  - type: StaticPrice
+    price: 25

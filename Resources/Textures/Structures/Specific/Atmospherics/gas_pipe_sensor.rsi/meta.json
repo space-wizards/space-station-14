@@ -1,0 +1,29 @@
+{
+    "version": 1,
+    "license": "CC0-1.0",
+    "copyright": "Created by chromiumboy (github) for SS14, based on the digital valve from /tg/",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "icon"
+        },
+		{
+            "name": "base"
+        },
+		{
+            "name": "lights"
+        },
+        {
+            "name": "blink",
+            "delays": [
+                [
+                    1.0,
+                    0.25
+                ]
+            ]
+        }
+    ]
+}
