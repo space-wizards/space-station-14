@@ -506,6 +506,7 @@
     children:
     # Weak Enemy
     - id: MobTick
+    - id: DehydratedSpaceCarp
       weight: 80
     # Strong Enemy
     - !type:GroupSelector
@@ -516,7 +517,6 @@
       - id: MobCarpMagic
       - id: MobCarpHolo
       - id: MobCarpRainbow
-      - id: DehydratedSpaceCarp
 
 - type: entity
   name: Maint Loot Spawner
