@@ -2,7 +2,7 @@
 #When it DOES exist, the values here should be totally reworked - probably just port them from SS13.
 
 - type: entity
-  parent: [ClothingHeadBase, BaseRestrictedContraband]
+  parent: ClothingHeadBase
   id: ClothingHeadHelmetBase
   abstract: true
   components:
@@ -415,7 +415,7 @@
 
 #Justice Helmet
 - type: entity
-  parent: ClothingHeadHelmetBase
+  parent: [ClothingHeadHelmetBase, BaseRestrictedContraband]
   id: ClothingHeadHelmetJustice
   name: justice helm
   description: Advanced security gear. Protects the station from ne'er-do-wells.
