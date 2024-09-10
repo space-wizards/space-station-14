@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Accentless speech now costs 2 trait points.
-    type: Tweak
-  id: 6846
-  time: '2024-06-30T13:47:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29603
 - author: deltanedas
   changes:
   - message: Fixed sleeper agents not showing up in the round end summary.
@@ -3907,3 +3900,11 @@
   id: 7345
   time: '2024-09-10T23:07:07.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32050
+- author: ArtisticRoomba
+  changes:
+  - message: The salvage magnet circuitboard has been added to QM's locker. It can
+      also be made at the circuit imprinter roundstart. NOW GET BACK TO WORK!!!
+    type: Tweak
+  id: 7346
+  time: '2024-09-10T23:25:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31996
