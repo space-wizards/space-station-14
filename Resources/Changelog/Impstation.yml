@@ -1369,3 +1369,23 @@
   id: 181
   time: '2024-09-08T16:17:05.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/226
+- author: FlippenPage
+  changes:
+  - message: Added PISK!
+    type: Add
+  id: 182
+  time: '2024-09-10T05:53:12.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/237
+- author: TheGrimbeeper
+  changes:
+  - message: indirectly nerfed chance of depth 4 foam being really really dangerous
+      by adding additional reagents to roll from in the list
+    type: Tweak
+  - message: BROS are now in the depth 4 artifact foam
+    type: Add
+  - message: something more evil than any foam before is now in the depth 4 artifact
+      foam
+    type: Add
+  id: 183
+  time: '2024-09-10T05:52:47.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/236
