@@ -10,13 +10,13 @@
               amount: 5
               doAfter: 1
             - tag: SuitEVA
-              name: An EVA suit
+              name: an EVA suit
               icon:
                 sprite: Clothing/OuterClothing/Suits/eva.rsi
                 state: icon
               doAfter: 1
             - tag: HelmetEVA
-              name: An EVA helmet
+              name: an EVA helmet
               icon:
                 sprite: Clothing/Head/Helmets/eva.rsi
                 state: icon
@@ -36,7 +36,7 @@
             - tag: MimeBelt
               name: suspenders
               icon:
-                sprite: Clothing/Belt/suspenders.rsi
+                sprite: Clothing/Belt/suspenders_red.rsi
                 state: icon
               doAfter: 1
     - node: mimeHardsuit

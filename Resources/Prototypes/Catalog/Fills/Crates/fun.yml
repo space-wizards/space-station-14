@@ -1,33 +1,57 @@
+- type: entityTable
+  id: AllPlushiesTable
+  table: !type:GroupSelector
+    children:
+    - id: PlushieBee
+    - id: PlushieNar
+      weight: 0.5
+    - id: PlushieRatvar
+      weight: 0.5
+    - id: PlushieNuke
+    - id: PlushieSlime
+    - id: PlushieSnake
+    - !type:GroupSelector
+      children:
+      - id: PlushieLizard
+        weight: 9
+      - id: PlushieSpaceLizard
+        weight: 1
+    - !type:GroupSelector
+      children:
+      - id: PlushieCarp
+      - id: PlushieHolocarp
+        weight: 0.25
+      - id: PlushieMagicarp
+        weight: 0.25
+      - id: PlushieRainbowCarp
+        weight: 0.15
+    - id: PlushieVox
+    - id: PlushieRouny
+    - !type:GroupSelector
+      children:
+      - id: PlushieSharkBlue
+      - id: PlushieSharkGrey
+      - id: PlushieSharkPink
+    - id: PlushieAtmosian
+    - id: PlushieDiona
+    - id: PlushieXeno
+    - id: PlushieHampter
+    - id: PlushieMoth
+    - id: PlushieArachind
+    - id: PlushiePenguin
+
 - type: entity
   id: CrateFunPlushie
   parent: CrateGenericSteel
   name: plushie crate
   description: A buncha soft plushies. Throw them around and then wonder how you're gonna explain this purchase to NT.
   components:
-  - type: StorageFill
-    contents:
-      - id: PlushieBee
-      - id: PlushieNar
-      - id: PlushieCarp
-      - id: PlushieNuke
-      - id: PlushieSlime
-      - id: PlushieSnake
-      - id: PlushieLizard
-      - id: PlushieSpaceLizard
-      - id: PlushieVox
-      - id: PlushieRouny
-      - id: PlushieRatvar
-      - id: PlushieSharkBlue
-        orGroup: PlushieShark
-      - id: PlushieSharkGrey
-        orGroup: PlushieShark
-      - id: PlushieAtmosian
-      - id: PlushieDiona
-      - id: PlushieXeno
-      - id: PlushieHampter
-      - id: PlushieMoth
-      - id: PlushieArachind
-      - id: PlushiePenguin
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: AllPlushiesTable
+        rolls: !type:ConstantNumberSelector
+          value: 10
 
 - type: entity
   id: CrateFunLizardPlushieBulk
@@ -35,12 +59,16 @@
   name: bulk lizard plushie crate
   description: A buncha soft lizard plushies. Throw them around and then wonder how you're gonna explain this purchase to NT.
   components:
-  - type: StorageFill
-    contents:
-      - id: PlushieLizard
-        amount: 3
-      - id: PlushieSpaceLizard
-        amount: 2
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: PlushieLizard
+          amount: !type:ConstantNumberSelector
+            value: 3
+        - id: PlushieSpaceLizard
+          amount: !type:ConstantNumberSelector
+            value: 3
 
 - type: entity
   id: CrateFunInstrumentsVariety

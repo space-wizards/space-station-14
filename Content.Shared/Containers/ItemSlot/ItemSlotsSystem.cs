@@ -24,7 +24,7 @@ namespace Content.Shared.Containers.ItemSlots
     ///     Note when using popups on entities with many slots with InsertOnInteract, EjectOnInteract or EjectOnUse:
     ///     A single use will try to insert to/eject from every slot and generate a popup for each that fails.
     /// </remarks>
-    public sealed class ItemSlotsSystem : EntitySystem
+    public sealed partial class ItemSlotsSystem : EntitySystem
     {
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
@@ -37,6 +37,8 @@ namespace Content.Shared.Containers.ItemSlots
         public override void Initialize()
         {
             base.Initialize();
+
+            InitializeLock();
 
             SubscribeLocalEvent<ItemSlotsComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<ItemSlotsComponent, ComponentInit>(Oninitialize);

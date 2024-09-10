@@ -3,13 +3,13 @@ using System.Linq;
 using Content.Server.Cargo.Components;
 using Content.Server.Labels;
 using Content.Server.NameIdentifier;
-using Content.Server.Paper;
 using Content.Shared.Access.Components;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Database;
 using Content.Shared.NameIdentifier;
+using Content.Shared.Paper;
 using Content.Shared.Stacks;
 using Content.Shared.Whitelist;
 using JetBrains.Annotations;
@@ -119,13 +119,13 @@ public sealed partial class CargoSystem
         msg.PushNewline();
         foreach (var entry in prototype.Entries)
         {
-            msg.AddMarkup($"- {Loc.GetString("bounty-console-manifest-entry",
+            msg.AddMarkupOrThrow($"- {Loc.GetString("bounty-console-manifest-entry",
                 ("amount", entry.Amount),
                 ("item", Loc.GetString(entry.Name)))}");
             msg.PushNewline();
         }
-        msg.AddMarkup(Loc.GetString("bounty-console-manifest-reward", ("reward", prototype.Reward)));
-        _paperSystem.SetContent(uid, msg.ToMarkup(), paper);
+        msg.AddMarkupOrThrow(Loc.GetString("bounty-console-manifest-reward", ("reward", prototype.Reward)));
+        _paperSystem.SetContent((uid, paper), msg.ToMarkup());
     }
 
     /// <summary>
@@ -138,7 +138,7 @@ public sealed partial class CargoSystem
             return;
 
         // make sure this label was actually applied to a crate.
-        if (!_container.TryGetContainingContainer(uid, out var container) || container.ID != LabelSystem.ContainerName)
+        if (!_container.TryGetContainingContainer((uid, null, null), out var container) || container.ID != LabelSystem.ContainerName)
             return;
 
         if (component.AssociatedStationId is not { } station || !TryComp<StationCargoBountyDatabaseComponent>(station, out var database))

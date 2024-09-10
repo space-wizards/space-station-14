@@ -226,6 +226,7 @@
   placement:
     mode: AlignTileAny
   components:
+  - type: StationAiWhitelist
   - type: SpriteFade
   - type: Sprite
     sprite: Structures/Machines/Anomaly/anomaly_generator.rsi
@@ -284,6 +285,9 @@
     fuelCost: 10
     doAfterDelay: 5
   - type: WiresPanel
+  - type: Wires
+    boardName: wires-board-name-anomalygenerator
+    layoutId: AnomalyGenerator
   - type: Destructible
     thresholds:
     - trigger:
@@ -300,6 +304,8 @@
     interfaces:
         enum.AnomalyGeneratorUiKey.Key:
           type: AnomalyGeneratorBoundUserInterface
+        enum.WiresUiKey.Key:
+          type: WiresBoundUserInterface
   - type: Appearance
   - type: ActiveRadio
     channels:

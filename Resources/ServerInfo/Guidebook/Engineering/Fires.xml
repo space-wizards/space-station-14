@@ -13,13 +13,13 @@
   As a result, there are three main options to repressurize the affected area:
 
   1. Assuming distro vents and pipes have not been destroyed in some unfortunate accident, you may set surrounding air alarms to the "Fill" setting. This will cause connected air vents to override their safeguards and begin repressurizing the area.
-    - Be aware this setting also allows vents to OVERpressure a room, so this process must be monitored at all times.
+    - Be aware this setting also allows vents to OVERpressurize a room, so this process must be monitored at all times.
 
   2. Another option is to open any firelocks that were engaged in response to the original spacing. This will cause the pressure to equalize between both areas.
     - This option generally causes more firelocks to engage in the surrounding area, potentially causing disruptions or making the second area unsafe for station crew.
 
   3. The final option is to bring a canister into the spaced area and open its release valve. An air canister at 4500kpa can fully repressurize around 20-30 tiles before running out of gas.
-    - This option requires the canister be brought in from outisde (generally atmos) which can be slow and time consuming depending on the situation.
+    - This option requires the canister be brought in from outside (generally atmos), which can be slow and time consuming depending on the situation.
 
 
   ## Fires

@@ -6,12 +6,9 @@
         <LineEdit Name="NameLineEdit" />
         <Label Name="CurrentJob" Text="{Loc 'agent-id-card-current-job'}" />
         <LineEdit Name="JobLineEdit" />
-        <BoxContainer Orientation="Horizontal">
-            <Label Text="{Loc 'agent-id-card-job-icon-label'}"/>
-            <Control HorizontalExpand="True" MinSize="50 0"/>
-            <GridContainer Name="IconGrid" Columns="10">
-                <!-- Job icon buttons are generated in the code -->
-            </GridContainer>
-        </BoxContainer>
+        <Label Text="{Loc 'agent-id-card-job-icon-label'}"/>
+        <GridContainer Name="IconGrid" Columns="10">
+            <!-- Job icon buttons are generated in the code -->
+        </GridContainer>
     </BoxContainer>
 </DefaultWindow>

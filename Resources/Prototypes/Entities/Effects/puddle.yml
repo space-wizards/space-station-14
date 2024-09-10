@@ -126,6 +126,11 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
+      # Context / examine fixture
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.25
       slipFixture:
         shape:
           !type:PhysShapeAabb
@@ -162,3 +167,6 @@
     solution: puddle
   - type: BadDrink
   - type: IgnoresFingerprints
+  - type: Tag
+    tags:
+    - DNASolutionScannable

@@ -93,7 +93,7 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
                 bool hasAccess = true;
                 FormattedMessage? reason;
 
-                if (!requirementsManager.CheckRoleTime(group.Key.Requirements, out reason))
+                if (!requirementsManager.CheckRoleRequirements(group.Key.Requirements, null, out reason))
                 {
                     hasAccess = false;
                 }
