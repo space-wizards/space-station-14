@@ -822,20 +822,8 @@
     node: bacon
   - type: FoodSequenceElement
     entries:
-<<<<<<< HEAD
-      burger:
-        name: food-sequence-burger-content-meat
-      taco:
-        name: food-sequence-content-meat
-      skewer:
-        name: food-sequence-content-meat
-        sprite:
-          sprite: Objects/Consumable/Food/skewer.rsi
-          state: skewer-meat
-=======
       Burger: MeatBecon
       Taco: MeatBecon
->>>>>>> space-wizards/master
 
 - type: entity
   name: cooked bear
