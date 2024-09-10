@@ -89,10 +89,8 @@ public sealed partial class ClimbSystem : VirtualController
                 continue;
             }
 
-            if (!_containers.IsEntityInContainer(uid)) {
-                var xform = _xformQuery.GetComponent(uid);
-                _xformSystem.SetLocalPosition(uid, xform.LocalPosition + comp.Direction * frameTime, xform);
-            }
+            var xform = _xformQuery.GetComponent(uid);
+            _xformSystem.SetLocalPosition(uid, xform.LocalPosition + comp.Direction * frameTime, xform);
         }
     }
 
@@ -251,6 +249,9 @@ public sealed partial class ClimbSystem : VirtualController
             return;
 
         if (!Resolve(climbable, ref comp, false))
+            return;
+
+        if (_containers.IsEntityInContainer(uid))
             return;
 
         if (!ReplaceFixtures(uid, climbing, fixtures))
