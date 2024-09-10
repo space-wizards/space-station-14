@@ -175,7 +175,7 @@
   id: BorgIceBucket
   name: ice bucket
   suffix: Cyborg
-  description: A special bucket of refreshy ice. Prohibited use for challenge with the same name!
+  description: A special bucket of refreshy refilling ice. Prohibited use for challenge with the same name!
   components:
   - type: Drink
   - type: DrainableSolution
