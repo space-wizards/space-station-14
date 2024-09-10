@@ -1,6 +1,6 @@
 version: "1"
 rules:
-  - base: master
+  - base: dev
     upstream: space-wizards:master    # change `wei` to the owner of upstream repo
     mergeMethod: merge
     conflictReviewers:      # Optional, on merge conflict assign a reviewer
