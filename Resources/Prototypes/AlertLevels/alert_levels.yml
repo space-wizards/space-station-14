@@ -70,3 +70,17 @@
       emergencyLightColor: DarkViolet
       forceEnableEmergencyLights: true
       shuttleTime: 1200
+    cyan:
+      announcement: alert-level-cyan-announcement
+      sound: /Audio/Misc/notice1.ogg
+      color: Cyan
+      emergencyLightColor: Cyan
+      forceEnableEmergencyLights: true
+      shuttleTime: 600
+    lime:
+      announcement: alert-level-lime-announcement
+      sound: /Audio/Misc/notice1.ogg
+      color: Lime
+      emergencyLightColor: Lime
+      forceEnableEmergencyLights: true
+      shuttleTime: 600
