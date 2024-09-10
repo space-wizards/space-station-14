@@ -28,7 +28,7 @@ public sealed class AtmosMonitoringConsoleBoundUserInterface : BoundUserInterfac
             return;
 
         EntMan.TryGetComponent<TransformComponent>(Owner, out var xform);
-        _menu?.UpdateUI(xform?.Coordinates, castState.Pumps, castState.Mixers, castState.Filters, castState.Thermoregulators, castState.FocusData);
+        _menu?.UpdateUI(xform?.Coordinates, castState.AtmosNetworks, castState.FocusData);
     }
 
     public void SendFocusChangeMessage(NetEntity? netEntity)

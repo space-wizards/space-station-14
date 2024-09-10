@@ -75,10 +75,7 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
         NavMap.ForceNavMapUpdate();
 
         // Set tab container headers
-        MasterTabContainer.SetTabTitle(0, Loc.GetString("atmos-monitoring-window-tab-pumps"));
-        MasterTabContainer.SetTabTitle(1, Loc.GetString("atmos-monitoring-window-tab-mixers"));
-        MasterTabContainer.SetTabTitle(2, Loc.GetString("atmos-monitoring-window-tab-filters"));
-        MasterTabContainer.SetTabTitle(3, Loc.GetString("atmos-monitoring-window-tab-thermoregulators"));
+        MasterTabContainer.SetTabTitle(0, Loc.GetString("atmos-monitoring-window-tab-networks"));
 
         // Set UI toggles
         ShowPipeNetwork.OnToggled += _ => OnShowPipeNetworkToggled();
@@ -113,10 +110,7 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
 
     public void UpdateUI
         (EntityCoordinates? consoleCoords,
-         AtmosMonitoringConsoleEntry[] pumps,
-         AtmosMonitoringConsoleEntry[] mixers,
-         AtmosMonitoringConsoleEntry[] filters,
-         AtmosMonitoringConsoleEntry[] thermoregulators,
+         AtmosMonitoringConsoleEntry[] atmosNetworks,
          AtmosFocusDeviceData? focusData)
     {
         if (_owner == null)
@@ -165,41 +159,14 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
         NavMap.ForceNavMapUpdate();
 
         // Clear excess children from the tables
-        while (PumpsTable.ChildCount > pumps.Length)
-            PumpsTable.RemoveChild(PumpsTable.GetChild(PumpsTable.ChildCount - 1));
-
-        while (MixersTable.ChildCount > mixers.Length)
-            MixersTable.RemoveChild(MixersTable.GetChild(MixersTable.ChildCount - 1));
-
-        while (FiltersTable.ChildCount > filters.Length)
-            FiltersTable.RemoveChild(FiltersTable.GetChild(FiltersTable.ChildCount - 1));
-
-        while (ThermoregulatorsTable.ChildCount > thermoregulators.Length)
-            ThermoregulatorsTable.RemoveChild(ThermoregulatorsTable.GetChild(ThermoregulatorsTable.ChildCount - 1));
+        while (AtmosNetworksTable.ChildCount > atmosNetworks.Length)
+            AtmosNetworksTable.RemoveChild(AtmosNetworksTable.GetChild(AtmosNetworksTable.ChildCount - 1));
 
         // Update all entries in each table
-        for (int index = 0; index < pumps.Length; index++)
+        for (int index = 0; index < atmosNetworks.Length; index++)
         {
-            var entry = pumps.ElementAt(index);
-            UpdateUIEntry(entry, index, PumpsTable, console, focusData);
-        }
-
-        for (int index = 0; index < mixers.Length; index++)
-        {
-            var entry = mixers.ElementAt(index);
-            UpdateUIEntry(entry, index, MixersTable, console, focusData);
-        }
-
-        for (int index = 0; index < filters.Length; index++)
-        {
-            var entry = filters.ElementAt(index);
-            UpdateUIEntry(entry, index, FiltersTable, console, focusData);
-        }
-
-        for (int index = 0; index < thermoregulators.Length; index++)
-        {
-            var entry = filters.ElementAt(index);
-            UpdateUIEntry(entry, index, ThermoregulatorsTable, console, focusData);
+            var entry = atmosNetworks.ElementAt(index);
+            UpdateUIEntry(entry, index, AtmosNetworksTable, console, focusData);
         }
 
         // Auto-scroll re-enable
@@ -240,18 +207,24 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
             // On click
             newEntryContainer.FocusButton.OnButtonUp += args =>
             {
-                var prevTrackedEntity = _trackedEntity;
-                if (_trackedEntity == entry.NetEntity)
+                if (_trackedEntity == newEntryContainer.NetEntity)
                 {
                     _trackedEntity = null;
                 }
+
                 else
                 {
                     _trackedEntity = newEntryContainer.NetEntity;
-                    NavMap.CenterToCoordinates(_entManager.GetCoordinates(entry.Coordinates));
+
+                    if (newEntryContainer.Coordinates != null)
+                        NavMap.CenterToCoordinates(newEntryContainer.Coordinates.Value);
                 }
+
                 // Send message to console that the focus has changed
                 SendFocusChangeMessageAction?.Invoke(_trackedEntity);
+
+                // Update affected UI elements across all tables
+                UpdateConsoleTable(console, AtmosNetworksTable, _trackedEntity);
             };
 
             // Add the entry to the current table
@@ -268,32 +241,25 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
 
             return;
         }
+
+        var entryContainer = (AtmosMonitoringEntryContainer)tableChild;
+        entryContainer.UpdateEntry(entry, entry.NetEntity == _trackedEntity, focusData);
     }
 
-    private void UpdateConsoleTable(AtmosMonitoringConsoleComponent console, Control table, NetEntity? currTrackedEntity, NetEntity? prevTrackedEntity)
+    private void UpdateConsoleTable(AtmosMonitoringConsoleComponent console, Control table, NetEntity? currTrackedEntity)
     {
-        foreach (var child in table.Children)
+        foreach (var tableChild in table.Children)
         {
-            if (child is not AtmosMonitoringEntryContainer)
+            if (tableChild is not AtmosAlarmEntryContainer)
                 continue;
 
-            var castAlert = (AtmosMonitoringEntryContainer)child;
+            var entryContainer = (AtmosAlarmEntryContainer)tableChild;
 
-            if (castAlert.NetEntity == prevTrackedEntity)
-                castAlert.RemoveAsFocus();
+            if (entryContainer.NetEntity != currTrackedEntity)
+                entryContainer.RemoveAsFocus();
 
-            else if (castAlert.NetEntity == currTrackedEntity)
-                castAlert.SetAsFocus();
-
-            if (castAlert?.Coordinates == null)
-                continue;
-
-            var device = console.AtmosDevices.FirstOrNull(x => x.NetEntity == castAlert.NetEntity);
-
-            if (device == null)
-                continue;
-
-            AddTrackedEntityToNavMap(device.Value);
+            else if (entryContainer.NetEntity == currTrackedEntity)
+                entryContainer.SetAsFocus();
         }
     }
 
@@ -333,7 +299,7 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
         if (!_autoScrollActive)
             return;
 
-        var scroll = MasterTabContainer.Children.ElementAt(MasterTabContainer.CurrentTab) as ScrollContainer;
+        var scroll = AtmosNetworksTable.Parent as ScrollContainer;
         if (scroll == null)
             return;
 
@@ -374,7 +340,7 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
     {
         nextScrollPosition = null;
 
-        var scroll = MasterTabContainer.Children.ElementAt(MasterTabContainer.CurrentTab) as ScrollContainer;
+        var scroll = AtmosNetworksTable.Parent as ScrollContainer;
         if (scroll == null)
             return false;
 

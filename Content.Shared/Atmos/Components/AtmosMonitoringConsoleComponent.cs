@@ -99,26 +99,26 @@ public struct AtmosFocusDeviceData
     /// <summary>
     /// Temperature (K) and related alert state
     /// </summary>
-    public (float, AtmosAlarmType) TemperatureData;
+    public float TemperatureData;
 
     /// <summary>
     /// Pressure (kPA) and related alert state
     /// </summary>
-    public (float, AtmosAlarmType) PressureData;
+    public float PressureData;
 
     /// <summary>
     /// Moles, percentage, and related alert state, for all detected gases 
     /// </summary>
-    public Dictionary<Gas, (float, float, AtmosAlarmType)> GasData;
+    public Dictionary<Gas, float> GasData;
 
     /// <summary>
     /// Populates the atmos monitoring console focus entry with atmospheric data
     /// </summary>
     public AtmosFocusDeviceData
         (NetEntity netEntity,
-        (float, AtmosAlarmType) temperatureData,
-        (float, AtmosAlarmType) pressureData,
-        Dictionary<Gas, (float, float, AtmosAlarmType)> gasData)
+        float temperatureData,
+        float pressureData,
+        Dictionary<Gas, float> gasData)
     {
         NetEntity = netEntity;
         TemperatureData = temperatureData;
@@ -133,22 +133,7 @@ public sealed class AtmosMonitoringConsoleBoundInterfaceState : BoundUserInterfa
     /// <summary>
     /// A list of all gas pumps
     /// </summary>
-    public AtmosMonitoringConsoleEntry[] Pumps;
-
-    /// <summary>
-    /// A list of all gas mixers
-    /// </summary>
-    public AtmosMonitoringConsoleEntry[] Mixers;
-
-    /// <summary>
-    /// A list of all gas filters
-    /// </summary>
-    public AtmosMonitoringConsoleEntry[] Filters;
-
-    /// <summary>
-    /// A list of all thermoregulators
-    /// </summary>
-    public AtmosMonitoringConsoleEntry[] Thermoregulators;
+    public AtmosMonitoringConsoleEntry[] AtmosNetworks;
 
     /// <summary>
     /// Data for the UI focus (if applicable)
@@ -159,16 +144,10 @@ public sealed class AtmosMonitoringConsoleBoundInterfaceState : BoundUserInterfa
     /// Sends data from the server to the client to populate the atmos monitoring console UI
     /// </summary>
     public AtmosMonitoringConsoleBoundInterfaceState
-        (AtmosMonitoringConsoleEntry[] pumps,
-        AtmosMonitoringConsoleEntry[] mixers,
-        AtmosMonitoringConsoleEntry[] filters,
-        AtmosMonitoringConsoleEntry[] thermoregulators,
+        (AtmosMonitoringConsoleEntry[] atmosNetworks,
         AtmosFocusDeviceData? focusData)
     {
-        Pumps = pumps;
-        Mixers = mixers;
-        Filters = filters;
-        Thermoregulators = thermoregulators;
+        AtmosNetworks = atmosNetworks;
         FocusData = focusData;
     }
 }
@@ -270,6 +249,7 @@ public sealed class AtmosMonitoringConsoleFocusChangeMessage : BoundUserInterfac
 /// </summary>
 public enum AtmosMonitoringConsoleGroup
 {
+    GasPipeAnalyzer,
     GasInlet,
     GasOutlet,
     GasOpening,

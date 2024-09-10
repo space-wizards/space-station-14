@@ -1,3 +1,4 @@
+using Content.Server.Atmos.Components;
 using Content.Server.Atmos.Monitor.Components;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.NodeContainer;
@@ -29,10 +30,13 @@ public sealed class AtmosMonitoringConsoleSystem : EntitySystem
     private float _updateTimer = 1.0f;
 
     private const float UpdateTime = 1.0f;
+    private EntityQuery<NodeContainerComponent> _nodeQuery;
 
     public override void Initialize()
     {
         base.Initialize();
+
+        _nodeQuery = GetEntityQuery<NodeContainerComponent>();
 
         // Console events
         SubscribeLocalEvent<AtmosMonitoringConsoleComponent, ComponentInit>(OnConsoleInit);
@@ -177,7 +181,10 @@ public sealed class AtmosMonitoringConsoleSystem : EntitySystem
 
         var gridUid = xform.GridUid!.Value;
 
-        if (!HasComp<MapGridComponent>(gridUid))
+        if (!TryComp<MapGridComponent>(gridUid, out var mapGrid))
+            return;
+
+        if (!TryComp<GridAtmosphereComponent>(gridUid, out var atmosphere))
             return;
 
         // The grid must have a NavMapComponent to visualize the map in the UI
@@ -186,35 +193,55 @@ public sealed class AtmosMonitoringConsoleSystem : EntitySystem
         // Gathering remaining data to be send to the client
         AtmosFocusDeviceData? focusAlarmData = null;
 
-        var pumps = new AtmosMonitoringConsoleEntry[0];
-        var mixers = new AtmosMonitoringConsoleEntry[0];
-        var filters = new AtmosMonitoringConsoleEntry[0];
-        var thermoregulators = new AtmosMonitoringConsoleEntry[0];
+        var atmosNetworks = new List<AtmosMonitoringConsoleEntry>();
+
+        var query = AllEntityQuery<GasPipeAnalyzerComponent, TransformComponent>();
+        while (query.MoveNext(out var ent, out var entAnalyzer, out var entXform))
+        {
+            if (entXform?.GridUid != xform.GridUid)
+                continue;
+
+            var gridIndex = mapGrid.TileIndicesFor(entXform.Coordinates);
+            PipeNode? pipeNode = null;
+
+            foreach (var node in NodeHelpers.GetNodesInTile(_nodeQuery, mapGrid, gridIndex))
+            {
+                if (node is PipeNode)
+                {
+                    pipeNode = (PipeNode)node;
+                    break;
+                }
+            }
+
+            if (pipeNode != null)
+            {
+                var netEnt = GetNetEntity(ent);
+                var entry = new AtmosMonitoringConsoleEntry
+                    (netEnt, GetNetCoordinates(entXform.Coordinates), AtmosMonitoringConsoleGroup.GasPipeAnalyzer, MetaData(ent).EntityName, pipeNode.NetId.ToString());
+
+                atmosNetworks.Add(entry);
+
+                if (component.FocusDevice == ent)
+                {
+                    var gasMixture = new Dictionary<Gas, float>();
+
+                    if (pipeNode.Air.TotalMoles > 0)
+                    {
+                        foreach (var gas in Enum.GetValues<Gas>())
+                        {
+                            if (pipeNode.Air[(int)gas] > 0)
+                                gasMixture.Add(gas, pipeNode.Air[(int)gas] / pipeNode.Air.TotalMoles);
+                        }
+                    }
+
+                    focusAlarmData = new AtmosFocusDeviceData(netEnt, pipeNode.Air.Temperature, pipeNode.Air.Pressure, gasMixture);
+                }
+            }
+        }
 
         // Set the UI state
         _userInterfaceSystem.SetUiState(uid, AtmosMonitoringConsoleUiKey.Key,
-            new AtmosMonitoringConsoleBoundInterfaceState(pumps, mixers, filters, thermoregulators, focusAlarmData));
-    }
-
-
-
-    private AtmosFocusDeviceData? GetFocusAlarmData(EntityUid uid, AtmosMonitoringConsoleComponent component, EntityUid gridUid)
-    {
-        if (component.FocusDevice == null)
-            return null;
-
-        var ent = component.FocusDevice.Value;
-        var entXform = Transform(component.FocusDevice.Value);
-
-        if (!entXform.Anchored ||
-            entXform.GridUid != gridUid ||
-            !TryComp<AirAlarmComponent>(ent, out var entAirAlarm))
-        {
-            return null;
-        }
-
-        //return new AtmosFocusDeviceData(GetNetEntity(component.FocusDevice.Value), temperatureData, pressureData, gasData);
-        return null;
+            new AtmosMonitoringConsoleBoundInterfaceState(atmosNetworks.ToArray(), focusAlarmData));
     }
 
     private HashSet<AtmosDeviceNavMapData> GetAllAtmosDeviceNavMapData(EntityUid gridUid)

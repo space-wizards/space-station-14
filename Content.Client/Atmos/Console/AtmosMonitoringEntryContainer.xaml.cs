@@ -12,7 +12,7 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Map;
 using System.Linq;
 
-namespace Content.Client.Atmos.Consoles;
+namespace Content.Client.Atmos.Console;
 
 [GenerateTypedNameReferences]
 public sealed partial class AtmosMonitoringEntryContainer : BoxContainer
@@ -68,25 +68,15 @@ public sealed partial class AtmosMonitoringEntryContainer : BoxContainer
         OxygenationLabel.FontOverride = normalFont;
 
         NoDataLabel.FontOverride = headerFont;
-
-        SilenceCheckBox.Label.FontOverride = smallFont;
-        SilenceCheckBox.Label.FontColorOverride = Color.DarkGray;
     }
 
-    /*public void UpdateEntry(AtmosAlertsComputerEntry entry, bool isFocus, AtmosAlertsFocusDeviceData? focusData = null)
+    public void UpdateEntry(AtmosMonitoringConsoleEntry entry, bool isFocus, AtmosFocusDeviceData? focusData = null)
     {
         // Load fonts
         var normalFont = new VectorFont(_cache.GetResource<FontResource>("/Fonts/NotoSansDisplay/NotoSansDisplay-Regular.ttf"), 11);
 
-        // Update alarm state
-        if (!_alarmStrings.TryGetValue(entry.AlarmState, out var alarmString))
-            alarmString = "atmos-alerts-window-invalid-state";
-
-        AlarmStateLabel.Text = Loc.GetString(alarmString);
-        AlarmStateLabel.FontColorOverride = GetAlarmStateColor(entry.AlarmState);
-
         // Update alarm name
-        AlarmNameLabel.Text = Loc.GetString("atmos-alerts-window-alarm-label", ("name", entry.EntityName), ("address", entry.Address));
+        NetworkNameLabel.Text = Loc.GetString("atmos-alerts-window-alarm-label", ("name", entry.EntityName), ("address", entry.Address));
 
         // Focus updates
         FocusContainer.Visible = isFocus;
@@ -96,36 +86,32 @@ public sealed partial class AtmosMonitoringEntryContainer : BoxContainer
         else
             RemoveAsFocus();
 
-        if (isFocus && entry.Group == AtmosAlertsComputerGroup.AirAlarm)
+        if (isFocus)
         {
-            MainDataContainer.Visible = (entry.AlarmState != AtmosAlarmType.Invalid);
-            NoDataLabel.Visible = (entry.AlarmState == AtmosAlarmType.Invalid);
+            MainDataContainer.Visible = true;
+            NoDataLabel.Visible = false;
 
             if (focusData != null)
             {
                 // Update temperature
-                var tempK = (FixedPoint2)focusData.Value.TemperatureData.Item1;
+                var tempK = (FixedPoint2)focusData.Value.TemperatureData;
                 var tempC = (FixedPoint2)TemperatureHelpers.KelvinToCelsius(tempK.Float());
 
                 TemperatureLabel.Text = Loc.GetString("atmos-alerts-window-temperature-value", ("valueInC", tempC), ("valueInK", tempK));
-                TemperatureLabel.FontColorOverride = GetAlarmStateColor(focusData.Value.TemperatureData.Item2);
+                TemperatureLabel.FontColorOverride = Color.White;
 
                 // Update pressure
-                PressureLabel.Text = Loc.GetString("atmos-alerts-window-pressure-value", ("value", (FixedPoint2)focusData.Value.PressureData.Item1));
-                PressureLabel.FontColorOverride = GetAlarmStateColor(focusData.Value.PressureData.Item2);
+                PressureLabel.Text = Loc.GetString("atmos-alerts-window-pressure-value", ("value", (FixedPoint2)focusData.Value.PressureData));
+                PressureLabel.FontColorOverride = Color.White;
 
                 // Update oxygenation
                 var oxygenPercent = (FixedPoint2)0f;
-                var oxygenAlert = AtmosAlarmType.Invalid;
 
                 if (focusData.Value.GasData.TryGetValue(Gas.Oxygen, out var oxygenData))
-                {
-                    oxygenPercent = oxygenData.Item2 * 100f;
-                    oxygenAlert = oxygenData.Item3;
-                }
+                    oxygenPercent = oxygenData * 100f;
 
                 OxygenationLabel.Text = Loc.GetString("atmos-alerts-window-oxygenation-value", ("value", oxygenPercent));
-                OxygenationLabel.FontColorOverride = GetAlarmStateColor(oxygenAlert);
+                OxygenationLabel.FontColorOverride = Color.White;
 
                 // Update other present gases
                 GasGridContainer.RemoveAllChildren();
@@ -153,7 +139,7 @@ public sealed partial class AtmosMonitoringEntryContainer : BoxContainer
                 else
                 {
                     // Add an entry for each gas
-                    foreach ((var gas, (var mol, var percent, var alert)) in gasData)
+                    foreach (var (gas, percent) in gasData)
                     {
                         var gasPercent = (FixedPoint2)0f;
                         gasPercent = percent * 100f;
@@ -165,7 +151,7 @@ public sealed partial class AtmosMonitoringEntryContainer : BoxContainer
                         {
                             Text = Loc.GetString("atmos-alerts-window-other-gases-value", ("shorthand", gasShorthand), ("value", gasPercent)),
                             FontOverride = normalFont,
-                            FontColorOverride = GetAlarmStateColor(alert),
+                            FontColorOverride = Color.White,
                             HorizontalAlignment = HAlignment.Center,
                             VerticalAlignment = VAlignment.Center,
                             HorizontalExpand = true,
@@ -178,7 +164,7 @@ public sealed partial class AtmosMonitoringEntryContainer : BoxContainer
                 }
             }
         }
-    }*/
+    }
 
     public void SetAsFocus()
     {
@@ -191,20 +177,5 @@ public sealed partial class AtmosMonitoringEntryContainer : BoxContainer
         FocusButton.RemoveStyleClass(StyleNano.StyleClassButtonColorGreen);
         ArrowTexture.TexturePath = "/Textures/Interface/Nano/triangle_right.png";
         FocusContainer.Visible = false;
-    }
-
-    private Color GetAlarmStateColor(AtmosAlarmType alarmType)
-    {
-        switch (alarmType)
-        {
-            case AtmosAlarmType.Normal:
-                return StyleNano.GoodGreenFore;
-            case AtmosAlarmType.Warning:
-                return StyleNano.ConcerningOrangeFore;
-            case AtmosAlarmType.Danger:
-                return StyleNano.DangerousRedFore;
-        }
-
-        return StyleNano.DisabledFore;
     }
 }
