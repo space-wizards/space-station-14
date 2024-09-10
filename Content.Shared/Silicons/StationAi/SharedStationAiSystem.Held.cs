@@ -122,20 +122,25 @@ public abstract partial class SharedStationAiSystem
         // Cancel if it's not us or something with a whitelist.
         args.Cancelled = ent.Owner != args.Target &&
                          args.Target != null &&
-                         (!TryComp(args.Target, out StationAiWhitelistComponent? whitelist) || !whitelist.Enabled);
+                         !HasComp<StationAiWhitelistComponent>(args.Target);
     }
 
     private void OnTargetVerbs(Entity<StationAiWhitelistComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanComplexInteract ||
-            !ent.Comp.Enabled ||
-            !HasComp<StationAiHeldComponent>(args.User) ||
-            !HasComp<StationAiWhitelistComponent>(args.Target))
+        if (!args.CanComplexInteract
+            || !HasComp<StationAiHeldComponent>(args.User)
+            || !HasComp<StationAiWhitelistComponent>(args.Target))
         {
             return;
         }
 
         var user = args.User;
+        if (!ent.Comp.Enabled)
+        {
+            _popup.PopupClient(Loc.GetString("ai-device-not-responding"), user, PopupType.MediumCaution);
+            return;
+        }
+
         var target = args.Target;
 
         var isOpen = _uiSystem.IsUiOpen(target, AiUi.Key, user);
