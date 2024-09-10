@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: The lock on emagged borgs no longer breaks, preventing unauthorized access
-      and emag checking.
-    type: Tweak
-  id: 6845
-  time: '2024-06-30T13:46:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29605
 - author: metalgearsloth
   changes:
   - message: Accentless speech now costs 2 trait points.
@@ -3907,3 +3899,11 @@
   id: 7344
   time: '2024-09-10T22:19:17.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32048
+- author: DiposableCrewmember42
+  changes:
+  - message: Fixed Revenant ability cost checks. Revenants can no longer spam abilities
+      without Essence.
+    type: Fix
+  id: 7345
+  time: '2024-09-10T23:07:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32050
