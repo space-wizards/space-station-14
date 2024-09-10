@@ -3,7 +3,7 @@
   id: ERTLeader
   name: job-name-ertleader
   description: job-description-ertleader
-  playTimeTracker: JobERTLeader
+  playTimeTracker: JobERT
   setPreference: false
   startingGear: ERTLeaderGearEVA
   icon: "JobIconNanotrasen"
@@ -93,7 +93,7 @@
   id: ERTChaplain
   name: job-name-ertchaplain
   description: job-description-ertchaplain
-  playTimeTracker: JobERTChaplain
+  playTimeTracker: JobERT
   setPreference: false
   startingGear: ERTChaplainGear
   icon: "JobIconNanotrasen"
@@ -175,7 +175,7 @@
   id: ERTEngineer
   name: job-name-ertengineer
   description: job-description-ertengineer
-  playTimeTracker: JobERTEngineer
+  playTimeTracker: JobERT
   setPreference: false
   startingGear: ERTEngineerGearEVA
   icon: "JobIconNanotrasen"
@@ -247,7 +247,7 @@
   id: ERTSecurity
   name: job-name-ertsecurity
   description: job-description-ertsecurity
-  playTimeTracker: JobERTSecurity
+  playTimeTracker: JobERT
   setPreference: false
   startingGear: ERTEngineerGearEVA
   icon: "JobIconNanotrasen"
@@ -337,7 +337,7 @@
   id: ERTMedical
   name: job-name-ertmedic
   description: job-description-ertmedic
-  playTimeTracker: JobERTMedical
+  playTimeTracker: JobERT
   setPreference: false
   startingGear: ERTMedicalGearEVA
   icon: "JobIconNanotrasen"
@@ -399,7 +399,7 @@
   id: ERTJanitor
   name: job-name-ertjanitor
   description: job-description-ertjanitor
-  playTimeTracker: JobERTJanitor
+  playTimeTracker: JobERT
   setPreference: false
   startingGear: ERTJanitorGearEVA
   icon: "JobIconNanotrasen"
