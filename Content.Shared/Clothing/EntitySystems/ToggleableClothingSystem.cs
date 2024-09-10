@@ -434,6 +434,10 @@ public sealed class ToggleableClothingSystem : EntitySystem
             return;
 
         var xform = Transform(toggleable.Owner);
+
+        if (comp.ClothingPrototypes == null)
+            return;
+
         var prototypes = comp.ClothingPrototypes;
 
         foreach (var prototype in prototypes)
