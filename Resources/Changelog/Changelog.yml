@@ -1,58 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Fix trait categories not respecting unlimited points.
-    type: Fix
-  id: 6841
-  time: '2024-06-30T04:28:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29600
-- author: ShadowCommander
-  changes:
-  - message: Fixed sprite layers disappearing when inserting or removing an item on
-      entities such as belts, janitor trolley, clipboard, etc.
-    type: Fix
-  id: 6842
-  time: '2024-06-30T04:34:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29461
-- author: Plykiya
-  changes:
-  - message: Syndicate traitor reinforcements price has been changed from 16 TC to
-      14 TC.
-    type: Tweak
-  - message: Nuclear ops reinforcements price has been changed from 16 TC to 35 TC.
-    type: Tweak
-  id: 6843
-  time: '2024-06-30T12:28:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29557
-- author: Plykiya
-  changes:
-  - message: Skeletons are now immune to flashes.
-    type: Add
-  id: 6844
-  time: '2024-06-30T13:42:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29604
-- author: Plykiya
-  changes:
-  - message: The lock on emagged borgs no longer breaks, preventing unauthorized access
-      and emag checking.
-    type: Tweak
-  id: 6845
-  time: '2024-06-30T13:46:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29605
-- author: metalgearsloth
-  changes:
-  - message: Accentless speech now costs 2 trait points.
-    type: Tweak
-  id: 6846
-  time: '2024-06-30T13:47:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29603
-- author: deltanedas
-  changes:
-  - message: Fixed sleeper agents not showing up in the round end summary.
-    type: Fix
-  id: 6847
-  time: '2024-06-30T13:51:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29468
 - author: EmoGarbage404
   changes:
   - message: The design on the bar sign can now be changed via a menu.
@@ -3910,3 +3856,55 @@
   id: 7340
   time: '2024-09-10T10:27:42.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31914
+- author: ScarKy0
+  changes:
+  - message: Arrival Screens now show time again.
+    type: Fix
+  id: 7341
+  time: '2024-09-10T19:08:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32037
+- author: themias
+  changes:
+  - message: The Justice Helm can now only be crafted using a security helmet.
+    type: Fix
+  id: 7342
+  time: '2024-09-10T19:08:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32042
+- author: TurboTrackerss14
+  changes:
+  - message: Gas tank explosions ("max caps") have a reduced range on WizDen servers
+      until they can be reworked into a proper game mechanic.
+    type: Remove
+  id: 7343
+  time: '2024-09-10T22:05:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31437
+- author: Boaz1111
+  changes:
+  - message: Researching Advanced Atmospherics now requires Atmospherics to be researched.
+    type: Tweak
+  id: 7344
+  time: '2024-09-10T22:19:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32048
+- author: DiposableCrewmember42
+  changes:
+  - message: Fixed Revenant ability cost checks. Revenants can no longer spam abilities
+      without Essence.
+    type: Fix
+  id: 7345
+  time: '2024-09-10T23:07:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32050
+- author: ArtisticRoomba
+  changes:
+  - message: The salvage magnet circuitboard has been added to QM's locker. It can
+      also be made at the circuit imprinter roundstart. NOW GET BACK TO WORK!!!
+    type: Tweak
+  id: 7346
+  time: '2024-09-10T23:25:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31996
+- author: Lank
+  changes:
+  - message: Several antagonist shuttle events have been removed.
+    type: Remove
+  id: 7347
+  time: '2024-09-10T23:26:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32052
