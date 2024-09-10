@@ -1,16 +1,6 @@
 ﻿Entries:
 - author: Plykiya
   changes:
-  - message: Syndicate traitor reinforcements price has been changed from 16 TC to
-      14 TC.
-    type: Tweak
-  - message: Nuclear ops reinforcements price has been changed from 16 TC to 35 TC.
-    type: Tweak
-  id: 6843
-  time: '2024-06-30T12:28:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29557
-- author: Plykiya
-  changes:
   - message: Skeletons are now immune to flashes.
     type: Add
   id: 6844
@@ -3909,3 +3899,11 @@
   id: 7342
   time: '2024-09-10T19:08:37.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32042
+- author: TurboTrackerss14
+  changes:
+  - message: Gas tank explosions ("max caps") have a reduced range on WizDen servers
+      until they can be reworked into a proper game mechanic.
+    type: Remove
+  id: 7343
+  time: '2024-09-10T22:05:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31437
