@@ -1389,3 +1389,11 @@
   id: 183
   time: '2024-09-10T05:52:47.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/236
+- author: Drags-His-Tail
+  changes:
+  - message: A new book documenting the Ritual of Agony's process and recounting one
+      such sermon will now be available in random bookshelves.
+    type: Add
+  id: 184
+  time: '2024-09-10T05:54:46.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/230
