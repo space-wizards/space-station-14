@@ -24,4 +24,11 @@ public sealed partial class NPCUseActionOnTargetComponent : Component
 
     [DataField]
     public Dictionary<EntityUid, float> ActionsEntities = new();
+
+    [DataField]
+    public (TimeSpan Start, TimeSpan End)? Cooldown;
+
+    [DataField]
+    public TimeSpan UseDelay = TimeSpan.FromSeconds(8);
+
 }

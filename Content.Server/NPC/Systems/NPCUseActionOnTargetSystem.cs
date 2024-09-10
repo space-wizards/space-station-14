@@ -4,7 +4,6 @@ using Content.Shared.Actions;
 using Content.Shared.Random.Helpers;
 using Robust.Shared.Timing;
 using Robust.Shared.Random;
-using System.Linq;
 
 namespace Content.Server.NPC.Systems;
 
@@ -43,6 +42,10 @@ public sealed class NPCUseActionOnTargetSystem : EntitySystem
         if (!Resolve(user, ref user.Comp, false))
             return false;
 
+        var curTime = _timing.CurTime;
+        if (user.Comp.Cooldown.HasValue && user.Comp.Cooldown.Value.End > curTime)
+            return false;
+
         var choosenAction = SharedRandomExtensions.Pick(_random, user.Comp.ActionsEntities);
 
         if (!TryComp<EntityWorldTargetActionComponent>(choosenAction, out var action))
@@ -63,6 +66,8 @@ public sealed class NPCUseActionOnTargetSystem : EntitySystem
             action.BaseEvent,
             _timing.CurTime,
             false);
+
+        user.Comp.Cooldown = (curTime, curTime + user.Comp.UseDelay);
         return true;
     }
 
