@@ -1432,6 +1432,18 @@ namespace Content.Shared.CCVar
             CVarDef.Create("votekick.eligible_number", 10, CVar.SERVERONLY);
 
         /// <summary>
+        ///     Whether a votekick initiator must be a ghost or not.
+        /// </summary>
+        public static readonly CVarDef<bool> VotekickInitiatorGhostRequirement =
+            CVarDef.Create("votekick.initiator_ghost_requirement", true, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Whether a votekick voter must be a ghost or not.
+        /// </summary>
+        public static readonly CVarDef<bool> VotekickVoterGhostRequirement =
+            CVarDef.Create("votekick.voter_ghost_requirement", true, CVar.SERVERONLY);
+
+        /// <summary>
         ///     Config for how many hours playtime a player must have to be able to vote on a votekick.
         /// </summary>
         public static readonly CVarDef<int> VotekickEligibleVoterPlaytime =

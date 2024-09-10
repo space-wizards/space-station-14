@@ -447,6 +447,13 @@ namespace Content.Server.Voting.Managers
                 }
             }
 
+            if (eligibility == VoterEligibility.MinimumPlaytime)
+            {
+                var playtime = _playtimeManager.GetPlayTimes(player);
+                if (!playtime.TryGetValue(PlayTimeTrackingShared.TrackerOverall, out TimeSpan overallTime) || overallTime < TimeSpan.FromHours(_cfg.GetCVar(CCVars.VotekickEligibleVoterPlaytime)))
+                    return false;
+            }
+
             return true;
         }
 
@@ -543,7 +550,8 @@ namespace Content.Server.Voting.Managers
         {
             All,
             Ghost, // Player needs to be a ghost
-            GhostMinimumPlaytime // Player needs to be a ghost, with a minimum playtime and deathtime as defined by votekick CCvars.
+            GhostMinimumPlaytime, // Player needs to be a ghost, with a minimum playtime and deathtime as defined by votekick CCvars.
+            MinimumPlaytime //Player needs to have a minimum playtime and deathtime as defined by votekick CCvars.
         }
 
         #endregion

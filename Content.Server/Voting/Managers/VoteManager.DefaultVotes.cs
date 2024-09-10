@@ -345,7 +345,7 @@ namespace Content.Server.Voting.Managers
             }
 
             var eligibleVoterNumberRequirement = _cfg.GetCVar(CCVars.VotekickEligibleNumberRequirement);
-            var eligibleVoterNumber = CalculateEligibleVoterNumber(VoterEligibility.GhostMinimumPlaytime);
+            var eligibleVoterNumber = _cfg.GetCVar(CCVars.VotekickVoterGhostRequirement) ? CalculateEligibleVoterNumber(VoterEligibility.GhostMinimumPlaytime) : CalculateEligibleVoterNumber(VoterEligibility.MinimumPlaytime);
 
             string target = args[0];
             string reason = args[1];
@@ -439,7 +439,7 @@ namespace Content.Server.Voting.Managers
                 },
                 Duration = TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VotekickTimer)),
                 InitiatorTimeout = TimeSpan.FromMinutes(_cfg.GetCVar(CCVars.VotekickTimeout)),
-                VoterEligibility = VoterEligibility.GhostMinimumPlaytime,
+                VoterEligibility = _cfg.GetCVar(CCVars.VotekickVoterGhostRequirement) ? VoterEligibility.GhostMinimumPlaytime : VoterEligibility.MinimumPlaytime,
                 DisplayVotes = false,
                 TargetEntity = targetNetEntity
             };

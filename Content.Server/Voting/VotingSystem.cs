@@ -86,13 +86,16 @@ public sealed class VotingSystem : EntitySystem
         if (initiator.AttachedEntity != null && _adminManager.IsAdmin(initiator.AttachedEntity.Value, false))
             return true;
 
-        // Must be ghost
-        if (!TryComp(initiator.AttachedEntity, out GhostComponent? ghostComp))
-            return false;
+        if (_cfg.GetCVar(CCVars.VotekickInitiatorGhostRequirement))
+        {
+            // Must be ghost
+            if (!TryComp(initiator.AttachedEntity, out GhostComponent? ghostComp))
+                return false;
 
-        // Must have been dead for x seconds
-        if ((int)_gameTiming.RealTime.Subtract(ghostComp.TimeOfDeath).TotalSeconds < _cfg.GetCVar(CCVars.VotekickEligibleVoterDeathtime))
-            return false;
+            // Must have been dead for x seconds
+            if ((int)_gameTiming.RealTime.Subtract(ghostComp.TimeOfDeath).TotalSeconds < _cfg.GetCVar(CCVars.VotekickEligibleVoterDeathtime))
+                return false;
+        }
 
         // Must be whitelisted
         if (!await _dbManager.GetWhitelistStatusAsync(initiator.UserId))
