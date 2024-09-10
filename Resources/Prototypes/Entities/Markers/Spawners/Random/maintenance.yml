@@ -506,8 +506,9 @@
     children:
     # Weak Enemy
     - id: MobTick
+      weight: 60
     - id: DehydratedSpaceCarp
-      weight: 80
+      weight: 20
     # Strong Enemy
     - !type:GroupSelector
       weight: 20
