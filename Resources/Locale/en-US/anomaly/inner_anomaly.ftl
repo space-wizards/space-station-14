@@ -10,3 +10,8 @@ inner-anomaly-start-message-tech = Your head is buzzing with the amount of chaot
 inner-anomaly-start-message-rock = The crystals are growing through your bones! You become the host of a rock anomaly.
 
 inner-anomaly-end-message = The abnormal activity within you disappears without a trace....
+
+inner-anomaly-severity-info-50 = You feel that the anomaly is taking over half your body.
+inner-anomaly-severity-info-75 = You feel that the anomaly is taking over a large part of your body.
+inner-anomaly-severity-info-90 = You feel that the anomaly has almost completely taken over your body.
+inner-anomaly-severity-info-100 = The anomaly inside you is growing uncontrollably, causing immense pain, and tearing you apart!

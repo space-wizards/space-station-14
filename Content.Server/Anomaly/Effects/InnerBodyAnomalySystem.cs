@@ -50,10 +50,54 @@ public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
         SubscribeLocalEvent<InnerBodyAnomalyComponent, AnomalyPulseEvent>(OnAnomalyPulse);
         SubscribeLocalEvent<InnerBodyAnomalyComponent, AnomalyShutdownEvent>(OnAnomalyShutdown);
         SubscribeLocalEvent<InnerBodyAnomalyComponent, AnomalySupercriticalEvent>(OnAnomalySupercritical);
+        SubscribeLocalEvent<InnerBodyAnomalyComponent, AnomalySeverityChangedEvent>(OnSeverityChanged);
 
         SubscribeLocalEvent<InnerBodyAnomalyComponent, MobStateChangedEvent>(OnMobStateChanged);
 
         SubscribeLocalEvent<AnomalyComponent, ActionAnomalyPulseEvent>(OnActionPulse);
+    }
+
+    private void OnSeverityChanged(Entity<InnerBodyAnomalyComponent> ent, ref AnomalySeverityChangedEvent args)
+    {
+        if (!_mind.TryGetMind(ent, out _, out var mindComponent) || mindComponent.Session == null)
+            return;
+
+        var message = string.Empty;
+
+        if (args.Severity >= 0.5 && ent.Comp.LastSeverityInformed < 0.5)
+        {
+            ent.Comp.LastSeverityInformed = 0.5f;
+            message = Loc.GetString("inner-anomaly-severity-info-50");
+        }
+        if (args.Severity >= 0.75 && ent.Comp.LastSeverityInformed < 0.75)
+        {
+            ent.Comp.LastSeverityInformed = 0.75f;
+            message = Loc.GetString("inner-anomaly-severity-info-75");
+        }
+        if (args.Severity >= 0.9 && ent.Comp.LastSeverityInformed < 0.9)
+        {
+            ent.Comp.LastSeverityInformed = 0.9f;
+            message = Loc.GetString("inner-anomaly-severity-info-90");
+        }
+        if (args.Severity >= 1 && ent.Comp.LastSeverityInformed < 1)
+        {
+            ent.Comp.LastSeverityInformed = 1f;
+            message = Loc.GetString("inner-anomaly-severity-info-100");
+        }
+
+        if (message == string.Empty)
+            return;
+
+        var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
+        _chat.ChatMessageToOne(ChatChannel.Server,
+            message,
+            wrappedMessage,
+            default,
+            false,
+            mindComponent.Session.Channel,
+            _messageColor);
+
+        _popup.PopupEntity(message, ent, ent, PopupType.MediumCaution);
     }
 
     private void OnActionPulse(Entity<AnomalyComponent> ent, ref ActionAnomalyPulseEvent args)

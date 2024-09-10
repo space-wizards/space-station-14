@@ -53,6 +53,12 @@ public sealed partial class InnerBodyAnomalyComponent : Component
     public EntityUid? Action = null;
 
     /// <summary>
+    /// Used to display messages to the player about their level of disease progression
+    /// </summary>
+    [DataField]
+    public float LastSeverityInformed = 0f;
+
+    /// <summary>
     /// prototypes of the action that the entity will receive
     /// </summary>
     [DataField]
