@@ -59,7 +59,7 @@
   name: guide-entry-rules-c0
   ruleEntry: true
   priority: 1
-  text: "/ServerInfo/Guidebook/ServerRules/CoreRules/Rule00.xml"
+  text: "/ServerInfo/Guidebook/ServerRules/CoreRules/RuleC00.xml"
 
 - type: guideEntry
   id: RuleC1
