@@ -1,6 +1,5 @@
 using Content.Server.Botany;
 using Content.Server.Botany.Components;
-using Content.Server.Botany.Systems;
 using Content.Shared.EntityEffects;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
@@ -29,15 +28,18 @@ public sealed partial class PlantChangeStat : EntityEffect
             return;
 
         var member = plantHolder.Seed.GetType().GetField(TargetValue);
+        var mutationSys = args.EntityManager.System<MutationSystem>();
 
         if (member == null)
+        {
+            mutationSys.Log.Error(this.GetType().Name + " Error: Member " + TargetValue + " not found on " + plantHolder.GetType().Name + ". Did you misspell it?");
             return;
+        }
 
         var currentValObj = member.GetValue(plantHolder.Seed);
         if (currentValObj == null)
             return;
 
-        var mutationSys = args.EntityManager.System<MutationSystem>();
         if (member.FieldType == typeof(float))
         {
             var floatVal = (float)currentValObj;
