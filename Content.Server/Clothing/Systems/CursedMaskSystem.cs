@@ -1,5 +1,5 @@
 using Content.Server.Administration.Logs;
-using Content.Server.GameTicking;
+using Content.Server.Ghost;
 using Content.Server.Mind;
 using Content.Server.NPC;
 using Content.Server.NPC.HTN;
@@ -21,7 +21,7 @@ namespace Content.Server.Clothing.Systems;
 public sealed class CursedMaskSystem : SharedCursedMaskSystem
 {
     [Dependency] private readonly IAdminLogManager _adminLog = default!;
-    [Dependency] private readonly GameTicker _ticker = default!;
+    [Dependency] private readonly GhostSystem _ghostSystem = default!;
     [Dependency] private readonly HTNSystem _htn = default!;
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly NPCSystem _npc = default!;
@@ -39,7 +39,7 @@ public sealed class CursedMaskSystem : SharedCursedMaskSystem
         if (TryComp<ActorComponent>(wearer, out var actor) && actor.PlayerSession.GetMind() is { } mind)
         {
             var session = actor.PlayerSession;
-            if (!_ticker.OnGhostAttempt(mind, false))
+            if (!_ghostSystem.OnGhostAttempt(mind, false))
                 return;
 
             ent.Comp.StolenMind = mind;
