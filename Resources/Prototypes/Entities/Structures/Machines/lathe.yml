@@ -574,6 +574,7 @@
     - BorgModuleAppraisal
     - BorgModuleBartender
     - BorgModuleConstruction
+    - BorgModulePaper
     - BorgModuleTreatment
     - BorgModuleCleaning
     - CyborgEndoskeleton
