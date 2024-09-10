@@ -30,7 +30,7 @@ public abstract class SharedPaperQuantumSystem : EntitySystem
         SubscribeLocalEvent<PaperQuantumComponent, StampedEvent>(OnStamped);
     }
 
-    // Splitting
+    // Quantum plitting functionality
 
     private void AddVerbs(EntityUid uid, PaperQuantumComponent component, GetVerbsEvent<Verb> args)
     {
@@ -52,9 +52,10 @@ public abstract class SharedPaperQuantumSystem : EntitySystem
         }
     }
 
+    // Quantum split verb, starts DoAfter.
     private bool TryStartSplit(Entity<PaperQuantumComponent> entity, EntityUid user)
     {
-        if (entity.Comp.Entangled is not null)
+        if (entity.Comp.Entangled is not null) // papers already entangled can't be split.
             return false;
 
         var doAfterArgs = new DoAfterArgs(
@@ -68,7 +69,7 @@ public abstract class SharedPaperQuantumSystem : EntitySystem
         {
             NeedHand = true,
             BreakOnDamage = true,
-            DistanceThreshold = 0.3f,
+            DistanceThreshold = 0.6f,
             MovementThreshold = 0.01f,
             BreakOnHandChange = false,
         };
@@ -85,6 +86,7 @@ public abstract class SharedPaperQuantumSystem : EntitySystem
         return true;
     }
 
+    // Post DoAfter. Create a new entity from the prototype and "entangle" both.
     private void OnSplit(Entity<PaperQuantumComponent> entity, ref PaperQuantumSplitDoAfter args)
     {
         if (!_net.IsServer || args.Cancelled)
@@ -104,6 +106,7 @@ public abstract class SharedPaperQuantumSystem : EntitySystem
         _handsSystem.PickupOrDrop(args.User, otherUid);
     }
 
+    // Entangle one of the papers with some other, setting its name and description.
     private void EntangleOne(Entity<PaperQuantumComponent> entity, string locName, EntityUid otherUid)
     {
         entity.Comp.Entangled = GetNetEntity(otherUid);
@@ -118,6 +121,7 @@ public abstract class SharedPaperQuantumSystem : EntitySystem
 
     // Disentangle
 
+    // Quantum disentangle verb, starts DoAfter.
     private bool TryStartDisentangle(Entity<PaperQuantumComponent> entity, EntityUid user)
     {
         var doAfterArgs = new DoAfterArgs(
@@ -131,7 +135,7 @@ public abstract class SharedPaperQuantumSystem : EntitySystem
         {
             NeedHand = true,
             BreakOnDamage = true,
-            DistanceThreshold = 0.3f,
+            DistanceThreshold = 0.6f,
             MovementThreshold = 0.01f,
             BreakOnHandChange = false,
         };
@@ -148,6 +152,7 @@ public abstract class SharedPaperQuantumSystem : EntitySystem
         return true;
     }
 
+    // Post DoAfter. Disentangles one or both copies.
     private void OnDisentangle(Entity<PaperQuantumComponent> entity, ref PaperQuantumDisentangleDoAfter args)
     {
         if (args.Cancelled)
@@ -158,6 +163,7 @@ public abstract class SharedPaperQuantumSystem : EntitySystem
         DisentangleOne((entity.Owner, entity.Comp));
     }
 
+    // Disentangle one of the papers without touching the other.
     protected virtual void DisentangleOne(Entity<PaperQuantumComponent?> entity)
     {
         if (!Resolve(entity, ref entity.Comp))
@@ -172,6 +178,7 @@ public abstract class SharedPaperQuantumSystem : EntitySystem
         RemCompDeferred<PaperQuantumComponent>(entity);
     }
 
+    // When one is stamped, try to transfer the stamp and place some bluespace effects with the color of the stamp.
     private void OnStamped(Entity<PaperQuantumComponent> entity, ref StampedEvent args)
     {
         if (!TryGetEntity(entity.Comp.Entangled, out var entangled))
@@ -180,7 +187,7 @@ public abstract class SharedPaperQuantumSystem : EntitySystem
 
         if (!_net.IsServer)
             return;
-        var light = Spawn(entity.Comp.BluespaceStampEffectProto, entangled.Value.ToCoordinates());
+        var light = Spawn(entity.Comp.BluespaceEffectProto, entangled.Value.ToCoordinates());
         _light.SetColor(light, args.StampInfo.StampedColor);
     }
 
@@ -194,12 +201,18 @@ public abstract class SharedPaperQuantumSystem : EntitySystem
         return entity.Comp.Entangled is not null;
     }
 
+    /// <summary>
+    /// As quantum entanglement involves two entities at maximum, whenever some of the entangled entities
+    /// is cloned, entanglement should be transferred instead.
+    /// This method tries to disentangle the source entity and entangle the target.
+    /// Used for Fax copying/sending.
+    /// </summary>
     public void TryTransferQuantum(Entity<PaperQuantumComponent?> source, Entity<PaperQuantumComponent?> target)
     {
         if (!Resolve(source, ref source.Comp) || !Resolve(target, ref target.Comp))
             return;
         target.Comp.Entangled = source.Comp.Entangled;
-        target.Comp.TeleportWeight = (int) (source.Comp.TeleportWeight * source.Comp.FaxTeleportWeightPenaltyCoeff);
+        target.Comp.TeleportWeight = (int) (source.Comp.TeleportWeight * source.Comp.WeightPenaltyCoeffOnTransfer); // teleport weight halved on each transfer.
         Dirty(target);
         if (TryGetEntity(source.Comp.Entangled, out var entangled) && TryComp(entangled, out PaperQuantumComponent? entangledComp))
         {

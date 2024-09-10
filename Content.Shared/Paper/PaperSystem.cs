@@ -99,10 +99,10 @@ public sealed class PaperSystem : EntitySystem
 
     private void OnInteractUsing(Entity<PaperComponent> entity, ref InteractUsingEvent args)
     {
-        // only allow editing if there are no stamps or when using a cyberpen
+        // If something you can write with
         if (_tagSystem.HasTag(args.Used, "Write"))
         {
-            if (entity.Comp.EditingDisabled)
+            if (entity.Comp.EditingDisabled) // Papers with EditingDisable cannot be modified, period.
             {
                 var paperEditingDisabledMessage = Loc.GetString("paper-tamper-proof-modified-message");
                 _popupSystem.PopupEntity(paperEditingDisabledMessage, entity, args.User);
@@ -111,8 +111,9 @@ public sealed class PaperSystem : EntitySystem
 
                 return;
             } 
+            // If paper is quantum entangled or stamped, it generally cannot be modified...
             var editable = !_quantum.IsEntangled(entity.Owner) && entity.Comp.StampedBy.Count == 0;
-            if (editable || _tagSystem.HasTag(args.Used, "WriteIgnoreRestrictions"))
+            if (editable || _tagSystem.HasTag(args.Used, "WriteIgnoreRestrictions")) // ... but cybersun pen, etc. can override it.
             {
                 var writeEvent = new PaperWriteEvent(entity, args.User);
                 RaiseLocalEvent(args.Used, ref writeEvent);
@@ -229,6 +230,9 @@ public sealed class PaperSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    ///     Forcibly update the contents of the paper with following text.
+    /// </summary>
     public void SetContent(Entity<PaperComponent?> entity, string content)
     {
         if (!Resolve(entity, ref entity.Comp))

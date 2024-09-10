@@ -37,37 +37,42 @@ public sealed class PaperQuantumSystem : SharedPaperQuantumSystem
         RemCompDeferred<SuperposedComponent>(entity);
     }
 
+    // On ignition, teleportation happens.
     private void OnIgnited(Entity<PaperQuantumComponent> entity, ref IgnitedEvent args)
     {
-        // Disentangle
+        // First, diisentangle both papers.
         if (!TryGetEntity(entity.Comp.Entangled, out var entangled))
             return;
         DisentangleOne((entity.Owner, entity.Comp));
         DisentangleOne(entangled.Value);
 
-        Spawn(entity.Comp.BluespaceStampEffectProto, entity.Owner.ToCoordinates());
-        Spawn(entity.Comp.BluespaceStampEffectProto, entangled.Value.ToCoordinates());
+        // Then, create bluespace effect at source and destination.
+        Spawn(entity.Comp.BluespaceEffectProto, entity.Owner.ToCoordinates());
+        Spawn(entity.Comp.BluespaceEffectProto, entangled.Value.ToCoordinates());
 
+        // Teleport items, up to the weight TeleportWeight.
+        // TelportWeight halved on each faxing.
         var teleportWeight = entity.Comp.TeleportWeight;
         if (teleportWeight <= 0)
             return;
         var destination = _transform.GetMapCoordinates(entangled.Value);
-        foreach (var nearEnt in _lookup.GetEntitiesInRange(entity.Owner.ToCoordinates(), 1f, LookupFlags.Dynamic | LookupFlags.Sundries))
+        foreach (var nearEnt in _lookup.GetEntitiesInRange(entity.Owner.ToCoordinates(), 0.75f, LookupFlags.Dynamic | LookupFlags.Sundries)) // scan for items/mobs nearby
         {
             if (teleportWeight <= 0)
                 break;
-            if (nearEnt == entity.Owner || nearEnt == entangled)
+            if (nearEnt == entity.Owner || nearEnt == entangled) // don't teleport quantum papers.
                 continue;
-            if (TryComp(nearEnt, out ItemComponent? nearItem))
+            if (TryComp(nearEnt, out ItemComponent? nearItem)) // if an item, try to teleport.
             {
                 var weight = _item.GetItemSizeWeight(nearItem.Size);
                 if (weight <= teleportWeight)
                 {
                     teleportWeight -= weight;
                     _transform.SetMapCoordinates(nearEnt, destination);
-                    _tempExplResist.ApplyResistance(nearEnt, TimeSpan.FromSeconds(0.5f));
+                    _tempExplResist.ApplyResistance(nearEnt, TimeSpan.FromSeconds(0.5f)); // Add TemporaryExplosionResistant component
+                    // to the teleported entity so they don't get instantly destroyed in the explosion. Doesn't save them from being ignited.
                 }
-            } else if (HasComp<BodyComponent>(nearEnt))
+            } else if (HasComp<BodyComponent>(nearEnt)) // if a mob with body, slice something off, reducing the channel capacity and damaging the entity.
             {
                 teleportWeight -= 1;
                 _damage.TryChangeDamage(nearEnt, entity.Comp.Damage);
@@ -82,6 +87,7 @@ public sealed class PaperQuantumSystem : SharedPaperQuantumSystem
             }
         }
 
+        // Kaboom the entangled paper. Set fire damage it receives to 0 so it never actually burns.
         if (TryComp(entangled.Value, out FlammableComponent? entangledFlammable))
             entangledFlammable.Damage = new();
         _explosion.TriggerExplosive(entangled.Value);
