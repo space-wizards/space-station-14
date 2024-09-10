@@ -77,7 +77,7 @@ public sealed class PaperSystem : EntitySystem
             {
                 args.PushMarkup(
                     Loc.GetString(
-                        "paer-component-examine-detail-has-words",
+                        "paper-component-examine-detail-has-words",
                         ("paper", entity)
                     )
                 );
