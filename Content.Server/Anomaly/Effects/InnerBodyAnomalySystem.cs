@@ -5,12 +5,14 @@ using Content.Server.Jittering;
 using Content.Server.Mind;
 using Content.Server.Stunnable;
 using Content.Shared.Actions;
+using Content.Shared.Anomaly;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Anomaly.Effects;
 using Content.Shared.Body.Components;
 using Content.Shared.Chat;
 using Content.Shared.Database;
 using Content.Shared.Mobs;
+using Content.Shared.Popups;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Physics.Events;
@@ -32,6 +34,7 @@ public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
     [Dependency] private readonly AnomalySystem _anomaly = default!;
     [Dependency] private readonly IAdminLogManager _adminLog = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     private readonly Color _messageColor = Color.FromSrgb(new Color(201, 22, 94));
 
@@ -49,6 +52,18 @@ public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
         SubscribeLocalEvent<InnerBodyAnomalyComponent, AnomalySupercriticalEvent>(OnAnomalySupercritical);
 
         SubscribeLocalEvent<InnerBodyAnomalyComponent, MobStateChangedEvent>(OnMobStateChanged);
+
+        SubscribeLocalEvent<AnomalyComponent, ActionAnomalyPulseEvent>(OnActionPulse);
+    }
+
+    private void OnActionPulse(Entity<AnomalyComponent> ent, ref ActionAnomalyPulseEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        _anomaly.DoAnomalyPulse(ent, ent.Comp);
+
+        args.Handled = true;
     }
 
     private void OnStartCollideInjector(Entity<InnerBodyAnomalyInjectorComponent> ent, ref StartCollideEvent args)
@@ -100,6 +115,8 @@ public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
                 false,
                 mindComponent.Session.Channel,
                 _messageColor);
+
+            _popup.PopupEntity(message, ent, ent, PopupType.MediumCaution);
 
             _adminLog.Add(LogType.Anomaly,LogImpact.Extreme,$"{ToPrettyString(ent)} become anomaly host.");
         }
@@ -175,8 +192,12 @@ public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
                 mindComponent.Session.Channel,
                 _messageColor);
 
+
+            _popup.PopupEntity(message, ent, ent, PopupType.MediumCaution);
+
             _adminLog.Add(LogType.Anomaly, LogImpact.Medium,$"{ToPrettyString(ent)} is no longer a host for the anomaly.");
         }
+
 
         ent.Comp.Injected = false;
         QueueDel(ent.Comp.Action);

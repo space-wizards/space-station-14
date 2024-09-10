@@ -55,21 +55,11 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
         SubscribeLocalEvent<AnomalyComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<AnomalyComponent, StartCollideEvent>(OnStartCollide);
 
-        SubscribeLocalEvent<AnomalyComponent, ActionAnomalyPulseEvent>(OnActionPulse);
 
         InitializeGenerator();
         InitializeScanner();
         InitializeVessel();
         InitializeCommands();
-    }
-
-    private void OnActionPulse(Entity<AnomalyComponent> ent, ref ActionAnomalyPulseEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        DoAnomalyPulse(ent, ent.Comp);
-        args.Handled = true;
     }
 
     private void OnMapInit(Entity<AnomalyComponent> anomaly, ref MapInitEvent args)
