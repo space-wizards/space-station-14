@@ -1,0 +1,13 @@
+- type: constructionGraph
+  id: CavemanClub
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: club
+      steps:
+      - material: WoodPlank
+        amount: 4
+        doAfter: 4
+  - node: club
+    entity: CavemanClub
