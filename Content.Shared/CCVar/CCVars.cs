@@ -1479,12 +1479,6 @@ namespace Content.Shared.CCVar
             CVarDef.Create("shuttle.arrivals_returns", false, CVar.SERVERONLY);
 
         /// <summary>
-        /// Should all players be forced to spawn at departures, even on roundstart, even if their loadout says they spawn in cryo?
-        /// </summary>
-        public static readonly CVarDef<bool> ForceArrivals =
-            CVarDef.Create("shuttle.force_arrivals", false, CVar.SERVERONLY);
-
-        /// <summary>
         /// Should all players who spawn at arrivals have godmode until they leave the map?
         /// </summary>
         public static readonly CVarDef<bool> GodmodeArrivals =
@@ -1561,6 +1555,18 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<float> EmergencyShuttleDockTime =
             CVarDef.Create("shuttle.emergency_dock_time", 180f, CVar.SERVERONLY);
+
+        /// <summary>
+        /// If the emergency shuttle can't dock at a priority port, the dock time will be multiplied with this value.
+        /// </summary>
+        public static readonly CVarDef<float> EmergencyShuttleDockTimeMultiplierOtherDock =
+            CVarDef.Create("shuttle.emergency_dock_time_multiplier_other_dock", 1.6667f, CVar.SERVERONLY);
+
+        /// <summary>
+        /// If the emergency shuttle can't dock at all, the dock time will be multiplied with this value.
+        /// </summary>
+        public static readonly CVarDef<float> EmergencyShuttleDockTimeMultiplierNoDock =
+            CVarDef.Create("shuttle.emergency_dock_time_multiplier_no_dock", 2f, CVar.SERVERONLY);
 
         /// <summary>
         /// How long after the console is authorized for the shuttle to early launch.

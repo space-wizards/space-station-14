@@ -672,3 +672,13 @@
   components:
     - type: Seed
       seedId: fakeCapfruit
+
+- type: entity
+  parent: SeedBase
+  name: packet of cherry seeds
+  id: CherrySeeds
+  components:
+    - type: Seed
+      seedId: cherry
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/cherry.rsi

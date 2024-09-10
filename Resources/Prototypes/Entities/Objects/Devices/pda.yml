@@ -691,14 +691,6 @@
 
 - type: entity
   parent: CentcomPDA
-  id: CentcomPDAFake
-  suffix: Fake
-  components:
-  - type: Pda
-    id: CentcomIDCardSyndie
-
-- type: entity
-  parent: CentcomPDA
   id: DeathsquadPDA
   suffix: Death Squad
   components:
