@@ -6,6 +6,7 @@ using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
+using Content.Shared.Labels.Components;
 using Content.Shared.Pinpointer;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
@@ -216,8 +217,13 @@ public sealed class AtmosMonitoringConsoleSystem : EntitySystem
             if (pipeNode != null)
             {
                 var netEnt = GetNetEntity(ent);
+                var name = MetaData(ent).EntityName;
+
+                if (TryComp<LabelComponent>(ent, out var label) && label.CurrentLabel != null)
+                    name = label.CurrentLabel;
+
                 var entry = new AtmosMonitoringConsoleEntry
-                    (netEnt, GetNetCoordinates(entXform.Coordinates), AtmosMonitoringConsoleGroup.GasPipeAnalyzer, MetaData(ent).EntityName, pipeNode.NetId.ToString());
+                    (netEnt, GetNetCoordinates(entXform.Coordinates), AtmosMonitoringConsoleGroup.GasPipeAnalyzer, name, pipeNode.NetId.ToString());
 
                 atmosNetworks.Add(entry);
 

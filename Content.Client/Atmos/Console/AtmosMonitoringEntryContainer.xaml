@@ -22,17 +22,13 @@
     </Button>
 
     <!-- Panel that appears on selecting the device -->
-    <PanelContainer Name="FocusContainer" HorizontalExpand="True" Margin="1 -1 1 0" ReservesSpace="False" Visible="False" Access="Public">
+    <PanelContainer HorizontalExpand="True" Margin="1 -1 1 0" ReservesSpace="False" Visible="True" Access="Public">
         <PanelContainer.PanelOverride>
             <gfx:StyleBoxFlat BackgroundColor="#25252a"/>
         </PanelContainer.PanelOverride>
         <BoxContainer HorizontalExpand="True" VerticalExpand="True" Orientation="Vertical">
-
-            <!-- Atmosphere status -->
             <Control>
-
-                <!-- Main container for displaying atmospheric data -->
-                <BoxContainer Name="MainDataContainer" HorizontalExpand="True" VerticalExpand="True" Orientation="Vertical" ReservesSpace="False" Visible="False">
+                <BoxContainer HorizontalExpand="True" VerticalExpand="True" Orientation="Vertical" ReservesSpace="False">
                     <BoxContainer HorizontalExpand="True" Orientation="Horizontal">
                         <Label Name="TemperatureHeaderLabel" Text="{Loc 'atmos-alerts-window-temperature-label'}" HorizontalAlignment="Center" HorizontalExpand="True" Margin="0 2 0 0" SetHeight="24"></Label>
                         <Label Name="PressureHeaderLabel" Text="{Loc 'atmos-alerts-window-pressure-label'}" HorizontalAlignment="Center" HorizontalExpand="True" Margin="0 2 0 0" SetHeight="24"></Label>
@@ -48,6 +44,14 @@
                             <Label Name="OxygenationLabel" Text="???" HorizontalAlignment="Center" HorizontalExpand="True" FontColorOverride="#5A5A5A" Margin="0 2 0 0" SetHeight="24"></Label>
                         </BoxContainer>
                     </PanelContainer>
+                </BoxContainer>
+            </Control>
+            
+            <!-- Atmosphere status -->
+            <Control Name="FocusContainer">
+                <!-- Main container for displaying atmospheric data -->
+                <BoxContainer Name="MainDataContainer" HorizontalExpand="True" VerticalExpand="True" Orientation="Vertical" ReservesSpace="False" Visible="False">
+                    
                     <BoxContainer HorizontalExpand="True" Orientation="Horizontal">
                         <Label Name="GasesHeaderLabel" Text="{Loc 'atmos-alerts-window-other-gases-label'}" HorizontalAlignment="Center" HorizontalExpand="True" Margin="0 4 0 0" SetHeight="24"></Label>
                     </BoxContainer>
