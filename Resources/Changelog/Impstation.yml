@@ -1369,3 +1369,52 @@
   id: 181
   time: '2024-09-08T16:17:05.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/226
+- author: FlippenPage
+  changes:
+  - message: Added PISK!
+    type: Add
+  id: 182
+  time: '2024-09-10T05:53:12.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/237
+- author: TheGrimbeeper
+  changes:
+  - message: indirectly nerfed chance of depth 4 foam being really really dangerous
+      by adding additional reagents to roll from in the list
+    type: Tweak
+  - message: BROS are now in the depth 4 artifact foam
+    type: Add
+  - message: something more evil than any foam before is now in the depth 4 artifact
+      foam
+    type: Add
+  id: 183
+  time: '2024-09-10T05:52:47.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/236
+- author: Drags-His-Tail
+  changes:
+  - message: A new book documenting the Ritual of Agony's process and recounting one
+      such sermon will now be available in random bookshelves.
+    type: Add
+  id: 184
+  time: '2024-09-10T05:54:46.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/230
+- author: TGRCdev
+  changes:
+  - message: Mucin speed boost now only affects Gastropoids
+    type: Tweak
+  id: 185
+  time: '2024-09-10T05:55:49.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/228
+- author: FlippenPage
+  changes:
+  - message: gave brigmeds more of their stuff back
+    type: Tweak
+  id: 186
+  time: '2024-09-10T05:56:01.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/233
+- author: iaada
+  changes:
+  - message: Power Gloves are now insulated.
+    type: Tweak
+  id: 187
+  time: '2024-09-10T06:00:40.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/229

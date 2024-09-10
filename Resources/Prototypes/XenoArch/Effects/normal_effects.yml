@@ -752,6 +752,8 @@
     maxFoamAmount: 40
     reagents:
     - SpaceDrugs
+    - BrosochloricBros
+    - Pilk
     - Nocturine
     - MuteToxin
     - Phlogiston

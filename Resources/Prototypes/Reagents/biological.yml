@@ -92,7 +92,7 @@
   recognizable: true
   physicalDesc: reagent-physical-desc-viscous
   slippery: false
-  viscosity: -0.5
+  viscosity: 0.1
   metabolisms:
     Food:
       effects:
@@ -103,7 +103,14 @@
     params:
       volume: 6
   tileReactions:
-    - !type:SpillTileReaction
+    - !type:EnsureTileReaction
+      components:
+        - type: Propulsion
+          walkSpeedModifier: 2.0
+          sprintSpeedModifier: 2.0
+          whitelist:
+            components:
+              - SnailSpeed
 
 - type: reagent
   id: Sap
