@@ -75,6 +75,8 @@
       tags:
       - HighRiskItem #ian meat
     efficiency: 0.9
+    onlyReclaimDrainable: false
+    solutionContainerId: output
   - type: Sprite
     sprite: Structures/Machines/recycling.rsi
     layers:
