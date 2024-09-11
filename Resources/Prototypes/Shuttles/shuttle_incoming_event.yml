@@ -50,6 +50,16 @@
   copies: 1
 
 - type: preloadedGrid
+  id: Drone
+  path: /Maps/Shuttles/ShuttleEvent/drone.yml
+  copies: 1
+
+- type: preloadedGrid
+  id: Raider
+  path: /Maps/Shuttles/ShuttleEvent/raider.yml
+  copies: 1
+
+- type: preloadedGrid
   id: Eternal
   path: /Maps/Shuttles/ShuttleEvent/eternal.yml
   copies: 1

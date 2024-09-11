@@ -32,6 +32,8 @@
   table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
     children:
     - id: LoneOpsSpawn
+    - id: UnknownShuttleDrone
+    - id: UnknownShuttleRaider
 
 # Shuttle Game Rules 
 
@@ -134,6 +136,16 @@
     preloadedGrid: Cryptid
 
 - type: entity
+  id: UnknownShuttleDrone
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: null #dont nark on antags
+    weight: 2 # lower because antags
+  - type: LoadMapRule
+    preloadedGrid: Drone
+
+- type: entity
   id: UnknownShuttleEternal
   parent: BaseUnknownShuttleRule
   components:
@@ -209,6 +221,17 @@
     maxOccurrences: 4
   - type: LoadMapRule
     preloadedGrid: Microshuttle
+
+- type: entity
+  id: UnknownShuttleRaider
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: null #dont nark on antags
+    weight: 1 # lower because antags & because its the Drone but better
+    earliestStart: 45 # late to hopefully have enough ghosts to fill all roles quickly.
+  - type: LoadMapRule
+    preloadedGrid: Raider
 
 - type: entity
   id: UnknownShuttleSpacebus
