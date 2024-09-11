@@ -153,13 +153,16 @@
   id: DragonSpawn
   components:
   - type: StationEvent
-    weight: 3.5
+    weight: 6.5
     earliestStart: 40
-    reoccurrenceDelay: 40
-    minimumPlayers: 35
-  - type: AntagRandomSpawn
+    reoccurrenceDelay: 20
+    minimumPlayers: 20
+    duration: null
+  - type: SpaceSpawnRule
+    spawnDistance: 0
   - type: AntagSpawner
     prototype: MobDragon
+  - type: DragonRule
   - type: AntagObjectives
     objectives:
     - CarpRiftsObjective
@@ -174,19 +177,17 @@
       mindComponents:
       - type: DragonRole
         prototype: Dragon
-      - type: RoleBriefing
-        briefing: dragon-role-briefing
 
 - type: entity
   parent: BaseGameRule
   id: NinjaSpawn
   components:
   - type: StationEvent
-    weight: 3
+    weight: 6
     duration: null
     earliestStart: 30
-    reoccurrenceDelay: 40
-    minimumPlayers: 35
+    reoccurrenceDelay: 20
+    minimumPlayers: 30
   - type: SpaceSpawnRule
   - type: AntagLoadProfileRule
   - type: AntagObjectives
@@ -424,9 +425,9 @@
   id: LoneOpsSpawn
   components:
   - type: StationEvent
-    earliestStart: 60
-    weight: 2
-    minimumPlayers: 35
+    earliestStart: 35
+    weight: 5.5
+    minimumPlayers: 20
     duration: 1
   - type: RuleGrids
   - type: LoadMapRule
