@@ -1,9 +1,9 @@
-using System.Linq;
-using System.Runtime.CompilerServices;
 using Content.Server.Atmos.Reactions;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Reactions;
 using Robust.Shared.Prototypes;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using DependencyAttribute = Robust.Shared.IoC.DependencyAttribute;
 
 namespace Content.Server.Atmos.EntitySystems
@@ -284,17 +284,34 @@ namespace Content.Server.Atmos.EntitySystems
         /// <summary>
         ///     Compares two gas mixtures to see if they are within acceptable ranges for group processing to be enabled.
         /// </summary>
-        public GasCompareResult CompareExchange(GasMixture sample, GasMixture otherSample)
+        public GasCompareResult CompareExchange(TileAtmosphere sample, TileAtmosphere otherSample, bool useArchived = false)
         {
+            float[] samples, otherSamples;
+            if (useArchived)
+            {
+                samples = sample.MolesArchived;
+                otherSamples = otherSample.MolesArchived;
+            }
+            else if (sample.Air != null && otherSample.Air != null)
+            {
+                samples = sample.Air.Moles;
+                otherSamples = sample.Air.Moles;
+            }
+            else
+                return GasCompareResult.NoExchange;
+
             var moles = 0f;
+            float sampleMoles, otherSampleMoles;
 
             for(var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
             {
-                var gasMoles = sample.Moles[i];
-                var delta = MathF.Abs(gasMoles - otherSample.Moles[i]);
-                if (delta > Atmospherics.MinimumMolesDeltaToMove && (delta > gasMoles * Atmospherics.MinimumAirRatioToMove))
+                sampleMoles = samples[i];
+                otherSampleMoles = otherSamples[i];
+
+                var delta = MathF.Abs(sampleMoles - otherSampleMoles);
+                if (delta > Atmospherics.MinimumMolesDeltaToMove && (delta > sampleMoles * Atmospherics.MinimumAirRatioToMove))
                     return (GasCompareResult)i; // We can move gases!
-                moles += gasMoles;
+                moles += sampleMoles;
             }
 
             if (moles > Atmospherics.MinimumMolesDeltaToMove)

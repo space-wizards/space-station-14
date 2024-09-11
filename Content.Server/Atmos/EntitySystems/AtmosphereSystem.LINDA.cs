@@ -54,7 +54,7 @@ namespace Content.Server.Atmos.EntitySystems
                     }
 
                     shouldShareAir = true;
-                } else if (CompareExchange(tile.Air, enemyTile.Air) != GasCompareResult.NoExchange)
+                } else if (CompareExchange(tile, enemyTile, true) != GasCompareResult.NoExchange)
                 {
                     AddActiveTile(gridAtmosphere, enemyTile);
                     if (ExcitedGroups)
