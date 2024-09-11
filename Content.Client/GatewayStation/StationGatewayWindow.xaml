@@ -15,17 +15,17 @@
                     </PanelContainer>
                 </controls:StripeBack>
 
-                <ScrollContainer Name="SensorScroller"
+                <ScrollContainer Name="GatewaysScroller"
                                  VerticalExpand="True"
                                  SetWidth="520"
                                  Margin="8, 8, 8, 8">
-                    <BoxContainer Name="SensorsTable"
+                    <BoxContainer Name="GatewaysTable"
                                    Orientation="Vertical"
                                    HorizontalExpand="True"
                                    Margin="0 0 10 0">
                         <!-- Table rows are filled by code -->
                     </BoxContainer>
-                    <Label  Name="NoServerLabel"
+                    <Label  Name="NoGatewayLabel"
                             Text="{Loc 'crew-monitoring-user-interface-no-server'}"
                             StyleClasses="LabelHeading"
                             FontColorOverride="Red"

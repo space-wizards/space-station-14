@@ -4,7 +4,7 @@ namespace Content.Server.GatewayStation.Components;
 
 [RegisterComponent]
 [Access(typeof(StationGatewaySystem))]
-public sealed partial class StationGatewayConsoleComponent : Component
+public sealed partial class StationGatewayComponent : Component
 {
 
 }

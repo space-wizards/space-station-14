@@ -1,3 +1,4 @@
+using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.GatewayStation;
@@ -11,8 +12,22 @@ public enum StationGatewayUIKey
 [Serializable, NetSerializable]
 public sealed class StationGatewayState : BoundUserInterfaceState
 {
-    public StationGatewayState()
+    public List<StationGatewayStatus> Gateways;
+    public StationGatewayState(List<StationGatewayStatus> gateways)
     {
-
+        Gateways = gateways;
     }
+}
+
+[Serializable, NetSerializable]
+public sealed class StationGatewayStatus
+{
+    public StationGatewayStatus(NetEntity gatewayUid, NetCoordinates coordinates)
+    {
+        GatewayUid = gatewayUid;
+        Coordinates = coordinates;
+    }
+
+    public NetEntity GatewayUid;
+    public NetCoordinates? Coordinates;
 }
