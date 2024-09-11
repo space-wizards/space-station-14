@@ -40,3 +40,9 @@
         Slash: 5
     bluntStaminaDamageFactor: 1.35
   - type: DisarmMalus
+  - type: LeechOnHit
+    leech:
+      groups:
+        Brute: -30 # heal up to 10 damage of blunt/slash/piercing
+      types:
+        Blunt: -10 # heal 10 blunt
