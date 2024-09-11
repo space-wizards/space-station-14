@@ -15,8 +15,8 @@ knowledge-path-side-s3-flask-desc =
 knowledge-path-side-s5-name = Ritual of Knowledge
 knowledge-path-side-s5-desc =
     You learn a special, one-time-only ritual that requires 4 different items,
-    from various organs to candles to stun batons, in various quantities.
-    Performing this ritual instantly grants you 4 knowledge points.
+    from various organs to candles and stun batons.
+    Performing this ritual grants you 4 knowledge points and resets the items needed.
 
 knowledge-path-side-s7-sphase-name = Space Phase
 knowledge-path-side-s7-sphase-desc =

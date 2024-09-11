@@ -48,7 +48,7 @@ knowledge-path-void-s7-name = Seeking Blade
 knowledge-path-void-s7-desc =
     Fleeting memories, fleeting feet. I mark my way with frozen blood upon the snow. Covered and forgotten.
 
-    When a target is marked, use your Void Blade to teleport right next to them without breaking the blade.
+    Your blade freezes enemies. Additionally, when a target is marked, activate the Void Blade in your hand to teleport right next to them without breaking the blade.
 
 knowledge-path-void-s8-name = Void Pull
 knowledge-path-void-s8-desc =

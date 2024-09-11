@@ -11,7 +11,6 @@ knowledge-path-flesh-s2-desc =
 
     Your Mansus Grasp gains the ability to create a ghoul out of corpse with a soul.
     Ghouls have only 50 health and look like husks to the heathens' eyes, but can use Bloody Blades effectively.
-    You can only create one at a time by this method.
 
 knowledge-path-flesh-s3-name = Imperfect Ritual
 knowledge-path-flesh-s3-desc =
@@ -20,14 +19,13 @@ knowledge-path-flesh-s3-desc =
     Allows you to transmute a corpse and a poppy to create a Voiceless Dead.
     The corpse does not need to have a soul.
     Voiceless Dead are mute ghouls and only have 100 health, but can use Bloody Blades effectively.
-    You can only create two at a time.
 
 knowledge-path-flesh-s4-name = Mark of Flesh
 knowledge-path-flesh-s4-desc =
     That's when I saw them, the marked ones. They were out of reach. They screamed, and screamed.
 
     Your Mansus Grasp now applies the Mark of Flesh. The mark is triggered from an attack with your Bloody Blade.
-    When triggered, the victim begins to bleed significantly.
+    When triggered, the victim violently spills all it's blood on the ground.
 
 knowledge-path-flesh-s5-name = Knitting of Flesh
 knowledge-path-flesh-s5-desc =

@@ -1,6 +1,8 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Systems;
 using Content.Server.Heretic.Components;
+using Content.Server.Temperature.Components;
+using Content.Server.Temperature.Systems;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Examine;
@@ -9,6 +11,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
+using Content.Shared.Temperature.Systems;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -37,6 +40,7 @@ public sealed partial class HereticBladeSystem : EntitySystem
     [Dependency] private readonly BloodstreamSystem _blood = default!;
     [Dependency] private readonly DamageableSystem _damage = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly TemperatureSystem _temp = default!;
 
     private EntityQuery<PhysicsComponent> _physicsQuery;
     private HashSet<Entity<MapGridComponent>> _targetGrids = [];
@@ -74,7 +78,8 @@ public sealed partial class HereticBladeSystem : EntitySystem
                 break;
 
             case "Void":
-                // check void pull
+                if (TryComp<TemperatureComponent>(target, out var temp))
+                    _temp.ForceChangeTemperature(target, temp.CurrentTemperature - 5f, temp);
                 break;
 
             default:

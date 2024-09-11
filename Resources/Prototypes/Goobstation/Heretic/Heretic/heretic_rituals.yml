@@ -126,6 +126,12 @@
 
 # side path
 - type: hereticRitual
+  id: RitualOfKnowledge
+  name: heretic-ritual-side-knowledge
+  customBehaviors:
+  - !type:RitualKnowledgeBehavior
+
+- type: hereticRitual
   id: ArmorerRitual
   name: heretic-ritual-side-armor
   requiredTags:

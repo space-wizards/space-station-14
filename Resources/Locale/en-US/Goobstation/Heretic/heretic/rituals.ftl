@@ -17,6 +17,7 @@ heretic-ritual-fail-temperature-cold = It is not cold enough here.
 heretic-ritual-fail-sacrifice-ash = There's either not enough of them dead, or burning.
 
 ## side quests
+heretic-ritual-side-knowledge = Ritual of Knowledge
 heretic-ritual-side-shark = Scorching Shark
 heretic-ritual-side-cloak = Void Cloak
 heretic-ritual-side-ghoul = Shattered Ritual

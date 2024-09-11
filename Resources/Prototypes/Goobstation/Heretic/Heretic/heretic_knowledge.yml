@@ -25,7 +25,8 @@
 
 - type: hereticKnowledge
   id: RitualOfKnowledge
-  #ritualPrototypes:
+  ritualPrototypes:
+  - RitualOfKnowledge
 
 # ash path
 - type: hereticKnowledge

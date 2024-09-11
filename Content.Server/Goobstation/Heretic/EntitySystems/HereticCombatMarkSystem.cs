@@ -14,6 +14,8 @@ using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using System.Linq;
 using Content.Shared.Humanoid;
+using Content.Server.Temperature.Components;
+using Content.Server.Body.Components;
 
 namespace Content.Server.Heretic.EntitySystems;
 
@@ -46,7 +48,11 @@ public sealed partial class HereticCombatMarkSystem : EntitySystem
                 break;
 
             case "Flesh":
-                _blood.TryModifyBleedAmount(target, 5f);
+                if (TryComp<BloodstreamComponent>(target, out var blood))
+                {
+                    _blood.TryModifyBleedAmount(target, 5f, blood);
+                    _blood.SpillAllSolutions(target, blood);
+                }
                 break;
 
             case "Lock":
@@ -83,7 +89,8 @@ public sealed partial class HereticCombatMarkSystem : EntitySystem
             case "Void":
                 // set target's temperature to -40C
                 // is really OP with the new temperature slowing thing :godo:
-                _temperature.ForceChangeTemperature(target, Atmospherics.T0C - 40f);
+                if (TryComp<TemperatureComponent>(target, out var temp))
+                    _temperature.ForceChangeTemperature(target, temp.CurrentTemperature - 100f, temp);
                 break;
 
             default:
