@@ -65,18 +65,20 @@ public sealed class PAISystem : SharedPAISystem
         // Changing the PAI's identity in a way that ties it to the owner's identity also seems weird.
         // Cause then you could remotely figure out information about the owner's equipped items.
 
-        if (!component.Cracked)
-            _metaData.SetEntityName(uid, val);
+        _metaData.SetEntityName(uid, val);
     }
 
     private void OnMindRemoved(EntityUid uid, PAIComponent component, MindRemovedMessage args)
     {
         // Mind was removed, shutdown the PAI.
-        PAITurningOff(uid, component);
+        PAITurningOff(uid);
     }
 
     private void OnMicrowaved(EntityUid uid, PAIComponent comp, BeingMicrowavedEvent args)
     {
+        // name will always be scrambled whether it gets bricked or not, this is the reward
+        ScrambleName(uid, comp);
+
         // damage and crack the pai
         _damageable.TryChangeDamage(uid, new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>("Heat"), 50));
 
@@ -110,7 +112,7 @@ public sealed class PAISystem : SharedPAISystem
         _metaData.SetEntityName(uid, val);
     }
 
-    public void PAITurningOff(EntityUid uid, PAIComponent comp)
+    public void PAITurningOff(EntityUid uid)
     {
         //  Close the instrument interface if it was open
         //  before closing
@@ -126,7 +128,7 @@ public sealed class PAISystem : SharedPAISystem
         if (TryComp(uid, out MetaDataComponent? metadata))
         {
             var proto = metadata.EntityPrototype;
-            if (proto != null && !comp.Cracked)
+            if (proto != null)
                 _metaData.SetEntityName(uid, proto.Name);
         }
     }
@@ -136,9 +138,6 @@ public sealed class PAISystem : SharedPAISystem
         if (comp.Cracked)
             return;
         comp.Cracked = true;
-
-        // Scramble the name when cracked.
-        ScrambleName(uid, comp);
 
         // Update the pai description
         if (TryComp(uid, out MetaDataComponent? metadata))
@@ -174,13 +173,6 @@ public sealed class PAISystem : SharedPAISystem
                 var proto = metadata.EntityPrototype;
                 if (proto != null)
                     _metaData.SetEntityDescription(uid, proto.Description);
-            }
-
-            // Update the pai name
-            if (comp.LastUser != null)
-            {
-                var val = Loc.GetString("pai-system-pai-name", ("owner", comp.LastUser));
-                _metaData.SetEntityName(uid, val);
             }
         }
     }
