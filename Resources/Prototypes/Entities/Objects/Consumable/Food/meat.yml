@@ -1252,7 +1252,7 @@
           Quantity: 5
   - type: FoodSequenceElement
     entries:
-      burger: MeatBall
+      Burger: MeatBall
 
 # Cutlets
 
