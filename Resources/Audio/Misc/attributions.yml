@@ -47,3 +47,8 @@
   license: "CC-BY-SA-3.0"
   copyright: "Taken from Citadel Station 13"
   source: "https://github.com/Skyrat-SS13/Skyrat13/commit/2d4f2d1b489590b559e4073f41b126cef56f4c50"
+
+- files: ["yellow.ogg"]
+  license: "CC0-1.0"
+  copyright: "Taken from Freesound and edited by Killerqu00"
+  source: "https://freesound.org/people/aunlu/sounds/726640/"
