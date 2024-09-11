@@ -17,17 +17,10 @@
         reagents:
         - ReagentId: THC
           Quantity: 15
-
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Specific/Hydroponics/cannabis.rsi
-      state: produce
     entries:
-      burger:
-        name: food-sequence-burger-content-cannabis
-        sprite:
-          sprite: Objects/Specific/Hydroponics/cannabis.rsi
-          state: produce
+      Burger: LeavesCannabisBurger
+      Taco: LeavesCannabis
 
 - type: entity
   name: green marijuana leaves
@@ -47,14 +40,9 @@
         - ReagentId: THC
           Quantity: 15
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Specific/Hydroponics/cannabis.rsi
-      state: produce
     entries:
-      burger:
-        name: food-sequence-burger-content-cannabis
-      taco:
-        name: food-sequence-content-cannabis
+      Burger: LeavesCannabisBurger
+      Taco: LeavesCannabis
 
 - type: entity
   name: dried cannabis leaves
@@ -104,11 +92,9 @@
     size: Tiny
   - type: FoodSequenceElement
     entries:
-      burger:
-        name: food-sequence-burger-content-cannabis
-        sprite:
-          sprite: Objects/Misc/reagent_fillings.rsi
-          state: powderpile
+      Burger: GroundCannabisBurger
+      Taco: GroundCannabis
+
 
 - type: entity
   name: rainbow cannabis leaves
@@ -297,8 +283,5 @@
     size: Tiny
   - type: FoodSequenceElement
     entries:
-      burger:
-        name: food-sequence-burger-content-tobacco
-        sprite:
-          sprite: Objects/Misc/reagent_fillings.rsi
-          state: powderpile
+      Burger: GroundTobaccoBurger
+      Taco: GroundTobacco

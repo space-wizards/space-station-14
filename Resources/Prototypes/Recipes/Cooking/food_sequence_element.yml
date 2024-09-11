@@ -276,7 +276,7 @@
   tags:
   - Cooked
   - Meat
-  
+
 # Snail meat
 
 - type: foodSequenceElement
@@ -1102,3 +1102,74 @@
   sprites:
   - sprite: Objects/Consumable/Food/Baked/cake.rsi
     state: suppermatter-shard
+
+# Ground Smokeables
+- type: foodSequenceElement
+  id: GroundTobacco
+  name: food-sequence-content-tobacco
+  sprite:
+    sprite: Objects/Misc/reagent_fillings.rsi
+    state: powderpile
+
+- type: foodSequenceElement
+  id: GroundTobaccoBurger
+  name: food-sequence-burger-content-tobacco
+  sprite:
+    sprite: Objects/Misc/reagent_fillings.rsi
+    state: powderpile
+
+- type: foodSequenceElement
+  id: LeavesCannabis
+  name: food-sequence-content-cannabis
+  sprite:
+    sprite: Objects/Specific/Hydroponics/cannabis.rsi
+    state: produce
+
+- type: foodSequenceElement
+  id: LeavesCannabisBurger
+  name: food-sequence-burger-content-cannabis
+  sprite:
+      sprite: Objects/Specific/Hydroponics/cannabis.rsi
+      state: produce
+
+- type: foodSequenceElement
+  id: GroundCannabis
+  name: food-sequence-content-cannabis
+  sprite:
+    sprite: Objects/Misc/reagent_fillings.rsi
+    state: powderpile
+
+- type: foodSequenceElement
+  id: GroundCannabisBurger
+  name: food-sequence-burger-content-cannabis
+  sprite:
+    sprite: Objects/Misc/reagent_fillings.rsi
+    state: powderpile
+
+- type: foodSequenceElement
+  id: LeavesRainbowCannabis
+  name: food-sequence-content-rainbow-cannabis
+  sprite:
+    sprite: Objects/Specific/Hydroponics/rainbow_cannabis.rsi
+    state: produce
+
+- type: foodSequenceElement
+  id: LeavesRainbowCannabisBurger
+  name: food-sequence-burger-content-rainbow-cannabis
+  sprite:
+    sprite: Objects/Specific/Hydroponics/rainbow_cannabis.rsi
+    state: produce
+
+- type: foodSequenceElement
+  id: GroundRainbowCannabis
+  name: food-sequence-content-rainbow-cannabis
+  sprite:
+    sprite: Objects/Specific/Hydroponics/rainbow_cannabis.rsi
+    state: powderpile_rainbow
+
+- type: foodSequenceElement
+  id: GroundRainbowCannabisBurger
+  name: food-sequence-burger-content-rainbow-cannabis
+  sprite:
+    sprite: Objects/Specific/Hydroponics/rainbow_cannabis.rsi
+    state: powderpile_rainbow

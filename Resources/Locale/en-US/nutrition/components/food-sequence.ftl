@@ -74,6 +74,9 @@ food-sequence-content-berries = berries
 food-sequence-content-spacemans-trumpet = spacemans trupmet
 food-sequence-content-cherry = cherry
 food-sequence-content-snail = snail
+food-sequence-content-cannabis = funny
+food-sequence-content-rainbow-cannabis = FUNNY
+food-sequence-content-tobacco = tobacco
 
 # BURGERS
 
@@ -108,7 +111,7 @@ food-sequence-burger-content-koibean = koi
 food-sequence-burger-content-watermelon = water
 food-sequence-burger-content-cannabis = funny
 food-sequence-burger-content-rainbow-cannabis = FUNNY
-food-sequence-burger-content-tobacco = tobaco
+food-sequence-burger-content-tobacco = tobac
 food-sequence-burger-content-suppermatter = supper
 food-sequence-burger-content-hamster = hams
 food-sequence-burger-content-berries = berri
