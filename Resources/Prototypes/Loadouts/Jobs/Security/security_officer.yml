@@ -13,6 +13,21 @@
       department: Security
       time: 216000 # 60 hrs
 
+# Trooper Time
+- type: loadoutEffectGroup
+  id: TrooperOfficer
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobWarden
+      time: 10800 #6 hrs
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Security
+      time: 108000 # 30 hrs
+
 #Security Star
 - type: loadoutEffectGroup
   id: SecurityStarWorthy
@@ -41,6 +56,9 @@
 
 - type: loadout
   id: TrooperHat
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: TrooperOfficer
   equipment:
     head: ClothingHeadHatSecurityTrooper
 
@@ -65,10 +83,10 @@
   equipment:
     jumpsuit: ClothingUniformJumpskirtSecGrey
 
-- type: loadout
-  id: TrooperUniform
-  equipment: 
-    jumpsuit: ClothingUniformSecurityTrooper
+#- type: loadout
+#  id: TrooperUniform
+#  equipment: 
+#    jumpsuit: ClothingUniformSecurityTrooper # GreyStation - Removal
 
 - type: loadout
   id: SeniorOfficerJumpsuit

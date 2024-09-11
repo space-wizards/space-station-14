@@ -983,7 +983,7 @@
   - SecurityJumpskirtGrey
   - SeniorOfficerJumpsuit
   - SeniorOfficerJumpskirt
-  - TrooperUniform
+#  - TrooperUniform # GreyStation - Removal
 
 - type: loadoutGroup
   id: SecurityBackpack
