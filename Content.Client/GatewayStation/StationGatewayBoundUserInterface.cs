@@ -1,4 +1,6 @@
+using Content.Shared.GatewayStation;
 using Robust.Client.UserInterface;
+using Serilog;
 
 namespace Content.Client.GatewayStation;
 
@@ -34,9 +36,10 @@ public sealed class StationGatewayBoundUserInterface : BoundUserInterface
     {
         base.UpdateState(state);
 
-        //switch (state)
-        //{
-        //    case GatewayStationState st:
-        //}
+        switch (state)
+        {
+            case StationGatewayState st:
+                break;
+        }
     }
 }

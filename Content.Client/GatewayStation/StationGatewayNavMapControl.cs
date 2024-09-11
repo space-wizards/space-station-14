@@ -1,6 +1,7 @@
 using Content.Client.Pinpointer.UI;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Timing;
 
 namespace Content.Client.GatewayStation;
 
@@ -40,9 +41,9 @@ public sealed partial class StationGatewayNavMapControl : NavMapControl
         this.AddChild(_trackedEntityPanel);
     }
 
-    protected override void UpdateNavMap()
+    protected override void FrameUpdate(FrameEventArgs args)
     {
-        base.UpdateNavMap();
+        base.FrameUpdate(args);
 
         if (Focus == null)
         {
