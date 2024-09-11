@@ -971,6 +971,7 @@
   - SecurityHelmet
   - SecurityBeret
   - SecurityHat
+  - TrooperHat
 
 - type: loadoutGroup
   id: SecurityJumpsuit
@@ -982,6 +983,7 @@
   - SecurityJumpskirtGrey
   - SeniorOfficerJumpsuit
   - SeniorOfficerJumpskirt
+#  - TrooperUniform # GreyStation - Removal
 
 - type: loadoutGroup
   id: SecurityBackpack
