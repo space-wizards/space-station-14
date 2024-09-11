@@ -65,7 +65,7 @@
   id: UnknownShuttleTravelingCuisine
   components:
   - type: StationEvent
-    startAnnouncement: station-event-unknown-shuttle-incoming
+    startAnnouncement: true
     maxOccurrences: 2 # should be the same as [copies] in shuttle_incoming_event.yml
   - type: LoadMapRule
     preloadedGrid: TravelingCuisine
@@ -75,7 +75,7 @@
   id: UnknownShuttleDisasterEvacPod
   components:
   - type: StationEvent
-    startAnnouncement: station-event-unknown-shuttle-incoming
+    startAnnouncement: true
     maxOccurrences: 3 # should be the same as [copies] in shuttle_incoming_event.yml
   - type: LoadMapRule
     preloadedGrid: DisasterEvacPod
@@ -86,7 +86,7 @@
   id: UnknownShuttleHonki
   components:
   - type: StationEvent
-    startAnnouncement: station-event-unknown-shuttle-incoming #!!
+    startAnnouncement: true #!!
     weight: 2
   - type: LoadMapRule
     preloadedGrid: Honki
@@ -96,7 +96,7 @@
   id: UnknownShuttleSyndieEvacPod
   components:
   - type: StationEvent
-    startAnnouncement: null # It should be silent.
+    startAnnouncement: false # It should be silent.
     weight: 5 # lower because weird freelance roles
     maxOccurrences: 2 # should be the same as [copies] in shuttle_incoming_event.yml
   - type: LoadMapRule
@@ -107,7 +107,7 @@
   parent: BaseUnknownShuttleRule
   components:
   - type: StationEvent
-    startAnnouncement: null # It should be silent.
+    startAnnouncement: false # It should be silent.
     weight: .5 # Hopefully this is uncommon enough, it needs to be uncommon enough that people wont waste time metaknowledging it.
     earliestStart: 45 # late to hopefully have enough ghosts to fill all roles quickly.
     minimumPlayers: 25
@@ -119,7 +119,7 @@
   parent: BaseUnknownShuttleRule
   components:
   - type: StationEvent
-    startAnnouncement: station-event-unknown-shuttle-incoming #!!
+    startAnnouncement: true #!!
     weight: 2 # Its just a big ship, so it needs to be rarer to be interesting.
   - type: LoadMapRule
     preloadedGrid: Cruiser
@@ -129,7 +129,7 @@
   parent: BaseUnknownShuttleRule
   components:
   - type: StationEvent
-    startAnnouncement: station-event-unknown-shuttle-incoming #!!
+    startAnnouncement: true #!!
   - type: LoadMapRule
     preloadedGrid: Cryptid
 
@@ -138,7 +138,7 @@
   parent: BaseUnknownShuttleRule
   components:
   - type: StationEvent
-    startAnnouncement: station-event-unknown-shuttle-incoming #!!
+    startAnnouncement: true #!!
   - type: LoadMapRule
     preloadedGrid: Eternal
 
@@ -147,7 +147,7 @@
   parent: BaseUnknownShuttleRule
   components:
   - type: StationEvent
-    startAnnouncement: station-event-unknown-shuttle-incoming #!!
+    startAnnouncement: true #!!
   - type: LoadMapRule
     preloadedGrid: Flatline
 
@@ -156,7 +156,7 @@
   parent: BaseUnknownShuttleRule
   components:
   - type: StationEvent
-    startAnnouncement: station-event-unknown-shuttle-incoming #!!
+    startAnnouncement: true #!!
     weight: 5 # Its just a big ship, so it needs to be rarer to be interesting.
   - type: LoadMapRule
     preloadedGrid: Gym
@@ -166,7 +166,7 @@
   parent: BaseUnknownShuttleRule
   components:
   - type: StationEvent
-    startAnnouncement: station-event-unknown-shuttle-incoming #!!
+    startAnnouncement: true #!!
     weight: 2 # Its just a big ship, so it needs to be rarer to be interesting.
     earliestStart: 45 # late to hopefully have enough ghosts to fill all roles quickly. (5-6)
   - type: LoadMapRule
@@ -177,7 +177,7 @@
   parent: BaseUnknownShuttleRule
   components:
   - type: StationEvent
-    startAnnouncement: station-event-unknown-shuttle-incoming #!!
+    startAnnouncement: true #!!
   - type: LoadMapRule
     preloadedGrid: Joe
 
@@ -186,7 +186,7 @@
   parent: BaseUnknownShuttleRule
   components:
   - type: StationEvent
-    startAnnouncement: station-event-unknown-shuttle-incoming #!!
+    startAnnouncement: true #!!
   - type: LoadMapRule
     preloadedGrid: Lambordeere
 
@@ -195,7 +195,7 @@
   parent: BaseUnknownShuttleRule
   components:
   - type: StationEvent
-    startAnnouncement: station-event-unknown-shuttle-incoming #!!
+    startAnnouncement: true #!!
   - type: LoadMapRule
     preloadedGrid: Meatzone
 
@@ -204,7 +204,7 @@
   parent: BaseUnknownShuttleRule
   components:
   - type: StationEvent
-    startAnnouncement: station-event-unknown-shuttle-incoming #!!
+    startAnnouncement: true #!!
     weight: 11 # this is higher because its just a little generic personal shuttle
     maxOccurrences: 4
   - type: LoadMapRule
@@ -215,7 +215,7 @@
   parent: BaseUnknownShuttleRule
   components:
   - type: StationEvent
-    startAnnouncement: station-event-unknown-shuttle-incoming #!!
+    startAnnouncement: true #!!
   - type: LoadMapRule
     preloadedGrid: Spacebus
 

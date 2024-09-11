@@ -1252,10 +1252,7 @@
           Quantity: 5
   - type: FoodSequenceElement
     entries:
-      burger:
-        sprite:
-          sprite: Objects/Consumable/Food/meat.rsi
-          state: meatball-cooked
+      burger: MeatBall
 
 # Cutlets
 

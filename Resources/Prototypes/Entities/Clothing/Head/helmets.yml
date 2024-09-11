@@ -413,6 +413,12 @@
     graph: SackHead
     node: eyesack
   - type: Armor
+    modifiers:
+      coefficients: # Basically nothing
+        Blunt: 0.99
+        Slash: 0.99
+        Piercing: 0.99
+        Heat: 0.99
   - type: IdentityBlocker
 
 - type: entity
