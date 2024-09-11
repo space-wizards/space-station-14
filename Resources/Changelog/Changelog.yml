@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Cojoke-dot
-  changes:
-  - message: Flares can now light Cigarettes and other similar things
-    type: Tweak
-  - message: Flares now are no longer hot after burning out
-    type: Tweak
-  id: 6855
-  time: '2024-07-01T21:14:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29476
 - author: Tayrtahn
   changes:
   - message: Fixed NukeOps ending prematurely in some situations where operatives
@@ -3912,3 +3903,10 @@
   id: 7354
   time: '2024-09-11T14:45:00.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32075
+- author: Plykiya
+  changes:
+  - message: Banners are no longer invincible.
+    type: Fix
+  id: 7355
+  time: '2024-09-11T15:29:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32077
