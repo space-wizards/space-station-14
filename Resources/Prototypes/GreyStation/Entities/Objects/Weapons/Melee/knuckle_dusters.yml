@@ -1,0 +1,42 @@
+- type: entity
+  name: bloody knuckles
+  parent: BaseItem
+  id: BloodyKnuckleDuster
+  description: You get a certain rush wearing these gloves while tearing flesh off with each swing. These are very bloody.
+  components:
+  - type: Sprite
+    sprite: GreyStation/Objects/Weapons/Melee/bloody_knuckle_dusters.rsi
+    state: icon
+  - type: Item
+    size: Small
+  - type: EmitSoundOnPickup
+    sound: /Audio/GreyStation/Misc/pickupweapon.ogg
+  - type: ItemToggleMeleeWeapon
+    activatedSoundOnHit:
+      path: /Audio/GreyStation/Misc/pickupweapon.ogg
+      params:
+        variation: 0.250
+  - type: MeleeWeapon
+    wideAnimationRotation: -180
+    attackRate: 1
+    range: .75
+    damage:
+      types:
+        Blunt: 8
+    soundHit:
+      collection: KnuckleDuster
+    params:
+        volume: 5
+    animation: WeaponArcFist
+  - type: Wieldable
+    wieldSound: !type:SoundPathSpecifier
+      path: /Audio/GreyStation/Misc/drawknife.ogg
+      params:
+        volume: -6
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 5
+        Slash: 5
+    bluntStaminaDamageFactor: 1.35
+  - type: DisarmMalus
