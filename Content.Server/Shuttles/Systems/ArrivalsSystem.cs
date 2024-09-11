@@ -22,6 +22,7 @@ using Content.Shared.DeviceNetwork;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Parallax.Biomes;
+using Content.Shared.Preferences;
 using Content.Shared.Salvage;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Tiles;
@@ -332,6 +333,9 @@ public sealed class ArrivalsSystem : EntitySystem
     public void HandlePlayerSpawning(PlayerSpawningEvent ev)
     {
         if (ev.SpawnResult != null)
+            return;
+
+        if (ev.HumanoidCharacterProfile?.SpawnPriority != SpawnPriorityPreference.Arrivals)
             return;
 
         // Only works on latejoin even if enabled.
