@@ -1,53 +1,4 @@
-<<<<<<< HEAD
 Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Blurry vision no longer causes names to momentarily appear as "???" when
-      examining.
-    type: Remove
-  id: 6850
-  time: '2024-07-01T03:06:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29633
-- author: Cojoke-dot
-  changes:
-  - message: Items that slow down a person when held now slow down when dragged too.
-    type: Tweak
-  id: 6851
-  time: '2024-07-01T05:33:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29364
-- author: metalgearsloth
-  changes:
-  - message: Add effects for when shuttles are arriving.
-    type: Add
-  id: 6852
-  time: '2024-07-01T06:11:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29402
-- author: Plykiya
-  changes:
-  - message: Gravity wells, like the supermatter grenade, now function properly again.
-    type: Fix
-  id: 6853
-  time: '2024-07-01T15:39:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29617
-- author: joelsgp
-  changes:
-  - message: Fixed login tips
-    type: Fix
-  id: 6854
-  time: '2024-07-01T16:27:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29640
-- author: Cojoke-dot
-  changes:
-  - message: Flares can now light Cigarettes and other similar things
-    type: Tweak
-  - message: Flares now are no longer hot after burning out
-    type: Tweak
-  id: 6855
-  time: '2024-07-01T21:14:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29476
-=======
-﻿Entries:
->>>>>>> upstream/master
 - author: Tayrtahn
   changes:
   - message: Fixed NukeOps ending prematurely in some situations where operatives
@@ -3915,9 +3866,6 @@ Entries:
     type: Add
   id: 7349
   time: '2024-09-11T03:33:42.0000000+00:00'
-<<<<<<< HEAD
-  url: https://github.com/space-wizards/space-station-14/pull/31638
-=======
   url: https://github.com/space-wizards/space-station-14/pull/31638
 - author: SlamBamActionman
   changes:
@@ -3962,4 +3910,3 @@ Entries:
   id: 7355
   time: '2024-09-11T15:29:23.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32077
->>>>>>> upstream/master
