@@ -37,7 +37,7 @@ public sealed partial class BinComponent : Component
     /// Prototypes of the items that could spawn in the with their chances bin.
     /// </summary>
     [DataField]
-    public ProtoId<WeightedRandomEntityPrototype> Loot = "PaperBinLoot";
+    public ProtoId<WeightedRandomEntityPrototype>? Loot;
 
     /// <summary>
     /// Amount of items spawned initially in the bin.

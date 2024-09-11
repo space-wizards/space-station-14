@@ -60,6 +60,9 @@ public sealed class BinSystem : EntitySystem
         if (_net.IsClient)
             return;
 
+        if (component.Loot is null)
+            return;
+
         var items = _proto.Index<WeightedRandomEntityPrototype>(component.Loot);
         var xform = Transform(uid);
         for (int i = 0; i < component.LootAmount; i++)

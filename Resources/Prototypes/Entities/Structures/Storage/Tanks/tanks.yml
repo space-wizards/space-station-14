@@ -113,6 +113,11 @@
         - ReagentId: Water
           Quantity: 1500
 
+- type: weightedRandomEntity
+  id: WaterCoolerLoot
+  weights:
+    DrinkWaterCup: 100
+
 - type: entity
   parent: StorageTank
   id: WaterCooler
@@ -140,17 +145,8 @@
     containers:
       bin-container: !type:Container
   - type: Bin
-    initialContents:
-    - DrinkWaterCup
-    - DrinkWaterCup
-    - DrinkWaterCup
-    - DrinkWaterCup
-    - DrinkWaterCup
-    - DrinkWaterCup
-    - DrinkWaterCup
-    - DrinkWaterCup
-    - DrinkWaterCup
-    - DrinkWaterCup
+    loot: WaterCoolerLoot
+    lootAmount: 10
     whitelist:
       requireAll: true
       components:
