@@ -28,7 +28,6 @@
   - type: InteractionOutline
   - type: Damageable
     damageContainer: StructuralInorganic
-    damageModifierSet: Inflatable
   - type: Destructible
     thresholds:
     - trigger:
