@@ -60,12 +60,12 @@ public sealed partial class AtmosMonitoringEntryContainer : BoxContainer
         // Set fonts
         TemperatureHeaderLabel.FontOverride = headerFont;
         PressureHeaderLabel.FontOverride = headerFont;
-        OxygenationHeaderLabel.FontOverride = headerFont;
+        TotalMolHeaderLabel.FontOverride = headerFont;
         GasesHeaderLabel.FontOverride = headerFont;
 
         TemperatureLabel.FontOverride = normalFont;
         PressureLabel.FontOverride = normalFont;
-        OxygenationLabel.FontOverride = normalFont;
+        TotalMolLabel.FontOverride = normalFont;
 
         NoDataLabel.FontOverride = headerFont;
     }
@@ -98,27 +98,20 @@ public sealed partial class AtmosMonitoringEntryContainer : BoxContainer
                 var tempC = (FixedPoint2)TemperatureHelpers.KelvinToCelsius(tempK.Float());
 
                 TemperatureLabel.Text = Loc.GetString("atmos-alerts-window-temperature-value", ("valueInC", tempC), ("valueInK", tempK));
-                TemperatureLabel.FontColorOverride = Color.White;
+                //TemperatureLabel.FontColorOverride = Color.White;
 
                 // Update pressure
                 PressureLabel.Text = Loc.GetString("atmos-alerts-window-pressure-value", ("value", (FixedPoint2)focusData.Value.PressureData));
-                PressureLabel.FontColorOverride = Color.White;
+                //PressureLabel.FontColorOverride = Color.White;
 
-                // Update oxygenation
-                var oxygenPercent = (FixedPoint2)0f;
-
-                if (focusData.Value.GasData.TryGetValue(Gas.Oxygen, out var oxygenData))
-                    oxygenPercent = oxygenData * 100f;
-
-                OxygenationLabel.Text = Loc.GetString("atmos-alerts-window-oxygenation-value", ("value", oxygenPercent));
-                OxygenationLabel.FontColorOverride = Color.White;
+                // Update total mol
+                TotalMolLabel.Text = Loc.GetString("atmos-alerts-window-total-mol-value", ("value", (FixedPoint2)focusData.Value.PressureData));
+                //TotalMolLabel.FontColorOverride = Color.White;
 
                 // Update other present gases
                 GasGridContainer.RemoveAllChildren();
 
-                var gasData = focusData.Value.GasData.Where(g => g.Key != Gas.Oxygen);
-
-                if (gasData.Count() == 0)
+                if (focusData.Value.GasData.Count() == 0)
                 {
                     // No other gases
                     var gasLabel = new Label()
@@ -139,7 +132,7 @@ public sealed partial class AtmosMonitoringEntryContainer : BoxContainer
                 else
                 {
                     // Add an entry for each gas
-                    foreach (var (gas, percent) in gasData)
+                    foreach (var (gas, percent) in focusData.Value.GasData)
                     {
                         var gasPercent = (FixedPoint2)0f;
                         gasPercent = percent * 100f;
@@ -151,7 +144,7 @@ public sealed partial class AtmosMonitoringEntryContainer : BoxContainer
                         {
                             Text = Loc.GetString("atmos-alerts-window-other-gases-value", ("shorthand", gasShorthand), ("value", gasPercent)),
                             FontOverride = normalFont,
-                            FontColorOverride = Color.White,
+                            //FontColorOverride = Color.White,
                             HorizontalAlignment = HAlignment.Center,
                             VerticalAlignment = VAlignment.Center,
                             HorizontalExpand = true,

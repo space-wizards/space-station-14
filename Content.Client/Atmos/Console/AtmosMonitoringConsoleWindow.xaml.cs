@@ -79,6 +79,7 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
 
         // Set UI toggles
         ShowPipeNetwork.OnToggled += _ => OnShowPipeNetworkToggled();
+        ShowGasPipeSensors.OnToggled += _ => OnShowGasPipeSensors();
 
         // Set atmos monitoring message action
         SendFocusChangeMessageAction += userInterface.SendFocusChangeMessage;
@@ -106,12 +107,23 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
         }
     }
 
+    private void OnShowGasPipeSensors()
+    {
+        if (_owner == null)
+            return;
+
+        if (!_entManager.TryGetComponent<AtmosMonitoringConsoleComponent>(_owner.Value, out var console))
+            return;
+
+
+    }
+
     #endregion
 
     public void UpdateUI
         (EntityCoordinates? consoleCoords,
-         AtmosMonitoringConsoleEntry[] atmosNetworks,
-         AtmosFocusDeviceData? focusData)
+        AtmosMonitoringConsoleEntry[] atmosNetworks,
+        AtmosFocusDeviceData? focusData)
     {
         if (_owner == null)
             return;

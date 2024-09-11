@@ -10,3 +10,9 @@ atmos-monitoring-window-toggle-overlays = Toggle map overlays
 atmos-monitoring-window-show-pipe-network = Pipe network
 atmos-monitoring-window-flavor-left = Contact an atmospheric technician for assistance
 atmos-monitoring-window-flavor-right = v0.8
+
+atmos-alerts-window-total-mol-label = Total mol.
+atmos-alerts-window-total-mol-value = {$value} mol.
+
+atmos-monitoring-window-show-gas-pipe-sensors = Gas pipe sensors
+atmos-monitoring-window-label-gases = Present gases

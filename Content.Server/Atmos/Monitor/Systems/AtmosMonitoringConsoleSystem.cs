@@ -196,8 +196,8 @@ public sealed class AtmosMonitoringConsoleSystem : EntitySystem
 
         var atmosNetworks = new List<AtmosMonitoringConsoleEntry>();
 
-        var query = AllEntityQuery<GasPipeAnalyzerComponent, TransformComponent>();
-        while (query.MoveNext(out var ent, out var entAnalyzer, out var entXform))
+        var query = AllEntityQuery<GasPipeSensorComponent, TransformComponent>();
+        while (query.MoveNext(out var ent, out var entSensor, out var entXform))
         {
             if (entXform?.GridUid != xform.GridUid)
                 continue;
@@ -223,12 +223,13 @@ public sealed class AtmosMonitoringConsoleSystem : EntitySystem
                     name = label.CurrentLabel;
 
                 var entry = new AtmosMonitoringConsoleEntry
-                    (netEnt, GetNetCoordinates(entXform.Coordinates), AtmosMonitoringConsoleGroup.GasPipeAnalyzer, name, pipeNode.NetId.ToString());
+                    (netEnt, GetNetCoordinates(entXform.Coordinates), AtmosMonitoringConsoleGroup.GasPipeSensor, name, pipeNode.NetId.ToString());
 
                 atmosNetworks.Add(entry);
 
                 if (component.FocusDevice == ent)
                 {
+                    var gasTemperature = pipeNode.Air.Temperature;
                     var gasMixture = new Dictionary<Gas, float>();
 
                     if (pipeNode.Air.TotalMoles > 0)
@@ -240,7 +241,12 @@ public sealed class AtmosMonitoringConsoleSystem : EntitySystem
                         }
                     }
 
-                    focusAlarmData = new AtmosFocusDeviceData(netEnt, pipeNode.Air.Temperature, pipeNode.Air.Pressure, gasMixture);
+                    else
+                    {
+                        gasTemperature = 0;
+                    }
+
+                    focusAlarmData = new AtmosFocusDeviceData(netEnt, gasTemperature, pipeNode.Air.Pressure, pipeNode.Air.TotalMoles, gasMixture);
                 }
             }
         }

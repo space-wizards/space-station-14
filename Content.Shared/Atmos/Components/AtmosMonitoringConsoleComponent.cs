@@ -97,17 +97,22 @@ public struct AtmosFocusDeviceData
     public NetEntity NetEntity;
 
     /// <summary>
-    /// Temperature (K) and related alert state
+    /// Temperature (K)
     /// </summary>
     public float TemperatureData;
 
     /// <summary>
-    /// Pressure (kPA) and related alert state
+    /// Pressure (kPA)
     /// </summary>
     public float PressureData;
 
     /// <summary>
-    /// Moles, percentage, and related alert state, for all detected gases 
+    /// Total number of mols of gas
+    /// </summary>
+    public float TotalMolData;
+
+    /// <summary>
+    /// Mol and percentage for all detected gases 
     /// </summary>
     public Dictionary<Gas, float> GasData;
 
@@ -118,11 +123,13 @@ public struct AtmosFocusDeviceData
         (NetEntity netEntity,
         float temperatureData,
         float pressureData,
+        float totalMolData,
         Dictionary<Gas, float> gasData)
     {
         NetEntity = netEntity;
         TemperatureData = temperatureData;
         PressureData = pressureData;
+        TotalMolData = totalMolData;
         GasData = gasData;
     }
 }
@@ -249,7 +256,7 @@ public sealed class AtmosMonitoringConsoleFocusChangeMessage : BoundUserInterfac
 /// </summary>
 public enum AtmosMonitoringConsoleGroup
 {
-    GasPipeAnalyzer,
+    GasPipeSensor,
     GasInlet,
     GasOutlet,
     GasOpening,

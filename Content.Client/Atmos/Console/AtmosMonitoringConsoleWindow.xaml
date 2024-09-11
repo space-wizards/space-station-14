@@ -75,9 +75,11 @@
                 <BoxContainer Orientation="Vertical" Margin="0 10 0 0">
                     <Label Text="{Loc 'atmos-monitoring-window-toggle-overlays'}" Margin="0 0 0 5"/>
                     <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
-                        <CheckBox Name="ShowPipeNetwork" Text="{Loc 'atmos-monitoring-window-show-pipe-network'}" Pressed="True" Margin="0 0 0 0"/>
+                        <CheckBox Name="ShowPipeNetwork" Text="{Loc 'atmos-monitoring-window-show-pipe-network'}" Pressed="True" HorizontalExpand="True"/>
+                        <CheckBox Name="ShowGasPipeSensors" Text="{Loc 'atmos-monitoring-window-show-gas-pipe-sensors'}" Pressed="False" HorizontalExpand="True"/>
                     </BoxContainer>
                 </BoxContainer>
+
             </BoxContainer>
 
         </BoxContainer>
