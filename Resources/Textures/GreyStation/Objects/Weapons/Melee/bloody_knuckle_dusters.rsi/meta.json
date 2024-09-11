@@ -8,10 +8,6 @@
   },
     "states": [
         {
-            "name": "icon",
-            "directions": 1
-        },
-        {
             "name": "inhand-left",
             "directions": 4
         },
