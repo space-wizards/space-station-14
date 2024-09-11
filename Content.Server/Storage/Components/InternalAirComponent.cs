@@ -10,6 +10,6 @@ public sealed partial class InternalAirComponent : Component, IGasMixtureHolder
     ///     The gas currently contained in this entity.
     ///     Used by containers, vehicles and so on to expose contained entities to the gas
     /// </summary>
-    [DataField("air"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public GasMixture Air { get; set; } = new (100);
 }
