@@ -267,12 +267,8 @@ public abstract partial class SharedBuckleSystem
             return false;
         }
 
-        if (buckleComp.Buckled)
+        if (buckleComp.Buckled && !TryUnbuckle(buckleUid, user, buckleComp))
         {
-            // allows you to try and buckle them to a different chair or bed
-            if (TryUnbuckle(buckleUid, user, buckleComp))
-                return true;
-
             if (_netManager.IsClient || popup || user == null)
                 return false;
 
