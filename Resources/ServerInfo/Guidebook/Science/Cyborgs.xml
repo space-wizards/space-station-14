@@ -55,7 +55,7 @@
     <GuideEntityEmbed Entity="BorgModuleRCD" Caption="RCD"/>
     <GuideEntityEmbed Entity="BorgModuleMining" Caption="Mining"/>
     <GuideEntityEmbed Entity="BorgModuleCleaning" Caption="Cleaning"/>
-    <GuideEntityEmbed Entity="BorgModuleService" Caption="Service"/>
+    <GuideEntityEmbed Entity="BorgModulePaper" Caption="Service"/>
     <GuideEntityEmbed Entity="BorgModuleTreatment" Caption="Treatment"/>
   </Box>
   <Box>
