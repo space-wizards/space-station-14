@@ -981,9 +981,9 @@
   - SecurityJumpskirt
   - SecurityJumpsuitGrey
   - SecurityJumpskirtGrey
+  - TrooperUniform
   - SeniorOfficerJumpsuit
   - SeniorOfficerJumpskirt
-  - TrooperUniform
 
 - type: loadoutGroup
   id: SecurityBackpack
