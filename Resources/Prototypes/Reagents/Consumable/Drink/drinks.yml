@@ -19,6 +19,18 @@
       - !type:AdjustReagent
         reagent: Theobromine
         amount: 0.05
+    Narcotic:
+      effects:
+      - !type:GenericStatusEffect
+        key: Stutter
+        component: StutteringAccent
+        conditions:
+        - !type:ReagentThreshold
+          min: 25
+      - !type:Jitter
+        conditions:
+        - !type:ReagentThreshold
+          min: 25
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/coffeeglass.rsi
     state: icon_empty
@@ -167,6 +179,18 @@
         key: Drowsiness
         time: 2.0
         type: Remove
+    Narcotic:
+      effects:
+      - !type:GenericStatusEffect
+        key: Stutter
+        component: StutteringAccent
+        conditions:
+        - !type:ReagentThreshold
+          min: 25
+      - !type:Jitter
+        conditions:
+        - !type:ReagentThreshold
+          min: 25
 
 - type: reagent
   id: IcedGreenTea
