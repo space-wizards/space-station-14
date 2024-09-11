@@ -4,22 +4,22 @@
   id: UnknownShuttlesFriendlyTable
   table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
     children:
-    - id: UnknownShuttleCargoLost
+    #- id: UnknownShuttleCargoLost
     - id: UnknownShuttleTravelingCuisine
     - id: UnknownShuttleDisasterEvacPod
-    - id: UnknownShuttleHonki
-    - id: UnknownShuttleNTQuark
-    - id: UnknownShuttleCruiser
-    - id: UnknownShuttleCryptid
-    - id: UnknownShuttleEternal
-    - id: UnknownShuttleFlatline
-    - id: UnknownShuttleGym
-    - id: UnknownShuttleNTIncorporation
-    - id: UnknownShuttleJoe
-    - id: UnknownShuttleLambordeere
-    - id: UnknownShuttleMeatZone
-    - id: UnknownShuttleMicroshuttle
-    - id: UnknownShuttleSpacebus
+    #- id: UnknownShuttleHonki
+    #- id: UnknownShuttleNTQuark
+    #- id: UnknownShuttleCruiser
+    #- id: UnknownShuttleCryptid
+    #- id: UnknownShuttleEternal
+    #- id: UnknownShuttleFlatline
+    #- id: UnknownShuttleGym
+    #- id: UnknownShuttleNTIncorporation
+    #- id: UnknownShuttleJoe
+    #- id: UnknownShuttleLambordeere
+    #- id: UnknownShuttleMeatZone
+    #- id: UnknownShuttleMicroshuttle
+    #- id: UnknownShuttleSpacebus
 
 - type: entityTable
   id: UnknownShuttlesFreelanceTable
