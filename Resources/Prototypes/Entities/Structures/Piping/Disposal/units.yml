@@ -119,7 +119,7 @@
     graph: DisposalMachine
     node: mailing_unit
   - type: DisposalUnit
-    autoEngageEnabled: false
+    automaticEngage: false
     whitelist:
       components:
       - Item

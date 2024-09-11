@@ -32,7 +32,7 @@
       components:
       - HumanoidAppearance
   - type: DisposalUnit
-    autoEngageEnabled: false
+    automaticEngage: false
     noUI: true
     blacklist:
       components:
