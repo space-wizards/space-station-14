@@ -176,7 +176,7 @@
   - accent-words-nymph-4
 
 - type: accent
-  id: tomatokiller
+  id: tomatoKiller
   fullReplacements:
   - accent-words-tomato-1
   - accent-words-tomato-2
