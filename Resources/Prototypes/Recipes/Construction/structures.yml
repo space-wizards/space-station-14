@@ -143,78 +143,6 @@
     - !type:TileNotBlocked
 
 - type: construction
-  name: silver wall
-  id: SilverWall
-  graph: Girder
-  startNode: start
-  targetNode: silverWall
-  category: construction-category-structures
-  description: Keeps the air in and the greytide out.
-  icon:
-    sprite: Structures/Walls/silver.rsi
-    state: full
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canRotate: false
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  name: plastic wall
-  id: PlasticWall
-  graph: Girder
-  startNode: start
-  targetNode: plasticWall
-  category: construction-category-structures
-  description: Keeps the air in and the greytide out.
-  icon:
-    sprite: Structures/Walls/plastic.rsi
-    state: full
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canRotate: false
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  name: plasma wall
-  id: PlasmaWall
-  graph: Girder
-  startNode: start
-  targetNode: plasmaWall
-  category: construction-category-structures
-  description: Keeps the air in and the greytide out.
-  icon:
-    sprite: Structures/Walls/plasma.rsi
-    state: full
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canRotate: false
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  name: gold wall
-  id: GoldWall
-  graph: Girder
-  startNode: start
-  targetNode: goldWall
-  category: construction-category-structures
-  description: Keeps the air in and the greytide out.
-  icon:
-    sprite: Structures/Walls/gold.rsi
-    state: full
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canRotate: false
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
   name: shuttle wall
   id: ShuttleWall
   graph: Girder
@@ -264,24 +192,6 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: true
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  name: bananium wall
-  id: ClownWall
-  graph: Girder
-  startNode: start
-  targetNode: bananiumWall
-  category: construction-category-structures
-  description: Keeps the air in and the greytide out.
-  icon:
-    sprite: Structures/Walls/clown.rsi
-    state: full
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canRotate: false
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked

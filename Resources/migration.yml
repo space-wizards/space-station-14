@@ -434,3 +434,13 @@ OverlordCircuitBoard: null
 
 # 2024-09-08
 HatBase: null
+
+# 2024-09-10
+WallBrick: WallSolid
+WallClown: WallSolid
+WallDiamond: WallSolid
+WallGold: WallSolid
+WallPlasma: WallSolid
+WallSilver: WallSolid
+WallSandstone: WallSolid
+WallPlastic: WallSolid
