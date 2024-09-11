@@ -88,6 +88,9 @@ public sealed partial class SpeciesPrototype : IPrototype
     public string FemaleFirstNames { get; private set; } = "names_first_female";
 
     [DataField]
+    public string MiddleNames { get; private set; } = "names_middle";
+
+    [DataField]
     public string LastNames { get; private set; } = "names_last";
 
     [DataField]
@@ -127,5 +130,6 @@ public enum SpeciesNaming : byte
     First,
     FirstLast,
     FirstDashFirst,
+    FirstMiddleLast,
     TheFirstofLast,
 }
