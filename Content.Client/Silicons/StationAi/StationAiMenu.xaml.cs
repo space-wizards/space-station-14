@@ -78,6 +78,21 @@ public sealed partial class StationAiMenu : RadialMenu
                 };
 
                 button.AddChild(tex);
+
+                if (action.OverlaySprite != null)
+                {
+                    texture = sprites.Frame0(action.OverlaySprite);
+
+                    tex = new TextureRect
+                    {
+                        VerticalAlignment = VAlignment.Center,
+                        HorizontalAlignment = HAlignment.Center,
+                        Texture = texture,
+                        TextureScale = scale,
+                    };
+                    
+                    button.AddChild(tex);
+                }
             }
 
             button.OnPressed += args =>

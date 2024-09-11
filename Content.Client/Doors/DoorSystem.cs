@@ -1,5 +1,6 @@
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
+using Content.Shared.Doors;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Client.ResourceManagement;
@@ -16,6 +17,7 @@ public sealed class DoorSystem : SharedDoorSystem
     {
         base.Initialize();
         SubscribeLocalEvent<DoorComponent, AppearanceChangeEvent>(OnAppearanceChange);
+        SubscribeNetworkEvent<OnGotElectrifiedEvent>(OnElectrified);
     }
 
     protected override void OnComponentInit(Entity<DoorComponent> ent, ref ComponentInit args)
@@ -65,6 +67,40 @@ public sealed class DoorSystem : SharedDoorSystem
                 }
             },
         };
+
+        if(TryComp<SpriteComponent>(ent, out var spriteComp))
+        {
+            spriteComp.LayerMapReserveBlank(DoorVisualLayers.BaseOverlayEffect);
+        }
+
+    }
+
+    private void OnElectrified(OnGotElectrifiedEvent args)
+    {
+        var uid = GetEntity(args.nid);
+        if (!TryComp<DoorComponent>(uid, out var doorComp) ||
+           !TryComp<AnimationPlayerComponent>(uid, out var animPlayer))
+        {
+            return;
+        }
+
+        var animLength = TimeSpan.FromSeconds(2f);
+        var electrifyingAnimation = new Animation()
+        {
+            Length = animLength,
+            AnimationTracks =
+            {
+                new AnimationTrackSpriteFlick()
+                {
+                    LayerKey = DoorVisualLayers.BaseOverlayEffect,
+                    KeyFrames = { new AnimationTrackSpriteFlick.KeyFrame("sparks_damaged", 0f) }
+                }
+            },
+        };
+        
+        if (_animationSystem.HasRunningAnimation(uid, animPlayer, DoorComponent.OverlayAnimationKey))
+            _animationSystem.Stop(uid, animPlayer, DoorComponent.OverlayAnimationKey);
+        _animationSystem.Play((uid, animPlayer), electrifyingAnimation, DoorComponent.OverlayAnimationKey);
     }
 
     private void OnAppearanceChange(EntityUid uid, DoorComponent comp, ref AppearanceChangeEvent args)

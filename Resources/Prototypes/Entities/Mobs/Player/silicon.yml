@@ -38,29 +38,47 @@
     - ActionAIViewLaws
   - type: UserInterface
     interfaces:
+      enum.CommunicationsConsoleUiKey.Key:
+        type: CommunicationsConsoleBoundUserInterface
       enum.RadarConsoleUiKey.Key:
         type: RadarConsoleBoundUserInterface
       enum.CrewMonitoringUIKey.Key:
         type: CrewMonitoringBoundUserInterface
       enum.GeneralStationRecordConsoleKey.Key:
         type: GeneralStationRecordConsoleBoundUserInterface
+      enum.PowerMonitoringConsoleUiKey.Key:
+        type: PowerMonitoringConsoleBoundUserInterface
       enum.SiliconLawsUiKey.Key:
         type: SiliconLawBoundUserInterface
+      enum.CrewManifestUiKey.Key:
+        type: CrewManifestBoundUserInterface
   - type: IntrinsicUI
     uis:
+      enum.CommunicationsConsoleUiKey.Key:
+        toggleAction: ActionAiShowCommunicationsConsole
       enum.RadarConsoleUiKey.Key:
         toggleAction: ActionAGhostShowRadar
       enum.CrewMonitoringUIKey.Key:
         toggleAction: ActionAGhostShowCrewMonitoring
       enum.GeneralStationRecordConsoleKey.Key:
         toggleAction: ActionAGhostShowStationRecords
+      enum.PowerMonitoringConsoleUiKey.Key:
+        toggleAction: ActionAIShowPowerMonitoring
+      enum.CrewManifestUiKey.Key:
+        toggleAction: ActionAIShowCrewManifest
+  - type: CommunicationsConsole
+    title: comms-console-announcement-title-station-ai
+    color: cyan
   - type: CrewMonitoringConsole
   - type: GeneralStationRecordConsole
+  - type: PowerMonitoringConsole
+  - type: PowerMonitoringCableNetworks
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: CrewMonitor
   - type: RadarConsole
     followEntity: false
+  - type: CrewManifestBound
 
 
 # Ai

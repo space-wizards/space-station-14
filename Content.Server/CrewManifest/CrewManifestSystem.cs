@@ -16,6 +16,7 @@ using Robust.Shared.Console;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using Robust.Server.GameObjects;
 
 namespace Content.Server.CrewManifest;
 
@@ -26,6 +27,7 @@ public sealed class CrewManifestSystem : EntitySystem
     [Dependency] private readonly EuiManager _euiManager = default!;
     [Dependency] private readonly IConfigurationManager _configManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
 
     /// <summary>
     ///     Cached crew manifest entries. The alternative is to outright
@@ -35,6 +37,7 @@ public sealed class CrewManifestSystem : EntitySystem
     private readonly Dictionary<EntityUid, CrewManifestEntries> _cachedEntries = new();
 
     private readonly Dictionary<EntityUid, Dictionary<ICommonSession, CrewManifestEui>> _openEuis = new();
+    private readonly Dictionary<EntityUid, HashSet<EntityUid>> _openBuis = new(); // Station UID -> Entity UIDs
 
     public override void Initialize()
     {
@@ -46,6 +49,9 @@ public sealed class CrewManifestSystem : EntitySystem
 
         SubscribeLocalEvent<CrewManifestViewerComponent, BoundUIClosedEvent>(OnBoundUiClose);
         SubscribeLocalEvent<CrewManifestViewerComponent, CrewManifestOpenUiMessage>(OpenEuiFromBui);
+
+        SubscribeLocalEvent<CrewManifestBoundComponent, BoundUIOpenedEvent>(OnBoundUIOpened);
+        SubscribeLocalEvent<CrewManifestBoundComponent, BoundUIClosedEvent>(OnBoundUIClosed);
     }
 
     private void OnRoundRestart(RoundRestartCleanupEvent ev)
@@ -80,18 +86,21 @@ public sealed class CrewManifestSystem : EntitySystem
     {
         BuildCrewManifest(ev.Key.OriginStation);
         UpdateEuis(ev.Key.OriginStation);
+        UpdateStationBuis(ev.Key.OriginStation);
     }
 
     private void OnRecordModified(RecordModifiedEvent ev)
     {
         BuildCrewManifest(ev.Key.OriginStation);
         UpdateEuis(ev.Key.OriginStation);
+        UpdateStationBuis(ev.Key.OriginStation);
     }
 
     private void OnRecordRemoved(RecordRemovedEvent ev)
     {
         BuildCrewManifest(ev.Key.OriginStation);
         UpdateEuis(ev.Key.OriginStation);
+        UpdateStationBuis(ev.Key.OriginStation);
     }
 
     private void OnBoundUiClose(EntityUid uid, CrewManifestViewerComponent component, BoundUIClosedEvent ev)
@@ -106,6 +115,92 @@ public sealed class CrewManifestSystem : EntitySystem
         }
 
         CloseEui(owningStation.Value, actorComp.PlayerSession, uid);
+    }
+
+    private void OnBoundUIOpened(EntityUid uid, CrewManifestBoundComponent comp, BoundUIOpenedEvent args)
+    {
+        var owningStation = _stationSystem.GetOwningStation(uid);
+        if(owningStation == null)
+        {
+            return;
+        }
+
+        if (!_openBuis.TryGetValue(owningStation.Value, out var entities))
+        {
+            entities = new();
+            _openBuis.Add(owningStation.Value, entities);
+        }
+
+        if(entities.Contains(uid))
+        {
+            return;
+        }
+
+        entities.Add(uid);
+
+        UpdateBui(uid, owningStation.Value);
+    }
+
+    private CrewManifestBuiState? NewBuiState(EntityUid station, string stationName)
+    {
+        var isValid = _cachedEntries.TryGetValue(station, out var cachedManifest);
+        if(!isValid)
+        {
+            return null;
+        }
+
+        return new CrewManifestBuiState(stationName, cachedManifest);
+    }
+
+    private void UpdateBui(EntityUid uid, EntityUid station)
+    {
+        var stationName = MetaData(station).EntityName;
+        var state = NewBuiState(station, stationName);
+        if(state == null)
+        {
+            return;
+        }
+        _userInterface.SetUiState(uid, CrewManifestUiKey.Key, state);
+    }
+
+    private void UpdateStationBuis(EntityUid station)
+    {
+        if(!_openBuis.TryGetValue(station, out var entities))
+        {
+            return;
+        }
+        
+        var stationName = MetaData(station).EntityName;
+        var state = NewBuiState(station, stationName);
+        if(state == null)
+        {
+            return;
+        }
+
+        foreach(var entity in entities)
+        {
+            _userInterface.SetUiState(entity, CrewManifestUiKey.Key, state);
+        }
+    }
+
+    private void OnBoundUIClosed(EntityUid uid, CrewManifestBoundComponent comp, BoundUIClosedEvent ev)
+    {
+        var owningStation = _stationSystem.GetOwningStation(uid);
+        if(owningStation == null)
+        {
+            return;
+        }
+
+        if (!_openBuis.TryGetValue(owningStation.Value, out var entities))
+        {
+            return;
+        }
+        if(!entities.Contains(uid))
+        {
+            return;
+        }
+
+        entities.Remove(uid);
     }
 
     /// <summary>

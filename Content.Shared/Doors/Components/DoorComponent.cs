@@ -143,6 +143,11 @@ public sealed partial class DoorComponent : Component
     public const string AnimationKey = "door_animation";
 
     /// <summary>
+    /// The key used when playing animations overlayed on the door.
+    /// </summary>
+    public const string OverlayAnimationKey = "door_overlay_animation";
+
+    /// <summary>
     /// The sprite state used for the door when it's open.
     /// </summary>
     [DataField]
@@ -327,4 +332,5 @@ public enum DoorVisualLayers : byte
     BaseUnlit,
     BaseBolted,
     BaseEmergencyAccess,
+    BaseOverlayEffect
 }

@@ -1,14 +1,15 @@
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 
-namespace Content.Server.Electrocution;
+namespace Content.Shared.Electrocution;
 
 /// <summary>
 ///     Component for things that shock users on touch.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class ElectrifiedComponent : Component
 {
-    [DataField("enabled")]
+    [AutoNetworkedField, DataField("enabled")]
     public bool Enabled = true;
 
     /// <summary>

@@ -3,19 +3,32 @@ using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
 using Content.Shared.Chat;
 using Content.Shared.Silicons.StationAi;
+using Content.Shared.Administration.Logs;
 using Content.Shared.StationAi;
+using Content.Server.Popups;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 
+
 namespace Content.Server.Silicons.StationAi;
 
-public sealed class StationAiSystem : SharedStationAiSystem
+public sealed partial class StationAiSystem : SharedStationAiSystem
 {
     [Dependency] private readonly IChatManager _chats = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] protected readonly SharedAudioSystem Audio = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
+    [Dependency] private readonly PopupSystem _popupSystem = default!;
 
     private readonly HashSet<Entity<StationAiCoreComponent>> _ais = new();
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        InitializeAirlock();
+    }
 
     public override bool SetVisionEnabled(Entity<StationAiVisionComponent> entity, bool enabled, bool announce = false)
     {

@@ -1,5 +1,7 @@
 using Content.Shared.Doors.Components;
 
+using Robust.Shared.Serialization;
+
 namespace Content.Shared.Doors
 {
     /// <summary>
@@ -61,5 +63,14 @@ namespace Content.Shared.Doors
     /// </remarks>
     public sealed class BeforeDoorAutoCloseEvent : CancellableEntityEventArgs
     {
+    }
+    
+    /// <summary>
+    /// Raised when door (NetEntity) should be electrified.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public sealed class OnGotElectrifiedEvent : EntityEventArgs
+    {
+        public NetEntity nid;
     }
 }

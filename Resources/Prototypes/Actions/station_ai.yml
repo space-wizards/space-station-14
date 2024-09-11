@@ -62,3 +62,36 @@
       state: state_laws
     event: !type:ToggleLawsScreenEvent
     useDelay: 0.5
+
+- type: entity
+  id: ActionAiShowCommunicationsConsole
+  name: Communications Console Interface
+  description: View a communications console interface.
+  components:
+  - type: InstantAction
+    icon: { sprite: Interface/Actions/actions_ai.rsi, state: comms_console }
+    keywords: [ "AI", "console", "interface" ]
+    priority: -10
+    event: !type:ToggleIntrinsicUIEvent { key: enum.CommunicationsConsoleUiKey.Key }
+
+- type: entity
+  id: ActionAIShowPowerMonitoring
+  name: Power Monitoring Interface
+  description: View a power monitoring interface.
+  components:
+  - type: InstantAction
+    icon: { sprite: Interface/Actions/actions_ai.rsi, state: power_monitor }
+    keywords: [ "AI", "console", "interface" ]
+    priority: -10
+    event: !type:ToggleIntrinsicUIEvent { key: enum.PowerMonitoringConsoleUiKey.Key }
+
+- type: entity
+  id: ActionAIShowCrewManifest
+  name: Crew Manifest
+  description: View crew manifest.
+  components:
+  - type: InstantAction
+    icon: { sprite: Interface/Actions/actions_ai.rsi, state: manifest }
+    keywords: [ "AI", "console", "interface" ]
+    priority: -10
+    event: !type:ToggleIntrinsicUIEvent { key: enum.CrewManifestUiKey.Key }

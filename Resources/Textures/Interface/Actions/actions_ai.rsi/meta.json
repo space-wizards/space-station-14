@@ -33,6 +33,9 @@
 		},
 		{
 			"name": "comms_console"
+		},
+        {
+			"name": "power_monitor"
 		}
     ]
 }

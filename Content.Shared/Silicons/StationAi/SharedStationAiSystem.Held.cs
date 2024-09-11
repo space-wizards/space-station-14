@@ -173,6 +173,10 @@ public sealed class StationAiRadialMessage : BoundUserInterfaceMessage
 public sealed class StationAiRadial : BaseStationAiAction
 {
     public SpriteSpecifier? Sprite;
+    
+    // OverlaySprite is just another sprite, displayed
+    // on top of the Sprite
+    public SpriteSpecifier? OverlaySprite;
 
     public string? Tooltip;
 

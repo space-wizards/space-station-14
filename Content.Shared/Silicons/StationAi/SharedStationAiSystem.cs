@@ -1,6 +1,7 @@
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Administration.Managers;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
 using Content.Shared.Doors.Systems;
@@ -34,6 +35,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
     [Dependency] private   readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private   readonly SharedContainerSystem _containers = default!;
     [Dependency] private   readonly SharedDoorSystem _doors = default!;
+    [Dependency] private   readonly SharedAirlockSystem _airlocks = default!;
     [Dependency] private   readonly SharedEyeSystem _eye = default!;
     [Dependency] protected readonly SharedMapSystem Maps = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
@@ -41,6 +43,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
     [Dependency] private   readonly SharedTransformSystem _xforms = default!;
     [Dependency] private   readonly SharedUserInterfaceSystem _uiSystem = default!;
     [Dependency] private   readonly StationAiVisionSystem _vision = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
 
     // StationAiHeld is added to anything inside of an AI core.
     // StationAiHolder indicates it can hold an AI positronic brain (e.g. holocard / core).
