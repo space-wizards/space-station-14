@@ -1,10 +1,9 @@
 using Content.Server.Body.Systems;
 using Content.Server.Popups;
-using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Stack;
-using Content.Server.Storage.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts;
+using Content.Shared.Storage.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Damage;
 using Content.Shared.Power;

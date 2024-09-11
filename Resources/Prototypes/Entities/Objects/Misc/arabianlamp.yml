@@ -17,6 +17,7 @@
   # - type: StorageFill
     # contents:
       # - id: PuddleSparkle # Ha! Cute. Unfortunately it despawns before the container is likely to open.
+  - type: InternalAir
   - type: ContainerContainer
     containers:
       entity_storage: !type:Container

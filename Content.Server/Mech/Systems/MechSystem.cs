@@ -3,6 +3,7 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Mech.Components;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Server.Storage.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
@@ -65,7 +66,7 @@ public sealed partial class MechSystem : SharedMechSystem
         SubscribeLocalEvent<MechPilotComponent, ExhaleLocationEvent>(OnExhale);
         SubscribeLocalEvent<MechPilotComponent, AtmosExposedGetAirEvent>(OnExpose);
 
-        SubscribeLocalEvent<MechAirComponent, GetFilterAirEvent>(OnGetFilterAir);
+        SubscribeLocalEvent<InternalAirComponent, GetFilterAirEvent>(OnGetFilterAir);
 
         #region Equipment UI message relays
         SubscribeLocalEvent<MechComponent, MechGrabberEjectMessage>(ReceiveEquipmentUiMesssages);
@@ -381,25 +382,25 @@ public sealed partial class MechSystem : SharedMechSystem
     private void OnInhale(EntityUid uid, MechPilotComponent component, InhaleLocationEvent args)
     {
         if (!TryComp<MechComponent>(component.Mech, out var mech) ||
-            !TryComp<MechAirComponent>(component.Mech, out var mechAir))
+            !TryComp<InternalAirComponent>(component.Mech, out var internalAir))
         {
             return;
         }
 
         if (mech.Airtight)
-            args.Gas = mechAir.Air;
+            args.Gas = internalAir.Air;
     }
 
     private void OnExhale(EntityUid uid, MechPilotComponent component, ExhaleLocationEvent args)
     {
         if (!TryComp<MechComponent>(component.Mech, out var mech) ||
-            !TryComp<MechAirComponent>(component.Mech, out var mechAir))
+            !TryComp<InternalAirComponent>(component.Mech, out var internalAir))
         {
             return;
         }
 
         if (mech.Airtight)
-            args.Gas = mechAir.Air;
+            args.Gas = internalAir.Air;
     }
 
     private void OnExpose(EntityUid uid, MechPilotComponent component, ref AtmosExposedGetAirEvent args)
@@ -410,10 +411,10 @@ public sealed partial class MechSystem : SharedMechSystem
         if (!TryComp(component.Mech, out MechComponent? mech))
             return;
 
-        if (mech.Airtight && TryComp(component.Mech, out MechAirComponent? air))
+        if (mech.Airtight && TryComp(component.Mech, out InternalAirComponent? internalAir))
         {
             args.Handled = true;
-            args.Gas = air.Air;
+            args.Gas = internalAir.Air;
             return;
         }
 
@@ -421,7 +422,7 @@ public sealed partial class MechSystem : SharedMechSystem
         args.Handled = true;
     }
 
-    private void OnGetFilterAir(EntityUid uid, MechAirComponent comp, ref GetFilterAirEvent args)
+    private void OnGetFilterAir(EntityUid uid, InternalAirComponent comp, ref GetFilterAirEvent args)
     {
         if (args.Air != null)
             return;

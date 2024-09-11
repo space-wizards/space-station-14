@@ -107,7 +107,8 @@
     containers:
       - scanner-body
   - type: CryoPod
-  - type: CryoPodAir
+  - type: InternalAir
+    volume: 1000
   - type: ContainerTemperatureDamageThresholds
     coldDamageThreshold: 10
   - type: GuideHelp

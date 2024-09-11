@@ -2,8 +2,10 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Disposal.Tube;
 using Content.Server.Disposal.Tube.Components;
 using Content.Server.Disposal.Unit.Components;
+using Content.Server.Storage.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Damage;
+using Content.Shared.Disposal.Components;
 using Content.Shared.Item;
 using Content.Shared.Throwing;
 using Robust.Shared.Audio.Systems;
@@ -152,8 +154,11 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
             if (_atmosphereSystem.GetContainingMixture(uid, false, true) is { } environment)
             {
-                _atmosphereSystem.Merge(environment, holder.Air);
-                holder.Air.Clear();
+                if (TryComp<InternalAirComponent>(uid, out var internalAir))
+                {
+                    _atmosphereSystem.Merge(environment, internalAir.Air);
+                    internalAir.Air.Clear();
+                }
             }
 
             EntityManager.DeleteEntity(uid);

@@ -1,6 +1,7 @@
-﻿using Content.Server.Atmos.EntitySystems;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Systems;
 using Content.Server.Disposal.Unit.Components;
+using Content.Server.Storage.Components;
 
 namespace Content.Server.Disposal.Unit.EntitySystems;
 
@@ -17,26 +18,26 @@ public sealed class BeingDisposedSystem : EntitySystem
 
     private void OnGetAir(EntityUid uid, BeingDisposedComponent component, ref AtmosExposedGetAirEvent args)
     {
-        if (TryComp<DisposalHolderComponent>(component.Holder, out var holder))
+        if (TryComp<InternalAirComponent>(component.Holder, out var internalAir))
         {
-            args.Gas = holder.Air;
+            args.Gas = internalAir.Air;
             args.Handled = true;
         }
     }
 
     private void OnInhaleLocation(EntityUid uid, BeingDisposedComponent component, InhaleLocationEvent args)
     {
-        if (TryComp<DisposalHolderComponent>(component.Holder, out var holder))
+        if (TryComp<InternalAirComponent>(component.Holder, out var internalAir))
         {
-            args.Gas = holder.Air;
+            args.Gas = internalAir.Air;
         }
     }
 
     private void OnExhaleLocation(EntityUid uid, BeingDisposedComponent component, ExhaleLocationEvent args)
     {
-        if (TryComp<DisposalHolderComponent>(component.Holder, out var holder))
+        if (TryComp<InternalAirComponent>(component.Holder, out var internalAir))
         {
-            args.Gas = holder.Air;
+            args.Gas = internalAir.Air;
         }
     }
 }

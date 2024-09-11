@@ -4,6 +4,7 @@ using Content.Shared.Revenant;
 using Robust.Shared.Random;
 using Content.Shared.Tag;
 using Content.Server.Storage.Components;
+using Content.Shared.Storage.Components;
 using Content.Server.Light.Components;
 using Content.Server.Ghost;
 using Robust.Shared.Physics;

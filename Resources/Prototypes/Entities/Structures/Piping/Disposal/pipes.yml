@@ -65,6 +65,8 @@
   name: disposal holder
   components:
   - type: DisposalHolder
+  - type: InternalAir
+    volume: 70
   - type: ContainerContainer
     containers:
       DisposalHolderComponent: !type:Container

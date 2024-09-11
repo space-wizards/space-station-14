@@ -107,10 +107,10 @@ public sealed class BluespaceLockerSystem : EntitySystem
                 }
 
             // Move contained air
-            if (component.BehaviorProperties.TransportGas)
+            if (TryComp<InternalAirComponent>(uid, out var internalAir) && component.BehaviorProperties.TransportGas && target.Value.internalAirComponent != null)
             {
-                entityStorageComponent.Air.CopyFrom(target.Value.storageComponent.Air);
-                target.Value.storageComponent.Air.Clear();
+                internalAir.Air.CopyFrom(target.Value.internalAirComponent.Air);
+                target.Value.internalAirComponent.Air.Clear();
             }
 
             // Bluespace effects
@@ -193,7 +193,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
         return true;
     }
 
-    public (EntityUid uid, EntityStorageComponent storageComponent, BluespaceLockerComponent? bluespaceLockerComponent)? GetTarget(EntityUid lockerUid, BluespaceLockerComponent component, bool init = false)
+    public (EntityUid uid, EntityStorageComponent storageComponent, BluespaceLockerComponent? bluespaceLockerComponent, InternalAirComponent? internalAirComponent)? GetTarget(EntityUid lockerUid, BluespaceLockerComponent component, bool init = false)
     {
         while (true)
         {
@@ -259,7 +259,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
             var links = component.BluespaceLinks.ToArray();
             var link = links[_robustRandom.Next(0, component.BluespaceLinks.Count)];
             if (ValidLink(lockerUid, link, component))
-                return (link, Comp<EntityStorageComponent>(link), CompOrNull<BluespaceLockerComponent>(link));
+                return (link, Comp<EntityStorageComponent>(link), CompOrNull<BluespaceLockerComponent>(link), CompOrNull<InternalAirComponent>(link));
             component.BluespaceLinks.Remove(link);
         }
     }
@@ -324,10 +324,10 @@ public sealed class BluespaceLockerSystem : EntitySystem
             }
 
         // Move contained air
-        if (component.BehaviorProperties.TransportGas)
+        if (TryComp<InternalAirComponent>(uid, out var internalAir) && component.BehaviorProperties.TransportGas && target.Value.internalAirComponent != null)
         {
-            target.Value.storageComponent.Air.CopyFrom(entityStorageComponent.Air);
-            entityStorageComponent.Air.Clear();
+            target.Value.internalAirComponent.Air.CopyFrom(internalAir.Air);
+            internalAir.Air.Clear();
         }
 
         // Open and empty target

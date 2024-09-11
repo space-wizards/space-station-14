@@ -47,6 +47,7 @@
       whitelist:
         components:
         - Artifact
+    - type: InternalAir
     - type: Weldable
     - type: SuppressArtifactContainer
     - type: RadiationBlockingContainer

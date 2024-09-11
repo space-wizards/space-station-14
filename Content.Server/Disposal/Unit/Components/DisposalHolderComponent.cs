@@ -1,12 +1,9 @@
-using Content.Server.Atmos;
-using Content.Server.Disposal.Tube.Components;
-using Content.Shared.Atmos;
 using Robust.Shared.Containers;
 
 namespace Content.Server.Disposal.Unit.Components
 {
     [RegisterComponent]
-    public sealed partial class DisposalHolderComponent : Component, IGasMixtureHolder
+    public sealed partial class DisposalHolderComponent : Component
     {
         public Container Container = null!;
 
@@ -48,8 +45,5 @@ namespace Content.Server.Disposal.Unit.Components
         /// </summary>
         [ViewVariables]
         public HashSet<string> Tags { get; set; } = new();
-
-        [DataField("air")]
-        public GasMixture Air { get; set; } = new(70);
     }
 }

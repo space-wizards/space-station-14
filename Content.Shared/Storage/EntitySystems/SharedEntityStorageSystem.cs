@@ -49,12 +49,12 @@ public abstract class SharedEntityStorageSystem : EntitySystem
 
     public const string ContainerName = "entity_storage";
 
-    protected void OnEntityUnpausedEvent(EntityUid uid, SharedEntityStorageComponent component, EntityUnpausedEvent args)
+    protected void OnEntityUnpausedEvent(EntityUid uid, EntityStorageComponent component, EntityUnpausedEvent args)
     {
         component.NextInternalOpenAttempt += args.PausedTime;
     }
 
-    protected void OnGetState(EntityUid uid, SharedEntityStorageComponent component, ref ComponentGetState args)
+    protected void OnGetState(EntityUid uid, EntityStorageComponent component, ref ComponentGetState args)
     {
         args.State = new EntityStorageComponentState(component.Open,
             component.Capacity,
@@ -64,7 +64,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
             component.NextInternalOpenAttempt);
     }
 
-    protected void OnHandleState(EntityUid uid, SharedEntityStorageComponent component, ref ComponentHandleState args)
+    protected void OnHandleState(EntityUid uid, EntityStorageComponent component, ref ComponentHandleState args)
     {
         if (args.Current is not EntityStorageComponentState state)
             return;
@@ -76,19 +76,19 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         component.NextInternalOpenAttempt = state.NextInternalOpenAttempt;
     }
 
-    protected virtual void OnComponentInit(EntityUid uid, SharedEntityStorageComponent component, ComponentInit args)
+    protected virtual void OnComponentInit(EntityUid uid, EntityStorageComponent component, ComponentInit args)
     {
         component.Contents = _container.EnsureContainer<Container>(uid, ContainerName);
         component.Contents.ShowContents = component.ShowContents;
         component.Contents.OccludesLight = component.OccludesLight;
     }
 
-    protected virtual void OnComponentStartup(EntityUid uid, SharedEntityStorageComponent component, ComponentStartup args)
+    protected virtual void OnComponentStartup(EntityUid uid, EntityStorageComponent component, ComponentStartup args)
     {
         _appearance.SetData(uid, StorageVisuals.Open, component.Open);
     }
 
-    protected void OnInteract(EntityUid uid, SharedEntityStorageComponent component, ActivateInWorldEvent args)
+    protected void OnInteract(EntityUid uid, EntityStorageComponent component, ActivateInWorldEvent args)
     {
         if (args.Handled || !args.Complex)
             return;
@@ -97,9 +97,9 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         ToggleOpen(args.User, uid, component);
     }
 
-    public abstract bool ResolveStorage(EntityUid uid, [NotNullWhen(true)] ref SharedEntityStorageComponent? component);
+    public abstract bool ResolveStorage(EntityUid uid, [NotNullWhen(true)] ref EntityStorageComponent? component);
 
-    protected void OnLockToggleAttempt(EntityUid uid, SharedEntityStorageComponent target, ref LockToggleAttemptEvent args)
+    protected void OnLockToggleAttempt(EntityUid uid, EntityStorageComponent target, ref LockToggleAttemptEvent args)
     {
         // Cannot (un)lock open lockers.
         if (target.Open)
@@ -110,7 +110,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
             args.Cancelled = true;
     }
 
-    protected void OnDestruction(EntityUid uid, SharedEntityStorageComponent component, DestructionEventArgs args)
+    protected void OnDestruction(EntityUid uid, EntityStorageComponent component, DestructionEventArgs args)
     {
         component.Open = true;
         Dirty(uid, component);
@@ -126,7 +126,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         }
     }
 
-    protected void OnRelayMovement(EntityUid uid, SharedEntityStorageComponent component, ref ContainerRelayMovementEntityEvent args)
+    protected void OnRelayMovement(EntityUid uid, EntityStorageComponent component, ref ContainerRelayMovementEntityEvent args)
     {
         if (!HasComp<HandsComponent>(args.Entity))
             return;
@@ -137,21 +137,21 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         if (_timing.CurTime < component.NextInternalOpenAttempt)
             return;
 
-        component.NextInternalOpenAttempt = _timing.CurTime + SharedEntityStorageComponent.InternalOpenAttemptDelay;
+        component.NextInternalOpenAttempt = _timing.CurTime + EntityStorageComponent.InternalOpenAttemptDelay;
         Dirty(uid, component);
 
         if (component.OpenOnMove)
             TryOpenStorage(args.Entity, uid);
     }
 
-    protected void OnFoldAttempt(EntityUid uid, SharedEntityStorageComponent component, ref FoldAttemptEvent args)
+    protected void OnFoldAttempt(EntityUid uid, EntityStorageComponent component, ref FoldAttemptEvent args)
     {
         if (args.Cancelled)
             return;
         args.Cancelled = component.Open || component.Contents.ContainedEntities.Count != 0;
     }
 
-    protected void AddToggleOpenVerb(EntityUid uid, SharedEntityStorageComponent component, GetVerbsEvent<InteractionVerb> args)
+    protected void AddToggleOpenVerb(EntityUid uid, EntityStorageComponent component, GetVerbsEvent<InteractionVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract)
             return;
@@ -176,7 +176,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
     }
 
 
-    public void ToggleOpen(EntityUid user, EntityUid target, SharedEntityStorageComponent? component = null)
+    public void ToggleOpen(EntityUid user, EntityUid target, EntityStorageComponent? component = null)
     {
         if (!ResolveStorage(target, ref component))
             return;
@@ -191,7 +191,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         }
     }
 
-    public void EmptyContents(EntityUid uid, SharedEntityStorageComponent? component = null)
+    public void EmptyContents(EntityUid uid, EntityStorageComponent? component = null)
     {
         if (!ResolveStorage(uid, ref component))
             return;
@@ -204,7 +204,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         }
     }
 
-    public void OpenStorage(EntityUid uid, SharedEntityStorageComponent? component = null)
+    public void OpenStorage(EntityUid uid, EntityStorageComponent? component = null)
     {
         if (!ResolveStorage(uid, ref component))
             return;
@@ -225,7 +225,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         RaiseLocalEvent(uid, ref afterev);
     }
 
-    public void CloseStorage(EntityUid uid, SharedEntityStorageComponent? component = null)
+    public void CloseStorage(EntityUid uid, EntityStorageComponent? component = null)
     {
         if (!ResolveStorage(uid, ref component))
             return;
@@ -275,7 +275,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         RaiseLocalEvent(uid, ref afterev);
     }
 
-    public bool Insert(EntityUid toInsert, EntityUid container, SharedEntityStorageComponent? component = null)
+    public bool Insert(EntityUid toInsert, EntityUid container, EntityStorageComponent? component = null)
     {
         if (!ResolveStorage(container, ref component))
             return false;
@@ -295,7 +295,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         return true;
     }
 
-    public bool Remove(EntityUid toRemove, EntityUid container, SharedEntityStorageComponent? component = null, TransformComponent? xform = null)
+    public bool Remove(EntityUid toRemove, EntityUid container, EntityStorageComponent? component = null, TransformComponent? xform = null)
     {
         if (!Resolve(container, ref xform, false))
             return false;
@@ -310,7 +310,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         return true;
     }
 
-    public bool CanInsert(EntityUid toInsert, EntityUid container, SharedEntityStorageComponent? component = null)
+    public bool CanInsert(EntityUid toInsert, EntityUid container, EntityStorageComponent? component = null)
     {
         if (!ResolveStorage(container, ref component))
             return false;
@@ -344,7 +344,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         return true;
     }
 
-    public bool CanOpen(EntityUid user, EntityUid target, bool silent = false, SharedEntityStorageComponent? component = null)
+    public bool CanOpen(EntityUid user, EntityUid target, bool silent = false, EntityStorageComponent? component = null)
     {
         if (!ResolveStorage(target, ref component))
             return false;
@@ -397,7 +397,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         return !ev.Cancelled;
     }
 
-    public bool AddToContents(EntityUid toAdd, EntityUid container, SharedEntityStorageComponent? component = null)
+    public bool AddToContents(EntityUid toAdd, EntityUid container, EntityStorageComponent? component = null)
     {
         if (!ResolveStorage(container, ref component))
             return false;
@@ -412,7 +412,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         return Insert(toAdd, container, component);
     }
 
-    private bool CanFit(EntityUid toInsert, EntityUid container, SharedEntityStorageComponent? component = null)
+    private bool CanFit(EntityUid toInsert, EntityUid container, EntityStorageComponent? component = null)
     {
         if (!Resolve(container, ref component))
             return false;
@@ -459,7 +459,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         return allowedToEat;
     }
 
-    private void ModifyComponents(EntityUid uid, SharedEntityStorageComponent? component = null)
+    private void ModifyComponents(EntityUid uid, EntityStorageComponent? component = null)
     {
         if (!ResolveStorage(uid, ref component))
             return;
@@ -494,12 +494,12 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         _appearance.SetData(uid, StorageVisuals.HasContents, component.Contents.ContainedEntities.Count > 0);
     }
 
-    protected virtual void TakeGas(EntityUid uid, SharedEntityStorageComponent component)
+    protected virtual void TakeGas(EntityUid uid, EntityStorageComponent component)
     {
 
     }
 
-    public virtual void ReleaseGas(EntityUid uid, SharedEntityStorageComponent component)
+    public virtual void ReleaseGas(EntityUid uid, EntityStorageComponent component)
     {
 
     }

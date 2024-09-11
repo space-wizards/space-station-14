@@ -1,9 +1,9 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Storage.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Construction;
 using Content.Server.Construction.Components;
-using Content.Server.Storage.Components;
 using Content.Shared.Destructible;
 using Content.Shared.Explosion;
 using Content.Shared.Foldable;
@@ -60,15 +60,19 @@ public sealed class EntityStorageSystem : SharedEntityStorageSystem
 
     private void OnMapInit(EntityUid uid, EntityStorageComponent component, MapInitEvent args)
     {
-        if (!component.Open && component.Air.TotalMoles == 0)
+        // If we're closed on spawn and have no air already saved, we need to pull some air into our environment from where we spawned,
+        // so that we have -something-. For example, if you bought an animal crate or something.
+        if (component.Open)
+            return;
+
+        if (TryComp<InternalAirComponent>(uid, out var internalAir))
         {
-            // If we're closed on spawn and have no air already saved, we need to pull some air into our environment from where we spawned,
-            // so that we have -something-. For example, if you bought an animal crate or something.
-            TakeGas(uid, component);
+            if (internalAir.Air.TotalMoles == 0)
+                TakeGas(uid, component);
         }
     }
 
-    protected override void OnComponentInit(EntityUid uid, SharedEntityStorageComponent component, ComponentInit args)
+    protected override void OnComponentInit(EntityUid uid, EntityStorageComponent component, ComponentInit args)
     {
         base.OnComponentInit(uid, component, args);
 
@@ -76,7 +80,7 @@ public sealed class EntityStorageSystem : SharedEntityStorageSystem
             _construction.AddContainer(uid, ContainerName, construction);
     }
 
-    public override bool ResolveStorage(EntityUid uid, [NotNullWhen(true)] ref SharedEntityStorageComponent? component)
+    public override bool ResolveStorage(EntityUid uid, [NotNullWhen(true)] ref EntityStorageComponent? component)
     {
         if (component != null)
             return true;
@@ -107,33 +111,36 @@ public sealed class EntityStorageSystem : SharedEntityStorageSystem
         args.Contents.AddRange(ent.Comp.Contents.ContainedEntities);
     }
 
-    protected override void TakeGas(EntityUid uid, SharedEntityStorageComponent component)
+    protected override void TakeGas(EntityUid uid, EntityStorageComponent component)
     {
         if (!component.Airtight)
             return;
 
-        var serverComp = (EntityStorageComponent) component;
-        var tile = GetOffsetTileRef(uid, serverComp);
-
-        if (tile != null && _atmos.GetTileMixture(tile.Value.GridUid, null, tile.Value.GridIndices, true) is {} environment)
+        if (TryComp<InternalAirComponent>(uid, out var internalAir))
         {
-            _atmos.Merge(serverComp.Air, environment.RemoveVolume(serverComp.Air.Volume));
+            var tile = GetOffsetTileRef(uid, component);
+
+            if (tile != null && _atmos.GetTileMixture(tile.Value.GridUid, null, tile.Value.GridIndices, true) is { } environment)
+            {
+                _atmos.Merge(internalAir.Air, environment.RemoveVolume(internalAir.Air.Volume));
+            }
         }
     }
 
-    public override void ReleaseGas(EntityUid uid, SharedEntityStorageComponent component)
+    public override void ReleaseGas(EntityUid uid, EntityStorageComponent component)
     {
-        var serverComp = (EntityStorageComponent) component;
-
-        if (!serverComp.Airtight)
+        if (component.Airtight)
             return;
 
-        var tile = GetOffsetTileRef(uid, serverComp);
-
-        if (tile != null && _atmos.GetTileMixture(tile.Value.GridUid, null, tile.Value.GridIndices, true) is {} environment)
+        if (TryComp<InternalAirComponent>(uid, out var internalAir))
         {
-            _atmos.Merge(environment, serverComp.Air);
-            serverComp.Air.Clear();
+            var tile = GetOffsetTileRef(uid, component);
+
+            if (tile != null && _atmos.GetTileMixture(tile.Value.GridUid, null, tile.Value.GridIndices, true) is { } environment)
+            {
+                _atmos.Merge(environment, internalAir.Air);
+                internalAir.Air.Clear();
+            }
         }
     }
 
@@ -162,7 +169,8 @@ public sealed class EntityStorageSystem : SharedEntityStorageSystem
     {
         if (TryComp<EntityStorageComponent>(component.Storage, out var storage) && storage.Airtight)
         {
-            args.Gas = storage.Air;
+            if (TryComp<InternalAirComponent>(component.Storage, out var internalAir))
+                args.Gas = internalAir.Air;
         }
     }
 
@@ -170,7 +178,8 @@ public sealed class EntityStorageSystem : SharedEntityStorageSystem
     {
         if (TryComp<EntityStorageComponent>(component.Storage, out var storage) && storage.Airtight)
         {
-            args.Gas = storage.Air;
+            if (TryComp<InternalAirComponent>(component.Storage, out var internalAir))
+                args.Gas = internalAir.Air;
         }
     }
 
@@ -184,7 +193,8 @@ public sealed class EntityStorageSystem : SharedEntityStorageSystem
             if (!storage.Airtight)
                 return;
 
-            args.Gas = storage.Air;
+            if (TryComp<InternalAirComponent>(component.Storage, out var internalAir))
+                args.Gas = internalAir.Air;
         }
 
         args.Handled = true;

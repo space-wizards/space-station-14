@@ -1,16 +1,13 @@
 using Content.Server.Administration.Logs;
-using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.Unary.EntitySystems;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Medical.Components;
-using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
-using Content.Server.Power.Components;
 using Content.Server.Temperature.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Atmos;
@@ -18,7 +15,6 @@ using Content.Shared.UserInterface;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Climbing.Systems;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
@@ -35,6 +31,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 using SharedToolSystem = Content.Shared.Tools.Systems.SharedToolSystem;
+using Content.Server.Storage.Components;
 
 namespace Content.Server.Medical;
 
@@ -158,12 +155,12 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
 
         if (InsertBody(entity.Owner, args.Args.Target.Value, entity.Comp))
         {
-            if (!TryComp(entity.Owner, out CryoPodAirComponent? cryoPodAir))
+            if (!TryComp(entity.Owner, out InternalAirComponent? internalAir))
                 _adminLogger.Add(LogType.Action, LogImpact.Medium,
                     $"{ToPrettyString(args.User)} inserted {ToPrettyString(args.Args.Target.Value)} into {ToPrettyString(entity.Owner)}");
 
             _adminLogger.Add(LogType.Action, LogImpact.Medium,
-                $"{ToPrettyString(args.User)} inserted {ToPrettyString(args.Args.Target.Value)} into {ToPrettyString(entity.Owner)} which contains gas: {cryoPodAir!.Air.ToPrettyString():gasMix}");
+                $"{ToPrettyString(args.User)} inserted {ToPrettyString(args.Args.Target.Value)} into {ToPrettyString(entity.Owner)} which contains gas: {internalAir!.Air.ToPrettyString():gasMix}");
         }
         args.Handled = true;
     }
@@ -263,24 +260,24 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
         if (!_nodeContainer.TryGetNode(entity.Owner, entity.Comp.PortName, out PortablePipeNode? portNode))
             return;
 
-        if (!TryComp(entity, out CryoPodAirComponent? cryoPodAir))
+        if (!TryComp(entity, out InternalAirComponent? internalAir))
             return;
 
-        _atmosphereSystem.React(cryoPodAir.Air, portNode);
+        _atmosphereSystem.React(internalAir.Air, portNode);
 
         if (portNode.NodeGroup is PipeNet { NodeCount: > 1 } net)
         {
-            _gasCanisterSystem.MixContainerWithPipeNet(cryoPodAir.Air, net.Air);
+            _gasCanisterSystem.MixContainerWithPipeNet(internalAir.Air, net.Air);
         }
     }
 
     private void OnGasAnalyzed(Entity<CryoPodComponent> entity, ref GasAnalyzerScanEvent args)
     {
-        if (!TryComp(entity, out CryoPodAirComponent? cryoPodAir))
+        if (!TryComp(entity, out InternalAirComponent? internalAir))
             return;
 
         args.GasMixtures ??= new List<(string, GasMixture?)>();
-        args.GasMixtures.Add((Name(entity.Owner), cryoPodAir.Air));
+        args.GasMixtures.Add((Name(entity.Owner), internalAir.Air));
         // If it's connected to a port, include the port side
         // multiply by volume fraction to make sure to send only the gas inside the analyzed pipe element, not the whole pipe system
         if (_nodeContainer.TryGetNode(entity.Owner, entity.Comp.PortName, out PipeNode? port) && port.Air.Volume != 0f)
