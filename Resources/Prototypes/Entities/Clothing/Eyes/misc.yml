@@ -50,3 +50,5 @@
     - type: EyeProtection
     - type: VisionDarkener
       strength: 3
+    - type: StaticPrice
+      price: 8

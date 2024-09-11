@@ -105,7 +105,7 @@
 
 - type: entity
   id: ActionToggleWeldingMask
-  name: Flip Welding Mask
+  name: Adjust Welding Mask
   description: Covers or reveals your face.
   components:
   - type: InstantAction
