@@ -334,6 +334,11 @@
 
 - type: latheRecipe
   parent: BaseGoldCircuitboardRecipe
+  id: SalvageMagnetMachineCircuitboard
+  result: SalvageMagnetMachineCircuitboard
+
+- type: latheRecipe
+  parent: BaseGoldCircuitboardRecipe
   id: RipleyCentralElectronics
   result: RipleyCentralElectronics
 

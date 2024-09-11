@@ -1,146 +1,4 @@
 ﻿Entries:
-- author: PJB3005
-  changes:
-  - message: '"Steal plutonium core" traitor objective has been reverted.'
-    type: Remove
-  id: 6839
-  time: '2024-06-29T15:23:03.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29578
-- author: MureixloL
-  changes:
-  - message: Changed some vending machine point lights to match the vendors better.
-    type: Tweak
-  id: 6840
-  time: '2024-06-30T03:46:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29590
-- author: metalgearsloth
-  changes:
-  - message: Fix trait categories not respecting unlimited points.
-    type: Fix
-  id: 6841
-  time: '2024-06-30T04:28:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29600
-- author: ShadowCommander
-  changes:
-  - message: Fixed sprite layers disappearing when inserting or removing an item on
-      entities such as belts, janitor trolley, clipboard, etc.
-    type: Fix
-  id: 6842
-  time: '2024-06-30T04:34:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29461
-- author: Plykiya
-  changes:
-  - message: Syndicate traitor reinforcements price has been changed from 16 TC to
-      14 TC.
-    type: Tweak
-  - message: Nuclear ops reinforcements price has been changed from 16 TC to 35 TC.
-    type: Tweak
-  id: 6843
-  time: '2024-06-30T12:28:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29557
-- author: Plykiya
-  changes:
-  - message: Skeletons are now immune to flashes.
-    type: Add
-  id: 6844
-  time: '2024-06-30T13:42:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29604
-- author: Plykiya
-  changes:
-  - message: The lock on emagged borgs no longer breaks, preventing unauthorized access
-      and emag checking.
-    type: Tweak
-  id: 6845
-  time: '2024-06-30T13:46:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29605
-- author: metalgearsloth
-  changes:
-  - message: Accentless speech now costs 2 trait points.
-    type: Tweak
-  id: 6846
-  time: '2024-06-30T13:47:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29603
-- author: deltanedas
-  changes:
-  - message: Fixed sleeper agents not showing up in the round end summary.
-    type: Fix
-  id: 6847
-  time: '2024-06-30T13:51:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29468
-- author: EmoGarbage404
-  changes:
-  - message: The design on the bar sign can now be changed via a menu.
-    type: Add
-  id: 6848
-  time: '2024-06-30T16:20:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29068
-- author: Hmeister
-  changes:
-  - message: The CE hardsuit is now fireproof again.
-    type: Tweak
-  id: 6849
-  time: '2024-06-30T17:56:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29516
-- author: EmoGarbage404
-  changes:
-  - message: Blurry vision no longer causes names to momentarily appear as "???" when
-      examining.
-    type: Remove
-  id: 6850
-  time: '2024-07-01T03:06:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29633
-- author: Cojoke-dot
-  changes:
-  - message: Items that slow down a person when held now slow down when dragged too.
-    type: Tweak
-  id: 6851
-  time: '2024-07-01T05:33:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29364
-- author: metalgearsloth
-  changes:
-  - message: Add effects for when shuttles are arriving.
-    type: Add
-  id: 6852
-  time: '2024-07-01T06:11:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29402
-- author: Plykiya
-  changes:
-  - message: Gravity wells, like the supermatter grenade, now function properly again.
-    type: Fix
-  id: 6853
-  time: '2024-07-01T15:39:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29617
-- author: joelsgp
-  changes:
-  - message: Fixed login tips
-    type: Fix
-  id: 6854
-  time: '2024-07-01T16:27:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29640
-- author: Cojoke-dot
-  changes:
-  - message: Flares can now light Cigarettes and other similar things
-    type: Tweak
-  - message: Flares now are no longer hot after burning out
-    type: Tweak
-  id: 6855
-  time: '2024-07-01T21:14:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29476
-- author: Tayrtahn
-  changes:
-  - message: Fixed NukeOps ending prematurely in some situations where operatives
-      were still alive.
-    type: Fix
-  id: 6856
-  time: '2024-07-01T22:23:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29642
-- author: Tayrtahn
-  changes:
-  - message: Fixed characters thrashing when speaking in beds.
-    type: Fix
-  id: 6857
-  time: '2024-07-02T03:30:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29653
 - author: slarticodefast
   changes:
   - message: Fixed sprite rotation in harm mode on rotated grids.
@@ -3899,3 +3757,156 @@
   id: 7338
   time: '2024-09-09T23:59:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32019
+- author: IProduceWidgets
+  changes:
+  - message: Visitors now can have the correct Id cards and PDA!
+    type: Fix
+  - message: ghost roles should now attempt to tell you what your antag status is
+      in a popup when you join the raffle.
+    type: Tweak
+  - message: ERT chaplains should now be able to use bibles.
+    type: Fix
+  - message: Many new unknown shuttle events to make them more unique.
+    type: Add
+  - message: Syndicate escape pods will once again appear.
+    type: Fix
+  - message: Unknown Shuttle events will be much rarer.
+    type: Tweak
+  id: 7339
+  time: '2024-09-10T06:40:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28098
+- author: ScarKy0
+  changes:
+  - message: Renamed Circuit Boards to be Law Boards instead.
+    type: Tweak
+  id: 7340
+  time: '2024-09-10T10:27:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31914
+- author: ScarKy0
+  changes:
+  - message: Arrival Screens now show time again.
+    type: Fix
+  id: 7341
+  time: '2024-09-10T19:08:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32037
+- author: themias
+  changes:
+  - message: The Justice Helm can now only be crafted using a security helmet.
+    type: Fix
+  id: 7342
+  time: '2024-09-10T19:08:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32042
+- author: TurboTrackerss14
+  changes:
+  - message: Gas tank explosions ("max caps") have a reduced range on WizDen servers
+      until they can be reworked into a proper game mechanic.
+    type: Remove
+  id: 7343
+  time: '2024-09-10T22:05:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31437
+- author: Boaz1111
+  changes:
+  - message: Researching Advanced Atmospherics now requires Atmospherics to be researched.
+    type: Tweak
+  id: 7344
+  time: '2024-09-10T22:19:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32048
+- author: DiposableCrewmember42
+  changes:
+  - message: Fixed Revenant ability cost checks. Revenants can no longer spam abilities
+      without Essence.
+    type: Fix
+  id: 7345
+  time: '2024-09-10T23:07:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32050
+- author: ArtisticRoomba
+  changes:
+  - message: The salvage magnet circuitboard has been added to QM's locker. It can
+      also be made at the circuit imprinter roundstart. NOW GET BACK TO WORK!!!
+    type: Tweak
+  id: 7346
+  time: '2024-09-10T23:25:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31996
+- author: Lank
+  changes:
+  - message: Several antagonist shuttle events have been removed.
+    type: Remove
+  id: 7347
+  time: '2024-09-10T23:26:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32052
+- author: Vermidia
+  changes:
+  - message: Borgs and other creatures that shouldn't get hurt stepping on things
+      no longer get hurt stepping on things.
+    type: Fix
+  - message: Honkbots slip again
+    type: Fix
+  id: 7348
+  time: '2024-09-11T02:12:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31011
+- author: EmoGarbage404
+  changes:
+  - message: The mining asteroid now generates small structures full of treasure and
+      equipment. Keep an eye open for them, nestled within the rock.
+    type: Add
+  id: 7349
+  time: '2024-09-11T03:33:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31638
+- author: SlamBamActionman
+  changes:
+  - message: The Station AI job is no longer affected by the Bureaucratic Event event.
+    type: Fix
+  id: 7350
+  time: '2024-09-11T11:24:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32021
+- author: K-Dynamic
+  changes:
+  - message: Reduced canister prices from 1000 to 200 spesos
+    type: Tweak
+  id: 7351
+  time: '2024-09-11T12:53:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31965
+- author: EmoGarbage404
+  changes:
+  - message: Added the hivelord! This self-replicating alien is found on the mining
+      asteroid. It's core is known to have powerful healing properties.
+    type: Add
+  id: 7352
+  time: '2024-09-11T13:52:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31322
+- author: PeccNeck
+  changes:
+  - message: Fixed a bug where ore processors could not produce reinforced glass
+    type: Fix
+  id: 7353
+  time: '2024-09-11T14:06:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32069
+- author: Plykiya
+  changes:
+  - message: You can now use swords to make baseball bats.
+    type: Fix
+  id: 7354
+  time: '2024-09-11T14:45:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32075
+- author: Plykiya
+  changes:
+  - message: Banners are no longer invincible.
+    type: Fix
+  id: 7355
+  time: '2024-09-11T15:29:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32077
+- author: themias
+  changes:
+  - message: Very small amounts of heat damage no longer play the cauterization sound
+      (e.g. spacing)
+    type: Fix
+  id: 7356
+  time: '2024-09-11T16:05:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32080
+- author: deltanedas
+  changes:
+  - message: Coins and Supercharged CPUs can now be recycled for rarer materials.
+    type: Tweak
+  id: 7357
+  time: '2024-09-11T16:24:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31970
