@@ -33,7 +33,6 @@
       - HumanoidAppearance
   - type: DisposalUnit
     automaticEngage: false
-    noUI: true
     blacklist:
       components:
       - HumanoidAppearance
