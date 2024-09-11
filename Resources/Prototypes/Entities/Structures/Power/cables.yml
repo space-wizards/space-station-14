@@ -56,7 +56,6 @@
   components:
   - type: Sprite
     sprite: Structures/Power/Cables/hv_cable.rsi
-    offset: 0.1, -0.1
     state: hvcable_0
     drawdepth: ThickWire
   - type: Icon
@@ -108,7 +107,6 @@
   - type: Sprite
     color: Yellow
     sprite: Structures/Power/Cables/mv_cable.rsi
-    offset: -0.1, 0.1
     state: mvcable_0
   - type: Icon
     color: Yellow
@@ -153,7 +151,6 @@
   - type: Sprite
     color: Green
     sprite: Structures/Power/Cables/lv_cable.rsi
-    offset: -0.1, 0.1
     state: lvcable_0
   - type: Icon
     color: Green

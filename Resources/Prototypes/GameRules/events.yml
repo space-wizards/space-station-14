@@ -157,9 +157,12 @@
     earliestStart: 40
     reoccurrenceDelay: 40
     minimumPlayers: 35
-  - type: AntagRandomSpawn
+    duration: null
+  - type: SpaceSpawnRule
+    spawnDistance: 0
   - type: AntagSpawner
     prototype: MobDragon
+  - type: DragonRule
   - type: AntagObjectives
     objectives:
     - CarpRiftsObjective
@@ -174,8 +177,6 @@
       mindComponents:
       - type: DragonRole
         prototype: Dragon
-      - type: RoleBriefing
-        briefing: dragon-role-briefing
 
 - type: entity
   parent: BaseGameRule
