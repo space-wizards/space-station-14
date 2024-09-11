@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: The design on the bar sign can now be changed via a menu.
-    type: Add
-  id: 6848
-  time: '2024-06-30T16:20:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29068
 - author: Hmeister
   changes:
   - message: The CE hardsuit is now fireproof again.
@@ -3908,3 +3901,13 @@
   id: 7347
   time: '2024-09-10T23:26:59.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32052
+- author: Vermidia
+  changes:
+  - message: Borgs and other creatures that shouldn't get hurt stepping on things
+      no longer get hurt stepping on things.
+    type: Fix
+  - message: Honkbots slip again
+    type: Fix
+  id: 7348
+  time: '2024-09-11T02:12:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31011
