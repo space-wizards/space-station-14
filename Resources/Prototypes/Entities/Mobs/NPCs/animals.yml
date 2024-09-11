@@ -1403,6 +1403,7 @@
   - type: Speech
     speechSounds: Lizard
     speechVerb: Reptilian
+    allowedEmotes: ['Thump', 'Huff', 'Hiss']
   - type: Vocal
     sounds:
       Male: MaleReptilian
