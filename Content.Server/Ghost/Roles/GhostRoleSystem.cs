@@ -572,7 +572,8 @@ public sealed class GhostRoleSystem : EntitySystem
                 Requirements = role.Requirements,
                 Kind = kind,
                 RafflePlayerCount = rafflePlayerCount,
-                RaffleEndTime = raffleEndTime
+                RaffleEndTime = raffleEndTime,
+                JobProto = role.JobProto
             });
         }
 

@@ -1,5 +1,6 @@
 using Content.Shared.Eui;
 using Content.Shared.Roles;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Ghost.Roles
@@ -12,7 +13,6 @@ namespace Content.Shared.Ghost.Roles
         public string Description { get; set; }
         public string Rules { get; set; }
 
-        // TODO ROLE TIMERS
         // Actually make use of / enforce this requirement?
         // Why is this even here.
         // Move to ghost role prototype & respect CCvars.GameRoleTimerOverride
@@ -31,6 +31,11 @@ namespace Content.Shared.Ghost.Roles
         /// if <see cref="Kind"/> is <see cref="GhostRoleKind.RaffleInProgress"/>, specifies when raffle finishes.
         /// </summary>
         public TimeSpan RaffleEndTime { get; set; }
+
+        /// <summary>
+        /// If not null, all requirements for this role apply to ghostrole.
+        /// </summary>
+        public ProtoId<JobPrototype>? JobProto { get; set; }
 
     }
 
