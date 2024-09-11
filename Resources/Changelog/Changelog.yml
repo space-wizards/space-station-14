@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Add effects for when shuttles are arriving.
-    type: Add
-  id: 6852
-  time: '2024-07-01T06:11:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29402
 - author: Plykiya
   changes:
   - message: Gravity wells, like the supermatter grenade, now function properly again.
@@ -3911,3 +3904,11 @@
   id: 7351
   time: '2024-09-11T12:53:51.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31965
+- author: EmoGarbage404
+  changes:
+  - message: Added the hivelord! This self-replicating alien is found on the mining
+      asteroid. It's core is known to have powerful healing properties.
+    type: Add
+  id: 7352
+  time: '2024-09-11T13:52:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31322
