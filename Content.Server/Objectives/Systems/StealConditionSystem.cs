@@ -27,6 +27,8 @@ public sealed class StealConditionSystem : EntitySystem
 
     private EntityQuery<ContainerManagerComponent> _containerQuery;
 
+    private HashSet<Entity<TransformComponent>> _nearestEnts = new();
+
     public override void Initialize()
     {
         base.Initialize();
@@ -109,8 +111,9 @@ public sealed class StealConditionSystem : EntitySystem
                 if (!area.Owners.Contains(mind.Owner))
                     continue;
 
-                var nearestEnt = _lookup.GetEntitiesInRange(uid, area.Range);
-                foreach (var ent in nearestEnt)
+                _nearestEnts.Clear();
+                _lookup.GetEntitiesInRange<TransformComponent>(xform.Coordinates, area.Range, _nearestEnts);
+                foreach (var ent in _nearestEnts)
                 {
                     if (!_interaction.InRangeUnobstructed((uid, xform), ent, range: area.Range))
                         continue;
