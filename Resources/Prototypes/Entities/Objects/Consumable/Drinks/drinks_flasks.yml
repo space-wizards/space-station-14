@@ -102,7 +102,7 @@
 - type: entity
   parent: FlaskBase
   id: Pitcher
-  name: Metal Pitcher
+  name: metal pitcher
   description: A stainless steel insulated pitcher. Everyone's best friend in the morning.
   components:
   - type: SolutionContainerManager

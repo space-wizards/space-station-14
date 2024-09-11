@@ -6,6 +6,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using System.Collections;
 using System.Linq;
+using Content.Shared.Chemistry.Components.SolutionManager;
 
 namespace Content.Shared.Chemistry.Components
 {

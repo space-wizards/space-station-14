@@ -1,0 +1,119 @@
+﻿- type: entity
+  id: StationAnchorBase
+  abstract: true
+  name: station anchor
+  description: Prevents stations from moving.
+  suffix: On
+  placement:
+    mode: AlignTileAny
+  components:
+  - type: StationAnchor
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: AmbientSound
+    enabled: false
+    range: 4
+    volume: -4
+    sound:
+      path: /Audio/Effects/shuttle_thruster.ogg
+  - type: InteractionOutline
+  - type: Sprite
+    sprite: Structures/Machines/station_anchor.rsi
+    layers:
+    - state: station_anchor
+      map: ["base"]
+    - state: station_anchor_unlit
+      shader: unshaded
+      map: ["unlit"]
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerChargeVisuals.Active:
+        unlit:
+          True: { visible: True }
+          False: { visible: False }
+  - type: Appearance
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.7,-0.8,0.7,0.8"
+        density: 190
+        mask:
+        - LargeMobMask
+        layer:
+        - WallLayer
+
+- type: entity
+  id: StationAnchorIndestructible
+  parent: StationAnchorBase
+  suffix: Indestructible, Unpowered
+
+- type: entity
+  id: StationAnchor
+  parent: [StationAnchorBase, BaseMachinePowered, ConstructibleMachine]
+  placement:
+    mode: AlignTileAny
+  components:
+    - type: StationAiWhitelist
+    - type: PowerCharge
+      windowTitle: station-anchor-window-title
+      idlePower: 50
+      activePower: 2500
+      chargeRate: 0.5
+    - type: ActivatableUI
+      key: enum.PowerChargeUiKey.Key
+    - type: ActivatableUIRequiresPower
+    - type: Anchorable
+    - type: ApcPowerReceiver
+      powerLoad: 2500
+    - type: ExtensionCableReceiver
+    - type: Damageable
+      damageContainer: Inorganic
+      damageModifierSet: Metallic
+    - type: Repairable
+      fuelCost: 10
+      doAfterDelay: 5
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 150
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Breakage" ]
+      - trigger:
+          !type:DamageTrigger
+          damage: 600
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+        - !type:PlaySoundBehavior
+          sound:
+            collection: MetalBreak
+    - type: StaticPrice
+      price: 10000
+    - type: Machine
+      board: StationAnchorCircuitboard
+    - type: ContainerContainer
+      containers:
+        machine_board: !type:Container
+        machine_parts: !type:Container
+    - type: Construction
+      containers:
+      - machine_parts
+      - machine_board
+    - type: UserInterface
+      interfaces:
+        enum.PowerChargeUiKey.Key:
+          type: PowerChargeBoundUserInterface
+
+- type: entity
+  parent: StationAnchor
+  id: StationAnchorOff
+  suffix: Off
+  components:
+  - type: StationAnchor
+    switchedOn: false
