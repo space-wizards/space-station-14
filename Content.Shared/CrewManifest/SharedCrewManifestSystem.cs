@@ -34,6 +34,25 @@ public sealed class CrewManifestEuiState : EuiStateBase
 }
 
 [Serializable, NetSerializable]
+public sealed class CrewManifestBuiState : BoundUserInterfaceState
+{
+    public string StationName { get; }
+    public CrewManifestEntries? Entries { get; }
+
+    public CrewManifestBuiState(string stationName, CrewManifestEntries? entries)
+    {
+        StationName = stationName;
+        Entries = entries;
+    }
+}
+
+[Serializable, NetSerializable]
+public enum CrewManifestUiKey : byte
+{
+    Key
+}
+
+[Serializable, NetSerializable]
 public sealed class CrewManifestEntries
 {
     /// <summary>

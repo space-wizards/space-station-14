@@ -44,10 +44,14 @@
         type: CrewMonitoringBoundUserInterface
       enum.GeneralStationRecordConsoleKey.Key:
         type: GeneralStationRecordConsoleBoundUserInterface
+      enum.PowerMonitoringConsoleUiKey.Key:
+        type: PowerMonitoringConsoleBoundUserInterface
       enum.SiliconLawsUiKey.Key:
         type: SiliconLawBoundUserInterface
       enum.CommunicationsConsoleUiKey.Key:
         type: CommunicationsConsoleBoundUserInterface
+      enum.CrewManifestUiKey.Key:
+        type: CrewManifestBoundUserInterface
   - type: IntrinsicUI
     uis:
       enum.RadarConsoleUiKey.Key:
@@ -58,8 +62,14 @@
         toggleAction: ActionAGhostShowStationRecords
       enum.CommunicationsConsoleUiKey.Key:
         toggleAction: ActionAGhostShowCommunications
+      enum.PowerMonitoringConsoleUiKey.Key:
+        toggleAction: ActionAIShowPowerMonitoring
+      enum.CrewManifestUiKey.Key:
+        toggleAction: ActionAIShowCrewManifest
   - type: CrewMonitoringConsole
   - type: GeneralStationRecordConsole
+  - type: PowerMonitoringConsole
+  - type: PowerMonitoringCableNetworks
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: CrewMonitor
@@ -70,6 +80,7 @@
     canShuttle: false
     title: comms-console-announcement-title-station-ai
     color: "#2ed2fd"
+  - type: CrewManifestBound
 
 
 # Ai
