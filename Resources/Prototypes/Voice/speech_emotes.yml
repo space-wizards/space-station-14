@@ -182,7 +182,7 @@
    - squeak
    - squeaks
    - squeaked
-   
+
 - type: emote
   id: Huff
   name: chat-emote-name-huff
@@ -200,7 +200,7 @@
    - huff
    - huffs
    - huffed
-   
+
 - type: emote
   id: Hiss
   name: chat-emote-name-hiss
@@ -277,7 +277,7 @@
     - snaps their fingers
     - snapping fingers
     - snapped fingers
- 
+
 - type: emote
   id: Thump
   name: chat-emote-name-thump
@@ -302,7 +302,7 @@
     - thumps her tai
     - thumps his tail
     - thumps its tail
-    
+
 - type: emote
   id: Salute
   name: chat-emote-name-salute
