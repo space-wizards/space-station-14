@@ -7,8 +7,13 @@
   copyright: "Taken from https://github.com/shiptest-ss13/Shiptest/pull/2159/commits/034844b6946d15a680bf8f9edab2ded7051b305c#diff-5c6dee940bb4ac50e1bb77b17f6a84a083f901a4289823c40852520e8d016edc"
   license: "CC-BY-SA-3.0"
   source: https://github.com/shiptest-ss13/Shiptest/tree/master/sound/voice/lizard
+
+- files: [reptilian_huff.ogg]
+  copyright: "Soughtaftersounds, audio trimmed, sped up, amplified, reversed"
+  license: "CC-BY-3.0"
+  source: https://freesound.org/people/Soughtaftersounds/sounds/239650/
   
  - files: [reptillian_hiss.ogg]
-  copyright: "Taken from https://github.com/shiptest-ss13/Shiptest/pull/1877/commits/6b0365fef38940eee430bebc35009dc448b25983#diff-f79f1710c15d3fdb99dad2384d10bc4e67874fd00888cdcf978338100b9b9b7f"
+  copyright: "Volume increased, taken from https://github.com/shiptest-ss13/Shiptest/pull/1877/commits/6b0365fef38940eee430bebc35009dc448b25983#diff-f79f1710c15d3fdb99dad2384d10bc4e67874fd00888cdcf978338100b9b9b7f"
   license: "CC-BY-SA-3.0"
   source: https://github.com/shiptest-ss13/Shiptest/tree/master/sound/voice/lizard
