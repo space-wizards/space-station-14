@@ -46,3 +46,8 @@
           - !type:DoActsBehavior
             acts: [ "Destruction" ]
   - type: AlwaysHot
+  - type: IgnitionSource
+    ignited: true
+  - type: RadiantTemperature
+    goalTemperature: 305
+    temperatureChangePerTick: 30
