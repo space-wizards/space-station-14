@@ -122,7 +122,7 @@
   - Supper
   - Big
   - Right
-  - True
+  - 'True'
   - Fat
   - Shielded
   - Mined
@@ -137,7 +137,6 @@
   - Diamond
   - Bronze
   - Leaden
-  - 
 
 - type: dataset
   id: DwarfLast
@@ -254,7 +253,7 @@
   - dinner
   - big
   - mercy
-  - true
+  - 'true'
   - voyage
   - fat
   - sack
