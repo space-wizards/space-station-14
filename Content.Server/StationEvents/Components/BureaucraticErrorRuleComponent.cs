@@ -11,5 +11,5 @@ public sealed partial class BureaucraticErrorRuleComponent : Component
     /// The jobs that are ignored by this rule and won't have their slots changed.
     /// </summary>
     [DataField]
-    public HashSet<ProtoId<JobPrototype>> IgnoredJobs = new();
+    public List<ProtoId<JobPrototype>> IgnoredJobs = new();
 }
