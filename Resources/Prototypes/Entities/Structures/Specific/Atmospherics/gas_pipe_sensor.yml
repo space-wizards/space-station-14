@@ -1,32 +1,42 @@
 - type: entity
   parent: BaseItem
-  id: GasPipeAnalyzer
-  name: gas pipe analyzer
-  description: A device that reports the characteristics of the gas in the attached pipe network. 
+  id: GasPipeSensor
+  name: gas pipe sensor
+  description: A device that reports on the characteristics of the gas in the attached pipe network. 
   placement:
     mode: SnapgridCenter
   suffix: General
   components:
   - type: Sprite
-    sprite: Objects/Devices/station_beacon.rsi
+    sprite: Structures/Specific/Atmospherics/gas_pipe_sensor.rsi
     drawdepth: BelowFloor
     layers:
-    - state: blink
-      map: ["base"]
+    - map: ["base"]
+      state: base
+    - map: ["enum.GasPipeSensorVisuals.Lights"]
+      state: lights
+      shader: unshaded
+    - map: ["enum.GasPipeSensorVisuals.Blink"]
+      state: blink
+      shader: unshaded
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-      enum.NavMapBeaconVisuals.Enabled:
-        base:
-          True: {state: blink}
-          False: {state: icon}
-#  - type: ActivatableUI
-#    key: enum.GasAnalyzerUiKey.Key
-#  - type: UserInterface
-#    interfaces:
-#      enum.GasAnalyzerUiKey.Key:
-#        type: GasAnalyzerBoundUserInterface
-  - type: GasPipeAnalyzer
+      enum.GasPipeSensorVisuals.State:
+        enum.GasPipeSensorVisuals.Lights:
+          True: { visible: true, shader: unshaded }
+          False: { visible: false }
+        enum.GasPipeSensorVisuals.Blink:
+          True: { visible: true, shader: unshaded }
+          False: { visible: false }
+  - type: GasPipeSensor
+  - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver
+  - type: DeviceNetwork
+    deviceNetId: AtmosDevices
+    receiveFrequencyId: AtmosMonitor
+  - type: DeviceNetworkRequiresPower
+  - type: WiredNetworkConnection
   - type: Item
     size: Small
   - type: SubFloorHide
