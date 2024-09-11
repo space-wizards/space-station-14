@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Hmeister
-  changes:
-  - message: The CE hardsuit is now fireproof again.
-    type: Tweak
-  id: 6849
-  time: '2024-06-30T17:56:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29516
 - author: EmoGarbage404
   changes:
   - message: Blurry vision no longer causes names to momentarily appear as "???" when
@@ -3911,3 +3904,11 @@
   id: 7348
   time: '2024-09-11T02:12:08.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31011
+- author: EmoGarbage404
+  changes:
+  - message: The mining asteroid now generates small structures full of treasure and
+      equipment. Keep an eye open for them, nestled within the rock.
+    type: Add
+  id: 7349
+  time: '2024-09-11T03:33:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31638
