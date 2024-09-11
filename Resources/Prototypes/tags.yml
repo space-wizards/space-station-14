@@ -226,6 +226,9 @@
   id: BoxHug
 
 - type: Tag
+  id: Brain
+
+- type: Tag
   id: BrassInstrument
 
 - type: Tag
@@ -250,10 +253,16 @@
   id: Bucket
 
 - type: Tag
+  id: Burger
+
+- type: Tag
   id: BulletFoam
 
 - type: Tag
   id: Burnt
+
+- type: Tag
+  id: Bun
 
 - type: Tag
   id: BypassDropChecks
@@ -373,6 +382,9 @@
 - type: Tag
   id: Chicken
 
+- type: Tag
+  id: Cheese
+
 # Allowed to control someone wearing a Chef's hat if inside their hat.
 - type: Tag
   id: ChefPilot
@@ -451,6 +463,9 @@
 
 - type: Tag
   id: Cow
+
+- type: Tag
+  id: Crab
 
 - type: Tag
   id: Crayon
@@ -837,6 +852,9 @@
   id: Lemo
 
 - type: Tag
+  id: LightBulb
+
+- type: Tag
   id: Lime
 
 - type: Tag
@@ -1151,6 +1169,9 @@
   id: SecBeltEquip
 
 - type: Tag
+  id: SecurityHelmet
+
+- type: Tag
   id: SecwayKeys
 
 - type: Tag
@@ -1269,6 +1290,9 @@
 
 - type: Tag
   id: TabletopBoard
+
+- type: Tag
+  id: Taco
 
 - type: Tag
   id: TabletopPiece
