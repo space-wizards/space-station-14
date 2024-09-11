@@ -125,7 +125,7 @@
             Brute: -2
             Burn: -2
   - type: ReplacementAccent
-    accent: tomatokiller
+    accent: tomatoKiller
   - type: Item
   - type: NpcFactionMember
     factions:
