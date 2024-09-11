@@ -1,5 +1,5 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Mind;
-using Content.Shared.Objectives;
 using Content.Shared.Objectives.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -40,7 +40,7 @@ public abstract class SharedObjectivesSystem : EntitySystem
         if (comp.Unique)
         {
             var proto = _metaQuery.GetComponent(uid).EntityPrototype?.ID;
-            foreach (var objective in mind.AllObjectives)
+            foreach (var objective in mind.Objectives)
             {
                 if (_metaQuery.GetComponent(objective).EntityPrototype?.ID == proto)
                     return false;
@@ -92,6 +92,17 @@ public abstract class SharedObjectivesSystem : EntitySystem
     }
 
     /// <summary>
+    /// Spawns and assigns an objective for a mind.
+    /// The objective is not added to the mind's objectives, mind system does that in TryAddObjective.
+    /// If the objective could not be assigned the objective is deleted and false is returned.
+    /// </summary>
+    public bool TryCreateObjective(Entity<MindComponent> mind, EntProtoId proto, [NotNullWhen(true)] out EntityUid? objective)
+    {
+        objective = TryCreateObjective(mind.Owner, mind.Comp, proto);
+        return objective != null;
+    }
+
+    /// <summary>
     /// Get the title, description, icon and progress of an objective using <see cref="ObjectiveGetInfoEvent"/>.
     /// If any of them are null it is logged and null is returned.
     /// </summary>
@@ -103,20 +114,43 @@ public abstract class SharedObjectivesSystem : EntitySystem
         if (!Resolve(mindId, ref mind))
             return null;
 
-        var ev = new ObjectiveGetProgressEvent(mindId, mind);
-        RaiseLocalEvent(uid, ref ev);
+        if (GetProgress(uid, (mindId, mind)) is not {} progress)
+            return null;
 
         var comp = Comp<ObjectiveComponent>(uid);
         var meta = MetaData(uid);
         var title = meta.EntityName;
         var description = meta.EntityDescription;
-        if (comp.Icon == null || ev.Progress == null)
+        if (comp.Icon == null)
         {
-            Log.Error($"An objective {ToPrettyString(uid):objective} of {_mind.MindOwnerLoggingString(mind)} is missing icon or progress ({ev.Progress})");
+            Log.Error($"An objective {ToPrettyString(uid):objective} of {_mind.MindOwnerLoggingString(mind)} is missing an icon!");
             return null;
         }
 
-        return new ObjectiveInfo(title, description, comp.Icon, ev.Progress.Value);
+        return new ObjectiveInfo(title, description, comp.Icon, progress);
+    }
+
+    /// <summary>
+    /// Gets the progress of an objective using <see cref="ObjectiveGetProgressEvent"/>.
+    /// Returning null is a programmer error.
+    /// </summary>
+    public float? GetProgress(EntityUid uid, Entity<MindComponent> mind)
+    {
+        var ev = new ObjectiveGetProgressEvent(mind, mind.Comp);
+        RaiseLocalEvent(uid, ref ev);
+        if (ev.Progress != null)
+            return ev.Progress;
+
+        Log.Error($"Objective {ToPrettyString(uid):objective} of {_mind.MindOwnerLoggingString(mind.Comp)} didn't set a progress value!");
+        return null;
+    }
+
+    /// <summary>
+    /// Returns true if an objective is completed.
+    /// </summary>
+    public bool IsCompleted(EntityUid uid, Entity<MindComponent> mind)
+    {
+        return (GetProgress(uid, mind) ?? 0f) >= 0.999f;
     }
 
     /// <summary>

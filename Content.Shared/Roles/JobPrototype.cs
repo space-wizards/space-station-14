@@ -87,8 +87,8 @@ namespace Content.Shared.Roles
         [DataField("antagAdvantage")]
         public int AntagAdvantage = 0;
 
-        [DataField("startingGear", customTypeSerializer: typeof(PrototypeIdSerializer<StartingGearPrototype>))]
-        public string? StartingGear { get; private set; }
+        [DataField]
+        public ProtoId<StartingGearPrototype>? StartingGear { get; private set; }
 
         /// <summary>
         /// Use this to spawn in as a non-humanoid (borg, test subject, etc.)
@@ -99,7 +99,7 @@ namespace Content.Shared.Roles
         public string? JobEntity = null;
 
         [DataField]
-        public ProtoId<StatusIconPrototype> Icon { get; private set; } = "JobIconUnknown";
+        public ProtoId<JobIconPrototype> Icon { get; private set; } = "JobIconUnknown";
 
         [DataField("special", serverOnly: true)]
         public JobSpecial[] Special { get; private set; } = Array.Empty<JobSpecial>();

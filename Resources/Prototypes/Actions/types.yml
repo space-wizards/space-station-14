@@ -37,14 +37,15 @@
   description: Turn the light on and off.
   components:
   - type: InstantAction
+    useDelay: 1
     icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
     iconOn: { sprite: Objects/Tools/flashlight.rsi, state: flashlight-on }
     event: !type:ToggleActionEvent
 
 - type: entity
   id: ActionOpenStorageImplant
-  name: Open Storage Implant
-  description: Opens the storage implant embedded under your skin
+  name: Toggle Storage Implant
+  description: Opens or closes the storage implant embedded under your skin
   components:
   - type: InstantAction
     itemIconStyle: BigAction
@@ -53,6 +54,7 @@
       sprite: Clothing/Back/Backpacks/backpack.rsi
       state: icon
     event: !type:OpenStorageImplantEvent
+    useDelay: 1
 
 - type: entity
   parent: BaseSuicideAction
@@ -159,20 +161,6 @@
       sprite: Clothing/OuterClothing/Hardsuits/lingspacesuit.rsi
       state: icon
     event: !type:UseDnaScramblerImplantEvent
-
-- type: entity
-  id: ActionMorphGeras
-  name: Morph into Geras
-  description:  Morphs you into a Geras - a miniature version of you which allows you to move fast, at the cost of your inventory.
-  components:
-  - type: InstantAction
-    itemIconStyle: BigAction
-    useDelay: 10 # prevent spam
-    priority: -20
-    icon:
-      sprite: Mobs/Aliens/slimes.rsi
-      state: blue_adult_slime
-    event: !type:MorphIntoGeras
 
 - type: entity
   id: ActionToggleSuitPiece

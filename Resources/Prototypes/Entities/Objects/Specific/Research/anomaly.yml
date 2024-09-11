@@ -36,23 +36,22 @@
       - state: screen
         shader: unshaded
         visible: false
-        map: ["enum.PowerDeviceVisualLayers.Powered"]
+        map: ["enum.ToggleVisuals.Layer"]
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-      enum.ProximityBeeperVisuals.Enabled:
-        enum.PowerDeviceVisualLayers.Powered:
+      enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
           True: { visible: true }
           False: { visible: false }
+  - type: ItemToggle
   - type: ProximityBeeper
   - type: ProximityDetector
-    enabled: false
     range: 20
     criteria:
       components:
       - Anomaly
   - type: Beeper
-    enabled: false
     minBeepInterval: 0.15
     maxBeepInterval: 1.00
     beepSound:
@@ -69,6 +68,7 @@
   - type: PowerCellDraw
     drawRate: 1
     useRate: 0
+  - type: ToggleCellDraw
 
 - type: entity
   id: AnomalyLocatorEmpty
@@ -102,6 +102,7 @@
   - type: PowerCellDraw
     drawRate: 1
     useRate: 0
+  - type: ToggleCellDraw
 
 - type: entity
   id: AnomalyLocatorWideEmpty
@@ -148,3 +149,10 @@
   - type: ContainerContainer
     containers:
       core_slot: !type:ContainerSlot
+  - type: DamageOnAttackedProtection
+    damageProtection:
+      flatReductions:
+        Heat: 100
+        Cold: 100
+        Radiation: 100
+    slots: NONE

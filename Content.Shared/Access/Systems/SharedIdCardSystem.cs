@@ -1,7 +1,9 @@
+using System.Globalization;
 using Content.Shared.Access.Components;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Hands.Components;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
 using Content.Shared.Roles;
@@ -20,12 +22,31 @@ public abstract class SharedIdCardSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<IdCardComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<TryGetIdentityShortInfoEvent>(OnTryGetIdentityShortInfo);
     }
 
     private void OnMapInit(EntityUid uid, IdCardComponent id, MapInitEvent args)
     {
         UpdateEntityName(uid, id);
+    }
+
+    private void OnTryGetIdentityShortInfo(TryGetIdentityShortInfoEvent ev)
+    {
+        if (ev.Handled)
+        {
+            return;
+        }
+
+        string? title = null;
+        if (TryFindIdCard(ev.ForActor, out var idCard) && !(ev.RequestForAccessLogging && idCard.Comp.BypassLogging))
+        {
+            title = ExtractFullTitle(idCard);
+        }
+
+        ev.Title = title;
+        ev.Handled = true;
     }
 
     /// <summary>
@@ -114,7 +135,7 @@ public abstract class SharedIdCardSystem : EntitySystem
         return true;
     }
 
-    public bool TryChangeJobIcon(EntityUid uid, StatusIconPrototype jobIcon, IdCardComponent? id = null, EntityUid? player = null)
+    public bool TryChangeJobIcon(EntityUid uid, JobIconPrototype jobIcon, IdCardComponent? id = null, EntityUid? player = null)
     {
         if (!Resolve(uid, ref id))
         {
@@ -147,7 +168,7 @@ public abstract class SharedIdCardSystem : EntitySystem
         foreach (var department in _prototypeManager.EnumeratePrototypes<DepartmentPrototype>())
         {
             if (department.Roles.Contains(job.ID))
-                id.JobDepartments.Add("department-" + department.ID);
+                id.JobDepartments.Add(department.ID);
         }
 
         Dirty(uid, id);
@@ -213,5 +234,11 @@ public abstract class SharedIdCardSystem : EntitySystem
                 ("fullName", id.FullName),
                 ("jobSuffix", jobSuffix));
         _metaSystem.SetEntityName(uid, val);
+    }
+
+    private static string ExtractFullTitle(IdCardComponent idCardComponent)
+    {
+        return $"{idCardComponent.FullName} ({CultureInfo.CurrentCulture.TextInfo.ToTitleCase(idCardComponent.JobTitle ?? string.Empty)})"
+            .Trim();
     }
 }

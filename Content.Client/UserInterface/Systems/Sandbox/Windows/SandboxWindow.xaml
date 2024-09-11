@@ -4,6 +4,7 @@
     Title="{Loc sandbox-window-title}"
     Resizable="False">
     <BoxContainer Orientation="Vertical" SeparationOverride="4">
+        <Button Name="AiOverlayButton" Access="Public" Text="{Loc sandbox-window-ai-overlay-button}" ToggleMode="True"/>
         <Button Name="RespawnButton" Access="Public" Text="{Loc sandbox-window-respawn-button}"/>
         <Button Name="SpawnEntitiesButton" Access="Public" Text="{Loc sandbox-window-spawn-entities-button}"/>
         <Button Name="SpawnTilesButton" Access="Public" Text="{Loc sandbox-window-spawn-tiles-button}"/>

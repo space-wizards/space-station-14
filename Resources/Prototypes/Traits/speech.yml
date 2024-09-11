@@ -23,7 +23,7 @@
   category: SpeechTraits
   cost: 1
   components:
-    - type: SouthernAccent
+  - type: SouthernAccent
 
 - type: trait
   id: PirateAccent
@@ -32,7 +32,7 @@
   category: SpeechTraits
   cost: 1
   components:
-    - type: PirateAccent
+  - type: PirateAccent
 
 - type: trait
   id: CowboyAccent
@@ -41,8 +41,17 @@
   category: SpeechTraits
   cost: 1
   components:
-    - type: ReplacementAccent
-      accent: cowboy
+  - type: ReplacementAccent
+    accent: cowboy
+
+- type: trait
+  id: GermanAccent
+  name: trait-german-name
+  description: trait-german-desc
+  category: SpeechTraits
+  cost: 1
+  components:
+  - type: GermanAccent
 
 - type: trait
   id: ItalianAccent
@@ -51,8 +60,8 @@
   category: SpeechTraits
   cost: 1
   components:
-    - type: ReplacementAccent
-      accent: italian
+  - type: ReplacementAccent
+    accent: italian
 
 - type: trait
   id: Liar
@@ -61,8 +70,8 @@
   category: SpeechTraits
   cost: 1
   components:
-    - type: ReplacementAccent
-      accent: liar
+  - type: ReplacementAccent
+    accent: liar
 
 # 2 Cost
 
@@ -73,11 +82,11 @@
   category: SpeechTraits
   cost: 2
   components:
-    - type: StutteringAccent
-      matchRandomProb: 0.1
-      fourRandomProb: 0
-      threeRandomProb: 0
-      cutRandomProb: 0
+  - type: StutteringAccent
+    matchRandomProb: 0.1
+    fourRandomProb: 0
+    threeRandomProb: 0
+    cutRandomProb: 0
 
 - type: trait
   id: FrontalLisp
@@ -86,4 +95,4 @@
   category: SpeechTraits
   cost: 2
   components:
-    - type: FrontalLisp
+  - type: FrontalLisp

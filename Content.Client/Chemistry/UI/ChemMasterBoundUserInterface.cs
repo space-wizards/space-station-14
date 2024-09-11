@@ -2,6 +2,7 @@ using Content.Shared.Chemistry;
 using Content.Shared.Containers.ItemSlots;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.Chemistry.UI
 {
@@ -27,13 +28,8 @@ namespace Content.Client.Chemistry.UI
             base.Open();
 
             // Setup window layout/elements
-            _window = new ChemMasterWindow
-            {
-                Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName,
-            };
-
-            _window.OpenCentered();
-            _window.OnClose += Close;
+            _window = this.CreateWindow<ChemMasterWindow>();
+            _window.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
 
             // Setup static button actions.
             _window.InputEjectButton.OnPressed += _ => SendMessage(
@@ -74,16 +70,6 @@ namespace Content.Client.Chemistry.UI
             var castState = (ChemMasterBoundUserInterfaceState) state;
 
             _window?.UpdateState(castState); // Update window state
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-
-            if (disposing)
-            {
-                _window?.Dispose();
-            }
         }
     }
 }

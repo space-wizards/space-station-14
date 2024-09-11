@@ -636,3 +636,29 @@
       catalyst: true
   products:
     Happiness: 4
+
+- type: reaction
+  id: PotassiumIodide
+  reactants:
+    Potassium:
+      amount: 1
+    Iodine:
+      amount: 1
+  products:
+    PotassiumIodide: 2
+
+- type: reaction
+  id: Haloperidol
+  reactants:
+    Aluminium:
+      amount: 1
+    Chlorine:
+      amount: 1
+    Fluorine:
+      amount: 1
+    Oil:
+      amount: 1
+    PotassiumIodide:
+      amount: 1
+  products:
+    Haloperidol: 5
