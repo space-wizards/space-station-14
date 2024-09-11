@@ -136,6 +136,14 @@
   sounds:
     Thump:
       path: /Audio/Voice/Reptilian/reptilian_tailthump.ogg
+    Clap:
+      collection: Claps
+    Snap:
+      collection: Snaps
+      params:
+        volume: -6
+    Salute:
+      collection: Salutes
 
 - type: emoteSounds
   id: MaleSlime
