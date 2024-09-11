@@ -1,14 +1,6 @@
 ﻿Entries:
 - author: Tayrtahn
   changes:
-  - message: Fixed NukeOps ending prematurely in some situations where operatives
-      were still alive.
-    type: Fix
-  id: 6856
-  time: '2024-07-01T22:23:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29642
-- author: Tayrtahn
-  changes:
   - message: Fixed characters thrashing when speaking in beds.
     type: Fix
   id: 6857
@@ -3910,3 +3902,11 @@
   id: 7355
   time: '2024-09-11T15:29:23.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32077
+- author: themias
+  changes:
+  - message: Very small amounts of heat damage no longer play the cauterization sound
+      (e.g. spacing)
+    type: Fix
+  id: 7356
+  time: '2024-09-11T16:05:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32080
