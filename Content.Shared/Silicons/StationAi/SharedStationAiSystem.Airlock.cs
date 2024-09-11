@@ -2,7 +2,6 @@ using Content.Shared.Doors.Components;
 using Robust.Shared.Serialization;
 using Content.Shared.Electrocution;
 using Content.Shared.Popups;
-using Content.Shared.Power.Components;
 using Robust.Shared.Audio;
 
 namespace Content.Shared.Silicons.StationAi;
@@ -26,12 +25,7 @@ public abstract partial class SharedStationAiSystem
     /// </summary>
     private void OnAirlockBolt(EntityUid ent, DoorBoltComponent component, StationAiBoltEvent args)
     {
-        if (!TryComp<StationAiWhitelistComponent>(ent, out var whiteList))
-        {
-            return;
-        }
-
-        if (!whiteList.Enabled || component.BoltWireCut || !component.Powered)
+        if (component.BoltWireCut || !component.Powered)
         {
             _popup.PopupClient(Loc.GetString("ai-device-not-responding"), args.User, PopupType.MediumCaution);
             return;
@@ -45,12 +39,7 @@ public abstract partial class SharedStationAiSystem
     /// </summary>
     private void OnAirlockEmergencyAccess(EntityUid ent, AirlockComponent component, StationAiEmergencyAccessEvent args)
     {
-        if (!TryComp<StationAiWhitelistComponent>(ent, out var whiteList))
-        {
-            return;
-        }
-
-        if (!whiteList.Enabled || !component.Powered)
+        if (!PowerReceiver.IsPowered(ent))
         {
             _popup.PopupClient(Loc.GetString("ai-device-not-responding"), args.User, PopupType.MediumCaution);
             return;
@@ -64,20 +53,14 @@ public abstract partial class SharedStationAiSystem
     /// </summary>
     private void OnElectrified(EntityUid ent, ElectrifiedComponent component, StationAiElectrifiedEvent args)
     {
-        if (!TryComp<ElectrifiedComponent>(ent, out var electrified)
-            || !TryComp<StationAiWhitelistComponent>(ent, out var whiteList))
+        if (!TryComp<ElectrifiedComponent>(ent, out var electrified))
         {
             return;
         }
 
-        SharedApcPowerReceiverComponent? apcPowerReceiverComponent = null;
         if (
-            !whiteList.Enabled
-            || electrified.IsWireCut
-            || (
-                PowerReceiver.ResolveApc(ent, ref apcPowerReceiverComponent)
-                && !apcPowerReceiverComponent.Powered
-                )
+            electrified.IsWireCut
+            || !PowerReceiver.IsPowered(ent)
         )
         {
             _popup.PopupClient(Loc.GetString("ai-device-not-responding"), args.User, PopupType.MediumCaution);

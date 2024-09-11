@@ -3,7 +3,6 @@ using Content.Shared.Actions.Events;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
-using Content.Shared.Power.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -109,11 +108,18 @@ public abstract partial class SharedStationAiSystem
         if (ev.Actor == ev.Target)
             return;
 
+        StationAiWhitelistComponent? whitelistComponent = null;
         if (TryComp(ev.Actor, out StationAiHeldComponent? aiComp) &&
            (!ValidateAi((ev.Actor, aiComp)) ||
-            !HasComp<StationAiWhitelistComponent>(ev.Target)))
+            !TryComp(ev.Target, out whitelistComponent)))
         {
             ev.Cancel();
+        }
+
+        if (whitelistComponent is { Enabled: false })
+        {
+            ev.Cancel();
+            _popup.PopupClient(Loc.GetString("ai-device-not-responding"), ev.Actor, PopupType.MediumCaution);
         }
     }
 
@@ -151,8 +157,7 @@ public abstract partial class SharedStationAiSystem
             Act = () =>
             {
                 // no need to show menu if device is not powered.
-                SharedApcPowerReceiverComponent? component = null;
-                if (PowerReceiver.ResolveApc(ent.Owner, ref component) && !component.Powered)
+                if (!PowerReceiver.IsPowered(ent.Owner))
                 {
                     _popup.PopupClient(Loc.GetString("ai-device-not-responding"), user, PopupType.MediumCaution);
                     return;
