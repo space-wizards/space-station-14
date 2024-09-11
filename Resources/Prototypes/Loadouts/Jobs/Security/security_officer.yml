@@ -83,13 +83,10 @@
   equipment:
     jumpsuit: ClothingUniformJumpskirtSecGrey
 
-- type: loadout
-  id: TrooperUniform
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: TrooperOfficer
-  equipment: 
-    jumpsuit: ClothingUniformSecurityTrooper
+#- type: loadout
+#  id: TrooperUniform
+#  equipment: 
+#    jumpsuit: ClothingUniformSecurityTrooper # GreyStation - Removal
 
 - type: loadout
   id: SeniorOfficerJumpsuit

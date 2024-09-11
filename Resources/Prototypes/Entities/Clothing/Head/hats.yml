@@ -65,9 +65,9 @@
   description: A campaign hat for the Nanotrasen Troopers, comes with a case too, but you lost it.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hats/security_trooper_hat.rsi
+    sprite: GreyStation/Clothing/Head/Hats/security_trooper_hat.rsi # GreyStation - Resprite
   - type: Clothing
-    sprite: Clothing/Head/Hats/security_trooper_hat.rsi
+    sprite: GreyStation/Clothing/Head/Hats/security_trooper_hat.rsi # GreyStation - Resprite
   - type: Tag
     tags:
     - ClothMade
