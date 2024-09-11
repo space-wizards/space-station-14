@@ -471,25 +471,6 @@
   - type: Wires
     layoutId: AirlockService
 
-
-- type: entity
-  parent: WindoorSecurePlasma
-  id: PlasmaWindoorSecureSyndicateLocked
-  suffix: Syndicate, Locked, Plasma
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsSyndicateAgent ]
-
-- type: entity
-  parent: WindoorSecurePlasma
-  id: PlasmaWindoorSecureSyndicateLocked
-  suffix: Syndicate, Locked, Plasma
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsSyndicateAgent ]
-
 - type: entity
   parent: WindoorSecureCommandLocked
   id: WindoorSecureHeadOfPersonnelLocked
