@@ -163,8 +163,8 @@
       Decals: "#4cc7aa96"
     entities:
       Cabling: CableApcExtension
-      CornerWalls: WallSilver
-      Walls: WallSilver
+      CornerWalls: WallSolid
+      Walls: WallSolid
     spawnGroups:
       CornerClutter: BaseClutter
       Entrance: SnowyLabsEntrance
