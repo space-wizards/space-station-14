@@ -29,7 +29,7 @@
     fixtures:
       fix1:
         shape:
-          -!type:PhysShapeAabb
+          !type:PhysShapeAabb
           bounds: "-0.25,-0.25,0.25,0.25"
         # less mass so it can cook faster, a single strip of bacon isnt 5kg
         density: 1
