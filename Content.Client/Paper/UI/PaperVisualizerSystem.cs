@@ -1,3 +1,4 @@
+using Content.Shared.Tag;
 using Robust.Client.GameObjects;
 
 using static Content.Shared.Paper.PaperComponent;
@@ -6,9 +7,11 @@ namespace Content.Client.Paper.UI;
 
 public sealed class PaperVisualizerSystem : VisualizerSystem<PaperVisualsComponent>
 {
+    [Dependency] private readonly TagSystem _tagSystem = default!;
+
     protected override void OnAppearanceChange(EntityUid uid, PaperVisualsComponent component, ref AppearanceChangeEvent args)
     {
-        if (args.Sprite == null)
+        if (args.Sprite == null || _tagSystem.HasTag(uid, "Book"))
             return;
 
         if (AppearanceSystem.TryGetData<PaperStatus>(uid, PaperVisuals.Status , out var writingStatus, args.Component))
