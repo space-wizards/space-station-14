@@ -182,6 +182,42 @@
    - squeak
    - squeaks
    - squeaked
+   
+- type: emote
+  id: Huff
+  name: chat-emote-name-huff
+  category: Vocal
+  available: false
+  icon: Interface/Emotes/squeak.png
+  whitelist:
+    components:
+      - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: ["chat-emote-msg-huff"]
+  chatTriggers:
+   - huff
+   - huffs
+   - huffed
+   
+- type: emote
+  id: Hiss
+  name: chat-emote-name-hiss
+  category: Vocal
+  available: false
+  icon: Interface/Emotes/squeak.png
+  whitelist:
+    components:
+      - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: ["chat-emote-msg-hiss"]
+  chatTriggers:
+   - hiss
+   - hisses
+   - hissed
 
 - type: emote
   id: Click
@@ -241,7 +277,32 @@
     - snaps their fingers
     - snapping fingers
     - snapped fingers
-
+ 
+- type: emote
+  id: Thump
+  name: chat-emote-name-thump
+  category: Hands
+  available: false
+  icon: Interface/Emotes/snap.png
+  whitelist:
+    components:
+    - Hands
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: ["chat-emote-msg-thump"]
+  chatTriggers:
+    - thump
+    - thumps
+    - thumping
+    - thumped
+    - thump tail
+    - thumps tail
+    - thumps their tail
+    - thumps her tai
+    - thumps his tail
+    - thumps its tail
+    
 - type: emote
   id: Salute
   name: chat-emote-name-salute

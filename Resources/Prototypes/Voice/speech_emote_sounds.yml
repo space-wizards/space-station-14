@@ -88,6 +88,12 @@
       path: /Audio/Voice/Reptilian/reptilian_scream.ogg
     Laugh:
       path: /Audio/Animals/lizard_happy.ogg
+    Thump:
+      path: /Audio/Voice/Reptilian/reptilian_tailthump.ogg
+    Huff:
+      path: /Audio/Voice/Reptilian/reptilian_huff.ogg
+    Hiss:
+      path: /Audio/Voice/Reptilian/reptilian_hiss.ogg
     Honk:
       collection: BikeHorn
     Whistle:
@@ -110,6 +116,12 @@
       path: /Audio/Voice/Reptilian/reptilian_scream.ogg
     Laugh:
       path: /Audio/Animals/lizard_happy.ogg
+    Thump:
+      path: /Audio/Voice/Reptilian/reptilian_tailthump.ogg
+    Huff:
+      path: /Audio/Voice/Reptilian/reptilian_huff.ogg
+    Hiss:
+      path: /Audio/Voice/Reptilian/reptilian_hiss.ogg
     Honk:
       collection: BikeHorn
     Whistle:
