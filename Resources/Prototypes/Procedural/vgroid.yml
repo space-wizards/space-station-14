@@ -18,6 +18,11 @@
       proto: VGRoidSmaller
     - !type:PrototypeDunGen
       proto: VGRoidSmallPaths
+    - !type:EntityTableDunGen
+      minCount: 7
+      maxCount: 12
+      table:
+        id: VGRoidInteriorRoomMarker
     # Fill
     - !type:PrototypeDunGen
       proto: VGRoidFill
@@ -219,3 +224,5 @@
       Fill: IronRock
   layers:
   - !type:FillGridDunGen
+    allowedTiles:
+    - FloorAsteroidSand

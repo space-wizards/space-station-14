@@ -118,7 +118,7 @@ public sealed partial class ShuttleSystem
                 continue;
             }
 
-            TryAddFTLDestination(gridXform.MapID, true, out _);
+            TryAddFTLDestination(gridXform.MapID, true, false, false, out _);
         }
     }
 
@@ -187,6 +187,11 @@ public sealed partial class ShuttleSystem
     /// </summary>
     public bool TryAddFTLDestination(MapId mapId, bool enabled, [NotNullWhen(true)] out FTLDestinationComponent? component)
     {
+        return TryAddFTLDestination(mapId, enabled, true, false, out component);
+    }
+
+    public bool TryAddFTLDestination(MapId mapId, bool enabled, bool requireDisk, bool beaconsOnly, [NotNullWhen(true)] out FTLDestinationComponent? component)
+    {
         var mapUid = _mapSystem.GetMapOrInvalid(mapId);
         component = null;
 
@@ -195,10 +200,13 @@ public sealed partial class ShuttleSystem
 
         component = EnsureComp<FTLDestinationComponent>(mapUid);
 
-        if (component.Enabled == enabled)
+        if (component.Enabled == enabled && component.RequireCoordinateDisk == requireDisk && component.BeaconsOnly == beaconsOnly)
             return true;
 
         component.Enabled = enabled;
+        component.RequireCoordinateDisk = requireDisk;
+        component.BeaconsOnly = beaconsOnly;
+
         _console.RefreshShuttleConsoles();
         Dirty(mapUid, component);
         return true;
@@ -661,8 +669,28 @@ public sealed partial class ShuttleSystem
     /// Tries to dock with the target grid, otherwise falls back to proximity.
     /// This bypasses FTL travel time.
     /// </summary>
-    public bool TryFTLDock(EntityUid shuttleUid, ShuttleComponent component, EntityUid targetUid, string? priorityTag = null)
+    public bool TryFTLDock(
+        EntityUid shuttleUid,
+        ShuttleComponent component,
+        EntityUid targetUid,
+        string? priorityTag = null)
     {
+        return TryFTLDock(shuttleUid, component, targetUid, out _, priorityTag);
+    }
+
+    /// <summary>
+    /// Tries to dock with the target grid, otherwise falls back to proximity.
+    /// This bypasses FTL travel time.
+    /// </summary>
+    public bool TryFTLDock(
+        EntityUid shuttleUid,
+        ShuttleComponent component,
+        EntityUid targetUid,
+        [NotNullWhen(true)] out DockingConfig? config,
+        string? priorityTag = null)
+    {
+        config = null;
+
         if (!_xformQuery.TryGetComponent(shuttleUid, out var shuttleXform) ||
             !_xformQuery.TryGetComponent(targetUid, out var targetXform) ||
             targetXform.MapUid == null ||
@@ -671,7 +699,7 @@ public sealed partial class ShuttleSystem
             return false;
         }
 
-        var config = _dockSystem.GetDockingConfig(shuttleUid, targetUid, priorityTag);
+        config = _dockSystem.GetDockingConfig(shuttleUid, targetUid, priorityTag);
 
         if (config != null)
         {

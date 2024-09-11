@@ -588,6 +588,10 @@
     - Hamster
     - VimPilot
     - ChefPilot
+  - type: FlavorProfile
+    flavors:
+    - meaty
+    - sadness
 
 - type: entity
   name: Shiva
@@ -743,6 +747,7 @@
         Caustic: 1
   - type: MultiHandedItem
   - type: Item
+    sprite: Mobs/Pets/smile.rsi
     size: Huge
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-slime

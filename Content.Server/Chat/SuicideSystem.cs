@@ -46,7 +46,15 @@ public sealed class SuicideSystem : EntitySystem
         if (!TryComp<MobStateComponent>(victim, out var mobState) || _mobState.IsDead(victim, mobState))
             return false;
 
+        _adminLogger.Add(LogType.Mind, $"{EntityManager.ToPrettyString(victim):player} is attempting to suicide");
+
+        ICommonSession? session = null;
+
+        if (TryComp<ActorComponent>(victim, out var actor))
+            session = actor.PlayerSession;
+
         var suicideGhostEvent = new SuicideGhostEvent(victim);
+
         RaiseLocalEvent(victim, suicideGhostEvent);
 
         // Suicide is considered a fail if the user wasn't able to ghost
@@ -54,11 +62,18 @@ public sealed class SuicideSystem : EntitySystem
         if (!suicideGhostEvent.Handled || _tagSystem.HasTag(victim, "CannotSuicide"))
             return false;
 
-        _adminLogger.Add(LogType.Mind, $"{EntityManager.ToPrettyString(victim):player} is attempting to suicide");
         var suicideEvent = new SuicideEvent(victim);
         RaiseLocalEvent(victim, suicideEvent);
 
-        _adminLogger.Add(LogType.Mind, $"{EntityManager.ToPrettyString(victim):player} suicided.");
+        // Since the player is already dead the log will not contain their username.
+        if (session != null)
+        {
+            _adminLogger.Add(LogType.Mind, $"{session:player} suicided.");
+        }
+        else
+        {
+            _adminLogger.Add(LogType.Mind, $"{EntityManager.ToPrettyString(victim):player} suicided.");
+        }
         return true;
     }
 
