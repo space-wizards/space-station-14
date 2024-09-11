@@ -65,7 +65,8 @@
     price: 70
   - type: PowerSwitch
   - type: InternalAir
-    volume: 2500 # Atmospherics.CellVolume
+    air:
+      volume: 2500 # Atmospherics.CellVolume
 
 - type: entity
   id: DisposalUnit

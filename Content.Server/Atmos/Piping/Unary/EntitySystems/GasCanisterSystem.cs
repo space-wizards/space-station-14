@@ -9,6 +9,7 @@ using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Popups;
+using Content.Server.Storage.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Containers.ItemSlots;
@@ -93,7 +94,8 @@ public sealed class GasCanisterSystem : EntitySystem
             var tank = canister.GasTankSlot.Item.Value;
             var tankComponent = Comp<GasTankComponent>(tank);
             tankLabel = Name(tank);
-            tankPressure = tankComponent.Air.Pressure;
+            var internalAirComponent = Comp<InternalAirComponent>(tank);
+            tankPressure = internalAirComponent.Air.Pressure;
         }
 
         _ui.SetUiState(uid, GasCanisterUiKey.Key,
@@ -163,8 +165,8 @@ public sealed class GasCanisterSystem : EntitySystem
         {
             if (canister.GasTankSlot.Item != null)
             {
-                var gasTank = Comp<GasTankComponent>(canister.GasTankSlot.Item.Value);
-                _atmos.ReleaseGasTo(canister.Air, gasTank.Air, canister.ReleasePressure);
+                var gasTankInternalAir = Comp<InternalAirComponent>(canister.GasTankSlot.Item.Value);
+                _atmos.ReleaseGasTo(canister.Air, gasTankInternalAir.Air, canister.ReleasePressure);
             }
             else
             {
@@ -305,8 +307,8 @@ public sealed class GasCanisterSystem : EntitySystem
         if (canisterComponent.GasTankSlot.Item != null)
         {
             var tank = canisterComponent.GasTankSlot.Item.Value;
-            var tankComponent = Comp<GasTankComponent>(tank);
-            args.GasMixtures.Add((Name(tank), tankComponent.Air));
+            var internalAirComponent = Comp<InternalAirComponent>(tank);
+            args.GasMixtures.Add((Name(tank), internalAirComponent.Air));
         }
     }
 

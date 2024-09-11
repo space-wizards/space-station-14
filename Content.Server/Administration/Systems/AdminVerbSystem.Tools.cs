@@ -12,6 +12,7 @@ using Content.Server.Power.EntitySystems;
 using Content.Server.Stack;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
+using Content.Server.Storage.Components;
 using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Access;
 using Content.Shared.Access.Components;
@@ -746,14 +747,14 @@ public sealed partial class AdminVerbSystem
 
     private void RefillGasTank(EntityUid tank, Gas gasType, GasTankComponent? tankComponent = null)
     {
-        if (!Resolve(tank, ref tankComponent, false))
+        if (!Resolve(tank, ref tankComponent, false) || !TryComp<InternalAirComponent>(tank, out var internalAir))
             return;
 
-        var mixSize = tankComponent.Air.Volume;
+        var mixSize = internalAir.Air.Volume;
         var newMix = new GasMixture(mixSize);
         newMix.SetMoles(gasType, (1000.0f * mixSize) / (Atmospherics.R * Atmospherics.T20C)); // Fill the tank to 1000KPA.
         newMix.Temperature = Atmospherics.T20C;
-        tankComponent.Air = newMix;
+        internalAir.Air = newMix;
     }
 
     private bool TryGetGridChildren(EntityUid target, [NotNullWhen(true)] out IEnumerable<EntityUid>? enumerator)

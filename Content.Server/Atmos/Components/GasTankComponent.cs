@@ -6,14 +6,13 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Atmos.Components
 {
     [RegisterComponent]
-    public sealed partial class GasTankComponent : Component, IGasMixtureHolder
+    public sealed partial class GasTankComponent : Component
     {
         public const float MaxExplosionRange = 26f;
         private const float DefaultLowPressure = 0f;
         private const float DefaultOutputPressure = Atmospherics.OneAtmosphere;
 
         public int Integrity = 3;
-        public bool IsLowPressure => (Air?.Pressure ?? 0F) <= TankLowPressure;
 
         [ViewVariables(VVAccess.ReadWrite), DataField("ruptureSound")]
         public SoundSpecifier RuptureSound = new SoundPathSpecifier("/Audio/Effects/spray.ogg");
@@ -32,9 +31,6 @@ namespace Content.Server.Atmos.Components
 
         public EntityUid? ConnectStream;
         public EntityUid? DisconnectStream;
-
-        [DataField("air"), ViewVariables(VVAccess.ReadWrite)]
-        public GasMixture Air { get; set; } = new();
 
         /// <summary>
         ///     Pressure at which tank should be considered 'low' such as for internals.

@@ -2,6 +2,7 @@ using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
 using Content.Server.Popups;
+using Content.Server.Storage.Components;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.DoAfter;
@@ -56,11 +57,11 @@ public sealed class InternalsSystem : EntitySystem
             return;
 
         var tank = FindBestGasTank(uid);
-        if (tank == null)
+        if (tank == null || !TryComp<InternalAirComponent>(tank.Value.Owner, out var internalAir))
             return;
 
         // Could the entity metabolise the air in the linked gas tank?
-        if (!_respirator.CanMetabolizeGas(uid, tank.Value.Comp.Air))
+        if (!_respirator.CanMetabolizeGas(uid, internalAir.Air))
             return;
 
         ToggleInternals(uid, uid, force: false, component);
@@ -253,7 +254,7 @@ public sealed class InternalsSystem : EntitySystem
 
         // If pressure in the tank is below low pressure threshold, flash warning on internals UI
         if (TryComp<GasTankComponent>(component.GasTankEntity, out var gasTank)
-            && gasTank.IsLowPressure)
+            && _gasTank.IsLowPressure(component.GasTankEntity.Value, gasTank))
         {
             return 0;
         }
