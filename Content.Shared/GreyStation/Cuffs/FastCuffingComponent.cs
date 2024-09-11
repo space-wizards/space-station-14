@@ -13,5 +13,5 @@ public sealed partial class FastCuffingComponent : Component
     /// Keep in mind this stacks with the handcuff's existing reduction when stunned.
     /// </summary>
     [DataField]
-    public TimeSpan Reduction = TimeSpan.FromSeconds(0.5);
+    public TimeSpan Reduction = TimeSpan.FromSeconds(0.2);
 }
