@@ -1426,3 +1426,30 @@
   id: 188
   time: '2024-09-10T09:34:34.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/238
+- author: hivehum
+  changes:
+  - message: "Added the \"Nanotrasen\u2019s Expanded Guide to Station Security,\"\
+      \ a short primer on good Security gameplay, to the guidebook."
+    type: Add
+  - message: Core Rule 0, Cuck's Law.
+    type: Add
+  - message: Fixed formatting errors on the Changeling page.
+    type: Fix
+  - message: The Gastropoid page now shows a Gastropoid and not a snail. Easy mistake!
+    type: Fix
+  - message: Linked Changelings on the Antagonist overview.
+    type: Tweak
+  - message: Core Rule 7 (English only) now only applies to OOC interactions.
+    type: Tweak
+  - message: Core Rule 12 (minimum player age) is now 20, to align with the Mirakurutaimu
+      Discord server and Twitch channel rules.
+    type: Tweak
+  - message: Core Rule 13 (character names) has been heavily overhauled and additionally
+      includes guidelines for Greys and Gastropoids.
+    type: Tweak
+  - message: Many minor changes to RP rules to better align with admin rulings and
+      OOC consensus.
+    type: Tweak
+  id: 189
+  time: '2024-09-11T15:05:28.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/239
