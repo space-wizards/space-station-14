@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Entries:
 - author: EmoGarbage404
   changes:
@@ -44,6 +45,9 @@ Entries:
   id: 6855
   time: '2024-07-01T21:14:38.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29476
+=======
+﻿Entries:
+>>>>>>> upstream/master
 - author: Tayrtahn
   changes:
   - message: Fixed NukeOps ending prematurely in some situations where operatives
@@ -3911,4 +3915,51 @@ Entries:
     type: Add
   id: 7349
   time: '2024-09-11T03:33:42.0000000+00:00'
+<<<<<<< HEAD
   url: https://github.com/space-wizards/space-station-14/pull/31638
+=======
+  url: https://github.com/space-wizards/space-station-14/pull/31638
+- author: SlamBamActionman
+  changes:
+  - message: The Station AI job is no longer affected by the Bureaucratic Event event.
+    type: Fix
+  id: 7350
+  time: '2024-09-11T11:24:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32021
+- author: K-Dynamic
+  changes:
+  - message: Reduced canister prices from 1000 to 200 spesos
+    type: Tweak
+  id: 7351
+  time: '2024-09-11T12:53:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31965
+- author: EmoGarbage404
+  changes:
+  - message: Added the hivelord! This self-replicating alien is found on the mining
+      asteroid. It's core is known to have powerful healing properties.
+    type: Add
+  id: 7352
+  time: '2024-09-11T13:52:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31322
+- author: PeccNeck
+  changes:
+  - message: Fixed a bug where ore processors could not produce reinforced glass
+    type: Fix
+  id: 7353
+  time: '2024-09-11T14:06:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32069
+- author: Plykiya
+  changes:
+  - message: You can now use swords to make baseball bats.
+    type: Fix
+  id: 7354
+  time: '2024-09-11T14:45:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32075
+- author: Plykiya
+  changes:
+  - message: Banners are no longer invincible.
+    type: Fix
+  id: 7355
+  time: '2024-09-11T15:29:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32077
+>>>>>>> upstream/master
