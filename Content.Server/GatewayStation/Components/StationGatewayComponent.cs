@@ -6,5 +6,6 @@ namespace Content.Server.GatewayStation.Components;
 [Access(typeof(StationGatewaySystem))]
 public sealed partial class StationGatewayComponent : Component
 {
-
+    [DataField]
+    public string GateName = string.Empty;
 }

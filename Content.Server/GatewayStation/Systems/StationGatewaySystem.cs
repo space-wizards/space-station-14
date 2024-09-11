@@ -1,8 +1,6 @@
-using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.GatewayStation.Components;
 using Content.Shared.GatewayStation;
-using Content.Shared.Medical.CrewMonitoring;
 using Content.Shared.Pinpointer;
 using Robust.Server.GameObjects;
 
@@ -66,7 +64,7 @@ public sealed class StationGatewaySystem : EntitySystem
             if (xform.GridUid != Transform(ent).GridUid)
                 return;
 
-            gatewaysData.Add( new(GetNetEntity(uid), GetNetCoordinates(xformComp.Coordinates)));
+            gatewaysData.Add( new(GetNetEntity(uid), GetNetCoordinates(xformComp.Coordinates), gate.GateName));
         }
 
         _uiSystem.SetUiState(ent.Owner, StationGatewayUIKey.Key, new StationGatewayState(gatewaysData));
