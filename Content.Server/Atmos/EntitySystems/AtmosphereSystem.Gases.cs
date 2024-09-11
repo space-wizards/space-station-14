@@ -282,7 +282,7 @@ namespace Content.Server.Atmos.EntitySystems
         }
 
         /// <summary>
-        ///     Compares two gas mixtures to see if they are within acceptable ranges for group processing to be enabled.
+        ///     Compares two TileAtmospheres to see if they are within acceptable ranges for group processing to be enabled.
         /// </summary>
         public GasCompareResult CompareExchange(TileAtmosphere sample, TileAtmosphere otherSample, bool useArchived = false)
         {
