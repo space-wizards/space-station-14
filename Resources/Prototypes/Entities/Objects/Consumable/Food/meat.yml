@@ -29,7 +29,7 @@
     fixtures:
       fix1:
         shape:
-          !type:PhysShapeAabb
+          -!type:PhysShapeAabb
           bounds: "-0.25,-0.25,0.25,0.25"
         # less mass so it can cook faster, a single strip of bacon isnt 5kg
         density: 1
@@ -919,20 +919,8 @@
     node: cooked chicken
   - type: FoodSequenceElement
     entries:
-<<<<<<< HEAD
-      burger:
-        name: food-sequence-content-chicken
-      taco:
-        name: food-sequence-content-chicken
-      skewer:
-        name: food-sequence-content-chicken
-        sprite:
-          sprite: Objects/Consumable/Food/skewer.rsi
-          state: skewer-meat
-=======
       Burger: MeatChicken
       Taco: MeatChicken
->>>>>>> space-wizards/master
 
 - type: entity
   name: fried chicken
@@ -963,20 +951,8 @@
           Quantity: 5
   - type: FoodSequenceElement
     entries:
-<<<<<<< HEAD
-      burger:
-        name: food-sequence-content-chicken
-      taco:
-        name: food-sequence-content-chicken
-      skewer:
-        name: food-sequence-content-chicken
-        sprite:
-          sprite: Objects/Consumable/Food/skewer.rsi
-          state: skewer-meat
-=======
       Burger: MeatChicken
       Taco: MeatChicken
->>>>>>> space-wizards/master
 
 - type: entity
   name: cooked duck
@@ -1007,20 +983,8 @@
     node: cooked duck
   - type: FoodSequenceElement
     entries:
-<<<<<<< HEAD
-      burger:
-        name: food-sequence-content-duck
-      taco:
-        name: food-sequence-content-duck
-      skewer:
-        name: food-sequence-content-duck
-        sprite:
-          sprite: Objects/Consumable/Food/skewer.rsi
-          state: skewer-meat
-=======
       Burger: MeatDuck
       Taco: MeatDuck
->>>>>>> space-wizards/master
 
 - type: entity
   name: cooked crab
@@ -1148,20 +1112,8 @@
     node: lizard steak
   - type: FoodSequenceElement
     entries:
-<<<<<<< HEAD
-      burger:
-        name: food-sequence-burger-content-lizard
-      taco:
-        name: food-sequence-content-lizard
-      skewer:
-        name: food-sequence-content-lizard
-        sprite:
-          sprite: Objects/Consumable/Food/skewer.rsi
-          state: skewer-tail-cooked
-=======
       Burger: MeatLizardBurger
       Taco: MeatLizard
->>>>>>> space-wizards/master
 
 - type: entity
   name: boiled spider leg
@@ -1211,20 +1163,8 @@
           Quantity: 5
   - type: FoodSequenceElement
     entries:
-<<<<<<< HEAD
-      burger:
-        name: food-sequence-burger-content-meat
-      taco:
-        name: food-sequence-content-meat
-      skewer:
-        name: food-sequence-content-meat
-        sprite:
-          sprite: Objects/Consumable/Food/skewer.rsi
-          state: skewer-meat
-=======
       Burger: MeatBall
       Taco: MeatBall
->>>>>>> space-wizards/master
 
 - type: entity
   name: boiled snail
@@ -1342,23 +1282,6 @@
           Quantity: 3
         - ReagentId: Fat
           Quantity: 2
-<<<<<<< HEAD
-  - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: cutlet
-    entries:
-      burger:
-        name: food-sequence-burger-content-meat
-      taco:
-        name: food-sequence-content-meat
-      skewer:
-        name: food-sequence-content-meat
-        sprite:
-          sprite: Objects/Consumable/Food/skewer.rsi
-          state: skewer-meat
-=======
->>>>>>> space-wizards/master
   - type: Construction
     graph: Cutlet
     node: start
@@ -1442,24 +1365,6 @@
           Quantity: 3
         - ReagentId: Fat
           Quantity: 2
-<<<<<<< HEAD
-  - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: cutlet
-      color: white
-    entries:
-      burger:
-        name: food-sequence-content-chicken
-      taco:
-        name: food-sequence-content-chicken
-      skewer:
-        name: food-sequence-content-chicken
-        sprite:
-          sprite: Objects/Consumable/Food/skewer.rsi
-          state: skewer-meat
-=======
->>>>>>> space-wizards/master
   - type: Construction
     graph: ChickenCutlet
     node: start
@@ -1487,24 +1392,6 @@
           Quantity: 3
         - ReagentId: Fat
           Quantity: 2
-<<<<<<< HEAD
-  - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: cutlet
-      color: white
-    entries:
-      burger:
-        name: food-sequence-content-duck
-      taco:
-        name: food-sequence-content-duck
-      skewer:
-        name: food-sequence-content-duck
-        sprite:
-          sprite: Objects/Consumable/Food/skewer.rsi
-          state: skewer-meat
-=======
->>>>>>> space-wizards/master
   - type: Construction
     graph: DuckCutlet
     node: start
@@ -1535,24 +1422,6 @@
           Quantity: 3
         - ReagentId: Fat
           Quantity: 2
-<<<<<<< HEAD
-  - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: cutlet
-      color: pink
-    entries:
-      burger:
-        name: food-sequence-burger-content-lizard
-      taco:
-        name: food-sequence-content-lizard
-      skewer:
-        name: food-sequence-content-lizard
-        sprite:
-          sprite: Objects/Consumable/Food/skewer.rsi
-          state: skewer-tail
-=======
->>>>>>> space-wizards/master
   - type: Construction
     graph: LizardCutlet
     node: start
@@ -1788,23 +1657,6 @@
           Quantity: 2
         - ReagentId: Protein
           Quantity: 2
-<<<<<<< HEAD
-  - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: cutlet-cooked
-    entries:
-      burger:
-        name: food-sequence-content-chicken
-      taco:
-        name: food-sequence-content-chicken
-      skewer:
-        name: food-sequence-content-chicken
-        sprite:
-          sprite: Objects/Consumable/Food/skewer.rsi
-          state: skewer-meat
-=======
->>>>>>> space-wizards/master
   - type: Construction
     graph: ChickenCutlet
     node: chicken cutlet
@@ -1835,23 +1687,6 @@
           Quantity: 2
         - ReagentId: Protein
           Quantity: 2
-<<<<<<< HEAD
-  - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: cutlet-cooked
-    entries:
-      burger:
-        name: food-sequence-content-duck
-      taco:
-        name: food-sequence-content-duck
-      skewer:
-        name: food-sequence-content-duck
-        sprite:
-          sprite: Objects/Consumable/Food/skewer.rsi
-          state: skewer-meat
-=======
->>>>>>> space-wizards/master
   - type: Construction
     graph: DuckCutlet
     node: duck cutlet
@@ -1883,23 +1718,6 @@
           Quantity: 2
         - ReagentId: Protein
           Quantity: 2
-<<<<<<< HEAD
-  - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: cutlet-cooked
-    entries:
-      burger:
-        name: food-sequence-burger-content-lizard
-      taco:
-        name: food-sequence-content-lizard
-      skewer:
-        name: food-sequence-content-lizard
-        sprite:
-          sprite: Objects/Consumable/Food/skewer.rsi
-          state: skewer-tail-cooked
-=======
->>>>>>> space-wizards/master
   - type: Construction
     graph: LizardCutlet
     node: lizard cutlet
@@ -1958,7 +1776,13 @@
           Quantity: 1
         - ReagentId: Protein
           Quantity: 1
-<<<<<<< HEAD
+  - type: Construction
+    graph: XenoCutlet
+    node: xeno cutlet
+  - type: FoodSequenceElement
+    entries:
+      Burger: XenoCutlet
+      Taco: XenoCutlet
 
 - type: entity
   name: finfin cutlet
@@ -1982,17 +1806,6 @@
           Quantity: 2
         - ReagentId: Protein
           Quantity: 2
-  - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/meat.rsi
-      state: xenocutlet-cooked
-    entries:
-      burger:
-        name: food-sequence-content-xeno
-  - type: Construction
-    graph: XenoCutlet
-    node: xeno cutlet
-=======
   - type: Construction
     graph: XenoCutlet
     node: xeno cutlet
@@ -2000,4 +1813,3 @@
     entries:
       Burger: XenoCutlet
       Taco: XenoCutlet
->>>>>>> space-wizards/master
