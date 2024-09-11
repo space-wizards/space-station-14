@@ -202,7 +202,7 @@ namespace Content.Shared.Cuffs
             if (cancelled || user != ent.Owner)
                 return;
 
-            if (!TryComp<HandsComponent>(ent, out var hands) || ent.Comp.CuffedHandCount != hands.Count)
+            if (!TryComp<HandsComponent>(ent, out var hands) || ent.Comp.CuffedHandCount < hands.Count)
                 return;
 
             cancelled = true;
@@ -487,6 +487,12 @@ namespace Content.Shared.Cuffs
                 _popup.PopupClient(Loc.GetString("handcuff-component-target-has-no-free-hands-error",
                     ("targetName", Identity.Name(target, EntityManager, user))), user, user);
                 return true;
+            }
+
+            if (!_hands.CanDrop(user, handcuff))
+            {
+                _popup.PopupClient(Loc.GetString("handcuff-component-cannot-drop-cuffs", ("target", Identity.Name(target, EntityManager, user))), user, user);
+                return false;
             }
 
             var cuffTime = handcuffComponent.CuffTime;

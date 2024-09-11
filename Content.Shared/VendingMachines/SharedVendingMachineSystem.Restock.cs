@@ -72,7 +72,7 @@ public abstract partial class SharedVendingMachineSystem
         {
             BreakOnMove = true,
             BreakOnDamage = true,
-            NeedHand = true
+            NeedHand = true,
         };
 
         if (!_doAfter.TryStartDoAfter(doAfterArgs))

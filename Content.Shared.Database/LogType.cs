@@ -115,4 +115,10 @@ public enum LogType
     /// Storage & entity-storage related interactions
     /// </summary>
     Storage = 93,
+    
+    /// <summary>
+    /// A player got hit by an explosion and was dealt damage.
+    /// </summary>
+    ExplosionHit = 94,
+
 }

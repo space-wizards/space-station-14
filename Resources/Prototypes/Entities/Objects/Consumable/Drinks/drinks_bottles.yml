@@ -39,6 +39,7 @@
   - type: PhysicalComposition
     materialComposition:
       Plastic: 100
+  - type: DnaSubstanceTrace
   - type: PressurizedSolution
     solution: drink
   - type: Shakeable

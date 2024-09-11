@@ -4,6 +4,7 @@ using Content.Client.ContextMenu.UI;
 using Content.Client.Examine;
 using Content.Client.PDA;
 using Content.Client.Resources;
+using Content.Client.Silicons.Laws.SiliconLawEditUi;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Controls.FancyTree;
 using Content.Client.Verbs.UI;
@@ -1613,6 +1614,10 @@ namespace Content.Client.Stylesheets
                     {
                         BackgroundColor = FancyTreeSelectedRowColor,
                     }),
+
+                // Silicon law edit ui
+                Element<Label>().Class(SiliconLawContainer.StyleClassSiliconLawPositionLabel)
+                    .Prop(Label.StylePropertyFontColor, NanoGold),
                 // Pinned button style
                 new StyleRule(
                     new SelectorElement(typeof(TextureButton), new[] { StyleClassPinButtonPinned }, null, null),

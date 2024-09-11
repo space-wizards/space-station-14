@@ -155,6 +155,21 @@
           - !type:ReagentThreshold
             min: 80
 
+- type: reagent
+  id: Sedin
+  name: reagent-name-sedin
+  group: Botanical
+  desc: reagent-desc-sedin
+  flavor: bitter
+  color: "#3CB371"
+  physicalDesc: reagent-physical-desc-sickly
+  plantMetabolism:
+    - !type:PlantAdjustHealth
+      amount: -2
+    - !type:PlantRestoreSeeds
+      probability: 0.20
+    - !type:PlantAdjustPotency
+      amount: -3 # Match this with current rate of Robust Harvest potency increase
 
 - type: reagent
   id: WeedKiller

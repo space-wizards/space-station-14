@@ -29,6 +29,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Content.Shared.NameModifier.Components;
+using Content.Shared.Power;
 
 namespace Content.Server.Fax;
 
@@ -51,16 +52,6 @@ public sealed class FaxSystem : EntitySystem
     [Dependency] private readonly FaxecuteSystem _faxecute = default!;
 
     private const string PaperSlotId = "Paper";
-
-    /// <summary>
-    ///     The prototype ID to use for faxed or copied entities if we can't get one from
-    ///     the paper entity for whatever reason.
-    /// </summary>
-    [ValidatePrototypeId<EntityPrototype>]
-    private const string DefaultPaperPrototypeId = "Paper";
-
-    [ValidatePrototypeId<EntityPrototype>]
-    private const string OfficePaperPrototypeId = "PaperOffice";
 
     public override void Initialize()
     {
@@ -242,7 +233,8 @@ public sealed class FaxSystem : EntitySystem
                 return;
             }
 
-            _adminLogger.Add(LogType.Action, LogImpact.Low,
+            _adminLogger.Add(LogType.Action,
+                LogImpact.Low,
                 $"{ToPrettyString(args.User):user} renamed {ToPrettyString(uid):tool} from \"{component.FaxName}\" to \"{newName}\"");
             component.FaxName = newName;
             _popupSystem.PopupEntity(Loc.GetString("fax-machine-popup-name-set"), uid);
@@ -324,7 +316,7 @@ public sealed class FaxSystem : EntitySystem
     private void OnCopyButtonPressed(EntityUid uid, FaxMachineComponent component, FaxCopyMessage args)
     {
         if (HasComp<MobStateComponent>(component.PaperSlot.Item))
-            _faxecute.Faxecute(uid, component); /// when button pressed it will hurt the mob.
+            _faxecute.Faxecute(uid, component); // when button pressed it will hurt the mob.
         else
             Copy(uid, component, args);
     }
@@ -332,7 +324,7 @@ public sealed class FaxSystem : EntitySystem
     private void OnSendButtonPressed(EntityUid uid, FaxMachineComponent component, FaxSendMessage args)
     {
         if (HasComp<MobStateComponent>(component.PaperSlot.Item))
-            _faxecute.Faxecute(uid, component); /// when button pressed it will hurt the mob.
+            _faxecute.Faxecute(uid, component); // when button pressed it will hurt the mob.
         else
             Send(uid, component, args);
     }
@@ -425,11 +417,7 @@ public sealed class FaxSystem : EntitySystem
     /// </summary>
     public void PrintFile(EntityUid uid, FaxMachineComponent component, FaxFileMessage args)
     {
-        string prototype;
-        if (args.OfficePaper)
-            prototype = OfficePaperPrototypeId;
-        else
-            prototype = DefaultPaperPrototypeId;
+        var prototype = args.OfficePaper ? component.PrintOfficePaperId : component.PrintPaperId;
 
         var name = Loc.GetString("fax-machine-printed-paper-name");
 
@@ -441,7 +429,8 @@ public sealed class FaxSystem : EntitySystem
 
         // Unfortunately, since a paper entity does not yet exist, we have to emulate what LabelSystem will do.
         var nameWithLabel = (args.Label is { } label) ? $"{name} ({label})" : name;
-        _adminLogger.Add(LogType.Action, LogImpact.Low,
+        _adminLogger.Add(LogType.Action,
+            LogImpact.Low,
             $"{ToPrettyString(args.Actor):actor} " +
             $"added print job to \"{component.FaxName}\" {ToPrettyString(uid):tool} " +
             $"of {nameWithLabel}: {args.Content}");
@@ -471,7 +460,7 @@ public sealed class FaxSystem : EntitySystem
         var printout = new FaxPrintout(paper.Content,
                                        nameMod?.BaseName ?? metadata.EntityName,
                                        labelComponent?.CurrentLabel,
-                                       metadata.EntityPrototype?.ID ?? DefaultPaperPrototypeId,
+                                       metadata.EntityPrototype?.ID ?? component.PrintPaperId,
                                        paper.StampState,
                                        paper.StampedBy,
                                        paper.EditingDisabled);
@@ -484,7 +473,8 @@ public sealed class FaxSystem : EntitySystem
 
         UpdateUserInterface(uid, component);
 
-        _adminLogger.Add(LogType.Action, LogImpact.Low,
+        _adminLogger.Add(LogType.Action,
+            LogImpact.Low,
             $"{ToPrettyString(args.Actor):actor} " +
             $"added copy job to \"{component.FaxName}\" {ToPrettyString(uid):tool} " +
             $"of {ToPrettyString(sendEntity):subject}: {printout.Content}");
@@ -531,7 +521,7 @@ public sealed class FaxSystem : EntitySystem
             // TODO: Ideally, we could just make a copy of the whole entity when it's
             // faxed, in order to preserve visuals, etc.. This functionality isn't
             // available yet, so we'll pass along the originating prototypeId and fall
-            // back to DefaultPaperPrototypeId in SpawnPaperFromQueue if we can't find one here.
+            // back to component.PrintPaperId in SpawnPaperFromQueue if we can't find one here.
             payload[FaxConstants.FaxPaperPrototypeData] = metadata.EntityPrototype.ID;
         }
 
@@ -543,7 +533,8 @@ public sealed class FaxSystem : EntitySystem
 
         _deviceNetworkSystem.QueuePacket(uid, component.DestinationFaxAddress, payload);
 
-        _adminLogger.Add(LogType.Action, LogImpact.Low,
+        _adminLogger.Add(LogType.Action,
+            LogImpact.Low,
             $"{ToPrettyString(args.Actor):actor} " +
             $"sent fax from \"{component.FaxName}\" {ToPrettyString(uid):tool} " +
             $"to \"{faxName}\" ({component.DestinationFaxAddress}) " +
@@ -585,7 +576,7 @@ public sealed class FaxSystem : EntitySystem
 
         var printout = component.PrintingQueue.Dequeue();
 
-        var entityToSpawn = printout.PrototypeId.Length == 0 ? DefaultPaperPrototypeId : printout.PrototypeId;
+        var entityToSpawn = printout.PrototypeId.Length == 0 ? component.PrintPaperId.ToString() : printout.PrototypeId;
         var printed = EntityManager.SpawnEntity(entityToSpawn, Transform(uid).Coordinates);
 
         if (TryComp<PaperComponent>(printed, out var paper))
