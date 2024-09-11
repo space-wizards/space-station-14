@@ -74,9 +74,6 @@ food-sequence-content-berries = berries
 food-sequence-content-spacemans-trumpet = spacemans trupmet
 food-sequence-content-cherry = cherry
 food-sequence-content-snail = snail
-food-sequence-content-cannabis = funny
-food-sequence-content-rainbow-cannabis = FUNNY
-food-sequence-content-tobacco = tobacco
 
 # BURGERS
 
