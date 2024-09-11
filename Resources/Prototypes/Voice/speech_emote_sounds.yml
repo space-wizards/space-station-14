@@ -88,8 +88,6 @@
       path: /Audio/Voice/Reptilian/reptilian_scream.ogg
     Laugh:
       path: /Audio/Animals/lizard_happy.ogg
-    Thump:
-      path: /Audio/Voice/Reptilian/reptilian_tailthump.ogg
     Huff:
       path: /Audio/Voice/Reptilian/reptilian_huff.ogg
     Hiss:
@@ -116,8 +114,6 @@
       path: /Audio/Voice/Reptilian/reptilian_scream.ogg
     Laugh:
       path: /Audio/Animals/lizard_happy.ogg
-    Thump:
-      path: /Audio/Voice/Reptilian/reptilian_tailthump.ogg
     Huff:
       path: /Audio/Voice/Reptilian/reptilian_huff.ogg
     Hiss:
@@ -134,6 +130,12 @@
       collection: FemaleGasp
     DefaultDeathgasp:
       collection: FemaleDeathGasp
+
+- type: emoteSounds
+  id: ReptilianBodyEmotes
+  sounds:
+    Thump:
+      path: /Audio/Voice/Reptilian/reptilian_tailthump.ogg
 
 - type: emoteSounds
   id: MaleSlime
