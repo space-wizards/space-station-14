@@ -1630,6 +1630,14 @@
   solids:
     FoodDonkpocketCarp: 1
 
+- type: microwaveMealRecipe
+  id: RecipeDonkpocketCloth
+  name: warm cloth-pocket recipe
+  result: FoodDonkpocketClothWarm
+  time: 5
+  solids:
+    FoodDonkpocketCloth: 1
+
 
 - type: microwaveMealRecipe
   id: RecipeHotChili
