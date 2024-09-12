@@ -49,6 +49,7 @@ using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Systems;
 using Content.Shared.Cuffs.Components;
+using Content.Shared.Movement.Systems;
 
 namespace Content.Server.Revenant.EntitySystems;
 
@@ -71,6 +72,7 @@ public sealed partial class RevenantSystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly ItemToggleSystem _itemToggleSystem = default!;
     [Dependency] private readonly SharedGunSystem _gunSystem = default!;
+    [Dependency] private readonly MovementSpeedModifierSystem _moveSpeed = default!;
 
     private void InitializeAbilities()
     {
@@ -401,7 +403,7 @@ public sealed partial class RevenantSystem
     {
         if (HasComp<MindContainerComponent>(target) || HasComp<HTNComponent>(target))
             return;
-        
+
         // TODO: Make animated handcuffs cuff people and then go inanimate
         // Disabling them for now because it causes a ton of errors.
         if (HasComp<HandcuffComponent>(target))
@@ -428,6 +430,20 @@ public sealed partial class RevenantSystem
 
         EnsureComp<MobStateComponent>(target);
         EnsureComp<InputMoverComponent>(target);
+        var moveSpeed = EnsureComp<MovementSpeedModifierComponent>(target);
+        if (revenant != null)
+            _moveSpeed.ChangeBaseSpeed(target,
+                revenant.Value.Comp.AnimateWalkSpeed,
+                revenant.Value.Comp.AnimateSprintSpeed,
+                MovementSpeedModifierComponent.DefaultAcceleration
+            );
+        else
+            _moveSpeed.ChangeBaseSpeed(target,
+                RevenantComponent.DefaultAnimateWalkSpeed,
+                RevenantComponent.DefaultAnimateSprintSpeed,
+                MovementSpeedModifierComponent.DefaultAcceleration
+            );
+
         var factions = EnsureComp<NpcFactionMemberComponent>(target);
         _factionSystem.ClearFactions((target, factions));
         _factionSystem.AddFaction((target, factions), "SimpleHostile");

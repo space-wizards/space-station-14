@@ -222,6 +222,15 @@ public sealed partial class RevenantComponent : Component
 
     [ViewVariables(VVAccess.ReadWrite), DataField]
     public Vector2 AnimateDebuffs = new(3, 8);
+
+    public const float DefaultAnimateWalkSpeed = 1.5f;
+    public const float DefaultAnimateSprintSpeed = 3.5f;
+
+    [ViewVariables(VVAccess.ReadWrite), DataField]
+    public float AnimateWalkSpeed = DefaultAnimateWalkSpeed;
+
+    [ViewVariables(VVAccess.ReadWrite), DataField]
+    public float AnimateSprintSpeed = DefaultAnimateSprintSpeed;
     #endregion
 
     [DataField]

@@ -19,9 +19,9 @@ public sealed class RevenantAnimatedSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        var enumerator = EntityQueryEnumerator<RevenantAnimatedComponent, PointLightComponent>();
+        var enumerator = EntityQueryEnumerator<RevenantAnimatedComponent>();
 
-        while (enumerator.MoveNext(out var uid, out var comp, out var light))
+        while (enumerator.MoveNext(out var uid, out var comp))
         {
             if (comp.LightOverlay == null)
                 continue;
