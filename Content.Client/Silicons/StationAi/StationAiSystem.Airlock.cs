@@ -63,8 +63,8 @@ public sealed partial class StationAiSystem
                     ? new SpriteSpecifier.Rsi(_aiActionsRsi, "door_overcharge_off")
                     : new SpriteSpecifier.Rsi(_aiActionsRsi, "door_overcharge_on"),
                 Tooltip = ent.Comp.Enabled
-                    ? Loc.GetString("bolt-open")
-                    : Loc.GetString("bolt-close"),
+                    ? Loc.GetString("electrify-door-on")
+                    : Loc.GetString("electrify-door-off"),
                 Event = new StationAiElectrifiedEvent
                 {
                     Electrified = !ent.Comp.Enabled,
