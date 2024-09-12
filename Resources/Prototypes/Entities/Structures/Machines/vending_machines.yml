@@ -203,7 +203,7 @@
   parent: VendingMachineBooze
   id: VendingMachineBoozeSyndicate # syndie booze-o-mat for nukie outpost
   name: Bruise-O-Mat
-  description: A refurbished Booze-O-Mat for boosting operative morale. Airlock bolts are stamped onto one side of the machine, and the paint seems ashed off on the other side.
+  description: A refurbished Booze-O-Mat for boosting operative morale. An imprint of a blood-red hardsuit is visible on one side, and the paint seems ashed off on the other side.
   components:
   - type: VendingMachine
     pack: BoozeOMatInventory
