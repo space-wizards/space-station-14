@@ -22,19 +22,19 @@ namespace Content.Server.Anomaly.Effects;
 
 public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
 {
-    [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly IAdminLogManager _adminLog = default!;
+    [Dependency] private readonly AnomalySystem _anomaly = default!;
+    [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
+    [Dependency] private readonly SharedActionsSystem _actions = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly BodySystem _body = default!;
     [Dependency] private readonly IChatManager _chat = default!;
-    [Dependency] private readonly MindSystem _mind = default!;
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
-    [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
-    [Dependency] private readonly StunSystem _stun = default!;
-    [Dependency] private readonly JitteringSystem _jitter = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
-    [Dependency] private readonly AnomalySystem _anomaly = default!;
-    [Dependency] private readonly IAdminLogManager _adminLog = default!;
+    [Dependency] private readonly JitteringSystem _jitter = default!;
+    [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly StunSystem _stun = default!;
 
     private readonly Color _messageColor = Color.FromSrgb(new Color(201, 22, 94));
 
@@ -44,7 +44,7 @@ public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
 
         SubscribeLocalEvent<InnerBodyAnomalyInjectorComponent, StartCollideEvent>(OnStartCollideInjector);
 
-        SubscribeLocalEvent<InnerBodyAnomalyComponent, ComponentStartup>(OnCompStartup);
+        SubscribeLocalEvent<InnerBodyAnomalyComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<InnerBodyAnomalyComponent, ComponentShutdown>(OnCompShutdown);
 
         SubscribeLocalEvent<InnerBodyAnomalyComponent, AnomalyPulseEvent>(OnAnomalyPulse);
@@ -55,6 +55,87 @@ public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
         SubscribeLocalEvent<InnerBodyAnomalyComponent, MobStateChangedEvent>(OnMobStateChanged);
 
         SubscribeLocalEvent<AnomalyComponent, ActionAnomalyPulseEvent>(OnActionPulse);
+    }
+
+    private void OnActionPulse(Entity<AnomalyComponent> ent, ref ActionAnomalyPulseEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        _anomaly.DoAnomalyPulse(ent, ent.Comp);
+
+        args.Handled = true;
+    }
+
+    private void OnStartCollideInjector(Entity<InnerBodyAnomalyInjectorComponent> ent, ref StartCollideEvent args)
+    {
+        if (ent.Comp.Whitelist is not null && !_whitelist.IsValid(ent.Comp.Whitelist, args.OtherEntity))
+            return;
+        if (TryComp<InnerBodyAnomalyComponent>(args.OtherEntity, out var innerAnom) && innerAnom.Injected)
+            return;
+        if (!_mind.TryGetMind(args.OtherEntity, out _, out var mindComponent))
+            return;
+
+        EntityManager.AddComponents(args.OtherEntity, ent.Comp.InjectionComponents);
+        QueueDel(ent);
+    }
+
+    private void OnMapInit(Entity<InnerBodyAnomalyComponent> ent, ref MapInitEvent args)
+    {
+        AddAnomalyToBody(ent);
+    }
+
+    private void AddAnomalyToBody(Entity<InnerBodyAnomalyComponent> ent)
+    {
+        if (!_proto.TryIndex(ent.Comp.InjectionProto, out var injectedAnom))
+            return;
+
+        if (ent.Comp.Injected)
+            return;
+
+        ent.Comp.Injected = true;
+
+        EntityManager.AddComponents(ent, injectedAnom.Components);
+
+        _stun.TryParalyze(ent, TimeSpan.FromSeconds(ent.Comp.StunDuration), true);
+        _jitter.DoJitter(ent, TimeSpan.FromSeconds(ent.Comp.StunDuration), true);
+
+        if (ent.Comp.StartSound is not null)
+            _audio.PlayPvs(ent.Comp.StartSound, ent);
+
+        if (ent.Comp.StartMessage is not null &&
+            _mind.TryGetMind(ent, out _, out var mindComponent) &&
+            mindComponent.Session != null)
+        {
+            var message = Loc.GetString(ent.Comp.StartMessage);
+            var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
+            _chat.ChatMessageToOne(ChatChannel.Server,
+                message,
+                wrappedMessage,
+                default,
+                false,
+                mindComponent.Session.Channel,
+                _messageColor);
+
+            _popup.PopupEntity(message, ent, ent, PopupType.MediumCaution);
+
+            _adminLog.Add(LogType.Anomaly,LogImpact.Extreme,$"{ToPrettyString(ent)} become anomaly host.");
+        }
+        Dirty(ent);
+    }
+
+    private void OnAnomalyPulse(Entity<InnerBodyAnomalyComponent> ent, ref AnomalyPulseEvent args)
+    {
+        _stun.TryParalyze(ent, TimeSpan.FromSeconds(ent.Comp.StunDuration / 2), true);
+        _jitter.DoJitter(ent, TimeSpan.FromSeconds(ent.Comp.StunDuration / 2), true);
+    }
+
+    private void OnAnomalySupercritical(Entity<InnerBodyAnomalyComponent> ent, ref AnomalySupercriticalEvent args)
+    {
+        if (!TryComp<BodyComponent>(ent, out var body))
+            return;
+
+        _body.GibBody(ent, body: body);
     }
 
     private void OnSeverityChanged(Entity<InnerBodyAnomalyComponent> ent, ref AnomalySeverityChangedEvent args)
@@ -98,99 +179,6 @@ public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
             _messageColor);
 
         _popup.PopupEntity(message, ent, ent, PopupType.MediumCaution);
-    }
-
-    private void OnActionPulse(Entity<AnomalyComponent> ent, ref ActionAnomalyPulseEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        _anomaly.DoAnomalyPulse(ent, ent.Comp);
-
-        args.Handled = true;
-    }
-
-    private void OnStartCollideInjector(Entity<InnerBodyAnomalyInjectorComponent> ent, ref StartCollideEvent args)
-    {
-        if (ent.Comp.Whitelist is not null && !_whitelist.IsValid(ent.Comp.Whitelist, args.OtherEntity))
-            return;
-        if (TryComp<InnerBodyAnomalyComponent>(args.OtherEntity, out var innerAnom) && innerAnom.Injected)
-            return;
-        if (!_mind.TryGetMind(args.OtherEntity, out _, out var mindComponent))
-            return;
-
-        EntityManager.AddComponents(args.OtherEntity, ent.Comp.InjectionComponents);
-        QueueDel(ent);
-    }
-
-    private void OnCompStartup(Entity<InnerBodyAnomalyComponent> ent, ref ComponentStartup args)
-    {
-        AddAnomalyToBody(ent);
-    }
-
-    private void AddAnomalyToBody(Entity<InnerBodyAnomalyComponent> ent)
-    {
-        if (!_proto.TryIndex(ent.Comp.InjectionProto, out var injectedAnom))
-            return;
-
-        if (ent.Comp.Injected)
-            return;
-
-        ent.Comp.Injected = true;
-
-        EntityManager.AddComponents(ent, injectedAnom.Components);
-
-        _stun.TryParalyze(ent, TimeSpan.FromSeconds(ent.Comp.StunDuration), true);
-        _jitter.DoJitter(ent, TimeSpan.FromSeconds(ent.Comp.StunDuration), true);
-
-        if (ent.Comp.StartSound is not null)
-            _audio.PlayPvs(ent.Comp.StartSound, ent);
-
-        if (ent.Comp.StartMessage is not null &&
-            _mind.TryGetMind(ent, out _, out var mindComponent) &&
-            mindComponent.Session != null)
-        {
-            var message = Loc.GetString(ent.Comp.StartMessage);
-            var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
-            _chat.ChatMessageToOne(ChatChannel.Server,
-                message,
-                wrappedMessage,
-                default,
-                false,
-                mindComponent.Session.Channel,
-                _messageColor);
-
-            _popup.PopupEntity(message, ent, ent, PopupType.MediumCaution);
-
-            _adminLog.Add(LogType.Anomaly,LogImpact.Extreme,$"{ToPrettyString(ent)} become anomaly host.");
-        }
-
-        if (ent.Comp.ActionProto is not null)
-        {
-            var action = _actionContainer.AddAction(ent, ent.Comp.ActionProto);
-
-            if (action is not null)
-            {
-                ent.Comp.Action = action.Value;
-                _actions.GrantActions(ent, new List<EntityUid> {action.Value}, ent);
-            }
-        }
-
-        Dirty(ent);
-    }
-
-    private void OnAnomalyPulse(Entity<InnerBodyAnomalyComponent> ent, ref AnomalyPulseEvent args)
-    {
-        _stun.TryParalyze(ent, TimeSpan.FromSeconds(ent.Comp.StunDuration / 2), true);
-        _jitter.DoJitter(ent, TimeSpan.FromSeconds(ent.Comp.StunDuration / 2), true);
-    }
-
-    private void OnAnomalySupercritical(Entity<InnerBodyAnomalyComponent> ent, ref AnomalySupercriticalEvent args)
-    {
-        if (!TryComp<BodyComponent>(ent, out var body))
-            return;
-
-        _body.GibBody(ent, body: body);
     }
 
     private void OnMobStateChanged(Entity<InnerBodyAnomalyComponent> ent, ref MobStateChangedEvent args)
@@ -242,9 +230,7 @@ public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
             _adminLog.Add(LogType.Anomaly, LogImpact.Medium,$"{ToPrettyString(ent)} is no longer a host for the anomaly.");
         }
 
-
         ent.Comp.Injected = false;
-        QueueDel(ent.Comp.Action);
         RemCompDeferred<AnomalyComponent>(ent);
     }
 }

@@ -34,6 +34,7 @@ public abstract class SharedAnomalySystem : EntitySystem
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {
@@ -186,7 +187,10 @@ public abstract class SharedAnomalySystem : EntitySystem
             return;
 
         if (spawnCore)
-            Spawn(supercritical ? component.CorePrototype : component.CoreInertPrototype, Transform(uid).Coordinates);
+        {
+            var core = Spawn(supercritical ? component.CorePrototype : component.CoreInertPrototype, Transform(uid).Coordinates);
+            _transform.PlaceNextTo(core, uid);
+        }
 
         if (component.DeleteEntity)
             QueueDel(uid);
