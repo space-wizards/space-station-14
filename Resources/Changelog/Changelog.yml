@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Fixed sprite rotation in harm mode on rotated grids.
-    type: Fix
-  id: 6858
-  time: '2024-07-02T13:04:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29663
 - author: lzk228
   changes:
   - message: Space Law book added to the game.
@@ -3910,3 +3903,13 @@
   id: 7357
   time: '2024-09-11T16:24:16.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31970
+- author: lzk228
+  changes:
+  - message: Fixed forensic pad didn't care about target identity.
+    type: Fix
+  - message: Instead of name changing, forensic pad now will have a label with target's
+      name.
+    type: Tweak
+  id: 7358
+  time: '2024-09-12T00:52:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31842
