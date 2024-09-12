@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Space Law book added to the game.
-    type: Add
-  id: 6859
-  time: '2024-07-02T13:33:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29392
 - author: Ko4erga
   changes:
   - message: Dropper can be placed in med belt, plant belt and chemistry bag.
@@ -3913,3 +3906,10 @@
   id: 7358
   time: '2024-09-12T00:52:19.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31842
+- author: lzk228
+  changes:
+  - message: Borgs and Station AI will not receive selected in preferences traits.
+    type: Tweak
+  id: 7359
+  time: '2024-09-12T10:36:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31990
