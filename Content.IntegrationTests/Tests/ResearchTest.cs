@@ -112,7 +112,7 @@ public sealed class ResearchTest
             foreach (var recipe in proto.EnumeratePrototypes<LatheRecipePrototype>())
             {
                 if (recipe.Result == null)
-                    Assert.That(recipe.ResultReagents, Is.Not.Null, $"Recipe '{recipe}' has no result or result reagents.");
+                    Assert.That(recipe.ResultReagents, Is.Not.Null, $"Recipe '{recipe.ID}' has no result or result reagents.");
             }
         });
 
