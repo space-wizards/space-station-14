@@ -1,0 +1,10 @@
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckMantleInstructor
+  name: instructor mantle
+  description: For instructors so their students can identify them easily and so they can just feel special.
+  components:
+  - type: Sprite
+    sprite: Harmony/Clothing/Neck/Misc/instructormantle.rsi
+  - type: Clothing
+    sprite: Harmony/Clothing/Neck/Misc/instructormantle.rsi
