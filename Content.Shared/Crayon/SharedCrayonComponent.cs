@@ -51,13 +51,15 @@ namespace Content.Shared.Crayon
         public readonly string State;
         public readonly int Charges;
         public readonly int Capacity;
+        public readonly bool Infinite;
 
-        public CrayonComponentState(Color color, string state, int charges, int capacity)
+        public CrayonComponentState(Color color, string state, int charges, int capacity, bool infinite)
         {
             Color = color;
             State = state;
             Charges = charges;
             Capacity = capacity;
+            Infinite = infinite;
         }
     }
     [Serializable, NetSerializable]

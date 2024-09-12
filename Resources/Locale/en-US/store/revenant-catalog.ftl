@@ -9,3 +9,6 @@ revenant-blight-desc = Infects all nearby organisms with an infectious disease t
 
 revenant-malfunction-name = Malfunction
 revenant-malfunction-desc = Makes nearby electronics stop working properly. Using it leaves you vulnerable to attacks for a long period of time.
+
+revenant-blood-writing-name = Blood writing
+revenant-blood-writing-desc = Summons an ethereal crayon of blood to draw glyphs with. Costs essence to use.
