@@ -1240,6 +1240,13 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<float> AtmosHeatScale =
             CVarDef.Create("atmos.heat_scale", 8f, CVar.SERVERONLY);
 
+        /// <summary>
+        /// Maximum explosion radius for explosions caused by bursting a gas tank ("max caps").
+        /// Setting this to zero disables the explosion but still allows the tank to burst and leak.
+        /// </summary>
+        public static readonly CVarDef<float> AtmosTankFragment =
+            CVarDef.Create("atmos.max_explosion_range", 26f, CVar.SERVERONLY);
+
         /*
          * MIDI instruments
          */
