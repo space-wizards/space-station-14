@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: You now see pickup animations when stripping objects off of people.
-    type: Fix
-  - message: Thieving gloves no longer have a pickup animation when stripping people.
-    type: Fix
-  id: 6861
-  time: '2024-07-03T00:01:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29665
 - author: nikthechampiongr
   changes:
   - message: The Elite Syndicate hardsuit is now slightly slower.
@@ -3916,3 +3907,12 @@
   id: 7360
   time: '2024-09-12T12:51:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31932
+- author: ScarKy0
+  changes:
+  - message: Station AI now has a comms console ability.
+    type: Add
+  - message: Station AI abilities now have a default order.
+    type: Tweak
+  id: 7361
+  time: '2024-09-12T15:28:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31852
