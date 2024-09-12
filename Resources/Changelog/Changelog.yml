@@ -1,96 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Blurry vision no longer causes names to momentarily appear as "???" when
-      examining.
-    type: Remove
-  id: 6850
-  time: '2024-07-01T03:06:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29633
-- author: Cojoke-dot
-  changes:
-  - message: Items that slow down a person when held now slow down when dragged too.
-    type: Tweak
-  id: 6851
-  time: '2024-07-01T05:33:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29364
-- author: metalgearsloth
-  changes:
-  - message: Add effects for when shuttles are arriving.
-    type: Add
-  id: 6852
-  time: '2024-07-01T06:11:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29402
-- author: Plykiya
-  changes:
-  - message: Gravity wells, like the supermatter grenade, now function properly again.
-    type: Fix
-  id: 6853
-  time: '2024-07-01T15:39:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29617
-- author: joelsgp
-  changes:
-  - message: Fixed login tips
-    type: Fix
-  id: 6854
-  time: '2024-07-01T16:27:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29640
-- author: Cojoke-dot
-  changes:
-  - message: Flares can now light Cigarettes and other similar things
-    type: Tweak
-  - message: Flares now are no longer hot after burning out
-    type: Tweak
-  id: 6855
-  time: '2024-07-01T21:14:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29476
-- author: Tayrtahn
-  changes:
-  - message: Fixed NukeOps ending prematurely in some situations where operatives
-      were still alive.
-    type: Fix
-  id: 6856
-  time: '2024-07-01T22:23:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29642
-- author: Tayrtahn
-  changes:
-  - message: Fixed characters thrashing when speaking in beds.
-    type: Fix
-  id: 6857
-  time: '2024-07-02T03:30:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29653
-- author: slarticodefast
-  changes:
-  - message: Fixed sprite rotation in harm mode on rotated grids.
-    type: Fix
-  id: 6858
-  time: '2024-07-02T13:04:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29663
-- author: lzk228
-  changes:
-  - message: Space Law book added to the game.
-    type: Add
-  id: 6859
-  time: '2024-07-02T13:33:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29392
-- author: Ko4erga
-  changes:
-  - message: Dropper can be placed in med belt, plant belt and chemistry bag.
-    type: Tweak
-  - message: Dropper size changed.
-    type: Tweak
-  id: 6860
-  time: '2024-07-02T15:28:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29667
-- author: Plykiya
-  changes:
-  - message: You now see pickup animations when stripping objects off of people.
-    type: Fix
-  - message: Thieving gloves no longer have a pickup animation when stripping people.
-    type: Fix
-  id: 6861
-  time: '2024-07-03T00:01:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29665
 - author: nikthechampiongr
   changes:
   - message: The Elite Syndicate hardsuit is now slightly slower.
@@ -3912,3 +3820,99 @@
   id: 7349
   time: '2024-09-11T03:33:42.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31638
+- author: SlamBamActionman
+  changes:
+  - message: The Station AI job is no longer affected by the Bureaucratic Event event.
+    type: Fix
+  id: 7350
+  time: '2024-09-11T11:24:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32021
+- author: K-Dynamic
+  changes:
+  - message: Reduced canister prices from 1000 to 200 spesos
+    type: Tweak
+  id: 7351
+  time: '2024-09-11T12:53:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31965
+- author: EmoGarbage404
+  changes:
+  - message: Added the hivelord! This self-replicating alien is found on the mining
+      asteroid. It's core is known to have powerful healing properties.
+    type: Add
+  id: 7352
+  time: '2024-09-11T13:52:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31322
+- author: PeccNeck
+  changes:
+  - message: Fixed a bug where ore processors could not produce reinforced glass
+    type: Fix
+  id: 7353
+  time: '2024-09-11T14:06:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32069
+- author: Plykiya
+  changes:
+  - message: You can now use swords to make baseball bats.
+    type: Fix
+  id: 7354
+  time: '2024-09-11T14:45:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32075
+- author: Plykiya
+  changes:
+  - message: Banners are no longer invincible.
+    type: Fix
+  id: 7355
+  time: '2024-09-11T15:29:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32077
+- author: themias
+  changes:
+  - message: Very small amounts of heat damage no longer play the cauterization sound
+      (e.g. spacing)
+    type: Fix
+  id: 7356
+  time: '2024-09-11T16:05:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32080
+- author: deltanedas
+  changes:
+  - message: Coins and Supercharged CPUs can now be recycled for rarer materials.
+    type: Tweak
+  id: 7357
+  time: '2024-09-11T16:24:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31970
+- author: lzk228
+  changes:
+  - message: Fixed forensic pad didn't care about target identity.
+    type: Fix
+  - message: Instead of name changing, forensic pad now will have a label with target's
+      name.
+    type: Tweak
+  id: 7358
+  time: '2024-09-12T00:52:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31842
+- author: lzk228
+  changes:
+  - message: Borgs and Station AI will not receive selected in preferences traits.
+    type: Tweak
+  id: 7359
+  time: '2024-09-12T10:36:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31990
+- author: MrRobDemo
+  changes:
+  - message: Added 5% chance to make killer tomatoes a ghost role.
+    type: Add
+  - message: Killer tomatoes can now heal from being splashed with water, blood or
+      RobustHarvest.
+    type: Add
+  - message: Killer tomatoes can now escape from inventory (only intelligent).
+    type: Tweak
+  id: 7360
+  time: '2024-09-12T12:51:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31932
+- author: ScarKy0
+  changes:
+  - message: Station AI now has a comms console ability.
+    type: Add
+  - message: Station AI abilities now have a default order.
+    type: Tweak
+  id: 7361
+  time: '2024-09-12T15:28:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31852
