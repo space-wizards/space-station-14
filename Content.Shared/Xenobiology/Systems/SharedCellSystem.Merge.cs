@@ -9,14 +9,14 @@ public abstract partial class SharedCellSystem
 
         // This is a simple but not the best implementation,
         // I think more thought should be given to this formula
-        return max * (1 - delta);
+        return max * (1 - delta) - max / 25;
     }
 
     public static string GetMergedName(Cell cellA, Cell cellB)
     {
         var nameA = cellA.Name[..(cellA.Name.Length / 2)];
         var nameB = cellB.Name[(cellA.Name.Length / 2)..];
-        return $"{nameA}{nameB}";
+        return cellA.Name == cellB.Name ? $"{nameA}{nameA}" : $"{nameA}{nameB}";
     }
 
     public static Color GetMergedColor(Cell cellA, Cell cellB)
