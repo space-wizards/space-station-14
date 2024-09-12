@@ -85,6 +85,14 @@ namespace Content.Server.Power.EntitySystems
             {
                 if (!comp.AutoRecharge) continue;
                 if (batt.IsFullyCharged) continue;
+                if (comp.AutoRechargePause)
+                {
+                    if (comp.AutoRechargeCooldown > 0)
+                    {
+                        SetChargeCooldown(uid, comp.AutoRechargeCooldown - frameTime, comp);
+                        continue;
+                    }
+                }
                 SetCharge(uid, batt.CurrentCharge + comp.AutoRechargeRate * frameTime, batt);
             }
         }
@@ -111,6 +119,13 @@ namespace Content.Server.Power.EntitySystems
             var newValue = Math.Clamp(0, battery.CurrentCharge - value, battery.MaxCharge);
             var delta = newValue - battery.CurrentCharge;
             battery.CurrentCharge = newValue;
+
+            if (TryComp<BatterySelfRechargerComponent>(uid, out var batterySelfRechargerComponent)){
+                if (batterySelfRechargerComponent.AutoRechargePause && batterySelfRechargerComponent.AutoRechargePauseTime > 0) {
+                    SetChargeCooldown(uid, Math.Clamp(batterySelfRechargerComponent.AutoRechargeCooldown, batterySelfRechargerComponent.AutoRechargePauseTime, 9999), batterySelfRechargerComponent);
+                }
+            }
+
             var ev = new ChargeChangedEvent(battery.CurrentCharge, battery.MaxCharge);
             RaiseLocalEvent(uid, ref ev);
             return delta;
@@ -143,6 +158,15 @@ namespace Content.Server.Power.EntitySystems
 
             var ev = new ChargeChangedEvent(battery.CurrentCharge, battery.MaxCharge);
             RaiseLocalEvent(uid, ref ev);
+        }
+
+        public void SetChargeCooldown(EntityUid uid, float value, BatterySelfRechargerComponent? batteryself = null)
+        {
+            if (!Resolve(uid, ref batteryself))
+                return;
+
+            var old = batteryself.AutoRechargeCooldown;
+            batteryself.AutoRechargeCooldown = Math.Clamp(value, 0, 9999);
         }
 
         /// <summary>
