@@ -6,8 +6,8 @@
   maxLimit: 3
   loadouts:
   - FlowerWreath
-  - Poppy
-  - Lily
+  - PoppyFlower
+  - LilyFlower
   - PlushieLizard
   - PlushieSpaceLizard
   - Lighter

@@ -16,16 +16,16 @@
     - ClothingHeadHatFlowerWreath
 
 - type: loadout
-  id: Poppy
+  id: PoppyFlower
   storage:
     back:
-    - FoodPoppy
+    - ClothingHeadHatHairflowerPoppy
 
 - type: loadout
-  id: Lily
+  id: LilyFlower
   storage:
     back:
-    - FoodLily
+    - ClothingHeadHatHairflowerLily
 
 # Plushies
 - type: loadout
