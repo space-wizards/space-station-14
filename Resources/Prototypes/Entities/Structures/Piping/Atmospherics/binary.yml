@@ -452,3 +452,5 @@
   - type: Construction
     graph: GasBinary
     node: radiator
+  - type: AtmosMonitoringConsoleDevice
+    group: Thermoregulator

@@ -1,9 +1,11 @@
 using Content.Client.Pinpointer.UI;
+using Content.Client.Power;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Pinpointer;
 using Robust.Client.Graphics;
 using Robust.Shared.Collections;
 using Robust.Shared.Map.Components;
+using System.Linq;
 using System.Numerics;
 
 namespace Content.Client.Atmos.Console;
@@ -15,19 +17,16 @@ public sealed partial class AtmosMonitoringConsoleNavMapControl : NavMapControl
     private Dictionary<Color, Color> _sRGBLookUp = new Dictionary<Color, Color>();
 
     public Dictionary<Vector2i, List<AtmosMonitoringConsoleLine>>? AtmosPipeNetwork;
+    public Dictionary<Vector2i, List<AtmosMonitoringConsoleLine>>? FocusPipeNetwork;
+
     public bool ShowPipeNetwork = true;
     private MapGridComponent? _grid;
 
     public AtmosMonitoringConsoleNavMapControl() : base()
     {
         // Set colors
-        //WallColor = new Color(180, 145, 0);
-        //WallColor = new Color(0, 69, 40);
-        //WallColor = new Color(0, 176, 102);
         WallColor = new Color(64, 64, 64);
         TileColor = Color.DimGray * WallColor;
-
-        //_backgroundColor = Color.FromSrgb(TileColor.WithAlpha(_backgroundOpacity));
 
         PostWallDrawingAction += DrawAllPipeNetworks;
     }
@@ -46,18 +45,27 @@ public sealed partial class AtmosMonitoringConsoleNavMapControl : NavMapControl
             return;
 
         AtmosPipeNetwork = GetDecodedAtmosPipeChunks(console.AtmosPipeChunks, _grid);
+        FocusPipeNetwork = GetDecodedAtmosPipeChunks(console.FocusPipeChunks, _grid);
     }
 
     public void DrawAllPipeNetworks(DrawingHandleScreen handle)
     {
+        if (!ShowPipeNetwork)
+            return;
+
         // Draw network
-        if (AtmosPipeNetwork != null && AtmosPipeNetwork.Count > 0 && ShowPipeNetwork)
+        if (AtmosPipeNetwork != null && AtmosPipeNetwork.Any())
         {
-            DrawPipeNetwork(handle, AtmosPipeNetwork);
+            var modulator = (FocusPipeNetwork != null && FocusPipeNetwork.Any()) ? Color.DimGray : Color.White;
+            DrawPipeNetwork(handle, AtmosPipeNetwork, modulator);
         }
+
+        // Draw focus network
+        if (FocusPipeNetwork != null && FocusPipeNetwork.Any())
+            DrawPipeNetwork(handle, FocusPipeNetwork, Color.White);
     }
 
-    public void DrawPipeNetwork(DrawingHandleScreen handle, Dictionary<Vector2i, List<AtmosMonitoringConsoleLine>> atmosPipeNetwork)
+    public void DrawPipeNetwork(DrawingHandleScreen handle, Dictionary<Vector2i, List<AtmosMonitoringConsoleLine>> atmosPipeNetwork, Color modulator)
     {
         var offset = GetOffset();
         var area = new Box2(-WorldRange, -WorldRange, WorldRange + 1f, WorldRange + 1f).Translated(offset);
@@ -93,14 +101,11 @@ public sealed partial class AtmosMonitoringConsoleNavMapControl : NavMapControl
 
             foreach ((var color, var subNetwork) in pipeNetworks)
             {
+                var modulatedColor = color * modulator;
+
                 if (subNetwork.Count > 0)
                 {
-                    if (!_sRGBLookUp.TryGetValue(color, out var sRGB))
-                    {
-                        sRGB = Color.ToSrgb(color);
-                        _sRGBLookUp[color] = sRGB;
-                    }
-
+                    var sRGB = GetsRGBColor(color * modulator);
                     handle.DrawPrimitives(DrawPrimitiveTopology.LineList, subNetwork.Span, sRGB);
                 }
             }
@@ -160,12 +165,7 @@ public sealed partial class AtmosMonitoringConsoleNavMapControl : NavMapControl
             {
                 if (pipeVertexUV.Count > 0)
                 {
-                    if (!_sRGBLookUp.TryGetValue(color, out var sRGB))
-                    {
-                        sRGB = Color.ToSrgb(color);
-                        _sRGBLookUp[color] = sRGB;
-                    }
-
+                    var sRGB = GetsRGBColor(color * modulator);
                     handle.DrawPrimitives(DrawPrimitiveTopology.TriangleList, pipeVertexUV.Span, sRGB);
                 }
             }
@@ -235,6 +235,17 @@ public sealed partial class AtmosMonitoringConsoleNavMapControl : NavMapControl
         }
 
         return decodedOutput;
+    }
+
+    public Color GetsRGBColor(Color color)
+    {
+        if (!_sRGBLookUp.TryGetValue(color, out var sRGB))
+        {
+            sRGB = Color.ToSrgb(color);
+            _sRGBLookUp[color] = sRGB;
+        }
+
+        return sRGB;
     }
 }
 

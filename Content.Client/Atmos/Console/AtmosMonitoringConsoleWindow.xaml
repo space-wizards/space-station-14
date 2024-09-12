@@ -25,7 +25,7 @@
 
                 </ui:AtmosMonitoringConsoleNavMapControl>
 
-                <!-- Nav map legend #ffcd00 -->
+                <!-- Nav map legend -->
                 <BoxContainer Orientation="Horizontal" Margin="0 10 0 10">
                     <TextureRect Stretch="KeepAspectCentered"
                                  TexturePath="/Textures/Interface/NavMap/beveled_square.png"

@@ -27,6 +27,7 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
 
     private EntityUid? _owner;
     private NetEntity? _trackedEntity;
+    private int? _trackedEntityNetId;
 
     public event Action<NetEntity?>? SendFocusChangeMessageAction;
 
@@ -99,6 +100,9 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
 
         foreach (var device in console.AtmosDevices)
         {
+            if (device.Group == AtmosMonitoringConsoleGroup.GasPipeSensor)
+                continue;
+
             if (ShowPipeNetwork.Pressed)
                 AddTrackedEntityToNavMap(device);
 
@@ -115,7 +119,17 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
         if (!_entManager.TryGetComponent<AtmosMonitoringConsoleComponent>(_owner.Value, out var console))
             return;
 
+        foreach (var device in console.AtmosDevices)
+        {
+            if (device.Group != AtmosMonitoringConsoleGroup.GasPipeSensor)
+                return;
 
+            if (ShowGasPipeSensors.Pressed)
+                AddTrackedEntityToNavMap(device);
+
+            else
+                NavMap.TrackedEntities.Remove(device.NetEntity);
+        }
     }
 
     #endregion
@@ -137,24 +151,27 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
             focusData = null;
         }
 
+        _trackedEntityNetId = focusData?.NetId;
+
         // Reset nav map values
         NavMap.TrackedCoordinates.Clear();
         NavMap.TrackedEntities.Clear();
 
         // Add tracked entities to the nav map
-        foreach (var device in console.AtmosDevices)
+        if (NavMap.Visible)
         {
-            if (!NavMap.Visible)
-                continue;
-
-            if (_trackedEntity != device.NetEntity)
+            foreach (var device in console.AtmosDevices)
             {
-                // Skip atmos devices if the pipe network is toggled off
-                if (!ShowPipeNetwork.Pressed)
+                // Skip network devices if the toggled is off
+                if (!ShowPipeNetwork.Pressed && device.Group != AtmosMonitoringConsoleGroup.GasPipeSensor)
                     continue;
-            }
 
-            AddTrackedEntityToNavMap(device);
+                // Skip gas pipe sensors if the toggle is off
+                if (!ShowGasPipeSensors.Pressed && device.Group == AtmosMonitoringConsoleGroup.GasPipeSensor)
+                    continue;
+
+                AddTrackedEntityToNavMap(device);
+            }
         }
 
         // Show the monitor location
@@ -202,6 +219,11 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
 
         if (color == null)
             color = Color.White;
+
+        if (_trackedEntityNetId != null && metaData.NetId != _trackedEntityNetId)
+        {
+            color *= Color.DimGray;
+        }
 
         var selectable = false;
         var blip = new NavMapBlip(coords, _spriteSystem.Frame0(texture), color.Value, _trackedEntity == metaData.NetEntity, selectable, 0.6667f);
@@ -389,37 +411,41 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
 
         switch (group)
         {
+            case AtmosMonitoringConsoleGroup.GasPipeSensor:
+                output = (new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/NavMap/beveled_star.png")), new Color(255, 205, 0));
+                break;
+
             case AtmosMonitoringConsoleGroup.GasPump:
             case AtmosMonitoringConsoleGroup.GasMixer:
             case AtmosMonitoringConsoleGroup.GasFilter:
                 switch (direction)
                 {
                     case Direction.North:
-                        output = (new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/AtmosMonitoring/pump_north.png")), Color.DarkGray); break;
+                        output = (new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/AtmosMonitoring/pump_north.png")), Color.LightGray); break;
                     case Direction.South:
-                        output = (new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/AtmosMonitoring/pump_south.png")), Color.DarkGray); break;
+                        output = (new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/AtmosMonitoring/pump_south.png")), Color.LightGray); break;
                     case Direction.East:
-                        output = (new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/AtmosMonitoring/pump_east.png")), Color.DarkGray); break;
+                        output = (new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/AtmosMonitoring/pump_east.png")), Color.LightGray); break;
                     default:
-                        output = (new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/AtmosMonitoring/pump_west.png")), Color.DarkGray); break;
+                        output = (new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/AtmosMonitoring/pump_west.png")), Color.LightGray); break;
                 }; break;
             case AtmosMonitoringConsoleGroup.GasValve:
                 switch (direction)
                 {
                     case Direction.North:
                     case Direction.South:
-                        output = (new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/AtmosMonitoring/valve_north_south.png")), Color.DarkGray); break;
+                        output = (new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/AtmosMonitoring/valve_north_south.png")), Color.LightGray); break;
                     case Direction.East:
                     default:
-                        output = (new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/AtmosMonitoring/valve_east_west.png")), Color.DarkGray); break;
+                        output = (new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/AtmosMonitoring/valve_east_west.png")), Color.LightGray); break;
                 }; break;
             case AtmosMonitoringConsoleGroup.GasInlet:
-                output = (new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/NavMap/beveled_circle.png")), Color.DarkGray); break;
+                output = (new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/NavMap/beveled_circle.png")), Color.LightGray); break;
             case AtmosMonitoringConsoleGroup.GasOutlet:
             case AtmosMonitoringConsoleGroup.GasOpening:
-                output = (new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/NavMap/beveled_square.png")), Color.DarkGray); break;
+                output = (new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/NavMap/beveled_square.png")), Color.LightGray); break;
             case AtmosMonitoringConsoleGroup.Thermoregulator:
-                output = (new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/NavMap/beveled_hexagon.png")), Color.DarkGray); break;
+                output = (new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/NavMap/beveled_hexagon.png")), Color.LightGray); break;
         }
 
         return output;

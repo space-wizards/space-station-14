@@ -30,6 +30,8 @@
           True: { visible: true, shader: unshaded }
           False: { visible: false }
   - type: GasPipeSensor
+  - type: AtmosMonitoringConsoleDevice
+    group: GasPipeSensor
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: DeviceNetwork

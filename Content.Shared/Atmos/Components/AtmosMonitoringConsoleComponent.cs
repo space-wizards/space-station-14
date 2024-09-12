@@ -1,4 +1,3 @@
-using Content.Shared.Atmos.Monitor;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
@@ -14,6 +13,13 @@ public sealed partial class AtmosMonitoringConsoleComponent : Component
     /// </summary>
     [ViewVariables, AutoNetworkedField]
     public Dictionary<Vector2i, AtmosPipeChunk> AtmosPipeChunks = new();
+
+    /// <summary>
+    /// A dictionary of the all the nav map chunks that contain anchored atmos pipes
+    /// belonging to the same network as the focus entity
+    /// </summary>
+    [ViewVariables, AutoNetworkedField]
+    public Dictionary<Vector2i, AtmosPipeChunk>? FocusPipeChunks = new();
 
     /// <summary>
     /// A list of all the atmos devices that will be used to populate the nav map
@@ -75,16 +81,19 @@ public struct AtmosDeviceNavMapData
     /// </summary>
     public Direction? Direction = null;
 
+    public int NetId = -1;
+
     /// <summary>
     /// Populate the atmos monitoring console nav map with a single entity
     /// </summary>
-    public AtmosDeviceNavMapData(NetEntity netEntity, NetCoordinates netCoordinates, AtmosMonitoringConsoleGroup group, Color? color = null, Direction? direction = null)
+    public AtmosDeviceNavMapData(NetEntity netEntity, NetCoordinates netCoordinates, AtmosMonitoringConsoleGroup group, int netId, Color? color = null, Direction? direction = null)
     {
         NetEntity = netEntity;
         NetCoordinates = netCoordinates;
         Group = group;
         Color = color;
         Direction = direction;
+        NetId = netId;
     }
 }
 
@@ -97,40 +106,26 @@ public struct AtmosFocusDeviceData
     public NetEntity NetEntity;
 
     /// <summary>
-    /// Temperature (K)
-    /// </summary>
-    public float TemperatureData;
-
-    /// <summary>
-    /// Pressure (kPA)
-    /// </summary>
-    public float PressureData;
-
-    /// <summary>
-    /// Total number of mols of gas
-    /// </summary>
-    public float TotalMolData;
-
-    /// <summary>
     /// Mol and percentage for all detected gases 
     /// </summary>
     public Dictionary<Gas, float> GasData;
+
+    /// <summary>
+    /// Network ID 
+    /// </summary>
+    public int NetId = -1;
 
     /// <summary>
     /// Populates the atmos monitoring console focus entry with atmospheric data
     /// </summary>
     public AtmosFocusDeviceData
         (NetEntity netEntity,
-        float temperatureData,
-        float pressureData,
-        float totalMolData,
-        Dictionary<Gas, float> gasData)
+        Dictionary<Gas, float> gasData,
+        int netId)
     {
         NetEntity = netEntity;
-        TemperatureData = temperatureData;
-        PressureData = pressureData;
-        TotalMolData = totalMolData;
         GasData = gasData;
+        NetId = netId;
     }
 }
 
@@ -186,6 +181,26 @@ public struct AtmosMonitoringConsoleEntry
     /// Device network address
     /// </summary>
     public string Address;
+
+    /// <summary>
+    /// Temperature (K)
+    /// </summary>
+    public float TemperatureData;
+
+    /// <summary>
+    /// Pressure (kPA)
+    /// </summary>
+    public float PressureData;
+
+    /// <summary>
+    /// Total number of mols of gas
+    /// </summary>
+    public float TotalMolData;
+
+    /// <summary>
+    /// Indicates whether the entity is active
+    /// </summary>
+    public bool IsActive = true;
 
     /// <summary>
     /// Used to populate the atmos monitoring console UI with data from a single air alarm
