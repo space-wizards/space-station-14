@@ -542,6 +542,7 @@
 - type: latheRecipe
   parent: BaseGoldCircuitboardRecipe
   id: MiniGravityGeneratorCircuitboard
+  result: MiniGravityGeneratorCircuitboard
 
 - type: latheRecipe
   parent: BaseCircuitboardRecipe
