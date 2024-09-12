@@ -187,5 +187,4 @@
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: plushie_lizard
-    rotation: 225
     noRot: false
