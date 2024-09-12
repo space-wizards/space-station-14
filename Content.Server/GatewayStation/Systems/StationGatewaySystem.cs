@@ -1,14 +1,18 @@
+using Content.Server.DeviceLinking.Systems;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.GatewayStation.Components;
 using Content.Shared.GatewayStation;
 using Content.Shared.Pinpointer;
+using Content.Shared.Teleportation.Systems;
 using Robust.Server.GameObjects;
+using Robust.Shared.Map;
 
 namespace Content.Server.GatewayStation.Systems;
 
 public sealed class StationGatewaySystem : EntitySystem
 {
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private readonly LinkedEntitySystem _link = default!;
     public override void Initialize()
     {
         base.Initialize();
@@ -64,7 +68,17 @@ public sealed class StationGatewaySystem : EntitySystem
             if (xform.GridUid != Transform(ent).GridUid)
                 return;
 
-            gatewaysData.Add( new(GetNetEntity(uid), GetNetCoordinates(xformComp.Coordinates), gate.GateName));
+            _link.GetLink(uid, out var link);
+            EntityCoordinates? linkCoord = null;
+
+            if (link is not null)
+                linkCoord = Transform(link.Value).Coordinates;
+
+            gatewaysData.Add(
+                new(GetNetEntity(uid),
+                    GetNetCoordinates(xformComp.Coordinates),
+                    GetNetCoordinates(linkCoord),
+                    gate.GateName));
         }
 
         _uiSystem.SetUiState(ent.Owner, StationGatewayUIKey.Key, new StationGatewayState(gatewaysData));

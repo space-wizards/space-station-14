@@ -19,6 +19,7 @@ public sealed partial class StationGatewayWindow : FancyWindow
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
+    private readonly SharedTransformSystem _xformSystem;
     private readonly SpriteSystem _spriteSystem;
 
     private NetEntity? _trackedEntity;
@@ -30,6 +31,7 @@ public sealed partial class StationGatewayWindow : FancyWindow
         IoCManager.InjectDependencies(this);
 
         _spriteSystem = _entManager.System<SpriteSystem>();
+        _xformSystem = _entManager.System<SharedTransformSystem>();
 
         NavMap.TrackedEntitySelectedAction += SetTrackedEntityFromNavMap;
     }
@@ -69,25 +71,12 @@ public sealed partial class StationGatewayWindow : FancyWindow
             // Primary container to hold the button UI elements
             var mainContainer = new BoxContainer()
             {
-                Orientation = LayoutOrientation.Horizontal,
+                Orientation = LayoutOrientation.Vertical,
                 HorizontalExpand = true,
-                MinHeight = 10,
+                MinHeight = 20,
             };
 
             GatewaysTable.AddChild(mainContainer);
-
-            var gatewayButton = new GatewayButton()
-            {
-                Text = "Кнопка",
-                GatewayUid = gate.GatewayUid,
-                Coordinates = coordinates,
-                HorizontalExpand = true,
-            };
-
-            if (gate.GatewayUid == _trackedEntity)
-                gatewayButton.AddStyleClass(StyleNano.StyleClassButtonColorGreen);
-
-            mainContainer.AddChild(gatewayButton);
 
             // Gate name
             var nameLabel = new Label()
@@ -99,6 +88,21 @@ public sealed partial class StationGatewayWindow : FancyWindow
             };
 
             mainContainer.AddChild(nameLabel);
+
+            // Main button
+            var gatewayButton = new GatewayButton()
+            {
+                Text = gate.LinkCoordinates is null ? Loc.GetString("gateway-console-user-interface-start-connection") : Loc.GetString("gateway-console-user-interface-cut-connection"),
+                GatewayUid = gate.GatewayUid,
+                Coordinates = coordinates,
+                HorizontalAlignment = HAlignment.Right,
+                SetWidth = 200f,
+            };
+
+            if (gate.GatewayUid == _trackedEntity)
+                gatewayButton.AddStyleClass(StyleNano.StyleClassButtonColorGreen);
+
+            mainContainer.AddChild(gatewayButton);
 
             //Add gateway coordinates to the navmap
             if (coordinates != null && NavMap.Visible && _ringTexture != null)
@@ -131,6 +135,21 @@ public sealed partial class StationGatewayWindow : FancyWindow
 
                     UpdateGatewaysTable(_trackedEntity, prevTrackedEntity);
                 };
+            }
+
+            //Add gateways links lines
+            if (gate.Coordinates is not null && gate.LinkCoordinates is not null)
+            {
+                var coordsOne = _entManager.GetCoordinates(gate.Coordinates);
+                var coordTwo = _entManager.GetCoordinates(gate.LinkCoordinates);
+                if (coordsOne is not null && coordTwo is not null)
+                {
+                    var mapOne = _xformSystem.ToMapCoordinates(coordsOne.Value);
+                    var mapTwo = _xformSystem.ToMapCoordinates(coordTwo.Value);
+
+                    NavMap.LinkLines.Add(new GatewayLinkLine(mapOne.Position,
+                        mapTwo.Position));
+                }
             }
         }
     }

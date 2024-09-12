@@ -85,7 +85,7 @@
     energy: 1
     netsync: false
   - type: StationGateway #TEST, TODO delete
-    name: Blue
+    gateName: Blue
 
 - type: entity
   id: PortalGatewayOrange
@@ -103,7 +103,7 @@
     energy: 1
     netsync: false
   - type: StationGateway #TEST, TODO delete
-    name: Orange
+    gateName: Orange
 
 - type: entity
   id: ShadowPortal
