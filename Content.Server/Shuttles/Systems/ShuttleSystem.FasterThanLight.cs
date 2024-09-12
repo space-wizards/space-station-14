@@ -956,8 +956,11 @@ public sealed partial class ShuttleSystem
         if (!Resolve(uid, ref manager, ref grid, ref xform) || xform.MapUid == null)
             return;
 
+        if (!TryComp(xform.MapUid, out BroadphaseComponent? lookup))
+            return;
+
         // Flatten anything not parented to a grid.
-        var transform = _physics.GetPhysicsTransform(uid, xform);
+        var transform = _physics.GetRelativePhysicsTransform((uid, xform), xform.MapUid.Value);
         var aabbs = new List<Box2>(manager.Fixtures.Count);
         var tileSet = new List<(Vector2i, Tile)>();
 
@@ -979,7 +982,7 @@ public sealed partial class ShuttleSystem
             _lookupEnts.Clear();
             _immuneEnts.Clear();
             // TODO: Ideally we'd query first BEFORE moving grid but needs adjustments above.
-            _lookup.GetEntitiesIntersecting(xform.MapID, fixture.Shape, transform, _lookupEnts, LookupFlags.Uncontained);
+            _lookup.GetLocalEntitiesIntersecting(xform.MapUid.Value, fixture.Shape, transform, _lookupEnts, flags: LookupFlags.Uncontained, lookup: lookup);
 
             foreach (var ent in _lookupEnts)
             {
