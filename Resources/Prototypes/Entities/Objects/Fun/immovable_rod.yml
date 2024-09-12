@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: ImmovableRod
   name: immovable rod
   description: You can sense that it's hungry. That's usually a bad sign.
@@ -175,5 +175,17 @@
   - type: Sprite
     sprite: Objects/Weapons/Melee/debug.rsi
     state: icon
+    rotation: 225
+    noRot: false
+
+- type: entity
+  parent: ImmovableRodKeepTilesStill
+  id: ImmovableRodWeh
+  name: immovable weh
+  description: WEH!
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/toys.rsi
+    state: plushie_lizard
     rotation: 225
     noRot: false

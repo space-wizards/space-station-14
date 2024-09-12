@@ -234,3 +234,6 @@
     - id: ImmovableRodGibstick
       prob: 0.0072
       orGroup: rodProto
+    - id: ImmovableRodWeh
+      prob: 0.0072
+      orGroup: rodProto
