@@ -9,7 +9,9 @@ public abstract partial class SharedCellSystem
 
         // This is a simple but not the best implementation,
         // I think more thought should be given to this formula
-        return max * (1 - delta) - max / 25;
+        var stability = max * (1 - delta) - max / 25;
+        
+        return Math.Clamp(stability, 0, 1);
     }
 
     public static string GetMergedName(Cell cellA, Cell cellB)
