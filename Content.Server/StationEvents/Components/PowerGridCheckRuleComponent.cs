@@ -18,3 +18,12 @@ public sealed partial class PowerGridCheckRuleComponent : Component
     public float UpdateRate => 1.0f / NumberPerSecond;
     public float FrameTimeAccumulator = 0.0f;
 }
+
+/// <summary>
+/// This component is used to detect when APCs are constructed
+/// while the PowerGridCheckRule is active.
+/// </summary>
+[RegisterComponent]
+public sealed partial class PowerGridCheckNotifyComponent : Component
+{
+}
