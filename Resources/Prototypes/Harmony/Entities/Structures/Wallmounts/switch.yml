@@ -1,0 +1,65 @@
+# Button frames
+- type: entity
+  id: ButtonFrameGreyBuildable
+  parent: ButtonFrame
+  suffix: grey
+  components:
+    - type: Sprite
+      drawdepth: SmallObjects
+      sprite: Structures/Wallmounts/switch_frame.rsi
+      state: grey
+    - type: Construction
+      graph: ButtonFrameGraph
+      node: ButtonFrameGreyNode
+
+- type: entity
+  id: ButtonFrameCautionBuildable
+  parent: ButtonFrame
+  suffix: caution
+  components:
+    - type: Sprite
+      drawdepth: SmallObjects
+      sprite: Structures/Wallmounts/switch_frame.rsi
+      state: caution
+    - type: Construction
+      graph: ButtonFrameGraph
+      node: ButtonFrameCautionNode
+
+- type: entity
+  id: ButtonFrameCautionSecurityBuildable
+  parent: ButtonFrame
+  suffix: caution_security
+  components:
+    - type: Sprite
+      drawdepth: SmallObjects
+      sprite: Structures/Wallmounts/switch_frame.rsi
+      state: caution_security
+    - type: Construction
+      graph: ButtonFrameGraph
+      node: ButtonFrameCautionSecurityNode
+
+- type: entity
+  id: ButtonFrameExitBuildable
+  parent: ButtonFrame
+  suffix: exit
+  components:
+    - type: Sprite
+      drawdepth: SmallObjects
+      sprite: Structures/Wallmounts/switch_frame.rsi
+      state: exit
+    - type: Construction
+      graph: ButtonFrameGraph
+      node: ButtonFrameExitNode
+
+- type: entity
+  id: ButtonFrameJanitorBuildable
+  parent: ButtonFrame
+  suffix: janitor
+  components:
+    - type: Sprite
+      drawdepth: SmallObjects
+      sprite: Structures/Wallmounts/switch_frame.rsi
+      state: janitor
+    - type: Construction
+      graph: ButtonFrameGraph
+      node: ButtonFrameJanitorNode
