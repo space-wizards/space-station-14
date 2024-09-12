@@ -92,7 +92,7 @@ public sealed partial class CellSequencerWindow : FancyWindow
             return;
         }
         CellColorLabel.SetMessage(colorMarkup);
-        CellStabilityLabel.Text = Loc.GetString("cell-sequencer-menu-cell-stability-label", ("stability", _selectedCell.Stability * 100));
+        CellStabilityLabel.Text = Loc.GetString("cell-sequencer-menu-cell-stability-label", ("stability", Math.Round(_selectedCell.Stability * 100f, 3)));
         CellRemoteLabel.Text = Loc.GetString("cell-sequencer-menu-cell-remote-label", ("remote", _sequencerEntry?.Remote.ToString() ?? "???"));
         CellCostLabel.Text = Loc.GetString("cell-sequencer-menu-cell-cost-label", ("cost", _selectedCell.Cost));
 

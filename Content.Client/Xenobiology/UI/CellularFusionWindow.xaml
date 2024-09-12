@@ -58,13 +58,18 @@
 
                 <BoxContainer Name="CellInfoContainer" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" Margin="8" Visible="False">
                     <Label Name="CellNameLabel"/>
+
                     <customControls:HSeparator Margin="4 0" StyleClasses="LowDivider" />
+
                     <RichTextLabel Name="CellColorLabel"/>
+
                     <Label Name="CellStabilityLabel"/>
-                    <Label Name="CellRemoteLabel"/>
                     <Label Name="CellCostLabel"/>
+
                     <customControls:HSeparator Margin="4 0" StyleClasses="LowDivider" />
-                    <Label Text="{Loc 'cell-sequencer-menu-cell-modifiers-label'}"/>
+
+                    <Label Text="{Loc 'cellular-fusion-menu-cell-modifiers-label'}"/>
+
                     <RichTextLabel Name="CellModifiersText" />
                 </BoxContainer>
             </PanelContainer>

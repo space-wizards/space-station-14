@@ -2,21 +2,25 @@
   id: Murine
   name: cell-Murine-name
   color: "#494546"
+  stability: 1
 
 - type: cell
   id: Galliform
   name: cell-Galliform-name
   color: "#C2B280"
+  stability: 0.97
 
 - type: cell
   id: Bovine
   name: cell-Bovine-name
   color: "#7F5B3E"
+  stability: 0.95
 
 - type: cell
   id: Feliform
   name: cell-Feliform-name
   color: "#A0522D"
+  stability: 0.92
   modifiers:
   - OwO
 
@@ -34,11 +38,13 @@
   id: Cyprinid
   name: cell-Cyprinid-name
   color: "#4682B4"
+  stability: 0.84
 
 - type: cell
   id: CartilaginousCyprinid
   name: cell-CartilaginousCyprinid-name
   color: "#5F9EA0"
+  stability: 0.8
 
 - type: cell
   id: Ophidic
@@ -69,3 +75,4 @@
   id: Pseudoarachnoid
   name: cell-Pseudoarachnoid-name
   color: "#DDA0DD"
+  stability: 0.81

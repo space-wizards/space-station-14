@@ -80,16 +80,18 @@ public sealed partial class CellularFusionWindow : FancyWindow
 
         SetCellInfoName(SharedCellSystem.GetMergedName(entryA.Cell, entryB.Cell));
         SetCellInfoColor(SharedCellSystem.GetMergedColor(entryA.Cell, entryB.Cell));
+        SetCellInfoStability(SharedCellSystem.GetMergedStability(entryA.Cell, entryB.Cell));
+        SetCellInfoCost(SharedCellSystem.GetMergedCost(entryA.Cell, entryB.Cell));
     }
 
     private void SetCellInfoName(string name)
     {
-        CellNameLabel.Text = Loc.GetString("cell-sequencer-menu-cell-name-label", ("name", name));
+        CellNameLabel.Text = Loc.GetString("cellular-fusion-menu-cell-name-label", ("name", name));
     }
 
     private void SetCellInfoColor(Color color)
     {
-        var colorTitle = Loc.GetString("cell-sequencer-menu-cell-color-label", ("color", color.ToHex()));
+        var colorTitle = Loc.GetString("cellular-fusion-menu-cell-color-label", ("color", color.ToHex()));
 
         if (!FormattedMessage.TryFromMarkup(colorTitle, out var colorMarkup))
         {
@@ -98,5 +100,15 @@ public sealed partial class CellularFusionWindow : FancyWindow
         }
 
         CellColorLabel.SetMessage(colorMarkup);
+    }
+
+    private void SetCellInfoStability(float stability)
+    {
+        CellStabilityLabel.Text = Loc.GetString("cellular-fusion-menu-cell-stability-label", ("stability", Math.Round(stability * 100f, 3)));
+    }
+
+    private void SetCellInfoCost(int cost)
+    {
+        CellCostLabel.Text = Loc.GetString("cellular-fusion-menu-cell-cost-label", ("cost", cost));
     }
 }
