@@ -71,7 +71,7 @@ public abstract partial class SharedStationAiSystem
         var soundToPlay = component.Enabled
             ? AirlockOverchargeDisabled
             : AirlockOverchargeEnabled;
-        _audio.PlayEntity(soundToPlay, args.User, ent);
+        _audio.PlayLocal(soundToPlay, ent, args.User);
     }
 }
 
