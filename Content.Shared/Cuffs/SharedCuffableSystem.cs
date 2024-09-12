@@ -7,6 +7,7 @@ using Content.Shared.Buckle.Components;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
+using Content.Shared.GreyStation.Cuffs; // GreyStation: Import ModifyCuffSpeedEvent
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -14,6 +15,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Inventory; // GreyStation: Import InventorySystem
 using Content.Shared.Inventory.Events;
 using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Item;
@@ -44,6 +46,7 @@ namespace Content.Shared.Cuffs
         [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
         [Dependency] private readonly AlertsSystem _alerts = default!;
+        [Dependency] private readonly InventorySystem _inventory = default!; // GreyStation
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedContainerSystem _container = default!;
         [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
@@ -502,6 +505,15 @@ namespace Content.Shared.Cuffs
 
             if (HasComp<DisarmProneComponent>(target))
                 cuffTime = 0.0f; // cuff them instantly.
+
+            // GreyStation - let the cuffers clothing affect the doafter
+            if (TryComp<InventoryComponent>(user, out var inventory))
+            {
+                var ev = new ModifyCuffSpeedEvent(target);
+                _inventory.RelayEvent((user, inventory), ref ev);
+                cuffTime = MathF.Max(cuffTime + ev.Adjustment, 0f);
+            }
+            /// End GreyStation code
 
             var doAfterEventArgs = new DoAfterArgs(EntityManager, user, cuffTime, new AddCuffDoAfterEvent(), handcuff, target, handcuff)
             {

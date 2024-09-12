@@ -255,7 +255,7 @@
       - type: CriminalRecordsHacker
 
 - type: entity
-  parent: [ClothingHandsGlovesColorBlack, BaseSecurityCargoContraband]
+  parent: [ClothingHandsGlovesColorBlack, BaseSecurityEngineeringContraband] # GreyStation - engineering instead of cargo, viva atmosia
   id: ClothingHandsGlovesCombat
   name: combat gloves
   description: These tactical gloves are fireproof and shock resistant.
@@ -267,6 +267,7 @@
   - type: Insulated
   - type: Fiber
     fiberMaterial: fibers-insulative
+  - type: FastCuffing # GreyStation - hos and warden get these so act like security gloves
 
 # can't parent combat gloves since they are butcherable
 - type: entity
