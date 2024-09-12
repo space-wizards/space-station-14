@@ -95,3 +95,58 @@
               prototype: SheetSteel1
               amount: 1
             - !type:DeleteEntity {}
+
+# Lockable buttons
+- type: constructionGraph
+  id: LockableButtonGraph
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: assembly
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 2.0
+            - material: Plastic
+              amount: 1
+
+    - node: assembly
+      entity: LockableButtonBuildableAssembly
+      edges:
+        - to: LockableButtonNode
+          steps:
+            - tag: DoorElectronics
+              store: board
+              name: "door electronics circuit board"
+              icon:
+                sprite: "Objects/Misc/module.rsi"
+                state: "door_electronics"
+              doAfter: 2.0
+        - to: start
+          steps:
+            - tool: Screwing
+              doAfter: 2.0
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:SpawnPrototype
+              prototype: SheetPlastic1
+              amount: 1
+            - !type:DeleteEntity {}
+
+    - node: LockableButtonNode
+      entity: LockableButtonBuildable
+      edges:
+        - to: assembly
+          conditions:
+            - !type:Locked
+              locked: false
+          steps:
+            - tool: Screwing
+              doAfter: 2.0
+          completed:
+            - !type:EmptyAllContainers
+              pickup: true
+              emptyAtUser: true
