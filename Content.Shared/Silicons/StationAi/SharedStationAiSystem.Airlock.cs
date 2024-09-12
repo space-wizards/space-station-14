@@ -27,14 +27,14 @@ public abstract partial class SharedStationAiSystem
     {
         if (component.BoltWireCut)
         {
-            _popup.PopupClient(Loc.GetString("ai-device-not-responding"), args.User, PopupType.MediumCaution);
+            ShowDeviceNotRespondingPopup(args.User);
             return;
         }
 
         var setResult = _doors.TrySetBoltDown((ent, component), args.Bolted, args.User, predicted: true);
         if (!setResult)
         {
-            _popup.PopupClient(Loc.GetString("ai-device-not-responding"), args.User, PopupType.MediumCaution);
+            ShowDeviceNotRespondingPopup(args.User);
         }
     }
 
@@ -45,7 +45,7 @@ public abstract partial class SharedStationAiSystem
     {
         if (!PowerReceiver.IsPowered(ent))
         {
-            _popup.PopupClient(Loc.GetString("ai-device-not-responding"), args.User, PopupType.MediumCaution);
+            ShowDeviceNotRespondingPopup(args.User);
             return;
         }
 
@@ -67,7 +67,7 @@ public abstract partial class SharedStationAiSystem
             || !PowerReceiver.IsPowered(ent)
         )
         {
-            _popup.PopupClient(Loc.GetString("ai-device-not-responding"), args.User, PopupType.MediumCaution);
+            ShowDeviceNotRespondingPopup(args.User);
             return;
         }
 

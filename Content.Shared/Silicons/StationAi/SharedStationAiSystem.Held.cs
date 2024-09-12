@@ -119,16 +119,22 @@ public abstract partial class SharedStationAiSystem
         if (whitelistComponent is { Enabled: false })
         {
             ev.Cancel();
-            _popup.PopupClient(Loc.GetString("ai-device-not-responding"), ev.Actor, PopupType.MediumCaution);
+            ShowDeviceNotRespondingPopup(ev.Actor);
         }
     }
 
     private void OnHeldInteraction(Entity<StationAiHeldComponent> ent, ref InteractionAttemptEvent args)
     {
-        // Cancel if it's not us or something with a whitelist.
-        args.Cancelled = ent.Owner != args.Target &&
-                         args.Target != null &&
-                         !HasComp<StationAiWhitelistComponent>(args.Target);
+        StationAiWhitelistComponent? whitelistComponent = null;
+        // Cancel if it's not us or something with a whitelist, or whitelist is disabled.
+        args.Cancelled = ent.Owner != args.Target
+                         && args.Target != null
+                         && (!TryComp(args.Target, out whitelistComponent)
+                             || !whitelistComponent.Enabled);
+        if (whitelistComponent is { Enabled: false })
+        {
+            ShowDeviceNotRespondingPopup(ent.Owner);
+        }
     }
 
     private void OnTargetVerbs(Entity<StationAiWhitelistComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
@@ -143,7 +149,7 @@ public abstract partial class SharedStationAiSystem
         var user = args.User;
         if (!ent.Comp.Enabled)
         {
-            _popup.PopupClient(Loc.GetString("ai-device-not-responding"), user, PopupType.MediumCaution);
+            ShowDeviceNotRespondingPopup(user);
             return;
         }
 
@@ -159,7 +165,7 @@ public abstract partial class SharedStationAiSystem
                 // no need to show menu if device is not powered.
                 if (!PowerReceiver.IsPowered(ent.Owner))
                 {
-                    _popup.PopupClient(Loc.GetString("ai-device-not-responding"), user, PopupType.MediumCaution);
+                    ShowDeviceNotRespondingPopup(user);
                     return;
                 }
 
@@ -174,6 +180,11 @@ public abstract partial class SharedStationAiSystem
             }
         };
         args.Verbs.Add(verb);
+    }
+
+    private void ShowDeviceNotRespondingPopup(EntityUid toEntity)
+    {
+        _popup.PopupClient(Loc.GetString("ai-device-not-responding"), toEntity, PopupType.MediumCaution);
     }
 }
 
