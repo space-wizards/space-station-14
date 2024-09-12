@@ -201,6 +201,15 @@ public sealed partial class RevenantComponent : Component
     public EntityWhitelist? MalfunctionBlacklist;
     #endregion
 
+    #region Blood Writing
+    [ViewVariables(VVAccess.ReadWrite), DataField("bloodWritingCost")]
+    public FixedPoint2 BloodWritingCost = -2;
+
+    [ViewVariables(VVAccess.ReadOnly), DataField]
+    public EntityUid? BloodCrayon;
+
+    #endregion
+
     [DataField]
     public ProtoId<AlertPrototype> EssenceAlert = "Essence";
 

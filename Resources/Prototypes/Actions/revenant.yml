@@ -46,3 +46,14 @@
     icon: Interface/Actions/malfunction.png
     event: !type:RevenantMalfunctionActionEvent
     useDelay: 20
+
+- type: entity
+  id: ActionRevenantBloodWriting
+  name: Blood Writing
+  description: Costs 2 Essence per glyph.
+  components:
+    - type: InstantAction
+      icon: Interface/Actions/blood-writing.png
+      event: !type:RevenantBloodWritingEvent
+      useDelay: 1
+    
