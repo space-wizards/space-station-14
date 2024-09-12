@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Xenobiology.Components.Machines;
 
-namespace Content.Shared.Xenobiology.Systems.Machines;
+namespace Content.Shared.Xenobiology.Systems.Machines.Connection;
 
 public sealed class CellClientSystem : EntitySystem
 {

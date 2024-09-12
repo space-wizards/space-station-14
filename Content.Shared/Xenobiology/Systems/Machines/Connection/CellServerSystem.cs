@@ -2,7 +2,7 @@
 using Content.Shared.Xenobiology.Components.Machines;
 using Content.Shared.Xenobiology.Events;
 
-namespace Content.Shared.Xenobiology.Systems.Machines;
+namespace Content.Shared.Xenobiology.Systems.Machines.Connection;
 
 public sealed class CellServerSystem : EntitySystem
 {

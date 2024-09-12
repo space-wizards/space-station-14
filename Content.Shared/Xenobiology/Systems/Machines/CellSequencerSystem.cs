@@ -2,6 +2,7 @@
 using Content.Shared.Popups;
 using Content.Shared.Xenobiology.Components;
 using Content.Shared.Xenobiology.Components.Machines;
+using Content.Shared.Xenobiology.Systems.Machines.Connection;
 using Content.Shared.Xenobiology.UI;
 using Robust.Shared.Containers;
 
