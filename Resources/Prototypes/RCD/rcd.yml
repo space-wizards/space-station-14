@@ -270,6 +270,6 @@
   prototype: CableTerminal
   cost: 1
   delay: 0
-  collisionMask: InteractImpassable
+  collisionMask: Impassable
   rotation: User
   fx: EffectRCDConstruct0
