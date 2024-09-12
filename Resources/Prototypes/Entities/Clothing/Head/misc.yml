@@ -312,3 +312,35 @@
       - WhitelistChameleon
   - type: StaticPrice
     price: 1
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatHairflowerPoppy
+  name: poppy flower
+  suffix: headflower
+  description: A beautiful poppy flower that can be inserted between the locks of hair.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/hairflowers.rsi
+    state: icon-poppy
+  - type: Clothing
+    sprite: Clothing/Head/Misc/hairflowers.rsi
+    equippedPrefix: poppy
+    slots:
+    - HEAD
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatHairflowerLily
+  name: lily flower
+  suffix: headflower
+  description: A beautiful lily flower that can be inserted between the locks of hair.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/hairflowers.rsi
+    state: icon-lily
+  - type: Clothing
+    sprite: Clothing/Head/Misc/hairflowers.rsi
+    equippedPrefix: lily
+    slots:
+    - HEAD
