@@ -188,7 +188,7 @@
   name: chat-emote-name-huff
   category: Vocal
   available: false
-  icon: Interface/Emotes/squeak.png
+  icon: Interface/Emotes/huff.png
   whitelist:
     components:
       - Vocal
@@ -209,7 +209,7 @@
   name: chat-emote-name-hiss
   category: Vocal
   available: false
-  icon: Interface/Emotes/squeak.png
+  icon: Interface/Emotes/hiss.png
   whitelist:
     components:
       - Vocal
@@ -286,7 +286,7 @@
   name: chat-emote-name-thump
   category: Hands
   available: false
-  icon: Interface/Emotes/snap.png
+  icon: Interface/Emotes/tailslap.png
   whitelist:
     components:
     - Hands
@@ -302,7 +302,7 @@
     - thump tail
     - thumps tail
     - thumps their tail
-    - thumps her tai
+    - thumps her tail
     - thumps his tail
     - thumps its tail
 
