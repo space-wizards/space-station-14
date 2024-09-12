@@ -1,15 +1,21 @@
 ﻿using Content.Shared.Xenobiology.Components;
 using Content.Shared.Xenobiology.Events;
-using Content.Shared.Xenobiology.Visuals;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Xenobiology.Systems;
 
+/// <summary>
+/// The system responsible for the operation, copy, translate, update and splicing of <see cref="Cell"/>
+/// and the containers in which they are contained,
+/// without visual effects, only direct interaction.
+/// </summary>
+/// <seealso cref="CellContainerComponent"/>
+/// <seealso cref="CellGenerationComponent"/>
+/// <seealso cref="SharedCellVisualsSystem"/>
 [PublicAPI]
-public abstract class SharedCellSystem : EntitySystem
+public abstract partial class SharedCellSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
 
     public override void Initialize()
@@ -21,6 +27,9 @@ public abstract class SharedCellSystem : EntitySystem
 
     private void OnCellGenerationInit(Entity<CellGenerationComponent> ent, ref ComponentInit args)
     {
+        // It doesn't make sense to add cells to a container,
+        // if there is no container component,
+        // it's better to warn the developer about it
         if (!TryComp<CellContainerComponent>(ent, out var container))
         {
             Log.Error($"Can't ensure cells to {ent} without {nameof(CellContainerComponent)}!");
@@ -33,84 +42,98 @@ public abstract class SharedCellSystem : EntitySystem
         }
     }
 
-    public void AddCell(Entity<CellContainerComponent?> ent, ProtoId<CellPrototype> cellId)
+    /// <summary>
+    /// Adds a new <see cref="Cell"/> instance created from the prototype to the container.
+    /// </summary>
+    /// <seealso cref="CellPrototype"/>
+    public bool AddCell(Entity<CellContainerComponent?> ent, ProtoId<CellPrototype> cellId)
     {
-        if (!Resolve(ent, ref ent.Comp))
-            return;
+        // Check the availability of the component and the prototype we need
+        if (!Resolve(ent, ref ent.Comp) || !_prototype.TryIndex(cellId, out var cellPrototype))
+            return false;
 
-        AddCell(ent, new Cell(_prototype.Index(cellId)));
+        return AddCell(ent, new Cell(cellPrototype));
     }
 
-    public void AddCell(Entity<CellContainerComponent?> ent, Cell cell)
+    /// <summary>
+    /// Adds a new <see cref="Cell"/> instance to the container.
+    /// </summary>
+    /// <seealso cref="ApplyAddCellModifiers"/>
+    public bool AddCell(Entity<CellContainerComponent?> ent, Cell cell)
     {
         if (!Resolve(ent, ref ent.Comp))
-            return;
+            return false;
 
+        // Add cell to container
         ent.Comp.Cells.Add(cell);
         Dirty(ent);
 
+        // Create an event, and notify all subscribers about the addition of a cell
         var ev = new CellAdded(GetNetEntity(ent), cell);
         RaiseLocalEvent(ent, ev);
 
-        if (!ent.Comp.AllowModifiers)
-            return;
-
-        foreach (var modifierId in cell.Modifiers)
+        if (ent.Comp.AllowModifiers)
         {
-            if (!_prototype.TryIndex(modifierId, out var modifierProto))
-                continue;
-
-            foreach (var modifier in modifierProto.Modifiers)
-            {
-                modifier.OnAdd(ent!, cell, EntityManager);
-            }
+            ApplyAddCellModifiers(ent!, cell);
         }
+
+        return true;
     }
 
-    public void RemoveCell(Entity<CellContainerComponent?> ent, Cell cell)
+    /// <summary>
+    /// Remove a <see cref="Cell"/> instance from the container.
+    /// </summary>
+    /// <seealso cref="ApplyRemoveCellModifiers"/>
+    public bool RemoveCell(Entity<CellContainerComponent?> ent, Cell cell)
     {
         if (!Resolve(ent, ref ent.Comp))
-            return;
+            return false;
 
+        // We try to remove the cell, if we failed,
+        // then it is already removed, and we do not need further methods
         if (!ent.Comp.Cells.Remove(cell))
-            return;
+            return false;
 
+        // Yes, this system uses predict,
+        // but we still need to synchronize the state to avoid unnecessary problems
         Dirty(ent);
 
+        // Create an event, and notify all subscribers about the removing of a cell
         var ev = new CellRemoved(GetNetEntity(ent), cell);
         RaiseLocalEvent(ent, ev);
 
-        if (!ent.Comp.AllowModifiers)
-            return;
-
-        foreach (var modifierId in cell.Modifiers)
+        if (ent.Comp.AllowModifiers)
         {
-            if (!_prototype.TryIndex(modifierId, out var modifierProto))
-                continue;
-
-            foreach (var modifier in modifierProto.Modifiers)
-            {
-                modifier.OnRemove(ent!, cell, EntityManager);
-            }
+            ApplyRemoveCellModifiers(ent!, cell);
         }
+
+        return true;
     }
 
+    /// <summary>
+    /// Remove all <see cref="Cell"/> instances from the container.
+    /// </summary>
+    /// <seealso cref="RemoveCell"/>
     public void ClearCells(Entity<CellContainerComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp))
             return;
 
-        // I'm lazy fix later
-        foreach (var cell in new List<Cell>(ent.Comp.Cells))
+        // for loop is used to avoid problems with collection iterating
+        // and deleting its elements in same loop
+
+        // ReSharper disable once ForCanBeConvertedToForeach
+        for (var i = 0; i < ent.Comp.Cells.Count; i++)
         {
-            RemoveCell(ent, cell);
+            RemoveCell(ent, ent.Comp.Cells[i]);
         }
     }
 
     /// <summary>
     /// Adds all cells from the target container to the current container.
     /// </summary>
-    public void CollectCells(Entity<CellContainerComponent?> ent, Entity<CellContainerComponent?> target)
+    /// <seealso cref="AddCell(Entity{CellContainerComponent?}, Cell)"/>
+    public void CopyCells(Entity<CellContainerComponent?> ent, Entity<CellContainerComponent?> target)
     {
         if (!Resolve(ent, ref ent.Comp) || !Resolve(target, ref target.Comp))
             return;
@@ -121,38 +144,17 @@ public abstract class SharedCellSystem : EntitySystem
         }
     }
 
-    protected void UpdateCollectorAppearance(Entity<CellCollectorComponent, CellContainerComponent?> ent)
+    /// <summary>
+    /// Adds all cells from the target container to the current container and clear it.
+    /// </summary>
+    /// <seealso cref="CopyCells"/>
+    /// <seealso cref="ClearCells"/>
+    public void TransferCells(Entity<CellContainerComponent?> ent, Entity<CellContainerComponent?> target)
     {
-        if (!Resolve(ent, ref ent.Comp2))
+        if (!Resolve(ent, ref ent.Comp) || !Resolve(target, ref target.Comp))
             return;
 
-        _appearance.SetData(ent, CellCollectorVisuals.State, ent.Comp2.Empty);
-    }
-
-    public static float GetMergedStability(Cell cellA, Cell cellB)
-    {
-        var max = Math.Max(cellA.Stability, cellB.Stability);
-        var delta = Math.Abs(cellA.Stability - cellB.Stability);
-
-        // This is a simple but not the best implementation,
-        // I think more thought should be given to this formula
-        return max * (1 - delta);
-    }
-
-    public static string GetMergedName(Cell cellA, Cell cellB)
-    {
-        var nameA = cellA.Name[..(cellA.Name.Length / 2)];
-        var nameB = cellB.Name[(cellA.Name.Length / 2)..];
-        return $"{nameA}{nameB}";
-    }
-
-    public static Color GetMergedColor(Cell cellA, Cell cellB)
-    {
-        return Color.InterpolateBetween(cellA.Color, cellB.Color, 0.5f);
-    }
-
-    public static int GetMergedCost(Cell cellA, Cell cellB)
-    {
-        return cellA.Cost + cellB.Cost;
+        CopyCells(ent, target);
+        ClearCells(ent);
     }
 }

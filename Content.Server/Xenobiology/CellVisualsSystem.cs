@@ -2,4 +2,4 @@
 
 namespace Content.Server.Xenobiology;
 
-public sealed class CellDishVisualsSystem : SharedCellDishVisualsSystem;
+public sealed class CellVisualsSystem : SharedCellVisualsSystem;

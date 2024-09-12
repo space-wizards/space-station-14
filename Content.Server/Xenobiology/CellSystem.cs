@@ -8,11 +8,14 @@ using Content.Shared.Whitelist;
 using Content.Shared.Xenobiology;
 using Content.Shared.Xenobiology.Components;
 using Content.Shared.Xenobiology.Systems;
+using Content.Shared.Xenobiology.Visuals;
+using Robust.Server.GameObjects;
 
 namespace Content.Server.Xenobiology;
 
 public sealed class CellSystem : SharedCellSystem
 {
+    [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
     [Dependency] private readonly EntityWhitelistSystem _entityWhitelist = default!;
@@ -64,7 +67,7 @@ public sealed class CellSystem : SharedCellSystem
         switch (args.Direction)
         {
             case CellCollectorDirection.Collection:
-                CollectCells(ent.Owner, args.Target.Value);
+                CopyCells(ent.Owner, args.Target.Value);
 
                 _popup.PopupPredicted(Loc.GetString("cell-collector-collected"), ent, null);
 
@@ -75,7 +78,7 @@ public sealed class CellSystem : SharedCellSystem
                 break;
 
             case CellCollectorDirection.Transfer:
-                CollectCells(args.Target.Value, ent.Owner);
+                CopyCells(args.Target.Value, ent.Owner);
                 ClearCells(ent.Owner);
 
                 _popup.PopupPredicted(Loc.GetString("cell-collector-transfer"), ent, null);
@@ -87,6 +90,14 @@ public sealed class CellSystem : SharedCellSystem
 
         UpdateCollectorAppearance(ent);
         args.Handled = true;
+    }
+
+    private void UpdateCollectorAppearance(Entity<CellCollectorComponent, CellContainerComponent?> ent)
+    {
+        if (!Resolve(ent, ref ent.Comp2))
+            return;
+
+        _appearance.SetData(ent, CellCollectorVisuals.State, ent.Comp2.Empty);
     }
 
     private bool CollectorInteractValidate(Entity<CellCollectorComponent, CellContainerComponent?> ent,

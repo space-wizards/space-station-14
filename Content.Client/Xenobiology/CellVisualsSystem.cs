@@ -5,7 +5,7 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Xenobiology;
 
-public sealed class CellDishVisualsSystem : SharedCellDishVisualsSystem
+public sealed class CellVisualsSystem : SharedCellVisualsSystem
 {
     public override void Initialize()
     {
