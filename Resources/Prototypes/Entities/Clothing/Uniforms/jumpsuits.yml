@@ -398,14 +398,14 @@
 
 - type: entity
   parent: [ClothingUniformBase, BaseCommandContraband]
-  id: ClothingUniformJumpsuitGenericCommand
-  name: head of personnel's jumpsuit
-  description: A generic command colored jumpsuit not associated with any department in particular.
+  id: ClothingUniformJumpsuitCommandGeneric
+  name: command jumpsuit
+  description: A generic command colored jumpsuit not associated with any particular department.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/hop.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/commandgeneric.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/hop.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/commandgeneric.rsi
 
 - type: entity
   parent: ClothingUniformBase
