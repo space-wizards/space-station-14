@@ -8,6 +8,19 @@
       department: Command
       time: 3600 # 1 hour
 
+# Flowers
+- type: loadout
+  id: Poppy
+  storage:
+    back:
+    - FoodPoppy
+
+- type: loadout
+  id: Lily
+  storage:
+    back:
+    - FoodLily
+
 # Plushies
 - type: loadout
   id: PlushieLizard
