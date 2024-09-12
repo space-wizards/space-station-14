@@ -1,7 +1,7 @@
 - type: entity
   id: BaseSpeedLoaderMagnum
   name: "speed loader (.45 magnum)"
-  parent: BaseItem
+  parent: [ BaseItem, BaseRestrictedContraband ]
   abstract: true
   components:
   - type: Tag

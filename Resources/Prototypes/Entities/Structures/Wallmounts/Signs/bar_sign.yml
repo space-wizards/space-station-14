@@ -48,7 +48,7 @@
 #- type: entity
 #  id: LargeBarSign
 #  name: large bar sign
-#  noSpawn: true
+#  categories: [ HideSpawnMenu ]
 #  components:
 #  - type: Clickable
 #  - type: InteractionOutline

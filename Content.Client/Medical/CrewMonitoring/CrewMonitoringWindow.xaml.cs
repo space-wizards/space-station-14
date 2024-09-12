@@ -257,7 +257,7 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
             mainContainer.AddChild(jobContainer);
 
             // Job icon
-            if (_prototypeManager.TryIndex<StatusIconPrototype>(sensor.JobIcon, out var proto))
+            if (_prototypeManager.TryIndex<JobIconPrototype>(sensor.JobIcon, out var proto))
             {
                 var jobIcon = new TextureRect()
                 {

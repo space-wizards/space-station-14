@@ -12,4 +12,10 @@ public sealed partial class HTNCompoundPrototype : IPrototype
 
     [DataField("branches", required: true)]
     public List<HTNBranch> Branches = new();
+
+    /// <summary>
+    /// Exclude this compound task from the CompoundRecursion integration test.
+    /// </summary>
+    [DataField]
+    public bool AllowRecursion = false;
 }

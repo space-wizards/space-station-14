@@ -1,4 +1,5 @@
 using Content.Server.Shuttles.Components;
+using Content.Shared.CCVar;
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Events;
@@ -12,6 +13,26 @@ public sealed partial class ShuttleSystem
         SubscribeLocalEvent<IFFConsoleComponent, AnchorStateChangedEvent>(OnIFFConsoleAnchor);
         SubscribeLocalEvent<IFFConsoleComponent, IFFShowIFFMessage>(OnIFFShow);
         SubscribeLocalEvent<IFFConsoleComponent, IFFShowVesselMessage>(OnIFFShowVessel);
+        SubscribeLocalEvent<GridSplitEvent>(OnGridSplit);
+    }
+
+    private void OnGridSplit(ref GridSplitEvent ev)
+    {
+        var splitMass = _cfg.GetCVar(CCVars.HideSplitGridsUnder);
+
+        if (splitMass < 0)
+            return;
+
+        foreach (var grid in ev.NewGrids)
+        {
+            if (!_physicsQuery.TryGetComponent(grid, out var physics) ||
+                physics.Mass > splitMass)
+            {
+                continue;
+            }
+
+            AddIFFFlag(grid, IFFFlags.HideLabel);
+        }
     }
 
     private void OnIFFShow(EntityUid uid, IFFConsoleComponent component, IFFShowIFFMessage args)
