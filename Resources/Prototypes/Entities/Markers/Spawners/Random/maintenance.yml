@@ -88,6 +88,7 @@
       - id: ClothingShoesTourist
       - id: ClothingUniformJumpsuitLoungewear
       - id: ClothingHeadHatCowboyRed
+      - id: ClothingMaskPacifier
     # Uncommon Group
     - !type:GroupSelector
       weight: 23

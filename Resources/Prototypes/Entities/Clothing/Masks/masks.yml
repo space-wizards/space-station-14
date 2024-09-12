@@ -665,3 +665,24 @@
   - type: EyeProtection
   - type: BreathMask
   - type: IdentityBlocker
+
+- type: entity
+  parent: ClothingMaskBase
+  id: ClothingMaskPacifier
+  name: pacifier
+  description: Helps to cope with stress. Recommended for prisoners.
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/pacifier.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/pacifier.rsi
+    equipDelay: 1.5
+    unequipDelay: 1.5
+  - type: IngestionBlocker
+  - type: AddAccentClothing
+    accent: ReplacementAccent
+    replacement: mumble
+  - type: Tag
+    tags:
+    - PetWearable
+    - WhitelistChameleon
