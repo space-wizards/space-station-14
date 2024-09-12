@@ -25,13 +25,17 @@ public abstract partial class SharedStationAiSystem
     /// </summary>
     private void OnAirlockBolt(EntityUid ent, DoorBoltComponent component, StationAiBoltEvent args)
     {
-        if (component.BoltWireCut || !component.Powered)
+        if (component.BoltWireCut)
         {
             _popup.PopupClient(Loc.GetString("ai-device-not-responding"), args.User, PopupType.MediumCaution);
             return;
         }
 
-        _doors.SetBoltsDown((ent, component), args.Bolted, args.User, predicted: true);
+        var setResult = _doors.TrySetBoltDown((ent, component), args.Bolted, args.User, predicted: true);
+        if (!setResult)
+        {
+            _popup.PopupClient(Loc.GetString("ai-device-not-responding"), args.User, PopupType.MediumCaution);
+        }
     }
 
     /// <summary>
