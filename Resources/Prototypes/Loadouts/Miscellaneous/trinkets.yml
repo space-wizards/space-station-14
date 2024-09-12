@@ -10,6 +10,12 @@
 
 # Flowers
 - type: loadout
+  id: FlowerWreath
+  storage:
+    back:
+    - ClothingHeadHatFlowerWreath
+
+- type: loadout
   id: Poppy
   storage:
     back:
