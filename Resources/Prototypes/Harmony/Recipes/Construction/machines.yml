@@ -1,0 +1,109 @@
+# Button frames
+- type: construction
+  name: button frame (grey)
+  id: ButtonFrameGreyRecipe
+  graph: ButtonFrameGraph
+  startNode: start
+  targetNode: ButtonFrameGreyNode
+  category: construction-category-machines
+  description: It's a frame to help distinguish switches visually.
+  icon:
+    sprite: Structures/Wallmounts/switch_frame.rsi
+    state: grey
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: true
+  canBuildInImpassable: true
+  conditions:
+    - !type:WallmountCondition
+
+- type: construction
+  name: button frame (caution)
+  id: ButtonFrameCautionRecipe
+  graph: ButtonFrameGraph
+  startNode: start
+  targetNode: ButtonFrameCautionNode
+  category: construction-category-machines
+  description: It's a frame to help distinguish switches visually.
+  icon:
+    sprite: Structures/Wallmounts/switch_frame.rsi
+    state: caution
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: true
+  canBuildInImpassable: true
+  conditions:
+    - !type:WallmountCondition
+
+- type: construction
+  name: button frame (danger)
+  id: ButtonFrameCautionSecurityRecipe
+  graph: ButtonFrameGraph
+  startNode: start
+  targetNode: ButtonFrameCautionSecurityNode
+  category: construction-category-machines
+  description: It's a frame to help distinguish switches visually.
+  icon:
+    sprite: Structures/Wallmounts/switch_frame.rsi
+    state: caution_security
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: true
+  canBuildInImpassable: true
+  conditions:
+    - !type:WallmountCondition
+
+- type: construction
+  name: button frame (exit)
+  id: ButtonFrameExitRecipe
+  graph: ButtonFrameGraph
+  startNode: start
+  targetNode: ButtonFrameExitNode
+  category: construction-category-machines
+  description: It's a frame to help distinguish switches visually.
+  icon:
+    sprite: Structures/Wallmounts/switch_frame.rsi
+    state: exit
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: true
+  canBuildInImpassable: true
+  conditions:
+    - !type:WallmountCondition
+
+- type: construction
+  name: button frame (janitor)
+  id: ButtonFrameJanitorRecipe
+  graph: ButtonFrameGraph
+  startNode: start
+  targetNode: ButtonFrameJanitorNode
+  category: construction-category-machines
+  description: It's a frame to help distinguish switches visually.
+  icon:
+    sprite: Structures/Wallmounts/switch_frame.rsi
+    state: janitor
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: true
+  conditions:
+    - !type:WallmountCondition
+  canBuildInImpassable: true
+
+# Lockable buttons
+- type: construction
+  name: lockable button
+  id: LockableButtonRecipe
+  graph: LockableButtonGraph
+  startNode: start
+  targetNode: LockableButtonNode
+  category: construction-category-machines
+  description: It's a lockable button for activating something.
+  icon:
+    sprite: Structures/Wallmounts/locked_switch.rsi
+    state: locked
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: true
+  canBuildInImpassable: true
+  conditions:
+    - !type:WallmountCondition

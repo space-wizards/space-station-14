@@ -1,0 +1,99 @@
+# Button frames
+- type: entity
+  id: ButtonFrameGreyBuildable
+  parent: ButtonFrame
+  suffix: grey
+  components:
+    - type: Sprite
+      drawdepth: SmallObjects
+      sprite: Structures/Wallmounts/switch_frame.rsi
+      state: grey
+    - type: Construction
+      graph: ButtonFrameGraph
+      node: ButtonFrameGreyNode
+
+- type: entity
+  id: ButtonFrameCautionBuildable
+  parent: ButtonFrame
+  suffix: caution
+  components:
+    - type: Sprite
+      drawdepth: SmallObjects
+      sprite: Structures/Wallmounts/switch_frame.rsi
+      state: caution
+    - type: Construction
+      graph: ButtonFrameGraph
+      node: ButtonFrameCautionNode
+
+- type: entity
+  id: ButtonFrameCautionSecurityBuildable
+  parent: ButtonFrame
+  suffix: caution_security
+  components:
+    - type: Sprite
+      drawdepth: SmallObjects
+      sprite: Structures/Wallmounts/switch_frame.rsi
+      state: caution_security
+    - type: Construction
+      graph: ButtonFrameGraph
+      node: ButtonFrameCautionSecurityNode
+
+- type: entity
+  id: ButtonFrameExitBuildable
+  parent: ButtonFrame
+  suffix: exit
+  components:
+    - type: Sprite
+      drawdepth: SmallObjects
+      sprite: Structures/Wallmounts/switch_frame.rsi
+      state: exit
+    - type: Construction
+      graph: ButtonFrameGraph
+      node: ButtonFrameExitNode
+
+- type: entity
+  id: ButtonFrameJanitorBuildable
+  parent: ButtonFrame
+  suffix: janitor
+  components:
+    - type: Sprite
+      drawdepth: SmallObjects
+      sprite: Structures/Wallmounts/switch_frame.rsi
+      state: janitor
+    - type: Construction
+      graph: ButtonFrameGraph
+      node: ButtonFrameJanitorNode
+
+# Lockable buttons
+- type: entity
+  id: LockableButtonBuildableAssembly
+  name: lockable button assembly
+  description: It's a lockable button for activating something.
+  components:
+    - type: Clickable
+    - type: InteractionOutline
+    - type: Sprite
+      sprite: Structures/Wallmounts/locked_switch.rsi
+      state: unlocked
+    - type: Construction
+      graph: LockableButtonGraph
+      node: assembly
+    - type: WallMount
+      arc: 175
+  placement:
+    mode: SnapgridCenter
+
+- type: entity
+  id: LockableButtonBuildable
+  name: constructed lockable button
+  description: It's a lockable button for activating something.
+  parent: LockableButton
+  components:
+    - type: Construction
+      graph: LockableButtonGraph
+      node: LockableButtonNode
+    - type: ContainerFill
+      containers:
+        board: [DoorElectronics]
+    - type: AccessReader
+      containerAccessProvider: board
