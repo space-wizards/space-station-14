@@ -1,20 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Space Law book added to the game.
-    type: Add
-  id: 6859
-  time: '2024-07-02T13:33:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29392
-- author: Ko4erga
-  changes:
-  - message: Dropper can be placed in med belt, plant belt and chemistry bag.
-    type: Tweak
-  - message: Dropper size changed.
-    type: Tweak
-  id: 6860
-  time: '2024-07-02T15:28:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29667
 - author: Plykiya
   changes:
   - message: You now see pickup animations when stripping objects off of people.
@@ -3913,3 +3897,22 @@
   id: 7358
   time: '2024-09-12T00:52:19.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31842
+- author: lzk228
+  changes:
+  - message: Borgs and Station AI will not receive selected in preferences traits.
+    type: Tweak
+  id: 7359
+  time: '2024-09-12T10:36:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31990
+- author: MrRobDemo
+  changes:
+  - message: Added 5% chance to make killer tomatoes a ghost role.
+    type: Add
+  - message: Killer tomatoes can now heal from being splashed with water, blood or
+      RobustHarvest.
+    type: Add
+  - message: Killer tomatoes can now escape from inventory (only intelligent).
+    type: Tweak
+  id: 7360
+  time: '2024-09-12T12:51:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31932
