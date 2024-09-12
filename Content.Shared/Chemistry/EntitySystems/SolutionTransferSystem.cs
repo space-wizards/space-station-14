@@ -205,10 +205,6 @@ public sealed class SolutionTransferSystem : EntitySystem
         var ev = new SolutionTransferredEvent(sourceEntity, targetEntity, user, actualAmount);
         RaiseLocalEvent(targetEntity, ref ev);
 
-        //var transferSuccess = new SolutionTransferredEvent(sourceEntity, targetEntity, solution);
-        //RaiseLocalEvent(sourceEntity, ref transferSuccess);
-        //RaiseLocalEvent(targetEntity, ref transferSuccess);
-
         _adminLogger.Add(LogType.Action, LogImpact.Medium,
             $"{ToPrettyString(user):player} transferred {SharedSolutionContainerSystem.ToPrettyString(solution)} to {ToPrettyString(targetEntity):target}, which now contains {SharedSolutionContainerSystem.ToPrettyString(targetSolution)}");
 
