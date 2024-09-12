@@ -200,10 +200,6 @@
    - huff
    - huffs
    - huffed
-   - sigh
-   - sighs
-   - sighed
-
 - type: emote
   id: Hiss
   name: chat-emote-name-hiss
