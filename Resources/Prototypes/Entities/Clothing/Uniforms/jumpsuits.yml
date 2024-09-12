@@ -397,6 +397,17 @@
     sprite: Clothing/Uniforms/Jumpsuit/hos_parade.rsi
 
 - type: entity
+  parent: [ClothingUniformBase, BaseCommandContraband]
+  id: ClothingUniformJumpsuitGenericCommand
+  name: head of personnel's jumpsuit
+  description: A generic command colored jumpsuit not associated with any department in particular.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/hop.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/hop.rsi
+
+- type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitHydroponics
   name: hydroponics jumpsuit

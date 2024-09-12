@@ -989,6 +989,9 @@
       - ClothingUniformJumpskirtCMO
       - ClothingUniformJumpsuitCMOTurtle
       - ClothingUniformJumpskirtCMOTurtle
+      - ClothingUniformJumpsuitCommandGeneric
+      - ClothingUniformJumpskirtCommandGeneric
+      - ClothingHeadHatCommandsoft
       - ClothingUniformJumpsuitDetective
       - ClothingUniformJumpskirtDetective
       - ClothingUniformJumpsuitEngineering

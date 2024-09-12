@@ -234,6 +234,22 @@
     Durathread: 100
 
 - type: latheRecipe
+  id: ClothingUniformJumpsuitCommandGeneric
+  result: ClothingUniformJumpsuitCommandGeneric
+  completetime: 4
+  materials:
+    Cloth: 300
+    Durathread: 100
+
+- type: latheRecipe
+  id: ClothingUniformJumpskirtCommandGeneric
+  result: ClothingUniformJumpskirtCommandGeneric
+  completetime: 4
+  materials:
+    Cloth: 300
+    Durathread: 100
+
+- type: latheRecipe
   id: ClothingUniformJumpsuitDetective
   result: ClothingUniformJumpsuitDetective
   completetime: 4
@@ -1028,6 +1044,14 @@
 - type: latheRecipe
   id: ClothingHeadHatBeretCmo
   result: ClothingHeadHatBeretCmo
+  completetime: 2
+  materials:
+    Cloth: 100
+    Durathread: 50
+
+- type: latheRecipe
+  id: ClothingHeadHatCommandsoft
+  result: ClothingHeadHatCommandsoft
   completetime: 2
   materials:
     Cloth: 100
