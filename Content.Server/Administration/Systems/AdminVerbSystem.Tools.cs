@@ -9,6 +9,7 @@ using Content.Server.Doors.Systems;
 using Content.Server.Hands.Systems;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Server.Revenant.EntitySystems;
 using Content.Server.Stack;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
@@ -25,6 +26,7 @@ using Content.Shared.Database;
 using Content.Shared.Doors.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
+using Content.Shared.Item;
 using Content.Shared.PDA;
 using Content.Shared.Stacks;
 using Content.Shared.Verbs;
@@ -55,6 +57,7 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
     [Dependency] private readonly GunSystem _gun = default!;
+    [Dependency] private readonly RevenantSystem _revenant = default!;
 
     private void AddTricksVerbs(GetVerbsEvent<Verb> args)
     {
@@ -734,6 +737,24 @@ public sealed partial class AdminVerbSystem
             };
             args.Verbs.Add(setCapacity);
         }
+
+        if (TryComp<ItemComponent>(args.Target, out var item))
+        {
+            Verb makeAnimate = new()
+            {
+                Text = "Animate Item",
+                Category = VerbCategory.Tricks,
+                Icon = new SpriteSpecifier.Rsi(new("/Textures/Mobs/Ghosts/revenant.rsi"), "icon"),
+                Act = () =>
+                {
+                    _revenant.AnimateObject(args.Target, TimeSpan.FromSeconds(60));
+                },
+                Impact = LogImpact.High,
+                Message = Loc.GetString("admin-trick-make-animate-description"),
+                Priority = (int) TricksVerbPriorities.MakeAnimate,
+            };
+            args.Verbs.Add(makeAnimate);
+        }
     }
 
     private void RefillEquippedTanks(EntityUid target, Gas gasType)
@@ -879,5 +900,6 @@ public sealed partial class AdminVerbSystem
         SnapJoints = -27,
         MakeMinigun = -28,
         SetBulletAmount = -29,
+        MakeAnimate = -30,
     }
 }

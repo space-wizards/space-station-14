@@ -203,11 +203,25 @@ public sealed partial class RevenantComponent : Component
 
     #region Blood Writing
     [ViewVariables(VVAccess.ReadWrite), DataField("bloodWritingCost")]
-    public FixedPoint2 BloodWritingCost = -2;
+    public FixedPoint2 BloodWritingCost = 2;
 
     [ViewVariables(VVAccess.ReadOnly), DataField]
     public EntityUid? BloodCrayon;
 
+    #endregion
+
+    #region Animate
+    [ViewVariables(VVAccess.ReadWrite), DataField]
+    public FixedPoint2 AnimateCost = 50;
+
+    /// <summary>
+    /// How long an item should be animated for
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField]
+    public TimeSpan AnimateTime = TimeSpan.FromSeconds(15);
+
+    [ViewVariables(VVAccess.ReadWrite), DataField]
+    public Vector2 AnimateDebuffs = new(3, 8);
     #endregion
 
     [DataField]

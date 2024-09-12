@@ -66,6 +66,10 @@ public sealed partial class RevenantBloodWritingEvent : InstantActionEvent
 {
 }
 
+public sealed partial class RevenantAnimateEvent : EntityTargetActionEvent
+{
+}
+
 
 [NetSerializable, Serializable]
 public enum RevenantVisuals : byte

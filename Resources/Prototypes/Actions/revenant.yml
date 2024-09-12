@@ -56,4 +56,17 @@
       icon: Interface/Actions/blood-writing.png
       event: !type:RevenantBloodWritingEvent
       useDelay: 1
+
+- type: entity
+  id: ActionRevenantAnimate
+  name: Animate
+  description: Costs 50 Essence.
+  components:
+    - type: EntityTargetAction
+      event: !type:RevenantAnimateEvent
+      useDelay: 1
+      canTargetSelf: false
+      whitelist:
+        components:
+          - Item
     
