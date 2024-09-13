@@ -745,7 +745,7 @@ public sealed partial class AdminVerbSystem
             {
                 Text = "Animate Item",
                 Category = VerbCategory.Tricks,
-                Icon = new SpriteSpecifier.Rsi(new("/Textures/Mobs/Ghosts/revenant.rsi"), "icon"),
+                Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/Actions/animate.png")),
                 Act = () =>
                 {
                     _revenantAnimate.TryAnimateObject(args.Target, TimeSpan.FromSeconds(60));
@@ -763,7 +763,7 @@ public sealed partial class AdminVerbSystem
             {
                 Text = "Inanimate Item",
                 Category = VerbCategory.Tricks,
-                Icon = new SpriteSpecifier.Rsi(new("/Textures/Mobs/Ghosts/revenant.rsi"), "icon"),
+                Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/Actions/inanimate.png")),
                 Act = () =>
                 {
                     _revenantAnimate.InanimateTarget(args.Target, animate);
