@@ -33,4 +33,10 @@ public sealed partial class StationGatewayComponent : Component
     {
         Params = AudioParams.Default.WithVariation(0.05f),
     };
+
+    /// <summary>
+    /// The last link that the portal will attempt to connect to after power up.
+    /// </summary>
+    [DataField]
+    public EntityUid? LastLink = null;
 }

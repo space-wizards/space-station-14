@@ -22,7 +22,6 @@ public sealed class StationGatewaySystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<StationGatewayConsoleComponent, ComponentRemove>(OnRemove);
         SubscribeLocalEvent<StationGatewayConsoleComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
         SubscribeLocalEvent<StationGatewayConsoleComponent, BoundUIOpenedEvent>(OnUIOpened);
 
@@ -39,12 +38,15 @@ public sealed class StationGatewaySystem : EntitySystem
         if (gate is null)
             return;
 
+        if (!TryComp<StationGatewayComponent>(gate.Value, out var gateComp))
+            return;
 
         //TODO error sounds
 
         if (_link.GetLink(gate.Value, out var linkedGate)) //If the pressed gateway is linked to another - cut this connection.
         {
             _link.TryUnlink(gate.Value, linkedGate.Value);
+            gateComp.LastLink = null;
         }
         else //If the pressed gateway is not connected to anything...
         {
@@ -55,8 +57,10 @@ public sealed class StationGatewaySystem : EntitySystem
             else // And we have a selected gateway - tie them together.
             {
                 if (ent.Comp.SelectedGate != gate.Value)
-                    _link.TryLink(gate.Value, ent.Comp.SelectedGate.Value);
-
+                {
+                    if (_link.TryLink(gate.Value, ent.Comp.SelectedGate.Value))
+                        gateComp.LastLink = ent.Comp.SelectedGate.Value;
+                }
                 ent.Comp.SelectedGate = null;
             }
         }
@@ -79,12 +83,25 @@ public sealed class StationGatewaySystem : EntitySystem
 
     private void OnPowerChanged(Entity<StationGatewayComponent> ent, ref PowerChangedEvent args)
     {
-        throw new NotImplementedException();
-    }
+        if (!args.Powered)
+        {
+            if (_link.GetLink(ent, out var secondLink))
+                _link.TryUnlink(ent, secondLink.Value);
+        }
+        else
+        {
+            // We look for a portal from our “memory” and see if it's connected to anything. If not, we connect to it ourselves.
+            if (ent.Comp.LastLink is null)
+                return;
 
-    private void OnRemove(Entity<StationGatewayConsoleComponent> ent, ref ComponentRemove args)
-    {
-        //Clear data
+            if (_link.GetLink(ent.Comp.LastLink.Value, out _))
+            {
+                ent.Comp.LastLink = null;
+                return;
+            }
+
+            _link.TryLink(ent, ent.Comp.LastLink.Value);
+        }
     }
 
     private void OnPacketReceived(Entity<StationGatewayConsoleComponent> ent, ref DeviceNetworkPacketEvent args)
