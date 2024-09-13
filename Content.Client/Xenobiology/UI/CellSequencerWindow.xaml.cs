@@ -12,41 +12,53 @@ namespace Content.Client.Xenobiology.UI;
 public sealed partial class CellSequencerWindow : FancyWindow
 {
     [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private readonly IEntityManager _entity = default!;
+
+    private readonly CellSystem _cell;
 
     public event Action? OnSync;
     public event Action<Cell?>? OnAdd;
     public event Action<Cell?, bool>? OnRemove;
     public event Action<Cell?>? OnPrint;
 
-    private Cell? _selectedCell;
     private CellEntryControl? _sequencerEntry;
     private int _material;
     private bool _hasContainer;
+
+    private bool SelectionIsRemote => _sequencerEntry is { Remote: true };
+
+    private Cell? SelectedCell => _sequencerEntry?.Cell;
+
+    private bool HasCell => SelectedCell is not null;
+    private bool HasMaterial => SelectedCell is { } cell && cell.Cost <= _material;
 
     public CellSequencerWindow()
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
+        _cell = _entity.System<CellSystem>();
+
+        SetMaterialCount(0);
+
         SyncButton.OnPressed += _ => OnSync?.Invoke();
-        AddButton.OnPressed += _ => OnAdd?.Invoke(_selectedCell);
+        AddButton.OnPressed += _ => OnAdd?.Invoke(SelectedCell);
         RemoveButton.OnPressed += _ =>
         {
-            OnRemove?.Invoke(_selectedCell, _sequencerEntry?.Remote ?? false);
+            OnRemove?.Invoke(SelectedCell, _sequencerEntry?.Remote ?? false);
             SelectedCellEntry(null);
         };
-        ReplaceButton.OnPressed += _ => OnPrint?.Invoke(_selectedCell);
+        ReplaceButton.OnPressed += _ => OnPrint?.Invoke(SelectedCell);
     }
 
-    public void UpdateState(CellSequencerUiState sequencerUiState)
+    public void UpdateState(CellSequencerUiState state)
     {
-        _material = sequencerUiState.Material;
-        _hasContainer = sequencerUiState.HasContainer;
+        SetMaterialCount(state.Material);
 
-        MaterialLabel.Text = Loc.GetString("cell-sequencer-menu-cell-material-label", ("material", _material));
+        _hasContainer = state.HasContainer;
 
         InsideCellContainer.RemoveAllChildren();
-        foreach (var savedCell in sequencerUiState.InsideCells)
+        foreach (var savedCell in state.InsideCells)
         {
             var entry = new CellEntryControl(savedCell, false);
             entry.OnSelect += SelectedCellEntry;
@@ -54,7 +66,7 @@ public sealed partial class CellSequencerWindow : FancyWindow
         }
 
         RemoteCellContainer.RemoveAllChildren();
-        foreach (var savedCell in sequencerUiState.RemoteCells)
+        foreach (var savedCell in state.RemoteCells)
         {
             var entry = new CellEntryControl(savedCell, true);
             entry.OnSelect += SelectedCellEntry;
@@ -64,48 +76,78 @@ public sealed partial class CellSequencerWindow : FancyWindow
 
     private void SelectedCellEntry(CellEntryControl? entry)
     {
+        SetSequencerEntry(entry);
+        SetCellInfo(SelectedCell);
+        UpdateButtonState();
+    }
+
+    private void UpdateButtonState()
+    {
+        AddButton.Disabled = !HasCell || SelectionIsRemote;
+        RemoveButton.Disabled = !HasCell || !SelectionIsRemote;
+        ReplaceButton.Disabled = !SelectionIsRemote || !HasMaterial || !_hasContainer;
+    }
+
+    private void SetSequencerEntry(CellEntryControl? entry)
+    {
         _sequencerEntry?.SetState(true);
 
-        _selectedCell = entry?.Cell;
         _sequencerEntry = entry;
         _sequencerEntry?.SetState(false);
+    }
 
-        var isRemote = false;
-        if (_sequencerEntry is not null)
-            isRemote = _sequencerEntry.Remote;
+    private void SetMaterialCount(int count)
+    {
+        _material = count;
+        MaterialLabel.Text = Loc.GetString("cell-sequencer-menu-cell-material-label", ("material", _material));
+    }
 
-        var hasMaterial = false;
-        if (_selectedCell is not null)
-            hasMaterial = _material >= _selectedCell.Cost;
+    private void SetCellInfo(Cell? cell)
+    {
+        CellInfoContainer.Visible = cell is not null;
+        NoSelectedLabel.Visible = cell is null;
 
-        AddButton.Disabled = _selectedCell is null || isRemote;
-        RemoveButton.Disabled = _selectedCell is null || !isRemote;
-        ReplaceButton.Disabled = !isRemote || !hasMaterial || !_hasContainer;
-
-        NoSelectedLabel.Visible = _selectedCell is null;
-        CellInfoContainer.Visible = _selectedCell is not null;
-
-        if (_selectedCell is null)
+        if (cell is null)
             return;
 
-        CellNameLabel.Text = Loc.GetString("cell-sequencer-menu-cell-name-label", ("name", _selectedCell.Name));
-        var colorTitle = Loc.GetString("cell-sequencer-menu-cell-color-label", ("color", _selectedCell.Color.ToHex()));
+        SetCellInfoName(cell.Name);
+        SetCellInfoColor(cell.Color);
+        SetCellInfoStability(cell.Stability);
+        SetCellInfoCost(cell.Cost);
+        SetCellInfoModifiers(cell.Modifiers);
+    }
+
+    private void SetCellInfoName(string name)
+    {
+        CellNameLabel.Text = Loc.GetString("cell-sequencer-menu-cell-name-label", ("name", name));
+    }
+
+    private void SetCellInfoColor(Color color)
+    {
+        var colorTitle = Loc.GetString("cell-sequencer-menu-cell-color-label", ("color", color.ToHex()));
+
         if (!FormattedMessage.TryFromMarkup(colorTitle, out var colorMarkup))
         {
             CellColorLabel.SetMessage(colorTitle);
             return;
         }
-        CellColorLabel.SetMessage(colorMarkup);
-        CellStabilityLabel.Text = Loc.GetString("cell-sequencer-menu-cell-stability-label", ("stability", Math.Round(_selectedCell.Stability * 100f, 3)));
-        CellRemoteLabel.Text = Loc.GetString("cell-sequencer-menu-cell-remote-label", ("remote", _sequencerEntry?.Remote.ToString() ?? "???"));
-        CellCostLabel.Text = Loc.GetString("cell-sequencer-menu-cell-cost-label", ("cost", _selectedCell.Cost));
 
-        var message = string.Empty;
-        foreach (var modifierId in _selectedCell.Modifiers)
-        {
-            var modifier = _prototype.Index(modifierId);
-            message += $"{Loc.GetString("cell-sequencer-menu-cell-modifier-message", ("name", Loc.GetString(modifier.Name)), ("color", modifier.Color.ToHex()))}\r\n";
-        }
+        CellColorLabel.SetMessage(colorMarkup);
+    }
+
+    private void SetCellInfoStability(float stability)
+    {
+        CellStabilityLabel.Text = Loc.GetString("cell-sequencer-menu-cell-stability-label", ("stability", Math.Round(stability * 100f, 3)));
+    }
+
+    private void SetCellInfoCost(int cost)
+    {
+        CellCostLabel.Text = Loc.GetString("cell-sequencer-menu-cell-cost-label", ("cost", cost));
+    }
+
+    private void SetCellInfoModifiers(List<ProtoId<CellModifierPrototype>> modifiers)
+    {
+        var message = _cell.GetCellModifiersString(modifiers);
 
         if (!FormattedMessage.TryFromMarkup(message, out var markup))
         {

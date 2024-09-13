@@ -1,4 +1,5 @@
-﻿using Content.Shared.Materials;
+﻿using System.Linq;
+using Content.Shared.Materials;
 using Content.Shared.Popups;
 using Content.Shared.Xenobiology.Components;
 using Content.Shared.Xenobiology.Components.Machines;
@@ -118,38 +119,28 @@ public sealed class CellSequencerSystem : EntitySystem
     private void OnReplace(Entity<CellSequencerComponent> ent, ref CellSequencerUiReplaceMessage args)
     {
         if (args.Cell is null)
-        {
-            _popup.PopupPredicted(Loc.GetString("cell-sequencer-no-selected"), ent, null, PopupType.MediumCaution);
             return;
-        }
 
-        if (!_cellClient.TryGetServer(ent.Owner, out var serverEnt))
-        {
-            _popup.PopupPredicted(Loc.GetString("cell-sequencer-no-connect"), ent, null, PopupType.MediumCaution);
+        if (!_cellClient.TryGetCells(ent.Owner, out var cells))
             return;
-        }
 
-        if (!serverEnt.Value.Comp.Cells.Contains(args.Cell))
+        if (!cells.Contains(args.Cell))
             return;
 
         if (ent.Comp.MaterialAmount < args.Cell.Cost)
-        {
-            _popup.PopupPredicted(Loc.GetString("cell-sequencer-not-enough-material"), ent, null, PopupType.MediumCaution);
             return;
-        }
+
+        if (!_materialStorage.TrySetMaterialAmount(ent, ent.Comp.RequiredMaterial, ent.Comp.MaterialAmount - args.Cell.Cost))
+            return;
 
         foreach (var container in ent.Comp.CellContainers)
         {
-            if (!_materialStorage.TrySetMaterialAmount(ent, ent.Comp.RequiredMaterial, ent.Comp.MaterialAmount - args.Cell.Cost))
-                break;
-
             _cell.ClearCells(container.Owner);
             _cell.AddCell(container.Owner, args.Cell);
-
-            UpdateInsideCells(ent);
-            UpdateUI(ent);
-            break;
         }
+
+        UpdateInsideCells(ent);
+        UpdateUI(ent);
     }
 
     private void UpdateUI(Entity<CellSequencerComponent> ent)
