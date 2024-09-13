@@ -58,7 +58,7 @@ public abstract class SharedAirlockSystem : EntitySystem
         if (args.State == DoorState.Closed)
         {
             component.AutoClose = true;
-            Dirty((uid, component));
+            Dirty(uid, component);
         }
     }
 
