@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: nikthechampiongr
-  changes:
-  - message: The Elite Syndicate hardsuit is now slightly slower.
-    type: Tweak
-  - message: The Elite Syndicate hardsuit now costs 12 Telecrystals.
-    type: Tweak
-  id: 6862
-  time: '2024-07-03T00:31:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29429
 - author: eoineoineoin
   changes:
   - message: Artifact Analyzer now collides with walls
@@ -3916,3 +3907,10 @@
   id: 7361
   time: '2024-09-12T15:28:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31852
+- author: themias
+  changes:
+  - message: Fixed medical PDAs sometimes toggling their lights while scanning
+    type: Fix
+  id: 7362
+  time: '2024-09-13T13:59:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32091
