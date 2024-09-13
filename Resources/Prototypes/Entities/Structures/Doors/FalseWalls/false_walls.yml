@@ -76,3 +76,17 @@
   - type: Construction
     graph: DisplacedGirder
     node: solidFalseWall
+
+- type: entity
+  id: ReinforcedFalseWall
+  name: reinforced wall
+  parent: BaseFalseWall
+  components:
+  - type: Construction
+    graph: DisplacedGirder
+    node: reinfFalseWall
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallicStrong
+  - type: Sprite
+    sprite: Structures/Doors/false_walls/reinf_fwall.rsi

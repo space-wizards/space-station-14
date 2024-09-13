@@ -420,3 +420,7 @@ ClothingBackpackDuffelSyndicateCostumeCentcom: null
 ClothingHeadsetAltCentComFake: null
 CentcomPDAFake: null
 CentcomIDCardSyndie: null
+
+# 2024-09-14
+BaseSecretDoorAssembly: DisplacedGirder
+SolidSecretDoor: SolidFalseWall

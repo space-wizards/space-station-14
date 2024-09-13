@@ -1747,3 +1747,20 @@
     state: closed
   conditions:
     - !type:TileNotBlocked
+
+- type: construction
+  name: reinforced false wall
+  id: ReinfFalseWall
+  graph: DisplacedGirder
+  startNode: start
+  targetNode: reinfFalseWall
+  category: construction-category-structures
+  description: False wall for your secrets.
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Doors/false_walls/reinf_fwall.rsi
+    state: closed
+  conditions:
+    - !type:TileNotBlocked
