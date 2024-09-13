@@ -42,6 +42,8 @@
   - type: Clickable
   - type: InteractionOutline
   - type: FireAlarm
+  - type: AtmosAlertsDevice
+    group: FireAlarm
   - type: ContainerFill
     containers:
       board: [ FireAlarmElectronics ]

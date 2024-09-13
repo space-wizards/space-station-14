@@ -4,6 +4,7 @@
   name: SmartFridge
   description: A refrigerated storage unit for keeping items cold and fresh.
   components:
+  - type: StationAiWhitelist
   - type: Advertise
     pack: SmartFridgeAds
   - type: Speech
