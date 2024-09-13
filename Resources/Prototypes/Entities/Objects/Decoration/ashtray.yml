@@ -43,8 +43,6 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 10
-  - type: StaticPrice
-    price: 1
   - type: Storage
     whitelist:
       tags:
