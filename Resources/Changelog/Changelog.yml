@@ -1,73 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Fixed sprite rotation in harm mode on rotated grids.
-    type: Fix
-  id: 6858
-  time: '2024-07-02T13:04:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29663
-- author: lzk228
-  changes:
-  - message: Space Law book added to the game.
-    type: Add
-  id: 6859
-  time: '2024-07-02T13:33:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29392
-- author: Ko4erga
-  changes:
-  - message: Dropper can be placed in med belt, plant belt and chemistry bag.
-    type: Tweak
-  - message: Dropper size changed.
-    type: Tweak
-  id: 6860
-  time: '2024-07-02T15:28:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29667
-- author: Plykiya
-  changes:
-  - message: You now see pickup animations when stripping objects off of people.
-    type: Fix
-  - message: Thieving gloves no longer have a pickup animation when stripping people.
-    type: Fix
-  id: 6861
-  time: '2024-07-03T00:01:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29665
-- author: nikthechampiongr
-  changes:
-  - message: The Elite Syndicate hardsuit is now slightly slower.
-    type: Tweak
-  - message: The Elite Syndicate hardsuit now costs 12 Telecrystals.
-    type: Tweak
-  id: 6862
-  time: '2024-07-03T00:31:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29429
-- author: eoineoineoin
-  changes:
-  - message: Artifact Analyzer now collides with walls
-    type: Fix
-  id: 6863
-  time: '2024-07-03T05:27:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28117
-- author: TheShuEd
-  changes:
-  - message: anomalies have the ability to gain invisibility behavior
-    type: Add
-  id: 6864
-  time: '2024-07-03T15:14:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29120
-- author: ArkiveDev
-  changes:
-  - message: Railings can now be constructed in all 4 orientations.
-    type: Fix
-  id: 6865
-  time: '2024-07-03T16:59:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29687
-- author: Rinary
-  changes:
-  - message: Fixed radial menus overlapping where there's many icons.
-    type: Fix
-  id: 6866
-  time: '2024-07-04T01:25:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29678
 - author: Plykiya
   changes:
   - message: An object's physics properly returns to normal after being pulled.
@@ -3910,3 +3841,81 @@
   id: 7357
   time: '2024-09-11T16:24:16.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31970
+- author: lzk228
+  changes:
+  - message: Fixed forensic pad didn't care about target identity.
+    type: Fix
+  - message: Instead of name changing, forensic pad now will have a label with target's
+      name.
+    type: Tweak
+  id: 7358
+  time: '2024-09-12T00:52:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31842
+- author: lzk228
+  changes:
+  - message: Borgs and Station AI will not receive selected in preferences traits.
+    type: Tweak
+  id: 7359
+  time: '2024-09-12T10:36:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31990
+- author: MrRobDemo
+  changes:
+  - message: Added 5% chance to make killer tomatoes a ghost role.
+    type: Add
+  - message: Killer tomatoes can now heal from being splashed with water, blood or
+      RobustHarvest.
+    type: Add
+  - message: Killer tomatoes can now escape from inventory (only intelligent).
+    type: Tweak
+  id: 7360
+  time: '2024-09-12T12:51:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31932
+- author: ScarKy0
+  changes:
+  - message: Station AI now has a comms console ability.
+    type: Add
+  - message: Station AI abilities now have a default order.
+    type: Tweak
+  id: 7361
+  time: '2024-09-12T15:28:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31852
+- author: themias
+  changes:
+  - message: Fixed medical PDAs sometimes toggling their lights while scanning
+    type: Fix
+  id: 7362
+  time: '2024-09-13T13:59:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32091
+- author: Gorox221
+  changes:
+  - message: Mech pilots receive a warning before they are ejected from the mech.
+    type: Tweak
+  - message: Now, when removing the pilot of the mech, you need to not move.
+    type: Fix
+  id: 7363
+  time: '2024-09-13T14:01:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31649
+- author: slarticodefast
+  changes:
+  - message: Extradimensional orange, holymelon, meatwheat and world peas plant mutations
+      have been added. Obtain them by mutating oranges, watermelons, wheat and laughin'
+      peas respectively.
+    type: Add
+  id: 7364
+  time: '2024-09-13T14:02:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27624
+- author: ShadowCommander
+  changes:
+  - message: Fixed PDA sometimes showing uplink and music buttons when the PDA was
+      not able to use them.
+    type: Fix
+  id: 7365
+  time: '2024-09-13T14:19:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28373
+- author: Dezzzix
+  changes:
+  - message: Now you can wear a hood in void cloak
+    type: Add
+  id: 7366
+  time: '2024-09-13T15:02:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31061
