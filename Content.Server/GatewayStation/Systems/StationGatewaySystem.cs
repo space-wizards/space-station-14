@@ -21,7 +21,14 @@ public sealed class StationGatewaySystem : EntitySystem
         SubscribeLocalEvent<StationGatewayConsoleComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
         SubscribeLocalEvent<StationGatewayConsoleComponent, BoundUIOpenedEvent>(OnUIOpened);
 
+        SubscribeLocalEvent<StationGatewayConsoleComponent, StationGatewayLinkChangeMessage>(OnUILinkChanged);
+
         SubscribeLocalEvent<StationGatewayComponent, MapInitEvent>(OnGatewayMapInit);
+    }
+
+    private void OnUILinkChanged(Entity<StationGatewayConsoleComponent> ent, ref StationGatewayLinkChangeMessage args)
+    {
+        Log.Error("CLICK");
     }
 
     private void OnGatewayMapInit(Entity<StationGatewayComponent> ent, ref MapInitEvent args)

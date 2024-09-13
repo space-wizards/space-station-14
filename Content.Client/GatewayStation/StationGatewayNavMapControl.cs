@@ -33,7 +33,7 @@ public sealed partial class StationGatewayNavMapControl : NavMapControl
     {
         base.Draw(handle);
 
-        foreach (var link in LinkLines)
+        foreach (var link in LinkLines) //TODO: Its work fine with all Maps expect Dev. Not sure why.
         {
             var map1 = _transformSystem.ToMapCoordinates(link.Start);
             var map2 = _transformSystem.ToMapCoordinates(link.End);
@@ -53,7 +53,7 @@ public sealed partial class StationGatewayNavMapControl : NavMapControl
             var pos2 = Vector2.Transform(map2.Position, _transformSystem.GetInvWorldMatrix(_xform)) - Offset;
             pos2 = ScalePosition(new Vector2(pos2.X, -pos2.Y));
 
-            handle.DrawLine(pos1, pos2, Color.Aqua);
+            handle.DrawLine(pos1, pos2, Color.Aqua); //TODO: optimize Draw calls
         }
     }
 }

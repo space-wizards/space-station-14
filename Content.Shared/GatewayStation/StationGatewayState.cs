@@ -35,3 +35,17 @@ public sealed class StationGatewayStatus
     public NetCoordinates? LinkCoordinates;
     public string Name;
 }
+
+[Serializable, NetSerializable]
+public sealed class StationGatewayLinkChangeMessage : BoundUserInterfaceMessage
+{
+    public NetEntity? Gateway;
+
+    /// <summary>
+    /// TODO
+    /// </summary>
+    public StationGatewayLinkChangeMessage(NetEntity? gateway)
+    {
+        Gateway = gateway;
+    }
+}

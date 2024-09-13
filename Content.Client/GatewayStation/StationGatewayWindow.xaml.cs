@@ -1,3 +1,4 @@
+using Content.Client.Message;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.GatewayStation;
@@ -21,10 +22,12 @@ public sealed partial class StationGatewayWindow : FancyWindow
     [Dependency] private readonly IPrototypeManager _proto = default!;
     private readonly SpriteSystem _spriteSystem;
 
+    public event Action<NetEntity?>? SendGatewayLinkChangeAction;
+
     private NetEntity? _trackedEntity;
     private Texture? _ringTexture;
 
-    public StationGatewayWindow()
+    public StationGatewayWindow(StationGatewayBoundUserInterface userInterface)
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
@@ -32,6 +35,8 @@ public sealed partial class StationGatewayWindow : FancyWindow
         _spriteSystem = _entManager.System<SpriteSystem>();
 
         NavMap.TrackedEntitySelectedAction += SetTrackedEntityFromNavMap;
+
+        SendGatewayLinkChangeAction += userInterface.SendGatewayLinkChangeMessage;
     }
 
     public void Set(string stationName, EntityUid? mapUid)
@@ -68,30 +73,65 @@ public sealed partial class StationGatewayWindow : FancyWindow
             var coordinates = _entManager.GetCoordinates(gate.Coordinates);
 
             // Primary container to hold the button UI elements
-            var mainContainer = new BoxContainer()
+            var panelContainer = new PanelContainer()
+            {
+                HorizontalAlignment = HAlignment.Center,
+                VerticalAlignment = VAlignment.Center,
+                HorizontalExpand = true,
+                Margin = new Thickness(10),
+                PanelOverride = new StyleBoxFlat
+                {
+                    BackgroundColor = new Color(30, 30, 34),
+                    BorderColor = Color.Black,
+                    BorderThickness = new(2),
+                },
+            };
+
+            GatewaysTable.AddChild(panelContainer);
+
+            var mainBox = new BoxContainer()
             {
                 Orientation = LayoutOrientation.Vertical,
                 HorizontalExpand = true,
-                MinHeight = 20,
             };
 
-            GatewaysTable.AddChild(mainContainer);
+            panelContainer.AddChild(mainBox);
 
             // Gate name
-            var nameLabel = new Label()
+            var nameLabel = new RichTextLabel()
             {
-                Text = gate.Name,
                 HorizontalExpand = true,
+                HorizontalAlignment = HAlignment.Center,
                 Margin = new Thickness(0, 5),
-                ClipText = true,
+            };
+            nameLabel.SetMarkup($"[bold]{gate.Name}[/bold]");
+
+            mainBox.AddChild(nameLabel);
+
+            //Left subpart
+            var leftBox = new BoxContainer()
+            {
+                SetWidth = 30,
+                Orientation = LayoutOrientation.Vertical,
+                HorizontalExpand = true,
             };
 
-            mainContainer.AddChild(nameLabel);
+            mainBox.AddChild(leftBox);
 
-            // Main button
-            var gatewayButton = new GatewayButton()
+            //Right subpart
+            var rightBox = new BoxContainer()
             {
-                Text = gate.LinkCoordinates is null ? Loc.GetString("gateway-console-user-interface-start-connection") : Loc.GetString("gateway-console-user-interface-cut-connection"),
+                Orientation = LayoutOrientation.Vertical,
+                HorizontalExpand = true,
+            };
+
+            mainBox.AddChild(rightBox);
+
+            // Centering button
+            var centerButton = new GatewayButton()
+            {
+                //Text = gate.LinkCoordinates is null ? Loc.GetString("gateway-console-user-interface-start-connection") : Loc.GetString("gateway-console-user-interface-cut-connection"),
+                Text = Loc.GetString("gateway-console-user-interface-locate"),
                 GatewayUid = gate.GatewayUid,
                 Coordinates = coordinates,
                 HorizontalAlignment = HAlignment.Right,
@@ -99,9 +139,9 @@ public sealed partial class StationGatewayWindow : FancyWindow
             };
 
             if (gate.GatewayUid == _trackedEntity)
-                gatewayButton.AddStyleClass(StyleNano.StyleClassButtonColorGreen);
+                centerButton.AddStyleClass(StyleNano.StyleClassButtonColorGreen);
 
-            mainContainer.AddChild(gatewayButton);
+            rightBox.AddChild(centerButton);
 
             //Add gateway coordinates to the navmap
             if (coordinates != null && NavMap.Visible && _ringTexture != null)
@@ -116,7 +156,7 @@ public sealed partial class StationGatewayWindow : FancyWindow
 
                 NavMap.Focus = _trackedEntity;
 
-                gatewayButton.OnButtonUp += args =>
+                centerButton.OnButtonUp += args =>
                 {
                     var prevTrackedEntity = _trackedEntity;
 
@@ -135,6 +175,20 @@ public sealed partial class StationGatewayWindow : FancyWindow
                     UpdateGatewaysTable(_trackedEntity, prevTrackedEntity);
                 };
             }
+
+            // Link\Unlink button
+            var linkButton = new GatewayButton()
+            {
+                Text = gate.LinkCoordinates is null ? Loc.GetString("gateway-console-user-interface-start-connection") : Loc.GetString("gateway-console-user-interface-cut-connection"),
+                GatewayUid = gate.GatewayUid,
+                HorizontalAlignment = HAlignment.Right,
+                SetWidth = 200f,
+            };
+            linkButton.OnButtonUp += _ =>
+            {
+                SendGatewayLinkChangeAction?.Invoke(gate.GatewayUid);
+            };
+            rightBox.AddChild(linkButton);
 
             //Add gateways links lines
             if (gate.Coordinates is not null && gate.LinkCoordinates is not null)

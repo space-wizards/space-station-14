@@ -1,6 +1,4 @@
 using Content.Shared.GatewayStation;
-using Robust.Client.UserInterface;
-using Serilog;
 
 namespace Content.Client.GatewayStation;
 
@@ -28,7 +26,10 @@ public sealed class StationGatewayBoundUserInterface : BoundUserInterface
             }
         }
 
-        _menu = this.CreateWindow<StationGatewayWindow>();
+        _menu = new StationGatewayWindow(this);
+        _menu.OpenCentered();
+        _menu.OnClose += Close;
+        //this.CreateWindow<StationGatewayWindow>();
         _menu.Set(stationName, gridUid);
     }
 
@@ -43,5 +44,10 @@ public sealed class StationGatewayBoundUserInterface : BoundUserInterface
                 _menu?.ShowGateways(st.Gateways, Owner, xform?.Coordinates);
                 break;
         }
+    }
+
+    public void SendGatewayLinkChangeMessage(NetEntity? gate)
+    {
+        SendMessage(new StationGatewayLinkChangeMessage(gate));
     }
 }
