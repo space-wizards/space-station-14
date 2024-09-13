@@ -133,3 +133,5 @@ admin-trick-pause-map-description = Pause the selected map. Note this doesn't en
 admin-trick-snap-joints-description = Remove all physics joints from an object. Unfortunately does not snap every bone in their body.
 admin-trick-minigun-fire-description = Makes the targetted gun fire like a minigun (very fast).
 admin-trick-set-bullet-amount-description = Quickly set the amount of unspawned bullets in a gun.
+admin-trick-make-animate-description = Animate an item and make it hostile for 60 seconds.
+admin-trick-make-inanimate-description = Render an animate item inanimate.
