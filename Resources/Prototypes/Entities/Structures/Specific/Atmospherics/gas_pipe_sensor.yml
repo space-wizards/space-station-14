@@ -5,7 +5,6 @@
   description: Reports on the status of the gas in the attached pipe network. 
   placement:
     mode: SnapgridCenter
-  suffix: General
   components:
   - type: Sprite
     sprite: Structures/Specific/Atmospherics/gas_pipe_sensor.rsi
@@ -82,6 +81,46 @@
           acts: ["Breakage"]
   - type: StaticPrice
     price: 25
+
+- type: entity
+  parent: GasPipeSensor 
+  id: GasPipeSensorDistribution 
+  suffix: Distribution
+  components:
+  - type: Label
+    currentLabel: Distribution loop
+    
+- type: entity
+  parent: GasPipeSensor 
+  id: GasPipeSensorWaste  
+  suffix: Waste
+  components:
+  - type: Label
+    currentLabel: Waste loop
+
+- type: entity
+  parent: GasPipeSensor 
+  id: GasPipeSensorMixedAir 
+  suffix: Mixed air
+  components:
+  - type: Label
+    currentLabel: Mixed air
+
+- type: entity
+  parent: GasPipeSensor 
+  id: GasPipeSensorTEGHot
+  suffix: TEG hot
+  components:
+  - type: Label
+    currentLabel: TEG hot loop
+
+- type: entity
+  parent: GasPipeSensor  
+  id: GasPipeSensorTEGCold
+  suffix: TEG cold
+  components:
+  - type: Label
+    currentLabel: TEG cold loop
     
 - type: entity
   parent: BaseItem
