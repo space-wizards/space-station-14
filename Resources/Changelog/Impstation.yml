@@ -1469,3 +1469,25 @@
   id: 191
   time: '2024-09-11T19:26:32.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/231
+- author: aada
+  changes:
+  - message: Added cloth flavored donk-pockets.
+    type: Add
+  id: 192
+  time: '2024-09-12T03:53:06.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/245
+- author: TGRCDev
+  changes:
+  - message: Added a new revenant ability to draw bloody glyphs on the ground.
+    type: Add
+  id: 193
+  time: '2024-09-12T03:52:51.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/244
+- author: formlessnameless
+  changes:
+  - message: Fixed all changeling gamemodes missing the SpaceTrafficControl event
+      handler.
+    type: Fix
+  id: 194
+  time: '2024-09-12T04:53:20.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/246
