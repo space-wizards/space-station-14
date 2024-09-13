@@ -24,3 +24,6 @@ revenant-user-interface-cost = {$price} Essence
 
 item-jump-into-pocket = The {$name} jumps into your pocket!
 item-jump-into-hands = The {$name} jumps into your hands!
+
+revenant-animate-item-animate = The {$name} becomes aggressive!
+revenant-animate-item-inanimate = The {$name} falls inert.

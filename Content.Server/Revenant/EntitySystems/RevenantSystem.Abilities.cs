@@ -50,6 +50,7 @@ using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Systems;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.Movement.Systems;
+using Robust.Shared.Player;
 
 namespace Content.Server.Revenant.EntitySystems;
 
@@ -415,6 +416,8 @@ public sealed partial class RevenantSystem
 
         var animate = EnsureComp<RevenantAnimatedComponent>(target);
 
+        _popup.PopupEntity(Loc.GetString("revenant-animate-item-animate", ("name", Comp<MetaDataComponent>(target).EntityName)), target, Filter.Pvs(target), true);
+
         EnsureComp<CombatModeComponent>(target);
         if (!HasComp<MeleeWeaponComponent>(target))
         {
@@ -487,6 +490,8 @@ public sealed partial class RevenantSystem
             RemComp<MeleeWeaponComponent>(target);
 
         RemComp<RevenantAnimatedComponent>(target);
+
+        _popup.PopupEntity(Loc.GetString("revenant-animate-item-inanimate", ("name", Comp<MetaDataComponent>(target).EntityName)), target, Filter.Pvs(target), true);
     }
 
     private void OnAnimateAction(EntityUid uid, RevenantComponent comp, RevenantAnimateEvent args)
