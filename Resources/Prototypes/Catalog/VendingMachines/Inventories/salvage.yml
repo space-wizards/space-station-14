@@ -3,13 +3,10 @@
   startingInventory:
     Crowbar: 2
     Pickaxe: 4
-    OreBag: 4
+    OreBag: 2
     Flare: 4
     FlashlightLantern: 2
-    Floodlight: 2
     HandheldGPSBasic: 2
     RadioHandheld: 2
+    WeaponGrapplingGun: 2
     WeaponProtoKineticAccelerator: 4
-    SeismicCharge: 2
-    FultonBeacon: 1
-    Fulton: 2

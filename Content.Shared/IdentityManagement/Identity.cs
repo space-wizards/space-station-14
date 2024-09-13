@@ -15,6 +15,9 @@ public static class Identity
     /// </summary>
     public static string Name(EntityUid uid, IEntityManager ent, EntityUid? viewer=null)
     {
+        if (!uid.IsValid())
+            return string.Empty;
+
         var meta = ent.GetComponent<MetaDataComponent>(uid);
         if (meta.EntityLifeStage <= EntityLifeStage.Initializing)
             return meta.EntityName; // Identity component and such will not yet have initialized and may throw NREs

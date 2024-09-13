@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: BaseAnimalOrganUnGibbable
   parent: BaseItem
   abstract: true
@@ -34,7 +34,7 @@
   id: OrganAnimalLungs
   parent: BaseAnimalOrgan
   name: lungs
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     layers:
@@ -65,7 +65,7 @@
   id: OrganAnimalStomach
   parent: BaseAnimalOrgan
   name: stomach
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     state: stomach
@@ -91,7 +91,7 @@
   id: OrganMouseStomach
   parent: OrganAnimalStomach
   name: stomach
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: SolutionContainerManager
     solutions:
@@ -102,7 +102,7 @@
   id: OrganAnimalLiver
   parent: BaseAnimalOrgan
   name: liver
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     state: liver
@@ -118,7 +118,7 @@
   id: OrganAnimalHeart
   parent: BaseAnimalOrgan
   name: heart
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     state: heart-on
@@ -135,7 +135,7 @@
   id: OrganAnimalKidneys
   parent: BaseAnimalOrgan
   name: kidneys
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     layers:

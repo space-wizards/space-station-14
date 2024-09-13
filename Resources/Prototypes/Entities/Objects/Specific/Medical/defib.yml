@@ -31,6 +31,11 @@
       size: Large
     - type: Speech
       speechVerb: Robotic
+    - type: ItemToggle
+      soundActivate:
+        path: /Audio/Items/Defib/defib_safety_on.ogg
+      soundDeactivate:
+        path: /Audio/Items/Defib/defib_safety_off.ogg
     - type: Defibrillator
       zapHeal:
         types:
@@ -42,6 +47,7 @@
     - type: GuideHelp
       guides:
       - Medical Doctor
+    - type: ToggleCellDraw
 
 - type: entity
   id: Defibrillator

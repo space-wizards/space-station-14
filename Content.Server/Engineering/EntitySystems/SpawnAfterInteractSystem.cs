@@ -65,8 +65,8 @@ namespace Content.Server.Engineering.EntitySystems
 
             EntityManager.SpawnEntity(component.Prototype, args.ClickLocation.SnapToGrid(grid));
 
-            if (component.RemoveOnInteract && stackComp == null && !((!EntityManager.EntityExists(uid) ? EntityLifeStage.Deleted : EntityManager.GetComponent<MetaDataComponent>(component.Owner).EntityLifeStage) >= EntityLifeStage.Deleted))
-                EntityManager.DeleteEntity(uid);
+            if (component.RemoveOnInteract && stackComp == null)
+                TryQueueDel(uid);
         }
     }
 }

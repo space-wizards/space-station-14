@@ -1,136 +1,294 @@
+- type: entityTable
+  id: MaintFluffTable
+  table: !type:GroupSelector
+    children:
+    # Common Group
+    - !type:GroupSelector
+      weight: 75
+      children:
+      # Smoker's specialty
+      - !type:AllSelector
+        children:
+        - id: Lighter
+        - id: CigCartonBlue
+      # Gar glasses
+      - !type:GroupSelector
+        children:
+        - id: ClothingEyesGlassesGar
+        - id: ClothingEyesGlassesGarOrange
+        - id: ClothingEyesGlassesGarGiga
+      - id: Wristwatch
+        weight: 0.5
+      - id: ClothingHeadHatCake
+      - id: ClothingHeadHatSkub
+      - id: ClothingHeadHatCone
+      - id: ClothingNeckBling
+      - id: ClothingHeadHelmetCosmonaut
+      - id: ClothingHeadHelmetBasic
+      - id: ClothingShoeSlippersDuck
+      - id: ClothingUnderSocksBee
+      - id: ClothingUnderSocksCoder
+      - id: ClothingHeadHatSquid
+      # Animal Masks
+      - !type:GroupSelector
+        children:
+        - id: ClothingMaskRat
+        - id: ClothingMaskFox
+        - id: ClothingMaskBee
+        - id: ClothingMaskBear
+        - id: ClothingMaskRaven
+        - id: ClothingMaskJackal
+        - id: ClothingMaskBat
+      - id: ClothingBeltSuspendersRed
+      - id: ClothingBeltSuspendersBlack
+      - id: ClothingEyesEyepatch
+      - id: ClothingEyesGlasses
+      - id: ClothingHandsGlovesLatex
+      - id: ClothingHandsGlovesFingerless
+      - id: ClothingHandsGlovesColorBlack
+      - id: ClothingHeadHatBeret
+      - id: ClothingHeadHatBowlerHat
+      - id: ClothingHeadHatFedoraBrown
+        weight: 0.5
+      - id: ClothingHeadHatFedoraGrey
+        weight: 0.5
+      - id: ClothingHeadHatFez
+      - id: ClothingHeadHatPaper
+      - id: ClothingHeadHatPirate
+      - id: ClothingMaskSterile
+      - id: ClothingNeckHeadphones
+      - id: ClothingNeckTieRed
+      - id: ClothingOuterCoatGentle
+      - !type:AllSelector
+        children:
+        - id: ClothingOuterCoatJensen
+        - id: ClothingEyesGlassesJensen
+      - id: ClothingOuterCoatLab
+      - !type:AllSelector
+        children:
+        - id: ClothingOuterCoatPirate
+        - id: ClothingHeadHatPirateTricord
+      - id: ClothingHeadHatTophat
+      - id: ClothingOuterHoodieBlack
+        weight: 0.5
+      - id: ClothingOuterHoodieGrey
+        weight: 0.5
+      - !type:GroupSelector
+        children:
+        - id: ClothingOuterFlannelRed
+        - id: ClothingOuterFlannelBlue
+        - id: ClothingOuterFlannelGreen
+      - id: ClothingOuterVestHazard
+      - id: ClothingShoesBootsJack
+      - id: ClothingShoesHighheelBoots
+      - id: ClothingShoesBootsLaceup
+      - id: ClothingShoesLeather
+      - id: ClothingShoesBootsSalvage
+      - id: ClothingShoesBootsWork
+      - id: ClothingShoesTourist
+      - id: ClothingUniformJumpsuitLoungewear
+      - id: ClothingHeadHatCowboyRed
+    # Uncommon Group
+    - !type:GroupSelector
+      weight: 23
+      children:
+      - id: ClothingNeckCloakHerald
+      - id: ClothingHeadHelmetTemplar
+      # Cloaks
+      - !type:GroupSelector
+        children:
+        - id: ClothingNeckCloakTrans
+        - id: ClothingNeckCloakAdmin
+        - id: ClothingNeckCloakMoth
+        - id: ClothingNeckCloakVoid
+        - id: ClothingNeckCloakGoliathCloak
+        - id: ClothingNeckCloakAce
+        - id: ClothingNeckCloakAro
+        - id: ClothingNeckCloakBi
+        - id: ClothingNeckCloakIntersex
+        - id: ClothingNeckCloakLesbian
+        - id: ClothingNeckCloakGay
+        - id: ClothingNeckCloakEnby
+        - id: ClothingNeckCloakPan
+      - id: ToySkeleton
+      - id: Basketball
+      - id: Football
+      - id: BalloonNT
+      - id: BalloonCorgi
+      - id: MysteryFigureBox
+      # Cult
+      - !type:AllSelector
+        children:
+        - id: ClothingOuterRobesCult
+        - id: ClothingShoesCult
+      - id: ClothingHandsGlovesMercFingerless
+      - id: ClothingHandsGlovesNitrile
+      - id: ClothingHandsGlovesPowerglove
+      - id: ClothingHeadHatAnimalHeadslime
+      - id: ClothingHeadHatBeretMerc
+      - id: ClothingHeadHatOutlawHat
+      - id: ClothingHeadHatUshanka
+      - id: ClothingHeadHatBunny
+      - id: ClothingMaskNeckGaiter
+      - id: ClothingNeckScarfStripedZebra
+      - id: ClothingOuterGhostSheet
+      - id: ClothingUniformJumpsuitAncient
+      - id: ClothingUniformJumpsuitPirate
+      - id: ClothingShoesBootsCowboyFancy
+      - id: ClothingHeadHatCowboyBountyHunter
+      # Pins
+      - !type:GroupSelector
+        children:
+        - id: ClothingNeckLGBTPin
+        - id: ClothingNeckAromanticPin
+        - id: ClothingNeckAsexualPin
+        - id: ClothingNeckBisexualPin
+        - id: ClothingNeckIntersexPin
+        - id: ClothingNeckLesbianPin
+        - id: ClothingNeckNonBinaryPin
+        - id: ClothingNeckPansexualPin
+        - id: ClothingNeckTransPin
+        - id: ClothingNeckAutismPin
+        - id: ClothingNeckGoldAutismPin
+    # Rare Group
+    - !type:GroupSelector
+      weight: 2
+      children:
+      - id: Skub
+      - id: PonderingOrb
+      - id: CluwneHorn
+      - id: ClothingShoesSkates
+      - id: DrinkMugDog
+      - id: CigarGold
+      - id: ClothingUniformJumpsuitFamilyGuy
+      - id: WristwatchGold
+      - id: RubberStampGreytide
+
 - type: entity
   name: Maint Loot Spawner
   suffix: Fluff+Clothes
   id: MaintenanceFluffSpawner
   parent: MarkerBase
   components:
-    - type: Sprite
-      layers:
-        - state: red
-        - sprite: Clothing/Eyes/Glasses/gar.rsi
-          state: icon-super
-    - type: RandomSpawner
-      rarePrototypes:
-        - ClothingUniformJumpsuitFamilyGuy
-        - CigarGold
-        - ClothingNeckCloakHerald
-        - ClothingHeadHelmetTemplar
-        - ClothingNeckCloakTrans
-        - ClothingNeckCloakAdmin
-        - ClothingNeckCloakMoth
-        - ClothingNeckCloakVoid
-        - ClothingNeckCloakGoliathCloak
-        - ClothingNeckCloakAce
-        - ClothingNeckCloakAro
-        - ClothingNeckCloakBi
-        - ClothingNeckCloakIntersex
-        - ClothingNeckCloakLesbian
-        - ClothingNeckCloakGay
-        - ClothingNeckCloakEnby
-        - ClothingNeckCloakPan
-        - ToySkeleton
-        - Basketball
-        - Football
-        - BalloonCorgi
-        - BalloonNT
-        - PonderingOrb
-        - Skub
-        - DrinkMugDog
-        - ClothingNeckLGBTPin
-        - ClothingNeckAromanticPin
-        - ClothingNeckAsexualPin
-        - ClothingNeckBisexualPin
-        - ClothingNeckIntersexPin
-        - ClothingNeckLesbianPin
-        - ClothingNeckNonBinaryPin
-        - ClothingNeckPansexualPin
-        - ClothingNeckTransPin
-        - CluwneHorn
-        - ClothingMaskRat
-        - MysteryFigureBox
-        - ClothingHandsGlovesMercFingerless
-        - ClothingHandsGlovesNitrile
-        - ClothingHandsGlovesPowerglove
-        - ClothingHeadHatAnimalHeadslime
-        - ClothingHeadHatBeretMerc
-        - ClothingHeadHatOutlawHat
-        - ClothingHeadHatUshanka
-        - ClothingHeadHatBunny
-        - ClothingMaskNeckGaiter
-        - ClothingNeckScarfStripedZebra
-        - ClothingOuterRobesCult
-        - ClothingOuterGhostSheet
-        - ClothingShoesCult
-        - ClothingUniformJumpsuitAncient
-        - ClothingUniformJumpsuitPirate
-        - ClothingShoesBootsCowboyFancy
-        - ClothingHeadHatCowboyBountyHunter
-        - ClothingNeckAutismPin
-        - ClothingNeckGoldAutismPin
-      rareChance: 0.01
-      prototypes:
-        - Lighter
-        - CigCartonBlue
-        - ClothingEyesGlassesGarGiga
-        - ClothingEyesGlassesGarOrange
-        - ClothingEyesGlassesGar
-        - ClothingHeadHatCake
-        - ClothingHeadHatSkub
-        - ClothingHeadHatCone
-        - ClothingNeckBling
-        - ClothingHeadHelmetCosmonaut
-        - ClothingHeadHelmetBasic
-        - ClothingShoeSlippersDuck
-        - ClothingUnderSocksBee
-        - ClothingUnderSocksCoder
-        - ClothingHeadHatSquid
-        - ClothingMaskFox
-        - ClothingMaskBee
-        - ClothingMaskBear
-        - ClothingMaskRaven
-        - ClothingMaskJackal
-        - ClothingMaskBat
-        - ClothingBeltSuspenders
-        - ClothingEyesEyepatch
-        - ClothingEyesGlasses
-        - ClothingHandsGlovesLatex
-        - ClothingHandsGlovesFingerless
-        - ClothingHandsGlovesColorBlack
-        - ClothingHeadHatBeret
-        - ClothingHeadHatBowlerHat
-        - ClothingHeadHatFedoraBrown
-        - ClothingHeadHatFedoraGrey
-        - ClothingHeadHatFez
-        - ClothingHeadHatPaper
-        - ClothingHeadHatPirate
-        - ClothingHeadHatPirateTricord
-        - ClothingHeadHatTophat
-        - ClothingMaskSterile
-        - ClothingNeckHeadphones
-        - ClothingNeckTieRed
-        - ClothingOuterCoatGentle
-        - ClothingOuterCoatJensen
-        - ClothingEyesGlassesJensen
-        - ClothingOuterCoatLab
-        - ClothingOuterCoatPirate
-        - ClothingOuterHoodieBlack
-        - ClothingOuterHoodieGrey
-        - ClothingOuterFlannelRed
-        - ClothingOuterFlannelBlue
-        - ClothingOuterFlannelGreen
-        - ClothingOuterVestHazard
-        - ClothingShoesBootsJack
-        - ClothingShoesHighheelBoots
-        - ClothingShoesBootsLaceup
-        - ClothingShoesLeather
-        - ClothingShoesBootsSalvage
-        - ClothingShoesBootsWork
-        - ClothingShoesTourist
-        - ClothingUniformJumpsuitLoungewear
-        - ClothingHeadHatCowboyRed
-      chance: 0.6
-      offset: 0.0
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Clothing/Eyes/Glasses/gar.rsi
+        state: icon-super
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: MaintFluffTable
+      prob: 0.6
 
+- type: entityTable
+  id: MaintToolsTable
+  table: !type:GroupSelector
+    children:
+    # Common Group
+    - !type:GroupSelector
+      weight: 75
+      children:
+      - id: FlashlightLantern
+      - id: ToolboxEmergencyFilled
+      - !type:GroupSelector
+        children:
+        - id: OxygenTankFilled
+        - id: DoubleEmergencyOxygenTankFilled
+      - !type:GroupSelector
+        children:
+        - id: NitrogenTankFilled
+        - id: DoubleEmergencyNitrogenTankFilled
+      - id: EmergencyFunnyOxygenTankFilled
+        weight: 0.5
+      - !type:GroupSelector
+        weight: 3
+        children:
+        - id: SheetSteel10
+        - id: SheetPlastic10
+        - id: SheetGlass10
+        - id: PartRodMetal10
+        - id: MaterialCardboard10
+          weight: 0.25
+        - id: MaterialCloth10
+          weight: 0.25
+        - id: MaterialWoodPlank10
+          weight: 0.25
+      - id: Plunger
+      - id: PowerCellMedium
+      - id: PowerCellSmall
+      - id: Soap
+      - id: Wirecutter
+      - id: Screwdriver
+      - id: Wrench
+      - id: Crowbar
+      - id: Multitool
+      - id: Shovel
+      - id: Welder
+      - id: GasAnalyzer
+      - id: SprayPainter
+      - id: Flare
+      - id: Beaker
+      - id: ClothingMaskGas
+      - id: ClothingMaskBreath
+      - id: DoorElectronics
+      - id: APCElectronics
+      - id: InflatableWallStack5
+      - id: CableHVStack10
+      - id: CableMVStack10
+      - id: CableApcStack10
+      - !type:GroupSelector
+        children:
+        - id: ClothingHandsGlovesColorYellowBudget
+          weight: 5
+        - id: ClothingHandsGlovesFingerlessInsulated
+          weight: 0.5
+        - id: ClothingHandsGlovesColorYellow
+          weight: 1
+        - id: ClothingHandsGlovesConducting
+          weight: 0.1
+      # Uncommon Group
+    - !type:GroupSelector
+      weight: 23
+      children:
+      - id: ClothingHeadHatCone
+        weight: 2
+      - id: BookRandomStory
+        weight: 0.25
+      - id: ToolboxElectricalFilled
+      - id: ToolboxMechanicalFilled
+      - id: ClothingBeltUtility
+      - id: ToolboxArtisticFilled
+      - id: GeigerCounter
+      - id: trayScanner
+      - id: HandheldGPSBasic
+      - id: HandLabeler
+      - id: GlowstickBase
+      - id: Bucket
+      - id: RadioHandheld
+      - id: AppraisalTool
+      - id: ModularReceiver
+      - id: WeaponFlareGun
+      - id: BarberScissors
+      - !type:GroupSelector
+        children:
+        - id: DrinkSpaceGlue
+        - id: DrinkSpaceLube
+      # Rare Group
+    - !type:GroupSelector
+      weight: 2
+      children:
+      - id: LanternFlash
+      - id: PowerCellHigh
+      - id: NetProbeCartridge
+      - id: WelderIndustrial
+      - id: SheetPlasteel10
+      - id: ClothingMaskGasExplorer
+      - id: TechnologyDisk
+      - id: ResearchDisk5000
+      - id: PetCarrier
+      - id: DrinkMopwataBottleRandom
+      - id: LidSalami
+        weight: 0.05
 
 - type: entity
   name: Maint Loot Spawner
@@ -138,75 +296,56 @@
   id: MaintenanceToolSpawner
   parent: MarkerBase
   components:
-    - type: Sprite
-      layers:
-        - state: red
-        - sprite: Objects/Power/power_cells.rsi
-          state: high
-    - type: RandomSpawner
-      rarePrototypes:
-        - LanternFlash
-        - PowerCellHigh
-        - NetProbeCartridge
-        - WelderIndustrial
-        - SheetPlasteel10
-        - ClothingMaskGasExplorer
-      rareChance: 0.08
-      prototypes:
-        - FlashlightLantern
-        - OxygenTankFilled
-        - DoubleEmergencyOxygenTankFilled
-        - ToolboxEmergencyFilled
-        - ToolboxArtisticFilled
-        - NitrogenTankFilled
-        - DoubleEmergencyNitrogenTankFilled
-        - EmergencyFunnyOxygenTankFilled
-        - ToolboxElectricalFilled
-        - ToolboxMechanicalFilled
-        - ClothingBeltUtility
-        - Shovel
-        - Welder
-        - WeaponFlareGun
-        - SheetSteel10
-        - SheetPlastic10
-        - SheetGlass10
-        - PartRodMetal10
-        - MaterialCardboard10
-        - MaterialCloth10
-        - MaterialWoodPlank10
-        - ResearchDisk
-        - Plunger
-        - TechnologyDisk
-        - PowerCellMedium
-        - PowerCellSmall
-        - Wirecutter
-        - Screwdriver
-        - Wrench
-        - Crowbar
-        - NetworkConfigurator
-        - trayScanner
-        - GasAnalyzer
-        - SprayPainter
-        - AppraisalTool
-        - Flare
-        - HandheldGPSBasic
-        - HandLabeler
-        - GlowstickBase
-        - Bucket
-        - RadioHandheld
-        - GeigerCounter
-        - Beaker
-        - ClothingMaskGas
-        - ClothingMaskBreath
-        - DoorElectronics
-        - APCElectronics
-        - InflatableWallStack5
-        - CableHVStack10
-        - CableMVStack10
-        - CableApcStack10
-        - PetCarrier
-      chance: 0.6
-      offset: 0.0
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Objects/Power/power_cells.rsi
+        state: high
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: MaintToolsTable
+      prob: 0.6
+
+- type: entityTable
+  id: MaintWeaponTable
+  table: !type:GroupSelector
+    children:
+    # Common Group
+    - !type:GroupSelector
+      weight: 95
+      children:
+      - id: Machete
+      - id: BaseBallBat
+      - id: CombatKnife
+      - id: Spear
+      - id: RifleStock
+      - id: ModularReceiver
+      - id: HydroponicsToolScythe
+    # Rare Group
+    - !type:GroupSelector
+      weight: 5
+      children:
+      - id: Lighter
+      - id: Matchbox
+      - id: ClothingEyesBlindfold
+      - id: ClothingMaskMuzzle
+      - id: ClothingMaskGasSecurity
+      - id: ShardGlass
+        weight: 2
+      - id: Syringe
+      - id: Mousetrap
+      - !type:GroupSelector
+        weight: 2
+        children:
+        - id: Brutepack1
+        - id: Ointment1
+        - id: Gauze1
+      - id: Bola
+      - id: SurvivalKnife
+      - id: ScalpelShiv
+      - id: Shiv
+      - id: SawImprov
+      - id: HydroponicsToolMiniHoe
 
 - type: entity
   name: Maint Loot Spawner
@@ -214,51 +353,15 @@
   id: MaintenanceWeaponSpawner
   parent: MarkerBase
   components:
-    - type: Sprite
-      layers:
-        - state: red
-        - sprite: Objects/Weapons/Melee/machete.rsi
-          state: icon
-    - type: RandomSpawner
-      rarePrototypes:
-        - Machete
-        - BaseBallBat
-        - CombatKnife
-        - Spear
-        - RifleStock
-        - ModularReceiver
-        - HydroponicsToolScythe
-      rareChance: 0.05
-      prototypes:
-        - FlashlightLantern
-        - OxygenTankFilled
-        - DoubleEmergencyOxygenTankFilled
-        - NitrogenTankFilled
-        - DoubleEmergencyNitrogenTankFilled
-        - Lighter
-        - Matchbox
-        - Crowbar
-        - Shovel
-        - Welder
-        - WeaponFlareGun
-        - LidSalami
-        - ClothingEyesBlindfold
-        - ClothingMaskMuzzle
-        - ClothingMaskGasSecurity
-        - ShardGlass
-        - Syringe
-        - Mousetrap
-        - Brutepack1
-        - Ointment1
-        - Gauze1
-        - Bola
-        - SurvivalKnife
-        - ScalpelShiv
-        - Shiv
-        - SawImprov
-        - HydroponicsToolMiniHoe
-      chance: 0.6
-      offset: 0.0
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Objects/Weapons/Melee/machete.rsi
+        state: icon
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: MaintWeaponTable
+      prob: 0.6
 
 - type: entity
   name: Maint Loot Spawner

@@ -78,7 +78,7 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
     public bool IsValidTarget(EntityPrototype proto, SlotFlags chameleonSlot = SlotFlags.NONE)
     {
         // check if entity is valid
-        if (proto.Abstract || proto.NoSpawn)
+        if (proto.Abstract || proto.HideSpawnMenu)
             return false;
 
         // check if it is marked as valid chameleon target

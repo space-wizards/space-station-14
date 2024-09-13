@@ -124,3 +124,10 @@ accent-words-nymph-1 = Chirp!
 accent-words-nymph-2 = Churr...
 accent-words-nymph-3 = Cheep?
 accent-words-nymph-4 = Chrrup!
+
+# TomatoKiller
+accent-words-tomato-1 = Totato!
+accent-words-tomato-2 = Trotect
+accent-words-tomato-3 = Mastet?
+accent-words-tomato-4 = Reaty!
+accent-words-tomato-5 = Water...

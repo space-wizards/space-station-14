@@ -1625,18 +1625,18 @@ entities:
     - type: GasTileOverlay
     - type: SpreaderGrid
     - type: GridPathfinding
-    - type: BecomesStation
-      id: SyndicateOutpost
   - uid: 1295
     components:
     - type: MetaData
     - type: Transform
     - type: Map
+    - type: PhysicsMap
+    - type: GridTree
+    - type: MovedGrids
     - type: FTLDestination
       whitelist:
         tags:
         - Syndicate
-    - type: PhysicsMap
     - type: Broadphase
     - type: OccluderTree
     - type: Parallax
@@ -1645,6 +1645,7 @@ entities:
       space: False
       mixture:
         volume: 2500
+        immutable: True
         temperature: 248.15
         moles:
         - 21.824879
@@ -1660,8 +1661,6 @@ entities:
         - 0
         - 0
     - type: LoadedMap
-    - type: GridTree
-    - type: MovedGrids
 - proto: AirlockExternalGlassNukeopLocked
   entities:
   - uid: 49
@@ -10192,13 +10191,6 @@ entities:
     - type: Transform
       pos: -0.5,-1.5
       parent: 104
-- proto: chem_master
-  entities:
-  - uid: 2444
-    components:
-    - type: Transform
-      pos: 5.5,-10.5
-      parent: 104
 - proto: ChemicalPayload
   entities:
   - uid: 2380
@@ -10217,6 +10209,13 @@ entities:
     components:
     - type: Transform
       pos: 4.5,-12.5
+      parent: 104
+- proto: ChemMaster
+  entities:
+  - uid: 2444
+    components:
+    - type: Transform
+      pos: 5.5,-10.5
       parent: 104
 - proto: ChessBoard
   entities:
@@ -10365,6 +10364,13 @@ entities:
     components:
     - type: Transform
       pos: -14.478909,9.585995
+      parent: 104
+- proto: DefibrillatorCabinetFilled
+  entities:
+  - uid: 2538
+    components:
+    - type: Transform
+      pos: -0.5,-11.5
       parent: 104
 - proto: DresserFilled
   entities:
@@ -10993,13 +10999,6 @@ entities:
     components:
     - type: Transform
       pos: 18.918644,6.663283
-      parent: 104
-- proto: SyndicateMicrowave
-  entities:
-  - uid: 10
-    components:
-    - type: Transform
-      pos: 13.5,-6.5
       parent: 104
 - proto: KitchenReagentGrinder
   entities:
@@ -12902,7 +12901,7 @@ entities:
     - type: Transform
       pos: 23.5,-18.5
       parent: 104
-- proto: soda_dispenser
+- proto: SodaDispenser
   entities:
   - uid: 225
     components:
@@ -12917,11 +12916,15 @@ entities:
     - type: Transform
       pos: 10.5,-6.5
       parent: 104
+    - type: SpamEmitSound
+      enabled: False
   - uid: 1653
     components:
     - type: Transform
       pos: 9.5,-6.5
       parent: 104
+    - type: SpamEmitSound
+      enabled: False
 - proto: SpawnMobLizard
   entities:
   - uid: 2473
@@ -13222,6 +13225,13 @@ entities:
       - SurveillanceCameraEntertainment
       nameSet: True
       id: Weeh
+- proto: SyndicateMicrowave
+  entities:
+  - uid: 10
+    components:
+    - type: Transform
+      pos: 13.5,-6.5
+      parent: 104
 - proto: SyndicatePersonalAI
   entities:
   - uid: 160
@@ -13710,13 +13720,6 @@ entities:
     components:
     - type: Transform
       pos: 3.5882664,-8.344303
-      parent: 104
-- proto: VariantCubeBox
-  entities:
-  - uid: 1826
-    components:
-    - type: Transform
-      pos: 14.485744,-16.427467
       parent: 104
 - proto: VendingMachineBooze
   entities:

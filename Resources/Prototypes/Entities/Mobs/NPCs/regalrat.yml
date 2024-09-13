@@ -1,5 +1,5 @@
 - type: entity
-  name: Rat King
+  name: rat king
   id: MobRatKing
   parent: [ SimpleMobBase, MobCombat ]
   description: He's da rat. He make da roolz.
@@ -48,6 +48,7 @@
       0: Alive
       200: Dead
   - type: MeleeWeapon
+    altDisarm: false
     soundHit:
         path: /Audio/Weapons/Xeno/alien_claw_flesh1.ogg
     angle: 0
@@ -89,7 +90,7 @@
     makeSentient: true
     name: ghost-role-information-rat-king-name
     description: ghost-role-information-rat-king-description
-    rules: ghost-role-information-rat-king-rules
+    rules: ghost-role-information-freeagent-rules
     raffle:
       settings: default
   - type: GhostTakeoverAvailable
@@ -141,6 +142,7 @@
       0: Alive
       350: Dead
   - type: MeleeWeapon
+    altDisarm: false
     soundHit:
         path: /Audio/Weapons/Xeno/alien_claw_flesh2.ogg
     angle: 0
@@ -158,11 +160,11 @@
     - MinorAntagonists
 
 - type: entity
-  name: Rat Servant
+  name: rat servant
   id: MobRatServant
   parent: [ SimpleMobBase, MobCombat ]
   description: He's da mini rat. He don't make da roolz.
-  noSpawn: true #Must be configured to a King or the AI breaks.
+  categories: [ HideSpawnMenu ] #Must be configured to a King or the AI breaks.
   components:
   - type: CombatMode
   - type: MovementSpeedModifier

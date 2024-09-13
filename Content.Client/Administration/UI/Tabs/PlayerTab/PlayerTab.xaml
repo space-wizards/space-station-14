@@ -4,7 +4,7 @@
          xmlns:co="clr-namespace:Content.Client.UserInterface.Controls">
     <BoxContainer Orientation="Vertical">
         <BoxContainer Orientation="Horizontal">
-            <Label Name="PlayerCount" HorizontalExpand="True" Text="{Loc Player Count}" />
+            <Label Name="PlayerCount" HorizontalExpand="True" Text="{Loc player-tab-player-count}" />
             <LineEdit Name="SearchLineEdit" HorizontalExpand="True"
                       PlaceHolder="{Loc player-tab-filter-line-edit-placeholder}" />
             <Button Name="ShowDisconnectedButton" HorizontalExpand="True"

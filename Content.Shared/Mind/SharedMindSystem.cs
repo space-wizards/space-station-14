@@ -168,15 +168,17 @@ public abstract class SharedMindSystem : EntitySystem
             args.PushMarkup($"[color=yellow]{Loc.GetString("comp-mind-examined-ssd", ("ent", uid))}[/color]");
     }
 
+    /// <summary>
+    /// Checks to see if the user's mind prevents them from suicide
+    /// Handles the suicide event without killing the user if true
+    /// </summary>
     private void OnSuicide(EntityUid uid, MindContainerComponent component, SuicideEvent args)
     {
         if (args.Handled)
             return;
 
         if (TryComp(component.Mind, out MindComponent? mind) && mind.PreventSuicide)
-        {
-            args.BlockSuicideAttempt(true);
-        }
+            args.Handled = true;
     }
 
     public EntityUid? GetMind(EntityUid uid, MindContainerComponent? mind = null)
@@ -313,6 +315,10 @@ public abstract class SharedMindSystem : EntitySystem
     {
     }
 
+    public virtual void ControlMob(EntityUid user, EntityUid target) {}
+
+    public virtual void ControlMob(NetUserId user, EntityUid target) {}
+
     /// <summary>
     /// Tries to create and add an objective from its prototype id.
     /// </summary>
@@ -370,7 +376,7 @@ public abstract class SharedMindSystem : EntitySystem
         if (Resolve(mindId, ref mind))
         {
             var query = GetEntityQuery<T>();
-            foreach (var uid in mind.AllObjectives)
+            foreach (var uid in mind.Objectives)
             {
                 if (query.TryGetComponent(uid, out objective))
                 {

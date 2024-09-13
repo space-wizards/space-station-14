@@ -5,12 +5,14 @@ using Robust.Shared.Replays;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Markdown.Mapping;
 using Robust.Shared.Serialization.Markdown.Value;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.GameTicking
 {
     public abstract class SharedGameTicker : EntitySystem
     {
         [Dependency] private readonly IReplayRecordingManager _replay = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         // See ideally these would be pulled from the job definition or something.
         // But this is easier, and at least it isn't hardcoded.
@@ -40,6 +42,11 @@ namespace Content.Shared.GameTicking
         private void OnRecordingStart(MappingDataNode metadata, List<object> events)
         {
             metadata["roundId"] = new ValueDataNode(RoundId.ToString());
+        }
+
+        public TimeSpan RoundDuration()
+        {
+            return _gameTiming.CurTime.Subtract(RoundStartTimeSpan);
         }
     }
 

@@ -1,11 +1,12 @@
 - type: entity
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   id: BaseAPC
   name: APC
   description: A control terminal for the area's electrical systems.
   placement:
     mode: SnapgridCenter
   components:
+  - type: StationAiWhitelist
   - type: AmbientOnPowered
   - type: AmbientSound
     volume: -9
@@ -104,8 +105,8 @@
   - type: WiresPanel
   - type: WiresVisuals
   - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: StrongMetallic
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallicStrong
   - type: Destructible
     thresholds:
     - trigger:
@@ -146,7 +147,7 @@
 
 # APC under construction
 - type: entity
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   id: APCFrame
   name: APC frame
   description: A control terminal for the area's electrical systems, lacking the electronics.
@@ -166,8 +167,8 @@
     node: apcFrame
   - type: WallMount
   - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -204,7 +205,7 @@
 - type: entity
   parent: BaseAPC
   id: APCBasic
-  suffix: Basic, 50kW
+  suffix: Basic, 50kJ
   components:
   - type: Battery
     maxCharge: 50000
@@ -213,7 +214,7 @@
 - type: entity
   parent: BaseAPC
   id: APCHighCapacity
-  suffix: High Capacity, 100kW
+  suffix: High Capacity, 100kJ
   components:
   - type: Battery
     maxCharge: 100000
@@ -222,7 +223,7 @@
 - type: entity
   parent: BaseAPC
   id: APCSuperCapacity
-  suffix: Super Capacity, 150kW
+  suffix: Super Capacity, 150kJ
   components:
   - type: Battery
     maxCharge: 150000
@@ -231,7 +232,7 @@
 - type: entity
   parent: BaseAPC
   id: APCHyperCapacity
-  suffix: Hyper Capacity, 200kW
+  suffix: Hyper Capacity, 200kJ
   components:
   - type: Battery
     maxCharge: 200000

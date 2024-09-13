@@ -2,8 +2,8 @@
   id: Core
   mapName: 'Core'
   mapPath: /Maps/core.yml
-  minPlayers: 30
-  maxPlayers: 60
+  minPlayers: 35
+  maxPlayers: 70
   stations:
     Core:
       stationProto: StandardNanotrasenStation
@@ -37,14 +37,13 @@
             #medical
             ChiefMedicalOfficer: [ 1, 1 ]
             MedicalDoctor: [ 3, 4 ]
-            Chemist: [ 1, 2 ]
+            Chemist: [ 2, 2 ]
             MedicalIntern: [ 2, 2 ]
             Paramedic: [ 1, 2 ]
             #science
             ResearchDirector: [ 1, 1 ]
             Scientist: [ 3, 3 ]
             ResearchAssistant: [ 1, 1 ]
-            Borg: [ 1, 2 ]
             #security
             HeadOfSecurity: [ 1, 1 ]
             SecurityOfficer: [ 4, 4 ]
@@ -63,3 +62,6 @@
             Musician: [ 1, 1 ]
             Boxer: [ 2, 2 ]
             Reporter: [ 2, 2 ]
+            # silicon
+            StationAi: [ 1, 1 ]
+            Borg: [ 2, 2 ]
