@@ -1,0 +1,6 @@
+- type: latheRecipe
+  id: BoxFolderClipboard
+  result: BoxFolderClipboard
+  completetime: 2
+  materials:
+    Wood: 50
