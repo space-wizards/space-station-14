@@ -23,6 +23,9 @@ using Content.Shared.Explosion.Components;
 using Content.Shared.Mind.Components;
 using System.Threading;
 using Timer = Robust.Shared.Timing.Timer;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
+using Content.Shared.Mobs;
 
 namespace Content.Server.Revenant.EntitySystems;
 
@@ -34,6 +37,7 @@ public sealed partial class RevenantAnimatedSystem : EntitySystem
     [Dependency] private readonly ItemToggleSystem _itemToggleSystem = default!;
     [Dependency] private readonly SharedGunSystem _gunSystem = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _moveSpeed = default!;
+    [Dependency] private readonly MobThresholdSystem _thresholds = default!;
 
     public override void Initialize()
     {
@@ -41,7 +45,7 @@ public sealed partial class RevenantAnimatedSystem : EntitySystem
 
         SubscribeLocalEvent<RevenantAnimatedComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<RevenantAnimatedComponent, ComponentShutdown>(OnComponentShutdown);
-
+        SubscribeLocalEvent<RevenantAnimatedComponent, MobStateChangedEvent>(OnMobStateChange);
     }
 
     private void OnComponentStartup(Entity<RevenantAnimatedComponent> ent, ref ComponentStartup _)
@@ -49,16 +53,17 @@ public sealed partial class RevenantAnimatedSystem : EntitySystem
         if (ent.Comp.LifeStage != ComponentLifeStage.Starting)
             return;
 
+        // Turn on welding rods and stun prods
         if (HasComp<ItemToggleMeleeWeaponComponent>(ent.Owner) && TryComp<ItemToggleComponent>(ent.Owner, out var toggle))
             _itemToggleSystem.TryActivate((ent.Owner, toggle));
 
         _popup.PopupEntity(Loc.GetString("revenant-animate-item-animate", ("name", Comp<MetaDataComponent>(ent.Owner).EntityName)), ent.Owner, Filter.Pvs(ent.Owner), true);
 
+        // Add melee damage if an item doesn't already have it
         if (EnsureHelper<MeleeWeaponComponent>(ent, out var melee))
             melee.Damage = new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>("Blunt"), 5);
 
         EnsureHelper<InputMoverComponent>(ent);
-
         EnsureHelper<MovementSpeedModifierComponent>(ent, out var moveSpeed);
         if (ent.Comp.Revenant != null)
             _moveSpeed.ChangeBaseSpeed(ent,
@@ -79,22 +84,33 @@ public sealed partial class RevenantAnimatedSystem : EntitySystem
         _factionSystem.ClearFactions((ent, factions));
         _factionSystem.AddFaction((ent, factions), "SimpleHostile");
 
+        // For things like handcuffs
         EnsureHelper<DoAfterComponent>(ent);
 
         EnsureHelper<HTNComponent>(ent, out var htn);
         if (HasComp<GunComponent>(ent))
         {
+            // Goals: Magdump into any nearby creatures, and melee hit them if empty
             if (TryComp<ChamberMagazineAmmoProviderComponent>(ent, out var bolt))
                 _gunSystem.SetBoltClosed(ent, bolt, true);
             htn.RootTask = new HTNCompoundTask() { Task = "SimpleRangedHostileCompound" };
         }
         else if (HasComp<HandcuffComponent>(ent))
+            // Goals: Jump into any creature's pockets/hands and cuff them
             htn.RootTask = new HTNCompoundTask() { Task = "AnimatedHandcuffsCompound" };
         else if (HasComp<OnUseTimerTriggerComponent>(ent))
+            // Goals: Jump into any creature's pockets/hands and activate self
             htn.RootTask = new HTNCompoundTask() { Task = "AnimatedGrenadeCompound" };
         else
+            // Goals: Fist fight anyone near you
             htn.RootTask = new HTNCompoundTask() { Task = "SimpleHostileCompound" };
+
         htn.Blackboard.SetValue(NPCBlackboard.Owner, ent.Owner);
+
+        EnsureHelper<DamageableComponent>(ent);
+        EnsureHelper<MobStateComponent>(ent);
+        EnsureHelper<MobThresholdsComponent>(ent, out var thresholds);
+        _thresholds.SetMobStateThreshold(ent, 30, MobState.Dead, thresholds);
 
         EnsureHelper<CombatModeComponent>(ent);
     }
@@ -112,10 +128,18 @@ public sealed partial class RevenantAnimatedSystem : EntitySystem
             if (comp.Deleted)
                 continue;
 
-            RemComp(ent, comp);
+            RemCompDeferred(ent, comp);
         }
 
         _popup.PopupEntity(Loc.GetString("revenant-animate-item-inanimate", ("name", Comp<MetaDataComponent>(ent).EntityName)), ent, Filter.Pvs(ent), true);
+    }
+
+    private void OnMobStateChange(Entity<RevenantAnimatedComponent> ent, ref MobStateChangedEvent args)
+    {
+        if (args.NewMobState == MobState.Dead)
+        {
+            InanimateTarget(ent);
+        }
     }
 
     // Returns true if a new component was added to the target.
