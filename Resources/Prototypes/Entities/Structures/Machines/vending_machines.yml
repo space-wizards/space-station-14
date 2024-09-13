@@ -218,7 +218,7 @@
     pack: BruiseOMatGoodbyes
   - type: Speech
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/boozeomat.rsi
+    sprite: Structures/Machines/VendingMachines/bruiseomat.rsi
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
