@@ -1,11 +1,13 @@
+using Content.Shared.Pinpointer;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Atmos.Components;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-//[Access(typeof(AtmosMonitoringConsoleSystem))]
+//[Access(typeof(AtmosMonitoringConsoleSystem))] - need to make shared
 public sealed partial class AtmosMonitoringConsoleComponent : Component
 {
     /// <summary>
@@ -13,13 +15,6 @@ public sealed partial class AtmosMonitoringConsoleComponent : Component
     /// </summary>
     [ViewVariables, AutoNetworkedField]
     public Dictionary<Vector2i, AtmosPipeChunk> AtmosPipeChunks = new();
-
-    /// <summary>
-    /// A dictionary of the all the nav map chunks that contain anchored atmos pipes
-    /// belonging to the same network as the focus entity
-    /// </summary>
-    [ViewVariables, AutoNetworkedField]
-    public Dictionary<Vector2i, AtmosPipeChunk>? FocusPipeChunks = new();
 
     /// <summary>
     /// A list of all the atmos devices that will be used to populate the nav map
@@ -32,25 +27,35 @@ public sealed partial class AtmosMonitoringConsoleComponent : Component
     /// </summary>
     [ViewVariables, AutoNetworkedField]
     public EntityUid? FocusDevice;
+
+    /// <summary>
+    /// The network associated with current entity of interest (selected on the console UI)
+    /// </summary>
+    [ViewVariables, AutoNetworkedField]
+    public int? FocusNetId;
 }
 
 [Serializable, NetSerializable]
-public struct AtmosPipeChunk
+public struct AtmosPipeChunk(Vector2i origin)
 {
     /// <summary>
     /// Chunk position
     /// </summary>
-    public readonly Vector2i Origin;
+    [ViewVariables]
+    public readonly Vector2i Origin = origin;
 
     /// <summary>
-    /// Bitmask dictionary for atmos pipes, 1 for occupied and 0 for empty.
+    /// Bitmask look up for atmos pipes, 1 for occupied and 0 for empty.
+    /// Indexed by the color hexcode of the pipe
     /// </summary>
-    public Dictionary<string, AtmosPipeData> AtmosPipeData = new();
+    [ViewVariables]
+    public Dictionary<(int, string), ulong> AtmosPipeData = new();
 
-    public AtmosPipeChunk(Vector2i origin)
-    {
-        Origin = origin;
-    }
+    /// <summary>
+    /// The last game tick that the chunk was updated
+    /// </summary>
+    [NonSerialized]
+    public GameTick LastUpdate;
 }
 
 [Serializable, NetSerializable]
@@ -81,6 +86,9 @@ public struct AtmosDeviceNavMapData
     /// </summary>
     public Direction? Direction = null;
 
+    /// <summary>
+    /// The network ID of the entity
+    /// </summary>
     public int NetId = -1;
 
     /// <summary>
@@ -221,38 +229,6 @@ public struct AtmosMonitoringConsoleEntry
 }
 
 [Serializable, NetSerializable]
-public struct AtmosPipeData
-{
-    /// <summary>
-    /// Tiles with a north facing pipe on a specific chunk
-    /// </summary>
-    public ushort NorthFacing = 0;
-
-    /// <summary>
-    /// Tiles with a south facing pipe on a specific chunk
-    /// </summary>
-    public ushort SouthFacing = 0;
-
-    /// <summary>
-    /// Tiles with an east facing pipe on a specific chunk
-    /// </summary>
-    public ushort EastFacing = 0;
-
-    /// <summary>
-    /// Tiles with a west facing pipe on a specific chunk
-    /// </summary>
-    public ushort WestFacing = 0;
-
-    /// <summary>
-    /// Contains four bitmasks for a single chunk of pipes, one for each cardinal direction 
-    /// </summary>
-    public AtmosPipeData()
-    {
-
-    }
-}
-
-[Serializable, NetSerializable]
 public sealed class AtmosMonitoringConsoleFocusChangeMessage : BoundUserInterfaceMessage
 {
     public NetEntity? FocusDevice;
@@ -264,6 +240,15 @@ public sealed class AtmosMonitoringConsoleFocusChangeMessage : BoundUserInterfac
     {
         FocusDevice = focusDevice;
     }
+}
+
+public enum AtmosPipeChunkDataFacing : byte
+{
+    // Values represent bit shift offsets when retrieving data in the tile array.
+    North = 0,
+    South = SharedNavMapSystem.ArraySize,
+    East = SharedNavMapSystem.ArraySize * 2,
+    West = SharedNavMapSystem.ArraySize * 3,
 }
 
 /// <summary>

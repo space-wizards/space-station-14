@@ -12,11 +12,9 @@ using Content.Shared.Pinpointer;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Security.Policy;
-
-//using static Content.Shared.Power.SharedPowerMonitoringConsoleSystem;
 
 namespace Content.Server.Atmos.Monitor.Systems;
 
@@ -34,6 +32,13 @@ public sealed class AtmosMonitoringConsoleSystem : EntitySystem
 
     private const float UpdateTime = 1.0f;
     private EntityQuery<NodeContainerComponent> _nodeQuery;
+
+    public static int ChunkSize = 4;
+
+    public static int GetTileIndex(Vector2i relativeTile)
+    {
+        return relativeTile.X * ChunkSize + relativeTile.Y;
+    }
 
     public override void Initialize()
     {
@@ -213,23 +218,53 @@ public sealed class AtmosMonitoringConsoleSystem : EntitySystem
                 atmosNetworks.Add(entry.Value);
         }
 
-        if (component.FocusDevice != null && focusAlarmData != null)
+        if (component.FocusDevice != null &&
+            TryGettingFirstPipeNode(component.FocusDevice.Value, Transform(component.FocusDevice.Value), mapGrid, out var pipeNode, out var netId) &&
+            netId != component.FocusNetId)
         {
-            var chunks = GetFocusPipeNetwork(gridUid, mapGrid, focusAlarmData.Value.NetId);
-            component.FocusPipeChunks = chunks;
-
-            Dirty(uid, component);
-        }
-
-        else if (component.FocusPipeChunks != null)
-        {
-            component.FocusPipeChunks = null;
+            component.FocusNetId = netId;
             Dirty(uid, component);
         }
 
         // Set the UI state
         _userInterfaceSystem.SetUiState(uid, AtmosMonitoringConsoleUiKey.Key,
             new AtmosMonitoringConsoleBoundInterfaceState(atmosNetworks.ToArray(), focusAlarmData));
+    }
+
+    private bool TryGettingFirstPipeNode(EntityUid uid, TransformComponent xform, MapGridComponent mapGrid, [NotNullWhen(true)] out PipeNode? pipeNode, [NotNullWhen(true)] out int? netId)
+    {
+        pipeNode = null;
+        netId = null;
+
+        if (xform.GridUid == null)
+            return false;
+
+        var gridIndex = _sharedMapSystem.TileIndicesFor(xform.GridUid.Value, mapGrid, xform.Coordinates);
+
+        foreach (var node in NodeHelpers.GetNodesInTile(_nodeQuery, mapGrid, gridIndex))
+        {
+            if (node is PipeNode)
+            {
+                pipeNode = (PipeNode)node;
+                netId = GetPipeNodeNetId(pipeNode);
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private int GetPipeNodeNetId(PipeNode pipeNode)
+    {
+        if (pipeNode.NodeGroup is BaseNodeGroup)
+        {
+            var nodeGroup = (BaseNodeGroup)pipeNode.NodeGroup;
+
+            return nodeGroup.NetId;
+        }
+
+        return -1;
     }
 
     private AtmosMonitoringConsoleEntry? CreateAtmosMonitoringConsoleEntry
@@ -258,31 +293,15 @@ public sealed class AtmosMonitoringConsoleSystem : EntitySystem
             return entry;
         }
 
-        var gridIndex = _sharedMapSystem.TileIndicesFor(entXform.GridUid.Value, mapGrid, entXform.Coordinates);
-        PipeNode? pipeNode = null;
-        BaseNodeGroup? nodeGroup = null;
+        if (!TryGettingFirstPipeNode(ent, entXform, mapGrid, out var pipeNode, out var netId))
+            return entry;
 
-        foreach (var node in NodeHelpers.GetNodesInTile(_nodeQuery, mapGrid, gridIndex))
-        {
-            if (node is PipeNode)
-            {
-                pipeNode = (PipeNode)node;
-
-                if (pipeNode.NodeGroup is BaseNodeGroup)
-                {
-                    nodeGroup = (BaseNodeGroup)pipeNode.NodeGroup;
-                }
-
-                break;
-            }
-        }
-
-        if (pipeNode != null && nodeGroup != null)
+        if (pipeNode != null && netId != null)
         {
             bool isAirPresent = pipeNode.Air.TotalMoles > 0;
 
             entry = new AtmosMonitoringConsoleEntry
-                (netEnt, GetNetCoordinates(entXform.Coordinates), AtmosMonitoringConsoleGroup.GasPipeSensor, name, nodeGroup.NetId.ToString())
+                (netEnt, GetNetCoordinates(entXform.Coordinates), AtmosMonitoringConsoleGroup.GasPipeSensor, name, netId.Value.ToString())
             {
                 TemperatureData = isAirPresent ? pipeNode.Air.Temperature : 0f,
                 PressureData = pipeNode.Air.Pressure,
@@ -302,7 +321,7 @@ public sealed class AtmosMonitoringConsoleSystem : EntitySystem
                     }
                 }
 
-                focusAlarmData = new AtmosFocusDeviceData(netEnt, gasMixture, nodeGroup.NetId);
+                focusAlarmData = new AtmosFocusDeviceData(netEnt, gasMixture, netId.Value);
             }
         }
 
@@ -368,74 +387,6 @@ public sealed class AtmosMonitoringConsoleSystem : EntitySystem
         return true;
     }
 
-    public static int ChunkSize = 4;
-
-    public static int GetFlag(Vector2i relativeTile)
-    {
-        return 1 << (relativeTile.X * ChunkSize + relativeTile.Y);
-    }
-
-    private Dictionary<Vector2i, AtmosPipeChunk> GetFocusPipeNetwork(EntityUid gridUid, MapGridComponent grid, int netId)
-    {
-        var allChunks = new Dictionary<Vector2i, AtmosPipeChunk>();
-
-        // Adds all atmos pipe to the grid
-        var query = AllEntityQuery<AtmosPipeColorComponent, NodeContainerComponent, TransformComponent>();
-        while (query.MoveNext(out var ent, out var entAtmosPipeColor, out var entNodeContainer, out var entXform))
-        {
-            if (entXform.GridUid != gridUid)
-                continue;
-
-            if (!entXform.Anchored)
-                continue;
-
-            var tile = _sharedMapSystem.GetTileRef(gridUid, grid, entXform.Coordinates);
-            var chunkOrigin = SharedMapSystem.GetChunkIndices(tile.GridIndices, ChunkSize);
-
-            if (!allChunks.TryGetValue(chunkOrigin, out var chunk))
-                chunk = new AtmosPipeChunk(chunkOrigin);
-
-            if (!chunk.AtmosPipeData.TryGetValue(entAtmosPipeColor.Color.ToHex(), out var atmosPipeData))
-                atmosPipeData = new AtmosPipeData();
-
-            var relative = SharedMapSystem.GetChunkRelative(tile.GridIndices, ChunkSize);
-
-            foreach ((var id, var node) in entNodeContainer.Nodes)
-            {
-                if (node is not PipeNode)
-                    continue;
-
-                var pipeNode = (PipeNode)node;
-
-                if (pipeNode.NodeGroup is BaseNodeGroup)
-                {
-                    var nodeGroup = (BaseNodeGroup)pipeNode.NodeGroup;
-
-                    if (nodeGroup.NetId != netId)
-                        continue;
-                }
-
-                var pipeDirection = pipeNode!.CurrentPipeDirection;
-
-                var flagNorth = (((int)pipeDirection & (int)PipeDirection.North) > 0) ? (ushort)GetFlag(relative) : (ushort)0;
-                var flagSouth = (((int)pipeDirection & (int)PipeDirection.South) > 0) ? (ushort)GetFlag(relative) : (ushort)0;
-                var flagEast = (((int)pipeDirection & (int)PipeDirection.East) > 0) ? (ushort)GetFlag(relative) : (ushort)0;
-                var flagWest = (((int)pipeDirection & (int)PipeDirection.West) > 0) ? (ushort)GetFlag(relative) : (ushort)0;
-
-                atmosPipeData.NorthFacing |= flagNorth;
-                atmosPipeData.SouthFacing |= flagSouth;
-                atmosPipeData.EastFacing |= flagEast;
-                atmosPipeData.WestFacing |= flagWest;
-
-                chunk.AtmosPipeData[entAtmosPipeColor.Color.ToHex()] = atmosPipeData;
-            }
-
-            allChunks[chunkOrigin] = chunk;
-        }
-
-        return allChunks;
-    }
-
     private Dictionary<Vector2i, AtmosPipeChunk> RebuildAtmosPipeGrid(EntityUid gridUid, MapGridComponent grid)
     {
         // Clears all chunks for the associated grid
@@ -454,35 +405,12 @@ public sealed class AtmosMonitoringConsoleSystem : EntitySystem
 
             var tile = _sharedMapSystem.GetTileRef(gridUid, grid, entXform.Coordinates);
             var chunkOrigin = SharedMapSystem.GetChunkIndices(tile.GridIndices, ChunkSize);
+            var relative = SharedMapSystem.GetChunkRelative(tile.GridIndices, ChunkSize);
 
             if (!allChunks.TryGetValue(chunkOrigin, out var chunk))
                 chunk = new AtmosPipeChunk(chunkOrigin);
 
-            if (!chunk.AtmosPipeData.TryGetValue(entAtmosPipeColor.Color.ToHex(), out var atmosPipeData))
-                atmosPipeData = new AtmosPipeData();
-
-            var relative = SharedMapSystem.GetChunkRelative(tile.GridIndices, ChunkSize);
-
-            foreach ((var id, var node) in entNodeContainer.Nodes)
-            {
-                if (node is not PipeNode)
-                    continue;
-
-                var pipeNode = node as PipeNode;
-                var pipeDirection = pipeNode!.CurrentPipeDirection;
-
-                var flagNorth = (((int)pipeDirection & (int)PipeDirection.North) > 0) ? (ushort)GetFlag(relative) : (ushort)0;
-                var flagSouth = (((int)pipeDirection & (int)PipeDirection.South) > 0) ? (ushort)GetFlag(relative) : (ushort)0;
-                var flagEast = (((int)pipeDirection & (int)PipeDirection.East) > 0) ? (ushort)GetFlag(relative) : (ushort)0;
-                var flagWest = (((int)pipeDirection & (int)PipeDirection.West) > 0) ? (ushort)GetFlag(relative) : (ushort)0;
-
-                atmosPipeData.NorthFacing |= flagNorth;
-                atmosPipeData.SouthFacing |= flagSouth;
-                atmosPipeData.EastFacing |= flagEast;
-                atmosPipeData.WestFacing |= flagWest;
-
-                chunk.AtmosPipeData[entAtmosPipeColor.Color.ToHex()] = atmosPipeData;
-            }
+            UpdateAtmosPipeChunk(ent, entNodeContainer, entAtmosPipeColor, GetTileIndex(relative), ref chunk);
 
             allChunks[chunkOrigin] = chunk;
         }
@@ -490,35 +418,43 @@ public sealed class AtmosMonitoringConsoleSystem : EntitySystem
         return allChunks;
     }
 
-    private void RebuildSingleTileOfPipeNetwork(EntityUid gridUid, MapGridComponent grid, EntityCoordinates coordinates)
+    private void RebuildSingleTileOfPipeNetwork(EntityUid gridUid, MapGridComponent grid, EntityCoordinates coords)
     {
         if (!_gridAtmosPipeChunks.TryGetValue(gridUid, out var allChunks))
             allChunks = new Dictionary<Vector2i, AtmosPipeChunk>();
 
-        var tile = _sharedMapSystem.GetTileRef(gridUid, grid, coordinates);
+        var tile = _sharedMapSystem.GetTileRef(gridUid, grid, coords);
         var chunkOrigin = SharedMapSystem.GetChunkIndices(tile.GridIndices, ChunkSize);
         var relative = SharedMapSystem.GetChunkRelative(tile.GridIndices, ChunkSize);
+        var tileIdx = GetTileIndex(relative);
 
         if (!allChunks.TryGetValue(chunkOrigin, out var chunk))
             chunk = new AtmosPipeChunk(chunkOrigin);
 
-        foreach (var ent in _sharedMapSystem.GetAnchoredEntities(gridUid, grid, coordinates))
+        // Remove all stale values for the tile
+        foreach (var (index, atmosPipeData) in chunk.AtmosPipeData)
         {
-            if (!TryComp<NodeContainerComponent>(ent, out var entNodeContainer))
-                continue;
+            var mask = (ulong)SharedNavMapSystem.AllDirMask << (tileIdx * SharedNavMapSystem.Directions);
+            chunk.AtmosPipeData[index] = atmosPipeData & ~mask;
+        }
 
+        // Rebuild the pipe data tile
+        foreach (var ent in _sharedMapSystem.GetAnchoredEntities(gridUid, grid, coords))
+        {
             if (!TryComp<AtmosPipeColorComponent>(ent, out var entAtmosPipeColor))
                 continue;
 
-            if (!chunk.AtmosPipeData.TryGetValue(entAtmosPipeColor.Color.ToHex(), out var atmosPipeData))
-                atmosPipeData = new AtmosPipeData();
+            if (!TryComp<NodeContainerComponent>(ent, out var entNodeContainer))
+                continue;
 
-            chunk.AtmosPipeData[entAtmosPipeColor.Color.ToHex()] = UpdateAtmosPipeData(atmosPipeData, relative, entNodeContainer);
+            UpdateAtmosPipeChunk(ent, entNodeContainer, entAtmosPipeColor, tileIdx, ref chunk);
         }
 
         allChunks[chunkOrigin] = chunk;
 
+        // Update the components of the monitoring consoles that are attached to the same grid
         var query = AllEntityQuery<AtmosMonitoringConsoleComponent, TransformComponent>();
+
         while (query.MoveNext(out var ent, out var entConsole, out var entXform))
         {
             if (gridUid != entXform.GridUid)
@@ -529,28 +465,21 @@ public sealed class AtmosMonitoringConsoleSystem : EntitySystem
         }
     }
 
-    private AtmosPipeData UpdateAtmosPipeData(AtmosPipeData atmosPipeData, Vector2i positionInChunk, NodeContainerComponent nodeContainer)
+    private void UpdateAtmosPipeChunk(EntityUid uid, NodeContainerComponent nodeContainer, AtmosPipeColorComponent pipeColor, int tileIdx, ref AtmosPipeChunk chunk)
     {
-        foreach ((var _, var node) in nodeContainer.Nodes)
+        foreach ((var id, var node) in nodeContainer.Nodes)
         {
             if (node is not PipeNode)
                 continue;
 
-            var pipeNode = node as PipeNode;
-            var pipeDirection = pipeNode!.CurrentPipeDirection;
+            var pipeNode = (PipeNode)node;
+            var netId = GetPipeNodeNetId(pipeNode);
+            var pipeDirection = pipeNode.CurrentPipeDirection;
 
-            var flagNorth = (((int)pipeDirection & (int)PipeDirection.North) > 0) ? (ushort)GetFlag(positionInChunk) : (ushort)0;
-            var flagSouth = (((int)pipeDirection & (int)PipeDirection.South) > 0) ? (ushort)GetFlag(positionInChunk) : (ushort)0;
-            var flagEast = (((int)pipeDirection & (int)PipeDirection.East) > 0) ? (ushort)GetFlag(positionInChunk) : (ushort)0;
-            var flagWest = (((int)pipeDirection & (int)PipeDirection.West) > 0) ? (ushort)GetFlag(positionInChunk) : (ushort)0;
-
-            atmosPipeData.NorthFacing |= flagNorth;
-            atmosPipeData.SouthFacing |= flagSouth;
-            atmosPipeData.EastFacing |= flagEast;
-            atmosPipeData.WestFacing |= flagWest;
+            chunk.AtmosPipeData.TryGetValue((netId, pipeColor.Color.ToHex()), out var atmosPipeData);
+            atmosPipeData |= (ulong)pipeDirection << (tileIdx * SharedNavMapSystem.Directions);
+            chunk.AtmosPipeData[(netId, pipeColor.Color.ToHex())] = atmosPipeData;
         }
-
-        return atmosPipeData;
     }
 
     private void InitalizeAtmosMonitoringConsole(EntityUid uid, AtmosMonitoringConsoleComponent component)
