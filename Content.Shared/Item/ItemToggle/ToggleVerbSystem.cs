@@ -23,6 +23,9 @@ public sealed class ToggleVerbSystem : EntitySystem
         if (!args.CanAccess || !args.CanInteract)
             return;
 
+        if (ent.Comp.Complex && !args.CanComplexInteract)
+            return;
+
         var name = Identity.Entity(ent, EntityManager);
         var user = args.User;
         args.Verbs.Add(new ActivationVerb()

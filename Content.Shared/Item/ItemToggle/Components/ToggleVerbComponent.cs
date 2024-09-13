@@ -15,4 +15,10 @@ public sealed partial class ToggleVerbComponent : Component
     /// </summary>
     [DataField(required: true)]
     public LocId Text = string.Empty;
+
+    /// <summary>
+    /// If this is true then mobs that can't do complex interactions (mice, etc) can't get the verb.
+    /// </summary>
+    [DataField]
+    public bool Complex = true;
 }
