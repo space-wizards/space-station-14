@@ -160,7 +160,8 @@ public sealed class CellSequencerSystem : EntitySystem
             return;
         }
 
-        var state = new CellSequencerUiState(ent.Comp.Cells, serverEnt.Value.Comp.Cells, ent.Comp.MaterialAmount);
+        var hasContainer = _container.HasContainer(ent, ent.Comp.DishSlot, null);
+        var state = new CellSequencerUiState(ent.Comp.Cells, serverEnt.Value.Comp.Cells, ent.Comp.MaterialAmount, hasContainer);
         _userInterface.SetUiState(ent.Owner, CellSequencerUiKey.Key, state);
     }
 
