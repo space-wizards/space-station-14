@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Forensics;
@@ -9,6 +10,7 @@ using Content.Shared.Implants.Components;
 using Content.Shared.Popups;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
@@ -21,6 +23,7 @@ public abstract class SharedImplanterSystem : EntitySystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
 
     public override void Initialize()
     {
@@ -37,6 +40,11 @@ public abstract class SharedImplanterSystem : EntitySystem
             component.ImplanterSlot.StartingItem = component.Implant;
 
         _itemSlots.AddItemSlot(uid, ImplanterComponent.ImplanterSlotId, component.ImplanterSlot);
+
+        if (component.DeimplantChosen == null)
+            component.DeimplantChosen = component.DeimplantWhitelist.FirstOrNull();
+
+        Dirty(uid, component);
     }
 
     private void OnEntInserted(EntityUid uid, ImplanterComponent component, EntInsertedIntoContainerMessage args)
@@ -125,40 +133,92 @@ public abstract class SharedImplanterSystem : EntitySystem
         {
             var implantCompQuery = GetEntityQuery<SubdermalImplantComponent>();
 
-            foreach (var implant in implantContainer.ContainedEntities)
+            if (component.AllowDeimplantAll)
             {
-                if (!implantCompQuery.TryGetComponent(implant, out var implantComp))
-                    continue;
-
-                //Don't remove a permanent implant and look for the next that can be drawn
-                if (!_container.CanRemove(implant, implantContainer))
+                foreach (var implant in implantContainer.ContainedEntities)
                 {
-                    var implantName = Identity.Entity(implant, EntityManager);
-                    var targetName = Identity.Entity(target, EntityManager);
-                    var failedPermanentMessage = Loc.GetString("implanter-draw-failed-permanent",
-                        ("implant", implantName), ("target", targetName));
-                    _popup.PopupEntity(failedPermanentMessage, target, user);
+                    if (!implantCompQuery.TryGetComponent(implant, out var implantComp))
+                        continue;
+
+                    //Don't remove a permanent implant and look for the next that can be drawn
+                    if (!_container.CanRemove(implant, implantContainer))
+                    {
+                        DrawPermanentFailurePopup(implant, target, user);
+                        permanentFound = implantComp.Permanent;
+                        continue;
+                    }
+
+                    DrawImplantIntoImplanter(implanter, target, implant, implantContainer, implanterContainer, implantComp);
                     permanentFound = implantComp.Permanent;
-                    continue;
+
+                    //Break so only one implant is drawn
+                    break;
                 }
 
-                _container.Remove(implant, implantContainer);
-                implantComp.ImplantedEntity = null;
-                _container.Insert(implant, implanterContainer);
-                permanentFound = implantComp.Permanent;
+                if (component.CurrentMode == ImplanterToggleMode.Draw && !component.ImplantOnly && !permanentFound)
+                    ImplantMode(implanter, component);
+            }
+            else
+            {
+                var implant = implantContainer.ContainedEntities.FirstOrNull(entity => Prototype(entity) != null && component.DeimplantChosen == Prototype(entity)!);
+                if (implant != null && implantCompQuery.TryGetComponent(implant, out var implantComp))
+                {
+                    //Don't remove a permanent implant
+                    if (!_container.CanRemove(implant.Value, implantContainer))
+                    {
+                        DrawPermanentFailurePopup(implant.Value, target, user);
+                        permanentFound = implantComp.Permanent;
 
-                var ev = new TransferDnaEvent { Donor = target, Recipient = implanter };
-                RaiseLocalEvent(target, ref ev);
+                    }
+                    else
+                    {
+                        DrawImplantIntoImplanter(implanter, target, implant.Value, implantContainer, implanterContainer, implantComp);
+                        permanentFound = implantComp.Permanent;
+                    }
 
-                //Break so only one implant is drawn
-                break;
+                    if (component.CurrentMode == ImplanterToggleMode.Draw && !component.ImplantOnly && !permanentFound)
+                        ImplantMode(implanter, component);
+                }
+                else
+                {
+                    DrawCatastrophicFailure(implanter, component, user);
+                }
             }
 
-            if (component.CurrentMode == ImplanterToggleMode.Draw && !component.ImplantOnly && !permanentFound)
-                ImplantMode(implanter, component);
-
             Dirty(implanter, component);
+
         }
+        else
+        {
+            DrawCatastrophicFailure(implanter, component, user);
+        }
+    }
+
+    private void DrawPermanentFailurePopup(EntityUid implant, EntityUid target, EntityUid user)
+    {
+        var implantName = Identity.Entity(implant, EntityManager);
+        var targetName = Identity.Entity(target, EntityManager);
+        var failedPermanentMessage = Loc.GetString("implanter-draw-failed-permanent",
+            ("implant", implantName), ("target", targetName));
+        _popup.PopupEntity(failedPermanentMessage, target, user);
+    }
+
+    private void DrawImplantIntoImplanter(EntityUid implanter, EntityUid target, EntityUid implant, BaseContainer implantContainer, ContainerSlot implanterContainer, SubdermalImplantComponent implantComp)
+    {
+        _container.Remove(implant, implantContainer);
+        implantComp.ImplantedEntity = null;
+        _container.Insert(implant, implanterContainer);
+
+        var ev = new TransferDnaEvent { Donor = target, Recipient = implanter };
+        RaiseLocalEvent(target, ref ev);
+    }
+
+    private void DrawCatastrophicFailure(EntityUid implanter, ImplanterComponent component, EntityUid user)
+    {
+        _damageableSystem.TryChangeDamage(user, component.DeimplantFailureDamage, ignoreResistances: true, origin: implanter);
+        var userName = Identity.Entity(user, EntityManager);
+        var failedCatastrophicallyMessage = Loc.GetString("implanter-draw-failed-catastrophically", ("user", userName));
+        _popup.PopupEntity(failedCatastrophicallyMessage, user, PopupType.MediumCaution);
     }
 
     private void ImplantMode(EntityUid uid, ImplanterComponent component)
@@ -225,4 +285,40 @@ public sealed class AddImplantAttemptEvent : CancellableEntityEventArgs
         Implant = implant;
         Implanter = implanter;
     }
+}
+
+
+[Serializable, NetSerializable]
+public sealed class DeimplantBuiState : BoundUserInterfaceState
+{
+    public readonly string? Implant;
+
+    public Dictionary<string, string> ImplantList;
+
+    public DeimplantBuiState(string? implant, Dictionary<string, string> implantList)
+    {
+        Implant = implant;
+        ImplantList = implantList;
+    }
+}
+
+
+/// <summary>
+/// Change the chosen implanter in the UI.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class DeimplantChangeVerbMessage : BoundUserInterfaceMessage
+{
+    public readonly string? Implant;
+
+    public DeimplantChangeVerbMessage(string? implant)
+    {
+        Implant = implant;
+    }
+}
+
+[Serializable, NetSerializable]
+public enum DeimplantUiKey : byte
+{
+    Key
 }
