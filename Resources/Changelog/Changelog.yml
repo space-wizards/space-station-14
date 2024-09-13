@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TheShuEd
-  changes:
-  - message: anomalies have the ability to gain invisibility behavior
-    type: Add
-  id: 6864
-  time: '2024-07-03T15:14:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29120
 - author: ArkiveDev
   changes:
   - message: Railings can now be constructed in all 4 orientations.
@@ -3916,3 +3909,12 @@
   id: 7363
   time: '2024-09-13T14:01:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31649
+- author: slarticodefast
+  changes:
+  - message: Extradimensional orange, holymelon, meatwheat and world peas plant mutations
+      have been added. Obtain them by mutating oranges, watermelons, wheat and laughin'
+      peas respectively.
+    type: Add
+  id: 7364
+  time: '2024-09-13T14:02:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27624
