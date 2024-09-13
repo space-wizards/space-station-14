@@ -8,7 +8,7 @@
   id: BruiseOMatGoodbyes
   values:
     prefix: thankyou-bruiseomat-
-    count: 25
+    count: 26
 
 - type: localizedDataset
   id: ChangGoodbyes
