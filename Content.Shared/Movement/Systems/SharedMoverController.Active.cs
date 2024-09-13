@@ -21,11 +21,13 @@ public abstract partial class SharedMoverController
 
     protected virtual void OnInputPlayerAttached(Entity<InputMoverComponent> ent, ref PlayerAttachedEvent args)
     {
+        SetMoveInput(ent, MoveButtons.None);
         RefreshActiveInput((ent.Owner, ent.Comp, null));
     }
 
     protected virtual void OnInputPlayerDetached(Entity<InputMoverComponent> ent, ref PlayerDetachedEvent args)
     {
+        SetMoveInput(ent, MoveButtons.None);
         RefreshActiveInput((ent.Owner, ent.Comp, null));
     }
 
