@@ -8,7 +8,7 @@ namespace Content.Shared.Doors
         PowerIndicator,
         BoltIndicator,
         BoltLightIndicator,
-        AIControlIndicator,
+        AiControlIndicator,
         TimingIndicator,
         SafetyIndicator,
     }

@@ -28,7 +28,7 @@
     containers:
     - entity_storage
   - type: StaticPrice
-    price: 80
+    price: 100
 
 - type: entity
   parent: CratePlastic
@@ -140,7 +140,7 @@
       map: ["enum.StorageVisualLayers.Door"]
     - state: paper
       sprite: Structures/Storage/Crates/labels.rsi
-      map: ["enum.PaperLabelVisuals.Layer"]  
+      map: ["enum.PaperLabelVisuals.Layer"]
   - type: Construction
     graph: WebStructures
     node: crate
@@ -171,7 +171,7 @@
 # Secure Crates
 
 - type: entity
-  parent: CrateBaseSecure
+  parent: [ CrateBaseSecure, BaseRestrictedContraband ]
   id: CrateSecgear
   name: secgear crate
   components:
@@ -287,7 +287,7 @@
     access: [["Armory"]]
 
 - type: entity
-  parent: CrateBaseSecure
+  parent: [ CrateBaseSecure, BaseRestrictedContraband ]
   suffix: Armory, Secure
   id: CrateContrabandStorageSecure
   name: contraband storage crate
@@ -326,7 +326,7 @@
     - state: paper
       sprite: Structures/Storage/Crates/labels.rsi
       offset: "-0.25,0.625"
-      map: ["enum.PaperLabelVisuals.Layer"]  
+      map: ["enum.PaperLabelVisuals.Layer"]
   - type: Icon
     sprite: Structures/Storage/Crates/livestock.rsi
     state: base
@@ -381,7 +381,7 @@
     - state: paper
       sprite: Structures/Storage/Crates/labels.rsi
       offset: "0.0,0.125"
-      map: ["enum.PaperLabelVisuals.Layer"]   
+      map: ["enum.PaperLabelVisuals.Layer"]
   - type: Icon
     sprite: Structures/Storage/Crates/cage.rsi
   - type: Destructible
@@ -417,7 +417,7 @@
         layer:
         - LargeMobLayer
   - type: StaticPrice
-    price: 60
+    price: 75
 
 - type: entity
   parent: CrateGeneric
@@ -483,7 +483,7 @@
     - state: closed
       map: ["enum.StorageVisualLayers.Door"]
     - state: paper
-      map: ["enum.PaperLabelVisuals.Layer"] 
+      map: ["enum.PaperLabelVisuals.Layer"]
   - type: Icon
     sprite: Structures/Storage/Crates/coffin.rsi
     state: base
@@ -525,7 +525,7 @@
     - state: paper
       sprite: Structures/Storage/Crates/labels.rsi
       offset: "-0.28125,0.625"
-      map: ["enum.PaperLabelVisuals.Layer"] 
+      map: ["enum.PaperLabelVisuals.Layer"]
   - type: Icon
     sprite: Structures/Storage/Crates/wooden_grave.rsi
     state: base
@@ -573,7 +573,7 @@
     - state: paper
       sprite: Structures/Storage/Crates/labels.rsi
       offset: "-0.3125,0.5625"
-      map: ["enum.PaperLabelVisuals.Layer"] 
+      map: ["enum.PaperLabelVisuals.Layer"]
   - type: Icon
     sprite: Structures/Storage/Crates/stone_grave.rsi
     state: base

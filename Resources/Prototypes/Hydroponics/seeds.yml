@@ -358,6 +358,31 @@
       PotencyDivisor: 5
 
 - type: seed
+  id: teaPlant
+  name: seeds-teaplant-name
+  noun: seeds-noun-seeds
+  displayName: seeds-teaplant-display-name
+  plantRsi: Objects/Specific/Hydroponics/tea_plant.rsi
+  packetPrototype: TeaPlantSeeds
+  productPrototypes:
+    - LeavesTea
+  harvestRepeat: Repeat
+  lifespan: 75
+  maturation: 5
+  production: 3
+  yield: 2
+  potency: 20
+  growthStages: 5
+  waterConsumption: 0.6
+  idealLight: 9
+  idealHeat: 298
+  chemicals:
+    Vitamin:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+
+- type: seed
   id: papercane
   name: seeds-papercane-name
   noun: seeds-noun-seeds
@@ -1319,6 +1344,61 @@
   packetPrototype: GatfruitSeeds
   productPrototypes:
     - FoodGatfruit
+  mutationPrototypes:
+    - fakeCapfruit
+    - realCapfruit
+  lifespan: 65
+  maturation: 25
+  production: 25
+  yield: 1
+  potency: 10
+  growthStages: 2
+  idealLight: 6
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+    Sulfur:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+
+- type: seed
+  id: fakeCapfruit
+  name: seeds-capfruit-name
+  noun: seeds-noun-seeds
+  displayName: seeds-capfruit-display-name
+  plantRsi: Objects/Specific/Hydroponics/capfruit.rsi
+  packetPrototype: FakeCapfruitSeeds
+  productPrototypes:
+    - FoodFakeCapfruit
+  lifespan: 65
+  maturation: 25
+  production: 25
+  yield: 1
+  potency: 10
+  growthStages: 2
+  idealLight: 6
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+    Sulfur:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+
+- type: seed
+  id: realCapfruit
+  name: seeds-capfruit-name
+  noun: seeds-noun-seeds
+  displayName: seeds-capfruit-display-name
+  plantRsi: Objects/Specific/Hydroponics/capfruit.rsi
+  packetPrototype: RealCapfruitSeeds
+  productPrototypes:
+    - FoodRealCapfruit
   lifespan: 65
   maturation: 25
   production: 25
@@ -1619,6 +1699,8 @@
   packetPrototype: PumpkinSeeds
   productPrototypes:
     - FoodPumpkin
+  mutationPrototypes:
+    - bluePumpkin
   lifespan: 55
   maturation: 10
   production: 4
@@ -1635,6 +1717,36 @@
       Min: 1
       Max: 5
       PotencyDivisor: 20
+
+- type: seed
+  id: bluePumpkin
+  name: seeds-blue-pumpkin-name
+  noun: seeds-noun-seeds
+  displayName: seeds-blue-pumpkin-display-name
+  plantRsi: Objects/Specific/Hydroponics/blue_pumpkin.rsi
+  packetPrototype: BluePumpkinSeeds
+  productPrototypes:
+    - FoodBluePumpkin
+  lifespan: 55
+  maturation: 10
+  production: 4
+  yield: 2
+  potency: 10
+  idealHeat: 288
+  growthStages: 3
+  chemicals:
+    Ammonia:
+      Min: 1
+      Max: 15
+      PotencyDivisor: 3
+    Chlorine:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 5
+    Vitamin:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 3
 
 - type: seed
   id: cotton
@@ -1687,3 +1799,29 @@
       Min: 4
       Max: 8
       PotencyDivisor: 30
+
+- type: seed
+  id: cherry
+  name: seeds-cherry-name
+  noun: seeds-noun-seeds
+  displayName: seeds-cherry-display-name
+  plantRsi: Objects/Specific/Hydroponics/cherry.rsi
+  packetPrototype: CherrySeeds
+  productPrototypes:
+    - FoodCherry
+  harvestRepeat: Repeat
+  lifespan: 55
+  maturation: 6
+  production: 6
+  yield: 5
+  potency: 10
+  idealLight: 6
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 3
+      PotencyDivisor: 30
+    Vitamin:
+      Min: 1
+      Max: 3
+      PotencyDivisor: 40

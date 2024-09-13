@@ -41,7 +41,8 @@
     state: boritos
   - type: Item
   - type: Food
-    trash: FoodPacketBoritosTrash
+    trash: 
+    - FoodPacketBoritosTrash
 
 - type: entity
   name: C&Ds
@@ -56,7 +57,8 @@
     state: cnds
   - type: Item
   - type: Food
-    trash: FoodPacketCnDsTrash
+    trash: 
+    - FoodPacketCnDsTrash
 
 - type: entity
   name: cheesie honkers
@@ -72,7 +74,8 @@
     state: cheesiehonkers
   - type: Item
   - type: Food
-    trash: FoodPacketCheesieTrash
+    trash: 
+    - FoodPacketCheesieTrash
 
 - type: entity
   name: chips
@@ -89,7 +92,8 @@
     state: chips
   - type: Item
   - type: Food
-    trash: FoodPacketChipsTrash
+    trash: 
+    - FoodPacketChipsTrash
 
 - type: entity
   name: chocolate bar
@@ -183,7 +187,8 @@
     state: pistachio
   - type: Item
   - type: Food
-    trash: FoodPacketPistachioTrash
+    trash: 
+    - FoodPacketPistachioTrash
   - type: Tag
     tags:
     - Fruit # Seed of a fruit, you can yell at me
@@ -204,7 +209,8 @@
   - type: Item
     heldPrefix: popcorn
   - type: Food
-    trash: FoodPacketPopcornTrash
+    trash: 
+    - FoodPacketPopcornTrash
 
 - type: entity
   name: 4no raisins
@@ -219,7 +225,8 @@
     state: raisins
   - type: Item
   - type: Food
-    trash: FoodPacketRaisinsTrash
+    trash: 
+    - FoodPacketRaisinsTrash
   - type: Tag
     tags:
     - Fruit
@@ -237,7 +244,8 @@
     state: semki
   - type: Item
   - type: Food
-    trash: FoodPacketSemkiTrash
+    trash: 
+    - FoodPacketSemkiTrash
 
 - type: entity
   name: sus jerky
@@ -252,7 +260,8 @@
     state: susjerky
   - type: Item
   - type: Food
-    trash: FoodPacketSusTrash
+    trash: 
+    - FoodPacketSusTrash
   - type: Tag
     tags:
     - Meat
@@ -270,7 +279,8 @@
     state: syndicakes
   - type: Item
   - type: Food
-    trash: FoodPacketSyndiTrash
+    trash: 
+    - FoodPacketSyndiTrash
 
 - type: entity
   parent: FoodSnackBase
@@ -294,7 +304,8 @@
   - type: Sprite
     state: ramen
   - type: Food
-    trash: FoodPacketCupRamenTrash
+    trash: 
+    - FoodPacketCupRamenTrash
 
 - type: entity
   parent: DrinkRamen
@@ -336,7 +347,8 @@
         - ReagentId: Soysauce
           Quantity: 2
   - type: Food
-    trash: FoodPacketChowMeinTrash
+    trash: 
+    - FoodPacketChowMeinTrash
 
 - type: entity
   name: dan dan noodles
@@ -364,7 +376,8 @@
         - ReagentId: Soysauce
           Quantity: 2
   - type: Food
-    trash: FoodPacketDanDanTrash
+    trash: 
+    - FoodPacketDanDanTrash
 
 - type: entity
   name: fortune cookie
@@ -389,7 +402,8 @@
     heldPrefix: packet
     size: Tiny
   - type: Food
-    trash: FoodCookieFortune
+    trash: 
+    - FoodCookieFortune
 
 - type: entity
   id: FoodSnackNutribrick

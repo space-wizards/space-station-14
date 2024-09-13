@@ -284,7 +284,7 @@
 
 - type: entity
   id: RCD
-  parent: BaseItem
+  parent: [ BaseItem, BaseEngineeringContraband ]
   name: RCD
   description: The rapid construction device can be used to quickly place and remove various station structures and fixtures. Requires compressed matter to function.
   components:
@@ -328,12 +328,13 @@
       Steel: 600
       Plastic: 100
   - type: StaticPrice
-    price: 100
+    price: 110
   - type: UserInterface
     interfaces:
       enum.RcdUiKey.Key:
         type: RCDMenuBoundUserInterface
   - type: ActivatableUI
+    inHandsOnly: true
     key: enum.RcdUiKey.Key
 
 - type: entity
