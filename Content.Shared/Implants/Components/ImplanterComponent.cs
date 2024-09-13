@@ -50,7 +50,7 @@ public sealed partial class ImplanterComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField]
-    public float DrawTime = 60f;
+    public float DrawTime = 25f;
 
     /// <summary>
     /// Good for single-use injectors

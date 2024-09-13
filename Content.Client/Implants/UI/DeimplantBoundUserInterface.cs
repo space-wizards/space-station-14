@@ -1,6 +1,4 @@
-using Content.Shared.VoiceMask;
 using Content.Shared.Implants;
-using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 using Robust.Shared.Prototypes;
 

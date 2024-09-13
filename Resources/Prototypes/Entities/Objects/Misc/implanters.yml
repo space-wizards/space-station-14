@@ -21,7 +21,6 @@
         tags:
         - Unimplantable
       currentMode: Draw
-      drawTime: 3
       implanterSlot:
         name: Implant
         locked: True

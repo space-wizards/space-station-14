@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
@@ -10,7 +9,6 @@ using Content.Shared.Implants.Components;
 using Content.Shared.Popups;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 

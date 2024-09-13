@@ -124,6 +124,9 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
         UpdateUi(uid, component);
     }
 
+    /// <summary>
+    /// Sets selectable implants in the UI of the draw setting window
+    /// </summary>
     private void UpdateUi(EntityUid uid, ImplanterComponent? component = null)
     {
         if (!Resolve(uid, ref component))
@@ -162,6 +165,9 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
         Dirty(uid, component);
     }
 
+    /// <summary>
+    /// Returns true if the target already has an implant of the same type.
+    /// </summary>
     public bool CheckSameImplant(EntityUid target, EntityUid implant)
     {
         if (!TryComp<ImplantedComponent>(target, out var implanted))
