@@ -19,6 +19,9 @@
     allowed:
     - Stun
     - Corporeal
+  - type: Hands
+    showInHands: false
+    disableExplosionRecursion: true
   - type: Damageable
     damageContainer: Biological
   - type: NoSlip

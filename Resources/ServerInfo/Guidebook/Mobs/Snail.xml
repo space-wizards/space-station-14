@@ -2,7 +2,7 @@
   # Gastropoid
 
   <Box>
-    <GuideEntityEmbed Entity="MobSnail" Caption=""/>
+    <GuideEntityEmbed Entity="MobGastropoid" Caption=""/>
   </Box>
   They depend on moisture to survive, so anything which contains table salt will damage them when splashed, ingested, or injected (including Saline.)
   <Box>

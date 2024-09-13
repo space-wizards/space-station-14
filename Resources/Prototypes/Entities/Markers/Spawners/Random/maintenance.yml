@@ -499,3 +499,38 @@
         - Spaceshroom
       chance: 0.6
       offset: 0.0
+
+- type: entityTable
+  id: MaintEnemyTable
+  table: !type:GroupSelector
+    children:
+    # Weak Enemy
+    - id: MobTick
+      weight: 60
+    - id: DehydratedSpaceCarp
+      weight: 20
+    # Strong Enemy
+    - !type:GroupSelector
+      weight: 20
+      children:
+      - id: MobCarp
+        weight: 5
+      - id: MobCarpMagic
+      - id: MobCarpHolo
+      - id: MobCarpRainbow
+
+- type: entity
+  name: Maint Loot Spawner
+  suffix: Enemy
+  id: MaintenanceEnemySpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Mobs/Aliens/Carps/space.rsi
+        state: alive
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: MaintEnemyTable
+      prob: 0.6

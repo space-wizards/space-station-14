@@ -236,7 +236,6 @@
 ## hos
 
 - type: entity
-  noSpawn: true
   parent: BaseTraitorStealObjective
   id: EnergyShotgunStealObjective
   components:

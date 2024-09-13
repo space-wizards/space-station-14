@@ -29,6 +29,9 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Utility;
 using Robust.Shared.Map.Components;
 using Content.Shared.Whitelist;
+using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Interaction.Components;
 
 namespace Content.Server.Revenant.EntitySystems;
 
@@ -43,6 +46,7 @@ public sealed partial class RevenantSystem
     [Dependency] private readonly TileSystem _tile = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+    [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
 
     private void InitializeAbilities()
     {
@@ -54,6 +58,7 @@ public sealed partial class RevenantSystem
         SubscribeLocalEvent<RevenantComponent, RevenantOverloadLightsActionEvent>(OnOverloadLightsAction);
         SubscribeLocalEvent<RevenantComponent, RevenantBlightActionEvent>(OnBlightAction);
         SubscribeLocalEvent<RevenantComponent, RevenantMalfunctionActionEvent>(OnMalfunctionAction);
+        SubscribeLocalEvent<RevenantComponent, RevenantBloodWritingEvent>(OnBloodWritingAction);
     }
 
     private void OnInteract(EntityUid uid, RevenantComponent component, UserActivateInWorldEvent args)
@@ -339,6 +344,31 @@ public sealed partial class RevenantSystem
                 continue;
 
             _emag.DoEmagEffect(uid, ent); //it does not emag itself. adorable.
+        }
+    }
+
+    private void OnBloodWritingAction(EntityUid uid, RevenantComponent component, RevenantBloodWritingEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        if (!TryComp<HandsComponent>(uid, out var hands))
+            return;
+
+        if (component.BloodCrayon != null)
+        {
+            // Disable blood writing
+            _handsSystem.RemoveHands(uid);
+            QueueDel(component.BloodCrayon);
+            component.BloodCrayon = null;
+        }
+        else
+        {
+            _handsSystem.AddHand(uid, "crayon", HandLocation.Middle);
+            var crayon = Spawn("CrayonBlood");
+            component.BloodCrayon = crayon;
+            _handsSystem.DoPickup(uid, hands.Hands["crayon"], crayon);
+            EnsureComp<UnremoveableComponent>(crayon);
         }
     }
 }

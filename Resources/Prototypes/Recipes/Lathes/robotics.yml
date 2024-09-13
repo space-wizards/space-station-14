@@ -618,8 +618,8 @@
     Plastic: 250
 
 - type: latheRecipe
-  id: BorgModuleService
-  result: BorgModuleService
+  id: BorgModuleBartender
+  result: BorgModuleBartender
   category: Robotics
   completetime: 3
   materials:
@@ -660,6 +660,16 @@
 - type: latheRecipe
   id: BorgModuleClowning
   result: BorgModuleClowning
+  category: Robotics
+  completetime: 3
+  materials:
+    Steel: 250
+    Glass: 250
+    Plastic: 250
+
+- type: latheRecipe
+  id: BorgModulePaper
+  result: BorgModulePaper
   category: Robotics
   completetime: 3
   materials:

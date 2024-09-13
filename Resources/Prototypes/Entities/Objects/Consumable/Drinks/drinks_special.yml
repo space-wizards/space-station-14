@@ -169,3 +169,39 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 75
+
+- type: entity
+  parent: BaseItem # Doesn't inherit the ability to put other reagents into it
+  id: BorgIceBucket
+  name: ice bucket
+  suffix: Cyborg
+  description: A special bucket of refreshy refilling ice. Prohibited use for challenge with the same name!
+  components:
+  - type: Drink
+  - type: DrainableSolution
+    solution: drink
+  - type: DrawableSolution
+    solution: drink
+  - type: SolutionTransfer
+    canChangeTransferAmount: true
+  - type: Spillable
+    solution: drink
+  - type: UserInterface
+    interfaces:
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Ice
+          Quantity: 200
+  - type: SolutionRegeneration
+    solution: drink
+    generated:
+      reagents:
+      - ReagentId: Ice
+        Quantity: 1
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/icebucket.rsi
+    state: icon

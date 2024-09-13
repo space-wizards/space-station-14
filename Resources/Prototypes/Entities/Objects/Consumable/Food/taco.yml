@@ -11,7 +11,7 @@
   - type: Food
     transferAmount: 3
   - type: Sprite
-    sprite: Objects/Consumable/Food/taco.rsi
+    sprite: Objects/Consumable/Food/taco_sequence.rsi
     layers:
     - state: tacoshell_back
     - map: ["foodSequenceLayers"]
@@ -25,12 +25,161 @@
         - ReagentId: Nutriment
           Quantity: 6.66
   - type: FoodSequenceStartPoint
-    key: taco
+    key: Taco
     maxLayers: 3
-    startPosition: -0.2, 0
-    offset: 0.1, 0
+    startPosition: -0.15, 0
+    offset: 0.15, 0
     minLayerOffset: 0, 0
     maxLayerOffset: 0, 0.05
     nameGeneration: food-sequence-taco-gen
     contentSeparator: ", "
   - type: Appearance
+
+# Old tacos
+
+- type: entity
+  parent: FoodInjectableBase
+  id: FoodTacoBase
+  abstract: true
+  components:
+  - type: FlavorProfile
+    flavors:
+      - meaty
+      - cheesy
+  - type: Food
+    transferAmount: 3
+  - type: Sprite
+    sprite: Objects/Consumable/Food/taco.rsi
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: Vitamin
+          Quantity: 4
+  - type: Item
+    sprite: Objects/Consumable/Food/taco.rsi
+    storedRotation: -90
+  - type: Tag
+    tags:
+      - Meat
+
+- type: entity
+  name: beef taco
+  parent: FoodTacoBase
+  id: FoodTacoBeef
+  description: A very basic and run of the mill beef taco, now with cheese!
+  components:
+  - type: Food
+  - type: Sprite
+    state: beeftaco
+
+- type: entity
+  name: chicken taco
+  parent: FoodTacoBase
+  id: FoodTacoChicken
+  description: A very basic and run of the mill chicken taco, now with cheese!
+  components:
+  - type: Food
+  - type: Sprite
+    state: chickentaco
+
+- type: entity
+  name: fish taco
+  parent: FoodTacoBase
+  id: FoodTacoFish
+  description: Sounds kinda gross, but it's actually not that bad.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - onion
+      - fishy
+  - type: Food
+  - type: Sprite
+    state: fishtaco
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Vitamin
+          Quantity: 6
+
+- type: entity
+  name: rat taco
+  parent: FoodTacoBase
+  id: FoodTacoRat
+  description: Yeah, that looks about right...
+  components:
+  - type: Food
+  - type: Sprite
+    state: rattaco
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: Vitamin
+          Quantity: 4
+
+- type: entity
+  name: beef taco supreme
+  parent: FoodTacoBase
+  id: FoodTacoBeefSupreme
+  description: It's like a regular beef taco, but surpeme!
+  components:
+  - type: Food
+  - type: Sprite
+    state: beeftacosupreme
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 26
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 14
+        - ReagentId: Vitamin
+          Quantity: 6
+
+- type: entity
+  name: chicken taco supreme
+  parent: FoodTacoBase
+  id: FoodTacoChickenSupreme
+  description: It's like a regular chicken taco, but surpeme!
+  components:
+  - type: Food
+  - type: Sprite
+    state: chickentacosupreme
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 26
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 14
+        - ReagentId: Vitamin
+          Quantity: 6
+
+- type: entity
+  name: soft taco
+  parent: FoodMealBase
+  id: FoodMealSoftTaco
+  description: Take a bite!
+  components:
+  - type: FlavorProfile
+    flavors:
+      - cheesy
+      - tomato
+      - meaty
+      - onion
+  - type: Sprite
+    state: softtaco
+  - type: Tag
+    tags:
+      - Meat
