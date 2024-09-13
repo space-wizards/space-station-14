@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: eoineoineoin
-  changes:
-  - message: Artifact Analyzer now collides with walls
-    type: Fix
-  id: 6863
-  time: '2024-07-03T05:27:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28117
 - author: TheShuEd
   changes:
   - message: anomalies have the ability to gain invisibility behavior
@@ -3914,3 +3907,12 @@
   id: 7362
   time: '2024-09-13T13:59:19.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32091
+- author: Gorox221
+  changes:
+  - message: Mech pilots receive a warning before they are ejected from the mech.
+    type: Tweak
+  - message: Now, when removing the pilot of the mech, you need to not move.
+    type: Fix
+  id: 7363
+  time: '2024-09-13T14:01:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31649
