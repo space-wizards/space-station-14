@@ -124,6 +124,36 @@ public partial class InventorySystem : EntitySystem
         return false;
     }
 
+    public bool TryJumpIntoSlots(EntityUid uid, EntityUid target)
+    {
+        if (_containerSystem.ContainsEntity(target, uid))
+            return true;
+
+        if (TryGetSlotContainer(target, "pocket1", out var pocket1, out _)
+            && _containerSystem.Insert(uid, pocket1)
+        )
+        {
+            _popup.PopupEntity(Loc.GetString("item-jump-into-pocket", ("name", Comp<MetaDataComponent>(uid).EntityName)), target, target);
+            return true;
+        }
+
+        if (TryGetSlotContainer(target, "pocket2", out var pocket2, out _)
+            && _containerSystem.Insert(uid, pocket2)
+        )
+        {
+            _popup.PopupEntity(Loc.GetString("item-jump-into-pocket", ("name", Comp<MetaDataComponent>(uid).EntityName)), target, target);
+            return true;
+        }
+
+        if (_handsSystem.TryPickupAnyHand(target, uid))
+        {
+            _popup.PopupEntity(Loc.GetString("item-jump-into-hands", ("name", Comp<MetaDataComponent>(uid).EntityName)), target, target);
+            return true;
+        }
+
+        return false;
+    }
+
     public bool TryGetContainerSlotEnumerator(Entity<InventoryComponent?> entity, out InventorySlotEnumerator containerSlotEnumerator, SlotFlags flags = SlotFlags.All)
     {
         if (!Resolve(entity.Owner, ref entity.Comp, false))

@@ -1,10 +1,16 @@
 - type: htnCompound
-  id: AnimatedHandcuffsCompound
+  id: AnimatedGrenadeCompound
   branches:
-    - tasks:
+    # Try and find an entity with pockets, jump into the pockets and activate self.
+    - preconditions:
+        - !type:InContainerPrecondition
+          isInContainer: false
+        - !type:ThrownPrecondition
+          isBeingThrown: false
+      tasks:
         - !type:HTNPrimitiveTask
           operator: !type:UtilityOperator
-            proto: NearbyCuffableTargets
+            proto: NearbyMeleeTargets
         
         - !type:HTNPrimitiveTask
           operator: !type:MoveToOperator
@@ -13,7 +19,7 @@
             targetKey: TargetCoordinates
             pathfindKey: TargetPathfind
             rangeKey: MovementRangeClose
-          
+        
         - !type:HTNPrimitiveTask
           preconditions:
             - !type:KeyExistsPrecondition
@@ -28,32 +34,10 @@
           preconditions:
             - !type:KeyExistsPrecondition
               key: Target
-          operator: !type:InteractionActivateTargetOperator
-        
-        - !type:HTNPrimitiveTask
-          preconditions:
-            - !type:KeyExistsPrecondition
-              key: IdleTime
-          operator: !type:WaitOperator
-            key: IdleTime
-
+            - !type:TargetInRangePrecondition
+              targetKey: Target
+              rangeKey: MeleeRange
+          operator: !type:InteractionActivateSelfOperator
     - tasks:
         - !type:HTNCompoundTask
           task: IdleCompound
-
-- type: utilityQuery
-  id: NearbyCuffableTargets
-  query:
-    - !type:NearbyHostilesQuery
-  considerations:
-    - !type:TargetIsAliveCon
-      curve: !type:BoolCurve
-    - !type:TargetDistanceCon
-      curve: !type:PresetCurve
-        preset: TargetDistance
-    - !type:TargetAccessibleCon
-      curve: !type:BoolCurve
-    - !type:TargetInLOSOrCurrentCon
-      curve: !type:BoolCurve
-    - !type:TargetIsCuffableCon
-      curve: !type:BoolCurve

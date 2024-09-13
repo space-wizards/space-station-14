@@ -51,6 +51,7 @@ using Content.Shared.Weapons.Ranged.Systems;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.Movement.Systems;
 using Robust.Shared.Player;
+using Content.Shared.Explosion.Components;
 
 namespace Content.Server.Revenant.EntitySystems;
 
@@ -449,14 +450,16 @@ public sealed partial class RevenantSystem
         EnsureComp<DoAfterComponent>(target);
 
         var htn = EnsureComp<HTNComponent>(target);
-        if (TryComp<GunComponent>(target, out var gun))
+        if (HasComp<GunComponent>(target))
         {
             if (TryComp<ChamberMagazineAmmoProviderComponent>(target, out var bolt))
                 _gunSystem.SetBoltClosed(target, bolt, true);
             htn.RootTask = new HTNCompoundTask() { Task = "SimpleRangedHostileCompound" };
         }
-        else if (TryComp<HandcuffComponent>(target, out var handcuff))
+        else if (HasComp<HandcuffComponent>(target))
             htn.RootTask = new HTNCompoundTask() { Task = "AnimatedHandcuffsCompound" };
+        else if (HasComp<OnUseTimerTriggerComponent>(target))
+            htn.RootTask = new HTNCompoundTask() { Task = "AnimatedGrenadeCompound" };
         else
             htn.RootTask = new HTNCompoundTask() { Task = "SimpleHostileCompound" };
         htn.Blackboard.SetValue(NPCBlackboard.Owner, target);

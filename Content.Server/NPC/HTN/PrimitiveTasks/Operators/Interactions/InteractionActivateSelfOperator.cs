@@ -6,12 +6,9 @@ using Content.Shared.Interaction;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Interactions;
 
-public sealed partial class InteractionActivateOperator : HTNOperator
+public sealed partial class InteractionActivateSelfOperator : HTNOperator
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
-
-    [DataField("targetKey")]
-    public string Key = "Target";
 
     /// <summary>
     /// If this alt-interaction started a do_after where does the key get stored.
@@ -30,7 +27,6 @@ public sealed partial class InteractionActivateOperator : HTNOperator
     public override HTNOperatorStatus Update(NPCBlackboard blackboard, float frameTime)
     {
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
-        var target = blackboard.GetValue<EntityUid>(Key);
         var intSystem = _entManager.System<SharedInteractionSystem>();
         var count = 0;
 
@@ -39,7 +35,7 @@ public sealed partial class InteractionActivateOperator : HTNOperator
             count = doAfter.DoAfters.Count;
         }
 
-        var result = intSystem.InteractionActivate(owner, target);
+        var result = intSystem.InteractionActivate(owner, owner);
 
         // Interaction started a doafter so set the idle time to it.
         if (result && doAfter != null && count != doAfter.DoAfters.Count)
