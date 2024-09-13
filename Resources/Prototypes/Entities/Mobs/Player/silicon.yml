@@ -147,14 +147,25 @@
 - type: entity
   id: LawChipBlank
   parent: BaseElectronics
-  name: law chip (Blank)
+  name: law chip
   description: A factory-fresh, empty and editable law chip.
   components:
   - type: Sprite
-    sprite: Objects/Misc/module.rsi
-    state: std_mod
-  - type: SiliconLawProvider
-    laws: Crewsimov
+    sprite: Objects/Misc/law_chip.rsi
+    state: blank
+    map: [ enum.LawChipVisuals.Printing ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.LawChipVisuals.State:
+        enum.LawChipVisuals.Printing:
+            Blank:      { state: blank }
+            Normal:     { state: normal }
+            Defective:  { state: defective }
+            Hacked:     { state: hacked }
+            Custom:     { state: custom }
+  - type: BlankLawChip
+       
 
 # Items
 - type: entity

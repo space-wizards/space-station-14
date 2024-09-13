@@ -10,3 +10,10 @@ public enum JudgeInterfaceVisuals : byte
     Screen,
     Broken
 }
+
+[Serializable, NetSerializable]
+public enum LawChipVisuals : byte
+{
+    State,
+    Printing
+}

@@ -1,0 +1,26 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Made poorly by Goldminermac",
+    "size": {
+        "x": 15,
+        "y": 15
+    },
+    "states": [
+        {
+            "name": "blank"
+        },
+        {
+            "name": "custom"
+        },
+        {
+            "name": "default"
+        },
+        {
+            "name": "defective"
+        },
+        {
+            "name": "hacked"
+        }
+    ]
+}
