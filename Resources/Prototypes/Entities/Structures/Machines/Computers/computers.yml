@@ -440,7 +440,13 @@
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
-        ents: [ ]
+        showEnts: False
+        occludes: True
+        ents: []
+      board: !type:Container
+        showEnts: False
+        occludes: True
+        ents: []
   - type: AccessReader
     access: [["Command"]]
   - type: Lock
