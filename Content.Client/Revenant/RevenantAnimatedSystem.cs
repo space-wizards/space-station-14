@@ -37,10 +37,9 @@ public sealed class RevenantAnimatedSystem : EntitySystem
 
         comp.LightOverlay = (lightEnt, light);
 
-        _lights.SetEnabled(uid, true, light);
-        _lights.SetColor(uid, comp.LightColor, light);
-        _lights.SetRadius(uid, comp.LightRadius, light);
-        Dirty(uid, light);
+        _lights.SetEnabled(lightEnt, true, light);
+        _lights.SetColor(lightEnt, comp.LightColor, light);
+        _lights.SetRadius(lightEnt, comp.LightRadius, light);
     }
 
     private void OnShutdown(EntityUid uid, RevenantAnimatedComponent comp, ComponentShutdown args)

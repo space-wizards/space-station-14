@@ -32,26 +32,6 @@ using Content.Shared.Whitelist;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction.Components;
-using Content.Shared.Mind.Components;
-using Content.Server.NPC.HTN;
-using Content.Server.NPC;
-using Robust.Shared.Timing;
-using Content.Shared.Weapons.Melee;
-using Content.Shared.CombatMode;
-using Content.Server.NPC.Systems;
-using Content.Shared.NPC.Components;
-using Content.Shared.NPC.Systems;
-using Robust.Shared.Prototypes;
-using Content.Shared.Damage.Prototypes;
-using Content.Shared.Movement.Components;
-using Content.Shared.Item.ItemToggle;
-using Content.Shared.Item.ItemToggle.Components;
-using Content.Shared.Weapons.Ranged.Components;
-using Content.Shared.Weapons.Ranged.Systems;
-using Content.Shared.Cuffs.Components;
-using Content.Shared.Movement.Systems;
-using Robust.Shared.Player;
-using Content.Shared.Explosion.Components;
 
 namespace Content.Server.Revenant.EntitySystems;
 
@@ -67,14 +47,7 @@ public sealed partial class RevenantSystem
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
-    [Dependency] private readonly IEntityManager _entityManager = default!;
-    [Dependency] private readonly HTNSystem _htnSystem = default!;
-    [Dependency] private readonly NPCSystem _npcSystem = default!;
-    [Dependency] private readonly NpcFactionSystem _factionSystem = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly ItemToggleSystem _itemToggleSystem = default!;
-    [Dependency] private readonly SharedGunSystem _gunSystem = default!;
-    [Dependency] private readonly MovementSpeedModifierSystem _moveSpeed = default!;
+    [Dependency] private readonly RevenantAnimatedSystem _revenantAnimated = default!;
 
     private void InitializeAbilities()
     {
@@ -401,107 +374,12 @@ public sealed partial class RevenantSystem
         }
     }
 
-    public void AnimateObject(EntityUid target, TimeSpan? time = null, Entity<RevenantComponent>? revenant = null)
-    {
-        if (HasComp<MindContainerComponent>(target) || HasComp<HTNComponent>(target))
-            return;
-
-        if (revenant != null && !TryUseAbility(revenant.Value.Owner, revenant.Value.Comp, revenant.Value.Comp.AnimateCost, revenant.Value.Comp.AnimateDebuffs))
-            return;
-
-        if (HasComp<ItemToggleMeleeWeaponComponent>(target) && TryComp<ItemToggleComponent>(target, out var toggle))
-        {
-            // Turn on welders and stun prods
-            _itemToggleSystem.TryActivate((target, toggle));
-        }
-
-        var animate = EnsureComp<RevenantAnimatedComponent>(target);
-
-        _popup.PopupEntity(Loc.GetString("revenant-animate-item-animate", ("name", Comp<MetaDataComponent>(target).EntityName)), target, Filter.Pvs(target), true);
-
-        EnsureComp<CombatModeComponent>(target);
-        if (!HasComp<MeleeWeaponComponent>(target))
-        {
-            var melee = AddComp<MeleeWeaponComponent>(target);
-            melee.Damage = new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>("Blunt"), 5);
-            animate.AddedMelee = melee;
-        }
-
-        EnsureComp<MobStateComponent>(target);
-        EnsureComp<InputMoverComponent>(target);
-        var moveSpeed = EnsureComp<MovementSpeedModifierComponent>(target);
-        if (revenant != null)
-            _moveSpeed.ChangeBaseSpeed(target,
-                revenant.Value.Comp.AnimateWalkSpeed,
-                revenant.Value.Comp.AnimateSprintSpeed,
-                MovementSpeedModifierComponent.DefaultAcceleration
-            );
-        else
-            _moveSpeed.ChangeBaseSpeed(target,
-                RevenantComponent.DefaultAnimateWalkSpeed,
-                RevenantComponent.DefaultAnimateSprintSpeed,
-                MovementSpeedModifierComponent.DefaultAcceleration
-            );
-
-        var factions = EnsureComp<NpcFactionMemberComponent>(target);
-        _factionSystem.ClearFactions((target, factions));
-        _factionSystem.AddFaction((target, factions), "SimpleHostile");
-
-        EnsureComp<DoAfterComponent>(target);
-
-        var htn = EnsureComp<HTNComponent>(target);
-        if (HasComp<GunComponent>(target))
-        {
-            if (TryComp<ChamberMagazineAmmoProviderComponent>(target, out var bolt))
-                _gunSystem.SetBoltClosed(target, bolt, true);
-            htn.RootTask = new HTNCompoundTask() { Task = "SimpleRangedHostileCompound" };
-        }
-        else if (HasComp<HandcuffComponent>(target))
-            htn.RootTask = new HTNCompoundTask() { Task = "AnimatedHandcuffsCompound" };
-        else if (HasComp<OnUseTimerTriggerComponent>(target))
-            htn.RootTask = new HTNCompoundTask() { Task = "AnimatedGrenadeCompound" };
-        else
-            htn.RootTask = new HTNCompoundTask() { Task = "SimpleHostileCompound" };
-        htn.Blackboard.SetValue(NPCBlackboard.Owner, target);
-
-        _npcSystem.WakeNPC(target, htn);
-        _htnSystem.Replan(htn);
-
-        if (revenant != null)
-            Timer.Spawn(time ?? revenant.Value.Comp.AnimateTime, () =>
-            {
-                if (!animate.Deleted)
-                    InanimateTarget(target, animate);
-            });
-        else if (time != null)
-            Timer.Spawn(time.Value, () =>
-            {
-                if (!animate.Deleted)
-                    InanimateTarget(target, animate);
-            });
-    }
-
-    public void InanimateTarget(EntityUid target, RevenantAnimatedComponent? comp = null)
-    {
-        if (!target.Valid || !Resolve(target, ref comp))
-            return;
-
-        RemComp<HTNComponent>(target);
-        RemComp<MobStateComponent>(target);
-
-        if (comp.AddedMelee != null)
-            RemComp<MeleeWeaponComponent>(target);
-
-        RemComp<RevenantAnimatedComponent>(target);
-
-        _popup.PopupEntity(Loc.GetString("revenant-animate-item-inanimate", ("name", Comp<MetaDataComponent>(target).EntityName)), target, Filter.Pvs(target), true);
-    }
-
     private void OnAnimateAction(EntityUid uid, RevenantComponent comp, RevenantAnimateEvent args)
     {
         if (args.Handled)
             return;
 
-        AnimateObject(args.Target, comp.AnimateTime, (uid, comp));
+        if (comp.Essence > comp.AnimateCost && _revenantAnimated.TryAnimateObject(args.Target, comp.AnimateTime, (uid, comp)))
+            TryUseAbility(uid, comp, comp.AnimateCost, comp.AnimateDebuffs);
     }
 }
