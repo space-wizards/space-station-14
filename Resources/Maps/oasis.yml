@@ -14470,7 +14470,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -75664.875
+      secondsUntilStateChange: -75752.04
       state: Opening
   - uid: 6934
     components:
@@ -14482,7 +14482,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -75667.51
+      secondsUntilStateChange: -75754.67
       state: Opening
   - uid: 6935
     components:
@@ -14494,7 +14494,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -75666.36
+      secondsUntilStateChange: -75753.52
       state: Opening
   - uid: 6936
     components:
@@ -14505,7 +14505,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -75665.58
+      secondsUntilStateChange: -75752.74
       state: Opening
 - proto: AirlockTheatreLocked
   entities:
@@ -94055,7 +94055,7 @@ entities:
       pos: -13.5,-1.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -66988.86
+      secondsUntilStateChange: -67076.02
     - type: DeviceNetwork
       deviceLists:
       - 18275
@@ -138604,7 +138604,7 @@ entities:
       pos: 36.5,-35.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -103820.7
+      secondsUntilStateChange: -103907.87
       state: Opening
   - uid: 5211
     components:
@@ -140600,10 +140600,11 @@ entities:
   - uid: 29522
     components:
     - type: Transform
+      anchored: True
       pos: -60.5,-18.5
       parent: 2
     - type: DeviceLinkSink
-      invokeCounter: 9
+      invokeCounter: 11
     - type: DeviceLinkSource
       linkedPorts:
         29527:
@@ -140618,6 +140619,9 @@ entities:
         - Output: InputB
         29534:
         - Output: InputB
+    - type: Physics
+      canCollide: False
+      bodyType: Static
   - uid: 29529
     components:
     - type: Transform
@@ -189941,7 +189945,7 @@ entities:
       pos: 24.5,2.5
       parent: 21002
     - type: Door
-      secondsUntilStateChange: -449025.34
+      secondsUntilStateChange: -449112.5
       state: Opening
   - uid: 28863
     components:
