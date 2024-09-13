@@ -14470,7 +14470,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -75752.04
+      secondsUntilStateChange: -75767.375
       state: Opening
   - uid: 6934
     components:
@@ -14482,7 +14482,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -75754.67
+      secondsUntilStateChange: -75770.01
       state: Opening
   - uid: 6935
     components:
@@ -14494,7 +14494,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -75753.52
+      secondsUntilStateChange: -75768.86
       state: Opening
   - uid: 6936
     components:
@@ -14505,7 +14505,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -75752.74
+      secondsUntilStateChange: -75768.08
       state: Opening
 - proto: AirlockTheatreLocked
   entities:
@@ -94055,7 +94055,7 @@ entities:
       pos: -13.5,-1.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -67076.02
+      secondsUntilStateChange: -67091.36
     - type: DeviceNetwork
       deviceLists:
       - 18275
@@ -138604,7 +138604,7 @@ entities:
       pos: 36.5,-35.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -103907.87
+      secondsUntilStateChange: -103923.2
       state: Opening
   - uid: 5211
     components:
@@ -157288,6 +157288,12 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -58.5,-18.5
       parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        29526:
+        - Pressed: Toggle
+        29574:
+        - Pressed: Toggle
   - uid: 12804
     components:
     - type: MetaData
@@ -189945,7 +189951,7 @@ entities:
       pos: 24.5,2.5
       parent: 21002
     - type: Door
-      secondsUntilStateChange: -449112.5
+      secondsUntilStateChange: -449127.84
       state: Opening
   - uid: 28863
     components:
