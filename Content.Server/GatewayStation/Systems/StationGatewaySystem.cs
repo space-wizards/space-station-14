@@ -1,6 +1,7 @@
 using Content.Server.Audio;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.GatewayStation.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Shared.Audio;
 using Content.Shared.GatewayStation;
 using Content.Shared.Pinpointer;
@@ -18,13 +19,12 @@ public sealed class StationGatewaySystem : EntitySystem
     [Dependency] private readonly LinkedEntitySystem _link = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly AmbientSoundSystem _ambient = default!;
+    [Dependency] private readonly PowerReceiverSystem _power = default!;
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<StationGatewayConsoleComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
         SubscribeLocalEvent<StationGatewayConsoleComponent, BoundUIOpenedEvent>(OnUIOpened);
-
         SubscribeLocalEvent<StationGatewayConsoleComponent, StationGatewayGateClickMessage>(OnUIGateClicked);
 
         SubscribeLocalEvent<StationGatewayComponent, LinkedEntityChangedEvent>(OnLinkedChanged);
@@ -33,15 +33,22 @@ public sealed class StationGatewaySystem : EntitySystem
 
     private void OnUIGateClicked(Entity<StationGatewayConsoleComponent> ent, ref StationGatewayGateClickMessage args)
     {
+        ConsoleInteract(ent, ref args);
+        UpdateUserInterface(ent);
+    }
+
+    private void ConsoleInteract(Entity<StationGatewayConsoleComponent> ent, ref StationGatewayGateClickMessage args)
+    {
         var gate = GetEntity(args.Gateway);
 
         if (gate is null)
             return;
 
-        if (!TryComp<StationGatewayComponent>(gate.Value, out var gateComp))
+        if (!_power.IsPowered(gate.Value))
             return;
 
-        //TODO error sounds
+        if (!TryComp<StationGatewayComponent>(gate.Value, out var gateComp))
+            return;
 
         if (_link.GetLink(gate.Value, out var linkedGate)) //If the pressed gateway is linked to another - cut this connection.
         {
@@ -56,7 +63,7 @@ public sealed class StationGatewaySystem : EntitySystem
             }
             else // And we have a selected gateway - tie them together.
             {
-                if (ent.Comp.SelectedGate != gate.Value)
+                if (ent.Comp.SelectedGate != gate.Value && _power.IsPowered(ent.Comp.SelectedGate.Value))
                 {
                     if (_link.TryLink(gate.Value, ent.Comp.SelectedGate.Value))
                         gateComp.LastLink = ent.Comp.SelectedGate.Value;
@@ -64,7 +71,6 @@ public sealed class StationGatewaySystem : EntitySystem
                 ent.Comp.SelectedGate = null;
             }
         }
-        UpdateUserInterface(ent);
     }
 
     private void OnLinkedChanged(Entity<StationGatewayComponent> ent, ref LinkedEntityChangedEvent args)
@@ -104,15 +110,6 @@ public sealed class StationGatewaySystem : EntitySystem
         }
     }
 
-    private void OnPacketReceived(Entity<StationGatewayConsoleComponent> ent, ref DeviceNetworkPacketEvent args)
-    {
-        var payload = args.Data;
-
-        //Update data
-
-        UpdateUserInterface(ent);
-    }
-
     private void OnUIOpened(Entity<StationGatewayConsoleComponent> ent, ref BoundUIOpenedEvent args)
     {
         UpdateUserInterface(ent);
@@ -136,7 +133,10 @@ public sealed class StationGatewaySystem : EntitySystem
         while (query.MoveNext(out var uid, out var gate, out var xformComp))
         {
             if (xform.GridUid != Transform(ent).GridUid)
-                return;
+                continue;
+
+            if (!_power.IsPowered(uid))
+                continue;
 
             _link.GetLink(uid, out var link);
             EntityCoordinates? linkCoord = null;

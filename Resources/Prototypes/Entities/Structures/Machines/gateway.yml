@@ -78,6 +78,7 @@
       map: ["enum.LinkedEntityVisuals.HasAnyLinks"]
     - state: on
       shader: unshaded
+      visible: false
       map: ["enum.PowerDeviceVisualLayers.Powered"]
   - type: ApcPowerReceiver
     powerLoad: 2500
@@ -119,6 +120,7 @@
   - type: Portal
     randomTeleport: false
   - type: PointLight
+    enabled: false
     radius: 3
     energy: 1
   - type: LitOnPowered
