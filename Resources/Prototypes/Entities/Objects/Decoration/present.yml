@@ -423,9 +423,9 @@
 
 - type: entity
   id: PresentTrash
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: BaseItem
-  name: Wrapping Paper
+  name: wrapping paper
   description: Carefully folded, taped, and tied with a bow. Then ceremoniously ripped apart and tossed on the floor.
   components:
   - type: Sprite

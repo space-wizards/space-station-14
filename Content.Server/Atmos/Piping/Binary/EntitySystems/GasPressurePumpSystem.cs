@@ -103,6 +103,9 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
         private void OnPumpActivate(EntityUid uid, GasPressurePumpComponent pump, ActivateInWorldEvent args)
         {
+            if (args.Handled || !args.Complex)
+                return;
+
             if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;
 

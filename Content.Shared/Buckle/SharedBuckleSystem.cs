@@ -1,21 +1,18 @@
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
-using Content.Shared.Buckle.Components;
+using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
-using Content.Shared.Pulling;
+using Content.Shared.Rotation;
 using Content.Shared.Standing;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
-using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
-using PullingSystem = Content.Shared.Movement.Pulling.Systems.PullingSystem;
 
 namespace Content.Shared.Buckle;
 
@@ -36,10 +33,11 @@ public abstract partial class SharedBuckleSystem : EntitySystem
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly SharedJointSystem _joints = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly PullingSystem _pulling = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly StandingStateSystem _standing = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly SharedRotationVisualsSystem _rotationVisuals = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -51,45 +49,6 @@ public abstract partial class SharedBuckleSystem : EntitySystem
 
         InitializeBuckle();
         InitializeStrap();
-    }
-
-    /// <summary>
-    /// Reattaches this entity to the strap, modifying its position and rotation.
-    /// </summary>
-    /// <param name="buckleUid">The entity to reattach.</param>
-    /// <param name="strapUid">The entity to reattach the buckleUid entity to.</param>
-    private void ReAttach(
-        EntityUid buckleUid,
-        EntityUid strapUid,
-        BuckleComponent? buckleComp = null,
-        StrapComponent? strapComp = null)
-    {
-        if (!Resolve(strapUid, ref strapComp, false)
-            || !Resolve(buckleUid, ref buckleComp, false))
-            return;
-
-        _transform.SetCoordinates(buckleUid, new EntityCoordinates(strapUid, strapComp.BuckleOffsetClamped));
-
-        var buckleTransform = Transform(buckleUid);
-
-        // Buckle subscribes to move for <reasons> so this might fail.
-        // TODO: Make buckle not do that.
-        if (buckleTransform.ParentUid != strapUid)
-            return;
-
-        _transform.SetLocalRotation(buckleUid, Angle.Zero, buckleTransform);
-        _joints.SetRelay(buckleUid, strapUid);
-
-        switch (strapComp.Position)
-        {
-            case StrapPosition.None:
-                break;
-            case StrapPosition.Stand:
-                _standing.Stand(buckleUid);
-                break;
-            case StrapPosition.Down:
-                _standing.Down(buckleUid, false, false);
-                break;
-        }
+        InitializeInteraction();
     }
 }

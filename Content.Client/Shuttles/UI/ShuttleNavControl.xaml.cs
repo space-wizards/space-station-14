@@ -35,6 +35,7 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
 
     public bool ShowIFF { get; set; } = true;
     public bool ShowDocks { get; set; } = true;
+    public bool RotateWithEntity { get; set; } = true;
 
     /// <summary>
     /// Raised if the user left-clicks on the radar control with the relevant entitycoordinates.
@@ -109,6 +110,8 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
 
         ActualRadarRange = Math.Clamp(ActualRadarRange, WorldMinRange, WorldMaxRange);
 
+        RotateWithEntity = state.RotateWithEntity;
+
         _docks = state.Docks;
     }
 
@@ -137,10 +140,11 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
 
         var mapPos = _transform.ToMapCoordinates(_coordinates.Value);
         var offset = _coordinates.Value.Position;
-        var posMatrix = Matrix3.CreateTransform(offset, _rotation.Value);
-        var (_, ourEntRot, ourEntMatrix) = _transform.GetWorldPositionRotationMatrix(_coordinates.Value.EntityId);
-        Matrix3.Multiply(posMatrix, ourEntMatrix, out var ourWorldMatrix);
-        var ourWorldMatrixInvert = ourWorldMatrix.Invert();
+        var posMatrix = Matrix3Helpers.CreateTransform(offset, _rotation.Value);
+        var ourEntRot = RotateWithEntity ? _transform.GetWorldRotation(xform) : _rotation.Value;
+        var ourEntMatrix = Matrix3Helpers.CreateTransform(_transform.GetWorldPosition(xform), ourEntRot);
+        var ourWorldMatrix = Matrix3x2.Multiply(posMatrix, ourEntMatrix);
+        Matrix3x2.Invert(ourWorldMatrix, out var ourWorldMatrixInvert);
 
         // Draw our grid in detail
         var ourGridId = xform.GridUid;
@@ -148,7 +152,7 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
             fixturesQuery.HasComponent(ourGridId.Value))
         {
             var ourGridMatrix = _transform.GetWorldMatrix(ourGridId.Value);
-            Matrix3.Multiply(in ourGridMatrix, in ourWorldMatrixInvert, out var matrix);
+            var matrix = Matrix3x2.Multiply(ourGridMatrix, ourWorldMatrixInvert);
             var color = _shuttles.GetIFFColor(ourGridId.Value, self: true);
 
             DrawGrid(handle, matrix, (ourGridId.Value, ourGrid), color);
@@ -194,7 +198,7 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
                 continue;
 
             var gridMatrix = _transform.GetWorldMatrix(gUid);
-            Matrix3.Multiply(in gridMatrix, in ourWorldMatrixInvert, out var matty);
+            var matty = Matrix3x2.Multiply(gridMatrix, ourWorldMatrixInvert);
             var color = _shuttles.GetIFFColor(grid, self: false, iff);
 
             // Others default:
@@ -207,7 +211,7 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
             {
                 var gridBounds = grid.Comp.LocalAABB;
 
-                var gridCentre = matty.Transform(gridBody.LocalCenter);
+                var gridCentre = Vector2.Transform(gridBody.LocalCenter, matty);
                 gridCentre.Y = -gridCentre.Y;
                 var distance = gridCentre.Length();
                 var labelText = Loc.GetString("shuttle-console-iff-label", ("name", labelName),
@@ -242,7 +246,7 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
         }
     }
 
-    private void DrawDocks(DrawingHandleScreen handle, EntityUid uid, Matrix3 matrix)
+    private void DrawDocks(DrawingHandleScreen handle, EntityUid uid, Matrix3x2 matrix)
     {
         if (!ShowDocks)
             return;
@@ -255,7 +259,7 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
             foreach (var state in docks)
             {
                 var position = state.Coordinates.Position;
-                var uiPosition = matrix.Transform(position);
+                var uiPosition = Vector2.Transform(position, matrix);
 
                 if (uiPosition.Length() > (WorldRange * 2f) - DockScale)
                     continue;
@@ -264,10 +268,10 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
 
                 var verts = new[]
                 {
-                    matrix.Transform(position + new Vector2(-DockScale, -DockScale)),
-                    matrix.Transform(position + new Vector2(DockScale, -DockScale)),
-                    matrix.Transform(position + new Vector2(DockScale, DockScale)),
-                    matrix.Transform(position + new Vector2(-DockScale, DockScale)),
+                    Vector2.Transform(position + new Vector2(-DockScale, -DockScale), matrix),
+                    Vector2.Transform(position + new Vector2(DockScale, -DockScale), matrix),
+                    Vector2.Transform(position + new Vector2(DockScale, DockScale), matrix),
+                    Vector2.Transform(position + new Vector2(-DockScale, DockScale), matrix),
                 };
 
                 for (var i = 0; i < verts.Length; i++)

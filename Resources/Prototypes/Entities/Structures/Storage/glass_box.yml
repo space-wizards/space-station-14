@@ -1,15 +1,12 @@
 ﻿- type: entity
+  parent: [BaseStructureDynamic, BaseItemCabinetGlass]
   id: BaseGlassBox
-  parent: BaseStructureDynamic
   abstract: true
-  placement:
-    mode: SnapgridCenter
   components:
   - type: Transform
     anchored: true
   - type: Physics
     bodyType: Static
-  - type: Clickable
   - type: InteractionOutline
   - type: Fixtures
     fixtures:
@@ -23,13 +20,8 @@
         layer:
         - MidImpassable
         - LowImpassable
-  - type: ItemSlots
-  - type: ContainerContainer
-    containers:
-      ItemCabinet: !type:ContainerSlot
   - type: Anchorable
     delay: 4
-  - type: Appearance
 
 - type: entity
   id: GlassBox
@@ -44,10 +36,10 @@
     layers:
     - state: base
     - state: caplaser # TODO: Remove it after item scaling in cabinets is implemented.
-      map: ["enum.ItemCabinetVisualLayers.ContainsItem"]
+      map: ["enum.ItemCabinetVisuals.Layer"]
       visible: true
     - state: glass
-      map: ["enum.ItemCabinetVisualLayers.Door"]
+      map: ["enum.OpenableVisuals.Layer"]
     - state: locked
       shader: unshaded
       map: ["enum.LockVisualLayers.Lock"]
@@ -77,7 +69,7 @@
     damageOverlay:
       sprite: Structures/Storage/glassbox.rsi
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: Glass
   - type: MeleeSound
     soundGroups:
@@ -118,49 +110,39 @@
   - type: Construction
     graph: GlassBox
     node: glassBox
-  - type: ItemCabinet
-    cabinetSlot:
-      ejectOnInteract: true
-      whitelist:
-        tags:
-        - WeaponAntiqueLaser
-    doorSound:
-      path: /Audio/Machines/machine_switch.ogg
-    openState: glass-up
-    closedState: glass
+  - type: ItemSlots
+    slots:
+      ItemCabinet:
+        ejectOnInteract: true
+        whitelist:
+          tags:
+          - WeaponAntiqueLaser
+        ejectSound: /Audio/Machines/machine_switch.ogg
 
 - type: entity
   id: GlassBoxLaserOpen
   parent: GlassBoxLaser
   suffix: AntiqueLaser, Open
   components:
+  - type: Openable
+    opened: true
   - type: Lock
     locked: false
-  - type: ItemCabinet
-    opened: true
 
 - type: entity
   id: GlassBoxLaserFilled
   parent: GlassBoxLaser
   suffix: AntiqueLaser, Filled
   components:
-  - type: ItemCabinet
-    cabinetSlot:
-      startingItem: WeaponAntiqueLaser
-      ejectOnInteract: true
-      whitelist:
-        tags:
-        - WeaponAntiqueLaser
+  - type: ContainerFill
+    containers:
+      ItemCabinet:
+      - WeaponAntiqueLaser
 
 - type: entity
+  parent: [GlassBoxLaserFilled, GlassBoxLaserOpen]
   id: GlassBoxLaserFilledOpen
-  parent: GlassBoxLaserFilled
   suffix: AntiqueLaser, Filled, Open
-  components:
-  - type: Lock
-    locked: false
-  - type: ItemCabinet
-    opened: true
 
 - type: entity
   id: GlassBoxFrame

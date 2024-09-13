@@ -1,6 +1,7 @@
 using Content.Client.Cargo.UI;
 using Content.Shared.Cargo.Components;
 using JetBrains.Annotations;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.Cargo.BUI;
 
@@ -18,9 +19,7 @@ public sealed class CargoBountyConsoleBoundUserInterface : BoundUserInterface
     {
         base.Open();
 
-        _menu = new();
-
-        _menu.OnClose += Close;
+        _menu = this.CreateWindow<CargoBountyMenu>();
 
         _menu.OnLabelButtonPressed += id =>
         {
@@ -31,8 +30,6 @@ public sealed class CargoBountyConsoleBoundUserInterface : BoundUserInterface
         {
             SendMessage(new BountySkipMessage(id));
         };
-
-        _menu.OpenCentered();
     }
 
     protected override void UpdateState(BoundUserInterfaceState message)
@@ -43,15 +40,5 @@ public sealed class CargoBountyConsoleBoundUserInterface : BoundUserInterface
             return;
 
         _menu?.UpdateEntries(state.Bounties, state.UntilNextSkip);
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
-
-        if (!disposing)
-            return;
-
-        _menu?.Dispose();
     }
 }

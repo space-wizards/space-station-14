@@ -1,6 +1,6 @@
 - type: entity
   name: dart
-  description: light throwing dart for playing darts. Don't get in the eye!
+  description: Light throwing dart for playing darts. Don't get in the eye!
   parent: BaseItem
   id: Dart
   components:
@@ -10,6 +10,7 @@
     offset: 0.0,0.0
   - type: ThrowingAngle
     angle: 315
+  - type: LandAtCursor
   - type: Fixtures
     fixtures:
       fix1:
@@ -83,10 +84,7 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: Appearance
-  - type: SolutionContainerVisuals
-    maxFillLevels: 1
-    fillBaseName: dart
+  - type: BalloonPopper
 
 - type: entity
   parent: Dart
@@ -193,7 +191,7 @@
         acts: [ "Destruction" ]
 
 - type: entity
-  parent: BaseItem
+  parent: [ BaseItem, BaseSyndicateContraband ]
   id: HypoDartBox
   name: hypodart box
   suffix: HypoDart

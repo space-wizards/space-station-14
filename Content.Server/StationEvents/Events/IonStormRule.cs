@@ -1,16 +1,16 @@
-using Content.Server.GameTicking.Components;
 using System.Linq;
 using Content.Server.Silicons.Laws;
-using Content.Server.Station.Components;
 using Content.Server.StationEvents.Components;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Dataset;
 using Content.Shared.FixedPoint;
+using Content.Shared.GameTicking.Components;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Silicons.Laws;
 using Content.Shared.Silicons.Laws.Components;
+using Content.Shared.Station.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -200,7 +200,8 @@ public sealed class IonStormRule : StationEventSystem<IonStormRuleComponent>
         {
             0 => threats,
             1 => crew1,
-            2 => objects
+            2 => objects,
+            _ => throw new IndexOutOfRangeException(),
         };
         var crewAll = RobustRandom.Prob(0.5f) ? crew2 : Loc.GetString("ion-storm-crew");
         var objectsThreats = RobustRandom.Prob(0.5f) ? objects : threats;

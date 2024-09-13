@@ -7,13 +7,13 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
-
+using Content.Shared.Explosion.EntitySystems;
 namespace Content.Server.Explosion.EntitySystems;
 
 // This partial part of the explosion system has all of the functions used to create the actual explosion map.
 // I.e, to get the sets of tiles & intensity values that describe an explosion.
 
-public sealed partial class ExplosionSystem : EntitySystem
+public sealed partial class ExplosionSystem : SharedExplosionSystem
 {
     /// <summary>
     ///     This is the main explosion generating function.
@@ -26,7 +26,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     /// <param name="maxIntensity">The maximum intensity that the explosion can have at any given tile. This
     /// effectively caps the damage that this explosion can do.</param>
     /// <returns>A list of tile-sets and a list of intensity values which describe the explosion.</returns>
-    private (int, List<float>, ExplosionSpaceTileFlood?, Dictionary<EntityUid, ExplosionGridTileFlood>, Matrix3)? GetExplosionTiles(
+    private (int, List<float>, ExplosionSpaceTileFlood?, Dictionary<EntityUid, ExplosionGridTileFlood>, Matrix3x2)? GetExplosionTiles(
         MapCoordinates epicenter,
         string typeID,
         float totalIntensity,
@@ -84,7 +84,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         Dictionary<EntityUid, HashSet<Vector2i>>? previousGridJump;
 
         // variables for transforming between grid and space-coordinates
-        var spaceMatrix = Matrix3.Identity;
+        var spaceMatrix = Matrix3x2.Identity;
         var spaceAngle = Angle.Zero;
         if (referenceGrid != null)
         {

@@ -9,13 +9,25 @@
       Brute:
         collection: GlassSmash
   - type: WallMount
+    arc: 360
   - type: Sprite
-    drawdepth: Objects
+    drawdepth: WallMountedItems
     sprite: Structures/Wallmounts/barsign.rsi
     state: empty
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: BarSign
+  - type: InteractionOutline
+  - type: AccessReader
+    access: [["Bar"]]
+  - type: ActivatableUIRequiresPower
+  - type: ActivatableUIRequiresAccess
+  - type: ActivatableUI
+    key: enum.BarSignUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.BarSignUiKey.Key:
+        type: BarSignBoundUserInterface
   - type: Appearance
   - type: Destructible
     thresholds:
@@ -36,7 +48,7 @@
 #- type: entity
 #  id: LargeBarSign
 #  name: large bar sign
-#  noSpawn: true
+#  categories: [ HideSpawnMenu ]
 #  components:
 #  - type: Clickable
 #  - type: InteractionOutline

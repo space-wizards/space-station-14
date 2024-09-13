@@ -6,9 +6,10 @@ using Content.Server.Power.EntitySystems;
 using Content.Server.Shuttles.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
-using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
+using Content.Shared.Power;
+using Robust.Server.GameObjects;
 using Robust.Shared.Map.Components;
 
 namespace Content.Server.Doors.Systems
@@ -16,10 +17,10 @@ namespace Content.Server.Doors.Systems
     public sealed class FirelockSystem : SharedFirelockSystem
     {
         [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
-        [Dependency] private readonly AtmosAlarmableSystem _atmosAlarmable = default!;
         [Dependency] private readonly AtmosphereSystem _atmosSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly SharedMapSystem _mapping = default!;
+        [Dependency] private readonly PointLightSystem _pointLight = default!;
 
         private const int UpdateInterval = 30;
         private int _accumulatedTicks;
@@ -53,6 +54,7 @@ namespace Content.Server.Doors.Systems
             var airtightQuery = GetEntityQuery<AirtightComponent>();
             var appearanceQuery = GetEntityQuery<AppearanceComponent>();
             var xformQuery = GetEntityQuery<TransformComponent>();
+            var pointLightQuery = GetEntityQuery<PointLightComponent>();
 
             var query = EntityQueryEnumerator<FirelockComponent, DoorComponent>();
             while (query.MoveNext(out var uid, out var firelock, out var door))
@@ -74,6 +76,11 @@ namespace Content.Server.Doors.Systems
                     firelock.Temperature = fire;
                     firelock.Pressure = pressure;
                     Dirty(uid, firelock);
+
+                    if (pointLightQuery.TryComp(uid, out var pointLight))
+                    {
+                        _pointLight.SetEnabled(uid, fire | pressure, pointLight);
+                    }
                 }
             }
         }
@@ -86,7 +93,7 @@ namespace Content.Server.Doors.Systems
             if (!TryComp<DoorComponent>(uid, out var doorComponent))
                 return;
 
-            if (args.AlarmType == AtmosAlarmType.Normal || args.AlarmType == AtmosAlarmType.Warning)
+            if (args.AlarmType == AtmosAlarmType.Normal)
             {
                 if (doorComponent.State == DoorState.Closed)
                     _doorSystem.TryOpen(uid);

@@ -1,7 +1,7 @@
 - type: entity
   parent: BaseStructureDynamic
   id: CrateGeneric
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   name: crate
   description: A large container for items.
   components:
@@ -77,23 +77,27 @@
       whitelist:
         components:
         - Paper
+      blacklist:
+        tags:
+        - Book
   - type: ContainerContainer
     containers:
       entity_storage: !type:Container
       paper_label: !type:ContainerSlot
   - type: ItemSlots
   - type: StaticPrice
-    price: 50
+    price: 75
   - type: Construction
     graph: CrateGenericSteel
     node: crategenericsteel
     containers:
       - entity_storage
+  - type: RequireProjectileTarget
 
 - type: entity
   parent: CrateGeneric
   id: CrateBaseWeldable
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Weldable
   - type: ResistLocker
@@ -123,6 +127,7 @@
       shader: unshaded
     - state: paper
       sprite: Structures/Storage/Crates/labels.rsi
+      offset: "-0.5,0"
       map: ["enum.PaperLabelVisuals.Layer"]
   - type: Damageable
     damageContainer: StructuralInorganic

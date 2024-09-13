@@ -11,6 +11,7 @@ using Content.Server.Shuttles.Systems;
 using Content.Server.Station.Components;
 using Content.Server.Store.Components;
 using Content.Server.Store.Systems;
+using Content.Shared.GameTicking.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.NPC.Components;
@@ -24,7 +25,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using System.Linq;
-using Content.Server.GameTicking.Components;
+using Content.Shared.Store.Components;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -56,13 +57,12 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         SubscribeLocalEvent<NukeOperativeComponent, MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<NukeOperativeComponent, EntityZombifiedEvent>(OnOperativeZombified);
 
-        SubscribeLocalEvent<NukeOpsShuttleComponent, MapInitEvent>(OnMapInit);
-
         SubscribeLocalEvent<ConsoleFTLAttemptEvent>(OnShuttleFTLAttempt);
         SubscribeLocalEvent<WarDeclaredEvent>(OnWarDeclared);
         SubscribeLocalEvent<CommunicationConsoleCallShuttleAttemptEvent>(OnShuttleCallAttempt);
 
         SubscribeLocalEvent<NukeopsRuleComponent, AfterAntagEntitySelectedEvent>(OnAfterAntagEntSelected);
+        SubscribeLocalEvent<NukeopsRuleComponent, RuleLoadedGridsEvent>(OnRuleLoadedGrids);
     }
 
     protected override void Started(EntityUid uid, NukeopsRuleComponent component, GameRuleComponent gameRule,
@@ -215,9 +215,10 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 
         var diskAtCentCom = false;
         var diskQuery = AllEntityQuery<NukeDiskComponent, TransformComponent>();
-        while (diskQuery.MoveNext(out _, out var transform))
+        while (diskQuery.MoveNext(out var diskUid, out _, out var transform))
         {
             diskAtCentCom = transform.MapUid != null && centcomms.Contains(transform.MapUid.Value);
+            diskAtCentCom |= _emergency.IsTargetEscaping(diskUid);
 
             // TODO: The target station should be stored, and the nuke disk should store its original station.
             // This is fine for now, because we can assume a single station in base SS14.
@@ -255,17 +256,18 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         RemCompDeferred(uid, component);
     }
 
-    private void OnMapInit(Entity<NukeOpsShuttleComponent> ent, ref MapInitEvent args)
+    private void OnRuleLoadedGrids(Entity<NukeopsRuleComponent> ent, ref RuleLoadedGridsEvent args)
     {
-        var map = Transform(ent).MapID;
-
-        var rules = EntityQueryEnumerator<NukeopsRuleComponent, LoadMapRuleComponent>();
-        while (rules.MoveNext(out var uid, out _, out var mapRule))
+        // Check each nukie shuttle
+        var query = EntityQueryEnumerator<NukeOpsShuttleComponent>();
+        while (query.MoveNext(out var uid, out var shuttle))
         {
-            if (map != mapRule.Map)
-                continue;
-            ent.Comp.AssociatedRule = uid;
-            break;
+            // Check if the shuttle's mapID is the one that just got loaded for this rule
+            if (Transform(uid).MapID == args.Map)
+            {
+                shuttle.AssociatedRule = ent;
+                break;
+            }
         }
     }
 
@@ -323,7 +325,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             if (nukeops.WarDeclaredTime != null)
                 continue;
 
-            if (TryComp<LoadMapRuleComponent>(uid, out var mapComp) && Transform(ev.DeclaratorEntity).MapID != mapComp.Map)
+            if (TryComp<RuleGridsComponent>(uid, out var grids) && Transform(ev.DeclaratorEntity).MapID != grids.Map)
                 continue;
 
             var newStatus = GetWarCondition(nukeops, ev.Status);
@@ -375,7 +377,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             if (Transform(uid).MapID != Transform(outpost).MapID) // Will receive bonus TC only on their start outpost
                 continue;
 
-            _store.TryAddCurrency(new () { { TelecrystalCurrencyPrototype, nukieRule.Comp.WarTcAmountPerNukie } }, uid, component);
+            _store.TryAddCurrency(new() { { TelecrystalCurrencyPrototype, nukieRule.Comp.WarTcAmountPerNukie } }, uid, component);
 
             var msg = Loc.GetString("store-currency-war-boost-given", ("target", uid));
             _popupSystem.PopupEntity(msg, uid);
@@ -444,7 +446,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 
         // Check that there are spawns available and that they can access the shuttle.
         var spawnsAvailable = EntityQuery<NukeOperativeSpawnerComponent>(true).Any();
-        if (spawnsAvailable && CompOrNull<LoadMapRuleComponent>(ent)?.Map == shuttleMapId)
+        if (spawnsAvailable && CompOrNull<RuleGridsComponent>(ent)?.Map == shuttleMapId)
             return; // Ghost spawns can still access the shuttle. Continue the round.
 
         // The shuttle is inaccessible to both living nuke operatives and yet to spawn nuke operatives,
@@ -477,12 +479,12 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
     /// Is this method the shitty glue holding together the last of my sanity? yes.
     /// Do i have a better solution? not presently.
     /// </remarks>
-    private EntityUid? GetOutpost(Entity<LoadMapRuleComponent?> ent)
+    private EntityUid? GetOutpost(Entity<RuleGridsComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp, false))
             return null;
 
-        return ent.Comp.MapGrids.Where(e => HasComp<StationMemberComponent>(e) && !HasComp<NukeOpsShuttleComponent>(e)).FirstOrNull();
+        return ent.Comp.MapGrids.Where(e => !HasComp<NukeOpsShuttleComponent>(e)).FirstOrNull();
     }
 
     /// <remarks>

@@ -218,7 +218,7 @@ namespace Content.Server.Strip
                 return;
             }
 
-            var (time, stealth) = GetStripTimeModifiers(user, target, slotDef.StripTime);
+            var (time, stealth) = GetStripTimeModifiers(user, target, held, slotDef.StripTime);
 
             if (!stealth)
                 _popupSystem.PopupEntity(Loc.GetString("strippable-component-alert-owner-insert", ("user", Identity.Entity(user, EntityManager)), ("item", user.Comp.ActiveHandEntity!.Value)), target, target, PopupType.Large);
@@ -306,7 +306,7 @@ namespace Content.Server.Strip
                 return;
             }
 
-            var (time, stealth) = GetStripTimeModifiers(user, target, slotDef.StripTime);
+            var (time, stealth) = GetStripTimeModifiers(user, target, item, slotDef.StripTime);
 
             if (!stealth)
             {
@@ -351,7 +351,7 @@ namespace Content.Server.Strip
 
             RaiseLocalEvent(item, new DroppedEvent(user), true); // Gas tank internals etc.
 
-            _handsSystem.PickupOrDrop(user, item, animateUser: stealth, animate: stealth);
+            _handsSystem.PickupOrDrop(user, item, animateUser: stealth, animate: !stealth);
             _adminLogger.Add(LogType.Stripping, LogImpact.Medium, $"{ToPrettyString(user):actor} has stripped the item {ToPrettyString(item):item} from {ToPrettyString(target):target}'s {slot} slot");
         }
 
@@ -411,7 +411,7 @@ namespace Content.Server.Strip
             if (!CanStripInsertHand(user, target, held, handName))
                 return;
 
-            var (time, stealth) = GetStripTimeModifiers(user, target, targetStrippable.HandStripDelay);
+            var (time, stealth) = GetStripTimeModifiers(user, target, null, targetStrippable.HandStripDelay);
 
             if (!stealth)
                 _popupSystem.PopupEntity(Loc.GetString("strippable-component-alert-owner-insert-hand", ("user", Identity.Entity(user, EntityManager)), ("item", user.Comp.ActiveHandEntity!.Value)), target, target, PopupType.Large);
@@ -450,7 +450,7 @@ namespace Content.Server.Strip
                 return;
 
             _handsSystem.TryDrop(user, checkActionBlocker: false, handsComp: user.Comp);
-            _handsSystem.TryPickup(target, held, handName, checkActionBlocker: false, animateUser: stealth, animate: stealth, handsComp: target.Comp);
+            _handsSystem.TryPickup(target, held, handName, checkActionBlocker: false, animateUser: stealth, animate: !stealth, handsComp: target.Comp);
             _adminLogger.Add(LogType.Stripping, LogImpact.Medium, $"{ToPrettyString(user):actor} has placed the item {ToPrettyString(held):item} in {ToPrettyString(target):target}'s hands");
 
             // Hand update will trigger strippable update.
@@ -510,7 +510,7 @@ namespace Content.Server.Strip
             if (!CanStripRemoveHand(user, target, item, handName))
                 return;
 
-            var (time, stealth) = GetStripTimeModifiers(user, target, targetStrippable.HandStripDelay);
+            var (time, stealth) = GetStripTimeModifiers(user, target, null, targetStrippable.HandStripDelay);
 
             if (!stealth)
                 _popupSystem.PopupEntity(Loc.GetString("strippable-component-alert-owner", ("user", Identity.Entity(user, EntityManager)), ("item", item)), target, target);
@@ -550,7 +550,7 @@ namespace Content.Server.Strip
                 return;
 
             _handsSystem.TryDrop(target, item, checkActionBlocker: false, handsComp: target.Comp);
-            _handsSystem.PickupOrDrop(user, item, animateUser: stealth, animate: stealth, handsComp: user.Comp);
+            _handsSystem.PickupOrDrop(user, item, animateUser: stealth, animate: !stealth, handsComp: user.Comp);
             _adminLogger.Add(LogType.Stripping, LogImpact.Medium, $"{ToPrettyString(user):actor} has stripped the item {ToPrettyString(item):item} from {ToPrettyString(target):target}'s hands");
 
             // Hand update will trigger strippable update.

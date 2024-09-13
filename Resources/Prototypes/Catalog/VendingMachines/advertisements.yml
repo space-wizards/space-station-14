@@ -1,0 +1,263 @@
+- type: localizedDataset
+  id: AmmoVendAds
+  values:
+    prefix: advertisement-ammo-
+    count: 10
+
+- type: localizedDataset
+  id: AtmosDrobeAds
+  values:
+    prefix: advertisement-atmosdrobe-
+    count: 5
+
+- type: localizedDataset
+  id: BarDrobeAds
+  values:
+    prefix: advertisement-bardrobe-
+    count: 2
+
+- type: localizedDataset
+  id: BoozeOMatAds
+  values:
+    prefix: advertisement-boozeomat-
+    count: 19
+
+- type: localizedDataset
+  id: CargoDrobeAds
+  values:
+    prefix: advertisement-cargodrobe-
+    count: 3
+
+- type: localizedDataset
+  id: ChangAds
+  values:
+    prefix: advertisement-chang-
+    count: 5
+
+- type: localizedDataset
+  id: ChefDrobeAds
+  values:
+    prefix: advertisement-chefdrobe-
+    count: 4
+
+- type: localizedDataset
+  id: ChefvendAds
+  values:
+    prefix: advertisement-chefvend-
+    count: 9
+
+- type: localizedDataset
+  id: ChemDrobeAds
+  values:
+    prefix: advertisement-chemdrobe-
+    count: 4
+
+- type: localizedDataset
+  id: CigaretteMachineAds
+  values:
+    prefix: advertisement-cigs-
+    count: 12
+
+- type: localizedDataset
+  id: ClothesMateAds
+  values:
+    prefix: advertisement-clothes-
+    count: 7
+
+- type: localizedDataset
+  id: HotDrinksMachineAds
+  values:
+    prefix: advertisement-coffee-
+    count: 14
+
+- type: localizedDataset
+  id: RobustSoftdrinksAds
+  values:
+    prefix: advertisement-cola-
+    count: 8
+
+- type: localizedDataset
+  id: CondimentVendAds
+  values:
+    prefix: advertisement-condiment-
+    count: 6
+
+- type: localizedDataset
+  id: CuraDrobeAds
+  values:
+    prefix: advertisement-curadrobe-
+    count: 3
+
+- type: localizedDataset
+  id: DetDrobeAds
+  values:
+    prefix: advertisement-detdrobe-
+    count: 3
+
+- type: localizedDataset
+  id: DinnerwareAds
+  values:
+    prefix: advertisement-dinnerware-
+    count: 10
+
+- type: localizedDataset
+  id: DiscountDansAds
+  values:
+    prefix: advertisement-discount-
+    count: 9
+
+- type: localizedDataset
+  id: DonutAds
+  values:
+    prefix: advertisement-donut-
+    count: 6
+
+- type: localizedDataset
+  id: EngiDrobeAds
+  values:
+    prefix: advertisement-engidrobe-
+    count: 5
+
+- type: localizedDataset
+  id: FatExtractorFacts
+  values:
+    prefix: fat-extractor-fact-
+    count: 6
+
+- type: localizedDataset
+  id: GoodCleanFunAds
+  values:
+    prefix: advertisement-goodcleanfun-
+    count: 10
+
+- type: localizedDataset
+  id: GeneDrobeAds
+  values:
+    prefix: advertisement-genedrobe-
+    count: 2
+
+- type: localizedDataset
+  id: HappyHonkAds
+  values:
+    prefix: advertisement-happyhonk-
+    count: 10
+
+- type: localizedDataset
+  id: HyDrobeAds
+  values:
+    prefix: advertisement-hydrobe-
+    count: 5
+
+- type: localizedDataset
+  id: JaniDrobeAds
+  values:
+    prefix: advertisement-janidrobe-
+    count: 5
+
+- type: localizedDataset
+  id: LawDrobeAds
+  values:
+    prefix: advertisement-lawdrobe-
+    count: 9
+
+- type: localizedDataset
+  id: MagiVendAds
+  values:
+    prefix: advertisement-magivend-
+    count: 11
+
+- type: localizedDataset
+  id: MediDrobeAds
+  values:
+    prefix: advertisement-medidrobe-
+    count: 4
+
+- type: localizedDataset
+  id: MegaSeedAds
+  values:
+    prefix: advertisement-megaseed-
+    count: 6
+
+- type: localizedDataset
+  id: NanoMedAds
+  values:
+    prefix: advertisement-nanomed-
+    count: 9
+
+- type: localizedDataset
+  id: NutriMaxAds
+  values:
+    prefix: advertisement-nutrimax-
+    count: 7
+
+- type: localizedDataset
+  id: RoboDrobeAds
+  values:
+    prefix: advertisement-robodrobe-
+    count: 4
+
+- type: localizedDataset
+  id: SciDrobeAds
+  values:
+    prefix: advertisement-scidrobe-
+    count: 3
+
+- type: localizedDataset
+  id: SecDrobeAds
+  values:
+    prefix: advertisement-secdrobe-
+    count: 5
+
+- type: localizedDataset
+  id: SecTechAds
+  values:
+    prefix: advertisement-sectech-
+    count: 5
+
+- type: localizedDataset
+  id: SmartFridgeAds
+  values:
+    prefix: advertisement-smartfridge-
+    count: 8
+
+- type: localizedDataset
+  id: GetmoreChocolateCorpAds
+  values:
+    prefix: advertisement-snack-
+    count: 15
+
+- type: localizedDataset
+  id: BodaAds
+  values:
+    prefix: advertisement-sovietsoda-
+    count: 6
+
+- type: localizedDataset
+  id: SyndieDrobeAds
+  values:
+    prefix: advertisement-syndiedrobe-
+    count: 31
+
+- type: localizedDataset
+  id: AutoDrobeAds
+  values:
+    prefix: advertisement-theater-
+    count: 6
+
+- type: localizedDataset
+  id: VendomatAds
+  values:
+    prefix: advertisement-vendomat-
+    count: 7
+
+- type: localizedDataset
+  id: ViroDrobeAds
+  values:
+    prefix: advertisement-virodrobe-
+    count: 3
+
+- type: localizedDataset
+  id: MedibotAds
+  values:
+    prefix: advertisement-medibot-
+    count: 17

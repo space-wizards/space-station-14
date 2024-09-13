@@ -1,13 +1,15 @@
 using Content.Shared.Popups;
-using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.Verbs;
-using Content.Shared.RadioJammer;
+using Content.Shared.Examine;
+using Content.Shared.Radio.Components;
+using Content.Shared.DeviceNetwork.Systems;
 
 namespace Content.Shared.Radio.EntitySystems;
 
 public abstract class SharedJammerSystem : EntitySystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedDeviceNetworkJammerSystem _jammer = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
 
     public override void Initialize()
@@ -15,6 +17,7 @@ public abstract class SharedJammerSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<RadioJammerComponent, GetVerbsEvent<Verb>>(OnGetVerb);
+        SubscribeLocalEvent<RadioJammerComponent, ExaminedEvent>(OnExamine);
     }
 
     private void OnGetVerb(Entity<RadioJammerComponent> entity, ref GetVerbsEvent<Verb> args)
@@ -38,13 +41,11 @@ public abstract class SharedJammerSystem : EntitySystem
                 Act = () =>
                 {
                     entity.Comp.SelectedPowerLevel = currIndex;
-                    if (TryComp<DeviceNetworkJammerComponent>(entity.Owner, out var jammerComp))
+                    Dirty(entity);
+                    if (_jammer.TrySetRange(entity.Owner, GetCurrentRange(entity)))
                     {
-                        // This is a little sketcy but only way to do it.
-                        jammerComp.Range = GetCurrentRange(entity.Comp);
-                        Dirty(entity.Owner, jammerComp);
+                        Popup.PopupPredicted(Loc.GetString(setting.Message), user, user);
                     }
-                    Popup.PopupPredicted(Loc.GetString(setting.Message), user, user);
                 },
                 Text = Loc.GetString(setting.Name),
             };
@@ -53,26 +54,39 @@ public abstract class SharedJammerSystem : EntitySystem
         }
     }
 
-    public float GetCurrentWattage(RadioJammerComponent jammer)
+    private void OnExamine(Entity<RadioJammerComponent> ent, ref ExaminedEvent args)
     {
-        return jammer.Settings[jammer.SelectedPowerLevel].Wattage;
+        if (args.IsInDetailsRange)
+        {
+            var powerIndicator = HasComp<ActiveRadioJammerComponent>(ent)
+                ? Loc.GetString("radio-jammer-component-examine-on-state")
+                : Loc.GetString("radio-jammer-component-examine-off-state");
+            args.PushMarkup(powerIndicator);
+
+            var powerLevel = Loc.GetString(ent.Comp.Settings[ent.Comp.SelectedPowerLevel].Name);
+            var switchIndicator = Loc.GetString("radio-jammer-component-switch-setting", ("powerLevel", powerLevel));
+            args.PushMarkup(switchIndicator);
+        }
     }
 
-    public float GetCurrentRange(RadioJammerComponent jammer)
+    public float GetCurrentWattage(Entity<RadioJammerComponent> jammer)
     {
-        return jammer.Settings[jammer.SelectedPowerLevel].Range;
+        return jammer.Comp.Settings[jammer.Comp.SelectedPowerLevel].Wattage;
     }
 
-    protected void ChangeLEDState(bool isLEDOn, EntityUid uid,
-        AppearanceComponent? appearance = null)
+    public float GetCurrentRange(Entity<RadioJammerComponent> jammer)
     {
-        _appearance.SetData(uid, RadioJammerVisuals.LEDOn, isLEDOn, appearance);
+        return jammer.Comp.Settings[jammer.Comp.SelectedPowerLevel].Range;
     }
 
-    protected void ChangeChargeLevel(RadioJammerChargeLevel chargeLevel, EntityUid uid,
-        AppearanceComponent? appearance = null)
+    protected void ChangeLEDState(Entity<AppearanceComponent?> ent, bool isLEDOn)
     {
-        _appearance.SetData(uid, RadioJammerVisuals.ChargeLevel, chargeLevel, appearance);
+        _appearance.SetData(ent, RadioJammerVisuals.LEDOn, isLEDOn, ent.Comp);
+    }
+
+    protected void ChangeChargeLevel(Entity<AppearanceComponent?> ent, RadioJammerChargeLevel chargeLevel)
+    {
+        _appearance.SetData(ent, RadioJammerVisuals.ChargeLevel, chargeLevel, ent.Comp);
     }
 
 }

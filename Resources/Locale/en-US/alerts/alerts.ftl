@@ -96,6 +96,9 @@ alerts-bleed-desc = You're [color=red]bleeding[/color].
 alerts-pacified-name = [color=green]Pacified[/color]
 alerts-pacified-desc = You're pacified; you won't be able to harm living creatures.
 
+alerts-adrenaline-name = [color=red]Adrenaline[/color]
+alerts-adrenaline-desc = You're full of adrenaline: pain won't slow you down.
+
 alerts-suit-power-name = Suit Power
 alerts-suit-power-desc = How much power your space ninja suit has.
 
@@ -107,6 +110,3 @@ alerts-revenant-essence-desc = The power of souls. It sustains you and is used f
 
 alerts-revenant-corporeal-name = Corporeal
 alerts-revenant-corporeal-desc = You have manifested physically. People around you can see and hurt you.
-
-alerts-deflecting-name = Deflecting
-alerts-deflecting-desc = You have a chance to deflect incoming projectiles. Standing still or moving slowly will increase this chance.

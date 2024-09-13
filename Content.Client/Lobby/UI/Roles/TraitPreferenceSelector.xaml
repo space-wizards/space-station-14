@@ -2,6 +2,6 @@
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
         <BoxContainer Name="Container"
                       Orientation="Horizontal">
-            <CheckBox Name="Checkbox"/>
+            <CheckBox Name="Checkbox" Access="Public"/>
         </BoxContainer>
 </Control>

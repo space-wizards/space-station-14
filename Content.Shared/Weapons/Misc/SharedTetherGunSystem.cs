@@ -152,6 +152,9 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
 
     private void OnTetherActivate(EntityUid uid, TetherGunComponent component, ActivateInWorldEvent args)
     {
+        if (!args.Complex)
+            return;
+
         StopTether(uid, component);
     }
 

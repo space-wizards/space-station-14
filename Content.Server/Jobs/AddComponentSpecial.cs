@@ -1,35 +1,22 @@
 using Content.Shared.Roles;
-using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager;
 
-namespace Content.Server.Jobs
+namespace Content.Server.Jobs;
+
+public sealed partial class AddComponentSpecial : JobSpecial
 {
-    [UsedImplicitly]
-    public sealed partial class AddComponentSpecial : JobSpecial
+    [DataField(required: true)]
+    public ComponentRegistry Components { get; private set; } = new();
+
+    /// <summary>
+    /// If this is true then existing components will be removed and replaced with these ones.
+    /// </summary>
+    [DataField]
+    public bool RemoveExisting = true;
+
+    public override void AfterEquip(EntityUid mob)
     {
-        [DataField("components")]
-        [AlwaysPushInheritance]
-        public ComponentRegistry Components { get; private set; } = new();
-
-        public override void AfterEquip(EntityUid mob)
-        {
-            // now its a registry of components, still throws i bet.
-            // TODO: This is hot garbage and probably needs an engine change to not be a POS.
-            var factory = IoCManager.Resolve<IComponentFactory>();
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-            var serializationManager = IoCManager.Resolve<ISerializationManager>();
-
-            foreach (var (name, data) in Components)
-            {
-                var component = (Component) factory.GetComponent(name);
-                component.Owner = mob;
-
-                var temp = (object) component;
-                serializationManager.CopyTo(data.Component, ref temp);
-                entityManager.RemoveComponent(mob, temp!.GetType());
-                entityManager.AddComponent(mob, (Component) temp);
-            }
-        }
+        var entMan = IoCManager.Resolve<IEntityManager>();
+        entMan.AddComponents(mob, Components, removeExisting: RemoveExisting);
     }
 }

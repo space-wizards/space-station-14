@@ -1,6 +1,0 @@
-- type: antag
-  id: Thief
-  name: roles-antag-thief-name
-  antagonist: true
-  setPreference: true
-  objective: roles-antag-thief-objective

@@ -15,10 +15,10 @@ public sealed class TileConstructionTests : InteractionTest
         await AssertTile(Plating, PlayerCoords);
         AssertGridCount(1);
         await SetTile(null);
-        await Interact(Rod);
+        await InteractUsing(Rod);
         await AssertTile(Lattice);
         Assert.That(Hands.ActiveHandEntity, Is.Null);
-        await Interact(Cut);
+        await InteractUsing(Cut);
         await AssertTile(null);
         await AssertEntityLookup((Rod, 1));
         AssertGridCount(1);
@@ -43,14 +43,14 @@ public sealed class TileConstructionTests : InteractionTest
         // Place Lattice
         var oldPos = TargetCoords;
         TargetCoords = SEntMan.GetNetCoordinates(new EntityCoordinates(MapData.MapUid, 1, 0));
-        await Interact(Rod);
+        await InteractUsing(Rod);
         TargetCoords = oldPos;
         await AssertTile(Lattice);
         AssertGridCount(1);
 
         // Cut lattice
         Assert.That(Hands.ActiveHandEntity, Is.Null);
-        await Interact(Cut);
+        await InteractUsing(Cut);
         await AssertTile(null);
         AssertGridCount(0);
 
@@ -76,25 +76,25 @@ public sealed class TileConstructionTests : InteractionTest
         // Space -> Lattice
         var oldPos = TargetCoords;
         TargetCoords = SEntMan.GetNetCoordinates(new EntityCoordinates(MapData.MapUid, 1, 0));
-        await Interact(Rod);
+        await InteractUsing(Rod);
         TargetCoords = oldPos;
         await AssertTile(Lattice);
         AssertGridCount(1);
 
         // Lattice -> Plating
-        await Interact(Steel);
+        await InteractUsing(Steel);
         Assert.That(Hands.ActiveHandEntity, Is.Null);
         await AssertTile(Plating);
         AssertGridCount(1);
 
         // Plating -> Tile
-        await Interact(FloorItem);
+        await InteractUsing(FloorItem);
         Assert.That(Hands.ActiveHandEntity, Is.Null);
         await AssertTile(Floor);
         AssertGridCount(1);
 
         // Tile -> Plating
-        await Interact(Pry);
+        await InteractUsing(Pry);
         await AssertTile(Plating);
         AssertGridCount(1);
 

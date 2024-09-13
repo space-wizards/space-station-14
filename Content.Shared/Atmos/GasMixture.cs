@@ -96,6 +96,11 @@ namespace Content.Shared.Atmos
             Volume = volume;
         }
 
+        public GasMixture(GasMixture toClone)
+        {
+            CopyFrom(toClone);
+        }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void MarkImmutable()
         {
@@ -197,9 +202,12 @@ namespace Content.Shared.Atmos
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void CopyFromMutable(GasMixture sample)
+        public void CopyFrom(GasMixture sample)
         {
-            if (Immutable) return;
+            if (Immutable)
+                return;
+
+            Volume = sample.Volume;
             sample.Moles.CopyTo(Moles, 0);
             Temperature = sample.Temperature;
         }

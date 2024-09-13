@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.Interaction;
 using Content.Server.Mech.Equipment.Components;
 using Content.Server.Mech.Systems;
@@ -40,7 +40,7 @@ public sealed class MechGrabberSystem : EntitySystem
         SubscribeLocalEvent<MechGrabberComponent, MechEquipmentRemovedEvent>(OnEquipmentRemoved);
         SubscribeLocalEvent<MechGrabberComponent, AttemptRemoveMechEquipmentEvent>(OnAttemptRemove);
 
-        SubscribeLocalEvent<MechGrabberComponent, InteractNoHandEvent>(OnInteract);
+        SubscribeLocalEvent<MechGrabberComponent, UserActivateInWorldEvent>(OnInteract);
         SubscribeLocalEvent<MechGrabberComponent, GrabberDoAfterEvent>(OnMechGrab);
     }
 
@@ -85,7 +85,7 @@ public sealed class MechGrabberSystem : EntitySystem
         var (mechPos, mechRot) = _transform.GetWorldPositionRotation(mechxform);
 
         var offset = mechPos + mechRot.RotateVec(component.DepositOffset);
-        _transform.SetWorldPositionRotation(xform, offset, Angle.Zero);
+        _transform.SetWorldPositionRotation(toRemove, offset, Angle.Zero);
         _mech.UpdateUserInterface(mech);
     }
 
@@ -123,10 +123,11 @@ public sealed class MechGrabberSystem : EntitySystem
         args.States.Add(GetNetEntity(uid), state);
     }
 
-    private void OnInteract(EntityUid uid, MechGrabberComponent component, InteractNoHandEvent args)
+    private void OnInteract(EntityUid uid, MechGrabberComponent component, UserActivateInWorldEvent args)
     {
-        if (args.Handled || args.Target is not {} target)
+        if (args.Handled)
             return;
+        var target = args.Target;
 
         if (args.Target == args.User || component.DoAfter != null)
             return;

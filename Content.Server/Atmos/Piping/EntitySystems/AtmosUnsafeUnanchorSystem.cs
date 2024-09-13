@@ -82,7 +82,10 @@ namespace Content.Server.Atmos.Piping.EntitySystems
                     continue;
 
                 var difference = pipe.Air.Pressure - environment.Pressure;
-                lost += difference * environment.Volume / (environment.Temperature * Atmospherics.R);
+                lost += Math.Min(
+                            pipe.Volume / pipe.Air.Volume * pipe.Air.TotalMoles,
+                            difference * environment.Volume / (environment.Temperature * Atmospherics.R)
+                        );
                 timesLost++;
             }
 

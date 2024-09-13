@@ -9,7 +9,7 @@ namespace Content.Shared.Movement.Pulling.Components;
 /// <summary>
 /// Specifies an entity as being able to pull another entity with <see cref="PullableComponent"/>
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
 [Access(typeof(PullingSystem))]
 public sealed partial class PullerComponent : Component
 {
@@ -44,3 +44,5 @@ public sealed partial class PullerComponent : Component
     [DataField]
     public ProtoId<AlertPrototype> PullingAlert = "Pulling";
 }
+
+public sealed partial class StopPullingAlertEvent : BaseAlertEvent;

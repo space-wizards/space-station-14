@@ -7,5 +7,6 @@
         <tabs:GraphicsTab Name="GraphicsTab" />
         <tabs:KeyRebindTab Name="KeyRebindTab" />
         <tabs:AudioTab Name="AudioTab" />
+        <tabs:AccessibilityTab Name="AccessibilityTab" />
     </TabContainer>
 </DefaultWindow>

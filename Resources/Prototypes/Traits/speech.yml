@@ -1,0 +1,98 @@
+# Free
+
+- type: trait
+  id: Accentless
+  name: trait-accentless-name
+  description: trait-accentless-desc
+  category: SpeechTraits
+  cost: 2
+  components:
+  - type: Accentless
+    removes:
+    - type: LizardAccent
+    - type: MothAccent
+    - type: ReplacementAccent
+      accent: dwarf
+
+# 1 Cost
+
+- type: trait
+  id: SouthernAccent
+  name: trait-southern-name
+  description: trait-southern-desc
+  category: SpeechTraits
+  cost: 1
+  components:
+  - type: SouthernAccent
+
+- type: trait
+  id: PirateAccent
+  name: trait-pirate-accent-name
+  description: trait-pirate-accent-desc
+  category: SpeechTraits
+  cost: 1
+  components:
+  - type: PirateAccent
+
+- type: trait
+  id: CowboyAccent
+  name: trait-cowboy-name
+  description: trait-cowboy-desc
+  category: SpeechTraits
+  cost: 1
+  components:
+  - type: ReplacementAccent
+    accent: cowboy
+
+- type: trait
+  id: GermanAccent
+  name: trait-german-name
+  description: trait-german-desc
+  category: SpeechTraits
+  cost: 1
+  components:
+  - type: GermanAccent
+
+- type: trait
+  id: ItalianAccent
+  name: trait-italian-name
+  description: trait-italian-desc
+  category: SpeechTraits
+  cost: 1
+  components:
+  - type: ReplacementAccent
+    accent: italian
+
+- type: trait
+  id: Liar
+  name: trait-liar-name
+  description: trait-liar-desc
+  category: SpeechTraits
+  cost: 1
+  components:
+  - type: ReplacementAccent
+    accent: liar
+
+# 2 Cost
+
+- type: trait
+  id: SocialAnxiety
+  name: trait-socialanxiety-name
+  description: trait-socialanxiety-desc
+  category: SpeechTraits
+  cost: 2
+  components:
+  - type: StutteringAccent
+    matchRandomProb: 0.1
+    fourRandomProb: 0
+    threeRandomProb: 0
+    cutRandomProb: 0
+
+- type: trait
+  id: FrontalLisp
+  name: trait-frontal-lisp-name
+  description: trait-frontal-lisp-desc
+  category: SpeechTraits
+  cost: 2
+  components:
+  - type: FrontalLisp

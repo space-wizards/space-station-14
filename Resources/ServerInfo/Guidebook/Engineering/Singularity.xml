@@ -71,7 +71,7 @@
     <GuideEntityEmbed Entity="RadiationCollector"/>
     <GuideEntityEmbed Entity="PlasmaTank"/>
   </Box>
-  The radition collectors connect to HV cables and generate power from nearby radiation sources when turned on.
+  The radiation collectors connect to HV cables and generate power from nearby radiation sources when turned on.
   Radiation collectors require a tank full of gaseous plasma in order to operate.
   Continous radiation exposure will gradually convert the stored plasma into tritium, so replace depleted plasma tanks with fresh ones regularly to maintain a high power output.
 
@@ -81,15 +81,14 @@
   </Box>
   The tesla coils connect to HV cables and provide a stream of power after being zapped by the ball lightning.
   However, tesla coils usually do not fully absorb the lightning strike, and the grounding rods are required to prevent lighting from arcing to and obliterating nearby machines.
-  Do note that one grounding rod is not a foolproof solution; get [color=#a4885c]atleast 4 rods[/color] around the containment field to make it mathematically unlikely for the tesla to escape.
+  Do note that one grounding rod is not a foolproof solution; get [color=#a4885c]at least 4 rods[/color] around the containment field to make it mathematically unlikely for the tesla to escape.
   As the ball lightning zaps tesla coils, they will degrade from wear; make sure to [color=#a4885c]weld them[/color] every now and then to keep generating power.
 
-  ## Turing on the Engines
+  ## Turning on the Engines
 
   [color=red]Do not[/color] turn the PA on unless all the other subsystems are working properly and there is enough power to start the engine.
 
-  Turn power on using the PA control computer. Set the strength to an appropiate level. Currently the only appropriate level is [color=#f0684d]1[/color]; anything above that will ensure that singularity grows too strong to handle.
-  The higher the output stength is set on PA control computer, the bigger the singularity will be.
+  Turn power on using the PA control computer. Set the strength to an appropriate level. The higher the output stength is set on PA control computer, the bigger the singularity will be.
 
   Currently, the output power does not affect the ball lightning, beyond giving the ball lightning extra orbs around it.
 

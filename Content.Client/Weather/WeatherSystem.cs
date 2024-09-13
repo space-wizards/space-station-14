@@ -2,16 +2,11 @@ using System.Numerics;
 using Content.Shared.Weather;
 using Robust.Client.Audio;
 using Robust.Client.GameObjects;
-using Robust.Client.Graphics;
 using Robust.Client.Player;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Physics;
-using Robust.Shared.Physics.Components;
-using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using AudioComponent = Robust.Shared.Audio.Components.AudioComponent;
 
@@ -62,7 +57,7 @@ public sealed class WeatherSystem : SharedWeatherSystem
         if (TryComp<MapGridComponent>(entXform.GridUid, out var grid))
         {
             var gridId = entXform.GridUid.Value;
-            // Floodfill to the nearest tile and use that for audio.
+            // FloodFill to the nearest tile and use that for audio.
             var seed = _mapSystem.GetTileRef(gridId, grid, entXform.Coordinates);
             var frontier = new Queue<TileRef>();
             frontier.Enqueue(seed);
@@ -75,7 +70,7 @@ public sealed class WeatherSystem : SharedWeatherSystem
                 if (!visited.Add(node.GridIndices))
                     continue;
 
-                if (!CanWeatherAffect(grid, node))
+                if (!CanWeatherAffect(entXform.GridUid.Value, grid, node))
                 {
                     // Add neighbors
                     // TODO: Ideally we pick some deterministically random direction and use that
@@ -107,7 +102,7 @@ public sealed class WeatherSystem : SharedWeatherSystem
             if (nearestNode != null)
             {
                 var entPos = _transform.GetMapCoordinates(entXform);
-                var nodePosition = nearestNode.Value.ToMap(EntityManager, _transform).Position;
+                var nodePosition = _transform.ToMapCoordinates(nearestNode.Value).Position;
                 var delta = nodePosition - entPos.Position;
                 var distance = delta.Length();
                 occlusion = _audio.GetOcclusion(entPos, delta, distance);

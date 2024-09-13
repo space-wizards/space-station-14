@@ -66,12 +66,13 @@
     deviceNetId: Wireless
     receiveFrequencyId: Fax
     transmitFrequencyId: Fax
+  - type: RequireProjectileTarget
 
 # Special
 - type: entity
   parent: FaxMachineBase
   id: FaxMachineCentcom
-  name: CentCom long range fax machine
+  name: CentComm long range fax machine
   suffix: CentCom
   components:
   - type: Sprite

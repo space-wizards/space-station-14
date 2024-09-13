@@ -1,10 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Administration.Logs;
-using Content.Server.GameTicking.Components;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Presets;
 using Content.Server.GameTicking.Rules.Components;
+using Content.Shared.GameTicking.Components;
 using Content.Shared.Random;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
@@ -21,7 +21,6 @@ public sealed class SecretRuleSystem : GameRuleSystem<SecretRuleComponent>
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IComponentFactory _compFact = default!;
 
     private string _ruleCompName = default!;
@@ -164,7 +163,7 @@ public sealed class SecretRuleSystem : GameRuleSystem<SecretRuleComponent>
                 return false;
             }
 
-            if (ruleComp.MinPlayers > players)
+            if (ruleComp.MinPlayers > players && ruleComp.CancelPresetOnTooFewPlayers)
                 return false;
         }
 

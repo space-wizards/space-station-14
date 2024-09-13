@@ -2,7 +2,6 @@
   id: ActionConfigureMeleeSpeech
   name: Set Battlecry
   description: Set a custom battlecry for when you attack!
-  noSpawn: true
   components:
   - type: InstantAction
     itemIconStyle: BigItem
