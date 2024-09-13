@@ -220,7 +220,8 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
         if (color == null)
             color = Color.White;
 
-        if (_trackedEntityNetId != null && metaData.NetId != _trackedEntityNetId)
+        if (_trackedEntity != null && metaData.NetEntity != _trackedEntity &&
+            _trackedEntityNetId != null && metaData.NetId != _trackedEntityNetId)
         {
             color *= Color.DimGray;
         }
