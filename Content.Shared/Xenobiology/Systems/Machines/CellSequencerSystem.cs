@@ -75,7 +75,7 @@ public sealed class CellSequencerSystem : EntitySystem
             return;
         }
 
-        _cellServer.RegisterCell(serverEnt.Value.Owner, ent.Owner, args.Cell);
+        _cellServer.AddCell(serverEnt.Value.Owner, ent.Owner, args.Cell);
         UpdateUI(ent);
     }
 

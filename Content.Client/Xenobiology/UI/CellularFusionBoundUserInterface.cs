@@ -17,8 +17,8 @@ public sealed class CellularFusionBoundUserInterface : BoundUserInterface
         base.Open();
 
         _window = this.CreateWindow<CellularFusionWindow>();
-
         _window.OnSync += () => SendMessage(new CellularFusionUiSyncMessage());
+        _window.OnSplice += (cellA, cellB) => SendMessage(new CellularFusionUiSpliceMessage(cellA, cellB));
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

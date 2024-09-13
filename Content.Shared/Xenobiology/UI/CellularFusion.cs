@@ -11,6 +11,20 @@ public enum CellularFusionUiKey
 [Serializable, NetSerializable]
 public sealed class CellularFusionUiSyncMessage : BoundUserInterfaceMessage;
 
+
+[Serializable, NetSerializable]
+public sealed class CellularFusionUiSpliceMessage : BoundUserInterfaceMessage
+{
+    public readonly Cell CellA;
+    public readonly Cell CellB;
+
+    public CellularFusionUiSpliceMessage(Cell cellA, Cell cellB)
+    {
+        CellA = cellA;
+        CellB = cellB;
+    }
+}
+
 [Serializable, NetSerializable]
 public sealed class CellularFusionUiState : BoundUserInterfaceState
 {

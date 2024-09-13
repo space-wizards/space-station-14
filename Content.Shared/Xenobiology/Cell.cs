@@ -73,6 +73,21 @@ public sealed class Cell : IEquatable<Cell>
     [ViewVariables]
     public readonly List<ProtoId<CellModifierPrototype>> Modifiers;
 
+    public Cell(ProtoId<CellPrototype>? id,
+        Color color,
+        string name,
+        float stability,
+        int cost,
+        List<ProtoId<CellModifierPrototype>> modifiers)
+    {
+        Id = id;
+        Color = color;
+        Name = name;
+        Stability = stability;
+        Cost = cost;
+        Modifiers = modifiers;
+    }
+
     public Cell(Cell cell)
     {
         Id = cell.Id;

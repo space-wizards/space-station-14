@@ -65,16 +65,31 @@ public sealed class CellServerSystem : EntitySystem
         return server.Comp.Clients.Contains(client);
     }
 
-    public void RegisterCell(Entity<CellServerComponent?> server, Entity<CellClientComponent?> client, Cell cell)
+    public bool AddCell(EntityUid clientUid, Cell cell)
+    {
+        return AddCell((clientUid, null), cell);
+    }
+
+    public bool AddCell(Entity<CellClientComponent?> client, Cell cell)
+    {
+        if (!Resolve(client, ref client.Comp) || client.Comp.Server is null)
+            return false;
+
+        return AddCell((client.Comp.Server.Value, null), client, cell);
+    }
+
+    public bool AddCell(Entity<CellServerComponent?> server, Entity<CellClientComponent?> client, Cell cell)
     {
         if (!Resolve(server, ref server.Comp) || !Resolve(client, ref client.Comp))
-            return;
+            return false;
 
         if (!HasClient(server, client))
-            return;
+            return false;
 
         server.Comp.Cells.Add(cell);
         DispatchChangedEvent(server, client);
+
+        return true;
     }
 
     public void RemoveCell(Entity<CellServerComponent?> server, Entity<CellClientComponent?> client, Cell cell)

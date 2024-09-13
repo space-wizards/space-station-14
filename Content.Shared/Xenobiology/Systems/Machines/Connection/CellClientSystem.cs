@@ -22,6 +22,17 @@ public sealed class CellClientSystem : EntitySystem
         }
     }
 
+    public bool TryGetCells(Entity<CellClientComponent?> ent, out IReadOnlyList<Cell> cells)
+    {
+        cells = [];
+
+        if (!TryGetServer(ent, out var server))
+            return false;
+
+        cells = server.Value.Comp.Cells;
+        return true;
+    }
+
     public bool TryGetServer(Entity<CellClientComponent?> ent, [NotNullWhen(true)] out Entity<CellServerComponent>? serverEnt)
     {
         serverEnt = null;
