@@ -19,7 +19,6 @@ public sealed partial class StationGatewayWindow : FancyWindow
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
-    private readonly SharedTransformSystem _xformSystem;
     private readonly SpriteSystem _spriteSystem;
 
     private NetEntity? _trackedEntity;
@@ -31,7 +30,6 @@ public sealed partial class StationGatewayWindow : FancyWindow
         IoCManager.InjectDependencies(this);
 
         _spriteSystem = _entManager.System<SpriteSystem>();
-        _xformSystem = _entManager.System<SharedTransformSystem>();
 
         NavMap.TrackedEntitySelectedAction += SetTrackedEntityFromNavMap;
     }
@@ -144,11 +142,7 @@ public sealed partial class StationGatewayWindow : FancyWindow
                 var coordTwo = _entManager.GetCoordinates(gate.LinkCoordinates);
                 if (coordsOne is not null && coordTwo is not null)
                 {
-                    var mapOne = _xformSystem.ToMapCoordinates(coordsOne.Value);
-                    var mapTwo = _xformSystem.ToMapCoordinates(coordTwo.Value);
-
-                    NavMap.LinkLines.Add(new GatewayLinkLine(mapOne.Position,
-                        mapTwo.Position));
+                    NavMap.LinkLines.Add(new GatewayLinkLine(coordsOne.Value, coordTwo.Value));
                 }
             }
         }
