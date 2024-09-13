@@ -2,6 +2,7 @@
 advertisement-bruiseomat-2 = Who has TC?
 advertisement-bruiseomat-3 = Did anyone buy an EMAG?
 advertisement-bruiseomat-4 = I wanna go back to my home station...
+advertisement-bruiseomat-5 = Beware the Mime and Clown. BEWARE!
 advertisement-bruiseomat-6 = A nuke a day keeps the deathsquad at bay!
 advertisement-bruiseomat-7 = You'll never be able to match MY mixing, Agent!
 advertisement-bruiseomat-8 = Thirsting for blood? I got you covered!
