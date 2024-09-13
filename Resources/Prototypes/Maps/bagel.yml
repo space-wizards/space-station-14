@@ -2,7 +2,7 @@
   id: Bagel
   mapName: 'Bagel Station'
   mapPath: /Maps/bagel.yml
-  minPlayers: 35
+  minPlayers: 30
   maxPlayers: 70
   stations:
     Bagel:
