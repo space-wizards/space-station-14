@@ -1,4 +1,5 @@
 using Content.Server.GatewayStation.Systems;
+using Robust.Shared.Audio;
 
 namespace Content.Server.GatewayStation.Components;
 
@@ -11,4 +12,17 @@ public sealed partial class GatewayChipComponent : Component
 {
     [DataField]
     public EntityUid? ConnectedGate;
+
+    /// <summary>
+    /// When initialized, it will attempt to contact a random gateway that has the same code. Can be used for pre-created gateways
+    /// </summary>
+    // Not ProtoId<TagPrototype> because we can random generate this keys for expeditions
+    [DataField]
+    public string? AutoLinkKey = null;
+
+    [DataField]
+    public SoundSpecifier RecordSound = new SoundPathSpecifier("/Audio/Machines/high_tech_confirm.ogg")
+    {
+        Params = AudioParams.Default.WithVariation(0.05f),
+    };
 }

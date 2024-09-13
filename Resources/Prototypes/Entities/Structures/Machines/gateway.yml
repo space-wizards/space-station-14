@@ -63,8 +63,8 @@
 - type: entity
   parent: [ BaseMachinePowered ]
   id: StationGateway
-  suffix: Station Console Support
-  name: gateway yay
+  suffix: Console Support
+  name: gateway
   description: The peak of bluespace technology. Giant gates that allow you to travel vast distances in the blink of an eye.
   components:
   - type: Sprite
@@ -124,3 +124,21 @@
     radius: 3
     energy: 1
   - type: LitOnPowered
+
+- type: entity
+  parent: StationGateway
+  id: StationGatewaySalvage
+  suffix: Salvage, Console Support
+  components:
+  - type: StationGateway
+    autoLinkKey: StationSalvage
+  
+
+- type: entity
+  parent: StationGateway
+  id: StationGatewayMedical
+  suffix: Medical, Console Support
+  components:
+  - type: StationGateway
+    autoLinkKey: StationMedical
+  

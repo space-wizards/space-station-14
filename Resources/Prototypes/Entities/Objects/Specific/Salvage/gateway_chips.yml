@@ -1,7 +1,7 @@
 - type: entity
-  id: BaseGatewayChip
+  id: GatewayChipBlank
   parent: BaseItem
-  abstract: true
+  suffix: Blank
   name: gateway chip
   description: A chip with stored portal gate data. Insert it into the gate control console to be able to control it.
   components:
@@ -10,13 +10,15 @@
     size: Tiny
   - type: Sprite
     sprite: Objects/Misc/gate_chip.rsi
+    layers:
+    - state: base
   - type: Tag
     tags:
     - GatewayChip
 
 - type: entity
   id: GatewayChipSalvage
-  parent: BaseGatewayChip
+  parent: GatewayChipBlank
   suffix: Salvage
   components:
   - type: Sprite
@@ -24,8 +26,22 @@
     - state: base
     - state: mark1
       color: "#8d1c99"
-   
+  - type: GatewayChip
+    autoLinkKey: StationSalvage
 
+- type: entity
+  id: GatewayChipMedical
+  parent: GatewayChipBlank
+  suffix: Medical
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+    - state: mark1
+      color: "#52B4E9"
+  - type: GatewayChip
+    autoLinkKey: StationMedical
+   
 #- type: palette
 #  id: Departmental
 #  name: Departmental

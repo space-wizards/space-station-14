@@ -11,4 +11,7 @@ public sealed partial class StationGatewayConsoleComponent : Component
     /// </summary>
     [DataField]
     public EntityUid? SelectedGate = null;
+
+    [DataField]
+    public string ChipStorageName = "storagebase";
 }

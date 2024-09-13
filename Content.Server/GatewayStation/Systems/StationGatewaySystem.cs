@@ -2,11 +2,15 @@ using Content.Server.Audio;
 using Content.Server.GatewayStation.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.GatewayStation;
+using Content.Shared.Interaction;
 using Content.Shared.Pinpointer;
+using Content.Shared.Popups;
 using Content.Shared.Power;
+using Content.Shared.Storage;
 using Content.Shared.Teleportation.Systems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Containers;
 using Robust.Shared.Map;
 
 namespace Content.Server.GatewayStation.Systems;
@@ -18,15 +22,45 @@ public sealed class StationGatewaySystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly AmbientSoundSystem _ambient = default!;
     [Dependency] private readonly PowerReceiverSystem _power = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<StationGatewayConsoleComponent, BoundUIOpenedEvent>(OnUIOpened);
         SubscribeLocalEvent<StationGatewayConsoleComponent, StationGatewayGateClickMessage>(OnUIGateClicked);
+        SubscribeLocalEvent<StationGatewayConsoleComponent, ContainerAttemptEventBase>(OnContainerAttempt);
 
         SubscribeLocalEvent<StationGatewayComponent, LinkedEntityChangedEvent>(OnLinkedChanged);
         SubscribeLocalEvent<StationGatewayComponent, PowerChangedEvent>(OnPowerChanged);
+        SubscribeLocalEvent<StationGatewayComponent, InteractUsingEvent>(OnInteractUsing);
+
+        SubscribeLocalEvent<GatewayChipComponent, MapInitEvent>(OnChipInit);
+    }
+
+    private void OnInteractUsing(Entity<StationGatewayComponent> ent, ref InteractUsingEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        if (!TryComp<GatewayChipComponent>(args.Used, out var chip))
+            return;
+
+        if (!_power.IsPowered(ent))
+            return;
+
+        if (chip.ConnectedGate is not null)
+        {
+            _popup.PopupEntity(Loc.GetString("gateway-console-chip-already-recorded"), ent, args.User);
+            return;
+        }
+
+        chip.ConnectedGate = ent;
+        _popup.PopupEntity(Loc.GetString("gateway-console-chip-record"), ent, args.User);
+        _audio.PlayPvs(chip.RecordSound, args.Used);
+
+        args.Handled = true;
     }
 
     private void OnUIGateClicked(Entity<StationGatewayConsoleComponent> ent, ref StationGatewayGateClickMessage args)
@@ -113,6 +147,11 @@ public sealed class StationGatewaySystem : EntitySystem
         UpdateUserInterface(ent);
     }
 
+    private void OnContainerAttempt(Entity<StationGatewayConsoleComponent> ent, ref ContainerAttemptEventBase args)
+    {
+        UpdateUserInterface(ent);
+    }
+
     private void UpdateUserInterface(Entity<StationGatewayConsoleComponent> ent)
     {
         if (!_uiSystem.IsUiOpen(ent.Owner, StationGatewayUIKey.Key))
@@ -127,27 +166,50 @@ public sealed class StationGatewaySystem : EntitySystem
         //Send data
         List<StationGatewayStatus> gatewaysData = new();
 
-        var query = EntityQueryEnumerator<StationGatewayComponent, TransformComponent>();
-        while (query.MoveNext(out var uid, out var gate, out var xformComp))
+        if (_container.TryGetContainer(ent, ent.Comp.ChipStorageName, out var container))
         {
-            if (xform.GridUid != Transform(ent).GridUid)
-                continue;
+            foreach (var chip in container.ContainedEntities)
+            {
+                if (!TryComp<GatewayChipComponent>(chip, out var chipComp))
+                    continue;
 
-            if (!_power.IsPowered(uid))
-                continue;
+                if (!EntityManager.EntityExists(chipComp.ConnectedGate))
+                    continue;
 
-            _link.GetLink(uid, out var link);
-            EntityCoordinates? linkCoord = null;
+                if (!TryComp<StationGatewayComponent>(chipComp.ConnectedGate, out var gateway))
+                    continue;
 
-            if (link is not null)
-                linkCoord = Transform(link.Value).Coordinates;
+                if (!_power.IsPowered(chipComp.ConnectedGate.Value))
+                    continue;
 
-            gatewaysData.Add(
-                new(GetNetEntity(uid),
-                    GetNetCoordinates(xformComp.Coordinates),
-                    GetNetCoordinates(linkCoord),
-                    gate.GateName));
+                _link.GetLink(chipComp.ConnectedGate.Value, out var linkedGateway);
+                EntityCoordinates? linkCoord = null;
+                if (linkedGateway is not null)
+                    linkCoord = Transform(linkedGateway.Value).Coordinates;
+
+                gatewaysData.Add(
+                    new(GetNetEntity(chipComp.ConnectedGate.Value),
+                        GetNetCoordinates(Transform(chipComp.ConnectedGate.Value).Coordinates),
+                        GetNetCoordinates(linkCoord),
+                        gateway.GateName));
+            }
         }
         _uiSystem.SetUiState(ent.Owner, StationGatewayUIKey.Key, new StationGatewayState(gatewaysData, GetNetEntity(ent.Comp.SelectedGate)));
+    }
+
+    private void OnChipInit(Entity<GatewayChipComponent> chip, ref MapInitEvent args)
+    {
+        if (chip.Comp.AutoLinkKey is null)
+            return;
+
+        var query = EntityQueryEnumerator<StationGatewayComponent>();
+        while (query.MoveNext(out var uid, out var gate))
+        {
+            if (gate.AutoLinkKey is null || gate.AutoLinkKey != chip.Comp.AutoLinkKey)
+                continue;
+
+            chip.Comp.ConnectedGate = uid;
+            return;
+        }
     }
 }

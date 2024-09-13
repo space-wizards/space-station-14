@@ -1,6 +1,6 @@
 gateway-console-slot-name = Disk
-gateway-console-chip-already-recorded = These codes are already recorded here
-gateway-console-chip-record = The new coordinates were successfully written to the console
+gateway-console-chip-already-recorded = Coordinates are already stored in this chip!
+gateway-console-chip-record = Coordinates saved!
 
 # UI
 

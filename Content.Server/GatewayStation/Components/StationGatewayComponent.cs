@@ -17,6 +17,13 @@ public sealed partial class StationGatewayComponent : Component
     public string GateName = "Unknown Coordinates";
 
     /// <summary>
+    /// When initialized, chip will attempt to contact a random gateway that has the same code. Can be used for pre-created gateways
+    /// </summary>
+    // Not ProtoId<TagPrototype> because we can random generate this keys for expeditions
+    [DataField]
+    public string? AutoLinkKey = null;
+
+    /// <summary>
     /// The sound that plays at the portal when it connects to something
     /// </summary>
     [DataField]
