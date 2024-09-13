@@ -7,19 +7,17 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.LawChips.Judge;
 
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedJudgeInterfaceSystem))]
+[AutoGenerateComponentState]
 public sealed partial class JudgeInterfaceComponent : Component
 {
-    [DataField("status")]
-    public JudgeInterfaceState Status = JudgeInterfaceState.Clean;
-
-    [DataField("powered")]
-    public bool Powered = false;
+    [DataField("status"), AutoNetworkedField]
+    public JudgeInterfaceStatus Status = JudgeInterfaceStatus.Normal;  
 }
 
-[Serializable, NetSerializable]
-public enum JudgeInterfaceState : byte
+[NetSerializable, Serializable]
+public enum JudgeInterfaceStatus : byte
 {
-    Clean,
-    Busted,
-    Hacked
+    Normal,
+    Hacked,
+    Broken
 }

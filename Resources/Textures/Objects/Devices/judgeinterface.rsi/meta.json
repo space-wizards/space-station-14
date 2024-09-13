@@ -8,13 +8,13 @@
     },
     "states": [
         {
-            "name": "off"
+            "name": "device"
         },
         {
-            "name": "off-busted"
+            "name": "broken"
         },
         {
-            "name": "on",
+            "name": "screen-normal",
             "delays": [
                 [
                     0.4,
@@ -33,7 +33,7 @@
             ]
         },
         {
-            "name": "on-busted",
+            "name": "screen-busted",
             "delays": [
                 [
                     0.4,
@@ -52,7 +52,7 @@
             ]
         },
         {
-            "name": "on-hacked",
+            "name": "screen-hacked",
             "delays": [
                 [
                     0.4,

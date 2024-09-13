@@ -95,7 +95,54 @@
   components:
    - type: Sprite
      sprite: Objects/Devices/judgeinterface.rsi
-     state: on
+     layers:
+       - state: device
+       - state: screen-normal
+         shader: unshaded
+         visible: false
+         map: ["enum.ToggleVisuals.Layer", "enum.JudgeInterfaceVisuals.Screen"]
+       - state: broken
+         visible: false
+         map: ["enum.JudgeInterfaceVisuals.Broken"]
+   - type: Appearance
+   - type: GenericVisualizer
+     visuals:
+      enum.JudgeInterfaceVisuals.DeviceState:
+        enum.JudgeInterfaceVisuals.Screen:
+          Normal: { state: screen-normal }
+          Hacked: { state: screen-hacked }
+          Broken: { state: screen-busted }
+        enum.JudgeInterfaceVisuals.Broken:
+          Normal: { visible: false }
+          Hacked: { visible: false }
+          Broken: { visible: true }
+      enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
+          True: { visible: true }
+          False: { visible: false }
+   - type: Damageable
+     damageContainer: Inorganic
+     damageModifierSet: Glass
+   - type: Destructible
+     thresholds:
+     - trigger:
+         !type:DamageTrigger
+         damage: 10
+       behaviors:
+       - !type:PlaySoundBehavior
+         sound:
+           collection: GlassBreak
+           params:
+             volume: -4
+       - !type:DoActsBehavior
+         acts: [ "Breakage" ]
+   - type: DamageOnLand
+     damage:
+       types:
+         Blunt: 10
+   - type: ItemToggle
+     predictable: false
+   - type: JudgeInterface
 
 
 # Boards
