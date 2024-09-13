@@ -478,7 +478,7 @@
     combatToggleAction: ActionCombatModeToggleOff
   - type: Bloodstream
     bloodMaxVolume: 30
-    bloodReagent: Cryoxadone
+    bloodReagent: CopperBlood
   - type: CanEscapeInventory
   - type: MobPrice
     price: 50
