@@ -12,10 +12,12 @@ public enum StationGatewayUIKey
 [Serializable, NetSerializable]
 public sealed class StationGatewayState : BoundUserInterfaceState
 {
+    public NetEntity? SelectedGateway;
     public List<StationGatewayStatus> Gateways;
-    public StationGatewayState(List<StationGatewayStatus> gateways)
+    public StationGatewayState(List<StationGatewayStatus> gateways, NetEntity? selected = null)
     {
         Gateways = gateways;
+        SelectedGateway = selected;
     }
 }
 

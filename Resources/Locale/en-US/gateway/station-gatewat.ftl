@@ -2,7 +2,7 @@
 
 gateway-console-user-interface-title = Gateway control console
 
-gateway-console-user-interface-locate = Center
+gateway-console-user-interface-locate = Locate
 gateway-console-user-interface-start-connection = Start connection
 gateway-console-user-interface-cut-connection = Cut connection
 

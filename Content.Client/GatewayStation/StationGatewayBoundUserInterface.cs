@@ -39,7 +39,7 @@ public sealed class StationGatewayBoundUserInterface : BoundUserInterface
         {
             case StationGatewayState st:
                 EntMan.TryGetComponent<TransformComponent>(Owner, out var xform);
-                _menu?.ShowGateways(st.Gateways, Owner, xform?.Coordinates);
+                _menu?.ShowGateways(st, Owner, xform?.Coordinates);
                 break;
         }
     }

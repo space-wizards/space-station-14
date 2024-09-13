@@ -46,7 +46,9 @@ public sealed class StationGatewaySystem : EntitySystem
             }
             else // And we have a selected gateway - tie them together.
             {
-                _link.TryLink(gate.Value, ent.Comp.SelectedGate.Value);
+                if (ent.Comp.SelectedGate != gate.Value)
+                    _link.TryLink(gate.Value, ent.Comp.SelectedGate.Value);
+
                 ent.Comp.SelectedGate = null;
             }
         }
@@ -110,6 +112,6 @@ public sealed class StationGatewaySystem : EntitySystem
                     GetNetCoordinates(linkCoord),
                     gate.GateName));
         }
-        _uiSystem.SetUiState(ent.Owner, StationGatewayUIKey.Key, new StationGatewayState(gatewaysData));
+        _uiSystem.SetUiState(ent.Owner, StationGatewayUIKey.Key, new StationGatewayState(gatewaysData, GetNetEntity(ent.Comp.SelectedGate)));
     }
 }
