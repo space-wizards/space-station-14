@@ -14470,7 +14470,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -75840.875
+      secondsUntilStateChange: -75908.84
       state: Opening
   - uid: 6934
     components:
@@ -14482,7 +14482,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -75843.51
+      secondsUntilStateChange: -75911.48
       state: Opening
   - uid: 6935
     components:
@@ -14494,7 +14494,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -75842.36
+      secondsUntilStateChange: -75910.33
       state: Opening
   - uid: 6936
     components:
@@ -14505,7 +14505,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -75841.58
+      secondsUntilStateChange: -75909.55
       state: Opening
 - proto: AirlockTheatreLocked
   entities:
@@ -94055,7 +94055,7 @@ entities:
       pos: -13.5,-1.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -67164.86
+      secondsUntilStateChange: -67232.83
     - type: DeviceNetwork
       deviceLists:
       - 18275
@@ -138604,7 +138604,7 @@ entities:
       pos: 36.5,-35.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -103996.7
+      secondsUntilStateChange: -104064.67
       state: Opening
   - uid: 5211
     components:
@@ -165214,6 +165214,8 @@ entities:
       pos: -57.5,-20.5
       parent: 2
     - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraSupply
       id: Salvage
   - uid: 29177
     components:
@@ -165236,6 +165238,17 @@ entities:
       - SurveillanceCameraSupply
       nameSet: True
       id: Cargo Dock N
+  - uid: 29525
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -60.5,-18.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraSupply
+      nameSet: True
+      id: Salvage Dock
 - proto: SurveillanceCameraWirelessRouterEntertainment
   entities:
   - uid: 23224
@@ -189946,7 +189959,7 @@ entities:
       pos: 24.5,2.5
       parent: 21002
     - type: Door
-      secondsUntilStateChange: -449201.34
+      secondsUntilStateChange: -449269.3
       state: Opening
   - uid: 28863
     components:
