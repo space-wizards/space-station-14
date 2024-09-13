@@ -38,7 +38,7 @@ public sealed class AirlockSystem : SharedAirlockSystem
         if (args.Port == component.AutoClosePort && component.AutoClose)
         {
             component.AutoClose = false;
-            Dirty((uid, component));
+            Dirty(uid, component);
         }
     }
 
@@ -89,7 +89,7 @@ public sealed class AirlockSystem : SharedAirlockSystem
         {
             // Disable auto close
             component.AutoClose = false;
-            Dirty((uid, component));
+            Dirty(uid, component);
         }
     }
 }
