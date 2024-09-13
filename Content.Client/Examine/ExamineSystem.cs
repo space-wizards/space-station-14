@@ -20,6 +20,10 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Direction = Robust.Shared.Maths.Direction;
+using Content.Client.Access;
+using Content.Shared.PDA;
+using Content.Shared.IdentityManagement.Components;
+
 
 namespace Content.Client.Examine
 {
@@ -30,6 +34,7 @@ namespace Content.Client.Examine
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly VerbSystem _verbSystem = default!;
+        [Dependency] private readonly IdCardSystem _idCard = default!;
 
         public const string StyleClassEntityTooltip = "entity-tooltip";
 
@@ -238,8 +243,35 @@ namespace Content.Client.Examine
 
             if (knowTarget)
             {
+                // Get the entity's presumed name and job from their Id card
+                // Only show if target has an identity or is a pda
+                string? postFixStr = null;
+                if (_idCard.TryFindIdCard(target, out var id) && (TryComp<IdentityComponent>(target, out var iComp) || TryComp<PdaComponent>(target, out var pda)))
+                {
+                    List<string> postFixes = new List<string>();
+
+                    //Display the id card name if it doesn't match the real identity and examiner is close enough to read the id card. Also used for PDAs
+                    if (id.Comp.FullName != Identity.Name(target, EntityManager, player) && !string.IsNullOrWhiteSpace(id.Comp.FullName) && IsInDetailsRange(player, target))
+                    {
+                        if (iComp != null)   //For mobs
+                            postFixes.Add(Loc.GetString("examinable-impersonating-id-name", ("idname", id.Comp.FullName)));
+                        else   //For PDAs
+                            postFixes.Add(id.Comp.FullName);
+                    }
+
+                    //Display job even if far away (the examiner can tell the job from a distance by the color of the id)
+                    if (!string.IsNullOrWhiteSpace(id.Comp.JobTitle))
+                        postFixes.Add(id.Comp.JobTitle);
+
+                    if (postFixes.Count > 0)
+                    {
+                        postFixStr = string.Join(", ", postFixes);
+                        postFixStr = $" ({postFixStr})";
+                    }
+                }
+
                 var itemName = FormattedMessage.EscapeText(Identity.Name(target, EntityManager, player));
-                var labelMessage = FormattedMessage.FromMarkupPermissive($"[bold]{itemName}[/bold]");
+                var labelMessage = FormattedMessage.FromMarkupPermissive($"[bold]{itemName}[/bold]" + postFixStr);
                 var label = new RichTextLabel();
                 label.SetMessage(labelMessage);
                 hBox.AddChild(label);
