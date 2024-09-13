@@ -435,23 +435,6 @@
     - DrinkShaker
     - BorgDropper
 
-# service modules
-- type: entity
-  id: BorgModuleBartending
-  parent: [ BaseBorgModuleService, BaseProviderBorgModule ]
-  name: bartending cyborg module
-  components:
-  - type: Sprite
-    layers:
-    - state: service
-    - state: icon-pen
-  - type: ItemBorgModule
-    items:
-    - DrinkShaker
-    - DrinkJigger
-    - BarSpoon
-    - BorgDropper
-
 - type: entity
   id: BorgModuleMusique
   parent: [ BaseBorgModuleService, BaseProviderBorgModule ]
