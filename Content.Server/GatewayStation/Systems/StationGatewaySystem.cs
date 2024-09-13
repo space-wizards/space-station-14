@@ -1,9 +1,12 @@
+using Content.Server.Audio;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.GatewayStation.Components;
+using Content.Shared.Audio;
 using Content.Shared.GatewayStation;
 using Content.Shared.Pinpointer;
 using Content.Shared.Teleportation.Systems;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 
 namespace Content.Server.GatewayStation.Systems;
@@ -12,6 +15,8 @@ public sealed class StationGatewaySystem : EntitySystem
 {
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly LinkedEntitySystem _link = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly AmbientSoundSystem _ambient = default!;
     public override void Initialize()
     {
         base.Initialize();
@@ -22,7 +27,7 @@ public sealed class StationGatewaySystem : EntitySystem
 
         SubscribeLocalEvent<StationGatewayConsoleComponent, StationGatewayGateClickMessage>(OnUIGateClicked);
 
-        SubscribeLocalEvent<StationGatewayComponent, MapInitEvent>(OnGatewayMapInit);
+        SubscribeLocalEvent<StationGatewayComponent, LinkedEntityChangedEvent>(OnLinkedChanged);
     }
 
     private void OnUIGateClicked(Entity<StationGatewayConsoleComponent> ent, ref StationGatewayGateClickMessage args)
@@ -31,6 +36,7 @@ public sealed class StationGatewaySystem : EntitySystem
 
         if (gate is null)
             return;
+
 
         //TODO error sounds
 
@@ -55,10 +61,16 @@ public sealed class StationGatewaySystem : EntitySystem
         UpdateUserInterface(ent);
     }
 
-
-    private void OnGatewayMapInit(Entity<StationGatewayComponent> ent, ref MapInitEvent args)
+    private void OnLinkedChanged(Entity<StationGatewayComponent> ent, ref LinkedEntityChangedEvent args)
     {
-
+        if (args.NewLinks.Count > 0)
+        {
+            _ambient.SetAmbience(ent, true);
+        }
+        else
+        {
+            _ambient.SetAmbience(ent, false);
+        }
     }
 
     private void OnRemove(Entity<StationGatewayConsoleComponent> ent, ref ComponentRemove args)

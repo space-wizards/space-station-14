@@ -84,8 +84,6 @@
     radius: 3
     energy: 1
     netsync: false
-  - type: StationGateway #TEST, TODO delete
-    gateName: Blue
 
 - type: entity
   id: PortalGatewayOrange
@@ -102,9 +100,6 @@
     radius: 3
     energy: 1
     netsync: false
-  - type: StationGateway #TEST, TODO delete
-    gateName: Orange
-  - type: Portal
 
 - type: entity
   id: ShadowPortal
