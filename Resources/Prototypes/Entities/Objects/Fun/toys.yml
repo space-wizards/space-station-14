@@ -56,7 +56,7 @@
 - type: entity
   parent: BasePlushie
   id: PlushieThrongler
-  name: The Throngler plushie
+  name: throngler plushie
   description: A stuffed toy to remind cargo techs of what they can no longer have.
   components:
     - type: Sprite

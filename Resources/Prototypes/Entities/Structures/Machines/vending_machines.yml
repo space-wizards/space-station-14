@@ -5,6 +5,7 @@
   description: Just add capitalism!
   abstract: true
   components:
+  - type: StationAiWhitelist
   - type: AmbientOnPowered
   - type: AmbientSound
     volume: -9

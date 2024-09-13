@@ -5,6 +5,7 @@
     Slash: 0.5
     Piercing: 0.7
     Shock: 1.2
+    Structural: 0.5
   flatReductions:
     Blunt: 5
     Heat: 5
@@ -66,6 +67,7 @@
     Piercing: 0.7
     Shock: 2
     Heat: 3
+    Structural: 0.5
 
 # Like metallic, but without flat reduction so it can be damaged with fists.
 - type: damageModifierSet
@@ -98,6 +100,7 @@
     Piercing: 2.0
     Heat: 0.5
     Shock: 0
+    Structural: 0.25
   flatReductions:
     Blunt: 5
 
@@ -138,6 +141,7 @@
     Slash: 2.0
     Piercing: 1.0
     Heat: 2.0
+    Structural: 0.5
   flatReductions:
     Blunt: 5
 
