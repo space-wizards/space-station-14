@@ -750,7 +750,7 @@
   parent: ClothingHeadBase
   id: ClothingHeadHatHoodVoidCloak
   name: void cloak hood
-  description: A hood of a void cloak. For those who have gone to the dark side of the force..
+  description: The hood of a void cloak. For those who have gone to the dark side of the force.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hoods/voidcloak.rsi
