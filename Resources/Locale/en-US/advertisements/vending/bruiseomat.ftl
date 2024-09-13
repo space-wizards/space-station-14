@@ -38,3 +38,4 @@ thankyou-bruiseomat-22 = 5 telecrystal says you won't make it to the shuttle bef
 thankyou-bruiseomat-23 = The soda fountain's over there. Lightweight.
 thankyou-bruiseomat-24 = Did you spend your TC on cat ears?
 thankyou-bruiseomat-25 = Really? That's what you wanted to drink?
+thankyou-bruiseomat-26 = Take a shot, give a shot!
