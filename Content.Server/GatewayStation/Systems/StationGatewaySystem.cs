@@ -34,14 +34,25 @@ public sealed class StationGatewaySystem : EntitySystem
 
         //TODO error sounds
 
-        if (_link.GetLink(gate.Value, out var linkedGate))
+        if (_link.GetLink(gate.Value, out var linkedGate)) //If the pressed gateway is linked to another - cut this connection.
         {
             _link.TryUnlink(gate.Value, linkedGate.Value);
-            UpdateUserInterface(ent);
-            return;
         }
-
+        else //If the pressed gateway is not connected to anything...
+        {
+            if (ent.Comp.SelectedGate is null) //And the console doesn't have Gateway selected - select it.
+            {
+                ent.Comp.SelectedGate = gate;
+            }
+            else // And we have a selected gateway - tie them together.
+            {
+                _link.TryLink(gate.Value, ent.Comp.SelectedGate.Value);
+                ent.Comp.SelectedGate = null;
+            }
+        }
+        UpdateUserInterface(ent);
     }
+
 
     private void OnGatewayMapInit(Entity<StationGatewayComponent> ent, ref MapInitEvent args)
     {

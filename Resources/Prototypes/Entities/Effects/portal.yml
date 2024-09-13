@@ -104,6 +104,7 @@
     netsync: false
   - type: StationGateway #TEST, TODO delete
     gateName: Orange
+  - type: Portal
 
 - type: entity
   id: ShadowPortal
