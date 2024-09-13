@@ -4,6 +4,7 @@ using Content.Server.GatewayStation.Components;
 using Content.Shared.Audio;
 using Content.Shared.GatewayStation;
 using Content.Shared.Pinpointer;
+using Content.Shared.Power;
 using Content.Shared.Teleportation.Systems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
@@ -28,6 +29,7 @@ public sealed class StationGatewaySystem : EntitySystem
         SubscribeLocalEvent<StationGatewayConsoleComponent, StationGatewayGateClickMessage>(OnUIGateClicked);
 
         SubscribeLocalEvent<StationGatewayComponent, LinkedEntityChangedEvent>(OnLinkedChanged);
+        SubscribeLocalEvent<StationGatewayComponent, PowerChangedEvent>(OnPowerChanged);
     }
 
     private void OnUIGateClicked(Entity<StationGatewayConsoleComponent> ent, ref StationGatewayGateClickMessage args)
@@ -66,11 +68,18 @@ public sealed class StationGatewaySystem : EntitySystem
         if (args.NewLinks.Count > 0)
         {
             _ambient.SetAmbience(ent, true);
+            _audio.PlayPvs(ent.Comp.LinkSound, ent);
         }
         else
         {
             _ambient.SetAmbience(ent, false);
+            _audio.PlayPvs(ent.Comp.UnlinkSound, ent);
         }
+    }
+
+    private void OnPowerChanged(Entity<StationGatewayComponent> ent, ref PowerChangedEvent args)
+    {
+        throw new NotImplementedException();
     }
 
     private void OnRemove(Entity<StationGatewayConsoleComponent> ent, ref ComponentRemove args)
