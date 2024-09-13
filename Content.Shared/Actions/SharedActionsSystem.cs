@@ -73,36 +73,31 @@ public abstract class SharedActionsSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        // All of this is extremely expensive, please make sure it's not active conssistently
-
         var worldActionQuery = EntityQueryEnumerator<WorldTargetActionComponent>();
         while (worldActionQuery.MoveNext(out var uid, out var action))
         {
-            if (IsCooldownActive(action) || !ShouldResetCharges(uid, action))
+            if (IsCooldownActive(action) || !ShouldResetCharges(action))
                 return;
 
-            UpdateAction(uid, action);
-            Dirty(uid, action);
+            ResetCharges(uid, dirty: true);
         }
 
         var instantActionQuery = EntityQueryEnumerator<InstantActionComponent>();
         while (instantActionQuery.MoveNext(out var uid, out var action))
         {
-            if (IsCooldownActive(action) || !ShouldResetCharges(uid, action))
+            if (IsCooldownActive(action) || !ShouldResetCharges(action))
                 return;
 
-            UpdateAction(uid, action);
-            Dirty(uid, action);
+            ResetCharges(uid, dirty: true);
         }
 
         var entityActionQuery = EntityQueryEnumerator<EntityTargetActionComponent>();
         while (entityActionQuery.MoveNext(out var uid, out var action))
         {
-            if (IsCooldownActive(action) || !ShouldResetCharges(uid, action))
+            if (IsCooldownActive(action) || !ShouldResetCharges(action))
                 return;
 
-            UpdateAction(uid, action);
-            Dirty(uid, action);
+            ResetCharges(uid, dirty: true);
         }
     }
 
@@ -289,10 +284,6 @@ public abstract class SharedActionsSystem : EntitySystem
     public virtual void UpdateAction(EntityUid? actionId, BaseActionComponent? action = null)
     {
         // See client-side code.
-        if (!ResolveActionData(actionId, ref action))
-            return;
-
-        action.IconColor = action.Charges < 1 ? action.DisabledIconColor : action.OriginalIconColor;
     }
 
     public void SetToggled(EntityUid? actionId, bool toggled)
@@ -369,14 +360,18 @@ public abstract class SharedActionsSystem : EntitySystem
         Dirty(actionId.Value, action);
     }
 
-    public void ResetCharges(EntityUid? actionId)
+    public void ResetCharges(EntityUid? actionId, bool update = false, bool dirty = false)
     {
         if (!TryGetActionData(actionId, out var action))
             return;
 
         action.Charges = action.MaxCharges;
-        UpdateAction(actionId, action);
-        Dirty(actionId.Value, action);
+
+        if (update)
+            UpdateAction(actionId, action);
+
+        if (dirty)
+            Dirty(actionId.Value, action);
     }
 
     private void OnActionsGetState(EntityUid uid, ActionsComponent component, ref ComponentGetState args)
@@ -434,7 +429,7 @@ public abstract class SharedActionsSystem : EntitySystem
 
         // TODO: Replace with individual charge recovery when we have the visuals to aid it
         if (action is { Charges: < 1, RenewCharges: true })
-            ResetCharges(actionEnt);
+            ResetCharges(actionEnt, true, true);
 
         BaseActionEvent? performEvent = null;
 
@@ -1118,19 +1113,15 @@ public abstract class SharedActionsSystem : EntitySystem
     /// <summary>
     ///     Checks if the action has a cooldown and if it's still active
     /// </summary>
-    private bool IsCooldownActive(BaseActionComponent action, TimeSpan? curTime = null)
+    protected bool IsCooldownActive(BaseActionComponent action, TimeSpan? curTime = null)
     {
         curTime ??= GameTiming.CurTime;
         // TODO: Check for charge recovery timer
         return action.Cooldown.HasValue && action.Cooldown.Value.End > curTime;
     }
 
-    private bool ShouldResetCharges(EntityUid uid, BaseActionComponent action)
+    protected bool ShouldResetCharges(BaseActionComponent action)
     {
-        if (action is not { Charges: < 1, RenewCharges: true })
-            return false;
-
-        ResetCharges(uid);
-        return true;
+        return action is { Charges: < 1, RenewCharges: true };
     }
 }
