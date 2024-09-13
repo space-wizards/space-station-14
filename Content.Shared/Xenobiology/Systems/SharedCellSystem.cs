@@ -119,13 +119,11 @@ public abstract partial class SharedCellSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp))
             return;
 
-        // for loop is used to avoid problems with collection iterating
+        // while loop is used to avoid problems with collection iterating
         // and deleting its elements in same loop
-
-        // ReSharper disable once ForCanBeConvertedToForeach
-        for (var i = 0; i < ent.Comp.Cells.Count; i++)
+        while (ent.Comp.Cells.Count != 0)
         {
-            RemoveCell(ent, ent.Comp.Cells[i]);
+            RemoveCell(ent, ent.Comp.Cells[0]);
         }
     }
 
