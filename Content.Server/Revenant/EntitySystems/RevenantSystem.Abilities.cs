@@ -379,7 +379,7 @@ public sealed partial class RevenantSystem
         if (args.Handled)
             return;
 
-        if (comp.Essence > comp.AnimateCost && _revenantAnimated.TryAnimateObject(args.Target, comp.AnimateTime, (uid, comp)))
-            TryUseAbility(uid, comp, comp.AnimateCost, comp.AnimateDebuffs);
+        if (_revenantAnimated.CanAnimateObject(args.Target) && TryUseAbility(uid, comp, comp.AnimateCost, comp.AnimateDebuffs))
+            _revenantAnimated.TryAnimateObject(args.Target, comp.AnimateTime, (uid, comp));
     }
 }

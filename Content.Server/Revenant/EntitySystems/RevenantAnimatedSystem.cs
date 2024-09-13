@@ -21,11 +21,10 @@ using Content.Shared.Movement.Systems;
 using Robust.Shared.Player;
 using Content.Shared.Explosion.Components;
 using Content.Shared.Mind.Components;
-using System.Threading;
-using Timer = Robust.Shared.Timing.Timer;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Mobs;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Revenant.EntitySystems;
 
@@ -38,6 +37,7 @@ public sealed partial class RevenantAnimatedSystem : EntitySystem
     [Dependency] private readonly SharedGunSystem _gunSystem = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _moveSpeed = default!;
     [Dependency] private readonly MobThresholdSystem _thresholds = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
 
     public override void Initialize()
     {
@@ -46,6 +46,22 @@ public sealed partial class RevenantAnimatedSystem : EntitySystem
         SubscribeLocalEvent<RevenantAnimatedComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<RevenantAnimatedComponent, ComponentShutdown>(OnComponentShutdown);
         SubscribeLocalEvent<RevenantAnimatedComponent, MobStateChangedEvent>(OnMobStateChange);
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var enumerator = EntityQueryEnumerator<RevenantAnimatedComponent>();
+
+        while (enumerator.MoveNext(out var uid, out var animate))
+        {
+            if (animate.EndTime == null)
+                continue;
+
+            if (animate.EndTime <= _gameTiming.CurTime)
+                InanimateTarget(uid, animate);
+        }
     }
 
     private void OnComponentStartup(Entity<RevenantAnimatedComponent> ent, ref ComponentStartup _)
@@ -120,9 +136,6 @@ public sealed partial class RevenantAnimatedSystem : EntitySystem
         if (ent.Comp.LifeStage != ComponentLifeStage.Stopping)
             return;
 
-        ent.Comp.CancelToken.Cancel();
-        ent.Comp.CancelToken.Dispose();
-
         foreach (var comp in ent.Comp.AddedComponents)
         {
             if (comp.Deleted)
@@ -174,10 +187,9 @@ public sealed partial class RevenantAnimatedSystem : EntitySystem
         var animate = EnsureComp<RevenantAnimatedComponent>(target);
         animate.Revenant = revenant;
         if (duration != null)
-        {
-            animate.CancelToken = new CancellationTokenSource();
-            Timer.Spawn(duration.Value, () => InanimateTarget(target, animate), animate.CancelToken.Token);
-        }
+            animate.EndTime = _gameTiming.CurTime + duration.Value;
+        else if (revenant != null)
+            animate.EndTime = _gameTiming.CurTime + revenant.Value.Comp.AnimateTime;
 
         return true;
     }

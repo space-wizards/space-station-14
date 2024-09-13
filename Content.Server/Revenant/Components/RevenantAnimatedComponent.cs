@@ -7,6 +7,7 @@ namespace Content.Server.Revenant.Components;
 
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(RevenantAnimatedSystem))]
+[AutoGenerateComponentPause]
 public sealed partial class RevenantAnimatedComponent : Component
 {
     /// <summary>
@@ -21,5 +22,10 @@ public sealed partial class RevenantAnimatedComponent : Component
     /// </summary>
     public List<Component> AddedComponents = new();
 
-    public CancellationTokenSource CancelToken;
+    /// <summary>
+    /// When the item should become inanimate. If null,
+    /// the item never becomes inanimate.
+    /// </summary>
+    [AutoPausedField]
+    public TimeSpan? EndTime;
 }
