@@ -2,6 +2,8 @@ gateway-console-slot-name = Disk
 gateway-console-chip-already-recorded = Coordinates are already stored in this chip!
 gateway-console-chip-record = Coordinates saved!
 
+gateway-console-chip-examine-recorded = [color=#f5b942]Recorded coordinates: {$gate}[/color]
+
 # UI
 
 gateway-console-user-interface-title = Gateway control console

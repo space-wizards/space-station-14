@@ -13,6 +13,9 @@ public sealed partial class GatewayChipComponent : Component
     [DataField]
     public EntityUid? ConnectedGate;
 
+    [DataField]
+    public string ConnectedName = string.Empty;
+
     /// <summary>
     /// When initialized, it will attempt to contact a random gateway that has the same code. Can be used for pre-created gateways
     /// </summary>

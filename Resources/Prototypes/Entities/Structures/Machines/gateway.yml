@@ -131,6 +131,7 @@
   suffix: Salvage, Console Support
   components:
   - type: StationGateway
+    gateName: Salvage
     autoLinkKey: StationSalvage
   
 
@@ -140,5 +141,6 @@
   suffix: Medical, Console Support
   components:
   - type: StationGateway
+    gateName: Medical
     autoLinkKey: StationMedical
   

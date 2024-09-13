@@ -1,12 +1,12 @@
 using Content.Server.Audio;
 using Content.Server.GatewayStation.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Shared.Examine;
 using Content.Shared.GatewayStation;
 using Content.Shared.Interaction;
 using Content.Shared.Pinpointer;
 using Content.Shared.Popups;
 using Content.Shared.Power;
-using Content.Shared.Storage;
 using Content.Shared.Teleportation.Systems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
@@ -30,13 +30,19 @@ public sealed class StationGatewaySystem : EntitySystem
 
         SubscribeLocalEvent<StationGatewayConsoleComponent, BoundUIOpenedEvent>(OnUIOpened);
         SubscribeLocalEvent<StationGatewayConsoleComponent, StationGatewayGateClickMessage>(OnUIGateClicked);
-        SubscribeLocalEvent<StationGatewayConsoleComponent, ContainerAttemptEventBase>(OnContainerAttempt);
 
         SubscribeLocalEvent<StationGatewayComponent, LinkedEntityChangedEvent>(OnLinkedChanged);
         SubscribeLocalEvent<StationGatewayComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<StationGatewayComponent, InteractUsingEvent>(OnInteractUsing);
 
         SubscribeLocalEvent<GatewayChipComponent, MapInitEvent>(OnChipInit);
+        SubscribeLocalEvent<GatewayChipComponent, ExaminedEvent>(OnChipExamined);
+    }
+
+    private void OnChipExamined(Entity<GatewayChipComponent> ent, ref ExaminedEvent args)
+    {
+        if (ent.Comp.ConnectedGate is not null)
+            args.PushMarkup(Loc.GetString("gateway-console-chip-examine-recorded", ("gate", ent.Comp.ConnectedName)));
     }
 
     private void OnInteractUsing(Entity<StationGatewayComponent> ent, ref InteractUsingEvent args)
@@ -57,6 +63,7 @@ public sealed class StationGatewaySystem : EntitySystem
         }
 
         chip.ConnectedGate = ent;
+        chip.ConnectedName = ent.Comp.GateName;
         _popup.PopupEntity(Loc.GetString("gateway-console-chip-record"), ent, args.User);
         _audio.PlayPvs(chip.RecordSound, args.Used);
 
@@ -147,11 +154,6 @@ public sealed class StationGatewaySystem : EntitySystem
         UpdateUserInterface(ent);
     }
 
-    private void OnContainerAttempt(Entity<StationGatewayConsoleComponent> ent, ref ContainerAttemptEventBase args)
-    {
-        UpdateUserInterface(ent);
-    }
-
     private void UpdateUserInterface(Entity<StationGatewayConsoleComponent> ent)
     {
         if (!_uiSystem.IsUiOpen(ent.Owner, StationGatewayUIKey.Key))
@@ -165,6 +167,7 @@ public sealed class StationGatewaySystem : EntitySystem
 
         //Send data
         List<StationGatewayStatus> gatewaysData = new();
+        var cachedGates = new List<EntityUid>(); //Prevent UI gate dublication
 
         if (_container.TryGetContainer(ent, ent.Comp.ChipStorageName, out var container))
         {
@@ -179,6 +182,9 @@ public sealed class StationGatewaySystem : EntitySystem
                 if (!TryComp<StationGatewayComponent>(chipComp.ConnectedGate, out var gateway))
                     continue;
 
+                if (cachedGates.Contains(chipComp.ConnectedGate.Value))
+                    continue;
+
                 if (!_power.IsPowered(chipComp.ConnectedGate.Value))
                     continue;
 
@@ -186,6 +192,8 @@ public sealed class StationGatewaySystem : EntitySystem
                 EntityCoordinates? linkCoord = null;
                 if (linkedGateway is not null)
                     linkCoord = Transform(linkedGateway.Value).Coordinates;
+
+                cachedGates.Add(chipComp.ConnectedGate.Value);
 
                 gatewaysData.Add(
                     new(GetNetEntity(chipComp.ConnectedGate.Value),
@@ -209,6 +217,7 @@ public sealed class StationGatewaySystem : EntitySystem
                 continue;
 
             chip.Comp.ConnectedGate = uid;
+            chip.Comp.ConnectedName = gate.GateName;
             return;
         }
     }
