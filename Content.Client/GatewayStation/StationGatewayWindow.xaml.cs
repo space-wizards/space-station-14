@@ -61,6 +61,7 @@ public sealed partial class StationGatewayWindow : FancyWindow
 
         NoGatewayLabel.Visible = false;
 
+
         // Show all gateways
         foreach (var gate in gateways)
         {
@@ -166,6 +167,7 @@ public sealed partial class StationGatewayWindow : FancyWindow
         GatewaysTable.RemoveAllChildren();
         NavMap.TrackedCoordinates.Clear();
         NavMap.TrackedEntities.Clear();
+        NavMap.LinkLines.Clear();
     }
 
     private void UpdateGatewaysTable(NetEntity? currTrackedEntity, NetEntity? prevTrackedEntity)

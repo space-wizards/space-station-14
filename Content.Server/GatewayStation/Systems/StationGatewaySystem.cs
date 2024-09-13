@@ -80,7 +80,6 @@ public sealed class StationGatewaySystem : EntitySystem
                     GetNetCoordinates(linkCoord),
                     gate.GateName));
         }
-
         _uiSystem.SetUiState(ent.Owner, StationGatewayUIKey.Key, new StationGatewayState(gatewaysData));
     }
 }
