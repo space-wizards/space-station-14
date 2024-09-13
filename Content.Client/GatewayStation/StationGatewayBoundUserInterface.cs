@@ -1,4 +1,5 @@
 using Content.Shared.GatewayStation;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.GatewayStation;
 
@@ -26,11 +27,8 @@ public sealed class StationGatewayBoundUserInterface : BoundUserInterface
             }
         }
 
-        _menu = new StationGatewayWindow(this);
-        _menu.OpenCentered();
-        _menu.OnClose += Close;
-        //this.CreateWindow<StationGatewayWindow>();
-        _menu.Set(stationName, gridUid);
+        _menu = this.CreateWindow<StationGatewayWindow>();
+        _menu.Set(this, stationName, gridUid);
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
@@ -48,6 +46,6 @@ public sealed class StationGatewayBoundUserInterface : BoundUserInterface
 
     public void SendGatewayLinkChangeMessage(NetEntity? gate)
     {
-        SendMessage(new StationGatewayLinkChangeMessage(gate));
+        SendMessage(new StationGatewayGateClickMessage(gate));
     }
 }

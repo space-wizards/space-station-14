@@ -1,4 +1,3 @@
-using Content.Server.DeviceLinking.Systems;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.GatewayStation.Components;
 using Content.Shared.GatewayStation;
@@ -21,14 +20,27 @@ public sealed class StationGatewaySystem : EntitySystem
         SubscribeLocalEvent<StationGatewayConsoleComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
         SubscribeLocalEvent<StationGatewayConsoleComponent, BoundUIOpenedEvent>(OnUIOpened);
 
-        SubscribeLocalEvent<StationGatewayConsoleComponent, StationGatewayLinkChangeMessage>(OnUILinkChanged);
+        SubscribeLocalEvent<StationGatewayConsoleComponent, StationGatewayGateClickMessage>(OnUIGateClicked);
 
         SubscribeLocalEvent<StationGatewayComponent, MapInitEvent>(OnGatewayMapInit);
     }
 
-    private void OnUILinkChanged(Entity<StationGatewayConsoleComponent> ent, ref StationGatewayLinkChangeMessage args)
+    private void OnUIGateClicked(Entity<StationGatewayConsoleComponent> ent, ref StationGatewayGateClickMessage args)
     {
-        Log.Error("CLICK");
+        var gate = GetEntity(args.Gateway);
+
+        if (gate is null)
+            return;
+
+        //TODO error sounds
+
+        if (_link.GetLink(gate.Value, out var linkedGate))
+        {
+            _link.TryUnlink(gate.Value, linkedGate.Value);
+            UpdateUserInterface(ent);
+            return;
+        }
+
     }
 
     private void OnGatewayMapInit(Entity<StationGatewayComponent> ent, ref MapInitEvent args)

@@ -27,7 +27,7 @@ public sealed partial class StationGatewayWindow : FancyWindow
     private NetEntity? _trackedEntity;
     private Texture? _ringTexture;
 
-    public StationGatewayWindow(StationGatewayBoundUserInterface userInterface)
+    public StationGatewayWindow()
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
@@ -35,11 +35,9 @@ public sealed partial class StationGatewayWindow : FancyWindow
         _spriteSystem = _entManager.System<SpriteSystem>();
 
         NavMap.TrackedEntitySelectedAction += SetTrackedEntityFromNavMap;
-
-        SendGatewayLinkChangeAction += userInterface.SendGatewayLinkChangeMessage;
     }
 
-    public void Set(string stationName, EntityUid? mapUid)
+    public void Set(StationGatewayBoundUserInterface userInterface, string stationName, EntityUid? mapUid)
     {
         _ringTexture = _spriteSystem.Frame0(new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/NavMap/ring.png")));
 
@@ -51,6 +49,8 @@ public sealed partial class StationGatewayWindow : FancyWindow
         StationName.AddStyleClass("LabelBig");
         StationName.Text = stationName;
         NavMap.ForceNavMapUpdate();
+
+        SendGatewayLinkChangeAction += userInterface.SendGatewayLinkChangeMessage;
     }
 
     public void ShowGateways(List<StationGatewayStatus> gateways, EntityUid monitor, EntityCoordinates? monitorCoords)

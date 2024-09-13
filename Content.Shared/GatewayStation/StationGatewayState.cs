@@ -37,14 +37,14 @@ public sealed class StationGatewayStatus
 }
 
 [Serializable, NetSerializable]
-public sealed class StationGatewayLinkChangeMessage : BoundUserInterfaceMessage
+public sealed class StationGatewayGateClickMessage : BoundUserInterfaceMessage
 {
     public NetEntity? Gateway;
 
     /// <summary>
     /// TODO
     /// </summary>
-    public StationGatewayLinkChangeMessage(NetEntity? gateway)
+    public StationGatewayGateClickMessage(NetEntity? gateway)
     {
         Gateway = gateway;
     }
