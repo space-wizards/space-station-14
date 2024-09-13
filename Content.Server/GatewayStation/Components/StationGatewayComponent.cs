@@ -11,10 +11,10 @@ namespace Content.Server.GatewayStation.Components;
 public sealed partial class StationGatewayComponent : Component
 {
     /// <summary>
-    /// TODO
+    /// Public name of the gateway displayed in the UI
     /// </summary>
     [DataField]
-    public string GateName = string.Empty;
+    public string GateName = "Unknown Coordinates";
 
     /// <summary>
     /// The sound that plays at the portal when it connects to something

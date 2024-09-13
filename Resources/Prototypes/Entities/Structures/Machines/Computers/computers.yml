@@ -418,9 +418,26 @@
     key: enum.StationGatewayUIKey.Key
   - type: UserInterface
     interfaces:
-        enum.StationGatewayUIKey.Key:
-          type: StationGatewayBoundUserInterface
+      enum.StationGatewayUIKey.Key:
+        type: StationGatewayBoundUserInterface
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
   - type: StationGatewayConsole
+  - type: Storage
+    grid:
+    - 0,0,4,2
+    maxItemSize: Tiny
+    storageOpenSound: /Audio/Machines/door_lock_off.ogg
+    storageCloseSound: /Audio/Machines/door_lock_on.ogg
+    storageInsertSound: /Audio/Machines/id_insert.ogg
+    storageRemoveSound: /Audio/Machines/id_swipe.ogg
+    whitelist:
+      tags:
+      - GatewayChip
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: [ ]
 
 - type: entity
   parent: BaseComputer
