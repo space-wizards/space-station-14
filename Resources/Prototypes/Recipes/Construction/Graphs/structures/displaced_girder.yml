@@ -12,8 +12,6 @@
             - material: Steel
               amount: 2
               doAfter: 1
-            - tool: Prying
-              doAfter: 2
 
     - node: displacedGirder
       entity: DisplacedGirder
@@ -32,6 +30,8 @@
           conditions:
             - !type:EntityAnchored {}
           steps:
+            - tool: Prying
+              doAfter: 3
             - material: Steel
               amount: 2
               doAfter: 3
