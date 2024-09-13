@@ -124,6 +124,12 @@
       name: ghost-role-information-holoparasite-name
       description: ghost-role-information-holoparasite-description
       rules: ghost-role-information-familiar-rules
+      requirements:
+      - !type:OverallPlaytimeRequirement
+        time: 36000 #10 hours
+      - !type:DepartmentTimeRequirement
+        department: Security
+        time: 18000 #5 hours
       raffle:
         settings: default
     - type: GhostTakeoverAvailable
@@ -157,6 +163,12 @@
       name: ghost-role-information-ifrit-name
       description: ghost-role-information-ifrit-description
       rules: ghost-role-information-familiar-rules
+      requirements:
+      - !type:OverallPlaytimeRequirement
+        time: 36000 #10 hours
+      - !type:DepartmentTimeRequirement
+        department: Security
+        time: 18000 #5 hours
       raffle:
         settings: default
     - type: GhostTakeoverAvailable
@@ -186,6 +198,12 @@
       name: ghost-role-information-holoclown-name
       description: ghost-role-information-holoclown-description
       rules: ghost-role-information-familiar-rules
+      requirements:
+      - !type:OverallPlaytimeRequirement
+        time: 36000 #10 hours
+      - !type:DepartmentTimeRequirement
+        department: Security
+        time: 18000 #5 hours
       raffle:
         settings: default
     - type: GhostTakeoverAvailable
