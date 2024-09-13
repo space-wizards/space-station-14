@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ArkiveDev
-  changes:
-  - message: Railings can now be constructed in all 4 orientations.
-    type: Fix
-  id: 6865
-  time: '2024-07-03T16:59:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29687
 - author: Rinary
   changes:
   - message: Fixed radial menus overlapping where there's many icons.
@@ -3918,3 +3911,11 @@
   id: 7364
   time: '2024-09-13T14:02:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/27624
+- author: ShadowCommander
+  changes:
+  - message: Fixed PDA sometimes showing uplink and music buttons when the PDA was
+      not able to use them.
+    type: Fix
+  id: 7365
+  time: '2024-09-13T14:19:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28373
