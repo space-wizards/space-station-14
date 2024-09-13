@@ -10,6 +10,7 @@
   - type: Handcuff
     cuffedRSI: Objects/Misc/handcuffs.rsi
     bodyIconState: body-overlay
+  - type: DoAfter
   - type: Sprite
     sprite: Objects/Misc/handcuffs.rsi
     state: handcuff
@@ -53,6 +54,7 @@
       path: /Audio/Items/Handcuffs/rope_breakout.ogg
     startBreakoutSound:
       path: /Audio/Items/Handcuffs/rope_takeoff.ogg
+  - type: DoAfter
   - type: Construction
     graph: makeshifthandcuffs
     node: cuffscable
@@ -94,6 +96,7 @@
       path: /Audio/Items/Handcuffs/rope_breakout.ogg
     startBreakoutSound:
       path: /Audio/Items/Handcuffs/rope_takeoff.ogg
+  - type: DoAfter
   - type: Sprite
     sprite: Objects/Misc/zipties.rsi
     state: cuff
@@ -149,6 +152,7 @@
   components:
   - type: Item
     size: Normal
+  - type: DoAfter
   - type: Handcuff
     cuffedRSI: Clothing/OuterClothing/Misc/straight_jacket.rsi
     breakoutTime: 100

@@ -46,9 +46,6 @@ public sealed class RevenantAnimatedSystem : EntitySystem
     private void OnShutdown(EntityUid uid, RevenantAnimatedComponent comp, ComponentShutdown args)
     {
         if (comp.LightOverlay != null)
-        {
             Del(comp.LightOverlay);
-            return;
-        }
     }
 }

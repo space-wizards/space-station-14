@@ -404,11 +404,6 @@ public sealed partial class RevenantSystem
         if (HasComp<MindContainerComponent>(target) || HasComp<HTNComponent>(target))
             return;
 
-        // TODO: Make animated handcuffs cuff people and then go inanimate
-        // Disabling them for now because it causes a ton of errors.
-        if (HasComp<HandcuffComponent>(target))
-            return;
-
         if (revenant != null && !TryUseAbility(revenant.Value.Owner, revenant.Value.Comp, revenant.Value.Comp.AnimateCost, revenant.Value.Comp.AnimateDebuffs))
             return;
 
@@ -448,6 +443,8 @@ public sealed partial class RevenantSystem
         _factionSystem.ClearFactions((target, factions));
         _factionSystem.AddFaction((target, factions), "SimpleHostile");
 
+        EnsureComp<DoAfterComponent>(target);
+
         var htn = EnsureComp<HTNComponent>(target);
         if (TryComp<GunComponent>(target, out var gun))
         {
@@ -455,6 +452,8 @@ public sealed partial class RevenantSystem
                 _gunSystem.SetBoltClosed(target, bolt, true);
             htn.RootTask = new HTNCompoundTask() { Task = "SimpleRangedHostileCompound" };
         }
+        else if (TryComp<HandcuffComponent>(target, out var handcuff))
+            htn.RootTask = new HTNCompoundTask() { Task = "AnimatedHandcuffsCompound" };
         else
             htn.RootTask = new HTNCompoundTask() { Task = "SimpleHostileCompound" };
         htn.Blackboard.SetValue(NPCBlackboard.Owner, target);
