@@ -1,0 +1,67 @@
+﻿- type: constructionGraph
+  id: GasPipeSensor
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: assembly
+          completed:
+          - !type:SnapToGrid {}
+          - !type:SetAnchor {}
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 1
+
+    - node: assembly
+      entity: GasPipeSensorAssembly
+      actions:
+      - !type:SnapToGrid {}
+      - !type:SetAnchor {}
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 2
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Screwing
+              doAfter: 2
+
+        - to: wiredAssembly
+          conditions:
+          - !type:EntityAnchored {}
+          steps:
+            - material: Cable
+              amount: 2
+              doAfter: 1
+
+    - node: wiredAssembly
+      edges:
+        - to: assembly
+          completed:
+            - !type:GivePrototype
+              prototype: CableApcStack1
+              amount: 2
+          steps:
+            - tool: Cutting
+              doAfter: 1
+
+        - to: gasPipeSensor
+          conditions:
+          - !type:EntityAnchored {}
+          steps:
+            - tool: Screwing
+              doAfter: 2
+              
+    - node: gasPipeSensor   
+      entity: GasPipeSensor
+      completed:
+      - !type:SnapToGrid {}
+      - !type:SetAnchor {}
+      edges:
+        - to: wiredAssembly
+          steps:
+            - tool: Screwing
+              doAfter: 2

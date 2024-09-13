@@ -2,7 +2,7 @@
   parent: BaseItem
   id: GasPipeSensor
   name: gas pipe sensor
-  description: A device that reports on the characteristics of the gas in the attached pipe network. 
+  description: Reports on the status of the gas in the attached pipe network. 
   placement:
     mode: SnapgridCenter
   suffix: General
@@ -49,6 +49,9 @@
     bodyType: static
   - type: Transform
     anchored: true
+  - type: Construction
+    graph: GasPipeSensor
+    node: gasPipeSensor  
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -79,3 +82,22 @@
           acts: ["Breakage"]
   - type: StaticPrice
     price: 25
+    
+- type: entity
+  parent: BaseItem
+  id: GasPipeSensorAssembly
+  name: gas pipe sensor assembly
+  description: When assembled, this device will report on the characteristics of the gas in the attached pipe network. 
+  components:
+    - type: Item
+      size: Small
+    - type: Anchorable
+    - type: Construction
+      graph: GasPipeSensor
+      node: assembly
+    - type: Sprite
+      sprite: Structures/Specific/Atmospherics/gas_pipe_sensor.rsi
+      drawdepth: BelowFloor
+      layers:
+      - map: ["base"]
+        state: base

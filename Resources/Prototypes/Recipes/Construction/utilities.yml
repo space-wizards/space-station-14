@@ -365,6 +365,21 @@
   placementMode: SnapgridCenter
   objectType: Structure
   canRotate: true
+  
+- type: construction
+  name: gas pipe sensor sensor
+  id: GasPipeSensor
+  graph: GasPipeSensor
+  startNode: start
+  targetNode: gasPipeSensor
+  category: construction-category-structures
+  description: Reports on the status of the gas within the attached pipe network. 
+  icon:
+    sprite: Structures/Specific/Atmospherics/gas_pipe_sensor.rsi
+    state: icon
+  placementMode: SnapgridCenter
+  objectType: Structure
+  canRotate: true
 
 # ATMOS PIPES
 - type: construction
