@@ -4,6 +4,13 @@
   antagonist: true
   setPreference: true
   objective: roles-antag-rev-head-objective
+  requirements:
+  - !type:DepartmentTimeRequirement
+  department: Security
+  time: 36000 # 10 hrs
+  - !type:DepartmentTimeRequirement
+  department: Command
+  time: 36000 # 10 hours
   guides: [ Revolutionaries ]
 
 - type: antag
