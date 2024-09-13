@@ -75,6 +75,21 @@ public sealed class AtmosMonitoringConsoleSystem : EntitySystem
     private void OnFocusChangedMessage(EntityUid uid, AtmosMonitoringConsoleComponent component, AtmosMonitoringConsoleFocusChangeMessage args)
     {
         component.FocusDevice = EntityManager.GetEntity(args.FocusDevice);
+
+        var xform = Transform(uid);
+        TryComp<MapGridComponent>(xform.GridUid, out var mapGrid);
+
+        if (component.FocusDevice == null || mapGrid == null)
+        {
+            component.FocusNetId = null;
+        }
+
+        else if (TryGettingFirstPipeNode(component.FocusDevice.Value, Transform(component.FocusDevice.Value), mapGrid, out var pipeNode, out var netId))
+        {
+            component.FocusNetId = netId;
+        }
+
+        Dirty(uid, component);
     }
 
     private void OnGridSplit(ref GridSplitEvent args)
@@ -216,14 +231,6 @@ public sealed class AtmosMonitoringConsoleSystem : EntitySystem
 
             if (entry != null)
                 atmosNetworks.Add(entry.Value);
-        }
-
-        if (component.FocusDevice != null &&
-            TryGettingFirstPipeNode(component.FocusDevice.Value, Transform(component.FocusDevice.Value), mapGrid, out var pipeNode, out var netId) &&
-            netId != component.FocusNetId)
-        {
-            component.FocusNetId = netId;
-            Dirty(uid, component);
         }
 
         // Set the UI state

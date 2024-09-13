@@ -672,6 +672,9 @@ public partial class NavMapControl : MapGridControl
         Vector2i foundTermius;
         Vector2i foundOrigin;
 
+        if (origin == terminus)
+            return;
+
         // Does our new line end at the beginning of an existing line?
         if (lookup.Remove(terminus, out foundTermius))
         {
