@@ -205,7 +205,7 @@
   - type: WiresPanel
     open: false
 
- - type: entity
+- type: entity
   id: BaseIntercomSecure
   parent: Intercom
   abstract: true
