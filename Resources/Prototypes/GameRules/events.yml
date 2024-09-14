@@ -538,6 +538,9 @@
     - id: ImmovableRodGibstick
       prob: 0.0072
       orGroup: rodProto
+    - id: ImmovableRodFinFin
+      prob: 0.0072
+      orGroup: rodProto
 
 - type: entity
   parent: BaseGameRule
