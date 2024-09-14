@@ -125,6 +125,8 @@
     weight: 3
     duration: 1
   - type: BureaucraticErrorRule
+    ignoredJobs:
+    - StationAi
 
 - type: entity
   id: ClericalError
@@ -157,9 +159,12 @@
     earliestStart: 40
     reoccurrenceDelay: 20
     minimumPlayers: 20
-  - type: AntagRandomSpawn
+    duration: null
+  - type: SpaceSpawnRule
+    spawnDistance: 0
   - type: AntagSpawner
     prototype: MobDragon
+  - type: DragonRule
   - type: AntagObjectives
     objectives:
     - CarpRiftsObjective
@@ -174,8 +179,6 @@
       mindComponents:
       - type: DragonRole
         prototype: Dragon
-      - type: RoleBriefing
-        briefing: dragon-role-briefing
 
 - type: entity
   parent: BaseGameRule
