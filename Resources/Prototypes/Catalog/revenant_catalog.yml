@@ -62,3 +62,16 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
+
+- type: listing
+  id: RevenantAnimate
+  name: revenant-animate-name
+  description: revenant-animate-desc
+  productAction: ActionRevenantAnimate
+  cost:
+    StolenEssence: 30
+  categories:
+  - RevenantAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1

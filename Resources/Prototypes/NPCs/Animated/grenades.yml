@@ -1,0 +1,43 @@
+- type: htnCompound
+  id: AnimatedGrenadeCompound
+  branches:
+    # Try and find an entity with pockets, jump into the pockets and activate self.
+    - preconditions:
+        - !type:InContainerPrecondition
+          isInContainer: false
+        - !type:ThrownPrecondition
+          isBeingThrown: false
+      tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:UtilityOperator
+            proto: NearbyMeleeTargets
+        
+        - !type:HTNPrimitiveTask
+          operator: !type:MoveToOperator
+            pathfindInPlanning: true
+            removeKeyOnFinish: false
+            targetKey: TargetCoordinates
+            pathfindKey: TargetPathfind
+            rangeKey: MovementRangeClose
+        
+        - !type:HTNPrimitiveTask
+          preconditions:
+            - !type:KeyExistsPrecondition
+              key: Target
+            - !type:TargetInRangePrecondition
+              targetKey: Target
+              rangeKey: MeleeRange
+          operator: !type:JumpInSlotsOperator
+            ignoreFail: true
+        
+        - !type:PrimitiveTask
+          preconditions:
+            - !type:KeyExistsPrecondition
+              key: Target
+            - !type:TargetInRangePrecondition
+              targetKey: Target
+              rangeKey: MeleeRange
+          operator: !type:InteractionActivateSelfOperator
+    - tasks:
+        - !type:HTNCompoundTask
+          task: IdleCompound

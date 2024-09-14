@@ -47,6 +47,7 @@ public sealed partial class RevenantSystem
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+    [Dependency] private readonly RevenantAnimatedSystem _revenantAnimated = default!;
 
     private void InitializeAbilities()
     {
@@ -59,6 +60,7 @@ public sealed partial class RevenantSystem
         SubscribeLocalEvent<RevenantComponent, RevenantBlightActionEvent>(OnBlightAction);
         SubscribeLocalEvent<RevenantComponent, RevenantMalfunctionActionEvent>(OnMalfunctionAction);
         SubscribeLocalEvent<RevenantComponent, RevenantBloodWritingEvent>(OnBloodWritingAction);
+        SubscribeLocalEvent<RevenantComponent, RevenantAnimateEvent>(OnAnimateAction);
     }
 
     private void OnInteract(EntityUid uid, RevenantComponent component, UserActivateInWorldEvent args)
@@ -370,5 +372,14 @@ public sealed partial class RevenantSystem
             _handsSystem.DoPickup(uid, hands.Hands["crayon"], crayon);
             EnsureComp<UnremoveableComponent>(crayon);
         }
+    }
+
+    private void OnAnimateAction(EntityUid uid, RevenantComponent comp, RevenantAnimateEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        if (_revenantAnimated.CanAnimateObject(args.Target) && TryUseAbility(uid, comp, comp.AnimateCost, comp.AnimateDebuffs))
+            _revenantAnimated.TryAnimateObject(args.Target, comp.AnimateTime, (uid, comp));
     }
 }

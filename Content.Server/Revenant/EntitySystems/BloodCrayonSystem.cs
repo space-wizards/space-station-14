@@ -26,7 +26,7 @@ public sealed class BloodCrayonSystem : EntitySystem
         if (!TryComp<RevenantComponent>(args.User, out var revenant))
             return;
 
-        if (!_revenant.ChangeEssenceAmount(args.User, revenant.BloodWritingCost, allowDeath: false))
+        if (!_revenant.ChangeEssenceAmount(args.User, -revenant.BloodWritingCost, allowDeath: false))
         {
             _popup.PopupEntity(Loc.GetString("revenant-not-enough-essence"), uid, args.User);
             args.Handled = true;
