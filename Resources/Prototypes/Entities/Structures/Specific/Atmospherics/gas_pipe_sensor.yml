@@ -10,24 +10,18 @@
     sprite: Structures/Specific/Atmospherics/gas_pipe_sensor.rsi
     drawdepth: BelowFloor
     layers:
-    - map: ["base"]
-      state: base
-    - map: ["enum.GasPipeSensorVisuals.Lights"]
-      state: lights
-      shader: unshaded
-    - map: ["enum.GasPipeSensorVisuals.Blink"]
-      state: blink
+    - state: base
+    - state: lights
+      map: ["enum.GasPipeSensorVisuals.Lights"]
+      visible: false
       shader: unshaded
   - type: Appearance
   - type: GenericVisualizer
     visuals:
       enum.GasPipeSensorVisuals.State:
         enum.GasPipeSensorVisuals.Lights:
-          True: { visible: true, shader: unshaded }
-          False: { visible: false }
-        enum.GasPipeSensorVisuals.Blink:
-          True: { visible: true, shader: unshaded }
-          False: { visible: false }
+          True: {visible: true}
+          False: {visible: false}
   - type: GasPipeSensor
   - type: AtmosMonitoringConsoleDevice
     group: GasPipeSensor

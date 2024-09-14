@@ -13,7 +13,6 @@ public sealed partial class GasPipeSensorComponent : Component
 public enum GasPipeSensorVisuals : byte
 {
     State,
-    Lights,
-    Blink,
+    Lights
 }
 
