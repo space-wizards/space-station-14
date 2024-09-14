@@ -88,6 +88,9 @@ public sealed class MutationSystem : EntitySystem
         CrossGasses(ref result.ExudeGasses, a.ExudeGasses);
         CrossGasses(ref result.ConsumeGasses, a.ConsumeGasses);
 
+        // LINQ Explanation
+        // For the list of mutation effects on both plants, use a 50% chance to pick each one.
+        // Union all of the chosen mutations into one list, and pick ones with a Distinct (unique) name.
         result.Mutations = result.Mutations.Where(m => Random(0.5f)).Union(a.Mutations.Where(m => Random(0.5f))).DistinctBy(m => m.Name).ToList();
 
         // Hybrids have a high chance of being seedless. Balances very
