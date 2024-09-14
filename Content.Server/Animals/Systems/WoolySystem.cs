@@ -23,8 +23,7 @@ public sealed class WoolySystem : EntitySystem
     [Dependency] private readonly HungerSystem _hunger = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _sharedSolutionContainer = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
@@ -102,7 +101,7 @@ public sealed class WoolySystem : EntitySystem
         Solution? solution;
         if (sol == null)
         {
-            _sharedSolutionContainer.ResolveSolution(
+            _solutionContainer.ResolveSolution(
                 ent.Owner,
                 ent.Comp.SolutionName,
                 ref ent.Comp.Solution,
