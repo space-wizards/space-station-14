@@ -14,8 +14,6 @@
     sprite: Clothing/Shoes/Boots/magboots.rsi
   - type: ToggleClothing
     action: ActionToggleMagboots
-  - type: ToggleVerb
-    text: toggle-magboots-verb-get-data-text
   - type: ComponentToggler
     components:
     - type: NoSlip
