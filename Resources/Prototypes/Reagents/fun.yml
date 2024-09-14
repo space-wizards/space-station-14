@@ -417,3 +417,18 @@
         type: Remove
   tileReactions:
     - !type:SpillTileReaction
+
+    # These two dont actually do anything, theyre just here for rp
+- type: reagent
+  id: Estradiol
+  name: reagent-name-estradiol
+  desc: reagent-desc-estradiol
+  physicalDesc: reagent-physical-desc-clear
+  color: "pink"
+  
+- type: reagent
+  id: Testosterone
+  name: reagent-name-testosterone
+  desc: reagent-desc-testosterone
+  physicalDesc: reagent-physical-desc-chalky
+  color: "#267ef0"

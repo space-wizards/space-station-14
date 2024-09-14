@@ -101,7 +101,7 @@
   id: Hydroxide
   name: reagent-name-hydroxide
   desc: reagent-desc-hydroxide
-  physicalDesc: reagent-physical-desc-alkaline
+  physicalDesc: reagent-physical-desc-clear
   color: "white"
   boilingPoint: 1661.0
   meltingPoint: 596.0
