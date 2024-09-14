@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: PJB3005
-  changes:
-  - message: Fixed flashlights and similar permanently getting stuck blinking.
-    type: Fix
-  id: 6872
-  time: '2024-07-04T08:02:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29457
 - author: Jezithyr
   changes:
   - message: All species except for Vox can now be played as Nukies. (Vox will be
@@ -3919,3 +3912,10 @@
   id: 7371
   time: '2024-09-14T15:56:57.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32152
+- author: eoineoineoin
+  changes:
+  - message: Ghosts can now read books.
+    type: Add
+  id: 7372
+  time: '2024-09-14T16:28:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32151
