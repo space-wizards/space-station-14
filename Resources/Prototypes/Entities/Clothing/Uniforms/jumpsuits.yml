@@ -83,12 +83,13 @@
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitSalvageSpecialist
   name: salvage specialist's jumpsuit
-  description: It's a snappy jumpsuit with a sturdy set of overalls. It's very dirty.
+  description: It's a snappy jumpsuit with a sturdy set of overalls and integrated GPS. It's very dirty.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/salvage.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/salvage.rsi
+  - type: HandheldGPS
 
 - type: entity
   parent: [ClothingUniformBase, BaseCommandContraband]
