@@ -1,0 +1,164 @@
+- files: ["Shuttles/AdminSpawn/ERT-Large-Base.yml"]
+  authors: TsjipTsjip, LuckyShotPictures, IProduceWidgets
+
+- files: ["Shuttles/AdminSpawn/ERT-Large-Med-Sec.yml"]
+  authors: TsjipTsjip, LuckyShotPictures, IProduceWidgets
+
+- files: ["Shuttles/AdminSpawn/ERT-Medium-Base.yml"]
+  authors: TsjipTsjip, LuckyShotPictures, IProduceWidgets
+
+- files: ["Shuttles/AdminSpawn/ERT-Medium-BasePlus.yml"]
+  authors: TsjipTsjip, LuckyShotPictures, IProduceWidgets
+
+- files: ["Shuttles/AdminSpawn/ERT-Medium-Eng-Jani.yml"]
+  authors: TsjipTsjip, LuckyShotPictures, IProduceWidgets
+
+- files: ["Shuttles/AdminSpawn/ERT-Medium-Med.yml"]
+  authors: TsjipTsjip, LuckyShotPictures, IProduceWidgets
+
+- files: ["Shuttles/AdminSpawn/ERT-Medium-Sec.yml"]
+  authors: TsjipTsjip, LuckyShotPictures, IProduceWidgets
+
+- files: ["Shuttles/AdminSpawn/ERT-Small-Base.yml"]
+  authors: TsjipTsjip, LuckyShotPictures, IProduceWidgets
+
+- files: ["Shuttles/AdminSpawn/ERT-Small-CBURN.yml"]
+  authors: TsjipTsjip, LuckyShotPictures, IProduceWidgets
+
+- files: ["Shuttles/AdminSpawn/ERT-Small-Deathsquad.yml"]
+  authors: TsjipTsjip, LuckyShotPictures, IProduceWidgets
+
+- files: ["Shuttles/AdminSpawn/ERT-Small-Eng.yml"]
+  authors: TsjipTsjip, LuckyShotPictures, IProduceWidgets
+
+- files: ["Shuttles/AdminSpawn/ERT-Small-Jani.yml"]
+  authors: TsjipTsjip, LuckyShotPictures, IProduceWidgets
+
+- files: ["Shuttles/AdminSpawn/ERT-Small-Med.yml"]
+  authors: TsjipTsjip, LuckyShotPictures, IProduceWidgets
+
+- files: ["Shuttles/AdminSpawn/ERT-Small-Sec.yml"]
+  authors: TsjipTsjip, LuckyShotPictures, IProduceWidgets
+
+- files: ["Shuttles/arrivals.yml"]
+  authors:
+
+- files: ["Shuttles/briggle.yml"]
+  authors: IProduceWidgets
+
+- files: ["Shuttles/cargo.yml"]
+  authors:
+
+- files: ["Shuttles/cargo_core.yml"]
+  authors:
+
+- files: ["Shuttles/cargo_fland.yml"]
+  authors:
+
+- files: ["Shuttles/dart.yml"]
+  authors:
+
+- files: ["Shuttles/emergency.yml"]
+  authors:
+
+- files: ["Shuttles/emergency_accordia.yml"]
+  authors: IProduceWidgets
+
+- files: ["Shuttles/emergency_box.yml"]
+  authors: 
+
+- files: ["Shuttles/emergency_cluster.yml"]
+  authors:
+
+- files: ["Shuttles/emergency_courser.yml"]
+  authors:
+
+- files: ["Shuttles/emergency_delta.yml"]
+  authors:
+
+- files: ["Shuttles/emergency_lox.yml"]
+  authors:
+
+- files: ["Shuttles/emergency_meta.yml"]
+  authors:
+
+- files: ["Shuttles/emergency_omega.yml"]
+  authors:
+
+- files: ["Shuttles/emergency_raven.yml"]
+  authors:
+
+- files: ["Shuttles/emergency_rod.yml"]
+  authors:
+
+- files: ["Shuttles/emergency_wode.yml"]
+  authors:
+
+- files: ["Shuttles/infiltrator.yml"]
+  authors: Emisse
+
+- files: ["Shuttles/mining.yml"]
+  authors:
+
+- files: ["Shuttles/pirate.yml"]
+  authors:
+
+- files: ["Shuttles/shittle.yml"]
+  authors:
+
+- files: ["Shuttles/trading_outpost.yml"]
+  authors:
+
+- files: ["Shuttles/wizard.yml"]
+  authors:
+
+- files: ["Shuttles/ShuttleEvent/cruiser.yml"]
+  authors: IProduceWidgets
+
+- files: ["Shuttles/ShuttleEvent/disaster_evacpod.yml"]
+  authors: TheShuEd
+
+- files: ["Shuttles/ShuttleEvent/eternal.yml"]
+  authors: IProduceWidgets
+
+- files: ["Shuttles/ShuttleEvent/flatline.yml"]
+  authors: IProduceWidgets
+
+- files: ["Shuttles/ShuttleEvent/gym.yml"]
+  authors: IProduceWidgets
+
+- files: ["Shuttles/ShuttleEvent/honki.yml"]
+  authors: TheShuEd
+
+- files: ["Shuttles/ShuttleEvent/incorporation.yml"]
+  authors: IProduceWidgets
+
+- files: ["Shuttles/ShuttleEvent/joe.yml"]
+  authors: IProduceWidgets
+
+- files: ["Shuttles/ShuttleEvent/lambordeere.yml"]
+  authors: IProduceWidgets
+
+- files: ["Shuttles/ShuttleEvent/lost_cargo.yml"]
+  authors: TheShuEd
+
+- files: ["Shuttles/ShuttleEvent/meatzone.yml"]
+  authors: IProduceWidgets
+
+- files: ["Shuttles/ShuttleEvent/microshuttle.yml"]
+  authors: IProduceWidgets
+
+- files: ["Shuttles/ShuttleEvent/quark.yml"]
+  authors: IProduceWidgets
+
+- files: ["Shuttles/ShuttleEvent/spacebus.yml"]
+  authors: IProduceWidgets
+
+- files: ["Shuttles/ShuttleEvent/striker"]
+  authors: IProduceWidgets
+
+- files: ["Shuttles/ShuttleEvent/syndie_evacpod.yml"]
+  authors: TheShuEd
+
+- files: ["Shuttles/ShuttleEvent/traveling_china_cuisine.yml"]
+  authors: TheShuEd
