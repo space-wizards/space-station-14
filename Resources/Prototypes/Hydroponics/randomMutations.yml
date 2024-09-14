@@ -141,19 +141,23 @@
     - name: ChangeSeedless
       baseOdds: 0.036
       persists: false
-      effect: !type:PlantMutateSeedless
+      effect: !type:PlantChangeStat
+        targetValue: Seedless
     - name: ChangeLigneous
       baseOdds: 0.036
       persists: false
-      effect: !type:PlantMutateLigneous
+      effect: !type:PlantChangeStat
+        targetValue: Ligneous
     - name: ChangeTurnIntoKudzu
       baseOdds: 0.036
       persists: false
-      effect: !type:PlantMutateKudzu
+      effect: !type:PlantChangeStat
+        targetValue: TurnIntoKudzu
     - name: ChangeScreaming
       baseOdds: 0.036
       persists: false
-      effect: !type:PlantMutateScream
+      effect: !type:PlantChangeStat
+        targetValue: CanScream
     - name: ChangeChemicals
       baseOdds: 0.072
       persists: false

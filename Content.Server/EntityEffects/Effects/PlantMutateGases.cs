@@ -17,6 +17,7 @@ public sealed partial class PlantMutateExudeGasses : EntityEffect
 
     [DataField]
     public float MaxValue = 0.5f;
+
     public override void Effect(EntityEffectBaseArgs args)
     {
         var plantholder = args.EntityManager.GetComponent<PlantHolderComponent>(args.TargetEntity);
