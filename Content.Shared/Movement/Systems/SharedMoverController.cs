@@ -252,7 +252,6 @@ public abstract partial class SharedMoverController : VirtualController
                 // island solver"??. So maybe SetRotation needs an argument to avoid raising an event?
                 var worldRot = _transform.GetWorldRotation(xform);
 
-                // _transform.SetLocalRotation(xform, xform.LocalRotation + worldTotal.ToWorldAngle() - worldRot);
                 _transform.SetLocalRotation(entXform.Owner, xform.LocalRotation + worldTotal.ToWorldAngle() - worldRot, xform);
             }
 
@@ -381,7 +380,7 @@ public abstract partial class SharedMoverController : VirtualController
                 !otherCollider.Comp.CanCollide ||
                 ((collider.CollisionMask & otherCollider.Comp.CollisionLayer) == 0 &&
                 (otherCollider.Comp.CollisionMask & collider.CollisionLayer) == 0) ||
-                (TryComp(otherCollider.Owner, out PullableComponent? pullable) && pullable.BeingPulled)) //TODO:ERRANT update
+                (TryComp(otherCollider.Owner, out PullableComponent? pullable) && pullable.BeingPulled))
             {
                 continue;
             }
@@ -504,7 +503,7 @@ public abstract partial class SharedMoverController : VirtualController
         // Walking on a tile.
         // Tile def might have been passed in already from previous methods, so use that
         // if we have it
-        if (tileDef == null && _mapSystem.TryGetTileRef(uid, grid, position, out var tileRef)) //TODO:ERRANT do I need that null check?
+        if (tileDef == null && _mapSystem.TryGetTileRef(uid, grid, position, out var tileRef))
         {
             tileDef = (ContentTileDefinition) _tileDefinitionManager[tileRef.Tile.TypeId];
         }

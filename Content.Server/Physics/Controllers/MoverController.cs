@@ -282,7 +282,7 @@ public sealed class MoverController : SharedMoverController
                 !shuttleComponent.Enabled)
                 continue;
 
-            if (!newPilots.TryGetValue(gridId.Value, out var pilots)) //TODO:ERRANT was gridId!.Value
+            if (!newPilots.TryGetValue(gridId.Value, out var pilots))
             {
                 pilots = (shuttleComponent, new List<(EntityUid, PilotComponent, InputMoverComponent, TransformComponent)>());
                 newPilots[gridId.Value] = pilots;
