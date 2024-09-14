@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Jezithyr
-  changes:
-  - message: All species except for Vox can now be played as Nukies. (Vox will be
-      enabled when load out code supports them)
-    type: Tweak
-  id: 6873
-  time: '2024-07-05T07:59:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29707
 - author: metalgearsloth
   changes:
   - message: Shuttle map buttons will show up faster.
@@ -3919,3 +3911,11 @@
   id: 7372
   time: '2024-09-14T16:28:33.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32151
+- author: Errant
+  changes:
+  - message: Lone Ops nukies now spawn with the appropriate species-specific survival
+      gear.
+    type: Fix
+  id: 7373
+  time: '2024-09-14T16:34:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31641
