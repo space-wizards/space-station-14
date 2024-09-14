@@ -40,8 +40,8 @@
 
 - files: ["redalert.ogg"]
   license: "CC-BY-SA-3.0"
-  copyright: "Taken from Citadel Station 13"
-  source: "https://github.com/Skyrat-SS13/Skyrat13/commit/2d4f2d1b489590b559e4073f41b126cef56f4c50"
+  copyright: "Taken from TG station"
+  source: "https://github.com/tgstation/tgstation/blob/master/sound/misc/notice3.ogg"
 
 - files: ["bluealert.ogg"]
   license: "CC-BY-SA-3.0"
