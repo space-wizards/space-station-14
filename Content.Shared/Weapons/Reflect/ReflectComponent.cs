@@ -1,5 +1,6 @@
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Content.Shared.Inventory;
 
 namespace Content.Shared.Weapons.Reflect;
 
@@ -17,12 +18,17 @@ public sealed partial class ReflectComponent : Component
     public ReflectType Reflects = ReflectType.Energy | ReflectType.NonEnergy;
 
     /// <summary>
-    /// If the item for reflection needed in inventory slots only - select Body.
-    /// If the item for reflection needed in hands only - select Hands.
-    /// Otherwise it will reflect in any inventory position.
+    /// Select in which inventory slots it will reflect.
+    /// By default, it will reflect in any inventory position, except pockets.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField]
-    public Placement Placement = Placement.Hands | Placement.Body;
+    public SlotFlags SlotFlags = SlotFlags.WITHOUT_POCKET;
+
+    /// <summary>
+    /// Is it allowed to reflect while being in hands.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    public bool ReflectingInHands = true;
 
     /// <summary>
     /// Can only reflect when placed correctly.
@@ -49,12 +55,4 @@ public enum ReflectType : byte
     None = 0,
     NonEnergy = 1 << 0,
     Energy = 1 << 1,
-}
-
-[Flags]
-public enum Placement : byte
-{
-    None = 0,
-    Hands = 1 << 0,
-    Body = 1 << 1,
 }

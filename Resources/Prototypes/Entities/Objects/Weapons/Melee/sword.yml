@@ -95,7 +95,8 @@
     - Back
     - Belt
   - type: Reflect
-    placement: hands
+    slotFlags:
+      - NONE
 
 - type: entity
   name: machete

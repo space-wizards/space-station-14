@@ -195,7 +195,7 @@ public sealed class ReflectSystem : EntitySystem
         if (_gameTiming.ApplyingState)
             return;
 
-        component.InRightPlace = IsInRightPlace(component, Placement.Body);
+        component.InRightPlace = IsInRightPlace(component, args.SlotFlags);
 
         EnsureComp<ReflectUserComponent>(args.Equipee);
     }
@@ -210,7 +210,7 @@ public sealed class ReflectSystem : EntitySystem
         if (_gameTiming.ApplyingState)
             return;
 
-        component.InRightPlace = IsInRightPlace(component, Placement.Hands);
+        component.InRightPlace = IsInRightPlace(component, SlotFlags.NONE);
 
         EnsureComp<ReflectUserComponent>(args.User);
     }
@@ -246,11 +246,11 @@ public sealed class ReflectSystem : EntitySystem
     /// <summary>
     /// Checks if the reflective component should work in designated place.
     /// </summary>
-    private static bool IsInRightPlace(ReflectComponent component, Placement placement)
+    private static bool IsInRightPlace(ReflectComponent component, SlotFlags slotFlag)
     {
-        if (component.Placement == (Placement.Hands | Placement.Body))
-            return true;
+        if (slotFlag == SlotFlags.NONE)
+            return component.ReflectingInHands;
         else
-            return (component.Placement & placement) != 0x0;
+            return (component.SlotFlags & slotFlag) == slotFlag;
     }
 }
