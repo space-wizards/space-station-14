@@ -1769,6 +1769,17 @@
   categories:
     - UplinkPointless
 
+- type: listing
+  id: UplinkSyndicateBusinessCard
+  name: uplink-business-cadr-name
+  description: uplink-business-cadr-desc
+  productEntity: SyndicateBusinessCard
+  categories:
+    - UplinkPointless
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 3
+
 # Job Specific
 
 - type: listing
