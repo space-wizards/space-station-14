@@ -116,14 +116,8 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
             return false;
 
         //looking for a suitable FoodSequence prototype
-        ProtoId<FoodSequenceElementPrototype> elementProto = string.Empty;
-        foreach (var pair in element.Comp.Entries)
-        {
-            if (pair.Key == start.Comp.Key)
-            {
-                elementProto = pair.Value;
-            }
-        }
+        if (!element.Comp.Entries.TryGetValue(start.Comp.Key, out var elementProto))
+            return false;
         if (!_proto.TryIndex(elementProto, out var elementIndexed))
             return false;
 
@@ -139,7 +133,7 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
         var flip = start.Comp.AllowHorizontalFlip && _random.Prob(0.5f);
         var layer = new FoodSequenceVisualLayer(elementIndexed,
             _random.Pick(elementIndexed.Sprites),
-            new Vector2(flip ? -1 : 1, 1),
+            new Vector2(flip ? -elementIndexed.Scale.X : elementIndexed.Scale.X, elementIndexed.Scale.Y),
             new Vector2(
                 _random.NextFloat(start.Comp.MinLayerOffset.X, start.Comp.MaxLayerOffset.X),
                 _random.NextFloat(start.Comp.MinLayerOffset.Y, start.Comp.MaxLayerOffset.Y))
