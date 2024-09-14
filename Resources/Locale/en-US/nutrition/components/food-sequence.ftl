@@ -14,6 +14,7 @@ food-sequence-content-salami = salami
 food-sequence-content-slime = slime
 food-sequence-content-clown = clown
 food-sequence-content-pea = pea
+food-sequence-content-world-pea = world pea
 food-sequence-content-bungo = bungo
 food-sequence-content-banana = banana
 food-sequence-content-mimana = mimana
@@ -64,6 +65,7 @@ food-sequence-content-glasstle = glasstle
 food-sequence-content-gatfruit = gatfruit
 food-sequence-content-koibean = koibean
 food-sequence-content-watermelon = watermelon
+food-sequence-content-holymelon = holymelon
 food-sequence-content-cannabis = cannabis
 food-sequence-content-rainbow-cannabis = rainbow cannabis
 food-sequence-content-tobacco = tobacco
@@ -71,7 +73,7 @@ food-sequence-content-hamster = hamster
 food-sequence-content-suppermatter = suppermatter
 food-sequence-content-capfruit = capfruit
 food-sequence-content-berries = berries
-food-sequence-content-spacemans-trumpet = spacemans trupmet
+food-sequence-content-spacemans-trumpet = spaceman's trupmet
 food-sequence-content-cherry = cherry
 food-sequence-content-snail = snail
 
@@ -106,6 +108,7 @@ food-sequence-burger-content-rice = rice
 food-sequence-burger-content-soy = soy
 food-sequence-burger-content-koibean = koi
 food-sequence-burger-content-watermelon = water
+food-sequence-burger-content-holymelon = holy
 food-sequence-burger-content-cannabis = funny
 food-sequence-burger-content-rainbow-cannabis = FUNNY
 food-sequence-burger-content-tobacco = tobaco
@@ -113,6 +116,8 @@ food-sequence-burger-content-suppermatter = supper
 food-sequence-burger-content-hamster = hams
 food-sequence-burger-content-berries = berri
 food-sequence-burger-content-spacemans-trumpet = spacetrump
+food-sequence-burger-content-extradimensional-orange = 3d
+food-sequence-burger-content-world-pea = peace
 
 # TACO
 
