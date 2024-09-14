@@ -1198,7 +1198,7 @@
 - type: Tag
   id: Slice # sliced fruit, vegetables, pizza etc.
   
- - type: Tag
+- type: Tag
   id: SlotDependencyOverride
 
 - type: Tag
