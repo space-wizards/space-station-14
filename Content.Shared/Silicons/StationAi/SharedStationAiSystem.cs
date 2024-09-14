@@ -12,6 +12,8 @@ using Content.Shared.Movement.Systems;
 using Content.Shared.Power;
 using Content.Shared.StationAi;
 using Content.Shared.Verbs;
+using Content.Shared.Follower;
+using Content.Shared.Follower.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
@@ -19,6 +21,10 @@ using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
+
+using System.Threading;
+using Timer = Robust.Shared.Timing.Timer;
+
 
 namespace Content.Shared.Silicons.StationAi;
 
@@ -36,11 +42,13 @@ public abstract partial class SharedStationAiSystem : EntitySystem
     [Dependency] private   readonly SharedDoorSystem _doors = default!;
     [Dependency] private   readonly SharedEyeSystem _eye = default!;
     [Dependency] protected readonly SharedMapSystem Maps = default!;
-    [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private   readonly SharedMindSystem _mind = default!;
     [Dependency] private   readonly SharedMoverController _mover = default!;
     [Dependency] private   readonly SharedTransformSystem _xforms = default!;
     [Dependency] private   readonly SharedUserInterfaceSystem _uiSystem = default!;
     [Dependency] private   readonly StationAiVisionSystem _vision = default!;
+    [Dependency] private   readonly FollowerSystem _followerSystem = default!;
+    [Dependency] private   readonly SharedMapSystem _maps = default!;
 
     // StationAiHeld is added to anything inside of an AI core.
     // StationAiHolder indicates it can hold an AI positronic brain (e.g. holocard / core).
@@ -85,6 +93,111 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         SubscribeLocalEvent<StationAiCoreComponent, ComponentShutdown>(OnAiShutdown);
         SubscribeLocalEvent<StationAiCoreComponent, PowerChangedEvent>(OnCorePower);
         SubscribeLocalEvent<StationAiCoreComponent, GetVerbsEvent<Verb>>(OnCoreVerbs);
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+        
+        UpdateEyeFollow();
+    }
+
+    /// <summary>
+    /// Checks if AI eye should stop following entity
+    /// </summary>
+    public void UpdateEyeFollow()
+    {
+        var query = EntityQueryEnumerator<StationAiHeldComponent>();
+        while (query.MoveNext(out var uid, out var heldComp))
+        {
+            if (!TryGetEye(uid, out var eye) || eye == null)
+                continue;
+            
+            // Checking if eye already follows something or have followed something
+            EntityUid? followed = heldComp.lastFollowedEntity;
+            bool visible = false;
+            // Make some updates if already following something
+            if (TryComp<FollowerComponent>(eye.Value, out var followerComp))
+            {
+                followed = followerComp.Following;
+                heldComp.lastFollowedEntity = followerComp.Following;
+            }
+            // If we lost followed entity - try check if it's visible and re-follow if it is
+            else if (followed != null && heldComp.lostFollowed)
+            {
+                if(!TryVisibleCheck(followed.Value, uid, out visible))
+                    continue;
+                
+                if(visible)
+                {
+                    _followerSystem.StartFollowingEntity(uid, followed.Value);
+                    heldComp.lostFollowed = false;
+                    heldComp.cancelRecaptureTokens.Cancel();
+                    heldComp.cancelRecaptureTokens = new CancellationTokenSource();
+                }
+                continue;
+            }
+            // If we didn't lose followed entity and do not actively follow one
+            else
+                continue;
+            
+            // Handle follwed entity leaving FoV
+            if(!TryVisibleCheck(followed.Value, uid, out visible))
+                continue;
+            if(!visible)
+            {
+                _followerSystem.StopFollowingEntity(uid, followed.Value);
+                Timer.Spawn(10000, () => { CancelReFollow((uid, heldComp)); }, heldComp.cancelRecaptureTokens.Token);
+                heldComp.lostFollowed = true;
+            }
+            // End of loop
+        }   
+    }
+    
+    /// <summary>
+    /// Checks if AI can actually see target if FoV, grid independent.
+    /// Returns true if does not fail, false if fails.
+    /// </summary>
+    private bool TryVisibleCheck(EntityUid target, EntityUid aiHeld, out bool visible)
+    {   
+        visible = false;
+        var aiTransform = Transform(aiHeld);
+        var targetTransform = Transform(target);
+        if (aiTransform.GridUid == null)
+            return false;
+
+        if (!_broadphaseQuery.TryComp(aiTransform.GridUid.Value, out var broadphase) ||
+            !_gridQuery.TryComp(aiTransform.GridUid.Value, out var grid))
+        {
+            return false;
+        }
+
+        Vector2i targetTileCoords;
+
+        // target is on the same grid as AI
+        if(targetTransform.GridUid != null && targetTransform.GridUid == aiTransform.GridUid)
+        {
+            var coords = targetTransform.Coordinates;
+            targetTileCoords = _maps.LocalToTile(aiTransform.GridUid.Value, grid, coords);
+        }
+        // target is not on grid or on a different grid
+        else
+        {
+            // can't follow on different map duh
+            if (targetTransform.MapPosition.MapId != aiTransform.MapPosition.MapId)
+                return true; // visible = false
+            var coords = _maps.MapToGrid(aiTransform.GridUid.Value, targetTransform.MapPosition);
+
+            targetTileCoords = _maps.LocalToTile(aiTransform.GridUid.Value, grid, coords);
+        }
+
+        visible = _vision.IsAccessible((aiTransform.GridUid.Value, broadphase, grid), targetTileCoords);
+        return true;
+    }
+
+    private void CancelReFollow(Entity<StationAiHeldComponent> held)
+    {
+        held.Comp.lostFollowed = false;
     }
 
     private void OnCoreVerbs(Entity<StationAiCoreComponent> ent, ref GetVerbsEvent<Verb> args)

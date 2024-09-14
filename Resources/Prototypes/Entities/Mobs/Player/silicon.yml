@@ -16,6 +16,7 @@
     - Security
     - Service
     - Supply
+    - Ai
   - type: ActiveRadio
     channels:
     - Binary
@@ -27,6 +28,7 @@
     - Security
     - Service
     - Supply
+    - Ai
   - type: IgnoreUIRange
   - type: StationAiHeld
   - type: StationAiOverlay

@@ -70,7 +70,7 @@ public abstract partial class SharedStationAiSystem
         return true;
     }
 
-    private bool TryGetCore(EntityUid ent, out Entity<StationAiCoreComponent?> core)
+    public bool TryGetCore(EntityUid ent, out Entity<StationAiCoreComponent?> core)
     {
         if (!_containers.TryGetContainingContainer(ent, out var container) ||
             container.ID != StationAiCoreComponent.Container ||
@@ -82,6 +82,21 @@ public abstract partial class SharedStationAiSystem
         }
 
         core = (container.Owner, coreComp);
+        return true;
+    }
+
+    public bool TryGetEye(EntityUid ent, out EntityUid? aiEye)
+    {
+        if(!HasComp<StationAiHeldComponent>(ent) ||
+           !TryGetCore(ent, out var aiCore) ||
+           aiCore.Comp == null ||
+           aiCore.Comp.RemoteEntity == null)
+        {
+            aiEye = null;
+            return false;
+        }
+
+        aiEye = aiCore.Comp.RemoteEntity.Value;
         return true;
     }
 
@@ -140,6 +155,8 @@ public abstract partial class SharedStationAiSystem
 
         args.Verbs.Add(new AlternativeVerb()
         {
+            // Should always be higher priority than follow AltVerb
+            Priority = 20,
             Text = isOpen ? Loc.GetString("ai-close") : Loc.GetString("ai-open"),
             Act = () =>
             {
