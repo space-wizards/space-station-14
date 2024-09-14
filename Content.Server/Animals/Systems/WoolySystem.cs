@@ -143,7 +143,7 @@ public sealed class WoolySystem : EntitySystem
 
     /// <summary>
     ///     This is used for checking if the wooly animal is dead or critical.
-    ///     If it is, then the wooly layer is removed_solutionContainer.
+    ///     If it is, then the wooly layer is removed.
     private void OnMobStateChanged(Entity<WoolyComponent> ent, ref MobStateChangedEvent args)
     {
         UpdateWoolLayer(ent);
