@@ -35,7 +35,7 @@ reagent-name-mucin = mucin
 reagent-desc-mucin = A fascinating secretion capable of accelerating the movement of anyone walking on it.
 
 reagent-name-testosterone = testosterone
-reagent-desc-testosterone = A fundamental bodily hormone, synthesized from plant matter for pharmacutical distribution.
+reagent-desc-testosterone = A fundamental bodily hormone, synthesized from plant matter for pharmaceutical distribution.
 
 reagent-name-estradiol = estradiol
-reagent-desc-estradiol = A fundamental bodily hormone, synthesized from cell matter for pharmacutical distribution.
+reagent-desc-estradiol = A fundamental bodily hormone, synthesized from cell matter for pharmaceutical distribution.
