@@ -119,7 +119,6 @@
   id: UplinkDisposableTurret
   name: uplink-disposable-turret-name
   description: uplink-disposable-turret-desc
-  productEntity: ToolboxElectricalTurretFilled
   productEntityTable: !type:NestedSelector
     tableId: ToolBoxTurretFilledUplinkEntityTable
   discountCategory: usualDiscounts

@@ -1,4 +1,5 @@
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.EntityTable.EntitySelectors;
 
@@ -6,6 +7,7 @@ namespace Content.Shared.EntityTable.EntitySelectors;
 /// Gets the spawns from the entity table prototype specified.
 /// Can be used to reuse common tables.
 /// </summary>
+[Serializable, NetSerializable]
 public sealed partial class NestedSelector : EntityTableSelector
 {
     [DataField(required: true)]

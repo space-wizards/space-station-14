@@ -1,10 +1,12 @@
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.EntityTable.ValueSelector;
 
 /// <summary>
 /// Gives a constant value.
 /// </summary>
+[Serializable, NetSerializable]
 public sealed partial class ConstantNumberSelector : NumberSelector
 {
     [DataField]

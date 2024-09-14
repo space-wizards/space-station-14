@@ -1,12 +1,14 @@
 using System.Numerics;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.EntityTable.ValueSelector;
 
 /// <summary>
 /// Gives a value between the two numbers specified, inclusive.
 /// </summary>
+[Serializable, NetSerializable]
 public sealed partial class RangeNumberSelector : NumberSelector
 {
     [DataField]
