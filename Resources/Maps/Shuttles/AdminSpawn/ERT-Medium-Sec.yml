@@ -2363,17 +2363,6 @@ entities:
       parent: 1
     - type: AtmosPipeColor
       color: '#990000FF'
-  - uid: 533
-    components:
-    - type: Transform
-      anchored: False
-      pos: -4.5,7.5
-      parent: 1
-    - type: AtmosPipeColor
-      color: '#990000FF'
-    - type: Physics
-      canCollide: True
-      bodyType: Dynamic
   - uid: 534
     components:
     - type: Transform
