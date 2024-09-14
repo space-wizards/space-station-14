@@ -1,6 +1,5 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
-using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
 using Content.Server.Temperature.Components;
@@ -13,6 +12,8 @@ using Content.Shared.Rejuvenate;
 using Content.Shared.Temperature;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Physics.Events;
+using Content.Shared.Projectiles;
 
 namespace Content.Server.Temperature.Systems;
 
@@ -22,6 +23,7 @@ public sealed class TemperatureSystem : EntitySystem
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly TemperatureSystem _temperature = default!;
 
     /// <summary>
     ///     All the components that will have their damage updated at the end of the tick.
@@ -47,6 +49,8 @@ public sealed class TemperatureSystem : EntitySystem
             OnTemperatureChangeAttempt);
 
         SubscribeLocalEvent<InternalTemperatureComponent, MapInitEvent>(OnInit);
+
+        SubscribeLocalEvent<ChangeTemperatureOnCollideComponent, ProjectileHitEvent>(ChangeTemperatureOnCollide);
 
         // Allows overriding thresholds based on the parent's thresholds.
         SubscribeLocalEvent<TemperatureComponent, EntParentChangedMessage>(OnParentChange);
@@ -295,10 +299,19 @@ public sealed class TemperatureSystem : EntitySystem
     private void OnTemperatureChangeAttempt(EntityUid uid, TemperatureProtectionComponent component,
         InventoryRelayedEvent<ModifyChangedTemperatureEvent> args)
     {
-        var ev = new GetTemperatureProtectionEvent(component.Coefficient);
+        var coefficient = args.Args.TemperatureDelta < 0
+            ? component.CoolingCoefficient
+            : component.HeatingCoefficient;
+
+        var ev = new GetTemperatureProtectionEvent(coefficient);
         RaiseLocalEvent(uid, ref ev);
 
         args.Args.TemperatureDelta *= ev.Coefficient;
+    }
+
+    private void ChangeTemperatureOnCollide(Entity<ChangeTemperatureOnCollideComponent> ent, ref ProjectileHitEvent args)
+    {
+        _temperature.ChangeHeat(args.Target, ent.Comp.Heat, ent.Comp.IgnoreHeatResistance);// adjust the temperature 
     }
 
     private void OnParentChange(EntityUid uid, TemperatureComponent component,
@@ -411,19 +424,5 @@ public sealed class TemperatureSystem : EntitySystem
         }
 
         return (newHeatThreshold, newColdThreshold);
-    }
-}
-
-public sealed class OnTemperatureChangeEvent : EntityEventArgs
-{
-    public float CurrentTemperature { get; }
-    public float LastTemperature { get; }
-    public float TemperatureDelta { get; }
-
-    public OnTemperatureChangeEvent(float current, float last, float delta)
-    {
-        CurrentTemperature = current;
-        LastTemperature = last;
-        TemperatureDelta = delta;
     }
 }

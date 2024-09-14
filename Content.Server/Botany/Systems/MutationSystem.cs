@@ -2,10 +2,8 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
-using Content.Shared.Chemistry.Reagent;
 using System.Linq;
 using Content.Shared.Atmos;
-using FastAccessors;
 
 namespace Content.Server.Botany;
 
@@ -40,8 +38,9 @@ public sealed class MutationSystem : EntitySystem
         }
 
         // Add up everything in the bits column and put the number here.
-        const int totalbits = 275;
+        const int totalbits = 262;
 
+        #pragma warning disable IDE0055 // disable formatting warnings because this looks more readable
         // Tolerances (55)
         MutateFloat(ref seed.NutrientConsumption  , 0.05f, 1.2f, 5, totalbits, severity);
         MutateFloat(ref seed.WaterConsumption     , 3f   , 9f  , 5, totalbits, severity);
@@ -66,15 +65,16 @@ public sealed class MutationSystem : EntitySystem
         // Kill the plant (30)
         MutateBool(ref seed.Viable        , false, 30, totalbits, severity);
 
-        // Fun (90)
+        // Fun (72)
         MutateBool(ref seed.Seedless      , true , 10, totalbits, severity);
         MutateBool(ref seed.Slip          , true , 10, totalbits, severity);
-        MutateBool(ref seed.Sentient      , true , 10, totalbits, severity);
+        MutateBool(ref seed.Sentient      , true , 2 , totalbits, severity);
         MutateBool(ref seed.Ligneous      , true , 10, totalbits, severity);
         MutateBool(ref seed.Bioluminescent, true , 10, totalbits, severity);
         MutateBool(ref seed.TurnIntoKudzu , true , 10, totalbits, severity);
         MutateBool(ref seed.CanScream     , true , 10, totalbits, severity);
         seed.BioluminescentColor = RandomColor(seed.BioluminescentColor, 10, totalbits, severity);
+        #pragma warning restore IDE0055
 
         // ConstantUpgade (10)
         MutateHarvestType(ref seed.HarvestRepeat, 10, totalbits, severity);
@@ -115,10 +115,10 @@ public sealed class MutationSystem : EntitySystem
         CrossFloat(ref result.Production, a.Production);
         CrossFloat(ref result.Potency, a.Potency);
 
+        // we do not transfer Sentient to another plant to avoid ghost role spam
         CrossBool(ref result.Seedless, a.Seedless);
         CrossBool(ref result.Viable, a.Viable);
         CrossBool(ref result.Slip, a.Slip);
-        CrossBool(ref result.Sentient, a.Sentient);
         CrossBool(ref result.Ligneous, a.Ligneous);
         CrossBool(ref result.Bioluminescent, a.Bioluminescent);
         CrossBool(ref result.TurnIntoKudzu, a.TurnIntoKudzu);
@@ -153,6 +153,12 @@ public sealed class MutationSystem : EntitySystem
         if (!Random(probBitflip))
             return;
 
+        if (min == max)
+        {
+            val = min;
+            return;
+        }
+
         // Starting number of bits that are high, between 0 and bits.
         // In other words, it's val mapped linearly from range [min, max] to range [0, bits], and then rounded.
         int valInt = (int)MathF.Round((val - min) / (max - min) * bits);
@@ -186,10 +192,22 @@ public sealed class MutationSystem : EntitySystem
         if (!Random(probBitflip))
             return;
 
+        if (min == max)
+        {
+            val = min;
+            return;
+        }
+
+        // Starting number of bits that are high, between 0 and bits.
+        // In other words, it's val mapped linearly from range [min, max] to range [0, bits], and then rounded.
+        int valInt = (int)MathF.Round((val - min) / (max - min) * bits);
+        // val may be outside the range of min/max due to starting prototype values, so clamp.
+        valInt = Math.Clamp(valInt, 0, bits);
+
         // Probability that the bit flip increases n.
-        // The higher the current value is, the lower the probability of increasing value is, and the higher the probability of decreasive it it.
+        // The higher the current value is, the lower the probability of increasing value is, and the higher the probability of decreasing it.
         // In other words, it tends to go to the middle.
-        float probIncrease = 1 - (float)val / bits;
+        float probIncrease = 1 - (float)valInt / bits;
         int valMutated;
         if (Random(probIncrease))
         {
@@ -261,7 +279,7 @@ public sealed class MutationSystem : EntitySystem
         {
             var pick = _randomChems.Pick(_robustRandom);
             string chemicalId = pick.reagent;
-            int amount = _robustRandom.Next(1, ((int)pick.quantity));
+            int amount = _robustRandom.Next(1, (int)pick.quantity);
             SeedChemQuantity seedChemQuantity = new SeedChemQuantity();
             if (chemicals.ContainsKey(chemicalId))
             {
@@ -274,7 +292,7 @@ public sealed class MutationSystem : EntitySystem
                 seedChemQuantity.Max = 1 + amount;
                 seedChemQuantity.Inherent = false;
             }
-            int potencyDivisor = (int) Math.Ceiling(100.0f / seedChemQuantity.Max);
+            int potencyDivisor = (int)Math.Ceiling(100.0f / seedChemQuantity.Max);
             seedChemQuantity.PotencyDivisor = potencyDivisor;
             chemicals[chemicalId] = seedChemQuantity;
         }

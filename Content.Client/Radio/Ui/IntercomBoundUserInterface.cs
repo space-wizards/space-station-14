@@ -1,6 +1,8 @@
 using Content.Shared.Radio;
 using Content.Shared.Radio.Components;
 using JetBrains.Annotations;
+using Robust.Client.GameObjects;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.Radio.Ui;
 
@@ -19,9 +21,12 @@ public sealed class IntercomBoundUserInterface : BoundUserInterface
     {
         base.Open();
 
-        var comp = EntMan.GetComponent<IntercomComponent>(Owner);
+        _menu = this.CreateWindow<IntercomMenu>();
 
-        _menu = new((Owner, comp));
+        if (EntMan.TryGetComponent(Owner, out IntercomComponent? intercom))
+        {
+            _menu.Update((Owner, intercom));
+        }
 
         _menu.OnMicPressed += enabled =>
         {
@@ -35,17 +40,6 @@ public sealed class IntercomBoundUserInterface : BoundUserInterface
         {
             SendMessage(new SelectIntercomChannelMessage(channel));
         };
-
-        _menu.OnClose += Close;
-        _menu.OpenCentered();
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
-        if (!disposing)
-            return;
-        _menu?.Close();
     }
 
     public void Update(Entity<IntercomComponent> ent)

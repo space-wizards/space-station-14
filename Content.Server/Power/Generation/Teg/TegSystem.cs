@@ -10,6 +10,7 @@ using Content.Server.Power.Components;
 using Content.Shared.Atmos;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.Examine;
+using Content.Shared.Power;
 using Content.Shared.Power.Generation.Teg;
 using Content.Shared.Rounding;
 using Robust.Server.GameObjects;

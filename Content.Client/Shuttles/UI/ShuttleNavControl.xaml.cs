@@ -35,6 +35,7 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
 
     public bool ShowIFF { get; set; } = true;
     public bool ShowDocks { get; set; } = true;
+    public bool RotateWithEntity { get; set; } = true;
 
     /// <summary>
     /// Raised if the user left-clicks on the radar control with the relevant entitycoordinates.
@@ -109,6 +110,8 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
 
         ActualRadarRange = Math.Clamp(ActualRadarRange, WorldMinRange, WorldMaxRange);
 
+        RotateWithEntity = state.RotateWithEntity;
+
         _docks = state.Docks;
     }
 
@@ -138,7 +141,8 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
         var mapPos = _transform.ToMapCoordinates(_coordinates.Value);
         var offset = _coordinates.Value.Position;
         var posMatrix = Matrix3Helpers.CreateTransform(offset, _rotation.Value);
-        var (_, ourEntRot, ourEntMatrix) = _transform.GetWorldPositionRotationMatrix(_coordinates.Value.EntityId);
+        var ourEntRot = RotateWithEntity ? _transform.GetWorldRotation(xform) : _rotation.Value;
+        var ourEntMatrix = Matrix3Helpers.CreateTransform(_transform.GetWorldPosition(xform), ourEntRot);
         var ourWorldMatrix = Matrix3x2.Multiply(posMatrix, ourEntMatrix);
         Matrix3x2.Invert(ourWorldMatrix, out var ourWorldMatrixInvert);
 

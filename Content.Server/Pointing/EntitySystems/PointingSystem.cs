@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Pointing.Components;
+using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Eye;
@@ -14,6 +15,7 @@ using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.GameStates;
 using Robust.Shared.Input.Binding;
@@ -27,6 +29,7 @@ namespace Content.Server.Pointing.EntitySystems
     [UsedImplicitly]
     internal sealed class PointingSystem : SharedPointingSystem
     {
+        [Dependency] private readonly IConfigurationManager _config = default!;
         [Dependency] private readonly IReplayRecordingManager _replay = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -40,7 +43,7 @@ namespace Content.Server.Pointing.EntitySystems
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly ExamineSystemShared _examine = default!;
 
-        private static readonly TimeSpan PointDelay = TimeSpan.FromSeconds(0.5f);
+        private TimeSpan _pointDelay = TimeSpan.FromSeconds(0.5f);
 
         /// <summary>
         ///     A dictionary of players to the last time that they
@@ -124,7 +127,7 @@ namespace Content.Server.Pointing.EntitySystems
             }
 
             if (_pointers.TryGetValue(session, out var lastTime) &&
-                _gameTiming.CurTime < lastTime + PointDelay)
+                _gameTiming.CurTime < lastTime + _pointDelay)
             {
                 return false;
             }
@@ -152,9 +155,7 @@ namespace Content.Server.Pointing.EntitySystems
 
             if (TryComp<PointingArrowComponent>(arrow, out var pointing))
             {
-                if (TryComp(player, out TransformComponent? xformPlayer))
-                    pointing.StartPosition = _transform.ToCoordinates((player, xformPlayer), _transform.ToMapCoordinates(xformPlayer.Coordinates)).Position;
-
+                pointing.StartPosition = _transform.ToCoordinates((arrow, Transform(arrow)), _transform.ToMapCoordinates(Transform(player).Coordinates)).Position;
                 pointing.EndTime = _gameTiming.CurTime + PointDuration;
 
                 Dirty(arrow, pointing);
@@ -259,6 +260,8 @@ namespace Content.Server.Pointing.EntitySystems
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.Point, new PointerInputCmdHandler(TryPoint))
                 .Register<PointingSystem>();
+
+            Subs.CVar(_config, CCVars.PointingCooldownSeconds, v => _pointDelay = TimeSpan.FromSeconds(v), true);
         }
 
         private void OnPointAttempt(PointingAttemptEvent ev, EntitySessionEventArgs args)

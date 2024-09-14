@@ -4,23 +4,26 @@ using Robust.Client.UserInterface.XAML;
 using Content.Shared.MassMedia.Systems;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Client.MassMedia.Ui;
 
 [GenerateTypedNameReferences]
 public sealed partial class NewsWriterMenu : FancyWindow
 {
-    private readonly IGameTiming _gameTiming;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
 
     private TimeSpan? _nextPublish;
 
     public event Action<int>? DeleteButtonPressed;
 
-    public NewsWriterMenu(IGameTiming gameTiming)
+    public event Action? CreateButtonPressed;
+
+    public NewsWriterMenu()
     {
         RobustXamlLoader.Load(this);
+        IoCManager.InjectDependencies(this);
 
-        _gameTiming = gameTiming;
         ContentsContainer.RectClipContent = false;
 
         // Customize scrollbar width and margin. This is not possible in xaml
@@ -31,7 +34,7 @@ public sealed partial class NewsWriterMenu : FancyWindow
         ButtonCreate.OnPressed += OnCreate;
     }
 
-    public void UpdateUI(NewsArticle[] articles, bool publishEnabled, TimeSpan nextPublish)
+    public void UpdateUI(NewsArticle[] articles, bool publishEnabled, TimeSpan nextPublish, string draftTitle, string draftContent)
     {
         ArticlesContainer.Children.Clear();
         ArticleCount.Text = Loc.GetString("news-write-ui-article-count-text", ("count", articles.Length));
@@ -54,6 +57,9 @@ public sealed partial class NewsWriterMenu : FancyWindow
 
         ButtonCreate.Disabled = !publishEnabled;
         _nextPublish = nextPublish;
+
+        ArticleEditorPanel.TitleField.Text = draftTitle;
+        ArticleEditorPanel.ContentField.TextRope = new Rope.Leaf(draftContent);
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
@@ -93,5 +99,6 @@ public sealed partial class NewsWriterMenu : FancyWindow
     private void OnCreate(BaseButton.ButtonEventArgs buttonEventArgs)
     {
         ArticleEditorPanel.Visible = true;
+        CreateButtonPressed?.Invoke();
     }
 }
