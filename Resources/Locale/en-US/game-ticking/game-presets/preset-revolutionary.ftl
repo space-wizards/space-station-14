@@ -8,7 +8,7 @@ head-rev-role-greeting =
     You are a Head Revolutionary.
     Your goal is to liberate the station from the Nanotrasen dogs by killing, marooning or imprisoning all Commanding officers.
     The Syndicate has sponsored you with a flash that removes your crewmates' NT brainwashing.
-    Beware, this won't work on Security, Command, the blind, or those wearing sunglasses.
+    Beware, this won't work on the Mindshielded, the blind, or those with other flash protection.
     Viva la revolución!
 
 head-rev-briefing =
