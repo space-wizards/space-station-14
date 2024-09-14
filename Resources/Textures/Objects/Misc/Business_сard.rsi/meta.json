@@ -1,14 +1,14 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Created by Aserovich",
+    "copyright": "Created by Aserovich (Discord)",
     "size": {
         "x": 32,
         "y": 32
     },
     "states": [
         {
-            "name": "Synicate card"
+            "name": "Synicate_card"
         }
     ]
 }
