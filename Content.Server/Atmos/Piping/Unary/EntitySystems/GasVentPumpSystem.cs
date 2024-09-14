@@ -88,8 +88,8 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             {
                 return;
             }
-
-            if (vent.IsPressureLockoutManuallyDisabled && (_timing.CurTime >= vent.ManualLockoutReenabledAt))
+            // If the lockout has expired, disable it.
+            if (vent.IsPressureLockoutManuallyDisabled && _timing.CurTime >= vent.ManualLockoutReenabledAt)
             {
                 vent.IsPressureLockoutManuallyDisabled = false;
             }
