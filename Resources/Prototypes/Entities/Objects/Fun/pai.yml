@@ -17,7 +17,7 @@
         type: InstrumentBoundUserInterface
         requireInputValidation: false
       enum.StationMapUiKey.Key:
-        type: UntrackedStationMapBoundUserInterface
+        type: StationMapBoundUserInterface
         requireInputValidation: false
   - type: Sprite
     sprite: Objects/Fun/pai.rsi
@@ -75,7 +75,7 @@
   - type: StationMap
 
 - type: entity
-  parent: PersonalAI
+  parent: [ PersonalAI, BaseSyndicateContraband]
   id: SyndicatePersonalAI
   name: syndicate personal ai device
   description: Your Syndicate pal who's fun to be with!

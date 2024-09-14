@@ -15,3 +15,6 @@ comp-solution-transfer-verb-toggle = Toggle to {$amount}u
 
 ## Displayed after you successfully change a solution's amount using the BUI
 comp-solution-transfer-set-amount = Transfer amount set to {$amount}u.
+comp-solution-transfer-set-amount-max = Max: {$amount}u
+comp-solution-transfer-set-amount-min = Min: {$amount}u
+

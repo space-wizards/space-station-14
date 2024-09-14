@@ -133,7 +133,7 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         {
             BreakOnMove = true,
             BreakOnDamage = true,
-            NeedHand = true
+            NeedHand = true,
         };
         if (!DoAfter.TryStartDoAfter(doAfterEventArgs, out var id))
             return;

@@ -99,7 +99,7 @@
     makeSentient: true
     name: ghost-role-information-xeno-name
     description: ghost-role-information-xeno-description
-    rules: ghost-role-information-xeno-rules
+    rules: ghost-role-information-rules-default-team-antagonist
     raffle:
       settings: default
   - type: GhostTakeoverAvailable
@@ -378,6 +378,10 @@
         Base: dead_purple_snake
       Dead:
         Base: dead_purple_snake
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatSnake
+      amount: 4
   - type: Grammar
     attributes:
       proper: true
@@ -444,5 +448,9 @@
         Base: dead_small_purple_snake
       Dead:
         Base: dead_small_purple_snake
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatSnake
+      amount: 2
   - type: SolutionTransfer
     maxTransferAmount: 1

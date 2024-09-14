@@ -1,6 +1,6 @@
 using Content.Server.Animals.Components;
-using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Nutrition;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
@@ -15,7 +15,7 @@ using Content.Shared.Mobs.Components;
 namespace Content.Server.Animals.Systems;
 
 /// <summary>
-///     Gives ability to produce fiber reagents, produces endless if the 
+///     Gives ability to produce fiber reagents, produces endless if the
 ///     owner has no HungerComponent
 /// </summary>
 public sealed class WoolySystem : EntitySystem
@@ -143,7 +143,7 @@ public sealed class WoolySystem : EntitySystem
 
     /// <summary>
     ///     This is used for checking if the wooly animal is dead or critical.
-    ///     If it is, then the wooly layer is removed.
+    ///     If it is, then the wooly layer is removed_solutionContainer.
     private void OnMobStateChanged(Entity<WoolyComponent> ent, ref MobStateChangedEvent args)
     {
         UpdateWoolLayer(ent);

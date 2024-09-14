@@ -5,7 +5,7 @@
   description: |
     It's rude to stare.
     It's also a bit odd you're looking at the abstract representation of the grid of reality.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
     - type: WorldChunk
     - type: Sprite
