@@ -1,6 +1,6 @@
-using Content.Server.DeltaV.Speech.EntitySystems;
+using Content.Server.GreyStation.Speech.EntitySystems;
 
-namespace Content.Server.DeltaV.Speech.Components;
+namespace Content.Server.GreyStation.Speech.Components;
 
 [RegisterComponent]
 [Access(typeof(ScottishAccentSystem))]
