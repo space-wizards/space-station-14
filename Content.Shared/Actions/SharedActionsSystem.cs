@@ -77,7 +77,7 @@ public abstract class SharedActionsSystem : EntitySystem
         while (worldActionQuery.MoveNext(out var uid, out var action))
         {
             if (IsCooldownActive(action) || !ShouldResetCharges(action))
-                return;
+                continue;
 
             ResetCharges(uid, dirty: true);
         }
@@ -86,7 +86,7 @@ public abstract class SharedActionsSystem : EntitySystem
         while (instantActionQuery.MoveNext(out var uid, out var action))
         {
             if (IsCooldownActive(action) || !ShouldResetCharges(action))
-                return;
+                continue;
 
             ResetCharges(uid, dirty: true);
         }
@@ -95,7 +95,7 @@ public abstract class SharedActionsSystem : EntitySystem
         while (entityActionQuery.MoveNext(out var uid, out var action))
         {
             if (IsCooldownActive(action) || !ShouldResetCharges(action))
-                return;
+                continue;
 
             ResetCharges(uid, dirty: true);
         }
@@ -284,6 +284,10 @@ public abstract class SharedActionsSystem : EntitySystem
     public virtual void UpdateAction(EntityUid? actionId, BaseActionComponent? action = null)
     {
         // See client-side code.
+        if (!ResolveActionData(actionId, ref action))
+            return;
+
+        action.LastUpdate = GameTiming.CurTime;
     }
 
     public void SetToggled(EntityUid? actionId, bool toggled)
