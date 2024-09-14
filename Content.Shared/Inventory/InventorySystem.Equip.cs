@@ -11,6 +11,7 @@ using Content.Shared.Item;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Strip.Components;
+using Content.Shared.Tag;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
@@ -32,9 +33,11 @@ public abstract partial class InventorySystem
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly TagSystem _tags = default!;
 
     [ValidatePrototypeId<ItemSizePrototype>]
     private const string PocketableItemSize = "Small";
+    private const string EquipOverrideTag = "SlotDependencyOverride";
 
     private void InitializeEquip()
     {
@@ -238,7 +241,7 @@ public abstract partial class InventorySystem
             return false;
 
         DebugTools.Assert(slotDefinition.Name == slot);
-        if (slotDefinition.DependsOn != null)
+        if (slotDefinition.DependsOn != null && !_tags.HasTag(itemUid, EquipOverrideTag))
         {
             if (!TryGetSlotEntity(target, slotDefinition.DependsOn, out EntityUid? slotEntity, inventory))
                 return false;
