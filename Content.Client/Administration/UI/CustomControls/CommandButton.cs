@@ -4,52 +4,73 @@ using Robust.Client.Console;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 
-namespace Content.Client.Administration.UI.CustomControls
+namespace Content.Client.Administration.UI.CustomControls;
+
+[Virtual]
+public class CommandButton : Button, IDocumentTag
 {
-    [Virtual]
-    public class CommandButton : Button, IDocumentTag
+    private ConfirmWindow? _window;
+
+    public string? Command { get; set; }
+    public string? RequiresConfirm { get; set; }
+
+
+    public CommandButton()
     {
-        public string? Command { get; set; }
+        OnPressed += Execute;
+    }
 
-        public CommandButton()
+    protected virtual bool CanPress()
+    {
+        return string.IsNullOrEmpty(Command) ||
+            IoCManager.Resolve<IClientConGroupController>().CanCommand(Command.Split(' ')[0]);
+    }
+
+    protected override void EnteredTree()
+    {
+        if (!CanPress())
         {
-            OnPressed += Execute;
+            Visible = false;
+        }
+    }
+
+    private void Confirm()
+    {
+        if (string.IsNullOrEmpty(Command))
+            return;
+
+        _window = new ConfirmWindow(Command);
+        _window.OpenCentered();
+    }
+
+    protected virtual void Execute(ButtonEventArgs obj)
+    {
+        if (string.IsNullOrEmpty(Command))
+            return;
+
+        if (RequiresConfirm != null) {
+            Logger.Error("confirm required");
+            Confirm();
+            Logger.Error("confirm invoke ended");
+            return;
         }
 
-        protected virtual bool CanPress()
+
+        IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand(Command);
+    }
+
+    public bool TryParseTag(Dictionary<string, string> args, [NotNullWhen(true)] out Control? control)
+    {
+        if (args.Count != 2 || !args.TryGetValue("Text", out var text) || !args.TryGetValue("Command", out var command))
         {
-            return string.IsNullOrEmpty(Command) ||
-                   IoCManager.Resolve<IClientConGroupController>().CanCommand(Command.Split(' ')[0]);
+            Logger.Error($"Invalid arguments passed to {nameof(CommandButton)}");
+            control = null;
+            return false;
         }
 
-        protected override void EnteredTree()
-        {
-            if (!CanPress())
-            {
-                Visible = false;
-            }
-        }
-
-        protected virtual void Execute(ButtonEventArgs obj)
-        {
-            // Default is to execute command
-            if (!string.IsNullOrEmpty(Command))
-                IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand(Command);
-        }
-
-        public bool TryParseTag(Dictionary<string, string> args, [NotNullWhen(true)] out Control? control)
-        {
-            if (args.Count != 2 || !args.TryGetValue("Text", out var text) || !args.TryGetValue("Command", out var command))
-            {
-                Logger.Error($"Invalid arguments passed to {nameof(CommandButton)}");
-                control = null;
-                return false;
-            }
-
-            Command = command;
-            Text = Loc.GetString(text);
-            control = this;
-            return true;
-        }
+        Command = command;
+        Text = Loc.GetString(text);
+        control = this;
+        return true;
     }
 }
