@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: JIPDawg
-  changes:
-  - message: Added Late join CryoSleepers to Origin.
-    type: Tweak
-  id: 6875
-  time: '2024-07-06T17:33:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29761
 - author: Beck Thompson
   changes:
   - message: Splashing reagents on players will now apply the correct amounts.
@@ -3919,3 +3912,10 @@
   id: 7374
   time: '2024-09-14T17:19:32.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32070
+- author: lzk228
+  changes:
+  - message: Command intercom now reinforced the same way as the security one.
+    type: Tweak
+  id: 7375
+  time: '2024-09-14T20:40:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32169
