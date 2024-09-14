@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: All nuclear operatives are now humans.
-    type: Tweak
-  id: 6869
-  time: '2024-07-04T02:29:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29693
 - author: metalgearsloth
   changes:
   - message: Made vox roundstart.
@@ -3920,3 +3913,10 @@
   id: 7368
   time: '2024-09-14T01:53:14.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32102
+- author: SlamBamActionman
+  changes:
+  - message: Briefcases can now be used as melee weapons.
+    type: Add
+  id: 7369
+  time: '2024-09-14T13:09:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32063
