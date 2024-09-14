@@ -1,55 +1,4 @@
 ﻿Entries:
-- author: nikthechampiongr
-  changes:
-  - message: The Elite Syndicate hardsuit is now slightly slower.
-    type: Tweak
-  - message: The Elite Syndicate hardsuit now costs 12 Telecrystals.
-    type: Tweak
-  id: 6862
-  time: '2024-07-03T00:31:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29429
-- author: eoineoineoin
-  changes:
-  - message: Artifact Analyzer now collides with walls
-    type: Fix
-  id: 6863
-  time: '2024-07-03T05:27:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28117
-- author: TheShuEd
-  changes:
-  - message: anomalies have the ability to gain invisibility behavior
-    type: Add
-  id: 6864
-  time: '2024-07-03T15:14:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29120
-- author: ArkiveDev
-  changes:
-  - message: Railings can now be constructed in all 4 orientations.
-    type: Fix
-  id: 6865
-  time: '2024-07-03T16:59:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29687
-- author: Rinary
-  changes:
-  - message: Fixed radial menus overlapping where there's many icons.
-    type: Fix
-  id: 6866
-  time: '2024-07-04T01:25:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29678
-- author: Plykiya
-  changes:
-  - message: An object's physics properly returns to normal after being pulled.
-    type: Fix
-  id: 6867
-  time: '2024-07-04T01:29:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29694
-- author: Plykiya
-  changes:
-  - message: You can now destroy portable flashers.
-    type: Fix
-  id: 6868
-  time: '2024-07-04T01:51:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29564
 - author: EmoGarbage404
   changes:
   - message: All nuclear operatives are now humans.
@@ -3916,3 +3865,58 @@
   id: 7361
   time: '2024-09-12T15:28:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31852
+- author: themias
+  changes:
+  - message: Fixed medical PDAs sometimes toggling their lights while scanning
+    type: Fix
+  id: 7362
+  time: '2024-09-13T13:59:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32091
+- author: Gorox221
+  changes:
+  - message: Mech pilots receive a warning before they are ejected from the mech.
+    type: Tweak
+  - message: Now, when removing the pilot of the mech, you need to not move.
+    type: Fix
+  id: 7363
+  time: '2024-09-13T14:01:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31649
+- author: slarticodefast
+  changes:
+  - message: Extradimensional orange, holymelon, meatwheat and world peas plant mutations
+      have been added. Obtain them by mutating oranges, watermelons, wheat and laughin'
+      peas respectively.
+    type: Add
+  id: 7364
+  time: '2024-09-13T14:02:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27624
+- author: ShadowCommander
+  changes:
+  - message: Fixed PDA sometimes showing uplink and music buttons when the PDA was
+      not able to use them.
+    type: Fix
+  id: 7365
+  time: '2024-09-13T14:19:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28373
+- author: Dezzzix
+  changes:
+  - message: Now you can wear a hood in void cloak
+    type: Add
+  id: 7366
+  time: '2024-09-13T15:02:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31061
+- author: PJB3005
+  changes:
+  - message: Fixed some powered machines working when unpowered if the panel is open.
+    type: Fix
+  id: 7367
+  time: '2024-09-13T23:58:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32135
+- author: qwerltaz
+  changes:
+  - message: The RCD can now place grilles and windows under shutters and cables under
+      doors.
+    type: Fix
+  id: 7368
+  time: '2024-09-14T01:53:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32102
