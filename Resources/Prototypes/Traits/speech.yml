@@ -5,7 +5,7 @@
   name: trait-accentless-name
   description: trait-accentless-desc
   category: SpeechTraits
-  cost: 2
+  cost: 1 # GreyStation - One Accent Policy
   components:
   - type: Accentless
     removes:
@@ -25,14 +25,14 @@
   components:
   - type: SouthernAccent
 
-- type: trait
-  id: PirateAccent
-  name: trait-pirate-accent-name
-  description: trait-pirate-accent-desc
-  category: SpeechTraits
-  cost: 1
-  components:
-  - type: PirateAccent
+#- type: trait
+#  id: PirateAccent
+#  name: trait-pirate-accent-name
+#  description: trait-pirate-accent-desc
+#  category: SpeechTraits
+#  cost: 1
+#  components:
+#  - type: PirateAccent
 
 - type: trait
   id: CowboyAccent
@@ -80,7 +80,7 @@
   name: trait-socialanxiety-name
   description: trait-socialanxiety-desc
   category: SpeechTraits
-  cost: 2
+  cost: 1 # GreyStation - One Accent Policy
   components:
   - type: StutteringAccent
     matchRandomProb: 0.1
@@ -93,6 +93,6 @@
   name: trait-frontal-lisp-name
   description: trait-frontal-lisp-desc
   category: SpeechTraits
-  cost: 2
+  cost: 1 # GreyStation - One Accent Policy
   components:
   - type: FrontalLisp

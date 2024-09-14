@@ -5,7 +5,7 @@
 - type: traitCategory
   id: SpeechTraits
   name: trait-category-speech
-  maxTraitPoints: 2
+  maxTraitPoints: 1 # GreyStation - Makes people more comprehensible.
 
 - type: traitCategory
   id: Quirks
