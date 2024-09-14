@@ -2,6 +2,35 @@
   id: ScottishAccent
   name: trait-scottish-accent-name
   description: trait-scottish-accent-desc
+  category: SpeechTraits
+  cost: 1
   traitGear: BagpipeInstrument
   components:
     - type: ScottishAccent
+
+- type: trait
+  id: FrenchAccent
+  name: trait-french-name
+  description: trait-french-desc
+  category: SpeechTraits
+  cost: 1
+  components:
+  - type: FrenchAccent
+
+- type: trait
+  id: SpanishAccent
+  name: trait-spanish-name
+  description: trait-spanish-desc
+  category: SpeechTraits
+  cost: 1
+  components:
+  - type: SpanishAccent
+
+- type: trait
+  id: RussianAccent
+  name: trait-russian-name
+  description: trait-russian-desc
+  category: SpeechTraits
+  cost: 1
+  components:
+  - type: RussianAccent
