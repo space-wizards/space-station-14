@@ -127,7 +127,7 @@ namespace Content.Server.PDA
 
         private void UpdateAllPdaUisOnStation()
         {
-            var query = EntityQueryEnumerator<PdaComponent>();
+            var query = AllEntityQuery<PdaComponent>();
             while (query.MoveNext(out var ent, out var comp))
             {
                 UpdatePdaUi(ent, comp);
