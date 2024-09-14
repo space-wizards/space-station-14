@@ -27,9 +27,6 @@ public sealed partial class SkeletonAccentSystem : EntitySystem
 
         var msg = message;
 
-        // apply word replacements
-        msg = _replacement.ApplyReplacements(msg, "skeleton");
-
         // Character manipulations:
         // At the start of words, any non-vowel + "one" becomes "bone", e.g. tone -> bone ; lonely -> bonely; clone -> clone (remains unchanged).
         msg = BoneRegex().Replace(msg, "bone");
