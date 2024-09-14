@@ -10,6 +10,8 @@
   name: asteroid rock
   description: A rocky asteroid.
   components:
+  - type: Tag
+    tags: [] # rewrite Wall tag
   - type: Transform
     noRot: true
   - type: IconSmooth
@@ -664,6 +666,8 @@
   name: rock
   suffix: planetmap
   components:
+    - type: Tag
+      tags: [] # rewrite Wall tag
     - type: Transform
       noRot: true
     - type: SoundOnGather
