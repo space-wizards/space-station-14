@@ -16,6 +16,7 @@
     - Ammonia
     - NitrousOxide
     - Frezon
+    - Water
     #- Helium3 TODO: fusion
     # remove everything except oxygen to maintain oxygen ratio
     overflowGases:
@@ -27,6 +28,7 @@
     - Ammonia
     - NitrousOxide
     - Frezon
+    - Water
     #- Helium3 TODO: fusion
   - type: AirIntake
   # for intake and filter to work
@@ -300,3 +302,37 @@
     containers:
       mech-battery-slot:
       - PowerCellHigh
+
+- type: entity
+  id: MechStepfather
+  parent: BaseMech
+  name: Rotund Stepfather
+  description: An advanced deep-sea mining unit, built to escort and assist with far-range mining operations and Trench research.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    noRot: true
+    sprite: Objects/Specific/Mech/mecha.rsi
+    layers:
+    - map: [ "enum.MechVisualLayers.Base" ]
+      state: ripley
+  - type: FootstepModifier
+    footstepSoundCollection:
+      path: /Audio/Mecha/sound_mecha_powerloader_step.ogg
+  - type: Mech
+    baseState: ripley
+    openState: ripley-open
+    brokenState: ripley-broken
+    mechToPilotDamageMultiplier: 0.75
+    pilotWhitelist:
+      components:
+        - HumanoidAppearance
+  - type: MeleeWeapon
+    hidden: true
+    attackRate: 1
+    damage:
+      types:
+        Blunt: 25
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2.25
+    baseSprintSpeed: 3.6
