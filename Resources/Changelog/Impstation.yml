@@ -1540,3 +1540,11 @@
   id: 200
   time: '2024-09-14T08:15:37.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/254
+- author: KingMudkipIII
+  changes:
+  - message: Testosterone and Estradiol can now be produced by chemists. (no ingame
+      effect)
+    type: Add
+  id: 201
+  time: '2024-09-14T14:23:42.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/256
