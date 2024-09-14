@@ -19,7 +19,7 @@
     - id: RandomSentience
     - id: SlimesSpawn
     - id: SolarFlare
-    - id: SnakeSpawn
+    #- id: SnakeSpawn # GreyStation - Replace for Ventbulls
     - id: SpiderClownSpawn
     - id: SpiderSpawn
     - id: VentClog
@@ -354,26 +354,26 @@
     - id: MobAdultSlimesYellowAngry
       prob: 0.02
 
-- type: entity
-  id: SnakeSpawn
-  parent: BaseStationEventShortDelay
-  components:
-  - type: StationEvent
-    startAnnouncement: station-event-vent-creatures-start-announcement
-    startAudio:
-      path: /Audio/Announcements/attention.ogg
-    earliestStart: 20
-    minimumPlayers: 15
-    weight: 5
-    duration: 60
-  - type: VentCrittersRule
-    entries:
-    - id: MobPurpleSnake
-      prob: 0.02
-    - id: MobSmallPurpleSnake
-      prob: 0.02
-    - id: MobCobraSpace
-      prob: 0.02
+#- type: entity # GreyStation - Replaced for Ventbulls
+#  id: SnakeSpawn
+#  parent: BaseStationEventShortDelay
+#  components:
+#  - type: StationEvent
+#    startAnnouncement: station-event-vent-creatures-start-announcement
+#    startAudio:
+#      path: /Audio/Announcements/attention.ogg
+#    earliestStart: 20
+#    minimumPlayers: 15
+#    weight: 5
+#    duration: 60
+#  - type: VentCrittersRule
+#    entries:
+#    - id: MobPurpleSnake
+#      prob: 0.02
+#    - id: MobSmallPurpleSnake
+#      prob: 0.02
+#    - id: MobCobraSpace
+#      prob: 0.02
 
 - type: entity
   id: SpiderSpawn
