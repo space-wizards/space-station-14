@@ -44,6 +44,10 @@
   id: AirlockArmory
 
 - type: wireLayout
+  parent: Airlock
+  id: AirlockExternal
+
+- type: wireLayout
   id: HighSec
   wires:
   - !type:PowerWireAction
@@ -52,11 +56,13 @@
   - !type:DoorBoltLightWireAction
   - !type:DoorTimingWireAction
   - !type:DoorSafetyWireAction
-  dummyWires: 5
+  - !type:AiInteractWireAction
+  dummyWires: 4
 
 - type: wireLayout
   id: Vending
   wires:
+  - !type:AiInteractWireAction
   - !type:PowerWireAction
   - !type:AccessWireAction
   - !type:LogWireAction
@@ -67,6 +73,7 @@
 - type: wireLayout
   id: AirAlarm
   wires:
+  - !type:AiInteractWireAction
   - !type:PowerWireAction
   - !type:AccessWireAction
   - !type:LogWireAction
@@ -95,6 +102,7 @@
   - !type:ArcadeOverflowWireAction
   - !type:ArcadePlayerInvincibleWireAction
   - !type:ArcadeEnemyInvincibleWireAction
+  - !type:AiInteractWireAction
 
 - type: wireLayout
   id: SurveillanceCamera
@@ -153,3 +161,17 @@
     - !type:DelayWireAction
     - !type:ProceedWireAction
     - !type:BoomWireAction
+    
+- type: wireLayout
+  id: Jukebox
+  dummyWires: 2
+  wires:
+    - !type:PowerWireAction
+    - !type:AiInteractWireAction
+    
+- type: wireLayout
+  id: AnomalyGenerator
+  dummyWires: 2
+  wires:
+    - !type:PowerWireAction
+    - !type:AiInteractWireAction

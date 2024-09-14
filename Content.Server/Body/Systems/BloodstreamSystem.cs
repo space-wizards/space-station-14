@@ -1,5 +1,4 @@
 using Content.Server.Body.Components;
-using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.EntityEffects.Effects;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Forensics;
@@ -37,7 +36,7 @@ public sealed class BloodstreamSystem : EntitySystem
     [Dependency] private readonly PuddleSystem _puddleSystem = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly SharedDrunkSystem _drunkSystem = default!;
-    [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly SharedStutteringSystem _stutteringSystem = default!;
     [Dependency] private readonly AlertsSystem _alertsSystem = default!;
     [Dependency] private readonly ForensicsSystem _forensicsSystem = default!;
@@ -178,9 +177,16 @@ public sealed class BloodstreamSystem : EntitySystem
 
     private void OnComponentInit(Entity<BloodstreamComponent> entity, ref ComponentInit args)
     {
-        var chemicalSolution = _solutionContainerSystem.EnsureSolution(entity.Owner, entity.Comp.ChemicalSolutionName);
-        var bloodSolution = _solutionContainerSystem.EnsureSolution(entity.Owner, entity.Comp.BloodSolutionName);
-        var tempSolution = _solutionContainerSystem.EnsureSolution(entity.Owner, entity.Comp.BloodTemporarySolutionName);
+        if (!_solutionContainerSystem.EnsureSolution(entity.Owner,
+                entity.Comp.ChemicalSolutionName,
+                out var chemicalSolution) ||
+            !_solutionContainerSystem.EnsureSolution(entity.Owner,
+                entity.Comp.BloodSolutionName,
+                out var bloodSolution) ||
+            !_solutionContainerSystem.EnsureSolution(entity.Owner,
+                entity.Comp.BloodTemporarySolutionName,
+                out var tempSolution))
+            return;
 
         chemicalSolution.MaxVolume = entity.Comp.ChemicalMaxVolume;
         bloodSolution.MaxVolume = entity.Comp.BloodMaxVolume;
@@ -235,7 +241,7 @@ public sealed class BloodstreamSystem : EntitySystem
         }
 
         // Heat damage will cauterize, causing the bleed rate to be reduced.
-        else if (totalFloat < 0 && oldBleedAmount > 0)
+        else if (totalFloat <= ent.Comp.BloodHealedSoundThreshold && oldBleedAmount > 0)
         {
             // Magically, this damage has healed some bleeding, likely
             // because it's burn damage that cauterized their wounds.
