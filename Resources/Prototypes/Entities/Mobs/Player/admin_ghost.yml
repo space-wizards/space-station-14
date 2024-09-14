@@ -92,6 +92,8 @@
     prototypes: [ MobAghostGear ]
   - type: BypassInteractionChecks
   - type: NavMapWarp
+    sounds:
+      collection: StaticShort
 
 - type: entity
   id: ActionAGhostShowSolar

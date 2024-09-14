@@ -41,7 +41,7 @@ public abstract class SharedNavMapSystem : EntitySystem
         // Data handling events
         SubscribeLocalEvent<NavMapComponent, ComponentGetState>(OnGetState);
 
-        SubscribeNetworkEvent<MapWarpRequest>(OnMapWarp);
+        SubscribeAllEvent<MapWarpRequest>(OnMapWarp);
 
         _doorQuery = GetEntityQuery<NavMapDoorComponent>();
     }
@@ -112,8 +112,7 @@ public abstract class SharedNavMapSystem : EntitySystem
         if (xform.MapUid is null)
             return;
 
-        var index = _random.Next(warpComp.Sounds.Count);
-        _audio.PlayGlobal(warpComp.Sounds[index],
+        _audio.PlayGlobal(warpComp.Sounds,
             GetEntity(args.Uid),
             AudioParams.Default.WithVariation(warpComp.PitchVariation));
 

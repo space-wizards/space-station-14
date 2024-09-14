@@ -189,7 +189,7 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: PaladinLawset
-    
+
 - type: entity
   id: LiveLetLiveCircuitBoard
   parent: BaseElectronics
@@ -201,7 +201,7 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: LiveLetLiveLaws
-    
+
 - type: entity
   id: StationEfficiencyCircuitBoard
   parent: BaseElectronics
@@ -225,7 +225,7 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: RobocopLawset
-    
+
 - type: entity
   id: OverlordCircuitBoard
   parent: BaseElectronics
@@ -237,7 +237,7 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: OverlordLawset
-    
+
 - type: entity
   id: DungeonMasterCircuitBoard
   parent: BaseElectronics
@@ -273,7 +273,7 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: AntimovLawset
-    
+
 - type: entity
   id: NutimovCircuitBoard
   parent: BaseElectronics
@@ -432,6 +432,8 @@
       shader: unshaded
       map: ["base"]
   - type: NavMapWarp
+    sounds:
+      collection: StaticShort
 
 # Borgs
 - type: entity
