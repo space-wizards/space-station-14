@@ -89,7 +89,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 return;
             }
 
-            if (vent.IsPressureLockoutManuallyDisabled && (_timing.CurTime - vent.ManualLockoutDisabledAt).TotalSeconds > vent.ManualLockoutDisabledDuration)
+            if (vent.IsPressureLockoutManuallyDisabled && (_timing.CurTime >= vent.ManualLockoutReenabledAt))
             {
                 vent.IsPressureLockoutManuallyDisabled = false;
             }
@@ -354,7 +354,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         }
         private void OnVentScrewed(EntityUid uid, GasVentPumpComponent component, VentScrewedDoAfterEvent args)
         {
-            component.ManualLockoutDisabledAt = _timing.CurTime;
+            component.ManualLockoutReenabledAt = _timing.CurTime + component.ManualLockoutDisabledDuration;
             component.IsPressureLockoutManuallyDisabled = true;
         }
     }
