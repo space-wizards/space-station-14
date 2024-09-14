@@ -1,16 +1,44 @@
 ## Plushies
 
 - type: entity
+  id: SilentPlushie
   parent: BaseItem
-  id: BasePlushie
   abstract: true
   components:
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
   - type: Tag
     tags:
-      - Payload
-      - ClothMade
+    - Payload
+    - ClothMade
+  - type: UseDelay
+    delay: 1.0
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    damage:
+      types:
+        Blunt: 0
+  - type: PhysicalComposition
+    materialComposition:
+      Cloth: 100
+  - type: StaticPrice
+    price: 5
+  - type: Food
+    requiresSpecialDigestion: true
+    delay: 2
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 10
+
+- type: entity
+  parent: SilentPlushie
+  id: BasePlushie
+  abstract: true
+  components:
   - type: EmitSoundOnUse
     sound:
       collection: ToySqueak
@@ -26,32 +54,12 @@
   - type: EmitSoundOnTrigger
     sound:
       collection: ToySqueak
-  - type: UseDelay
-    delay: 1.0
   - type: MeleeWeapon
-    wideAnimationRotation: 180
     soundHit:
       collection: ToySqueak
-    damage:
-      types:
-        Blunt: 0
-  - type: PhysicalComposition
-    materialComposition:
-      Cloth: 100
-  - type: StaticPrice
-    price: 5
   - type: Food
-    requiresSpecialDigestion: true
     useSound:
       collection: ToySqueak
-    delay: 2
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 10
-        reagents:
-        - ReagentId: Fiber
-          Quantity: 10
 
 - type: entity
   parent: BasePlushie
@@ -760,7 +768,7 @@
     soundHit:
       path: /Audio/Weapons/Xeno/alien_spitacid.ogg
 - type: entity
-  parent: BasePlushie
+  parent: SilentPlushie # Linux doesn't have sound
   id: PlushiePenguin
   name: penguin plushie
   description: I use arch btw!
