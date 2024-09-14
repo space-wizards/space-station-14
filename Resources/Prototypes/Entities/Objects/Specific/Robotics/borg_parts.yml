@@ -412,6 +412,96 @@
         - Trash
         - BorgMiningTorso
 
+# cargo parts
+- type: entity
+  id: LeftArmBorgCargo
+  parent: BaseBorgArmLeft
+  name: cargo cyborg left arm
+  components:
+    - type: Sprite
+      state: cargo_l_arm
+    - type: Icon
+      state: cargo_l_arm
+    - type: Tag
+      tags:
+        - Trash
+        - BorgArm
+        - BorgCargoLArm
+
+- type: entity
+  id: RightArmBorgCargo
+  parent: BaseBorgArmRight
+  name: cargo cyborg right arm
+  components:
+    - type: Sprite
+      state: cargo_r_arm
+    - type: Icon
+      state: cargo_r_arm
+    - type: Tag
+      tags:
+        - Trash
+        - BorgArm
+        - BorgCargoRArm
+
+- type: entity
+  id: LeftLegBorgCargo
+  parent: BaseBorgLegLeft
+  name: cargo cyborg left leg
+  components:
+    - type: Sprite
+      state: cargo_l_leg
+    - type: Icon
+      state: cargo_l_leg
+    - type: Tag
+      tags:
+        - Trash
+        - BorgLeg
+        - BorgCargoLLeg
+
+- type: entity
+  id: RightLegBorgCargo
+  parent: BaseBorgLegRight
+  name: cargo cyborg right leg
+  components:
+    - type: Sprite
+      state: cargo_r_leg
+    - type: Icon
+      state: cargo_r_leg
+    - type: Tag
+      tags:
+        - Trash
+        - BorgLeg
+        - BorgCargoRLeg
+
+- type: entity
+  id: HeadBorgCargo
+  parent: BaseBorgHead
+  name: cargo cyborg head
+  components:
+    - type: Sprite
+      state: cargo_head
+    - type: Icon
+      state: cargo_head
+    - type: Tag
+      tags:
+        - Trash
+        - BorgHead
+        - BorgCargoHead
+
+- type: entity
+  id: TorsoBorgCargo
+  parent: BaseBorgTorso
+  name: cargo cyborg torso
+  components:
+    - type: Sprite
+      state: cargo_chest
+    - type: Icon
+      state: cargo_chest
+    - type: Tag
+      tags:
+        - Trash
+        - BorgCargoTorso
+
 # service parts
 - type: entity
   id: LeftArmBorgService

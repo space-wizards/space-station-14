@@ -68,6 +68,7 @@ petting-success-cleanbot = You pet {THE($target)} on {POSS-ADJ($target)} damp me
 petting-success-medibot = You pet {THE($target)} on {POSS-ADJ($target)} sterile metal head.
 petting-success-generic-cyborg = You pet {THE($target)} on {POSS-ADJ($target)} metal head.
 petting-success-salvage-cyborg = You pet {THE($target)} on {POSS-ADJ($target)} dirty metal head.
+petting-success-cargo-cyborg = You pet {THE($target)} on {POSS-ADJ($target)} scratched metal head.
 petting-success-engineer-cyborg = You pet {THE($target)} on {POSS-ADJ($target)} reflective metal head.
 petting-success-janitor-cyborg = You pet {THE($target)} on {POSS-ADJ($target)} damp metal head.
 petting-success-medical-cyborg = You pet {THE($target)} on {POSS-ADJ($target)} sterile metal head.
