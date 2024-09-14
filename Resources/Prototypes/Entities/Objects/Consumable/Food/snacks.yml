@@ -110,6 +110,7 @@
   - type: Tag
     tags:
       - FoodSnack
+      - ReptilianFood
   - type: SpawnItemsOnUse
     items:
       - id: FoodPacketChocolateTrash
