@@ -1,0 +1,32 @@
+<Document>
+  # Station AI
+  <Box>
+    <GuideEntityEmbed Entity="SignAi" Caption="Sign indicating the AI Core"/>
+  </Box>
+  The [color=cyan]Station AI[/color], not unlike [color=#a4885c]cyborgs[/color], is a [color=#a4885c]law-bound[/color] computer construct that works to assist the station's [color=#a4885c]crew[/color]. On most stations it can be found in a reinforced core, built mostly away from the main station body. 
+  <Box>
+    <GuideEntityEmbed Entity="PlayerStationAi" Caption="A Station AI frame, without an AI installed."/>
+  </Box>
+  
+  ## AI Abilities
+  The [color=cyan]Station AI[/color] is able to:
+  - Listen to and speak on all radio channels, including the exclusive-to-silicons [color=#2ED2FD]Binary[/color] ([color=#2ED2FD]:b[/color]) channel.
+  - Analyze various station-status interfaces, derived from their human-readable computer counterparts.
+  - Interact with [color=#a4885c]airlocks[/color] and other various electronic equipment, such as [color=#a4885c]air alarms[/color] and [color=#a4885c]APCs[/color].
+  - Act as a dispatcher for the station's [color=#a4885c]cyborg[/color] population to rapidly inform them of situations needing their attention.
+
+  The AI can only see where there are [color=#a4885c]surveillance cameras[/color], in areas too far from camera coverage, its vision appears as TV-static. To its player and to spectators, the location the AI is currently looking at is indicated by the [color=#a4885c]AI Eye[/color]. 
+  <Box>
+    <GuideEntityEmbed Entity="SurveillanceCameraGeneral" Caption="A surveillance camera."/>
+  </Box>
+  ## AI Laws
+  <Box>
+    <GuideEntityEmbed Entity="SignAiUpload" Caption=""/>
+  </Box>
+  As a [color=#a4885c]law-bound[/color] silicon, the [color=cyan]Station AI[/color] must obey the laws programmed into it. The [color=#c96dbf]Research Director[/color] and [color=#fcdf03]Captain[/color] of the station have access to the [color=#a4885c]AI Upload Console[/color], a computer capable of reading the instructions printed on a [color=#a4885c]law board[/color] and storing them as the [color=cyan]Station AI[/color]'s [color=#a4885c]lawset[/color].
+  <Box>
+    <GuideEntityEmbed Entity="StationAiUploadComputer" Caption="The AI Upload Console."/>
+    <GuideEntityEmbed Entity="NTDefaultCircuitBoard" Caption="A law board."/>
+  </Box>
+  Be aware that most servers have [textlink="rules" link="SiliconRules"] regarding [color=#a4885c]silicon laws[/color] and behavior.
+</Document>
