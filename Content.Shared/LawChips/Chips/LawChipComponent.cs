@@ -7,8 +7,10 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.LawChips.Chips;
 
 [RegisterComponent, NetworkedComponent]
-public sealed partial class BlankLawChipComponent : Component
+public sealed partial class LawChipComponent : Component
 {
+    [DataField("isPrinted")]
+    public bool IsPrinted = false;
 }
 
 [Serializable, NetSerializable]

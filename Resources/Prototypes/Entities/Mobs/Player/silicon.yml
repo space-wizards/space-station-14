@@ -143,6 +143,14 @@
    - type: ItemToggle
      predictable: false
    - type: JudgeInterface
+     chipSlot:
+      name: device-law-chip-name-blank
+      ejectSound: /Audio/Machines/id_swipe.ogg
+      insertSound: /Audio/Machines/id_insert.ogg
+      whitelist:
+        components:
+        - LawChip
+   - type: ItemSlots
 
 - type: entity
   id: LawChipBlank
@@ -164,7 +172,8 @@
             Defective:  { state: defective }
             Hacked:     { state: hacked }
             Custom:     { state: custom }
-  - type: BlankLawChip
+  - type: LawChip
+
        
 
 # Items
