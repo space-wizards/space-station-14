@@ -6,6 +6,7 @@ using Content.Server.Stack;
 using Content.Server.Store.Components;
 using Content.Shared.Actions;
 using Content.Shared.Database;
+using Content.Shared.EntityTable;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Mind;
@@ -31,6 +32,7 @@ public sealed partial class StoreSystem
     [Dependency] private readonly StackSystem _stack = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly EntityTableSystem _entityTable = default!;
 
     private void InitializeUi()
     {
@@ -193,6 +195,31 @@ public sealed partial class StoreSystem
                 while (childEnumerator.MoveNext(out var child))
                 {
                     component.BoughtEntities.Add(child);
+                }
+            }
+        }
+
+        // pick an option from the entity table and spawn it
+        if (listing.ProductEntityTable != null)
+        {
+            var products = _entityTable.GetSpawns(listing.ProductEntityTable);
+
+            foreach (var proto in products)
+            {
+                var product = Spawn(proto, Transform(buyer).Coordinates);
+                _hands.PickupOrDrop(buyer, product);
+
+                HandleRefundComp(uid, component, product);
+
+                var xForm = Transform(product);
+
+                if (xForm.ChildCount > 0)
+                {
+                    var childEnumerator = xForm.ChildEnumerator;
+                    while (childEnumerator.MoveNext(out var child))
+                    {
+                        component.BoughtEntities.Add(child);
+                    }
                 }
             }
         }
