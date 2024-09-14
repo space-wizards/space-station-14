@@ -121,6 +121,18 @@
 
 - type: entity
   parent: ImmovableRodKeepTilesStill
+  id: ImmovableRodFinFin
+  name: immovable Fin Fin
+  description: Your best friend! Don't touch him though.
+  components:
+  - type: Sprite
+    sprite: Mobs/Pets/finfin.rsi
+    state: finfin
+    rotation: 0
+    noRot: false
+
+- type: entity
+  parent: ImmovableRodKeepTilesStill
   id: ImmovableRodClown
   name: immovable clown
   description: Ejected from the neighbouring station one solar system over. HONK!
