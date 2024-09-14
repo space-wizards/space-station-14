@@ -17,7 +17,8 @@
       effect: !type:PlantSpeciesChange
     - name: Unviable
       baseOdds: 0.109
-      effect: !type:PlantUnviable
+      effect: !type:PlantChangeStat
+        targetValue: Viable
     - name: ChangeWaterConsumption
       baseOdds: 0.018
       persists: false
