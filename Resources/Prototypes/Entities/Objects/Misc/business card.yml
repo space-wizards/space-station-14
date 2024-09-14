@@ -6,7 +6,7 @@
   components:
     - type: Sprite
       sprite: Objects/Misc/Business_сard.rsi
-      state: Synicate card
+      state: Synicate_card
     - type: Item
       size: Tiny
     - type: Tag
