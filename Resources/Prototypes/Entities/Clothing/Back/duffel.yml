@@ -45,7 +45,7 @@
 - type: entity
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelCaptain
-  name: captain's duffel bag
+  name: overseer's duffel bag
   description: A large duffel bag for holding extra captainly goods.
   components:
   - type: Sprite

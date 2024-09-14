@@ -1,8 +1,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckMantleCap
-  name: captain's mantle
-  description: A comfortable and chique mantle befitting of only the most experienced captain.
+  name: overseer's mantle
+  description: A comfortable and chique mantle, perfect for the sholders of an overseer.
   components:
   - type: Sprite
     sprite: Clothing/Neck/mantles/capmantle.rsi
@@ -19,7 +19,7 @@
     sprite: Clothing/Neck/mantles/cemantle.rsi
   - type: Clothing
     sprite: Clothing/Neck/mantles/cemantle.rsi
-    
+
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckMantleCMO
@@ -30,7 +30,7 @@
     sprite: Clothing/Neck/mantles/cmomantle.rsi
   - type: Clothing
     sprite: Clothing/Neck/mantles/cmomantle.rsi
-    
+
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckMantleHOP
@@ -41,7 +41,7 @@
     sprite: Clothing/Neck/mantles/hopmantle.rsi
   - type: Clothing
     sprite: Clothing/Neck/mantles/hopmantle.rsi
-    
+
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckMantleHOS
@@ -52,7 +52,7 @@
     sprite: Clothing/Neck/mantles/hosmantle.rsi
   - type: Clothing
     sprite: Clothing/Neck/mantles/hosmantle.rsi
-    
+
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckMantleRD
@@ -73,4 +73,4 @@
   - type: Sprite
     sprite: Clothing/Neck/mantles/qmmantle.rsi
   - type: Clothing
-    sprite: Clothing/Neck/mantles/qmmantle.rsi  
+    sprite: Clothing/Neck/mantles/qmmantle.rsi

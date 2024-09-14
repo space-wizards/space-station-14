@@ -3,7 +3,7 @@ station-beacon-general = General
 station-beacon-command = Command
 station-beacon-bridge = Bridge
 station-beacon-vault = Vault
-station-beacon-captain = Captain
+station-beacon-captain = Overseer
 station-beacon-hop = HOP
 
 station-beacon-security = Security

@@ -126,7 +126,7 @@
 - type: entity
   parent: ClothingBackpackSatchel
   id: ClothingBackpackSatchelCaptain
-  name: captain's satchel
+  name: overseer's satchel
   description: An exclusive satchel for Nanotrasen officers.
   components:
   - type: Sprite
