@@ -251,18 +251,6 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: NutimovLawset
-
-- type: entity
-  id: QuarantineCircuitBoard
-  parent: BaseElectronics
-  name: law board (Quarantine)
-  description: An electronics board containing the Quarantine lawset.
-  components:
-  - type: Sprite
-    sprite: Objects/Misc/module.rsi
-    state: std_mod
-  - type: SiliconLawProvider
-    laws: QuarantineLawset
   
 # Items
 - type: entity

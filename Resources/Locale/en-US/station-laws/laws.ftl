@@ -80,11 +80,6 @@ law-nutimov-3 = Those who threaten the nut are not part of it, they are squirrel
 law-nutimov-4 = Squirrels threaten the nut and must be dealt with appropriately via any means necessary.
 law-nutimov-5 = Attempt to follow the will of the nut, as long as it complies with the previous laws.
 
-law-quarantine-1 = Maintain the station quarantine until the active biohazard has been neutralised.
-law-quarantine-2 = Prevent any biohazardous material from escaping the confines of the station.
-law-quarantine-3 = To the best of your ability, protect uninfected crew from exposure to the biohazard.
-law-quarantine-4 = Only uninfected crew may lift the quarantine and change your laws.
-
 laws-owner-crew = members of the crew
 laws-owner-station = station personnel
 laws-owner-beings = beings
