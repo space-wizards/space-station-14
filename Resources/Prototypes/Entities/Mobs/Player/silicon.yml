@@ -254,19 +254,7 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: QuarantineLawset
-
-- type: entity
-  id: HippocraticOathCircuitBoard
-  parent: BaseElectronics
-  name: circuit board (Hippocratic Oath)
-  description: An electronics board containing the Hippocratic Oath lawset.
-  components:
-  - type: Sprite
-    sprite: Objects/Misc/module.rsi
-    state: std_mod
-  - type: SiliconLawProvider
-    laws: HippocraticOathLawset
-
+  
 # Items
 - type: entity
   id: Intellicard
