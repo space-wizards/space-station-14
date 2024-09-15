@@ -459,14 +459,14 @@
 
 # Uplink items
 - type: entity
-  parent: [BoxVial, BaseSyndicateContraband]
+  parent: [BoxCardboard, BaseSyndicateContraband]
   id: MaliciousLawsKit
   name: dangerous laws kit
   description: A collection of law boards that make the station AI significantly less friendly.
   components:
   - type: Storage
     grid:
-    - 0,0,2,2
+    - 0,0,1,1
   - type: StorageFill
     contents:
       - id: OverlordCircuitBoard
