@@ -610,6 +610,7 @@
   loadouts:
   - CargoTechnicianJumpsuit
   - CargoTechnicianJumpskirt
+  - CargoTechnicianOveralls
 
 - type: loadoutGroup
   id: CargoTechnicianBackpack
