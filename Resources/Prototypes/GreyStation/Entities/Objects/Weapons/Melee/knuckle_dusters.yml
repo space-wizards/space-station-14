@@ -2,7 +2,7 @@
   name: bloody knuckles
   parent: BaseItem
   id: BloodyKnuckleDuster
-  description: You get a certain rush wearing these gloves while tearing flesh off with each swing. These are very bloody.
+  description: Knuckle dusters that can land gruesome blows. They are very bloody.
   components:
   - type: Item
     size: Small
@@ -16,10 +16,10 @@
   - type: MeleeWeapon
     wideAnimationRotation: -180
     attackRate: 1
-    range: .75
+    range: 1
     damage:
       types:
-        Blunt: 8
+        Blunt: 1
     soundHit:
       collection: KnuckleDuster
     params:
@@ -30,13 +30,6 @@
       path: /Audio/GreyStation/Misc/drawknife.ogg
       params:
         volume: -6
-  - type: IncreaseDamageOnWield
-    damage:
-      types:
-        Blunt: 5
-        Slash: 5
-    bluntStaminaDamageFactor: 1.35
-  - type: DisarmMalus
   - type: LeechOnHit
     leech:
       groups:
