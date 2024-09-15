@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: Beck Thompson
-  changes:
-  - message: Splashing reagents on players will now apply the correct amounts.
-    type: Fix
-  id: 6876
-  time: '2024-07-07T03:52:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29763
-- author: Tayrtahn
-  changes:
-  - message: Dead bodies will no longer remain standing after being unbuckled from
-      chairs.
-    type: Fix
-  id: 6877
-  time: '2024-07-07T06:20:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29741
 - author: Simyon
   changes:
   - message: Ratkings now require at least 30 players in order to spawn.
@@ -3919,3 +3904,17 @@
   id: 7375
   time: '2024-09-14T20:40:38.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32169
+- author: de0rix
+  changes:
+  - message: Animals in critical state now all have proper sprites.
+    type: Fix
+  id: 7376
+  time: '2024-09-15T01:53:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32175
+- author: notafet
+  changes:
+  - message: Pressure and volume pumps now require power to operate.
+    type: Tweak
+  id: 7377
+  time: '2024-09-15T01:58:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28995
