@@ -153,9 +153,10 @@ public sealed partial class RevenantSystem : EntitySystem
         if (component.Essence <= 0)
         {
             component.Essence = 0;
-            Log.Debug($"Spawning stasisObj at {Transform(uid).Coordinates}");
+            _statusEffects.TryRemoveAllStatusEffects(uid);
             var stasisObj = Spawn(component.SpawnOnDeathPrototype, Transform(uid).Coordinates);
             AddComp(stasisObj, new RevenantStasisComponent(component.StasisTime, (uid, component)));
+            // TODO: Make a RevenantInStasisComponent and attach that to the inert Revenant entity
             if (_mind.TryGetMind(uid, out var mindId, out var _))
                 _mind.TransferTo(mindId, stasisObj);
             _transformSystem.DetachEntity(uid, Comp<TransformComponent>(uid));

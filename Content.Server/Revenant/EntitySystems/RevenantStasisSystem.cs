@@ -1,12 +1,19 @@
+using Content.Server.Bible;
+using Content.Server.Bible.Components;
 using Content.Server.Ghost.Roles;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Mind;
 using Content.Server.Revenant.Components;
 using Content.Shared.Alert;
+using Content.Shared.DoAfter;
 using Content.Shared.Examine;
+using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Movement.Components;
+using Content.Shared.Popups;
+using Content.Shared.Revenant;
 using Content.Shared.StatusEffect;
+using Robust.Shared.Player;
 
 namespace Content.Server.Revenant.EntitySystems;
 
@@ -17,6 +24,8 @@ public sealed partial class RevenantStasisSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly GhostRoleSystem _ghostRoles = default!;
     [Dependency] private readonly MetaDataSystem _meta = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
 
     [ValidatePrototypeId<StatusEffectPrototype>]
     private const string RevenantStasisId = "Stasis";
@@ -30,6 +39,10 @@ public sealed partial class RevenantStasisSystem : EntitySystem
         SubscribeLocalEvent<RevenantStasisComponent, StatusEffectEndedEvent>(OnStatusEnded);
         SubscribeLocalEvent<RevenantStasisComponent, ChangeDirectionAttemptEvent>(OnAttemptDirection);
         SubscribeLocalEvent<RevenantStasisComponent, ExaminedEvent>(OnExamine);
+
+        // TODO: This code should be in a shared system
+        SubscribeLocalEvent<RevenantStasisComponent, AfterInteractUsingEvent>(OnBibleInteract, before: [typeof(BibleSystem)]);
+        SubscribeLocalEvent<RevenantStasisComponent, ExorciseRevenantDoAfterEvent>(OnExorcise);
     }
 
     private void OnStartup(EntityUid uid, RevenantStasisComponent component, ComponentStartup args)
@@ -78,5 +91,62 @@ public sealed partial class RevenantStasisSystem : EntitySystem
     private void OnAttemptDirection(EntityUid uid, RevenantStasisComponent comp, ChangeDirectionAttemptEvent args)
     {
         args.Cancel();
+    }
+
+    private void OnBibleInteract(EntityUid uid, RevenantStasisComponent comp, ref AfterInteractUsingEvent args)
+    {
+        if (args.Handled)
+            return;
+        if (args.Target == null)
+            return;
+        var bible = args.Used;
+        var target = args.Target.Value;
+        var user = args.User;
+        if (!HasComp<BibleComponent>(args.Used))
+            return;
+
+        if (!TryComp<RevenantStasisComponent>(target, out var stasis))
+            return;
+
+        var revenant = stasis.Revenant;
+
+        if (!HasComp<BibleUserComponent>(args.User))
+        {
+            _popup.PopupEntity(Loc.GetString("revenant-exorcise-fail", ("bible", bible)), user, user);
+            return;
+        }
+
+        var doAfterEventArgs = new DoAfterArgs(EntityManager, user, TimeSpan.FromSeconds(10), new ExorciseRevenantDoAfterEvent(), target, target, bible)
+        {
+            BreakOnMove = true,
+            BreakOnWeightlessMove = false,
+            BreakOnDamage = true,
+            NeedHand = true,
+            DistanceThreshold = 1f
+        };
+
+        if (!_doAfter.TryStartDoAfter(doAfterEventArgs))
+            return;
+
+        args.Handled = true;
+
+        _popup.PopupEntity(Loc.GetString("revenant-exorcise-begin-user", [("bible", bible), ("user", user), ("revenant", revenant.Owner)]), user, user);
+        _popup.PopupEntity(Loc.GetString("revenant-exorcise-begin-target", [("bible", bible), ("user", user), ("revenant", revenant.Owner)]), target, target, PopupType.MediumCaution);
+        _popup.PopupEntity(Loc.GetString("revenant-exorcise-begin-other", [("bible", bible), ("user", user), ("revenant", revenant.Owner)]), target, Filter.Pvs(target).RemovePlayersByAttachedEntity([user, target]), true);
+    }
+
+    private void OnExorcise(EntityUid uid, RevenantStasisComponent comp, ExorciseRevenantDoAfterEvent args)
+    {
+        if (args.Cancelled)
+            return;
+        if (args.Target == null || args.Used == null)
+            return;
+
+        var target = args.Target.Value;
+        var used = args.Used.Value;
+
+        _popup.PopupEntity(Loc.GetString("revenant-exorcise-success", [("bible", used), ("user", args.User), ("revenant", comp.Revenant.Owner)]), target);
+
+        RemComp<RevenantStasisComponent>(args.Target.Value);
     }
 }
