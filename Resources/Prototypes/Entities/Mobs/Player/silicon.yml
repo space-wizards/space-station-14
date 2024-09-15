@@ -185,7 +185,7 @@
 
 - type: entity
   id: OverlordCircuitBoard
-  parent: BaseElectronics
+  parent: [BaseElectronics, BaseSyndicateContraband]
   name: circuit board (Overlord)
   description: An electronics board containing the Overlord lawset.
   components:
@@ -221,7 +221,7 @@
 
 - type: entity
   id: AntimovCircuitBoard
-  parent: BaseElectronics
+  parent: [BaseElectronics, BaseSyndicateContraband]
   name: circuit board (Antimov)
   description: An electronics board containing the Antimov lawset.
   components:
