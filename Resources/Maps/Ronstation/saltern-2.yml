@@ -108,7 +108,7 @@ entities:
           version: 6
         1,1:
           ind: 1,1
-          tiles: aAAAAAAAeQAAAAAAWQAAAAABWQAAAAADWQAAAAACWQAAAAAAWQAAAAAAWQAAAAABWQAAAAABZAAAAAAAWQAAAAABWQAAAAABWQAAAAABZAAAAAAAeQAAAAAAeQAAAAAAaAAAAAAAeQAAAAAAWQAAAAAAWQAAAAAAWQAAAAABWQAAAAADWQAAAAACWQAAAAADWQAAAAAAZAAAAAAAWQAAAAACWQAAAAADTAAAAAAAZAAAAAACeQAAAAAAeQAAAAAAaAAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAWQAAAAAAWQAAAAABWQAAAAADeQAAAAAAeQAAAAAAeQAAAAAATAAAAAAAWQAAAAADTAAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeAAAAAAAeQAAAAAAWQAAAAAAWQAAAAABWQAAAAACeQAAAAAAZAAAAAADaAAAAAAAaAAAAAAAaAAAAAAAaAAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeAAAAAAAeQAAAAAAWQAAAAAAWQAAAAACWQAAAAADeQAAAAAAZAAAAAAAaAAAAAAAaAAAAAAAaAAAAAAAaAAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeAAAAAAAeQAAAAAAWQAAAAACWQAAAAACWQAAAAACeQAAAAAAZAAAAAACaAAAAAAAaAAAAAAAaAAAAAAAaAAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeAAAAAAAeQAAAAAAWQAAAAABWQAAAAADWQAAAAACeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAAAAAAAAAAAAAAAAAeAAAAAAAeQAAAAAAWQAAAAAAWQAAAAAAWQAAAAABeQAAAAAAeAAAAAAAAAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAAAAAAAAAAAAAAAAAeAAAAAAAeQAAAAAAWQAAAAADWQAAAAABWQAAAAADeQAAAAAAeAAAAAAAAAAAAAAAAAAAAAAAeAAAAAAAAAAAAAAAAAAAAAAAeAAAAAAAeAAAAAAAAAAAAAAAAAAAAAAAeQAAAAAAeQAAAAAAWQAAAAABWQAAAAAAWQAAAAABeQAAAAAAeQAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAAAAAAAAAAAAAAAAAeAAAAAAAeAAAAAAAAAAAAAAAAAAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAAAAAAAAAAAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAAAAAAAAAAAAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAAAAAAAAAAAAAAAAAeAAAAAAAAAAAAAAAAAAAAAAAeAAAAAAAeAAAAAAAAAAAAAAAAAAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeAAAAAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeAAAAAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+          tiles: aAAAAAAAeQAAAAAAWQAAAAABWQAAAAADWQAAAAACWQAAAAAAWQAAAAAAWQAAAAABWQAAAAABZAAAAAAAWQAAAAABWQAAAAABWQAAAAABZAAAAAAAeQAAAAAAeQAAAAAAaAAAAAAAeQAAAAAAWQAAAAAAWQAAAAAAWQAAAAABWQAAAAADWQAAAAACWQAAAAADWQAAAAAAZAAAAAAAWQAAAAACWQAAAAADTAAAAAAAZAAAAAACeQAAAAAAeQAAAAAAaAAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAZAAAAAAAZAAAAAAAZAAAAAAAeQAAAAAAeQAAAAAAeQAAAAAATAAAAAAAWQAAAAADTAAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeAAAAAAAeQAAAAAAWQAAAAAAWQAAAAABWQAAAAACeQAAAAAAZAAAAAADaAAAAAAAaAAAAAAAaAAAAAAAaAAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeAAAAAAAeQAAAAAAWQAAAAAAWQAAAAACWQAAAAADeQAAAAAAZAAAAAAAaAAAAAAAaAAAAAAAaAAAAAAAaAAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeAAAAAAAeQAAAAAAWQAAAAACWQAAAAACWQAAAAACeQAAAAAAZAAAAAACaAAAAAAAaAAAAAAAaAAAAAAAaAAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeAAAAAAAeQAAAAAAWQAAAAABWQAAAAADWQAAAAACeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAAAAAAAAAAAAAAAAAeAAAAAAAeQAAAAAAWQAAAAAAWQAAAAAAWQAAAAABeQAAAAAAeAAAAAAAAAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAAAAAAAAAAAAAAAAAeAAAAAAAeQAAAAAAWQAAAAADWQAAAAABWQAAAAADeQAAAAAAeAAAAAAAAAAAAAAAAAAAAAAAeAAAAAAAAAAAAAAAAAAAAAAAeAAAAAAAeAAAAAAAAAAAAAAAAAAAAAAAeQAAAAAAeQAAAAAAWQAAAAABWQAAAAAAWQAAAAABeQAAAAAAeQAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAAAAAAAAAAAAAAAAAeAAAAAAAeAAAAAAAAAAAAAAAAAAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAAAAAAAAAAAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAAAAAAAAAAAAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAAAAAAAAAAAAAAAAAeAAAAAAAAAAAAAAAAAAAAAAAeAAAAAAAeAAAAAAAAAAAAAAAAAAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeAAAAAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeAAAAAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
           version: 6
         0,2:
           ind: 0,2
@@ -823,10 +823,10 @@ entities:
           8,5:
             0: 257
             2: 14
-            4: 17408
+            3: 17408
           8,6:
             2: 62209
-            4: 4
+            3: 4
           8,7:
             2: 61183
           0,12:
@@ -872,10 +872,10 @@ entities:
             0: 53759
           11,2:
             0: 4319
-            3: 49152
+            4: 49152
           11,3:
             0: 61457
-            3: 204
+            4: 204
           11,-1:
             0: 30583
           11,4:
@@ -886,9 +886,9 @@ entities:
             0: 28791
           12,2:
             0: 119
-            3: 28672
+            4: 28672
           12,3:
-            3: 119
+            4: 119
             0: 61440
           12,-1:
             0: 29311
@@ -1306,24 +1306,24 @@ entities:
           9,5:
             2: 15
             5: 4352
-            3: 17408
+            4: 17408
           9,6:
             5: 1
             2: 63744
-            3: 4
+            4: 4
           10,5:
             2: 15
-            3: 4352
+            4: 4352
             6: 17408
           10,6:
-            3: 1
+            4: 1
             2: 62464
             6: 4
           11,5:
             2: 15
-            3: 21760
+            4: 21760
           11,6:
-            3: 1
+            4: 1
             2: 61952
             0: 4
           12,5:
@@ -1507,7 +1507,7 @@ entities:
           temperature: 293.15
           moles:
           - 0
-          - 0
+          - 6666.982
           - 0
           - 0
           - 0
@@ -1522,7 +1522,7 @@ entities:
           temperature: 293.15
           moles:
           - 0
-          - 6666.982
+          - 0
           - 0
           - 0
           - 0
@@ -1715,6 +1715,12 @@ entities:
             1177: 4,16
             2365: -4,35
         - node:
+            zIndex: 1
+            color: '#4463267F'
+            id: BrickCornerOverlayNW
+          decals:
+            2591: -21,1
+        - node:
             color: '#52B4E996'
             id: BrickCornerOverlayNW
           decals:
@@ -1839,6 +1845,12 @@ entities:
           decals:
             2366: -4,33
         - node:
+            zIndex: 1
+            color: '#4463267F'
+            id: BrickCornerOverlaySW
+          decals:
+            2590: -21,-3
+        - node:
             color: '#52B4E996'
             id: BrickCornerOverlaySW
           decals:
@@ -1961,6 +1973,13 @@ entities:
             2337: 2,23
             2367: -3,34
         - node:
+            zIndex: 1
+            color: '#4463267F'
+            id: BrickLineOverlayE
+          decals:
+            2585: -17,-1
+            2586: -17,-2
+        - node:
             color: '#52B4E996'
             id: BrickLineOverlayE
           decals:
@@ -1977,24 +1996,28 @@ entities:
             1668: 15,-15
             1669: 15,-17
         - node:
+            color: '#79150096'
+            id: BrickLineOverlayE
+          decals:
+            2440: 2,2
+            2441: 2,1
+            2442: 2,0
+            2443: 2,-1
+            2444: 2,-2
+            2445: 2,-3
+            2446: 2,-4
+            2447: 2,-5
+            2448: 2,-6
+            2449: 2,-7
+            2450: 2,-8
+            2451: 2,-9
+            2452: 2,-10
+            2453: 2,-11
+            2454: 2,-12
+        - node:
             color: '#9FED5896'
             id: BrickLineOverlayE
           decals:
-            1250: 2,2
-            1251: 2,1
-            1252: 2,0
-            1253: 2,-1
-            1254: 2,-2
-            1255: 2,-3
-            1256: 2,-4
-            1330: 2,-5
-            1331: 2,-6
-            1332: 2,-7
-            1333: 2,-8
-            1334: 2,-9
-            1335: 2,-10
-            1336: 2,-11
-            1337: 2,-12
             1966: -15,-8
             1968: -16,-6
         - node:
@@ -2072,6 +2095,14 @@ entities:
             1614: 19,-1
             1615: 19,0
         - node:
+            zIndex: 1
+            color: '#4463267F'
+            id: BrickLineOverlayN
+          decals:
+            2582: -18,1
+            2583: -19,1
+            2584: -20,1
+        - node:
             color: '#52B4E996'
             id: BrickLineOverlayN
           decals:
@@ -2089,20 +2120,24 @@ entities:
             1641: 11,-8
             1661: 8,-14
         - node:
+            color: '#79150096'
+            id: BrickLineOverlayN
+          decals:
+            2455: 0,3
+            2456: -1,3
+            2457: -2,3
+            2458: -3,3
+            2459: -5,3
+            2460: -4,3
+            2461: -6,3
+            2462: -7,3
+            2463: -8,3
+            2464: -9,3
+            2465: -10,3
+        - node:
             color: '#9FED5896'
             id: BrickLineOverlayN
           decals:
-            1229: 0,3
-            1230: -1,3
-            1231: -2,3
-            1232: -3,3
-            1233: -4,3
-            1234: -5,3
-            1235: -6,3
-            1236: -7,3
-            1237: -8,3
-            1238: -9,3
-            1239: -10,3
             1240: -12,3
             1241: -13,3
             1242: -14,3
@@ -2240,6 +2275,14 @@ entities:
             1185: 4,21
             1204: 3,28
         - node:
+            zIndex: 1
+            color: '#4463267F'
+            id: BrickLineOverlayS
+          decals:
+            2587: -18,-3
+            2588: -19,-3
+            2589: -20,-3
+        - node:
             color: '#52B4E996'
             id: BrickLineOverlayS
           decals:
@@ -2296,7 +2339,6 @@ entities:
             1388: -13,-15
             1389: -11,-15
             1390: -9,-15
-            1391: -10,-15
             1392: -8,-15
             1393: -6,-15
             1394: -7,-15
@@ -2315,6 +2357,7 @@ entities:
             1771: -10,-23
             1820: -7,-36
             1821: -6,-36
+            2516: -10,-15
         - node:
             color: '#D4D4D496'
             id: BrickLineOverlayS
@@ -2423,6 +2466,14 @@ entities:
             2339: 4,24
             2340: 4,23
             2368: -4,34
+        - node:
+            zIndex: 1
+            color: '#4463267F'
+            id: BrickLineOverlayW
+          decals:
+            2592: -21,0
+            2593: -21,-1
+            2594: -21,-2
         - node:
             color: '#52B4E996'
             id: BrickLineOverlayW
@@ -3151,6 +3202,14 @@ entities:
             2224: -6,-36
         - node:
             cleanable: True
+            zIndex: 1
+            color: '#FFFFFFFF'
+            id: DirtHeavyMonotile
+          decals:
+            2534: -13,10
+            2576: -27,10
+        - node:
+            cleanable: True
             zIndex: 2
             color: '#FFFFFFFF'
             id: DirtHeavyMonotile
@@ -3192,7 +3251,6 @@ entities:
             494: -24,-9
             495: -24,3
             496: -25,2
-            497: -7,3
             499: -36,8
             500: -38,9
             508: -23,-24
@@ -3215,6 +3273,65 @@ entities:
             2202: 13,10
             2216: -6,-36
             2221: -5,-36
+        - node:
+            cleanable: True
+            zIndex: 1
+            color: '#FFFFFFFF'
+            id: DirtLight
+          decals:
+            2533: -4,11
+            2535: -9,15
+            2536: 0,10
+            2537: 0,14
+            2538: -1,12
+            2539: -1,8
+            2540: -8,19
+            2541: -14,15
+            2542: -7,13
+            2543: -9,3
+            2544: -3,4
+            2545: 12,4
+            2546: 22,3
+            2547: 13,6
+            2548: 19,10
+            2549: 22,8
+            2550: 21,11
+            2551: 3,-1
+            2552: 2,-7
+            2553: 4,-18
+            2554: 1,-22
+            2555: 4,-27
+            2556: 2,-31
+            2557: -7,-27
+            2558: -11,-30
+            2559: -2,-27
+            2560: -11,-22
+            2561: -9,-21
+            2562: -17,-18
+            2563: -13,-16
+            2564: -9,-15
+            2565: -4,-17
+            2566: -24,-16
+            2567: -25,-13
+            2568: -23,-9
+            2569: -25,-4
+            2570: -24,0
+            2571: -26,6
+            2572: -23,3
+            2573: -25,9
+            2574: -29,10
+            2575: -28,8
+            2577: -32,3
+            2578: -29,5
+            2579: -18,4
+            2580: -17,5
+            2581: -13,3
+            2615: 22,22
+            2616: 20,20
+            2617: 21,19
+            2618: 21,22
+            2619: 21,27
+            2620: 34,5
         - node:
             cleanable: True
             zIndex: 2
@@ -3242,6 +3359,14 @@ entities:
             2217: -5,-35
             2219: -7,-36
             2223: -8,-35
+        - node:
+            cleanable: True
+            zIndex: 1
+            color: '#FFFFFFFF'
+            id: DirtMedium
+          decals:
+            2613: 21,24
+            2614: 20,23
         - node:
             cleanable: True
             zIndex: 2
@@ -4506,9 +4631,9 @@ entities:
             color: '#79150096'
             id: WarnLineGreyscaleS
           decals:
-            1942: -8,3
-            1943: -7,3
-            1944: -6,3
+            2510: -6,3
+            2511: -7,3
+            2512: -8,3
         - node:
             color: '#8080807F'
             id: WarnLineGreyscaleS
@@ -4612,9 +4737,9 @@ entities:
             color: '#79150096'
             id: WarnLineGreyscaleW
           decals:
-            1945: 2,-1
-            1946: 2,-2
-            1947: 2,-3
+            2513: 2,-1
+            2514: 2,-2
+            2515: 2,-3
         - node:
             color: '#8080807F'
             id: WarnLineGreyscaleW
@@ -4853,6 +4978,8 @@ entities:
             1035: -10,-7
             1052: 12,-30
             1077: 12,-23
+            2517: -19,-5
+            2523: 25,-10
         - node:
             zIndex: 1
             color: '#FFFFFFFF'
@@ -4872,6 +4999,8 @@ entities:
             1075: 6,-24
             1076: 7,-23
             2243: -39,19
+            2518: -20,-5
+            2524: 21,-10
         - node:
             color: '#FFFFFFFF'
             id: WoodTrimThinCornerSe
@@ -4886,6 +5015,9 @@ entities:
             1078: 12,-28
             1079: 9,-31
             2242: -37,17
+            2520: -19,-6
+            2521: 24,-12
+            2525: 25,-11
         - node:
             color: '#FFFFFFFF'
             id: WoodTrimThinCornerSw
@@ -4899,6 +5031,8 @@ entities:
             1051: 11,-32
             1080: 6,-31
             2241: -39,17
+            2519: -20,-6
+            2522: 21,-12
         - node:
             zIndex: 2
             color: '#FFFFFFFF'
@@ -4942,6 +5076,7 @@ entities:
             984: -3,-1
             1082: 9,-28
             2233: -37,15
+            2526: 24,-11
         - node:
             color: '#FFFFFFFF'
             id: WoodTrimThinInnerSw
@@ -5019,6 +5154,9 @@ entities:
             1074: 11,-23
             2236: -37,15
             2239: -38,19
+            2530: 22,-10
+            2531: 23,-10
+            2532: 24,-10
         - node:
             zIndex: 1
             color: '#FFFFFFFF'
@@ -5060,6 +5198,8 @@ entities:
             1065: 10,-28
             1066: 11,-28
             2240: -38,17
+            2528: 22,-12
+            2529: 23,-12
         - node:
             zIndex: 2
             color: '#FFFFFFFF'
@@ -5090,6 +5230,7 @@ entities:
             1059: 6,-26
             1060: 6,-25
             2237: -39,18
+            2527: 21,-11
         - node:
             cleanable: True
             angle: -3.141592653589793 rad
@@ -6421,7 +6562,7 @@ entities:
       pos: 31.5,23.5
       parent: 31
     - type: Door
-      secondsUntilStateChange: -16546.61
+      secondsUntilStateChange: -17809.178
       state: Opening
     - type: DeviceLinkSource
       linkedPorts:
