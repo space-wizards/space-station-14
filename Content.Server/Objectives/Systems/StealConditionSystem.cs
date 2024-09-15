@@ -105,8 +105,8 @@ public sealed class StealConditionSystem : EntitySystem
         //check stealAreas
         if (condition.CheckStealAreas)
         {
-            var areasQuery = AllEntityQuery<TransformComponent, StealAreaComponent>();
-            while (areasQuery.MoveNext(out var uid, out var xform, out var area))
+            var areasQuery = AllEntityQuery<StealAreaComponent, TransformComponent>();
+            while (areasQuery.MoveNext(out var uid, out var area, out var xform))
             {
                 if (!area.Owners.Contains(mind.Owner))
                     continue;
