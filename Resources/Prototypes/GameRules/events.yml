@@ -74,7 +74,7 @@
     startAnnouncementColor: "#18abf5"
     startAudio:
       path: /Audio/Announcements/announce.ogg
-    weight: 8
+    weight: 5
     duration: 35
   - type: AnomalySpawnRule
 
@@ -90,7 +90,7 @@
     startAnnouncementColor: "#18abf5"
     startAudio:
       path: /Audio/Announcements/announce.ogg
-    weight: 8
+    weight: 5
     duration: 35
   - type: BluespaceArtifactRule
 
@@ -261,7 +261,8 @@
     startAudio:
       path: /Audio/Announcements/attention.ogg
     endAnnouncement: station-event-gas-leak-end-announcement
-    weight: 8
+    weight: 4
+    minimumPlayers: 5
   - type: GasLeakRule
 
 - type: entity
@@ -280,7 +281,7 @@
   parent: BaseStationEventShortDelay
   components:
   - type: StationEvent
-    weight: 5
+    weight: 2
     startAnnouncement: station-event-power-grid-check-start-announcement
     endAnnouncement: station-event-power-grid-check-end-announcement
     startAudio:
@@ -289,6 +290,7 @@
        volume: -4
     duration: 60
     maxDuration: 120
+    minimumPlayers: 2
   - type: PowerGridCheckRule
 
 - type: entity
@@ -302,7 +304,8 @@
     startAudio:
       path: /Audio/Announcements/attention.ogg
     duration: 120
-    maxDuration: 240
+    maxDuration: 180
+    minimumPlayers: 5
   - type: SolarFlareRule
     onlyJamHeadsets: true
     affectedChannels:
@@ -490,7 +493,7 @@
   parent: BaseGameRule
   components:
   - type: StationEvent
-    weight: 7
+    weight: 3
     duration: 150
     maxDuration: 300
     reoccurrenceDelay: 30
