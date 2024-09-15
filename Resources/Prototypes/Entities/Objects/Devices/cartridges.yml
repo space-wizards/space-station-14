@@ -93,3 +93,19 @@
     - type: GuideHelp
       guides:
       - Forensics
+
+- type: entity
+  parent: BaseItem
+  id: AstroNavCartridge
+  name: AstroNav cartridge
+  description: A program for navigation that provides GPS coordinates.
+  components:
+    - type: Sprite
+      sprite: Objects/Devices/cartridge.rsi
+      state: cart-nav
+    - type: Cartridge
+      programName: astro-nav-program-name
+      icon:
+        sprite: Objects/Devices/gps.rsi
+        state: icon
+    - type: AstroNavCartridge
