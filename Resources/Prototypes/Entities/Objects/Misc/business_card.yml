@@ -1,28 +1,15 @@
 - type: entity
   id: SyndicateBusinessCard
   name: Syndicate business card
-  parent: BaseItem
+  parent: Paper
   description: A black card with the syndicate's logo. There's something written on the back
   components:
     - type: Sprite
-      sprite: Objects/Misc/Business_card.rsi
-      state: Synicate_card
-    - type: Item
-      size: Tiny
-    - type: Tag
-      tags:
-      - Trash
-      - Paper
+      sprite: Objects/Misc/bureaucracy.rsi
+      layers:
+      - state: synicate_card
     - type: Paper
       content: syndicate-business-card-base
-    - type: PaperLabelType
-    - type: ActivatableUI
-      key: enum.PaperUiKey.Key
-      requiresComplex: false
-    - type: UserInterface
-      interfaces:
-        enum.PaperUiKey.Key:
-          type: PaperBoundUserInterface
     - type: PaperVisuals
       headerImagePath: "/Textures/Interface/Paper/paper_heading_syndicate_logo.svg.96dpi.png"
       headerMargin: 0.0, 0.0, 0.0, 2.0

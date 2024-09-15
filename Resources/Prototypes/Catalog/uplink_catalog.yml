@@ -1771,8 +1771,8 @@
 
 - type: listing
   id: UplinkSyndicateBusinessCard
-  name: uplink-business-cadr-name
-  description: uplink-business-cadr-desc
+  name: uplink-business-card-name
+  description: uplink-business-card-desc
   productEntity: SyndicateBusinessCard
   categories:
     - UplinkPointless

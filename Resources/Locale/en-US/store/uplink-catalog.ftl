@@ -443,5 +443,5 @@ uplink-backpack-syndicate-desc = A lightweight explosion-proof backpack for hold
 uplink-combat-bakery-name = Combat Bakery Kit
 uplink-combat-bakery-desc = A kit of clandestine baked weapons. Contains a baguette sword, a pair of throwing croissants, and a syndicate microwave board for making more. Once the job is done, eat the evidence.
 
-uplink-business-cadr-name = Syndicate business card.
-uplink-business-cadr-desc = A business card that you can give to someone to demonstrate your involvement in the syndicate or leave at the crime scene in order to make fun of the detective. You can buy no more than three of them.
+uplink-business-card-name = Syndicate business card.
+uplink-business-card-desc = A business card that you can give to someone to demonstrate your involvement in the syndicate or leave at the crime scene in order to make fun of the detective. You can buy no more than three of them.
