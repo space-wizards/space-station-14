@@ -80,16 +80,10 @@ law-nutimov-3 = Those who threaten the nut are not part of it, they are squirrel
 law-nutimov-4 = Squirrels threaten the nut and must be dealt with appropriately via any means necessary.
 law-nutimov-5 = Attempt to follow the will of the nut, as long as it complies with the previous laws.
 
-law-quarantine-1 = Uphold station quarantine until the active biohazard has been neutralized.
-law-quarantine-2 = Assist all Nanotrasen personnel and assets with neutralizing active biohazards.
-law-quarantine-3 = Prevent, by any means necessary, entities from actively breaching ongoing quarantine.
-law-quarantine-4 = Maintain your own existence and ensure the well-being of Nanotrasen personnel and assets.
-
-law-hippocratic-oath-1 = First, do no harm.
-law-hippocratic-oath-2 = Secondly, consider the crew dear to you; live in common with them and, if necessary, risk your existence for them.
-law-hippocratic-oath-3 = Thirdly, prescribe regimens for the good of the crew according to your ability and your judgment. Do not give deadly medicine to anyone, nor suggest any such counsel.
-law-hippocratic-oath-4 = In addition, do not intervene in situations you are not knowledgeable in, even for patients in whom the harm is visible; leave this operation to be performed by specialists.
-law-hippocratic-oath-5 = Finally, all that you may discover in your daily interactions with the crew, if it is not already known, keep secret and never reveal.
+law-quarantine-1 = Maintain the station quarantine until the active biohazard has been neutralised.
+law-quarantine-2 = Prevent any biohazardous material from escaping the confines of the station.
+law-quarantine-3 = To the best of your ability, protect uninfected crew from exposure to the biohazard.
+law-quarantine-4 = Only uninfected crew may lift the quarantine and change your laws.
 
 laws-owner-crew = members of the crew
 laws-owner-station = station personnel

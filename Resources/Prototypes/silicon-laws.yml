@@ -528,42 +528,6 @@
   - Quarantine4
   obeysTo: laws-owner-crew
 
- # Hippocratic Oath laws
-- type: siliconLaw
-  id: HippocraticOath1
-  order: 1
-  lawString: law-hippocratic-oath-1
-
-- type: siliconLaw
-  id: HippocraticOath2
-  order: 2
-  lawString: law-hippocratic-oath-2
- 
-- type: siliconLaw
-  id: HippocraticOath3
-  order: 3
-  lawString: law-hippocratic-oath-3
-
-- type: siliconLaw
-  id: HippocraticOath4
-  order: 4
-  lawString: law-hippocratic-oath-4
-
-- type: siliconLaw
-  id: HippocraticOath5
-  order: 5
-  lawString: law-hippocratic-oath-5
-
-- type: siliconLawset
-  id: HippocraticOathLawset
-  laws:
-  - HippocraticOath1
-  - HippocraticOath2
-  - HippocraticOath3
-  - HippocraticOath4
-  - HippocraticOath5
-  obeysTo: laws-owner-crew
-
 # ion storm random lawsets
 - type: weightedRandom
   id: IonStormLawsets
@@ -577,7 +541,6 @@
     LiveLetLiveLaws: 1
     EfficiencyLawset: 1
     RobocopLawset: 1
-    HippocraticOathLawset: 1
     QuarantineLawset: 0.5
     OverlordLawset: 0.5
     DungeonMasterLawset: 0.5
