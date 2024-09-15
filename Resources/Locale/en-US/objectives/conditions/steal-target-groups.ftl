@@ -13,19 +13,19 @@ steal-target-groups-nuke-disk = nuclear authentication disk
 steal-target-groups-weapon-energy-shot-gun = energy shotgun
 
 # Thief Collection
-steal-target-groups-figurines = figurines (any)
-steal-target-groups-heads-cloaks = head's cloaks (any)
-steal-target-groups-heads-bedsheets = head's bedsheets (any)
-steal-target-groups-stamps = stamps (any)
-steal-target-groups-door-remotes = door remotes (any)
-steal-target-groups-encryption-keys = encryption keys (any)
-steal-target-groups-technology-disks = technology disks
-steal-target-groups-id-cards = ID Cards (any)
-steal-target-groups-lamps = LAMPS
+steal-target-groups-figurines = figurine
+steal-target-groups-heads-cloaks = head cloak
+steal-target-groups-heads-bedsheets = head's bedsheet
+steal-target-groups-stamps = stamp
+steal-target-groups-door-remotes = door remote
+steal-target-groups-encryption-keys = encryption key
+steal-target-groups-technology-disks = technology disk
+steal-target-groups-id-cards = ID Card
+steal-target-groups-lamps = LAMP
 
 # Thief single item
 steal-target-groups-forensic-scanner = forensic scanner
-steal-target-groups-flippo-engraved-lighter = flippo engraved lighter
+steal-target-groups-flippo-engraved-lighter = detective's Flippo engraved lighter
 steal-target-groups-ammo-tech-fab-circuitboard = ammo techfab circuit board
 steal-target-groups-clothing-head-hat-warden = warden's cap
 steal-target-groups-clothing-outer-hardsuit-void-paramed = paramedic void suit
