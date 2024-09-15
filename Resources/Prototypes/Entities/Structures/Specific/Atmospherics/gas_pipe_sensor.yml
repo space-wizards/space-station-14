@@ -11,17 +11,13 @@
     drawdepth: BelowFloor
     layers:
     - state: base
-    - state: lights
-      map: ["enum.GasPipeSensorVisuals.Lights"]
-      visible: false
-      shader: unshaded
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-      enum.GasPipeSensorVisuals.State:
-        enum.GasPipeSensorVisuals.Lights:
-          True: {visible: true}
-          False: {visible: false}
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          False: { state: base, shader: shaded }
+          True: { state: lights, shader: unshaded }
   - type: GasPipeSensor
   - type: AtmosMonitoringConsoleDevice
     group: GasPipeSensor
