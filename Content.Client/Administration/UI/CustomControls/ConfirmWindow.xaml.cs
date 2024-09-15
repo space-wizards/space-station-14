@@ -18,7 +18,7 @@ public sealed partial class ConfirmWindow : DefaultWindow
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
-        Title = string.Format("Execute: {0}", this.Command);
+        Title = Loc.GetString("confirm-command-title", ("command", this.Command));
 
         CancelButton.OnPressed += _ =>
         {

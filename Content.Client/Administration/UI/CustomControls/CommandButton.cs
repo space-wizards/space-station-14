@@ -49,12 +49,9 @@ public class CommandButton : Button, IDocumentTag
             return;
 
         if (RequiresConfirm != null) {
-            Logger.Error("confirm required");
             Confirm();
-            Logger.Error("confirm invoke ended");
             return;
         }
-
 
         IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand(Command);
     }
