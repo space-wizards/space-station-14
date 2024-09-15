@@ -923,7 +923,7 @@
   name: uplink-malicious-laws-module-name
   description: uplink-malicious-laws-module-desc
   productEntity: MaliciousLawsKit
-  icon: { sprite: /Objects/Misc/module.rsi, state: std_mod }
+  icon: { sprite: /Textures/Objects/Misc/module.rsi, state: std_mod }
   discountCategory: veryRareDiscounts
   discountDownTo:
     Telecrystal: 4
