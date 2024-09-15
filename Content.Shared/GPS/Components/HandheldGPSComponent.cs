@@ -5,6 +5,6 @@ namespace Content.Shared.GPS.Components
     public sealed partial class HandheldGPSComponent : Component
     {
         [DataField]
-        public float UpdateRate = 0.2f;
+        public float UpdateRate = 0.5f;
     }
 }
