@@ -524,14 +524,12 @@
 - type: roleLoadout
   id: JobSecurityClown
   groups:
-  - GroupTankHarness
-  - SurvivalClown
-  - GroupSpeciesBreathTool
+  - SurvivalSecurity
+  - GroupSpeciesBreathToolSecurity
 
 - type: roleLoadout
   id: JobCommandMaid
   groups:
-  - GroupTankHarness
   - Survival
   - GroupSpeciesBreathTool
 
