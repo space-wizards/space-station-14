@@ -183,3 +183,24 @@
     - ClothMade
     - HamsterWearable
     - WhitelistChameleon
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatTony
+  name: tony
+  description: 'Man, this party stinks, I fucking hate these people.'
+  components:
+  - type: Sprite
+    sprite: GreyStation/Clothing/Head/Misc/tony.rsi
+  - type: Clothing
+    sprite: GreyStation/Clothing/Head/Misc/tony.rsi
+    equipSound:
+      path: /Audio/GreyStation/Misc/pickupweapon.ogg
+  - type: IngestionBlocker
+  - type: IdentityBlocker
+  - type: EmitSoundOnPickup
+    sound: /Audio/GreyStation/Misc/pickupweapon.ogg
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout

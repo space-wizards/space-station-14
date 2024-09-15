@@ -1,0 +1,5 @@
+- type: soundCollection
+  id: KnuckleDuster
+  files:
+    - /Audio/GreyStation/Misc/punch.ogg
+    - /Audio/GreyStation/Misc/hit.ogg
