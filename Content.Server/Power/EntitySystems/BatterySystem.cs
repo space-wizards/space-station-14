@@ -121,7 +121,7 @@ namespace Content.Server.Power.EntitySystems
             battery.CurrentCharge = newValue;
 
             if (TryComp<BatterySelfRechargerComponent>(uid, out var batterySelfRechargerComponent)){
-                if (batterySelfRechargerComponent.AutoRechargePause && batterySelfRechargerComponent.AutoRechargePauseTime > 0) {
+                if (batterySelfRechargerComponent.AutoRechargePause && batterySelfRechargerComponent.AutoRechargePauseTime > 0 && value > 0) {
                     SetChargeCooldown(uid, Math.Clamp(batterySelfRechargerComponent.AutoRechargeCooldown, batterySelfRechargerComponent.AutoRechargePauseTime, 9999), batterySelfRechargerComponent);
                 }
             }
