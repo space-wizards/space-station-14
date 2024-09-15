@@ -55,13 +55,7 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
 
             if (_timing.CurTime < sync.NextCheckTime)
                 continue;
-            sync.NextCheckTime = _timing.CurTime + sync.CheckFrequency;
-
-            if (!EntityManager.EntityExists(sync.ConnectedAnomaly))
-            {
-                DisconnectFromAnomaly((uid, sync), sync.ConnectedAnomaly.Value);
-                continue;
-            }
+            sync.NextCheckTime += sync.CheckFrequency;
 
             if (Transform(sync.ConnectedAnomaly.Value).MapUid != Transform(uid).MapUid)
             {
@@ -69,14 +63,11 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
                 continue;
             }
 
-            var pos1 = _transform.GetWorldPosition(uid);
-            var pos2 = _transform.GetWorldPosition(sync.ConnectedAnomaly.Value);
-            var distance = Vector2.Distance(pos1, pos2);
-            if (distance > sync.AttachRange)
-            {
-                DisconnectFromAnomaly((uid, sync), sync.ConnectedAnomaly.Value);
+            if (!xform.Coordinates.TryDistance(EntityManager, Transform(sync.ConnectedAnomaly.Value).Coordinates, out var distance))
                 continue;
-            }
+
+            if (distance > sync.AttachRange)
+                DisconnectFromAnomaly((uid, sync), sync.ConnectedAnomaly.Value);
         }
     }
 
