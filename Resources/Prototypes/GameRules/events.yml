@@ -559,4 +559,5 @@
   - type: JobDistributionErrorRule
     jobs:
     - SecurityClown
-    - FloraInspector
+    - PartyMaker
+    - CommandMaid

@@ -6,6 +6,7 @@ job-supervisors-ce = the chief engineer
 job-supervisors-cmo = the chief medical officer
 job-supervisors-rd = the research director
 job-supervisors-qm = the quartermaster
+job-supervisors-command = the station's command
 job-supervisors-service = chefs, botanists, the bartender, and the head of personnel
 job-supervisors-engineering = station engineers, atmospheric technicians, and the chief engineer
 job-supervisors-medicine = medical doctors, chemists, and the chief medical officer

@@ -519,6 +519,29 @@
   - Trinkets
   - GroupSpeciesBreathTool
 
+# Event-restricted roles
+
+- type: roleLoadout
+  id: JobSecurityClown
+  groups:
+  - GroupTankHarness
+  - SurvivalClown
+  - GroupSpeciesBreathTool
+
+- type: roleLoadout
+  id: JobCommandMaid
+  groups:
+  - GroupTankHarness
+  - Survival
+  - GroupSpeciesBreathTool
+
+- type: roleLoadout
+  id: JobPartyMaker
+  groups:
+  - GroupTankHarness
+  - Survival
+  - GroupSpeciesBreathTool
+
 # These loadouts are used for non-crew spawns, like off-station antags and event mobs
 # They will be used without player configuration, thus they will only ever apply what is forced by MinLimit
 

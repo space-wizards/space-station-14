@@ -10,10 +10,10 @@
       role: JobClown
       time: 3600 #1 hr
   startingGear: SecurityClownGear
-  icon: "JobIconSecurityCadet"
+  icon: "JobIconSecurityClown"
   supervisors: job-supervisors-security
   canBeAntag: false
-  setPreference: false
+  setPreference: true
   access:
   - Security
   - Brig
@@ -41,14 +41,15 @@
 - type: startingGear
   id: SecurityClownGear
   equipment:
-    shoes: ClothingShoesBootsJackFilled
+    mask: ClothingMaskClownSecurity
+    jumpsuit: ClothingUniformJumpsuitClown
+    shoes: ClothingShoesClown
     outerClothing: ClothingOuterArmorBasic
-    id: SecurityCadetPDA
+    id: SecurityClownPDA
     ears: ClothingHeadsetSecurity
-    belt: ClothingBeltSecurityFilled
-    pocket1: WeaponPistolMk58
-    pocket2: BookSecurity
+    belt: BikeHorn
+    back: ClothingBackpackClown
   storage:
     back:
     - Flash
-    - MagazinePistol
+    - ClownRecorder

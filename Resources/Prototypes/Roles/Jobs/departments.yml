@@ -32,7 +32,7 @@
   - Visitor
   - Zookeeper
   - ServiceWorker
-  - FloraInspector # event-restricted
+  - PartyMaker # event-restricted
 
 - type: department
   id: CentralCommand
@@ -74,6 +74,7 @@
   - ERTSecurity
   - ERTEngineer
   - DeathSquad
+  - CommandMaid # event-restricted
   primary: false
   weight: 100
 
