@@ -22,8 +22,8 @@ revenant-user-interface-essence-amount = [color=plum]{$amount}[/color] Stolen Es
 
 revenant-user-interface-cost = {$price} Essence
 
-item-jump-into-pocket = The {$name} jumps into your pocket!
-item-jump-into-hands = The {$name} jumps into your hands!
+item-jump-into-pocket = {CAPITALIZE(THE($target))} jumps into your pocket!
+item-jump-into-hands = {CAPITALIZE(THE($target))} jumps into your hands!
 
-revenant-animate-item-animate = The {$name} becomes aggressive!
-revenant-animate-item-inanimate = The {$name} falls inert.
+revenant-animate-item-animate = {CAPITALIZE(THE($target))} becomes aggressive!
+revenant-animate-item-inanimate = {CAPITALIZE(THE($target))} falls inert.
