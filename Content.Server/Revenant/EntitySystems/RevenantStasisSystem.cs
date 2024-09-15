@@ -1,8 +1,10 @@
 using Content.Server.Bible;
 using Content.Server.Bible.Components;
 using Content.Server.Construction;
+using Content.Server.Explosion.EntitySystems;
 using Content.Server.Ghost.Roles;
 using Content.Server.Ghost.Roles.Components;
+using Content.Server.Kitchen.EntitySystems;
 using Content.Server.Mind;
 using Content.Server.Revenant.Components;
 using Content.Server.VoiceMask;
@@ -16,6 +18,7 @@ using Content.Shared.Popups;
 using Content.Shared.Revenant;
 using Content.Shared.Speech;
 using Content.Shared.StatusEffect;
+using Content.Shared.Tag;
 using Robust.Shared.Player;
 
 namespace Content.Server.Revenant.EntitySystems;
@@ -29,6 +32,8 @@ public sealed partial class RevenantStasisSystem : EntitySystem
     [Dependency] private readonly MetaDataSystem _meta = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private readonly TagSystem _tags = default!;
+    [Dependency] private readonly ExplosionSystem _explosion = default!;
 
     [ValidatePrototypeId<StatusEffectPrototype>]
     private const string RevenantStasisId = "Stasis";
@@ -43,6 +48,7 @@ public sealed partial class RevenantStasisSystem : EntitySystem
         SubscribeLocalEvent<RevenantStasisComponent, ChangeDirectionAttemptEvent>(OnAttemptDirection);
         SubscribeLocalEvent<RevenantStasisComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<RevenantStasisComponent, ConstructionConsumedObjectEvent>(OnCrafted);
+        SubscribeLocalEvent<RevenantStasisComponent, GrindAttemptEvent>(OnGrindAttempt);
 
         SubscribeLocalEvent<RevenantStasisComponent, AfterInteractUsingEvent>(OnBibleInteract, before: [typeof(BibleSystem)]);
         SubscribeLocalEvent<RevenantStasisComponent, ExorciseRevenantDoAfterEvent>(OnExorcise);
@@ -113,6 +119,26 @@ public sealed partial class RevenantStasisSystem : EntitySystem
 
         if (_mind.TryGetMind(uid, out var mindId, out var _))
             _mind.TransferTo(mindId, args.New);
+    }
+
+    private void OnGrindAttempt(EntityUid uid, RevenantStasisComponent comp, GrindAttemptEvent args)
+    {
+        foreach (var reagent in args.Reagents)
+        {
+            if (_tags.HasAnyTag(reagent, "Salt", "Holy"))
+                return;
+        }
+
+        // Ripped off the changeling blood explosion variables
+        _explosion.QueueExplosion(
+            args.Grinder.Owner,
+            "Default",
+            7.5f, // totalIntensity
+            4f, // slope
+            2f // maxTileIntensity
+        );
+
+        args.Cancel();
     }
 
     private void OnAttemptDirection(EntityUid uid, RevenantStasisComponent comp, ChangeDirectionAttemptEvent args)
