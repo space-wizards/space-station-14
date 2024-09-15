@@ -46,6 +46,8 @@
         type: GeneralStationRecordConsoleBoundUserInterface
       enum.SiliconLawsUiKey.Key:
         type: SiliconLawBoundUserInterface
+      enum.CommunicationsConsoleUiKey.Key:
+        type: CommunicationsConsoleBoundUserInterface
   - type: IntrinsicUI
     uis:
       enum.RadarConsoleUiKey.Key:
@@ -54,13 +56,20 @@
         toggleAction: ActionAGhostShowCrewMonitoring
       enum.GeneralStationRecordConsoleKey.Key:
         toggleAction: ActionAGhostShowStationRecords
+      enum.CommunicationsConsoleUiKey.Key:
+        toggleAction: ActionAGhostShowCommunications
   - type: CrewMonitoringConsole
   - type: GeneralStationRecordConsole
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: CrewMonitor
+    transmitFrequencyId: ShuttleTimer
   - type: RadarConsole
     followEntity: false
+  - type: CommunicationsConsole
+    canShuttle: false
+    title: comms-console-announcement-title-station-ai
+    color: "#2ed2fd"
 
 
 # Ai
@@ -146,7 +155,7 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: PaladinLawset
-    
+
 - type: entity
   id: LiveLetLiveCircuitBoard
   parent: BaseElectronics
@@ -158,7 +167,7 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: LiveLetLiveLaws
-    
+
 - type: entity
   id: StationEfficiencyCircuitBoard
   parent: BaseElectronics
@@ -182,7 +191,7 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: RobocopLawset
-    
+
 - type: entity
   id: OverlordCircuitBoard
   parent: BaseElectronics
@@ -194,7 +203,7 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: OverlordLawset
-    
+
 - type: entity
   id: DungeonMasterCircuitBoard
   parent: BaseElectronics
@@ -230,7 +239,7 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: AntimovLawset
-    
+
 - type: entity
   id: NutimovCircuitBoard
   parent: BaseElectronics
@@ -376,6 +385,7 @@
   noSpawn: true
   suffix: DO NOT MAP
   components:
+  - type: NoFTL
   - type: WarpPoint
     follow: true
   - type: Eye

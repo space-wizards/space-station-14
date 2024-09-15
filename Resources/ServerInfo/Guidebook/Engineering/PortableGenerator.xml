@@ -16,7 +16,7 @@
     <GuideEntityEmbed Entity="WeldingFuelTank" />
   </Box>
 
-  The J.R.P.A.C.M.A.N. can be found across the station in maintenance shafts, and is ideal for crew to set up themselves whenever there are power issues.
+  The J.R.P.A.C.M.A.N. can be found across the station in maintenance shafts, and is ideal for crew to set up themselves whenever there are power issues. Its output of up to [color=orange][protodata="PortableGeneratorJrPacman" comp="FuelGenerator" member="MaxTargetPower" format="N0"/] W[/color] is enough to power a few important devices.
   Setup is incredibly easy: wrench it down above an [color=green]LV[/color] power cable, give it some welding fuel, and start it up.
 
   Welding fuel should be plentiful to find around the station. In a pinch, you can even transfer some from the big tanks with a soda can or water bottle. Just remember to empty the soda can first, I don't think it likes soda as fuel.
@@ -35,7 +35,7 @@
 
   The (S.U.P.E.R.)P.A.C.M.A.N. is intended for usage by engineering for advanced power scenarios. Bootstrapping larger engines, powering departments, and so on.
 
-  The S.U.P.E.R.P.A.C.M.A.N. boasts a larger power output and longer runtime at maximum output, but scales down to lower outputs less efficiently.
+  The S.U.P.E.R.P.A.C.M.A.N. boasts a larger power output (up to [color=orange][protodata="PortableGeneratorSuperPacman" comp="FuelGenerator" member="MaxTargetPower" format="N0"/] W[/color]) and longer runtime at maximum output, but scales down to lower outputs less efficiently.
 
   They connect directly to [color=yellow]MV[/color] or [color=orange]HV[/color] power cables, and are able to switch between them for flexibility.
 
