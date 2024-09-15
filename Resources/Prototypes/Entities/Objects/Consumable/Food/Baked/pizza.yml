@@ -618,3 +618,66 @@
           Quantity: 2
 
 # Tastes like crust, tomato, cheese, radiation.
+
+- type: entity
+  name: cotton pizza
+  parent: FoodPizzaBase
+  id: FoodPizzaCotton
+  description: Flat fabric cotton dough with cotton topping. Incredible.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - cotton
+    - bread
+  - type: Sprite
+    layers:
+    - state: cotton-pizza
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: SliceableFood
+    slice: FoodPizzaCottonSlice
+  - type: Tag
+    tags:
+    - ClothMade
+    - Pizza
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 40
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 20
+        - ReagentId: Vitamin
+          Quantity: 5
+        - ReagentId: Fiber
+          Quantity: 10
+
+- type: entity
+  name: slice of cotton pizza
+  parent: FoodPizzaSliceBase
+  id: FoodPizzaCottonSlice
+  description: A slice of cotton pizza. Cotton included.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - cotton
+    - bread
+  - type: Sprite
+    layers:
+    - state: cotton-slice
+  - type: Tag
+    tags:
+    - ClothMade
+    - Pizza
+    - Slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 6
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3.5
+        - ReagentId: Vitamin
+          Quantity: 0.8
+        - ReagentId: Fiber
+          Quantity: 1.5

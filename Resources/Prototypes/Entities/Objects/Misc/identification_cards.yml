@@ -541,24 +541,6 @@
 
 - type: entity
   parent: IDCardStandard
-  id: CentcomIDCardSyndie
-  name: command officer ID card
-  suffix: Fake
-  components:
-  - type: Sprite
-    layers:
-    - state: centcom
-    - state: idcentcom
-  - type: Item
-    heldPrefix: blue
-  - type: IdCard
-    jobTitle: Central Commander
-  - type: Access
-    tags:
-    - Maintenance
-
-- type: entity
-  parent: IDCardStandard
   id: MusicianIDCard
   name: musician ID card
   components:

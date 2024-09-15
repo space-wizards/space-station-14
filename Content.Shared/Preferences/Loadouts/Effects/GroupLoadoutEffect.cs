@@ -26,7 +26,7 @@ public sealed partial class GroupLoadoutEffect : LoadoutEffect
             reasons.Add(reason.ToMarkup());
         }
 
-        reason = reasons.Count == 0 ? null : FormattedMessage.FromMarkup(string.Join('\n', reasons));
+        reason = reasons.Count == 0 ? null : FormattedMessage.FromMarkupOrThrow(string.Join('\n', reasons));
         return reason == null;
     }
 }

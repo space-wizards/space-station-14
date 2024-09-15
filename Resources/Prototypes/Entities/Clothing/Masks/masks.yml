@@ -102,7 +102,7 @@
   - type: IngestionBlocker
 
 - type: entity
-  parent: ClothingMaskGas
+  parent: [ClothingMaskGas, BaseCargoContraband]
   id: ClothingMaskGasExplorer
   name: explorer gas mask
   description: A military-grade gas mask that can be connected to an air supply.

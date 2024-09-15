@@ -97,13 +97,14 @@ public sealed class DockTest : ContentUnitTest
         var entManager = server.ResolveDependency<IEntityManager>();
         var dockingSystem = entManager.System<DockingSystem>();
         var mapSystem = entManager.System<SharedMapSystem>();
+        MapGridComponent mapGrid = default!;
 
-        var mapGrid = entManager.AddComponent<MapGridComponent>(map.MapUid);
         var shuttle = EntityUid.Invalid;
 
         // Spawn shuttle and affirm no valid docks.
         await server.WaitAssertion(() =>
         {
+            mapGrid = entManager.AddComponent<MapGridComponent>(map.MapUid);
             entManager.DeleteEntity(map.Grid);
             Assert.That(entManager.System<MapLoaderSystem>().TryLoad(otherMap.MapId, "/Maps/Shuttles/emergency.yml", out var rootUids));
             shuttle = rootUids[0];
