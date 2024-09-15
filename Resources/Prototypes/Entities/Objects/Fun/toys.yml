@@ -1587,6 +1587,7 @@
       params:
         variation: 0.125
   - type: MeleeWeapon
+    wideAnimationRotation: 110
     soundHit:
       collection: RubberChicken
       params:
