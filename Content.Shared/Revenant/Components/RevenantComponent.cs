@@ -30,6 +30,9 @@ public sealed partial class RevenantComponent : Component
     [DataField("spawnOnDeathPrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string SpawnOnDeathPrototype = "Ectoplasm";
 
+    [DataField("stasisTime"), ViewVariables(VVAccess.ReadWrite)]
+    public TimeSpan StasisTime = TimeSpan.FromSeconds(60);
+
     /// <summary>
     /// The entity's current max amount of essence. Can be increased
     /// through harvesting player souls.

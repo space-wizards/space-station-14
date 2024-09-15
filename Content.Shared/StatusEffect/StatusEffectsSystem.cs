@@ -348,7 +348,7 @@ namespace Content.Shared.StatusEffect
 
             if (!_prototypeManager.TryIndex<StatusEffectPrototype>(key, out var proto))
                 return false;
-            if (!status.AllowedEffects.Contains(key) && !proto.AlwaysAllowed)
+            if (!proto.AlwaysAllowed && !status.AllowedEffects.Contains(key))
                 return false;
 
             return true;
