@@ -136,7 +136,7 @@
     sprite: Objects/Weapons/Melee/kukri_knife.rsi
 
 - type: entity
-  parent: [ClothingHeadHatGreyFlatcap, BaseSyndicateContraband]
+  parent: ClothingHeadHatGreyFlatcap
   id: BladedFlatcapGrey
   name: grey flatcap
   description: Fashionable for both the working class and old man Jenkins. It has glass shards hidden in the brim.
