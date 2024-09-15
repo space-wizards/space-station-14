@@ -3517,6 +3517,7 @@
       gender: epicene
   - type: Speech
     speechVerb: Plant
+    allowedEmotes: ['Chirp']
   - type: Tag
     tags:
     - DoorBumpOpener
