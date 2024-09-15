@@ -215,7 +215,7 @@
     - state: synd_label
 
 - type: entity
-  parent: [ EncryptionKey, BaseSiliconScienceContraband ]
+  parent: [ EncryptionKey, BaseSyndicateContraband ]
   id: EncryptionKeyBinary
   name: binary translator key
   description: An encryption key that translates binary signals used by silicons.
@@ -226,8 +226,8 @@
     defaultChannel: Binary
   - type: Sprite
     layers:
-    - state: crypt_silver
-    - state: rd_label
+    - state: crypt_red
+    - state: borg_label
 
 - type: entity
   parent: EncryptionKey
