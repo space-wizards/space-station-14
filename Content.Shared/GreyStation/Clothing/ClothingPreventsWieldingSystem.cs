@@ -24,7 +24,7 @@ public sealed partial class ClothingPreventsWieldingSystem : EntitySystem
         if (args.Cancelled)
             return;
 
-        var user = args.Wielder;
+        var user = args.User;
         if (!TryComp<InventoryComponent>(user, out var inventory))
             return;
 
