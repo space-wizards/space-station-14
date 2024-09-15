@@ -11,6 +11,7 @@
     - id: CockroachMigration
     - id: GasLeak
     - id: IonStorm # its calm like 90% of the time smh
+    - id: JobDistributionError
     - id: KudzuGrowth
     - id: MassHallucinations
     - id: MimicVendorRule
@@ -545,3 +546,17 @@
     maxOccurrences: 1 # this event has diminishing returns on interesting-ness, so we cap it
     weight: 5
   - type: MobReplacementRule
+
+- type: entity
+  id: JobDistributionError
+  parent: BaseGameRule
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-job-distribution-error-announcement
+    minimumPlayers: 25
+    weight: 3
+    duration: 1
+  - type: JobDistributionErrorRule
+    jobs:
+    - SecurityClown
+    - FloraInspector
