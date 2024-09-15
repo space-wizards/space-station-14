@@ -1,7 +1,6 @@
 using Content.Server.Atmos.Components;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
-using Content.Server.Cargo.Systems;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Storage.Components;
 using Content.Shared.UserInterface;
@@ -54,7 +53,6 @@ namespace Content.Server.Atmos.EntitySystems
             SubscribeLocalEvent<GasTankComponent, GasTankSetPressureMessage>(OnGasTankSetPressure);
             SubscribeLocalEvent<GasTankComponent, GasTankToggleInternalsMessage>(OnGasTankToggleInternals);
             SubscribeLocalEvent<GasTankComponent, GasAnalyzerScanEvent>(OnAnalyzed);
-            SubscribeLocalEvent<GasTankComponent, PriceCalculationEvent>(OnGasTankPrice);
             SubscribeLocalEvent<GasTankComponent, GetVerbsEvent<AlternativeVerb>>(OnGetAlternativeVerb);
             Subs.CVar(_cfg, CCVars.AtmosTankFragment, UpdateMaxRange, true);
         }
@@ -406,12 +404,6 @@ namespace Content.Server.Atmos.EntitySystems
                 args.GasMixtures ??= new List<(string, GasMixture?)>();
                 args.GasMixtures.Add((Name(uid), internalAir.Air));
             }
-        }
-
-        private void OnGasTankPrice(EntityUid uid, GasTankComponent component, ref PriceCalculationEvent args)
-        {
-            if (TryComp<InternalAirComponent>(uid, out var internalAir))
-                args.Price += _atmosphereSystem.GetPrice(internalAir.Air);
         }
 
         private void OnGetAlternativeVerb(EntityUid uid, GasTankComponent component, GetVerbsEvent<AlternativeVerb> args)
