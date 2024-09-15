@@ -7,10 +7,10 @@ accent-skeleton-words-replace-2 = boned
 accent-skeleton-words-3 = fuck
 accent-skeleton-words-3-2 = fck
 accent-skeleton-words-3-3 = shit
-accent-skeleton-words-replace-3 = babushka
+accent-skeleton-words-replace-3 = RATTLE RATTLE
 
 accent-skeleton-words-4 = definitely
-accent-skeleton-words-4-2 = definitely
+accent-skeleton-words-4-2 = absolutely
 accent-skeleton-words-replace-4 = make no bones about it
 
 accent-skeleton-words-5 = afraid
