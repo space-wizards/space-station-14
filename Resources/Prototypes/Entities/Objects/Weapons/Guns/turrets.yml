@@ -149,8 +149,6 @@
             !type:DamageTrigger
             damage: 100
           behaviors:
-            - !type:DoActsBehavior
-              acts: [ "Destruction" ]
             - !type:TriggerBehavior
     - type: Gun
       fireRate: 2
