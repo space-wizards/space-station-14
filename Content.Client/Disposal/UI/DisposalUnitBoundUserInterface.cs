@@ -96,8 +96,8 @@ namespace Content.Client.Disposal.UI
             if (!disposing)
                 return;
 
-            MailingUnitWindow?.Dispose();
-            DisposalUnitWindow?.Dispose();
+            MailingUnitWindow?.Parent?.RemoveChild(MailingUnitWindow);
+            DisposalUnitWindow?.Parent?.RemoveChild(DisposalUnitWindow);
         }
     }
 }

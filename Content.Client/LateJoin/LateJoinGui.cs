@@ -321,17 +321,14 @@ namespace Content.Client.LateJoin
             }
         }
 
-        protected override void Dispose(bool disposing)
+        protected override void ExitedTree()
         {
-            base.Dispose(disposing);
+            base.ExitedTree();
 
-            if (disposing)
-            {
-                _jobRequirements.Updated -= RebuildUI;
-                _gameTicker.LobbyJobsAvailableUpdated -= JobsAvailableUpdated;
-                _jobButtons.Clear();
-                _jobCategories.Clear();
-            }
+            _jobRequirements.Updated -= RebuildUI;
+            _gameTicker.LobbyJobsAvailableUpdated -= JobsAvailableUpdated;
+            _jobButtons.Clear();
+            _jobCategories.Clear();
         }
     }
 

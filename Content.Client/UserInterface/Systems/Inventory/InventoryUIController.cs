@@ -79,7 +79,7 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
     {
         if (_strippingWindow != null)
         {
-            _strippingWindow.Dispose();
+            _strippingWindow.Parent?.RemoveChild(_strippingWindow);
             _strippingWindow = null;
         }
 

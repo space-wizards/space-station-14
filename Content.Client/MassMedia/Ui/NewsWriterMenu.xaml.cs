@@ -87,11 +87,9 @@ public sealed partial class NewsWriterMenu : FancyWindow
         ArticleEditorPanel.Margin =  new Thickness(Width - 1, margin.Top, margin.Right, margin.Bottom);
     }
 
-    protected override void Dispose(bool disposing)
+    protected override void ExitedTree()
     {
-        base.Dispose(disposing);
-        if (!disposing)
-            return;
+        base.ExitedTree();
 
         ButtonCreate.OnPressed -= OnCreate;
     }

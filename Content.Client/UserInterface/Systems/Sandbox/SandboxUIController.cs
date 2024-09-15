@@ -1,4 +1,4 @@
-﻿using Content.Client.Administration.Managers;
+using Content.Client.Administration.Managers;
 using Content.Client.Gameplay;
 using Content.Client.Markers;
 using Content.Client.Sandbox;
@@ -164,7 +164,7 @@ public sealed class SandboxUIController : UIController, IOnStateChanged<Gameplay
     {
         if (_window != null)
         {
-            _window.Dispose();
+            _window.Parent?.RemoveChild(_window);
             _window = null;
         }
 

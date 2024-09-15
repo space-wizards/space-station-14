@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Client.Eui;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Eui;
@@ -93,7 +93,7 @@ public sealed class AdminLogsEui : BaseEui
         });
 
         LogsControl.Orphan();
-        LogsWindow.Dispose();
+        LogsWindow.Parent?.RemoveChild(LogsWindow);
         LogsWindow = null;
 
         ClydeWindow.RequestClosed += OnRequestClosed;
@@ -175,9 +175,9 @@ public sealed class AdminLogsEui : BaseEui
             ClydeWindow.RequestClosed -= OnRequestClosed;
         }
 
-        LogsControl.Dispose();
-        LogsWindow?.Dispose();
-        Root?.Dispose();
+        LogsControl.Parent?.RemoveChild(LogsControl);
+        LogsWindow?.Parent?.RemoveChild(LogsWindow);
+        Root?.Parent?.RemoveChild(Root);
         ClydeWindow?.Dispose();
     }
 }

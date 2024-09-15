@@ -1,4 +1,4 @@
-﻿using Content.Client.Atmos.EntitySystems;
+using Content.Client.Atmos.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Trinary.Components;
 using Content.Shared.Localizations;
@@ -94,7 +94,7 @@ namespace Content.Client.Atmos.UI
         {
             base.Dispose(disposing);
             if (!disposing) return;
-            _window?.Dispose();
+            _window?.Parent?.RemoveChild(_window);
         }
     }
 }

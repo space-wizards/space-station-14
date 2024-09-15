@@ -92,7 +92,7 @@ namespace Content.Client.PDA.Ringer
             if (!disposing)
                 return;
 
-            _menu?.Dispose();
+            _menu?.Parent?.RemoveChild(_menu);
         }
     }
 }

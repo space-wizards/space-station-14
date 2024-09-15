@@ -37,10 +37,10 @@ public sealed partial class AdminMenuWindow : DefaultWindow
             ObjectsTabControl.RefreshObjectList();
     }
 
-    protected override void Dispose(bool disposing)
+    protected override void ExitedTree()
     {
         OnDisposed?.Invoke();
-        base.Dispose(disposing);
+        base.ExitedTree();
         OnDisposed = null;
     }
 

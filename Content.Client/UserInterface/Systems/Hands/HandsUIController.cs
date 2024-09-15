@@ -372,7 +372,7 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
             _statusHandRight = null;
 
         _handLookup.Remove(handName);
-        handButton.Dispose();
+        handButton.Parent?.RemoveChild(handButton);
         UpdateVisibleStatusPanels();
         return true;
     }
