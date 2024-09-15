@@ -84,7 +84,7 @@
   description: A door, where will it lead?
   components:
   - type: Sprite
-    sprite: Structures/Doors/MineralDoors/wood_door.rsi
+    sprite: GreyStation/Structures/Doors/MineralDoors/wood_door.rsi # GreyStation - Resprite
     layers:
     - state: closed
       map: ["enum.DoorVisualLayers.Base"]

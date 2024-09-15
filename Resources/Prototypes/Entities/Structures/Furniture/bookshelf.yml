@@ -5,7 +5,7 @@
   description: Mostly filled with books.
   components:
   - type: Sprite
-    sprite: Structures/Furniture/bookshelf.rsi
+    sprite: GreyStation/Structures/Furniture/bookshelf.rsi # GreyStation - Resprite
     snapCardinals: true
     layers:
       - state: base
