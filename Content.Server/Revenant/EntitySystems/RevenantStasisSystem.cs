@@ -163,7 +163,7 @@ public sealed partial class RevenantStasisSystem : EntitySystem
 
         var revenant = stasis.Revenant;
 
-        if (!HasComp<BibleUserComponent>(args.User))
+        if (revenant.Comp.ExorcismRequiresBibleUser && !HasComp<BibleUserComponent>(args.User))
         {
             _popup.PopupEntity(Loc.GetString("revenant-exorcise-fail", ("bible", bible)), user, user);
             return;

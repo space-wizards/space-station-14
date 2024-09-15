@@ -44,6 +44,7 @@
   - type: GhostTakeoverAvailable
   - type: Revenant
     malfunctionWhitelist:
+      exorcismRequiresBibleUser: true # Escape hatch, change to false if revenant becomes too OP
       components:
       # emag lockers open
       - EntityStorage
