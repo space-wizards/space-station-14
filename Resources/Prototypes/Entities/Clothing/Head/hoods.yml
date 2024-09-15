@@ -274,8 +274,8 @@
   parent: ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterCaptain
   noSpawn: true
-  name: captain's winter coat hood
-  description: An expensive hood, to keep the captain's head warm.
+  name: overseer's winter coat hood
+  description: An expensive hood, to keep the overseer's head warm.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hoods/Coat/hoodcaptain.rsi

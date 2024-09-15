@@ -15,10 +15,10 @@
       - Knife
 
 - type: entity
-  name: captain's sabre
+  name: corporate sabre
   parent: BaseSword
   id: CaptainSabre
-  description: A ceremonial weapon belonging to the captain of the station.
+  description: A ceremonial weapon originally belonging to the captain of a Nanotrasen Station.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/captain_sabre.rsi
@@ -136,7 +136,7 @@
   name: cutlass
   parent: BaseSword
   id: Cutlass
-  description: A wickedly curved blade, often seen in the hands of space pirates.
+  description: A wickedly curved blade, often seen in the hands of pirates and raiders.
   components:
   - type: Tag
     tags:

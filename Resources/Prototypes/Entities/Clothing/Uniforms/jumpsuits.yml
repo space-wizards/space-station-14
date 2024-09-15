@@ -60,8 +60,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitCaptain
-  name: captain's jumpsuit
-  description: It's a blue jumpsuit with some gold markings denoting the rank of "Captain".
+  name: overseer's jumpsuit
+  description: It's a blue jumpsuit with some gold markings denoting the rank of "Overseer".
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/captain.rsi
@@ -82,8 +82,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitSalvageSpecialist
-  name: salvage specialist's jumpsuit
-  description: It's a snappy jumpsuit with a sturdy set of overalls. It's very dirty.
+  name: expeditioneer's jumpsuit
+  description: It's a snappy jumpsuit with a sturdy set of overalls. It's very dirty and slightly damp.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/salvage.rsi
@@ -127,7 +127,7 @@
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitCentcomAgent
   name: CentCom agent's jumpsuit
-  description: A suit worn by CentCom's legal team. Smells of burnt coffee.
+  description: A suit worn by CentCom's wretched legal team. Smells of burnt coffee.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/centcom_agent.rsi
@@ -412,7 +412,7 @@
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitJanitor
   name: janitor jumpsuit
-  description: The jumpsuit for the poor sop with a mop.
+  description: This jumpsuit seems to attract all the seagull droppings. Poor lad.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/janitor.rsi
@@ -516,8 +516,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitQM
-  name: quartermaster's jumpsuit
-  description: 'What can brown do for you?'
+  name: harbormaster's jumpsuit
+  description: a salt-crusted uniform given to those with the rank of Harbormaster.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/qm.rsi
@@ -527,7 +527,7 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitQMTurtleneck
-  name: quartermasters's turtleneck
+  name: harbormaster's turtleneck
   description: A sharp turtleneck made for the hardy work environment of supply.
   components:
     - type: Sprite
@@ -538,8 +538,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitQMFormal
-  name: quartermasters's formal suit
-  description: Inspired by the quartermasters of military's past, the perfect outfit for supplying a formal occasion.
+  name: harbormaster's formal suit
+  description: The rarely-worn suit for the Harbormaster. If they're wearing this, they're not happy.
   components:
     - type: Sprite
       sprite: Clothing/Uniforms/Jumpsuit/qmformal.rsi
@@ -628,7 +628,7 @@
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitSecGrey
   name: grey security jumpsuit
-  description: A tactical relic of years past before Nanotrasen decided it was cheaper to dye the suits red instead of washing out the blood.
+  description: The OG. They stopped making it after realizing it's easier to dye than wash the blood out.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/security_grey.rsi
@@ -639,7 +639,7 @@
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitWarden
   name: warden's uniform
-  description: A formal security suit for officers complete with Nanotrasen belt buckle.
+  description: A formal security suit for wardens, complete with extra butt-padding for those long hours at the desk.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/warden.rsi
@@ -805,7 +805,7 @@
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitCentcomFormal
   name: central command formal suit
-  description: A suit for special occasions.
+  description: A suit for special occasions like conquering another innocent planet. Cheers!
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/centcomformal.rsi
@@ -919,7 +919,7 @@
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitSafari
   name: safari suit
-  description: Perfect for a jungle excursion.
+  description: Perfect for a jungle excursion. Not waterproof.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/safari.rsi
@@ -1229,7 +1229,7 @@
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitLoungewear
   name: loungewear
-  description: A long stretch of fabric that wraps around your body for comfort.
+  description: A cozy wrap of fabric, for staring out at the sea in comfort.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/loungewear.rsi

@@ -16,6 +16,7 @@
     - Ammonia
     - NitrousOxide
     - Frezon
+    - Water
     #- Helium3 TODO: fusion
     # remove everything except oxygen to maintain oxygen ratio
     overflowGases:
@@ -27,6 +28,7 @@
     - Ammonia
     - NitrousOxide
     - Frezon
+    - Water
     #- Helium3 TODO: fusion
   - type: AirIntake
   # for intake and filter to work
@@ -300,3 +302,70 @@
     containers:
       mech-battery-slot:
       - PowerCellHigh
+
+- type: entity
+  id: MechStepfather
+  parent: BaseMech
+  name: Rotund Stepfather
+  description: An advanced deep-sea mining unit, built to escort and assist with far-range mining operations and Trench research.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    noRot: true
+    sprite: Objects/Specific/Mech/mecha.rsi
+    layers:
+    - map: [ "enum.MechVisualLayers.Base" ]
+      state: ripley
+  - type: FootstepModifier
+    footstepSoundCollection:
+      path: /Audio/Mecha/sound_mecha_powerloader_step.ogg
+  - type: Mech
+    baseState: stepfather
+    openState: stepfather-open
+    brokenState: ripley-broken
+    mechToPilotDamageMultiplier: 0.50
+    airtight: true
+    pilotWhitelist:
+      components:
+        - HumanoidAppearance
+  - type: MeleeWeapon
+  - type: HandheldLight
+    addPrefix: false
+    blinkingBehaviourId: blinking
+    radiatingBehaviourId: radiating
+  - type: LightBehaviour
+    behaviours:
+      - !type:FadeBehaviour
+        id: radiating
+        maxDuration: 2.0
+        startValue: 3.0
+        endValue: 2.0
+        isLooped: true
+        reverseWhenFinished: true
+      - !type:PulseBehaviour
+        id: blinking
+        interpolate: Nearest
+        maxDuration: 1.0
+        minValue: 0.1
+        maxValue: 2.0
+        isLooped: true
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMedium
+  - type: PointLight
+    enabled: false
+    hidden: true
+    attackRate: 1
+    damage:
+      types:
+        Blunt: 13
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2.25
+    baseSprintSpeed: 3.6

@@ -103,7 +103,7 @@
   parent: ClothingHeadHeadHatBaseFlippable
   id: ClothingHeadHatCorpsoft
   name: corporate cap
-  description: A baseball bat in corporation colors.
+  description: A baseball bat in corporation colors. An affront to the entire platform.
   components:
   - type: Sprite
     sprite: Clothing/Head/Soft/corpsoft.rsi

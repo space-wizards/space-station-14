@@ -10,7 +10,7 @@
   parent: ClothingHeadHardsuitBase
   id: ClothingHeadHelmetHardsuitBasic
   name: basic hardsuit helmet
-  description: A basic-looking hardsuit helmet that provides minor protection against most sources of damage.
+  description: A basic-looking pressure suit helmet that provides minor protection against the nightmares of the sea.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/basic.rsi
@@ -86,7 +86,7 @@
   parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetHardsuitSpatio
   name: spationaut hardsuit helmet
-  description: A sturdy helmet designed for complex industrial operations in space.
+  description: A sturdy helmet designed for complex industrial operations in the ocean.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/spatiohelm.rsi
@@ -120,7 +120,7 @@
   parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetHardsuitSalvage
   name: salvage hardsuit helmet
-  description: A special helmet designed for work in a hazardous, low pressure environment. Has reinforced plating for wildlife encounters and dual floodlights.
+  description: A special helmet designed for work in a hazardous, extreme pressure environment. Has reinforced plating for wildlife encounters and dual floodlights.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/salvage.rsi
@@ -233,8 +233,8 @@
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetHardsuitCap
-  name: captain's hardsuit helmet
-  description: Special hardsuit helmet, made for the captain of the station.
+  name: overseer's hardsuit helmet
+  description: a modified hardsuit helmet, made for the overseer of the platform.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/capspace.rsi
@@ -249,7 +249,7 @@
   parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetHardsuitEngineeringWhite
   name: chief engineer's hardsuit helmet
-  description: Special hardsuit helmet, made for the chief engineer of the station.
+  description: Special hardsuit helmet, made for the chief engineer of the platform.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/engineering-white.rsi
@@ -302,7 +302,7 @@
   parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetHardsuitSecurityRed
   name: head of security's hardsuit helmet
-  description: Security hardsuit helmet with the latest top secret NT-HUD software. Belongs to the HoS.
+  description: Security hardsuit helmet with the latest top secret NT-HUD software. Pilfered from a drunk HOS.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/security-red.rsi
@@ -467,7 +467,7 @@
   parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetHardsuitWizard
   name: wizard hardsuit helmet
-  description: A bizarre gem-encrusted helmet that radiates magical energies.
+  description: Originally designed by Pandalf the Purple, 'space wizard extraordinare'!
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/wizard.rsi
@@ -491,7 +491,7 @@
   parent: ClothingHeadHardsuitBase
   id: ClothingHeadHelmetHardsuitLing
   name: organic space helmet
-  description: A spaceworthy biomass of pressure and temperature resistant tissue.
+  description: A  biomass of pressure and temperature resistant tissue, reminicent of a human face. god help us all.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/lingspacehelmet.rsi
@@ -507,7 +507,7 @@
   id: ClothingHeadHelmetHardsuitPirateEVA
   name: deep space EVA helmet
   suffix: Pirate
-  description: A deep space EVA helmet, very heavy but provides good protection.
+  description: A deep space EVA helmet, very heavy but provides good protection from the ocean's horrors.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/pirateeva.rsi
@@ -523,7 +523,7 @@
   id: ClothingHeadHelmetHardsuitPirateCap
   name: pirate captain's hardsuit helmet
   suffix: Pirate
-  description: A special hardsuit helmet, made for the captain of a pirate ship.
+  description: A special pressure suit helmet, made for the captain of a pirate vessel.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardsuits/piratecaptainhelm.rsi
@@ -682,7 +682,7 @@
   parent: ClothingHeadHardsuitBase
   id: ClothingHeadHelmetHardsuitDeathsquad
   name: deathsquad hardsuit helmet
-  description: A robust helmet for special operations.
+  description: A robust, dark helmet for special Nanotrasen warfare. 
   components:
   - type: BreathMask
   - type: Sprite
@@ -725,7 +725,7 @@
   parent: ClothingHeadHelmetHardsuitSecurity
   id: ClothingHeadHelmetHardsuitMime
   name: mime hardsuit helmet
-  description: A mime hardsuit helmet.
+  description: It stares silently.
   components:
   - type: BreathMask
   - type: Sprite

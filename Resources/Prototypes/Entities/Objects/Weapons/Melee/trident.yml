@@ -1,0 +1,40 @@
+- type: entity
+  parent: BaseItem
+  id: WeaponTrident
+  name: overseer's trident
+  description: A trident modified with mysterious alien technology, wielded by the platform Overseer.
+  components:
+  - type: Sharp
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/trident.rsi
+    state: icon
+  - type: AmmoCounter
+  - type: UseDelayOnShoot
+  - type: UseDelay
+    delay: 0.3
+  - type: Gun
+    soundGunshot: /Audio/Weapons/plasma_cutter.ogg
+    fireRate: 1
+    useKey: false
+  - type: RechargeBasicEntityAmmo
+    rechargeCooldown: 0.5
+  - type: BasicEntityAmmoProvider
+    proto: BulletTrident
+    capacity: 2
+    count: 2
+  - type: MeleeWeapon
+    attackRate: 1.5
+    wideAnimationRotation: -135
+    damage:
+      types:
+        Slash: 12
+  - type: Wieldable
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Slash: 3.5
+        Structural: 30
+  - type: GunRequiresWield
+  - type: Item
+    size: Ginormous
+  - type: DisarmMalus

@@ -78,10 +78,10 @@
       collection: Screwdriver
 
 - type: entity
-  name: captain's fountain pen
+  name: overseer's fountain pen
   parent: PenEmbeddable
   id: PenCap
-  description: A luxurious fountain pen for the captain of the station.
+  description: A luxurious fountain pen for the overseer of Trieste.
   components:
   - type: Sprite
     state: pen_cap

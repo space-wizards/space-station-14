@@ -60,3 +60,34 @@
             - !type:PlaySoundBehavior
               sound:
                 collection: MetalBreak
+
+
+- type: entity
+  id: FloorDrainPlatform
+  name: Ocean
+  description: Long way down...
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Sprite
+      drawdepth: FloorObjects
+      sprite: Objects/Specific/Janitorial/drainplatform.rsi
+      layers:
+        - state: drainplatform
+    - type: Transform
+      anchored: true
+    - type: Physics
+      bodyType: Static
+      canCollide: false
+    - type: Drain
+    - type: DumpableSolution
+      solution: drainBuffer
+    - type: SolutionContainerManager
+      solutions:
+        drainBuffer:
+          maxVol: 100000
+    - type: DrainableSolution
+      solution: drainBuffer
+    - type: Tag
+      tags:
+      - HideContextMenu
