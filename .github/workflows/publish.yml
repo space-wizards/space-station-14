@@ -10,7 +10,7 @@ on:
   pull_request_target:
     types: [closed]
     branches:
-      - main  # Replace 'main' with your default branch name if different
+      - master  # Replace 'main' with your default branch name if different
 
 jobs:
   build:
