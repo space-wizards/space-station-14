@@ -27,3 +27,7 @@ item-jump-into-hands = {CAPITALIZE(THE($target))} jumps into your hands!
 
 revenant-animate-item-animate = {CAPITALIZE(THE($target))} becomes aggressive!
 revenant-animate-item-inanimate = {CAPITALIZE(THE($target))} falls inert.
+
+alerts-revenant-stasis-name = [color=red]Stasis[/color]
+alerts-revenant-stasis-desc = You are in stasis. Your ghostly energy needs time to regenerate.
+revenant-stasis-regenerating = [color=yellow]The revenant's energy is still present![/color]

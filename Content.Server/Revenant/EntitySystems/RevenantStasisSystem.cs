@@ -3,6 +3,7 @@ using Content.Server.Ghost.Roles.Components;
 using Content.Server.Mind;
 using Content.Server.Revenant.Components;
 using Content.Shared.Alert;
+using Content.Shared.Examine;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Movement.Components;
 using Content.Shared.StatusEffect;
@@ -28,6 +29,7 @@ public sealed partial class RevenantStasisSystem : EntitySystem
         SubscribeLocalEvent<RevenantStasisComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<RevenantStasisComponent, StatusEffectEndedEvent>(OnStatusEnded);
         SubscribeLocalEvent<RevenantStasisComponent, ChangeDirectionAttemptEvent>(OnAttemptDirection);
+        SubscribeLocalEvent<RevenantStasisComponent, ExaminedEvent>(OnExamine);
     }
 
     private void OnStartup(EntityUid uid, RevenantStasisComponent component, ComponentStartup args)
@@ -66,6 +68,11 @@ public sealed partial class RevenantStasisSystem : EntitySystem
                 _mind.TransferTo(mindId, component.Revenant);
             QueueDel(uid);
         }
+    }
+
+    private void OnExamine(Entity<RevenantStasisComponent> entity, ref ExaminedEvent args)
+    {
+        args.PushMarkup(Loc.GetString("revenant-stasis-regenerating"));
     }
 
     private void OnAttemptDirection(EntityUid uid, RevenantStasisComponent comp, ChangeDirectionAttemptEvent args)
