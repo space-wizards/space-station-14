@@ -150,6 +150,8 @@
             damage: 100
           behaviors:
             - !type:TriggerBehavior
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
     - type: Gun
       fireRate: 2
       selectedMode: FullAuto
