@@ -5,6 +5,7 @@ using Content.Server.Ghost.Roles;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Mind;
 using Content.Server.Revenant.Components;
+using Content.Server.VoiceMask;
 using Content.Shared.Alert;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
@@ -43,7 +44,6 @@ public sealed partial class RevenantStasisSystem : EntitySystem
         SubscribeLocalEvent<RevenantStasisComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<RevenantStasisComponent, ConstructionConsumedObjectEvent>(OnCrafted);
 
-        // TODO: This code should be in a shared system
         SubscribeLocalEvent<RevenantStasisComponent, AfterInteractUsingEvent>(OnBibleInteract, before: [typeof(BibleSystem)]);
         SubscribeLocalEvent<RevenantStasisComponent, ExorciseRevenantDoAfterEvent>(OnExorcise);
     }
@@ -62,6 +62,9 @@ public sealed partial class RevenantStasisSystem : EntitySystem
         var speech = EnsureComp<SpeechComponent>(uid);
         speech.SpeechVerb = "Ghost";
         Dirty(uid, speech);
+
+        var voice = EnsureComp<VoiceMaskComponent>(uid);
+        voice.VoiceName = Comp<MetaDataComponent>(component.Revenant).EntityName;
 
         if (TryComp<GhostRoleComponent>(uid, out var ghostRole))
             _ghostRoles.UnregisterGhostRole((uid, ghostRole));
@@ -103,9 +106,10 @@ public sealed partial class RevenantStasisSystem : EntitySystem
         speech.SpeechVerb = "Ghost";
         Dirty(args.New, speech);
 
-        var mover = EnsureComp<InputMoverComponent>(uid);
-        mover.CanMove = false;
-        Dirty(uid, mover);
+        EnsureComp<InputMoverComponent>(args.New);
+
+        var voice = EnsureComp<VoiceMaskComponent>(args.New);
+        voice.VoiceName = Comp<MetaDataComponent>(comp.Revenant).EntityName;
 
         if (_mind.TryGetMind(uid, out var mindId, out var _))
             _mind.TransferTo(mindId, args.New);
