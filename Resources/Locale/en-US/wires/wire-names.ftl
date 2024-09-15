@@ -39,6 +39,7 @@ wires-board-name-mech = Mech
 wires-board-name-fatextractor = FatExtractor
 wires-board-name-flatpacker = Flatpacker
 wires-board-name-spaceheater = Space Heater
+wires-board-name-jukebox = Jukebox
 
 # names that get displayed in the wire hacking hud & admin logs.
 
