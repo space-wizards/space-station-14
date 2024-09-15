@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "size":
+  {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Hyenh#6078 (313846233099927552)",
+  "states":
+  [
+    {
+      "name": "pibble",
+      "directions": 4
+    },
+
+    {
+      "name": "pibble_dead",
+      "directions": 1
+    }
+  ]
+}

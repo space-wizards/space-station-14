@@ -2843,6 +2843,9 @@
   - type: Tag
     tags:
     - VimPilot
+  - type: NpcFactionMember # GreyStation - Makes pibbles attack all cats
+    factions:
+    - Cat
 
 - type: entity
   name: calico cat
