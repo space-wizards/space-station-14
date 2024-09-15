@@ -1,16 +1,16 @@
 # Traitor single items
-steal-target-groups-hypospray = {$ ent-Hypospray.name }
-steal-target-groups-handheld-crew-monitor = {$ ent-HandheldCrewMonitor.name }
-steal-target-groups-clothing-outer-hardsuit-rd = {$ ent-ClothingOuterHardsuitRd.name }
-steal-target-groups-hand-teleporter = {$ ent-HandTeleporter.name }
-steal-target-groups-clothing-shoes-boots-mag-adv = {$ ent-ClothingShoesBootsMagAdv.name }
-steal-target-groups-box-folder-qm-clipboard = {$ ent-BoxFolderQmClipboard.name }
-steal-target-groups-food-meat-corgi = {$ ent-FoodMeatCorgi.name }
-steal-target-groups-captain-id-card = {$ ent-CaptainIDCard.name }
-steal-target-groups-jetpack-captain-filled = {$ ent-JetpackCaptainFilled.name }
-steal-target-groups-weapon-antique-laser = {$ ent-WeaponAntiqueLaser.name }
-steal-target-groups-nuke-disk = {$ ent-NukeDisk.name }
-steal-target-groups-weapon-energy-shot-gun = {$ ent-WeaponEnergyShotgun.name }
+steal-target-groups-hypospray = hypospray
+steal-target-groups-handheld-crew-monitor = handheld crew monitor
+steal-target-groups-clothing-outer-hardsuit-rd = experimental research hardsuit
+steal-target-groups-hand-teleporter = hand teleporter
+steal-target-groups-clothing-shoes-boots-mag-adv = advanced magboots
+steal-target-groups-box-folder-qm-clipboard = requisition digi-board
+steal-target-groups-food-meat-corgi = prime-cut corgi meat
+steal-target-groups-captain-id-card = captain ID card
+steal-target-groups-jetpack-captain-filled = captain's jetpack
+steal-target-groups-weapon-antique-laser = antique laser pistol
+steal-target-groups-nuke-disk = nuclear authentication disk
+steal-target-groups-weapon-energy-shot-gun = energy shotgun
 
 # Thief Collection
 steal-target-groups-figurines = figurines (any)
@@ -23,44 +23,43 @@ steal-target-groups-id-cards = ID Cards (any)
 steal-target-groups-lamps = LAMPS
 
 # Thief single item
-steal-target-groups-forensic-scanner = {$ ent-ForensicScanner.name }
-steal-target-groups-flippo-engraved-lighter = {$ ent-FlippoEngravedLighter.name }
-steal-target-groups-ammo-tech-fab-circuitboard = {$ ent-AmmoTechFabCircuitboard.name }
-steal-target-groups-clothing-head-hat-warden = {$ ent-ClothingHeadHatWarden.name }
-steal-target-groups-clothing-outer-hardsuit-void-paramed = {$ ent-ClothingOuterHardsuitVoidParamed.name }
-steal-target-groups-medical-tech-fab-circuitboard = {$ ent-MedicalTechFabCircuitboard.name }
-steal-target-groups-clothing-headset-alt-medical = {$ ent-ClothingHeadsetAltMedical.name }
-steal-target-groups-research-and-development-server-machine-circuitboard = {$ ent-ResearchAndDevelopmentServerMachineCircuitboard.name }
-steal-target-groups-fire-axe = {$ ent-FireAxe.name }
-steal-target-groups-ame-part-flatpack = {$ ent-AmePartFlatpack.name }
-steal-target-groups-salvage-expeditions-computer-circuitboard = {$ ent-SalvageExpeditionsComputerCircuitboard.name }
-steal-target-groups-cargo-shuttle-console-circuitboard = {$ ent-CargoShuttleConsoleCircuitboard.name }
-steal-target-groups-salvage-shuttle-console-circuitboard = {$ ent-SalvageShuttleConsoleCircuitboard.name }
-steal-target-groups-clothing-eyes-hud-beer = {$ ent-ClothingEyesHudBeer.name }
-steal-target-groups-bible = {$ ent-Bible.name }
-steal-target-groups-clothing-neck-goldmedal = {$ ent-ClothingNeckGoldmedal.name }
-steal-target-groups-clothing-neck-clownmedal = {$ ent-ClothingNeckClownmedal.name }
+steal-target-groups-forensic-scanner = forensic scanner
+steal-target-groups-flippo-engraved-lighter = flippo engraved lighter
+steal-target-groups-ammo-tech-fab-circuitboard = ammo techfab circuit board
+steal-target-groups-clothing-head-hat-warden = warden's cap
+steal-target-groups-clothing-outer-hardsuit-void-paramed = paramedic void suit
+steal-target-groups-medical-tech-fab-circuitboard = medical techfab machine board
+steal-target-groups-clothing-headset-alt-medical = chief medical officer's over-ear headset
+steal-target-groups-research-and-development-server-machine-circuitboard = R&D server machine board
+steal-target-groups-fire-axe = fireaxe
+steal-target-groups-ame-part-flatpack =  AME flatpack
+steal-target-groups-salvage-expeditions-computer-circuitboard = salvage expeditions computer board
+steal-target-groups-cargo-shuttle-console-circuitboard = cargo shuttle console board
+steal-target-groups-clothing-eyes-hud-beer = beer goggles
+steal-target-groups-bible = bible
+steal-target-groups-clothing-neck-goldmedal = gold medal of crewmanship
+steal-target-groups-clothing-neck-clownmedal = clown medal
 
 # Thief structures
 steal-target-groups-teg = teg generator part
 steal-target-groups-freezer-heater = freezer or heater
 steal-target-groups-altar-nanotrasen = nanotrasen altar (any)
 
-steal-target-groups-nuclear-bomb = {$ ent-NuclearBomb.name }
-steal-target-groups-fax-machine-captain = {$ ent-FaxMachineCaptain.name }
-steal-target-groups-chem-dispenser = {$ ent-ChemDispenser.name }
-steal-target-groups-xeno-artifact = {$ ent-BaseXenoArtifact.name }
-steal-target-groups-booze-dispenser = {$ ent-BoozeDispenser.name }
-steal-target-groups-plant-rd = {$ ent-PottedPlantRD.name }
-steal-target-groups-toilet-golden-dirty-water = {$ ent-ToiletGoldenDirtyWater.name }
+steal-target-groups-nuclear-bomb = nuclear fission explosive
+steal-target-groups-fax-machine-captain = captain long range fax machine
+steal-target-groups-chem-dispenser = chemical dispenser
+steal-target-groups-xeno-artifact = alien artifact
+steal-target-groups-booze-dispenser = booze dispenser
+steal-target-groups-plant-rd = "RD's potted plant"
+steal-target-groups-toilet-golden-dirty-water = golden toilet
 
 # Thief Animal
 steal-target-groups-animal-named-cat = CMO's Cat
 
-steal-target-groups-animal-ian = {$ ent-MobCorgiIan.name }
-steal-target-groups-animal-mc-griff = {$ ent-MobMcGriff.name }
-steal-target-groups-animal-walter = {$ ent-MobWalter.name }
-steal-target-groups-animal-morty = {$ ent-MobPossumMorty.name }
-steal-target-groups-animal-renault = {$ ent-MobFoxRenault.name }
-steal-target-groups-animal-shiva = {$ ent-MobSpiderShiva.name }
-steal-target-groups-animal-tropico = {$ ent-MobCrabAtmos.name }
+steal-target-groups-animal-ian = Ian
+steal-target-groups-animal-mc-griff = McGriff
+steal-target-groups-animal-walter = Walter
+steal-target-groups-animal-morty = Morty
+steal-target-groups-animal-renault = Renault
+steal-target-groups-animal-shiva = Shiva
+steal-target-groups-animal-tropico = Tropico
