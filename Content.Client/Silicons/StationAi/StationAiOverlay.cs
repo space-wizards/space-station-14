@@ -2,6 +2,7 @@ using System.Numerics;
 using Content.Shared.Silicons.StationAi;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
+using Robust.Shared.Collections;
 using Robust.Shared.Enums;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
@@ -60,14 +61,16 @@ public sealed class StationAiOverlay : Overlay
 
         if (grid != null && broadphase != null)
         {
+            var maps = _entManager.System<SharedMapSystem>();
             var lookups = _entManager.System<EntityLookupSystem>();
             var xforms = _entManager.System<SharedTransformSystem>();
+            var vision = _entManager.System<StationAiVisionSystem>();
 
             if (_accumulator <= 0f)
             {
                 _accumulator = MathF.Max(0f, _accumulator + _updateRate);
                 _visibleTiles.Clear();
-                _entManager.System<StationAiVisionSystem>().GetView((gridUid, broadphase, grid), worldBounds, _visibleTiles);
+                vision.GetView((gridUid, broadphase, grid), worldBounds.Enlarged(1f), _visibleTiles, new HashSet<Vector2i>());
             }
 
             var gridMatrix = xforms.GetWorldMatrix(gridUid);
@@ -90,10 +93,101 @@ public sealed class StationAiOverlay : Overlay
             worldHandle.RenderInRenderTarget(_staticTexture!,
             () =>
             {
-                worldHandle.SetTransform(invMatrix);
-                var shader = _proto.Index<ShaderPrototype>("CameraStatic").Instance();
-                worldHandle.UseShader(shader);
-                worldHandle.DrawRect(worldBounds, Color.White);
+                worldHandle.SetTransform(matty);
+                worldHandle.UseShader(_proto.Index<ShaderPrototype>("Dithering").Instance());
+
+                var tiles = maps.GetTilesEnumerator(gridUid, grid, worldBounds.Enlarged(grid.TileSize / 2f));
+                var gridEnt = new Entity<BroadphaseComponent, MapGridComponent>(gridUid, _entManager.GetComponent<BroadphaseComponent>(gridUid), grid);
+                var airlockVerts = new ValueList<Vector2>();
+                var airlockVertCache = new ValueList<Vector2>(9);
+
+                while (tiles.MoveNext(out var tileRef))
+                {
+                    if (_visibleTiles.Contains(tileRef.GridIndices))
+                        continue;
+
+                    // TODO: GetView should do these.
+                    var aabb = lookups.GetLocalBounds(tileRef.GridIndices, grid.TileSize);
+
+                    if (vision.TryAirlock(gridEnt, tileRef.GridIndices, out var open))
+                    {
+                        var midBottom = (aabb.BottomRight - aabb.BottomLeft) / 2f + aabb.BottomLeft;
+                        var midTop = (aabb.TopRight - aabb.TopLeft) / 2f + aabb.TopLeft;
+                        const float IndentSize = 0.15f;
+                        const float OpenOffset = 0.35f;
+
+                        // Left half
+                        {
+                            airlockVertCache.Clear();
+                            airlockVertCache.Add(aabb.BottomLeft);
+                            airlockVertCache.Add(midBottom);
+                            airlockVertCache.Add(airlockVertCache[^1] + new Vector2(0f, grid.TileSize * 0.4f));
+                            airlockVertCache.Add(airlockVertCache[^1] + new Vector2(-grid.TileSize * IndentSize, 0f));
+                            airlockVertCache.Add(airlockVertCache[^1] + new Vector2(0f, grid.TileSize * 0.2f));
+                            airlockVertCache.Add(airlockVertCache[^1] + new Vector2(grid.TileSize * IndentSize, 0f));
+                            airlockVertCache.Add(midTop);
+                            airlockVertCache.Add(aabb.TopLeft);
+
+                            if (open)
+                            {
+                                for (var i = 0; i < 8; i++)
+                                {
+                                    airlockVertCache[i] -= new Vector2(OpenOffset, 0f);
+                                }
+                            }
+
+                            for (var i = 0; i < airlockVertCache.Count; i++)
+                            {
+                                airlockVerts.Add(airlockVertCache[i]);
+                                var next = (airlockVertCache[(i + 1) % airlockVertCache.Count]);
+                                airlockVerts.Add(next);
+                            }
+                        }
+
+                        // Right half
+                        {
+                            airlockVertCache.Clear();
+                            airlockVertCache.Add(aabb.BottomRight);
+                            airlockVertCache.Add(midBottom);
+                            airlockVertCache.Add(airlockVertCache[^1] + new Vector2(0f, grid.TileSize * 0.4f));
+                            airlockVertCache.Add(airlockVertCache[^1] + new Vector2(grid.TileSize * IndentSize, 0f));
+                            airlockVertCache.Add(airlockVertCache[^1] + new Vector2(0f, grid.TileSize * 0.2f));
+                            airlockVertCache.Add(airlockVertCache[^1] + new Vector2(-grid.TileSize * IndentSize, 0f));
+                            airlockVertCache.Add(midTop);
+                            airlockVertCache.Add(aabb.TopRight);
+
+                            if (open)
+                            {
+                                for (var i = 0; i < 8; i++)
+                                {
+                                    airlockVertCache[i] += new Vector2(OpenOffset, 0f);
+                                }
+                            }
+
+                            for (var i = 0; i < airlockVertCache.Count; i++)
+                            {
+                                airlockVerts.Add(airlockVertCache[i]);
+                                var next = (airlockVertCache[(i + 1) % airlockVertCache.Count]);
+                                airlockVerts.Add(next);
+                            }
+                        }
+
+                        continue;
+                    }
+
+                    var occluded = vision.IsOccluded(gridEnt, tileRef.GridIndices);
+
+                    if (occluded)
+                    {
+                        worldHandle.DrawRect(aabb, Color.LimeGreen, filled: false);
+                    }
+                    else
+                    {
+                        worldHandle.DrawRect(aabb, Color.Green.WithAlpha(0.35f), filled: false);
+                    }
+                }
+
+                worldHandle.DrawPrimitives(DrawPrimitiveTopology.LineList, airlockVerts.Span, Color.Gold);
             },
             Color.Black);
         }
