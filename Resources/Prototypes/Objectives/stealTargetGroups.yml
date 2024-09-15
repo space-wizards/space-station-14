@@ -130,7 +130,7 @@
 
 - type: stealTargetGroup
   id: TechnologyDisk
-  name: technology disks
+  name: steal-target-groups-technology-disks
   sprite:
     sprite: Objects/Misc/module.rsi
     state: datadisk_base

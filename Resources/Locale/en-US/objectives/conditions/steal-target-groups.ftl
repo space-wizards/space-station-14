@@ -19,6 +19,7 @@ steal-target-groups-heads-bedsheets = head's bedsheets (any)
 steal-target-groups-stamps = stamps (any)
 steal-target-groups-door-remotes = door remotes (any)
 steal-target-groups-encryption-keys = encryption keys (any)
+steal-target-groups-technology-disks = technology disks
 steal-target-groups-id-cards = ID Cards (any)
 steal-target-groups-lamps = LAMPS
 
