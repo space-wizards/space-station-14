@@ -1,5 +1,5 @@
 <DefaultWindow xmlns="https://spacestation14.io">
-    <BoxContainer Orientation="Vertical">
+    <BoxContainer Orientation="Vertical" HorizontalAlignment="Center">
         <GridContainer Columns="2">
             <Button Name="CancelButton" Text="{Loc confirm-command-cancel}" HorizontalAlignment="Center"/>
             <Button Name="ConfirmButton" Text="{Loc confirm-command-confirm}" HorizontalAlignment="Center"/>
