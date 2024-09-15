@@ -30,15 +30,4 @@
       backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
       contentMargin: 4.0, 4.0, 4.0, 4.0
       maxWritableArea: 400.0, 256.0
-    - type: Flammable
-      fireSpread: true
-      canResistFire: false
-      alwaysCombustible: true
-      canExtinguish: true # Mwahaha! Let the world burn because of one piece of paper!
-      damage:
-        types:
-          Heat: 1
-    - type: FireVisuals
-      sprite: Effects/fire.rsi
-      normalState: fire
 
