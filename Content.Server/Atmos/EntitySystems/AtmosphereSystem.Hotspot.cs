@@ -70,7 +70,7 @@ namespace Content.Server.Atmos.EntitySystems
 
                 foreach (var set in tileDecals)
                 {
-                    if (!_burntDecals.Contains(set.Decal.Id))
+                    if (Array.IndexOf(_burntDecals, set.Decal.Id) == -1)
                         continue;
 
                     tileBurntDecals++;
@@ -81,7 +81,7 @@ namespace Content.Server.Atmos.EntitySystems
 
                 // Add a random burned decal to the tile only if there are less than 4 of them
                 if (tileBurntDecals < 4)
-                    _decalSystem.TryAddDecal(_burntDecals[_random.Next(_burntDecals.Count)], new EntityCoordinates(gridUid, tilePos), out _, cleanable: true);
+                    _decalSystem.TryAddDecal(_burntDecals[_random.Next(_burntDecals.Length)], new EntityCoordinates(gridUid, tilePos), out _, cleanable: true);
 
                 if (tile.Air.Temperature > Atmospherics.FireMinimumTemperatureToSpread)
                 {
