@@ -18,7 +18,6 @@ public sealed partial class WantedListUiFragment : BoxContainer
 
     private string? _selectedTargetName;
     private List<WantedRecord> _wantedRecords = new();
-    private GridContainer? _historyGridContainer;
 
     public WantedListUiFragment()
     {
@@ -140,44 +139,23 @@ public sealed partial class WantedListUiFragment : BoxContainer
         // History table
 
         // Clear table if it exists
-        if (_historyGridContainer is not null && ScrollTableContainer.Children.Contains(_historyGridContainer))
-        {
-            _historyGridContainer.RemoveAllChildren();
-        }
-        else
-        {
-            _historyGridContainer = new GridContainer()
-            {
-                Name = "HistoryTable",
-                Columns = 5,
-                HorizontalExpand = true,
-                VerticalExpand = true,
-            };
-            ScrollTableContainer.AddChild(_historyGridContainer);
-        }
+        HistoryTable.RemoveAllChildren();
 
-        void AddDivider()
-        {
-            var panel = new PanelContainer() { StyleClasses = { "LowDivider" }, };
-            _historyGridContainer.AddChild(panel);
-        }
-
-        _historyGridContainer.AddChild(new Label()
+        HistoryTable.AddChild(new Label()
         {
             Text = Loc.GetString("wanted-list-history-table-time-col"),
             StyleClasses = { "LabelSmall" },
             HorizontalAlignment = HAlignment.Center,
         });
-        AddDivider();
-        _historyGridContainer.AddChild(new Label()
+        HistoryTable.AddChild(new Label()
         {
             Text = Loc.GetString("wanted-list-history-table-reason-col"),
             StyleClasses = { "LabelSmall" },
             HorizontalAlignment = HAlignment.Center,
             HorizontalExpand = true,
         });
-        AddDivider();
-        _historyGridContainer.AddChild(new Label()
+
+        HistoryTable.AddChild(new Label()
         {
             Text = Loc.GetString("wanted-list-history-table-initiator-col"),
             StyleClasses = { "LabelSmall" },
@@ -186,25 +164,31 @@ public sealed partial class WantedListUiFragment : BoxContainer
 
         if (record.History.Count > 0)
         {
+            HistoryTable.Visible = true;
+
             foreach (var history in record.History.OrderByDescending(h => h.AddTime))
             {
-                _historyGridContainer.AddChild(new Label()
+                HistoryTable.AddChild(new Label()
                 {
                     Text = $"{history.AddTime.Hours:00}:{history.AddTime.Minutes:00}:{history.AddTime.Seconds:00}",
                     StyleClasses = { "LabelSmall" },
+                    VerticalAlignment = VAlignment.Top,
                 });
-                AddDivider();
-                _historyGridContainer.AddChild(new Label()
+
+                HistoryTable.AddChild(new RichTextLabel()
                 {
-                    Text = history.Crime,
+                    Text = $"[color=white]{history.Crime}[/color]",
                     HorizontalExpand = true,
-                    StyleClasses = { "LabelSmall" },
+                    VerticalAlignment = VAlignment.Top,
+                    StyleClasses = { "LabelSubText" },
+                    Margin = new(10f, 0f),
                 });
-                AddDivider();
-                _historyGridContainer.AddChild(new Label()
+
+                HistoryTable.AddChild(new RichTextLabel()
                 {
-                    Text = history.InitiatorName,
-                    StyleClasses = { "LabelSmall" },
+                    Text = $"[color=white]{history.InitiatorName}[/color]",
+                    StyleClasses = { "LabelSubText" },
+                    VerticalAlignment = VAlignment.Top,
                 });
             }
         }

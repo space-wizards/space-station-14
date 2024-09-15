@@ -1,6 +1,7 @@
 <cartridges:WantedListUiFragment xmlns:cartridges="clr-namespace:Content.Client.CartridgeLoader.Cartridges"
         xmlns="https://spacestation14.io"
         xmlns:ui="clr-namespace:Content.Client.CartridgeLoader.UI"
+        xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
         Orientation="Vertical"
         VerticalExpand="True"
         HorizontalExpand="True">
@@ -34,7 +35,7 @@
                     <RichTextLabel Name="InitiatorName" VerticalAlignment="Stretch"/>
                     <RichTextLabel Name="WantedReason" VerticalAlignment="Stretch"/>
                     <PanelContainer StyleClasses="LowDivider" Margin="0 5 0 5" />
-                    <ScrollContainer Name="ScrollTableContainer" VerticalExpand="True" HorizontalExpand="True" />
+                    <controls:TableContainer Name="HistoryTable" Columns="3" Visible="False" HorizontalAlignment="Stretch" />
                 </BoxContainer>
             </ScrollContainer>
         </BoxContainer>
