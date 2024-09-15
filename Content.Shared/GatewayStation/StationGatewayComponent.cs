@@ -1,13 +1,12 @@
-using Content.Server.GatewayStation.Systems;
 using Robust.Shared.Audio;
 
-namespace Content.Server.GatewayStation.Components;
+namespace Content.Shared.GatewayStation;
 
 /// <summary>
 /// TODO
 /// </summary>
 [RegisterComponent]
-[Access(typeof(StationGatewaySystem))]
+[Access(typeof(SharedStationGatewaySystem))]
 public sealed partial class StationGatewayComponent : Component
 {
     /// <summary>
@@ -46,4 +45,10 @@ public sealed partial class StationGatewayComponent : Component
     /// </summary>
     [DataField]
     public EntityUid? LastLink = null;
+
+    /// <summary>
+    /// Used for coloring from AppearanceChanged
+    /// </summary>
+    [DataField]
+    public string? PortalLayerMap;
 }

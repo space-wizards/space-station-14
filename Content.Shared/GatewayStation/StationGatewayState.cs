@@ -51,3 +51,9 @@ public sealed class StationGatewayGateClickMessage : BoundUserInterfaceMessage
         Gateway = gateway;
     }
 }
+
+[Serializable, NetSerializable]
+public enum GatewayPortalVisual
+{
+    Color,
+}

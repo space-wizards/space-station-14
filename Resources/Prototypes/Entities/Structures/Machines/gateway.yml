@@ -75,7 +75,7 @@
     - state: portal
       shader: unshaded
       visible: false
-      map: ["enum.LinkedEntityVisuals.HasAnyLinks"]
+      map: ["Portal"]
     - state: on
       shader: unshaded
       visible: false
@@ -90,7 +90,7 @@
           True: { visible: true }
           False: { visible: false }
       enum.LinkedEntityVisuals.HasAnyLinks:
-        enum.LinkedEntityVisuals.HasAnyLinks:
+        Portal:
           True: { visible: true }
           False: { visible: false }
   - type: AmbientSound
@@ -117,6 +117,7 @@
         hard: false
   - type: Appearance
   - type: StationGateway
+    portalLayerMap: "Portal"
   - type: Portal
     randomTeleport: false
     canTeleportToOtherMaps: true

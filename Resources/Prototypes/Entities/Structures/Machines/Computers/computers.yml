@@ -453,6 +453,31 @@
     unlockOnClick: false
 
 - type: entity
+  parent: ComputerGatewayStation
+  id: ComputerGatewaySyndicate
+  name: syndicate gateways control console
+  components:
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: gateway_syndicate
+    - map: ["computerLayerKeys"]
+      state: syndie_key
+  - type: PointLight
+    color: "#c61414"
+  - type: Computer
+    board: CrewMonitoringComputerCircuitboard #TODO
+  - type: AccessReader
+    access: [["SyndicateAgent"]]
+  - type: StationGatewayConsole
+    gatewayColor: "#c61414"
+  
+
+- type: entity
   parent: BaseComputer
   id: ComputerResearchAndDevelopment
   name: R&D computer

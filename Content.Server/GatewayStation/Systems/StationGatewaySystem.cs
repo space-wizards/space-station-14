@@ -12,11 +12,13 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
+using Robust.Shared.Timing;
 
 namespace Content.Server.GatewayStation.Systems;
 
-public sealed class StationGatewaySystem : EntitySystem
+public sealed class StationGatewaySystem : SharedStationGatewaySystem
 {
+    [Dependency] private readonly SharedAppearanceSystem _appearanceSys = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly LinkedEntitySystem _link = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -24,6 +26,8 @@ public sealed class StationGatewaySystem : EntitySystem
     [Dependency] private readonly PowerReceiverSystem _power = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -39,6 +43,22 @@ public sealed class StationGatewaySystem : EntitySystem
         SubscribeLocalEvent<GatewayChipComponent, ExaminedEvent>(OnChipExamined);
     }
 
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var query = EntityQueryEnumerator<StationGatewayConsoleComponent>();
+        while (query.MoveNext(out var uid, out var console))
+        {
+            if (console.NextUpdateTime > _timing.CurTime)
+                continue;
+
+            console.NextUpdateTime += console.UpdateFrequency;
+
+            UpdateUserInterface((uid, console));
+        }
+    }
+
     private void OnChipExamined(Entity<GatewayChipComponent> ent, ref ExaminedEvent args)
     {
         if (ent.Comp.ConnectedGate is not null)
@@ -51,9 +71,6 @@ public sealed class StationGatewaySystem : EntitySystem
             return;
 
         if (!TryComp<GatewayChipComponent>(args.Used, out var chip))
-            return;
-
-        if (!_power.IsPowered(ent))
             return;
 
         if (chip.ConnectedGate is not null)
@@ -106,6 +123,9 @@ public sealed class StationGatewaySystem : EntitySystem
                 {
                     if (_link.TryLink(gate.Value, ent.Comp.SelectedGate.Value))
                         gateComp.LastLink = ent.Comp.SelectedGate.Value;
+
+                    _appearanceSys.SetData(gate.Value, GatewayPortalVisual.Color, ent.Comp.GatewayColor);
+                    _appearanceSys.SetData(ent.Comp.SelectedGate.Value, GatewayPortalVisual.Color, ent.Comp.GatewayColor);
                 }
                 ent.Comp.SelectedGate = null;
             }
