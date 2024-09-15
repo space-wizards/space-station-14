@@ -167,12 +167,21 @@ public sealed class NukeSystem : EntitySystem
         if (component.Status == NukeStatus.ARMED)
             return;
 
+        // Nuke has to have the disk in it to be moved
+        if (!component.DiskSlot.HasItem)
+        {
+            var msg = Loc.GetString("nuke-component-cant-anchor-toggle");
+            _popups.PopupEntity(msg, uid, args.Actor, PopupType.MediumCaution);
+            return;
+        }
+
         // manually set transform anchor (bypassing anchorable)
         // todo: it will break pullable system
         var xform = Transform(uid);
         if (xform.Anchored)
         {
             _transform.Unanchor(uid, xform);
+            _itemSlots.SetLock(uid, component.DiskSlot, true);
         }
         else
         {
@@ -194,6 +203,7 @@ public sealed class NukeSystem : EntitySystem
 
             _transform.SetCoordinates(uid, xform, xform.Coordinates.SnapToGrid());
             _transform.AnchorEntity(uid, xform);
+            _itemSlots.SetLock(uid, component.DiskSlot, false);
         }
 
         UpdateUserInterface(uid, component);

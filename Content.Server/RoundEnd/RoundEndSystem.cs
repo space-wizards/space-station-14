@@ -194,7 +194,7 @@ namespace Content.Server.RoundEnd
             ExpectedCountdownEnd = _gameTiming.CurTime + countdownTime;
 
             // TODO full game saves
-            Timer.Spawn(countdownTime, _shuttle.CallEmergencyShuttle, _countdownTokenSource.Token);
+            Timer.Spawn(countdownTime, _shuttle.DockEmergencyShuttle, _countdownTokenSource.Token);
 
             ActivateCooldown();
             RaiseLocalEvent(RoundEndSystemChangedEvent.Default);
