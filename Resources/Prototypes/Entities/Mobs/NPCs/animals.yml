@@ -3430,6 +3430,7 @@
       gender: epicene
   - type: Speech
     speechVerb: Plant
+    speechSounds: Alto
     allowedEmotes: ['Chirp']
   - type: Vocal
     sounds:
