@@ -43,8 +43,8 @@
   - type: Strippable
   - type: UserInterface
     interfaces:
-    - key: enum.StrippingUiKey.Key
-      type: StrippableBoundUserInterface
+      enum.StrippingUiKey.Key:
+        interface: StrippableBoundUserInterface
   - type: DamageStateVisuals
     states:
       Alive:
@@ -115,7 +115,7 @@
         layer:
         - SmallMobLayer
   - type: Sprite
-    scale: 0.8, 0.6
+    #scale: 0.8, 0.6
     drawdepth: Mobs
     sprite: GreyStation/Mobs/Pets/ventbull.rsi
     layers:
