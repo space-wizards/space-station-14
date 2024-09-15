@@ -4,6 +4,9 @@
   id: BloodyKnuckleDuster
   description: Knuckle dusters that can land gruesome blows. They are very bloody.
   components:
+  - type: Sprite
+    sprite: GreyStation/Objects/Weapons/Melee/bloody_knuckle_dusters.rsi
+    state: icon
   - type: Item
     size: Small
   - type: EmitSoundOnPickup
