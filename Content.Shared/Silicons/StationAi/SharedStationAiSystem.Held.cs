@@ -55,7 +55,7 @@ public abstract partial class SharedStationAiSystem
     /// <summary>
     /// Tries to get the entity held in the AI core.
     /// </summary>
-    private bool TryGetHeld(Entity<StationAiCoreComponent?> entity, out EntityUid held)
+    public bool TryGetHeld(Entity<StationAiCoreComponent?> entity, out EntityUid held)
     {
         held = EntityUid.Invalid;
 

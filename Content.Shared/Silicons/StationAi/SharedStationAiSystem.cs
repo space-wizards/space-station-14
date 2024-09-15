@@ -110,6 +110,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         var query = EntityQueryEnumerator<StationAiHeldComponent>();
         while (query.MoveNext(out var uid, out var heldComp))
         {
+            NetEntity? nEnt; // For alerts
             if (!TryGetEye(uid, out var eye) || eye == null)
                 continue;
             
@@ -130,6 +131,9 @@ public abstract partial class SharedStationAiSystem : EntitySystem
                 
                 if(visible)
                 {
+                    if(TryGetNetEntity(uid, out nEnt))
+                        RaiseNetworkEvent(new AiAlertEvent(nEnt.Value, AiAlertType.FollowedFound));
+                    
                     _followerSystem.StartFollowingEntity(uid, followed.Value);
                     heldComp.lostFollowed = false;
                     heldComp.cancelRecaptureTokens.Cancel();
@@ -144,10 +148,13 @@ public abstract partial class SharedStationAiSystem : EntitySystem
             // Handle follwed entity leaving FoV
             if(!TryVisibleCheck(followed.Value, uid, out visible))
                 continue;
-            if(!visible)
-            {
+            // Check for lostFollowed is here to prevent multiple runs
+            if(!visible && !heldComp.lostFollowed)
+            {   
+                if(TryGetNetEntity(uid, out nEnt))
+                    RaiseNetworkEvent(new AiAlertEvent(nEnt.Value, AiAlertType.LostTrack));
                 _followerSystem.StopFollowingEntity(uid, followed.Value);
-                Timer.Spawn(10000, () => { CancelReFollow((uid, heldComp)); }, heldComp.cancelRecaptureTokens.Token);
+                Timer.Spawn(10000, () => { CancelReFollowing((uid, heldComp)); }, heldComp.cancelRecaptureTokens.Token);
                 heldComp.lostFollowed = true;
             }
             // End of loop
@@ -155,7 +162,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
     }
     
     /// <summary>
-    /// Checks if AI can actually see target if FoV, grid independent.
+    /// Checks if AI can actually see target in FoV, grid independent.
     /// Returns true if does not fail, false if fails.
     /// </summary>
     private bool TryVisibleCheck(EntityUid target, EntityUid aiHeld, out bool visible)
@@ -195,8 +202,11 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         return true;
     }
 
-    private void CancelReFollow(Entity<StationAiHeldComponent> held)
+    private void CancelReFollowing(Entity<StationAiHeldComponent> held)
     {
+        if(TryGetNetEntity(held.Owner, out var nEnt) && nEnt != null)
+            RaiseNetworkEvent(new AiAlertEvent(nEnt.Value, AiAlertType.ReFollowingCanceled));
+        
         held.Comp.lostFollowed = false;
     }
 
@@ -514,6 +524,18 @@ public sealed partial class JumpToCoreEvent : InstantActionEvent
 }
 
 [Serializable, NetSerializable]
+public sealed class AiAlertEvent : HandledEntityEventArgs
+{
+    public NetEntity target;
+    public AiAlertType type;
+    public AiAlertEvent(NetEntity alertTarget, AiAlertType alertType)
+    {
+        target = alertTarget; 
+        type = alertType;
+    }
+}
+
+[Serializable, NetSerializable]
 public enum StationAiVisualState : byte
 {
     Key,
@@ -525,4 +547,15 @@ public enum StationAiState : byte
     Empty,
     Occupied,
     Dead,
+}
+
+[Serializable, NetSerializable]
+public enum AiAlertType : byte
+{
+    // AI eye follow alerts
+    LostTrack,
+    FollowedFound,
+    ReFollowingCanceled,
+
+    AiWireSnipped,
 }
