@@ -14,7 +14,7 @@ steal-target-groups-weapon-energy-shot-gun = energy shotgun
 
 # Thief Collection
 steal-target-groups-figurines = figurine
-steal-target-groups-heads-cloaks = head cloak
+steal-target-groups-heads-cloaks = head's cloak
 steal-target-groups-heads-bedsheets = head's bedsheet
 steal-target-groups-stamps = stamp
 steal-target-groups-door-remotes = door remote
