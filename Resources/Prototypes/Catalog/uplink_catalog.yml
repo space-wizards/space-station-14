@@ -919,6 +919,20 @@
     - UplinkDisruption
 
 - type: listing
+  id: UplinkMaliciousLawBoards
+  name: uplink-malicious-laws-module-name
+  description: uplink-malicious-laws-module-desc
+  productEntity: MaliciousLawsKit
+  icon: { sprite: /Objects/Misc/module.rsi, state: std_mod }
+  discountCategory: veryRareDiscounts
+  discountDownTo:
+    Telecrystal: 4
+  cost:
+    Telecrystal: 8
+  categories:
+    - UplinkDisruption
+
+- type: listing
   id: UplinkSoapSyndie
   name: uplink-soap-name
   description: uplink-soap-desc

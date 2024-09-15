@@ -163,6 +163,9 @@ uplink-syndicate-weapon-module-desc = This module will give a cyborg advanced la
 uplink-syndicate-martyr-module-name = Martyr Cyborg Module
 uplink-syndicate-martyr-module-desc = Turn your emagged borg friend into a walking bomb with just this module. Make sure they're loyal to your cause, results may vary.
 
+uplink-malicious-laws-module-name = Malicious Law Boards
+uplink-malicious-laws-module-desc = A collection of law boards that make the station AI significantly less friendly.
+
 uplink-singularity-beacon-name = Singularity Beacon
 uplink-singularity-beacon-desc = A device that attracts singularities. Has to be anchored and powered. Causes singularities to grow when consumed.
 
