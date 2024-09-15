@@ -5,7 +5,7 @@
   description: A black card with the syndicate's logo. There's something written on the back
   components:
     - type: Sprite
-      sprite: Objects/Misc/Business_сard.rsi
+      sprite: Objects/Misc/Business_card.rsi
       state: Synicate_card
     - type: Item
       size: Tiny
