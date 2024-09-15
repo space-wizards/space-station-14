@@ -1,5 +1,6 @@
 using Content.Server.Bible;
 using Content.Server.Bible.Components;
+using Content.Server.Construction;
 using Content.Server.Ghost.Roles;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Mind;
@@ -12,6 +13,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Movement.Components;
 using Content.Shared.Popups;
 using Content.Shared.Revenant;
+using Content.Shared.Speech;
 using Content.Shared.StatusEffect;
 using Robust.Shared.Player;
 
@@ -39,6 +41,7 @@ public sealed partial class RevenantStasisSystem : EntitySystem
         SubscribeLocalEvent<RevenantStasisComponent, StatusEffectEndedEvent>(OnStatusEnded);
         SubscribeLocalEvent<RevenantStasisComponent, ChangeDirectionAttemptEvent>(OnAttemptDirection);
         SubscribeLocalEvent<RevenantStasisComponent, ExaminedEvent>(OnExamine);
+        SubscribeLocalEvent<RevenantStasisComponent, ConstructionConsumedObjectEvent>(OnCrafted);
 
         // TODO: This code should be in a shared system
         SubscribeLocalEvent<RevenantStasisComponent, AfterInteractUsingEvent>(OnBibleInteract, before: [typeof(BibleSystem)]);
@@ -55,6 +58,10 @@ public sealed partial class RevenantStasisSystem : EntitySystem
         var mover = EnsureComp<InputMoverComponent>(uid);
         mover.CanMove = false;
         Dirty(uid, mover);
+
+        var speech = EnsureComp<SpeechComponent>(uid);
+        speech.SpeechVerb = "Ghost";
+        Dirty(uid, speech);
 
         if (TryComp<GhostRoleComponent>(uid, out var ghostRole))
             _ghostRoles.UnregisterGhostRole((uid, ghostRole));
@@ -86,6 +93,22 @@ public sealed partial class RevenantStasisSystem : EntitySystem
     private void OnExamine(Entity<RevenantStasisComponent> entity, ref ExaminedEvent args)
     {
         args.PushMarkup(Loc.GetString("revenant-stasis-regenerating"));
+    }
+
+    private void OnCrafted(EntityUid uid, RevenantStasisComponent comp, ConstructionConsumedObjectEvent args)
+    {
+        // Permanently sealed into revenant plushie
+
+        var speech = EnsureComp<SpeechComponent>(args.New);
+        speech.SpeechVerb = "Ghost";
+        Dirty(args.New, speech);
+
+        var mover = EnsureComp<InputMoverComponent>(uid);
+        mover.CanMove = false;
+        Dirty(uid, mover);
+
+        if (_mind.TryGetMind(uid, out var mindId, out var _))
+            _mind.TransferTo(mindId, args.New);
     }
 
     private void OnAttemptDirection(EntityUid uid, RevenantStasisComponent comp, ChangeDirectionAttemptEvent args)
