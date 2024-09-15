@@ -553,6 +553,12 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         if (targetMap.MapId != userXform.MapID)
             return false;
 
+        // GreyStation: add HeavyAttackAttemptEvent
+        var attemptEv = new HeavyAttackAttemptEvent(user);
+        RaiseLocalEvent(meleeUid, ref attemptEv);
+        if (attemptEv.Cancelled)
+            return false;
+
         var userPos = TransformSystem.GetWorldPosition(userXform);
         var direction = targetMap.Position - userPos;
         var distance = Math.Min(component.Range, direction.Length());
@@ -842,3 +848,9 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         Dirty(uid, meleeWeapon);
     }
 }
+
+/// <summary>
+/// GreyStation: Let melee weapons prevent wide swings
+/// </summary>
+[ByRefEvent]
+public record struct HeavyAttackAttemptEvent(EntityUid User, bool Cancelled = false);
