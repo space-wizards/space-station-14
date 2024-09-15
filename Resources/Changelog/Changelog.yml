@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Vermidia
-  changes:
-  - message: Some drink reactions now require shaking with the shaker or stirring
-      with a spoon
-    type: Add
-  id: 6880
-  time: '2024-07-07T14:21:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29243
 - author: Dezzzix
   changes:
   - message: Now you can slice food with swords
@@ -3915,3 +3907,10 @@
   id: 7379
   time: '2024-09-15T20:03:15.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30966
+- author: Plykiya
+  changes:
+  - message: Meteors break through less walls now.
+    type: Tweak
+  id: 7380
+  time: '2024-09-15T20:04:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32109
