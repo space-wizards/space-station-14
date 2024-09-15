@@ -98,13 +98,13 @@ public class ListContainer : Control
             GenerateItem?.Invoke(data[0], control);
             control.Measure(Vector2Helpers.Infinity);
             _itemHeight = control.DesiredSize.Y;
-            control.Parent?.RemoveChild(control);
+            control.Dispose();
         }
 
         // Ensure buttons are re-generated.
         foreach (var button in _buttons.Values)
         {
-            button.Parent?.RemoveChild(button);
+            button.Dispose();
         }
         _buttons.Clear();
 
@@ -298,7 +298,7 @@ public class ListContainer : Control
             foreach (var (data, button) in toRemove)
             {
                 _buttons.Remove(data);
-                button.Parent?.RemoveChild(button);
+                button.Dispose();
             }
 
             _vScrollBar.SetPositionLast();
