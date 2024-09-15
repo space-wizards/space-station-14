@@ -136,18 +136,8 @@ public sealed class GasCanisterSystem : EntitySystem
         // filling a jetpack with plasma is less important than filling a room with it
         impact = canister.GasTankSlot.HasItem ? LogImpact.Medium : LogImpact.High;
 
-        var containedGasDict = new Dictionary<Gas, float>();
-
         if (TryComp<InternalAirComponent>(uid, out var internalAir))
-        {
-            var containedGasArray = Enum.GetValues(typeof(Gas));
-            for (int i = 0; i < containedGasArray.Length; i++)
-            {
-                containedGasDict.Add((Gas)i, internalAir.Air[i]);
-            }
-        }
-
-        _adminLogger.Add(LogType.CanisterValve, impact, $"{ToPrettyString(args.Actor):player} set the valve on {ToPrettyString(uid):canister} to {args.Valve:valveState} while it contained [{string.Join(", ", containedGasDict)}]");
+            _adminLogger.Add(LogType.CanisterValve, impact, $"{ToPrettyString(args.Actor):player} set the valve on {ToPrettyString(uid):canister} to {args.Valve:valveState} while it contained [{internalAir.Air:gas}]");
 
         canister.ReleaseValve = args.Valve;
         DirtyUI(uid, canister);
