@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Intercoms now use encryption keys to determine what channels they can
-      broadcast on.
-    type: Tweak
-  - message: Intercoms and handheld radios no longer rely on telecom servers.
-    type: Fix
-  id: 6879
-  time: '2024-07-07T14:19:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29580
 - author: Vermidia
   changes:
   - message: Some drink reactions now require shaking with the shaker or stirring
@@ -3918,3 +3908,10 @@
   id: 7378
   time: '2024-09-15T19:04:32.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32068
+- author: BackeTako
+  changes:
+  - message: Added French and Spanish speech traits.
+    type: Add
+  id: 7379
+  time: '2024-09-15T20:03:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30966
