@@ -233,7 +233,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/gauze.rsi
+  - sprite: Mobs/Customization/Misc/Gauze/gauze.rsi
     state: gauze_head
 
 # Lizard Specific Markings
