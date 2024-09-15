@@ -1,0 +1,21 @@
+- type: constructionGraph
+  id: DoubleEyepatch
+  start: start
+  graph:
+    - node: start
+      edges:
+      - to: doubleeyepatch
+        steps:
+        - tag: Eyepatch
+          name: eyepatch
+          icon:
+            sprite: Clothing/Eyes/Misc/eyepatch.rsi
+            state: icon
+        - tag: Eyepatch
+          name: eyepatch
+          icon:
+            sprite: Clothing/Eyes/Misc/eyepatch.rsi
+            state: icon
+          doAfter: 1
+    - node: doubleeyepatch
+      entity: ClothingEyesDoubleEyepatch
