@@ -7,10 +7,9 @@
     "y": 32
   },
     "states": [
-        {
-            "name": "icon",
-            "directions": 4
-        },
+		{
+			"name": "icon"
+		},
         {
             "name": "inhand-left",
             "directions": 4
