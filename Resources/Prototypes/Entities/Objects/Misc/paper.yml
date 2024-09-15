@@ -37,7 +37,7 @@
     fireSpread: true
     canResistFire: false
     alwaysCombustible: true
-    canExtinguish: true # Mwahaha! Let the world burn because of one piece of paper!
+    canExtinguish: false # Mwahaha! Let the world burn because of one piece of paper!
     damage:
       types:
         Heat: 1

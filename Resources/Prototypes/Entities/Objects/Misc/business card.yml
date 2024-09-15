@@ -25,7 +25,7 @@
           type: PaperBoundUserInterface
     - type: PaperVisuals
       headerImagePath: "/Textures/Interface/Paper/paper_heading_syndicate_logo.svg.96dpi.png"
-      headerMargin: 0.0, 0.0, 0.0, 16.0
+      headerMargin: 0.0, 0.0, 0.0, 2.0
       backgroundImagePath: "/Textures/Interface/Paper/paper_background_black.svg.96dpi.png"
       backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
       contentMargin: 4.0, 4.0, 4.0, 4.0
