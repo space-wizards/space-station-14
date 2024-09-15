@@ -1,0 +1,41 @@
+- type: entity
+  name: bloody knuckles
+  parent: BaseItem
+  id: BloodyKnuckleDuster
+  description: Knuckle dusters that can land gruesome blows. They are very bloody.
+  components:
+  - type: Sprite
+    sprite: GreyStation/Objects/Weapons/Melee/bloody_knuckle_dusters.rsi
+    state: icon
+  - type: Item
+    size: Small
+  - type: EmitSoundOnPickup
+    sound: /Audio/GreyStation/Misc/pickupweapon.ogg
+  - type: ItemToggleMeleeWeapon
+    activatedSoundOnHit:
+      path: /Audio/GreyStation/Misc/pickupweapon.ogg
+      params:
+        variation: 0.250
+  - type: MeleeWeapon
+    wideAnimationRotation: -180
+    attackRate: 1
+    range: 1
+    damage:
+      types:
+        Blunt: 1
+    soundHit:
+      collection: KnuckleDuster
+    params:
+        volume: 5
+    animation: WeaponArcFist
+  - type: Wieldable
+    wieldSound: !type:SoundPathSpecifier
+      path: /Audio/GreyStation/Misc/drawknife.ogg
+      params:
+        volume: -6
+  - type: LeechOnHit
+    leech:
+      groups:
+        Brute: -30 # heal up to 10 damage of blunt/slash/piercing
+      types:
+        Blunt: -10 # heal 10 blunt
