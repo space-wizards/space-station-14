@@ -18,7 +18,7 @@
   description: Shows job icons for crew members.
   components:
   - type: InstantAction
-    priority: -5
+    priority: -2
     itemIconStyle: BigAction
     icon:
       sprite: Interface/Actions/actions_ai.rsi
@@ -33,7 +33,7 @@
   description: Enable surveillance camera lights near wherever you're viewing.
   components:
   - type: InstantAction
-    priority: -6
+    priority: -3
     itemIconStyle: BigAction
     icon:
       sprite: Interface/Actions/actions_ai.rsi
@@ -58,7 +58,7 @@
   description: View the laws that you must follow.
   components:
   - type: InstantAction
-    priority: -3
+    priority: 0
     itemIconStyle: NoItem
     icon:
       sprite: Interface/Actions/actions_ai.rsi
@@ -74,7 +74,7 @@
   - type: InstantAction
     icon: { sprite: Interface/Actions/actions_ai.rsi, state: power_monitor }
     keywords: [ "AI", "console", "interface" ]
-    priority: -10
+    priority: -5
     event: !type:ToggleIntrinsicUIEvent { key: enum.PowerMonitoringConsoleUiKey.Key }
 
 - type: entity
@@ -85,5 +85,5 @@
   - type: InstantAction
     icon: { sprite: Interface/Actions/actions_ai.rsi, state: manifest }
     keywords: [ "AI", "console", "interface" ]
-    priority: -10
+    priority: -7
     event: !type:ToggleIntrinsicUIEvent { key: enum.CrewManifestUiKey.Key }

@@ -120,7 +120,7 @@ public sealed class CrewManifestSystem : EntitySystem
     private void OnBoundUIOpened(EntityUid uid, CrewManifestBoundComponent comp, BoundUIOpenedEvent args)
     {
         var owningStation = _stationSystem.GetOwningStation(uid);
-        if(owningStation == null)
+        if (owningStation == null)
         {
             return;
         }
@@ -131,7 +131,7 @@ public sealed class CrewManifestSystem : EntitySystem
             _openBuis.Add(owningStation.Value, entities);
         }
 
-        if(entities.Contains(uid))
+        if (entities.Contains(uid))
         {
             return;
         }
@@ -144,7 +144,7 @@ public sealed class CrewManifestSystem : EntitySystem
     private CrewManifestBuiState? NewBuiState(EntityUid station, string stationName)
     {
         var isValid = _cachedEntries.TryGetValue(station, out var cachedManifest);
-        if(!isValid)
+        if (!isValid)
         {
             return null;
         }
@@ -156,7 +156,7 @@ public sealed class CrewManifestSystem : EntitySystem
     {
         var stationName = MetaData(station).EntityName;
         var state = NewBuiState(station, stationName);
-        if(state == null)
+        if (state == null)
         {
             return;
         }
@@ -165,14 +165,14 @@ public sealed class CrewManifestSystem : EntitySystem
 
     private void UpdateStationBuis(EntityUid station)
     {
-        if(!_openBuis.TryGetValue(station, out var entities))
+        if (!_openBuis.TryGetValue(station, out var entities))
         {
             return;
         }
         
         var stationName = MetaData(station).EntityName;
         var state = NewBuiState(station, stationName);
-        if(state == null)
+        if (state == null)
         {
             return;
         }
@@ -186,7 +186,7 @@ public sealed class CrewManifestSystem : EntitySystem
     private void OnBoundUIClosed(EntityUid uid, CrewManifestBoundComponent comp, BoundUIClosedEvent ev)
     {
         var owningStation = _stationSystem.GetOwningStation(uid);
-        if(owningStation == null)
+        if (owningStation == null)
         {
             return;
         }
@@ -195,7 +195,7 @@ public sealed class CrewManifestSystem : EntitySystem
         {
             return;
         }
-        if(!entities.Contains(uid))
+        if (!entities.Contains(uid))
         {
             return;
         }
