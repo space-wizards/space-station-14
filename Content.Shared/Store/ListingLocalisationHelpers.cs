@@ -37,18 +37,6 @@ public static class ListingLocalisationHelpers
         else if (listingData.ProductEntity != null)
             desc = prototypeManager.Index(listingData.ProductEntity.Value).Description;
 
-        // goob edit
-        var _protoMan = IoCManager.Resolve<IPrototypeManager>();
-        var _rand = IoCManager.Resolve<IRobustRandom>();
-
-        var discountFluff = _rand.Pick(_protoMan.Index<DatasetPrototype>("UplinkDiscountFluff").Values);
-        var discountString = $"{Loc.GetString("store-sales-amount", ("amount", listingData.DiscountValue))} {discountFluff}";
-
-        if (listingData.DiscountValue > 0)
-            desc += "\n" + discountString;
-        else if (listingData.OldCost.Count > 0)
-            desc += "\n" + Loc.GetString("store-sales-over");
-
         return desc;
     }
 }

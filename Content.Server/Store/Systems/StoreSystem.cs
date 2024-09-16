@@ -10,7 +10,6 @@ using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Linq;
-using Content.Server._White.StoreDiscount;
 
 namespace Content.Server.Store.Systems;
 
@@ -22,7 +21,6 @@ public sealed partial class StoreSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly StoreDiscountSystem _storeDiscount = default!; // WD EDIT
 
     public override void Initialize()
     {
