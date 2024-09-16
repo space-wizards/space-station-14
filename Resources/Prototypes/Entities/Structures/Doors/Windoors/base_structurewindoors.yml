@@ -11,6 +11,7 @@
       Brute:
         collection: GlassSmash
   - type: InteractionOutline
+  - type: StationAiWhitelist
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -63,7 +64,7 @@
     lastSignals:
       DoorStatus: false
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: Glass
   - type: ExaminableDamage
     messages: WindowMessages
@@ -130,6 +131,8 @@
     layoutId: Airlock
   - type: UserInterface
     interfaces:
+      enum.AiUi.Key:
+        type: StationAiBoundUserInterface
       enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
   - type: Appearance
@@ -201,6 +204,11 @@
     node: windoorSecure
   - type: StaticPrice
     price: 350
+  - type: Tag
+    tags:
+      - SecureWindoor
+      # This tag is used to nagivate the Airlock construction graph. It's needed because the construction graph is shared between Airlock, AirlockGlass, and HighSecDoor
+
 
 #Plasma Windoors
 - type: entity
@@ -311,6 +319,11 @@
     price: 500
   - type: RadiationBlocker
     resistance: 4
+  - type: Tag
+    tags:
+      - SecurePlasmaWindoor
+      # This tag is used to nagivate the Airlock construction graph. It's needed because the construction graph is shared between Airlock, AirlockGlass, and HighSecDoor
+
 
 #Uranium Windoors
 - type: entity
@@ -421,3 +434,7 @@
     price: 750
   - type: RadiationBlocker
     resistance: 5
+  - type: Tag
+    tags:
+      - SecureUraniumWindoor
+      # This tag is used to nagivate the Airlock construction graph. It's needed because the construction graph is shared between Airlock, AirlockGlass, and HighSecDoor
