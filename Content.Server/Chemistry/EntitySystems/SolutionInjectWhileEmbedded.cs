@@ -33,17 +33,23 @@ public sealed class SolutionInjectWhileEmbeddedSystem : EntitySystem
 
 	public override void Update(float frameTime)
 	{
+        base.Update(frameTime);
+
         var query = EntityQueryEnumerator<SolutionInjectWhileEmbeddedComponent, EmbeddableProjectileComponent>();
         while (query.MoveNext(out var uid, out var injectComponent, out var projectileComponent))
         {
             if (_gameTiming.CurTime < injectComponent.NextUpdate)
                 continue;
-            if(projectileComponent.EmbeddedIntoUid == null)
+            if(projectileComponent.EmbeddedIntoUid == null) {
+                Console.WriteLine("Is null");
                 continue;
+            }
 
             var ev = new InjectOverTimeEvent(projectileComponent.EmbeddedIntoUid.Value);
 			RaiseLocalEvent(ref ev);
-            injectComponent.NextUpdate += injectComponent.UpdateInterval;
+            Console.WriteLine("Sent event");
+
+            injectComponent.NextUpdate = _gameTiming.CurTime + injectComponent.UpdateInterval;
 		}
 	}
 }
