@@ -1,3 +1,12 @@
+- type: loadoutEffectGroup
+  id: SeniorParamedic
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobParamedic
+      time: 36000 #10 hrs, love life
+
 # Head
 - type: loadout
   id: ParamedicHead
@@ -14,6 +23,15 @@
   id: ParamedicJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtParamedic
+
+- type: loadout
+  id: SkirtOfLife
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtOfLife
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorParamedic
+
 
 # Outer clothing
 - type: loadout
