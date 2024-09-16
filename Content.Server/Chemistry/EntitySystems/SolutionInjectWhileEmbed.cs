@@ -37,8 +37,10 @@ public sealed class SolutionInjectWhileEmbedSystem : EntitySystem
         {
             if (_gameTiming.CurTime < component.NextUpdate)
                 continue;
+            if(component.EmbeddedIntoUid == null)
+                continue;
 
-			Console.WriteLine(uid);
+			RaiseLocalEvent();
             component.NextUpdate += component.UpdateInterval;
 		}
 	}
