@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Dezzzix
-  changes:
-  - message: Now you can slice food with swords
-    type: Add
-  id: 6881
-  time: '2024-07-07T14:22:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29005
 - author: EmoGarbage404
   changes:
   - message: Changed AME power output. Lower injection amounts now produce more power
@@ -3914,3 +3907,10 @@
   id: 7380
   time: '2024-09-15T20:04:37.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32109
+- author: drakewill-CRL
+  changes:
+  - message: Produce harvested from sentient plants are no longer sentient themselves.
+    type: Fix
+  id: 7381
+  time: '2024-09-16T00:04:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32192
