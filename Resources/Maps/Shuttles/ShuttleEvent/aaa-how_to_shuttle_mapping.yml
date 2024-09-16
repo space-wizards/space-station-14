@@ -769,8 +769,6 @@ entities:
       pos: -2.5,7.5
       parent: 205
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 206
   - uid: 211
@@ -780,8 +778,6 @@ entities:
       pos: -2.5,2.5
       parent: 205
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 206
   - uid: 445
@@ -791,8 +787,6 @@ entities:
       pos: -2.5,7.5
       parent: 438
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 439
   - uid: 446
@@ -802,8 +796,6 @@ entities:
       pos: -2.5,2.5
       parent: 438
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 439
 - proto: APCBasic
@@ -2083,8 +2075,6 @@ entities:
       pos: -3.5,7.5
       parent: 205
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 206
     - type: AtmosPipeColor
@@ -2096,8 +2086,6 @@ entities:
       pos: -4.5,2.5
       parent: 205
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 206
     - type: AtmosPipeColor
@@ -2108,8 +2096,6 @@ entities:
       pos: -3.5,7.5
       parent: 438
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 439
     - type: AtmosPipeColor
@@ -2121,8 +2107,6 @@ entities:
       pos: -4.5,2.5
       parent: 438
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 439
     - type: AtmosPipeColor
@@ -2135,8 +2119,6 @@ entities:
       pos: -1.5,7.5
       parent: 205
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 206
     - type: AtmosPipeColor
@@ -2148,8 +2130,6 @@ entities:
       pos: -0.5,2.5
       parent: 205
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 206
     - type: AtmosPipeColor
@@ -2160,8 +2140,6 @@ entities:
       pos: -1.5,7.5
       parent: 438
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 439
     - type: AtmosPipeColor
@@ -2173,8 +2151,6 @@ entities:
       pos: -0.5,2.5
       parent: 438
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 439
     - type: AtmosPipeColor
