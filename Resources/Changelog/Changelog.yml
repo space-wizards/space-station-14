@@ -1,16 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Changed AME power output. Lower injection amounts now produce more power
-      but further injections have diminishing returns.
-    type: Tweak
-  - message: Increased damage per injection overclocked AMEs.
-    type: Tweak
-  - message: Halved fuel per AME jar.
-    type: Tweak
-  id: 6882
-  time: '2024-07-07T14:27:52.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29587
 - author: Plykiya
   changes:
   - message: Hyperzine's effective healing range has been changed from 70 to 120,
@@ -3914,3 +3902,11 @@
   id: 7381
   time: '2024-09-16T00:04:45.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32192
+- author: DrSmugleaf
+  changes:
+  - message: Fixed examine sometimes flickering and closing until you examine something
+      around you.
+    type: Fix
+  id: 7382
+  time: '2024-09-16T08:51:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32205
