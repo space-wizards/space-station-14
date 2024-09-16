@@ -40,6 +40,7 @@ public abstract class SharedMindSystem : EntitySystem
         SubscribeLocalEvent<VisitingMindComponent, EntityTerminatingEvent>(OnVisitingTerminating);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnReset);
         SubscribeLocalEvent<MindComponent, ComponentStartup>(OnMindStartup);
+        SubscribeLocalEvent<MindComponent, EntityRenamedEvent>(OnRenamed);
     }
 
     public override void Shutdown()
@@ -180,6 +181,12 @@ public abstract class SharedMindSystem : EntitySystem
 
         if (TryComp(component.Mind, out MindComponent? mind) && mind.PreventSuicide)
             args.Handled = true;
+    }
+
+    private void OnRenamed(Entity<MindComponent> ent, ref EntityRenamedEvent args)
+    {
+        ent.Comp.CharacterName = args.NewName;
+        Dirty(ent);
     }
 
     public EntityUid? GetMind(EntityUid uid, MindContainerComponent? mind = null)
