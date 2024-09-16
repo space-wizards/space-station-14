@@ -45,7 +45,7 @@
 - type: entity
   parent: BaseComputer
   id: ComputerAtmosMonitor
-  name: atmospheric monitoring console
+  name: atmospheric network monitor
   description: Used to monitor the station's atmospheric networks.
   components:
   - type: Computer
