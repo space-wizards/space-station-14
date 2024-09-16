@@ -1,26 +1,26 @@
 {
-    "version": 1,
-    "license": "CC-BY-SA-3.0",
-    "copyright": "https://github.com/Citadel-Station-13/Citadel-Station-13-RP/blob/817e7c1f225876b45891e3f06908e6d032f0a8bc/icons/obj/mining.dmi and modified by alzore_ (discord)",
-    "size": {
-        "x": 32,
-        "y": 32
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "https://github.com/Citadel-Station-13/Citadel-Station-13-RP/blob/817e7c1f225876b45891e3f06908e6d032f0a8bc/icons/obj/mining.dmi and modified by alzore_ (discord)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
     },
-    "states": [
-        {
-            "name": "icon"
-        },
-        {
-            "name": "icon-lit"
-        },
-        {
-            "name": "icon-uncharged",
-            "delays": [
-                [
-                    0.3,
-                    0.3
-                ]
-            ]
-        }
-    ]
+    {
+      "name": "icon-lit"
+    },
+    {
+      "name": "icon-uncharged",
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
+    }
+  ]
 }
