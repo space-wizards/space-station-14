@@ -50,7 +50,7 @@
   - type: LandAtCursor
 
 - type: entity
-  name: Energy Bola
+  name: energy bola
   parent: Bola
   id: EnergyBola
   description: Security-Grade Bola to ensnare escaping criminals.
