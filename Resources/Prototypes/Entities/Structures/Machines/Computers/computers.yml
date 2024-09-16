@@ -415,7 +415,7 @@
     energy: 1.6
     color: "#3493c2"
   - type: Computer
-    board: CrewMonitoringComputerCircuitboard #TODO
+    board: StationGatewayControlCircuitboard
   - type: ActivatableUIRequiresAccess
   - type: ActivatableUI
     key: enum.StationGatewayUIKey.Key
@@ -470,7 +470,7 @@
   - type: PointLight
     color: "#c61414"
   - type: Computer
-    board: CrewMonitoringComputerCircuitboard #TODO
+    board: SyndicateGatewayControlCircuitboard
   - type: AccessReader
     access: [["SyndicateAgent"]]
   - type: StationGatewayConsole
