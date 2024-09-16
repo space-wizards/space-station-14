@@ -48,3 +48,16 @@
     canThrowTrigger: true
     canMoveBreakout: true
   - type: LandAtCursor
+
+- type: entity
+  name: Energy Bola
+  parent: Bola
+  id: EnergyBola
+  description: Security-Grade Bola to ensnare escaping criminals.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Throwable/energy_bola.rsi
+    state: icon
+  - type: Ensnaring
+    walkSpeed: 0.5
+    sprintSpeed: 0.5
