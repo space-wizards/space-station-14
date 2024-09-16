@@ -17,7 +17,7 @@ namespace Content.Server.Chemistry.EntitySystems;
 /// System for handling the different inheritors of <see cref="BaseSolutionInjectOnEventComponent"/>.
 /// Subscribes to relevent events and performs solution injections when they are raised.
 /// </summary>
-public sealed class SolutionInjectWhileEmbedSystem : EntitySystem
+public sealed class SolutionInjectWhileEmbeddedSystem : EntitySystem
 {
 	[Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
@@ -33,16 +33,17 @@ public sealed class SolutionInjectWhileEmbedSystem : EntitySystem
 
 	public override void Update(float frameTime)
 	{
-        var query = EntityQueryEnumerator<SolutionInjectWhileEmbedComponent>();
-        while (query.MoveNext(out var uid, out var component))
+        var query = EntityQueryEnumerator<SolutionInjectWhileEmbeddedComponent, EmbeddableProjectileComponent>();
+        while (query.MoveNext(out var uid, out var injectComponent, out var projectileComponent))
         {
-            if (_gameTiming.CurTime < component.NextUpdate)
+            if (_gameTiming.CurTime < injectComponent.NextUpdate)
                 continue;
-            if(component.EmbeddedIntoUid == null)
+            if(projectileComponent.EmbeddedIntoUid == null)
                 continue;
 
-			RaiseLocalEvent(new InjectOverTimeEvent());
-            component.NextUpdate += component.UpdateInterval;
+            var ev = new InjectOverTimeEvent(projectileComponent.EmbeddedIntoUid.Value);
+			RaiseLocalEvent(ref ev);
+            injectComponent.NextUpdate += injectComponent.UpdateInterval;
 		}
 	}
 }

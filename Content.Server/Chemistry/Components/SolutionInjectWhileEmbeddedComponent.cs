@@ -1,7 +1,7 @@
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 
-namespace Content.Shared.Chemistry.Components;
+namespace Content.Server.Chemistry.Components;
 
 /// <summary>
 /// Used for embeddable entities that should try to inject a

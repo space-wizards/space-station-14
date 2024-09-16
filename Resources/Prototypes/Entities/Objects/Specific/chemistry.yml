@@ -359,8 +359,10 @@
   - type: EmbeddableProjectile
     minimumSpeed: 3
     removalTime: 0.5
-    offset: 0.0,0.0
     embedOnThrow: false
+  - type: SolutionInjectWhileEmbedded
+    transferAmount: 2
+    solution: injector
   - type: SolutionInjectOnEmbed
     transferAmount: 2
     solution: injector
