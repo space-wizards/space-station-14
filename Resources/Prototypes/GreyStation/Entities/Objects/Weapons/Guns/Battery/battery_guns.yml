@@ -25,19 +25,19 @@
     soundEmpty:
       path: /Audio/GreyStation/Weapons/Guns/Empty/dry_fire.ogg
   - type: Battery
-    maxCharge: 2000
-    startingCharge: 2000
+    maxCharge: 1000
+    startingCharge: 1000
   - type: ProjectileBatteryAmmoProvider
     proto: BulletDisabler
-    fireCost: 100
+    fireCost: 50
   - type: EnergyGun
     fireModes:
     - proto: BulletDisabler
-      fireCost: 100
+      fireCost: 50
       name: disable
       state: disabler
     - proto: BulletEnergyGunLaser
-      fireCost: 200
+      fireCost: 100
       name: kill
       state: lethal
   - type: MagazineVisuals
@@ -80,23 +80,23 @@
     soundEmpty:
       path: /Audio/GreyStation/Weapons/Guns/Empty/dry_fire.ogg
   - type: Battery
-    maxCharge: 2000
-    startingCharge: 2000
+    maxCharge: 1000
+    startingCharge: 1000
   - type: ProjectileBatteryAmmoProvider
     proto: BulletDisabler
-    fireCost: 100
+    fireCost: 50
   - type: EnergyGun
     fireModes:
     - proto: BulletDisabler
-      fireCost: 100
+      fireCost: 50
       name: disable
       state: disabler
     - proto: BulletEnergyGunLaser
-      fireCost: 200
+      fireCost: 100
       name: lethal
       state: lethal
     # - proto: BulletEnergyGunIon
-    #   fireCost: 500
+    #   fireCost: 250
     #   name: ion
     #   state: special
   - type: MagazineVisuals
