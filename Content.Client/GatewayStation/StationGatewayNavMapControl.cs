@@ -15,6 +15,8 @@ public sealed partial class StationGatewayNavMapControl : NavMapControl
     {
         _transformSystem = EntManager.System<SharedTransformSystem>();
 
+        MaxSelectableDistance = 30f;
+        
         WallColor = new Color(32, 96, 128);
         TileColor = new Color(12, 50, 69);
         BackgroundColor = Color.FromSrgb(TileColor.WithAlpha(BackgroundOpacity));
