@@ -18,3 +18,13 @@
     - type: Sprite
       sprite: Harmony/Structures/Wallmounts/posters.rsi
       state: harmony_poster2_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterHarmonyManOfWeh
+  name: "A Man of Weh"
+  description: "A painting depicting a historic figure within the Church of Weh."
+  components:
+    - type: Sprite
+      sprite: Harmony/Structures/Wallmounts/posters.rsi
+      state: harmony_poster3_legit
