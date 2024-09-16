@@ -197,6 +197,14 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/void.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHatHoodVoidCloak
+    requiredSlot:
+    - neck
+    slot: head
+  - type: ContainerContainer
+    containers:
+      toggleable-clothing: !type:ContainerSlot {}
   - type: TypingIndicatorClothing
     proto: alien
 
