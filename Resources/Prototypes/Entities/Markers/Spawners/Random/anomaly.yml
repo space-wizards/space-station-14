@@ -9,6 +9,7 @@
     - sprite: Structures/Specific/anomaly.rsi
       state: anom1
   - type: RandomSpawner
+    chance: 1
     prototypes:
     - AnomalyPyroclastic
     - AnomalyGravity
@@ -21,8 +22,9 @@
     - AnomalyFlora
     - AnomalyShadow
     - AnomalyTech
-    - RandomAnomalyInjectorSpawner #Yes, all anomaly zones are rare enough that they should go their own subgroup
-    chance: 1
+    rareChance: 0.3
+    rarePrototypes:
+    - RandomAnomalyInjectorSpawner
     offset: 0.15 # not to put it higher. The anomaly sychnronizer looks for anomalies within this radius, and if the radius is higher, the anomaly can be attracted from a neighboring tile.
 
 - type: entity
