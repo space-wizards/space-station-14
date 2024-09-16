@@ -454,6 +454,22 @@
 
 - type: entity
   parent: ComputerGatewayStation
+  id: ComputerGatewayStationFilled
+  suffix: Filled, All Chips
+  components:
+  - type: ContainerFill
+    containers:
+      storagebase:
+      - GatewayChipStation
+      - GatewayChipSalvage
+      - GatewayChipMedical
+      - GatewayChipEngineering
+      - GatewayChipSecurity
+      - GatewayChipScience
+      - GatewayChipCargo
+  
+- type: entity
+  parent: ComputerGatewayStation
   id: ComputerGatewaySyndicate
   name: syndicate gateways control console
   components:
