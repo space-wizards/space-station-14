@@ -41,13 +41,11 @@ public sealed class SolutionInjectWhileEmbeddedSystem : EntitySystem
             if (_gameTiming.CurTime < injectComponent.NextUpdate)
                 continue;
             if(projectileComponent.EmbeddedIntoUid == null) {
-                Console.WriteLine("Is null");
                 continue;
             }
 
             var ev = new InjectOverTimeEvent(projectileComponent.EmbeddedIntoUid.Value);
-			RaiseLocalEvent(ref ev);
-            Console.WriteLine("Sent event");
+			RaiseLocalEvent(uid, ref ev);
 
             injectComponent.NextUpdate = _gameTiming.CurTime + injectComponent.UpdateInterval;
 		}

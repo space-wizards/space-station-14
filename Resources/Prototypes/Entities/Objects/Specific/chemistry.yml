@@ -361,8 +361,9 @@
     removalTime: 0.5
     embedOnThrow: false
   - type: SolutionInjectWhileEmbedded
-    transferAmount: 2
+    transferAmount: 1
     solution: injector
+    updateInterval: 2
   - type: SolutionInjectOnEmbed
     transferAmount: 2
     solution: injector

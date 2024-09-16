@@ -53,7 +53,6 @@ public sealed class SolutionInjectOnCollideSystem : EntitySystem
 
     private void OnInjectOverTime(Entity<SolutionInjectWhileEmbeddedComponent> entity, ref InjectOverTimeEvent args)
     {
-        Console.WriteLine("Received Event");
         DoInjection((entity.Owner, entity.Comp), args.EmbeddedIntoUid);
     }
 
