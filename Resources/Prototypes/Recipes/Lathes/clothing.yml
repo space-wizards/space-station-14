@@ -962,76 +962,53 @@
   parent: BaseCarpetRecipe
   id: CarpetWhite
   result: FloorCarpetItemWhite
-  completetime: 1
-  materials:
-    Cloth: 100
 
 - type: latheRecipe
+  parent: BaseNeckClothingRecipe
   id: ClothingNeckCloakTrans
   result: ClothingNeckCloakTrans
-  completetime: 3.2
-  materials:
-    Durathread: 200
 
 - type: latheRecipe
+  parent: BaseNeckClothingRecipe
   id: ClothingNeckCloakAce
   result: ClothingNeckCloakAce
-  completetime: 3.2
-  materials:
-    Durathread: 200
 
 - type: latheRecipe
+  parent: BaseNeckClothingRecipe
   id: ClothingNeckCloakAro
   result: ClothingNeckCloakAro
-  completetime: 3.2
-  materials:
-    Durathread: 200
 
 - type: latheRecipe
+  parent: BaseNeckClothingRecipe
   id: ClothingNeckCloakBi
   result: ClothingNeckCloakBi
-  completetime: 3.2
-  materials:
-    Durathread: 200
 
 - type: latheRecipe
+  parent: BaseNeckClothingRecipe
   id: ClothingNeckCloakIntersex
   result: ClothingNeckCloakIntersex
-  completetime: 3.2
-  materials:
-    Durathread: 200
 
 - type: latheRecipe
+  parent: BaseNeckClothingRecipe
   id: ClothingNeckCloakLesbian
   result: ClothingNeckCloakLesbian
-  completetime: 3.2
-  materials:
-    Durathread: 200
 
 - type: latheRecipe
+  parent: BaseNeckClothingRecipe
   id: ClothingNeckCloakGay
   result: ClothingNeckCloakGay
-  completetime: 3.2
-  materials:
-    Durathread: 200
 
 - type: latheRecipe
+  parent: BaseNeckClothingRecipe
   id: ClothingNeckCloakEnby
   result: ClothingNeckCloakEnby
-  completetime: 3.2
-  materials:
-    Durathread: 200
 
 - type: latheRecipe
+  parent: BaseNeckClothingRecipe
   id: ClothingNeckCloakPan
   result: ClothingNeckCloakPan
-  completetime: 3.2
-  materials:
-    Durathread: 200
 
 - type: latheRecipe
+  parent: BaseNeckClothingRecipe
   id: ClothingNeckCloakBear
   result: ClothingNeckCloakBear
-  completetime: 3.2
-  materials:
-    Durathread: 200
