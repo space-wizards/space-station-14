@@ -117,6 +117,7 @@
       - id: BalloonCorgi
       - id: MysteryFigureBox
       - id: CoinQuarter #GreyStation Addition
+      - id: RubberChicken
 
       # Cult
       - !type:AllSelector
