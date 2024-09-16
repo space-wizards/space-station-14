@@ -325,7 +325,7 @@
     - id: RubberStampHos
     - id: SecurityTechFabCircuitboard
 #    - id: WeaponDisabler
-    - id: WeaponEnergyGunMultiphase # DeltaV - HoS Energy Gun
+    - id: WeaponEnergyGunMultiphase # GreyStation - HoS Energy Gun
 
 # Hardsuit table, used for suit storage as well
 - type: entityTable
