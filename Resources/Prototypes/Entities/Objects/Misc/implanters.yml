@@ -47,7 +47,8 @@
       - MindShieldImplant
       deimplantFailureDamage:
         types:
-          Cellular: 40
+          Cellular: 50
+          Heat: 10
     - type: Sprite
       sprite: Objects/Specific/Medical/implanter.rsi
       state: implanter0
