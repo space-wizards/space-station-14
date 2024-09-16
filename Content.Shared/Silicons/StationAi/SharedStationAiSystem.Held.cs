@@ -14,9 +14,9 @@ public abstract partial class SharedStationAiSystem
     /*
      * Added when an entity is inserted into a StationAiCore.
      */
-	 
-	//TODO: Fix this, please
-	private const string JobNameLocId = "job-name-station-ai";
+
+    //TODO: Fix this, please
+    private const string JobNameLocId = "job-name-station-ai";
 
     private void InitializeHeld()
     {
@@ -27,10 +27,10 @@ public abstract partial class SharedStationAiSystem
         SubscribeLocalEvent<StationAiHeldComponent, InteractionAttemptEvent>(OnHeldInteraction);
         SubscribeLocalEvent<StationAiHeldComponent, AttemptRelayActionComponentChangeEvent>(OnHeldRelay);
         SubscribeLocalEvent<StationAiHeldComponent, JumpToCoreEvent>(OnCoreJump);
-		SubscribeLocalEvent<TryGetIdentityShortInfoEvent>(OnTryGetIdentityShortInfo);
+        SubscribeLocalEvent<TryGetIdentityShortInfoEvent>(OnTryGetIdentityShortInfo);
     }
-	
-	private void OnTryGetIdentityShortInfo(TryGetIdentityShortInfoEvent args)
+
+    private void OnTryGetIdentityShortInfo(TryGetIdentityShortInfoEvent args)
     {
         if (args.Handled)
         {
@@ -41,7 +41,7 @@ public abstract partial class SharedStationAiSystem
         {
             return;
         }
-	    args.Title = $"{Name(args.ForActor)} ({Loc.GetString(JobNameLocId)})";
+        args.Title = $"{Name(args.ForActor)} ({Loc.GetString(JobNameLocId)})";
         args.Handled = true;
     }
 
@@ -115,8 +115,7 @@ public abstract partial class SharedStationAiSystem
         {
             ev.Cancel();
         }
-
-        if (whitelistComponent is { Enabled: false })
+        else if (whitelistComponent is { Enabled: false })
         {
             ev.Cancel();
             ShowDeviceNotRespondingPopup(ev.Actor);
@@ -140,18 +139,12 @@ public abstract partial class SharedStationAiSystem
     private void OnTargetVerbs(Entity<StationAiWhitelistComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
         if (!args.CanComplexInteract
-            || !HasComp<StationAiHeldComponent>(args.User)
-            || !HasComp<StationAiWhitelistComponent>(args.Target))
+            || !HasComp<StationAiHeldComponent>(args.User))
         {
             return;
         }
 
         var user = args.User;
-        if (!ent.Comp.Enabled)
-        {
-            ShowDeviceNotRespondingPopup(user);
-            return;
-        }
 
         var target = args.Target;
 
@@ -160,7 +153,7 @@ public abstract partial class SharedStationAiSystem
         var verb = new AlternativeVerb
         {
             Text = isOpen ? Loc.GetString("ai-close") : Loc.GetString("ai-open"),
-            Act = () =>
+            Act = () => 
             {
                 // no need to show menu if device is not powered.
                 if (!PowerReceiver.IsPowered(ent.Owner))

@@ -57,13 +57,8 @@ public abstract partial class SharedStationAiSystem
     /// </summary>
     private void OnElectrified(EntityUid ent, ElectrifiedComponent component, StationAiElectrifiedEvent args)
     {
-        if (!TryComp<ElectrifiedComponent>(ent, out var electrified))
-        {
-            return;
-        }
-
         if (
-            electrified.IsWireCut
+            component.IsWireCut
             || !PowerReceiver.IsPowered(ent)
         )
         {
