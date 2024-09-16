@@ -100,6 +100,9 @@ public sealed class InteractionPopupSystem : EntitySystem
 
             if (component.InteractSuccessSpawn != null)
                 Spawn(component.InteractSuccessSpawn, _transform.GetMapCoordinates(uid));
+
+            var ev = new InteractionSuccessEvent(user);
+            RaiseLocalEvent(target, ref ev);
         }
         else
         {
@@ -111,6 +114,9 @@ public sealed class InteractionPopupSystem : EntitySystem
 
             if (component.InteractFailureSpawn != null)
                 Spawn(component.InteractFailureSpawn, _transform.GetMapCoordinates(uid));
+
+            var ev = new InteractionFailureEvent(user);
+            RaiseLocalEvent(target, ref ev);
         }
 
         if (!string.IsNullOrEmpty(component.MessagePerceivedByOthers))
