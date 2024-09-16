@@ -105,6 +105,7 @@
     price: 40
   - type: IgnitionSource
     temperature: 700
+  - type: Cauterizer
 
 - type: entity
   name: industrial welding tool

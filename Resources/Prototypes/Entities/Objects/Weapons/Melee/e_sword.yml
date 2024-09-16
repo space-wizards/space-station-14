@@ -71,6 +71,7 @@
   - type: Reflect
   - type: IgnitionSource
     temperature: 700
+  - type: Cauterizer
 
 - type: entity
   name: energy sword
