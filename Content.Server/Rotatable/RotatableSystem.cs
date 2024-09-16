@@ -1,5 +1,6 @@
 using Content.Server.Popups;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Hands.Components;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
 using Content.Shared.Rotatable;
@@ -36,7 +37,7 @@ namespace Content.Server.Rotatable
 
         private void AddFlipVerb(EntityUid uid, FlippableComponent component, GetVerbsEvent<Verb> args)
         {
-            if (!args.CanAccess || !args.CanInteract)
+            if (!args.CanAccess || !args.CanInteract || args.Hands is null)
                 return;
 
             // Check if the object is anchored.
@@ -59,7 +60,8 @@ namespace Content.Server.Rotatable
         {
             if (!args.CanAccess
                 || !args.CanInteract
-                || Transform(uid).NoLocalRotation) // Good ol prototype inheritance, eh?
+                || Transform(uid).NoLocalRotation
+                || args.Hands is null) // Good ol prototype inheritance, eh?
                 return;
 
             // Check if the object is anchored, and whether we are still allowed to rotate it.
@@ -127,6 +129,9 @@ namespace Content.Server.Rotatable
             if (!_actionBlocker.CanInteract(player, entity) || !_interaction.InRangeAndAccessible(player, entity))
                 return false;
 
+            if (!HasComp<HandsComponent>(player))
+                return false;
+
             // Check if the object is anchored, and whether we are still allowed to rotate it.
             if (!rotatableComp.RotateWhileAnchored && EntityManager.TryGetComponent(entity, out PhysicsComponent? physics) &&
                 physics.BodyType == BodyType.Static)
@@ -150,6 +155,9 @@ namespace Content.Server.Rotatable
             if (!_actionBlocker.CanInteract(player, entity) || !_interaction.InRangeAndAccessible(player, entity))
                 return false;
 
+            if (!HasComp<HandsComponent>(player))
+                return false;
+
             // Check if the object is anchored, and whether we are still allowed to rotate it.
             if (!rotatableComp.RotateWhileAnchored && EntityManager.TryGetComponent(entity, out PhysicsComponent? physics) &&
                 physics.BodyType == BodyType.Static)
@@ -171,6 +179,9 @@ namespace Content.Server.Rotatable
                 return false;
 
             if (!_actionBlocker.CanInteract(player, entity) || !_interaction.InRangeAndAccessible(player, entity))
+                return false;
+
+            if (!HasComp<HandsComponent>(player))
                 return false;
 
             // Check if the object is anchored.
