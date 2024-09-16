@@ -403,7 +403,7 @@
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
-          min: 1
+          min: 0
         - !type:OrganType
           type: Animal # Applying damage to the mobs with lower metabolism capabilities
         damage:
@@ -413,7 +413,7 @@
         probability: 0.04 #Scaled for time, not metabolismrate.
         conditions:
           - !type:ReagentThreshold
-            min: 3
+            min: 0
           - !type:OrganType
             type: Animal
 
