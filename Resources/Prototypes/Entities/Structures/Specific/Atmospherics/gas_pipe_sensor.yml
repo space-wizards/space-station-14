@@ -1,16 +1,39 @@
 - type: entity
-  parent: BaseItem
+  parent: GasPipeBase
+  id: GasPipeSensorAssembly
+  name: gas pipe sensor assembly
+  description: When assembled, this device will report on the characteristics of the gas in the attached pipe network. 
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Atmospherics/gas_pipe_sensor.rsi
+    drawdepth: BelowFloor
+    layers:
+    - sprite: Structures/Piping/Atmospherics/pipe.rsi
+      map: [ "enum.PipeVisualLayers.Pipe" ]
+      state: pipeStraight
+    - map: ["base"]
+      state: base
+  - type: Construction
+    graph: GasPipeSensor
+    node: assembly
+  - type: NodeContainer
+    nodes:
+      pipe:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: Longitudinal
+  - type: Tag
+    tags:
+      - Unstackable
+      
+- type: entity
+  parent: [AirSensorBase, GasPipeSensorAssembly]
   id: GasPipeSensor
   name: gas pipe sensor
   description: Reports on the status of the gas in the attached pipe network. 
   placement:
     mode: SnapgridCenter
   components:
-  - type: Sprite
-    sprite: Structures/Specific/Atmospherics/gas_pipe_sensor.rsi
-    drawdepth: BelowFloor
-    layers:
-    - state: base
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -19,58 +42,17 @@
           False: { state: base, shader: shaded }
           True: { state: lights, shader: unshaded }
   - type: GasPipeSensor
+  - type: AtmosMonitor
+    monitorsPipeNet: true
   - type: AtmosMonitoringConsoleDevice
     group: GasPipeSensor
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
-  - type: DeviceNetwork
-    deviceNetId: AtmosDevices
-    receiveFrequencyId: AtmosMonitor
-  - type: DeviceNetworkRequiresPower
-  - type: WiredNetworkConnection
-  - type: Item
-    size: Small
-  - type: SubFloorHide
-  - type: Anchorable
-  - type: CollideOnAnchor
-  - type: Physics
-    canCollide: false
-    bodyType: static
-  - type: Transform
-    anchored: true
+  - type: Clickable
+  - type: InteractionOutline
   - type: Construction
     graph: GasPipeSensor
     node: gasPipeSensor  
-  - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 200
-      behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-        - !type:PlaySoundBehavior
-          sound:
-            collection: MetalBreak
-            params:
-              volume: -8
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            SheetSteel1:
-              min: 1
-              max: 1
-          offset: 0
-        - !type:DoActsBehavior
-          acts: ["Breakage"]
-  - type: StaticPrice
-    price: 25
 
 - type: entity
   parent: GasPipeSensor 
@@ -111,22 +93,3 @@
   components:
   - type: Label
     currentLabel: TEG cold loop
-    
-- type: entity
-  parent: BaseItem
-  id: GasPipeSensorAssembly
-  name: gas pipe sensor assembly
-  description: When assembled, this device will report on the characteristics of the gas in the attached pipe network. 
-  components:
-    - type: Item
-      size: Small
-    - type: Anchorable
-    - type: Construction
-      graph: GasPipeSensor
-      node: assembly
-    - type: Sprite
-      sprite: Structures/Specific/Atmospherics/gas_pipe_sensor.rsi
-      drawdepth: BelowFloor
-      layers:
-      - map: ["base"]
-        state: base
