@@ -1,7 +1,7 @@
 - type: gameMap
   id: Uoui
   mapName: 'Uoui'
-  mapPath: /Maps/uoui.yml
+  mapPath: /Maps/Weaselstation/Maps/uoui.yml
   minPlayers: 3
   maxPlayers: 35
   fallback: true
