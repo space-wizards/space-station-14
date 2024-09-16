@@ -1,11 +1,9 @@
 using Content.Client.Pinpointer.UI;
-using Content.Client.Power;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Pinpointer;
 using Robust.Client.Graphics;
 using Robust.Shared.Collections;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Physics;
 using System;
 using System.Linq;
 using System.Numerics;
@@ -16,17 +14,19 @@ public sealed partial class AtmosMonitoringConsoleNavMapControl : NavMapControl
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
 
-    public static int ChunkSize = 4;
-    public List<AtmosMonitoringConsoleLine> AtmosPipeNetwork = new();
     public bool ShowPipeNetwork = true;
+    public int? FocusNetId = null;
+
+    private const int ChunkSize = 4;
+
+    private List<AtmosMonitoringConsoleLine> _atmosPipeNetwork = new();
+    private Dictionary<Color, Color> _sRGBLookUp = new Dictionary<Color, Color>();
 
     // Look up tables for merging continuous lines. Indexed by line color
     private Dictionary<Color, Dictionary<Vector2i, Vector2i>> _horizLines = new();
     private Dictionary<Color, Dictionary<Vector2i, Vector2i>> _horizLinesReversed = new();
     private Dictionary<Color, Dictionary<Vector2i, Vector2i>> _vertLines = new();
     private Dictionary<Color, Dictionary<Vector2i, Vector2i>> _vertLinesReversed = new();
-
-    private Dictionary<Color, Color> _sRGBLookUp = new Dictionary<Color, Color>();
 
     public AtmosMonitoringConsoleNavMapControl() : base()
     {
@@ -50,7 +50,7 @@ public sealed partial class AtmosMonitoringConsoleNavMapControl : NavMapControl
         if (!_entManager.TryGetComponent<MapGridComponent>(MapUid, out var grid))
             return;
 
-        AtmosPipeNetwork = GetDecodedAtmosPipeChunks(console.AtmosPipeChunks, grid, console.FocusNetId);
+        _atmosPipeNetwork = GetDecodedAtmosPipeChunks(console.AtmosPipeChunks, grid);
     }
 
     public void DrawAllPipeNetworks(DrawingHandleScreen handle)
@@ -59,8 +59,8 @@ public sealed partial class AtmosMonitoringConsoleNavMapControl : NavMapControl
             return;
 
         // Draw networks
-        if (AtmosPipeNetwork != null && AtmosPipeNetwork.Any())
-            DrawPipeNetwork(handle, AtmosPipeNetwork);
+        if (_atmosPipeNetwork != null && _atmosPipeNetwork.Any())
+            DrawPipeNetwork(handle, _atmosPipeNetwork);
     }
 
     public void DrawPipeNetwork(DrawingHandleScreen handle, List<AtmosMonitoringConsoleLine> atmosPipeNetwork)
@@ -140,7 +140,7 @@ public sealed partial class AtmosMonitoringConsoleNavMapControl : NavMapControl
         }
     }
 
-    public List<AtmosMonitoringConsoleLine> GetDecodedAtmosPipeChunks(Dictionary<Vector2i, AtmosPipeChunk>? chunks, MapGridComponent? grid, int? focusNetId = null)
+    public List<AtmosMonitoringConsoleLine> GetDecodedAtmosPipeChunks(Dictionary<Vector2i, AtmosPipeChunk>? chunks, MapGridComponent? grid)
     {
         var decodedOutput = new List<AtmosMonitoringConsoleLine>();
 
@@ -168,7 +168,7 @@ public sealed partial class AtmosMonitoringConsoleNavMapControl : NavMapControl
                 // Determine the correct coloration for the pipe
                 var color = Color.FromHex(hexColor) * Color.LightGray;
 
-                if (focusNetId != null && focusNetId != netId)
+                if (FocusNetId != null && FocusNetId != netId)
                     color *= Color.DimGray;
 
                 // Get the associated line look up tables
