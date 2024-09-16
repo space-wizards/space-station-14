@@ -1,0 +1,20 @@
+# posters
+- type: entity
+  parent: PosterBase
+  id: PosterHarmonyEnrico
+  name: "Salazar says WEH!"
+  description: "A poster depicting a distinguished Harmony Station captain - Salazar Snek."
+  components:
+    - type: Sprite
+      sprite: Harmony/Structures/Wallmounts/posters.rsi
+      state: harmony_poster1_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterHarmonyHarmony
+  name: "Harmony Station"
+  description: "Motivational poster for Harmony Station crew."
+  components:
+    - type: Sprite
+      sprite: Harmony/Structures/Wallmounts/posters.rsi
+      state: harmony_poster2_legit
