@@ -110,7 +110,6 @@
   - type: Tag
     tags:
       - FoodSnack
-      - ReptilianFood
   - type: SpawnItemsOnUse
     items:
       - id: FoodPacketChocolateTrash
@@ -130,6 +129,9 @@
   - type: Sprite
     state: chocolatebar-open
   - type: Item
+  - type: Tag
+    tags:
+      - ReptilianFood
   - type: SolutionContainerManager
     solutions:
       food:
