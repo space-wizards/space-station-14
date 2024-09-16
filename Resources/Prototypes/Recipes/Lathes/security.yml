@@ -46,7 +46,7 @@
 - type: latheRecipe
   id: EnergyBola
   result: EnergyBola
-  completeTime: 2
+  completetime: 2
   materials:
     Steel: 100
     Plastic: 200
