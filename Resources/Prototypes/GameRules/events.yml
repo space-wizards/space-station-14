@@ -20,6 +20,7 @@
     - id: RandomSentience
     - id: SlimesSpawn
     - id: SolarFlare
+    - id: SnakeSpawn
     - id: SnailMigration
     - id: SnailMigrationLowPop
     - id: SpiderClownSpawn
@@ -55,30 +56,30 @@
   parent: BaseGameRule
   abstract: true
   components:
-    - type: GameRule
-      delay:
-        min:  10
-        max:  20
+  - type: GameRule
+    delay:
+      min:  10
+      max:  20
 
 - type: entity
   id: BaseStationEventShortDelay
   parent: BaseGameRule
   abstract: true
   components:
-    - type: GameRule
-      delay:
-        min:  10
-        max:  20
+  - type: GameRule
+    delay:
+      min:  10
+      max:  20
 
 - type: entity
   id: BaseStationEventLongDelay
   parent: BaseGameRule
   abstract: true
   components:
-    - type: GameRule
-      delay:
-        min:  40
-        max:  60
+  - type: GameRule
+    delay:
+      min:  40
+      max:  60
 
 - type: entity
   id: AnomalySpawn
@@ -350,6 +351,24 @@
       prob: 0.02
 
 - type: entity
+  id: SnakeSpawn
+  parent: BaseStationEventShortDelay
+  components:
+  - type: StationEvent
+    earliestStart: 20
+    minimumPlayers: 15
+    weight: 5
+    duration: 60
+  - type: VentCrittersRule
+    entries:
+    - id: MobPurpleSnake
+      prob: 0.02
+    - id: MobSmallPurpleSnake
+      prob: 0.02
+    - id: MobCobraSpace
+      prob: 0.02
+
+- type: entity
   id: SpiderSpawn
   parent: BaseStationEventShortDelay
   components:
@@ -446,6 +465,9 @@
       max: 1
       pickPlayer: false
       startingGear: SyndicateLoneOperativeGearFull
+      roleLoadout:
+      - RoleSurvivalNukie
+
       components:
       - type: NukeOperative
       - type: RandomMetadata
@@ -556,9 +578,9 @@
   id: MimicVendorRule
   parent: BaseGameRule
   components:
-    - type: StationEvent
-      earliestStart: 0
-      minimumPlayers: 20
-      maxOccurrences: 1 # this event has diminishing returns on interesting-ness, so we cap it
-      weight: 5
-    - type: MobReplacementRule
+  - type: StationEvent
+    earliestStart: 0
+    minimumPlayers: 20
+    maxOccurrences: 1 # this event has diminishing returns on interesting-ness, so we cap it
+    weight: 5
+  - type: MobReplacementRule
