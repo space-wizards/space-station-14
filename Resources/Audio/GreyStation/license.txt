@@ -1,2 +1,3 @@
 dry_fire.ogg from tgstation at https://github.com/tgstation/tgstation/blob/master/sound/weapons/gun/general/dry_fire.ogg which is licensed under the CC-BY-SA 3.0
+laser.ogg from tgstation at https://github.com/tgstation/tgstation/blob/master/sound/weapons/laser.ogg which is licensed under the CC-BY-SA 3.0 
 sound files from fart folder taken from /vg/station at https://github.com/vgstation-coders/vgstation13/pull/1045

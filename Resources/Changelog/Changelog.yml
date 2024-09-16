@@ -1,47 +1,4 @@
 ﻿Entries:
-- author: Dezzzix
-  changes:
-  - message: Now you can slice food with swords
-    type: Add
-  id: 6881
-  time: '2024-07-07T14:22:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29005
-- author: EmoGarbage404
-  changes:
-  - message: Changed AME power output. Lower injection amounts now produce more power
-      but further injections have diminishing returns.
-    type: Tweak
-  - message: Increased damage per injection overclocked AMEs.
-    type: Tweak
-  - message: Halved fuel per AME jar.
-    type: Tweak
-  id: 6882
-  time: '2024-07-07T14:27:52.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29587
-- author: Plykiya
-  changes:
-  - message: Hyperzine's effective healing range has been changed from 70 to 120,
-      to anything above 70 total damage.
-    type: Tweak
-  id: 6883
-  time: '2024-07-07T14:28:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29712
-- author: Tayrtahn
-  changes:
-  - message: Fixed admin ghosts briefly becoming visible when a news article is published.
-    type: Fix
-  id: 6884
-  time: '2024-07-08T03:33:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29801
-- author: slarticodefast
-  changes:
-  - message: Improved throwing calculations. Thrown items now stop moving exactly
-      below your cursor. Throwing weapons will land at your cursor and then slide
-      until stopped by friction.
-    type: Tweak
-  id: 6885
-  time: '2024-07-08T09:03:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29726
 - author: Errant
   changes:
   - message: Vox now have their entry in the guidebook.
@@ -3914,3 +3871,42 @@
   id: 7380
   time: '2024-09-15T20:04:37.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32109
+- author: drakewill-CRL
+  changes:
+  - message: Produce harvested from sentient plants are no longer sentient themselves.
+    type: Fix
+  id: 7381
+  time: '2024-09-16T00:04:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32192
+- author: DrSmugleaf
+  changes:
+  - message: Fixed examine sometimes flickering and closing until you examine something
+      around you.
+    type: Fix
+  id: 7382
+  time: '2024-09-16T08:51:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32205
+- author: ArtisticRoomba
+  changes:
+  - message: The Bruise-O-Mat alcohol vendor has been added to the nukie outpost,
+      for all your pre-op drinking needs. Seems to have developed a witty personality,
+      too...
+    type: Add
+  id: 7383
+  time: '2024-09-16T08:59:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32107
+- author: ArtisticRoomba
+  changes:
+  - message: The binary translator key in the syndie uplink is now correctly marked
+      as syndicate contraband.
+    type: Tweak
+  id: 7384
+  time: '2024-09-16T10:01:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32193
+- author: MissKay1994
+  changes:
+  - message: Lizards are now poisoned by hot chocolate
+    type: Fix
+  id: 7385
+  time: '2024-09-16T12:45:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32147
