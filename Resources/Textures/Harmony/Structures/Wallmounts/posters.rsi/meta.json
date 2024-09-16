@@ -1,0 +1,17 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "textures by BodenPflanze, Emii-olii",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "harmony_poster1_legit"
+        },
+        {
+            "name": "harmony_poster2_legit"
+        }
+    ]
+}
