@@ -103,11 +103,8 @@
     - id: FoodOnionRed
     - id: FoodWatermelon
     - id: FoodCherry
-    - id: FoodGatfruit
-      weight: 0.15
     - id: MobTomatoKiller
-      weight: 0.25
     - id: MobLuminousEntity
-      weight: 0.25
     - id: MobLuminousObject
-      weight: 0.25
+    - id: FoodGatfruit # 0.007% spawn chance. 1 / 141
+      weight: 0.10
