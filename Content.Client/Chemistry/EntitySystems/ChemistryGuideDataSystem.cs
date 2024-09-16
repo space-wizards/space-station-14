@@ -1,5 +1,5 @@
-﻿using System.Linq;
-using Content.Client.Chemistry.Containers.EntitySystems;
+using System.Linq;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Atmos.Prototypes;
 using Content.Shared.Body.Part;
 using Content.Shared.Chemistry;

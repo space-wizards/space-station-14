@@ -10,7 +10,7 @@ using Content.Shared.Lube;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
-using Robust.Shared.Audio;
+using Content.Shared.Chemistry.EntitySystems;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Random;
 

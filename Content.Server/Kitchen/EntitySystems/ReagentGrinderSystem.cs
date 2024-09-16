@@ -2,6 +2,7 @@ using Content.Server.Kitchen.Components;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Stack;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.FixedPoint;
@@ -21,6 +22,7 @@ using System.Linq;
 using Content.Server.Jittering;
 using Content.Shared.Chemistry.Systems;
 using Content.Shared.Jittering;
+using Content.Shared.Power;
 
 namespace Content.Server.Kitchen.EntitySystems
 {

@@ -30,7 +30,6 @@ public sealed class AirAlarmBoundUserInterface : BoundUserInterface
         _window.AirAlarmModeChanged += OnAirAlarmModeChanged;
         _window.AutoModeChanged += OnAutoModeChanged;
         _window.ResyncAllRequested += ResyncAllDevices;
-        _window.AirAlarmTabChange += OnTabChanged;
     }
 
     private void ResyncAllDevices()
@@ -61,11 +60,6 @@ public sealed class AirAlarmBoundUserInterface : BoundUserInterface
     private void OnThresholdChanged(string address, AtmosMonitorThresholdType type, AtmosAlarmThreshold threshold, Gas? gas = null)
     {
         SendMessage(new AirAlarmUpdateAlarmThresholdMessage(address, type, threshold, gas));
-    }
-
-    private void OnTabChanged(AirAlarmTab tab)
-    {
-        SendMessage(new AirAlarmTabSetMessage(tab));
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

@@ -1,5 +1,5 @@
 using Content.Server.Anomaly.Components;
-using Content.Server.Chemistry.Containers.EntitySystems;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using System.Linq;
@@ -26,7 +26,7 @@ public sealed class InjectionAnomalySystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<InjectionAnomalyComponent, AnomalyPulseEvent>(OnPulse);
-        SubscribeLocalEvent<InjectionAnomalyComponent, AnomalySupercriticalEvent>(OnSupercritical, before: new[] { typeof(SolutionContainerSystem) });
+        SubscribeLocalEvent<InjectionAnomalyComponent, AnomalySupercriticalEvent>(OnSupercritical, before: new[] { typeof(SharedSolutionContainerSystem) });
 
         _injectableQuery = GetEntityQuery<InjectableSolutionComponent>();
     }

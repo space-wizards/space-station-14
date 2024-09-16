@@ -1,4 +1,4 @@
-﻿using Content.Shared.Temperature.Systems;
+using Content.Shared.Temperature.Systems;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Temperature.Components;
@@ -8,7 +8,7 @@ namespace Content.Shared.Temperature.Components;
 public sealed partial class TemperatureProtectionComponent : Component
 {
     /// <summary>
-    ///     How much to multiply temperature deltas by.
+    ///     Multiplier for the transferred heat when heating up
     /// </summary>
     [DataField, AutoNetworkedField]
     public float Coefficient = 1.0f;

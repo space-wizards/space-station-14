@@ -1,20 +1,25 @@
 using Content.Server.Fluids.EntitySystems;
-using Content.Server.GameTicking;
+using Content.Server.Ghost;
 using Content.Server.Popups;
-using Content.Server.Power.Components;
+using Content.Server.Repairable;
 using Content.Server.Stack;
 using Content.Server.Wires;
 using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Database;
+using Content.Shared.Destructible;
+using Content.Shared.Emag.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Materials;
 using Content.Shared.Mind;
 using Content.Shared.Nutrition.EntitySystems;
+using Content.Shared.Power;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Linq;
 using Content.Server.Administration.Logs;
@@ -35,7 +40,7 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
 {
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly AppearanceSystem _appearance = default!;
-    [Dependency] private readonly GameTicker _ticker = default!;
+    [Dependency] private readonly GhostSystem _ghostSystem = default!;
     [Dependency] private readonly MaterialStorageSystem _materialStorage = default!;
     [Dependency] private readonly OpenableSystem _openable = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
@@ -106,7 +111,7 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
         if (TryComp(victim, out ActorComponent? actor) &&
             _mind.TryGetMind(actor.PlayerSession, out var mindId, out var mind))
         {
-            _ticker.OnGhostAttempt(mindId, false, mind: mind);
+            _ghostSystem.OnGhostAttempt(mindId, false, mind: mind);
             if (mind.OwnedEntity is { Valid: true } suicider)
             {
                 _popup.PopupEntity(Loc.GetString("recycler-component-suicide-message"), suicider);
@@ -276,6 +281,14 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
             foreach (var solution in _solutionSystem.EnumerateSolutions((item, solutionContainer)))
             {
                 _solutionSystem.TransferSolution(solution, outputSolution, solution.Comp.Volume, out overflow);
+            }
+        }
+        else
+        {
+            // Are we an industrial reagent grinder? Use extractable solution.
+            if (_solutionContainer.TryGetExtractableSolution(item, out _, out var extractableSolution))
+            {
+                totalChemicals.AddSolution(extractableSolution, _prototype);
             }
         }
 

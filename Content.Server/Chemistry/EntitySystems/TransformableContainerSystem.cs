@@ -11,7 +11,7 @@ namespace Content.Server.Chemistry.EntitySystems;
 public sealed class TransformableContainerSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionsSystem = default!;
     [Dependency] private readonly MetaDataSystem _metadataSystem = default!;
     [Dependency] private readonly NameModifierSystem _nameMod = default!;
     [Dependency] private readonly ChemistryRegistrySystem _chemistryRegistry = default!;
