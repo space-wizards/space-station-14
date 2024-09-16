@@ -133,7 +133,7 @@ public partial class InventorySystem : EntitySystem
             && _containerSystem.Insert(uid, pocket1)
         )
         {
-            _popup.PopupEntity(Loc.GetString("item-jump-into-pocket", ("name", Comp<MetaDataComponent>(uid).EntityName)), target, target);
+            _popup.PopupEntity(Loc.GetString("item-jump-into-pocket", ("target", uid)), target, target);
             return true;
         }
 
@@ -141,13 +141,13 @@ public partial class InventorySystem : EntitySystem
             && _containerSystem.Insert(uid, pocket2)
         )
         {
-            _popup.PopupEntity(Loc.GetString("item-jump-into-pocket", ("name", Comp<MetaDataComponent>(uid).EntityName)), target, target);
+            _popup.PopupEntity(Loc.GetString("item-jump-into-pocket", ("target", uid)), target, target);
             return true;
         }
 
         if (_handsSystem.TryPickupAnyHand(target, uid))
         {
-            _popup.PopupEntity(Loc.GetString("item-jump-into-hands", ("name", Comp<MetaDataComponent>(uid).EntityName)), target, target);
+            _popup.PopupEntity(Loc.GetString("item-jump-into-hands", ("name", uid)), target, target);
             return true;
         }
 

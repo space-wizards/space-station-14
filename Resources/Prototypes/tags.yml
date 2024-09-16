@@ -798,6 +798,9 @@
   id: HolosignProjector
 
 - type: Tag
+  id: Holy
+
+- type: Tag
   id: HonkerCentralControlModule
 
 - type: Tag
@@ -1173,6 +1176,9 @@
 
 - type: Tag
   id: RollingPin
+
+- type: Tag
+  id: Salt
 
 - type: Tag
   id: SaltShaker

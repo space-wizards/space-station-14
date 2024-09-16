@@ -73,7 +73,7 @@ public sealed partial class RevenantAnimatedSystem : EntitySystem
         if (HasComp<ItemToggleMeleeWeaponComponent>(ent.Owner) && TryComp<ItemToggleComponent>(ent.Owner, out var toggle))
             _itemToggleSystem.TryActivate((ent.Owner, toggle));
 
-        _popup.PopupEntity(Loc.GetString("revenant-animate-item-animate", ("name", Comp<MetaDataComponent>(ent.Owner).EntityName)), ent.Owner, Filter.Pvs(ent.Owner), true);
+        _popup.PopupEntity(Loc.GetString("revenant-animate-item-animate", ("target", ent.Owner)), ent.Owner, Filter.Pvs(ent.Owner), true);
 
         // Add melee damage if an item doesn't already have it
         if (EnsureHelper<MeleeWeaponComponent>(ent, out var melee))
@@ -144,7 +144,7 @@ public sealed partial class RevenantAnimatedSystem : EntitySystem
             RemCompDeferred(ent, comp);
         }
 
-        _popup.PopupEntity(Loc.GetString("revenant-animate-item-inanimate", ("name", Comp<MetaDataComponent>(ent).EntityName)), ent, Filter.Pvs(ent), true);
+        _popup.PopupEntity(Loc.GetString("revenant-animate-item-inanimate", ("target", ent)), ent, Filter.Pvs(ent), true);
     }
 
     private void OnMobStateChange(Entity<RevenantAnimatedComponent> ent, ref MobStateChangedEvent args)

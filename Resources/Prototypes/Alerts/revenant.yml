@@ -14,6 +14,14 @@
   name: alerts-revenant-corporeal-name
   description: alerts-revenant-corporeal-desc
 
+- type: alert
+  id: Stasis
+  icons:
+  - sprite: Mobs/Ghosts/revenant.rsi
+    state: ectoplasm
+  name: alerts-revenant-stasis-name
+  description: alerts-revenant-stasis-desc
+
 - type: entity
   id: AlertEssenceSpriteView
   categories: [ HideSpawnMenu ]

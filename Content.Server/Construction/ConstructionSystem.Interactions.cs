@@ -628,4 +628,16 @@ namespace Content.Server.Construction
     {
         public HandleResult? Result;
     }
+
+    public sealed class ConstructionConsumedObjectEvent : EntityEventArgs
+    {
+        public EntityUid Old;
+        public EntityUid New;
+
+        public ConstructionConsumedObjectEvent(EntityUid oldEnt, EntityUid newEnt)
+        {
+            Old = oldEnt;
+            New = newEnt;
+        }
+    }
 }
