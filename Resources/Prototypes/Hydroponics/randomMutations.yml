@@ -6,7 +6,8 @@
       effect: !type:Glow
     - name: Sentient
       baseOdds: 0.0072
-      appliesToPlant: false # makes the botany tray sentient if true
+      appliesToProduce: false
+      persists: false
       effect: !type:MakeSentient # existing effect.
     - name: Slippery
       baseOdds: 0.036
