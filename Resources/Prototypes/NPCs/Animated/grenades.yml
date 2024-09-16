@@ -37,7 +37,7 @@
             - !type:TargetInRangePrecondition
               targetKey: Target
               rangeKey: MeleeRange
-          operator: !type:InteractionActivateSelfOperator
+          operator: !type:StartTimerOperator
     - tasks:
         - !type:HTNCompoundTask
           task: IdleCompound
