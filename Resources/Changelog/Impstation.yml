@@ -1588,3 +1588,14 @@
   id: 206
   time: '2024-09-16T02:43:36.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/260
+- author: Pinkbat5
+  changes:
+  - message: Diona and nymphs can now chirp.
+    type: Add
+  - message: Nymphs can scream and laugh like adult diona.
+    type: Add
+  - message: Double eyepatch item, craftable from two eyepatches.
+    type: Add
+  id: 207
+  time: '2024-09-16T02:47:30.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/261
