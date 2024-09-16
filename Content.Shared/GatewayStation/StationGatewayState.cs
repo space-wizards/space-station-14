@@ -24,18 +24,22 @@ public sealed class StationGatewayState : BoundUserInterfaceState
 [Serializable, NetSerializable]
 public sealed class StationGatewayStatus
 {
-    public StationGatewayStatus(NetEntity gatewayUid, NetCoordinates coordinates, NetCoordinates? link, string name)
+    public StationGatewayStatus(NetEntity gatewayUid, NetCoordinates coordinates, NetEntity gatewayLinkedUid, NetCoordinates? link, string name, bool powered)
     {
         GatewayUid = gatewayUid;
         Coordinates = coordinates;
+        GatewayLinkedUid = gatewayLinkedUid;
         LinkCoordinates = link;
         Name = name;
+        Powered = powered;
     }
 
     public NetEntity GatewayUid;
+    public NetEntity GatewayLinkedUid;
     public NetCoordinates? Coordinates;
     public NetCoordinates? LinkCoordinates;
     public string Name;
+    public bool Powered;
 }
 
 [Serializable, NetSerializable]

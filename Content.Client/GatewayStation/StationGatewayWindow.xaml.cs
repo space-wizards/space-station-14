@@ -24,6 +24,7 @@ public sealed partial class StationGatewayWindow : FancyWindow
 
     private NetEntity? _trackedEntity;
     private Texture? _ringTexture;
+    private Texture? _ringFilledTexture;
 
     public StationGatewayWindow()
     {
@@ -32,12 +33,13 @@ public sealed partial class StationGatewayWindow : FancyWindow
 
         _spriteSystem = _entManager.System<SpriteSystem>();
 
-        NavMap.TrackedEntitySelectedAction += SetTrackedEntityFromNavMap;
+        NavMap.TrackedEntitySelectedAction += ClickGatewayOnNavMap;
     }
 
     public void Set(StationGatewayBoundUserInterface userInterface, string stationName, EntityUid? mapUid)
     {
         _ringTexture = _spriteSystem.Frame0(new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/NavMap/ring.png")));
+        _ringFilledTexture = _spriteSystem.Frame0(new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/NavMap/ring_filled.png")));
 
         if (_entManager.TryGetComponent<TransformComponent>(mapUid, out var xform))
             NavMap.MapUid = xform.GridUid;
@@ -139,8 +141,8 @@ public sealed partial class StationGatewayWindow : FancyWindow
             mainBox.AddChild(rightBox);
 
 
-            // Centering button
-            var centerButton = new GatewayButton()
+            // Locating button
+            var locateButton = new GatewayButton()
             {
                 Text = Loc.GetString("gateway-console-user-interface-locate"),
                 GatewayUid = gate.GatewayUid,
@@ -149,17 +151,24 @@ public sealed partial class StationGatewayWindow : FancyWindow
                 SetWidth = 200f,
             };
 
-            rightBox.AddChild(centerButton);
+            rightBox.AddChild(locateButton);
 
 
             // Link\Unlink button
+            var buttonLoc = "gateway-console-user-interface-start-connection";
+            if (linked)
+                buttonLoc = "gateway-console-user-interface-cut-connection";
+            if (!gate.Powered)
+                buttonLoc = "gateway-console-user-interface-no-power";
+
             var linkButton = new GatewayButton()
             {
-                Text = linked ? Loc.GetString("gateway-console-user-interface-cut-connection") : Loc.GetString("gateway-console-user-interface-start-connection"),
+                Text = Loc.GetString(buttonLoc),
                 GatewayUid = gate.GatewayUid,
                 Coordinates = coordinates,
                 HorizontalAlignment = HAlignment.Right,
                 SetWidth = 200f,
+                Disabled = !gate.Powered,
             };
             linkButton.OnButtonUp += _ =>
             {
@@ -170,14 +179,22 @@ public sealed partial class StationGatewayWindow : FancyWindow
 
 
             //Add gateway coordinates to the NavMap
-            if (coordinates != null && NavMap.Visible && _ringTexture != null)
+            var blipColor = Color.Aqua;
+            if (!gate.Powered)
+                blipColor = Color.Gray;
+            if (selected)
+                blipColor = Color.Green;
+
+            if (coordinates != null && NavMap.Visible && _ringTexture is not null && _ringFilledTexture is not null)
             {
-                var blip = new NavMapBlip(coordinates.Value, _ringTexture, Color.Aqua, false);
+                var blip = new NavMapBlip(
+                    coordinates.Value,
+                    linked ? _ringFilledTexture : _ringTexture,
+                    blipColor,
+                    false);
                 NavMap.TrackedEntities.TryAdd(gate.GatewayUid, blip);
 
-                NavMap.Focus = _trackedEntity;
-
-                centerButton.OnButtonUp += _ =>
+                locateButton.OnButtonUp += _ =>
                 {
                     if (_trackedEntity == gate.GatewayUid)
                         _trackedEntity = null;
@@ -186,8 +203,6 @@ public sealed partial class StationGatewayWindow : FancyWindow
                         _trackedEntity = gate.GatewayUid;
                         NavMap.CenterToCoordinates(coordinates.Value);
                     }
-
-                    NavMap.Focus = _trackedEntity;
 
                     UpdateGatewaysTable();
                 };
@@ -206,10 +221,9 @@ public sealed partial class StationGatewayWindow : FancyWindow
         }
     }
 
-    private void SetTrackedEntityFromNavMap(NetEntity? netEntity)
+    private void ClickGatewayOnNavMap(NetEntity? netEntity)
     {
-        NavMap.Focus = netEntity;
-        UpdateGatewaysTable();
+        SendGatewayLinkChangeAction?.Invoke(netEntity);
     }
 
     private void ClearOutDatedData()

@@ -205,8 +205,7 @@ public sealed class StationGatewaySystem : SharedStationGatewaySystem
                 if (cachedGates.Contains(chipComp.ConnectedGate.Value))
                     continue;
 
-                if (!_power.IsPowered(chipComp.ConnectedGate.Value))
-                    continue;
+                var powered = _power.IsPowered(chipComp.ConnectedGate.Value);
 
                 _link.GetLink(chipComp.ConnectedGate.Value, out var linkedGateway);
                 EntityCoordinates? linkCoord = null;
@@ -218,8 +217,10 @@ public sealed class StationGatewaySystem : SharedStationGatewaySystem
                 gatewaysData.Add(
                     new(GetNetEntity(chipComp.ConnectedGate.Value),
                         GetNetCoordinates(Transform(chipComp.ConnectedGate.Value).Coordinates),
+                        GetNetEntity(chipComp.ConnectedGate.Value),
                         GetNetCoordinates(linkCoord),
-                        gateway.GateName));
+                        gateway.GateName,
+                        powered));
             }
         }
         _uiSystem.SetUiState(ent.Owner, StationGatewayUIKey.Key, new StationGatewayState(gatewaysData, GetNetEntity(ent.Comp.SelectedGate)));

@@ -8,7 +8,6 @@ namespace Content.Client.GatewayStation;
 
 public sealed partial class StationGatewayNavMapControl : NavMapControl
 {
-    public NetEntity? Focus;
     public HashSet<GatewayLinkLine> LinkLines = new();
 
     private readonly SharedTransformSystem _transformSystem;
@@ -19,14 +18,6 @@ public sealed partial class StationGatewayNavMapControl : NavMapControl
         WallColor = new Color(32, 96, 128);
         TileColor = new Color(12, 50, 69);
         BackgroundColor = Color.FromSrgb(TileColor.WithAlpha(BackgroundOpacity));
-    }
-
-    protected override void FrameUpdate(FrameEventArgs args)
-    {
-        base.FrameUpdate(args);
-
-        if (Focus == null)
-            return;
     }
 
     protected override void Draw(DrawingHandleScreen handle)
