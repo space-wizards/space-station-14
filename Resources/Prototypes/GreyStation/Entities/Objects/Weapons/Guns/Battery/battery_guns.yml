@@ -5,7 +5,7 @@
   description: "A basic hybrid energy gun with two settings: disable and kill."
   components:
   - type: Sprite
-    sprite: DeltaV/Objects/Weapons/Guns/Battery/energygun.rsi
+    sprite: GreyStation/Objects/Weapons/Guns/Battery/energygun.rsi
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
@@ -16,14 +16,14 @@
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: Clothing
-    sprite: DeltaV/Objects/Weapons/Guns/Battery/energygun.rsi
+    sprite: GreyStation/Objects/Weapons/Guns/Battery/energygun.rsi
   - type: Item
     heldPrefix: disabler
   - type: Gun
     soundGunshot:
-      path: /Audio/DeltaV/Weapons/Guns/Gunshots/laser.ogg
+      path: /Audio/GreyStation/Weapons/Guns/Gunshots/laser.ogg
     soundEmpty:
-      path: /Audio/DeltaV/Weapons/Guns/Empty/dry_fire.ogg
+      path: /Audio/GreyStation/Weapons/Guns/Empty/dry_fire.ogg
   - type: Battery
     maxCharge: 2000
     startingCharge: 2000
@@ -60,7 +60,7 @@
   description: "This is an expensive, modern recreation of an antique laser gun. The fire selector has two settings, 'disable' and 'kill'. Unfortunately, it has lost the ability to recharge over time."
   components:
   - type: Sprite
-    sprite: DeltaV/Objects/Weapons/Guns/Battery/multiphase_energygun.rsi
+    sprite: GreyStation/Objects/Weapons/Guns/Battery/multiphase_energygun.rsi
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
@@ -71,14 +71,14 @@
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: Clothing
-    sprite: DeltaV/Objects/Weapons/Guns/Battery/multiphase_energygun.rsi
+    sprite: GreyStation/Objects/Weapons/Guns/Battery/multiphase_energygun.rsi
   - type: Item
     heldPrefix: disabler
   - type: Gun
     soundGunshot:
-      path: /Audio/DeltaV/Weapons/Guns/Gunshots/laser.ogg
+      path: /Audio/GreyStation/Weapons/Guns/Gunshots/laser.ogg
     soundEmpty:
-      path: /Audio/DeltaV/Weapons/Guns/Empty/dry_fire.ogg
+      path: /Audio/GreyStation/Weapons/Guns/Empty/dry_fire.ogg
   - type: Battery
     maxCharge: 2000
     startingCharge: 2000
