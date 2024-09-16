@@ -1,7 +1,0 @@
-- type: npcFaction
-  id: Pibble
-  hostile:
-  - Cat
-
-- type: npcFaction
-  id: Cat
