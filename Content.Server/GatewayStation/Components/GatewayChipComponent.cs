@@ -23,6 +23,12 @@ public sealed partial class GatewayChipComponent : Component
     [DataField]
     public string? AutoLinkKey = null;
 
+    /// <summary>
+    /// If AutoLinkKey is not empty, but the link failed to be set up, this entity will be automatically deleted
+    /// </summary>
+    [DataField]
+    public bool DeleteOnFailedLink = true;
+
     [DataField]
     public SoundSpecifier RecordSound = new SoundPathSpecifier("/Audio/Machines/high_tech_confirm.ogg")
     {

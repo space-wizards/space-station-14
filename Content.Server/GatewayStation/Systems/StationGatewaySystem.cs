@@ -19,14 +19,14 @@ namespace Content.Server.GatewayStation.Systems;
 public sealed class StationGatewaySystem : SharedStationGatewaySystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearanceSys = default!;
-    [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-    [Dependency] private readonly LinkedEntitySystem _link = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly AmbientSoundSystem _ambient = default!;
-    [Dependency] private readonly PowerReceiverSystem _power = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly LinkedEntitySystem _link = default!;
+    [Dependency] private readonly PowerReceiverSystem _power = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
     public override void Initialize()
     {
@@ -232,6 +232,7 @@ public sealed class StationGatewaySystem : SharedStationGatewaySystem
             return;
 
         var query = EntityQueryEnumerator<StationGatewayComponent>();
+        var successLink = false;
         while (query.MoveNext(out var uid, out var gate))
         {
             if (gate.AutoLinkKey is null || gate.AutoLinkKey != chip.Comp.AutoLinkKey)
@@ -239,7 +240,10 @@ public sealed class StationGatewaySystem : SharedStationGatewaySystem
 
             chip.Comp.ConnectedGate = uid;
             chip.Comp.ConnectedName = gate.GateName;
-            return;
+            successLink = true;
+            break;
         }
+        if (!successLink && chip.Comp.DeleteOnFailedLink)
+            QueueDel(chip);
     }
 }

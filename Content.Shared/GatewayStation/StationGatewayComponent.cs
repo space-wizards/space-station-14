@@ -3,7 +3,7 @@ using Robust.Shared.Audio;
 namespace Content.Shared.GatewayStation;
 
 /// <summary>
-/// TODO
+/// Allows an entity to be displayed and managed using StationGatewayConsole
 /// </summary>
 [RegisterComponent]
 [Access(typeof(SharedStationGatewaySystem))]

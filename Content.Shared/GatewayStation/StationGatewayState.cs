@@ -48,7 +48,7 @@ public sealed class StationGatewayGateClickMessage : BoundUserInterfaceMessage
     public NetEntity? Gateway;
 
     /// <summary>
-    /// TODO
+    /// Called when the client clicks on any active Gateway on the StationGatewayConsoleComponent
     /// </summary>
     public StationGatewayGateClickMessage(NetEntity? gateway)
     {

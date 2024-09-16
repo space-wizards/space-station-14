@@ -2,6 +2,9 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.GatewayStation;
 
+/// <summary>
+/// Console that allows you to manage the StationGatewayComponent
+/// </summary>
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedStationGatewaySystem))]
 public sealed partial class StationGatewayConsoleComponent : Component
@@ -10,7 +13,7 @@ public sealed partial class StationGatewayConsoleComponent : Component
     /// Selected via UI gate. Defines the behavior of the console.
     /// </summary>
     [DataField]
-    public EntityUid? SelectedGate = null;
+    public EntityUid? SelectedGate;
 
     /// <summary>
     /// Portals created by this console will be colored in the specified color. This can be used to make Syndicate portals blood red.
