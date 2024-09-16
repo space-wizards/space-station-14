@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Tayrtahn
-  changes:
-  - message: Fixed admin ghosts briefly becoming visible when a news article is published.
-    type: Fix
-  id: 6884
-  time: '2024-07-08T03:33:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29801
 - author: slarticodefast
   changes:
   - message: Improved throwing calculations. Thrown items now stop moving exactly
@@ -3911,3 +3904,11 @@
   id: 7383
   time: '2024-09-16T08:59:00.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32107
+- author: ArtisticRoomba
+  changes:
+  - message: The binary translator key in the syndie uplink is now correctly marked
+      as syndicate contraband.
+    type: Tweak
+  id: 7384
+  time: '2024-09-16T10:01:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32193
