@@ -89,7 +89,7 @@
 
 - type: Tag
   id: BorgCargoTorso
-  
+
 - type: Tag
   id: BorgEngineerHead
 
@@ -625,6 +625,9 @@
 
 - type: Tag
   id: ExplosivePassable
+
+- type: Tag
+  id: Eyepatch
 
 - type: Tag
   id: Figurine
@@ -1204,7 +1207,7 @@
 - type: Tag
   id: SecureWindoor
 
-- type: Tag  
+- type: Tag
   id: SecurityHelmet
 
 - type: Tag

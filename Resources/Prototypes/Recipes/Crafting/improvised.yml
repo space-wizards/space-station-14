@@ -99,6 +99,19 @@
     state: icon
 
 - type: construction
+  name: double eyepatch
+  id: doubleeyepatch
+  graph: DoubleEyepatch
+  startNode: start
+  targetNode: doubleeyepatch
+  category: construction-category-tools
+  objectType: Item
+  description: Two eyepatches, for twice the swashbuckling.
+  icon:
+    sprite: Clothing/Eyes/Misc/doubleeyepatch.rsi
+    state: icon
+
+- type: construction
   name: flower wreath
   id: flowerwreath
   graph: flowerwreath
