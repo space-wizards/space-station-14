@@ -18,16 +18,11 @@ public sealed class AstroNavCartridgeSystem : EntitySystem
 
     private void OnCartridgeAdded(Entity<AstroNavCartridgeComponent> ent, ref CartridgeAddedEvent args)
     {
-        var loader = args.Loader;
-        if (!EntityManager.HasComponent<HandheldGPSComponent>(loader))
-        {
-            EntityManager.AddComponent<HandheldGPSComponent>(loader);
-        }
+        EnsureComp<HandheldGPSComponent>(args.Loader);
     }
 
     private void OnCartridgeRemoved(Entity<AstroNavCartridgeComponent> ent, ref CartridgeRemovedEvent args)
     {
-        var loader = args.Loader;
-        EntityManager.RemoveComponent<HandheldGPSComponent>(loader);
+        RemComp<HandheldGPSComponent>(args.Loader);
     }
 }
