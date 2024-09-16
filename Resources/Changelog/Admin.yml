@@ -519,5 +519,30 @@ Entries:
   id: 64
   time: '2024-08-31T11:38:04.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30433
+- author: nikthechampiongr
+  changes:
+  - message: The addobjective command will now offer completions for username and
+      objectives.
+    type: Tweak
+  id: 65
+  time: '2024-09-08T07:28:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30456
+- author: Fildrance
+  changes:
+  - message: The setmapatmos command now correctly uses its temperature argument
+    type: Fix
+  id: 66
+  time: '2024-09-13T22:49:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32125
+- author: nikthechampiongr
+  changes:
+  - message: Rename verb now acts the same as the rename command.
+    type: Fix
+  - message: Renamed entities will now have their new name appear immediately on entity
+      examination and on crew monitor console.
+    type: Fix
+  id: 67
+  time: '2024-09-15T01:55:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31654
 Name: Admin
 Order: 1

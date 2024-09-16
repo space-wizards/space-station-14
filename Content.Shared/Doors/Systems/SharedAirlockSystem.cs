@@ -56,7 +56,10 @@ public abstract class SharedAirlockSystem : EntitySystem
 
         // Make sure the airlock auto closes again next time it is opened
         if (args.State == DoorState.Closed)
+        {
             component.AutoClose = true;
+            Dirty(uid, component);
+        }
     }
 
     private void OnBeforeDoorOpened(EntityUid uid, AirlockComponent component, BeforeDoorOpenedEvent args)

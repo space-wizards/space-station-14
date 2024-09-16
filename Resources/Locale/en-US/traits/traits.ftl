@@ -54,5 +54,11 @@ trait-german-desc = You seem to come from space Germany.
 trait-italian-name = Italian accent
 trait-italian-desc = Mamma mia! You seem to have lived in space Italy!
 
+trait-french-name = French accent
+trait-french-desc = Your accent seems to have a certain «je ne sais quoi».
+
+trait-spanish-name = Spanish accent
+trait-spanish-desc = Hola señor, donde esta la biblioteca.
+
 trait-softspoken-name = Softspoken
 trait-softspoken-desc = You can only communicate by whispering...
