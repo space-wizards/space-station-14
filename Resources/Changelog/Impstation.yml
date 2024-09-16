@@ -1548,3 +1548,43 @@
   id: 201
   time: '2024-09-14T14:23:42.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/256
+- author: hivehum
+  changes:
+  - message: The message you receive upon becoming some antagonists have been rewritten
+      to better set the tone of the round.
+    type: Tweak
+  - message: The Ninja greeting is now in second person, like every other antagonist
+      greeting.
+    type: Fix
+  id: 202
+  time: '2024-09-16T02:43:22.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/258
+- author: TGRCDev
+  changes:
+  - message: Cyborgs no longer explode when they click on themselves
+    type: Fix
+  id: 203
+  time: '2024-09-16T02:42:22.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/266
+- author: TGRCDev
+  changes:
+  - message: Revenants now enter stasis on death instead of dying outright. You can
+      kill a revenant in stasis by either destroying or exorcising its ectoplasm.
+    type: Tweak
+  id: 204
+  time: '2024-09-16T02:42:43.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/262
+- author: sususuyo
+  changes:
+  - message: Screwloose lobby art is actually in rotation now
+    type: Fix
+  id: 205
+  time: '2024-09-16T02:42:32.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/265
+- author: hivehum
+  changes:
+  - message: Code Pink, for when you think your employees are trying to form a union.
+    type: Add
+  id: 206
+  time: '2024-09-16T02:43:36.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/260
