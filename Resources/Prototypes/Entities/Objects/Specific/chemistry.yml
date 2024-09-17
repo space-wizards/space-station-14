@@ -401,9 +401,6 @@
   - type: Icon
     sprite: Objects/Specific/Chemistry/syringe.rsi
     state: "syringeproj"
-  - type: Item
-    size: Tiny
-    sprite: Objects/Specific/Chemistry/syringe.rsi
   - type: EmbeddableProjectile
     minimumSpeed: 3
     removalTime: 0.25
