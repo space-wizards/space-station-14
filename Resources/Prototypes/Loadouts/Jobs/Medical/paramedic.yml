@@ -25,17 +25,15 @@
   equipment:
     jumpsuit: ClothingUniformJumpskirtParamedic
 
+
 - type: loadout
   id: SkirtOfLife
-  equipment: ClothingUniformJumpskirtOfLife
   effects:
   - !type:GroupLoadoutEffect
     proto: SeniorParamedic
-
-- type: startingGear
-  id: SkirtOfLife
   equipment:
     jumpsuit: ClothingUniformJumpskirtOfLife
+
 
 # Outer clothing
 - type: loadout
@@ -53,4 +51,3 @@
   id: BlueShoes
   equipment:
     shoes: ClothingShoesColorBlue
-
