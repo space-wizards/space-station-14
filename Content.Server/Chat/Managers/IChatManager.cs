@@ -1,8 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
-using Content.Server.Players;
 using Content.Server.Players.RateLimiting;
 using Content.Shared.Administration;
 using Content.Shared.Chat;
+using Robust.Shared.Audio;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 
@@ -30,14 +30,14 @@ namespace Content.Server.Chat.Managers
         void SendAdminAlert(EntityUid player, string message);
 
         void ChatMessageToOne(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat,
-            INetChannel client, Color? colorOverride = null, bool recordReplay = false, string? audioPath = null, float audioVolume = 0, NetUserId? author = null);
+            INetChannel client, Color? colorOverride = null, bool recordReplay = false, SoundSpecifier? sound = null, NetUserId? author = null);
 
         void ChatMessageToMany(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat, bool recordReplay,
-            IEnumerable<INetChannel> clients, Color? colorOverride = null, string? audioPath = null, float audioVolume = 0, NetUserId? author = null);
+            IEnumerable<INetChannel> clients, Color? colorOverride = null, SoundSpecifier? sound = null, NetUserId? author = null);
 
-        void ChatMessageToManyFiltered(Filter filter, ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat, bool recordReplay, Color? colorOverride, string? audioPath = null, float audioVolume = 0);
+        void ChatMessageToManyFiltered(Filter filter, ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat, bool recordReplay, Color? colorOverride, SoundSpecifier? sound = null);
 
-        void ChatMessageToAll(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat, bool recordReplay, Color? colorOverride = null, string? audioPath = null, float audioVolume = 0, NetUserId? author = null);
+        void ChatMessageToAll(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat, bool recordReplay, Color? colorOverride = null, SoundSpecifier? sound = null, NetUserId? author = null);
 
         bool MessageCharacterLimit(ICommonSession player, string message);
 

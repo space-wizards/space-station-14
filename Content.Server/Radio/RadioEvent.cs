@@ -28,3 +28,9 @@ public record struct RadioSendAttemptEvent(RadioChannelPrototype Channel, Entity
     public readonly EntityUid RadioSource = RadioSource;
     public bool Cancelled = false;
 }
+
+/// <summary>
+/// Use this event to modify a radio chat message before it is sent
+/// </summary>
+[ByRefEvent]
+public record struct RadioModifyMessageEvent(ChatMessage Message, RadioChannelPrototype Channel, EntityUid RadioSource);
