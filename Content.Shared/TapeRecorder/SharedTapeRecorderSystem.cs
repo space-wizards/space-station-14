@@ -62,13 +62,13 @@ public abstract class SharedTapeRecorderSystem : EntitySystem
         var query = EntityQueryEnumerator<ActiveTapeRecorderComponent, TapeRecorderComponent>();
         while (query.MoveNext(out var uid, out _, out var comp))
         {
+            var ent = (uid, comp);
             if (TryGetTapeCassette(uid, out var tape))
             {
                 SetMode(ent, TapeRecorderMode.Stopped);
                 continue;
             }
 
-            var ent = (uid, comp);
             var continuing = comp.Mode switch
             {
                 TapeRecorderMode.Recording => ProcessRecordingTapeRecorder(ent, frameTime),
