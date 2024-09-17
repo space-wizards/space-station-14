@@ -1,3 +1,13 @@
+# Reward for keeping us safe
+- type: loadoutEffectGroup
+  id: SeniorParamedic
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobParamedic
+      time: 36000 #10 hrs
+
 # Head
 - type: loadout
   id: ParamedicHead
@@ -26,6 +36,18 @@
   id: ParamedicJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtParamedic
+
+- type: loadout
+  id: SkirtOfLife
+  equipment: ClothingUniformJumpskirtOfLife
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorParamedic
+
+- type: startingGear
+  id: SkirtOfLife
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtOfLife
 
 # Outer clothing
 - type: loadout
