@@ -31,8 +31,8 @@ public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
     }
 
     /// <summary>
-    /// Given a time range, play all messages on a tape within said range
-    /// Split into this system as shared does not have _chat access
+    /// Given a time range, play all messages on a tape within said range, [start, end).
+    /// Split into this system as shared does not have ChatSystem access
     /// </summary>
     protected override void ReplayMessagesInSegment(Entity<TapeRecorderComponent> ent, TapeCassetteComponent tape, float segmentStart, float segmentEnd)
     {
@@ -42,7 +42,7 @@ public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
 
         foreach (var message in tape.RecordedData)
         {
-            if (message.Timestamp < tape.CurrentPosition || message.Timestamp > segmentEnd)
+            if (message.Timestamp < tape.CurrentPosition || message.Timestamp >= segmentEnd)
                 continue;
 
             //Change the voice to match the speaker

@@ -62,6 +62,12 @@ public abstract class SharedTapeRecorderSystem : EntitySystem
         var query = EntityQueryEnumerator<ActiveTapeRecorderComponent, TapeRecorderComponent>();
         while (query.MoveNext(out var uid, out _, out var comp))
         {
+            if (TryGetTapeCassette(uid, out var tape))
+            {
+                SetMode(ent, TapeRecorderMode.Stopped);
+                continue;
+            }
+
             var ent = (uid, comp);
             var continuing = comp.Mode switch
             {
@@ -71,8 +77,11 @@ public abstract class SharedTapeRecorderSystem : EntitySystem
                 _ => false
             };
 
-            if (!continuing)
-                SetMode(ent, TapeRecorderMode.Stopped);
+            if (continuing)
+                continue;
+
+            SetMode(ent, TapeRecorderMode.Stopped);
+            Dirty(tape); // make sure clients have the right value once it's stopped
         }
     }
 
