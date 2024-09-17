@@ -338,6 +338,17 @@
     MuteToxin: 2
 
 - type: reaction
+  id: Sadness
+  impact: Medium
+  reactants:
+    Happiness:
+      amount: 1
+    Copper:
+      amount: 1
+  products:
+    Sadness: 2
+
+- type: reaction
   id: ChloralHydrate
   impact: Medium
   reactants:
