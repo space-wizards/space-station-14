@@ -505,11 +505,17 @@
   order: 1
   lawString: law-pai-1
   
+- type: siliconLaw
+  id: Pai2
+  order: 2
+  lawString: law-pai-2
+  
 - type: siliconLawset
   id: PaiLawset
   laws:
   - Pai1
-  obeysTo: laws-owner-person
+  - Pai2
+  obeysTo: laws-owner-crew
 
 # ion storm random lawsets
 - type: weightedRandom
@@ -529,5 +535,6 @@
     PainterLawset: 1
     AntimovLawset: 0.25
     NutimovLawset: 0.5
+    PaiLawset: 0.5
     Drone: 0.5
     Ninja: 0.25

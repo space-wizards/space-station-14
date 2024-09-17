@@ -79,6 +79,7 @@
   - type: SiliconLawBound
   - type: SiliconLawProvider
     laws: PaiLawset
+  - type: IonStormTarget
 
 - type: entity
   parent: [ PersonalAI, BaseSyndicateContraband]
