@@ -25,6 +25,7 @@ using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Systems;
+using Content.Shared.NPC.Components;
 using Content.Shared.NPC.Systems;
 using Content.Shared.Nutrition.AnimalHusbandry;
 using Content.Shared.Nutrition.Components;
@@ -218,6 +219,7 @@ public sealed partial class ZombieSystem
 
         _faction.ClearFactions(target, dirty: false);
         _faction.AddFaction(target, "Zombie");
+        EnsureComp<NoFriendlyFireComponent>(target); // prevent shitters biting other zombies
 
         //gives it the funny "Zombie ___" name.
         _nameMod.RefreshNameModifiers(target);
