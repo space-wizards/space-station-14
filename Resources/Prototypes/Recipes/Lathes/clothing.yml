@@ -827,6 +827,7 @@
 
 - type: latheRecipe
   parent: BaseCommandHatRecipe
+  id: ClothingHeadHatCommandsoft
   result: ClothingHeadHatCommandsoft
 
 # Non-command hats
