@@ -33,9 +33,9 @@
   scale: 0.6667
   color: LightGray
   texturePaths:
-    - "/Textures/Interface/AtmosMonitoring/pump_north.png"
     - "/Textures/Interface/AtmosMonitoring/pump_south.png"
     - "/Textures/Interface/AtmosMonitoring/pump_east.png"
+    - "/Textures/Interface/AtmosMonitoring/pump_north.png"
     - "/Textures/Interface/AtmosMonitoring/pump_west.png"
   
 - type: navMapBlip
@@ -44,8 +44,8 @@
   color: LightGray
   texturePaths:
     - "/Textures/Interface/AtmosMonitoring/valve_north_south.png"
-    - "/Textures/Interface/AtmosMonitoring/valve_north_south.png"
     - "/Textures/Interface/AtmosMonitoring/valve_east_west.png"
+    - "/Textures/Interface/AtmosMonitoring/valve_north_south.png"   
     - "/Textures/Interface/AtmosMonitoring/valve_east_west.png"
   
 - type: navMapBlip

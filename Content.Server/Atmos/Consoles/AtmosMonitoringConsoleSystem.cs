@@ -1,7 +1,6 @@
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.Monitor.Systems;
 using Content.Server.Atmos.Piping.Components;
-using Content.Server.Construction.Completions;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.EntitySystems;
@@ -13,7 +12,6 @@ using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Consoles;
 using Content.Shared.Labels.Components;
 using Content.Shared.Pinpointer;
-using Microsoft.CodeAnalysis;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -322,7 +320,12 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
         if (!TryGettingFirstPipeNode(uid, out var pipeNode, out var netId))
             netId = -1;
 
-        device = new AtmosDeviceNavMapData(GetNetEntity(uid), GetNetCoordinates(xform.Coordinates), netId.Value, component.NavMapBlip, direction);
+        var color = Color.White;
+
+        if (TryComp<AtmosPipeColorComponent>(uid, out var atmosPipeColor))
+            color = atmosPipeColor.Color;
+
+        device = new AtmosDeviceNavMapData(GetNetEntity(uid), GetNetCoordinates(xform.Coordinates), netId.Value, component.NavMapBlip, direction, color);
 
         return true;
     }

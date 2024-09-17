@@ -221,7 +221,7 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
 
         var idx = Math.Clamp((int)metaData.Direction / 2, 0, proto.TexturePaths.Length - 1);
         var texture = proto.TexturePaths.Length > 0 ? proto.TexturePaths[idx] : proto.TexturePaths[0];
-        var color = proto.Color;
+        var color = proto.Color * metaData.PipeColor;
 
         if (_focusNetId != null && metaData.NetId != _focusNetId)
             color *= Color.DimGray;

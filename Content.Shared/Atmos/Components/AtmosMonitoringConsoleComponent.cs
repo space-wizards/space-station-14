@@ -82,15 +82,21 @@ public struct AtmosDeviceNavMapData
     public Direction Direction;
 
     /// <summary>
+    /// Color of the attached pipe
+    /// </summary>
+    public Color PipeColor;
+
+    /// <summary>
     /// Populate the atmos monitoring console nav map with a single entity
     /// </summary>
-    public AtmosDeviceNavMapData(NetEntity netEntity, NetCoordinates netCoordinates, int netId, ProtoId<NavMapBlipPrototype> navMapBlip, Direction direction)
+    public AtmosDeviceNavMapData(NetEntity netEntity, NetCoordinates netCoordinates, int netId, ProtoId<NavMapBlipPrototype> navMapBlip, Direction direction, Color pipeColor)
     {
         NetEntity = netEntity;
         NetCoordinates = netCoordinates;
         NetId = netId;
         NavMapBlip = navMapBlip;
         Direction = direction;
+        PipeColor = pipeColor;
     }
 }
 
