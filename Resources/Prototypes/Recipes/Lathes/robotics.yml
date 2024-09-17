@@ -18,6 +18,15 @@
     Steel: 100
 
 - type: latheRecipe
+  id: ClothingEyesVisorCamera
+  result: ClothingEyesVisorCamera
+  completetime: 2
+  materials:
+    Steel: 300
+    Plastic: 200
+    Glass: 500
+
+- type: latheRecipe
   id: CyborgEndoskeleton
   result: CyborgEndoskeleton
   category: Robotics
