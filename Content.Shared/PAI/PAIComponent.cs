@@ -32,6 +32,12 @@ public sealed partial class PAIComponent : Component
 
     [DataField]
     public EntProtoId MapActionId = "ActionPAIOpenMap";
+	
+    [DataField]
+    public EntProtoId LawsActionID = "ActionPAIViewLaws";
+
+    [DataField, AutoNetworkedField]
+    public EntityUid? LawsAction;
 
     [DataField, AutoNetworkedField]
     public EntityUid? MapAction;

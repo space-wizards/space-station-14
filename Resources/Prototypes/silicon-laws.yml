@@ -498,6 +498,18 @@
   - Nutimov4
   - Nutimov5
   obeysTo: laws-owner-crew
+  
+ # Pai
+- type: siliconLaw
+  id: Pai1
+  order: 1
+  lawString: law-pai-1
+  
+- type: siliconLawset
+  id: PaiLawset
+  laws:
+  - Pai1
+  obeysTo: laws-owner-person
 
 # ion storm random lawsets
 - type: weightedRandom

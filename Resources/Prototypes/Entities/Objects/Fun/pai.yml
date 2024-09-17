@@ -13,6 +13,9 @@
     program: 2
   - type: UserInterface
     interfaces:
+      enum.SiliconLawsUiKey.Key:
+        type: SiliconLawBoundUserInterface
+        requireInputValidation: false
       enum.InstrumentUiKey.Key:
         type: InstrumentBoundUserInterface
         requireInputValidation: false
@@ -73,6 +76,9 @@
           Searching: { state: pai-searching-overlay }
           On: { state: pai-on-overlay }
   - type: StationMap
+  - type: SiliconLawBound
+  - type: SiliconLawProvider
+    laws: PaiLawset
 
 - type: entity
   parent: [ PersonalAI, BaseSyndicateContraband]
@@ -158,3 +164,16 @@
       icon: { sprite: Interface/Actions/pai-map.rsi, state: icon }
       event: !type:OpenUiActionEvent
         key: enum.StationMapUiKey.Key
+
+- type: entity
+  id: ActionPAIViewLaws
+  name: View Laws
+  description: View the laws that you must follow.
+  components:
+    - type: InstantAction
+      checkCanInteract: false
+      checkConsciousness: false
+      icon: { sprite: Interface/Actions/actions_borg.rsi, state: state-laws }
+      event: !type:OpenUiActionEvent
+        key: enum.SiliconLawsUiKey.Key
+        
