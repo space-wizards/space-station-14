@@ -14,6 +14,11 @@
     - id: GiftsSecurityRiot
     - id: GiftsSpacingSupplies
     - id: GiftsVendingRestock
+    - id: GiftsFunPlushie
+    - id: GiftsFunInstruments
+    - id: GiftsArtSupplies
+    - id: GiftsPartySupplies
+    - id: GiftsToyBox
 
 # Game Rules
     
@@ -213,3 +218,78 @@
       SecurityRiot: 2
       SecurityRestraints: 2
       SecurityNonLethal: 2
+
+- type: entity
+  id: GiftsFunPlushie
+  parent: CargoGiftsBase
+  components:
+  - type: StationEvent
+    weight: 3
+    duration: 120
+    earliestStart: 30
+    minimumPlayers: 20
+  - type: CargoGiftsRule
+    description: cargo-gift-fun-plushies
+    dest: cargo-gift-dest-bar
+    gifts:
+      CrateFunPlushie: 2
+
+- type: entity
+  id: GiftsFunInstruments
+  parent: CargoGiftsBase
+  components:
+  - type: StationEvent
+    weight: 3
+    duration: 120
+    earliestStart: 30
+    minimumPlayers: 20
+  - type: CargoGiftsRule
+    description: cargo-gift-fun-instruments
+    dest: cargo-gift-dest-bar
+    gifts:
+      CrateFunInstrumentsVariety: 1
+
+- type: entity
+  id: GiftsArtSupplies
+  parent: CargoGiftsBase
+  components:
+  - type: StationEvent
+    weight: 3
+    duration: 120
+    earliestStart: 30
+    minimumPlayers: 20
+  - type: CargoGiftsRule
+    description: cargo-gift-art-supplies
+    dest: cargo-gift-dest-bar
+    gifts:
+      CrateFunArtSupplies: 2
+
+- type: entity
+  id: GiftsPartySupplies
+  parent: CargoGiftsBase
+  components:
+  - type: StationEvent
+    weight: 3
+    duration: 120
+    earliestStart: 30
+    minimumPlayers: 20
+  - type: CargoGiftsRule
+    description: cargo-gift-party-supplies
+    dest: cargo-gift-dest-bar
+    gifts:
+      CrateFunParty: 1
+
+- type: entity
+  id: GiftsToyBox
+  parent: CargoGiftsBase
+  components:
+  - type: StationEvent
+    weight: 3
+    duration: 120
+    earliestStart: 30
+    minimumPlayers: 20
+  - type: CargoGiftsRule
+    description: cargo-gift-toy-box
+    dest: cargo-gift-dest-bar
+    gifts:
+      CrateFunToyBox: 1
