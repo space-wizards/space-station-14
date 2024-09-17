@@ -232,6 +232,11 @@
   license: "CC-BY-SA-3.0"
   source: https://github.com/YuriyKiss/space-station-14/commit/971a135a9c83aed46e967aac9302ab5b35562b5f
 
+- files: [inneranomaly.ogg]
+  copyright: 'created by waveplaySFX on Freesound'
+  license: "CC0-1.0"
+  source: https://freesound.org/people/waveplaySFX/sounds/553744/
+
 - files: [static1.ogg, static2.ogg, static3.ogg]
   copyright: Errant (github username Errant-4)
   license: CC-BY-SA-3.0

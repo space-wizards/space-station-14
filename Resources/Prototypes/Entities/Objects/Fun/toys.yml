@@ -56,7 +56,7 @@
 - type: entity
   parent: BasePlushie
   id: PlushieThrongler
-  name: The Throngler plushie
+  name: throngler plushie
   description: A stuffed toy to remind cargo techs of what they can no longer have.
   components:
     - type: Sprite
@@ -1319,10 +1319,9 @@
     sprite: Objects/Weapons/Melee/cutlass.rsi
     state: foam_icon
   - type: MeleeWeapon
+    wideAnimationRotation: -135
     attackRate: 1.5
     range: 2.0
-    angle: 0
-    animation: WeaponArcThrust
     damage:
       types:
         Blunt: 0
@@ -1546,3 +1545,52 @@
       params:
         volume: -9
         maxDistance: 3
+
+- type: entity
+  parent: BasePlushie
+  id: RubberChicken
+  name: rubber chicken
+  description: A stress inducing parody of nature's most delectable avian.
+  components:
+  - type: Sprite
+    state: rubber_chicken
+  - type: EmitSoundOnUse
+    sound:
+      collection: RubberChicken
+      params:
+        variation: 0.125
+  - type: EmitSoundOnLand
+    sound:
+      collection: RubberChicken
+      params:
+        variation: 0.125
+  - type: EmitSoundOnActivate
+    sound:
+      collection: RubberChicken
+      params:
+        variation: 0.125
+  - type: EmitSoundOnCollide
+    sound:
+      collection: RubberChicken
+      params:
+        variation: 0.125
+  - type: EmitSoundOnTrigger
+    sound:
+      collection: RubberChicken
+      params:
+        variation: 0.125
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      collection: RubberChicken
+      params:
+        variation: 0.125
+  - type: MeleeWeapon
+    wideAnimationRotation: 110
+    soundHit:
+      collection: RubberChicken
+      params:
+        variation: 0.125
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 25
