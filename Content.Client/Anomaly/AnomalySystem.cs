@@ -21,7 +21,7 @@ public sealed class AnomalySystem : SharedAnomalySystem
         SubscribeLocalEvent<AnomalyComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<AnomalyComponent, AnimationCompletedEvent>(OnAnimationComplete);
 
-        SubscribeLocalEvent<AnomalySupercriticalComponent, ComponentShutdown>(OnSupercriticalShutdown);
+        SubscribeLocalEvent<AnomalySupercriticalComponent, ComponentShutdown>(OnShutdown);
     }
     private void OnStartup(EntityUid uid, AnomalyComponent component, ComponentStartup args)
     {
@@ -77,7 +77,7 @@ public sealed class AnomalySystem : SharedAnomalySystem
         }
     }
 
-    private void OnSupercriticalShutdown(Entity<AnomalySupercriticalComponent> ent, ref ComponentShutdown args)
+    private void OnShutdown(Entity<AnomalySupercriticalComponent> ent, ref ComponentShutdown args)
     {
         if (!TryComp<SpriteComponent>(ent, out var sprite))
             return;

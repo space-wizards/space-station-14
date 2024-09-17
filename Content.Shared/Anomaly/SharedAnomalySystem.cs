@@ -192,10 +192,10 @@ public abstract class SharedAnomalySystem : EntitySystem
             _transform.PlaceNextTo(core, uid);
         }
 
-        RemCompDeferred<AnomalySupercriticalComponent>(uid);
-
         if (component.DeleteEntity)
             QueueDel(uid);
+        else
+            RemCompDeferred<AnomalySupercriticalComponent>(uid);
     }
 
     /// <summary>
