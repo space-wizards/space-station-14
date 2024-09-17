@@ -1158,6 +1158,8 @@
 
 - type: reaction
   id: Vodka
+  requiredMixerCategories:
+  - Stir
   reactants:
     Ethanol:
       amount: 1
