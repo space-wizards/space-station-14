@@ -936,3 +936,80 @@
   - type: Tag
     tags:
       - HideContextMenu
+
+# Light anomaly
+
+- type: entity
+  id: LightAnomalySpark
+  components:
+  - type: CanMoveInAir
+  - type: Clickable
+  - type: Physics
+    bodyType: KinematicController
+    bodyStatus: InAir
+    sleepingAllowed: false
+  - type: ChasingWalk
+    minSpeed: 1
+    maxSpeed: 3
+    chasingComponent:
+    - type: Body
+  - type: AmbientSound
+    range: 5
+    volume: -5
+    sound:
+      path: /Audio/Ambience/Objects/emf_buzz.ogg
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.15
+        density: 10
+        mask:
+        - None 
+        layer:
+        - MobLayer
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/Cores/pyro_core.rsi
+    layers:
+    - state: core
+    - state: pulse
+  - type: Stealth
+    lastVisibility: -0.5
+  - type: PointLight
+    radius: 2.0
+    energy: 4.0
+    color: "#ffffff"
+    castShadows: false
+  - type: TimedDespawn
+    lifetime: 120
+  - type: EmitSoundOnTrigger
+    sound:
+      collection: sparks
+      params:
+        variation: 0.250
+  - type: FlashOnTrigger
+    range: 2
+  - type: TriggerOnProximity
+    requiresAnchored: false
+    enabled: true
+    cooldown: 2
+    shape:
+      !type:PhysShapeCircle
+        radius: 1
+    repeating: true
+  - type: Damageable
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Heat
+        damage: 10
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ] 
+      - !type:PlaySoundBehavior
+        sound:
+          collection: sparks
+          params:
+            variation: 0.250

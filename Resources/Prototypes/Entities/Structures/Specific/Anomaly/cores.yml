@@ -33,6 +33,11 @@
     timeToDecay: 600
     startPrice: 10000
     endPrice: 200
+  - type: PointLight
+    radius: 1.5
+    energy: 1.5
+    castShadows: false
+    netsync: false
 
 - type: entity
   parent: BaseAnomalyCore
@@ -42,10 +47,7 @@
   - type: Sprite
     sprite: Structures/Specific/Anomalies/Cores/pyro_core.rsi
   - type: PointLight
-    radius: 1.5
-    energy: 1.5
     color: "#E25822"
-    castShadows: false
   - type: IgnitionSource
     temperature: 400
     ignited: true
@@ -58,10 +60,8 @@
   - type: Sprite
     sprite: Structures/Specific/Anomalies/Cores/gravity_core.rsi
   - type: PointLight
-    radius: 1.5
     energy: 10
     color: "#1e070e"
-    castShadows: false
 
 - type: entity
   parent: BaseAnomalyCore
@@ -71,10 +71,7 @@
   - type: Sprite
     sprite: Structures/Specific/Anomalies/Cores/ice_core.rsi
   - type: PointLight
-    radius: 1.5
-    energy: 1.5
     color: "#befaff"
-    castShadows: false
 
 - type: entity
   parent: BaseAnomalyCore
@@ -84,10 +81,8 @@
   - type: Sprite
     sprite: Structures/Specific/Anomalies/Cores/flesh_core.rsi
   - type: PointLight
-    radius: 1.5
     energy: 3.5
     color: "#cb5b7e"
-    castShadows: false
 
 - type: entity
   parent: BaseAnomalyCore
@@ -97,10 +92,8 @@
   - type: Sprite
     sprite: Structures/Specific/Anomalies/Cores/rock_core.rsi
   - type: PointLight
-    radius: 1.5
     energy: 3.5
     color: "#5ca8cb"
-    castShadows: false
 
 - type: entity
   parent: BaseAnomalyCore
@@ -110,10 +103,8 @@
   - type: Sprite
     sprite: Structures/Specific/Anomalies/Cores/liquid_core.rsi
   - type: PointLight
-    radius: 1.5
     energy: 3.5
     color: "#ffffff"
-    castShadows: false
 
 - type: entity
   parent: BaseAnomalyCore
@@ -123,10 +114,8 @@
   - type: Sprite
     sprite: Structures/Specific/Anomalies/Cores/bluespace_core.rsi
   - type: PointLight
-    radius: 1.5
     energy: 3.5
     color: "#00ccff"
-    castShadows: false
 
 - type: entity
   parent: BaseAnomalyCore
@@ -136,10 +125,8 @@
   - type: Sprite
     sprite: Structures/Specific/Anomalies/Cores/electric_core.rsi
   - type: PointLight
-    radius: 1.5
     energy: 2.0
     color: "#ffffaa"
-    castShadows: false
   - type: Electrified
 
 - type: entity
@@ -150,10 +137,8 @@
   - type: Sprite
     sprite: Structures/Specific/Anomalies/Cores/flora_core.rsi
   - type: PointLight
-    radius: 1.5
     energy: 2.0
     color: "#6270bb"
-    castShadows: false
 
 - type: entity
   parent: [ BaseAnomalyCore, BaseShadow ]
@@ -163,10 +148,8 @@
   - type: Sprite
     sprite: Structures/Specific/Anomalies/Cores/shadow_core.rsi
   - type: PointLight
-    radius: 1.5
     energy: 2.0
     color: "#793a80"
-    castShadows: false
 
 - type: entity
   parent: BaseAnomalyCore
@@ -176,10 +159,19 @@
   - type: Sprite
     sprite: Structures/Specific/Anomalies/Cores/tech_core.rsi
   - type: PointLight
-    radius: 1.5
     energy: 2.0
     color: "#56c1e8"
-    castShadows: false
+
+- type: entity
+  parent: BaseAnomalyCore
+  id: AnomalyCoreLight
+  suffix: Light
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/Cores/light_core.rsi
+  - type: PointLight
+    energy: 2.0
+    color: "#ffffff"
 
 # Inert cores
 
@@ -206,10 +198,7 @@
   - type: Sprite
     sprite: Structures/Specific/Anomalies/Cores/pyro_core.rsi
   - type: PointLight
-    radius: 1.5
-    energy: 1.5
     color: "#fca3c0"
-    castShadows: false
 
 - type: entity
   parent: BaseAnomalyInertCore
@@ -219,10 +208,8 @@
   - type: Sprite
     sprite: Structures/Specific/Anomalies/Cores/gravity_core.rsi
   - type: PointLight
-    radius: 1.5
     energy: 10
     color: "#1e070e"
-    castShadows: false
 
 - type: entity
   parent: BaseAnomalyInertCore
@@ -232,10 +219,7 @@
   - type: Sprite
     sprite: Structures/Specific/Anomalies/Cores/ice_core.rsi
   - type: PointLight
-    radius: 1.5
-    energy: 1.5
     color: "#befaff"
-    castShadows: false
 
 - type: entity
   parent: BaseAnomalyInertCore
@@ -245,10 +229,8 @@
   - type: Sprite
     sprite: Structures/Specific/Anomalies/Cores/flesh_core.rsi
   - type: PointLight
-    radius: 1.5
     energy: 3.5
     color: "#cb5b7e"
-    castShadows: false
 
 - type: entity
   parent: BaseAnomalyInertCore
@@ -258,10 +240,8 @@
   - type: Sprite
     sprite: Structures/Specific/Anomalies/Cores/rock_core.rsi
   - type: PointLight
-    radius: 1.5
     energy: 3.5
     color: "#5ca8cb"
-    castShadows: false
 
 - type: entity
   parent: BaseAnomalyInertCore
@@ -271,10 +251,8 @@
   - type: Sprite
     sprite: Structures/Specific/Anomalies/Cores/liquid_core.rsi
   - type: PointLight
-    radius: 1.5
     energy: 3.5
     color: "#ffffff"
-    castShadows: false
 
 - type: entity
   parent: BaseAnomalyInertCore
@@ -284,10 +262,8 @@
   - type: Sprite
     sprite: Structures/Specific/Anomalies/Cores/bluespace_core.rsi
   - type: PointLight
-    radius: 1.5
     energy: 3.5
     color: "#00ccff"
-    castShadows: false
 
 - type: entity
   parent: BaseAnomalyInertCore
@@ -297,10 +273,8 @@
   - type: Sprite
     sprite: Structures/Specific/Anomalies/Cores/electric_core.rsi
   - type: PointLight
-    radius: 1.5
     energy: 2.0
     color: "#ffffaa"
-    castShadows: false
 
 - type: entity
   parent: BaseAnomalyInertCore
@@ -310,10 +284,8 @@
   - type: Sprite
     sprite: Structures/Specific/Anomalies/Cores/flora_core.rsi
   - type: PointLight
-    radius: 1.5
     energy: 2.0
     color: "#6270bb"
-    castShadows: false
 
 - type: entity
   parent: [ BaseAnomalyInertCore, BaseShadow ]
@@ -323,10 +295,8 @@
   - type: Sprite
     sprite: Structures/Specific/Anomalies/Cores/shadow_core.rsi
   - type: PointLight
-    radius: 1.5
     energy: 2.0
     color: "#793a80"
-    castShadows: false
 
 - type: entity
   parent: BaseAnomalyInertCore
@@ -336,7 +306,16 @@
   - type: Sprite
     sprite: Structures/Specific/Anomalies/Cores/tech_core.rsi
   - type: PointLight
-    radius: 1.5
     energy: 2.0
     color: "#56c1e8"
-    castShadows: false
+
+- type: entity
+  parent: BaseAnomalyInertCore
+  id: AnomalyCoreLightInert
+  suffix: Light
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/Cores/light_core.rsi
+  - type: PointLight
+    energy: 2.0
+    color: "#ffffff"

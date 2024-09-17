@@ -351,3 +351,44 @@
       - MobSpawnCrabSilver
       - MobSpawnCrabIron
       - MobSpawnCrabQuartz
+
+- type: entity
+  parent: AnomalyInjectionBase
+  id: AnomalyInjectionLight
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: PointLight
+    color: "#FFFFFF"
+  - type: EntitySpawnAnomaly
+    entries:
+    - settings:
+        spawnOnPulse: true
+        minAmount: 4
+        maxAmount: 8
+        minRange: 1
+        maxRange: 3
+      spawns:
+      - AdminInstantEffectFlash
+    - settings:
+        spawnOnPulse: true
+        maxAmount: 2
+        minRange: 0
+        maxRange: 1
+      spawns:
+      - LightAnomalySpark
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 7
+        maxAmount: 8
+        minRange: 1
+        maxRange: 3
+      spawns:
+      - AdminInstantEffectFlash
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 15
+        maxAmount: 20
+        minRange: 0
+        maxRange: 1
+      spawns:
+      - LightAnomalySpark
