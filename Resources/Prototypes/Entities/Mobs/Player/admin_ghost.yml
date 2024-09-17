@@ -92,6 +92,8 @@
   - type: Loadout
     prototypes: [ MobAghostGear ]
   - type: BypassInteractionChecks
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 50
 
 - type: entity
   id: ActionAGhostShowSolar
