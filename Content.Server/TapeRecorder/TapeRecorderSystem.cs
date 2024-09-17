@@ -2,6 +2,7 @@ using Content.Server.Chat.Systems;
 using Content.Server.Hands.Systems;
 using Content.Server.Speech;
 using Content.Server.VoiceMask;
+using Content.Shared.Chat;
 using Content.Shared.Paper;
 using Content.Shared.Speech;
 using Content.Shared.TapeRecorder;
@@ -46,7 +47,7 @@ public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
 
             //Change the voice to match the speaker
             voiceMask.VoiceName = message.Name ?? ent.Comp.DefaultName;
-            var verb = message.Verb ?? SharedchatSystem.DefaultSpeechVerb;
+            var verb = message.Verb ?? SharedChatSystem.DefaultSpeechVerb;
             speech.SpeechVerb = _proto.Index<SpeechVerbPrototype>(verb);
             //Play the message
             _chat.TrySendInGameICMessage(ent, message.Message, InGameICChatType.Speak, false);
