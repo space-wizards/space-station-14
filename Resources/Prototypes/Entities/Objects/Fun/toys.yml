@@ -804,7 +804,6 @@
   components:
   - type: Sprite
     sprite: Objects/Fun/moff_plushie.rsi
-    netsync: false
   - type: EmitSoundOnUse
     sound:
       path: /Audio/Voice/Moth/moth_squeak.ogg
@@ -849,7 +848,6 @@
   - type: Sprite
     state: moff
   - type: Item
-    heldPrefix: plushiemoff
     inhandVisuals:
       left:
       - state: moff-inhand-left
@@ -868,7 +866,6 @@
     layers:
       - state: moff_all
   - type: Item
-    heldPrefix: plushiemoff
     inhandVisuals:
       left:
       - state: moff-inhand-left
@@ -916,7 +913,6 @@
   - type: Sprite
     state: moff_monarch
   - type: Item
-    heldPrefix: plushiemoff
     inhandVisuals:
       left:
       - state: moff_monarch-inhand-left
@@ -932,7 +928,6 @@
   - type: Sprite
     state: moff_luna
   - type: Item
-    heldPrefix: plushiemoff
     inhandVisuals:
       left:
       - state: moff_luna-inhand-left
@@ -948,7 +943,6 @@
   - type: Sprite
     state: moff_atlas
   - type: Item
-    heldPrefix: plushiemoff
     inhandVisuals:
       left:
       - state: moff_atlas-inhand-left
@@ -964,7 +958,6 @@
   - type: Sprite
     state: moff_redish
   - type: Item
-    heldPrefix: plushiemoff
     inhandVisuals:
       left:
       - state: moff_redish-inhand-left
@@ -980,7 +973,6 @@
   - type: Sprite
     state: moff_royal
   - type: Item
-    heldPrefix: plushiemoff
     inhandVisuals:
       left:
       - state: moff_royal-inhand-left
@@ -996,7 +988,6 @@
   - type: Sprite
     state: moff_gothic
   - type: Item
-    heldPrefix: plushiemoff
     inhandVisuals:
       left:
       - state: moff_gothic-inhand-left
@@ -1012,7 +1003,6 @@
   - type: Sprite
     state: moff_lovers
   - type: Item
-    heldPrefix: plushiemoff
     inhandVisuals:
       left:
       - state: moff_lovers-inhand-left
@@ -1028,7 +1018,6 @@
   - type: Sprite
     state: moff_whitefly
   - type: Item
-    heldPrefix: plushiemoff
     inhandVisuals:
       left:
       - state: moff_whitefly-inhand-left
@@ -1044,7 +1033,6 @@
   - type: Sprite
     state: moff_firewatch
   - type: Item
-    heldPrefix: plushiemoff
     inhandVisuals:
       left:
       - state: moff_firewatch-inhand-left
@@ -1060,7 +1048,6 @@
   - type: Sprite
     state: moff_deadhead
   - type: Item
-    heldPrefix: plushiemoff
     inhandVisuals:
       left:
       - state: moff_deadhead-inhand-left
@@ -1076,7 +1063,6 @@
   - type: Sprite
     state: moff_poison
   - type: Item
-    heldPrefix: plushiemoff
     inhandVisuals:
       left:
       - state: moff_poison-inhand-left
@@ -1092,7 +1078,6 @@
   - type: Sprite
     state: moff_ragged
   - type: Item
-    heldPrefix: plushiemoff
     inhandVisuals:
       left:
       - state: moff_ragged-inhand-left
@@ -1108,7 +1093,6 @@
   - type: Sprite
     state: moff_snow
   - type: Item
-    heldPrefix: plushiemoff
     inhandVisuals:
       left:
       - state: moff_snow-inhand-left
@@ -1124,7 +1108,6 @@
   - type: Sprite
     state: moff_clockwork
   - type: Item
-    heldPrefix: plushiemoff
     inhandVisuals:
       left:
       - state: moff_clockwork-inhand-left
@@ -1166,6 +1149,13 @@
       path: /Audio/Voice/Moth/moth_chitter.ogg
       params:
         volume: -7
+  - type: SolutionContainerManager #Less food from small moff
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 10
 
 - type: entity
   parent: BasePlushieMoff
@@ -1176,7 +1166,6 @@
   - type: Sprite
     state: moff_moonfly
   - type: Item
-    heldPrefix: plushiemoff
     inhandVisuals:
       left:
       - state: moff_moonfly-inhand-left
@@ -1192,7 +1181,6 @@
   - type: Sprite
     state: moff_witchwing
   - type: Item
-    heldPrefix: plushiemoff
     inhandVisuals:
       left:
       - state: moff_witchwing-inhand-left
@@ -1208,7 +1196,6 @@
   - type: Sprite
     state: moff_plasmafire
   - type: Item
-    heldPrefix: plushiemoff
     inhandVisuals:
       left:
       - state: moff_plasmafire-inhand-left
@@ -1224,7 +1211,6 @@
   - type: Sprite
     state: moff_brown
   - type: Item
-    heldPrefix: plushiemoff
     inhandVisuals:
       left:
       - state: moff_brown-inhand-left
@@ -1240,7 +1226,6 @@
   - type: Sprite
     state: moff_rosy
   - type: Item
-    heldPrefix: plushiemoff
     inhandVisuals:
       left:
       - state: moff_rosy-inhand-left
@@ -1258,7 +1243,6 @@
   - type: Sprite
     state: moff
   - type: Item
-    heldPrefix: plushiemoff
     inhandVisuals:
       left:
       - state: moff-inhand-left
@@ -1269,6 +1253,26 @@
   - type: PointLight #More light for moff
     radius: 2
     energy: 2.5
+  - type: Extractable #:clueless:
+    juiceSolution:
+      reagents:
+      - ReagentId: Fiber
+        Quantity: 5
+      - ReagentId: Lipolicide
+        Quantity: 2.5
+      - ReagentId: Happiness
+        Quantity: 2.5
+  - type: SolutionContainerManager 
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 10
+        - ReagentId: Lipolicide
+          Quantity: 2.5
+        - ReagentId: Happiness
+          Quantity: 2.5
 
 - type: entity
   parent: BasePlushieMoff
@@ -1279,7 +1283,6 @@
   - type: Sprite
     state: moffsician
   - type: Item
-    heldPrefix: plushiemoff
     inhandVisuals:
       left:
       - state: moffsician-inhand-left
@@ -1315,7 +1318,6 @@
   - type: Sprite
     state: moffbar
   - type: Item
-    heldPrefix: plushiemoff
     inhandVisuals:
       left:
       - state: moffbar-inhand-left
@@ -1324,6 +1326,22 @@
   - type: EmitSoundOnLand #Somewhat masochistic moff
     sound:
       path: /Audio/Voice/Moth/moth_laugh.ogg
+  - type: Extractable #Or just drunk =]
+    juiceSolution:
+      reagents:
+      - ReagentId: Fiber
+        Quantity: 7.5
+      - ReagentId: Ethanol
+        Quantity: 2.5
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 10
+        - ReagentId: Ethanol
+          Quantity: 5
 
 - type: entity
   parent: BasePlushieMoff
@@ -1332,9 +1350,8 @@
   description: An adorable mothperson plushie. Bzz, this fluffy is teleporting!
   components:
   - type: Sprite
-    state: moff_bluespace 
+    state: moff_bluespace
   - type: Item
-    heldPrefix: plushiemoff
     inhandVisuals:
       left:
       - state: moff_bluespace-inhand-left
@@ -1355,7 +1372,6 @@
   - type: Sprite
     state: moffrror
   - type: Item
-    heldPrefix: plushiemoff
     inhandVisuals:
       left:
       - state: moffrror-inhand-left
@@ -1387,7 +1403,7 @@
     juiceSolution:
       reagents:
       - ReagentId: JuiceThatMakesYouWeh
-        Quantity: 10
+        Quantity: 15
   - type: SolutionContainerManager #Broken. . .
     solutions:
       food:
