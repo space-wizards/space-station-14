@@ -253,7 +253,8 @@ public abstract class SharedTapeRecorderSystem : EntitySystem
             TapeRecorderMode.Playing => ent.Comp.TextModePlaying,
             TapeRecorderMode.Stopped => ent.Comp.TextModeStopped,
             TapeRecorderMode.Recording => ent.Comp.TextModeRecording,
-            TapeRecorderMode.Rewinding => ent.Comp.TextModeRewinding
+            TapeRecorderMode.Rewinding => ent.Comp.TextModeRewinding,
+            _ => ""
         }));
 
         OnTapeExamined(tape, ref args);

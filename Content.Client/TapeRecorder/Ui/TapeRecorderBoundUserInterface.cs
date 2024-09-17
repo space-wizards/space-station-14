@@ -1,15 +1,16 @@
 using Content.Shared.TapeRecorder.Components;
 using Content.Shared.TapeRecorder.Events;
-using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Client.TapeRecorder.Ui;
 
-[UsedImplicitly]
 public sealed class TapeRecorderBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
-    private TapeRecorderMenu? _menu;
+    [Dependency] private readonly IEntityManager _entMan = default!;
+
+    [ViewVariables]
+    private TapeRecorderWindow? _window;
 
     [ViewVariables]
     private TimeSpan _printCooldown;
@@ -18,32 +19,27 @@ public sealed class TapeRecorderBoundUserInterface(EntityUid owner, Enum uiKey) 
     {
         base.Open();
 
-        _menu = new(this);
-        _menu.OnClose += Close;
-        _menu.OpenCentered();
+        _window = new(_entMan, Owner);
+        _window.OnClose += Close;
+        _window.OnModeChanged += ChangeMode;
+        _window.OnPrintTranscript += PrintTranscript;
+        _window.OpenCentered();
     }
 
-    public void ToggleSwitch()
-    {
-        SendMessage(new ToggleTapeRecorderMessage());
-    }
-
-    public void ChangeMode(TapeRecorderMode mode)
+    private void ChangeMode(TapeRecorderMode mode)
     {
         SendMessage(new ChangeModeTapeRecorderMessage(mode));
     }
 
-    public void PrintTranscript()
+    private void PrintTranscript()
     {
         SendMessage(new PrintTapeRecorderMessage());
 
-        if (_menu != null)
-            _menu.UpdatePrint(true);
+        _window?.UpdatePrint(true);
 
         Timer.Spawn(_printCooldown, () =>
         {
-            if (_menu != null)
-                _menu.UpdatePrint(false);
+            _window?.UpdatePrint(false);
         });
     }
 
@@ -51,19 +47,19 @@ public sealed class TapeRecorderBoundUserInterface(EntityUid owner, Enum uiKey) 
     {
         base.UpdateState(state);
 
-        var castState = (TapeRecorderState) state;
+        if (state is not TapeRecorderState cast)
+            return;
 
-        _printCooldown = castState.PrintCooldown;
+        _printCooldown = cast.PrintCooldown;
 
-        _menu?.UpdateState(castState);
+        _window?.UpdateState(cast);
     }
 
     protected override void Dispose(bool disposing)
     {
         base.Dispose(disposing);
-        if (!disposing)
-            return;
-        _menu?.Dispose();
+        if (disposing)
+            _window?.Dispose();
     }
 }
 
