@@ -22,6 +22,7 @@
     contentSize: 12000
   - type: ActivatableUI
     key: enum.PaperUiKey.Key
+    requiresComplex: false
   - type: UserInterface
     interfaces:
       enum.PaperUiKey.Key:
