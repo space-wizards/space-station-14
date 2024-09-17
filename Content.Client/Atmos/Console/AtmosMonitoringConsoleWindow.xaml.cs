@@ -12,6 +12,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
@@ -29,7 +30,6 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
     private int? _focusNetId;
 
     private bool _autoScrollActive = false;
-    private bool _autoScrollAwaitsUpdate = false;
 
     private ProtoId<NavMapBlipPrototype> _navMapConsolePid;
     private ProtoId<NavMapBlipPrototype> _gasPipeSensorPid;
@@ -50,9 +50,11 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
 
         // Set nav map grid uid
         var stationName = Loc.GetString("atmos-monitoring-window-unknown-location");
+        EntityCoordinates? consoleCoords = null;
 
         if (_entManager.TryGetComponent<TransformComponent>(owner, out var xform))
         {
+            consoleCoords = xform.Coordinates;
             NavMap.MapUid = xform.GridUid;
 
             // Assign station name      
@@ -90,6 +92,9 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
 
         NavMap.TileColor = console.NavMapTileColor;
         NavMap.WallColor = console.NavMapWallColor;
+
+        // Initalize
+        UpdateUI(consoleCoords, Array.Empty<AtmosMonitoringConsoleEntry>());
     }
 
     #region Toggle handling
@@ -158,25 +163,7 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
             ClearFocus();
 
         // Add tracked entities to the nav map
-        if (NavMap.Visible)
-        {
-            foreach (var (netEnt, device) in console.AtmosDevices)
-            {
-                // Update the focus network ID, incase it has changed
-                if (_focusEntity == netEnt)
-                    SetFocus(netEnt, device.NetId);
-
-                // Skip network devices if the toggled is off
-                if (!ShowPipeNetwork.Pressed && device.NavMapBlip != _gasPipeSensorPid)
-                    continue;
-
-                // Skip gas pipe sensors if the toggle is off
-                if (!ShowGasPipeSensors.Pressed && device.NavMapBlip == _gasPipeSensorPid)
-                    continue;
-
-                AddTrackedEntityToNavMap(device);
-            }
-        }
+        UpdateNavMapBlips();
 
         // Show the monitor location
         var consoleNetEnt = _entManager.GetNetEntity(_owner);
@@ -206,12 +193,34 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
             var entry = atmosNetworks.ElementAt(index);
             UpdateUIEntry(entry, index, AtmosNetworksTable, console);
         }
+    }
 
-        // Auto-scroll re-enable
-        if (_autoScrollAwaitsUpdate)
+    private void UpdateNavMapBlips()
+    {
+        if (_owner == null || !_entManager.TryGetComponent<AtmosMonitoringConsoleComponent>(_owner.Value, out var console))
+            return;
+
+        if (NavMap.Visible)
         {
-            _autoScrollActive = true;
-            _autoScrollAwaitsUpdate = false;
+            foreach (var (netEnt, device) in console.AtmosDevices)
+            {
+                // Update the focus network ID, incase it has changed
+                if (_focusEntity == netEnt)
+                {
+                    _focusNetId = device.NetId;
+                    NavMap.FocusNetId = _focusNetId;
+                }
+
+                // Skip network devices if the toggled is off
+                if (!ShowPipeNetwork.Pressed && device.NavMapBlip != _gasPipeSensorPid)
+                    continue;
+
+                // Skip gas pipe sensors if the toggle is off
+                if (!ShowGasPipeSensors.Pressed && device.NavMapBlip == _gasPipeSensorPid)
+                    continue;
+
+                AddTrackedEntityToNavMap(device);
+            }
         }
     }
 
@@ -235,27 +244,27 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
         NavMap.TrackedEntities[metaData.NetEntity] = blip;
     }
 
-    private void UpdateUIEntry(AtmosMonitoringConsoleEntry entry, int index, Control table, AtmosMonitoringConsoleComponent console)
+    private void UpdateUIEntry(AtmosMonitoringConsoleEntry data, int index, Control table, AtmosMonitoringConsoleComponent console)
     {
         // Make new UI entry if required
         if (index >= table.ChildCount)
         {
-            var newEntryContainer = new AtmosMonitoringEntryContainer(entry.NetEntity, entry.NetId, _entManager.GetCoordinates(entry.Coordinates));
+            var newEntryContainer = new AtmosMonitoringEntryContainer(data);
 
             // On click
             newEntryContainer.FocusButton.OnButtonUp += args =>
             {
-                if (_focusEntity == newEntryContainer.NetEntity)
+                if (_focusEntity == newEntryContainer.Data.NetEntity)
                 {
                     ClearFocus();
                 }
 
                 else
                 {
-                    SetFocus(newEntryContainer.NetEntity, newEntryContainer.NetId);
+                    SetFocus(newEntryContainer.Data.NetEntity, newEntryContainer.Data.NetId);
 
-                    if (newEntryContainer.Coordinates != null)
-                        NavMap.CenterToCoordinates(newEntryContainer.Coordinates.Value);
+                    var coords = _entManager.GetCoordinates(newEntryContainer.Data.Coordinates);
+                    NavMap.CenterToCoordinates(coords);
                 }
 
                 // Update affected UI elements across all tables
@@ -272,13 +281,13 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
         if (tableChild is not AtmosMonitoringEntryContainer)
         {
             table.RemoveChild(tableChild);
-            UpdateUIEntry(entry, index, table, console);
+            UpdateUIEntry(data, index, table, console);
 
             return;
         }
 
         var entryContainer = (AtmosMonitoringEntryContainer)tableChild;
-        entryContainer.UpdateEntry(entry, entry.NetEntity == _focusEntity);
+        entryContainer.UpdateEntry(data, data.NetEntity == _focusEntity);
     }
 
     private void UpdateConsoleTable(AtmosMonitoringConsoleComponent console, Control table, NetEntity? currTrackedEntity)
@@ -319,6 +328,8 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
 
             // Get the scroll position of the selected entity on the selected button the UI
             ActivateAutoScrollToFocus();
+
+            break;
         }
     }
 
@@ -329,8 +340,7 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
 
     private void ActivateAutoScrollToFocus()
     {
-        _autoScrollActive = false;
-        _autoScrollAwaitsUpdate = true;
+        _autoScrollActive = true;
     }
 
     private void AutoScrollToFocus()
@@ -358,18 +368,14 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
     {
         vScrollBar = null;
 
-        foreach (var child in scroll.Children)
+        foreach (var control in scroll.Children)
         {
-            if (child is not VScrollBar)
+            if (control is not VScrollBar)
                 continue;
 
-            var castChild = child as VScrollBar;
+            vScrollBar = (VScrollBar)control;
 
-            if (castChild != null)
-            {
-                vScrollBar = castChild;
-                return true;
-            }
+            return true;
         }
 
         return false;
@@ -395,10 +401,12 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
 
         foreach (var control in container.Children)
         {
-            if (control == null || control is not AtmosMonitoringEntryContainer)
+            if (control is not AtmosMonitoringEntryContainer)
                 continue;
 
-            if (((AtmosMonitoringEntryContainer)control).NetEntity == _focusEntity)
+            var entry = (AtmosMonitoringEntryContainer)control;
+
+            if (entry.Data.NetEntity == _focusEntity)
                 return true;
 
             nextScrollPosition += control.Height;
@@ -415,6 +423,8 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
         _focusEntity = focusEntity;
         _focusNetId = focusNetId;
         NavMap.FocusNetId = focusNetId;
+
+        OnFocusChanged();
     }
 
     private void ClearFocus()
@@ -422,5 +432,26 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
         _focusEntity = null;
         _focusNetId = null;
         NavMap.FocusNetId = null;
+
+        OnFocusChanged();
+    }
+
+    private void OnFocusChanged()
+    {
+        UpdateNavMapBlips();
+        NavMap.ForceNavMapUpdate();
+
+        if (!_entManager.TryGetComponent<AtmosMonitoringConsoleComponent>(_owner, out var console))
+            return;
+
+        for (int index = 0; index < AtmosNetworksTable.ChildCount; index++)
+        {
+            var entry = (AtmosMonitoringEntryContainer)AtmosNetworksTable.GetChild(index);
+
+            if (entry == null)
+                continue;
+
+            UpdateUIEntry(entry.Data, index, AtmosNetworksTable, console);
+        }
     }
 }
