@@ -83,5 +83,6 @@ public sealed class AnomalySystem : SharedAnomalySystem
             return;
 
         sprite.Scale = Vector2.One;
+        sprite.Color = sprite.Color.WithAlpha(1f);
     }
 }
