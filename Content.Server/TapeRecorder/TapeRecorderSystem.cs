@@ -8,19 +8,15 @@ using Content.Shared.TapeRecorder.Components;
 using Content.Shared.TapeRecorder.Events;
 using Robust.Server.Audio;
 using Robust.Shared.Timing;
-using System.Linq;
 using System.Text;
 
 namespace Content.Server.TapeRecorder;
 
 public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
 {
-    [Dependency] private readonly AudioSystem _audioSystem = default!;
-    [Dependency] private readonly ChatSystem _chatSystem = default!;
-    [Dependency] private readonly HandsSystem _handsSystem = default!;
-    [Dependency] private readonly MetaDataSystem _metaDataSystem = default!;
-    [Dependency] private readonly PaperSystem _paperSystem = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly HandsSystem _hands = default!;
+    [Dependency] private readonly PaperSystem _paper = default!;
 
     public override void Initialize()
     {
@@ -30,66 +26,37 @@ public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
         SubscribeLocalEvent<TapeRecorderComponent, PrintTapeRecorderMessage>(OnPrintMessage);
     }
 
-    protected override bool ProcessRecordingTapeRecorder(Entity<TapeRecorderComponent> tapeRecorder, float frameTime)
-    {
-        if (!base.ProcessRecordingTapeRecorder(tapeRecorder, frameTime))
-        {
-            Stop(tapeRecorder, changeMode: true);
-            return false;
-        }
-
-        return true;
-    }
-
-    protected override bool ProcessPlayingTapeRecorder(Entity<TapeRecorderComponent> tapeRecorder, float frameTime)
-    {
-        if (!base.ProcessPlayingTapeRecorder(tapeRecorder, frameTime))
-        {
-            Stop(tapeRecorder, changeMode: true);
-            return false;
-        }
-
-        return true;
-    }
-
-    protected override bool ProcessRewindingTapeRecorder(Entity<TapeRecorderComponent> tapeRecorder, float frameTime)
-    {
-        if (!base.ProcessRewindingTapeRecorder(tapeRecorder, frameTime))
-        {
-            Stop(tapeRecorder, changeMode: true);
-            return false;
-        }
-
-        return true;
-    }
-
     /// <summary>
     /// Given a time range, play all messages on a tape within said range
-    /// Split into this system as shared does not have _chatSystem access
+    /// Split into this system as shared does not have _chat access
     /// </summary>
-    protected override void ReplayMessagesInSegment(Entity<TapeRecorderComponent> tapeRecorder, TapeCassetteComponent tapeCassetteComponent, float segmentStart, float segmentEnd)
+    protected override void ReplayMessagesInSegment(Entity<TapeRecorderComponent> ent, TapeCassetteComponent tape, float segmentStart, float segmentEnd)
     {
-        EnsureComp<VoiceMaskComponent>(tapeRecorder, out var voiceMaskComponent);
+        // TODO: when voice mask is refactored change this to VoiceOverride
+        var voiceMask = EnsureComp<VoiceMaskComponent>(ent);
 
-        foreach (var messageToBeReplayed in tapeCassetteComponent.RecordedData.Where(x => x.Timestamp > tapeCassetteComponent.CurrentPosition && x.Timestamp <= segmentEnd))
+        foreach (var message in tape.RecordedData)
         {
+            if (message.Timestamp < tape.CurrentPosition || message.Timestamp > segmentEnd)
+                continue;
+
             //Change the voice to match the speaker
-            if (voiceMaskComponent != null)
-                voiceMaskComponent.VoiceName = messageToBeReplayed.Name ?? messageToBeReplayed.DefaultName;
+            voiceMask.VoiceName = message.Name ?? message.DefaultName;
             //Play the message
-            _chatSystem.TrySendInGameICMessage(tapeRecorder, messageToBeReplayed.Message, InGameICChatType.Speak, false);
+            _chat.TrySendInGameICMessage(ent, message.Message, InGameICChatType.Speak, false);
         }
     }
 
     /// <summary>
     /// Whenever someone speaks within listening range, record it to tape
     /// </summary>
-    private void OnListen(Entity<TapeRecorderComponent> tapeRecorder, ref ListenEvent args)
+    private void OnListen(Entity<TapeRecorderComponent> ent, ref ListenEvent args)
     {
-        if (tapeRecorder.Comp.Mode != TapeRecorderMode.Recording || !tapeRecorder.Comp.Active)
+        // mode should never be set when it isn't active but whatever
+        if (ent.Comp.Mode != TapeRecorderMode.Recording || !HasComp<ActiveTapeRecorderComponent>(ent))
             return;
 
-        if (!TryGetTapeCassette(tapeRecorder, out var cassette))
+        if (!TryGetTapeCassette(ent, out var cassette))
             return;
 
         //Handle someone using a voice changer
@@ -100,60 +67,40 @@ public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
         cassette.Comp.Buffer.Add(new TapeCassetteRecordedMessage(cassette.Comp.CurrentPosition, nameEv.Name, args.Message));
     }
 
-
-    /// <summary>
-    /// Start playback if we are not already playing, ensure we have a voice mask component so the name is correctly shown through radios
-    /// </summary>
-    protected override bool StartPlayback(Entity<TapeRecorderComponent> tapeRecorder, EntityUid? user = null)
+    private void OnPrintMessage(Entity<TapeRecorderComponent> ent, ref PrintTapeRecorderMessage args)
     {
-        if (base.StartPlayback(tapeRecorder, user))
-        {
-            //Server only component
-            EnsureComp<VoiceMaskComponent>(tapeRecorder);
-            return true;
-        }
+        var (uid, comp) = ent;
 
-        return false;
-    }
-
-    private void OnPrintMessage(Entity<TapeRecorderComponent> tapeRecorder, ref PrintTapeRecorderMessage args)
-    {
-        var comp = tapeRecorder.Comp;
-
-        if (comp.CooldownEndTime > _gameTiming.CurTime)
+        if (comp.CooldownEndTime > Timing.CurTime)
             return;
 
-        if (!TryGetTapeCassette(tapeRecorder, out var cassette))
+        if (!TryGetTapeCassette(ent, out var cassette))
             return;
 
         var text = new StringBuilder();
-        var paper = EntityManager.SpawnEntity(comp.PaperPrototype, Transform(tapeRecorder).Coordinates);
+        var paper = Spawn(comp.PaperPrototype, Transform(ent).Coordinates);
 
         // Sorting list by time for overwrite order
+        // TODO: why is this needed? why wouldn't it be stored in order
         var data = cassette.Comp.RecordedData;
         data.Sort((x,y) => x.Timestamp.CompareTo(y.Timestamp));
 
         // Looking if player's entity exists to give paper in its hand
         var player = args.Actor;
         if (Exists(player))
-            _handsSystem.PickupOrDrop(player, paper, checkActionBlocker: false);
+            _hands.PickupOrDrop(player, paper, checkActionBlocker: false);
 
         if (!TryComp<PaperComponent>(paper, out var paperComp))
             return;
 
-        _metaDataSystem.SetEntityName(paper, Loc.GetString("tape-recorder-transcript-title"));
-
-        _audioSystem.PlayPvs(comp.PrintSound, tapeRecorder);
+        Audio.PlayPvs(comp.PrintSound, ent);
 
         text.AppendLine(Loc.GetString("tape-recorder-print-start-text"));
         text.AppendLine();
         foreach (var message in cassette.Comp.RecordedData)
         {
-            var name = "Unknown";
+            var name = message.Name ?? message.DefaultName;
             var time = TimeSpan.FromSeconds((double) message.Timestamp);
-
-            if (message.Name != null)
-                name = message.Name;
 
             text.AppendLine(Loc.GetString("tape-recorder-print-message-text",
                 ("time", time.ToString(@"hh\:mm\:ss")),
@@ -163,8 +110,8 @@ public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
         text.AppendLine();
         text.Append(Loc.GetString("tape-recorder-print-end-text"));
 
-        _paperSystem.SetContent((paper, paperComp), text.ToString());
+        _paper.SetContent((paper, paperComp), text.ToString());
 
-        comp.CooldownEndTime = _gameTiming.CurTime + comp.PrintCooldown;
+        comp.CooldownEndTime = Timing.CurTime + comp.PrintCooldown;
     }
 }

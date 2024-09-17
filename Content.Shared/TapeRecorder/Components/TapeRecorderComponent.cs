@@ -1,5 +1,6 @@
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
@@ -12,26 +13,20 @@ public sealed partial class TapeRecorderComponent : Component
     /// <summary>
     /// The current tape recorder mode, controls what using the item will do
     /// </summary>
-    [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
-    public TapeRecorderMode Mode = TapeRecorderMode.Empty;
-
-    /// <summary>
-    /// True when the current mode is active i.e. recording or stopped
-    /// </summary>
-    [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
-    public bool Active = false;
+    [DataField, AutoNetworkedField]
+    public TapeRecorderMode Mode = TapeRecorderMode.Stopped;
 
     /// <summary>
     /// Paper that will spawn when printing transcript
     /// </summary>
     [DataField]
-    public string PaperPrototype = "Paper";
+    public EntProtoId PaperPrototype = "TapeRecorderTranscript";
 
     /// <summary>
     /// How fast can this tape recorder rewind
     /// Acts as a multiplier for the frameTime
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public float RewindSpeed = 3f;
 
     [DataField]
@@ -79,12 +74,6 @@ public sealed partial class TapeRecorderComponent : Component
         Params = AudioParams.Default.WithVolume(-2f).WithMaxDistance(3f)
     };
 
-    /// <summary>
-    /// Do UI needs to be updated?
-    /// </summary>
-    [DataField]
-    public bool NeedUIUpdate = true;
-
     //Locale references
     [DataField]
     public LocId TextCantEject = "tape-recorder-locked";
@@ -114,10 +103,9 @@ public enum TapeRecorderVisuals : byte
 [Serializable, NetSerializable]
 public enum TapeRecorderMode : byte
 {
-    Empty,
     Stopped,
-    Playing,
     Recording,
+    Playing,
     Rewinding
 }
 

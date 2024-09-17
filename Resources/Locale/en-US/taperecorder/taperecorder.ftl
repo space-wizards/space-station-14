@@ -14,17 +14,14 @@ tape-recorder-message-corruption = #
 
 tape-recorder-menu-title = Tape Recorder
 tape-recorder-menu-controls-label = Controls:
-tape-recorder-menu-mode-label = Mode:
-tape-recorder-menu-stop-button = Pause
-tape-recorder-menu-play-button = Start
-tape-recorder-menu-playback-button = Playback
-tape-recorder-menu-record-button = Record
-tape-recorder-menu-rewind-button = Rewind
+tape-recorder-menu-stopped-button = Pause
+tape-recorder-menu-recording-button = Record
+tape-recorder-menu-playing-button = Playback
+tape-recorder-menu-rewinding-button = Rewind
 tape-recorder-menu-print-button = Print record transcript
 tape-recorder-menu-cassette-label = Cassette tape: {$cassetteName}
 tape-recorder-menu-no-cassette-label = Cassette tape is not inserted
 
-tape-recorder-transcript-title = record transcript
 tape-recorder-print-start-text = [bold]Start of recorded transcript[/bold]
-tape-recorder-print-message-text = [bold][{$time}] {$source}: [/bold] {$message} 
+tape-recorder-print-message-text = [bold][{$time}] {$source}: [/bold] {$message}
 tape-recorder-print-end-text = [bold]End of recorded transcript[/bold]
