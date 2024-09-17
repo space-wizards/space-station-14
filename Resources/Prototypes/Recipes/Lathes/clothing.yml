@@ -1058,6 +1058,14 @@
     Durathread: 50
 
 - type: latheRecipe
+  id: ClothingHeadHatBeretCommand
+  result: ClothingHeadHatBeretCommand
+  completetime: 2
+  materials:
+    Cloth: 100
+    Durathread: 50
+
+- type: latheRecipe
   id: ClothingHeadHatBeretMedic
   result: ClothingHeadHatBeretMedic
   completetime: 2

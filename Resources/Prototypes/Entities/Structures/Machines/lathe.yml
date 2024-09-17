@@ -992,6 +992,7 @@
       - ClothingUniformJumpsuitCommandGeneric
       - ClothingUniformJumpskirtCommandGeneric
       - ClothingHeadHatCommandsoft
+      - ClothingHeadHatBeretCommand
       - ClothingUniformJumpsuitDetective
       - ClothingUniformJumpskirtDetective
       - ClothingUniformJumpsuitEngineering
