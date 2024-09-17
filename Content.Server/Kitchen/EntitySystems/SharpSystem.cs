@@ -145,9 +145,9 @@ public sealed class SharpSystem : EntitySystem
 
         var disabled = false;
         string? message = null;
-        EntityUid sharpObject = default;
 
-        // if the user has hands and the item they're holding doesn't have the SharpComponent
+        // if the user has hands
+        // and the item they're holding doesn't have the SharpComponent
         // disable the verb
         if (!TryComp<SharpComponent>(args.Using, out var usingSharpComp) && args.Hands != null)
         {
@@ -157,9 +157,9 @@ public sealed class SharpSystem : EntitySystem
         }
         else if (_containerSystem.IsEntityInContainer(uid))
         {
+            disabled = true;
             message = Loc.GetString("butcherable-not-in-container",
                 ("target", uid));
-            disabled = true;
         }
         else if (TryComp<MobStateComponent>(uid, out var state) && !_mobStateSystem.IsDead(uid, state))
         {
@@ -169,6 +169,7 @@ public sealed class SharpSystem : EntitySystem
 
         // set the object doing the butchering to the item in the user's hands or to the user themselves
         // if either has the SharpComponent
+        EntityUid sharpObject = default;
         if (usingSharpComp != null)
             sharpObject = args.Using!.Value;
         else if (userSharpComp != null)
