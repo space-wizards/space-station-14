@@ -24,6 +24,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Content.Shared.EntityEffects;
 
 namespace Content.Server.Botany.Systems;
 
@@ -176,6 +177,11 @@ public sealed class PlantHolderSystem : EntitySystem
                     component.Health = component.Seed.Endurance;
                 }
                 component.LastCycle = _gameTiming.CurTime;
+
+                var effectArgs = new EntityEffectBaseArgs(uid, EntityManager);
+                foreach (var mut in component.Seed.Mutations)
+                    if (mut.AppliesToPlant)
+                        mut.Effect.Effect(effectArgs);
 
                 QueueDel(args.Used);
 
