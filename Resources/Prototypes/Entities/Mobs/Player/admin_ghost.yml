@@ -93,7 +93,7 @@
     prototypes: [ MobAghostGear ]
   - type: BypassInteractionChecks
   - type: MovementSpeedModifier
-    baseWalkSpeed : 50
+    baseWalkSpeed : 30
 
 - type: entity
   id: ActionAGhostShowSolar
