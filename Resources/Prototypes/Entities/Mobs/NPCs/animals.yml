@@ -2520,7 +2520,7 @@
     - type: Speech
       speechVerb: Cluwne
     - type: Bloodstream
-      bloodMaxVolume: 40
+      bloodMaxVolume: 15
       bloodReagent: VentCrud
     - type: NoSlip
     - type: ZombieImmune
