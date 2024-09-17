@@ -197,10 +197,12 @@
     - id: PowerCellHighPrinted
     - id: RadioHandheld
     - id: ClothingBeltUtility
+    - id: Floodlight
     - id: WeaponProtoKineticAccelerator
       weight: 0.5
     - id: OxygenTankFilled
     - id: WelderIndustrial
+    - id: WeaponGrapplingGun
     - !type:GroupSelector
       children:
       - id: ClothingHeadHatWelding
@@ -226,6 +228,8 @@
     - id: ClothingEyesGlassesMeson
     - id: ClothingBeltSalvageWebbing
     - id: SeismicCharge
+    - id: MineralScanner
+      weight: 0.5
     - id: WeaponCrusher
       weight: 0.5
     - !type:GroupSelector
@@ -237,6 +241,7 @@
   id: SalvageEquipmentLegendary
   table: !type:GroupSelector
     children:
+    - id: AdvancedMineralScanner
     - id: BlueprintFulton
     - id: BlueprintSeismicCharge
     - id: WeaponCrusherGlaive
