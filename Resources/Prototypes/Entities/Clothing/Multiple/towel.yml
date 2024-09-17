@@ -6,9 +6,9 @@
   parent: [ UnsensoredClothingUniformBase, ClothingHeadBase, ClothingBeltBase ]
   components:
   - type: Sprite
-    sprite: Clothing/Multiple/Towel.rsi
+    sprite: Clothing/Multiple/towel.rsi
   - type: Clothing
-    sprite: Clothing/Multiple/Towel.rsi
+    sprite: Clothing/Multiple/towel.rsi
     slots: 
     - BELT
     - INNERCLOTHING
