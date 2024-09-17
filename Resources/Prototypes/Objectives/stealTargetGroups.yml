@@ -393,9 +393,11 @@
     sprite: Mobs/Animals/crab.rsi
     state: crab
 
+# Documents
+
 - type: stealTargetGroup
   id: ArrestLogs
-  name: arrest logs
+  name: steal-target-groups-documents-arrest-logs
   sprite:
     sprite: Objects/Specific/Syndicate/document.rsi
     state: genaric_doc
@@ -409,63 +411,63 @@
 
 - type: stealTargetGroup
   id: StationMaintenceReport
-  name: station maintence report
+  name: steal-target-groups-documents-maintence-report
   sprite:
     sprite: Objects/Specific/Syndicate/document.rsi
     state: genaric_doc
 
 - type: stealTargetGroup
   id: ResesarchReport
-  name: research report
+  name: steal-target-groups-documents-research-report
   sprite:
     sprite: Objects/Specific/Syndicate/document.rsi
     state: genaric_doc
 
 - type: stealTargetGroup
   id: MedicalLogs
-  name: medical logs
+  name: steal-target-groups-documents-medical-logs
   sprite:
     sprite: Objects/Specific/Syndicate/document.rsi
     state: genaric_doc
 
 - type: stealTargetGroup
   id: SupplyReport
-  name: supply report
+  name: steal-target-groups-documents-supply-report
   sprite:
     sprite: Objects/Specific/Syndicate/document.rsi
     state: genaric_doc
 
 - type: stealTargetGroup
   id: CentralCommandReport
-  name: central command report
+  name: steal-target-groups-documents-central-command-report
   sprite:
     sprite: Objects/Specific/Syndicate/document.rsi
     state: genaric_doc
 
 - type: stealTargetGroup
   id: CentralCommandAudit
-  name: central command audit
+  name: steal-target-groups-documents-central-command-audit
   sprite:
     sprite: Objects/Specific/Syndicate/document.rsi
     state: genaric_doc
 
 - type: stealTargetGroup
   id: NuclearDeviceMaintainceReport
-  name: nuclear device maintaince report
+  name: steal-target-groups-documents-nuclear-device-report
   sprite:
     sprite: Objects/Specific/Syndicate/document.rsi
     state: genaric_doc
 
 - type: stealTargetGroup
   id: ArmoryInspectionReport
-  name: armory inspection report
+  name: steal-target-groups-documents-armory-report
   sprite:
     sprite: Objects/Specific/Syndicate/document.rsi
     state: genaric_doc
 
 - type: stealTargetGroup
   id: VaultInspectionReport
-  name: vault inspection report
+  name: steal-target-groups-documents-vault-inspection
   sprite:
     sprite: Objects/Specific/Syndicate/document.rsi
     state: genaric_doc

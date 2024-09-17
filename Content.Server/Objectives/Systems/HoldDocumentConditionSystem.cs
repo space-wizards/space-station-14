@@ -41,9 +41,10 @@ public sealed class HoldDocumentConditionSystem : EntitySystem
             throw new Exception($"StealGroup is null");
 
         var group = _proto.Index(stealConditionComp.StealGroup.Value);
+        var name = Loc.GetString(group.Name);
 
-        var title = Loc.GetString(entity.Comp.Title, ("docname", group.Name));
-        var description = Loc.GetString(entity.Comp.Description, ("docname", group.Name));
+        var title = Loc.GetString(entity.Comp.Title, ("docname", name));
+        var description = Loc.GetString(entity.Comp.Description, ("docname", name));
 
         _metaDataSystem.SetEntityName(entity, title);
         _metaDataSystem.SetEntityDescription(entity, description);

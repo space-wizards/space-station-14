@@ -146,20 +146,22 @@ public sealed class TradeDocumentsConditionSystem : EntitySystem
         var selfStealGroup = _proto.Index(stealConditionComp.StealGroup.Value);
         var otherStealGroup = _proto.Index(otherStealConditionComp.StealGroup.Value);
 
+        var selfName = Loc.GetString(selfStealGroup.Name);
+        var otherName = Loc.GetString(otherStealGroup.Name);
+
         // This is changing your own objective.
         var otherJob = _serverObjectivesSystem.TryGetJobAndName(targetObjComp.Target).Item2;
-        var selftitle = Loc.GetString(entity.Comp.Title, ("docnameself", otherStealGroup.Name), ("docnameother", selfStealGroup.Name));
-        var selfdescription = Loc.GetString(entity.Comp.Description, ("otherjobname", otherJob), ("docnameother", selfStealGroup.Name));
+        var selftitle = Loc.GetString(entity.Comp.Title, ("docnameself", otherName), ("docnameother", selfName));
+        var selfdescription = Loc.GetString(entity.Comp.Description, ("otherjobname", otherJob), ("docnameother", selfName));
 
         _metaDataSystem.SetEntityName(entity, selftitle);
         _metaDataSystem.SetEntityDescription(entity, selfdescription);
         _objectives.SetIcon(entity, otherStealGroup.Sprite);
 
-        // Move this
         // This is changing the other agents objective.
         var selfJob = _serverObjectivesSystem.TryGetJobAndName(args.MindId, args.Mind).Item2;
-        var title = Loc.GetString(entity.Comp.Title, ("docnameself", selfStealGroup.Name), ("docnameother", otherStealGroup.Name));
-        var description = Loc.GetString(entity.Comp.Description, ("otherjobname", selfJob), ("docnameother", otherStealGroup.Name));
+        var title = Loc.GetString(entity.Comp.Title, ("docnameself", selfName), ("docnameother", otherName));
+        var description = Loc.GetString(entity.Comp.Description, ("otherjobname", selfJob), ("docnameother", otherName));
 
         _metaDataSystem.SetEntityName(otherDocHoldObjective, title);
         _metaDataSystem.SetEntityDescription(otherDocHoldObjective, description);

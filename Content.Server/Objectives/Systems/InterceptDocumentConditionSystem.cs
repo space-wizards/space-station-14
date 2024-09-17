@@ -100,9 +100,10 @@ public sealed class InterceptDocumentConditionSystem : EntitySystem
         var targetJob = targetNameAndJob.Item2;
 
         var group = _proto.Index(stealConditionComp.StealGroup.Value);
+        var name = Loc.GetString(group.Name);
 
-        var title = Loc.GetString(entity.Comp.Title, ("docname", group.Name));
-        var description = Loc.GetString(entity.Comp.Description, ("target", targetName), ("taretjob", targetJob), ("docname", group.Name));
+        var title = Loc.GetString(entity.Comp.Title, ("docname", name));
+        var description = Loc.GetString(entity.Comp.Description, ("target", targetName), ("taretjob", targetJob), ("docname", name));
 
         _metaDataSystem.SetEntityName(entity, title);
         _metaDataSystem.SetEntityDescription(entity, description);
