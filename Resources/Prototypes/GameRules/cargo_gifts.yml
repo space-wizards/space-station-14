@@ -232,7 +232,7 @@
     description: cargo-gift-fun-plushies
     dest: cargo-gift-dest-bar
     gifts:
-      CrateFunPlushie: 2
+      FunPlushies: 2
 
 - type: entity
   id: GiftsFunInstruments
@@ -247,7 +247,7 @@
     description: cargo-gift-fun-instruments
     dest: cargo-gift-dest-bar
     gifts:
-      CrateFunInstrumentsVariety: 1
+      FunInstrumentsVariety: 1
 
 - type: entity
   id: GiftsArtSupplies
@@ -262,7 +262,7 @@
     description: cargo-gift-art-supplies
     dest: cargo-gift-dest-bar
     gifts:
-      CrateFunArtSupplies: 2
+      FunArtSupplies: 2
 
 - type: entity
   id: GiftsPartySupplies
@@ -277,7 +277,7 @@
     description: cargo-gift-party-supplies
     dest: cargo-gift-dest-bar
     gifts:
-      CrateFunParty: 1
+      FunParty: 1
 
 - type: entity
   id: GiftsToyBox
@@ -292,4 +292,4 @@
     description: cargo-gift-toy-box
     dest: cargo-gift-dest-bar
     gifts:
-      CrateFunToyBox: 1
+      FunToyBox: 1
