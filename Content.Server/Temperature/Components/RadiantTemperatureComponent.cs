@@ -16,9 +16,8 @@ public sealed partial class RadiantTemperatureComponent : Component
     public float GoalTemperature = Atmospherics.T20C;
 
     /// <summary>
-    /// How much the temperature of the surrounding air will change in Kelvin per tick
-    /// Positive means it will only heat, negative means it will only cool
+    /// How much energy (in joules) to add to or remove from the surrounding air per second
     /// </summary>
     [DataField]
-    public float TemperatureChangePerTick = 1f;
+    public float EnergyChangedPerSecond = 1f;
 }
