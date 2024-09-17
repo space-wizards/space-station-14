@@ -120,7 +120,7 @@
     - 0,0,2,0
     whitelist:
       tags:
-      - Syringe
+      - SyringeGunAmmo
   - type: Gun
     fireRate: 1
     selectedMode: SemiAuto
