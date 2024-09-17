@@ -404,7 +404,7 @@
 
 - type: stealTargetGroup
   id: RadioLogs
-  name: radio logs
+  name: steal-target-groups-documents-radio-logs
   sprite:
     sprite: Objects/Specific/Syndicate/document.rsi
     state: genaric_doc
