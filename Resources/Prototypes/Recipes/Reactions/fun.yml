@@ -182,6 +182,7 @@
       amount: 15
     Plasma:
       amount: 5
+      catalyst: true
   effects:
     - !type:CreateEntityReactionEffect
       entity: ShardCrystalRandom
