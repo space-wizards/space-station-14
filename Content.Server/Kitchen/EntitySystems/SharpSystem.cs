@@ -77,7 +77,7 @@ public sealed class SharpSystem : EntitySystem
             {
                 BreakOnDamage = true,
                 BreakOnMove = true,
-                NeedHand = true,
+                // NeedHand = false, only mobs with hands and mobs with the sharpcomp will see the verb
             };
         _doAfterSystem.TryStartDoAfter(doAfter);
         return true;
@@ -136,13 +136,20 @@ public sealed class SharpSystem : EntitySystem
 
     private void OnGetInteractionVerbs(EntityUid uid, ButcherableComponent component, GetVerbsEvent<InteractionVerb> args)
     {
-        if (component.Type != ButcheringType.Knife || args.Hands == null || !args.CanAccess || !args.CanInteract)
+        if (component.Type != ButcheringType.Knife || !args.CanAccess || !args.CanInteract)
             return;
 
-        bool disabled = false;
-        string? message = null;
+        // if the user has no hands, don't show them the verb if they have no SharpComponent either
+        if (!TryComp<SharpComponent>(args.User, out var userSharpComp) && args.Hands == null)
+            return;
 
-        if (!HasComp<SharpComponent>(args.Using))
+        var disabled = false;
+        string? message = null;
+        EntityUid sharpObject = default;
+
+        // if the user has hands and the item they're holding doesn't have the SharpComponent
+        // disable the verb
+        if (!TryComp<SharpComponent>(args.Using, out var usingSharpComp) && args.Hands != null)
         {
             disabled = true;
             message = Loc.GetString("butcherable-need-knife",
@@ -160,12 +167,19 @@ public sealed class SharpSystem : EntitySystem
             message = Loc.GetString("butcherable-mob-isnt-dead");
         }
 
+        // set the object doing the butchering to the item in the user's hands or to the user themselves
+        // if either has the SharpComponent
+        if (usingSharpComp != null)
+            sharpObject = args.Using!.Value;
+        else if (userSharpComp != null)
+            sharpObject = args.User;
+
         InteractionVerb verb = new()
         {
             Act = () =>
             {
                 if (!disabled)
-                    TryStartButcherDoafter(args.Using!.Value, args.Target, args.User);
+                    TryStartButcherDoafter(sharpObject, args.Target, args.User);
             },
             Message = message,
             Disabled = disabled,
