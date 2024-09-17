@@ -13,7 +13,7 @@
         <BoxContainer Name ="Test" Margin = "0 5 0 0" Orientation="Horizontal" VerticalExpand = "True">
             <BoxContainer Orientation="Vertical" HorizontalExpand = "True">
                 <Label Text="{Loc 'tape-recorder-menu-controls-label'}" Align="Center" />
-                <BoxContainer Name="Buttons" Orientation="Horizontal" VerticalExpand="True"/> <!-- Populated in constructor -->
+                <BoxContainer Name="Buttons" Orientation="Horizontal" VerticalExpand="True" Align="Center"/> <!-- Populated in constructor -->
             </BoxContainer>
         </BoxContainer>
         <BoxContainer Margin = "0 2 0 0" Orientation="Horizontal">
