@@ -10,6 +10,7 @@
     - state: taperecorder_empty
     - state: taperecorder_idle
       map: ["tape"]
+      visible: false
   - type: Item
     size: Small
   - type: TapeRecorder
