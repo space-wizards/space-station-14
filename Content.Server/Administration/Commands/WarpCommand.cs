@@ -63,7 +63,7 @@ namespace Content.Server.Administration.Commands
                         // Sort so that warp points on the same grid/map are first.
                         // So if you have two maps loaded with the same warp points,
                         // it will prefer the warp points on the map you're currently on.
-                        var aGrid =   a.GetGridUid(_entManager);
+                        var aGrid = a.GetGridUid(_entManager);
                         var bGrid = b.GetGridUid(_entManager);
 
                         if (aGrid == bGrid)
