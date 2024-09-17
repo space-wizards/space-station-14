@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: The construction menu and building preview now show the correct passive
-      vent sprite.
-    type: Fix
-  id: 6889
-  time: '2024-07-09T13:39:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29820
 - author: Cojoke-dot
   changes:
   - message: Pacifists can now use foam weaponry
@@ -3918,3 +3910,10 @@
   id: 7388
   time: '2024-09-17T16:05:38.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32245
+- author: drakewill-CRL
+  changes:
+  - message: Fixed plant mutations carrying over to other plants and future rounds.
+    type: Fix
+  id: 7389
+  time: '2024-09-17T19:45:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32257
