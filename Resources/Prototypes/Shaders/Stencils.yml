@@ -23,3 +23,12 @@
     ref: 1
     op: Keep
     func: NotEqual
+
+- type: shader
+  id: StencilBlack
+  kind: source
+  path: "/Textures/Shaders/stencil_black.swsl"
+  stencil:
+    ref: 0
+    op: Replace
+    func: Always

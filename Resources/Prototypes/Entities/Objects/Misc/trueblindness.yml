@@ -1,0 +1,8 @@
+- type: entity
+  name: Blindness Ghost
+  id: BlindnessGhost
+  components:
+  - type: TrueBlindnessGhost
+  - type: Sprite
+    sprite: deprecated.rsi
+  - type: Transform
