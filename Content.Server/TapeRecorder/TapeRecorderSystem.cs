@@ -3,10 +3,12 @@ using Content.Server.Hands.Systems;
 using Content.Server.Speech;
 using Content.Server.VoiceMask;
 using Content.Shared.Paper;
+using Content.Shared.Speech;
 using Content.Shared.TapeRecorder;
 using Content.Shared.TapeRecorder.Components;
 using Content.Shared.TapeRecorder.Events;
 using Robust.Server.Audio;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using System.Text;
 
@@ -16,6 +18,7 @@ public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
 {
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly HandsSystem _hands = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly PaperSystem _paper = default!;
 
     public override void Initialize()
@@ -34,6 +37,7 @@ public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
     {
         // TODO: when voice mask is refactored change this to VoiceOverride
         var voiceMask = EnsureComp<VoiceMaskComponent>(ent);
+        var speech = EnsureComp<SpeechComponent>(ent);
 
         foreach (var message in tape.RecordedData)
         {
@@ -41,7 +45,9 @@ public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
                 continue;
 
             //Change the voice to match the speaker
-            voiceMask.VoiceName = message.Name ?? message.DefaultName;
+            voiceMask.VoiceName = message.Name ?? ent.Comp.DefaultName;
+            if (message.Verb != null)
+                speech.SpeechVerb = _proto.Index<SpeechVerbPrototype>(message.Verb);
             //Play the message
             _chat.TrySendInGameICMessage(ent, message.Message, InGameICChatType.Speak, false);
         }
@@ -56,15 +62,22 @@ public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
         if (ent.Comp.Mode != TapeRecorderMode.Recording || !HasComp<ActiveTapeRecorderComponent>(ent))
             return;
 
+        // No feedback loops
+        if (args.Source == ent.Owner)
+            return;
+
         if (!TryGetTapeCassette(ent, out var cassette))
             return;
+
+        // TODO: Handle "Someone" when whispering from far away, needs chat refactor
 
         //Handle someone using a voice changer
         var nameEv = new TransformSpeakerNameEvent(args.Source, Name(args.Source));
         RaiseLocalEvent(args.Source, nameEv);
 
         //Add a new entry to the tape
-        cassette.Comp.Buffer.Add(new TapeCassetteRecordedMessage(cassette.Comp.CurrentPosition, nameEv.Name, args.Message));
+        var verb = _chat.GetSpeechVerb(args.Source, args.Message);
+        cassette.Comp.Buffer.Add(new TapeCassetteRecordedMessage(cassette.Comp.CurrentPosition, nameEv.Name, verb, args.Message));
     }
 
     private void OnPrintMessage(Entity<TapeRecorderComponent> ent, ref PrintTapeRecorderMessage args)
@@ -99,7 +112,7 @@ public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
         text.AppendLine();
         foreach (var message in cassette.Comp.RecordedData)
         {
-            var name = message.Name ?? message.DefaultName;
+            var name = message.Name ?? ent.Comp.DefaultName;
             var time = TimeSpan.FromSeconds((double) message.Timestamp);
 
             text.AppendLine(Loc.GetString("tape-recorder-print-message-text",

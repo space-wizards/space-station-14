@@ -39,6 +39,12 @@ public sealed partial class TapeRecorderComponent : Component
     public TimeSpan PrintCooldown = TimeSpan.FromSeconds(4);
 
     /// <summary>
+    /// Default name as fallback if a message doesn't have one.
+    /// </summary>
+    [DataField]
+    public LocId DefaultName = "tape-recorder-voice-unknown";
+
+    /// <summary>
     /// Sound on print transcript
     /// </summary>
     [DataField]

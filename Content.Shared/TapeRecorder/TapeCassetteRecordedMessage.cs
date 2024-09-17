@@ -1,3 +1,6 @@
+using Content.Shared.Speech;
+using Robust.Shared.Prototypes;
+
 namespace Content.Shared.TapeRecorder;
 
 /// <summary>
@@ -19,10 +22,10 @@ public sealed partial class TapeCassetteRecordedMessage : IComparable<TapeCasset
     public string? Name;
 
     /// <summary>
-    /// Default name as fallback
+    /// The verb used for this message.
     /// </summary>
     [DataField]
-    public LocId DefaultName = "tape-recorder-voice-unknown";
+    public ProtoId<SpeechVerbPrototype>? Verb;
 
     /// <summary>
     /// What was spoken
@@ -30,10 +33,11 @@ public sealed partial class TapeCassetteRecordedMessage : IComparable<TapeCasset
     [DataField]
     public string Message = string.Empty;
 
-    public TapeCassetteRecordedMessage(float timestamp, string name, string message)
+    public TapeCassetteRecordedMessage(float timestamp, string name, ProtoId<SpeechVerbPrototype> verb, string message)
     {
         Timestamp = timestamp;
         Name = name;
+        Verb = verb;
         Message = message;
     }
 

@@ -68,7 +68,5 @@ public sealed partial class TapeCassetteComponent : Component
 /// <summary>
 /// Removed from the cassette when damaged to prevent it being played until repaired
 /// </summary>
-[RegisterComponent]
-public sealed partial class FitsInTapeRecorderComponent : Component
-{
-}
+[RegisterComponent, NetworkedComponent]
+public sealed partial class FitsInTapeRecorderComponent : Component;
