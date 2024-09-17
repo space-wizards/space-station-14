@@ -30,19 +30,12 @@ public sealed partial class AtmosMonitoringConsoleNavMapControl : NavMapControl
 
     public AtmosMonitoringConsoleNavMapControl() : base()
     {
-        // Set colors
-        WallColor = new Color(64, 64, 64);
-        TileColor = Color.DimGray * WallColor;
-
         PostWallDrawingAction += DrawAllPipeNetworks;
     }
 
     protected override void UpdateNavMap()
     {
         base.UpdateNavMap();
-
-        if (Owner == null)
-            return;
 
         if (!_entManager.TryGetComponent<AtmosMonitoringConsoleComponent>(Owner, out var console))
             return;

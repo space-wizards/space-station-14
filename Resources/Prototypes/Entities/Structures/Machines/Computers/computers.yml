@@ -61,6 +61,8 @@
     - map: ["computerLayerKeys"]
       state: atmos_key
   - type: AtmosMonitoringConsole
+    navMapTileColor: "#1a1a1a"
+    navMapWallColor: "#404040"
   - type: ActivatableUI
     singleUser: true
     key: enum.AtmosMonitoringConsoleUiKey.Key

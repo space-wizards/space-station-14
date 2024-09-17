@@ -28,6 +28,18 @@ public sealed partial class AtmosMonitoringConsoleComponent : Component
     /// </summary>
     [ViewVariables]
     public Dictionary<NetEntity, AtmosDeviceNavMapData> AtmosDevices = new();
+
+    /// <summary>
+    /// Color of the floor tiles on the nav map screen
+    /// </summary>
+    [DataField, ViewVariables]
+    public Color NavMapTileColor;
+
+    /// <summary>
+    /// Color of the wall lines on the nav map screen
+    /// </summary>
+    [DataField, ViewVariables]
+    public Color NavMapWallColor;
 }
 
 [Serializable, NetSerializable]
