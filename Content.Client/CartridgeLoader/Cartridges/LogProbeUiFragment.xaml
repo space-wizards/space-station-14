@@ -18,4 +18,8 @@
     <ScrollContainer VerticalExpand="True" HScrollEnabled="True">
         <BoxContainer Orientation="Vertical" Name="ProbedDeviceContainer"/>
     </ScrollContainer>
+    <BoxContainer Orientation="Horizontal" Margin="4 8">
+        <BoxContainer HorizontalExpand="True"/>
+        <Label Name="EntityName" Align="Right"/>
+    </BoxContainer>
 </cartridges:LogProbeUiFragment>

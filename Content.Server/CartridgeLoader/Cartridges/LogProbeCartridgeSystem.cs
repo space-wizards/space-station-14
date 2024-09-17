@@ -40,6 +40,7 @@ public sealed class LogProbeCartridgeSystem : EntitySystem
         _audioSystem.PlayEntity(ent.Comp.SoundScan, args.InteractEvent.User, target, AudioHelpers.WithVariation(0.25f, _random));
         _popupSystem.PopupCursor(Loc.GetString("log-probe-scan", ("device", target)), args.InteractEvent.User);
 
+        ent.Comp.EntityName = Name(target);
         ent.Comp.PulledAccessLogs.Clear();
 
         foreach (var accessRecord in accessReaderComponent.AccessLog)
@@ -65,7 +66,7 @@ public sealed class LogProbeCartridgeSystem : EntitySystem
 
     private void UpdateUiState(Entity<LogProbeCartridgeComponent> ent, EntityUid loaderUid)
     {
-        var state = new LogProbeUiState(ent.Comp.PulledAccessLogs);
+        var state = new LogProbeUiState(ent.Comp.EntityName, ent.Comp.PulledAccessLogs);
         _cartridgeLoaderSystem?.UpdateCartridgeUiState(loaderUid, state);
     }
 }

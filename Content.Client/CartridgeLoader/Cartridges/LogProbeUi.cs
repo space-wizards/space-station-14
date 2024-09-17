@@ -13,16 +13,16 @@ public sealed partial class LogProbeUi : UIFragment
         return _fragment!;
     }
 
-    public override void Setup(BoundUserInterface userInterface, EntityUid? fragmentOwner)
+    public override void Setup(BoundUserInterface ui, EntityUid? fragmentOwner)
     {
         _fragment = new LogProbeUiFragment();
     }
 
     public override void UpdateState(BoundUserInterfaceState state)
     {
-        if (state is not LogProbeUiState logProbeUiState)
+        if (state is not LogProbeUiState cast)
             return;
 
-        _fragment?.UpdateState(logProbeUiState.PulledLogs);
+        _fragment?.UpdateState(cast.EntityName, cast.PulledLogs);
     }
 }

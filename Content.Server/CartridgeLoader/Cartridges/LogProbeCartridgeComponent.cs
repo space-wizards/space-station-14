@@ -8,6 +8,12 @@ namespace Content.Server.CartridgeLoader.Cartridges;
 public sealed partial class LogProbeCartridgeComponent : Component
 {
     /// <summary>
+    /// The name of the scanned entity, sent to clients when they open the UI.
+    /// </summary>
+    [DataField]
+    public string EntityName = string.Empty;
+
+    /// <summary>
     /// The list of pulled access logs
     /// </summary>
     [DataField, ViewVariables]

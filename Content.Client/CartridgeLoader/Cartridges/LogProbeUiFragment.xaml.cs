@@ -13,8 +13,10 @@ public sealed partial class LogProbeUiFragment : BoxContainer
         RobustXamlLoader.Load(this);
     }
 
-    public void UpdateState(List<PulledAccessLog> logs)
+    public void UpdateState(string name, List<PulledAccessLog> logs)
     {
+        EntityName.Text = name;
+
         ProbedDeviceContainer.RemoveAllChildren();
 
         //Reverse the list so the oldest entries appear at the bottom
