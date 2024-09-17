@@ -1,7 +1,9 @@
 using Content.Shared.Atmos.Consoles;
 using Content.Shared.Pinpointer;
+using Content.Shared.Prototypes;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
@@ -65,35 +67,29 @@ public struct AtmosDeviceNavMapData
     public NetCoordinates NetCoordinates;
 
     /// <summary>
-    /// Used to determine what map icons to use
-    /// </summary>
-    public AtmosMonitoringConsoleGroup Group;
-
-    /// <summary>
     /// The associated pipe network ID 
     /// </summary>
     public int NetId = -1;
 
     /// <summary>
-    /// Pipe color (if applicable)
+    /// Prototype ID for the nav map blip
     /// </summary>
-    public Color? Color = null;
+    public ProtoId<NavMapBlipPrototype> NavMapBlip;
 
     /// <summary>
-    /// Direction of the entity (if applicable)
+    /// Direction of the entity
     /// </summary>
-    public Direction? Direction = null;
+    public Direction Direction;
 
     /// <summary>
     /// Populate the atmos monitoring console nav map with a single entity
     /// </summary>
-    public AtmosDeviceNavMapData(NetEntity netEntity, NetCoordinates netCoordinates, AtmosMonitoringConsoleGroup group, int netId, Color? color = null, Direction? direction = null)
+    public AtmosDeviceNavMapData(NetEntity netEntity, NetCoordinates netCoordinates, int netId, ProtoId<NavMapBlipPrototype> navMapBlip, Direction direction)
     {
         NetEntity = netEntity;
         NetCoordinates = netCoordinates;
-        Group = group;
         NetId = netId;
-        Color = color;
+        NavMapBlip = navMapBlip;
         Direction = direction;
     }
 }
@@ -127,11 +123,6 @@ public struct AtmosMonitoringConsoleEntry
     /// Location of the entity
     /// </summary>
     public NetCoordinates Coordinates;
-
-    /// <summary>
-    /// The type of entity
-    /// </summary>
-    public AtmosMonitoringConsoleGroup Group;
 
     /// <summary>
     /// The associated pipe network ID 
@@ -179,14 +170,12 @@ public struct AtmosMonitoringConsoleEntry
     public AtmosMonitoringConsoleEntry
         (NetEntity entity,
         NetCoordinates coordinates,
-        AtmosMonitoringConsoleGroup group,
         int netId,
         string entityName,
         string address)
     {
         NetEntity = entity;
         Coordinates = coordinates;
-        Group = group;
         NetId = netId;
         EntityName = entityName;
         Address = address;
@@ -200,22 +189,6 @@ public enum AtmosPipeChunkDataFacing : byte
     South = SharedNavMapSystem.ArraySize,
     East = SharedNavMapSystem.ArraySize * 2,
     West = SharedNavMapSystem.ArraySize * 3,
-}
-
-/// <summary>
-/// List of all the different atmos device groups
-/// </summary>
-public enum AtmosMonitoringConsoleGroup
-{
-    GasPipeSensor,
-    GasInlet,
-    GasOutlet,
-    GasOpening,
-    GasPump,
-    GasMixer,
-    GasFilter,
-    GasValve,
-    Thermoregulator,
 }
 
 /// <summary>

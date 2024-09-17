@@ -63,8 +63,7 @@
     sound:
       path: /Audio/Ambience/Objects/gas_pump.ogg
   - type: AtmosMonitoringConsoleDevice
-    group: GasPump
-    rotatable: true
+    navMapBlip: GasFlowRegulator
     
 - type: entity
   parent: GasBinaryBase
@@ -115,8 +114,7 @@
       prefix: device-address-prefix-volume-pump
     - type: WiredNetworkConnection
     - type: AtmosMonitoringConsoleDevice
-      group: GasPump
-      rotatable: true
+      navMapBlip: GasFlowRegulator
     
 - type: entity
   parent: GasBinaryBase
@@ -147,7 +145,7 @@
       sound:
         path: /Audio/Ambience/Objects/gas_hiss.ogg
     - type: AtmosMonitoringConsoleDevice
-      group: GasValve
+      navMapBlip: GasValve
       
 - type: entity
   parent: GasBinaryBase
@@ -197,7 +195,7 @@
       sound:
         path: /Audio/Ambience/Objects/gas_hiss.ogg
     - type: AtmosMonitoringConsoleDevice
-      group: GasValve
+      navMapBlip: GasValve
       
 - type: entity
   parent: GasBinaryBase
@@ -258,7 +256,7 @@
     sound:
       path: /Audio/Ambience/Objects/gas_hiss.ogg
   - type: AtmosMonitoringConsoleDevice
-    group: GasValve
+    navMapBlip: GasValve
       
 - type: entity
   parent: GasBinaryBase
@@ -289,7 +287,7 @@
       graph: GasBinary
       node: port
     - type: AtmosMonitoringConsoleDevice
-      group: GasOpening
+      navMapBlip: GasVentOpening
       
 - type: entity
   parent: GasVentPump
@@ -347,7 +345,7 @@
     - type: AmbientSound
       enabled: true
     - type: AtmosMonitoringConsoleDevice
-      group: GasOutlet
+      navMapBlip: GasVentOpening
       
 - type: entity
   parent: [ BaseMachine, ConstructibleMachine ]
@@ -411,7 +409,7 @@
   - type: Machine
     board: GasRecyclerMachineCircuitboard
   - type: AtmosMonitoringConsoleDevice
-    group: Thermoregulator
+    navMapBlip: Thermoregulator
     
 - type: entity
   parent: GasBinaryBase
@@ -453,4 +451,4 @@
     graph: GasBinary
     node: radiator
   - type: AtmosMonitoringConsoleDevice
-    group: Thermoregulator
+    navMapBlip: Thermoregulator

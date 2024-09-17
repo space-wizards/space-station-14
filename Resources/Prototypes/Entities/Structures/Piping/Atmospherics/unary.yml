@@ -69,7 +69,7 @@
         path: /Audio/Ambience/Objects/gas_vent.ogg
     - type: Weldable
     - type: AtmosMonitoringConsoleDevice
-      group: GasOutlet
+      navMapBlip: GasVentOpening
       
 - type: entity
   parent: GasUnaryBase
@@ -95,7 +95,7 @@
       graph: GasUnary
       node: passivevent
     - type: AtmosMonitoringConsoleDevice
-      group: GasOpening
+      navMapBlip: GasVentOpening
       
 - type: entity
   parent: [GasUnaryBase, AirSensorBase]
@@ -146,7 +146,7 @@
         path: /Audio/Ambience/Objects/gas_vent.ogg
     - type: Weldable
     - type: AtmosMonitoringConsoleDevice
-      group: GasInlet
+      navMapBlip: GasVentScrubber
       
 - type: entity
   parent: GasUnaryBase
@@ -187,7 +187,7 @@
       - enum.SubfloorLayers.FirstLayer
       - enum.LightLayers.Unshaded
     - type: AtmosMonitoringConsoleDevice
-      group: GasOutlet
+      navMapBlip: GasVentOpening
       
 - type: entity
   parent: [ BaseMachinePowered, ConstructibleMachine ]
@@ -233,7 +233,7 @@
     - type: WiredNetworkConnection
     - type: PowerSwitch
     - type: AtmosMonitoringConsoleDevice
-      group: Thermoregulator
+      navMapBlip: Thermoregulator
       
 - type: entity
   parent: BaseGasThermoMachine

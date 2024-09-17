@@ -257,8 +257,7 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
         // Unpowered device entry
         if (TryComp<ApcPowerReceiverComponent>(uid, out var apcPowerReceiver) && !apcPowerReceiver.Powered)
         {
-            entry = new AtmosMonitoringConsoleEntry
-                (netEnt, GetNetCoordinates(xform.Coordinates), AtmosMonitoringConsoleGroup.GasPipeSensor, netId.Value, name, address)
+            entry = new AtmosMonitoringConsoleEntry(netEnt, GetNetCoordinates(xform.Coordinates), netId.Value, name, address)
             {
                 IsPowered = false
             };
@@ -278,8 +277,7 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
             }
         }
 
-        entry = new AtmosMonitoringConsoleEntry
-            (netEnt, GetNetCoordinates(xform.Coordinates), AtmosMonitoringConsoleGroup.GasPipeSensor, netId.Value, name, address)
+        entry = new AtmosMonitoringConsoleEntry(netEnt, GetNetCoordinates(xform.Coordinates), netId.Value, name, address)
         {
             TemperatureData = isAirPresent ? pipeNode.Air.Temperature : 0f,
             PressureData = pipeNode.Air.Pressure,
@@ -320,15 +318,11 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
             return false;
 
         var direction = xform.LocalRotation.GetCardinalDir();
-        Color? color = null;
-
-        if (TryComp<AtmosPipeColorComponent>(uid, out var atmosPipeColor))
-            color = atmosPipeColor.Color;
 
         if (!TryGettingFirstPipeNode(uid, out var pipeNode, out var netId))
             netId = -1;
 
-        device = new AtmosDeviceNavMapData(GetNetEntity(uid), GetNetCoordinates(xform.Coordinates), component.Group, netId.Value, color, direction);
+        device = new AtmosDeviceNavMapData(GetNetEntity(uid), GetNetCoordinates(xform.Coordinates), netId.Value, component.NavMapBlip, direction);
 
         return true;
     }

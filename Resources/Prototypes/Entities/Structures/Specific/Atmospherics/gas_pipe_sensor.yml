@@ -45,7 +45,7 @@
   - type: AtmosMonitor
     monitorsPipeNet: true
   - type: AtmosMonitoringConsoleDevice
-    group: GasPipeSensor
+    navMapBlip: GasPipeSensor
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: Clickable

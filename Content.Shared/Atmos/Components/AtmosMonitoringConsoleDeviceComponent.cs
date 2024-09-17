@@ -1,4 +1,6 @@
+using Content.Shared.Prototypes;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Atmos.Components;
 
@@ -6,14 +8,8 @@ namespace Content.Shared.Atmos.Components;
 public sealed partial class AtmosMonitoringConsoleDeviceComponent : Component
 {
     /// <summary>
-    /// The group that the entity belongs to
+    /// Prototype ID for the nav map blip
     /// </summary>
     [DataField, ViewVariables]
-    public AtmosMonitoringConsoleGroup Group;
-
-    /// <summary>
-    /// Indicates whether the cardinal facing of this entity affects it nav map sprite
-    /// </summary>
-    [DataField, ViewVariables]
-    public bool Rotatable = false;
+    public ProtoId<NavMapBlipPrototype> NavMapBlip { get; private set; }
 }

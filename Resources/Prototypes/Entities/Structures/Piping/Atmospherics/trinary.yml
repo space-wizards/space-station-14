@@ -71,7 +71,7 @@
       sound:
         path: /Audio/Ambience/Objects/gas_hiss.ogg
     - type: AtmosMonitoringConsoleDevice
-      group: GasFilter
+      navMapBlip: GasFlowRegulator
       
 - type: entity
   parent: GasFilter
@@ -161,7 +161,7 @@
       sound:
         path: /Audio/Ambience/Objects/gas_hiss.ogg
     - type: AtmosMonitoringConsoleDevice
-      group: GasMixer
+      navMapBlip: GasFlowRegulator
       
 - type: entity
   parent: GasMixer
@@ -262,4 +262,4 @@
       graph: GasTrinary
       node: pneumaticvalve
     - type: AtmosMonitoringConsoleDevice
-      group: GasValve
+      navMapBlip: GasFlowRegulator
