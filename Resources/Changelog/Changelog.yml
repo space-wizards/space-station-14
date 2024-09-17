@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Whisper
-  changes:
-  - message: Light toggle actions now have a 1 second cooldown between uses.
-    type: Tweak
-  id: 6887
-  time: '2024-07-09T04:14:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29833
 - author: Cojoke-dot
   changes:
   - message: Shotgun loading doafter now does something
@@ -3910,3 +3903,18 @@
   id: 7386
   time: '2024-09-17T00:35:57.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32061
+- author: TheShuEd
+  changes:
+  - message: Anomalous infections added! People can now be infected by anomalies!
+      This allows you to use abnormal abilities, but can easily kill the host. To
+      cure them, bombard them with containment particles, because if the anomaly inside
+      them explodes, their bodies will be gibbed....
+    type: Add
+  - message: Flesh anomaly resprite
+    type: Tweak
+  - message: anomalies now disconnect from the anomaly synchronizer if they are too
+      far away from it.
+    type: Fix
+  id: 7387
+  time: '2024-09-17T09:49:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31876
