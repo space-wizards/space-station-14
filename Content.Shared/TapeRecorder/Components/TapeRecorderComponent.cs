@@ -97,7 +97,8 @@ public sealed partial class TapeRecorderComponent : Component
 [Serializable, NetSerializable]
 public enum TapeRecorderVisuals : byte
 {
-    Status
+    Mode,
+    TapeInserted
 }
 
 [Serializable, NetSerializable]

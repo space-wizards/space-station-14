@@ -8,7 +8,8 @@
     sprite: Objects/Devices/tape_recorder.rsi
     layers:
     - state: taperecorder_empty
-      map: ["base"]
+    - state: taperecorder_idle
+      map: ["tape"]
   - type: Item
     size: Small
   - type: TapeRecorder
@@ -30,13 +31,16 @@
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-      enum.TapeRecorderVisuals.Status:
-        base:
-          Empty: { state: "taperecorder_empty" }
+      enum.TapeRecorderVisuals.Mode:
+        tape:
           Stopped: { state: "taperecorder_idle" }
           Playing: { state: "taperecorder_playing" }
           Recording: { state: "taperecorder_recording" }
           Rewinding: { state: "taperecorder_rewinding" }
+      enum.TapeRecorderVisuals.TapeInserted:
+        tape:
+          True: { visible: true }
+          False: { visible: false }
   - type: ActivatableUI
     key: enum.TapeRecorderUIKey.Key
     inHandsOnly: true

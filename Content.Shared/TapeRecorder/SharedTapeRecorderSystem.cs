@@ -285,13 +285,14 @@ public abstract class SharedTapeRecorderSystem : EntitySystem
     }
 
     /// <summary>
-    /// Update the appearance of the tape recorder, optionally ignoring the components mode
+    /// Update the appearance of the tape recorder.
     /// </summary>
     /// <param name="ent">The tape recorder to update</param>
-    /// <param name="modeOverride">If set, use this mode instead of the mode on the component</param>
-    protected void UpdateAppearance(Entity<TapeRecorderComponent> ent, TapeRecorderMode? modeOverride = null)
+    protected void UpdateAppearance(Entity<TapeRecorderComponent> ent)
     {
-        _appearance.SetData(ent, TapeRecorderVisuals.Status, modeOverride.HasValue ? modeOverride : ent.Comp.Mode);
+        var hasCassette = TryGetTapeCassette(ent, out _);
+        _appearance.SetData(ent, TapeRecorderVisuals.Mode, ent.Comp.Mode);
+        _appearance.SetData(ent, TapeRecorderVisuals.TapeInserted, hasCassette);
     }
 
     /// <summary>
