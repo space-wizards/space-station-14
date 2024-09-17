@@ -25,6 +25,22 @@
   - ClothingNeckTransPin
   - ClothingNeckAutismPin
   - ClothingNeckGoldAutismPin
+  - TowelColorBlack
+  - TowelColorDarkBlue
+  - TowelColorDarkGreen
+  - TowelColorGold
+  - TowelColorGray
+  - TowelColorGreen
+  - TowelColorLightBlue
+  - TowelColorLightBrown
+  - TowelColorMaroon
+  - TowelColorOrange
+  - TowelColorPurple
+  - TowelColorRed
+  - TowelColorSilver
+  - TowelColorTeal
+  - TowelColorWhite
+  - TowelColorYellow
 
 - type: loadoutGroup
   id: Glasses
