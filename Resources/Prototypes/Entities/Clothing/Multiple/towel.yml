@@ -14,10 +14,8 @@
     - INNERCLOTHING
     - HEAD
     femaleMask: UniformTop
-    equipSound:
-      path: Default
-    unequipSound:
-      path: Default
+    equipSound: ""
+    unequipSound: ""
   - type: Spillable
     solution: absorbed
   - type: Absorbent
