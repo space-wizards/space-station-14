@@ -1,4 +1,5 @@
 ﻿using Content.Client.UserInterface.Fragments;
+using Content.Shared.CartridgeLoader;
 using Content.Shared.CartridgeLoader.Cartridges;
 using Robust.Client.UserInterface;
 
@@ -16,6 +17,13 @@ public sealed partial class LogProbeUi : UIFragment
     public override void Setup(BoundUserInterface ui, EntityUid? fragmentOwner)
     {
         _fragment = new LogProbeUiFragment();
+
+        _fragment.OnPrintPressed += () =>
+        {
+            var ev = new LogProbePrintMessage();
+            var message = new CartridgeUiMessage(ev);
+            ui.SendMessage(message);
+        };
     }
 
     public override void UpdateState(BoundUserInterfaceState state)

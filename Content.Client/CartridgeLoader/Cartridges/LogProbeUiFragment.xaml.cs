@@ -8,19 +8,24 @@ namespace Content.Client.CartridgeLoader.Cartridges;
 [GenerateTypedNameReferences]
 public sealed partial class LogProbeUiFragment : BoxContainer
 {
+    /// <summary>
+    /// Action invoked when the print button gets pressed.
+    /// </summary>
+    public Action? OnPrintPressed;
+
     public LogProbeUiFragment()
     {
         RobustXamlLoader.Load(this);
+
+        PrintButton.OnPressed += _ => OnPrintPressed?.Invoke();
     }
 
     public void UpdateState(string name, List<PulledAccessLog> logs)
     {
         EntityName.Text = name;
+        PrintButton.Disabled = string.IsNullOrEmpty(name);
 
         ProbedDeviceContainer.RemoveAllChildren();
-
-        //Reverse the list so the oldest entries appear at the bottom
-        logs.Reverse();
 
         var count =  1;
         foreach (var log in logs)
