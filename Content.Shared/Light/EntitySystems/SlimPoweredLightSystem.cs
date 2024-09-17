@@ -1,6 +1,5 @@
 using Content.Shared.Light.Components;
 using Content.Shared.Power;
-using Content.Shared.Power.Components;
 using Content.Shared.Power.EntitySystems;
 
 namespace Content.Shared.Light.EntitySystems;
