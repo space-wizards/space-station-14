@@ -117,18 +117,3 @@
               Quantity: 30
     - type: Tag
       tags: []
-
-- type: entity
-  id: SubjuzineChemistryVial
-  name: subjuzine vial
-  parent: BaseChemistryEmptyVial
-  components:
-    - type: SolutionContainerManager
-      solutions:
-        beaker:
-          maxVol: 30
-          reagents:
-            - ReagentId: Subjuzine
-              Quantity: 20
-    - type: Tag
-      tags: []
