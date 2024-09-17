@@ -54,6 +54,7 @@
   - type: PipeRestrictOverlap
   - type: AtmosUnsafeUnanchor
   - type: AtmosPipeColor
+  - type: AtmosMonitoredPipe
   - type: Tag
     tags:
     - Pipe

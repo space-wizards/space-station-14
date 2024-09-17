@@ -21,7 +21,8 @@ public sealed partial class AtmosMonitoringEntryContainer : BoxContainer
     public int NetId;
     public EntityCoordinates? Coordinates;
 
-    private IResourceCache _cache;
+    private readonly IEntityManager _entManager;
+    private readonly IResourceCache _cache;
 
     // This needs to be moved out and shared with the atmos alerts computer
     private Dictionary<Gas, string> _gasShorthands = new Dictionary<Gas, string>()
@@ -40,7 +41,7 @@ public sealed partial class AtmosMonitoringEntryContainer : BoxContainer
     public AtmosMonitoringEntryContainer(NetEntity uid, int netId, EntityCoordinates? coordinates)
     {
         RobustXamlLoader.Load(this);
-
+        _entManager = IoCManager.Resolve<IEntityManager>();
         _cache = IoCManager.Resolve<IResourceCache>();
 
         NetEntity = uid;
@@ -70,14 +71,16 @@ public sealed partial class AtmosMonitoringEntryContainer : BoxContainer
         // Load fonts
         var normalFont = new VectorFont(_cache.GetResource<FontResource>("/Fonts/NotoSansDisplay/NotoSansDisplay-Regular.ttf"), 11);
 
-        // Update name and network ID
+        // Update name and values
         if (!string.IsNullOrEmpty(entry.Address))
             NetworkNameLabel.Text = Loc.GetString("atmos-alerts-window-alarm-label", ("name", entry.EntityName), ("address", entry.Address));
 
         else
             NetworkNameLabel.Text = Loc.GetString(entry.EntityName);
 
+        NetEntity = entry.NetEntity;
         NetId = entry.NetId;
+        Coordinates = _entManager.GetCoordinates(entry.Coordinates);
 
         // Focus updates
         if (isFocus)

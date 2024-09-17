@@ -93,7 +93,7 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
 
         NavMap.ShowPipeNetwork = ShowPipeNetwork.Pressed;
 
-        foreach (var device in console.AtmosDevices)
+        foreach (var (netEnt, device) in console.AtmosDevices)
         {
             if (device.Group == AtmosMonitoringConsoleGroup.GasPipeSensor)
                 continue;
@@ -102,7 +102,7 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
                 AddTrackedEntityToNavMap(device);
 
             else
-                NavMap.TrackedEntities.Remove(device.NetEntity);
+                NavMap.TrackedEntities.Remove(netEnt);
         }
     }
 
@@ -114,7 +114,7 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
         if (!_entManager.TryGetComponent<AtmosMonitoringConsoleComponent>(_owner.Value, out var console))
             return;
 
-        foreach (var device in console.AtmosDevices)
+        foreach (var (netEnt, device) in console.AtmosDevices)
         {
             if (device.Group != AtmosMonitoringConsoleGroup.GasPipeSensor)
                 return;
@@ -123,7 +123,7 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
                 AddTrackedEntityToNavMap(device);
 
             else
-                NavMap.TrackedEntities.Remove(device.NetEntity);
+                NavMap.TrackedEntities.Remove(netEnt);
         }
     }
 
@@ -143,14 +143,17 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
         NavMap.TrackedCoordinates.Clear();
         NavMap.TrackedEntities.Clear();
 
+        if (_focusEntity != null && !console.AtmosDevices.Any(x => x.Key == _focusEntity))
+            ClearFocus();
+
         // Add tracked entities to the nav map
         if (NavMap.Visible)
         {
-            foreach (var device in console.AtmosDevices)
+            foreach (var (netEnt, device) in console.AtmosDevices)
             {
                 // Update the focus network ID, incase it has changed
-                if (_focusEntity == device.NetEntity)
-                    SetFocus(device.NetEntity, device.NetId);
+                if (_focusEntity == netEnt)
+                    SetFocus(netEnt, device.NetId);
 
                 // Skip network devices if the toggled is off
                 if (!ShowPipeNetwork.Pressed && device.Group != AtmosMonitoringConsoleGroup.GasPipeSensor)
@@ -292,22 +295,19 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
         if (!_entManager.TryGetComponent<AtmosMonitoringConsoleComponent>(_owner, out var console))
             return;
 
-        var data = console.AtmosDevices.FirstOrNull(x => x.NetEntity == focusEntity);
-
-        if (data == null || data.Value.Group != AtmosMonitoringConsoleGroup.GasPipeSensor)
-            return;
-
-        if (focusEntity != null)
+        foreach (var (netEnt, device) in console.AtmosDevices)
         {
-            SetFocus(focusEntity.Value, data.Value.NetId);
+            if (netEnt != focusEntity)
+                continue;
+
+            if (device.Group != AtmosMonitoringConsoleGroup.GasPipeSensor)
+                return;
+
+            // Set new focus
+            SetFocus(focusEntity.Value, device.NetId);
 
             // Get the scroll position of the selected entity on the selected button the UI
             ActivateAutoScrollToFocus();
-        }
-
-        else
-        {
-            ClearFocus();
         }
     }
 

@@ -7,21 +7,25 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Atmos.Components;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedAtmosMonitoringConsoleSystem))]
 public sealed partial class AtmosMonitoringConsoleComponent : Component
 {
+    /*
+     * Don't need DataFields as this can be reconstructed
+     */
+
     /// <summary>
     /// A dictionary of the all the nav map chunks that contain anchored atmos pipes
     /// </summary>
-    [ViewVariables, AutoNetworkedField]
+    [ViewVariables]
     public Dictionary<Vector2i, AtmosPipeChunk> AtmosPipeChunks = new();
 
     /// <summary>
     /// A list of all the atmos devices that will be used to populate the nav map
     /// </summary>
-    [ViewVariables, AutoNetworkedField]
-    public HashSet<AtmosDeviceNavMapData> AtmosDevices = new();
+    [ViewVariables]
+    public Dictionary<NetEntity, AtmosDeviceNavMapData> AtmosDevices = new();
 }
 
 [Serializable, NetSerializable]

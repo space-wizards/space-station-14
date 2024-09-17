@@ -1,6 +1,7 @@
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.Monitor.Systems;
 using Content.Server.Atmos.Piping.Components;
+using Content.Server.Construction.Completions;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.EntitySystems;
@@ -12,9 +13,11 @@ using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Consoles;
 using Content.Shared.Labels.Components;
 using Content.Shared.Pinpointer;
+using Microsoft.CodeAnalysis;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Timing;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -28,6 +31,7 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
     [Dependency] private readonly AirAlarmSystem _airAlarmSystem = default!;
     [Dependency] private readonly AtmosDeviceNetworkSystem _atmosDevNet = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
 
     // Private variables
     // Note: this data does not need to be saved
@@ -49,15 +53,16 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
 
         // Tracked device events
         SubscribeLocalEvent<AtmosMonitoringConsoleDeviceComponent, ComponentInit>(OnConsoleDeviceInit);
-        SubscribeLocalEvent<AtmosMonitoringConsoleDeviceComponent, AnchorStateChangedEvent>(OnConsoleDeviceAnchorChanged);
+        SubscribeLocalEvent<AtmosMonitoringConsoleDeviceComponent, EntityTerminatingEvent>(OnConsoleDeviceShutdown);
         SubscribeLocalEvent<AtmosMonitoringConsoleDeviceComponent, NodeGroupsRebuilt>(OnConsoleDeviceNodeGroupsRebuilt);
 
         // Grid events
         SubscribeLocalEvent<GridSplitEvent>(OnGridSplit);
 
         // Pipe events
-        SubscribeLocalEvent<AtmosPipeColorComponent, AtmosPipeColorChangedEvent>(OnPipeColorChanged);
-        SubscribeLocalEvent<AtmosPipeColorComponent, NodeGroupsRebuilt>(OnPipeNodeGroupsChanged);
+        SubscribeLocalEvent<AtmosMonitoredPipeComponent, AtmosPipeColorChangedEvent>(OnPipeColorChanged);
+        SubscribeLocalEvent<AtmosMonitoredPipeComponent, EntityTerminatingEvent>(OnPipeShutdown);
+        SubscribeLocalEvent<AtmosMonitoredPipeComponent, NodeGroupsRebuilt>(OnPipeNodeGroupsRebuilt);
     }
 
     #region Event handling
@@ -82,9 +87,16 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
         InitializeAtmosMonitoringDevice(uid, component);
     }
 
-    private void OnConsoleDeviceAnchorChanged(EntityUid uid, AtmosMonitoringConsoleDeviceComponent component, AnchorStateChangedEvent args)
+    private void OnConsoleDeviceShutdown(EntityUid uid, AtmosMonitoringConsoleDeviceComponent component, EntityTerminatingEvent args)
     {
-        InitializeAtmosMonitoringDevice(uid, component);
+        var netEntity = EntityManager.GetNetEntity(uid);
+        var query = AllEntityQuery<AtmosMonitoringConsoleComponent, TransformComponent>();
+
+        while (query.MoveNext(out var ent, out var entConsole, out var entXform))
+        {
+            if (entConsole.AtmosDevices.Remove(netEntity))
+                Dirty(ent, entConsole);
+        }
     }
 
     private void OnConsoleDeviceNodeGroupsRebuilt(EntityUid uid, AtmosMonitoringConsoleDeviceComponent component, NodeGroupsRebuilt args)
@@ -123,17 +135,22 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
         }
     }
 
-    private void OnPipeColorChanged(EntityUid uid, AtmosPipeColorComponent component, ref AtmosPipeColorChangedEvent args)
+    private void OnPipeColorChanged(EntityUid uid, AtmosMonitoredPipeComponent component, ref AtmosPipeColorChangedEvent args)
     {
         OnPipeChange(uid);
     }
 
-    private void OnPipeNodeGroupsChanged(EntityUid uid, AtmosPipeColorComponent component, NodeGroupsRebuilt args)
+    private void OnPipeShutdown(EntityUid uid, AtmosMonitoredPipeComponent component, EntityTerminatingEvent args)
+    {
+        OnPipeChange(uid, true);
+    }
+
+    private void OnPipeNodeGroupsRebuilt(EntityUid uid, AtmosMonitoredPipeComponent component, NodeGroupsRebuilt args)
     {
         OnPipeChange(uid);
     }
 
-    private void OnPipeChange(EntityUid uid)
+    private void OnPipeChange(EntityUid uid, bool deleteEntity = false)
     {
         var xform = Transform(uid);
         var gridUid = xform.GridUid;
@@ -144,7 +161,9 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
         if (!TryComp<MapGridComponent>(gridUid, out var grid))
             return;
 
-        RebuildSingleTileOfPipeNetwork(gridUid.Value, grid, xform.Coordinates);
+        EntityUid? excludedEntity = deleteEntity ? uid : null;
+
+        RebuildSingleTileOfPipeNetwork(gridUid.Value, grid, xform.Coordinates, excludedEntity);
     }
 
     #endregion
@@ -271,15 +290,15 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
         return entry;
     }
 
-    private HashSet<AtmosDeviceNavMapData> GetAllAtmosDeviceNavMapData(EntityUid gridUid)
+    private Dictionary<NetEntity, AtmosDeviceNavMapData> GetAllAtmosDeviceNavMapData(EntityUid gridUid)
     {
-        var atmosDeviceNavMapData = new HashSet<AtmosDeviceNavMapData>();
+        var atmosDeviceNavMapData = new Dictionary<NetEntity, AtmosDeviceNavMapData>();
 
         var query = AllEntityQuery<AtmosMonitoringConsoleDeviceComponent, TransformComponent>();
         while (query.MoveNext(out var ent, out var entComponent, out var entXform))
         {
             if (TryGetAtmosDeviceNavMapData(ent, entComponent, entXform, gridUid, out var data))
-                atmosDeviceNavMapData.Add(data.Value);
+                atmosDeviceNavMapData.Add(data.Value.NetEntity, data.Value);
         }
 
         return atmosDeviceNavMapData;
@@ -318,15 +337,13 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
 
     #region Pipe net functions
 
-    private Dictionary<Vector2i, AtmosPipeChunk> RebuildAtmosPipeGrid(EntityUid gridUid, MapGridComponent grid)
+    private void RebuildAtmosPipeGrid(EntityUid gridUid, MapGridComponent grid)
     {
-        // Clears all chunks for the associated grid
         var allChunks = new Dictionary<Vector2i, AtmosPipeChunk>();
-        _gridAtmosPipeChunks[gridUid] = allChunks;
 
         // Adds all atmos pipe to the grid
-        var query = AllEntityQuery<AtmosPipeColorComponent, NodeContainerComponent, TransformComponent>();
-        while (query.MoveNext(out var ent, out var entAtmosPipeColor, out var entNodeContainer, out var entXform))
+        var queryPipes = AllEntityQuery<AtmosPipeColorComponent, NodeContainerComponent, TransformComponent>();
+        while (queryPipes.MoveNext(out var ent, out var entAtmosPipeColor, out var entNodeContainer, out var entXform))
         {
             if (entXform.GridUid != gridUid)
                 continue;
@@ -339,17 +356,30 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
             var relative = SharedMapSystem.GetChunkRelative(tile.GridIndices, ChunkSize);
 
             if (!allChunks.TryGetValue(chunkOrigin, out var chunk))
+            {
                 chunk = new AtmosPipeChunk(chunkOrigin);
+                allChunks[chunkOrigin] = chunk;
+            }
 
             UpdateAtmosPipeChunk(ent, entNodeContainer, entAtmosPipeColor, GetTileIndex(relative), ref chunk);
-
-            allChunks[chunkOrigin] = chunk;
         }
 
-        return allChunks;
+        // Add or update the chunks on the associated grid
+        _gridAtmosPipeChunks[gridUid] = allChunks;
+
+        // Update the components of the monitoring consoles that are attached to the same grid
+        var queryConsoles = AllEntityQuery<AtmosMonitoringConsoleComponent, TransformComponent>();
+        while (queryConsoles.MoveNext(out var ent, out var entConsole, out var entXform))
+        {
+            if (gridUid != entXform.GridUid)
+                continue;
+
+            entConsole.AtmosPipeChunks = allChunks;
+            Dirty(ent, entConsole);
+        }
     }
 
-    private void RebuildSingleTileOfPipeNetwork(EntityUid gridUid, MapGridComponent grid, EntityCoordinates coords)
+    private void RebuildSingleTileOfPipeNetwork(EntityUid gridUid, MapGridComponent grid, EntityCoordinates coords, EntityUid? excludedEntity = null)
     {
         if (!_gridAtmosPipeChunks.TryGetValue(gridUid, out var allChunks))
             allChunks = new Dictionary<Vector2i, AtmosPipeChunk>();
@@ -372,6 +402,9 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
         // Rebuild the pipe data tile
         foreach (var ent in _sharedMapSystem.GetAnchoredEntities(gridUid, grid, coords))
         {
+            if (ent == excludedEntity)
+                continue;
+
             if (!TryComp<AtmosPipeColorComponent>(ent, out var entAtmosPipeColor))
                 continue;
 
@@ -381,7 +414,11 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
             UpdateAtmosPipeChunk(ent, entNodeContainer, entAtmosPipeColor, tileIdx, ref chunk);
         }
 
+        // Add or update the chunk on the associated grid
+        // Only the modified chunk will be sent to the client
+        chunk.LastUpdate = _gameTiming.CurTick;
         allChunks[chunkOrigin] = chunk;
+        _gridAtmosPipeChunks[gridUid] = allChunks;
 
         // Update the components of the monitoring consoles that are attached to the same grid
         var query = AllEntityQuery<AtmosMonitoringConsoleComponent, TransformComponent>();
@@ -398,6 +435,12 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
 
     private void UpdateAtmosPipeChunk(EntityUid uid, NodeContainerComponent nodeContainer, AtmosPipeColorComponent pipeColor, int tileIdx, ref AtmosPipeChunk chunk)
     {
+        // Prevent entities that are actively being deleted from being redrawn
+        var stage = MetaData(uid).EntityLifeStage;
+
+        if (MetaData(uid).EntityLifeStage >= EntityLifeStage.Terminating)
+            return;
+
         foreach ((var id, var node) in nodeContainer.Nodes)
         {
             if (node is not PipeNode)
@@ -463,40 +506,41 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
         if (!TryComp<MapGridComponent>(grid, out var map))
             return;
 
-        if (!_gridAtmosPipeChunks.TryGetValue(grid, out var allChunks))
-            allChunks = RebuildAtmosPipeGrid(grid, map);
-
-        component.AtmosPipeChunks = allChunks;
         component.AtmosDevices = GetAllAtmosDeviceNavMapData(grid);
 
-        Dirty(uid, component);
+        if (!_gridAtmosPipeChunks.ContainsKey(grid))
+        {
+            RebuildAtmosPipeGrid(grid, map);
+        }
+
+        else
+        {
+            component.AtmosPipeChunks = _gridAtmosPipeChunks[grid];
+            Dirty(uid, component);
+        }
     }
 
     private void InitializeAtmosMonitoringDevice(EntityUid uid, AtmosMonitoringConsoleDeviceComponent component)
     {
         var xform = Transform(uid);
         var gridUid = xform.GridUid;
-
-        if (gridUid == null)
-            return;
-
         var netEntity = EntityManager.GetNetEntity(uid);
 
         var query = AllEntityQuery<AtmosMonitoringConsoleComponent, TransformComponent>();
         while (query.MoveNext(out var ent, out var entConsole, out var entXform))
         {
-            if (gridUid != entXform.GridUid)
-                continue;
+            var isDirty = entConsole.AtmosDevices.Remove(netEntity);
 
-            entConsole.AtmosDevices.RemoveWhere(x => x.NetEntity == netEntity);
-
-            if (xform.Anchored)
+            if (gridUid != null && gridUid == entXform.GridUid &&
+                xform.Anchored &&
+                TryGetAtmosDeviceNavMapData(uid, component, xform, gridUid.Value, out var data))
             {
-                if (TryGetAtmosDeviceNavMapData(uid, component, xform, gridUid.Value, out var data))
-                    entConsole.AtmosDevices.Add(data.Value);
+                entConsole.AtmosDevices.Add(netEntity, data.Value);
+                isDirty = true;
             }
 
-            Dirty(ent, entConsole);
+            if (isDirty)
+                Dirty(ent, entConsole);
         }
     }
 
