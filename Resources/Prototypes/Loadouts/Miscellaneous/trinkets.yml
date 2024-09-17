@@ -314,3 +314,15 @@
   storage:
     back: 
     - TowelColorYellow
+
+- type: loadout
+  id: TowelColorMime
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobMime
+      time: 360000 # 100hr
+  storage:
+    back: 
+    - TowelColorMime

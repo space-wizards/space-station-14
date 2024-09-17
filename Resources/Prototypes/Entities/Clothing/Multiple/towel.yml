@@ -416,6 +416,8 @@
     layers:
     - state: icon
       color: "#F7C430"
+    - state: iconstripe
+      color: "#535353"
   - type: Item
     inhandVisuals:
       left:
@@ -602,6 +604,8 @@
     layers:
     - state: icon
       color: "#d0d0d0"
+    - state: iconstripe
+      color: "#F7C430"
   - type: Item
     inhandVisuals:
       left:
@@ -623,6 +627,39 @@
         color: "#d0d0d0"
   - type: Fiber
     fiberColor: fibers-silver
+
+- type: entity
+  id: TowelColorMime
+  name: silent towel
+  parent: BaseTowel
+  components:
+  - type: Sprite
+    layers:
+    - state: icon
+      color: "#EAE8E8"
+    - state: iconstripe
+      color: "#535353"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-right
+        color: "#EAE8E8"
+      right:
+      - state: inhand-right
+        color: "#EAE8E8"
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#EAE8E8"
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#EAE8E8"
+      belt:
+      - state: equipped-BELT
+        color: "#EAE8E8"
+  - type: Fiber
+    fiberColor: fibers-white
 
 - type: entity
   id: TowelColorNT
