@@ -1,10 +1,4 @@
 <Document>
-<!--
-  Copyright 2024 Delta-V. This source code was originally part of the Delta-V project
-  (https://github.com/DeltaV-Station), which is licensed under the AGPL license.
-
-  16 September 2024 - Modified by hivehum/impstation
--->
 # Alert Procedure
 Alert levels exist on the station to advise the crew at-large of the state of the station's overall security or well-being. Setting an alert level via the communications computer is an immediate action, so it is often done after sending a message to the crew.
 <Box>
