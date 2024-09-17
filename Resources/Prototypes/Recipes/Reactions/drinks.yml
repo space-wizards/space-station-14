@@ -943,6 +943,8 @@
 
 - type: reaction
   id: SodaWater
+  requiredMixerCategories:
+- Shake
   reactants:
     Water:
       amount: 5
