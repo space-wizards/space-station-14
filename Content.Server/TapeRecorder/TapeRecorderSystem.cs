@@ -46,7 +46,7 @@ public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
 
             //Change the voice to match the speaker
             voiceMask.VoiceName = message.Name ?? ent.Comp.DefaultName;
-            var verb = message.Verb ?? _chat.DefaultSpeechVerb;
+            var verb = message.Verb ?? SharedchatSystem.DefaultSpeechVerb;
             speech.SpeechVerb = _proto.Index<SpeechVerbPrototype>(verb);
             //Play the message
             _chat.TrySendInGameICMessage(ent, message.Message, InGameICChatType.Speak, false);
