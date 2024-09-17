@@ -48,7 +48,7 @@ public sealed partial class AirlockComponent : Component
     /// <summary>
     /// Whether the airlock should auto close. This value is reset every time the airlock closes.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField, AutoNetworkedField]
     public bool AutoClose = true;
 
     /// <summary>
