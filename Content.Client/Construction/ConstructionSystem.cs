@@ -26,7 +26,6 @@ namespace Content.Client.Construction
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
         [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
         [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
@@ -48,11 +47,11 @@ namespace Content.Client.Construction
 
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.OpenCraftingMenu,
-                    new PointerInputCmdHandler(HandleOpenCraftingMenu, outsidePrediction:true))
+                    new PointerInputCmdHandler(HandleOpenCraftingMenu, outsidePrediction: true))
                 .Bind(EngineKeyFunctions.Use,
                     new PointerInputCmdHandler(HandleUse, outsidePrediction: true))
                 .Bind(ContentKeyFunctions.EditorFlipObject,
-                    new PointerInputCmdHandler(HandleFlip, outsidePrediction:true))
+                    new PointerInputCmdHandler(HandleFlip, outsidePrediction: true))
                 .Register<ConstructionSystem>();
 
             SubscribeLocalEvent<ConstructionGhostComponent, ExaminedEvent>(HandleConstructionGhostExamined);
@@ -196,7 +195,7 @@ namespace Content.Client.Construction
             if (GhostPresent(loc))
                 return false;
 
-            var predicate = GetPredicate(prototype.CanBuildInImpassable, loc.ToMap(EntityManager, _transformSystem));
+            var predicate = GetPredicate(prototype.CanBuildInImpassable, _transformSystem.ToMapCoordinates(loc));
             if (!_examineSystem.InRangeUnOccluded(user, loc, 20f, predicate: predicate))
                 return false;
 

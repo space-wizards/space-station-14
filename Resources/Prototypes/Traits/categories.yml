@@ -6,3 +6,7 @@
   id: SpeechTraits
   name: trait-category-speech
   maxTraitPoints: 2
+
+- type: traitCategory
+  id: Quirks
+  name: trait-category-quirks

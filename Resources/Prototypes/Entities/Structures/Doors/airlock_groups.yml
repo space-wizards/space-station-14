@@ -5,6 +5,7 @@
     atmospherics: Structures/Doors/Airlocks/Standard/atmospherics.rsi
     basic:       Structures/Doors/Airlocks/Standard/basic.rsi
     cargo:       Structures/Doors/Airlocks/Standard/cargo.rsi
+    chemistry:   Structures/Doors/Airlocks/Standard/chemistry.rsi
     command:     Structures/Doors/Airlocks/Standard/command.rsi
     engineering: Structures/Doors/Airlocks/Standard/engineering.rsi
     freezer:     Structures/Doors/Airlocks/Standard/freezer.rsi
@@ -20,10 +21,12 @@
   stylePaths:
     atmospherics: Structures/Doors/Airlocks/Glass/atmospherics.rsi
     basic:       Structures/Doors/Airlocks/Glass/basic.rsi
-    command:     Structures/Doors/Airlocks/Glass/command.rsi
-    science:     Structures/Doors/Airlocks/Glass/science.rsi
     cargo:       Structures/Doors/Airlocks/Glass/cargo.rsi
+    command:     Structures/Doors/Airlocks/Glass/command.rsi
+    chemistry:   Structures/Doors/Airlocks/Glass/chemistry.rsi
+    science:     Structures/Doors/Airlocks/Glass/science.rsi
     engineering: Structures/Doors/Airlocks/Glass/engineering.rsi
+    glass:       Structures/Doors/Airlocks/Glass/glass.rsi
     maintenance: Structures/Doors/Airlocks/Glass/maint.rsi
     medical:     Structures/Doors/Airlocks/Glass/medical.rsi
     security:    Structures/Doors/Airlocks/Glass/security.rsi
@@ -66,9 +69,11 @@
     atmospherics: Engineering
     basic: Civilian
     cargo: Cargo
+    chemistry: Medical
     command: Command
     engineering: Engineering
     freezer: Civilian
+    glass: Civilian
     maintenance: Civilian
     medical: Medical
     science: Science

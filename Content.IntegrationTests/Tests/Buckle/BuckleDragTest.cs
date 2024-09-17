@@ -34,17 +34,21 @@ public sealed class BuckleDragTest : InteractionTest
         Assert.That(pullable.BeingPulled, Is.False);
 
         // Strap the human to the chair
-        Assert.That(Server.System<SharedBuckleSystem>().TryBuckle(sUrist, SPlayer, STarget.Value));
+        await Server.WaitAssertion(() =>
+        {
+            Assert.That(Server.System<SharedBuckleSystem>().TryBuckle(sUrist, SPlayer, STarget.Value));
+        });
+
         await RunTicks(5);
         Assert.That(buckle.Buckled, Is.True);
         Assert.That(buckle.BuckledTo, Is.EqualTo(STarget));
-        Assert.That(strap.BuckledEntities, Is.EquivalentTo(new[]{sUrist}));
+        Assert.That(strap.BuckledEntities, Is.EquivalentTo(new[] { sUrist }));
         Assert.That(puller.Pulling, Is.Null);
         Assert.That(pullable.Puller, Is.Null);
         Assert.That(pullable.BeingPulled, Is.False);
 
         // Start pulling, and thus unbuckle them
-        await PressKey(ContentKeyFunctions.TryPullObject, cursorEntity:urist);
+        await PressKey(ContentKeyFunctions.TryPullObject, cursorEntity: urist);
         await RunTicks(5);
         Assert.That(buckle.Buckled, Is.False);
         Assert.That(buckle.BuckledTo, Is.Null);

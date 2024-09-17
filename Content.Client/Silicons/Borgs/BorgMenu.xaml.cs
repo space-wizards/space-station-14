@@ -21,25 +21,33 @@ public sealed partial class BorgMenu : FancyWindow
     public Action<string>? NameChanged;
     public Action<EntityUid>? RemoveModuleButtonPressed;
 
-    private readonly BorgChassisComponent? _chassis;
-    public readonly EntityUid Entity;
     public float AccumulatedTime;
     private string _lastValidName;
     private List<EntityUid> _modules = new();
 
-    public BorgMenu(EntityUid entity)
+    public EntityUid Entity;
+
+    public BorgMenu()
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
+        _lastValidName = NameLineEdit.Text;
+
+        EjectBatteryButton.OnPressed += _ => EjectBatteryButtonPressed?.Invoke();
+        BrainButton.OnPressed += _ => BrainButtonPressed?.Invoke();
+
+        NameLineEdit.OnTextChanged += OnNameChanged;
+        NameLineEdit.OnTextEntered += OnNameEntered;
+        NameLineEdit.OnFocusExit += OnNameFocusExit;
+
+        UpdateBrainButton();
+    }
+
+    public void SetEntity(EntityUid entity)
+    {
         Entity = entity;
-
-        if (_entity.TryGetComponent<BorgChassisComponent>(Entity, out var chassis))
-            _chassis = chassis;
-
         BorgSprite.SetEntity(entity);
-        ChargeBar.MaxValue = 1f;
-        ChargeBar.Value = 1f;
 
         if (_entity.TryGetComponent<NameIdentifierComponent>(Entity, out var nameIdentifierComponent))
         {
@@ -55,17 +63,6 @@ public sealed partial class BorgMenu : FancyWindow
             NameIdentifierLabel.Visible = false;
             NameLineEdit.Text = _entity.GetComponent<MetaDataComponent>(Entity).EntityName;
         }
-
-        _lastValidName = NameLineEdit.Text;
-
-        EjectBatteryButton.OnPressed += _ => EjectBatteryButtonPressed?.Invoke();
-        BrainButton.OnPressed += _ => BrainButtonPressed?.Invoke();
-
-        NameLineEdit.OnTextChanged += OnNameChanged;
-        NameLineEdit.OnTextEntered += OnNameEntered;
-        NameLineEdit.OnFocusExit += OnNameFocusExit;
-
-        UpdateBrainButton();
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
@@ -89,7 +86,7 @@ public sealed partial class BorgMenu : FancyWindow
 
     private void UpdateBrainButton()
     {
-        if (_chassis?.BrainEntity is { } brain)
+        if (_entity.TryGetComponent(Entity, out BorgChassisComponent? chassis) && chassis.BrainEntity is { } brain)
         {
             BrainButton.Text = _entity.GetComponent<MetaDataComponent>(brain).EntityName;
             BrainView.Visible = true;
@@ -108,17 +105,17 @@ public sealed partial class BorgMenu : FancyWindow
 
     private void UpdateModulePanel()
     {
-        if (_chassis == null)
+        if (!_entity.TryGetComponent(Entity, out BorgChassisComponent? chassis))
             return;
 
         ModuleCounter.Text = Loc.GetString("borg-ui-module-counter",
-            ("actual", _chassis.ModuleCount),
-            ("max", _chassis.MaxModules));
+            ("actual", chassis.ModuleCount),
+            ("max", chassis.MaxModules));
 
-        if (_chassis.ModuleContainer.Count == _modules.Count)
+        if (chassis.ModuleContainer.Count == _modules.Count)
         {
             var isSame = true;
-            foreach (var module in _chassis.ModuleContainer.ContainedEntities)
+            foreach (var module in chassis.ModuleContainer.ContainedEntities)
             {
                 if (_modules.Contains(module))
                     continue;
@@ -132,7 +129,7 @@ public sealed partial class BorgMenu : FancyWindow
 
         ModuleContainer.Children.Clear();
         _modules.Clear();
-        foreach (var module in _chassis.ModuleContainer.ContainedEntities)
+        foreach (var module in chassis.ModuleContainer.ContainedEntities)
         {
             var control = new BorgModuleControl(module, _entity);
             control.RemoveButtonPressed += () =>

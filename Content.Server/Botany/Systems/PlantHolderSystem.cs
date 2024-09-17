@@ -1,11 +1,9 @@
-using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Botany.Components;
-using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Fluids.Components;
-using Content.Server.Ghost.Roles.Components;
 using Content.Server.Kitchen.Components;
 using Content.Server.Popups;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Botany;
 using Content.Shared.Burial.Components;
@@ -40,7 +38,7 @@ public sealed class PlantHolderSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly SharedPointLightSystem _pointLight = default!;
-    [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
     [Dependency] private readonly RandomHelperSystem _randomHelper = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -79,7 +77,7 @@ public sealed class PlantHolderSystem : EntitySystem
         if (component.Seed == null)
             return 0;
 
-        var result = Math.Max(1, (int) (component.Age * component.Seed.GrowthStages / component.Seed.Maturation));
+        var result = Math.Max(1, (int)(component.Age * component.Seed.GrowthStages / component.Seed.Maturation));
         return result;
     }
 
@@ -125,9 +123,9 @@ public sealed class PlantHolderSystem : EntitySystem
                 args.PushMarkup(Loc.GetString("plant-holder-component-pest-high-level-message"));
 
             args.PushMarkup(Loc.GetString($"plant-holder-component-water-level-message",
-                ("waterLevel", (int) component.WaterLevel)));
+                ("waterLevel", (int)component.WaterLevel)));
             args.PushMarkup(Loc.GetString($"plant-holder-component-nutrient-level-message",
-                ("nutritionLevel", (int) component.NutritionLevel)));
+                ("nutritionLevel", (int)component.NutritionLevel)));
 
             if (component.DrawWarnings)
             {
@@ -298,17 +296,14 @@ public sealed class PlantHolderSystem : EntitySystem
             {
                 healthOverride = component.Health;
             }
-            component.Seed.Unique = false;
-            var seed = _botany.SpawnSeedPacket(component.Seed, Transform(args.User).Coordinates, args.User, healthOverride);
+            var packetSeed = component.Seed;
+            var seed = _botany.SpawnSeedPacket(packetSeed, Transform(args.User).Coordinates, args.User, healthOverride);
             _randomHelper.RandomOffset(seed, 0.25f);
             var displayName = Loc.GetString(component.Seed.DisplayName);
             _popup.PopupCursor(Loc.GetString("plant-holder-component-take-sample-message",
                 ("seedName", displayName)), args.User);
 
-            if (component.Seed != null && component.Seed.CanScream)
-            {
-                _audio.PlayPvs(component.Seed.ScreamSound, uid, AudioParams.Default.WithVolume(-2));
-            }
+            DoScream(entity.Owner, component.Seed);
 
             if (_random.Prob(0.3f))
                 component.Sampled = true;
@@ -453,7 +448,7 @@ public sealed class PlantHolderSystem : EntitySystem
         else
         {
             if (_random.Prob(0.8f))
-                component.Age += (int) (1 * HydroponicsSpeedMultiplier);
+                component.Age += (int)(1 * HydroponicsSpeedMultiplier);
 
             component.UpdateSpriteAfterUpdate = true;
         }
@@ -516,10 +511,9 @@ public sealed class PlantHolderSystem : EntitySystem
 
         var environment = _atmosphere.GetContainingMixture(uid, true, true) ?? GasMixture.SpaceGas;
 
+        component.MissingGas = 0;
         if (component.Seed.ConsumeGasses.Count > 0)
         {
-            component.MissingGas = 0;
-
             foreach (var (gas, amount) in component.Seed.ConsumeGasses)
             {
                 if (environment.GetMoles(gas) < amount)
@@ -626,8 +620,9 @@ public sealed class PlantHolderSystem : EntitySystem
         }
         else if (component.Age < 0) // Revert back to seed packet!
         {
+            var packetSeed = component.Seed;
             // will put it in the trays hands if it has any, please do not try doing this
-            _botany.SpawnSeedPacket(component.Seed, Transform(uid).Coordinates, uid);
+            _botany.SpawnSeedPacket(packetSeed, Transform(uid).Coordinates, uid);
             RemovePlant(uid, component);
             component.ForceUpdate = true;
             Update(uid, component);
@@ -661,14 +656,6 @@ public sealed class PlantHolderSystem : EntitySystem
         }
 
         CheckLevelSanity(uid, component);
-
-        if (component.Seed.Sentient)
-        {
-            var ghostRole = EnsureComp<GhostRoleComponent>(uid);
-            EnsureComp<GhostTakeoverAvailableComponent>(uid);
-            ghostRole.RoleName = MetaData(uid).EntityName;
-            ghostRole.RoleDescription = Loc.GetString("station-event-random-sentience-role-description", ("name", ghostRole.RoleName));
-        }
 
         if (component.UpdateSpriteAfterUpdate)
             UpdateSprite(uid, component);
@@ -732,6 +719,19 @@ public sealed class PlantHolderSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    /// Force do scream on PlantHolder (like plant is screaming) using seed's ScreamSound specifier (collection or soundPath)
+    /// </summary>
+    /// <returns></returns>
+    public bool DoScream(EntityUid plantholder, SeedData? seed = null)
+    {
+        if (seed == null || seed.CanScream == false)
+            return false;
+
+        _audio.PlayPvs(seed.ScreamSound, plantholder);
+        return true;
+    }
+
     public void AutoHarvest(EntityUid uid, PlantHolderComponent? component = null)
     {
         if (!Resolve(uid, ref component))
@@ -752,8 +752,7 @@ public sealed class PlantHolderSystem : EntitySystem
         component.Harvest = false;
         component.LastProduce = component.Age;
 
-        if (component.Seed != null && component.Seed.CanScream)
-            _audio.PlayPvs(component.Seed.ScreamSound, uid, AudioParams.Default.WithVolume(-2));
+        DoScream(uid, component.Seed);
 
         if (component.Seed?.HarvestRepeat == HarvestType.NoRepeat)
             RemovePlant(uid, component);
@@ -887,7 +886,7 @@ public sealed class PlantHolderSystem : EntitySystem
         if (component.Seed != null)
         {
             EnsureUniqueSeed(uid, component);
-            _mutation.MutateSeed(ref component.Seed, severity);
+            _mutation.MutateSeed(uid, ref component.Seed, severity);
         }
     }
 
@@ -897,19 +896,6 @@ public sealed class PlantHolderSystem : EntitySystem
             return;
 
         component.UpdateSpriteAfterUpdate = false;
-
-        if (component.Seed != null && component.Seed.Bioluminescent)
-        {
-            var light = EnsureComp<PointLightComponent>(uid);
-            _pointLight.SetRadius(uid, component.Seed.BioluminescentRadius, light);
-            _pointLight.SetColor(uid, component.Seed.BioluminescentColor, light);
-            _pointLight.SetCastShadows(uid, false, light);
-            Dirty(uid, light);
-        }
-        else
-        {
-            RemComp<PointLightComponent>(uid);
-        }
 
         if (!TryComp<AppearanceComponent>(uid, out var app))
             return;
