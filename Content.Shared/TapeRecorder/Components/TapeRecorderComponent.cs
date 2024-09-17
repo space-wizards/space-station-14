@@ -2,12 +2,13 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.TapeRecorder.Components;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
-[Access(typeof(SharedTapeRecorderSystem))]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedTapeRecorderSystem))]
+[AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class TapeRecorderComponent : Component
 {
     /// <summary>
@@ -29,7 +30,7 @@ public sealed partial class TapeRecorderComponent : Component
     [DataField]
     public float RewindSpeed = 3f;
 
-    [DataField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
     public TimeSpan CooldownEndTime = TimeSpan.Zero;
 
     /// <summary>
