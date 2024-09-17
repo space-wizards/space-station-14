@@ -675,12 +675,12 @@
         color: "#A63526"
     - type: Paper
       content: book-text-agony
-      
+
 - type: entity
   parent: BookBase
   id: BookClownLaw
-  name: An Outside Perspective on Clown Law
-  description: An anthropological essay on the system of law practiced in clown cultures.
+  name: an outside perspective on clown law
+  description: The book is in good condition, with a tidy cover displaying only a title and a description. "An anthropological essay on rule of law in clown cultures."
   components:
   - type: Sprite
     sprite: Objects/Misc/books.rsi
