@@ -342,6 +342,9 @@
   - type: Tag
     tags:
     - Salt
+  - type: RevealRevenantOnCollide
+    revealTime: 5
+    popupText: revenant-revealed-salt
   - type: Stack
     stackType: SaltOre
   - type: Sprite
