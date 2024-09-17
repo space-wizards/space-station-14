@@ -31,6 +31,7 @@
   - type: NpcFactionMember
     factions:
     - Dragon
+  - type: NoFriendlyFire # don't let dragon accidentally hit the fish when fighting
   - type: Speech
     speechVerb: LargeMob
   - type: CombatMode
