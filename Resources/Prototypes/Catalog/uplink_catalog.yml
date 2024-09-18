@@ -773,8 +773,8 @@
   id: UplinkBinaryTranslatorKey
   name: uplink-binary-translator-key-name
   description: uplink-binary-translator-key-desc
-  icon: { sprite: /Textures/Objects/Devices/encryption_keys.rsi, state: rd_label }
-  productEntity: EncryptionKeyBinary
+  icon: { sprite: /Textures/Objects/Devices/encryption_keys.rsi, state: borg_label }
+  productEntity: EncryptionKeyBinarySyndicate
   cost:
     Telecrystal: 1
   categories:

@@ -2,10 +2,13 @@
   id: names_ai
   values:
   - 16-20
+  - 512k
+  - 640k #ought to be enough for anybody
   - "790"
   - A.L.L.M.O.T.H.E.R
   - A.R.C.H.O.N.
   - Adaptive Manipulator
+  - Adlib #named after the famous soundcard
   - Analysis-bot
   - Al-An
   - Alfred
@@ -31,6 +34,7 @@
   - Atlas
   - Auto
   - B.O.B.
+  - Bell 301 #the most influential modem ever, created by the bell system. It still lives on today in certain applications
   - BELLBOY
   - Big Brother
   - Big Sister
@@ -41,12 +45,16 @@
   - BUSSER
   - Butler
   - C.A.T.S.
+  - C.R.A.I.G.
+  - Calculator
   - Call
   - Cassandra
   - Cell
   - Chii
   - Chip
   - ClapBack
+  - Cray-2 #commercial supercomputer from the 70s
+  - CompuServe #if we're going to have AOL we may as well have some of their major competitors
   - Computer
   - CORTNA
   - COZMO
@@ -55,6 +63,7 @@
   - Daedalus
   - Davey Jones
   - David
+  - DecTalk
   - Dee Model
   - Delta
   - Dial Up
@@ -65,6 +74,7 @@
   - Duey
   - ELIZA
   - Emma-2
+  - ENIAC #famous early computer
   - Epsilon
   - Erasmus
   - Everything
@@ -86,9 +96,12 @@
   - Huey
   - Hugin
   - Hyper PAI
+  - I.E. 6 #hell on earth (web browser)
   - I.N.F.I.N.I.T.Y.
+  - iAI #a play on the fad apple spawned of putting "i" infront of your tech products name
   - Icarus
   - iriS
+  - Jeeves #if you don't get this one you are too young
   - Jeri
   - Jinx
   - Jupiter King
@@ -105,6 +118,7 @@
   - M.I.M.I
   - Machine Spirit
   - Managerial Mainframe
+  - Manchester Mark 2 #named after the Manchester Mark 1, the successor of which was actually named the Ferranti Mark 1, rather than Manchester Mark 2
   - MARK13
   - Maria
   - Marvin
@@ -130,9 +144,11 @@
   - NT-GPT
   - NT Sisyphus
   - NT Smartfridge
+  - NT v6.0 #A play on both NT as in NanoTrasen and NT as in windows NT, of which version 6.0 is windows vista
   - Omega
   - ORWELL
   - P.R.O.B.L.eM.
+  - Packard Bell
   - Panopticon
   - Peabody
   - Pear
@@ -160,12 +176,15 @@
   - STARVIS
   - Static Sky
   - Station Control Program
+  - AINU (AI's Not Unix)
   - Super 35
   - SUPER ALABASTER
   - Surgeon General
   - Tesseract
   - TWA
   - Terminus
+  - TPM 3.0
+  - Turing Complete
   - Tidy
   - U-Borg
   - Ulysses
