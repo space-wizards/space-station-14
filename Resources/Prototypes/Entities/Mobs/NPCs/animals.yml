@@ -2539,6 +2539,7 @@
     - type: Tag
       tags:
       - BROS
+      - Trash
 
 - type: entity
   name: SORB
