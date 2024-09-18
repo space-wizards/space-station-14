@@ -1316,6 +1316,7 @@
     tags:
     - VimPilot
     - DoorBumpOpener
+    - AnomalyHost
   - type: Reactive
     groups:
       Flammable: [ Touch ]
@@ -3136,7 +3137,7 @@
       Alive:
         Base: ferret
       Critical:
-        Base:
+        Base: ferret_dead
       Dead:
         Base: ferret_dead
   - type: Butcherable
@@ -3344,7 +3345,7 @@
       Alive:
         Base: pig
       Critical:
-        Base:
+        Base: dead
       Dead:
         Base: dead
   - type: Butcherable
