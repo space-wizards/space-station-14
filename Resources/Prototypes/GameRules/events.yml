@@ -20,7 +20,7 @@
     - id: SlimesSpawn
     - id: SolarFlare
     #- id: SnakeSpawn # GreyStation - Replace for Ventbulls
-    - id: SpiderClownSpawn
+    #- id: SpiderClownSpawn
     - id: SpiderSpawn
     - id: VentClog
 
