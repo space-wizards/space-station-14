@@ -1,5 +1,5 @@
 - type: entity # Head of Security steal objective.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: BaseTraitorStealObjective
   id: HoSGunStealObjective
   components:
