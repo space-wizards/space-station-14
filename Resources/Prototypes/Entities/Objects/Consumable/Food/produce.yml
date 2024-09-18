@@ -2088,6 +2088,10 @@
   - type: SliceableFood
     count: 5
     slice: FoodHolymelonSlice
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: ClothingHeadHatHolyWatermelon
   - type: Tag
     tags:
     - Fruit
