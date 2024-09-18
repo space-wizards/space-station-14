@@ -19,8 +19,8 @@
     - id: RandomSentience
     - id: SlimesSpawn
     - id: SolarFlare
-    #- id: SnakeSpawn # GreyStation - Replace for Ventbulls
-    #- id: SpiderClownSpawn
+    #- id: SnakeSpawn # GreyStation - Removed
+    #- id: SpiderClownSpawn # GreyStation - Removed
     - id: SpiderSpawn
     - id: VentClog
 
@@ -354,7 +354,7 @@
     - id: MobAdultSlimesYellowAngry
       prob: 0.02
 
-#- type: entity # GreyStation - Replaced for Ventbulls
+#- type: entity # GreyStation - Removed
 #  id: SnakeSpawn
 #  parent: BaseStationEventShortDelay
 #  components:
