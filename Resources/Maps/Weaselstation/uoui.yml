@@ -44964,6 +44964,38 @@ entities:
     - type: Transform
       pos: 54.5,-5.5
       parent: 1
+- proto: SpawnPointSecurityOfficer
+  entities:
+  - uid: 8358
+    components:
+    - type: Transform
+      pos: 50.5,-17.5
+      parent: 1
+  - uid: 8359
+    components:
+    - type: Transform
+      pos: 51.5,-17.5
+      parent: 1
+  - uid: 8360
+    components:
+    - type: Transform
+      pos: 52.5,-17.5
+      parent: 1
+  - uid: 8361
+    components:
+    - type: Transform
+      pos: 52.5,-18.5
+      parent: 1
+  - uid: 8362
+    components:
+    - type: Transform
+      pos: 51.5,-18.5
+      parent: 1
+  - uid: 8363
+    components:
+    - type: Transform
+      pos: 50.5,-18.5
+      parent: 1
 - proto: SpawnPointServiceWorker
   entities:
   - uid: 7434
