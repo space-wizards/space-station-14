@@ -43,7 +43,7 @@
 
 - type: stealTargetGroup
   id: RecruiterPen
-  name: recruiter pen
+  name: steal-target-groups-recruiter-pen
   sprite:
     sprite: DeltaV/Objects/Misc/recruiter_pen.rsi
     state: empty
