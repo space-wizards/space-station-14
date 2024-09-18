@@ -1672,3 +1672,16 @@
   id: 217
   time: '2024-09-18T10:11:00.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/283
+- author: formlessnameless
+  changes:
+  - message: Modified salvage and added AI to Cluster
+    type: Tweak
+  - message: Modified salvage and added AI to Train
+    type: Tweak
+  - message: Modified salvage on Atlas
+    type: Tweak
+  - message: Modified salvage and Atmos on Saltern, added AI zone
+    type: Tweak
+  id: 218
+  time: '2024-09-18T21:54:15.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/287
