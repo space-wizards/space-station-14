@@ -20,6 +20,7 @@
       - id: ClothingOuterHardsuitWarden
       - id: HoloprojectorSecurity
       - id: BookSpaceLaw
+      - id: DrinkShinyFlask
       - id: ClothingBackpackElectropack
         amount: 2
       - id: RemoteSignaller
