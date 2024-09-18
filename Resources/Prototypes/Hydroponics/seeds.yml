@@ -14,8 +14,6 @@
   production: 3
   yield: 3
   potency: 5
-  idealLight: 8
-  nutrientConsumption: 0.40
   chemicals:
     Nutriment:
       Min: 1
@@ -40,8 +38,6 @@
   production: 3
   yield: 3
   potency: 5
-  idealLight: 8
-  nutrientConsumption: 0.40
   chemicals:
     Nutriment:
       Min: 1
@@ -51,6 +47,15 @@
       Min: 5
       Max: 20
       PotencyDivisor: 20
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.5
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.4
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: oat
@@ -66,8 +71,6 @@
   production: 3
   yield: 3
   potency: 5
-  idealLight: 8
-  nutrientConsumption: 0.40
   chemicals:
     Nutriment:
       Min: 1
@@ -77,6 +80,15 @@
       Min: 5
       Max: 20
       PotencyDivisor: 20
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.5
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.4
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: banana
@@ -94,8 +106,6 @@
   maturation: 6
   production: 6
   yield: 2
-  idealLight: 9
-  waterConsumption: 0.60
   idealHeat: 298
   chemicals:
     Vitamin:
@@ -106,6 +116,15 @@
       Min: 1
       Max: 2
       PotencyDivisor: 50
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.6
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.5
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: mimana
@@ -121,8 +140,6 @@
   maturation: 6
   production: 6
   yield: 2
-  idealLight: 9
-  waterConsumption: 0.60
   idealHeat: 298
   chemicals:
     MuteToxin:
@@ -133,6 +150,15 @@
       Min: 1
       Max: 2
       PotencyDivisor: 50
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.6
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.5
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: carrots
@@ -149,7 +175,6 @@
   yield: 3
   potency: 10
   growthStages: 3
-  waterConsumption: 0.60
   chemicals:
     JuiceCarrot:
       Min: 1
@@ -163,6 +188,15 @@
       Min: 1
       Max: 4
       PotencyDivisor: 25
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.6
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.5
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: laughinPea
@@ -181,10 +215,7 @@
   production: 5
   yield: 3
   potency: 20
-  idealLight: 8
   harvestRepeat: Repeat
-  nutrientConsumption: 0.6
-  waterConsumption: 0.6
   chemicals:
     Nutriment:
       Min: 1
@@ -198,6 +229,15 @@
       Min: 1
       Max: 10
       PotencyDivisor: 5
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.6
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.6
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: lemon
@@ -218,7 +258,6 @@
   production: 6
   yield: 3
   potency: 10
-  idealLight: 8
   chemicals:
     Nutriment:
       Min: 1
@@ -228,6 +267,15 @@
       Min: 1
       Max: 4
       PotencyDivisor: 25
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.5
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.5
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: lemoon
@@ -244,7 +292,6 @@
   production: 6
   yield: 4
   potency: 1
-  idealLight: 8
   chemicals:
     Vitamin:
       Min: 1
@@ -254,6 +301,15 @@
       Min: 8
       Max: 20
       PotencyDivisor: 5
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.5
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.5
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: lime
@@ -273,7 +329,6 @@
   production: 6
   yield: 3
   potency: 10
-  idealLight: 8
   chemicals:
     Nutriment:
       Min: 1
@@ -283,6 +338,15 @@
       Min: 1
       Max: 4
       PotencyDivisor: 25
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.5
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.5
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: orange
@@ -303,7 +367,6 @@
   production: 6
   yield: 3
   potency: 10
-  idealLight: 8
   chemicals:
     Nutriment:
       Min: 1
@@ -329,7 +392,6 @@
   production: 6
   yield: 3
   potency: 10
-  idealLight: 8
   chemicals:
     Haloperidol:
       Min: 1
@@ -343,6 +405,15 @@
       Min: 1
       Max: 4
       PotencyDivisor: 25
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.5
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.5
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: pineapple
@@ -359,7 +430,6 @@
   production: 6
   yield: 3
   potency: 10
-  idealLight: 8
   growthStages: 3
   chemicals:
     Nutriment:
@@ -374,6 +444,15 @@
       Min: 1
       Max: 2
       PotencyDivisor: 50
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.5
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.5
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: potato
@@ -390,7 +469,6 @@
   yield: 3
   potency: 10
   growthStages: 4
-  waterConsumption: 0.60
   chemicals:
     Nutriment:
       Min: 1
@@ -400,6 +478,15 @@
       Min: 1
       Max: 4
       PotencyDivisor: 25
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.6
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.5
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: sugarcane
@@ -425,6 +512,15 @@
       Min: 4
       Max: 5
       PotencyDivisor: 5
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.5
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.5
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: teaPlant
@@ -442,14 +538,21 @@
   yield: 2
   potency: 20
   growthStages: 5
-  waterConsumption: 0.6
-  idealLight: 9
   idealHeat: 298
   chemicals:
     Vitamin:
       Min: 1
       Max: 5
       PotencyDivisor: 20
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.6
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.5
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: papercane
@@ -468,6 +571,15 @@
   potency: 10
   growthStages: 3
   idealHeat: 298
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.5
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.5
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: towercap
@@ -487,10 +599,16 @@
   yield: 5
   potency: 1
   growthStages: 3
-  waterConsumption: 0.60
-  nutrientConsumption: 0.50
-  lightTolerance: 6
   idealHeat: 288
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.6
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.5
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: steelcap
@@ -508,10 +626,16 @@
   yield: 3
   potency: 1
   growthStages: 3
-  waterConsumption: 0.60
-  nutrientConsumption: 0.80
-  lightTolerance: 6
   idealHeat: 288
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.6
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.8
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: tomato
@@ -531,9 +655,6 @@
   production: 6
   yield: 2
   potency: 10
-  waterConsumption: 0.60
-  nutrientConsumption: 0.40
-  idealLight: 8
   idealHeat: 298
   splatPrototype: PuddleSplatter
   chemicals:
@@ -549,6 +670,15 @@
       Min: 1
       Max: 4
       PotencyDivisor: 25
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.6
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.4
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: blueTomato
@@ -565,9 +695,6 @@
   production: 6
   yield: 2
   potency: 10
-  waterConsumption: 0.60
-  nutrientConsumption: 0.70
-  idealLight: 8
   idealHeat: 298
   splatPrototype: PuddleSplatter
   chemicals:
@@ -583,6 +710,15 @@
       Min: 1
       Max: 4
       PotencyDivisor: 25
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.6
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.7
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: bloodTomato
@@ -601,9 +737,6 @@
   production: 6
   yield: 2
   potency: 10
-  waterConsumption: 0.60
-  nutrientConsumption: 0.70
-  idealLight: 8
   idealHeat: 298
   splatPrototype: PuddleSplatter
   chemicals:
@@ -615,6 +748,15 @@
       Min: 1
       Max: 4
       PotencyDivisor: 25
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.6
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.7
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: killerTomato
@@ -631,9 +773,6 @@
   production: 6
   yield: 2
   potency: 10
-  waterConsumption: 0.60
-  nutrientConsumption: 0.70
-  idealLight: 8
   idealHeat: 298
   growthStages: 2
   splatPrototype: PuddleSplatter
@@ -646,6 +785,15 @@
       Min: 1
       Max: 4
       PotencyDivisor: 25
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.6
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.7
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: eggplant
@@ -664,7 +812,6 @@
   production: 6
   yield: 2
   potency: 20
-  idealLight: 9
   idealHeat: 298
   chemicals:
     Nutriment:
@@ -675,6 +822,15 @@
       Min: 1
       Max: 4
       PotencyDivisor: 25
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.5
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.5
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: cabbage
@@ -700,6 +856,15 @@
       Min: 1
       Max: 4
       PotencyDivisor: 25
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.5
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.5
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: garlic
@@ -729,6 +894,15 @@
       Min: 1
       Max: 8
       PotencyDivisor: 25
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.5
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.5
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: apple
@@ -747,7 +921,6 @@
   production: 6
   yield: 3
   potency: 10
-  idealLight: 6
   chemicals:
     Nutriment:
       Min: 1
@@ -757,6 +930,16 @@
       Min: 1
       Max: 4
       PotencyDivisor: 25
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.5
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.5
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
+      
 
 - type: seed
   id: goldenApple
@@ -773,9 +956,6 @@
   production: 6
   yield: 3
   potency: 10
-  idealLight: 6
-  waterConsumption: 0.75
-  nutrientConsumption: 0.75
   chemicals:
     Nutriment:
       Min: 1
@@ -788,7 +968,16 @@
     DoctorsDelight:
       Min: 3
       Max: 13
-      PotencyDivisor: 10
+      PotencyDivisor: 10 
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.75
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.75
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: corn
@@ -805,8 +994,6 @@
   yield: 2
   potency: 20
   growthStages: 3
-  idealLight: 8
-  waterConsumption: 0.60
   idealHeat: 298
   chemicals:
     Nutriment:
@@ -817,6 +1004,15 @@
       Min: 5
       Max: 15
       PotencyDivisor: 10
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.6
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.5
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: onion
@@ -835,8 +1031,6 @@
   yield: 2
   potency: 20
   growthStages: 3
-  idealLight: 8
-  waterConsumption: 0.60
   idealHeat: 298
   chemicals:
     Nutriment:
@@ -851,6 +1045,15 @@
       Min: 1
       Max: 4
       PotencyDivisor: 25
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.6
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.5
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: onionred
@@ -867,8 +1070,6 @@
   yield: 2
   potency: 20
   growthStages: 3
-  idealLight: 8
-  waterConsumption: 0.60
   idealHeat: 298
   chemicals:
     Nutriment:
@@ -883,6 +1084,15 @@
       Min: 1
       Max: 4
       PotencyDivisor: 25
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.6
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.5
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: chanterelle
@@ -899,15 +1109,21 @@
   yield: 5
   potency: 1
   growthStages: 3
-  lightTolerance: 6
-  waterConsumption: 0.60
-  nutrientConsumption: 0.50
   idealHeat: 288
   chemicals:
     Nutriment:
       Min: 1
       Max: 25
       PotencyDivisor: 25
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.6
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.5
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: eggy
@@ -924,14 +1140,21 @@
   production: 12
   yield: 2
   potency: 20
-  nutrientConsumption: 0.50
-  idealLight: 9
   idealHeat: 298
   chemicals:
     Egg:
       Min: 1
       Max: 10
       PotencyDivisor: 10
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.5
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.5
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: cannabis
@@ -951,14 +1174,21 @@
   yield: 2
   potency: 20
   growthStages: 3
-  waterConsumption: 0.40
-  idealLight: 9
   idealHeat: 298
   chemicals:
     THC:
       Min: 1
       Max: 10
       PotencyDivisor: 10
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.4
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.5
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: rainbowCannabis
@@ -976,8 +1206,6 @@
   yield: 2
   potency: 20
   growthStages: 3
-  waterConsumption: 0.40
-  idealLight: 9
   idealHeat: 298
   chemicals:
     SpaceDrugs:
@@ -1004,6 +1232,15 @@
       Min: 0
       Max: 5
       PotencyDivisor: 33
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.4
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.5
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: tobacco
@@ -1021,14 +1258,21 @@
   yield: 2
   potency: 20
   growthStages: 3
-  waterConsumption: 0.40
-  idealLight: 9
   idealHeat: 298
   chemicals:
     Nicotine:
       Min: 1
       Max: 10
       PotencyDivisor: 10
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.4
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.5
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: nettle
@@ -1047,14 +1291,21 @@
   yield: 2
   potency: 20
   growthStages: 5
-  idealLight: 8
-  waterConsumption: 0.60
   idealHeat: 298
   chemicals:
     Histamine:
       Min: 1
       Max: 25
       PotencyDivisor: 4
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.6
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.5
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: deathNettle
@@ -1071,9 +1322,6 @@
   yield: 2
   potency: 20
   growthStages: 5
-  idealLight: 8
-  waterConsumption: 0.70
-  nutrientConsumption: 0.80
   idealHeat: 298
   chemicals:
     SulfuricAcid:
@@ -1084,6 +1332,15 @@
       Min: 1
       Max: 15
       PotencyDivisor: 6
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.7
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.8
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: chili
@@ -1102,7 +1359,6 @@
   production: 6
   yield: 2
   potency: 20
-  idealLight: 9
   idealHeat: 298
   chemicals:
     CapsaicinOil:
@@ -1117,6 +1373,15 @@
       Min: 1
       Max: 4
       PotencyDivisor: 25
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.5
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.5
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: chilly
@@ -1133,7 +1398,6 @@
   production: 6
   yield: 2
   potency: 20
-  idealLight: 9
   idealHeat: 298
   chemicals:
     Frostoil:
@@ -1148,6 +1412,15 @@
       Min: 1
       Max: 4
       PotencyDivisor: 25
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.5
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.5
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: poppy
@@ -1166,7 +1439,6 @@
   yield: 3
   potency: 10
   growthStages: 3
-  waterConsumption: 0.60
   chemicals:
     Nutriment:
       Min: 1
@@ -1176,6 +1448,15 @@
       Min: 1
       Max: 20
       PotencyDivisor: 5
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.6
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.5
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: aloe
@@ -1192,7 +1473,6 @@
   yield: 3
   potency: 10
   growthStages: 5
-  waterConsumption: 0.60
   chemicals:
     Aloe:
       Min: 1
@@ -1202,6 +1482,15 @@
       Min: 1
       Max: 10
       PotencyDivisor: 10
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.6
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.5
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: lily
@@ -1220,7 +1509,6 @@
   yield: 3
   potency: 10
   growthStages: 3
-  waterConsumption: 0.60
   chemicals:
     Nutriment:
       Min: 1
@@ -1230,6 +1518,15 @@
       Min: 1
       Max: 20
       PotencyDivisor: 5
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.6
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.5
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: lingzhi
@@ -1246,7 +1543,6 @@
   yield: 3
   potency: 10
   growthStages: 3
-  waterConsumption: 0.60
   chemicals:
     Ultravasculine:
       Min: 1
@@ -1256,6 +1552,15 @@
       Min: 1
       Max: 20
       PotencyDivisor: 5
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.6
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.5
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: ambrosiaVulgaris
@@ -1274,7 +1579,6 @@
   yield: 3
   potency: 10
   growthStages: 6
-  waterConsumption: 0.60
   chemicals:
     Nutriment:
       Min: 1
@@ -1296,6 +1600,15 @@
       Min: 1
       Max: 2
       PotencyDivisor: 50
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.6
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.5
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: ambrosiaDeus
@@ -1312,7 +1625,6 @@
   yield: 3
   potency: 10
   growthStages: 6
-  waterConsumption: 0.60
   chemicals:
     Nutriment:
       Min: 1
@@ -1330,6 +1642,15 @@
       Min: 1
       Max: 10
       PotencyDivisor: 10
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.6
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.5
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: galaxythistle
@@ -1348,12 +1669,20 @@
   yield: 3
   potency: 10
   growthStages: 3
-  waterConsumption: 0.60
   chemicals:
     Stellibinin:
       Min: 1
       Max: 25
       PotencyDivisor: 4
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.6
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.5
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: glasstle
@@ -1370,12 +1699,20 @@
   yield: 3
   potency: 10
   growthStages: 3
-  waterConsumption: 0.5
   chemicals:
     Razorium:
       Min: 1
       Max: 25
       PotencyDivisor: 4
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.5
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.5
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: flyAmanita
@@ -1392,8 +1729,6 @@
   yield: 3
   potency: 10
   growthStages: 2
-  waterConsumption: 0.60
-  nutrientConsumption: 0.50
   chemicals:
     Amatoxin:
       Min: 1
@@ -1403,6 +1738,15 @@
       Min: 1
       Max: 5
       PotencyDivisor: 20
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.5
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.5
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: gatfruit
@@ -1422,7 +1766,6 @@
   yield: 1
   potency: 10
   growthStages: 2
-  idealLight: 6
   chemicals:
     Nutriment:
       Min: 1
@@ -1432,6 +1775,15 @@
       Min: 1
       Max: 5
       PotencyDivisor: 20
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.5
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.5
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: fakeCapfruit
@@ -1448,7 +1800,6 @@
   yield: 1
   potency: 10
   growthStages: 2
-  idealLight: 6
   chemicals:
     Nutriment:
       Min: 1
@@ -1458,6 +1809,15 @@
       Min: 1
       Max: 5
       PotencyDivisor: 20
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.5
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.5
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: realCapfruit
@@ -1474,7 +1834,6 @@
   yield: 1
   potency: 10
   growthStages: 2
-  idealLight: 6
   chemicals:
     Nutriment:
       Min: 1
@@ -1484,6 +1843,15 @@
       Min: 1
       Max: 5
       PotencyDivisor: 20
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.5
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.5
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: rice
@@ -1500,9 +1868,6 @@
   yield: 3
   potency: 5
   growthStages: 4
-  idealLight: 5
-  nutrientConsumption: 0.40
-  waterConsumption: 0.60
   chemicals:
     Nutriment:
       Min: 1
@@ -1512,6 +1877,15 @@
       Min: 5
       Max: 20
       PotencyDivisor: 20
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.6
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.4
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: soybeans
@@ -1530,13 +1904,20 @@
   production: 6
   yield: 3
   potency: 5
-  idealLight: 7
-  nutrientConsumption: 0.40
   chemicals:
     Nutriment:
       Min: 1
       Max: 2
       PotencyDivisor: 50
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.5
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.4
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: spacemansTrumpet
@@ -1553,7 +1934,6 @@
   production: 3
   yield: 2
   potency: 10
-  waterConsumption: 0.60
   chemicals:
     Nutriment:
       Min: 1
@@ -1563,6 +1943,15 @@
       Min: 1
       Max: 15
       PotencyDivisor: 5
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.6
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.5
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: koibean
@@ -1579,8 +1968,6 @@
   production: 6
   yield: 3
   potency: 5
-  idealLight: 7
-  nutrientConsumption: 0.40
   chemicals:
     Nutriment:
       Min: 1
@@ -1590,6 +1977,15 @@
       Min: 1
       Max: 4
       PotencyDivisor: 30
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.5
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.5
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: grape
@@ -1615,6 +2011,15 @@
       Min: 1
       Max: 4
       PotencyDivisor: 25
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.5
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.5
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: watermelon
@@ -1632,7 +2037,6 @@
   production: 3
   yield: 1
   potency: 1
-  idealLight: 8
   chemicals:
     Nutriment:
       Min: 1
@@ -1646,6 +2050,15 @@
       Min: 1
       Max: 5
       PotencyDivisor: 20
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.5
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.5
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: holymelon
@@ -1661,7 +2074,6 @@
   production: 3
   yield: 1
   potency: 1
-  idealLight: 8
   chemicals:
     Nutriment:
       Min: 1
@@ -1690,9 +2102,6 @@
   maturation: 6
   production: 6
   yield: 6
-  idealLight: 7
-  waterConsumption: 1
-  nutrientConsumption: 0.8
   idealHeat: 298
   chemicals:
     Vitamin:
@@ -1703,6 +2112,15 @@
       Min: 1
       Max: 2
       PotencyDivisor: 50
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 1.0
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.8
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: berries
@@ -1718,8 +2136,6 @@
   maturation: 6
   production: 6
   yield: 4
-  idealLight: 7
-  nutrientConsumption: 0.6
   chemicals:
     Nutriment:
       Min: 2
@@ -1729,6 +2145,15 @@
       Min: 1
       Max: 4
       PotencyDivisor: 40
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.5
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.6
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: bungo
@@ -1745,10 +2170,8 @@
   production: 6
   potency: 10
   yield: 3
-  idealLight: 8
   idealHeat: 298
   growthStages: 4
-  waterConsumption: 0.6
   chemicals:
     Nutriment:
       Min: 5
@@ -1758,6 +2181,15 @@
       Min: 5
       Max: 10
       PotencyDivisor: 20
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.6
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.5
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: pea
@@ -1776,10 +2208,7 @@
   production: 6
   yield: 3
   potency: 25
-  idealLight: 8
   harvestRepeat: Repeat
-  nutrientConsumption: 0.5
-  waterConsumption: 0.5
   chemicals:
     Nutriment:
       Min: 1
@@ -1789,6 +2218,15 @@
       Min: 1
       Max: 2
       PotencyDivisor: 50
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.5
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.5
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: worldPea
@@ -1805,7 +2243,6 @@
   production: 6
   yield: 3
   potency: 25
-  idealLight: 8
   harvestRepeat: Repeat
   nutrientConsumption: 0.5
   waterConsumption: 0.5
@@ -1822,6 +2259,15 @@
       Min: 1
       Max: 2
       PotencyDivisor: 50
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.5
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.5
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: pumpkin
@@ -1850,6 +2296,15 @@
       Min: 1
       Max: 5
       PotencyDivisor: 20
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.5
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.5
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: bluePumpkin
@@ -1880,6 +2335,15 @@
       Min: 1
       Max: 10
       PotencyDivisor: 3
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.5
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.5
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: cotton
@@ -1897,14 +2361,21 @@
   production: 3
   yield: 3
   potency: 5
-  idealLight: 8
   growthStages: 3
-  waterConsumption: 0.60
   chemicals:
     Fiber:
       Min: 5
       Max: 10
       PotencyDivisor: 20
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.6
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.5
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: pyrotton
@@ -1920,9 +2391,7 @@
   production: 3
   yield: 2
   potency: 5
-  idealLight: 8
   growthStages: 3
-  waterConsumption: 0.80
   chemicals:
     Fiber:
       Min: 5
@@ -1932,6 +2401,15 @@
       Min: 4
       Max: 8
       PotencyDivisor: 30
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.8
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.5
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: cherry
@@ -1948,7 +2426,6 @@
   production: 6
   yield: 5
   potency: 10
-  idealLight: 6
   chemicals:
     Nutriment:
       Min: 1
@@ -1958,6 +2435,15 @@
       Min: 1
       Max: 3
       PotencyDivisor: 40
+  growthComponents:
+    - !type:WaterGrowthComponent
+      waterConsumption: 0.5
+    - !type:NutrientGrowthComponent
+      nutrientConsumption: 0.5
+    - !type:AgeGrowthComponent
+    - !type:WeedPestGrowthComponent
+    - !type:TemperatureGrowthComponent
+    - !type:PressureGrowthComponent
 
 - type: seed
   id: anomalyBerry

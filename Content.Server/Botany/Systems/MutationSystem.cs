@@ -61,17 +61,7 @@ public sealed class MutationSystem : EntitySystem
 
         CrossChemicals(ref result.Chemicals, a.Chemicals);
 
-        CrossFloat(ref result.NutrientConsumption, a.NutrientConsumption);
-        CrossFloat(ref result.WaterConsumption, a.WaterConsumption);
-        CrossFloat(ref result.IdealHeat, a.IdealHeat);
-        CrossFloat(ref result.HeatTolerance, a.HeatTolerance);
-        CrossFloat(ref result.IdealLight, a.IdealLight);
-        CrossFloat(ref result.LightTolerance, a.LightTolerance);
         CrossFloat(ref result.ToxinsTolerance, a.ToxinsTolerance);
-        CrossFloat(ref result.LowPressureTolerance, a.LowPressureTolerance);
-        CrossFloat(ref result.HighPressureTolerance, a.HighPressureTolerance);
-        CrossFloat(ref result.PestTolerance, a.PestTolerance);
-        CrossFloat(ref result.WeedTolerance, a.WeedTolerance);
 
         CrossFloat(ref result.Endurance, a.Endurance);
         CrossInt(ref result.Yield, a.Yield);
@@ -83,10 +73,6 @@ public sealed class MutationSystem : EntitySystem
         CrossBool(ref result.Seedless, a.Seedless);
         CrossBool(ref result.Ligneous, a.Ligneous);
         CrossBool(ref result.TurnIntoKudzu, a.TurnIntoKudzu);
-        CrossBool(ref result.CanScream, a.CanScream);
-
-        CrossGasses(ref result.ExudeGasses, a.ExudeGasses);
-        CrossGasses(ref result.ConsumeGasses, a.ConsumeGasses);
 
         // LINQ Explanation
         // For the list of mutation effects on both plants, use a 50% chance to pick each one.

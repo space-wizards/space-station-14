@@ -88,9 +88,6 @@ public sealed partial class PlantHolderComponent : Component
     public bool ImproperPressure;
 
     [DataField]
-    public bool ImproperLight;
-
-    [DataField]
     public bool ForceUpdate;
 
     [DataField]

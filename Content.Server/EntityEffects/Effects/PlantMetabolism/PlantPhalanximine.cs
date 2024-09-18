@@ -16,7 +16,7 @@ public sealed partial class PlantPhalanximine : EntityEffect
                                 plantHolderComp.Seed.Immutable)
             return;
 
-        plantHolderComp.Seed.Viable = true;
+        args.EntityManager.RemoveComponent<UnviableGrowthComponent>(args.TargetEntity);
     }
 
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) => Loc.GetString("reagent-effect-guidebook-plant-phalanximine", ("chance", Probability));

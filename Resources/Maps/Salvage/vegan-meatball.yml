@@ -488,14 +488,11 @@ entities:
         splatPrototype: null
         lifespan: 75
         endurance: 100
-        weedHighLevelThreshold: 10
         weedTolerance: 5
         pestTolerance: 5
         highPressureTolerance: 121
         lowPressureTolerance: 81
         toxinsTolerance: 4
-        lightTolerance: 3
-        idealLight: 9
         heatTolerance: 10
         idealHeat: 298
         waterConsumption: 0.4
@@ -561,14 +558,11 @@ entities:
         splatPrototype: null
         lifespan: 25
         endurance: 100
-        weedHighLevelThreshold: 10
         weedTolerance: 5
         pestTolerance: 5
         highPressureTolerance: 121
         lowPressureTolerance: 81
         toxinsTolerance: 4
-        lightTolerance: 3
-        idealLight: 7
         heatTolerance: 10
         idealHeat: 293
         waterConsumption: 0.6
