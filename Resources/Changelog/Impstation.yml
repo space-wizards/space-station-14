@@ -1599,3 +1599,62 @@
   id: 207
   time: '2024-09-16T02:47:30.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/261
+- author: Darkmajia
+  changes:
+  - message: Forgotten, devoured, gutted. Humanity has forgotten the eldritch forces
+      of decay, but the mansus veil has weakened. We will make them taste fear again...
+    type: Add
+  id: 208
+  time: '2024-09-18T05:36:03.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/249
+- author: KingMudkipIII
+  changes:
+  - message: horsepussy can be made again without winning the juckport 1 trillion$
+    type: Fix
+  id: 209
+  time: '2024-09-18T05:39:19.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/270
+- author: ultramario1998
+  changes:
+  - message: Added a flask to the Warden's locker. Leave your room 70% less!
+    type: Tweak
+  id: 210
+  time: '2024-09-18T05:38:27.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/272
+- author: Darkmajia
+  changes:
+  - message: Armblades finally have a hit sound.
+    type: Add
+  id: 211
+  time: '2024-09-18T05:36:48.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/273
+- author: starlighthowls
+  changes:
+  - message: couple white whale changes
+    type: Tweak
+  - message: added AI to WW and put back in rotation
+    type: Add
+  id: 212
+  time: '2024-09-18T05:38:42.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/279
+- author: aada
+  changes:
+  - message: 500 cigarettes moved to the emag inventory of cigVend.
+    type: Tweak
+  id: 213
+  time: '2024-09-18T05:37:45.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/275
+- author: widgetbeck
+  changes:
+  - message: Reduced the thirst cost of Mucin now that it's not OP.
+    type: Tweak
+  id: 214
+  time: '2024-09-18T05:37:20.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/269
+- author: widgetbeck
+  changes:
+  - message: Propulsion Gel's recipe is now cheaper.
+    type: Tweak
+  id: 215
+  time: '2024-09-18T05:36:20.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/268
