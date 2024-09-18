@@ -692,3 +692,26 @@
       color: "#ff2fff"
   - type: Paper
     content: book-text-clown-law
+    
+- type: entity
+  parent: BookBase
+  id: BookTEGtorial
+  name: guide ta tha thermo-electric generator
+  description: The book is battered and beaten-up, with mysterious dark stains on the corners of the pages. It smells like welding fuel and chemical burns.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+    - state: paper
+    - state: cover_old
+      color: "#FFB8AD"
+    - state: decor_spine
+      color: "#D48763"
+    - state: overlay_dirt
+      color: "#663929"
+    - state: detail_bookmark
+      color: "#95BE76"
+  - type: Paper
+    content: book-text-tegtorial
+
+
