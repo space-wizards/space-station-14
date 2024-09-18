@@ -22,6 +22,8 @@
     rules:
     - id: Thief
       prob: 0.5
+    - id: Heretic # goob edit
+      prob: 0.2
 
 - type: entity
   id: DeathMatch31

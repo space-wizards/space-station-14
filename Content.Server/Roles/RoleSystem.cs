@@ -1,3 +1,4 @@
+using Content.Shared.Heretic;
 using Content.Shared.Roles;
 
 namespace Content.Server.Roles;
@@ -18,7 +19,9 @@ public sealed class RoleSystem : SharedRoleSystem
         SubscribeAntagEvents<TraitorRoleComponent>();
         SubscribeAntagEvents<ZombieRoleComponent>();
         SubscribeAntagEvents<ThiefRoleComponent>();
-        SubscribeAntagEvents<ChangelingRoleComponent>();
+        SubscribeAntagEvents<ChangelingRoleComponent>(); // goobstation - changelings
+        SubscribeAntagEvents<HereticRoleComponent>(); // goobstation - heretics
+        SubscribeAntagEvents<GhoulRoleComponent>(); // heretics
     }
 
     public string? MindGetBriefing(EntityUid? mindId)

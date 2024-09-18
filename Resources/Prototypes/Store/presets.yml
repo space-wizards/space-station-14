@@ -16,10 +16,18 @@
     - UplinkWearables
     - UplinkJob
     - UplinkPointless
+    - UplinkSales # WD EDIT
     currencyWhitelist:
     - Telecrystal
     balance:
       Telecrystal: 0
+    sales: # WD EDIT
+      enabled: true
+      minMultiplier: 0.2
+      maxMultiplier: 0.8
+      minItems: 3
+      maxItems: 8
+      salesCategory: UplinkSales
 
 - type: entity
   id: StorePresetSpellbook
