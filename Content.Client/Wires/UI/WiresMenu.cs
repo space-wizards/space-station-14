@@ -584,12 +584,10 @@ namespace Content.Client.Wires.UI
 
         private sealed class HelpPopup : Popup
         {
-            private readonly string _text = Loc.GetString("wires-menu-help-popup");
-
             public HelpPopup()
             {
                 var label = new RichTextLabel();
-                label.SetMessage(_text);
+                label.SetMessage(Loc.GetString("wires-menu-help-popup"));
                 AddChild(new PanelContainer
                 {
                     StyleClasses = {ExamineSystem.StyleClassEntityTooltip},
