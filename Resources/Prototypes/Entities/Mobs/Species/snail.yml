@@ -15,7 +15,7 @@
     productionLength: 0.1
     excretedReagent: Mucin
     excretedVolume: 15
-    thirstCost: 28
+    thirstCost: 10
   - type: Icon
     sprite: Mobs/Species/Snail/parts.rsi
     state: full
