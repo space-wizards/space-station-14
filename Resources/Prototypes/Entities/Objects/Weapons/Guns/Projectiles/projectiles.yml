@@ -1053,14 +1053,14 @@
     count: 3 #bit stronger than a disabler if you hit your shots you goober, still not a 2 hit stun though
     spread: 9
 
-# DeltaV projectiles
-# For whatever magical reasons, I cannot put those in the DeltaV folders without having errors.
+# GreyStation projectiles
+# For whatever magical reasons, I cannot put those in the GreyStation folders without having errors.
 
 # Because Hitscan lasers aren't fun to shoot in my opinion, we give the HoS pistol a special lethal laser that moves
 - type: entity
   name: energy bolt
   id: BulletEnergyGunLaser
-  parent: BaseBullet
+  categories: [ HideSpawnMenu ]llet
   noSpawn: true
   components:
   - type: Reflective
