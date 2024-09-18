@@ -28,3 +28,33 @@
     - type: Sprite
       sprite: Harmony/Structures/Wallmounts/posters.rsi
       state: harmony_poster3_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterHarmonyMoney
+  name: "HarMoney"
+  description: "A poster depicting the values of Harmony Station cargo department."
+  components:
+    - type: Sprite
+      sprite: Harmony/Structures/Wallmounts/posters.rsi
+      state: harmony_poster4_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterHarmonyWorkHard
+  name: "Work Hard"
+  description: "If you work hard enough, YOU could earn your very own Nanotrasen Plunger Plus!"
+  components:
+    - type: Sprite
+      sprite: Harmony/Structures/Wallmounts/posters.rsi
+      state: harmony_poster5_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterHarmonyMakeshiftClown
+  name: "Makeshift Clown Poster"
+  description: "A poster has a handwritten signature: Clowne was herE!!"
+  components:
+    - type: Sprite
+      sprite: Harmony/Structures/Wallmounts/posters.rsi
+      state: harmony_poster6_legit
