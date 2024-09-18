@@ -30,23 +30,23 @@
   
 - type: navMapBlip
   id: GasFlowRegulator
-  scale: 0.6667
+  scale: 0.75
   color: LightGray
   texturePaths:
-    - "/Textures/Interface/AtmosMonitoring/pump_south.png"
-    - "/Textures/Interface/AtmosMonitoring/pump_east.png"
-    - "/Textures/Interface/AtmosMonitoring/pump_north.png"
-    - "/Textures/Interface/AtmosMonitoring/pump_west.png"
+    - "/Textures/Interface/AtmosMonitoring/beveled_arrow_south.png"
+    - "/Textures/Interface/AtmosMonitoring/beveled_arrow_east.png"
+    - "/Textures/Interface/AtmosMonitoring/beveled_arrow_north.png"
+    - "/Textures/Interface/AtmosMonitoring/beveled_arrow_west.png"
   
 - type: navMapBlip
   id: GasValve
   scale: 0.6667
   color: LightGray
   texturePaths:
-    - "/Textures/Interface/AtmosMonitoring/valve_north_south.png"
-    - "/Textures/Interface/AtmosMonitoring/valve_east_west.png"
-    - "/Textures/Interface/AtmosMonitoring/valve_north_south.png"   
-    - "/Textures/Interface/AtmosMonitoring/valve_east_west.png"
+    - "/Textures/Interface/AtmosMonitoring/beveled_diamond_north_south.png"
+    - "/Textures/Interface/AtmosMonitoring/beveled_diamond_east_west.png"
+    - "/Textures/Interface/AtmosMonitoring/beveled_diamond_north_south.png"   
+    - "/Textures/Interface/AtmosMonitoring/beveled_diamond_east_west.png"
   
 - type: navMapBlip
   id: Thermoregulator
