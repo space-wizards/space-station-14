@@ -8,7 +8,7 @@ using System;
 using System.Linq;
 using System.Numerics;
 
-namespace Content.Client.Atmos.Console;
+namespace Content.Client.Atmos.Consoles;
 
 public sealed partial class AtmosMonitoringConsoleNavMapControl : NavMapControl
 {
@@ -46,7 +46,7 @@ public sealed partial class AtmosMonitoringConsoleNavMapControl : NavMapControl
         _atmosPipeNetwork = GetDecodedAtmosPipeChunks(console.AtmosPipeChunks, grid);
     }
 
-    public void DrawAllPipeNetworks(DrawingHandleScreen handle)
+    private void DrawAllPipeNetworks(DrawingHandleScreen handle)
     {
         if (!ShowPipeNetwork)
             return;
@@ -56,7 +56,7 @@ public sealed partial class AtmosMonitoringConsoleNavMapControl : NavMapControl
             DrawPipeNetwork(handle, _atmosPipeNetwork);
     }
 
-    public void DrawPipeNetwork(DrawingHandleScreen handle, List<AtmosMonitoringConsoleLine> atmosPipeNetwork)
+    private void DrawPipeNetwork(DrawingHandleScreen handle, List<AtmosMonitoringConsoleLine> atmosPipeNetwork)
     {
         var offset = GetOffset();
         var area = new Box2(-WorldRange, -WorldRange, WorldRange + 1f, WorldRange + 1f).Translated(offset);
@@ -133,7 +133,7 @@ public sealed partial class AtmosMonitoringConsoleNavMapControl : NavMapControl
         }
     }
 
-    public List<AtmosMonitoringConsoleLine> GetDecodedAtmosPipeChunks(Dictionary<Vector2i, AtmosPipeChunk>? chunks, MapGridComponent? grid)
+    private List<AtmosMonitoringConsoleLine> GetDecodedAtmosPipeChunks(Dictionary<Vector2i, AtmosPipeChunk>? chunks, MapGridComponent? grid)
     {
         var decodedOutput = new List<AtmosMonitoringConsoleLine>();
 
@@ -195,7 +195,7 @@ public sealed partial class AtmosMonitoringConsoleNavMapControl : NavMapControl
                     if (atmosPipeData == 0)
                         continue;
 
-                    var mask = (ulong)SharedNavMapSystem.AllDirMask << (tileIdx * SharedNavMapSystem.Directions);
+                    var mask = (ulong)SharedNavMapSystem.AllDirMask << tileIdx * SharedNavMapSystem.Directions;
 
                     if ((atmosPipeData & mask) == 0)
                         continue;
@@ -205,16 +205,16 @@ public sealed partial class AtmosMonitoringConsoleNavMapControl : NavMapControl
                     tile = tile with { Y = -tile.Y };
 
                     // Calculate the draw point offsets
-                    var vertLineOrigin = ((atmosPipeData & (northMask << (tileIdx * SharedNavMapSystem.Directions))) > 0) ?
+                    var vertLineOrigin = (atmosPipeData & northMask << tileIdx * SharedNavMapSystem.Directions) > 0 ?
                         new Vector2(grid.TileSize * 0.5f, -grid.TileSize * 1f) : new Vector2(grid.TileSize * 0.5f, -grid.TileSize * 0.5f);
 
-                    var vertLineTerminus = ((atmosPipeData & (southMask << (tileIdx * SharedNavMapSystem.Directions))) > 0) ?
+                    var vertLineTerminus = (atmosPipeData & southMask << tileIdx * SharedNavMapSystem.Directions) > 0 ?
                         new Vector2(grid.TileSize * 0.5f, -grid.TileSize * 0f) : new Vector2(grid.TileSize * 0.5f, -grid.TileSize * 0.5f);
 
-                    var horizLineOrigin = ((atmosPipeData & (eastMask << (tileIdx * SharedNavMapSystem.Directions))) > 0) ?
+                    var horizLineOrigin = (atmosPipeData & eastMask << tileIdx * SharedNavMapSystem.Directions) > 0 ?
                         new Vector2(grid.TileSize * 1f, -grid.TileSize * 0.5f) : new Vector2(grid.TileSize * 0.5f, -grid.TileSize * 0.5f);
 
-                    var horizLineTerminus = ((atmosPipeData & (westMask << (tileIdx * SharedNavMapSystem.Directions))) > 0) ?
+                    var horizLineTerminus = (atmosPipeData & westMask << tileIdx * SharedNavMapSystem.Directions) > 0 ?
                         new Vector2(grid.TileSize * 0f, -grid.TileSize * 0.5f) : new Vector2(grid.TileSize * 0.5f, -grid.TileSize * 0.5f);
 
                     // Since we can have pipe lines that have a length of a half tile, 
@@ -256,7 +256,7 @@ public sealed partial class AtmosMonitoringConsoleNavMapControl : NavMapControl
 
     private Vector2i ConvertVector2ToVector2i(Vector2 vector, float scale = 1f)
     {
-        return new Vector2i((int)(MathF.Round(vector.X * scale)), (int)(MathF.Round(vector.Y * scale)));
+        return new Vector2i((int)MathF.Round(vector.X * scale), (int)MathF.Round(vector.Y * scale));
     }
 
     private Vector2i GetTileFromIndex(int index)

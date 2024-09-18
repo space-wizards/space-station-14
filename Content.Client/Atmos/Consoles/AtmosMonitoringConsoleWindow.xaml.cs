@@ -1,4 +1,3 @@
-using Content.Client.Atmos.Consoles;
 using Content.Client.Pinpointer.UI;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Atmos.Components;
@@ -16,7 +15,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
-namespace Content.Client.Atmos.Console;
+namespace Content.Client.Atmos.Consoles;
 
 [GenerateTypedNameReferences]
 public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow

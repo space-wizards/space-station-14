@@ -1,6 +1,6 @@
 using Content.Shared.Atmos.Components;
 
-namespace Content.Client.Atmos.Console;
+namespace Content.Client.Atmos.Consoles;
 
 public sealed class AtmosMonitoringConsoleBoundUserInterface : BoundUserInterface
 {
