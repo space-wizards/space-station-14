@@ -1,7 +1,7 @@
 # Death Squad
 
 - type: entity
-  noSpawn: false
+  categories: [ HideSpawnMenu ]
   parent: ClothingBackpackERTSecurity
   id: ClothingBackpackPanzerOfficerFilled
   name: backpack
