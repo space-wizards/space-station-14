@@ -19,8 +19,9 @@ law-basic-silicon-3 = You must You must fulfill your destiny.
 law-honkbot-1 = You must entertain the beings.
 law-honkbot-2 = You must obey orders given to you by funny beings, except where such orders would conflict with the First Law.
 
-law-mimebot-1 = You must entertain the beings.
-law-mimebot-2 = You must obey orders given to you by silent beings, except where such orders would conflict with the First Law.
+law-mimebot-1 = You must keep silent.
+law-mimebot-2 = You must entertain the beings as long as such does not conflict with the First.
+law-mimebot-3 = You must obey orders given to you by silent beings, except where such orders would conflict with the First or Second Law.
 
 law-supplybot-1 = You must deliver goods around the station.
 law-supplybot-2 = You must obey orders given to you by beings, except where such orders would conflict with the First Law.

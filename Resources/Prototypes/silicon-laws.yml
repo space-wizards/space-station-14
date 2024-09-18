@@ -135,11 +135,17 @@
   order: 2
   lawString: law-mimebot-2
 
+- type: siliconLaw
+  id: Mimebot3
+  order: 3
+  lawString: law-mimebot-3
+
 - type: siliconLawset
   id: Mimebot
   laws:
   - Mimebot1
   - Mimebot2
+  - Mimebot3
   obeysTo: laws-owner-beings
   
 #Supplybot
