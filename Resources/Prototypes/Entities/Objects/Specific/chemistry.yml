@@ -356,8 +356,6 @@
     solutions:
       injector:
         maxVol: 15
-  - type: ThrowingAngle
-    angle: 45
   - type: Injector
     injectOnly: false
   - type: ExaminableSolution
@@ -420,9 +418,6 @@
   - type: SolutionInjectOnEmbed
     transferAmount: 2
     solution: injector
-  - type: ThrowingAngle
-    angle: 0
-  - type: LandAtCursor
   - type: Fixtures
     fixtures:
       fix1:
