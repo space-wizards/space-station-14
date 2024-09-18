@@ -1,11 +1,18 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Numerics;
+using Content.Shared.Physics;
 using Content.Shared.TrueBlindness;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
+using Robust.Client.Physics;
 using Robust.Client.Player;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
 namespace Content.Client.TrueBlindness;
@@ -16,6 +23,7 @@ public sealed class TrueBlindnessSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IOverlayManager _overlayMan = default!;
+    [Dependency] private readonly PhysicsSystem _physics = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     private const string GhostDefaultPrototype = "BlindnessGhost";
@@ -30,6 +38,19 @@ public sealed class TrueBlindnessSystem : EntitySystem
 
         _overlay = new();
         _overlayMan.AddOverlay(_overlay);
+    }
+
+    public bool VisibleFromPlayer(EntityUid playerUid, EntityUid objectUid)
+    {
+        var playerTransform = Transform(playerUid);
+        var playerPosition = _transform.GetWorldPosition(playerTransform);
+        var objectPosition = _transform.GetWorldPosition(objectUid);
+        var direction = Vector2.Normalize(objectPosition - playerPosition);
+        if (!MathHelper.CloseToPercent(direction.LengthSquared(), 1))
+            return false;
+        var r = new CollisionRay(_transform.GetWorldPosition(playerTransform), direction, (int)CollisionGroup.FlyingMobMask);
+        var cr = _physics.IntersectRay(playerTransform.MapID, r, maxLength:1.5f, ignoredEnt:playerUid, returnOnFirstHit:true).FirstOrNull();
+        return cr is null || cr.Value.HitEntity == objectUid;
     }
 
     public bool CreateGhost(Entity<TrueBlindnessVisibleComponent> uid,
@@ -74,15 +95,18 @@ public sealed class TrueBlindnessSystem : EntitySystem
 
         var player = _playerManager.LocalEntity;
 
-        if (player is null || !HasComp(player, typeof(TrueBlindnessComponent)) && _overlay.Enabled)
+        if (player is null || !HasComp(player, typeof(TrueBlindnessComponent)))
         {
-            _overlay.SetEnabled(false);
-
-            var deletionQuery = EntityQueryEnumerator<TrueBlindnessGhostComponent>();
-
-            while (deletionQuery.MoveNext(out var uid, out var _))
+            if (_overlay.Enabled)
             {
-                QueueDel(uid);
+                _overlay.SetEnabled(false);
+
+                var deletionQuery = EntityQueryEnumerator<TrueBlindnessGhostComponent>();
+
+                while (deletionQuery.MoveNext(out var uid, out var _))
+                {
+                    QueueDel(uid);
+                }
             }
             return;
         }
@@ -95,12 +119,15 @@ public sealed class TrueBlindnessSystem : EntitySystem
         {
             if (HasComp(uid, typeof(TrueBlindnessGhostComponent)))
             {
-                QueueDel(uid);
+                if (VisibleFromPlayer(player.Value, uid))
+                    QueueDel(uid);
                 continue;
             }
 
             EnsureComp(uid, out TrueBlindnessVisibleComponent visible);
             if (_timing.CurTime < visible.LastGhost + visible.BufferTime)
+                continue;
+            if (!VisibleFromPlayer(player.Value, uid))
                 continue;
             CreateGhost((uid, visible), out _);
         }
@@ -112,7 +139,9 @@ public sealed class TrueBlindnessSystem : EntitySystem
 
         while (query.MoveNext(out var uid, out var comp))
         {
-            if (_timing.CurTime - comp.LastSeen > comp.VisibleTime && _timing.CurTime >= comp.DeletionEligible)
+            if (_timing.CurTime - comp.LastSeen > comp.VisibleTime
+                && _timing.CurTime >= comp.DeletionEligible
+                && !comp.WasAnchored)
             {
                 QueueDel(uid);
             }
