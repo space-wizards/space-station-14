@@ -138,6 +138,15 @@ public sealed partial class GunSystem : SharedGunSystem
 
     public override void Update(float frameTime)
     {
+        var query = EntityQueryEnumerator<ProjectileBatteryAmmoProviderComponent, AmmoCounterComponent>();
+        while (query.MoveNext(out var uid, out var comp, out var ammoComp))
+        {
+            if (comp.QueueUpdate)
+            {
+                comp.QueueUpdate = false;
+                UpdateAmmoCount(uid, ammoComp);
+            }
+        }
         if (!Timing.IsFirstTimePredicted)
             return;
 

@@ -15,4 +15,9 @@ public abstract partial class BatteryAmmoProviderComponent : AmmoProviderCompone
 
     [ViewVariables(VVAccess.ReadWrite)]
     public int Capacity;
+
+    // For if we need to refresh the ammo counter.
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    public bool QueueUpdate = true;
 }
