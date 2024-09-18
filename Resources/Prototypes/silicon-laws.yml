@@ -588,6 +588,7 @@
     Honkbot: 0.75
     Mimebot: 0.75
     Supplybot: 0.75
+    BasicSilicon: 1
     CommandmentsLawset: 1
     PaladinLawset: 1
     LiveLetLiveLaws: 1
