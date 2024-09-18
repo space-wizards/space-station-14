@@ -35,3 +35,14 @@
   canBuildInImpassable: true
   conditions:
     - !type:WallmountCondition
+
+- type: construction
+  id: ClosetSteelBlast
+  name: blast closet
+  graph: ClosetSteelBlast
+  startNode: start
+  targetNode: done
+  category: construction-category-storage
+  description: A sturdy explosion resistant steel box.
+  icon: { sprite: Structures/Storage/closet.rsi, state: blast_icon }
+  objectType: Structure

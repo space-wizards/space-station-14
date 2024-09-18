@@ -1,4 +1,4 @@
-﻿# Tool closet
+# Tool closet
 - type: entity
   id: ClosetTool
   name: tool closet
@@ -75,6 +75,31 @@
     stateBaseClosed: bomb
     stateDoorOpen: bomb_open
     stateDoorClosed: bomb_door
+
+# Blast closet
+- type: entity
+  id: ClosetBlast
+  name: blast closet
+  parent: ClosetSteelBase
+  description: It's an explosion resistant storage unit 
+  components:
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateBaseClosed: blast
+    stateDoorOpen: blast_open
+    stateDoorClosed: blast_door
+  - type: Construction
+    graph: ClosetSteelBlast
+    node: done
+    containers:
+    - entity_storage
+  - type: ExplosionResistance
+    damageCoefficient: 0.1
+    examine: explosion-resistance-contents-coefficient-value
+    # to show the explosion resistance :3
+  - type: GroupExamine
+  - type: Armor
+    modifiers: {}
 
 # Janitorial bomb suit closet
 - type: entity

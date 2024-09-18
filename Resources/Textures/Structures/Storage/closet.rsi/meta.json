@@ -107,6 +107,18 @@
       "name": "bomb_open"
     },
     {
+      "name": "blast"
+    },
+    {
+      "name": "blast_door"
+    },
+    {
+      "name": "blast_open"
+    },
+    {
+      "name": "blast_icon"
+    },
+    {
       "name": "janitor_bomb"
     },
     {

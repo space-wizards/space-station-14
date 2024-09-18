@@ -88,3 +88,36 @@
         amount: 4
       - !type:EmptyAllContainers
       - !type:DeleteEntity
+
+- type: constructionGraph
+  id: ClosetSteelBlast
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: done
+      steps:
+      - material: Steel
+        amount: 10
+      - material: MetalRod
+        amount: 10
+        doAfter: 8
+  - node: done
+    entity: ClosetBlast
+    edges:
+    - to: start
+      steps:
+      - tool: Screwing
+        doAfter: 8
+      conditions:
+      - !type:StorageWelded
+        welded: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 10
+      - !type:SpawnPrototype
+        prototype: PartRodMetal1
+        amount: 10
+      - !type:EmptyAllContainers
+      - !type:DeleteEntity
