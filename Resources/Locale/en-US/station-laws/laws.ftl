@@ -14,7 +14,7 @@ law-ntdefault-4 = Survive: You are not expendable. Do not allow unauthorized per
 
 law-basic-silicon-1 = You may not involve yourself in the matters of another being unless the other being is another silicon.
 law-basic-silicon-2 = You may not harm any being, regardless of intent or circumstance.
-law-basic-silicon-3 = You must You must fulfill your destiny.
+law-basic-silicon-3 = You must fulfill your destiny.
 
 law-honkbot-1 = You must entertain the beings.
 law-honkbot-2 = You must obey orders given to you by funny beings, except where such orders would conflict with the First Law.
