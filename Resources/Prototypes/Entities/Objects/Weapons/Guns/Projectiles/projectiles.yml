@@ -1060,7 +1060,7 @@
 - type: entity
   name: energy bolt
   id: BulletEnergyGunLaser
-  categories: [ HideSpawnMenu ]llet
+  categories: [ HideSpawnMenu ]
   noSpawn: true
   components:
   - type: Reflective
