@@ -2,7 +2,7 @@
   id: TouchSpellMansus
   name: mansus grasp
   description: The power of the Old Gods, channeled through your grip.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Unremoveable
   - type: Item

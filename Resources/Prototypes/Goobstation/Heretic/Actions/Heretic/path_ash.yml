@@ -2,7 +2,7 @@
   id: ActionHereticJaunt
   name: Ashen Passage
   description: A short range spell that allows you to pass unimpeded through walls.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
     useDelay: 15
@@ -19,7 +19,7 @@
   id: ActionHereticVolcanoBlast
   name: Volcanic Blast
   description: Charge up a blast of fire that chains between nearby targets, setting them ablaze.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
     useDelay: 10
@@ -36,7 +36,7 @@
   id: ActionHereticNightwatcherRebirth
   name: Nightwatcher's Rebirth
   description: A spell that extinguishes you and drains nearby heathens engulfed in flames of their life force.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
     useDelay: 15
@@ -53,7 +53,7 @@
   id: ActionHereticAscension1
   name: Oath of Flame
   description: For a minute, you will passively create a ring of fire around you.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
     useDelay: 90
@@ -70,7 +70,7 @@
   id: ActionHereticAscension2
   name: Fire Cascade
   description: Heats the air around you.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
     useDelay: 30

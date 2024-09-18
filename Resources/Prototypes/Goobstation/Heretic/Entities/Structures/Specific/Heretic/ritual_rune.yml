@@ -16,7 +16,7 @@
   id: HereticRuneRitualDrawAnimation
   name: unfinished transmutation rune
   description: An unfinished ancient drawing used by sinister individuals for sacrifices.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   placement:
     mode: SnapgridCenter
   components:
@@ -31,7 +31,7 @@
   description: you shouldn't be seeing this description
   placement:
     mode: SnapgridCenter
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: TimedDespawn
     lifetime: 1

@@ -3,7 +3,7 @@
   id: ActionHereticOpenStore
   name: Open Knowledge Store
   description: Open the Knowledge Store.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
     itemIconStyle: NoItem
@@ -18,7 +18,7 @@
   id: ActionHereticMansusGrasp
   name: Mansus Grasp
   description: Channel the power of the Old Gods through your grip.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
     useDelay: 10
@@ -34,7 +34,7 @@
   id: ActionHereticMansusLink
   name: Manse Link
   description: This spell allows you to pierce through reality and connect minds to one another via your Mansus Link.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: EntityTargetAction
     useDelay: 10
