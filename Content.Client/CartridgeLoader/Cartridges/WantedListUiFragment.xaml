@@ -12,8 +12,8 @@
 
         <!-- Any attempts to set dimensions for ListContainer breaks the renderer, I have to roughly set sizes and margins in other controllers. -->
         <controls:ListContainer
-            HorizontalAlignment="Left"
             Name="RecordsList"
+            HorizontalAlignment="Left"
             VerticalExpand="True"
             Visible="False"
             Toggle="True"
@@ -26,7 +26,7 @@
                FontColorOverride="DarkGray"
                Visible="False"
                HorizontalExpand="True" />
-        <BoxContainer Name="PersonContainer" Orientation="Vertical" HorizontalExpand="True" SetWidth="334" Margin="5 5 75 5">
+        <BoxContainer Name="PersonContainer" Orientation="Vertical" HorizontalExpand="True" SetWidth="334" Margin="5 0 77 0">
             <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
                 <Label Name="PersonName" StyleClasses="LabelBig" />
                 <RichTextLabel Name="PersonState" HorizontalAlignment="Right" HorizontalExpand="True" />
