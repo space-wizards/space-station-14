@@ -2,7 +2,7 @@
   id: Uoui
   mapName: 'Uoui'
   mapPath: /Maps/Weaselstation/uoui.yml
-  minPlayers: 3
+  minPlayers: 2
   maxPlayers: 35
   fallback: true
   stations:
