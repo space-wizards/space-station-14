@@ -1658,3 +1658,10 @@
   id: 215
   time: '2024-09-18T05:36:20.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/268
+- author: formlessnameless
+  changes:
+  - message: Replaced a bunch of obsolete noSpawn stuff with HideSpawnMenu category
+    type: Fix
+  id: 216
+  time: '2024-09-18T05:56:35.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/281
