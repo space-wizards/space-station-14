@@ -1685,3 +1685,17 @@
   id: 218
   time: '2024-09-18T21:54:15.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/287
+- author: Darkmajia
+  changes:
+  - message: The Warden and Head of Security can now pick winter coats in their loadouts.
+    type: Add
+  id: 219
+  time: '2024-09-18T22:00:02.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/284
+- author: hivehum
+  changes:
+  - message: Fixed a very misleading word choice on the Singularity guidebook page.
+    type: Fix
+  id: 220
+  time: '2024-09-18T22:00:17.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/286
