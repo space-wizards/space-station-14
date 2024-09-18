@@ -117,6 +117,7 @@
               amount: 2
           steps:
             - tool: Prying
+              doAfter: 1
 
     - node: computer
       entity: !type:BoardNodeEntity { container: board }
@@ -125,8 +126,6 @@
           steps:
             - tool: Prying
               doAfter: 1
-            - tool: Screwing
-              doAfter: 2
 
     - node: monitorBroken
       entity: ComputerBroken
