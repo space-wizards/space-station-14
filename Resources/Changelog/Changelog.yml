@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Winkarst-cpu
-  changes:
-  - message: Fixed popup spam when trying to open borg's UI while the borg is locked.
-    type: Fix
-  id: 6893
-  time: '2024-07-09T23:48:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29861
 - author: Lokachop
   changes:
   - message: Scarves now count as warm clothing for the warm clothing cargo bounty.
@@ -3917,3 +3910,10 @@
   id: 7392
   time: '2024-09-18T21:58:59.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32144
+- author: deltanedas
+  changes:
+  - message: Epinephrine now adds Adrenaline, because it is.
+    type: Tweak
+  id: 7393
+  time: '2024-09-18T23:00:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32076
