@@ -30,6 +30,7 @@
       children:
       - id: BookAurora
       - id: BookCafe
+      - id: BookClownLaw
       - id: BookEarth
       - id: BookFeather
       - id: BookIanAntarctica
