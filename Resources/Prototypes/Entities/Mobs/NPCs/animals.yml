@@ -2521,7 +2521,7 @@
     - type: Speech
       speechVerb: Cluwne
     - type: Bloodstream
-      bloodMaxVolume: 40
+      bloodMaxVolume: 15
       bloodReagent: VentCrud
     - type: NoSlip
     - type: ZombieImmune
@@ -2540,6 +2540,7 @@
     - type: Tag
       tags:
       - BROS
+      - Trash
 
 - type: entity
   name: SORB
