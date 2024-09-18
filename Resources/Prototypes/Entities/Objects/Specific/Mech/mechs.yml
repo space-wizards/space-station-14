@@ -267,6 +267,9 @@
       path: /Audio/Mecha/mechmove03.ogg
       params:
         volume: -10
+  - type: Tag
+    tags:
+        - DoorBumpOpener
   - type: Mech
     baseState: vim
     openState: vim-open
@@ -300,3 +303,4 @@
     containers:
       mech-battery-slot:
       - PowerCellHigh
+ 
