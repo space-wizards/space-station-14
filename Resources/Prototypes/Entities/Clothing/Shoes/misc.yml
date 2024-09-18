@@ -160,9 +160,14 @@
     slots:
       cell_slot:
         name: power-cell-slot-component-slot-name-default
-        startingItem: PowerCellHigh
+        startingItem: PowerCellSmall
   - type: Tag
     tags: []
+  - type: Skates
+    friction: 20
+    frictionNoInput: 20
+    acceleration: 20
+    minimumSpeed: 2.5
 
 - type: entity
   id: ActionToggleSpeedBoots
