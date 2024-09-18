@@ -40,7 +40,7 @@
 
   ## Traitor
 
-  The existence of Syndicate operatives who infiltrate and sabotage the station is not shielded.
+  The existence of Syndicate agents who infiltrate and sabotage the station is not shielded.
 
   ## Thief
 
@@ -54,6 +54,7 @@
 
   The revealing condition for this shield is the following:
   - the Ninja is witnessed cloaking, uncloaking or teleporting. Spotting an actively cloaked Ninja does not count.
+  - you witness an uncloaked Ninja who is aggressive or otherwise actively completing their objectives (emagging doors, tampering with computers)
 
   ## Changeling
 
@@ -72,9 +73,10 @@
 
   The ability to prevent the revival of a Changeling by cremating them is shielded.
 
-  The revealing condition for this shield is the following:
+  The revealing condition for this shield is any the following:
   - you are the Research Director or Chief Medical Officer
-  - you have witnessed the successful cremation of a Changeling
+  - you have witnessed a Changeling revive
+
 
   ## Revolutionaries
 
