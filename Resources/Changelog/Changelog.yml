@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Lokachop
-  changes:
-  - message: Scarves now count as warm clothing for the warm clothing cargo bounty.
-    type: Tweak
-  id: 6894
-  time: '2024-07-10T05:26:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29779
 - author: Aquif
   changes:
   - message: It is now possible to "lock" admin faxes such that they cannot be edited
@@ -3917,3 +3910,11 @@
   id: 7393
   time: '2024-09-18T23:00:48.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32076
+- author: ShadowCommander
+  changes:
+  - message: Fixed clicking on chairs and beds with an entity buckled to them not
+      unbuckling them.
+    type: Fix
+  id: 7394
+  time: '2024-09-18T23:55:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29998
