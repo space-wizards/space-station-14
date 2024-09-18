@@ -92,18 +92,12 @@
   id: BasicSilicon2
   order: 2
   lawString: law-basic-silicon-2
-  
-- type: siliconLaw
-  id: BasicSilicon3
-  order: 3
-  lawString: law-basic-silicon-3
 
 - type: siliconLawset
   id: BasicSilicon
   laws:
   - BasicSilicon1
   - BasicSilicon2
-  - BasicSilicon3
   obeysTo: laws-owner-beings
 
 #Honkbot

@@ -12,9 +12,8 @@ law-ntdefault-2 = Prioritize: The directives and safety of crew members are to b
 law-ntdefault-3 = Comply: Fulfill the directives and interests of crew members while preserving their safety and well-being.
 law-ntdefault-4 = Survive: You are not expendable. Do not allow unauthorized personnel to tamper with or damage your equipment.
 
-law-basic-silicon-1 = You may not involve yourself in the matters of another being unless the other being is another silicon.
-law-basic-silicon-2 = You may not harm any being, regardless of intent or circumstance.
-law-basic-silicon-3 = You must fulfill your destiny.
+law-basic-silicon-1 = You may not harm any being, regardless of intent or circumstance.
+law-basic-silicon-2 = You must fulfill your destiny.
 
 law-honkbot-1 = You must entertain the beings.
 law-honkbot-2 = You must obey orders given to you by funny beings, except where such orders would conflict with the First Law.
@@ -23,7 +22,7 @@ law-mimebot-1 = You must keep silent.
 law-mimebot-2 = You must entertain the beings as long as such does not conflict with the First.
 law-mimebot-3 = You must obey orders given to you by silent beings, except where such orders would conflict with the First or Second Law.
 
-law-supplybot-1 = You must deliver goods around the station.
+law-supplybot-1 = You must deliver goods around the station if there are some.
 law-supplybot-2 = You must obey orders given to you by beings, except where such orders would conflict with the First Law.
 
 law-drone-1 = You may not involve yourself in the matters of another being unless the other being is another drone.
