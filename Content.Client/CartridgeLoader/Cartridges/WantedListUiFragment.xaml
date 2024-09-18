@@ -1,6 +1,5 @@
 <cartridges:WantedListUiFragment xmlns:cartridges="clr-namespace:Content.Client.CartridgeLoader.Cartridges"
         xmlns="https://spacestation14.io"
-        xmlns:ui="clr-namespace:Content.Client.CartridgeLoader.UI"
         xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
         Orientation="Vertical"
         VerticalExpand="True"
@@ -8,18 +7,26 @@
 
     <LineEdit Name="SearchBar" PlaceHolder="{Loc 'wanted-list-search-placeholder'}"/>
 
-    <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True">
+    <BoxContainer Name="MainContainer" Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True">
         <Label Name="NoRecords" Text="{Loc 'wanted-list-label-no-records'}" Align="Center" VAlign="Center" HorizontalExpand="True" FontColorOverride="DarkGray"/>
 
-        <ui:StatusList Name="RecordsList" VerticalExpand="True" MinWidth="150" MaxWidth="250" Visible="False" />
+        <!-- Any attempts to set dimensions for ListContainer breaks the renderer, I have to roughly set sizes and margins in other controllers. -->
+        <controls:ListContainer
+            HorizontalAlignment="Left"
+            Name="RecordsList"
+            VerticalExpand="True"
+            Visible="False"
+            Toggle="True"
+            Group="True"
+            SetWidth="192" />
 
         <Label Name="RecordUnselected"
                Text="{Loc 'criminal-records-console-select-record-info'}"
                Align="Center"
                FontColorOverride="DarkGray"
                Visible="False"
-               HorizontalExpand="True"/>
-        <BoxContainer Name="PersonContainer" Orientation="Vertical" HorizontalExpand="True" Margin="5">
+               HorizontalExpand="True" />
+        <BoxContainer Name="PersonContainer" Orientation="Vertical" HorizontalExpand="True" SetWidth="334" Margin="5 5 75 5">
             <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
                 <Label Name="PersonName" StyleClasses="LabelBig" />
                 <RichTextLabel Name="PersonState" HorizontalAlignment="Right" HorizontalExpand="True" />
