@@ -2,7 +2,7 @@
   id: ActionHereticVoidBlast
   name: Void Blast
   description: Fire off a cone of ice in front of you.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
     useDelay: 15
@@ -19,7 +19,7 @@
   id: ActionHereticVoidPhase
   name: Void Phase
   description: Shift through the void, knocking down everyone around you.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: WorldTargetAction
     useDelay: 15
@@ -38,7 +38,7 @@
   id: ActionHereticVoidPull
   name: Void Pull
   description: Pull and damage nearby heathens.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
     useDelay: 20
