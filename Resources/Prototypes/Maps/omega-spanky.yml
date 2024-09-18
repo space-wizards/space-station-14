@@ -1,6 +1,6 @@
 - type: gameMap
-  id: Omega-v2
-  mapName: 'Omega v2'
+  id: OmegaSpanky
+  mapName: 'Omega Spanky'
   mapPath: /Maps/omega-spanky.yml
   minPlayers: 7
   maxPlayers: 35
@@ -14,7 +14,7 @@
             !type:NanotrasenNameGenerator
             prefixCreator: 'TG'
         - type: StationEmergencyShuttle
-          emergencyShuttlePath: /Maps/Shuttles/emergency_omega_spanky.yml
+          emergencyShuttlePath: /Maps/Shuttles/emergency_omega.yml
         - type: StationJobs
           availableJobs:
             #service
