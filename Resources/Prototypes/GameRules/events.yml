@@ -19,8 +19,8 @@
     - id: RandomSentience
     - id: SlimesSpawn
     - id: SolarFlare
-    - id: SnakeSpawn
-    - id: SpiderClownSpawn
+    #- id: SnakeSpawn # GreyStation - Removed
+    #- id: SpiderClownSpawn # GreyStation - Removed
     - id: SpiderSpawn
     - id: VentClog
 
@@ -354,26 +354,26 @@
     - id: MobAdultSlimesYellowAngry
       prob: 0.02
 
-- type: entity
-  id: SnakeSpawn
-  parent: BaseStationEventShortDelay
-  components:
-  - type: StationEvent
-    startAnnouncement: station-event-vent-creatures-start-announcement
-    startAudio:
-      path: /Audio/Announcements/attention.ogg
-    earliestStart: 20
-    minimumPlayers: 15
-    weight: 5
-    duration: 60
-  - type: VentCrittersRule
-    entries:
-    - id: MobPurpleSnake
-      prob: 0.02
-    - id: MobSmallPurpleSnake
-      prob: 0.02
-    - id: MobCobraSpace
-      prob: 0.02
+#- type: entity # GreyStation - Removed
+#  id: SnakeSpawn
+#  parent: BaseStationEventShortDelay
+#  components:
+#  - type: StationEvent
+#    startAnnouncement: station-event-vent-creatures-start-announcement
+#    startAudio:
+#      path: /Audio/Announcements/attention.ogg
+#    earliestStart: 20
+#    minimumPlayers: 15
+#    weight: 5
+#    duration: 60
+#  - type: VentCrittersRule
+#    entries:
+#    - id: MobPurpleSnake
+#      prob: 0.02
+#    - id: MobSmallPurpleSnake
+#      prob: 0.02
+#    - id: MobCobraSpace
+#      prob: 0.02
 
 - type: entity
   id: SpiderSpawn
@@ -392,22 +392,22 @@
     - id: MobGiantSpiderAngry
       prob: 0.05
 
-- type: entity
-  id: SpiderClownSpawn
-  parent: BaseStationEventShortDelay
-  components:
-  - type: StationEvent
-    startAnnouncement: station-event-vent-creatures-start-announcement
-    startAudio:
-      path: /Audio/Announcements/attention.ogg
-    earliestStart: 20
-    minimumPlayers: 20
-    weight: 1.5
-    duration: 60
-  - type: VentCrittersRule
-    entries:
-    - id: MobClownSpider
-      prob: 0.05
+#- type: entity # GreyStation - Removed
+#  id: SpiderClownSpawn
+#  parent: BaseStationEventShortDelay
+#  components:
+#  - type: StationEvent
+#    startAnnouncement: station-event-vent-creatures-start-announcement
+#    startAudio:
+#      path: /Audio/Announcements/attention.ogg
+#    earliestStart: 20
+#    minimumPlayers: 20
+#    weight: 1.5
+#    duration: 60
+#  - type: VentCrittersRule
+#    entries:
+#    - id: MobClownSpider
+#      prob: 0.05
 
 - type: entity
   id: ZombieOutbreak
