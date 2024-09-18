@@ -429,8 +429,12 @@ public sealed class FoodSystem : EntitySystem
             // Check if the food is in the whitelist
             if (_whitelistSystem.IsWhitelistPass(ent.Comp1.SpecialDigestible, food))
                 return true;
-            // They can only eat whitelist food and the food isn't in the whitelist. It's not edible.
-            return false;
+
+            if (ent.Comp1.AdditiveDiet)
+                continue;
+            else
+                // They can only eat whitelist food and the food isn't in the whitelist. It's not edible.
+                return false;
         }
 
         if (component.RequiresSpecialDigestion)

@@ -87,3 +87,14 @@
   components:
   - type: SalvageMobRestrictions
 
+# - type: entity
+#   id: MobTickMaints
+#   parent: MobTick
+#   suffix: Maintenance
+#   components:
+#   - type: SolutionContainerManager
+#     solutions:
+#       melee:
+#         reagents:
+#         - ReagentId: Toxin  
+#           Quantity: 2

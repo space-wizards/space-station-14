@@ -58,7 +58,7 @@ public sealed class KeepAliveConditionSystem : EntitySystem
                 return;
             }
 
-            //Fallback to assign people who COULD be assigned as traitor
+            //Fallback to assign people who COULD be assigned as traitor - might need to just do this from the start on ForceAll rounds, limiting it to existing traitors could be skewing the numbers towards just a few people.
             var allHumans = _mind.GetAliveHumansExcept(args.MindId);
             var allValidTraitorCandidates = new List<EntityUid>();
             if (_traitorRule.CurrentAntagPool != null)

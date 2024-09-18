@@ -1202,14 +1202,17 @@
   products:
     UAP: 6
 
-- type: reaction
+       # Razz whatever the fuck you did here has caused horrible things
+- type: reaction 
   id: TheeHorsepussy
   requiredMixerCategories:
     - Stir
   reactants:
-    AppleMartiniCrystalLite:
-      amount: 2
-    Methadone:
+    JuiceApple:
+      amount: 1
+    Martini:
+      amount: 1
+    Desoxyephedrine:
       amount: 1
   products:
     TheeHorsepussy: 3

@@ -20,12 +20,14 @@
       - id: ClothingOuterHardsuitWarden
       - id: HoloprojectorSecurity
       - id: BookSpaceLaw
+      - id: DrinkShinyFlask
       - id: ClothingBackpackElectropack
         amount: 2
       - id: RemoteSignaller
         amount: 2
       - id: ClothingOuterHardsuitBrigmedic
       - id: BrigmedicPDA
+      - id: ClothingHeadsetBrigmedic
 
 - type: entity
   id: LockerWardenFilled
@@ -52,8 +54,8 @@
         amount: 2
       - id: RemoteSignaller
         amount: 2
-      - id: ClothingOuterHardsuitBrigmedic
       - id: BrigmedicPDA
+      - id: ClothingHeadsetBrigmedic
 
 - type: entity
   id: LockerSecurityFilled

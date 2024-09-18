@@ -90,6 +90,9 @@ marking-LizardHornsAyrshire = Lizard Horns (Ayrshire)
 marking-LizardHornsMyrsore-horns_myrsore = Lizard Horns (Myrsore)
 marking-LizardHornsMyrsore = Lizard Horns (Myrsore)
 
+marking-LizardHornsNubby-horns_nubby = Lizard Horns (Nubby)
+marking-LizardHornsNubby = Lizard Horns (Nubby)
+
 marking-LizardHornsBighorn-horns_bighorn = Lizard Horns (Bighorn)
 marking-LizardHornsBighorn = Lizard Horns (Bighorn)
 

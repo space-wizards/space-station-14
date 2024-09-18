@@ -1,0 +1,7 @@
+- type: antag
+  id: Heretic
+  name: roles-antag-heretic-name
+  antagonist: true
+  setPreference: true
+  objective: roles-antag-heretic-description
+  guides: [ Heretics ]

@@ -206,6 +206,7 @@
     items:
     - MiningDrill
     - Shovel
+    - MineralScannerUnpowered
     - OreBag
     - Crowbar
     - RadioHandheld
@@ -397,6 +398,8 @@
   - type: ItemBorgModule
     items:
     - NodeScanner
+    - BorgDropper
+    - Beaker
 
 - type: entity
   id: BorgModuleAnomaly
@@ -416,6 +419,25 @@
     - Multitool
 
 # service modules
+- type: entity
+  id: BorgModuleBartender
+  parent: [ BaseBorgModuleService, BaseProviderBorgModule ]
+  name: bartender cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: service
+    - state: icon-beer
+  - type: ItemBorgModule
+    items:
+    - Lighter
+    - DrinkShaker
+    - BarSpoon
+    - BorgIceBucket
+    - Pitcher
+    - BorgDropper
+
+# depreciated. included in case of merge errors
 - type: entity
   id: BorgModuleService
   parent: [ BaseBorgModuleService, BaseProviderBorgModule ]
@@ -494,6 +516,24 @@
     - BikeHorn
     - ClownRecorder
     - BikeHornInstrument
+
+- type: entity
+  id: BorgModulePaper
+  parent: [ BaseBorgModuleService, BaseProviderBorgModule ]
+  name: bureaucracy cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: service
+    - state: icon-pen
+  - type: ItemBorgModule
+    items:
+    - Pen
+    - BooksBag
+    - HandLabeler
+    - RubberStampApproved
+    - RubberStampDenied
+    - RubberStampBorg
 
 #syndicate modules
 - type: entity

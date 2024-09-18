@@ -176,6 +176,15 @@
   - accent-words-nymph-4
 
 - type: accent
+  id: tomatoKiller
+  fullReplacements:
+  - accent-words-tomato-1
+  - accent-words-tomato-2
+  - accent-words-tomato-3
+  - accent-words-tomato-4
+  - accent-words-tomato-5
+
+- type: accent
   id: finfin
   fullReplacements:
   - accent-words-finfin-1

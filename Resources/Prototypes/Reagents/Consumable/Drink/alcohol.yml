@@ -2037,7 +2037,7 @@
       - !type:SatiateThirst
         factor: 2
       - !type:AdjustReagent
-        reagent: Methadone
+        reagent: Desoxyephedrine
         amount: 0.15
       - !type:AdjustReagent
         reagent: Ethanol

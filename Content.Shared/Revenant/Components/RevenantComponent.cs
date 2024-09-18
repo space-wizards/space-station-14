@@ -30,6 +30,19 @@ public sealed partial class RevenantComponent : Component
     [DataField("spawnOnDeathPrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string SpawnOnDeathPrototype = "Ectoplasm";
 
+    [DataField("stasisTime"), ViewVariables(VVAccess.ReadWrite)]
+    public TimeSpan StasisTime = TimeSpan.FromSeconds(60);
+
+    /// <summary>
+    /// If true, only bible users can exorcise this revenant
+    /// with a bible.
+    /// 
+    /// If false, anyone who tries to exorcise a revenant with
+    /// a bible will be able to.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public bool ExorcismRequiresBibleUser = true;
+
     /// <summary>
     /// The entity's current max amount of essence. Can be increased
     /// through harvesting player souls.
@@ -86,7 +99,7 @@ public sealed partial class RevenantComponent : Component
     /// The amount of essence that is needed to use the ability.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("defileCost")]
-    public FixedPoint2 DefileCost = -30;
+    public FixedPoint2 DefileCost = 30;
 
     /// <summary>
     /// The status effects applied after the ability
@@ -121,7 +134,7 @@ public sealed partial class RevenantComponent : Component
     /// The amount of essence that is needed to use the ability.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("overloadCost")]
-    public FixedPoint2 OverloadCost = -40;
+    public FixedPoint2 OverloadCost = 40;
 
     /// <summary>
     /// The status effects applied after the ability
@@ -149,7 +162,7 @@ public sealed partial class RevenantComponent : Component
     /// The amount of essence that is needed to use the ability.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("blightCost")]
-    public float BlightCost = -50;
+    public float BlightCost = 50;
 
     /// <summary>
     /// The status effects applied after the ability
@@ -171,7 +184,7 @@ public sealed partial class RevenantComponent : Component
     /// The amount of essence that is needed to use the ability.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("malfunctionCost")]
-    public FixedPoint2 MalfunctionCost = -60;
+    public FixedPoint2 MalfunctionCost = 60;
 
     /// <summary>
     /// The status effects applied after the ability
@@ -199,6 +212,38 @@ public sealed partial class RevenantComponent : Component
     /// </summary>
     [DataField]
     public EntityWhitelist? MalfunctionBlacklist;
+    #endregion
+
+    #region Blood Writing
+    [ViewVariables(VVAccess.ReadWrite), DataField("bloodWritingCost")]
+    public FixedPoint2 BloodWritingCost = 2;
+
+    [ViewVariables(VVAccess.ReadOnly), DataField]
+    public EntityUid? BloodCrayon;
+
+    #endregion
+
+    #region Animate
+    [ViewVariables(VVAccess.ReadWrite), DataField]
+    public FixedPoint2 AnimateCost = 50;
+
+    /// <summary>
+    /// How long an item should be animated for
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField]
+    public TimeSpan AnimateTime = TimeSpan.FromSeconds(15);
+
+    [ViewVariables(VVAccess.ReadWrite), DataField]
+    public Vector2 AnimateDebuffs = new(3, 8);
+
+    public const float DefaultAnimateWalkSpeed = 1.5f;
+    public const float DefaultAnimateSprintSpeed = 3.5f;
+
+    [ViewVariables(VVAccess.ReadWrite), DataField]
+    public float AnimateWalkSpeed = DefaultAnimateWalkSpeed;
+
+    [ViewVariables(VVAccess.ReadWrite), DataField]
+    public float AnimateSprintSpeed = DefaultAnimateSprintSpeed;
     #endregion
 
     [DataField]

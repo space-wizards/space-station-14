@@ -270,6 +270,9 @@
     - id: FoodPizzaDonkpocket
       prob: 0.10
       orGroup: Pizza
+    - id: FoodPizzaCotton
+      prob: 0.10
+      orGroup: Pizza
     - id: KnifePlastic
 
 # Nugget
@@ -465,6 +468,21 @@
   - type: StorageFill
     contents:
     - id: FoodDonkpocketDink
+      amount: 6
+
+- type: entity
+  parent: FoodBoxDonkpocket
+  id: FoodBoxDonkpocketCloth
+  name: box of cloth-pockets
+  description: A box of imitation donk-pockets made of cloth.
+  components:
+  - type: Sprite
+    state: cloth-box
+  - type: Item
+    sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
+  - type: StorageFill
+    contents:
+    - id: FoodDonkpocketCloth
       amount: 6
 
 - type: entity

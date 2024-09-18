@@ -30,6 +30,7 @@
       children:
       - id: BookAurora
       - id: BookCafe
+      - id: BookClownLaw
       - id: BookEarth
       - id: BookFeather
       - id: BookIanAntarctica
@@ -58,6 +59,7 @@
       - id: BookTruth
       - id: BookWatched
       - id: BookWorld
+      - id: BookAgony
 
 - type: entity
   id: BookshelfFilled

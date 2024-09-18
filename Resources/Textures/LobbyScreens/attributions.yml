@@ -67,3 +67,8 @@
   license: "CC-BY-SA-4.0"
   copyright: "Lion"
   source: "https://github.com/medabunny/imp-station-14/"
+
+- files: ["screwloose.webp"]
+  license: "CC-BY-SA-4.0"
+  copyright: "SnazzyGator"
+  source: "https://github.com/medabunny/imp-station-14/"

@@ -18,15 +18,9 @@
         - ReagentId: THC
           Quantity: 15
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Specific/Hydroponics/cannabis.rsi
-      state: produce
     entries:
-      burger:
-        name: food-sequence-burger-content-cannabis
-        sprite:
-          sprite: Objects/Specific/Hydroponics/cannabis.rsi
-          state: produce
+      Burger: LeavesCannabisBurger
+      Taco: LeavesCannabis
 
 - type: entity
   name: green marijuana leaves
@@ -46,15 +40,9 @@
         - ReagentId: THC
           Quantity: 15
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Specific/Hydroponics/cannabis.rsi
-      state: produce
     entries:
-      burger:
-        name: food-sequence-burger-content-cannabis
-      taco:
-        name: food-sequence-content-cannabis
-
+      Burger: LeavesCannabisBurger
+      Taco: LeavesCannabis
 
 - type: entity
   name: dried cannabis leaves
@@ -65,6 +53,7 @@
   - type: Stack
     stackType: LeavesCannabisDried
     count: 1
+  - type: Food
   - type: SolutionContainerManager
     solutions:
       food:
@@ -74,6 +63,10 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/tobacco.rsi
     state: dried
+  - type: FoodSequenceElement
+    entries:
+      Burger: LeavesCannabisBurger
+      Taco: LeavesCannabis
 
 - type: entity
   name: ground cannabis
@@ -84,6 +77,7 @@
   - type: Stack
     stackType: GroundCannabis
     count: 1
+  - type: Food
   - type: SolutionContainerManager
     solutions:
       food:
@@ -102,13 +96,7 @@
       - Smokable
   - type: Item
     size: Tiny
-  - type: FoodSequenceElement
-    entries:
-      burger:
-        name: food-sequence-burger-content-cannabis
-        sprite:
-          sprite: Objects/Misc/reagent_fillings.rsi
-          state: powderpile
+
 
 - type: entity
   name: rainbow cannabis leaves
@@ -125,6 +113,7 @@
     energy: 2
   - type: RgbLightController
     cycleRate: 0.6
+  - type: Food
   - type: SolutionContainerManager
     solutions:
       food:
@@ -142,14 +131,9 @@
         - ReagentId: Psicodine
           Quantity: 0.6
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Specific/Hydroponics/rainbow_cannabis.rsi
-      state: produce
     entries:
-      burger:
-        name: food-sequence-burger-content-rainbow-cannabis
-      taco:
-        name: food-sequence-content-rainbow-cannabis
+      Burger: LeavesRainbowCannabisBurger
+      Taco: LeavesRainbowCannabis
 
 - type: entity
   name: dried rainbow cannabis leaves
@@ -160,6 +144,7 @@
   - type: Stack
     stackType: LeavesCannabisRainbowDried
     count: 1
+  - type: Food
   - type: SolutionContainerManager
     solutions:
       food:
@@ -180,6 +165,10 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/rainbow_cannabis.rsi
     state: dried
+  - type: FoodSequenceElement
+    entries:
+      Burger: LeavesRainbowCannabisBurger
+      Taco: LeavesRainbowCannabis
 
 - type: entity
   name: ground rainbow cannabis
@@ -190,6 +179,7 @@
   - type: Stack
     stackType: GroundCannabisRainbow
     count: 1
+  - type: Food
   - type: SolutionContainerManager
     solutions:
       food:
@@ -257,6 +247,17 @@
     sprite: Objects/Specific/Hydroponics/tobacco.rsi
   - type: Produce
     seedId: tobacco
+  - type: Food
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nicotine
+          Quantity: 2
+  - type: FoodSequenceElement
+    entries:
+      Burger: LeavesTobaccoBurger
+      Taco: LeavesTobacco
 
 - type: entity
   name: dried tobacco leaves
@@ -267,6 +268,7 @@
   - type: Stack
     stackType: LeavesTobaccoDried
     count: 1
+  - type: Food
   - type: SolutionContainerManager
     solutions:
       food:
@@ -276,6 +278,10 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/tobacco.rsi
     state: dried
+  - type: FoodSequenceElement
+    entries:
+      Burger: LeavesTobaccoBurger
+      Taco: LeavesTobacco
 
 - type: entity
   name: ground tobacco
@@ -286,6 +292,7 @@
   - type: Stack
     stackType: GroundTobacco
     count: 1
+  - type: Food
   - type: SolutionContainerManager
     solutions:
       food:
@@ -304,10 +311,3 @@
       - Smokable
   - type: Item
     size: Tiny
-  - type: FoodSequenceElement
-    entries:
-      burger:
-        name: food-sequence-burger-content-tobacco
-        sprite:
-          sprite: Objects/Misc/reagent_fillings.rsi
-          state: powderpile

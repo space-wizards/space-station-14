@@ -43,6 +43,28 @@
           type: Moth
 
 - type: reagent
+  id: Trash
+  name: reagent-name-trash
+  desc: reagent-desc-trash
+  physicalDesc: reagent-physical-desc-murky
+  flavor: trash
+  metabolisms:
+    Food:
+      effects:
+        - !type:SatiateHunger
+          conditions:
+            - !type:OrganType
+              type: Rat
+        - !type:HealthChange
+          conditions:
+          - !type:OrganType
+            type: Rat
+            shouldHave: false
+          damage:
+            types:
+              Poison: 0.5
+
+- type: reagent
   id: BuzzochloricBees
   name: reagent-name-buzzochloric-bees
   group: Toxins
@@ -417,3 +439,18 @@
         type: Remove
   tileReactions:
     - !type:SpillTileReaction
+
+    # These two dont actually do anything, theyre just here for rp
+- type: reagent
+  id: Estradiol
+  name: reagent-name-estradiol
+  desc: reagent-desc-estradiol
+  physicalDesc: reagent-physical-desc-clear
+  color: "pink"
+  
+- type: reagent
+  id: Testosterone
+  name: reagent-name-testosterone
+  desc: reagent-desc-testosterone
+  physicalDesc: reagent-physical-desc-chalky
+  color: "#267ef0"

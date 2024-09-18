@@ -282,7 +282,7 @@ public sealed class ItemToggleSystem : EntitySystem
 
         if (comp.ActiveSound != null && comp.PlayingStream == null)
         {
-            var loop = AudioParams.Default.WithLoop(true);
+            var loop = comp.ActiveSound.Params.WithLoop(true);
             var stream = args.Predicted
                 ? _audio.PlayPredicted(comp.ActiveSound, uid, args.User, loop)
                 : _audio.PlayPvs(comp.ActiveSound, uid, loop);
