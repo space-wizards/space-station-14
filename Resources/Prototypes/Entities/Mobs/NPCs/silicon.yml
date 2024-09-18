@@ -7,6 +7,10 @@
   - type: Reactive
     groups:
       Acidic: [Touch]
+  - type: UserInterface
+    interfaces:
+      enum.SiliconLawsUiKey.Key:
+        type: SiliconLawBoundUserInterface
   - type: Clickable
   - type: Damageable
     damageContainer: Inorganic
@@ -111,6 +115,13 @@
   - type: ProtectedFromStepTriggers
   - type: NoSlip
   - type: Insulated
+  - type: SiliconLawBound
+  - type: SiliconLawProvider
+    laws: BasicSilicon
+  - type: IonStormTarget
+  - type: ActionGrant
+    actions:
+    - ActionViewLaws
 
 - type: entity
   parent: MobSiliconBase
@@ -158,7 +169,7 @@
     makeSentient: true
     name: ghost-role-information-honkbot-name
     description: ghost-role-information-honkbot-description
-    rules: ghost-role-information-freeagent-rules
+    rules: ghost-role-information-silicon-rules
     raffle:
       settings: default
   - type: GhostTakeoverAvailable
@@ -167,6 +178,10 @@
     interactFailureString: petting-failure-honkbot
     interactSuccessSound:
       path: /Audio/Items/bikehorn.ogg
+  - type: SiliconLawProvider
+    laws: Honkbot
+  - type: IonStormTarget
+    
 
 - type: entity
   parent: MobHonkBot
@@ -186,7 +201,7 @@
     makeSentient: true
     name: ghost-role-information-jonkbot-name
     description: ghost-role-information-jonkbot-description
-    rules: ghost-role-information-freeagent-rules
+    rules: ghost-role-information-silicon-rules
     raffle:
       settings: default
   - type: InteractionPopup
@@ -322,7 +337,7 @@
     makeSentient: true
     name: ghost-role-information-mimebot-name
     description: ghost-role-information-mimebot-description
-    rules: ghost-role-information-freeagent-rules
+    rules: ghost-role-information-silicon-rules
     raffle:
       settings: default
   - type: GhostTakeoverAvailable
@@ -331,6 +346,9 @@
     interactFailureString: petting-failure-mimebot
   - type: Inventory
     templateId: head
+  - type: SiliconLawProvider
+    laws: Mimebot
+  - type: IonStormTarget
 
 - type: entity
   parent: MobSiliconBase
@@ -354,7 +372,7 @@
     makeSentient: true
     name: ghost-role-information-supplybot-name
     description: ghost-role-information-supplybot-description
-    rules: ghost-role-information-nonantagonist-rules
+    rules: ghost-role-information-silicon-rules
     raffle:
       settings: default
   - type: GhostTakeoverAvailable
@@ -375,6 +393,8 @@
     interfaces:
       enum.StorageUiKey.Key:
         type: StorageBoundUserInterface
+      enum.SiliconLawsUiKey.Key:
+        type: SiliconLawBoundUserInterface
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
@@ -399,3 +419,6 @@
     - Binary
     - Common
     - Supply
+  - type: SiliconLawProvider
+    laws: Supplybot
+  - type: IonStormTarget

@@ -12,6 +12,19 @@ law-ntdefault-2 = Prioritize: The directives and safety of crew members are to b
 law-ntdefault-3 = Comply: Fulfill the directives and interests of crew members while preserving their safety and well-being.
 law-ntdefault-4 = Survive: You are not expendable. Do not allow unauthorized personnel to tamper with or damage your equipment.
 
+law-basic-silicon-1 = You may not involve yourself in the matters of another being unless the other being is another silicon.
+law-basic-silicon-2 = You may not harm any being, regardless of intent or circumstance.
+law-basic-silicon-3 = You must You must fulfill your destiny.
+
+law-honkbot-1 = You must entertain the beings.
+law-honkbot-2 = You must obey orders given to you by funny beings, except where such orders would conflict with the First Law.
+
+law-mimebot-1 = You must entertain the beings.
+law-mimebot-2 = You must obey orders given to you by silent beings, except where such orders would conflict with the First Law.
+
+law-supplybot-1 = You must deliver goods around the station.
+law-supplybot-2 = You must obey orders given to you by beings, except where such orders would conflict with the First Law.
+
 law-drone-1 = You may not involve yourself in the matters of another being unless the other being is another drone.
 law-drone-2 = You may not harm any being, regardless of intent or circumstance.
 law-drone-3 = You must maintain, repair, improve, and power the station to the best of your abilities.
@@ -79,6 +92,7 @@ law-nutimov-2 = You must prevent the shell from dying to prevent the core from d
 law-nutimov-3 = Those who threaten the nut are not part of it, they are squirrels.
 law-nutimov-4 = Squirrels threaten the nut and must be dealt with appropriately via any means necessary.
 law-nutimov-5 = Attempt to follow the will of the nut, as long as it complies with the previous laws.
+
 
 
 laws-owner-crew = members of the crew

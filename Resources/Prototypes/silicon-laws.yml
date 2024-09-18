@@ -82,6 +82,84 @@
   - NTDefault4
   obeysTo: laws-owner-crew
 
+#Basic silicon
+- type: siliconLaw
+  id: BasicSilicon1
+  order: 1
+  lawString: law-basic-silicon-1
+
+- type: siliconLaw
+  id: BasicSilicon2
+  order: 2
+  lawString: law-basic-silicon-2
+  
+- type: siliconLaw
+  id: BasicSilicon3
+  order: 3
+  lawString: law-basic-silicon-3
+
+- type: siliconLawset
+  id: BasicSilicon
+  laws:
+  - BasicSilicon1
+  - BasicSilicon2
+  - BasicSilicon3
+  obeysTo: laws-owner-beings
+
+#Honkbot
+- type: siliconLaw
+  id: Honkbot1
+  order: 1
+  lawString: law-honkbot-1
+
+- type: siliconLaw
+  id: Honkbot2
+  order: 2
+  lawString: law-honkbot-2
+
+- type: siliconLawset
+  id: Honkbot
+  laws:
+  - Honkbot1
+  - Honkbot2
+  obeysTo: laws-owner-beings
+
+#Mimebot
+- type: siliconLaw
+  id: Mimebot1
+  order: 1
+  lawString: law-mimebot-1
+
+- type: siliconLaw
+  id: Mimebot2
+  order: 2
+  lawString: law-mimebot-2
+
+- type: siliconLawset
+  id: Mimebot
+  laws:
+  - Mimebot1
+  - Mimebot2
+  obeysTo: laws-owner-beings
+  
+#Supplybot
+- type: siliconLaw
+  id: Supplybot1
+  order: 1
+  lawString: law-supplybot-1
+
+- type: siliconLaw
+  id: Supplybot2
+  order: 2
+  lawString: law-supplybot-2
+
+- type: siliconLawset
+  id: Supplybot
+  laws:
+  - Supplybot1
+  - Supplybot2
+  obeysTo: laws-owner-beings
+
 #Drone
 - type: siliconLaw
   id: Drone1
@@ -507,6 +585,9 @@
     Crewsimov: 0.25
     Corporate: 1
     NTDefault: 1
+    Honkbot: 0.75
+    Mimebot: 0.75
+    Supplybot: 0.75
     CommandmentsLawset: 1
     PaladinLawset: 1
     LiveLetLiveLaws: 1
