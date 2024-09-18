@@ -95,7 +95,6 @@ law-nutimov-4 = Squirrels threaten the nut and must be dealt with appropriately 
 law-nutimov-5 = Attempt to follow the will of the nut, as long as it complies with the previous laws.
 
 
-
 laws-owner-crew = members of the crew
 laws-owner-station = station personnel
 laws-owner-beings = beings
