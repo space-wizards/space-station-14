@@ -38,3 +38,13 @@
     - type: Sprite
       sprite: Harmony/Structures/Wallmounts/posters.rsi
       state: harmony_poster4_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterHarmonyWorkHard
+  name: "Work Hard"
+  description: "If you work hard enough, YOU could earn your very own Nanotrasen Plunger Plus!"
+  components:
+    - type: Sprite
+      sprite: Harmony/Structures/Wallmounts/posters.rsi
+      state: harmony_poster5_legit
