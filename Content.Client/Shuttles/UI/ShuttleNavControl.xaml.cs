@@ -234,8 +234,6 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
                 // by half the label's width, plus the y-offset
                 var gridScaledPosition = ScalePosition(gridCentre) - new Vector2(0, -yOffset);
 
-                var coordUiPosition = gridScaledPosition - new Vector2(coordsDimensions.X / 2f, -labelDimensions.Y);
-
                 // Normalize the grid position if it exceeds the viewport bounds
                 // normalizing it instead of clamping it preserves the direction of the vector and prevents corner-hugging
                 var gridOffset = gridScaledPosition / PixelSize - new Vector2(0.5f, 0.5f);
@@ -248,17 +246,21 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
                 }
 
                 var labelUiPosition = gridScaledPosition - new Vector2(labelDimensions.X / 2f, 0);
+                var coordUiPosition = gridScaledPosition - new Vector2(coordsDimensions.X / 2f, -labelDimensions.Y);
 
                 // clamp the IFF label's UI position to within the viewport extents so it hugs the edges of the viewport
                 // coord label intentionally isn't clamped so we don't get ugly clutter at the edges
-                var controlExtents = PixelSize - new Vector2(labelDimensions.X * 2f, labelDimensions.Y);
+                var controlExtents = PixelSize - new Vector2(labelDimensions.X, labelDimensions.Y); //new Vector2(labelDimensions.X * 2f, labelDimensions.Y);
                 labelUiPosition = Vector2.Clamp(labelUiPosition, Vector2.Zero, controlExtents);
 
                 // draw IFF label
                 handle.DrawString(Font, labelUiPosition, labelText, labelColor);
 
-                // draw coords as another smaller string to make it prettier
-                handle.DrawString(Font, coordUiPosition, coordsText, 0.7f, coordColor);
+                // only draw coords label if close enough
+                if (offsetMax < 1)
+                {
+                    handle.DrawString(Font, coordUiPosition, coordsText, 0.7f, coordColor);
+                }
             }
 
             // Detailed view
