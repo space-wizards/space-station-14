@@ -265,10 +265,10 @@
 
 - type: stealTargetGroup
   id: WantedListCartridge
-  name: wanted list cartridge
+  name: steal-target-groups-wanted-list-cartridge
   sprite:
     sprite: Objects/Devices/cartridge.rsi
-    state: cart-s
+    state: cart-sec
 
 #Thief structures
 
