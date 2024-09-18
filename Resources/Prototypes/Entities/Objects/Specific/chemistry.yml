@@ -397,10 +397,18 @@
   - type: Sprite
     sprite: Objects/Specific/Chemistry/syringe.rsi
     layers:
+      - state: minisyringe1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
       - state: syringeproj
   - type: Icon
     sprite: Objects/Specific/Chemistry/syringe.rsi
     state: "syringeproj"
+  - type: SolutionContainerVisuals
+    maxFillLevels: 3
+    fillBaseName: minisyringe
+    inHandsMaxFillLevels: 3
+    inHandsFillBaseName: -fill-
   - type: EmbeddableProjectile
     minimumSpeed: 3
     removalTime: 0.25
