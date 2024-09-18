@@ -61,6 +61,9 @@
   - type: LightningTarget
     priority: 1
   - type: RequireProjectileTarget
+  - type: Electrified
+    enabled: false
+    usesApcPower: true
   - type: WiresPanel
   - type: WiresVisuals
   - type: Wires
