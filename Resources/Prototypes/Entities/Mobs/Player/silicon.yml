@@ -2,7 +2,7 @@
 - type: entity
   id: AiHeld
   description: Components added / removed from an entity that gets inserted into an AI core.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: IntrinsicRadioReceiver
   - type: IntrinsicRadioTransmitter
@@ -341,7 +341,7 @@
 - type: entity
   id: StationAiBrain
   parent: PositronicBrain
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   suffix: DO NOT MAP
   components:
   - type: Sprite
@@ -382,7 +382,7 @@
   id: StationAiHolo
   name: AI eye
   description: The AI's viewer.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   suffix: DO NOT MAP
   components:
   - type: NoFTL
