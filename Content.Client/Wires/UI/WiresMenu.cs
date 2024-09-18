@@ -584,17 +584,10 @@ namespace Content.Client.Wires.UI
 
         private sealed class HelpPopup : Popup
         {
-            private const string Text = "Click on the gold contacts with a multitool in hand to pulse their wire.\n" +
-                                        "Click on the wires with a pair of wirecutters in hand to cut/mend them.\n\n" +
-                                        "The lights at the top show the state of the machine, " +
-                                        "messing with wires will probably do stuff to them.\n" +
-                                        "Wire layouts are different each round, " +
-                                        "but consistent between machines of the same type.";
-
             public HelpPopup()
             {
                 var label = new RichTextLabel();
-                label.SetMessage(Text);
+                label.SetMessage(Loc.GetString("wires-menu-help-popup"));
                 AddChild(new PanelContainer
                 {
                     StyleClasses = {ExamineSystem.StyleClassEntityTooltip},
