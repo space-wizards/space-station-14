@@ -967,6 +967,7 @@
   loadouts:
   - HeadofSecurityCoat
   - HeadofSecurityWinterCoat
+  - HeadofSecurityWinterCoatUnarmored
 
 - type: loadoutGroup
   id: WardenHead
@@ -989,6 +990,7 @@
   loadouts:
   - WardenCoat
   - WardenArmoredWinterCoat
+  - WardenWinterCoatUnarmored
 
 - type: loadoutGroup
   id: SecurityHead
