@@ -4,6 +4,9 @@ reagent-desc-carpetium = A mystical chemical, usually outsourced from the Clown 
 reagent-name-fiber = fiber
 reagent-desc-fiber = A raw material, usually extracted from wool or other fabric products.
 
+reagent-name-trash = trash
+reagent-desc-trash = A slurry of discarded food, drink and packaging.
+
 reagent-name-buzzochloric-bees = buzzochloric bees
 reagent-desc-buzzochloric-bees = Liquid bees. Oh god it's LIQUID BEES NO-
 

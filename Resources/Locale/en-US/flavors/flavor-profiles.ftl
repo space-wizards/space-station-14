@@ -31,6 +31,7 @@ flavor-base-peppery = peppery
 flavor-base-slimy = slimy
 flavor-base-magical = magical
 flavor-base-fiber = fibrous
+flavor-base-trash = like rubbish
 flavor-base-cold = cold
 flavor-base-spooky = spooky
 flavor-base-smokey = smokey
