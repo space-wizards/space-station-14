@@ -100,6 +100,8 @@
   - type: GroupExamine
   - type: Armor
     modifiers: {}
+  - type: StaticPrice
+    price: 250
 
 # Janitorial bomb suit closet
 - type: entity
