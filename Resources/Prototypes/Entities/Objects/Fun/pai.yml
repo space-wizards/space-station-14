@@ -80,6 +80,11 @@
   - type: SiliconLawProvider
     laws: PaiLawset
   - type: IonStormTarget
+  - type: ActionGrant
+    actions:
+    - ActionPAIPlayMidi
+    - ActionPAIOpenMap
+    - ActionPAIViewLaws
 
 - type: entity
   parent: [ PersonalAI, BaseSyndicateContraband]

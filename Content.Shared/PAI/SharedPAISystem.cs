@@ -13,29 +13,6 @@ namespace Content.Shared.PAI
     /// </summary>
     public abstract class SharedPAISystem : EntitySystem
     {
-        [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
-
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            SubscribeLocalEvent<PAIComponent, MapInitEvent>(OnMapInit);
-            SubscribeLocalEvent<PAIComponent, ComponentShutdown>(OnShutdown);
-        }
-
-        private void OnMapInit(EntityUid uid, PAIComponent component, MapInitEvent args)
-        {
-            _actionsSystem.AddAction(uid, ref component.MidiAction, component.MidiActionId);
-            _actionsSystem.AddAction(uid, ref component.MapAction, component.MapActionId);
-            _actionsSystem.AddAction(uid, ref component.LawsAction, component.LawsActionID);
-        }
-
-        private void OnShutdown(EntityUid uid, PAIComponent component, ComponentShutdown args)
-        {
-            _actionsSystem.RemoveAction(uid, component.MidiAction);
-            _actionsSystem.RemoveAction(uid, component.MapAction);
-            _actionsSystem.RemoveAction(uid, component.LawsAction);
-        }
     }
 }
 
