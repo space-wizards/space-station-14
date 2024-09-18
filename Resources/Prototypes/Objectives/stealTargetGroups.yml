@@ -395,7 +395,7 @@
 
 - type: stealTargetGroup
   id: AnimalPipi
-  name: Pipi
+  name: steal-target-groups-animal-pipi
   sprite:
     sprite: Mobs/Pets/pipi.rsi
     state: pipi

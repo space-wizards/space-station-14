@@ -185,7 +185,7 @@
 - type: entity
   parent: BaseSpeciesDummy
   id: MobGastropoidDummy
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: HumanoidAppearance
     species: Snail

@@ -40,6 +40,7 @@ steal-target-groups-clothing-eyes-hud-beer = beer goggles
 steal-target-groups-bible = bible
 steal-target-groups-clothing-neck-goldmedal = gold medal of crewmanship
 steal-target-groups-clothing-neck-clownmedal = clown medal
+steal-target-groups-recruiter-pen = recruiter pen
 
 # Thief structures
 steal-target-groups-teg = teg generator part
@@ -64,3 +65,4 @@ steal-target-groups-animal-morty = Morty
 steal-target-groups-animal-renault = Renault
 steal-target-groups-animal-shiva = Shiva
 steal-target-groups-animal-tropico = Tropico
+steal-target-groups-animal-pipi = Pipi

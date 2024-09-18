@@ -76,7 +76,7 @@
 - type: entity
   parent: BaseSpeciesDummy
   id: MobGrayDummy
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     scale: 1, 0.8
