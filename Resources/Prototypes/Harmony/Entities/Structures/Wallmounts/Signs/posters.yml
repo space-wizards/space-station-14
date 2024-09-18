@@ -28,3 +28,13 @@
     - type: Sprite
       sprite: Harmony/Structures/Wallmounts/posters.rsi
       state: harmony_poster3_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterHarmonyMoney
+  name: "HarMoney"
+  description: "A poster depicting the values of Harmony Station cargo department."
+  components:
+    - type: Sprite
+      sprite: Harmony/Structures/Wallmounts/posters.rsi
+      state: harmony_poster4_legit
