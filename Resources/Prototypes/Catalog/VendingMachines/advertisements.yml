@@ -23,6 +23,12 @@
     count: 19
 
 - type: localizedDataset
+  id: BruiseOMatAds
+  values:
+    prefix: advertisement-bruiseomat-
+    count: 15
+
+- type: localizedDataset
   id: CargoDrobeAds
   values:
     prefix: advertisement-cargodrobe-
