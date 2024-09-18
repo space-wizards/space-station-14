@@ -1,0 +1,29 @@
+- type: entity
+  name: angry bat
+  parent: MobBat
+  id: MobBatAngry
+  suffix: Angry
+  components:
+    - type: NpcFactionMember
+      factions:
+        - Xeno
+    - type: InputMover
+    - type: MobMover
+    - type: HTN
+      rootTask:
+        task: SimpleHostileCompound
+
+- type: entity
+  name: angry lizard
+  parent: MobLizard
+  id: MobLizardAngry
+  suffix: Angry
+  components:
+    - type: NpcFactionMember
+      factions:
+        - Xeno
+    - type: InputMover
+    - type: MobMover
+    - type: HTN
+      rootTask:
+        task: SimpleHostileCompound
