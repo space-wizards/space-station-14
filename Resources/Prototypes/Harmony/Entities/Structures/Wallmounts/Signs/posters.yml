@@ -58,3 +58,13 @@
     - type: Sprite
       sprite: Harmony/Structures/Wallmounts/posters.rsi
       state: harmony_poster6_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterHarmonyFloodlight
+  name: "The Floodlight"
+  description: "In loving memory of Salvagers that were lost in space and never recovered."
+  components:
+    - type: Sprite
+      sprite: Harmony/Structures/Wallmounts/posters.rsi
+      state: harmony_poster7_legit
