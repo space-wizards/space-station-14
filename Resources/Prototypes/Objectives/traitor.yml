@@ -92,6 +92,10 @@
   - type: TargetObjective
     title: objective-condition-kill-person-title
   - type: PickRandomPerson
+    ignoredJobs:
+    - TechnicalAssistant
+    - MedicalIntern
+    - ResearchAssistant
 
 - type: entity
   parent: [BaseTraitorObjective, BaseKillObjective]

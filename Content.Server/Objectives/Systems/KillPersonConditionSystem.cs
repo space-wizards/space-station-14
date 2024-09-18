@@ -6,6 +6,7 @@ using Content.Shared.Objectives.Components;
 using Content.Shared.Roles.Jobs;
 using Robust.Shared.Configuration;
 using Robust.Shared.Random;
+using System.Linq;
 
 namespace Content.Server.Objectives.Systems;
 
@@ -55,6 +56,12 @@ public sealed class KillPersonConditionSystem : EntitySystem
 
         // no other humans to kill
         var allHumans = _mind.GetAliveHumansExcept(args.MindId);
+
+        // filter jobs that we don't want to be kill objectives
+        allHumans = allHumans
+            .Where(human => !_job.MindTryGetJobId(human, out var jobId) || !comp.IgnoredJobs.Contains(jobId))
+            .ToList();
+
         if (allHumans.Count == 0)
         {
             args.Cancelled = true;
