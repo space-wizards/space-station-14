@@ -8,11 +8,9 @@ public sealed partial class PlantHolderComponent : Component
 {
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan NextUpdate = TimeSpan.Zero;
-    [DataField]
-    public TimeSpan UpdateDelay = TimeSpan.FromSeconds(3);
 
     [DataField]
-    public int LastProduce;
+    public TimeSpan UpdateDelay = TimeSpan.FromSeconds(3);
 
     [DataField]
     public int MissingGas;
@@ -45,46 +43,13 @@ public sealed partial class PlantHolderComponent : Component
     public float Toxins;
 
     [DataField]
-    public int Age;
-
-    [DataField]
-    public int SkipAging;
-
-    [DataField]
-    public bool Dead;
-
-    [DataField]
-    public bool Harvest;
-
-    [DataField]
-    public bool Sampled;
-
-    [DataField]
-    public int YieldMod = 1;
-
-    [DataField]
-    public float MutationMod = 1f;
-
-    [DataField]
-    public float MutationLevel;
-
-    [DataField]
-    public float Health;
-
-    [DataField]
     public float WeedCoefficient = 1f;
-
-    [DataField]
-    public SeedData? Seed;
 
     [DataField]
     public bool ImproperHeat;
 
     [DataField]
     public bool ImproperPressure;
-
-    [DataField]
-    public bool ImproperLight;
 
     [DataField]
     public bool ForceUpdate;
@@ -94,4 +59,7 @@ public sealed partial class PlantHolderComponent : Component
 
     [DataField]
     public Entity<SolutionComponent>? SoilSolution = null;
+
+    [DataField]
+    public EntityUid PlantUid = EntityUid.Invalid;
 }
