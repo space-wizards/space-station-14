@@ -1,5 +1,5 @@
 - type: latheRecipe
-  id: SheetSteel
+  id: SheetSteel1
   result: SheetSteel1
   completetime: 0
   materials:
@@ -29,12 +29,12 @@
     RawQuartz: 3000
 
 - type: latheRecipe
-  id: SheetRGlass
+  id: SheetRGlass1
   result: SheetRGlass1
   completetime: 0
   materials:
     RawQuartz: 100
-    RawIron: 50
+    RawIron: 40
     Coal: 15
 
 - type: latheRecipe
@@ -43,8 +43,24 @@
   completetime: 2
   materials:
     RawQuartz: 3000
-    RawIron: 1500
+    RawIron: 1200
     Coal: 500
+
+- type: latheRecipe
+  id: SheetRGlass1Lathe
+  result: SheetRGlass1
+  completetime: 2
+  materials:
+    Glass: 100
+    Steel: 50
+
+- type: latheRecipe
+  id: SheetRGlass30Lathe
+  result: SheetRGlass
+  completetime: 10
+  materials:
+    Glass: 3000
+    Steel: 1500
 
 - type: latheRecipe
   id: SheetPGlass1
@@ -179,7 +195,7 @@
     RawBananium: 3000
 
 - type: latheRecipe
-  id: MaterialDiamond
+  id: MaterialDiamond1
   result: MaterialDiamond1
   completetime: 0
   materials:
