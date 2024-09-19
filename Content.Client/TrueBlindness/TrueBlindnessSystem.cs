@@ -59,7 +59,7 @@ public sealed class TrueBlindnessSystem : EntitySystem
         var rTrue = cr is null
                     || cr.Value.HitEntity == objectUid
                     || (TryComp(objectUid, out TrueBlindnessGhostComponent? ghostComp) &&
-                        cr.Value.HitEntity == GetEntity(ghostComp.From))
+                        cr.Value.HitEntity == GetEntity(ghostComp.From));
         return rTrue;
     }
 
