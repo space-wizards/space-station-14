@@ -1,6 +1,6 @@
 - type: entity
+  parent: BaseOrganLungs
   id: OrganVoxLungs
-  parent: OrganHumanLungs
   suffix: "vox"
   components:
   - type: Metabolizer

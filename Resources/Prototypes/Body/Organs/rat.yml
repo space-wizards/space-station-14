@@ -1,14 +1,14 @@
 - type: entity
+  parent: BaseOrganLungs
   id: OrganRatLungs
-  parent: OrganHumanLungs
   suffix: "rat"
   components:
   - type: Metabolizer
     metabolizerTypes: [ Rat ]
 
 - type: entity
-  id: OrganRatStomach
   parent: OrganAnimalStomach
+  id: OrganRatStomach
   suffix: "rat"
   components:
   - type: SolutionContainerManager
@@ -20,5 +20,3 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 5
-  - type: Sprite
-    state: stomach
