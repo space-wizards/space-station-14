@@ -227,7 +227,7 @@
   parent: BaseOrgan
   id: BaseOrganLiver
   name: liver
-  description: Pairing suggestion: chianti and fava beans.
+  description: 'Pairing suggestion: chianti and fava beans.'
   abstract: true
   components:
   - type: Sprite
