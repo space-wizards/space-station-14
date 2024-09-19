@@ -17,3 +17,4 @@
   - type: PlantVisuals
   - type: Clickable
   - type: InteractionOutline
+  - type: Physics
