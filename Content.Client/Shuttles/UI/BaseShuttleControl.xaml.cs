@@ -286,7 +286,7 @@ public partial class BaseShuttleControl : MapGridControl
 
     private record struct GridDrawJob : IParallelRobustJob
     {
-        public int BatchSize => 16;
+        public int BatchSize => 64;
 
         public float MinimapScale;
         public Vector2 MidPoint;
