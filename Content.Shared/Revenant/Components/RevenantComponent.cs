@@ -3,6 +3,7 @@ using Content.Shared.Alert;
 using Content.Shared.FixedPoint;
 using Content.Shared.Store;
 using Content.Shared.Whitelist;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -96,17 +97,23 @@ public sealed partial class RevenantComponent : Component
     // essence regeneration for each crewmate that witnesses it
     #region Haunt Ability
 
-    [DataField("hauntDebuffs")]
+    [DataField("hauntDebuffs"), ViewVariables(VVAccess.ReadWrite)]
     public Vector2 HauntDebuffs = new(2, 6);
 
-    [DataField("hauntStolenEssencePerWitness")]
+    [DataField("hauntStolenEssencePerWitness"), ViewVariables(VVAccess.ReadWrite)]
     public FixedPoint2 HauntStolenEssencePerWitness = 2.5;
 
-    [DataField("hauntEssenceRegenPerWitness")]
+    [DataField("hauntEssenceRegenPerWitness"), ViewVariables(VVAccess.ReadWrite)]
     public FixedPoint2 HauntEssenceRegenPerWitness = 0.5;
 
-    [DataField("hauntEssenceRegenDuration")]
+    [DataField("hauntEssenceRegenDuration"), ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan HauntEssenceRegenDuration = TimeSpan.FromSeconds(10);
+
+    [DataField("hauntSound"), ViewVariables(VVAccess.ReadWrite)]
+    public SoundSpecifier? HauntSound = new SoundCollectionSpecifier("RevenantHaunt");
+
+    [DataField("hauntFlashDuration"), ViewVariables(VVAccess.ReadWrite)]
+    public TimeSpan HauntFlashDuration = TimeSpan.FromSeconds(2);
 
     #endregion
 

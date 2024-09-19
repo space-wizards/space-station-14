@@ -34,6 +34,9 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction.Components;
 using Robust.Shared.Player;
 using Content.Shared.StatusEffect;
+using Content.Shared.Flash.Components;
+using Content.Shared.Flash;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Revenant.EntitySystems;
 
@@ -51,6 +54,7 @@ public sealed partial class RevenantSystem
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly RevenantAnimatedSystem _revenantAnimated = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
+    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
     [ValidatePrototypeId<StatusEffectPrototype>]
     private const string RevenantEssenceRegen = "EssenceRegen";
@@ -238,7 +242,7 @@ public sealed partial class RevenantSystem
         args.Handled = true;
 
         // This is probably not the right way to do this...
-        var witnesses = new HashSet<NetEntity>(Filter.PvsExcept(uid).RemoveWhere(player =>
+        var witnessAndRevenantFilter = Filter.Pvs(uid).RemoveWhere(player =>
         {
             if (player.AttachedEntity == null)
                 return true;
@@ -251,7 +255,22 @@ public sealed partial class RevenantSystem
             var haunted = _interact.InRangeUnobstructed((uid, Transform(uid)), (ent, Transform(ent)), range: 0, collisionMask: CollisionGroup.Impassable);
             Log.Debug($"{ent} haunted: {haunted}");
             return !haunted;
-        }).Recipients.Select(ply => GetNetEntity(ply.AttachedEntity!.Value)));
+        });
+
+        var witnesses = new HashSet<NetEntity>(witnessAndRevenantFilter.RemovePlayerByAttachedEntity(uid).Recipients.Select(ply => GetNetEntity(ply.AttachedEntity!.Value)));
+
+        // Give the witnesses a spook!
+        _audioSystem.PlayGlobal(comp.HauntSound, witnessAndRevenantFilter, true);
+
+        foreach (var witness in witnesses)
+        {
+            _statusEffects.TryAddStatusEffect<FlashedComponent>(GetEntity(witness),
+                SharedFlashSystem.FlashedKey,
+                comp.HauntFlashDuration,
+                false
+            );
+        }
+
 
         // TODO: Maybe an eyeball icon above witnesses on the revenant's client
 
