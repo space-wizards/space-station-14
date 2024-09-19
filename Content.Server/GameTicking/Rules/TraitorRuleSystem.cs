@@ -159,7 +159,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         }
         else if (pda is null && uplinked)
         {
-            briefing = string.Format("{0}\n{1}", briefing, Loc.GetString("traitor-role-uplink-implant-short"));
+            briefing += "\n" + Loc.GetString("traitor-role-uplink-implant-short");
         }
 
         return (null, briefing);
