@@ -14,6 +14,15 @@
   name: alerts-revenant-corporeal-name
   description: alerts-revenant-corporeal-desc
 
+# TODO: Custom icon
+- type: alert
+  id: EssenceRegen
+  name: alerts-revenant-essence-regen
+  description: alerts-revenant-essence-regen
+  icons:
+    - sprite: /Textures/Mobs/Ghosts/revenant.rsi
+      state: icon
+
 - type: alert
   id: Stasis
   icons:

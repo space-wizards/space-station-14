@@ -92,6 +92,24 @@ public sealed partial class RevenantComponent : Component
     public float MaxEssenceUpgradeAmount = 10;
     #endregion
 
+    // When used, the revenant reveals itself temporarily and gains stolen essence and a boost in
+    // essence regeneration for each crewmate that witnesses it
+    #region Haunt Ability
+
+    [DataField("hauntDebuffs")]
+    public Vector2 HauntDebuffs = new(2, 6);
+
+    [DataField("hauntStolenEssencePerWitness")]
+    public FixedPoint2 HauntStolenEssencePerWitness = 2.5;
+
+    [DataField("hauntEssenceRegenPerWitness")]
+    public FixedPoint2 HauntEssenceRegenPerWitness = 0.5;
+
+    [DataField("hauntEssenceRegenDuration")]
+    public TimeSpan HauntEssenceRegenDuration = TimeSpan.FromSeconds(10);
+
+    #endregion
+
     //In the nearby radius, causes various objects to be thrown, messed with, and containers opened
     //Generally just causes a mess
     #region Defile Ability
@@ -260,5 +278,6 @@ public sealed partial class RevenantComponent : Component
     public string HarvestingState = "harvesting";
     #endregion
 
-    [DataField] public EntityUid? Action;
+    [DataField] public EntityUid? ShopAction;
+    [DataField] public EntityUid? HauntAction;
 }

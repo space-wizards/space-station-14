@@ -32,6 +32,8 @@ using Content.Shared.Whitelist;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction.Components;
+using Robust.Shared.Player;
+using Content.Shared.StatusEffect;
 
 namespace Content.Server.Revenant.EntitySystems;
 
@@ -48,6 +50,10 @@ public sealed partial class RevenantSystem
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly RevenantAnimatedSystem _revenantAnimated = default!;
+    [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
+
+    [ValidatePrototypeId<StatusEffectPrototype>]
+    private const string RevenantEssenceRegen = "EssenceRegen";
 
     private void InitializeAbilities()
     {
@@ -61,6 +67,7 @@ public sealed partial class RevenantSystem
         SubscribeLocalEvent<RevenantComponent, RevenantMalfunctionActionEvent>(OnMalfunctionAction);
         SubscribeLocalEvent<RevenantComponent, RevenantBloodWritingEvent>(OnBloodWritingAction);
         SubscribeLocalEvent<RevenantComponent, RevenantAnimateEvent>(OnAnimateAction);
+        SubscribeLocalEvent<RevenantComponent, RevenantHauntActionEvent>(OnHauntAction);
     }
 
     private void OnInteract(EntityUid uid, RevenantComponent component, UserActivateInWorldEvent args)
@@ -218,6 +225,46 @@ public sealed partial class RevenantSystem
         _damage.TryChangeDamage(args.Args.Target, dspec, true, origin: uid);
 
         args.Handled = true;
+    }
+
+    private void OnHauntAction(EntityUid uid, RevenantComponent comp, RevenantHauntActionEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        if (!TryUseAbility(uid, comp, 0, comp.HauntDebuffs))
+            return;
+
+        args.Handled = true;
+
+        // This is probably not the right way to do this...
+        var witnesses = new HashSet<NetEntity>(Filter.PvsExcept(uid).RemoveWhere(player =>
+        {
+            if (player.AttachedEntity == null)
+                return true;
+
+            var ent = player.AttachedEntity.Value;
+
+            if (!HasComp<MobStateComponent>(ent) || !HasComp<HumanoidAppearanceComponent>(ent) || HasComp<RevenantComponent>(ent))
+                return true;
+
+            var haunted = _interact.InRangeUnobstructed((uid, Transform(uid)), (ent, Transform(ent)), range: 0, collisionMask: CollisionGroup.Impassable);
+            Log.Debug($"{ent} haunted: {haunted}");
+            return !haunted;
+        }).Recipients.Select(ply => GetNetEntity(ply.AttachedEntity!.Value)));
+
+        // TODO: Maybe an eyeball icon above witnesses on the revenant's client
+
+        // TODO: Modify TryAddStatusEffect to add a premade instance of the component
+        if (witnesses.Count > 0 && _statusEffects.TryAddStatusEffect<RevenantRegenModifierComponent>(uid, RevenantEssenceRegen, comp.HauntEssenceRegenDuration, true))
+        {
+            _store.TryAddCurrency(new Dictionary<string, FixedPoint2>
+            { {comp.StolenEssenceCurrencyPrototype, comp.HauntStolenEssencePerWitness * witnesses.Count} }, uid);
+
+            var regen = Comp<RevenantRegenModifierComponent>(uid);
+            regen.Witnesses = witnesses;
+            Dirty(uid, regen);
+        }
     }
 
     private void OnDefileAction(EntityUid uid, RevenantComponent component, RevenantDefileActionEvent args)
