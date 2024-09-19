@@ -16,6 +16,12 @@ public sealed partial class TrueBlindnessVisibleComponent : Component
     public TimeSpan FadeoutTime = TimeSpan.FromSeconds(0.5);
 
     /// <summary>
+    ///     How long an entity takes to fade in.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public TimeSpan FadeinTime = TimeSpan.FromSeconds(0.2);
+
+    /// <summary>
     ///     How long this entity will have to wait before another ghost can be spawned from it.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]

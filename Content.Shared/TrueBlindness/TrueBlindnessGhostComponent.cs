@@ -1,3 +1,5 @@
+using Robust.Shared.Timing;
+
 namespace Content.Client.TrueBlindness;
 
 [RegisterComponent]
@@ -22,16 +24,16 @@ public sealed partial class TrueBlindnessGhostComponent : Component
     public TimeSpan VisibleTime = TimeSpan.FromSeconds(3);
 
     /// <summary>
-    ///     When this ghost was created.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan CreationTime = TimeSpan.Zero;
-
-    /// <summary>
     ///     How long this ghost takes to fade out.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan FadeoutTime = TimeSpan.FromSeconds(0.5);
+
+    /// <summary>
+    ///     When this ghost was created.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    public TimeSpan CreationTime = TimeSpan.Zero;
 
     /// <summary>
     ///     When this ghost will become eligible for deletion.

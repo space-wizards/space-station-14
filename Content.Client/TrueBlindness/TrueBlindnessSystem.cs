@@ -1,6 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
-using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Physics;
 using Content.Shared.TrueBlindness;
@@ -47,7 +46,7 @@ public sealed class TrueBlindnessSystem : EntitySystem
         _overlayMan.AddOverlay(_overlay);
     }
 
-    public bool VisibleFromPlayer(EntityUid playerUid, EntityUid objectUid)
+    public bool VisibleFromPlayer(EntityUid playerUid, EntityUid objectUid, float range)
     {
         var playerTransform = Transform(playerUid);
         var playerPosition = _transform.GetWorldPosition(playerTransform);
@@ -56,11 +55,12 @@ public sealed class TrueBlindnessSystem : EntitySystem
         if (!MathHelper.CloseToPercent(direction.LengthSquared(), 1))
             return false;
         var r = new CollisionRay(_transform.GetWorldPosition(playerTransform), direction, (int)CollisionGroup.FlyingMobMask);
-        var cr = _physics.IntersectRay(playerTransform.MapID, r, maxLength:1.5f, ignoredEnt:playerUid, returnOnFirstHit:true).FirstOrNull();
-        return cr is null
-               || cr.Value.HitEntity == objectUid
-               || (TryComp(objectUid, out TrueBlindnessGhostComponent? ghostComp) &&
-                   GetEntity(ghostComp.From) == objectUid);
+        var cr = _physics.IntersectRay(playerTransform.MapID, r, maxLength:range, ignoredEnt:playerUid, returnOnFirstHit:true).FirstOrNull();
+        var rTrue = cr is null
+                    || cr.Value.HitEntity == objectUid
+                    || (TryComp(objectUid, out TrueBlindnessGhostComponent? ghostComp) &&
+                        cr.Value.HitEntity == GetEntity(ghostComp.From))
+        return rTrue;
     }
 
     public bool CreateGhost(Entity<TrueBlindnessVisibleComponent> uid,
@@ -95,9 +95,6 @@ public sealed class TrueBlindnessSystem : EntitySystem
     public void DeleteGhost(EntityUid ghost)
     {
         QueueDel(ghost);
-
-        // if (TryComp(ghost, out SpriteComponent? sprite))
-        //     sprite.PostShader?.Dispose();
     }
 
     public override void Update(float frameTime)
@@ -138,15 +135,17 @@ public sealed class TrueBlindnessSystem : EntitySystem
         {
             if (HasComp(uid, typeof(TrueBlindnessGhostComponent)))
             {
-                if (VisibleFromPlayer(player.Value, uid))
+                if (VisibleFromPlayer(player.Value, uid, visibleRange))
+                {
                     DeleteGhost(uid);
+                }
                 continue;
             }
 
             EnsureComp(uid, out TrueBlindnessVisibleComponent visible);
             if (_timing.CurTime < visible.LastGhost + visible.BufferTime)
                 continue;
-            if (!VisibleFromPlayer(player.Value, uid))
+            if (!VisibleFromPlayer(player.Value, uid, visibleRange))
                 continue;
             CreateGhost((uid, visible), out _);
         }
@@ -156,13 +155,15 @@ public sealed class TrueBlindnessSystem : EntitySystem
 
         while (query.MoveNext(out var uid, out var comp))
         {
+            var lifeSpan = (_timing.CurTime - comp.CreationTime);
+
             if (comp.WasAnchored || _timing.CurTime < comp.DeletionEligible)
                 continue;
 
-            if (_timing.CurTime - comp.CreationTime > comp.VisibleTime)
+            if (lifeSpan > comp.VisibleTime)
                 DeleteGhost(uid);
 
-            var fade = (float)(1 - (_timing.CurTime - comp.CreationTime - comp.VisibleTime + comp.FadeoutTime) /
+            var fade = (float)(1 - (lifeSpan - comp.VisibleTime + comp.FadeoutTime) /
                 comp.FadeoutTime);
 
             if (fade > 1 || fade < 0)
@@ -171,12 +172,7 @@ public sealed class TrueBlindnessSystem : EntitySystem
             if (!TryComp(uid, out SpriteComponent? sprite))
                 continue;
 
-            // if (sprite.PostShader is null || sprite.PostShader.Disposed)
-            //     continue;
-            //
-            // sprite.PostShader.SetParameter("Alpha", (float)fade);
-
-            sprite.Color = new Color(1f, 1f, 1f, fade);
+            sprite.Color = new Color(1f / fade, 1f / fade, 1f / fade, fade * fade);
         }
 
     }
