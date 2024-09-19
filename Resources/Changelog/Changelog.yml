@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Winkarst-cpu
-  changes:
-  - message: Admin notes popups are now more readable.
-    type: Tweak
-  id: 6904
-  time: '2024-07-11T14:03:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29909
 - author: jonathanargo
   changes:
   - message: Muskets are now wieldable.
@@ -3922,3 +3915,10 @@
   id: 7403
   time: '2024-09-19T14:01:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31294
+- author: Plykiya
+  changes:
+  - message: You can now transfer someone from a rollerbed to a bed directly.
+    type: Tweak
+  id: 7404
+  time: '2024-09-19T14:08:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32089
