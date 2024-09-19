@@ -198,32 +198,6 @@
     - id: Drink
 
 - type: entity
-  parent: BaseOrganStomach
-  id: OrganAnimalStomach
-  name: stomach
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: Sprite
-    state: stomach
-  - type: Organ
-  - type: SolutionContainerManager
-    solutions:
-      stomach:
-        maxVol: 40
-      food:
-        maxVol: 5
-        reagents:
-        - ReagentId: UncookedAnimalProteins
-          Quantity: 5
-  - type: Stomach
-  - type: Metabolizer
-    maxReagents: 3
-    metabolizerTypes: [ Animal ]
-    groups:
-    - id: Food
-    - id: Drink
-
-- type: entity
   parent: BaseOrgan
   id: BaseOrganLiver
   name: liver
