@@ -10,8 +10,8 @@ public sealed partial class RevealRevenantOnCollideComponent : Component
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public string PopupText;
 
-    [DataField(required: true), ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan RevealTime;
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public TimeSpan RevealTime = TimeSpan.FromSeconds(5);
 
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan? StunTime;
