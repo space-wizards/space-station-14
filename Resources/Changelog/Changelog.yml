@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: ShadowCommander
-  changes:
-  - message: Players can now use melee attacks and shoves while dragging an entity
-      in their active hand.
-    type: Tweak
-  id: 6900
-  time: '2024-07-11T04:48:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29703
 - author: Cojoke-dot
   changes:
   - message: You can no longer shoot out of crates with guns
@@ -3922,3 +3914,10 @@
   id: 7399
   time: '2024-09-19T10:22:02.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31223
+- author: Errant
+  changes:
+  - message: Crew monitor list can now be filtered by name and job.
+    type: Add
+  id: 7400
+  time: '2024-09-19T10:23:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31659
