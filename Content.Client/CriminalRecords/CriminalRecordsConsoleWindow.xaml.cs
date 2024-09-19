@@ -13,6 +13,11 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using System.Linq;
+using System.Numerics;
+using Content.Shared.StatusIcon;
+using Robust.Client.Utility;
+using Robust.Client.GameObjects;
+using FastAccessors;
 
 namespace Content.Client.CriminalRecords;
 
@@ -24,6 +29,8 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
     private readonly IPrototypeManager _proto;
     private readonly IRobustRandom _random;
     private readonly AccessReaderSystem _accessReader;
+    [Dependency] private readonly IEntityManager _entManager = default!;
+    private readonly SpriteSystem _spriteSystem;
 
     public readonly EntityUid Console;
 
@@ -33,10 +40,12 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
     public Action<uint?>? OnKeySelected;
     public Action<StationRecordFilterType, string>? OnFiltersChanged;
     public Action<SecurityStatus>? OnStatusSelected;
+    public Action<uint>? OnCheckStatus;
     public Action<CriminalRecord, bool, bool>? OnHistoryUpdated;
     public Action? OnHistoryClosed;
     public Action<SecurityStatus, string>? OnDialogConfirmed;
 
+    public Action<int>? OnStatusFilterPressed;
     private uint _maxLength;
     private bool _access;
     private uint? _selectedKey;
@@ -55,6 +64,8 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
         _proto = prototypeManager;
         _random = robustRandom;
         _accessReader = accessReader;
+        _entManager = IoCManager.Resolve<IEntityManager>();
+        _spriteSystem = _entManager.System<SpriteSystem>();
 
         _maxLength = maxLength;
         _currentFilterType = StationRecordFilterType.Name;
@@ -104,14 +115,48 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
 
         StatusOptionButton.OnItemSelected += args =>
         {
-            SetStatus((SecurityStatus) args.Id);
+            SetStatus((SecurityStatus)args.Id);
         };
 
         HistoryButton.OnPressed += _ =>
         {
-            if (_selectedRecord is {} record)
+            if (_selectedRecord is { } record)
                 OnHistoryUpdated?.Invoke(record, _access, true);
         };
+
+        var statusFilterButtonGroup = new ButtonGroup();
+
+        AllListToggle.Group = statusFilterButtonGroup;
+
+        //Need to get the CurrentTab and set correct button to be active
+
+        AllListToggle.OnToggled += _ =>
+        {
+            StatusFilterPressed(0);
+        };
+
+        WantedListToggle.Group = statusFilterButtonGroup;
+        WantedListToggle.OnToggled += _ =>
+        {
+            StatusFilterPressed(1);
+        };
+
+        ParoleListToggle.Group = statusFilterButtonGroup;
+        ParoleListToggle.OnToggled += _ =>
+        {
+            StatusFilterPressed(2);
+        };
+
+        DetainedListToggle.Group = statusFilterButtonGroup;
+        DetainedListToggle.OnToggled += _ =>
+        {
+            StatusFilterPressed(3);
+        };
+    }
+
+    public void StatusFilterPressed(int tab)
+    {
+        OnStatusFilterPressed?.Invoke(tab);
     }
 
     public void UpdateState(CriminalRecordsConsoleState state)
@@ -162,7 +207,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
         }
     }
 
-    private void PopulateRecordListing(Dictionary<uint, string>? listing)
+    private void PopulateRecordListing(Dictionary<uint, string>? listing, SecurityStatus? filterSecStatus = null)
     {
         if (listing == null)
         {
@@ -179,7 +224,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
         // in parallel to synchronize the items in RecordListing with `entries`.
         int i = RecordListing.Count - 1;
         int j = entries.Count - 1;
-        while(i >= 0 && j >= 0)
+        while (i >= 0 && j >= 0)
         {
             var strcmp = string.Compare(RecordListing[i].Text, entries[j].Value, StringComparison.Ordinal);
             if (strcmp == 0)
@@ -212,23 +257,44 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
         // And finally, any remaining items in `entries`, don't exist in RecordListing. Create them.
         while (j >= 0)
         {
-            RecordListing.Insert(0, new ItemList.Item(RecordListing){Text = entries[j].Value, Metadata = entries[j].Key});
+            RecordListing.Insert(0, new ItemList.Item(RecordListing){ Text = entries[j].Value, Metadata = entries[j].Key });
             j--;
         }
     }
-
     private void PopulateRecordContainer(GeneralStationRecord stationRecord, CriminalRecord criminalRecord)
     {
+        var specifier = new SpriteSpecifier.Rsi(new ResPath("Interface/Misc/job_icons.rsi"), "Unknown");
         var na = Loc.GetString("generic-not-available-shorthand");
         PersonName.Text = stationRecord.Name;
-        PersonPrints.Text = Loc.GetString("general-station-record-console-record-fingerprint", ("fingerprint", stationRecord.Fingerprint ?? na));
-        PersonDna.Text = Loc.GetString("general-station-record-console-record-dna", ("dna", stationRecord.DNA ?? na));
+        PersonJob.Text = stationRecord.JobTitle ?? na;
 
-        StatusOptionButton.SelectId((int) criminalRecord.Status);
-        if (criminalRecord.Reason is {} reason)
+        // Job icon
+        if (_proto.TryIndex<JobIconPrototype>(stationRecord.JobIcon, out var proto))
+        {
+            PersonJobIcon.Texture = _spriteSystem.Frame0(proto.Icon);
+        }
+
+        PersonPrints.Text = stationRecord.Fingerprint ?? "n/a";
+        PersonDna.Text = stationRecord.DNA ?? "n/a";
+
+        if (criminalRecord.Status != SecurityStatus.None)
+        {
+            specifier = new SpriteSpecifier.Rsi(new ResPath("Interface/Misc/security_icons.rsi"),  GetStatusIcon(criminalRecord.Status));
+        }
+        PersonStatusTX.SetFromSpriteSpecifier(specifier);
+        PersonStatusTX.DisplayRect.TextureScale = new Vector2(3f, 3f);
+
+        StatusOptionButton.SelectId((int)criminalRecord.Status);
+        if (criminalRecord.Reason is { } reason)
         {
             var message = FormattedMessage.FromMarkupOrThrow(Loc.GetString("criminal-records-console-wanted-reason"));
+
+            if (criminalRecord.Status == SecurityStatus.Suspected)
+            {
+                message = FormattedMessage.FromMarkupOrThrow(Loc.GetString("criminal-records-console-suspected-reason"));
+            }
             message.AddText($": {reason}");
+
             WantedReason.SetMessage(message);
             WantedReason.Visible = true;
         }
@@ -287,6 +353,18 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
         };
 
         _reasonDialog.OnClose += () => { _reasonDialog = null; };
+    }
+    private string GetStatusIcon(SecurityStatus status)
+    {
+        return status switch
+        {
+            SecurityStatus.Paroled => "hud_paroled",
+            SecurityStatus.Wanted => "hud_wanted",
+            SecurityStatus.Detained => "hud_incarcerated",
+            SecurityStatus.Discharged => "hud_discharged",
+            SecurityStatus.Suspected => "hud_suspected",
+            _ => "SecurityIconNone"
+        };
     }
 
     private string GetTypeFilterLocals(StationRecordFilterType type)

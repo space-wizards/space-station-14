@@ -100,3 +100,20 @@ public sealed class CriminalRecordDeleteHistory : BoundUserInterfaceMessage
         Index = index;
     }
 }
+
+/// <summary>
+/// Used to set what status to filter by index.
+///
+/// </summary>
+///
+[Serializable, NetSerializable]
+
+public sealed class CriminalRecordSetStatusFilter : BoundUserInterfaceMessage
+{
+    public readonly int Tab;
+    public CriminalRecordSetStatusFilter(int tab)
+    {
+        Tab = tab;
+    }
+}
+

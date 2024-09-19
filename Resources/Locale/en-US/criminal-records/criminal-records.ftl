@@ -3,6 +3,8 @@ criminal-records-console-records-list-title = Crewmembers
 criminal-records-console-select-record-info = Select a record.
 criminal-records-console-no-records = No records found!
 criminal-records-console-no-record-found = No record was found for the selected person.
+criminal-records-console-flavor-left = Arrest first! Ask questions later.
+criminal-records-console-flavor-right = v2.0
 
 ## Status
 
@@ -14,8 +16,8 @@ criminal-records-status-suspected = Suspect
 criminal-records-status-discharged = Discharged
 criminal-records-status-paroled = Paroled
 
-criminal-records-console-wanted-reason = [color=gray]Wanted Reason[/color]
-criminal-records-console-suspected-reason = [color=gray]Suspected Reason[/color]
+criminal-records-console-wanted-reason = Wanted Reason
+criminal-records-console-suspected-reason = Suspected Reason
 criminal-records-console-reason = Reason
 criminal-records-console-reason-placeholder = For example: {$placeholder}
 

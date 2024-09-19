@@ -13,6 +13,7 @@ using Robust.Server.GameObjects;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Security.Components;
+using System.Linq;
 
 namespace Content.Server.CriminalRecords.Systems;
 
@@ -28,7 +29,6 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
     [Dependency] private readonly StationRecordsSystem _records = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
-
     public override void Initialize()
     {
         SubscribeLocalEvent<CriminalRecordsConsoleComponent, RecordModifiedEvent>(UpdateUserInterface);
@@ -42,6 +42,7 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
             subs.Event<CriminalRecordChangeStatus>(OnChangeStatus);
             subs.Event<CriminalRecordAddHistory>(OnAddHistory);
             subs.Event<CriminalRecordDeleteHistory>(OnDeleteHistory);
+            subs.Event<CriminalRecordSetStatusFilter>(OnStatusFilterPressed);
         });
     }
 
@@ -55,6 +56,11 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
     {
         // no concern of sus client since record retrieval will fail if invalid id is given
         ent.Comp.ActiveKey = msg.SelectedKey;
+        UpdateUserInterface(ent);
+    }
+    private void OnStatusFilterPressed(Entity<CriminalRecordsConsoleComponent> ent, ref CriminalRecordSetStatusFilter msg)
+    {
+        ent.Comp.CurrentTab = msg.Tab;
         UpdateUserInterface(ent);
     }
 
@@ -190,8 +196,24 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
             _ui.SetUiState(uid, CriminalRecordsConsoleKey.Key, new CriminalRecordsConsoleState());
             return;
         }
-
+        // get the listing of records to display
         var listing = _records.BuildListing((owningStation.Value, stationRecords), console.Filter);
+
+        // if the a fukter toggle is set, filter the listing
+        var statusMap = new Dictionary<int, SecurityStatus>
+        {
+            { 1, SecurityStatus.Wanted },
+            { 2, SecurityStatus.Paroled },
+            { 3, SecurityStatus.Detained }
+        };
+
+        if (statusMap.TryGetValue(console.CurrentTab, out var status))
+        {
+            // filter the listing by the status
+            listing = _records.BuildListing((owningStation.Value, stationRecords), console.Filter)
+                .Where(x => _records.TryGetRecord<CriminalRecord>(new StationRecordKey(x.Key, owningStation.Value), out var record) && record.Status == status)
+                .ToDictionary(x => x.Key, x => x.Value);
+        }
 
         var state = new CriminalRecordsConsoleState(listing, console.Filter);
         if (console.ActiveKey is { } id)
