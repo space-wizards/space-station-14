@@ -9,6 +9,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
+using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
@@ -23,7 +24,7 @@ namespace Content.Shared.Containers.ItemSlots
     ///     Note when using popups on entities with many slots with InsertOnInteract, EjectOnInteract or EjectOnUse:
     ///     A single use will try to insert to/eject from every slot and generate a popup for each that fails.
     /// </remarks>
-    public sealed class ItemSlotsSystem : EntitySystem
+    public sealed partial class ItemSlotsSystem : EntitySystem
     {
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
@@ -31,10 +32,13 @@ namespace Content.Shared.Containers.ItemSlots
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+        [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
         public override void Initialize()
         {
             base.Initialize();
+
+            InitializeLock();
 
             SubscribeLocalEvent<ItemSlotsComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<ItemSlotsComponent, ComponentInit>(Oninitialize);
@@ -266,8 +270,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (slot.ContainerSlot == null)
                 return false;
 
-            if ((!slot.Whitelist?.IsValid(usedUid) ?? false) ||
-                (slot.Blacklist?.IsValid(usedUid) ?? false))
+            if (_whitelistSystem.IsWhitelistFail(slot.Whitelist, usedUid) || _whitelistSystem.IsBlacklistPass(slot.Blacklist, usedUid))
             {
                 if (popup.HasValue && slot.WhitelistFailPopup.HasValue)
                     _popupSystem.PopupClient(Loc.GetString(slot.WhitelistFailPopup), uid, popup.Value);

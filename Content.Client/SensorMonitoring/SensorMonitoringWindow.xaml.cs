@@ -129,14 +129,7 @@ public sealed partial class SensorMonitoringWindow : FancyWindow, IComputerWindo
 
             foreach (var stream in sensor.Streams.Values)
             {
-                var maxValue = stream.Unit switch
-                {
-                    SensorUnit.PressureKpa => 5000, // 5 MPa
-                    SensorUnit.Ratio => 1,
-                    SensorUnit.PowerW => 1_000_000, // 1 MW
-                    SensorUnit.EnergyJ => 2_000_000, // 2 MJ
-                    _ => 1000
-                };
+                var maxValue = stream.Samples.Max(x => x.Value);
 
                 // TODO: Better way to do this?
                 var lastSample = stream.Samples.Last();
@@ -151,7 +144,7 @@ public sealed partial class SensorMonitoringWindow : FancyWindow, IComputerWindo
                     }
                 });
 
-                Asdf.AddChild(new GraphView(stream.Samples, startTime, curTime, maxValue) { MinHeight = 150 });
+                Asdf.AddChild(new GraphView(stream.Samples, startTime, curTime, maxValue * 1.1f) { MinHeight = 150 });
                 Asdf.AddChild(new PanelContainer { StyleClasses = { StyleBase.ClassLowDivider } });
             }
         }

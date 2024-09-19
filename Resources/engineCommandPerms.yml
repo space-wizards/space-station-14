@@ -32,7 +32,6 @@
   - togglelight
   - togglelightbuf
   - toggleshadows
-  - testbed
   - lightbb
   - vv
   - szr_stats
@@ -90,12 +89,12 @@
 
 - Flags: ADMIN
   Commands:
-  - delete
-  - kick
   - listplayers
   - tp
   - tpto
-  - respawn
+
+- Flags: FUN
+  Commands:
   - tippy
   - tip
 
@@ -111,6 +110,12 @@
   Commands:
   - spawn
   - cspawn
+  - delete
+
+- Flags: MODERATOR
+  Commands:
+  - kick
+  - respawn
 
 - Flags: HOST
   Commands:

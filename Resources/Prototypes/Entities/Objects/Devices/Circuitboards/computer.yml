@@ -21,8 +21,8 @@
 - type: entity
   parent: BaseComputerCircuitboard
   id: AlertsComputerCircuitboard
-  name: alerts computer board
-  description: A computer printed circuit board for an alerts computer.
+  name: atmospheric alerts computer board
+  description: A computer printed circuit board for an atmospheric alerts computer.
   components:
     - type: ComputerBoard
       prototype: ComputerAlert
@@ -85,6 +85,17 @@
       price: 750
 
 - type: entity
+  parent: BaseComputerCircuitboard
+  id: CargoSaleComputerCircuitboard
+  name: cargo sale computer board
+  description: A computer printed circuit board for a cargo sale computer.
+  components:
+    - type: Sprite
+      state: cpu_supply
+    - type: ComputerBoard
+      prototype: ComputerPalletConsole
+
+- type: entity
   id: CargoBountyComputerCircuitboard
   parent: BaseComputerCircuitboard
   name: cargo bounty computer board
@@ -130,17 +141,6 @@
       prototype: ComputerShuttleCargo
     - type: StealTarget
       stealGroup: CargoShuttleConsoleCircuitboard
-
-- type: entity
-  parent: BaseComputerCircuitboard
-  id: SalvageShuttleConsoleCircuitboard
-  name: salvage shuttle console board
-  description: A computer printed circuit board for a salvage shuttle console.
-  components:
-    - type: ComputerBoard
-      prototype: ComputerShuttleSalvage
-    - type: StealTarget
-      stealGroup: SalvageShuttleConsoleCircuitboard
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -218,7 +218,7 @@
       prototype: ComputerCrewMonitoring
 
 - type: entity
-  parent: BaseComputerCircuitboard
+  parent: [BaseComputerCircuitboard, BaseGrandTheftContraband]
   id: IDComputerCircuitboard
   name: ID card computer board
   description: A computer printed circuit board for an ID card console.
@@ -245,7 +245,7 @@
       prototype: computerBodyScanner
 
 - type: entity
-  parent: BaseComputerCircuitboard
+  parent: [ BaseComputerCircuitboard, BaseGrandTheftContraband ]
   id: CommsComputerCircuitboard
   name: communications computer board
   description: A computer printed circuit board for a communications console.
@@ -256,7 +256,7 @@
       prototype: ComputerComms
 
 - type: entity
-  parent: BaseComputerCircuitboard
+  parent: [ BaseComputerCircuitboard, BaseSyndicateContraband ]
   id: SyndicateCommsComputerCircuitboard
   name: syndicate communications computer board
   description: A computer printed circuit board for a syndicate communications console.
@@ -395,3 +395,14 @@
       state: cpu_science
     - type: ComputerBoard
       prototype: ComputerRoboticsControl
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: StationAiUploadCircuitboard
+  name: AI upload console board
+  description: A computer printed circuit board for a AI upload console.
+  components:
+    - type: Sprite
+      state: cpu_science
+    - type: ComputerBoard
+      prototype: StationAiUploadComputer

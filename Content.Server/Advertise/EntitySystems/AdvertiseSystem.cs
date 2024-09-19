@@ -62,7 +62,7 @@ public sealed class AdvertiseSystem : EntitySystem
             return;
 
         if (_prototypeManager.TryIndex(advert.Pack, out var advertisements))
-            _chat.TrySendInGameICMessage(uid, Loc.GetString(_random.Pick(advertisements.Messages)), InGameICChatType.Speak, hideChat: true);
+            _chat.TrySendInGameICMessage(uid, Loc.GetString(_random.Pick(advertisements.Values)), InGameICChatType.Speak, hideChat: true);
     }
 
     public override void Update(float frameTime)

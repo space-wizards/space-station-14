@@ -7,12 +7,12 @@ namespace Content.IntegrationTests.Tests.Networking;
 [TestFixture]
 public sealed class PvsCommandTest
 {
-    public static EntProtoId TestEnt = "MobHuman";
+    private static readonly EntProtoId TestEnt = "MobHuman";
 
     [Test]
     public async Task TestPvsCommands()
     {
-        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true, DummyTicker = false});
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true, DummyTicker = false });
         var (server, client) = pair;
         await pair.RunTicksSync(5);
 

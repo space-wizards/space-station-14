@@ -11,6 +11,11 @@ if (!CommandLineArgs.TryParse(args, out var parsed))
 
 if (parsed.WipeRelease)
     WipeRelease();
+else
+{
+    // Ensure the release directory exists. Otherwise, the packaging will fail.
+    Directory.CreateDirectory("release");
+}
 
 if (!parsed.SkipBuild)
     WipeBin();

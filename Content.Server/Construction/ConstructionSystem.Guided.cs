@@ -25,7 +25,7 @@ namespace Content.Server.Construction
 
         private void OnGuideRequested(RequestConstructionGuide msg, EntitySessionEventArgs args)
         {
-            if (!_prototypeManager.TryIndex(msg.ConstructionId, out ConstructionPrototype? prototype))
+            if (!PrototypeManager.TryIndex(msg.ConstructionId, out ConstructionPrototype? prototype))
                 return;
 
             if(GetGuide(prototype) is {} guide)
@@ -41,7 +41,7 @@ namespace Content.Server.Construction
                 component.Node == component.DeconstructionNode)
                 return;
 
-            if (!_prototypeManager.TryIndex(component.Graph, out ConstructionGraphPrototype? graph))
+            if (!PrototypeManager.TryIndex(component.Graph, out ConstructionGraphPrototype? graph))
                 return;
 
             if (component.DeconstructionNode == null)
@@ -145,7 +145,7 @@ namespace Content.Server.Construction
                 return guide;
 
             // If the graph doesn't actually exist, do nothing.
-            if (!_prototypeManager.TryIndex(construction.Graph, out ConstructionGraphPrototype? graph))
+            if (!PrototypeManager.TryIndex(construction.Graph, out ConstructionGraphPrototype? graph))
                 return null;
 
             // If either the start node or the target node are missing, do nothing.

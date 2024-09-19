@@ -16,6 +16,8 @@
     - !type:DepartmentTimeRequirement
       department: Command
       time: 54000 # 15 hours
+    - !type:AgeRequirement
+      requiredAge: 21
   weight: 20
   startingGear: CaptainGear
   icon: "JobIconCaptain"
@@ -40,3 +42,7 @@
     gloves: ClothingHandsGlovesCaptain
     id: CaptainPDA
     ears: ClothingHeadsetAltCommand
+  storage:
+    back:
+    - Flash
+    # - StationCharter

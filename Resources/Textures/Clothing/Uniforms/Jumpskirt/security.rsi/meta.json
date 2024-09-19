@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Original sec jumpsuit from tgstation at commit https://github.com/tgstation/tgstation/commit/c838ba21dae97db345e0113f99596decd1d66039, jumpskirt sprite made by Flareguy for SS14. In hand sprite scaled down by potato1234_x, monkey derivative made by brainfood1183 (github) for ss14",
+  "copyright": "Created by Flareguy using sprites from tgstation at commit https://github.com/tgstation/tgstation/commit/c838ba21dae97db345e0113f99596decd1d66039 & the jumpskirt base found in color.rsi.",
   "size": {
     "x": 32,
     "y": 32
@@ -12,18 +12,6 @@
     },
     {
       "name": "equipped-INNERCLOTHING",
-      "directions": 4
-    },
-    {
-      "name": "equipped-INNERCLOTHING-monkey",
-      "directions": 4
-    },
-    {
-      "name": "inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "inhand-right",
       "directions": 4
     }
   ]

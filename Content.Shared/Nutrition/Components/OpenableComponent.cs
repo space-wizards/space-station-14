@@ -27,6 +27,12 @@ public sealed partial class OpenableComponent : Component
     public bool OpenableByHand = true;
 
     /// <summary>
+    /// If true, tries to open when activated in world.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool OpenOnActivate;
+
+    /// <summary>
     /// Text shown when examining and its open.
     /// </summary>
     [DataField]
@@ -58,7 +64,7 @@ public sealed partial class OpenableComponent : Component
     /// Sound played when opening.
     /// </summary>
     [DataField]
-    public SoundSpecifier Sound = new SoundCollectionSpecifier("canOpenSounds");
+    public SoundSpecifier? Sound = new SoundCollectionSpecifier("canOpenSounds");
 
     /// <summary>
     /// Can this item be closed again after opening?

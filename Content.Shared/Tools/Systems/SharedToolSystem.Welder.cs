@@ -16,8 +16,15 @@ public abstract partial class SharedToolSystem
     {
         SubscribeLocalEvent<WelderComponent, ExaminedEvent>(OnWelderExamine);
         SubscribeLocalEvent<WelderComponent, AfterInteractEvent>(OnWelderAfterInteract);
-        SubscribeLocalEvent<WelderComponent, DoAfterAttemptEvent<ToolDoAfterEvent>>(OnWelderToolUseAttempt);
+
+        SubscribeLocalEvent<WelderComponent, ToolUseAttemptEvent>((uid, comp, ev) => {
+            CanCancelWelderUse((uid, comp), ev.User, ev.Fuel, ev);
+        });
+        SubscribeLocalEvent<WelderComponent, DoAfterAttemptEvent<ToolDoAfterEvent>>((uid, comp, ev) => {
+            CanCancelWelderUse((uid, comp), ev.Event.User, ev.Event.Fuel, ev);
+        });
         SubscribeLocalEvent<WelderComponent, ToolDoAfterEvent>(OnWelderDoAfter);
+
         SubscribeLocalEvent<WelderComponent, ItemToggledEvent>(OnToggle);
         SubscribeLocalEvent<WelderComponent, ItemToggleActivateAttemptEvent>(OnActivateAttempt);
     }
@@ -120,23 +127,20 @@ public abstract partial class SharedToolSystem
         }
     }
 
-    private void OnWelderToolUseAttempt(Entity<WelderComponent> entity, ref DoAfterAttemptEvent<ToolDoAfterEvent> args)
+    private void CanCancelWelderUse(Entity<WelderComponent> entity, EntityUid user, float requiredFuel, CancellableEntityEventArgs ev)
     {
-        var user = args.DoAfter.Args.User;
-
         if (!ItemToggle.IsActivated(entity.Owner))
         {
             _popup.PopupClient(Loc.GetString("welder-component-welder-not-lit-message"), entity, user);
-            args.Cancel();
-            return;
+            ev.Cancel();
         }
 
-        var (fuel, _) = GetWelderFuelAndCapacity(entity);
+        var (currentFuel, _) = GetWelderFuelAndCapacity(entity);
 
-        if (args.Event.Fuel > fuel)
+        if (requiredFuel > currentFuel)
         {
             _popup.PopupClient(Loc.GetString("welder-component-cannot-weld-message"), entity, user);
-            args.Cancel();
+            ev.Cancel();
         }
     }
 

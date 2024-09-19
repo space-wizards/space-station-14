@@ -23,7 +23,8 @@
         - ReagentId: Vitamin
           Quantity: 5
   - type: Food #All pies here made with a pie tin; unless you're some kind of savage, you're probably not destroying this when you eat or slice the pie!
-    trash: FoodPlateTin
+    trash: 
+    - FoodPlateTin
   - type: SliceableFood
     count: 4
   - type: Tag
@@ -148,6 +149,9 @@
     - state: tin
     - state: plain
   - type: CreamPie
+  - type: ThrowingAngle
+    angle: 180
+  - type: LandAtCursor
   - type: ContainerContainer
     containers:
       payloadSlot: !type:ContainerSlot

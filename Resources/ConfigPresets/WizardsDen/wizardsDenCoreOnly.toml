@@ -1,0 +1,17 @@
+# Configuration preset layer for "Core Only" Wizard's Den servers.
+# Intended to be loaded after wizardsDen.toml
+
+# hostname is a placeholder
+# needs region tag
+
+[game]
+soft_max_players = 50
+hostname = "[EN] Wizard's Den Red Firefly [US East]"
+desc = "Official English Space Station 14 servers. Vanilla, core ruleset."
+panic_bunker.min_overall_minutes = 15
+
+[server]
+rules_file = "CoreRuleset"
+
+[hub]
+tags = "lang:en,region:am_n_e,rp:none"

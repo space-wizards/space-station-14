@@ -92,7 +92,7 @@
   name: wrench
   parent: BaseItem
   id: Wrench
-  description: 'A common tool for assembly and disassembly. Remember: righty tighty, lefty loosey.'
+  description: 'A common tool for assembly and disassembly. Remember: lefty latchy, righty removey.'
   components:
   - type: EmitSoundOnLand
     sound:
@@ -128,68 +128,10 @@
     price: 22
 
 - type: entity
-  name: crowbar
-  parent: BaseItem
-  id: Crowbar
-  description: A multipurpose tool to pry open doors and fight interdimensional invaders.
-  components:
-  - type: EmitSoundOnLand
-    sound:
-      path: /Audio/Items/crowbar_drop.ogg
-  - type: Tag
-    tags:
-    - Crowbar
-  - type: Sprite
-    sprite: Objects/Tools/crowbar.rsi
-    state: icon
-  - type: Item
-    sprite: Objects/Tools/crowbar.rsi
-    size: Small
-    storedSprite:
-      sprite: Objects/Tools/crowbar.rsi
-      state: storage
-  - type: MeleeWeapon
-    wideAnimationRotation: -135
-    damage:
-      types:
-        Blunt: 8
-    soundHit:
-      collection: MetalThud
-  - type: Tool
-    qualities:
-      - Prying
-    useSound:
-      path: /Audio/Items/crowbar.ogg
-  - type: ToolTileCompatible
-  - type: PhysicalComposition
-    materialComposition:
-      Steel: 100
-  - type: StaticPrice
-    price: 22
-  - type: Prying
-
-- type: entity
-  parent: Crowbar
-  id: CrowbarRed
-  name: emergency crowbar
-  components:
-  - type: Tag
-    tags:
-    - Crowbar
-    - CrowbarRed
-  - type: Sprite
-    state: red-icon
-  - type: Item
-    heldPrefix: red
-    storedSprite:
-      sprite: Objects/Tools/crowbar.rsi
-      state: red-storage
-
-- type: entity
   name: multitool
   parent: BaseItem
   id: Multitool
-  description: An advanced tool to copy, store, and send electrical pulses and signals through wires and machines
+  description: An advanced tool to copy, store, and send electrical pulses and signals through wires and machines.
   components:
   - type: EmitSoundOnLand
     sound:
@@ -282,7 +224,7 @@
       price: 56
     - type: GuideHelp
       guides:
-        - NetworkConfigurator
+      - NetworkConfigurator
 
 #Power tools
 #Later on these should switch probably switch damage when changing the tool behavior.
@@ -304,7 +246,7 @@
   - type: Tool
     qualities:
       - Screwing
-    speed: 1.5
+    speedModifier: 1.5
     useSound: /Audio/Items/drill_use.ogg
   - type: MultipleTool
     statusShowBehavior: true
@@ -342,7 +284,7 @@
 
 - type: entity
   id: RCD
-  parent: BaseItem
+  parent: [ BaseItem, BaseEngineeringContraband ]
   name: RCD
   description: The rapid construction device can be used to quickly place and remove various station structures and fixtures. Requires compressed matter to function.
   components:
@@ -386,12 +328,13 @@
       Steel: 600
       Plastic: 100
   - type: StaticPrice
-    price: 100
+    price: 110
   - type: UserInterface
     interfaces:
       enum.RcdUiKey.Key:
         type: RCDMenuBoundUserInterface
   - type: ActivatableUI
+    inHandsOnly: true
     key: enum.RcdUiKey.Key
 
 - type: entity
@@ -401,20 +344,6 @@
   components:
   - type: LimitedCharges
     charges: 0
-  - type: RCD
-    availablePrototypes:
-    - WallSolid
-    - FloorSteel
-    - Plating
-    - Catwalk
-    - Grille
-    - Window
-    - WindowDirectional
-    - WindowReinforcedDirectional
-    - ReinforcedWindow
-    - Airlock
-    - AirlockGlass
-    - Firelock
 
 - type: entity
   id: RCDRecharging
@@ -479,7 +408,7 @@
   - type: Tool
     qualities:
       - Screwing
-    speed: 1.2 # Kept for future adjustments. Currently 1.2x for balance
+    speedModifier: 1.2 # Kept for future adjustments. Currently 1.2x for balance
     useSound: /Audio/Items/drill_use.ogg
   - type: ToolTileCompatible
   - type: MultipleTool

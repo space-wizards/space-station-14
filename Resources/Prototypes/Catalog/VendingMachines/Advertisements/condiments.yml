@@ -1,9 +1,0 @@
-- type: messagePack
-  id: CondimentVendAds
-  messages:
-  - advertisement-condiment-1
-  - advertisement-condiment-2
-  - advertisement-condiment-3
-  - advertisement-condiment-4
-  - advertisement-condiment-5
-  - advertisement-condiment-6

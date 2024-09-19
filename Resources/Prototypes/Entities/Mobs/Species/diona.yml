@@ -25,6 +25,8 @@
       Brute:
         sprite: Mobs/Effects/brute_damage.rsi
         color: "#cd7314"
+      Burn:
+        sprite: Mobs/Effects/burn_damage.rsi
   - type: Butcherable
     butcheringType: Spike
     spawned:
@@ -49,9 +51,9 @@
         scaleByQuantity: true
         damage:
           types:
-            Blunt: 2
-            Slash: 2
-            Piercing: 3
+            Blunt: 0.1
+            Slash: 0.1
+            Piercing: 0.15
       - !type:PopupMessage
         type: Local
         visualType: Large
@@ -64,7 +66,7 @@
         scaleByQuantity: true
         damage:
           types:
-            Poison: 5
+            Poison: 0.25
       - !type:PopupMessage
         type: Local
         visualType: Large
@@ -82,8 +84,6 @@
           - MobMask
         layer:
           - MobLayer
-  - type: Inventory
-    templateId: diona
   - type: Speech
     speechVerb: Plant
   - type: Vocal
@@ -101,13 +101,27 @@
     actionPrototype: DionaGibAction
     allowedStates:
     - Dead
+  - type: Inventory
+    templateId: diona
+    femaleDisplacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Human/displacement.rsi
+            state: jumpsuit-female
 
 - type: entity
   parent: BaseSpeciesDummy
   id: MobDionaDummy
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
-  - type: Inventory
-    templateId: diona
   - type: HumanoidAppearance
     species: Diona
+  - type: Inventory
+    templateId: diona
+    femaleDisplacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Human/displacement.rsi
+            state: jumpsuit-female

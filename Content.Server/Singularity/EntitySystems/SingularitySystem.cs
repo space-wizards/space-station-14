@@ -55,14 +55,12 @@ public sealed class SingularitySystem : SharedSingularitySystem
 
         var vvHandle = Vvm.GetTypeHandler<SingularityComponent>();
         vvHandle.AddPath(nameof(SingularityComponent.Energy), (_, comp) => comp.Energy, SetEnergy);
-        vvHandle.AddPath(nameof(SingularityComponent.TargetUpdatePeriod), (_, comp) => comp.TargetUpdatePeriod, SetUpdatePeriod);
     }
 
     public override void Shutdown()
     {
         var vvHandle = Vvm.GetTypeHandler<SingularityComponent>();
         vvHandle.RemovePath(nameof(SingularityComponent.Energy));
-        vvHandle.RemovePath(nameof(SingularityComponent.TargetUpdatePeriod));
         base.Shutdown();
     }
 
@@ -78,37 +76,8 @@ public sealed class SingularitySystem : SharedSingularitySystem
         var query = EntityQueryEnumerator<SingularityComponent>();
         while (query.MoveNext(out var uid, out var singularity))
         {
-            var curTime = _timing.CurTime;
-            if (singularity.NextUpdateTime <= curTime)
-                Update(uid, curTime - singularity.LastUpdateTime, singularity);
+            AdjustEnergy(uid, -singularity.EnergyDrain * frameTime, singularity: singularity);
         }
-    }
-
-    /// <summary>
-    /// Handles the gradual energy loss and dissipation of singularity.
-    /// </summary>
-    /// <param name="uid">The uid of the singularity to update.</param>
-    /// <param name="singularity">The state of the singularity to update.</param>
-    public void Update(EntityUid uid, SingularityComponent? singularity = null)
-    {
-        if (Resolve(uid, ref singularity))
-            Update(uid, _timing.CurTime - singularity.LastUpdateTime, singularity);
-    }
-
-    /// <summary>
-    /// Handles the gradual energy loss and dissipation of a singularity.
-    /// </summary>
-    /// <param name="uid">The uid of the singularity to update.</param>
-    /// <param name="frameTime">The amount of time that has elapsed since the last update.</param>
-    /// <param name="singularity">The state of the singularity to update.</param>
-    public void Update(EntityUid uid, TimeSpan frameTime, SingularityComponent? singularity = null)
-    {
-        if(!Resolve(uid, ref singularity))
-            return;
-
-        singularity.LastUpdateTime = _timing.CurTime;
-        singularity.NextUpdateTime = singularity.LastUpdateTime + singularity.TargetUpdatePeriod;
-        AdjustEnergy(uid, -singularity.EnergyDrain * (float)frameTime.TotalSeconds, singularity: singularity);
     }
 
 #region Getters/Setters
@@ -132,10 +101,12 @@ public sealed class SingularitySystem : SharedSingularitySystem
         singularity.Energy = value;
         SetLevel(uid, value switch
         {
-            >= 2400 => 6,
-            >= 1600 => 5,
-            >= 900 => 4,
-            >= 300 => 3,
+			// Normally, a level 6 singularity requires the supermatter + 3000 energy.
+			// The required amount of energy has been bumped up to compensate for the lack of the supermatter.
+            >= 5000 => 6,
+            >= 2000 => 5,
+            >= 1000 => 4,
+            >= 500 => 3,
             >= 200 => 2,
             > 0 => 1,
             _ => 0
@@ -164,28 +135,6 @@ public sealed class SingularitySystem : SharedSingularitySystem
         SetEnergy(uid, MathHelper.Clamp(newValue, min, max), singularity);
     }
 
-    /// <summary>
-    /// Setter for <see cref="SingularityComponent.TargetUpdatePeriod"/>.
-    /// If the new target time implies that the singularity should have updated it does so immediately.
-    /// </summary>
-    /// <param name="uid">The uid of the singularity to set the update period for.</param>
-    /// <param name="value">The new update period for the singularity.</param>
-    /// <param name="singularity">The state of the singularity to set the update period for.</param>
-    public void SetUpdatePeriod(EntityUid uid, TimeSpan value, SingularityComponent? singularity = null)
-    {
-        if(!Resolve(uid, ref singularity))
-            return;
-
-        if (MathHelper.CloseTo(singularity.TargetUpdatePeriod.TotalSeconds, value.TotalSeconds))
-            return;
-
-        singularity.TargetUpdatePeriod = value;
-        singularity.NextUpdateTime = singularity.LastUpdateTime + singularity.TargetUpdatePeriod;
-
-        var curTime = _timing.CurTime;
-        if (singularity.NextUpdateTime <= curTime)
-            Update(uid, curTime - singularity.LastUpdateTime, singularity);
-    }
 
 #endregion Getters/Setters
 
@@ -201,9 +150,6 @@ public sealed class SingularitySystem : SharedSingularitySystem
     /// <param name="args">The event arguments.</param>
     protected override void OnSingularityStartup(EntityUid uid, SingularityComponent comp, ComponentStartup args)
     {
-        comp.LastUpdateTime = _timing.CurTime;
-        comp.NextUpdateTime = comp.LastUpdateTime + comp.TargetUpdatePeriod;
-
         MetaDataComponent? metaData = null;
         if (Resolve(uid, ref metaData) && metaData.EntityLifeStage <= EntityLifeStage.Initializing)
             _audio.PlayPvs(comp.FormationSound, uid);
@@ -221,7 +167,7 @@ public sealed class SingularitySystem : SharedSingularitySystem
     /// <param name="args">The event arguments.</param>
     public void OnDistortionStartup(EntityUid uid, SingularityDistortionComponent comp, ComponentStartup args)
     {
-        _pvs.AddGlobalOverride(GetNetEntity(uid));
+        _pvs.AddGlobalOverride(uid);
     }
 
     /// <summary>
@@ -267,6 +213,10 @@ public sealed class SingularitySystem : SharedSingularitySystem
     /// <param name="args">The event arguments.</param>
     public void OnConsumedEntity(EntityUid uid, SingularityComponent comp, ref EntityConsumedByEventHorizonEvent args)
     {
+        // Don't double count singulo food
+        if (HasComp<SinguloFoodComponent>(args.Entity))
+            return;
+
         AdjustEnergy(uid, BaseEntityEnergy, singularity: comp);
     }
 
@@ -319,11 +269,11 @@ public sealed class SingularitySystem : SharedSingularitySystem
     {
         comp.EnergyDrain = args.NewValue switch
         {
-            6 => 20,
-            5 => 15,
-            4 => 12,
-            3 => 8,
-            2 => 2,
+            6 => 0,
+            5 => 0,
+            4 => 20,
+            3 => 10,
+            2 => 5,
             1 => 1,
             _ => 0
         };

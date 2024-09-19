@@ -6,6 +6,7 @@ using Content.Shared.Popups;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Prototypes;
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Whitelist;
 
 namespace Content.Shared.Polymorph.Systems;
 
@@ -18,6 +19,7 @@ public abstract class SharedChameleonProjectorSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly ISerializationManager _serMan = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     public override void Initialize()
     {
@@ -49,8 +51,8 @@ public abstract class SharedChameleonProjectorSystem : EntitySystem
     /// </summary>
     public bool IsInvalid(ChameleonProjectorComponent comp, EntityUid target)
     {
-        return (comp.Whitelist?.IsValid(target, EntityManager) == false)
-            || (comp.Blacklist?.IsValid(target, EntityManager) == true);
+        return _whitelistSystem.IsWhitelistFail(comp.Whitelist, target)
+            || _whitelistSystem.IsBlacklistPass(comp.Blacklist, target);
     }
 
     /// <summary>
