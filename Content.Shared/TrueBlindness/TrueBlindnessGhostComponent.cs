@@ -22,10 +22,10 @@ public sealed partial class TrueBlindnessGhostComponent : Component
     public TimeSpan VisibleTime = TimeSpan.FromSeconds(3);
 
     /// <summary>
-    ///     The last time this ghost was seen.
+    ///     When this ghost was created.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan LastSeen = TimeSpan.Zero;
+    public TimeSpan CreationTime = TimeSpan.Zero;
 
     /// <summary>
     ///     How long this ghost takes to fade out.

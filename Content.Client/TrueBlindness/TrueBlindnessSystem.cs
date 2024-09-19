@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
+using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Physics;
 using Content.Shared.TrueBlindness;
@@ -25,17 +26,22 @@ public sealed class TrueBlindnessSystem : EntitySystem
     [Dependency] private readonly PhysicsSystem _physics = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
+
     private const string GhostDefaultPrototype = "BlindnessGhost";
+    private const string GhostShaderPrototype = "Greyscale";
+    private const float DefaultVisibleRange = 1.5f;
+
     private ShaderInstance? _shader;
+
 
     private TrueBlindnessOverlay _overlay = default!;
 
-    private const float DefaultVisibleRange = 1.5f;
 
     public override void Initialize()
     {
         base.Initialize();
-        _shader = _proto.Index<ShaderPrototype>("Greyscale").Instance();
+
+        _shader = _proto.Index<ShaderPrototype>(GhostShaderPrototype).Instance();
 
         _overlay = new();
         _overlayMan.AddOverlay(_overlay);
@@ -51,7 +57,10 @@ public sealed class TrueBlindnessSystem : EntitySystem
             return false;
         var r = new CollisionRay(_transform.GetWorldPosition(playerTransform), direction, (int)CollisionGroup.FlyingMobMask);
         var cr = _physics.IntersectRay(playerTransform.MapID, r, maxLength:1.5f, ignoredEnt:playerUid, returnOnFirstHit:true).FirstOrNull();
-        return cr is null || cr.Value.HitEntity == objectUid;
+        return cr is null
+               || cr.Value.HitEntity == objectUid
+               || (TryComp(objectUid, out TrueBlindnessGhostComponent? ghostComp) &&
+                   GetEntity(ghostComp.From) == objectUid);
     }
 
     public bool CreateGhost(Entity<TrueBlindnessVisibleComponent> uid,
@@ -74,13 +83,21 @@ public sealed class TrueBlindnessSystem : EntitySystem
         ghostComponent.WasAnchored = xform.Anchored;
         ghostComponent.VisibleTime = uid.Comp.VisibleTime;
         ghostComponent.FadeoutTime = uid.Comp.FadeoutTime;
-        ghostComponent.LastSeen = _timing.CurTime;
+        ghostComponent.CreationTime = _timing.CurTime;
         ghostSprite.CopyFrom(sprite);
         if (applyShader)
             ghostSprite.PostShader = _shader;
-        ghostSprite.DrawDepth += (int)DrawDepth.Overlays * 2; // Lol.
+        ghostSprite.DrawDepth += (int)DrawDepth.Overlays - (int)DrawDepth.LowFloors + 1; // Lol.
         ghostEntity = ghost;
         return true;
+    }
+
+    public void DeleteGhost(EntityUid ghost)
+    {
+        QueueDel(ghost);
+
+        // if (TryComp(ghost, out SpriteComponent? sprite))
+        //     sprite.PostShader?.Dispose();
     }
 
     public override void Update(float frameTime)
@@ -98,9 +115,9 @@ public sealed class TrueBlindnessSystem : EntitySystem
 
                 var deletionQuery = EntityQueryEnumerator<TrueBlindnessGhostComponent>();
 
-                while (deletionQuery.MoveNext(out var uid, out var _))
+                while (deletionQuery.MoveNext(out var uid, out _))
                 {
-                    QueueDel(uid);
+                    DeleteGhost(uid);
                 }
             }
             return;
@@ -122,7 +139,7 @@ public sealed class TrueBlindnessSystem : EntitySystem
             if (HasComp(uid, typeof(TrueBlindnessGhostComponent)))
             {
                 if (VisibleFromPlayer(player.Value, uid))
-                    QueueDel(uid);
+                    DeleteGhost(uid);
                 continue;
             }
 
@@ -139,12 +156,27 @@ public sealed class TrueBlindnessSystem : EntitySystem
 
         while (query.MoveNext(out var uid, out var comp))
         {
-            if (_timing.CurTime - comp.LastSeen > comp.VisibleTime
-                && _timing.CurTime >= comp.DeletionEligible
-                && !comp.WasAnchored)
-            {
-                QueueDel(uid);
-            }
+            if (comp.WasAnchored || _timing.CurTime < comp.DeletionEligible)
+                continue;
+
+            if (_timing.CurTime - comp.CreationTime > comp.VisibleTime)
+                DeleteGhost(uid);
+
+            var fade = (float)(1 - (_timing.CurTime - comp.CreationTime - comp.VisibleTime + comp.FadeoutTime) /
+                comp.FadeoutTime);
+
+            if (fade > 1 || fade < 0)
+                continue;
+
+            if (!TryComp(uid, out SpriteComponent? sprite))
+                continue;
+
+            // if (sprite.PostShader is null || sprite.PostShader.Disposed)
+            //     continue;
+            //
+            // sprite.PostShader.SetParameter("Alpha", (float)fade);
+
+            sprite.Color = new Color(1f, 1f, 1f, fade);
         }
 
     }
