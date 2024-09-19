@@ -24,20 +24,20 @@ public sealed partial class PlantChangeStat : EntityEffect
 
     public override void Effect(EntityEffectBaseArgs args)
     {
-        var plantHolder = args.EntityManager.GetComponent<PlantHolderComponent>(args.TargetEntity);
-        if (plantHolder == null || plantHolder.Seed == null)
+        var plant = args.EntityManager.GetComponent<PlantComponent>(args.TargetEntity);
+        if (plant == null || plant.Seed == null)
             return;
 
-        var member = plantHolder.Seed.GetType().GetField(TargetValue);
+        var member = plant.Seed.GetType().GetField(TargetValue);
         var mutationSys = args.EntityManager.System<MutationSystem>();
 
         if (member == null)
         {
-            mutationSys.Log.Error(this.GetType().Name + " Error: Member " + TargetValue + " not found on " + plantHolder.GetType().Name + ". Did you misspell it?");
+            mutationSys.Log.Error(this.GetType().Name + " Error: Member " + TargetValue + " not found on " + plant.GetType().Name + ". Did you misspell it?");
             return;
         }
 
-        var currentValObj = member.GetValue(plantHolder.Seed);
+        var currentValObj = member.GetValue(plant.Seed);
         if (currentValObj == null)
             return;
 
@@ -45,19 +45,19 @@ public sealed partial class PlantChangeStat : EntityEffect
         {
             var floatVal = (float)currentValObj;
             MutateFloat(ref floatVal, MinValue, MaxValue, Steps);
-            member.SetValue(plantHolder.Seed, floatVal);
+            member.SetValue(plant.Seed, floatVal);
         }
         else if (member.FieldType == typeof(int))
         {
             var intVal = (int)currentValObj;
             MutateInt(ref intVal, (int)MinValue, (int)MaxValue, Steps);
-            member.SetValue(plantHolder.Seed, intVal);
+            member.SetValue(plant.Seed, intVal);
         }
         else if (member.FieldType == typeof(bool))
         {
             var boolVal = (bool)currentValObj;
             boolVal = !boolVal;
-            member.SetValue(plantHolder.Seed, boolVal);
+            member.SetValue(plant.Seed, boolVal);
         }
     }
 

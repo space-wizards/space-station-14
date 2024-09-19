@@ -15,16 +15,13 @@ public sealed partial class PlantSpeciesChange : EntityEffect
     public override void Effect(EntityEffectBaseArgs args)
     {
         var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-        var plantholder = args.EntityManager.GetComponent<PlantHolderComponent>(args.TargetEntity);
+        var plant = args.EntityManager.GetComponent<PlantComponent>(args.TargetEntity);
 
-        if (plantholder.Seed == null)
-            return;
-
-        if (plantholder.Seed.MutationPrototypes.Count == 0)
+        if (plant.Seed == null || plant.Seed.MutationPrototypes.Count == 0)
             return;
 
         var random = IoCManager.Resolve<IRobustRandom>();
-        var targetProto = random.Pick(plantholder.Seed.MutationPrototypes);
+        var targetProto = random.Pick(plant.Seed.MutationPrototypes);
         prototypeManager.TryIndex(targetProto, out SeedPrototype? protoSeed);
 
         if (protoSeed == null)
@@ -32,8 +29,6 @@ public sealed partial class PlantSpeciesChange : EntityEffect
             Log.Error($"Seed prototype could not be found: {targetProto}!");
             return;
         }
-
-        plantholder.Seed = plantholder.Seed.SpeciesChange(protoSeed);
     }
 
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
