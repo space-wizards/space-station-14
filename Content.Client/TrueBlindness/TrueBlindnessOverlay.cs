@@ -58,6 +58,9 @@ public sealed class TrueBlindnessOverlay : Overlay
 
     protected override void Draw(in OverlayDrawArgs args)
     {
+        if (ScreenTexture is null)
+            return;
+
         var playerEntity = _playerManager.LocalSession?.AttachedEntity;
 
         if (playerEntity == null)
@@ -68,7 +71,8 @@ public sealed class TrueBlindnessOverlay : Overlay
             _stencilShader.SetParameter("Zoom", content.Zoom.X);
         }
 
-        _greyscaleShader?.SetParameter("SCREEN_TEXTURE", ScreenTexture);
+        _stencilShader.SetParameter("CircleRadius", 22.5f);
+        _greyscaleShader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
 
         var worldHandle = args.WorldHandle;
         var viewport = args.WorldBounds;

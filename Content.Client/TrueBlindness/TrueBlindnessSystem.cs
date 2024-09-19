@@ -1,15 +1,13 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Numerics;
+using Content.Shared.Inventory;
 using Content.Shared.Physics;
 using Content.Shared.TrueBlindness;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Physics;
 using Robust.Client.Player;
-using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Physics;
-using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -23,6 +21,7 @@ public sealed class TrueBlindnessSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IOverlayManager _overlayMan = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly PhysicsSystem _physics = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
@@ -30,6 +29,8 @@ public sealed class TrueBlindnessSystem : EntitySystem
     private ShaderInstance? _shader;
 
     private TrueBlindnessOverlay _overlay = default!;
+
+    private const float DefaultVisibleRange = 1.5f;
 
     public override void Initialize()
     {
@@ -77,15 +78,9 @@ public sealed class TrueBlindnessSystem : EntitySystem
         ghostSprite.CopyFrom(sprite);
         if (applyShader)
             ghostSprite.PostShader = _shader;
-        ghostSprite.DrawDepth += (int)DrawDepth.Overlays + 1; // Lol.
+        ghostSprite.DrawDepth += (int)DrawDepth.Overlays * 2; // Lol.
         ghostEntity = ghost;
         return true;
-    }
-
-    public bool CreatePlayerGhost(EntityUid playerUid, [NotNullWhen(true)] out EntityUid? ghostEntity)
-    {
-        EnsureComp(playerUid, out TrueBlindnessVisibleComponent trueBlindnessVisible);
-        return CreateGhost((playerUid, trueBlindnessVisible), out ghostEntity, false);
     }
 
     public override void Update(float frameTime)
@@ -113,9 +108,16 @@ public sealed class TrueBlindnessSystem : EntitySystem
 
         _overlay.SetEnabled(true);
 
-        CreatePlayerGhost(player.Value, out _);
+        var visibleRange = DefaultVisibleRange;
 
-        foreach (var uid in _lookup.GetEntitiesInRange(player.Value, 1.5f, LookupFlags.Uncontained))
+        foreach (var entityUid in _inventory.GetHandOrInventoryEntities(player.Value, SlotFlags.PREVENTEQUIP))
+        {
+            if (TryComp(entityUid, out TrueBlindnessRangeExtendComponent? rangeExtend) &&
+                rangeExtend.Range > visibleRange)
+                visibleRange = rangeExtend.Range;
+        }
+
+        foreach (var uid in _lookup.GetEntitiesInRange(player.Value, visibleRange / 2, LookupFlags.Uncontained))
         {
             if (HasComp(uid, typeof(TrueBlindnessGhostComponent)))
             {
@@ -131,8 +133,6 @@ public sealed class TrueBlindnessSystem : EntitySystem
                 continue;
             CreateGhost((uid, visible), out _);
         }
-
-        CreatePlayerGhost(player.Value, out _);
 
 
         var query = EntityQueryEnumerator<TrueBlindnessGhostComponent>();

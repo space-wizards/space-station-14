@@ -24,4 +24,6 @@
         Blunt: 3
   - type: UseDelay
     delay: 1
+  - type: TrueBlindnessRangeExtend
+    range: 3
 
