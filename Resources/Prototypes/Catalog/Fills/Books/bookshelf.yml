@@ -60,6 +60,7 @@
       - id: BookWatched
       - id: BookWorld
       - id: BookAgony
+      - id: BookTEGtorial
 
 - type: entity
   id: BookshelfFilled

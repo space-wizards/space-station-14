@@ -30,3 +30,8 @@
   id: WardenArmoredWinterCoat
   equipment:
     outerClothing: ClothingOuterWinterWarden
+
+- type: loadout
+  id: WardenWinterCoatUnarmored
+  equipment:
+    outerClothing: ClothingOuterWinterWardenUnarmored

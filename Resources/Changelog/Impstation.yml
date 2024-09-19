@@ -1672,3 +1672,38 @@
   id: 217
   time: '2024-09-18T10:11:00.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/283
+- author: formlessnameless
+  changes:
+  - message: Modified salvage and added AI to Cluster
+    type: Tweak
+  - message: Modified salvage and added AI to Train
+    type: Tweak
+  - message: Modified salvage on Atlas
+    type: Tweak
+  - message: Modified salvage and Atmos on Saltern, added AI zone
+    type: Tweak
+  id: 218
+  time: '2024-09-18T21:54:15.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/287
+- author: Darkmajia
+  changes:
+  - message: The Warden and Head of Security can now pick winter coats in their loadouts.
+    type: Add
+  id: 219
+  time: '2024-09-18T22:00:02.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/284
+- author: hivehum
+  changes:
+  - message: Fixed a very misleading word choice on the Singularity guidebook page.
+    type: Fix
+  id: 220
+  time: '2024-09-18T22:00:17.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/286
+- author: mqole
+  changes:
+  - message: New library book about the TEG!!!!! And other pipes and vents and shit
+      too, I guess.
+    type: Add
+  id: 221
+  time: '2024-09-18T22:05:36.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/285
