@@ -32,7 +32,11 @@ public abstract class SharedRevealRevenantOnCollideSystem : EntitySystem
             return;
 
         if (!string.IsNullOrEmpty(comp.PopupText) && !_status.HasStatusEffect(args.OtherEntity, CorporealStatusId))
-            _popup.PopupClient(Loc.GetString(comp.PopupText), args.OtherEntity, args.OtherEntity);
+            _popup.PopupClient(
+                Loc.GetString(comp.PopupText, ("revealer", uid), ("revenant", args.OtherEntity)),
+                args.OtherEntity,
+                args.OtherEntity
+            );
 
         _status.TryAddStatusEffect<CorporealComponent>(args.OtherEntity, CorporealStatusId, comp.RevealTime, true);
 
