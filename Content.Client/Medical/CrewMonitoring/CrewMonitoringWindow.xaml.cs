@@ -157,8 +157,8 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
         foreach (var sensor in departmentSensors)
         {
             if (!string.IsNullOrEmpty(SearchLineEdit.Text)
-                && !sensor.Name.ToUpper().Contains(SearchLineEdit.Text.ToUpper())
-                && !sensor.Job.ToUpper().Contains(SearchLineEdit.Text.ToUpper()))
+                && !sensor.Name.Contains(SearchLineEdit.Text, StringComparison.CurrentCultureIgnoreCase)
+                && !sensor.Job.Contains(SearchLineEdit.Text, StringComparison.CurrentCultureIgnoreCase))
                 continue;
 
             var coordinates = _entManager.GetCoordinates(sensor.Coordinates);
