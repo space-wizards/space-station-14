@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Aquif
-  changes:
-  - message: It is now possible to "lock" admin faxes such that they cannot be edited
-      by cybersun pens or any other IC means.
-    type: Add
-  id: 6895
-  time: '2024-07-10T05:28:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28972
 - author: Ghagliiarghii
   changes:
   - message: The Librarian's Books Bag can now hold D&D related items such as dice
@@ -3918,3 +3910,10 @@
   id: 7394
   time: '2024-09-18T23:55:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29998
+- author: Winkarst-cpu
+  changes:
+  - message: Now fire leaves burn marks on the tiles that were affected by it.
+    type: Add
+  id: 7395
+  time: '2024-09-19T00:23:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31939
