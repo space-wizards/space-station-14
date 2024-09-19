@@ -6,6 +6,8 @@
   components:
   - type: HereticBlade
   - type: Sharp
+  - type: Execution
+    doAfterDuration: 4.0
   - type: Sprite
     sprite: Goobstation/Heretic/Blades/blade_blade.rsi
     state: icon
