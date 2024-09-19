@@ -81,11 +81,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         var briefing = "";
 
         if (component.GiveCodewords)
-        {
-            briefing = string.Format("{0}{1}",
-                briefing,
-                Loc.GetString("traitor-role-codewords-short", ("codewords", string.Join(", ", component.Codewords))));
-        }
+            briefing = Loc.GetString("traitor-role-codewords-short", ("codewords", string.Join(", ", component.Codewords)));
 
         var issuer = _random.Pick(_prototypeManager.Index(component.ObjectiveIssuers).Values);
 

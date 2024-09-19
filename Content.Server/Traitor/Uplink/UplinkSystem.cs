@@ -44,14 +44,10 @@ public sealed class UplinkSystem : EntitySystem
     {
         // Try to find target item if none passed
 
-        //uplinkEntity ??= FindUplinkTarget(user); //TODO:ERRANT see if I can use this?
+        uplinkEntity ??= FindUplinkTarget(user);
 
         if (uplinkEntity == null)
-        {
-            uplinkEntity = FindUplinkTarget(user);
-            if (uplinkEntity == null)
-                return ImplantUplink(user, balance, giveDiscounts); //TODO:ERRANT clean this up
-        }
+            return ImplantUplink(user, balance, giveDiscounts);
 
         EnsureComp<UplinkComponent>(uplinkEntity.Value);
 
@@ -76,7 +72,7 @@ public sealed class UplinkSystem : EntitySystem
             uplink,
             store);
 
-        var uplinkInitializedEvent = new StoreInitializedEvent( //TODO:ERRANT fix this thing
+        var uplinkInitializedEvent = new StoreInitializedEvent(
             TargetUser: user,
             Store: uplink,
             UseDiscounts: giveDiscounts,
