@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Ghagliiarghii
-  changes:
-  - message: The Librarian's Books Bag can now hold D&D related items such as dice
-      and battlemats.
-    type: Tweak
-  id: 6896
-  time: '2024-07-10T05:51:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29863
 - author: Beck Thompson, Tayrtahn
   changes:
   - message: Typing indicators now correctly stack and will not overwrite your default
@@ -3917,3 +3909,14 @@
   id: 7395
   time: '2024-09-19T00:23:50.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31939
+- author: ArchRBX
+  changes:
+  - message: Mass scanners and shuttle consoles now display coordinates beneath IFF
+      labels
+    type: Add
+  - message: IFF labels that are beyond the viewport extents maintain their heading
+      and don't hug corners
+    type: Fix
+  id: 7396
+  time: '2024-09-19T01:25:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31501
