@@ -13,6 +13,16 @@
       state: pipeStraight
     - map: ["base"]
       state: base
+    - map: [ "enum.ConstructionVisuals.Layer" ]
+      state: cavity 
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ConstructionVisuals.Key:
+        enum.ConstructionVisuals.Layer:
+          assembly: { state: cavity }
+          wiredAssembly: { state: wires }
+
   - type: Construction
     graph: GasPipeSensor
     node: assembly
@@ -34,12 +44,29 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: Sprite
+    sprite: Structures/Specific/Atmospherics/gas_pipe_sensor.rsi
+    drawdepth: BelowFloor
+    layers:
+    - sprite: Structures/Piping/Atmospherics/pipe.rsi
+      map: [ "enum.PipeVisualLayers.Pipe" ]
+      state: pipeStraight
+    - map: ["base"]
+      state: base
+    - map: [ "enum.ConstructionVisuals.Layer" ]
+      state: blank
+    - map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+      state: lights       
   - type: Appearance
   - type: GenericVisualizer
     visuals:
+      enum.ConstructionVisuals.Key:
+        enum.ConstructionVisuals.Layer:
+          wiredSensor: { state: wires_connected }
+          sensor: { state: blank }
       enum.PowerDeviceVisuals.Powered:
         enum.PowerDeviceVisualLayers.Powered:
-          False: { state: base, shader: shaded }
+          False: { state: blank, shader: shaded }
           True: { state: lights, shader: unshaded }
   - type: GasPipeSensor
   - type: AtmosMonitor
@@ -52,7 +79,7 @@
   - type: InteractionOutline
   - type: Construction
     graph: GasPipeSensor
-    node: gasPipeSensor  
+    node: sensor  
 
 - type: entity
   parent: GasPipeSensor 

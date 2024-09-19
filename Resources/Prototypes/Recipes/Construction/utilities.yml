@@ -367,11 +367,11 @@
   canRotate: true
   
 - type: construction
-  name: gas pipe sensor sensor
+  name: gas pipe sensor
   id: GasPipeSensor
   graph: GasPipeSensor
   startNode: start
-  targetNode: gasPipeSensor
+  targetNode: sensor
   category: construction-category-structures
   description: Reports on the status of the gas within the attached pipe network. 
   icon:
