@@ -31690,14 +31690,11 @@ entities:
         - 0
 - proto: CrewMonitoringServer
   entities:
-  - uid: 4984
+  - uid: 6290
     components:
     - type: Transform
-      pos: -3.5,26.5
+      pos: 12.5,-18.5
       parent: 4812
-    - type: SingletonDeviceNetServer
-      active: False
-      available: False
 - proto: Crowbar
   entities:
   - uid: 3469
@@ -58676,10 +58673,10 @@ entities:
         stash: !type:ContainerSlot {}
 - proto: PottedPlantRD
   entities:
-  - uid: 6290
+  - uid: 12045
     components:
     - type: Transform
-      pos: 24.5,-18.5
+      pos: 28.5,-20.5
       parent: 4812
 - proto: PowerCellRecharger
   entities:
@@ -67865,10 +67862,10 @@ entities:
       parent: 4812
 - proto: SurveillanceCameraRouterScience
   entities:
-  - uid: 12045
+  - uid: 4984
     components:
     - type: Transform
-      pos: 12.5,-18.5
+      pos: 24.5,-18.5
       parent: 4812
 - proto: SurveillanceCameraRouterSecurity
   entities:
@@ -69907,6 +69904,11 @@ entities:
           showEnts: False
           occludes: True
           ents: []
+  - uid: 4373
+    components:
+    - type: Transform
+      pos: -3.5,26.5
+      parent: 4812
   - uid: 4991
     components:
     - type: Transform

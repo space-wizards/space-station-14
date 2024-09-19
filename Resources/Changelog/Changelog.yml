@@ -1,56 +1,4 @@
 ﻿Entries:
-- author: Winkarst-cpu
-  changes:
-  - message: Now confirmation popup is displayed and item panel status is updated
-      after setting a custom solution transfer volume.
-    type: Fix
-  id: 6898
-  time: '2024-07-10T10:32:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29852
-- author: Winkarst-cpu
-  changes:
-  - message: Added exit confirmation for character setup menu with unsaved changes.
-    type: Add
-  id: 6899
-  time: '2024-07-11T00:24:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29875
-- author: ShadowCommander
-  changes:
-  - message: Players can now use melee attacks and shoves while dragging an entity
-      in their active hand.
-    type: Tweak
-  id: 6900
-  time: '2024-07-11T04:48:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29703
-- author: Cojoke-dot
-  changes:
-  - message: You can no longer shoot out of crates with guns
-    type: Fix
-  id: 6901
-  time: '2024-07-11T05:14:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28961
-- author: Cojoke-dot
-  changes:
-  - message: The Spray Painter can now be used to paint glass airlocks to look like
-      regular glass airlocks.
-    type: Tweak
-  id: 6902
-  time: '2024-07-11T05:33:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29869
-- author: MFMessage
-  changes:
-  - message: Picking a ghost role as an admin will now deadmin.
-    type: Fix
-  id: 6903
-  time: '2024-07-11T05:53:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29790
-- author: Winkarst-cpu
-  changes:
-  - message: Admin notes popups are now more readable.
-    type: Tweak
-  id: 6904
-  time: '2024-07-11T14:03:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29909
 - author: jonathanargo
   changes:
   - message: Muskets are now wieldable.
@@ -3919,3 +3867,58 @@
   id: 7397
   time: '2024-09-19T02:15:44.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29972
+- author: Boaz1111
+  changes:
+  - message: Added plasma and uranium arrows.
+    type: Add
+  id: 7398
+  time: '2024-09-19T08:41:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31241
+- author: Ertanic
+  changes:
+  - message: Wanted list program and its cartridge.
+    type: Add
+  - message: The cartridge has been added to the HOS locker.
+    type: Add
+  - message: Added target to thief on wanted list cartridge.
+    type: Add
+  id: 7399
+  time: '2024-09-19T10:22:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31223
+- author: Errant
+  changes:
+  - message: Crew monitor list can now be filtered by name and job.
+    type: Add
+  id: 7400
+  time: '2024-09-19T10:23:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31659
+- author: deltanedas
+  changes:
+  - message: Removed the flare blueprint from salvage, it's now unlocked roundstart
+      in autolathes.
+    type: Remove
+  id: 7401
+  time: '2024-09-19T13:45:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32303
+- author: deltanedas
+  changes:
+  - message: Increased the thieving beacon's range to 2 tiles.
+    type: Tweak
+  id: 7402
+  time: '2024-09-19T13:55:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31340
+- author: Winkarst-cpu
+  changes:
+  - message: The first editable line in the dialog window now grabs the keyboard focus
+      once it's open.
+    type: Fix
+  id: 7403
+  time: '2024-09-19T14:01:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31294
+- author: Plykiya
+  changes:
+  - message: You can now transfer someone from a rollerbed to a bed directly.
+    type: Tweak
+  id: 7404
+  time: '2024-09-19T14:08:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32089
