@@ -1,108 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: You can now drop food and drinks to stop consuming it.
-    type: Fix
-  id: 6891
-  time: '2024-07-09T23:12:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29854
-- author: Boaz1111
-  changes:
-  - message: Guitars can now be worn in the suit storage slot
-    type: Add
-  id: 6892
-  time: '2024-07-09T23:28:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29048
-- author: Winkarst-cpu
-  changes:
-  - message: Fixed popup spam when trying to open borg's UI while the borg is locked.
-    type: Fix
-  id: 6893
-  time: '2024-07-09T23:48:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29861
-- author: Lokachop
-  changes:
-  - message: Scarves now count as warm clothing for the warm clothing cargo bounty.
-    type: Tweak
-  id: 6894
-  time: '2024-07-10T05:26:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29779
-- author: Aquif
-  changes:
-  - message: It is now possible to "lock" admin faxes such that they cannot be edited
-      by cybersun pens or any other IC means.
-    type: Add
-  id: 6895
-  time: '2024-07-10T05:28:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28972
-- author: Ghagliiarghii
-  changes:
-  - message: The Librarian's Books Bag can now hold D&D related items such as dice
-      and battlemats.
-    type: Tweak
-  id: 6896
-  time: '2024-07-10T05:51:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29863
-- author: Beck Thompson, Tayrtahn
-  changes:
-  - message: Typing indicators now correctly stack and will not overwrite your default
-      species indicator.
-    type: Fix
-  id: 6897
-  time: '2024-07-10T05:51:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29492
-- author: Winkarst-cpu
-  changes:
-  - message: Now confirmation popup is displayed and item panel status is updated
-      after setting a custom solution transfer volume.
-    type: Fix
-  id: 6898
-  time: '2024-07-10T10:32:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29852
-- author: Winkarst-cpu
-  changes:
-  - message: Added exit confirmation for character setup menu with unsaved changes.
-    type: Add
-  id: 6899
-  time: '2024-07-11T00:24:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29875
-- author: ShadowCommander
-  changes:
-  - message: Players can now use melee attacks and shoves while dragging an entity
-      in their active hand.
-    type: Tweak
-  id: 6900
-  time: '2024-07-11T04:48:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29703
-- author: Cojoke-dot
-  changes:
-  - message: You can no longer shoot out of crates with guns
-    type: Fix
-  id: 6901
-  time: '2024-07-11T05:14:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28961
-- author: Cojoke-dot
-  changes:
-  - message: The Spray Painter can now be used to paint glass airlocks to look like
-      regular glass airlocks.
-    type: Tweak
-  id: 6902
-  time: '2024-07-11T05:33:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29869
-- author: MFMessage
-  changes:
-  - message: Picking a ghost role as an admin will now deadmin.
-    type: Fix
-  id: 6903
-  time: '2024-07-11T05:53:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29790
-- author: Winkarst-cpu
-  changes:
-  - message: Admin notes popups are now more readable.
-    type: Tweak
-  id: 6904
-  time: '2024-07-11T14:03:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29909
 - author: jonathanargo
   changes:
   - message: Muskets are now wieldable.
@@ -3917,3 +3813,112 @@
   id: 7390
   time: '2024-09-17T22:09:55.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31951
+- author: Calecute
+  changes:
+  - message: Corrected cake batter recipe in guidebook
+    type: Fix
+  id: 7391
+  time: '2024-09-18T15:15:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32276
+- author: Beck Thompson
+  changes:
+  - message: Recycler no longer allows basic materials to be inserted into it.
+    type: Fix
+  id: 7392
+  time: '2024-09-18T21:58:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32144
+- author: deltanedas
+  changes:
+  - message: Epinephrine now adds Adrenaline, because it is.
+    type: Tweak
+  id: 7393
+  time: '2024-09-18T23:00:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32076
+- author: ShadowCommander
+  changes:
+  - message: Fixed clicking on chairs and beds with an entity buckled to them not
+      unbuckling them.
+    type: Fix
+  id: 7394
+  time: '2024-09-18T23:55:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29998
+- author: Winkarst-cpu
+  changes:
+  - message: Now fire leaves burn marks on the tiles that were affected by it.
+    type: Add
+  id: 7395
+  time: '2024-09-19T00:23:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31939
+- author: ArchRBX
+  changes:
+  - message: Mass scanners and shuttle consoles now display coordinates beneath IFF
+      labels
+    type: Add
+  - message: IFF labels that are beyond the viewport extents maintain their heading
+      and don't hug corners
+    type: Fix
+  id: 7396
+  time: '2024-09-19T01:25:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31501
+- author: coffeeware
+  changes:
+  - message: a powered TEG won't produce infinite power when destroyed
+    type: Fix
+  id: 7397
+  time: '2024-09-19T02:15:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29972
+- author: Boaz1111
+  changes:
+  - message: Added plasma and uranium arrows.
+    type: Add
+  id: 7398
+  time: '2024-09-19T08:41:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31241
+- author: Ertanic
+  changes:
+  - message: Wanted list program and its cartridge.
+    type: Add
+  - message: The cartridge has been added to the HOS locker.
+    type: Add
+  - message: Added target to thief on wanted list cartridge.
+    type: Add
+  id: 7399
+  time: '2024-09-19T10:22:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31223
+- author: Errant
+  changes:
+  - message: Crew monitor list can now be filtered by name and job.
+    type: Add
+  id: 7400
+  time: '2024-09-19T10:23:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31659
+- author: deltanedas
+  changes:
+  - message: Removed the flare blueprint from salvage, it's now unlocked roundstart
+      in autolathes.
+    type: Remove
+  id: 7401
+  time: '2024-09-19T13:45:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32303
+- author: deltanedas
+  changes:
+  - message: Increased the thieving beacon's range to 2 tiles.
+    type: Tweak
+  id: 7402
+  time: '2024-09-19T13:55:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31340
+- author: Winkarst-cpu
+  changes:
+  - message: The first editable line in the dialog window now grabs the keyboard focus
+      once it's open.
+    type: Fix
+  id: 7403
+  time: '2024-09-19T14:01:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31294
+- author: Plykiya
+  changes:
+  - message: You can now transfer someone from a rollerbed to a bed directly.
+    type: Tweak
+  id: 7404
+  time: '2024-09-19T14:08:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32089
