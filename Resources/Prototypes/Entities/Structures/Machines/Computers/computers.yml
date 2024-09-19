@@ -16,6 +16,8 @@
       state: alert-0
     - map: ["computerLayerKeys"]
       state: atmos_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
   - type: GenericVisualizer
     visuals:
       enum.ComputerVisuals.Powered:
@@ -32,6 +34,10 @@
           2: { state: alert-1 }
           3: { state: alert-2 }
           4: { state: alert-2 }
+      enum.WiresVisuals.MaintenancePanelState:
+        enum.WiresVisualLayers.MaintenancePanel:
+          True: { visible: false }
+          False: { visible: true }
   - type: AtmosAlertsComputer
   - type: ActivatableUI
     singleUser: true
@@ -126,6 +132,8 @@
       state: shuttle
     - map: ["computerLayerKeys"]
       state: generic_keys
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
   - type: Computer
     board: ShuttleConsoleCircuitboard
 
@@ -145,6 +153,8 @@
       state: syndishuttle
     - map: ["computerLayerKeys"]
       state: syndie_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
   - type: Tag
     tags:
       - Syndicate
@@ -175,6 +185,8 @@
       state: shuttle
     - map: ["computerLayerKeys"]
       state: generic_keys
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
   - type: DroneConsole
     components:
       - type: CargoShuttle
@@ -207,6 +219,8 @@
       state: helm
     - map: ["computerLayerKeys"]
       state: generic_keys
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
   - type: ActivatableUI
     key: enum.IFFConsoleUiKey.Key
   - type: UserInterface
@@ -256,6 +270,8 @@
       state: power_monitor
     - map: ["computerLayerKeys"]
       state: power_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
   - type: PointLight
     radius: 1.5
     energy: 1.6
@@ -296,6 +312,8 @@
       state: medcomp
     - map: ["computerLayerKeys"]
       state: med_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
   - type: PointLight
     radius: 1.5
     energy: 1.6
@@ -328,6 +346,8 @@
       state: explosive
     - map: ["computerLayerKeys"]
       state: security_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
   - type: PointLight
     radius: 1.5
     energy: 1.6
@@ -381,6 +401,8 @@
       state: crew
     - map: ["computerLayerKeys"]
       state: med_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
   - type: PointLight
     radius: 1.5
     energy: 1.6
@@ -418,6 +440,8 @@
       state: rdcomp
     - map: ["computerLayerKeys"]
       state: rd_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
   - type: ResearchClient
   - type: ResearchConsole
   - type: ActiveRadio
@@ -464,6 +488,8 @@
       state: artifact
     - map: ["computerLayerKeys"]
       state: tech_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
   - type: ResearchClient
   - type: AnalysisConsole
     reportEntityId: PaperArtifactAnalyzer
@@ -541,6 +567,8 @@
       state: id
     - map: ["computerLayerKeys"]
       state: id_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
   - type: Computer
     board: IDComputerCircuitboard
   - type: PointLight
@@ -588,6 +616,8 @@
       state: comm
     - map: ["computerLayerKeys"]
       state: generic_keys
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
   - type: AccessReader
     access: [[ "Command" ]]
   - type: CommunicationsConsole
@@ -628,6 +658,8 @@
       state: comm_syndie
     - map: ["computerLayerKeys"]
       state: syndie_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
   - type: AccessReader
     access: [[ "NuclearOperative" ]]
   - type: CommunicationsConsole
@@ -659,6 +691,8 @@
       state: solar_screen
     - map: ["computerLayerKeys"]
       state: generic_keys
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
   - type: SolarControlConsole
   - type: ActivatableUI
     key: enum.SolarControlConsoleUiKey.Key
@@ -691,6 +725,8 @@
       state: solar_screen
     - map: ["computerLayerKeys"]
       state: generic_keys
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
   - type: RadarConsole
   - type: ActivatableUI
     key: enum.RadarConsoleUiKey.Key
@@ -723,6 +759,8 @@
       state: supply
     - map: ["computerLayerKeys"]
       state: tech_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
   - type: CargoShuttleConsole
   - type: ActivatableUI
     key: enum.CargoConsoleUiKey.Shuttle
@@ -760,6 +798,8 @@
       state: request
     - map: ["computerLayerKeys"]
       state: tech_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
   - type: CargoOrderConsole
   - type: BankClient
   - type: ActiveRadio
@@ -810,6 +850,8 @@
       state: bounty
     - map: ["computerLayerKeys"]
       state: tech_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
   - type: CargoBountyConsole
   - type: ActivatableUI
     key: enum.CargoConsoleUiKey.Bounty
@@ -852,6 +894,8 @@
       state: dna
     - map: ["computerLayerKeys"]
       state: generic_keys
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
   - type: ApcPowerReceiver
     powerLoad: 3100 #We want this to fail first so I transferred most of the scanner and pod's power here. (3500 in total)
   - type: Computer
@@ -899,6 +943,8 @@
           state: mining
         - map: ["computerLayerKeys"]
           state: tech_key
+        - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+          state: generic_panel_open
     - type: Appearance
     - type: GenericVisualizer
       visuals:
@@ -908,6 +954,10 @@
             False: { visible: false }
           computerLayerKeys:
             True: { visible: true, shader: unshaded }
+            False: { visible: true }
+        enum.WiresVisuals.MaintenancePanelState:
+          enum.WiresVisualLayers.MaintenancePanel:
+            True: { visible: false }
             False: { visible: true }
     - type: SalvageExpeditionConsole
     - type: ActivatableUI
@@ -946,6 +996,8 @@
       state: cameras
     - map: ["computerLayerKeys"]
       state: tech_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
   - type: Computer
     board: SurveillanceCameraMonitorCircuitboard
   - type: DeviceNetwork
@@ -983,6 +1035,8 @@
       state: cameras
     - map: ["computerLayerKeys"]
       state: tech_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
   - type: Computer
     board: SurveillanceWirelessCameraMonitorCircuitboard
   - type: DeviceNetwork
@@ -1022,6 +1076,8 @@
       state: request
     - map: ["computerLayerKeys"]
       state: tech_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
   - type: Anchorable
     flags:
     - Anchorable
@@ -1060,6 +1116,8 @@
       state: service
     - map: ["computerLayerKeys"]
       state: service_keys
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
   - type: Computer
     board: ComputerMassMediaCircuitboard
   - type: DeviceNetworkRequiresPower
@@ -1097,6 +1155,8 @@
           state: sensors
         - map: ["computerLayerKeys"]
           state: atmos_key
+        - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+          state: generic_panel_open
     - type: PointLight
       radius: 1.5
       energy: 1.6
@@ -1139,6 +1199,8 @@
       state: robot
     - map: ["computerLayerKeys"]
       state: rd_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
   - type: RoboticsConsole
   - type: ActiveRadio
     channels:
@@ -1180,6 +1242,8 @@
       state: aiupload
     - map: [ "computerLayerKeys" ]
       state: generic_keys
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
   - type: ApcPowerReceiver
     powerLoad: 1000
   - type: Computer

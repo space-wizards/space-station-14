@@ -30,6 +30,8 @@
       state: generic
     - map: ["computerLayerKeys"]
       state: generic_keys
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -40,6 +42,10 @@
         computerLayerKeys:
           True: { visible: true, shader: unshaded }
           False: { visible: true, shader: shaded }
+      enum.WiresVisuals.MaintenancePanelState:
+        enum.WiresVisualLayers.MaintenancePanel:
+          True: { visible: false }
+          False: { visible: true }
   - type: LitOnPowered
   - type: PointLight
     radius: 1.5
