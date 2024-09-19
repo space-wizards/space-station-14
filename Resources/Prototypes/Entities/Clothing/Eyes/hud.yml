@@ -49,7 +49,7 @@
     - HudMedical
 
 - type: entity
-  parent: [ClothingEyesBase, ShowSecurityIcons, BaseSecurityCommandContraband]
+  parent: [ClothingEyesBase, ShowSecurityIcons, BaseRestrictedContraband]
   id: ClothingEyesHudSecurity
   name: security hud
   description: A heads-up display that scans the humanoids in view and provides accurate data about their ID status and security records.
@@ -61,6 +61,18 @@
   - type: Tag
     tags:
     - HudSecurity
+
+- type: entity
+  parent: [ClothingEyesBase, BaseCommandContraband]
+  id: ClothingEyesHudCommand
+  name: administration hud
+  description: A heads-up display that scans the humanoids in view and provides accurate data about their ID status.
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Hud/command.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Hud/command.rsi
+  - type: ShowJobIcons
 
 - type: entity
   parent: ClothingEyesBase

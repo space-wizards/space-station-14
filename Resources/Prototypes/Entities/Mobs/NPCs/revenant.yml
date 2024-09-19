@@ -1,8 +1,8 @@
 - type: entity
   id: MobRevenant
   parent:
-  - BaseMob
   - Incorporeal
+  - BaseMob
   name: revenant
   description: A spooky ghostie.
   components:

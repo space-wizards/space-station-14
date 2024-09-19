@@ -52,7 +52,7 @@
   - badidea
   - punishment
   name: aller-at-once-title
-  description: all-at-once-description
+  description: aller-at-once-description
   showInVote: false #Please god dont do this
   rules:
     - Nukeops

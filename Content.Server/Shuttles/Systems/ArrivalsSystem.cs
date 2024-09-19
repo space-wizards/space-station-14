@@ -11,6 +11,7 @@ using Content.Server.Screens.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.Spawners.Components;
+using Content.Server.Spawners.EntitySystems;
 using Content.Server.Station.Components;
 using Content.Server.Station.Events;
 using Content.Server.Station.Systems;
@@ -21,6 +22,7 @@ using Content.Shared.DeviceNetwork;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Parallax.Biomes;
+using Content.Shared.Preferences;
 using Content.Shared.Salvage;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Tiles;
@@ -70,11 +72,6 @@ public sealed class ArrivalsSystem : EntitySystem
     public bool Enabled { get; private set; }
 
     /// <summary>
-    /// Flags if all players must arrive via the Arrivals system, or if they can spawn in other ways.
-    /// </summary>
-    public bool Forced { get; private set; }
-
-    /// <summary>
     /// Flags if all players spawning at the departure terminal have godmode until they leave the terminal.
     /// </summary>
     public bool ArrivalsGodmode { get; private set; }
@@ -95,6 +92,8 @@ public sealed class ArrivalsSystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<PlayerSpawningEvent>(HandlePlayerSpawning, before: new []{ typeof(SpawnPointSystem)}, after: new [] { typeof(ContainerSpawnPointSystem)});
+
         SubscribeLocalEvent<StationArrivalsComponent, StationPostInitEvent>(OnStationPostInit);
 
         SubscribeLocalEvent<ArrivalsShuttleComponent, ComponentStartup>(OnShuttleStartup);
@@ -112,11 +111,9 @@ public sealed class ArrivalsSystem : EntitySystem
 
         // Don't invoke immediately as it will get set in the natural course of things.
         Enabled = _cfgManager.GetCVar(CCVars.ArrivalsShuttles);
-        Forced = _cfgManager.GetCVar(CCVars.ForceArrivals);
         ArrivalsGodmode = _cfgManager.GetCVar(CCVars.GodmodeArrivals);
 
         _cfgManager.OnValueChanged(CCVars.ArrivalsShuttles, SetArrivals);
-        _cfgManager.OnValueChanged(CCVars.ForceArrivals, b => Forced = b);
         _cfgManager.OnValueChanged(CCVars.GodmodeArrivals, b => ArrivalsGodmode = b);
 
         // Command so admins can set these for funsies
@@ -338,8 +335,10 @@ public sealed class ArrivalsSystem : EntitySystem
         if (ev.SpawnResult != null)
             return;
 
+        // We use arrivals as the default spawn so don't check for job prio.
+
         // Only works on latejoin even if enabled.
-        if (!Enabled || !Forced && _ticker.RunLevel != GameRunLevel.InRound)
+        if (!Enabled || _ticker.RunLevel != GameRunLevel.InRound)
             return;
 
         if (!HasComp<StationArrivalsComponent>(ev.Station))

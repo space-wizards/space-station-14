@@ -30,6 +30,15 @@
       ]
     },
     {
+      "name": "ai_camera",
+      "delays": [
+        [
+          1.0,
+          1.0
+        ]
+      ]
+    },
+    {
       "name": "ai_dead"
     },
     {
