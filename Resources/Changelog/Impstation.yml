@@ -1728,3 +1728,10 @@
   id: 224
   time: '2024-09-19T05:22:35.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/278
+- author: Darkmajia
+  changes:
+  - message: Fix tiktok announcer voiceline for power grid back online
+    type: Fix
+  id: 225
+  time: '2024-09-19T13:25:46.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/297
