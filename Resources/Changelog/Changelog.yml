@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: MFMessage
-  changes:
-  - message: Picking a ghost role as an admin will now deadmin.
-    type: Fix
-  id: 6903
-  time: '2024-07-11T05:53:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29790
 - author: Winkarst-cpu
   changes:
   - message: Admin notes popups are now more readable.
@@ -3921,3 +3914,11 @@
   id: 7402
   time: '2024-09-19T13:55:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31340
+- author: Winkarst-cpu
+  changes:
+  - message: The first editable line in the dialog window now grabs the keyboard focus
+      once it's open.
+    type: Fix
+  id: 7403
+  time: '2024-09-19T14:01:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31294
