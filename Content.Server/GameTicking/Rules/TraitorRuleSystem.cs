@@ -144,7 +144,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         var pda = _uplink.FindUplinkTarget(traitor);
         Note[]? code = null;
 
-        var uplinked = _uplink.AddUplink(traitor, startingBalance, giveDiscounts: true);
+        var uplinked = _uplink.AddUplink(traitor, startingBalance, pda, true);
 
         if (pda is not null && uplinked)
         {
