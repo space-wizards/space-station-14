@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: themias
-  changes:
-  - message: Notice boards can now be built on walls
-    type: Fix
-  id: 6906
-  time: '2024-07-12T09:18:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29851
 - author: slarticodefast
   changes:
   - message: Stun batons, stun prods and banana cream pies now fly like other throwing
@@ -3922,3 +3915,10 @@
   id: 7405
   time: '2024-09-19T19:17:19.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32264
+- author: Plykiya
+  changes:
+  - message: Cockroaches and mothroaches can no longer damage things with their bites.
+    type: Tweak
+  id: 7406
+  time: '2024-09-19T22:15:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32221
