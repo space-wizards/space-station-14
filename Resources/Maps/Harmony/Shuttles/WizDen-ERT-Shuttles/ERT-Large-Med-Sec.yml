@@ -928,8 +928,6 @@ entities:
       parent: 1
     - type: DeviceList
       devices:
-      - invalid
-      - invalid
       - 432
       - 436
       - 426
@@ -944,8 +942,6 @@ entities:
       parent: 1
     - type: DeviceList
       devices:
-      - invalid
-      - invalid
       - 430
       - 431
       - 434
@@ -964,8 +960,6 @@ entities:
       pos: 4.5,12.5
       parent: 1
     - type: DeviceList
-      configurators:
-      - invalid
       devices:
       - 422
       - 421
