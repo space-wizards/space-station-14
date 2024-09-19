@@ -2078,80 +2078,6 @@ entities:
     - type: ContainedSolution
       containerName: glass
       container: 28
-  - uid: 35
-    components:
-    - type: MetaData
-      name: solution - injector
-    - type: Transform
-      parent: 34
-    - type: Solution
-      solution:
-        maxVol: 15
-        name: injector
-        reagents:
-        - data: []
-          ReagentId: Ephedrine
-          Quantity: 15
-    - type: ContainedSolution
-      containerName: injector
-      container: 34
-  - uid: 37
-    components:
-    - type: MetaData
-      name: solution - injector
-    - type: Transform
-      parent: 36
-    - type: Solution
-      solution:
-        maxVol: 15
-        name: injector
-        reagents:
-        - data: []
-          ReagentId: Saline
-          Quantity: 15
-    - type: ContainedSolution
-      containerName: injector
-      container: 36
-  - uid: 39
-    components:
-    - type: MetaData
-      name: solution - pen
-    - type: Transform
-      parent: 38
-    - type: Solution
-      solution:
-        maxVol: 20
-        name: pen
-        reagents:
-        - data: []
-          ReagentId: Bicaridine
-          Quantity: 15
-        - data: []
-          ReagentId: TranexamicAcid
-          Quantity: 5
-    - type: ContainedSolution
-      containerName: pen
-      container: 38
-  - uid: 41
-    components:
-    - type: MetaData
-      name: solution - pen
-    - type: Transform
-      parent: 40
-    - type: Solution
-      solution:
-        maxVol: 20
-        name: pen
-        reagents:
-        - data: []
-          ReagentId: Dermaline
-          Quantity: 10
-        - data: []
-          ReagentId: Leporazine
-          Quantity: 10
-    - type: ContainedSolution
-      containerName: pen
-      container: 40
   - uid: 45
     components:
     - type: MetaData
@@ -2249,80 +2175,6 @@ entities:
     - type: ContainedSolution
       containerName: plastic
       container: 52
-  - uid: 56
-    components:
-    - type: MetaData
-      name: solution - injector
-    - type: Transform
-      parent: 55
-    - type: Solution
-      solution:
-        maxVol: 15
-        name: injector
-        reagents:
-        - data: []
-          ReagentId: Ephedrine
-          Quantity: 15
-    - type: ContainedSolution
-      containerName: injector
-      container: 55
-  - uid: 58
-    components:
-    - type: MetaData
-      name: solution - injector
-    - type: Transform
-      parent: 57
-    - type: Solution
-      solution:
-        maxVol: 15
-        name: injector
-        reagents:
-        - data: []
-          ReagentId: Saline
-          Quantity: 15
-    - type: ContainedSolution
-      containerName: injector
-      container: 57
-  - uid: 60
-    components:
-    - type: MetaData
-      name: solution - pen
-    - type: Transform
-      parent: 59
-    - type: Solution
-      solution:
-        maxVol: 20
-        name: pen
-        reagents:
-        - data: []
-          ReagentId: Bicaridine
-          Quantity: 15
-        - data: []
-          ReagentId: TranexamicAcid
-          Quantity: 5
-    - type: ContainedSolution
-      containerName: pen
-      container: 59
-  - uid: 62
-    components:
-    - type: MetaData
-      name: solution - pen
-    - type: Transform
-      parent: 61
-    - type: Solution
-      solution:
-        maxVol: 20
-        name: pen
-        reagents:
-        - data: []
-          ReagentId: Dermaline
-          Quantity: 10
-        - data: []
-          ReagentId: Leporazine
-          Quantity: 10
-    - type: ContainedSolution
-      containerName: pen
-      container: 61
   - uid: 67
     components:
     - type: MetaData
@@ -3599,8 +3451,6 @@ entities:
       pos: 3.5,-5.5
       parent: 1
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 235
       address: SNS-0C0F-E167
@@ -3941,8 +3791,6 @@ entities:
       pos: -0.5,-6.5
       parent: 1
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 235
       address: SNS-575D-5D4A
@@ -4115,8 +3963,6 @@ entities:
       pos: 5.5,-12.5
       parent: 1
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 235
       address: SNS-4E27-E8FB
@@ -4289,8 +4135,6 @@ entities:
       pos: -1.5,1.5
       parent: 1
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 235
       address: SNS-7EAC-EE86
@@ -4811,66 +4655,6 @@ entities:
       parent: 1
     - type: EmitSoundOnCollide
       nextSound: -911.2373965
-- proto: BruteAutoInjector
-  entities:
-  - uid: 38
-    components:
-    - type: Transform
-      parent: 33
-    - type: SolutionContainerManager
-      solutions: null
-      containers:
-      - pen
-    - type: Physics
-      canCollide: False
-    - type: ContainerContainer
-      containers:
-        solution@pen: !type:ContainerSlot
-          ent: 39
-  - uid: 59
-    components:
-    - type: Transform
-      parent: 54
-    - type: SolutionContainerManager
-      solutions: null
-      containers:
-      - pen
-    - type: Physics
-      canCollide: False
-    - type: ContainerContainer
-      containers:
-        solution@pen: !type:ContainerSlot
-          ent: 60
-- proto: BurnAutoInjector
-  entities:
-  - uid: 40
-    components:
-    - type: Transform
-      parent: 33
-    - type: SolutionContainerManager
-      solutions: null
-      containers:
-      - pen
-    - type: Physics
-      canCollide: False
-    - type: ContainerContainer
-      containers:
-        solution@pen: !type:ContainerSlot
-          ent: 41
-  - uid: 61
-    components:
-    - type: Transform
-      parent: 54
-    - type: SolutionContainerManager
-      solutions: null
-      containers:
-      - pen
-    - type: Physics
-      canCollide: False
-    - type: ContainerContainer
-      containers:
-        solution@pen: !type:ContainerSlot
-          ent: 62
 - proto: ButtonFrameCautionSecurity
   entities:
   - uid: 291
@@ -7339,8 +7123,6 @@ entities:
       pos: -0.5,1.5
       parent: 1
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 235
       address: VNT-24D5-3BCF
@@ -7514,8 +7296,6 @@ entities:
       pos: 0.5,-6.5
       parent: 1
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 235
       address: VNT-65F0-1CE7
@@ -7688,8 +7468,6 @@ entities:
       pos: 4.5,-2.5
       parent: 1
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 235
       address: VNT-45EA-8675
@@ -7863,8 +7641,6 @@ entities:
       pos: 5.5,-11.5
       parent: 1
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 235
       address: VNT-46A3-B940
@@ -8038,8 +7814,6 @@ entities:
       pos: 7.5,-5.5
       parent: 1
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 235
       address: VNT-0CEC-898F
@@ -8213,8 +7987,6 @@ entities:
       pos: 7.5,-8.5
       parent: 1
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 235
       address: VNT-125B-249E
@@ -9111,20 +8883,6 @@ entities:
       count: 2
     - type: Physics
       canCollide: False
-- proto: MedicatedSuture
-  entities:
-  - uid: 42
-    components:
-    - type: Transform
-      parent: 33
-    - type: Physics
-      canCollide: False
-  - uid: 63
-    components:
-    - type: Transform
-      parent: 54
-    - type: Physics
-      canCollide: False
 - proto: MedkitCombatFilled
   entities:
   - uid: 33
@@ -9132,93 +8890,11 @@ entities:
     - type: Transform
       pos: -1.6108704,-1.5
       parent: 1
-    - type: Storage
-      storedItems:
-        42:
-          position: 0,0
-          _rotation: East
-        43:
-          position: 2,0
-          _rotation: South
-        34:
-          position: 3,0
-          _rotation: South
-        36:
-          position: 0,1
-          _rotation: South
-        38:
-          position: 1,1
-          _rotation: South
-        40:
-          position: 3,1
-          _rotation: South
-    - type: ContainerContainer
-      containers:
-        storagebase: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 42
-          - 43
-          - 34
-          - 36
-          - 38
-          - 40
-    - type: Physics
-      canCollide: False
-    - type: UseDelay
-      delays:
-        default:
-          length: 1
-        quickInsert:
-          length: 0.5
-        storage: {}
   - uid: 54
     components:
     - type: Transform
       pos: -1.3296204,-1.5
       parent: 1
-    - type: Storage
-      storedItems:
-        63:
-          position: 0,0
-          _rotation: East
-        64:
-          position: 2,0
-          _rotation: South
-        55:
-          position: 3,0
-          _rotation: South
-        57:
-          position: 0,1
-          _rotation: South
-        59:
-          position: 1,1
-          _rotation: South
-        61:
-          position: 3,1
-          _rotation: South
-    - type: ContainerContainer
-      containers:
-        storagebase: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 63
-          - 64
-          - 55
-          - 57
-          - 59
-          - 61
-    - type: Physics
-      canCollide: False
-    - type: UseDelay
-      delays:
-        default:
-          length: 1
-        quickInsert:
-          length: 0.5
-        storage: {}
 - proto: MicroManipulatorStockPart
   entities:
   - uid: 32
@@ -9867,20 +9543,6 @@ entities:
       powerLoad: 0
     - type: DamageOnInteract
       isDamageActive: False
-- proto: RegenerativeMesh
-  entities:
-  - uid: 43
-    components:
-    - type: Transform
-      parent: 33
-    - type: Physics
-      canCollide: False
-  - uid: 64
-    components:
-    - type: Transform
-      parent: 54
-    - type: Physics
-      canCollide: False
 - proto: RemoteSignaller
   entities:
   - uid: 734
@@ -10757,90 +10419,6 @@ entities:
       parent: 105
     - type: Physics
       canCollide: False
-- proto: SyringeEphedrine
-  entities:
-  - uid: 34
-    components:
-    - type: MetaData
-      name: syringe (ephedrine)
-    - type: Transform
-      parent: 33
-    - type: Label
-      currentLabel: ephedrine
-    - type: SolutionContainerManager
-      solutions: null
-      containers:
-      - injector
-    - type: Physics
-      canCollide: False
-    - type: NameModifier
-      baseName: syringe
-    - type: ContainerContainer
-      containers:
-        solution@injector: !type:ContainerSlot
-          ent: 35
-  - uid: 55
-    components:
-    - type: MetaData
-      name: syringe (ephedrine)
-    - type: Transform
-      parent: 54
-    - type: Label
-      currentLabel: ephedrine
-    - type: SolutionContainerManager
-      solutions: null
-      containers:
-      - injector
-    - type: Physics
-      canCollide: False
-    - type: NameModifier
-      baseName: syringe
-    - type: ContainerContainer
-      containers:
-        solution@injector: !type:ContainerSlot
-          ent: 56
-- proto: SyringeSaline
-  entities:
-  - uid: 36
-    components:
-    - type: MetaData
-      name: syringe (saline)
-    - type: Transform
-      parent: 33
-    - type: Label
-      currentLabel: saline
-    - type: SolutionContainerManager
-      solutions: null
-      containers:
-      - injector
-    - type: Physics
-      canCollide: False
-    - type: NameModifier
-      baseName: syringe
-    - type: ContainerContainer
-      containers:
-        solution@injector: !type:ContainerSlot
-          ent: 37
-  - uid: 57
-    components:
-    - type: MetaData
-      name: syringe (saline)
-    - type: Transform
-      parent: 54
-    - type: Label
-      currentLabel: saline
-    - type: SolutionContainerManager
-      solutions: null
-      containers:
-      - injector
-    - type: Physics
-      canCollide: False
-    - type: NameModifier
-      baseName: syringe
-    - type: ContainerContainer
-      containers:
-        solution@injector: !type:ContainerSlot
-          ent: 58
 - proto: TableReinforced
   entities:
   - uid: 585
