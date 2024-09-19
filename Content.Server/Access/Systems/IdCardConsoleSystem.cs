@@ -13,6 +13,11 @@ using Robust.Shared.Prototypes;
 using System.Linq;
 using static Content.Shared.Access.Components.IdCardConsoleComponent;
 using Content.Shared.Access;
+using Content.Shared.Construction;
+using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Throwing;
+using Robust.Shared.Random;
+using Content.Server.Containers;
 
 namespace Content.Server.Access.Systems;
 
@@ -26,7 +31,9 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
     [Dependency] private readonly AccessSystem _access = default!;
     [Dependency] private readonly IdCardSystem _idCard = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-
+    [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly ThrowingSystem _throwing = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
     public override void Initialize()
     {
         base.Initialize();
@@ -37,6 +44,9 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         SubscribeLocalEvent<IdCardConsoleComponent, ComponentStartup>(UpdateUserInterface);
         SubscribeLocalEvent<IdCardConsoleComponent, EntInsertedIntoContainerMessage>(UpdateUserInterface);
         SubscribeLocalEvent<IdCardConsoleComponent, EntRemovedFromContainerMessage>(UpdateUserInterface);
+
+        // Intercept the event before anyone can do anything with it!
+        SubscribeLocalEvent<IdCardConsoleComponent, MachineDeconstructedEvent>(OnMachineDeconstructed, before: new[] { typeof(EmptyOnMachineDeconstructSystem), typeof(ItemSlotsSystem) });
     }
 
     private void OnWriteToTargetIdMessage(EntityUid uid, IdCardConsoleComponent component, WriteToTargetIdMessage args)
@@ -209,5 +219,21 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         }
 
         _record.Synchronize(key);
+    }
+
+    private void OnMachineDeconstructed(Entity<IdCardConsoleComponent> entity, ref MachineDeconstructedEvent args)
+    {
+        if (!TryComp<ItemSlotsComponent>(entity.Owner, out var itemSlotsComp))
+            return;
+
+        foreach (var slot in itemSlotsComp.Slots.Values)
+        {
+            if (slot.Item == null || slot.ContainerSlot == null)
+                continue;
+
+            var item = slot.Item.Value;
+            _container.Remove(item, slot.ContainerSlot);
+            _throwing.TryThrow(item, _random.NextVector2(), baseThrowSpeed: 5f);
+        }
     }
 }

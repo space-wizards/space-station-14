@@ -122,6 +122,9 @@
       entity: !type:BoardNodeEntity { container: board }
       edges:
         - to: monitorUnsecured
+          completed:
+            - !type:RaiseEvent
+                event: !type:MachineDeconstructedEvent
           conditions:
             - !type:AllWiresCut {}
           steps:
