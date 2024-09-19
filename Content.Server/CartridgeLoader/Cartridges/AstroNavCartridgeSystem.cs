@@ -6,7 +6,7 @@ namespace Content.Server.CartridgeLoader.Cartridges;
 
 public sealed class AstroNavCartridgeSystem : EntitySystem
 {
-    [Dependency] private readonly CartridgeLoaderSystem? _cartridgeLoaderSystem = default!;
+    [Dependency] private readonly CartridgeLoaderSystem _cartridgeLoaderSystem = default!;
 
     public override void Initialize()
     {
@@ -23,6 +23,10 @@ public sealed class AstroNavCartridgeSystem : EntitySystem
 
     private void OnCartridgeRemoved(Entity<AstroNavCartridgeComponent> ent, ref CartridgeRemovedEvent args)
     {
-        RemComp<HandheldGPSComponent>(args.Loader);
+        // only remove when the program itself is removed
+        if (!_cartridgeLoaderSystem.HasProgram<AstroNavCartridgeComponent>(args.Loader))
+        {
+            RemComp<HandheldGPSComponent>(args.Loader);
+        }
     }
 }
