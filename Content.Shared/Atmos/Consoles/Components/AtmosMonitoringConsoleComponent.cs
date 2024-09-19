@@ -41,6 +41,10 @@ public sealed partial class AtmosMonitoringConsoleComponent : Component
     [DataField, ViewVariables]
     public Color NavMapWallColor;
 
+    /// <summary>
+    /// The next time this component is dirtied, it will force the full satte
+    /// to be sent to the client, instead of just the delta state
+    /// </summary>
     [ViewVariables]
     public bool ForceFullUpdate = false;
 }
