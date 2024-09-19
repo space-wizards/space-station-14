@@ -2292,7 +2292,7 @@
   name: reagent-name-salvagerssoothe
   parent: BaseAlcohol
   desc: reagent-desc-salvagerssoothe
-  physicalDesc: reagent-physical-desc-bubbly
+  physicalDesc: reagent-physical-desc-cloudy
   flavor: medicine
   color: "#00ff99"
   recognizable: true
