@@ -184,6 +184,15 @@
   - type: Objective
     difficulty: 1.2
 
+- type: entity
+  parent: BaseThiefStealObjective
+  id: WantedListCartridgeStealObjective
+  components:
+  - type: StealCondition
+    stealGroup: WantedListCartridge
+  - type: Objective
+    difficulty: 1
+
 - type: entity                                      #Medical subgroup
   parent: BaseThiefStealObjective
   id: ClothingOuterHardsuitVoidParamedStealObjective
