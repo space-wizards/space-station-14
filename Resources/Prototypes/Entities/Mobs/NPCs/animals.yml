@@ -389,6 +389,14 @@
   - type: NonSpreaderZombie
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-organic
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    angle: 0
+    animation: WeaponArcBite
+    damage:
+      types:
+        Piercing: 0
 
 - type: entity
   name: glockroach
@@ -1316,6 +1324,7 @@
     tags:
     - VimPilot
     - DoorBumpOpener
+    - AnomalyHost
   - type: Reactive
     groups:
       Flammable: [ Touch ]

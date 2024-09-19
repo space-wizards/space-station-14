@@ -227,7 +227,22 @@
   - type: Sprite
     layers:
     - state: crypt_silver
-    - state: rd_label
+    - state: borg_label
+
+- type: entity
+  parent: [ EncryptionKey, BaseSyndicateContraband ]
+  id: EncryptionKeyBinarySyndicate
+  name: binary translator key
+  description: A syndicate encryption key that translates binary signals used by silicons.
+  components:
+  - type: EncryptionKey
+    channels:
+    - Binary
+    defaultChannel: Binary
+  - type: Sprite
+    layers:
+    - state: crypt_red
+    - state: borg_label
 
 - type: entity
   parent: EncryptionKey
