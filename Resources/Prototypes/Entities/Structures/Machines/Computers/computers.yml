@@ -1,10 +1,9 @@
 - type: entity
-  parent: BaseComputer
+  parent: BaseComputerAiAccess
   id: ComputerAlert
   name: atmospheric alerts computer
   description: Used to access the station's atmospheric automated alert system.
   components:
-  - type: StationAiWhitelist
   - type: Computer
     board: AlertsComputerCircuitboard
   - type: Sprite
@@ -43,9 +42,6 @@
             type: AtmosAlertsComputerBoundUserInterface
         enum.WiresUiKey.Key:
           type: WiresBoundUserInterface
-  - type: Wires
-    boardName: wires-board-name-computer
-    layoutId: ComputerAi
 
 - type: entity
   parent: BaseComputer
@@ -194,12 +190,11 @@
     stealGroup: CargoShuttleConsoleCircuitboard
 
 - type: entity
-  parent: BaseComputer
+  parent: BaseComputerAiAccess
   id: ComputerIFF
   name: IFF computer
   description: Allows you to control the IFF characteristics of this vessel.
   components:
-  - type: StationAiWhitelist
   - type: IFFConsole
   - type: Sprite
     layers:
@@ -222,9 +217,6 @@
           type: WiresBoundUserInterface
   - type: Computer
     board: ComputerIFFCircuitboard
-  - type: Wires
-    boardName: wires-board-name-computer
-    layoutId: ComputerAi
 
 - type: entity
   parent: ComputerIFF
@@ -249,12 +241,11 @@
     board: ComputerIFFSyndicateCircuitboard
 
 - type: entity
-  parent: BaseComputer
+  parent: BaseComputerAiAccess
   id: ComputerPowerMonitoring
   name: power monitoring computer
   description: It monitors power levels across the station.
   components:
-  - type: StationAiWhitelist
   - type: Sprite
     layers:
     - map: ["computerLayerBody"]
@@ -288,17 +279,13 @@
         type: PowerMonitoringConsoleBoundUserInterface
       enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
-  - type: Wires
-    boardName: wires-board-name-computer
-    layoutId: ComputerAi
 
 - type: entity
-  parent: BaseComputer
+  parent: BaseComputerAiAccess
   id: ComputerMedicalRecords
   name: medical records computer
   description: This can be used to check medical records.
   components:
-  - type: StationAiWhitelist
   - type: Sprite
     layers:
     - map: ["computerLayerBody"]
@@ -315,17 +302,13 @@
     color: "#1f8c28"
   - type: Computer
     board: MedicalRecordsComputerCircuitboard
-  - type: Wires
-    boardName: wires-board-name-computer
-    layoutId: ComputerAi
 
 - type: entity
-  parent: BaseComputer
+  parent: BaseComputerAiAccess
   id: ComputerCriminalRecords
   name: criminal records computer
   description: This can be used to check criminal records. Only security can modify them.
   components:
-  - type: StationAiWhitelist
   - type: CriminalRecordsConsole
   - type: UserInterface
     interfaces:
@@ -356,17 +339,13 @@
   - type: GuideHelp
     guides:
     - CriminalRecords
-  - type: Wires
-    boardName: wires-board-name-computer
-    layoutId: ComputerAi
 
 - type: entity
-  parent: BaseComputer
+  parent: BaseComputerAiAccess
   id: ComputerStationRecords
   name: station records computer
   description: This can be used to check station records.
   components:
-  - type: StationAiWhitelist
   - type: GeneralStationRecordConsole
   - type: UserInterface
     interfaces:
@@ -385,17 +364,13 @@
   - type: GuideHelp
     guides:
     - Forensics
-  - type: Wires
-    boardName: wires-board-name-computer
-    layoutId: ComputerAi
 
 - type: entity
-  parent: BaseComputer
+  parent: BaseComputerAiAccess
   id: ComputerCrewMonitoring
   name: crew monitoring console
   description: Used to monitor active health sensors built into most of the crew's uniforms.
   components:
-  - type: StationAiWhitelist
   - type: Sprite
     layers:
     - map: ["computerLayerBody"]
@@ -426,17 +401,13 @@
     receiveFrequencyId: CrewMonitor
   - type: WirelessNetworkConnection
     range: 1200
-  - type: Wires
-    boardName: wires-board-name-computer
-    layoutId: ComputerAi
 
 - type: entity
-  parent: BaseComputer
+  parent: BaseComputerAiAccess
   id: ComputerResearchAndDevelopment
   name: R&D computer
   description: A computer used to interface with R&D tools.
   components:
-  - type: StationAiWhitelist
   - type: Sprite
     layers:
     - map: ["computerLayerBody"]
@@ -476,17 +447,13 @@
   - type: GuideHelp
     guides:
     - Science
-  - type: Wires
-    boardName: wires-board-name-computer
-    layoutId: ComputerAi
 
 - type: entity
-  parent: BaseComputer
+  parent: BaseComputerAiAccess
   id: ComputerAnalysisConsole
   name: analysis console
   description: A computer used to interface with the artifact analyzer.
   components:
-  - type: StationAiWhitelist
   - type: Sprite
     layers:
     - map: ["computerLayerBody"]
@@ -528,17 +495,13 @@
   - type: GuideHelp
     guides:
     - Xenoarchaeology
-  - type: Wires
-    boardName: wires-board-name-computer
-    layoutId: ComputerAi
 
 - type: entity
-  parent: BaseComputer
+  parent: BaseComputerAiAccess
   id: ComputerId
   name: ID card computer
   description: Terminal for programming Nanotrasen employee ID cards to access parts of the station.
   components:
-  - type: StationAiWhitelist
   - type: IdCardConsole
     privilegedIdSlot:
       name: id-card-console-privileged-id
@@ -593,17 +556,13 @@
       board: !type:Container
       IdCardConsole-privilegedId: !type:ContainerSlot
       IdCardConsole-targetId: !type:ContainerSlot
-  - type: Wires
-    boardName: wires-board-name-computer
-    layoutId: ComputerAi
 
 - type: entity
-  parent: BaseComputer
+  parent: BaseComputerAiAccess
   id: computerBodyScanner
   name: body scanner computer
   description: A body scanner.
   components:
-  - type: StationAiWhitelist
   - type: ApcPowerReceiver
     powerLoad: 500
   - type: Computer
@@ -614,12 +573,11 @@
     color: "#1f8c28"
 
 - type: entity
-  parent: BaseComputer
+  parent: BaseComputerAiAccess
   id: ComputerComms
   name: communications computer
   description: A computer used to make station wide announcements via keyboard, set the appropriate alert level, and call the emergency shuttle.
   components:
-  - type: StationAiWhitelist
   - type: Sprite
     layers:
     - map: ["computerLayerBody"]
@@ -653,9 +611,6 @@
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: StructuralMetallicStrong
-  - type: Wires
-    boardName: wires-board-name-computer
-    layoutId: ComputerAi
 
 - type: entity
   parent: ComputerComms
@@ -689,12 +644,11 @@
     color: "#f71713"
 
 - type: entity
-  parent: BaseComputer
+  parent: BaseComputerAiAccess
   id: ComputerSolarControl
   name: solar control computer
   description: A controller for solar panel arrays.
   components:
-  - type: StationAiWhitelist
   - type: Sprite
     layers:
     - map: ["computerLayerBody"]
@@ -720,17 +674,13 @@
     radius: 1.5
     energy: 1.6
     color: "#e6e227"
-  - type: Wires
-    boardName: wires-board-name-computer
-    layoutId: ComputerAi
 
 - type: entity
-  parent: BaseComputer
+  parent: BaseComputerAiAccess
   id: ComputerRadar
   name: mass scanner computer
   description: A computer for detecting nearby bodies, displaying them by position and mass.
   components:
-  - type: StationAiWhitelist
   - type: Sprite
     layers:
     - map: ["computerLayerBody"]
@@ -756,17 +706,13 @@
     radius: 1.5
     energy: 1.6
     color: "#e6e227"
-  - type: Wires
-    boardName: wires-board-name-computer
-    layoutId: ComputerAi
 
 - type: entity
   id: ComputerCargoShuttle
-  parent: BaseComputer
+  parent: BaseComputerAiAccess
   name: cargo shuttle computer
   description: Used to order the shuttle.
   components:
-  - type: StationAiWhitelist
   - type: Sprite
     layers:
     - map: ["computerLayerBody"]
@@ -797,17 +743,13 @@
   - type: GuideHelp
     guides:
     - Cargo
-  - type: Wires
-    boardName: wires-board-name-computer
-    layoutId: ComputerAi
 
 - type: entity
   id: ComputerCargoOrders
-  parent: BaseComputer
+  parent: BaseComputerAiAccess
   name: cargo request computer
   description: Used to order supplies and approve requests.
   components:
-  - type: StationAiWhitelist
   - type: Sprite
     layers:
     - map: ["computerLayerBody"]
@@ -851,17 +793,13 @@
   - type: GuideHelp
     guides:
     - Cargo
-  - type: Wires
-    boardName: wires-board-name-computer
-    layoutId: ComputerAi
 
 - type: entity
   id: ComputerCargoBounty
-  parent: BaseComputer
+  parent: BaseComputerAiAccess
   name: cargo bounty computer
   description: Used to manage currently active bounties.
   components:
-  - type: StationAiWhitelist
   - type: Sprite
     layers:
     - map: ["computerLayerBody"]
@@ -893,17 +831,13 @@
     guides:
     - CargoBounties
     - Cargo
-  - type: Wires
-    boardName: wires-board-name-computer
-    layoutId: ComputerAi
 
 - type: entity
-  parent: BaseComputer
+  parent: BaseComputerAiAccess
   id: ComputerCloningConsole
   name: cloning console computer
   description: The centerpiece of the cloning system, medicine's greatest accomplishment. It has lots of ports and wires.
   components:
-  - type: StationAiWhitelist
   - type: CloningConsole
   - type: DeviceList
   - type: DeviceNetwork
@@ -948,17 +882,13 @@
   - type: GuideHelp
     guides:
     - Cloning
-  - type: Wires
-    boardName: wires-board-name-computer
-    layoutId: ComputerAi
 
 - type: entity
   id: ComputerSalvageExpedition
-  parent: BaseComputer
+  parent: BaseComputerAiAccess
   name: salvage expeditions computer
   description: Used to accept salvage missions, if you're tough enough.
   components:
-    - type: StationAiWhitelist
     - type: Sprite
       layers:
         - map: ["computerLayerBody"]
@@ -999,9 +929,6 @@
       access: [["Salvage"]]
     - type: StealTarget
       stealGroup: SalvageExpeditionsComputerCircuitboard
-    - type: Wires
-      boardName: wires-board-name-computer
-      layoutId: ComputerAi
 
 - type: entity
   parent: BaseComputer
@@ -1081,11 +1008,10 @@
 
 - type: entity
   id: ComputerPalletConsole
-  parent: BaseComputer
+  parent: BaseComputerAiAccess
   name: cargo sale computer
   description: Used to sell goods loaded onto cargo pallets.
   components:
-  - type: StationAiWhitelist
   - type: Sprite
     layers:
     - map: ["computerLayerBody"]
@@ -1117,17 +1043,13 @@
   - type: GuideHelp
     guides:
     - Cargo
-  - type: Wires
-    boardName: wires-board-name-computer
-    layoutId: ComputerAi
 
 - type: entity
-  parent: BaseComputer
+  parent: BaseComputerAiAccess
   id: ComputerMassMedia
   name: news manager console
   description: Write your message to the world!
   components:
-  - type: StationAiWhitelist
   - type: Sprite
     layers:
     - map: ["computerLayerBody"]
@@ -1155,9 +1077,6 @@
           type: NewsWriterBoundUserInterface
         enum.WiresUiKey.Key:
           type: WiresBoundUserInterface
-  - type: Wires
-    boardName: wires-board-name-computer
-    layoutId: ComputerAi
 
 - type: entity
   parent: BaseComputer
@@ -1205,12 +1124,11 @@
     - type: AtmosDevice
 
 - type: entity
-  parent: BaseComputer
+  parent: BaseComputerAiAccess
   id: ComputerRoboticsControl
   name: robotics control console
   description: Used to remotely monitor, disable and destroy the station's cyborgs.
   components:
-  - type: StationAiWhitelist
   - type: Sprite
     layers:
     - map: ["computerLayerBody"]
@@ -1245,9 +1163,6 @@
     access: [["ResearchDirector"]]
   - type: Lock
     unlockOnClick: false
-  - type: Wires
-    boardName: wires-board-name-computer
-    layoutId: ComputerAi
 
 - type: entity
   id: StationAiUploadComputer
