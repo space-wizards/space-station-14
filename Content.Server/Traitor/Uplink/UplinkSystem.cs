@@ -86,7 +86,7 @@ public sealed class UplinkSystem : EntitySystem
     /// </summary>
     private bool ImplantUplink(EntityUid user, FixedPoint2 balance, bool giveDiscounts)
     {
-        var implants = new List<string>(){FallbackUplinkImplant};
+        var implantProto = new string(FallbackUplinkImplant);
 
         if (!_proto.TryIndex<ListingPrototype>(FallbackUplinkCatalog, out var catalog))
             return false;
@@ -99,21 +99,13 @@ public sealed class UplinkSystem : EntitySystem
         else
             balance = balance - cost;
 
-        _subdermalImplant.AddImplants(user, implants);
+        var implant = _subdermalImplant.AddImplant(user, implantProto);
 
-        if (!_container.TryGetContainer(user, ImplanterComponent.ImplantSlotId, out var implantContainer))
+        if (!HasComp<StoreComponent>(implant))
             return false;
 
-        foreach (var implant in implantContainer.ContainedEntities)
-        {
-            if (HasComp<StoreComponent>(implant))
-            {
-                SetUplink(user, implant, balance, giveDiscounts);
-                return true;
-            }
-        }
-
-        return false;
+        SetUplink(user, implant.Value, balance, giveDiscounts);
+        return true;
     }
 
     /// <summary>
