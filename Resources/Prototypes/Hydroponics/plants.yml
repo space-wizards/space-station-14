@@ -1,0 +1,19 @@
+- type: entity
+  id: BasePlant
+  components:
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.5
+        density: 190
+        hard: true
+        layer:
+        - BulletImpassable
+  - type: Sprite
+  - type: Plant
+  - type: Appearance
+  - type: PlantVisuals
+  - type: Clickable
+  - type: InteractionOutline
