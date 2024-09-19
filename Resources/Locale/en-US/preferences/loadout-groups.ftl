@@ -48,6 +48,7 @@ loadout-group-chef-head = Chef head
 loadout-group-chef-mask = Chef mask
 loadout-group-chef-jumpsuit = Chef jumpsuit
 loadout-group-chef-outerclothing = Chef outer clothing
+loadout-group-chef-shoes = Chef shoes
 
 loadout-group-librarian-jumpsuit = Librarian jumpsuit
 

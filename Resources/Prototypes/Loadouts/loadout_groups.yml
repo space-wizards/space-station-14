@@ -267,6 +267,13 @@
   - ChefWintercoat
 
 - type: loadoutGroup
+  id: ChefShoes
+  name: loadout-group-chef-shoes
+  loadouts:
+  - BlackShoes
+  - ChefShoes
+
+- type: loadoutGroup
   id: LibrarianJumpsuit
   name: loadout-group-librarian-jumpsuit
   loadouts:
@@ -879,6 +886,7 @@
   - ScientistJumpskirt
   - RoboticistJumpsuit
   - RoboticistJumpskirt
+  - ScientistJumpsuitFormal
   - SeniorResearcherJumpsuit
   - SeniorResearcherJumpskirt
 
@@ -983,6 +991,7 @@
   loadouts:
   - WardenJumpsuit
   - WardenJumpskirt
+  - SecurityJumpsuitBlue
 
 - type: loadoutGroup
   id: WardenOuterClothing
@@ -1010,9 +1019,10 @@
   - SecurityJumpskirt
   - SecurityJumpsuitGrey
   - SecurityJumpskirtGrey
+  - TrooperUniform
+  - SecurityJumpsuitBlue
   - SeniorOfficerJumpsuit
   - SeniorOfficerJumpskirt
-  - TrooperUniform
 
 - type: loadoutGroup
   id: SecurityBackpack
@@ -1082,6 +1092,7 @@
   loadouts:
   - DetectiveArmorVest
   - DetectiveCoat
+  - NoirCoat
 
 - type: loadoutGroup
   id: SecurityCadetJumpsuit
