@@ -24,7 +24,7 @@ namespace Content.Shared.Containers.ItemSlots
     ///     Note when using popups on entities with many slots with InsertOnInteract, EjectOnInteract or EjectOnUse:
     ///     A single use will try to insert to/eject from every slot and generate a popup for each that fails.
     /// </remarks>
-    public sealed class ItemSlotsSystem : EntitySystem
+    public sealed partial class ItemSlotsSystem : EntitySystem
     {
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
@@ -37,6 +37,8 @@ namespace Content.Shared.Containers.ItemSlots
         public override void Initialize()
         {
             base.Initialize();
+
+            InitializeLock();
 
             SubscribeLocalEvent<ItemSlotsComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<ItemSlotsComponent, ComponentInit>(Oninitialize);
@@ -357,39 +359,76 @@ namespace Content.Shared.Containers.ItemSlots
         ///     Useful for predicted interactions
         /// </param>
         /// <returns>False if failed to insert item</returns>
-        public bool TryInsertEmpty(Entity<ItemSlotsComponent?> ent, EntityUid item, EntityUid? user, bool excludeUserAudio = false)
+        public bool TryInsertEmpty(Entity<ItemSlotsComponent?> ent,
+            EntityUid item,
+            EntityUid? user,
+            bool excludeUserAudio = false)
         {
+            if (!Resolve(ent, ref ent.Comp, false))
+                return false;
+
+            TryComp(user, out HandsComponent? handsComp);
+
+            if (!TryGetAvailableSlot(ent,
+                    item,
+                    user == null ? null : (user.Value, handsComp),
+                    out var itemSlot,
+                    emptyOnly: true))
+                return false;
+
+            if (user != null && !_handsSystem.TryDrop(user.Value, item, handsComp: handsComp))
+                return false;
+
+            Insert(ent, itemSlot, item, user, excludeUserAudio: excludeUserAudio);
+            return true;
+        }
+
+        /// <summary>
+        /// Tries to get any slot that the <paramref name="item"/> can be inserted into.
+        /// </summary>
+        /// <param name="ent">Entity that <paramref name="item"/> is being inserted into.</param>
+        /// <param name="item">Entity being inserted into <paramref name="ent"/>.</param>
+        /// <param name="userEnt">Entity inserting <paramref name="item"/> into <paramref name="ent"/>.</param>
+        /// <param name="itemSlot">The ItemSlot on <paramref name="ent"/> to insert <paramref name="item"/> into.</param>
+        /// <param name="emptyOnly"> True only returns slots that are empty.
+        /// False returns any slot that is able to receive <paramref name="item"/>.</param>
+        /// <returns>True when a slot is found. Otherwise, false.</returns>
+        public bool TryGetAvailableSlot(Entity<ItemSlotsComponent?> ent,
+            EntityUid item,
+            Entity<HandsComponent?>? userEnt,
+            [NotNullWhen(true)] out ItemSlot? itemSlot,
+            bool emptyOnly = false)
+        {
+            itemSlot = null;
+
+            if (userEnt is { } user
+                && Resolve(user, ref user.Comp)
+                && _handsSystem.IsHolding(user, item))
+            {
+                if (!_handsSystem.CanDrop(user, item, user.Comp))
+                    return false;
+            }
+
             if (!Resolve(ent, ref ent.Comp, false))
                 return false;
 
             var slots = new List<ItemSlot>();
             foreach (var slot in ent.Comp.Slots.Values)
             {
-                if (slot.ContainerSlot?.ContainedEntity != null)
+                if (emptyOnly && slot.ContainerSlot?.ContainedEntity != null)
                     continue;
 
-                if (CanInsert(ent, item, user, slot))
+                if (CanInsert(ent, item, userEnt, slot))
                     slots.Add(slot);
             }
 
             if (slots.Count == 0)
                 return false;
 
-            if (user != null && _handsSystem.IsHolding(user.Value, item))
-            {
-                if (!_handsSystem.TryDrop(user.Value, item))
-                    return false;
-            }
-
             slots.Sort(SortEmpty);
 
-            foreach (var slot in slots)
-            {
-                if (TryInsert(ent, slot, item, user, excludeUserAudio: excludeUserAudio))
-                    return true;
-            }
-
-            return false;
+            itemSlot = slots[0];
+            return true;
         }
 
         private static int SortEmpty(ItemSlot a, ItemSlot b)

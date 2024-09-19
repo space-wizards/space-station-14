@@ -6,6 +6,19 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Storage;
 
 /// <summary>
+/// Prototype wrapper around <see cref="EntitySpawnEntry"/>
+/// </summary>
+[Prototype]
+public sealed class EntitySpawnEntryPrototype : IPrototype
+{
+    [IdDataField]
+    public string ID { get; } = string.Empty;
+
+    [DataField]
+    public List<EntitySpawnEntry> Entries = new();
+}
+
+/// <summary>
 ///     Dictates a list of items that can be spawned.
 /// </summary>
 [Serializable]

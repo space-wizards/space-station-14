@@ -2,6 +2,7 @@ using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Shuttles.Components;
 using Content.Shared.Atmos;
+using Content.Shared.Maps;
 using Content.Shared.Spreader;
 using Content.Shared.Tag;
 using Robust.Shared.Collections;
@@ -175,11 +176,12 @@ public sealed class SpreaderSystem : EntitySystem
     /// </summary>
     public void GetNeighbors(EntityUid uid, TransformComponent comp, ProtoId<EdgeSpreaderPrototype> prototype, out ValueList<(MapGridComponent, TileRef)> freeTiles, out ValueList<Vector2i> occupiedTiles, out ValueList<EntityUid> neighbors)
     {
-        // TODO remove occupiedTiles -- its currently unused and just slows this method down.
-        DebugTools.Assert(_prototype.HasIndex(prototype));
         freeTiles = [];
         occupiedTiles = [];
         neighbors = [];
+        // TODO remove occupiedTiles -- its currently unused and just slows this method down.
+        if (!_prototype.TryIndex(prototype, out var spreaderPrototype))
+            return;
 
         if (!TryComp<MapGridComponent>(comp.GridUid, out var grid))
             return;
@@ -242,6 +244,9 @@ public sealed class SpreaderSystem : EntitySystem
                 continue;
 
             if (!_map.TryGetTileRef(neighborEnt, neighborGrid, neighborPos, out var tileRef) || tileRef.Tile.IsEmpty)
+                continue;
+
+            if (spreaderPrototype.PreventSpreadOnSpaced && tileRef.Tile.IsSpace())
                 continue;
 
             var directionEnumerator = _map.GetAnchoredEntitiesEnumerator(neighborEnt, neighborGrid, neighborPos);
@@ -334,5 +339,13 @@ public sealed class SpreaderSystem : EntitySystem
                     EnsureComp<ActiveEdgeSpreaderComponent>(entity.Value);
             }
         }
+    }
+
+    public bool RequiresFloorToSpread(EntProtoId<EdgeSpreaderComponent> spreader)
+    {
+        if (!_prototype.Index(spreader).TryGetComponent<EdgeSpreaderComponent>(out var spreaderComp, EntityManager.ComponentFactory))
+            return false;
+
+        return _prototype.Index(spreaderComp.Id).PreventSpreadOnSpaced;
     }
 }

@@ -65,6 +65,19 @@
   objectType: Item
 
 - type: construction
+  name: pizza box
+  id: FoodBoxPizza
+  graph: FoodBoxPizza
+  startNode: start
+  targetNode: foodboxpizza
+  category: construction-category-storage
+  description: A box for pizza.
+  icon: 
+    sprite: Objects/Consumable/Food/Baked/pizza.rsi
+    state: box
+  objectType: Item
+
+- type: construction
   name: coffin
   id: CrateCoffin
   graph: CrateCoffin

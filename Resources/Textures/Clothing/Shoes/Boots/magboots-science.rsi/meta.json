@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Drawn by Ubaser.",
+  "copyright": "Drawn by Ubaser. Vox states made by Flareguy, modified from magboots.rsi",
   "size": {
     "x": 32,
     "y": 32
@@ -13,6 +13,14 @@
     },
     {
       "name": "on-equipped-FEET",
+      "directions": 4
+    },
+    {
+      "name": "equipped-FEET-vox",
+      "directions": 4
+    },
+    {
+      "name": "on-equipped-FEET-vox",
       "directions": 4
     },
     {

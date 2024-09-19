@@ -36,7 +36,7 @@
   id: HandsAnimal
   name: animal hands
   parent: PartAnimal
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     layers:
@@ -50,7 +50,7 @@
   id: LegsAnimal
   name: animal legs
   parent: PartAnimal
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     layers:
@@ -64,7 +64,7 @@
   id: FeetAnimal
   name: animal feet
   parent: PartAnimal
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     layers:
@@ -77,7 +77,7 @@
   id: TorsoAnimal
   name: animal torso
   parent: PartAnimal
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     layers:

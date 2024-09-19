@@ -16,7 +16,6 @@
     - UplinkWearables
     - UplinkJob
     - UplinkPointless
-    - UplinkObjectives
     currencyWhitelist:
     - Telecrystal
     balance:

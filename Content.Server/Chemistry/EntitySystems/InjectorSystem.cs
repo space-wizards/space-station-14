@@ -118,21 +118,25 @@ public sealed class InjectorSystem : SharedInjectorSystem
         if (!SolutionContainers.TryGetSolution(injector.Owner, injector.Comp.SolutionName, out _, out var solution))
             return;
 
-        var actualDelay = MathHelper.Max(injector.Comp.Delay, TimeSpan.FromSeconds(1));
-        float amountToInject;
+        var actualDelay = injector.Comp.Delay;
+        FixedPoint2 amountToInject;
         if (injector.Comp.ToggleState == InjectorToggleMode.Draw)
         {
             // additional delay is based on actual volume left to draw in syringe when smaller than transfer amount
-            amountToInject = Math.Min(injector.Comp.TransferAmount.Float(), (solution.MaxVolume - solution.Volume).Float());
+            amountToInject = FixedPoint2.Min(injector.Comp.TransferAmount, (solution.MaxVolume - solution.Volume));
         }
         else
         {
             // additional delay is based on actual volume left to inject in syringe when smaller than transfer amount
-            amountToInject = Math.Min(injector.Comp.TransferAmount.Float(), solution.Volume.Float());
+            amountToInject = FixedPoint2.Min(injector.Comp.TransferAmount, solution.Volume);
         }
 
         // Injections take 0.5 seconds longer per 5u of possible space/content
-        actualDelay += TimeSpan.FromSeconds(amountToInject / 10);
+        // First 5u(MinimumTransferAmount) doesn't incur delay
+        actualDelay += injector.Comp.DelayPerVolume * FixedPoint2.Max(0, amountToInject - injector.Comp.MinimumTransferAmount).Double();
+
+        // Ensure that minimum delay before incapacitation checks is 1 seconds
+        actualDelay = MathHelper.Max(actualDelay, TimeSpan.FromSeconds(1));
 
 
         var isTarget = user != target;
@@ -199,9 +203,9 @@ public sealed class InjectorSystem : SharedInjectorSystem
             BreakOnMove = true,
             BreakOnWeightlessMove = false,
             BreakOnDamage = true,
-            NeedHand = true,
-            BreakOnHandChange = true,
-            MovementThreshold = 0.1f,
+            NeedHand = injector.Comp.NeedHand,
+            BreakOnHandChange = injector.Comp.BreakOnHandChange,
+            MovementThreshold = injector.Comp.MovementThreshold,
         });
     }
 
@@ -323,8 +327,23 @@ public sealed class InjectorSystem : SharedInjectorSystem
             return false;
         }
 
+        var applicableTargetSolution = targetSolution.Comp.Solution;
+        // If a whitelist exists, remove all non-whitelisted reagents from the target solution temporarily
+        var temporarilyRemovedSolution = new Solution();
+        if (injector.Comp.ReagentWhitelist is { } reagentWhitelist)
+        {
+            string[] reagentPrototypeWhitelistArray = new string[reagentWhitelist.Count];
+            var i = 0;
+            foreach (var reagent in reagentWhitelist)
+            {
+                reagentPrototypeWhitelistArray[i] = reagent;
+                ++i;
+            }
+            temporarilyRemovedSolution = applicableTargetSolution.SplitSolutionWithout(applicableTargetSolution.Volume, reagentPrototypeWhitelistArray);
+        }
+
         // Get transfer amount. May be smaller than _transferAmount if not enough room, also make sure there's room in the injector
-        var realTransferAmount = FixedPoint2.Min(injector.Comp.TransferAmount, targetSolution.Comp.Solution.Volume,
+        var realTransferAmount = FixedPoint2.Min(injector.Comp.TransferAmount, applicableTargetSolution.Volume,
             solution.AvailableVolume);
 
         if (realTransferAmount <= 0)
@@ -345,6 +364,9 @@ public sealed class InjectorSystem : SharedInjectorSystem
 
         // Move units from attackSolution to targetSolution
         var removedSolution = SolutionContainers.Draw(target.Owner, targetSolution, realTransferAmount);
+
+        // Add back non-whitelisted reagents to the target solution
+        applicableTargetSolution.AddSolution(temporarilyRemovedSolution, null);
 
         if (!SolutionContainers.TryAddSolution(soln.Value, removedSolution))
         {

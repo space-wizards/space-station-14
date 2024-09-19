@@ -9,6 +9,7 @@
   - Revolutionaries
   - MinorAntagonists
   - SpaceNinja
+  - Thieves
 
 - type: guideEntry
   id: Traitors
@@ -39,3 +40,8 @@
   id: SpaceNinja
   name: guide-entry-space-ninja
   text: "/ServerInfo/Guidebook/Antagonist/SpaceNinja.xml"
+
+- type: guideEntry
+  id: Thieves
+  name: guide-entry-thieves
+  text: "/ServerInfo/Guidebook/Antagonist/Thieves.xml"

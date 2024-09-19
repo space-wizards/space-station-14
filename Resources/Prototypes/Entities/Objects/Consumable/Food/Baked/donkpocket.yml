@@ -296,7 +296,7 @@
   name: stonk-pocket
   parent: FoodDonkpocketBase
   id: FoodDonkpocketStonk
-  description: Tasty, but a sad reminder of the great crash of '24
+  description: Tasty, but a sad reminder of the great crash of '24.
   components:
   - type: FlavorProfile
     flavors:

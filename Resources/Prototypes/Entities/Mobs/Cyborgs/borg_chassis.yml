@@ -29,6 +29,11 @@
     node: cyborg
   - type: Speech
     speechVerb: Robotic
+  - type: InteractionPopup
+    interactSuccessString: petting-success-generic-cyborg
+    interactFailureString: petting-failure-generic-cyborg
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
 
 - type: entity
   id: BorgChassisMining
@@ -85,6 +90,11 @@
     access: [["Cargo"], ["Salvage"], ["Command"], ["Research"]]
   - type: Inventory
     templateId: borgTall
+  - type: InteractionPopup
+    interactSuccessString: petting-success-salvage-cyborg
+    interactFailureString: petting-failure-salvage-cyborg
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
 
 - type: entity
   id: BorgChassisEngineer
@@ -133,6 +143,11 @@
     access: [["Engineering"], ["Command"], ["Research"]]
   - type: Inventory
     templateId: borgShort
+  - type: InteractionPopup
+    interactSuccessString: petting-success-engineer-cyborg
+    interactFailureString: petting-failure-engineer-cyborg
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
 
 - type: entity
   id: BorgChassisJanitor
@@ -189,6 +204,11 @@
     access: [["Service"], ["Command"], ["Research"]]
   - type: Inventory
     templateId: borgShort
+  - type: InteractionPopup
+    interactSuccessString: petting-success-janitor-cyborg
+    interactFailureString: petting-failure-janitor-cyborg
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
 
 - type: entity
   id: BorgChassisMedical
@@ -248,6 +268,12 @@
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepHoverBorg
+  - type: SolutionScanner
+  - type: InteractionPopup
+    interactSuccessString: petting-success-medical-cyborg
+    interactFailureString: petting-failure-medical-cyborg
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
 
 - type: entity
   id: BorgChassisService
@@ -296,6 +322,11 @@
     access: [["Service"], ["Command"], ["Research"]]
   - type: Inventory
     templateId: borgTall
+  - type: InteractionPopup
+    interactSuccessString: petting-success-service-cyborg
+    interactFailureString: petting-failure-service-cyborg
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
 
 - type: entity
   id: BorgChassisSyndicateAssault
@@ -325,10 +356,15 @@
       noMindState: synd_sec
     - type: Construction
       node: syndicateassault
+    - type: InteractionPopup
+      interactSuccessString: petting-success-syndicate-cyborg
+      interactFailureString: petting-failure-syndicate-cyborg
+      interactSuccessSound:
+        path: /Audio/Ambience/Objects/periodic_beep.ogg
 
 - type: entity
   id: BorgChassisSyndicateMedical
-  parent: BaseBorgChassisSyndicate
+  parent: [BaseBorgChassisSyndicate, ShowMedicalIcons]
   name: syndicate medical cyborg
   description: A combat medical cyborg. Has limited offensive potential, but makes more than up for it with its support capabilities.
   components:
@@ -357,6 +393,17 @@
     - type: ShowHealthBars
       damageContainers:
       - Biological
+    - type: InteractionPopup
+      interactSuccessString: petting-success-syndicate-cyborg
+      interactFailureString: petting-failure-syndicate-cyborg
+      interactSuccessSound:
+        path: /Audio/Ambience/Objects/periodic_beep.ogg
+    - type: SolutionScanner
+    - type: FootstepModifier
+      footstepSoundCollection:
+        collection: FootstepHoverBorg
+        params:
+          volume: -6
 
 - type: entity
   id: BorgChassisSyndicateSaboteur
@@ -390,3 +437,8 @@
       damageContainers:
       - Inorganic
       - Silicon
+    - type: InteractionPopup
+      interactSuccessString: petting-success-syndicate-cyborg
+      interactFailureString: petting-failure-syndicate-cyborg
+      interactSuccessSound:
+        path: /Audio/Ambience/Objects/periodic_beep.ogg
