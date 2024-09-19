@@ -452,6 +452,11 @@ entities:
           decals:
             60: 7.348894,2.1080375
         - node:
+            color: '#FFFFFFFF'
+            id: Caution
+          decals:
+            981: -48,15
+        - node:
             color: '#474F52FF'
             id: CheckerNESW
           decals:
@@ -1956,6 +1961,9 @@ entities:
             830: -44,9
             831: -43,9
             832: -42,9
+            978: -49,16
+            979: -48,16
+            980: -47,16
         - node:
             color: '#FFFF47FF'
             id: WarnLineS
@@ -42818,21 +42826,6 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -36.5,-12.5
-      parent: 30
-  - uid: 8723
-    components:
-    - type: Transform
-      pos: -48.5,16.5
-      parent: 30
-  - uid: 8724
-    components:
-    - type: Transform
-      pos: -47.5,16.5
-      parent: 30
-  - uid: 8725
-    components:
-    - type: Transform
-      pos: -46.5,16.5
       parent: 30
 - proto: RailingCorner
   entities:
