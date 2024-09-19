@@ -37,7 +37,7 @@
 - type: entity
   id: OrganArachnidLiver
   parent: [BaseHumanOrgan, OrganAnimalLiver] #TODO: sprite arachnid liver and change parent from BaseHumanOrgan to BaseArachnidOrgan
-  description: Pairing suggestion: chianti and fava beans.
+  description: 'Pairing suggestion: chianti and fava beans.'
   categories: [ HideSpawnMenu ]
   components:
   - type: Metabolizer
