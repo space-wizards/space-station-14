@@ -210,7 +210,7 @@
   production: 6
   yield: 3
   potency: 10
-    chemicals:
+  chemicals:
     Nutriment:
       Min: 1
       Max: 5
@@ -260,7 +260,7 @@
   production: 6
   yield: 3
   potency: 10
-    chemicals:
+  chemicals:
     Nutriment:
       Min: 1
       Max: 5
@@ -424,7 +424,7 @@
   potency: 20
   growthStages: 5
   waterConsumption: 0.6
-    idealHeat: 298
+  idealHeat: 298
   chemicals:
     Vitamin:
       Min: 1
