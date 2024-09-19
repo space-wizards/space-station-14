@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: Cojoke-dot
   changes:
-  - message: You can no longer shoot out of crates with guns
-    type: Fix
-  id: 6901
-  time: '2024-07-11T05:14:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28961
-- author: Cojoke-dot
-  changes:
   - message: The Spray Painter can now be used to paint glass airlocks to look like
       regular glass airlocks.
     type: Tweak
@@ -3921,3 +3914,11 @@
   id: 7400
   time: '2024-09-19T10:23:45.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31659
+- author: deltanedas
+  changes:
+  - message: Removed the flare blueprint from salvage, it's now unlocked roundstart
+      in autolathes.
+    type: Remove
+  id: 7401
+  time: '2024-09-19T13:45:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32303
