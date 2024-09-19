@@ -37,7 +37,7 @@ traitor-role-uplink-code =
     Set your ringtone to the notes [color = lightgray]{$code}[/color] to lock or unlock your uplink.
     Remember to lock it after, or the stations crew will easily open it too!
 traitor-role-uplink-implant =
-    Your Uplink Implant has been activated, access it from your hotbar.
+    Your uplink implant has been activated, access it from your hotbar.
     The uplink is secure unless someone removes it from your body.
 
 # don't need all the flavour text for character menu
