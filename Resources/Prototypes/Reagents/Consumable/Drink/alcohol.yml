@@ -867,6 +867,7 @@
   metamorphicChangeColor: false
   metabolisms:
     Drink:
+      metabolismRate: 0.25
       effects:
       - !type:SatiateThirst
         factor: 2
@@ -876,6 +877,7 @@
         reagent: Ethanol
         amount: 0.05
     Medicine:
+      metabolismRate: 0.25
       effects:
       - !type:HealthChange
         damage:
