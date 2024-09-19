@@ -40,6 +40,9 @@ public sealed partial class AtmosMonitoringConsoleComponent : Component
     /// </summary>
     [DataField, ViewVariables]
     public Color NavMapWallColor;
+
+    [ViewVariables]
+    public bool ForceFullUpdate = false;
 }
 
 [Serializable, NetSerializable]

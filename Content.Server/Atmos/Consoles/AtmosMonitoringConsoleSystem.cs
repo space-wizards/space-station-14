@@ -47,7 +47,7 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
 
         // Tracked device events
         SubscribeLocalEvent<AtmosMonitoringConsoleDeviceComponent, NodeGroupsRebuilt>(OnEntityNodeGroupsRebuilt);
-        SubscribeLocalEvent<AtmosMonitoringConsoleDeviceComponent, ComponentInit>(OnEntityPipeColorChanged);
+        SubscribeLocalEvent<AtmosMonitoringConsoleDeviceComponent, AtmosPipeColorChangedEvent>(OnEntityPipeColorChanged);
         SubscribeLocalEvent<AtmosMonitoringConsoleDeviceComponent, EntityTerminatingEvent>(OnEntityShutdown);
 
         // Grid events
@@ -68,23 +68,24 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
 
     private void OnConsoleParentChanged(EntityUid uid, AtmosMonitoringConsoleComponent component, EntParentChangedMessage args)
     {
+        component.ForceFullUpdate = true;
         InitializeAtmosMonitoringConsole(uid, component);
     }
+
     private void OnEntityNodeGroupsRebuilt(EntityUid uid, AtmosMonitoringConsoleDeviceComponent component, NodeGroupsRebuilt args)
     {
-        InitializeAtmosMonitoringEntity(uid, component);
+        InitializeAtmosMonitoringDevice(uid, component);
     }
 
-    private void OnEntityPipeColorChanged(EntityUid uid, AtmosMonitoringConsoleDeviceComponent component, ComponentInit args)
+    private void OnEntityPipeColorChanged(EntityUid uid, AtmosMonitoringConsoleDeviceComponent component, AtmosPipeColorChangedEvent args)
     {
-        InitializeAtmosMonitoringEntity(uid, component);
+        InitializeAtmosMonitoringDevice(uid, component);
     }
 
     private void OnEntityShutdown(EntityUid uid, AtmosMonitoringConsoleDeviceComponent component, EntityTerminatingEvent args)
     {
         ShutDownAtmosMonitoringEntity(uid, component);
     }
-
 
     private void OnGridSplit(ref GridSplitEvent args)
     {
@@ -168,6 +169,9 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
         while (query.MoveNext(out var ent, out var entSensor, out var entXform))
         {
             if (entXform?.GridUid != xform.GridUid)
+                continue;
+
+            if (!entXform.Anchored)
                 continue;
 
             var entry = CreateAtmosMonitoringConsoleEntry(ent, entXform);
@@ -333,7 +337,7 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
         }
     }
 
-    private void RebuildSingleTileOfPipeNetwork(EntityUid gridUid, MapGridComponent grid, EntityCoordinates coords, EntityUid? excludedEntity = null)
+    private void RebuildSingleTileOfPipeNetwork(EntityUid gridUid, MapGridComponent grid, EntityCoordinates coords)
     {
         if (!_gridAtmosPipeChunks.TryGetValue(gridUid, out var allChunks))
             allChunks = new Dictionary<Vector2i, AtmosPipeChunk>();
@@ -356,9 +360,6 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
         // Rebuild the tile's pipe data 
         foreach (var ent in _sharedMapSystem.GetAnchoredEntities(gridUid, grid, coords))
         {
-            if (ent == excludedEntity)
-                continue;
-
             if (!TryComp<AtmosPipeColorComponent>(ent, out var entAtmosPipeColor))
                 continue;
 
@@ -474,7 +475,7 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
         }
     }
 
-    private void InitializeAtmosMonitoringEntity(EntityUid uid, AtmosMonitoringConsoleDeviceComponent component)
+    private void InitializeAtmosMonitoringDevice(EntityUid uid, AtmosMonitoringConsoleDeviceComponent component)
     {
         // Rebuild tile
         var xform = Transform(uid);

@@ -18,8 +18,10 @@ public abstract class SharedAtmosMonitoringConsoleSystem : EntitySystem
         Dictionary<Vector2i, Dictionary<(int, string), ulong>> chunks;
 
         // Should this be a full component state or a delta-state?
-        if (args.FromTick <= component.CreationTick)
+        if (args.FromTick <= component.CreationTick || component.ForceFullUpdate)
         {
+            component.ForceFullUpdate = false;
+
             // Full state
             chunks = new(component.AtmosPipeChunks.Count);
 
