@@ -3909,4 +3909,160 @@ Entries:
     type: Fix
   id: 7385
   time: '2024-09-16T12:45:15.0000000+00:00'
+<<<<<<< HEAD
   url: https://github.com/space-wizards/space-station-14/pull/32147
+=======
+  url: https://github.com/space-wizards/space-station-14/pull/32147
+- author: Alice Liddel
+  changes:
+  - message: Crayon charges increased from 15 to 25
+    type: Add
+  id: 7386
+  time: '2024-09-17T00:35:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32061
+- author: TheShuEd
+  changes:
+  - message: Anomalous infections added! People can now be infected by anomalies!
+      This allows you to use abnormal abilities, but can easily kill the host. To
+      cure them, bombard them with containment particles, because if the anomaly inside
+      them explodes, their bodies will be gibbed....
+    type: Add
+  - message: Flesh anomaly resprite
+    type: Tweak
+  - message: anomalies now disconnect from the anomaly synchronizer if they are too
+      far away from it.
+    type: Fix
+  id: 7387
+  time: '2024-09-17T09:49:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31876
+- author: TheShuEd
+  changes:
+  - message: fix Tech anomaly loud sounds and superfast flickering
+    type: Fix
+  id: 7388
+  time: '2024-09-17T16:05:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32245
+- author: drakewill-CRL
+  changes:
+  - message: Fixed plant mutations carrying over to other plants and future rounds.
+    type: Fix
+  id: 7389
+  time: '2024-09-17T19:45:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32257
+- author: Moomoobeef
+  changes:
+  - message: Added more names to the pool of names the AI can have.
+    type: Add
+  id: 7390
+  time: '2024-09-17T22:09:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31951
+- author: Calecute
+  changes:
+  - message: Corrected cake batter recipe in guidebook
+    type: Fix
+  id: 7391
+  time: '2024-09-18T15:15:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32276
+- author: Beck Thompson
+  changes:
+  - message: Recycler no longer allows basic materials to be inserted into it.
+    type: Fix
+  id: 7392
+  time: '2024-09-18T21:58:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32144
+- author: deltanedas
+  changes:
+  - message: Epinephrine now adds Adrenaline, because it is.
+    type: Tweak
+  id: 7393
+  time: '2024-09-18T23:00:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32076
+- author: ShadowCommander
+  changes:
+  - message: Fixed clicking on chairs and beds with an entity buckled to them not
+      unbuckling them.
+    type: Fix
+  id: 7394
+  time: '2024-09-18T23:55:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29998
+- author: Winkarst-cpu
+  changes:
+  - message: Now fire leaves burn marks on the tiles that were affected by it.
+    type: Add
+  id: 7395
+  time: '2024-09-19T00:23:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31939
+- author: ArchRBX
+  changes:
+  - message: Mass scanners and shuttle consoles now display coordinates beneath IFF
+      labels
+    type: Add
+  - message: IFF labels that are beyond the viewport extents maintain their heading
+      and don't hug corners
+    type: Fix
+  id: 7396
+  time: '2024-09-19T01:25:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31501
+- author: coffeeware
+  changes:
+  - message: a powered TEG won't produce infinite power when destroyed
+    type: Fix
+  id: 7397
+  time: '2024-09-19T02:15:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29972
+- author: Boaz1111
+  changes:
+  - message: Added plasma and uranium arrows.
+    type: Add
+  id: 7398
+  time: '2024-09-19T08:41:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31241
+- author: Ertanic
+  changes:
+  - message: Wanted list program and its cartridge.
+    type: Add
+  - message: The cartridge has been added to the HOS locker.
+    type: Add
+  - message: Added target to thief on wanted list cartridge.
+    type: Add
+  id: 7399
+  time: '2024-09-19T10:22:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31223
+- author: Errant
+  changes:
+  - message: Crew monitor list can now be filtered by name and job.
+    type: Add
+  id: 7400
+  time: '2024-09-19T10:23:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31659
+- author: deltanedas
+  changes:
+  - message: Removed the flare blueprint from salvage, it's now unlocked roundstart
+      in autolathes.
+    type: Remove
+  id: 7401
+  time: '2024-09-19T13:45:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32303
+- author: deltanedas
+  changes:
+  - message: Increased the thieving beacon's range to 2 tiles.
+    type: Tweak
+  id: 7402
+  time: '2024-09-19T13:55:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31340
+- author: Winkarst-cpu
+  changes:
+  - message: The first editable line in the dialog window now grabs the keyboard focus
+      once it's open.
+    type: Fix
+  id: 7403
+  time: '2024-09-19T14:01:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31294
+- author: Plykiya
+  changes:
+  - message: You can now transfer someone from a rollerbed to a bed directly.
+    type: Tweak
+  id: 7404
+  time: '2024-09-19T14:08:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32089
+>>>>>>> upstream/master
