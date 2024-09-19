@@ -185,7 +185,7 @@ public sealed partial class ContentAudioSystem
             false,
             _lobbySoundtrackParams.WithVolume(_lobbySoundtrackParams.Volume + SharedAudioSystem.GainToVolume(_configManager.GetCVar(CCVars.LobbyMusicVolume)))
         );
-        if (playResult.Value.Entity == default)
+        if (playResult == null)
         {
             _sawmill.Warning(
                 $"Tried to play lobby soundtrack '{{Filename}}' using {nameof(SharedAudioSystem)}.{nameof(SharedAudioSystem.PlayGlobal)} but it returned default value of EntityUid!",
