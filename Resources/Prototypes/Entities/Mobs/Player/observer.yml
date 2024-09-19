@@ -8,6 +8,7 @@
     noRot: true
     overrideContainerOcclusion: true # Always show up regardless of where they're contained.
     drawdepth: Ghosts
+  - type: FTLSmashImmune
   - type: CargoSellBlacklist
   - type: MovementSpeedModifier
     baseSprintSpeed: 12
@@ -24,7 +25,7 @@
           !type:PhysShapeCircle
           radius: 0.35
         density: 15
-        mask:
+        layer:
         - GhostImpassable
 
 - type: entity

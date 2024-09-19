@@ -63,6 +63,9 @@
     solution: food
     delay: 7
     forceFeedDelay: 7
+  - type: FlavorProfile
+    flavors:
+    - paper
   - type: BadFood
   - type: SolutionContainerManager
     solutions:

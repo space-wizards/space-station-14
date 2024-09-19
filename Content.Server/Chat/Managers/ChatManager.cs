@@ -81,10 +81,10 @@ internal sealed partial class ChatManager : IChatManager
         DispatchServerAnnouncement(Loc.GetString(val ? "chat-manager-admin-ooc-chat-enabled-message" : "chat-manager-admin-ooc-chat-disabled-message"));
     }
 
-    public void DeleteMessagesBy(ICommonSession player)
-    {
-        if (!_players.TryGetValue(player.UserId, out var user))
-            return;
+        public void DeleteMessagesBy(NetUserId uid)
+        {
+            if (!_players.TryGetValue(uid, out var user))
+                return;
 
         var msg = new MsgDeleteChatMessagesBy { Key = user.Key, Entities = user.Entities };
         _netManager.ServerSendToAll(msg);

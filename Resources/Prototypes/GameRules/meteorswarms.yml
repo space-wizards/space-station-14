@@ -38,16 +38,16 @@
 - type: weightedRandomEntity
   id: MeteorSpawnAsteroidWallTable
   weights:
-    AsteroidRock: 10
-    AsteroidRockCoal: 5
-    AsteroidRockQuartz: 5
-    AsteroidRockTin: 5
-    AsteroidRockSilver: 2
-    AsteroidRockGold: 2
-    AsteroidRockPlasma: 2
-    AsteroidRockDiamond: 2
-    AsteroidRockUranium: 0.5
-    AsteroidRockBananium: 0.5
+    MeteorRock: 10
+    MeteorRockCoal: 5
+    MeteorRockQuartz: 5
+    MeteorRockTin: 5
+    MeteorRockSilver: 2
+    MeteorRockGold: 2
+    MeteorRockPlasma: 2
+    MeteorRockDiamond: 2
+    MeteorRockUranium: 0.5
+    MeteorRockBananium: 0.5
 
 # Event Schedulers
 
@@ -211,26 +211,29 @@
   - type: ImmovableRodRule
     rodPrototypes:
     - id: ImmovableRodKeepTilesStill
-      prob: 0.95
+      prob: 0.94
       orGroup: rodProto
     - id: ImmovableRodMop
-      prob: 0.0072
+      prob: 0.0075
       orGroup: rodProto
     - id: ImmovableRodShark
-      prob: 0.0072
+      prob: 0.0075
       orGroup: rodProto
     - id: ImmovableRodClown
-      prob: 0.0072
+      prob: 0.0075
       orGroup: rodProto
     - id: ImmovableRodBanana
-      prob: 0.0072
+      prob: 0.0075
       orGroup: rodProto
     - id: ImmovableRodHammer
-      prob: 0.0072
+      prob: 0.0075
       orGroup: rodProto
     - id: ImmovableRodThrongler
-      prob: 0.0072
+      prob: 0.0075
       orGroup: rodProto
     - id: ImmovableRodGibstick
-      prob: 0.0072
+      prob: 0.0075
+      orGroup: rodProto
+    - id: ImmovableRodWeh
+      prob: 0.0075
       orGroup: rodProto
