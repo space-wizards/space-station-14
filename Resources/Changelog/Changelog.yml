@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Winkarst-cpu
-  changes:
-  - message: Added exit confirmation for character setup menu with unsaved changes.
-    type: Add
-  id: 6899
-  time: '2024-07-11T00:24:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29875
 - author: ShadowCommander
   changes:
   - message: Players can now use melee attacks and shoves while dragging an entity
@@ -3918,3 +3911,14 @@
   id: 7398
   time: '2024-09-19T08:41:24.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31241
+- author: Ertanic
+  changes:
+  - message: Wanted list program and its cartridge.
+    type: Add
+  - message: The cartridge has been added to the HOS locker.
+    type: Add
+  - message: Added target to thief on wanted list cartridge.
+    type: Add
+  id: 7399
+  time: '2024-09-19T10:22:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31223
