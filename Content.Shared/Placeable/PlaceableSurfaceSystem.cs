@@ -26,6 +26,9 @@ public sealed class PlaceableSurfaceSystem : EntitySystem
         if (!Resolve(uid, ref surface, false))
             return;
 
+        if (surface.IsPlaceable == isPlaceable)
+            return;
+
         surface.IsPlaceable = isPlaceable;
         Dirty(uid, surface);
     }
