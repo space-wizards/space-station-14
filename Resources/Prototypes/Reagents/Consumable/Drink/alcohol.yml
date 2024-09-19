@@ -2116,7 +2116,7 @@
       - !type:SatiateThirst
         factor: 2
       - !type:GenericStatusEffect
-        key: Drunk
+        key: Drowsiness
         time: 5
         type: Add
     Narcotic:
