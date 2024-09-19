@@ -1047,6 +1047,15 @@
   metamorphicMaxFillLevels: 6
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: false
+  metabolisms:
+    Narcotic:
+      effects:
+      - !type:GenericStatusEffect
+        key: SeeingRainbows
+        component: SeeingRainbows
+        type: Add
+        time: 3
+        refresh: false
 
 - type: reagent
   id: Hooch
@@ -2063,6 +2072,12 @@
   physicalDesc: reagent-physical-desc-bubbly
   flavor: cola
   color: "#663100"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/wineglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
   fizziness: 0.8
 
 - type: reagent
@@ -2073,6 +2088,12 @@
   physicalDesc: reagent-physical-desc-bubbly
   flavor: rootbeersoda
   color: "#381c07"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/rootbeerglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 6
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
   fizziness: 0.8
 
 - type: reagent
@@ -2083,6 +2104,12 @@
   physicalDesc: reagent-physical-desc-evil
   flavor: energydrink
   color: "#ff6500"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/whiskeyglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
   metabolisms:
     Drink:
       effects:
@@ -2106,7 +2133,7 @@
         probability: 0.25
         damage:
           types:
-            Blunt: 20
+            Poison: 5
         conditions:
         - !type:ReagentThreshold
           min: 20
@@ -2122,6 +2149,12 @@
   physicalDesc: reagent-physical-desc-bubbly
   flavor: sweet
   color: "#ffee3e"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/wineglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
   fizziness: 0.8
 
 - type: reagent
@@ -2132,6 +2165,12 @@
   physicalDesc: reagent-physical-desc-murky
   flavor: horrible
   color: "#8a8048"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/whiskeyglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
   metabolisms:
     Drink:
       effects:
@@ -2163,6 +2202,12 @@
   physicalDesc: reagent-physical-desc-syrupy
   flavor: sweet
   color: "#e74f4f"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/wineglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
   fizziness: 0.9
 
 - type: reagent
@@ -2174,6 +2219,12 @@
   flavor: medicine
   color: "#a12b68"
   recognizable: true
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/beerglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
   metabolisms:
     Drink:
       effects:
@@ -2195,6 +2246,12 @@
   physicalDesc: reagent-physical-desc-bubbly
   flavor: spaceshroom
   color: "#310b01"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/lemonadeglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
   fizziness: 0.8
 
 - type: reagent
@@ -2206,4 +2263,90 @@
   flavor: drinkdrink
   color: "#10101a"
   recognizable: true
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/aleglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
   fizziness: 1
+  
+- type: reagent
+  id: BloodierMary
+  name: reagent-name-bloodier-mary
+  parent: BaseAlcohol
+  desc: reagent-desc-bloodier-mary
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: bloodymary
+  color: "#d12b28"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/bloodymaryglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
+  fizziness: .3 
+  
+- type: reagent
+  id: SalvagersSoothe
+  name: reagent-name-salvagerssoothe
+  parent: BaseAlcohol
+  desc: reagent-desc-salvagerssoothe
+  physicalDesc: reagent-physical-desc-cloudy
+  flavor: medicine
+  color: "#00ff99"
+  recognizable: true
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/moonshineglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 4
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.1
+      - !type:AdjustReagent
+        reagent: CarpoToxin
+        amount: -0.25
+    Medicine:
+      effects:
+      - !type:HealthChange
+        probability: 0.75
+        damage:
+          types:
+            Poison: -1
+            Asphyxiation: -1
+            Bloodloss: -0.5
+          groups:
+            Brute: -2
+  fizziness: .7
+  
+- type: reagent
+  id: DontTell
+  name: reagent-name-donttelldsheriff
+  parent: BaseAlcohol
+  desc: reagent-desc-donttelldsheriff
+  physicalDesc: reagent-physical-desc-clear
+  flavor: moonshine
+  color: "#fff4b0"
+  recognizable: true
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/moonshineglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.35
+  fizziness: 0.1

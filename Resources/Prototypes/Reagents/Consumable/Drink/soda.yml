@@ -274,3 +274,18 @@
   physicalDesc: reagent-physical-desc-fizzy
   flavor: kingsoda
   color: "#9F3400"
+
+- type: reagent
+  id: HummingBird
+  name: reagent-name-hummingbird
+  parent: BaseSoda
+  desc: reagent-desc-hummingbird
+  physicalDesc: reagent-physical-desc-sweet
+  flavor: sweet
+  color: "#cffff8"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/lemonadeglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 6
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
