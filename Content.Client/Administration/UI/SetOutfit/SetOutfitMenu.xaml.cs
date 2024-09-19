@@ -68,7 +68,7 @@ namespace Content.Client.Administration.UI.SetOutfit
         {
             // Filter out any StartingGearPrototypes that belong to loadouts
             var loadouts = _prototypeManager.EnumeratePrototypes<LoadoutPrototype>();
-            var loadoutGears = loadouts.Select(l => l.Equipment);
+            var loadoutGears = loadouts.Select(l => l.StartingGear);
             return _prototypeManager.EnumeratePrototypes<StartingGearPrototype>()
                 .Where(p => !loadoutGears.Contains(p.ID));
         }
