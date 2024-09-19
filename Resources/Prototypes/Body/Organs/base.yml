@@ -5,6 +5,8 @@
   desctription: It's an organ.
   abstract: true
   components:
+  - type: Sprite
+    path: Mobs/Species/Human/organs.rsi
   - type: Organ
   - type: Food
   - type: Extractable
