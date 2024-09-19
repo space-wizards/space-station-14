@@ -243,12 +243,14 @@
 - type: reaction
   id: Tricordrazine
   reactants:
-    Inaprovaline:
+    Copper:
       amount: 1
-    Dylovene:
+    Iron:
+      amount: 1
+    Potassium:
       amount: 1
   products:
-    Tricordrazine: 2
+    Tricordrazine: 3
 
 - type: reaction
   id: HeartbreakerToxin
