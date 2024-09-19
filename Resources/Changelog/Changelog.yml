@@ -1,26 +1,4 @@
 ﻿Entries:
-- author: jonathanargo
-  changes:
-  - message: Muskets are now wieldable.
-    type: Tweak
-  id: 6905
-  time: '2024-07-12T09:16:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29910
-- author: themias
-  changes:
-  - message: Notice boards can now be built on walls
-    type: Fix
-  id: 6906
-  time: '2024-07-12T09:18:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29851
-- author: slarticodefast
-  changes:
-  - message: Stun batons, stun prods and banana cream pies now fly like other throwing
-      weapons when thrown.
-    type: Fix
-  id: 6907
-  time: '2024-07-12T09:19:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29883
 - author: Plykiya
   changes:
   - message: Dropping an item while in a container now places the item in the container.
@@ -3922,3 +3900,25 @@
   id: 7404
   time: '2024-09-19T14:08:33.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32089
+- author: SaphireLattice
+  changes:
+  - message: Fland now has public glass airlocks sectioning the hallway.
+    type: Fix
+  id: 7405
+  time: '2024-09-19T19:17:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32264
+- author: Plykiya
+  changes:
+  - message: Cockroaches and mothroaches can no longer damage things with their bites.
+    type: Tweak
+  id: 7406
+  time: '2024-09-19T22:15:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32221
+- author: PopGamer46
+  changes:
+  - message: The rat king's rats now follow you instead of idling when there is no
+      one to attack during the CheeseEm order
+    type: Tweak
+  id: 7407
+  time: '2024-09-19T23:27:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32181
