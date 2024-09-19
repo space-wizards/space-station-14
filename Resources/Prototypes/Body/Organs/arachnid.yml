@@ -44,7 +44,7 @@
     updateInterval: 1.5
 
 - type: entity
-  parent: [ BaseHumanOrgan OrganAnimalKidneys] #TODO: sprite arachnid kidneys and change parent from BaseHumanOrgan to BaseArachnidOrgan
+  parent: [ BaseHumanOrgan, OrganAnimalKidneys] #TODO: sprite arachnid kidneys and change parent from BaseHumanOrgan to BaseArachnidOrgan
   id: OrganArachnidKidneys
   categories: [ HideSpawnMenu ]
   components:
