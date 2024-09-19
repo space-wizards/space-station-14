@@ -3,7 +3,7 @@
   id: MobWatcherBase
   parent: [ SimpleSpaceMobBase, FlyingMobBase ]
   abstract: true
-  description: It's like its staring right through you.
+  description: It's like it's staring right through you.
   components:
   - type: NpcFactionMember
     factions:

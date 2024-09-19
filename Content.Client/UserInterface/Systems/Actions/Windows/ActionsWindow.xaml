@@ -3,7 +3,7 @@
     xmlns:windows="clr-namespace:Content.Client.UserInterface.Systems.Actions.Windows"
     Name="ActionsList"
     HorizontalExpand="True"
-    Title="Actions"
+    Title="{Loc ui-actionmenu-title}"
     VerticalExpand="True"
     Resizable="True"
     MinHeight="300"

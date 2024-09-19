@@ -54,7 +54,6 @@ Ask Botany for what you need, without a botanist, you may need to grow more plan
 <GuideEntityEmbed Entity="SignHydro1" Caption=" "/>
 <GuideEntityEmbed Entity="hydroponicsTray"/>
 <GuideEntityEmbed Entity="WheatBushel"/>
-<GuideEntityEmbed Entity="SignHydro2" Caption=" "/>
 </Box>
 ## Gathering Milk:
 Alt-Click on a Cow with a container in your hand. (Beakers, Buckets, Milk Jugs, ect.)

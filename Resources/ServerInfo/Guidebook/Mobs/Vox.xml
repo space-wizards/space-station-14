@@ -1,0 +1,16 @@
+<Document>
+  # Vox
+
+  <Box>
+    <GuideEntityEmbed Entity="MobVox" Caption=""/>
+  </Box>
+
+  [color=#ffa500]Caution! This species has a severely limiting game mechanic and is not recommended for new players. [/color]
+
+  They breathe nitrogen, and [color=#ffa500] oxygen is very toxic to them.[/color]
+  They need to be on internals at all times to avoid being poisoned by the station's oxygen.
+  Eating or drinking will require you to remove your breath mask, although injecting liquid food is an option.
+
+  Their unarmed claw attacks deal Slash damage instead of Blunt.
+
+</Document>

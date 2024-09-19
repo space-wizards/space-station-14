@@ -27,7 +27,8 @@ public sealed class IdExaminableSystem : EntitySystem
         {
             Act = () =>
             {
-                var markup = FormattedMessage.FromMarkup(info);
+                var markup = FormattedMessage.FromMarkupOrThrow(info);
+
                 _examineSystem.SendExamineTooltip(args.User, uid, markup, false, false);
             },
             Text = Loc.GetString("id-examinable-component-verb-text"),

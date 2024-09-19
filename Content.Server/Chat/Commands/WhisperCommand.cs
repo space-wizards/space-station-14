@@ -16,7 +16,7 @@ namespace Content.Server.Chat.Commands
         {
             if (shell.Player is not { } player)
             {
-                shell.WriteError("This command cannot be run from the server.");
+                shell.WriteError(Loc.GetString("shell-cannot-run-command-from-server"));
                 return;
             }
 

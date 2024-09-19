@@ -22,7 +22,7 @@ public sealed partial class NPCSteeringSystem
         if (weight == 0f || direction == Vector2.Zero)
             return;
 
-        var directionAngle = (float) direction.ToAngle().Theta;
+        var directionAngle = (float)direction.ToAngle().Theta;
 
         for (var i = 0; i < InterestDirections; i++)
         {
@@ -142,6 +142,13 @@ public sealed partial class NPCSteeringSystem
 
         // Grab the target position, either the next path node or our end goal..
         var targetCoordinates = GetTargetCoordinates(steering);
+
+        if (!targetCoordinates.IsValid(EntityManager))
+        {
+            steering.Status = SteeringStatus.NoPath;
+            return false;
+        }
+
         var needsPath = false;
 
         // If the next node is invalid then get new ones
@@ -159,8 +166,8 @@ public sealed partial class NPCSteeringSystem
         }
 
         // Check if mapids match.
-        var targetMap = targetCoordinates.ToMap(EntityManager, _transform);
-        var ourMap = ourCoordinates.ToMap(EntityManager, _transform);
+        var targetMap = _transform.ToMapCoordinates(targetCoordinates);
+        var ourMap = _transform.ToMapCoordinates(ourCoordinates);
 
         if (targetMap.MapId != ourMap.MapId)
         {
@@ -243,7 +250,15 @@ public sealed partial class NPCSteeringSystem
                 // Alright just adjust slightly and grab the next node so we don't stop moving for a tick.
                 // TODO: If it's the last node just grab the target instead.
                 targetCoordinates = GetTargetCoordinates(steering);
-                targetMap = targetCoordinates.ToMap(EntityManager, _transform);
+
+                if (!targetCoordinates.IsValid(EntityManager))
+                {
+                    SetDirection(mover, steering, Vector2.Zero);
+                    steering.Status = SteeringStatus.NoPath;
+                    return false;
+                }
+
+                targetMap = _transform.ToMapCoordinates(targetCoordinates);
 
                 // Can't make it again.
                 if (ourMap.MapId != targetMap.MapId)
@@ -414,7 +429,7 @@ public sealed partial class NPCSteeringSystem
 
         if (TryComp<PhysicsComponent>(uid, out var physics))
         {
-            mask = (CollisionGroup) physics.CollisionMask;
+            mask = (CollisionGroup)physics.CollisionMask;
         }
 
         for (var i = 0; i < nodes.Count; i++)
@@ -424,7 +439,7 @@ public sealed partial class NPCSteeringSystem
             if (!node.Data.IsFreeSpace)
                 break;
 
-            var nodeMap = node.Coordinates.ToMap(EntityManager, _transform);
+            var nodeMap = _transform.ToMapCoordinates(node.Coordinates);
 
             // If any nodes are 'behind us' relative to the target we'll prune them.
             // This isn't perfect but should fix most cases of stutter stepping.

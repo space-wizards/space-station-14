@@ -1,5 +1,6 @@
 using Content.Shared.Gravity;
 using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Physics;
 using Robust.Shared.Utility;
@@ -11,6 +12,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
     [Dependency] private readonly IDynamicTypeFactory _factory = default!;
     [Dependency] private readonly SharedGravitySystem _gravity = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
+    [Dependency] private readonly SharedHandsSystem _hands = default!;
 
     private DoAfter[] _doAfters = Array.Empty<DoAfter>();
 
@@ -170,7 +172,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         if (args.BreakOnMove && !(!args.BreakOnWeightlessMove && _gravity.IsWeightless(args.User, xform: userXform)))
         {
             // Whether the user has moved too much from their original position.
-            if (!userXform.Coordinates.InRange(EntityManager, _transform, doAfter.UserPosition, args.MovementThreshold))
+            if (!_transform.InRange(userXform.Coordinates, doAfter.UserPosition, args.MovementThreshold))
                 return true;
 
             // Whether the distance between the user and target(if any) has changed too much.
@@ -217,16 +219,22 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         if (args.AttemptFrequency == AttemptFrequency.EveryTick && !TryAttemptEvent(doAfter))
             return true;
 
+        // Check if the do-after requires hands to perform at first
+        // For example, you need hands to strip clothes off of someone
+        // This does not mean their hand needs to be empty.
         if (args.NeedHand)
         {
             if (!handsQuery.TryGetComponent(args.User, out var hands) || hands.Count == 0)
                 return true;
 
-            if (args.BreakOnHandChange && (hands.ActiveHand?.Name != doAfter.InitialHand
-                                           || hands.ActiveHandEntity != doAfter.InitialItem))
-            {
+            // If an item was in the user's hand to begin with,
+            // check if the user is no longer holding the item.
+            if (args.BreakOnDropItem && doAfter.InitialItem != null && !_hands.IsHolding((args.User, hands), doAfter.InitialItem))
+                    return true;
+
+            // If the user changes which hand is active at all, interrupt the do-after
+            if (args.BreakOnHandChange && hands.ActiveHand?.Name != doAfter.InitialHand)
                 return true;
-            }
         }
 
         if (args.RequireCanInteract && !_actionBlocker.CanInteract(args.User, args.Target))
