@@ -1,3 +1,4 @@
+using Content.Server.Botany.Components;
 using Content.Shared.EntityEffects;
 
 namespace Content.Server.EntityEffects.Effects.PlantMetabolism;
@@ -8,9 +9,9 @@ public sealed partial class PlantAdjustMutationLevel : PlantAdjustAttribute
 
     public override void Effect(EntityEffectBaseArgs args)
     {
-        if (!CanMetabolize(args.TargetEntity, out var plantHolderComp, args.EntityManager))
+        if (!CanMetabolize(args.TargetEntity, out PlantComponent? plantComp, args.EntityManager))
             return;
 
-        plantHolderComp.MutationLevel += Amount * plantHolderComp.MutationMod;
+        plantComp.MutationLevel += Amount * plantComp.MutationMod;
     }
 }

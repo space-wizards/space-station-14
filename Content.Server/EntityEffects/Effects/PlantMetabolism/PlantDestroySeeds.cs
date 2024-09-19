@@ -1,5 +1,4 @@
-﻿using Content.Server.Botany.Components;
-using Content.Server.Botany.Systems;
+using Content.Server.Botany.Components;
 using Content.Shared.EntityEffects;
 using Content.Shared.Popups;
 using Robust.Shared.Prototypes;
@@ -14,26 +13,19 @@ public sealed partial class PlantDestroySeeds : EntityEffect
 {
     public override void Effect(EntityEffectBaseArgs args)
     {
-        if (
-            !args.EntityManager.TryGetComponent(args.TargetEntity, out PlantHolderComponent? plantHolderComp)
-            || plantHolderComp.Seed == null
-            || plantHolderComp.Dead
-            || plantHolderComp.Seed.Immutable
-        )
+        if (!args.EntityManager.TryGetComponent(args.TargetEntity, out PlantComponent? plantComp)
+            || plantComp.Dead || plantComp.Seed == null || plantComp.Seed.Immutable)
             return;
 
-        var plantHolder = args.EntityManager.System<PlantHolderSystem>();
-        var popupSystem = args.EntityManager.System<SharedPopupSystem>();
-
-        if (plantHolderComp.Seed.Seedless == false)
+        if (plantComp.Seed != null && plantComp.Seed.Seedless == false)
         {
-            plantHolder.EnsureUniqueSeed(args.TargetEntity, plantHolderComp);
+            var popupSystem = args.EntityManager.System<SharedPopupSystem>();
             popupSystem.PopupEntity(
                 Loc.GetString("botany-plant-seedsdestroyed"),
                 args.TargetEntity,
                 PopupType.SmallCaution
             );
-            plantHolderComp.Seed.Seedless = true;
+            plantComp.Seed.Seedless = true;
         }
     }
 

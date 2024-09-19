@@ -1,3 +1,4 @@
+using Content.Server.Botany.Components;
 using Content.Shared.EntityEffects;
 using JetBrains.Annotations;
 
@@ -11,9 +12,8 @@ public sealed partial class PlantAdjustToxins : PlantAdjustAttribute
 
     public override void Effect(EntityEffectBaseArgs args)
     {
-        if (!CanMetabolize(args.TargetEntity, out var plantHolderComp, args.EntityManager))
-            return;
-
+        var plantComp = args.EntityManager.GetComponent<PlantComponent>(args.TargetEntity);
+        var plantHolderComp = args.EntityManager.GetComponent<PlantHolderComponent>(plantComp.PlantHolderUid);
         plantHolderComp.Toxins += Amount;
     }
 }

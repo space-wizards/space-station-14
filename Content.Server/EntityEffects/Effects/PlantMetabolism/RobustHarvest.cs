@@ -1,5 +1,4 @@
 using Content.Server.Botany.Components;
-using Content.Server.Botany.Systems;
 using Content.Shared.EntityEffects;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
@@ -22,30 +21,25 @@ public sealed partial class RobustHarvest : EntityEffect
 
     public override void Effect(EntityEffectBaseArgs args)
     {
-        if (!args.EntityManager.TryGetComponent(args.TargetEntity, out PlantHolderComponent? plantHolderComp)
-                                || plantHolderComp.Seed == null || plantHolderComp.Dead ||
-                                plantHolderComp.Seed.Immutable)
+        if (!args.EntityManager.TryGetComponent(args.TargetEntity, out PlantComponent? plantComp)
+            || plantComp.Dead || plantComp.Seed == null || plantComp.Seed.Immutable)
             return;
 
-
-        var plantHolder = args.EntityManager.System<PlantHolderSystem>();
         var random = IoCManager.Resolve<IRobustRandom>();
 
-        if (plantHolderComp.Seed.Potency < PotencyLimit)
+        if (plantComp.Seed.Potency < PotencyLimit)
         {
-            plantHolder.EnsureUniqueSeed(args.TargetEntity, plantHolderComp);
-            plantHolderComp.Seed.Potency = Math.Min(plantHolderComp.Seed.Potency + PotencyIncrease, PotencyLimit);
+            plantComp.Seed.Potency = Math.Min(plantComp.Seed.Potency + PotencyIncrease, PotencyLimit);
 
-            if (plantHolderComp.Seed.Potency > PotencySeedlessThreshold)
+            if (plantComp.Seed.Potency > PotencySeedlessThreshold)
             {
-                plantHolderComp.Seed.Seedless = true;
+                plantComp.Seed.Seedless = true;
             }
         }
-        else if (plantHolderComp.Seed.Yield > 1 && random.Prob(0.1f))
+        else if (plantComp.Seed.Yield > 1 && random.Prob(0.1f))
         {
             // Too much of a good thing reduces yield
-            plantHolder.EnsureUniqueSeed(args.TargetEntity, plantHolderComp);
-            plantHolderComp.Seed.Yield--;
+            plantComp.Seed.Yield--;
         }
     }
 

@@ -1,3 +1,4 @@
+using Content.Server.Botany.Components;
 using Content.Server.Botany.Systems;
 using Content.Shared.EntityEffects;
 using JetBrains.Annotations;
@@ -11,12 +12,9 @@ public sealed partial class PlantAdjustWater : PlantAdjustAttribute
 
     public override void Effect(EntityEffectBaseArgs args)
     {
-        if (!CanMetabolize(args.TargetEntity, out var plantHolderComp, args.EntityManager, mustHaveAlivePlant: false))
-            return;
-
+        var plantComp = args.EntityManager.GetComponent<PlantComponent>(args.TargetEntity);
         var plantHolder = args.EntityManager.System<PlantHolderSystem>();
-
-        plantHolder.AdjustWater(args.TargetEntity, Amount, plantHolderComp);
+        plantHolder.AdjustWater(plantComp.PlantHolderUid, Amount);
     }
 }
 
