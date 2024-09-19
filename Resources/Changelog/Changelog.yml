@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Beck Thompson, Tayrtahn
-  changes:
-  - message: Typing indicators now correctly stack and will not overwrite your default
-      species indicator.
-    type: Fix
-  id: 6897
-  time: '2024-07-10T05:51:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29492
 - author: Winkarst-cpu
   changes:
   - message: Now confirmation popup is displayed and item panel status is updated
@@ -3920,3 +3912,10 @@
   id: 7396
   time: '2024-09-19T01:25:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31501
+- author: coffeeware
+  changes:
+  - message: a powered TEG won't produce infinite power when destroyed
+    type: Fix
+  id: 7397
+  time: '2024-09-19T02:15:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29972
