@@ -1714,3 +1714,17 @@
   id: 222
   time: '2024-09-19T01:02:43.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/288
+- author: AirFryerBuyOneGetOneFree
+  changes:
+  - message: Heretic blades can now be used to perform executions.
+    type: Tweak
+  id: 223
+  time: '2024-09-19T05:22:46.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/289
+- author: TGRCDev
+  changes:
+  - message: Placing salt on the ground now reveals revenants who pass over it.
+    type: Tweak
+  id: 224
+  time: '2024-09-19T05:22:35.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/278
