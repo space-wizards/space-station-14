@@ -30,11 +30,11 @@
 - type: entity
   parent: BaseComputerCircuitboard
   id: AtmosMonitoringConsoleCircuitboard
-  name: atmospheric monitoring console board
-  description: A computer printed circuit board for an atmospheric monitoring console.
+  name: atmospheric network monitor board
+  description: A computer printed circuit board for an atmospheric network monitor.
   components:
     - type: ComputerBoard
-      prototype: ComputerAtmosMonitor    
+      prototype: AtmosMonitoringConsole    
 
 - type: entity
   parent: BaseComputerCircuitboard

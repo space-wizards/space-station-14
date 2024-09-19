@@ -44,12 +44,12 @@
 
 - type: entity
   parent: BaseComputer
-  id: ComputerAtmosMonitor
+  id: AtmosMonitoringConsole
   name: atmospheric network monitor
   description: Used to monitor the station's atmospheric networks.
   components:
   - type: Computer
-    board: AlertsComputerCircuitboard
+    board: AtmosMonitoringConsoleCircuitboard
   - type: Sprite
     layers:
     - map: ["computerLayerBody"]
