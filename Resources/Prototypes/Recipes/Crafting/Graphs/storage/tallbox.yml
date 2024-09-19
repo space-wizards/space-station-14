@@ -97,7 +97,7 @@
     edges:
     - to: done
       steps:
-      - material: Steel
+      - material: Plasteel
         amount: 10
       - material: MetalRod
         amount: 10
@@ -114,7 +114,7 @@
         welded: false
       completed:
       - !type:SpawnPrototype
-        prototype: SheetSteel1
+        prototype: SheetPlasteel1
         amount: 10
       - !type:SpawnPrototype
         prototype: PartRodMetal1

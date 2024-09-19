@@ -101,7 +101,7 @@
   - type: Armor
     modifiers: {}
   - type: StaticPrice
-    price: 250
+    price: 600
 
 # Janitorial bomb suit closet
 - type: entity
