@@ -117,7 +117,6 @@
   - type: StealTarget
     stealGroup: WantedListCartridge
 
-
 - type: entity
   parent: BaseItem
   id: AstroNavCartridge
