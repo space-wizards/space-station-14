@@ -44,15 +44,10 @@ public sealed class MutationSystem : EntitySystem
     /// <summary>
     /// Checks all defined mutations against a seed to see which of them are applied.
     /// </summary>
-    public void MutateSeed(EntityUid plantHolder, ref SeedData seed, float severity)
+    public void MutateSeed(EntityUid plant, ref SeedData seed, float severity)
     {
-        if (!seed.Unique)
-        {
-            Log.Error($"Attempted to mutate a shared seed");
-            return;
-        }
 
-        CheckRandomMutations(plantHolder, ref seed, severity);
+        CheckRandomMutations(plant, ref seed, severity);
     }
 
     public SeedData Cross(SeedData a, SeedData b)
@@ -65,8 +60,6 @@ public sealed class MutationSystem : EntitySystem
         CrossFloat(ref result.WaterConsumption, a.WaterConsumption);
         CrossFloat(ref result.IdealHeat, a.IdealHeat);
         CrossFloat(ref result.HeatTolerance, a.HeatTolerance);
-        CrossFloat(ref result.IdealLight, a.IdealLight);
-        CrossFloat(ref result.LightTolerance, a.LightTolerance);
         CrossFloat(ref result.ToxinsTolerance, a.ToxinsTolerance);
         CrossFloat(ref result.LowPressureTolerance, a.LowPressureTolerance);
         CrossFloat(ref result.HighPressureTolerance, a.HighPressureTolerance);
