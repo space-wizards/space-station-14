@@ -532,7 +532,7 @@ public sealed class PlantSystem : EntitySystem
         {
             holder.ImproperHeat = false;
             holder.ImproperPressure = false;
-            holder.WeedLevel += 1 * HydroponicsSpeedMultiplier;
+            holder.WeedLevel = Math.Clamp(holder.WeedLevel + (1 * HydroponicsSpeedMultiplier), 0f, 10f);
             holder.PestLevel = 0;
             _plantHolder.UpdateSprite(plant.PlantHolderUid, holder);
         }

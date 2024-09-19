@@ -351,7 +351,7 @@ public sealed class PlantHolderSystem : EntitySystem
                 chance = 0.01f;
 
             if (_random.Prob(chance))
-                component.WeedLevel += 1 + HydroponicsSpeedMultiplier * component.WeedCoefficient;
+                component.WeedLevel = Math.Clamp(component.WeedLevel + (1 + HydroponicsSpeedMultiplier * component.WeedCoefficient), 0, 10);
 
             if (component.DrawWarnings)
                 component.UpdateSpriteAfterUpdate = true;
@@ -378,7 +378,7 @@ public sealed class PlantHolderSystem : EntitySystem
         // Can only happen when there's a live seed planted.
         if (_random.Prob(0.01f))
         {
-            component.PestLevel += 0.5f * HydroponicsSpeedMultiplier;
+            component.PestLevel = Math.Clamp(component.PestLevel + 0.5f * HydroponicsSpeedMultiplier, 0, 10);
             if (component.DrawWarnings)
                 component.UpdateSpriteAfterUpdate = true;
         }
@@ -408,7 +408,7 @@ public sealed class PlantHolderSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
-        component.NutritionLevel += amount;
+        component.NutritionLevel = Math.Clamp(component.NutritionLevel + amount, 0, 100);
     }
 
     public void AdjustWater(EntityUid uid, float amount, PlantHolderComponent? component = null)
@@ -416,12 +416,12 @@ public sealed class PlantHolderSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
-        component.WaterLevel += amount;
+        component.WaterLevel = Math.Clamp(component.WaterLevel + amount, 0, 100);
 
         // Water dilutes toxins.
         if (amount > 0)
         {
-            component.Toxins -= amount * 4f;
+            component.Toxins = Math.Clamp(component.Toxins - amount * 4f, 0, 100);
         }
     }
 
