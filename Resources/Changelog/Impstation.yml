@@ -1777,3 +1777,13 @@
   id: 230
   time: '2024-09-19T15:41:22.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/299
+- author: formlessnameless
+  changes:
+  - message: Minor aesthetic changes to Atlas, Cluster, Train, and Saltern.
+    type: Tweak
+  - message: Fixed some missing device links and wiring on Atlas, Cluster, Train,
+      and Saltern.
+    type: Fix
+  id: 231
+  time: '2024-09-19T17:31:14.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/300
