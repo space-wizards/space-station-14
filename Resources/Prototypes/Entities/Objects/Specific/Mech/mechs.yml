@@ -300,3 +300,6 @@
     containers:
       mech-battery-slot:
       - PowerCellHigh
+  - type: Tag
+    tags:
+        - DoorBumpOpener
