@@ -69,3 +69,17 @@
   - type: ItemToggle
     onUse: false # can't really wear it like that
   - type: ToggleClothing
+
+# for clothing that updates functionality from items inside it
+- type: entity
+  abstract: true
+  id: BaseLensSlot
+  components:
+  - type: LensSlot
+    LensSlotId: lens_slot
+  - type: ItemSlots
+    slots:
+      lens_slot:
+        whitelist:
+          tags:
+          - Lens
