@@ -58,3 +58,53 @@
     - type: Sprite
       sprite: Harmony/Structures/Wallmounts/posters.rsi
       state: harmony_poster6_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterHarmonyCan
+  name: "Fallen Can"
+  description: "A poster reminding you to clean up after yourself, nobody likes littering! Or, that's probably what it means. It's been here for so long, the original meaning may have faded…"
+  components:
+    - type: Sprite
+      sprite: Harmony/Structures/Wallmounts/posters.rsi
+      state: harmony_poster8_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterHarmonyFaded
+  name: "Faded Poster"
+  description: "Was it wanted poster? A human bounty? It's not very clear. You can tell, however, that whoever the target was probably isn't loose anymore..."
+  components:
+    - type: Sprite
+      sprite: Harmony/Structures/Wallmounts/posters.rsi
+      state: harmony_poster9_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterHarmonyMagicCandle
+  name: "Magic Candle"
+  description: "The fire within you burns bright. Maintain it and thrive. Neglect it and wither."
+  components:
+    - type: Sprite
+      sprite: Harmony/Structures/Wallmounts/posters.rsi
+      state: harmony_poster10_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterHarmonySuperMatter
+  name: "Super-Matter"
+  description: "Nanotrasen's really getting creative with these motivational posters. Using the cause of death of thousands of people as a source of motivation? Brilliant. Now, if only it were actually effective..."
+  components:
+    - type: Sprite
+      sprite: Harmony/Structures/Wallmounts/posters.rsi
+      state: harmony_poster11_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterHarmonyCoolS
+  name: "Cool S"
+  description: "It seems some crewmember cut out part of a graffiti’d maintenance closet and stuck it onto this wall. And who can blame them? This thing is siiiick."
+  components:
+    - type: Sprite
+      sprite: Harmony/Structures/Wallmounts/posters.rsi
+      state: harmony_poster12_legit
