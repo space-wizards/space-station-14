@@ -436,7 +436,7 @@
 - type: entity
   id: DummyBorgGeneric
   name: generic chassis
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Mobs/Silicon/chassis.rsi
@@ -467,7 +467,7 @@
 - type: entity
   id: DummyBorgMining
   name: mining chassis
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Mobs/Silicon/chassis.rsi
@@ -499,7 +499,7 @@
 - type: entity
   id: DummyBorgEngineer
   name: engineering chassis
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Mobs/Silicon/chassis.rsi
@@ -530,7 +530,7 @@
 - type: entity
   id: DummyBorgJanitor
   name: janitor chassis
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Mobs/Silicon/chassis.rsi
@@ -562,7 +562,7 @@
 - type: entity
   id: DummyBorgMedical
   name: medical chassis
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Mobs/Silicon/chassis.rsi
@@ -594,7 +594,7 @@
 - type: entity
   id: DummyBorgService
   name: service chassis
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Mobs/Silicon/chassis.rsi
