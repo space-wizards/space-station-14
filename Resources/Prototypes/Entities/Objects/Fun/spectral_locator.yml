@@ -2,7 +2,7 @@
   id: SpectralLocatorUnpowered
   parent: BaseItem
   name: spectral locator
-  description: A spooky device that reacts to nearby disembodied consciousnesses.
+  description: Appears to be a modified anomaly locator. Seems very old.
   suffix: Unpowered
   components:
   - type: Sprite
