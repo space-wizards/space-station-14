@@ -456,6 +456,8 @@
     weight: 2 # twice as common as zombies
     duration: 1
   - type: ChangelingRule
+    components:
+      sendBriefing: false
   - type: AntagSelection
     definitions:
     - prefRoles: [ Changeling ]
@@ -465,9 +467,7 @@
         components:
         - AntagImmune
       briefing:
-        text: changeling-role-greeting
-        color: Yellow
-        sound: "/Audio/Ambience/Antag/changeling_start.ogg"
+        text: changeling-midround-role-greeting
       components:
       - type: Changeling
       mindComponents:

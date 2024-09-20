@@ -19,3 +19,8 @@ changeling-role-greeting =
 
 changeling-role-greeting-short =
     You are a changeling who has taken the shape of {$name}.
+
+changeling-midround-role-greeting =
+    You feel an intense pang in your stomach. Your skin crawls. You remember. You remember. You remember why you're really here.
+    Your objectives are listed in the character menu.
+    Absorb, shapeshift and evolve to complete them!
