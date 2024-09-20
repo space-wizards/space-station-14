@@ -1,0 +1,15 @@
+- type: job
+  id: Brigmedic
+  name: job-name-brigmedic
+  description: job-description-brigmedic
+  playTimeTracker: JobBrigmedic
+  canBeAntag: false
+  icon: JobIconBrigmedic
+  setPreference: false
+  overrideConsoleVisibility: true
+  access:
+  - Medical
+  - Security
+  - Brig
+  - Maintenance
+  - External
