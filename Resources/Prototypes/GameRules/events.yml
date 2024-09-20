@@ -39,6 +39,7 @@
     - id: RevenantSpawn
     - id: SleeperAgents
     - id: ZombieOutbreak
+    - id: ChangelingAwakening
 
 - type: entityTable
   id: SleeperlessAntagEventsTable
@@ -50,6 +51,7 @@
     - id: NinjaSpawn
     - id: RevenantSpawn
     - id: ZombieOutbreak
+    - id: ChangelingAwakening
 
 - type: entity
   id: BaseStationEvent
@@ -443,6 +445,34 @@
       mindComponents:
       - type: InitialInfectedRole
         prototype: InitialInfected
+
+- type: entity
+  id: ChangelingAwakening
+  parent: BaseGameRule
+  components:
+  - type: StationEvent
+    earliestStart: 60
+    minimumPlayers: 30 # roundstart changeling is 15 which seems insane
+    weight: 2 # twice as common as zombies
+    duration: 1
+  - type: ChangelingRule
+  - type: AntagSelection
+    definitions:
+    - prefRoles: [ Changeling ]
+      max: 3
+      playerRatio: 10
+      blacklist:
+        components:
+        - AntagImmune
+      briefing:
+        text: changeling-role-greeting
+        color: Yellow
+        sound: "/Audio/Ambience/Antag/changeling_start.ogg"
+      components:
+      - type: Changeling
+      mindComponents:
+      - type: ChangelingRole
+        prototype: Changeling
 
 - type: entity
   parent: BaseNukeopsRule
