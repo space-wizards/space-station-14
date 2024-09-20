@@ -73,6 +73,22 @@
       entity: FoodDoughTortilla
 
 - type: reaction
+  id: CreateDoughCotton
+  impact: Low
+  quantized: true
+  conserveEnergy: false
+  reactants:
+    Fiber:
+      amount: 10
+    Flour:
+      amount: 5
+    Water:
+      amount: 10
+  effects:
+  - !type:CreateEntityReactionEffect
+    entity: FoodDoughCotton
+
+- type: reaction
   id: CreateCakeBatter
   impact: Low
   quantized: true

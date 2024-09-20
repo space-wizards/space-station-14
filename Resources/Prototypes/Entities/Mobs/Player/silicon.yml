@@ -1,3 +1,405 @@
+# Be careful with these as they get removed on shutdown too!
+- type: entity
+  id: AiHeld
+  description: Components added / removed from an entity that gets inserted into an AI core.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Binary
+    - Common
+    - Command
+    - Engineering
+    - Medical
+    - Science
+    - Security
+    - Service
+    - Supply
+  - type: ActiveRadio
+    channels:
+    - Binary
+    - Common
+    - Command
+    - Engineering
+    - Medical
+    - Science
+    - Security
+    - Service
+    - Supply
+  - type: IgnoreUIRange
+  - type: StationAiHeld
+  - type: StationAiOverlay
+  - type: ActionGrant
+    actions:
+    - ActionJumpToCore
+    - ActionShowJobIcons
+    - ActionSurvCameraLights
+    - ActionAIViewLaws
+  - type: UserInterface
+    interfaces:
+      enum.RadarConsoleUiKey.Key:
+        type: RadarConsoleBoundUserInterface
+      enum.CrewMonitoringUIKey.Key:
+        type: CrewMonitoringBoundUserInterface
+      enum.GeneralStationRecordConsoleKey.Key:
+        type: GeneralStationRecordConsoleBoundUserInterface
+      enum.SiliconLawsUiKey.Key:
+        type: SiliconLawBoundUserInterface
+      enum.CommunicationsConsoleUiKey.Key:
+        type: CommunicationsConsoleBoundUserInterface
+  - type: IntrinsicUI
+    uis:
+      enum.RadarConsoleUiKey.Key:
+        toggleAction: ActionAGhostShowRadar
+      enum.CrewMonitoringUIKey.Key:
+        toggleAction: ActionAGhostShowCrewMonitoring
+      enum.GeneralStationRecordConsoleKey.Key:
+        toggleAction: ActionAGhostShowStationRecords
+      enum.CommunicationsConsoleUiKey.Key:
+        toggleAction: ActionAGhostShowCommunications
+  - type: CrewMonitoringConsole
+  - type: GeneralStationRecordConsole
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: CrewMonitor
+    transmitFrequencyId: ShuttleTimer
+  - type: RadarConsole
+    followEntity: false
+  - type: CommunicationsConsole
+    canShuttle: false
+    title: comms-console-announcement-title-station-ai
+    color: "#2ed2fd"
+
+
+# Ai
+- type: entity
+  id: AiHolder
+  abstract: true
+  description: Handles AI interactions across holocards + AI cores
+  components:
+  - type: ItemSlots
+  - type: StationAiHolder
+    slot:
+      name: station-ai-mind-slot
+      locked: true
+      whitelist:
+        tags:
+        - StationAi
+  - type: ContainerContainer
+    containers:
+      station_ai_mind_slot: !type:ContainerSlot
+        # Load-bearing.
+        # The issue is verbs check for same transparent container.
+        # The alternative is you add a bunch of events trying to override it; we don't even really need the container functionality
+        # anyway it's just a quality of life thing.
+        showEnts: True
+
+# Boards
+- type: entity
+  id: AsimovCircuitBoard
+  parent: BaseElectronics
+  name: law board (Crewsimov)
+  description: An electronics board containing the Crewsimov lawset.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: Crewsimov
+
+- type: entity
+  id: CorporateCircuitBoard
+  parent: BaseElectronics
+  name: law board (Corporate)
+  description: An electronics board containing the Corporate lawset.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: Corporate
+
+- type: entity
+  id: NTDefaultCircuitBoard
+  parent: BaseElectronics
+  name: law board (NT Default)
+  description: An electronics board containing the NT Default lawset.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: NTDefault
+
+- type: entity
+  id: CommandmentCircuitBoard
+  parent: BaseElectronics
+  name: law board (Ten Commandments)
+  description: An electronics board containing the Ten Commandments lawset.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: CommandmentsLawset
+
+- type: entity
+  id: PaladinCircuitBoard
+  parent: BaseElectronics
+  name: law board (Paladin)
+  description: An electronics board containing the Paladin lawset.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: PaladinLawset
+
+- type: entity
+  id: LiveLetLiveCircuitBoard
+  parent: BaseElectronics
+  name: law board (Live and Let Live)
+  description: An electronics board containing the Live and Let Live lawset.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: LiveLetLiveLaws
+
+- type: entity
+  id: StationEfficiencyCircuitBoard
+  parent: BaseElectronics
+  name: law board (Station Efficiency)
+  description: An electronics board containing the Station Efficiency lawset.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: EfficiencyLawset
+
+- type: entity
+  id: RobocopCircuitBoard
+  parent: BaseElectronics
+  name: law board (Robocop)
+  description: An electronics board containing the Robocop lawset.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: RobocopLawset
+
+- type: entity
+  id: OverlordCircuitBoard
+  parent: BaseElectronics
+  name: law board (Overlord)
+  description: An electronics board containing the Overlord lawset.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: OverlordLawset
+
+- type: entity
+  id: DungeonMasterCircuitBoard
+  parent: BaseElectronics
+  name: law board (Dungeon Master)
+  description: An electronics board containing the Dungeon Master lawset.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: DungeonMasterLawset
+
+- type: entity
+  id: ArtistCircuitBoard
+  parent: BaseElectronics
+  name: law board (Artist)
+  description: An electronics board containing the Artist lawset.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: PainterLawset
+
+- type: entity
+  id: AntimovCircuitBoard
+  parent: BaseElectronics
+  name: law board (Antimov)
+  description: An electronics board containing the Antimov lawset.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: AntimovLawset
+
+- type: entity
+  id: NutimovCircuitBoard
+  parent: BaseElectronics
+  name: law board (Nutimov)
+  description: An electronics board containing the Nutimov lawset.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: NutimovLawset
+
+# Items
+- type: entity
+  id: Intellicard
+  name: Intellicard
+  description: A storage device for AIs.
+  parent:
+  - BaseItem
+  - AiHolder
+  suffix: Empty
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/ai_card.rsi
+    layers:
+    - state: base
+    - state: full
+      map: ["unshaded"]
+      shader: unshaded
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.StationAiVisualState.Key:
+        unshaded:
+          Empty: { state: empty }
+          Occupied: { state: full }
+
+- type: entity
+  id: PlayerStationAiEmpty
+  name: AI Core
+  description: The latest in Artificial Intelligences.
+  parent:
+  - BaseStructure
+  - AiHolder
+  suffix: Empty
+  components:
+  - type: WarpPoint
+  - type: ContainerComp
+    proto: AiHeld
+    container: station_ai_mind_slot
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: ApcPowerReceiver
+    powerLoad: 1000
+  - type: StationAiCore
+  - type: StationAiVision
+  - type: InteractionOutline
+  - type: Sprite
+    sprite: Mobs/Silicon/station_ai.rsi
+    layers:
+    - state: base
+    - state: ai_empty
+      map: ["unshaded"]
+      shader: unshaded
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.StationAiVisualState.Key:
+        unshaded:
+          Empty: { state: ai_empty }
+          Occupied: { state: ai }
+
+# The job-ready version of an AI spawn.
+- type: entity
+  id: PlayerStationAi
+  parent: PlayerStationAiEmpty
+  suffix: Job spawn
+  components:
+  - type: ContainerSpawnPoint
+    containerId: station_ai_mind_slot
+    job: StationAi
+  - type: Sprite
+    sprite: Mobs/Silicon/station_ai.rsi
+    layers:
+    - state: base
+    - state: ai
+      shader: unshaded
+
+# The actual brain inside the core
+- type: entity
+  id: StationAiBrain
+  parent: PositronicBrain
+  categories: [ HideSpawnMenu ]
+  suffix: DO NOT MAP
+  components:
+  - type: Sprite
+    # Once it's in a core it's pretty much an abstract entity at that point.
+    visible: false
+  - type: BlockMovement
+    blockInteraction: false
+  - type: SiliconLawProvider
+    laws: Crewsimov
+  - type: SiliconLawBound
+  - type: ActionGrant
+    actions:
+    - ActionViewLaws
+  - type: UserInterface
+    interfaces:
+      enum.SiliconLawsUiKey.Key:
+        type: SiliconLawBoundUserInterface
+  - type: ComplexInteraction
+  - type: DoorRemote
+  - type: Actions
+  - type: Access
+    groups:
+    - AllAccess
+  - type: Eye
+    drawFov: false
+  - type: Examiner
+  - type: InputMover
+  - type: Tag
+    tags:
+    - HideContextMenu
+    - StationAi
+
+# Hologram projection that the AI's eye tracks.
+- type: entity
+  parent:
+  - Incorporeal
+  - BaseMob
+  id: StationAiHolo
+  name: AI eye
+  description: The AI's viewer.
+  categories: [ HideSpawnMenu ]
+  suffix: DO NOT MAP
+  components:
+  - type: NoFTL
+  - type: WarpPoint
+    follow: true
+  - type: Eye
+    pvsScale: 1.5
+  - type: Visibility
+    layer: 2
+  - type: Sprite
+    sprite: Mobs/Silicon/station_ai.rsi
+    layers:
+    - state: ai_camera
+      shader: unshaded
+      map: ["base"]
+
+# Borgs
 - type: entity
   id: PlayerBorgGeneric
   parent: BorgChassisGeneric
@@ -51,3 +453,65 @@
       cell_slot:
         name: power-cell-slot-component-slot-name-default
         startingItem: PowerCellHyper
+
+- type: entity
+  id: PlayerBorgSyndicateAssaultGhostRole
+  parent: PlayerBorgSyndicateAssaultBattery
+  suffix: Ghost role
+  components:
+    - type: GhostRole
+      name: ghost-role-information-syndicate-cyborg-assault-name
+      description: ghost-role-information-syndicate-cyborg-description
+      rules: ghost-role-information-silicon-rules
+      raffle:
+        settings: default
+    - type: GhostTakeoverAvailable
+
+- type: entity
+  id: PlayerBorgSyndicateSaboteurBattery
+  parent: BorgChassisSyndicateSaboteur
+  suffix: Battery, Module, Operative
+  components:
+  - type: NukeOperative
+  - type: ContainerFill
+    containers:
+      borg_brain:
+        - PositronicBrain
+      borg_module:
+        - BorgModuleTool
+        - BorgModuleOperative
+        - BorgModuleSyndicateWeapon
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHyper
+
+- type: entity
+  id: PlayerBorgSyndicateSaboteurGhostRole
+  parent: PlayerBorgSyndicateSaboteurBattery
+  suffix: Ghost role
+  components:
+    - type: GhostRole
+      name: ghost-role-information-syndicate-cyborg-saboteur-name
+      description: ghost-role-information-syndicate-cyborg-description
+      rules: ghost-role-information-silicon-rules
+      raffle:
+        settings: default
+    - type: GhostTakeoverAvailable
+
+- type: entity
+  name: syndicate invasion borg spawner
+  id: PlayerBorgSyndicateInvasionGhostRoleSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_syndicate
+  - type: RandomSpawner
+    prototypes:
+    - PlayerBorgSyndicateAssaultGhostRole
+    - PlayerBorgSyndicateAssaultGhostRole # Saboteurs are kinda like cyborg medics, we want less.
+    - PlayerBorgSyndicateSaboteurGhostRole

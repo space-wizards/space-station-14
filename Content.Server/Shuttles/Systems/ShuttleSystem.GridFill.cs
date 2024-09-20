@@ -110,7 +110,7 @@ public sealed partial class ShuttleSystem
             spawnCoords = spawnCoords.Offset(_random.NextVector2(distancePadding + group.MinimumDistance, distancePadding + group.MaximumDistance));
         }
 
-        _maps.CreateMap(out var mapId);
+        _mapSystem.CreateMap(out var mapId);
 
         var spawnedGrid = _mapManager.CreateGridEntity(mapId);
 

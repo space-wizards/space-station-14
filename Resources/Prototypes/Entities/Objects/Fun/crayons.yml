@@ -21,8 +21,12 @@
       enum.CrayonUiKey.Key:
         type: CrayonBoundUserInterface
   - type: Crayon
-    capacity: 15
+    capacity: 25
   - type: Food
+  - type: FlavorProfile
+    flavors:
+    - chewy
+    - bitter
   - type: SolutionContainerManager
     solutions:
       food:
