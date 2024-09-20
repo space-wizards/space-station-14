@@ -10,7 +10,7 @@ namespace Content.Server.Atmos
     ///     Internal Atmos class that stores data about the atmosphere in a grid.
     ///     You shouldn't use this directly, use <see cref="AtmosphereSystem"/> instead.
     /// </summary>
-    [Access(typeof(AtmosphereSystem), typeof(GasTileOverlaySystem), typeof(AtmosDebugOverlaySystem))]
+    [Access(typeof(AtmosphereSystem), typeof(GasTileOverlaySystem), typeof(AtmosDebugOverlaySystem), typeof(AtmosphereWeatherDeviceSystem))]
     public sealed class TileAtmosphere : IGasMixtureHolder
     {
         [ViewVariables]
@@ -19,7 +19,7 @@ namespace Content.Server.Atmos
         [ViewVariables]
         public int CurrentCycle;
 
-        [ViewVariables]
+        [ViewVariables(VVAccess.ReadWrite)]
         public float Temperature { get; set; } = Atmospherics.T20C;
 
         [ViewVariables]
@@ -90,7 +90,7 @@ namespace Content.Server.Atmos
         /// This can be immutable if the tile is spaced.
         /// </summary>
         [ViewVariables]
-        [Access(typeof(AtmosphereSystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
+        [Access(typeof(AtmosphereSystem), typeof(AtmosphereWeatherDeviceSystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
         public GasMixture? Air { get; set; }
 
         [DataField("lastShare")]

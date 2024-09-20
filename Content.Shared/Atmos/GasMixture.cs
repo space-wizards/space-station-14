@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Content.Shared.Atmos.EntitySystems;
@@ -62,8 +62,12 @@ namespace Content.Shared.Atmos
             set
             {
                 DebugTools.Assert(!float.IsNaN(value));
-                if (!Immutable)
-                    _temperature = MathF.Min(MathF.Max(value, Atmospherics.TCMB), Atmospherics.Tmax);
+                switch (Immutable)
+                {
+                    case false:
+                        _temperature = MathF.Min(MathF.Max(value, Atmospherics.TCMB), Atmospherics.Tmax);
+                        break;
+                }
             }
         }
 

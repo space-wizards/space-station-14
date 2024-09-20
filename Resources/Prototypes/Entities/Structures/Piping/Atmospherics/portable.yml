@@ -180,6 +180,93 @@
           - !type:DoActsBehavior
             acts: [ "Destruction" ]
 
+
+- type: entity
+  id: SpaceHeater2
+  parent: [BaseMachinePowered, ConstructibleMachine]
+  name: space heater 2
+  description: A bluespace technology device that alters local temperature. Commonly referred to as a "Space Heater".
+  suffix: Unanchored
+  components:
+  - type: WeatherDevice
+  - type: StationAiWhitelist
+  - type: Transform
+    anchored: false
+  - type: Physics
+    bodyType: Dynamic
+  - type: AtmosDevice
+    joinSystem: true
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.15,-0.35,0.15,0.5"
+        density: 100
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: ApcPowerReceiver
+    powerDisabled: true #starts off
+  - type: Sprite
+    sprite: Structures/Piping/Atmospherics/Portable/portable_sheater.rsi
+    noRot: true
+    layers:
+    - state: sheaterOff
+      map: ["enum.SpaceHeaterVisualLayers.Main"]
+    - state: sheaterPanelOpen
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.SpaceHeaterVisuals.State:
+        SpaceHeaterVisualLayers.Main:
+          Off: { state: sheaterOff }
+          StandBy: { state: sheaterStandby }
+          Heating: { state: sheaterHeat }
+          Cooling: { state: sheaterCool }
+  - type: Machine
+    board: SpaceHeaterMachineCircuitBoard
+  - type: WiresPanel
+  - type: WiresVisuals
+  - type: UserInterface
+    interfaces:
+      enum.SpaceHeaterUiKey.Key:
+        type: SpaceHeaterBoundUserInterface
+  - type: ActivatableUI
+    inHandsOnly: false
+    key: enum.SpaceHeaterUiKey.Key
+  - type: SpaceHeater
+  - type: GasThermoMachine
+    temperatureTolerance: 0.2
+    atmospheric: true
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 600
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
+          damage: 300
+        behaviors:
+          - !type:PlaySoundBehavior
+            sound:
+              collection: MetalBreak
+          - !type:SpawnEntitiesBehavior
+            spawn:
+              SheetSteel1:
+                min: 1
+                max: 3
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+
 - type: entity
   parent: SpaceHeater
   id: SpaceHeaterAnchored
