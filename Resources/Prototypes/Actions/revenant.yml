@@ -18,7 +18,7 @@
       sprite: Mobs/Ghosts/revenant.rsi
       state: icon
     event: !type:RevenantHauntActionEvent
-    useDelay: 15
+    useDelay: 20
 
 - type: entity
   id: ActionRevenantDefile

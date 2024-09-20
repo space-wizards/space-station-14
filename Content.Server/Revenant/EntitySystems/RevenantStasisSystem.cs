@@ -123,6 +123,9 @@ public sealed partial class RevenantStasisSystem : EntitySystem
 
     private void OnGrindAttempt(EntityUid uid, RevenantStasisComponent comp, GrindAttemptEvent args)
     {
+        if (!comp.Revenant.Comp.GrindingRequiresSalt)
+            return;
+
         foreach (var reagent in args.Reagents)
         {
             if (_tags.HasAnyTag(reagent, "Salt", "Holy"))
