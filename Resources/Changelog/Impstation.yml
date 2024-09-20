@@ -1794,3 +1794,12 @@
   id: 232
   time: '2024-09-19T20:23:17.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/302
+- author: TGRCDev
+  changes:
+  - message: Revenants can now Haunt, which reveals them and gives them a small amount
+      of stolen essence and a boost in essence regeneration for every person that
+      witnesses them.
+    type: Add
+  id: 233
+  time: '2024-09-20T01:52:44.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/293
