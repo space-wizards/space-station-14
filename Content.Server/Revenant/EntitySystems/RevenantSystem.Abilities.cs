@@ -35,10 +35,7 @@ using Content.Shared.Interaction.Components;
 using Robust.Shared.Player;
 using Content.Shared.StatusEffect;
 using Content.Shared.Flash.Components;
-using Content.Shared.Flash;
 using Robust.Shared.Audio.Systems;
-using Content.Shared.Mind;
-using Content.Shared.Mind.Components;
 
 namespace Content.Server.Revenant.EntitySystems;
 
@@ -55,11 +52,13 @@ public sealed partial class RevenantSystem
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly RevenantAnimatedSystem _revenantAnimated = default!;
-    [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
     [ValidatePrototypeId<StatusEffectPrototype>]
     private const string RevenantEssenceRegen = "EssenceRegen";
+
+    [ValidatePrototypeId<StatusEffectPrototype>]
+    private const string FlashedId = "Flashed";
 
     private void InitializeAbilities()
     {
@@ -265,7 +264,7 @@ public sealed partial class RevenantSystem
         foreach (var witness in witnesses)
         {
             _statusEffects.TryAddStatusEffect<FlashedComponent>(GetEntity(witness),
-                SharedFlashSystem.FlashedKey,
+                FlashedId,
                 comp.HauntFlashDuration,
                 false
             );
