@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: Dropping an item while in a container now places the item in the container.
-    type: Fix
-  id: 6908
-  time: '2024-07-12T09:24:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29900
 - author: coffeeware, slarticodefast
   changes:
   - message: Fixed items thrown very fast not being in the air. In particular this
@@ -3922,3 +3915,11 @@
   id: 7407
   time: '2024-09-19T23:27:23.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32181
+- author: JIPDawg
+  changes:
+  - message: Small Hydraulic clamp now correctly consumes 2% battery instead of recharging
+      the battery by 2%
+    type: Fix
+  id: 7408
+  time: '2024-09-20T04:09:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32320
