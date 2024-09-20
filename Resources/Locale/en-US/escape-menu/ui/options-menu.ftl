@@ -77,7 +77,6 @@ ui-options-hud-theme-clockwork = Clockwork
 ui-options-hud-theme-retro = Retro
 ui-options-hud-theme-minimalist = Minimalist
 ui-options-hud-theme-ashen = Ashen
-<!-- Purple theme by jack-thedragon95 -->
 ui-options-hud-theme-HarmonyPurple = GAH I LOVE BEING PURPLE
 ui-options-hud-layout-default = Default
 ui-options-hud-layout-separated = Separated
