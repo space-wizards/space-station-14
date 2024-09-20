@@ -4,6 +4,7 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.EntityEffects;
 using Content.Shared.FixedPoint;
+using Content.Shared.Implants.Components;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -189,6 +190,11 @@ namespace Content.Shared.Chemistry.Reaction
                 var newCap = solution.GetHeatCapacity(_prototypeManager);
                 if (newCap > 0)
                     solution.Temperature = energy / newCap;
+            }
+
+            if(reaction.preserveDNA)
+            {
+                
             }
 
             OnReaction(soln, reaction, null, unitReactions);
