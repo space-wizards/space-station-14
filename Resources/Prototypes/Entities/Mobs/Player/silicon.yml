@@ -82,7 +82,8 @@
   - type: StationAiHolder
     slot:
       name: station-ai-mind-slot
-      locked: true
+      locked: false
+      disableEject: true
       whitelist:
         tags:
         - StationAi
@@ -360,7 +361,6 @@
       enum.SiliconLawsUiKey.Key:
         type: SiliconLawBoundUserInterface
   - type: ComplexInteraction
-  - type: DoorRemote
   - type: Actions
   - type: Access
     groups:
