@@ -238,8 +238,8 @@
           type: Rat
           shouldHave: false
         - !type:OrganType
-           type: Vox
-           shouldHave: false
+          type: Vox
+          shouldHave: false
         - !type:ReagentThreshold
           reagent: Ammonia
           min: 0.8
