@@ -276,6 +276,8 @@
   - type: NpcFactionMember
     factions:
     - NanoTrasen
+  - type: SiliconLawProvider
+    laws: CrewsimovBorg
   - type: Access
     enabled: false
     groups:
