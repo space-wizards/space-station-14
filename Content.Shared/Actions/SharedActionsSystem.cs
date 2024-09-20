@@ -284,8 +284,6 @@ public abstract class SharedActionsSystem : EntitySystem
     public virtual void UpdateAction(EntityUid? actionId, BaseActionComponent? action = null)
     {
         // See client-side code.
-        if (!ResolveActionData(actionId, ref action))
-            return;
     }
 
     public void SetToggled(EntityUid? actionId, bool toggled)
