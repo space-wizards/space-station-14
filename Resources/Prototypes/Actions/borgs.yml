@@ -14,7 +14,7 @@
 - type: entity
   id: ActionBeep
   name: Beep
-  description: Beep Bepep
+  description: Beep Beep.
   components:
   - type: InstantAction
     useDelay: 5
