@@ -13,6 +13,6 @@ public sealed partial class PickRandomPersonComponent : Component
     /// <summary>
     /// List of jobs, that won't be kill objectives
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public List<ProtoId<JobPrototype>?> IgnoredJobs = new();
 }
