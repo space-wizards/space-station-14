@@ -6,7 +6,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Light.Components;
 
 [NetworkedComponent, RegisterComponent]
-[AutoGenerateComponentState]
+[AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class MatchstickComponent : Component
 {
     /// <summary>
@@ -25,7 +25,7 @@ public sealed partial class MatchstickComponent : Component
     /// <summary>
     ///     The time that the match will burn out. If null, that means the match is unlit.
     /// </summary>
-    [AutoNetworkedField]
+    [AutoNetworkedField, AutoPausedField]
     public TimeSpan? TimeMatchWillBurnOut = null;
 
     /// <summary>
