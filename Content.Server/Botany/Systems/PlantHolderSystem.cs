@@ -6,6 +6,7 @@ using Content.Shared.Burial.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Coordinates.Helpers;
+using Content.Shared.EntityEffects;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.IdentityManagement;
@@ -181,6 +182,15 @@ public sealed class PlantHolderSystem : EntitySystem
                     var xform = Transform(newPlant);
                     _transform.SetParent(newPlant, xform, uid);
                     _plant.UpdateSprite(newPlant);
+
+                    foreach (var mutation in seed.Mutations)
+                    {
+                        if (mutation.AppliesToPlant)
+                        {
+                            var effectArgs = new EntityEffectBaseArgs(newPlant, EntityManager);
+                            mutation.Effect.Effect(effectArgs);
+                        }
+                    }
 
                     if (seeds.HealthOverride != null)
                     {
