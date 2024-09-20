@@ -61,8 +61,7 @@ namespace Content.IntegrationTests.Tests
             "Reach",
             "Train",
             "Oasis",
-            "Cog",
-            "OmegaSpanky" // Harmony, spanky's omega rework beta
+            "Cog"
         };
 
         /// <summary>
