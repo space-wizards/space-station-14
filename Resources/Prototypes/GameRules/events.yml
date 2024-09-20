@@ -468,6 +468,8 @@
         - AntagImmune
       briefing:
         text: changeling-midround-role-greeting
+        color: Yellow
+        sound: "/Audio/Ambience/Antag/changeling_start.ogg"
       components:
       - type: Changeling
       mindComponents:
