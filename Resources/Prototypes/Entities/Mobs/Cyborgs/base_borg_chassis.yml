@@ -149,6 +149,9 @@
   - type: Vocal
     sounds:
       Unsexed: UnisexSilicon
+    screamId: Beep
+    wilhelmProbability: 0
+    screamAction: ActionBeep
   - type: UnblockableSpeech
   - type: FootstepModifier
     footstepSoundCollection:
