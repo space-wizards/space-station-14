@@ -45,6 +45,14 @@ public sealed partial class RevenantComponent : Component
     public bool ExorcismRequiresBibleUser = true;
 
     /// <summary>
+    /// If true, grinding a revenant's ectoplasm will require
+    /// putting salt in the reagent grinder. Otherwise, the
+    /// grinder will explode.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public bool GrindingRequiresSalt = true;
+
+    /// <summary>
     /// The entity's current max amount of essence. Can be increased
     /// through harvesting player souls.
     /// </summary>
@@ -98,7 +106,7 @@ public sealed partial class RevenantComponent : Component
     #region Haunt Ability
 
     [DataField("hauntDebuffs"), ViewVariables(VVAccess.ReadWrite)]
-    public Vector2 HauntDebuffs = new(2, 6);
+    public Vector2 HauntDebuffs = new(3, 8);
 
     [DataField("hauntStolenEssencePerWitness"), ViewVariables(VVAccess.ReadWrite)]
     public FixedPoint2 HauntStolenEssencePerWitness = 2.5;
