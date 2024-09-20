@@ -62,7 +62,7 @@ job-name-unknown = Unknown
 job-name-virologist = Virologist
 job-name-zombie = Zombie
 
-#Job titles
+# Job titles
 job-title-visitor = Visitor
 job-title-cluwne = Cluwne
 job-title-universal = Universal
