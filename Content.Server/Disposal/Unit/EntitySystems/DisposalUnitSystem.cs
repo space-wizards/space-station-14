@@ -322,7 +322,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 
         if (component.Engaged)
         {
-            // Run ManualEngage to reclaculate a new flush time
+            // Run ManualEngage to recalculate a new flush time
             ManualEngage(uid, component);
         }
     }
