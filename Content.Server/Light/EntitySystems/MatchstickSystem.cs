@@ -24,13 +24,13 @@ public sealed class MatchstickSystem : SharedMatchstickSystem
 
         while (query.MoveNext(out var uid, out var match))
         {
-            if (match.CurrentState != SmokableState.Lit || Paused(uid) || match.Deleted)
+            if (match.CurrentState != SmokableState.Lit)
                 continue;
 
             var xform = Transform(uid);
 
             if (xform.GridUid is not { } gridUid)
-                return;
+                continue;
 
             var position = _transformSystem.GetGridOrMapTilePosition(uid, xform);
 
