@@ -286,8 +286,6 @@ public abstract class SharedActionsSystem : EntitySystem
         // See client-side code.
         if (!ResolveActionData(actionId, ref action))
             return;
-
-        action.LastUpdate = GameTiming.CurTime;
     }
 
     public void SetToggled(EntityUid? actionId, bool toggled)
