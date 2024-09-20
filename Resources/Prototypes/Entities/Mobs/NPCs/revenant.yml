@@ -19,6 +19,7 @@
     allowed:
     - Stun
     - Corporeal
+    - EssenceRegen
   - type: Hands
     showInHands: false
     disableExplosionRecursion: true
@@ -44,6 +45,7 @@
   - type: GhostTakeoverAvailable
   - type: Revenant
     exorcismRequiresBibleUser: true # Escape hatch, change to false if revenant becomes too OP
+    grindingRequiresSalt: true # Escape hatch, change to false if revenant becomes too OP
     malfunctionWhitelist:
       components:
       # emag lockers open

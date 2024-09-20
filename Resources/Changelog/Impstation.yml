@@ -1794,3 +1794,31 @@
   id: 232
   time: '2024-09-19T20:23:17.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/302
+- author: TGRCDev
+  changes:
+  - message: Revenants can now Haunt, which reveals them and gives them a small amount
+      of stolen essence and a boost in essence regeneration for every person that
+      witnesses them.
+    type: Add
+  id: 233
+  time: '2024-09-20T01:52:44.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/293
+- author: TGRCDev
+  changes:
+  - message: Revenant's Haunt ability stuns itself for slightly longer, and has a
+      longer cooldown
+    type: Tweak
+  id: 234
+  time: '2024-09-20T16:18:43.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/305
+- author: aada
+  changes:
+  - message: Prescription lenses that can be slotted in and out of eyewear.
+    type: Add
+  - message: Near-sighted trait starts with extra-strength prescription lenses.
+    type: Add
+  - message: JamJar glasses have a stronger prescription.
+    type: Tweak
+  id: 235
+  time: '2024-09-20T16:18:32.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/304
