@@ -195,6 +195,7 @@
   graph: Girder
   startNode: start
   targetNode: shuttleWall
+  suffix: true
   category: construction-category-structures
   icon:
     sprite: Structures/Walls/shuttle.rsi
@@ -211,6 +212,7 @@
   graph: Girder
   startNode: start
   targetNode: shuttleInteriorWall
+  suffix: true
   category: construction-category-structures
   icon:
     sprite: Structures/Walls/shuttleinterior.rsi
@@ -227,6 +229,7 @@
   graph: Girder
   startNode: start
   targetNode: diagonalshuttleWall
+  suffix: true
   category: construction-category-structures
   icon:
     sprite: Structures/Walls/shuttle_diagonal.rsi
@@ -307,6 +310,7 @@
   graph: GrilleDiagonal
   startNode: start
   targetNode: grilleDiagonal
+  suffix: true
   category: construction-category-structures
   conditions:
     - !type:TileNotBlocked
@@ -322,6 +326,7 @@
   graph: GrilleDiagonal
   startNode: start
   targetNode: clockworkGrilleDiagonal
+  suffix: true
   category: construction-category-structures
   conditions:
     - !type:TileNotBlocked
@@ -354,6 +359,7 @@
   graph: WindowDiagonal
   startNode: start
   targetNode: windowDiagonal
+  suffix: true
   category: construction-category-structures
   canBuildInImpassable: true
   conditions:
@@ -387,6 +393,7 @@
   graph: WindowDiagonal
   startNode: start
   targetNode: reinforcedWindowDiagonal
+  suffix: true
   category: construction-category-structures
   canBuildInImpassable: true
   conditions:
@@ -437,6 +444,7 @@
   graph: WindowDiagonal
   startNode: start
   targetNode: clockworkWindowDiagonal
+  suffix: true
   category: construction-category-structures
   canBuildInImpassable: true
   conditions:
@@ -504,6 +512,7 @@
   graph: WindowDiagonal
   startNode: start
   targetNode: plasmaWindowDiagonal
+  suffix: true
   category: construction-category-structures
   canBuildInImpassable: true
   conditions:
@@ -520,6 +529,7 @@
   graph: WindowDiagonal
   startNode: start
   targetNode: reinforcedPlasmaWindowDiagonal
+  suffix: true
   category: construction-category-structures
   canBuildInImpassable: true
   conditions:
@@ -650,6 +660,7 @@
   graph: WindowDiagonal
   startNode: start
   targetNode: uraniumWindowDiagonal
+  suffix: true
   category: construction-category-structures
   canBuildInImpassable: true
   conditions:
@@ -666,6 +677,7 @@
   graph: WindowDiagonal
   startNode: start
   targetNode: reinforcedUraniumWindowDiagonal
+  suffix: true
   category: construction-category-structures
   canBuildInImpassable: true
   conditions:
@@ -911,6 +923,7 @@
   graph: FenceMetal
   startNode: start
   targetNode: straight
+  suffix: true
   category: construction-category-structures
   icon:
     sprite: Structures/Walls/fence.rsi
@@ -926,6 +939,7 @@
   graph: FenceMetal
   startNode: start
   targetNode: corner
+  suffix: true
   category: construction-category-structures
   icon:
     sprite: Structures/Walls/fence.rsi
@@ -941,6 +955,7 @@
   graph: FenceMetal
   startNode: start
   targetNode: end
+  suffix: true
   category: construction-category-structures
   icon:
     sprite: Structures/Walls/fence.rsi
@@ -972,6 +987,7 @@
   graph: FenceWood
   startNode: start
   targetNode: straight
+  suffix: true
   category: construction-category-structures
   icon:
     sprite: Structures/Walls/wooden_fence.rsi
@@ -987,6 +1003,7 @@
   graph: FenceWood
   startNode: start
   targetNode: end
+  suffix: true
   category: construction-category-structures
   icon:
     sprite: Structures/Walls/wooden_fence.rsi
@@ -1002,6 +1019,7 @@
   graph: FenceWood
   startNode: start
   targetNode: corner
+  suffix: true
   category: construction-category-structures
   icon:
     sprite: Structures/Walls/wooden_fence.rsi
@@ -1017,6 +1035,7 @@
   graph: FenceWood
   startNode: start
   targetNode: tjunction
+  suffix: true
   category: construction-category-structures
   icon:
     sprite: Structures/Walls/wooden_fence.rsi
@@ -1433,6 +1452,7 @@
   graph: PlasticFlapsGraph
   startNode: start
   targetNode: plasticFlaps
+  suffix: true
   category: construction-category-structures
   placementMode: SnapgridCenter
   objectType: Structure
@@ -1448,6 +1468,7 @@
   graph: PlasticFlapsGraph
   startNode: start
   targetNode: opaqueFlaps
+  suffix: true
   category: construction-category-structures
   placementMode: SnapgridCenter
   objectType: Structure

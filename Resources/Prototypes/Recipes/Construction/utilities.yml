@@ -324,6 +324,7 @@
   graph: GasPipe
   startNode: start
   targetNode: half
+  suffix: true
   category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: true
@@ -336,6 +337,7 @@
   graph: GasPipe
   startNode: start
   targetNode: straight
+  suffix: true
   category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: true
@@ -348,6 +350,7 @@
   graph: GasPipe
   startNode: start
   targetNode: bend
+  suffix: true
   category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: true
@@ -360,6 +363,7 @@
   graph: GasPipe
   startNode: start
   targetNode: tjunction
+  suffix: true
   category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: true
@@ -372,6 +376,7 @@
   graph: GasPipe
   startNode: start
   targetNode: fourway
+  suffix: true
   category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: true

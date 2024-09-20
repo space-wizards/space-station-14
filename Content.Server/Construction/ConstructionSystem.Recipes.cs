@@ -62,8 +62,11 @@ public sealed partial class ConstructionSystem : SharedConstructionSystem
                         continue;
 
                     RecipeMetadata meta = _prototypeManager.TryIndex(entityId, out var proto)
-                            ? new(proto.Name, proto.Description)
-                            : new(null, null);
+                        ? new(constructionProto.Suffix && proto.SetSuffix is {} suffix
+                                ? $"{proto.Name} [{suffix.ToLower()}]"
+                                : proto.Name,
+                            proto.Description)
+                        : new(null, null);
 
                     _recipesMetadataCache.Add(constructionProto.ID, meta);
                 } while (stack.Count > 0);

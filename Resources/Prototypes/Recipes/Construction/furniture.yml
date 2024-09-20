@@ -365,6 +365,7 @@
   graph: Table
   startNode: start
   targetNode: TableFancyBlack
+  suffix: true
   category: construction-category-furniture
   icon:
     sprite: Structures/Furniture/Tables/Fancy/black.rsi
@@ -380,6 +381,7 @@
   graph: Table
   startNode: start
   targetNode: TableFancyBlue
+  suffix: true
   category: construction-category-furniture
   icon:
     sprite: Structures/Furniture/Tables/Fancy/blue.rsi
@@ -395,6 +397,7 @@
   graph: Table
   startNode: start
   targetNode: TableFancyCyan
+  suffix: true
   category: construction-category-furniture
   icon:
     sprite: Structures/Furniture/Tables/Fancy/cyan.rsi
@@ -410,6 +413,7 @@
   graph: Table
   startNode: start
   targetNode: TableFancyGreen
+  suffix: true
   category: construction-category-furniture
   icon:
     sprite: Structures/Furniture/Tables/Fancy/green.rsi
@@ -425,6 +429,7 @@
   graph: Table
   startNode: start
   targetNode: TableFancyOrange
+  suffix: true
   category: construction-category-furniture
   icon:
     sprite: Structures/Furniture/Tables/Fancy/orange.rsi
@@ -440,6 +445,7 @@
   graph: Table
   startNode: start
   targetNode: TableFancyPurple
+  suffix: true
   category: construction-category-furniture
   icon:
     sprite: Structures/Furniture/Tables/Fancy/purple.rsi
@@ -455,6 +461,7 @@
   graph: Table
   startNode: start
   targetNode: TableFancyPink
+  suffix: true
   category: construction-category-furniture
   icon:
     sprite: Structures/Furniture/Tables/Fancy/pink.rsi
@@ -470,6 +477,7 @@
   graph: Table
   startNode: start
   targetNode: TableFancyRed
+  suffix: true
   category: construction-category-furniture
   icon:
     sprite: Structures/Furniture/Tables/Fancy/red.rsi
@@ -485,6 +493,7 @@
   graph: Table
   startNode: start
   targetNode: TableFancyWhite
+  suffix: true
   category: construction-category-furniture
   icon:
     sprite: Structures/Furniture/Tables/Fancy/white.rsi
@@ -639,6 +648,7 @@
   graph: Curtains
   startNode: start
   targetNode: Curtains
+  suffix: true
   category: construction-category-furniture
   icon:
     sprite: Structures/Decoration/Curtains/hospital.rsi
@@ -646,12 +656,13 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
-    
+
 - type: construction
   id: CurtainsBlack
   graph: Curtains
   startNode: start
   targetNode: CurtainsBlack
+  suffix: true
   category: construction-category-furniture
   icon:
     sprite: Structures/Decoration/Curtains/black.rsi
@@ -665,6 +676,7 @@
   graph: Curtains
   startNode: start
   targetNode: CurtainsBlue
+  suffix: true
   category: construction-category-furniture
   icon:
     sprite: Structures/Decoration/Curtains/blue.rsi
@@ -672,12 +684,13 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
-    
+
 - type: construction
   id: CurtainsCyan
   graph: Curtains
   startNode: start
   targetNode: CurtainsCyan
+  suffix: true
   category: construction-category-furniture
   icon:
     sprite: Structures/Decoration/Curtains/cyan.rsi
@@ -685,12 +698,13 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
-    
+
 - type: construction
   id: CurtainsGreen
   graph: Curtains
   startNode: start
   targetNode: CurtainsGreen
+  suffix: true
   category: construction-category-furniture
   icon:
     sprite: Structures/Decoration/Curtains/green.rsi
@@ -698,12 +712,13 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
-    
+
 - type: construction
   id: CurtainsOrange
   graph: Curtains
   startNode: start
   targetNode: CurtainsOrange
+  suffix: true
   category: construction-category-furniture
   icon:
     sprite: Structures/Decoration/Curtains/orange.rsi
@@ -711,12 +726,13 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
-    
+
 - type: construction
   id: CurtainsPink
   graph: Curtains
   startNode: start
   targetNode: CurtainsPink
+  suffix: true
   category: construction-category-furniture
   icon:
     sprite: Structures/Decoration/Curtains/pink.rsi
@@ -724,12 +740,13 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
-    
+
 - type: construction
   id: CurtainsPurple
   graph: Curtains
   startNode: start
   targetNode: CurtainsPurple
+  suffix: true
   category: construction-category-furniture
   icon:
     sprite: Structures/Decoration/Curtains/purple.rsi
@@ -737,12 +754,13 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
-    
+
 - type: construction
   id: CurtainsRed
   graph: Curtains
   startNode: start
   targetNode: CurtainsRed
+  suffix: true
   category: construction-category-furniture
   icon:
     sprite: Structures/Decoration/Curtains/red.rsi
@@ -756,6 +774,7 @@
   graph: Curtains
   startNode: start
   targetNode: CurtainsWhite
+  suffix: true
   category: construction-category-furniture
   icon:
     sprite: Structures/Decoration/Curtains/white.rsi
