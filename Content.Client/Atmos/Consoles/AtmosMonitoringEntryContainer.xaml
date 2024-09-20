@@ -6,7 +6,7 @@
          Orientation="Vertical" HorizontalExpand ="True" Margin="0 0 0 3">
 
     <!-- Network selection button -->
-    <Button Name="FocusButton" HorizontalExpand="True" VerticalExpand="True" Margin="0 0 0 8" StyleClasses="OpenBoth" Access="Public">
+    <Button Name="FocusButton" HorizontalExpand="True" VerticalExpand="True" Margin="0 0 6 8" StyleClasses="OpenLeft" Access="Public">
         <BoxContainer HorizontalExpand="True" VerticalExpand="True" Orientation="Vertical">
             <BoxContainer HorizontalExpand="True" VerticalExpand="True" Orientation="Horizontal" SetHeight="32">
                 <Label Name="NetworkNameLabel" Text="???" HorizontalExpand="True" HorizontalAlignment="Center"></Label>
@@ -14,7 +14,7 @@
 
             <!-- Panel that appears on selecting the device -->
         
-            <PanelContainer HorizontalExpand="True" Margin="-8 0 -8 -4" Access="Public">
+            <PanelContainer HorizontalExpand="True" Margin="-8 0 -14 -4" Access="Public">
                 <PanelContainer.PanelOverride>
                     <gfx:StyleBoxFlat BackgroundColor="#25252a"/>
                 </PanelContainer.PanelOverride>
