@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: coffeeware, slarticodefast
-  changes:
-  - message: Fixed items thrown very fast not being in the air. In particular this
-      fixes the pneumatic cannon.
-    type: Fix
-  - message: Buffed base hand throwing speed by 10% to be more similar to before the
-      recent throwing changes.
-    type: Tweak
-  id: 6909
-  time: '2024-07-12T10:32:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29935
 - author: themias
   changes:
   - message: Timers can now be deconstructed
@@ -3923,3 +3912,11 @@
   id: 7408
   time: '2024-09-20T04:09:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32320
+- author: clinux
+  changes:
+  - message: Added the psychologist's stamp. Prescribe treatments for your less mentally
+      sane crew!
+    type: Add
+  id: 7409
+  time: '2024-09-20T14:42:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31881
