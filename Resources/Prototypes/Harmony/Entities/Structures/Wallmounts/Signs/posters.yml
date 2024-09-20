@@ -43,7 +43,7 @@
   parent: PosterBase
   id: PosterHarmonyWorkHard
   name: "Work Hard"
-  description: "If you work hard enough, YOU could earn your very own Nanotrasen Plunger Plus!"
+  description: "If you work hard enough, YOU could earn your very own Nanotrasen Plunger Plus! Just be sure to survive long enough to redeem it!.."
   components:
     - type: Sprite
       sprite: Harmony/Structures/Wallmounts/posters.rsi
