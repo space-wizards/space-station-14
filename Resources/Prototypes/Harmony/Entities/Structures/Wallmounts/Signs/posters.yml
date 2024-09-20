@@ -53,7 +53,7 @@
   parent: PosterBase
   id: PosterHarmonyMakeshiftClown
   name: "Makeshift Clown Poster"
-  description: "A poster has a handwritten signature: Clowne was herE!!"
+  description: "A makeshift poster consisting of a crayon drawing upon a paper stuck to the wall with some horrible mix of glue and banana paste. Upon it is inscribed: 'Clowne was herE !!'."
   components:
     - type: Sprite
       sprite: Harmony/Structures/Wallmounts/posters.rsi
