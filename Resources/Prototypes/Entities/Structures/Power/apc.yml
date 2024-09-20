@@ -91,7 +91,7 @@
         type: ApcBoundUserInterface
   - type: ActivatableUI
     inHandsOnly: false
-    singleUser: true
+    singleUser: false
     key: enum.ApcUiKey.Key
   - type: Construction
     graph: APC
