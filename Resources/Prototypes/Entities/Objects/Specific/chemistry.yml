@@ -399,9 +399,6 @@
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
       - state: syringeproj
-  - type: Icon
-    sprite: Objects/Specific/Chemistry/syringe.rsi
-    state: "syringeproj"
   - type: SolutionContainerVisuals
     maxFillLevels: 3
     fillBaseName: minisyringe
@@ -432,7 +429,7 @@
       projectile:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.1,-0.15,0.1,0.15"
+          bounds: "-0.1,-0.3,0.1,0.3"
         hard: false
         mask:
         - Impassable

@@ -26,11 +26,6 @@ public sealed class SolutionInjectWhileEmbeddedSystem : EntitySystem
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly TagSystem _tag = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-    }
-
 	public override void Update(float frameTime)
 	{
         base.Update(frameTime);
