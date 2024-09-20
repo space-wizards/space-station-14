@@ -3,6 +3,7 @@ using Content.Shared.Alert;
 using Content.Shared.FixedPoint;
 using Content.Shared.Store;
 using Content.Shared.Whitelist;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -90,6 +91,30 @@ public sealed partial class RevenantComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("maxEssenceUpgradeAmount")]
     public float MaxEssenceUpgradeAmount = 10;
+    #endregion
+
+    // When used, the revenant reveals itself temporarily and gains stolen essence and a boost in
+    // essence regeneration for each crewmate that witnesses it
+    #region Haunt Ability
+
+    [DataField("hauntDebuffs"), ViewVariables(VVAccess.ReadWrite)]
+    public Vector2 HauntDebuffs = new(2, 6);
+
+    [DataField("hauntStolenEssencePerWitness"), ViewVariables(VVAccess.ReadWrite)]
+    public FixedPoint2 HauntStolenEssencePerWitness = 2.5;
+
+    [DataField("hauntEssenceRegenPerWitness"), ViewVariables(VVAccess.ReadWrite)]
+    public FixedPoint2 HauntEssenceRegenPerWitness = 0.5;
+
+    [DataField("hauntEssenceRegenDuration"), ViewVariables(VVAccess.ReadWrite)]
+    public TimeSpan HauntEssenceRegenDuration = TimeSpan.FromSeconds(10);
+
+    [DataField("hauntSound"), ViewVariables(VVAccess.ReadWrite)]
+    public SoundSpecifier? HauntSound = new SoundCollectionSpecifier("RevenantHaunt");
+
+    [DataField("hauntFlashDuration"), ViewVariables(VVAccess.ReadWrite)]
+    public TimeSpan HauntFlashDuration = TimeSpan.FromSeconds(2);
+
     #endregion
 
     //In the nearby radius, causes various objects to be thrown, messed with, and containers opened
@@ -260,5 +285,6 @@ public sealed partial class RevenantComponent : Component
     public string HarvestingState = "harvesting";
     #endregion
 
-    [DataField] public EntityUid? Action;
+    [DataField] public EntityUid? ShopAction;
+    [DataField] public EntityUid? HauntAction;
 }

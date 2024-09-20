@@ -8,6 +8,19 @@
     event: !type:RevenantShopActionEvent
 
 - type: entity
+  id: ActionRevenantHaunt
+  name: Haunt
+  description: Gives essence and stolen essence for every witness.
+  components:
+  - type: InstantAction
+    itemIconStyle: NoItem
+    icon:
+      sprite: Mobs/Ghosts/revenant.rsi
+      state: icon
+    event: !type:RevenantHauntActionEvent
+    useDelay: 15
+
+- type: entity
   id: ActionRevenantDefile
   name: Defile
   description: Costs 30 Essence.

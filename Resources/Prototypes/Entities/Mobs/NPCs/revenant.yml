@@ -19,6 +19,7 @@
     allowed:
     - Stun
     - Corporeal
+    - EssenceRegen
   - type: Hands
     showInHands: false
     disableExplosionRecursion: true
