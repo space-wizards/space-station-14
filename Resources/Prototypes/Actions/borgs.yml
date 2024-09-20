@@ -17,7 +17,7 @@
   description: Beep Bepep
   components:
   - type: InstantAction
-    useDelay: 10
+    useDelay: 5
     icon: Interface/Emotes/beep.png
     event: !type:ScreamActionEvent
     checkCanInteract: false
