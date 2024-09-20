@@ -8,6 +8,7 @@
   - type: StorageFill
     contents:
         - id: OxygenTankFilled
+        - id: NitrogenTankFilled
         - id: ClothingOuterHardsuitEVA
         - id: ClothingHeadHelmetEVA
         - id: ClothingMaskBreath
@@ -21,6 +22,7 @@
   - type: StorageFill
     contents:
         - id: OxygenTankFilled
+        - id: NitrogenTankFilled
         - id: ClothingOuterHardsuitEVA
         - id: ClothingHeadHelmetEVALarge
         - id: ClothingMaskBreath
@@ -34,6 +36,7 @@
   - type: StorageFill
     contents:
         - id: OxygenTankFilled
+        - id: NitrogenTankFilled
         - id: ClothingOuterSuitEmergency
         - id: ClothingMaskBreath
 
@@ -46,6 +49,7 @@
   - type: StorageFill
     contents:
         - id: OxygenTankFilled
+        - id: NitrogenTankFilled
         - id: ClothingOuterHardsuitEVAPrisoner
         - id: ClothingHeadHelmetEVALarge
         - id: ClothingMaskBreath
@@ -59,6 +63,7 @@
   - type: StorageFill
     contents:
         - id: OxygenTankFilled
+        - id: NitrogenTankFilled
         - id: ClothingOuterHardsuitSyndicate
         - id: ClothingHeadHelmetSyndicate
         - id: ClothingMaskGasSyndicate
@@ -72,6 +77,7 @@
   - type: StorageFill
     contents:
         - id: OxygenTankFilled
+        - id: NitrogenTankFilled
         - id: ClothingOuterHardsuitPirateEVA
         - id: ClothingMaskGas
 
@@ -98,6 +104,7 @@
   - type: StorageFill
     contents:
         - id: OxygenTankFilled
+        - id: NitrogenTankFilled
         - id: ClothingOuterHardsuitBasic
         - id: ClothingMaskBreath
 
@@ -110,6 +117,9 @@
   - type: StorageFill
     contents:
         - id: OxygenTankFilled
+        - id: NitrogenTankFilled
+        - id: ExtendedEmergencyOxygenTank
+        - id: ExtendedEmergencyNitrogenTank
         - id: ClothingShoesBootsMag
         - id: ClothingOuterHardsuitEngineering
         - id: ClothingMaskBreath
@@ -125,6 +135,9 @@
   - type: StorageFill
     contents:
         - id: OxygenTankFilled
+        - id: NitrogenTankFilled
+        - id: ExtendedEmergencyOxygenTank
+        - id: ExtendedEmergencyNitrogenTank
         - id: ClothingOuterHardsuitAtmos
         - id: ClothingMaskBreath
   - type: AccessReader
@@ -139,6 +152,9 @@
   - type: StorageFill
     contents:
         - id: OxygenTankFilled
+        - id: NitrogenTankFilled
+        - id: ExtendedEmergencyOxygenTank
+        - id: ExtendedEmergencyNitrogenTank
         - id: ClothingOuterHardsuitSecurity
         - id: ClothingMaskBreath
   - type: AccessReader
@@ -205,6 +221,9 @@
   - type: StorageFill
     contents:
         - id: OxygenTankFilled
+        - id: NitrogenTankFilled
+        - id: ExtendedEmergencyOxygenTank
+        - id: ExtendedEmergencyNitrogenTank
         - id: ClothingOuterHardsuitWarden
         - id: ClothingMaskBreath
   - type: AccessReader
@@ -245,6 +264,7 @@
   - type: StorageFill
     contents:
         - id: OxygenTankFilled
+        - id: NitrogenTankFilled
         - id: ClothingOuterHardsuitSyndie
         - id: ClothingShoesBootsMagSyndie
         - id: ClothingMaskGasSyndicate
@@ -258,6 +278,7 @@
   - type: StorageFill
     contents:
         - id: OxygenTankFilled
+        - id: NitrogenTankFilled
         - id: ClothingOuterHardsuitPirateCap
         - id: ClothingMaskGas
 
@@ -270,5 +291,6 @@
   - type: StorageFill
     contents:
         - id: OxygenTankFilled
+        - id: NitrogenTankFilled
         - id: ClothingOuterHardsuitWizard
         - id: ClothingMaskBreath
