@@ -897,6 +897,9 @@
   id: LightBulb
 
 - type: Tag
+  id: Lens
+
+- type: Tag
   id: Lime
 
 - type: Tag # goob edit
