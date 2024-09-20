@@ -144,6 +144,22 @@ namespace Content.Shared.StatusEffect
             return false;
         }
 
+        public bool TryAddStatusEffect(EntityUid uid, string key, TimeSpan time, bool refresh, Component component,
+            StatusEffectsComponent? status = null)
+        {
+            if (!Resolve(uid, ref status, false))
+                return false;
+
+            if (TryAddStatusEffect(uid, key, time, refresh, status))
+            {
+                EntityManager.AddComponent(uid, component, true);
+                status.ActiveEffects[key].RelevantComponent = _componentFactory.GetComponentName(component.GetType());
+                return true;
+            }
+
+            return false;
+        }
+
         /// <summary>
         ///     Tries to add a status effect to an entity with a certain timer.
         /// </summary>

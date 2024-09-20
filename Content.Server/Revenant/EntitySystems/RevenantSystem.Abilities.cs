@@ -37,6 +37,8 @@ using Content.Shared.StatusEffect;
 using Content.Shared.Flash.Components;
 using Content.Shared.Flash;
 using Robust.Shared.Audio.Systems;
+using Content.Shared.Mind;
+using Content.Shared.Mind.Components;
 
 namespace Content.Server.Revenant.EntitySystems;
 
@@ -252,9 +254,7 @@ public sealed partial class RevenantSystem
             if (!HasComp<MobStateComponent>(ent) || !HasComp<HumanoidAppearanceComponent>(ent) || HasComp<RevenantComponent>(ent))
                 return true;
 
-            var haunted = _interact.InRangeUnobstructed((uid, Transform(uid)), (ent, Transform(ent)), range: 0, collisionMask: CollisionGroup.Impassable);
-            Log.Debug($"{ent} haunted: {haunted}");
-            return !haunted;
+            return !_interact.InRangeUnobstructed((uid, Transform(uid)), (ent, Transform(ent)), range: 0, collisionMask: CollisionGroup.Impassable);
         });
 
         var witnesses = new HashSet<NetEntity>(witnessAndRevenantFilter.RemovePlayerByAttachedEntity(uid).Recipients.Select(ply => GetNetEntity(ply.AttachedEntity!.Value)));
@@ -271,18 +271,18 @@ public sealed partial class RevenantSystem
             );
         }
 
-
-        // TODO: Maybe an eyeball icon above witnesses on the revenant's client
-
-        // TODO: Modify TryAddStatusEffect to add a premade instance of the component
-        if (witnesses.Count > 0 && _statusEffects.TryAddStatusEffect<RevenantRegenModifierComponent>(uid, RevenantEssenceRegen, comp.HauntEssenceRegenDuration, true))
+        if (witnesses.Count > 0 && _statusEffects.TryAddStatusEffect(uid,
+            RevenantEssenceRegen,
+            comp.HauntEssenceRegenDuration,
+            true,
+            component: new RevenantRegenModifierComponent(witnesses)
+        ))
         {
+            if (_mind.TryGetMind(uid, out var _, out var mind) && mind.Session != null)
+                RaiseNetworkEvent(new RevenantHauntWitnessEvent(witnesses), mind.Session);
+
             _store.TryAddCurrency(new Dictionary<string, FixedPoint2>
             { {comp.StolenEssenceCurrencyPrototype, comp.HauntStolenEssencePerWitness * witnesses.Count} }, uid);
-
-            var regen = Comp<RevenantRegenModifierComponent>(uid);
-            regen.Witnesses = witnesses;
-            Dirty(uid, regen);
         }
     }
 

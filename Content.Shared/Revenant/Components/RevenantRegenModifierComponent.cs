@@ -8,8 +8,17 @@ namespace Content.Shared.Revenant.Components;
 public sealed partial class RevenantRegenModifierComponent : Component
 {
     [ViewVariables, AutoNetworkedField]
-    public HashSet<NetEntity> Witnesses = new();
+    public HashSet<NetEntity> Witnesses;
 
     [DataField]
     public ProtoId<AlertPrototype> Alert = "EssenceRegen";
+
+    public RevenantRegenModifierComponent(HashSet<NetEntity> witnesses)
+    {
+        Witnesses = witnesses;
+    }
+
+    public RevenantRegenModifierComponent() : this(new())
+    {
+    }
 }
