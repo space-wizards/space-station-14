@@ -4,6 +4,7 @@
   abstract: true
   description: Mobs without physical bodies
   components:
+  - type: Spectral
   - type: Sprite
     noRot: true
     overrideContainerOcclusion: true # Always show up regardless of where they're contained.
