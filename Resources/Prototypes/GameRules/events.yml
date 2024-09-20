@@ -456,8 +456,7 @@
     weight: 2 # twice as common as zombies
     duration: 1
   - type: ChangelingRule
-    components:
-      sendBriefing: false
+    sendBriefing: false
   - type: AntagSelection
     definitions:
     - prefRoles: [ Changeling ]
