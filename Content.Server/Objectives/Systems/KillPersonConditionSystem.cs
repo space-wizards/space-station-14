@@ -58,7 +58,7 @@ public sealed class KillPersonConditionSystem : EntitySystem
         var allHumans = _mind.GetAliveHumansExcept(args.MindId);
 
         // filter jobs that we don't want to be kill objectives
-        allHumans.RemoveAll(human => !_job.MindTryGetJobId(human, out var jobId) || !comp.IgnoredJobs.Contains(jobId))
+        allHumans.RemoveAll(human => !_job.MindTryGetJobId(human, out var jobId) || !comp.IgnoredJobs.Contains(jobId));
 
         if (allHumans.Count == 0)
         {
