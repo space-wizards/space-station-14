@@ -1,7 +1,6 @@
 using System.Linq;
 using Content.Client.UserInterface.Systems.MenuBar.Widgets;
 using Content.Shared.Construction.Prototypes;
-using Content.Shared.Tag;
 using Content.Shared.Whitelist;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -11,7 +10,6 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.Utility;
 using Robust.Shared.Enums;
-using Robust.Shared.Graphics;
 using Robust.Shared.Prototypes;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
@@ -175,6 +173,17 @@ namespace Content.Client.Construction.UI
                 || _whitelistSystem.IsWhitelistFail(recipe.EntityWhitelist, _playerManager.LocalEntity.Value))
                     continue;
 
+                if (_constructionSystem is not null &&
+                    _constructionSystem.TryGetRecipeMetadata(recipe.ID, out var recipeMetadata))
+                {
+                    recipe.Name = recipeMetadata.Name;
+                    recipe.Description = recipeMetadata.Description;
+                }
+
+                // If nothing is found, we use a fallback.
+                recipe.Name ??= Loc.GetString("construction-presenter-fallback");
+                recipe.Description ??= Loc.GetString("construction-presenter-fallback");
+
                 if (!string.IsNullOrEmpty(search))
                 {
                     if (!recipe.Name.ToLowerInvariant().Contains(search.Trim().ToLowerInvariant()))
@@ -261,7 +270,7 @@ namespace Content.Client.Construction.UI
             _constructionView.ClearRecipeInfo();
 
             _constructionView.SetRecipeInfo(
-                prototype.Name, prototype.Description, spriteSys.Frame0(prototype.Icon),
+                prototype.Name!, prototype.Description!, spriteSys.Frame0(prototype.Icon),
                 prototype.Type != ConstructionType.Item,
                 !_favoritedRecipes.Contains(prototype));
 
@@ -415,9 +424,16 @@ namespace Content.Client.Construction.UI
             }
         }
 
+        // We will update the UI as soon as the client system receives the response.
+        private void OnConstructionRecipesUpdated(object? sender, EventArgs e)
+        {
+            OnViewPopulateRecipes(_constructionView, (string.Empty, string.Empty));
+        }
+
         private void BindToSystem(ConstructionSystem system)
         {
             _constructionSystem = system;
+            system.OnConstructionRecipesUpdated += OnConstructionRecipesUpdated;
             system.ToggleCraftingWindow += SystemOnToggleMenu;
             system.FlipConstructionPrototype += SystemFlipConstructionPrototype;
             system.CraftingAvailabilityChanged += SystemCraftingAvailabilityChanged;
@@ -435,6 +451,7 @@ namespace Content.Client.Construction.UI
             if (system is null)
                 throw new InvalidOperationException();
 
+            system.OnConstructionRecipesUpdated -= OnConstructionRecipesUpdated;
             system.ToggleCraftingWindow -= SystemOnToggleMenu;
             system.FlipConstructionPrototype -= SystemFlipConstructionPrototype;
             system.CraftingAvailabilityChanged -= SystemCraftingAvailabilityChanged;

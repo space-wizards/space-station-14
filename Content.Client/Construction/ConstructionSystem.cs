@@ -2,10 +2,8 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Client.Popups;
 using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
-using Content.Shared.Construction.Steps;
 using Content.Shared.Examine;
 using Content.Shared.Input;
-using Content.Shared.Interaction;
 using Content.Shared.Wall;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
@@ -32,6 +30,7 @@ namespace Content.Client.Construction
 
         private readonly Dictionary<int, EntityUid> _ghosts = new();
         private readonly Dictionary<string, ConstructionGuide> _guideCache = new();
+        private Dictionary<string, RecipeMetadata>? _recipeMetadataCache;
 
         public bool CraftingEnabled { get; private set; }
 
@@ -39,6 +38,9 @@ namespace Content.Client.Construction
         public override void Initialize()
         {
             base.Initialize();
+
+            SubscribeNetworkEvent<ResponseConstructionRecipes>(OnResponseConstructionRecipes);
+            RaiseNetworkEvent(new RequestConstructionRecipes());
 
             UpdatesOutsidePrediction = true;
             SubscribeLocalEvent<LocalPlayerAttachedEvent>(HandlePlayerAttached);
@@ -57,6 +59,13 @@ namespace Content.Client.Construction
             SubscribeLocalEvent<ConstructionGhostComponent, ExaminedEvent>(HandleConstructionGhostExamined);
         }
 
+        public event EventHandler? OnConstructionRecipesUpdated;
+        private void OnResponseConstructionRecipes(ResponseConstructionRecipes ev)
+        {
+            _recipeMetadataCache = ev.Metadata;
+            OnConstructionRecipesUpdated?.Invoke(this, EventArgs.Empty);
+        }
+
         private void OnConstructionGuideReceived(ResponseConstructionGuide ev)
         {
             _guideCache[ev.ConstructionId] = ev.Guide;
@@ -69,6 +78,22 @@ namespace Content.Client.Construction
             base.Shutdown();
 
             CommandBinds.Unregister<ConstructionSystem>();
+        }
+
+        public bool TryGetRecipeMetadata(string constructionId, [NotNullWhen(true)] out RecipeMetadata? metadata)
+        {
+            if (_recipeMetadataCache == null)
+            {
+                metadata = null;
+                return false;
+            }
+
+            if (_recipeMetadataCache.TryGetValue(constructionId, out metadata))
+                return true;
+
+            metadata = null;
+            return false;
+
         }
 
         public ConstructionGuide? GetGuide(ConstructionPrototype prototype)
@@ -89,7 +114,7 @@ namespace Content.Client.Construction
             {
                 args.PushMarkup(Loc.GetString(
                     "construction-ghost-examine-message",
-                    ("name", component.Prototype.Name)));
+                    ("name", component.Prototype.Name!)));
 
                 if (!_prototypeManager.TryIndex(component.Prototype.Graph, out ConstructionGraphPrototype? graph))
                     return;
