@@ -118,8 +118,8 @@
     contents:
         - id: OxygenTankFilled
         - id: NitrogenTankFilled
-        - id: ExtendedEmergencyOxygenTank
-        - id: ExtendedEmergencyNitrogenTank
+        - id: ExtendedEmergencyOxygenTankFilled
+        - id: ExtendedEmergencyNitrogenTankFilled
         - id: ClothingShoesBootsMag
         - id: ClothingOuterHardsuitEngineering
         - id: ClothingMaskBreath
@@ -136,8 +136,8 @@
     contents:
         - id: OxygenTankFilled
         - id: NitrogenTankFilled
-        - id: ExtendedEmergencyOxygenTank
-        - id: ExtendedEmergencyNitrogenTank
+        - id: ExtendedEmergencyOxygenTankFilled
+        - id: ExtendedEmergencyNitrogenTankFilled
         - id: ClothingOuterHardsuitAtmos
         - id: ClothingMaskBreath
   - type: AccessReader
@@ -153,8 +153,8 @@
     contents:
         - id: OxygenTankFilled
         - id: NitrogenTankFilled
-        - id: ExtendedEmergencyOxygenTank
-        - id: ExtendedEmergencyNitrogenTank
+        - id: ExtendedEmergencyOxygenTankFilled
+        - id: ExtendedEmergencyNitrogenTankFilled
         - id: ClothingOuterHardsuitSecurity
         - id: ClothingMaskBreath
   - type: AccessReader
@@ -222,8 +222,8 @@
     contents:
         - id: OxygenTankFilled
         - id: NitrogenTankFilled
-        - id: ExtendedEmergencyOxygenTank
-        - id: ExtendedEmergencyNitrogenTank
+        - id: ExtendedEmergencyOxygenTankFilled
+        - id: ExtendedEmergencyNitrogenTankFilled
         - id: ClothingOuterHardsuitWarden
         - id: ClothingMaskBreath
   - type: AccessReader

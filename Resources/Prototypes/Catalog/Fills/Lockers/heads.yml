@@ -70,8 +70,8 @@
     - id: JetpackCaptainFilled
     - id: OxygenTankFilled
     - id: NitrogenTankFilled
-    - id: DoubleEmergencyOxygenTank
-    - id: DoubleEmergencyNitrogenTank
+    - id: DoubleEmergencyOxygenTankFilled
+    - id: DoubleEmergencyNitrogenTankFilled
 
 # No laser locker, used when the antique laser is placed in the special display crate
 - type: entity
@@ -176,8 +176,8 @@
     - id: JetpackVoidFilled
     - id: OxygenTankFilled
     - id: NitrogenTankFilled
-    - id: DoubleEmergencyOxygenTank
-    - id: DoubleEmergencyNitrogenTank
+    - id: DoubleEmergencyOxygenTankFilled
+    - id: DoubleEmergencyNitrogenTankFilled
 
 # No hardsuit locker
 - type: entity
@@ -234,8 +234,8 @@
     - id: ClothingOuterHardsuitMedical
     - id: OxygenTankFilled
     - id: NitrogenTankFilled
-    - id: DoubleEmergencyOxygenTank
-    - id: DoubleEmergencyNitrogenTank
+    - id: DoubleEmergencyOxygenTankFilled
+    - id: DoubleEmergencyNitrogenTankFilled
 
 # No hardsuit locker
 - type: entity
@@ -287,8 +287,8 @@
     - id: ClothingOuterHardsuitRd
     - id: OxygenTankFilled
     - id: NitrogenTankFilled
-    - id: DoubleEmergencyOxygenTank
-    - id: DoubleEmergencyNitrogenTank
+    - id: DoubleEmergencyOxygenTankFilled
+    - id: DoubleEmergencyNitrogenTankFilled
 
 # No hardsuit locker
 - type: entity
@@ -349,8 +349,8 @@
     - id: JetpackSecurityFilled
     - id: OxygenTankFilled
     - id: NitrogenTankFilled
-    - id: DoubleEmergencyOxygenTank
-    - id: DoubleEmergencyNitrogenTank
+    - id: DoubleEmergencyOxygenTankFilled
+    - id: DoubleEmergencyNitrogenTankFilled
 
 # No hardsuit locker
 - type: entity
