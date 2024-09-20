@@ -1,12 +1,10 @@
 - type: entity # DO NOT USE THIS ONE AS A PARENT
   parent: BaseItem
   id: BaseBaseOrgan
-  name: organ
-  desctription: It's an organ.
   abstract: true
   components:
   - type: Sprite
-    path: Mobs/Species/Human/organs.rsi
+    sprite: Mobs/Species/Human/organs.rsi
   - type: Organ
   - type: Food
   - type: Extractable
@@ -37,7 +35,7 @@
   - type: Gibbable
 
 - type: entity
-  parent: BaseOrgan
+  parent: BaseBaseOrgan
   id: BaseOrganBrain
   name: brain
   desctription: The source of incredible, unending intelligence. Honk.
@@ -235,7 +233,6 @@
 # base animal organs
 
 - type: entity
-  parent: BaseOrgan
   id: BaseAnimalOrgan
   abstract: true
   components:
@@ -275,6 +272,8 @@
   id: OrganAnimalStomach
   categories: [ HideSpawnMenu ]
   components:
+  - type: Metabolizer
+    metabolizerTypes: [ Animal ]
   - type: SolutionContainerManager
     solutions:
       stomach:
@@ -284,8 +283,6 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 5
-  - type: Metabolizer
-    metabolizerTypes: [ Animal ]
 
 - type: entity
   parent: [BaseOrganLiver, BaseAnimalOrgan]

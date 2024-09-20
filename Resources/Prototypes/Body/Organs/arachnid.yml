@@ -1,13 +1,13 @@
 - type: entity
-  parent: BaseOrgan
   id: BaseArachnidOrgan
   abstract: true
+  suffix: arachnid
   components:
   - type: Sprite
     sprite: Mobs/Species/Arachnid/organs.rsi
 
 - type: entity
-  parent: [BaseArachnidOrgan, OrganAnimalStomach]
+  parent: [OrganAnimalStomach, BaseArachnidOrgan]
   id: OrganArachnidStomach
   components:
   - type: Sprite
@@ -18,7 +18,7 @@
     updateInterval: 1.5
 
 - type: entity
-  parent: [BaseArachnidOrgan, BaseOrganLungs]
+  parent: [BaseOrganLungs, BaseArachnidOrgan]
   id: OrganArachnidLungs
   description: Filters oxygen from an atmosphere... just more greedily.
   components:
@@ -26,7 +26,7 @@
     updateInterval: 1.5
 
 - type: entity
-  parent: [BaseArachnidOrgan, BaseOrganHeart]
+  parent: [BaseOrganHeart, BaseArachnidOrgan]
   id: OrganArachnidHeart
   description: A disgustingly persistent little biological pump made for spiders.
   components:
@@ -36,7 +36,7 @@
 
 - type: entity
   id: OrganArachnidLiver
-  parent: [BaseHumanOrgan, OrganAnimalLiver] #TODO: sprite arachnid liver and change parent from BaseHumanOrgan to BaseArachnidOrgan
+  parent: [BaseHumanOrgan, OrganAnimalLiver, BaseArachnidOrgan] #TODO: sprite arachnid liver and change parent from BaseHumanOrgan to BaseArachnidOrgan
   description: 'Pairing suggestion: chianti and fava beans.'
   categories: [ HideSpawnMenu ]
   components:
@@ -44,7 +44,7 @@
     updateInterval: 1.5
 
 - type: entity
-  parent: [ BaseHumanOrgan, OrganAnimalKidneys] #TODO: sprite arachnid kidneys and change parent from BaseHumanOrgan to BaseArachnidOrgan
+  parent: [ BaseHumanOrgan, OrganAnimalKidneys, BaseArachnidOrgan] #TODO: sprite arachnid kidneys and change parent from BaseHumanOrgan to BaseArachnidOrgan
   id: OrganArachnidKidneys
   categories: [ HideSpawnMenu ]
   components:
@@ -52,10 +52,10 @@
     updateInterval: 1.5
 
 - type: entity
-  parent: [BaseArachnidOrgan, BaseOrganEyes]
+  parent: [BaseOrganEyes, BaseArachnidOrgan]
   id: OrganArachnidEyes
   description: Two was already too many.
 
 - type: entity
-  parent: [BaseArachnidOrgan, BaseOrganTongue]
+  parent: [BaseOrganTongue, BaseArachnidOrgan]
   id: OrganArachnidTongue

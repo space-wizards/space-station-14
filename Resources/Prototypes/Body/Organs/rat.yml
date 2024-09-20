@@ -1,7 +1,7 @@
 - type: entity
-  parent: BaseOrganLungs
+  parent: OrganAnimalLungs
   id: OrganRatLungs
-  suffix: "rat"
+  suffix: rat
   components:
   - type: Metabolizer
     metabolizerTypes: [ Rat ]
@@ -9,7 +9,7 @@
 - type: entity
   parent: OrganAnimalStomach
   id: OrganRatStomach
-  suffix: "rat"
+  suffix: rat
   components:
   - type: SolutionContainerManager
     solutions:
