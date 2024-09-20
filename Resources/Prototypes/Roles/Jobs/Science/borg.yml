@@ -12,6 +12,7 @@
   icon: JobIconStationAi
   supervisors: job-supervisors-rd
   jobEntity: StationAiBrain
+  applyTraits: false
 
 - type: job
   id: Borg
@@ -24,3 +25,4 @@
   canBeAntag: false
   icon: JobIconBorg
   supervisors: job-supervisors-rd
+  applyTraits: false
