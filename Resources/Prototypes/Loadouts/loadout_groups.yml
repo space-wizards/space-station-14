@@ -239,8 +239,8 @@
 - type: loadoutGroup
   id: BartenderShoes
   name: loadout-group-bartender-shoes
-  minLimit: 0
   loadouts:
+  - BlackShoes
   - ClownShoesExpert
 
 - type: loadoutGroup
@@ -369,8 +369,8 @@
 - type: loadoutGroup
   id: ChaplainShoes
   name: loadout-group-chaplain-shoes
-  minLimit: 0
   loadouts:
+  - BlackShoes
   - ClownShoesExpert
 
 - type: loadoutGroup
@@ -413,8 +413,8 @@
 - type: loadoutGroup
   id: JanitorShoes
   name: loadout-group-janitor-shoes
-  minLimit: 0
   loadouts:
+  - JanitorGaloshes
   - JanitorClownShoes
 
 - type: loadoutGroup
@@ -466,8 +466,8 @@
 - type: loadoutGroup
   id: BotanistShoes
   name: loadout-group-botanist-shoes
-  minLimit: 0
   loadouts:
+  - BrownShoes
   - ClownShoesExpert
 
 - type: loadoutGroup
@@ -1411,13 +1411,6 @@
 
 # Wildcards
 - type: loadoutGroup
-  id: ReporterJumpsuit
-  name: loadout-group-reporter-jumpsuit
-  loadouts:
-  - ReporterJumpsuit
-  - JournalistJumpsuit
-
-- type: loadoutGroup
   id: ReporterMask
   name: loadout-group-reporter-mask
   minLimit: 0
@@ -1425,10 +1418,17 @@
   - ServiceClown
 
 - type: loadoutGroup
+  id: ReporterJumpsuit
+  name: loadout-group-reporter-jumpsuit
+  loadouts:
+  - ReporterJumpsuit
+  - JournalistJumpsuit
+
+- type: loadoutGroup
   id: ReporterShoes
   name: loadout-group-reporter-shoes
-  minLimit: 0
   loadouts:
+  - WhiteShoes
   - ClownShoesExpert
 
 - type: loadoutGroup
