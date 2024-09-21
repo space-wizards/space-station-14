@@ -1208,6 +1208,16 @@
   id: SmallMech
 
 - type: Tag
+  id: IndustrialMech
+
+- type: Tag
+  id: CombatMech
+# TODO: Make medical mech
+
+- type: Tag
+  id: SpecialMech
+
+- type: Tag
   id: Smokable
 
 - type: Tag
