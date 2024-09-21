@@ -154,6 +154,11 @@
     id: SciencePDA
 
 - type: loadout
+  id: RoboticistPDA
+  equipment:
+    id: RoboticsPDA
+
+- type: loadout
   id: SeniorResearcherPDA
   effects:
   - !type:GroupLoadoutEffect

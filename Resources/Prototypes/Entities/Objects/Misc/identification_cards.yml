@@ -467,6 +467,26 @@
     layers:
     - state: default
     - state: idbrigmedic
+  - type: IdCard
+    jobTitle: Brigmedic
+    jobIcon: JobIconBrigmedic
+  - type: PresetIdCard
+    job: Brigmedic
+
+- type: entity
+  parent: IDCardStandard
+  id: RoboticsIDCard
+  name: robotics ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idroboticist
+  - type: IdCard
+    jobTitle: Roboticist
+    jobIcon: JobIconRoboticist
+  - type: PresetIdCard
+    job: Roboticist
 
 - type: entity
   parent: IDCardStandard
