@@ -213,6 +213,13 @@
   - BartenderBowler
 
 - type: loadoutGroup
+  id: BartenderMask
+  name: loadout-group-bartender-mask
+  minLimit: 0
+  loadouts:
+  - ServiceClown
+
+- type: loadoutGroup
   id: BartenderJumpsuit
   name: loadout-group-bartender-jumpsuit
   loadouts:
@@ -228,6 +235,13 @@
   - BartenderVest
   - BartenderApron
   - BartenderWintercoat
+
+- type: loadoutGroup
+  id: BartenderShoes
+  name: loadout-group-bartender-shoes
+  minLimit: 0
+  loadouts:
+  - ClownShoesExpert
 
 - type: loadoutGroup
   id: Mixologist
@@ -249,6 +263,7 @@
   minLimit: 0
   loadouts:
   - ChefMask
+  - ServiceClown
 
 - type: loadoutGroup
   id: ChefJumpsuit
@@ -272,6 +287,7 @@
   loadouts:
   - BlackShoes
   - ChefShoes
+  - ClownShoesExpert
 
 - type: loadoutGroup
   id: LibrarianJumpsuit
@@ -321,6 +337,7 @@
   minLimit: 0
   loadouts:
   - ChaplainMask
+  - ChaplinClown
 
 - type: loadoutGroup
   id: ChaplainJumpsuit
@@ -340,6 +357,7 @@
   - ChaplainNunRobe
   - ChaplainBlackHoodie
   - ChaplainHoodie
+  - ChaplinHonkrobes
 
 - type: loadoutGroup
   id: ChaplainNeck
@@ -349,11 +367,25 @@
   - ChaplainNeck
 
 - type: loadoutGroup
+  id: ChaplainShoes
+  name: loadout-group-chaplain-shoes
+  minLimit: 0
+  loadouts:
+  - ClownShoesExpert
+
+- type: loadoutGroup
   id: JanitorHead
   name: loadout-group-janitor-head
   minLimit: 0
   loadouts:
   - JanitorHead
+
+- type: loadoutGroup
+  id: JanitorMask
+  name: loadout-group-janitor-mask
+  minLimit: 0
+  loadouts:
+  - JanitorClown
 
 - type: loadoutGroup
   id: JanitorJumpsuit
@@ -379,6 +411,13 @@
   - JanitorWintercoat
 
 - type: loadoutGroup
+  id: JanitorShoes
+  name: loadout-group-janitor-shoes
+  minLimit: 0
+  loadouts:
+  - JanitorClownShoes
+
+- type: loadoutGroup
   id: JanitorPlunger
   name: loadout-group-janitor-plunger
   minLimit: 0
@@ -392,6 +431,13 @@
   loadouts:
   - BotanistHead
   - BotanistBandana
+
+- type: loadoutGroup
+  id: BotanistMask
+  name: loadout-group-botanist-mask
+  minLimit: 0
+  loadouts:
+  - ServiceClown
 
 - type: loadoutGroup
   id: BotanistJumpsuit
@@ -416,6 +462,13 @@
   loadouts:
   - BotanistApron
   - BotanistWintercoat
+
+- type: loadoutGroup
+  id: BotanistShoes
+  name: loadout-group-botanist-shoes
+  minLimit: 0
+  loadouts:
+  - ClownShoesExpert
 
 - type: loadoutGroup
   id: ClownHead
@@ -622,6 +675,13 @@
   - CargoTechnicianHead
 
 - type: loadoutGroup
+  id: CargoTechnicianMask
+  name: loadout-group-cargo-technician-mask
+  minLimit: 0
+  loadouts:
+  - CargoClown
+
+- type: loadoutGroup
   id: CargoTechnicianJumpsuit
   name: loadout-group-cargo-technician-jumpsuit
   loadouts:
@@ -649,6 +709,7 @@
   loadouts:
   - BlackShoes
   - CargoWinterBoots
+  - CargoClownShoes
 
 - type: loadoutGroup
   id: CargoTechnicianPDA
@@ -745,6 +806,13 @@
   - SeniorEngineerBeret
 
 - type: loadoutGroup
+  id: StationEngineerMask
+  name: loadout-group-station-engineer-mask
+  minLimit: 0
+  loadouts:
+  - EngineerClown
+
+- type: loadoutGroup
   id: StationEngineerJumpsuit
   name: loadout-group-station-engineer-jumpsuit
   loadouts:
@@ -776,6 +844,7 @@
   loadouts:
   - WorkBoots
   - EngineeringWinterBoots
+  - EngineerClownShoes
 
 - type: loadoutGroup
   id: StationEngineerID
@@ -872,6 +941,14 @@
   - ScientificBeret
 
 - type: loadoutGroup
+  id: ScientistMask
+  name: loadout-group-scientist-mask
+  minLimit: 0
+  loadouts:
+  - ScientistClown
+  - RoboticsClown
+
+- type: loadoutGroup
   id: ScientistNeck
   name: loadout-group-scientist-neck
   minLimit: 0
@@ -917,6 +994,7 @@
   - WhiteShoes
   - BlackShoes
   - ScienceWinterBoots
+  - ScientistClownShoes
 
 - type: loadoutGroup
   id: ScientistGloves
@@ -1012,6 +1090,13 @@
   - TrooperHat
 
 - type: loadoutGroup
+  id: SecurityMask
+  name: loadout-group-security-mask
+  minLimit: 0
+  loadouts:
+  - SecurityClown
+
+- type: loadoutGroup
   id: SecurityJumpsuit
   name: loadout-group-security-jumpsuit
   loadouts:
@@ -1050,6 +1135,14 @@
 - type: loadoutGroup
   id: SecurityShoes
   name: loadout-group-security-shoes
+  loadouts:
+  - JackBoots
+  - SecurityWinterBoots
+  - SecurityClownShoes
+
+- type: loadoutGroup
+  id: UpperSecurityShoes
+  name: loadout-group-upper-security-shoes
   loadouts:
   - JackBoots
   - SecurityWinterBoots
@@ -1202,11 +1295,12 @@
   - MedicalDoctorDuffel
 
 - type: loadoutGroup
-  id: MedicalShoes
+  id: MedicalDoctorShoes
   name: loadout-group-medical-doctor-shoes
   loadouts:
   - WhiteShoes
   - MedicalWinterBoots
+  - DoctorClownShoes
 
 - type: loadoutGroup
   id: MedicalDoctorPDA
@@ -1229,6 +1323,14 @@
   minLimit: 0
   loadouts:
   - SterileMask
+
+- type: loadoutGroup
+  id: MedicalDoctorMask
+  name: loadout-group-medical-doctor-mask
+  minLimit: 0
+  loadouts:
+  - SterileMask
+  - DoctorClown
 
 - type: loadoutGroup
   id: MedicalInternJumpsuit
@@ -1260,6 +1362,13 @@
   - ChemistBackpack
   - ChemistSatchel
   - ChemistDuffel
+
+- type: loadoutGroup
+  id: ChemistShoes
+  name: loadout-group-chemist-shoes
+  loadouts:
+  - WhiteShoes
+  - MedicalWinterBoots
 
 - type: loadoutGroup
   id: ParamedicHead
@@ -1307,6 +1416,20 @@
   loadouts:
   - ReporterJumpsuit
   - JournalistJumpsuit
+
+- type: loadoutGroup
+  id: ReporterMask
+  name: loadout-group-reporter-mask
+  minLimit: 0
+  loadouts:
+  - ServiceClown
+
+- type: loadoutGroup
+  id: ReporterShoes
+  name: loadout-group-reporter-shoes
+  minLimit: 0
+  loadouts:
+  - ClownShoesExpert
 
 - type: loadoutGroup
   id: PsychologistJumpsuit
