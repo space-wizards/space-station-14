@@ -73,6 +73,10 @@
           Searching: { state: pai-searching-overlay }
           On: { state: pai-on-overlay }
   - type: StationMap
+  - type: ActionGrant
+    actions:
+    - ActionPAIPlayMidi
+    - ActionPAIOpenMap
 
 - type: entity
   parent: [ PersonalAI, BaseSyndicateContraband]

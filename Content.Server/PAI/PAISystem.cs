@@ -4,7 +4,6 @@ using Content.Server.Instruments;
 using Content.Server.Kitchen.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mind.Components;
-using Content.Shared.PAI;
 using Content.Shared.Popups;
 using Robust.Shared.Random;
 using System.Text;
@@ -12,7 +11,7 @@ using Robust.Shared.Player;
 
 namespace Content.Server.PAI;
 
-public sealed class PAISystem : SharedPAISystem
+public sealed class PAISystem : EntitySystem
 {
     [Dependency] private readonly InstrumentSystem _instrumentSystem = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
