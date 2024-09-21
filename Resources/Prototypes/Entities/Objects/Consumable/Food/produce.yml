@@ -2556,7 +2556,7 @@
 
 - type: entity
   name: anomaly berry
-  description: a strange blue fruit. Something about it doesn't seem right.
+  description: A strange blue fruit. Something about it doesn't seem right.
   parent: FoodProduceBase
   id: FoodAnomalyBerry
   components:
