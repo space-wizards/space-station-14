@@ -10,14 +10,3 @@
       state: state-laws
     event: !type:ToggleLawsScreenEvent
     useDelay: 0.5
-
-- type: entity
-  id: ActionBeep
-  name: Beep
-  description: Beep Beep.
-  components:
-  - type: InstantAction
-    useDelay: 5
-    icon: Interface/Emotes/beep.png
-    event: !type:ScreamActionEvent
-    checkCanInteract: false
