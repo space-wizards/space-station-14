@@ -74,10 +74,10 @@ public sealed class ApcSystem : EntitySystem
     //Update the HasAccess var for UI to read
     private void OnBoundUiOpen(EntityUid uid, ApcComponent component, BoundUIOpenedEvent args)
     {
-        // TODO: this should be per-player not stored on the apc                        //maybe remove before merge.
-        //component.HasAccess = _accessReader.IsAllowed(args.Actor, uid);           //Maybe un-comment this.
+        // TODO: this should be per-player not stored on the apc                        //maybe remove before merge, if maints think this is solved
+        //component.HasAccess = _accessReader.IsAllowed(args.Actor, uid);           //All instances of HasAccess have been commented.
         //component.HasAccess = true;                 // This can likely be changed with the above line again, though it will re-inroduce unnecessary jank without singleUser:true
-        UpdateApcState(uid, component);                                           //!!REMOVE (one of these) BEFORE MERGE!!
+        UpdateApcState(uid, component);
     }
 
     private void OnToggleMainBreaker(EntityUid uid, ApcComponent component, ApcToggleMainBreakerMessage args)
@@ -91,7 +91,6 @@ public sealed class ApcSystem : EntitySystem
             return;
         }
 
-        //component.HasAccess = _accessReader.IsAllowed(args.Actor, uid);           !!REMOVE BEFORE MERGE!!
         if (_accessReader.IsAllowed(args.Actor, uid))       // this is the check for ID permissions
         {
             ApcToggleBreaker(uid, component);
