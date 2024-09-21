@@ -34,14 +34,6 @@
   id: JustAWeekAway
   background: /Textures/LobbyScreens/justaweekaway.webp
 
-- type: lobbyBackground
-  id: JaniShootout
-  background: /Textures/LobbyScreens/janishootout.webp
-
-- type: lobbyBackground
-  id: ReclaimerNuke
-  background: /Textures/LobbyScreens/reclaimer-nuke.webp
-  
 - type: lobbyBackground # These three with the ID "CQCm" and "Janitor" are for Weaselstation.
   id: CQCm
   background: /Textures/LobbyScreens/cqcm.webp
