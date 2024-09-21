@@ -263,6 +263,13 @@
     sprite: Clothing/Neck/Medals/clownmedal.rsi
     state: icon
 
+- type: stealTargetGroup
+  id: WantedListCartridge
+  name: steal-target-groups-wanted-list-cartridge
+  sprite:
+    sprite: Objects/Devices/cartridge.rsi
+    state: cart-sec
+
 #Thief structures
 
 - type: stealTargetGroup
