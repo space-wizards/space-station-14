@@ -458,8 +458,8 @@
       - state: old_generator_plasma_fuel_leak
   - type: PhysicalComposition
     materialComposition:
-      Steel: 4500 # 45 sheets
-      Plasma: 3000 # 30 sheets
+      Steel: 4000 # 40 sheets
+      Plasma: 2500 # 25 sheets
       Plastic: 500 # 5 sheets
 
 - type: entity
@@ -474,8 +474,8 @@
       - state: old_generator_plasma
   - type: PhysicalComposition
     materialComposition:
-      Steel: 4500 # 45 sheets
-      Plasma: 500 # 5 sheets
+      Steel: 4000 # 40 sheets
+      Plasma: 1000 # 10 sheets
       Plastic: 500 # 5 sheets
 
 - type: entity
@@ -501,8 +501,8 @@
   - type: MultiHandedItem
   - type: PhysicalComposition
     materialComposition:
-      Steel: 4500 # 45 sheets
-      Uranium: 3000 # 30 sheets
+      Steel: 4000 # 40 sheets
+      Uranium: 2500 # 25 sheets
       Plastic: 500 # 5 sheets
 
 - type: entity
@@ -523,8 +523,8 @@
         nothing: ""
   - type: PhysicalComposition
     materialComposition:
-      Steel: 4500 # 45 sheets
-      Uranium: 500 # 5 sheets
+      Steel: 4000 # 40 sheets
+      Uranium: 1000 # 10 sheets
       Plastic: 500 # 5 sheets
 
 - type: entity
@@ -539,7 +539,7 @@
       - state: generator_frame
   - type: PhysicalComposition
     materialComposition:
-      Steel: 1500 # 15 sheetss
+      Steel: 1500 # 15 sheets
 
 - type: entity
   parent: BaseScrap
@@ -554,4 +554,4 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 200 # 2 sheets
-      Uranium: 300 # 3 sheets
+      Uranium: 500 # 5 sheets
