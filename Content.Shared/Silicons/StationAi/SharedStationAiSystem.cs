@@ -292,11 +292,11 @@ public abstract partial class SharedStationAiSystem : EntitySystem
 
     private void ClearEye(Entity<StationAiCoreComponent> ent)
     {
-		if (_net.IsClient)
+        if (_net.IsClient)
             return;
         QueueDel(ent.Comp.RemoteEntity);
         ent.Comp.RemoteEntity = null;
-		Dirty(ent);
+        Dirty(ent);
     }
 
     private void AttachEye(Entity<StationAiCoreComponent> ent)
