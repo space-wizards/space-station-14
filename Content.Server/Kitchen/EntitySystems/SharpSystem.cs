@@ -11,6 +11,7 @@ using Content.Shared.Storage;
 using Content.Shared.Verbs;
 using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
+using Content.Shared.Hands.Components;
 using Content.Shared.Kitchen;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -72,12 +73,17 @@ public sealed class SharpSystem : EntitySystem
         if (!sharp.Butchering.Add(target))
             return false;
 
+        // if the user isn't the entity with the sharp component,
+        // they will need to be holding something with their hands, so we set needHand to true
+        // so that the doafter can be interrupted if they drop the item in their hands
+        var needHand = user != knife;
+
         var doAfter =
             new DoAfterArgs(EntityManager, user, sharp.ButcherDelayModifier * butcher.ButcherDelay, new SharpDoAfterEvent(), knife, target: target, used: knife)
             {
                 BreakOnDamage = true,
                 BreakOnMove = true,
-                // NeedHand = false, only mobs with hands and mobs with the sharpcomp will see the verb
+                NeedHand = needHand
             };
         _doAfterSystem.TryStartDoAfter(doAfter);
         return true;
