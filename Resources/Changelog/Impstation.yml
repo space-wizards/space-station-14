@@ -1843,3 +1843,37 @@
   id: 238
   time: '2024-09-21T02:11:42.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/307
+- author: Tox3ct
+  changes:
+  - message: Added gray plushie. thui love keb piskun plushie
+    type: Add
+  id: 239
+  time: '2024-09-21T18:04:28.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/315
+- author: Pinkbat5
+  changes:
+  - message: HoPs rejoice! Brigmedic and roboticist can be selected as presets in
+      the ID card computer.
+    type: Add
+  - message: Scientists can now select the robotics PDA in their loadout.
+    type: Tweak
+  id: 240
+  time: '2024-09-21T18:06:03.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/312
+- author: Pinkbat5
+  changes:
+  - message: Added bronzeheart medal to Head of Security locker.
+    type: Add
+  id: 241
+  time: '2024-09-21T18:06:46.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/313
+- author: aada
+  changes:
+  - message: NanoTrasen has signed new contracts with expert staff across many departments.
+      The experts happen to also be clowns.
+    type: Add
+  - message: New clown prestige loadouts.
+    type: Add
+  id: 242
+  time: '2024-09-21T18:05:08.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/316
