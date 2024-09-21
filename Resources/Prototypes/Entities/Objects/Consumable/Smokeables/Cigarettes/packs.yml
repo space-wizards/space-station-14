@@ -195,7 +195,7 @@
   id: CigPackSpirits
   parent: CigPackBase
   name: Spirits
-  description: Designer cigarettes containing genetically-modified tobacoo that smells like wood smoke when burnt.
+  description: Designer cigarettes containing genetically-modified tobacco that smells like wood smoke when burnt.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/spirits.rsi
