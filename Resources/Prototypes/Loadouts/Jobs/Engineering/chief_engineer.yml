@@ -6,7 +6,7 @@
     requirement:
       !type:RoleTimeRequirement
       role: JobChiefEngineer
-      time: 72000 #20
+      time: 72000 #20 hrs
 
 # For the veteran command cosmetic set
 - type: loadoutEffectGroup
