@@ -4,7 +4,6 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.EntityEffects;
 using Content.Shared.FixedPoint;
-using Content.Shared.Implants.Components;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -167,8 +166,27 @@ namespace Content.Shared.Chemistry.Reaction
 
             var energy = reaction.ConserveEnergy ? solution.GetThermalEnergy(_prototypeManager) : 0;
 
+            List<ReagentData> dnaDataList = new List<ReagentData>();
+
+            //save reactant DNA to DNAlist
+            if (reaction.PreserveDNA)
+            {
+
+                foreach (var reagent in solution.Contents)
+                {
+
+                    foreach (var data in reagent.Reagent.EnsureReagentData())
+                    {
+                        if (data is DnaData)
+                        {
+                            dnaDataList.Add((data));
+                        }
+                    }
+                }
+            }
+
             //Remove reactants
-            foreach (var reactant in reaction.Reactants)
+            foreach (KeyValuePair<string, ReactantPrototype> reactant in reaction.Reactants)
             {
                 if (!reactant.Value.Catalyst)
                 {
@@ -182,7 +200,7 @@ namespace Content.Shared.Chemistry.Reaction
             foreach (var product in reaction.Products)
             {
                 products.Add(product.Key);
-                solution.AddReagent(product.Key, product.Value * unitReactions);
+                solution.AddReagent(new ReagentId(product.Key, dnaDataList), product.Value * unitReactions);
             }
 
             if (reaction.ConserveEnergy)
@@ -192,10 +210,6 @@ namespace Content.Shared.Chemistry.Reaction
                     solution.Temperature = energy / newCap;
             }
 
-            if(reaction.preserveDNA)
-            {
-                
-            }
 
             OnReaction(soln, reaction, null, unitReactions);
 
