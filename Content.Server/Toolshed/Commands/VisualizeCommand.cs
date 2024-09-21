@@ -16,7 +16,7 @@ public sealed class VisualizeCommand : ToolshedCommand
 
     [CommandImplementation]
     public void VisualizeEntities(
-            [CommandInvocationContext] IInvocationContext ctx,
+            IInvocationContext ctx,
             [PipedArgument] IEnumerable<EntityUid> input
         )
     {
