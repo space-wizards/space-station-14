@@ -2902,6 +2902,11 @@
   - type: Tag
     tags:
     - VimPilot
+  - type: HTN # GreyStation - make all cats eat mice
+    rootTask: SimpleHostileCompound
+  - type: NpcFactionMember # GreyStation - give cats faction so they fight mice and pitbulls fight htem
+    factions:
+    - Cat
 
 - type: entity
   name: calico cat
