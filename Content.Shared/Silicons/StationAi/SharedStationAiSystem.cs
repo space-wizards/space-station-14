@@ -356,11 +356,11 @@ public abstract partial class SharedStationAiSystem : EntitySystem
 
     private void OnAiBrainRemoved(Entity<StationAiHeldComponent> ent, ref EntGotRemovedFromContainerMessage args)
     {
-        if(!TryComp(ent.Owner, out ActionsComponent? targetComponent)) 
-            return;
-        targetComponent.Actions.Clear();
-
-        Dirty(targetComponent.Owner, targetComponent);
+        if (TryComp(args.Entity, out ActionsComponent? comp))
+        {
+            comp.Actions.Clear();
+            Dirty(args.Entity, comp);
+        }
     }
 
     private void UpdateAppearance(Entity<StationAiHolderComponent?> entity)
