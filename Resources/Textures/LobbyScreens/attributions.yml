@@ -38,27 +38,12 @@
   copyright: "InCrah on twitter / @in_crah"
   source: "https://twitter.com/in_crah"
 
-- files: ["terminalstation.webp"]
-  license: "CC-BY-SA-3.0"
-  copyright: "aserovich on discord"
-  source: "https://github.com/space-wizards/space-station-14"
-
 - files: ["justaweekaway.webp"]
   license: "CC-BY-SA-3.0"
   copyright: "plantyfern on discord"
   source: "https://github.com/space-wizards/space-station-14"
 
-- files: ["janishootout.webp"]
-  license: "CC0-1.0"
-  copyright: "psychpsyo on Github/Twitter"
-  source: "https://github.com/space-wizards/space-station-14"
-
-- files: ["reclaimer-nuke.webp"]
-  license: "CC-BY-NC-SA-3.0"
-  copyright: "GetOutMarutak,aka.Snicket on Discord/github/Cara/Ko-fi"
-  source: "https://github.com/space-wizards/space-station-14"
-
-- files: ["cqcm.webp"] # These three titled "cqcm" are for Weaselstation
+- files: ["cqcm.webp"] # These three titled "cqcm" and "janitor" are for Weaselstation
   license: "CC-BY-NC-SA-3.0"
   copyright: "blooodyspy"
   source: "https://github.com/GroggleG/Weasel-Station"
@@ -72,3 +57,8 @@
   license: "CC-BY-NC-SA-3.0"
   copyright: "blooodyspy"
   source: "https://github.com/GroggleG/Weasel-Station"
+
+- files: ["janitor.webp"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "Kor Phaeron"
+  source: "https://tgstation13.org/phpBB/viewtopic.php?t=15554"

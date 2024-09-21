@@ -68,3 +68,18 @@
   license: "CC-BY-NC-SA-3.0"
   copyright: "every light is blinking at once by Alexander Divine."
   source: "https://soundcloud.com/alexanderdivine/every-light-is-blinking-at-once"
+
+- files: ["clownwmv.ogg"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "Clown.wmv by Admiral Hippie"
+  source: "https://www.youtube.com/watch?v=9whQIbNmu9s"
+
+- files: ["LISAonthemoon.ogg"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "LISA - TinTin on the moon by Admiral Hippie"
+  source: "https://www.youtube.com/watch?v=bjVSd62LdEA"
+
+- files: ["thewizard.ogg"]
+  license: "Custom"
+  copyright: "The Wizard by Chris Remo is used with special permission from the author, under the condition that the project remains non-commercial and open source. The author also requested that a link to his bandcamp be included: https://chrisremo.bandcamp.com/"
+  source: "https://idlethumbs.bandcamp.com/track/the-wizard"
