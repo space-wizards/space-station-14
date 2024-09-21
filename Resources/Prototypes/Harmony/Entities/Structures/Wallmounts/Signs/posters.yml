@@ -61,6 +61,16 @@
 
 - type: entity
   parent: PosterBase
+  id: PosterHarmonyFloodlight
+  name: "The Floodlight"
+  description: "In loving memory of Salvagers that were lost in space and never recovered."
+  components:
+    - type: Sprite
+      sprite: Harmony/Structures/Wallmounts/posters.rsi
+      state: harmony_poster7_legit
+
+- type: entity
+  parent: PosterBase
   id: PosterHarmonyCan
   name: "Fallen Can"
   description: "A poster reminding you to clean up after yourself, nobody likes littering! Or, that's probably what it means. It's been here for so long, the original meaning may have faded…"
