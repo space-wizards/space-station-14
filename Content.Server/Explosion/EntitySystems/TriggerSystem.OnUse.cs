@@ -16,24 +16,10 @@ public sealed partial class TriggerSystem
     private void InitializeOnUse()
     {
         SubscribeLocalEvent<OnUseTimerTriggerComponent, UseInHandEvent>(OnTimerUse);
-        SubscribeLocalEvent<OnUseTimerTriggerComponent, UserActivateInWorldEvent>(OnUseSelf);
         SubscribeLocalEvent<OnUseTimerTriggerComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<OnUseTimerTriggerComponent, GetVerbsEvent<AlternativeVerb>>(OnGetAltVerbs);
         SubscribeLocalEvent<OnUseTimerTriggerComponent, EntityStuckEvent>(OnStuck);
         SubscribeLocalEvent<RandomTimerTriggerComponent, MapInitEvent>(OnRandomTimerTriggerMapInit);
-    }
-
-    private void OnUseSelf(EntityUid uid, OnUseTimerTriggerComponent comp, UserActivateInWorldEvent args)
-    {
-        // Allow grenades to activate themselves (if they're posessed or ghost role)
-
-        if (args.Handled)
-            return;
-
-        if (args.Target != uid)
-            return;
-
-        StartTimer((uid, comp), uid);
     }
 
     private void OnStuck(EntityUid uid, OnUseTimerTriggerComponent component, ref EntityStuckEvent args)

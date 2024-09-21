@@ -64,6 +64,14 @@
   - LoadoutSpeciesEVANitrogen
   - LoadoutSpeciesEVAOxygen
 
+- type: loadoutGroup
+  id: GroupPocketTankDouble
+  name: loadout-group-pocket-tank-double
+  hidden: true
+  loadouts:
+  - LoadoutSpeciesPocketDoubleNitrogen
+  - LoadoutSpeciesPocketDoubleOxygen
+
 # Command
 - type: loadoutGroup
   id: CaptainHead
@@ -316,6 +324,13 @@
   - ChefApron
   - ChefJacket
   - ChefWintercoat
+
+- type: loadoutGroup
+  id: ChefShoes
+  name: loadout-group-chef-shoes
+  loadouts:
+  - BlackShoes
+  - ChefShoes
 
 - type: loadoutGroup
   id: LibrarianJumpsuit
@@ -963,6 +978,7 @@
   - ScientistJumpskirt
   - RoboticistJumpsuit
   - RoboticistJumpskirt
+  - ScientistJumpsuitFormal
   - SeniorResearcherJumpsuit
   - SeniorResearcherJumpskirt
 
@@ -1051,6 +1067,7 @@
   loadouts:
   - HeadofSecurityCoat
   - HeadofSecurityWinterCoat
+  - HeadofSecurityWinterCoatUnarmored
 
 - type: loadoutGroup
   id: HeadofSecurityBackpack
@@ -1077,6 +1094,7 @@
   loadouts:
   - WardenJumpsuit
   - WardenJumpskirt
+  - SecurityJumpsuitBlue
 
 - type: loadoutGroup
   id: WardenOuterClothing
@@ -1084,6 +1102,7 @@
   loadouts:
   - WardenCoat
   - WardenArmoredWinterCoat
+  - WardenWinterCoatUnarmored
 
 - type: loadoutGroup
   id: SecurityHead
@@ -1103,9 +1122,10 @@
   - SecurityJumpskirt
   - SecurityJumpsuitGrey
   - SecurityJumpskirtGrey
+  - TrooperUniform
+  - SecurityJumpsuitBlue
   - SeniorOfficerJumpsuit
   - SeniorOfficerJumpskirt
-  - TrooperUniform
 
 - type: loadoutGroup
   id: SecurityBackpack
@@ -1175,6 +1195,7 @@
   loadouts:
   - DetectiveArmorVest
   - DetectiveCoat
+  - NoirCoat
 
 - type: loadoutGroup
   id: SecurityCadetJumpsuit

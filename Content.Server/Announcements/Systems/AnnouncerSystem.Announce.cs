@@ -56,7 +56,7 @@ public sealed partial class AnnouncerSystem
         Color? colorOverride = null, EntityUid? station = null, AnnouncerPrototype? announcerOverride = null,
         params (string, object)[] localeArgs)
     {
-        sender ??= Loc.GetString($"announcer-{announcerOverride?.ID ?? Announcer.ID}-name");
+        sender = (sender != null) ? Loc.GetString(sender) : Loc.GetString($"announcer-{announcerOverride?.ID ?? Announcer.ID}-name");
 
         // If the announcement has a message override, use that instead of the message parameter
         if (GetAnnouncementMessage(announcementId, announcerOverride?.ID ?? Announcer.ID) is { } announcementMessage)

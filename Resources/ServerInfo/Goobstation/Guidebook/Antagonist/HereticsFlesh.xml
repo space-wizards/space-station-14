@@ -1,0 +1,79 @@
+<Document>
+  # Path of Flesh
+  The Path of Flesh focuses on summoning player-controlled minions and demons to do your bidding. Heretics on this path gain almost no offensive or defensive abilities, and rely heavily on stockpiling corpses and organs to complete rituals.
+
+  Despite this, it offers many fun and powerful tools to those who can make it to the end, making it a difficult (but satisfying) path overall for inexperienced Heretics. Ascending allows you to shed your human form and become something much greater. 
+
+  ## Principle of Hunger
+  <Box>
+    <GuideEntityEmbed Entity="HereticBladeFlesh" Caption=""/>
+  </Box>
+  Opens up the Path of Flesh to you.
+
+  Allows you to transmute a knife and a pool of blood into a Bloody Blade.
+
+  ## Grasp of Flesh
+  <Box>
+    <GuideEntityEmbed Entity="TouchSpellMansus" Caption=""/>
+  </Box>
+  Your Mansus Grasp gains the ability to create a ghoul out of corpse with a soul.
+
+  Ghouls have only 50 health and look like husks to the heathens' eyes, but can use Bloody Blades effectively.
+
+  ## Imperfect Ritual
+  <Box>
+    <GuideEntityEmbed Entity="FoodPoppy" Caption=""/>
+  </Box>
+  Allows you to transmute a corpse and a poppy to create a Voiceless Dead.
+
+  The corpse does not need to have a soul.
+
+  Voiceless Dead are mute ghouls and only have 100 health, but can use Bloody Blades effectively.
+
+  ## Mark of Flesh
+  <Box>
+    <GuideEntityEmbed Entity="TouchSpellMansus" Caption=""/>
+  </Box>
+  Your Mansus Grasp now applies the Mark of Flesh. The mark is triggered from an attack with your Bloody Blade.
+
+  When triggered, the victim violently spills all it's blood on the ground.
+
+  ## Knitting of Flesh
+  <Box>
+    <GuideEntityEmbed Entity="OrganHumanHeart" Caption=""/>
+  </Box>
+  Grants you the spell Knit Flesh. This spell allows you to remove organs from victims without requiring a lengthy surgery. This process is much longer if the target is not dead.
+
+  This spell also allows you to heal your minions and summons, or restore failing organs to acceptable status.
+
+  ## Raw Ritual
+  <Box>
+    <GuideEntityEmbed Entity="MobGhoulProphet" Caption=""/>
+  </Box>
+  Allows you to transmute a pair of eyes, a stomach, and a pool of blood to create a Raw Prophet.
+
+  Raw Prophets have a long range jaunt and the ability to link minds to communicate with ease, but are very fragile and weak in combat.
+
+  ## Bleeding Steel
+  <Box>
+    <GuideEntityEmbed Entity="HereticBladeFlesh" Caption=""/>
+  </Box>
+  Your Bloody Blade now causes enemies to bleed heavily on attack.
+
+  ## Lonely Ritual
+  <Box>
+    <GuideEntityEmbed Entity="MobGhoulStalker" Caption=""/>
+  </Box>
+  Allows you to transmute a heart, a stomach, lungs and a pen to create a Stalker.
+
+  Stalkers can jaunt, release EMPs, and are strong in combat.
+
+  ## Priest’s Final Hymn
+  The ascension ritual of the Path of Flesh. Bring 4 corpses to a transmutation rune to complete the ritual.
+
+  When completed, you gain the ability to shed your human form and become the Lord of the Night, a supremely powerful creature.
+
+  Just the act of transforming causes nearby heathens great fear and trauma.
+
+  While in the Lord of the Night form, you can consume the living to heal.
+</Document>

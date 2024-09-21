@@ -1,0 +1,221 @@
+# basic knowledge
+- type: hereticKnowledge
+  id: BreakOfDawn
+  actionPrototypes:
+  - ActionHereticOpenStore
+  - ActionHereticMansusGrasp
+
+- type: hereticKnowledge
+  id: HeartbeatOfMansus
+  ritualPrototypes:
+  - Sacrifice  
+
+- type: hereticKnowledge
+  id: AmberFocus
+  ritualPrototypes:
+  - AmberFocus
+
+- type: hereticKnowledge
+  id: CodexCicatrix
+  # ritualPrototypes:
+
+- type: hereticKnowledge
+  id: CloakOfShadow
+  # actionPrototypes:
+
+- type: hereticKnowledge
+  id: RitualOfKnowledge
+  ritualPrototypes:
+  - RitualOfKnowledge
+
+# ash path
+- type: hereticKnowledge
+  id: NightwatcherSecret
+  path: Ash
+  stage: 1
+  ritualPrototypes:
+  - BladeAsh  
+
+- type: hereticKnowledge
+  id: GraspOfAsh
+  path: Ash
+  stage: 2
+
+- type: hereticKnowledge
+  id: AshenShift
+  stage: 3
+  actionPrototypes:
+  - ActionHereticJaunt
+
+- type: hereticKnowledge
+  id: MarkOfAsh
+  path: Ash
+  stage: 4
+
+- type: hereticKnowledge
+  id: VolcanicBlast
+  path: Ash
+  stage: 5
+  actionPrototypes:
+  - ActionHereticVolcanoBlast
+
+- type: hereticKnowledge
+  id: MaskOfMadness
+  stage: 6
+  ritualPrototypes:
+  - MaskOfMadness
+
+- type: hereticKnowledge
+  id: FieryBlade
+  path: Ash
+  stage: 7
+
+- type: hereticKnowledge
+  id: NightwatcherRebirth
+  stage: 8
+  actionPrototypes:
+  - ActionHereticNightwatcherRebirth
+
+- type: hereticKnowledge
+  id: AscensionAsh
+  path: Ash
+  stage: 9
+  ritualPrototypes:
+  - AscensionAsh
+
+- type: hereticKnowledge
+  id: AshlordRite
+  path: Ash
+  stage: 10
+  actionPrototypes:
+  - ActionHereticAscension1
+  - ActionHereticAscension2
+
+# flesh path
+- type: hereticKnowledge
+  id: PrincipleOfHunger
+  path: Flesh
+  stage: 1
+  ritualPrototypes:
+  - BladeFlesh
+
+- type: hereticKnowledge
+  id: GraspOfFlesh
+  path: Flesh
+  stage: 2
+
+- type: hereticKnowledge
+  id: ImperfectRitual
+  stage: 3
+  ritualPrototypes:
+  - ImperfectRitual
+
+- type: hereticKnowledge
+  id: MarkOfFlesh
+  path: Flesh
+  stage: 4
+
+- type: hereticKnowledge
+  id: KnittingOfFlesh
+  path: Flesh
+  stage: 5
+  actionPrototypes:
+  - ActionHereticFleshSurgery
+
+- type: hereticKnowledge
+  id: RawRitual
+  stage: 6
+  ritualPrototypes:
+  - RawRitual
+
+- type: hereticKnowledge
+  id: BleedingSteel
+  path: Flesh
+  stage: 7
+
+- type: hereticKnowledge
+  id: LonelyRitual
+  stage: 8
+  ritualPrototypes:
+  - LonelyRitual
+
+- type: hereticKnowledge
+  id: AscensionFlesh
+  path: Flesh
+  stage: 9
+  ritualPrototypes:
+  - AscensionFlesh
+
+- type: hereticKnowledge
+  id: PriestFinalHymn
+  path: Flesh
+  stage: 10
+  actionPrototypes:
+  - ActionPolymorphHereticHorror
+
+# void path
+- type: hereticKnowledge
+  id: GlimmerOfWinter
+  path: Void
+  stage: 1
+  ritualPrototypes:
+  - BladeVoid
+
+- type: hereticKnowledge
+  id: GraspOfVoid
+  path: Void
+  stage: 2
+
+- type: hereticKnowledge
+  id: AristocratWay
+  stage: 3
+  event: !type:HereticAristocratWayEvent
+
+- type: hereticKnowledge
+  id: MarkOfVoid
+  path: Void
+  stage: 4
+
+- type: hereticKnowledge
+  id: VoidBlast
+  path: Void
+  stage: 5
+  actionPrototypes:
+  - ActionHereticVoidBlast
+
+- type: hereticKnowledge
+  id: VoidPhase
+  stage: 6
+  actionPrototypes:
+  - ActionHereticVoidPhase
+
+- type: hereticKnowledge
+  id: SeekingBlade
+  path: Void
+  stage: 7
+
+- type: hereticKnowledge
+  id: VoidPull
+  stage: 8
+  actionPrototypes:
+  - ActionHereticVoidPull
+
+- type: hereticKnowledge
+  id: AscensionVoid
+  stage: 9
+  path: Void
+  ritualPrototypes:
+  - AscensionVoid
+
+- type: hereticKnowledge
+  id: WaltzAtTheEndOfTime
+  stage: 10
+  path: Void
+  event: !type:HereticAscensionVoidEvent
+
+# side paths
+- type: hereticKnowledge
+  id: ArmorerRitual
+  stage: 3
+  ritualPrototypes:
+  - ArmorerRitual  

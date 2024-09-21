@@ -14,7 +14,7 @@
   id: PoorVision
   name: trait-poor-vision-name
   description: trait-poor-vision-desc
-  traitGear: ClothingEyesGlasses
+  traitGear: ClothingEyesGlassesStrong
   category: Disabilities
   whitelist:
     components:

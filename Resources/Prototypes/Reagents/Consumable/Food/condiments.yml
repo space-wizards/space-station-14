@@ -191,6 +191,11 @@
         damage:
           types:
             Poison: 4
+  tileReactions:
+    - !type:EnsureTileReaction
+      components:
+        - type: RevealRevenantOnCollide
+          popupText: revenant-revealed-salt
 
 - type: reagent
   id: Syrup

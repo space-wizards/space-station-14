@@ -1548,3 +1548,298 @@
   id: 201
   time: '2024-09-14T14:23:42.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/256
+- author: hivehum
+  changes:
+  - message: The message you receive upon becoming some antagonists have been rewritten
+      to better set the tone of the round.
+    type: Tweak
+  - message: The Ninja greeting is now in second person, like every other antagonist
+      greeting.
+    type: Fix
+  id: 202
+  time: '2024-09-16T02:43:22.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/258
+- author: TGRCDev
+  changes:
+  - message: Cyborgs no longer explode when they click on themselves
+    type: Fix
+  id: 203
+  time: '2024-09-16T02:42:22.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/266
+- author: TGRCDev
+  changes:
+  - message: Revenants now enter stasis on death instead of dying outright. You can
+      kill a revenant in stasis by either destroying or exorcising its ectoplasm.
+    type: Tweak
+  id: 204
+  time: '2024-09-16T02:42:43.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/262
+- author: sususuyo
+  changes:
+  - message: Screwloose lobby art is actually in rotation now
+    type: Fix
+  id: 205
+  time: '2024-09-16T02:42:32.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/265
+- author: hivehum
+  changes:
+  - message: Code Pink, for when you think your employees are trying to form a union.
+    type: Add
+  id: 206
+  time: '2024-09-16T02:43:36.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/260
+- author: Pinkbat5
+  changes:
+  - message: Diona and nymphs can now chirp.
+    type: Add
+  - message: Nymphs can scream and laugh like adult diona.
+    type: Add
+  - message: Double eyepatch item, craftable from two eyepatches.
+    type: Add
+  id: 207
+  time: '2024-09-16T02:47:30.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/261
+- author: Darkmajia
+  changes:
+  - message: Forgotten, devoured, gutted. Humanity has forgotten the eldritch forces
+      of decay, but the mansus veil has weakened. We will make them taste fear again...
+    type: Add
+  id: 208
+  time: '2024-09-18T05:36:03.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/249
+- author: KingMudkipIII
+  changes:
+  - message: horsepussy can be made again without winning the juckport 1 trillion$
+    type: Fix
+  id: 209
+  time: '2024-09-18T05:39:19.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/270
+- author: ultramario1998
+  changes:
+  - message: Added a flask to the Warden's locker. Leave your room 70% less!
+    type: Tweak
+  id: 210
+  time: '2024-09-18T05:38:27.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/272
+- author: Darkmajia
+  changes:
+  - message: Armblades finally have a hit sound.
+    type: Add
+  id: 211
+  time: '2024-09-18T05:36:48.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/273
+- author: starlighthowls
+  changes:
+  - message: couple white whale changes
+    type: Tweak
+  - message: added AI to WW and put back in rotation
+    type: Add
+  id: 212
+  time: '2024-09-18T05:38:42.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/279
+- author: aada
+  changes:
+  - message: 500 cigarettes moved to the emag inventory of cigVend.
+    type: Tweak
+  id: 213
+  time: '2024-09-18T05:37:45.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/275
+- author: widgetbeck
+  changes:
+  - message: Reduced the thirst cost of Mucin now that it's not OP.
+    type: Tweak
+  id: 214
+  time: '2024-09-18T05:37:20.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/269
+- author: widgetbeck
+  changes:
+  - message: Propulsion Gel's recipe is now cheaper.
+    type: Tweak
+  id: 215
+  time: '2024-09-18T05:36:20.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/268
+- author: formlessnameless
+  changes:
+  - message: Replaced a bunch of obsolete noSpawn stuff with HideSpawnMenu category
+    type: Fix
+  id: 216
+  time: '2024-09-18T05:56:35.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/281
+- author: TGRCDev
+  changes:
+  - message: Rat kings and rat servants can now eat trash
+    type: Tweak
+  id: 217
+  time: '2024-09-18T10:11:00.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/283
+- author: formlessnameless
+  changes:
+  - message: Modified salvage and added AI to Cluster
+    type: Tweak
+  - message: Modified salvage and added AI to Train
+    type: Tweak
+  - message: Modified salvage on Atlas
+    type: Tweak
+  - message: Modified salvage and Atmos on Saltern, added AI zone
+    type: Tweak
+  id: 218
+  time: '2024-09-18T21:54:15.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/287
+- author: Darkmajia
+  changes:
+  - message: The Warden and Head of Security can now pick winter coats in their loadouts.
+    type: Add
+  id: 219
+  time: '2024-09-18T22:00:02.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/284
+- author: hivehum
+  changes:
+  - message: Fixed a very misleading word choice on the Singularity guidebook page.
+    type: Fix
+  id: 220
+  time: '2024-09-18T22:00:17.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/286
+- author: mqole
+  changes:
+  - message: New library book about the TEG!!!!! And other pipes and vents and shit
+      too, I guess.
+    type: Add
+  id: 221
+  time: '2024-09-18T22:05:36.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/285
+- author: formlessnameless
+  changes:
+  - message: Added station anchors to all of the maps I changed previously
+    type: Add
+  id: 222
+  time: '2024-09-19T01:02:43.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/288
+- author: AirFryerBuyOneGetOneFree
+  changes:
+  - message: Heretic blades can now be used to perform executions.
+    type: Tweak
+  id: 223
+  time: '2024-09-19T05:22:46.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/289
+- author: TGRCDev
+  changes:
+  - message: Placing salt on the ground now reveals revenants who pass over it.
+    type: Tweak
+  id: 224
+  time: '2024-09-19T05:22:35.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/278
+- author: Darkmajia
+  changes:
+  - message: Fix tiktok announcer voiceline for power grid back online
+    type: Fix
+  id: 225
+  time: '2024-09-19T13:25:46.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/297
+- author: KingMudkipIII
+  changes:
+  - message: 'Added Four new drinks: Bloodier Mary, Salvager''s Soothe, Hummingbird''s
+      Delight, and Dont Tell D Sheriff.'
+    type: Add
+  - message: Hippies Delight now gets you high.
+    type: Fix
+  id: 226
+  time: '2024-09-19T15:14:19.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/292
+- author: hivehum
+  changes:
+  - message: Spy v Spy is now less common.
+    type: Tweak
+  id: 227
+  time: '2024-09-19T15:13:06.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/290
+- author: starlighthowls
+  changes:
+  - message: more ww fixes aaaaaaaaaaa
+    type: Fix
+  id: 228
+  time: '2024-09-19T15:13:15.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/294
+- author: Darkmajia
+  changes:
+  - message: Added chef shoes, the noir trenchcoat, the scientist's formal jumpsuit,
+      and the blue shirt and tie to their respective job loadouts.
+    type: Add
+  - message: Added the trooper hat and uniform to the SecDrobe.
+    type: Add
+  id: 229
+  time: '2024-09-19T15:13:32.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/291
+- author: Darkmajia
+  changes:
+  - message: The regular version of the warden's locker now contains a flask, rather
+      than just the hardsuit-filled one.
+    type: Add
+  id: 230
+  time: '2024-09-19T15:41:22.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/299
+- author: formlessnameless
+  changes:
+  - message: Minor aesthetic changes to Atlas, Cluster, Train, and Saltern.
+    type: Tweak
+  - message: Fixed some missing device links and wiring on Atlas, Cluster, Train,
+      and Saltern.
+    type: Fix
+  id: 231
+  time: '2024-09-19T17:31:14.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/300
+- author: formlessnameless
+  changes:
+  - message: Modified disposals room on Saltern to be more functional
+    type: Tweak
+  id: 232
+  time: '2024-09-19T20:23:17.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/302
+- author: TGRCDev
+  changes:
+  - message: Revenants can now Haunt, which reveals them and gives them a small amount
+      of stolen essence and a boost in essence regeneration for every person that
+      witnesses them.
+    type: Add
+  id: 233
+  time: '2024-09-20T01:52:44.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/293
+- author: TGRCDev
+  changes:
+  - message: Revenant's Haunt ability stuns itself for slightly longer, and has a
+      longer cooldown
+    type: Tweak
+  id: 234
+  time: '2024-09-20T16:18:43.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/305
+- author: aada
+  changes:
+  - message: Prescription lenses that can be slotted in and out of eyewear.
+    type: Add
+  - message: Near-sighted trait starts with extra-strength prescription lenses.
+    type: Add
+  - message: JamJar glasses have a stronger prescription.
+    type: Tweak
+  id: 235
+  time: '2024-09-20T16:18:32.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/304
+- author: hivehum
+  changes:
+  - message: Revenants can now be bigoted.
+    type: Add
+  id: 236
+  time: '2024-09-21T02:08:59.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/309
+- author: hivehum
+  changes:
+  - message: There is now a new antagonist that can show up in the middle of rounds...
+    type: Tweak
+  id: 237
+  time: '2024-09-21T02:11:26.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/303
+- author: starlighthowls
+  changes:
+  - message: moreeeee boat stuff
+    type: Tweak
+  id: 238
+  time: '2024-09-21T02:11:42.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/307

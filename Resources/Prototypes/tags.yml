@@ -16,6 +16,9 @@
   id: Ambrosia
 
 - type: Tag
+  id: AnomalyHost
+
+- type: Tag
   id: AppraisalTool
 
 - type: Tag
@@ -89,7 +92,7 @@
 
 - type: Tag
   id: BorgCargoTorso
-  
+
 - type: Tag
   id: BorgEngineerHead
 
@@ -626,6 +629,12 @@
 - type: Tag
   id: ExplosivePassable
 
+- type: Tag # goob edit
+  id: Eyes
+
+- type: Tag
+  id: Eyepatch
+
 - type: Tag
   id: Figurine
 
@@ -676,6 +685,9 @@
 
 - type: Tag
   id: Galaxythistle
+
+- type: Tag # goob edit
+  id: GasMask
 
 - type: Tag
   id: GasScrubber
@@ -761,6 +773,9 @@
 - type: Tag
   id: Head
 
+- type: Tag # goob edit
+  id: Heart
+
 - type: Tag
   id: HelmetEVA
 
@@ -796,6 +811,9 @@
 
 - type: Tag
   id: HolosignProjector
+
+- type: Tag
+  id: Holy
 
 - type: Tag
   id: HonkerCentralControlModule
@@ -857,6 +875,9 @@
 - type: Tag
   id: KeyedInstrument
 
+- type: Tag # goob edit
+  id: Kidneys
+
 - type: Tag
   id: KitchenKnife
 
@@ -876,7 +897,16 @@
   id: LightBulb
 
 - type: Tag
+  id: Lens
+
+- type: Tag
   id: Lime
+
+- type: Tag # goob edit
+  id: Liver
+
+- type: Tag # goob edit
+  id: Lungs
 
 - type: Tag
   id: Machete
@@ -941,6 +971,9 @@
 
 - type: Tag
   id: MailingUnitElectronics
+
+- type: Tag # goob edit
+  id: Mask
 
 - type: Tag
   id: Matchstick
@@ -1022,6 +1055,9 @@
 
 - type: Tag
   id: Ore
+
+- type: Tag # goob edit
+  id: Organ
 
 - type: Tag
   id: Packet
@@ -1175,6 +1211,9 @@
   id: RollingPin
 
 - type: Tag
+  id: Salt
+
+- type: Tag
   id: SaltShaker
 
 - type: Tag
@@ -1198,7 +1237,7 @@
 - type: Tag
   id: SecureWindoor
 
-- type: Tag  
+- type: Tag
   id: SecurityHelmet
 
 - type: Tag
@@ -1288,8 +1327,14 @@
 - type: Tag
   id: Steak
 
+- type: Tag # goob edit
+  id: Stomach
+
 - type: Tag
   id: StringInstrument
+
+- type: Tag
+  id: Stunbaton
 
 - type: Tag
   id: SubdermalImplant
@@ -1318,6 +1363,9 @@
 - type: Tag
   id: Spellbook
 
+- type: Tag # goob edit
+  id: Table
+
 - type: Tag
   id: TabletopBoard
 
@@ -1338,6 +1386,9 @@
 
 - type: Tag
   id: TimerSignalElectronics
+
+- type: Tag # goob edit
+  id: Tongue
 
 - type: Tag
   id: Toolbox

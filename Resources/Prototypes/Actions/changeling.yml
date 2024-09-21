@@ -5,7 +5,7 @@
   id: ActionEvolutionMenu
   name: Open evolution menu
   description: Opens the evolution menu.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
     checkCanInteract: false
@@ -22,7 +22,7 @@
   id: ActionAbsorbDNA
   name: Absorb DNA
   description: Absorb the target's DNA, husking them in the process. Costs 25 chemicals.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: EntityTargetAction
     useDelay: 5
@@ -45,7 +45,7 @@
   id: ActionStingExtractDNA
   name: Extract DNA sting
   description: Steal your target's genetic information. Costs 25 chemicals.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: EntityTargetAction
     whitelist:
@@ -66,7 +66,7 @@
   id: ActionChangelingTransformCycle
   name: Cycle DNA
   description: Cycle your available DNA.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
     checkCanInteract: false
@@ -83,7 +83,7 @@
   id: ActionChangelingTransform
   name: Transform
   description: Transform into another humanoid. Doesn't come with clothes. Costs 5 chemicals.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
     useDelay: 5
@@ -100,7 +100,7 @@
   id: ActionEnterStasis
   name: Enter regenerative stasis
   description: Fake your death and start regenerating. Drains all your chemicals. Consumes biomass.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
     checkCanInteract: false
@@ -118,7 +118,7 @@
   id: ActionExitStasis
   name: Exit stasis
   description: Rise from the dead with full health. Costs 60 chemicals.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
     checkCanInteract: false
@@ -137,7 +137,7 @@
   id: ActionToggleArmblade
   name: Toggle Arm Blade
   description: Reform one of your arms into a strong blade, composed of bone and flesh. Retract on secondary use. Costs 15 chemicals.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
     useDelay: 2
@@ -153,7 +153,7 @@
   id: ActionCreateBoneShard
   name: Form Bone Shard
   description: Break off shards of your bone and shape them into a throwing star. Costs 15 chemicals.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
     useDelay: 1
@@ -169,7 +169,7 @@
   id: ActionToggleChitinousArmor
   name: Toggle Armor
   description: Inflate your body into an all-consuming chitinous mass of armor. Costs 25 chemicals.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
     useDelay: 2
@@ -186,7 +186,7 @@
   id: ActionToggleOrganicShield
   name: Form Shield
   description: Reform one of your arms into a large, fleshy shield. Costs 20 chemicals.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
     useDelay: 2
@@ -203,7 +203,7 @@
   id: ActionShriekDissonant
   name: Dissonant Shriek
   description: Emit an EMP blast, with just your voice. Costs 30 chemicals.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
     checkCanInteract: false
@@ -222,7 +222,7 @@
   id: ActionShriekResonant
   name: Resonant Shriek
   description: Disorient people and break lights, with just your voice. Costs 30 chemicals.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
     checkCanInteract: false
@@ -241,7 +241,7 @@
   id: ActionToggleStrainedMuscles
   name: Strain Muscles
   description: Move at extremely fast speeds. Deals stamina damage.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
     checkCanInteract: false
@@ -260,7 +260,7 @@
   id: ActionStingBlind
   name: Blind Sting
   description: Silently sting your target, blinding them for a short time and rendering them near sighted. Costs 35 chemicals.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: EntityTargetAction
     whitelist:
@@ -281,7 +281,7 @@
   id: ActionStingCryo
   name: Cryogenic Sting
   description: Silently sting your target, constantly slowing and freezing them. Costs 35 chemicals.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: EntityTargetAction
     whitelist:
@@ -302,7 +302,7 @@
   id: ActionStingLethargic
   name: Lethargic Sting
   description: Silently inject a cocktail of anesthetics into the target. Costs 35 chemicals.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: EntityTargetAction
     whitelist:
@@ -323,7 +323,7 @@
   id: ActionStingMute
   name: Mute Sting
   description: Silently sting your target, completely silencing them for a short time. Costs 35 chemicals.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: EntityTargetAction
     whitelist:
@@ -344,7 +344,7 @@
   id: ActionStingFakeArmblade
   name: Fake Armblade Sting
   description: Silently sting your target, making them grow a dull armblade for a short time. Costs 50 chemicals.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: EntityTargetAction
     whitelist:
@@ -365,7 +365,7 @@
   id: ActionStingTransform
   name: Transformation Sting
   description: Silently sting your target, transforming them into a person of your choosing. Costs 75 chemicals.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: EntityTargetAction
     whitelist:
@@ -387,7 +387,7 @@
   id: ActionAnatomicPanacea
   name: Anatomic Panacea
   description: Cure yourself of diseases, disabilities, radiation, toxins, drunkedness and brain damage. Costs 30 chemicals.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
     useDelay: 30
@@ -406,7 +406,7 @@
   id: ActionAugmentedEyesight
   name: Augmented Eyesight
   description: Toggle flash protection.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
     checkCanInteract: false
@@ -422,7 +422,7 @@
   id: ActionBiodegrade
   name: Biodegrade
   description: Vomit a caustic substance onto any restraints, or someone's face. Costs 30 chemicals.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
     useDelay: 5
@@ -439,7 +439,7 @@
   id: ActionChameleonSkin
   name: Chameleon Skin
   description: Slowly blend in with the environment. Costs 25 chemicals.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
     useDelay: 1
@@ -457,7 +457,7 @@
   id: ActionEphedrineOverdose
   name: Ephedrine Overdose
   description: Inject some stimulants into yourself. Costs 30 chemicals.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
     useDelay: 10
@@ -476,7 +476,7 @@
   id: ActionFleshmend
   name: Fleshmend
   description: Rapidly heal yourself. Costs 35 chemicals.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
     useDelay: 30
@@ -494,7 +494,7 @@
   id: ActionToggleLesserForm
   name: Lesser Form
   description: Abandon your current form and transform into a monkey. Costs 20 chemicals.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
     useDelay: 5
@@ -511,7 +511,7 @@
   id: ActionToggleSpacesuit
   name: Toggle Space Suit
   description: Make your body space proof. Costs 20 chemicals.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
     useDelay: 2
@@ -527,7 +527,7 @@
   id: ActionHivemindAccess
   name: Hivemind Access
   description: Tune your chemical receptors for hivemind communication.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
     checkCanInteract: false
