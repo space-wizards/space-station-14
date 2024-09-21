@@ -98,13 +98,3 @@
     - type: Sprite
       sprite: Harmony/Structures/Wallmounts/posters.rsi
       state: harmony_poster11_legit
-
-- type: entity
-  parent: PosterBase
-  id: PosterHarmonyCoolS
-  name: "Cool S"
-  description: "It seems some crewmember cut out part of a graffiti'd maintenance closet and stuck it onto this wall. And who can blame them? This thing is siiiick."
-  components:
-    - type: Sprite
-      sprite: Harmony/Structures/Wallmounts/posters.rsi
-      state: harmony_poster12_legit
