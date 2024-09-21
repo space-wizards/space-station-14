@@ -1822,3 +1822,10 @@
   id: 235
   time: '2024-09-20T16:18:32.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/304
+- author: hivehum
+  changes:
+  - message: Revenants can now be bigoted.
+    type: Add
+  id: 236
+  time: '2024-09-21T02:08:59.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/309
