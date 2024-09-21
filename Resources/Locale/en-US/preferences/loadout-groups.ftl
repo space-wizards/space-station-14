@@ -23,12 +23,20 @@ loadout-group-captain-jumpsuit = Captain jumpsuit
 loadout-group-captain-neck = Captain neck
 loadout-group-captain-backpack = Captain backpack
 loadout-group-captain-outerclothing = Captain outer clothing
+loadout-group-captain-glasses = Captain glasses
+loadout-group-captain-gloves = Captain gloves
+loadout-group-captain-shoes = Captain shoes
+
+loadout-group-command-headset = Command headset
 
 loadout-group-hop-head = Head of Personnel head
 loadout-group-hop-jumpsuit = Head of Personnel jumpsuit
 loadout-group-hop-neck = Head of Personnel neck
 loadout-group-hop-backpack = Head of Personnel backpack
 loadout-group-hop-outerclothing = Head of Personnel outer clothing
+
+loadout-group-survival-command = Command survival box
+loadout-group-survival-extended-command = Extended command survival box
 
 # Civilian
 loadout-group-passenger-jumpsuit = Passenger jumpsuit
@@ -92,6 +100,7 @@ loadout-group-quartermaster-jumpsuit = Quartermaster jumpsuit
 loadout-group-quartermaster-neck = Quartermaster neck
 loadout-group-quartermaster-outerclothing = Quartermaster outer clothing
 loadout-group-quartermaster-shoes = Quartermaster shoes
+loadout-group-quartermaster-backpack = Quartermaster backpack
 
 loadout-group-cargo-technician-head = Cargo Technician head
 loadout-group-cargo-technician-jumpsuit = Cargo Technician jumpsuit
@@ -108,6 +117,7 @@ loadout-group-salvage-specialist-shoes = Salvage Specialist shoes
 # Engineering
 loadout-group-chief-engineer-head = Chief Engineer head
 loadout-group-chief-engineer-jumpsuit = Chief Engineer jumpsuit
+loadout-group-chief-engineer-backpack = Chief Engineer backpack
 loadout-group-chief-engineer-outerclothing = Chief Engineer outer clothing
 loadout-group-chief-engineer-neck = Chief Engineer neck
 loadout-group-chief-engineer-shoes = Chief Engineer shoes
@@ -132,6 +142,7 @@ loadout-group-research-director-neck = Research Director neck
 loadout-group-research-director-jumpsuit = Research Director jumpsuit
 loadout-group-research-director-outerclothing = Research Director outer clothing
 loadout-group-research-director-shoes = Research Director shoes
+loadout-group-research-director-backpack = Research Director backpack
 
 loadout-group-scientist-head = Scientist head
 loadout-group-scientist-neck = Scientist neck
@@ -149,6 +160,7 @@ loadout-group-head-of-security-head = Head of Security head
 loadout-group-head-of-security-jumpsuit = Head of Security jumpsuit
 loadout-group-head-of-security-neck = Head of Security neck
 loadout-group-head-of-security-outerclothing = Head of Security outer clothing
+loadout-group-head-of-security-backpack = Head of Security backpack
 
 loadout-group-warden-head = Warden head
 loadout-group-warden-jumpsuit = Warden jumpsuit
@@ -176,6 +188,7 @@ loadout-group-medical-mask = Medical mask
 
 loadout-group-chief-medical-officer-head = Chief Medical Officer head
 loadout-group-chief-medical-officer-jumpsuit = Chief Medical Officer jumpsuit
+loadout-group-chief-medical-officer-backpack = Chief Medical Officer backpack
 loadout-group-chief-medical-officer-outerclothing = Chief Medical Officer outer clothing
 loadout-group-chief-medical-officer-shoes = Chief Medical Officer shoes
 loadout-group-chief-medical-officer-neck = Chief Medical Officer neck

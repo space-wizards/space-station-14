@@ -107,6 +107,21 @@
     sprite: Clothing/Ears/Headsets/command.rsi
 
 - type: entity
+  parent: [ClothingHeadset, BaseCommandContraband]
+  id: ClothingHeadsetCommandveteran
+  name: command veteran headset
+  description: A sleek headset with a commanding channel, earned through a long career as command.
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyStationMaster
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/commandveteran.rsi
+  - type: Clothing
+    sprite: Clothing/Ears/Headsets/commandveteran.rsi
+
+- type: entity
   parent: ClothingHeadset
   id: ClothingHeadsetEngineering
   name: engineering headset

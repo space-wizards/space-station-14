@@ -8,6 +8,16 @@
       role: JobHeadOfSecurity
       time: 72000 #20 hrs
 
+# For the veteran command cosmetic set
+- type: loadoutEffectGroup
+  id: VeteranCommand
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Command
+      time: 180000 # 50 hrs
+
 # Jumpsuit
 - type: loadout
   id: HeadofSecurityJumpsuit
@@ -79,3 +89,28 @@
   id: HeadofSecurityWinterCoat
   equipment:
     outerClothing: ClothingOuterWinterHoS
+
+# Back
+- type: loadout
+  id: CommandVeteranBackpack
+  equipment:
+    back: ClothingBackpackCommandveteran
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: VeteranCommand
+
+- type: loadout
+  id: CommandVeteranSatchel
+  equipment:
+    back: ClothingBackpackSatchelCommandveteran
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: VeteranCommand
+
+- type: loadout
+  id: CommandVeteranDuffel
+  equipment:
+    back: ClothingBackpackDuffelCommandveteran
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: VeteranCommand

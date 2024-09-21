@@ -110,6 +110,22 @@
   - type: FingerprintMask
 
 - type: entity
+  parent: [ClothingHandsInedibleBase, BaseCommandContraband]
+  id: ClothingHandsGlovesCaptainflightgloves
+  name: flight gloves
+  description: Regal black leather gloves with gold trim, insulated from electricity.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/captainflightgloves.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/captainflightgloves.rsi
+  - type: Insulated
+  - type: Fiber
+    fiberMaterial: fibers-leather
+    fiberColor: fibers-regal-black
+  - type: FingerprintMask
+
+- type: entity
   parent: ClothingHandsBase
   id: ClothingHandsGlovesHop
   name: papercut-proof gloves

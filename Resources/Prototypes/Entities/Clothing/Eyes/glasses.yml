@@ -188,7 +188,7 @@
   parent: [ClothingEyesBase, BaseCommandContraband]
   id: ClothingEyesGlassesCommand
   name: administration glasses
-  description: Upgraded sunglasses that provide flash immunity and show ID card status. 
+  description: Upgraded sunglasses that provide flash immunity and show ID card status.
   components:
   - type: Sprite
     sprite: Clothing/Eyes/Glasses/commandglasses.rsi
@@ -204,6 +204,27 @@
   - type: IdentityBlocker
     coverage: EYES
   - type: ShowJobIcons
+
+- type: entity
+  parent: [ClothingEyesBase, BaseCommandContraband]
+  id: ClothingEyesGlassesCaptainvisor
+  name: captain's visor
+  description: A sleek visor that provides flash immunity and shows ID card status.
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Glasses/captainvisor.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Glasses/captainvisor.rsi
+  - type: FlashImmunity
+  - type: EyeProtection
+    protectionTime: 5
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+  - type: IdentityBlocker
+    coverage: EYES
+  - type: ShowJobIcons
+
 
 - type: entity
   parent: ClothingEyesBase

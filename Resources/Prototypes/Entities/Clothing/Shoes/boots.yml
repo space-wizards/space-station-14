@@ -95,6 +95,20 @@
     sprite: Clothing/Shoes/Boots/laceups.rsi
 
 - type: entity
+  parent: [ClothingShoesMilitaryBaseInedible, BaseCommandContraband]
+  id: ClothingShoesBootsCaptainjumpboots
+  name: jump boots
+  description: Polished leather boots with strong ankle support, originally designed for paratroopers, with rattling gold heel taps so they know you're coming.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/captainjumpboots.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/captainjumpboots.rsi
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepSpurs
+
+- type: entity
   parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinter
   name: winter boots
