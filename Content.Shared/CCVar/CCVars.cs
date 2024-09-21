@@ -1447,7 +1447,7 @@ namespace Content.Shared.CCVar
         ///     Config for how many hours playtime a player must have to be able to vote on a votekick.
         /// </summary>
         public static readonly CVarDef<int> VotekickEligibleVoterPlaytime =
-            CVarDef.Create("votekick.voter_playtime", 20, CVar.SERVERONLY);
+            CVarDef.Create("votekick.voter_playtime", 100, CVar.SERVERONLY);
 
         /// <summary>
         ///     Config for how many seconds a player must have been dead to initiate a votekick / be able to vote on a votekick.
