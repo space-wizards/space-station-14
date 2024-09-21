@@ -74,9 +74,11 @@ public sealed class ApcSystem : EntitySystem
     //Update the HasAccess var for UI to read
     private void OnBoundUiOpen(EntityUid uid, ApcComponent component, BoundUIOpenedEvent args)
     {
-        // TODO: this should be per-player not stored on the apc
-        component.HasAccess = _accessReader.IsAllowed(args.Actor, uid);
-        UpdateApcState(uid, component);
+        // TODO: this should be per-player not stored on the apc                        maybe remove before merge.
+        //component.HasAccess = _accessReader.IsAllowed(args.Actor, uid);           !!REMOVE BEFORE MERGE!!
+        component.HasAccess = true;
+        //UpdateApcState(uid, component);                                           !!REMOVE BEFORE MERGE!!
+        UpdateUIState(uid, component);
     }
 
     private void OnToggleMainBreaker(EntityUid uid, ApcComponent component, ApcToggleMainBreakerMessage args)
@@ -90,6 +92,7 @@ public sealed class ApcSystem : EntitySystem
             return;
         }
 
+        //component.HasAccess = _accessReader.IsAllowed(args.Actor, uid);           !!REMOVE BEFORE MERGE!!
         if (_accessReader.IsAllowed(args.Actor, uid))
         {
             ApcToggleBreaker(uid, component);
