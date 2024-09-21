@@ -75,8 +75,8 @@ public sealed class ApcSystem : EntitySystem
     private void OnBoundUiOpen(EntityUid uid, ApcComponent component, BoundUIOpenedEvent args)
     {
         // TODO: this should be per-player not stored on the apc                        maybe remove before merge.
-        //component.HasAccess = _accessReader.IsAllowed(args.Actor, uid);           !!REMOVE BEFORE MERGE!!
-        component.HasAccess = true;
+        //component.HasAccess = _accessReader.IsAllowed(args.Actor, uid);           Maybe un-comment this.
+        component.HasAccess = true;                 // This can likely be changed with the above line again, though it will re-inroduce unnecessary jank.
         //UpdateApcState(uid, component);                                           !!REMOVE BEFORE MERGE!!
         UpdateUIState(uid, component);
     }
