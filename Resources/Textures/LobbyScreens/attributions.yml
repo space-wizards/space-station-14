@@ -58,7 +58,7 @@
   copyright: "GetOutMarutak,aka.Snicket on Discord/github/Cara/Ko-fi"
   source: "https://github.com/space-wizards/space-station-14"
 
-- files: ["cqcm.webp"]
+- files: ["cqcm.webp"] # These three titled "cqcm" are for Weaselstation
   license: "CC-BY-NC-SA-3.0"
   copyright: "blooodyspy"
   source: "https://github.com/GroggleG/Weasel-Station"
