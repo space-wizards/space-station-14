@@ -16,6 +16,12 @@ public sealed partial class ConstructionPrototype : IPrototype
     [DataField]
     public bool Hide = false;
 
+    [DataField("name")]
+    public LocId? NameLocId;
+
+    [DataField("description")]
+    public LocId? DescLocId;
+
     /// <summary>
     ///     Friendly name displayed in the construction GUI.
     /// </summary>

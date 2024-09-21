@@ -180,6 +180,12 @@ namespace Content.Client.Construction.UI
                     recipe.Description = recipeMetadata.Description;
                 }
 
+                // Override the name and description with custom values.
+                if (recipe.NameLocId.HasValue)
+                    recipe.Name = Loc.GetString(recipe.NameLocId.Value);
+                if (recipe.DescLocId.HasValue)
+                    recipe.Description = Loc.GetString(recipe.DescLocId.Value);
+
                 // If nothing is found, we use a fallback.
                 recipe.Name ??= Loc.GetString("construction-presenter-fallback");
                 recipe.Description ??= Loc.GetString("construction-presenter-fallback");
