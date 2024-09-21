@@ -1,10 +1,11 @@
-﻿using Content.Server.Cuffs;
+using Content.Server.Cuffs;
 using Content.Server.Forensics;
 using Content.Server.Humanoid;
 using Content.Server.Implants.Components;
 using Content.Server.Store.Components;
 using Content.Server.Store.Systems;
 using Content.Shared.Cuffs.Components;
+using Content.Shared.Forensics;
 using Content.Shared.Humanoid;
 using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
@@ -212,6 +213,9 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
             if (TryComp<DnaComponent>(ent, out var dna))
             {
                 dna.DNA = _forensicsSystem.GenerateDNA();
+
+                var ev = new GenerateDnaEvent { Owner = ent, DNA = dna.DNA };
+                RaiseLocalEvent(ent, ref ev);
             }
             if (TryComp<FingerprintComponent>(ent, out var fingerprint))
             {

@@ -19,6 +19,7 @@ using Content.Shared.Emag.Components;
 using Content.Shared.Examine;
 using Content.Shared.Lathe;
 using Content.Shared.Materials;
+using Content.Shared.Power;
 using Content.Shared.ReagentSpeed;
 using Content.Shared.Research.Components;
 using Content.Shared.Research.Prototypes;
@@ -155,10 +156,10 @@ namespace Content.Server.Lathe
         {
             var ev = new LatheGetRecipesEvent(uid, getUnavailable)
             {
-                Recipes = new List<ProtoId<LatheRecipePrototype>>(component.StaticRecipes)
+                Recipes = new HashSet<ProtoId<LatheRecipePrototype>>(component.StaticRecipes)
             };
             RaiseLocalEvent(uid, ev);
-            return ev.Recipes;
+            return ev.Recipes.ToList();
         }
 
         public static List<ProtoId<LatheRecipePrototype>> GetAllBaseRecipes(LatheComponent component)
@@ -197,11 +198,11 @@ namespace Content.Server.Lathe
             var recipe = component.Queue.First();
             component.Queue.RemoveAt(0);
 
-            var time = _reagentSpeed.ApplySpeed(uid, recipe.CompleteTime);
+            var time = _reagentSpeed.ApplySpeed(uid, recipe.CompleteTime) * component.TimeMultiplier;
 
             var lathe = EnsureComp<LatheProducingComponent>(uid);
             lathe.StartTime = _timing.CurTime;
-            lathe.ProductionLength = time * component.TimeMultiplier;
+            lathe.ProductionLength = time;
             component.CurrentRecipe = recipe;
 
             var ev = new LatheStartPrintingEvent(recipe);
@@ -210,6 +211,11 @@ namespace Content.Server.Lathe
             _audio.PlayPvs(component.ProducingSound, uid);
             UpdateRunningAppearance(uid, true);
             UpdateUserInterfaceState(uid, component);
+
+            if (time == TimeSpan.Zero)
+            {
+                FinishProducing(uid, component, lathe);
+            }
             return true;
         }
 

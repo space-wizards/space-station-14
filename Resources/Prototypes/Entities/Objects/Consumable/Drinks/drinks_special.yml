@@ -34,6 +34,7 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 50
+  - type: DnaSubstanceTrace
   - type: ReactionMixer
     mixOnInteract: false
     reactionTypes:

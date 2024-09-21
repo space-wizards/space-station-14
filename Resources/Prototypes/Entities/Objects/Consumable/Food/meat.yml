@@ -210,7 +210,6 @@
     node: start
     defaultTarget: filet migrawr
 
-
 - type: entity
   name: raw penguin meat
   parent: FoodMeatRawBase
@@ -288,7 +287,7 @@
 - type: entity
   name: prime-cut corgi meat
   # can't rot since that would be very bad for syndies
-  parent: FoodMeatBase
+  parent: [FoodMeatBase, BaseGrandTheftContraband]
   id: FoodMeatCorgi
   description: The tainted gift of an evil crime. The meat may be delicious, but at what cost?
   components:
@@ -505,6 +504,9 @@
   id: FoodMeatWheat
   description: This doesn't look like meat, but your standards aren't that high to begin with.
   components:
+  - type: FlavorProfile
+    flavors:
+      - falsemeat
   - type: Sprite
     state: clump
   - type: SolutionContainerManager
@@ -678,6 +680,26 @@
   - type: Sprite
     state: slime
 
+- type: entity
+  name: raw snail meat
+  parent: FoodMeatRawBase
+  id: FoodMeatSnail
+  description: Improved with salt.
+  components:
+  - type: Sprite
+    state: snail
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 3
+        - ReagentId: Fat
+          Quantity: 3
+        - ReagentId: Water
+          Quantity: 4 #It makes saline if you add salt!
+
 # Cooked
 
 - type: entity
@@ -740,6 +762,10 @@
   - type: Construction
     graph: MeatSteak
     node: meat steak
+  - type: FoodSequenceElement
+    entries:
+      Burger: MeatSteak
+      Taco: MeatSteak
 
 - type: entity
   name: bacon
@@ -771,6 +797,10 @@
   - type: Construction
     graph: Bacon
     node: bacon
+  - type: FoodSequenceElement
+    entries:
+      Burger: MeatBacon
+      Taco: MeatBacon
 
 - type: entity
   name: cooked bear
@@ -800,6 +830,10 @@
   - type: Construction
     graph: BearSteak
     node: filet migrawr
+  - type: FoodSequenceElement
+    entries:
+      Burger: MeatBearBurger
+      Taco: MeatBear
 
 - type: entity
   name: penguin filet
@@ -828,6 +862,10 @@
   - type: Construction
     graph: PenguinSteak
     node: cooked penguin
+  - type: FoodSequenceElement
+    entries:
+      Burger: MeatPenguinBurger
+      Taco: MeatPenguin
 
 - type: entity
   name: cooked chicken
@@ -856,6 +894,10 @@
   - type: Construction
     graph: ChickenSteak
     node: cooked chicken
+  - type: FoodSequenceElement
+    entries:
+      Burger: MeatChicken
+      Taco: MeatChicken
 
 - type: entity
   name: fried chicken
@@ -884,6 +926,10 @@
           Quantity: 5
         - ReagentId: Protein
           Quantity: 5
+  - type: FoodSequenceElement
+    entries:
+      Burger: MeatChicken
+      Taco: MeatChicken
 
 - type: entity
   name: cooked duck
@@ -912,6 +958,10 @@
   - type: Construction
     graph: DuckSteak
     node: cooked duck
+  - type: FoodSequenceElement
+    entries:
+      Burger: MeatDuck
+      Taco: MeatDuck
 
 - type: entity
   name: cooked crab
@@ -940,6 +990,10 @@
   - type: Construction
     graph: CrabSteak
     node: cooked crab
+  - type: FoodSequenceElement
+    entries:
+      Burger: MeatCrabBurger
+      Taco: MeatCrab
 
 - type: entity
   name: goliath steak
@@ -966,6 +1020,10 @@
   - type: Construction
     graph: GoliathSteak
     node: goliath steak
+  - type: FoodSequenceElement
+    entries:
+      Burger: MeatGoliathBurger
+      Taco: MeatGoliath
 
 - type: entity
   name: rouny steak
@@ -996,6 +1054,10 @@
   - type: Construction
     graph: RounySteak
     node: rouny steak
+  - type: FoodSequenceElement
+    entries:
+      Burger: MeatXeno
+      Taco: MeatXeno
 
 - type: entity
   name: lizard steak
@@ -1025,6 +1087,10 @@
   - type: Construction
     graph: LizardSteak
     node: lizard steak
+  - type: FoodSequenceElement
+    entries:
+      Burger: MeatLizardBurger
+      Taco: MeatLizard
 
 - type: entity
   name: boiled spider leg
@@ -1047,6 +1113,10 @@
           Quantity: 5
         - ReagentId: Protein
           Quantity: 5
+  - type: FoodSequenceElement
+    entries:
+      Burger: MeatSpiderBurger
+      Taco: MeatSpider
 
 - type: entity
   name: meatball
@@ -1068,6 +1138,39 @@
           Quantity: 5
         - ReagentId: Protein
           Quantity: 5
+  - type: FoodSequenceElement
+    entries:
+      Burger: MeatBall
+      Taco: MeatBall
+
+- type: entity
+  name: boiled snail
+  parent: FoodMeatBase
+  id: FoodMeatSnailCooked
+  description: Improved with salt.
+  components:
+  - type: Tag
+    tags:
+    - Cooked
+    - Meat
+  - type: Sprite
+    layers:
+    - state: snail-cooked
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: Protein
+          Quantity: 3
+        - ReagentId: Water
+          Quantity: 4 # makes saline if you add salt!
+  - type: FoodSequenceElement
+    entries:
+      Burger: MeatSnail
+      Taco: MeatSnail
 
 # Cutlets
 
@@ -1094,6 +1197,10 @@
           Quantity: 3
         - ReagentId: Fat
           Quantity: 2
+  - type: Construction
+    graph: Cutlet
+    node: start
+    defaultTarget: cutlet
 
 - type: entity
   name: raw bear cutlet
@@ -1119,6 +1226,10 @@
           Quantity: 3
         - ReagentId: Fat
           Quantity: 2
+  - type: Construction
+    graph: BearCutlet
+    node: start
+    defaultTarget: bear cutlet
 
 - type: entity
   name: raw penguin cutlet
@@ -1142,6 +1253,10 @@
           Quantity: 3
         - ReagentId: Fat
           Quantity: 2
+  - type: Construction
+    graph: PenguinCutlet
+    node: start
+    defaultTarget: penguin cutlet
 
 - type: entity
   name: raw chicken cutlet
@@ -1165,6 +1280,10 @@
           Quantity: 3
         - ReagentId: Fat
           Quantity: 2
+  - type: Construction
+    graph: ChickenCutlet
+    node: start
+    defaultTarget: chicken cutlet
 
 - type: entity
   name: raw duck cutlet
@@ -1188,6 +1307,10 @@
           Quantity: 3
         - ReagentId: Fat
           Quantity: 2
+  - type: Construction
+    graph: DuckCutlet
+    node: start
+    defaultTarget: duck cutlet
 
 - type: entity
   name: raw lizard cutlet
@@ -1214,6 +1337,10 @@
           Quantity: 3
         - ReagentId: Fat
           Quantity: 2
+  - type: Construction
+    graph: LizardCutlet
+    node: start
+    defaultTarget: lizard cutlet
 
 - type: entity
   name: raw spider cutlet
@@ -1236,6 +1363,10 @@
           Quantity: 3
         - ReagentId: Fat
           Quantity: 2
+  - type: Construction
+    graph: SpiderCutlet
+    node: start
+    defaultTarget: spider cutlet
 
 - type: entity
   name: raw xeno cutlet
@@ -1260,6 +1391,10 @@
         reagents:
         - ReagentId: SulfuricAcid
           Quantity: 20
+  - type: Construction
+    graph: XenoCutlet
+    node: start
+    defaultTarget: xeno cutlet
 
 - type: entity
   name: raw killer tomato cutlet
@@ -1322,6 +1457,13 @@
           Quantity: 2
         - ReagentId: Protein
           Quantity: 2
+  - type: Construction
+    graph: Cutlet
+    node: cutlet
+  - type: FoodSequenceElement
+    entries:
+      Burger: MeatCutlet
+      Taco: MeatCutlet
 
 - type: entity
   name: bear cutlet
@@ -1347,6 +1489,13 @@
           Quantity: 2
         - ReagentId: Protein
           Quantity: 2
+  - type: Construction
+    graph: BearCutlet
+    node: bear cutlet
+  - type: FoodSequenceElement
+    entries:
+      Burger: BearCutletBurger
+      Taco: BearCutlet
 
 - type: entity
   name: penguin cutlet
@@ -1370,6 +1519,13 @@
           Quantity: 2
         - ReagentId: Protein
           Quantity: 2
+  - type: Construction
+    graph: PenguinCutlet
+    node: penguin cutlet
+  - type: FoodSequenceElement
+    entries:
+      Burger: PenguinCutletBurger
+      Taco: PenguinCutlet
 
 - type: entity
   name: chicken cutlet
@@ -1393,6 +1549,13 @@
           Quantity: 2
         - ReagentId: Protein
           Quantity: 2
+  - type: Construction
+    graph: ChickenCutlet
+    node: chicken cutlet
+  - type: FoodSequenceElement
+    entries:
+      Burger: ChickenCutlet
+      Taco: ChickenCutlet
 
 - type: entity
   name: duck cutlet
@@ -1416,6 +1579,13 @@
           Quantity: 2
         - ReagentId: Protein
           Quantity: 2
+  - type: Construction
+    graph: DuckCutlet
+    node: duck cutlet
+  - type: FoodSequenceElement
+    entries:
+      Burger: DuckCutlet
+      Taco: DuckCutlet
 
 - type: entity
   name: lizard cutlet
@@ -1440,6 +1610,13 @@
           Quantity: 2
         - ReagentId: Protein
           Quantity: 2
+  - type: Construction
+    graph: LizardCutlet
+    node: lizard cutlet
+  - type: FoodSequenceElement
+    entries:
+      Burger: LizardCutletBurger
+      Taco: LizardCutlet
 
 - type: entity
   name: spider cutlet
@@ -1462,6 +1639,13 @@
           Quantity: 1
         - ReagentId: Protein
           Quantity: 1
+  - type: Construction
+    graph: SpiderCutlet
+    node: spider cutlet
+  - type: FoodSequenceElement
+    entries:
+      Burger: SpiderCutletBurger
+      Taco: SpiderCutlet
 
 - type: entity
   name: xeno cutlet
@@ -1484,3 +1668,10 @@
           Quantity: 1
         - ReagentId: Protein
           Quantity: 1
+  - type: Construction
+    graph: XenoCutlet
+    node: xeno cutlet
+  - type: FoodSequenceElement
+    entries:
+      Burger: XenoCutlet
+      Taco: XenoCutlet
