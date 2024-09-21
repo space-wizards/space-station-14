@@ -79,12 +79,6 @@
   id: BoxZiptie
   description: A box full of zipties.
   components:
-  - type: Storage
-    grid:
-    - 0,0,7,1
-    whitelist:
-      components:
-      - Handcuff
   - type: StorageFill
     contents:
       - id: Zipties
