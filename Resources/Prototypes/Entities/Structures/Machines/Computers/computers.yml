@@ -25,7 +25,7 @@
           False: { visible: false }
         computerLayerKeys:
           True: { visible: true, shader: unshaded }
-          False: { visible: true, shader: shaded }   
+          False: { visible: true, shader: shaded }
       enum.AtmosAlertsComputerVisuals.ComputerLayerScreen:
         computerLayerScreen:
           0: { state: alert-0 }
@@ -517,6 +517,9 @@
         type: IdCardConsoleBoundUserInterface
   - type: CrewManifestViewer
     ownerKey: enum.IdCardConsoleUiKey.Key
+  - type: Speech
+    speechVerb: Robotic
+    speechSounds: Pai
   - type: Sprite
     layers:
     - map: ["computerLayerBody"]
