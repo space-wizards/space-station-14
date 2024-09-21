@@ -85,8 +85,6 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         SubscribeLocalEvent<StationAiCoreComponent, ComponentShutdown>(OnAiShutdown);
         SubscribeLocalEvent<StationAiCoreComponent, PowerChangedEvent>(OnCorePower);
         SubscribeLocalEvent<StationAiCoreComponent, GetVerbsEvent<Verb>>(OnCoreVerbs);
-
-        SubscribeLocalEvent<StationAiHeldComponent, EntGotRemovedFromContainerMessage>(OnAiBrainRemoved);
     }
 
     private void OnCoreVerbs(Entity<StationAiCoreComponent> ent, ref GetVerbsEvent<Verb> args)
@@ -340,6 +338,13 @@ public abstract partial class SharedStationAiSystem : EntitySystem
     {
         if (_timing.ApplyingState)
             return;
+        
+
+        if (TryComp(args.Entity, out ActionsComponent? comp))
+        {
+            comp.Actions.Clear();
+            Dirty(args.Entity, comp);
+        }
 
         // Reset name to whatever
         _metadata.SetEntityName(ent.Owner, Prototype(ent.Owner)?.Name ?? string.Empty);
@@ -352,15 +357,6 @@ public abstract partial class SharedStationAiSystem : EntitySystem
             _eye.SetTarget(args.Entity, null, eyeComp);
         }
         ClearEye(ent);
-    }
-
-    private void OnAiBrainRemoved(Entity<StationAiHeldComponent> ent, ref EntGotRemovedFromContainerMessage args)
-    {
-        if (TryComp(args.Entity, out ActionsComponent? comp))
-        {
-            comp.Actions.Clear();
-            Dirty(args.Entity, comp);
-        }
     }
 
     private void UpdateAppearance(Entity<StationAiHolderComponent?> entity)
