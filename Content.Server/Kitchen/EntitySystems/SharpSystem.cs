@@ -83,7 +83,7 @@ public sealed class SharpSystem : EntitySystem
             {
                 BreakOnDamage = true,
                 BreakOnMove = true,
-                NeedHand = needHand
+                NeedHand = needHand,
             };
         _doAfterSystem.TryStartDoAfter(doAfter);
         return true;
