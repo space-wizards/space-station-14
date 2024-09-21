@@ -9,6 +9,7 @@ using Content.Shared.Item;
 using Content.Shared.Polymorph;
 using Content.Shared.Polymorph.Components;
 using Content.Shared.Popups;
+using Content.Shared.Storage.Components;
 using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
@@ -44,6 +45,7 @@ public abstract class SharedChameleonProjectorSystem : EntitySystem
 
         SubscribeLocalEvent<ChameleonDisguiseComponent, InteractHandEvent>(OnDisguiseInteractHand, before: [typeof(SharedItemSystem)]);
         SubscribeLocalEvent<ChameleonDisguiseComponent, DamageChangedEvent>(OnDisguiseDamaged);
+        SubscribeLocalEvent<ChameleonDisguiseComponent, InsertIntoEntityStorageAttemptEvent>(OnDisguiseInsertAttempt);
         SubscribeLocalEvent<ChameleonDisguiseComponent, ComponentShutdown>(OnDisguiseShutdown);
 
         SubscribeLocalEvent<ChameleonProjectorComponent, AfterInteractEvent>(OnInteract);
@@ -69,6 +71,12 @@ public abstract class SharedChameleonProjectorSystem : EntitySystem
         // feature? projector makes your atoms weaker or some bs
         if (args.DamageDelta is {} damage)
             _damageable.TryChangeDamage(ent.Comp.User, damage);
+    }
+
+    private void OnDisguiseInsertAttempt(Entity<ChameleonDisguiseComponent> ent, ref InsertIntoEntityStorageAttemptEvent args)
+    {
+        // stay parented to the user, not the storage
+        args.Cancelled = true;
     }
 
     private void OnDisguiseShutdown(Entity<ChameleonDisguiseComponent> ent, ref ComponentShutdown args)
