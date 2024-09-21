@@ -884,6 +884,34 @@
     graph: YarnNoodles
     node: noodles
 
+- type: entity
+  parent: BasePlushie
+  id: PlushieGray
+  name: gray plushie
+  description: Manufactured recently to commemorate the gray exchange program becoming a booming success. It feels plasticky and seems easy to chew on. Thui love keb piskun plushie!!
+  components:
+  - type: Sprite
+    state: plushie_gray
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Voice/Gray/gray_scream.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Voice/Gray/gray_cry.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Voice/Gray/gray_scream.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Voice/Gray/gray_scream.ogg
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Voice/Gray/gray_scream.ogg
+  - type: Food
+    requiresSpecialDigestion: false
+    useSound:
+      path: /Audio/Voice/Gray/gray_scream.ogg
+
 ## Cheapo Figurines
 
 - type: entity
