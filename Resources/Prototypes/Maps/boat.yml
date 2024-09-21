@@ -3,8 +3,8 @@
   mapName: 'White Whale'
   mapPath: /Maps/boat.yml
   minPlayers: 40
-  maxPlayers: 80
-  randomRotation: false
+  maxPlayers: 90
+  randomRotation: true
   stations:
     Boat:
       stationProto: StandardNanotrasenStation
@@ -21,6 +21,7 @@
         - type: StationJobs
           availableJobs:
             #service
+            StationAi: [ 1, 1 ]
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
             Bartender: [ 1, 1 ]
@@ -29,7 +30,7 @@
             Janitor: [ 3, 3 ]
             Chaplain: [ 1, 1 ]
             Librarian: [ 1, 1 ]
-            ServiceWorker: [ 5, 5 ]
+            ServiceWorker: [ 4, 4 ]
             Detective: [ 1, 1 ]
             #engineering
             ChiefEngineer: [ 1, 1 ]
@@ -42,6 +43,7 @@
             MedicalDoctor: [ 3, 3 ]
             MedicalIntern: [ 2, 2 ]
             Paramedic: [ 1, 1 ]
+            Psychologist: [ 1, 1 ]
             #science
             ResearchDirector: [ 1, 1 ]
             Scientist: [ 4, 4 ]

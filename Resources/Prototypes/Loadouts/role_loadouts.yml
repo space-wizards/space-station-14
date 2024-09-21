@@ -86,6 +86,7 @@
   - ChefJumpsuit
   - CommonBackpack
   - ChefOuterClothing
+  - ChefShoes
   - Glasses
   - Survival
   - Trinkets
@@ -576,6 +577,13 @@
   - SurvivalSyndicate
   - GroupSpeciesBreathTool
   - GroupTankHarness
+
+- type: roleLoadout
+  id: RoleSurvivalNukie
+  groups:
+  - SurvivalSyndicate
+  - GroupSpeciesBreathTool
+  - GroupPocketTankDouble
 
 - type: roleLoadout
   id: RoleSurvivalEVA

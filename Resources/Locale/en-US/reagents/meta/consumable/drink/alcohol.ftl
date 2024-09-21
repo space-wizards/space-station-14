@@ -312,3 +312,12 @@ reagent-desc-junglejuice = Dont let the captain see, or youll have to pour it ou
 
 reagent-name-drinkdrink = Drink
 reagent-desc-drinkdrink = Finally.
+
+reagent-name-bloodier-mary = Bloodier Mary
+reagent-desc-bloodier-mary = AH, AH, AHH!
+
+reagent-name-salvagerssoothe = Salvager's Soothe
+reagent-desc-salvagerssoothe = Come home safe, okay? We're counting on you.
+
+reagent-name-donttelldsheriff = Don't Tell D Sherrif
+reagent-desc-donttelldsheriff = If Red Bool gives you wings, this'll give you four wheel drive.

@@ -318,6 +318,10 @@ ghost-role-information-pirate-captain-description = Argh matey! You are in charg
 ghost-role-information-artifact-name = Sentient Artifact
 ghost-role-information-artifact-description = Enact your eldritch whims. Forcibly activate your nodes for good or for evil.
 
+ghost-role-information-tomatokiller-name = Tomato killer
+ghost-role-information-tomatokiller-description = This little tomato will serve the botanist for the rest of his life... that is, a couple of minutes
+
+
 ghost-role-information-syndie-assaultborg-name = Syndicate Assault Borg
 ghost-role-information-syndie-assaultborg-description = Nuclear operatives needs reinforcements. You, a cold silicon killing machine, will help them. More dakka!
 

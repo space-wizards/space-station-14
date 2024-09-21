@@ -1,0 +1,141 @@
+# basic
+- type: hereticRitual
+  id: Sacrifice
+  name: heretic-ritual-basic-sacrifice
+  customBehaviors:
+  - !type:RitualSacrificeBehavior
+
+- type: hereticRitual
+  id: AmberFocus
+  name: heretic-ritual-basic-focus
+  requiredTags:
+    GlassShard: 1
+    Eyes: 1
+  output:
+    ClothingNeckAmberFocus: 1
+
+# ash path
+- type: hereticRitual
+  id: BladeAsh
+  name: heretic-ritual-ash-blade
+  requiredTags:
+    Knife: 1
+    Matchstick: 1
+  output:
+    HereticBladeAsh: 1
+
+- type: hereticRitual
+  id: MaskOfMadness
+  name: heretic-ritual-ash-mask
+  requiredTags:
+    Mask: 1
+    Candle: 4
+    Stunbaton: 1
+  output:
+    ClothingMaskMadHeretic: 1
+
+- type: hereticRitual
+  id: AscensionAsh
+  name: heretic-ritual-ash-ascend
+  customBehaviors:
+  - !type:RitualAshAscendBehavior
+    min: 3
+    max: 3
+  outputKnowledge: AshlordRite
+  outputEvent: !type:EventHereticAscension
+
+# flesh path
+- type: hereticRitual
+  id: BladeFlesh
+  name: heretic-ritual-flesh-blade
+  customBehaviors:
+  - !type:RitualReagentPuddleBehavior
+    reagent: Blood
+  requiredTags:
+    Knife: 1
+  output:
+    HereticBladeFlesh: 1
+
+- type: hereticRitual
+  id: ImperfectRitual
+  name: heretic-ritual-flesh-ghoul
+  customBehaviors:
+  - !type:RitualMuteGhoulifyBehavior
+  requiredEntityNames:
+    poppy: 1
+
+- type: hereticRitual
+  id: RawRitual
+  name: heretic-ritual-flesh-prophet
+  customBehaviors:
+  - !type:RitualReagentPuddleBehavior
+    reagent: Blood
+  requiredTags:
+    Eyes: 1
+    Stomach: 1
+  output:
+    MobGhoulProphet: 1
+
+- type: hereticRitual
+  id: LonelyRitual
+  name: heretic-ritual-flesh-stalker
+  customBehaviors:
+  - !type:RitualReagentPuddleBehavior
+    reagent: Blood
+  requiredTags:
+    Pen: 1
+    Heart: 1
+    Stomach: 1
+    Lungs: 1
+  output:
+    MobGhoulStalker: 1
+
+- type: hereticRitual
+  id: AscensionFlesh
+  name: heretic-ritual-flesh-ascend
+  customBehaviors:
+  - !type:RitualSacrificeBehavior
+    min: 4
+    max: 4
+  outputKnowledge: PriestFinalHymn
+  outputEvent: !type:EventHereticAscension
+
+# void path
+- type: hereticRitual
+  id: BladeVoid
+  name: heretic-ritual-void-blade
+  customBehaviors:
+  - !type:RitualTemperatureBehavior
+    minThreshold: 0 # ~= -1 celcius. or sub zero temperatures
+  requiredTags:
+    Knife: 1
+  output:
+    HereticBladeVoid: 1
+
+- type: hereticRitual
+  id: AscensionVoid
+  name: heretic-ritual-void-ascend
+  customBehaviors:
+  - !type:RitualSacrificeBehavior
+    min: 3
+    max: 3
+  - !type:RitualTemperatureBehavior
+    minThreshold: -20
+  outputKnowledge: WaltzAtTheEndOfTime
+  outputEvent: !type:EventHereticAscension
+
+# side path
+- type: hereticRitual
+  id: RitualOfKnowledge
+  name: heretic-ritual-side-knowledge
+  customBehaviors:
+  - !type:RitualKnowledgeBehavior
+
+- type: hereticRitual
+  id: ArmorerRitual
+  name: heretic-ritual-side-armor
+  requiredTags:
+    Table: 1
+    GasMask: 1
+  output:
+    ClothingOuterArmorHeretic: 1

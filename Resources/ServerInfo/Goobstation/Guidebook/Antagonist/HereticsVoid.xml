@@ -1,0 +1,63 @@
+<Document>
+  # Path of Void
+  The Path of Void focuses on stealth, silence and the freezing cold. While the path offers very little utility early on, they quickly gain the ability to silence and freeze their victims, opening the window to silently ambush targets with no other items or chemicals required.
+
+  It also offers full immunity to freezing temperatures, an invisible armored cloak (with pockets!), and later a targeted blink that damages anything nearby.
+
+  The path has access to many strong transmuted items, but requires smart use to realize their full potential, making it moderately difficult but a good beginner choice. Ascending silences those around you and makes you the eye of a deadly blizzard. 
+
+  ## Glimmer of Winter
+  <Box>
+    <GuideEntityEmbed Entity="HereticBladeVoid" Caption=""/>
+  </Box>
+  Opens up the Path of Void to you.
+
+  Allows you to transmute a knife in sub-zero temperatures into a Void Blade.
+
+  ## Grasp of Void
+  <Box>
+    <GuideEntityEmbed Entity="TouchSpellMansus" Caption=""/>
+  </Box>
+  Your Mansus Grasp will temporarily mute and chill the victim.
+
+  ## Aristocrat's Way
+  Grants you immunity to cold temperatures, and removes your need to breathe.
+
+  You can still take damage due to a lack of pressure.
+
+  ## Mark of Void
+  <Box>
+    <GuideEntityEmbed Entity="TouchSpellMansus" Caption=""/>
+  </Box>
+  Your Mansus Grasp now applies the Mark of Void. The mark is triggered from an attack with your Void Blade.
+
+  When triggered, further silences the victim and swiftly lowers the temperature of their body and the air around them.
+
+  ## Void Blast
+  Grants you Void Blast, a spell that shoots out a freezing blast in a cone in front of you, freezing the ground and any victims within.
+
+  ## Void Phase
+  Grants you Void Phase, a long range targeted teleport spell.
+
+  Additionally stuns heathens around your original and target destination.
+
+  ## Seeking Blade
+  <Box>
+    <GuideEntityEmbed Entity="HereticBladeVoid" Caption=""/>
+  </Box>
+  Your blade freezes enemies. Additionally, when a target is marked, activate the Void Blade in your hand to teleport right next to them without breaking the blade.
+
+  ## Void Pull
+  Grants you Void Pull, a spell that pulls all nearby heathens towards you, stunning them briefly.
+
+  ## Waltz at the End of Time
+  The ascension ritual of the Path of Void.
+
+  Bring 3 corpses to a transmutation rune in sub-zero temperatures to complete the ritual.
+
+  When completed, grants you Aristocrat's Blessing.
+
+  Everything around you will be turned into snow and the air will constantly be frozen. Those nearby will be silenced and frozen even quicker.
+
+  Additionally, you will become immune to the effects of space.
+</Document>

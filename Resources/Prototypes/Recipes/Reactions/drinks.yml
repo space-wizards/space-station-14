@@ -1202,14 +1202,17 @@
   products:
     UAP: 6
 
-- type: reaction
+       # Razz whatever the fuck you did here has caused horrible things
+- type: reaction 
   id: TheeHorsepussy
   requiredMixerCategories:
     - Stir
   reactants:
-    AppleMartiniCrystalLite:
-      amount: 2
-    Methadone:
+    JuiceApple:
+      amount: 1
+    Martini:
+      amount: 1
+    Desoxyephedrine:
       amount: 1
   products:
     TheeHorsepussy: 3
@@ -1385,3 +1388,51 @@
       amount: 1
   products:
     TheDrink: 2
+   
+- type: reaction
+  id: BloodierMary
+  reactants:
+    BloodyMary:
+      amount: 2
+    Blood:
+      amount: 1
+  products:
+    BloodierMary: 3
+    
+- type: reaction
+  id: SalvagersSoothe
+  reactants:
+    Bicaridine:
+      amount: 1
+    Dexalin:
+      amount: 1
+    Dylovene:
+      amount: 1
+    Moonshine:
+      amount: 2
+  products:
+    SalvagersSoothe: 3
+    
+- type: reaction
+  id: HummingBird
+  requiredMixerCategories:
+    - Stir
+  reactants:
+    Water:
+      amount: 4
+    Sugar:
+      amount: 1
+  products:
+    HummingBird: 5
+ 
+- type: reaction
+  id: DontTell
+  requiredMixerCategories:
+    - Stir
+  reactants:
+    Hooch:
+      amount: 1
+    Moonshine:
+      amount: 1
+  products:
+    DontTell: 2

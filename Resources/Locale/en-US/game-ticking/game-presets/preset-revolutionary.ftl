@@ -4,10 +4,11 @@ roles-antag-rev-head-name = Head Revolutionary
 roles-antag-rev-head-objective = Your objective is to take over the station by converting people to your cause and killing all Command staff on station.
 
 head-rev-role-greeting =
+    Enough is enough!
     You are a Head Revolutionary.
-    You are tasked with removing all of Command from station via death, exilement or imprisonment.
-    The Syndicate has sponsored you with a flash that converts the crew to your side.
-    Beware, this won't work on Security, Command, the blind, or those wearing sunglasses.
+    Your goal is to liberate the station from the Nanotrasen dogs by killing, marooning or imprisoning all Commanding officers.
+    The Syndicate has sponsored you with a flash that removes your crewmates' NT brainwashing.
+    Beware, this won't work on the Mindshielded, the blind, or those with other flash protection.
     Viva la revolución!
 
 head-rev-briefing =

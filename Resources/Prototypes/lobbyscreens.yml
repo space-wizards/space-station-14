@@ -53,3 +53,7 @@
 - type: lobbyBackground
   id: YumTrain
   background: /Textures/LobbyScreens/IMG_0138.webp
+
+- type: lobbyBackground
+  id: Screwloose
+  background: /Textures/LobbyScreens/screwloose.webp

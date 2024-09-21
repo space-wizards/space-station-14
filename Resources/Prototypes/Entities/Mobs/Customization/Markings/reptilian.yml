@@ -286,6 +286,15 @@
     state: horns_myrsore
 
 - type: marking
+  id: LizardHornsNubby
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/reptilian_parts.rsi
+    state: horns_nubby
+
+- type: marking
   id: LizardHornsBighorn
   bodyPart: HeadTop
   markingCategory: HeadTop

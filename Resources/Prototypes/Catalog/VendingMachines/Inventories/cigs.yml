@@ -16,7 +16,6 @@
     CheapLighter: 4
     Lighter: 2
     FlippoLighter: 2
-  contrabandInventory:
-    StackOfCigs: 1
   emaggedInventory:
     CigPackSyndicate: 1
+    StackOfCigs: 1

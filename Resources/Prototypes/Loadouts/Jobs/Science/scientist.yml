@@ -60,6 +60,11 @@
     jumpsuit: ClothingUniformJumpskirtRoboticist
 
 - type: loadout
+  id: ScientistJumpsuitFormal
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitScientistFormal
+
+- type: loadout
   id: SeniorResearcherJumpsuit
   effects:
   - !type:GroupLoadoutEffect
