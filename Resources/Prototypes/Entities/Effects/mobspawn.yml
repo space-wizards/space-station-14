@@ -86,7 +86,6 @@
     deleteSpawnerAfterSpawn: false
     table: !type:NestedSelector
       tableId: AnomalyFloraLootTable
-      prob: 1
 
 - type: entityTable
   id: AnomalyFloraLootTable
