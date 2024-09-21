@@ -20,15 +20,22 @@
     - Biological
 
 - type: entity
-  parent: ClothingEyesBase
+  parent: [ClothingEyesBase, BaseToggleClothing]
   id: ClothingEyesHudDiagnostic
   name: diagnostic hud
-  description: A heads-up display capable of analyzing the integrity and status of robotics and exosuits. Made out of see-borg-ium.
+  description: A heads-up display capable of analyzing the integrity and status of robotics and exosuits. Made out of see-borg-ium. Has a camera mod to work with Station AI.
   components:
   - type: Sprite
     sprite: Clothing/Eyes/Hud/diag.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Hud/diag.rsi
+  - type: ToggleClothing
+    action: ActionToggleHudDiagnosticCamera
+    disableOnUnequip: true
+  - type: ComponentToggler
+    parent: true
+    components:
+    - type: StationAiOverlay
   - type: ShowHealthBars
     damageContainers:
     - Inorganic
@@ -38,7 +45,7 @@
   parent: [ClothingEyesBase, ShowMedicalIcons]
   id: ClothingEyesHudMedical
   name: medical hud
-  description: A heads-up display that scans the humanoids in view and provides accurate data about their health status.
+  description: A heads-up display that scans the humas in view and provides accurate data about their health status.
   components:
   - type: Sprite
     sprite: Clothing/Eyes/Hud/med.rsi
@@ -294,3 +301,11 @@
   parent: [ClothingEyesEyepatchHudDiag, ClothingHeadEyeBaseFlipped]
   id: ClothingEyesEyepatchHudDiagFlipped
   name: diagnostic hud eyepatch
+
+- type: entity
+  id: ActionToggleHudDiagnosticCamera
+  name: Toggle camera mod
+  description: Toggles the camera mod on and off.
+  components:
+  - type: InstantAction
+    event: !type:ToggleActionEvent

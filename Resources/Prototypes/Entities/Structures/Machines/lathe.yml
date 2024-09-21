@@ -613,7 +613,7 @@
     - TorsoBorgService
     dynamicRecipes:
     - ProximitySensor
-    - ClothingEyesVisorCamera
+    - ClothingEyesHudDiagnostic
     - BorgModuleLightReplacer
     - BorgModuleAdvancedCleaning
     - BorgModuleMining

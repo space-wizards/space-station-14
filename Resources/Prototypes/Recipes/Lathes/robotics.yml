@@ -55,12 +55,12 @@
 
 - type: latheRecipe
   parent: BaseRoboticsRecipe
-  id: ClothingEyesVisorCamera
-  result: ClothingEyesVisorCamera
+  id: ClothingEyesHudDiagnostic
+  result: ClothingEyesHudDiagnostic
   materials:
-    Steel: 300
-    Plastic: 200
-    Glass: 500
+    Steel: 200
+    Plastic: 100
+    Glass: 300
 
 - type: latheRecipe
   parent: BaseRoboticsRecipe
