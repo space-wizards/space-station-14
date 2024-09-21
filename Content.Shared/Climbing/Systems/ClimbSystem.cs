@@ -62,7 +62,7 @@ public sealed partial class ClimbSystem : VirtualController
         SubscribeLocalEvent<ClimbingComponent, ClimbDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<ClimbingComponent, EndCollideEvent>(OnClimbEndCollide);
         SubscribeLocalEvent<ClimbingComponent, BuckledEvent>(OnBuckled);
-        SubscribeLocalEvent<ClimbingComponent, ContainerGettingInsertedAttemptEvent>(OnStored);
+        SubscribeLocalEvent<ClimbingComponent, EntGotInsertedIntoContainerMessage>(OnStored);
 
         SubscribeLocalEvent<ClimbableComponent, CanDropTargetEvent>(OnCanDragDropOn);
         SubscribeLocalEvent<ClimbableComponent, GetVerbsEvent<AlternativeVerb>>(AddClimbableVerb);
@@ -247,6 +247,10 @@ public sealed partial class ClimbSystem : VirtualController
         if (args.Handled || args.Cancelled || args.Args.Target == null || args.Args.Used == null)
             return;
 
+        if (_containers.IsEntityInContainer(uid))
+            args.Handled = true;
+            return;
+
         Climb(uid, args.Args.User, args.Args.Target.Value, climbing: component);
         args.Handled = true;
     }
@@ -258,9 +262,6 @@ public sealed partial class ClimbSystem : VirtualController
             return;
 
         if (!Resolve(climbable, ref comp, false))
-            return;
-
-        if (_containers.IsEntityInContainer(uid))
             return;
 
         if (!ReplaceFixtures(uid, climbing, fixtures))
@@ -519,7 +520,7 @@ public sealed partial class ClimbSystem : VirtualController
         StopOrCancelClimb(uid, component);
     }
 
-    private void OnStored(EntityUid uid, ClimbingComponent component, ref ContainerGettingInsertedAttemptEvent args)
+    private void OnStored(EntityUid uid, ClimbingComponent component, ref EntGotInsertedIntoContainerMessage args)
     {
         StopOrCancelClimb(uid, component);
     }
