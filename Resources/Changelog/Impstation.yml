@@ -1877,3 +1877,17 @@
   id: 242
   time: '2024-09-21T18:05:08.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/316
+- author: hivehum
+  changes:
+  - message: The Heretic greeting has more sauce.
+    type: Tweak
+  id: 243
+  time: '2024-09-21T22:38:12.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/320
+- author: Darkmajia
+  changes:
+  - message: Heretic equipment is now marked with a contraband tag.
+    type: Add
+  id: 244
+  time: '2024-09-21T22:38:24.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/318
