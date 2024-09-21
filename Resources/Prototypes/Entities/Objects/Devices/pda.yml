@@ -1048,6 +1048,21 @@
     state: pda-brigmedic
 
 - type: entity
+  parent: BasePDA
+  id: RoboticsPDA
+  name: robotics PDA
+  description: It's covered in scratches.
+  components:
+  - type: Pda
+    id: ResearchIDCard
+    state: pda-roboticist
+  - type: PdaBorderColor
+    borderColor: "#484848"
+    accentVColor: "#d33725"
+  - type: Icon
+    state: pda-roboticist
+
+- type: entity
   parent: ClownPDA
   id: CluwnePDA
   name: cluwne PDA

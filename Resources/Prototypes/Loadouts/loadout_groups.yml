@@ -932,6 +932,7 @@
   name: loadout-group-scientist-id
   loadouts:
   - ScientistPDA
+  - RoboticistPDA
   - SeniorResearcherPDA
 
 - type: loadoutGroup

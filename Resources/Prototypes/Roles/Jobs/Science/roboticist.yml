@@ -2,7 +2,7 @@
   id: Roboticist
   name: job-name-roboticist
   description: job-description-roboticist
-  playTimeTracker: JobRoboticist #Change if the job is ever added proper
+  playTimeTracker: JobRoboticist
   icon: JobIconRoboticist
   setPreference: false
   overrideConsoleVisibility: true
