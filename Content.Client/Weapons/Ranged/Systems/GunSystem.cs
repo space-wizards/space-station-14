@@ -77,6 +77,7 @@ public sealed partial class GunSystem : SharedGunSystem
         base.Initialize();
         UpdatesOutsidePrediction = true;
         SubscribeLocalEvent<AmmoCounterComponent, ItemStatusCollectMessage>(OnAmmoCounterCollect);
+        SubscribeLocalEvent<AmmoCounterComponent, UpdateClientAmmoEvent>(OnUpdateClientAmmo);
         SubscribeAllEvent<MuzzleFlashEvent>(OnMuzzleFlash);
 
         // Plays animated effects on the client.
@@ -84,6 +85,11 @@ public sealed partial class GunSystem : SharedGunSystem
 
         InitializeMagazineVisuals();
         InitializeSpentAmmo();
+    }
+
+    private void OnUpdateClientAmmo(EntityUid uid, AmmoCounterComponent ammoComp, ref UpdateClientAmmoEvent args)
+    {
+        UpdateAmmoCount(uid, ammoComp);
     }
 
     private void OnMuzzleFlash(MuzzleFlashEvent args)
@@ -138,15 +144,6 @@ public sealed partial class GunSystem : SharedGunSystem
 
     public override void Update(float frameTime)
     {
-        var query = EntityQueryEnumerator<ProjectileBatteryAmmoProviderComponent, AmmoCounterComponent>();
-        while (query.MoveNext(out var uid, out var comp, out var ammoComp))
-        {
-            if (comp.QueueUpdate)
-            {
-                comp.QueueUpdate = false;
-                UpdateAmmoCount(uid, ammoComp);
-            }
-        }
         if (!Timing.IsFirstTimePredicted)
             return;
 

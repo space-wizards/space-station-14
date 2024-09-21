@@ -5,6 +5,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
+using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Weapons.Ranged.Systems;
@@ -110,7 +111,9 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
             float FireCostDiff = (float)fireMode.FireCost / (float)OldFireCost;
             projectileBatteryAmmoProviderComponent.Shots = (int)Math.Round(projectileBatteryAmmoProviderComponent.Shots/FireCostDiff);
             projectileBatteryAmmoProviderComponent.Capacity = (int)Math.Round(projectileBatteryAmmoProviderComponent.Capacity/FireCostDiff);
-            projectileBatteryAmmoProviderComponent.QueueUpdate = true;
+            Dirty(uid, projectileBatteryAmmoProviderComponent);
+            var updateClientAmmoEvent = new UpdateClientAmmoEvent();
+            RaiseLocalEvent(uid, ref updateClientAmmoEvent);
 
             if (user != null)
             {
