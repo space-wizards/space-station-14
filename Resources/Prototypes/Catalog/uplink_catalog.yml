@@ -1207,8 +1207,8 @@
 
 - type: listing
   id: UplinkDarkGygax
-  name: uplink-bundele-mech-assault-name
-  description: uplink-bundele-mech-assault-desc
+  name: uplink-mech-teleporter-assault-name
+  description: uplink-mech-teleporter-assault-desc
   icon: { sprite: /Textures/Objects/Specific/Mech/mecha.rsi, state: darkgygax }
   productEntity: CrateCybersunDarkGygaxBundle
   cost:
@@ -1223,8 +1223,8 @@
 
 - type: listing
   id: UplinkMauler
-  name: uplink-bundele-mech-heavy-name
-  description: uplink-bundele-mech-heavy-desc
+  name: uplink-mech-teleporter-heavy-name
+  description: uplink-mech-teleporter-heavy-desc
   icon: { sprite: /Textures/Objects/Specific/Mech/mecha.rsi, state: mauler }
   productEntity: CrateCybersunMaulerBundle
   cost:
