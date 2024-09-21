@@ -42,7 +42,7 @@
   id: ReclaimerNuke
   background: /Textures/LobbyScreens/reclaimer-nuke.webp
   
-- type: lobbyBackground # These three with the ID "CQCm" are for Weaselstation.
+- type: lobbyBackground # These three with the ID "CQCm" and "Janitor" are for Weaselstation.
   id: CQCm
   background: /Textures/LobbyScreens/cqcm.webp
   
