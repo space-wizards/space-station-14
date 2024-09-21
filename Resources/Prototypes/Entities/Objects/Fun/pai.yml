@@ -73,6 +73,9 @@
           Searching: { state: pai-searching-overlay }
           On: { state: pai-on-overlay }
   - type: StationMap
+  - type: Tag
+    tags:
+    - PdaPaiInsertable
 
 - type: entity
   parent: [ PersonalAI, BaseSyndicateContraband]
