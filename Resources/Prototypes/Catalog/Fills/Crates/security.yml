@@ -89,13 +89,13 @@
       - id: ClothingBeltSecurity
         amount: 2
       - id: BookSecurity
-        amount: 2
+        amount: 2 # the law
 
 - type: entity
   id: CrateRestraints
   parent: CrateSecgear
   name: restraints crate
-  description: Contains a box of handcuffs, box of zipties, and two straitjackets. Requires Security access to open.
+  description: Contains a box of handcuffs and a box of zipties. Requires Security access to open.
   components:
   - type: StorageFill
     contents:
@@ -103,8 +103,6 @@
         amount: 1
       - id: BoxZiptie
         amount: 1
-      - id: ClothingOuterStraightjacket
-        amount: 2
 
 - type: entity
   id: CrateSecNonlethalThrowables
