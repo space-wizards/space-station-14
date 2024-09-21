@@ -713,6 +713,18 @@
       mech-battery-slot:
       - PowerCellHyper
 
+- type: entity
+  id: MechGygaxSyndieFilled
+  parent: MechGygaxSyndieBattery
+  suffix: Battery, Filled
+  components:
+  - type: Mech
+    startingEquipment:
+      - WeaponMechChainSword
+      - WeaponMechCombatShotgun
+      - WeaponMechCombatMissileRack8
+      - WeaponMechCombatTeslaCannon
+
 # Mauler
 - type: entity
   id: MechMaulerSyndie
@@ -769,3 +781,15 @@
       mech-battery-slot:
       - PowerCellHyper
 
+- type: entity
+  id: MechMaulerSyndieFilled
+  parent: MechMaulerSyndieBattery
+  suffix: Battery, Filled
+  components:
+  - type: Mech
+    startingEquipment:
+      - WeaponMechChainSword
+      - WeaponMechCombatUltraRifle
+      - WeaponMechCombatShotgun
+      - WeaponMechCombatMissileRack6
+      - WeaponMechCombatTeslaCannon

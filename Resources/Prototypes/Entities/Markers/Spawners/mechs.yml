@@ -124,6 +124,21 @@
       - MechGygaxSyndieBattery
 
 - type: entity
+  name: Dark Gygax Spawner
+  suffix: Filled
+  id: SpawnMechGygaxSyndieFilled
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - sprite: Objects/Specific/Mech/mecha.rsi
+        state: darkgygax
+  - type: ConditionalSpawner
+    prototypes:
+      - MechGygaxSyndieFilled
+
+- type: entity
   name: Mauler Spawner
   id: SpawnMechMaulerSyndie
   parent: MarkerBase
@@ -137,3 +152,17 @@
     prototypes:
       - MechMaulerSyndieBattery
 
+- type: entity
+  name: Mauler Spawner
+  suffix: Filled
+  id: SpawnMechMaulerSyndieFilled
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - sprite: Objects/Specific/Mech/mecha.rsi
+        state: mauler
+  - type: ConditionalSpawner
+    prototypes:
+      - MechMaulerSyndieFilled
