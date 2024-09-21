@@ -3,6 +3,10 @@
   table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
     children:
     - id: MothroachSpawn
+    - id: LizardSpawn
+    - id: BatSpawn
+    - id: BeeSpawn
+    - id: PitbullVentSpawn
 
 - type: entity
   id: MothroachSpawn
@@ -67,4 +71,19 @@
   - type: VentCrittersRule
     entries:
     - id: MobAngryBee
+      prob: 0.05
+
+- type: entity
+  parent: BaseGameRule
+  id: PitbullVentSpawn
+  components:
+  - type: StationEvent
+    earliestStart: 25
+    minimumPlayers: 15
+    reoccurenceDelay: 30 # it gets old
+    weight: 4
+    duration: 1
+  - type: VentCrittersRule
+    entries:
+    - id: MobPitbullVent
       prob: 0.05
