@@ -728,7 +728,7 @@
 
 - type: entity
   parent: SeedBase
-  name: packet of anomaly seeds
+  name: packet of anomaly berry seeds
   id: AnomalyBerrySeeds
   components:
     - type: Seed
