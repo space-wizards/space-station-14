@@ -13,7 +13,9 @@ public sealed partial class PlantAdjustToxins : PlantAdjustAttribute
     public override void Effect(EntityEffectBaseArgs args)
     {
         var plantComp = args.EntityManager.GetComponent<PlantComponent>(args.TargetEntity);
-        var plantHolderComp = args.EntityManager.GetComponent<PlantHolderComponent>(plantComp.PlantHolderUid);
+        if (plantComp.PlantHolderUid == null)
+            return;
+        var plantHolderComp = args.EntityManager.GetComponent<PlantHolderComponent>(plantComp.PlantHolderUid.Value);
         plantHolderComp.Toxins += Amount;
     }
 }

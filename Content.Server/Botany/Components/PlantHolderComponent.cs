@@ -61,5 +61,5 @@ public sealed partial class PlantHolderComponent : Component
     public Entity<SolutionComponent>? SoilSolution = null;
 
     [DataField]
-    public EntityUid PlantUid = EntityUid.Invalid;
+    public EntityUid? PlantUid;
 }

@@ -48,7 +48,7 @@ public sealed partial class PlantComponent : Component
     public float Health = 100;
 
     [DataField]
-    public EntityUid PlantHolderUid = EntityUid.Invalid;
+    public EntityUid? PlantHolderUid;
 
     [DataField]
     public SeedData? Seed;

@@ -147,7 +147,8 @@ public sealed class PlantSystem : EntitySystem
             if (_random.Prob(0.3f))
                 plant.Sampled = true;
 
-            _plantHolder.UpdateSprite(plant.PlantHolderUid, holder);
+            if (plant.PlantHolderUid != null)
+                _plantHolder.UpdateSprite(plant.PlantHolderUid.Value, holder);
             return;
         }
 
@@ -190,18 +191,21 @@ public sealed class PlantSystem : EntitySystem
         if (!plant.Dead)
             return false;
 
-        RemovePlant(plantEntity, plant);
+        RemovePlant(plantEntity);
         AfterHarvest(plantEntity, plant);
         return true;
     }
 
-    public void RemovePlant(EntityUid uid, PlantComponent? component = null)
+    public void RemovePlant(EntityUid uid)
     {
-        if (!Resolve(uid, ref component))
-            return;
+        GetEverything(uid, out var plant, out _, out var holder);
 
         QueueDel(uid);
-        _plantHolder.ForceUpdateByExternalCause(component.PlantHolderUid);
+        if (holder != null && plant != null && plant.PlantHolderUid != null)
+        {
+            holder.PlantUid = null;
+            _plantHolder.ForceUpdateByExternalCause(plant.PlantHolderUid.Value);
+        }
     }
 
     private void AfterHarvest(EntityUid uid, PlantComponent? component = null)
@@ -218,8 +222,8 @@ public sealed class PlantSystem : EntitySystem
 
         if (seed.HarvestRepeat == HarvestType.NoRepeat)
         {
-            holder.PlantUid = EntityUid.Invalid;
-            RemovePlant(uid, plant);
+            holder.PlantUid = null;
+            RemovePlant(uid);
         }
         else
             UpdateSprite(uid, plant);
@@ -445,14 +449,16 @@ public sealed class PlantSystem : EntitySystem
             if (holder.DrawWarnings)
                 holder.UpdateSpriteAfterUpdate = true;
         }
-        else if (plant.Age < 0) // Revert back to seed packet!
+        else if (plant.Age < 0 && plant.PlantHolderUid != null) // Revert back to seed packet!
         {
             var packetSeed = seed;
             // will put it in the trays hands if it has any, please do not try doing this
-            _botany.SpawnSeedPacket(packetSeed, Transform(plant.PlantHolderUid).Coordinates, plant.PlantHolderUid);
-            RemovePlant(plantuid, plant);
+            if (plant.PlantHolderUid != null)
+                _botany.SpawnSeedPacket(packetSeed, Transform(plant.PlantHolderUid.Value).Coordinates, plant.PlantHolderUid.Value);
+            RemovePlant(plantuid);
             holder.ForceUpdate = true;
-            _plantHolder.Update(plant.PlantHolderUid, holder);
+            if (plant.PlantHolderUid != null)
+                _plantHolder.Update(plant.PlantHolderUid.Value, holder);
             return;
         }
 
@@ -510,8 +516,11 @@ public sealed class PlantSystem : EntitySystem
         return plantFound && seed != null && holderFound;
     }
 
-    public PlantHolderComponent? GetPlantHolder(EntityUid plantHolderUid)
+    public PlantHolderComponent? GetPlantHolder(EntityUid? plantHolderUid)
     {
+        if (plantHolderUid == null)
+            return null;
+
         TryComp<PlantHolderComponent>(plantHolderUid, out var plantHolder);
         return plantHolder;
     }
@@ -534,7 +543,8 @@ public sealed class PlantSystem : EntitySystem
             holder.ImproperPressure = false;
             holder.WeedLevel = Math.Clamp(holder.WeedLevel + (1 * HydroponicsSpeedMultiplier), 0f, 10f);
             holder.PestLevel = 0;
-            _plantHolder.UpdateSprite(plant.PlantHolderUid, holder);
+            if (plant.PlantHolderUid != null)
+                _plantHolder.UpdateSprite(plant.PlantHolderUid.Value, holder);
         }
     }
 

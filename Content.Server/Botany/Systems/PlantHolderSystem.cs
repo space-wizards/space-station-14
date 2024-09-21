@@ -134,14 +134,13 @@ public sealed class PlantHolderSystem : EntitySystem
     /// <summary>
     /// Gets the PlantComponent on an Plant entity.
     /// </summary>
-    private bool GetPlant(EntityUid uid, out Entity<PlantComponent> plant)
+    private bool GetPlant(EntityUid? uid, out Entity<PlantComponent> plant)
     {
-        if (uid != EntityUid.Invalid)
+        if (uid != null)
         {
-            TryComp<PlantComponent>(uid, out var plantComp);
-            if (plantComp != null)
+            if (TryComp<PlantComponent>(uid, out var plantComp) && plantComp != null)
             {
-                plant = (uid, plantComp);
+                plant = (uid.Value, plantComp);
                 return true;
             }
         }
@@ -163,7 +162,7 @@ public sealed class PlantHolderSystem : EntitySystem
                 if (!_botany.TryGetSeed(seeds, out var seed))
                     return;
 
-                if (entity.Comp.PlantUid == EntityUid.Invalid)
+                if (entity.Comp.PlantUid == null)
                 {
                     seed = seed.Clone();
                     var name = Loc.GetString(seed.Name);
@@ -405,10 +404,12 @@ public sealed class PlantHolderSystem : EntitySystem
         component.PestLevel = 0;
         component.ImproperPressure = false;
         component.ImproperHeat = false;
-
-        GetPlant(component.PlantUid, out var plant);
-        _plant.RemovePlant(plant);
-        component.PlantUid = EntityUid.Invalid;
+        if (component.PlantUid != null)
+        {
+            GetPlant(component.PlantUid.Value, out var plant);
+            _plant.RemovePlant(plant);
+            component.PlantUid = null;
+        }
 
         UpdateSprite(uid, component);
     }
@@ -437,11 +438,11 @@ public sealed class PlantHolderSystem : EntitySystem
 
     public void UpdateReagents(EntityUid uid, PlantHolderComponent? component = null)
     {
-        if (!Resolve(uid, ref component))
+        if (!Resolve(uid, ref component) || component.PlantUid == null)
             return;
 
         PlantComponent? plantComp = null;
-        var hasPlant = GetPlant(component.PlantUid, out var plant);
+        var hasPlant = GetPlant(component.PlantUid.Value, out var plant);
         if (hasPlant)
             TryComp<PlantComponent>(plant, out plantComp);
 
@@ -472,25 +473,35 @@ public sealed class PlantHolderSystem : EntitySystem
         if (!TryComp<AppearanceComponent>(uid, out var app))
             return;
 
-        var hasPlant = GetPlant(component.PlantUid, out var plantEnt);
         SeedData? seed = null;
-        if (hasPlant)
+
+        if (component.PlantUid != null)
         {
-            seed = plantEnt.Comp.Seed;
-            _appearance.SetData(uid, PlantHolderVisuals.HarvestLight, plantEnt.Comp.Harvest, app);
+            var hasPlant = GetPlant(component.PlantUid.Value, out var plantEnt);
+
+            if (hasPlant && plantEnt.Comp != null)
+            {
+                seed = plantEnt.Comp.Seed;
+                _appearance.SetData(uid, PlantHolderVisuals.HarvestLight, plantEnt.Comp.Harvest, app);
+            }
+            else
+            {
+                _appearance.SetData(uid, PlantHolderVisuals.HarvestLight, false, app);
+            }
+
+            if (seed == null || plantEnt.Comp == null)
+            {
+                _appearance.SetData(uid, PlantHolderVisuals.HealthLight, false, app);
+            }
+            else
+            {
+                _appearance.SetData(uid, PlantHolderVisuals.HealthLight, plantEnt.Comp.Health <= seed.Endurance / 2f);
+            }
         }
         else
         {
             _appearance.SetData(uid, PlantHolderVisuals.HarvestLight, false, app);
-        }
-
-        if (seed == null)
-        {
             _appearance.SetData(uid, PlantHolderVisuals.HealthLight, false, app);
-        }
-        else
-        {
-            _appearance.SetData(uid, PlantHolderVisuals.HealthLight, plantEnt.Comp.Health <= seed.Endurance / 2f);
         }
 
         _appearance.SetData(uid, PlantHolderVisuals.WaterLight, component.WaterLevel <= 15, app);
@@ -506,14 +517,14 @@ public sealed class PlantHolderSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
-        if (GetPlant(component.PlantUid, out var plant))
+        if (component.PlantUid != null && GetPlant(component.PlantUid.Value, out var plant))
         {
             plant.Comp.SkipAging++; // We're forcing an update cycle, so one age hasn't passed.
-            _plant.Update(component.PlantUid, plant.Comp);
+            _plant.Update(component.PlantUid.Value, plant.Comp);
         }
         else
         {
-            component.PlantUid = EntityUid.Invalid;
+            component.PlantUid = null;
         }
         component.ForceUpdate = true;
         Update(uid, component);
