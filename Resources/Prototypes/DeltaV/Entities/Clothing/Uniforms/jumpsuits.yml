@@ -131,7 +131,7 @@
     sprite: DeltaV/Clothing/Uniforms/Jumpsuit/lost_tourist.rsi
 
 - type: entity
-  parent: ClothingUniformBase
+  parent: ClothingUniformMailCarrier # GreyStation: inherit faction clothing from mail carrier uniform
   id: ClothingUniformCourier
   name: courier's uniform
   description:
