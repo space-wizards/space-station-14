@@ -25,6 +25,7 @@ namespace Content.Client.Power.APC.UI
             RobustXamlLoader.Load(this);
 
             BreakerButton.OnPressed += _ => OnBreaker?.Invoke();
+
         }
 
         public void SetEntity(EntityUid entity)
@@ -38,7 +39,8 @@ namespace Content.Client.Power.APC.UI
 
             if (BreakerButton != null)
             {
-                if(castState.HasAccess == false)
+                //                     Below is commented out as part of HasAccess removal.
+                /*if(castState.HasAccess == false)
                 {
                     BreakerButton.Disabled = true;
                     BreakerButton.ToolTip = Loc.GetString("apc-component-insufficient-access");
@@ -48,7 +50,8 @@ namespace Content.Client.Power.APC.UI
                     BreakerButton.Disabled = false;
                     BreakerButton.ToolTip = null;
                     BreakerButton.Pressed = castState.MainBreaker;
-                }
+                }*/
+                BreakerButton.Pressed = castState.MainBreaker;
             }
 
             if (PowerLabel != null)
