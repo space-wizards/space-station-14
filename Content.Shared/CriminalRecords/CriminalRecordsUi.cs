@@ -38,6 +38,7 @@ public sealed class CriminalRecordsConsoleState : BoundUserInterfaceState
 
     public CriminalRecord? CriminalRecord = null;
     public GeneralStationRecord? StationRecord = null;
+    public int CurrentTab = 0;
     public readonly Dictionary<uint, string>? RecordListing;
     public readonly StationRecordsFilter? Filter;
 

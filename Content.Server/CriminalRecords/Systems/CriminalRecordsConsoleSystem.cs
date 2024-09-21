@@ -225,6 +225,9 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
             state.SelectedKey = id;
         }
 
+        //Set the Current Tab aka the filter status type for the records list
+        state.CurrentTab = console.CurrentTab;
+
         _ui.SetUiState(uid, CriminalRecordsConsoleKey.Key, state);
     }
 

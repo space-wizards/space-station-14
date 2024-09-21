@@ -161,6 +161,12 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
 
     public void UpdateState(CriminalRecordsConsoleState state)
     {
+        //Set the correct button to be active
+        AllListToggle.Pressed = state.CurrentTab == 0;
+        WantedListToggle.Pressed = state.CurrentTab == 1;
+        ParoleListToggle.Pressed = state.CurrentTab == 2;
+        DetainedListToggle.Pressed = state.CurrentTab == 3;
+
         if (state.Filter != null)
         {
             if (state.Filter.Type != _currentFilterType)
