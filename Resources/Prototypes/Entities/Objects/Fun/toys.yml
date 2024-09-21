@@ -886,7 +886,7 @@
 
 - type: entity
   parent: BasePlushie
-  id: PlushieMoth
+  id: PlushieGray
   name: gray plushie
   description: Manufactured recently to commemorate the gray exchange program becoming a booming success. It feels plasticky and seems easy to chew on. Thui love keb piskun plushie!!
   components:
