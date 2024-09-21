@@ -1235,7 +1235,6 @@
   loadouts:
   - ParamedicJumpsuit
   - ParamedicJumpskirt
-  - SkirtOfLife
 
 - type: loadoutGroup
   id: ParamedicOuterClothing
