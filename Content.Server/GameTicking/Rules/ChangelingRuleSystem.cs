@@ -53,10 +53,13 @@ public sealed partial class ChangelingRuleSystem : GameRuleSystem<ChangelingRule
         // briefing
         if (TryComp<MetaDataComponent>(target, out var metaData))
         {
-            var briefing = Loc.GetString("changeling-role-greeting", ("name", metaData?.EntityName ?? "Unknown"));
+            if (rule.SendBriefing)
+            {
+                var briefing = Loc.GetString("changeling-role-greeting", ("name", metaData?.EntityName ?? "Unknown"));
+                _antag.SendBriefing(target, briefing, Color.Yellow, BriefingSound);
+            }
+            
             var briefingShort = Loc.GetString("changeling-role-greeting-short", ("name", metaData?.EntityName ?? "Unknown"));
-
-            _antag.SendBriefing(target, briefing, Color.Yellow, BriefingSound);
             _role.MindAddRole(mindId, new RoleBriefingComponent { Briefing = briefingShort }, mind, true);
         }
         // hivemind stuff
