@@ -1,4 +1,54 @@
 - type: entity
+  id: DebugMechEquipment
+  abstract: true
+  suffix: DEBUG
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Tag
+    tags:
+    - CombatMech
+    - IndustrialMech
+    - SpecialMech
+    - SmallMech
+
+- type: entity
+  id: CombatMechEquipment
+  abstract: true
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Tag
+    tags:
+    - CombatMech
+
+- type: entity
+  id: IndustrialMechEquipment
+  abstract: true
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Tag
+    tags:
+    - IndustrialMech
+
+- type: entity
+  id: SpecialMechEquipment
+  abstract: true
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Tag
+    tags:
+    - SpecialMech
+
+- type: entity
+  id: SmallMechEquipment
+  abstract: true
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Tag
+    tags:
+    - SmallMech
+# TODO: Make medical mech with equipment.
+
+- type: entity
   parent: BaseItem
   id: BaseMechEquipment
   abstract: true
@@ -15,7 +65,7 @@
 
 - type: entity
   id: MechEquipmentGrabber
-  parent: BaseMechEquipment
+  parent: [ BaseMechEquipment, IndustrialMechEquipment ]
   name: hydraulic clamp
   description: Gives the mech the ability to grab things and drag them around.
   components:
@@ -40,18 +90,19 @@
     maxContents: 4
     grabDelay: 3
     grabEnergyDelta: -20
-  - type: Tag
-    tags:
-    - SmallMech
   - type: UIFragment
     ui: !type:MechGrabberUi
   - type: ContainerContainer
     containers:
       item-container: !type:Container
+  - type: Tag
+    tags:
+    - IndustrialMech
+    - SmallMech
 
 - type: entity
   id: MechEquipmentHorn
-  parent: BaseMechEquipment
+  parent: [ BaseMechEquipment, SpecialMechEquipment ]
   name: mech horn
   description: An enhanced bike horn that plays a hilarious array of sounds for the enjoyment of the crew. HONK!
   components:
@@ -69,4 +120,3 @@
     ui: !type:MechSoundboardUi
   - type: UseDelay
     delay: 0.5
-  # TODO: tag as being for H.O.N.K. only!!!
