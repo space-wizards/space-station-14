@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: Tayrtahn
-  changes:
-  - message: Antag objective total difficulty is now properly capped.
-    type: Fix
-  id: 6913
-  time: '2024-07-13T04:14:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29830
-- author: EmoGarbage404
-  changes:
-  - message: Added wristwatches for telling time.
-    type: Add
-  id: 6914
-  time: '2024-07-13T06:09:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29550
 - author: TheShuEd
   changes:
   - message: Added diamonds ore!
@@ -3922,3 +3908,17 @@
   id: 7412
   time: '2024-09-21T07:33:22.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31156
+- author: TheShuEd
+  changes:
+  - message: Cores from floral anomalies are now seeds for hydroponics!
+    type: Add
+  id: 7413
+  time: '2024-09-21T19:54:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31987
+- author: Plykiya
+  changes:
+  - message: The rat king is now capable of butchering things, like animals.
+    type: Add
+  id: 7414
+  time: '2024-09-21T23:21:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32232
