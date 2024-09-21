@@ -1,0 +1,51 @@
+ent-BaseSubdermalImplant = имплант
+    .desc = Микрочип, который вживляют под кожу.
+# Corvax-HiddenDesc-Start
+ent-SadTromboneImplant = { ent-BaseSubdermalImplant }
+    .suffix = Грустный тромбон
+    .desc = { ent-BaseSubdermalImplant.desc }
+ent-LightImplant = { ent-BaseSubdermalImplant }
+    .suffix = Свет
+    .desc = { ent-BaseSubdermalImplant.desc }
+ent-BikeHornImplant = { ent-BaseSubdermalImplant }
+    .suffix = хонк-имплант
+    .desc = { ent-BaseSubdermalImplant.desc }
+ent-TrackingImplant = { ent-BaseSubdermalImplant }
+    .suffix = Трекер
+    .desc = { ent-BaseSubdermalImplant.desc }
+ent-StorageImplant = { ent-BaseSubdermalImplant }
+    .suffix = Хранилище
+    .desc = { ent-BaseSubdermalImplant.desc }
+ent-FreedomImplant = { ent-BaseSubdermalImplant }
+    .suffix = Свобода
+    .desc = { ent-BaseSubdermalImplant.desc }
+ent-UplinkImplant = { ent-BaseSubdermalImplant }
+    .suffix = Аплинк
+    .desc = { ent-BaseSubdermalImplant.desc }
+ent-EmpImplant = { ent-BaseSubdermalImplant }
+    .suffix = ЭМИ
+    .desc = { ent-BaseSubdermalImplant.desc }
+ent-ScramImplant = { ent-BaseSubdermalImplant }
+    .suffix = Побег
+    .desc = { ent-BaseSubdermalImplant.desc }
+ent-DnaScramblerImplant = { ent-BaseSubdermalImplant }
+    .suffix = Миксер ДНК
+    .desc = { ent-BaseSubdermalImplant.desc }
+ent-MicroBombImplant = { ent-BaseSubdermalImplant }
+    .suffix = Микробомба
+    .desc = { ent-BaseSubdermalImplant.desc }
+ent-MacroBombImplant = { ent-BaseSubdermalImplant }
+    .suffix = Макробомба
+    .desc = { ent-BaseSubdermalImplant.desc }
+ent-DeathAcidifierImplant = { ent-BaseSubdermalImplant }
+    .suffix = Посмертный растворитель
+    .desc = { ent-BaseSubdermalImplant.desc }
+ent-DeathRattleImplant = { ent-BaseSubdermalImplant }
+    .suffix = Предсмертный хрип
+    .desc = { ent-BaseSubdermalImplant.desc }
+ent-MindShieldImplant = { ent-BaseSubdermalImplant }
+    .suffix = Щит разума
+    .desc = { ent-BaseSubdermalImplant.desc }
+
+# Corvax-HiddenDesc-End
+

@@ -1,0 +1,24 @@
+- files: ["DeltaParallaxBG.png", "DeltaParallaxNeb.png", "AvriteParallaxNeb.png"]
+  license: "CC0-1.0"
+  copyright: "adapted from TheClicketyBoom"
+  source: "https://opengameart.org/content/3-layer-parallax-star-and-nebula-field"
+
+- files: ["AvriteParallaxBG.png"]
+  license: "CC0-1.0"
+  copyright: "adapted from Soluna Software"
+  source: "https://opengameart.org/content/space-backgrounds-with-stars-and-nubular"
+
+- files: ["SillyOcean.png"]
+  license: "CC0-1.0"
+  copyright: "Created by TheShuEd"
+  source: "https://github.com/space-syndicate/space-station-14/pull/1938"
+
+- files: ["SillyOcean_Overlay.png"]
+  license: "CC0-1.0"
+  copyright: "Created by TheShuEd"
+  source: "https://github.com/space-syndicate/space-station-14/pull/1938"
+  
+- files: ["SillyOcean_Overlay2.png"]
+  license: "CC0-1.0"
+  copyright: "Created by TheShuEd"
+  source: "https://github.com/space-syndicate/space-station-14/pull/1938"

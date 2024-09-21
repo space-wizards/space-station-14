@@ -1,0 +1,29 @@
+- files: ["cargo.png"]
+  license: "CC-BY-3.0"
+  copyright: "Created by Kuro & kxv"
+  source: "https://github.com/space-syndicate/space-station-14/blob/ea370babf8c7ff34ea65cd4277ca50e3e9a021bc/Resources/Textures/Corvax/Interface/AdminActions/cargo.png"
+
+- files: ["communication.png"]
+  license: "CC-BY-3.0"
+  copyright: "Created by Kuro & kxv"
+  source: "https://github.com/space-syndicate/space-station-14/blob/ea370babf8c7ff34ea65cd4277ca50e3e9a021bc/Resources/Textures/Corvax/Interface/AdminActions/communications.png"
+
+- files: ["monitoring.png"]
+  license: "CC-BY-3.0"
+  copyright: "Created by Kuro & kxv"
+  source: "https://github.com/space-syndicate/space-station-14/blob/ea370babf8c7ff34ea65cd4277ca50e3e9a021bc/Resources/Textures/Corvax/Interface/AdminActions/monitoring.png"
+
+- files: ["radar.png"]
+  license: "CC-BY-3.0"
+  copyright: "Created by Kuro & kxv"
+  source: "https://github.com/space-syndicate/space-station-14/blob/ea370babf8c7ff34ea65cd4277ca50e3e9a021bc/Resources/Textures/Corvax/Interface/AdminActions/radar.png"
+
+- files: ["solar.png"]
+  license: "CC-BY-3.0"
+  copyright: "Created by Kuro & kxv"
+  source: "https://github.com/space-syndicate/space-station-14/blob/ea370babf8c7ff34ea65cd4277ca50e3e9a021bc/Resources/Textures/Corvax/Interface/AdminActions/solar.png"
+
+- files: ["records.png"]
+  license: "CC-BY-3.0"
+  copyright: "Created by Kuro & kxv"
+  source: "https://github.com/space-syndicate/space-station-14/blob/ea370babf8c7ff34ea65cd4277ca50e3e9a021bc/Resources/Textures/Corvax/Interface/AdminActions/records.png"

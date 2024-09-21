@@ -1,0 +1,9 @@
+ent-PlayerBorgGeneric = { ent-BorgChassisGeneric }
+    .desc = { ent-BorgChassisGeneric.desc }
+    .suffix = Батарея, Инструменты
+ent-PlayerBorgBattery = { ent-BorgChassisGeneric }
+    .suffix = Батарея
+    .desc = { ent-BorgChassisGeneric.desc }
+ent-PlayerBorgSyndicateAssaultBattery = { ent-BorgChassisSyndicateAssault }
+    .suffix = Батарея, Модуль, Оперативник
+    .desc = { ent-BorgChassisSyndicateAssault.desc }

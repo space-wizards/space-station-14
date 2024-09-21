@@ -1,0 +1,68 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC0-1.0",
+    "copyright": "discord:temporary-ga#3856",
+    "states": [
+        {
+            "name": "cyr_b"
+        },
+        {
+            "name": "cyr_ch"
+        },
+        {
+            "name": "cyr_c"
+        },
+        {
+            "name": "cyr_d"
+        },
+        {
+            "name": "cyr_eh"
+        },
+        {
+            "name": "cyr_f"
+        },
+        {
+            "name": "cyr_g"
+        },
+        {
+            "name": "cyr_i"
+        },
+        {
+            "name": "cyr_l"
+        },
+        {
+            "name": "cyr_soft_sign"
+        },
+        {
+            "name": "cyr_p"
+        },
+        {
+            "name": "cyr_shh"
+        },
+        {
+            "name": "cyr_sh"
+        },
+        {
+            "name": "cyr_hard_sign"
+        },
+        {
+            "name": "cyr_u"
+        },
+        {
+            "name": "cyr_ya"
+        },
+        {
+            "name": "cyr_y"
+        },
+        {
+            "name": "cyr_zh"
+        },
+        {
+            "name": "cyr_z"
+        }
+    ]
+}

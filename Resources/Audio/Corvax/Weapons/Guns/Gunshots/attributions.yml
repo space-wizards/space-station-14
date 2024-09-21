@@ -1,0 +1,14 @@
+- files: ["shotgun_alt.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "tgstation"
+  source: "https://github.com/tgstation/tgstation/blob/5736656139713c802033b9457a2a9d058211bd85/sound/weapons/gun/shotgun/shot_alt.ogg"
+
+- files: ["shotgun_metal.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Skyrat-tg"
+  source: "https://github.com/Skyrat-SS13/Skyrat-tg/blob/771eeab6379a74c1f850b59237f25dc8da87afa6/modular_skyrat/modules/aesthetics/guns/sound/shotgun_light.ogg"
+
+- files: ["shotgun_auto.ogg", "shotgun_pipe.ogg", "shotgun_sawed.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "ss220/Paradise, shotgun_auto.ogg is 1shotgun_auto.ogg, shotgun_pipe.ogg is 1shotgunpipe.ogg and shotgun_sawed.ogg is 1shotgun.ogg"
+  source: "https://github.com/ss220-space/Paradise/commit/d5183fa98cbef14c4b28e076707a69429f12c30a"

@@ -1,0 +1,2 @@
+ent-BaseStationGoal = { "" }
+    .desc = { "" }

@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/63bb36db24a44e446cc903eb29856d06ea011224",
+  "size": {
+    "x": 96,
+    "y": 64
+  },
+  "states": [
+    {
+      "name": "conarex"
+    },
+    {
+      "name": "container_blank"
+    },
+    {
+      "name": "cybersun"
+    },
+    {
+      "name": "deforest"
+    },
+    {
+      "name": "donk_co"
+    },
+    {
+      "name": "gorlex"
+    },
+    {
+      "name": "gorlex_red"
+    },
+    {
+      "name": "interdyne"
+    },
+    {
+      "name": "kahraman"
+    },
+    {
+      "name": "kahraman_alt"
+    },
+    {
+      "name": "kosmologistika"
+    },
+    {
+      "name": "nakamura"
+    },
+    {
+      "name": "nanotrasen"
+    },
+    {
+      "name": "nthi"
+    },
+    {
+      "name": "vitezstvi"
+    }
+  ]
+}
