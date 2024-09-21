@@ -491,6 +491,11 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
 
     public void SetElectrifiedWireCut(Entity<ElectrifiedComponent> ent, bool value)
     {
+        if (ent.Comp.IsWireCut == value)
+        {
+            return;
+        }
+
         ent.Comp.IsWireCut = value;
         Dirty(ent);
     }

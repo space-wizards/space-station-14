@@ -108,28 +108,25 @@ public abstract partial class SharedStationAiSystem
         if (ev.Actor == ev.Target)
             return;
 
-        StationAiWhitelistComponent? whitelistComponent = null;
         if (TryComp(ev.Actor, out StationAiHeldComponent? aiComp) &&
-           (!ValidateAi((ev.Actor, aiComp)) ||
-            !TryComp(ev.Target, out whitelistComponent)))
+           (!TryComp(ev.Target, out StationAiWhitelistComponent? whitelistComponent) ||
+            !ValidateAi((ev.Actor, aiComp))))
         {
+            if (whitelistComponent is { Enabled: false })
+            {
+                ShowDeviceNotRespondingPopup(ev.Actor);
+            }
             ev.Cancel();
-        }
-        else if (whitelistComponent is { Enabled: false })
-        {
-            ev.Cancel();
-            ShowDeviceNotRespondingPopup(ev.Actor);
         }
     }
 
     private void OnHeldInteraction(Entity<StationAiHeldComponent> ent, ref InteractionAttemptEvent args)
     {
-        StationAiWhitelistComponent? whitelistComponent = null;
         // Cancel if it's not us or something with a whitelist, or whitelist is disabled.
-        args.Cancelled = ent.Owner != args.Target
-                         && args.Target != null
-                         && (!TryComp(args.Target, out whitelistComponent)
-                             || !whitelistComponent.Enabled);
+        args.Cancelled = (!TryComp(args.Target, out StationAiWhitelistComponent? whitelistComponent)
+                          || !whitelistComponent.Enabled)
+                         && ent.Owner != args.Target
+                         && args.Target != null;
         if (whitelistComponent is { Enabled: false })
         {
             ShowDeviceNotRespondingPopup(ent.Owner);

@@ -175,8 +175,8 @@
 - files:
   - airlock_emergencyoff.ogg
   - airlock_emergencyon.ogg
-  - airlock_overcharge_off.ogg
-  - airlock_overcharge_on.ogg
+  - airlock_electrify_off.ogg
+  - airlock_electrify_on.ogg
   license: "CC0-1.0"
   copyright: "by ScarKy0"
   source: "https://github.com/space-wizards/space-station-14/pull/32012"

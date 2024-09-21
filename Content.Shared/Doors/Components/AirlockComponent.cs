@@ -28,13 +28,13 @@ public sealed partial class AirlockComponent : Component
     /// <summary>
     /// Sound to play when the airlock emergency access is turned on.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public SoundSpecifier EmergencyOnSound = new SoundPathSpecifier("/Audio/Machines/airlock_emergencyon.ogg");
 
     /// <summary>
     /// Sound to play when the airlock emergency access is turned off.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public SoundSpecifier EmergencyOffSound = new SoundPathSpecifier("/Audio/Machines/airlock_emergencyoff.ogg");
 
     /// <summary>

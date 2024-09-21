@@ -1,16 +1,11 @@
 using Content.Shared.Doors.Components;
 using Robust.Shared.Serialization;
 using Content.Shared.Electrocution;
-using Content.Shared.Popups;
-using Robust.Shared.Audio;
 
 namespace Content.Shared.Silicons.StationAi;
 
 public abstract partial class SharedStationAiSystem
 {
-    private static readonly SoundPathSpecifier AirlockOverchargeDisabled = new("/Audio/Machines/airlock_overcharge_on.ogg");
-    private static readonly SoundPathSpecifier AirlockOverchargeEnabled = new("/Audio/Machines/airlock_overcharge_off.ogg");
-
     // Handles airlock radial
 
     private void InitializeAirlock()
@@ -68,8 +63,8 @@ public abstract partial class SharedStationAiSystem
 
         _electrify.SetElectrified((ent, component), args.Electrified);
         var soundToPlay = component.Enabled
-            ? AirlockOverchargeDisabled
-            : AirlockOverchargeEnabled;
+            ? component.AirlockElectrifyDisabled
+            : component.AirlockElectrifyEnabled;
         _audio.PlayLocal(soundToPlay, ent, args.User);
     }
 }

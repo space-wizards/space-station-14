@@ -28,12 +28,13 @@ namespace Content.Shared.Electrocution
         /// </summary>
         public void SetElectrified(Entity<ElectrifiedComponent> ent, bool value)
         {
-            var oldValue = ent.Comp.Enabled;
-            ent.Comp.Enabled = value;
-            if (value != oldValue)
+            if (ent.Comp.Enabled == value)
             {
-                Dirty(ent, ent.Comp);
+                return;
             }
+
+            ent.Comp.Enabled = value;
+            Dirty(ent, ent.Comp);
         }
 
         /// <param name="uid">Entity being electrocuted.</param>
