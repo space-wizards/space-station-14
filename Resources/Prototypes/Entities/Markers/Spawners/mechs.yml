@@ -39,6 +39,22 @@
   - type: ConditionalSpawner
     prototypes:
       - MechHonkerBattery
+
+- type: entity
+  name: H.O.N.K. Spawner
+  suffix: Filled
+  id: SpawnMechHonkerFilled
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - sprite: Objects/Specific/Mech/mecha.rsi
+        state: honker
+  - type: ConditionalSpawner
+    prototypes:
+      - MechHonkerFilled
+
 - type: entity
   name: Clarke Spawner
   id: SpawnMechClarke
@@ -96,6 +112,21 @@
       - MechMarauderBattery
 
 - type: entity
+  name: Marauder Spawner
+  suffix: Filled
+  id: SpawnMechMarauderFilled
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - sprite: Objects/Specific/Mech/mecha.rsi
+        state: marauder
+  - type: ConditionalSpawner
+    prototypes:
+      - MechMarauderFilled
+
+- type: entity
   name: Seraph Spawner
   id: SpawnMechSeraph
   parent: MarkerBase
@@ -108,6 +139,21 @@
   - type: ConditionalSpawner
     prototypes:
       - MechSeraphBattery
+
+- type: entity
+  name: Seraph Spawner
+  suffix: Filled
+  id: SpawnMechSeraphFilled
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - sprite: Objects/Specific/Mech/mecha.rsi
+        state: seraph
+  - type: ConditionalSpawner
+    prototypes:
+      - MechSeraphFilled
 
 - type: entity
   name: Dark Gygax Spawner
