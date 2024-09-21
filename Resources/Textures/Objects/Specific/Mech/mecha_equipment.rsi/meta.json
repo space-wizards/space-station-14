@@ -1,7 +1,7 @@
 {
-  "copyright" : "Taken from https://github.com/tgstation/tgstation at at https://github.com/tgstation/tgstation/commit/40d89d11ea4a5cb81d61dc1018b46f4e7d32c62a",
-  "license" : "CC-BY-SA-3.0",
   "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/tgstation/tgstation at https://github.com/tgstation/tgstation/commit/da4d61210600269aaf56a2e309dd31c056252d84 || Mech ChainSword by NULL882 (GitHub)",
   "size": {
     "x": 32,
     "y": 32
@@ -150,6 +150,39 @@
     },
     {
       "name": "mecha_kineticgun"
+    },
+    {
+      "name": "mecha_camera"
+    },
+    {
+      "name": "mecha_bin"
+    },
+    {
+      "name": "mecha_air_tank"
+    },
+    {
+      "name": "mecha_radio"
+    },
+    {
+      "name": "mecha_sleeper"
+    },
+    {
+      "name": "mecha_syringegun"
+    },
+    {
+      "name": "paddy_claw"
+    },
+    {
+      "name": "paddyupgrade"
+    },
+    {
+      "name": "mecha_chainsword",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
     }
   ]
 }
