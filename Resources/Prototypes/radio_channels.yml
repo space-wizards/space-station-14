@@ -18,7 +18,7 @@
   name: chat-radio-command
   keycode: 'c'
   frequency: 1353
-  color: "#fcdf03"
+  color: "#436be0"
 
 - type: radioChannel
   id: Engineering
