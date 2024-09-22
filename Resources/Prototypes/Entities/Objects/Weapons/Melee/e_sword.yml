@@ -336,6 +336,23 @@
   id: HyperEutacticBlade
   description: A supermassive weapon envisioned to cleave the very fabric of space and time itself in twain, the hypereutactic blade dynamically flash-forges a hypereutactic crystaline nanostructure capable of passing through most known forms of matter like a hot knife through butter.
   components:
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    attackRate: 0.8 #0.7 is too slow
+    angle: 100
+    damage:
+      types:
+        Blunt: 4.5
+  - type: ItemToggleMeleeWeapon
+    activatedSoundOnSwing:
+      path: /Audio/Weapons/eblademiss.ogg
+      params:
+        volume: -3
+        variation: 0.250
+    activatedDamage:
+      types:
+        Slash: 20
+        Heat: 20
   - type: Sprite
     sprite: Objects/Weapons/Melee/hypereutactic_blade.rsi
     layers:
