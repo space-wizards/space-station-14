@@ -19,9 +19,6 @@
   - type: SpeedModifierContacts
     walkSpeedModifier: 0.2
     sprintSpeedModifier: 0.2
-  - type: EmitSoundOnTrigger
-    sound:
-      path: Resources/Audio/Effects/falling.ogg
   - type: Slippery
   - type: StepTrigger
     intersectRatio: 200
