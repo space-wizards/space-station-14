@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using Robust.Shared.Player;
+using Robust.Shared.Toolshed.TypeParsers;
 
 namespace Content.Shared.Administration.Logs;
 
@@ -24,7 +25,7 @@ public ref struct LogStringHandler
 
         _handler = new DefaultInterpolatedStringHandler(literalLength, formattedCount);
 
-        // TODO LOGGING Array pool?
+        // TODO LOGGING Dictionary pool?
         Values = new Dictionary<string, object?>(formattedCount);
         Logger = logger;
     }
@@ -180,83 +181,52 @@ public ref struct LogStringHandler
     }
     #endregion
 
-    #region Entity<T>
-
-    // TODO LOGGING
-    // Make Entity<T1,T2,T3> etc implement some entity uid fetching interface.
-    // I CBF writing variants for all the generic combinations
-    public void AppendFormatted<T>(Entity<T> value, [CallerArgumentExpression("value")] string? argument = null)
-        where T : IComponent?
-    {
-        AppendFormatted(value.Owner, argument);
-    }
-
-    public void AppendFormatted<T>(Entity<T> value, string? format, [CallerArgumentExpression("value")] string? argument = null)
-        where T : IComponent?
-    {
-        AppendFormatted(value.Owner, format, argument);
-    }
-
-    public void AppendFormatted<T>(Entity<T> value, int alignment, [CallerArgumentExpression("value")] string? argument = null)
-        where T : IComponent?
-    {
-        AppendFormatted(value.Owner, alignment, argument);
-    }
-
-    public void AppendFormatted<T>(Entity<T> value, int alignment, string? format, [CallerArgumentExpression("value")] string? argument = null)
-        where T : IComponent?
-    {
-        AppendFormatted(value.Owner, alignment, format, argument);
-    }
-
-    public void AppendFormatted<T>(Entity<T>? value, [CallerArgumentExpression("value")] string? argument = null)
-        where T : IComponent?
-    {
-        AppendFormatted(value?.Owner, argument);
-    }
-
-    public void AppendFormatted<T>(Entity<T>? value, string? format, [CallerArgumentExpression("value")] string? argument = null)
-        where T : IComponent?
-    {
-        AppendFormatted(value?.Owner, format, argument);
-    }
-
-    public void AppendFormatted<T>(Entity<T>? value, int alignment, [CallerArgumentExpression("value")] string? argument = null)
-        where T : IComponent?
-    {
-        AppendFormatted(value?.Owner, alignment, argument);
-    }
-
-    public void AppendFormatted<T>(Entity<T>? value, int alignment, string? format, [CallerArgumentExpression("value")] string? argument = null)
-        where T : IComponent?
-    {
-        AppendFormatted(value?.Owner, alignment, format, argument);
-    }
-
-    #endregion
-
     #region Generic
 
     public void AppendFormatted<T>(T value, [CallerArgumentExpression("value")] string? argument = null)
     {
+        if (value is IAsType<EntityUid> ent)
+        {
+            AppendFormatted(ent.AsType(), argument);
+            return;
+        }
+
         AddFormat(null, value, argument);
         _handler.AppendFormatted(value);
     }
 
     public void AppendFormatted<T>(T value, string? format, [CallerArgumentExpression("value")] string? argument = null)
     {
+        if (value is IAsType<EntityUid> ent)
+        {
+            AppendFormatted(ent.AsType(), format, argument);
+            return;
+        }
+
         AddFormat(format, value, argument);
         _handler.AppendFormatted(value, format);
     }
 
     public void AppendFormatted<T>(T value, int alignment, [CallerArgumentExpression("value")] string? argument = null)
     {
+        if (value is IAsType<EntityUid> ent)
+        {
+            AppendFormatted(ent.AsType(), alignment, argument);
+            return;
+        }
+
         AddFormat(null, value, argument);
         _handler.AppendFormatted(value, alignment);
     }
 
     public void AppendFormatted<T>(T value, int alignment, string? format, [CallerArgumentExpression("value")] string? argument = null)
     {
+        if (value is IAsType<EntityUid> ent)
+        {
+            AppendFormatted(ent.AsType(), alignment, format, argument);
+            return;
+        }
+
         AddFormat(format, value, argument);
         _handler.AppendFormatted(value, alignment, format);
     }
