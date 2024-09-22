@@ -170,7 +170,7 @@ namespace Content.Server.Hands.Systems
 
         private bool HandleThrowItem(ICommonSession? playerSession, EntityCoordinates coordinates, EntityUid entity)
         {
-            if (playerSession?.AttachedEntity is not {Valid: true} player || !Exists(player))
+            if (playerSession?.AttachedEntity is not {Valid: true} player || !Exists(player) || !coordinates.IsValid(EntityManager))
                 return false;
 
             return ThrowHeldItem(player, coordinates);
@@ -201,7 +201,7 @@ namespace Content.Server.Hands.Systems
                 throwEnt = splitStack.Value;
             }
 
-            var direction = coordinates.ToMapPos(EntityManager, _transformSystem) - Transform(player).WorldPosition;
+            var direction = _transformSystem.ToMapCoordinates(coordinates).Position - _transformSystem.GetWorldPosition(player);
             if (direction == Vector2.Zero)
                 return true;
 

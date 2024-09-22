@@ -38,7 +38,7 @@
 - type: entity
   name: composition C-4
   description: Used to put holes in specific areas without too much extra hole. A saboteur's favorite.
-  parent: BasePlasticExplosive
+  parent: [BasePlasticExplosive, BaseSyndicateContraband]
   id: C4
   components:
   - type: Sprite

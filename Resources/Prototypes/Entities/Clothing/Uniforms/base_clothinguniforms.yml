@@ -47,6 +47,7 @@
   - type: DeviceNetwork
     deviceNetId: Wireless
     transmitFrequencyId: SuitSensor
+    savableAddress: false
   - type: WirelessNetworkConnection
     range: 1200
   - type: StationLimitedNetwork

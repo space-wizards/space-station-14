@@ -118,7 +118,7 @@ public sealed partial class DungeonSystem
         // go BRRNNTTT on existing stuff
         if (clearExisting)
         {
-            var gridBounds = new Box2(Vector2.Transform(Vector2.Zero, roomTransform), Vector2.Transform(room.Size, roomTransform));
+            var gridBounds = new Box2(Vector2.Transform(-room.Size/2, roomTransform), Vector2.Transform(room.Size/2, roomTransform));
             _entitySet.Clear();
             // Polygon skin moment
             gridBounds = gridBounds.Enlarged(-0.05f);

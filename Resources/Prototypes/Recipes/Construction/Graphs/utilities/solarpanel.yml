@@ -7,7 +7,7 @@
         - to: solarassembly
           steps:
             - tag: SolarAssemblyFlatpack
-              name: Solar Assembly Parts
+              name: solar assembly parts
               icon:
                 sprite: Objects/Devices/flatpack.rsi
                 state: solar-assembly-part
@@ -39,7 +39,7 @@
             - !type:EntityAnchored
           steps:
             - tag: SolarTrackerElectronics
-              name: Solar Tracker Electronics
+              name: solar tracker electronics
               icon:
                 sprite: Objects/Misc/module.rsi
                 state: id_mod

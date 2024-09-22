@@ -7,6 +7,7 @@ using Content.Shared.Anomaly.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.Power;
 using Robust.Shared.Audio.Systems;
 using Content.Shared.Verbs;
 
@@ -75,7 +76,7 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
         if (!TryComp<AnomalyComponent>(ent.Comp.ConnectedAnomaly, out var anomaly))
             return;
 
-        DisconneсtFromAnomaly(ent, anomaly);
+        DisconnectFromAnomaly(ent, anomaly);
     }
 
     private void OnExamined(Entity<AnomalySynchronizerComponent> ent, ref ExaminedEvent args)
@@ -122,9 +123,9 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
         _audio.PlayPvs(ent.Comp.ConnectedSound, ent);
     }
 
-    //TO DO: disconnection from the anomaly should also be triggered if the anomaly is far away from the synchronizer.
+    //TODO: disconnection from the anomaly should also be triggered if the anomaly is far away from the synchronizer.
     //Currently only bluespace anomaly can do this, but for some reason it is the only one that cannot be connected to the synchronizer.
-    private void DisconneсtFromAnomaly(Entity<AnomalySynchronizerComponent> ent, AnomalyComponent anomaly)
+    private void DisconnectFromAnomaly(Entity<AnomalySynchronizerComponent> ent, AnomalyComponent anomaly)
     {
         if (ent.Comp.ConnectedAnomaly == null)
             return;

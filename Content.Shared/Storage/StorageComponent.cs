@@ -123,6 +123,14 @@ namespace Content.Shared.Storage
         [DataField, ViewVariables(VVAccess.ReadWrite)]
         public StorageDefaultOrientation? DefaultStorageOrientation;
 
+        /// <summary>
+        /// If true, sets StackVisuals.Hide to true when the container is closed
+        /// Used in cases where there are sprites that are shown when the container is open but not
+        /// when it is closed
+        /// </summary>
+        [DataField]
+        public bool HideStackVisualsWhenClosed = true;
+
         [Serializable, NetSerializable]
         public enum StorageUiKey : byte
         {

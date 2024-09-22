@@ -12,6 +12,10 @@
 - changed-files:
   - any-glob-to-any-file: '**/*.xaml*'
 
+"Changes: Shaders":
+- changed-files:
+  - any-glob-to-any-file: '**/*.swsl'
+
 "No C#":
 - changed-files:
   # Equiv to any-glob-to-all as long as this has one matcher. If ALL changed files are not C# files, then apply label.

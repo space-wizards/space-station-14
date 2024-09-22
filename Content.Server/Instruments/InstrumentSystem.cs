@@ -30,7 +30,6 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
     [Dependency] private readonly UserInterfaceSystem _bui = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
-    [Dependency] private readonly InteractionSystem _interactions = default!;
     [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
 
     private const float MaxInstrumentBandRange = 10f;

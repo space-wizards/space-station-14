@@ -71,7 +71,7 @@
   components:
   - type: CombatMode
   - type: MovementSpeedModifier
-    baseWalkSpeed : 7
+    baseWalkSpeed : 3
     baseSprintSpeed : 7
   - type: Sprite
     drawdepth: Mobs
@@ -335,7 +335,7 @@
       0: Alive
       1: Dead
   - type: MovementSpeedModifier
-    baseWalkSpeed : 5
+    baseWalkSpeed : 2.5
     baseSprintSpeed : 5
   - type: DamageStateVisuals
     states:
@@ -347,6 +347,11 @@
     bloodReagent: InsectBlood
     bloodMaxVolume: 20
   - type: Food
+  - type: FlavorProfile
+    flavors:
+    - horrible
+    - terrible
+    - chewy
   - type: Hunger
     baseDecayRate: 0.25
   - type: Extractable
@@ -376,6 +381,8 @@
       behaviors:
       - !type:GibBehavior { }
   - type: NonSpreaderZombie
+  - type: SentienceTarget
+    flavorKind: station-event-random-sentience-flavor-organic
 
 - type: entity
   name: glockroach
@@ -442,7 +449,7 @@
     insertingState: inserting_mothroach
   - type: MothAccent
   - type: Sprite
-    sprite: Mobs/Animals/mothroach.rsi
+    sprite: Mobs/Animals/mothroach/mothroach.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base", "movement"]
       state: mothroach
@@ -457,7 +464,7 @@
     size: Normal
   - type: Clothing
     quickEquip: false
-    sprite: Mobs/Animals/mothroach.rsi
+    sprite: Mobs/Animals/mothroach/mothroach.rsi
     equippedPrefix: 0
     slots:
     - HEAD
@@ -536,6 +543,41 @@
   - type: FireVisuals
     sprite: Mobs/Effects/onfire.rsi
     normalState: Mouse_burning
+  - type: Strippable
+  - type: UserInterface
+    interfaces:
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
+  - type: InventorySlots
+  - type: Inventory
+    speciesId: hamster
+    templateId: hamster
+    displacements:
+      head:
+        sizeMaps:
+          32:
+            sprite: Mobs/Animals/mothroach/displacement.rsi
+            state: head
+      mask:
+        sizeMaps:
+          32:
+            sprite: Mobs/Animals/mothroach/displacement.rsi
+            state: mask
+      suitstorage:
+        sizeMaps:
+          32:
+            sprite: Mobs/Animals/mothroach/displacement.rsi
+            state: suitstorage
+      eyes:
+        sizeMaps:
+          32:
+            sprite: Mobs/Animals/mothroach/displacement.rsi
+            state: eyes
+      neck:
+        sizeMaps:
+          32:
+            sprite: Mobs/Animals/mothroach/displacement.rsi
+            state: neck
 
 
 # Note that the mallard duck is actually a male drake mallard, with the brown duck being the female variant of the same species, however ss14 lacks sex specific textures
@@ -669,7 +711,7 @@
   description: Despite popular misconceptions, it's not actually made of butter.
   components:
   - type: MovementSpeedModifier
-    baseWalkSpeed : 6
+    baseWalkSpeed : 3
     baseSprintSpeed : 6
   - type: Sprite
     drawdepth: Mobs
@@ -788,6 +830,7 @@
   - type: GuideHelp
     guides:
     - Chef
+    - FoodRecipes
 
 - type: entity
   name: crab
@@ -919,6 +962,9 @@
     requiresSpecialDigestion: true
     # Wooly prevents eating wool deleting the goat so its fine
     requireDead: false
+  - type: FlavorProfile
+    flavors:
+    - fiber
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -1250,6 +1296,17 @@
     tags:
     - VimPilot
     - DoorBumpOpener
+  - type: Reactive
+    groups:
+      Flammable: [ Touch ]
+      Extinguish: [ Touch ]
+    reactions:
+    - reagents: [ Water, SpaceCleaner ]
+      methods: [ Touch ]
+      effects:
+      - !type:WashCreamPieReaction
+
+
 
 - type: entity
   name: monkey
@@ -1282,6 +1339,7 @@
         Burn: 3
     clumsySound:
       path: /Audio/Animals/monkey_scream.ogg
+
 
 - type: entity
   name: monkey
@@ -1434,7 +1492,7 @@
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-kobold
   - type: GhostRole
-    prob: 0.1
+    prob: 0.05
     makeSentient: true
     name: ghost-role-information-kobold-name
     description: ghost-role-information-kobold-description
@@ -1492,7 +1550,7 @@
 - type: entity
   name: guidebook monkey
   parent: MobMonkey
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   id: MobGuidebookMonkey
   description: A hopefully helpful monkey whose only purpose in life is for you to click on. Does this count as having a monkey give you a tutorial?
   components:
@@ -1574,7 +1632,7 @@
       10: Critical
       20: Dead
   - type: MovementSpeedModifier
-    baseWalkSpeed : 5
+    baseWalkSpeed : 2.5
     baseSprintSpeed : 5
   - type: DamageStateVisuals
     states:
@@ -1585,6 +1643,9 @@
       Dead:
         Base: splat-0
   - type: Food
+  - type: FlavorProfile
+    flavors:
+    - meaty
   - type: Thirst
     startingThirst: 25  # spawn with Okay thirst state
     thresholds:
@@ -1643,7 +1704,14 @@
     wilhelmProbability: 0.001
   # TODO: Remove CombatMode when Prototype Composition is added
   - type: CombatMode
-    combatToggleAction: ActionCombatModeToggleOff
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    angle: 0
+    animation: WeaponArcBite
+    damage:
+      types:
+        Piercing: 0
   - type: Bloodstream
     bloodMaxVolume: 50
   - type: CanEscapeInventory
@@ -1651,10 +1719,14 @@
     price: 50
   - type: BadFood
   - type: NonSpreaderZombie
-  - type: PreventSpiller
   - type: FireVisuals
     sprite: Mobs/Effects/onfire.rsi
     normalState: Mouse_burning
+  - type: FoodSequenceElement
+    entries:
+      Taco: RatTaco
+      Burger: RatBurger
+      Skewer: RatSkewer
 
 - type: entity
   parent: MobMouse
@@ -1882,7 +1954,7 @@
   description: Hop hop hop. Lookin' moist.
   components:
   - type: MovementSpeedModifier
-    baseWalkSpeed: 4
+    baseWalkSpeed: 3
     baseSprintSpeed: 6
   - type: Sprite
     drawdepth: Mobs
@@ -1940,7 +2012,7 @@
   description: Infiltrates your domain, spies on you, and somehow still a cool pet.
   components:
   - type: MovementSpeedModifier
-    baseWalkSpeed : 6
+    baseWalkSpeed : 2.5
     baseSprintSpeed : 6
   - type: Sprite
     drawdepth: Mobs
@@ -2047,12 +2119,12 @@
 
 - type: entity
   name: grenade penguin
-  parent: [ MobPenguin, MobCombat ]
+  parent: [ MobPenguin, MobCombat, BaseSyndicateContraband ]
   id: MobGrenadePenguin
   description: A small penguin with a grenade strapped around its neck. Harvested by the Syndicate from icy shit-hole planets.
   components:
   - type: MovementSpeedModifier
-    baseWalkSpeed: 3.5
+    baseWalkSpeed: 3
     baseSprintSpeed: 5
   - type: InputMover
   - type: MobMover
@@ -2143,11 +2215,13 @@
     states:
       Alive:
         Base: snake
+      Critical:
+        Base: dead
       Dead:
         Base: dead
   - type: Butcherable
     spawned:
-    - id: FoodMeat
+    - id: FoodMeatSnake
       amount: 1
   - type: InteractionPopup
     successChance: 0.6
@@ -2853,7 +2927,7 @@
       - DoorBumpOpener
   - type: MovementAlwaysTouching
   - type: PressureImmunity
-  - type: StepTriggerImmune
+  - type: ProtectedFromStepTriggers
   - type: Insulated
   - type: InteractionPopup
     successChance: 0.7
@@ -2923,7 +2997,7 @@
   description: Very slow animal. For people with low energy.
   components:
   - type: MovementSpeedModifier
-    baseWalkSpeed : 1
+    baseWalkSpeed : 0.5
     baseSprintSpeed : 1
   - type: Sprite
     drawdepth: Mobs
@@ -3083,7 +3157,7 @@
       40: Critical
       60: Dead
   - type: MovementSpeedModifier
-    baseWalkSpeed : 4
+    baseWalkSpeed : 2.5
     baseSprintSpeed : 4
   - type: Inventory
     speciesId: hamster
@@ -3097,6 +3171,9 @@
       Dead:
         Base: splat-0
   - type: Food
+  - type: FlavorProfile
+    flavors:
+    - meaty
   - type: Hunger
     baseDecayRate: 0.3
   - type: Extractable

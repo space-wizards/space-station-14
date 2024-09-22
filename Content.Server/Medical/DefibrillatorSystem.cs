@@ -46,7 +46,6 @@ public sealed class DefibrillatorSystem : EntitySystem
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly UseDelaySystem _useDelay = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
 
     /// <inheritdoc/>
@@ -120,8 +119,6 @@ public sealed class DefibrillatorSystem : EntitySystem
         return _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, user, component.DoAfterDuration, new DefibrillatorZapDoAfterEvent(),
             uid, target, uid)
             {
-                BlockDuplicate = true,
-                BreakOnHandChange = true,
                 NeedHand = true,
                 BreakOnMove = !component.AllowDoAfterMovement
             });

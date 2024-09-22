@@ -11,3 +11,6 @@ reagent-effect-status-effect-PressureImmunity = pressure immunity
 reagent-effect-status-effect-Pacified = combat pacification
 reagent-effect-status-effect-RatvarianLanguage = ratvarian language patterns
 reagent-effect-status-effect-StaminaModifier = modified stamina
+reagent-effect-status-effect-RadiationProtection = radiation protection
+reagent-effect-status-effect-Drowsiness = drowsiness
+reagent-effect-status-effect-Adrenaline = adrenaline

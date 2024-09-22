@@ -67,3 +67,8 @@
   license: "CC0-1.0"
   copyright: "Created by unusualcrow for ss14"
   source: "https://github.com/space-wizards/space-station-14/blob/master/Resources/Audio/Items/Toys/skub2.ogg"
+
+- files: ["rawr.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from ss200, made by Daeberdir"
+  source: "https://github.com/ss220-space/Paradise/pull/3756"

@@ -13,7 +13,7 @@
         amount: 1
         doAfter: 0.5
       - tag: GlassShard
-        name: Glass Shard
+        name: glass shard
         icon:
           sprite: Objects/Materials/Shards/shard.rsi
           state: shard1

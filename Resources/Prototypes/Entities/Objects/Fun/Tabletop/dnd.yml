@@ -86,7 +86,7 @@
   parent: BaseBoardTabletop
   id: GrassBoardTabletop
   name: grass battlemap
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Objects/Fun/Tabletop/Battlemaps/grassbm_tabletop.rsi
@@ -98,7 +98,7 @@
   parent: BaseBoardTabletop
   id: MoonBoardTabletop
   name: grass battlemap
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Objects/Fun/Tabletop/Battlemaps/moonbm_tabletop.rsi
@@ -108,7 +108,7 @@
   parent: BaseBoardTabletop
   id: SandBoardTabletop
   name: sand battlemap
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Objects/Fun/Tabletop/Battlemaps/sandbm_tabletop.rsi
@@ -118,7 +118,7 @@
   parent: BaseBoardTabletop
   id: SnowBoardTabletop
   name: snow battlemap
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Objects/Fun/Tabletop/Battlemaps/snowbm_tabletop.rsi
@@ -128,7 +128,7 @@
   parent: BaseBoardTabletop
   id: ShipBoardTabletop
   name: ship battlemap
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Objects/Fun/Tabletop/Battlemaps/shipbm_tabletop.rsi
