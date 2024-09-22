@@ -1,0 +1,5 @@
+- type: hudTheme
+  id: SS14Purplicious
+  name: ui-options-hud-theme-HarmonyPurple
+  path: HarmonyPurple
+  order: 7

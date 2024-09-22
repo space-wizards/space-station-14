@@ -77,6 +77,7 @@ ui-options-hud-theme-clockwork = Clockwork
 ui-options-hud-theme-retro = Retro
 ui-options-hud-theme-minimalist = Minimalist
 ui-options-hud-theme-ashen = Ashen
+ui-options-hud-theme-HarmonyPurple = Purplicious
 ui-options-hud-layout-default = Default
 ui-options-hud-layout-separated = Separated
 ui-options-vp-stretch = Stretch viewport to fit game window
