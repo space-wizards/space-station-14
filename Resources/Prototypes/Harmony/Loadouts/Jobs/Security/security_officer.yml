@@ -1,0 +1,5 @@
+# Head
+- type: loadout
+  id: SecurityBandana
+  equipment:
+    head: ClothingHeadBandRed

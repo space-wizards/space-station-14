@@ -984,6 +984,7 @@
   - SecurityBeret
   - SecurityHat
   - TrooperHat
+  - SecurityBandana # Harmony
 
 - type: loadoutGroup
   id: SecurityJumpsuit
