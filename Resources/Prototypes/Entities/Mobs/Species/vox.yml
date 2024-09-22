@@ -5,6 +5,8 @@
   components:
   - type: Hunger
   - type: Thirst
+  - type: Puller
+    needsHands: false
   - type: Icon
     sprite: Mobs/Species/Vox/parts.rsi
     state: vox_m
