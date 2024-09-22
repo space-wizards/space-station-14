@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: HahayesSiH
-  changes:
-  - message: It is now possible to pet cyborgs.
-    type: Add
-  - message: Clicking on cyborgs and opening the strip menu no longer unlocks them.
-    type: Tweak
-  id: 6919
-  time: '2024-07-14T14:09:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30037
 - author: deltanedas
   changes:
   - message: Fixed ninja shoes not working as magboots.
@@ -3923,3 +3914,10 @@
   id: 7418
   time: '2024-09-22T15:15:12.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32306
+- author: PotentiallyTom
+  changes:
+  - message: Vent pressure lockout can be temporarily disabled with a screwdriver
+    type: Tweak
+  id: 7419
+  time: '2024-09-22T19:59:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31050
