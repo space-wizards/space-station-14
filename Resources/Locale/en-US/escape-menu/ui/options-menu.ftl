@@ -29,6 +29,7 @@ ui-options-general-accessibility = Accessibility
 ui-options-master-volume = Master Volume:
 ui-options-midi-volume = MIDI (Instrument) Volume:
 ui-options-ambient-music-volume = Ambient music volume:
+ui-options-jukebox-music-volume = Jukebox music volume:
 ui-options-ambience-volume = Ambience volume:
 ui-options-lobby-volume = Lobby & Round-end volume:
 ui-options-interface-volume = Interface volume:

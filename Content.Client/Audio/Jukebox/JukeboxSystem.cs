@@ -1,6 +1,9 @@
 using Content.Shared.Audio.Jukebox;
+using Content.Shared.CCVar;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
+using Robust.Shared.Audio.Systems;
+using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Audio.Jukebox;
@@ -12,13 +15,20 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
     [Dependency] private readonly AnimationPlayerSystem _animationPlayer = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
+    [Dependency] private readonly IConfigurationManager _configManager = default!;
+
+    public float JukeboxGain => _configManager.GetCVar(CCVars.JukeboxMusicVolume);
+    public float JukeboxVolume => SharedAudioSystem.GainToVolume(JukeboxGain);
 
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<JukeboxComponent, AppearanceChangeEvent>(OnAppearanceChange);
         SubscribeLocalEvent<JukeboxComponent, AnimationCompletedEvent>(OnAnimationCompleted);
         SubscribeLocalEvent<JukeboxComponent, AfterAutoHandleStateEvent>(OnJukeboxAfterState);
+
+        Subs.CVar(_configManager, CCVars.JukeboxMusicVolume, JukeboxVolumeCVarChanged, true);
 
         _protoManager.PrototypesReloaded += OnProtoReload;
     }
@@ -47,6 +57,8 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
 
     private void OnJukeboxAfterState(Entity<JukeboxComponent> ent, ref AfterAutoHandleStateEvent args)
     {
+        Audio.SetVolume(ent.Comp.AudioStream, JukeboxVolume, dirty: false);
+
         if (!_uiSystem.TryGetOpenUi<JukeboxBoundUserInterface>(ent.Owner, JukeboxUiKey.Key, out var bui))
             return;
 
@@ -141,5 +153,12 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
         sprite.LayerSetVisible(layer, true);
         sprite.LayerSetAutoAnimated(layer, true);
         sprite.LayerSetState(layer, state);
+    }
+
+    private void JukeboxVolumeCVarChanged(float gain)
+    {
+        var enumerator = AllEntityQuery<JukeboxComponent>();
+        while (enumerator.MoveNext(out var uid, out var jukebox))
+            Audio.SetVolume(jukebox.AudioStream, SharedAudioSystem.GainToVolume(gain), dirty: false);
     }
 }
