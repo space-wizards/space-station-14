@@ -1066,6 +1066,7 @@
   loadouts:
   - DetectiveArmorVest
   - DetectiveCoat
+  - DetectiveNoirCoat # Harmony
 
 - type: loadoutGroup
   id: SecurityCadetJumpsuit
