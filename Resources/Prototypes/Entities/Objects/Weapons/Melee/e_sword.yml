@@ -338,7 +338,7 @@
   components:
   - type: MeleeWeapon
     wideAnimationRotation: -135
-    attackRate: 0.9 #0.8 and below is too slow
+    attackRate: 0.8 #0.7 and below is too slow
     angle: 100
     damage:
       types:
