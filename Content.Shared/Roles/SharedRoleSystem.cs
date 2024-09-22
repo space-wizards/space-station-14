@@ -110,7 +110,7 @@ public abstract class SharedRoleSystem : EntitySystem
         }
 
         _adminLogger.Add(LogType.Mind, LogImpact.Low,
-            $"Role components {string.Join(components.Keys.ToString(), ", ")} added to mind of {_minds.MindOwnerLoggingString(mind)}");
+            $"Role components {string.Join(components.Keys.ToString(), ", ")} added to mind of {mind.OwnedEntity} ({(mind.UserId == null ? "originally " : "")} {mind.UserId ?? mind.OriginalOwnerUserId})");
     }
 
     public void MindAddRole(EntityUid mindId, Component component, MindComponent? mind = null, bool silent = false)
@@ -136,7 +136,7 @@ public abstract class SharedRoleSystem : EntitySystem
         }
 
         _adminLogger.Add(LogType.Mind, LogImpact.Low,
-            $"'Role {component}' added to mind of {_minds.MindOwnerLoggingString(mind)}");
+            $"'Role {component}' added to mind of {mind.OwnedEntity} ({(mind.UserId == null ? "originally " : "")} {mind.UserId ?? mind.OriginalOwnerUserId})");
     }
 
     /// <summary>
@@ -173,7 +173,7 @@ public abstract class SharedRoleSystem : EntitySystem
         }
 
         _adminLogger.Add(LogType.Mind, LogImpact.Low,
-            $"'Role {typeof(T).Name}' added to mind of {_minds.MindOwnerLoggingString(mind)}");
+            $"'Role {typeof(T).Name}' added to mind of {mind.OwnedEntity} ({(mind.UserId == null ? "originally " : "")} {mind.UserId ?? mind.OriginalOwnerUserId})");
     }
 
     /// <summary>
@@ -200,7 +200,7 @@ public abstract class SharedRoleSystem : EntitySystem
             RaiseLocalEvent(mind.OwnedEntity.Value, message, true);
         }
         _adminLogger.Add(LogType.Mind, LogImpact.Low,
-            $"'Role {typeof(T).Name}' removed from mind of {_minds.MindOwnerLoggingString(mind)}");
+            $"'Role {typeof(T).Name}' removed from mind of {mind.OwnedEntity} ({(mind.UserId == null ? "originally " : "")} {mind.UserId ?? mind.OriginalOwnerUserId})");
     }
 
     public bool MindTryRemoveRole<T>(EntityUid mindId) where T : IComponent

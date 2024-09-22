@@ -346,7 +346,7 @@ public abstract class SharedMindSystem : EntitySystem
     public void AddObjective(EntityUid mindId, MindComponent mind, EntityUid objective)
     {
         var title = Name(objective);
-        _adminLogger.Add(LogType.Mind, LogImpact.Low, $"Objective {objective} ({title}) added to mind of {MindOwnerLoggingString(mind)}");
+        _adminLogger.Add(LogType.Mind, LogImpact.Low, $"Objective {objective} ({title}) added to mind of {mind.OwnedEntity} ({(mind.UserId == null ? "originally " : "")} {mind.UserId ?? mind.OriginalOwnerUserId})");
         mind.Objectives.Add(objective);
     }
 
@@ -362,7 +362,7 @@ public abstract class SharedMindSystem : EntitySystem
         var objective = mind.Objectives[index];
 
         var title = Name(objective);
-        _adminLogger.Add(LogType.Mind, LogImpact.Low, $"Objective {objective} ({title}) removed from the mind of {MindOwnerLoggingString(mind)}");
+        _adminLogger.Add(LogType.Mind, LogImpact.Low, $"Objective {objective} ({title}) removed from the mind of {mind.OwnedEntity} ({(mind.UserId == null ? "originally " : "")} {mind.UserId ?? mind.OriginalOwnerUserId})");
         mind.Objectives.Remove(objective);
         Del(objective);
         return true;
@@ -526,7 +526,8 @@ public abstract class SharedMindSystem : EntitySystem
     }
 
     /// <summary>
-    ///     A string to represent the mind for logging
+    /// A string to represent the mind for logging. Note that this should not be used for admin logs, as the
+    /// entity information will get lost.
     /// </summary>
     public string MindOwnerLoggingString(MindComponent mind)
     {
