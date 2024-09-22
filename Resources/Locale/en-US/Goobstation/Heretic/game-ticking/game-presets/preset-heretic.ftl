@@ -9,9 +9,11 @@ heretic-gamemode-description =
     Dimensional anomaly detected within the station. There is no additional data.
 
 heretic-role-greeting-fluff =
-    Another day at a meaningless job. You feel a shimmer around you, as a realization of something strange in the air unfolds. You look inwards and discover something that will change your life.
-
-    The Gates of Mansus open up to your mind.
+    Another day at a meaningless job…
+    …For everyone else.
+    You feel a shimmer around you; you feel something supernatural buzzing through the air. You look inwards and discover something that will change your life.
+    Forgotten, devoured, gutted. Humanity has forgotten the eldritch forces of decay, but the veil has weakened. We will make them taste fear again…
+    The Gates of Mansus crack open, and you peer inside.
 
 heretic-role-greeting =
     You are the Heretic!

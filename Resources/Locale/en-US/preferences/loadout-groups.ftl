@@ -49,8 +49,10 @@ loadout-group-passenger-shoes = Passenger shoes
 loadout-group-passenger-neck = Passenger neck
 
 loadout-group-bartender-head = Bartender head
+loadout-group-bartender-mask = Bartender mask
 loadout-group-bartender-jumpsuit = Bartender jumpsuit
 loadout-group-bartender-outerclothing = Bartender outer clothing
+loadout-group-bartender-shoes = Bartender shoes
 loadout-group-bartender-mixologist = Mixologist Qualification
 
 loadout-group-chef-head = Chef head
@@ -69,17 +71,22 @@ loadout-group-chaplain-mask = Chaplain mask
 loadout-group-chaplain-jumpsuit = Chaplain jumpsuit
 loadout-group-chaplain-outerclothing = Chaplain outer clothing
 loadout-group-chaplain-neck = Chaplain neck
+loadout-group-chaplain-shoes = Chaplain shoes
 
 loadout-group-janitor-head = Janitor head
+loadout-group-janitor-mask = Janitor mask
 loadout-group-janitor-jumpsuit = Janitor jumpsuit
 loadout-group-janitor-gloves = Janitor gloves
 loadout-group-janitor-outerclothing = Janitor outer clothing
+loadout-group-janitor-shoes = Janitor shoes
 loadout-group-janitor-plunger = Janitor plunger
 
 loadout-group-botanist-head = Botanist head
+loadout-group-botanist-mask = Botanist mask
 loadout-group-botanist-jumpsuit = Botanist jumpsuit
 loadout-group-botanist-backpack = Botanist backpack
 loadout-group-botanist-outerclothing = Botanist outer clothing
+loadout-group-botanist-shoes = Botanist shoes
 
 loadout-group-clown-head = Clown head
 loadout-group-clown-jumpsuit = Clown jumpsuit
@@ -107,6 +114,7 @@ loadout-group-quartermaster-backpack = Quartermaster backpack
 loadout-group-quartermaster-headset = Quartermaster headset
 
 loadout-group-cargo-technician-head = Cargo Technician head
+loadout-group-cargo-technician-mask = Cargo Technician mask
 loadout-group-cargo-technician-jumpsuit = Cargo Technician jumpsuit
 loadout-group-cargo-technician-backpack = Cargo Technician backpack
 loadout-group-cargo-technician-outerclothing = Cargo Technician outer clothing
@@ -130,6 +138,7 @@ loadout-group-chief-engineer-headset = Chief Engineer headset
 loadout-group-technical-assistant-jumpsuit = Technical Assistant jumpsuit
 
 loadout-group-station-engineer-head = Station Engineer head
+loadout-group-station-engineer-mask = Station Engineer mask
 loadout-group-station-engineer-jumpsuit = Station Engineer jumpsuit
 loadout-group-station-engineer-backpack = Station Engineer backpack
 loadout-group-station-engineer-outerclothing = Station Engineer outer clothing
@@ -151,6 +160,7 @@ loadout-group-research-director-backpack = Research Director backpack
 loadout-group-research-director-headset = Research Director headset
 
 loadout-group-scientist-head = Scientist head
+loadout-group-scientist-mask = Scientist mask
 loadout-group-scientist-neck = Scientist neck
 loadout-group-scientist-jumpsuit = Scientist jumpsuit
 loadout-group-scientist-backpack = Scientist backpack
@@ -172,8 +182,10 @@ loadout-group-head-of-security-headset = Head of Security headset
 loadout-group-warden-head = Warden head
 loadout-group-warden-jumpsuit = Warden jumpsuit
 loadout-group-warden-outerclothing = Warden outer clothing
+loadout-group-upper-security-shoes = Security shoes
 
 loadout-group-security-head = Security head
+loadout-group-security-mask = Security mask
 loadout-group-security-jumpsuit = Security jumpsuit
 loadout-group-security-backpack = Security backpack
 loadout-group-security-belt = Security Belt
@@ -202,6 +214,7 @@ loadout-group-chief-medical-officer-neck = Chief Medical Officer neck
 loadout-group-chief-medical-officer-headset = Chief Medical Officer headset
 
 loadout-group-medical-doctor-head = Medical Doctor head
+loadout-group-medical-doctor-mask = Medical Doctor mask
 loadout-group-medical-doctor-jumpsuit = Medical Doctor jumpsuit
 loadout-group-medical-doctor-outerclothing = Medical Doctor outer clothing
 loadout-group-medical-doctor-backpack = Medical Doctor backpack
@@ -213,6 +226,7 @@ loadout-group-medical-intern-jumpsuit = Medical intern jumpsuit
 loadout-group-chemist-jumpsuit = Chemist jumpsuit
 loadout-group-chemist-outerclothing = Chemist outer clothing
 loadout-group-chemist-backpack = Chemist backpack
+loadout-group-chemist-shoes = Chemist shoes
 
 loadout-group-paramedic-head = Paramedic head
 loadout-group-paramedic-jumpsuit = Paramedic jumpsuit
@@ -220,7 +234,9 @@ loadout-group-paramedic-outerclothing = Paramedic outer clothing
 loadout-group-paramedic-shoes = Paramedic shoes
 
 # Wildcards
+loadout-group-reporter-mask = Reporter mask
 loadout-group-reporter-jumpsuit = Reporter jumpsuit
+loadout-group-reporter-shoes = Reporter shoes
 
 loadout-group-psychologist-jumpsuit = Psychologist jumpsuit
 

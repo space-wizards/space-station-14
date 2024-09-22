@@ -17,7 +17,6 @@
 - type: startingGear
   id: ChaplainGear
   equipment:
-    shoes: ClothingShoesColorBlack
     id: ChaplainPDA
     ears: ClothingHeadsetService
   storage:
