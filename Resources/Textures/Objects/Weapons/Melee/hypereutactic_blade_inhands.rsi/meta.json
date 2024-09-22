@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "license": null,
-  "copyright": null,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by Toriate. Taken from Citadel Station at https://github.com/Citadel-Station-13/Citadel-Station-13",
   "size": {
     "x": 64,
     "y": 64
