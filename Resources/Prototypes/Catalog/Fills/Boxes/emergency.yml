@@ -138,7 +138,7 @@
 - type: entity
   parent: BoxCardboard
   id: BoxSurvivalEngineeringNitrogenCommand
-  namename: extended command survival box
+  name: extended command survival box
   description: It's a box with ornate but otherwise basic internals inside. This one is labelled to contain an extended-capacity tank.
   suffix: Extended N2
   components:
