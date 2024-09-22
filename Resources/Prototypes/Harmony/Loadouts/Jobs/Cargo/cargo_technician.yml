@@ -1,0 +1,5 @@
+# Head
+- type: loadout
+  id: CargoTechnicianBandana
+  equipment:
+    head: ClothingHeadBandBrown

@@ -613,6 +613,7 @@
   minLimit: 0
   loadouts:
   - CargoTechnicianHead
+  - CargoTechnicianBandana # Harmony
 
 - type: loadoutGroup
   id: CargoTechnicianJumpsuit
