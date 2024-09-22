@@ -18,7 +18,7 @@
       role: JobCaptain
       time: 180000 #50 hrs
 
-# For the veteran command cosmetic set
+# For the veteran command cosmetic set, used for all command jobs
 - type: loadoutEffectGroup
   id: VeteranCommand
   effects:
@@ -138,6 +138,7 @@
   equipment:
     back: ClothingBackpackDuffelCaptain
 
+# Command Veteran backpacks are used by all command
 - type: loadout
   id: CommandVeteranBackpack
   equipment:
@@ -210,6 +211,11 @@
     proto: VeteranCap
 
 # Headset
+- type: loadout
+  id: CommandHeadsetBasic
+  equipment:
+    ears: ClothingHeadsetCommand
+
 - type: loadout
   id: CommandHeadset
   equipment:

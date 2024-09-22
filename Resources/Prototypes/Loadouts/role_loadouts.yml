@@ -206,6 +206,7 @@
   - QuartermasterHead
   - QuartermasterNeck
   - QuartermasterJumpsuit
+  - QuartermasterHeadset
   - QuartermasterBackpack
   - QuartermasterOuterClothing
   - QuartermasterShoes
@@ -249,6 +250,7 @@
   - GroupTankHarness
   - ChiefEngineerHead
   - ChiefEngineerJumpsuit
+  - ChiefEngineerHeadset
   - ChiefEngineerBackpack
   - ChiefEngineerNeck
   - ChiefEngineerOuterClothing
@@ -301,6 +303,7 @@
   - ResearchDirectorHead
   - ResearchDirectorNeck
   - ResearchDirectorJumpsuit
+  - ResearchDirectorHeadset
   - ResearchDirectorBackpack
   - ResearchDirectorOuterClothing
   - ScientistGloves
@@ -345,11 +348,12 @@
   - HeadofSecurityHead
   - HeadofSecurityNeck
   - HeadofSecurityJumpsuit
+  - HeadofSecurityHeadset
   - HeadofSecurityBackpack
   - SecurityBelt
   - HeadofSecurityOuterClothing
   - SecurityShoes
-  - SurvivalSecurity
+  - SurvivalSecurityCommand
   - Trinkets
   - SecurityStar
   - GroupSpeciesBreathToolSecurity
@@ -416,6 +420,7 @@
   - MedicalMask
   - ChiefMedicalOfficerJumpsuit
   - MedicalGloves
+  - ChiefMedicalOfficerHeadset
   - ChiefMedicalOfficerBackpack
   - ChiefMedicalOfficerOuterClothing
   - ChiefMedicalOfficerNeck

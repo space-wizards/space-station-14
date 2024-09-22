@@ -196,6 +196,25 @@
     back:
     - BoxSurvivalEngineeringNitrogenCommand
 
+# Head of Security
+- type: loadout
+  id: EmergencyOxygenSecurityCommand
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenBreather
+  storage:
+    back:
+    - BoxSurvivalSecurityCommand
+
+- type: loadout
+  id: EmergencyNitrogenSecurityCommand
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: NitrogenBreather
+  storage:
+    back:
+    - BoxSurvivalSecurityNitrogenCommand
+
 # Syndicate
 - type: loadout
   id: EmergencyOxygenSyndicate

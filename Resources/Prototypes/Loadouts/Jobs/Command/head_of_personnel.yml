@@ -18,16 +18,6 @@
       role: JobHeadOfPersonnel
       time: 54000 #15 hrs, special reward for HoP mains
 
-# For the veteran command cosmetic set
-- type: loadoutEffectGroup
-  id: VeteranCommand
-  effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:DepartmentTimeRequirement
-      department: Command
-      time: 180000 # 50 hrs
-
 # Jumpsuit
 - type: loadout
   id: HoPJumpsuit
@@ -73,47 +63,8 @@
   equipment:
     back: ClothingBackpackIan
 
-- type: loadout
-  id: CommandVeteranBackpack
-  equipment:
-    back: ClothingBackpackCommandveteran
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: VeteranCommand
-
-- type: loadout
-  id: CommandVeteranSatchel
-  equipment:
-    back: ClothingBackpackSatchelCommandveteran
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: VeteranCommand
-
-- type: loadout
-  id: CommandVeteranDuffel
-  equipment:
-    back: ClothingBackpackDuffelCommandveteran
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: VeteranCommand
-
 # Outerclothing
 - type: loadout
   id: HoPWintercoat
   equipment:
     outerClothing: ClothingOuterWinterHoP
-
-# Headset
-- type: loadout
-  id: CommandHeadset
-  equipment:
-    ears: ClothingHeadsetAltCommand
-
-- type: loadout
-  id: CommandVeteranHeadset
-  equipment:
-    ears: ClothingHeadsetCommandveteran
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: VeteranCommand
-

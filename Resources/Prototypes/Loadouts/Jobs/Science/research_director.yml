@@ -8,15 +8,15 @@
       role: JobResearchDirector
       time: 72000 #20 hrs
 
-# For the veteran command cosmetic set
+# For the veteran research director cosmetics
 - type: loadoutEffectGroup
-  id: VeteranCommand
+  id: VeteranRD
   effects:
   - !type:JobRequirementLoadoutEffect
     requirement:
-      !type:DepartmentTimeRequirement
-      department: Command
-      time: 180000 # 50 hrs
+      !type:RoleTimeRequirement
+      role: JobResearchDirector
+      time: 180000 #50 hrs
 
 # Head
 - type: loadout
@@ -64,27 +64,21 @@
   equipment:
     outerClothing: ClothingOuterWinterRD
 
-# Back
+# Headset
 - type: loadout
-  id: CommandVeteranBackpack
+  id: ResearchDirectorHeadsetBasic
   equipment:
-    back: ClothingBackpackCommandveteran
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: VeteranCommand
+    ears: ClothingHeadsetRD
 
 - type: loadout
-  id: CommandVeteranSatchel
+  id: ResearchDirectorHeadset
   equipment:
-    back: ClothingBackpackSatchelCommandveteran
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: VeteranCommand
+    ears: ClothingHeadsetAltScience
 
 - type: loadout
-  id: CommandVeteranDuffel
+  id: ResearchDirectorVeteranHeadset
   equipment:
-    back: ClothingBackpackDuffelCommandveteran
+    ears: ClothingHeadsetRDveteran
   effects:
   - !type:GroupLoadoutEffect
-    proto: VeteranCommand
+    proto: VeteranRD

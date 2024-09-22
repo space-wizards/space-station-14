@@ -38,6 +38,7 @@ loadout-group-hop-outerclothing = Head of Personnel outer clothing
 
 loadout-group-survival-command = Command survival box
 loadout-group-survival-extended-command = Extended command survival box
+loadout-group-survival-security-command = Security command survival box
 
 # Civilian
 loadout-group-passenger-jumpsuit = Passenger jumpsuit
@@ -103,6 +104,7 @@ loadout-group-quartermaster-neck = Quartermaster neck
 loadout-group-quartermaster-outerclothing = Quartermaster outer clothing
 loadout-group-quartermaster-shoes = Quartermaster shoes
 loadout-group-quartermaster-backpack = Quartermaster backpack
+loadout-group-quartermaster-headset = Quartermaster headset
 
 loadout-group-cargo-technician-head = Cargo Technician head
 loadout-group-cargo-technician-jumpsuit = Cargo Technician jumpsuit
@@ -123,6 +125,7 @@ loadout-group-chief-engineer-backpack = Chief Engineer backpack
 loadout-group-chief-engineer-outerclothing = Chief Engineer outer clothing
 loadout-group-chief-engineer-neck = Chief Engineer neck
 loadout-group-chief-engineer-shoes = Chief Engineer shoes
+loadout-group-chief-engineer-headset = Chief Engineer headset
 
 loadout-group-technical-assistant-jumpsuit = Technical Assistant jumpsuit
 
@@ -145,6 +148,7 @@ loadout-group-research-director-jumpsuit = Research Director jumpsuit
 loadout-group-research-director-outerclothing = Research Director outer clothing
 loadout-group-research-director-shoes = Research Director shoes
 loadout-group-research-director-backpack = Research Director backpack
+loadout-group-research-director-headset = Research Director headset
 
 loadout-group-scientist-head = Scientist head
 loadout-group-scientist-neck = Scientist neck
@@ -163,6 +167,7 @@ loadout-group-head-of-security-jumpsuit = Head of Security jumpsuit
 loadout-group-head-of-security-neck = Head of Security neck
 loadout-group-head-of-security-outerclothing = Head of Security outer clothing
 loadout-group-head-of-security-backpack = Head of Security backpack
+loadout-group-head-of-security-headset = Head of Security headset
 
 loadout-group-warden-head = Warden head
 loadout-group-warden-jumpsuit = Warden jumpsuit
@@ -194,6 +199,7 @@ loadout-group-chief-medical-officer-backpack = Chief Medical Officer backpack
 loadout-group-chief-medical-officer-outerclothing = Chief Medical Officer outer clothing
 loadout-group-chief-medical-officer-shoes = Chief Medical Officer shoes
 loadout-group-chief-medical-officer-neck = Chief Medical Officer neck
+loadout-group-chief-medical-officer-headset = Chief Medical Officer headset
 
 loadout-group-medical-doctor-head = Medical Doctor head
 loadout-group-medical-doctor-jumpsuit = Medical Doctor jumpsuit

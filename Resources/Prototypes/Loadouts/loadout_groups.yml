@@ -146,6 +146,7 @@
   id: CommandHeadset
   name: loadout-group-command-headset
   loadouts:
+  - CommandHeadsetBasic
   - CommandHeadset
   - CommandVeteranHeadset
 
@@ -208,6 +209,16 @@
   loadouts:
   - EmergencyNitrogenExtendedCommand
   - EmergencyOxygenExtendedCommand
+  - LoadoutSpeciesVoxNitrogen
+
+- type: loadoutGroup
+  id: SurvivalSecurityCommand
+  name: loadout-group-survival-security-command
+  minLimit: 2
+  hidden: true
+  loadouts:
+  - EmergencyNitrogenSecurityCommand
+  - EmergencyOxygenSecurityCommand
   - LoadoutSpeciesVoxNitrogen
 
 # Civilian
@@ -633,6 +644,14 @@
 
 # Cargo
 - type: loadoutGroup
+  id: QuartermasterHeadset
+  name: loadout-group-quartermaster-headset
+  loadouts:
+  - QuartermasterHeadsetBasic
+  - QuartermasterHeadset
+  - QuartermasterVeteranHeadset
+
+- type: loadoutGroup
   id: QuartermasterHead
   name: loadout-group-quartermaster-head
   minLimit: 0
@@ -759,6 +778,14 @@
   - CargoWinterBoots
 
 # Engineering
+- type: loadoutGroup
+  id: ChiefEngineerHeadset
+  name: loadout-group-chief-engineer-headset
+  loadouts:
+  - ChiefEngineerHeadsetBasic
+  - ChiefEngineerHeadset
+  - ChiefEngineerVeteranHeadset
+
 - type: loadoutGroup
   id: ChiefEngineerHead
   name: loadout-group-chief-engineer-head
@@ -907,6 +934,14 @@
 
 # Science
 - type: loadoutGroup
+  id: ResearchDirectorHeadset
+  name: loadout-group-research-director-headset
+  loadouts:
+  - ResearchDirectorHeadsetBasic
+  - ResearchDirectorHeadset
+  - ResearchDirectorVeteranHeadset
+
+- type: loadoutGroup
   id: ResearchDirectorHead
   name: loadout-group-research-director-head
   minLimit: 0
@@ -1034,6 +1069,14 @@
   - WhiteJumpskirt
 
 # Security
+- type: loadoutGroup
+  id: HeadofSecurityHeadset
+  name: loadout-group-head-of-security-headset
+  loadouts:
+  - HeadofSecurityHeadsetBasic
+  - HeadofSecurityHeadset
+  - HeadofSecurityVeteranHeadset
+
 - type: loadoutGroup
   id: HeadofSecurityHead
   name: loadout-group-head-of-security-head
@@ -1222,6 +1265,14 @@
   - SecStar
 
 # Medical
+- type: loadoutGroup
+  id: ChiefMedicalOfficerHeadset
+  name: loadout-group-chief-medical-officer-headset
+  loadouts:
+  - ChiefMedicalOfficerHeadsetBasic
+  - ChiefMedicalOfficerHeadset
+  - ChiefMedicalOfficerVeteranHeadset
+
 - type: loadoutGroup
   id: ChiefMedicalOfficerHead
   name: loadout-group-chief-medical-officer-head

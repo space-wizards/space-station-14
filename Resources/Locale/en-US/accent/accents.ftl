@@ -141,7 +141,7 @@ accent-words-raccoon-4 = Scree!
 accent-words-possum-1 = Hissss...
 accent-words-possum-2 = Hs.
 accent-words-possum-3 = Chrchrchr.
-accent-words-possum-4 = Grrrah.\
+accent-words-possum-4 = Grrrah.
 
 # TomatoKiller
 accent-words-tomato-1 = Totato!
