@@ -42,6 +42,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         [Dependency] private readonly SharedToolSystem _toolSystem = default!;
         [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
+        // [Dependency] private readonly TransformSystem _transformSystem = default!;
         public override void Initialize()
         {
             base.Initialize();
@@ -341,8 +342,9 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         private void OnInteractUsing(EntityUid uid, GasVentPumpComponent component, InteractUsingEvent args)
         {
             if (args.Handled
-             || !_toolSystem.HasQuality(args.Used, "Screwing")
              || component.UnderPressureLockout == false
+             || !_toolSystem.HasQuality(args.Used, "Screwing")
+             || (!CompOrNull<TransformComponent>(uid)?.Anchored ?? false) // If component doesn't exist continue, else check for anchor, stops it from eating the deconstruction screwdrivering
             )
             {
                 return;
