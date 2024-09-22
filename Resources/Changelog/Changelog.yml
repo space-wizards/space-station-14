@@ -1,20 +1,4 @@
 ﻿Entries:
-- author: TheShuEd
-  changes:
-  - message: Added diamonds ore!
-    type: Add
-  - message: Diamonds can now be sold at a bargain price.
-    type: Add
-  id: 6915
-  time: '2024-07-13T12:15:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25750
-- author: coffeeware
-  changes:
-  - message: Lizards will no longer lose their snouts when equipping head bandanas
-    type: Fix
-  id: 6916
-  time: '2024-07-14T02:59:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29979
 - author: SlamBamActionman
   changes:
   - message: RGBee and Rainbow Carp plushies now cycle color when held/worn.
@@ -3922,3 +3906,20 @@
   id: 7414
   time: '2024-09-21T23:21:52.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32232
+- author: AsnDen
+  changes:
+  - message: Now AI is able to use news manager console that is far away from its
+      core.
+    type: Fix
+  id: 7415
+  time: '2024-09-22T08:20:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32334
+- author: metalgearsloth
+  changes:
+  - message: Fix unbuckling mispredicting.
+    type: Fix
+  - message: Aligned buckle range with interaction range.
+    type: Tweak
+  id: 7416
+  time: '2024-09-22T08:21:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32370
