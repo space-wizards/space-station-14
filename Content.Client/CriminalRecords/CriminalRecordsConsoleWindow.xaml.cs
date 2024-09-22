@@ -15,9 +15,7 @@ using Robust.Shared.Utility;
 using System.Linq;
 using System.Numerics;
 using Content.Shared.StatusIcon;
-using Robust.Client.Utility;
 using Robust.Client.GameObjects;
-using FastAccessors;
 
 namespace Content.Client.CriminalRecords;
 
