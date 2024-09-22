@@ -149,3 +149,21 @@
   storage:
     back:
     - PersonalAI
+
+- type: loadout
+  id: FolderBlack
+  storage:
+    back:
+    - BoxFolderBlack
+
+- type: loadout
+  id: BarFlask
+  storage:
+    back:
+    - DrinkFlaskBar
+
+- type: loadout
+  id: NewtonCradle
+  storage:
+    back:
+    - NewtonCradle
