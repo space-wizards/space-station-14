@@ -65,7 +65,7 @@
 - type: entity
   parent: [ClothingHeadsetCargo, BaseCommandContraband]
   id: ClothingHeadsetQM
-  name: qm headset
+  name: quartermaster's headset
   description: A headset used by the quartermaster.
   components:
   - type: ContainerFill
@@ -74,6 +74,23 @@
       - EncryptionKeyCargo
       - EncryptionKeyCommand
       - EncryptionKeyCommon
+
+- type: entity
+  parent: [ClothingHeadsetCargo, BaseCommandContraband]
+  id: ClothingHeadsetQMveteran
+  name: quartermaster's veteran headset
+  description: A sleek headset, earned through a long career as quartermaster.
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyCargo
+      - EncryptionKeyCommand
+      - EncryptionKeyCommon
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/commandveteranqm.rsi
+  - type: Clothing
+    sprite: Clothing/Ears/Headsets/commandveteranqm.rsi
 
 - type: entity
   parent: [ ClothingHeadset, BaseCentcommContraband ]
@@ -107,6 +124,21 @@
     sprite: Clothing/Ears/Headsets/command.rsi
 
 - type: entity
+  parent: [ClothingHeadset, BaseCommandContraband]
+  id: ClothingHeadsetCommandveteran
+  name: command veteran headset
+  description: A sleek headset with a commanding channel, earned through a long career as command.
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyStationMaster
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/commandveteran.rsi
+  - type: Clothing
+    sprite: Clothing/Ears/Headsets/commandveteran.rsi
+
+- type: entity
   parent: ClothingHeadset
   id: ClothingHeadsetEngineering
   name: engineering headset
@@ -125,7 +157,7 @@
 - type: entity
   parent: [ClothingHeadsetEngineering, BaseCommandContraband]
   id: ClothingHeadsetCE
-  name: ce headset
+  name: chief engineer's headset
   description: A headset for the chief engineer to ignore all emergency calls on.
   components:
   - type: ContainerFill
@@ -134,6 +166,23 @@
       - EncryptionKeyEngineering
       - EncryptionKeyCommand
       - EncryptionKeyCommon
+
+- type: entity
+  parent: [ClothingHeadsetEngineering, BaseCommandContraband]
+  id: ClothingHeadsetCEveteran
+  name: chief engineer's veteran headset
+  description: A sleek headset, earned through a long career as chief engineer.
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyEngineering
+      - EncryptionKeyCommand
+      - EncryptionKeyCommon
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/commandveterance.rsi
+  - type: Clothing
+    sprite: Clothing/Ears/Headsets/commandveterance.rsi
 
 - type: entity
   parent: ClothingHeadset
@@ -154,7 +203,7 @@
 - type: entity
   parent: [ClothingHeadsetMedical, BaseCommandContraband]
   id: ClothingHeadsetCMO
-  name: cmo headset
+  name: chief medical officer's headset
   description: A headset used by the CMO.
   components:
   - type: ContainerFill
@@ -163,6 +212,23 @@
       - EncryptionKeyMedical
       - EncryptionKeyCommand
       - EncryptionKeyCommon
+
+- type: entity
+  parent: [ClothingHeadsetMedical, BaseCommandContraband]
+  id: ClothingHeadsetCMOveteran
+  name: chief medical officer's veteran headset
+  description: A sleek headset, earned through a long career as chief medical officer.
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyMedical
+      - EncryptionKeyCommand
+      - EncryptionKeyCommon
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/commandveterancmo.rsi
+  - type: Clothing
+    sprite: Clothing/Ears/Headsets/commandveterancmo.rsi
 
 - type: entity
   parent: ClothingHeadset
@@ -215,7 +281,7 @@
 - type: entity
   parent: [ClothingHeadsetScience, BaseCommandContraband]
   id: ClothingHeadsetRD
-  name: rd headset
+  name: research director's headset
   description: Lamarr used to love chewing on this...
   components:
   - type: ContainerFill
@@ -224,6 +290,23 @@
       - EncryptionKeyScience
       - EncryptionKeyCommand
       - EncryptionKeyCommon
+
+- type: entity
+  parent: [ClothingHeadsetScience, BaseCommandContraband]
+  id: ClothingHeadsetRDveteran
+  name: research director's veteran headset
+  description: A sleek headset, earned through a long career as research director.
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyScience
+      - EncryptionKeyCommand
+      - EncryptionKeyCommon
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/commandveteranrd.rsi
+  - type: Clothing
+    sprite: Clothing/Ears/Headsets/commandveteranrd.rsi
 
 - type: entity
   parent: [ClothingHeadset, BaseRestrictedContraband]
@@ -240,6 +323,40 @@
     sprite: Clothing/Ears/Headsets/security.rsi
   - type: Clothing
     sprite: Clothing/Ears/Headsets/security.rsi
+
+- type: entity
+  parent: [ClothingHeadset, BaseRestrictedContraband]
+  id: ClothingHeadsetHOS
+  name: head of security's headset
+  description: A headset for the head of security to ignore all security officer reports on.
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeySecurity
+      - EncryptionKeyCommon
+      - EncryptionKeyCommand
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/security.rsi
+  - type: Clothing
+    sprite: Clothing/Ears/Headsets/security.rsi
+
+- type: entity
+  parent: [ClothingHeadsetSecurity, BaseCommandContraband]
+  id: ClothingHeadsetHOSveteran
+  name: head of security's veteran headset
+  description: A sleek headset, earned through a long career as head of security.
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeySecurity
+      - EncryptionKeyCommon
+      - EncryptionKeyCommand
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/commandveteranhos.rsi
+  - type: Clothing
+    sprite: Clothing/Ears/Headsets/commandveteranhos.rsi
 
 - type: entity
   parent: [ClothingHeadset, BaseRestrictedContraband]
