@@ -1898,3 +1898,38 @@
   id: 245
   time: '2024-09-21T22:39:53.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/317
+- author: Darkmajia
+  changes:
+  - message: Cheap sunglasses, a black folder, a bar flask, and a newton cradle are
+      now available as common loadout items.
+    type: Add
+  - message: Adjusted the title of loadout windows.
+    type: Tweak
+  id: 246
+  time: '2024-09-22T16:58:00.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/324
+- author: Sha-Seng
+  changes:
+  - message: Captain now has a whole 50-hour prestige set (functionally identical!)
+    type: Add
+  - message: Adjusted the Captain's sword sheath to stop covering our pretty uniform
+      belts with a plain brown line
+    type: Tweak
+  - message: All Command spawns with a command survival box (CE gets an extended one,
+      HoS gets a special gas mask!)
+    type: Add
+  - message: All Command now have 50-hour prestige bag and headset options
+    type: Add
+  - message: A cool box of cigarettes hehe
+    type: Add
+  id: 247
+  time: '2024-09-22T16:57:07.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/314
+- author: KingMudkipIII
+  changes:
+  - message: Hummingbird's delight now requires shaking instead of stirring, so it
+      doesnt interfere with lemonade.
+    type: Fix
+  id: 248
+  time: '2024-09-22T16:57:23.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/322
