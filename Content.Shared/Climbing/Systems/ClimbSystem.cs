@@ -247,9 +247,10 @@ public sealed partial class ClimbSystem : VirtualController
         if (args.Handled || args.Cancelled || args.Args.Target == null || args.Args.Used == null)
             return;
 
-        if (_containers.IsEntityInContainer(uid))
+        if (_containers.IsEntityInContainer(uid)) {
             args.Handled = true;
             return;
+        }
 
         Climb(uid, args.Args.User, args.Args.Target.Value, climbing: component);
         args.Handled = true;
