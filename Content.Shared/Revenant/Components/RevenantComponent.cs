@@ -37,7 +37,7 @@ public sealed partial class RevenantComponent : Component
     /// <summary>
     /// If true, only bible users can exorcise this revenant
     /// with a bible.
-    /// 
+    ///
     /// If false, anyone who tries to exorcise a revenant with
     /// a bible will be able to.
     /// </summary>
@@ -277,6 +277,9 @@ public sealed partial class RevenantComponent : Component
 
     [ViewVariables(VVAccess.ReadWrite), DataField]
     public float AnimateSprintSpeed = DefaultAnimateSprintSpeed;
+
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public bool AnimateCanBoltGuns = false;
     #endregion
 
     [DataField]
