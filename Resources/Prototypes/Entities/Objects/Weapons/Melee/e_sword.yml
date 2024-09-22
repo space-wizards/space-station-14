@@ -353,6 +353,7 @@
       types:
         Slash: 20
         Heat: 20
+        Structural: 15
   - type: HeldSpeedModifier #slowdown is what balances this compared to a dsword
     walkModifier: 0.6
     sprintModifier: 0.6
