@@ -35,7 +35,6 @@
   id: ResearchDirectorGear
   equipment:
     id: RnDPDA
-    ears: ClothingHeadsetRD
   storage:
     back:
     - Flash

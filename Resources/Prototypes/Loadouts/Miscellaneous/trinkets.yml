@@ -60,6 +60,12 @@
     - CigPackNewport
 
 - type: loadout
+  id: CigPackSpirits
+  storage:
+    back:
+    - CigPackSpirits
+
+- type: loadout
   id: CigarCase
   effects:
   - !type:GroupLoadoutEffect
@@ -149,3 +155,21 @@
   storage:
     back:
     - PersonalAI
+
+- type: loadout
+  id: FolderBlack
+  storage:
+    back:
+    - BoxFolderBlack
+
+- type: loadout
+  id: BarFlask
+  storage:
+    back:
+    - DrinkFlaskBar
+
+- type: loadout
+  id: NewtonCradle
+  storage:
+    back:
+    - NewtonCradle

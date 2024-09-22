@@ -13,9 +13,13 @@
   - CigPackBlue
   - CigPackBlack
   - CigPackNewport
+  - CigPackSpirits
   - CigarCase
   - CigarGold
   - PersonalAI
+  - FolderBlack
+  - BarFlask
+  - NewtonCradle
   - ClothingNeckLGBTPin
   - ClothingNeckAromanticPin
   - ClothingNeckAsexualPin
@@ -34,6 +38,7 @@
   minLimit: 0
   loadouts:
   - Glasses
+  - GlassesCheapSunglasses
   - GlassesJamjar
   - GlassesJensen
 
@@ -79,6 +84,14 @@
   loadouts:
   - CaptainHead
   - CaptainCap
+  - CaptainCrusherCap
+
+- type: loadoutGroup
+  id: CaptainGlasses
+  name: loadout-group-captain-glasses
+  loadouts:
+  - CaptainSunglasses
+  - CaptainVisor
 
 - type: loadoutGroup
   id: CaptainJumpsuit
@@ -88,6 +101,7 @@
   - CaptainJumpskirt
   - CaptainFormalSuit
   - CaptainFormalSkirt
+  - CaptainEveningAttire
 
 - type: loadoutGroup
   id: CaptainNeck
@@ -97,6 +111,7 @@
   - CaptainCloak
   - CaptainCloakFormal
   - CaptainMantle
+  - CaptainGreatcoat
   - ScarfBlue
 
 - type: loadoutGroup
@@ -106,6 +121,9 @@
   - CaptainBackpack
   - CaptainSatchel
   - CaptainDuffel
+  - CommandVeteranBackpack
+  - CommandVeteranSatchel
+  - CommandVeteranDuffel
 
 - type: loadoutGroup
   id: CaptainOuterClothing
@@ -113,6 +131,29 @@
   loadouts:
   - CaptainOuterClothing
   - CaptainWintercoat
+  - CaptainRepeller
+
+- type: loadoutGroup
+  id: CaptainGloves
+  name: loadout-group-captain-gloves
+  loadouts:
+  - CaptainGloves
+  - CaptainFlightGloves
+
+- type: loadoutGroup
+  id: CaptainShoes
+  name: loadout-group-captain-shoes
+  loadouts:
+  - CaptainShoes
+  - CaptainJumpBoots
+
+- type: loadoutGroup
+  id: CommandHeadset
+  name: loadout-group-command-headset
+  loadouts:
+  - CommandHeadsetBasic
+  - CommandHeadset
+  - CommandVeteranHeadset
 
 - type: loadoutGroup
   id: HoPHead
@@ -145,6 +186,9 @@
   - CommonSatchel
   - CommonDuffel
   - HoPBackpackIan
+  - CommandVeteranBackpack
+  - CommandVeteranSatchel
+  - CommandVeteranDuffel
 
 - type: loadoutGroup
   id: HoPOuterClothing
@@ -152,6 +196,36 @@
   minLimit: 0
   loadouts:
   - HoPWintercoat
+
+- type: loadoutGroup
+  id: SurvivalCommand
+  name: loadout-group-survival-command
+  minLimit: 2
+  hidden: true
+  loadouts:
+  - EmergencyNitrogenCommand
+  - EmergencyOxygenCommand
+  - LoadoutSpeciesVoxNitrogen
+
+- type: loadoutGroup
+  id: SurvivalExtendedCommand
+  name: loadout-group-survival-extended-command
+  minLimit: 2
+  hidden: true
+  loadouts:
+  - EmergencyNitrogenExtendedCommand
+  - EmergencyOxygenExtendedCommand
+  - LoadoutSpeciesVoxNitrogen
+
+- type: loadoutGroup
+  id: SurvivalSecurityCommand
+  name: loadout-group-survival-security-command
+  minLimit: 2
+  hidden: true
+  loadouts:
+  - EmergencyNitrogenSecurityCommand
+  - EmergencyOxygenSecurityCommand
+  - LoadoutSpeciesVoxNitrogen
 
 # Civilian
 - type: loadoutGroup
@@ -680,6 +754,14 @@
 
 # Cargo
 - type: loadoutGroup
+  id: QuartermasterHeadset
+  name: loadout-group-quartermaster-headset
+  loadouts:
+  - QuartermasterHeadsetBasic
+  - QuartermasterHeadset
+  - QuartermasterVeteranHeadset
+
+- type: loadoutGroup
   id: QuartermasterHead
   name: loadout-group-quartermaster-head
   minLimit: 0
@@ -720,6 +802,17 @@
   - BrownShoes
   - CargoWinterBoots
   - SalvageBoots
+
+- type: loadoutGroup
+  id: QuartermasterBackpack
+  name: loadout-group-quartermaster-backpack
+  loadouts:
+  - CargoTechnicianBackpack
+  - CargoTechnicianSatchel
+  - CargoTechnicianDuffel
+  - CommandVeteranBackpack
+  - CommandVeteranSatchel
+  - CommandVeteranDuffel
 
 - type: loadoutGroup
   id: CargoTechnicianHead
@@ -812,6 +905,14 @@
 
 # Engineering
 - type: loadoutGroup
+  id: ChiefEngineerHeadset
+  name: loadout-group-chief-engineer-headset
+  loadouts:
+  - ChiefEngineerHeadsetBasic
+  - ChiefEngineerHeadset
+  - ChiefEngineerVeteranHeadset
+
+- type: loadoutGroup
   id: ChiefEngineerHead
   name: loadout-group-chief-engineer-head
   minLimit: 0
@@ -850,6 +951,17 @@
   loadouts:
   - BrownShoes
   - EngineeringWinterBoots
+
+- type: loadoutGroup
+  id: ChiefEngineerBackpack
+  name: loadout-group-chief-engineer-backpack
+  loadouts:
+  - StationEngineerBackpack
+  - StationEngineerSatchel
+  - StationEngineerDuffel
+  - CommandVeteranBackpack
+  - CommandVeteranSatchel
+  - CommandVeteranDuffel
 
 - type: loadoutGroup
   id: TechnicalAssistantJumpsuit
@@ -971,6 +1083,14 @@
 
 # Science
 - type: loadoutGroup
+  id: ResearchDirectorHeadset
+  name: loadout-group-research-director-headset
+  loadouts:
+  - ResearchDirectorHeadsetBasic
+  - ResearchDirectorHeadset
+  - ResearchDirectorVeteranHeadset
+
+- type: loadoutGroup
   id: ResearchDirectorHead
   name: loadout-group-research-director-head
   minLimit: 0
@@ -1007,6 +1127,17 @@
   loadouts:
   - BrownShoes
   - ScienceWinterBoots
+
+- type: loadoutGroup
+  id: ResearchDirectorBackpack
+  name: loadout-group-research-director-backpack
+  loadouts:
+  - ScientistBackpack
+  - ScientistSatchel
+  - ScientistDuffel
+  - CommandVeteranBackpack
+  - CommandVeteranSatchel
+  - CommandVeteranDuffel
 
 - type: loadoutGroup
   id: ScientistHead
@@ -1101,6 +1232,14 @@
 
 # Security
 - type: loadoutGroup
+  id: HeadofSecurityHeadset
+  name: loadout-group-head-of-security-headset
+  loadouts:
+  - HeadofSecurityHeadsetBasic
+  - HeadofSecurityHeadset
+  - HeadofSecurityVeteranHeadset
+
+- type: loadoutGroup
   id: HeadofSecurityHead
   name: loadout-group-head-of-security-head
   minLimit: 0
@@ -1136,6 +1275,17 @@
   - HeadofSecurityCoat
   - HeadofSecurityWinterCoat
   - HeadofSecurityWinterCoatUnarmored
+
+- type: loadoutGroup
+  id: HeadofSecurityBackpack
+  name: loadout-group-head-of-security-backpack
+  loadouts:
+  - SecurityBackpack
+  - SecuritySatchel
+  - SecurityDuffel
+  - CommandVeteranBackpack
+  - CommandVeteranSatchel
+  - CommandVeteranDuffel
 
 - type: loadoutGroup
   id: WardenHead
@@ -1311,6 +1461,14 @@
 
 # Medical
 - type: loadoutGroup
+  id: ChiefMedicalOfficerHeadset
+  name: loadout-group-chief-medical-officer-headset
+  loadouts:
+  - ChiefMedicalOfficerHeadsetBasic
+  - ChiefMedicalOfficerHeadset
+  - ChiefMedicalOfficerVeteranHeadset
+
+- type: loadoutGroup
   id: ChiefMedicalOfficerHead
   name: loadout-group-chief-medical-officer-head
   minLimit: 0
@@ -1350,6 +1508,17 @@
   loadouts:
   - BrownShoes
   - MedicalWinterBoots
+
+- type: loadoutGroup
+  id: ChiefMedicalOfficerBackpack
+  name: loadout-group-chief-medical-officer-backpack
+  loadouts:
+  - MedicalDoctorBackpack
+  - MedicalDoctorSatchel
+  - MedicalDoctorDuffel
+  - CommandVeteranBackpack
+  - CommandVeteranSatchel
+  - CommandVeteranDuffel
 
 - type: loadoutGroup
   id: MedicalDoctorHead

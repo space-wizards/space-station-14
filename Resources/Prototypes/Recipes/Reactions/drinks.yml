@@ -1416,7 +1416,7 @@
 - type: reaction
   id: HummingBird
   requiredMixerCategories:
-    - Stir
+    - Shake
   reactants:
     Water:
       amount: 4

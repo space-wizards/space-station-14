@@ -3,11 +3,15 @@
   id: JobCaptain
   groups:
   - CaptainHead
+  - CaptainGlasses
   - CaptainNeck
   - CaptainJumpsuit
+  - CaptainGloves
+  - CaptainShoes
+  - CommandHeadset
   - CaptainBackpack
   - CaptainOuterClothing
-  - Survival
+  - SurvivalCommand
   - Trinkets
   - GroupSpeciesBreathTool
 
@@ -18,10 +22,11 @@
   - HoPHead
   - HoPNeck
   - HoPJumpsuit
+  - CommandHeadset
   - HoPBackpack
   - HoPOuterClothing
   - Glasses
-  - Survival
+  - SurvivalCommand
   - Trinkets
   - GroupSpeciesBreathTool
 
@@ -215,11 +220,12 @@
   - QuartermasterHead
   - QuartermasterNeck
   - QuartermasterJumpsuit
-  - CargoTechnicianBackpack
+  - QuartermasterHeadset
+  - QuartermasterBackpack
   - QuartermasterOuterClothing
   - QuartermasterShoes
   - Glasses
-  - Survival
+  - SurvivalCommand
   - Trinkets
   - GroupSpeciesBreathTool
 
@@ -260,11 +266,12 @@
   - GroupTankHarness
   - ChiefEngineerHead
   - ChiefEngineerJumpsuit
-  - StationEngineerBackpack
+  - ChiefEngineerHeadset
+  - ChiefEngineerBackpack
   - ChiefEngineerNeck
   - ChiefEngineerOuterClothing
   - ChiefEngineerShoes
-  - SurvivalExtended
+  - SurvivalExtendedCommand
   - Trinkets
   - GroupSpeciesBreathTool
 
@@ -315,12 +322,13 @@
   - ResearchDirectorHead
   - ResearchDirectorNeck
   - ResearchDirectorJumpsuit
-  - ScientistBackpack
+  - ResearchDirectorHeadset
+  - ResearchDirectorBackpack
   - ResearchDirectorOuterClothing
   - ScientistGloves
   - ResearchDirectorShoes
   - Glasses
-  - Survival
+  - SurvivalCommand
   - Trinkets
   - GroupSpeciesBreathTool
 
@@ -360,11 +368,12 @@
   - HeadofSecurityHead
   - HeadofSecurityNeck
   - HeadofSecurityJumpsuit
-  - SecurityBackpack
+  - HeadofSecurityHeadset
+  - HeadofSecurityBackpack
   - SecurityBelt
   - HeadofSecurityOuterClothing
   - UpperSecurityShoes
-  - SurvivalSecurity
+  - SurvivalSecurityCommand
   - Trinkets
   - SecurityStar
   - GroupSpeciesBreathToolSecurity
@@ -435,12 +444,13 @@
   - MedicalMask
   - ChiefMedicalOfficerJumpsuit
   - MedicalGloves
-  - MedicalBackpack
+  - ChiefMedicalOfficerHeadset
+  - ChiefMedicalOfficerBackpack
   - ChiefMedicalOfficerOuterClothing
   - ChiefMedicalOfficerNeck
   - ChiefMedicalOfficerShoes
   - Glasses
-  - SurvivalMedical
+  - SurvivalCommand
   - Trinkets
   - GroupSpeciesBreathToolMedical
 
