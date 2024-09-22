@@ -353,24 +353,26 @@
       types:
         Slash: 20
         Heat: 20
-        Structural: 15
+        Structural: 20
   - type: HeldSpeedModifier #slowdown is what balances this compared to a dsword
     walkModifier: 0.6
     sprintModifier: 0.6
+  - type: UseDelay
+    delay: 1.5
   - type: Sprite
     sprite: Objects/Weapons/Melee/hypereutactic_blade.rsi
     layers:
-    - state: hypereutactic
-    - state: hypereutactic_blade
-      color: "#FFFFFF"
-      visible: false
-      shader: unshaded
-      map: [ "blade" ]
-    - state: hypereutactic_gem
-      color: "#FFFFFF"
-      visible: false
-      shader: unshaded
-      map: [ "gem" ]
+      - state: hypereutactic
+      - state: hypereutactic_blade
+        color: "#FFFFFF"
+        visible: false
+        shader: unshaded
+        map: [ "blade" ]
+      - state: hypereutactic_gem
+        color: "#FFFFFF"
+        visible: false
+        shader: unshaded
+        map: [ "blade" ]
   - type: Item
     size: Small
     sprite: Objects/Weapons/Melee/hypereutactic_blade_inhands.rsi
