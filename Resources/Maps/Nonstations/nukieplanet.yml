@@ -13721,7 +13721,7 @@ entities:
     - type: Transform
       pos: 3.5882664,-8.344303
       parent: 104
-- proto: VendingMachineBooze
+- proto: VendingMachineBoozeSyndicate
   entities:
   - uid: 1380
     components:
