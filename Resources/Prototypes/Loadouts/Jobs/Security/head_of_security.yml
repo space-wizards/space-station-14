@@ -113,3 +113,9 @@
   effects:
   - !type:GroupLoadoutEffect
     proto: VeteranHOS
+
+# A mask so the HoS can choose to spawn with the standard security gas mask that their new survival box removes
+- type: loadout
+  id: HeadofSecurityMask
+  equipment:
+    mask: ClothingMaskGasSecurity
