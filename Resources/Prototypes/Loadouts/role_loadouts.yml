@@ -60,6 +60,7 @@
   - BartenderMask
   - BartenderJumpsuit
   - CommonBackpack
+  - BartenderNeck
   - BartenderOuterClothing
   - BartenderShoes
   - Glasses
@@ -87,6 +88,7 @@
   - ChefMask
   - ChefJumpsuit
   - CommonBackpack
+  - ChefNeck
   - ChefOuterClothing
   - ChefShoes
   - Glasses
@@ -99,6 +101,7 @@
   groups:
   - GroupTankHarness
   - LibrarianJumpsuit
+  - LibrarianNeck
   - CommonBackpack
   - Glasses
   - Survival
@@ -142,6 +145,7 @@
   - JanitorJumpsuit
   - JanitorGloves
   - CommonBackpack
+  - JanitorNeck
   - JanitorOuterClothing
   - JanitorShoes
   - Glasses
@@ -158,6 +162,7 @@
   - BotanistMask
   - BotanistJumpsuit
   - BotanistBackpack
+  - BotanistNeck
   - BotanistOuterClothing
   - BotanistShoes
   - Glasses
@@ -186,6 +191,7 @@
   - MimeMask
   - MimeJumpsuit
   - MimeBackpack
+  - MimeNeck
   - MimeOuterClothing
   - MimeBelt
   - Glasses
@@ -198,6 +204,7 @@
   - GroupTankHarness
   - MusicianJumpsuit
   - CommonBackpack
+  - MusicianNeck
   - MusicianOuterClothing
   - Glasses
   - Survival
@@ -230,6 +237,7 @@
   - CargoTechnicianMask
   - CargoTechnicianJumpsuit
   - CargoTechnicianBackpack
+  - CargoTechnicianNeck
   - CargoTechnicianOuterClothing
   - CargoTechnicianShoes
   - CargoTechnicianPDA
@@ -285,6 +293,7 @@
   - StationEngineerMask
   - StationEngineerJumpsuit
   - StationEngineerBackpack
+  - StationEngineerNeck
   - StationEngineerOuterClothing
   - StationEngineerShoes
   - StationEngineerID
@@ -298,6 +307,7 @@
   - GroupTankHarness
   - AtmosphericTechnicianJumpsuit
   - AtmosphericTechnicianBackpack
+  - AtmosphericTechnicianNeck
   - AtmosphericTechnicianOuterClothing
   - AtmosphericTechnicianShoes
   - SurvivalExtended
@@ -375,6 +385,7 @@
   - WardenJumpsuit
   - SecurityBackpack
   - SecurityBelt
+  - WardenNeck
   - WardenOuterClothing
   - UpperSecurityShoes
   - SurvivalSecurity
@@ -389,6 +400,7 @@
   - SecurityMask
   - SecurityJumpsuit
   - SecurityBackpack
+  - SecurityNeck
   - SecurityOuterClothing
   - SecurityShoes
   - SecurityPDA
@@ -451,6 +463,7 @@
   - MedicalDoctorJumpsuit
   - MedicalGloves
   - MedicalBackpack
+  - MedicalDoctorNeck
   - MedicalDoctorOuterClothing
   - MedicalDoctorShoes
   - MedicalDoctorPDA
@@ -478,6 +491,7 @@
   - ChemistJumpsuit
   - MedicalGloves
   - ChemistBackpack
+  - ChemistNeck
   - ChemistOuterClothing
   - ChemistShoes
   - SurvivalMedical
@@ -493,6 +507,7 @@
   - ParamedicJumpsuit
   - MedicalGloves
   - MedicalBackpack
+  - ParamedicNeck
   - ParamedicOuterClothing
   - ParamedicShoes
   - Glasses
@@ -518,6 +533,7 @@
   - ReporterMask
   - ReporterJumpsuit
   - CommonBackpack
+  - ReporterNeck
   - ReporterShoes
   - Glasses
   - Survival
@@ -530,6 +546,7 @@
   - GroupTankHarness
   - PsychologistJumpsuit
   - MedicalBackpack
+  - PsychologistNeck
   - Glasses
   - Survival
   - Trinkets
