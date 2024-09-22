@@ -1,0 +1,52 @@
+- type: entity
+  parent: BaseMachinePowered
+  id: Holopad
+  name: holopad
+  description: "It's a floor-mounted device for projecting holographic images."
+  components:
+  - type: Transform
+    anchored: true
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        mask:
+        - SubfloorMask
+        layer:
+        - LowImpassable
+        hard: false
+  - type: ApcPowerReceiver
+    powerLoad: 300
+  - type: Sprite
+    sprite: Structures/Machines/holopad.rsi
+    snapCardinals: true
+    layers:
+    - state: base
+  - type: Appearance
+#  - type: GenericVisualizer
+#    visuals:
+#      enum.ComputerVisuals.Powered:
+#        computerLayerScreen:
+#          True: { visible: true, shader: unshaded }
+#          False: { visible: false }
+#        computerLayerKeys:
+#          True: { visible: true, shader: unshaded }
+#          False: { visible: true, shader: shaded }
+#  - type: Machine
+#    board: HotplateMachineCircuitboard
+  - type: LitOnPowered
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#43ccb5"
+  - type: Holopad
+  - type: ActivatableUI
+    key: enum.HolopadUiKey.Key
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+        enum.HolopadUiKey.Key:
+          type: HolopadBoundUserInterface
+ 
