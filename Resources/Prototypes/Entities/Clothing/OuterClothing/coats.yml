@@ -40,7 +40,6 @@
     contents:
     - id: SmokingPipeFilledTobacco
     - id: FlippoEngravedLighter
-  - type: ExplosionResistance
 
 
 - type: entity
