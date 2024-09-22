@@ -880,3 +880,23 @@
   - type: ConditionalSpawner
     prototypes:
     - MobHonkBot
+
+- type: entity
+  name: space koi spawner
+  id: SpawnSpaceKoi
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - sprite: Mobs/Aliens/Kois/red_black.rsi
+        state: livestock_icon
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - MobSpaceGlowKoi
+    - MobRedBlackKoi
+    - MobGoldBlackKoi
+    - MobRedCircleKoi
+    - MobBloodSkeletonKoi
+

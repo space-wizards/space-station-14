@@ -3459,3 +3459,138 @@
   components:
   - type: ReplacementAccent
     accent: nymph
+- type: entity
+  name: space koi 
+  id: BaseMobKoi
+  parent: [ SimpleSpaceMobBase, FlyingMobBase ]
+  description: Colorful space carp parody, looks friendly.
+  abstract: true
+  components:
+    - type: Sprite
+      drawdepth: Mobs
+      sprite: Mobs/Aliens/Kois/gold_black.rsi
+      layers:
+      - map: [ "enum.DamageStateVisualLayers.Base" ]
+        state: alive
+    - type: Physics
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeCircle
+            radius: 0.40
+          density: 80
+          mask:
+            - FlyingMobMask
+          layer:
+            - FlyingMobLayer
+    - type: MobState
+    - type: MobThresholds
+      thresholds:
+        0: Alive
+        40: Dead
+    - type: MovementSpeedModifier
+      baseWalkSpeed: 2.5
+      baseSprintSpeed: 3.5
+    - type: Stamina
+      critThreshold: 100
+    - type: DamageStateVisuals
+      states:
+        Alive:
+          Base: alive
+        Dead:
+          Base: dead
+    - type: Butcherable
+      spawned:
+        - id: FoodMeat
+          amount: 1
+    - type: MeleeWeapon
+      altDisarm: false
+      angle: 0
+      animation: WeaponArcBite
+      soundHit:
+        path: /Audio/Effects/bite.ogg
+      damage:
+        types:
+          Blunt: 1
+          Slash: 7
+    - type: TypingIndicator
+      proto: alien
+    - type: Tag
+      tags:
+        - Carp
+        - DoorBumpOpener
+    - type: ReplacementAccent
+      accent: genericAggressive
+    - type: Speech
+      speechVerb: LargeMob
+    - type: InteractionPopup
+      interactSuccessString: petting-success-carp
+      interactFailureString: petting-failure-carp
+      interactFailureSound:
+        path: /Audio/Effects/bite.ogg
+    - type: StaticPrice
+      price: -800
+
+
+- type: entity
+  parent: BaseMobKoi
+  id: MobRedBlackKoi
+  suffix: "Red Black"
+  components:
+  - type: Sprite
+    sprite: Mobs/Aliens/Kois/red_black.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: alive
+- type: entity
+  parent: BaseMobKoi
+  id: MobGoldBlackKoi
+  suffix: "Gold Black"
+  components:
+  - type: Sprite
+    sprite: Mobs/Aliens/Kois/gold_black.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: alive
+
+- type: entity
+  parent: BaseMobKoi
+  id: MobRedCircleKoi
+  suffix: "Red Circle"
+  components:
+  - type: Sprite
+    sprite: Mobs/Aliens/Kois/red_circle.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: alive
+
+- type: entity
+  parent: BaseMobKoi
+  id: MobBloodSkeletonKoi
+  suffix: "Blood Skeleton"
+  components:
+  - type: Sprite
+    sprite: Mobs/Aliens/Kois/blood_skeleton.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: alive
+- type: entity
+  parent: BaseMobKoi
+  id: MobSpaceGlowKoi
+  suffix: "Space Glow"
+  components:
+  - type: Sprite
+    sprite: Mobs/Aliens/Kois/space_glow.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: alive
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: unshaded
+      shader: unshaded
+  - type: PointLight
+    radius: 1.2
+    energy: 2
+    color: "#4faffb"
+
+
