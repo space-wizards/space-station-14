@@ -239,6 +239,10 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
     }
 
     #region Public functions
+    /// <summary>
+    ///     Tries to drop any IDs stored in the console, and then tries to throw them away.
+    ///     Returns true if anything was ejected and false otherwise.
+    /// </summary>
     public bool TryDropAndThrowIds(EntityUid uid, IdCardConsoleComponent? idCardConsoleComp, ItemSlotsComponent? itemSlotsComp)
     {
         if (!Resolve(uid, ref idCardConsoleComp, ref itemSlotsComp))
