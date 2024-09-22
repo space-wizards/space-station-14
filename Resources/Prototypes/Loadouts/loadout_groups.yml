@@ -17,6 +17,9 @@
   - CigarCase
   - CigarGold
   - PersonalAI
+  - FolderBlack
+  - BarFlask
+  - NewtonCradle
   - ClothingNeckLGBTPin
   - ClothingNeckAromanticPin
   - ClothingNeckAsexualPin
@@ -35,6 +38,7 @@
   minLimit: 0
   loadouts:
   - Glasses
+  - GlassesCheapSunglasses
   - GlassesJamjar
   - GlassesJensen
 
