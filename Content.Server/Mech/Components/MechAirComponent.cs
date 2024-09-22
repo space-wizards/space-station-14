@@ -10,5 +10,5 @@ public sealed partial class MechAirComponent : Component
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public GasMixture Air = new (GasMixVolume);
 
-    public const float GasMixVolume = 70f;
+    public const float GasMixVolume = 90f;
 }
