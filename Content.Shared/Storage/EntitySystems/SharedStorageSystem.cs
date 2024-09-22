@@ -36,6 +36,8 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
+using Content.Shared.Rounding;
+using Content.Shared.Storage;
 
 namespace Content.Shared.Storage.EntitySystems;
 
@@ -738,11 +740,11 @@ public abstract class SharedStorageSystem : EntitySystem
         }
     }
 
-    public void UpdateAppearance(Entity<StorageComponent?, AppearanceComponent?> entity)
+    public void UpdateAppearance(Entity<StorageComponent?, AppearanceComponent?, StorageFillVisualizerComponent?> entity)
     {
         // TODO STORAGE remove appearance data and just use the data on the component.
-        var (uid, storage, appearance) = entity;
-        if (!Resolve(uid, ref storage, ref appearance, false))
+        var (uid, storage, appearance, storageFillVis) = entity;
+        if (!Resolve(uid, ref storage, ref appearance, ref storageFillVis, false))
             return;
 
         // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
@@ -751,6 +753,7 @@ public abstract class SharedStorageSystem : EntitySystem
 
         var capacity = storage.Grid.GetArea();
         var used = GetCumulativeItemAreas((uid, storage));
+        var level = ContentHelpers.RoundToLevels(used, capacity, storageFillVis.MaxFillLevels);
 
         var isOpen = _ui.IsUiOpen(entity.Owner, StorageComponent.StorageUiKey.Key);
 
@@ -758,6 +761,7 @@ public abstract class SharedStorageSystem : EntitySystem
         _appearance.SetData(uid, StorageVisuals.Capacity, capacity, appearance);
         _appearance.SetData(uid, StorageVisuals.Open, isOpen, appearance);
         _appearance.SetData(uid, SharedBagOpenVisuals.BagState, isOpen ? SharedBagState.Open : SharedBagState.Closed, appearance);
+        _appearance.SetData(uid, StorageFillVisuals.FillLevel, level, appearance);
 
         // HideClosedStackVisuals true sets the StackVisuals.Hide to the open state of the storage.
         // This is for containers that only show their contents when open. (e.g. donut boxes)
