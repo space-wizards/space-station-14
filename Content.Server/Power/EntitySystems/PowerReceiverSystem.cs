@@ -141,7 +141,9 @@ namespace Content.Server.Power.EntitySystems
         {
             args.State = new ApcPowerReceiverComponentState
             {
-                Powered = component.Powered
+                Powered = component.Powered,
+                NeedsPower = component.NeedsPower,
+                PowerDisabled = component.PowerDisabled,
             };
         }
 

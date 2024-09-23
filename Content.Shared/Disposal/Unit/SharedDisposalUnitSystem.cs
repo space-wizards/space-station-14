@@ -120,6 +120,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         Dirty(uid, component);
         component.LastExitAttempt = currentTime;
         Remove(uid, component, args.Entity);
+        UpdateUI((uid, component));
     }
 
     private void OnActivate(EntityUid uid, DisposalUnitComponent component, ActivateInWorldEvent args)
@@ -161,6 +162,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         if (!component.Running)
             return;
 
+        UpdateUI((uid, component));
         UpdateVisualState(uid, component);
 
         if (!args.Powered)
@@ -190,6 +192,11 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
     private void OnDragDropOn(EntityUid uid, DisposalUnitComponent component, ref DragDropTargetEvent args)
     {
         args.Handled = TryInsert(uid, args.Dragged, args.User);
+    }
+
+    protected virtual void UpdateUI(Entity<DisposalUnitComponent> entity)
+    {
+
     }
 
     /// <summary>
@@ -225,6 +232,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
             {
                 component.NextFlush = null;
                 Dirty(uid, component);
+                UpdateUI((uid, component));
             }
         }
 
@@ -539,6 +547,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         if (entry == default || component is not DisposalUnitComponent sDisposals)
         {
             component.Engaged = false;
+            UpdateUI((uid, component));
             Dirty(uid, component);
             return false;
         }
@@ -557,6 +566,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
 
         UpdateVisualState(uid, component, true);
         Dirty(uid, component);
+        UpdateUI((uid, component));
 
         return true;
     }
@@ -571,6 +581,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         component.Engaged = true;
         UpdateVisualState(uid, component);
         Dirty(uid, component);
+        UpdateUI((uid, component));
 
         if (!CanFlush(uid, component))
             return;
@@ -594,6 +605,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
 
         UpdateVisualState(uid, component);
         Dirty(uid, component);
+        UpdateUI((uid, component));
     }
 
     /// <summary>
@@ -610,6 +622,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         {
             component.NextFlush = null;
             Dirty(uid, component);
+            UpdateUI((uid, component));
         }
     }
 
@@ -629,6 +642,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
 
         component.NextFlush = flushTime;
         Dirty(uid, component);
+        UpdateUI((uid, component));
     }
 
     private void OnUiButtonPressed(EntityUid uid, DisposalUnitComponent component, DisposalUnitComponent.UiButtonPressedMessage args)

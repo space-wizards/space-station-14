@@ -1,3 +1,4 @@
+using Content.Client.Power.EntitySystems;
 using Content.Shared.Disposal;
 using Content.Shared.Disposal.Components;
 using Content.Shared.Disposal.Unit;
@@ -35,9 +36,14 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 
     private void OnHandleState(EntityUid uid, DisposalUnitComponent component, ref AfterAutoHandleStateEvent args)
     {
-        if (_uiSystem.TryGetOpenUi<DisposalUnitBoundUserInterface>(uid, DisposalUnitUiKey.Key, out var bui))
+        UpdateUI((uid, component));
+    }
+
+    protected override void UpdateUI(Entity<DisposalUnitComponent> entity)
+    {
+        if (_uiSystem.TryGetOpenUi<DisposalUnitBoundUserInterface>(entity.Owner, DisposalUnitUiKey.Key, out var bui))
         {
-            bui.Refresh((uid, component));
+            bui.Refresh(entity);
         }
     }
 

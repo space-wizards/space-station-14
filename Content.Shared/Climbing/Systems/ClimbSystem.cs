@@ -254,7 +254,6 @@ public sealed partial class ClimbSystem : VirtualController
         if (!ReplaceFixtures(uid, climbing, fixtures))
             return;
 
-        Log.Info("Climbing");
         var xform = _xformQuery.GetComponent(uid);
         var (worldPos, worldRot) = _xformSystem.GetWorldPositionRotation(xform);
         var worldDirection = _xformSystem.GetWorldPosition(climbable) - worldPos;
@@ -397,8 +396,6 @@ public sealed partial class ClimbSystem : VirtualController
     {
         if (!Resolve(uid, ref climbing, ref fixtures, false))
             return;
-
-        Log.Info("Stopping climb");
 
         foreach (var (name, fixtureMask) in climbing.DisabledFixtureMasks)
         {

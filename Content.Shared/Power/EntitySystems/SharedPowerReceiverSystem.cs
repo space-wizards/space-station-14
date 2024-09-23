@@ -24,25 +24,39 @@ public abstract class SharedPowerReceiverSystem : EntitySystem
         if (!ResolveApc(uid, ref receiver))
             return true;
 
+        var oldValue = receiver.PowerDisabled;
+
         // it'll save a lot of confusion if 'always powered' means 'always powered'
         if (!receiver.NeedsPower)
         {
             receiver.PowerDisabled = false;
-            return true;
+        }
+        else
+        {
+            receiver.PowerDisabled = !receiver.PowerDisabled;
+
+            if (user != null)
+                _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user.Value):player} hit power button on {ToPrettyString(uid)}, it's now {(!receiver.PowerDisabled ? "on" : "off")}");
+
+            if (playSwitchSound)
+            {
+                _audio.PlayPredicted(new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg"), uid, user,
+                    AudioParams.Default.WithVolume(-2f));
+            }
         }
 
-        receiver.PowerDisabled = !receiver.PowerDisabled;
-
-        if (user != null)
-            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user.Value):player} hit power button on {ToPrettyString(uid)}, it's now {(!receiver.PowerDisabled ? "on" : "off")}");
-
-        if (playSwitchSound)
+        if (oldValue != receiver.PowerDisabled)
         {
-            _audio.PlayPredicted(new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg"), uid, user,
-                AudioParams.Default.WithVolume(-2f));
+            Dirty(uid, receiver);
+            RaisePower((uid, receiver));
         }
 
         return !receiver.PowerDisabled; // i.e. PowerEnabled
+    }
+
+    protected virtual void RaisePower(Entity<SharedApcPowerReceiverComponent> entity)
+    {
+        // NOOP on server because client has 0 idea of load so we can't raise it properly in shared.
     }
 
     public bool IsPowered(Entity<SharedApcPowerReceiverComponent?> entity)
