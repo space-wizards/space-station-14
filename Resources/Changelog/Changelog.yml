@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: lzk228
   changes:
-  - message: Added health examine for caustic and cold damage.
-    type: Add
-  id: 6926
-  time: '2024-07-17T06:19:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29989
-- author: lzk228
-  changes:
   - message: Surgery saws now are normal-sized (no more pocket circular saw).
     type: Tweak
   id: 6927
@@ -3925,3 +3918,10 @@
   id: 7425
   time: '2024-09-23T13:08:11.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32302
+- author: lzk228
+  changes:
+  - message: Cadet PDA now has wanted list cartridge preinstalled.
+    type: Fix
+  id: 7426
+  time: '2024-09-23T21:49:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32399
