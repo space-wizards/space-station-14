@@ -942,6 +942,18 @@
     SnowWhite: 3
 
 - type: reaction
+  id: SodaWater
+  requiredMixerCategories:
+  - Shake
+  reactants:
+    Water:
+      amount: 5
+    CarbonDioxide:
+      amount: 1
+  products:
+    SodaWater: 6
+
+- type: reaction
   id: SoyLatte
   reactants:
     Coffee:
@@ -1145,6 +1157,18 @@
       amount: 1
   products:
     TheMartinez: 6
+
+- type: reaction
+  id: Vodka
+  requiredMixerCategories:
+  - Stir
+  reactants:
+    Ethanol:
+      amount: 1
+    Water:
+      amount: 1
+  products:
+    Vodka: 2
 
 - type: reaction
   id: WaterBreakdown
