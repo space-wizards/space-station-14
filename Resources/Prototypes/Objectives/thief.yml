@@ -59,8 +59,6 @@
   components:
   - type: StealCondition
     stealGroup: Figurines
-    minCollectionSize: 10
-    maxCollectionSize: 18 #will be limited to the number of figures on the station anyway.
   - type: Objective
     difficulty: 0.25
 
