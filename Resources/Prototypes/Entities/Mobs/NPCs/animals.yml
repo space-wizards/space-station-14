@@ -389,6 +389,14 @@
   - type: NonSpreaderZombie
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-organic
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    angle: 0
+    animation: WeaponArcBite
+    damage:
+      types:
+        Piercing: 0
 
 - type: entity
   name: glockroach
@@ -2894,6 +2902,12 @@
   - type: Tag
     tags:
     - VimPilot
+  - type: HTN # GreyStation - make all cats eat mice
+    rootTask:
+      task: SimpleHostileCompound
+  - type: NpcFactionMember # GreyStation - give cats faction so they fight mice and pitbulls fight htem
+    factions:
+    - Cat
 
 - type: entity
   name: calico cat
@@ -3372,7 +3386,10 @@
   - type: NpcFactionMember
     factions:
     - Passive
-
+  - type: HTN
+    rootTask:
+      task: RuminantCompound
+      
 - type: entity
   name: diona nymph
   parent: [SimpleMobBase, StripableInventoryBase]

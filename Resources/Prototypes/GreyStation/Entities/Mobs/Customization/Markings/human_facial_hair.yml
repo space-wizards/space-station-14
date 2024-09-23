@@ -1,0 +1,7 @@
+- type: marking
+  id: HumanFacialHairBrowsnstache
+  bodyPart: FacialHair
+  markingCategory: FacialHair
+  sprites:
+    - sprite: GreyStation/Mobs/Customization/human_facial_hair.rsi
+      state: browsnstache

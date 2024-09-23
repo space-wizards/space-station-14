@@ -135,6 +135,7 @@
   - type: NpcFactionMember
     factions:
       - PetsNT
+      - Cat # DeltaV
   - type: HTN
     rootTask:
       task: SimpleHostileCompound
@@ -158,6 +159,7 @@
   - type: NpcFactionMember
     factions:
       - PetsNT
+      - Cat # DeltaV
   - type: Grammar
     attributes:
       proper: true
@@ -405,7 +407,7 @@
   - type: InteractionPopup
     successChance: 0.7
     interactSuccessString: petting-success-dog
-    interactFailureString: petting-failure-generic
+    interactFailureString: petting-failure-pitbull # GreyStation
     interactSuccessSpawn: EffectHearts
     interactSuccessSound:
       path: /Audio/Animals/small_dog_bark_happy.ogg
@@ -419,6 +421,25 @@
     - VimPilot
   - type: StealTarget
     stealGroup: AnimalWalter
+  # Begin GreyStation additions: Pitbull behaviour
+  - type: HostileOnInteractFail
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
+  - type: NPCRetaliation
+    attackMemoryLength: 10
+  - type: NpcFactionMember
+    factions:
+    - PetsNT
+    - Pitbull
+  - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 4
+        Piercing: 8
+        Blunt: 1
+        Structural: 4
+  # End GreyStation additions
 
 - type: entity
   name: Morty
