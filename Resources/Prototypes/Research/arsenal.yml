@@ -175,7 +175,7 @@
   - ShuttleGunPerforatorCircuitboard
   - ShuttleGunFriendshipCircuitboard
   technologyPrerequisites:
-  - SalvageWeapons
+  - ExperimentalSalvageWeaponry
 
 # Tier 3
 
