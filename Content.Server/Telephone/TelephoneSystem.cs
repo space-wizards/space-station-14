@@ -183,7 +183,9 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
         SetTelephoneState(component.LinkedTelephone.Value, sourceTelephone, TelephoneState.InCall);
 
         var evCallCommenced = new TelephoneCallCommencedEvent(component.LinkedTelephone.Value, uid);
+
         RaiseLocalEvent(uid, ref evCallCommenced);
+        RaiseLocalEvent(component.LinkedTelephone.Value, ref evCallCommenced);
     }
 
     public void HangUpTelephone(EntityUid uid, TelephoneComponent component)
@@ -232,7 +234,7 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
         RaiseLocalEvent(uid, ref evCallTerminated);
     }
 
-    public void SendTelephoneMessage(EntityUid messageSource, string message, RadioChannelPrototype channel, EntityUid radioSource, bool escapeMarkup = true)
+    /*public void SendTelephoneMessage(EntityUid messageSource, string message, RadioChannelPrototype channel, EntityUid radioSource, bool escapeMarkup = true)
     {
         // TODO if radios ever garble / modify messages, feedback-prevention needs to be handled better than this.
         if (!_messages.Add(message))
@@ -313,7 +315,7 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
 
         _replay.RecordServerMessage(chat);
         _messages.Remove(message);
-    }
+    }*/
 
     private void SetTelephoneState(EntityUid uid, TelephoneComponent component, TelephoneState newState)
     {

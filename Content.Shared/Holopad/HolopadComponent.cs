@@ -10,22 +10,16 @@ namespace Content.Shared.Holopad;
 public sealed partial class HolopadComponent : Component
 {
     /// <summary>
-    /// Proto ID for the user's hologram
-    /// </summary>
-    [DataField]
-    public EntProtoId? HoloCloneProtoId;
-
-    /// <summary>
-    /// The entity operating the holopad
-    /// </summary>
-    [ViewVariables]
-    public EntityUid? User;
-
-    /// <summary>
     /// The entity being projected by the holopad
     /// </summary>
     [ViewVariables]
     public EntityUid? Hologram;
+
+    /// <summary>
+    /// Proto ID for the user's hologram
+    /// </summary>
+    [DataField]
+    public EntProtoId? HologramProtoId;
 }
 
 /// <summary>
@@ -34,8 +28,8 @@ public sealed partial class HolopadComponent : Component
 [Serializable, NetSerializable]
 public sealed class HolopadBoundInterfaceState : BoundUserInterfaceState
 {
-    public TelephoneState State;
-    public Dictionary<NetEntity, string> Holopads;
+    public readonly TelephoneState State;
+    public readonly Dictionary<NetEntity, string> Holopads;
 
     public HolopadBoundInterfaceState(TelephoneState state, Dictionary<NetEntity, string> holopads)
     {
@@ -50,7 +44,7 @@ public sealed class HolopadBoundInterfaceState : BoundUserInterfaceState
 [Serializable, NetSerializable]
 public sealed class HolopadStartNewCallMessage : BoundUserInterfaceMessage
 {
-    public NetEntity Receiver;
+    public readonly NetEntity Receiver;
 
     public HolopadStartNewCallMessage(NetEntity receiver)
     {
@@ -69,6 +63,30 @@ public sealed class HolopadAnswerCallMessage : BoundUserInterfaceMessage { }
 /// </summary>
 [Serializable, NetSerializable]
 public sealed class HolopadHangUpOnCallMessage : BoundUserInterfaceMessage { }
+
+
+/// <summary>
+/// A networked event raised when the visual state of a hologram is being updated
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class HolopadHologramVisualsUpdateEvent : EntityEventArgs
+{
+    /// <summary>
+    /// The hologram being updated
+    /// </summary>
+    public readonly NetEntity Hologram;
+
+    /// <summary>
+    /// The target the hologram is copying
+    /// </summary>
+    public readonly NetEntity Target;
+
+    public HolopadHologramVisualsUpdateEvent(NetEntity hologram, NetEntity target)
+    {
+        Hologram = hologram;
+        Target = target;
+    }
+}
 
 /// <summary>
 /// Key to the Holopad UI

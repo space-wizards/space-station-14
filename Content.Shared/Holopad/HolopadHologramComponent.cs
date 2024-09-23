@@ -1,4 +1,5 @@
 using Robust.Shared.GameStates;
+using System.Numerics;
 
 namespace Content.Shared.Holopad;
 
@@ -22,4 +23,11 @@ public sealed partial class HolopadHologramComponent : Component
 
     [DataField]
     public float ScrollRate = 0.1f;
+
+
+    /// <summary>
+    /// The sprite offset for the hologram
+    /// </summary>
+    [ViewVariables]
+    public Vector2 Offset = new Vector2();
 }

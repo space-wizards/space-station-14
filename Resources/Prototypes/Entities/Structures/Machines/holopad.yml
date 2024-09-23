@@ -45,6 +45,7 @@
     energy: 1.8
     color: "#afe1fe"
   - type: Holopad
+    hologramProtoId: HolopadHologram
   - type: Telephone
     ringTone: /Audio/Machines/double_ring.ogg
     ringInterval: 2
@@ -64,14 +65,8 @@
   - type: Transform
     anchored: true
   - type: Sprite
-    snapCardinals: true
-    noRot: true
-    drawdepth: Mobs
-    offset: 0, 0.45
-    sprite: /Textures/Mobs/Species/Slime/parts.rsi
-    layers:
-    - state: full
-      shader: unshaded
+  - type: Appearance
+  - type: TypingIndicator
   - type: HolopadHologram
     shaderName: Hologram
     color1: "#65b8e2"
@@ -79,6 +74,7 @@
     alpha: 1
     intensity: 2
     scrollRate: 0.125
+    offset: 0, 0.45
   - type: Tag
     tags:
     - HideContextMenu

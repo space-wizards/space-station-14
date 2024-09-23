@@ -3,9 +3,12 @@ using Content.Server.Telephone;
 using Content.Shared.Holopad;
 using Content.Shared.Telephone;
 using Robust.Server.GameObjects;
+using Robust.Server.GameStates;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Timing;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace Content.Server.Holopad;
@@ -28,7 +31,18 @@ public sealed class HolopadSystem : SharedHolopadSystem
         SubscribeLocalEvent<HolopadComponent, HolopadStartNewCallMessage>(OnHolopadStartNewCallMessage);
         SubscribeLocalEvent<HolopadComponent, HolopadAnswerCallMessage>(OnHolopadAnswerCallMessage);
         SubscribeLocalEvent<HolopadComponent, HolopadHangUpOnCallMessage>(OnHolopadHangUpOnCallMessage);
+
+        SubscribeLocalEvent<HolopadComponent, TelephoneCallCommencedEvent>(OnHoloCallCommenced);
+        SubscribeLocalEvent<HolopadComponent, TelephoneHungUpEvent>(OnHoloCallEnded);
+        SubscribeLocalEvent<HolopadComponent, TelephoneCallTerminatedEvent>(OnHoloCallTerminated);
+
+        SubscribeLocalEvent<HolopadComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<HolopadComponent, ComponentShutdown>(OnComponentShutdown);
+
+        SubscribeLocalEvent<ExpandPvsEvent>(OnExpandPvs);
     }
+
+    #region: Events
 
     private void OnHolopadStartNewCallMessage(EntityUid uid, HolopadComponent component, HolopadStartNewCallMessage args)
     {
@@ -55,6 +69,51 @@ public sealed class HolopadSystem : SharedHolopadSystem
 
         _telephoneSystem.HangUpTelephone(uid, telephone);
     }
+
+    private void OnHoloCallCommenced(EntityUid uid, HolopadComponent component, TelephoneCallCommencedEvent args)
+    {
+        SyncHologramWithTarget(uid, component);
+    }
+
+    private void OnHoloCallEnded(EntityUid uid, HolopadComponent component, TelephoneHungUpEvent args)
+    {
+        TurnOffHologram(uid, component);
+    }
+
+    private void OnHoloCallTerminated(EntityUid uid, HolopadComponent component, TelephoneCallTerminatedEvent args)
+    {
+        TurnOffHologram(uid, component);
+    }
+
+    private void OnComponentInit(EntityUid uid, HolopadComponent component, ComponentInit args)
+    {
+        SyncHologramWithTarget(uid, component);
+    }
+
+    private void OnComponentShutdown(EntityUid uid, HolopadComponent component, ComponentShutdown args)
+    {
+        TurnOffHologram(uid, component);
+    }
+
+    private void OnExpandPvs(ref ExpandPvsEvent args)
+    {
+        var query = AllEntityQuery<HolopadComponent, TelephoneComponent>();
+        while (query.MoveNext(out var ent, out var holopad, out var telephone))
+        {
+            if (telephone.User == null)
+                continue;
+
+            if (telephone.CurrentState != TelephoneState.InCall)
+                continue;
+
+            if (args.Entities == null)
+                args.Entities = new();
+
+            args.Entities.Add(telephone.User.Value);
+        }
+    }
+
+    #endregion
 
     public override void Update(float frameTime)
     {
@@ -116,5 +175,32 @@ public sealed class HolopadSystem : SharedHolopadSystem
     {
         // Spawn hologram entity
         // Move user into world PVS so they can be visually duplicated across clients
+    }
+
+    private void TurnOffHologram(EntityUid uid, HolopadComponent component)
+    {
+        QueueDel(component.Hologram);
+    }
+
+    private void SyncHologramWithTarget(EntityUid uid, HolopadComponent component)
+    {
+        if (!TryComp<TelephoneComponent>(uid, out var telephone) ||
+            !TryComp<TelephoneComponent>(telephone.LinkedTelephone, out var linkedTelephone))
+            return;
+
+        var target = linkedTelephone.User;
+
+        if (target == null)
+            return;
+        component.Hologram = Spawn(component.HologramProtoId, Transform(uid).Coordinates);
+
+        var netHologram = GetNetEntity(component.Hologram);
+        var netTarget = GetNetEntity(target.Value);
+
+        if (netHologram == null)
+            return;
+
+        var ev = new HolopadHologramVisualsUpdateEvent(netHologram.Value, netTarget);
+        RaiseNetworkEvent(ev);
     }
 }
