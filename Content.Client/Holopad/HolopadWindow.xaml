@@ -6,6 +6,9 @@
                SetSize="500 750"
                MinSize="500 750">
     <BoxContainer Orientation="Vertical">
+        <Label Text="Options" Margin="0 0 0 5"/>
+        <Button Name="AnswerCallButton" Text="Answer call" Margin="0 0 0 5" Disabled="True"/>
+        <Button Name="EndCallButton" Text="End call" Margin="0 0 0 5" Disabled="True"/>
         <Label Text="Select contact from the list below to initiate holo-call" Margin="0 0 0 5"/>
 
         <ScrollContainer HorizontalExpand="True" VerticalExpand="True" Margin="8, 8, 8, 8">

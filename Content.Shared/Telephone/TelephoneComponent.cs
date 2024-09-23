@@ -1,11 +1,7 @@
-using Content.Shared.Holopad;
-using Content.Shared.Radio;
-using Robust.Shared.Audio.Sources;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
-using System.Threading.Channels;
 
 namespace Content.Shared.Telephone;
 
@@ -13,68 +9,95 @@ namespace Content.Shared.Telephone;
 [Access(typeof(SharedTelephoneSystem))]
 public sealed partial class TelephoneComponent : Component
 {
-    public GameTick StateStartTime;
+    /// <summary>
+    /// Sets how long the telephone will ring before it automatically hangs up
+    /// </summary>
+    [DataField]
     public float RingingTimeout = 10;
+
+    /// <summary>
+    /// Sets how long the telephone will stay in the hanging up state before return to idle
+    /// </summary>
+    [DataField]
     public float HangingUpTimeout = 3;
+
+    /// <summary>
+    /// Tone played while the phone is ringing
+    /// </summary>
+    [DataField]
+    public SoundSpecifier? RingTone = null;
+
+    /// <summary>
+    /// Sets the number of seconds before the next ring tone is played
+    /// </summary>
+    [DataField]
+    public float RingInterval = 2f;
+
+    /// <summary>
+    /// The time at which the next tone will be played
+    /// </summary>
+    [DataField]
+    public TimeSpan NextToneTime;
+
+    /// <summary>
+    /// Toggles whether people nearby can participate in the call
+    /// </summary>
+    [DataField]
+    public bool IsConferenceCall = false;
 
     /// <summary>
     /// The person using the phone
     /// </summary>
+    [ViewVariables]
     public EntityUid? User;
 
     /// <summary>
     /// Linked telephone
     /// </summary>
+    [ViewVariables]
     public EntityUid? LinkedTelephone;
 
     /// <summary>
     /// Defines the current state the telephone is in
     /// </summary>
+    [ViewVariables]
     public TelephoneState CurrentState = TelephoneState.Idle;
 
     /// <summary>
-    /// Toggles whether people nearby can participate in the call
+    /// The game tick the current state started
     /// </summary>
-    public bool IsConferenceCall = false;
+    [ViewVariables]
+    public TimeSpan StateStartTime;
 }
 
 #region: Telephone events
 
 /// <summary>
-/// Raised when one telephone is ringing another
-/// </summary>
-[ByRefEvent]
-public record struct TelephoneOutgoingCallEvent(EntityUid RecipientTelephone);
-
-/// <summary>
 /// Raised when one telephone is attempting to call another
 /// </summary>
 [ByRefEvent]
-public record struct TelephoneIncomingCallAttemptEvent(EntityUid CallingTelephone)
+public record struct TelephoneCallAttemptEvent(EntityUid Source, EntityUid Receiver, EntityUid? User)
 {
     public bool Cancelled = false;
 }
 
 /// <summary>
-/// Raised when one telephone call another
+/// Raised when one telephone is calling another
 /// </summary>
-/// <remarks>
-/// Raise a TelephoneCallAttemptEvent on the target telephone before raising this event
-/// </remarks>
 [ByRefEvent]
-public record struct TelephoneIncomingCallEvent(EntityUid CallingTelephone);
+public record struct TelephoneCallEvent(EntityUid Source, EntityUid Receiver, EntityUid? User);
 
 /// <summary>
-/// Raised when a call commences between two people
+/// Raised when a call commences between two telephones
 /// </summary>
 [ByRefEvent]
-public record struct TelephoneCallCommencedEvent(EntityUid CallingTelephone, EntityUid RecipientTelephone);
+public record struct TelephoneCallCommencedEvent(EntityUid Source, EntityUid Receiver);
 
 /// <summary>
-/// Raised when one telephone hangs up on the other
+/// Raised when a telephone hangs up
 /// </summary>
 [ByRefEvent]
-public record struct TelephoneHungUpEvent(EntityUid HangingUpTelephone);
+public record struct TelephoneHungUpEvent(EntityUid Source);
 
 /// <summary>
 /// Raised when a telephone becomes idle
@@ -83,6 +106,12 @@ public record struct TelephoneHungUpEvent(EntityUid HangingUpTelephone);
 public record struct TelephoneCallTerminatedEvent();
 
 #endregion
+
+[Serializable, NetSerializable]
+public enum TelephoneVisuals : byte
+{
+    Key
+}
 
 [Serializable, NetSerializable]
 public enum TelephoneState : byte

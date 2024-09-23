@@ -1,7 +1,5 @@
 using Content.Shared.Holopad;
-using Content.Shared.Power;
 using Robust.Client.UserInterface;
-using Robust.Shared.GameObjects;
 
 namespace Content.Client.Holopad;
 
@@ -15,7 +13,10 @@ public sealed class HolopadBoundUserInterface : BoundUserInterface
     protected override void Open()
     {
         _menu = this.CreateWindow<HolopadWindow>();
-        _menu.SendHolopadMessageAction += SendHolopadMessage;
+
+        _menu.SendHolopadStartNewCallMessageAction += SendHolopadStartNewCallMessage;
+        _menu.SendHolopadAnswerCallMessageAction += SendHolopadAnswerCallMessage;
+        _menu.SendHolopadHangUpOnCallMessageAction += SendHolopadHangUpOnCallMessage;
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
@@ -26,11 +27,21 @@ public sealed class HolopadBoundUserInterface : BoundUserInterface
 
         EntMan.TryGetComponent<TransformComponent>(Owner, out var xform);
 
-        _menu?.UpdateUIState(castState.Holopads);
+        _menu?.UpdateUIState(castState.State, castState.Holopads);
     }
 
-    public void SendHolopadMessage(NetEntity caller, NetEntity recipient)
+    public void SendHolopadStartNewCallMessage(NetEntity receiver)
     {
-        SendMessage(new HolopadMessage(caller, recipient));
+        SendMessage(new HolopadStartNewCallMessage(receiver));
+    }
+
+    public void SendHolopadAnswerCallMessage()
+    {
+        SendMessage(new HolopadAnswerCallMessage());
+    }
+
+    public void SendHolopadHangUpOnCallMessage()
+    {
+        SendMessage(new HolopadHangUpOnCallMessage());
     }
 }

@@ -1,3 +1,4 @@
+using Content.Shared.Telephone;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -8,15 +9,23 @@ namespace Content.Shared.Holopad;
 [Access(typeof(SharedHolopadSystem))]
 public sealed partial class HolopadComponent : Component
 {
-    public float CurrentCallDuration = 0;
-    public float CallingTimeout = 0;
-    public EntityUid? CurrentUser;
-    public float InteractionDistance = 1.5f;
-    public EntityUid? LinkedHolopad;
-    public EntityUid? HoloCallRecipient;
+    /// <summary>
+    /// Proto ID for the user's hologram
+    /// </summary>
+    [DataField]
     public EntProtoId? HoloCloneProtoId;
+
+    /// <summary>
+    /// The entity operating the holopad
+    /// </summary>
+    [ViewVariables]
+    public EntityUid? User;
+
+    /// <summary>
+    /// The entity being projected by the holopad
+    /// </summary>
+    [ViewVariables]
     public EntityUid? Hologram;
-    public HolopadState CurrentState = HolopadState.Inactive;
 }
 
 /// <summary>
@@ -25,10 +34,12 @@ public sealed partial class HolopadComponent : Component
 [Serializable, NetSerializable]
 public sealed class HolopadBoundInterfaceState : BoundUserInterfaceState
 {
+    public TelephoneState State;
     public Dictionary<NetEntity, string> Holopads;
 
-    public HolopadBoundInterfaceState(Dictionary<NetEntity, string> holopads)
+    public HolopadBoundInterfaceState(TelephoneState state, Dictionary<NetEntity, string> holopads)
     {
+        State = state;
         Holopads = holopads;
     }
 }
@@ -37,40 +48,31 @@ public sealed class HolopadBoundInterfaceState : BoundUserInterfaceState
 ///     Triggers the server to send updated power monitoring console data to the client for the single player session
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class HolopadMessage : BoundUserInterfaceMessage
+public sealed class HolopadStartNewCallMessage : BoundUserInterfaceMessage
 {
-    public NetEntity Caller;
-    public NetEntity Recipient;
+    public NetEntity Receiver;
 
-    public HolopadMessage(NetEntity caller, NetEntity recipient)
+    public HolopadStartNewCallMessage(NetEntity receiver)
     {
-        Caller = caller;
-        Recipient = recipient;
+        Receiver = receiver;
     }
 }
 
-[ByRefEvent]
-public readonly record struct HoloCallInitiationEvent();
-
-[ByRefEvent]
-public readonly record struct HoloCallTerminationEvent();
-
+/// <summary>
+///     Triggers the server to send updated power monitoring console data to the client for the single player session
+/// </summary>
 [Serializable, NetSerializable]
-public enum HolopadState : byte
-{
-    Inactive,
-    Calling,
-    Ringing,
-    Active,
-    HangingUp
-}
+public sealed class HolopadAnswerCallMessage : BoundUserInterfaceMessage { }
 
+/// <summary>
+///     Triggers the server to send updated power monitoring console data to the client for the single player session
+/// </summary>
 [Serializable, NetSerializable]
-public enum HolopadVisualState : byte
-{
-    State
-}
+public sealed class HolopadHangUpOnCallMessage : BoundUserInterfaceMessage { }
 
+/// <summary>
+/// Key to the Holopad UI
+/// </summary>
 [Serializable, NetSerializable]
 public enum HolopadUiKey : byte
 {
