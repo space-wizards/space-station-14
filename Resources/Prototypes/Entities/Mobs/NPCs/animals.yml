@@ -3055,8 +3055,15 @@
   - type: Sprite
     sprite: Mobs/Pets/caracal.rsi
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
       state: caracal_flop
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: caracal-moving
+    noMovementLayers:
+      movement:
+        state: caracal_flop
   - type: DamageStateVisuals
     states:
       Alive:

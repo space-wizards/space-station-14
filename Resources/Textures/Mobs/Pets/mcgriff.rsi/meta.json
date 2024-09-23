@@ -17,6 +17,32 @@
     {
       "name": "mcgriff_dead",
       "directions": 1
+    },
+    {
+        "name": "mcgriff-moving",
+        "directions": 4,
+        "delays": [
+          [
+            0.2,
+            0.2,
+            0.2
+          ],
+          [
+            0.2,
+            0.2,
+            0.2
+          ],
+          [
+            0.2,
+            0.2,
+            0.2
+          ],
+          [
+            0.2,
+            0.2,
+            0.2
+          ]
+        ]
     }
   ]
 }

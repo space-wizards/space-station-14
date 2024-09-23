@@ -292,8 +292,15 @@
     drawdepth: Mobs
     sprite: Mobs/Pets/mcgriff.rsi
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
       state: mcgriff
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: mcgriff-moving
+    noMovementLayers:
+      movement:
+        state: mcgriff
   - type: Physics
   - type: Fixtures
     fixtures:
