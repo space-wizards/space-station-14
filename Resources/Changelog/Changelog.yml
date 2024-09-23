@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: Jezithyr
-  changes:
-  - message: Removed the Geras ability from Slimes
-    type: Remove
-  id: 6923
-  time: '2024-07-16T22:50:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29731
-- author: K-Dynamic
-  changes:
-  - message: nerfed paraylze timer of all slippable objects (including soaps, water
-      puddles, and clown-related items)
-    type: Tweak
-  id: 6924
-  time: '2024-07-16T23:26:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27879
 - author: EmoGarbage404
   changes:
   - message: Resprited wall signs.
@@ -3924,3 +3909,19 @@
   id: 7422
   time: '2024-09-23T07:28:42.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32395
+- author: Errant
+  changes:
+  - message: Computers now have a maintenance panel with a Power and AI wire (if AI-connected).
+    type: Tweak
+  - message: Computer deconstruction now begins with the crowbar, not the screwdriver.
+    type: Tweak
+  id: 7423
+  time: '2024-09-23T10:51:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32273
+- author: lzk228
+  changes:
+  - message: Guidebook books now do damage like default writeable books.
+    type: Fix
+  id: 7424
+  time: '2024-09-23T11:12:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32403
