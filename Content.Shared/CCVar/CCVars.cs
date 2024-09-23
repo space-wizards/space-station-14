@@ -1493,7 +1493,7 @@ namespace Content.Shared.CCVar
 
         /// <summary>
         /// Impulse multiplier for player interactions that move grids (other than shuttle thrusters, gyroscopes and grid collisons).
-        /// At the moment this only affects the pushback in SpraySystem.
+        /// At the moment this affects the pushback in SpraySystem and from shooting guns.
         /// A higher value means grids have a lower effective mass and therefore will get pushed stronger.
         /// A value of 0 will disable pushback.
         /// The default has been chosen such that a one tile grid roughly equals 2/3 Urist masses.

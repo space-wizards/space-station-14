@@ -4,6 +4,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Audio;
+using Content.Shared.CCVar;
 using Content.Shared.CombatMode;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Damage;
@@ -24,6 +25,7 @@ using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
@@ -65,7 +67,9 @@ public abstract partial class SharedGunSystem : EntitySystem
     [Dependency] protected readonly ThrowingSystem ThrowingSystem = default!;
     [Dependency] private   readonly UseDelaySystem _useDelay = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
 
+    private float _gridImpulseMultiplier;
     private const float InteractNextFire = 0.3f;
     private const double SafetyNextFire = 0.5;
     private const float EjectOffset = 0.4f;
@@ -97,6 +101,12 @@ public abstract partial class SharedGunSystem : EntitySystem
         SubscribeLocalEvent<GunComponent, CycleModeEvent>(OnCycleMode);
         SubscribeLocalEvent<GunComponent, HandSelectedEvent>(OnGunSelected);
         SubscribeLocalEvent<GunComponent, MapInitEvent>(OnMapInit);
+        Subs.CVar(_cfg, CCVars.GridImpulseMultiplier, UpdateGridMassMultiplier, true);
+    }
+
+    private void UpdateGridMassMultiplier(float value)
+    {
+        _gridImpulseMultiplier = value;
     }
 
     private void OnMapInit(Entity<GunComponent> gun, ref MapInitEvent args)
@@ -355,7 +365,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         if (userImpulse && TryComp<PhysicsComponent>(user, out var userPhysics))
         {
             if (_gravity.IsWeightless(user, userPhysics))
-                CauseImpulse(fromCoordinates, toCoordinates.Value, user, userPhysics);
+                CauseImpulse(gun.ImpulseStrength, fromCoordinates, toCoordinates.Value, user, userPhysics);
         }
 
         Dirty(gunUid, gun);
@@ -479,15 +489,29 @@ public abstract partial class SharedGunSystem : EntitySystem
         CreateEffect(gun, ev, gun);
     }
 
-    public void CauseImpulse(EntityCoordinates fromCoordinates, EntityCoordinates toCoordinates, EntityUid user, PhysicsComponent userPhysics)
+    public void CauseImpulse(float impulseStrength, EntityCoordinates fromCoordinates, EntityCoordinates toCoordinates, EntityUid user, PhysicsComponent userPhysics)
     {
         var fromMap = fromCoordinates.ToMapPos(EntityManager, TransformSystem);
         var toMap = toCoordinates.ToMapPos(EntityManager, TransformSystem);
         var shotDirection = (toMap - fromMap).Normalized();
 
-        const float impulseStrength = 25.0f;
-        var impulseVector =  shotDirection * impulseStrength;
-        Physics.ApplyLinearImpulse(user, -impulseVector, body: userPhysics);
+        var impulseVector = shotDirection * impulseStrength;
+        if (_gravity.IsWeightless(user, userPhysics))
+        {
+            // push back the player
+            Physics.ApplyLinearImpulse(user, -impulseVector, body: userPhysics);
+        }
+        else
+        {
+            // push back the grid the player is standing on
+            var userTransform = Transform(user);
+            if (userTransform.GridUid != null)
+            {
+                // apply both linear and angular momentum depending on the player position
+                // multiply by a cvar because grid mass is currently extremely small compared to all other masses
+                Physics.ApplyLinearImpulse(userTransform.GridUid.Value, -impulseVector * _gridImpulseMultiplier, userTransform.LocalPosition);
+            }
+        }
     }
 
     public void RefreshModifiers(Entity<GunComponent?> gun)

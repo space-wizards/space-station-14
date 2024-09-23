@@ -232,6 +232,13 @@ public sealed partial class GunComponent : Component
     /// </summary>
     [DataField]
     public bool ClumsyProof = false;
+
+    /// <summary>
+    /// Pushback impulse applied to the gun's holder or the grid they are standing on when fired.
+    /// In kg*m/s
+    /// </summary>
+    [DataField]
+    public float ImpulseStrength = 25f;
 }
 
 [Flags]
