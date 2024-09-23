@@ -1,69 +1,24 @@
-using Content.Server.Engineering.Components;
-using Content.Shared.DoAfter;
 using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Verbs;
-using JetBrains.Annotations;
+using Content.Shared.Engineering.Components;
 
-namespace Content.Server.Engineering.EntitySystems
+namespace Content.Server.Engineering.EntitySystems;
+
+public sealed class DisassembleOnAltVerbSystem : EntitySystem
 {
-    [UsedImplicitly]
-    public sealed class DisassembleOnAltVerbSystem : EntitySystem
+    [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+
+    public override void Initialize()
     {
-        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+        base.Initialize();
+        SubscribeLocalEvent<DisassembleOnAltVerbComponent, DissembleDoAfterEvent>(OnDissembleDoAfter);
+    }
 
-        public override void Initialize()
-        {
-            base.Initialize();
+    private void OnDissembleDoAfter(Entity<DisassembleOnAltVerbComponent> entity, ref DissembleDoAfterEvent args)
+    {
+        var spawnedEnt = SpawnNextToOrDrop(entity.Comp.PrototypeToSpawn, entity.Owner);
 
-            SubscribeLocalEvent<DisassembleOnAltVerbComponent, GetVerbsEvent<AlternativeVerb>>(AddDisassembleVerb);
-        }
-        private void AddDisassembleVerb(EntityUid uid, DisassembleOnAltVerbComponent component, GetVerbsEvent<AlternativeVerb> args)
-        {
-            if (!args.CanInteract || !args.CanAccess || args.Hands == null)
-                return;
-
-            AlternativeVerb verb = new()
-            {
-                Act = () =>
-                {
-                    AttemptDisassemble(uid, args.User, args.Target, component);
-                },
-                Text = Loc.GetString("disassemble-system-verb-disassemble"),
-                Priority = 2
-            };
-            args.Verbs.Add(verb);
-        }
-
-        public async void AttemptDisassemble(EntityUid uid, EntityUid user, EntityUid target, DisassembleOnAltVerbComponent? component = null)
-        {
-            if (!Resolve(uid, ref component))
-                return;
-            if (string.IsNullOrEmpty(component.Prototype))
-                return;
-
-            if (component.DoAfterTime > 0 && TryGet<SharedDoAfterSystem>(out var doAfterSystem))
-            {
-                var doAfterArgs = new DoAfterArgs(EntityManager, user, component.DoAfterTime, new AwaitedDoAfterEvent(), null)
-                {
-                    BreakOnMove = true,
-                };
-                var result = await doAfterSystem.WaitDoAfter(doAfterArgs);
-
-                if (result != DoAfterStatus.Finished)
-                    return;
-            }
-
-            if (component.Deleted || Deleted(uid))
-                return;
-
-            if (!TryComp(uid, out TransformComponent? transformComp))
-                return;
-
-            var entity = EntityManager.SpawnEntity(component.Prototype, transformComp.Coordinates);
-
-            _handsSystem.TryPickup(user, entity);
-
-            EntityManager.DeleteEntity(uid);
-        }
+        _handsSystem.TryPickup(args.User, spawnedEnt);
+        // Only reason this is in server is because this isn't predicted.
+        EntityManager.DeleteEntity(entity.Owner);
     }
 }
