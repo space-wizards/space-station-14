@@ -12,6 +12,7 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using DeviceNetworkComponent = Content.Shared.DeviceNetwork.Components.DeviceNetworkComponent;
 
 namespace Content.Server.Atmos.Monitor.Systems;
 

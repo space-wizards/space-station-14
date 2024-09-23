@@ -7,6 +7,7 @@ using Content.Shared.PowerCell.Components;
 using Content.Shared.Radio.EntitySystems;
 using Content.Shared.Radio.Components;
 using Content.Shared.DeviceNetwork.Systems;
+using DeviceNetworkComponent = Content.Shared.DeviceNetwork.Components.DeviceNetworkComponent;
 
 namespace Content.Server.Radio.EntitySystems;
 

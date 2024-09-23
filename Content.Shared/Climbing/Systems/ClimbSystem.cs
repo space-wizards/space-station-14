@@ -148,7 +148,7 @@ public sealed partial class ClimbSystem : VirtualController
 
     private void OnCanDragDropOn(EntityUid uid, ClimbableComponent component, ref CanDropTargetEvent args)
     {
-        if (args.Handled)
+        if (args.Handled || !component.Vaultable)
             return;
 
         var canVault = args.User == args.Dragged
@@ -242,7 +242,7 @@ public sealed partial class ClimbSystem : VirtualController
         args.Handled = true;
     }
 
-    private void Climb(EntityUid uid, EntityUid user, EntityUid climbable, bool silent = false, ClimbingComponent? climbing = null,
+    public void Climb(EntityUid uid, EntityUid user, EntityUid climbable, bool silent = false, ClimbingComponent? climbing = null,
         PhysicsComponent? physics = null, FixturesComponent? fixtures = null, ClimbableComponent? comp = null)
     {
         if (!Resolve(uid, ref climbing, ref physics, ref fixtures, false))
@@ -254,6 +254,7 @@ public sealed partial class ClimbSystem : VirtualController
         if (!ReplaceFixtures(uid, climbing, fixtures))
             return;
 
+        Log.Info("Climbing");
         var xform = _xformQuery.GetComponent(uid);
         var (worldPos, worldRot) = _xformSystem.GetWorldPositionRotation(xform);
         var worldDirection = _xformSystem.GetWorldPosition(climbable) - worldPos;
@@ -397,6 +398,8 @@ public sealed partial class ClimbSystem : VirtualController
         if (!Resolve(uid, ref climbing, ref fixtures, false))
             return;
 
+        Log.Info("Stopping climb");
+
         foreach (var (name, fixtureMask) in climbing.DisabledFixtureMasks)
         {
             if (!fixtures.Fixtures.TryGetValue(name, out var fixture))
@@ -425,6 +428,12 @@ public sealed partial class ClimbSystem : VirtualController
     /// <param name="reason">The reason why it cant be dropped</param>
     public bool CanVault(ClimbableComponent component, EntityUid user, EntityUid target, out string reason)
     {
+        if (!component.Vaultable)
+        {
+            reason = string.Empty;
+            return false;
+        }
+
         if (!_actionBlockerSystem.CanInteract(user, target))
         {
             reason = Loc.GetString("comp-climbable-cant-interact");

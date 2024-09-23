@@ -38,6 +38,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using DeviceNetworkComponent = Content.Shared.DeviceNetwork.Components.DeviceNetworkComponent;
 
 namespace Content.Server.Shuttles.Systems;
 

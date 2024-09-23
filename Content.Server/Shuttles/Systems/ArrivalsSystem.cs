@@ -35,6 +35,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using DeviceNetworkComponent = Content.Shared.DeviceNetwork.Components.DeviceNetworkComponent;
 using TimedDespawnComponent = Robust.Shared.Spawners.TimedDespawnComponent;
 
 namespace Content.Server.Shuttles.Systems;

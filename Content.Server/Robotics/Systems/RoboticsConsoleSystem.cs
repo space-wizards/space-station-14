@@ -11,6 +11,7 @@ using Content.Shared.Robotics.Systems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Timing;
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.DeviceNetwork.Events;
 
 namespace Content.Server.Research.Systems;
 

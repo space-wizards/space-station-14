@@ -2,7 +2,6 @@ using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Administration.UI;
 using Content.Server.Disposal.Tube;
-using Content.Server.Disposal.Tube.Components;
 using Content.Server.EUI;
 using Content.Server.GameTicking;
 using Content.Server.Ghost.Roles;
@@ -41,6 +40,7 @@ using Robust.Server.Player;
 using Content.Shared.Mind;
 using Robust.Shared.Physics.Components;
 using static Content.Shared.Configurable.ConfigurationComponent;
+using DisposalTubeComponent = Content.Server.Disposal.Tube.DisposalTubeComponent;
 
 namespace Content.Server.Administration.Systems
 {

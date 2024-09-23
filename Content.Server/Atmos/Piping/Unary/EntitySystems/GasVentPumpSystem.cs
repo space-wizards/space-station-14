@@ -17,11 +17,13 @@ using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.Atmos.Visuals;
 using Content.Shared.Audio;
 using Content.Shared.DeviceNetwork;
+using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Examine;
 using Content.Shared.Power;
 using Content.Shared.Tools.Systems;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using DeviceNetworkComponent = Content.Shared.DeviceNetwork.Components.DeviceNetworkComponent;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 {

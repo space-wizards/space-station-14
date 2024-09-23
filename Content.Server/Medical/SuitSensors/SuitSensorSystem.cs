@@ -23,6 +23,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using DeviceNetworkComponent = Content.Shared.DeviceNetwork.Components.DeviceNetworkComponent;
 
 namespace Content.Server.Medical.SuitSensors;
 

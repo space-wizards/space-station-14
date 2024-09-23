@@ -6,6 +6,8 @@ using Content.Server.DeviceNetwork.Systems;
 using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.DeviceNetwork;
+using Content.Shared.DeviceNetwork.Events;
+using DeviceNetworkComponent = Content.Shared.DeviceNetwork.Components.DeviceNetworkComponent;
 
 namespace Content.Server.DeviceLinking.Systems;
 

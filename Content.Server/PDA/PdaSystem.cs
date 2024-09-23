@@ -22,6 +22,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
+using DeviceNetworkComponent = Content.Shared.DeviceNetwork.Components.DeviceNetworkComponent;
 
 namespace Content.Server.PDA
 {

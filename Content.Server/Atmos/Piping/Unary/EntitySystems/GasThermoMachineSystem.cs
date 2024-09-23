@@ -18,7 +18,9 @@ using Content.Shared.UserInterface;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.DeviceNetwork;
+using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Examine;
+using DeviceNetworkComponent = Content.Shared.DeviceNetwork.Components.DeviceNetworkComponent;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 {

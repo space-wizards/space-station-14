@@ -1,15 +1,16 @@
 #nullable enable annotations
 using System.Linq;
 using System.Numerics;
-using Content.Server.Disposal.Tube.Components;
-using Content.Server.Disposal.Unit.Components;
-using Content.Server.Disposal.Unit.EntitySystems;
+using Content.Server.Disposal.Unit;
 using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Shared.Disposal;
 using Content.Shared.Disposal.Components;
-using NUnit.Framework;
+using Content.Shared.Disposal.Unit;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Reflection;
+using DisposalEntryComponent = Content.Shared.Disposal.Tube.Components.DisposalEntryComponent;
+using DisposalHolderComponent = Content.Server.Disposal.Unit.DisposalHolderComponent;
 
 namespace Content.IntegrationTests.Tests.Disposal
 {
@@ -163,6 +164,8 @@ namespace Content.IntegrationTests.Tests.Disposal
             var entityManager = server.ResolveDependency<IEntityManager>();
             var xformSystem = entityManager.System<SharedTransformSystem>();
             var disposalSystem = entityManager.System<DisposalUnitSystem>();
+            var power = entityManager.System<PowerReceiverSystem>();
+
             await server.WaitAssertion(() =>
             {
                 // Spawn the entities
@@ -191,7 +194,7 @@ namespace Content.IntegrationTests.Tests.Disposal
                 xformSystem.AnchorEntity(unitUid, entityManager.GetComponent<TransformComponent>(unitUid));
 
                 // No power
-                Assert.That(unitComponent.Powered, Is.False);
+                Assert.That(power.IsPowered(unitUid), Is.False);
 
                 // Can't insert the trunk or the unit into itself
                 UnitInsertContains(unitUid, unitComponent, false, disposalSystem, disposalUnit, disposalTrunk);
@@ -229,7 +232,6 @@ namespace Content.IntegrationTests.Tests.Disposal
                 // Remove power need
                 Assert.That(entityManager.TryGetComponent(disposalUnit, out ApcPowerReceiverComponent power));
                 power!.NeedsPower = false;
-                unitComponent.Powered = true; //Power state changed event doesn't get fired smh
 
                 // Flush with a mob and an item
                 Flush(disposalUnit, unitComponent, true, disposalSystem, human, wrench);

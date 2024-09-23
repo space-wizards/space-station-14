@@ -14,6 +14,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Emag.Systems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
+using DeviceNetworkComponent = Content.Shared.DeviceNetwork.Components.DeviceNetworkComponent;
 
 namespace Content.Server.Atmos.Monitor.Systems;
 

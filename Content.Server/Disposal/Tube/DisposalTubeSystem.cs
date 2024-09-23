@@ -2,12 +2,11 @@ using System.Linq;
 using System.Text;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Construction.Completions;
-using Content.Server.Disposal.Tube.Components;
-using Content.Server.Disposal.Unit.Components;
-using Content.Server.Disposal.Unit.EntitySystems;
+using Content.Server.Disposal.Unit;
 using Content.Server.Popups;
 using Content.Shared.Destructible;
 using Content.Shared.Disposal.Components;
+using Content.Shared.Disposal.Unit;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -18,10 +17,12 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Random;
 using static Content.Shared.Disposal.Components.SharedDisposalRouterComponent;
 using static Content.Shared.Disposal.Components.SharedDisposalTaggerComponent;
+using DisposalEntryComponent = Content.Shared.Disposal.Tube.Components.DisposalEntryComponent;
+using DisposalHolderComponent = Content.Server.Disposal.Unit.DisposalHolderComponent;
 
 namespace Content.Server.Disposal.Tube
 {
-    public sealed class DisposalTubeSystem : EntitySystem
+    public sealed class DisposalTubeSystem : SharedDisposalTubeSystem
     {
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
@@ -419,7 +420,7 @@ namespace Content.Server.Disposal.Tube
             _popups.PopupEntity(Loc.GetString("disposal-tube-component-popup-directions-text", ("directions", directions)), tubeId, recipient);
         }
 
-        public bool TryInsert(EntityUid uid, DisposalUnitComponent from, IEnumerable<string>? tags = default, DisposalEntryComponent? entry = null)
+        public override bool TryInsert(EntityUid uid, DisposalUnitComponent from, IEnumerable<string>? tags = default, DisposalEntryComponent? entry = null)
         {
             if (!Resolve(uid, ref entry))
                 return false;

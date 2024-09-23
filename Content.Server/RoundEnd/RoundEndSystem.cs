@@ -21,6 +21,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using DeviceNetworkComponent = Content.Shared.DeviceNetwork.Components.DeviceNetworkComponent;
 using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.RoundEnd

@@ -22,6 +22,8 @@ using Content.Shared.Wires;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using System.Linq;
+using Content.Shared.DeviceNetwork.Events;
+using DeviceNetworkComponent = Content.Shared.DeviceNetwork.Components.DeviceNetworkComponent;
 
 namespace Content.Server.Atmos.Monitor.Systems;
 
