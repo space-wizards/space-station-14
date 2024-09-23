@@ -41,6 +41,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly MeleeWeaponSystem _meleeWeapon = default!;
@@ -186,7 +187,18 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         if (_meleeWeapon.GetDamage(args.Used, args.User).Empty)
             return;
 
-        DoCommonElectrocution(args.User, uid, component.UnarmedHitShock, component.UnarmedHitStun, false);
+        var siemens = 1f;
+
+        // Check for insualted component on the entity triggering the action or on the gloves
+        if (TryComp<InsulatedComponent>(args.User, out var insulation) ||
+        (TryComp<InventoryComponent>(args.User, out var inventory) &&
+         _inventory.TryGetSlotEntity(args.User, "gloves", out var gloves, inventory) &&
+         TryComp<InsulatedComponent>(gloves, out insulation)))
+        {
+            siemens = insulation.Coefficient;
+        }
+
+        DoCommonElectrocution(args.User, uid, component.UnarmedHitShock, component.UnarmedHitStun, false, siemens);
     }
 
     private void OnElectrifiedInteractUsing(EntityUid uid, ElectrifiedComponent electrified, InteractUsingEvent args)
