@@ -747,7 +747,7 @@ public sealed class ChatUIController : UIController
         // Check if message is longer than the character limit
         if (text.Length > MaxMessageLength)
         {
-            var locWarning = Loc.GetString("chat-manager-max-message-length",
+            var locWarning = Loc.GetString("chat-manager-max-message-length-exceeded-message",
                 ("maxMessageLength", MaxMessageLength));
             box.AddLine(locWarning, Color.Orange);
             return;

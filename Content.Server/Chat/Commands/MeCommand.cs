@@ -1,13 +1,15 @@
-using Content.Server.Chat.Systems;
+using Content.Server.Chat.Managers;
 using Content.Shared.Administration;
+using Content.Shared.Chat;
 using Robust.Shared.Console;
-using Robust.Shared.Enums;
 
 namespace Content.Server.Chat.Commands
 {
     [AnyCommand]
     internal sealed class MeCommand : IConsoleCommand
     {
+        [Dependency] private readonly IChatManager _chat = default!;
+
         public string Command => "me";
         public string Description => "Perform an action.";
         public string Help => "me <text>";
@@ -20,9 +22,6 @@ namespace Content.Server.Chat.Commands
                 return;
             }
 
-            if (player.Status != SessionStatus.InGame)
-                return;
-
             if (player.AttachedEntity is not {} playerEntity)
             {
                 shell.WriteError("You don't have an entity!");
@@ -33,11 +32,7 @@ namespace Content.Server.Chat.Commands
                 return;
 
             var message = string.Join(" ", args).Trim();
-            if (string.IsNullOrEmpty(message))
-                return;
-
-            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ChatSystem>()
-                .TrySendInGameICMessage(playerEntity, message, InGameICChatType.Emote, ChatTransmitRange.Normal, false, shell, player);
+            _chat.RequestChat(player, message, ChatSelectChannel.Emotes);
         }
     }
 }

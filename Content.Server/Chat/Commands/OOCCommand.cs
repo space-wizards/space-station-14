@@ -1,5 +1,6 @@
 using Content.Server.Chat.Managers;
 using Content.Shared.Administration;
+using Content.Shared.Chat;
 using Robust.Shared.Console;
 
 namespace Content.Server.Chat.Commands
@@ -7,6 +8,8 @@ namespace Content.Server.Chat.Commands
     [AnyCommand]
     internal sealed class OOCCommand : IConsoleCommand
     {
+        [Dependency] private readonly IChatManager _chat = default!;
+
         public string Command => "ooc";
         public string Description => "Send Out Of Character chat messages.";
         public string Help => "ooc <text>";
@@ -23,10 +26,7 @@ namespace Content.Server.Chat.Commands
                 return;
 
             var message = string.Join(" ", args).Trim();
-            if (string.IsNullOrEmpty(message))
-                return;
-
-            IoCManager.Resolve<IChatManager>().TrySendOOCMessage(player, message, OOCChatType.OOC);
+            _chat.RequestChat(player, message, ChatSelectChannel.OOC);
         }
     }
 }

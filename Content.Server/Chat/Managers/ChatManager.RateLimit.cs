@@ -25,13 +25,13 @@ internal sealed partial class ChatManager
 
     private void RateLimitPlayerLimited(ICommonSession player)
     {
-        DispatchServerMessage(player, Loc.GetString("chat-manager-rate-limited"), suppressLog: true);
+        DispatchServerMessage(player, _loc.GetString("chat-manager-rate-limited"), suppressLog: true);
     }
 
     private void RateLimitAlertAdmins(ICommonSession player)
     {
         if (_configurationManager.GetCVar(CCVars.ChatRateLimitAnnounceAdmins))
-            SendAdminAlert(Loc.GetString("chat-manager-rate-limit-admin-announcement", ("player", player.Name)));
+            SendAdminAlert(_loc.GetString("chat-manager-rate-limit-admin-announcement", ("player", player.Name)));
     }
 
     public RateLimitStatus HandleRateLimit(ICommonSession player)
