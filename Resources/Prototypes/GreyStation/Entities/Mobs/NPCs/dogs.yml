@@ -29,7 +29,7 @@
       # no gender like walter has
   - type: RandomMetadata
     nameSegments: [names_pitbull]
-  - type: NPCFactionMember
+  - type: NpcFactionMember
     factions: # No PetsNT faction
     - Pitbull
 

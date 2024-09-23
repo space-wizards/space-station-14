@@ -2903,7 +2903,8 @@
     tags:
     - VimPilot
   - type: HTN # GreyStation - make all cats eat mice
-    rootTask: SimpleHostileCompound
+    rootTask:
+      task: SimpleHostileCompound
   - type: NpcFactionMember # GreyStation - give cats faction so they fight mice and pitbulls fight htem
     factions:
     - Cat

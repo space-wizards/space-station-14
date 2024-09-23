@@ -425,7 +425,7 @@
   - type: HostileOnInteractFail
   - type: HTN
     rootTask:
-      task: SimpleHostile
+      task: SimpleHostileCompound
   - type: NPCRetaliation
     attackMemoryLength: 10
   - type: NpcFactionMember
