@@ -58,3 +58,28 @@
         enum.HolopadUiKey.Key:
           type: HolopadBoundUserInterface
  
+- type: entity
+  id: HolopadHologram
+  components:
+  - type: Transform
+    anchored: true
+  - type: Sprite
+    snapCardinals: true
+    noRot: true
+    drawdepth: Mobs
+    offset: 0, 0.45
+    sprite: /Textures/Mobs/Species/Slime/parts.rsi
+    layers:
+    - state: full
+      shader: unshaded
+  - type: HolopadHologram
+    shaderName: Hologram
+    color1: "#65b8e2"
+    color2: "#4985a3"
+    alpha: 1
+    intensity: 2
+    scrollRate: 0.125
+  - type: Tag
+    tags:
+    - HideContextMenu
+  - type: AnimationPlayer
