@@ -422,7 +422,6 @@
   - type: StealTarget
     stealGroup: AnimalWalter
   # Begin GreyStation additions: Pitbull behaviour
-  - type: DogVision
   - type: HostileOnInteractFail
   - type: HTN
     rootTask:
