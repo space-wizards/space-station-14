@@ -101,8 +101,9 @@ internal sealed partial class ChatManager : IChatManager
                 return;
         }
 
-        if (session.Status != SessionStatus.InGame || session.AttachedEntity is not { } ent ||
-            !_entityManager.EntityExists(ent))
+        if (session.Status != SessionStatus.InGame
+            || session.AttachedEntity is not { } ent
+            || !_entityManager.EntityExists(ent))
         {
             var msg = _loc.GetString("chat-manager-no-entity", ("channel", channel));
             DispatchServerMessage(session, msg, true);
