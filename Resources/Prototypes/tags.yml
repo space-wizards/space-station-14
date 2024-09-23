@@ -16,6 +16,9 @@
   id: Ambrosia
 
 - type: Tag
+  id: AnomalyHost
+
+- type: Tag
   id: AppraisalTool
 
 - type: Tag
@@ -203,6 +206,9 @@
 
 - type: Tag
   id: BorgServiceTorso
+
+- type: Tag
+  id: Bot
 
 - type: Tag
   id: BotanyHatchet
@@ -1154,6 +1160,15 @@
   id: SecBeltEquip
 
 - type: Tag
+  id: SecurePlasmaWindoor
+
+- type: Tag
+  id: SecureUraniumWindoor
+
+- type: Tag
+  id: SecureWindoor
+
+- type: Tag  
   id: SecurityHelmet
 
 - type: Tag
@@ -1332,6 +1347,9 @@
 
 - type: Tag
   id: Vegetable
+
+- type: Tag
+  id: VGRoidInterior
 
 - type: Tag
   id: VimPilot
