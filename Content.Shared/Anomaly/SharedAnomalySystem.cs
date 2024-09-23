@@ -194,6 +194,8 @@ public abstract class SharedAnomalySystem : EntitySystem
 
         if (component.DeleteEntity)
             QueueDel(uid);
+        else
+            RemCompDeferred<AnomalySupercriticalComponent>(uid);
     }
 
     /// <summary>
