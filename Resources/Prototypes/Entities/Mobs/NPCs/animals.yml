@@ -3377,7 +3377,10 @@
   - type: NpcFactionMember
     factions:
     - Passive
-
+  - type: HTN
+    rootTask:
+      task: RuminantCompound
+      
 - type: entity
   name: diona nymph
   parent: [SimpleMobBase, StripableInventoryBase]
