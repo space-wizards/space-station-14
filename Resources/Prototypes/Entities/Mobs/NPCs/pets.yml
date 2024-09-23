@@ -11,8 +11,15 @@
     drawdepth: Mobs
     sprite: Mobs/Pets/corgi.rsi
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
       state: ian
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: ian-moving
+    noMovementLayers:
+      movement:
+        state: ian
   - type: DamageStateVisuals
     states:
       Alive:
@@ -70,8 +77,15 @@
   components:
   - type: Sprite
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
       state: lisa
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: lisa-moving
+    noMovementLayers:
+      movement:
+        state: lisa
   - type: DamageStateVisuals
     states:
       Alive:
@@ -371,8 +385,15 @@
     drawdepth: Mobs
     sprite: Mobs/Pets/walter.rsi
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
       state: walter
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: walter-moving
+    noMovementLayers:
+      movement:
+        state: walter
   - type: Physics
   - type: Fixtures
     fixtures:

@@ -2693,8 +2693,15 @@
     drawdepth: Mobs
     sprite: Mobs/Pets/corgi.rsi
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
       state: corgi
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: corgi-moving
+    noMovementLayers:
+      movement:
+        state: corgi
   - type: Physics
   - type: Speech
     speechVerb: Canine
@@ -2814,8 +2821,15 @@
     drawdepth: Mobs
     sprite: Mobs/Pets/corgi.rsi
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
       state: puppy
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: puppy-moving
+    noMovementLayers:
+      movement:
+        state: puppy
   - type: Inventory
     speciesId: puppy
     templateId: pet
@@ -2841,8 +2855,15 @@
     drawdepth: Mobs
     sprite: Mobs/Pets/cat.rsi
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
       state: cat
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: cat-moving
+    noMovementLayers:
+      movement:
+        state: cat
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -2908,8 +2929,15 @@
   components:
   - type: Sprite
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
       state: cat2
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: cat2-moving
+    noMovementLayers:
+      movement:
+        state: cat2
   - type: DamageStateVisuals
     states:
       Alive:
@@ -2927,8 +2955,15 @@
   components:
   - type: Sprite
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
       state: syndicat
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: syndicat-moving
+    noMovementLayers:
+      movement:
+        state: syndicat
   - type: DamageStateVisuals
     states:
       Alive:
@@ -2974,8 +3009,15 @@
   components:
   - type: Sprite
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
       state: spacecat
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: spacecat-moving
+    noMovementLayers:
+      movement:
+        state: spacecat
   - type: DamageStateVisuals
     states:
       Alive:
@@ -3032,8 +3074,15 @@
   components:
   - type: Sprite
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
       state: kitten
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: kitten-moving
+    noMovementLayers:
+      movement:
+        state: kitten
   - type: DamageStateVisuals
     states:
       Alive:
@@ -3380,7 +3429,7 @@
   - type: HTN
     rootTask:
       task: RuminantCompound
-      
+
 - type: entity
   name: diona nymph
   parent: [SimpleMobBase, StripableInventoryBase]
