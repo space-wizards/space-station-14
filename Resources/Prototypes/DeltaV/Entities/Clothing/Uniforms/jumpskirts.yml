@@ -1,5 +1,5 @@
 - type: entity
-  parent: ClothingUniformSkirtBase
+  parent: ClothingUniformSkirtMailCarrier # GreyStation: inherit faction clothing from mail carrier skirt
   id: ClothingUniformSkirtCourier
   name: courier's jumpskirt
   description: Enemy of dogs everywhere.
