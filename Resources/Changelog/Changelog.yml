@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Winkarst-cpu
-  changes:
-  - message: Now addgamerule command processes only valid game rules.
-    type: Fix
-  id: 6922
-  time: '2024-07-15T19:18:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29912
 - author: Jezithyr
   changes:
   - message: Removed the Geras ability from Slimes
@@ -3923,3 +3916,11 @@
   id: 7421
   time: '2024-09-23T06:48:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30525
+- author: ElectroJr
+  changes:
+  - message: Entities within the same container as the player only appear in the context
+      menu when clicking near the container.
+    type: Fix
+  id: 7422
+  time: '2024-09-23T07:28:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32395
