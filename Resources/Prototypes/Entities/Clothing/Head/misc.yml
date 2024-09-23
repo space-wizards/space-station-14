@@ -317,7 +317,7 @@
   parent: ClothingHeadBase
   id: ClothingHeadHatHairflower
   name: hairflower
-  description: A beautiful hairflower that can be inserted between the locks of hair.
+  description: A beautiful hairflower that can be inserted between locks of hair.
   components:
   - type: Sprite
     sprite: Clothing/Head/Misc/hairflower.rsi
