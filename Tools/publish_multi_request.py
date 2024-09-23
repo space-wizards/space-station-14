@@ -14,7 +14,7 @@ RELEASE_DIR = "release"
 # CONFIGURATION PARAMETERS
 # Forks should change these to publish to their own infrastructure.
 #
-ROBUST_CDN_URL = "https://ss14cdn.azurewebsites.net/"
+ROBUST_CDN_URL = "https://ss14-cdn.mw-gc.com/"
 FORK_ID = "MWGSolaris14"
 
 def main():
