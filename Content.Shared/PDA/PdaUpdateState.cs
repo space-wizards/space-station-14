@@ -44,6 +44,7 @@ namespace Content.Shared.PDA
     [Serializable, NetSerializable]
     public struct PdaIdInfoText
     {
+        public string? ActualOwnerName;
         public string? IdOwner;
         public string? JobTitle;
         public string? StationAlertLevel;

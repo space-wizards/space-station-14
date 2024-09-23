@@ -80,6 +80,19 @@ public sealed class RenameCommand : IConsoleCommand
             }
         }
 
+        // PDAs
+        if (_entManager.TrySystem<PdaSystem>(out var pdaSystem))
+        {
+            var query = _entManager.EntityQueryEnumerator<PdaComponent>();
+            while (query.MoveNext(out var uid, out var pda))
+            {
+                if (pda.OwnerName == oldName)
+                {
+                    pdaSystem.SetOwner(uid, pda, name);
+                }
+            }
+        }
+
         // Admin Overlay
         if (_entManager.TrySystem<AdminSystem>(out var adminSystem)
             && _entManager.TryGetComponent<ActorComponent>(entityUid, out var actorComp))

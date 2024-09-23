@@ -136,6 +136,14 @@ namespace Content.Client.PDA
         {
             FlashLightToggleButton.IsActive = state.FlashlightEnabled;
 
+            if (state.PdaOwnerInfo.ActualOwnerName != null)
+            {
+                _pdaOwner = state.PdaOwnerInfo.ActualOwnerName;
+                PdaOwnerLabel.SetMarkup(Loc.GetString("comp-pda-ui-owner",
+                    ("actualOwnerName", _pdaOwner)));
+            }
+
+
             if (state.PdaOwnerInfo.IdOwner != null || state.PdaOwnerInfo.JobTitle != null)
             {
                 _owner = state.PdaOwnerInfo.IdOwner ?? Loc.GetString("comp-pda-ui-unknown");
