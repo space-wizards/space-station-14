@@ -15,7 +15,7 @@ public sealed partial class StrapComponent : Component
     /// <summary>
     /// The entities that are currently buckled to this strap.
     /// </summary>
-    [ViewVariables]
+    [DataField, AutoNetworkedField]
     public HashSet<EntityUid> BuckledEntities = new();
 
     /// <summary>
@@ -60,12 +60,6 @@ public sealed partial class StrapComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool Enabled = true;
-
-    /// <summary>
-    /// You can specify the offset the entity will have after unbuckling.
-    /// </summary>
-    [DataField]
-    public Vector2 UnbuckleOffset = Vector2.Zero;
 
     /// <summary>
     /// The sound to be played when a mob is buckled
