@@ -225,6 +225,21 @@
     - WeaponGrapplingGun
     - HandheldGPSBasic
 
+- type: entity
+  parent: [ BaseBorgModuleCargo, BaseProviderBorgModule ]
+  id: BorgModuleFauna
+  name: fauna protection module
+  description: A borg module for protection from deadly space fauna.
+  components:
+  - type: Sprite
+    layers:
+    - state: cargo
+    - state: icon-carp
+  - type: ItemBorgModule
+    items:
+    - WeaponProtoKineticAcceleratorOneHanded
+    - WeaponCrusherDagger
+
 # engineering modules
 - type: entity
   id: BorgModuleAdvancedTool
