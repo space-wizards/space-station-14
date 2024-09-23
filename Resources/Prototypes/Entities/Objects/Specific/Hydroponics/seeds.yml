@@ -725,3 +725,13 @@
       seedId: cherry
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/cherry.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of anomaly berry seeds
+  id: AnomalyBerrySeeds
+  components:
+    - type: Seed
+      seedId: anomalyBerry
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/anomaly_berry.rsi
