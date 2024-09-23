@@ -225,6 +225,7 @@
       - RiotShield
       - SpeedLoaderMagnum
       - SpeedLoaderMagnumEmpty
+      - WeaponProtoKineticAccelerator
   - type: BlueprintReceiver
     whitelist:
       tags:
@@ -351,6 +352,7 @@
       - DeviceQuantumSpinInverter
   - type: EmagLatheRecipes
     emagDynamicRecipes:
+      - BorgModuleFauna
       - BoxBeanbag
       - BoxShotgunIncendiary
       - BoxShotgunUranium
@@ -390,6 +392,9 @@
       - WeaponLaserCannon
       - WeaponLaserCarbine
       - WeaponXrayCannon
+      - WeaponCrusher
+      - WeaponCrusherDagger
+      - WeaponCrusherGlaive
 
 - type: entity
   id: ProtolatheHyperConvection
