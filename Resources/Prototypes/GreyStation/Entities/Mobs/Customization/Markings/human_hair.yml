@@ -1,0 +1,15 @@
+- type: marking
+  id: HumanHairMullet
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: GreyStation/Mobs/Customization/human_hair.rsi
+      state: mullet
+
+- type: marking
+  id: HumanHairScientist
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: GreyStation/Mobs/Customization/human_hair.rsi
+      state: scientist

@@ -1,56 +1,4 @@
 ﻿Entries:
-- author: HahayesSiH
-  changes:
-  - message: It is now possible to pet cyborgs.
-    type: Add
-  - message: Clicking on cyborgs and opening the strip menu no longer unlocks them.
-    type: Tweak
-  id: 6919
-  time: '2024-07-14T14:09:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30037
-- author: deltanedas
-  changes:
-  - message: Fixed ninja shoes not working as magboots.
-    type: Fix
-  id: 6920
-  time: '2024-07-14T15:11:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28586
-- author: lzk228
-  changes:
-  - message: Scarves are eatable again.
-    type: Fix
-  id: 6921
-  time: '2024-07-14T15:12:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29959
-- author: Winkarst-cpu
-  changes:
-  - message: Now addgamerule command processes only valid game rules.
-    type: Fix
-  id: 6922
-  time: '2024-07-15T19:18:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29912
-- author: Jezithyr
-  changes:
-  - message: Removed the Geras ability from Slimes
-    type: Remove
-  id: 6923
-  time: '2024-07-16T22:50:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29731
-- author: K-Dynamic
-  changes:
-  - message: nerfed paraylze timer of all slippable objects (including soaps, water
-      puddles, and clown-related items)
-    type: Tweak
-  id: 6924
-  time: '2024-07-16T23:26:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27879
-- author: EmoGarbage404
-  changes:
-  - message: Resprited wall signs.
-    type: Tweak
-  id: 6925
-  time: '2024-07-17T04:35:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29806
 - author: lzk228
   changes:
   - message: Added health examine for caustic and cold damage.
@@ -3923,3 +3871,57 @@
   id: 7418
   time: '2024-09-22T15:15:12.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32306
+- author: PotentiallyTom
+  changes:
+  - message: Vent pressure lockout can be temporarily disabled with a screwdriver
+    type: Tweak
+  id: 7419
+  time: '2024-09-22T19:59:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31050
+- author: metalgearsloth
+  changes:
+  - message: You can examine entities inside of your own container again.
+    type: Fix
+  id: 7420
+  time: '2024-09-23T04:55:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32267
+- author: Cojoke-dot
+  changes:
+  - message: L6 Saw now fits in the suit slot
+    type: Tweak
+  - message: L6 Saw is now a 5x4 item
+    type: Tweak
+  id: 7421
+  time: '2024-09-23T06:48:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30525
+- author: ElectroJr
+  changes:
+  - message: Entities within the same container as the player only appear in the context
+      menu when clicking near the container.
+    type: Fix
+  id: 7422
+  time: '2024-09-23T07:28:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32395
+- author: Errant
+  changes:
+  - message: Computers now have a maintenance panel with a Power and AI wire (if AI-connected).
+    type: Tweak
+  - message: Computer deconstruction now begins with the crowbar, not the screwdriver.
+    type: Tweak
+  id: 7423
+  time: '2024-09-23T10:51:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32273
+- author: lzk228
+  changes:
+  - message: Guidebook books now do damage like default writeable books.
+    type: Fix
+  id: 7424
+  time: '2024-09-23T11:12:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32403
+- author: Jophire
+  changes:
+  - message: VIM mech now can open maintenance doors!
+    type: Add
+  id: 7425
+  time: '2024-09-23T13:08:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32302
