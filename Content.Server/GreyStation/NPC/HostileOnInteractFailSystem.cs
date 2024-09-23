@@ -12,10 +12,10 @@ public sealed class HostileOnInteractFailSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<HostileOnInteractFailComponent, InteractionFailedEvent>(OnInteractionFailed);
+        SubscribeLocalEvent<HostileOnInteractFailComponent, InteractionFailureEvent>(OnInteractionFailed);
     }
 
-    private void OnInteractionFailed(Entity<HostileOnInteractFailComponent> ent, ref InteractionFailedEvent args)
+    private void OnInteractionFailed(Entity<HostileOnInteractFailComponent> ent, ref InteractionFailureEvent args)
     {
         if (TryComp<NPCRetaliationComponent>(ent, out var retaliation))
             _retaliation.TryRetaliate((ent, retaliation), args.User);
