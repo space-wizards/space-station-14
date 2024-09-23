@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Actions.Events;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Verbs;
 using Robust.Shared.Serialization;
@@ -12,6 +13,9 @@ public abstract partial class SharedStationAiSystem
     /*
      * Added when an entity is inserted into a StationAiCore.
      */
+	 
+	//TODO: Fix this, please
+	private const string JobNameLocId = "job-name-station-ai";
 
     private void InitializeHeld()
     {
@@ -22,6 +26,22 @@ public abstract partial class SharedStationAiSystem
         SubscribeLocalEvent<StationAiHeldComponent, InteractionAttemptEvent>(OnHeldInteraction);
         SubscribeLocalEvent<StationAiHeldComponent, AttemptRelayActionComponentChangeEvent>(OnHeldRelay);
         SubscribeLocalEvent<StationAiHeldComponent, JumpToCoreEvent>(OnCoreJump);
+		SubscribeLocalEvent<TryGetIdentityShortInfoEvent>(OnTryGetIdentityShortInfo);
+    }
+	
+	private void OnTryGetIdentityShortInfo(TryGetIdentityShortInfoEvent args)
+    {
+        if (args.Handled)
+        {
+            return;
+        }
+
+        if (!HasComp<StationAiHeldComponent>(args.ForActor))
+        {
+            return;
+        }
+	    args.Title = $"{Name(args.ForActor)} ({Loc.GetString(JobNameLocId)})";
+        args.Handled = true;
     }
 
     private void OnCoreJump(Entity<StationAiHeldComponent> ent, ref JumpToCoreEvent args)
