@@ -375,7 +375,7 @@
         color: "#FFFFFF"
         visible: false
         shader: unshaded
-        map: [ "blade" ]
+        map: [ "gem" ]
   - type: Item
     size: Small
     sprite: Objects/Weapons/Melee/hypereutactic_blade_inhands.rsi
