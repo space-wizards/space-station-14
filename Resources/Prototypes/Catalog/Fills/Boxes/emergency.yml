@@ -69,7 +69,7 @@
     - id: EmergencyMedipen
     - id: Flare
     - id: FoodSnackNutribrick
-    - id: DrinkWaterBottleFull
+    - id: DrinkCommandFlaskFull
   # Ok, NT actually only bothered to change the picture on the box for command. Assholes.
   - type: Sprite
     layers:
@@ -112,7 +112,7 @@
     - id: EmergencyMedipen
     - id: Flare
     - id: FoodSnackNutribrick
-    - id: DrinkWaterBottleFull
+    - id: DrinkCommandFlaskFull
   - type: Sprite
     layers:
     - state: internals
@@ -149,7 +149,7 @@
     - id: EmergencyMedipen
     - id: Flare
     - id: FoodSnackNutribrick
-    - id: DrinkWaterBottleFull
+    - id: DrinkCommandFlaskFull
   # Ok, NT actually only bothered to change the picture on the box for command. Assholes.
   - type: Sprite
     layers:
@@ -192,7 +192,7 @@
     - id: EmergencyMedipen
     - id: Flare
     - id: FoodSnackNutribrick
-    - id: DrinkWaterBottleFull
+    - id: DrinkCommandFlaskFull
   - type: Sprite
     layers:
     - state: internals
@@ -229,7 +229,7 @@
     - id: EmergencyMedipen
     - id: Flare
     - id: FoodSnackNutribrick
-    - id: DrinkWaterBottleFull
+    - id: DrinkCommandFlaskFull
   # Ok, NT actually only bothered to change the picture on the box for command. Assholes.
   - type: Sprite
     layers:

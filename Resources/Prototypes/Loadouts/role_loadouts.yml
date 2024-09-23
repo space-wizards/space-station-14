@@ -367,6 +367,7 @@
   groups:
   - HeadofSecurityHead
   - HeadofSecurityNeck
+  - HeadofSecurityMask
   - HeadofSecurityJumpsuit
   - HeadofSecurityHeadset
   - HeadofSecurityBackpack

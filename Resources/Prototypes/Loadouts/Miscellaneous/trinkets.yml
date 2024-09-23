@@ -30,6 +30,12 @@
     - Lighter
 
 - type: loadout
+  id: FlippoLighter
+  storage:
+    back:
+    - FlippoLighter
+
+- type: loadout
   id: CigPackGreen
   storage:
     back:
