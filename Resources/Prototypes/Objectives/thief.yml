@@ -55,15 +55,6 @@
 
 - type: entity
   parent: BaseThiefStealCollectionObjective
-  id: FigurineStealCollectionObjective
-  components:
-  - type: StealCondition
-    stealGroup: Figurines
-  - type: Objective
-    difficulty: 0.25
-
-- type: entity
-  parent: BaseThiefStealCollectionObjective
   id: HeadCloakStealCollectionObjective
   components:
   - type: StealCondition
