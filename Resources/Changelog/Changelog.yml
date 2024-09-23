@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: deltanedas
-  changes:
-  - message: Fixed ninja shoes not working as magboots.
-    type: Fix
-  id: 6920
-  time: '2024-07-14T15:11:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28586
 - author: lzk228
   changes:
   - message: Scarves are eatable again.
@@ -3921,3 +3914,10 @@
   id: 7419
   time: '2024-09-22T19:59:56.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31050
+- author: metalgearsloth
+  changes:
+  - message: You can examine entities inside of your own container again.
+    type: Fix
+  id: 7420
+  time: '2024-09-23T04:55:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32267
