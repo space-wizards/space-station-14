@@ -1,89 +1,4 @@
 ﻿Entries:
-- author: coffeeware, slarticodefast
-  changes:
-  - message: Fixed items thrown very fast not being in the air. In particular this
-      fixes the pneumatic cannon.
-    type: Fix
-  - message: Buffed base hand throwing speed by 10% to be more similar to before the
-      recent throwing changes.
-    type: Tweak
-  id: 6909
-  time: '2024-07-12T10:32:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29935
-- author: themias
-  changes:
-  - message: Timers can now be deconstructed
-    type: Fix
-  id: 6910
-  time: '2024-07-12T11:38:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29917
-- author: jonathanargo
-  changes:
-  - message: Hard hat icon sprites are now centered correctly.
-    type: Fix
-  id: 6911
-  time: '2024-07-12T15:00:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29953
-- author: lzk228
-  changes:
-  - message: Secure windoors now use reinforced glass damage modifier.
-    type: Fix
-  id: 6912
-  time: '2024-07-13T04:03:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29941
-- author: Tayrtahn
-  changes:
-  - message: Antag objective total difficulty is now properly capped.
-    type: Fix
-  id: 6913
-  time: '2024-07-13T04:14:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29830
-- author: EmoGarbage404
-  changes:
-  - message: Added wristwatches for telling time.
-    type: Add
-  id: 6914
-  time: '2024-07-13T06:09:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29550
-- author: TheShuEd
-  changes:
-  - message: Added diamonds ore!
-    type: Add
-  - message: Diamonds can now be sold at a bargain price.
-    type: Add
-  id: 6915
-  time: '2024-07-13T12:15:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25750
-- author: coffeeware
-  changes:
-  - message: Lizards will no longer lose their snouts when equipping head bandanas
-    type: Fix
-  id: 6916
-  time: '2024-07-14T02:59:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29979
-- author: SlamBamActionman
-  changes:
-  - message: RGBee and Rainbow Carp plushies now cycle color when held/worn.
-    type: Fix
-  id: 6917
-  time: '2024-07-14T10:26:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30023
-- author: Winkarst-cpu
-  changes:
-  - message: Now grappling gun is clumsy proof.
-    type: Tweak
-  id: 6918
-  time: '2024-07-14T10:26:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29904
-- author: HahayesSiH
-  changes:
-  - message: It is now possible to pet cyborgs.
-    type: Add
-  - message: Clicking on cyborgs and opening the strip menu no longer unlocks them.
-    type: Tweak
-  id: 6919
-  time: '2024-07-14T14:09:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30037
 - author: deltanedas
   changes:
   - message: Fixed ninja shoes not working as magboots.
@@ -3923,3 +3838,86 @@
   id: 7408
   time: '2024-09-20T04:09:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32320
+- author: clinux
+  changes:
+  - message: Added the psychologist's stamp. Prescribe treatments for your less mentally
+      sane crew!
+    type: Add
+  id: 7409
+  time: '2024-09-20T14:42:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31881
+- author: saga3152
+  changes:
+  - message: You can now make vodka and soda water.
+    type: Add
+  id: 7410
+  time: '2024-09-20T22:27:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32252
+- author: goet
+  changes:
+  - message: Hides character sprite in health analyzer window if the scan becomes
+      inactive.
+    type: Fix
+  id: 7411
+  time: '2024-09-21T05:54:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31879
+- author: TGRCDev
+  changes:
+  - message: Station maps now have a directory for finding specific departments and
+      areas.
+    type: Add
+  id: 7412
+  time: '2024-09-21T07:33:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31156
+- author: TheShuEd
+  changes:
+  - message: Cores from floral anomalies are now seeds for hydroponics!
+    type: Add
+  id: 7413
+  time: '2024-09-21T19:54:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31987
+- author: Plykiya
+  changes:
+  - message: The rat king is now capable of butchering things, like animals.
+    type: Add
+  id: 7414
+  time: '2024-09-21T23:21:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32232
+- author: AsnDen
+  changes:
+  - message: Now AI is able to use news manager console that is far away from its
+      core.
+    type: Fix
+  id: 7415
+  time: '2024-09-22T08:20:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32334
+- author: metalgearsloth
+  changes:
+  - message: Fix unbuckling mispredicting.
+    type: Fix
+  - message: Aligned buckle range with interaction range.
+    type: Tweak
+  id: 7416
+  time: '2024-09-22T08:21:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32370
+- author: ravage123321
+  changes:
+  - message: You can make a holy helmet from holymelons!
+    type: Add
+  id: 7417
+  time: '2024-09-22T10:33:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32272
+- author: saga3152
+  changes:
+  - message: Citrus plants can now be mutated into each other.
+    type: Add
+  id: 7418
+  time: '2024-09-22T15:15:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32306
+- author: PotentiallyTom
+  changes:
+  - message: Vent pressure lockout can be temporarily disabled with a screwdriver
+    type: Tweak
+  id: 7419
+  time: '2024-09-22T19:59:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31050

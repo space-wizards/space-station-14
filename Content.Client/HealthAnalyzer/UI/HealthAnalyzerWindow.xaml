@@ -21,6 +21,7 @@
                 Orientation="Vertical">
                 <BoxContainer Orientation="Horizontal" Margin="0 0 0 5">
                     <SpriteView OverrideDirection="South" Scale="2 2" Name="SpriteView" Access="Public" SetSize="64 64" />
+                    <TextureRect Name="NoDataTex" Access="Public" SetSize="64 64" Visible="false" Stretch="KeepAspectCentered" TexturePath="/Textures/Interface/Misc/health_analyzer_out_of_range.png"/>
                     <BoxContainer Margin="5 0 0 0" Orientation="Vertical" VerticalAlignment="Top">
                         <RichTextLabel Name="NameLabel" SetWidth="150" />
                         <Label Name="SpeciesLabel" VerticalAlignment="Top" StyleClasses="LabelSubText" />
