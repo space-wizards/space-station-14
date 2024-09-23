@@ -13,6 +13,7 @@ using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Client.State;
+using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
 
@@ -28,6 +29,7 @@ namespace Content.Client.Verbs
         [Dependency] private readonly IStateManager _stateManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly SharedContainerSystem _containers = default!;
 
         /// <summary>
         ///     When a user right clicks somewhere, how large is the box we use to get entities for the context menu?
@@ -81,12 +83,11 @@ namespace Content.Client.Verbs
             // Get entities
             _entities.Clear();
             var entitiesUnderMouse = _tree.QueryAabb(targetPos.MapId, Box2.CenteredAround(targetPos.Position, new Vector2(EntityMenuLookupSize, EntityMenuLookupSize)));
+            bool Predicate(EntityUid e) => e == player;
 
             // Do we have to do FoV checks?
             if ((visibility & MenuVisibility.NoFov) == 0)
             {
-                bool Predicate(EntityUid e) => e == player;
-
                 TryComp(player.Value, out ExaminerComponent? examiner);
 
                 foreach (var ent in entitiesUnderMouse)
@@ -100,6 +101,21 @@ namespace Content.Client.Verbs
                 foreach (var ent in entitiesUnderMouse)
                 {
                     _entities.Add(ent.Uid);
+                }
+            }
+
+            // If we're in a container list all other entities in it.
+            if (_containers.TryGetContainingContainer(player.Value, out var container))
+            {
+                foreach (var ent in container.ContainedEntities)
+                {
+                    if (ent == player.Value || _entities.Contains(ent))
+                        continue;
+
+                    if ((visibility & MenuVisibility.NoFov) == 0x0 || _examine.CanExamine(player.Value, targetPos, examined: ent))
+                    {
+                        _entities.Add(ent);
+                    }
                 }
             }
 
