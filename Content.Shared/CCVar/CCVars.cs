@@ -1514,7 +1514,7 @@ namespace Content.Shared.CCVar
         /// At the moment they have a very low mass of roughly 0.48 kg per tile independent of any walls or anchored objects on them.
         /// </summary>
         public static readonly CVarDef<float> GridImpulseMultiplier =
-            CVarDef.Create("shuttle.grid_impulse_multiplier", 0.01f, CVar.SERVERONLY);
+            CVarDef.Create("shuttle.grid_impulse_multiplier", 0.01f, CVar.REPLICATED | CVar.SERVER);
 
         /// <summary>
         /// Whether to automatically spawn escape shuttles.
