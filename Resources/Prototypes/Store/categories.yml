@@ -89,17 +89,17 @@
   name: store-category-pointless
   priority: 10
 
+- type: storeCategory
+  id: DiscountedItems
+  name: store-discounted-items
+  priority: 200
+
 #revenant
 - type: storeCategory
   id: RevenantAbilities
   name: store-category-abilities
 
-- type: storeCategory
-  id: DiscountedItems
-  name: store-discounted-items
-  priority: 200
 # changeling
-
 - type: storeCategory
   id: ChangelingAbilityCombat
   name: store-ling-category-combat
