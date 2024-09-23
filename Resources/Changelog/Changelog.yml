@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Scarves are eatable again.
-    type: Fix
-  id: 6921
-  time: '2024-07-14T15:12:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29959
 - author: Winkarst-cpu
   changes:
   - message: Now addgamerule command processes only valid game rules.
@@ -3921,3 +3914,12 @@
   id: 7420
   time: '2024-09-23T04:55:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32267
+- author: Cojoke-dot
+  changes:
+  - message: L6 Saw now fits in the suit slot
+    type: Tweak
+  - message: L6 Saw is now a 5x4 item
+    type: Tweak
+  id: 7421
+  time: '2024-09-23T06:48:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30525
