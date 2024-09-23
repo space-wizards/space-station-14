@@ -59,7 +59,7 @@
     color: white
     netsync: false
   - type: Appearance
-  - type: ToggleableLightVisuals
+  - type: ToggleableLightVisuals # Add support for multiple layers
     spriteLayer: blade
     inhandVisuals:
       left:
@@ -330,6 +330,7 @@
     reflectProb: .75
     spread: 75
 
+# Item will look weird in handslot. Will need to adjust handstorage visuals in a future PR
 - type: entity
   name: hypereutactic-blade
   parent: EnergySwordDouble
