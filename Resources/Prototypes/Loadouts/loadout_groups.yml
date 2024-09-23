@@ -613,6 +613,7 @@
   minLimit: 0
   loadouts:
   - CargoTechnicianHead
+  - CargoTechnicianBandanaHarmony # Harmony
 
 - type: loadoutGroup
   id: CargoTechnicianJumpsuit
@@ -983,6 +984,7 @@
   - SecurityBeret
   - SecurityHat
   - TrooperHat
+  - SecurityBandanaHarmony # Harmony
 
 - type: loadoutGroup
   id: SecurityJumpsuit
@@ -1064,6 +1066,7 @@
   loadouts:
   - DetectiveArmorVest
   - DetectiveCoat
+  - DetectiveNoirCoatHarmony # Harmony
 
 - type: loadoutGroup
   id: SecurityCadetJumpsuit

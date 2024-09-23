@@ -1,0 +1,5 @@
+# OuterClothing
+- type: loadout
+  id: DetectiveNoirCoatHarmony
+  equipment:
+    outerClothing: ClothingOuterCoatDetectiveLoadoutGrey
