@@ -336,7 +336,6 @@
       - SyringeBluespace
       - WeaponForceGun
       - WeaponLaserSvalinn
-      - WeaponProtoKineticAccelerator
       - WeaponTetherGun
       - ClothingBackpackHolding
       - ClothingBackpackSatchelHolding
@@ -769,8 +768,10 @@
       - TargetSyndicate
       - WeaponDisablerPractice
       - WeaponLaserCarbinePractice
+      - WeaponProtoKineticAccelerator
       - Zipties
     dynamicRecipes:
+      - BorgModuleFauna
       - BoxBeanbag
       - BoxShotgunIncendiary
       - BoxShotgunUranium
@@ -821,6 +822,9 @@
       - WeaponLaserCannon
       - WeaponLaserCarbine
       - WeaponXrayCannon
+      - WeaponCrusher
+      - WeaponCrusherDagger
+      - WeaponCrusherGlaive
   - type: MaterialStorage
     whitelist:
       tags:
