@@ -3,6 +3,7 @@ using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Fluids.Components;
 using Content.Server.Gravity;
 using Content.Server.Popups;
+using Content.Shared.CCVar;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids;
@@ -11,6 +12,7 @@ using Content.Shared.Timing;
 using Content.Shared.Vapor;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Configuration;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
 using System.Numerics;
@@ -29,12 +31,21 @@ public sealed class SpraySystem : EntitySystem
     [Dependency] private readonly VaporSystem _vapor = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
+
+    private float _gridImpulseMultiplier;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<SprayComponent, AfterInteractEvent>(OnAfterInteract);
+        Subs.CVar(_cfg, CCVars.GridImpulseMultiplier, UpdateGridMassMultiplier, true);
+    }
+
+    private void UpdateGridMassMultiplier(float value)
+    {
+        _gridImpulseMultiplier = value;
     }
 
     private void OnAfterInteract(Entity<SprayComponent> entity, ref AfterInteractEvent args)
@@ -147,8 +158,11 @@ public sealed class SpraySystem : EntitySystem
                     // push back the grid the player is standing on
                     var userTransform = Transform(args.User);
                     if (userTransform.GridUid != null)
+                    {
                         // apply both linear and angular momentum depending on the player position
-                        _physics.ApplyLinearImpulse(userTransform.GridUid.Value, -impulseDirection * entity.Comp.GridPushbackAmount, userTransform.LocalPosition);
+                        // multiply by a cvar because grid mass is currently extremely small compared to all other masses
+                        _physics.ApplyLinearImpulse(userTransform.GridUid.Value, -impulseDirection * _gridImpulseMultiplier * entity.Comp.PushbackAmount, userTransform.LocalPosition);
+                    }
                 }
             }
         }

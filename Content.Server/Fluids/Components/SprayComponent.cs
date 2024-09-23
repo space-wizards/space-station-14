@@ -33,15 +33,7 @@ public sealed partial class SprayComponent : Component
     /// How much the player is pushed back for each spray.
     /// </summary>
     [DataField]
-    public float PushbackAmount = 2f;
-
-    /// <summary>
-    /// How much the grid the player is standing on is pushed back for each spray when gravity or magboots are on.
-    /// We need to make this separate because the mass of a grid is completely unrealistic at the moment.
-    /// The Dev map weights only 700kg for example.
-    /// </summary>
-    [DataField]
-    public float GridPushbackAmount = 1;
+    public float PushbackAmount = 5f;
 
     [DataField(required: true)]
     [Access(typeof(SpraySystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
