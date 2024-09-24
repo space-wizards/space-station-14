@@ -15,7 +15,7 @@ public sealed class TooltipSheetlet<T> : Sheetlet<T> where T: PalettedStylesheet
 {
     public override StyleRule[] GetRules(T sheet, object config)
     {
-        var tooltipCfg = (ITooltipConfig) sheet;
+        ITooltipConfig tooltipCfg = sheet;
 
         var tooltipBox = sheet.GetTextureOr(tooltipCfg.TooltipBoxPath, NanotrasenStylesheet.TextureRoot)
             .IntoPatch(StyleBox.Margin.All, 2);

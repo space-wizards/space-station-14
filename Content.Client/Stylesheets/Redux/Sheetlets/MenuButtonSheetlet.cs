@@ -20,7 +20,7 @@ public sealed class MenuButtonSheetlet<T> : Sheetlet<T> where T : PalettedStyles
 
     public override StyleRule[] GetRules(T sheet, object config)
     {
-        var cfg = (IButtonConfig)sheet;
+        IButtonConfig cfg = sheet;
 
         var buttonTex = sheet.GetTextureOr(cfg.BaseButtonPath, NanotrasenStylesheet.TextureRoot);
         var topButtonBase = new StyleBoxTexture

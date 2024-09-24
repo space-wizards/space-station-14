@@ -16,9 +16,9 @@ public sealed class WindowSheetlet<T> : Sheetlet<T>
 {
     public override StyleRule[] GetRules(T sheet, object config)
     {
-        var buttonCfg = (IButtonConfig)sheet;
-        var windowCfg = (IWindowConfig)sheet;
-        var iconCfg = (IIconConfig)sheet;
+        IButtonConfig buttonCfg = sheet;
+        IWindowConfig windowCfg = sheet;
+        IIconConfig iconCfg = sheet;
 
         var boxFont = new SingleFontFamily(ResCache, "/Fonts/Boxfont-round/Boxfont Round.ttf");
 

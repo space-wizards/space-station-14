@@ -12,7 +12,7 @@ public sealed class TabContainerSheetlet<T> : Sheetlet<T> where T: PalettedStyle
 {
     public override StyleRule[] GetRules(T sheet, object config)
     {
-        var tabCfg = (ITabContainerConfig) sheet;
+        ITabContainerConfig tabCfg = sheet;
 
         var tabContainerPanel = sheet.GetTextureOr(tabCfg.TabContainerPanelPath, NanotrasenStylesheet.TextureRoot)
             .IntoPatch(StyleBox.Margin.All, 2);

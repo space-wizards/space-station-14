@@ -16,33 +16,33 @@ public sealed class ScrollbarSheetlet : Sheetlet<PalettedStylesheet>
         var vScrollBarGrabberNormal = new StyleBoxFlat
         {
             BackgroundColor = Color.Gray.WithAlpha(0.35f), ContentMarginLeftOverride = DefaultGrabberSize,
-            ContentMarginTopOverride = DefaultGrabberSize
+            ContentMarginTopOverride = DefaultGrabberSize,
         };
         var vScrollBarGrabberHover = new StyleBoxFlat
         {
             BackgroundColor = new Color(140, 140, 140).WithAlpha(0.35f), ContentMarginLeftOverride = DefaultGrabberSize,
-            ContentMarginTopOverride = DefaultGrabberSize
+            ContentMarginTopOverride = DefaultGrabberSize,
         };
 
         var vScrollBarGrabberGrabbed = new StyleBoxFlat
         {
             BackgroundColor = new Color(160, 160, 160).WithAlpha(0.35f), ContentMarginLeftOverride = DefaultGrabberSize,
-            ContentMarginTopOverride = DefaultGrabberSize
+            ContentMarginTopOverride = DefaultGrabberSize,
         };
 
         var hScrollBarGrabberNormal = new StyleBoxFlat
         {
-            BackgroundColor = Color.Gray.WithAlpha(0.35f), ContentMarginTopOverride = DefaultGrabberSize
+            BackgroundColor = Color.Gray.WithAlpha(0.35f), ContentMarginTopOverride = DefaultGrabberSize,
         };
 
         var hScrollBarGrabberHover = new StyleBoxFlat
         {
-            BackgroundColor = new Color(140, 140, 140).WithAlpha(0.35f), ContentMarginTopOverride = DefaultGrabberSize
+            BackgroundColor = new Color(140, 140, 140).WithAlpha(0.35f), ContentMarginTopOverride = DefaultGrabberSize,
         };
 
         var hScrollBarGrabberGrabbed = new StyleBoxFlat
         {
-            BackgroundColor = new Color(160, 160, 160).WithAlpha(0.35f), ContentMarginTopOverride = DefaultGrabberSize
+            BackgroundColor = new Color(160, 160, 160).WithAlpha(0.35f), ContentMarginTopOverride = DefaultGrabberSize,
         };
 
         return

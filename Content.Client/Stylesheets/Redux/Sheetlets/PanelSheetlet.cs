@@ -11,7 +11,7 @@ public sealed class PanelSheetlet<T> : Sheetlet<T> where T: PalettedStylesheet, 
 {
     public override StyleRule[] GetRules(T sheet, object config)
     {
-        var buttonCfg = (IButtonConfig) sheet;
+        IButtonConfig buttonCfg = sheet;
 
         var boxLight = new StyleBoxFlat()
         {

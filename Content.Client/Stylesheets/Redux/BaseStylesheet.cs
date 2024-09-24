@@ -13,7 +13,7 @@ public abstract partial class BaseStylesheet
 
     public record NoConfig();
 
-    protected object _config;
+    private object _config;
 
     /// <remarks>
     ///     This constructor will not access any virtual or abstract properties, so you can set them from your config.

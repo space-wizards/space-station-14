@@ -15,7 +15,7 @@ public sealed class ActionSheetlet<T> : Sheetlet<T> where T: PalettedStylesheet,
 {
     public override StyleRule[] GetRules(T sheet, object config)
     {
-        var panelCfg = (IPanelConfig) sheet;
+        IPanelConfig panelCfg = sheet;
 
         // TODO: absolute texture access
         var handSlotHighlightTex = ResCache.GetTexture("/Textures/Interface/Inventory/hand_slot_highlight.png");

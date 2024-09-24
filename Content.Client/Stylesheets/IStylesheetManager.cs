@@ -1,4 +1,3 @@
-using Content.Client.Stylesheets.Redux;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.Stylesheets;

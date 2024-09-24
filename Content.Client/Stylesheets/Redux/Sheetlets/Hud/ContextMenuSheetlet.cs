@@ -17,7 +17,7 @@ public sealed class ContextMenuSheetlet<T> : Sheetlet<T>
     where T : PalettedStylesheet, IWindowConfig, IButtonConfig, IIconConfig
 {
     // TODO: make this note hardcoded (I am too scared to change the context menu colors)
-    public static readonly ColorPalette ContextButtonPalette = new(Color.Black)
+    private static readonly ColorPalette ContextButtonPalette = new(Color.Black)
     {
         HoveredElement = Color.DarkSlateGray,
         Element = Color.FromHex("#1119"),
@@ -26,8 +26,7 @@ public sealed class ContextMenuSheetlet<T> : Sheetlet<T>
 
     public override StyleRule[] GetRules(T sheet, object config)
     {
-        var windowCfg = (IWindowConfig)sheet;
-        var btnCfg = (IButtonConfig)sheet;
+        IWindowConfig windowCfg = sheet;
 
         var borderedWindowBackground = new StyleBoxTexture
         {

@@ -12,7 +12,7 @@ public sealed class StripebackSheetlet<T> : Sheetlet<T> where T : PalettedStyles
 {
     public override StyleRule[] GetRules(T sheet, object config)
     {
-        var stripebackCfg = (IStripebackConfig)sheet;
+        IStripebackConfig stripebackCfg = sheet;
 
         var stripeBack = new StyleBoxTexture
         {

@@ -23,7 +23,6 @@ public sealed class ItemListSheetlet : Sheetlet<PalettedStylesheet>
     public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
     {
         var boxBackground = new StyleBoxFlat { BackgroundColor = sheet.SecondaryPalette.Background };
-        var boxTransparent = new StyleBoxFlat(Color.Transparent);
         var boxItemBackground = Box(sheet.SecondaryPalette.BackgroundLight);
         var boxSelected = Box(sheet.SecondaryPalette.Background);
         var boxDisabled = Box(sheet.SecondaryPalette.BackgroundDark);

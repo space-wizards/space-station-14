@@ -13,7 +13,7 @@ public sealed class ChatSheetlet<T> : Sheetlet<T> where T: PalettedStylesheet, I
 {
     public override StyleRule[] GetRules(T sheet, object config)
     {
-        var btnCfg = (IButtonConfig) sheet;
+        IButtonConfig btnCfg = sheet;
 
         var chatColor = sheet.SecondaryPalette.Background.WithAlpha(221.0f / 255.0f);
         var chatBg = new StyleBoxFlat(chatColor);

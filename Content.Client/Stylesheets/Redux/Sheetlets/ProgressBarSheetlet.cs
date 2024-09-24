@@ -13,12 +13,12 @@ public sealed class ProgressBarSheetlet : Sheetlet<PalettedStylesheet>
         // TODO: 1) hardcoded colors, 2) yuck
         var progressBarBackground = new StyleBoxFlat
         {
-            BackgroundColor = new Color(0.25f, 0.25f, 0.25f)
+            BackgroundColor = new Color(0.25f, 0.25f, 0.25f),
         };
         progressBarBackground.SetContentMarginOverride(StyleBox.Margin.Vertical, 14.5f);
         var progressBarForeground = new StyleBoxFlat
         {
-            BackgroundColor = new Color(0.25f, 0.50f, 0.25f)
+            BackgroundColor = new Color(0.25f, 0.50f, 0.25f),
         };
         progressBarForeground.SetContentMarginOverride(StyleBox.Margin.Vertical, 14.5f);
 

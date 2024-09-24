@@ -12,7 +12,7 @@ public sealed class LineEditSheetlet<T> : Sheetlet<T> where T : PalettedStyleshe
 {
     public override StyleRule[] GetRules(T sheet, object config)
     {
-        var lineEditCfg = (ILineEditConfig) sheet;
+        ILineEditConfig lineEditCfg = sheet;
 
         var lineEditStylebox = sheet.GetTextureOr(lineEditCfg.LineEditPath, NanotrasenStylesheet.TextureRoot)
             .IntoPatch(StyleBox.Margin.All, 3);

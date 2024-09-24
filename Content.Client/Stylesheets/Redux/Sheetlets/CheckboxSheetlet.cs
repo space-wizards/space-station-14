@@ -11,7 +11,7 @@ public sealed class CheckboxSheetlet<T> : Sheetlet<T> where T : PalettedStyleshe
 {
     public override StyleRule[] GetRules(T sheet, object config)
     {
-        var checkboxCfg = (ICheckboxConfig) sheet;
+        ICheckboxConfig checkboxCfg = sheet;
 
         var uncheckedTex = sheet.GetTextureOr(checkboxCfg.CheckboxUncheckedPath, NanotrasenStylesheet.TextureRoot);
         var checkedTex = sheet.GetTextureOr(checkboxCfg.CheckboxCheckedPath, NanotrasenStylesheet.TextureRoot);

@@ -1,5 +1,3 @@
-using Content.Client.Stylesheets.Redux.SheetletConfigs;
-
 namespace Content.Client.Stylesheets.Redux.Stylesheets;
 
 public partial class SystemStylesheet

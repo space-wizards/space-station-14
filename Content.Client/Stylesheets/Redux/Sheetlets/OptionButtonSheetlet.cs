@@ -11,7 +11,7 @@ public sealed class OptionButtonSheetlet<T> : Sheetlet<T> where T: PalettedStyle
 {
     public override StyleRule[] GetRules(T sheet, object config)
     {
-        var iconCfg = (IIconConfig) sheet;
+        IIconConfig iconCfg = sheet;
 
         var invertedTriangleTex =
             sheet.GetTextureOr(iconCfg.InvertedTriangleIconPath, NanotrasenStylesheet.TextureRoot);

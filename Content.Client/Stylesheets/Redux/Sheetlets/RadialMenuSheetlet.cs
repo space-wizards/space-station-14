@@ -11,7 +11,7 @@ public sealed class RadialMenuSheetlet<T> : Sheetlet<T> where T: PalettedStylesh
 {
     public override StyleRule[] GetRules(T sheet, object config)
     {
-        var radialCfg = (IRadialMenuConfig) sheet;
+        IRadialMenuConfig radialCfg = sheet;
 
         var btnNormalTex = sheet.GetTextureOr(radialCfg.ButtonNormalPath, NanotrasenStylesheet.TextureRoot);
         var btnHoverTex = sheet.GetTextureOr(radialCfg.ButtonHoverPath, NanotrasenStylesheet.TextureRoot);

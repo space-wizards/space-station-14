@@ -11,8 +11,8 @@ public sealed class ButtonSheetlet<T> : Sheetlet<T> where T : PalettedStylesheet
 {
     public override StyleRule[] GetRules(T sheet, object config)
     {
-        var buttonCfg = (IButtonConfig)sheet;
-        var iconCfg = (IIconConfig)sheet;
+        IButtonConfig buttonCfg = sheet;
+        IIconConfig iconCfg = sheet;
 
         var crossTex = sheet.GetTextureOr(iconCfg.CrossIconPath, NanotrasenStylesheet.TextureRoot);
 
@@ -96,10 +96,8 @@ public sealed class ButtonSheetlet<T> : Sheetlet<T> where T : PalettedStylesheet
         });
     }
 
-    internal static MutableSelectorElement CButton()
+    private static MutableSelectorElement CButton()
     {
         return E<ContainerButton>().Class(ContainerButton.StyleClassButton);
     }
-
-
 }

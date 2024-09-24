@@ -27,8 +27,8 @@ namespace Content.Client.Stylesheets
 
             Stylesheets = new Dictionary<string, Stylesheet>();
 
-            SheetNanotransen = Init("Nanotransen", new NanotrasenStylesheet(new PalettedStylesheet.NoConfig()));
-            SheetSystem = Init("Interface", new SystemStylesheet(new PalettedStylesheet.NoConfig()));
+            SheetNanotransen = Init("Nanotransen", new NanotrasenStylesheet(new BaseStylesheet.NoConfig()));
+            SheetSystem = Init("Interface", new SystemStylesheet(new BaseStylesheet.NoConfig()));
 
             _userInterfaceManager.Stylesheet = SheetNanotransen;
 

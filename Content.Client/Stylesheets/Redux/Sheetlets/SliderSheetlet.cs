@@ -12,7 +12,7 @@ public sealed class SliderSheetlet<T> : Sheetlet<T> where T: PalettedStylesheet,
 {
     public override StyleRule[] GetRules(T sheet, object config)
     {
-        var sliderCfg = (ISliderConfig) sheet;
+        ISliderConfig sliderCfg = sheet;
 
         var sliderFillTex = sheet.GetTextureOr(sliderCfg.SliderFillPath, NanotrasenStylesheet.TextureRoot);
 
