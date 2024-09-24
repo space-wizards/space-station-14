@@ -35,9 +35,7 @@
   - type: PaperVisuals
   - type: Flammable
     fireSpread: true
-    canResistFire: false
     alwaysCombustible: true
-    canExtinguish: false # Mwahaha! Let the world burn because of one piece of paper!
     damage:
       types:
         Heat: 1
