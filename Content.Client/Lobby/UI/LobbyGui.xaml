@@ -74,7 +74,7 @@
                                HorizontalExpand="True" HorizontalAlignment="Center" />
                     </BoxContainer>
                     <!-- Gold line -->
-                    <controls:HLine Color="#a88b5e" Thickness="2" />
+                    <controls:HLine StyleClasses="highlight" Thickness="2" />
                     <controls:HSpacer Spacing="10" />
                     <!-- Voting & misc button bar -->
                     <BoxContainer Orientation="Horizontal" MinSize="0 40" HorizontalAlignment="Right">
@@ -98,7 +98,7 @@
                     <controls:HSpacer Spacing="5" />
                     <BoxContainer MinHeight="10" />
                     <!-- Gold line -->
-                    <controls:HLine Color="#a88b5e" Thickness="2" Access="Public" />
+                    <controls:HLine StyleClasses="highlight" Thickness="2" Access="Public" />
                     <controls:HSpacer Spacing="10" />
                     <widgets:ChatBox Name="Chat" Access="Public" VerticalExpand="True" Margin="3 3 3 3" MinHeight="50" />
                 </BoxContainer>
