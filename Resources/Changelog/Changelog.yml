@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Surgery saws now are normal-sized (no more pocket circular saw).
-    type: Tweak
-  id: 6927
-  time: '2024-07-17T06:26:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29995
 - author: Winkarst-cpu
   changes:
   - message: The super door remote is now able to control Syndicate doors.
@@ -3925,3 +3918,10 @@
   id: 7426
   time: '2024-09-23T21:49:34.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32399
+- author: Vasilis
+  changes:
+  - message: Removed the age requirement for command jobs.
+    type: Tweak
+  id: 7427
+  time: '2024-09-24T00:31:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32340
