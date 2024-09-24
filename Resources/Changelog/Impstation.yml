@@ -1991,3 +1991,11 @@
   id: 255
   time: '2024-09-24T21:43:25.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/331
+- author: formlessnameless
+  changes:
+  - message: Lowpop rounds that roll heretic will no longer get sent back to lobby
+      if there aren't enough players
+    type: Fix
+  id: 256
+  time: '2024-09-24T22:02:03.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/336
