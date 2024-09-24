@@ -430,6 +430,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> ContrabandExamine =
             CVarDef.Create("game.contraband_examine", true, CVar.SERVER | CVar.REPLICATED);
 
+        /// <summary>
+        /// Size of the lookup area for adding entities to the context menu
+        /// </summary>
+        public static readonly CVarDef<float> GameEntityMenuLookup =
+            CVarDef.Create("game.entity_menu_lookup", 0.25f, CVar.CLIENTONLY | CVar.ARCHIVE);
+
         /*
          * Discord
          */
