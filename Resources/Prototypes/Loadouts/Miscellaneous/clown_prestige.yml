@@ -118,6 +118,14 @@
     mask: ClothingMaskClownService
 
 - type: loadout
+  id: ServiceClownApron
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: ClownExpertTimer
+  equipment:
+    mask: ClothingOuterApronClown
+
+- type: loadout
   id: ClownShoesExpert
   effects:
   - !type:GroupLoadoutEffect
