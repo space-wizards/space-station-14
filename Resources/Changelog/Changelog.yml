@@ -1,34 +1,4 @@
 ﻿Entries:
-- author: Errant
-  changes:
-  - message: Vox are temporarily removed from Space Ninjas and all Unknown Shuttle
-      ghostroles, until code supports giving them species-specific gear.
-    type: Tweak
-  id: 6929
-  time: '2024-07-17T22:04:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30099
-- author: Cojoke-dot
-  changes:
-  - message: You can no longer teleport objects that should not be in other objects
-      into other objects with the Quantum Spin Inverter
-    type: Fix
-  id: 6930
-  time: '2024-07-18T00:40:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29200
-- author: Plykiya
-  changes:
-  - message: Stun batons no longer use up charges when hitting objects without stamina.
-    type: Fix
-  id: 6931
-  time: '2024-07-18T00:48:09.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30136
-- author: Sh18RW
-  changes:
-  - message: Moth can't eat boots with an item more
-    type: Fix
-  id: 6932
-  time: '2024-07-18T22:34:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30019
 - author: portfiend
   changes:
   - message: Reptilians display correct mask sprites in character customization screen.
@@ -3925,3 +3895,37 @@
   id: 7428
   time: '2024-09-24T14:23:48.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32153
+- author: LordEclipse
+  changes:
+  - message: The Antimov Law Board is now available in both the Traitor and Nuclear
+      Operative Uplinks, 14 and 24 TC respectively.
+    type: Add
+  id: 7429
+  time: '2024-09-24T15:06:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31916
+- author: lzk228
+  changes:
+  - message: Freezer electronics added to autolathe, with which you can craft locker
+      freezer or crate freezer.
+    type: Add
+  id: 7430
+  time: '2024-09-24T15:19:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32277
+- author: MilonPL
+  changes:
+  - message: Paper will no longer stay on fire indefinitely.
+    type: Fix
+  id: 7431
+  time: '2024-09-24T15:48:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32412
+- author: ArchRBX
+  changes:
+  - message: The AstroNav PDA cartridge has now been added, which turns your PDA into
+      a handheld GPS
+    type: Add
+  - message: The AstroNav cartridge has been added to the QM locker, and comes preinstalled
+      on salvage PDA's
+    type: Add
+  id: 7432
+  time: '2024-09-24T17:02:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32194
