@@ -3,7 +3,7 @@
   mapName: 'White Whale'
   mapPath: /Maps/boat.yml
   minPlayers: 40
-  maxPlayers: 90
+  maxPlayers: 100
   randomRotation: true
   stations:
     Boat:
@@ -51,12 +51,12 @@
             #security
             HeadOfSecurity: [ 1, 1 ]
             Warden: [ 1, 1 ]
-            SecurityOfficer: [ 6, 6 ]
-            SecurityCadet: [ 3, 3 ]
+            SecurityOfficer: [ 5, 5 ]
+            SecurityCadet: [ 2, 2 ]
             Lawyer: [ 1, 1 ]
             #supply
             Quartermaster: [ 1, 1 ]
-            SalvageSpecialist: [ 3,3 ]
+            SalvageSpecialist: [ 3, 3 ]
             CargoTechnician: [ 3, 3 ]
             #civilian
             Passenger: [ -1, -1 ]
@@ -65,3 +65,4 @@
             Musician: [ 2, 2 ]
             Borg: [ 3, 3 ]
             Reporter: [ 1, 1 ]
+            Boxer: [ 2, 2 ]
