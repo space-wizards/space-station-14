@@ -29,9 +29,6 @@
                     <BoxContainer Name="Characters" Orientation="Vertical" />
                 </ScrollContainer>
                 <PanelContainer MinSize="2 0" StyleClasses="highlight">
-                    <!-- <PanelContainer.PanelOverride> -->
-                    <!--     <gfx:StyleBoxFlat BackgroundColor="highlight" ContentMarginTopOverride="2" /> -->
-                    <!-- </PanelContainer.PanelOverride> -->
                 </PanelContainer>
                 <BoxContainer Name="CharEditor" HorizontalExpand="True" />
             </BoxContainer>

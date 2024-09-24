@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using Content.Client.Stylesheets;
+using Content.Client.Stylesheets.Redux;
 using Robust.Client.UserInterface.Controls;
 using Timer = Robust.Shared.Timing.Timer;
 
@@ -50,7 +51,7 @@ public static class AdminUIHelpers
             button.Text = data.OriginalText;
         }, data.Cancellation.Token);
 
-        button.SetOnlyStyleClass("negative");
+        button.SetOnlyStyleClass(StyleClass.Negative);
         button.Text = Loc.GetString("admin-player-actions-confirm");
         return false;
     }

@@ -13,6 +13,10 @@ namespace Content.Client.Stylesheets
         public Stylesheet SheetNanotransen { get; private set; } = default!;
         public Stylesheet SheetSystem { get; private set; } = default!;
 
+        // obsolete, TODO(maybe): bring back normal StyleNano.cs / StyleSpace.cs? for easier merging.
+        public Stylesheet SheetNano { get; } = default!;
+        public Stylesheet SheetSpace { get; } = default!;
+
         public Dictionary<string, Stylesheet> Stylesheets { get; private set; } = default!;
 
         public void Initialize()

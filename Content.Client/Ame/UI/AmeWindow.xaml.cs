@@ -32,9 +32,9 @@ namespace Content.Client.Ame.UI
             var castState = (AmeControllerBoundUserInterfaceState) state;
 
             // Disable all buttons if not powered
-            if (ContentsContainer.Children.Any())
+            if (Contents.Children.Any())
             {
-                ButtonHelpers.SetButtonDisabledRecursive(ContentsContainer, !castState.HasPower);
+                ButtonHelpers.SetButtonDisabledRecursive(Contents, !castState.HasPower);
                 EjectButton.Disabled = false;
             }
 
