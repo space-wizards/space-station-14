@@ -848,11 +848,7 @@
   - type: Sprite
     state: moff
   - type: Item
-    inhandVisuals:
-      left:
-      - state: moff-inhand-left
-      right:
-      - state: moff-inhand-right
+    heldPrefix: moff
 
 - type: entity
   parent: BasePlushieMoff
@@ -862,15 +858,9 @@
   description: An adorable mothperson plushie. Bzz, this fluffy is *squeaks!*
   components:
   - type: Sprite
-    sprite: Objects/Fun/moff_plushie.rsi
-    layers:
-      - state: moff_all
+    state: moff_all
   - type: Item
-    inhandVisuals:
-      left:
-      - state: moff-inhand-left
-      right:
-      - state: moff-inhand-right
+    heldPrefix: moff
   - type: RandomSpawner
     offset: 0
     prototypes:
@@ -913,11 +903,7 @@
   - type: Sprite
     state: moff_monarch
   - type: Item
-    inhandVisuals:
-      left:
-      - state: moff_monarch-inhand-left
-      right:
-      - state: moff_monarch-inhand-right
+    heldPrefix: moff_monarch
 
 - type: entity
   parent: BasePlushieMoff
@@ -928,11 +914,7 @@
   - type: Sprite
     state: moff_luna
   - type: Item
-    inhandVisuals:
-      left:
-      - state: moff_luna-inhand-left
-      right:
-      - state: moff_luna-inhand-right
+    heldPrefix: moff_luna
 
 - type: entity
   parent: BasePlushieMoff
@@ -943,11 +925,7 @@
   - type: Sprite
     state: moff_atlas
   - type: Item
-    inhandVisuals:
-      left:
-      - state: moff_atlas-inhand-left
-      right:
-      - state: moff_atlas-inhand-right
+    heldPrefix: moff_atlas
 
 - type: entity
   parent: BasePlushieMoff
@@ -958,11 +936,7 @@
   - type: Sprite
     state: moff_redish
   - type: Item
-    inhandVisuals:
-      left:
-      - state: moff_redish-inhand-left
-      right:
-      - state: moff_redish-inhand-right
+    heldPrefix: moff_redish
 
 - type: entity
   parent: BasePlushieMoff
@@ -973,11 +947,7 @@
   - type: Sprite
     state: moff_royal
   - type: Item
-    inhandVisuals:
-      left:
-      - state: moff_royal-inhand-left
-      right:
-      - state: moff_royal-inhand-right
+    heldPrefix: moff_royal
 
 - type: entity
   parent: BasePlushieMoff
@@ -988,11 +958,7 @@
   - type: Sprite
     state: moff_gothic
   - type: Item
-    inhandVisuals:
-      left:
-      - state: moff_gothic-inhand-left
-      right:
-      - state: moff_gothic-inhand-right
+    heldPrefix: moff_gothic
 
 - type: entity
   parent: BasePlushieMoff
@@ -1003,11 +969,7 @@
   - type: Sprite
     state: moff_lovers
   - type: Item
-    inhandVisuals:
-      left:
-      - state: moff_lovers-inhand-left
-      right:
-      - state: moff_lovers-inhand-right
+    heldPrefix: moff_lovers
 
 - type: entity
   parent: BasePlushieMoff
@@ -1018,11 +980,7 @@
   - type: Sprite
     state: moff_whitefly
   - type: Item
-    inhandVisuals:
-      left:
-      - state: moff_whitefly-inhand-left
-      right:
-      - state: moff_whitefly-inhand-right
+    heldPrefix: moff_whitefly
 
 - type: entity
   parent: BasePlushieMoff
@@ -1033,11 +991,7 @@
   - type: Sprite
     state: moff_firewatch
   - type: Item
-    inhandVisuals:
-      left:
-      - state: moff_firewatch-inhand-left
-      right:
-      - state: moff_firewatch-inhand-right
+    heldPrefix: moff_firewatch
 
 - type: entity
   parent: BasePlushieMoff
@@ -1048,11 +1002,7 @@
   - type: Sprite
     state: moff_deadhead
   - type: Item
-    inhandVisuals:
-      left:
-      - state: moff_deadhead-inhand-left
-      right:
-      - state: moff_deadhead-inhand-right
+    heldPrefix: moff_deadhead
 
 - type: entity
   parent: BasePlushieMoff
@@ -1063,11 +1013,7 @@
   - type: Sprite
     state: moff_poison
   - type: Item
-    inhandVisuals:
-      left:
-      - state: moff_poison-inhand-left
-      right:
-      - state: moff_poison-inhand-right
+    heldPrefix: moff_poison
 
 - type: entity
   parent: BasePlushieMoff
@@ -1078,11 +1024,7 @@
   - type: Sprite
     state: moff_ragged
   - type: Item
-    inhandVisuals:
-      left:
-      - state: moff_ragged-inhand-left
-      right:
-      - state: moff_ragged-inhand-right
+    heldPrefix: moff_ragged
 
 - type: entity
   parent: BasePlushieMoff
@@ -1093,11 +1035,7 @@
   - type: Sprite
     state: moff_snow
   - type: Item
-    inhandVisuals:
-      left:
-      - state: moff_snow-inhand-left
-      right:
-      - state: moff_snow-inhand-right
+    heldPrefix: moff_snow
 
 - type: entity
   parent: BasePlushieMoff
@@ -1108,11 +1046,7 @@
   - type: Sprite
     state: moff_clockwork
   - type: Item
-    inhandVisuals:
-      left:
-      - state: moff_clockwork-inhand-left
-      right:
-      - state: moff_clockwork-inhand-right
+    heldPrefix: moff_clockwork
   - type: EmitSoundOnUse #Quiet moff
     sound:
       path: /Audio/Voice/Moth/moth_squeak.ogg
@@ -1166,11 +1100,7 @@
   - type: Sprite
     state: moff_moonfly
   - type: Item
-    inhandVisuals:
-      left:
-      - state: moff_moonfly-inhand-left
-      right:
-      - state: moff_moonfly-inhand-right
+    heldPrefix: moff_moonfly
 
 - type: entity
   parent: BasePlushieMoff
@@ -1181,11 +1111,7 @@
   - type: Sprite
     state: moff_witchwing
   - type: Item
-    inhandVisuals:
-      left:
-      - state: moff_witchwing-inhand-left
-      right:
-      - state: moff_witchwing-inhand-right
+    heldPrefix: moff_witchwing
 
 - type: entity
   parent: BasePlushieMoff
@@ -1196,11 +1122,7 @@
   - type: Sprite
     state: moff_plasmafire
   - type: Item
-    inhandVisuals:
-      left:
-      - state: moff_plasmafire-inhand-left
-      right:
-      - state: moff_plasmafire-inhand-right
+    heldPrefix: moff_plasmafire
 
 - type: entity
   parent: BasePlushieMoff
@@ -1211,11 +1133,7 @@
   - type: Sprite
     state: moff_brown
   - type: Item
-    inhandVisuals:
-      left:
-      - state: moff_brown-inhand-left
-      right:
-      - state: moff_brown-inhand-right
+    heldPrefix: moff_brown
 
 - type: entity
   parent: BasePlushieMoff
@@ -1226,11 +1144,7 @@
   - type: Sprite
     state: moff_rosy
   - type: Item
-    inhandVisuals:
-      left:
-      - state: moff_rosy-inhand-left
-      right:
-      - state: moff_rosy-inhand-right
+    heldPrefix: moff_rosy
 
 - type: entity
   parent: BasePlushieMoff
@@ -1283,11 +1197,7 @@
   - type: Sprite
     state: moffsician
   - type: Item
-    inhandVisuals:
-      left:
-      - state: moffsician-inhand-left
-      right:
-      - state: moffsician-inhand-right
+    heldPrefix: moffsician
   - type: EmitSoundOnUse #Music for musician moff!
     sound:
       path: /Audio/Jukebox/sunset.ogg
@@ -1318,11 +1228,7 @@
   - type: Sprite
     state: moffbar
   - type: Item
-    inhandVisuals:
-      left:
-      - state: moffbar-inhand-left
-      right:
-      - state: moffbar-inhand-right
+    heldPrefix: moffbar
   - type: EmitSoundOnLand #Somewhat masochistic moff
     sound:
       path: /Audio/Voice/Moth/moth_laugh.ogg
@@ -1352,11 +1258,7 @@
   - type: Sprite
     state: moff_bluespace
   - type: Item
-    inhandVisuals:
-      left:
-      - state: moff_bluespace-inhand-left
-      right:
-      - state: moff_bluespace-inhand-right
+    heldPrefix: moff_bluespace
   - type: RandomWalk #"Teleportation"
     minSpeed: 500
     maxSpeed: 500
@@ -1372,11 +1274,7 @@
   - type: Sprite
     state: moffrror
   - type: Item
-    inhandVisuals:
-      left:
-      - state: moffrror-inhand-left
-      right:
-      - state: moffrror-inhand-right
+    heldPrefix: moffrror
   - type: EmitSoundOnUse
     sound:
       path: /Audio/Voice/Talk/speak_3.ogg
@@ -1395,7 +1293,7 @@
   - type: MeleeWeapon
     soundHit:
       path: /Audio/Voice/Talk/speak_3_exclaim.ogg
-  - type: Food
+  - type: Food #Broken. . .
     requiresSpecialDigestion: true
     useSound:
       path: /Audio/Voice/Talk/speak_3_ask.ogg
@@ -1404,7 +1302,7 @@
       reagents:
       - ReagentId: JuiceThatMakesYouWeh
         Quantity: 15
-  - type: SolutionContainerManager #Broken. . .
+  - type: SolutionContainerManager
     solutions:
       food:
         maxVol: 10
