@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Sh18RW
-  changes:
-  - message: Moth can't eat boots with an item more
-    type: Fix
-  id: 6932
-  time: '2024-07-18T22:34:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30019
 - author: portfiend
   changes:
   - message: Reptilians display correct mask sprites in character customization screen.
@@ -3925,3 +3918,14 @@
   id: 7431
   time: '2024-09-24T15:48:32.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32412
+- author: ArchRBX
+  changes:
+  - message: The AstroNav PDA cartridge has now been added, which turns your PDA into
+      a handheld GPS
+    type: Add
+  - message: The AstroNav cartridge has been added to the QM locker, and comes preinstalled
+      on salvage PDA's
+    type: Add
+  id: 7432
+  time: '2024-09-24T17:02:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32194
