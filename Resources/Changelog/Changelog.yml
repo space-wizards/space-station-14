@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Cojoke-dot
-  changes:
-  - message: You can no longer teleport objects that should not be in other objects
-      into other objects with the Quantum Spin Inverter
-    type: Fix
-  id: 6930
-  time: '2024-07-18T00:40:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29200
 - author: Plykiya
   changes:
   - message: Stun batons no longer use up charges when hitting objects without stamina.
@@ -3925,3 +3917,11 @@
   id: 7429
   time: '2024-09-24T15:06:59.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31916
+- author: lzk228
+  changes:
+  - message: Freezer electronics added to autolathe, with which you can craft locker
+      freezer or crate freezer.
+    type: Add
+  id: 7430
+  time: '2024-09-24T15:19:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32277
