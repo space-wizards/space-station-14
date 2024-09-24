@@ -430,6 +430,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> ContrabandExamine =
             CVarDef.Create("game.contraband_examine", true, CVar.SERVER | CVar.REPLICATED);
 
+        /// <summary>
+        /// Size of the lookup area for adding entities to the context menu
+        /// </summary>
+        public static readonly CVarDef<float> GameEntityMenuLookup =
+            CVarDef.Create("game.entity_menu_lookup", 0.25f, CVar.CLIENTONLY | CVar.ARCHIVE);
+
         /*
          * Discord
          */
@@ -1240,6 +1246,13 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<float> AtmosHeatScale =
             CVarDef.Create("atmos.heat_scale", 8f, CVar.SERVERONLY);
 
+        /// <summary>
+        /// Maximum explosion radius for explosions caused by bursting a gas tank ("max caps").
+        /// Setting this to zero disables the explosion but still allows the tank to burst and leak.
+        /// </summary>
+        public static readonly CVarDef<float> AtmosTankFragment =
+            CVarDef.Create("atmos.max_explosion_range", 26f, CVar.SERVERONLY);
+
         /*
          * MIDI instruments
          */
@@ -1555,6 +1568,18 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<float> EmergencyShuttleDockTime =
             CVarDef.Create("shuttle.emergency_dock_time", 180f, CVar.SERVERONLY);
+
+        /// <summary>
+        /// If the emergency shuttle can't dock at a priority port, the dock time will be multiplied with this value.
+        /// </summary>
+        public static readonly CVarDef<float> EmergencyShuttleDockTimeMultiplierOtherDock =
+            CVarDef.Create("shuttle.emergency_dock_time_multiplier_other_dock", 1.6667f, CVar.SERVERONLY);
+
+        /// <summary>
+        /// If the emergency shuttle can't dock at all, the dock time will be multiplied with this value.
+        /// </summary>
+        public static readonly CVarDef<float> EmergencyShuttleDockTimeMultiplierNoDock =
+            CVarDef.Create("shuttle.emergency_dock_time_multiplier_no_dock", 2f, CVar.SERVERONLY);
 
         /// <summary>
         /// How long after the console is authorized for the shuttle to early launch.

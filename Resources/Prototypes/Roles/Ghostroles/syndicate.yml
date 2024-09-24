@@ -2,21 +2,21 @@
   id: SyndicateKobold
   name: ghost-role-information-syndicate-kobold-reinforcement-name
   description: ghost-role-information-syndicate-kobold-reinforcement-description
-  rules: ghost-role-information-syndicate-kobold-reinforcement-rules
+  rules: ghost-role-information-rules-default-familiar 
   entityPrototype: MobKoboldSyndicateAgent
 
 - type: ghostRole
   id: SyndicateKoboldNukeops
   name: ghost-role-information-syndicate-kobold-reinforcement-name
   description: ghost-role-information-syndicate-kobold-reinforcement-description
-  rules: ghost-role-information-syndicate-kobold-reinforcement-rules
+  rules: ghost-role-information-rules-default-familiar 
   entityPrototype: MobKoboldSyndicateAgentNukeops
 
 - type: ghostRole
   id: SyndicateMonkey
   name: ghost-role-information-syndicate-monkey-reinforcement-name
   description: ghost-role-information-syndicate-monkey-reinforcement-description
-  rules: ghost-role-information-syndicate-monkey-reinforcement-name
+  rules: ghost-role-information-rules-default-familiar 
   entityPrototype: MobMonkeySyndicateAgent
 
 - type: ghostRole

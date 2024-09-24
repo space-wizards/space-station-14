@@ -30,6 +30,13 @@ public sealed class HandheldGpsStatusControl : Control
     {
         base.FrameUpdate(args);
 
+        // don't display the label if the gps component is being removed
+        if (_parent.Comp.LifeStage > ComponentLifeStage.Running)
+        {
+            _label.Visible = false;
+            return;
+        }
+
         _updateDif += args.DeltaSeconds;
         if (_updateDif < _parent.Comp.UpdateRate)
             return;
