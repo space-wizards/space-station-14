@@ -14,10 +14,10 @@ public sealed class ColorPalette
     /// </summary>
     public Color Base;
 
-    public float LightnessPositiveShift = 6f;
-    public float LightnessNegativeShift = 6f;
-    public float ChromaPositiveShift = 0f;
-    public float ChromaNegativeShift = 0f;
+    public float LightnessPositiveShift = 0.06f;
+    public float LightnessNegativeShift = -0.06f;
+    public float ChromaPositiveShift = 0.00f;
+    public float ChromaNegativeShift = 0.00f;
 
     public ColorPalette(Color baseColor)
     {

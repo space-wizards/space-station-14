@@ -27,7 +27,7 @@ public static class ColorExtensions
     public static Color NudgeLightness(this Color c, float lightnessShift)
     {
         var o = new OklabColor(c);
-        o.L += lightnessShift / 100f;
+        o.L += lightnessShift;
 
         return (Color) o;
     }
@@ -44,7 +44,7 @@ public static class ColorExtensions
 
         var chroma = float.Sqrt(o.A * o.A + o.B * o.B);
         var hue = float.Atan2(o.B, o.A);
-        chroma += chromaShift / 100f;
+        chroma += chromaShift;
 
         o.A = chroma * float.Cos(hue);
         o.B = chroma * float.Sin(hue);

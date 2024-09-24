@@ -10,7 +10,7 @@ public sealed class TextSheetlet : Sheetlet<PalettedStylesheet>
 {
     public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
     {
-        var notoMono = new SingleFont(ResCache, "/EngineFonts/NotoSans/NotoSansMono-Regular.ttf");
+        var notoMono = new SingleFontFamily(ResCache, "/EngineFonts/NotoSans/NotoSansMono-Regular.ttf");
 
         return
         [

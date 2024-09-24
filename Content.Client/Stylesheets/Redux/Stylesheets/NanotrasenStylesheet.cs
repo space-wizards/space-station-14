@@ -11,7 +11,7 @@ namespace Content.Client.Stylesheets.Redux.Stylesheets;
 [Virtual]
 public partial class NanotrasenStylesheet : CommonStylesheet
 {
-    public override FontStack BaseFont { get; }
+    public override FontFamilyStack BaseFont { get; }
 
 
     public static readonly ResPath TextureRoot = new("/Textures/Interface/Nano");
@@ -35,7 +35,7 @@ public partial class NanotrasenStylesheet : CommonStylesheet
 
     public NanotrasenStylesheet(object config) : base(config)
     {
-        BaseFont = new NotoFontStack(ResCache);
+        BaseFont = new NotoFontFamilyStack(ResCache);
         var rules = new[]
         {
             // Set up important rules that need to go first.

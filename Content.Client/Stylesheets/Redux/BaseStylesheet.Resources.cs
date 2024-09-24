@@ -44,14 +44,14 @@ public abstract partial class BaseStylesheet
     /// <param name="target">The relative path of the target resource.</param>
     /// <typeparam name="T">Type of the resource to read.</typeparam>
     /// <returns>The retrieved resource</returns>
-    /// <exception cref="MissingResourceException">Thrown if the resource does not exist within the stylesheet's roots.</exception>
+    /// <exception cref="MissingStyleResourceException">Thrown if the resource does not exist within the stylesheet's roots.</exception>
     public T GetResource<T>(ResPath target)
         where T : BaseResource, new()
     {
         if (TryGetResource(target, out T? res))
             return res;
 
-        throw new MissingResourceException(this, target.ToString());
+        throw new MissingStyleResourceException(this, target.ToString());
     }
 
     /// <summary>
@@ -85,7 +85,7 @@ public abstract partial class BaseStylesheet
 /// </summary>
 /// <param name="sheet">The stylesheet </param>
 /// <param name="target"></param>
-public sealed class MissingResourceException(BaseStylesheet sheet, string target) : Exception
+public sealed class MissingStyleResourceException(BaseStylesheet sheet, string target) : Exception
 {
     public override string Message =>
         $"Failed to find any resource at \"{target}\" for {sheet}. The roots are: {sheet.Roots}";

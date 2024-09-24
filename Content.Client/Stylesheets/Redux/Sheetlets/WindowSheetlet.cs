@@ -20,7 +20,7 @@ public sealed class WindowSheetlet<T> : Sheetlet<T>
         var windowCfg = (IWindowConfig)sheet;
         var iconCfg = (IIconConfig)sheet;
 
-        var boxFont = new SingleFont(ResCache, "/Fonts/Boxfont-round/Boxfont Round.ttf");
+        var boxFont = new SingleFontFamily(ResCache, "/Fonts/Boxfont-round/Boxfont Round.ttf");
 
         var headerStylebox = new StyleBoxTexture
         {

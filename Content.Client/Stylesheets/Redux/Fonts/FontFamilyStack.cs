@@ -6,7 +6,7 @@ using Robust.Client.ResourceManagement;
 namespace Content.Client.Stylesheets.Redux.Fonts;
 
 [PublicAPI]
-public abstract class FontStack(IResourceCache resCache)
+public abstract class FontFamilyStack(IResourceCache resCache)
 {
     /// <summary>
     ///     The primary font path, with string substitution markers.

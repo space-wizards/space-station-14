@@ -12,7 +12,7 @@ namespace Content.Client.Stylesheets.Redux.Stylesheets;
 [Virtual]
 public partial class SystemStylesheet : CommonStylesheet
 {
-    public override FontStack BaseFont { get; }
+    public override FontFamilyStack BaseFont { get; }
 
     public override Dictionary<Type, ResPath[]> Roots => new()
     {
@@ -34,7 +34,7 @@ public partial class SystemStylesheet : CommonStylesheet
 
     public SystemStylesheet(object config) : base(config)
     {
-        BaseFont = new NotoFontStack(ResCache);
+        BaseFont = new NotoFontFamilyStack(ResCache);
         var rules = new[]
         {
             // Set up important rules that need to go first.

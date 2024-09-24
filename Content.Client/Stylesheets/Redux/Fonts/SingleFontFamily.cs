@@ -5,7 +5,7 @@ namespace Content.Client.Stylesheets.Redux.Fonts;
 
 
 [PublicAPI]
-public sealed class SingleFont(IResourceCache resCache, string singularFont) : FontStack(resCache)
+public sealed class SingleFontFamily(IResourceCache resCache, string singularFont) : FontFamilyStack(resCache)
 {
     public override string FontPrimary => throw new NotImplementedException();
 

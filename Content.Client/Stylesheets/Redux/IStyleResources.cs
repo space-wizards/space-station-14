@@ -32,7 +32,7 @@ public interface IStyleResources
     /// <param name="target">The relative path of the target resource.</param>
     /// <typeparam name="T">Type of the resource to read.</typeparam>
     /// <returns>The retrieved resource</returns>
-    /// <exception cref="MissingResourceException">Thrown if the resource does not exist within the stylesheet's roots.</exception>
+    /// <exception cref="MissingStyleResourceException">Thrown if the resource does not exist within the stylesheet's roots.</exception>
     T GetResource<T>(ResPath target)
         where T : BaseResource, new();
 
@@ -65,7 +65,7 @@ public interface IStyleResources
     /// </summary>
     /// <param name="target">The relative path of the target texture.</param>
     /// <returns>The retrieved texture</returns>
-    /// <exception cref="MissingResourceException">Thrown if the texture does not exist within the stylesheet's roots.</exception>
+    /// <exception cref="MissingStyleResourceException">Thrown if the texture does not exist within the stylesheet's roots.</exception>
     Texture GetTexture(ResPath target);
 
     /// <summary>
