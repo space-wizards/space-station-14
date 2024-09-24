@@ -1,4 +1,5 @@
 ﻿using Content.Client.Stylesheets.Redux.Fonts;
+using Content.Client.Stylesheets.Redux.Palette;
 using Content.Client.Stylesheets.Redux.SheetletConfigs;
 using Content.Client.Stylesheets.Redux.Stylesheets;
 using Content.Client.UserInterface.Controls;
@@ -54,8 +55,8 @@ public sealed class WindowSheetlet<T> : Sheetlet<T>
         leftPanel.SetPadding(StyleBox.Margin.All, 0.0f);
 
         // TODO: maybe also change everything here to `NanoWindow` or something
-        var rules = new List<StyleRule>()
-        {
+        return
+        [
             // TODO: KILL DEFAULT WINDOW (in a bit)
             E<Label>()
                 .Class(DefaultWindow.StyleClassWindowTitle)
@@ -78,10 +79,29 @@ public sealed class WindowSheetlet<T> : Sheetlet<T>
             E()
                 .Class(StyleClass.BorderedWindowPanel)
                 .Panel(borderedBackgroundBox),
+
+            // Close button
             E<TextureButton>()
                 .Class(DefaultWindow.StyleClassWindowCloseButton)
                 .Prop(TextureButton.StylePropertyTexture, closeButtonTex)
+                .Margin(new Thickness(0, 0, -3, 0))
                 .Margin(3),
+            E<TextureButton>()
+                .Class(DefaultWindow.StyleClassWindowCloseButton)
+                .PseudoNormal()
+                .Modulate(Palettes.Neutral.Element),
+            E<TextureButton>()
+                .Class(DefaultWindow.StyleClassWindowCloseButton)
+                .PseudoHovered()
+                .Modulate(Palettes.Red.HoveredElement),
+            E<TextureButton>()
+                .Class(DefaultWindow.StyleClassWindowCloseButton)
+                .PseudoPressed()
+                .Modulate(Palettes.Red.PressedElement),
+            E<TextureButton>()
+                .Class(DefaultWindow.StyleClassWindowCloseButton)
+                .PseudoDisabled()
+                .Modulate(Palettes.Red.DisabledElement),
 
             // Title
             E<Label>()
@@ -104,22 +124,11 @@ public sealed class WindowSheetlet<T> : Sheetlet<T>
                 .Pseudo(ContainerButton.StylePseudoClassPressed)
                 .Prop(Control.StylePropertyModulateSelf, sheet.PrimaryPalette.PressedElement),
 
-            // Close Button
-            E<TextureButton>()
-                .Class(FancyWindow.StyleClassWindowCloseButton)
-                .Margin(new Thickness(0, 0, -3, 0)),
-
             // Footer
             E<Label>()
                 .Class("WindowFooterText")
                 .Prop(Label.StylePropertyFont, sheet.BaseFont.GetFont(8))
                 .Prop(Label.StylePropertyFontColor, Color.FromHex("#757575")),
-        };
-
-        ButtonSheetlet<T>.MakeButtonRules(rules,
-            buttonCfg.NegativeButtonPalette,
-            DefaultWindow.StyleClassWindowCloseButton);
-
-        return rules.ToArray();
+        ];
     }
 }
