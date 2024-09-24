@@ -54,17 +54,17 @@ public sealed class ButtonSheetlet<T> : Sheetlet<T> where T : PalettedStylesheet
                 .AlignMode(Label.AlignMode.Center),
         };
         // Texture button modulation
-        MakeButtonRules<TextureButton>(buttonCfg, rules, Palettes.AlphaModulate, null);
-        MakeButtonRules<TextureButton>(buttonCfg, rules, sheet.NegativePalette, StyleClass.CrossButtonRed);
+        MakeButtonRules<TextureButton>(rules, Palettes.AlphaModulate, null);
+        MakeButtonRules<TextureButton>(rules, sheet.NegativePalette, StyleClass.CrossButtonRed);
 
-        MakeButtonRules(buttonCfg, rules, buttonCfg.ButtonPalette, null);
-        MakeButtonRules(buttonCfg, rules, buttonCfg.PositiveButtonPalette, StyleClass.Positive);
-        MakeButtonRules(buttonCfg, rules, buttonCfg.NegativeButtonPalette, StyleClass.Negative);
+        MakeButtonRules(rules, buttonCfg.ButtonPalette, null);
+        MakeButtonRules(rules, buttonCfg.PositiveButtonPalette, StyleClass.Positive);
+        MakeButtonRules(rules, buttonCfg.NegativeButtonPalette, StyleClass.Negative);
 
         return rules.ToArray();
     }
 
-    public static void MakeButtonRules<T>(IButtonConfig _,
+    public static void MakeButtonRules<T>(
         List<StyleRule> rules,
         ColorPalette palette,
         string? styleclass)
@@ -79,7 +79,7 @@ public sealed class ButtonSheetlet<T> : Sheetlet<T> where T : PalettedStylesheet
         });
     }
 
-    public static void MakeButtonRules(IButtonConfig _,
+    public static void MakeButtonRules(
         List<StyleRule> rules,
         ColorPalette palette,
         string? styleclass)
@@ -100,4 +100,6 @@ public sealed class ButtonSheetlet<T> : Sheetlet<T> where T : PalettedStylesheet
     {
         return E<ContainerButton>().Class(ContainerButton.StyleClassButton);
     }
+
+
 }

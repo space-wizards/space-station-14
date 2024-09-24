@@ -28,12 +28,6 @@ public abstract partial class BaseStylesheet
         return sheetlet is not null ? sheetlet.GetRules((TSheetTy)(object)this, _config) : [];
     }
 
-    public StyleRule[] GetSheetletRules<T, TSheetTy>()
-        where T : Sheetlet<TSheetTy>
-    {
-        return GetSheetletRules<TSheetTy>(typeof(T));
-    }
-
     public StyleRule[] GetAllSheetletRules<TSheetTy, TAttrib>()
         where TAttrib : Attribute
     {

@@ -116,8 +116,7 @@ public sealed class WindowSheetlet<T> : Sheetlet<T>
                 .Prop(Label.StylePropertyFontColor, Color.FromHex("#757575")),
         };
 
-        ButtonSheetlet<T>.MakeButtonRules(buttonCfg,
-            rules,
+        ButtonSheetlet<T>.MakeButtonRules(rules,
             buttonCfg.NegativeButtonPalette,
             DefaultWindow.StyleClassWindowCloseButton);
 

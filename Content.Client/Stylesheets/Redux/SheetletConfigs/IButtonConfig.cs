@@ -1,6 +1,7 @@
 using System.Numerics;
 using Content.Client.Stylesheets.Redux.Stylesheets;
 using Robust.Client.Graphics;
+using Robust.Client.UserInterface;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Stylesheets.Redux.SheetletConfigs;

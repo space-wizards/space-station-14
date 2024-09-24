@@ -76,12 +76,10 @@ public sealed class ContextMenuSheetlet<T> : Sheetlet<T>
                 .Prop(ContainerButton.StylePropertyStyleBox, buttonContext),
         };
 
-        ButtonSheetlet<T>.MakeButtonRules<ContextMenuElement>(btnCfg,
-            rules,
+        ButtonSheetlet<T>.MakeButtonRules<ContextMenuElement>(rules,
             ContextButtonPalette,
             ContextMenuElement.StyleClassContextMenuButton);
-        ButtonSheetlet<T>.MakeButtonRules<ContextMenuElement>(btnCfg,
-            rules,
+        ButtonSheetlet<T>.MakeButtonRules<ContextMenuElement>(rules,
             sheet.NegativePalette,
             ConfirmationMenuElement.StyleClassConfirmationContextMenuButton);
 

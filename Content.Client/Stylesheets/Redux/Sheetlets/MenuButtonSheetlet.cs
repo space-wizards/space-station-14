@@ -73,7 +73,7 @@ public sealed class MenuButtonSheetlet<T> : Sheetlet<T> where T : PalettedStyles
             // new StyleProperty(Label.StylePropertyFont, notoSansDisplayBold14),
         };
 
-        ButtonSheetlet<T>.MakeButtonRules<MenuButton>(cfg, rules, cfg.ButtonPalette, null);
+        ButtonSheetlet<T>.MakeButtonRules<MenuButton>(rules, cfg.ButtonPalette, null);
 
         return rules.ToArray();
     }

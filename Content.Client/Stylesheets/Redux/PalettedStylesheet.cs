@@ -13,15 +13,4 @@ public abstract partial class PalettedStylesheet : BaseStylesheet
     protected PalettedStylesheet(object config) : base(config)
     {
     }
-
-    public StyleRule[] GetSheetletRules(Type sheetletTy)
-    {
-        return GetSheetletRules<PalettedStylesheet>(sheetletTy);
-    }
-
-    public StyleRule[] GetSheetletRules<T>()
-        where T : Sheetlet<PalettedStylesheet>
-    {
-        return GetSheetletRules<T, PalettedStylesheet>();
-    }
 }
