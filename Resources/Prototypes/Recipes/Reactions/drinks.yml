@@ -81,6 +81,18 @@
     AtomicBomb: 11
 
 - type: reaction
+  id: Aviation
+  reactants:
+    Gin:
+      amount: 3
+    LemonLime:
+      amount: 1
+    JuiceBerry:
+      amount: 1
+  products:
+    AviationCocktail: 5
+
+- type: reaction
   id: B52
   reactants:
     Cognac:
@@ -369,6 +381,16 @@
       amount: 1
   products:
     ErikaSurprise: 6
+
+- type: reaction
+  id: EspressoMartini
+  reactants:
+    BlackRussian:
+      amount: 1
+    Coffee:
+      amount: 1
+  products:
+    EspressoMartini: 2
 
 - type: reaction
   id: EthanolBreakdown
@@ -952,6 +974,20 @@
       amount: 1
   products:
     SodaWater: 6
+
+- type: reaction
+  id: SunsetSoda
+  reactants:
+    Cream:
+      amount: 1
+    SodaWater:
+      amount: 2
+    Ice:
+      amount: 2
+    Sap:
+      amount: 1
+  products:
+    SunsetSoda: 6
 
 - type: reaction
   id: SoyLatte

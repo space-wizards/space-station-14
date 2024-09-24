@@ -79,6 +79,9 @@ reagent-desc-antifreeze = Ultimate refreshment.
 reagent-name-atomic-bomb = atomic bomb
 reagent-desc-atomic-bomb = Nuclear proliferation never tasted so good.
 
+reagent-name-aviation = Aviation #3
+reagent-desc-aviation = The color comes from a purple nurple at the bottom.
+
 reagent-name-b52 = b-52
 reagent-desc-b52 = Coffee, irish cream, and cognac. You will get bombed.
 
@@ -132,6 +135,9 @@ reagent-desc-driest-martini = Only for the experienced. You think you see sand f
 
 reagent-name-erika-surprise = erika surprise
 reagent-desc-erika-surprise = The surprise is, it's green!
+
+reagent-name-espresso-martini = espresso martini
+reagent-desc-espresso-martini = A caffeinated twist on a classic cocktail
 
 reagent-name-gargle-blaster = Pan-Galactic Gargle Blaster
 reagent-desc-gargle-blaster = Whoah, this stuff looks volatile!

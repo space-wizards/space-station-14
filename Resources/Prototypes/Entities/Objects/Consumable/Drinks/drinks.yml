@@ -298,6 +298,22 @@
 
 - type: entity
   parent: DrinkGlass
+  id: DrinkAviationGlass
+  suffix: aviation
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: AviationCocktail
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/aviationcocktail.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
   id: DrinkB52Glass
   suffix: b-52
   components:
@@ -787,6 +803,22 @@
           Quantity: 30
   - type: Icon
     sprite: Objects/Consumable/Drinks/erikasurprise.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkEspressoMartini
+  suffix: espresso martini
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: EspressoMartini
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/espressomartiniglass.rsi
     state: icon
 
 - type: entity

@@ -265,3 +265,18 @@
   physicalDesc: reagent-physical-desc-fizzy
   flavor: metallic
   color: "#66538F"
+
+- type: reagent
+  id: SunsetSoda
+  name: reagent-name-sunset-soda
+  parent: BaseSoda
+  desc: reagent-desc-sunset-soda
+  physicalDesc: reagent-physical-desc-fizzy-and-creamy
+  flavor: fizzy
+  color: "#cd7314"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/sunset-soda.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 6
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
