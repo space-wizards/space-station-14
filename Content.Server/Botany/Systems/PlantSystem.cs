@@ -261,6 +261,7 @@ public sealed class PlantSystem : EntitySystem
         if (!Resolve(plantuid, ref plant))
             return;
 
+        var asdf = Transform(plantuid);
         var holder = GetPlantHolder(plant.PlantHolderUid);
         if (holder == null)
             return;

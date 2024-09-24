@@ -12,10 +12,8 @@ public sealed partial class PlantAdjustWater : PlantAdjustAttribute
 
     public override void Effect(EntityEffectBaseArgs args)
     {
-        var plantComp = args.EntityManager.GetComponent<PlantComponent>(args.TargetEntity);
         var plantHolder = args.EntityManager.System<PlantHolderSystem>();
-        if (plantComp.PlantHolderUid != null)
-            plantHolder.AdjustWater(plantComp.PlantHolderUid.Value, Amount);
+        plantHolder.AdjustWater(args.TargetEntity, Amount);
     }
 }
 

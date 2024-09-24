@@ -13,11 +13,11 @@ public sealed partial class PlantAdjustPotency : PlantAdjustAttribute
 
     public override void Effect(EntityEffectBaseArgs args)
     {
-        if (!args.EntityManager.TryGetComponent(args.TargetEntity, out PlantComponent? plantComp)
-            || plantComp.Dead || plantComp.Seed == null || plantComp.Seed.Immutable)
-        {
+        var plantHolderComp = args.EntityManager.GetComponent<PlantHolderComponent>(args.TargetEntity);
+        if (plantHolderComp.PlantUid == null
+            || !CanMetabolize(plantHolderComp.PlantUid.Value, out PlantComponent? plantComp, args.EntityManager)
+            || plantComp.Seed == null || plantComp.Seed.Immutable)
             return;
-        }
 
         plantComp.Seed.Potency = Math.Max(plantComp.Seed.Potency + Amount, 1);
     }

@@ -347,6 +347,10 @@ public sealed class PlantHolderSystem : EntitySystem
             if (seedComp != null && seedComp.Seed != null)
                 seed = seedComp.Seed;
         }
+        else // Plant was removed in a non-standard way, like admin direct delete.
+        {
+            component.PlantUid = null;
+        }
 
         // Weeds like water and nutrients! They may appear even if there's not a seed planted.
         if (component.WaterLevel > 10 && component.NutritionLevel > 5)
@@ -438,24 +442,28 @@ public sealed class PlantHolderSystem : EntitySystem
 
     public void UpdateReagents(EntityUid uid, PlantHolderComponent? component = null)
     {
-        if (!Resolve(uid, ref component) || component.PlantUid == null)
+        if (!Resolve(uid, ref component))
             return;
 
-        PlantComponent? plantComp = null;
-        var hasPlant = GetPlant(component.PlantUid.Value, out var plant);
-        if (hasPlant)
-            TryComp<PlantComponent>(plant, out plantComp);
+        //PlantComponent? plantComp = null;
+        //var hasPlant = GetPlant(component.PlantUid.Value, out var plant);
+        //if (hasPlant)
+            //TryComp<PlantComponent>(plant, out plantComp);
+
+        // TODO: this means nothing runs (water and nutrients dont refill) unless something is planted. I need to fix that
+        // so at least water and nutrients refill. Might mean these all run on the plantHolder and then reference its plant
+        // That gets rid of the hasPlant checks (and we just drop that mutation thing, it never happens)
 
         if (!_solutionContainerSystem.ResolveSolution(uid, component.SoilSolutionName, ref component.SoilSolution, out var solution))
             return;
 
-        if (solution.Volume > 0 && plantComp != null && plantComp.MutationLevel < 25)
+        if (solution.Volume > 0)
         {
             var amt = FixedPoint2.New(1);
             foreach (var entry in _solutionContainerSystem.RemoveEachReagent(component.SoilSolution.Value, amt))
             {
                 var reagentProto = _prototype.Index<ReagentPrototype>(entry.Reagent.Prototype);
-                reagentProto.ReactionPlant(component.PlantUid, entry, solution);
+                reagentProto.ReactionPlant(uid, entry, solution);
             }
         }
     }

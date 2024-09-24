@@ -12,10 +12,7 @@ public sealed partial class PlantAdjustWeeds : PlantAdjustAttribute
 
     public override void Effect(EntityEffectBaseArgs args)
     {
-        if (!args.EntityManager.TryGetComponent(args.TargetEntity, out PlantComponent? plantComp))
-            return;
-
-        if (!args.EntityManager.TryGetComponent(plantComp.PlantHolderUid, out PlantHolderComponent? plantHolderComp))
+        if (!args.EntityManager.TryGetComponent(args.TargetEntity, out PlantHolderComponent? plantHolderComp))
             return;
 
         plantHolderComp.WeedLevel = Math.Clamp(plantHolderComp.WeedLevel + Amount, 0f, 10f);

@@ -35,11 +35,14 @@ public abstract partial class PlantAdjustAttribute : EntityEffect
         IEntityManager entityManager,
         bool mustHaveAlivePlant = true)
     {
-        if (!entityManager.TryGetComponent(plant, out plantComponent)
-            || (mustHaveAlivePlant && plantComponent.Dead))
-            return false;
-
-        return true;
+        if (entityManager.TryGetComponent(plant, out plantComponent))
+        {
+            return mustHaveAlivePlant ? !plantComponent.Dead : true; //a plant exists, check if we need it alive.
+        }
+        else
+        {
+            return !mustHaveAlivePlant; // There is no plant, we must not require one.
+        }
     }
 
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)

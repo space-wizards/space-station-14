@@ -11,7 +11,8 @@ public sealed partial class PlantAdjustMutationMod : PlantAdjustAttribute
 
     public override void Effect(EntityEffectBaseArgs args)
     {
-        if (!CanMetabolize(args.TargetEntity, out PlantComponent? plantComp, args.EntityManager))
+        var plantHolderComp = args.EntityManager.GetComponent<PlantHolderComponent>(args.TargetEntity);
+        if (plantHolderComp.PlantUid == null || !CanMetabolize(plantHolderComp.PlantUid.Value, out PlantComponent? plantComp, args.EntityManager))
             return;
 
         plantComp.MutationMod = Math.Clamp(plantComp.MutationMod + Amount, 1f, 3f);

@@ -163,14 +163,11 @@ namespace Content.Shared.Chemistry.Reagent
             return removed;
         }
 
-        public void ReactionPlant(EntityUid? plant, ReagentQuantity amount, Solution solution)
+        public void ReactionPlant(EntityUid plantHolder, ReagentQuantity amount, Solution solution)
         {
-            if (plant == null)
-                return;
-
             var entMan = IoCManager.Resolve<IEntityManager>();
             var random = IoCManager.Resolve<IRobustRandom>();
-            var args = new EntityEffectReagentArgs(plant.Value, entMan, null, solution, amount.Quantity, this, null, 1f);
+            var args = new EntityEffectReagentArgs(plantHolder, entMan, null, solution, amount.Quantity, this, null, 1f);
             foreach (var plantMetabolizable in PlantMetabolisms)
             {
                 if (!plantMetabolizable.ShouldApply(args, random))

@@ -12,8 +12,11 @@ public sealed partial class PlantDiethylamine : EntityEffect
 {
     public override void Effect(EntityEffectBaseArgs args)
     {
-        if (!args.EntityManager.TryGetComponent(args.TargetEntity, out PlantComponent? plantComp)
-            || plantComp.Dead || plantComp.Seed == null || plantComp.Seed.Immutable)
+        var plantHolderComp = args.EntityManager.GetComponent<PlantHolderComponent>(args.TargetEntity);
+        if (plantHolderComp.PlantUid == null)
+            return;
+        var plantComp = args.EntityManager.GetComponent<PlantComponent>(plantHolderComp.PlantUid.Value);
+        if (plantComp == null || plantComp.Dead || plantComp.Seed == null || plantComp.Seed.Immutable)
             return;
 
         var random = IoCManager.Resolve<IRobustRandom>();

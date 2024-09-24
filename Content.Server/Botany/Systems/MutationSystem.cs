@@ -23,7 +23,7 @@ public sealed class MutationSystem : EntitySystem
     /// </summary>
     /// <param name="seed"></param>
     /// <param name="severity"></param>
-    public void CheckRandomMutations(EntityUid plantHolder, ref SeedData seed, float severity)
+    public void CheckRandomMutations(EntityUid plant, ref SeedData seed, float severity)
     {
         foreach (var mutation in _randomMutations.mutations)
         {
@@ -31,7 +31,7 @@ public sealed class MutationSystem : EntitySystem
             {
                 if (mutation.AppliesToPlant)
                 {
-                    var args = new EntityEffectBaseArgs(plantHolder, EntityManager);
+                    var args = new EntityEffectBaseArgs(plant, EntityManager);
                     mutation.Effect.Effect(args);
                 }
                 // Stat adjustments do not persist by being an attached effect, they just change the stat.

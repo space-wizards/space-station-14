@@ -12,11 +12,12 @@ public sealed partial class PlantAffectGrowth : PlantAdjustAttribute
 
     public override void Effect(EntityEffectBaseArgs args)
     {
-        if (!CanMetabolize(args.TargetEntity, out PlantComponent? plantComp, args.EntityManager))
+        var plantHolderComp = args.EntityManager.GetComponent<PlantHolderComponent>(args.TargetEntity);
+        if (plantHolderComp.PlantUid == null || !CanMetabolize(plantHolderComp.PlantUid.Value, out PlantComponent? plantComp, args.EntityManager))
             return;
 
         var plant = args.EntityManager.System<PlantSystem>();
-        plant.AffectGrowth(args.TargetEntity, (int)Amount, plantComp);
+        plant.AffectGrowth(plantHolderComp.PlantUid.Value, (int)Amount, plantComp);
     }
 }
 

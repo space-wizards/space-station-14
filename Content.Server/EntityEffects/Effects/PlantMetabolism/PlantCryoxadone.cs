@@ -13,8 +13,11 @@ public sealed partial class PlantCryoxadone : EntityEffect
 {
     public override void Effect(EntityEffectBaseArgs args)
     {
-        if (!args.EntityManager.TryGetComponent(args.TargetEntity, out PlantComponent? plantComp)
-            || plantComp.Dead || plantComp.Seed == null || plantComp.Seed.Immutable)
+        var plantHolderComp = args.EntityManager.GetComponent<PlantHolderComponent>(args.TargetEntity);
+        if (plantHolderComp.PlantUid == null)
+            return;
+        var plantComp = args.EntityManager.GetComponent<PlantComponent>(plantHolderComp.PlantUid.Value);
+        if (plantComp == null || plantComp.Dead || plantComp.Seed == null)
             return;
 
         var deviation = 0;
@@ -27,7 +30,7 @@ public sealed partial class PlantCryoxadone : EntityEffect
         plantComp.Age -= deviation;
         plantComp.SkipAging++;
         var plantSys = args.EntityManager.System<PlantSystem>();
-        plantSys.Update(args.TargetEntity, plantComp);
+        plantSys.Update(plantHolderComp.PlantUid.Value, plantComp);
     }
 
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) => Loc.GetString("reagent-effect-guidebook-plant-cryoxadone", ("chance", Probability));

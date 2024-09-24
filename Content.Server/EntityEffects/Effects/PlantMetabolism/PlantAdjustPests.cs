@@ -12,12 +12,11 @@ public sealed partial class PlantAdjustPests : PlantAdjustAttribute
 
     public override void Effect(EntityEffectBaseArgs args)
     {
-        var plantComp = args.EntityManager.GetComponent<PlantComponent>(args.TargetEntity);
-        if (plantComp.PlantHolderUid != null)
-        {
-            var plantHolderComp = args.EntityManager.GetComponent<PlantHolderComponent>(plantComp.PlantHolderUid.Value);
-            plantHolderComp.PestLevel = Math.Clamp(plantHolderComp.PestLevel + Amount, 0, 10);
-        }
+        var plantHolderComp = args.EntityManager.GetComponent<PlantHolderComponent>(args.TargetEntity);
+        if (plantHolderComp.PlantUid == null || !CanMetabolize(plantHolderComp.PlantUid.Value, out PlantComponent? plantComp, args.EntityManager))
+            return;
+
+        plantHolderComp.PestLevel = Math.Clamp(plantHolderComp.PestLevel + Amount, 0, 10);
     }
 }
 
