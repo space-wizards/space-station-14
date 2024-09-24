@@ -5,40 +5,35 @@ using Content.Shared.Wires;
 namespace Content.Server.VendingMachines;
 
 [DataDefinition]
-public sealed partial class VendingMachineContrabandWireAction : ComponentWireAction<VendingMachineComponent>
+public sealed partial class VendingMachineContrabandWireAction : BaseToggleWireAction
 {
-    private VendingMachineSystem _vendingMachineSystem = default!;
-
     public override Color Color { get; set; } = Color.Green;
     public override string Name { get; set; } = "wire-name-vending-contraband";
     public override object? StatusKey { get; } = ContrabandWireKey.StatusKey;
-    // TODO probably gonna need this for the pulse action? delete otherwise
-    //public override object? TimeoutKey { get; } = ContrabandWireKey.TimeoutKey;
+    public override object? TimeoutKey { get; } = ContrabandWireKey.TimeoutKey;
 
-    public override void Initialize()
+    public override StatusLightState? GetLightState(Wire wire)
     {
-        base.Initialize();
+        if (EntityManager.TryGetComponent(wire.Owner, out VendingMachineComponent? vending))
+        {
+            return vending.Contraband
+                ? StatusLightState.BlinkingSlow
+                : StatusLightState.On;
+        }
 
-        _vendingMachineSystem = EntityManager.System<VendingMachineSystem>();
+        return StatusLightState.Off;
     }
 
-    public override StatusLightState? GetLightState(Wire wire, VendingMachineComponent component)
-        => component.Contraband ? StatusLightState.BlinkingSlow : StatusLightState.On;
-
-    public override bool Cut(EntityUid user, Wire wire, VendingMachineComponent component)
+    public override void ToggleValue(EntityUid owner, bool setting)
     {
-        _vendingMachineSystem.SetContraband(wire.Owner, true, component);
-        return true;
+        if (EntityManager.TryGetComponent(owner, out VendingMachineComponent? vending))
+        {
+            vending.Contraband = !setting;
+        }
     }
 
-    public override bool Mend(EntityUid user, Wire wire, VendingMachineComponent component)
+    public override bool GetValue(EntityUid owner)
     {
-        _vendingMachineSystem.SetContraband(wire.Owner, false, component);
-        return true;
-    }
-
-    public override void Pulse(EntityUid user, Wire wire, VendingMachineComponent component)
-    {
-        throw new NotImplementedException(); // TODO
+        return EntityManager.TryGetComponent(owner, out VendingMachineComponent? vending) && !vending.Contraband;
     }
 }
