@@ -347,7 +347,7 @@ chem_master: ChemMaster
 CrateJanitorExplosive: ClosetJanitorBombFilled
 
 # 2024-05-27
-DoorRemoteFirefight: null
+# DoorRemoteFirefight: null
 
 # 2024-06-03
 AirlockServiceCaptainLocked: AirlockCaptainLocked
