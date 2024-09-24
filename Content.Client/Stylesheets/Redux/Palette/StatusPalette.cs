@@ -1,7 +1,7 @@
 using Content.Client.Stylesheets.Redux.Colorspace;
 using Robust.Shared.Utility;
 
-namespace Content.Client.Stylesheets.Redux;
+namespace Content.Client.Stylesheets.Redux.Palette;
 
 public sealed class StatusPalette(Color[] statusColors)
 {

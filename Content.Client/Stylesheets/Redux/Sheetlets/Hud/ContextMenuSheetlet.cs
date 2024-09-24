@@ -1,6 +1,7 @@
 using Content.Client.ContextMenu.UI;
 using Content.Client.Resources;
 using Content.Client.Stylesheets.Redux.Fonts;
+using Content.Client.Stylesheets.Redux.Palette;
 using Content.Client.Stylesheets.Redux.SheetletConfigs;
 using Content.Client.Stylesheets.Redux.Stylesheets;
 using Content.Client.Verbs.UI;

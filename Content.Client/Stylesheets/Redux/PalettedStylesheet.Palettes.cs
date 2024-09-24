@@ -1,4 +1,6 @@
-﻿namespace Content.Client.Stylesheets.Redux;
+﻿using Content.Client.Stylesheets.Redux.Palette;
+
+namespace Content.Client.Stylesheets.Redux;
 
 public abstract partial class PalettedStylesheet
 {

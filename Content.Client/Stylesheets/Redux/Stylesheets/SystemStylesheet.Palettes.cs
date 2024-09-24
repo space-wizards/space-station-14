@@ -1,3 +1,5 @@
+using Content.Client.Stylesheets.Redux.Palette;
+
 namespace Content.Client.Stylesheets.Redux.Stylesheets;
 
 public partial class SystemStylesheet

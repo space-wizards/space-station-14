@@ -2,7 +2,7 @@ using Content.Client.Stylesheets.Redux.Colorspace;
 
 // ReSharper disable MemberCanBePrivate.Global
 
-namespace Content.Client.Stylesheets.Redux;
+namespace Content.Client.Stylesheets.Redux.Palette;
 
 /// <remarks>
 ///     Don't be afraid to add a lot of fields here! This class is made for readability.

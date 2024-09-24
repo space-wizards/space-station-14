@@ -1,4 +1,4 @@
-namespace Content.Client.Stylesheets.Redux;
+namespace Content.Client.Stylesheets.Redux.Palette;
 
 /// <summary>
 ///     Stores all style palettes in one accessible location

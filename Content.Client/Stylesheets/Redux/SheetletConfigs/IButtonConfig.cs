@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Client.Stylesheets.Redux.Palette;
 using Content.Client.Stylesheets.Redux.Stylesheets;
 using Robust.Client.Graphics;
 using Robust.Shared.Utility;

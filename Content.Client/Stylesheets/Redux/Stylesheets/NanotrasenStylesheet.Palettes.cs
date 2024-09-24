@@ -1,4 +1,6 @@
-﻿namespace Content.Client.Stylesheets.Redux.Stylesheets;
+﻿using Content.Client.Stylesheets.Redux.Palette;
+
+namespace Content.Client.Stylesheets.Redux.Stylesheets;
 
 public sealed partial class NanotrasenStylesheet
 {
