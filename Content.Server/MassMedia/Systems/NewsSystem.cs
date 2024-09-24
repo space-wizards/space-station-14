@@ -309,9 +309,6 @@ public sealed class NewsSystem : SharedNewsSystem
 
     private bool CanUse(EntityUid user, EntityUid console)
     {
-        // This shouldn't technically be possible because of BUI but don't trust client.
-        if (!_interaction.InRangeUnobstructed(console, user))
-            return false;
 
         if (TryComp<AccessReaderComponent>(console, out var accessReaderComponent))
         {
