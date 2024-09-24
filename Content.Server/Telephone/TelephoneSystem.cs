@@ -21,6 +21,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Content.Server.Administration.Logs;
 using Robust.Shared.Replays;
+using Content.Server.Speech.Components;
 
 namespace Content.Server.Telephone;
 
@@ -38,6 +39,7 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
 
     // set used to prevent radio feedback loops.
     private readonly HashSet<string> _messages = new();
+    private HashSet<(string, EntityUid)> _recentlySent = new();
 
     public override void Initialize()
     {
@@ -46,7 +48,9 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
         SubscribeLocalEvent<TelephoneComponent, TelephoneCallAttemptEvent>(OnIncomingCallAttempt);
         SubscribeLocalEvent<TelephoneComponent, ComponentShutdown>(OnComponentShutdown);
 
-        //SubscribeLocalEvent<TelephoneComponent, ListenEvent>(OnListen);
+        SubscribeLocalEvent<TelephoneComponent, ListenAttemptEvent>(OnAttemptListen);
+        SubscribeLocalEvent<TelephoneComponent, ListenEvent>(OnListen);
+        SubscribeLocalEvent<TelephoneComponent, TelephoneMessageReceivedEvent>(OnTelephoneMessageReceived);
     }
 
     #region: Events
@@ -65,10 +69,10 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
         TerminateTelephoneCall(uid, component);
     }
 
-    private void OnAttemptListen(EntityUid uid, RadioMicrophoneComponent component, ListenAttemptEvent args)
+    private void OnAttemptListen(EntityUid uid, TelephoneComponent component, ListenAttemptEvent args)
     {
-        if (component.PowerRequired && !this.IsPowered(uid, EntityManager)
-            || component.UnobstructedRequired && !_interaction.InRangeUnobstructed(args.Source, uid, 0))
+        if (!this.IsPowered(uid, EntityManager)
+            || !_interaction.InRangeUnobstructed(args.Source, uid, 0))
         {
             args.Cancel();
         }
@@ -79,13 +83,13 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
         if (args.Source == uid)
             return;
 
-        //if (_recentlySent.Add((args.Message, args.Source)))
-        //    _radio.SendRadioMessage(args.Source, args.Message, _protoMan.Index<RadioChannelPrototype>(component.BroadcastChannel), uid);
+        if (_recentlySent.Add((args.Message, args.Source)))
+            SendTelephoneMessage(args.Source, args.Message, uid);
     }
 
-    private void OnReceiveRadio(EntityUid uid, RadioSpeakerComponent component, ref RadioReceiveEvent args)
+    private void OnTelephoneMessageReceived(EntityUid uid, TelephoneComponent component, ref TelephoneMessageReceivedEvent args)
     {
-        if (uid == args.RadioSource)
+        if (uid == args.TelephoneSource)
             return;
 
         var nameEv = new TransformSpeakerNameEvent(args.MessageSource, Name(args.MessageSource));
@@ -96,7 +100,7 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
             ("originalName", nameEv.Name));
 
         // log to chat so people can identity the speaker/source, but avoid clogging ghost chat if there are many radios
-        _chat.TrySendInGameICMessage(uid, args.Message, InGameICChatType.Whisper, ChatTransmitRange.GhostRangeLimit, nameOverride: name, checkRadioPrefix: false);
+        _chat.TrySendInGameICMessage(uid, args.Message, InGameICChatType.Speak, ChatTransmitRange.GhostRangeLimit, nameOverride: name, checkRadioPrefix: false);
     }
 
     #endregion
@@ -234,9 +238,12 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
         RaiseLocalEvent(uid, ref evCallTerminated);
     }
 
-    /*public void SendTelephoneMessage(EntityUid messageSource, string message, RadioChannelPrototype channel, EntityUid radioSource, bool escapeMarkup = true)
+    public void SendTelephoneMessage(EntityUid messageSource, string message, EntityUid telephoneSource, bool escapeMarkup = true)
     {
-        // TODO if radios ever garble / modify messages, feedback-prevention needs to be handled better than this.
+        if (!TryComp<TelephoneComponent>(telephoneSource, out var telephone) || telephone.LinkedTelephone == null)
+            return;
+
+        // TODO if messages ever garble or get modified, feedback-prevention needs to be handled better than this.
         if (!_messages.Add(message))
             return;
 
@@ -265,11 +272,11 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
             : message;
 
         var wrappedMessage = Loc.GetString(speech.Bold ? "chat-radio-message-wrap-bold" : "chat-radio-message-wrap",
-            ("color", channel.Color),
+            ("color", Color.Red),
             ("fontType", speech.FontId),
             ("fontSize", speech.FontSize),
             ("verb", Loc.GetString(_random.Pick(speech.SpeechVerbStrings))),
-            ("channel", $"\\[{channel.LocalizedName}\\]"),
+            ("channel", "test"),
             ("name", name),
             ("message", content));
 
@@ -282,40 +289,38 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
             null);
 
         var chatMsg = new MsgChatMessage { Message = chat };
-        var ev = new RadioReceiveEvent(message, messageSource, channel, radioSource, chatMsg);
+        var ev = new TelephoneMessageReceivedEvent(message, messageSource, telephoneSource, chatMsg);
 
-        var sendAttemptEv = new RadioSendAttemptEvent(channel, radioSource);
-        RaiseLocalEvent(ref sendAttemptEv);
-        RaiseLocalEvent(radioSource, ref sendAttemptEv);
-        var canSend = !sendAttemptEv.Cancelled;
+        //var sendAttemptEv = new RadioSendAttemptEvent(channel, radioSource);
+        //RaiseLocalEvent(ref sendAttemptEv);
+        //RaiseLocalEvent(radioSource, ref sendAttemptEv);
+        //var canSend = !sendAttemptEv.Cancelled;
 
-        var sourceMapId = Transform(radioSource).MapID;
+        //var sourceMapId = Transform(radioSource).MapID;
 
-
-        if (!channel.LongRange && transform.MapID != sourceMapId && !radio.GlobalReceive)
-            return;
-
- 
+        // Check if target can be reached
+        //if (!channel.LongRange && transform.MapID != sourceMapId && !radio.GlobalReceive)
+        //   return;
 
         // check if message can be sent to specific receiver
-        var attemptEv = new RadioReceiveAttemptEvent(channel, radioSource, receiver);
-        RaiseLocalEvent(ref attemptEv);
-        RaiseLocalEvent(receiver, ref attemptEv);
+        //var attemptEv = new RadioReceiveAttemptEvent(channel, radioSource, receiver);
+        //RaiseLocalEvent(ref attemptEv);
+        //RaiseLocalEvent(receiver, ref attemptEv);
 
-        if (attemptEv.Cancelled)
-            return;
+        //if (attemptEv.Cancelled)
+        //    return;
 
         // send the message
-        RaiseLocalEvent(receiver, ref ev);
+        RaiseLocalEvent(telephone.LinkedTelephone.Value, ref ev);
 
-        if (name != Name(messageSource))
-            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Telephone message from {ToPrettyString(messageSource):user} as {name} on {channel.LocalizedName}: {message}");
-        else
-            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Telephone message from {ToPrettyString(messageSource):user} on {channel.LocalizedName}: {message}");
+        //if (name != Name(messageSource))
+        //    _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Telephone message from {ToPrettyString(messageSource):user} as {name} on {channel.LocalizedName}: {message}");
+        //else
+        //    _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Telephone message from {ToPrettyString(messageSource):user} on {channel.LocalizedName}: {message}");
 
         _replay.RecordServerMessage(chat);
         _messages.Remove(message);
-    }*/
+    }
 
     private void SetTelephoneState(EntityUid uid, TelephoneComponent component, TelephoneState newState)
     {
@@ -323,6 +328,18 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
         component.StateStartTime = _timing.RealTime;
 
         _appearanceSystem.SetData(uid, TelephoneVisuals.Key, component.CurrentState);
+
+        if (component.CurrentState == TelephoneState.InCall)
+        {
+            if (!HasComp<ActiveListenerComponent>(uid))
+                AddComp<ActiveListenerComponent>(uid);
+        }
+
+        else
+        {
+            if (HasComp<ActiveListenerComponent>(uid))
+                RemComp<ActiveListenerComponent>(uid);
+        }
     }
 
     public bool IsTelephoneReachable(EntityUid uid, TelephoneComponent component)

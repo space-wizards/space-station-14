@@ -1,3 +1,5 @@
+using Content.Shared.Chat;
+using Content.Shared.Radio;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
@@ -104,6 +106,11 @@ public record struct TelephoneHungUpEvent(EntityUid Source);
 /// </summary>
 [ByRefEvent]
 public record struct TelephoneCallTerminatedEvent();
+
+
+[ByRefEvent]
+public readonly record struct TelephoneMessageReceivedEvent(string Message, EntityUid MessageSource, EntityUid TelephoneSource, MsgChatMessage ChatMsg);
+
 
 #endregion
 

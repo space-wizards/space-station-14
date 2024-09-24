@@ -1,5 +1,8 @@
+using Content.Server.Construction.Completions;
 using Content.Server.Power.Components;
 using Content.Server.Telephone;
+using Content.Shared.Chat.TypingIndicator;
+using Content.Shared.Doors.Components;
 using Content.Shared.Holopad;
 using Content.Shared.Telephone;
 using Robust.Server.GameObjects;
@@ -38,6 +41,9 @@ public sealed class HolopadSystem : SharedHolopadSystem
 
         SubscribeLocalEvent<HolopadComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<HolopadComponent, ComponentShutdown>(OnComponentShutdown);
+
+        SubscribeNetworkEvent<HolopadUserTypingChangedEvent>(OnTypingChanged);
+        SubscribeNetworkEvent<HolopadUserAppearanceChangedEvent>(OnAppearanceChanged);
 
         SubscribeLocalEvent<ExpandPvsEvent>(OnExpandPvs);
     }
@@ -83,6 +89,39 @@ public sealed class HolopadSystem : SharedHolopadSystem
     private void OnHoloCallTerminated(EntityUid uid, HolopadComponent component, TelephoneCallTerminatedEvent args)
     {
         TurnOffHologram(uid, component);
+    }
+
+    private void OnTypingChanged(HolopadUserTypingChangedEvent ev)
+    {
+        var uid = GetEntity(ev.User);
+
+        if (!Exists(uid))
+            return;
+
+        if (!TryComp<HolopadUserComponent>(uid, out var holopadUser))
+            return;
+
+        if (!TryComp<HolopadComponent>(holopadUser.LinkedHolopad, out var holopad))
+            return;
+
+        if (!TryComp<HolopadHologramComponent>(holopad.Hologram, out var hologram))
+            return;
+
+        if (!TryComp<AppearanceComponent>(holopad.Hologram, out var appearance))
+            return;
+
+        _appearanceSystem.SetData(holopad.Hologram.Value, TypingIndicatorVisuals.IsTyping, ev.IsTyping, appearance);
+    }
+
+    private void OnAppearanceChanged(HolopadUserAppearanceChangedEvent ev, EntitySessionEventArgs args)
+    {
+        if (!TryComp<HolopadUserComponent>(args.SenderSession.AttachedEntity, out var holopadUser))
+            return;
+
+        if (!TryComp<HolopadComponent>(holopadUser.LinkedHolopad, out var holopad))
+            return;
+
+        SyncHologramWithTarget(holopadUser.LinkedHolopad.Value, holopad);
     }
 
     private void OnComponentInit(EntityUid uid, HolopadComponent component, ComponentInit args)
@@ -180,6 +219,18 @@ public sealed class HolopadSystem : SharedHolopadSystem
     private void TurnOffHologram(EntityUid uid, HolopadComponent component)
     {
         QueueDel(component.Hologram);
+
+        if (!TryComp<TelephoneComponent>(uid, out var telephone) ||
+            !TryComp<TelephoneComponent>(telephone.LinkedTelephone, out var linkedTelephone))
+            return;
+
+        var target = linkedTelephone.User;
+
+        if (target == null)
+            return;
+
+        if (HasComp<HolopadUserComponent>(target.Value))
+            RemComp<HolopadUserComponent>(target.Value);
     }
 
     private void SyncHologramWithTarget(EntityUid uid, HolopadComponent component)
@@ -192,6 +243,12 @@ public sealed class HolopadSystem : SharedHolopadSystem
 
         if (target == null)
             return;
+
+        if (!TryComp<HolopadUserComponent>(target.Value, out var holopadUser))
+            holopadUser = AddComp<HolopadUserComponent>(target.Value);
+
+        holopadUser.LinkedHolopad = uid;
+
         component.Hologram = Spawn(component.HologramProtoId, Transform(uid).Coordinates);
 
         var netHologram = GetNetEntity(component.Hologram);

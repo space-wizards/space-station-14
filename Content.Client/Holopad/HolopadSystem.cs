@@ -1,3 +1,4 @@
+using Content.Shared.Chat.TypingIndicator;
 using Content.Shared.Holopad;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -5,7 +6,6 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using System.Linq;
 using System.Numerics;
-using static Robust.Client.GameObjects.SpriteComponent;
 using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
 namespace Content.Client.Holopad;
@@ -14,6 +14,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
     public override void Initialize()
@@ -24,6 +25,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
         SubscribeLocalEvent<HolopadHologramComponent, BeforePostShaderRenderEvent>(OnShaderRender);
 
         SubscribeNetworkEvent<HolopadHologramVisualsUpdateEvent>(OnVisualsUpdate);
+        SubscribeAllEvent<TypingChangedEvent>(OnTypingChanged);
     }
 
     private void OnComponentInit(EntityUid uid, HolopadHologramComponent component, ComponentInit ev)
@@ -37,6 +39,17 @@ public sealed class HolopadSystem : SharedHolopadSystem
             return;
 
         ev.Sprite.PostShader.SetParameter("t", (float)_timing.RealTime.TotalSeconds * component.ScrollRate);
+    }
+
+    private void OnTypingChanged(TypingChangedEvent ev, EntitySessionEventArgs args)
+    {
+        var uid = args.SenderSession.AttachedEntity;
+
+        if (!Exists(uid))
+            return;
+
+        var netEv = new HolopadUserTypingChangedEvent(GetNetEntity(uid.Value), ev.IsTyping);
+        RaiseNetworkEvent(netEv);
     }
 
     private void OnVisualsUpdate(HolopadHologramVisualsUpdateEvent ev)

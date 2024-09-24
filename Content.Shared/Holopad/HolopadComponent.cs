@@ -22,6 +22,8 @@ public sealed partial class HolopadComponent : Component
     public EntProtoId? HologramProtoId;
 }
 
+#region: Event messages
+
 /// <summary>
 ///     Data from by the server to the client for the holopad UI
 /// </summary>
@@ -64,29 +66,7 @@ public sealed class HolopadAnswerCallMessage : BoundUserInterfaceMessage { }
 [Serializable, NetSerializable]
 public sealed class HolopadHangUpOnCallMessage : BoundUserInterfaceMessage { }
 
-
-/// <summary>
-/// A networked event raised when the visual state of a hologram is being updated
-/// </summary>
-[Serializable, NetSerializable]
-public sealed class HolopadHologramVisualsUpdateEvent : EntityEventArgs
-{
-    /// <summary>
-    /// The hologram being updated
-    /// </summary>
-    public readonly NetEntity Hologram;
-
-    /// <summary>
-    /// The target the hologram is copying
-    /// </summary>
-    public readonly NetEntity Target;
-
-    public HolopadHologramVisualsUpdateEvent(NetEntity hologram, NetEntity target)
-    {
-        Hologram = hologram;
-        Target = target;
-    }
-}
+#endregion
 
 /// <summary>
 /// Key to the Holopad UI

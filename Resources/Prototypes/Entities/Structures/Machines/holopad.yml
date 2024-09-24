@@ -46,6 +46,8 @@
     color: "#afe1fe"
   - type: Holopad
     hologramProtoId: HolopadHologram
+  - type: Speech
+    speechVerb: Robotic
   - type: Telephone
     ringTone: /Audio/Machines/double_ring.ogg
     ringInterval: 2
@@ -66,7 +68,12 @@
     anchored: true
   - type: Sprite
   - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.TelephoneVisuals.Key:
+        lights:
   - type: TypingIndicator
+    proto: robot
   - type: HolopadHologram
     shaderName: Hologram
     color1: "#65b8e2"
