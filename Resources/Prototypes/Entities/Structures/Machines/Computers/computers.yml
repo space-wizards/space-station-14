@@ -50,7 +50,7 @@
           type: WiresBoundUserInterface
 
 - type: entity
-  parent: BaseComputer
+  parent: BaseComputerAiAccess
   id: AtmosMonitoringConsole
   name: atmospheric network monitor
   description: Used to monitor the station's atmospheric networks.
@@ -67,6 +67,8 @@
       state: tank
     - map: ["computerLayerKeys"]
       state: atmos_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
   - type: AtmosMonitoringConsole
     navMapTileColor: "#1a1a1a"
     navMapWallColor: "#404040"
@@ -77,6 +79,8 @@
     interfaces:
         enum.AtmosMonitoringConsoleUiKey.Key:
             type: AtmosMonitoringConsoleBoundUserInterface
+        enum.WiresUiKey.Key:
+            type: WiresBoundUserInterface
 
 - type: entity
   parent: BaseComputer
