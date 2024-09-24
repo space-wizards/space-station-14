@@ -2222,7 +2222,7 @@
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/beerglass.rsi
     state: icon_empty
-  metamorphicMaxFillLevels: 5
+  metamorphicMaxFillLevels: 6
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: true
   metabolisms:
@@ -2231,11 +2231,15 @@
       - !type:SatiateThirst
         factor: 4
       - !type:AdjustReagent
-        reagent: Dylovene
-        amount: 0.5
-      - !type:AdjustReagent
         reagent: Oxygen
-        amount: -25
+        amount: -5
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: -0.5
+           # Asphyxiation: -0.25 
   fizziness: .7
 
 - type: reagent
