@@ -20994,6 +20994,56 @@ entities:
     - type: Transform
       pos: -55.5,6.5
       parent: 4812
+  - uid: 13699
+    components:
+    - type: Transform
+      pos: -55.5,9.5
+      parent: 4812
+  - uid: 13700
+    components:
+    - type: Transform
+      pos: -56.5,9.5
+      parent: 4812
+  - uid: 13701
+    components:
+    - type: Transform
+      pos: -57.5,9.5
+      parent: 4812
+  - uid: 13702
+    components:
+    - type: Transform
+      pos: -58.5,9.5
+      parent: 4812
+  - uid: 13703
+    components:
+    - type: Transform
+      pos: -59.5,9.5
+      parent: 4812
+  - uid: 13704
+    components:
+    - type: Transform
+      pos: -60.5,9.5
+      parent: 4812
+  - uid: 13705
+    components:
+    - type: Transform
+      pos: -58.5,0.5
+      parent: 4812
+  - uid: 13706
+    components:
+    - type: Transform
+      pos: -59.5,0.5
+      parent: 4812
+  - uid: 13707
+    components:
+    - type: Transform
+      pos: -60.5,0.5
+      parent: 4812
+  - uid: 13708
+    components:
+    - type: Transform
+      pos: -61.5,0.5
+      parent: 4812
 - proto: CableApcStack
   entities:
   - uid: 6196
@@ -86503,6 +86553,12 @@ entities:
       rot: 3.141592653589793 rad
       pos: 28.5,13.5
       parent: 4812
+  - uid: 13169
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 21.5,15.5
+      parent: 4812
 - proto: WindoorSecureChemistryLocked
   entities:
   - uid: 6582
@@ -86588,12 +86644,6 @@ entities:
       parent: 4812
 - proto: WindoorSecureSalvageLocked
   entities:
-  - uid: 13169
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 21.5,15.5
-      parent: 4812
   - uid: 13253
     components:
     - type: Transform
