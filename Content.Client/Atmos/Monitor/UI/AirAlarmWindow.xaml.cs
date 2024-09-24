@@ -1,5 +1,6 @@
 using Content.Client.Atmos.Monitor.UI.Widgets;
 using Content.Client.Message;
+using Content.Client.Stylesheets.Redux.Palette;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
@@ -191,15 +192,11 @@ public sealed partial class AirAlarmWindow : FancyWindow
 
     public static Color ColorForAlarm(AtmosAlarmType curAlarm)
     {
-        // TODO: hardcoded, fix when i get palettes done
-        switch (curAlarm)
+        return curAlarm switch
         {
-            case AtmosAlarmType.Danger:
-                return Color.FromHex("#BB3232");
-            case AtmosAlarmType.Warning:
-                return Color.FromHex("#A5762F");
-            default:
-                return Color.FromHex("#BB3232");
-        }
+            AtmosAlarmType.Danger => Palettes.Status.GetStatusColor(0.0f),
+            AtmosAlarmType.Warning => Palettes.Status.GetStatusColor(0.5f),
+            _ => Palettes.Status.GetStatusColor(1.0f),
+        };
     }
 }
