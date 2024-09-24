@@ -6,7 +6,6 @@ namespace Content.Shared.GPS.Systems;
 
 public sealed class HandheldGpsSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly IEntityManager _entMan = default!;
 
