@@ -14,7 +14,7 @@ public sealed class NanoHeadingSheetlet : Sheetlet<NanotrasenStylesheet>
 {
     public override StyleRule[] GetRules(NanotrasenStylesheet sheet, object config)
     {
-        var nanoHeadingCfg = (INanoHeadingConfig) sheet;
+        INanoHeadingConfig nanoHeadingCfg = sheet;
 
         var nanoHeadingTex = sheet.GetTexture(nanoHeadingCfg.NanoHeadingPath);
         var nanoHeadingBox = new StyleBoxTexture

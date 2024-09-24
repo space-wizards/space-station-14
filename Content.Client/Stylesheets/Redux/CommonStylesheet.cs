@@ -18,7 +18,7 @@ public abstract class CommonStylesheet : PalettedStylesheet, IButtonConfig, IWin
 
     ResPath IStripebackConfig.StripebackPath => new("stripeback.svg.96dpi.png");
 
-    ResPath INanoHeadingConfig.NanoHeadingPath => new("geometric_panel_border.svg.96dpi.png");
+    ResPath INanoHeadingConfig.NanoHeadingPath => new("nanoheading.svg.96dpi.png");
 
     ResPath ILineEditConfig.LineEditPath => new("lineedit.png");
 
