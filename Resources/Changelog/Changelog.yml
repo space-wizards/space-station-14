@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Errant
-  changes:
-  - message: Vox are temporarily removed from Space Ninjas and all Unknown Shuttle
-      ghostroles, until code supports giving them species-specific gear.
-    type: Tweak
-  id: 6929
-  time: '2024-07-17T22:04:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30099
 - author: Cojoke-dot
   changes:
   - message: You can no longer teleport objects that should not be in other objects
@@ -3925,3 +3917,11 @@
   id: 7428
   time: '2024-09-24T14:23:48.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32153
+- author: LordEclipse
+  changes:
+  - message: The Antimov Law Board is now available in both the Traitor and Nuclear
+      Operative Uplinks, 14 and 24 TC respectively.
+    type: Add
+  id: 7429
+  time: '2024-09-24T15:06:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31916
