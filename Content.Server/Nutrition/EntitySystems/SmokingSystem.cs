@@ -15,6 +15,7 @@ using Content.Shared.Nutrition.Components;
 using Content.Shared.Smoking;
 using Content.Shared.Temperature;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using System.Linq;
 
@@ -29,6 +30,7 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly TransformSystem _transformSystem = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
         [Dependency] private readonly ClothingSystem _clothing = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedItemSystem _items = default!;
         [Dependency] private readonly SharedContainerSystem _container = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
@@ -72,6 +74,12 @@ namespace Content.Server.Nutrition.EntitySystems
                 EnsureComp<BurningComponent>(uid);
             else
                 RemComp<BurningComponent>(uid);
+
+            var sound = state == SmokableState.Lit
+                ? smokable.LightSound
+                : smokable.SnuffSound;
+
+            _audio.PlayPvs(sound, uid);
         }
 
         private void OnSmokableIsHotEvent(Entity<SmokableComponent> entity, ref IsHotEvent args)
