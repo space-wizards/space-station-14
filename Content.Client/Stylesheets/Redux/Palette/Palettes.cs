@@ -8,20 +8,20 @@ namespace Content.Client.Stylesheets.Redux.Palette;
 /// </remarks>
 public static class Palettes
 {
-    public static readonly ColorPalette Navy = new(Color.FromHex("#575b7f"));
-    public static readonly ColorPalette Cyan = new(Color.FromHex("#4a6173"));
-    public static readonly ColorPalette Slate = new(Color.FromHex("#5b5d6e"));
-    public static readonly ColorPalette Neutral = new(Color.FromHex("#5e5e5e"));
+    public static readonly ColorPalette Navy = new ColorPalette{ Base = Color.FromHex("#4f5376"), ChromaNegativeShift = -0.012f }.Construct();
+    public static readonly ColorPalette Cyan = new ColorPalette{ Base = Color.FromHex("#42586a"), ChromaNegativeShift = -0.012f }.Construct();
+    public static readonly ColorPalette Slate = new ColorPalette{ Base = Color.FromHex("#545562")}.Construct();
+    public static readonly ColorPalette Neutral = new ColorPalette{ Base = Color.FromHex("#555555")}.Construct();
 
-    public static readonly ColorPalette Red = new(Color.FromHex("#cf2f2f"));
-    public static readonly ColorPalette Amber = new(Color.FromHex("#c18e36"));
-    public static readonly ColorPalette Green = new(Color.FromHex("#3c854a"));
+    public static readonly ColorPalette Red = new ColorPalette{ Base = Color.FromHex("#cf2f2f")}.Construct();
+    public static readonly ColorPalette Amber = new ColorPalette{ Base = Color.FromHex("#c18e36")}.Construct();
+    public static readonly ColorPalette Green = new ColorPalette{ Base = Color.FromHex("#3c854a")}.Construct();
     public static readonly StatusPalette Status = new([Red.Base, Amber.Base, Green.Base]);
 
-    public static readonly ColorPalette Gold = new(Color.FromHex("#a88b5e"));
-    public static readonly ColorPalette Maroon = new(Color.FromHex("#9b2236"));
+    public static readonly ColorPalette Gold = new ColorPalette{ Base = Color.FromHex("#a88b5e")}.Construct();
+    public static readonly ColorPalette Maroon = new ColorPalette{ Base = Color.FromHex("#9b2236")}.Construct();
 
     // Intended to be used with `ModulateSelf` to darken / lighten something
-    public static readonly ColorPalette AlphaModulate = new(Color.FromHex("#ffffff"));
+    public static readonly ColorPalette AlphaModulate = new ColorPalette{ Base = Color.FromHex("#ffffff")}.Construct();
 
 }

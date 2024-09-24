@@ -11,11 +11,11 @@ public static class ColorExtensions
     /// </summary>
     public static Color WithLightness(this Color c, float lightness)
     {
-        DebugTools.Assert(lightness is >= 0.0f and <= 100.0f);
+        DebugTools.Assert(lightness is >= 0.0f and <= 1.0f);
 
         var o = new OklabColor(c)
         {
-            L = lightness / 100f,
+            L = lightness,
         };
 
         return (Color) o;
@@ -27,7 +27,7 @@ public static class ColorExtensions
     public static Color NudgeLightness(this Color c, float lightnessShift)
     {
         var o = new OklabColor(c);
-        o.L += lightnessShift;
+        o.L = Math.Clamp(o.L + lightnessShift, 0, 1);
 
         return (Color) o;
     }
@@ -44,7 +44,7 @@ public static class ColorExtensions
 
         var chroma = float.Sqrt(o.A * o.A + o.B * o.B);
         var hue = float.Atan2(o.B, o.A);
-        chroma += chromaShift;
+        chroma = Math.Clamp(chroma + chromaShift, 0, 1);
 
         o.A = chroma * float.Cos(hue);
         o.B = chroma * float.Sin(hue);

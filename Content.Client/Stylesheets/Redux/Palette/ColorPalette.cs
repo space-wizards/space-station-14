@@ -19,10 +19,12 @@ public sealed class ColorPalette
     public float ChromaPositiveShift = 0.00f;
     public float ChromaNegativeShift = 0.00f;
 
-    public ColorPalette(Color baseColor)
+    /**
+     * Given the initialized configuration properties, this method sets all the color properties to derivations of
+     * the <see cref="Base"/> color.
+     */
+    public ColorPalette Construct()
     {
-        Base = baseColor;
-
         Element = Shift(Base, -1); //               Shift(Base, -1)
         HoveredElement = Shift(Element, 1); //      Shift(Base,  0)
         PressedElement = Shift(Element, -1); //     Shift(Base, -2)
@@ -34,13 +36,15 @@ public sealed class ColorPalette
 
         Text = Base; //                             Shift(Base,  0)
         TextDark = Shift(Text, -1); //              Shift(Base, -1)
+
+        return this;
     }
 
     private Color Shift(Color from, float factor)
     {
         return factor > 0
             ? from.NudgeLightness(LightnessPositiveShift * factor).NudgeChroma(ChromaPositiveShift * factor)
-            : from.NudgeLightness(LightnessNegativeShift * factor).NudgeChroma(ChromaNegativeShift * factor);
+            : from.NudgeLightness(LightnessNegativeShift * -factor).NudgeChroma(ChromaNegativeShift * -factor);
     }
 
     public Color Element;
