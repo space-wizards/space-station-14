@@ -29,6 +29,7 @@ public sealed partial class PlantSpeciesChange : EntityEffect
             Log.Error($"Seed prototype could not be found: {targetProto}!");
             return;
         }
+        plant.Seed = plant.Seed.SpeciesChange(protoSeed);
     }
 
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)

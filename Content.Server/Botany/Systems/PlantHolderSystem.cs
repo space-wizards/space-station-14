@@ -445,15 +445,6 @@ public sealed class PlantHolderSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
-        //PlantComponent? plantComp = null;
-        //var hasPlant = GetPlant(component.PlantUid.Value, out var plant);
-        //if (hasPlant)
-            //TryComp<PlantComponent>(plant, out plantComp);
-
-        // TODO: this means nothing runs (water and nutrients dont refill) unless something is planted. I need to fix that
-        // so at least water and nutrients refill. Might mean these all run on the plantHolder and then reference its plant
-        // That gets rid of the hasPlant checks (and we just drop that mutation thing, it never happens)
-
         if (!_solutionContainerSystem.ResolveSolution(uid, component.SoilSolutionName, ref component.SoilSolution, out var solution))
             return;
 
