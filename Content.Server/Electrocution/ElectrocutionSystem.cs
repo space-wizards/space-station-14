@@ -187,18 +187,21 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         if (_meleeWeapon.GetDamage(args.Used, args.User).Empty)
             return;
 
-        var siemens = 1f;
+        DoCommonElectrocution(args.User, uid, component.UnarmedHitShock, component.UnarmedHitStun, false, GetSiemensCoefficient(args.User));
+    }
 
-        // Check for insualted component on the entity triggering the action or on the gloves
-        if (TryComp<InsulatedComponent>(args.User, out var insulation) ||
-        (TryComp<InventoryComponent>(args.User, out var inventory) &&
-         _inventory.TryGetSlotEntity(args.User, "gloves", out var gloves, inventory) &&
+    private float GetSiemensCoefficient(EntityUid uid)
+    {
+        // Check for InsulatedComponent on the entity, or in the gloves slot
+        if (TryComp<InsulatedComponent>(uid, out var insulation) ||
+        (TryComp<InventoryComponent>(uid, out var inventory) &&
+         _inventory.TryGetSlotEntity(uid, "gloves", out var gloves, inventory) &&
          TryComp<InsulatedComponent>(gloves, out insulation)))
         {
-            siemens = insulation.Coefficient;
+            return insulation.Coefficient;
         }
-
-        DoCommonElectrocution(args.User, uid, component.UnarmedHitShock, component.UnarmedHitStun, false, siemens);
+        else
+            return 1; // Default to 1 if the entity doesn't have an InsulatedComponent
     }
 
     private void OnElectrifiedInteractUsing(EntityUid uid, ElectrifiedComponent electrified, InteractUsingEvent args)
