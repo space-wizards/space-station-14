@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: themias
-  changes:
-  - message: Mailing units are functional again
-    type: Fix
-  id: 6939
-  time: '2024-07-20T02:31:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30174
 - author: Ghagliiarghii
   changes:
   - message: Nuclear Operatives' Reinforcements now have a PDA!
@@ -3926,3 +3919,11 @@
   id: 7438
   time: '2024-09-25T17:27:30.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32285
+- author: BramvanZijp
+  changes:
+  - message: Fixed an issue that caused Doctors Delight to metabolize twice the normal
+      speed, which also halved its effectiveness.
+    type: Fix
+  id: 7439
+  time: '2024-09-25T17:39:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32297
