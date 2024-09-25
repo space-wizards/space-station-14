@@ -911,13 +911,13 @@
   - type: Pda
     id: ERTMedicIDCard
   - type: CartridgeLoader
-  uiKey: enum.PdaUiKey.Key
-  preinstalled:
-    - CrewManifestCartridge
-    - NotekeeperCartridge
-    - NewsReaderCartridge
-    - MedTekCartridge
-    - WantedListCartridge
+    uiKey: enum.PdaUiKey.Key
+    preinstalled:
+      - CrewManifestCartridge
+      - NotekeeperCartridge
+      - NewsReaderCartridge
+      - MedTekCartridge
+      - WantedListCartridge
 
 - type: entity
   parent: ERTLeaderPDA
