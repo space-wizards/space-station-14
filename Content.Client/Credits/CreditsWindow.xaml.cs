@@ -146,7 +146,7 @@ namespace Content.Client.Credits
                 var text = _resourceManager.ContentFileReadAllText($"/Credits/{path}");
                 if (markup)
                 {
-                    label.SetMessage(FormattedMessage.FromMarkup(text.Trim()));
+                    label.SetMessage(FormattedMessage.FromMarkupOrThrow(text.Trim()));
                 }
                 else
                 {

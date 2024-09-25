@@ -1,4 +1,3 @@
-using System.IO.Compression;
 using Content.Client.Administration.Managers;
 using Content.Client.Launcher;
 using Content.Client.MainMenu;
@@ -27,8 +26,6 @@ using Robust.Client.Replays.Playback;
 using Robust.Client.State;
 using Robust.Client.Timing;
 using Robust.Client.UserInterface;
-using Robust.Client.UserInterface.Controls;
-using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
@@ -97,32 +94,17 @@ public sealed class ContentReplayPlaybackManager
             return;
         }
 
-        ReturnToDefaultState();
+        if (_client.RunLevel == ClientRunLevel.SinglePlayerGame)
+            _client.StopSinglePlayer();
 
-        // Show a popup window with the error message
-        var text = Loc.GetString("replay-loading-failed", ("reason", exception));
-        var box = new BoxContainer
+        Action? retryAction = null;
+        Action? cancelAction = null;
+
+        if (!_cfg.GetCVar(CVars.ReplayIgnoreErrors) && LastLoad is { } last)
         {
-            Orientation = BoxContainer.LayoutOrientation.Vertical,
-            Children = {new Label {Text = text}}
-        };
-
-        var popup = new DefaultWindow { Title = "Error!" };
-        popup.Contents.AddChild(box);
-
-        // Add button for attempting to re-load the replay while ignoring some errors.
-        if (!_cfg.GetCVar(CVars.ReplayIgnoreErrors) && LastLoad is {} last)
-        {
-            var button = new Button
-            {
-                Text = Loc.GetString("replay-loading-retry"),
-                StyleClasses = { StyleClass.Negative }
-            };
-
-            button.OnPressed += _ =>
+            retryAction = () =>
             {
                 _cfg.SetCVar(CVars.ReplayIgnoreErrors, true);
-                popup.Dispose();
 
                 IReplayFileReader reader = last.Zip == null
                     ? new ReplayFileReaderResources(_resMan, last.Folder)
@@ -130,11 +112,20 @@ public sealed class ContentReplayPlaybackManager
 
                 _loadMan.LoadAndStartReplay(reader);
             };
-
-            box.AddChild(button);
         }
 
-        popup.OpenCentered();
+        // If we have an explicit menu to get back to (e.g. replay browser UI), show a cancel button.
+        if (DefaultState != null)
+        {
+            cancelAction = () =>
+            {
+                _stateMan.RequestStateChange(DefaultState);
+            };
+        }
+
+        // Switch to a new game state to present the error and cancel/retry options.
+        var state = _stateMan.RequestStateChange<ReplayLoadingFailed>();
+        state.SetData(exception, cancelAction, retryAction);
     }
 
     public void ReturnToDefaultState()

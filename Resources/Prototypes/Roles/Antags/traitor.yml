@@ -12,6 +12,7 @@
   antagonist: true
   setPreference: true
   objective: roles-antag-syndicate-agent-sleeper-objective
+  guides: [ Traitors ]
 
 # Syndicate Operative Outfit - Monkey
 - type: startingGear
@@ -31,17 +32,44 @@
     gloves: ClothingHandsGlovesColorBlack
   storage:
     back:
-    - BoxSurvivalSyndicate
     - WeaponPistolViper
     - PinpointerSyndicateNuclear
     - DeathAcidifierImplanter
 
-# Syndicate Reinforcement NukeOps
 - type: startingGear
-  id: SyndicateOperativeGearReinforcementNukeOps
-  parent: SyndicateOperativeGearExtremelyBasic
+  id: SyndicateOperativeClothing
   equipment:
-    id: SyndiPDA #Do not give a PDA to the normal Reinforcement - it will spawn with a 20TC uplink
+    jumpsuit: ClothingUniformJumpsuitOperative
+    back: ClothingBackpackSyndicate
+    shoes: ClothingShoesBootsSyndieFilled
+    gloves: ClothingHandsGlovesColorBlack
+
+- type: startingGear
+  id: SyndicateReinforcementMedic
+  parent: SyndicateOperativeClothing
+  equipment:
+    pocket1: WeaponPistolViper
+  inhand:
+    - MedkitCombatFilled
+
+- type: startingGear
+  id: SyndicateReinforcementSpy
+  parent: SyndicateOperativeClothing
+  equipment:
+    id: AgentIDCard
+    mask: ClothingMaskGasVoiceChameleon
+    pocket1: WeaponPistolViper
+
+- type: startingGear
+  id: SyndicateReinforcementThief
+  parent: SyndicateOperativeClothing
+  equipment:
+    pocket1: WeaponPistolViper
+  inhand:
+    - ToolboxSyndicateFilled
+  storage:
+    back:
+    - SyndicateJawsOfLife
 
 #Syndicate Operative Outfit - Basic
 - type: startingGear

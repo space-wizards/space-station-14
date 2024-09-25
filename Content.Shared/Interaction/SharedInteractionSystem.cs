@@ -17,6 +17,7 @@ using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
+using Content.Shared.Silicons.StationAi;
 using Content.Shared.Storage;
 using Content.Shared.Tag;
 using Content.Shared.Timing;
@@ -74,7 +75,6 @@ namespace Content.Shared.Interaction
         private EntityQuery<WallMountComponent> _wallMountQuery;
         private EntityQuery<UseDelayComponent> _delayQuery;
         private EntityQuery<ActivatableUIComponent> _uiQuery;
-        private EntityQuery<ComplexInteractionComponent> _complexInteractionQuery;
 
         private const CollisionGroup InRangeUnobstructedMask = CollisionGroup.Impassable | CollisionGroup.InteractImpassable;
 
@@ -97,7 +97,6 @@ namespace Content.Shared.Interaction
             _wallMountQuery = GetEntityQuery<WallMountComponent>();
             _delayQuery = GetEntityQuery<UseDelayComponent>();
             _uiQuery = GetEntityQuery<ActivatableUIComponent>();
-            _complexInteractionQuery = GetEntityQuery<ComplexInteractionComponent>();
 
             SubscribeLocalEvent<BoundUserInterfaceCheckRangeEvent>(HandleUserInterfaceRangeCheck);
             SubscribeLocalEvent<BoundUserInterfaceMessageAttempt>(OnBoundInterfaceInteractAttempt);
@@ -165,10 +164,7 @@ namespace Content.Shared.Interaction
                 return;
             }
 
-            if (!uiComp.RequireHands)
-                return;
-
-            if (!_handsQuery.TryComp(ev.Actor, out var hands) || hands.Hands.Count == 0)
+            if (uiComp.RequiresComplex && !_actionBlockerSystem.CanComplexInteract(ev.Actor))
                 ev.Cancel();
         }
 
@@ -443,7 +439,7 @@ namespace Content.Shared.Interaction
 
         public void InteractHand(EntityUid user, EntityUid target)
         {
-            var complexInteractions = SupportsComplexInteractions(user);
+            var complexInteractions = _actionBlockerSystem.CanComplexInteract(user);
             if (!complexInteractions)
             {
                 InteractionActivate(user,
@@ -632,6 +628,14 @@ namespace Content.Shared.Interaction
         {
             if (!Resolve(other, ref other.Comp))
                 return false;
+
+            var ev = new InRangeOverrideEvent(origin, other);
+            RaiseLocalEvent(origin, ref ev);
+
+            if (ev.Handled)
+            {
+                return ev.InRange;
+            }
 
             return InRangeUnobstructed(origin,
                 other,
@@ -921,11 +925,21 @@ namespace Content.Shared.Interaction
         }
 
         /// <summary>
-        /// Uses a item/object on an entity
+        /// Uses an item/object on an entity
         /// Finds components with the InteractUsing interface and calls their function
         /// NOTE: Does not have an InRangeUnobstructed check
         /// </summary>
-        public void InteractUsing(
+        /// <param name="user">User doing the interaction.</param>
+        /// <param name="used">Item being used on the <paramref name="target"/>.</param>
+        /// <param name="target">Entity getting interacted with by the <paramref name="user"/> using the
+        ///     <paramref name="used"/> entity.</param>
+        /// <param name="clickLocation">The location that the <paramref name="user"/> clicked.</param>
+        /// <param name="checkCanInteract">Whether to check that the <paramref name="user"/> can interact with the
+        ///     <paramref name="target"/>.</param>
+        /// <param name="checkCanUse">Whether to check that the <paramref name="user"/> can use the
+        ///     <paramref name="used"/> entity.</param>
+        /// <returns>True if the interaction was handled. Otherwise, false.</returns>
+        public bool InteractUsing(
             EntityUid user,
             EntityUid used,
             EntityUid target,
@@ -934,10 +948,10 @@ namespace Content.Shared.Interaction
             bool checkCanUse = true)
         {
             if (checkCanInteract && !_actionBlockerSystem.CanInteract(user, target))
-                return;
+                return false;
 
             if (checkCanUse && !_actionBlockerSystem.CanUseHeldEntity(user, used))
-                return;
+                return false;
 
             _adminLogger.Add(
                 LogType.InteractUsing,
@@ -945,24 +959,33 @@ namespace Content.Shared.Interaction
                 $"{ToPrettyString(user):user} interacted with {ToPrettyString(target):target} using {ToPrettyString(used):used}");
 
             if (RangedInteractDoBefore(user, used, target, clickLocation, true))
-                return;
+                return true;
 
             // all interactions should only happen when in range / unobstructed, so no range check is needed
             var interactUsingEvent = new InteractUsingEvent(user, used, target, clickLocation);
             RaiseLocalEvent(target, interactUsingEvent, true);
             DoContactInteraction(user, used, interactUsingEvent);
             DoContactInteraction(user, target, interactUsingEvent);
-            DoContactInteraction(used, target, interactUsingEvent);
+            // Contact interactions are currently only used for forensics, so we don't raise used -> target
             if (interactUsingEvent.Handled)
-                return;
+                return true;
 
-            InteractDoAfter(user, used, target, clickLocation, canReach: true);
+            if (InteractDoAfter(user, used, target, clickLocation, canReach: true))
+                return true;
+            return false;
         }
 
         /// <summary>
         ///     Used when clicking on an entity resulted in no other interaction. Used for low-priority interactions.
         /// </summary>
-        public void InteractDoAfter(EntityUid user, EntityUid used, EntityUid? target, EntityCoordinates clickLocation, bool canReach)
+        /// <param name="user"><inheritdoc cref="InteractUsing"/></param>
+        /// <param name="used"><inheritdoc cref="InteractUsing"/></param>
+        /// <param name="target"><inheritdoc cref="InteractUsing"/></param>
+        /// <param name="clickLocation"><inheritdoc cref="InteractUsing"/></param>
+        /// <param name="canReach">Whether the <paramref name="user"/> is in range of the <paramref name="target"/>.
+        ///     </param>
+        /// <returns>True if the interaction was handled. Otherwise, false.</returns>
+        public bool InteractDoAfter(EntityUid user, EntityUid used, EntityUid? target, EntityCoordinates clickLocation, bool canReach)
         {
             if (target is { Valid: false })
                 target = null;
@@ -973,14 +996,14 @@ namespace Content.Shared.Interaction
             if (canReach)
             {
                 DoContactInteraction(user, target, afterInteractEvent);
-                DoContactInteraction(used, target, afterInteractEvent);
+                // Contact interactions are currently only used for forensics, so we don't raise used -> target
             }
 
             if (afterInteractEvent.Handled)
-                return;
+                return true;
 
             if (target == null)
-                return;
+                return false;
 
             var afterInteractUsingEvent = new AfterInteractUsingEvent(user, used, target, clickLocation, canReach);
             RaiseLocalEvent(target.Value, afterInteractUsingEvent);
@@ -989,8 +1012,12 @@ namespace Content.Shared.Interaction
             if (canReach)
             {
                 DoContactInteraction(user, target, afterInteractUsingEvent);
-                DoContactInteraction(used, target, afterInteractUsingEvent);
+                // Contact interactions are currently only used for forensics, so we don't raise used -> target
             }
+
+            if (afterInteractUsingEvent.Handled)
+                return true;
+            return false;
         }
 
         #region ActivateItemInWorld
@@ -1108,7 +1135,7 @@ namespace Content.Shared.Interaction
             // Get list of alt-interact verbs
             var verbs = _verbSystem.GetLocalVerbs(target, user, typeof(AlternativeVerb));
 
-            if (!verbs.Any())
+            if (verbs.Count == 0)
                 return false;
 
             _verbSystem.ExecuteVerb(verbs.First(), user, target);
@@ -1162,6 +1189,13 @@ namespace Content.Shared.Interaction
         /// </summary>
         public bool IsAccessible(Entity<TransformComponent?> user, Entity<TransformComponent?> target)
         {
+            var ev = new AccessibleOverrideEvent(user, target);
+
+            RaiseLocalEvent(user, ref ev);
+
+            if (ev.Handled)
+                return ev.Accessible;
+
             if (_containerSystem.IsInSameOrParentContainer(user, target, out _, out var container))
                 return true;
 
@@ -1174,7 +1208,7 @@ namespace Content.Shared.Interaction
         /// </summary>
         public bool CanAccessViaStorage(EntityUid user, EntityUid target)
         {
-            if (!_containerSystem.TryGetContainingContainer(target, out var container))
+            if (!_containerSystem.TryGetContainingContainer((target, null, null), out var container))
                 return false;
 
             return CanAccessViaStorage(user, target, container);
@@ -1200,7 +1234,7 @@ namespace Content.Shared.Interaction
             if (Deleted(target))
                 return false;
 
-            if (!_containerSystem.TryGetContainingContainer(target, out var container))
+            if (!_containerSystem.TryGetContainingContainer((target, null, null), out var container))
                 return false;
 
             var wearer = container.Owner;
@@ -1304,13 +1338,10 @@ namespace Content.Shared.Interaction
             return ev.Handled;
         }
 
-        /// <summary>
-        /// Checks if a given entity is able to do specific complex interactions.
-        /// This is used to gate manipulation to general humanoids. If a mouse shouldn't be able to do something, then it's complex.
-        /// </summary>
+        [Obsolete("Use ActionBlockerSystem")]
         public bool SupportsComplexInteractions(EntityUid user)
         {
-            return _complexInteractionQuery.HasComp(user);
+            return _actionBlockerSystem.CanComplexInteract(user);
         }
     }
 
@@ -1349,17 +1380,38 @@ namespace Content.Shared.Interaction
     };
 
     /// <summary>
-    ///     Raised directed by-ref on an item and a user to determine if interactions can occur.
-    /// </summary>
-    /// <param name="Cancelled">Whether the hand interaction should be cancelled.</param>
-    [ByRefEvent]
-    public record struct AttemptUseInteractEvent(EntityUid User, EntityUid Used, bool Cancelled = false);
-
-    /// <summary>
     ///     Raised directed by-ref on an item to determine if hand interactions should go through.
     ///     Defaults to allowing hand interactions to go through. Cancel to force the item to be attacked instead.
     /// </summary>
     /// <param name="Cancelled">Whether the hand interaction should be cancelled.</param>
     [ByRefEvent]
     public record struct CombatModeShouldHandInteractEvent(bool Cancelled = false);
+
+    /// <summary>
+    /// Override event raised directed on the user to say the target is accessible.
+    /// </summary>
+    /// <param name="User"></param>
+    /// <param name="Target"></param>
+    [ByRefEvent]
+    public record struct AccessibleOverrideEvent(EntityUid User, EntityUid Target)
+    {
+        public readonly EntityUid User = User;
+        public readonly EntityUid Target = Target;
+
+        public bool Handled;
+        public bool Accessible = false;
+    }
+
+    /// <summary>
+    /// Override event raised directed on a user to check InRangeUnoccluded AND InRangeUnobstructed to the target if you require custom logic.
+    /// </summary>
+    [ByRefEvent]
+    public record struct InRangeOverrideEvent(EntityUid User, EntityUid Target)
+    {
+        public readonly EntityUid User = User;
+        public readonly EntityUid Target = Target;
+
+        public bool Handled;
+        public bool InRange = false;
+    }
 }

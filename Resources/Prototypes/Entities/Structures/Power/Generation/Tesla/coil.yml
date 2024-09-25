@@ -101,7 +101,7 @@
               SheetSteel1:
                 min: 2
                 max: 4
-  #- type: GuideHelp #   To Do - add Tesla Guide
+  #- type: GuideHelp # TODO - add Tesla Guide
 
 - type: entity
   id: TeslaGroundingRod
@@ -184,5 +184,5 @@
               SheetSteel1:
                 min: 2
                 max: 4
-  #- type: GuideHelp #   To Do - add Tesla Guide
+  #- type: GuideHelp # TODO - add Tesla Guide
 
