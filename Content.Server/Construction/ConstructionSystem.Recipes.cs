@@ -8,7 +8,7 @@ public sealed partial class ConstructionSystem : SharedConstructionSystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-    private Dictionary<string, RecipeMetadata>? _recipesMetadataCache;
+    private Dictionary<string, string>? _recipesMetadataCache;
 
     private void InitializeRecipes()
     {
@@ -58,17 +58,7 @@ public sealed partial class ConstructionSystem : SharedConstructionSystem
                     // If we got the id of the prototype, we exit the “recursion” by clearing the stack.
                     stack.Clear();
 
-                    if (!_prototypeManager.TryIndex(entityId, out var entity))
-                        continue;
-
-                    RecipeMetadata meta = _prototypeManager.TryIndex(entityId, out var proto)
-                        ? new(constructionProto.Suffix && proto.SetSuffix is {} suffix
-                                ? $"{proto.Name} [{suffix.ToLower()}]"
-                                : proto.Name,
-                            proto.Description)
-                        : new(null, null);
-
-                    _recipesMetadataCache.Add(constructionProto.ID, meta);
+                    _recipesMetadataCache.Add(constructionProto.ID, entityId);
                 } while (stack.Count > 0);
             }
         }

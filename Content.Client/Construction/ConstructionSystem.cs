@@ -1,18 +1,23 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Client.Popups;
 using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Examine;
 using Content.Shared.Input;
+using Content.Shared.Prototypes;
 using Content.Shared.Wall;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
 using Robust.Client.Player;
+using Robust.Client.Utility;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Construction
 {
@@ -30,9 +35,11 @@ namespace Content.Client.Construction
 
         private readonly Dictionary<int, EntityUid> _ghosts = new();
         private readonly Dictionary<string, ConstructionGuide> _guideCache = new();
-        private Dictionary<string, RecipeMetadata>? _recipeMetadataCache;
+        private Dictionary<string, string>? _recipeMetadataCache;
 
         public bool CraftingEnabled { get; private set; }
+
+        public bool IsRecipesCacheWarmed { get; private set; }
 
         /// <inheritdoc />
         public override void Initialize()
@@ -62,8 +69,40 @@ namespace Content.Client.Construction
         public event EventHandler? OnConstructionRecipesUpdated;
         private void OnResponseConstructionRecipes(ResponseConstructionRecipes ev)
         {
-            _recipeMetadataCache = ev.Metadata;
+            if (_recipeMetadataCache is null)
+            {
+                _recipeMetadataCache = new();
+
+                foreach (var (constructionProtoId, targetProtoId) in ev.Metadata)
+                {
+                    if (!_prototypeManager.TryIndex(constructionProtoId, out ConstructionPrototype? recipe))
+                        continue;
+
+                    if (!_prototypeManager.TryIndex(targetProtoId, out var proto))
+                        continue;
+
+                    var name = recipe.NameLocId.HasValue ? Loc.GetString(recipe.NameLocId) : proto.Name;
+                    var desc = recipe.DescLocId.HasValue ? Loc.GetString(recipe.DescLocId) : proto.Description;
+
+                    recipe.Name = name;
+                    recipe.Description = desc;
+
+                    _recipeMetadataCache.Add(constructionProtoId, targetProtoId);
+                }
+
+                IsRecipesCacheWarmed = true;
+            }
+
             OnConstructionRecipesUpdated?.Invoke(this, EventArgs.Empty);
+        }
+
+        public bool TryGetRecipePrototype(string constructionProtoId, [NotNullWhen(true)] out string? targetProtoId)
+        {
+            if (_recipeMetadataCache is not null && _recipeMetadataCache.TryGetValue(constructionProtoId, out targetProtoId))
+                return true;
+
+            targetProtoId = null;
+            return false;
         }
 
         private void OnConstructionGuideReceived(ResponseConstructionGuide ev)
@@ -78,22 +117,6 @@ namespace Content.Client.Construction
             base.Shutdown();
 
             CommandBinds.Unregister<ConstructionSystem>();
-        }
-
-        public bool TryGetRecipeMetadata(string constructionId, [NotNullWhen(true)] out RecipeMetadata? metadata)
-        {
-            if (_recipeMetadataCache == null)
-            {
-                metadata = null;
-                return false;
-            }
-
-            if (_recipeMetadataCache.TryGetValue(constructionId, out metadata))
-                return true;
-
-            metadata = null;
-            return false;
-
         }
 
         public ConstructionGuide? GetGuide(ConstructionPrototype prototype)
@@ -234,14 +257,6 @@ namespace Content.Client.Construction
             _ghosts.Add(ghost.GetHashCode(), ghost.Value);
             var sprite = EntityManager.GetComponent<SpriteComponent>(ghost.Value);
             sprite.Color = new Color(48, 255, 48, 128);
-
-            for (int i = 0; i < prototype.Layers.Count; i++)
-            {
-                sprite.AddBlankLayer(i); // There is no way to actually check if this already exists, so we blindly insert a new one
-                sprite.LayerSetSprite(i, prototype.Layers[i]);
-                sprite.LayerSetShader(i, "unshaded");
-                sprite.LayerSetVisible(i, true);
-            }
 
             if (prototype.CanBuildInImpassable)
                 EnsureComp<WallMountComponent>(ghost.Value).Arc = new(Math.Tau);

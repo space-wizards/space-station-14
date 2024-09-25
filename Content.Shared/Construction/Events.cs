@@ -84,17 +84,10 @@ public sealed class AckStructureConstructionMessage : EntityEventArgs
 public sealed class RequestConstructionRecipes : EntityEventArgs;
 
 [Serializable, NetSerializable]
-public sealed class ResponseConstructionRecipes : EntityEventArgs
+public sealed class ResponseConstructionRecipes(Dictionary<string, string> metadata) : EntityEventArgs
 {
-    public readonly Dictionary<string, RecipeMetadata> Metadata;
-    public ResponseConstructionRecipes(Dictionary<string, RecipeMetadata> metadata)
-    {
-        Metadata = metadata;
-    }
+    public readonly Dictionary<string, string> Metadata = metadata;
 }
-
-[Serializable, NetSerializable]
-public sealed record RecipeMetadata(string? Name, string? Description);
 
 /// <summary>
 /// Sent client -> server to request a specific construction guide.

@@ -16,20 +16,20 @@ public sealed partial class ConstructionPrototype : IPrototype
     [DataField]
     public bool Hide = false;
 
-    [DataField("name")]
-    public LocId? NameLocId;
-
-    [DataField("description")]
-    public LocId? DescLocId;
-
     /// <summary>
     ///     Friendly name displayed in the construction GUI.
     /// </summary>
+    [DataField("name")]
+    public LocId? NameLocId;
+
     public string? Name;
 
     /// <summary>
     ///     "Useful" description displayed in the construction GUI.
     /// </summary>
+    [DataField("description")]
+    public LocId? DescLocId;
+
     public string? Description;
 
     /// <summary>
@@ -59,8 +59,8 @@ public sealed partial class ConstructionPrototype : IPrototype
     /// <summary>
     ///     Texture path inside the construction GUI.
     /// </summary>
-    [DataField]
-    public SpriteSpecifier Icon = SpriteSpecifier.Invalid;
+    // [DataField]
+    public SpriteSpecifier? Icon;
 
     /// <summary>
     ///     Texture paths used for the construction ghost.
@@ -105,7 +105,7 @@ public sealed partial class ConstructionPrototype : IPrototype
     public ProtoId<ConstructionPrototype>? Mirror { get; private set; }
 
     public IReadOnlyList<IConstructionCondition> Conditions => _conditions;
-    public IReadOnlyList<SpriteSpecifier> Layers => _layers ?? new List<SpriteSpecifier> { Icon };
+    public IReadOnlyList<SpriteSpecifier> Layers => _layers ?? new List<SpriteSpecifier> { Icon ?? SpriteSpecifier.Invalid };
 }
 
 public enum ConstructionType

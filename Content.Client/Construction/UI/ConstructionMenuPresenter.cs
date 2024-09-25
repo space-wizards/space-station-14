@@ -8,10 +8,8 @@ using Robust.Client.Placement;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Client.Utility;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
-using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.Construction.UI
 {
@@ -28,6 +26,7 @@ namespace Content.Client.Construction.UI
         [Dependency] private readonly IPlacementManager _placementManager = default!;
         [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
+        private readonly SpriteSystem _spriteSystem;
 
         private readonly IConstructionMenuView _constructionView;
         private readonly EntityWhitelistSystem _whitelistSystem;
@@ -83,6 +82,7 @@ namespace Content.Client.Construction.UI
             IoCManager.InjectDependencies(this);
             _constructionView = new ConstructionMenu();
             _whitelistSystem = _entManager.System<EntityWhitelistSystem>();
+            _spriteSystem = _systemManager.GetEntitySystem<SpriteSystem>();
 
             // This is required so that if we load after the system is initialized, we can bind to it immediately
             if (_systemManager.TryGetEntitySystem<ConstructionSystem>(out var constructionSystem))
@@ -112,7 +112,7 @@ namespace Content.Client.Construction.UI
             OnViewPopulateRecipes(_constructionView, (string.Empty, string.Empty));
         }
 
-        public void OnHudCraftingButtonToggled(ButtonToggledEventArgs args)
+        public void OnHudCraftingButtonToggled(BaseButton.ButtonToggledEventArgs args)
         {
             WindowOpen = args.Pressed;
         }
@@ -134,7 +134,7 @@ namespace Content.Client.Construction.UI
             _constructionView.ResetPlacement();
         }
 
-        private void OnViewRecipeSelected(object? sender, ItemList.Item? item)
+        private void OnViewRecipeSelected(object? sender, ConstructionMenu.ConstructionMenuListData? item)
         {
             if (item is null)
             {
@@ -143,25 +143,27 @@ namespace Content.Client.Construction.UI
                 return;
             }
 
-            _selected = (ConstructionPrototype) item.Metadata!;
-            if (_placementManager.IsActive && !_placementManager.Eraser) UpdateGhostPlacement();
+            _selected = item.Prototype;
+
+            if (_placementManager is { IsActive: true, Eraser: false })
+                UpdateGhostPlacement();
+
             PopulateInfo(_selected);
         }
 
         private void OnViewPopulateRecipes(object? sender, (string search, string catagory) args)
         {
+            if (_constructionSystem is null || !_constructionSystem.IsRecipesCacheWarmed)
+                return;
+
             var (search, category) = args;
             var recipesList = _constructionView.Recipes;
 
-            recipesList.Clear();
-            var recipes = new List<ConstructionPrototype>();
+            var recipes = new List<ConstructionMenu.ConstructionMenuListData>();
 
             var isEmptyCategory = string.IsNullOrEmpty(category) || category == _forAllCategoryName;
 
-            if (isEmptyCategory)
-                _selectedCategory = string.Empty;
-            else
-                _selectedCategory = category;
+            _selectedCategory = isEmptyCategory ? string.Empty : category;
 
             foreach (var recipe in _prototypeManager.EnumeratePrototypes<ConstructionPrototype>())
             {
@@ -173,55 +175,33 @@ namespace Content.Client.Construction.UI
                 || _whitelistSystem.IsWhitelistFail(recipe.EntityWhitelist, _playerManager.LocalEntity.Value))
                     continue;
 
-                if (_constructionSystem is not null &&
-                    _constructionSystem.TryGetRecipeMetadata(recipe.ID, out var recipeMetadata))
-                {
-                    recipe.Name = recipeMetadata.Name;
-                    recipe.Description = recipeMetadata.Description;
-                }
-
-                // Override the name and description with custom values.
-                if (recipe.NameLocId.HasValue)
-                    recipe.Name = Loc.GetString(recipe.NameLocId.Value);
-                if (recipe.DescLocId.HasValue)
-                    recipe.Description = Loc.GetString(recipe.DescLocId.Value);
-
-                // If nothing is found, we use a fallback.
-                recipe.Name ??= Loc.GetString("construction-presenter-fallback");
-                recipe.Description ??= Loc.GetString("construction-presenter-fallback");
-
-                if (!string.IsNullOrEmpty(search))
-                {
-                    if (!recipe.Name.ToLowerInvariant().Contains(search.Trim().ToLowerInvariant()))
-                        continue;
-                }
+                if (!string.IsNullOrEmpty(search) && recipe.Name is { } name && !name.Contains(search.Trim(), StringComparison.InvariantCultureIgnoreCase))
+                    continue;
 
                 if (!isEmptyCategory)
                 {
-                    if (category == _favoriteCatName)
-                    {
-                        if (!_favoritedRecipes.Contains(recipe))
-                        {
-                            continue;
-                        }
-                    }
-                    else if (recipe.Category != category)
-                    {
+                    if (category == _favoriteCatName && !_favoritedRecipes.Contains(recipe))
                         continue;
-                    }
+
+                    if (recipe.Category != category)
+                        continue;
                 }
 
-                recipes.Add(recipe);
+                if (!_constructionSystem.TryGetRecipePrototype(recipe.ID, out var targetProtoId))
+                {
+                    Logger.Error("Cannot find the target prototype in the recipe cache with the id \"{0}\" of {1}.", recipe.ID, nameof(ConstructionPrototype));
+                    return;
+                }
+
+                if (!_prototypeManager.TryIndex(targetProtoId, out EntityPrototype? proto))
+                    return;
+
+                recipes.Add(new(recipe, proto));
             }
 
-            recipes.Sort((a, b) => string.Compare(a.Name, b.Name, StringComparison.InvariantCulture));
+            recipes.Sort((a, b) => string.Compare(a.Prototype.Name, b.Prototype.Name, StringComparison.InvariantCulture));
 
-            foreach (var recipe in recipes)
-            {
-                recipesList.Add(GetItem(recipe, recipesList));
-            }
-
-            // There is apparently no way to set which
+            recipesList.PopulateList(recipes);
         }
 
         private void PopulateCategories(string? selectCategory = null)
@@ -272,11 +252,15 @@ namespace Content.Client.Construction.UI
 
         private void PopulateInfo(ConstructionPrototype prototype)
         {
-            var spriteSys = _systemManager.GetEntitySystem<SpriteSystem>();
+            if (_constructionSystem is null || !_constructionSystem.IsRecipesCacheWarmed)
+                return;
+
             _constructionView.ClearRecipeInfo();
 
             _constructionView.SetRecipeInfo(
-                prototype.Name!, prototype.Description!, spriteSys.Frame0(prototype.Icon),
+                prototype.Name!,
+                prototype.Description!,
+                _constructionSystem.TryGetRecipePrototype(prototype.ID, out var targetProto) ? targetProto : null,
                 prototype.Type != ConstructionType.Item,
                 !_favoritedRecipes.Contains(prototype));
 
@@ -288,8 +272,6 @@ namespace Content.Client.Construction.UI
         {
             if (_constructionSystem?.GetGuide(prototype) is not { } guide)
                 return;
-
-            var spriteSys = _systemManager.GetEntitySystem<SpriteSystem>();
 
             foreach (var entry in guide.Entries)
             {
@@ -305,21 +287,9 @@ namespace Content.Client.Construction.UI
                 // The padding needs to be applied regardless of text length... (See PadLeft documentation)
                 text = text.PadLeft(text.Length + entry.Padding);
 
-                var icon = entry.Icon != null ? spriteSys.Frame0(entry.Icon) : Texture.Transparent;
+                var icon = entry.Icon != null ? _spriteSystem.Frame0(entry.Icon) : Texture.Transparent;
                 stepList.AddItem(text, icon, false);
             }
-        }
-
-        private static ItemList.Item GetItem(ConstructionPrototype recipe, ItemList itemList)
-        {
-            return new(itemList)
-            {
-                Metadata = recipe,
-                Text = recipe.Name,
-                Icon = recipe.Icon.Frame0(),
-                TooltipEnabled = true,
-                TooltipText = recipe.Description
-            };
         }
 
         private void BuildButtonToggled(bool pressed)
@@ -390,7 +360,7 @@ namespace Content.Client.Construction.UI
 
         private void OnViewFavoriteRecipe()
         {
-            if (_selected is not ConstructionPrototype recipe)
+            if (_selected is null)
                 return;
 
             if (!_favoritedRecipes.Remove(_selected))
