@@ -22,6 +22,7 @@
     contentSize: 12000
   - type: ActivatableUI
     key: enum.PaperUiKey.Key
+    requiresComplex: false
   - type: UserInterface
     interfaces:
       enum.PaperUiKey.Key:
@@ -59,6 +60,15 @@
     openOnActivation: true
     guides:
     - SS14
+  - type: MeleeWeapon  # Should write it again since BaseGuidebook doesn't inherit BookBase
+    soundHit:
+      collection: Punch
+    damage:
+      types:
+        Blunt: 1
+  - type: DamageOtherOnHit
+    damage:
+      types:
 
 - type: entity
   id: BookSpaceEncyclopedia

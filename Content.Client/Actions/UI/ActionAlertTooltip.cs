@@ -101,7 +101,7 @@ namespace Content.Client.Actions.UI
             {
                 var duration = Cooldown.Value.End - Cooldown.Value.Start;
 
-                if (!FormattedMessage.TryFromMarkup($"[color=#a10505]{(int) duration.TotalSeconds} sec cooldown ({(int) timeLeft.TotalSeconds + 1} sec remaining)[/color]", out var markup))
+                if (!FormattedMessage.TryFromMarkup(Loc.GetString("ui-actionslot-duration", ("duration", (int)duration.TotalSeconds), ("timeLeft", (int)timeLeft.TotalSeconds + 1)), out var markup))
                     return;
 
                 _cooldownLabel.SetMessage(markup);
