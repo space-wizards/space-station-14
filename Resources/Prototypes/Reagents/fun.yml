@@ -355,7 +355,7 @@
   group: Toxins
   desc: reagent-desc-ammoniated-sludge
   physicalDesc: reagent-physical-desc-slimy
-  flavor: unappealing
+  flavor: bitter
   color: "#555f55"
   metabolisms:
     Poison:
