@@ -1521,6 +1521,8 @@
 
 - type: construction
   id: SolidSecretDoor
+  name: recipes-secret-door-name
+  description: recipes-secret-door-desc
   graph: SecretDoor
   startNode: start
   targetNode: solidSecretDoor
