@@ -2,14 +2,14 @@
   id: WoodenRollingPin
   start: start
   graph:
-    - node: start
-      edges:
-        - to: rollingpin
-          steps:
-            - material: WoodPlank
-              amount: 2
-            - material: MetalRod
-              amount: 1
-              doAfter: 2
-    - node: rollingpin
-      entity: RollingPin
+  - node: start
+    edges:
+    - to: rollingpin
+      steps:
+      - material: WoodPlank
+        amount: 2
+      - material: MetalRod
+        amount: 1
+        doAfter: 2
+  - node: rollingpin
+    entity: RollingPin
