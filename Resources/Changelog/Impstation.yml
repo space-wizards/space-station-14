@@ -1999,3 +1999,69 @@
   id: 256
   time: '2024-09-24T22:02:03.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/336
+- author: Darkmajia
+  changes:
+  - message: Mobs will no longer ignore changelings and heretics.
+    type: Fix
+  id: 257
+  time: '2024-09-25T19:33:52.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/332
+- author: Darkmajia
+  changes:
+  - message: Job loadout slots now display in a consistent order.
+    type: Tweak
+  id: 258
+  time: '2024-09-25T19:34:03.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/342
+- author: hivehum
+  changes:
+  - message: Added new lobby art by lazy :)
+    type: Add
+  id: 259
+  time: '2024-09-25T19:35:56.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/344
+- author: starlighthowls
+  changes:
+  - message: whale things you know how it is
+    type: Tweak
+  id: 260
+  time: '2024-09-25T19:36:40.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/343
+- author: Sha-Seng
+  changes:
+  - message: Adjusted veteran captain set sprites
+    type: Tweak
+  id: 261
+  time: '2024-09-25T19:37:14.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/339
+- author: Pinkbat5
+  changes:
+  - message: Pink Alert now has an alarm sound.
+    type: Add
+  id: 262
+  time: '2024-09-25T19:38:09.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/340
+- author: Sha-Seng
+  changes:
+  - message: Made the captain's winter coat match the uniform since like three people
+      asked
+    type: Tweak
+  id: 263
+  time: '2024-09-25T19:35:18.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/338
+- author: hivehum
+  changes:
+  - message: Added any iota of useful information at all to the Gray species page.
+    type: Add
+  - message: Roleplay Rule 4 (Metashield) has been split into Roleplay Rule 4-1 (Relationships
+      between rounds) and Roleplay Rule 4-2
+    type: Add
+  - message: Ported the Alert Procedure article from Delta V, modified to match the
+      content of our fork.
+    type: Add
+  - message: Core Rule 13 has been substantially cut down and the naming guidelines
+      are now on each respective species.
+    type: Tweak
+  id: 264
+  time: '2024-09-25T19:41:19.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/276

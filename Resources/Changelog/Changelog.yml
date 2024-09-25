@@ -1,41 +1,4 @@
 ﻿Entries:
-- author: deepdarkdepths
-  changes:
-  - message: Removed the description about geras in the Slime guidebook section.
-    type: Remove
-  id: 6935
-  time: '2024-07-19T09:04:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30140
-- author: Blackern5000
-  changes:
-  - message: Nuclear operatives are now able to purchase durable armor which is NOT
-      space-proof.
-    type: Add
-  id: 6936
-  time: '2024-07-19T09:38:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29845
-- author: Plykiya, slarticodefast
-  changes:
-  - message: Explosive pens now correctly embed into their target.
-    type: Fix
-  id: 6937
-  time: '2024-07-19T09:42:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30112
-- author: ThatOneEnby1337
-  changes:
-  - message: News Reporters are now able to use markup tags in their reports without
-      bricking the PDAs of readers
-    type: Fix
-  id: 6938
-  time: '2024-07-19T14:18:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30169
-- author: themias
-  changes:
-  - message: Mailing units are functional again
-    type: Fix
-  id: 6939
-  time: '2024-07-20T02:31:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30174
 - author: Ghagliiarghii
   changes:
   - message: Nuclear Operatives' Reinforcements now have a PDA!
@@ -3928,3 +3891,39 @@
   id: 7434
   time: '2024-09-24T21:58:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32343
+- author: goet
+  changes:
+  - message: Vending machines can be hacked again.
+    type: Fix
+  id: 7435
+  time: '2024-09-25T05:21:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32431
+- author: themias
+  changes:
+  - message: Agent ID card can now only copy access within interaction range.
+    type: Fix
+  id: 7436
+  time: '2024-09-25T15:41:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32445
+- author: Myra
+  changes:
+  - message: Silicon with no laws will not have binary channel access.
+    type: Remove
+  id: 7437
+  time: '2024-09-25T16:49:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32385
+- author: august-sun
+  changes:
+  - message: Rolling pins are now craftable.
+    type: Tweak
+  id: 7438
+  time: '2024-09-25T17:27:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32285
+- author: BramvanZijp
+  changes:
+  - message: Fixed an issue that caused Doctors Delight to metabolize twice the normal
+      speed, which also halved its effectiveness.
+    type: Fix
+  id: 7439
+  time: '2024-09-25T17:39:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32297

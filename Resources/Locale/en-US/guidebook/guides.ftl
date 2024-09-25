@@ -49,6 +49,7 @@ guide-entry-criminal-records = Criminal Records
 guide-entry-guide-to-station-security = Guide to Station Security
 guide-entry-command = Command
 guide-entry-service = Service
+guide-entry-alertprocedure = Alert Procedure
 
 guide-entry-newplayer = New? Start here!
 guide-entry-charactercreation = Creating Characters
@@ -106,6 +107,8 @@ guide-entry-rules-r1 = R1
 guide-entry-rules-r2 = R2
 guide-entry-rules-r3 = R3
 guide-entry-rules-r4 = R4
+guide-entry-rules-r4-1 = R4-1
+guide-entry-rules-r4-2 = R4-2
 guide-entry-rules-r5 = R5
 guide-entry-rules-r6 = R6
 guide-entry-rules-r7 = R7
