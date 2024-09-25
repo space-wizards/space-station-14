@@ -1,8 +1,8 @@
 - type: reagent
   id: SunsetSoda
-  name: "sunset soda"
+  name: reagent-name-sunset-soda
   parent: BaseSoda
-  desc: "Smells like diesel fumes at dusk."
+  desc: reagent-desc-sunset-soda
   physicalDesc: reagent-physical-desc-fizzy-and-creamy
   flavor: fizzy
   color: "#cd7314"
