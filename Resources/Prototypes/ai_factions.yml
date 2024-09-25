@@ -7,6 +7,8 @@
     - PetsNT
     - Zombie
     - Revolutionary
+    - Changeling
+    - Heretic
 
 - type: npcFaction
   id: NanoTrasen
@@ -43,6 +45,7 @@
   - Zombie
   - Revolutionary
   - Changeling
+  - Heretic
 
 - type: npcFaction
   id: SimpleNeutral
@@ -55,6 +58,8 @@
   - Xeno
   - PetsNT
   - Zombie
+  - Changeling
+  - Heretic
 
 - type: npcFaction
   id: Xeno
@@ -65,6 +70,8 @@
   - PetsNT
   - Zombie
   - Revolutionary
+  - Changeling
+  - Heretic
 
 - type: npcFaction
   id: Zombie
@@ -76,6 +83,8 @@
   - Passive
   - PetsNT
   - Revolutionary
+  - Changeling
+  - Heretic
 
 - type: npcFaction
   id: Revolutionary
@@ -92,3 +101,4 @@
   - Syndicate
   - Zombie
   - Revolutionary
+  - Heretic
