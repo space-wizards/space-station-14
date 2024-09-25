@@ -4,9 +4,6 @@
   startNode: start
   targetNode: grenade
   category: construction-category-weapons
-  icon:
-    sprite: Objects/Weapons/Grenades/modular.rsi
-    state: complete
   objectType: Item
 
 - type: construction
@@ -15,7 +12,4 @@
   startNode: start
   targetNode: mine
   category: construction-category-weapons
-  icon:
-    sprite: Objects/Misc/landmine.rsi
-    state: landmine
   objectType: Item

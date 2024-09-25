@@ -6,9 +6,6 @@
   category: construction-category-machines
   placementMode: SnapgridCenter
   canBuildInImpassable: false
-  icon:
-    sprite: Structures/Machines/parts.rsi
-    state: 4
 
 - type: construction
   id: MachineFrame
@@ -18,9 +15,6 @@
   category: construction-category-machines
   placementMode: SnapgridCenter
   canBuildInImpassable: false
-  icon:
-    sprite: Structures/Machines/parts.rsi
-    state: "box_0"
 
 # Switching
 - type: construction
@@ -32,9 +26,6 @@
   category: construction-category-machines
   objectType: Structure
   canBuildInImpassable: false
-  icon:
-    sprite: Structures/conveyor.rsi
-    state: switch-off
   conditions:
     - !type:TileNotBlocked
 
@@ -44,9 +35,6 @@
   startNode: start
   targetNode: LightSwitchNode
   category: construction-category-machines
-  icon:
-    sprite: Structures/Wallmounts/switch.rsi
-    state: on
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: true
@@ -60,9 +48,6 @@
   startNode: start
   targetNode: SignalSwitchNode
   category: construction-category-machines
-  icon:
-    sprite: Structures/Wallmounts/switch.rsi
-    state: on
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: true
@@ -76,9 +61,6 @@
   startNode: start
   targetNode: SignalButtonNode
   category: construction-category-machines
-  icon:
-    sprite: Structures/Wallmounts/switch.rsi
-    state: on
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: true
@@ -92,9 +74,6 @@
   startNode: start
   targetNode: LightSwitchDirectionalNode
   category: construction-category-machines
-  icon:
-    sprite: Structures/Wallmounts/switch.rsi
-    state: on
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: true
@@ -108,9 +87,6 @@
   startNode: start
   targetNode: SignalSwitchDirectionalNode
   category: construction-category-machines
-  icon:
-    sprite: Structures/Wallmounts/switch.rsi
-    state: on
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: true
@@ -124,9 +100,6 @@
   startNode: start
   targetNode: SignalButtonDirectionalNode
   category: construction-category-machines
-  icon:
-    sprite: Structures/Wallmounts/switch.rsi
-    state: on
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: true

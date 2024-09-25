@@ -6,7 +6,6 @@
   startNode: start
   targetNode: steeltile
   category: construction-category-tiles
-  icon: { sprite: Objects/Tiles/tile.rsi, state: steel }
   objectType: Item
 
 - type: construction
@@ -15,7 +14,6 @@
   startNode: start
   targetNode: woodtile
   category: construction-category-tiles
-  icon: { sprite: Objects/Tiles/tile.rsi, state: wood }
   objectType: Item
 
 - type: construction
@@ -24,7 +22,6 @@
   startNode: start
   targetNode: filledPlate
   category: construction-category-tiles
-  icon: { sprite: Objects/Tiles/tile.rsi, state: brass-filled }
   objectType: Item
 
 - type: construction
@@ -33,7 +30,6 @@
   startNode: start
   targetNode: reebe
   category: construction-category-tiles
-  icon: { sprite: Objects/Tiles/tile.rsi, state: reebe }
   objectType: Item
 
 - type: construction
@@ -42,7 +38,6 @@
   startNode: start
   targetNode: whitetile
   category: construction-category-tiles
-  icon: { sprite: Objects/Tiles/tile.rsi, state: white }
   objectType: Item
 
 - type: construction
@@ -51,7 +46,6 @@
   startNode: start
   targetNode: darktile
   category: construction-category-tiles
-  icon: { sprite: Objects/Tiles/tile.rsi, state: dark }
   objectType: Item
 
 - type: construction
@@ -60,98 +54,7 @@
   startNode: start
   targetNode: fleshTile
   category: construction-category-tiles
-  icon: { sprite: Objects/Tiles/tile.rsi, state: meat }
   objectType: Item
-
-# - type: construction
-#   id: tileTechmaint
-#   graph: tileTechmaint
-#   startNode: start
-#   targetNode: techmainttile
-#   category: construction-category-tiles
-#   icon: { sprite: Objects/Tiles/tile.rsi, state: steel_techfloor_grid }
-#   objectType: Item
-#
-# - type: construction
-#   id: tileFreezer
-#   graph: tileFreezer
-#   startNode: start
-#   targetNode: freezertile
-#   category: construction-category-tiles
-#   icon: { sprite: Objects/Tiles/tile.rsi, state: showroom }
-#   objectType: Item
-#
-# - type: construction
-#   id: tileShowroom
-#   graph: tileShowroom
-#   startNode: start
-#   targetNode: showroomtile
-#   category: construction-category-tiles
-#   icon: { sprite: Objects/Tiles/tile.rsi, state: showroom }
-#   objectType: Item
-#
-# - type: construction
-#   id: tileGCircuit
-#   graph: tileGCircuit
-#   startNode: start
-#   targetNode: gcircuittile
-#   category: construction-category-tiles
-#   icon: { sprite: Objects/Tiles/tile.rsi, state: gcircuit }
-#   objectType: Item
-#
-# - type: construction
-#   id: tileGold
-#   graph: tileGold
-#   startNode: start
-#   targetNode: goldtile
-#   category: construction-category-tiles
-#   icon: { sprite: Objects/Tiles/tile.rsi, state: gold }
-#   objectType: Item
-#
-# - type: construction
-#   id: tileReinforced
-#   graph: tileReinforced
-#   startNode: start
-#   targetNode: reinforcedtile
-#   category: construction-category-tiles
-#   icon: { sprite: Objects/Tiles/tile.rsi, state: reinforced }
-#   objectType: Item
-#
-# - type: construction
-#   id: tileMono
-#   graph: tileMono
-#   startNode: start
-#   targetNode: monotile
-#   category: construction-category-tiles
-#   icon: { sprite: Objects/Tiles/tile.rsi, state: white_monofloor }
-#   objectType: Item
-#
-# - type: construction
-#   id: tileLino
-#   graph: tileLino
-#   startNode: start
-#   targetNode: linotile
-#   category: construction-category-tiles
-#   icon: { sprite: Objects/Tiles/tile.rsi, state: white_monofloor }
-#   objectType: Item
-#
-# - type: construction
-#   id: tileHydro
-#   graph: tileHydro
-#   startNode: start
-#   targetNode: hydrotile
-#   category: construction-category-tiles
-#   icon: { sprite: Objects/Tiles/tile.rsi, state: hydro }
-#   objectType: Item
-#
-# - type: construction
-#   id: tileDirty
-#   graph: tileDirty
-#   startNode: start
-#   targetNode: dirtytile
-#   category: construction-category-tiles
-#   icon: { sprite: Objects/Tiles/tile.rsi, state: dirty }
-#   objectType: Item
 
 - type: construction
   id: TileWoodLarge
@@ -159,5 +62,4 @@
   startNode: start
   targetNode: woodtilelarge
   category: construction-category-tiles
-  icon: { sprite: Objects/Tiles/tile.rsi, state: wood-large }
   objectType: Item

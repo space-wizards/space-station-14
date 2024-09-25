@@ -4,7 +4,6 @@
   startNode: start
   targetNode: potatobattery
   category: construction-category-misc
-  icon: { sprite: Objects/Power/power_cells.rsi, state: potato }
   objectType: Item
 
 - type: construction
@@ -13,7 +12,6 @@
   startNode: start
   targetNode: potatoai
   category: construction-category-misc
-  icon: { sprite: Objects/Fun/pai.rsi, state: icon-potato-off }
   objectType: Item
 
 - type: construction
@@ -22,5 +20,4 @@
   startNode: start
   targetNode: potatoaichip
   category: construction-category-misc
-  icon: { sprite: Objects/Misc/potatoai_chip.rsi, state: icon }
   objectType: Item

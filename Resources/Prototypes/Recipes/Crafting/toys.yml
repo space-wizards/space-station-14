@@ -5,9 +5,6 @@
   targetNode: plushie
   category: construction-category-misc
   objectType: Item
-  icon:
-    sprite: Mobs/Ghosts/revenant.rsi
-    state: icon
 
 - type: construction
   id: ClothingOuterSuitIan
@@ -16,6 +13,3 @@
   targetNode: suit
   category: construction-category-misc
   objectType: Item
-  icon:
-    sprite: Clothing/OuterClothing/Suits/iansuit.rsi
-    state: icon

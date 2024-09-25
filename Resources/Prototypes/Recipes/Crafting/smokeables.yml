@@ -4,7 +4,6 @@
   startNode: start
   targetNode: joint
   category: construction-category-misc
-  icon: { sprite: Objects/Consumable/Smokeables/Cannabis/joint.rsi, state: unlit-icon }
   objectType: Item
 
 - type: construction
@@ -13,7 +12,6 @@
   startNode: start
   targetNode: jointRainbow
   category: construction-category-misc
-  icon: { sprite: Objects/Consumable/Smokeables/Cannabis/joint.rsi, state: unlit-icon }
   objectType: Item
 
 - type: construction
@@ -22,7 +20,6 @@
   startNode: start
   targetNode: blunt
   category: construction-category-misc
-  icon: { sprite: Objects/Consumable/Smokeables/Cannabis/blunt.rsi, state: unlit-icon }
   objectType: Item
 
 - type: construction
@@ -31,7 +28,6 @@
   startNode: start
   targetNode: bluntRainbow
   category: construction-category-misc
-  icon: { sprite: Objects/Consumable/Smokeables/Cannabis/blunt.rsi, state: unlit-icon }
   objectType: Item
 
 - type: construction
@@ -40,7 +36,6 @@
   startNode: start
   targetNode: cigarette
   category: construction-category-misc
-  icon: { sprite: Objects/Consumable/Smokeables/Cigarettes/cigarette.rsi, state: unlit-icon }
   objectType: Item
 
 # I wanted to put a hand-grinder here but we need construction graphs that use non-consumed catalysts first.
@@ -51,7 +46,6 @@
   startNode: start
   targetNode: ground
   category: construction-category-misc
-  icon: { sprite: Objects/Misc/reagent_fillings.rsi, state: powderpile }
 #    color: darkgreen
   objectType: Item
 
@@ -61,7 +55,6 @@
   startNode: start
   targetNode: groundRainbow
   category: construction-category-misc
-  icon: { sprite: Objects/Specific/Hydroponics/rainbow_cannabis.rsi, state: powderpile_rainbow }
   objectType: Item
 
 - type: construction
@@ -70,6 +63,5 @@
   startNode: start
   targetNode: ground
   category: construction-category-misc
-  icon: { sprite: Objects/Misc/reagent_fillings.rsi, state: powderpile }
 #    color: brown
   objectType: Item

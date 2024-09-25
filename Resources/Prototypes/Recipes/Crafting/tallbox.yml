@@ -4,7 +4,6 @@
   startNode: start
   targetNode: done
   category: construction-category-storage
-  icon: { sprite: Structures/Storage/closet.rsi, state: generic_icon }
   objectType: Structure
 
 - type: construction
@@ -13,7 +12,6 @@
   startNode: start
   targetNode: done
   category: construction-category-storage
-  icon: { sprite: Structures/Storage/closet.rsi, state: secure_icon }
   objectType: Structure
 
 - type: construction
@@ -22,7 +20,6 @@
   startNode: start
   targetNode: done
   category: construction-category-storage
-  icon: { sprite: Structures/Storage/wall_locker.rsi, state: generic_icon }
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: true

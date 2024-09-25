@@ -4,7 +4,6 @@
   startNode: start
   targetNode: icon
   category: construction-category-weapons
-  icon: { sprite: Clothing/Head/Hats/greyflatcap.rsi, state: icon }
   objectType: Item
 
 - type: construction
@@ -13,7 +12,6 @@
   startNode: start
   targetNode: icon
   category: construction-category-weapons
-  icon: { sprite: Clothing/Head/Hats/brownflatcap.rsi, state: icon }
   objectType: Item
 
 - type: construction
@@ -22,7 +20,6 @@
   startNode: start
   targetNode: icon
   category: construction-category-weapons
-  icon: { sprite: Objects/Weapons/Melee/shiv.rsi, state: icon }
   objectType: Item
 
 - type: construction
@@ -31,7 +28,6 @@
   startNode: start
   targetNode: icon
   category: construction-category-weapons
-  icon: { sprite: Objects/Weapons/Melee/reinforced_shiv.rsi, state: icon }
   objectType: Item
 
 - type: construction
@@ -40,7 +36,6 @@
   startNode: start
   targetNode: icon
   category: construction-category-weapons
-  icon: { sprite: Objects/Weapons/Melee/plasma_shiv.rsi, state: icon }
   objectType: Item
 
 - type: construction
@@ -49,7 +44,6 @@
   startNode: start
   targetNode: icon
   category: construction-category-weapons
-  icon: { sprite: Objects/Weapons/Melee/uranium_shiv.rsi, state: icon }
   objectType: Item
 
 - type: construction
@@ -58,7 +52,6 @@
   startNode: start
   targetNode: spear
   category: construction-category-weapons
-  icon: { sprite: Objects/Weapons/Melee/spear.rsi, state: spear }
   objectType: Item
 
 - type: construction
@@ -67,7 +60,6 @@
   startNode: start
   targetNode: spear
   category: construction-category-weapons
-  icon: { sprite: Objects/Weapons/Melee/reinforced_spear.rsi, state: spear }
   objectType: Item
 
 - type: construction
@@ -76,7 +68,6 @@
   startNode: start
   targetNode: spear
   category: construction-category-weapons
-  icon: { sprite: Objects/Weapons/Melee/plasma_spear.rsi, state: spear }
   objectType: Item
 
 - type: construction
@@ -85,7 +76,6 @@
   startNode: start
   targetNode: spear
   category: construction-category-weapons
-  icon: { sprite: Objects/Weapons/Melee/uranium_spear.rsi, state: spear }
   objectType: Item
 
 - type: construction
@@ -94,7 +84,6 @@
   startNode: start
   targetNode: bola
   category: construction-category-weapons
-  icon: { sprite: Objects/Weapons/Throwable/bola.rsi, state: icon }
   objectType: Item
 
 - type: construction
@@ -103,7 +92,6 @@
   startNode: start
   targetNode: woodenBuckler
   category: construction-category-weapons
-  icon: { sprite: Objects/Weapons/Melee/shields.rsi, state: buckler-icon }
   objectType: Item
 
 - type: construction
@@ -112,7 +100,6 @@
   startNode: start
   targetNode: makeshiftShield
   category: construction-category-weapons
-  icon: { sprite: Objects/Weapons/Melee/shields.rsi, state: makeshift-icon }
   objectType: Item
 
 - type: construction
@@ -121,7 +108,6 @@
   startNode: start
   targetNode: ImprovisedArrow
   category: construction-category-weapons
-  icon: { sprite: Objects/Weapons/Guns/Bow/bow.rsi, state: wielded-arrow }
   objectType: Item
 
 - type: construction
@@ -130,7 +116,6 @@
   startNode: start
   targetNode: ImprovisedBow
   category: construction-category-weapons
-  icon: { sprite: Objects/Weapons/Guns/Bow/bow.rsi, state: unwielded }
   objectType: Item
 
 - type: construction
@@ -139,5 +124,4 @@
   startNode: start
   targetNode: spear
   category: construction-category-weapons
-  icon: { sprite: Objects/Weapons/Melee/bone_spear.rsi, state: spear }
   objectType: Item

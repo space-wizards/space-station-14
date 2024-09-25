@@ -4,7 +4,6 @@
   startNode: start
   targetNode: cratelivestock
   category: construction-category-storage
-  icon: { sprite: Structures/Storage/Crates/livestock.rsi, state: base }
   objectType: Structure
 
 - type: construction
@@ -13,7 +12,6 @@
   startNode: start
   targetNode: crategenericsteel
   category: construction-category-storage
-  icon: { sprite: Structures/Storage/Crates/generic.rsi, state: icon }
   objectType: Structure
 
 - type: construction
@@ -22,7 +20,6 @@
   startNode: start
   targetNode: cratesecure
   category: construction-category-storage
-  icon: { sprite: Structures/Storage/Crates/secure.rsi, state: icon }
   objectType: Structure
 
 - type: construction
@@ -31,7 +28,6 @@
   startNode: start
   targetNode: crateplastic
   category: construction-category-storage
-  icon: { sprite: Structures/Storage/Crates/plastic.rsi, state: icon }
   objectType: Structure
 
 - type: construction
@@ -40,7 +36,6 @@
   startNode: start
   targetNode: basebigbox
   category: construction-category-storage
-  icon: { sprite: Structures/Storage/closet.rsi, state: cardboard }
   objectType: Structure
 
 - type: construction
@@ -49,7 +44,6 @@
   startNode: start
   targetNode: boxcardboard
   category: construction-category-storage
-  icon: { sprite: Objects/Storage/boxes.rsi, state: box }
   objectType: Item
 
 - type: construction
@@ -58,9 +52,6 @@
   startNode: start
   targetNode: foodboxpizza
   category: construction-category-storage
-  icon:
-    sprite: Objects/Consumable/Food/Baked/pizza.rsi
-    state: box
   objectType: Item
 
 - type: construction
@@ -69,5 +60,4 @@
   startNode: start
   targetNode: cratecoffin
   category: construction-category-storage
-  icon: { sprite: Structures/Storage/Crates/coffin.rsi, state: base }
   objectType: Structure

@@ -1,7 +1,6 @@
 using Content.Shared.Construction.Conditions;
 using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.Construction.Prototypes;
 
@@ -51,18 +50,6 @@ public sealed partial class ConstructionPrototype : IPrototype
     public string StartNode { get; private set; } = default!;
 
     /// <summary>
-    ///     Texture path inside the construction GUI.
-    /// </summary>
-    // [DataField]
-    public SpriteSpecifier? Icon;
-
-    /// <summary>
-    ///     Texture paths used for the construction ghost.
-    /// </summary>
-    [DataField("layers")]
-    private List<SpriteSpecifier>? _layers;
-
-    /// <summary>
     ///     If you can start building or complete steps on impassable terrain.
     /// </summary>
     [DataField]
@@ -99,7 +86,6 @@ public sealed partial class ConstructionPrototype : IPrototype
     public ProtoId<ConstructionPrototype>? Mirror { get; private set; }
 
     public IReadOnlyList<IConstructionCondition> Conditions => _conditions;
-    public IReadOnlyList<SpriteSpecifier> Layers => _layers ?? new List<SpriteSpecifier> { Icon ?? SpriteSpecifier.Invalid };
 }
 
 public enum ConstructionType

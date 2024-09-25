@@ -4,9 +4,6 @@
   startNode: start
   targetNode: bat
   category: construction-category-weapons
-  icon:
-    sprite: Objects/Weapons/Melee/baseball_bat.rsi
-    state: icon
   objectType: Item
 
 - type: construction
@@ -15,9 +12,6 @@
   startNode: start
   targetNode: ghost_sheet
   category: construction-category-clothing
-  icon:
-    sprite: Clothing/OuterClothing/Misc/ghostsheet.rsi
-    state: icon
   objectType: Item
 
 - type: construction
@@ -26,7 +20,6 @@
   startNode: start
   targetNode: cuffscable
   category: construction-category-tools
-  icon: { sprite: Objects/Misc/cablecuffs.rsi, state: cuff }
   objectType: Item
 
 - type: construction
@@ -35,7 +28,6 @@
   startNode: start
   targetNode: msstunprod
   category: construction-category-weapons
-  icon: { sprite: Objects/Weapons/Melee/stunprod.rsi, state: stunprod_off }
   objectType: Item
 
 - type: construction
@@ -45,9 +37,6 @@
   targetNode: muzzle
   category: construction-category-tools
   objectType: Item
-  icon:
-    sprite: Clothing/Mask/muzzle.rsi
-    state: icon
 
 - type: construction
   id: pneumaticcannon
@@ -56,9 +45,6 @@
   targetNode: cannon
   category: construction-category-weapons
   objectType: Item
-  icon:
-    sprite: Objects/Weapons/Guns/Cannons/pneumatic_cannon.rsi
-    state: icon
 
 - type: construction
   id: gauze
@@ -67,9 +53,6 @@
   targetNode: gauze
   category: construction-category-tools
   objectType: Item
-  icon:
-    sprite: Objects/Specific/Medical/medical.rsi
-    state: gauze
 
 - type: construction
   id: blindfold
@@ -78,9 +61,6 @@
   targetNode: blindfold
   category: construction-category-tools
   objectType: Item
-  icon:
-    sprite: Clothing/Eyes/Misc/blindfold.rsi
-    state: icon
 
 - type: construction
   id: flowerwreath
@@ -88,9 +68,6 @@
   startNode: start
   targetNode: flowerwreath
   category: construction-category-clothing
-  icon:
-    sprite: Clothing/Head/Misc/flower-wreath.rsi
-    state: icon
   objectType: Item
 
 - type: construction
@@ -100,9 +77,6 @@
   targetNode: rag
   category: construction-category-tools
   objectType: Item
-  icon:
-    sprite: Objects/Specific/Janitorial/rag.rsi
-    state: rag
 
 - type: construction
   id: improvisedshotgun
@@ -111,9 +85,6 @@
   targetNode: shotgun
   category: construction-category-weapons
   objectType: Item
-  icon:
-    sprite: Objects/Weapons/Guns/Shotguns/improvised_shotgun.rsi
-    state: icon
 
 - type: construction
   id: ShellShotgunImprovised
@@ -122,9 +93,6 @@
   targetNode: shell
   category: construction-category-weapons
   objectType: Item
-  icon:
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
-    state: improvised
 
 - type: construction
   id: riflestock
@@ -133,9 +101,6 @@
   targetNode: riflestock
   category: construction-category-weapons
   objectType: Item
-  icon:
-    sprite: Objects/Misc/rifle_stock.rsi
-    state: icon
 
 - type: construction
   id: firebomb
@@ -144,9 +109,6 @@
   targetNode: firebomb
   category: construction-category-weapons
   objectType: Item
-  icon:
-    sprite: Objects/Weapons/Bombs/ied.rsi
-    state: icon
 
 - type: construction
   id: CottonWovenCloth
@@ -154,9 +116,6 @@
   startNode: start
   targetNode: cottoncloth
   category: construction-category-misc
-  icon:
-    sprite: Objects/Materials/materials.rsi
-    state: cloth_3
   objectType: Item
 
 - type: construction
@@ -165,9 +124,6 @@
   startNode: start
   targetNode: strawhat
   category: construction-category-clothing
-  icon:
-    sprite: Clothing/Head/Hats/straw_hat.rsi
-    state: icon
   objectType: Item
 
 - type: construction
@@ -177,6 +133,3 @@
   targetNode: pipebomb
   category: construction-category-weapons
   objectType: Item
-  icon:
-    sprite: Objects/Weapons/Bombs/pipebomb.rsi
-    state: icon

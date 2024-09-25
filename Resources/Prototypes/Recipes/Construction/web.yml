@@ -4,9 +4,6 @@
   startNode: start
   targetNode: wall
   category: construction-category-structures
-  icon:
-    sprite: Structures/Walls/web.rsi
-    state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
@@ -23,9 +20,6 @@
   startNode: start
   targetNode: table
   category: construction-category-furniture
-  icon:
-    sprite: Structures/Furniture/Tables/web.rsi
-    state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
@@ -42,9 +36,6 @@
   startNode: start
   targetNode: bed
   category: construction-category-furniture
-  icon:
-    sprite: Structures/Web/bed.rsi
-    state: icon
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
@@ -61,9 +52,6 @@
   startNode: start
   targetNode: chair
   category: construction-category-furniture
-  icon:
-    sprite: Structures/Web/chair.rsi
-    state: icon
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -77,9 +65,6 @@
   startNode: start
   targetNode: crate
   category: construction-category-storage
-  icon:
-    sprite: Structures/Storage/Crates/web.rsi
-    state: icon
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
@@ -94,9 +79,6 @@
   startNode: start
   targetNode: door
   category: construction-category-structures
-  icon:
-    sprite: Structures/Doors/web_door.rsi
-    state: closed
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false

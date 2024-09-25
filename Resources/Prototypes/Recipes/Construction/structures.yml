@@ -4,9 +4,6 @@
   startNode: start
   targetNode: girder
   category: construction-category-structures
-  icon:
-    sprite: /Textures/Structures/Walls/solid.rsi
-    state: wall_girder
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
@@ -20,9 +17,6 @@
   startNode: start
   targetNode: reinforcedGirder
   category: construction-category-structures
-  icon:
-    sprite: /Textures/Structures/Walls/solid.rsi
-    state: reinforced_wall_girder
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
@@ -36,9 +30,6 @@
   startNode: start
   targetNode: clockGirder
   category: construction-category-structures
-  icon:
-    sprite: /Textures/Structures/Walls/clock.rsi
-    state: wall_gear
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
@@ -52,9 +43,6 @@
   startNode: start
   targetNode: wall
   category: construction-category-structures
-  icon:
-    sprite: Structures/Walls/solid.rsi
-    state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
@@ -68,9 +56,6 @@
   startNode: start
   targetNode: reinforcedWall
   category: construction-category-structures
-  icon:
-    sprite: Structures/Walls/solid.rsi
-    state: rgeneric
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
@@ -84,9 +69,6 @@
   startNode: start
   targetNode: clockworkWall
   category: construction-category-structures
-  icon:
-    sprite: Structures/Walls/clock.rsi
-    state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
@@ -100,9 +82,6 @@
   startNode: start
   targetNode: woodWall
   category: construction-category-structures
-  icon:
-    sprite: Structures/Walls/wood.rsi
-    state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
@@ -116,9 +95,6 @@
   startNode: start
   targetNode: uraniumWall
   category: construction-category-structures
-  icon:
-    sprite: Structures/Walls/uranium.rsi
-    state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
@@ -132,9 +108,6 @@
   startNode: start
   targetNode: silverWall
   category: construction-category-structures
-  icon:
-    sprite: Structures/Walls/silver.rsi
-    state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
@@ -148,9 +121,6 @@
   startNode: start
   targetNode: plasticWall
   category: construction-category-structures
-  icon:
-    sprite: Structures/Walls/plastic.rsi
-    state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
@@ -164,9 +134,6 @@
   startNode: start
   targetNode: plasmaWall
   category: construction-category-structures
-  icon:
-    sprite: Structures/Walls/plasma.rsi
-    state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
@@ -180,9 +147,6 @@
   startNode: start
   targetNode: goldWall
   category: construction-category-structures
-  icon:
-    sprite: Structures/Walls/gold.rsi
-    state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
@@ -196,9 +160,6 @@
   startNode: start
   targetNode: shuttleWall
   category: construction-category-structures
-  icon:
-    sprite: Structures/Walls/shuttle.rsi
-    state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
@@ -212,9 +173,6 @@
   startNode: start
   targetNode: shuttleInteriorWall
   category: construction-category-structures
-  icon:
-    sprite: Structures/Walls/shuttleinterior.rsi
-    state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
@@ -228,9 +186,6 @@
   startNode: start
   targetNode: diagonalshuttleWall
   category: construction-category-structures
-  icon:
-    sprite: Structures/Walls/shuttle_diagonal.rsi
-    state: state0
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: true
@@ -244,9 +199,6 @@
   startNode: start
   targetNode: bananiumWall
   category: construction-category-structures
-  icon:
-    sprite: Structures/Walls/clown.rsi
-    state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
@@ -260,9 +212,6 @@
   startNode: start
   targetNode: meatWall
   category: construction-category-structures
-  icon:
-    sprite: Structures/Walls/meat.rsi
-    state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
@@ -279,9 +228,6 @@
   conditions:
     - !type:TileNotBlocked
       failIfSpace: false
-  icon:
-    sprite: Structures/Walls/grille.rsi
-    state: grille
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
@@ -295,9 +241,6 @@
   conditions:
     - !type:TileNotBlocked
       failIfSpace: false
-  icon:
-    sprite: Structures/Walls/clockwork_grille.rsi
-    state: ratvargrille
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
@@ -311,9 +254,6 @@
   conditions:
     - !type:TileNotBlocked
       failIfSpace: false
-  icon:
-    sprite: Structures/Walls/grille.rsi
-    state: grille_diagonal
   objectType: Structure
   placementMode: SnapgridCenter
 
@@ -326,9 +266,6 @@
   conditions:
     - !type:TileNotBlocked
       failIfSpace: false
-  icon:
-    sprite: Structures/Walls/clockwork_grille.rsi
-    state: ratvargrille_diagonal
   objectType: Structure
   placementMode: SnapgridCenter
 
@@ -342,9 +279,6 @@
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
-  icon:
-    sprite: Structures/Windows/window.rsi
-    state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
@@ -359,9 +293,6 @@
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
-  icon:
-    sprite: Structures/Windows/window_diagonal.rsi
-    state: state1
   objectType: Structure
   placementMode: SnapgridCenter
 
@@ -375,9 +306,6 @@
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
-  icon:
-    sprite: Structures/Windows/reinforced_window.rsi
-    state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
@@ -392,9 +320,6 @@
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
-  icon:
-    sprite: Structures/Windows/reinforced_window_diagonal.rsi
-    state: state1
   objectType: Structure
   placementMode: SnapgridCenter
 
@@ -408,9 +333,6 @@
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
-  icon:
-    sprite: Structures/Windows/tinted_window.rsi
-    state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
@@ -425,9 +347,6 @@
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
-  icon:
-    sprite: Structures/Windows/clockwork_window.rsi
-    state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
@@ -442,9 +361,6 @@
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
-  icon:
-    sprite: Structures/Windows/clockwork_diagonal.rsi
-    state: state0
   objectType: Structure
   placementMode: SnapgridCenter
 
@@ -458,9 +374,6 @@
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
-  icon:
-    sprite: Structures/Windows/plasma_window.rsi
-    state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
@@ -475,9 +388,6 @@
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
-  icon:
-    sprite: Structures/Windows/reinforced_plasma_window.rsi
-    state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
@@ -492,9 +402,6 @@
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
-  icon:
-    sprite: Structures/Windows/shuttle_window.rsi
-    state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
@@ -509,9 +416,6 @@
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
-  icon:
-    sprite: Structures/Windows/plasma_diagonal.rsi
-    state: state1
   objectType: Structure
   placementMode: SnapgridCenter
 
@@ -525,9 +429,6 @@
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
-  icon:
-    sprite: Structures/Windows/reinforced_plasma_diagonal.rsi
-    state: state1
   objectType: Structure
   placementMode: SnapgridCenter
 
@@ -541,9 +442,6 @@
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
-  icon:
-    sprite: Structures/Windows/directional.rsi
-    state: window
   objectType: Structure
   placementMode: SnapgridCenter
 
@@ -557,9 +455,6 @@
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
-  icon:
-    sprite: Structures/Windows/directional.rsi
-    state: reinforced_window
   objectType: Structure
   placementMode: SnapgridCenter
 
@@ -573,9 +468,6 @@
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
-  icon:
-    sprite: Structures/Windows/directional.rsi
-    state: clock_window
   objectType: Structure
   placementMode: SnapgridCenter
 
@@ -589,9 +481,6 @@
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
-  icon:
-    sprite: Structures/Windows/directional.rsi
-    state: plasma_window
   objectType: Structure
   placementMode: SnapgridCenter
 
@@ -605,9 +494,6 @@
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
-  icon:
-    sprite: Structures/Windows/directional.rsi
-    state: plasma_reinforced_window
   objectType: Structure
   placementMode: SnapgridCenter
 
@@ -621,9 +507,6 @@
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
-  icon:
-    sprite: Structures/Windows/uranium_window.rsi
-    state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
@@ -638,9 +521,6 @@
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
-  icon:
-    sprite: Structures/Windows/reinforced_uranium_window.rsi
-    state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
@@ -655,9 +535,6 @@
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
-  icon:
-    sprite: Structures/Windows/uranium_window_diagonal.rsi
-    state: state1
   objectType: Structure
   placementMode: SnapgridCenter
 
@@ -671,9 +548,6 @@
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
-  icon:
-    sprite: Structures/Windows/reinforced_uranium_diagonal.rsi
-    state: state1
   objectType: Structure
   placementMode: SnapgridCenter
 
@@ -683,9 +557,6 @@
   startNode: start
   targetNode: Firelock
   category: construction-category-structures
-  icon:
-    sprite: Structures/Doors/Airlocks/Standard/firelock.rsi
-    state: closed
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
@@ -699,9 +570,6 @@
   startNode: start
   targetNode: FirelockGlass
   category: construction-category-structures
-  icon:
-    sprite: Structures/Doors/Airlocks/Glass/firelock.rsi
-    state: closed
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
@@ -715,9 +583,6 @@
   startNode: start
   targetNode: FirelockEdge
   category: construction-category-structures
-  icon:
-    sprite: Structures/Doors/edge_door_hazard.rsi
-    state: closed
   placementMode: SnapgridCenter
   objectType: Structure
   canBuildInImpassable: false
@@ -730,9 +595,6 @@
   startNode: start
   targetNode: Shutters
   category: construction-category-structures
-  icon:
-    sprite: Structures/Doors/Shutters/shutters.rsi
-    state: closed
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
@@ -743,9 +605,6 @@
   startNode: start
   targetNode: ShuttersWindow
   category: construction-category-structures
-  icon:
-    sprite: Structures/Doors/Shutters/shutters_window.rsi
-    state: closed
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
@@ -756,9 +615,6 @@
   startNode: start
   targetNode: ShuttersRadiation
   category: construction-category-structures
-  icon:
-    sprite: Structures/Doors/Shutters/shutters_radiation.rsi
-    state: closed
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
@@ -769,9 +625,6 @@
   startNode: start
   targetNode: blastdoor
   category: construction-category-structures
-  icon:
-    sprite: Structures/Doors/Shutters/blastdoor.rsi
-    state: closed
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
@@ -789,9 +642,6 @@
       targets:
         - Lattice
         - Plating
-  icon:
-    sprite: Structures/catwalk.rsi
-    state: catwalk_preview
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -808,9 +658,6 @@
     - !type:TileType
       targets:
         - Plating
-  icon:
-    sprite: Tiles/Misc/bananium.rsi
-    state: bananium
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -821,9 +668,6 @@
   startNode: start
   targetNode: barricadefull
   category: construction-category-structures
-  icon:
-    sprite: Structures/barricades.rsi
-    state: barricade_full
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -836,9 +680,6 @@
   startNode: start
   targetNode: barricadefull
   category: construction-category-structures
-  icon:
-    sprite: Structures/barricades.rsi
-    state: barricade_directional
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -851,9 +692,6 @@
   startNode: start
   targetNode: railing
   category: construction-category-structures
-  icon:
-    sprite: Structures/Walls/railing.rsi
-    state: side
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -866,9 +704,6 @@
   startNode: start
   targetNode: railingCorner
   category: construction-category-structures
-  icon:
-    sprite: Structures/Walls/railing.rsi
-    state: corner
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -881,9 +716,6 @@
   startNode: start
   targetNode: railingCornerSmall
   category: construction-category-structures
-  icon:
-    sprite: Structures/Walls/railing.rsi
-    state: corner_small
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -896,9 +728,6 @@
   startNode: start
   targetNode: railingRound
   category: construction-category-structures
-  icon:
-    sprite: Structures/Walls/railing.rsi
-    state: round
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -912,9 +741,6 @@
   startNode: start
   targetNode: straight
   category: construction-category-structures
-  icon:
-    sprite: Structures/Walls/fence.rsi
-    state: straight
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -927,9 +753,6 @@
   startNode: start
   targetNode: corner
   category: construction-category-structures
-  icon:
-    sprite: Structures/Walls/fence.rsi
-    state: corner
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -942,9 +765,6 @@
   startNode: start
   targetNode: end
   category: construction-category-structures
-  icon:
-    sprite: Structures/Walls/fence.rsi
-    state: end
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -957,9 +777,6 @@
   startNode: start
   targetNode: gate
   category: construction-category-structures
-  icon:
-    sprite: Structures/Walls/fence.rsi
-    state: door_closed
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -973,9 +790,6 @@
   startNode: start
   targetNode: straight
   category: construction-category-structures
-  icon:
-    sprite: Structures/Walls/wooden_fence.rsi
-    state: straight
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -988,9 +802,6 @@
   startNode: start
   targetNode: end
   category: construction-category-structures
-  icon:
-    sprite: Structures/Walls/wooden_fence.rsi
-    state: end
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -1003,9 +814,6 @@
   startNode: start
   targetNode: corner
   category: construction-category-structures
-  icon:
-    sprite: Structures/Walls/wooden_fence.rsi
-    state: corner
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -1018,9 +826,6 @@
   startNode: start
   targetNode: tjunction
   category: construction-category-structures
-  icon:
-    sprite: Structures/Walls/wooden_fence.rsi
-    state: tjunction
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -1033,9 +838,6 @@
   startNode: start
   targetNode: gate
   category: construction-category-structures
-  icon:
-    sprite: Structures/Walls/wooden_fence.rsi
-    state: door_closed
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -1049,9 +851,6 @@
   startNode: start
   targetNode: straight_small
   category: construction-category-structures
-  icon:
-    sprite: Structures/Walls/wooden_fence.rsi
-    state: straight_small
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -1064,9 +863,6 @@
   startNode: start
   targetNode: end_small
   category: construction-category-structures
-  icon:
-    sprite: Structures/Walls/wooden_fence.rsi
-    state: end_small
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -1079,9 +875,6 @@
   startNode: start
   targetNode: corner_small
   category: construction-category-structures
-  icon:
-    sprite: Structures/Walls/wooden_fence.rsi
-    state: corner_small
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -1094,9 +887,6 @@
   startNode: start
   targetNode: tjunction_small
   category: construction-category-structures
-  icon:
-    sprite: Structures/Walls/wooden_fence.rsi
-    state: tjunction_small
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -1109,9 +899,6 @@
   startNode: start
   targetNode: gate_small
   category: construction-category-structures
-  icon:
-    sprite: Structures/Walls/wooden_fence.rsi
-    state: door_closed_small
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -1125,9 +912,6 @@
   startNode: start
   targetNode: airlock
   category: construction-category-structures
-  icon:
-    sprite: Structures/Doors/Airlocks/Standard/basic.rsi
-    state: assembly
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -1140,9 +924,6 @@
   startNode: start
   targetNode: glassAirlock
   category: construction-category-structures
-  icon:
-    sprite: Structures/Doors/Airlocks/Glass/glass.rsi
-    state: assembly
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -1155,9 +936,6 @@
   startNode: start
   targetNode: airlock
   category: construction-category-structures
-  icon:
-    sprite: Structures/Doors/Airlocks/Standard/clockwork_pinion.rsi
-    state: assembly
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -1170,9 +948,6 @@
   startNode: start
   targetNode: glassAirlock
   category: construction-category-structures
-  icon:
-    sprite: Structures/Doors/Airlocks/Glass/clockwork_pinion.rsi
-    state: assembly
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -1185,9 +960,6 @@
   startNode: start
   targetNode: airlock
   category: construction-category-structures
-  icon:
-    sprite: Structures/Doors/Airlocks/Glass/shuttle.rsi
-    state: closed
   #  state: assembly
   objectType: Structure
   placementMode: SnapgridCenter
@@ -1201,9 +973,6 @@
   startNode: start
   targetNode: airlockGlass
   category: construction-category-structures
-  icon:
-    sprite: Structures/Doors/Airlocks/Glass/shuttle.rsi
-    state: closed
   #  state: assembly
   objectType: Structure
   placementMode: SnapgridCenter
@@ -1217,9 +986,6 @@
   startNode: start
   targetNode: windoor
   category: construction-category-structures
-  icon:
-    sprite: Structures/Doors/Windoors/windoor.rsi
-    state: closed
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -1232,9 +998,6 @@
   startNode: start
   targetNode: windoorSecure
   category: construction-category-structures
-  icon:
-    sprite: Structures/Doors/Windoors/windoor.rsi
-    state: closed
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -1247,9 +1010,6 @@
   startNode: start
   targetNode: windoorClockwork
   category: construction-category-structures
-  icon:
-    sprite: Structures/Doors/Windoors/clockwork_windoor.rsi
-    state: closed
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -1263,9 +1023,6 @@
   startNode: start
   targetNode: tubeLight
   category: construction-category-structures
-  icon:
-    sprite: Structures/Wallmounts/Lighting/light_tube.rsi
-    state: base
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: true
@@ -1281,9 +1038,6 @@
   startNode: start
   targetNode: bulbLight
   category: construction-category-structures
-  icon:
-    sprite: Structures/Wallmounts/Lighting/light_small.rsi
-    state: base
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: true
@@ -1298,9 +1052,6 @@
   startNode: start
   targetNode: groundLight
   category: construction-category-structures
-  icon:
-    sprite: Structures/Lighting/LightPosts/small_light_post.rsi
-    state: base
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
@@ -1314,9 +1065,6 @@
   startNode: start
   targetNode: strobeLight
   category: construction-category-structures
-  icon:
-    sprite: Structures/Wallmounts/Lighting/strobe_light.rsi
-    state: base
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: true
@@ -1334,9 +1082,6 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
-  icon:
-    sprite: Structures/conveyor.rsi
-    state: conveyor_stopped_cw
   conditions:
     - !type:TileNotBlocked
 
@@ -1349,9 +1094,6 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
-  icon:
-    sprite: Structures/Doors/MineralDoors/metal_door.rsi
-    state: closed
   conditions:
     - !type:TileNotBlocked
 
@@ -1364,9 +1106,6 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
-  icon:
-    sprite: Structures/Doors/MineralDoors/wood_door.rsi
-    state: closed
   conditions:
     - !type:TileNotBlocked
 
@@ -1379,9 +1118,6 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
-  icon:
-    sprite: Structures/Doors/MineralDoors/plasma_door.rsi
-    state: closed
   conditions:
     - !type:TileNotBlocked
 
@@ -1394,9 +1130,6 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
-  icon:
-    sprite: Structures/Doors/MineralDoors/gold_door.rsi
-    state: closed
   conditions:
     - !type:TileNotBlocked
 
@@ -1409,9 +1142,6 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
-  icon:
-    sprite: Structures/Doors/MineralDoors/silver_door.rsi
-    state: closed
   conditions:
     - !type:TileNotBlocked
 
@@ -1424,9 +1154,6 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
-  icon:
-    sprite: Structures/Doors/MineralDoors/paper_door.rsi
-    state: closed
 
 - type: construction
   id: PlasticFlapsClear
@@ -1437,9 +1164,6 @@
   placementMode: SnapgridCenter
   objectType: Structure
   canBuildInImpassable: false
-  icon:
-    sprite: Structures/plastic_flaps.rsi
-    state: plasticflaps
   conditions:
     - !type:TileNotBlocked
 
@@ -1452,9 +1176,6 @@
   placementMode: SnapgridCenter
   objectType: Structure
   canBuildInImpassable: false
-  icon:
-    sprite: Structures/plastic_flaps.rsi
-    state: plasticflaps
   conditions:
     - !type:TileNotBlocked
 
@@ -1467,9 +1188,6 @@
   placementMode: SnapgridCenter
   objectType: Structure
   canBuildInImpassable: false
-  icon:
-    sprite: Structures/Specific/carp_statue.rsi
-    state: icon
   conditions:
   - !type:TileNotBlocked
 
@@ -1482,9 +1200,6 @@
   placementMode: SnapgridCenter
   objectType: Structure
   canBuildInImpassable: false
-  icon:
-    sprite: Structures/Decoration/statues.rsi
-    state: bananium_clown
   conditions:
     - !type:TileNotBlocked
 
@@ -1497,9 +1212,6 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
-  icon:
-    sprite: Structures/Doors/MineralDoors/bananium_door.rsi
-    state: closed
   conditions:
     - !type:TileNotBlocked
 
@@ -1509,9 +1221,6 @@
   startNode: start
   targetNode: bananiumAltar
   category: construction-category-structures
-  icon:
-    sprite: Structures/Furniture/Altars/Cults/bananium.rsi
-    state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
@@ -1530,8 +1239,5 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
-  icon:
-    sprite: Structures/Doors/secret_door.rsi
-    state: closed
   conditions:
     - !type:TileNotBlocked

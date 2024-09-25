@@ -5,9 +5,6 @@
   targetNode: bot
   category: construction-category-utilities
   objectType: Item
-  icon:
-    sprite: Mobs/Silicon/Bots/cleanbot.rsi
-    state: cleanbot
 
 - type: construction
   id: honkbot
@@ -16,9 +13,6 @@
   targetNode: bot
   category: construction-category-utilities
   objectType: Item
-  icon:
-    sprite: Mobs/Silicon/Bots/honkbot.rsi
-    state: honkbot
 
 - type: construction
   id: jonkbot
@@ -27,9 +21,6 @@
   targetNode: bot
   category: construction-category-utilities
   objectType: Item
-  icon:
-    sprite: Mobs/Silicon/Bots/honkbot.rsi
-    state: jonkbot
 
 - type: construction
   id: medibot
@@ -38,9 +29,6 @@
   targetNode: bot
   category: construction-category-utilities
   objectType: Item
-  icon:
-    sprite: Mobs/Silicon/Bots/medibot.rsi
-    state: medibot
 
 - type: construction
   id: mimebot
@@ -49,9 +37,6 @@
   targetNode: bot
   category: construction-category-utilities
   objectType: Item
-  icon:
-    sprite: Mobs/Silicon/Bots/mimebot.rsi
-    state: mimebot
 
 - type: construction
   id: supplybot
@@ -60,6 +45,3 @@
   targetNode: bot
   category: construction-category-utilities
   objectType: Item
-  icon:
-    sprite: Mobs/Silicon/Bots/supplybot.rsi
-    state: supplybot

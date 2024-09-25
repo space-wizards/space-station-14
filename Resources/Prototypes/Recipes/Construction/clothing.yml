@@ -4,7 +4,6 @@
   startNode: start
   targetNode: clownHardsuit
   category: construction-category-clothing
-  icon: { sprite: Clothing/OuterClothing/Hardsuits/clown.rsi, state: icon }
   objectType: Item
 
 - type: construction
@@ -13,7 +12,6 @@
   startNode: start
   targetNode: mimeHardsuit
   category: construction-category-clothing
-  icon: { sprite: Clothing/OuterClothing/Hardsuits/mime.rsi, state: icon }
   objectType: Item
 
 - type: construction
@@ -22,7 +20,6 @@
   startNode: start
   targetNode: armor
   category: construction-category-clothing
-  icon: { sprite: Clothing/OuterClothing/Armor/bone_armor.rsi, state: icon }
   objectType: Item
 
 - type: construction
@@ -31,7 +28,6 @@
   startNode: start
   targetNode: helmet
   category: construction-category-clothing
-  icon: { sprite: Clothing/Head/Helmets/bone_helmet.rsi, state: icon }
   objectType: Item
 
 - type: construction
@@ -40,7 +36,6 @@
   startNode: start
   targetNode: mask
   category: construction-category-clothing
-  icon: { sprite: Clothing/Mask/clown_banana.rsi, state: icon }
   objectType: Item
 
 - type: construction
@@ -49,7 +44,6 @@
   startNode: start
   targetNode: jumpsuit
   category: construction-category-clothing
-  icon: { sprite: Clothing/Uniforms/Jumpsuit/clown_banana.rsi, state: icon }
   objectType: Item
 
 - type: construction
@@ -58,7 +52,6 @@
   startNode: start
   targetNode: shoes
   category: construction-category-clothing
-  icon: { sprite: Clothing/Shoes/Specific/clown_banana.rsi, state: icon }
   objectType: Item
 
 - type: construction
@@ -67,7 +60,6 @@
   startNode: start
   targetNode: medsecHud
   category: construction-category-clothing
-  icon: { sprite: Clothing/Eyes/Hud/medsec.rsi, state: icon }
   objectType: Item
 
 - type: construction
@@ -76,7 +68,6 @@
   startNode: start
   targetNode: shoes
   category: construction-category-clothing
-  icon: { sprite: Clothing/Shoes/Misc/duck-slippers.rsi, state: icon }
   objectType: Item
 
 - type: construction
@@ -85,7 +76,6 @@
   startNode: start
   targetNode: glassesSec
   category: construction-category-clothing
-  icon: { sprite: Clothing/Eyes/Glasses/secglasses.rsi, state: icon }
   objectType: Item
 
 - type: construction
@@ -94,7 +84,6 @@
   startNode: start
   targetNode: Quiver
   category: construction-category-clothing
-  icon: { sprite: Clothing/Belt/quiver.rsi, state: icon }
   objectType: Item
 
 - type: construction
@@ -103,5 +92,4 @@
   startNode: start
   targetNode: helmet
   category: construction-category-clothing
-  icon: { sprite: Clothing/Head/Helmets/justice.rsi, state: icon }
   objectType: Item
