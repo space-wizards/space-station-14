@@ -777,14 +777,10 @@
     NuclearCola:
       amount: 10 # assuming we loose all o2 released as gas in the centrifugal process
   products:
-    Ipecac:
-      amount: 2
-    Water:
-      amount: 2
-    Sugar:
-      amount: 2
-    Uranium:
-      amount: 1
+    Ipecac: 2
+    Water: 2
+    Sugar: 2
+    Uranium: 1
 
 - type: reaction
   id: Patron
