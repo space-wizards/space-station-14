@@ -1,0 +1,54 @@
+# Base Alcohol
+
+# Mixed Alcohol
+
+- type: reagent
+  id: AviationCocktail
+  name: reagent-name-aviation
+  parent: BaseAlcohol
+  desc: reagent-desc-aviation
+  physicalDesc: reagent-physical-desc-tart
+  flavor: alcohol
+  color: "#8484d4"
+  metamorphicSprite:
+    sprite: Harmony/Objects/Consumable/Drinks/aviationcocktail.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.25
+
+- type: reagent
+  id: EspressoMartini
+  name: reagent-name-espresso-martini
+  parent: BaseAlcohol
+  desc: reagent-desc-espresso-martini
+  physicalDesc: reagent-physical-desc-energizing
+  flavor: coffeeliquor
+  color: "#252010"
+  metamorphicSprite:
+    sprite: Harmony/Objects/Consumable/Drinks/espressomartiniglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.1
+      - !type:GenericStatusEffect
+        key: Drowsiness
+        time: 2.0
+        type: Remove
+

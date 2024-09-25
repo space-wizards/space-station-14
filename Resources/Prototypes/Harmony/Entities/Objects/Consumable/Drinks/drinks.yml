@@ -1,0 +1,48 @@
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkAviationGlass
+  suffix: aviation
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: AviationCocktail
+          Quantity: 30
+  - type: Icon
+    sprite: Harmony/Objects/Consumable/Drinks/aviationcocktail.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkEspressoMartini
+  suffix: espresso martini
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: EspressoMartini
+          Quantity: 30
+  - type: Icon
+    sprite: Harmony/Objects/Consumable/Drinks/espressomartiniglass.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkSunsetSodaGlass
+  suffix: sunset soda
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: SunsetSoda
+          Quantity: 30
+  - type: Icon
+    sprite: Harmony/Objects/Consumable/Drinks/sunset-soda.rsi
+    state: icon
