@@ -867,7 +867,6 @@
   metamorphicChangeColor: false
   metabolisms:
     Drink:
-      metabolismRate: 0.5
       effects:
       - !type:SatiateThirst
         factor: 2
