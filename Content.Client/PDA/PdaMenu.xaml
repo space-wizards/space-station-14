@@ -65,11 +65,6 @@
                                        Access="Public"
                                        Text="{Loc 'comp-pda-ui-ringtone-button'}"
                                        Description="{Loc 'comp-pda-ui-ringtone-button-description'}"/>
-                <pda:PdaSettingsButton Name="ActivateMusicButton"
-                                       Access="Public"
-                                       Visible="False"
-                                       Text="{Loc 'pda-bound-user-interface-music-button'}"
-                                       Description="{Loc 'pda-bound-user-interface-music-button-description'}"/>
                 <pda:PdaSettingsButton Name="ShowUplinkButton"
                                        Access="Public"
                                        Visible="False"

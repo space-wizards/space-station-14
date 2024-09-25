@@ -48,7 +48,6 @@ namespace Content.Server.PDA
             SubscribeLocalEvent<PdaComponent, PdaRequestUpdateInterfaceMessage>(OnUiMessage);
             SubscribeLocalEvent<PdaComponent, PdaToggleFlashlightMessage>(OnUiMessage);
             SubscribeLocalEvent<PdaComponent, PdaShowRingtoneMessage>(OnUiMessage);
-            SubscribeLocalEvent<PdaComponent, PdaShowMusicMessage>(OnUiMessage);
             SubscribeLocalEvent<PdaComponent, PdaShowUplinkMessage>(OnUiMessage);
             SubscribeLocalEvent<PdaComponent, PdaLockUplinkMessage>(OnUiMessage);
 
@@ -168,7 +167,6 @@ namespace Content.Server.PDA
                 return;
 
             var address = GetDeviceNetAddress(uid);
-            var hasInstrument = HasComp<InstrumentComponent>(uid);
             var showUplink = HasComp<UplinkComponent>(uid) && IsUnlocked(uid);
 
             UpdateStationName(uid, pda);
@@ -198,7 +196,6 @@ namespace Content.Server.PDA
                 },
                 pda.StationName,
                 showUplink,
-                hasInstrument,
                 address);
 
             _ui.SetUiState(uid, PdaUiKey.Key, state);
@@ -237,15 +234,6 @@ namespace Content.Server.PDA
 
             if (HasComp<RingerComponent>(uid))
                 _ringer.ToggleRingerUI(uid, msg.Actor);
-        }
-
-        private void OnUiMessage(EntityUid uid, PdaComponent pda, PdaShowMusicMessage msg)
-        {
-            if (!PdaUiKey.Key.Equals(msg.UiKey))
-                return;
-
-            if (TryComp<InstrumentComponent>(uid, out var instrument))
-                _instrument.ToggleInstrumentUi(uid, msg.Actor, instrument);
         }
 
         private void OnUiMessage(EntityUid uid, PdaComponent pda, PdaShowUplinkMessage msg)

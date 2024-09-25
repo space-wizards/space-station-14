@@ -14,7 +14,6 @@ namespace Content.Shared.PDA
         public PdaIdInfoText PdaOwnerInfo;
         public string? StationName;
         public bool HasUplink;
-        public bool CanPlayMusic;
         public string? Address;
 
         public PdaUpdateState(
@@ -26,7 +25,6 @@ namespace Content.Shared.PDA
             PdaIdInfoText pdaOwnerInfo,
             string? stationName,
             bool hasUplink = false,
-            bool canPlayMusic = false,
             string? address = null)
             : base(programs, activeUI)
         {
@@ -35,7 +33,6 @@ namespace Content.Shared.PDA
             HasPai = hasPai;
             PdaOwnerInfo = pdaOwnerInfo;
             HasUplink = hasUplink;
-            CanPlayMusic = canPlayMusic;
             StationName = stationName;
             Address = address;
         }
