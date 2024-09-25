@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: portfiend
-  changes:
-  - message: Reptilians display correct mask sprites in character customization screen.
-    type: Fix
-  id: 6933
-  time: '2024-07-18T22:36:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30095
-- author: Plykiya
-  changes:
-  - message: You no longer deal double damage to your first target when throwing an
-      item.
-    type: Fix
-  id: 6934
-  time: '2024-07-19T01:08:52.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30115
 - author: deepdarkdepths
   changes:
   - message: Removed the description about geras in the Slime guidebook section.
@@ -3929,3 +3914,17 @@
   id: 7432
   time: '2024-09-24T17:02:52.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32194
+- author: PJB3005
+  changes:
+  - message: Fixed some people's preferences taking ages to load, hopefully.
+    type: Fix
+  id: 7433
+  time: '2024-09-24T20:43:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32434
+- author: Moomoobeef
+  changes:
+  - message: Most papers are no longer considered trash.
+    type: Tweak
+  id: 7434
+  time: '2024-09-24T21:58:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32343
