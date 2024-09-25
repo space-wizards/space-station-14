@@ -1364,16 +1364,16 @@
     - sprite: Mobs/Customization/human_hair.rsi
       state: classiclong3
 - type: marking
-  id: HumanHairArtist
+  id: HumanHairShaped
   bodyPart: Hair
   markingCategory: Hair
   sprites:
     - sprite: Mobs/Customization/human_hair.rsi
-      state: artist
+      state: shaped
 - type: marking
-  id: HumanHairCapsdaughter
+  id: HumanHairLongBow
   bodyPart: Hair
   markingCategory: Hair
   sprites:
     - sprite: Mobs/Customization/human_hair.rsi
-      state: capsdaughter
+      state: longbow
