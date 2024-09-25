@@ -93,7 +93,7 @@ public abstract class SharedNavMapSystem : EntitySystem
     public void RequestWarpTo(EntityUid uid, Vector2 target)
     {
         var message = new MapWarpRequest(GetNetEntity(uid), target);
-        RaiseNetworkEvent(message);
+        RaisePredictiveEvent(message);
     }
 
     private void OnMapWarp(MapWarpRequest args)
@@ -112,8 +112,9 @@ public abstract class SharedNavMapSystem : EntitySystem
         if (xform.MapUid is null)
             return;
 
-        _audio.PlayGlobal(warpComp.Sounds,
-            GetEntity(args.Uid),
+        _audio.PlayPredicted(warpComp.Sounds,
+            uid,
+            uid,
             AudioParams.Default.WithVariation(warpComp.PitchVariation));
 
         // This was designed for incorporeal entities, thus there aren't any collision checks or anything
