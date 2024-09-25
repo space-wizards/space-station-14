@@ -67,6 +67,7 @@ public sealed partial class AtmosphereSystem
 
        // 7: Water
        mixtures[7].AdjustMoles(Gas.Water, Atmospherics.MolesCellGasMiner);
+       mixtures[7].Temperature = 40f; // god help us all
 
        foreach (var arg in args)
        {

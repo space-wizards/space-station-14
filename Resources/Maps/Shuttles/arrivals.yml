@@ -46,13 +46,13 @@ entities:
       linearDamping: 0.05
       fixedRotation: False
       bodyType: Dynamic
+    - type: Fixtures
+      fixtures: {}
     - type: Gravity
       gravityShakeSound: !type:SoundPathSpecifier
         path: /Audio/Effects/alert.ogg
       inherent: True
       enabled: True
-    - type: Fixtures
-      fixtures: {}
     - type: OccluderTree
     - type: SpreaderGrid
     - type: Shuttle
@@ -100,6 +100,57 @@ entities:
     - type: GridAtmosphere
       version: 2
       data:
+        tiles:
+          0,0:
+            0: 1263
+            1: 41216
+          0,-1:
+            0: 49124
+            1: 1
+          -1,0:
+            1: 132
+          1,0:
+            0: 1
+            1: 292
+          1,-1:
+            0: 12544
+            1: 1057
+          -1,-1:
+            1: 1152
+            0: 32768
+          0,-2:
+            0: 16384
+        uniqueMixes:
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 21.824879
+          - 82.10312
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          immutable: True
+          moles:
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
         chunkSize: 4
     - type: GasTileOverlay
     - type: RadiationGridResistance

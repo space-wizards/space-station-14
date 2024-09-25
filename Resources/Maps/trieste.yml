@@ -1158,14 +1158,6 @@ entities:
     - type: Transform
       pos: 23.5,24.5
       parent: 2
-- proto: BoozeDispenser
-  entities:
-  - uid: 1492
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 42.5,23.5
-      parent: 2
 - proto: BrigTimer
   entities:
   - uid: 546
@@ -17121,12 +17113,167 @@ entities:
       parent: 2
     - type: Physics
       canCollide: False
+- proto: SpawnPointBotanist
+  entities:
+  - uid: 3526
+    components:
+    - type: Transform
+      pos: 12.5,38.5
+      parent: 2
+  - uid: 3527
+    components:
+    - type: Transform
+      pos: 12.5,36.5
+      parent: 2
+- proto: SpawnPointCaptain
+  entities:
+  - uid: 1492
+    components:
+    - type: Transform
+      pos: 46.5,7.5
+      parent: 2
+- proto: SpawnPointCargoTechnician
+  entities:
+  - uid: 3519
+    components:
+    - type: Transform
+      pos: -0.5,7.5
+      parent: 2
+  - uid: 3520
+    components:
+    - type: Transform
+      pos: -0.5,6.5
+      parent: 2
+- proto: SpawnPointChef
+  entities:
+  - uid: 3525
+    components:
+    - type: Transform
+      pos: 18.5,39.5
+      parent: 2
+- proto: SpawnPointChiefMedicalOfficer
+  entities:
+  - uid: 3515
+    components:
+    - type: Transform
+      pos: 46.5,9.5
+      parent: 2
 - proto: SpawnPointLatejoin
   entities:
   - uid: 267
     components:
     - type: Transform
       pos: 31.5,6.5
+      parent: 2
+- proto: SpawnPointMedicalDoctor
+  entities:
+  - uid: 3516
+    components:
+    - type: Transform
+      pos: 3.5,-6.5
+      parent: 2
+  - uid: 3517
+    components:
+    - type: Transform
+      pos: -0.5,-9.5
+      parent: 2
+  - uid: 3518
+    components:
+    - type: Transform
+      pos: -0.5,-10.5
+      parent: 2
+- proto: SpawnPointMusician
+  entities:
+  - uid: 3528
+    components:
+    - type: Transform
+      pos: 34.5,36.5
+      parent: 2
+- proto: SpawnPointParamedic
+  entities:
+  - uid: 3536
+    components:
+    - type: Transform
+      pos: 5.5,-9.5
+      parent: 2
+- proto: SpawnPointPassenger
+  entities:
+  - uid: 3521
+    components:
+    - type: Transform
+      pos: 10.5,23.5
+      parent: 2
+  - uid: 3522
+    components:
+    - type: Transform
+      pos: 14.5,23.5
+      parent: 2
+  - uid: 3523
+    components:
+    - type: Transform
+      pos: 19.5,23.5
+      parent: 2
+  - uid: 3524
+    components:
+    - type: Transform
+      pos: 23.5,23.5
+      parent: 2
+- proto: SpawnPointQuartermaster
+  entities:
+  - uid: 3514
+    components:
+    - type: Transform
+      pos: 46.5,5.5
+      parent: 2
+- proto: SpawnPointSalvageSpecialist
+  entities:
+  - uid: 3534
+    components:
+    - type: Transform
+      pos: -20.5,10.5
+      parent: 2
+  - uid: 3535
+    components:
+    - type: Transform
+      pos: -18.5,10.5
+      parent: 2
+- proto: SpawnPointSecurityCadet
+  entities:
+  - uid: 3533
+    components:
+    - type: Transform
+      pos: 31.5,-14.5
+      parent: 2
+- proto: SpawnPointSecurityOfficer
+  entities:
+  - uid: 3531
+    components:
+    - type: Transform
+      pos: 30.5,-13.5
+      parent: 2
+  - uid: 3532
+    components:
+    - type: Transform
+      pos: 32.5,-13.5
+      parent: 2
+- proto: SpawnPointServiceWorker
+  entities:
+  - uid: 3529
+    components:
+    - type: Transform
+      pos: 41.5,25.5
+      parent: 2
+  - uid: 3530
+    components:
+    - type: Transform
+      pos: 41.5,23.5
+      parent: 2
+- proto: SpawnPointWarden
+  entities:
+  - uid: 268
+    components:
+    - type: Transform
+      pos: 31.5,-13.5
       parent: 2
 - proto: StairDark
   entities:
