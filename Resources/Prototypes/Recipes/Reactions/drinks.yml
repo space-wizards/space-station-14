@@ -769,6 +769,20 @@
     NuclearCola: 5
 
 - type: reaction
+  id: NuclearColaBreakdown
+  source: true
+  requiredMixerCategories:
+  - Centrifuge
+  reactants:
+    NuclearCola:
+      amount: 10
+  products:
+    Cola:
+      amount: 9
+    Uranium:
+      amount: 1
+
+- type: reaction
   id: Patron
   requiredMixerCategories:
   - Shake
