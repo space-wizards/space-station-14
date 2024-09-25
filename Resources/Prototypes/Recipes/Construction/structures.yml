@@ -1546,6 +1546,7 @@
   startNode: start
   targetNode: solidSecretDoor
   category: construction-category-structures
+  suffix: true
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false

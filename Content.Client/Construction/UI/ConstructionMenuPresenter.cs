@@ -257,10 +257,18 @@ namespace Content.Client.Construction.UI
 
             _constructionView.ClearRecipeInfo();
 
+            if (!_constructionSystem.TryGetRecipePrototype(prototype.ID, out var targetProtoId))
+                return;
+
+            if (!_prototypeManager.TryIndex(targetProtoId, out EntityPrototype? proto))
+                return;
+
             _constructionView.SetRecipeInfo(
-                prototype.Name!,
+                prototype.Suffix && proto.EditorSuffix is not null
+                    ? $"{prototype.Name} [{proto.EditorSuffix.ToLower()}]"
+                    : prototype.Name!,
                 prototype.Description!,
-                _constructionSystem.TryGetRecipePrototype(prototype.ID, out var targetProto) ? targetProto : null,
+                proto,
                 prototype.Type != ConstructionType.Item,
                 !_favoritedRecipes.Contains(prototype));
 
