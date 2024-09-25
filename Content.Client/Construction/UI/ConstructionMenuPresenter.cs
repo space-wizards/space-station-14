@@ -264,9 +264,7 @@ namespace Content.Client.Construction.UI
                 return;
 
             _constructionView.SetRecipeInfo(
-                prototype.Suffix && proto.EditorSuffix is not null
-                    ? $"{prototype.Name} [{proto.EditorSuffix.ToLower()}]"
-                    : prototype.Name!,
+                prototype.Name!,
                 prototype.Description!,
                 proto,
                 prototype.Type != ConstructionType.Item,

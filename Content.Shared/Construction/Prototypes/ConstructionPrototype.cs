@@ -33,12 +33,6 @@ public sealed partial class ConstructionPrototype : IPrototype
     public string? Description;
 
     /// <summary>
-    /// If <c>true</c>, the suffix will be displayed in the item name in the construction menu.
-    /// </summary>
-    [DataField]
-    public bool Suffix = false;
-
-    /// <summary>
     ///     The <see cref="ConstructionGraphPrototype"/> this construction will be using.
     /// </summary>
     [DataField(required: true)]
