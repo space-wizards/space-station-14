@@ -1,9 +1,7 @@
 using Content.Shared.Chat;
-using Content.Shared.Radio;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
-using Robust.Shared.Timing;
 
 namespace Content.Shared.Telephone;
 
@@ -39,25 +37,25 @@ public sealed partial class TelephoneComponent : Component
     /// The time at which the next tone will be played
     /// </summary>
     [DataField]
-    public TimeSpan NextToneTime;
+    public TimeSpan NextRingToneTime;
 
     /// <summary>
-    /// Toggles whether people nearby can participate in the call
+    /// The volume at which relayed messages are played
     /// </summary>
     [DataField]
-    public bool IsConferenceCall = false;
+    public TelephoneVolume SpeakerVolume;
 
     /// <summary>
-    /// The person using the phone
+    /// The range at which the telephone can connect to another
     /// </summary>
-    [ViewVariables]
-    public EntityUid? User;
+    [DataField]
+    public TelephoneRange Range;
 
     /// <summary>
     /// Linked telephone
     /// </summary>
     [ViewVariables]
-    public EntityUid? LinkedTelephone;
+    public HashSet<Entity<TelephoneComponent>> LinkedTelephones = new();
 
     /// <summary>
     /// Defines the current state the telephone is in
@@ -70,6 +68,12 @@ public sealed partial class TelephoneComponent : Component
     /// </summary>
     [ViewVariables]
     public TimeSpan StateStartTime;
+
+    /// <summary>
+    /// Sets whether the telphone can pick up nearby speech
+    /// </summary>
+    [ViewVariables]
+    public bool Muted = false;
 }
 
 #region: Telephone events
@@ -78,7 +82,7 @@ public sealed partial class TelephoneComponent : Component
 /// Raised when one telephone is attempting to call another
 /// </summary>
 [ByRefEvent]
-public record struct TelephoneCallAttemptEvent(EntityUid Source, EntityUid Receiver, EntityUid? User)
+public record struct TelephoneCallAttemptEvent(Entity<TelephoneComponent> Source, Entity<TelephoneComponent> Receiver, EntityUid? User)
 {
     public bool Cancelled = false;
 }
@@ -87,19 +91,19 @@ public record struct TelephoneCallAttemptEvent(EntityUid Source, EntityUid Recei
 /// Raised when one telephone is calling another
 /// </summary>
 [ByRefEvent]
-public record struct TelephoneCallEvent(EntityUid Source, EntityUid Receiver, EntityUid? User);
+public record struct TelephoneCallEvent(Entity<TelephoneComponent> Source, Entity<TelephoneComponent> Receiver, EntityUid? User);
 
 /// <summary>
 /// Raised when a call commences between two telephones
 /// </summary>
 [ByRefEvent]
-public record struct TelephoneCallCommencedEvent(EntityUid Source, EntityUid Receiver);
+public record struct TelephoneCallCommencedEvent(Entity<TelephoneComponent> Source, Entity<TelephoneComponent> Receiver);
 
 /// <summary>
 /// Raised when a telephone hangs up
 /// </summary>
 [ByRefEvent]
-public record struct TelephoneHungUpEvent(EntityUid Source);
+public record struct TelephoneCallEndedEvent(Entity<TelephoneComponent> Source);
 
 /// <summary>
 /// Raised when a telephone becomes idle
@@ -107,12 +111,22 @@ public record struct TelephoneHungUpEvent(EntityUid Source);
 [ByRefEvent]
 public record struct TelephoneCallTerminatedEvent();
 
-
 [ByRefEvent]
-public readonly record struct TelephoneMessageReceivedEvent(string Message, EntityUid MessageSource, EntityUid TelephoneSource, MsgChatMessage ChatMsg);
-
+public readonly record struct TelephoneMessageReceivedEvent(string Message, EntityUid MessageSource, Entity<TelephoneComponent> TelephoneSource, MsgChatMessage ChatMsg);
 
 #endregion
+
+/// <summary>
+/// Options for tailoring telephone calls
+/// </summary>
+[Serializable, NetSerializable]
+public struct TelephoneCallOptions
+{
+    public bool ForceConnect;   // The source immediately opens a call with the receiver, potentially interupting a call already in progress 
+    public bool ForceJoin;      // The source and can smoothly join a call in progress, ringing the reciever if there is none
+    public bool MuteSource;     // Chatter from the source is not transmitted - could be used for eavesdropping when combined with 'ForceJoin'
+    public bool MuteReceiver;   // Chatter from the receiver - useful for emergency broadcasts
+}
 
 [Serializable, NetSerializable]
 public enum TelephoneVisuals : byte
@@ -127,5 +141,20 @@ public enum TelephoneState : byte
     Calling,
     Ringing,
     InCall,
-    HangingUp
+    Ending
+}
+
+[Serializable, NetSerializable]
+public enum TelephoneVolume : byte
+{
+    Whisper,
+    Speak
+}
+
+[Serializable, NetSerializable]
+public enum TelephoneRange : byte
+{
+    Grid,
+    Map,
+    Unlimited
 }

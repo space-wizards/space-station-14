@@ -16,7 +16,7 @@ public sealed class HolopadBoundUserInterface : BoundUserInterface
 
         _menu.SendHolopadStartNewCallMessageAction += SendHolopadStartNewCallMessage;
         _menu.SendHolopadAnswerCallMessageAction += SendHolopadAnswerCallMessage;
-        _menu.SendHolopadHangUpOnCallMessageAction += SendHolopadHangUpOnCallMessage;
+        _menu.SendHolopadEndCallMessageAction += SendHolopadEndCallMessage;
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
@@ -40,8 +40,8 @@ public sealed class HolopadBoundUserInterface : BoundUserInterface
         SendMessage(new HolopadAnswerCallMessage());
     }
 
-    public void SendHolopadHangUpOnCallMessage()
+    public void SendHolopadEndCallMessage()
     {
-        SendMessage(new HolopadHangUpOnCallMessage());
+        SendMessage(new HolopadEndCallMessage());
     }
 }

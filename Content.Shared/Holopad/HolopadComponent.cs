@@ -13,7 +13,13 @@ public sealed partial class HolopadComponent : Component
     /// The entity being projected by the holopad
     /// </summary>
     [ViewVariables]
-    public EntityUid? Hologram;
+    public Entity<HolopadHologramComponent>? Hologram;
+
+    /// <summary>
+    /// The entity using the holopad
+    /// </summary>
+    [ViewVariables]
+    public Entity<HolopadUserComponent>? User;
 
     /// <summary>
     /// Proto ID for the user's hologram
@@ -64,7 +70,7 @@ public sealed class HolopadAnswerCallMessage : BoundUserInterfaceMessage { }
 ///     Triggers the server to send updated power monitoring console data to the client for the single player session
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class HolopadHangUpOnCallMessage : BoundUserInterfaceMessage { }
+public sealed class HolopadEndCallMessage : BoundUserInterfaceMessage { }
 
 #endregion
 

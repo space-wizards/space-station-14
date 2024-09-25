@@ -17,7 +17,7 @@ public sealed partial class HolopadWindow : FancyWindow
 
     public event Action<NetEntity>? SendHolopadStartNewCallMessageAction;
     public event Action? SendHolopadAnswerCallMessageAction;
-    public event Action? SendHolopadHangUpOnCallMessageAction;
+    public event Action? SendHolopadEndCallMessageAction;
 
     public HolopadWindow()
     {
@@ -27,13 +27,13 @@ public sealed partial class HolopadWindow : FancyWindow
         _spriteSystem = _entManager.System<SpriteSystem>();
 
         AnswerCallButton.OnPressed += args => { OnHolopadAnswerCallMessage(); };
-        EndCallButton.OnPressed += args => { OnHolopadHangUpOnCallMessage(); };
+        EndCallButton.OnPressed += args => { OnHolopadEndCallMessage(); };
     }
 
     public void UpdateUIState(TelephoneState state, Dictionary<NetEntity, string> holopads)
     {
         AnswerCallButton.Disabled = (state != TelephoneState.Ringing);
-        EndCallButton.Disabled = (state == TelephoneState.Idle || state == TelephoneState.HangingUp);
+        EndCallButton.Disabled = (state == TelephoneState.Idle || state == TelephoneState.Ending);
 
         // Clear excess children from the contact list
         while (ContactsList.ChildCount > holopads.Count)
@@ -92,9 +92,9 @@ public sealed partial class HolopadWindow : FancyWindow
         SendHolopadStartNewCallMessageAction?.Invoke(receiver);
     }
 
-    private void OnHolopadHangUpOnCallMessage()
+    private void OnHolopadEndCallMessage()
     {
-        SendHolopadHangUpOnCallMessageAction?.Invoke();
+        SendHolopadEndCallMessageAction?.Invoke();
     }
 
     private void OnHolopadAnswerCallMessage()

@@ -23,9 +23,9 @@ public sealed class HolopadSystem : SharedHolopadSystem
 
         SubscribeLocalEvent<HolopadHologramComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<HolopadHologramComponent, BeforePostShaderRenderEvent>(OnShaderRender);
+        SubscribeLocalEvent<HolopadUserComponent, TypingChangedEvent>(OnTypingChanged);
 
         SubscribeNetworkEvent<HolopadHologramVisualsUpdateEvent>(OnVisualsUpdate);
-        SubscribeAllEvent<TypingChangedEvent>(OnTypingChanged);
     }
 
     private void OnComponentInit(EntityUid uid, HolopadHologramComponent component, ComponentInit ev)
@@ -41,14 +41,9 @@ public sealed class HolopadSystem : SharedHolopadSystem
         ev.Sprite.PostShader.SetParameter("t", (float)_timing.RealTime.TotalSeconds * component.ScrollRate);
     }
 
-    private void OnTypingChanged(TypingChangedEvent ev, EntitySessionEventArgs args)
+    private void OnTypingChanged(EntityUid uid, HolopadUserComponent component, TypingChangedEvent ev)
     {
-        var uid = args.SenderSession.AttachedEntity;
-
-        if (!Exists(uid))
-            return;
-
-        var netEv = new HolopadUserTypingChangedEvent(GetNetEntity(uid.Value), ev.IsTyping);
+        var netEv = new HolopadUserTypingChangedEvent(GetNetEntity(uid), ev.IsTyping);
         RaiseNetworkEvent(netEv);
     }
 

@@ -1,15 +1,11 @@
+using Content.Server.Administration.Logs;
 using Content.Server.Chat.Systems;
 using Content.Server.Interaction;
-using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
-using Content.Server.Radio;
-using Content.Server.Radio.Components;
 using Content.Server.Speech;
+using Content.Server.Speech.Components;
 using Content.Server.VoiceMask;
 using Content.Shared.Chat;
-using Content.Shared.Database;
-using Content.Shared.Radio.Components;
-using Content.Shared.Radio;
 using Content.Shared.Speech;
 using Content.Shared.Telephone;
 using Robust.Server.GameObjects;
@@ -19,9 +15,10 @@ using Robust.Shared.Utility;
 using System;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Content.Server.Administration.Logs;
 using Robust.Shared.Replays;
-using Content.Server.Speech.Components;
+
+using System.Linq;
+using Content.Shared.Database;
 
 namespace Content.Server.Telephone;
 
@@ -37,17 +34,14 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IReplayRecordingManager _replay = default!;
 
-    // set used to prevent radio feedback loops.
-    private readonly HashSet<string> _messages = new();
-    private HashSet<(string, EntityUid)> _recentlySent = new();
+    // Has set used to prevent telephone feedback loops
+    private HashSet<(string, EntityUid)> _recentChatMessages = new();
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<TelephoneComponent, TelephoneCallAttemptEvent>(OnIncomingCallAttempt);
         SubscribeLocalEvent<TelephoneComponent, ComponentShutdown>(OnComponentShutdown);
-
         SubscribeLocalEvent<TelephoneComponent, ListenAttemptEvent>(OnAttemptListen);
         SubscribeLocalEvent<TelephoneComponent, ListenEvent>(OnListen);
         SubscribeLocalEvent<TelephoneComponent, TelephoneMessageReceivedEvent>(OnTelephoneMessageReceived);
@@ -55,52 +49,46 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
 
     #region: Events
 
-    private void OnIncomingCallAttempt(EntityUid uid, TelephoneComponent component, ref TelephoneCallAttemptEvent ev)
+    private void OnComponentShutdown(Entity<TelephoneComponent> telephone, ref ComponentShutdown ev)
     {
-        if (!IsTelephoneReachable(uid, component) || IsTelephoneEngaged(uid, component))
-        {
-            ev.Cancelled = true;
-            return;
-        }
+        TerminateTelephoneCalls(telephone);
     }
 
-    private void OnComponentShutdown(EntityUid uid, TelephoneComponent component, ref ComponentShutdown ev)
+    private void OnAttemptListen(Entity<TelephoneComponent> telephone, ref ListenAttemptEvent args)
     {
-        TerminateTelephoneCall(uid, component);
-    }
-
-    private void OnAttemptListen(EntityUid uid, TelephoneComponent component, ListenAttemptEvent args)
-    {
-        if (!this.IsPowered(uid, EntityManager)
-            || !_interaction.InRangeUnobstructed(args.Source, uid, 0))
+        if (!this.IsPowered(telephone, EntityManager)
+            || !_interaction.InRangeUnobstructed(args.Source, telephone.Owner, 0))
         {
             args.Cancel();
         }
     }
 
-    private void OnListen(EntityUid uid, TelephoneComponent component, ListenEvent args)
+    private void OnListen(Entity<TelephoneComponent> telephone, ref ListenEvent args)
     {
-        if (args.Source == uid)
+        if (args.Source == telephone.Owner)
             return;
 
-        if (_recentlySent.Add((args.Message, args.Source)))
-            SendTelephoneMessage(args.Source, args.Message, uid);
+        if (_recentChatMessages.Add((args.Message, args.Source)))
+            SendTelephoneMessage(args.Source, args.Message, telephone);
     }
 
-    private void OnTelephoneMessageReceived(EntityUid uid, TelephoneComponent component, ref TelephoneMessageReceivedEvent args)
+    private void OnTelephoneMessageReceived(Entity<TelephoneComponent> telephone, ref TelephoneMessageReceivedEvent args)
     {
-        if (uid == args.TelephoneSource)
+        if (telephone == args.TelephoneSource)
+            return;
+
+        if (!IsTelephonePowered(telephone))
             return;
 
         var nameEv = new TransformSpeakerNameEvent(args.MessageSource, Name(args.MessageSource));
         RaiseLocalEvent(args.MessageSource, nameEv);
 
         var name = Loc.GetString("speech-name-relay",
-            ("speaker", Name(uid)),
+            ("speaker", Name(telephone)),
             ("originalName", nameEv.Name));
 
-        // log to chat so people can identity the speaker/source, but avoid clogging ghost chat if there are many radios
-        _chat.TrySendInGameICMessage(uid, args.Message, InGameICChatType.Speak, ChatTransmitRange.GhostRangeLimit, nameOverride: name, checkRadioPrefix: false);
+        var volume = telephone.Comp.SpeakerVolume == TelephoneVolume.Speak ? InGameICChatType.Speak : InGameICChatType.Whisper;
+        _chat.TrySendInGameICMessage(telephone, args.Message, volume, ChatTransmitRange.GhostRangeLimit, nameOverride: name, checkRadioPrefix: false);
     }
 
     #endregion
@@ -112,9 +100,11 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
         var query = EntityManager.EntityQueryEnumerator<TelephoneComponent>();
         while (query.MoveNext(out var ent, out var entTelephone))
         {
-            if (!IsTelephoneReachable(ent, entTelephone) && IsTelephoneEngaged(ent, entTelephone))
+            var telephone = new Entity<TelephoneComponent>(ent, entTelephone);
+
+            if (!IsTelephonePowered(telephone) && IsTelephoneEngaged(telephone))
             {
-                TerminateTelephoneCall(ent, entTelephone);
+                TerminateTelephoneCalls(telephone);
                 continue;
             }
 
@@ -122,129 +112,183 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
             {
                 case TelephoneState.Ringing:
                     if (_timing.RealTime > entTelephone.StateStartTime + TimeSpan.FromSeconds(entTelephone.RingingTimeout))
-                        HangUpTelephone(ent, entTelephone);
+                        EndTelephoneCalls(telephone);
 
                     else if (entTelephone.RingTone != null &&
-                        _timing.RealTime > entTelephone.NextToneTime)
+                        _timing.RealTime > entTelephone.NextRingToneTime)
                     {
                         _audio.PlayPvs(entTelephone.RingTone, ent);
-                        entTelephone.NextToneTime = _timing.RealTime + TimeSpan.FromSeconds(entTelephone.RingInterval);
+                        entTelephone.NextRingToneTime = _timing.RealTime + TimeSpan.FromSeconds(entTelephone.RingInterval);
                     }
 
                     break;
 
-                case TelephoneState.HangingUp:
+                case TelephoneState.Ending:
                     if (_timing.RealTime > entTelephone.StateStartTime + TimeSpan.FromSeconds(entTelephone.HangingUpTimeout))
-                        TerminateTelephoneCall(ent, entTelephone);
+                        TerminateTelephoneCalls(telephone);
 
                     break;
             }
         }
+
+        _recentChatMessages.Clear();
     }
 
-    public void CallTelephone(EntityUid uid, TelephoneComponent component, EntityUid source, EntityUid? user = null)
+    public void BroadcastCallToTelephones(Entity<TelephoneComponent> source, HashSet<Entity<TelephoneComponent>> receivers, EntityUid? user = null, bool isEmergency = false)
     {
-        if (IsTelephoneEngaged(uid, component))
+        if (IsTelephoneEngaged(source))
             return;
 
-        if (!TryComp<TelephoneComponent>(source, out var sourceTelephone))
+        var options = new TelephoneCallOptions()
+        {
+            ForceConnect = true,
+            MuteReceiver = isEmergency,
+        };
+
+        foreach (var receiver in receivers)
+            CallTelephone(source, receiver, user, options);
+
+        // If no connections could be made, time out the telephone
+        if (!IsTelephoneEngaged(source))
+            EndTelephoneCalls(source);
+    }
+
+    public void CallTelephone(Entity<TelephoneComponent> source, Entity<TelephoneComponent> receiver, EntityUid? user = null, TelephoneCallOptions? options = null)
+    {
+        if (source == receiver ||
+            IsTelephoneEngaged(source) ||
+            !IsTelephonePowered(source))
             return;
 
-        var evCallAttempt = new TelephoneCallAttemptEvent(source, uid, user);
-        RaiseLocalEvent(uid, ref evCallAttempt);
+        // If a connection cannot be made, time out the telephone
+        if ((IsTelephoneEngaged(receiver) || !IsTelephonePowered(receiver)) &&
+            options?.ForceConnect == false &&
+            options?.ForceJoin == false)
+        {
+            EndTelephoneCalls(source);
+            return;
+        }
+
+        var evCallAttempt = new TelephoneCallAttemptEvent(source, receiver, user);
+
         RaiseLocalEvent(source, ref evCallAttempt);
+        RaiseLocalEvent(receiver, ref evCallAttempt);
 
         if (evCallAttempt.Cancelled)
         {
-            HangUpTelephone(source, sourceTelephone);
+            // Force connected calls could originate from a broadcast to multiple telephones,
+            // so this needs to be handled elsewhere
+            if (options?.ForceConnect == false)
+                EndTelephoneCalls(source);
+
             return;
         }
 
-        component.User = null;
-        component.LinkedTelephone = source;
-        SetTelephoneState(uid, component, TelephoneState.Ringing);
+        source.Comp.LinkedTelephones.Add(receiver);
+        source.Comp.Muted = options?.MuteSource == true;
 
-        sourceTelephone.User = user;
-        sourceTelephone.LinkedTelephone = uid;
-        SetTelephoneState(source, sourceTelephone, TelephoneState.Calling);
+        if (options?.ForceConnect == true)
+            TerminateTelephoneCalls(receiver);
 
-        var evCall = new TelephoneCallEvent(source, uid, user);
-        RaiseLocalEvent(uid, ref evCall);
+        receiver.Comp.LinkedTelephones.Add(source);
+        receiver.Comp.Muted = options?.MuteReceiver == true;
+
+        if (options?.ForceConnect == true ||
+            (options?.ForceJoin == true &&
+            receiver.Comp.CurrentState == TelephoneState.InCall))
+        {
+            CommenceTelephoneCall(source, receiver);
+            return;
+        }
+
+        SetTelephoneState(source, TelephoneState.Calling);
+        SetTelephoneState(receiver, TelephoneState.Ringing);
+
+        var evCall = new TelephoneCallEvent(source, receiver, user);
+
+        RaiseLocalEvent(receiver, ref evCall);
         RaiseLocalEvent(source, ref evCall);
     }
 
-    public void AnswerTelephone(EntityUid uid, TelephoneComponent component, EntityUid? user = null)
+    public void AnswerTelephone(Entity<TelephoneComponent> receiver)
     {
-        if (component.CurrentState != TelephoneState.Ringing)
+        if (receiver.Comp.CurrentState != TelephoneState.Ringing)
             return;
 
-        if (!TryComp<TelephoneComponent>(component.LinkedTelephone, out var sourceTelephone))
+        // If the telephone isn't linked, or is linked to more than one telephone,
+        // you shouldn't need to answer
+        if (receiver.Comp.LinkedTelephones.Count != 1)
             return;
 
-        component.User = user;
-
-        SetTelephoneState(uid, component, TelephoneState.InCall);
-        SetTelephoneState(component.LinkedTelephone.Value, sourceTelephone, TelephoneState.InCall);
-
-        var evCallCommenced = new TelephoneCallCommencedEvent(component.LinkedTelephone.Value, uid);
-
-        RaiseLocalEvent(uid, ref evCallCommenced);
-        RaiseLocalEvent(component.LinkedTelephone.Value, ref evCallCommenced);
+        var source = receiver.Comp.LinkedTelephones.First();
+        CommenceTelephoneCall(source, receiver);
     }
 
-    public void HangUpTelephone(EntityUid uid, TelephoneComponent component)
+    private void CommenceTelephoneCall(Entity<TelephoneComponent> source, Entity<TelephoneComponent> receiver)
     {
-        if (component.CurrentState == TelephoneState.HangingUp)
+        SetTelephoneState(source, TelephoneState.InCall);
+        SetTelephoneState(receiver, TelephoneState.InCall);
+
+        var evCallCommenced = new TelephoneCallCommencedEvent(source, receiver);
+
+        RaiseLocalEvent(source, ref evCallCommenced);
+        RaiseLocalEvent(receiver, ref evCallCommenced);
+    }
+
+    public void EndTelephoneCalls(Entity<TelephoneComponent> telephone)
+    {
+        if (telephone.Comp.CurrentState == TelephoneState.Ending)
             return;
 
-        var evHungUp = new TelephoneHungUpEvent(uid);
+        var evCallEnded = new TelephoneCallEndedEvent(telephone);
 
-        if (TryComp<TelephoneComponent>(component.LinkedTelephone, out var linkedTelephone))
+        foreach (var linkedTelephone in telephone.Comp.LinkedTelephones)
         {
-            linkedTelephone.User = null;
-            linkedTelephone.LinkedTelephone = null;
-            SetTelephoneState(component.LinkedTelephone.Value, linkedTelephone, TelephoneState.HangingUp);
+            if (!linkedTelephone.Comp.LinkedTelephones.Remove(telephone))
+                continue;
 
-            RaiseLocalEvent(component.LinkedTelephone.Value, ref evHungUp);
+            if (!IsTelephoneEngaged(telephone))
+                EndTelephoneCalls(linkedTelephone);
+
+            RaiseLocalEvent(linkedTelephone, ref evCallEnded);
         }
 
-        component.User = null;
-        component.LinkedTelephone = null;
-        SetTelephoneState(uid, component, TelephoneState.HangingUp);
+        telephone.Comp.LinkedTelephones.Clear();
+        telephone.Comp.Muted = false;
+        SetTelephoneState(telephone, TelephoneState.Ending);
 
-        RaiseLocalEvent(uid, ref evHungUp);
+        RaiseLocalEvent(telephone, ref evCallEnded);
     }
 
-    public void TerminateTelephoneCall(EntityUid uid, TelephoneComponent component)
+    public void TerminateTelephoneCalls(Entity<TelephoneComponent> telephone)
     {
-        if (!IsTelephoneEngaged(uid, component))
+        if (telephone.Comp.CurrentState == TelephoneState.Idle)
             return;
 
         var evCallTerminated = new TelephoneCallTerminatedEvent();
 
-        if (TryComp<TelephoneComponent>(component.LinkedTelephone, out var linkedTelephone))
+        foreach (var linkedTelephone in telephone.Comp.LinkedTelephones)
         {
-            linkedTelephone.User = null;
-            linkedTelephone.LinkedTelephone = null;
-            SetTelephoneState(component.LinkedTelephone.Value, linkedTelephone, TelephoneState.Idle);
+            if (!linkedTelephone.Comp.LinkedTelephones.Remove(telephone))
+                continue;
 
-            RaiseLocalEvent(component.LinkedTelephone.Value, ref evCallTerminated);
+            if (!IsTelephoneEngaged(telephone))
+                EndTelephoneCalls(linkedTelephone);
+
+            RaiseLocalEvent(linkedTelephone, ref evCallTerminated);
         }
 
-        component.User = null;
-        component.LinkedTelephone = null;
-        SetTelephoneState(uid, component, TelephoneState.Idle);
+        telephone.Comp.LinkedTelephones.Clear();
+        telephone.Comp.Muted = false;
+        SetTelephoneState(telephone, TelephoneState.Idle);
 
-        RaiseLocalEvent(uid, ref evCallTerminated);
+        RaiseLocalEvent(telephone, ref evCallTerminated);
     }
 
-    public void SendTelephoneMessage(EntityUid messageSource, string message, EntityUid telephoneSource, bool escapeMarkup = true)
+    public void SendTelephoneMessage(EntityUid messageSource, string message, Entity<TelephoneComponent> source, bool escapeMarkup = true)
     {
-        if (!TryComp<TelephoneComponent>(telephoneSource, out var telephone) || telephone.LinkedTelephone == null)
-            return;
-
-        // TODO if messages ever garble or get modified, feedback-prevention needs to be handled better than this.
-        if (!_messages.Add(message))
+        if (!IsTelephoneEngaged(source) ||
+            !IsTelephonePowered(source))
             return;
 
         var name = TryComp(messageSource, out VoiceMaskComponent? mask) && mask.Enabled
@@ -280,7 +324,6 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
             ("name", name),
             ("message", content));
 
-        // most radios are relayed to chat, so lets parse the chat message beforehand
         var chat = new ChatMessage(
             ChatChannel.Radio,
             message,
@@ -289,69 +332,74 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
             null);
 
         var chatMsg = new MsgChatMessage { Message = chat };
-        var ev = new TelephoneMessageReceivedEvent(message, messageSource, telephoneSource, chatMsg);
+        var ev = new TelephoneMessageReceivedEvent(message, messageSource, source, chatMsg);
 
-        //var sendAttemptEv = new RadioSendAttemptEvent(channel, radioSource);
-        //RaiseLocalEvent(ref sendAttemptEv);
-        //RaiseLocalEvent(radioSource, ref sendAttemptEv);
-        //var canSend = !sendAttemptEv.Cancelled;
+        foreach (var receiver in source.Comp.LinkedTelephones)
+        {
+            if (!IsSourceInRangeOfReceiver(source, receiver))
+                continue;
 
-        //var sourceMapId = Transform(radioSource).MapID;
+            RaiseLocalEvent(receiver, ref ev);
+        }
 
-        // Check if target can be reached
-        //if (!channel.LongRange && transform.MapID != sourceMapId && !radio.GlobalReceive)
-        //   return;
-
-        // check if message can be sent to specific receiver
-        //var attemptEv = new RadioReceiveAttemptEvent(channel, radioSource, receiver);
-        //RaiseLocalEvent(ref attemptEv);
-        //RaiseLocalEvent(receiver, ref attemptEv);
-
-        //if (attemptEv.Cancelled)
-        //    return;
-
-        // send the message
-        RaiseLocalEvent(telephone.LinkedTelephone.Value, ref ev);
-
-        //if (name != Name(messageSource))
-        //    _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Telephone message from {ToPrettyString(messageSource):user} as {name} on {channel.LocalizedName}: {message}");
-        //else
-        //    _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Telephone message from {ToPrettyString(messageSource):user} on {channel.LocalizedName}: {message}");
+        if (name != Name(messageSource))
+            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Telephone message from {ToPrettyString(messageSource):user} as {name} on {source}: {message}");
+        else
+            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Telephone message from {ToPrettyString(messageSource):user} on {source}: {message}");
 
         _replay.RecordServerMessage(chat);
-        _messages.Remove(message);
     }
 
-    private void SetTelephoneState(EntityUid uid, TelephoneComponent component, TelephoneState newState)
+    private void SetTelephoneState(Entity<TelephoneComponent> telephone, TelephoneState newState)
     {
-        component.CurrentState = newState;
-        component.StateStartTime = _timing.RealTime;
+        telephone.Comp.CurrentState = newState;
+        telephone.Comp.StateStartTime = _timing.RealTime;
 
-        _appearanceSystem.SetData(uid, TelephoneVisuals.Key, component.CurrentState);
+        _appearanceSystem.SetData(telephone, TelephoneVisuals.Key, telephone.Comp.CurrentState);
 
-        if (component.CurrentState == TelephoneState.InCall)
+        if (telephone.Comp.CurrentState == TelephoneState.InCall)
         {
-            if (!HasComp<ActiveListenerComponent>(uid))
-                AddComp<ActiveListenerComponent>(uid);
+            if (!HasComp<ActiveListenerComponent>(telephone))
+                AddComp<ActiveListenerComponent>(telephone);
+
+            return;
         }
 
-        else
-        {
-            if (HasComp<ActiveListenerComponent>(uid))
-                RemComp<ActiveListenerComponent>(uid);
-        }
+        if (HasComp<ActiveListenerComponent>(telephone))
+            RemComp<ActiveListenerComponent>(telephone);
     }
 
-    public bool IsTelephoneReachable(EntityUid uid, TelephoneComponent component)
+    public bool IsTelephonePowered(Entity<TelephoneComponent> telephone)
     {
-        if (TryComp<ApcPowerReceiverComponent>(uid, out var apcPowerReceiver) && !apcPowerReceiver.Powered)
-            return false;
+        return this.IsPowered(telephone, EntityManager);
+    }
+
+    public bool IsSourceInRangeOfReceiver(Entity<TelephoneComponent> source, Entity<TelephoneComponent> receiver)
+    {
+        var sourceXform = Transform(source);
+        var receiverXform = Transform(receiver);
+
+        switch (source.Comp.Range)
+        {
+            case TelephoneRange.Grid:
+                if (sourceXform.GridUid == null || receiverXform.GridUid != sourceXform.GridUid)
+                    return false;
+                break;
+
+            case TelephoneRange.Map:
+                if (sourceXform.MapID != receiverXform.MapID)
+                    return false;
+                break;
+        }
 
         return true;
     }
 
-    public bool IsTelephoneEngaged(EntityUid uid, TelephoneComponent component)
+    public bool IsTelephoneEngaged(Entity<TelephoneComponent> telephone)
     {
-        return component.CurrentState != TelephoneState.Idle;
+        DebugTools.AssertNotEqual(telephone.Comp.LinkedTelephones.Any(), telephone.Comp.CurrentState == TelephoneState.Idle,
+            $"Telephone {telephone} has {(telephone.Comp.LinkedTelephones.Any() ? "linked telephones" : "no linked telephones")} but its state is {telephone.Comp.CurrentState}");
+
+        return telephone.Comp.LinkedTelephones.Any();
     }
 }

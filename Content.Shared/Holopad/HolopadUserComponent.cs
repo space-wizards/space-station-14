@@ -7,8 +7,17 @@ namespace Content.Shared.Holopad;
 [Access(typeof(SharedHolopadSystem))]
 public sealed partial class HolopadUserComponent : Component
 {
+    /// <summary>
+    /// A list of holopads that the user is interacting with
+    /// </summary>
     [ViewVariables]
-    public EntityUid? LinkedHolopad = null;
+    public HashSet<Entity<HolopadComponent>> LinkedHolopads = new();
+
+    /// <summary>
+    /// A list of holograms that are copying the user's appearance
+    /// </summary>
+    [ViewVariables]
+    public HashSet<Entity<HolopadHologramComponent>> LinkedHolograms = new();
 }
 
 /// <summary>
