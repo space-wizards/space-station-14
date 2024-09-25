@@ -4,9 +4,9 @@
 
 - type: reagent
   id: AviationCocktail
-  name: reagent-name-aviation
+  name: "aviation #3"
   parent: BaseAlcohol
-  desc: reagent-desc-aviation
+  desc: "The color comes from a purple nurple at the bottom."
   physicalDesc: reagent-physical-desc-tart
   flavor: alcohol
   color: "#8484d4"
@@ -27,9 +27,9 @@
 
 - type: reagent
   id: EspressoMartini
-  name: reagent-name-espresso-martini
+  name: "espresso martini"
   parent: BaseAlcohol
-  desc: reagent-desc-espresso-martini
+  desc: "A caffeinated twist on a classic cocktail"
   physicalDesc: reagent-physical-desc-energizing
   flavor: coffeeliquor
   color: "#252010"
