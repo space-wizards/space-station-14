@@ -192,6 +192,15 @@
   - CommandVeteranDuffel
 
 - type: loadoutGroup
+  id: HoPShoes
+  name: loadout-group-hop-shoes
+  loadouts:
+  - HoPShoes
+  - HoPShoesBlack
+  - HoPShoesBrown
+  - HoPShoesWhite
+
+- type: loadoutGroup
   id: HoPOuterClothing
   name: loadout-group-hop-outerclothing
   minLimit: 0
