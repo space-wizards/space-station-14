@@ -31,6 +31,16 @@ public sealed class ContrabandSystem : EntitySystem
         Subs.CVar(_configuration, CCVars.ContrabandExamine, SetContrabandExamine, true);
     }
 
+    public void CopyDetails(EntityUid uid, ContrabandComponent other, ContrabandComponent? contraband = null)
+    {
+        if (!Resolve(uid, ref contraband))
+            return;
+
+        contraband.Severity = other.Severity;
+        contraband.AllowedDepartments = other.AllowedDepartments;
+        Dirty(uid, contraband);
+    }
+
     private void OnDetailedExamine(EntityUid ent,ContrabandComponent component, ref GetVerbsEvent<ExamineVerb> args)
     {
 
