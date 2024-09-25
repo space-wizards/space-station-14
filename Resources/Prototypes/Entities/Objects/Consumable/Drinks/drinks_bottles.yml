@@ -640,7 +640,7 @@
 - type: entity
   parent: [DrinkBottleVisualsOpenable, DrinkBottlePlasticBaseFull, BaseCommandContraband]
   id: DrinkCommandFlaskFull
-  name: Command Flask
+  name: command flask
   description: A brass flask with a white leather wrap, because you get paid enough to deserve it.
   components:
   - type: Item
