@@ -16,6 +16,7 @@
   canBeAntag: false
   access:
   - Medical
+  - Security
   - Brig
   - Maintenance
   - External
