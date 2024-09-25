@@ -22,6 +22,8 @@ log-probe-label-number = #
 
 astro-nav-program-name = AstroNav
 
+ready-tone-program-name = Readytone
+
 # Wanted list cartridge
 wanted-list-program-name = Wanted list
 wanted-list-label-no-records = It's all right, cowboy
