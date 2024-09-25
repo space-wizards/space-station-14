@@ -175,7 +175,7 @@ namespace Content.Client.Construction.UI
                 || _whitelistSystem.IsWhitelistFail(recipe.EntityWhitelist, _playerManager.LocalEntity.Value))
                     continue;
 
-                if (!string.IsNullOrEmpty(search) && recipe.Name is { } name && !name.Contains(search.Trim(), StringComparison.InvariantCultureIgnoreCase))
+                if (!string.IsNullOrEmpty(search) && (recipe.Name is { } name && !name.Contains(search.Trim(), StringComparison.InvariantCultureIgnoreCase)))
                     continue;
 
                 if (!isEmptyCategory)
