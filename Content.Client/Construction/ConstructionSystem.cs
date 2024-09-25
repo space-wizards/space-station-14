@@ -5,13 +5,10 @@ using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Examine;
 using Content.Shared.Input;
-using Content.Shared.Prototypes;
 using Content.Shared.Wall;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Client.Graphics;
 using Robust.Client.Player;
-using Robust.Client.Utility;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
@@ -240,6 +237,9 @@ namespace Content.Client.Construction
                 return false;
             }
 
+            if (!TryGetRecipePrototype(prototype.ID, out var targetProtoId) || !_prototypeManager.TryIndex(targetProtoId, out EntityPrototype? targetProto))
+                return false;
+
             if (GhostPresent(loc))
                 return false;
 
@@ -255,8 +255,43 @@ namespace Content.Client.Construction
             comp.Prototype = prototype;
             EntityManager.GetComponent<TransformComponent>(ghost.Value).LocalRotation = dir.ToAngle();
             _ghosts.Add(ghost.GetHashCode(), ghost.Value);
+
             var sprite = EntityManager.GetComponent<SpriteComponent>(ghost.Value);
             sprite.Color = new Color(48, 255, 48, 128);
+
+            if (targetProto.TryGetComponent(out IconComponent? icon))
+            {
+                sprite.AddBlankLayer(0);
+                sprite.LayerSetSprite(0, icon.Icon);
+                sprite.LayerSetShader(0, "unshaded");
+                sprite.LayerSetVisible(0, true);
+            }
+            else if (targetProto.Components.TryGetValue("Sprite", out _))
+            {
+                var dummy = EntityManager.SpawnEntity(targetProtoId, MapCoordinates.Nullspace);
+                var targetSprite = EntityManager.EnsureComponent<SpriteComponent>(dummy);
+                EntityManager.System<AppearanceSystem>().OnChangeData(dummy, targetSprite);
+
+                for (var i = 0; i < targetSprite.AllLayers.Count(); i++)
+                {
+                    if (!targetSprite[i].Visible || !targetSprite[i].RsiState.IsValid)
+                        continue;
+
+                    var rsi = targetSprite[i].Rsi ?? targetSprite.BaseRSI;
+                    if (rsi is null || !rsi.TryGetState(targetSprite[i].RsiState, out var state) ||
+                        state.StateId.Name is null)
+                        continue;
+
+                    sprite.AddBlankLayer(i);
+                    sprite.LayerSetSprite(i, new SpriteSpecifier.Rsi(rsi.Path, state.StateId.Name));
+                    sprite.LayerSetShader(i, "unshaded");
+                    sprite.LayerSetVisible(i, true);
+                }
+
+                EntityManager.DeleteEntity(dummy);
+            }
+            else
+                return false;
 
             if (prototype.CanBuildInImpassable)
                 EnsureComp<WallMountComponent>(ghost.Value).Arc = new(Math.Tau);
