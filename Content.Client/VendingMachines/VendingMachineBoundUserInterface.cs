@@ -2,10 +2,8 @@ using Content.Client.UserInterface.Controls;
 using Content.Client.VendingMachines.UI;
 using Content.Shared.VendingMachines;
 using Robust.Client.UserInterface;
-using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using System.Linq;
-using Robust.Client.UserInterface;
 
 namespace Content.Client.VendingMachines
 {
