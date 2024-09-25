@@ -102,7 +102,8 @@ public sealed class HealthAnalyzerSystem : EntitySystem
         if (args.Handled || args.Cancelled || args.Target == null || !_cell.HasDrawCharge(uid, user: args.User))
             return;
 
-        _audio.PlayPvs(uid.Comp.ScanningEndSound, uid);
+        if (!uid.Comp.Silent)
+            _audio.PlayPvs(uid.Comp.ScanningEndSound, uid);
 
         OpenUserInterface(args.User, uid);
         BeginAnalyzingEntity(uid, args.Target.Value);

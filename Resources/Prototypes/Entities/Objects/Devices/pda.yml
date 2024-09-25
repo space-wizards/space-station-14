@@ -910,10 +910,14 @@
   components:
   - type: Pda
     id: ERTMedicIDCard
-  #- type: HealthAnalyzer
-  #  scanDelay: 1
-  #  scanningEndSound:
-  #    path: "/Audio/Items/Medical/healthscanner.ogg"
+  - type: CartridgeLoader
+  uiKey: enum.PdaUiKey.Key
+  preinstalled:
+    - CrewManifestCartridge
+    - NotekeeperCartridge
+    - NewsReaderCartridge
+    - MedTekCartridge
+    - WantedListCartridge
 
 - type: entity
   parent: ERTLeaderPDA
