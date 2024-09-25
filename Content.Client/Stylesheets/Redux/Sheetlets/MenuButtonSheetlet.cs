@@ -54,19 +54,19 @@ public sealed class MenuButtonSheetlet<T> : Sheetlet<T> where T : PalettedStyles
             CButton().Class(StyleClass.ButtonSquare).Box(topButtonSquare),
             CButton().Class(StyleClass.ButtonOpenLeft).Box(topButtonOpenLeft),
             CButton().Class(StyleClass.ButtonOpenRight).Box(topButtonOpenRight),
-            CButton().Box(cfg.ConfigureBaseButton(sheet)),
+            CButton().Box(StyleBoxHelpers.BaseStyleBox(sheet)),
             CButton()
                 .Class(StyleClass.ButtonOpenLeft)
-                .Prop(ContainerButton.StylePropertyStyleBox, cfg.ConfigureOpenLeftButton(sheet)),
+                .Prop(ContainerButton.StylePropertyStyleBox, StyleBoxHelpers.OpenLeftStyleBox(sheet)),
             CButton()
                 .Class(StyleClass.ButtonOpenRight)
-                .Prop(ContainerButton.StylePropertyStyleBox, cfg.ConfigureOpenRightButton(sheet)),
+                .Prop(ContainerButton.StylePropertyStyleBox, StyleBoxHelpers.OpenRightStyleBox(sheet)),
             CButton()
                 .Class(StyleClass.ButtonOpenBoth)
-                .Prop(ContainerButton.StylePropertyStyleBox, cfg.ConfigureOpenBothButton(sheet)),
+                .Prop(ContainerButton.StylePropertyStyleBox, StyleBoxHelpers.SquareStyleBox(sheet)),
             CButton()
                 .Class(StyleClass.ButtonSquare)
-                .Prop(ContainerButton.StylePropertyStyleBox, cfg.ConfigureOpenSquareButton(sheet)),
+                .Prop(ContainerButton.StylePropertyStyleBox, StyleBoxHelpers.SquareStyleBox(sheet)),
             E<Label>()
                 .Class(MenuButton.StyleClassLabelTopButton)
                 .Prop(Label.StylePropertyFont, sheet.BaseFont.GetFont(14, FontKind.Bold)),

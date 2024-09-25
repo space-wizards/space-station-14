@@ -1,6 +1,7 @@
 using Content.Client.PDA;
 using Content.Client.Stylesheets.Redux;
 using Content.Client.Stylesheets.Redux.SheetletConfigs;
+using Content.Client.Stylesheets.Redux.Sheetlets;
 using Content.Client.Stylesheets.Redux.Stylesheets;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
@@ -14,8 +15,8 @@ public sealed class PdaSheetlet : Sheetlet<NanotrasenStylesheet>
 {
     public override StyleRule[] GetRules(NanotrasenStylesheet sheet, object config)
     {
-        var panelCfg = (IPanelConfig) sheet;
-        var btnCfg = (IButtonConfig) sheet;
+        IPanelConfig panelCfg = sheet;
+        IButtonConfig btnCfg = sheet;
 
         // TODO: This should have its own set of images, instead of using button cfg directly.
         var angleBorderRect =
@@ -26,26 +27,22 @@ public sealed class PdaSheetlet : Sheetlet<NanotrasenStylesheet>
             //PDA - Backgrounds
             E<PanelContainer>()
                 .Class("PdaContentBackground")
-                .Prop(PanelContainer.StylePropertyPanel, btnCfg.ConfigureOpenBothButton(sheet))
+                .Prop(PanelContainer.StylePropertyPanel, StyleBoxHelpers.SquareStyleBox(sheet))
                 .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#25252a")),
 
             E<PanelContainer>()
                 .Class("PdaBackground")
-                .Prop(PanelContainer.StylePropertyPanel, btnCfg.ConfigureOpenBothButton(sheet))
+                .Prop(PanelContainer.StylePropertyPanel, StyleBoxHelpers.SquareStyleBox(sheet))
                 .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#000000")),
 
             E<PanelContainer>()
                 .Class("PdaBackgroundRect")
-                .Prop(PanelContainer.StylePropertyPanel, btnCfg.ConfigureBaseButton(sheet))
+                .Prop(PanelContainer.StylePropertyPanel, StyleBoxHelpers.BaseStyleBox((sheet)))
                 .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#717059")),
 
             E<PanelContainer>()
                 .Class("PdaBorderRect")
                 .Prop(PanelContainer.StylePropertyPanel, angleBorderRect),
-
-            E<PanelContainer>()
-                .Class("BackgroundDark")
-                .Prop(PanelContainer.StylePropertyPanel, new StyleBoxFlat(Color.FromHex("#25252A"))),
 
             //PDA - Buttons
             E<PdaSettingsButton>()

@@ -41,17 +41,22 @@ public sealed class PanelSheetlet<T> : Sheetlet<T> where T: PalettedStylesheet, 
             E<PanelContainer>().Class(StyleClass.Negative).Panel(boxNegative),
             E<PanelContainer>().Class(StyleClass.Highlight).Panel(boxHighlight),
 
+            // TODO: this should probably be cleaned up but too many UIs rely on this hardcoded color so I'm scared to touch it
+            E<PanelContainer>()
+                .Class("BackgroundDark")
+                .Prop(PanelContainer.StylePropertyPanel, new StyleBoxFlat(Color.FromHex("#25252A"))),
+
             E()
                 .Class(StyleClass.BackgroundPanel)
-                .Prop(PanelContainer.StylePropertyPanel, buttonCfg.ConfigureBaseButton(sheet))
+                .Prop(PanelContainer.StylePropertyPanel, StyleBoxHelpers.OpenRightStyleBox(sheet))
                 .Modulate(sheet.SecondaryPalette.Background),
             E()
                 .Class(StyleClass.BackgroundPanelOpenLeft)
-                .Prop(PanelContainer.StylePropertyPanel, buttonCfg.ConfigureOpenLeftButton(sheet))
+                .Prop(PanelContainer.StylePropertyPanel, StyleBoxHelpers.OpenLeftStyleBox(sheet))
                 .Modulate(sheet.SecondaryPalette.Background),
             E()
                 .Class(StyleClass.BackgroundPanelOpenRight)
-                .Prop(PanelContainer.StylePropertyPanel, buttonCfg.ConfigureOpenRightButton(sheet))
+                .Prop(PanelContainer.StylePropertyPanel, StyleBoxHelpers.OpenRightStyleBox(sheet))
                 .Modulate(sheet.SecondaryPalette.Background),
         ];
     }
