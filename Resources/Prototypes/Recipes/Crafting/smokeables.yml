@@ -12,7 +12,6 @@
   graph: smokeableJointRainbow
   startNode: start
   targetNode: jointRainbow
-  suffix: true
   category: construction-category-misc
   icon: { sprite: Objects/Consumable/Smokeables/Cannabis/joint.rsi, state: unlit-icon }
   objectType: Item
@@ -31,7 +30,6 @@
   graph: smokeableBluntRainbow
   startNode: start
   targetNode: bluntRainbow
-  suffix: true
   category: construction-category-misc
   icon: { sprite: Objects/Consumable/Smokeables/Cannabis/blunt.rsi, state: unlit-icon }
   objectType: Item
@@ -62,7 +60,6 @@
   graph: smokeableGroundCannabisRainbow
   startNode: start
   targetNode: groundRainbow
-  suffix: true
   category: construction-category-misc
   icon: { sprite: Objects/Specific/Hydroponics/rainbow_cannabis.rsi, state: powderpile_rainbow }
   objectType: Item

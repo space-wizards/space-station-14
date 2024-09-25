@@ -12,7 +12,6 @@
   graph: LogicGate
   startNode: start
   targetNode: logic_gate
-  suffix: true
   category: construction-category-tools
   icon: { sprite: Objects/Devices/gates.rsi, state: or_icon }
   objectType: Item
@@ -22,7 +21,6 @@
   graph: LogicGate
   startNode: start
   targetNode: edge_detector
-  suffix: true
   category: construction-category-tools
   icon: { sprite: Objects/Devices/gates.rsi, state: edge_detector }
   objectType: Item
@@ -32,7 +30,6 @@
   graph: LogicGate
   startNode: start
   targetNode: power_sensor
-  suffix: true
   category: construction-category-tools
   icon: { sprite: Objects/Devices/gates.rsi, state: power_sensor }
   objectType: Item
