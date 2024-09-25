@@ -3,13 +3,33 @@
   name: job-name-brigmedic
   description: job-description-brigmedic
   playTimeTracker: JobBrigmedic
-  canBeAntag: false
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 36000 #10 hrs
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 14400 #4 hrs
+  startingGear: BrigmedicGear
   icon: JobIconBrigmedic
-  setPreference: false
-  overrideConsoleVisibility: true
+  supervisors: job-supervisors-hos
+  canBeAntag: false
   access:
   - Medical
-  - Security
   - Brig
   - Maintenance
   - External
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+
+- type: startingGear
+  id: BrigmedicGear
+  equipment:
+    eyes: ClothingEyesGlassesSecurity
+    ears: ClothingHeadsetBrigmedic
+    id: BrigmedicPDA
+    belt: ClothingBeltMedicalFilled
+  storage:
+    back:
+    - Flash

@@ -1,0 +1,38 @@
+# Head
+- type: loadout
+  id: BrigmedicBeret
+  equipment:
+    head: ClothingHeadHatBeretBrigmedic
+
+# Jumpsuit
+- type: loadout
+  id: BrigmedicJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitBrigmedic
+
+- type: loadout
+  id: BrigmedicJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtBrigmedic
+
+# Outer clothing
+- type: loadout
+  id: BrigmedicArmoredWinterCoat
+  equipment:
+    outerClothing: ClothingOuterCoatAMG
+
+# Back
+- type: loadout
+  id: BrigmedicBackpack
+  equipment:
+    back: ClothingBackpackBrigmedic
+
+- type: loadout
+  id: BrigmedicSatchel
+  equipment:
+    back: ClothingBackpackSatchelBrigmedic
+
+- type: loadout
+  id: BrigmedicDuffel
+  equipment:
+    back: ClothingBackpackDuffelBrigmedic
