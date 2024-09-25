@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: ThatOneEnby1337
-  changes:
-  - message: News Reporters are now able to use markup tags in their reports without
-      bricking the PDAs of readers
-    type: Fix
-  id: 6938
-  time: '2024-07-19T14:18:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30169
 - author: themias
   changes:
   - message: Mailing units are functional again
@@ -3927,3 +3919,10 @@
   id: 7437
   time: '2024-09-25T16:49:43.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32385
+- author: august-sun
+  changes:
+  - message: Rolling pins are now craftable.
+    type: Tweak
+  id: 7438
+  time: '2024-09-25T17:27:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32285
