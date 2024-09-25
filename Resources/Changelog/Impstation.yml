@@ -2013,3 +2013,39 @@
   id: 258
   time: '2024-09-25T19:34:03.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/342
+- author: hivehum
+  changes:
+  - message: Added new lobby art by lazy :)
+    type: Add
+  id: 259
+  time: '2024-09-25T19:35:56.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/344
+- author: starlighthowls
+  changes:
+  - message: whale things you know how it is
+    type: Tweak
+  id: 260
+  time: '2024-09-25T19:36:40.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/343
+- author: Sha-Seng
+  changes:
+  - message: Adjusted veteran captain set sprites
+    type: Tweak
+  id: 261
+  time: '2024-09-25T19:37:14.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/339
+- author: Pinkbat5
+  changes:
+  - message: Pink Alert now has an alarm sound.
+    type: Add
+  id: 262
+  time: '2024-09-25T19:38:09.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/340
+- author: Sha-Seng
+  changes:
+  - message: Made the captain's winter coat match the uniform since like three people
+      asked
+    type: Tweak
+  id: 263
+  time: '2024-09-25T19:35:18.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/338
