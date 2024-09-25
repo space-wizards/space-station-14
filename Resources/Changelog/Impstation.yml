@@ -1999,3 +1999,17 @@
   id: 256
   time: '2024-09-24T22:02:03.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/336
+- author: Darkmajia
+  changes:
+  - message: Mobs will no longer ignore changelings and heretics.
+    type: Fix
+  id: 257
+  time: '2024-09-25T19:33:52.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/332
+- author: Darkmajia
+  changes:
+  - message: Job loadout slots now display in a consistent order.
+    type: Tweak
+  id: 258
+  time: '2024-09-25T19:34:03.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/342
