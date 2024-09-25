@@ -288,6 +288,9 @@
   - type: MovementSpeedModifier
     baseWalkSpeed: 2.25
     baseSprintSpeed: 3.6
+  - type: Access
+    tags:
+    - Maintenance
   # TOOD: buzz / chime actions
   # TODO: builtin flashlight
 

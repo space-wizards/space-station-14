@@ -22,7 +22,6 @@ public abstract class StationEventSystem<T> : GameRuleSystem<T> where T : ICompo
     [Dependency] protected readonly ChatSystem ChatSystem = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] protected readonly StationSystem StationSystem = default!;
-    [Dependency] protected readonly GameTicker GameTicker = default!;
 
     protected ISawmill Sawmill = default!;
 

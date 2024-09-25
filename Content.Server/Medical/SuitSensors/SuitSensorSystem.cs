@@ -368,7 +368,7 @@ public sealed class SuitSensorSystem : EntitySystem
             userJobIcon = card.Comp.JobIcon;
 
             foreach (var department in card.Comp.JobDepartments)
-                userJobDepartments.Add(Loc.GetString(department));
+                userJobDepartments.Add(Loc.GetString($"department-{department}"));
         }
 
         // get health mob state

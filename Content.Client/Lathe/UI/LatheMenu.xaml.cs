@@ -73,6 +73,16 @@ public sealed partial class LatheMenu : DefaultWindow
         MaterialsList.SetOwner(Entity);
     }
 
+    protected override void Opened()
+    {
+        base.Opened();
+
+        if (_entityManager.TryGetComponent<LatheComponent>(Entity, out var latheComp))
+        {
+            AmountLineEdit.SetText(latheComp.DefaultProductionAmount.ToString());
+        }
+    }
+
     /// <summary>
     /// Populates the list of all the recipes
     /// </summary>
