@@ -109,7 +109,7 @@
   molarMass: 10
   color: 9370db
   reagent: BZ
-  pricePerMole: 1.5
+  pricePerMole: 0.15
 
 - type: gas
   id: 10
