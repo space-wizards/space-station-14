@@ -1,6 +1,6 @@
 - type: entity
   id: CameraBug
-  parent: BaseItem
+  parent: [ BaseItem, BaseSyndicateContraband ]
   name: Camera bug
   description: personal camera viewing device
   components:
@@ -10,8 +10,8 @@
     - state: camera_bug
   - type: Item
   - type: ActivatableUI
-    singleUser: true
     requireActiveHand: false
+    inHandsOnly: true
     key: enum.SurveillanceCameraMonitorUiKey.Key
   - type: UserInterface
     interfaces:
