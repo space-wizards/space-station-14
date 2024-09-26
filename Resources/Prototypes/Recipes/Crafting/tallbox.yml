@@ -15,6 +15,14 @@
   objectType: Structure
 
 - type: construction
+  id: ClosetFreezer
+  graph: ClosetFreezer
+  startNode: start
+  targetNode: done
+  category: construction-category-storage
+  objectType: Structure
+
+- type: construction
   id: ClosetWall
   graph: ClosetWall
   startNode: start

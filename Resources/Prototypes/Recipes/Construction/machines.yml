@@ -18,7 +18,6 @@
 
 # Switching
 - type: construction
-  name: two-way lever
   id: TwoWayLeverRecipe
   graph: LeverGraph
   startNode: start

@@ -52,7 +52,7 @@
             - PowerCell
             - PowerCellSmall
           store: powercell
-          name: a powercell
+          name: construction-graph-tag-power-cell
           icon:
             sprite: "Objects/Power/power_cells.rsi"
             state: "medium"

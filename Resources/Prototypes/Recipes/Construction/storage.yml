@@ -5,9 +5,6 @@
   startNode: start
   targetNode: filingCabinet
   category: construction-category-storage
-  icon:
-    sprite: Structures/Storage/cabinets.rsi
-    state: filingcabinet
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -20,9 +17,6 @@
   startNode: start
   targetNode: tallCabinet
   category: construction-category-storage
-  icon:
-    sprite: Structures/Storage/cabinets.rsi
-    state: tallcabinet
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -35,9 +29,6 @@
   startNode: start
   targetNode: chestDrawer
   category: construction-category-storage
-  icon:
-    sprite: Structures/Storage/cabinets.rsi
-    state: chestdrawer
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -51,9 +42,6 @@
   startNode: start
   targetNode: glassBox
   category: construction-category-storage
-  icon:
-    sprite: Structures/Storage/glassbox.rsi
-    state: icon
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -67,9 +55,6 @@
   graph: Shelf
   startNode: start
   targetNode: ShelfWood
-  icon:
-    sprite: Structures/Storage/Shelfs/wood.rsi
-    state: base
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
@@ -81,9 +66,6 @@
   graph: Shelf
   startNode: start
   targetNode: ShelfMetal
-  icon:
-    sprite: Structures/Storage/Shelfs/metal.rsi
-    state: base
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
@@ -95,9 +77,6 @@
   graph: Shelf
   startNode: start
   targetNode: ShelfGlass
-  icon:
-    sprite: Structures/Storage/Shelfs/glass.rsi
-    state: base
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
@@ -110,9 +89,6 @@
   graph: Shelf
   startNode: start
   targetNode: ShelfRWood
-  icon:
-    sprite: Structures/Storage/Shelfs/wood.rsi
-    state: rbase
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
@@ -124,9 +100,6 @@
   graph: Shelf
   startNode: start
   targetNode: ShelfRMetal
-  icon:
-    sprite: Structures/Storage/Shelfs/metal.rsi
-    state: rbase
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
@@ -138,9 +111,6 @@
   graph: Shelf
   startNode: start
   targetNode: ShelfRGlass
-  icon:
-    sprite: Structures/Storage/Shelfs/glass.rsi
-    state: rbase
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
@@ -153,9 +123,6 @@
   graph: Shelf
   startNode: start
   targetNode: ShelfBar
-  icon:
-    sprite: Structures/Storage/Shelfs/Departments/Service/bar.rsi
-    state: base
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
@@ -167,9 +134,6 @@
   graph: Shelf
   startNode: start
   targetNode: ShelfKitchen
-  icon:
-    sprite: Structures/Storage/Shelfs/Departments/Service/kitchen.rsi
-    state: base
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
@@ -181,9 +145,6 @@
   graph: Shelf
   startNode: start
   targetNode: ShelfChemistry
-  icon:
-    sprite: Structures/Storage/Shelfs/Departments/Medical/chemistry.rsi
-    state: base
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true

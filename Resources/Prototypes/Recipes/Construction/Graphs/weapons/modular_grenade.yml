@@ -48,7 +48,7 @@
       steps:
       - component: PayloadTrigger
         store: payloadTrigger
-        name: trigger
+        name: construction-graph-component-payload-trigger
         doAfter: 0.5
     - to: caseWithPayload
       steps:
@@ -94,7 +94,7 @@
       steps:
       - component: PayloadTrigger
         store: payloadTrigger
-        name: trigger
+        name: construction-graph-component-payload-trigger
         doAfter: 0.5
 
   - node: grenade

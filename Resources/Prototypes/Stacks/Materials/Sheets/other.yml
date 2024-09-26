@@ -7,7 +7,7 @@
 
 - type: stack
   id: Plasma
-  name: plasma
+  name: stack-plasma
   icon: { sprite: /Textures/Objects/Materials/Sheets/other.rsi, state: plasma }
   spawn: SheetPlasma1
   maxCount: 30

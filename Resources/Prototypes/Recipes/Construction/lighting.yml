@@ -4,7 +4,6 @@
   startNode: start
   targetNode: icon
   category: construction-category-utilities
-  icon: { sprite: Objects/Power/light_tube.rsi, state: normal }
   objectType: Item
 
 - type: construction
@@ -13,7 +12,6 @@
   startNode: start
   targetNode: icon
   category: construction-category-utilities
-  icon: { sprite: Objects/Power/light_tube.rsi, state: normal }
   objectType: Item
 
 - type: construction
@@ -22,7 +20,6 @@
   startNode: start
   targetNode: icon
   category: construction-category-utilities
-  icon: { sprite: Objects/Power/light_tube.rsi, state: normal }
   objectType: Item
 
 - type: construction
@@ -31,7 +28,6 @@
   startNode: start
   targetNode: icon
   category: construction-category-utilities
-  icon: { sprite: Objects/Power/light_tube.rsi, state: normal }
   objectType: Item
 
 - type: construction
@@ -40,7 +36,6 @@
   startNode: start
   targetNode: icon
   category: construction-category-utilities
-  icon: { sprite: Objects/Power/light_tube.rsi, state: normal }
   objectType: Item
 
 - type: construction
@@ -49,5 +44,4 @@
   startNode: start
   targetNode: icon
   category: construction-category-utilities
-  icon: { sprite: Objects/Power/light_tube.rsi, state: normal }
   objectType: Item

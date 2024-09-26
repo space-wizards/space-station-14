@@ -6,18 +6,18 @@
 
 - type: stack
   id: Capacitor
-  name: capacitor
+  name: stack-capacitor
   spawn: CapacitorStockPart
   maxCount: 10
 
 - type: stack
   id: Manipulator
-  name: micro manipulator
+  name: stack-micro-manipulator
   spawn: MicroManipulatorStockPart
   maxCount: 10
 
 - type: stack
   id: MatterBin
-  name: matter bin
+  name: stack-matter-bin
   spawn: MatterBinStockPart
   maxCount: 10

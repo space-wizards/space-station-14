@@ -2,19 +2,19 @@
 
 - type: stack
   id: Pancake
-  name: pancake
+  name: stack-pancake
   spawn: FoodBakedPancake
   maxCount: 9
 
 - type: stack
   id: PancakeBb
-  name: blueberry pancake
+  name: stack-blueberry-pancake
   spawn: FoodBakedPancakeBb
   maxCount: 9
 
 - type: stack
   id: PancakeCc
-  name: chocolate chip pancake
+  name: stack-chocolate-chip-pancake
   spawn: FoodBakedPancakeCc
   maxCount: 9
 
@@ -22,7 +22,7 @@
 
 - type: stack
   id: PizzaBox
-  name: pizza box
+  name: stack-pizza-box
   icon: { sprite: Objects/Consumable/Food/Baked/pizza.rsi, state: box }
   spawn: FoodBoxPizza
   maxCount: 30

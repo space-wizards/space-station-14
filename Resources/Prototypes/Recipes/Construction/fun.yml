@@ -4,5 +4,4 @@
   startNode: start
   targetNode: bananiumHorn
   category: construction-category-weapons
-  icon: { sprite: Objects/Fun/bananiumhorn.rsi, state: icon }
   objectType: Item

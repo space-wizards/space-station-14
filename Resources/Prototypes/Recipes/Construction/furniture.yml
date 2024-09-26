@@ -5,9 +5,6 @@
   startNode: start
   targetNode: chair
   category: construction-category-furniture
-  icon:
-    sprite: Structures/Furniture/chairs.rsi
-    state: chair
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -20,9 +17,6 @@
   startNode: start
   targetNode: stool
   category: construction-category-furniture
-  icon:
-    sprite: Structures/Furniture/chairs.rsi
-    state: stool
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -35,9 +29,6 @@
   startNode: start
   targetNode: stoolBar
   category: construction-category-furniture
-  icon:
-    sprite: Structures/Furniture/chairs.rsi
-    state: bar
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -50,9 +41,6 @@
   startNode: start
   targetNode: chairBrass
   category: construction-category-furniture
-  icon:
-    sprite: Structures/Furniture/chairs.rsi
-    state: brass_chair
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -65,9 +53,6 @@
   startNode: start
   targetNode: chairOffice
   category: construction-category-furniture
-  icon:
-    sprite: Structures/Furniture/chairs.rsi
-    state: office-white
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -80,9 +65,6 @@
   startNode: start
   targetNode: chairOfficeDark
   category: construction-category-furniture
-  icon:
-    sprite: Structures/Furniture/chairs.rsi
-    state: office-dark
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -95,9 +77,6 @@
   startNode: start
   targetNode: chairComfy
   category: construction-category-furniture
-  icon:
-    sprite: Structures/Furniture/chairs.rsi
-    state: comfy
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -110,9 +89,6 @@
   startNode: start
   targetNode: chairPilotSeat
   category: construction-category-furniture
-  icon:
-    sprite: Structures/Furniture/chairs.rsi
-    state: shuttle
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -125,9 +101,6 @@
   startNode: start
   targetNode: chairWood
   category: construction-category-furniture
-  icon:
-    sprite: Structures/Furniture/chairs.rsi
-    state: wooden
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -140,9 +113,6 @@
   startNode: start
   targetNode: chairMeat
   category: construction-category-furniture
-  icon:
-    sprite: Structures/Furniture/chairs.rsi
-    state: meat
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -155,9 +125,6 @@
   startNode: start
   targetNode: chairRitual
   category: construction-category-furniture
-  icon:
-    sprite: Structures/Furniture/chairs.rsi
-    state: ritual
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -170,9 +137,6 @@
   startNode: start
   targetNode: chairFolding
   category: construction-category-furniture
-  icon:
-    sprite: Structures/Furniture/folding_chair.rsi
-    state: folding
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -185,9 +149,6 @@
   startNode: start
   targetNode: chairSteelBench
   category: construction-category-furniture
-  icon:
-    sprite: Structures/Furniture/chairs.rsi
-    state: steel-bench
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -200,9 +161,6 @@
   startNode: start
   targetNode: chairWoodBench
   category: construction-category-furniture
-  icon:
-    sprite: Structures/Furniture/chairs.rsi
-    state: wooden-bench
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -215,9 +173,6 @@
   startNode: start
   targetNode: redComfBench
   category: construction-category-furniture
-  icon:
-    sprite: Structures/Furniture/Bench/comf_bench.rsi
-    state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -230,9 +185,6 @@
   startNode: start
   targetNode: blueComfBench
   category: construction-category-furniture
-  icon:
-    sprite: Structures/Furniture/Bench/comf_bench.rsi
-    state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -246,9 +198,6 @@
   startNode: start
   targetNode: Table
   category: construction-category-furniture
-  icon:
-    sprite: Structures/Furniture/Tables/generic.rsi
-    state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -261,9 +210,6 @@
   startNode: start
   targetNode: TableReinforced
   category: construction-category-furniture
-  icon:
-    sprite: Structures/Furniture/Tables/reinforced.rsi
-    state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -276,9 +222,6 @@
   startNode: start
   targetNode: TableGlass
   category: construction-category-furniture
-  icon:
-    sprite: Structures/Furniture/Tables/glass.rsi
-    state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -291,9 +234,6 @@
   startNode: start
   targetNode: TableReinforcedGlass
   category: construction-category-furniture
-  icon:
-    sprite: Structures/Furniture/Tables/r_glass.rsi
-    state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -306,9 +246,6 @@
   startNode: start
   targetNode: TablePlasmaGlass
   category: construction-category-furniture
-  icon:
-    sprite: Structures/Furniture/Tables/plasma.rsi
-    state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -321,9 +258,6 @@
   startNode: start
   targetNode: TableBrass
   category: construction-category-furniture
-  icon:
-    sprite: Structures/Furniture/Tables/brass.rsi
-    state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -336,9 +270,6 @@
   startNode: start
   targetNode: TableWood
   category: construction-category-furniture
-  icon:
-    sprite: Structures/Furniture/Tables/wood.rsi
-    state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -351,9 +282,6 @@
   startNode: start
   targetNode: TableCarpet
   category: construction-category-furniture
-  icon:
-    sprite: Structures/Furniture/Tables/carpet.rsi
-    state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -366,9 +294,6 @@
   startNode: start
   targetNode: TableFancyBlack
   category: construction-category-furniture
-  icon:
-    sprite: Structures/Furniture/Tables/Fancy/black.rsi
-    state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -381,9 +306,6 @@
   startNode: start
   targetNode: TableFancyBlue
   category: construction-category-furniture
-  icon:
-    sprite: Structures/Furniture/Tables/Fancy/blue.rsi
-    state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -396,9 +318,6 @@
   startNode: start
   targetNode: TableFancyCyan
   category: construction-category-furniture
-  icon:
-    sprite: Structures/Furniture/Tables/Fancy/cyan.rsi
-    state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -411,9 +330,6 @@
   startNode: start
   targetNode: TableFancyGreen
   category: construction-category-furniture
-  icon:
-    sprite: Structures/Furniture/Tables/Fancy/green.rsi
-    state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -426,9 +342,6 @@
   startNode: start
   targetNode: TableFancyOrange
   category: construction-category-furniture
-  icon:
-    sprite: Structures/Furniture/Tables/Fancy/orange.rsi
-    state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -441,9 +354,6 @@
   startNode: start
   targetNode: TableFancyPurple
   category: construction-category-furniture
-  icon:
-    sprite: Structures/Furniture/Tables/Fancy/purple.rsi
-    state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -456,9 +366,6 @@
   startNode: start
   targetNode: TableFancyPink
   category: construction-category-furniture
-  icon:
-    sprite: Structures/Furniture/Tables/Fancy/pink.rsi
-    state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -471,9 +378,6 @@
   startNode: start
   targetNode: TableFancyRed
   category: construction-category-furniture
-  icon:
-    sprite: Structures/Furniture/Tables/Fancy/red.rsi
-    state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -486,9 +390,6 @@
   startNode: start
   targetNode: TableFancyWhite
   category: construction-category-furniture
-  icon:
-    sprite: Structures/Furniture/Tables/Fancy/white.rsi
-    state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -501,9 +402,6 @@
   startNode: start
   targetNode: CounterMetal
   category: construction-category-furniture
-  icon:
-    sprite: Structures/Furniture/Tables/countermetal.rsi
-    state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -516,9 +414,6 @@
   startNode: start
   targetNode: CounterWood
   category: construction-category-furniture
-  icon:
-    sprite: Structures/Furniture/Tables/counterwood.rsi
-    state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -532,9 +427,6 @@
   startNode: start
   targetNode: toilet
   category: construction-category-furniture
-  icon:
-    sprite: Structures/Furniture/toilet.rsi
-    state: disposal
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -548,9 +440,6 @@
   startNode: start
   targetNode: bed
   category: construction-category-furniture
-  icon:
-    sprite: Structures/Furniture/furniture.rsi
-    state: bed
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -563,9 +452,6 @@
   startNode: start
   targetNode: medicalbed
   category: construction-category-furniture
-  icon:
-    sprite: Structures/Furniture/furniture.rsi
-    state: bed-MED
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -578,9 +464,6 @@
   startNode: start
   targetNode: dogbed
   category: construction-category-furniture
-  icon:
-    sprite: Structures/Furniture/furniture.rsi
-    state: dogbed
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -593,9 +476,6 @@
   startNode: start
   targetNode: dresser
   category: construction-category-furniture
-  icon:
-    sprite: Structures/Furniture/furniture.rsi
-    state: dresser
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -609,9 +489,6 @@
   startNode: start
   targetNode: Rack
   category: construction-category-furniture
-  icon:
-    sprite: Structures/Furniture/furniture.rsi
-    state: rack
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -625,9 +502,6 @@
   startNode: start
   targetNode: MeatSpike
   category: construction-category-furniture
-  icon:
-    sprite: Structures/meat_spike.rsi
-    state: spike
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -640,9 +514,6 @@
   startNode: start
   targetNode: Curtains
   category: construction-category-furniture
-  icon:
-    sprite: Structures/Decoration/Curtains/hospital.rsi
-    state: closed
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
@@ -653,9 +524,6 @@
   startNode: start
   targetNode: CurtainsBlack
   category: construction-category-furniture
-  icon:
-    sprite: Structures/Decoration/Curtains/black.rsi
-    state: closed
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
@@ -666,9 +534,6 @@
   startNode: start
   targetNode: CurtainsBlue
   category: construction-category-furniture
-  icon:
-    sprite: Structures/Decoration/Curtains/blue.rsi
-    state: closed
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
@@ -679,9 +544,6 @@
   startNode: start
   targetNode: CurtainsCyan
   category: construction-category-furniture
-  icon:
-    sprite: Structures/Decoration/Curtains/cyan.rsi
-    state: closed
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
@@ -692,9 +554,6 @@
   startNode: start
   targetNode: CurtainsGreen
   category: construction-category-furniture
-  icon:
-    sprite: Structures/Decoration/Curtains/green.rsi
-    state: closed
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
@@ -705,9 +564,6 @@
   startNode: start
   targetNode: CurtainsOrange
   category: construction-category-furniture
-  icon:
-    sprite: Structures/Decoration/Curtains/orange.rsi
-    state: closed
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
@@ -718,9 +574,6 @@
   startNode: start
   targetNode: CurtainsPink
   category: construction-category-furniture
-  icon:
-    sprite: Structures/Decoration/Curtains/pink.rsi
-    state: closed
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
@@ -731,9 +584,6 @@
   startNode: start
   targetNode: CurtainsPurple
   category: construction-category-furniture
-  icon:
-    sprite: Structures/Decoration/Curtains/purple.rsi
-    state: closed
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
@@ -744,9 +594,6 @@
   startNode: start
   targetNode: CurtainsRed
   category: construction-category-furniture
-  icon:
-    sprite: Structures/Decoration/Curtains/red.rsi
-    state: closed
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
@@ -757,9 +604,6 @@
   startNode: start
   targetNode: CurtainsWhite
   category: construction-category-furniture
-  icon:
-    sprite: Structures/Decoration/Curtains/white.rsi
-    state: closed
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
@@ -770,9 +614,6 @@
   startNode: start
   targetNode: bookshelf
   category: construction-category-furniture
-  icon:
-    sprite: Structures/Furniture/bookshelf.rsi
-    state: base
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -785,9 +626,6 @@
   startNode: start
   targetNode: noticeBoard
   category: construction-category-furniture
-  icon:
-    sprite: Structures/Wallmounts/noticeboard.rsi
-    state: noticeboard
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: true
@@ -801,9 +639,6 @@
   startNode: start
   targetNode: mannequin
   category: construction-category-furniture
-  icon:
-    sprite: Structures/Decoration/mannequin.rsi
-    state: mannequin
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: true

@@ -35,7 +35,7 @@ public sealed partial class ConstructionPrototype : IPrototype
     ///     The <see cref="ConstructionGraphPrototype"/> this construction will be using.
     /// </summary>
     [DataField(required: true)]
-    public ProtoId<ConstructionGraphPrototype> Graph { get; private set; } = default!;
+    public ProtoId<ConstructionGraphPrototype> Graph { get; private set; } = string.Empty;
 
     /// <summary>
     ///     The target <see cref="ConstructionGraphNode"/> this construction will guide the user to.
@@ -62,7 +62,7 @@ public sealed partial class ConstructionPrototype : IPrototype
     [DataField]
     public EntityWhitelist? EntityWhitelist { get; private set; }
 
-    [DataField] public string Category { get; private set; } = default!;
+    [DataField] public string Category { get; private set; } = string.Empty;
 
     [DataField("objectType")] public ConstructionType Type { get; private set; } = ConstructionType.Structure;
 

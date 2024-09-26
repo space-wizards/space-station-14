@@ -127,14 +127,14 @@ namespace Content.Client.Construction
 
         private void HandleConstructionGhostExamined(EntityUid uid, ConstructionGhostComponent component, ExaminedEvent args)
         {
-            if (component.Prototype == null)
+            if (component.Prototype?.Name is null)
                 return;
 
             using (args.PushGroup(nameof(ConstructionGhostComponent)))
             {
                 args.PushMarkup(Loc.GetString(
                     "construction-ghost-examine-message",
-                    ("name", component.Prototype.Name!)));
+                    ("name", component.Prototype.Name)));
 
                 if (!_prototypeManager.TryIndex(component.Prototype.Graph, out ConstructionGraphPrototype? graph))
                     return;
