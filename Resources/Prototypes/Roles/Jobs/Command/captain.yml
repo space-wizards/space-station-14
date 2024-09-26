@@ -6,18 +6,16 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Engineering
-      time: 0 # 15 hours
+      time: 0 # 0 hours
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 0 # 15 hours
+      time: 0 # 0 hours
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 0 # 15 hours
+      time: 0 # 0 hours
     - !type:DepartmentTimeRequirement
       department: Command
-      time: 10800 # 15 hours
-    - !type:AgeRequirement
-      requiredAge: 21
+      time: 10800 # 3 hours
   weight: 20
   startingGear: CaptainGear
   icon: "JobIconCaptain"
