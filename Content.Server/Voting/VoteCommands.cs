@@ -29,11 +29,17 @@ namespace Content.Server.Voting
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            if (args.Length != 1)
+            if (args.Length != 1 && args[0] != StandardVoteType.Votekick.ToString())
             {
                 shell.WriteError(Loc.GetString("shell-need-exactly-one-argument"));
                 return;
             }
+            if (args.Length != 3 && args[0] == StandardVoteType.Votekick.ToString())
+            {
+                shell.WriteError(Loc.GetString("shell-wrong-arguments-number-need-specific", ("properAmount", 3), ("currentAmount", args.Length)));
+                return;
+            }
+
 
             if (!Enum.TryParse<StandardVoteType>(args[0], ignoreCase: true, out var type))
             {
@@ -50,7 +56,7 @@ namespace Content.Server.Voting
                 return;
             }
 
-            mgr.CreateStandardVote(shell.Player, type);
+            mgr.CreateStandardVote(shell.Player, type, args.Skip(1).ToArray());
         }
 
         public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
