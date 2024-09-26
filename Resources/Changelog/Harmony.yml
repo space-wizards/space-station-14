@@ -1,0 +1,224 @@
+Entries:
+- id: 2
+  author: liltenhead
+  time: '2024-07-01T02:43:36.0000000+00:00'
+  url: https://github.com/ss14-harmony/space-station-14/pull/2
+  changes:
+  - type: Add
+    message: Added server pins to the trinket section in character loadouts.
+- id: 6
+  author: KeldWolf
+  time: '2024-07-28T19:19:10.0000000+00:00'
+  url: https://github.com/ss14-harmony/space-station-14/pull/6
+  changes:
+  - type: Add
+    message: Added the lobby art made by Amatiramasu
+  - type: Remove
+    message: Removed Revolutionaries from secret rotation
+- id: 7
+  author: KeldWolf
+  time: '2024-08-09T05:28:35.0000000+00:00'
+  url: https://github.com/ss14-harmony/space-station-14/pull/7
+  changes:
+  - type: Tweak
+    message: Syndicate evac pod and clown shuttle mid round events have had their
+      weights set to 0.
+- id: 17
+  author: DieselMohawk
+  time: '2024-08-24T05:21:55.0000000+00:00'
+  url: https://github.com/ss14-harmony/space-station-14/pull/17
+  changes:
+  - type: Tweak
+    message: Resprited the Vulture Pins
+- id: 22
+  author: KeldWolf
+  time: '2024-09-01T19:53:38.0000000+00:00'
+  url: https://github.com/ss14-harmony/space-station-14/pull/22
+  changes:
+  - type: Tweak
+    message: Reduced clothing timers and brought honk and syndi evac shuttles back
+      into rotation
+- id: 25
+  author: KeldWolf
+  time: '2024-09-04T06:57:35.0000000+00:00'
+  url: https://github.com/ss14-harmony/space-station-14/pull/25
+  changes:
+  - type: Add
+    message: Added 2 new shuttles by spanky to load (for admins)
+- id: 28
+  author: KeldWolf
+  time: '2024-09-06T15:26:28.0000000+00:00'
+  url: https://github.com/ss14-harmony/space-station-14/pull/28
+  changes:
+  - type: Add
+    message: Added more shuttles by spanky to load (for admins)
+- id: 30
+  author: KeldWolf
+  time: '2024-09-07T04:39:41.0000000+00:00'
+  url: https://github.com/ss14-harmony/space-station-14/pull/30
+  changes:
+  - type: Tweak
+    message: 'Re-enabled role timers: 3 hours for command and sensitive roles and
+      3 hours of command for Captain.'
+- id: 31
+  author: KeldWolf
+  time: '2024-09-07T05:29:00.0000000+00:00'
+  url: https://github.com/ss14-harmony/space-station-14/pull/31
+  changes:
+  - type: Tweak
+    message: Tweaks on shuttles made by Spanky.
+- id: 33
+  author: TheCrimsonJupiter
+  time: '2024-09-09T21:35:20.0000000+00:00'
+  url: https://github.com/ss14-harmony/space-station-14/pull/33
+  changes:
+  - type: Tweak
+    message: Reduced the likelihood of mid-round round-ending antagonists to appear.
+- id: 43
+  author: Tsawodi
+  time: '2024-09-12T19:17:52.0000000+00:00'
+  url: https://github.com/ss14-harmony/space-station-14/pull/43
+  changes:
+  - type: Add
+    message: Added the instructor mantle for teach-and-learn events. Can only spawned
+      in through the entity menu.
+- id: 47
+  author: spanky-spanky
+  time: '2024-09-12T18:49:42.0000000+00:00'
+  url: https://github.com/ss14-harmony/space-station-14/pull/47
+  changes:
+  - type: Add
+    message: Added 14 ERT shuttles, credit to TsjipTsjip, luckyshotpictures, & IProduceWidgets.
+- id: 48
+  author: FluffMe
+  time: '2024-09-12T19:20:38.0000000+00:00'
+  url: https://github.com/ss14-harmony/space-station-14/pull/48
+  changes:
+  - type: Add
+    message: 'Added 5 button frames to "Construction" menu: grey, exit, caution, danger,
+      janitor.'
+  - type: Add
+    message: Added lockable button to "Construction" menu.
+- id: 49
+  author: spanky-spanky
+  time: '2024-09-13T03:20:18.0000000+00:00'
+  url: https://github.com/ss14-harmony/space-station-14/pull/49
+  changes:
+  - type: Add
+    message: Added a Deathsquad shuttle, and renamed other custom shuttles to date.
+- id: 51
+  author: spanky-spanky
+  time: '2024-09-13T05:01:16.0000000+00:00'
+  url: https://github.com/ss14-harmony/space-station-14/pull/51
+  changes:
+  - type: Tweak
+    message: Lowered the minimum population of several mid-pop maps.
+- id: 53
+  author: FluffMe
+  time: '2024-09-14T05:13:57.0000000+00:00'
+  url: https://github.com/ss14-harmony/space-station-14/pull/53
+  changes:
+  - type: Add
+    message: Clipboard can now be printed in Autolathe.
+- id: 55
+  author: spanky-spanky
+  time: '2024-09-16T15:55:55.0000000+00:00'
+  url: https://github.com/ss14-harmony/space-station-14/pull/55
+  changes:
+  - type: Tweak
+    message: QOL improvements to Omega.
+- id: 57
+  author: FluffMe
+  time: '2024-09-16T15:56:59.0000000+00:00'
+  url: https://github.com/ss14-harmony/space-station-14/pull/57
+  changes:
+  - type: Add
+    message: Added 2 harmony-specific posters to random spawner (authors -- Emii-olii,
+      BodenPflanze).
+- id: 59
+  author: spanky-spanky
+  time: '2024-09-16T23:48:12.0000000+00:00'
+  url: https://github.com/ss14-harmony/space-station-14/pull/59
+  changes:
+  - type: Add
+    message: Add Man of Weh poster, by eli_sarek.
+- id: 60
+  author: spanky-spanky
+  time: '2024-09-17T06:28:34.0000000+00:00'
+  url: https://github.com/ss14-harmony/space-station-14/pull/60
+  changes:
+  - type: Tweak
+    message: Second round of Harmony updates to Omega, mainly featuring a TEG.
+- id: 61
+  author: DieselMohawk
+  time: '2024-09-17T15:45:55.0000000+00:00'
+  url: https://github.com/ss14-harmony/space-station-14/pull/61
+  changes:
+  - type: Tweak
+    message: Rat King is now a Solo Antag.
+- id: 62
+  author: spanky-spanky
+  time: '2024-09-19T03:24:17.0000000+00:00'
+  url: https://github.com/ss14-harmony/space-station-14/pull/62
+  changes:
+  - type: Tweak
+    message: More Omega changes -- Major atmos rework, fixes from the last update,
+      QOL, and hopefully some error fixes.
+- id: 63
+  author: FluffMe
+  time: '2024-09-18T16:21:04.0000000+00:00'
+  url: https://github.com/ss14-harmony/space-station-14/pull/63
+  changes:
+  - type: Add
+    message: Added 3 more Harmony community posters -- "HarMoney", "Work Hard", and
+      "Makeshift Clown Poster" by Denetth and LevitatingTree.
+- id: 64
+  author: FluffMe
+  time: '2024-09-21T05:16:17.0000000+00:00'
+  url: https://github.com/ss14-harmony/space-station-14/pull/64
+  changes:
+  - type: Add
+    message: Added "The Floodlight" poster by sevount.
+- id: 65
+  author: jack-thedragon95
+  time: '2024-09-22T02:10:50.0000000+00:00'
+  url: https://github.com/ss14-harmony/space-station-14/pull/65
+  changes:
+  - type: Add
+    message: Added "Purplicious" HUD theme. PURPLE!
+- id: 68
+  author: spanky-spanky
+  time: '2024-09-20T18:40:53.0000000+00:00'
+  url: https://github.com/ss14-harmony/space-station-14/pull/68
+  changes:
+  - type: Remove
+    message: Removed Spanky's beta of refined Omega due to changes being merged upstream.
+  - type: Tweak
+    message: Original Omega is returned to map pool.
+- id: 69
+  author: FluffMe
+  time: '2024-09-20T18:39:19.0000000+00:00'
+  url: https://github.com/ss14-harmony/space-station-14/pull/69
+  changes:
+  - type: Tweak
+    message: Changed "Work Hard" and "Makeshift Clown Poster" sprites and descriptions
+      (by LevitatingTree).
+- id: 71
+  author: FluffMe
+  time: '2024-09-23T15:40:11.0000000+00:00'
+  url: https://github.com/ss14-harmony/space-station-14/pull/71
+  changes:
+  - type: Add
+    message: Added "Fallen Can", "Faded Poster", "Magic Candle", and "Super-Matter"
+      posters by LevitatingTree.
+- id: 73
+  author: FluffMe
+  time: '2024-09-23T15:47:12.0000000+00:00'
+  url: https://github.com/ss14-harmony/space-station-14/pull/73
+  changes:
+  - type: Add
+    message: Add "brown bandana" as a headwear option for Cargo Tech loadout.
+  - type: Add
+    message: Add "red bandana" as a headwear option for Security Officer loadout.
+  - type: Add
+    message: Add "noir trenchcoat" as a outer clothing option for Detective loadout.
