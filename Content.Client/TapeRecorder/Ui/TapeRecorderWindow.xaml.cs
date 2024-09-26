@@ -56,6 +56,10 @@ public sealed partial class TapeRecorderWindow : FancyWindow
         };
 
         PrintButton.OnPressed += _ => OnPrintTranscript?.Invoke();
+
+        SetEnabled(TapeRecorderMode.Recording, false);
+        SetEnabled(TapeRecorderMode.Playing, false);
+        SetEnabled(TapeRecorderMode.Rewinding, false);
     }
 
     private void SetSlider(float maxTime, float currentTime)
