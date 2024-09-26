@@ -19,13 +19,13 @@ public sealed class SliderSheetlet<T> : Sheetlet<T> where T: PalettedStylesheet,
         var sliderFillBox = new StyleBoxTexture
         {
             Texture = sliderFillTex,
-            Modulate = sheet.PositivePalette.Element,
+            Modulate = sheet.PositivePalette.TextDark,
         };
 
         var sliderBackBox = new StyleBoxTexture
         {
             Texture = sliderFillTex,
-            Modulate = sheet.SecondaryPalette.Background,
+            Modulate = sheet.SecondaryPalette.BackgroundDark,
         };
 
         var sliderForeBox = new StyleBoxTexture

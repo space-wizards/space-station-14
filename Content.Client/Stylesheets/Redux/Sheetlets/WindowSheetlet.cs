@@ -84,7 +84,7 @@ public sealed class WindowSheetlet<T> : Sheetlet<T>
             E<TextureButton>()
                 .Class(DefaultWindow.StyleClassWindowCloseButton)
                 .Prop(TextureButton.StylePropertyTexture, closeButtonTex)
-                .Margin(new Thickness(0, 0, -3, 0))
+                .Margin(new Thickness(0, 0, 0, 0)) // margin right -3 once DefaultWindow is killed?
                 .Margin(3),
             E<TextureButton>()
                 .Class(DefaultWindow.StyleClassWindowCloseButton)
