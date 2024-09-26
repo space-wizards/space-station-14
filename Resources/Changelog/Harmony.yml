@@ -217,8 +217,24 @@ Entries:
   url: https://github.com/ss14-harmony/space-station-14/pull/73
   changes:
   - type: Add
-    message: Add "brown bandana" as a headwear option for Cargo Tech loadout.
+    message: Added "brown bandana" as a headwear option for Cargo Tech loadout.
   - type: Add
-    message: Add "red bandana" as a headwear option for Security Officer loadout.
+    message: Added "red bandana" as a headwear option for Security Officer loadout.
   - type: Add
-    message: Add "noir trenchcoat" as a outer clothing option for Detective loadout.
+    message: Added "noir trenchcoat" as a outer clothing option for Detective loadout.
+- id: 76
+  author: Unisol
+  time: '2024-09-26T03:48:23.0000000+00:00'
+  url: https://github.com/ss14-harmony/space-station-14/pull/76
+  changes:
+  - type: Add
+    message: Added Aviation number 3, espresso martini and sunset soda to list of
+      cocktails
+- id: 77
+  author: FluffMe
+  time: '2024-09-26T06:09:18.0000000+00:00'
+  url: https://github.com/ss14-harmony/space-station-14/pull/77
+  changes:
+  - type: Add
+    message: Added "Harmony Changelog" tab to the in-game Changelogs.
+
