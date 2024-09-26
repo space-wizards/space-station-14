@@ -185,6 +185,21 @@
     - BasicRoundstartVariation
 
 - type: gamePreset
+  id: SecretNukeops #For Admin Use: Runs Nukeops but shows "Secret" in lobby.
+  alias:
+    - secretnukeops
+  name: secret-title
+  description: secret-description
+  showInVote: false #Admin Use
+  rules:
+    - Nukeops
+    - SubGamemodesRule
+    - BasicStationEventScheduler
+    - MeteorSwarmScheduler
+    - SpaceTrafficControlEventScheduler
+    - BasicRoundstartVariation
+
+- type: gamePreset
   id: Revolutionary
   alias:
     - rev
