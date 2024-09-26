@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using Content.Client.Stylesheets.Redux;
 using Content.Client.Stylesheets.Redux.Stylesheets;
 using Robust.Client.UserInterface;
@@ -17,7 +18,12 @@ namespace Content.Client.Stylesheets
         public Stylesheet SheetNano { get; } = default!;
         public Stylesheet SheetSpace { get; } = default!;
 
-        public Dictionary<string, Stylesheet> Stylesheets { get; private set; } = default!;
+        private Dictionary<string, Stylesheet> Stylesheets { get; set; } = default!;
+
+        public bool TryGetStylesheet(string name, [MaybeNullWhen(false)] out Stylesheet stylesheet)
+        {
+            return Stylesheets.TryGetValue(name, out stylesheet);
+        }
 
         public void Initialize()
         {

@@ -46,7 +46,7 @@ namespace Content.Client.UserInterface.Controls
             set
             {
                 _stylesheet = value;
-                if (value is not null && _styleMan.Stylesheets.TryGetValue(value, out var stylesheet))
+                if (value is not null && _styleMan.TryGetStylesheet(value, out var stylesheet))
                     base.Stylesheet = stylesheet;
             }
         }
