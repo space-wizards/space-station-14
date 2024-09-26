@@ -71,12 +71,15 @@ public sealed class ApcSystem : EntitySystem
         component.NeedStateUpdate = true;
     }
 
-    //Update the HasAccess var for UI to read
     private void OnBoundUiOpen(EntityUid uid, ApcComponent component, BoundUIOpenedEvent args)
     {
-        // TODO: this should be per-player not stored on the apc
-        component.HasAccess = _accessReader.IsAllowed(args.Actor, uid);
         UpdateApcState(uid, component);
+
+        _ui.ServerSendUiMessage((uid, null), ApcUiKey.Key, new ApcAccessCheckMessage()
+        {
+            HasAccess = _accessReader.IsAllowed(args.Actor, uid),
+            Actor = args.Actor
+        }, args.Actor);
     }
 
     private void OnToggleMainBreaker(EntityUid uid, ApcComponent component, ApcToggleMainBreakerMessage args)
@@ -165,7 +168,7 @@ public sealed class ApcSystem : EntitySystem
         // TODO: Fix ContentHelpers or make a new one coz this is cooked.
         var charge = ContentHelpers.RoundToNearestLevels(battery.CurrentStorage / battery.Capacity, 1.0, 100 / ChargeAccuracy) / 100f * ChargeAccuracy;
 
-        var state = new ApcBoundInterfaceState(apc.MainBreakerEnabled, apc.HasAccess,
+        var state = new ApcBoundInterfaceState(apc.MainBreakerEnabled,
             (int) MathF.Ceiling(battery.CurrentSupply), apc.LastExternalState,
             charge);
 

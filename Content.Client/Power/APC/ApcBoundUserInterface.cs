@@ -1,7 +1,6 @@
-﻿using Content.Client.Power.APC.UI;
+using Content.Client.Power.APC.UI;
 using Content.Shared.APC;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.Power.APC
@@ -30,6 +29,15 @@ namespace Content.Client.Power.APC
 
             var castState = (ApcBoundInterfaceState) state;
             _menu?.UpdateState(castState);
+        }
+
+        protected override void ReceiveMessage(BoundUserInterfaceMessage message)
+        {
+            base.ReceiveMessage(message);
+            if (message is ApcAccessCheckMessage)
+            {
+                _menu?.SetAccessEnabled(((ApcAccessCheckMessage)message).HasAccess);
+            }
         }
 
         public void BreakerPressed()
