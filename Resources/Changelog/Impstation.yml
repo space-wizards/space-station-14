@@ -2103,3 +2103,18 @@
   id: 269
   time: '2024-09-26T06:22:31.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/347
+- author: Sha-Seng
+  changes:
+  - message: HoP can now spawn with laceup shoes, leather shoes, and yakuza shoes
+      in addition to the stupid brown sneakers
+    type: Add
+  id: 270
+  time: '2024-09-26T06:46:24.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/350
+- author: Sha-Seng
+  changes:
+  - message: Captain winter coat hood now matches the coat's new (captain-blue) colors
+    type: Tweak
+  id: 271
+  time: '2024-09-26T06:46:34.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/352
