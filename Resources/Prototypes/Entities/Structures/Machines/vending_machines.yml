@@ -79,8 +79,6 @@
     speechVerb: Robotic
     speechSounds: Vending
   - type: IntrinsicRadioReceiver
-    channels:
-    - Common
   - type: IntrinsicRadioTransmitter
     channels:
     - Common

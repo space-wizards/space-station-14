@@ -32,8 +32,6 @@
     factions:
     - SimpleNeutral
   - type: IntrinsicRadioReceiver
-    channels:
-    - Common
   - type: IntrinsicRadioTransmitter
     channels:
     - Common
