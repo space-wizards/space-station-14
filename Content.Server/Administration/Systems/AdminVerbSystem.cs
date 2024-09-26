@@ -349,29 +349,29 @@ namespace Content.Server.Administration.Systems
                 });
 
                 // This logic is needed to be able to modify the AI's laws through its core and eye.
+                EntityUid? target = null;
                 SiliconLawBoundComponent? lawBoundComponent = null;
 
-                var target = args.Target;
-                TryComp(args.Target, out lawBoundComponent);
-
-                if (lawBoundComponent == null)
+                if (TryComp(args.Target, out lawBoundComponent))
                 {
-                    // When inspecting the core we can find the entity with its laws by looking at the  AiHolderComponent.
-                    if (TryComp<StationAiHolderComponent>(args.Target, out var holder) && holder.Slot.Item != null
-                        && TryComp(holder.Slot.Item, out lawBoundComponent))
-                    {
-                        target = holder.Slot.Item.Value;
-                    }
+                    target = args.Target;
+                }
+                // When inspecting the core we can find the entity with its laws by looking at the  AiHolderComponent.
+                else if (TryComp<StationAiHolderComponent>(args.Target, out var holder) && holder.Slot.Item != null
+                         && TryComp(holder.Slot.Item, out lawBoundComponent))
+                {
+                    target = holder.Slot.Item.Value;
                     // For the eye we can find the entity with its laws as the source of the movement relay since the eye
                     // is just a proxy for it to move around and look around the station.
-                    else if (TryComp<MovementRelayTargetComponent>(args.Target, out var relay)
-                        && TryComp(relay.Source, out lawBoundComponent))
-                    {
-                        target = relay.Source;
-                    }
+                }
+                else if (TryComp<MovementRelayTargetComponent>(args.Target, out var relay)
+                         && TryComp(relay.Source, out lawBoundComponent))
+                {
+                    target = relay.Source;
+
                 }
 
-                if (lawBoundComponent != null)
+                if (lawBoundComponent != null && target != null)
                 {
                     args.Verbs.Add(new Verb()
                     {
@@ -385,7 +385,7 @@ namespace Content.Server.Administration.Systems
                                 return;
                             }
                             _euiManager.OpenEui(ui, session);
-                            ui.UpdateLaws(lawBoundComponent, target);
+                            ui.UpdateLaws(lawBoundComponent, target.Value);
                         },
                         Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/Interface/Actions/actions_borg.rsi"), "state-laws"),
                     });
