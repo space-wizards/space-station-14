@@ -32,6 +32,9 @@
     factions:
     - SimpleNeutral
   - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Common
   - type: ActiveRadio
     channels:
     - Common
@@ -412,6 +415,11 @@
     - DoorBumpOpener
     - FootstepSound
     - Bot
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Common
+    - Supply
   - type: ActiveRadio
     channels:
     - Common
