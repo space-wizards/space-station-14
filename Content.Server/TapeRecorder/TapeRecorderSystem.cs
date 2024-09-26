@@ -37,7 +37,6 @@ public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
     protected override void ReplayMessagesInSegment(Entity<TapeRecorderComponent> ent, TapeCassetteComponent tape, float segmentStart, float segmentEnd)
     {
         var voice = EnsureComp<VoiceOverrideComponent>(ent);
-        var speech = EnsureComp<SpeechComponent>(ent);
 
         foreach (var message in tape.RecordedData)
         {
@@ -45,9 +44,10 @@ public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
                 continue;
 
             //Change the voice to match the speaker
-            voice.VoiceName = message.Name ?? ent.Comp.DefaultName;
+            voice.NameOverride = message.Name ?? ent.Comp.DefaultName;
+            // TODO: mimic the exact string chosen when the message was recorded
             var verb = message.Verb ?? SharedChatSystem.DefaultSpeechVerb;
-            speech.SpeechVerb = _proto.Index<SpeechVerbPrototype>(verb);
+            voice.SpeechVerbOverride = _proto.Index<SpeechVerbPrototype>(verb);
             //Play the message
             _chat.TrySendInGameICMessage(ent, message.Message, InGameICChatType.Speak, false);
         }
@@ -77,7 +77,8 @@ public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
 
         //Add a new entry to the tape
         var verb = _chat.GetSpeechVerb(args.Source, args.Message);
-        cassette.Comp.Buffer.Add(new TapeCassetteRecordedMessage(cassette.Comp.CurrentPosition, nameEv.Name, verb, args.Message));
+        var name = nameEv.VoiceName;
+        cassette.Comp.Buffer.Add(new TapeCassetteRecordedMessage(cassette.Comp.CurrentPosition, name, verb, args.Message));
     }
 
     private void OnPrintMessage(Entity<TapeRecorderComponent> ent, ref PrintTapeRecorderMessage args)
