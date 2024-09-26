@@ -1469,6 +1469,6 @@
     Fiber:
       amount: 3
     EnergyDrink:
-      amount: 2
+      amount: 3
   products:
-    CottonBool: 5
+    CottonBool: 6
