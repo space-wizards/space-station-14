@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: Chameleon scarves now work again.
-    type: Fix
-  id: 6941
-  time: '2024-07-20T03:00:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30156
-- author: Aidenkrz
-  changes:
-  - message: The mass hallucinations event no longer affects non-humanoids.
-    type: Fix
-  id: 6942
-  time: '2024-07-20T05:53:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28748
 - author: buntobaggins
   changes:
   - message: Increased light radius on the Spationaut Hardsuit
@@ -3929,3 +3915,18 @@
   id: 7440
   time: '2024-09-26T12:46:17.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32407
+- author: SlamBamActionman
+  changes:
+  - message: Trusted players can now initiate votekicks for serious rulebreaks, when
+      admins are unavailable.
+    type: Add
+  id: 7441
+  time: '2024-09-26T16:32:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32005
+- author: Beck Thompson
+  changes:
+  - message: Voice masks allow you to pick your speaking style again.
+    type: Fix
+  id: 7442
+  time: '2024-09-26T16:55:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30798
