@@ -33,7 +33,7 @@ public sealed partial class HolopadWindow : FancyWindow
     public void UpdateUIState(TelephoneState state, Dictionary<NetEntity, string> holopads)
     {
         AnswerCallButton.Disabled = (state != TelephoneState.Ringing);
-        EndCallButton.Disabled = (state == TelephoneState.Idle || state == TelephoneState.Ending);
+        EndCallButton.Disabled = (state == TelephoneState.Idle || state == TelephoneState.EndingCall);
 
         // Clear excess children from the contact list
         while (ContactsList.ChildCount > holopads.Count)

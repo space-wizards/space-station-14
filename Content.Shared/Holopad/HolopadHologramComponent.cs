@@ -49,8 +49,8 @@ public sealed partial class HolopadHologramComponent : Component
     public Vector2 Offset = new Vector2();
 
     /// <summary>
-    /// A set of entities that are linked to this hologram
+    /// A user that are linked to this hologram
     /// </summary>
     [ViewVariables]
-    public HashSet<EntityUid> LinkedEntities = new();
+    public Entity<HolopadUserComponent>? LinkedUser;
 }

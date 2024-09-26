@@ -49,7 +49,13 @@ public sealed partial class TelephoneComponent : Component
     /// The range at which the telephone can connect to another
     /// </summary>
     [DataField]
-    public TelephoneRange Range;
+    public TelephoneRange TransmissionRange;
+
+    /// <summary>
+    /// The range at which the telephone picks up voices
+    /// </summary>
+    [DataField]
+    public float ListeningRange = 2;
 
     /// <summary>
     /// Linked telephone
@@ -141,7 +147,7 @@ public enum TelephoneState : byte
     Calling,
     Ringing,
     InCall,
-    Ending
+    EndingCall
 }
 
 [Serializable, NetSerializable]

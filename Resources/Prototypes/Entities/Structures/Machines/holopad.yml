@@ -36,14 +36,14 @@
           Calling: { state: lights_calling }
           Ringing: { state: lights_ringing }
           InCall: { state: lights_in_call }
-          HangingUp: { state: lights_hanging_up }
+          EndingCall: { state: lights_hanging_up }
 #  - type: Machine
 #    board: HotplateMachineCircuitboard
-  - type: LitOnPowered
   - type: PointLight
     radius: 1.3
     energy: 1.8
     color: "#afe1fe"
+    enabled: false
   - type: Holopad
     hologramProtoId: HolopadHologram
   - type: Speech
@@ -51,8 +51,9 @@
   - type: Telephone
     ringTone: /Audio/Machines/double_ring.ogg
     ringInterval: 2
-    ringingTimeout: 60
-    hangingUpTimeout: 3
+    ringingTimeout: 30
+    hangingUpTimeout: 2
+    speakerVolume: Speak
   - type: ActivatableUI
     key: enum.HolopadUiKey.Key
   - type: ActivatableUIRequiresPower

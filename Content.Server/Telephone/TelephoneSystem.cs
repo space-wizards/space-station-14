@@ -19,6 +19,7 @@ using Robust.Shared.Replays;
 
 using System.Linq;
 using Content.Shared.Database;
+using Content.Shared.Mind.Components;
 
 namespace Content.Server.Telephone;
 
@@ -35,7 +36,7 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
     [Dependency] private readonly IReplayRecordingManager _replay = default!;
 
     // Has set used to prevent telephone feedback loops
-    private HashSet<(string, EntityUid)> _recentChatMessages = new();
+    private HashSet<(EntityUid, string, Entity<TelephoneComponent>)> _recentChatMessages = new();
 
     public override void Initialize()
     {
@@ -68,7 +69,11 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
         if (args.Source == telephone.Owner)
             return;
 
-        if (_recentChatMessages.Add((args.Message, args.Source)))
+        // Ignore background chatter
+        if (!HasComp<MindContainerComponent>(args.Source))
+            return;
+
+        if (_recentChatMessages.Add((args.Source, args.Message, telephone)))
             SendTelephoneMessage(args.Source, args.Message, telephone);
     }
 
@@ -123,7 +128,7 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
 
                     break;
 
-                case TelephoneState.Ending:
+                case TelephoneState.EndingCall:
                     if (_timing.RealTime > entTelephone.StateStartTime + TimeSpan.FromSeconds(entTelephone.HangingUpTimeout))
                         TerminateTelephoneCalls(telephone);
 
@@ -237,52 +242,39 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
 
     public void EndTelephoneCalls(Entity<TelephoneComponent> telephone)
     {
-        if (telephone.Comp.CurrentState == TelephoneState.Ending)
-            return;
-
         var evCallEnded = new TelephoneCallEndedEvent(telephone);
 
-        foreach (var linkedTelephone in telephone.Comp.LinkedTelephones)
-        {
-            if (!linkedTelephone.Comp.LinkedTelephones.Remove(telephone))
-                continue;
-
-            if (!IsTelephoneEngaged(telephone))
-                EndTelephoneCalls(linkedTelephone);
-
-            RaiseLocalEvent(linkedTelephone, ref evCallEnded);
-        }
-
-        telephone.Comp.LinkedTelephones.Clear();
-        telephone.Comp.Muted = false;
-        SetTelephoneState(telephone, TelephoneState.Ending);
-
-        RaiseLocalEvent(telephone, ref evCallEnded);
+        HandleEndingTelephoneCalls(telephone, TelephoneState.EndingCall, evCallEnded);
     }
 
     public void TerminateTelephoneCalls(Entity<TelephoneComponent> telephone)
     {
-        if (telephone.Comp.CurrentState == TelephoneState.Idle)
-            return;
-
         var evCallTerminated = new TelephoneCallTerminatedEvent();
+
+        HandleEndingTelephoneCalls(telephone, TelephoneState.Idle, evCallTerminated);
+    }
+
+    private void HandleEndingTelephoneCalls<T>(Entity<TelephoneComponent> telephone, TelephoneState newState, T ev) where T : notnull
+    {
+        if (telephone.Comp.CurrentState == newState)
+            return;
 
         foreach (var linkedTelephone in telephone.Comp.LinkedTelephones)
         {
             if (!linkedTelephone.Comp.LinkedTelephones.Remove(telephone))
                 continue;
 
-            if (!IsTelephoneEngaged(telephone))
+            if (!IsTelephoneEngaged(linkedTelephone))
                 EndTelephoneCalls(linkedTelephone);
 
-            RaiseLocalEvent(linkedTelephone, ref evCallTerminated);
+            RaiseLocalEvent(linkedTelephone, ref ev);
         }
 
         telephone.Comp.LinkedTelephones.Clear();
         telephone.Comp.Muted = false;
-        SetTelephoneState(telephone, TelephoneState.Idle);
+        SetTelephoneState(telephone, newState);
 
-        RaiseLocalEvent(telephone, ref evCallTerminated);
+        RaiseLocalEvent(telephone, ref ev);
     }
 
     public void SendTelephoneMessage(EntityUid messageSource, string message, Entity<TelephoneComponent> source, bool escapeMarkup = true)
@@ -360,7 +352,10 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
         if (telephone.Comp.CurrentState == TelephoneState.InCall)
         {
             if (!HasComp<ActiveListenerComponent>(telephone))
-                AddComp<ActiveListenerComponent>(telephone);
+            {
+                var activeListener = AddComp<ActiveListenerComponent>(telephone);
+                activeListener.Range = telephone.Comp.ListeningRange;
+            }
 
             return;
         }
@@ -379,7 +374,7 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
         var sourceXform = Transform(source);
         var receiverXform = Transform(receiver);
 
-        switch (source.Comp.Range)
+        switch (source.Comp.TransmissionRange)
         {
             case TelephoneRange.Grid:
                 if (sourceXform.GridUid == null || receiverXform.GridUid != sourceXform.GridUid)
@@ -397,9 +392,6 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
 
     public bool IsTelephoneEngaged(Entity<TelephoneComponent> telephone)
     {
-        DebugTools.AssertNotEqual(telephone.Comp.LinkedTelephones.Any(), telephone.Comp.CurrentState == TelephoneState.Idle,
-            $"Telephone {telephone} has {(telephone.Comp.LinkedTelephones.Any() ? "linked telephones" : "no linked telephones")} but its state is {telephone.Comp.CurrentState}");
-
         return telephone.Comp.LinkedTelephones.Any();
     }
 }
