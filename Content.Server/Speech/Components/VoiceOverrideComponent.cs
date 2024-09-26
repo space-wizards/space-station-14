@@ -8,7 +8,7 @@ namespace Content.Server.Speech.Components;
 /// </summary>
 /// <remarks>
 ///     Before using this component, please take a look at the the TransformSpeakerNameEvent (and the inventory relay version).
-///     Depending on what your doing, it could be a better choice!
+///     Depending on what you're doing, it could be a better choice!
 /// </remarks>
 [RegisterComponent]
 public sealed partial class VoiceOverrideComponent : Component
@@ -21,14 +21,14 @@ public sealed partial class VoiceOverrideComponent : Component
     public string? NameOverride = null;
 
     /// <summary>
-    ///     The verb that will be used insteand ofan entities default one.
+    ///     The verb that will be used insteand of an entities default one.
     ///     If null, the defaut will be used.
     /// </summary>
     [DataField]
     public ProtoId<SpeechVerbPrototype>? SpeechVerbOverride = null;
 
     /// <summary>
-    ///     If true, the override values (If not null) will be applied.
+    ///     If true, the override values (if they are not null) will be applied.
     /// </summary>
     [DataField]
     public bool Enabled = true;
