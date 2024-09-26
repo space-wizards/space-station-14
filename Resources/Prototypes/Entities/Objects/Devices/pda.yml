@@ -1150,6 +1150,7 @@
     uiKey: enum.PdaUiKey.Key
     preinstalled:
       - NotekeeperCartridge
+      - MedTekCartridge
     cartridgeSlot:
       priority: -1
       name: Cartridge
