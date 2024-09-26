@@ -30,7 +30,7 @@ public sealed partial class HealiumProductionReaction : IGasReactionEffect
 
         mixture.AdjustMoles(Gas.BZ, -bZRemoved);
         mixture.AdjustMoles(Gas.Frezon, -frezonRemoved);
-        mixture.AdjustMoles(Gas.Healium, HealiumProduced);
+        mixture.AdjustMoles(Gas.Healium, healiumProduced);
 
         var energyReleased = healiumProduced * Atmospherics.HealiumProductionEnergy;
         var heatCap = atmosphereSystem.GetHeatCapacity(mixture, true);
