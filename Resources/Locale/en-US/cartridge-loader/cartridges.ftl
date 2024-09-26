@@ -20,6 +20,8 @@ log-probe-label-time = Time
 log-probe-label-accessor = Accessed by
 log-probe-label-number = #
 
+astro-nav-program-name = AstroNav
+
 # Wanted list cartridge
 wanted-list-program-name = Wanted list
 wanted-list-label-no-records = It's all right, cowboy

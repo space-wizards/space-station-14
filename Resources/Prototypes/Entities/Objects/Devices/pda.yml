@@ -400,6 +400,13 @@
     accentVColor: "#8900c9"
   - type: Icon
     state: pda-miner
+  - type: CartridgeLoader
+    uiKey: enum.PdaUiKey.Key
+    preinstalled:
+      - CrewManifestCartridge
+      - NotekeeperCartridge
+      - NewsReaderCartridge
+      - AstroNavCartridge
 
 - type: entity
   parent: BasePDA
