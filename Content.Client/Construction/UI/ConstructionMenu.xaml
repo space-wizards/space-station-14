@@ -3,7 +3,7 @@
     <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
         <BoxContainer Orientation="Vertical" HorizontalExpand="True" SizeFlagsStretchRatio="0.4" Margin="0 0 5 0">
             <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="0 0 0 5">
-                <LineEdit Name="SearchBar" PlaceHolder="Search" HorizontalExpand="True"/>
+                <LineEdit Name="SearchBar" PlaceHolder="{Loc 'construction-menu-search'}" HorizontalExpand="True"/>
                 <OptionButton Name="OptionCategories" Access="Public" MinSize="130 0"/>
             </BoxContainer>
             <controls:ListContainer Name="Recipes" Access="Public" Group="True" Toggle="True" VerticalExpand="True" />
