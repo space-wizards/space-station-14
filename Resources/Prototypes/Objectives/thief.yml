@@ -184,6 +184,15 @@
   - type: Objective
     difficulty: 1.2
 
+- type: entity
+  parent: BaseThiefStealObjective
+  id: WantedListCartridgeStealObjective
+  components:
+  - type: StealCondition
+    stealGroup: WantedListCartridge
+  - type: Objective
+    difficulty: 1
+
 - type: entity                                      #Medical subgroup
   parent: BaseThiefStealObjective
   id: ClothingOuterHardsuitVoidParamedStealObjective
@@ -258,17 +267,6 @@
     job: CargoTechnician
   - type: StealCondition
     stealGroup: CargoShuttleConsoleCircuitboard
-  - type: Objective
-    difficulty: 0.7
-
-- type: entity
-  parent: BaseThiefStealObjective
-  id: SalvageShuttleCircuitboardStealObjective
-  components:
-  - type: NotJobRequirement
-    job: SalvageSpecialist
-  - type: StealCondition
-    stealGroup: SalvageShuttleConsoleCircuitboard
   - type: Objective
     difficulty: 0.7
 

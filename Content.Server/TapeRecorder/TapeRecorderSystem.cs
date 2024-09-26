@@ -1,7 +1,7 @@
 using Content.Server.Chat.Systems;
 using Content.Server.Hands.Systems;
 using Content.Server.Speech;
-using Content.Server.VoiceMask;
+using Content.Server.Speech.Components;
 using Content.Shared.Chat;
 using Content.Shared.Paper;
 using Content.Shared.Speech;
@@ -36,8 +36,7 @@ public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
     /// </summary>
     protected override void ReplayMessagesInSegment(Entity<TapeRecorderComponent> ent, TapeCassetteComponent tape, float segmentStart, float segmentEnd)
     {
-        // TODO: when voice mask is refactored change this to VoiceOverride
-        var voiceMask = EnsureComp<VoiceMaskComponent>(ent);
+        var voice = EnsureComp<VoiceOverrideComponent>(ent);
         var speech = EnsureComp<SpeechComponent>(ent);
 
         foreach (var message in tape.RecordedData)
@@ -46,7 +45,7 @@ public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
                 continue;
 
             //Change the voice to match the speaker
-            voiceMask.VoiceName = message.Name ?? ent.Comp.DefaultName;
+            voice.VoiceName = message.Name ?? ent.Comp.DefaultName;
             var verb = message.Verb ?? SharedChatSystem.DefaultSpeechVerb;
             speech.SpeechVerb = _proto.Index<SpeechVerbPrototype>(verb);
             //Play the message
