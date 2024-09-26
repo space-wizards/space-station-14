@@ -41,7 +41,7 @@ public abstract class SharedNavMapSystem : EntitySystem
         // Data handling events
         SubscribeLocalEvent<NavMapComponent, ComponentGetState>(OnGetState);
 
-        SubscribeAllEvent<MapWarpRequest>(OnMapWarp);
+        SubscribeAllEvent<NavMapWarpRequest>(OnNavMapWarp);
 
         _doorQuery = GetEntityQuery<NavMapDoorComponent>();
     }
@@ -92,11 +92,11 @@ public abstract class SharedNavMapSystem : EntitySystem
 
     public void RequestWarpTo(EntityUid uid, Vector2 target)
     {
-        var message = new MapWarpRequest(GetNetEntity(uid), target);
+        var message = new NavMapWarpRequest(GetNetEntity(uid), target);
         RaisePredictiveEvent(message);
     }
 
-    private void OnMapWarp(MapWarpRequest args)
+    private void OnNavMapWarp(NavMapWarpRequest args)
     {
         var uid = GetEntity(args.Uid);
 
