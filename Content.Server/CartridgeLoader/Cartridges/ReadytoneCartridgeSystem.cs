@@ -20,7 +20,9 @@ public sealed class ReadytoneCartridgeSystem : EntitySystem
 
     private void OnCartridgeAdded(Entity<ReadytoneCartridgeComponent> ent, ref CartridgeAddedEvent args)
     {
-        EnsureComp<InstrumentComponent>(args.Loader);
+        var instrument = EnsureComp<InstrumentComponent>(args.Loader);
+
+        _instrumentSystem.SetInstrumentProgram(args.Loader, instrument, 2, 1);
     }
 
     private void OnCartridgeRemoved(Entity<ReadytoneCartridgeComponent> ent, ref CartridgeRemovedEvent args)
