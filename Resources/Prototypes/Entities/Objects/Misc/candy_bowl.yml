@@ -17,6 +17,9 @@
         - Pill
       tags:
         - FoodSnack
+        - Burnt
+        - Cigarette
+        - Cigar
   - type: ContainerContainer
     containers:
       bin-container: !type:Container
