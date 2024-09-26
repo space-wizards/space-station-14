@@ -4349,21 +4349,6 @@ entities:
     - type: Transform
       pos: 6.5,-13.5
       parent: 1
-- proto: BaseAdvancedPen
-  entities:
-  - uid: 264
-    components:
-    - type: Transform
-      pos: -0.83932495,-3.4339676
-      parent: 1
-    - type: UseDelay
-      delays:
-        default:
-          endTime: 0
-          startTime: 0
-          length: 1.5
-    - type: Physics
-      canCollide: False
 - proto: Beaker
   entities:
   - uid: 66
