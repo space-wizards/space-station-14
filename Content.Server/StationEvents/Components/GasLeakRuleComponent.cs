@@ -15,6 +15,7 @@ public sealed partial class GasLeakRuleComponent : Component
         Gas.Frezon,
         Gas.WaterVapor, // the fog
         Gas.BZ,
+        Gas.Healium
     };
 
     /// <summary>

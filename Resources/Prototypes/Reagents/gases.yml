@@ -467,3 +467,53 @@
         component: ForcedSleeping
         time: 10
         type: Add
+
+- type: reagent
+  id: Healium
+  name: reagent-name-healium
+  desc: reagent-desc-healium
+  physicalDesc: reagent-physical-desc-gaseous
+  flavor: sweet
+  color: "#8b0000"
+  metabolisms:
+    Gas:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Healium
+          min: 0.5
+        scaleByQuantity: true
+        ignoreResistances: true
+        damage:
+          types:
+            Slash: -0.3
+            Blunt: -0.3
+            Heat: -0.3
+      - !type:ModifyBleedAmount
+        amount: -0.15
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Healium
+          min: 0.5
+        type: Local
+        visualType: Medium
+        messages: [ "effect-sleepy" ]
+        probability: 0.1
+      - !type:MovespeedModifier
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Healium
+          min: 1
+        walkSpeedModifier: 0.65
+        sprintSpeedModifier: 0.65
+      - !type:GenericStatusEffect
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Healium
+          min: 1.8
+        key: ForcedSleep
+        component: ForcedSleeping
+        time: 3
+        type: Add

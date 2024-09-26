@@ -108,6 +108,23 @@
   effects:
   - !type:BZFormationReaction {}
 
+- type: gasReaction
+  id: HealiumProduction
+  priority: 2
+  minimumRequirements:
+  - 0     # oxygen
+  - 0     # nitrogen
+  - 0     # carbon dioxide
+  - 0     # plasma
+  - 0     # tritium
+  - 0     # vapor
+  - 0     # miasma
+  - 0     # n2o
+  - 5     # frezon
+  - 5     # bz
+  effects:
+  - !type:HealiumProductionReaction {}
+
 #- type: gasReaction
 #  id: WaterVaporPuddle
 #  priority: 1

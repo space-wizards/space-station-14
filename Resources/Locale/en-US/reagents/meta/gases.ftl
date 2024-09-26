@@ -21,3 +21,6 @@ reagent-desc-frezon = A highly effective coolant.. and hallucinogenic.
 
 reagent-name-bz = BZ
 reagent-desc-bz = A potent hallucinogenic that also puts slimes into stasis.
+
+reagent-name-healium = Healium
+reagent-desc-healium = A powerful sleeping agent with regenerative properties.

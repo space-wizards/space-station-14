@@ -110,3 +110,13 @@
   color: 9370db
   reagent: BZ
   pricePerMole: 1.5
+
+- type: gas
+  id: 10
+  name: gases-healium
+  specificHeat: 20
+  heatCapacityRatio: 1.4
+  molarMass: 10
+  color: 8b0000
+  reagent: Healium
+  pricePerMole: 3.5
