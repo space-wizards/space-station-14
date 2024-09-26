@@ -2065,3 +2065,56 @@
   id: 264
   time: '2024-09-25T19:41:19.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/276
+- author: hivehum
+  changes:
+  - message: Pink Alert now has a new alarm in certain circumstances.
+    type: Tweak
+  id: 265
+  time: '2024-09-26T06:23:49.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/348
+- author: Sha-Seng
+  changes:
+  - message: Command flask item name is now appropriately lowercased
+    type: Fix
+  id: 266
+  time: '2024-09-26T06:22:56.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/349
+- author: sususuyo
+  changes:
+  - message: Command Flasks and water bottles are able to be filled in a dispenser
+      now
+    type: Tweak
+  id: 267
+  time: '2024-09-26T06:23:05.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/351
+- author: Pinkbat5
+  changes:
+  - message: Dionae (and borg) now have a greater variety of generated names.
+    type: Add
+  id: 268
+  time: '2024-09-26T06:22:20.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/346
+- author: Darkmajia
+  changes:
+  - message: Brigmedic has been added to the security roster.
+    type: Add
+  - message: The brigmedic PDA and headset have been removed from the warden's locker.
+    type: Remove
+  id: 269
+  time: '2024-09-26T06:22:31.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/347
+- author: Sha-Seng
+  changes:
+  - message: HoP can now spawn with laceup shoes, leather shoes, and yakuza shoes
+      in addition to the stupid brown sneakers
+    type: Add
+  id: 270
+  time: '2024-09-26T06:46:24.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/350
+- author: Sha-Seng
+  changes:
+  - message: Captain winter coat hood now matches the coat's new (captain-blue) colors
+    type: Tweak
+  id: 271
+  time: '2024-09-26T06:46:34.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/352

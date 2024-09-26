@@ -636,11 +636,13 @@
     inHandsMaxFillLevels: 2
     inHandsFillBaseName: -fill-
   - type: Sealable
+  - type: FitsInDispenser
+    solution: drink
 
 - type: entity
   parent: [DrinkBottleVisualsOpenable, DrinkBottlePlasticBaseFull, BaseCommandContraband]
   id: DrinkCommandFlaskFull
-  name: Command Flask
+  name: command flask
   description: A brass flask with a white leather wrap, because you get paid enough to deserve it.
   components:
   - type: Item
@@ -659,7 +661,9 @@
       - state: icon
         map: ["enum.OpenableVisuals.Layer"]
   - type: Appearance
-  - type: Sealable
+  - type: Sealable 
+  - type: FitsInDispenser
+    solution: drink
 
 - type: entity
   parent: DrinkWaterBottleFull

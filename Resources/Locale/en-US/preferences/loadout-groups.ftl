@@ -35,6 +35,7 @@ loadout-group-hop-jumpsuit = Head of Personnel jumpsuit
 loadout-group-hop-neck = Head of Personnel neck
 loadout-group-hop-backpack = Head of Personnel backpack
 loadout-group-hop-outerclothing = Head of Personnel outer clothing
+loadout-group-hop-shoes = Head of Personnel shoes
 
 loadout-group-survival-command = Command survival box
 loadout-group-survival-extended-command = Extended command survival box
@@ -210,6 +211,13 @@ loadout-group-detective-head = Detective head
 loadout-group-detective-neck = Detective neck
 loadout-group-detective-jumpsuit = Detective jumpsuit
 loadout-group-detective-outerclothing = Detective outer clothing
+
+loadout-group-brigmedic-head = Brigmedic head
+loadout-group-brigmedic-neck = Brigmedic neck
+loadout-group-brigmedic-jumpsuit = Brigmedic jumpsuit
+loadout-group-brigmedic-outerclothing = Brigmedic outer clothing
+loadout-group-brigmedic-shoes = Brigmedic shoes
+loadout-group-brigmedic-backpack = Brigmedic backpack
 
 loadout-group-security-cadet-jumpsuit = Security cadet jumpsuit
 loadout-group-security-star = Security Star
