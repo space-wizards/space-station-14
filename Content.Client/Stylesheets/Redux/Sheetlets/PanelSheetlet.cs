@@ -46,9 +46,10 @@ public sealed class PanelSheetlet<T> : Sheetlet<T> where T: PalettedStylesheet, 
                 .Class("BackgroundDark")
                 .Prop(PanelContainer.StylePropertyPanel, new StyleBoxFlat(Color.FromHex("#25252A"))),
 
+            // panels that have the same corner bezels as buttons
             E()
                 .Class(StyleClass.BackgroundPanel)
-                .Prop(PanelContainer.StylePropertyPanel, StyleBoxHelpers.OpenRightStyleBox(sheet))
+                .Prop(PanelContainer.StylePropertyPanel, StyleBoxHelpers.BaseStyleBox(sheet))
                 .Modulate(sheet.SecondaryPalette.Background),
             E()
                 .Class(StyleClass.BackgroundPanelOpenLeft)

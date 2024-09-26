@@ -1,7 +1,7 @@
 <Control xmlns="https://spacestation14.io"
          xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
          MouseFilter="Stop">
-    <PanelContainer StyleClasses="BackgroundOpenLeft"/>
+    <PanelContainer StyleClasses="BackgroundPanelOpenLeft"/>
     <PanelContainer>
         <PanelContainer.PanelOverride>
             <graphics:StyleBoxFlat BorderColor="#25252A" BorderThickness="0 0 0 3"/>

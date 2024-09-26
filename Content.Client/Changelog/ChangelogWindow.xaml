@@ -4,7 +4,7 @@
                     MinSize="500 400"
                     SetSize="500 400"
                     Stylesheet="Interface">
-    <PanelContainer StyleClasses="AngleRect" />
+    <PanelContainer StyleClasses="BackgroundPanel" />
     <BoxContainer Orientation="Vertical">
         <TabContainer Name="Tabs" Access="Public" HorizontalExpand="True" VerticalExpand="True" />
         <PanelContainer StyleClasses="LowDivider" />

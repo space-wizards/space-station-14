@@ -20,7 +20,7 @@
                 <Control Name="DefaultState" VerticalExpand="True">
                     <BoxContainer Name="TopLeft" Orientation="Vertical">
                         <!-- Left Top Panel -->
-                        <PanelContainer StyleClasses="AngleRect" HorizontalAlignment="Left" Name="LeftSideTop"
+                        <PanelContainer StyleClasses="BackgroundPanel" HorizontalAlignment="Left" Name="LeftSideTop"
                                         VerticalAlignment="Top">
                             <BoxContainer Orientation="Vertical" HorizontalAlignment="Center" MaxWidth="800">
                                 <info:LinkBanner Name="LinkBanner" VerticalExpand="false" HorizontalAlignment="Center"
@@ -52,7 +52,7 @@
                     <!-- Left Bot Panel -->
                     <BoxContainer Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
                         <info:DevInfoBanner Name="DevInfoBanner" VerticalExpand="false" Margin="3 3 3 3" />
-                        <PanelContainer StyleClasses="AngleRect">
+                        <PanelContainer StyleClasses="BackgroundPanel">
                             <RichTextLabel Name="LobbySong" Access="Public" HorizontalAlignment="Center" />
                         </PanelContainer>
                     </BoxContainer>
@@ -62,7 +62,7 @@
                 <Control Access="Public" Visible="False" Name="CharacterSetupState" VerticalExpand="True" />
             </BoxContainer>
             <!-- Right Panel -->
-            <PanelContainer Name="RightSide" StyleClasses="AngleRect" HorizontalAlignment="Right" VerticalExpand="True"
+            <PanelContainer Name="RightSide" StyleClasses="BackgroundPanel" HorizontalAlignment="Right" VerticalExpand="True"
                             VerticalAlignment="Stretch">
                 <BoxContainer Orientation="Vertical" HorizontalExpand="True">
                     <!-- Top row -->

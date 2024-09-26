@@ -33,11 +33,11 @@ public static class StyleClass
     public const string LabelHeadingBigger = "LabelHeadingBigger";
     public const string LabelSubText = "LabelSubText";
     public const string LabelKeyText = "LabelKeyText";
-    public const string LabelWeak = "LabelWeak"; // replaces `StyleClassLabelSecondaryColor`
+    public const string LabelWeak = "LabelWeak"; // replaces `LabelSecondaryColor`
 
-    public const string BackgroundPanel = "AngleRect";
-    public const string BackgroundPanelOpenLeft = "BackgroundOpenLeft";
-    public const string BackgroundPanelOpenRight = "BackgroundOpenRight";
+    public const string BackgroundPanel = "BackgroundPanel"; // replaces `AngleRect`
+    public const string BackgroundPanelOpenLeft = "BackgroundPanelOpenLeft"; // replaces `BackgroundOpenLeft`
+    public const string BackgroundPanelOpenRight = "BackgroundPanelOpenRight"; // replaces `BackgroundOpenRight`
 
     public const string PanelDark = "PanelDark";
     public const string PanelLight = "PanelLight";

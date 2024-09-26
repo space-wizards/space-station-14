@@ -4,7 +4,7 @@
     SetSize="510 660"> <!-- Provide some reasonable sizes by default. Can be changed by the component -->
 
     <BoxContainer Name="ContentsRoot" Orientation="Vertical">
-        <PanelContainer StyleClasses="AngleRect" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="6">
+        <PanelContainer StyleClasses="BackgroundPanel" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="6">
             <TextureButton Name="CloseButton" StyleClasses="windowCloseButton"/>
         </PanelContainer>
         <PanelContainer Name="PaperBackground" StyleIdentifier="PaperDefaultBorder" VerticalExpand="True" HorizontalExpand="True">

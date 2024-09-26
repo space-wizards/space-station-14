@@ -2,7 +2,7 @@
          xmlns:pllax="clr-namespace:Content.Client.Parallax">
     <pllax:ParallaxControl />
     <Control HorizontalAlignment="Center" VerticalAlignment="Center">
-        <PanelContainer StyleClasses="AngleRect" />
+        <PanelContainer StyleClasses="BackgroundPanel" />
         <BoxContainer Orientation="Vertical" SetSize="800 600" Margin="2">
             <ScrollContainer Name="what" VerticalExpand="True" HScrollEnabled="False" Margin="0 0 0 2" ReturnMeasure="True">
                 <RichTextLabel Name="ReasonLabel" VerticalAlignment="Top" />

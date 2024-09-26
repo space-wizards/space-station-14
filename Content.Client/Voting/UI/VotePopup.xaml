@@ -1,5 +1,5 @@
 ﻿<Control xmlns="https://spacestation14.io" MinWidth="300" MaxWidth="500">
-    <PanelContainer StyleClasses="AngleRect" />
+    <PanelContainer StyleClasses="BackgroundPanel" />
     <BoxContainer Margin="4" Orientation="Vertical">
         <Label Name="VoteCaller" />
         <RichTextLabel Name="VoteTitle" />
