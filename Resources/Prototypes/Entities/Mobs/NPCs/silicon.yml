@@ -416,9 +416,6 @@
     - FootstepSound
     - Bot
   - type: IntrinsicRadioReceiver
-    channels:
-    - Common
-    - Supply
   - type: IntrinsicRadioTransmitter
     channels:
     - Common
