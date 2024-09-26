@@ -110,32 +110,6 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool>
             EventsEnabled = CVarDef.Create("events.enabled", true, CVar.ARCHIVE | CVar.SERVERONLY);
 
-        /// <summary>
-        ///     Average time (in minutes) for when the ramping event scheduler should stop increasing the chaos modifier.
-        ///     Close to how long you expect a round to last, so you'll probably have to tweak this on downstreams.
-        /// </summary>
-        public static readonly CVarDef<float>
-            EventsRampingAverageEndTime = CVarDef.Create("events.ramping_average_end_time", 40f, CVar.ARCHIVE | CVar.SERVERONLY);
-
-        /// <summary>
-        ///     Average ending chaos modifier for the ramping event scheduler.
-        ///     Max chaos chosen for a round will deviate from this
-        /// </summary>
-        public static readonly CVarDef<float>
-            EventsRampingAverageChaos = CVarDef.Create("events.ramping_average_chaos", 6f, CVar.ARCHIVE | CVar.SERVERONLY);
-
-        /// <summary>
-        ///     Minimum time between meteor swarms in minutes.
-        /// </summary>
-        public static readonly CVarDef<float>
-            MeteorSwarmMinTime = CVarDef.Create("events.meteor_swarm_min_time", 12.5f, CVar.ARCHIVE | CVar.SERVERONLY);
-
-        /// <summary>
-        ///     Maximum time between meteor swarms in minutes.
-        /// </summary>
-        public static readonly CVarDef<float>
-            MeteorSwarmMaxTime = CVarDef.Create("events.meteor_swarm_max_time", 17.5f, CVar.ARCHIVE | CVar.SERVERONLY);
-
         /*
          * Game
          */
@@ -449,6 +423,18 @@ namespace Content.Shared.CCVar
         /// </remarks>
         public static readonly CVarDef<bool> GameTabletopPlace =
             CVarDef.Create("game.tabletop_place", false, CVar.SERVERONLY);
+
+        /// <summary>
+        /// If true, contraband severity can be viewed in the examine menu
+        /// </summary>
+        public static readonly CVarDef<bool> ContrabandExamine =
+            CVarDef.Create("game.contraband_examine", true, CVar.SERVER | CVar.REPLICATED);
+
+        /// <summary>
+        /// Size of the lookup area for adding entities to the context menu
+        /// </summary>
+        public static readonly CVarDef<float> GameEntityMenuLookup =
+            CVarDef.Create("game.entity_menu_lookup", 0.25f, CVar.CLIENTONLY | CVar.ARCHIVE);
 
         /*
          * Discord
@@ -937,7 +923,7 @@ namespace Content.Shared.CCVar
         /// <seealso cref="AdminUseCustomNamesAdminRank"/>
         /// <seealso cref="AhelpAdminPrefixWebhook"/>
         public static readonly CVarDef<bool> AhelpAdminPrefix =
-            CVarDef.Create("ahelp.admin_prefix", true, CVar.SERVERONLY);
+            CVarDef.Create("ahelp.admin_prefix", false, CVar.SERVERONLY);
 
         /// <summary>
         /// Should the administrator's position be displayed in the webhook.
@@ -946,7 +932,7 @@ namespace Content.Shared.CCVar
         /// <seealso cref="AdminUseCustomNamesAdminRank"/>
         /// <seealso cref="AhelpAdminPrefix"/>
         public static readonly CVarDef<bool> AhelpAdminPrefixWebhook =
-            CVarDef.Create("ahelp.admin_prefix_webhook", true, CVar.SERVERONLY);
+            CVarDef.Create("ahelp.admin_prefix_webhook", false, CVar.SERVERONLY);
 
         /*
          * Explosions
@@ -1260,6 +1246,13 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<float> AtmosHeatScale =
             CVarDef.Create("atmos.heat_scale", 8f, CVar.SERVERONLY);
 
+        /// <summary>
+        /// Maximum explosion radius for explosions caused by bursting a gas tank ("max caps").
+        /// Setting this to zero disables the explosion but still allows the tank to burst and leak.
+        /// </summary>
+        public static readonly CVarDef<float> AtmosTankFragment =
+            CVarDef.Create("atmos.max_explosion_range", 26f, CVar.SERVERONLY);
+
         /*
          * MIDI instruments
          */
@@ -1346,24 +1339,12 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool> WhitelistEnabled =
             CVarDef.Create("whitelist.enabled", false, CVar.SERVERONLY);
-
         /// <summary>
-        ///     The loc string to display as a disconnect reason when someone is not whitelisted.
+        ///     Specifies the whitelist prototypes to be used by the server. This should be a comma-separated list of prototypes.
+        ///     If a whitelists conditions to be active fail (for example player count), the next whitelist will be used instead. If no whitelist is valid, the player will be allowed to connect.
         /// </summary>
-        public static readonly CVarDef<string> WhitelistReason =
-            CVarDef.Create("whitelist.reason", "whitelist-not-whitelisted", CVar.SERVERONLY);
-
-        /// <summary>
-        ///     If the playercount is below this number, the whitelist will not apply.
-        /// </summary>
-        public static readonly CVarDef<int> WhitelistMinPlayers =
-            CVarDef.Create("whitelist.min_players", 0, CVar.SERVERONLY);
-
-        /// <summary>
-        ///     If the playercount is above this number, the whitelist will not apply.
-        /// </summary>
-        public static readonly CVarDef<int> WhitelistMaxPlayers =
-            CVarDef.Create("whitelist.max_players", int.MaxValue, CVar.SERVERONLY);
+        public static readonly CVarDef<string> WhitelistPrototypeList =
+            CVarDef.Create("whitelist.prototype_list", "basicWhitelist", CVar.SERVERONLY);
 
         /*
          * VOTE
@@ -1423,7 +1404,6 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<float> VoteSameTypeTimeout =
             CVarDef.Create("vote.same_type_timeout", 240f, CVar.SERVERONLY);
 
-
         /// <summary>
         ///     Sets the duration of the map vote timer.
         /// </summary>
@@ -1448,6 +1428,87 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<int>
             VoteTimerAlone = CVarDef.Create("vote.timeralone", 10, CVar.SERVERONLY);
 
+        /*
+         * VOTEKICK
+         */
+
+        /// <summary>
+        ///     Allows enabling/disabling player-started votekick for ultimate authority
+        /// </summary>
+        public static readonly CVarDef<bool> VotekickEnabled =
+            CVarDef.Create("votekick.enabled", true, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Config for when the votekick should be allowed to be called based on number of eligible voters.
+        /// </summary>
+        public static readonly CVarDef<int> VotekickEligibleNumberRequirement =
+            CVarDef.Create("votekick.eligible_number", 10, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Whether a votekick initiator must be a ghost or not.
+        /// </summary>
+        public static readonly CVarDef<bool> VotekickInitiatorGhostRequirement =
+            CVarDef.Create("votekick.initiator_ghost_requirement", true, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Whether a votekick voter must be a ghost or not.
+        /// </summary>
+        public static readonly CVarDef<bool> VotekickVoterGhostRequirement =
+            CVarDef.Create("votekick.voter_ghost_requirement", true, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Config for how many hours playtime a player must have to be able to vote on a votekick.
+        /// </summary>
+        public static readonly CVarDef<int> VotekickEligibleVoterPlaytime =
+            CVarDef.Create("votekick.voter_playtime", 100, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Config for how many seconds a player must have been dead to initiate a votekick / be able to vote on a votekick.
+        /// </summary>
+        public static readonly CVarDef<int> VotekickEligibleVoterDeathtime =
+            CVarDef.Create("votekick.voter_deathtime", 180, CVar.REPLICATED | CVar.SERVER);
+
+        /// <summary>
+        ///     The required ratio of eligible voters that must agree for a votekick to go through.
+        /// </summary>
+        public static readonly CVarDef<float> VotekickRequiredRatio =
+            CVarDef.Create("votekick.required_ratio", 0.6f, CVar.SERVERONLY);
+
+        /// <summary>
+        /// Whether or not to prevent the votekick from having any effect when there is an online admin.
+        /// </summary>
+        public static readonly CVarDef<bool> VotekickNotAllowedWhenAdminOnline =
+            CVarDef.Create("votekick.not_allowed_when_admin_online", true, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     The delay for which two votekicks are allowed to be made by separate people, in seconds.
+        /// </summary>
+        public static readonly CVarDef<float> VotekickTimeout =
+            CVarDef.Create("votekick.timeout", 120f, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Sets the duration of the votekick vote timer.
+        /// </summary>
+        public static readonly CVarDef<int>
+            VotekickTimer = CVarDef.Create("votekick.timer", 60, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Config for how many hours playtime a player must have to get protection from the Raider votekick type when playing as an antag.
+        /// </summary>
+        public static readonly CVarDef<int> VotekickAntagRaiderProtection =
+            CVarDef.Create("votekick.antag_raider_protection", 10, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Default severity for votekick bans
+        /// </summary>
+        public static readonly CVarDef<string> VotekickBanDefaultSeverity =
+            CVarDef.Create("votekick.ban_default_severity", "High", CVar.ARCHIVE | CVar.SERVER | CVar.REPLICATED);
+
+        /// <summary>
+        ///     Duration of a ban caused by a votekick (in minutes).
+        /// </summary>
+        public static readonly CVarDef<int> VotekickBanDuration =
+            CVarDef.Create("votekick.ban_duration", 180, CVar.SERVERONLY);
 
         /*
          * BAN
@@ -1509,12 +1570,6 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool> ArrivalsReturns =
             CVarDef.Create("shuttle.arrivals_returns", false, CVar.SERVERONLY);
-
-        /// <summary>
-        /// Should all players be forced to spawn at departures, even on roundstart, even if their loadout says they spawn in cryo?
-        /// </summary>
-        public static readonly CVarDef<bool> ForceArrivals =
-            CVarDef.Create("shuttle.force_arrivals", false, CVar.SERVERONLY);
 
         /// <summary>
         /// Should all players who spawn at arrivals have godmode until they leave the map?
@@ -1593,6 +1648,18 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<float> EmergencyShuttleDockTime =
             CVarDef.Create("shuttle.emergency_dock_time", 180f, CVar.SERVERONLY);
+
+        /// <summary>
+        /// If the emergency shuttle can't dock at a priority port, the dock time will be multiplied with this value.
+        /// </summary>
+        public static readonly CVarDef<float> EmergencyShuttleDockTimeMultiplierOtherDock =
+            CVarDef.Create("shuttle.emergency_dock_time_multiplier_other_dock", 1.6667f, CVar.SERVERONLY);
+
+        /// <summary>
+        /// If the emergency shuttle can't dock at all, the dock time will be multiplied with this value.
+        /// </summary>
+        public static readonly CVarDef<float> EmergencyShuttleDockTimeMultiplierNoDock =
+            CVarDef.Create("shuttle.emergency_dock_time_multiplier_no_dock", 2f, CVar.SERVERONLY);
 
         /// <summary>
         /// How long after the console is authorized for the shuttle to early launch.
@@ -2027,6 +2094,12 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<float> GhostRoleTime =
             CVarDef.Create("ghost.role_time", 3f, CVar.REPLICATED | CVar.SERVER);
+
+        /// <summary>
+        /// If ghost role lotteries should be made near-instanteous.
+        /// </summary>
+        public static readonly CVarDef<bool> GhostQuickLottery =
+            CVarDef.Create("ghost.quick_lottery", false, CVar.SERVERONLY);
 
         /// <summary>
         /// Whether or not to kill the player's mob on ghosting, when it is in a critical health state.

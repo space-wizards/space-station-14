@@ -2,17 +2,10 @@
     xmlns="https://spacestation14.io"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-    xmlns:style="clr-namespace:Content.Client.Stylesheets">
-    <BoxContainer Orientation="Vertical">
-        <LineEdit Name="SearchBar" PlaceHolder="{Loc 'vending-machine-component-search-filter'}" HorizontalExpand="True"  Margin ="4 4" Access="Public"/>
-        <ItemList Name="VendingContents"
-                  SizeFlagsStretchRatio="8"
-                  VerticalExpand="True"
-                  ItemSeparation="2"
-                  Margin="4 0"
-                  SelectMode="Button"
-                  StyleClasses="transparentBackgroundItemList">
-        </ItemList>
+    xmlns:co="clr-namespace:Content.Client.UserInterface.Controls">
+    <BoxContainer Name="MainContainer" Orientation="Vertical">
+        <LineEdit Name="SearchBar" PlaceHolder="{Loc 'vending-machine-component-search-filter'}" HorizontalExpand="True"  Margin ="4 4"/>
+        <co:SearchListContainer Name="VendingContents" VerticalExpand="True" Margin="4 4"/>
          <!-- Footer -->
         <BoxContainer Orientation="Vertical">
             <PanelContainer StyleClasses="LowDivider" />

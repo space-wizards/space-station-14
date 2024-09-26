@@ -52,6 +52,7 @@
       components:
       - Anomaly
   - type: Beeper
+    isMuted: true
     minBeepInterval: 0.15
     maxBeepInterval: 1.00
     beepSound:
@@ -68,6 +69,7 @@
   - type: PowerCellDraw
     drawRate: 1
     useRate: 0
+  - type: ToggleCellDraw
 
 - type: entity
   id: AnomalyLocatorEmpty
@@ -101,6 +103,7 @@
   - type: PowerCellDraw
     drawRate: 1
     useRate: 0
+  - type: ToggleCellDraw
 
 - type: entity
   id: AnomalyLocatorWideEmpty

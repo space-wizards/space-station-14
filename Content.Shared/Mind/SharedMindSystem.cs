@@ -39,6 +39,7 @@ public abstract class SharedMindSystem : EntitySystem
         SubscribeLocalEvent<VisitingMindComponent, EntityTerminatingEvent>(OnVisitingTerminating);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnReset);
         SubscribeLocalEvent<MindComponent, ComponentStartup>(OnMindStartup);
+        SubscribeLocalEvent<MindComponent, EntityRenamedEvent>(OnRenamed);
     }
 
     public override void Shutdown()
@@ -168,15 +169,23 @@ public abstract class SharedMindSystem : EntitySystem
             args.PushMarkup($"[color=yellow]{Loc.GetString("comp-mind-examined-ssd", ("ent", uid))}[/color]");
     }
 
+    /// <summary>
+    /// Checks to see if the user's mind prevents them from suicide
+    /// Handles the suicide event without killing the user if true
+    /// </summary>
     private void OnSuicide(EntityUid uid, MindContainerComponent component, SuicideEvent args)
     {
         if (args.Handled)
             return;
 
         if (TryComp(component.Mind, out MindComponent? mind) && mind.PreventSuicide)
-        {
-            args.BlockSuicideAttempt(true);
-        }
+            args.Handled = true;
+    }
+
+    private void OnRenamed(Entity<MindComponent> ent, ref EntityRenamedEvent args)
+    {
+        ent.Comp.CharacterName = args.NewName;
+        Dirty(ent);
     }
 
     public EntityUid? GetMind(EntityUid uid, MindContainerComponent? mind = null)
@@ -312,6 +321,10 @@ public abstract class SharedMindSystem : EntitySystem
     public virtual void TransferTo(EntityUid mindId, EntityUid? entity, bool ghostCheckOverride = false, bool createGhost = true, MindComponent? mind = null)
     {
     }
+
+    public virtual void ControlMob(EntityUid user, EntityUid target) {}
+
+    public virtual void ControlMob(NetUserId user, EntityUid target) {}
 
     /// <summary>
     /// Tries to create and add an objective from its prototype id.

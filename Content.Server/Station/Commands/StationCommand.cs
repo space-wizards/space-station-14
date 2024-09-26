@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using System.Linq;
 using Content.Server.Administration;
 using Content.Server.Cargo.Systems;
@@ -128,7 +128,7 @@ public record struct OnlyOneStationsError : IConError
 {
     public FormattedMessage DescribeInner()
     {
-        return FormattedMessage.FromMarkup("This command doesn't function if there is more than one or no stations, explicitly specify a station with the ent command or similar.");
+        return FormattedMessage.FromMarkupOrThrow("This command doesn't function if there is more than one or no stations, explicitly specify a station with the ent command or similar.");
     }
 
     public string? Expression { get; set; }
