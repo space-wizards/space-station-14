@@ -7,7 +7,7 @@
     Resizable="False">
     <BoxContainer Margin = "10 5" Orientation="Vertical" SeparationOverride="5">
         <BoxContainer Orientation="Vertical">
-            <Label Margin = "5 0" Name="CassetteLabel" Text="{Loc 'tape-recorder-menu-cassette-label'}" Align="Left" StyleClasses="StatusFieldTitle" />
+            <Label Margin = "5 0" Name="CassetteLabel" Text="{Loc 'tape-recorder-menu-no-cassette-label'}" Align="Left" StyleClasses="StatusFieldTitle" />
             <Slider Name="PlaybackSlider" HorizontalExpand="True" />
         </BoxContainer>
         <BoxContainer Name ="Test" Margin = "0 5 0 0" Orientation="Horizontal" VerticalExpand = "True">
