@@ -41,7 +41,7 @@ namespace Content.Client.Stylesheets
 
     }
     // STLYE SHEETS WERE A MISTAKE. KILL ALL OF THIS WITH FIRE
-    [Obsolete("Please use the new sheetlet system to define styles, and remove all references to StyleNano as it will be deleted in the future")]
+    [Obsolete("Please use the new sheetlet system to define styles, and remove all references to this class as it may be deleted in the future")]
     // i did :)
     public sealed class StyleNano : StyleBase
     {
@@ -459,10 +459,10 @@ namespace Content.Client.Stylesheets
             itemListItemBackgroundTransparent.SetContentMarginOverride(StyleBox.Margin.Vertical, 2);
             itemListItemBackgroundTransparent.SetContentMarginOverride(StyleBox.Margin.Horizontal, 4);
 
-            var squareTex = resCache.GetTexture("/Textures/Interface/Nano/square.png");
-            var listContainerButton = new StyleBoxTexture
+            // var squareTex = resCache.GetTexture("/Textures/Interface/Nano/square.png");
+            var listContainerButton = new StyleBoxFlat
             {
-                Texture = squareTex,
+                // Texture = squareTex,
                 ContentMarginLeftOverride = 10
             };
 
