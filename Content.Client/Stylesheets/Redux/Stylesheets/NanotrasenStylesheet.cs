@@ -33,7 +33,7 @@ public partial class NanotrasenStylesheet : CommonStylesheet
         (StyleClass.FontLarge, PrimaryFontSize + FontSizeStep),
     };
 
-    public NanotrasenStylesheet(object config) : base(config)
+    public NanotrasenStylesheet(object config, StylesheetManager man) : base(config)
     {
         BaseFont = new NotoFontFamilyStack(ResCache);
         var rules = new[]
@@ -51,8 +51,8 @@ public partial class NanotrasenStylesheet : CommonStylesheet
                     .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#757575")),
             ],
             // Finally, load all the other sheetlets.
-            GetAllSheetletRules<PalettedStylesheet, CommonSheetletAttribute>(),
-            GetAllSheetletRules<NanotrasenStylesheet, CommonSheetletAttribute>(),
+            GetAllSheetletRules<PalettedStylesheet, CommonSheetletAttribute>(man),
+            GetAllSheetletRules<NanotrasenStylesheet, CommonSheetletAttribute>(man),
         };
 
         Stylesheet = new Stylesheet(rules.SelectMany(x => x).ToArray());

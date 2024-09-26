@@ -1,8 +1,10 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Client.Stylesheets.Redux;
 using Content.Client.Stylesheets.Redux.Stylesheets;
 using Robust.Client.UserInterface;
+using Robust.Shared.Reflection;
 
 namespace Content.Client.Stylesheets
 {
@@ -10,6 +12,7 @@ namespace Content.Client.Stylesheets
     {
         [Dependency] private readonly ILogManager _logManager = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
+        [Dependency] private readonly IReflectionManager _reflection = default!;
 
         public Stylesheet SheetNanotransen { get; private set; } = default!;
         public Stylesheet SheetSystem { get; private set; } = default!;
@@ -31,15 +34,30 @@ namespace Content.Client.Stylesheets
             sawmill.Debug("Initializing Stylesheets...");
             var sw = Stopwatch.StartNew();
 
-            Stylesheets = new Dictionary<string, Stylesheet>();
+            // add all sheetlets to the hashset
+            var tys = _reflection.FindTypesWithAttribute<CommonSheetletAttribute>();
+            UnusedSheetlets = [..tys];
 
-            SheetNanotransen = Init("Nanotransen", new NanotrasenStylesheet(new BaseStylesheet.NoConfig()));
-            SheetSystem = Init("Interface", new SystemStylesheet(new BaseStylesheet.NoConfig()));
+            Stylesheets = new Dictionary<string, Stylesheet>();
+            SheetNanotransen = Init("Nanotransen", new NanotrasenStylesheet(new BaseStylesheet.NoConfig(), this));
+            SheetSystem = Init("Interface", new SystemStylesheet(new BaseStylesheet.NoConfig(), this));
 
             _userInterfaceManager.Stylesheet = SheetNanotransen;
 
+            // warn about unused sheetlets
+            if (UnusedSheetlets.Count > 0)
+            {
+                var sheetlets = UnusedSheetlets.AsEnumerable()
+                    .Take(5)
+                    .Select(t => t.FullName ?? "<could not get FullName>")
+                    .ToArray();
+                sawmill.Error($"There are unloaded sheetlets: {string.Join(", ", sheetlets)}");
+            }
+
             sawmill.Debug($"Initialized {_styleRuleCount} style rules in {sw.Elapsed}");
         }
+
+        public HashSet<Type> UnusedSheetlets { get; private set; } = [];
 
         private int _styleRuleCount;
 

@@ -4,7 +4,7 @@ namespace Content.Client.Stylesheets.Redux;
 
 public abstract partial class BaseStylesheet
 {
-    public StyleRule[] GetSheetletRules<TSheetTy>(Type sheetletTy)
+    public StyleRule[] GetSheetletRules<TSheetTy>(Type sheetletTy, StylesheetManager man)
     {
         Sheetlet<TSheetTy>? sheetlet = null;
         try
@@ -24,10 +24,16 @@ public abstract partial class BaseStylesheet
         // `sheetletTy`
         catch (ArgumentException) { }
 
-        return sheetlet is not null ? sheetlet.GetRules((TSheetTy)(object)this, _config) : [];
+        if (sheetlet is not null)
+        {
+            man.UnusedSheetlets.Remove(sheetletTy);
+            return sheetlet.GetRules((TSheetTy)(object)this, _config);
+        }
+        else
+            return [];
     }
 
-    public StyleRule[] GetAllSheetletRules<TSheetTy, TAttrib>()
+    public StyleRule[] GetAllSheetletRules<TSheetTy, TAttrib>(StylesheetManager man)
         where TAttrib : Attribute
     {
         var tys = ReflectionManager.FindTypesWithAttribute<TAttrib>();
@@ -35,7 +41,7 @@ public abstract partial class BaseStylesheet
 
         foreach (var ty in tys)
         {
-            rules.AddRange(GetSheetletRules<TSheetTy>(ty));
+            rules.AddRange(GetSheetletRules<TSheetTy>(ty, man));
         }
 
         return rules.ToArray();

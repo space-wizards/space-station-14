@@ -26,4 +26,9 @@ public interface IStylesheetManager
     public bool TryGetStylesheet(string name, [MaybeNullWhen(false)]  out Stylesheet stylesheet);
 
     void Initialize();
+
+    /**
+     * Sheetlets marked with CommonSheetlet that have not satisfied the type constraints of any stylesheet
+     */
+    public HashSet<Type> UnusedSheetlets { get; }
 }

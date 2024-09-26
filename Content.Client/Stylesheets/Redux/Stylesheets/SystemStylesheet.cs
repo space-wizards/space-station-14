@@ -32,7 +32,7 @@ public partial class SystemStylesheet : CommonStylesheet
         (StyleClass.FontLarge, PrimaryFontSize + FontSizeStep),
     };
 
-    public SystemStylesheet(object config) : base(config)
+    public SystemStylesheet(object config, StylesheetManager man) : base(config)
     {
         BaseFont = new NotoFontFamilyStack(ResCache);
         var rules = new[]
@@ -45,8 +45,8 @@ public partial class SystemStylesheet : CommonStylesheet
                 Element().Prop(Label.StylePropertyFont, BaseFont.GetFont(PrimaryFontSize)),
             ],
             // Finally, load all the other sheetlets.
-            GetAllSheetletRules<PalettedStylesheet, CommonSheetletAttribute>(),
-            GetAllSheetletRules<SystemStylesheet, CommonSheetletAttribute>(),
+            GetAllSheetletRules<PalettedStylesheet, CommonSheetletAttribute>(man),
+            GetAllSheetletRules<SystemStylesheet, CommonSheetletAttribute>(man),
         };
 
         Stylesheet = new Stylesheet(rules.SelectMany(x => x).ToArray());
