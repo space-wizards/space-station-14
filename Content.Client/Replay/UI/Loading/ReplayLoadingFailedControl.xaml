@@ -7,7 +7,7 @@
             <ScrollContainer Name="what" VerticalExpand="True" HScrollEnabled="False" Margin="0 0 0 2" ReturnMeasure="True">
                 <RichTextLabel Name="ReasonLabel" VerticalAlignment="Top" />
             </ScrollContainer>
-            <Button Name="RetryButton" StyleClasses="Caution" Text="{Loc 'replay-loading-retry'}" Visible="False" />
+            <Button Name="RetryButton" StyleClasses="negative" Text="{Loc 'replay-loading-retry'}" Visible="False" />
             <Button Name="CancelButton" Text="{Loc 'replay-loading-cancel'}" Visible="False" />
         </BoxContainer>
     </Control>

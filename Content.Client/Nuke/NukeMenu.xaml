@@ -39,7 +39,7 @@
                 <Button Name="ArmButton"
                         Text="{Loc 'nuke-user-interface-arm-button'}"
                         Access="Public"
-                        StyleClasses="Caution"/>
+                        StyleClasses="negative"/>
             </BoxContainer>
         </BoxContainer>
     </BoxContainer>
