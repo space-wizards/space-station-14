@@ -312,3 +312,11 @@
     proto: EffectSpeciesVox
   equipment:
     mask: ClothingMaskGasSecurity
+
+- type: loadout
+  id: LoadoutSpeciesBreathToolMedSec
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: EffectSpeciesVox
+  equipment:
+    mask: ClothingMaskBreathMedicalSecurity

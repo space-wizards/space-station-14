@@ -211,6 +211,13 @@ loadout-group-detective-neck = Detective neck
 loadout-group-detective-jumpsuit = Detective jumpsuit
 loadout-group-detective-outerclothing = Detective outer clothing
 
+loadout-group-brigmedic-head = Brigmedic head
+loadout-group-brigmedic-neck = Brigmedic neck
+loadout-group-brigmedic-jumpsuit = Brigmedic jumpsuit
+loadout-group-brigmedic-outerclothing = Brigmedic outer clothing
+loadout-group-brigmedic-shoes = Brigmedic shoes
+loadout-group-brigmedic-backpack = Brigmedic backpack
+
 loadout-group-security-cadet-jumpsuit = Security cadet jumpsuit
 loadout-group-security-star = Security Star
 

@@ -54,6 +54,7 @@
             SecurityOfficer: [ 5, 5 ]
             SecurityCadet: [ 2, 2 ]
             Lawyer: [ 1, 1 ]
+            Brigmedic: [ 1, 1 ]
             #supply
             Quartermaster: [ 1, 1 ]
             SalvageSpecialist: [ 3, 3 ]
