@@ -237,6 +237,7 @@ public sealed class PaperSystem : EntitySystem
     {
         if (!Resolve(entity, ref entity.Comp))
             return;
+
         entity.Comp.Content = content;
         Dirty(entity);
         UpdateUserInterface((entity.Owner, entity.Comp));

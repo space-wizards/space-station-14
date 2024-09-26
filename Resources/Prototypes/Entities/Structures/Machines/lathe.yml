@@ -198,7 +198,8 @@
       - ClothingHeadHatWelding
       - WetFloorSign
       - ClothingHeadHatCone
-
+      - FreezerElectronics
+      - Flare
   - type: EmagLatheRecipes
     emagStaticRecipes:
       - BoxLethalshot
@@ -449,6 +450,7 @@
     - SpaceHeaterMachineCircuitBoard
     - CutterMachineCircuitboard
     - StationAnchorCircuitboard
+    - SalvageMagnetMachineCircuitboard
     dynamicRecipes:
       - ThermomachineFreezerMachineCircuitBoard
       - HellfireFreezerMachineCircuitBoard
