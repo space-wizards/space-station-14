@@ -37,6 +37,7 @@ public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
     protected override void ReplayMessagesInSegment(Entity<TapeRecorderComponent> ent, TapeCassetteComponent tape, float segmentStart, float segmentEnd)
     {
         var voice = EnsureComp<VoiceOverrideComponent>(ent);
+        var speech = EnsureComp<SpeechComponent>(ent);
 
         foreach (var message in tape.RecordedData)
         {
@@ -47,7 +48,7 @@ public sealed class TapeRecorderSystem : SharedTapeRecorderSystem
             voice.NameOverride = message.Name ?? ent.Comp.DefaultName;
             // TODO: mimic the exact string chosen when the message was recorded
             var verb = message.Verb ?? SharedChatSystem.DefaultSpeechVerb;
-            voice.SpeechVerbOverride = _proto.Index<SpeechVerbPrototype>(verb);
+            speech.SpeechVerb = _proto.Index<SpeechVerbPrototype>(verb);
             //Play the message
             _chat.TrySendInGameICMessage(ent, message.Message, InGameICChatType.Speak, false);
         }
