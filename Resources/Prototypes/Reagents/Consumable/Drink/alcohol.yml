@@ -2352,3 +2352,44 @@
         reagent: Ethanol
         amount: 0.35
   fizziness: 0.1
+  
+- type: reagent
+  id: CottonBool
+  name: reagent-name-cottonbool
+  parent: BaseAlcohol
+  desc: reagent-desc-cottonbool
+  physicalDesc: reagent-physical-desc-fibrous
+  flavor: cottonbool
+  color: "#fff0e3"
+  recognizable: true
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/thin_glass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 4
+      - !type:SatiateHunger
+        conditions:
+        - !type:OrganType
+          type: Moth
+          shouldHave: true    
+        factor: 4
+      - !type:Emote
+        conditions:
+        - !type:OrganType
+          type: Moth
+          shouldHave: true        
+        emote: Squeak
+        showInChat: true
+        force: true
+        probability: 0.35
+    Medicine:
+      effects:
+      - !type:ModifyBleedAmount
+        amount: -0.75
+  fizziness: .1

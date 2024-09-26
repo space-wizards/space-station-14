@@ -283,41 +283,44 @@ reagent-desc-rubberneck = A popular drink amongst those adhering to an all synth
 reagent-name-uap = U.A.P
 reagent-desc-uap = An unidentified alcoholic product...
 
-reagent-name-theehorsepussy = The Horsepussy
+reagent-name-theehorsepussy = the horsepussy
 reagent-desc-theehorsepussy = They are going this drink after me when i die
 
-reagent-name-lovetap = Love tap
+reagent-name-lovetap = love tap
 reagent-desc-lovetap = Straight Root Beer, with a love tap of Rum.
 
-reagent-name-calimotxo = Calimotxo
+reagent-name-calimotxo = calimotxo
 reagent-desc-calimotxo = A classy, 50/50 mix of Wine and Cola.
 
-reagent-name-reaganomics = Reaganomics
+reagent-name-reaganomics = reaganomics
 reagent-desc-reaganomics = Why would we ever want anything else?
 
-reagent-name-gatorwine = Gatorwine
+reagent-name-gatorwine = gatorwine
 reagent-desc-gatorwine = No Reptillians were harmed in the making of this drink.
 
-reagent-name-rotgut = Rotgut
+reagent-name-rotgut = rotgut
 reagent-desc-rotgut = A perfect excuse to check up with that cute girl in the emergency ward.
 
-reagent-name-bumwine = Bum Wine
+reagent-name-bumwine = bum wine
 reagent-desc-bumwine = For the economical drinker. You know drinks are free though, right?
 
-reagent-name-voxrocks = Vox & Rocks
+reagent-name-voxrocks = vox & rocks
 reagent-desc-voxrocks = Ensure our feathered friends a seat at the table with this modern, oxygen-depriving beer.
 
-reagent-name-junglejuice = Jungle Juice
+reagent-name-junglejuice = jungle juice
 reagent-desc-junglejuice = Dont let the captain see, or youll have to pour it out.
 
-reagent-name-drinkdrink = Drink
+reagent-name-drinkdrink = drink
 reagent-desc-drinkdrink = Finally.
 
-reagent-name-bloodier-mary = Bloodier Mary
+reagent-name-bloodier-mary = bloodier mary
 reagent-desc-bloodier-mary = AH, AH, AHH!
 
-reagent-name-salvagerssoothe = Salvager's Soothe
+reagent-name-salvagerssoothe = salvager's soothe
 reagent-desc-salvagerssoothe = Come home safe, okay? We're counting on you.
 
-reagent-name-donttelldsheriff = Don't Tell D Sherrif
+reagent-name-donttelldsheriff = don't tell D sherrif
 reagent-desc-donttelldsheriff = If Red Bool gives you wings, this'll give you four wheel drive.
+
+reagent-name-cottonbool = cotton bool
+reagent-desc-cottonbool = A modern take on a Mothrine classic that's sure to cause a buzzz.

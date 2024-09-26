@@ -1204,3 +1204,8 @@
   id: speed
   flavorType: Complex
   description: flavor-complex-speed
+  
+- type: flavor
+  id: cottonbool
+  flavorType: Complex
+  description: flavor-complex-cottonbool
