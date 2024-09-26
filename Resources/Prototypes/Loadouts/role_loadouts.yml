@@ -3,16 +3,16 @@
   id: JobCaptain
   groups:
   - CaptainHead
-  - CaptainGlasses
   - CaptainNeck
   - CaptainJumpsuit
+  - CaptainOuterClothing
   - CaptainGloves
   - CaptainShoes
   - CommandHeadset
+  - CaptainGlasses
   - CaptainBackpack
-  - CaptainOuterClothing
-  - SurvivalCommand
   - Trinkets
+  - SurvivalCommand
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -22,12 +22,13 @@
   - HoPHead
   - HoPNeck
   - HoPJumpsuit
-  - CommandHeadset
-  - HoPBackpack
   - HoPOuterClothing
+  - HoPShoes
+  - CommandHeadset
   - Glasses
-  - SurvivalCommand
+  - HoPBackpack
   - Trinkets
+  - SurvivalCommand
   - GroupSpeciesBreathTool
 
 # Silicons
@@ -40,16 +41,16 @@
   id: JobPassenger
   groups:
   - GroupTankHarness
-  - PassengerJumpsuit
-  - CommonBackpack
-  - PassengerNeck
   - PassengerFace
-  - PassengerGloves
+  - PassengerNeck
+  - PassengerJumpsuit
   - PassengerOuterClothing
+  - PassengerGloves
   - PassengerShoes
   - Glasses
-  - Survival
+  - CommonBackpack
   - Trinkets
+  - Survival
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -58,26 +59,26 @@
   - GroupTankHarness
   - BartenderHead
   - BartenderMask
-  - BartenderJumpsuit
-  - CommonBackpack
   - BartenderNeck
+  - BartenderJumpsuit
   - BartenderOuterClothing
   - BartenderShoes
   - Glasses
-  - Survival
+  - CommonBackpack
   - Trinkets
-  - GroupSpeciesBreathTool
   - Mixologist
+  - Survival
+  - GroupSpeciesBreathTool
 
 - type: roleLoadout
   id: JobServiceWorker
   groups:
   - GroupTankHarness
   - BartenderJumpsuit
-  - CommonBackpack
   - Glasses
-  - Survival
+  - CommonBackpack
   - Trinkets
+  - Survival
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -86,26 +87,26 @@
   - GroupTankHarness
   - ChefHead
   - ChefMask
-  - ChefJumpsuit
-  - CommonBackpack
   - ChefNeck
+  - ChefJumpsuit
   - ChefOuterClothing
   - ChefShoes
   - Glasses
-  - Survival
+  - CommonBackpack
   - Trinkets
+  - Survival
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
   id: JobLibrarian
   groups:
   - GroupTankHarness
-  - LibrarianJumpsuit
   - LibrarianNeck
-  - CommonBackpack
+  - LibrarianJumpsuit
   - Glasses
-  - Survival
+  - CommonBackpack
   - Trinkets
+  - Survival
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -114,10 +115,10 @@
   - GroupTankHarness
   - LawyerNeck
   - LawyerJumpsuit
-  - CommonBackpack
   - Glasses
-  - Survival
+  - CommonBackpack
   - Trinkets
+  - Survival
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -128,12 +129,12 @@
   - ChaplainMask
   - ChaplainNeck
   - ChaplainJumpsuit
-  - CommonBackpack
   - ChaplainOuterClothing
   - ChaplainShoes
   - Glasses
-  - Survival
+  - CommonBackpack
   - Trinkets
+  - Survival
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -142,16 +143,16 @@
   - GroupTankHarness
   - JanitorHead
   - JanitorMask
-  - JanitorJumpsuit
-  - JanitorGloves
-  - CommonBackpack
   - JanitorNeck
+  - JanitorJumpsuit
   - JanitorOuterClothing
+  - JanitorGloves
   - JanitorShoes
   - Glasses
-  - Survival
+  - CommonBackpack
   - Trinkets
   - JanitorPlunger
+  - Survival
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -160,14 +161,14 @@
   - GroupTankHarness
   - BotanistHead
   - BotanistMask
-  - BotanistJumpsuit
-  - BotanistBackpack
   - BotanistNeck
+  - BotanistJumpsuit
   - BotanistOuterClothing
   - BotanistShoes
   - Glasses
-  - Survival
+  - BotanistBackpack
   - Trinkets
+  - Survival
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -176,12 +177,12 @@
   - GroupTankHarness
   - ClownHead
   - ClownJumpsuit
-  - ClownBackpack
   - ClownOuterClothing
   - ClownShoes
   - Glasses
-  - SurvivalClown
+  - ClownBackpack
   - Trinkets
+  - SurvivalClown
 
 - type: roleLoadout
   id: JobMime
@@ -189,27 +190,27 @@
   - GroupTankHarness
   - MimeHead
   - MimeMask
-  - MimeJumpsuit
-  - MimeBackpack
   - MimeNeck
+  - MimeJumpsuit
   - MimeOuterClothing
-  - MimeBelt
   - Glasses
-  - SurvivalMime
+  - MimeBackpack
+  - MimeBelt
   - Trinkets
+  - SurvivalMime
 
 - type: roleLoadout
   id: JobMusician
   groups:
   - GroupTankHarness
-  - MusicianJumpsuit
-  - CommonBackpack
   - MusicianNeck
+  - MusicianJumpsuit
   - MusicianOuterClothing
   - Glasses
-  - Survival
+  - CommonBackpack
   - Trinkets
   - Instruments
+  - Survival
   - GroupSpeciesBreathTool
 
 # Cargo
@@ -220,13 +221,13 @@
   - QuartermasterHead
   - QuartermasterNeck
   - QuartermasterJumpsuit
-  - QuartermasterHeadset
-  - QuartermasterBackpack
   - QuartermasterOuterClothing
   - QuartermasterShoes
+  - QuartermasterHeadset
   - Glasses
-  - SurvivalCommand
+  - QuartermasterBackpack
   - Trinkets
+  - SurvivalCommand
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -235,28 +236,28 @@
   - GroupTankHarness
   - CargoTechnicianHead
   - CargoTechnicianMask
-  - CargoTechnicianJumpsuit
-  - CargoTechnicianBackpack
   - CargoTechnicianNeck
+  - CargoTechnicianJumpsuit
   - CargoTechnicianOuterClothing
   - CargoTechnicianShoes
-  - CargoTechnicianPDA
   - Glasses
-  - Survival
+  - CargoTechnicianBackpack
+  - CargoTechnicianPDA
   - Trinkets
+  - Survival
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
   id: JobSalvageSpecialist
   groups:
   - GroupTankHarness
-  - SalvageSpecialistBackpack
+  - SalvageSpecialistNeck
   - SalvageSpecialistOuterClothing
   - SalvageSpecialistShoes
-  - SalvageSpecialistNeck
+  - SalvageSpecialistBackpack
   - Glasses
-  - Survival
   - Trinkets
+  - Survival
   - GroupSpeciesBreathTool
 
 # Engineering
@@ -265,14 +266,14 @@
   groups:
   - GroupTankHarness
   - ChiefEngineerHead
-  - ChiefEngineerJumpsuit
-  - ChiefEngineerHeadset
-  - ChiefEngineerBackpack
   - ChiefEngineerNeck
+  - ChiefEngineerJumpsuit
   - ChiefEngineerOuterClothing
   - ChiefEngineerShoes
-  - SurvivalExtendedCommand
+  - ChiefEngineerHeadset
+  - ChiefEngineerBackpack
   - Trinkets
+  - SurvivalExtendedCommand
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -281,8 +282,8 @@
   - GroupTankHarness
   - TechnicalAssistantJumpsuit
   - StationEngineerBackpack
-  - SurvivalExtended
   - Trinkets
+  - SurvivalExtended
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -291,27 +292,27 @@
   - GroupTankHarness
   - StationEngineerHead
   - StationEngineerMask
-  - StationEngineerJumpsuit
-  - StationEngineerBackpack
   - StationEngineerNeck
+  - StationEngineerJumpsuit
   - StationEngineerOuterClothing
   - StationEngineerShoes
+  - StationEngineerBackpack
   - StationEngineerID
-  - SurvivalExtended
   - Trinkets
+  - SurvivalExtended
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
   id: JobAtmosphericTechnician
   groups:
   - GroupTankHarness
-  - AtmosphericTechnicianJumpsuit
-  - AtmosphericTechnicianBackpack
   - AtmosphericTechnicianNeck
+  - AtmosphericTechnicianJumpsuit
   - AtmosphericTechnicianOuterClothing
   - AtmosphericTechnicianShoes
-  - SurvivalExtended
+  - AtmosphericTechnicianBackpack
   - Trinkets
+  - SurvivalExtended
   - GroupSpeciesBreathTool
 
 # Science
@@ -322,14 +323,14 @@
   - ResearchDirectorHead
   - ResearchDirectorNeck
   - ResearchDirectorJumpsuit
-  - ResearchDirectorHeadset
-  - ResearchDirectorBackpack
   - ResearchDirectorOuterClothing
   - ScientistGloves
   - ResearchDirectorShoes
+  - ResearchDirectorHeadset
   - Glasses
-  - SurvivalCommand
+  - ResearchDirectorBackpack
   - Trinkets
+  - SurvivalCommand
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -340,14 +341,14 @@
   - ScientistMask
   - ScientistNeck
   - ScientistJumpsuit
-  - ScientistBackpack
   - ScientistOuterClothing
   - ScientistGloves
   - ScientistShoes
-  - ScientistPDA
   - Glasses
-  - Survival
+  - ScientistBackpack
+  - ScientistPDA
   - Trinkets
+  - Survival
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -357,8 +358,8 @@
   - ResearchAssistantJumpsuit
   - ScientistBackpack
   - Glasses
-  - Survival
   - Trinkets
+  - Survival
   - GroupSpeciesBreathTool
 
 # Security
@@ -366,32 +367,32 @@
   id: JobHeadOfSecurity
   groups:
   - HeadofSecurityHead
-  - HeadofSecurityNeck
   - HeadofSecurityMask
+  - HeadofSecurityNeck
   - HeadofSecurityJumpsuit
+  - HeadofSecurityOuterClothing
+  - UpperSecurityShoes
   - HeadofSecurityHeadset
   - HeadofSecurityBackpack
   - SecurityBelt
-  - HeadofSecurityOuterClothing
-  - UpperSecurityShoes
-  - SurvivalSecurityCommand
   - Trinkets
   - SecurityStar
+  - SurvivalSecurityCommand
   - GroupSpeciesBreathToolSecurity
 
 - type: roleLoadout
   id: JobWarden
   groups:
   - WardenHead
-  - WardenJumpsuit
-  - SecurityBackpack
-  - SecurityBelt
   - WardenNeck
+  - WardenJumpsuit
   - WardenOuterClothing
   - UpperSecurityShoes
-  - SurvivalSecurity
+  - SecurityBackpack
+  - SecurityBelt
   - Trinkets
   - SecurityStar
+  - SurvivalSecurity
   - GroupSpeciesBreathToolSecurity
 
 - type: roleLoadout
@@ -399,16 +400,16 @@
   groups:
   - SecurityHead
   - SecurityMask
-  - SecurityJumpsuit
-  - SecurityBackpack
   - SecurityNeck
+  - SecurityJumpsuit
   - SecurityOuterClothing
   - SecurityShoes
-  - SecurityPDA
+  - SecurityBackpack
   - SecurityBelt
-  - SurvivalSecurity
+  - SecurityPDA
   - Trinkets
   - SecurityStar
+  - SurvivalSecurity
   - GroupSpeciesBreathToolSecurity
 
 - type: roleLoadout
@@ -419,21 +420,37 @@
   - SecurityMask
   - DetectiveNeck
   - DetectiveJumpsuit
-  - SecurityBackpack
   - DetectiveOuterClothing
   - SecurityShoes
-  - SurvivalSecurity
+  - SecurityBackpack
   - Trinkets
   - SecurityStar
+  - SurvivalSecurity
   - GroupSpeciesBreathToolSecurity
+
+- type: roleLoadout
+  id: JobBrigmedic
+  groups:
+  - GroupTankHarness
+  - BrigmedicHead
+  - MedicalMask
+  - BrigmedicNeck
+  - BrigmedicJumpsuit
+  - BrigmedicOuterClothing
+  - MedicalGloves
+  - BrigmedicShoes
+  - BrigmedicBackpack
+  - Trinkets
+  - SecurityStar
+  - GroupSpeciesBreathToolMedSec
 
 - type: roleLoadout
   id: JobSecurityCadet
   groups:
   - SecurityCadetJumpsuit
   - SecurityBackpack
-  - SurvivalSecurity
   - Trinkets
+  - SurvivalSecurity
   - GroupSpeciesBreathToolSecurity
 
 # Medical
@@ -443,16 +460,16 @@
   - GroupTankHarness
   - ChiefMedicalOfficerHead
   - MedicalMask
-  - ChiefMedicalOfficerJumpsuit
-  - MedicalGloves
-  - ChiefMedicalOfficerHeadset
-  - ChiefMedicalOfficerBackpack
-  - ChiefMedicalOfficerOuterClothing
   - ChiefMedicalOfficerNeck
+  - ChiefMedicalOfficerJumpsuit
+  - ChiefMedicalOfficerOuterClothing
+  - MedicalGloves
   - ChiefMedicalOfficerShoes
+  - ChiefMedicalOfficerHeadset
   - Glasses
-  - SurvivalCommand
+  - ChiefMedicalOfficerBackpack
   - Trinkets
+  - SurvivalCommand
   - GroupSpeciesBreathToolMedical
 
 - type: roleLoadout
@@ -461,16 +478,16 @@
   - GroupTankHarness
   - MedicalDoctorHead
   - MedicalDoctorMask
-  - MedicalDoctorJumpsuit
-  - MedicalGloves
-  - MedicalBackpack
   - MedicalDoctorNeck
+  - MedicalDoctorJumpsuit
   - MedicalDoctorOuterClothing
+  - MedicalGloves
   - MedicalDoctorShoes
-  - MedicalDoctorPDA
   - Glasses
-  - SurvivalMedical
+  - MedicalBackpack
+  - MedicalDoctorPDA
   - Trinkets
+  - SurvivalMedical
   - GroupSpeciesBreathToolMedical
 
 - type: roleLoadout
@@ -478,10 +495,10 @@
   groups:
   - GroupTankHarness
   - MedicalInternJumpsuit
-  - MedicalBackpack
   - Glasses
-  - SurvivalMedical
+  - MedicalBackpack
   - Trinkets
+  - SurvivalMedical
   - GroupSpeciesBreathToolMedical
 
 - type: roleLoadout
@@ -489,14 +506,14 @@
   groups:
   - GroupTankHarness
   - MedicalMask
-  - ChemistJumpsuit
-  - MedicalGloves
-  - ChemistBackpack
   - ChemistNeck
+  - ChemistJumpsuit
   - ChemistOuterClothing
+  - MedicalGloves
   - ChemistShoes
-  - SurvivalMedical
+  - ChemistBackpack
   - Trinkets
+  - SurvivalMedical
   - GroupSpeciesBreathToolMedical
 
 - type: roleLoadout
@@ -505,15 +522,15 @@
   - GroupTankHarness
   - ParamedicHead
   - MedicalMask
-  - ParamedicJumpsuit
-  - MedicalGloves
-  - MedicalBackpack
   - ParamedicNeck
+  - ParamedicJumpsuit
   - ParamedicOuterClothing
+  - MedicalGloves
   - ParamedicShoes
   - Glasses
-  - SurvivalMedical
+  - MedicalBackpack
   - Trinkets
+  - SurvivalMedical
   - GroupSpeciesBreathToolMedical
 
 # Wildcards
@@ -523,8 +540,8 @@
   - GroupTankHarness
   - CommonBackpack
   - Glasses
-  - Survival
   - Trinkets
+  - Survival
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -532,25 +549,25 @@
   groups:
   - GroupTankHarness
   - ReporterMask
-  - ReporterJumpsuit
-  - CommonBackpack
   - ReporterNeck
+  - ReporterJumpsuit
   - ReporterShoes
   - Glasses
-  - Survival
+  - CommonBackpack
   - Trinkets
+  - Survival
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
   id: JobPsychologist
   groups:
   - GroupTankHarness
-  - PsychologistJumpsuit
-  - MedicalBackpack
   - PsychologistNeck
+  - PsychologistJumpsuit
   - Glasses
-  - Survival
+  - MedicalBackpack
   - Trinkets
+  - Survival
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -559,10 +576,10 @@
   - GroupTankHarness
   - BoxerJumpsuit
   - BoxerGloves
-  - CommonBackpack
   - Glasses
-  - Survival
+  - CommonBackpack
   - Trinkets
+  - Survival
   - GroupSpeciesBreathTool
 
 # These loadouts are used for non-crew spawns, like off-station antags and event mobs

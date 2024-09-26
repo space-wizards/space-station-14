@@ -1999,3 +1999,130 @@
   id: 256
   time: '2024-09-24T22:02:03.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/336
+- author: Darkmajia
+  changes:
+  - message: Mobs will no longer ignore changelings and heretics.
+    type: Fix
+  id: 257
+  time: '2024-09-25T19:33:52.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/332
+- author: Darkmajia
+  changes:
+  - message: Job loadout slots now display in a consistent order.
+    type: Tweak
+  id: 258
+  time: '2024-09-25T19:34:03.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/342
+- author: hivehum
+  changes:
+  - message: Added new lobby art by lazy :)
+    type: Add
+  id: 259
+  time: '2024-09-25T19:35:56.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/344
+- author: starlighthowls
+  changes:
+  - message: whale things you know how it is
+    type: Tweak
+  id: 260
+  time: '2024-09-25T19:36:40.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/343
+- author: Sha-Seng
+  changes:
+  - message: Adjusted veteran captain set sprites
+    type: Tweak
+  id: 261
+  time: '2024-09-25T19:37:14.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/339
+- author: Pinkbat5
+  changes:
+  - message: Pink Alert now has an alarm sound.
+    type: Add
+  id: 262
+  time: '2024-09-25T19:38:09.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/340
+- author: Sha-Seng
+  changes:
+  - message: Made the captain's winter coat match the uniform since like three people
+      asked
+    type: Tweak
+  id: 263
+  time: '2024-09-25T19:35:18.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/338
+- author: hivehum
+  changes:
+  - message: Added any iota of useful information at all to the Gray species page.
+    type: Add
+  - message: Roleplay Rule 4 (Metashield) has been split into Roleplay Rule 4-1 (Relationships
+      between rounds) and Roleplay Rule 4-2
+    type: Add
+  - message: Ported the Alert Procedure article from Delta V, modified to match the
+      content of our fork.
+    type: Add
+  - message: Core Rule 13 has been substantially cut down and the naming guidelines
+      are now on each respective species.
+    type: Tweak
+  id: 264
+  time: '2024-09-25T19:41:19.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/276
+- author: hivehum
+  changes:
+  - message: Pink Alert now has a new alarm in certain circumstances.
+    type: Tweak
+  id: 265
+  time: '2024-09-26T06:23:49.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/348
+- author: Sha-Seng
+  changes:
+  - message: Command flask item name is now appropriately lowercased
+    type: Fix
+  id: 266
+  time: '2024-09-26T06:22:56.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/349
+- author: sususuyo
+  changes:
+  - message: Command Flasks and water bottles are able to be filled in a dispenser
+      now
+    type: Tweak
+  id: 267
+  time: '2024-09-26T06:23:05.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/351
+- author: Pinkbat5
+  changes:
+  - message: Dionae (and borg) now have a greater variety of generated names.
+    type: Add
+  id: 268
+  time: '2024-09-26T06:22:20.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/346
+- author: Darkmajia
+  changes:
+  - message: Brigmedic has been added to the security roster.
+    type: Add
+  - message: The brigmedic PDA and headset have been removed from the warden's locker.
+    type: Remove
+  id: 269
+  time: '2024-09-26T06:22:31.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/347
+- author: Sha-Seng
+  changes:
+  - message: HoP can now spawn with laceup shoes, leather shoes, and yakuza shoes
+      in addition to the stupid brown sneakers
+    type: Add
+  id: 270
+  time: '2024-09-26T06:46:24.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/350
+- author: Sha-Seng
+  changes:
+  - message: Captain winter coat hood now matches the coat's new (captain-blue) colors
+    type: Tweak
+  id: 271
+  time: '2024-09-26T06:46:34.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/352
+- author: formlessnameless
+  changes:
+  - message: Added Common channel to silicons without laws in place of the Binary
+      channel
+    type: Tweak
+  id: 272
+  time: '2024-09-26T07:35:52.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/353

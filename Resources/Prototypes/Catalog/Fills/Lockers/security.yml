@@ -26,8 +26,6 @@
       - id: RemoteSignaller
         amount: 2
       - id: ClothingOuterHardsuitBrigmedic
-      - id: BrigmedicPDA
-      - id: ClothingHeadsetBrigmedic
 
 - type: entity
   id: LockerWardenFilled
@@ -55,8 +53,7 @@
         amount: 2
       - id: RemoteSignaller
         amount: 2
-      - id: BrigmedicPDA
-      - id: ClothingHeadsetBrigmedic
+      - id: ClothingOuterHardsuitBrigmedic
 
 - type: entity
   id: LockerSecurityFilled

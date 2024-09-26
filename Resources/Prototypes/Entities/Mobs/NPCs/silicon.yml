@@ -34,10 +34,9 @@
   - type: IntrinsicRadioReceiver
   - type: IntrinsicRadioTransmitter
     channels:
-    - Binary
+    - Common
   - type: ActiveRadio
     channels:
-    - Binary
     - Common
   - type: HealthExaminable
     examinableTypes:
@@ -416,8 +415,12 @@
     - DoorBumpOpener
     - FootstepSound
     - Bot
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Common
+    - Supply
   - type: ActiveRadio
     channels:
-    - Binary
     - Common
     - Supply
