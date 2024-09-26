@@ -7,13 +7,13 @@ namespace Content.Server.Chemistry.Components;
 /// Used for embeddable entities that should try to inject a
 /// contained solution into a target over time while they are embbeded into.
 /// </summary>
-[RegisterComponent, AutoGenerateComponentPause]
+[RegisterComponent]
 public sealed partial class SolutionInjectWhileEmbeddedComponent : BaseSolutionInjectOnEventComponent {
 		///<summary>
 		///The time at which the injection will happen.
 		///</summary>
-		[DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
-        public TimeSpan NextUpdate = TimeSpan.Zero;
+		[DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+        public TimeSpan NextUpdate;
 		
 		///<summary>
 		///The delay between each injection in seconds.

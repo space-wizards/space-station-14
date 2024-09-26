@@ -14,8 +14,7 @@ using Robust.Shared.Timing;
 namespace Content.Server.Chemistry.EntitySystems;
 
 /// <summary>
-/// System for handling the different inheritors of <see cref="BaseSolutionInjectOnEventComponent"/>.
-/// Subscribes to relevent events and performs solution injections when they are raised.
+/// System for handling injecting into an entity while a projectile is embedded.
 /// </summary>
 public sealed class SolutionInjectWhileEmbeddedSystem : EntitySystem
 {
@@ -26,8 +25,26 @@ public sealed class SolutionInjectWhileEmbeddedSystem : EntitySystem
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly TagSystem _tag = default!;
 
-	public override void Update(float frameTime)
-	{
+    public override void Initialize()
+    {
+        base.Initialize();
+        
+        SubscribeLocalEvent<SolutionInjectWhileEmbeddedComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<SolutionInjectWhileEmbeddedComponent, EntityUnpausedEvent>(OnUnpaused);
+    }
+
+    private void OnMapInit(Entity<SolutionInjectWhileEmbeddedComponent> ent, ref MapInitEvent args)
+    {
+        ent.Comp.NextUpdate = _gameTiming.CurTime + ent.Comp.UpdateInterval;
+    }
+
+    private void OnUnpaused(Entity<SolutionInjectWhileEmbeddedComponent> ent, ref EntityUnpausedEvent args)
+    {
+        ent.Comp.NextUpdate += args.PausedTime;
+    }
+
+    public override void Update(float frameTime)
+    {
         base.Update(frameTime);
 
         var query = EntityQueryEnumerator<SolutionInjectWhileEmbeddedComponent, EmbeddableProjectileComponent>();
@@ -35,14 +52,16 @@ public sealed class SolutionInjectWhileEmbeddedSystem : EntitySystem
         {
             if (_gameTiming.CurTime < injectComponent.NextUpdate)
                 continue;
+
+            injectComponent.NextUpdate += injectComponent.UpdateInterval;
+
             if(projectileComponent.EmbeddedIntoUid == null) {
                 continue;
             }
 
             var ev = new InjectOverTimeEvent(projectileComponent.EmbeddedIntoUid.Value);
-			RaiseLocalEvent(uid, ref ev);
+            RaiseLocalEvent(uid, ref ev);
 
-            injectComponent.NextUpdate = _gameTiming.CurTime + injectComponent.UpdateInterval;
-		}
-	}
+        }
+    }
 }
