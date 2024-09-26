@@ -145,7 +145,8 @@
   id: CaptainShoes
   name: loadout-group-captain-shoes
   loadouts:
-  - CaptainShoes
+  - LacedShoes
+  - LeatherShoes
   - CaptainJumpBoots
 
 - type: loadoutGroup
@@ -195,9 +196,9 @@
   id: HoPShoes
   name: loadout-group-hop-shoes
   loadouts:
-  - HoPShoes
-  - HoPShoesBlack
-  - HoPShoesBrown
+  - BrownShoes
+  - LacedShoes
+  - LeatherShoes
   - HoPShoesWhite
 
 - type: loadoutGroup
@@ -319,6 +320,7 @@
   minLimit: 0
   loadouts:
   - ScarfBlack
+  - RedTie
 
 - type: loadoutGroup
   id: BartenderOuterClothing
@@ -335,6 +337,7 @@
   name: loadout-group-bartender-shoes
   loadouts:
   - BlackShoes
+  - LacedShoes
   - ClownShoesExpert
 
 - type: loadoutGroup
@@ -408,6 +411,14 @@
   - ScarfGreen
 
 - type: loadoutGroup
+  id: LibrarianShoes
+  name: loadout-group-librarian-shoes
+  loadouts:
+  - LeatherShoes
+  - LacedShoes
+  - BlackShoes
+
+- type: loadoutGroup
   id: LawyerJumpsuit
   name: loadout-group-lawyer-jumpsuit
   loadouts:
@@ -428,6 +439,13 @@
   minLimit: 0
   loadouts:
   - LawyerNeck
+
+- type: loadoutGroup
+  id: LawyerShoes
+  name: loadout-group-lawyer-shoes
+  loadouts:
+  - LacedShoes
+  - LeatherShoes
 
 - type: loadoutGroup
   id: ChaplainHead
@@ -481,6 +499,7 @@
   name: loadout-group-chaplain-shoes
   loadouts:
   - BlackShoes
+  - LacedShoes
   - ClownShoesExpert
 
 - type: loadoutGroup
@@ -693,6 +712,13 @@
   - MimeWintercoat
 
 - type: loadoutGroup
+  id: MimeShoes
+  name: loadout-group-mime-shoes
+  loadouts:
+  - WhiteShoes
+  - BlackShoes
+
+- type: loadoutGroup
   id: MimeBelt
   name: loadout-group-mime-belt
   loadouts:
@@ -729,6 +755,13 @@
   minLimit: 0
   loadouts:
   - MusicianWintercoat
+
+- type: loadoutGroup
+  id: MusicianShoes
+  name: loadout-group-musician-shoes
+  loadouts:
+  - LacedShoes
+  - BlackShoes
 
 - type: loadoutGroup
   id: Instruments
@@ -963,6 +996,7 @@
   name: loadout-group-chief-engineer-shoes
   loadouts:
   - BrownShoes
+  - WorkBoots
   - EngineeringWinterBoots
 
 - type: loadoutGroup
@@ -1139,6 +1173,8 @@
   name: loadout-group-research-director-shoes
   loadouts:
   - BrownShoes
+  - LeatherShoes
+  - WhiteShoes
   - ScienceWinterBoots
 
 - type: loadoutGroup
@@ -1456,6 +1492,15 @@
   - NoirCoat
 
 - type: loadoutGroup
+  id: DetectiveShoes
+  name: loadout-group-detective-shoes
+  loadouts:
+  - JackBoots
+  - LeatherShoes
+  - SecurityWinterBoots
+  - SecurityClownShoes
+
+- type: loadoutGroup
   id: BrigmedicHead
   name: loadout-group-brigmedic-head
   minLimit: 0
@@ -1572,6 +1617,7 @@
   name: loadout-group-chief-medical-officer-shoes
   loadouts:
   - BrownShoes
+  - WhiteShoes
   - MedicalWinterBoots
 
 - type: loadoutGroup
@@ -1751,6 +1797,7 @@
   name: loadout-group-paramedic-shoes
   loadouts:
   - BlueShoes
+  - WhiteShoes
   - MedicalWinterBoots
 
 - type: loadoutGroup
@@ -1790,6 +1837,7 @@
   name: loadout-group-reporter-shoes
   loadouts:
   - WhiteShoes
+  - LeatherShoes
   - ClownShoesExpert
 
 - type: loadoutGroup
@@ -1805,6 +1853,14 @@
   minLimit: 0
   loadouts:
   - ScarfBlack
+
+- type: loadoutGroup
+  id: PsychologistShoes
+  name: loadout-group-psychologist-shoes
+  loadouts:
+  - LeatherShoes
+  - BlackShoes
+  - WhiteShoes
 
 - type: loadoutGroup
   id: BoxerJumpsuit

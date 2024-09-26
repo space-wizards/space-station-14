@@ -71,17 +71,7 @@
 
 # Shoes
 - type: loadout
-  id: HoPShoes
-  equipment:
-    shoes: ClothingShoesColorBrown
-
-- type: loadout
-  id: HoPShoesBlack
-  equipment:
-    shoes: ClothingShoesBootsLaceup
-
-- type: loadout
-  id: HoPShoesBrown
+  id: LeatherShoes
   equipment:
     shoes: ClothingShoesLeather
 

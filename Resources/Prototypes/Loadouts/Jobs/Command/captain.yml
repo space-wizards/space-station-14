@@ -198,7 +198,7 @@
 
 # Shoes
 - type: loadout
-  id: CaptainShoes
+  id: LacedShoes
   equipment:
     shoes: ClothingShoesBootsLaceup
 

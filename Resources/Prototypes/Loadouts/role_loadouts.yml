@@ -103,6 +103,7 @@
   - GroupTankHarness
   - LibrarianNeck
   - LibrarianJumpsuit
+  - LibrarianShoes
   - Glasses
   - CommonBackpack
   - Trinkets
@@ -115,6 +116,7 @@
   - GroupTankHarness
   - LawyerNeck
   - LawyerJumpsuit
+  - LawyerShoes
   - Glasses
   - CommonBackpack
   - Trinkets
@@ -193,6 +195,7 @@
   - MimeNeck
   - MimeJumpsuit
   - MimeOuterClothing
+  - MimeShoes
   - Glasses
   - MimeBackpack
   - MimeBelt
@@ -206,6 +209,7 @@
   - MusicianNeck
   - MusicianJumpsuit
   - MusicianOuterClothing
+  - MusicianShoes
   - Glasses
   - CommonBackpack
   - Trinkets
@@ -421,7 +425,7 @@
   - DetectiveNeck
   - DetectiveJumpsuit
   - DetectiveOuterClothing
-  - SecurityShoes
+  - DetectiveShoes
   - SecurityBackpack
   - Trinkets
   - SecurityStar
@@ -564,6 +568,7 @@
   - GroupTankHarness
   - PsychologistNeck
   - PsychologistJumpsuit
+  - PsychologistShoes
   - Glasses
   - MedicalBackpack
   - Trinkets
