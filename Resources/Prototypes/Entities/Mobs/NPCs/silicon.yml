@@ -163,6 +163,7 @@
     interactFailureString: petting-failure-honkbot
     interactSuccessSound:
       path: /Audio/Items/bikehorn.ogg
+  - type: Alerts
 
 - type: entity
   parent: MobHonkBot
@@ -198,6 +199,7 @@
     totalIntensity: 10
     intensitySlope: 5
     canCreateVacuum: false
+  - type: Alerts
 
 - type: entity
   parent: MobSiliconBase
@@ -327,6 +329,7 @@
     interactFailureString: petting-failure-mimebot
   - type: Inventory
     templateId: head
+  - type: Alerts
 
 - type: entity
   parent: MobSiliconBase
@@ -394,3 +397,6 @@
     channels:
     - Common
     - Supply
+  - type: Puller
+    needsHands: false
+  - type: Alerts
