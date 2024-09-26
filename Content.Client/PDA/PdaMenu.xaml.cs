@@ -124,9 +124,6 @@ namespace Content.Client.PDA
                 _clipboard.SetText(_instructions);
             };
 
-            
-
-
             HideAllViews();
             ToHomeScreen();
         }

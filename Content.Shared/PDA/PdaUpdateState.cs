@@ -32,8 +32,8 @@ namespace Content.Shared.PDA
             HasPen = hasPen;
             HasPai = hasPai;
             PdaOwnerInfo = pdaOwnerInfo;
-            HasUplink = hasUplink;
             StationName = stationName;
+            HasUplink = hasUplink;
             Address = address;
         }
     }
