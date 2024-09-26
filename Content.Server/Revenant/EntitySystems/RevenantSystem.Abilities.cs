@@ -230,7 +230,7 @@ public sealed partial class RevenantSystem
         if (!TryComp<MapGridComponent>(xform.GridUid, out var map))
             return;
         var tiles = _mapSystem.GetTilesIntersecting(
-            uid,
+            xform.GridUid.Value,
             map,
             Box2.CenteredAround(_transformSystem.GetWorldPosition(xform),
             new Vector2(component.DefileRadius * 2, component.DefileRadius)))

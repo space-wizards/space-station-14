@@ -31,7 +31,7 @@ public sealed class ThrowArtifactSystem : EntitySystem
         if (TryComp<MapGridComponent>(xform.GridUid, out var grid))
         {
             var tiles = _mapSystem.GetTilesIntersecting(
-                uid,
+                xform.GridUid.Value,
                 grid,
                 Box2.CenteredAround(_transform.GetWorldPosition(xform), new Vector2(component.Range * 2, component.Range)));
 
