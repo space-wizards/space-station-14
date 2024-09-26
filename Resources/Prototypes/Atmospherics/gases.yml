@@ -100,3 +100,13 @@
   color: 3a758c
   reagent: Frezon
   pricePerMole: 3
+
+- type: gas
+  id: 9
+  name: gases-bz
+  specificHeat: 20
+  heatCapacityRatio: 1.4
+  molarMass: 10
+  color: 9370db
+  reagent: BZ
+  pricePerMole: 1.5
