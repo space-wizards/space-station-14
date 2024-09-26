@@ -11,9 +11,9 @@ namespace Content.Shared.Construction.Steps
         // TODO: Make this use the material system.
         // TODO TODO: Make the material system not shit.
         [DataField("material", required:true)]
-        public ProtoId<StackPrototype> MaterialPrototypeId { get; private set; } = "Steel";
+        public ProtoId<StackPrototype> MaterialPrototypeId { get; private set; }
 
-        [DataField("amount")] public int Amount { get; private set; } = 1;
+        [DataField] public int Amount { get; private set; } = 1;
 
         public override void DoExamine(ExaminedEvent examinedEvent)
         {

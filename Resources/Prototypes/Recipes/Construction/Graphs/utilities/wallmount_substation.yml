@@ -43,7 +43,7 @@
         steps:
         - tag: WallmountSubstationElectronics
           store: board
-          name: "wallmount substation circuit board"
+          name: construction-graph-tag-wallmount-substation-circuit-board
           icon:
             sprite: "Objects/Misc/module.rsi"
             state: "charger_APC"
@@ -58,7 +58,7 @@
             state: "medium"
           doAfter: 0.5
         - tag: CapacitorStockPart
-          name: a capacitor
+          name: construction-graph-tag-capacitor
           store: capacitor
           icon:
             sprite: "Objects/Misc/stock_parts.rsi"

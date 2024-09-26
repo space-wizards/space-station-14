@@ -40,7 +40,7 @@
         icon:
           sprite: Objects/Tools/multitool.rsi
           state: icon
-        name: a multitool
+        name: construction-graph-tag-multitool
       - material: Cable
         amount: 2
         doAfter: 1
@@ -50,7 +50,7 @@
         icon:
           sprite: Objects/Misc/stock_parts.rsi
           state: capacitor
-        name: a capacitor
+        name: construction-graph-tag-capacitor
       - material: Cable
         amount: 2
         doAfter: 1

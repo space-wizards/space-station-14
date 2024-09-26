@@ -34,7 +34,7 @@
           data: 4
 
       - tag: RipleyCentralControlModule
-        name: ripley central control module
+        name: construction-graph-tag-ripley-central-control-module
         icon:
           sprite: "Objects/Misc/module.rsi"
           state: "mainboard"

@@ -54,7 +54,7 @@
       steps:
       - tag: Payload
         store: payload
-        name: payload
+        name: construction-graph-tag-payload
         doAfter: 0.5
 
   - node: caseWithTrigger
@@ -74,7 +74,7 @@
       steps:
       - tag: Payload
         store: payload
-        name: payload
+        name: construction-graph-tag-payload
         doAfter: 0.5
 
   - node: caseWithPayload
