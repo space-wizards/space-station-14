@@ -636,6 +636,8 @@
     inHandsMaxFillLevels: 2
     inHandsFillBaseName: -fill-
   - type: Sealable
+  - type: FitsInDispenser
+    solution: drink
 
 - type: entity
   parent: [DrinkBottleVisualsOpenable, DrinkBottlePlasticBaseFull, BaseCommandContraband]
@@ -659,7 +661,9 @@
       - state: icon
         map: ["enum.OpenableVisuals.Layer"]
   - type: Appearance
-  - type: Sealable
+  - type: Sealable 
+  - type: FitsInDispenser
+    solution: drink
 
 - type: entity
   parent: DrinkWaterBottleFull
