@@ -10,6 +10,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Pinpointer;
 
@@ -29,6 +30,7 @@ public abstract class SharedNavMapSystem : EntitySystem
     [Robust.Shared.IoC.Dependency] private readonly SharedAudioSystem _audio = default!;
     [Robust.Shared.IoC.Dependency] private readonly IRobustRandom _random = default!;
     [Robust.Shared.IoC.Dependency] private readonly TagSystem _tagSystem = default!;
+    [Robust.Shared.IoC.Dependency] private readonly IGameTiming _timing = default!;
     [Robust.Shared.IoC.Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
     private static readonly ProtoId<TagPrototype>[] WallTags = {"Wall", "Window"};
@@ -104,9 +106,10 @@ public abstract class SharedNavMapSystem : EntitySystem
         if (TryComp<EyeComponent>(uid, out var eye) && eye.Target is not null)
             uid = eye.Target.Value;
 
-        if (!TryComp<NavMapWarpComponent>(uid, out var warpComp))
+        if (!TryComp<NavMapWarpComponent>(uid, out var warpComp) || _timing.CurTime < warpComp.NextWarpAllowed)
             return;
 
+        warpComp.NextWarpAllowed = _timing.CurTime + TimeSpan.FromSeconds(warpComp.Delay);
         var xform = Transform(uid);
 
         if (xform.MapUid is null)
