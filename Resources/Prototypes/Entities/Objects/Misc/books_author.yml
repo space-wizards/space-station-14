@@ -692,7 +692,7 @@
       color: "#ff2fff"
   - type: Paper
     content: book-text-clown-law
-    
+
 - type: entity
   parent: BookBase
   id: BookTEGtorial
@@ -714,4 +714,19 @@
   - type: Paper
     content: book-text-tegtorial
 
-
+- type: entity
+  parent: BookBase
+  id: BookGatsby
+  name: The Great Gatsby by F. Scott Fitzgerald
+  description: The book is worn and tattered, with a barcode visible embedded physically within the cover. It smells like high school.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+    - state: paper
+    - state: cover_old
+      color: "#0E5672"
+    - state: icon_eye
+      color: "#8F823D"
+  - type: Paper
+    content: book-text-gatsby

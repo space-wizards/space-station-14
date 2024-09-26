@@ -866,6 +866,8 @@
     spawns:
     - id: BookRandomStory
       prob: 0.5
+    - id: BookGatsby
+      prob: 0.05
     - id: BookTEGtorial
       prob: 0.05
     - id: BookClownLaw
