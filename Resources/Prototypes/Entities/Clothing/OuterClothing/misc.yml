@@ -57,6 +57,18 @@
     sprite: Clothing/OuterClothing/Misc/chef.rsi
 
 - type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterApronClown
+  name: apron
+  suffix: Clown
+  description: A garish apron with "Kiss The Clown" embroidered on it.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Misc/apronclown.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Misc/apronclown.rsi
+
+- type: entity
   parent: ClothingOuterBase
   id: ClothingOuterHoodieBlack
   name: black hoodie
@@ -300,7 +312,7 @@
       - state: equipped-OUTERCLOTHING-lines
         color: "#000000"
   - type: TemperatureProtection
-    coefficient: 0.3
+    coolingCoefficient: 0.3
 
 - type: entity
   parent: ClothingOuterBase
@@ -336,7 +348,7 @@
       - state: equipped-OUTERCLOTHING-lines
         color: "#000000"
   - type: TemperatureProtection
-    coefficient: 0.3
+    coolingCoefficient: 0.3
 
 - type: entity
   parent: ClothingOuterBase
@@ -372,7 +384,7 @@
       - state: equipped-OUTERCLOTHING-lines
         color: "#000000"
   - type: TemperatureProtection
-    coefficient: 0.3
+    coolingCoefficient: 0.3
 
 - type: entity
   parent: ClothingOuterBase

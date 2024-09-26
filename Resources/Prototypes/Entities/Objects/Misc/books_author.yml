@@ -17,7 +17,7 @@
       - state: icon_pentagramm
         color: "#911129"
       - state: detail_bookmark
-        color: red 
+        color: red
     - type: Paper
       content: book-text-narsielegend
 
@@ -449,9 +449,9 @@
       - state: cover_base
         color: "#0f204f"
       - state: decor_vertical_middle
-        color: "#3c6ab0" 
+        color: "#3c6ab0"
       - state: decor_spine
-        color: "#3c6ab0" 
+        color: "#3c6ab0"
       - state: icon_stars2
       - state: icon_aurora
       - state: detail_bookmark
@@ -641,7 +641,7 @@
   parent: BookBase
   id: BookJanitorTale
   name: the tales of a tired janitor
-  description: A clean looking book, smelling vaguely of soap and bleach. 
+  description: A clean looking book, smelling vaguely of soap and bleach.
   components:
   - type: Sprite
     sprite: Objects/Misc/books.rsi
@@ -656,4 +656,62 @@
     - state: overlay_dirt
   - type: Paper
     content: book-text-janitor
+
+- type: entity
+  parent: BookBase
+  id: BookAgony
+  name: the ritual of agony
+  description: The book's cover features a religious symbol and the handwritten title, "The Ritual of Agony - A Guide and Recounting"
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/books.rsi
+      layers:
+      - state: paper
+      - state: cover_base
+        color: "#E0BF33"
+      - state: decor_wingette
+        color: "#E08474"
+      - state: icon_atmos
+        color: "#A63526"
+    - type: Paper
+      content: book-text-agony
+
+- type: entity
+  parent: BookBase
+  id: BookClownLaw
+  name: an outside perspective on clown law
+  description: The book is in good condition, with a tidy cover displaying only a title and a description. "An anthropological essay on rule of law in clown cultures."
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+    - state: paper
+    - state: cover_strong
+      color: "#ca00ca"
+    - state: icon_law
+      color: "#ff2fff"
+  - type: Paper
+    content: book-text-clown-law
+    
+- type: entity
+  parent: BookBase
+  id: BookTEGtorial
+  name: guide ta tha thermo-electric generator
+  description: The book is battered and beaten-up, with mysterious dark stains on the corners of the pages. It smells like welding fuel and chemical burns.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+    - state: paper
+    - state: cover_old
+      color: "#FFB8AD"
+    - state: decor_spine
+      color: "#D48763"
+    - state: overlay_dirt
+      color: "#663929"
+    - state: detail_bookmark
+      color: "#95BE76"
+  - type: Paper
+    content: book-text-tegtorial
+
 

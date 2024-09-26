@@ -1,7 +1,4 @@
-using Content.Shared.NPC.Prototypes;
-using Content.Shared.Roles;
 using Content.Shared.Store;
-using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.GameTicking.Rules.Components;
@@ -24,4 +21,7 @@ public sealed partial class ChangelingRuleComponent : Component
         "ChangelingStealDNAObjective",
         "EscapeIdentityObjective"
     };
+
+    [DataField("sendBriefing")]
+    public bool SendBriefing = true;
 }

@@ -99,6 +99,19 @@
     state: icon
 
 - type: construction
+  name: double eyepatch
+  id: doubleeyepatch
+  graph: DoubleEyepatch
+  startNode: start
+  targetNode: doubleeyepatch
+  category: construction-category-tools
+  objectType: Item
+  description: Two eyepatches, for twice the swashbuckling.
+  icon:
+    sprite: Clothing/Eyes/Misc/doubleeyepatch.rsi
+    state: icon
+
+- type: construction
   name: flower wreath
   id: flowerwreath
   graph: flowerwreath
@@ -145,7 +158,7 @@
   targetNode: shell
   category: construction-category-weapons
   objectType: Item
-  description: A homemade shotgun shell that shoots painful glass shrapnel. The spread is so wide that it couldn't hit the broad side of a Barn
+  description: A homemade shotgun shell that shoots painful glass shrapnel. The spread is so wide that it couldn't hit the broad side of a barn.
   icon:
     sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
     state: improvised
@@ -239,6 +252,19 @@
   description: An improvised explosive made from pipes and wire.
   icon:
     sprite: Objects/Weapons/Bombs/pipebomb.rsi
+    state: icon
+
+- type: construction
+  name: rolling pin
+  id: rollingpin
+  graph: WoodenRollingPin
+  startNode: start
+  targetNode: rollingpin
+  category: construction-category-tools
+  objectType: Item
+  description: A rolling pin, used for cooking and defending the kitchen.
+  icon:
+    sprite: Objects/Tools/rolling_pin.rsi
     state: icon
 
 - type: construction

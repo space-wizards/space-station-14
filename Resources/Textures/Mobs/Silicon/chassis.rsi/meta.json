@@ -188,6 +188,44 @@
       "directions": 4
     },
     {
+      "name": "cargo",
+      "directions": 4
+    },
+    {
+      "name": "cargo_moving",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "cargo_e",
+      "directions": 4
+    },
+    {
+      "name": "cargo_e_r",
+      "directions": 4
+    },
+    {
+      "name": "cargo_l",
+      "directions": 4
+    },
+    {
       "name": "robot",
       "directions": 4
     },

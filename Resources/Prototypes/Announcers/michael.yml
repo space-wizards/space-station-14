@@ -43,6 +43,8 @@
       path: alerts/epsilon.ogg
       audioParams:
         volume: -3
+    - id: alertPink # Please don't form a union
+      path: alerts/pink.ogg
 
     # Events
     ## Wizard's Den

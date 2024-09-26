@@ -17,7 +17,7 @@
   The emitters connect to MV cables and fire lasers as long as they have power and are turned on.
   Fire the emitters at enabled containment field generators to activate them.
   If two containment field generators are active, in range and are in the same cardinal axis, a containment field will appear.
-  The containment field will repel the singularity or tesla, keeping it from escaping, and yield a little bit of power every time anything bounces off of them.
+  The containment field will repel the singularity or tesla, keeping it from escaping, and loses a little bit of its strength every time anything bounces off of them.
 
   The emitter lasers and the containment fields can also cause damage and/or cause you to be sent flying into deep space; [color=#a4885c]avoid touching them[/color] when active.
   It is recommended to [color=#a4885c]lock the emitters[/color] with [keybind="AltActivateItemInWorld"/], to prevent any break-in no-gooders from loosing the singularity or tesla by simply switching off the field.

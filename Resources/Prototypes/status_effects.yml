@@ -46,6 +46,15 @@
   alert: Corporeal
 
 - type: statusEffect
+  id: Stasis
+  alert: Stasis
+  alwaysAllowed: true
+
+- type: statusEffect
+  id: EssenceRegen
+  alert: EssenceRegen
+
+- type: statusEffect
   id: ForcedSleep #I.e., they will not wake on damage or similar
 
 - type: statusEffect
@@ -68,3 +77,7 @@
 
 - type: statusEffect
   id: Drowsiness #blurs your vision and makes you randomly fall asleep
+
+- type: statusEffect
+  id: Adrenaline
+  alert: Adrenaline

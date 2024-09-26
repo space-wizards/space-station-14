@@ -16,6 +16,9 @@
   id: Ambrosia
 
 - type: Tag
+  id: AnomalyHost
+
+- type: Tag
   id: AppraisalTool
 
 - type: Tag
@@ -71,6 +74,24 @@
 
 - type: Tag
   id: BorgArm
+
+- type: Tag
+  id: BorgCargoHead
+
+- type: Tag
+  id: BorgCargoLArm
+
+- type: Tag
+  id: BorgCargoLLeg
+
+- type: Tag
+  id: BorgCargoRArm
+
+- type: Tag
+  id: BorgCargoRLeg
+
+- type: Tag
+  id: BorgCargoTorso
 
 - type: Tag
   id: BorgEngineerHead
@@ -205,6 +226,9 @@
   id: BorgServiceTorso
 
 - type: Tag
+  id: Bot
+
+- type: Tag
   id: BotanyHatchet
 
 - type: Tag
@@ -224,6 +248,9 @@
 
 - type: Tag
   id: BoxHug
+
+- type: Tag
+  id: Brain
 
 - type: Tag
   id: BrassInstrument
@@ -250,10 +277,16 @@
   id: Bucket
 
 - type: Tag
+  id: Burger
+
+- type: Tag
   id: BulletFoam
 
 - type: Tag
   id: Burnt
+
+- type: Tag
+  id: Bun
 
 - type: Tag
   id: BypassDropChecks
@@ -373,6 +406,9 @@
 - type: Tag
   id: Chicken
 
+- type: Tag
+  id: Cheese
+
 # Allowed to control someone wearing a Chef's hat if inside their hat.
 - type: Tag
   id: ChefPilot
@@ -451,6 +487,9 @@
 
 - type: Tag
   id: Cow
+
+- type: Tag
+  id: Crab
 
 - type: Tag
   id: Crayon
@@ -590,6 +629,12 @@
 - type: Tag
   id: ExplosivePassable
 
+- type: Tag # goob edit
+  id: Eyes
+
+- type: Tag
+  id: Eyepatch
+
 - type: Tag
   id: Figurine
 
@@ -636,10 +681,16 @@
   id: ForceNoFixRotations # fixrotations command WON'T target this
 
 - type: Tag
+  id: FreezerElectronics
+
+- type: Tag
   id: Fruit
 
 - type: Tag
   id: Galaxythistle
+
+- type: Tag # goob edit
+  id: GasMask
 
 - type: Tag
   id: GasScrubber
@@ -725,6 +776,9 @@
 - type: Tag
   id: Head
 
+- type: Tag # goob edit
+  id: Heart
+
 - type: Tag
   id: HelmetEVA
 
@@ -760,6 +814,9 @@
 
 - type: Tag
   id: HolosignProjector
+
+- type: Tag
+  id: Holy
 
 - type: Tag
   id: HonkerCentralControlModule
@@ -821,6 +878,9 @@
 - type: Tag
   id: KeyedInstrument
 
+- type: Tag # goob edit
+  id: Kidneys
+
 - type: Tag
   id: KitchenKnife
 
@@ -837,7 +897,19 @@
   id: Lemo
 
 - type: Tag
+  id: LightBulb
+
+- type: Tag
+  id: Lens
+
+- type: Tag
   id: Lime
+
+- type: Tag # goob edit
+  id: Liver
+
+- type: Tag # goob edit
+  id: Lungs
 
 - type: Tag
   id: Machete
@@ -902,6 +974,9 @@
 
 - type: Tag
   id: MailingUnitElectronics
+
+- type: Tag # goob edit
+  id: Mask
 
 - type: Tag
   id: Matchstick
@@ -983,6 +1058,9 @@
 
 - type: Tag
   id: Ore
+
+- type: Tag # goob edit
+  id: Organ
 
 - type: Tag
   id: Packet
@@ -1136,6 +1214,9 @@
   id: RollingPin
 
 - type: Tag
+  id: Salt
+
+- type: Tag
   id: SaltShaker
 
 - type: Tag
@@ -1149,6 +1230,18 @@
 
 - type: Tag
   id: SecBeltEquip
+
+- type: Tag
+  id: SecurePlasmaWindoor
+
+- type: Tag
+  id: SecureUraniumWindoor
+
+- type: Tag
+  id: SecureWindoor
+
+- type: Tag
+  id: SecurityHelmet
 
 - type: Tag
   id: SecwayKeys
@@ -1237,8 +1330,14 @@
 - type: Tag
   id: Steak
 
+- type: Tag # goob edit
+  id: Stomach
+
 - type: Tag
   id: StringInstrument
+
+- type: Tag
+  id: Stunbaton
 
 - type: Tag
   id: SubdermalImplant
@@ -1267,8 +1366,14 @@
 - type: Tag
   id: Spellbook
 
+- type: Tag # goob edit
+  id: Table
+
 - type: Tag
   id: TabletopBoard
+
+- type: Tag
+  id: Taco
 
 - type: Tag
   id: TabletopPiece
@@ -1284,6 +1389,9 @@
 
 - type: Tag
   id: TimerSignalElectronics
+
+- type: Tag # goob edit
+  id: Tongue
 
 - type: Tag
   id: Toolbox
@@ -1323,6 +1431,9 @@
 
 - type: Tag
   id: Vegetable
+
+- type: Tag
+  id: VGRoidInterior
 
 - type: Tag
   id: VimPilot

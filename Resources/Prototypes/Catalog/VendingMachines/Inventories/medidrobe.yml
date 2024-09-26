@@ -19,7 +19,11 @@
     UniformScrubsColorGreen: 4
     UniformScrubsColorBlue: 4
     UniformScrubsColorPurple: 4
-    ClothingHeadHatSurgcapGreen: 4 
+    ClothingHeadHatSurgcapGreen: 4
     ClothingHeadHatSurgcapBlue: 4
     ClothingHeadHatSurgcapPurple: 4
+    ClothingNeckScarfStripedLightBlue: 2
     ClothingShoesBootsWinterMed: 2
+  contrabandInventory:
+    ClothingUniformJumpskirtOfLife: 1
+    ClothingMaskClownMedical: 1

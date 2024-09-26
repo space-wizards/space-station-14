@@ -76,9 +76,6 @@
   parent: PuddleTemporary
   suffix: Mucin
   components:
-  - type: TimedDespawn
-    lifetime: 5
-  - type: EvaporationSparkle
   - type: SolutionContainerManager
     solutions:
       puddle:
@@ -86,6 +83,12 @@
         reagents:
         - ReagentId: Mucin
           Quantity: 20
+  - type: Propulsion
+    walkSpeedModifier: 2.0
+    sprintSpeedModifier: 2.0
+    whitelist:
+      components:
+        - SnailSpeed
 
 - type: entity
   id: PuddleFlour
@@ -142,11 +145,6 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
-      # Context / examine fixture
-      fix1:
-        shape:
-          !type:PhysShapeCircle
-          radius: 0.25
       slipFixture:
         shape:
           !type:PhysShapeAabb

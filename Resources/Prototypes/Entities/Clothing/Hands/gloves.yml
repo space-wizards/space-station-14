@@ -110,6 +110,22 @@
   - type: FingerprintMask
 
 - type: entity
+  parent: [ClothingHandsInedibleBase, BaseCommandContraband]
+  id: ClothingHandsGlovesCaptainflightgloves
+  name: flight gloves
+  description: Regal black leather gloves with gold trim, insulated from electricity.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/captainflightgloves.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/captainflightgloves.rsi
+  - type: Insulated
+  - type: Fiber
+    fiberMaterial: fibers-leather
+    fiberColor: fibers-regal-black
+  - type: FingerprintMask
+
+- type: entity
   parent: ClothingHandsBase
   id: ClothingHandsGlovesHop
   name: papercut-proof gloves
@@ -182,6 +198,7 @@
     sprite: Clothing/Hands/Gloves/powerglove.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/powerglove.rsi
+  - type: Insulated
   - type: Fiber
     fiberMaterial: fibers-nanomachines
   - type: FingerprintMask
@@ -255,7 +272,7 @@
       - type: CriminalRecordsHacker
 
 - type: entity
-  parent: [ClothingHandsGlovesColorBlack, BaseSecurityEngineeringContraband]
+  parent: [ ClothingHandsGlovesColorBlack, BaseSecurityEngineeringContraband ]
   id: ClothingHandsGlovesCombat
   name: combat gloves
   description: These tactical gloves are fireproof and shock resistant.

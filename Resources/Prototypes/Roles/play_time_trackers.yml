@@ -17,6 +17,9 @@
   id: JobBotanist
 
 - type: playTimeTracker
+  id: JobBrigmedic
+
+- type: playTimeTracker
   id: JobCaptain
 
 - type: playTimeTracker
@@ -65,6 +68,12 @@
   id: JobERTSecurity
 
 - type: playTimeTracker
+  id: JobDeathSquad
+
+- type: playTimeTracker
+  id: JobCBURN
+
+- type: playTimeTracker
   id: JobHeadOfPersonnel
 
 - type: playTimeTracker
@@ -111,6 +120,9 @@
 
 - type: playTimeTracker
   id: JobResearchDirector
+
+- type: playTimeTracker
+  id: JobRoboticist
 
 - type: playTimeTracker
   id: JobSalvageSpecialist

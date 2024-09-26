@@ -126,6 +126,30 @@
         whitelist:
           tags:
             - BorgMiningTorso
+      cargo_l_arm+o:
+        whitelist:
+          tags:
+            - BorgCargoLArm
+      cargo_r_arm+o:
+        whitelist:
+          tags:
+            - BorgCargoRArm
+      cargo_l_leg+o:
+        whitelist:
+          tags:
+            - BorgCargoLLeg
+      cargo_r_leg+o:
+        whitelist:
+          tags:
+            - BorgCargoRLeg
+      cargo_head+o:
+        whitelist:
+          tags:
+            - BorgCargoHead
+      cargo_chest+o:
+        whitelist:
+          tags:
+            - BorgCargoTorso
       medical_l_arm+o:
         whitelist:
           tags:
@@ -212,6 +236,13 @@
       - BorgMiningRLeg
       - BorgMiningHead
       - BorgMiningTorso
+      cargo:
+      - BorgCargoLArm
+      - BorgCargoRArm
+      - BorgCargoLLeg
+      - BorgCargoRLeg
+      - BorgCargoHead
+      - BorgCargoTorso
   - type: Construction
     graph: Cyborg
     node: start

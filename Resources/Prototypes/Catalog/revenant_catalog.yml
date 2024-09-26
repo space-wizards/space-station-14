@@ -49,3 +49,29 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
+
+- type: listing
+  id: RevenantBloodWriting
+  name: revenant-blood-writing-name
+  description: revenant-blood-writing-desc
+  productAction: ActionRevenantBloodWriting
+  cost:
+    StolenEssence: 2
+  categories:
+  - RevenantAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: RevenantAnimate
+  name: revenant-animate-name
+  description: revenant-animate-desc
+  productAction: ActionRevenantAnimate
+  cost:
+    StolenEssence: 30
+  categories:
+  - RevenantAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1

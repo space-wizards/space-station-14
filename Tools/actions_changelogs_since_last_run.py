@@ -21,7 +21,7 @@ GITHUB_TOKEN      = os.environ["GITHUB_TOKEN"]
 DISCORD_SPLIT_LIMIT = 2000
 DISCORD_WEBHOOK_URL = os.environ.get("DISCORD_WEBHOOK_URL")
 
-CHANGELOG_FILE = "Resources/Changelog/Changelog.yml"
+CHANGELOG_FILE = "Resources/Changelog/Impstation.yml"
 
 TYPES_TO_EMOJI = {
     "Fix":    "🐛",
@@ -146,7 +146,7 @@ def send_to_discord(entries: Iterable[ChangelogEntry]) -> None:
                 message = change['message']
                 url = entry.get("url")
                 if url and url.strip():
-                    group_content.write(f"{emoji} [-]({url}) {message}\n")
+                    group_content.write(f"{emoji} - {message} [PR]({url}) \n")
                 else:
                     group_content.write(f"{emoji} - {message}\n")
 

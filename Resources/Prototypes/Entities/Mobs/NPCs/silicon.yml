@@ -34,10 +34,9 @@
   - type: IntrinsicRadioReceiver
   - type: IntrinsicRadioTransmitter
     channels:
-    - Binary
+    - Common
   - type: ActiveRadio
     channels:
-    - Binary
     - Common
   - type: HealthExaminable
     examinableTypes:
@@ -66,6 +65,7 @@
   - type: Tag
     tags:
     - DoorBumpOpener
+    - Bot
   - type: MobState
     allowedStates:
       - Alive
@@ -107,7 +107,7 @@
   - type: TypingIndicator
     proto: robot
   - type: ZombieImmune
-  - type: StepTriggerImmune
+  - type: ProtectedFromStepTriggers
   - type: NoSlip
   - type: Insulated
 
@@ -414,8 +414,13 @@
     tags:
     - DoorBumpOpener
     - FootstepSound
+    - Bot
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Common
+    - Supply
   - type: ActiveRadio
     channels:
-    - Binary
     - Common
     - Supply

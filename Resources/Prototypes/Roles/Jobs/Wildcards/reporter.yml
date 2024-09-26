@@ -13,7 +13,6 @@
 - type: startingGear
   id: ReporterGear
   equipment:
-    shoes: ClothingShoesColorWhite
     id: ReporterPDA
     ears: ClothingHeadsetService
   #storage:

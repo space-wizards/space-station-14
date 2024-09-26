@@ -1,0 +1,59 @@
+- type: htnCompound
+  id: AnimatedHandcuffsCompound
+  branches:
+    - tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:UtilityOperator
+            proto: NearbyCuffableTargets
+        
+        - !type:HTNPrimitiveTask
+          operator: !type:MoveToOperator
+            pathfindInPlanning: true
+            removeKeyOnFinish: false
+            targetKey: TargetCoordinates
+            pathfindKey: TargetPathfind
+            rangeKey: MovementRangeClose
+          
+        - !type:HTNPrimitiveTask
+          preconditions:
+            - !type:KeyExistsPrecondition
+              key: Target
+            - !type:TargetInRangePrecondition
+              targetKey: Target
+              rangeKey: MeleeRange
+          operator: !type:JumpInSlotsOperator
+            ignoreFail: true
+        
+        - !type:PrimitiveTask
+          preconditions:
+            - !type:KeyExistsPrecondition
+              key: Target
+          operator: !type:InteractionActivateTargetOperator
+        
+        - !type:HTNPrimitiveTask
+          preconditions:
+            - !type:KeyExistsPrecondition
+              key: IdleTime
+          operator: !type:WaitOperator
+            key: IdleTime
+
+    - tasks:
+        - !type:HTNCompoundTask
+          task: IdleCompound
+
+- type: utilityQuery
+  id: NearbyCuffableTargets
+  query:
+    - !type:NearbyHostilesQuery
+  considerations:
+    - !type:TargetIsAliveCon
+      curve: !type:BoolCurve
+    - !type:TargetDistanceCon
+      curve: !type:PresetCurve
+        preset: TargetDistance
+    - !type:TargetAccessibleCon
+      curve: !type:BoolCurve
+    - !type:TargetInLOSOrCurrentCon
+      curve: !type:BoolCurve
+    - !type:TargetIsCuffableCon
+      curve: !type:BoolCurve

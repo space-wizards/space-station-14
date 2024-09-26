@@ -17,6 +17,8 @@
       types:
         Slash: 25
         Piercing: 15
+    soundHit:
+        path: /Audio/Weapons/bladeslice.ogg
   - type: Item
     size: Normal
     sprite: Objects/Weapons/Melee/armblade.rsi

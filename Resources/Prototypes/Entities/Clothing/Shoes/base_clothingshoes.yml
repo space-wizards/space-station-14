@@ -23,7 +23,34 @@
     tags:
     - ClothMade
     - WhitelistChameleon
-  - type: ClothingRequiredStepTriggerImmune
+  - type: ProtectedFromStepTriggers
+
+# a ClothingShoesBase for footwear that's entirely leather or synthetic since moths eat cloth and occasionally paper
+- type: entity
+  abstract: true
+  parent: Clothing
+  id: ClothingShoesBaseInedible
+  components:
+  - type: Clothing
+    slots:
+    - FEET
+  - type: Sprite
+    state: icon
+  - type: Item
+    size: Normal
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 10
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+  - type: ProtectedFromStepTriggers
 
 - type: entity
   abstract: true
@@ -52,6 +79,24 @@
           - Knife
           - Sidearm
 
+# a variant for military boots that are all leather or synthetic so moths can't eat them if you want lore-friendly shoes
+
+# stuff common to all military boots
+- type: entity
+  abstract: true
+  parent: [ClothingShoesBaseInedible, ClothingSlotBase]
+  id: ClothingShoesMilitaryBaseInedible
+  components:
+  - type: Matchbox
+  - type: ItemSlots
+    slots:
+      item:
+        name: clothing-boots-sidearm
+        whitelist:
+          tags:
+          - Knife
+          - Sidearm
+
 - type: entity
   abstract: true
   id: ClothingShoesBootsSecFilled
@@ -69,4 +114,5 @@
   description: Fluffy boots to help survive even the coldest of winters.
   components:
   - type: TemperatureProtection
-    coefficient: 0.2
+    heatingCoefficient: 1.025
+    coolingCoefficient: 0.5

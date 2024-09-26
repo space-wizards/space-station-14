@@ -61,7 +61,7 @@ public sealed partial class StoreListingControl : Control
         if (_data.RestockTime > stationTime)
         {
             var timeLeftToBuy = stationTime - _data.RestockTime;
-            StoreItemBuyButton.Text =  timeLeftToBuy.Duration().ToString(@"mm\:ss");
+            StoreItemBuyButton.Text = timeLeftToBuy.Duration().ToString(@"mm\:ss");
         }
         else
         {

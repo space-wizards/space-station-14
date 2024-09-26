@@ -39,6 +39,7 @@
     - id: PlushieMoth
     - id: PlushieArachind
     - id: PlushiePenguin
+    - id: PlushieGray
 
 - type: entity
   id: CrateFunPlushie
@@ -345,6 +346,7 @@
       - id: ClothingHeadHatMagician
       - id: BeachBall
       - id: ClothingShoesSkates
+      - id: RubberChicken
 
 - type: entity
   id: CrateFunBikeHornImplants

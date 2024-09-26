@@ -12,6 +12,8 @@
       - Cigarette
       - Trash
       - PetWearable
+  - type: StaticPrice
+    price: 1
   - type: SpaceGarbage
   - type: Clothing
     sprite: Objects/Consumable/Smokeables/Cigarettes/cigarette.rsi

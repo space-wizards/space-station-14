@@ -2,7 +2,7 @@
   # Gastropoid
 
   <Box>
-    <GuideEntityEmbed Entity="MobSnail" Caption=""/>
+    <GuideEntityEmbed Entity="MobGastropoid" Caption=""/>
   </Box>
   They depend on moisture to survive, so anything which contains table salt will damage them when splashed, ingested, or injected (including Saline.)
   <Box>
@@ -30,4 +30,14 @@
   <Box>
     <GuideEntityEmbed Entity="MobSlug" Caption=""/>
   </Box>
+
+  ## Gastropoid Naming Conventions
+  Gastropoids typically have palindrome first names and the scientific genus of snails for last names.
+  - [color=#449944]Acceptable:[/color] Otto Acmaea
+  - [color=#449944]Acceptable:[/color] Vyv Natici
+  - [color=#449944]Acceptable:[/color] Minim Mol
+  - [color=#449944]Acceptable:[/color] Neriren Lottii
+  - [color=#994444]Bad:[/color] Thug Slug
+  - [color=#994444]Bad:[/color] Slurp Slorp
+  - [color=#994444]Bad:[/color] Benry
 </Document>
