@@ -263,7 +263,7 @@ namespace Content.Shared.Atmos
         /// <summary>
         ///     The amount of energy 1 mol of Healium forming from BZ and frezon releases.
         /// </summary>
-        public const float HealiumProductionEnergy = 80f;
+        public const float HealiumProductionEnergy = 10e3f;
 
         /// <summary>
         ///     Determines at what pressure the ultra-high pressure red icon is displayed.

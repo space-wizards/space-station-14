@@ -641,7 +641,7 @@
 - type: entity
   parent: GasCanister
   id: BZCanister
-  name: BZ Canister
+  name: bz canister
   components:
   - type: Sprite
     layers:
@@ -690,7 +690,7 @@
 - type: entity
   parent: GasCanister
   id: HealiumCanister
-  name: HealiumCanister
+  name: healium canister
   components:
   - type: Sprite
     layers:

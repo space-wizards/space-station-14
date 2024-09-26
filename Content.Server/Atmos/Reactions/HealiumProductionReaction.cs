@@ -6,7 +6,7 @@ using JetBrains.Annotations;
 namespace Content.Server.Atmos.Reactions;
 
 /// <summary>
-///     Produces Healium by mixing BZ and Frezon at low pressure. Also decomposes Nitrous Oxide when there are more than 3 parts Plasma per N2O.
+///     Produces Healium by mixing BZ and Frezon at temperatures between 23K and 300K. Efficiency increases in colder temperatures.  
 /// </summary>
 [UsedImplicitly]
 public sealed partial class HealiumProductionReaction : IGasReactionEffect
@@ -18,9 +18,12 @@ public sealed partial class HealiumProductionReaction : IGasReactionEffect
         var pressure = mixture.Pressure;
         var volume = mixture.Volume;
 
+        var efficiency = mixture.Temperature / 24f;
+
+
         var bZRemoved = 1f;
         var frezonRemoved = 11f;
-        var HealiumProduced = 12f;
+        var healiumProduced = 12f * efficiency;
 
         if (bZRemoved > initBZ || frezonRemoved > initFrezon)
             return ReactionResult.NoReaction;
@@ -29,10 +32,10 @@ public sealed partial class HealiumProductionReaction : IGasReactionEffect
         mixture.AdjustMoles(Gas.Frezon, -frezonRemoved);
         mixture.AdjustMoles(Gas.Healium, HealiumProduced);
 
-        var energyReleased = HealiumProduced * Atmospherics.HealiumProductionEnergy;
+        var energyReleased = healiumProduced * Atmospherics.HealiumProductionEnergy;
         var heatCap = atmosphereSystem.GetHeatCapacity(mixture, true);
         if (heatCap > Atmospherics.MinimumHeatCapacity)
-            mixture.Temperature = Math.Max((mixture.Temperature * heatCap + energyReleased) / heatCap, Atmospherics.TCMB);
+            mixture.Temperature = Math.Max((mixture.Temperature * heatCap + energyReleased) / heatCap, Atmospherics.T20C);
 
         return ReactionResult.Reacting;
     }

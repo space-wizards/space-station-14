@@ -486,10 +486,11 @@
         scaleByQuantity: true
         ignoreResistances: true
         damage:
+          groups:
+            Burn: -0.3
+            Toxin: -0.3
           types:
-            Slash: -0.3
             Blunt: -0.3
-            Heat: -0.3
       - !type:ModifyBleedAmount
         amount: -0.15
       - !type:PopupMessage

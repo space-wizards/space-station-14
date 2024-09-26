@@ -19,8 +19,8 @@ reagent-desc-nitrous-oxide = You know how everything seems funnier when you're t
 reagent-name-frezon = frezon
 reagent-desc-frezon = A highly effective coolant.. and hallucinogenic.
 
-reagent-name-bz = BZ
+reagent-name-bz = bz
 reagent-desc-bz = A potent hallucinogenic that also puts slimes into stasis.
 
-reagent-name-healium = Healium
+reagent-name-healium = healium
 reagent-desc-healium = A powerful sleeping agent with regenerative properties.
