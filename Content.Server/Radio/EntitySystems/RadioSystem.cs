@@ -83,10 +83,11 @@ public sealed class RadioSystem : EntitySystem
         var name = evt.VoiceName;
         name = FormattedMessage.EscapeText(name);
 
-        var speech = _chat.GetSpeechVerb(messageSource, message);
-
-        if (_prototype.TryIndex(evt.SpeechVerb, out var evntProto))
+        SpeechVerbPrototype speech;
+        if (evt.SpeechVerb != null && _prototype.TryIndex(evt.SpeechVerb, out var evntProto))
             speech = evntProto;
+        else
+            speech = _chat.GetSpeechVerb(messageSource, message);
 
         var content = escapeMarkup
             ? FormattedMessage.EscapeText(message)

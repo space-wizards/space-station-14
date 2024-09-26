@@ -18,10 +18,8 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
 
-    private const string MaskSlot = "mask";
     public override void Initialize()
     {
         base.Initialize();
@@ -77,11 +75,12 @@ public sealed partial class VoiceMaskSystem : EntitySystem
 
     private void OpenUI(VoiceMaskSetNameEvent ev)
     {
-        if (!_inventory.TryGetSlotEntity(ev.Performer, MaskSlot, out var maskEntity))
+        var maskEntity = ev.Action.Comp.Container;
+
+        if (!TryComp<VoiceMaskComponent>(maskEntity, out var voiceMaskComp))
             return;
 
-        if (!_uiSystem.HasUi(maskEntity.Value, VoiceMaskUIKey.Key)
-            || !TryComp<VoiceMaskComponent>(maskEntity.Value, out var voiceMaskComp) || voiceMaskComp == null)
+        if (!_uiSystem.HasUi(maskEntity.Value, VoiceMaskUIKey.Key))
             return;
 
         _uiSystem.OpenUi(maskEntity.Value, VoiceMaskUIKey.Key, ev.Performer);
