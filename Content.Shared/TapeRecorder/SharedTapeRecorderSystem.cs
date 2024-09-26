@@ -63,7 +63,7 @@ public abstract class SharedTapeRecorderSystem : EntitySystem
         while (query.MoveNext(out var uid, out _, out var comp))
         {
             var ent = (uid, comp);
-            if (TryGetTapeCassette(uid, out var tape))
+            if (!TryGetTapeCassette(uid, out var tape))
             {
                 SetMode(ent, TapeRecorderMode.Stopped);
                 continue;
