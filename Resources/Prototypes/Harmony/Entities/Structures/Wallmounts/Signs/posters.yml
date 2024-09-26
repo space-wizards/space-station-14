@@ -108,3 +108,43 @@
     - type: Sprite
       sprite: Harmony/Structures/Wallmounts/posters.rsi
       state: harmony_poster11_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterHarmonyAlwaysWatching
+  name: "Always Watching"
+  description: "A good reminder that the Station AI is keeping everyone safe by eliminating all semblance of privacy! Aren't you glad it's probably staring at you right now?"
+  components:
+    - type: Sprite
+      sprite: Harmony/Structures/Wallmounts/posters.rsi
+      state: harmony_poster12_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterHarmonySpaceAsshole
+  name: "Space Asshole"
+  description: "A poster advertising the historical drama film about what is referred to these days as 'The Incident of 2125'. The poster's name reminds you of something."
+  components:
+    - type: Sprite
+      sprite: Harmony/Structures/Wallmounts/posters.rsi
+      state: harmony_poster13_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterHarmonySmokeBreak
+  name: "Smoke Break"
+  description: "A poster reminding you of the 'optimal' time for Nanotrasen-approved smoke breaks. They considered it long enough due to a security officer that apparently consumed about 500 cigarettes in 5 minutes. It has been shoddily edited to account for its recent increase by 10 minutes, as requested near-unanimously by the station captains who were polled. The color of the background is mildly irritating, but you're not too sure why."
+  components:
+    - type: Sprite
+      sprite: Harmony/Structures/Wallmounts/posters.rsi
+      state: harmony_poster14_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterHarmonyWallMeat
+  name: "Wall Meat"
+  description: "The objective best way to store food is to hide it in the walls where nobody can ever find it! So convenient! So useful! So discrete! So cool! Agreed-upon by vampires everywhere."
+  components:
+    - type: Sprite
+      sprite: Harmony/Structures/Wallmounts/posters.rsi
+      state: harmony_poster15_legit
