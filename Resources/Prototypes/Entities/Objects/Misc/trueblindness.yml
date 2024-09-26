@@ -1,8 +1,18 @@
 - type: entity
   name: Blindness Ghost
   id: BlindnessGhost
+  noSpawn: true
   components:
   - type: TrueBlindnessGhost
   - type: Sprite
     sprite: deprecated.rsi
   - type: Transform
+
+- type: entity
+  name: Sound
+  id: BlindnessSoundGhost
+  parent: BlindnessGhost
+  components:
+  - type: Sprite
+    sprite: Effects/sound.rsi
+    state: sound

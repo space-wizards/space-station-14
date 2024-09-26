@@ -7,8 +7,3 @@
   id: GreyscaleFullscreen
   kind: source
   path: "/Textures/Shaders/greyscale_fullscreen.swsl"
-
-- type: shader
-  id: GreyscaleAlpha
-  kind: source
-  path: "/Textures/Shaders/greyscale_alpha.swsl"
