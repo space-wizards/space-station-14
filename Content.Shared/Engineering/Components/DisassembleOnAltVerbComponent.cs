@@ -22,4 +22,4 @@ public sealed partial class DisassembleOnAltVerbComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed partial class DissembleDoAfterEvent : SimpleDoAfterEvent { }
+public sealed partial class DisassembleDoAfterEvent : SimpleDoAfterEvent { }
