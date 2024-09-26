@@ -1,6 +1,6 @@
 - type: stack
   id: Paper
-  name: paper
+  name: stack-paper
   icon: { sprite: /Textures/Objects/Materials/Sheets/other.rsi, state: paper }
   spawn: SheetPaper1
   maxCount: 30
@@ -14,14 +14,14 @@
 
 - type: stack
   id: Plastic
-  name: plastic
+  name: stack-plastic
   icon: { sprite: /Textures/Objects/Materials/Sheets/other.rsi, state: plastic }
   spawn: SheetPlastic1
   maxCount: 30
 
 - type: stack
   id: Uranium
-  name: uranium
+  name: stack-uranium
   icon: { sprite: /Textures/Objects/Materials/Sheets/other.rsi, state: uranium }
   spawn: SheetUranium1
   maxCount: 30
