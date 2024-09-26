@@ -53,11 +53,11 @@
         - ReagentId: Fiber
           Quantity: 10
   - type: SecretStash
-    secretStashName: secret-stash-plushy
+    secretStashName: secret-stash-plushie
   - type: ToolOpenable
     openToolQualityNeeded: Slicing
     closeToolQualityNeeded: Slicing # Should probably be stitching or something if that gets added
-    name: secret-stash-plushy
+    name: secret-stash-plushie
 
 - type: entity
   parent: BasePlushie
