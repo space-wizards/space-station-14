@@ -7,17 +7,15 @@ namespace Content.Client.Stylesheets.Redux.Palette;
 /// <remarks>
 ///     Don't be afraid to add a lot of fields here! This class is made for readability.
 /// </remarks>
-public sealed class ColorPalette
+public sealed class ColorPalette(string hex = "#000000")
 {
     /// <summary>
     ///     The root color all others are derived from
     /// </summary>
-    public Color Base;
+    public Color Base = Color.FromHex(hex);
 
-    public float LightnessPositiveShift = 0.06f;
-    public float LightnessNegativeShift = -0.06f;
-    public float ChromaPositiveShift = 0.00f;
-    public float ChromaNegativeShift = 0.00f;
+    public float LightnessShift = 0.06f;
+    public float ChromaShift = 0.00f;
 
     /**
      * Given the initialized configuration properties, this method sets all the color properties to derivations of
@@ -42,9 +40,7 @@ public sealed class ColorPalette
 
     private Color Shift(Color from, float factor)
     {
-        return factor > 0
-            ? from.NudgeLightness(LightnessPositiveShift * factor).NudgeChroma(ChromaPositiveShift * factor)
-            : from.NudgeLightness(LightnessNegativeShift * -factor).NudgeChroma(ChromaNegativeShift * -factor);
+        return from.NudgeLightness(LightnessShift * factor).NudgeChroma(ChromaShift * factor);
     }
 
     public Color Element;
