@@ -88,10 +88,12 @@ public sealed class CartridgeRemovedEvent : EntityEventArgs
 public sealed class CartridgeActivatedEvent : EntityEventArgs
 {
     public readonly EntityUid Loader;
+    public readonly EntityUid Actor;
 
-    public CartridgeActivatedEvent(EntityUid loader)
+    public CartridgeActivatedEvent(EntityUid loader, EntityUid actor)
     {
         Loader = loader;
+        Actor = actor;
     }
 }
 

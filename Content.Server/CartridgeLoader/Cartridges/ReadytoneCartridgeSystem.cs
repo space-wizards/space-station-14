@@ -39,14 +39,7 @@ public sealed class ReadytoneCartridgeSystem : EntitySystem
 
     private void OnCartridgeActivated(Entity<ReadytoneCartridgeComponent> ent, ref CartridgeActivatedEvent args)
     {
-        var uid = args.Loader;
-        if (TryComp<PdaComponent>(uid, out var pda))
-        {
-            if (pda.PdaOwner != null)
-            {
-                if (TryComp<InstrumentComponent>(uid, out var instrument))
-                    _instrumentSystem.ToggleInstrumentUi(uid, (EntityUid)pda.PdaOwner, instrument);
-            }
-        }
+        if (TryComp<InstrumentComponent>(args.Loader, out var instrument))
+            _instrumentSystem.ToggleInstrumentUi(args.Loader, args.Actor, instrument);
     }
 }
