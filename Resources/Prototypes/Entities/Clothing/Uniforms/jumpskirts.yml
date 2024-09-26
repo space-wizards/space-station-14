@@ -854,3 +854,18 @@
       sprite: Clothing/Uniforms/Jumpskirt/psychologist.rsi
     - type: Clothing
       sprite: Clothing/Uniforms/Jumpskirt/psychologist.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtClown
+  name: clown skirt
+  description: HONK!
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/clown.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/clown.rsi
+  - type: Tag
+    tags:
+    - ClownSuit
+    - WhitelistChameleon

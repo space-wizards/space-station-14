@@ -32,12 +32,8 @@
     factions:
     - SimpleNeutral
   - type: IntrinsicRadioReceiver
-  - type: IntrinsicRadioTransmitter
-    channels:
-    - Binary
   - type: ActiveRadio
     channels:
-    - Binary
     - Common
   - type: HealthExaminable
     examinableTypes:
@@ -66,6 +62,7 @@
   - type: Tag
     tags:
     - DoorBumpOpener
+    - Bot
   - type: MobState
     allowedStates:
       - Alive
@@ -103,10 +100,11 @@
     - Robotics
   - type: Speech
     speechVerb: Robotic
+    speechSounds: Pai #couldn't decide if this should be borg or pai sounds so I flipped a coin.
   - type: TypingIndicator
     proto: robot
   - type: ZombieImmune
-  - type: StepTriggerImmune
+  - type: ProtectedFromStepTriggers
   - type: NoSlip
   - type: Insulated
 
@@ -391,8 +389,8 @@
     tags:
     - DoorBumpOpener
     - FootstepSound
+    - Bot
   - type: ActiveRadio
     channels:
-    - Binary
     - Common
     - Supply

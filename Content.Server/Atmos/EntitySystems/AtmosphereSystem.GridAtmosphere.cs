@@ -74,7 +74,7 @@ public sealed partial class AtmosphereSystem
                 newGridAtmos = AddComp<GridAtmosphereComponent>(newGrid);
 
             // We assume the tiles on the new grid have the same coordinates as they did on the old grid...
-            var enumerator = mapGrid.GetAllTilesEnumerator();
+            var enumerator = _mapSystem.GetAllTilesEnumerator(newGrid, mapGrid);
 
             while (enumerator.MoveNext(out var tile))
             {
@@ -176,7 +176,7 @@ public sealed partial class AtmosphereSystem
         tile.AdjacentBits = AtmosDirection.Invalid;
         for (var i = 0; i < Atmospherics.Directions; i++)
         {
-            var direction = (AtmosDirection) (1 << i);
+            var direction = (AtmosDirection)(1 << i);
             var adjacentIndices = tile.GridIndices.Offset(direction);
 
             TileAtmosphere? adjacent;
@@ -196,7 +196,7 @@ public sealed partial class AtmosphereSystem
                 AddActiveTile(atmos, adjacent);
 
             var oppositeIndex = i.ToOppositeIndex();
-            var oppositeDirection = (AtmosDirection) (1 << oppositeIndex);
+            var oppositeDirection = (AtmosDirection)(1 << oppositeIndex);
 
             if (adjBlockDirs.IsFlagSet(oppositeDirection) || blockedDirs.IsFlagSet(direction))
             {
@@ -269,7 +269,7 @@ public sealed partial class AtmosphereSystem
     private void GridFixTileVacuum(TileAtmosphere tile)
     {
         DebugTools.AssertNotNull(tile.Air);
-        DebugTools.Assert(tile.Air?.Immutable == false );
+        DebugTools.Assert(tile.Air?.Immutable == false);
         Array.Clear(tile.MolesArchived);
         tile.ArchivedCycle = 0;
 

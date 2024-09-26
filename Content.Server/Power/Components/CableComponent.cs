@@ -4,6 +4,7 @@ using Content.Shared.Tools;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using System.Diagnostics.Tracing;
+using Content.Shared.Tools.Systems;
 
 namespace Content.Server.Power.Components;
 
@@ -14,11 +15,11 @@ namespace Content.Server.Power.Components;
 [Access(typeof(CableSystem))]
 public sealed partial class CableComponent : Component
 {
-    [DataField("cableDroppedOnCutPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string CableDroppedOnCutPrototype = "CableHVStack1";
+    [DataField]
+    public EntProtoId CableDroppedOnCutPrototype = "CableHVStack1";
 
-    [DataField("cuttingQuality", customTypeSerializer:typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
-    public string CuttingQuality = "Cutting";
+    [DataField]
+    public ProtoId<ToolQualityPrototype> CuttingQuality = SharedToolSystem.CutQuality;
 
     /// <summary>
     ///     Checked by <see cref="CablePlacerComponent"/> to determine if there is
