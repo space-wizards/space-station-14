@@ -199,6 +199,7 @@
       - WetFloorSign
       - ClothingHeadHatCone
       - BoxFolderClipboard # Harmony
+      - FreezerElectronics
       - Flare
 
   - type: EmagLatheRecipes
