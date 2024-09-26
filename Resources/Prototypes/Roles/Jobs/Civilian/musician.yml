@@ -15,6 +15,7 @@
     prototype: BoxPerformer
 
 - type: startingGear
+  eyes: ClothingEyesGlassesSunglasses
   id: MusicianGear
   equipment:
     id: MusicianPDA
