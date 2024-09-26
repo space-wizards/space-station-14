@@ -1,3 +1,4 @@
+using Content.Shared.Materials;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Lathe;
@@ -15,6 +16,7 @@ public sealed class BlueprintSystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly EntityWhitelistSystem _entityWhitelist = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedMaterialStorageSystem _materialStorage = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -66,6 +68,9 @@ public sealed class BlueprintSystem : EntitySystem
 
         var ev = new TechnologyDatabaseModifiedEvent();
         RaiseLocalEvent(ent, ref ev);
+
+        _materialStorage.UpdateMaterialWhitelist(ent);
+
         return true;
     }
 
