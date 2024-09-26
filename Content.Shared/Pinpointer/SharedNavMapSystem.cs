@@ -119,7 +119,6 @@ public abstract class SharedNavMapSystem : EntitySystem
 
         // This was designed for incorporeal entities, thus there aren't any collision checks or anything
         _transformSystem.SetCoordinates(uid, xform, new EntityCoordinates(xform.MapUid.Value, args.Target));
-        _transformSystem.AttachToGridOrMap(uid, xform);
     }
 
     #region: Event handling
