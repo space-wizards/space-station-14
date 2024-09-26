@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Ghagliiarghii
-  changes:
-  - message: Nuclear Operatives' Reinforcements now have a PDA!
-    type: Tweak
-  id: 6940
-  time: '2024-07-20T02:59:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28088
 - author: Plykiya
   changes:
   - message: Chameleon scarves now work again.
@@ -3927,3 +3920,12 @@
   id: 7439
   time: '2024-09-25T17:39:49.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32297
+- author: Ilya246
+  changes:
+  - message: Atmos gas sell prices significantly lowered.
+    type: Tweak
+  - message: Frezon now consumes significantly more tritium to produce.
+    type: Tweak
+  id: 7440
+  time: '2024-09-26T12:46:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32407
