@@ -1,0 +1,12 @@
+- type: listing
+  id: PAICrewMonitor
+  name: pai-crew-monitor-name
+  description: pai-crew-monitor-desc
+  productAction: ActionPAICrewMonitor
+  cost:
+    PAIMemory: 10
+  categories:
+  - PAIAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1

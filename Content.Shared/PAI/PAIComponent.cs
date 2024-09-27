@@ -1,3 +1,5 @@
+using Content.Shared.FixedPoint;
+using Content.Shared.Store;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -24,6 +26,13 @@ public sealed partial class PAIComponent : Component
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public EntityUid? LastUser;
 
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [AutoNetworkedField]
+    public FixedPoint2 PAIMemory = 75;
+
+    [DataField("paiMemoryCurrencyPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<CurrencyPrototype>))]
+    public string PAIMemoryCurrencyPrototype = "PAIMemory";
+
     [DataField(serverOnly: true)]
     public EntProtoId? MidiActionId = "ActionPAIPlayMidi";
 
@@ -35,6 +44,12 @@ public sealed partial class PAIComponent : Component
 
     [DataField, AutoNetworkedField]
     public EntityUid? MapAction;
+
+    [DataField]
+    public EntProtoId ShopActionId = "ActionPAIOpenShop";
+
+    [DataField, AutoNetworkedField]
+    public EntityUid? ShopAction;
 
     /// <summary>
     /// When microwaved there is this chance to brick the pai, kicking out its player and preventing it from being used again.
