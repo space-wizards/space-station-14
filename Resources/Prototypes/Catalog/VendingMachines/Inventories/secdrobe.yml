@@ -32,7 +32,9 @@
     ClothingBackpackDuffelBrigmedic: 1
     ClothingBackpackBrigmedic: 1
     ClothingBackpackSatchelBrigmedic: 1
-    ClothingOuterCoatAMG: 3
+    ClothingOuterCoatAMG: 1
+    ClothingOuterWinterBrigmedic: 1
+    ClothingShoesBootsWinterBrigmedic: 1
 
 
     ClothingHeadHelmetJustice: 10
