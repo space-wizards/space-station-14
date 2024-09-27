@@ -2,7 +2,7 @@
   id: Boat
   mapName: 'Spooky Whale'
   mapPath: /Maps/boat.yml
-  minPlayers: 40
+  minPlayers: 50
   maxPlayers: 100
   randomRotation: true
   stations:
