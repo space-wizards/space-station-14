@@ -177,3 +177,9 @@
       baseOdds: 0.036
       persists: false
       effect: !type:PlantMutateHarvest
+    - name: Sunglow
+      baseOdds: 0.000001 #1 in 100k units of mutagen
+      effect: !type:Glow
+        power: 8
+        radius: 8
+        color: '#FFFFFF'

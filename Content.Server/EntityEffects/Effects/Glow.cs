@@ -13,6 +13,9 @@ public sealed partial class Glow : EntityEffect
     public float Radius = 2f;
 
     [DataField]
+    public float Energy = 1f;
+
+    [DataField]
     public Color Color = Color.Black;
 
     private static readonly List<Color> Colors = new()
@@ -38,6 +41,7 @@ public sealed partial class Glow : EntityEffect
         var light = lightSystem.EnsureLight(args.TargetEntity);
         lightSystem.SetRadius(args.TargetEntity, Radius, light);
         lightSystem.SetColor(args.TargetEntity, Color, light);
+        lightSystem.SetEnergy(args.TargetEntity, Energy, light);
         lightSystem.SetCastShadows(args.TargetEntity, false, light); // this is expensive, and botanists make lots of plants
     }
 
