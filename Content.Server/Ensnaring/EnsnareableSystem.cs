@@ -1,4 +1,7 @@
+using Content.Server.Body.Systems;
 using Content.Server.Popups;
+using Content.Shared.Alert;
+using Content.Shared.Damage.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.Ensnaring;
 using Content.Shared.Ensnaring.Components;
@@ -13,7 +16,9 @@ public sealed partial class EnsnareableSystem : SharedEnsnareableSystem
 {
     [Dependency] private readonly ContainerSystem _container = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly AlertsSystem _alerts = default!;
+    [Dependency] private readonly BodySystem _body = default!;
+    [Dependency] private readonly StaminaSystem _stamina = default!;
 
     public override void Initialize()
     {
@@ -40,7 +45,7 @@ public sealed partial class EnsnareableSystem : SharedEnsnareableSystem
 
         if (args.Cancelled || !_container.Remove(args.Args.Used.Value, component.Container))
         {
-            _popup.PopupEntity(Loc.GetString("ensnare-component-try-free-fail", ("ensnare", args.Args.Used)), uid, uid, PopupType.MediumCaution);
+            Popup.PopupEntity(Loc.GetString("ensnare-component-try-free-fail", ("ensnare", args.Args.Used)), uid, uid, PopupType.MediumCaution);
             return;
         }
 
@@ -50,7 +55,7 @@ public sealed partial class EnsnareableSystem : SharedEnsnareableSystem
 
         _hands.PickupOrDrop(args.Args.User, args.Args.Used.Value);
 
-        _popup.PopupEntity(Loc.GetString("ensnare-component-try-free-complete", ("ensnare", args.Args.Used)), uid, uid, PopupType.Medium);
+        Popup.PopupEntity(Loc.GetString("ensnare-component-try-free-complete", ("ensnare", args.Args.Used)), uid, uid, PopupType.Medium);
 
         UpdateAlert(args.Args.Target.Value, component);
         var ev = new EnsnareRemoveEvent(ensnaring.WalkSpeed, ensnaring.SprintSpeed);

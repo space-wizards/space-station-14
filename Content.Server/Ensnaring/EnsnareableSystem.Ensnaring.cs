@@ -16,11 +16,6 @@ namespace Content.Server.Ensnaring;
 
 public sealed partial class EnsnareableSystem
 {
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly AlertsSystem _alerts = default!;
-    [Dependency] private readonly BodySystem _body = default!;
-    [Dependency] private readonly StaminaSystem _stamina = default!;
-
     public void InitializeEnsnaring()
     {
         SubscribeLocalEvent<EnsnaringComponent, ComponentRemove>(OnComponentRemove);
@@ -117,39 +112,6 @@ public sealed partial class EnsnareableSystem
         UpdateAlert(target, ensnareable);
         var ev = new EnsnareEvent(component.WalkSpeed, component.SprintSpeed);
         RaiseLocalEvent(target, ev);
-    }
-
-    /// <summary>
-    /// Used where you want to try to free an entity with the <see cref="EnsnareableComponent"/>
-    /// </summary>
-    /// <param name="target">The entity that will be freed</param>
-    /// <param name="user">The entity that is freeing the target</param>
-    /// <param name="ensnare">The entity used to ensnare</param>
-    /// <param name="component">The ensnaring component</param>
-    public void TryFree(EntityUid target, EntityUid user, EntityUid ensnare, EnsnaringComponent component)
-    {
-        // Don't do anything if they don't have the ensnareable component.
-        if (!HasComp<EnsnareableComponent>(target))
-            return;
-
-        var freeTime = user == target ? component.BreakoutTime : component.FreeTime;
-        var breakOnMove = !component.CanMoveBreakout;
-
-        var doAfterEventArgs = new DoAfterArgs(EntityManager, user, freeTime, new EnsnareableDoAfterEvent(), target, target: target, used: ensnare)
-        {
-            BreakOnMove = breakOnMove,
-            BreakOnDamage = false,
-            NeedHand = true,
-            BreakOnDropItem = false,
-        };
-
-        if (!_doAfter.TryStartDoAfter(doAfterEventArgs))
-            return;
-
-        if (user == target)
-            _popup.PopupEntity(Loc.GetString("ensnare-component-try-free", ("ensnare", ensnare)), target, target);
-        else
-            _popup.PopupEntity(Loc.GetString("ensnare-component-try-free-other", ("ensnare", ensnare), ("user", Identity.Entity(target, EntityManager))), user, user);
     }
 
     /// <summary>

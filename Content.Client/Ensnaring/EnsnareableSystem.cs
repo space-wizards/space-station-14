@@ -2,7 +2,7 @@ using Content.Shared.Ensnaring;
 using Content.Shared.Ensnaring.Components;
 using Robust.Client.GameObjects;
 
-namespace Content.Client.Ensnaring.Visualizers;
+namespace Content.Client.Ensnaring;
 
 public sealed class EnsnareableSystem : SharedEnsnareableSystem
 {
