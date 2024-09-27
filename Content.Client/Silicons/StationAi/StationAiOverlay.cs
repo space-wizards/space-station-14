@@ -68,7 +68,6 @@ public sealed class StationAiOverlay : Overlay
 
             if (_accumulator <= 0f)
             {
-                _accumulator = MathF.Max(0f, _accumulator + _updateRate);
                 _visibleTiles.Clear();
                 vision.GetView((gridUid, broadphase, grid), worldBounds.Enlarged(1f), _visibleTiles, new HashSet<Vector2i>());
             }
@@ -94,12 +93,12 @@ public sealed class StationAiOverlay : Overlay
             () =>
             {
                 worldHandle.SetTransform(matty);
-                worldHandle.UseShader(_proto.Index<ShaderPrototype>("Dithering").Instance());
 
                 var tiles = maps.GetTilesEnumerator(gridUid, grid, worldBounds.Enlarged(grid.TileSize / 2f));
                 var gridEnt = new Entity<BroadphaseComponent, MapGridComponent>(gridUid, _entManager.GetComponent<BroadphaseComponent>(gridUid), grid);
-                var airlockVerts = new ValueList<Vector2>();
                 var airlockVertCache = new ValueList<Vector2>(9);
+                var airlockColor = Color.Gold;
+                var airlockVerts = new ValueList<Vector2>();
 
                 while (tiles.MoveNext(out var tileRef))
                 {
@@ -113,18 +112,20 @@ public sealed class StationAiOverlay : Overlay
                     {
                         var midBottom = (aabb.BottomRight - aabb.BottomLeft) / 2f + aabb.BottomLeft;
                         var midTop = (aabb.TopRight - aabb.TopLeft) / 2f + aabb.TopLeft;
-                        const float IndentSize = 0.15f;
-                        const float OpenOffset = 0.35f;
+                        const float IndentSize = 0.10f;
+                        const float OpenOffset = 0.25f;
+
+                        // Use triangle-fan and draw from the mid-vert
 
                         // Left half
                         {
                             airlockVertCache.Clear();
+                            airlockVertCache.Add(aabb.Center with { X = aabb.Center.X - aabb.Width / 2f });
                             airlockVertCache.Add(aabb.BottomLeft);
                             airlockVertCache.Add(midBottom);
-                            airlockVertCache.Add(airlockVertCache[^1] + new Vector2(0f, grid.TileSize * 0.4f));
-                            airlockVertCache.Add(airlockVertCache[^1] + new Vector2(-grid.TileSize * IndentSize, 0f));
-                            airlockVertCache.Add(airlockVertCache[^1] + new Vector2(0f, grid.TileSize * 0.2f));
-                            airlockVertCache.Add(airlockVertCache[^1] + new Vector2(grid.TileSize * IndentSize, 0f));
+                            airlockVertCache.Add(airlockVertCache[^1] + new Vector2(0f, grid.TileSize * 0.35f));
+                            airlockVertCache.Add(airlockVertCache[^1] + new Vector2(-grid.TileSize * IndentSize, grid.TileSize * 0.15f));
+                            airlockVertCache.Add(airlockVertCache[^1] + new Vector2(grid.TileSize * IndentSize, grid.TileSize * 0.15f));
                             airlockVertCache.Add(midTop);
                             airlockVertCache.Add(aabb.TopLeft);
 
@@ -142,17 +143,19 @@ public sealed class StationAiOverlay : Overlay
                                 var next = (airlockVertCache[(i + 1) % airlockVertCache.Count]);
                                 airlockVerts.Add(next);
                             }
+
+                            worldHandle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, airlockVertCache.Span, airlockColor.WithAlpha(0.05f));
                         }
 
                         // Right half
                         {
                             airlockVertCache.Clear();
+                            airlockVertCache.Add(aabb.Center with { X = aabb.Center.X + aabb.Width / 2f });
                             airlockVertCache.Add(aabb.BottomRight);
                             airlockVertCache.Add(midBottom);
-                            airlockVertCache.Add(airlockVertCache[^1] + new Vector2(0f, grid.TileSize * 0.4f));
-                            airlockVertCache.Add(airlockVertCache[^1] + new Vector2(grid.TileSize * IndentSize, 0f));
-                            airlockVertCache.Add(airlockVertCache[^1] + new Vector2(0f, grid.TileSize * 0.2f));
-                            airlockVertCache.Add(airlockVertCache[^1] + new Vector2(-grid.TileSize * IndentSize, 0f));
+                            airlockVertCache.Add(airlockVertCache[^1] + new Vector2(0f, grid.TileSize * 0.35f));
+                            airlockVertCache.Add(airlockVertCache[^1] + new Vector2(grid.TileSize * IndentSize, 0.15f));
+                            airlockVertCache.Add(airlockVertCache[^1] + new Vector2(-grid.TileSize * IndentSize, grid.TileSize * 0.15f));
                             airlockVertCache.Add(midTop);
                             airlockVertCache.Add(aabb.TopRight);
 
@@ -170,17 +173,23 @@ public sealed class StationAiOverlay : Overlay
                                 var next = (airlockVertCache[(i + 1) % airlockVertCache.Count]);
                                 airlockVerts.Add(next);
                             }
+
+                            worldHandle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, airlockVertCache.Span, airlockColor.WithAlpha(0.05f));
                         }
 
                         continue;
                     }
 
+
                     var occluded = vision.IsOccluded(gridEnt, tileRef.GridIndices);
 
+                    // Draw walls
                     if (occluded)
                     {
+                        worldHandle.DrawRect(aabb, Color.LimeGreen.WithAlpha(0.05f));
                         worldHandle.DrawRect(aabb, Color.LimeGreen, filled: false);
                     }
+                    // Draw tiles
                     else
                     {
                         worldHandle.DrawRect(aabb, Color.Green.WithAlpha(0.35f), filled: false);
@@ -205,6 +214,11 @@ public sealed class StationAiOverlay : Overlay
                 worldHandle.SetTransform(Matrix3x2.Identity);
                 worldHandle.DrawRect(worldBounds, Color.Black);
             }, Color.Black);
+        }
+
+        if (_accumulator <= 0f)
+        {
+            _accumulator = MathF.Max(0f, _accumulator + _updateRate);
         }
 
         // Use the lighting as a mask
