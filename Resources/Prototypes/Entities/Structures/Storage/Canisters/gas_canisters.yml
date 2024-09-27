@@ -694,7 +694,7 @@
   components:
   - type: Sprite
     layers:
-    - state: yellow
+    - state: healium
   - type: GasCanister
     gasMixture:
       volume: 1000
@@ -898,4 +898,4 @@
   noSpawn: true
   components:
   - type: Sprite
-    state: yellow-1
+    state: healium-1
