@@ -73,8 +73,8 @@ public sealed class SpraySystem : EntitySystem
         if (ev.Cancelled)
             return;
 
-        if (!TryComp<UseDelayComponent>(entity, out var useDelay)
-            || _useDelay.IsDelayed((entity, useDelay)))
+        if (TryComp<UseDelayComponent>(entity, out var useDelay)
+            && _useDelay.IsDelayed((entity, useDelay)))
             return;
 
         if (solution.Volume <= 0)
@@ -109,8 +109,6 @@ public sealed class SpraySystem : EntitySystem
 
         var amount = Math.Max(Math.Min((solution.Volume / entity.Comp.TransferAmount).Int(), entity.Comp.VaporAmount), 1);
         var spread = entity.Comp.VaporSpread / amount;
-        // TODO: Just use usedelay homie.
-        var cooldownTime = 0f;
 
         for (var i = 0; i < amount; i++)
         {
@@ -152,7 +150,6 @@ public sealed class SpraySystem : EntitySystem
             // impulse direction is defined in world-coordinates, not local coordinates
             var impulseDirection = rotation.ToVec();
             var time = diffLength / entity.Comp.SprayVelocity;
-            cooldownTime = MathF.Max(time, cooldownTime);
 
             _vapor.Start(ent, vaporXform, impulseDirection * diffLength, entity.Comp.SprayVelocity, target, time, user);
 
@@ -165,7 +162,7 @@ public sealed class SpraySystem : EntitySystem
 
         _audio.PlayPvs(entity.Comp.SpraySound, entity, entity.Comp.SpraySound.Params.WithVariation(0.125f));
 
-        _useDelay.SetLength(entity.Owner, TimeSpan.FromSeconds(cooldownTime));
-        _useDelay.TryResetDelay((entity, useDelay));
+        if (useDelay != null)
+            _useDelay.TryResetDelay((entity, useDelay));
     }
 }
