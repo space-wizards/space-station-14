@@ -6,8 +6,6 @@ using Content.Shared.Cuffs.Components;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
-using Content.Shared.Ensnaring;
-using Content.Shared.Ensnaring.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
@@ -18,7 +16,6 @@ using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Popups;
 using Content.Shared.Strip.Components;
 using Content.Shared.Verbs;
-using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Strip;
@@ -28,7 +25,6 @@ public abstract class SharedStrippableSystem : EntitySystem
     [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
 
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
-    [Dependency] private readonly SharedEnsnareableSystem _ensnaringSystem = default!;
 
     [Dependency] private readonly SharedCuffableSystem _cuffableSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
@@ -36,8 +32,6 @@ public abstract class SharedStrippableSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
 
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-
-    // TODO: ECS popups. Not all of these have ECS equivalents yet.
 
     public override void Initialize()
     {
@@ -48,7 +42,6 @@ public abstract class SharedStrippableSystem : EntitySystem
 
         // BUI
         SubscribeLocalEvent<StrippableComponent, StrippingSlotButtonPressed>(OnStripButtonPressed);
-        SubscribeLocalEvent<EnsnareableComponent, StrippingEnsnareButtonPressed>(OnStripEnsnareMessage);
 
         // DoAfters
         SubscribeLocalEvent<HandsComponent, DoAfterAttemptEvent<StrippableDoAfterEvent>>(OnStrippableDoAfterRunning);
@@ -141,21 +134,6 @@ public abstract class SharedStrippableSystem : EntitySystem
             StartStripInsertHand(user, target, user.Comp.ActiveHandEntity.Value, handId, targetStrippable);
         else if (user.Comp.ActiveHandEntity == null && handSlot.HeldEntity != null)
             StartStripRemoveHand(user, target, handSlot.HeldEntity.Value, handId, targetStrippable);
-    }
-
-    private void OnStripEnsnareMessage(EntityUid uid, EnsnareableComponent component, StrippingEnsnareButtonPressed args)
-    {
-        if (args.Actor is not { Valid: true } user)
-            return;
-
-        foreach (var entity in component.Container.ContainedEntities)
-        {
-            if (!TryComp<EnsnaringComponent>(entity, out var ensnaring))
-                continue;
-
-            _ensnaringSystem.TryFree(uid, user, entity, ensnaring);
-            return;
-        }
     }
 
     /// <summary>
