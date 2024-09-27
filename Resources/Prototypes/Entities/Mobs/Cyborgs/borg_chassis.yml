@@ -442,3 +442,42 @@
       interactFailureString: petting-failure-syndicate-cyborg
       interactSuccessSound:
         path: /Audio/Ambience/Objects/periodic_beep.ogg
+
+
+- type: entity
+  id: BorgChassisDerelict
+  parent: BaseBorgChassisDerelict
+  name: damaged cyborg
+  components:
+  - type: Sprite
+    layers:
+    - state: derelict
+    - state: derelict_e_r
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: derelict_l
+      shader: unshaded
+      map: ["light"]
+      visible: false
+  - type: BorgChassis
+    maxModules: 5 #The sixth one broke lol.
+    moduleWhitelist:
+      tags:
+      - BorgModuleGeneric
+    hasMindState: derelict_e
+    noMindState: derelict_e_r
+  - type: BorgTransponder
+    sprite:
+      sprite: Mobs/Silicon/chassis.rsi
+      state: derelict
+    name: damaged cyborg
+  - type: Construction
+    node: derelictcyborg #what is this?
+  - type: Speech
+    speechVerb: Robotic
+  - type: InteractionPopup
+    interactSuccessString: petting-success-derelict-cyborg
+    interactFailureString: petting-failure-derelict-cyborg
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg

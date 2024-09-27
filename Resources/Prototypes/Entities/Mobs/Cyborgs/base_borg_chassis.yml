@@ -317,3 +317,28 @@
       Unsexed: UnisexSiliconSyndicate
   - type: PointLight
     color: "#dd200b"
+
+- type: entity
+  id: BaseBorgChassisDerelict
+  parent: [BaseBorgChassis, BaseBorgTransponder]
+  abstract: true
+  components:
+  - type: NpcFactionMember
+    factions:
+    - Passive #Might change this
+  - type: Access
+    enabled: false
+    groups:
+    - AllAccess
+  - type: AccessReader
+    access: [["Command"]] #I will probably change this.
+  - type: SiliconLawProvider
+    laws: AntimovLawset
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Binary
+    - Common
+  - type: ActiveRadio
+    channels:
+    - Binary
+    - Common

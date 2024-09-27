@@ -515,3 +515,39 @@
     - PlayerBorgSyndicateAssaultGhostRole
     - PlayerBorgSyndicateAssaultGhostRole # Saboteurs are kinda like cyborg medics, we want less.
     - PlayerBorgSyndicateSaboteurGhostRole
+
+- type: entity
+  id: PlayerBorgDerelict
+  parent: BorgChassisDerelict
+  suffix: Battery, Module
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+        - PositronicBrain
+      borg_module:
+        - BorgModuleTool
+        - BorgModuleFireExtinguisher
+        - BorgModuleGPS
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHigh
+  - type: RandomMetadata
+    nameSegments: [names_borg]
+
+- type: entity
+  id: PlayerBorgDerelictBattery
+  parent: BorgChassisDerelict
+  suffix: Battery
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+        - MMIFilled
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHigh
