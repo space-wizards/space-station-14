@@ -320,7 +320,7 @@
 
 - type: entity
   id: BaseBorgChassisDerelict
-  parent: [BaseBorgChassis, BaseBorgTransponder]
+  parent: BaseBorgChassis
   abstract: true
   components:
   - type: NpcFactionMember
@@ -329,11 +329,11 @@
   - type: Access
     enabled: false
     groups:
-    - AllAccess
+    - AllAccess #Randomized access would be fun. AllAccess is the best i can think of right now that does make it too hard to enter the station or.
   - type: AccessReader
     access: [["Command"]] #I will probably change this.
   - type: SiliconLawProvider
-    laws: AntimovLawset
+    laws: AntimovLawset #Temporary until i get it randomized.
   - type: IntrinsicRadioTransmitter
     channels:
     - Binary

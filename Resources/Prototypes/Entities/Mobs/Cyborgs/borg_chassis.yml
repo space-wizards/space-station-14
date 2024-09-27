@@ -447,7 +447,8 @@
 - type: entity
   id: BorgChassisDerelict
   parent: BaseBorgChassisDerelict
-  name: damaged cyborg
+  name: derelict cyborg
+  description: A man-machine hybrid that assists in station activity. This one is in a state of great disrepair.
   components:
   - type: Sprite
     layers:
@@ -467,13 +468,8 @@
       - BorgModuleGeneric
     hasMindState: derelict_e
     noMindState: derelict_e_r
-  - type: BorgTransponder
-    sprite:
-      sprite: Mobs/Silicon/chassis.rsi
-      state: derelict
-    name: damaged cyborg
   - type: Construction
-    node: derelictcyborg #what is this?
+    node: derelictcyborg
   - type: Speech
     speechVerb: Robotic
   - type: InteractionPopup
