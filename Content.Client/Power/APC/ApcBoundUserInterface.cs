@@ -1,13 +1,18 @@
 using Content.Client.Power.APC.UI;
+using Content.Shared.Access.Systems;
 using Content.Shared.APC;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
+using Robust.Shared.Player;
 
 namespace Content.Client.Power.APC
 {
     [UsedImplicitly]
     public sealed class ApcBoundUserInterface : BoundUserInterface
     {
+        // TODO: This is in the base class, but is private! Remove this, once it's accessible
+        [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
+
         [ViewVariables]
         private ApcMenu? _menu;
 
@@ -21,6 +26,14 @@ namespace Content.Client.Power.APC
             _menu = this.CreateWindow<ApcMenu>();
             _menu.SetEntity(Owner);
             _menu.OnBreaker += BreakerPressed;
+
+            var hasAccess = false;
+            if (_playerManager.LocalEntity != null)
+            {
+                var accessReader = EntMan.System<AccessReaderSystem>();
+                hasAccess = accessReader.IsAllowed((EntityUid)_playerManager.LocalEntity, Owner);
+            }
+            _menu?.SetAccessEnabled(hasAccess);
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)
@@ -29,15 +42,6 @@ namespace Content.Client.Power.APC
 
             var castState = (ApcBoundInterfaceState) state;
             _menu?.UpdateState(castState);
-        }
-
-        protected override void ReceiveMessage(BoundUserInterfaceMessage message)
-        {
-            base.ReceiveMessage(message);
-            if (message is ApcAccessCheckMessage)
-            {
-                _menu?.SetAccessEnabled(((ApcAccessCheckMessage)message).HasAccess);
-            }
         }
 
         public void BreakerPressed()

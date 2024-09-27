@@ -212,12 +212,6 @@ namespace Content.Shared.APC
     }
 
     [Serializable, NetSerializable]
-    public sealed class ApcAccessCheckMessage : BoundUserInterfaceMessage
-    {
-        public bool HasAccess;
-    }
-
-    [Serializable, NetSerializable]
     public sealed class ApcToggleMainBreakerMessage : BoundUserInterfaceMessage
     {
     }

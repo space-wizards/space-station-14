@@ -2,7 +2,6 @@ using Content.Server.Emp;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.Pow3r;
-using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.APC;
 using Content.Shared.Emag.Components;
@@ -74,12 +73,6 @@ public sealed class ApcSystem : EntitySystem
     private void OnBoundUiOpen(EntityUid uid, ApcComponent component, BoundUIOpenedEvent args)
     {
         UpdateApcState(uid, component);
-
-        _ui.ServerSendUiMessage((uid, null), ApcUiKey.Key, new ApcAccessCheckMessage()
-        {
-            HasAccess = _accessReader.IsAllowed(args.Actor, uid),
-            Actor = args.Actor
-        }, args.Actor);
     }
 
     private void OnToggleMainBreaker(EntityUid uid, ApcComponent component, ApcToggleMainBreakerMessage args)

@@ -18,7 +18,6 @@ namespace Content.Client.Power.APC.UI
     public sealed partial class ApcMenu : FancyWindow
     {
         public event Action? OnBreaker;
-        private bool _breakerEnabled;
 
         public ApcMenu()
         {
@@ -37,7 +36,6 @@ namespace Content.Client.Power.APC.UI
         {
             var castState = (ApcBoundInterfaceState) state;
 
-            _breakerEnabled = castState.MainBreaker;
             if (!BreakerButton.Disabled)
             {
                 BreakerButton.Pressed = castState.MainBreaker;
@@ -82,13 +80,11 @@ namespace Content.Client.Power.APC.UI
         {
             if(hasAccess)
             {
-                BreakerButton.Pressed = _breakerEnabled;
                 BreakerButton.Disabled = false;
                 BreakerButton.ToolTip = null;
             }
             else
             {
-                BreakerButton.Pressed = false;
                 BreakerButton.Disabled = true;
                 BreakerButton.ToolTip = Loc.GetString("apc-component-insufficient-access");
             }
