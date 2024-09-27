@@ -3,9 +3,24 @@ using System.Numerics;
 
 namespace Content.Shared.Holopad;
 
+/// <summary>
+/// Holds data pertaining to holopad holograms
+/// </summary>
 [RegisterComponent, NetworkedComponent]
 public sealed partial class HolopadHologramComponent : Component
 {
+    /// <summary>
+    /// Default RSI path
+    /// </summary>
+    [DataField]
+    public string RsiPath;
+
+    /// <summary>
+    /// Default RSI state
+    /// </summary>
+    [DataField]
+    public string RsiState;
+
     /// <summary>
     /// Name of the shader to use
     /// </summary>
@@ -40,7 +55,7 @@ public sealed partial class HolopadHologramComponent : Component
     /// The scroll rate of the hologram shader
     /// </summary>
     [DataField]
-    public float ScrollRate = 0.1f;
+    public float ScrollRate = 1f;
 
     /// <summary>
     /// The sprite offset
@@ -52,5 +67,5 @@ public sealed partial class HolopadHologramComponent : Component
     /// A user that are linked to this hologram
     /// </summary>
     [ViewVariables]
-    public Entity<HolopadUserComponent>? LinkedUser;
+    public Entity<HolopadComponent>? LinkedHolopad;
 }

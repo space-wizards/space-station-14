@@ -5,6 +5,12 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Holopad;
 
+/// <summary>
+/// Holds data pertaining to holopads
+/// </summary>
+/// <remarks>
+/// Holopads also require a <see cref="TelephoneComponent"/> to function
+/// </remarks>
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedHolopadSystem))]
 public sealed partial class HolopadComponent : Component

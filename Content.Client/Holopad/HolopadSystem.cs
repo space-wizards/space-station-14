@@ -21,16 +21,9 @@ public sealed class HolopadSystem : SharedHolopadSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<HolopadHologramComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<HolopadHologramComponent, BeforePostShaderRenderEvent>(OnShaderRender);
         SubscribeAllEvent<TypingChangedEvent>(OnTypingChanged);
-
         SubscribeNetworkEvent<HolopadHologramVisualsUpdateEvent>(OnVisualsUpdate);
-    }
-
-    private void OnComponentInit(EntityUid uid, HolopadHologramComponent component, ComponentInit ev)
-    {
-        UpdateColors(uid, component);
     }
 
     private void OnShaderRender(EntityUid uid, HolopadHologramComponent component, BeforePostShaderRenderEvent ev)
@@ -57,44 +50,60 @@ public sealed class HolopadSystem : SharedHolopadSystem
 
     private void OnVisualsUpdate(HolopadHologramVisualsUpdateEvent ev)
     {
-        if (!TryComp<SpriteComponent>(GetEntity(ev.Hologram), out var hologramSprite))
+        var hologram = GetEntity(ev.Hologram);
+        var target = GetEntity(ev.Target);
+
+        if (!TryComp<SpriteComponent>(hologram, out var hologramSprite))
             return;
 
-        if (!TryComp<SpriteComponent>(GetEntity(ev.Target), out var targetSprite))
+        if (!TryComp<HolopadHologramComponent>(hologram, out var holopadhologram))
             return;
 
-        if (!TryComp<HolopadHologramComponent>(GetEntity(ev.Hologram), out var hologramComponent))
-            return;
-
-        hologramSprite.CopyFrom(targetSprite);
-
-        // Reset select values
-        hologramSprite.Color = Color.White;
-        hologramSprite.Offset = hologramComponent.Offset;
-        hologramSprite.DrawDepth = (int)DrawDepth.Mobs;
-
-        for (int i = 0; i < hologramSprite.AllLayers.Count(); i++)
+        // Mimic the appearance of the target
+        if (TryComp<SpriteComponent>(target, out var targetSprite))
         {
-            hologramSprite.LayerSetShader(i, "unshaded");
+            hologramSprite.CopyFrom(targetSprite);
+
+            // Adjust select values
+            hologramSprite.Color = Color.White;
+            hologramSprite.Offset = holopadhologram.Offset;
+            hologramSprite.Scale = new Vector2(1f, 1f);
+            hologramSprite.DrawDepth = (int)DrawDepth.Mobs;
+            hologramSprite.NoRotation = true;
+
+            for (int i = 0; i < hologramSprite.AllLayers.Count(); i++)
+                hologramSprite.LayerSetShader(i, "unshaded");
         }
 
-        UpdateColors(GetEntity(ev.Hologram), hologramComponent);
+        // If there's no target, remove all layers and display an 'in-call' symbol instead
+        else
+        {
+            for (int i = hologramSprite.AllLayers.Count() - 1; i >= 0; i--)
+                hologramSprite.RemoveLayer(i);
+
+            if (string.IsNullOrEmpty(holopadhologram.RsiPath) || string.IsNullOrEmpty(holopadhologram.RsiState))
+                return;
+
+            var layer = new PrototypeLayerData();
+            layer.RsiPath = holopadhologram.RsiPath;
+            layer.State = holopadhologram.RsiState;
+            layer.Shader = "unshaded";
+
+            hologramSprite.AddLayer(layer);
+        }
+
+        UpdateShader(GetEntity(ev.Hologram), hologramSprite, holopadhologram);
     }
 
-    private void UpdateColors(EntityUid uid, HolopadHologramComponent component)
+    private void UpdateShader(EntityUid uid, SpriteComponent sprite, HolopadHologramComponent holopadHologram)
     {
-        if (!_entManager.TryGetComponent<SpriteComponent>(uid, out var sprite))
-            return;
-
-        var instance = _prototypeManager.Index<ShaderPrototype>(component.ShaderName).InstanceUnique();
-        instance.SetParameter("color1", new Robust.Shared.Maths.Vector3(component.Color1.R, component.Color1.G, component.Color1.B));
-        instance.SetParameter("color2", new Robust.Shared.Maths.Vector3(component.Color2.R, component.Color2.G, component.Color2.B));
-        instance.SetParameter("alpha", component.Alpha);
-        instance.SetParameter("intensity", component.Intensity);
+        var instance = _prototypeManager.Index<ShaderPrototype>(holopadHologram.ShaderName).InstanceUnique();
+        instance.SetParameter("color1", new Robust.Shared.Maths.Vector3(holopadHologram.Color1.R, holopadHologram.Color1.G, holopadHologram.Color1.B));
+        instance.SetParameter("color2", new Robust.Shared.Maths.Vector3(holopadHologram.Color2.R, holopadHologram.Color2.G, holopadHologram.Color2.B));
+        instance.SetParameter("alpha", holopadHologram.Alpha);
+        instance.SetParameter("intensity", holopadHologram.Intensity);
 
         sprite.PostShader = instance;
         sprite.RaiseShaderEvent = true;
-        sprite.Color = Color.White;
-        sprite.Offset = new Vector2(-0.03f, 0.45f);
     }
 }

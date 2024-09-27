@@ -3,6 +3,12 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Holopad;
 
+/// <summary>
+/// Holds data pertaining to entities that are using holopads
+/// </summary>
+/// <remarks>
+/// This component is added and removed automatically from entities
+/// </remarks>
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedHolopadSystem))]
 public sealed partial class HolopadUserComponent : Component
@@ -12,12 +18,6 @@ public sealed partial class HolopadUserComponent : Component
     /// </summary>
     [ViewVariables]
     public HashSet<Entity<HolopadComponent>> LinkedHolopads = new();
-
-    /// <summary>
-    /// A list of holograms that are copying the user's appearance
-    /// </summary>
-    [ViewVariables]
-    public HashSet<Entity<HolopadHologramComponent>> LinkedHolograms = new();
 }
 
 /// <summary>
@@ -34,9 +34,9 @@ public sealed class HolopadHologramVisualsUpdateEvent : EntityEventArgs
     /// <summary>
     /// The target the hologram is copying
     /// </summary>
-    public readonly NetEntity Target;
+    public readonly NetEntity? Target;
 
-    public HolopadHologramVisualsUpdateEvent(NetEntity hologram, NetEntity target)
+    public HolopadHologramVisualsUpdateEvent(NetEntity hologram, NetEntity? target = null)
     {
         Hologram = hologram;
         Target = target;

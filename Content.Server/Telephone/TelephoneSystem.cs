@@ -20,6 +20,9 @@ using Robust.Shared.Replays;
 using System.Linq;
 using Content.Shared.Database;
 using Content.Shared.Mind.Components;
+using Content.Shared.Holopad;
+using Content.Shared.Power;
+using Content.Server.Power.Components;
 
 namespace Content.Server.Telephone;
 
@@ -42,6 +45,7 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<TelephoneComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<TelephoneComponent, ComponentShutdown>(OnComponentShutdown);
         SubscribeLocalEvent<TelephoneComponent, ListenAttemptEvent>(OnAttemptListen);
         SubscribeLocalEvent<TelephoneComponent, ListenEvent>(OnListen);
@@ -49,6 +53,12 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
     }
 
     #region: Events
+
+    private void OnPowerChanged(Entity<TelephoneComponent> telephone, ref PowerChangedEvent ev)
+    {
+        if (!ev.Powered)
+            TerminateTelephoneCalls(telephone);
+    }
 
     private void OnComponentShutdown(Entity<TelephoneComponent> telephone, ref ComponentShutdown ev)
     {
@@ -82,7 +92,7 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
         if (telephone == args.TelephoneSource)
             return;
 
-        if (!IsTelephonePowered(telephone))
+        if (!this.IsPowered(telephone, EntityManager))
             return;
 
         var nameEv = new TransformSpeakerNameEvent(args.MessageSource, Name(args.MessageSource));
@@ -107,7 +117,7 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
         {
             var telephone = new Entity<TelephoneComponent>(ent, entTelephone);
 
-            if (!IsTelephonePowered(telephone) && IsTelephoneEngaged(telephone))
+            if (!this.IsPowered(telephone, EntityManager) && IsTelephoneEngaged(telephone))
             {
                 TerminateTelephoneCalls(telephone);
                 continue;
@@ -162,13 +172,12 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
     {
         if (source == receiver ||
             IsTelephoneEngaged(source) ||
-            !IsTelephonePowered(source))
+            !this.IsPowered(source, EntityManager))
             return;
 
         // If a connection cannot be made, time out the telephone
-        if ((IsTelephoneEngaged(receiver) || !IsTelephonePowered(receiver)) &&
-            options?.ForceConnect == false &&
-            options?.ForceJoin == false)
+        if ((IsTelephoneEngaged(receiver) || !this.IsPowered(receiver, EntityManager)) &&
+            options?.ForceConnect == false && options?.ForceJoin == false)
         {
             EndTelephoneCalls(source);
             return;
@@ -280,7 +289,7 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
     public void SendTelephoneMessage(EntityUid messageSource, string message, Entity<TelephoneComponent> source, bool escapeMarkup = true)
     {
         if (!IsTelephoneEngaged(source) ||
-            !IsTelephonePowered(source))
+            !this.IsPowered(source, EntityManager))
             return;
 
         var name = TryComp(messageSource, out VoiceMaskComponent? mask) && mask.Enabled
@@ -324,14 +333,18 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
             null);
 
         var chatMsg = new MsgChatMessage { Message = chat };
-        var ev = new TelephoneMessageReceivedEvent(message, messageSource, source, chatMsg);
+
+        var evSentMessage = new TelephoneMessageSentEvent(message, messageSource, source, chatMsg);
+        RaiseLocalEvent(source, ref evSentMessage);
+
+        var evReceivedMessage = new TelephoneMessageReceivedEvent(message, messageSource, source, chatMsg);
 
         foreach (var receiver in source.Comp.LinkedTelephones)
         {
             if (!IsSourceInRangeOfReceiver(source, receiver))
                 continue;
 
-            RaiseLocalEvent(receiver, ref ev);
+            RaiseLocalEvent(receiver, ref evReceivedMessage);
         }
 
         if (name != Name(messageSource))
@@ -362,11 +375,6 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
 
         if (HasComp<ActiveListenerComponent>(telephone))
             RemComp<ActiveListenerComponent>(telephone);
-    }
-
-    public bool IsTelephonePowered(Entity<TelephoneComponent> telephone)
-    {
-        return this.IsPowered(telephone, EntityManager);
     }
 
     public bool IsSourceInRangeOfReceiver(Entity<TelephoneComponent> source, Entity<TelephoneComponent> receiver)

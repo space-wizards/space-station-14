@@ -69,21 +69,19 @@
     anchored: true
   - type: Sprite
   - type: Appearance
-  - type: GenericVisualizer
-    visuals:
-      enum.TelephoneVisuals.Key:
-        lights:
   - type: TypingIndicator
     proto: robot
   - type: HolopadHologram
+    rsiPath: Structures/Machines/holopad.rsi
+    rsiState: icon_in_call
     shaderName: Hologram
     color1: "#65b8e2"
     color2: "#4985a3"
     alpha: 1
     intensity: 2
     scrollRate: 0.125
-    offset: 0, 0.45
-  - type: Tag
-    tags:
-    - HideContextMenu
+    offset: -0.02, 0.40
+#  - type: Tag
+#    tags:
+#    - HideContextMenu
   - type: AnimationPlayer

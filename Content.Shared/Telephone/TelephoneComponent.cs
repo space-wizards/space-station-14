@@ -118,6 +118,9 @@ public record struct TelephoneCallEndedEvent(Entity<TelephoneComponent> Source);
 public record struct TelephoneCallTerminatedEvent();
 
 [ByRefEvent]
+public readonly record struct TelephoneMessageSentEvent(string Message, EntityUid MessageSource, Entity<TelephoneComponent> TelephoneSource, MsgChatMessage ChatMsg);
+
+[ByRefEvent]
 public readonly record struct TelephoneMessageReceivedEvent(string Message, EntityUid MessageSource, Entity<TelephoneComponent> TelephoneSource, MsgChatMessage ChatMsg);
 
 #endregion
