@@ -23,6 +23,14 @@
   objectType: Structure
 
 - type: construction
+  id: CrateFreezer
+  graph: CrateFreezer
+  startNode: start
+  targetNode: done
+  category: construction-category-storage
+  objectType: Structure
+
+- type: construction
   id: CratePlastic
   graph: CratePlastic
   startNode: start

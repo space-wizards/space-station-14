@@ -133,3 +133,11 @@
   targetNode: pipebomb
   category: construction-category-weapons
   objectType: Item
+
+- type: construction
+  id: rollingpin
+  graph: WoodenRollingPin
+  startNode: start
+  targetNode: rollingpin
+  category: construction-category-tools
+  objectType: Item

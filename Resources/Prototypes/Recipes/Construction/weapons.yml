@@ -111,6 +111,22 @@
   objectType: Item
 
 - type: construction
+  id: ImprovisedArrowPlasma
+  graph: ImprovisedArrowPlasma
+  startNode: start
+  targetNode: ImprovisedArrowPlasma
+  category: construction-category-weapons
+  objectType: Item
+
+- type: construction
+  id: ImprovisedArrowUranium
+  graph: ImprovisedArrowUranium
+  startNode: start
+  targetNode: ImprovisedArrowUranium
+  category: construction-category-weapons
+  objectType: Item
+
+- type: construction
   id: ImprovisedBow
   graph: ImprovisedBow
   startNode: start
