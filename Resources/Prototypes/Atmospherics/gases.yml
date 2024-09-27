@@ -99,9 +99,7 @@
   gasMolesVisible: 0.6
   color: 3a758c
   reagent: Frezon
-<<<<<<< HEAD
-<<<<<<< HEAD
-  pricePerMole: 3
+  pricePerMole: 0.3
 
 - type: gas
   id: 9
@@ -122,9 +120,3 @@
   color: 8b0000
   reagent: Healium
   pricePerMole: 0.8
-=======
-  pricePerMole: 0.3
->>>>>>> bf80f3abb8a2ba329636f9e288f70e3bc501b8b0
-=======
-  pricePerMole: 0.3
->>>>>>> bf80f3abb8a2ba329636f9e288f70e3bc501b8b0
