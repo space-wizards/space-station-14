@@ -199,7 +199,7 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
         // get the listing of records to display
         var listing = _records.BuildListing((owningStation.Value, stationRecords), console.Filter);
 
-        // if the a fukter toggle is set, filter the listing
+        // if the a filter toggle is set, filter the listing
         var statusMap = new Dictionary<int, SecurityStatus>
         {
             { 1, SecurityStatus.Wanted },
