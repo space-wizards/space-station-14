@@ -391,6 +391,7 @@
   priority: 1
   text: "/ServerInfo/Guidebook/ServerRules/SpaceLaw/SpaceLaw.xml"
   children:
+  - SpaceLawRestrictedList # Harmony
   - SpaceLawCrimeList
 
 - type: guideEntry
@@ -398,6 +399,12 @@
   name: guide-entry-rules-sl-crime-list
   priority: 5
   text: "/ServerInfo/Guidebook/ServerRules/SpaceLaw/SLCrimeList.xml"
+
+- type: guideEntry
+  id: SpaceLawRestrictedList # Harmony
+  name: guide-entry-rules-sl-restricted-list
+  priority: 4
+  text: "/ServerInfo/Guidebook/ServerRules/SpaceLaw/SLRestrictedList.xml"
 
 - type: guideEntry
   id: BanTypes
