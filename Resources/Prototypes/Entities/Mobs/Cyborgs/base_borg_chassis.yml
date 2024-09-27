@@ -121,7 +121,7 @@
     cellSlotId: cell_slot
     fitsInCharger: true
   - type: ItemToggle
-    manualToggle: false # You should not be able to turn off a borg temporarily.
+    onActivate: false # You should not be able to turn off a borg temporarily.
     activated: false # gets activated when a mind is added
     onUse: false # no item-borg toggling sorry
   - type: ItemTogglePointLight
