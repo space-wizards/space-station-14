@@ -20,6 +20,12 @@ public sealed partial class ItemToggleComponent : Component
     public bool Activated = false;
 
     /// <summary>
+    /// Can the entity be toggled with a verb or interaction.
+    /// </summary>
+    [DataField]
+    public bool ManualToggle {get; set;} = true;
+
+    /// <summary>
     /// Can the entity be activated in the world.
     /// </summary>
     [DataField]
