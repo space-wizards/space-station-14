@@ -180,6 +180,6 @@
     - name: Sunglow
       baseOdds: 0.000001 #1 in 100k units of mutagen
       effect: !type:Glow
-        power: 8
+        energy: 8
         radius: 8
         color: '#FFFFFF'
