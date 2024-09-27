@@ -17,6 +17,11 @@
             proto: NearbyOnFire
 
         - !type:HTNPrimitiveTask
+          operator: !type:SpeakOperator
+            speech: firebot-fire-detected
+            hidden: true  
+
+        - !type:HTNPrimitiveTask
           operator: !type:MoveToOperator
             pathfindInPlanning: true
             removeKeyOnFinish: false
