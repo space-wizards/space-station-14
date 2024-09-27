@@ -6,8 +6,8 @@
   icon: { sprite: DeltaV/Objects/Devices/communication.rsi, state: cheese-radio }
   discountCategory: rareDiscounts
   discountDownTo:
-    Telecrystal: 2
+    Telecrystal: 1
   cost:
-    Telecrystal: 3
+    Telecrystal: 2
   categories:
   - UplinkAllies
