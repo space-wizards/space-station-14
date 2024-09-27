@@ -261,7 +261,7 @@ namespace Content.Server.Communications
             Loc.TryGetString(comp.Title, out var title);
             title ??= comp.Title;
 
-            msg += "\n" + Loc.GetString("comms-console-announcement-sent-by") + " " + author;
+            msg += "\n" + Loc.GetString("comms-console-announcement-sent-by") + " " + author + ("location", FormattedMessage.RemoveMarkupOrThrow(_navMap.GetNearestBeaconString((uid, xform))));
             if (comp.Global)
             {
                 _chatSystem.DispatchGlobalAnnouncement(msg, title, announcementSound: comp.Sound, colorOverride: comp.Color);
