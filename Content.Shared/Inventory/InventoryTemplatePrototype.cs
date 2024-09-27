@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Shared.Strip;
 using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 
@@ -39,6 +40,10 @@ public sealed partial class SlotDefinition
     [DataField("displayName", required: true)]
     public string DisplayName { get; private set; } = string.Empty;
 
+    /// <summary>
+    ///     Whether or not this slot will have its item hidden in the strip menu, and block interactions.
+    ///     <seealso cref="SharedStrippableSystem.IsStripHidden"/>
+    /// </summary>
     [DataField("stripHidden")] public bool StripHidden { get; private set; }
 
     /// <summary>

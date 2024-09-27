@@ -310,7 +310,7 @@ namespace Content.Server.Strip
 
             if (!stealth)
             {
-                if (slotDef.StripHidden)
+                if (IsStripHidden(slotDef, user))
                     _popupSystem.PopupEntity(Loc.GetString("strippable-component-alert-owner-hidden", ("slot", slot)), target, target, PopupType.Large);
                 else
                     _popupSystem.PopupEntity(Loc.GetString("strippable-component-alert-owner", ("user", Identity.Entity(user, EntityManager)), ("item", item)), target, target, PopupType.Large);
