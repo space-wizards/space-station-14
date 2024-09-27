@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Shared.VendingMachines
 {
-    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
     public sealed partial class VendingMachineComponent : Component
     {
         /// <summary>
@@ -21,7 +21,7 @@ namespace Content.Shared.VendingMachines
         /// Used by the server to determine how long the vending machine stays in the "Deny" state.
         /// Used by the client to determine how long the deny animation should be played.
         /// </summary>
-        [DataField("denyDelay")]
+        [DataField]
         public float DenyDelay = 2.0f;
 
         /// <summary>
@@ -29,18 +29,19 @@ namespace Content.Shared.VendingMachines
         /// The selected item is dispensed afer this delay.
         /// Used by the client to determine how long the deny animation should be played.
         /// </summary>
-        [DataField("ejectDelay")]
+        [DataField]
         public float EjectDelay = 1.2f;
 
-        [ViewVariables]
+        [DataField, AutoNetworkedField]
         public Dictionary<string, VendingMachineInventoryEntry> Inventory = new();
 
-        [ViewVariables]
+        [DataField, AutoNetworkedField]
         public Dictionary<string, VendingMachineInventoryEntry> EmaggedInventory = new();
 
-        [ViewVariables]
+        [DataField, AutoNetworkedField]
         public Dictionary<string, VendingMachineInventoryEntry> ContrabandInventory = new();
 
+        [DataField, AutoNetworkedField]
         public bool Contraband;
 
         public bool Ejecting;
@@ -101,17 +102,6 @@ namespace Content.Shared.VendingMachines
         [DataField("soundDeny")]
         // Yoinked from: https://github.com/discordia-space/CEV-Eris/blob/35bbad6764b14e15c03a816e3e89aa1751660ba9/sound/machines/Custom_deny.ogg
         public SoundSpecifier SoundDeny = new SoundPathSpecifier("/Audio/Machines/custom_deny.ogg");
-
-        /// <summary>
-        ///     The action available to the player controlling the vending machine
-        /// </summary>
-        [DataField("action", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        [AutoNetworkedField]
-        public string? Action = "ActionVendingThrow";
-
-        [DataField("actionEntity")]
-        [AutoNetworkedField]
-        public EntityUid? ActionEntity;
 
         public float NonLimitedEjectForce = 7.5f;
 
