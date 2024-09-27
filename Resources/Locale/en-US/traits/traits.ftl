@@ -28,7 +28,7 @@ trait-pirate-accent-name = Pirate accent
 trait-pirate-accent-desc = You can't stop speaking like a pirate!
 
 trait-accentless-name = Accentless
-trait-accentless-desc = You don't have the accent that your species would usually have
+trait-accentless-desc = You don't have the accent that your species would usually have.
 
 trait-frontal-lisp-name = Frontal lisp
 trait-frontal-lisp-desc = You thpeak with a lithp.
@@ -70,7 +70,10 @@ trait-french-name = French accent
 trait-french-desc = You speak with the cadence of someone who has cast off their vow of silence.
 
 trait-spanish-name = Spanish accent
-trait-spanish-desc = You speak with the accent of someone who grew up in Earth Spain
+trait-spanish-desc = You speak with the accent of someone who grew up in Earth Spain.
 
 trait-snalien-name = Slow talker
 trait-snalien-desc = Yyoouu taallk rreeaallyy... rreeaallyy... sslloowwllyy.
+
+trait-scrambled-name = Scrambled Speech
+trait-scrambled-desc = There was an accident with a tesla engine, now others have trouble understanding you.
