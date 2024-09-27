@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: metalgearsloth
   changes:
-  - message: Fix muzzle flashes not tracking properly.
-    type: Fix
-  id: 6946
-  time: '2024-07-21T06:09:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30163
-- author: metalgearsloth
-  changes:
   - message: Fix being able to throw items while your cursor is off-screen.
     type: Fix
   id: 6947
@@ -3930,3 +3923,17 @@
   id: 7445
   time: '2024-09-27T07:09:18.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32397
+- author: metalgearsloth
+  changes:
+  - message: Fix verbs shuffling on mobs.
+    type: Fix
+  - message: Stripping is now predicted.
+    type: Fix
+  - message: Ensnare interactions are now predicted.
+    type: Fix
+  - message: Fix text saying you are freeing yourself from ensnare when freeing someone
+      else.
+    type: Fix
+  id: 7446
+  time: '2024-09-27T07:12:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32478
