@@ -1483,14 +1483,14 @@
   minLimit: 0
   loadouts:
   - BrigmedicArmoredWinterCoat
+  - BrigmedicWinterCoat
 
 - type: loadoutGroup
   id: BrigmedicShoes
   name: loadout-group-brigmedic-shoes
   loadouts:
   - JackBoots
-  - SecurityWinterBoots
-  - MedicalWinterBoots
+  - BrigmedicWinterBoots
 
 - type: loadoutGroup
   id: BrigmedicBackpack
