@@ -1,0 +1,33 @@
+<Document>
+  # Space Law: Restricted Items and Areas Lists
+
+  ## Controlled Substances
+
+  Items in the list are preceded by an indication of which department or job is legally allowed to use or possess the item on most stations. The station captain may modify these lists as they see fit so long as they exercise due care and provide reasonable notification to the station. Members of command who oversee a department that is permitted to use a restricted item may issue permits to specific people outside of their department to use those items. "None" indicates that there are no departments or roles authorized to use or possess the item.
+
+  - \[Chemists/Science\] Explosive and pyrotechnic compounds excluding welding fuel contained in welders or welding fuel storage vessels
+  - \[Science\] Toxins
+  - \[Medical\] Chloral hydrate, Impedrezene, Ipecac, and Pax
+  - \[Medical\] Desoxyephedrine and Ephedrine
+  - \[None\] Mindbreaker toxin
+  - \[None\] Mute toxin
+  - \[None\] Nocturine
+  - \[None\] Norepinephirc acid
+  - \[None\] Romerol
+  - \[None\] Space drugs
+  - \[None\] Stimulants, excluding Desoxyephedrine and Ephedrine
+
+  ## Restricted Areas
+
+  - I Core and Upload: All command usually have access.
+  - Armory: Head of Security, Warden, and any security officer with Warden or Head of Security's approval.
+  - Atmospherics: Only Atmospheric technicians and Chief Engineer have access.
+  - Bridge: All command staff have access.
+  - Camera Servers: Only Engineering and Security personnel usually have access.
+  - Gravity Generation: Only Engineering personnel (sometimes Chief Engineer exclusively) have access normally.
+  - Head Offices: Dependent on the head.
+  - Research Server: Only the Research Director has access.
+  - Security Zones: Any member of security or command. As well as lawyers.
+  - Telecommunications: Only Engineering personnel (sometimes Chief Engineer exclusively) have access normally.
+  - Vault: All command staff have access.
+</Document>
