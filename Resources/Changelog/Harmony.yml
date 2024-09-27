@@ -237,4 +237,17 @@ Entries:
   changes:
   - type: Add
     message: Added "Harmony Changelog" tab to the in-game Changelogs.
-
+- id: 82
+  author: FluffMe
+  time: '2024-09-27T11:13:49.0000000+00:00'
+  url: https://github.com/ss14-harmony/space-station-14/pull/82
+  changes:
+  - type: Add
+    message: Added 4 more posters by LevitatingTree.
+- id: 85
+  author: FluffMe
+  time: '2024-09-27T15:45:53.0000000+00:00'
+  url: https://github.com/ss14-harmony/space-station-14/pull/85
+  changes:
+  - type: Tweak
+    message: In-game Space Law guidebooks are now Harmony Space Law.
