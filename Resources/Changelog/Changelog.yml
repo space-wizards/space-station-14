@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: metalgearsloth
   changes:
-  - message: Fix being able to throw items while your cursor is off-screen.
-    type: Fix
-  id: 6947
-  time: '2024-07-21T06:13:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30164
-- author: metalgearsloth
-  changes:
   - message: Reset the scroll bar in the ghost warp menu whenever you search for a
       role. Previously it remained at your previous position and you would have to
       scroll up to see the first entry.
@@ -3937,3 +3930,15 @@
   id: 7446
   time: '2024-09-27T07:12:10.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32478
+- author: Fildrance, ScarKy0
+  changes:
+  - message: AI now can electrify doors and set them to emergency access. Setting
+      door to emergency access will now play sound effect for everyone around, while
+      electrifying door will play sound effect only for AI
+    type: Add
+  - message: AI will now be notified when trying to interact with door without power
+      or when respective wires were messed up with
+    type: Fix
+  id: 7447
+  time: '2024-09-27T07:22:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32012
