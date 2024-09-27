@@ -88,6 +88,7 @@
     - Silver
     - Sodium
     - JuiceThatMakesYouWeh
+    - AmmoniatedSludge
 
 - type: weightedRandomFillSolution
   id: RandomFillTrashPuddleBloodbath
