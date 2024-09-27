@@ -47,6 +47,7 @@ public abstract class SharedAirlockSystem : EntitySystem
 
     private void OnStateChanged(EntityUid uid, AirlockComponent component, DoorStateChangedEvent args)
     {
+        // This is here so we don't accidentally bulldoze state values and mispredict.
         if (_timing.ApplyingState)
             return;
 
