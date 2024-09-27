@@ -887,7 +887,7 @@
 - type: entity
   parent: GasCanisterBrokenBase
   id: BZCanisterBroken
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     state: bz-1
@@ -895,7 +895,7 @@
 - type: entity
   parent: GasCanisterBrokenBase
   id: HealiumCanisterBroken
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     state: healium-1
