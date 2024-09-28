@@ -442,7 +442,7 @@
     allowMovement: true
     name: ghost-role-information-mothroach-name
     description: ghost-role-information-mothroach-description
-    rules: ghost-role-information-freeagent-rules
+    rules: ghost-role-information-nonantagonist-rules
   - type: Fixtures
     fixtures:
       fix1:
