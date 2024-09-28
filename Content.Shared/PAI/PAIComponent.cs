@@ -31,19 +31,7 @@ public sealed partial class PAIComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
-    public int StartingMemory = 50;
-
-    [DataField(serverOnly: true)]
-    public EntProtoId? MidiActionId = "ActionPAIPlayMidi";
-
-    [DataField(serverOnly: true)] // server only, as it uses a server-BUI event !type
-    public EntityUid? MidiAction;
-
-    [DataField]
-    public EntProtoId MapActionId = "ActionPAIOpenMap";
-
-    [DataField, AutoNetworkedField]
-    public EntityUid? MapAction;
+    public int StartingMemory = 30;
 
     [DataField]
     public EntProtoId ShopActionId = "ActionPAIOpenShop";

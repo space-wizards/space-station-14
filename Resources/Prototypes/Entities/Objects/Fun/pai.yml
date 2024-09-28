@@ -13,9 +13,6 @@
     program: 2
   - type: UserInterface
     interfaces:
-      enum.InstrumentUiKey.Key:
-        type: InstrumentBoundUserInterface
-        requireInputValidation: false
       enum.StationMapUiKey.Key:
         type: StationMapBoundUserInterface
         requireInputValidation: false
@@ -25,6 +22,12 @@
       # available in pai shop
       enum.CrewMonitoringUIKey.Key:
         type: CrewMonitoringBoundUserInterface
+        requireInputValidation: false
+      enum.RadarConsoleUiKey.Key:
+        type: RadarConsoleBoundUserInterface
+        requireInputValidation: false
+      enum.InstrumentUiKey.Key:
+        type: InstrumentBoundUserInterface
         requireInputValidation: false
   - type: Sprite
     sprite: Objects/Fun/pai.rsi
@@ -61,6 +64,9 @@
     - PAIAbilities
     currencyWhitelist:
     - SiliconMemory
+  - type: RadarConsole
+    maxRange: 256
+    followEntity: true
   - type: TypingIndicator
     proto: robot
   - type: Speech
@@ -156,7 +162,7 @@
 
 - type: entity
   id: ActionPAICrewMonitor
-  name: Crew Monitoring Interface
+  name: Crew Monitor
   description: View a crew monitoring interface.
   components:
   - type: InstantAction
@@ -168,6 +174,19 @@
         key: enum.CrewMonitoringUIKey.Key
 
 - type: entity
+  id: ActionPAIMassScanner
+  name: Mass Scanner
+  description: View a mass scanner interface.
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    checkConsciousness: false
+    icon: { sprite: Interface/Actions/actions_ai.rsi, state: mass_scanner }
+    itemIconStyle: NoItem
+    event: !type:OpenUiActionEvent
+        key: enum.RadarConsoleUiKey.Key
+
+- type: entity
   id: ActionPAIPlayMidi
   name: Play MIDI
   description: Open your portable MIDI interface to soothe your owner.
@@ -176,6 +195,7 @@
     checkCanInteract: false
     checkConsciousness: false
     icon: Interface/Actions/pai-midi.png
+    itemIconStyle: NoItem
     event: !type:OpenUiActionEvent
       key: enum.InstrumentUiKey.Key
 
@@ -188,5 +208,6 @@
       checkCanInteract: false
       checkConsciousness: false
       icon: { sprite: Interface/Actions/pai-map.rsi, state: icon }
+      itemIconStyle: NoItem
       event: !type:OpenUiActionEvent
         key: enum.StationMapUiKey.Key
