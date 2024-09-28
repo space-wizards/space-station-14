@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: AutolatheMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: autolathe machine board
@@ -485,8 +485,9 @@
       stackRequirements:
         MatterBin: 2
         Manipulator: 2
-        Glass: 1
+        Glass: 5
         Cable: 1
+        Plasma: 5
 
 - type: entity
   id: MedicalScannerMachineCircuitboard
