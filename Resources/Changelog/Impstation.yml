@@ -2213,3 +2213,12 @@
   id: 282
   time: '2024-09-28T00:13:26.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/354
+- author: Sha-Seng
+  changes:
+  - message: A new prestige neck item for quartermasters
+    type: Add
+  - message: Some veteran captain sprite adjustments
+    type: Tweak
+  id: 283
+  time: '2024-09-28T00:47:17.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/364
