@@ -1,65 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Fixed wires not updating UI on the Particle Accelerator.
-    type: Fix
-  id: 6944
-  time: '2024-07-21T05:27:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28750
-- author: CroilBird
-  changes:
-  - message: 6-pack of cola displays correctly when not being handled
-    type: Fix
-  id: 6945
-  time: '2024-07-21T05:49:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29309
-- author: metalgearsloth
-  changes:
-  - message: Fix muzzle flashes not tracking properly.
-    type: Fix
-  id: 6946
-  time: '2024-07-21T06:09:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30163
-- author: metalgearsloth
-  changes:
-  - message: Fix being able to throw items while your cursor is off-screen.
-    type: Fix
-  id: 6947
-  time: '2024-07-21T06:13:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30164
-- author: metalgearsloth
-  changes:
-  - message: Reset the scroll bar in the ghost warp menu whenever you search for a
-      role. Previously it remained at your previous position and you would have to
-      scroll up to see the first entry.
-    type: Tweak
-  id: 6948
-  time: '2024-07-21T06:38:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30159
-- author: Blackern5000
-  changes:
-  - message: The syndicate agent's cyborg weapons module now uses syndicate weaponry
-      rather than NT weaponry.
-    type: Tweak
-  id: 6949
-  time: '2024-07-21T07:04:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26947
-- author: Winkarst-cpu
-  changes:
-  - message: Added ambience to the camera routers and telecommunication servers.
-    type: Add
-  - message: Now server's and router's ambience stops once they are unpowered.
-    type: Fix
-  id: 6950
-  time: '2024-07-21T07:22:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30091
-- author: Scott Dimeling
-  changes:
-  - message: Reduced the number of botanists in some stations, for optimal _workflow_
-    type: Tweak
-  id: 6951
-  time: '2024-07-21T07:23:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29581
 - author: metalgearsloth
   changes:
   - message: Escape pods won't show up on shuttle map anymore.
@@ -3930,3 +3869,71 @@
   id: 7443
   time: '2024-09-27T05:49:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32471
+- author: metalgearsloth
+  changes:
+  - message: Fix airlock autoclose mispredicting.
+    type: Fix
+  id: 7444
+  time: '2024-09-27T06:10:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32477
+- author: metalgearsloth
+  changes:
+  - message: Fix storage area pickup sound playing more than once.
+    type: Fix
+  id: 7445
+  time: '2024-09-27T07:09:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32397
+- author: metalgearsloth
+  changes:
+  - message: Fix verbs shuffling on mobs.
+    type: Fix
+  - message: Stripping is now predicted.
+    type: Fix
+  - message: Ensnare interactions are now predicted.
+    type: Fix
+  - message: Fix text saying you are freeing yourself from ensnare when freeing someone
+      else.
+    type: Fix
+  id: 7446
+  time: '2024-09-27T07:12:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32478
+- author: Fildrance, ScarKy0
+  changes:
+  - message: AI now can electrify doors and set them to emergency access. Setting
+      door to emergency access will now play sound effect for everyone around, while
+      electrifying door will play sound effect only for AI
+    type: Add
+  - message: AI will now be notified when trying to interact with door without power
+      or when respective wires were messed up with
+    type: Fix
+  id: 7447
+  time: '2024-09-27T07:22:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32012
+- author: LittleNorthStar
+  changes:
+  - message: Noir trenchcoat to detective loadout
+    type: Add
+  id: 7448
+  time: '2024-09-27T10:03:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32380
+- author: deltanedas
+  changes:
+  - message: Removed the thief figurines objective.
+    type: Remove
+  id: 7449
+  time: '2024-09-27T19:04:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32413
+- author: Beck Thompson
+  changes:
+  - message: The appraisal tool verb is now predicted!
+    type: Fix
+  id: 7450
+  time: '2024-09-28T04:40:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32496
+- author: Pyvik
+  changes:
+  - message: Added 2 new hairstyles.
+    type: Add
+  id: 7451
+  time: '2024-09-28T06:07:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31010
