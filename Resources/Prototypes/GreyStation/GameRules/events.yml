@@ -80,7 +80,7 @@
   - type: StationEvent
     earliestStart: 25
     minimumPlayers: 15
-    reoccurenceDelay: 30 # it gets old
+    reoccurrenceDelay: 30 # it gets old
     weight: 4
     duration: 1
   - type: VentCrittersRule
