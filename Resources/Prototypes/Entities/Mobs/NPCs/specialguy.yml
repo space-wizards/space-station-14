@@ -19,14 +19,10 @@
   - type: RotationVisuals
     defaultRotation: 90
     horizontalRotation: 90
-  - type: HTN
-    rootTask:
-      task: SimpleHostileCompound
   - type: Body
     prototype: Animal
   - type: Damageable
     damageContainer: Biological
-    damageModifierSet: HellSpawn
   - type: MovementSpeedModifier
     baseWalkSpeed: 2
     baseSprintSpeed: 3
@@ -41,7 +37,6 @@
         Base: alive
       Dead:
         Base: dead
-  - type: Firestarter
   - type: NameIdentifier
     group: GenericNumber
   - type: SlowOnDamage
@@ -51,10 +46,6 @@
   - type: MobPrice
     price: 1000 # Living critters are valuable in space.
   - type: Perishable
-  - type: Reflect
-    reflectProb: 0.7
-    reflects:
-      - Energy
   - type: Fixtures
     fixtures:
       fix1:
@@ -88,7 +79,7 @@
     damage:
       types:
         Blunt: 150
-        Structural: 70
+        Structural: 10
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepThud
