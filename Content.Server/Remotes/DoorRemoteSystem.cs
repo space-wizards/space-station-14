@@ -74,7 +74,7 @@ namespace Content.Shared.Remotes
                 case OperatingMode.ToggleEmergencyAccess:
                     if (airlockComp != null)
                     {
-                        _airlock.ToggleEmergencyAccess(args.Target.Value, airlockComp);
+                        _airlock.SetEmergencyAccess((args.Target.Value, airlockComp), !airlockComp.EmergencyAccess);
                         _adminLogger.Add(LogType.Action, LogImpact.Medium,
                             $"{ToPrettyString(args.User):player} used {ToPrettyString(args.Used)} on {ToPrettyString(args.Target.Value)} to set emergency access {(airlockComp.EmergencyAccess ? "on" : "off")}");
                     }
