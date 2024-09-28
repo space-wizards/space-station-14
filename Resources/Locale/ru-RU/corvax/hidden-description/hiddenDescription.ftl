@@ -64,7 +64,7 @@ corvax-hidden-desc-SadTromboneImplanter-syndicate = [color=#e31735]Это имп
 corvax-hidden-desc-LightImplanter-syndicate = [color=#e31735]Это имплантер света. Позволит коже слабо светиться по желанию.[/color]
 corvax-hidden-desc-BikeHornImplanter-syndicate = [color=#e31735]Это хонк-имплантер. Позволит издавать смешные звуки непонятно откуда.[/color]
 corvax-hidden-desc-TrackingImplanter-syndicate = [color=#e31735]Это трекер-имплантер. Будет транслировать местоположение и жизненные показатели на сервера NanoTrasen.[/color]
-corvax-hidden-desc-MindShieldImplanter-syndicate = [color=#e31735]Это имплант "Щит разума". Гарантирует лояльность корпорации Nanotrasen и предотвращает воздействие устройств контроля сознания.[/color]
+corvax-hidden-desc-MindShieldImplanter-syndicate = [color=#e31735]Это имплант "Щит разума". Защищает от промывки мозгов, а так-же позволяет отменить недавнюю промывку мозгов и в дальнейшем предотвратить таковую, имплант не отменяет моё длительное внушение.[/color]
 corvax-hidden-desc-StorageImplanter-syndicate = [color=#e31735]Это имплантер подкожного хранилища. Позволит хранить контрабанду внутри тела.[/color]
 corvax-hidden-desc-FreedomImplanter-syndicate = [color=#e31735]Это имплантер свободы. Позволит до трёх раз вырваться из наручников, освободившись из плена.[/color]
 corvax-hidden-desc-UplinkImplanter-syndicate = [color=#e31735]Это имплантер чёрного рынка. Позволит пользоваться спрятанным аплинком Синдиката, даже если у меня всё заберут.[/color]
