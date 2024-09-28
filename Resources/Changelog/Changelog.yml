@@ -1,27 +1,4 @@
 ﻿Entries:
-- author: Winkarst-cpu
-  changes:
-  - message: Added ambience to the camera routers and telecommunication servers.
-    type: Add
-  - message: Now server's and router's ambience stops once they are unpowered.
-    type: Fix
-  id: 6950
-  time: '2024-07-21T07:22:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30091
-- author: Scott Dimeling
-  changes:
-  - message: Reduced the number of botanists in some stations, for optimal _workflow_
-    type: Tweak
-  id: 6951
-  time: '2024-07-21T07:23:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29581
-- author: metalgearsloth
-  changes:
-  - message: Escape pods won't show up on shuttle map anymore.
-    type: Tweak
-  id: 6952
-  time: '2024-07-21T07:23:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29758
 - author: IProduceWidgets
   changes:
   - message: an arabian lamp!
@@ -3939,3 +3916,24 @@
   id: 7449
   time: '2024-09-27T19:04:22.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32413
+- author: Beck Thompson
+  changes:
+  - message: The appraisal tool verb is now predicted!
+    type: Fix
+  id: 7450
+  time: '2024-09-28T04:40:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32496
+- author: Pyvik
+  changes:
+  - message: Added 2 new hairstyles.
+    type: Add
+  id: 7451
+  time: '2024-09-28T06:07:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31010
+- author: metalgearsloth
+  changes:
+  - message: Fix a lot of jankiness around airlocks.
+    type: Fix
+  id: 7452
+  time: '2024-09-28T09:02:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32483
