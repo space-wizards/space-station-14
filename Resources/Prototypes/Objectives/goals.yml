@@ -1,0 +1,59 @@
+- type: stationGoal
+  id: StationGoalShuttle
+  text: station-goal-shuttle
+
+- type: stationGoal
+  id: StationGoalTournament
+  text: station-goal-tournament
+
+- type: stationGoal
+  id: StationGoalSolarPanels
+  text: station-goal-solar-panels
+
+- type: stationGoal
+  id: StationGoalScience
+  text: station-goal-science
+
+- type: stationGoal
+  id: StationGoalBank
+  text: station-goal-bank
+
+- type: stationGoal
+  id: StationGoalZoo
+  text: station-goal-zoo
+
+- type: stationGoal
+  id: StationGoalOre
+  text: station-goal-ore
+
+- type: stationGoal
+  id: StationGoalHarvester
+  text: station-goal-harvester
+
+- type: stationGoal
+  id: StationGoalRepair
+  text: station-goal-repair
+
+- type: stationGoal
+  id: StationGoalOutpost
+  text: station-goal-mining-outpost
+
+- type: stationGoal
+  id: StationGoalContainment
+  text: station-goal-containment
+
+- type: stationGoal
+  id: StationGoalMeteorBarrier
+  text: station-goal-meteor-barrier
+
+- type: stationGoal
+  id: StationGoalXenoBiology
+  text: station-goal-xeno
+
+- type: stationGoal
+  id: StationGoalMuseum
+  text: station-goal-museum
+
+- type: stationGoal
+  id: StationGoalAnomaly
+  text: station-goal-anomaly

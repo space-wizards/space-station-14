@@ -72,7 +72,7 @@
 - type: entity
   parent: FaxMachineBase
   id: FaxMachineCentcom
-  name: CentComm long range fax machine
+  name: CentCom long range fax machine
   suffix: CentCom
   components:
   - type: Sprite
@@ -110,5 +110,6 @@
     - type: FaxMachine
       name: "Captain's Office"
       receiveNukeCodes: true
+      receiveStationGoal: true
     - type: StealTarget
       stealGroup: FaxMachineCaptain
