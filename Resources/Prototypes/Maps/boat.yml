@@ -1,8 +1,8 @@
 - type: gameMap
   id: Boat
-  mapName: 'White Whale'
+  mapName: 'Spooky Whale'
   mapPath: /Maps/boat.yml
-  minPlayers: 40
+  minPlayers: 50
   maxPlayers: 100
   randomRotation: true
   stations:
@@ -10,10 +10,10 @@
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
-          mapNameTemplate:  '{0} White Whale {1}'
+          mapNameTemplate:  '{0} Spooky Whale {1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
-            prefixCreator: 'AS'
+            prefixCreator: 'SW'
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/Shuttles/emergency_cluster.yml
         - type: StationCargoShuttle
