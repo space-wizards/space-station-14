@@ -98,7 +98,7 @@
   parent: [ClothingShoesMilitaryBaseInedible, BaseCommandContraband]
   id: ClothingShoesBootsCaptainjumpboots
   name: jump boots
-  description: Polished leather boots with strong ankle support, originally designed for paratroopers, with rattling gold heel taps so they know you're coming.
+  description: "Polished leather boots with strong ankle support, originally designed for paratroopers. Designed with an honor guard's rattling gold heel taps so they know you're coming."
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/captainjumpboots.rsi

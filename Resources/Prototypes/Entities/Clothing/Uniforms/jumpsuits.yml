@@ -72,7 +72,7 @@
   parent: [ClothingUniformBase, BaseCommandContraband]
   id: ClothingUniformJumpsuitCaptaineveningattire
   name: captain's evening attire
-  description: A comfortable captain's uniform with a low-cut collar and rolled-up sleeves, complete with a sword belt.
+  description: "A comfortable captain's uniform with a low-cut collar and three-quarter sleeves, complete with a sword belt. Held fastened in part by a medal-like brooch."
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/captaineveningattire.rsi
