@@ -21,6 +21,11 @@
   equipment:
     outerClothing: ClothingOuterCoatAMG
 
+- type: loadout
+  id: BrigmedicWinterCoat
+  equipment:
+    outerClothing: ClothingOuterWinterBrigmedic
+
 # Back
 - type: loadout
   id: BrigmedicBackpack
@@ -36,3 +41,9 @@
   id: BrigmedicDuffel
   equipment:
     back: ClothingBackpackDuffelBrigmedic
+
+# Shoes
+- type: loadout
+  id: BrigmedicWinterBoots
+  equipment:
+    shoes: ClothingShoesBootsWinterBrigmedic

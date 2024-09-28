@@ -97,6 +97,29 @@
     clothingPrototype: ClothingHeadHatHoodWinterBartender
 
 - type: entity
+  parent: ClothingOuterWinterCoatToggleable
+  id: ClothingOuterWinterBrigmedic
+  name: brigmedic winter coat
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/WinterCoats/coat.rsi
+    layers:
+    - state: BRIGMEDIC-icon
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: BRIGMEDIC-inhand-left
+      right:
+      - state: BRIGMEDIC-inhand-right
+  - type: Clothing
+    sprite: Clothing/OuterClothing/WinterCoats/coat.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: BRIGMEDIC-equipped-OUTERCLOTHING
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHatHoodWinterBrigmedic
+
+- type: entity
   parent: [ClothingOuterWinterCoatToggleable, BaseCommandContraband]
   id: ClothingOuterWinterCap
   name: captain's winter coat
