@@ -1437,9 +1437,9 @@
 
 #Airtight hatch
 
-- type: entity
-  parent: AirlockHatch
-  id: AirlockHatchSyndicate
+- type: entity # GreyStation - Added a unique syndicate hatch sprite
+  parent: AirlockHatchSyndicate
+  id: AirlockHatchSyndicateLocked
   suffix: Syndicate, Locked
   components:
   - type: ContainerFill
