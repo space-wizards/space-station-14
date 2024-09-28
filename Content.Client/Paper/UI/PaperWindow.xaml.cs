@@ -46,7 +46,11 @@ namespace Content.Client.Paper.UI
             typeof(ItalicTag)
         };
 
-        public event Action<string>? OnSaved;
+        /// <summary>
+        /// Fired when a user completes editing the paper
+        /// Arguments are the entity of the writing tool and the new text.
+        /// </summary>
+        public event Action<NetEntity, string>? OnSaved;
 
         private int _MaxInputLength = -1;
         public int MaxInputLength
@@ -69,6 +73,11 @@ namespace Content.Client.Paper.UI
         /// to load the new content
         /// </summary>
         private string? _initialEditText = null;
+
+        /// <summary>
+        /// The tool used to start writing on this paper.
+        /// </summary>
+        NetEntity _editTool;
 
         public PaperWindow()
         {
@@ -280,8 +289,10 @@ namespace Content.Client.Paper.UI
             }
         }
 
-        public void BeginEdit()
+        public void BeginEdit(NetEntity editTool)
         {
+            _editTool = editTool;
+
             bool wasEditing = InputContainer.Visible;
             InputContainer.Visible = true;
             EditButtons.Visible = true;
@@ -361,7 +372,8 @@ namespace Content.Client.Paper.UI
         {
             // Prevent further saving while text processing still in
             SaveButton.Disabled = true;
-            OnSaved?.Invoke(Rope.Collapse(Input.TextRope));
+
+            OnSaved?.Invoke(_editTool, Rope.Collapse(Input.TextRope));
         }
 
         private void UpdateFillState()

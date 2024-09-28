@@ -97,11 +97,16 @@ public sealed class PaperSystem : EntitySystem
         }
     }
 
+    private bool IsEditable(Entity<PaperComponent> entity, EntityUid writingTool)
+    {
+        return _tagSystem.HasTag(writingTool, "Write")
+            // only allow editing if there are no stamps or when using a cyberpen
+            && (entity.Comp.StampedBy.Count == 0 || _tagSystem.HasTag(writingTool, "WriteIgnoreStamps"));
+    }
+
     private void OnInteractUsing(Entity<PaperComponent> entity, ref InteractUsingEvent args)
     {
-        // only allow editing if there are no stamps or when using a cyberpen
-        var editable = entity.Comp.StampedBy.Count == 0 || _tagSystem.HasTag(args.Used, "WriteIgnoreStamps");
-        if (_tagSystem.HasTag(args.Used, "Write") && editable)
+        if (IsEditable(entity, args.Used))
         {
             if (entity.Comp.EditingDisabled)
             {
@@ -118,7 +123,8 @@ public sealed class PaperSystem : EntitySystem
             UpdateUserInterface(entity);
             if (_net.IsServer)
             {
-                _uiSystem.ServerSendUiMessage(entity.Owner, PaperUiKey.Key, new PaperBeginEditMessage(), args.User);
+                var toolNetEnt = EntityManager.GetNetEntity(args.Used);
+                _uiSystem.ServerSendUiMessage(entity.Owner, PaperUiKey.Key, new PaperBeginEditMessage(toolNetEnt), args.User);
             }
             args.Handled = true;
             return;
@@ -156,7 +162,7 @@ public sealed class PaperSystem : EntitySystem
 
     private void OnInputTextMessage(Entity<PaperComponent> entity, ref PaperInputTextMessage args)
     {
-        if (args.Text.Length <= entity.Comp.ContentSize)
+        if (args.Text.Length <= entity.Comp.ContentSize && IsEditable(entity, EntityManager.GetEntity(args.EditToolEntity)))
         {
             SetContent(entity, args.Text);
 
@@ -171,6 +177,14 @@ public sealed class PaperSystem : EntitySystem
                 $"{ToPrettyString(args.Actor):player} has written on {ToPrettyString(entity):entity} the following text: {args.Text}");
 
             _audio.PlayPvs(entity.Comp.Sound, entity);
+        }
+        else
+        {
+            // This block can be hit if the user somehow managed to input more than the maximum content size
+            // or if the paper was stamped after they started editing it with a normal, stamp-respecting pen.
+            var user = EntityManager.GetEntity(args.User);
+            var writeFailedMessage = Loc.GetString("paper-component-action-write-failed");
+            _popupSystem.PopupEntity(writeFailedMessage, entity, user);
         }
 
         UpdateUserInterface(entity);

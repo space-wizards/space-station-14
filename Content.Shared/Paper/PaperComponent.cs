@@ -47,15 +47,39 @@ public sealed partial class PaperComponent : Component
     [Serializable, NetSerializable]
     public sealed class PaperBeginEditMessage : BoundUserInterfaceMessage
     {
+        /// <summary>
+        /// The entity ID of the tool used to begin editing (i.e. a pen).
+        /// </summary>
+        public readonly NetEntity EditToolEntity;
+
+        public PaperBeginEditMessage(NetEntity editTool)
+        {
+            EditToolEntity = editTool;
+        }
     }
 
     [Serializable, NetSerializable]
     public sealed class PaperInputTextMessage : BoundUserInterfaceMessage
     {
+        /// <summary>
+        /// The entity of the player who edited the paper
+        /// </summary>
+        public readonly NetEntity User;
+
+        /// <summary>
+        /// The entity ID of the tool used to begin editing (i.e. a pen).
+        /// </summary>
+        public readonly NetEntity EditToolEntity;
+
+        /// <summary>
+        /// The new text the paper should have
+        /// </summary>
         public readonly string Text;
 
-        public PaperInputTextMessage(string text)
+        public PaperInputTextMessage(NetEntity user, NetEntity editTool, string text)
         {
+            User = user;
+            EditToolEntity = editTool;
             Text = text;
         }
     }

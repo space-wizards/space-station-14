@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Client.Player;
 using Robust.Shared.Utility;
 using Content.Shared.Paper;
 using static Content.Shared.Paper.PaperComponent;
@@ -10,6 +11,9 @@ namespace Content.Client.Paper.UI;
 [UsedImplicitly]
 public sealed class PaperBoundUserInterface : BoundUserInterface
 {
+    // TODO: This is in the base class, but is private! Remove this, once it's accessible
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
+
     [ViewVariables]
     private PaperWindow? _window;
 
@@ -46,13 +50,14 @@ public sealed class PaperBoundUserInterface : BoundUserInterface
 
         if (message is PaperBeginEditMessage)
         {
-            _window?.BeginEdit();
+            _window?.BeginEdit(((PaperBeginEditMessage)message).EditToolEntity);
         }
     }
 
-    private void InputOnTextEntered(string text)
+    private void InputOnTextEntered(NetEntity editTool, string text)
     {
-        SendMessage(new PaperInputTextMessage(text));
+        var playerEnt = _playerManager.LocalEntity == null ? EntityUid.Invalid : _playerManager.LocalEntity;
+        SendMessage(new PaperInputTextMessage(EntMan.GetNetEntity((EntityUid)playerEnt), editTool, text));
 
         if (_window != null)
         {
