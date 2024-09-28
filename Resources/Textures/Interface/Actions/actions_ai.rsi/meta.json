@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/blob/c473a8bcc28fbd80827dfca5660d81ca6e833e2c/icons/hud/screen_ai.dmi, power_monitor by ArchRBX (github) made for SS14",
+    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/blob/c473a8bcc28fbd80827dfca5660d81ca6e833e2c/icons/hud/screen_ai.dmi",
     "size": {
         "x": 32,
         "y": 32
@@ -27,9 +27,6 @@
 		},
 		{
 			"name": "mass_scanner"
-		},
-        {
-			"name": "power_monitor"
 		},
 		{
 			"name": "job_view"

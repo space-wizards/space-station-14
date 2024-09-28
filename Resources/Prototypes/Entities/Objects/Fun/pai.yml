@@ -17,12 +17,6 @@
         type: StoreBoundUserInterface
         requireInputValidation: false
       # available in pai shop
-      enum.CrewMonitoringUIKey.Key:
-        type: CrewMonitoringBoundUserInterface
-        requireInputValidation: false
-      enum.PowerMonitoringConsoleUiKey.Key:
-        type: PowerMonitoringConsoleBoundUserInterface
-        requireInputValidation: false
       enum.RadarConsoleUiKey.Key:
         type: RadarConsoleBoundUserInterface
         requireInputValidation: false
@@ -70,8 +64,6 @@
   - type: RadarConsole
     maxRange: 256
     followEntity: true
-  - type: PowerMonitoringConsole
-  - type: PowerMonitoringCableNetworks
   - type: TypingIndicator
     proto: robot
   - type: Speech
@@ -164,32 +156,6 @@
     checkConsciousness: false
     icon: Interface/Actions/shop.png
     event: !type:PAIShopActionEvent
-
-- type: entity
-  id: ActionPAICrewMonitor
-  name: Crew Monitor
-  description: View a crew monitoring interface.
-  components:
-  - type: InstantAction
-    checkCanInteract: false
-    checkConsciousness: false
-    icon: { sprite: Interface/Actions/actions_ai.rsi, state: crew_monitor }
-    itemIconStyle: NoItem
-    event: !type:OpenUiActionEvent
-        key: enum.CrewMonitoringUIKey.Key
-
-- type: entity
-  id: ActionPAIPowerMonitor
-  name: Power Monitor
-  description: View a power monitoring interface.
-  components:
-  - type: InstantAction
-    checkCanInteract: false
-    checkConsciousness: false
-    icon: { sprite: Interface/Actions/actions_ai.rsi, state: power_monitor }
-    itemIconStyle: NoItem
-    event: !type:OpenUiActionEvent
-        key: enum.PowerMonitoringConsoleUiKey.Key
 
 - type: entity
   id: ActionPAIMassScanner

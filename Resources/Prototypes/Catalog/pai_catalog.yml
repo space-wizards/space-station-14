@@ -1,28 +1,3 @@
-- type: listing
-  id: PAICrewMonitor
-  name: pai-crew-monitor-name
-  description: pai-crew-monitor-desc
-  productAction: ActionPAICrewMonitor
-  cost:
-    SiliconMemory: 15
-  categories:
-  - PAIAbilities
-  conditions:
-  - !type:ListingLimitedStockCondition
-    stock: 1
-
-- type: listing
-  id: PAIPowerMonitor
-  name: pai-power-monitor-name
-  description: pai-power-monitor-desc
-  productAction: ActionPAIPowerMonitor
-  cost:
-    SiliconMemory: 20
-  categories:
-  - PAIAbilities
-  conditions:
-  - !type:ListingLimitedStockCondition
-    stock: 1
 
 - type: listing
   id: PAIMassScanner
