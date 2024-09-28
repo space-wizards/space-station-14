@@ -145,7 +145,7 @@ accent-words-possum-4 = Grrrah.
 
 # TomatoKiller
 accent-words-tomato-1 = Totato!
-accent-words-tomato-2 = Trotect
+accent-words-tomato-2 = Trotect.
 accent-words-tomato-3 = Mastet?
 accent-words-tomato-4 = Reaty!
 accent-words-tomato-5 = Water...
