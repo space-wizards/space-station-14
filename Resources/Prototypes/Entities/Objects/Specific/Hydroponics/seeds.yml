@@ -24,6 +24,17 @@
 
 - type: entity
   parent: SeedBase
+  name: packet of meatwheat seeds
+  description: "If you ever wanted to drive a vegetarian to insanity, here's how."
+  id: MeatwheatSeeds
+  components:
+    - type: Seed
+      seedId: meatwheat
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/meatwheat.rsi
+
+- type: entity
+  parent: SeedBase
   name: packet of oat seeds
   id: OatSeeds
   components:
@@ -132,6 +143,17 @@
       seedId: orange
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/orange.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of extradimensional orange seeds
+  description: "Polygonal seeds."
+  id: ExtradimensionalOrangeSeeds
+  components:
+    - type: Seed
+      seedId: extradimensionalOrange
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/extradimensional_orange.rsi
 
 - type: entity
   parent: SeedBase
@@ -564,6 +586,16 @@
 
 - type: entity
   parent: SeedBase
+  name: packet of holymelon seeds
+  id: HolymelonSeeds
+  components:
+    - type: Seed
+      seedId: holymelon
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/holymelon.rsi
+
+- type: entity
+  parent: SeedBase
   name: packet of grape seeds
   id: GrapeSeeds
   components:
@@ -613,6 +645,17 @@
       seedId: pea
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/pea.rsi
+
+- type: entity
+  parent: SeedBase
+  id: WorldPeaSeeds
+  name: packet of world pea seeds
+  description: "These rather large seeds give off a soothing blue glow."
+  components:
+    - type: Seed
+      seedId: worldPea
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/world_pea.rsi
 
 - type: entity
   parent: SeedBase
@@ -682,3 +725,13 @@
       seedId: cherry
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/cherry.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of anomaly berry seeds
+  id: AnomalyBerrySeeds
+  components:
+    - type: Seed
+      seedId: anomalyBerry
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/anomaly_berry.rsi

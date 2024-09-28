@@ -143,6 +143,11 @@
   copyright: "/tg/station"
   source: "https://github.com/tgstation/tgstation/blob/3eeba3899f22638595333c63b7b7433001f91bb2/sound/machines/eject.ogg"
 
+- files: ["sonar-ping.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "/tg/station"
+  source: "https://github.com/tgstation/tgstation/blob/002051a3d5e4a35af504e52c0990bf4e22a908dc/sound/machines/sonar-ping.ogg"
+
 - files: ["scanning.ogg"]
   license: "CC0-1.0"
   copyright: "Samuel Gremaud on freesound.org"
@@ -166,3 +171,12 @@
   license: "CC0-1.0"
   copyright: "by Ko4erga"
   source: "https://github.com/space-wizards/space-station-14/pull/30431"
+
+- files:
+  - airlock_emergencyoff.ogg
+  - airlock_emergencyon.ogg
+  - airlock_electrify_off.ogg
+  - airlock_electrify_on.ogg
+  license: "CC0-1.0"
+  copyright: "by ScarKy0"
+  source: "https://github.com/space-wizards/space-station-14/pull/32012"

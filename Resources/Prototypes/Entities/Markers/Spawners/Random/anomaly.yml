@@ -9,6 +9,7 @@
     - sprite: Structures/Specific/anomaly.rsi
       state: anom1
   - type: RandomSpawner
+    chance: 1
     prototypes:
     - AnomalyPyroclastic
     - AnomalyGravity
@@ -20,7 +21,10 @@
     - AnomalyLiquid
     - AnomalyFlora
     - AnomalyShadow
-    chance: 1
+    - AnomalyTech
+    rareChance: 0.3
+    rarePrototypes:
+    - RandomAnomalyInjectorSpawner
     offset: 0.15 # not to put it higher. The anomaly sychnronizer looks for anomalies within this radius, and if the radius is higher, the anomaly can be attracted from a neighboring tile.
 
 - type: entity
@@ -40,3 +44,27 @@
     - AnomalyRockUranium
     chance: 1
     offset: 0.15
+
+- type: entity
+  id: RandomAnomalyInjectorSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Structures/Specific/Anomalies/tech_anom.rsi
+      state: pulse
+  - type: RandomSpawner
+    prototypes:
+    - AnomalyTrapPyroclastic
+    - AnomalyTrapElectricity
+    - AnomalyTrapShadow
+    - AnomalyTrapIce
+    - AnomalyTrapFlora
+    - AnomalyTrapBluespace
+    - AnomalyTrapFlesh
+    - AnomalyTrapGravity
+    - AnomalyTrapTech
+    - AnomalyTrapRock
+    chance: 1
+  
