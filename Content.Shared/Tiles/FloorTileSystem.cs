@@ -133,7 +133,7 @@ public sealed class FloorTileSystem : EntitySystem
                     return;
                 }
 
-                var tile = mapGrid.GetTileRef(location);
+                var tile = _map.GetTileRef(gridUid, mapGrid, location);
                 var baseTurf = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
 
                 if (HasBaseTurf(currentTileDefinition, baseTurf.ID))
