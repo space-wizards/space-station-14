@@ -6,7 +6,7 @@ using JetBrains.Annotations;
 namespace Content.Server.Atmos.Reactions;
 
 /// <summary>
-///     Produces Healium by mixing BZ and Frezon at temperatures between 23K and 300K. Efficiency increases in colder temperatures.  
+///     Produces Healium by mixing BZ and Frezon at temperatures between 23K and 293K. Efficiency increases in colder temperatures.  
 /// </summary>
 [UsedImplicitly]
 public sealed partial class HealiumProductionReaction : IGasReactionEffect
@@ -15,17 +15,15 @@ public sealed partial class HealiumProductionReaction : IGasReactionEffect
     {
         var initBZ = mixture.GetMoles(Gas.BZ);
         var initFrezon = mixture.GetMoles(Gas.Frezon);
-        var pressure = mixture.Pressure;
-        var volume = mixture.Volume;
 
-        var efficiency = mixture.Temperature / 24f;
+        var rate = mixture.Temperature / Atmospherics.T20C;
+        var efficiency = 23.15f / mixture.Temperature;
 
+        var bZRemoved = 1f * rate;
+        var frezonRemoved = 11f * rate;
+        var healiumProduced = 12f * rate * efficiency;
 
-        var bZRemoved = 1f;
-        var frezonRemoved = 11f;
-        var healiumProduced = 12f * efficiency;
-
-        if (bZRemoved > initBZ || frezonRemoved > initFrezon)
+        if (bZRemoved > initBZ || frezonRemoved > initFrezon || mixture.Temperature > Atmospherics.T20C)
             return ReactionResult.NoReaction;
 
         mixture.AdjustMoles(Gas.BZ, -bZRemoved);
@@ -35,7 +33,7 @@ public sealed partial class HealiumProductionReaction : IGasReactionEffect
         var energyReleased = healiumProduced * Atmospherics.HealiumProductionEnergy;
         var heatCap = atmosphereSystem.GetHeatCapacity(mixture, true);
         if (heatCap > Atmospherics.MinimumHeatCapacity)
-            mixture.Temperature = Math.Max((mixture.Temperature * heatCap + energyReleased) / heatCap, Atmospherics.T20C);
+            mixture.Temperature = Math.Max((mixture.Temperature * heatCap + energyReleased) / heatCap, Atmospherics.TCMB);
 
         return ReactionResult.Reacting;
     }
