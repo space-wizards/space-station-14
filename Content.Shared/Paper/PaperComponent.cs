@@ -7,7 +7,6 @@ namespace Content.Shared.Paper;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class PaperComponent : Component
 {
-    public PaperAction Mode;
     [DataField("content"), AutoNetworkedField]
     public string Content { get; set; } = "";
 
@@ -37,14 +36,17 @@ public sealed partial class PaperComponent : Component
     {
         public readonly string Text;
         public readonly List<StampDisplayInfo> StampedBy;
-        public readonly PaperAction Mode;
 
-        public PaperBoundUserInterfaceState(string text, List<StampDisplayInfo> stampedBy, PaperAction mode = PaperAction.Read)
+        public PaperBoundUserInterfaceState(string text, List<StampDisplayInfo> stampedBy)
         {
             Text = text;
             StampedBy = stampedBy;
-            Mode = mode;
         }
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class PaperBeginEditMessage : BoundUserInterfaceMessage
+    {
     }
 
     [Serializable, NetSerializable]
@@ -62,13 +64,6 @@ public sealed partial class PaperComponent : Component
     public enum PaperUiKey
     {
         Key
-    }
-
-    [Serializable, NetSerializable]
-    public enum PaperAction
-    {
-        Read,
-        Write,
     }
 
     [Serializable, NetSerializable]

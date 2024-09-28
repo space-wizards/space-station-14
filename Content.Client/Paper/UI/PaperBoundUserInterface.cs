@@ -40,6 +40,16 @@ public sealed class PaperBoundUserInterface : BoundUserInterface
         _window?.Populate((PaperBoundUserInterfaceState) state);
     }
 
+    protected override void ReceiveMessage(BoundUserInterfaceMessage message)
+    {
+        base.ReceiveMessage(message);
+
+        if (message is PaperBeginEditMessage)
+        {
+            _window?.BeginEdit();
+        }
+    }
+
     private void InputOnTextEntered(string text)
     {
         SendMessage(new PaperInputTextMessage(text));
@@ -48,6 +58,7 @@ public sealed class PaperBoundUserInterface : BoundUserInterface
         {
             _window.Input.TextRope = Rope.Leaf.Empty;
             _window.Input.CursorPosition = new TextEdit.CursorPos(0, TextEdit.LineBreakBias.Top);
+            _window.FinishEdit();
         }
     }
 }

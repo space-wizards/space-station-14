@@ -6,8 +6,9 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
-using Robust.Shared.Player;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Network;
+using Robust.Shared.Player;
 using static Content.Shared.Paper.PaperComponent;
 
 namespace Content.Shared.Paper;
@@ -22,6 +23,7 @@ public sealed class PaperSystem : EntitySystem
     [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly INetManager _net = default!;
 
     public override void Initialize()
     {
@@ -47,7 +49,6 @@ public sealed class PaperSystem : EntitySystem
 
     private void OnInit(Entity<PaperComponent> entity, ref ComponentInit args)
     {
-        entity.Comp.Mode = PaperAction.Read;
         UpdateUserInterface(entity);
 
         if (TryComp<AppearanceComponent>(entity, out var appearance))
@@ -62,7 +63,6 @@ public sealed class PaperSystem : EntitySystem
 
     private void BeforeUIOpen(Entity<PaperComponent> entity, ref BeforeActivatableUIOpenEvent args)
     {
-        entity.Comp.Mode = PaperAction.Read;
         UpdateUserInterface(entity);
     }
 
@@ -114,9 +114,12 @@ public sealed class PaperSystem : EntitySystem
             var writeEvent = new PaperWriteEvent(entity, args.User);
             RaiseLocalEvent(args.Used, ref writeEvent);
 
-            entity.Comp.Mode = PaperAction.Write;
             _uiSystem.OpenUi(entity.Owner, PaperUiKey.Key, args.User);
             UpdateUserInterface(entity);
+            if (_net.IsServer)
+            {
+                _uiSystem.ServerSendUiMessage(entity.Owner, PaperUiKey.Key, new PaperBeginEditMessage(), args.User);
+            }
             args.Handled = true;
             return;
         }
@@ -170,7 +173,6 @@ public sealed class PaperSystem : EntitySystem
             _audio.PlayPvs(entity.Comp.Sound, entity);
         }
 
-        entity.Comp.Mode = PaperAction.Read;
         UpdateUserInterface(entity);
     }
 
@@ -217,7 +219,7 @@ public sealed class PaperSystem : EntitySystem
 
     private void UpdateUserInterface(Entity<PaperComponent> entity)
     {
-        _uiSystem.SetUiState(entity.Owner, PaperUiKey.Key, new PaperBoundUserInterfaceState(entity.Comp.Content, entity.Comp.StampedBy, entity.Comp.Mode));
+        _uiSystem.SetUiState(entity.Owner, PaperUiKey.Key, new PaperBoundUserInterfaceState(entity.Comp.Content, entity.Comp.StampedBy));
     }
 }
 

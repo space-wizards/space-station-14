@@ -99,6 +99,8 @@ namespace Content.Client.Paper.UI
 
             SaveButton.Text = Loc.GetString("paper-ui-save-button",
                 ("keybind", _inputManager.GetKeyFunctionButtonString(EngineKeyFunctions.MultilineTextSubmit)));
+
+            FinishEdit();
         }
 
         /// <summary>
@@ -242,36 +244,15 @@ namespace Content.Client.Paper.UI
         /// </summary>
         public void Populate(PaperComponent.PaperBoundUserInterfaceState state)
         {
-            bool isEditing = state.Mode == PaperComponent.PaperAction.Write;
-            bool wasEditing = InputContainer.Visible;
-            InputContainer.Visible = isEditing;
-            EditButtons.Visible = isEditing;
-
             var msg = new FormattedMessage();
             msg.AddMarkupPermissive(state.Text);
 
-            // For premade documents, we want to be able to edit them rather than
-            // replace them.
-            var shouldCopyText = 0 == Input.TextLength && 0 != state.Text.Length;
-            if (!wasEditing || shouldCopyText)
-            {
-                // We can get repeated messages with state.Mode == Write if another
-                // player opens the UI for reading. In this case, don't update the
-                // text input, as this player is currently writing new text and we
-                // don't want to lose any text they already input.
-                Input.TextRope = Rope.Leaf.Empty;
-                Input.CursorPosition = new TextEdit.CursorPos();
-                Input.InsertAtCursor(state.Text);
-            }
-
-            for (var i = 0; i <= state.StampedBy.Count * 3 + 1; i++)
-            {
-                msg.AddMarkupPermissive("\r\n");
-            }
             WrittenTextLabel.SetMessage(msg, _allowedTags, DefaultTextColor);
 
-            WrittenTextLabel.Visible = !isEditing && state.Text.Length > 0;
-            BlankPaperIndicator.Visible = !isEditing && state.Text.Length == 0;
+            var isEditing = InputContainer.Visible;
+            var hasText = !string.IsNullOrEmpty(state.Text);
+            WrittenTextLabel.Visible = !isEditing && hasText;
+            BlankPaperIndicator.Visible = !isEditing && !hasText;
 
             StampDisplay.RemoveAllChildren();
             StampDisplay.RemoveStamps();
@@ -279,6 +260,33 @@ namespace Content.Client.Paper.UI
             {
                 StampDisplay.AddStamp(new StampWidget{ StampInfo = stamper });
             }
+        }
+
+        public void BeginEdit()
+        {
+            bool wasEditing = InputContainer.Visible;
+            InputContainer.Visible = true;
+            EditButtons.Visible = true;
+            BlankPaperIndicator.Visible = false;
+            WrittenTextLabel.Visible = false;
+
+            Input.TextRope = Rope.Leaf.Empty;
+            Input.CursorPosition = new TextEdit.CursorPos();
+            var text = WrittenTextLabel.GetMessage();
+            if (text != null)
+            {
+                Input.InsertAtCursor(text);
+            }
+        }
+
+        public void FinishEdit()
+        {
+            InputContainer.Visible = false;
+            EditButtons.Visible = false;
+
+            var hasText = !string.IsNullOrEmpty(WrittenTextLabel.Text);
+            WrittenTextLabel.Visible = hasText;
+            BlankPaperIndicator.Visible = !hasText;
         }
 
         /// <summary>
