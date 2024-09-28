@@ -1460,3 +1460,15 @@
       amount: 1
   products:
     DontTell: 2
+
+- type: reaction
+  id: CottonBool
+  requiredMixerCategories:
+    - Stir
+  reactants:
+    Fiber:
+      amount: 1
+    EnergyDrink:
+      amount: 1
+  products:
+    CottonBool: 2
