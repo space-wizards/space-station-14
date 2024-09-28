@@ -115,6 +115,8 @@
     sprite: Objects/Fun/pai.rsi
     layers:
     - state: gold-pai-base
+    - state: gold-pai-shimmer-overlay
+      shader: unshaded
     - state: gold-pai-off-overlay
       shader: unshaded
       map: ["screen"]
@@ -137,7 +139,7 @@
           Searching: { state: gold-pai-searching-overlay }
           On: { state: gold-pai-on-overlay }
   - type: PointLight
-    radius: 1.13
+    radius: 1.2
     energy: 1.33
     castShadows: false
     color: "#9b68ff"
