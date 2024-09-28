@@ -136,6 +136,11 @@
           Off: { state: gold-pai-off-overlay }
           Searching: { state: gold-pai-searching-overlay }
           On: { state: gold-pai-on-overlay }
+  - type: PointLight
+    radius: 1.13
+    energy: 1.33
+    castShadows: false
+    color: "#9b68ff"
 
 - type: entity
   parent: PersonalAI
