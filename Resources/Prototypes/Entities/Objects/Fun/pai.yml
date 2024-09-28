@@ -109,7 +109,7 @@
   parent: PersonalAI
   id: GoldPersonalAI
   name: gilded personal ai device
-  description: Wow! A rare, golden electronic pal! This would be worth a fortune... But it's got no resale value.
+  description: Wow! An incredibly rare, golden electronic pal. This would be worth a fortune... But it's got no resale value.
   components:
   - type: Sprite
     sprite: Objects/Fun/pai.rsi
@@ -120,6 +120,8 @@
     - state: gold-pai-off-overlay
       shader: unshaded
       map: ["screen"]
+    - state: gold-pai-swish-overlay
+      shader: unshaded
   - type: ToggleableGhostRole
     roleName: pai-system-role-name
     roleDescription: pai-system-role-description
