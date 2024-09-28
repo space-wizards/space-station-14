@@ -55,6 +55,8 @@
   - type: ContainerContainer
     containers:
       stash: !type:ContainerSlot {}
+  - type: Speech
+    speechVerb: Default # for pais (In the secret stash)
   - type: SecretStash
     secretStashName: secret-stash-plushie
     blacklist:
@@ -338,6 +340,8 @@
     equippedPrefix: lizard
     slots:
     - HEAD
+  - type: Speech
+    speechVerb: Reptilian # for pais (In the secret stash)
 
 - type: entity
   parent: PlushieLizard
