@@ -2126,3 +2126,90 @@
   id: 272
   time: '2024-09-26T07:35:52.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/353
+- author: Pinkbat5
+  changes:
+  - message: Added the scrambled speech trait. Understand nobody now can you.
+    type: Add
+  - message: Accentless now works for snails and gray.
+    type: Fix
+  - message: Removed duplicate accents.
+    type: Fix
+  id: 273
+  time: '2024-09-28T00:15:26.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/363
+- author: starlighthowls
+  changes:
+  - message: cruise is haunted now
+    type: Add
+  id: 274
+  time: '2024-09-28T00:14:59.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/358
+- author: hivehum
+  changes:
+  - message: The evacuation shuttle now takes 20 minutes to arrive when the station
+      alert level is Pink.
+    type: Tweak
+  id: 275
+  time: '2024-09-28T00:15:11.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/361
+- author: AftrLite
+  changes:
+  - message: Extra shoe options for Captain, Mime, Musician, Lawyer, Librarian, Bartender,
+      Psychologist, Paramedic, Detective, Reporter, Chief Engie, Chief Medical, &
+      Research Director!
+    type: Add
+  id: 276
+  time: '2024-09-28T00:14:00.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/355
+- author: KingMudkipIII
+  changes:
+  - message: 'Added a new drink: Cotton Bool!'
+    type: Add
+  - message: Fixed capitalization in some reagent names.
+    type: Fix
+  id: 277
+  time: '2024-09-28T00:14:17.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/356
+- author: hivehum
+  changes:
+  - message: More items can be put in the candy bowl.
+    type: Tweak
+  id: 278
+  time: '2024-09-28T00:12:40.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/359
+- author: Darkmajia
+  changes:
+  - message: Brigmedics now spawn with a survival box.
+    type: Fix
+  id: 279
+  time: '2024-09-28T00:12:16.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/357
+- author: AirFryerBuyOneGetOneFree
+  changes:
+  - message: A new type of mouse has been added.
+    type: Add
+  id: 280
+  time: '2024-09-28T00:14:41.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/360
+- author: Darkmajia
+  changes:
+  - message: Brigmedics now have their own winter coat and boots.
+    type: Add
+  - message: Security and medical winter boots have been removed from the Brigmedic
+      loadout.
+    type: Remove
+  id: 281
+  time: '2024-09-28T00:13:06.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/362
+- author: TheGrimbeeper
+  changes:
+  - message: Artifacts can now spawn non-random books (e.g Book of Nar'sie, Parker's
+      TEG guide, etc)
+    type: Add
+  - message: Added some parts of The Great Gatsby by F. Scott Fitzgerald, which is
+      under public domain. By sections, I mean Added the entirety of The Great Gatsby
+      by F. Scott Fitzgerald, which is under public domain.
+    type: Add
+  id: 282
+  time: '2024-09-28T00:13:26.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/354
