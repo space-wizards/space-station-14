@@ -76,4 +76,4 @@
       color: Pink
       emergencyLightColor: Pink
       forceEnableEmergencyLights: true
-      shuttleTime: 600
+      shuttleTime: 1200
