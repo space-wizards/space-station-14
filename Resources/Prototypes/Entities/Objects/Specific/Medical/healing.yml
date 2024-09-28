@@ -216,6 +216,14 @@
       path: "/Audio/Items/Medical/brutepack_begin.ogg"
     healingEndSound:
       path: "/Audio/Items/Medical/brutepack_end.ogg"
+    bloodReagentWhitelist:
+      - Blood
+      - InsectBlood
+      - CopperBlood
+      - Sap
+      - Sugar
+      - Slime
+      - AmmoniaBlood
   - type: Stack
     stackType: Bloodpack
     count: 10
