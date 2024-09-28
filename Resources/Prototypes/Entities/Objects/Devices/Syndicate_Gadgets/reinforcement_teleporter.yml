@@ -25,7 +25,7 @@
   - type: GhostRole
     name: ghost-role-information-syndicate-reinforcement-spy-name
     description: ghost-role-information-syndicate-reinforcement-description
-    rules: ghost-role-information-syndicate-monkey-reinforcement-rules
+    rules: ghost-role-information-rules-team-antagonist
     raffle:
       settings: default
   - type: GhostRoleMobSpawner
@@ -57,7 +57,7 @@
   - type: GhostRole
     name: ghost-role-information-syndicate-monkey-reinforcement-name
     description: ghost-role-information-syndicate-monkey-reinforcement-description
-    rules: ghost-role-information-familiar-rules
+    rules: ghost-role-information-syndicate-monkey-reinforcement-rules
     raffle:
       settings: default
   - type: GhostRoleMobSpawner
