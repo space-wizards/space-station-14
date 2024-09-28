@@ -5,7 +5,7 @@
     xmlns:co="clr-namespace:Content.Client.UserInterface.Controls">
     <BoxContainer Name="MainContainer" Orientation="Vertical">
         <LineEdit Name="SearchBar" PlaceHolder="{Loc 'vending-machine-component-search-filter'}" HorizontalExpand="True"  Margin ="4 4"/>
-        <co:SearchListContainer Name="VendingContents" VerticalExpand="True" Margin="4 0"/>
+        <co:SearchListContainer Name="VendingContents" VerticalExpand="True" Margin="4 4"/>
          <!-- Footer -->
         <BoxContainer Orientation="Vertical">
             <PanelContainer StyleClasses="LowDivider" />

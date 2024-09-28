@@ -478,13 +478,12 @@
     combatToggleAction: ActionCombatModeToggleOff
   - type: Bloodstream
     bloodMaxVolume: 30
-    bloodReagent: Cryoxadone
+    bloodReagent: CopperBlood
   - type: CanEscapeInventory
   - type: MobPrice
     price: 50
   - type: BadFood
   - type: NonSpreaderZombie
-  - type: PreventSpiller
   - type: FireVisuals
     sprite: Mobs/Effects/onfire.rsi
     normalState: Mouse_burning
@@ -506,7 +505,7 @@
         visualType: Large
         messages: [ "snail-hurt-by-salt-popup" ]
         probability: 0.66
-    
+
 - type: entity
   parent: MobSnail
   id: MobSnailInstantDeath
