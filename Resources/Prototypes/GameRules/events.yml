@@ -35,6 +35,7 @@
     - id: RevenantSpawn
     - id: SleeperAgents
     - id: ZombieOutbreak
+    - id: DerelictCyborgSpawn
 
 - type: entity
   id: BaseStationEvent
@@ -545,3 +546,25 @@
     maxOccurrences: 1 # this event has diminishing returns on interesting-ness, so we cap it
     weight: 5
   - type: MobReplacementRule
+
+- type: entity
+  parent: BaseGameRule
+  id: DerelictCyborgSpawn
+  components:
+  - type: StationEvent
+    weight: 2 #Low until it spawns with a random lawset instead of just antimov.
+    earliestStart: 15
+    reoccurrenceDelay: 20
+    minimumPlayers: 7
+    duration: null
+  - type: SpaceSpawnRule
+    spawnDistance: 0
+  - type: AntagSpawner
+    prototype: PlayerBorgDerelict
+  - type: AntagSelection
+    agentName: derelict-cyborg-round-end-agent-name
+    definitions:
+    - spawnerPrototype: SpawnPointGhostDerelictCyborg
+      min: 1
+      max: 1
+      pickPlayer: false

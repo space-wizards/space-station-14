@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "size": {
     "x": 32,
     "y": 32
@@ -30,6 +30,10 @@
     {
       "name": "derelict_e_r",
       "directions": 4
+    },
+    {
+      "name": "derelict_icon",
+      "directions": 1
     },
     {
       "name": "derelict_l",
