@@ -8,6 +8,15 @@
       department: Command
       time: 3600 # 1 hour
 
+- type: loadoutEffectGroup
+  id: Silicon
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Silicon
+      time: 36000 #10 hours
+
 # Plushies
 - type: loadout
   id: PlushieLizard
@@ -161,6 +170,15 @@
   storage:
     back:
     - PersonalAI
+
+- type: loadout
+  id: GoldPersonalAI
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Silicon
+  storage:
+    back:
+    - GoldPersonalAI
 
 - type: loadout
   id: FolderBlack

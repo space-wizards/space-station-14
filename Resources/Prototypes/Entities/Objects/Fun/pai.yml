@@ -107,6 +107,38 @@
 
 - type: entity
   parent: PersonalAI
+  id: GoldPersonalAI
+  name: gilded personal ai device
+  description: Wow! A rare, golden electronic pal! This would be worth a fortune... But it's got no resale value.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/pai.rsi
+    layers:
+    - state: gold-pai-base
+    - state: gold-pai-off-overlay
+      shader: unshaded
+      map: ["screen"]
+  - type: ToggleableGhostRole
+    roleName: pai-system-role-name
+    roleDescription: pai-system-role-description
+    roleRules: ghost-role-information-familiar-rules
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Common
+  - type: ActiveRadio
+    channels:
+    - Common
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleableGhostRoleVisuals.Status:
+        screen:
+          Off: { state: gold-pai-off-overlay }
+          Searching: { state: gold-pai-searching-overlay }
+          On: { state: gold-pai-on-overlay }
+
+- type: entity
+  parent: PersonalAI
   id: PotatoAI
   name: potato artificial intelligence
   description: It's a potato. You forced it to be sentient, you monster.
