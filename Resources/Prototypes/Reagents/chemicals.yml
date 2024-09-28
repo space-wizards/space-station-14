@@ -219,9 +219,9 @@
       - !type:HealthChange
         damage:
           groups:
-            Heat: -1.5
+            Burn: -1
       - !type:ChemCleanBloodstream
-        cleanseRate: 3.5
+        cleanseRate: 3
     Poison:
       effects:
       - !type:HealthChange
