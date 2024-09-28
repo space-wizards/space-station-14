@@ -6707,7 +6707,7 @@ entities:
     - type: Transform
       pos: -9.5,2.5
       parent: 31
-- proto: BaseAdvancedPen
+- proto: Pen
   entities:
   - uid: 12065
     components:
