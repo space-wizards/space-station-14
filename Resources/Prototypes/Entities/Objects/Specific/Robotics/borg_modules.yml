@@ -312,6 +312,8 @@
     - LightReplacer
     - Crowbar
     - Screwdriver
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: light-replacer-module }
 
 - type: entity
   id: BorgModuleCleaning
@@ -327,6 +329,8 @@
     - MopItem
     - Bucket
     - TrashBag
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: cleaning-module }
 
 - type: entity
   id: BorgModuleAdvancedCleaning
@@ -344,6 +348,8 @@
     - SprayBottleSpaceCleaner
     - Dropper
     - TrashBag
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-cleaning-module }
 
 # medical modules
 - type: entity
@@ -359,6 +365,8 @@
     items:
     - HandheldHealthAnalyzerUnpowered
     - ClothingNeckStethoscope
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: diagnosis-module }
 
 - type: entity
   id: BorgModuleTreatment
@@ -377,6 +385,8 @@
     - Gauze10Lingering
     - Bloodpack10Lingering
     - Syringe
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: treatment-module }
 
 - type: entity
   id: BorgModuleDefibrillator
@@ -390,6 +400,8 @@
   - type: ItemBorgModule
     items:
     - DefibrillatorOneHandedUnpowered
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: defib-module }
 
 - type: entity
   id: BorgModuleAdvancedTreatment
@@ -407,6 +419,8 @@
     - Beaker
     - BorgDropper
     - BorgHypo
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-diagnosis-module }
 
 # science modules
 # todo: if science ever gets their own custom robot, add more "sci" modules.

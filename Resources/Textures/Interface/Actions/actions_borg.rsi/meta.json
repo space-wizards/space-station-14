@@ -45,6 +45,27 @@
 		},
 		{
 			"name":"mining-module"
+		},
+		{
+			"name":"light-replacer-module"
+		}, 
+		{
+			"name":"cleaning-module"
+		},
+		{
+			"name":"adv-cleaning-module"
+		},
+		{
+			"name":"diagnosis-module"
+		},
+		{
+			"name":"treatment-module"
+		},
+		{
+			"name":"adv-diagnosis-module"
+		},
+		{
+			"name":"defib-module"
 		}
     ]
 }
