@@ -26,13 +26,6 @@ public sealed partial class PAIComponent : Component
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public EntityUid? LastUser;
 
-    /// <summary>
-    /// The starting balance for the pAI's shop.
-    /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    [AutoNetworkedField]
-    public int StartingMemory = 30;
-
     [DataField]
     public EntProtoId ShopActionId = "ActionPAIOpenShop";
 

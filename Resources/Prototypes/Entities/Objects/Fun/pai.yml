@@ -61,6 +61,8 @@
     - PAIAbilities
     currencyWhitelist:
     - SiliconMemory
+    balance:
+      SiliconMemory: 30
   - type: RadarConsole
     maxRange: 256
     followEntity: true
