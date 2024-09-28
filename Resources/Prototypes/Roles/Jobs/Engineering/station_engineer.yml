@@ -23,6 +23,9 @@
     eyes: ClothingEyesGlassesMeson
     belt: ClothingBeltUtilityEngineering
     ears: ClothingHeadsetEngineering
-  #storage:
-    #back:
-    #- Stuff
+  storage:
+    back:
+    - CableApcStack
+    - SheetSteel
+    #add more? Glass or plastic?
+
