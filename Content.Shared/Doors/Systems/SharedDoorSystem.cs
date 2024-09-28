@@ -55,7 +55,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
     /// </summary>
     private readonly HashSet<Entity<DoorComponent>> _activeDoors = new();
 
-    private readonly HashSet<Entity<DoorComponent>> _doorIntersecting = new();
+    private readonly HashSet<Entity<PhysicsComponent>> _doorIntersecting = new();
 
     public override void Initialize()
     {
