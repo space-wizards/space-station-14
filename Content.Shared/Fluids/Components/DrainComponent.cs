@@ -28,9 +28,9 @@ public sealed partial class DrainComponent : Component
 
     /// <summary>
     /// Does this drain automatically absorb surrouding puddles? Or is it a drain designed to empty
-    /// solutions in it manually?
+    /// solutions in it manually? 
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    [DataField]
     public bool AutoDrain = true;
 
     /// <summary>
@@ -73,12 +73,12 @@ public sealed partial class DrainComponent : Component
     [DataField]
     public float UnclogProbability = 0.75f;
 
-    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    [DataField]
     public SoundSpecifier ManualDrainSound = new SoundPathSpecifier("/Audio/Effects/Fluids/slosh.ogg");
 
-    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    [DataField]
     public SoundSpecifier PlungerSound = new SoundPathSpecifier("/Audio/Items/Janitor/plunger.ogg");
 
-    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    [DataField]
     public SoundSpecifier UnclogSound = new SoundPathSpecifier("/Audio/Effects/Fluids/glug.ogg");
 }
