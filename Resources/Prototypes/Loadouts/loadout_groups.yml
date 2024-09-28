@@ -1518,6 +1518,16 @@
   - LoadoutSpeciesVoxNitrogen
 
 - type: loadoutGroup
+  id: SurvivalBrigmedic
+  name: loadout-group-survival-brigmedic
+  minLimit: 2
+  hidden: true
+  loadouts:
+  - EmergencyNitrogenBrigmedic
+  - EmergencyOxygenBrigmedic
+  - LoadoutSpeciesVoxNitrogen
+
+- type: loadoutGroup
   id: SecurityStar
   name: loadout-group-security-star
   minLimit: 0
