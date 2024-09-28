@@ -39,6 +39,12 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitBartenderPurple
 
+# Neck
+- type: loadout
+  id: RedTie
+  equipment:
+    neck: ClothingNeckTieRed
+
 # Outer clothing
 - type: loadout
   id: BartenderApron

@@ -67,9 +67,11 @@ loadout-group-chef-shoes = Chef shoes
 
 loadout-group-librarian-jumpsuit = Librarian jumpsuit
 loadout-group-librarian-neck = Librarian neck
+loadout-group-librarian-shoes = Librarian shoes
 
 loadout-group-lawyer-jumpsuit = Lawyer jumpsuit
 loadout-group-lawyer-neck = Lawyer neck
+loadout-group-lawyer-shoes = Lawyer shoes
 
 loadout-group-chaplain-head = Chaplain head
 loadout-group-chaplain-mask = Chaplain mask
@@ -107,11 +109,13 @@ loadout-group-mime-jumpsuit = Mime jumpsuit
 loadout-group-mime-backpack = Mime backpack
 loadout-group-mime-neck = Mime neck
 loadout-group-mime-outerclothing = Mime outer clothing
+loadout-group-mime-shoes = Mime shoes
 loadout-group-mime-belt = Mime belt
 
 loadout-group-musician-jumpsuit = Musician jumpsuit
 loadout-group-musician-neck = Musician neck
 loadout-group-musician-outerclothing = Musician outer clothing
+loadout-group-musician-shoes = Musician shoes
 
 # Cargo
 loadout-group-quartermaster-head = Quartermaster head
@@ -212,6 +216,7 @@ loadout-group-detective-head = Detective head
 loadout-group-detective-neck = Detective neck
 loadout-group-detective-jumpsuit = Detective jumpsuit
 loadout-group-detective-outerclothing = Detective outer clothing
+loadout-group-detective-shoes = Detective shoes
 
 loadout-group-brigmedic-head = Brigmedic head
 loadout-group-brigmedic-neck = Brigmedic neck
@@ -266,6 +271,7 @@ loadout-group-reporter-shoes = Reporter shoes
 
 loadout-group-psychologist-jumpsuit = Psychologist jumpsuit
 loadout-group-psychologist-neck = Psychologist neck
+loadout-group-psychologist-shoes = Psychologist shoes
 
 loadout-group-boxer-jumpsuit = Boxer jumpsuit
 loadout-group-boxer-gloves = Boxer gloves
