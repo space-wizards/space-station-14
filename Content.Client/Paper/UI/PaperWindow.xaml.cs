@@ -62,6 +62,14 @@ namespace Content.Client.Paper.UI
             }
         }
 
+        /// <summary>
+        /// Intitialized when the player begins to edit the paper. When update messages
+        /// arrive, this is used to determine if the paper has been modified by a different
+        /// player after we started editing, which will give us the option to have a button
+        /// to load the new content
+        /// </summary>
+        private string? _initialEditText = null;
+
         public PaperWindow()
         {
             IoCManager.InjectDependencies(this);
@@ -90,6 +98,11 @@ namespace Content.Client.Paper.UI
             Input.OnTextChanged += args =>
             {
                 UpdateFillState();
+            };
+
+            ReloadButton.OnPressed += _ =>
+            {
+                FillInputText();
             };
 
             SaveButton.OnPressed += _ =>
@@ -260,6 +273,11 @@ namespace Content.Client.Paper.UI
             {
                 StampDisplay.AddStamp(new StampWidget{ StampInfo = stamper });
             }
+
+            if (isEditing && _initialEditText != null)
+            {
+                ReloadButton.Visible = !string.Equals(_initialEditText, state.Text);
+            }
         }
 
         public void BeginEdit()
@@ -267,15 +285,26 @@ namespace Content.Client.Paper.UI
             bool wasEditing = InputContainer.Visible;
             InputContainer.Visible = true;
             EditButtons.Visible = true;
+            ReloadButton.Visible = false;
             BlankPaperIndicator.Visible = false;
             WrittenTextLabel.Visible = false;
 
+            FillInputText();
+        }
+
+        protected void FillInputText()
+        {
             Input.TextRope = Rope.Leaf.Empty;
             Input.CursorPosition = new TextEdit.CursorPos();
             var text = WrittenTextLabel.GetMessage();
             if (text != null)
             {
                 Input.InsertAtCursor(text);
+
+                // We'll remember what the text was at the start of the edit
+                // so that we can check if the contents were modified by another
+                // user.
+                _initialEditText = text;
             }
         }
 
@@ -287,6 +316,9 @@ namespace Content.Client.Paper.UI
             var hasText = !string.IsNullOrEmpty(WrittenTextLabel.Text);
             WrittenTextLabel.Visible = hasText;
             BlankPaperIndicator.Visible = !hasText;
+
+            // Don't need this anymore.
+            _initialEditText = null;
         }
 
         /// <summary>
