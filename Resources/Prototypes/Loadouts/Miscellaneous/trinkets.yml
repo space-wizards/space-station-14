@@ -14,7 +14,7 @@
   - !type:JobRequirementLoadoutEffect
     requirement:
       !type:OverallPlaytimeRequirement
-      id: Overall
+
       time: 900000 #250 hours
   - !type:JobRequirementLoadoutEffect
     requirement:
