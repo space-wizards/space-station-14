@@ -1,5 +1,5 @@
-﻿using Content.Shared.Access.Components;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
@@ -34,8 +34,25 @@ public abstract partial class SharedBorgSystem : EntitySystem
         SubscribeLocalEvent<BorgChassisComponent, EntRemovedFromContainerMessage>(OnRemoved);
         SubscribeLocalEvent<BorgChassisComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovementSpeedModifiers);
         SubscribeLocalEvent<BorgChassisComponent, ActivatableUIOpenAttemptEvent>(OnUIOpenAttempt);
-        
+        SubscribeLocalEvent<TryGetIdentityShortInfoEvent>(OnTryGetIdentityShortInfo);
+
         InitializeRelay();
+    }
+
+    private void OnTryGetIdentityShortInfo(TryGetIdentityShortInfoEvent args)
+    {
+        if (args.Handled)
+        {
+            return;
+        }
+
+        if (!HasComp<BorgChassisComponent>(args.ForActor))
+        {
+            return;
+        }
+
+        args.Title = Name(args.ForActor).Trim();
+        args.Handled = true;
     }
 
     private void OnItemSlotInsertAttempt(EntityUid uid, BorgChassisComponent component, ref ItemSlotInsertAttemptEvent args)

@@ -48,3 +48,41 @@
   - type: Fiber
     fiberMaterial: fibers-synthetic
   - type: FingerprintMask
+
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: RingBase
+  components:
+  - type: Clothing
+    slots: [ gloves, neck ]
+  - type: Sprite
+    sprite: Clothing/Hands/Rings/basic.rsi
+  - type: Appearance
+  - type: Item
+    size: Tiny
+  - type: Tag
+    tags:
+    - Ring
+
+- type: entity
+  abstract: true
+  id: GoldRingBase
+  components:
+    - type: PhysicalComposition
+      materialComposition:
+        Gold: 200 # 2 bars
+    - type: StaticPrice
+      price: 300
+
+- type: entity
+  abstract: true
+  id: SilverRingBase
+  name: silver ring
+  description: Looks slightly less valuable than a gold one.
+  components:
+    - type: PhysicalComposition
+      materialComposition:
+        Silver: 200 # 2 bars
+    - type: StaticPrice
+      price: 275

@@ -1128,7 +1128,7 @@ entities:
             0: 54783
           4,1:
             0: 157
-            4: 64
+            2: 64
           -5,0:
             0: 61183
           -4,1:
@@ -1164,8 +1164,8 @@ entities:
           2,-2:
             0: 61687
           2,-4:
-            2: 6
-            3: 1536
+            3: 6
+            4: 1536
           3,-4:
             1: 8737
             0: 256
@@ -1255,40 +1255,40 @@ entities:
           - 0
           - 0
         - volume: 2500
-          temperature: 293.15
-          moles:
-          - 0
-          - 6666.982
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-        - volume: 2500
-          temperature: 293.15
-          moles:
-          - 6666.982
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-        - volume: 2500
           temperature: 293.14975
           moles:
           - 20.078888
           - 75.53487
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 0
+          - 6666.982
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 6666.982
+          - 0
           - 0
           - 0
           - 0
@@ -1899,7 +1899,7 @@ entities:
   - uid: 80
     components:
     - type: Transform
-      pos: 1.5,9.5
+      pos: -0.5,10.5
       parent: 2
 - proto: BarSignTheLightbulb
   entities:
@@ -6524,13 +6524,6 @@ entities:
     - type: Transform
       pos: 2.5,11.5
       parent: 2
-- proto: ComputerShuttleSalvage
-  entities:
-  - uid: 953
-    components:
-    - type: Transform
-      pos: 0.5,16.5
-      parent: 2
 - proto: ComputerStationRecords
   entities:
   - uid: 954
@@ -7551,8 +7544,8 @@ entities:
       pos: 7.5,-13.5
       parent: 2
     - type: GasMixer
-      inletTwoConcentration: 0.78
-      inletOneConcentration: 0.22
+      inletTwoConcentration: 0.22000003
+      inletOneConcentration: 0.78
     - type: AtmosPipeColor
       color: '#0055CCFF'
 - proto: GasPassiveVent
@@ -10924,8 +10917,6 @@ entities:
     - type: Transform
       pos: -22.5,-2.5
       parent: 2
-    - type: GravityGenerator
-      charge: 100
     - type: PointLight
       radius: 175.75
 - proto: Grille
@@ -12195,11 +12186,6 @@ entities:
     components:
     - type: Transform
       pos: 2.5,6.5
-      parent: 2
-  - uid: 1739
-    components:
-    - type: Transform
-      pos: -0.5,10.5
       parent: 2
   - uid: 1949
     components:
@@ -13786,6 +13772,13 @@ entities:
     - type: Transform
       pos: 8.5,15.5
       parent: 2
+- proto: SpawnPointSalvageSpecialist
+  entities:
+  - uid: 953
+    components:
+    - type: Transform
+      pos: -1.5,15.5
+      parent: 2
 - proto: SpawnPointScientist
   entities:
   - uid: 1997
@@ -14362,12 +14355,6 @@ entities:
     components:
     - type: Transform
       pos: 16.5,-4.5
-      parent: 2
-  - uid: 2081
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -0.5,10.5
       parent: 2
   - uid: 2082
     components:
