@@ -70,7 +70,7 @@ public sealed partial class RevenantStasisSystem : EntitySystem
         Dirty(uid, speech);
 
         var voice = EnsureComp<VoiceMaskComponent>(uid);
-        voice.VoiceName = Comp<MetaDataComponent>(component.Revenant).EntityName;
+        voice.VoiceMaskName = Comp<MetaDataComponent>(component.Revenant).EntityName;
 
         if (TryComp<GhostRoleComponent>(uid, out var ghostRole))
             _ghostRoles.UnregisterGhostRole((uid, ghostRole));
@@ -115,7 +115,7 @@ public sealed partial class RevenantStasisSystem : EntitySystem
         EnsureComp<InputMoverComponent>(args.New);
 
         var voice = EnsureComp<VoiceMaskComponent>(args.New);
-        voice.VoiceName = Comp<MetaDataComponent>(comp.Revenant).EntityName;
+        voice.VoiceMaskName = Comp<MetaDataComponent>(comp.Revenant).EntityName;
 
         if (_mind.TryGetMind(uid, out var mindId, out var _))
             _mind.TransferTo(mindId, args.New);

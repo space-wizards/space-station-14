@@ -1489,8 +1489,8 @@
   minLimit: 0
   loadouts:
   - DetectiveArmorVest
+  - DetectiveCoatGrey
   - DetectiveCoat
-  - NoirCoat
 
 - type: loadoutGroup
   id: DetectiveShoes
