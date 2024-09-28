@@ -576,7 +576,7 @@
     accent-german-words-61-4: accent-german-words-replace-61
     accent-german-words-62: accent-german-words-replace-62
 
-    - type: accent
+- type: accent
   id: french
   wordReplacements:
     accent-french-words-1: accent-french-words-replace-1
