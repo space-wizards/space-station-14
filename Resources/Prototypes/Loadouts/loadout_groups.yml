@@ -799,6 +799,7 @@
   loadouts:
   - QuartermasterCloak
   - QuartermasterMantle
+  - QuartermasterGreatcoat
   - ScarfBrown
 
 - type: loadoutGroup
