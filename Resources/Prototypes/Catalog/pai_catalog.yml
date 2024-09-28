@@ -12,6 +12,19 @@
     stock: 1
 
 - type: listing
+  id: PAIPowerMonitor
+  name: pai-power-monitor-name
+  description: pai-power-monitor-desc
+  productAction: ActionPAIPowerMonitor
+  cost:
+    SiliconMemory: 20
+  categories:
+  - PAIAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
   id: PAIMassScanner
   name: pai-mass-scanner-name
   description: pai-mass-scanner-desc
