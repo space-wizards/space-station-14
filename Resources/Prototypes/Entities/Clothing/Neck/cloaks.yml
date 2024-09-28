@@ -86,6 +86,15 @@
 
 - type: entity
   parent: [ClothingNeckBase, BaseCommandContraband]
+  id: ClothingNeckCloakQmgreatcoat
+  name: quartermaster's greatcoat
+  description: A heavy brown greatcoat with a Cargonian C on the back, worn as a cape thanks to the leather belts holding it around your neck.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Cloaks/qmgreatcoat.rsi
+
+- type: entity
+  parent: [ClothingNeckBase, BaseCommandContraband]
   id: ClothingNeckCloakHop
   name: head of personnel's cloak
   description: A blue cloak with red shoulders and gold buttons, proving you are the gatekeeper to any airlock on the station.
