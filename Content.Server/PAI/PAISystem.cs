@@ -8,11 +8,15 @@ using Content.Shared.PAI;
 using Content.Shared.Popups;
 using Robust.Shared.Random;
 using System.Text;
-using Robust.Shared.Player;
+using Content.Shared.FixedPoint;
 using Content.Server.Store.Systems;
-using Content.Shared.Revenant.Components;
-using Content.Shared.Revenant;
+using Content.Shared.Store;
 using Content.Shared.Store.Components;
+using Content.Shared.Revenant.Components;
+using Content.Server.GameTicking;
+using Content.Shared.Eye;
+using Content.Shared.Revenant;
+using Robust.Server.GameObjects;
 
 namespace Content.Server.PAI;
 
@@ -25,6 +29,9 @@ public sealed class PAISystem : SharedPAISystem
     [Dependency] private readonly StoreSystem _store = default!;
     [Dependency] private readonly ToggleableGhostRoleSystem _toggleableGhostRole = default!;
 
+    [ValidatePrototypeId<CurrencyPrototype>]
+    public string SiliconMemoryCurrencyPrototype = "SiliconMemory";
+
     /// <summary>
     /// Possible symbols that can be part of a scrambled pai's name.
     /// </summary>
@@ -34,12 +41,22 @@ public sealed class PAISystem : SharedPAISystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<PAIComponent, ComponentStartup>(OnStartup);
+
         SubscribeLocalEvent<PAIComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<PAIComponent, MindAddedMessage>(OnMindAdded);
         SubscribeLocalEvent<PAIComponent, MindRemovedMessage>(OnMindRemoved);
         SubscribeLocalEvent<PAIComponent, BeingMicrowavedEvent>(OnMicrowaved);
 
         SubscribeLocalEvent<PAIComponent, PAIShopActionEvent>(OnShop);
+    }
+
+    private void OnStartup(EntityUid uid, PAIComponent component, ComponentStartup args)
+    {
+        var store = EnsureComp<StoreComponent>(uid);
+
+        store.Balance.Clear();
+        _store.TryAddCurrency(new Dictionary<string, FixedPoint2> { { SiliconMemoryCurrencyPrototype, component.StartingMemory } }, uid, store);
     }
 
     private void OnUseInHand(EntityUid uid, PAIComponent component, UseInHandEvent args)

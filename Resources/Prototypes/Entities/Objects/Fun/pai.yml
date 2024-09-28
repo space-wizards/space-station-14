@@ -19,6 +19,13 @@
       enum.StationMapUiKey.Key:
         type: StationMapBoundUserInterface
         requireInputValidation: false
+      enum.StoreUiKey.Key:
+        type: StoreBoundUserInterface
+        requireInputValidation: false
+      # available in pai shop
+      enum.CrewMonitoringUIKey.Key:
+        type: CrewMonitoringBoundUserInterface
+        requireInputValidation: false
   - type: Sprite
     sprite: Objects/Fun/pai.rsi
     layers:
@@ -49,6 +56,11 @@
     - Common
   - type: DoAfter
   - type: Actions
+  - type: Store
+    categories:
+    - PAIAbilities
+    currencyWhitelist:
+    - SiliconMemory
   - type: TypingIndicator
     proto: robot
   - type: Speech
@@ -141,6 +153,19 @@
     checkConsciousness: false
     icon: Interface/Actions/shop.png
     event: !type:PAIShopActionEvent
+
+- type: entity
+  id: ActionPAICrewMonitor
+  name: Crew Monitoring Interface
+  description: View a crew monitoring interface.
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    checkConsciousness: false
+    icon: { sprite: Interface/Actions/actions_ai.rsi, state: crew_monitor }
+    itemIconStyle: NoItem
+    event: !type:OpenUiActionEvent
+        key: enum.CrewMonitoringUIKey.Key
 
 - type: entity
   id: ActionPAIPlayMidi

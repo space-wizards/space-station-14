@@ -26,12 +26,12 @@ public sealed partial class PAIComponent : Component
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public EntityUid? LastUser;
 
+    /// <summary>
+    /// The starting balance for the pAI's shop.
+    /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
-    public FixedPoint2 PAIMemory = 75;
-
-    [DataField("paiMemoryCurrencyPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<CurrencyPrototype>))]
-    public string PAIMemoryCurrencyPrototype = "PAIMemory";
+    public int StartingMemory = 50;
 
     [DataField(serverOnly: true)]
     public EntProtoId? MidiActionId = "ActionPAIPlayMidi";

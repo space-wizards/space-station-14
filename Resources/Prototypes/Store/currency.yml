@@ -11,8 +11,8 @@
   canWithdraw: false
 
 - type: currency
-  id: PAIMemory
-  displayName: store-currency-display-pai-memory
+  id: SiliconMemory
+  displayName: store-currency-display-silicon-memory
   canWithdraw: false
 
 - type: currency

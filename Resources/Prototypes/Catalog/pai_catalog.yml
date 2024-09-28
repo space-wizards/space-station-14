@@ -4,7 +4,7 @@
   description: pai-crew-monitor-desc
   productAction: ActionPAICrewMonitor
   cost:
-    PAIMemory: 10
+    SiliconMemory: 10
   categories:
   - PAIAbilities
   conditions:
