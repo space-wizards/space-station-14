@@ -1,0 +1,8 @@
+- type: entity
+  parent: Airlock
+  id: AirlockHatchSyndicate
+  name: airtight hatch
+  suffix: Syndicate
+  components:
+  - type: Sprite
+    sprite: GreyStation/Structures/Doors/Airlocks/Standard/hatch_syndicate.rsi # GreyStation - Resprite
