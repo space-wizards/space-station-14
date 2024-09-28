@@ -186,3 +186,49 @@
         key: Adrenaline
         component: IgnoreSlowOnDamage
         time: 120
+
+- type: reagent
+  id: Calomel
+  name: reagent-name-calomel
+  group: Chemical
+  desc: reagent-desc-calomel
+  flavor: bitter
+  color: "#6e4665"
+  physicalDesc: reagent-physical-desc-odorless
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 1.5
+            Caustic: 1
+      - !type:Jitter
+
+- type: reagent
+  id: AmmoniatedMercury
+  name: reagent-name-ammoniated-mercury
+  group: Medicine
+  desc: reagent-desc-ammoniated-mercury
+  flavor: metallic
+  color: "white"
+  physicalDesc: reagent-physical-desc-crystalline
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: -0.15
+            Caustic: -1 # ammoniated mercury is used to treat skin problems/infections; there is no virology, though
+            Heat: -1
+      - !type:ChemCleanBloodstream
+        cleanseRate: 3.75
+    Poison:
+        damage:
+          types:
+            Caustic: 0.25
+            Poison: 1
+        conditions:
+        - !type:ReagentThreshold
+          min: 10
