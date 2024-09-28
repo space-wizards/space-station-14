@@ -201,7 +201,7 @@
       - !type:HealthChange
         damage:
           types:
-            Poison: 1.25
+            Poison: 1
             Caustic: 1
       - !type:Jitter
 
@@ -211,7 +211,7 @@
   group: Chemical
   desc: reagent-desc-ammoniated-mercury
   flavor: metallic
-  color: "white"
+  color: "#f2f0f0"
   physicalDesc: reagent-physical-desc-crystalline
   metabolisms:
     Medicine:
@@ -219,16 +219,14 @@
       - !type:HealthChange
         damage:
           groups:
-            Heat: -1.15
+            Heat: -1.5
       - !type:ChemCleanBloodstream
-        cleanseRate: 3.25
-    Poison:
-      effects:
+        cleanseRate: 3.5
      - !type:HealthChange
         conditions:
           - !type:ReagentThreshold
             min: 10
         damage:
           types:
-            Poison: 1.25
+            Poison: 1.2
       - !type:Jitter
