@@ -23,8 +23,6 @@
   - type: Construction
     graph: CavemanClub
     node: club
-  - type: UseDelay
-    delay: 1
   - type: PhysicalComposition
     materialComposition:
       Wood: 200
