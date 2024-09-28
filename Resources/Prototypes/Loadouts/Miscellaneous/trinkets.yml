@@ -9,13 +9,16 @@
       time: 3600 # 1 hour
 
 - type: loadoutEffectGroup
-  id: PrestigeGold
+  id: Silicon
   effects:
   - !type:JobRequirementLoadoutEffect
-    requirements:
-    - !type:OverallPlaytimeRequirement
-      time: 720000 # 200 hours, because if you want it, you better *really* want it.
-    - !type:DepartmentTimeRequirement
+    requirement:
+      !type:OverallPlaytimeRequirement
+      id: Overall
+      time: 900000 #250 hours
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
       department: Silicon
       time: 36000 #10 hours
 
@@ -177,7 +180,7 @@
   id: GoldPersonalAI
   effects:
   - !type:GroupLoadoutEffect
-    proto: PrestigeGold
+    proto: Silicon
   storage:
     back:
     - GoldPersonalAI
