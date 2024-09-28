@@ -190,7 +190,7 @@
 - type: reagent
   id: Calomel
   name: reagent-name-calomel
-  group: Chemical
+  group: Toxin 
   desc: reagent-desc-calomel
   flavor: bitter
   color: "#6e4665"
@@ -208,7 +208,7 @@
 - type: reagent
   id: AmmoniatedMercury
   name: reagent-name-ammoniated-mercury
-  group: Medicine
+  group: Chemical
   desc: reagent-desc-ammoniated-mercury
   flavor: metallic
   color: "white"
