@@ -559,7 +559,7 @@
   - type: GhostRole
     name: ghost-role-information-snoth-name
     description: ghost-role-information-snoth-description
-    rules: ghost-role-information-freeagent-rules
+    rules: ghost-role-information-nonantagonist-rules
   - type: Sprite
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
