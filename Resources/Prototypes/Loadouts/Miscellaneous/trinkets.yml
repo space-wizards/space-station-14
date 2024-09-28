@@ -9,7 +9,7 @@
       time: 3600 # 1 hour
 
 - type: loadoutEffectGroup
-  id: Silicon
+  id: PrestigeGold
   effects:
   - !type:JobRequirementLoadoutEffect
     requirement:
@@ -180,7 +180,7 @@
   id: GoldPersonalAI
   effects:
   - !type:GroupLoadoutEffect
-    proto: Silicon
+    proto: PrestigeGold
   storage:
     back:
     - GoldPersonalAI
