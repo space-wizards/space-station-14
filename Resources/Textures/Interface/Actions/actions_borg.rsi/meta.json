@@ -9,6 +9,42 @@
     "states": [
         {
             "name": "state-laws"
-        }
+        },
+		{
+            "name": "no-action"
+        },
+		{
+			"name":"tool-module"
+		},
+		{
+			"name":"wire-module"
+		},
+		{
+			"name":"gps-module"
+		},
+		{
+			"name":"extinguisher-module"
+		},
+		{
+			"name":"geiger-module"
+		},
+		{
+			"name":"rcd-module"
+		},
+		{
+			"name":"adv-tools-module"
+		},
+		{
+			"name":"construction-module"
+		},
+		{
+			"name":"appraisal-module"
+		},
+		{
+			"name":"grappling-module"
+		},
+		{
+			"name":"mining-module"
+		}
     ]
 }

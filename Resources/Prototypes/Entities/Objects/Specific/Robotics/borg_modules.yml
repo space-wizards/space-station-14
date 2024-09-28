@@ -10,6 +10,8 @@
   - type: Sprite
     sprite: Objects/Specific/Robotics/borgmodule.rsi
   - type: BorgModule
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: no-action }
   - type: StaticPrice
     price: 100
   - type: Tag
@@ -35,7 +37,7 @@
   description: Select this module, enabling you to use the tools it provides.
   components:
   - type: InstantAction
-    itemIconStyle: BigItem
+    itemIconStyle: BigAction
     useDelay: 0.5
     event: !type:BorgModuleActionSelectedEvent
 
@@ -119,6 +121,8 @@
     - CableHVStackLingering10
     - Wirecutter
     - trayScanner
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: wire-module }
 
 - type: entity
   id: BorgModuleFireExtinguisher
@@ -132,6 +136,8 @@
   - type: ItemBorgModule
     items:
     - FireExtinguisher
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: extinguisher-module }
 
 - type: entity
   id: BorgModuleGPS
@@ -147,6 +153,8 @@
     - HandheldGPSBasic
     - HandHeldMassScannerBorg
     - HandheldStationMapUnpowered
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: gps-module }
 
 - type: entity
   id: BorgModuleRadiationDetection
@@ -160,6 +168,8 @@
   - type: ItemBorgModule
     items:
     - GeigerCounter
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: geiger-module }
 
 - type: entity
   id: BorgModuleTool
@@ -178,6 +188,8 @@
     - Wirecutter
     - Multitool
     - WelderIndustrial
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: tool-module }
 
 # cargo modules
 - type: entity
@@ -192,6 +204,8 @@
   - type: ItemBorgModule
     items:
     - AppraisalTool
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: appraisal-module }
 
 - type: entity
   id: BorgModuleMining
@@ -210,6 +224,8 @@
     - OreBag
     - Crowbar
     - RadioHandheld
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: mining-module }
 
 - type: entity
   id: BorgModuleGrapplingGun
@@ -224,6 +240,8 @@
     items:
     - WeaponGrapplingGun
     - HandheldGPSBasic
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: grappling-module }
 
 # engineering modules
 - type: entity
@@ -243,6 +261,8 @@
     - RemoteSignaller
     - GasAnalyzer
     - GeigerCounter
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-tools-module }
 
 - type: entity
   id: BorgModuleConstruction
@@ -259,6 +279,8 @@
     - SheetGlassLingering0
     - PartRodMetalLingering0
     - FloorTileItemSteelLingering0
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: construction-module }
 
 - type: entity
   id: BorgModuleRCD
@@ -272,6 +294,8 @@
   - type: ItemBorgModule
     items:
     - RCDRecharging
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: rcd-module }
 
 # janitorial modules (this gets its own unique things because janis are epic)
 - type: entity
