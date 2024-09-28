@@ -865,7 +865,77 @@
     maxSpawns: 1
     spawns:
     - id: BookRandomStory
-      prob: 0.95
+      prob: 0.5
+    - id: BookGatsby
+      prob: 0.05
+    - id: BookTEGtorial
+      prob: 0.05
+    - id: BookClownLaw
+      prob: 0.05
+    - id: BookAgony
+      prob: 0.05
+    - id: BookJanitorTale
+      prob: 0.05
+    - id: BookInspiration
+      prob: 0.05
+    - id: BookJourney
+      prob: 0.05
+    - id: BookMap
+      prob: 0.05
+    - id: BookRufus
+      prob: 0.05
+    - id: BookMorgue
+      prob: 0.05
+    - id: BookMedicalOfficer
+      prob: 0.05
+    - id: BookWatched
+      prob: 0.05
+    - id: BookTemple
+      prob: 0.05
+    - id: BookAurora
+      prob: 0.05
+    - id: BookEarth
+      prob: 0.05
+    - id: BookNames
+      prob: 0.05
+    - id: BookIanDesert
+      prob: 0.05
+    - id: BookIanArctic
+      prob: 0.05
+    - id: BookIanCity
+      prob: 0.05
+    - id: BookIanMountain
+      prob: 0.05
+    - id: BookIanOcean
+      prob: 0.05
+    - id: BookIanRanch
+      prob: 0.05
+    - id: BookIanLostWolfPup
+      prob: 0.05
+    - id: BookFeather
+      prob: 0.05
+    - id: BookCafe
+      prob: 0.05
+    - id: BookPossum
+      prob: 0.05
+    - id: BookSun
+      prob: 0.05
+    - id: BookStruck
+      prob: 0.05
+    - id: BookSlothClownMMD
+      prob: 0.05
+    - id: BookSlothClownPranks
+      prob: 0.05
+    - id: BookSlothClownSSS
+      prob: 0.05
+    - id: BookIanAntarctica
+      prob: 0.05
+    - id: BookWorld
+      prob: 0.05
+    - id: BookTruth
+      prob: 0.05
+    - id: BookNarsieLegend
+      prob: 0.05
     - id: WizardsGrimoire
       prob: 0.001
     - id: SpawnSpellbook

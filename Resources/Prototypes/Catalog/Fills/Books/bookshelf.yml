@@ -61,6 +61,7 @@
       - id: BookWorld
       - id: BookAgony
       - id: BookTEGtorial
+      - id: BookGatsby
 
 - type: entity
   id: BookshelfFilled
