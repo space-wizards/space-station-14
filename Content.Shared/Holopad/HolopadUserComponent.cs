@@ -66,5 +66,55 @@ public sealed class HolopadUserTypingChangedEvent : EntityEventArgs
     }
 }
 
+/// <summary>
+/// A networked event raised by the server to request the current visual state of a target player entity
+/// </summary>
 [Serializable, NetSerializable]
-public sealed class HolopadUserAppearanceChangedEvent : EntityEventArgs { }
+public sealed class PlayerSpriteStateRequest : EntityEventArgs
+{
+    /// <summary>
+    /// The player entity in question
+    /// </summary>
+    public readonly NetEntity TargetPlayer;
+
+    public PlayerSpriteStateRequest(NetEntity targetPlayer)
+    {
+        TargetPlayer = targetPlayer;
+    }
+}
+
+/// <summary>
+/// The client's response to a <see cref="PlayerSpriteStateRequest"/>
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class PlayerSpriteStateMessage : EntityEventArgs
+{
+    public readonly NetEntity SpriteEntity;
+
+    /// <summary>
+    /// Data needed to reconstruct the player's sprite component layers
+    /// </summary>
+    public readonly SpriteLayerDatum[] SpriteLayerData;
+
+    public PlayerSpriteStateMessage(NetEntity spriteEntity, SpriteLayerDatum[] spriteLayerData)
+    {
+        SpriteEntity = spriteEntity;
+        SpriteLayerData = spriteLayerData;
+    }
+}
+
+/// <summary>
+/// Data for a single sprite component layer
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class SpriteLayerDatum
+{
+    public string RSIPath;
+    public string RSIState;
+
+    public SpriteLayerDatum(string rsiPath, string rsiState)
+    {
+        RSIPath = rsiPath;
+        RSIState = rsiState;
+    }
+}

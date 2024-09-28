@@ -4,7 +4,6 @@ using Content.Server.Telephone;
 using Content.Shared.Chat.TypingIndicator;
 using Content.Shared.Holopad;
 using Content.Shared.Inventory;
-using Content.Shared.Mind.Components;
 using Content.Shared.Telephone;
 using Robust.Server.GameObjects;
 using Robust.Server.GameStates;
@@ -27,13 +26,21 @@ public sealed class HolopadSystem : SharedHolopadSystem
     [Dependency] private readonly IGameTiming _timing = default!;
 
     private float _updateTimer = 1.0f;
+
     private const float UpdateTime = 1.0f;
+    private const float MinTimeBetweenSyncRequests = 0.5f;
+    private TimeSpan _minTimeSpanBetweenSyncRequests;
+
+    private HashSet<EntityUid> _pendingRequestsForSpriteState = new();
+    private HashSet<EntityUid> _recentlyUpdatedHolograms = new(); // Clear on frame update
 
     public override void Initialize()
     {
         base.Initialize();
 
-        // Holopad specific events
+        _minTimeSpanBetweenSyncRequests = TimeSpan.FromSeconds(MinTimeBetweenSyncRequests);
+
+        // Holopad bound user interface messages
         SubscribeLocalEvent<HolopadComponent, HolopadStartNewCallMessage>(OnHolopadStartNewCall);
         SubscribeLocalEvent<HolopadComponent, HolopadAnswerCallMessage>(OnHolopadAnswerCall);
         SubscribeLocalEvent<HolopadComponent, HolopadEndCallMessage>(OnHolopadEndCall);
@@ -49,11 +56,12 @@ public sealed class HolopadSystem : SharedHolopadSystem
         SubscribeLocalEvent<HolopadComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<HolopadComponent, ComponentShutdown>(OnComponentShutdown);
 
-        // PVS events
-        SubscribeLocalEvent<ExpandPvsEvent>(OnExpandPvs);
+        // Holopad user events
+        SubscribeLocalEvent<HolopadUserComponent, ComponentInit>(OnComponentInit);
 
         // Networked events
         SubscribeNetworkEvent<HolopadUserTypingChangedEvent>(OnTypingChanged);
+        SubscribeNetworkEvent<PlayerSpriteStateMessage>(OnPlayerSpriteStateMessage);
     }
 
     #region: Events
@@ -75,20 +83,20 @@ public sealed class HolopadSystem : SharedHolopadSystem
 
     private void OnHolopadAnswerCall(Entity<HolopadComponent> holopad, ref HolopadAnswerCallMessage args)
     {
-        if (!TryComp<TelephoneComponent>(holopad, out var telephone))
+        if (!TryComp<TelephoneComponent>(holopad, out var holopadTelephone))
             return;
 
         LinkHolopadToUser(holopad, args.Actor);
 
-        _telephoneSystem.AnswerTelephone((holopad, telephone));
+        _telephoneSystem.AnswerTelephone((holopad, holopadTelephone));
     }
 
     private void OnHolopadEndCall(Entity<HolopadComponent> holopad, ref HolopadEndCallMessage args)
     {
-        if (!TryComp<TelephoneComponent>(holopad, out var telephone))
+        if (!TryComp<TelephoneComponent>(holopad, out var holopadTelephone))
             return;
 
-        _telephoneSystem.EndTelephoneCalls((holopad, telephone));
+        _telephoneSystem.EndTelephoneCalls((holopad, holopadTelephone));
     }
 
     private void OnHoloCall(Entity<HolopadComponent> holopad, ref TelephoneCallEvent args)
@@ -105,7 +113,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
         if (holopad.Comp.Hologram == null)
             GenerateHologram(holopad);
 
-        SyncHolopadHologramWithMimicryTarget(holopad);
+        LinkHolopadToUser(holopad, holopad.Comp.User);
     }
 
     private void OnHoloCallEnded(Entity<HolopadComponent> holopad, ref TelephoneCallEndedEvent args)
@@ -152,7 +160,13 @@ public sealed class HolopadSystem : SharedHolopadSystem
 
     private void OnComponentInit(Entity<HolopadComponent> holopad, ref ComponentInit args)
     {
-        SyncHolopadHologramWithMimicryTarget(holopad);
+        LinkHolopadToUser(holopad, holopad.Comp.User);
+    }
+
+    private void OnComponentInit(Entity<HolopadUserComponent> holopadUser, ref ComponentInit args)
+    {
+        foreach (var linkedHolopad in holopadUser.Comp.LinkedHolopads)
+            LinkHolopadToUser(linkedHolopad, holopadUser);
     }
 
     private void OnComponentShutdown(Entity<HolopadComponent> holopad, ref ComponentShutdown args)
@@ -161,44 +175,20 @@ public sealed class HolopadSystem : SharedHolopadSystem
             DeleteHologram(holopad.Comp.Hologram.Value, holopad);
     }
 
-    private void OnExpandPvs(ref ExpandPvsEvent args)
+    private void OnPlayerSpriteStateMessage(PlayerSpriteStateMessage ev, EntitySessionEventArgs args)
     {
-        var query = AllEntityQuery<HolopadUserComponent>();
-        while (query.MoveNext(out var ent, out var entHolopadUser))
-        {
-            /*
+        var uid = args.SenderSession.AttachedEntity;
 
-            // Unlink holopad users if they stray too far away
-            foreach (var linkedHolopad in entHolopadUser.LinkedHolopads.ToList())
-            {
-                if (!TryComp<TelephoneComponent>(linkedHolopad, out var linkedTelephone))
-                    continue;
+        if (!Exists(uid))
+            return;
 
-                if (!_interactionSystem.InRangeAndAccessible(ent, linkedHolopad.Owner, linkedTelephone.ListeningRange))
-                    UnlinkHolopadFromUser(linkedHolopad, (ent, entHolopadUser));
-            }
+        if (!_pendingRequestsForSpriteState.Remove(uid.Value))
+            return;
 
-            if (!HasComp<HolopadUserComponent>(ent) || !entHolopadUser.LinkedHolopads.Any())
-                continue;*/
+        if (!TryComp<HolopadUserComponent>(uid, out var holopadUser))
+            return;
 
-            if (args.Entities == null)
-                args.Entities = new();
-
-            // Add holopad users to PVS so that they can be rendered by distant holopads
-            args.Entities.Add(ent);
-
-            // Add their inventory items to PVS for the same reason
-            if (_inventorySystem.TryGetSlots(ent, out var slots))
-            {
-                foreach (var slot in slots)
-                {
-                    _inventorySystem.TryGetSlotContainer(ent, slot.Name, out var container, out var definition);
-
-                    if (container?.ContainedEntity != null)
-                        args.Entities.Add(container.ContainedEntity.Value);
-                }
-            }
-        }
+        SyncHolopadUserWithLinkedHolograms(uid.Value, holopadUser, ev.SpriteLayerData);
     }
 
     #endregion
@@ -222,6 +212,8 @@ public sealed class HolopadSystem : SharedHolopadSystem
                 UpdateUIState((ent, holopad), telephone);
             }
         }
+
+        _recentlyUpdatedHolograms.Clear();
     }
 
     public void UpdateUIState(Entity<HolopadComponent> holopad, TelephoneComponent telephone)
@@ -270,19 +262,21 @@ public sealed class HolopadSystem : SharedHolopadSystem
         if (user == null)
             return;
 
+        if (!TryComp<HolopadUserComponent>(user, out var userComp))
+            userComp = AddComp<HolopadUserComponent>(user.Value);
+
         if (user != holopad.Comp.User?.Owner)
         {
             UnlinkHolopadFromUser(holopad, holopad.Comp.User, false);
-
-            if (!TryComp<HolopadUserComponent>(user, out var userComp))
-                userComp = AddComp<HolopadUserComponent>(user.Value);
-
             userComp.LinkedHolopads.Add(holopad);
             holopad.Comp.User = (user.Value, userComp);
         }
 
-        foreach (var linkedHolopad in GetLinkedHolopads(holopad))
-            SyncHolopadHologramWithMimicryTarget(linkedHolopad);
+        if (_pendingRequestsForSpriteState.Add(user.Value))
+        {
+            var ev = new PlayerSpriteStateRequest(GetNetEntity(user.Value));
+            RaiseNetworkEvent(ev);
+        }
     }
 
     private void UnlinkHolopadFromUser(Entity<HolopadComponent> holopad, Entity<HolopadUserComponent>? user, bool sync = true)
@@ -296,9 +290,6 @@ public sealed class HolopadSystem : SharedHolopadSystem
         {
             if (linkedHolopad.Comp.Hologram != null)
                 _appearanceSystem.SetData(linkedHolopad.Comp.Hologram.Value.Owner, TypingIndicatorVisuals.IsTyping, false);
-
-            if (sync)
-                SyncHolopadHologramWithMimicryTarget(linkedHolopad);
         }
 
         if (!HasComp<HolopadUserComponent>(user))
@@ -307,7 +298,10 @@ public sealed class HolopadSystem : SharedHolopadSystem
         user.Value.Comp.LinkedHolopads.Remove(holopad);
 
         if (!user.Value.Comp.LinkedHolopads.Any())
+        {
+            _pendingRequestsForSpriteState.Remove(user.Value);
             RemComp<HolopadUserComponent>(user.Value);
+        }
     }
 
     private void ShutDownHolopad(Entity<HolopadComponent> holopad)
@@ -319,22 +313,21 @@ public sealed class HolopadSystem : SharedHolopadSystem
             UnlinkHolopadFromUser(holopad, holopad.Comp.User.Value);
     }
 
-    private void SyncHolopadHologramWithMimicryTarget(Entity<HolopadComponent> holopad)
+    private void SyncHolopadUserWithLinkedHolograms(EntityUid uid, HolopadUserComponent component, SpriteLayerDatum[] spriteLayerData)
     {
-        var netHologram = GetNetEntity(holopad.Comp.Hologram);
+        foreach (var linkedHolopad in component.LinkedHolopads)
+        {
+            foreach (var receivingHolopad in GetLinkedHolopads(linkedHolopad))
+            {
+                if (receivingHolopad.Comp.Hologram == null ||
+                    !_recentlyUpdatedHolograms.Add(receivingHolopad.Comp.Hologram.Value))
+                    continue;
 
-        if (netHologram == null)
-            return;
-
-        NetEntity? netTarget = null;
-        var linkedHolopads = GetLinkedHolopads(holopad);
-
-        // If the holopad has only one active link, mimic the user of that device
-        if (linkedHolopads.Count == 1)
-            netTarget = GetNetEntity(linkedHolopads.First().Comp.User);
-
-        var ev = new HolopadHologramVisualsUpdateEvent(netHologram.Value, netTarget);
-        RaiseNetworkEvent(ev);
+                var netHologram = GetNetEntity(receivingHolopad.Comp.Hologram.Value);
+                var ev = new PlayerSpriteStateMessage(netHologram, spriteLayerData);
+                RaiseNetworkEvent(ev);
+            }
+        }
     }
 
     private HashSet<Entity<HolopadComponent>> GetLinkedHolopads(Entity<HolopadComponent> holopad)

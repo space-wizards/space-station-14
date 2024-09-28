@@ -2,11 +2,11 @@ using Content.Shared.Chat.TypingIndicator;
 using Content.Shared.Holopad;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
+using Robust.Client.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using System;
 using System.Linq;
-using System.Numerics;
-using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
 namespace Content.Client.Holopad;
 
@@ -15,6 +15,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
     public override void Initialize()
@@ -23,7 +24,9 @@ public sealed class HolopadSystem : SharedHolopadSystem
 
         SubscribeLocalEvent<HolopadHologramComponent, BeforePostShaderRenderEvent>(OnShaderRender);
         SubscribeAllEvent<TypingChangedEvent>(OnTypingChanged);
-        SubscribeNetworkEvent<HolopadHologramVisualsUpdateEvent>(OnVisualsUpdate);
+
+        SubscribeNetworkEvent<PlayerSpriteStateRequest>(OnPlayerSpriteStateRequest);
+        SubscribeNetworkEvent<PlayerSpriteStateMessage>(OnPlayerSpriteStateMessage);
     }
 
     private void OnShaderRender(EntityUid uid, HolopadHologramComponent component, BeforePostShaderRenderEvent ev)
@@ -48,10 +51,43 @@ public sealed class HolopadSystem : SharedHolopadSystem
         RaiseNetworkEvent(netEv);
     }
 
-    private void OnVisualsUpdate(HolopadHologramVisualsUpdateEvent ev)
+    private void OnPlayerSpriteStateRequest(PlayerSpriteStateRequest ev)
     {
-        var hologram = GetEntity(ev.Hologram);
-        var target = GetEntity(ev.Target);
+        var targetPlayer = GetEntity(ev.TargetPlayer);
+        var player = _playerManager.LocalSession?.AttachedEntity;
+
+        if (targetPlayer != player)
+            return;
+
+        if (!TryComp<SpriteComponent>(player, out var playerSprite))
+            return;
+
+        var spriteLayerData = new List<SpriteLayerDatum>();
+
+        if (playerSprite.Visible)
+        {
+            for (int i = 0; i < playerSprite.AllLayers.Count(); i++)
+            {
+                if (!playerSprite.TryGetLayer(i, out var layer))
+                    continue;
+
+                if (!layer.Visible ||
+                    string.IsNullOrEmpty(layer.RSI?.Path.ToString()) ||
+                    string.IsNullOrEmpty(layer.State.Name))
+                    continue;
+
+                var layerDatum = new SpriteLayerDatum(layer.RSI.Path.ToString(), layer.State.Name);
+                spriteLayerData.Add(layerDatum);
+            }
+        }
+
+        var evResponse = new PlayerSpriteStateMessage(ev.TargetPlayer, spriteLayerData.ToArray());
+        RaiseNetworkEvent(evResponse);
+    }
+
+    private void OnPlayerSpriteStateMessage(PlayerSpriteStateMessage ev)
+    {
+        var hologram = GetEntity(ev.SpriteEntity);
 
         if (!TryComp<SpriteComponent>(hologram, out var hologramSprite))
             return;
@@ -59,40 +95,20 @@ public sealed class HolopadSystem : SharedHolopadSystem
         if (!TryComp<HolopadHologramComponent>(hologram, out var holopadhologram))
             return;
 
-        // Mimic the appearance of the target
-        if (TryComp<SpriteComponent>(target, out var targetSprite))
+        for (int i = hologramSprite.AllLayers.Count() - 1; i >= 0; i--)
+            hologramSprite.RemoveLayer(i);
+
+        for (int i = 0; i < ev.SpriteLayerData.Length; i++)
         {
-            hologramSprite.CopyFrom(targetSprite);
-
-            // Adjust select values
-            hologramSprite.Color = Color.White;
-            hologramSprite.Offset = holopadhologram.Offset;
-            hologramSprite.Scale = new Vector2(1f, 1f);
-            hologramSprite.DrawDepth = (int)DrawDepth.Mobs;
-            hologramSprite.NoRotation = true;
-
-            for (int i = 0; i < hologramSprite.AllLayers.Count(); i++)
-                hologramSprite.LayerSetShader(i, "unshaded");
-        }
-
-        // If there's no target, remove all layers and display an 'in-call' symbol instead
-        else
-        {
-            for (int i = hologramSprite.AllLayers.Count() - 1; i >= 0; i--)
-                hologramSprite.RemoveLayer(i);
-
-            if (string.IsNullOrEmpty(holopadhologram.RsiPath) || string.IsNullOrEmpty(holopadhologram.RsiState))
-                return;
-
             var layer = new PrototypeLayerData();
-            layer.RsiPath = holopadhologram.RsiPath;
-            layer.State = holopadhologram.RsiState;
+            layer.RsiPath = ev.SpriteLayerData[i].RSIPath;
+            layer.State = ev.SpriteLayerData[i].RSIState;
             layer.Shader = "unshaded";
 
-            hologramSprite.AddLayer(layer);
+            hologramSprite.AddLayer(layer, i);
         }
 
-        UpdateShader(GetEntity(ev.Hologram), hologramSprite, holopadhologram);
+        UpdateShader(hologram, hologramSprite, holopadhologram);
     }
 
     private void UpdateShader(EntityUid uid, SpriteComponent sprite, HolopadHologramComponent holopadHologram)

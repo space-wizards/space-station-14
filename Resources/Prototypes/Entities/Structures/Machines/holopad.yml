@@ -64,10 +64,16 @@
  
 - type: entity
   id: HolopadHologram
+  categories: [ HideSpawnMenu ]
   components:
   - type: Transform
     anchored: true
   - type: Sprite
+    noRot: true
+    drawdepth: Mobs
+    offset: -0.02, 0.45
+    overrideDir: South
+    enableOverrideDir: true
   - type: Appearance
   - type: TypingIndicator
     proto: robot
@@ -80,8 +86,7 @@
     alpha: 1
     intensity: 2
     scrollRate: 0.125
-    offset: -0.02, 0.40
-#  - type: Tag
-#    tags:
-#    - HideContextMenu
+  - type: Tag
+    tags:
+    - HideContextMenu
   - type: AnimationPlayer
