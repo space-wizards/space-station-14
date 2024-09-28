@@ -1490,7 +1490,6 @@
   - DetectiveArmorVest
   - DetectiveCoatGrey
   - DetectiveCoat
-  - NoirCoat
 
 - type: loadoutGroup
   id: DetectiveShoes
