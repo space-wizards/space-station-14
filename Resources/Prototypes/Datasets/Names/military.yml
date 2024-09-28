@@ -1,60 +1,141 @@
-﻿- type: dataset
+- type: dataset
   id: NamesFirstMilitaryLeader
   values:
-  - Colonel
-  - Commander
-  - Lieutenant
-  - Major
-  
+  - Мастер Сержант
+  - Первый Сержант
+  - Штаб-Сержант
+  - Старший Сержант
+
 - type: dataset
   id: NamesFirstMilitary
   values:
-  - Corporal
-  - Sergeant
-  - Specialist
+  - Специалист 1-го класса
+  - Специалист
+  - Капрал Отделения
+  - Капрал
+  - Младший Капрал
+  - Рядовой
 
 - type: dataset
   id: NamesLastMilitary
   values:
-  - Agena
-  - Andromeda
-  - Antares
-  - Aquarius
-  - Beid
-  - Betelgeuse
-  - Canopus
-  - Capricorn
-  - Celaeno
-  - Centaur
-  - Chameleon
-  - Chau
-  - Cygnus
-  - Deneb
-  - Dragon
-  - Electra
-  - Fomalhaut
-  - Ginan
-  - Hercules
-  - Labr
-  - Leonis
-  - Matar
-  - Microscopium
-  - Nihal
-  - Ophiuchus
-  - Oculus
-  - Orion
-  - Perseus
-  - Phoenix
-  - Procyon
-  - Regulus
-  - Rigel
-  - Sargas
-  - Schedar
-  - Shaula
-  - Sirius
-  - Tabit
-  - Taurus
-  - Ukdah
-  - Vega
-  - Yildun
-  - Zosma
+  - Антарес
+  - Андромеда
+  - Бейд
+  - Бетельгейзе
+  - Вега
+  - Водолей
+  - Гинан
+  - Геркулес
+  - Денеб
+  - Дракон
+  - Зосма
+  - Змееносец
+  - Иклил
+  - Йильдун
+  - Канопус
+  - Козерог
+  - Лабр
+  - Лебедь
+  - Матар
+  - Микроскоп
+  - Нави
+  - Нихал
+  - Окул
+  - Орион
+  - Процион
+  - Персей
+  - Ригель
+  - Регул
+  - Сириус
+  - Саргас
+  - Табит
+  - Телец
+  - Укдах
+  - Фомальгаут
+  - Феникс
+  - Хадар
+  - Хамелеон
+  - Целена
+  - Центавр
+  - Чау
+  - Шедар
+  - Шаула
+  - Электра
+ 
+- type: dataset
+  id: NamesFirstMilitaryUSSPLeader
+  values:
+  - Старшина
+  - Младший Лейтенант
+  - Лейтенант
+  - Старший Лейтенант 
+  - Капитан 
+  - Майор
+  
+- type: dataset
+  id: NamesFirstUSSPMilitary
+  values:
+  - Рядовой
+  - Ефрейтор
+  - Младший Сержант
+  - Сержант
+  - Старший Сержант  
+
+- type: dataset
+  id: NamesLastUSSPMilitary
+  values:
+  - Антарес
+  - Андромеда
+  - Альтаир
+  - Афганит  
+  - Бейд
+  - Бетельгейзе
+  - Вега
+  - Водолей
+  - Гинан
+  - Геркулес
+  - Денеб
+  - Дракон
+  - Зосма
+  - Змееносец
+  - Иклил
+  - Йильдун
+  - Канопус
+  - Козерог
+  - Лабр
+  - Лебедь
+  - Стахановец
+  - Союз  
+  - Октябрист
+  - Октябрь   
+  - Прайм
+  - Потёмкин
+  - Персей 
+  - Сол
+  - Титан
+  - Регул
+  - Сириус
+  - Саргас
+  - Табит
+  - Телец
+  - Укдах
+  - Фомальгаут
+  - Феникс
+  - Хадар
+  - Хамелеон
+  - Целена
+  - Центавр
+  - Чау
+  - Шедар
+  - Шаула
+  - Электра
+  - Терра
+  - Сварог
+  - Невский
+  - Леший
+  - Свердлов
+  - Фрунзе
+  - Шариков
+  - Шарий
+  - Тузолог

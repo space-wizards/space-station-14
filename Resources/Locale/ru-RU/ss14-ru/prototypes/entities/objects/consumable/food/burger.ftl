@@ -1,5 +1,9 @@
 ent-FoodBreadBun = булочка
     .desc = Булочка для гамбургера. Круглая и удобная для удержания чего-то.
+ent-FoodBreadBunBottom = нижняя булочка
+    .desc = Пришло время начать строительство бургерной башни.
+ent-FoodBreadBunTop = верхняя булочка
+    .desc = Идеальное завершение для вашей бургерной башни.
 ent-FoodBurgerBase = { ent-FoodInjectableBase }
     .desc = { ent-FoodInjectableBase.desc }
 ent-FoodBurgerJelly = желейный бургер

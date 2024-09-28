@@ -1,37 +1,44 @@
 - type: dataset
   id: names_moth_last
   values:
-  - Blackwitch # Ascalapha odorata
-  - Deathshead # refers to any of the 3 Acherontia
-  - Emperor # Saturniinae
-  - Scorchedwing # Plagodis dolabraria
-  - Temnora # Temnora
-  - Usta # Usta
-  - Whitewitch # Thysania agrippina
-  - Winter # Operophtera brumata
+  - Одоратта # Ascalapha odorata
+  - Император # Saturniinae
+  - Сатурниина
+  - Плагодис # Plagodis dolabraria
+  - Темнора # Temnora
+  - Уста # Usta
+  - Агриппин # Thysania agrippina
+  - Оперофтера # Operophtera brumata
+  - Коциносера
+  - Брунеатта
+  - Акосмерикс
+  - Саттурнид
+  - Бистон
+  - Саласс
+  - Актияс
+  - Дриокамп
+  - Майродор
+  - Аккеронт
 
   # Other languages
-  - Epiolos # Ancient Greek "moth"
-  - Moeller # conceivably any Old Norse descendant of mǫlr but probably more Danish than anything. "oe" digraph for ø.
-  - Nightflitter # literal pseudo-translation of German Nachtfalter
+  - Эпиолос # Ancient Greek "moth"
+  - Молье # conceivably any Old Norse descendant of mǫlr but probably more Danish than anything. "oe" digraph for ø.
+  - Накфальтер # literal pseudo-translation of German Nachtfalter
 
   # Myth and legend
-  - Herald # belief of moths flying at night signalling the reception of a letter
-  - Leander # Greek figure associated with Hero, and similar sounding to Oleander hawk-moth
-  - Mothman # split between being a myth reference and actual possible surname given the actual Goodman, Hoffman, Newman, Coleman, etc.
+  - Геральд # belief of moths flying at night signalling the reception of a letter
+  - Леандер # Greek figure associated with Hero, and similar sounding to Oleander hawk-moth
+  - Мофман # split between being a myth reference and actual possible surname given the actual Goodman, Hoffman, Newman, Coleman, etc.
 
   # Fun names
-  - Cometrider
-  - Eventide
-  - Firefly
-  - Firebrush
-  - Flamecoat
-  - Lightweaver
-  - Moondancer
-  - Nightwish
-  - Nighteyes
-  - Owlbane
-  - Silktongue
-  - Sparkdrawn
-  - Stargazer
-  - Starseeker
+  - Кометрайдер
+  - Ивентайд
+  - Файрфлай
+  - Файрбруш
+  - Флеймкот
+  - Лайтвир
+  - Мунданс
+  - Найтвиш
+  - Оулбейн
+  - Сликтонг
+  - Спаркдроу

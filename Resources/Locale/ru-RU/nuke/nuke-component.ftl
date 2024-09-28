@@ -1,4 +1,5 @@
 nuke-component-cant-anchor-floor = Крепёжным болтам не удаётся закрепиться в полу!
+nuke-component-cant-anchor-toggle = Для переключения крепёжных болтов требуется диск ядерной аутентификации!
 nuke-component-announcement-sender = Ядерная боеголовка
 nuke-component-announcement-armed = Внимание! Механизм самоуничтожения станции был активирован { $location }. До детонации { $time } секунд.
 nuke-component-announcement-unarmed = Механизм самоуничтожение станции деактивирован! Хорошего дня!

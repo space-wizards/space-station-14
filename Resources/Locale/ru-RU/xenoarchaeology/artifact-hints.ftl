@@ -40,3 +40,4 @@ artifact-trigger-hint-regular-gases = Стандартные атмосферн�
 artifact-trigger-hint-plasma = Газообразная плазма
 artifact-trigger-hint-land = Активное замедление
 artifact-trigger-hint-examine = Внимательное изучение
+artifact-trigger-hint-medical = Терапевтические химикаты

@@ -38,5 +38,3 @@ ent-ClothingShoesBootsCowboyWhite = белые ковбойские ботинк
     .desc = { ent-ClothingShoesBootsCowboyBrown.desc }
 ent-ClothingShoesBootsCowboyFancy = модные ковбойские ботинки
     .desc = { ent-ClothingShoesBootsCowboyBrown.desc }
-ent-ClothingShoesCluwneRemoveable = { ent-ClothingShoesCluwne }
-    .desc = { ent-ClothingShoesCluwne.desc }

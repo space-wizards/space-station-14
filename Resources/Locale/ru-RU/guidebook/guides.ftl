@@ -75,6 +75,7 @@ guide-entry-zombies = Зомби
 guide-entry-revolutionaries = Революционеры
 guide-entry-minor-antagonists = Малые антагонисты
 guide-entry-space-ninja = Космический ниндзя
+guide-entry-thieves = Воры
 guide-entry-rules = Правила сервера
 guide-entry-rules-core-only = Core Only Ruleset
 guide-entry-rules-lrp = Standard Ruleset

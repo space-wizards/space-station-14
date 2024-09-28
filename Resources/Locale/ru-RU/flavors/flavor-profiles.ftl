@@ -50,6 +50,7 @@ flavor-base-horrible = ужасно
 # lmao
 flavor-base-terrible = ужасающе
 flavor-base-mindful = разумно
+flavor-base-chewy = жевательно
 
 # Complex flavors. Put a flavor here when you want something that's more
 # specific.
@@ -112,7 +113,7 @@ flavor-complex-corn = как кукуруза
 flavor-complex-banana = как бананы
 flavor-complex-apple = как яблоки
 flavor-complex-cotton = как хлопок
-flavor-complex-bungo = как бунго
+flavor-complex-bungo = как тропическая сладость
 flavor-complex-raisins = как сушёный виноград
 flavor-complex-orange = как апельсины
 flavor-complex-watermelon = как арбуз
@@ -126,6 +127,7 @@ flavor-complex-vegetables = как овощи
 
 ## Complex foodstuffs (cooked foods, joke flavors, etc)
 
+flavor-complex-cherry = как вишня
 flavor-complex-pink = как розовый
 flavor-complex-curry = как карри
 flavor-complex-borsch-1 = как борщ
@@ -172,10 +174,16 @@ flavor-complex-light = как угасший свет
 
 flavor-complex-profits = как прибыль
 flavor-complex-fishops = как страшная рыбья операция
+flavor-complex-blue-pumpkin = как вода в бассейне
 flavor-complex-violets = как фиалки
 flavor-complex-pyrotton = как горящий рот
 flavor-complex-mothballs = как нафталиновые шарики
 flavor-complex-paint-thinner = как растворитель для краски
+flavor-complex-numbing-tranquility = как оцепенелое спокойствие
+flavor-complex-true-nature = как истинная природа реальности
+flavor-complex-false-meat = как не совсем не мясо
+flavor-complex-paper = как кашеобразная масса
+flavor-complex-compressed-meat = как спрессованное мясо
 flavor-complex-alcohol = как алкоголь
 flavor-complex-soda = как газировка
 flavor-complex-juice = как сок

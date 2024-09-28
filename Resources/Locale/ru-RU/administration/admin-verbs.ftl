@@ -15,3 +15,4 @@ admin-verbs-erase-description =
     Игроки увидят всплывающее окно, указывающее им играть как будто исчезнувшего никогда не существовало.
 toolshed-verb-mark = Отметить
 toolshed-verb-mark-description = Помещает данную сущность в переменную $marked, заменяя её предыдущее значение.
+export-entity-verb-get-data-text = Экспорт спрайта

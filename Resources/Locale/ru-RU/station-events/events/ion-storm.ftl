@@ -7,6 +7,7 @@ ion-storm-the-job = { CAPITALIZE($job) }
 ion-storm-clowns = КЛОУНЫ
 ion-storm-heads = ГЛАВЫ ОТДЕЛОВ
 ion-storm-crew = ЭКИПАЖ
+ion-storm-people = ЛЮДИ
 ion-storm-adjective-things = { $adjective } ОБЪЕКТЫ
 ion-storm-x-and-y = { $x } И { $y }
 # joined is short for {$number} {$adjective}

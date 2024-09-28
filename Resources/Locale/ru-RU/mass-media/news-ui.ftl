@@ -15,7 +15,8 @@ news-write-ui-articles-label = Статьи:
 news-write-ui-delete-text = Удалить
 news-write-ui-publish-text = Опубликовать
 news-write-ui-create-text = Создать
-news-write-ui-cancel-text = Отмена
+news-write-ui-cancel-text = Очистить
+news-write-ui-save-text = Сохранить
 news-write-ui-preview-text = Предпросмотр
 news-write-ui-article-count-0 = 0 статей
 news-write-ui-article-count-text =
@@ -39,4 +40,4 @@ news-write-ui-richtext-tooltip =
     { "[bullet/]color" }
     { "[bullet/]bullet[/color]" }
 news-pda-notification-header = Новая новостная статья
-news-publish-admin-announcement = { $actor } опубликовал(а) новостную статью { $title } за авторством { $author }"
+news-publish-admin-announcement = { $actor } опубликовал(а) новостную статью { $title } за авторством { $author }

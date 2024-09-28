@@ -74,3 +74,5 @@ ban-panel-erase = Стереть сообщения в чате и игрока 
 server-ban-string-never = никогда
 server-ban-string-no-pii = { $admin } установил серверный бан { $severity } тяжести, который истечёт { $expires } у { $name } с причиной: { $reason }
 cmd-ban_exemption_get-arg-player = <player>
+# Kick on ban
+ban-kick-reason = Вы были забанены

@@ -1,4 +1,4 @@
-generator-clogged = { $generator } резко отключается!
+generator-clogged = { CAPITALIZE($generator) } резко отключается!
 portable-generator-verb-start = Запустить генератор
 portable-generator-verb-start-msg-unreliable = Запуск генератора. Это может потребовать нескольких попыток.
 portable-generator-verb-start-msg-reliable = Запустить генератор.

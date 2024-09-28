@@ -6,4 +6,4 @@ objective-condition-steal-station = станция
 objective-condition-steal-Ian = корги главы персонала
 objective-condition-thief-description = { CAPITALIZE($itemName) } станет отличным пополнением моей коллекции!
 objective-condition-thief-animal-description = { CAPITALIZE($itemName) } станет отличным пополнением моей коллекции! Главное - живым.
-objective-condition-thief-multiply-description = Мне нужно собрать { $count } { $itemName } и увезти их с собой.
+objective-condition-thief-multiply-description = Мне нужно собрать { $count } { $itemName } (любых) и увезти их с собой.

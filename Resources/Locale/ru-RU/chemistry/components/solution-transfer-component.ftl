@@ -18,3 +18,5 @@ comp-solution-transfer-verb-toggle = Переключить на { $amount } е�
 ## Displayed after you successfully change a solution's amount using the BUI
 
 comp-solution-transfer-set-amount = Перемещаемое количество установлено на { $amount } ед.
+comp-solution-transfer-set-amount-max = Макс.: { $amount } ед.
+comp-solution-transfer-set-amount-min = Мин.: { $amount } ед.

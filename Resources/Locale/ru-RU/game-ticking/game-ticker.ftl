@@ -37,17 +37,16 @@ latejoin-arrival-announcement =
         [male] прибыл
         [female] прибыла
         [epicene] прибыли
-       *[neuter] прибыл
+       *[neuter] прибыло
     } на станцию!
+latejoin-arrival-announcement-special = { $job } { $character } на палубе!
 latejoin-arrival-sender = Станции
 latejoin-arrivals-direction = Вскоре прибудет шаттл, который доставит вас на станцию.
 latejoin-arrivals-direction-time = Шаттл, который доставит вас на станцию, прибудет через { $time }.
+latejoin-arrivals-dumped-from-shuttle = Таинственная сила не позволяет вам улететь на шаттле прибытия.
+latejoin-arrivals-teleport-to-spawn = Таинственная сила телепортирует вас с шаттла прибытия. Удачной смены!
 preset-not-enough-ready-players = Не удалось запустить пресет { $presetName }. Требуется { $minimumPlayers } игроков, но готовы только { $readyPlayersCount }.
 preset-no-one-ready = Не удалось запустить режим { $presetName }. Нет готовых игроков.
-latejoin-arrival-announcement-captain =
-    Все на борт! { $job } { $character } { $gender ->
-        [male] прибыл
-        [female] прибыла
-        [epicene] прибыли
-       *[neuter] прибыл
-    } на станцию!
+game-run-level-PreRoundLobby = Предраундовое лобби
+game-run-level-InRound = В раунде
+game-run-level-PostRound = После раунда

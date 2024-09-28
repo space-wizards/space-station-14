@@ -1,8 +1,5 @@
 ent-ClothingBackpackDuffelSurgeryFilled = хирургический вещмешок
     .desc = Большой вещевой мешок для хранения дополнительного медицинского снаряжения - похоже, этот мешок предназначен для хранения хирургических инструментов.
-ent-ClothingBackpackDuffelCBURNFilled = { ent-ClothingBackpackDuffelCBURN }
-    .suffix = Заполненный
-    .desc = { ent-ClothingBackpackDuffelCBURN.desc }
 # Corvax-HiddenDesc-Start
 ent-ClothingBackpackDuffelSyndicateFilledMedical = { ent-ClothingBackpackDuffelSyndicate }
     .desc = { ent-ClothingBackpackDuffelSyndicate.desc }
@@ -30,9 +27,6 @@ ent-ClothingBackpackDuffelSyndicateAmmoFilled = { ent-ClothingBackpackDuffelSynd
 
 # Corvax-HiddenDesc-End
 
-ent-ClothingBackpackDuffelSyndicateCostumeCentcom = вещмешок с костюмом представителя Центкома
-    .desc = Содержит полный комплект униформы представителя Центкома, гарнитуру и планшет. Гарнитура поставляется без ключа шифрования.
-    .suffix = НЕ МАППИТЬ
 ent-ClothingBackpackDuffelSyndicateCostumeClown = { ent-ClothingBackpackDuffelClown }
     .desc = { ent-ClothingBackpackDuffelClown.desc }
     .suffix = Синдикат
@@ -49,6 +43,8 @@ ent-ClothingBackpackDuffelSyndicateC4tBundle = { ent-ClothingBackpackDuffelSyndi
 ent-ClothingBackpackChameleonFill = { ent-ClothingBackpackDuffelSyndicate }
     .suffix = Заполненный, Хамелеон
     .desc = { ent-ClothingBackpackDuffelSyndicate.desc }
+ent-ClothingBackpackDuffelSyndicateRaidBundle = набор рейдерского костюма Синдиката
+    .desc = Содержит прочный рейдерский бронекостюм Синдиката.
 ent-ClothingBackpackDuffelSyndicateEVABundle = { ent-ClothingBackpackDuffelSyndicate }
     .suffix = набор EVA Синдиката
     .desc = { ent-ClothingBackpackDuffelSyndicate.desc }
@@ -63,12 +59,6 @@ ent-ClothingBackpackDuffelSyndicateHardsuitExtrasBundle = { ent-ClothingBackpack
     .desc = { ent-ClothingBackpackDuffelSyndicate.desc }
 ent-ClothingBackpackDuffelZombieBundle = { ent-ClothingBackpackDuffelSyndicate }
     .suffix = зомби набор Синдиката
-    .desc = { ent-ClothingBackpackDuffelSyndicate.desc }
-ent-ClothingBackpackDuffelSyndicateOperative = { ent-ClothingBackpackDuffelSyndicate }
-    .suffix = вещмешок оперативника
-    .desc = { ent-ClothingBackpackDuffelSyndicate.desc }
-ent-ClothingBackpackDuffelSyndicateOperativeMedic = { ent-ClothingBackpackDuffelSyndicate }
-    .suffix = вещмешок оперативника-медика
     .desc = { ent-ClothingBackpackDuffelSyndicate.desc }
 ent-ClothingBackpackDuffelSyndicateMedicalBundleFilled = { ent-ClothingBackpackDuffelSyndicate }
     .suffix = набор медикаментов

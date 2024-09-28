@@ -1,5 +1,7 @@
 ent-Window = окно
     .desc = Смотри не заляпай.
+ent-TintedWindow = матовое окно
+    .desc = { ent-Window.desc }
 ent-WindowRCDResistant = { ent-Window }
     .desc = { ent-Window.desc }
 ent-WindowDirectional = направленное окно

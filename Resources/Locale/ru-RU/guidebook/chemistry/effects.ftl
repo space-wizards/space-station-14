@@ -351,3 +351,13 @@ reagent-effect-guidebook-plant-robust-harvest =
         [1] Повышает
        *[other] повышают
     } потенцию растения путём { $increase } до максимума в { $limit }. Приводит к тому, что растение теряет свои семена, когда потенция достигает { $seedlesstreshold }. Попытка повысить потенцию свыше { $limit } может вызвать снижение урожайности с вероятностью 10%
+reagent-effect-guidebook-plant-seeds-add =
+    { $chance ->
+        [1] Восстанавливает
+       *[other] восстанавливают
+    } семена растения
+reagent-effect-guidebook-plant-seeds-remove =
+    { $chance ->
+        [1] Убирает
+       *[other] убирают
+    } семена из растения
