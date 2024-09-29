@@ -22,6 +22,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Communications
 {
@@ -38,6 +39,7 @@ namespace Content.Server.Communications
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly NavMapsystem _navMap = default!;
 
         private const float UIUpdateInterval = 5.0f;
 
@@ -262,7 +264,7 @@ namespace Content.Server.Communications
             Loc.TryGetString(comp.Title, out var title);
             title ??= comp.Title;
 
-            msg += $"\n{Loc.GetString("comms-console-announcement-sent-by")} {author} in {("location", FormattedMessage.RemoveMarkupOrThrow(_navMap.GetNearestBeaconString((uid, xform))))}";
+            msg += "\n" + Loc.GetString("comms-console-announcement-sent-by") + " " + author + "in " + FormattedMessage.RemoveMarkupOrThrow(_navMap.GetNearestBeaconString((uid, xform)));
             if (comp.Global)
             {
                 _chatSystem.DispatchGlobalAnnouncement(msg, title, announcementSound: comp.Sound, colorOverride: comp.Color);
