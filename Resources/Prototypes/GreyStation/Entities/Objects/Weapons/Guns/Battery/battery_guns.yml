@@ -1,6 +1,6 @@
 - type: entity
   name: energy gun
-  parent: BaseWeaponBattery
+  parent: [BaseWeaponBattery, BaseGrandTheftContraband]
   id: WeaponEnergyGun
   description: "A basic hybrid energy gun with two settings: disable and kill."
   components:
