@@ -13,7 +13,7 @@ namespace Content.Shared.Revenant.EntitySystems;
 /// </summary>
 public abstract class SharedCorporealSystem : EntitySystem
 {
-    [Dependency] protected readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
