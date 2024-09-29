@@ -26,6 +26,7 @@ using Content.Shared.Verbs;
 using Content.Shared.Wall;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
+using Robust.Shared.Enums;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
@@ -50,6 +51,7 @@ namespace Content.Shared.Interaction
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly INetManager _net = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly ISharedPlayerManager _player = default!;
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly RotateToFaceSystem _rotateToFaceSystem = default!;
@@ -83,6 +85,8 @@ namespace Content.Shared.Interaction
 
         public const float MaxRaycastRange = 100f;
 
+        private Dictionary<ICommonSession, GameTick> _lastInteraction = new();
+
         public delegate bool Ignored(EntityUid entity);
 
         public override void Initialize()
@@ -97,6 +101,8 @@ namespace Content.Shared.Interaction
             _wallMountQuery = GetEntityQuery<WallMountComponent>();
             _delayQuery = GetEntityQuery<UseDelayComponent>();
             _uiQuery = GetEntityQuery<ActivatableUIComponent>();
+
+            _player.PlayerStatusChanged += OnPlayerChange;
 
             SubscribeLocalEvent<BoundUserInterfaceCheckRangeEvent>(HandleUserInterfaceRangeCheck);
             SubscribeLocalEvent<BoundUserInterfaceMessageAttempt>(OnBoundInterfaceInteractAttempt);
@@ -122,8 +128,25 @@ namespace Content.Shared.Interaction
             InitializeBlocking();
         }
 
+        private void OnPlayerChange(object? sender, SessionStatusEventArgs e)
+        {
+            if (_net.IsClient)
+                return;
+
+            switch (e.NewStatus)
+            {
+                case SessionStatus.Disconnected:
+                    _lastInteraction.Remove(e.Session);
+                    break;
+                default:
+                    _lastInteraction[e.Session] = GameTick.Zero;
+                    break;
+            }
+        }
+
         public override void Shutdown()
         {
+            _player.PlayerStatusChanged -= OnPlayerChange;
             CommandBinds.Unregister<SharedInteractionSystem>();
             base.Shutdown();
         }
@@ -1279,6 +1302,18 @@ namespace Content.Shared.Interaction
             {
                 Log.Warning($"Client attempted interaction with a non-existent attached entity. Session={session},  entity={userEntity}");
                 return false;
+            }
+
+            // Rate limit
+            if (session != null && _lastInteraction.TryGetValue(session, out var lastInteract))
+            {
+                if (_gameTiming.CurTick == lastInteract)
+                {
+                    Log.Warning($"Client attempted repeated interactions in 1 tick. Session={session}");
+                    return false;
+                }
+
+                _lastInteraction[session] = _gameTiming.CurTick;
             }
 
             return true;
