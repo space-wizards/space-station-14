@@ -1,4 +1,5 @@
 using Content.Client.Stylesheets.Redux.SheetletConfigs;
+using Content.Client.UserInterface.Controls;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -7,7 +8,7 @@ using static Content.Client.Stylesheets.Redux.StylesheetHelpers;
 namespace Content.Client.Stylesheets.Redux.Sheetlets;
 
 [CommonSheetlet]
-public sealed class PanelSheetlet<T> : Sheetlet<T> where T: PalettedStylesheet, IButtonConfig
+public sealed class PanelSheetlet<T> : Sheetlet<T> where T : PalettedStylesheet, IButtonConfig
 {
     public override StyleRule[] GetRules(T sheet, object config)
     {
@@ -21,12 +22,6 @@ public sealed class PanelSheetlet<T> : Sheetlet<T> where T: PalettedStylesheet, 
         {
             BackgroundColor = sheet.SecondaryPalette.BackgroundDark,
         };
-        var boxDivider = new StyleBoxFlat
-        {
-            BackgroundColor = sheet.HighlightPalette.Base,
-            ContentMarginBottomOverride = 2,
-            ContentMarginLeftOverride = 2,
-        };
         var boxPositive = new StyleBoxFlat { BackgroundColor = sheet.PositivePalette.Background };
         var boxNegative = new StyleBoxFlat { BackgroundColor = sheet.NegativePalette.Background };
         var boxHighlight = new StyleBoxFlat { BackgroundColor = sheet.HighlightPalette.Background };
@@ -35,7 +30,6 @@ public sealed class PanelSheetlet<T> : Sheetlet<T> where T: PalettedStylesheet, 
         [
             E<PanelContainer>().Class(StyleClass.PanelLight).Panel(boxLight),
             E<PanelContainer>().Class(StyleClass.PanelDark).Panel(boxDark),
-            E<PanelContainer>().Class(StyleClass.HighDivider).Panel(boxDivider),
 
             E<PanelContainer>().Class(StyleClass.Positive).Panel(boxPositive),
             E<PanelContainer>().Class(StyleClass.Negative).Panel(boxNegative),
