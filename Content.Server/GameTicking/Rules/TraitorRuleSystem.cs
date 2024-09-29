@@ -1,3 +1,4 @@
+using Content.Server.Administration.Logs;
 using Content.Server.Antag;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind;
@@ -5,6 +6,7 @@ using Content.Server.Objectives;
 using Content.Server.PDA.Ringer;
 using Content.Server.Roles;
 using Content.Server.Traitor.Uplink;
+using Content.Shared.Database;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Mind;
 using Content.Shared.NPC.Systems;
@@ -25,6 +27,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
 {
     private static readonly Color TraitorCodewordColor = Color.FromHex("#cc3b3b");
 
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
@@ -58,6 +61,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
     private void SetCodewords(TraitorRuleComponent component)
     {
         component.Codewords = GenerateTraitorCodewords(component);
+        _adminLogger.Add(LogType.EventStarted, LogImpact.Low, $"Codewords generated: {string.Join(", ", component.Codewords)}");
     }
 
     public string[] GenerateTraitorCodewords(TraitorRuleComponent component)
