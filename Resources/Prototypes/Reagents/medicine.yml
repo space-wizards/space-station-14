@@ -1375,3 +1375,26 @@
       - !type:AdjustReagent
         reagent: MindbreakerToxin
         amount: -3.0
+
+- type: reagent
+  id: SalineGlucose
+  name: reagent-name-saline-glucose
+  desc: reagent-desc-saline-glucose
+  group: Medicine
+  physicalDesc: reagent-physical-desc-milky
+  flavor: sweet
+  color: "#c3d2e0"
+  metabolisms:
+    Drink:
+      effects:
+        - !type:SatiateThirst
+          factor: 7
+        - !type:ModifyBloodLevel
+          amount: 6.5
+    Medicine:
+      effects:
+        - !type:HealthChange
+        damage:
+          groups:
+            Brute: -1.05
+            Burn: -0.95
