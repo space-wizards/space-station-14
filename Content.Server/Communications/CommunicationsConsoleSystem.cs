@@ -39,7 +39,7 @@ namespace Content.Server.Communications
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly NavMapsystem _navMap = default!;
+        [Dependency] private readonly NavMapSystem _navMap = default!;
 
         private const float UIUpdateInterval = 5.0f;
 
