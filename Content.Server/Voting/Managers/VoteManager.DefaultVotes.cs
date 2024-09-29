@@ -452,7 +452,7 @@ namespace Content.Server.Voting.Managers
             _adminLogger.Add(LogType.Vote, LogImpact.Extreme, $"Votekick for {located.Username} ({targetEntityName}) due to {reason} started, initiated by {initiator}.");
 
             // Create Discord webhook
-            var webhookState = _voteWebhooks.CreateWebhookIfConfigured(options, _cfg.GetCVar(CCVars.DiscordVotekickWebhook), "Votekick held", options.Title + "\n" + "Initiator: " + initiatorName + "; Target: " + targetSession.ToString());
+            var webhookState = _voteWebhooks.CreateWebhookIfConfigured(options, _cfg.GetCVar(CCVars.DiscordVotekickWebhook), Loc.GetString("votekick-webhook-name"), options.Title + "\n" + Loc.GetString("votekick-webhook-description", ("initiator", initiatorName), ("target", targetSession)));
 
             // Time out the vote now that we know it will happen
             TimeoutStandardVote(StandardVoteType.Votekick);
@@ -492,7 +492,7 @@ namespace Content.Server.Voting.Managers
                     {
                         _adminLogger.Add(LogType.Vote, LogImpact.Extreme, $"Votekick for {located.Username} attempted to pass, but an admin was online. Yes: {votesYes} / No: {votesNo}. Yes: {yesVotersString} / No: {noVotersString}");
                         AnnounceCancelledVotekickForVoters(targetEntityName);
-                        _voteWebhooks.UpdateCancelledWebhookIfConfigured(webhookState, "**Vote cancelled due to admins online**");
+                        _voteWebhooks.UpdateCancelledWebhookIfConfigured(webhookState, Loc.GetString("votekick-webhook-cancelled-admin-online"));
                         return;
                     }
                     // Check if the target is an antag and the vote reason is raiding (this is to prevent false positives)
@@ -500,7 +500,7 @@ namespace Content.Server.Voting.Managers
                     {
                         _adminLogger.Add(LogType.Vote, LogImpact.Extreme, $"Votekick for {located.Username} due to {reason} finished, created by {initiator}, but was cancelled due to the target being an antagonist.");
                         AnnounceCancelledVotekickForVoters(targetEntityName);
-                        _voteWebhooks.UpdateCancelledWebhookIfConfigured(webhookState, "**Vote cancelled due to target being antag**");
+                        _voteWebhooks.UpdateCancelledWebhookIfConfigured(webhookState, Loc.GetString("votekick-webhook-cancelled-antag-target"));
                         return;
                     }
                     // Check if the target is an admin/de-admined admin
@@ -508,7 +508,7 @@ namespace Content.Server.Voting.Managers
                     {
                         _adminLogger.Add(LogType.Vote, LogImpact.Extreme, $"Votekick for {located.Username} due to {reason} finished, created by {initiator}, but was cancelled due to the target being a de-admined admin.");
                         AnnounceCancelledVotekickForVoters(targetEntityName);
-                        _voteWebhooks.UpdateCancelledWebhookIfConfigured(webhookState, "**Vote cancelled due to target being admin**");
+                        _voteWebhooks.UpdateCancelledWebhookIfConfigured(webhookState, Loc.GetString("votekick-webhook-cancelled-admin-target"));
                         return;
                     }
                     else
