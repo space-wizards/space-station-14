@@ -715,6 +715,7 @@
           Quantity: 90
   - type: SliceableFood
     count: 10
+    sliceTime: 5
     slice: FoodMeat #That's... So much meat
   - type: InternalTemperature
     conductivity: 0.43
@@ -1222,6 +1223,7 @@
           Quantity: 50
   - type: SliceableFood
     count: 10
+    sliceTime: 5
     slice: FoodMeatCooked
   - type: Construction
     graph: AnomalyMeatSteak
