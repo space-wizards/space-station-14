@@ -501,3 +501,28 @@
       amount: 1
   products:
     Tazinide: 1
+
+- type: reaction
+  id: Calomel
+  impact: Low
+  minTemp: 374
+  reactants:
+    Mercury:
+      amount: 1
+    Chlorine:
+      amount: 1
+  products:
+    Calomel: 2
+
+- type: reaction
+  id: AmmoniatedMercury
+  impact: Medium
+  minTemp: 336
+  reactants:
+    Calomel:
+      amount: 1
+    Ammonia:
+      amount: 2
+  products:
+    AmmoniatedMercury: 2
+    AmmoniatedSludge: 1

@@ -201,17 +201,3 @@
   effects:
     - !type:CreateEntityReactionEffect
       entity: MaterialGunpowder
-
-- type: reaction
-  id: AmmoniatedSludge
-  impact: Low
-  minTemp: 327
-  reactants:
-     Ammonia:
-       amount: 2
-     Slime:
-       amount: 1
-     Vomit:
-       amount: 2
-  products:
-     AmmoniatedSludge: 5
