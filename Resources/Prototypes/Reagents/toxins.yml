@@ -702,3 +702,23 @@
           shouldHave: false
         walkSpeedModifier: 0.4
         sprintSpeedModifier: 0.4
+
+- type: reagent
+  id: PolypniumSpores
+  name: reagent-name-polypnium-spores
+  desc: reagent-desc-polypnium-spores
+  group: Toxins
+  physicalDesc: reagent-physical-desc-sticky
+  color: "#768c89"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+          damage:
+            types:
+              Poison: 1.3
+              Asphyxiation: 0.5
+      - !type:Jitter
+      - !type:Emote
+        emote: Cough
+        probability: 0.3
