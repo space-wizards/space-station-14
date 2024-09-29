@@ -156,7 +156,7 @@ public sealed class SharedExecutionSystem : EntitySystem
         if (predict)
         {
             _popup.PopupClient(
-               Loc.GetString(locString, ("attacker", attacker), ("victim", Identity.Entity(victim, EntityManager)), ("weapon", weapon)),
+               Loc.GetString(locString, ("attacker", Identity.Entity(attacker, EntityManager)), ("victim", Identity.Entity(victim, EntityManager)), ("weapon", weapon)),
                attacker,
                attacker,
                PopupType.MediumCaution
@@ -165,7 +165,7 @@ public sealed class SharedExecutionSystem : EntitySystem
         else
         {
             _popup.PopupEntity(
-               Loc.GetString(locString, ("attacker", attacker), ("victim", Identity.Entity(victim, EntityManager)), ("weapon", weapon)),
+               Loc.GetString(locString, ("attacker", Identity.Entity(attacker, EntityManager)), ("victim", Identity.Entity(victim, EntityManager)), ("weapon", weapon)),
                attacker,
                attacker,
                PopupType.MediumCaution
@@ -176,7 +176,7 @@ public sealed class SharedExecutionSystem : EntitySystem
     private void ShowExecutionExternalPopup(string locString, EntityUid attacker, EntityUid victim, EntityUid weapon)
     {
         _popup.PopupEntity(
-            Loc.GetString(locString, ("attacker", attacker), ("victim", Identity.Entity(victim, EntityManager)), ("weapon", weapon)),
+            Loc.GetString(locString, ("attacker", Identity.Entity(attacker, EntityManager)), ("victim", Identity.Entity(victim, EntityManager)), ("weapon", weapon)),
             attacker,
             Filter.PvsExcept(attacker),
             true,
