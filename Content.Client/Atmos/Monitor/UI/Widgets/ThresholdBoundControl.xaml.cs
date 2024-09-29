@@ -1,4 +1,5 @@
 using Content.Client.Message;
+using Content.Client.Stylesheets.Redux;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Temperature;
@@ -42,11 +43,11 @@ public sealed partial class ThresholdBoundControl : BoxContainer
 
         if (enabled)
         {
-            CBoundLabel.RemoveStyleClass("Disabled");
+            CBoundLabel.RemoveStyleClass(StyleClass.LabelWeak);
         }
         else
         {
-            CBoundLabel.SetOnlyStyleClass("Disabled");
+            CBoundLabel.SetOnlyStyleClass(StyleClass.LabelWeak);
         }
     }
 
