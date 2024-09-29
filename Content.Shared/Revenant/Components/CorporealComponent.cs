@@ -10,6 +10,6 @@ public sealed partial class CorporealComponent : Component
     /// <summary>
     /// The debuff applied when the component is present.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public float MovementSpeedDebuff = 0.66f;
 }
