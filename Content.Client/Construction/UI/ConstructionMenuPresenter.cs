@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using Content.Client.UserInterface.Systems.MenuBar.Widgets;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Tag;
@@ -225,7 +226,8 @@ namespace Content.Client.Construction.UI
                     {
                         TextureNormal = item.Icon,
                         Name = recipe.Name,
-                        ToolTip = recipe.Description,
+                        ToolTip = recipe.Name,
+                        Scale = new Vector2(1.35f),
                     };
 
                     itemButton.OnPressed += _ =>
