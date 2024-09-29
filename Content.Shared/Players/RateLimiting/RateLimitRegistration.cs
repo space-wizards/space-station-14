@@ -8,7 +8,7 @@ namespace Content.Shared.Players.RateLimiting;
 /// Contains all data necessary to register a rate limit with <see cref="SharedPlayerRateLimitManager.Register"/>.
 /// </summary>
 public sealed class RateLimitRegistration(
-    CVarDef<int> cVarLimitPeriodLength,
+    CVarDef<float> cVarLimitPeriodLength,
     CVarDef<int> cVarLimitCount,
     Action<ICommonSession>? playerLimitedAction,
     CVarDef<int>? cVarAdminAnnounceDelay = null,
@@ -18,7 +18,7 @@ public sealed class RateLimitRegistration(
     /// <summary>
     /// CVar that controls the period over which the rate limit is counted, measured in seconds.
     /// </summary>
-    public readonly CVarDef<int> CVarLimitPeriodLength = cVarLimitPeriodLength;
+    public readonly CVarDef<float> CVarLimitPeriodLength = cVarLimitPeriodLength;
 
     /// <summary>
     /// CVar that controls how many actions are allowed in a single rate limit period.
