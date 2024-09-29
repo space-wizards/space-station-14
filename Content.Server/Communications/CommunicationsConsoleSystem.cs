@@ -264,7 +264,7 @@ namespace Content.Server.Communications
             Loc.TryGetString(comp.Title, out var title);
             title ??= comp.Title;
 
-            if (comp.ShowLocation = true)
+            if (comp.ShowLocation == true)
             {
                 msg += "\n" + Loc.GetString("comms-console-announcement-sent-by") + " " + author + " " + FormattedMessage.RemoveMarkupOrThrow(_navMap.GetNearestBeaconString((uid, null))) + ".";
             }

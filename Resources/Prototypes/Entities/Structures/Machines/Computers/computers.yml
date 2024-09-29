@@ -621,7 +621,7 @@
   - type: AccessReader
     access: [[ "Command" ]]
   - type: CommunicationsConsole
-    ShowLocation: true
+    showLocation: true
     title: comms-console-announcement-title-station
   - type: DeviceNetwork
     transmitFrequencyId: ShuttleTimer

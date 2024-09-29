@@ -59,7 +59,6 @@ namespace Content.Server.Communications
         /// <summary>
         /// Shows the location of the console used. (Physical consoles only.)
         /// </summary>
-        [ViewVariables]
         [DataField]
         public bool ShowLocation = false;
 
