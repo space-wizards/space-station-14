@@ -1,3 +1,4 @@
+using Content.Client.Stylesheets.Redux.SheetletConfigs;
 using Content.Client.UserInterface.Controls;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
@@ -7,34 +8,24 @@ using static Content.Client.Stylesheets.Redux.StylesheetHelpers;
 namespace Content.Client.Stylesheets.Redux.Sheetlets;
 
 [CommonSheetlet]
-public sealed class ListContainerSheetlet : Sheetlet<PalettedStylesheet>
+public sealed class ListContainerSheetlet<T> : Sheetlet<T> where T : PalettedStylesheet, IButtonConfig, IIconConfig
 {
-    public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
+    public override StyleRule[] GetRules(T sheet, object config)
     {
-        // TODO: why is this hardcoded???
+        IButtonConfig buttonCfg = sheet;
+
         var box = new StyleBoxFlat() { BackgroundColor = Color.White };
 
-        return
+        var rules = new List<StyleRule>(
         [
             E<ContainerButton>()
                 .Class(ListContainer.StyleClassListContainerButton)
                 .Box(box),
-            E<ContainerButton>()
-                .Class(ListContainer.StyleClassListContainerButton)
-                .PseudoNormal()
-                .Modulate(new Color(55, 55, 68)),
-            E<ContainerButton>()
-                .Class(ListContainer.StyleClassListContainerButton)
-                .PseudoHovered()
-                .Modulate(new Color(75, 75, 86)),
-            E<ContainerButton>()
-                .Class(ListContainer.StyleClassListContainerButton)
-                .PseudoPressed()
-                .Modulate(new Color(75, 75, 86)),
-            E<ContainerButton>()
-                .Class(ListContainer.StyleClassListContainerButton)
-                .PseudoDisabled()
-                .Modulate(new Color(10, 10, 12)),
-        ];
+        ]);
+        ButtonSheetlet<T>.MakeButtonRules<ContainerButton>(rules,
+            buttonCfg.ButtonPalette,
+            ListContainer.StyleClassListContainerButton);
+
+        return rules.ToArray();
     }
 }
