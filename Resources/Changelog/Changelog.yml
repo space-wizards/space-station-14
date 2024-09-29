@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Cojoke-dot
-  changes:
-  - message: Dead Space Dragons no long despawn
-    type: Fix
-  id: 6957
-  time: '2024-07-21T10:46:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29842
 - author: slarticodefast
   changes:
   - message: Fixed microwave construction.
@@ -3934,3 +3927,10 @@
   id: 7456
   time: '2024-09-29T15:18:09.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32444
+- author: CuteMoonGod
+  changes:
+  - message: Fixed execution system showing character name instead of their identity
+    type: Fix
+  id: 7457
+  time: '2024-09-29T22:36:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32536
