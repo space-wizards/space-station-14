@@ -470,8 +470,6 @@
           Quantity: 5
         - ReagentId: Vitamin
           Quantity: 4
-        - ReagentID: Oculine
-          Quantity: 3
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/carrot.rsi
   - type: Produce
@@ -481,8 +479,6 @@
       reagents:
       - ReagentId: JuiceCarrot
         Quantity: 10
-      - ReagentID: Oculine
-        Quantity: 2
   - type: FoodSequenceElement
     entries:
       Burger: CarrotBurger
