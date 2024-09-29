@@ -6,10 +6,10 @@ execution-verb-message = Use your weapon to execute someone.
 # victim (the person being executed)
 # weapon (the weapon used for the execution)
 
-execution-popup-melee-initial-internal = You ready {THE($weapon)} against {$victim}'s throat.
-execution-popup-melee-initial-external = {$attacker} readies {POSS-ADJ($attacker)} {$weapon} against the throat of {$victim}.
-execution-popup-melee-complete-internal = You slit the throat of {$victim}!
-execution-popup-melee-complete-external = {$attacker} slits the throat of {$victim}!
+execution-popup-melee-initial-internal = You ready {THE($weapon)} against {THE($victim)}'s throat.
+execution-popup-melee-initial-external = {$attacker} readies {POSS-ADJ($attacker)} {$weapon} against the throat of {THE($victim)}.
+execution-popup-melee-complete-internal = You slit the throat of {THE($victim)}!
+execution-popup-melee-complete-external = {$attacker} slits the throat of {THE($victim) }!
 
 execution-popup-self-initial-internal = You ready {THE($weapon)} against your own throat.
 execution-popup-self-initial-external = {$attacker} readies {POSS-ADJ($attacker)} {$weapon} against their own throat.
