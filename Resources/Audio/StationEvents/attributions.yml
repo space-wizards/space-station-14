@@ -19,12 +19,12 @@
   source: "https://youtube.com/watch?v=fihc2ONQ5v0"
   
 - files: ["roadkilla.ogg"]
-  license: "Custom. Suggested by neonannihilator"
+  license: "Custom"
   copyright: "Roadkilla (Combat X-Mix) by Jay Tholen"
   source: "https://www.youtube.com/watch?v=ZGo-MLA6YfU"
   
 - files: ["ruinous_intnt.ogg"]
-  license: "Custom. Suggested by Epitaff"
+  license: "Custom"
   copyright: "RUINOUS INTNT by NoisyRejects"
   source: "https://www.youtube.com/watch?v=22fCgKfzhWo"
 
