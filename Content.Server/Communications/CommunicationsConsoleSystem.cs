@@ -264,7 +264,14 @@ namespace Content.Server.Communications
             Loc.TryGetString(comp.Title, out var title);
             title ??= comp.Title;
 
-            msg += "\n" + Loc.GetString("comms-console-announcement-sent-by") + " " + author + " " + FormattedMessage.RemoveMarkupOrThrow(_navMap.GetNearestBeaconString((uid, null))) + ".";
+            if (comp.ShowLocation == true)
+            {
+                msg += "\n" + Loc.GetString("comms-console-announcement-sent-by") + " " + author + " " + FormattedMessage.RemoveMarkupOrThrow(_navMap.GetNearestBeaconString((uid, null))) + ".";
+            }
+            else
+            {
+                msg += "\n" + Loc.GetString("comms-console-announcement-sent-by") + " " + author;
+            }
             if (comp.Global)
             {
                 _chatSystem.DispatchGlobalAnnouncement(msg, title, announcementSound: comp.Sound, colorOverride: comp.Color);
