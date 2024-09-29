@@ -83,7 +83,14 @@
   - quantity: 10
     weight: 10
     reagents:
-    - SpaceDrugs
+    - SalineGlucose
+    - Ipecybin
+  - quantity: 5
+    weight: 3
+    reagents:
+    - PolypniumSpores
+    - SulfuricAcid
+    - Psicodine
 
 # Cooked Object
 - type: entity
