@@ -182,13 +182,47 @@
 
 
 - type: entity
-  id: SpaceHeater2
+  id: WeatherDevice1
   parent: [BaseMachinePowered, ConstructibleMachine]
-  name: space heater 2
-  description: A bluespace technology device that alters local temperature. Commonly referred to as a "Space Heater".
-  suffix: Unanchored
+  name:  weather device
   components:
   - type: WeatherDevice
+    enabled: true
+    defaultTickSpan: "00:00:05"
+    keyFramesByCycleState:
+      "00:00:00":
+        targetTemperature: 293.16
+      "00:00:15":
+        targetTemperature: 283.16
+      "00:00:45":
+        targetTemperature: 273.16
+        setWeatherTo: SnowfallLight
+      "00:01:00":
+        targetTemperature: 250
+      "00:01:30":
+        targetTemperature: 240
+        setWeatherTo: SnowfallMedium
+      "00:01:45":
+        targetTemperature: 230
+        setWeatherTo: SnowfallHeavy
+      "00:02:00":
+        targetTemperature: 230
+      "00:02:15":
+        targetTemperature: 240
+        setWeatherTo: SnowfallMedium
+      "00:02:30":
+        targetTemperature: 250
+        setWeatherTo: SnowfallLight
+      "00:03:00":
+        targetTemperature: 260
+        resetWeather: true
+      "00:03:15":
+        targetTemperature: 273.16
+      "00:03:45":
+        targetTemperature: 283.16
+      "00:04:00":
+        targetTemperature: 293.16
+
   - type: StationAiWhitelist
   - type: Transform
     anchored: false
@@ -241,31 +275,6 @@
   - type: GasThermoMachine
     temperatureTolerance: 0.2
     atmospheric: true
-  - type: Damageable
-    damageContainer: StructuralInorganic
-    damageModifierSet: Metallic
-  - type: Destructible
-    thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 600
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
-      - trigger:
-          !type:DamageTrigger
-          damage: 300
-        behaviors:
-          - !type:PlaySoundBehavior
-            sound:
-              collection: MetalBreak
-          - !type:SpawnEntitiesBehavior
-            spawn:
-              SheetSteel1:
-                min: 1
-                max: 3
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
 
 - type: entity
   parent: SpaceHeater
