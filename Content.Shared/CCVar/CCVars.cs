@@ -1851,19 +1851,12 @@ namespace Content.Shared.CCVar
         /// <see cref="ChatRateLimitCount"/> divided by <see cref="ChatRateLimitCount"/>.
         /// </remarks>
         /// <seealso cref="ChatRateLimitPeriod"/>
-        /// <seealso cref="ChatRateLimitAnnounceAdmins"/>
         public static readonly CVarDef<int> ChatRateLimitCount =
             CVarDef.Create("chat.rate_limit_count", 10, CVar.SERVERONLY);
 
         /// <summary>
-        /// If true, announce when a player breached chat rate limit to game administrators.
-        /// </summary>
-        /// <seealso cref="ChatRateLimitAnnounceAdminsDelay"/>
-        public static readonly CVarDef<bool> ChatRateLimitAnnounceAdmins =
-            CVarDef.Create("chat.rate_limit_announce_admins", true, CVar.SERVERONLY);
-
-        /// <summary>
-        /// Minimum delay (in seconds) between announcements from <see cref="ChatRateLimitAnnounceAdmins"/>.
+        /// Minimum delay (in seconds) between notifying admins about chat message rate limit violations.
+        /// A negative value disables admin announcements.
         /// </summary>
         public static readonly CVarDef<int> ChatRateLimitAnnounceAdminsDelay =
             CVarDef.Create("chat.rate_limit_announce_admins_delay", 15, CVar.SERVERONLY);

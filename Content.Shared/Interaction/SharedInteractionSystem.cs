@@ -16,8 +16,8 @@ using Content.Shared.Item;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Physics;
+using Content.Shared.Players.RateLimiting;
 using Content.Shared.Popups;
-using Content.Shared.Silicons.StationAi;
 using Content.Shared.Storage;
 using Content.Shared.Tag;
 using Content.Shared.Timing;
@@ -64,6 +64,7 @@ namespace Content.Shared.Interaction
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
         [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
+        [Dependency] private readonly SharedPlayerRateLimitManager _rateLimit = default!;
 
         private EntityQuery<IgnoreUIRangeComponent> _ignoreUiRangeQuery;
         private EntityQuery<FixturesComponent> _fixtureQuery;
@@ -1280,6 +1281,8 @@ namespace Content.Shared.Interaction
                 Log.Warning($"Client attempted interaction with a non-existent attached entity. Session={session},  entity={userEntity}");
                 return false;
             }
+
+
 
             return true;
         }
