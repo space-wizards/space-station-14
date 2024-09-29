@@ -689,7 +689,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             var chance = MathHelper.Clamp(0.01f + (sum / SpacingMaxWind) * 0.3f, 0.003f, 0.3f);
 
-            if (sum > 20 && _robustRandom.Prob(chance))
+            if (sum > 20 && _random.Prob(chance))
                 PryTile(mapGrid, tile.GridIndices);
         }
 

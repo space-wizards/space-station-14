@@ -397,7 +397,8 @@ public sealed partial class ShuttleSystem
                 new EntityCoordinates(fromMapUid.Value, _mapSystem.GetGridPosition(entity.Owner)), true, startupAudio.Params);
 
             _audio.SetPlaybackPosition(clippedAudio, entity.Comp1.StartupTime);
-            clippedAudio.Value.Component.Flags |= AudioFlags.NoOcclusion;
+            if (clippedAudio != null)
+                clippedAudio.Value.Component.Flags |= AudioFlags.NoOcclusion;
         }
 
         // Offset the start by buffer range just to avoid overlap.

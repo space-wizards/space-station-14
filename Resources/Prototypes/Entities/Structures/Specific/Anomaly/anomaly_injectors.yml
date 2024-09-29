@@ -1,0 +1,320 @@
+- type: entity
+  name: anomaly injector
+  parent: MarkerBase
+  id: BaseAnomalyInjector
+  abstract: true
+  components:
+  - type: Physics
+    bodyType: Static
+    fixedRotation: true
+  - type: AmbientSound
+    range: 5
+    volume: -5
+    sound:
+      path: /Audio/Ambience/anomaly_drone.ogg
+  - type: Fixtures
+    fixtures:
+      anom:
+        shape:
+          !type:PhysShapeCircle
+          radius: 2.27 # i love 27
+        hard: false
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: InnerBodyAnomalyInjector
+    whitelist:
+      tags:
+      - AnomalyHost
+
+- type: entity
+  parent: BaseAnomalyInjector
+  id: AnomalyTrapPyroclastic
+  suffix: Pyroclastic
+  components:
+  - type: Sprite
+    layers:
+    - state: pink
+    - sprite: Structures/Specific/Anomalies/pyro_anom.rsi
+      state: pulse
+    - sprite: Mobs/Species/Human/parts.rsi
+      state: full
+  - type: InnerBodyAnomalyInjector
+    injectionComponents:
+      - type: Anomaly
+        deleteEntity: false
+        maxPointsPerSecond: 100
+        corePrototype: AnomalyCorePyroclastic
+      - type: InnerBodyAnomaly
+        injectionProto: AnomalyInjectionPyroclastic
+        startMessage: inner-anomaly-start-message-pyro
+        fallbackSprite:
+          sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+          state: fire
+        speciesSprites:
+          Vox:
+            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+            state: fire_VOX
+
+- type: entity
+  parent: BaseAnomalyInjector
+  id: AnomalyTrapElectricity
+  suffix: Electricity
+  components:
+  - type: Sprite
+    layers:
+    - state: pink
+    - sprite: Structures/Specific/anomaly.rsi
+      state: anom3-pulse
+    - sprite: Mobs/Species/Human/parts.rsi
+      state: full
+  - type: InnerBodyAnomalyInjector
+    injectionComponents:
+      - type: Anomaly
+        deleteEntity: false
+        maxPointsPerSecond: 100
+        corePrototype: AnomalyCoreElectricity
+      - type: InnerBodyAnomaly
+        injectionProto: AnomalyInjectionElectric
+        startMessage: inner-anomaly-start-message-shock
+        fallbackSprite:
+          sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+          state: shock
+        speciesSprites:
+          Vox:
+            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+            state: shock_VOX
+
+- type: entity
+  parent: BaseAnomalyInjector
+  id: AnomalyTrapShadow
+  suffix: Shadow
+  components:
+  - type: Sprite
+    layers:
+    - state: pink
+    - sprite: Structures/Specific/Anomalies/shadow_anom.rsi
+      state: pulse
+    - sprite: Mobs/Species/Human/parts.rsi
+      state: full
+  - type: InnerBodyAnomalyInjector
+    injectionComponents:
+      - type: Anomaly
+        deleteEntity: false
+        maxPointsPerSecond: 100
+        corePrototype: AnomalyCoreShadow
+      - type: InnerBodyAnomaly
+        injectionProto: AnomalyInjectionShadow
+        startMessage: inner-anomaly-start-message-shadow
+        fallbackSprite:
+          sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+          state: shadow
+        speciesSprites:
+          Vox:
+            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+            state: shadow_VOX
+
+- type: entity
+  parent: BaseAnomalyInjector
+  id: AnomalyTrapIce
+  suffix: Ice
+  components:
+  - type: Sprite
+    layers:
+    - state: pink
+    - sprite: Structures/Specific/Anomalies/ice_anom.rsi
+      state: pulse
+    - sprite: Mobs/Species/Human/parts.rsi
+      state: full
+  - type: InnerBodyAnomalyInjector
+    injectionComponents:
+      - type: Anomaly
+        deleteEntity: false
+        maxPointsPerSecond: 100
+        corePrototype: AnomalyCoreIce
+      - type: InnerBodyAnomaly
+        injectionProto: AnomalyInjectionIce
+        startMessage: inner-anomaly-start-message-frost
+        fallbackSprite:
+          sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+          state: frost
+        speciesSprites:
+          Vox:
+            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+            state: frost_VOX
+
+- type: entity
+  parent: BaseAnomalyInjector
+  id: AnomalyTrapFlora
+  suffix: Flora
+  components:
+  - type: Sprite
+    layers:
+    - state: pink
+    - sprite: Structures/Specific/Anomalies/flora_anom.rsi
+      state: pulse
+    - sprite: Mobs/Species/Human/parts.rsi
+      state: full
+  - type: InnerBodyAnomalyInjector
+    injectionComponents:
+      - type: Anomaly
+        deleteEntity: false
+        maxPointsPerSecond: 100
+        corePrototype: AnomalyCoreFlora
+      - type: InnerBodyAnomaly
+        injectionProto: AnomalyInjectionFlora
+        startMessage: inner-anomaly-start-message-flora
+        fallbackSprite:
+          sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+          state: flora
+        speciesSprites:
+          Vox:
+            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+            state: flora_VOX
+
+- type: entity
+  parent: BaseAnomalyInjector
+  id: AnomalyTrapBluespace
+  suffix: Bluespace
+  components:
+  - type: Sprite
+    layers:
+    - state: pink
+    - sprite: Structures/Specific/anomaly.rsi
+      state: anom4-pulse
+    - sprite: Mobs/Species/Human/parts.rsi
+      state: full
+  - type: InnerBodyAnomalyInjector
+    injectionComponents:
+      - type: Anomaly
+        deleteEntity: false
+        maxPointsPerSecond: 100
+        corePrototype: AnomalyCoreBluespace
+      - type: InnerBodyAnomaly
+        injectionProto: AnomalyInjectionBluespace
+        startMessage: inner-anomaly-start-message-bluespace
+        fallbackSprite:
+          sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+          state: bluespace
+        speciesSprites:
+          Vox:
+            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+            state: bluespace_VOX
+
+- type: entity
+  parent: BaseAnomalyInjector
+  id: AnomalyTrapFlesh
+  suffix: Flesh
+  components:
+  - type: Sprite
+    layers:
+    - state: pink
+    - sprite: Structures/Specific/anomaly.rsi
+      state: anom5-pulse
+    - sprite: Mobs/Species/Human/parts.rsi
+      state: full
+  - type: InnerBodyAnomalyInjector
+    injectionComponents:
+      - type: Anomaly
+        deleteEntity: false
+        maxPointsPerSecond: 100
+        corePrototype: AnomalyCoreFlesh
+      - type: InnerBodyAnomaly
+        injectionProto: AnomalyInjectionFlesh
+        startMessage: inner-anomaly-start-message-flesh
+        fallbackSprite:
+          sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+          state: flesh
+        speciesSprites:
+          Vox:
+            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+            state: flesh_VOX
+
+- type: entity
+  parent: BaseAnomalyInjector
+  id: AnomalyTrapGravity
+  suffix: Gravity
+  components:
+  - type: Sprite
+    layers:
+    - state: pink
+    - sprite: Structures/Specific/anomaly.rsi
+      state: anom2-pulse
+    - sprite: Mobs/Species/Human/parts.rsi
+      state: full
+  - type: InnerBodyAnomalyInjector
+    injectionComponents:
+      - type: Anomaly
+        deleteEntity: false
+        maxPointsPerSecond: 100
+        corePrototype: AnomalyCoreGravity
+      - type: InnerBodyAnomaly
+        injectionProto: AnomalyInjectionGravity
+        startMessage: inner-anomaly-start-message-grav
+        fallbackSprite:
+          sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+          state: grav
+        speciesSprites:
+          Vox:
+            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+            state: grav_VOX
+
+- type: entity
+  parent: BaseAnomalyInjector
+  id: AnomalyTrapTech
+  suffix: Tech
+  components:
+  - type: Sprite
+    layers:
+    - state: pink
+    - sprite: Structures/Specific/Anomalies/tech_anom.rsi
+      state: pulse
+    - sprite: Mobs/Species/Human/parts.rsi
+      state: full
+  - type: InnerBodyAnomalyInjector
+    injectionComponents:
+      - type: Anomaly
+        deleteEntity: false
+        maxPointsPerSecond: 100
+        corePrototype: AnomalyCoreTech
+      - type: InnerBodyAnomaly
+        injectionProto: AnomalyInjectionTech
+        startMessage: inner-anomaly-start-message-tech
+        fallbackSprite:
+          sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+          state: tech
+        speciesSprites:
+          Vox:
+            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+            state: tech_VOX
+
+- type: entity
+  parent: BaseAnomalyInjector
+  id: AnomalyTrapRock
+  suffix: Rock
+  components:
+  - type: Sprite
+    layers:
+    - state: pink
+    - sprite: Structures/Specific/anomaly.rsi
+      state: anom6-pulse
+      color: "#5ca8cb"
+    - sprite: Mobs/Species/Human/parts.rsi
+      state: full
+  - type: InnerBodyAnomalyInjector
+    injectionComponents:
+      - type: Anomaly
+        deleteEntity: false
+        maxPointsPerSecond: 100
+        corePrototype: AnomalyCoreRock
+      - type: InnerBodyAnomaly
+        injectionProto: AnomalyInjectionRock
+        startMessage: inner-anomaly-start-message-rock
+        fallbackSprite:
+          sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+          state: rock
+        speciesSprites:
+          Vox:
+            sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+            state: rock_VOX

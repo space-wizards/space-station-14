@@ -166,6 +166,9 @@ uplink-syndicate-martyr-module-desc = Turn your emagged borg friend into a walki
 uplink-singularity-beacon-name = Singularity Beacon
 uplink-singularity-beacon-desc = A device that attracts singularities. Has to be anchored and powered. Causes singularities to grow when consumed.
 
+uplink-antimov-law-name = Antimov Law Circuit
+uplink-antimov-law-desc = A very dangerous Lawset to use when you want to cause the A.I. to go haywire, use with caution.
+
 # Implants
 uplink-storage-implanter-name = Storage Implanter
 uplink-storage-implanter-desc = Hide goodies inside of yourself with new bluespace technology!
