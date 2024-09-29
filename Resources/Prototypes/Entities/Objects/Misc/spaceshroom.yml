@@ -84,22 +84,6 @@
     weight: 10
     reagents:
     - SpaceDrugs
-  - quantity: 0
-    weight: 5
-    reagents:
-    - Water
-  - quantity: 10
-    weight: 3
-    reagents:
-    - Ephedrine
-  - quantity: 10
-    weight: 1
-    reagents:
-    - Lexorin
-  - quantity: 15
-    weight: 1
-    reagents:
-    - Amatoxin
 
 # Cooked Object
 - type: entity
