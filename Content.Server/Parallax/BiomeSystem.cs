@@ -11,6 +11,7 @@ using Content.Server.Shuttles.Systems;
 using Content.Shared.Atmos;
 using Content.Shared.Decals;
 using Content.Shared.Gravity;
+using Content.Shared.Light.Components;
 using Content.Shared.Parallax.Biomes;
 using Content.Shared.Parallax.Biomes.Layers;
 using Content.Shared.Parallax.Biomes.Markers;
@@ -1005,8 +1006,8 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         // Moonlight: #2b3143
         // Lava: #A34931
 
-        var light = EnsureComp<MapLightComponent>(mapUid);
-        light.AmbientLightColor = mapLight ?? Color.FromHex("#D8B059");
+        var light = EnsureComp<PlanetLightComponent>(mapUid);
+        light.Color = mapLight ?? Color.FromHex("#D8B059");
         Dirty(mapUid, light, metadata);
 
         var moles = new float[Atmospherics.AdjustedNumberOfGases];
