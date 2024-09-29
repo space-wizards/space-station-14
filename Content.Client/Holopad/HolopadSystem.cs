@@ -98,11 +98,21 @@ public sealed class HolopadSystem : SharedHolopadSystem
         for (int i = hologramSprite.AllLayers.Count() - 1; i >= 0; i--)
             hologramSprite.RemoveLayer(i);
 
-        for (int i = 0; i < ev.SpriteLayerData.Length; i++)
+        var spriteData = ev.SpriteLayerData;
+
+        if (spriteData.Length == 0 &&
+            !string.IsNullOrEmpty(holopadhologram.RsiPath) &&
+            !string.IsNullOrEmpty(holopadhologram.RsiState))
+        {
+            spriteData = new SpriteLayerDatum[1];
+            spriteData[0] = new SpriteLayerDatum(holopadhologram.RsiPath, holopadhologram.RsiState);
+        }
+
+        for (int i = 0; i < spriteData.Length; i++)
         {
             var layer = new PrototypeLayerData();
-            layer.RsiPath = ev.SpriteLayerData[i].RSIPath;
-            layer.State = ev.SpriteLayerData[i].RSIState;
+            layer.RsiPath = spriteData[i].RSIPath;
+            layer.State = spriteData[i].RSIState;
             layer.Shader = "unshaded";
 
             hologramSprite.AddLayer(layer, i);
@@ -114,8 +124,8 @@ public sealed class HolopadSystem : SharedHolopadSystem
     private void UpdateShader(EntityUid uid, SpriteComponent sprite, HolopadHologramComponent holopadHologram)
     {
         var instance = _prototypeManager.Index<ShaderPrototype>(holopadHologram.ShaderName).InstanceUnique();
-        instance.SetParameter("color1", new Robust.Shared.Maths.Vector3(holopadHologram.Color1.R, holopadHologram.Color1.G, holopadHologram.Color1.B));
-        instance.SetParameter("color2", new Robust.Shared.Maths.Vector3(holopadHologram.Color2.R, holopadHologram.Color2.G, holopadHologram.Color2.B));
+        instance.SetParameter("color1", new Vector3(holopadHologram.Color1.R, holopadHologram.Color1.G, holopadHologram.Color1.B));
+        instance.SetParameter("color2", new Vector3(holopadHologram.Color2.R, holopadHologram.Color2.G, holopadHologram.Color2.B));
         instance.SetParameter("alpha", holopadHologram.Alpha);
         instance.SetParameter("intensity", holopadHologram.Intensity);
 

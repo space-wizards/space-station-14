@@ -6,6 +6,9 @@ using Content.Server.Speech;
 using Content.Server.Speech.Components;
 using Content.Server.VoiceMask;
 using Content.Shared.Chat;
+using Content.Shared.Database;
+using Content.Shared.Mind.Components;
+using Content.Shared.Power;
 using Content.Shared.Speech;
 using Content.Shared.Telephone;
 using Robust.Server.GameObjects;
@@ -16,13 +19,7 @@ using System;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Replays;
-
 using System.Linq;
-using Content.Shared.Database;
-using Content.Shared.Mind.Components;
-using Content.Shared.Holopad;
-using Content.Shared.Power;
-using Content.Server.Power.Components;
 
 namespace Content.Server.Telephone;
 
@@ -149,7 +146,7 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
         _recentChatMessages.Clear();
     }
 
-    public void BroadcastCallToTelephones(Entity<TelephoneComponent> source, HashSet<Entity<TelephoneComponent>> receivers, EntityUid? user = null, bool isEmergency = false)
+    public void BroadcastCallToTelephones(Entity<TelephoneComponent> source, HashSet<Entity<TelephoneComponent>> receivers, EntityUid user, bool isEmergency = false)
     {
         if (IsTelephoneEngaged(source))
             return;
@@ -168,11 +165,12 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
             EndTelephoneCalls(source);
     }
 
-    public void CallTelephone(Entity<TelephoneComponent> source, Entity<TelephoneComponent> receiver, EntityUid? user = null, TelephoneCallOptions? options = null)
+    public void CallTelephone(Entity<TelephoneComponent> source, Entity<TelephoneComponent> receiver, EntityUid user, TelephoneCallOptions? options = null)
     {
         if (source == receiver ||
             IsTelephoneEngaged(source) ||
-            !this.IsPowered(source, EntityManager))
+            !this.IsPowered(source, EntityManager) ||
+            !IsSourceInRangeOfReceiver(source, receiver))
             return;
 
         // If a connection cannot be made, time out the telephone
@@ -224,13 +222,14 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
         RaiseLocalEvent(source, ref evCall);
     }
 
-    public void AnswerTelephone(Entity<TelephoneComponent> receiver)
+    public void AnswerTelephone(Entity<TelephoneComponent> receiver, EntityUid user)
     {
         if (receiver.Comp.CurrentState != TelephoneState.Ringing)
             return;
 
         // If the telephone isn't linked, or is linked to more than one telephone,
-        // you shouldn't need to answer
+        // you shouldn't need to answer the call. If you do need to answer,
+        // it needs to be handled in a different way
         if (receiver.Comp.LinkedTelephones.Count != 1)
             return;
 

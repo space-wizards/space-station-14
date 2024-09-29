@@ -1,12 +1,12 @@
 using Content.Server.Interaction;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Telephone;
+using Content.Shared.Audio;
 using Content.Shared.Chat.TypingIndicator;
 using Content.Shared.Holopad;
 using Content.Shared.Inventory;
 using Content.Shared.Telephone;
 using Robust.Server.GameObjects;
-using Robust.Server.GameStates;
 using Robust.Shared.Timing;
 using System;
 using System.Collections.Generic;
@@ -21,6 +21,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
     [Dependency] private readonly TransformSystem _xformSystem = default!;
     [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly SharedPointLightSystem _pointLightSystem = default!;
+    [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly InteractionSystem _interactionSystem = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
@@ -88,7 +89,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
 
         LinkHolopadToUser(holopad, args.Actor);
 
-        _telephoneSystem.AnswerTelephone((holopad, holopadTelephone));
+        _telephoneSystem.AnswerTelephone((holopad, holopadTelephone), args.Actor);
     }
 
     private void OnHolopadEndCall(Entity<HolopadComponent> holopad, ref HolopadEndCallMessage args)
@@ -101,19 +102,26 @@ public sealed class HolopadSystem : SharedHolopadSystem
 
     private void OnHoloCall(Entity<HolopadComponent> holopad, ref TelephoneCallEvent args)
     {
-        if (TryComp<PointLightComponent>(holopad, out var pointLight))
-            _pointLightSystem.SetEnabled(holopad, this.IsPowered(holopad, EntityManager), pointLight);
+        SetHolopadEnviron(holopad, this.IsPowered(holopad, EntityManager));
     }
 
     private void OnHoloCallCommenced(Entity<HolopadComponent> holopad, ref TelephoneCallCommencedEvent args)
     {
-        if (TryComp<PointLightComponent>(holopad, out var pointLight))
-            _pointLightSystem.SetEnabled(holopad, this.IsPowered(holopad, EntityManager), pointLight);
+        SetHolopadEnviron(holopad, this.IsPowered(holopad, EntityManager));
 
         if (holopad.Comp.Hologram == null)
             GenerateHologram(holopad);
 
-        LinkHolopadToUser(holopad, holopad.Comp.User);
+        if (holopad.Comp.User != null)
+        {
+            RequestHolopadUserSpriteUpdate(holopad.Comp.User.Value);
+        }
+
+        else
+        {
+            var ev = new PlayerSpriteStateMessage(GetNetEntity(holopad), Array.Empty<SpriteLayerDatum>());
+            RaiseNetworkEvent(ev);
+        }
     }
 
     private void OnHoloCallEnded(Entity<HolopadComponent> holopad, ref TelephoneCallEndedEvent args)
@@ -123,10 +131,8 @@ public sealed class HolopadSystem : SharedHolopadSystem
 
     private void OnHoloCallTerminated(Entity<HolopadComponent> holopad, ref TelephoneCallTerminatedEvent args)
     {
-        if (TryComp<PointLightComponent>(holopad, out var pointLight))
-            _pointLightSystem.SetEnabled(holopad, false, pointLight);
-
         ShutDownHolopad(holopad);
+        SetHolopadEnviron(holopad, false);
     }
 
     private void OnTelephoneMessageSent(Entity<HolopadComponent> holopad, ref TelephoneMessageSentEvent args)
@@ -203,13 +209,15 @@ public sealed class HolopadSystem : SharedHolopadSystem
         {
             _updateTimer -= UpdateTime;
 
-            var query = AllEntityQuery<HolopadComponent, TelephoneComponent>();
-            while (query.MoveNext(out var ent, out var holopad, out var telephone))
+            var query = AllEntityQuery<HolopadComponent, TelephoneComponent, TransformComponent>();
+            while (query.MoveNext(out var ent, out var entHolopad, out var entTelephone, out var entXform))
             {
-                if (!_userInterfaceSystem.IsUiOpen(ent, HolopadUiKey.Key))
-                    continue;
+                if (_userInterfaceSystem.IsUiOpen(ent, HolopadUiKey.Key))
+                    UpdateUIState((ent, entHolopad), entTelephone);
 
-                UpdateUIState((ent, holopad), telephone);
+                if (entHolopad.User != null &&
+                    !_xformSystem.InRange((entHolopad.User.Value, Transform(entHolopad.User.Value)), (ent, entXform), entTelephone.ListeningRange))
+                    UnlinkHolopadFromUser((ent, entHolopad), entHolopad.User.Value);
             }
         }
 
@@ -262,24 +270,29 @@ public sealed class HolopadSystem : SharedHolopadSystem
         if (user == null)
             return;
 
-        if (!TryComp<HolopadUserComponent>(user, out var userComp))
+        if (!TryComp<HolopadUserComponent>(user.Value, out var userComp))
             userComp = AddComp<HolopadUserComponent>(user.Value);
 
         if (user != holopad.Comp.User?.Owner)
         {
-            UnlinkHolopadFromUser(holopad, holopad.Comp.User, false);
+            UnlinkHolopadFromUser(holopad, holopad.Comp.User);
             userComp.LinkedHolopads.Add(holopad);
             holopad.Comp.User = (user.Value, userComp);
         }
 
-        if (_pendingRequestsForSpriteState.Add(user.Value))
+        RequestHolopadUserSpriteUpdate((user.Value, userComp));
+    }
+
+    private void RequestHolopadUserSpriteUpdate(Entity<HolopadUserComponent> user)
+    {
+        if (_pendingRequestsForSpriteState.Add(user))
         {
-            var ev = new PlayerSpriteStateRequest(GetNetEntity(user.Value));
+            var ev = new PlayerSpriteStateRequest(GetNetEntity(user));
             RaiseNetworkEvent(ev);
         }
     }
 
-    private void UnlinkHolopadFromUser(Entity<HolopadComponent> holopad, Entity<HolopadUserComponent>? user, bool sync = true)
+    private void UnlinkHolopadFromUser(Entity<HolopadComponent> holopad, Entity<HolopadUserComponent>? user)
     {
         if (user == null)
             return;
@@ -289,7 +302,12 @@ public sealed class HolopadSystem : SharedHolopadSystem
         foreach (var linkedHolopad in GetLinkedHolopads(holopad))
         {
             if (linkedHolopad.Comp.Hologram != null)
+            {
                 _appearanceSystem.SetData(linkedHolopad.Comp.Hologram.Value.Owner, TypingIndicatorVisuals.IsTyping, false);
+
+                var ev = new PlayerSpriteStateMessage(GetNetEntity(linkedHolopad.Comp.Hologram.Value), Array.Empty<SpriteLayerDatum>());
+                RaiseNetworkEvent(ev);
+            }
         }
 
         if (!HasComp<HolopadUserComponent>(user))
@@ -346,5 +364,14 @@ public sealed class HolopadSystem : SharedHolopadSystem
         }
 
         return linkedHolopads;
+    }
+
+    private void SetHolopadEnviron(Entity<HolopadComponent> holopad, bool isEnabled)
+    {
+        if (TryComp<PointLightComponent>(holopad, out var pointLight))
+            _pointLightSystem.SetEnabled(holopad, isEnabled, pointLight);
+
+        if (TryComp<AmbientSoundComponent>(holopad, out var ambientSound))
+            _ambientSoundSystem.SetAmbience(holopad, isEnabled, ambientSound);
     }
 }

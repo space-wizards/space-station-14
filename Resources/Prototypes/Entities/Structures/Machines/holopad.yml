@@ -1,8 +1,8 @@
 - type: entity
-  parent: BaseMachinePowered
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
   id: Holopad
   name: holopad
-  description: "It's a floor-mounted device for projecting holographic images."
+  description: "A floor-mounted device for projecting holographic images."
   components:
   - type: Transform
     anchored: true
@@ -10,8 +10,8 @@
     fixtures:
       fix1:
         shape:
-          !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.5,0.5"
+          !type:PhysShapeCircle
+          radius: 0.25
         mask:
         - SubfloorMask
         layer:
@@ -37,13 +37,19 @@
           Ringing: { state: lights_ringing }
           InCall: { state: lights_in_call }
           EndingCall: { state: lights_hanging_up }
-#  - type: Machine
-#    board: HotplateMachineCircuitboard
+  - type: Machine
+    board: HolopadMachineCircuitboard
   - type: PointLight
     radius: 1.3
     energy: 1.8
     color: "#afe1fe"
     enabled: false
+  - type: AmbientSound
+    enabled: false
+    volume: -5
+    range: 3
+    sound:
+      path: /Audio/Ambience/Objects/buzzing.ogg
   - type: Holopad
     hologramProtoId: HolopadHologram
   - type: Speech
@@ -53,6 +59,7 @@
     ringInterval: 2
     ringingTimeout: 30
     hangingUpTimeout: 2
+    listeningRange: 4
     speakerVolume: Speak
   - type: ActivatableUI
     key: enum.HolopadUiKey.Key
@@ -82,8 +89,8 @@
     rsiState: icon_in_call
     shaderName: Hologram
     color1: "#65b8e2"
-    color2: "#4985a3"
-    alpha: 1
+    color2: "#3a6981"
+    alpha: 0.9
     intensity: 2
     scrollRate: 0.125
   - type: Tag
