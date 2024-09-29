@@ -168,7 +168,7 @@ public partial class SeedData
 
     [DataField] public float Endurance = 100f;
 
-    [DataField] public int Yield;
+    [DataField] public int Yield; // Your days are numbered, overly problematic value.
     [DataField] public float Lifespan;
     [DataField] public float Maturation;
     [DataField] public float Production;
