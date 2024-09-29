@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: Syndicate traitor reinforcements are now specialized to be medics, spies,
-      or thieves.
-    type: Add
-  - message: Reinforcement radios with options now have a radial menu, similar to
-      RCDs.
-    type: Tweak
-  id: 6956
-  time: '2024-07-21T10:32:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29853
 - author: Cojoke-dot
   changes:
   - message: Dead Space Dragons no long despawn
@@ -3938,3 +3927,10 @@
   id: 7455
   time: '2024-09-29T12:22:57.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32521
+- author: Ilya246
+  changes:
+  - message: Steel cost of conveyor belt assemblies halved.
+    type: Tweak
+  id: 7456
+  time: '2024-09-29T15:18:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32444
