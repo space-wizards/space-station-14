@@ -15,6 +15,19 @@
   - UplinkWeaponry
 
 - type: listing
+  id: UplinkSawnOff
+  name: uplink-sawn-off-name
+  description: uplink-sawn-off-desc
+  productEntity: WeaponShotgunSawn
+  discountCategory: usualDiscounts
+  discountDownTo:
+    Telecrystal: 4
+  cost:
+    Telecrystal: 6
+  categories:
+  - UplinkWeaponry
+
+- type: listing
   id: UplinkRevolverPython
   name: uplink-revolver-python-name
   description: uplink-revolver-python-desc
