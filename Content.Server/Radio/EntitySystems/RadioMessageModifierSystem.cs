@@ -13,6 +13,9 @@ public sealed partial class RadioMessageModifierSystem : EntitySystem
         SubscribeLocalEvent<RadioMessageSoundComponent, RadioModifyMessageEvent>(OnRadioModifiyMessage);
     }
 
+    /// <summary>
+    /// Changes a radio message sound based on the RadioMessageSoundComponent attached to the entity.
+    /// </summary>
     public void OnRadioModifiyMessage(Entity<RadioMessageSoundComponent> entity, ref RadioModifyMessageEvent args)
     {
         args.Message.Sound = entity.Comp.Sound;
