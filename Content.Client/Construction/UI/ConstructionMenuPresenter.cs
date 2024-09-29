@@ -153,9 +153,7 @@ namespace Content.Client.Construction.UI
         private void OnViewPopulateRecipes(object? sender, (string search, string catagory) args)
         {
             var (search, category) = args;
-            var recipesList = _constructionView.Recipes;
 
-            recipesList.Clear();
             var recipes = new List<ConstructionPrototype>();
 
             var isEmptyCategory = string.IsNullOrEmpty(category) || category == _forAllCategoryName;
@@ -201,12 +199,51 @@ namespace Content.Client.Construction.UI
 
             recipes.Sort((a, b) => string.Compare(a.Name, b.Name, StringComparison.InvariantCulture));
 
-            foreach (var recipe in recipes)
-            {
-                recipesList.Add(GetItem(recipe, recipesList));
-            }
+            PopulateRecipes(recipes);
+        }
 
-            // There is apparently no way to set which
+
+
+        private void PopulateRecipes(List<ConstructionPrototype> recipes)
+        {
+            var recipesList = _constructionView.Recipes;
+            recipesList.Clear();
+
+            var recipesGrid = _constructionView.RecipesGrid;
+            recipesGrid.RemoveAllChildren();
+
+            _constructionView.RecipesGridScrollContainer.Visible = _constructionView.GridViewButtonPressed;
+            _constructionView.Recipes.Visible = !_constructionView.GridViewButtonPressed;
+
+            if (_constructionView.GridViewButtonPressed)
+            {
+                foreach (var recipe in recipes)
+                {
+                    var item = GetItem(recipe, recipesList);
+
+                    var itemButton = new TextureButton
+                    {
+                        TextureNormal = item.Icon,
+                        Name = recipe.Name,
+                        ToolTip = recipe.Description,
+                    };
+
+                    itemButton.OnPressed += _ =>
+                    {
+                        _selected = recipe;
+                        PopulateInfo(recipe);
+                    };
+
+                    recipesGrid.AddChild(itemButton);
+                }
+            }
+            else
+            {
+                foreach (var recipe in recipes)
+                {
+                    recipesList.Add(GetItem(recipe, recipesList));
+                }
+            }
         }
 
         private void PopulateCategories(string? selectCategory = null)
