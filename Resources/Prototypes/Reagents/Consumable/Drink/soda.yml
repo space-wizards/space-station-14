@@ -289,3 +289,11 @@
   metamorphicMaxFillLevels: 6
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: true
+
+- type: reagent
+  id: Genderfluid
+  name: reagent-name-genderfluid
+  parent: BaseSoda
+  desc: reagent-desc-genderfluid
+  physicalDesc: reagent-physical-desc-gender
+  flavor: genderfluid
