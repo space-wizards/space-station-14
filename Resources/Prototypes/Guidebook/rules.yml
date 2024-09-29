@@ -2,7 +2,162 @@
   id: DefaultRuleset
   name: guide-entry-rules
   ruleEntry: true
-  text: "/ServerInfo/Guidebook/ServerRules/HarmonyRules.xml"
+  priority: 50
+  text: "/ServerInfo/Guidebook/ServerRules/HarmonyRules/HarmonyRules.xml"
+  children:
+  - HarmonyR0
+  - HarmonyR1
+  - HarmonyR2
+  - HarmonyR3
+  - HarmonyR4
+  - HarmonyR5
+  - HarmonyR6
+  - HarmonyR7
+  - HarmonyR8
+  - HarmonyS1
+  - HarmonyS2
+  - HarmonyS3
+  - HarmonyS4
+  - HarmonyS5
+  - HarmonyS6
+  - HarmonyS7
+  - HarmonyS8
+  - HarmonyS9
+  - HarmonyS10
+
+- type: guideEntry
+  id: HarmonyR0
+  name: guide-entry-rules-harmony-r0
+  ruleEntry: true
+  priority: 1
+  text: "/ServerInfo/Guidebook/ServerRules/HarmonyRules/HarmonyR0.xml"
+
+- type: guideEntry
+  id: HarmonyR1
+  name: guide-entry-rules-harmony-r1
+  ruleEntry: true
+  priority: 2
+  text: "/ServerInfo/Guidebook/ServerRules/HarmonyRules/HarmonyR1.xml"
+
+- type: guideEntry
+  id: HarmonyR2
+  name: guide-entry-rules-harmony-r2
+  ruleEntry: true
+  priority: 3
+  text: "/ServerInfo/Guidebook/ServerRules/HarmonyRules/HarmonyR2.xml"
+
+- type: guideEntry
+  id: HarmonyR3
+  name: guide-entry-rules-harmony-r3
+  ruleEntry: true
+  priority: 4
+  text: "/ServerInfo/Guidebook/ServerRules/HarmonyRules/HarmonyR3.xml"
+
+- type: guideEntry
+  id: HarmonyR4
+  name: guide-entry-rules-harmony-r4
+  ruleEntry: true
+  priority: 5
+  text: "/ServerInfo/Guidebook/ServerRules/HarmonyRules/HarmonyR4.xml"
+
+- type: guideEntry
+  id: HarmonyR5
+  name: guide-entry-rules-harmony-r5
+  ruleEntry: true
+  priority: 6
+  text: "/ServerInfo/Guidebook/ServerRules/HarmonyRules/HarmonyR5.xml"
+
+- type: guideEntry
+  id: HarmonyR6
+  name: guide-entry-rules-harmony-r6
+  ruleEntry: true
+  priority: 7
+  text: "/ServerInfo/Guidebook/ServerRules/HarmonyRules/HarmonyR6.xml"
+
+- type: guideEntry
+  id: HarmonyR7
+  name: guide-entry-rules-harmony-r7
+  ruleEntry: true
+  priority: 8
+  text: "/ServerInfo/Guidebook/ServerRules/HarmonyRules/HarmonyR7.xml"
+
+- type: guideEntry
+  id: HarmonyR8
+  name: guide-entry-rules-harmony-r8
+  ruleEntry: true
+  priority: 9
+  text: "/ServerInfo/Guidebook/ServerRules/HarmonyRules/HarmonyR8.xml"
+
+
+- type: guideEntry
+  id: HarmonyS1
+  name: guide-entry-rules-harmony-s1
+  ruleEntry: true
+  priority: 10
+  text: "/ServerInfo/Guidebook/ServerRules/HarmonyRules/HarmonyS1.xml"
+
+- type: guideEntry
+  id: HarmonyS2
+  name: guide-entry-rules-harmony-s2
+  ruleEntry: true
+  priority: 11
+  text: "/ServerInfo/Guidebook/ServerRules/HarmonyRules/HarmonyS2.xml"
+
+- type: guideEntry
+  id: HarmonyS3
+  name: guide-entry-rules-harmony-s3
+  ruleEntry: true
+  priority: 12
+  text: "/ServerInfo/Guidebook/ServerRules/HarmonyRules/HarmonyS3.xml"
+
+- type: guideEntry
+  id: HarmonyS4
+  name: guide-entry-rules-harmony-s4
+  ruleEntry: true
+  priority: 13
+  text: "/ServerInfo/Guidebook/ServerRules/HarmonyRules/HarmonyS4.xml"
+
+- type: guideEntry
+  id: HarmonyS5
+  name: guide-entry-rules-harmony-s5
+  ruleEntry: true
+  priority: 14
+  text: "/ServerInfo/Guidebook/ServerRules/HarmonyRules/HarmonyS5.xml"
+
+- type: guideEntry
+  id: HarmonyS6
+  name: guide-entry-rules-harmony-s6
+  ruleEntry: true
+  priority: 15
+  text: "/ServerInfo/Guidebook/ServerRules/HarmonyRules/HarmonyS6.xml"
+
+- type: guideEntry
+  id: HarmonyS7
+  name: guide-entry-rules-harmony-s7
+  ruleEntry: true
+  priority: 16
+  text: "/ServerInfo/Guidebook/ServerRules/HarmonyRules/HarmonyS7.xml"
+
+- type: guideEntry
+  id: HarmonyS8
+  name: guide-entry-rules-harmony-s8
+  ruleEntry: true
+  priority: 17
+  text: "/ServerInfo/Guidebook/ServerRules/HarmonyRules/HarmonyS8.xml"
+
+- type: guideEntry
+  id: HarmonyS9
+  name: guide-entry-rules-harmony-s9
+  ruleEntry: true
+  priority: 18
+  text: "/ServerInfo/Guidebook/ServerRules/HarmonyRules/HarmonyS9.xml"
+
+- type: guideEntry
+  id: HarmonyS10
+  name: guide-entry-rules-harmony-s10
+  ruleEntry: true
+  priority: 19
+  text: "/ServerInfo/Guidebook/ServerRules/HarmonyRules/HarmonyS10.xml"
 
 - type: guideEntry
   id: CoreRuleset
