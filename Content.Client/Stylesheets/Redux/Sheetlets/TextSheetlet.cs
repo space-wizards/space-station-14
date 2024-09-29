@@ -1,3 +1,4 @@
+using Content.Client.Resources;
 using Content.Client.Stylesheets.Redux.Fonts;
 using Robust.Client.UserInterface;
 using static Content.Client.Stylesheets.Redux.StylesheetHelpers;
@@ -10,11 +11,12 @@ public sealed class TextSheetlet : Sheetlet<PalettedStylesheet>
 {
     public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
     {
-        var notoMono = new SingleFontFamily(ResCache, "/EngineFonts/NotoSans/NotoSansMono-Regular.ttf");
+        // TODO: once fonts are reworked, change this!
+        var mono = ResCache.GetFont("/EngineFonts/NotoSans/NotoSansMono-Regular.ttf", 12);
 
         return
         [
-            E().Class(StyleClass.Monospace).Font(notoMono.GetFont(12)),
+            E().Class(StyleClass.Monospace).Font(mono),
             E().Class(StyleClass.Italic).Font(sheet.BaseFont.GetFont(12, FontKind.Italic)),
             E().Class(StyleClass.FontLarge).Font(sheet.BaseFont.GetFont(14)),
             E().Class(StyleClass.FontSmall).Font(sheet.BaseFont.GetFont(10)),

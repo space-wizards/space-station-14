@@ -1,4 +1,5 @@
-﻿using Content.Client.Stylesheets.Redux.Fonts;
+﻿using Content.Client.Resources;
+using Content.Client.Stylesheets.Redux.Fonts;
 using Content.Client.Stylesheets.Redux.Palette;
 using Content.Client.Stylesheets.Redux.SheetletConfigs;
 using Content.Client.Stylesheets.Redux.Stylesheets;
@@ -20,8 +21,6 @@ public sealed class WindowSheetlet<T> : Sheetlet<T>
         IButtonConfig buttonCfg = sheet;
         IWindowConfig windowCfg = sheet;
         IIconConfig iconCfg = sheet;
-
-        var boxFont = new SingleFontFamily(ResCache, "/Fonts/Boxfont-round/Boxfont Round.ttf");
 
         var headerStylebox = new StyleBoxTexture
         {
@@ -84,7 +83,6 @@ public sealed class WindowSheetlet<T> : Sheetlet<T>
             E<TextureButton>()
                 .Class(DefaultWindow.StyleClassWindowCloseButton)
                 .Prop(TextureButton.StylePropertyTexture, closeButtonTex)
-                .Margin(new Thickness(0, 0, 0, 0)) // margin right -3 once DefaultWindow is killed?
                 .Margin(3),
             E<TextureButton>()
                 .Class(DefaultWindow.StyleClassWindowCloseButton)
@@ -105,8 +103,8 @@ public sealed class WindowSheetlet<T> : Sheetlet<T>
 
             // Title
             E<Label>()
-                .Class("FancyWindowTitle") // TODO: HARDCODING AAAAAA (theres a lot more in this file)
-                .Font(boxFont.GetFont(13, FontKind.Bold))
+                .Class("FancyWindowTitle") // TODO: hardcoding class name
+                .Font(ResCache.GetFont("/Fonts/Boxfont-round/Boxfont Round.ttf", 13)) // TODO: hardcoding font
                 .FontColor(sheet.HighlightPalette.Text),
 
             // Help Button
@@ -126,7 +124,7 @@ public sealed class WindowSheetlet<T> : Sheetlet<T>
 
             // Footer
             E<Label>()
-                .Class("WindowFooterText")
+                .Class("WindowFooterText") // TODO: hardcoding font
                 .Prop(Label.StylePropertyFont, sheet.BaseFont.GetFont(8))
                 .Prop(Label.StylePropertyFontColor, Color.FromHex("#757575")),
         ];

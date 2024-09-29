@@ -12,7 +12,7 @@ namespace Content.Client.Stylesheets.Redux.Stylesheets;
 [Virtual]
 public partial class SystemStylesheet : CommonStylesheet
 {
-    public override FontFamilyStack BaseFont { get; }
+    public override NotoFontFamilyStack BaseFont { get; } // TODO: NotoFontFamilyStack is temporary
 
     public override Dictionary<Type, ResPath[]> Roots => new()
     {
