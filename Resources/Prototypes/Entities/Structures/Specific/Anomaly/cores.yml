@@ -223,6 +223,8 @@
     energy: 10
     color: "#1e070e"
     castShadows: false
+  - type: SinguloFood
+    energy: -500 #Get out of jail free; Change your pants and get the power going again
 
 - type: entity
   parent: BaseAnomalyInertCore

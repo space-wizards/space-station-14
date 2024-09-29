@@ -1979,3 +1979,19 @@
     FoodCroissantRaw: 1
     FoodButterSlice: 1
     ShardGlass: 1
+
+- type: microwaveMealRecipe
+  id: RecipeAnomalyMeat
+  name: meat anomaly recipe
+  result: FoodMeatAnomaly
+  time: 5
+  solids:
+    AnomalyCoreFleshInert: 1
+
+- type: microwaveMealRecipe
+  id: RecipeAnomalyMeatCooked
+  name: cooked meat anomaly recipe
+  result: FoodMeatAnomalyCooked
+  time: 5
+  solids:
+    FoodMeatAnomaly: 1
