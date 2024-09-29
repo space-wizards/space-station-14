@@ -27,6 +27,9 @@ traitor-role-greeting =
     You are an agent sent by {$corporation} on behalf of [color = darkred]The Syndicate.[/color]
     Your objectives and codewords are listed in the character menu.
     Use the uplink loaded into your PDA to buy the tools you'll need for this mission.
+traitor-role-objectives =
+    Your objectives are: [color = lightgray]
+    {$objectives}[/color]
     Death to Nanotrasen!
 traitor-role-codewords =
     The codewords are: [color = lightgray]
@@ -34,8 +37,8 @@ traitor-role-codewords =
     Codewords can be used in regular conversation to identify yourself discretely to other syndicate agents.
     Listen for them, and keep them secret.
 traitor-role-uplink-code =
-    Set your ringtone to the notes [color = lightgray]{$code}[/color] to lock or unlock your uplink.
-    Remember to lock it after, or the stations crew will easily open it too!
+    Set your ringtone to the notes [color = lightgray]{$code}[/color] to unlock your uplink.
+    Remember to lock it after, or the station's crew can easily access it too!
 
 # don't need all the flavour text for character menu
 traitor-role-codewords-short =
