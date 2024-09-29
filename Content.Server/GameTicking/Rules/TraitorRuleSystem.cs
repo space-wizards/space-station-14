@@ -50,7 +50,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
     protected override void Added(EntityUid uid, TraitorRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
     {
         base.Added(uid, component, gameRule, args);
-        SetCodewords(component);
+        SetCodewords(component, args.RuleEntity);
     }
 
     private void AfterEntitySelected(Entity<TraitorRuleComponent> ent, ref AfterAntagEntitySelectedEvent args)
@@ -58,10 +58,10 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         MakeTraitor(args.EntityUid, ent);
     }
 
-    private void SetCodewords(TraitorRuleComponent component)
+    private void SetCodewords(TraitorRuleComponent component, EntityUid ruleEntity)
     {
         component.Codewords = GenerateTraitorCodewords(component);
-        _adminLogger.Add(LogType.EventStarted, LogImpact.Low, $"Codewords generated: {string.Join(", ", component.Codewords)}");
+        _adminLogger.Add(LogType.EventStarted, LogImpact.Low, $"Codewords generated for game rule {ToPrettyString(ruleEntity)}: {string.Join(", ", component.Codewords)}");
     }
 
     public string[] GenerateTraitorCodewords(TraitorRuleComponent component)
