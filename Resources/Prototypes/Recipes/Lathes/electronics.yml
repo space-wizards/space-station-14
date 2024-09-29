@@ -99,6 +99,11 @@
   result: DoorElectronics
 
 - type: latheRecipe
+  parent: BaseCheapElectronicsRecipe
+  id: FreezerElectronics
+  result: FreezerElectronics
+
+- type: latheRecipe
   parent: BaseElectronicsRecipe
   id: AirAlarmElectronics
   result: AirAlarmElectronics
@@ -166,6 +171,7 @@
 - type: latheRecipe
   parent: BaseGoldCircuitboardRecipe
   id: ChemMasterMachineCircuitboard
+  result: ChemMasterMachineCircuitboard
 
 - type: latheRecipe
   parent: BaseGoldCircuitboardRecipe
@@ -431,6 +437,7 @@
 - type: latheRecipe
   parent: BaseCircuitboardRecipe
   id: MicrowaveMachineCircuitboard
+  result: MicrowaveMachineCircuitboard
 
 - type: latheRecipe
   parent: BaseCircuitboardRecipe
@@ -540,6 +547,7 @@
 - type: latheRecipe
   parent: BaseGoldCircuitboardRecipe
   id: MiniGravityGeneratorCircuitboard
+  result: MiniGravityGeneratorCircuitboard
 
 - type: latheRecipe
   parent: BaseCircuitboardRecipe
