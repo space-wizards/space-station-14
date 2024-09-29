@@ -38,7 +38,7 @@ namespace Content.Shared.Chat
         public Color? MessageColorOverride;
 
         /// <summary>
-        /// Sound that should be played when other people recive this message.
+        /// Sound that should be played when other people receive this message.
         /// </summary>
         public SoundSpecifier? Sound;
 

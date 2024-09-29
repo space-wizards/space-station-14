@@ -112,7 +112,7 @@ public sealed class RadioSystem : EntitySystem
 
         // Allow other systems to modifiy the message before we send it on
         var chatEv = new RadioModifyMessageEvent(chat, channel, messageSource);
-        RaiseLocalEvent(ref chatEv);
+        RaiseLocalEvent(messageSource, ref chatEv);
 
         var chatMsg = new MsgChatMessage { Message = chat };
         var ev = new RadioReceiveEvent(message, messageSource, channel, radioSource, chatMsg);
