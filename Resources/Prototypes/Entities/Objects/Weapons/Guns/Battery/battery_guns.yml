@@ -724,9 +724,9 @@
   - type: StaticPrice
     price: 750
 
-#- type: entity # GreyStation - Removed in favor of X-01 Phase Gun
-#  name: energy shotgun
-#  parent: [BaseWeaponBattery, BaseGunWieldable]
+#- type: entity
+#  name: energy shotgun # GreyStation - Removed in favor of X-01
+#  parent: [BaseWeaponBattery, BaseGunWieldable, BaseGrandTheftContraband]
 #  id: WeaponEnergyShotgun
 #  description: A one-of-a-kind prototype energy weapon that uses various shotgun configurations. It offers the possibility of both lethal and non-lethal shots, making it a versatile weapon.
 #  components:
