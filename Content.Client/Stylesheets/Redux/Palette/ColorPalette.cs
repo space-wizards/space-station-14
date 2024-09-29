@@ -17,21 +17,36 @@ public sealed class ColorPalette(string hex = "#000000")
     public float LightnessShift = 0.06f;
     public float ChromaShift = 0.00f;
 
-    /// Given the initialized configuration properties, this method sets all the color properties to derivations of
-    /// the <see cref="Base"/> color.
+    /// <summary>
+    ///     Given the initialized configuration properties, this method sets all the color properties to derivations of
+    ///     the <see cref="Base"/> color. Any colors previously set will not be overriden.
+    /// </summary>
+    /// <remarks>
+    ///     Detects if a color has been overriden by whether it's the default value (black) or not. Intended use of this
+    ///     function is to override specific fields with brace initialization before calling this method.
+    /// </remarks>
     public ColorPalette Construct()
     {
-        Element = Shift(Base, -1); //               Shift(Base, -1)
-        HoveredElement = Shift(Element, 1); //      Shift(Base,  0)
-        PressedElement = Shift(Element, -1); //     Shift(Base, -2)
-        DisabledElement = Shift(Element, -3); //    Shift(Base, -4)
+        if (Element == default)
+            Element = Shift(Base, -1); //               Shift(Base, -1)
+        if (HoveredElement == default)
+            HoveredElement = Shift(Element, 1); //      Shift(Base,  0)
+        if (PressedElement == default)
+            PressedElement = Shift(Element, -1); //     Shift(Base, -2)
+        if (DisabledElement == default)
+            DisabledElement = Shift(Element, -3); //    Shift(Base, -4)
 
-        Background = Shift(Base, -3); //            Shift(Base, -3)
-        BackgroundLight = Shift(Background, 1); //  Shift(Base, -2)
-        BackgroundDark = Shift(Background, -1); //  Shift(Base, -4)
+        if (Background == default)
+            Background = Shift(Base, -3); //            Shift(Base, -3)
+        if (BackgroundLight == default)
+            BackgroundLight = Shift(Background, 1); //  Shift(Base, -2)
+        if (BackgroundDark == default)
+            BackgroundDark = Shift(Background, -1); //  Shift(Base, -4)
 
-        Text = Base; //                             Shift(Base,  0)
-        TextDark = Shift(Text, -1); //              Shift(Base, -1)
+        if (Text == default)
+            Text = Base; //                             Shift(Base,  0)
+        if (TextDark == default)
+            TextDark = Shift(Text, -1); //              Shift(Base, -1)
 
         return this;
     }
