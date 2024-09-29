@@ -552,10 +552,10 @@
   id: DerelictCyborgSpawn
   components:
   - type: StationEvent
-    weight: 2 #Low until it spawns with a random lawset instead of just antimov.
+    weight: 8
     earliestStart: 15
     reoccurrenceDelay: 20
-    minimumPlayers: 7
+    minimumPlayers: 4
     duration: null
   - type: SpaceSpawnRule
     spawnDistance: 0
@@ -564,6 +564,9 @@
   - type: AntagSelection
     agentName: derelict-cyborg-round-end-agent-name
     definitions:
+#      briefing:
+#        text: derelict-cyborg-role-greetin
+#        color: Blue
     - spawnerPrototype: SpawnPointGhostDerelictCyborg
       min: 1
       max: 1

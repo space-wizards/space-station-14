@@ -329,11 +329,11 @@
   - type: Access
     enabled: false
     groups:
-    - AllAccess #Randomized access would be fun. AllAccess is the best i can think of right now that does make it too hard to enter the station or.
+    - AllAccess #Randomized access would be fun. AllAccess is the best i can think of right now that does make it too hard for it to enter the station or navigate it..
   - type: AccessReader
     access: [["Command"]] #I will probably change this.
   - type: SiliconLawProvider
-    laws: AntimovLawset #Temporary until i get it randomized.
+    laws: Crewsimov #Although this will be randomized.
   - type: IntrinsicRadioTransmitter
     channels:
     - Binary
@@ -342,3 +342,7 @@
     channels:
     - Binary
     - Common
+  - type: StartIonStormed
+    ionStormAmount: 5
+    DelayAdminlog: true
+  - type: IonStormTarget
