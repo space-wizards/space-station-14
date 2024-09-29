@@ -15,7 +15,7 @@
     requirement:
       !type:OverallPlaytimeRequirement
 
-      time: 900000 #250 hours
+      time: 1512000 #420 hours
   - !type:JobRequirementLoadoutEffect
     requirement:
       !type:DepartmentTimeRequirement
