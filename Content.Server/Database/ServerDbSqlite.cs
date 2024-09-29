@@ -350,6 +350,111 @@ namespace Content.Server.Database
         }
         #endregion
 
+        #region Restrict Username
+        public override async Task<ServerUsernameRuleDef?> GetServerUsernameRuleAsync(int id)
+        {
+            await using var db = await GetDbImpl();
+
+            var queryRule = await GetServerRestrictedUsernamesInternal(db.SqliteDbContext, true);
+
+            return ConvertUsernameRule(queryRule
+                .Where(r => r.Id == id)
+                .FirstOrDefault());
+        }
+
+        public override async Task<List<ServerUsernameRuleDef>> GetServerUsernameRulesAsync(bool includeRetired)
+        {
+            await using var db = await GetDbImpl();
+
+            var queryRule = await GetServerRestrictedUsernamesInternal(db.SqliteDbContext, includeRetired);
+
+            return queryRule
+                .Select(ConvertUsernameRule)
+                .ToList()!;
+        }
+
+        public override async Task CreateUsernameRuleAsync(ServerUsernameRuleDef usernameRule)
+        {
+            await using var db = await GetDbImpl();
+
+            db.SqliteDbContext.UsernameRule.Add(new ServerUsernameRule
+            {
+                CreationTime = usernameRule.CreationTime.UtcDateTime,
+                Expression = usernameRule.Expression,
+                Message = usernameRule.Message,
+                RestrictingAdmin = usernameRule.RestrictingAdmin?.UserId,
+                ExtendToBan = usernameRule.ExtendToBan,
+                // should be false, null, null perhaps should be checked
+                Retired = false,
+                RetiringAdmin = null,
+                RetireTime = null
+            });
+
+            await db.SqliteDbContext.SaveChangesAsync();
+
+            return;
+        }
+
+        public override async Task RemoveServerUsernameRuleAsync(int id, NetUserId retiringAdmin, DateTimeOffset retireTime)
+        {
+            await using var db = await GetDbImpl();
+
+            // TODO check next line against pg
+            var usernameRule = db.SqliteDbContext.UsernameRule.Find(id);
+
+            if (usernameRule == null || usernameRule.Retired) {
+                return;
+            }
+
+            usernameRule.Retired = true;
+            usernameRule.RetiringAdmin = retiringAdmin.UserId;
+            usernameRule.RetireTime = retireTime.UtcDateTime;
+
+            await db.SqliteDbContext.SaveChangesAsync();
+        }
+
+        private static async Task<List<ServerUsernameRule>> GetServerRestrictedUsernamesInternal(SqliteServerDbContext db, bool includeRetired)
+        {
+            IQueryable<ServerUsernameRule> query = db.UsernameRule;
+
+            return await query
+                .Where(r => includeRetired || !r.Retired)
+                .ToListAsync();
+        }
+
+        private static ServerUsernameRuleDef? ConvertUsernameRule(ServerUsernameRule? rule)
+        {
+            if (rule == null)
+            {
+                return null;
+            }
+
+            NetUserId? acUid = null;
+            if (rule.RestrictingAdmin is {} acGuid)
+            {
+                acUid = new NetUserId(acGuid);
+            }
+
+            NetUserId? arUid = null;
+            if (rule.RetiringAdmin is {} arGuid)
+            {
+                arUid = new NetUserId(arGuid);
+            }
+
+            return new ServerUsernameRuleDef(
+                rule.Id,
+                rule.CreationTime,
+                rule.Expression,
+                rule.Message,
+                acUid,
+                rule.ExtendToBan,
+                rule.Retired,
+                arUid,
+                rule.RetireTime
+            );
+        }
+        #endregion
+
         [return: NotNullIfNotNull(nameof(ban))]
         private static ServerBanDef? ConvertBan(ServerBan? ban)
         {

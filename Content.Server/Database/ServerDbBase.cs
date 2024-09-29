@@ -525,6 +525,16 @@ namespace Content.Server.Database
         }
         #endregion
 
+        #region Username Rule
+        public abstract Task<ServerUsernameRuleDef?> GetServerUsernameRuleAsync(int id);
+
+        public abstract Task<List<ServerUsernameRuleDef>> GetServerUsernameRulesAsync(bool includeRetired);
+
+        public abstract Task CreateUsernameRuleAsync(ServerUsernameRuleDef usernameRule);
+
+        public abstract Task RemoveServerUsernameRuleAsync(int id, NetUserId retiringAdmin, DateTimeOffset retireTime);
+        #endregion
+
         #region Playtime
         public async Task<List<PlayTime>> GetPlayTimes(Guid player, CancellationToken cancel)
         {

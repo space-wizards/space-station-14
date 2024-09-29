@@ -36,6 +36,7 @@ namespace Content.Server.Database
         public DbSet<ServerBanHit> ServerBanHit { get; set; } = default!;
         public DbSet<ServerRoleBan> RoleBan { get; set; } = default!;
         public DbSet<ServerRoleUnban> RoleUnban { get; set; } = default!;
+        public DbSet<ServerUsernameRule> UsernameRule { get; set; } = default!;
         public DbSet<PlayTime> PlayTime { get; set; } = default!;
         public DbSet<UploadedResourceLog> UploadedResourceLog { get; set; } = default!;
         public DbSet<AdminNote> AdminNotes { get; set; } = null!;
@@ -178,6 +179,8 @@ namespace Content.Server.Database
 
             modelBuilder.Entity<ServerRoleBan>().ToTable(t =>
                 t.HasCheckConstraint("HaveEitherAddressOrUserIdOrHWId", "address IS NOT NULL OR player_user_id IS NOT NULL OR hwid IS NOT NULL"));
+
+            // TODO: restrict table
 
             modelBuilder.Entity<Player>()
                 .HasIndex(p => p.UserId)
@@ -978,6 +981,22 @@ namespace Content.Server.Database
         public Guid? UnbanningAdmin { get; set; }
 
         public DateTime UnbanTime { get; set; }
+    }
+
+    //todo: add table UsernameRule
+    [Table("server_username_rule")]
+    public sealed class ServerUsernameRule
+    {
+        [Required, Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+        public DateTime CreationTime { get; set; }
+        public string Expression { get; set; }
+        public string Message { get; set; }
+        public Guid? RestrictingAdmin { get; set; }
+        public bool ExtendToBan { get; set; }
+        public bool Retired { get; set; }
+        public Guid? RetiringAdmin { get; set; }
+        public DateTime? RetireTime { get; set; }
     }
 
     [Table("play_time")]
