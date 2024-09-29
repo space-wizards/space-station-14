@@ -1398,3 +1398,26 @@
           groups:
             Brute: -1.05
             Burn: -0.95
+
+- type: reagent
+  id: Ipecybin
+  name: reagent-name-ipecybin
+  desc: reagent-desc-ipecybin
+  group: Medicine
+  physicalDesc: reagent-physical-desc-pungent
+  flavor: bitter
+  color: "#577178"
+  metabolisms:
+    Medicine:
+      effects:
+        - !type:ModifyBloodLevel
+          amount: 1.5
+        - !type:Jitter
+        - !type:HealthChange
+        damage:
+          groups:
+            Toxin: -0.5
+            Airloss: -0.5
+            Brute: -0.5
+        - !type:ChemVomit
+          min: 15
