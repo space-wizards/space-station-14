@@ -97,7 +97,7 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
 
         var name = Loc.GetString("speech-name-relay",
             ("speaker", Name(telephone)),
-            ("originalName", nameEv.Name));
+            ("originalName", nameEv.VoiceName));
 
         var volume = telephone.Comp.SpeakerVolume == TelephoneVolume.Speak ? InGameICChatType.Speak : InGameICChatType.Whisper;
         _chat.TrySendInGameICMessage(telephone, args.Message, volume, ChatTransmitRange.GhostRangeLimit, nameOverride: name, checkRadioPrefix: false);
@@ -291,41 +291,32 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
             !this.IsPowered(source, EntityManager))
             return;
 
-        var name = TryComp(messageSource, out VoiceMaskComponent? mask) && mask.Enabled
-            ? mask.VoiceName
-            : MetaData(messageSource).EntityName;
+        var evt = new TransformSpeakerNameEvent(messageSource, MetaData(messageSource).EntityName);
+        RaiseLocalEvent(messageSource, evt);
 
+        var name = evt.VoiceName;
         name = FormattedMessage.EscapeText(name);
 
         SpeechVerbPrototype speech;
-        if (mask != null
-            && mask.Enabled
-            && mask.SpeechVerb != null
-            && _prototype.TryIndex(mask.SpeechVerb, out var proto))
-        {
-            speech = proto;
-        }
-
+        if (evt.SpeechVerb != null && _prototype.TryIndex(evt.SpeechVerb, out var evntProto))
+            speech = evntProto;
         else
-        {
             speech = _chat.GetSpeechVerb(messageSource, message);
-        }
 
         var content = escapeMarkup
             ? FormattedMessage.EscapeText(message)
             : message;
 
-        var wrappedMessage = Loc.GetString(speech.Bold ? "chat-radio-message-wrap-bold" : "chat-radio-message-wrap",
-            ("color", Color.Red),
+        var wrappedMessage = Loc.GetString(speech.Bold ? "chat-telephone-message-wrap-bold" : "chat-telephone-message-wrap",
+            ("color", Color.White),
             ("fontType", speech.FontId),
             ("fontSize", speech.FontSize),
             ("verb", Loc.GetString(_random.Pick(speech.SpeechVerbStrings))),
-            ("channel", "test"),
             ("name", name),
             ("message", content));
 
         var chat = new ChatMessage(
-            ChatChannel.Radio,
+            ChatChannel.Local,
             message,
             wrappedMessage,
             NetEntity.Invalid,
