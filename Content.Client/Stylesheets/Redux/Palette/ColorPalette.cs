@@ -17,10 +17,8 @@ public sealed class ColorPalette(string hex = "#000000")
     public float LightnessShift = 0.06f;
     public float ChromaShift = 0.00f;
 
-    /**
-     * Given the initialized configuration properties, this method sets all the color properties to derivations of
-     * the <see cref="Base"/> color.
-     */
+    /// Given the initialized configuration properties, this method sets all the color properties to derivations of
+    /// the <see cref="Base"/> color.
     public ColorPalette Construct()
     {
         Element = Shift(Base, -1); //               Shift(Base, -1)
