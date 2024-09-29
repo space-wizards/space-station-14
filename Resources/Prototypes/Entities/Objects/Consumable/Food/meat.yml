@@ -717,6 +717,7 @@
         - ReagentId: Fat
           Quantity: 90
   - type: SliceableFood
+    sliceTime: 5
     count: 10
     slice: FoodMeat #That's... So much meat
   - type: InternalTemperature
@@ -1224,6 +1225,7 @@
         - ReagentId: Protein
           Quantity: 50
   - type: SliceableFood
+    sliceTime: 5
     count: 10
     slice: FoodMeatCooked
   - type: Construction
