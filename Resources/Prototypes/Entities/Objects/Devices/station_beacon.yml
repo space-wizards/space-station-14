@@ -139,6 +139,14 @@
 
 - type: entity
   parent: DefaultStationBeaconCommand
+  id: DefaultStationBeaconGateway
+  suffix: Gateway
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-gateway
+
+- type: entity
+  parent: DefaultStationBeaconCommand
   id: DefaultStationBeaconCaptainsQuarters
   suffix: Captain's Quarters
   components:

@@ -100,6 +100,13 @@ namespace Content.Server.Stack
         /// </summary>
         public List<EntityUid> SpawnMultiple(string entityPrototype, int amount, EntityCoordinates spawnPosition)
         {
+            if (amount <= 0)
+            {
+                Log.Error(
+                    $"Attempted to spawn an invalid stack: {entityPrototype}, {amount}. Trace: {Environment.StackTrace}");
+                return new();
+            }
+
             var spawns = CalculateSpawns(entityPrototype, amount);
 
             var spawnedEnts = new List<EntityUid>();
@@ -116,6 +123,13 @@ namespace Content.Server.Stack
         /// <inheritdoc cref="SpawnMultiple(string,int,EntityCoordinates)"/>
         public List<EntityUid> SpawnMultiple(string entityPrototype, int amount, EntityUid target)
         {
+            if (amount <= 0)
+            {
+                Log.Error(
+                    $"Attempted to spawn an invalid stack: {entityPrototype}, {amount}. Trace: {Environment.StackTrace}");
+                return new();
+            }
+
             var spawns = CalculateSpawns(entityPrototype, amount);
 
             var spawnedEnts = new List<EntityUid>();
