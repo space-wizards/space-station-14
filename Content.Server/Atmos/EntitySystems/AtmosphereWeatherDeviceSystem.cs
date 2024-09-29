@@ -144,15 +144,14 @@ public sealed partial class AtmosphereWeatherDeviceSystem : EntitySystem
                 {
                     if (currentGas.Immutable)
                     {
-                        currentGas = new GasMixture();
-                        currentGas.CopyFrom(currentGas);
+                        var newGas = new GasMixture();
+                        newGas.CopyFrom(currentGas);
+                        currentGas = newGas;
                     }
 
                     currentGas.Temperature += temperatureChange;
                     _atmosphere.SetMapAtmosphere(transform.MapUid!.Value, false, currentGas);
                 }
-
-                
             }
         }
     }
