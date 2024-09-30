@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: valquaint, slarticodefast
-  changes:
-  - message: Fixed borgs being unable to state laws with an activated flashlight.
-    type: Fix
-  id: 6960
-  time: '2024-07-22T03:55:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30183
 - author: Lank
   changes:
   - message: Darts can now pop balloons. Keep them away from any monkeys.
@@ -3934,3 +3927,12 @@
   id: 7459
   time: '2024-09-30T09:56:05.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32467
+- author: BramvanZijp
+  changes:
+  - message: The Engineering Cyborg's Advanced Tool Module now has jaws of life and
+      a power drill instead of an omnitool, with a multitool replacing the network
+      configurator.
+    type: Tweak
+  id: 7460
+  time: '2024-09-30T17:38:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32487
