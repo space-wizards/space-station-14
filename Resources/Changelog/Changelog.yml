@@ -1,43 +1,4 @@
 ﻿Entries:
-- author: IProduceWidgets
-  changes:
-  - message: an arabian lamp!
-    type: Add
-  id: 6953
-  time: '2024-07-21T07:24:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27270
-- author: osjarw
-  changes:
-  - message: NPCs no longer get stuck trying to pick up anchored pipes.
-    type: Fix
-  id: 6954
-  time: '2024-07-21T07:28:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30061
-- author: The Hands Leader - JoJo cat
-  changes:
-  - message: Train map is back into rotation
-    type: Tweak
-  id: 6955
-  time: '2024-07-21T07:44:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30145
-- author: Plykiya
-  changes:
-  - message: Syndicate traitor reinforcements are now specialized to be medics, spies,
-      or thieves.
-    type: Add
-  - message: Reinforcement radios with options now have a radial menu, similar to
-      RCDs.
-    type: Tweak
-  id: 6956
-  time: '2024-07-21T10:32:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29853
-- author: Cojoke-dot
-  changes:
-  - message: Dead Space Dragons no long despawn
-    type: Fix
-  id: 6957
-  time: '2024-07-21T10:46:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29842
 - author: slarticodefast
   changes:
   - message: Fixed microwave construction.
@@ -3937,3 +3898,39 @@
   id: 7452
   time: '2024-09-28T09:02:43.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32483
+- author: ElectroJr
+  changes:
+  - message: Fixed a store currency duplication bug/exploit.
+    type: Fix
+  id: 7453
+  time: '2024-09-29T12:13:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32524
+- author: ElectroJr
+  changes:
+  - message: There is now a rate limit for most interactions. It should not be noticeable
+      most of the time, but may lead to mispredicts when spam-clicking.
+    type: Tweak
+  id: 7454
+  time: '2024-09-29T12:19:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32527
+- author: ArtisticRoomba
+  changes:
+  - message: HoS's energy shotgun is now correctly marked as grand theft contraband.
+    type: Tweak
+  id: 7455
+  time: '2024-09-29T12:22:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32521
+- author: Ilya246
+  changes:
+  - message: Steel cost of conveyor belt assemblies halved.
+    type: Tweak
+  id: 7456
+  time: '2024-09-29T15:18:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32444
+- author: CuteMoonGod
+  changes:
+  - message: Fixed execution system showing character name instead of their identity
+    type: Fix
+  id: 7457
+  time: '2024-09-29T22:36:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32536
