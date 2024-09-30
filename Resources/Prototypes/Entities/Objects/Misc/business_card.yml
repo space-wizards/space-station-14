@@ -2,13 +2,13 @@
   id: SyndicateBusinessCard
   name: Syndicate business card
   parent: Paper
-  description: A black card with the syndicate's logo. There's something written on the back
+  description: A black card with the syndicate's logo. There's something written on the back.
   components:
     - type: Sprite
       sprite: Objects/Misc/bureaucracy.rsi
       layers:
-      - state: synicate_card
-      - state: synicate_card
+      - state: syndicate_card
+      - state: syndicate_card
         map: ["enum.PaperVisualLayers.Writing"]
         visible: false
       - state: paper_stamp-generic
