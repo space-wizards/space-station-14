@@ -1670,10 +1670,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 20
+        maxVol:  30
         reagents:
         - ReagentId: Sake
-          Quantity: 20
+          Quantity: 30
   - type: Icon
     sprite: Objects/Consumable/Drinks/sake.rsi
     state: icon
