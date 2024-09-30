@@ -251,3 +251,17 @@ Entries:
   changes:
   - type: Tweak
     message: In-game Space Law guidebooks are now Harmony Space Law.
+- id: 93
+  author: spanky-spanky
+  time: '2024-09-30T02:00:09.0000000+00:00'
+  url: https://github.com/ss14-harmony/space-station-14/pull/93
+  changes:
+  - type: Add
+    message: Added two syndicate shuttles for admin events.
+- id: 96
+  author: FluffMe
+  time: '2024-09-30T15:31:30.0000000+00:00'
+  url: https://github.com/ss14-harmony/space-station-14/pull/96
+  changes:
+  - type: Add
+    message: Added no EORG reminder popup at the end of the round.
