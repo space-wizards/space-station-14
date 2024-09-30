@@ -1670,7 +1670,7 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol:  30
+        maxVol: 30
         reagents:
         - ReagentId: Sake
           Quantity: 30
