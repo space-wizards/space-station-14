@@ -13,6 +13,7 @@ using System.Linq;
 using System.Text;
 using Content.Server.Objectives.Commands;
 using Content.Shared.Prototypes;
+using Content.Shared.Roles.Jobs;
 using Robust.Server.Player;
 using Robust.Shared.Utility;
 
@@ -25,6 +26,7 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly EmergencyShuttleSystem _emergencyShuttle = default!;
+    [Dependency] private readonly SharedJobSystem _job = default!;
 
     private IEnumerable<string>? _objectives;
 
@@ -257,7 +259,12 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
             _player.TryGetPlayerData(mind.Comp.OriginalOwnerUserId.Value, out var sessionData))
         {
             var username = sessionData.UserName;
-            return Loc.GetString("objectives-player-user-named", ("user", username), ("name", name));
+
+            var nameWithJobMaybe = name;
+            if (_job.MindTryGetJobName(mind, out var jobName))
+                nameWithJobMaybe += ", " + jobName;
+
+            return Loc.GetString("objectives-player-user-named", ("user", username), ("name", nameWithJobMaybe));
         }
 
         return Loc.GetString("objectives-player-named", ("name", name));
