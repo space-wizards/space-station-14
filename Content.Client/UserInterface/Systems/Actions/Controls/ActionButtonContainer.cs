@@ -45,6 +45,11 @@ public class ActionButtonContainer : GridContainer
             ((ActionButton) GetChild(i)).UpdateData(action, system);
         }
 
+        for (var i = ChildCount - 1; i >= uniqueCount; i--)
+        {
+            RemoveChild(GetChild(i));
+        }
+
         ActionButton MakeButton(int index)
         {
             var button = new ActionButton(_entity);
