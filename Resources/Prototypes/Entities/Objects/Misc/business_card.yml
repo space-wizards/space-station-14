@@ -1,6 +1,6 @@
 - type: entity
   id: SyndicateBusinessCard
-  name: Syndicate business card
+  name: syndicate business card
   parent: Paper
   description: A black card with the syndicate's logo. There's something written on the back.
   components:
