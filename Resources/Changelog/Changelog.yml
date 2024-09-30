@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Fixed microwave construction.
-    type: Fix
-  id: 6958
-  time: '2024-07-21T16:20:09.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30232
 - author: Sphiral&Kezu
   changes:
   - message: 'Added a variety of new wall based storages: Shelfs! Build some today!'
@@ -3934,3 +3927,10 @@
   id: 7457
   time: '2024-09-29T22:36:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32536
+- author: drakewill-CRL
+  changes:
+  - message: Fix error in gas exchange processing order.
+    type: Fix
+  id: 7458
+  time: '2024-09-30T05:14:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32088
