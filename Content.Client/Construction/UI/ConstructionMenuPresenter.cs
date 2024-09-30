@@ -38,7 +38,7 @@ namespace Content.Client.Construction.UI
         private ConstructionSystem? _constructionSystem;
         private ConstructionPrototype? _selected;
         private List<ConstructionPrototype> _favoritedRecipes = [];
-        private Dictionary<ConstructionPrototype, TextureButton> _recipeButtons = new();
+        private Dictionary<string, TextureButton> _recipeButtons = new();
         private string _selectedCategory = string.Empty;
         private string _favoriteCatName = "construction-category-favorites";
         private string _forAllCategoryName = "construction-category-all";
@@ -247,14 +247,16 @@ namespace Content.Client.Construction.UI
 
                     itemButton.OnPressed += _ =>
                     {
-                        if (_selected is not null)
-                            _recipeButtons[_selected].Modulate = Color.White;
+                        if (_selected is not null
+                            && _recipeButtons.TryGetValue(_selected.Name, out var oldButton))
+                            oldButton.Modulate = Color.White;
+
                         OnGridViewRecipeSelected(this, recipe);
                         itemButton.Modulate = Color.Green;
                     };
 
                     recipesGrid.AddChild(itemButton);
-                    _recipeButtons[recipe] = itemButton;
+                    _recipeButtons[recipe.Name] = itemButton;
                 }
             }
             else
