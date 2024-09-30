@@ -266,11 +266,11 @@ namespace Content.Server.Communications
 
             if (comp.ShowLocation == true)
             {
-                msg += "\n" + Loc.GetString("comms-console-announcement-sent-by") + " " + author + " " + FormattedMessage.RemoveMarkupOrThrow(_navMap.GetNearestBeaconString((uid, null))) + ".";
+                msg += "\n" + Loc.GetString("comms-console-announcement-sent-by-with-location", ("author", author), ("location", FormattedMessage.RemoveMarkupOrThrow(_navMap.GetNearestBeaconString((uid, null)))));
             }
             else
             {
-                msg += "\n" + Loc.GetString("comms-console-announcement-sent-by") + " " + author;
+                msg += "\n" + Loc.GetString("comms-console-announcement-sent-by", ("author", author);
             }
             if (comp.Global)
             {
