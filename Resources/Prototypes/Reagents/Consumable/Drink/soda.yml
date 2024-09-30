@@ -297,3 +297,9 @@
   desc: reagent-desc-genderfluid
   physicalDesc: reagent-physical-desc-gender
   flavor: genderfluid
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/genderfluid.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
