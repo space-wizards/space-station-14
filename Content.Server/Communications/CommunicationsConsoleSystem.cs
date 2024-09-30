@@ -270,7 +270,7 @@ namespace Content.Server.Communications
             }
             else
             {
-                msg += "\n" + Loc.GetString("comms-console-announcement-sent-by", ("author", author);
+                msg += "\n" + Loc.GetString("comms-console-announcement-sent-by", ("author", author));
             }
             if (comp.Global)
             {
