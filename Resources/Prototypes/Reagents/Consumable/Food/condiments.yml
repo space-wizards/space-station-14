@@ -164,3 +164,27 @@
       # eating salt on its own kinda sucks, kids
       - !type:SatiateThirst
         factor: -0.5
+
+- type: reagent
+  id: Syrup
+  name: reagent-name-syrup
+  group: Foods
+  desc: reagent-desc-syrup
+  flavor: sweet
+  color: "#fb7125"
+  recognizable: true
+  physicalDesc: reagent-physical-desc-sticky
+  slippery: false
+  viscosity: 0.55 #Start using syrup to attach your remote recievers to your microwaves!
+  tileReactions:
+    - !type:SpillTileReaction
+  metabolisms:
+    Food:
+      # 12 diona blood for 1 unit of syrup, this stuff better be worthwhile.
+      effects:
+      - !type:SatiateHunger
+        factor: 6.0 #Stronger than cookedramen
+  footstepSound:
+    collection: FootstepBlood
+    params:
+      volume: 6

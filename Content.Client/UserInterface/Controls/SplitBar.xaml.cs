@@ -7,6 +7,7 @@ using Robust.Client.UserInterface.XAML;
 namespace Content.Client.UserInterface.Controls
 {
     [GenerateTypedNameReferences]
+    [Virtual]
     public partial class SplitBar : BoxContainer
     {
         public Vector2 MinBarSize = new(24, 0);

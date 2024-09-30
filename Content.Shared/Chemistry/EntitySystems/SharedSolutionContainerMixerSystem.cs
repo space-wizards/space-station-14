@@ -31,7 +31,11 @@ public abstract class SharedSolutionContainerMixerSystem : EntitySystem
 
     private void OnActivateInWorld(Entity<SolutionContainerMixerComponent> entity, ref ActivateInWorldEvent args)
     {
+        if (args.Handled || !args.Complex)
+            return;
+
         TryStartMix(entity, args.User);
+        args.Handled = true;
     }
 
     private void OnRemoveAttempt(Entity<SolutionContainerMixerComponent> ent, ref ContainerIsRemovingAttemptEvent args)

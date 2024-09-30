@@ -1,76 +1,76 @@
 <Document>
-# Airlock Upgrades
-It is not uncommon for plucky individuals to try and bypass an airlock by meddling with its internal wiring.
+  # Airlock Upgrades
+  It is not uncommon for plucky individuals to try and bypass an airlock by meddling with its internal wiring.
 
-Fortunately, certain countermeasures can installed into airlocks to inconvenience any would be trespassers.
+  Fortunately, certain countermeasures can be installed into airlocks to inconvenience any would-be trespassers.
 
-## Medium security airlocks
-The most basic form of intrusion deterrence is to install internal steel plating that will prevent access to internal wiring of the airlock. 
+  ## Medium security airlocks
+  The most basic form of intrusion deterrence is to install a secured steel plating that will prevent access to internal wiring of the airlock.
 
-To upgrade a basic airlock to a medium security airlock, you will require the following materials
-<Box HorizontalAlignment="Stretch">
-	<Box>
-		<GuideEntityEmbed Entity="SheetSteel" Caption="steel sheet x2"/>
-	</Box>
-	<Box>
-		<GuideEntityEmbed Entity="Screwdriver" Caption="screwdriver"/>
-	</Box>
-	<Box>
-		<GuideEntityEmbed Entity="Welder" Caption="welder"/>
-	</Box>
-</Box>
+  To upgrade a basic airlock to a medium security airlock, you will require the following materials:
+  <Box HorizontalAlignment="Stretch">
+	  <Box>
+		  <GuideEntityEmbed Entity="SheetSteel" Caption="2 steel sheets"/>
+	  </Box>
+	  <Box>
+		  <GuideEntityEmbed Entity="Screwdriver" Caption="Screwdriver"/>
+	  </Box>
+	  <Box>
+		  <GuideEntityEmbed Entity="Welder" Caption="Welder"/>
+	  </Box>
+  </Box>
 
-To upgrade the basic airlock,
--	Use the screwdriver to open the airlock maintenance panel.
--	Add the steel sheets to the airlock.
--	Weld the steel sheets into place.
--	Close the maintenance panel using the screwdriver.
+  To upgrade a basic airlock:
+  -	Use the screwdriver to open the airlock maintenance panel.
+  -	Add the steel sheets to the airlock.
+  -	Weld the steel sheets into place.
+  -	Close the maintenance panel using the screwdriver.
 
-## High security airlocks
-For airlocks leading to the more sensitive areas of the space station, the use of stronger deterrents are advised. High security airlocks have improved armor plating to protect its internal wiring, along with an electrified security grille. 
+  ## High security airlocks
+  For airlocks leading to the more sensitive areas of the space station, the use of stronger deterrents are advised. High security airlocks have improved armor plating to protect its internal wiring, along with an electrified security grille.
 
-To upgrade a basic airlock to a high security airlock, you will require the following materials
-<Box HorizontalAlignment="Stretch">
-	<Box>
-		<GuideEntityEmbed Entity="SheetPlasteel" Caption="plasteel sheet x2"/>
-	</Box>
-	<Box>
-		<GuideEntityEmbed Entity="PartRodMetal" Caption="metal rod x2"/>
-	</Box>
-	<Box>
-		<GuideEntityEmbed Entity="Screwdriver" Caption="screwdriver"/>
-	</Box>
-	<Box>
-		<GuideEntityEmbed Entity="Welder" Caption="welder"/>
-	</Box>
-</Box>
+  To upgrade a medium security airlock to a high security airlock, you will require the following materials:
+  <Box HorizontalAlignment="Stretch">
+	  <Box>
+		  <GuideEntityEmbed Entity="SheetPlasteel" Caption="2 plasteel sheets"/>
+	  </Box>
+	  <Box>
+		  <GuideEntityEmbed Entity="PartRodMetal" Caption="2 metal rods"/>
+	  </Box>
+	  <Box>
+		  <GuideEntityEmbed Entity="Screwdriver" Caption="Screwdriver"/>
+	  </Box>
+	  <Box>
+		  <GuideEntityEmbed Entity="Welder" Caption="Welder"/>
+	  </Box>
+  </Box>
 
-To upgrade the basic airlock,
-- Use the screwdriver to open the airlock maintenance panel.
-- Add the plasteel sheets to the airlock.
-- Weld the plasteel sheets into place.
-- Add the metal rods to the airlock.
-- Close the maintenance panel using the screwdriver.
+  To upgrade a medium security airlock:
+  - Use the screwdriver to open the airlock maintenance panel.
+  - Add the plasteel sheets to the airlock.
+  - Weld the plasteel sheets into place.
+  - Add the metal rods to the airlock.
+  - Close the maintenance panel using the screwdriver.
 
-## Maximum security airlocks
-You can optionally upgrade a high security airlock to a maximum security airlock. Maximum security airlocks possess an additional layer of plasteel plating on top of its other protections. 
+  ## Maximum security airlocks
+  You can optionally upgrade a high security airlock to a maximum security airlock. Maximum security airlocks possess an additional layer of plasteel plating on top of its other protections.
 
-To upgrade a high security airlock to a maximum security airlock, you will require the following materials
-<Box HorizontalAlignment="Stretch">
-	<Box>
-		<GuideEntityEmbed Entity="SheetPlasteel" Caption="plasteel sheet x2"/>
-	</Box>
-	<Box>
-		<GuideEntityEmbed Entity="Screwdriver" Caption="screwdriver"/>
-	</Box>
-	<Box>
-		<GuideEntityEmbed Entity="Welder" Caption="welder"/>
-	</Box>
-</Box>
+  To upgrade a high security airlock to a maximum security airlock, you will require the following materials:
+  <Box HorizontalAlignment="Stretch">
+	  <Box>
+		  <GuideEntityEmbed Entity="SheetPlasteel" Caption="2 plasteel sheets"/>
+	  </Box>
+	  <Box>
+		  <GuideEntityEmbed Entity="Screwdriver" Caption="Screwdriver"/>
+	  </Box>
+	  <Box>
+		  <GuideEntityEmbed Entity="Welder" Caption="Welder"/>
+	  </Box>
+  </Box>
 
-To upgrade the high security airlock,
--	Use the screwdriver to open the airlock maintenance panel.
--	Add the plasteel sheets to the airlock.
--	Weld the plasteel sheets into place.
--	Close the maintenance panel using the screwdriver.
+  To upgrade a high security airlock:
+  -	Use the screwdriver to open the airlock maintenance panel.
+  -	Add the plasteel sheets to the airlock.
+  -	Weld the plasteel sheets into place.
+  -	Close the maintenance panel using the screwdriver.
 </Document>

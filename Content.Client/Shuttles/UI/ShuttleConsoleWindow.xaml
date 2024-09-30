@@ -2,109 +2,42 @@
                       xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                       xmlns:ui="clr-namespace:Content.Client.Shuttles.UI"
                       Title="{Loc 'shuttle-console-window-title'}"
-                      SetSize="1180 648"
-                      MinSize="788 320">
-    <GridContainer Columns="3"
-                  HorizontalAlignment="Stretch"
-                  Margin="5 5 5 5">
-        <BoxContainer Name="LeftDisplay"
-                      VerticalAlignment="Top"
-                      HorizontalAlignment="Left"
-                      MinWidth="256"
-                      MaxWidth="256"
-                      Align="Center"
-                      Orientation="Vertical">
-            <BoxContainer Orientation="Vertical">
-                <controls:StripeBack>
-                    <Label Name="DockingPortsLabel" Text="{Loc 'shuttle-console-dock-label'}" HorizontalAlignment="Center"/>
-                </controls:StripeBack>
-                <BoxContainer Name="DockPorts"
-                              Orientation="Vertical"/>
-            </BoxContainer>
-            <BoxContainer Orientation="Vertical">
-                <controls:StripeBack>
-                    <Label Name="HyperspaceLabel" Text="{Loc 'shuttle-console-hyperspace-label'}" HorizontalAlignment="Center"/>
-                </controls:StripeBack>
-                <BoxContainer Name="HyperspaceDestinations"
-                              Orientation="Vertical"/>
-            </BoxContainer>
+                      SetSize="960 762"
+                      MinSize="960 762">
+    <BoxContainer Orientation="Vertical">
+        <!-- Top row mode buttons -->
+        <BoxContainer Name="ModeButtons"
+                       Orientation="Horizontal"
+                       HorizontalAlignment="Stretch"
+                       MinSize="52 52"
+                       Margin="5">
+            <Button Name="NavModeButton"
+                    ToggleMode="True"
+                    HorizontalExpand="True"
+                    VerticalExpand="True"
+                    Text="NAV"
+                    Margin="5"/>
+            <Button Name="MapModeButton"
+                    ToggleMode="True"
+                    HorizontalExpand="True"
+                    VerticalExpand="True"
+                    Text="MAP"
+                    Margin="5"/>
+            <Button Name="DockModeButton"
+                    ToggleMode="True"
+                    HorizontalExpand="True"
+                    VerticalExpand="True"
+                    Text="DOCK"
+                    Margin="5"/>
         </BoxContainer>
-        <PanelContainer MinSize="256 256"
-                        HorizontalAlignment = "Stretch"
-                        HorizontalExpand = "True"
-                        VerticalExpand = "True">
-            <ui:RadarControl Name="RadarScreen"
-                             MouseFilter="Stop"
-                             Margin="4"
-                             HorizontalExpand = "True"
-                             VerticalExpand = "True"/>
-            <ui:DockingControl Name="DockingScreen"
-                               Visible="False"
-                               MouseFilter="Stop"
-                               Margin="4"
-                               HorizontalExpand = "True"
-                               VerticalExpand = "True"/>
-        </PanelContainer>
-        <BoxContainer Name="RightDisplay"
-                      VerticalAlignment="Top"
-                      HorizontalAlignment="Right"
-                      MinWidth="256"
-                      MaxWidth="256"
-                      Align="Center"
-                      Orientation="Vertical">
-            <controls:StripeBack>
-                <Label Name="DisplayLabel" Text="{Loc 'shuttle-console-display-label'}" HorizontalAlignment="Center"/>
-            </controls:StripeBack>
-            <BoxContainer Name="ReadonlyDisplay">
-                <GridContainer Columns="2"
-                               HorizontalAlignment="Stretch"
-                               VerticalAlignment="Top">
-                    <Label Text="{Loc 'shuttle-console-ftl-state'}"/>
-                    <Label Name="FTLState"
-                           Text="{Loc 'ftl-shuttle-console-available'}"
-                           HorizontalAlignment="Right"/>
-                    <Label Text="{Loc 'shuttle-console-ftl-timer'}"/>
-                    <Label Name="FTLTimer"
-                           Text="0.0"
-                           HorizontalAlignment="Right"/>
-                    <Label Text="{Loc 'shuttle-console-max-radar'}"/>
-                    <Label Name="MaxRadarRange"
-                           Text="0.0"
-                           HorizontalAlignment="Right"/>
-                    <Label Text="{Loc 'shuttle-console-radar'}"/>
-                    <Label Name="RadarRange"
-                           Text="0.0"
-                           HorizontalAlignment="Right"/>
-                    <Label Text="{Loc 'shuttle-console-position'}"/>
-                    <Label Name="GridPosition"
-                           Text="0.0, 0.0"
-                           Align="Right"/>
-                    <Label Text="{Loc 'shuttle-console-orientation'}"/>
-                    <Label Name="GridOrientation"
-                           Text="0.0"
-                           Align="Right"/>
-                    <Label Text="{Loc 'shuttle-console-linear-velocity'}"/>
-                    <Label Name="GridLinearVelocity"
-                           Text="0.0, 0.0"
-                           Align="Right"/>
-                    <Label Text="{Loc 'shuttle-console-angular-velocity'}"/>
-                    <Label Name="GridAngularVelocity"
-                           Text="0.0"
-                           Align="Right"/>
-                </GridContainer>
-            </BoxContainer>
-            <Button Name="IFFToggle"
-                    Text="{Loc 'shuttle-console-iff-toggle'}"
-                    TextAlign="Center"
-                    ToggleMode="True"/>
-            <Button Name="DockToggle"
-                    Text="{Loc 'shuttle-console-dock-toggle'}"
-                    TextAlign="Center"
-                    ToggleMode="True"/>
-            <Button Name="UndockButton"
-                    Text="{Loc 'shuttle-console-undock'}"
-                    TextAlign="Center"
-                    Disabled="True"/>
+        <!-- Contents box -->
+        <BoxContainer Name="Contents"
+                      HorizontalAlignment="Stretch"
+                      VerticalExpand="True"
+                      Margin="5">
+            <ui:NavScreen Name="NavContainer" Visible="False"/>
+            <ui:MapScreen Name="MapContainer" Visible="False"/>
+            <ui:DockingScreen Name="DockContainer" Visible="False"/>
         </BoxContainer>
-    </GridContainer>
+    </BoxContainer>
 </controls:FancyWindow>

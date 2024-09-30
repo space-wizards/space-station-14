@@ -1,0 +1,31 @@
+# Jumpsuit
+- type: loadout
+  id: BoxerShorts
+  equipment:
+    jumpsuit: UniformShortsRed
+
+- type: loadout
+  id: BoxerShortsWithTop
+  equipment:
+    jumpsuit: UniformShortsRedWithTop
+
+# Gloves
+- type: loadout
+  id: RedBoxingGloves
+  equipment:
+    gloves: ClothingHandsGlovesBoxingRed
+
+- type: loadout
+  id: BlueBoxingGloves
+  equipment:
+    gloves: ClothingHandsGlovesBoxingBlue
+
+- type: loadout
+  id: GreenBoxingGloves
+  equipment:
+    gloves: ClothingHandsGlovesBoxingGreen
+
+- type: loadout
+  id: YellowBoxingGloves
+  equipment:
+    gloves: ClothingHandsGlovesBoxingYellow

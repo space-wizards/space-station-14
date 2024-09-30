@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Components;
@@ -12,8 +12,6 @@ namespace Content.Server.DeviceNetwork.Systems;
 [UsedImplicitly]
 public sealed class DeviceListSystem : SharedDeviceListSystem
 {
-    private ISawmill _sawmill = default!;
-
     [Dependency] private readonly NetworkConfiguratorSystem _configurator = default!;
 
     public override void Initialize()
@@ -23,7 +21,6 @@ public sealed class DeviceListSystem : SharedDeviceListSystem
         SubscribeLocalEvent<DeviceListComponent, BeforeBroadcastAttemptEvent>(OnBeforeBroadcast);
         SubscribeLocalEvent<DeviceListComponent, BeforePacketSentEvent>(OnBeforePacketSent);
         SubscribeLocalEvent<BeforeSaveEvent>(OnMapSave);
-        _sawmill = Logger.GetSawmill("devicelist");
     }
 
     private void OnShutdown(EntityUid uid, DeviceListComponent component, ComponentShutdown args)
@@ -154,7 +151,7 @@ public sealed class DeviceListSystem : SharedDeviceListSystem
                 // TODO full game saves.
                 // when full saves are supported, this should instead add data to the BeforeSaveEvent informing the
                 // saving system that this map (or null-space entity) also needs to be included in the save.
-                _sawmill.Error(
+                Log.Error(
                     $"Saving a device list ({ToPrettyString(uid)}) that has a reference to an entity on another map ({ToPrettyString(ent)}). Removing entity from list.");
             }
 

@@ -4,10 +4,12 @@
   - !type:PowerWireAction
   - !type:PowerWireAction
     pulseTimeout: 15
+  - !type:LogWireAction
   - !type:DoorBoltWireAction
   - !type:DoorBoltLightWireAction
   - !type:DoorTimingWireAction
   - !type:DoorSafetyWireAction
+  - !type:AiInteractWireAction
 
 - type: wireLayout
   parent: Airlock
@@ -15,11 +17,35 @@
 
 - type: wireLayout
   parent: Airlock
+  id: AirlockService
+
+- type: wireLayout
+  parent: Airlock
+  id: AirlockCargo
+
+- type: wireLayout
+  parent: Airlock
+  id: AirlockEngineering
+
+- type: wireLayout
+  parent: Airlock
+  id: AirlockMedical
+
+- type: wireLayout
+  parent: Airlock
+  id: AirlockScience
+
+- type: wireLayout
+  parent: HighSec
   id: AirlockCommand
 
 - type: wireLayout
   parent: Airlock
   id: AirlockArmory
+
+- type: wireLayout
+  parent: Airlock
+  id: AirlockExternal
 
 - type: wireLayout
   id: HighSec
@@ -30,13 +56,16 @@
   - !type:DoorBoltLightWireAction
   - !type:DoorTimingWireAction
   - !type:DoorSafetyWireAction
-  dummyWires: 5
+  - !type:AiInteractWireAction
+  dummyWires: 4
 
 - type: wireLayout
   id: Vending
   wires:
+  - !type:AiInteractWireAction
   - !type:PowerWireAction
   - !type:AccessWireAction
+  - !type:LogWireAction
   - !type:VendingMachineContrabandWireAction
   - !type:VendingMachineEjectItemWireAction
   - !type:SpeechWireAction
@@ -44,8 +73,10 @@
 - type: wireLayout
   id: AirAlarm
   wires:
+  - !type:AiInteractWireAction
   - !type:PowerWireAction
   - !type:AccessWireAction
+  - !type:LogWireAction
   - !type:AirAlarmPanicWire
   - !type:AtmosMonitorDeviceNetWire
 
@@ -59,6 +90,7 @@
 - type: wireLayout
   id: FireAlarm
   wires:
+  - !type:AiInteractWireAction
   - !type:PowerWireAction
   - !type:AtmosMonitorDeviceNetWire
     alarmOnPulse: true
@@ -67,15 +99,18 @@
   id: Arcade
   wires:
   - !type:PowerWireAction
+  - !type:SpeechWireAction
   - !type:ArcadeOverflowWireAction
   - !type:ArcadePlayerInvincibleWireAction
   - !type:ArcadeEnemyInvincibleWireAction
+  - !type:AiInteractWireAction
 
 - type: wireLayout
   id: SurveillanceCamera
-  dummyWires: 4
+  dummyWires: 2
   wires:
   - !type:PowerWireAction
+  - !type:AiVisionWireAction
 
 - type: wireLayout
   id: CryoPod
@@ -100,6 +135,7 @@
   - !type:PowerWireAction
   - !type:PowerWireAction
     pulseTimeout: 15
+  - !type:LogWireAction
   - !type:DoorBoltWireAction
   - !type:DoorBoltLightWireAction
   - !type:DoorTimingWireAction
@@ -121,8 +157,35 @@
   id: TrainingDefusable
   dummyWires: 0
   wires:
-    - !type:ActivateWireAction
-    - !type:BoltWireAction
-    - !type:DelayWireAction
-    - !type:ProceedWireAction
-    - !type:BoomWireAction
+  - !type:ActivateWireAction
+  - !type:BoltWireAction
+  - !type:DelayWireAction
+  - !type:ProceedWireAction
+  - !type:BoomWireAction
+
+- type: wireLayout
+  id: Jukebox
+  dummyWires: 2
+  wires:
+  - !type:PowerWireAction
+  - !type:AiInteractWireAction
+
+- type: wireLayout
+  id: AnomalyGenerator
+  dummyWires: 2
+  wires:
+  - !type:PowerWireAction
+  - !type:AiInteractWireAction
+
+- type: wireLayout
+  id: Computer
+  dummyWires: 3
+  wires:
+  - !type:PowerWireAction
+
+- type: wireLayout
+  id: ComputerAi
+  dummyWires: 2
+  wires:
+  - !type:PowerWireAction
+  - !type:AiInteractWireAction

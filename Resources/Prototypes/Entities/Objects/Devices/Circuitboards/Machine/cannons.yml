@@ -1,0 +1,87 @@
+# Most of these have DO NOT MAP, since stations are completely unequipped to deal with ship combat + these are basically placeholder.
+
+- type: entity
+  id: ShuttleGunSvalinnMachineGunCircuitboard
+  parent: BaseMachineCircuitboard
+  name: LSE-400c "Svalinn machine gun" machine board
+  description: A machine printed circuit board for an LSE-400c "Svalinn machine gun".
+  suffix: DO NOT MAP, Machine Board
+  components:
+  - type: Sprite
+    state: security
+  - type: MachineBoard
+    prototype: ShuttleGunSvalinnMachineGun
+    stackRequirements:
+      MatterBin: 2
+      Manipulator: 4
+      Steel: 5
+      CableHV: 5
+
+- type: entity
+  id: ShuttleGunPerforatorCircuitboard
+  parent: BaseMachineCircuitboard
+  name: LSE-1200c "Perforator" machine board
+  description: A machine printed circuit board for an LSE-1200c "Perforator".
+  suffix: DO NOT MAP, Machine Board
+  components:
+  - type: Sprite
+    state: security
+  - type: MachineBoard
+    prototype: ShuttleGunPerforator
+    stackRequirements:
+      MatterBin: 4
+      Manipulator: 6
+      Steel: 10
+      CableHV: 5
+
+- type: entity
+  id: ShuttleGunFriendshipCircuitboard
+  parent: BaseMachineCircuitboard
+  name: EXP-320g "Friendship" machine board
+  description: A machine printed circuit board for an EXP-320g "Friendship".
+  suffix: DO NOT MAP, Machine Board
+  components:
+  - type: Sprite
+    state: security
+  - type: MachineBoard
+    prototype: ShuttleGunFriendship
+    stackRequirements:
+      MatterBin: 3
+      Manipulator: 2
+      Steel: 7
+      CableHV: 5
+
+- type: entity
+  id: ShuttleGunDusterCircuitboard
+  parent: BaseMachineCircuitboard
+  name: EXP-2100g "Duster" machine board
+  description: A machine printed circuit board for an EXP-2100g "Duster".
+  suffix: DO NOT MAP, Machine Board
+  components:
+  - type: Sprite
+    state: security
+  - type: MachineBoard
+    prototype: ShuttleGunDuster
+    stackRequirements:
+      MatterBin: 6
+      Manipulator: 4
+      Steel: 10
+      CableHV: 5
+      Uranium: 2
+
+- type: entity
+  id: ShuttleGunKineticCircuitboard
+  parent: BaseMachineCircuitboard
+  name: PTK-800 "Matter Dematerializer" machine board
+  description: A machine printed circuit board for an PTK-800 "Matter Dematerializer".
+  suffix: DO NOT MAP, Machine Board
+  components:
+  - type: Sprite
+    state: security
+  - type: MachineBoard
+    prototype: ShuttleGunKinetic
+    stackRequirements:
+      MatterBin: 2
+      Manipulator: 3
+      Steel: 5
+      CableHV: 2

@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/e1142f20f5e4661cb6845cfcf2dd69f864d67432. pen_centcom is a resprited version of pen_cap by PuroSlavKing (Github). Luxury pen is drawn by Ubaser.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "pen"
+    },
+    {
+      "name": "pen_cap"
+    },
+    {
+      "name": "pen_centcom"
+    },
+    {
+      "name": "pen_hop"
+    },
+    {
+      "name": "overpriced_pen"
+    },
+    {
+      "name": "luxury_pen"
+    },
+    {
+      "name": "pen_blue"
+    },
+    {
+      "name": "pen_red"
+    },
+    {
+      "name": "pen-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "pen-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "overpriced_pen-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "overpriced_pen-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "pen_centcom-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "pen_centcom-inhand-right",
+      "directions": 4
+    }
+  ]
+}

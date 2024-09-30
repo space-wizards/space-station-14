@@ -13,23 +13,26 @@ namespace Content.Server.Kitchen.Components
     [Access(typeof(ReagentGrinderSystem)), RegisterComponent]
     public sealed partial class ReagentGrinderComponent : Component
     {
-        [DataField, ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
         public int StorageMaxEntities = 6;
 
-        [DataField("workTime"), ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
         public TimeSpan WorkTime = TimeSpan.FromSeconds(3.5); // Roughly matches the grind/juice sounds.
 
-        [DataField, ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
         public float WorkTimeMultiplier = 1;
 
-        [DataField("clickSound"), ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
         public SoundSpecifier ClickSound { get; set; } = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
 
-        [DataField("grindSound"), ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
         public SoundSpecifier GrindSound { get; set; } = new SoundPathSpecifier("/Audio/Machines/blender.ogg");
 
-        [DataField("juiceSound"), ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
         public SoundSpecifier JuiceSound { get; set; } = new SoundPathSpecifier("/Audio/Machines/juicer.ogg");
+
+        [DataField]
+        public GrinderAutoMode AutoMode = GrinderAutoMode.Off;
 
         public EntityUid? AudioStream;
     }

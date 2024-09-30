@@ -2,6 +2,8 @@
     <BoxContainer Margin="8,8,8,8" Orientation="Vertical">
         <BoxContainer Orientation="Horizontal">
             <Label Name="StoreItemName" HorizontalExpand="True" />
+            <Label Name="DiscountSubText"
+                   HorizontalAlignment="Right"/>
             <Button
                 Name="StoreItemBuyButton"
                 MinWidth="64"
@@ -15,6 +17,7 @@
                 Margin="0,0,4,0"
                 MinSize="48 48"
                 Stretch="KeepAspectCentered" />
+            <Control MinWidth="5"/>
             <RichTextLabel Name="StoreItemDescription" />
         </BoxContainer>
     </BoxContainer>

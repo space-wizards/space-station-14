@@ -2,6 +2,9 @@
 # Chef
 A fella has gotta eat, and it's the chef's job to make sure folks have something other than junk to munch on.
 
+
+[textlink="Click here to see a list of food recipes." link="FoodRecipes"]
+
 First and foremost, you'll need to familiarize yourself with the kitchen, and the tools available to you.
 
 <Box>
@@ -51,7 +54,6 @@ Ask Botany for what you need, without a botanist, you may need to grow more plan
 <GuideEntityEmbed Entity="SignHydro1" Caption=" "/>
 <GuideEntityEmbed Entity="hydroponicsTray"/>
 <GuideEntityEmbed Entity="WheatBushel"/>
-<GuideEntityEmbed Entity="SignHydro2" Caption=" "/>
 </Box>
 ## Gathering Milk:
 Alt-Click on a Cow with a container in your hand. (Beakers, Buckets, Milk Jugs, ect.)

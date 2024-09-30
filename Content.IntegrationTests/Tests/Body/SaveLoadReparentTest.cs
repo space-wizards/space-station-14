@@ -33,10 +33,11 @@ public sealed class SaveLoadReparentTest
         var mapLoader = entities.System<MapLoaderSystem>();
         var bodySystem = entities.System<SharedBodySystem>();
         var containerSystem = entities.System<SharedContainerSystem>();
+        var mapSys = entities.System<SharedMapSystem>();
 
         await server.WaitAssertion(() =>
         {
-            var mapId = maps.CreateMap();
+            mapSys.CreateMap(out var mapId);
             maps.CreateGrid(mapId);
             var human = entities.SpawnEntity("HumanBodyDummy", new MapCoordinates(0, 0, mapId));
 
@@ -115,7 +116,7 @@ public sealed class SaveLoadReparentTest
             mapLoader.SaveMap(mapId, mapPath);
             maps.DeleteMap(mapId);
 
-            mapId = maps.CreateMap();
+            mapSys.CreateMap(out mapId);
             Assert.That(mapLoader.TryLoad(mapId, mapPath, out _), Is.True);
 
             var query = EnumerateQueryEnumerator(

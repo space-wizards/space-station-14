@@ -75,10 +75,10 @@
   - type: StorageFill
     contents:
       - id: MobDuckMallard
-        amount: 2
-      - id: MobDuckWhite
-        amount: 2
+        amount: 1
       - id: MobDuckBrown
+        amount: 1
+      - id: MobDuckWhite
         amount: 2
 
 - type: entity

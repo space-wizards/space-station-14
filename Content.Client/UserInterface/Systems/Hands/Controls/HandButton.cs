@@ -5,8 +5,11 @@ namespace Content.Client.UserInterface.Systems.Hands.Controls;
 
 public sealed class HandButton : SlotControl
 {
+    public HandLocation HandLocation { get; }
+
     public HandButton(string handName, HandLocation handLocation)
     {
+        HandLocation = handLocation;
         Name = "hand_" + handName;
         SlotName = handName;
         SetBackground(handLocation);

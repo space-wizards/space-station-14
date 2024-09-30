@@ -21,6 +21,12 @@
         },
 		{
             "name": "icon-4"
+        },
+		{
+            "name": "icon-vend-tea"
+        },
+		{
+            "name": "icon-vend-green-tea"
         }
     ]
 }

@@ -7,7 +7,8 @@ namespace Content.Server.Charges.Components;
 /// Something with limited charges that can be recharged automatically.
 /// Requires LimitedChargesComponent to function.
 /// </summary>
-[RegisterComponent]
+// TODO: no reason this cant be predicted and server system deleted
+[RegisterComponent, AutoGenerateComponentPause]
 [Access(typeof(ChargesSystem))]
 public sealed partial class AutoRechargeComponent : Component
 {
@@ -21,5 +22,6 @@ public sealed partial class AutoRechargeComponent : Component
     /// The time when the next charge will be added
     /// </summary>
     [DataField("nextChargeTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [AutoPausedField]
     public TimeSpan NextChargeTime;
 }

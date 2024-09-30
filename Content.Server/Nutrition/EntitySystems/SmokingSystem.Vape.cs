@@ -13,6 +13,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Nutrition;
 using System.Threading;
+using Content.Shared.Atmos;
 
 /// <summary>
 /// System for vapes
@@ -26,7 +27,6 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly FoodSystem _foodSystem = default!;
         [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
 
         private void InitializeVapes()
         {
@@ -113,8 +113,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 var vapeDoAfterEvent = new VapeDoAfterEvent(solution, forced);
                 _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, delay, vapeDoAfterEvent, entity.Owner, target: args.Target, used: entity.Owner)
                 {
-                    BreakOnTargetMove = true,
-                    BreakOnUserMove = false,
+                    BreakOnMove = false,
                     BreakOnDamage = true
                 });
             }
@@ -127,7 +126,7 @@ namespace Content.Server.Nutrition.EntitySystems
             || args.Args.Target == null)
                 return;
 
-            var environment = _atmosphereSystem.GetContainingMixture(args.Args.Target.Value, true, true);
+            var environment = _atmos.GetContainingMixture(args.Args.Target.Value, true, true);
             if (environment == null)
             {
                 return;
@@ -139,7 +138,7 @@ namespace Content.Server.Nutrition.EntitySystems
             var merger = new GasMixture(1) { Temperature = args.Solution.Temperature };
             merger.SetMoles(entity.Comp.GasType, args.Solution.Volume.Value / entity.Comp.ReductionFactor);
 
-            _atmosphereSystem.Merge(environment, merger);
+            _atmos.Merge(environment, merger);
 
             args.Solution.RemoveAllSolution();
 

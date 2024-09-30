@@ -233,7 +233,7 @@ public sealed class LightReplacerSystem : SharedLightReplacerSystem
         // show some message if success
         if (insertedBulbs > 0 && userUid != null)
         {
-            var msg = Loc.GetString("comp-light-replacer-refill-from-storage", ("light-replacer", storageUid));
+            var msg = Loc.GetString("comp-light-replacer-refill-from-storage", ("light-replacer", replacerUid));
             _popupSystem.PopupEntity(msg, replacerUid, userUid.Value, PopupType.Medium);
         }
 

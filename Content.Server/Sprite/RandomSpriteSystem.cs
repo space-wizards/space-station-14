@@ -63,7 +63,7 @@ public sealed class RandomSpriteSystem: SharedRandomSpriteSystem
             }
         }
 
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     private void OnGetState(EntityUid uid, RandomSpriteComponent component, ref ComponentGetState args)

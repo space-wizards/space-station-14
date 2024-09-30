@@ -5,7 +5,7 @@
     state: firstaid
   product: CrateMedicalSupplies
   cost: 2400
-  category: Medical
+  category: cargoproduct-category-name-medical
   group: market
 
 - type: cargoProduct
@@ -15,7 +15,7 @@
     state: beaker
   product: CrateChemistrySupplies
   cost: 750
-  category: Medical
+  category: cargoproduct-category-name-medical
   group: market
 
 - type: cargoProduct
@@ -25,7 +25,7 @@
     state: vial
   product: CrateChemistryVials
   cost: 1000
-  category: Medical
+  category: cargoproduct-category-name-medical
   group: market
 
 - type: cargoProduct
@@ -35,7 +35,7 @@
     state: burnkit
   product: CrateEmergencyBurnKit
   cost: 700
-  category: Medical
+  category: cargoproduct-category-name-medical
   group: market
 
 - type: cargoProduct
@@ -45,7 +45,7 @@
     state: toxinkit
   product: CrateEmergencyToxinKit
   cost: 600
-  category: Medical
+  category: cargoproduct-category-name-medical
   group: market
 
 - type: cargoProduct
@@ -55,7 +55,7 @@
     state: o2kit
   product: CrateEmergencyO2Kit
   cost: 600
-  category: Medical
+  category: cargoproduct-category-name-medical
   group: market
 
 - type: cargoProduct
@@ -65,7 +65,7 @@
     state: brutekit
   product: CrateEmergencyBruteKit
   cost: 600
-  category: Medical
+  category: cargoproduct-category-name-medical
   group: market
 
 - type: cargoProduct
@@ -75,7 +75,7 @@
     state: advkit
   product: CrateEmergencyAdvancedKit
   cost: 1200
-  category: Medical
+  category: cargoproduct-category-name-medical
   group: market
 
 - type: cargoProduct
@@ -85,7 +85,7 @@
     state: radkit
   product: CrateEmergencyRadiationKit
   cost: 600
-  category: Medical
+  category: cargoproduct-category-name-medical
   group: market
 
 - type: cargoProduct
@@ -95,7 +95,7 @@
     state: bag_folded
   product: CrateBodyBags
   cost: 700
-  category: Medical
+  category: cargoproduct-category-name-medical
   group: market
 
 - type: cargoProduct
@@ -105,7 +105,7 @@
     state: icon
   product: CrateVirologyBiosuit
   cost: 800
-  category: Medical
+  category: cargoproduct-category-name-medical
   group: market
 
 - type: cargoProduct
@@ -115,7 +115,7 @@
     state: implanter0
   product: CrateMindShieldImplants
   cost: 3000
-  category: Medical
+  category: cargoproduct-category-name-medical
   group: market
 
 - type: cargoProduct
@@ -125,7 +125,7 @@
     state: icon
   product: CrateChemistryP
   cost: 850
-  category: Medical
+  category: cargoproduct-category-name-medical
   group: market
 
 - type: cargoProduct
@@ -135,7 +135,7 @@
     state: icon
   product: CrateChemistryS
   cost: 750
-  category: Medical
+  category: cargoproduct-category-name-medical
   group: market
 
 - type: cargoProduct
@@ -145,5 +145,5 @@
     state: icon
   product: CrateChemistryD
   cost: 750
-  category: Medical
+  category: cargoproduct-category-name-medical
   group: market

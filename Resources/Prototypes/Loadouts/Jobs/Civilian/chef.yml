@@ -1,0 +1,38 @@
+# Head
+- type: loadout
+  id: ChefHead
+  equipment:
+    head: ClothingHeadHatChef
+
+# Mask
+- type: loadout
+  id: ChefMask
+  equipment:
+    mask: ClothingMaskItalianMoustache
+
+# Jumpsuit
+- type: loadout
+  id: ChefJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitChef
+
+- type: loadout
+  id: ChefJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtChef
+
+# Outer clothing
+- type: loadout
+  id: ChefApron
+  equipment:
+    outerClothing: ClothingOuterApronChef
+
+- type: loadout
+  id: ChefJacket
+  equipment:
+    outerClothing: ClothingOuterJacketChef
+
+- type: loadout
+  id: ChefWintercoat
+  equipment:
+    outerClothing: ClothingOuterWinterChef

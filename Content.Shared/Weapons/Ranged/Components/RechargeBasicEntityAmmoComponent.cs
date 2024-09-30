@@ -7,7 +7,7 @@ namespace Content.Shared.Weapons.Ranged.Components;
 /// <summary>
 ///     Responsible for handling recharging a basic entity ammo provider over time.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class RechargeBasicEntityAmmoComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
@@ -17,7 +17,7 @@ public sealed partial class RechargeBasicEntityAmmoComponent : Component
 
     [DataField("rechargeSound")]
     [AutoNetworkedField]
-    public SoundSpecifier RechargeSound = new SoundPathSpecifier("/Audio/Magic/forcewall.ogg")
+    public SoundSpecifier? RechargeSound = new SoundPathSpecifier("/Audio/Magic/forcewall.ogg")
     {
         Params = AudioParams.Default.WithVolume(-5f)
     };
@@ -25,5 +25,9 @@ public sealed partial class RechargeBasicEntityAmmoComponent : Component
     [ViewVariables(VVAccess.ReadWrite),
      DataField("nextCharge", customTypeSerializer:typeof(TimeOffsetSerializer)),
     AutoNetworkedField]
+    [AutoPausedField]
     public TimeSpan? NextCharge;
+
+    [DataField, AutoNetworkedField]
+    public bool ShowExamineText = true;
 }

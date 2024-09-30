@@ -7,7 +7,6 @@
   components:
   - type: StorageFill
     contents:
-        - id: NitrogenTankFilled
         - id: OxygenTankFilled
         - id: ClothingOuterHardsuitEVA
         - id: ClothingHeadHelmetEVA
@@ -21,7 +20,6 @@
   components:
   - type: StorageFill
     contents:
-        - id: NitrogenTankFilled
         - id: OxygenTankFilled
         - id: ClothingOuterHardsuitEVA
         - id: ClothingHeadHelmetEVALarge
@@ -35,7 +33,6 @@
   components:
   - type: StorageFill
     contents:
-        - id: NitrogenTankFilled
         - id: OxygenTankFilled
         - id: ClothingOuterSuitEmergency
         - id: ClothingMaskBreath
@@ -48,7 +45,6 @@
   components:
   - type: StorageFill
     contents:
-        - id: NitrogenTankFilled
         - id: OxygenTankFilled
         - id: ClothingOuterHardsuitEVAPrisoner
         - id: ClothingHeadHelmetEVALarge
@@ -62,7 +58,6 @@
   components:
   - type: StorageFill
     contents:
-        - id: NitrogenTankFilled
         - id: OxygenTankFilled
         - id: ClothingOuterHardsuitSyndicate
         - id: ClothingHeadHelmetSyndicate
@@ -76,7 +71,6 @@
   components:
   - type: StorageFill
     contents:
-        - id: NitrogenTankFilled
         - id: OxygenTankFilled
         - id: ClothingOuterHardsuitPirateEVA
         - id: ClothingMaskGas
@@ -103,7 +97,6 @@
   components:
   - type: StorageFill
     contents:
-        - id: NitrogenTankFilled
         - id: OxygenTankFilled
         - id: ClothingOuterHardsuitBasic
         - id: ClothingMaskBreath
@@ -116,7 +109,6 @@
   components:
   - type: StorageFill
     contents:
-        - id: NitrogenTankFilled
         - id: OxygenTankFilled
         - id: ClothingShoesBootsMag
         - id: ClothingOuterHardsuitEngineering
@@ -132,7 +124,6 @@
   components:
   - type: StorageFill
     contents:
-        - id: NitrogenTankFilled
         - id: OxygenTankFilled
         - id: ClothingOuterHardsuitAtmos
         - id: ClothingMaskBreath
@@ -147,7 +138,6 @@
   components:
   - type: StorageFill
     contents:
-        - id: NitrogenTankFilled
         - id: OxygenTankFilled
         - id: ClothingOuterHardsuitSecurity
         - id: ClothingMaskBreath
@@ -160,14 +150,10 @@
   parent: SuitStorageBase
   suffix: Chief Engineer
   components:
-  - type: StorageFill
-    contents:
-        - id: NitrogenTankFilled
-        - id: OxygenTankFilled
-        - id: JetpackVoidFilled
-        - id: ClothingShoesBootsMagAdv
-        - id: ClothingOuterHardsuitEngineeringWhite
-        - id: ClothingMaskBreath
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillChiefEngineerHardsuit
   - type: AccessReader
     access: [["ChiefEngineer"]]
 
@@ -177,12 +163,10 @@
   parent: SuitStorageBase
   suffix: Chief Medical Officer
   components:
-  - type: StorageFill
-    contents:
-        - id: NitrogenTankFilled
-        - id: OxygenTankFilled
-        - id: ClothingOuterHardsuitMedical
-        - id: ClothingMaskBreathMedical
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillChiefMedicalOfficerHardsuit
   - type: AccessReader
     access: [ [ "ChiefMedicalOfficer" ] ]
 
@@ -192,12 +176,10 @@
   parent: SuitStorageBase
   suffix: Research Director
   components:
-  - type: StorageFill
-    contents:
-        - id: NitrogenTankFilled
-        - id: OxygenTankFilled
-        - id: ClothingOuterHardsuitRd
-        - id: ClothingMaskBreath
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillResearchDirectorHardsuit
   - type: AccessReader
     access: [ [ "ResearchDirector" ] ]
 
@@ -207,13 +189,10 @@
   parent: SuitStorageBase
   suffix: Head of Security
   components:
-  - type: StorageFill
-    contents:
-        - id: NitrogenTankFilled
-        - id: OxygenTankFilled
-        - id: JetpackSecurityFilled
-        - id: ClothingOuterHardsuitSecurityRed
-        - id: ClothingMaskGasSwat
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillHeadOfSecurityHardsuit
   - type: AccessReader
     access: [["HeadOfSecurity"]]
 
@@ -225,7 +204,6 @@
   components:
   - type: StorageFill
     contents:
-        - id: NitrogenTankFilled
         - id: OxygenTankFilled
         - id: ClothingOuterHardsuitWarden
         - id: ClothingMaskBreath
@@ -238,12 +216,10 @@
   parent: SuitStorageBase
   suffix: Captain
   components:
-  - type: StorageFill
-    contents:
-        - id: NitrogenTankFilled
-        - id: OxygenTankFilled
-        - id: ClothingOuterHardsuitCap
-        - id: ClothingMaskGasCaptain
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillCaptainHardsuit
   - type: AccessReader
     access: [["Captain"]]
 
@@ -253,13 +229,10 @@
   parent: SuitStorageBase
   suffix: Salvage
   components:
-  - type: StorageFill
-    contents:
-      - id: NitrogenTankFilled
-      - id: OxygenTankFilled
-      - id: ClothingShoesBootsMag
-      - id: ClothingOuterHardsuitSpatio
-      - id: ClothingMaskGasExplorer
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillSalvageSpecialistHardsuitSpatio
   - type: AccessReader
     access: [["Salvage"]]
 
@@ -271,7 +244,6 @@
   components:
   - type: StorageFill
     contents:
-        - id: NitrogenTankFilled
         - id: OxygenTankFilled
         - id: ClothingOuterHardsuitSyndie
         - id: ClothingShoesBootsMagSyndie
@@ -285,7 +257,6 @@
   components:
   - type: StorageFill
     contents:
-        - id: NitrogenTankFilled
         - id: OxygenTankFilled
         - id: ClothingOuterHardsuitPirateCap
         - id: ClothingMaskGas
@@ -298,7 +269,6 @@
   components:
   - type: StorageFill
     contents:
-        - id: NitrogenTankFilled
         - id: OxygenTankFilled
         - id: ClothingOuterHardsuitWizard
         - id: ClothingMaskBreath

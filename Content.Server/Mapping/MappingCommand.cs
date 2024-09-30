@@ -1,17 +1,14 @@
-// ReSharper disable once RedundantUsingDirective
-// Used to warn the player in big red letters in debug mode
-
 using System.Linq;
 using Content.Server.Administration;
 using Content.Server.GameTicking;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
-using Robust.Server.Player;
+using Robust.Server.GameObjects;
+using Robust.Server.Maps;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Map;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Mapping
 {
@@ -19,6 +16,8 @@ namespace Content.Server.Mapping
     sealed class MappingCommand : IConsoleCommand
     {
         [Dependency] private readonly IEntityManager _entities = default!;
+        [Dependency] private readonly IMapManager _map = default!;
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
 
         public string Command => "mapping";
         public string Description => Loc.GetString("cmd-mapping-desc");
@@ -43,7 +42,7 @@ namespace Content.Server.Mapping
         {
             if (shell.Player is not { } player)
             {
-                shell.WriteError(Loc.GetString("cmd-savemap-server"));
+                shell.WriteError(Loc.GetString("shell-cannot-run-command-from-server"));
                 return;
             }
 
@@ -54,16 +53,16 @@ namespace Content.Server.Mapping
             }
 
 #if DEBUG
-            shell.WriteError(Loc.GetString("cmd-mapping-warning"));
+            shell.WriteLine(Loc.GetString("cmd-mapping-warning"));
 #endif
 
-            var mapManager = IoCManager.Resolve<IMapManager>();
             MapId mapId;
+            string? toLoad = null;
+            var mapSys = _entities.System<SharedMapSystem>();
 
             // Get the map ID to use
             if (args.Length is 1 or 2)
             {
-
                 if (!int.TryParse(args[0], out var intMapId))
                 {
                     shell.WriteError(Loc.GetString("cmd-mapping-failure-integer", ("arg", args[0])));
@@ -79,35 +78,33 @@ namespace Content.Server.Mapping
                     return;
                 }
 
-                if (mapManager.MapExists(mapId))
+                if (_map.MapExists(mapId))
                 {
                     shell.WriteError(Loc.GetString("cmd-mapping-exists", ("mapId", mapId)));
                     return;
                 }
 
+                // either load a map or create a new one.
+                if (args.Length <= 1)
+                {
+                    mapSys.CreateMap(mapId, runMapInit: false);
+                }
+                else
+                {
+                    var loadOptions = new MapLoadOptions {StoreMapUids = true};
+                    _entities.System<MapLoaderSystem>().TryLoad(mapId, args[1], out _, loadOptions);
+                }
+
+                // was the map actually created or did it fail somehow?
+                if (!_map.MapExists(mapId))
+                {
+                    shell.WriteError(Loc.GetString("cmd-mapping-error"));
+                    return;
+                }
             }
             else
             {
-                mapId = mapManager.NextMapId();
-            }
-
-            string? toLoad = null;
-            // either load a map or create a new one.
-            if (args.Length <= 1)
-            {
-                shell.ExecuteCommand($"addmap {mapId} false");
-            }
-            else
-            {
-                toLoad = CommandParsing.Escape(args[1]);
-                shell.ExecuteCommand($"loadmap {mapId} \"{toLoad}\" 0 0 0 true");
-            }
-
-            // was the map actually created?
-            if (!mapManager.MapExists(mapId))
-            {
-                shell.WriteError(Loc.GetString("cmd-mapping-error"));
-                return;
+                mapSys.CreateMap(out mapId, runMapInit: false);
             }
 
             // map successfully created. run misc helpful mapping commands
@@ -117,17 +114,15 @@ namespace Content.Server.Mapping
                 shell.ExecuteCommand("aghost");
             }
 
-            var cfg = IoCManager.Resolve<IConfigurationManager>();
-
             // don't interrupt mapping with events or auto-shuttle
             shell.ExecuteCommand("sudo cvar events.enabled false");
             shell.ExecuteCommand("sudo cvar shuttle.auto_call_time 0");
 
-            if (cfg.GetCVar(CCVars.AutosaveEnabled))
+            if (_cfg.GetCVar(CCVars.AutosaveEnabled))
                 shell.ExecuteCommand($"toggleautosave {mapId} {toLoad ?? "NEWMAP"}");
             shell.ExecuteCommand($"tp 0 0 {mapId}");
             shell.RemoteExecuteCommand("mappingclientsidesetup");
-            mapManager.SetMapPaused(mapId, true);
+            _map.SetMapPaused(mapId, true);
 
             if (args.Length == 2)
                 shell.WriteLine(Loc.GetString("cmd-mapping-success-load",("mapId",mapId),("path", args[1])));

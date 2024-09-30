@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "sprite made by Gtheglorious based on the sprite made by Alekshhh for SS14",
+  "copyright": "sprite made by Gtheglorious based on the sprite made by Alekshhh for SS14. Vox states by Flareguy for Space Station 14",
   "size": {
     "x": 32,
     "y": 32
@@ -19,6 +19,14 @@
     },
     {
       "name": "on-equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "off-equipped-HELMET-vox",
+      "directions": 4
+    },
+    {
+      "name": "on-equipped-HELMET-vox",
       "directions": 4
     }
   ]

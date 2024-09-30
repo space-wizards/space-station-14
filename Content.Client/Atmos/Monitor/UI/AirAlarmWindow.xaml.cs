@@ -22,9 +22,7 @@ public sealed partial class AirAlarmWindow : FancyWindow
     public event Action<string, AtmosMonitorThresholdType, AtmosAlarmThreshold, Gas?>? AtmosAlarmThresholdChanged;
     public event Action<AirAlarmMode>? AirAlarmModeChanged;
     public event Action<bool>? AutoModeChanged;
-    public event Action<string>? ResyncDeviceRequested;
     public event Action? ResyncAllRequested;
-    public event Action<AirAlarmTab>? AirAlarmTabChange;
 
     private RichTextLabel _address => CDeviceAddress;
     private RichTextLabel _deviceTotal => CDeviceTotal;
@@ -48,7 +46,7 @@ public sealed partial class AirAlarmWindow : FancyWindow
 
     private CheckBox _autoMode => AutoModeCheckBox;
 
-    public AirAlarmWindow(BoundUserInterface owner)
+    public AirAlarmWindow()
     {
         RobustXamlLoader.Load(this);
 
@@ -81,11 +79,6 @@ public sealed partial class AirAlarmWindow : FancyWindow
         _tabContainer.SetTabTitle(1, Loc.GetString("air-alarm-ui-window-tab-scrubbers"));
         _tabContainer.SetTabTitle(2, Loc.GetString("air-alarm-ui-window-tab-sensors"));
 
-        _tabContainer.OnTabChanged += idx =>
-        {
-            AirAlarmTabChange!((AirAlarmTab) idx);
-        };
-
         _resyncDevices.OnPressed += _ =>
         {
             _ventDevices.RemoveAllChildren();
@@ -96,8 +89,11 @@ public sealed partial class AirAlarmWindow : FancyWindow
             _sensors.Clear();
             ResyncAllRequested!.Invoke();
         };
+    }
 
-        EntityView.SetEntity(owner.Owner);
+    public void SetEntity(EntityUid uid)
+    {
+        EntityView.SetEntity(uid);
     }
 
     public void UpdateState(AirAlarmUIState state)
@@ -115,8 +111,6 @@ public sealed partial class AirAlarmWindow : FancyWindow
         {
             UpdateDeviceData(addr, dev);
         }
-
-        _tabContainer.CurrentTab = (int) state.Tab;
     }
 
     public void UpdateModeSelector(AirAlarmMode mode)

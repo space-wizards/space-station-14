@@ -27,6 +27,9 @@
       whitelist:
         components:
         - Paper
+      blacklist:
+        tags:
+        - Book
   - type: ItemSlots
   - type: DamageOnHighSpeedImpact
     damage:
@@ -89,7 +92,7 @@
     stateDoorOpen: generic_open
     stateDoorClosed: generic_door
   - type: StaticPrice
-    price: 50
+    price: 75
 
 # steel closet base (that can be constructed/deconstructed)
 - type: entity
@@ -116,9 +119,9 @@
   - type: ResistLocker
   - type: Weldable
   - type: WallMount
-    arc: 180
+    arc: 175
   - type: StaticPrice
-    price: 50
+    price: 75
   - type: Transform
     noRot: false
   - type: Sprite
@@ -135,7 +138,8 @@
       map: ["enum.WeldableLayers.BaseWelded"]
   - type: EntityStorage
     isCollidableWhenOpen: true
-    enteringOffset: 0, -0.75
+    enteringOffset: 0, -0.6
+    enteringRange: 0.03
     closeSound:
       path: /Audio/Items/deconstruct.ogg
     openSound:
@@ -145,7 +149,7 @@
       entity_storage: !type:Container
         ents: []
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
   - type: Destructible
     thresholds:
@@ -171,6 +175,11 @@
           SheetSteel1:
             min: 1
             max: 1
+  - type: Construction
+    graph: ClosetWall
+    node: done
+    containers:
+    - entity_storage
 
 #Wall locker
 - type: entity
@@ -180,6 +189,7 @@
   components:
   - type: AccessReader
   - type: Lock
+  - type: LockVisuals
   - type: Sprite
     sprite: Structures/Storage/wall_locker.rsi
     layers:
@@ -188,7 +198,7 @@
     - state: generic_door
       map: ["enum.StorageVisualLayers.Door"]
     - state: locked
-      map: ["enum.StorageVisualLayers.Lock"]
+      map: ["enum.LockVisualLayers.Lock"]
       shader: unshaded
     - state: welded
       visible: false
@@ -222,7 +232,7 @@
       visible: false
       map: ["enum.WeldableLayers.BaseWelded"]
     - state: locked
-      map: ["enum.StorageVisualLayers.Lock"]
+      map: ["enum.LockVisualLayers.Lock"]
       shader: unshaded
   - type: MovedByPressure
   - type: DamageOnHighSpeedImpact
@@ -253,7 +263,7 @@
     placeCentered: true
     isPlaceable: false
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
   - type: Destructible
     thresholds:
@@ -282,7 +292,6 @@
   - type: Appearance
   - type: EntityStorageVisuals
     stateBase: base
-    stateLocked: locked
-    stateUnlocked: unlocked
     stateDoorOpen: base
     stateDoorClosed: door
+  - type: LockVisuals

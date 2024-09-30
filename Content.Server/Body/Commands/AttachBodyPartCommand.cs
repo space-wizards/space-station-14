@@ -103,11 +103,11 @@ namespace Content.Server.Body.Commands
             // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
             if (body.RootContainer.ContainedEntity != null)
             {
-                bodySystem.AttachPartToRoot(bodyId,partUid.Value, body ,part);
+                bodySystem.AttachPartToRoot(bodyId, partUid.Value, body, part);
             }
             else
             {
-                var (rootPartId,rootPart) = bodySystem.GetRootPartOrNull(bodyId, body)!.Value;
+                var (rootPartId, rootPart) = bodySystem.GetRootPartOrNull(bodyId, body)!.Value;
                 if (!bodySystem.TryCreatePartSlotAndAttach(rootPartId, slotId, partUid.Value, part.PartType, rootPart, part))
                 {
                     shell.WriteError($"Could not create slot {slotId} on entity {_entManager.ToPrettyString(bodyId)}");

@@ -207,6 +207,14 @@
     state: threequartertile_overlay_270
 
 - type: decal
+  id: MonoOverlay
+  tags: ["station", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: Decals/Overlays/greyscale.rsi
+    state: mono
+
+- type: decal
   id: CheckerNESW
   tags: ["station", "overlay"]
   defaultCustomColor: true

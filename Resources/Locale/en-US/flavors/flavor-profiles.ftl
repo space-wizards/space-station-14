@@ -20,6 +20,7 @@ flavor-base-fishy = fishy
 flavor-base-crabby = crabby
 flavor-base-cheesy = cheesy
 flavor-base-funny = funny
+flavor-base-strange = strange
 flavor-base-tingly = tingly
 flavor-base-acid = acidic
 flavor-base-leafy = leafy
@@ -47,9 +48,10 @@ flavor-base-clean = clean
 flavor-base-alkaline = alkaline
 flavor-base-holy = holy
 flavor-base-horrible = horrible
-
 # lmao
 flavor-base-terrible = terrible
+flavor-base-mindful = mindful
+flavor-base-chewy = chewy
 
 # Complex flavors. Put a flavor here when you want something that's more
 # specific.
@@ -112,7 +114,7 @@ flavor-complex-corn = like corn
 flavor-complex-banana = like bananas
 flavor-complex-apple = like apples
 flavor-complex-cotton = like cottons
-flavor-complex-bungo = like bungo
+flavor-complex-bungo = like tropical sweetness
 flavor-complex-raisins = like dried grapes
 flavor-complex-orange = like oranges
 flavor-complex-watermelon = like watermelon
@@ -123,6 +125,7 @@ flavor-complex-meatballs = like meatballs
 flavor-complex-nettles = like nettles
 flavor-complex-jungle = like jungle
 flavor-complex-vegetables = like vegetables
+flavor-complex-cherry = like cherries
 # use it when there multiple types of veggies
 
 ## Complex foodstuffs (cooked foods, joke flavors, etc)
@@ -167,6 +170,16 @@ flavor-complex-lost-friendship = like lost friendship
 flavor-complex-light = like a light gone out
 flavor-complex-profits = like profits
 flavor-complex-fishops = like the dreaded fishops
+flavor-complex-blue-pumpkin = like a mouthful of pool water
+flavor-complex-violets = like violets
+flavor-complex-pyrotton = like a burning mouth
+flavor-complex-mothballs = like mothballs
+flavor-complex-paint-thinner = like paint thinner
+flavor-complex-numbing-tranquility = like numbing tranquility
+flavor-complex-true-nature = like the true nature of reality
+flavor-complex-false-meat = not entirely unlike meat
+flavor-complex-paper = like mushy pulp
+flavor-complex-compressed-meat = like compressed meat
 
 # Drink-specific flavors.
 
@@ -187,6 +200,7 @@ flavor-complex-tonic-water = like angry water
 flavor-complex-cola = like cola
 flavor-complex-energy-drink = like battery acid
 flavor-complex-dr-gibb = like malpractice
+flavor-complex-ginger-soda = like ginger
 flavor-complex-grape-soda = like grape soda
 flavor-complex-lemon-lime-soda = like lemon-lime soda
 flavor-complex-pwr-game-soda = like gaming
@@ -199,6 +213,7 @@ flavor-complex-vodka = like fermented grain
 flavor-complex-tequila = like fermented death
 flavor-complex-sake = like sweet, alcoholic rice
 flavor-complex-rum = like fermented sugar
+flavor-complex-coconut-rum = like nutty fermented sugar
 flavor-complex-coffee-liquor = like strong, bitter coffee
 flavor-complex-whiskey = like molasses
 flavor-complex-shitty-wine = like grape rinds
@@ -211,6 +226,11 @@ flavor-complex-ice = like ice
 flavor-complex-mopwata = like stagnant, dirty water
 
 ## Cocktails
+flavor-complex-arnold-palmer = like a hole-in-one
+flavor-complex-blue-hawaiian = like the tropics
+flavor-complex-cosmopolitan = sweet and tangy
+flavor-complex-painkiller = like spiked pineapple juice
+flavor-complex-pina-colada = like tropical sun
 flavor-complex-long-island = suspiciously like iced tea
 flavor-complex-three-mile-island = like tea brewed in nuclear runoff
 flavor-complex-whiskey-cola = like carbonated molasses
@@ -232,6 +252,12 @@ flavor-complex-atomic-cola = like hoarding bottle caps
 flavor-complex-cuba-libre = like spiked cola
 flavor-complex-gin-tonic = like spiked lemon-lime soda
 flavor-complex-screwdriver = like spiked orange juice
+flavor-complex-vodka-red-bool = like a heart attack
+flavor-complex-irish-bool = caffine and Ireland
+flavor-complex-xeno-basher = like killing bugs
+flavor-complex-budget-insuls-drink = like door hacking
+flavor-complex-watermelon-wakeup = like a sweet wakeup call
+flavor-complex-rubberneck = like synthetics
 flavor-complex-irish-car-bomb = like a spiked cola float
 flavor-complex-themartinez = like violets and lemon vodka
 flavor-complex-cogchamp = like brass
@@ -251,3 +277,4 @@ flavor-complex-bee = unbeelievable
 flavor-complex-sax = like jazz
 flavor-complex-bottledlightning = like lightning in a bottle
 flavor-complex-punishment = like punishment
+flavor-weh = like weh

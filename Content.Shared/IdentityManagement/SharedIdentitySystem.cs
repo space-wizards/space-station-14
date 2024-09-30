@@ -40,3 +40,8 @@ public abstract class SharedIdentitySystem : EntitySystem
         ent.Comp.Enabled = !args.IsToggled;
     }
 }
+/// <summary>
+///     Gets called whenever an entity changes their identity.
+/// </summary>
+[ByRefEvent]
+public record struct IdentityChangedEvent(EntityUid CharacterEntity, EntityUid IdentityEntity);

@@ -5,19 +5,26 @@ namespace Content.Server.Bed.Components
     [RegisterComponent]
     public sealed partial class HealOnBuckleComponent : Component
     {
-        [DataField("damage", required: true)]
-        [ViewVariables(VVAccess.ReadWrite)]
+        /// <summary>
+        /// Damage to apply to entities that are strapped to this entity.
+        /// </summary>
+        [DataField(required: true)]
         public DamageSpecifier Damage = default!;
 
-        [DataField("healTime", required: false)]
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float HealTime = 1f; // How often the bed applies the damage
+        /// <summary>
+        /// How frequently the damage should be applied, in seconds.
+        /// </summary>
+        [DataField(required: false)]
+        public float HealTime = 1f;
 
-        [DataField("sleepMultiplier")]
+        /// <summary>
+        /// Damage multiplier that gets applied if the entity is sleeping.
+        /// </summary>
+        [DataField]
         public float SleepMultiplier = 3f;
 
         public TimeSpan NextHealTime = TimeSpan.Zero; //Next heal
 
-        [DataField("sleepAction")] public EntityUid? SleepAction;
+        [DataField] public EntityUid? SleepAction;
     }
 }

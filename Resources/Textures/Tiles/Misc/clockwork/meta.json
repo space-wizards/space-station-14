@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/blob/cf00ca220063bedbb8838277bec32ef8ce90ede7/icons/turf/floors.dmi, item icons taken from tgstation at https://github.com/tgstation/tgstation/blob/c0f9d2e7e84856063bf2dbb93b35dc5c62cfdd5c/icons/obj/tiles.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "clockwork_floor"
+    },
+    {
+      "name": "reebe"
+    },
+    {
+      "name": "reebemap"
+    },
+    {
+      "name": "reebespawn"
+    },
+    {
+      "name": "reebelattice"
+    },
+    {
+      "name": "reebegame"
+    },
+    {
+      "name": "clockwork_floor_filled"
+    }
+  ]
+}

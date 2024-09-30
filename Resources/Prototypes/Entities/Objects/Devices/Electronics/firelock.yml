@@ -4,12 +4,13 @@
   name: firelock electronics
   description: An electronics board used to detect differences in pressure, temperature and gas concentrations between the two sides of the door.
   components:
+    - type: Item
+      storedRotation: 0
     - type: Sprite
       sprite: Objects/Misc/module.rsi
       state: mainboard
     - type: Tag
       tags:
-      - DroneUsable
       - FirelockElectronics
     - type: StaticPrice
       price: 61

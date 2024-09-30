@@ -8,6 +8,8 @@ namespace Content.Client.NodeContainer
 {
     public sealed class NodeVisCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntityManager _e = default!;
+
         public string Command => "nodevis";
         public string Description => "Toggles node group visualization";
         public string Help => "";
@@ -21,20 +23,22 @@ namespace Content.Client.NodeContainer
                 return;
             }
 
-            var sys = EntitySystem.Get<NodeGroupSystem>();
+            var sys = _e.System<NodeGroupSystem>();
             sys.SetVisEnabled(!sys.VisEnabled);
         }
     }
 
     public sealed class NodeVisFilterCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntityManager _e = default!;
+
         public string Command => "nodevisfilter";
         public string Description => "Toggles showing a specific group on nodevis";
         public string Help => "Usage: nodevis [filter]\nOmit filter to list currently masked-off";
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var sys = EntitySystem.Get<NodeGroupSystem>();
+            var sys = _e.System<NodeGroupSystem>();
 
             if (args.Length == 0)
             {

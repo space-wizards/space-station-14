@@ -57,6 +57,12 @@ namespace Content.Server.Kitchen.Components
         public uint CurrentCookTimerTime = 0;
 
         /// <summary>
+        /// Tracks the elapsed time of the current cook timer.
+        /// </summary>
+        [DataField, ViewVariables(VVAccess.ReadWrite)]
+        public TimeSpan CurrentCookTimeEnd = TimeSpan.Zero;
+
+        /// <summary>
         /// The maximum number of seconds a microwave can be set to.
         /// This is currently only used for validation and the client does not check this.
         /// </summary>
@@ -72,6 +78,9 @@ namespace Content.Server.Kitchen.Components
         public int CurrentCookTimeButtonIndex;
 
         public Container Storage = default!;
+
+        [DataField]
+        public string ContainerId = "microwave_entity_container";
 
         [DataField, ViewVariables(VVAccess.ReadWrite)]
         public int Capacity = 10;
@@ -95,6 +104,12 @@ namespace Content.Server.Kitchen.Components
         /// Chance of lightning occurring when we microwave a metallic object
         [DataField, ViewVariables(VVAccess.ReadWrite)]
         public float LightningChance = .75f;
+
+        /// <summary>
+        /// If this microwave can give ids accesses without exploding
+        /// </summary>
+        [DataField, ViewVariables(VVAccess.ReadWrite)]
+        public bool CanMicrowaveIdsSafely = true;
     }
 
     public sealed class BeingMicrowavedEvent : HandledEntityEventArgs

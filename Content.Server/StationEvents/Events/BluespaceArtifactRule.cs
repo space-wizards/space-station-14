@@ -1,5 +1,5 @@
-﻿using Content.Server.GameTicking.Rules.Components;
 using Content.Server.StationEvents.Components;
+﻿using Content.Shared.GameTicking.Components;
 using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
@@ -8,18 +8,21 @@ public sealed class BluespaceArtifactRule : StationEventSystem<BluespaceArtifact
 {
     protected override void Added(EntityUid uid, BluespaceArtifactRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
     {
-        base.Added(uid, component, gameRule, args);
+        if (!TryComp<StationEventComponent>(uid, out var stationEvent))
+            return;
 
         var str = Loc.GetString("bluespace-artifact-event-announcement",
             ("sighting", Loc.GetString(RobustRandom.Pick(component.PossibleSighting))));
-        ChatSystem.DispatchGlobalAnnouncement(str, colorOverride: Color.FromHex("#18abf5"));
+        stationEvent.StartAnnouncement = str;
+
+        base.Added(uid, component, gameRule, args);
     }
 
     protected override void Started(EntityUid uid, BluespaceArtifactRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
         base.Started(uid, component, gameRule, args);
 
-        var amountToSpawn = Math.Max(1, (int) MathF.Round(GetSeverityModifier() / 1.5f));
+        var amountToSpawn = 1;
         for (var i = 0; i < amountToSpawn; i++)
         {
             if (!TryFindRandomTile(out _, out _, out _, out var coords))

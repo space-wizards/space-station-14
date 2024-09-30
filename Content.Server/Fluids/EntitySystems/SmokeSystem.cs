@@ -1,8 +1,7 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
-using Content.Server.Chemistry.Containers.EntitySystems;
-using Content.Server.Chemistry.ReactionEffects;
+using Content.Server.EntityEffects.Effects;
 using Content.Server.Spreader;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
@@ -13,7 +12,7 @@ using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Smoking;
 using Robust.Server.GameObjects;
-using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
@@ -35,7 +34,7 @@ public sealed class SmokeSystem : EntitySystem
     // If I could do it all again this could probably use a lot more of puddles.
     [Dependency] private readonly IAdminLogManager _logger = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly AppearanceSystem _appearance = default!;
@@ -44,8 +43,7 @@ public sealed class SmokeSystem : EntitySystem
     [Dependency] private readonly ReactiveSystem _reactive = default!;
     [Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
-    [Dependency] private readonly TransformSystem _transform = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
 
     private EntityQuery<SmokeComponent> _smokeQuery;
     private EntityQuery<SmokeAffectedComponent> _smokeAffectedQuery;
@@ -63,7 +61,6 @@ public sealed class SmokeSystem : EntitySystem
         SubscribeLocalEvent<SmokeComponent, ReactionAttemptEvent>(OnReactionAttempt);
         SubscribeLocalEvent<SmokeComponent, SolutionRelayEvent<ReactionAttemptEvent>>(OnReactionAttempt);
         SubscribeLocalEvent<SmokeComponent, SpreadNeighborsEvent>(OnSmokeSpread);
-        SubscribeLocalEvent<SmokeAffectedComponent, EntityUnpausedEvent>(OnAffectedUnpaused);
     }
 
     /// <inheritdoc/>
@@ -124,11 +121,6 @@ public sealed class SmokeSystem : EntitySystem
             RemComp(args.OtherEntity, smokeAffectedComponent);
     }
 
-    private void OnAffectedUnpaused(Entity<SmokeAffectedComponent> entity, ref EntityUnpausedEvent args)
-    {
-        entity.Comp.NextSecond += args.PausedTime;
-    }
-
     private void OnSmokeSpread(Entity<SmokeComponent> entity, ref SpreadNeighborsEvent args)
     {
         if (entity.Comp.SpreadAmount == 0 || !_solutionContainerSystem.ResolveSolution(entity.Owner, SmokeComponent.SolutionName, ref entity.Comp.Solution, out var solution))
@@ -143,7 +135,7 @@ public sealed class SmokeSystem : EntitySystem
             return;
         }
 
-        if (!args.NeighborFreeTiles.Any())
+        if (args.NeighborFreeTiles.Count == 0)
             return;
 
         TryComp<TimedDespawnComponent>(entity, out var timer);
@@ -152,10 +144,10 @@ public sealed class SmokeSystem : EntitySystem
         var smokePerSpread = entity.Comp.SpreadAmount / Math.Max(1, args.NeighborFreeTiles.Count);
         foreach (var neighbor in args.NeighborFreeTiles)
         {
-            var coords = neighbor.Grid.GridTileToLocal(neighbor.Tile);
+            var coords = _map.GridTileToLocal(neighbor.Tile.GridUid, neighbor.Grid, neighbor.Tile.GridIndices);
             var ent = Spawn(prototype.ID, coords);
             var spreadAmount = Math.Max(0, smokePerSpread);
-            entity.Comp.SpreadAmount -= args.NeighborFreeTiles.Count();
+            entity.Comp.SpreadAmount -= args.NeighborFreeTiles.Count;
 
             StartSmoke(ent, solution.Clone(), timer?.Lifetime ?? entity.Comp.Duration, spreadAmount);
 
@@ -299,7 +291,7 @@ public sealed class SmokeSystem : EntitySystem
         if (_blood.TryAddToChemicals(entity, transferSolution, bloodstream))
         {
             // Log solution addition by smoke
-            _logger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(entity):target} ingested smoke {SolutionContainerSystem.ToPrettyString(transferSolution)}");
+            _logger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(entity):target} ingested smoke {SharedSolutionContainerSystem.ToPrettyString(transferSolution)}");
         }
     }
 
@@ -311,10 +303,10 @@ public sealed class SmokeSystem : EntitySystem
         if (!_solutionContainerSystem.ResolveSolution(uid, SmokeComponent.SolutionName, ref component.Solution, out var solution) || !solution.Any())
             return;
 
-        if (!_mapManager.TryGetGrid(xform.GridUid, out var mapGrid))
+        if (!TryComp<MapGridComponent>(xform.GridUid, out var mapGrid))
             return;
 
-        var tile = mapGrid.GetTileRef(xform.Coordinates.ToVector2i(EntityManager, _mapManager, _transform));
+        var tile = _map.GetTileRef(xform.GridUid.Value, mapGrid, xform.Coordinates);
 
         foreach (var reagentQuantity in solution.Contents.ToArray())
         {
@@ -322,7 +314,7 @@ public sealed class SmokeSystem : EntitySystem
                 continue;
 
             var reagent = _prototype.Index<ReagentPrototype>(reagentQuantity.Reagent.Prototype);
-            reagent.ReactionTile(tile, reagentQuantity.Quantity);
+            reagent.ReactionTile(tile, reagentQuantity.Quantity, EntityManager, reagentQuantity.Reagent.Data);
         }
     }
 

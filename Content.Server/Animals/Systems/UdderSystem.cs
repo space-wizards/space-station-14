@@ -1,6 +1,6 @@
 using Content.Server.Animals.Components;
-using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Popups;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
@@ -15,7 +15,7 @@ using Robust.Shared.Timing;
 namespace Content.Server.Animals.Systems;
 
 /// <summary>
-///     Gives ability to produce milkable reagents, produces endless if the 
+///     Gives ability to produce milkable reagents, produces endless if the
 ///     owner has no HungerComponent
 /// </summary>
 internal sealed class UdderSystem : EntitySystem
@@ -25,7 +25,7 @@ internal sealed class UdderSystem : EntitySystem
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
-    [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
 
     public override void Initialize()
     {
@@ -76,9 +76,8 @@ internal sealed class UdderSystem : EntitySystem
 
         var doargs = new DoAfterArgs(EntityManager, userUid, 5, new MilkingDoAfterEvent(), udder, udder, used: containerUid)
         {
-            BreakOnUserMove = true,
+            BreakOnMove = true,
             BreakOnDamage = true,
-            BreakOnTargetMove = true,
             MovementThreshold = 1.0f,
         };
 

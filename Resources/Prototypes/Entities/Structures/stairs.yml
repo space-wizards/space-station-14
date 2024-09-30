@@ -1,6 +1,7 @@
 - type: entity
   id: Stairs
   name: stairs
+  suffix: Steel
   description: The greatest invention since rocket-propelled grenades.
   placement:
     mode: SnapgridCenter
@@ -8,12 +9,12 @@
   - type: Clickable
   - type: Sprite
     sprite: Structures/stairs.rsi
-    state: stairs
+    state: stairs_steel
     drawdepth: FloorTiles
   - type: Transform
     anchored: true
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
   - type: Destructible
     thresholds:
@@ -38,9 +39,69 @@
 - type: entity
   id: StairStage
   parent: Stairs
-  suffix: stage
+  suffix: Steel, stage
   components:
   - type: Sprite
     sprite: Structures/stairs.rsi
-    state: stairs_stage
+    state: stairs_stage_steel
+    drawdepth: FloorTiles
+
+- type: entity
+  id: StairWhite
+  parent: Stairs
+  suffix: White
+  components:
+  - type: Sprite
+    sprite: Structures/stairs.rsi
+    state: stairs_white
+    drawdepth: FloorTiles
+
+- type: entity
+  id: StairStageWhite
+  parent: Stairs
+  suffix: White, stage
+  components:
+  - type: Sprite
+    sprite: Structures/stairs.rsi
+    state: stairs_stage_white
+    drawdepth: FloorTiles
+
+- type: entity
+  id: StairDark
+  parent: Stairs
+  suffix: Dark
+  components:
+  - type: Sprite
+    sprite: Structures/stairs.rsi
+    state: stairs_dark
+    drawdepth: FloorTiles
+
+- type: entity
+  id: StairStageDark
+  parent: Stairs
+  suffix: Dark, stage
+  components:
+  - type: Sprite
+    sprite: Structures/stairs.rsi
+    state: stairs_stage_dark
+    drawdepth: FloorTiles
+
+- type: entity
+  id: StairWood
+  parent: Stairs
+  suffix: Wood
+  components:
+  - type: Sprite
+    sprite: Structures/stairs.rsi
+    state: stairs_wood
+    drawdepth: FloorTiles
+
+- type: entity
+  id: StairStageWood
+  parent: Stairs
+  suffix: Wood, stage
+  components:
+  - type: Sprite
+    sprite: Structures/stairs.rsi
+    state: stairs_stage_wood
     drawdepth: FloorTiles

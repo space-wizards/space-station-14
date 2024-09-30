@@ -18,12 +18,12 @@ public sealed class ActionsAddedTest
     [Test]
     public async Task TestCombatActionsAdded()
     {
-        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true, DummyTicker = false});
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true, DummyTicker = false });
         var server = pair.Server;
         var client = pair.Client;
         var sEntMan = server.ResolveDependency<IEntityManager>();
         var cEntMan = client.ResolveDependency<IEntityManager>();
-        var clientSession = client.ResolveDependency<Robust.Client.Player.IPlayerManager>().LocalPlayer?.Session;
+        var clientSession = client.Session;
         var serverSession = server.ResolveDependency<IPlayerManager>().Sessions.Single();
         var sActionSystem = server.System<SharedActionsSystem>();
         var cActionSystem = client.System<SharedActionsSystem>();

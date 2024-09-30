@@ -1,3 +1,4 @@
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Alert;
@@ -7,5 +8,7 @@ public struct AlertState
 {
     public short? Severity;
     public (TimeSpan, TimeSpan)? Cooldown;
-    public AlertType Type;
+    public bool AutoRemove;
+    public bool ShowCooldown;
+    public ProtoId<AlertPrototype> Type;
 }

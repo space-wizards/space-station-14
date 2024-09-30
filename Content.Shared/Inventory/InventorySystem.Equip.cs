@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Armor;
 using Content.Shared.Clothing.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands;
@@ -10,6 +11,7 @@ using Content.Shared.Item;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Strip.Components;
+using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
@@ -29,6 +31,7 @@ public abstract partial class InventorySystem
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     [ValidatePrototypeId<ItemSizePrototype>]
     private const string PocketableItemSize = "Small";
@@ -106,15 +109,14 @@ public abstract partial class InventorySystem
         // before we drop the item, check that it can be equipped in the first place.
         if (!CanEquip(actor, held.Value, ev.Slot, out var reason))
         {
-            if (_gameTiming.IsFirstTimePredicted)
-                _popup.PopupCursor(Loc.GetString(reason));
+            _popup.PopupCursor(Loc.GetString(reason));
             return;
         }
 
         if (!_handsSystem.CanDropHeld(actor, hands.ActiveHand!, checkActionBlocker: false))
             return;
 
-        RaiseLocalEvent(held.Value, new HandDeselectedEvent(actor), false);
+        RaiseLocalEvent(held.Value, new HandDeselectedEvent(actor));
 
         TryEquip(actor, actor, held.Value, ev.Slot, predicted: true, inventory: inventory, force: true, checkDoafter:true);
     }
@@ -128,7 +130,7 @@ public abstract partial class InventorySystem
     {
         if (!Resolve(target, ref inventory, false))
         {
-            if(!silent && _gameTiming.IsFirstTimePredicted)
+            if(!silent)
                 _popup.PopupCursor(Loc.GetString("inventory-component-can-equip-cannot"));
             return false;
         }
@@ -139,14 +141,14 @@ public abstract partial class InventorySystem
 
         if (!TryGetSlotContainer(target, slot, out var slotContainer, out var slotDefinition, inventory))
         {
-            if(!silent && _gameTiming.IsFirstTimePredicted)
+            if(!silent)
                 _popup.PopupCursor(Loc.GetString("inventory-component-can-equip-cannot"));
             return false;
         }
 
         if (!force && !CanEquip(actor, target, itemUid, slot, out var reason, slotDefinition, inventory, clothing))
         {
-            if(!silent && _gameTiming.IsFirstTimePredicted)
+            if(!silent)
                 _popup.PopupCursor(Loc.GetString(reason));
             return false;
         }
@@ -166,13 +168,8 @@ public abstract partial class InventorySystem
                 target,
                 itemUid)
             {
-                BlockDuplicate = true,
-                BreakOnHandChange = true,
-                BreakOnUserMove = true,
-                BreakOnTargetMove = true,
-                CancelDuplicate = true,
-                RequireCanInteract = true,
-                NeedHand = true
+                BreakOnMove = true,
+                NeedHand = true,
             };
 
             _doAfter.TryStartDoAfter(args);
@@ -181,7 +178,7 @@ public abstract partial class InventorySystem
 
         if (!_containerSystem.Insert(itemUid, slotContainer))
         {
-            if(!silent && _gameTiming.IsFirstTimePredicted)
+            if(!silent)
                 _popup.PopupCursor(Loc.GetString("inventory-component-can-unequip-cannot"));
             return false;
         }
@@ -210,11 +207,7 @@ public abstract partial class InventorySystem
             return false;
 
         // Can the actor reach the item?
-        if (_interactionSystem.InRangeUnobstructed(actor, itemUid) && _containerSystem.IsInSameOrParentContainer(actor, itemUid))
-            return true;
-
-        // Is the item in an open storage UI, i.e., is the user quick-equipping from an open backpack?
-        if (_interactionSystem.CanAccessViaStorage(actor, itemUid))
+        if (_interactionSystem.InRangeAndAccessible(actor, itemUid))
             return true;
 
         // Is the actor currently stripping the target? Here we could check if the actor has the stripping UI open, but
@@ -244,8 +237,24 @@ public abstract partial class InventorySystem
             return false;
 
         DebugTools.Assert(slotDefinition.Name == slot);
-        if (slotDefinition.DependsOn != null && !TryGetSlotEntity(target, slotDefinition.DependsOn, out _, inventory))
-            return false;
+        if (slotDefinition.DependsOn != null)
+        {
+            if (!TryGetSlotEntity(target, slotDefinition.DependsOn, out EntityUid? slotEntity, inventory))
+                return false;
+
+            if (slotDefinition.DependsOnComponents is { } componentRegistry)
+            {
+                foreach (var (_, entry) in componentRegistry)
+                {
+                    if (!HasComp(slotEntity, entry.Component.GetType()))
+                        return false;
+
+                    if (TryComp<AllowSuitStorageComponent>(slotEntity, out var comp) &&
+                        _whitelistSystem.IsWhitelistFailOrNull(comp.Whitelist, itemUid))
+                        return false;
+                }
+            }
+        }
 
         var fittingInPocket = slotDefinition.SlotFlags.HasFlag(SlotFlags.POCKET) &&
                               item != null &&
@@ -263,13 +272,8 @@ public abstract partial class InventorySystem
             return false;
         }
 
-        if (slotDefinition.Whitelist != null && !slotDefinition.Whitelist.IsValid(itemUid))
-        {
-            reason = "inventory-component-can-equip-does-not-fit";
-            return false;
-        }
-
-        if (slotDefinition.Blacklist != null && slotDefinition.Blacklist.IsValid(itemUid))
+        if (_whitelistSystem.IsWhitelistFail(slotDefinition.Whitelist, itemUid) ||
+            _whitelistSystem.IsBlacklistPass(slotDefinition.Blacklist, itemUid))
         {
             reason = "inventory-component-can-equip-does-not-fit";
             return false;
@@ -302,7 +306,6 @@ public abstract partial class InventorySystem
             reason = itemAttemptEvent.Reason ?? reason;
             return false;
         }
-
         return true;
     }
 
@@ -370,14 +373,14 @@ public abstract partial class InventorySystem
 
         if (!Resolve(target, ref inventory, false))
         {
-            if(!silent && _gameTiming.IsFirstTimePredicted)
+            if(!silent)
                 _popup.PopupCursor(Loc.GetString("inventory-component-can-unequip-cannot"));
             return false;
         }
 
         if (!TryGetSlotContainer(target, slot, out var slotContainer, out var slotDefinition, inventory))
         {
-            if(!silent && _gameTiming.IsFirstTimePredicted)
+            if(!silent)
                 _popup.PopupCursor(Loc.GetString("inventory-component-can-unequip-cannot"));
             return false;
         }
@@ -389,7 +392,7 @@ public abstract partial class InventorySystem
 
         if (!force && !CanUnequip(actor, target, slot, out var reason, slotContainer, slotDefinition, inventory))
         {
-            if(!silent && _gameTiming.IsFirstTimePredicted)
+            if(!silent)
                 _popup.PopupCursor(Loc.GetString(reason));
             return false;
         }
@@ -412,13 +415,8 @@ public abstract partial class InventorySystem
                 target,
                 removedItem.Value)
             {
-                BlockDuplicate = true,
-                BreakOnHandChange = true,
-                BreakOnUserMove = true,
-                BreakOnTargetMove = true,
-                CancelDuplicate = true,
-                RequireCanInteract = true,
-                NeedHand = true
+                BreakOnMove = true,
+                NeedHand = true,
             };
 
             _doAfter.TryStartDoAfter(args);

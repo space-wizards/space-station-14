@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/ead7e05f990de05b7f5f93d39f9671498cb0aa01",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "sheaterOff"
+    },
+    {
+      "name": "sheaterCool",
+      "delays": [
+        [
+          0.2,
+		  0.2,
+		  0.2,
+		  0.2,
+		  0.2,
+		  0.2,
+		  0.2,
+		  0.2
+        ]
+      ]
+    },
+	{
+      "name": "sheaterHeat",
+      "delays": [
+        [
+          0.2,
+		  0.2,
+		  0.2,
+		  0.2,
+		  0.2,
+		  0.2,
+		  0.2,
+		  0.2
+        ]
+      ]
+    },
+    {
+      "name": "sheaterPanelOpen"
+    },
+    {
+      "name": "sheaterStandby"
+    }
+  ]
+}

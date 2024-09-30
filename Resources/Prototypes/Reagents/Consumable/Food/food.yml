@@ -93,6 +93,12 @@
     amount: 2
   - !type:PlantAdjustPests
     amount: 2
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/sugarglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 7
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
 
 - type: reagent
   id: PumpkinFlesh #Just so pumpkins spill orange stuff when smashed

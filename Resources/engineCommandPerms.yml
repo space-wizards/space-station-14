@@ -32,7 +32,6 @@
   - togglelight
   - togglelightbuf
   - toggleshadows
-  - testbed
   - lightbb
   - vv
   - szr_stats
@@ -67,6 +66,7 @@
   - scene
   - replay_recording_stats
   - print_pvs_ack
+  - pvs_override_info
   - merge_grids
 
 
@@ -89,12 +89,14 @@
 
 - Flags: ADMIN
   Commands:
-  - delete
-  - kick
   - listplayers
   - tp
   - tpto
-  - respawn
+
+- Flags: FUN
+  Commands:
+  - tippy
+  - tip
 
 - Flags: SERVER
   Commands:
@@ -108,6 +110,12 @@
   Commands:
   - spawn
   - cspawn
+  - delete
+
+- Flags: MODERATOR
+  Commands:
+  - kick
+  - respawn
 
 - Flags: HOST
   Commands:

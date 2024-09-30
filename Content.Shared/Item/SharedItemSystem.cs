@@ -46,6 +46,15 @@ public abstract class SharedItemSystem : EntitySystem
         Dirty(uid, component);
     }
 
+    public void SetShape(EntityUid uid, List<Box2i>? shape, ItemComponent? component = null)
+    {
+        if (!Resolve(uid, ref component, false))
+            return;
+
+        component.Shape = shape;
+        Dirty(uid, component);
+    }
+
     public void SetHeldPrefix(EntityUid uid, string? heldPrefix, bool force = false, ItemComponent? component = null)
     {
         if (!Resolve(uid, ref component, false))
@@ -101,8 +110,8 @@ public abstract class SharedItemSystem : EntitySystem
 
         // if the item already in a container (that is not the same as the user's), then change the text.
         // this occurs when the item is in their inventory or in an open backpack
-        Container.TryGetContainingContainer(args.User, out var userContainer);
-        if (Container.TryGetContainingContainer(args.Target, out var container) && container != userContainer)
+        Container.TryGetContainingContainer((args.User, null, null), out var userContainer);
+        if (Container.TryGetContainingContainer((args.Target, null, null), out var container) && container != userContainer)
             verb.Text = Loc.GetString("pick-up-verb-get-data-text-inventory");
         else
             verb.Text = Loc.GetString("pick-up-verb-get-data-text");
@@ -183,7 +192,7 @@ public abstract class SharedItemSystem : EntitySystem
         var shapes = GetItemShape(entity);
         var boundingShape = shapes.GetBoundingBox();
         var boundingCenter = ((Box2) boundingShape).Center;
-        var matty = Matrix3.CreateTransform(boundingCenter, rotation);
+        var matty = Matrix3Helpers.CreateTransform(boundingCenter, rotation);
         var drift = boundingShape.BottomLeft - matty.TransformBox(boundingShape).BottomLeft;
 
         var adjustedShapes = new List<Box2i>();
@@ -209,6 +218,13 @@ public abstract class SharedItemSystem : EntitySystem
 
         if (args.Activated)
         {
+            if (itemToggleSize.ActivatedShape != null)
+            {
+                // Set the deactivated shape to the default item's shape before it gets changed.
+                itemToggleSize.DeactivatedShape ??= new List<Box2i>(GetItemShape(item));
+                SetShape(uid, itemToggleSize.ActivatedShape, item);
+            }
+
             if (itemToggleSize.ActivatedSize != null)
             {
                 // Set the deactivated size to the default item's size before it gets changed.
@@ -218,6 +234,11 @@ public abstract class SharedItemSystem : EntitySystem
         }
         else
         {
+            if (itemToggleSize.DeactivatedShape != null)
+            {
+                SetShape(uid, itemToggleSize.DeactivatedShape, item);
+            }
+
             if (itemToggleSize.DeactivatedSize != null)
             {
                 SetSize(uid, (ProtoId<ItemSizePrototype>) itemToggleSize.DeactivatedSize, item);

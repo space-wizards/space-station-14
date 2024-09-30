@@ -63,3 +63,26 @@
         path: /Audio/Weapons/Guns/Empty/empty.ogg
       ejectSound:
         path: /Audio/Weapons/Guns/Empty/empty.ogg
+
+- type: entity
+  id: SmokingPipeFilledCannabisRainbow
+  parent: SmokingPipe
+  name: pipe
+  suffix: Rainbow Cannabis
+  description: Just like grandpappy used to smoke.
+  components:
+  - type: ContainerContainer
+    containers:
+      bowl_slot: !type:ContainerSlot
+  - type: ItemSlots
+  - type: SmokingPipe
+    bowl_slot:
+      name: smoking-pipe-slot-component-slot-name-bowl
+      startingItem: GroundCannabisRainbow
+      whitelist:
+        tags:
+          - Smokable
+      insertSound:
+        path: /Audio/Weapons/Guns/Empty/empty.ogg
+      ejectSound:
+        path: /Audio/Weapons/Guns/Empty/empty.ogg

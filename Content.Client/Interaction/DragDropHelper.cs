@@ -73,11 +73,6 @@ public sealed class DragDropHelper<T>
         _cfg.OnValueChanged(CCVars.DragDropDeadZone, SetDeadZone, true);
     }
 
-    ~DragDropHelper()
-    {
-        _cfg.UnsubValueChanged(CCVars.DragDropDeadZone, SetDeadZone);
-    }
-
     /// <summary>
     /// Tell the helper that the mouse button was pressed down on
     /// a target, thus a drag has the possibility to begin for this target.

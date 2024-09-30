@@ -1,7 +1,7 @@
 - type: entity
   id: BaseCartridgeCaselessRifle
   name: cartridge (.25 rifle)
-  parent: BaseCartridge
+  parent: [ BaseCartridge, BaseRestrictedContraband ]
   abstract: true
   components:
   - type: Tag
@@ -39,18 +39,7 @@
   - type: Sprite
     layers:
       - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
       - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
         color: "#dbdbdb"
-
-- type: entity
-  id: CartridgeCaselessRifleRubber
-  name: cartridge (.25 caseless rubber)
-  parent: BaseCartridgeCaselessRifle
-  components:
-  - type: CartridgeAmmo
-    proto: BulletCaselessRifleRubber
-  - type: Sprite
-    layers:
-      - state: base
-      - state: tip
-        color: "#43c4f7"

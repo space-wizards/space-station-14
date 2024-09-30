@@ -1,6 +1,6 @@
 - type: entity
   name: dart
-  description: light throwing dart for playing darts. Don't get in the eye!
+  description: Light throwing dart for playing darts. Don't get in the eye!
   parent: BaseItem
   id: Dart
   components:
@@ -10,6 +10,7 @@
     offset: 0.0,0.0
   - type: ThrowingAngle
     angle: 315
+  - type: LandAtCursor
   - type: Fixtures
     fixtures:
       fix1:
@@ -28,6 +29,7 @@
     sprite: Objects/Fun/Darts/dart_red.rsi
     state: icon
   - type: MeleeWeapon
+    wideAnimationRotation: -45
     damage:
       types:
         Piercing: 2
@@ -52,10 +54,10 @@
     solution: melee
   - type: InjectableSolution
     solution: melee
-  - type: SolutionInjectOnCollide
+  - type: SolutionInjectOnEmbed
     transferAmount: 2
+    solution: melee
     blockSlots: OUTERCLOTHING
-    fixtureId: "throw-fixture"
   - type: SolutionTransfer
     maxTransferAmount: 2
   - type: Damageable
@@ -82,10 +84,7 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: Appearance
-  - type: SolutionContainerVisuals
-    maxFillLevels: 1
-    fillBaseName: dart
+  - type: BalloonPopper
 
 - type: entity
   parent: Dart
@@ -123,10 +122,10 @@
     solutions:
       melee:
         maxVol: 7
-  - type: SolutionInjectOnCollide
+  - type: SolutionInjectOnEmbed
     transferAmount: 7
     blockSlots: NONE
-    fixtureId: "throw-fixture"
+    solution: melee
   - type: SolutionTransfer
     maxTransferAmount: 7
 
@@ -192,7 +191,7 @@
         acts: [ "Destruction" ]
 
 - type: entity
-  parent: BaseItem
+  parent: [ BaseItem, BaseSyndicateContraband ]
   id: HypoDartBox
   name: hypodart box
   suffix: HypoDart

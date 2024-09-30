@@ -55,7 +55,7 @@ namespace Content.Shared.Atmos.EntitySystems
                     data[index] = chunk;
             }
 
-            args.State = new GasTileOverlayState(data) { AllChunks = new(component.Chunks.Keys) };
+            args.State = new GasTileOverlayDeltaState(data, new(component.Chunks.Keys));
         }
 
         public static Vector2i GetGasChunkIndices(Vector2i indices)
@@ -66,7 +66,10 @@ namespace Content.Shared.Atmos.EntitySystems
         [Serializable, NetSerializable]
         public readonly struct GasOverlayData : IEquatable<GasOverlayData>
         {
+            [ViewVariables]
             public readonly byte FireState;
+
+            [ViewVariables]
             public readonly byte[] Opacity;
 
             // TODO change fire color based on temps

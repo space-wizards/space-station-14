@@ -1,22 +1,35 @@
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.EntitySystems;
+using Content.Shared.Alert;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Body.Components
 {
-    [RegisterComponent, Access(typeof(BloodstreamSystem), (typeof(ChemistrySystem)))]
+    [RegisterComponent, Access(typeof(BloodstreamSystem), typeof(ReactionMixerSystem))]
     public sealed partial class BloodstreamComponent : Component
     {
         public static string DefaultChemicalsSolutionName = "chemicals";
         public static string DefaultBloodSolutionName = "bloodstream";
         public static string DefaultBloodTemporarySolutionName = "bloodstreamTemporary";
 
-        public float AccumulatedFrametime = 0.0f;
+        /// <summary>
+        /// The next time that blood level will be updated and bloodloss damage dealt.
+        /// </summary>
+        [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+        public TimeSpan NextUpdate;
+
+        /// <summary>
+        /// The interval at which this component updates.
+        /// </summary>
+        [DataField]
+        public TimeSpan UpdateInterval = TimeSpan.FromSeconds(3);
 
         /// <summary>
         ///     How much is this entity currently bleeding?
@@ -32,10 +45,10 @@ namespace Content.Server.Body.Components
         public float BleedAmount;
 
         /// <summary>
-        ///     How much should bleeding should be reduced every update interval?
+        ///     How much should bleeding be reduced every update interval?
         /// </summary>
         [DataField]
-        public float BleedReductionAmount = 1.0f;
+        public float BleedReductionAmount = 0.33f;
 
         /// <summary>
         ///     How high can <see cref="BleedAmount"/> go?
@@ -63,18 +76,12 @@ namespace Content.Server.Body.Components
         [DataField(required: true)]
         public DamageSpecifier BloodlossHealDamage = new();
 
-        /// <summary>
-        ///     How frequently should this bloodstream update, in seconds?
-        /// </summary>
-        [DataField]
-        public float UpdateInterval = 3.0f;
-
         // TODO shouldn't be hardcoded, should just use some organ simulation like bone marrow or smth.
         /// <summary>
         ///     How much reagent of blood should be restored each update interval?
         /// </summary>
         [DataField]
-        public float BloodRefreshAmount = 1.0f;
+        public FixedPoint2 BloodRefreshAmount = 1.0f;
 
         /// <summary>
         ///     How much blood needs to be in the temporary solution in order to create a puddle?
@@ -89,8 +96,8 @@ namespace Content.Server.Body.Components
         /// <remarks>
         ///     For example, piercing damage is increased while poison damage is nullified entirely.
         /// </remarks>
-        [DataField(customTypeSerializer:typeof(PrototypeIdSerializer<DamageModifierSetPrototype>))]
-        public string DamageBleedModifiers = "BloodlossHuman";
+        [DataField]
+        public ProtoId<DamageModifierSetPrototype> DamageBleedModifiers = "BloodlossHuman";
 
         /// <summary>
         ///     The sound to be played when a weapon instantly deals blood loss damage.
@@ -103,6 +110,13 @@ namespace Content.Server.Body.Components
         /// </summary>
         [DataField]
         public SoundSpecifier BloodHealedSound = new SoundPathSpecifier("/Audio/Effects/lightburn.ogg");
+
+        /// <summary>
+        /// The minimum amount damage reduction needed to play the healing sound/popup.
+        /// This prevents tiny amounts of heat damage from spamming the sound, e.g. spacing.
+        /// </summary>
+        [DataField]
+        public float BloodHealedSoundThreshold = -0.1f;
 
         // TODO probably damage bleed thresholds.
 
@@ -126,7 +140,7 @@ namespace Content.Server.Body.Components
         ///     Slime-people might use slime as their blood or something like that.
         /// </remarks>
         [DataField]
-        public string BloodReagent = "Blood";
+        public ProtoId<ReagentPrototype> BloodReagent = "Blood";
 
         /// <summary>Name/Key that <see cref="BloodSolution"/> is indexed by.</summary>
         [DataField]
@@ -164,6 +178,9 @@ namespace Content.Server.Body.Components
         /// Variable that stores the amount of status time added by having a low blood level.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public float StatusTime;
+        public TimeSpan StatusTime;
+
+        [DataField]
+        public ProtoId<AlertPrototype> BleedingAlert = "Bleed";
     }
 }

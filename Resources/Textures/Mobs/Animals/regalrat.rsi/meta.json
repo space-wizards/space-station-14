@@ -1,24 +1,28 @@
 {
-  "version": 1,
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from https://github.com/tgstation/tgstation/commit/53d1f1477d22a11a99c6c6924977cd431075761b Changed by Alekshhh",
-  "states": [
-    {
-      "name": "critical"
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
     },
-    {
-      "name": "dead"
-    },
-	{
-      "name": "icon"
-    },
-    {
-      "name": "regalrat",
-      "directions": 4
-    }
-  ]
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from https://github.com/tgstation/tgstation/commit/53d1f1477d22a11a99c6c6924977cd431075761b Changed by Alekshhh + eyes added by jamessimo",
+    "states": [
+        {
+            "name": "critical"
+        },
+        {
+            "name": "dead"
+        },
+        {
+            "name": "icon"
+        },
+        {
+            "name": "regalrat",
+            "directions": 4
+        },
+        {
+            "name": "eyes",
+            "directions": 4
+        }
+    ]
 }

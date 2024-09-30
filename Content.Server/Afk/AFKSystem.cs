@@ -30,7 +30,7 @@ public sealed class AFKSystem : EntitySystem
     {
         base.Initialize();
         _playerManager.PlayerStatusChanged += OnPlayerChange;
-        _configManager.OnValueChanged(CCVars.AfkTime, SetAfkDelay, true);
+        Subs.CVar(_configManager, CCVars.AfkTime, SetAfkDelay, true);
 
         SubscribeNetworkEvent<FullInputCmdMessage>(HandleInputCmd);
     }
@@ -60,7 +60,6 @@ public sealed class AFKSystem : EntitySystem
         base.Shutdown();
         _afkPlayers.Clear();
         _playerManager.PlayerStatusChanged -= OnPlayerChange;
-        _configManager.UnsubValueChanged(CCVars.AfkTime, SetAfkDelay);
     }
 
     public override void Update(float frameTime)

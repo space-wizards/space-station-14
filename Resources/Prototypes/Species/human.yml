@@ -17,11 +17,14 @@
 - type: speciesBaseSprites
   id: MobHumanSprites
   sprites:
+    Special: MobHumanoidAnyMarking
     Head: MobHumanHead
     Hair: MobHumanoidAnyMarking
     FacialHair: MobHumanoidAnyMarking
+    Snout: MobHumanoidAnyMarking
     Chest: MobHumanTorso
     Eyes: MobHumanoidEyes
+    HeadTop: MobHumanoidAnyMarking
     LArm: MobHumanLArm
     RArm: MobHumanRArm
     LHand: MobHumanLHand
@@ -34,17 +37,23 @@
 - type: markingPoints
   id: MobHumanMarkingLimits
   points:
+    Special: # the cat ear joke
+      points: 0
+      required: false
     Hair:
       points: 1
       required: false
     FacialHair:
       points: 1
       required: false
+    Snout:
+      points: 1
+      required: false
     Tail: # the cat tail joke
       points: 0
       required: false
-    HeadTop: # the cat ear joke
-      points: 0
+    HeadTop:
+      points: 1
       required: false
     Chest:
       points: 1

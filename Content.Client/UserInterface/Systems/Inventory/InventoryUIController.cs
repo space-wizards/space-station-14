@@ -21,6 +21,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
+using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using static Content.Client.Inventory.ClientInventorySystem;
 
@@ -132,6 +133,9 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
         if (clientInv == null)
         {
             _inventoryHotbar?.ClearButtons();
+            if (_inventoryButton != null)
+                _inventoryButton.Visible = false;
+
             return;
         }
 
@@ -396,6 +400,9 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
         foreach (var slotData in clientInv.SlotData.Values)
         {
             AddSlot(slotData);
+
+            if (_inventoryButton != null)
+                _inventoryButton.Visible = true;
         }
 
         UpdateInventoryHotbar(_playerInventory);
@@ -403,12 +410,17 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
 
     private void UnloadSlots()
     {
+        if (_inventoryButton != null)
+            _inventoryButton.Visible = false;
+
         _playerUid = null;
         _playerInventory = null;
         foreach (var slotGroup in _slotGroups.Values)
         {
             slotGroup.ClearButtons();
         }
+
+        UpdateInventoryHotbar(null);
     }
 
     private void SpriteUpdated(SlotSpriteUpdate update)
@@ -417,7 +429,7 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
 
         if (_strippingWindow?.InventoryButtons.GetButton(update.Name) is { } inventoryButton)
         {
-            inventoryButton.SpriteView.SetEntity(entity);
+            inventoryButton.SetEntity(entity);
             inventoryButton.StorageButton.Visible = showStorage;
         }
 
@@ -426,12 +438,12 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
 
         if (_entities.TryGetComponent(entity, out VirtualItemComponent? virtb))
         {
-            button.SpriteView.SetEntity(virtb.BlockingEntity);
+            button.SetEntity(virtb.BlockingEntity);
             button.Blocked = true;
         }
         else
         {
-            button.SpriteView.SetEntity(entity);
+            button.SetEntity(entity);
             button.Blocked = false;
             button.StorageButton.Visible = showStorage;
         }

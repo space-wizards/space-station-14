@@ -3,6 +3,5 @@ using Robust.Shared.GameStates;
 
 namespace Content.Client.Administration.Components;
 
-[NetworkedComponent, RegisterComponent]
-public sealed partial class KillSignComponent : SharedKillSignComponent
-{ }
+[RegisterComponent]
+public sealed partial class KillSignComponent : SharedKillSignComponent;

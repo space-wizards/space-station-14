@@ -1,6 +1,6 @@
 - type: entity
   name: baseball bat
-  parent: BaseItem
+  parent: [BaseItem, BaseMinorContraband]
   id: BaseBallBat
   description: A robust baseball bat.
   components:
@@ -13,6 +13,8 @@
       types:
         Blunt: 10
         Structural: 5
+    soundHit:
+      collection: MetalThud
   - type: Wieldable
   - type: IncreaseDamageOnWield
     damage:
@@ -24,7 +26,7 @@
   - type: Tool
     qualities:
     - Rolling
-    speed: 0.75 # a bit unwieldly but does the job
+    speedModifier: 0.75 # a bit unwieldly but does the job
   - type: Clothing
     quickEquip: false
     slots:
@@ -34,9 +36,27 @@
     node: bat
   - type: UseDelay
     delay: 1
+  - type: PhysicalComposition
+    materialComposition:
+      Wood: 250
   - type: Tag
     tags:
     - BaseballBat
+
+- type: entity
+  name: incomplete baseball bat
+  parent: BaseItem
+  id: IncompleteBaseBallBat
+  description: A few planks of wood stuck together.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/incomplete_bat.rsi
+    state: icon
+  - type: Item
+    size: Normal
+  - type: Construction
+    graph: WoodenBat
+    node: incompleteBat
 
 - type: entity
   name: knockback stick

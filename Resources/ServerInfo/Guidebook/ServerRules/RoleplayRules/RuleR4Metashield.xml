@@ -1,0 +1,104 @@
+﻿<Document>
+  # Roleplay Rule 4 - Do not metagame, obey the Metashield
+  Something that is "shielded" cannot be known by your character during a round until the "revealing condition" happens. This also means that your character cannot do things based on "shielded" information. Knowing or acting on something that is shielded before the revealing condition is met is referred to as metagaming.
+
+  Revealing conditions reveal the shielded information for the round, not for a specific instance. This means that once a revealing condition is met in a round, the shield no longer applies in any case for the remainder of the round.
+
+  ## Never Revealed IC
+  Some shields are never revealed IC. This means that your character can never act as if they know about that shielded thing.
+
+  The following are shielded:
+  - Current game mode and possible antags during the current game mode.
+  - Events from previous rounds.
+  - Events you experienced as a different character.
+  - All information related to the player of a character rather than the character itself. (See "Metafriending and Metagrudging" below.)
+  - All information gained while dead or a ghost.
+  - The fact that a round will end.
+
+  This does not prevent knowing that a shift will end, but does prohibit things like preparing to kill people at central command when roleplay rules stop being enforced on LRP.
+
+  ## Nuclear Operatives
+
+  The existence of Nuclear Operatives beyond a myth that no one would act on is shielded.
+
+  The fact that the nuke disk must be protected and could be used by a bad actor to try to destroy the station is not shielded.
+
+  The revealing condition for this shield is any of the following:
+  - discovering a blood red hardsuit
+  - discovering a nuclear operative's shuttle
+  - an operative name
+  - a War Ops announcement
+  - being a nuclear operative
+
+  ## Implanted Implants
+
+  Implanted implants are shielded.
+
+  Implanters themselves and un-implanted implants are not shielded. This prohibits implant checking.
+
+  The revealing condition for this shield is any of the following:
+  - discovering a non-NT implanter, used or unused
+  - discovering a non-NT implant box
+  - discovering use of a non-NT implant by anyone
+  - experiencing a situation where absolutely no other explanation is possible
+  - discovering an unlocked uplink
+
+  ## Chameleon Items
+
+  Chameleon items are shielded.
+
+  Being suspicious of an item being fake or stolen is not shielded, but testing items or calling them chameleon is covered by this shield.
+
+  The revealing condition for this shield is any of the following:
+  - seeing someone else cause any chameleon item to change
+  - finding holographic nanomachine fibers
+  - experiencing a situation where absolutely no other explanation is possible
+  - discovering an unlocked uplink
+
+  ## Stealth Items
+
+  The fact that an item can be something other than what its visual appearance and examine description indicate is shielded.
+
+  This shield protects stealth items, including protecting them from being tested.
+
+  The revealing condition for this shield is any of the following:
+  - seeing the item behave differently than the expected behavior for the item
+  - seeing the item used for its hidden purpose
+  - experiencing a situation where absolutely no other explanation is possible
+  - discovering an unlocked uplink
+
+  ## MRP Amendment 1
+  A shield prevents your character from remembering anything that happened while unconscious. This shield is never revealed IC.
+
+  ## MRP Amendment 2
+  There is a "New Life Rule" shield. It prevents you from remembering anything that lead to your death, even if you are put into an MMI. If you are cloned, it also prevents you from remembering everything from that round. This shield is never revealed IC.
+
+  ## Metafriending and Metagrudging
+  This section provides additional information on a concept that is prohibited by multiple metashield items that are never revealed IC. Giving a person or character preferential treatment based on something that your character should not know is considered metafriending. Treating a person or character negatively based on something that your character should not know is considered metagrudging.
+
+  ## Metafriending Examples
+  These are all examples of things that are prohibited by at least one metashield item that is never revealed IC.
+  - Giving a character additional access or a job because you are friends with the player who is playing that character.
+  - Trusting a character because you are friends with the player who is playing that character.
+  - Not fighting a character because you are friends with the player who is playing that character.
+  - Ignoring your objective to kill a character because your character and theirs became friends in a previous round.
+
+  ## Metagrudging Examples
+  These are all examples of things that are prohibited by at least one metashield item that is never revealed IC.
+  - Not giving a character additional access or a job because you are mad at or don't like the player who is playing that character.
+  - Not trusting a character because you are mad at or don't like the player who is playing that character.
+  - Starting a fight with a character because of something that they did last round.
+  - Starting a fight with a character because they killed you while you were playing a different character.
+  - Targeting or harassing a character based on anything which that character did outside the current round.
+  - Targeting or harassing a character based on anything which the character's player did while not playing the character.
+
+  ## Explicitly Not Shielded
+  The following is a list of things that are explicitly not shielded. If something is not on this list, it doesn't mean that it is shielded, but if something is on it then it definitely is not shielded.
+  - The fact that the nuke disk must be protected and could be used by a bad actor to try to destroy the station.
+  - Items that are of high value or are desired by the Syndicate, and therefore are likely targets of theft.
+  - The idea that any Syndicate agent or other bad actor has goals or objectives that they are attempting to accomplish.
+  - The number of goals or objectives that a Syndicate agent or other bad actor has.
+  - The fact that the Syndicate are enemies of Nanotrasen, and that they regularly attempt to send covert agents to spy on, sabotage, or attack Nanotrasen.
+  - A character's typical appearance. Though you should keep in mind that multiple characters can share the same name.
+  - The fact that the Syndicate have covert items capable of getting items to them, and that these items are known as uplinks.
+</Document>

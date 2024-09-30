@@ -48,6 +48,30 @@ namespace Content.Client.Actions
             SubscribeLocalEvent<InstantActionComponent, ComponentHandleState>(OnInstantHandleState);
             SubscribeLocalEvent<EntityTargetActionComponent, ComponentHandleState>(OnEntityTargetHandleState);
             SubscribeLocalEvent<WorldTargetActionComponent, ComponentHandleState>(OnWorldTargetHandleState);
+            SubscribeLocalEvent<EntityWorldTargetActionComponent, ComponentHandleState>(OnEntityWorldTargetHandleState);
+        }
+
+        public override void FrameUpdate(float frameTime)
+        {
+            base.FrameUpdate(frameTime);
+
+            var worldActionQuery = EntityQueryEnumerator<WorldTargetActionComponent>();
+            while (worldActionQuery.MoveNext(out var uid, out var action))
+            {
+                UpdateAction(uid, action);
+            }
+
+            var instantActionQuery = EntityQueryEnumerator<InstantActionComponent>();
+            while (instantActionQuery.MoveNext(out var uid, out var action))
+            {
+                UpdateAction(uid, action);
+            }
+
+            var entityActionQuery = EntityQueryEnumerator<EntityTargetActionComponent>();
+            while (entityActionQuery.MoveNext(out var uid, out var action))
+            {
+                UpdateAction(uid, action);
+            }
         }
 
         private void OnInstantHandleState(EntityUid uid, InstantActionComponent component, ref ComponentHandleState args)
@@ -76,12 +100,28 @@ namespace Content.Client.Actions
             BaseHandleState<WorldTargetActionComponent>(uid, component, state);
         }
 
+        private void OnEntityWorldTargetHandleState(EntityUid uid,
+            EntityWorldTargetActionComponent component,
+            ref ComponentHandleState args)
+        {
+            if (args.Current is not EntityWorldTargetActionComponentState state)
+                return;
+
+            component.Whitelist = state.Whitelist;
+            component.CanTargetSelf = state.CanTargetSelf;
+            BaseHandleState<EntityWorldTargetActionComponent>(uid, component, state);
+        }
+
         private void BaseHandleState<T>(EntityUid uid, BaseActionComponent component, BaseActionComponentState state) where T : BaseActionComponent
         {
+            // TODO ACTIONS use auto comp states
             component.Icon = state.Icon;
             component.IconOn = state.IconOn;
             component.IconColor = state.IconColor;
-            component.Keywords = new HashSet<string>(state.Keywords);
+            component.OriginalIconColor = state.OriginalIconColor;
+            component.DisabledIconColor = state.DisabledIconColor;
+            component.Keywords.Clear();
+            component.Keywords.UnionWith(state.Keywords);
             component.Enabled = state.Enabled;
             component.Toggled = state.Toggled;
             component.Cooldown = state.Cooldown;
@@ -92,6 +132,7 @@ namespace Content.Client.Actions
             component.Container = EnsureEntity<T>(state.Container, uid);
             component.EntityIcon = EnsureEntity<T>(state.EntityIcon, uid);
             component.CheckCanInteract = state.CheckCanInteract;
+            component.CheckConsciousness = state.CheckConsciousness;
             component.ClientExclusive = state.ClientExclusive;
             component.Priority = state.Priority;
             component.AttachedEntity = EnsureEntity<T>(state.AttachedEntity, uid);
@@ -101,17 +142,18 @@ namespace Content.Client.Actions
             component.ItemIconStyle = state.ItemIconStyle;
             component.Sound = state.Sound;
 
-            if (_playerManager.LocalPlayer?.ControlledEntity == component.AttachedEntity)
-                ActionsUpdated?.Invoke();
+            UpdateAction(uid, component);
         }
 
-        protected override void UpdateAction(EntityUid? actionId, BaseActionComponent? action = null)
+        public override void UpdateAction(EntityUid? actionId, BaseActionComponent? action = null)
         {
             if (!ResolveActionData(actionId, ref action))
                 return;
 
+            action.IconColor = action.Charges < 1 ? action.DisabledIconColor : action.OriginalIconColor;
+
             base.UpdateAction(actionId, action);
-            if (_playerManager.LocalPlayer?.ControlledEntity != action.AttachedEntity)
+            if (_playerManager.LocalEntity != action.AttachedEntity)
                 return;
 
             ActionsUpdated?.Invoke();
@@ -144,7 +186,7 @@ namespace Content.Client.Actions
                 _added.Add((actionId, action));
             }
 
-            if (_playerManager.LocalPlayer?.ControlledEntity != uid)
+            if (_playerManager.LocalEntity != uid)
                 return;
 
             foreach (var action in _removed)
@@ -177,7 +219,7 @@ namespace Content.Client.Actions
         protected override void ActionAdded(EntityUid performer, EntityUid actionId, ActionsComponent comp,
             BaseActionComponent action)
         {
-            if (_playerManager.LocalPlayer?.ControlledEntity != performer)
+            if (_playerManager.LocalEntity != performer)
                 return;
 
             OnActionAdded?.Invoke(actionId);
@@ -185,7 +227,7 @@ namespace Content.Client.Actions
 
         protected override void ActionRemoved(EntityUid performer, EntityUid actionId, ActionsComponent comp, BaseActionComponent action)
         {
-            if (_playerManager.LocalPlayer?.ControlledEntity != performer)
+            if (_playerManager.LocalEntity != performer)
                 return;
 
             OnActionRemoved?.Invoke(actionId);
@@ -193,7 +235,7 @@ namespace Content.Client.Actions
 
         public IEnumerable<(EntityUid Id, BaseActionComponent Comp)> GetClientActions()
         {
-            if (_playerManager.LocalPlayer?.ControlledEntity is not { } user)
+            if (_playerManager.LocalEntity is not { } user)
                 return Enumerable.Empty<(EntityUid, BaseActionComponent)>();
 
             return GetActions(user);
@@ -216,7 +258,7 @@ namespace Content.Client.Actions
 
         public void LinkAllActions(ActionsComponent? actions = null)
         {
-             if (_playerManager.LocalPlayer?.ControlledEntity is not { } user ||
+             if (_playerManager.LocalEntity is not { } user ||
                  !Resolve(user, ref actions, false))
              {
                  return;
@@ -233,7 +275,7 @@ namespace Content.Client.Actions
 
         public void TriggerAction(EntityUid actionId, BaseActionComponent action)
         {
-            if (_playerManager.LocalPlayer?.ControlledEntity is not { } user ||
+            if (_playerManager.LocalEntity is not { } user ||
                 !TryComp(user, out ActionsComponent? actions))
             {
                 return;
@@ -244,9 +286,6 @@ namespace Content.Client.Actions
 
             if (action.ClientExclusive)
             {
-                if (instantAction.Event != null)
-                    instantAction.Event.Performer = user;
-
                 PerformAction(user, actions, actionId, instantAction, instantAction.Event, GameTiming.CurTime);
             }
             else
@@ -261,7 +300,7 @@ namespace Content.Client.Actions
         /// </summary>
         public void LoadActionAssignments(string path, bool userData)
         {
-            if (_playerManager.LocalPlayer?.ControlledEntity is not { } user)
+            if (_playerManager.LocalEntity is not { } user)
                 return;
 
             var file = new ResPath(path).ToRootedPath();
@@ -288,7 +327,7 @@ namespace Content.Client.Actions
                     continue;
 
                 var action = _serialization.Read<BaseActionComponent>(actionNode, notNullableOverride: true);
-                var actionId = Spawn(null);
+                var actionId = Spawn();
                 AddComp(actionId, action);
                 AddActionDirect(user, actionId);
 

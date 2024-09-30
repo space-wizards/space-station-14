@@ -63,24 +63,6 @@
   canBuildInImpassable: true
 
 - type: construction
-  name: solar assembly
-  id: SolarPanel
-  graph: SolarPanel
-  startNode: start
-  targetNode: solarpanel
-  category: construction-category-utilities
-  description: "Can be turned into a solar panel or solar tracker."
-  icon:
-    sprite: Structures/Power/Generation/solar_panel.rsi
-    state: solar_assembly
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-      failIfSpace: false
-
-- type: construction
   name: cable terminal
   id: CableTerminal
   graph: CableTerminal
@@ -178,7 +160,7 @@
   targetNode: pipe
   category: construction-category-utilities
   placementMode: SnapgridCenter
-  canBuildInImpassable: true
+  canBuildInImpassable: false
   icon:
     sprite: Structures/Piping/disposal.rsi
     state: conpipe-s
@@ -394,7 +376,7 @@
   targetNode: half
   category: construction-category-utilities
   placementMode: SnapgridCenter
-  canBuildInImpassable: false
+  canBuildInImpassable: true
   icon:
     sprite: Structures/Piping/Atmospherics/pipe.rsi
     state: pipeHalf
@@ -408,7 +390,7 @@
   targetNode: straight
   category: construction-category-utilities
   placementMode: SnapgridCenter
-  canBuildInImpassable: false
+  canBuildInImpassable: true
   icon:
     sprite: Structures/Piping/Atmospherics/pipe.rsi
     state: pipeStraight
@@ -422,7 +404,7 @@
   targetNode: bend
   category: construction-category-utilities
   placementMode: SnapgridCenter
-  canBuildInImpassable: false
+  canBuildInImpassable: true
   icon:
     sprite: Structures/Piping/Atmospherics/pipe.rsi
     state: pipeBend
@@ -436,7 +418,7 @@
   targetNode: tjunction
   category: construction-category-utilities
   placementMode: SnapgridCenter
-  canBuildInImpassable: false
+  canBuildInImpassable: true
   icon:
     sprite: Structures/Piping/Atmospherics/pipe.rsi
     state: pipeTJunction
@@ -450,7 +432,7 @@
   targetNode: fourway
   category: construction-category-utilities
   placementMode: SnapgridCenter
-  canBuildInImpassable: false
+  canBuildInImpassable: true
   icon:
     sprite: Structures/Piping/Atmospherics/pipe.rsi
     state: pipeFourway
@@ -489,12 +471,12 @@
   canBuildInImpassable: false
   icon:
     sprite: Structures/Piping/Atmospherics/vent.rsi
-    state: vent_off
+    state: vent_passive
   layers:
   - sprite: Structures/Piping/Atmospherics/pipe.rsi
     state: pipeHalf
   - sprite: Structures/Piping/Atmospherics/vent.rsi
-    state: vent_off
+    state: vent_passive
   conditions:
     - !type:NoUnstackableInTile
 
@@ -790,7 +772,7 @@
 # INTERCOM
 - type: construction
   name: intercom
-  id: IntercomAssesmbly
+  id: IntercomAssembly
   graph: Intercom
   startNode: start
   targetNode: intercom

@@ -36,6 +36,31 @@
     sprite: Structures/Doors/Airlocks/Glass/cargo.rsi
     state: "assembly"
 
+#Clockwork
+- type: entity
+  id: PinionAirlockAssembly
+  name: airlock assembly
+  suffix: Pinion, Clockwork
+  parent: AirlockAssembly
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/clockwork_pinion.rsi
+    state: "assembly"
+  - type: Construction
+    graph: PinionAirlock
+    node: assembly
+  placement:
+    mode: SnapgridCenter
+
+- type: entity
+  parent: PinionAirlockAssembly
+  id: PinionAirlockAssemblyGlass
+  suffix: Pinion, Clockwork, Glass
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/clockwork_pinion.rsi
+    state: "assembly"
+
 #Command
 - type: entity
   parent: AirlockAssembly

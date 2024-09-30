@@ -123,24 +123,24 @@ namespace Content.IntegrationTests.Tests.Doors
             var xformSystem = entityManager.System<SharedTransformSystem>();
 
             PhysicsComponent physBody = null;
-            EntityUid AirlockPhysicsDummy = default;
+            EntityUid airlockPhysicsDummy = default;
             EntityUid airlock = default;
             DoorComponent doorComponent = null;
 
-            var AirlockPhysicsDummyStartingX = -1;
+            var airlockPhysicsDummyStartingX = -1;
+
+            var map = await pair.CreateTestMap();
 
             await server.WaitAssertion(() =>
             {
-                var mapId = mapManager.CreateMap();
+                var humanCoordinates = new MapCoordinates(new Vector2(airlockPhysicsDummyStartingX, 0), map.MapId);
+                airlockPhysicsDummy = entityManager.SpawnEntity("AirlockPhysicsDummy", humanCoordinates);
 
-                var humanCoordinates = new MapCoordinates(new Vector2(AirlockPhysicsDummyStartingX, 0), mapId);
-                AirlockPhysicsDummy = entityManager.SpawnEntity("AirlockPhysicsDummy", humanCoordinates);
-
-                airlock = entityManager.SpawnEntity("AirlockDummy", new MapCoordinates(new Vector2(0, 0), mapId));
+                airlock = entityManager.SpawnEntity("AirlockDummy", new MapCoordinates(new Vector2(0, 0), map.MapId));
 
                 Assert.Multiple(() =>
                 {
-                    Assert.That(entityManager.TryGetComponent(AirlockPhysicsDummy, out physBody), Is.True);
+                    Assert.That(entityManager.TryGetComponent(airlockPhysicsDummy, out physBody), Is.True);
                     Assert.That(entityManager.TryGetComponent(airlock, out doorComponent), Is.True);
                 });
                 Assert.That(doorComponent.State, Is.EqualTo(DoorState.Closed));
@@ -152,7 +152,7 @@ namespace Content.IntegrationTests.Tests.Doors
             await server.WaitAssertion(() => Assert.That(physBody, Is.Not.EqualTo(null)));
             await server.WaitPost(() =>
             {
-                physicsSystem.SetLinearVelocity(AirlockPhysicsDummy, new Vector2(0.5f, 0f), body: physBody);
+                physicsSystem.SetLinearVelocity(airlockPhysicsDummy, new Vector2(0.5f, 0f), body: physBody);
             });
 
             for (var i = 0; i < 240; i += 10)
@@ -171,12 +171,12 @@ namespace Content.IntegrationTests.Tests.Doors
             // Sloth: Okay I'm sorry but I hate having to rewrite tests for every refactor
             // If you see this yell at me in discord so I can continue to pretend this didn't happen.
             // REMINDER THAT I STILL HAVE TO FIX THIS TEST EVERY OTHER PHYSICS PR
-            // Assert.That(AirlockPhysicsDummy.Transform.MapPosition.X, Is.GreaterThan(AirlockPhysicsDummyStartingX));
+            // _transform.GetMapCoordinates(UID HERE, xform: Assert.That(AirlockPhysicsDummy.Transform).X, Is.GreaterThan(AirlockPhysicsDummyStartingX));
 
             // Blocked by the airlock
             await server.WaitAssertion(() =>
             {
-                Assert.That(Math.Abs(xformSystem.GetWorldPosition(AirlockPhysicsDummy).X - 1), Is.GreaterThan(0.01f));
+                Assert.That(Math.Abs(xformSystem.GetWorldPosition(airlockPhysicsDummy).X - 1), Is.GreaterThan(0.01f));
             });
             await pair.CleanReturnAsync();
         }

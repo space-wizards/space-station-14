@@ -31,7 +31,7 @@ public sealed partial class CargoBountyPrototype : IPrototype
     /// <summary>
     /// The entries that must be satisfied for the cargo bounty to be complete.
     /// </summary>
-    [DataField( required: true)]
+    [DataField(required: true)]
     public List<CargoBountyItemEntry> Entries = new();
 
     /// <summary>
@@ -49,6 +49,12 @@ public readonly partial record struct CargoBountyItemEntry()
     /// </summary>
     [DataField(required: true)]
     public EntityWhitelist Whitelist { get; init; } = default!;
+
+    /// <summary>
+    /// A blacklist that can be used to exclude items in the whitelist.
+    /// </summary>
+    [DataField]
+    public EntityWhitelist? Blacklist { get; init; } = null;
 
     // todo: implement some kind of simple generic condition system
 

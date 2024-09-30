@@ -3,6 +3,7 @@ using Content.Server.GameTicking.Commands;
 using Content.Shared.CCVar;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Timing;
 
 namespace Content.IntegrationTests.Tests.Commands
@@ -25,7 +26,7 @@ namespace Content.IntegrationTests.Tests.Commands
 
             var configManager = server.ResolveDependency<IConfigurationManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
-            var gameTicker = entityManager.EntitySysManager.GetEntitySystem<GameTicker>();
+            var gameTicker = entityManager.System<GameTicker>();
 
             await pair.RunTicksSync(5);
 
@@ -40,8 +41,7 @@ namespace Content.IntegrationTests.Tests.Commands
 
                 tickBeforeRestart = entityManager.CurrentTick;
 
-                var command = new RestartRoundNowCommand();
-                command.Execute(null, string.Empty, Array.Empty<string>());
+                gameTicker.RestartRound();
 
                 if (lobbyEnabled)
                 {

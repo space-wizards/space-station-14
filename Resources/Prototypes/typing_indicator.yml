@@ -35,6 +35,11 @@
   offset: 0, 0.125
 
 - type: typingIndicator
+  id: vox
+  typingState: vox0
+  offset: -0.125, 0.125
+
+- type: typingIndicator
   id: lizard
   typingState: lizard0
   offset: 0, 0.0625

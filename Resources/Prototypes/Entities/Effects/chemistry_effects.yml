@@ -9,6 +9,7 @@
   - type: SmokeVisuals
   - type: Transform
     anchored: true
+  - type: Clickable
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -35,7 +36,7 @@
   parent: BaseFoam
   id: Smoke
   name: smoke
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Occluder
   - type: Sprite
@@ -51,7 +52,7 @@
   parent: BaseFoam
   id: Foam
   name: foam
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     color: "#ffffffcc"
@@ -69,18 +70,20 @@
       state: foam-west
   - type: SmoothEdge
   - type: IconSmooth
-    key: walls
     mode: NoSprite
   - type: FoamVisuals
     animationTime: 0.6
     animationState: foam-dissolve
   - type: Slippery
   - type: StepTrigger
+  # disabled until foam reagent duplication is fixed
+  #- type: ScoopableSolution
+  #  solution: solutionArea
 
 - type: entity
   id: MetalFoam
   name: metal foam
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: Foam
   components:
   - type: Sprite
@@ -97,6 +100,8 @@
       state: m_foam-north
     - map: [ "enum.EdgeLayer.West" ]
       state: m_foam-west
+  - type: EdgeSpreader
+    id: MetalFoam
   - type: FoamVisuals
     animationTime: 0.6
     animationState: m_foam-dissolve
@@ -104,7 +109,7 @@
 - type: entity
   id: IronMetalFoam
   name: iron metal foam
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: MetalFoam
   components:
   - type: SpawnOnDespawn
@@ -113,7 +118,7 @@
 - type: entity
   id: AluminiumMetalFoam
   name: aluminium metal foam
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: MetalFoam
   components:
   - type: SpawnOnDespawn
@@ -128,9 +133,10 @@
     snap:
     - Wall
   components:
-  - type: Tag
-    tags:
-    - RCDDeconstructWhitelist
+  - type: RCDDeconstructable
+    cost: 2
+    delay: 2
+    fx: EffectRCDDeconstruct2
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite
@@ -154,8 +160,15 @@
   - type: Transform
     anchored: true
   - type: Airtight
+  - type: ReplaceFloorOnSpawn
+    replaceableTiles:
+    - Plating
+    - Lattice
+    - TrainLattice
+    replacementTiles:
+    - FloorMetalFoam
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
   - type: Destructible
     thresholds:

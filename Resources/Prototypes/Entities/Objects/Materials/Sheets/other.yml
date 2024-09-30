@@ -12,7 +12,6 @@
   - type: Tag
     tags:
     - Sheet
-    - DroneUsable
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
@@ -114,6 +113,16 @@
 
 - type: entity
   parent: SheetPlasma
+  id: SheetPlasma10
+  suffix: 10
+  components:
+  - type: Sprite
+    state: plasma
+  - type: Stack
+    count: 10
+
+- type: entity
+  parent: SheetPlasma
   id: SheetPlasma1
   name: plasma
   suffix: Single
@@ -133,7 +142,6 @@
     tags:
     - Plastic
     - Sheet
-    - DroneUsable
   - type: Material
   - type: PhysicalComposition
     materialComposition:
@@ -250,7 +258,6 @@
     - type: Tag
       tags:
       - Sheet
-      - DroneUsable
     - type: Material
     - type: PhysicalComposition
       materialComposition:

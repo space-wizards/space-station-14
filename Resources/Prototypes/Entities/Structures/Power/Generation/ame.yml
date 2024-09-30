@@ -29,8 +29,8 @@
         layer:
         - WallLayer
   - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallicStrong
   - type: Destructible
     thresholds:
     - trigger:
@@ -50,6 +50,13 @@
   - type: Anchorable
   - type: Pullable
   - type: AmeController
+    fuelSlot:
+      whitelist:
+        components:
+        - AmeFuelContainer
+      whitelistFailPopup: ame-controller-component-fuel-slot-fail-whitelist
+      lockedFailPopup: ame-controller-component-fuel-slot-fail-locked
+      insertSuccessPopup: ame-controller-component-fuel-slot-success-insert
   - type: Explosive
     explosionType: Default
     intensitySlope: 5
@@ -58,8 +65,8 @@
     key: enum.AmeControllerUiKey.Key
   - type: UserInterface
     interfaces:
-    - key: enum.AmeControllerUiKey.Key
-      type: AmeControllerBoundUserInterface
+      enum.AmeControllerUiKey.Key:
+        type: AmeControllerBoundUserInterface
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -86,9 +93,10 @@
     state: static
   - type: PowerSupplier
     supplyRate: 0
+  - type: ItemSlots
   - type: ContainerContainer
     containers:
-      AmeFuel: !type:ContainerSlot {}
+      fuelSlot: !type:ContainerSlot
   - type: GuideHelp
     guides: [ AME, Power ]
   - type: Electrified
@@ -100,7 +108,7 @@
     mediumVoltageNode: ame
 
 - type: entity
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: AmeController
   id: AmeControllerUnanchored
   suffix: Unanchored
@@ -145,8 +153,8 @@
         layer:
         - WallLayer
   - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallicStrong
   - type: Destructible
     thresholds:
     - trigger:

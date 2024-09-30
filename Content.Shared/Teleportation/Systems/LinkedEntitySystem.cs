@@ -87,7 +87,7 @@ public sealed class LinkedEntitySystem : EntitySystem
     /// <param name="secondLink">Resolve comp</param>
     /// <returns>Whether unlinking was successful (e.g. they both were actually linked to one another)</returns>
     public bool TryUnlink(EntityUid first, EntityUid second,
-        LinkedEntityComponent? firstLink=null, LinkedEntityComponent? secondLink=null)
+        LinkedEntityComponent? firstLink = null, LinkedEntityComponent? secondLink = null)
     {
         if (!Resolve(first, ref firstLink))
             return false;
@@ -101,8 +101,8 @@ public sealed class LinkedEntitySystem : EntitySystem
         _appearance.SetData(first, LinkedEntityVisuals.HasAnyLinks, firstLink.LinkedEntities.Any());
         _appearance.SetData(second, LinkedEntityVisuals.HasAnyLinks, secondLink.LinkedEntities.Any());
 
-        Dirty(firstLink);
-        Dirty(secondLink);
+        Dirty(first, firstLink);
+        Dirty(second, secondLink);
 
         if (firstLink.LinkedEntities.Count == 0 && firstLink.DeleteOnEmptyLinks)
             QueueDel(first);

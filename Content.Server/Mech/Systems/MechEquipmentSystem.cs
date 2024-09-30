@@ -3,6 +3,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Mech.Components;
 using Content.Shared.Mech.Equipment.Components;
+using Content.Shared.Whitelist;
 
 namespace Content.Server.Mech.Systems;
 
@@ -14,6 +15,7 @@ public sealed class MechEquipmentSystem : EntitySystem
     [Dependency] private readonly MechSystem _mech = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -40,15 +42,14 @@ public sealed class MechEquipmentSystem : EntitySystem
         if (mechComp.EquipmentContainer.ContainedEntities.Count >= mechComp.MaxEquipmentAmount)
             return;
 
-        if (mechComp.EquipmentWhitelist != null && !mechComp.EquipmentWhitelist.IsValid(args.Used))
+        if (_whitelistSystem.IsWhitelistFail(mechComp.EquipmentWhitelist, args.Used))
             return;
 
         _popup.PopupEntity(Loc.GetString("mech-equipment-begin-install", ("item", uid)), mech);
 
         var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, component.InstallDuration, new InsertEquipmentEvent(), uid, target: mech, used: uid)
         {
-            BreakOnTargetMove = true,
-            BreakOnUserMove = true
+            BreakOnMove = true,
         };
 
         _doAfter.TryStartDoAfter(doAfterEventArgs);

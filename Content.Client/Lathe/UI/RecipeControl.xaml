@@ -5,11 +5,13 @@
         Margin="0"
         StyleClasses="ButtonSquare">
         <BoxContainer Orientation="Horizontal">
-            <TextureRect
-                Name="RecipeTexture"
+            <BoxContainer
+                Name="RecipeDisplayContainer"
                 Margin="0 0 4 0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
                 MinSize="32 32"
-                Stretch="KeepAspectCentered" />
+                />
             <Label Name="RecipeName" HorizontalExpand="True" />
         </BoxContainer>
     </Button>

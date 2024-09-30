@@ -9,8 +9,8 @@ public sealed partial class BlockGame
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    private readonly ArcadeSystem _arcadeSystem = default!;
-    private readonly UserInterfaceSystem _uiSystem = default!;
+    private readonly ArcadeSystem _arcadeSystem;
+    private readonly UserInterfaceSystem _uiSystem;
 
     /// <summary>
     /// What entity is currently hosting this game of NT-BG.
@@ -78,7 +78,7 @@ public sealed partial class BlockGame
         _gameOver = true;
 
         if (_entityManager.TryGetComponent<BlockGameArcadeComponent>(_owner, out var cabinet)
-        && _entityManager.TryGetComponent<MetaDataComponent>(cabinet.Player?.AttachedEntity, out var meta))
+        && _entityManager.TryGetComponent<MetaDataComponent>(cabinet.Player, out var meta))
         {
             _highScorePlacement = _arcadeSystem.RegisterHighScore(meta.EntityName, Points);
             SendHighscoreUpdate();

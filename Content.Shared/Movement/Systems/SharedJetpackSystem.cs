@@ -13,12 +13,12 @@ namespace Content.Shared.Movement.Systems;
 
 public abstract class SharedJetpackSystem : EntitySystem
 {
-    [Dependency] private   readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
-    [Dependency] protected  readonly SharedAppearanceSystem Appearance = default!;
+    [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
+    [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
     [Dependency] protected readonly SharedContainerSystem Container = default!;
-    [Dependency] private   readonly SharedMoverController _mover = default!;
-    [Dependency] private   readonly SharedPopupSystem _popup = default!;
-    [Dependency] private   readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly SharedMoverController _mover = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
 
     public override void Initialize()
@@ -92,7 +92,7 @@ public abstract class SharedJetpackSystem : EntitySystem
         _mover.SetRelay(user, jetpackUid);
 
         if (TryComp<PhysicsComponent>(user, out var physics))
-            _physics.SetBodyStatus(physics, BodyStatus.InAir);
+            _physics.SetBodyStatus(user, physics, BodyStatus.InAir);
 
         userComp.Jetpack = jetpackUid;
     }
@@ -103,7 +103,7 @@ public abstract class SharedJetpackSystem : EntitySystem
             return;
 
         if (TryComp<PhysicsComponent>(uid, out var physics))
-            _physics.SetBodyStatus(physics, BodyStatus.OnGround);
+            _physics.SetBodyStatus(uid, physics, BodyStatus.OnGround);
 
         RemComp<RelayInputMoverComponent>(uid);
     }
@@ -113,7 +113,7 @@ public abstract class SharedJetpackSystem : EntitySystem
         if (args.Handled)
             return;
 
-        if (TryComp<TransformComponent>(uid, out var xform) && !CanEnableOnGrid(xform.GridUid))
+        if (TryComp(uid, out TransformComponent? xform) && !CanEnableOnGrid(xform.GridUid))
         {
             _popup.PopupClient(Loc.GetString("jetpack-no-station"), uid, args.Performer);
 
@@ -125,6 +125,8 @@ public abstract class SharedJetpackSystem : EntitySystem
 
     private bool CanEnableOnGrid(EntityUid? gridUid)
     {
+        // No and no again! Do not attempt to activate the jetpack on a grid with gravity disabled. You will not be the first or the last to try this.
+        // https://discord.com/channels/310555209753690112/310555209753690112/1270067921682694234
         return gridUid == null ||
                (!HasComp<GravityComponent>(gridUid));
     }
@@ -158,7 +160,7 @@ public abstract class SharedJetpackSystem : EntitySystem
 
         if (user == null)
         {
-            Container.TryGetContainingContainer(uid, out var container);
+            Container.TryGetContainingContainer((uid, null, null), out var container);
             user = container?.Owner;
         }
 

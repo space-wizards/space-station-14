@@ -12,6 +12,21 @@
               doAfter: 2
     - node: joint
       entity: Joint
+      
+- type: constructionGraph
+  id: smokeableJointRainbow
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: jointRainbow
+          steps:
+            - material: PaperRolling
+            - material: CigaretteFilter
+            - material: GroundCannabisRainbow
+              doAfter: 2
+    - node: jointRainbow
+      entity: JointRainbow
 
 - type: constructionGraph
   id: smokeableBlunt
@@ -26,6 +41,20 @@
               doAfter: 2
     - node: blunt
       entity: Blunt
+
+- type: constructionGraph
+  id: smokeableBluntRainbow
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: bluntRainbow
+          steps:
+            - material: LeavesTobaccoDried
+            - material: GroundCannabisRainbow
+              doAfter: 2
+    - node: bluntRainbow
+      entity: BluntRainbow
 
 - type: constructionGraph
   id: smokeableCigarette
@@ -55,6 +84,20 @@
               doAfter: 5
     - node: ground
       entity: GroundCannabis
+
+- type: constructionGraph
+  id: smokeableGroundCannabisRainbow
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: groundRainbow
+          steps:
+            - material: LeavesCannabisRainbowDried
+              amount: 2
+              doAfter: 5
+    - node: groundRainbow
+      entity: GroundCannabisRainbow
 
 - type: constructionGraph
   id: smokeableGroundTobacco

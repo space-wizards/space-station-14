@@ -1,7 +1,8 @@
 ﻿using Content.Shared.Construction.Components;
-using Content.Shared.Construction.Prototypes;
+using Content.Shared.Stacks;
+using Content.Shared.Tag;
 using Robust.Shared.Containers;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Construction.Components
 {
@@ -14,29 +15,23 @@ namespace Content.Server.Construction.Components
         [ViewVariables]
         public bool HasBoard => BoardContainer?.ContainedEntities.Count != 0;
 
-        [DataField("progress", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<int, MachinePartPrototype>))]
-        public Dictionary<string, int> Progress = new();
-
         [ViewVariables]
-        public readonly Dictionary<string, int> MaterialProgress = new();
+        public readonly Dictionary<ProtoId<StackPrototype>, int> MaterialProgress = new();
 
         [ViewVariables]
         public readonly Dictionary<string, int> ComponentProgress = new();
 
         [ViewVariables]
-        public readonly Dictionary<string, int> TagProgress = new();
-
-        [DataField("requirements", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<int, MachinePartPrototype>))]
-        public Dictionary<string, int> Requirements = new();
+        public readonly Dictionary<ProtoId<TagPrototype>, int> TagProgress = new();
 
         [ViewVariables]
-        public Dictionary<string, int> MaterialRequirements = new();
+        public Dictionary<ProtoId<StackPrototype>, int> MaterialRequirements = new();
 
         [ViewVariables]
         public Dictionary<string, GenericPartInfo> ComponentRequirements = new();
 
         [ViewVariables]
-        public Dictionary<string, GenericPartInfo> TagRequirements = new();
+        public Dictionary<ProtoId<TagPrototype>, GenericPartInfo> TagRequirements = new();
 
         [ViewVariables]
         public Container BoardContainer = default!;

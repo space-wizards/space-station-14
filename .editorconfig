@@ -1,4 +1,5 @@
 ﻿root = true
+
 [*]
 
 charset = utf-8
@@ -12,6 +13,7 @@ tab_width = 4
 #end_of_line = crlf
 insert_final_newline = true
 trim_trailing_whitespace = true
+max_line_length = 120
 
 #### .NET Coding Conventions ####
 
@@ -127,7 +129,7 @@ csharp_indent_braces = false
 csharp_indent_switch_labels = true
 
 # Space preferences
-csharp_space_after_cast = true
+csharp_space_after_cast = false
 csharp_space_after_colon_in_inheritance_clause = true
 csharp_space_after_comma = true
 csharp_space_after_dot = false
@@ -277,7 +279,7 @@ dotnet_naming_style.t_upper_camel_case_style.capitalization = pascal_case
 dotnet_naming_style.t_upper_camel_case_style.required_prefix = T
 dotnet_naming_style.upper_camel_case_style.capitalization = pascal_case
 
-dotnet_naming_symbols.constants_symbols.applicable_accessibilities = public,internal,protected,protected_internal,private_protected
+dotnet_naming_symbols.constants_symbols.applicable_accessibilities = public, internal, protected, protected_internal, private_protected
 dotnet_naming_symbols.constants_symbols.applicable_kinds = field
 dotnet_naming_symbols.constants_symbols.required_modifiers = const
 
@@ -316,27 +318,32 @@ dotnet_naming_symbols.private_static_fields_symbols.required_modifiers = static
 
 dotnet_naming_symbols.private_static_readonly_symbols.applicable_accessibilities = private
 dotnet_naming_symbols.private_static_readonly_symbols.applicable_kinds = field
-dotnet_naming_symbols.private_static_readonly_symbols.required_modifiers = static,readonly
+dotnet_naming_symbols.private_static_readonly_symbols.required_modifiers = static, readonly
 
 dotnet_naming_symbols.property_symbols.applicable_accessibilities = *
 dotnet_naming_symbols.property_symbols.applicable_kinds = property
 
-dotnet_naming_symbols.public_fields_symbols.applicable_accessibilities = public,internal,protected,protected_internal,private_protected
+dotnet_naming_symbols.public_fields_symbols.applicable_accessibilities = public, internal, protected, protected_internal, private_protected
 dotnet_naming_symbols.public_fields_symbols.applicable_kinds = field
 
-dotnet_naming_symbols.static_readonly_symbols.applicable_accessibilities = public,internal,protected,protected_internal,private_protected
+dotnet_naming_symbols.static_readonly_symbols.applicable_accessibilities = public, internal, protected, protected_internal, private_protected
 dotnet_naming_symbols.static_readonly_symbols.applicable_kinds = field
-dotnet_naming_symbols.static_readonly_symbols.required_modifiers = static,readonly
+dotnet_naming_symbols.static_readonly_symbols.required_modifiers = static, readonly
 
 dotnet_naming_symbols.types_and_namespaces_symbols.applicable_accessibilities = *
-dotnet_naming_symbols.types_and_namespaces_symbols.applicable_kinds = namespace,class,struct,enum,delegate
+dotnet_naming_symbols.types_and_namespaces_symbols.applicable_kinds = namespace, class, struct, enum, delegate
 
 dotnet_naming_symbols.type_parameters_symbols.applicable_accessibilities = *
 dotnet_naming_symbols.type_parameters_symbols.applicable_kinds = type_parameter
 
 # ReSharper properties
 resharper_braces_for_ifelse = required_for_multiline
+resharper_csharp_wrap_arguments_style = chop_if_long
+resharper_csharp_wrap_parameters_style = chop_if_long
 resharper_keep_existing_attribute_arrangement = true
+resharper_wrap_chained_binary_patterns = chop_if_long
+resharper_wrap_chained_method_calls = chop_if_long
+resharper_csharp_trailing_comma_in_multiline_lists = true
 
 [*.{csproj,xml,yml,yaml,dll.config,msbuildproj,targets,props}]
 indent_size = 2

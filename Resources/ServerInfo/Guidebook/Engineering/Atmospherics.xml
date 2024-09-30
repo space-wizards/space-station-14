@@ -1,61 +1,67 @@
-﻿<Document>
-# Atmospherics
+<Document>
+  # Atmospherics
 
-Atmospherics setups are a necessity for your long-term comfort but are generally undocumented, resulting in them being a bit tricky to set up. The following attempts to cover the basics.
+  Atmospherics setups are a necessity for your long-term comfort, but are generally underdocumented, resulting in them being a bit tricky to set up. The following attempts to cover the basics.
 
-## Standard Mix
-Breathing pure O2 or pure N2 is generally bad for the health of your crew, and it is recommended to instead aim for a mix of [color=#a4885c]78% N2 and 22% O2 at 101.24kPa.[/color] It's recommended that your gas mixer setup be set to output at least 1000kPa for faster re-pressurization of rooms.
-<Box>
-<GuideEntityEmbed Entity="OxygenCanister"/>
-<GuideEntityEmbed Entity="NitrogenCanister"/>
-<GuideEntityEmbed Entity="AirCanister"/>
-</Box>
-Variations on this mix may be necessary for the long-term comfort of atypical crew, for example crew who require a plasma gas mix to survive. For atypical crew, it is recommended to try and give them their own personal space, isolated by either airlock or disposals section. Keep in mind both methods are leaky and you will need scrubbers on both sides of the lock to clean up any leaked gasses.
-<Box>
-<GuideEntityEmbed Entity="PlasmaCanister"/>
-<GuideEntityEmbed Entity="StorageCanister"/>
-</Box>
-## Vents and Scrubbers
-Vents and scrubbers are core atmospherics devices that fill and cleanse rooms, respectively. By default, they are configured for filling rooms to standard pressure (101.24kPa) and to remove all non-O2/N2 gasses from a room. They can be reconfigured from their default settings, allowing you to configure how they respond to various types of gasses or pressure levels. This can be done by interacting with an existing air alarm nearby, or installing and connecting them to a new one.
+  ## Standard Mix
+  Breathing pure O2 or pure N2 is generally bad for the health of your crew, and it is recommended to instead aim for a mix of [color=#a4885c]78% N2 and 22% O2 at 101.24kPa.[/color] It's recommended that your gas mixer setup be set to output at least 300kPA for faster re-pressurization of rooms, without posing too much of an overpressurization risk, should traitors sabotage the distro.
+  <Box>
+    <GuideEntityEmbed Entity="OxygenCanister"/>
+    <GuideEntityEmbed Entity="NitrogenCanister"/>
+    <GuideEntityEmbed Entity="AirCanister"/>
+  </Box>
+  Variations on this mix may be necessary for the long-term comfort of atypical crew, (for example, Voxes, who are poisoned by Oxygen and breathe Nitrogen). For atypical crew (to be implemented), it is recommended to try and give them their own personal space, isolated by either an airlock or disposals section. Keep in mind that both methods are leaky and you will need scrubbers on both sides of the lock to clean up any leaked gasses.
+  <Box>
+    <GuideEntityEmbed Entity="NitrogenCanister"/>
+    <GuideEntityEmbed Entity="StorageCanister"/>
+  </Box>
+  ## Vents and Scrubbers
+  Vents and scrubbers are core atmospherics devices that fill and cleanse rooms, respectively. By default, they are configured for filling rooms to standard pressure (101.24kPa) and to remove all non-O2/N2 gasses from a room. They can be reconfigured from their default settings by linking them to an Air Alarm, allowing you to configure how they respond to various types of gasses or pressure levels.
 
-<Box>
-<GuideEntityEmbed Entity="GasVentPump"/>
-<GuideEntityEmbed Entity="GasVentScrubber"/>
-</Box>
-During standard operation, if a vent detects that the outside environment is space, it will automatically cease operation until a minimum pressure is reached to avoid destruction of necessary gasses. This can be fixed by pressurizing the room up to that minimum pressure by refilling it with gas canister (potentially multiple, if the room is of significant size).
+  <Box>
+    <GuideEntityEmbed Entity="GasVentPump"/>
+    <GuideEntityEmbed Entity="GasVentScrubber"/>
+  </Box>
+  During standard operation, if a normal vent detects that the outside environment is space, it will automatically cease operation until a minimum pressure is reached to avoid destruction of useful gasses. This can be fixed by pressurizing the room up to that minimum pressure by refilling it with a gas canister (potentially multiple, if the room is of significant size).
 
-Should you encounter a situation where scrubbers aren't cleaning a room fast enough, employ portable scrubbers by dragging them to the affected location and wrenching them down. They work much faster than typical scrubbers and can clean up a room quite quickly. Large spills may require you to employ multiple.
-<Box>
-<GuideEntityEmbed Entity="PortableScrubber"/>
-</Box>
-# Gas mixes and Burn chambers
-In the event you finish all the tasks at hand, you can make some extra power or money by creating new chemical gasses.
+  Should you encounter a situation where scrubbers aren't cleaning a room fast enough (and the "Siphon" functionality still cannot keep up), employ portable scrubbers by dragging them to the affected location and wrenching them down. They work much faster than typical scrubbers and can clean up a room quite quickly. Large spills may require you to employ multiple.
+  <Box>
+    <GuideEntityEmbed Entity="PortableScrubber"/>
+  </Box>
+  # Gas mixes and Burn chambers
+  In the event you finish all the tasks at hand, you can make some extra money by creating new chemical gasses.
 
-##Tritium
-Tritium is a clear, green gas that is highly flammable, radioactive, and combusts when in contact with oxygen making it very helpful when running the [color=#a4885c]TEG.[/color]
-It can be made by burning 1% Plasma and 96% or more Oxygen in the Burn Chamber. You can extract this gas through scrubbers.
+  ##Tritium
+  Tritium is a clear, green gas that is highly flammable, radioactive, and combusts when in contact with oxygen, making it very helpful when running the [color=#a4885c]TEG[/color].
+  It can be made by burning 1% Plasma and 96% or more Oxygen in the Burn Chamber (Ideal ratio is 3% Plasma to 97% Oxygen). You can extract this gas through scrubbers.
 
-<Box>
-<GuideEntityEmbed Entity="PlasmaCanister" />
-<GuideEntityEmbed Entity="OxygenCanister" />
-<GuideEntityEmbed Entity="GasVentScrubber"/>
-<GuideEntityEmbed Entity="TritiumCanister" />
-</Box>
+  <Box>
+    <GuideEntityEmbed Entity="PlasmaCanister"/>
+    <GuideEntityEmbed Entity="OxygenCanister"/>
+    <GuideEntityEmbed Entity="GasVentScrubber"/>
+    <GuideEntityEmbed Entity="TritiumCanister"/>
+  </Box>
 
-##Frezon
-Frezon is a bluish-green gas that is very complex and very dangerous. To obtain frezon, you must mix Tritium, Oxygen, and Nitrogen in a 70K room to start the reaction, as well as prevent the Tritium from combusting with the oxygen.
+  ##Frezon
+  Frezon is a bluish-green gas that is very complex and very dangerous. To obtain frezon, you must mix Tritium, Oxygen, and Nitrogen in a 70K room to start the reaction, and prevent the Tritium from combusting with the oxygen.
 
-<Box>
-<GuideEntityEmbed Entity="TritiumCanister" />
-<GuideEntityEmbed Entity="AirCanister" />
-<GuideEntityEmbed Entity="GasVentScrubber"/>
-<GuideEntityEmbed Entity="StorageCanister" Caption="Frezon Canister"/>
-</Box>
+  <Box>
+    <GuideEntityEmbed Entity="TritiumCanister"/>
+    <GuideEntityEmbed Entity="AirCanister"/>
+    <GuideEntityEmbed Entity="GasVentScrubber"/>
+    <GuideEntityEmbed Entity="StorageCanister" Caption="Frezon Canister"/>
+  </Box>
 
-It is critical to understand that a frezon leak can devastate the station, causing a wintery hell filled with itchy sweaters and cold burns. Frezon is very cold, and can freeze the station to death if even a few moles get out, so make sure that you lock your canisters or just move your Frezon straight into a storage room.
+  It is critical to understand that a frezon leak can devastate the station, causing a wintery hell filled with itchy sweaters and cold burns. Frezon is very cold, and can freeze the station to death if even a few moles get out, so make sure that you lock your canisters or just move your Frezon straight into a storage room.
 
-## Reference Sheet
-- Standard atmospheric mix is [color=#a4885c]78% N2 and 22% O2 at 101.24kPa.[/color]
-- Gas obeys real math. You can use the equation PV = nRT (Pressure kPa * Volume L = Moles * R * Temperature K) to derive information you might need to know about a gas. R is approximately 8.31446
+  ## Reference Sheet
+  - Standard atmospheric mix is [color=#a4885c]78% N2 and 22% O2 at 101.24kPa.[/color]
+  - Gas obeys real math. You can use the equation:
+  <Box>
+    [color=cyan]PV = nRT[/color]
+  </Box>
+  <Box>
+    ([color=#a4885c]Pressure kPa * Volume L = Moles * R * Temperature K[/color])
+  </Box> to derive information you might need to know about a gas. R is approximately 8.31446.
 
 </Document>

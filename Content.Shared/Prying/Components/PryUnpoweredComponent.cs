@@ -8,4 +8,6 @@ namespace Content.Shared.Prying.Components;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class PryUnpoweredComponent : Component
 {
+    [DataField]
+    public float PryModifier = 0.1f;
 }

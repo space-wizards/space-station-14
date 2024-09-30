@@ -5,10 +5,29 @@
         "y": 8
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "https://github.com/tgstation/tgstation/blob/master/icons/mob/huds/hud.dmi",
+    "copyright": "Taken from /tg/station at commit https://github.com/tgstation/tgstation/commit/20ae083f140ac5b4da7e8bc40f95349001b6c086",
     "states": [
         {
             "name": "Fine"
+        },
+        {
+            "name": "Critical"
+        },
+        {
+            "name": "Dead",
+            "delays": [
+                [
+                    0.125,
+                    0.125,
+                    0.125,
+                    0.125,
+                    0.125,
+                    0.125
+                ]
+            ]
+        },
+        {
+            "name": "Rotting"
         }
     ]
 }

@@ -4,6 +4,8 @@
   name: holographic sign projector
   description: A handy-dandy holographic projector that displays a janitorial sign.
   components:
+  - type: Item
+    storedRotation: -90
   - type: HolosignProjector
   - type: UseDelay
   - type: ContainerContainer
@@ -22,6 +24,16 @@
   - type: Tag
     tags:
       - HolosignProjector
+
+- type: entity
+  parent: Holoprojector
+  id: HoloprojectorEmpty
+  suffix: Empty
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
 
 - type: entity
   parent: Holoprojector
@@ -57,6 +69,16 @@
     price: 80
 
 - type: entity
+  parent: HolofanProjector
+  id: HolofanProjectorEmpty
+  suffix: Empty
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+
+- type: entity
   parent: Holoprojector
   id: HoloprojectorField
   name: force field projector
@@ -73,6 +95,16 @@
         - HolofanProjector
     - type: StaticPrice
       price: 130
+
+- type: entity
+  parent: HoloprojectorField
+  id: HoloprojectorFieldEmpty
+  suffix: Empty
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
 
 - type: entity
   parent: Holoprojector

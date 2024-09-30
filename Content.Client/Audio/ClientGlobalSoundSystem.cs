@@ -26,11 +26,11 @@ public sealed class ClientGlobalSoundSystem : SharedGlobalSoundSystem
         base.Initialize();
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
         SubscribeNetworkEvent<AdminSoundEvent>(PlayAdminSound);
-        _cfg.OnValueChanged(CCVars.AdminSoundsEnabled, ToggleAdminSound, true);
+        Subs.CVar(_cfg, CCVars.AdminSoundsEnabled, ToggleAdminSound, true);
 
         SubscribeNetworkEvent<StationEventMusicEvent>(PlayStationEventMusic);
         SubscribeNetworkEvent<StopStationEventMusic>(StopStationEventMusic);
-        _cfg.OnValueChanged(CCVars.EventMusicEnabled, ToggleStationEventMusic, true);
+        Subs.CVar(_cfg, CCVars.EventMusicEnabled, ToggleStationEventMusic, true);
 
         SubscribeNetworkEvent<GameGlobalSoundEvent>(PlayGameSound);
     }
@@ -67,7 +67,7 @@ public sealed class ClientGlobalSoundSystem : SharedGlobalSoundSystem
         if(!_adminAudioEnabled) return;
 
         var stream = _audio.PlayGlobal(soundEvent.Filename, Filter.Local(), false, soundEvent.AudioParams);
-        _adminAudio.Add(stream.Value.Entity);
+        _adminAudio.Add(stream?.Entity);
     }
 
     private void PlayStationEventMusic(StationEventMusicEvent soundEvent)
@@ -76,7 +76,7 @@ public sealed class ClientGlobalSoundSystem : SharedGlobalSoundSystem
         if(!_eventAudioEnabled || _eventAudio.ContainsKey(soundEvent.Type)) return;
 
         var stream = _audio.PlayGlobal(soundEvent.Filename, Filter.Local(), false, soundEvent.AudioParams);
-        _eventAudio.Add(soundEvent.Type, stream.Value.Entity);
+        _eventAudio.Add(soundEvent.Type, stream?.Entity);
     }
 
     private void PlayGameSound(GameGlobalSoundEvent soundEvent)

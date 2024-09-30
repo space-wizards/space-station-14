@@ -1,7 +1,7 @@
 - type: entity
   id: PelletClusterRubber
-  name: pellet (ball, Rubber)
-  noSpawn: true
+  name: pellet (ball, rubber)
+  categories: [ HideSpawnMenu ]
   parent: BaseBullet
   components:
   - type: Sprite
@@ -12,8 +12,6 @@
     damage:
       types:
         Blunt: 4
-  - type: CanPenetrate
-    penetrationLayer: MobLayer
   - type: StaminaDamageOnCollide
     damage: 55
   - type: TimedDespawn
@@ -21,8 +19,8 @@
 
 - type: entity
   id: PelletClusterLethal
-  name: pellet (ball, Lethal)
-  noSpawn: true
+  name: pellet (ball, lethal)
+  categories: [ HideSpawnMenu ]
   parent: BaseBullet
   components:
   - type: Sprite
@@ -33,15 +31,13 @@
     damage:
       types:
         Piercing: 45
-  - type: CanPenetrate
-    penetrationLayer: MobLayer
   - type: TimedDespawn
     lifetime: 0.25
 
 - type: entity
   id: PelletClusterIncendiary
   name: pellet (ball, incendiary)
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: BaseBulletIncendiary
   components:
   - type: Sprite
@@ -53,10 +49,8 @@
       types:
         Blunt: 1
         Heat: 2
-  - type: CanPenetrate
-    penetrationLayer: MobLayer
   - type: IgniteOnCollide
-    fireStacks: 3
+    fireStacks: 1
     count: 10
   - type: TimedDespawn
     lifetime: 0.25

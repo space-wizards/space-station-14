@@ -17,3 +17,5 @@
     damage:
       types:
         Blunt: 20
+    soundHit:
+      path: "/Audio/Weapons/smash.ogg"

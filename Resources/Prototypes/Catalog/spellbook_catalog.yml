@@ -1,0 +1,140 @@
+﻿# Offensive
+- type: listing
+  id: SpellbookFireball
+  name: spellbook-fireball-name
+  description: spellbook-fireball-desc
+  productAction: ActionFireball
+  productUpgradeId: SpellbookFireballUpgrade
+  cost:
+    WizCoin: 2
+  categories:
+  - SpellbookOffensive
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: SpellbookRodForm
+  name: spellbook-polymorph-rod-name
+  description: spellbook-polymorph-rod-desc
+  productAction: ActionPolymorphWizardRod
+  cost:
+    WizCoin: 3
+  categories:
+  - SpellbookOffensive
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+# Defensive
+- type: listing
+  id: SpellbookForceWall
+  name: spellbook-force-wall-name
+  description: spellbook-force-wall-desc
+  productAction: ActionForceWall
+  cost:
+    WizCoin: 3
+  categories:
+  - SpellbookDefensive
+
+# Utility
+- type: listing
+  id: SpellbookPolymorphSpider
+  name: spellbook-polymoprh-spider-name
+  description: spellbook-polymorph-spider-desc
+  productAction: ActionPolymorphWizardSpider
+  cost:
+    WizCoin: 2
+  categories:
+  - SpellbookUtility
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: SpellbookBlink
+  name: spellbook-blink-name
+  description: spellbook-blink-desc
+  productAction: ActionBlink
+  cost:
+    WizCoin: 1
+  categories:
+  - SpellbookUtility
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: SpellbookCharge
+  name: spellbook-charge-name
+  description: spellbook-charge-desc
+  productAction: ActionChargeSpell
+  cost:
+    WizCoin: 1
+  categories:
+  - SpellbookUtility
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+# Equipment
+- type: listing
+  id: SpellbookWandDoor
+  name: spellbook-wand-polymorph-door-name
+  description: spellbook-wand-polymorph-door-description
+  productEntity: WeaponWandPolymorphDoor
+  cost:
+    WizCoin: 3
+  categories:
+  - SpellbookEquipment
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: SpellbookWandPolymorphCarp
+  name: spellbook-wand-polymorph-carp-name
+  description: spellbook-wand-polymorph-carp-description
+  productEntity: WeaponWandPolymorphCarp
+  cost:
+    WizCoin: 3
+  categories:
+  - SpellbookEquipment
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+# Event
+- type: listing
+  id: SpellbookEventSummonGhosts
+  name: spellbook-event-summon-ghosts-name
+  description: spellbook-event-summon-ghosts-description
+  productAction: ActionSummonGhosts
+  cost:
+    WizCoin: 0
+  categories:
+  - SpellbookEvents
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+# Upgrades
+- type: listing
+  id: SpellbookFireballUpgrade
+  productUpgradeId: SpellbookFireballUpgrade
+  name: spellbook-upgrade-fireball-name
+  description: spellbook-upgrade-fireball-description
+  icon:
+    sprite: Objects/Magic/magicactions.rsi
+    state: fireball
+  cost:
+    WizCoin: 2
+  categories:
+  - SpellbookOffensive
+  conditions:
+  - !type:BuyBeforeCondition
+    whitelist:
+      - SpellbookFireball
+  # manual for now
+  - !type:ListingLimitedStockCondition
+    stock: 2

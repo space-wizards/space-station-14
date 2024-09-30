@@ -1,5 +1,5 @@
 - type: entity
-  name: Food Cart
+  name: food cart
   id: FoodCartBase
   abstract: true
   parent: BaseStructureDynamic
@@ -44,8 +44,8 @@
     - type: Appearance
     - type: UserInterface
       interfaces:
-      - key: enum.StorageUiKey.Key
-        type: StorageBoundUserInterface
+        enum.StorageUiKey.Key:
+          type: StorageBoundUserInterface
     - type: Storage
       maxItemSize: Normal
       grid:

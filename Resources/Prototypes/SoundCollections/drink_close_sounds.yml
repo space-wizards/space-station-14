@@ -1,0 +1,4 @@
+- type: soundCollection
+  id: bottleCloseSounds
+  files:
+  - /Audio/Items/bottle_close1.ogg

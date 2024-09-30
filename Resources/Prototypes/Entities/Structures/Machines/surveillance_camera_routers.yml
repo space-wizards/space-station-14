@@ -13,7 +13,7 @@
     - type: DeviceNetworkRequiresPower
     - type: UserInterface
       interfaces:
-        - key: enum.SurveillanceCameraSetupUiKey.Router
+        enum.SurveillanceCameraSetupUiKey.Router:
           type: SurveillanceCameraSetupBoundUi
     - type: Machine
       board: SurveillanceCameraRouterCircuitboard
@@ -22,6 +22,12 @@
       snapCardinals: true
       layers:
         - state: server
+    - type: AmbientOnPowered
+    - type: AmbientSound
+      volume: -9
+      range: 5
+      sound:
+        path: /Audio/Ambience/Objects/server_fans.ogg
 
 - type: entity
   parent: SurveillanceCameraRouterBase
@@ -104,6 +110,7 @@
       subnetFrequency: SurveillanceCameraGeneral
 
 - type: entity
+  abstract: true
   parent: [ BaseMachinePowered, ConstructibleMachine ]
   id: SurveillanceCameraWirelessRouterBase
   name: wireless camera router
@@ -118,7 +125,7 @@
     - type: DeviceNetworkRequiresPower
     - type: UserInterface
       interfaces:
-        - key: enum.SurveillanceCameraSetupUiKey.Router
+        enum.SurveillanceCameraSetupUiKey.Router:
           type: SurveillanceCameraSetupBoundUi
     - type: Machine
       board: SurveillanceCameraWirelessRouterCircuitboard
@@ -126,6 +133,12 @@
       sprite: Structures/Machines/server.rsi
       layers:
         - state: server
+    - type: AmbientOnPowered
+    - type: AmbientSound
+      volume: -9
+      range: 5
+      sound:
+        path: /Audio/Ambience/Objects/server_fans.ogg
 
 - type: entity
   parent: SurveillanceCameraWirelessRouterBase

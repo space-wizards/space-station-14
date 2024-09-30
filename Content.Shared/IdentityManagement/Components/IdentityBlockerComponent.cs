@@ -6,6 +6,7 @@ namespace Content.Shared.IdentityManagement.Components;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class IdentityBlockerComponent : Component
 {
+    [DataField]
     public bool Enabled = true;
 
     /// <summary>

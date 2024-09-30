@@ -24,7 +24,6 @@
           conditions:
             - !type:EntityAnchored
               anchored: false
-            - !type:ToiletLidClosed {}
           steps:
             - tool: Welding
               doAfter: 2

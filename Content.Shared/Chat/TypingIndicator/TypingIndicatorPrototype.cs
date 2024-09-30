@@ -23,6 +23,6 @@ public sealed partial class TypingIndicatorPrototype : IPrototype
     public Vector2 Offset = new(0, 0);
 
     [DataField("shader")]
-    public string Shader = "unshaded";
+    public string Shader = "shaded";
 
 }

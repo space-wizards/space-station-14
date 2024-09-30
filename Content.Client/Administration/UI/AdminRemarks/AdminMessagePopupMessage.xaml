@@ -1,0 +1,6 @@
+﻿<Control xmlns="https://spacestation14.io" Margin="0 0 0 8">
+    <BoxContainer Orientation="Vertical">
+        <RichTextLabel Name="Admin" Margin="0 0 0 4" />
+        <RichTextLabel Name="Message" Margin="2 0 0 0" />
+    </BoxContainer>
+</Control>

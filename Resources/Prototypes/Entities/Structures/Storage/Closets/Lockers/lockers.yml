@@ -18,6 +18,18 @@
     openSound:
       path: /Audio/Effects/woodenclosetopen.ogg
 
+# Basic
+- type: entity
+  id: LockerSteel
+  parent: LockerBaseSecure
+  name: secure closet
+  components:
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateBaseClosed: secure
+    stateDoorOpen: secure_open
+    stateDoorClosed: secure_door
+
 # Cargo
 - type: entity
   id: LockerQuarterMaster
@@ -158,6 +170,11 @@
   - type: ExplosionResistance
     damageCoefficient: 0.50
   - type: AntiRottingContainer
+  - type: Construction
+    graph: ClosetFreezer
+    node: done
+    containers:
+    - entity_storage
 
 - type: entity
   id: LockerFreezer

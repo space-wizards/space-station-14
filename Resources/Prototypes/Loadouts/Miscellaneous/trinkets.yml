@@ -1,0 +1,138 @@
+# Timers
+- type: loadoutEffectGroup
+  id: Command
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Command
+      time: 3600 # 1 hour
+
+# Plushies
+- type: loadout
+  id: PlushieLizard
+  storage:
+    back:
+    - PlushieLizard
+
+- type: loadout
+  id: PlushieSpaceLizard
+  storage:
+    back:
+    - PlushieSpaceLizard
+
+# Smokeables
+- type: loadout
+  id: Lighter
+  storage:
+    back:
+    - Lighter
+
+- type: loadout
+  id: CigPackGreen
+  storage:
+    back:
+    - CigPackGreen
+
+- type: loadout
+  id: CigPackRed
+  storage:
+    back:
+    - CigPackRed
+
+- type: loadout
+  id: CigPackBlue
+  storage:
+    back:
+    - CigPackBlue
+
+- type: loadout
+  id: CigPackBlack
+  storage:
+    back:
+    - CigPackBlack
+
+- type: loadout
+  id: CigarCase
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Command
+  storage:
+    back:
+    - CigarCase
+
+- type: loadout
+  id: CigarGold
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Command
+  storage:
+    back:
+    - CigarGold
+
+# Pins
+- type: loadout
+  id: ClothingNeckLGBTPin
+  storage:
+    back:
+    - ClothingNeckLGBTPin
+
+- type: loadout
+  id: ClothingNeckAromanticPin
+  storage:
+    back:
+    - ClothingNeckAromanticPin
+
+- type: loadout
+  id: ClothingNeckAsexualPin
+  storage:
+    back:
+    - ClothingNeckAsexualPin
+
+- type: loadout
+  id: ClothingNeckBisexualPin
+  storage:
+    back:
+    - ClothingNeckBisexualPin
+
+- type: loadout
+  id: ClothingNeckIntersexPin
+  storage:
+    back:
+    - ClothingNeckIntersexPin
+
+- type: loadout
+  id: ClothingNeckLesbianPin
+  storage:
+    back:
+    - ClothingNeckLesbianPin
+
+- type: loadout
+  id: ClothingNeckNonBinaryPin
+  storage:
+    back:
+    - ClothingNeckNonBinaryPin
+
+- type: loadout
+  id: ClothingNeckPansexualPin
+  storage:
+    back:
+    - ClothingNeckPansexualPin
+
+- type: loadout
+  id: ClothingNeckTransPin
+  storage:
+    back:
+    - ClothingNeckTransPin
+
+- type: loadout
+  id: ClothingNeckAutismPin
+  storage:
+    back:
+    - ClothingNeckAutismPin
+
+- type: loadout
+  id: ClothingNeckGoldAutismPin
+  storage:
+    back:
+    - ClothingNeckGoldAutismPin

@@ -10,6 +10,8 @@
   abstract: true
   description: A delicious meal, cooked with love.
   components:
+  - type: Item
+    storedRotation: -90
   - type: Food
   - type: Sprite
     sprite: Objects/Consumable/Food/meals.rsi
@@ -328,7 +330,8 @@
   description: BBQ ribs, slathered in a healthy coating of BBQ sauce. The least vegan thing to ever exist.
   components:
   - type: Food
-    trash: FoodKebabSkewer
+    trash: 
+    - FoodKebabSkewer
   - type: FlavorProfile
     flavors:
       - meaty
@@ -589,7 +592,8 @@
   description: Buttery.
   components:
   - type: Food
-    trash: FoodPlate
+    trash: 
+    - FoodPlate
   - type: FlavorProfile
     flavors:
       - corn

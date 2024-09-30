@@ -1,0 +1,35 @@
+- type: entity
+  name: syndicate footsoldier spawner
+  id: SpawnMobSyndicateFootSoldier
+  parent: MarkerBase
+  components:
+#God forgive me for what I'm about to do
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Mobs/Species/Human/parts.rsi
+      state: full
+    - sprite: Clothing/Shoes/Boots/combatboots.rsi
+      state: equipped-FEET
+    - sprite: Clothing/Uniforms/Jumpsuit/operative.rsi
+      state: equipped-INNERCLOTHING
+    - sprite: Clothing/OuterClothing/Armor/security.rsi
+      state: equipped-OUTERCLOTHING
+    - sprite: Clothing/Hands/Gloves/Color/black.rsi
+      state: equipped-HAND
+    - sprite: Clothing/Mask/gas.rsi
+      state: equipped-MASK
+    - sprite: Clothing/Head/Helmets/swat_syndicate.rsi
+      state: equipped-HELMET
+  - type: ConditionalSpawner
+    prototypes:
+    - MobSyndicateFootsoldier
+
+- type: entity
+  name: syndicate shuttle pilot spawner
+  id: SpawnMobSyndicateFootsoldierPilot
+  parent: SpawnMobSyndicateFootSoldier
+  components:
+  - type: ConditionalSpawner
+    prototypes:
+    - MobSyndicateFootsoldierPilot

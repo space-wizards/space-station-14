@@ -2,11 +2,10 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Anomaly.Components;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Atmos;
-using Robust.Server.GameObjects;
-using Robust.Shared.Map;
 using Robust.Shared.Random;
 using System.Linq;
 using System.Numerics;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.Anomaly.Effects;
 
@@ -16,8 +15,6 @@ namespace Content.Server.Anomaly.Effects;
 public sealed class GasProducerAnomalySystem : EntitySystem
 {
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
-    [Dependency] private readonly TransformSystem _xform = default!;
-    [Dependency] private readonly IMapManager _map = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Initialize()
@@ -55,7 +52,7 @@ public sealed class GasProducerAnomalySystem : EntitySystem
     {
         var xform = Transform(uid);
 
-        if (!_map.TryGetGrid(xform.GridUid, out var grid))
+        if (!TryComp<MapGridComponent>(xform.GridUid, out var grid))
             return;
 
         var localpos = xform.Coordinates.Position;
@@ -65,7 +62,7 @@ public sealed class GasProducerAnomalySystem : EntitySystem
         if (tilerefs.Length == 0)
             return;
 
-        var mixture = _atmosphere.GetTileMixture((uid, xform), grid, true);
+        var mixture = _atmosphere.GetTileMixture((uid, xform), true);
         if (mixture != null)
         {
             mixture.AdjustMoles(gas, mols);

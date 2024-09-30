@@ -3,7 +3,7 @@
   name: fireball
   description: You better GITTAH WEIGH.
   parent: BulletRocket
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: PointLight
     color: "#E25822"
@@ -31,11 +31,44 @@
     fireStacks: 0.35
 
 - type: entity
+  categories: [ HideSpawnMenu ]
+  parent: BaseBulletTrigger
+  id: ProjectileDragonsBreath
+  name: dragon's breath
+  description: Try not to get toasted.
+  components:
+  - type: PointLight
+    color: "#E25822"
+    radius: 3.0
+    energy: 5.0
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
+    layers:
+    - state: fireball
+      shader: unshaded
+  - type: IgnitionSource
+    temperature: 1000
+    ignited: true
+  - type: RepeatingTrigger
+    delay: 0.5 # line of fire as well as if it hits something
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: FireBomb
+    totalIntensity: 5 # low intensity, the point is to burn attackers not to break open walls, dragons can just eat them
+    intensitySlope: 1
+    maxIntensity: 3
+    canCreateVacuum: false
+    deleteAfterExplosion: false
+    repeatable: true
+  - type: TimedDespawn
+    lifetime: 5
+
+- type: entity
   id: ProjectileAnomalyFireball
   name: fireball
   description: Hovering blob of flame.
   parent: ProjectileFireball
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: TimedDespawn
     lifetime: 30
@@ -49,7 +82,7 @@
 - type: entity
   id: ProjectilePolyboltBase
   parent: BaseBullet
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
@@ -66,7 +99,7 @@
   parent: ProjectilePolyboltBase
   name: carp polybolt
   description: Nooo, I don't wanna be fish!
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: PolymorphOnCollide
     polymorph: WizardForcedCarp
@@ -79,7 +112,7 @@
   parent: ProjectilePolyboltBase
   name: monkey polybolt
   description: Nooo, I don't wanna be monkey!
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: PolymorphOnCollide
     polymorph: WizardForcedMonkey
@@ -92,7 +125,7 @@
   parent: ProjectilePolyboltBase
   name: door polybolt
   description: Nooo, I don't wanna be door!
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
@@ -113,7 +146,7 @@
   name: healing bolt
   description: I COMMAND YOU TO LIVE!
   parent: BaseBullet
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
@@ -133,7 +166,7 @@
   id: BulletInstakillMagic
   name: magical lead cylinder
   parent: BaseBullet
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   description: This looks familiar.
   components:
   - type: Projectile
@@ -146,8 +179,8 @@
   id: ProjectilePolyboltCluwne
   parent: ProjectilePolyboltBase
   name: cluwne polybolt
-  description: knoH KnoH!
-  noSpawn: true
+  description: KnoH KnoH!
+  categories: [ HideSpawnMenu ]
   components:
   - type: PolymorphOnCollide
     polymorph: WizardForcedCluwne
@@ -158,9 +191,9 @@
 - type: entity
   id: ProjectileIcicle
   parent: BaseBullet
-  name: Icicle
+  name: icicle
   description: Brrrrr.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Structures/Specific/Anomalies/ice_anom.rsi
@@ -176,7 +209,7 @@
   id: ProjectilePolyboltBread
   name: bread polybolt
   description: Nooo, I don't wanna be bread!
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: PolymorphOnCollide
     polymorph: BreadMorph

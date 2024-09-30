@@ -35,13 +35,14 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Administration.Systems;
 
 public sealed partial class AdminVerbSystem
 {
-    [Dependency] private readonly DoorBoltSystem _boltsSystem = default!;
+    [Dependency] private readonly DoorSystem _door = default!;
     [Dependency] private readonly AirlockSystem _airlockSystem = default!;
     [Dependency] private readonly StackSystem _stackSystem = default!;
     [Dependency] private readonly SharedAccessSystem _accessSystem = default!;
@@ -51,7 +52,6 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly StationJobsSystem _stationJobsSystem = default!;
     [Dependency] private readonly JointSystem _jointSystem = default!;
     [Dependency] private readonly BatterySystem _batterySystem = default!;
-    [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
     [Dependency] private readonly GunSystem _gun = default!;
 
@@ -78,7 +78,7 @@ public sealed partial class AdminVerbSystem
                         : new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/bolt.png")),
                     Act = () =>
                     {
-                        _boltsSystem.SetBoltsWithAudio(args.Target, bolts, !bolts.BoltsDown);
+                        _door.SetBoltsDown((args.Target, bolts), !bolts.BoltsDown);
                     },
                     Impact = LogImpact.Medium,
                     Message = Loc.GetString(bolts.BoltsDown
@@ -89,22 +89,22 @@ public sealed partial class AdminVerbSystem
                 args.Verbs.Add(bolt);
             }
 
-            if (TryComp<AirlockComponent>(args.Target, out var airlock))
+            if (TryComp<AirlockComponent>(args.Target, out var airlockComp))
             {
                 Verb emergencyAccess = new()
                 {
-                    Text = airlock.EmergencyAccess ? "Emergency Access Off" : "Emergency Access On",
+                    Text = airlockComp.EmergencyAccess ? "Emergency Access Off" : "Emergency Access On",
                     Category = VerbCategory.Tricks,
                     Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/emergency_access.png")),
                     Act = () =>
                     {
-                        _airlockSystem.ToggleEmergencyAccess(args.Target, airlock);
+                        _airlockSystem.SetEmergencyAccess((args.Target, airlockComp), !airlockComp.EmergencyAccess);
                     },
                     Impact = LogImpact.Medium,
-                    Message = Loc.GetString(airlock.EmergencyAccess
+                    Message = Loc.GetString(airlockComp.EmergencyAccess
                         ? "admin-trick-emergency-access-off-description"
                         : "admin-trick-emergency-access-on-description"),
-                    Priority = (int) (airlock.EmergencyAccess ? TricksVerbPriorities.EmergencyAccessOff : TricksVerbPriorities.EmergencyAccessOn),
+                    Priority = (int) (airlockComp.EmergencyAccess ? TricksVerbPriorities.EmergencyAccessOff : TricksVerbPriorities.EmergencyAccessOn),
                 };
                 args.Verbs.Add(emergencyAccess);
             }
@@ -326,7 +326,7 @@ public sealed partial class AdminVerbSystem
                 Act = () =>
                 {
                     var (mapUid, gridUid) = _adminTestArenaSystem.AssertArenaLoaded(player);
-                    _xformSystem.SetCoordinates(args.Target, new EntityCoordinates(gridUid ?? mapUid, Vector2.One));
+                    _transformSystem.SetCoordinates(args.Target, new EntityCoordinates(gridUid ?? mapUid, Vector2.One));
                 },
                 Impact = LogImpact.Medium,
                 Message = Loc.GetString("admin-trick-send-to-test-arena-description"),
@@ -532,7 +532,7 @@ public sealed partial class AdminVerbSystem
                     if (shuttle is null)
                         return;
 
-                    _xformSystem.SetCoordinates(args.User, new EntityCoordinates(shuttle.Value, Vector2.Zero));
+                    _transformSystem.SetCoordinates(args.User, new EntityCoordinates(shuttle.Value, Vector2.Zero));
                 },
                 Impact = LogImpact.Low,
                 Message = Loc.GetString("admin-trick-locate-cargo-shuttle-description"),
@@ -718,9 +718,13 @@ public sealed partial class AdminVerbSystem
                 Icon = new SpriteSpecifier.Rsi(new("/Textures/Objects/Fun/caps.rsi"), "mag-6"),
                 Act = () =>
                 {
-                    _quickDialog.OpenDialog(player, "Set Bullet Amount", $"Amount (max {ballisticAmmo.Capacity}):", (int amount) =>
+                    _quickDialog.OpenDialog(player, "Set Bullet Amount", $"Amount (standard {ballisticAmmo.Capacity}):", (string amount) =>
                     {
-                        ballisticAmmo.UnspawnedCount = amount;
+                        if (!int.TryParse(amount, out var result))
+                            return;
+
+                        _gun.SetBallisticUnspawned((args.Target, ballisticAmmo), result);
+                        _gun.UpdateBallisticAppearance(args.Target, ballisticAmmo);
                     });
                 },
                 Impact = LogImpact.Medium,
@@ -731,11 +735,11 @@ public sealed partial class AdminVerbSystem
         }
     }
 
-    private void RefillEquippedTanks(EntityUid target, Gas plasma)
+    private void RefillEquippedTanks(EntityUid target, Gas gasType)
     {
         foreach (var held in _inventorySystem.GetHandOrInventoryEntities(target))
         {
-            RefillGasTank(held, Gas.Plasma);
+            RefillGasTank(held, gasType);
         }
     }
 
@@ -832,14 +836,14 @@ public sealed partial class AdminVerbSystem
     {
         var allAccess = _prototypeManager
             .EnumeratePrototypes<AccessLevelPrototype>()
-            .Select(p => p.ID).ToArray();
+            .Select(p => new ProtoId<AccessLevelPrototype>(p.ID)).ToArray();
 
         _accessSystem.TrySetTags(entity, allAccess);
     }
 
     private void RevokeAllAccess(EntityUid entity)
     {
-        _accessSystem.TrySetTags(entity, Array.Empty<string>());
+        _accessSystem.TrySetTags(entity, new List<ProtoId<AccessLevelPrototype>>());
     }
 
     public enum TricksVerbPriorities

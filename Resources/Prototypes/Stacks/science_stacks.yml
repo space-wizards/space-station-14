@@ -3,4 +3,21 @@
   name: artifact fragment
   spawn: ArtifactFragment1
   maxCount: 30
-  itemSize: 5
+
+- type: stack
+  id: Capacitor
+  name: capacitor
+  spawn: CapacitorStockPart
+  maxCount: 10
+
+- type: stack
+  id: Manipulator
+  name: micro manipulator
+  spawn: MicroManipulatorStockPart
+  maxCount: 10
+
+- type: stack
+  id: MatterBin
+  name: matter bin
+  spawn: MatterBinStockPart
+  maxCount: 10

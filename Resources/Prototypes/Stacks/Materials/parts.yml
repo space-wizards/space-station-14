@@ -4,4 +4,3 @@
   icon: { sprite: /Textures/Objects/Materials/parts.rsi, state: rods }
   spawn: PartRodMetal1
   maxCount: 30
-  itemSize: 1

@@ -1,4 +1,4 @@
-﻿- type: hudTheme
+- type: hudTheme
   id: SS14DefaultTheme
   name: ui-options-hud-theme-default
   path: Default
@@ -35,7 +35,7 @@
   order: 1
 
 - type: hudTheme
-  id: SS14ErisTheme
-  name: ui-options-hud-theme-eris
-  path: Eris
+  id: SS14AshenTheme
+  name: ui-options-hud-theme-ashen
+  path: Ashen
   order: 5

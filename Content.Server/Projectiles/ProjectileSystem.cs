@@ -51,7 +51,7 @@ public sealed class ProjectileSystem : SharedProjectileSystem
 
         if (modifiedDamage is not null && EntityManager.EntityExists(component.Shooter))
         {
-            if (modifiedDamage.Any() && !deleted)
+            if (modifiedDamage.AnyPositive() && !deleted)
             {
                 _color.RaiseEffect(Color.Red, new List<EntityUid> { target }, Filter.Pvs(target, entityManager: EntityManager));
             }
@@ -69,13 +69,10 @@ public sealed class ProjectileSystem : SharedProjectileSystem
 
         component.DamagedEntity = true;
 
-        var afterProjectileHitEvent = new AfterProjectileHitEvent(component.Damage, target, args.OtherFixture);
-        RaiseLocalEvent(uid, ref afterProjectileHitEvent);
-
         if (component.DeleteOnCollide)
             QueueDel(uid);
 
-        if (component.ImpactEffect != null && TryComp<TransformComponent>(uid, out var xform))
+        if (component.ImpactEffect != null && TryComp(uid, out TransformComponent? xform))
         {
             RaiseNetworkEvent(new ImpactEffectEvent(component.ImpactEffect, GetNetCoordinates(xform.Coordinates)), Filter.Pvs(xform.Coordinates, entityMan: EntityManager));
         }

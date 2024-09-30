@@ -1,0 +1,75 @@
+- type: constructionGraph
+  id: FireBomb
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: empty
+      steps:
+      - tag: DrinkCan
+        name: an empty can
+        icon:
+          sprite: Objects/Consumable/Drinks/cola.rsi
+          state: icon_open
+        doAfter: 1
+      - tag: Igniter
+        name: an igniter
+        icon:
+          sprite: Objects/Devices/igniter.rsi
+          state: icon
+        doAfter: 1
+  - node: empty
+    entity: FireBombEmpty
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: DrinkColaCanEmpty
+      - !type:SpawnPrototype
+        prototype: Igniter
+      - !type:DeleteEntity {}
+      steps:
+      - tool: Prying
+        doAfter: 1
+    - to: fuel
+      conditions:
+      - !type:MinSolution
+        solution: drink
+        reagent:
+          ReagentId: WeldingFuel
+        quantity: 30
+      steps:
+      - tool: Screwing
+        doAfter: 1
+  - node: fuel
+    entity: FireBombFuel
+    edges:
+    - to: empty
+      conditions:
+      - !type:SolutionEmpty
+        solution: drink
+      steps:
+      - tool: Screwing
+        doAfter: 1
+    - to: firebomb
+      conditions: # no dumping out 29u of the fuel then adding wires :)
+      - !type:MinSolution
+        solution: drink
+        reagent:
+          ReagentId: WeldingFuel
+        quantity: 30
+      steps:
+      - material: Cable
+        amount: 5
+        doAfter: 2
+  - node: firebomb
+    entity: FireBomb
+    edges:
+    - to: fuel
+      completed:
+      - !type:SpawnPrototype
+        prototype: CableApcStack1
+        amount: 5
+      steps:
+      - tool: Cutting
+        doAfter: 2

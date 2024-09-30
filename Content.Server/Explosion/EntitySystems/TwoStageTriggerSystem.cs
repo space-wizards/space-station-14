@@ -14,14 +14,7 @@ public sealed class TwoStageTriggerSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<TwoStageTriggerComponent, EntityUnpausedEvent>(OnTriggerUnpaused);
         SubscribeLocalEvent<TwoStageTriggerComponent, TriggerEvent>(OnTrigger);
-    }
-
-    private void OnTriggerUnpaused(EntityUid uid, TwoStageTriggerComponent component, ref EntityUnpausedEvent args)
-    {
-        if (component.NextTriggerTime != null)
-            component.NextTriggerTime = component.NextTriggerTime.Value + args.PausedTime;
     }
 
     private void OnTrigger(EntityUid uid, TwoStageTriggerComponent component, TriggerEvent args)
@@ -37,13 +30,12 @@ public sealed class TwoStageTriggerSystem : EntitySystem
     {
         foreach (var (name, entry) in component.SecondStageComponents)
         {
-            var comp = (Component) _factory.GetComponent(name);
-            var temp = (object) comp;
+            var comp = (Component)_factory.GetComponent(name);
+            var temp = (object)comp;
 
             if (EntityManager.TryGetComponent(uid, entry.Component.GetType(), out var c))
                 RemComp(uid, c);
 
-            comp.Owner = uid;
             _serializationManager.CopyTo(entry.Component, ref temp);
             EntityManager.AddComponent(uid, comp);
         }

@@ -20,6 +20,7 @@ namespace Content.Client.NodeContainer
         private readonly IMapManager _mapManager;
         private readonly IInputManager _inputManager;
         private readonly IEntityManager _entityManager;
+        private readonly SharedTransformSystem _transformSystem;
 
         private readonly Dictionary<(int, int), NodeRenderData> _nodeIndex = new();
         private readonly Dictionary<EntityUid, Dictionary<Vector2i, List<(GroupData, NodeDatum)>>> _gridIndex = new ();
@@ -46,6 +47,7 @@ namespace Content.Client.NodeContainer
             _mapManager = mapManager;
             _inputManager = inputManager;
             _entityManager = entityManager;
+            _transformSystem = _entityManager.System<SharedTransformSystem>();
 
             _font = cache.GetFont("/Fonts/NotoSans/NotoSans-Regular.ttf", 12);
         }
@@ -80,7 +82,7 @@ namespace Content.Client.NodeContainer
 
 
             var xform = _entityManager.GetComponent<TransformComponent>(_entityManager.GetEntity(node.Entity));
-            if (!_mapManager.TryGetGrid(xform.GridUid, out var grid))
+            if (!_entityManager.TryGetComponent<MapGridComponent>(xform.GridUid, out var grid))
                 return;
             var gridTile = grid.TileIndicesFor(xform.Coordinates);
 
@@ -145,8 +147,8 @@ namespace Content.Client.NodeContainer
 
             foreach (var (gridId, gridDict) in _gridIndex)
             {
-                var grid = _mapManager.GetGrid(gridId);
-                var (_, _, worldMatrix, invMatrix) = _entityManager.GetComponent<TransformComponent>(gridId).GetWorldPositionRotationMatrixWithInv();
+                var grid = _entityManager.GetComponent<MapGridComponent>(gridId);
+                var (_, _, worldMatrix, invMatrix) = _transformSystem.GetWorldPositionRotationMatrixWithInv(gridId);
 
                 var lCursorBox = invMatrix.TransformBox(cursorBox);
                 foreach (var (pos, list) in gridDict)
@@ -199,7 +201,7 @@ namespace Content.Client.NodeContainer
             }
 
 
-            handle.SetTransform(Matrix3.Identity);
+            handle.SetTransform(Matrix3x2.Identity);
             _gridIndex.Clear();
         }
 

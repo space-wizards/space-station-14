@@ -8,7 +8,7 @@ namespace Content.Shared.Atmos.Rotting;
 /// Tracking component for stuff that has started to rot.
 /// Only the current stage is networked to the client.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentPause]
 [Access(typeof(SharedRottingSystem))]
 public sealed partial class RottingComponent : Component
 {
@@ -22,6 +22,7 @@ public sealed partial class RottingComponent : Component
     /// When the next check will happen for rot progression + effects like damage and ammonia
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [AutoPausedField]
     public TimeSpan NextRotUpdate = TimeSpan.Zero;
 
     /// <summary>
