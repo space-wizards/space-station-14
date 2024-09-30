@@ -19,6 +19,14 @@
       "directions": 4
     },
     {
+      "name": "folded-equipped-INNERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "folded-equipped-INNERCLOTHING-vox",
+      "directions": 4
+    },
+    {
       "name": "inhand-left",
       "directions": 4
     },
