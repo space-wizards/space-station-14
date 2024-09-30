@@ -346,3 +346,4 @@
     ionStormAmount: 5
     DelayAdminlog: true
   - type: IonStormTarget
+    chance: 1
