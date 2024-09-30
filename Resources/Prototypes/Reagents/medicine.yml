@@ -1385,19 +1385,15 @@
   flavor: sweet
   color: "#c3d2e0"
   metabolisms:
-    Drink:
-      effects:
-        - !type:SatiateThirst
-          factor: 7
-        - !type:ModifyBloodLevel
-          amount: 6.5
     Medicine:
       effects:
         - !type:HealthChange
         damage:
           groups:
-            Brute: -1.05
-            Burn: -0.95
+            Blunt: -1.0
+            Burn: -1.0
+        - !type:ModifyBloodLevel
+          amount: 6.5
 
 - type: reagent
   id: Ipecybin
@@ -1410,14 +1406,11 @@
   metabolisms:
     Medicine:
       effects:
-        - !type:ModifyBloodLevel
-          amount: 1.5
-        - !type:Jitter
         - !type:HealthChange
         damage:
           groups:
             Toxin: -0.5
             Airloss: -0.5
-            Brute: -0.5
+            Blunt: -0.5
         - !type:ChemVomit
           min: 15
