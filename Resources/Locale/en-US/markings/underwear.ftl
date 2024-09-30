@@ -12,3 +12,6 @@ marking-UnderwearSatin = Underwear (Satin)
 
 marking-UnderwearTanga-tanga = Underwear
 marking-UnderwearTanga = Underwear (Tanga)
+
+marking-UnderwearNone = None
+marking-UnderwearNone-none = None

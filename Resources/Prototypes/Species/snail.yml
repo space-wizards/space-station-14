@@ -40,6 +40,9 @@
     Chest:
       points: 4
       required: false
+    Undershirt:
+      points: 1
+      required: false
     Arms:
       points: 2
       required: false

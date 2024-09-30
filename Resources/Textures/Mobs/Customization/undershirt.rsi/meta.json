@@ -46,10 +46,6 @@
     {
       "name": "nanotrasen",
       "directions": 4
-    },
-    {
-      "name": "none",
-      "directions": 4
     }
   ]
 }

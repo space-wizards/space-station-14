@@ -2,7 +2,7 @@
   id: UndershirtDefault
   bodyPart: Undershirt
   markingCategory: Undershirt
-  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid, SlimePerson, Diona, Moth]
+  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid, SlimePerson, Diona, Moth, Gray, Snail]
   coloring:
     default:
       type:
@@ -16,7 +16,7 @@
   id: UndershirtRolled
   bodyPart: Undershirt
   markingCategory: Undershirt
-  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid, SlimePerson, Diona, Moth]
+  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid, SlimePerson, Diona, Moth, Gray, Snail]
   coloring:
     default:
       type:
@@ -30,7 +30,7 @@
   id: UndershirtSleeveless
   bodyPart: Undershirt
   markingCategory: Undershirt
-  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid, SlimePerson, Diona, Moth]
+  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid, SlimePerson, Diona, Moth, Gray, Snail]
   coloring:
     default:
       type:
@@ -44,7 +44,7 @@
   id: UndershirtRolledSleeveless
   bodyPart: Undershirt
   markingCategory: Undershirt
-  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid, SlimePerson, Diona, Moth]
+  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid, SlimePerson, Diona, Moth, Gray, Snail]
   coloring:
     default:
       type:
@@ -58,7 +58,7 @@
   id: UndershirtLong
   bodyPart: Undershirt
   markingCategory: Undershirt
-  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid, SlimePerson, Diona, Moth]
+  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid, SlimePerson, Diona, Moth, Gray, Snail]
   coloring:
     default:
       type:
@@ -72,7 +72,7 @@
   id: UndershirtNanotrasen
   bodyPart: Undershirt
   markingCategory: Undershirt
-  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid, SlimePerson, Diona, Moth]
+  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid, SlimePerson, Diona, Moth, Gray, Snail]
   coloring:
     default:
       type:
@@ -86,7 +86,7 @@
   id: UndershirtClown
   bodyPart: Undershirt
   markingCategory: Undershirt
-  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid, SlimePerson, Diona, Moth]
+  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid, SlimePerson, Diona, Moth, Gray, Snail]
   coloring:
     default:
       type:
@@ -100,7 +100,7 @@
   id: UndershirtBraClassic
   bodyPart: Undershirt
   markingCategory: Undershirt
-  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid, SlimePerson, Diona, Moth]
+  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid, SlimePerson, Diona, Moth, Gray, Snail]
   coloring:
     default:
       type:
@@ -114,7 +114,7 @@
   id: UndershirtBraSports
   bodyPart: Undershirt
   markingCategory: Undershirt
-  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid, SlimePerson, Diona, Moth]
+  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid, SlimePerson, Diona, Moth, Gray, Snail]
   coloring:
     default:
       type:
@@ -128,7 +128,7 @@
   id: UndershirtBraStrapless
   bodyPart: Undershirt
   markingCategory: Undershirt
-  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid, SlimePerson, Diona, Moth]
+  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid, SlimePerson, Diona, Moth, Gray, Snail]
   coloring:
     default:
       type:
@@ -137,18 +137,3 @@
   sprites:
   - sprite: Mobs/Customization/undershirt.rsi
     state: strapless
-
-- type: marking
-  id: UndershirtNone
-  bodyPart: Undershirt
-  markingCategory: Undershirt
-  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid, SlimePerson, Diona, Moth]
-  sexRestriction: [Male]
-  coloring:
-    default:
-      type:
-        !type:SimpleColoring
-          color: "#FFFFFF"
-  sprites:
-  - sprite: Mobs/Customization/undershirt.rsi
-    state: none
