@@ -1,0 +1,22 @@
+- type: entity
+  id: ActionLightning
+  name: lightning bolt
+  description: Thunderbolt and lightning, very very frightening!
+  components:
+  - type: EntityTargetAction
+    useDelay: 15
+    itemIconStyle: BigAction
+    canTargetSelf: false
+    interactOnMiss: false
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Effects/Lightning/lightningbolt.ogg
+    icon:
+      sprite: Objects/Magic/magicactions.rsi
+      state: spell_default
+    event: !type:LightningSpellEvent
+      speech: action-speech-spell-smite
+
+
+
+
+

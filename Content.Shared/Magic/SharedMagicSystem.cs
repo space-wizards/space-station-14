@@ -1,4 +1,4 @@
-﻿using System.Numerics;
+using System.Numerics;
 using Content.Shared.Actions;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
@@ -174,7 +174,7 @@ public abstract class SharedMagicSystem : EntitySystem
         // TODO: Pre-cast do after, either here or in SharedActionsSystem
     }
 
-    private bool PassesSpellPrerequisites(EntityUid spell, EntityUid performer)
+    protected bool PassesSpellPrerequisites(EntityUid spell, EntityUid performer)
     {
         var ev = new BeforeCastSpellEvent(performer);
         RaiseLocalEvent(spell, ref ev);
@@ -507,7 +507,7 @@ public abstract class SharedMagicSystem : EntitySystem
 
     // When any spell is cast it will raise this as an event, so then it can be played in server or something. At least until chat gets moved to shared
     // TODO: Temp until chat is in shared
-    private void Speak(BaseActionEvent args)
+    protected void Speak(BaseActionEvent args)
     {
         if (args is not ISpeakSpell speak || string.IsNullOrWhiteSpace(speak.Speech))
             return;
