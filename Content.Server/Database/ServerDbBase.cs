@@ -532,7 +532,7 @@ namespace Content.Server.Database
 
         public abstract Task CreateUsernameRuleAsync(ServerUsernameRuleDef usernameRule);
 
-        public abstract Task RemoveServerUsernameRuleAsync(int id, NetUserId retiringAdmin, DateTimeOffset retireTime);
+        public abstract Task RemoveServerUsernameRuleAsync(int id, NetUserId? retiringAdmin, DateTimeOffset retireTime);
         #endregion
 
         #region Playtime

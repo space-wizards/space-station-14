@@ -1,6 +1,7 @@
 using System.Collections.Immutable;
 using System.Net;
 using Content.Shared.Database;
+using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 
 namespace Content.Server.Database;
@@ -39,12 +40,12 @@ public sealed class ServerUsernameRuleDef
         ExtendToBan = extendToBan;
     }
 
-    // public string FormatRestrictionMessage(IConfigurationManager cfg, ILocalizationManager loc)
-    // {
-    //     return $"""
-    //             {loc.GetString("restrict-username-1")}
-    //             {loc.GetString("restrict-username-2", ("reason", Message))}
-    //             {loc.GetString("restrict-username-3")}
-    //             """;
-    // }
+    public string FormatUsernameViolationMessage(IConfigurationManager cfg, ILocalizationManager loc)
+    {
+        return $"""
+                {loc.GetString("restrict-username-1")}
+                {loc.GetString("restrict-username-2", ("reason", Message))}
+                {loc.GetString("restrict-username-3")}
+                """;
+    }
 }

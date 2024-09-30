@@ -518,7 +518,7 @@ namespace Content.Server.Database
             return;
         }
 
-        public override async Task RemoveServerUsernameRuleAsync(int id, NetUserId retiringAdmin, DateTimeOffset retireTime)
+        public override async Task RemoveServerUsernameRuleAsync(int id, NetUserId? retiringAdmin, DateTimeOffset retireTime)
         {
             await using var db = await GetDbImpl();
 
@@ -531,7 +531,7 @@ namespace Content.Server.Database
             }
 
             usernameRule.Retired = true;
-            usernameRule.RetiringAdmin = retiringAdmin.UserId;
+            usernameRule.RetiringAdmin = retiringAdmin;
             usernameRule.RetireTime = retireTime.UtcDateTime;
 
             await db.PgDbContext.SaveChangesAsync();
