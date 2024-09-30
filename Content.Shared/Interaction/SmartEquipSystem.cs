@@ -149,10 +149,7 @@ public sealed class SmartEquipSystem : EntitySystem
             }
 
             _hands.TryDrop(uid, hands.ActiveHand, handsComp: hands);
-            _storage.Insert(slotItem, handItem.Value, out var stacked, out _);
-
-            if (stacked != null)
-                _hands.TryPickup(uid, stacked.Value, handsComp: hands);
+            _storage.Insert(slotItem, handItem.Value, out _, out _);
 
             return;
         }
