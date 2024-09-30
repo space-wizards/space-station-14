@@ -7,6 +7,7 @@
     snap:
     - Wallmount
   components:
+  - type: StationAiWhitelist
   - type: WallMount
     arc: 360
   - type: Clickable
@@ -49,6 +50,7 @@
     snap:
     - Wallmount
   components:
+  - type: StationAiWhitelist
   - type: WallMount
     arc: 360
   - type: Clickable
@@ -146,6 +148,7 @@
   placement:
     mode: SnapgridCenter
   components:
+    - type: StationAiWhitelist
     - type: Clickable
     - type: InteractionOutline
     - type: Sprite
