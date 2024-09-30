@@ -132,7 +132,7 @@
     maxCollectionSize: 10
     verifyMapExistence: false
   - type: Objective
-    difficulty: 1
+    difficulty: 0.7
 
 
 
