@@ -22,6 +22,7 @@ fibers-grey = grey
 fibers-green = green
 fibers-orange = orange
 fibers-white = white
+fibers-web = silky white
 fibers-yellow = yellow
 fibers-regal-blue = regal blue
 fibers-regal-black = regal black

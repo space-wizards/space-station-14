@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Add new dress by DreamlyJack",
+  "copyright": "Drawn by Ubaser",
   "size": {
     "x": 32,
     "y": 32
@@ -11,24 +11,7 @@
       "name": "icon"
     },
     {
-      "name": "WEB-icon"
-    },
-    {
-      "name": "WEB-crafting-icon"
-    },
-    {
-      "name": "icon-color"
-    },
-    {
       "name": "equipped-INNERCLOTHING",
-      "directions": 4
-    },
-    {
-      "name": "equipped-WEB-INNERCLOTHING",
-      "directions": 4
-    },
-    {
-      "name": "color-equipped-INNERCLOTHING",
       "directions": 4
     },
     {
