@@ -85,8 +85,8 @@ namespace Content.Client.Construction.UI
 
         public ConstructionMenu()
         {
-            SetSize = MinSize = new Vector2(720, 320);
-            MinWidth = 541;
+            SetSize = new Vector2(550, 450);
+            MinSize = new Vector2(550, 320);
 
             IoCManager.InjectDependencies(this);
             RobustXamlLoader.Load(this);
