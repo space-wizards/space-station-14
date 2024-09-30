@@ -26,7 +26,7 @@
     - gc
     - gc_mode
     - cvar
-    - fuckrules
+    #- fuckrules # Harmony
     - midipanic
     - replay_recording_start
     - replay_recording_stop

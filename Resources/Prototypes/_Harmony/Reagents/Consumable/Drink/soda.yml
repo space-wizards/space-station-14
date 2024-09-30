@@ -7,7 +7,7 @@
   flavor: fizzy
   color: "#cd7314"
   metamorphicSprite:
-    sprite: Harmony/Objects/Consumable/Drinks/sunset-soda.rsi
+    sprite: _Harmony/Objects/Consumable/Drinks/sunset-soda.rsi
     state: icon_empty
   metamorphicMaxFillLevels: 6
   metamorphicFillBaseName: fill-
