@@ -13,5 +13,3 @@ job-supervisors-security = security officers, the warden, and the head of securi
 job-supervisors-science = scientists, and the research director
 job-supervisors-hire = whoever hires you
 job-supervisors-everyone = absolutely everyone
-job-supervisors-laws = your laws
-job-supervisors-ai-laws = the station AI, and your laws

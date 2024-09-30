@@ -15,7 +15,7 @@
       time: 270000 # 75 hrs, borg already needs 60.
   canBeAntag: false
   icon: JobIconStationAi
-  supervisors: job-supervisors-laws
+  supervisors: job-supervisors-rd
   jobEntity: StationAiBrain
   applyTraits: false
 
@@ -29,6 +29,6 @@
       time: 216000 # 60 hrs
   canBeAntag: false
   icon: JobIconBorg
-  supervisors: job-supervisors-laws
+  supervisors: job-supervisors-rd
   jobEntity: PlayerBorgGeneric
   applyTraits: false
