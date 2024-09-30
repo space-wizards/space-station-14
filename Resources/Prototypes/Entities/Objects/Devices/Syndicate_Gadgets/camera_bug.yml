@@ -2,7 +2,7 @@
   id: CameraBug
   parent: [ BaseItem, BaseSyndicateContraband ]
   name: Camera bug
-  description: personal camera viewing device
+  description: An illegal syndicate device that allows you to hack into the station's camera network.
   components:
   - type: Sprite
     sprite: Objects/Devices/camera_bug.rsi
