@@ -38,10 +38,12 @@ public sealed class RoundEndNoEorgUIController : UIController
     {
         if (GetSkipPopupCvar())
             return;
+
         if (_window == null)
-        {
             InitializeWindow();
-        }
+
+        if (_window != null)
+            _window.MoveToFront();
     }
 
     private void InitializeWindow()
