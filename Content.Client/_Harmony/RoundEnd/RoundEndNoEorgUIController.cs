@@ -42,8 +42,7 @@ public sealed class RoundEndNoEorgUIController : UIController
         if (_window == null)
             InitializeWindow();
 
-        if (_window != null)
-            _window.MoveToFront();
+        _window?.MoveToFront();
     }
 
     private void InitializeWindow()
