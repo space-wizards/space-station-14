@@ -21,7 +21,7 @@ public sealed class TitleWindowManager
     public void Shutdown()
     {
         _cfg.UnsubValueChanged(CVars.GameHostName, OnHostnameChange);
-        _cfg.UnsubValueChanged(CVars.HostnameInTitlebar, OnHostnameTitleChange);
+        _cfg.UnsubValueChanged(CCVars.HostnameInTitlebar, OnHostnameTitleChange);
     }
 
     // This may use the last joined server temporarily until the CCVars of the joining server are received.
