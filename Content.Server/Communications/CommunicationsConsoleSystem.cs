@@ -251,6 +251,14 @@ namespace Content.Server.Communications
                 var tryGetIdentityShortInfoEvent = new TryGetIdentityShortInfoEvent(uid, mob);
                 RaiseLocalEvent(tryGetIdentityShortInfoEvent);
                 var author = tryGetIdentityShortInfoEvent.Title ?? Loc.GetString("comms-console-announcement-unknown-sender");
+                if (comp.ShowLocation == true)
+                {
+                    msg += "\n" + Loc.GetString("comms-console-announcement-sent-by-with-location", ("author", author), ("location", FormattedMessage.RemoveMarkupOrThrow(_navMap.GetNearestBeaconString((uid, null)))));
+                }
+                else
+                {
+                    msg += "\n" + Loc.GetString("comms-console-announcement-sent-by", ("author", author));
+                }
             }
 
             comp.AnnouncementCooldownRemaining = comp.Delay;
@@ -263,14 +271,6 @@ namespace Content.Server.Communications
             Loc.TryGetString(comp.Title, out var title);
             title ??= comp.Title;
 
-            if (comp.ShowLocation == true)
-            {
-                msg += "\n" + Loc.GetString("comms-console-announcement-sent-by-with-location", ("author", author), ("location", FormattedMessage.RemoveMarkupOrThrow(_navMap.GetNearestBeaconString((uid, null)))));
-            }
-            else
-            {
-                msg += "\n" + Loc.GetString("comms-console-announcement-sent-by", ("author", author));
-            }
             if (comp.Global)
             {
                 _chatSystem.DispatchGlobalAnnouncement(msg, title, announcementSound: comp.Sound, colorOverride: comp.Color);
