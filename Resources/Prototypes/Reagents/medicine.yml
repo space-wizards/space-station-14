@@ -1390,7 +1390,7 @@
       - !type:HealthChange
         damage:
           groups:
-            Blunt: -1.0
+            Brute: -1.0
             Burn: -1.0
       - !type:ModifyBloodLevel
         amount: 6.5
@@ -1411,7 +1411,7 @@
           groups:
             Toxin: -0.5
             Airloss: -0.5
-            Blunt: -0.5
+            Brute: -0.5
       - !type:ChemVomit
         conditions:
           - !type:ReagentThreshold
