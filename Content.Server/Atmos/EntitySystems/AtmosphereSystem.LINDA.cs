@@ -117,7 +117,7 @@ namespace Content.Server.Atmos.EntitySystems
         private void Archive(TileAtmosphere tile, int fireCount)
         {
             if (tile.Air != null)
-                tile.AirArchived.CopyFrom(tile.Air);
+                tile.AirArchived = new GasMixture(tile.Air);
 
             tile.ArchivedCycle = fireCount;
         }
