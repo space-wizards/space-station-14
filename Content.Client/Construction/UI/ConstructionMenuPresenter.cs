@@ -215,13 +215,6 @@ namespace Content.Client.Construction.UI
 
             recipes.Sort((a, b) => string.Compare(a.Name, b.Name, StringComparison.InvariantCulture));
 
-            PopulateRecipes(recipes);
-        }
-
-
-
-        private void PopulateRecipes(List<ConstructionPrototype> recipes)
-        {
             var recipesList = _constructionView.Recipes;
             recipesList.Clear();
 
@@ -243,21 +236,37 @@ namespace Content.Client.Construction.UI
                         Name = recipe.Name,
                         ToolTip = recipe.Name,
                         Scale = new Vector2(1.35f),
+                        ToggleMode = true,
                     };
 
-                    itemButton.OnPressed += _ =>
+                    itemButton.OnToggled += buttonToggledEventArgs =>
                     {
-                        if (_selected is not null
-                            && _recipeButtons.TryGetValue(_selected.Name, out var oldButton))
-                            oldButton.Modulate = Color.White;
-
-                        OnGridViewRecipeSelected(this, recipe);
-                        itemButton.Modulate = Color.Green;
+                        if (_selected is null)
+                            itemButton.Modulate = buttonToggledEventArgs.Pressed ? Color.Green : Color.White;
+                        else
+                        {
+                            itemButton.Modulate = Color.Green;
+                            if (_recipeButtons.TryGetValue(_selected.Name, out var oldButton))
+                            {
+                                oldButton.Pressed = false;
+                                oldButton.Modulate = Color.White;
+                                if (_selected == recipe)
+                                {
+                                    OnGridViewRecipeSelected(this, null);
+                                    return;
+                                }
+                            }
+                        }
+                        OnGridViewRecipeSelected(this, buttonToggledEventArgs.Pressed ? recipe : null);
                     };
 
                     recipesGrid.AddChild(itemButton);
                     _recipeButtons[recipe.Name] = itemButton;
                 }
+
+                if (_selected is not null
+                    && _recipeButtons.TryGetValue(_selected.Name, out var selectedButton))
+                    selectedButton.Modulate = Color.Green;
             }
             else
             {
