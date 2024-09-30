@@ -437,7 +437,7 @@ namespace Content.Shared.CCVar
             CVarDef.Create("game.entity_menu_lookup", 0.25f, CVar.CLIENTONLY | CVar.ARCHIVE);
 
         /// <summary>
-        /// Size of the lookup area for adding entities to the context menu
+        /// Should the clients window show the server name in them?
         /// </summary>
         public static readonly CVarDef<bool> HostnameInTitlebar =
             CVarDef.Create("game.hostname_in_titlebar", true, CVar.SERVER | CVar.REPLICATED);
