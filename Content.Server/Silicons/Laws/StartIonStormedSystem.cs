@@ -29,7 +29,7 @@ public sealed class StartIonStormedSystem : EntitySystem
         if (!TryComp<IonStormTargetComponent>(uid, out var target))
             return;
 
-        for (int currentIonStorm = 1; currentIonStorm <= component.IonStormAmount; currentIonStorm++)
+        for (int currentIonStorm = 0; currentIonStorm < component.IonStormAmount; currentIonStorm++)
         {
             _ionStorm.IonStormTarget(uid, lawBound, xform, target, null, true, true);
         }
