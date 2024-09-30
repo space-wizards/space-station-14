@@ -12,7 +12,7 @@
         - ReagentId: AviationCocktail
           Quantity: 30
   - type: Icon
-    sprite: Harmony/Objects/Consumable/Drinks/aviationcocktail.rsi
+    sprite: _Harmony/Objects/Consumable/Drinks/aviationcocktail.rsi
     state: icon
 
 - type: entity
@@ -28,7 +28,7 @@
         - ReagentId: EspressoMartini
           Quantity: 30
   - type: Icon
-    sprite: Harmony/Objects/Consumable/Drinks/espressomartiniglass.rsi
+    sprite: _Harmony/Objects/Consumable/Drinks/espressomartiniglass.rsi
     state: icon
 
 - type: entity
@@ -44,5 +44,5 @@
         - ReagentId: SunsetSoda
           Quantity: 30
   - type: Icon
-    sprite: Harmony/Objects/Consumable/Drinks/sunset-soda.rsi
+    sprite: _Harmony/Objects/Consumable/Drinks/sunset-soda.rsi
     state: icon

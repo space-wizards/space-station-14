@@ -5,9 +5,9 @@
   description: Given to the crew of Vulture
   components:
   - type: Sprite
-    sprite: Harmony/Clothing/Neck/Misc/vulturepin.rsi
+    sprite: _Harmony/Clothing/Neck/Misc/vulturepin.rsi
   - type: Clothing
-    sprite: Harmony/Clothing/Neck/Misc/vulturepin.rsi
+    sprite: _Harmony/Clothing/Neck/Misc/vulturepin.rsi
 
 - type: entity
   parent: ClothingNeckPinBase
@@ -16,15 +16,15 @@
   description: Given to the crew of Miros
   components:
   - type: Sprite
-    sprite: Harmony/Clothing/Neck/Misc/serverpins.rsi
+    sprite: _Harmony/Clothing/Neck/Misc/serverpins.rsi
     layers:
     - state: miros
   - type: Clothing
-    sprite: Harmony/Clothing/Neck/Misc/serverpins.rsi
+    sprite: _Harmony/Clothing/Neck/Misc/serverpins.rsi
     clothingVisuals:
       neck:
       - state: miros-equipped
-      
+
 - type: entity
   parent: ClothingNeckPinBase
   id: ClothingNeckLizardPin
@@ -32,15 +32,15 @@
   description: Given to the crew of Lizard
   components:
   - type: Sprite
-    sprite: Harmony/Clothing/Neck/Misc/serverpins.rsi
+    sprite: _Harmony/Clothing/Neck/Misc/serverpins.rsi
     layers:
     - state: lizard
   - type: Clothing
-    sprite: Harmony/Clothing/Neck/Misc/serverpins.rsi
+    sprite: _Harmony/Clothing/Neck/Misc/serverpins.rsi
     clothingVisuals:
       neck:
       - state: lizard-equipped
-      
+
 - type: entity
   parent: ClothingNeckPinBase
   id: ClothingNeckLeviathanPin
@@ -48,15 +48,15 @@
   description: Given to the crew of Leviathan
   components:
   - type: Sprite
-    sprite: Harmony/Clothing/Neck/Misc/serverpins.rsi
+    sprite: _Harmony/Clothing/Neck/Misc/serverpins.rsi
     layers:
     - state: leviathan
   - type: Clothing
-    sprite: Harmony/Clothing/Neck/Misc/serverpins.rsi
+    sprite: _Harmony/Clothing/Neck/Misc/serverpins.rsi
     clothingVisuals:
       neck:
       - state: leviathan-equipped
- 
+
 - type: entity
   parent: ClothingNeckPinBase
   id: ClothingNeckSalamanderPin
@@ -64,15 +64,15 @@
   description: Given to the crew of Salamander
   components:
   - type: Sprite
-    sprite: Harmony/Clothing/Neck/Misc/serverpins.rsi
+    sprite: _Harmony/Clothing/Neck/Misc/serverpins.rsi
     layers:
     - state: salamander
   - type: Clothing
-    sprite: Harmony/Clothing/Neck/Misc/serverpins.rsi
+    sprite: _Harmony/Clothing/Neck/Misc/serverpins.rsi
     clothingVisuals:
       neck:
       - state: salamander-equipped
-      
+
 - type: entity
   parent: ClothingNeckPinBase
   id: ClothingNeckAxolotlPin
@@ -80,11 +80,11 @@
   description: Given to the crew of Axolotl
   components:
   - type: Sprite
-    sprite: Harmony/Clothing/Neck/Misc/serverpins.rsi
+    sprite: _Harmony/Clothing/Neck/Misc/serverpins.rsi
     layers:
     - state: axolotl
   - type: Clothing
-    sprite: Harmony/Clothing/Neck/Misc/serverpins.rsi
+    sprite: _Harmony/Clothing/Neck/Misc/serverpins.rsi
     clothingVisuals:
       neck:
       - state: axolotl-equipped
@@ -96,11 +96,11 @@
   description: Given to the crew of Frontier
   components:
   - type: Sprite
-    sprite: Harmony/Clothing/Neck/Misc/serverpins.rsi
+    sprite: _Harmony/Clothing/Neck/Misc/serverpins.rsi
     layers:
     - state: frontier
   - type: Clothing
-    sprite: Harmony/Clothing/Neck/Misc/serverpins.rsi
+    sprite: _Harmony/Clothing/Neck/Misc/serverpins.rsi
     clothingVisuals:
       neck:
       - state: frontier-equipped
@@ -112,11 +112,11 @@
   description: Given to the crew of Delta-V
   components:
   - type: Sprite
-    sprite: Harmony/Clothing/Neck/Misc/serverpins.rsi
+    sprite: _Harmony/Clothing/Neck/Misc/serverpins.rsi
     layers:
     - state: delta-v
   - type: Clothing
-    sprite: Harmony/Clothing/Neck/Misc/serverpins.rsi
+    sprite: _Harmony/Clothing/Neck/Misc/serverpins.rsi
     clothingVisuals:
       neck:
       - state: delta-v-equipped
@@ -128,11 +128,11 @@
   description: Given to the crew of Cosmatic Drift
   components:
   - type: Sprite
-    sprite: Harmony/Clothing/Neck/Misc/serverpins.rsi
+    sprite: _Harmony/Clothing/Neck/Misc/serverpins.rsi
     layers:
     - state: cosmatic-drift
   - type: Clothing
-    sprite: Harmony/Clothing/Neck/Misc/serverpins.rsi
+    sprite: _Harmony/Clothing/Neck/Misc/serverpins.rsi
     clothingVisuals:
       neck:
       - state: cosmatic-drift-equipped
