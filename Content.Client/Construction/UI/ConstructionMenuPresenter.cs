@@ -38,6 +38,7 @@ namespace Content.Client.Construction.UI
         private ConstructionSystem? _constructionSystem;
         private ConstructionPrototype? _selected;
         private List<ConstructionPrototype> _favoritedRecipes = [];
+        private Dictionary<ConstructionPrototype, TextureButton> _recipeButtons = new();
         private string _selectedCategory = string.Empty;
         private string _favoriteCatName = "construction-category-favorites";
         private string _forAllCategoryName = "construction-category-all";
@@ -151,6 +152,20 @@ namespace Content.Client.Construction.UI
             PopulateInfo(_selected);
         }
 
+        private void OnGridViewRecipeSelected(object? sender, ConstructionPrototype? recipe)
+        {
+            if (recipe is null)
+            {
+                _selected = null;
+                _constructionView.ClearRecipeInfo();
+                return;
+            }
+
+            _selected = recipe;
+            if (_placementManager.IsActive && !_placementManager.Eraser) UpdateGhostPlacement();
+            PopulateInfo(_selected);
+        }
+
         private void OnViewPopulateRecipes(object? sender, (string search, string catagory) args)
         {
             var (search, category) = args;
@@ -232,11 +247,14 @@ namespace Content.Client.Construction.UI
 
                     itemButton.OnPressed += _ =>
                     {
-                        _selected = recipe;
-                        PopulateInfo(recipe);
+                        if (_selected is not null)
+                            _recipeButtons[_selected].Modulate = Color.White;
+                        OnGridViewRecipeSelected(this, recipe);
+                        itemButton.Modulate = Color.Green;
                     };
 
                     recipesGrid.AddChild(itemButton);
+                    _recipeButtons[recipe] = itemButton;
                 }
             }
             else
