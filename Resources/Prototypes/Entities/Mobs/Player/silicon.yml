@@ -537,20 +537,6 @@
   - type: RandomMetadata
     nameSegments: [names_borg]
 
-- type: entity
-  id: PlayerBorgDerelictBattery
-  parent: BorgChassisDerelict
-  suffix: Battery
-  components:
-  - type: ContainerFill
-    containers:
-      borg_brain:
-        - MMIFilled
-  - type: ItemSlots
-    slots:
-      cell_slot:
-        name: power-cell-slot-component-slot-name-default
-        startingItem: PowerCellHigh
 
 - type: entity
   id: PlayerBorgDerelictGhostRole
