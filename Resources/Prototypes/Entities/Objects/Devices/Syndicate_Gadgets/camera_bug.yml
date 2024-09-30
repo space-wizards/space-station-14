@@ -1,7 +1,7 @@
 - type: entity
   id: CameraBug
   parent: [ BaseItem, BaseSyndicateContraband ]
-  name: Camera bug
+  name: camera bug
   description: An illegal syndicate device that allows you to hack into the station's camera network.
   components:
   - type: Sprite
