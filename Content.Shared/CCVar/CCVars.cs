@@ -436,6 +436,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<float> GameEntityMenuLookup =
             CVarDef.Create("game.entity_menu_lookup", 0.25f, CVar.CLIENTONLY | CVar.ARCHIVE);
 
+        /// <summary>
+        /// Size of the lookup area for adding entities to the context menu
+        /// </summary>
+        public static readonly CVarDef<bool> HostnameInTitlebar =
+            CVarDef.Create("game.hostname_in_titlebar", true, CVar.SERVER | CVar.REPLICATED);
+
         /*
          * Discord
          */
