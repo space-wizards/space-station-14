@@ -716,9 +716,15 @@
       - !type:HealthChange
           damage:
             types:
-              Poison: 1.3
-              Asphyxiation: 0.5
+              Poison: 0.50
+              Asphyxiation: 0.50
+      - !type:MovespeedModifier
+        walkSpeedModifier: 0.85
+        sprintSpeedModifier: 0.85
       - !type:Jitter
+        conditions:
+        - !type:ReagentThreshold
+          min: 10
       - !type:Emote
         emote: Cough
         probability: 0.3
