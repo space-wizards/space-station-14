@@ -30,6 +30,7 @@ public sealed class PlanetLightOverlay : Overlay
         var protomanager = IoCManager.Resolve<IPrototypeManager>();
         var worldHandle = args.WorldHandle;
         var bounds = args.WorldBounds;
+        var mapId = args.MapId;
 
         var lookup = entManager.System<EntityLookupSystem>();
         var xformSystem = entManager.System<SharedTransformSystem>();
@@ -43,37 +44,34 @@ public sealed class PlanetLightOverlay : Overlay
             {
                 var invMatrix = fovTexture.GetWorldToLocalMatrix(eye, viewport.RenderScale / 2f);
                 worldHandle.SetTransform(invMatrix);
-                _clyde.ApplyFovToBuffer(viewport, fovTexture, eye, Color.Black);
+                _clyde.ApplyFovToBuffer(viewport, eye, Color.Black);
+                //_clyde.DrawOccluders();
             }, Color.White);
 
         args.WorldHandle.RenderInRenderTarget(texture,
             () =>
             {
-                var shader = protomanager.Index<ShaderPrototype>("StencilMask").Instance();
-                worldHandle.UseShader(shader);
+                var maskShader = protomanager.Index<ShaderPrototype>("StencilMask").Instance();
+                var drawShader = protomanager.Index<ShaderPrototype>("StencilDraw").Instance();
+
                 var invMatrix = texture.GetWorldToLocalMatrix(eye, viewport.RenderScale / 2f);
+                worldHandle.UseShader(maskShader);
                 worldHandle.SetTransform(invMatrix);
                 worldHandle.DrawTextureRect(fovTexture.Texture, bounds);
-            }, null);
+                worldHandle.UseShader(drawShader);
 
-        var invMatrix = texture.GetWorldToLocalMatrix(args.Viewport.Eye, args.Viewport.RenderScale / 2f);
+                var query = entManager.AllEntityQueryEnumerator<PlanetLightComponent, MapGridComponent, TransformComponent>();
+                // TODO: Render to a separate texture, blur, then apply to the main texture.
 
-        var query = entManager.AllEntityQueryEnumerator<PlanetLightComponent, MapGridComponent, TransformComponent>();
-        // TODO: Render to a separate texture, blur, then apply to the main texture.
-
-        while (query.MoveNext(out var uid, out var comp, out var grid, out var xform))
-        {
-            if (args.MapId != xform.MapID)
-                continue;
-
-            var gridMatrix = xformSystem.GetWorldMatrix(uid);
-
-            var matty = Matrix3x2.Multiply(gridMatrix, invMatrix);
-
-            args.WorldHandle.RenderInRenderTarget(texture,
-                () =>
+                while (query.MoveNext(out var uid, out var comp, out var grid, out var xform))
                 {
-                    worldHandle.UseShader(protomanager.Index<ShaderPrototype>("StencilDraw").Instance());
+                    if (mapId != xform.MapID)
+                        continue;
+
+                    var gridMatrix = xformSystem.GetWorldMatrix(uid);
+
+                    var matty = Matrix3x2.Multiply(gridMatrix, invMatrix);
+
                     worldHandle.SetTransform(matty);
                     SharedMapSystem.TilesEnumerator tileEnumerator;
                     {
@@ -88,8 +86,9 @@ public sealed class PlanetLightOverlay : Overlay
                             worldHandle.DrawRect(local, Color.Blue);
                         }
                     }
-                }, null);
-        }
+                }
+            }, null);
+
 
         // Copy texture to lighting buffer
         worldHandle.RenderInRenderTarget(viewport.LightRenderTarget,
