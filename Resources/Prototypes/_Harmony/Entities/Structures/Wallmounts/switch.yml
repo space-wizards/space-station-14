@@ -2,7 +2,7 @@
 - type: entity
   id: ButtonFrameGreyBuildable
   parent: ButtonFrame
-  suffix: grey
+  suffix: grey, DO NOT MAP
   components:
     - type: Sprite
       drawdepth: SmallObjects
@@ -15,7 +15,7 @@
 - type: entity
   id: ButtonFrameCautionBuildable
   parent: ButtonFrame
-  suffix: caution
+  suffix: caution, DO NOT MAP
   components:
     - type: Sprite
       drawdepth: SmallObjects
@@ -28,7 +28,7 @@
 - type: entity
   id: ButtonFrameCautionSecurityBuildable
   parent: ButtonFrame
-  suffix: caution_security
+  suffix: caution_security, DO NOT MAP
   components:
     - type: Sprite
       drawdepth: SmallObjects
@@ -41,7 +41,7 @@
 - type: entity
   id: ButtonFrameExitBuildable
   parent: ButtonFrame
-  suffix: exit
+  suffix: exit, DO NOT MAP
   components:
     - type: Sprite
       drawdepth: SmallObjects
@@ -54,7 +54,7 @@
 - type: entity
   id: ButtonFrameJanitorBuildable
   parent: ButtonFrame
-  suffix: janitor
+  suffix: janitor, DO NOT MAP
   components:
     - type: Sprite
       drawdepth: SmallObjects
@@ -88,6 +88,7 @@
   name: constructed lockable button
   description: It's a lockable button for activating something.
   parent: LockableButton
+  suffix: DO NOT MAP
   components:
     - type: Construction
       graph: LockableButtonGraph
