@@ -23,28 +23,40 @@ public sealed class PlanetLightOverlay : Overlay
         if (args.Viewport.Eye == null)
             return;
 
+        var viewport = args.Viewport;
+        var eye = args.Viewport.Eye;
+        var entManager = IoCManager.Resolve<IEntityManager>();
+        var mapSystem = entManager.System<SharedMapSystem>();
         var protomanager = IoCManager.Resolve<IPrototypeManager>();
-        var texture = _clyde.CreateLightRenderTarget(args.Viewport.LightRenderTarget.Size, name: "planet-lighting");
-        var invMatrix = texture.GetWorldToLocalMatrix(args.Viewport.Eye, args.Viewport.RenderScale / 2f);
         var worldHandle = args.WorldHandle;
         var bounds = args.WorldBounds;
 
-        /*
+        var lookup = entManager.System<EntityLookupSystem>();
+        var xformSystem = entManager.System<SharedTransformSystem>();
+
+        var fovTexture = _clyde.CreateRenderTarget(viewport.RenderTarget.Size,
+            new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb), name: "planet-fov");
+        var texture = _clyde.CreateLightRenderTarget(viewport.LightRenderTarget.Size, name: "planet-lighting");
+
+        args.WorldHandle.RenderInRenderTarget(fovTexture,
+            () =>
+            {
+                var invMatrix = fovTexture.GetWorldToLocalMatrix(eye, viewport.RenderScale / 2f);
+                worldHandle.SetTransform(invMatrix);
+                _clyde.ApplyFovToBuffer(viewport, fovTexture, eye, Color.Black);
+            }, Color.White);
+
         args.WorldHandle.RenderInRenderTarget(texture,
             () =>
             {
-                worldHandle.UseShader(protomanager.Index<ShaderPrototype>("StencilMask").Instance());
+                var shader = protomanager.Index<ShaderPrototype>("StencilMask").Instance();
+                worldHandle.UseShader(shader);
+                var invMatrix = texture.GetWorldToLocalMatrix(eye, viewport.RenderScale / 2f);
                 worldHandle.SetTransform(invMatrix);
-                worldHandle.DrawTextureRect(texture1.Texture, bounds, Color.Orange);
+                worldHandle.DrawTextureRect(fovTexture.Texture, bounds);
             }, null);
-            */
 
-        var entManager = IoCManager.Resolve<IEntityManager>();
-        var mapSystem = entManager.System<SharedMapSystem>();
-        var viewport = args.Viewport;
-
-        var lookup = entManager.System<EntityLookupSystem>();
-        var xformSystem = entManager.System<SharedTransformSystem>();
+        var invMatrix = texture.GetWorldToLocalMatrix(args.Viewport.Eye, args.Viewport.RenderScale / 2f);
 
         var query = entManager.AllEntityQueryEnumerator<PlanetLightComponent, MapGridComponent, TransformComponent>();
         // TODO: Render to a separate texture, blur, then apply to the main texture.
@@ -61,11 +73,10 @@ public sealed class PlanetLightOverlay : Overlay
             args.WorldHandle.RenderInRenderTarget(texture,
                 () =>
                 {
-                    worldHandle.UseShader(protomanager.Index<ShaderPrototype>("StencilMask").Instance());
+                    worldHandle.UseShader(protomanager.Index<ShaderPrototype>("StencilDraw").Instance());
                     worldHandle.SetTransform(matty);
                     SharedMapSystem.TilesEnumerator tileEnumerator;
                     {
-                        worldHandle.UseShader(null);
                         tileEnumerator = mapSystem.GetTilesEnumerator(uid, grid, bounds);
 
                         while (tileEnumerator.MoveNext(out var tileRef))
@@ -77,16 +88,14 @@ public sealed class PlanetLightOverlay : Overlay
                             worldHandle.DrawRect(local, Color.Blue);
                         }
                     }
-                }, Color.Black);
+                }, null);
         }
 
         // Copy texture to lighting buffer
-        var lightTarget = args.Viewport.LightRenderTarget;
-        var lightInvMatrix = lightTarget.GetWorldToLocalMatrix(args.Viewport.Eye, args.Viewport.RenderScale / 2f);
-
-        args.WorldHandle.RenderInRenderTarget(args.Viewport.LightRenderTarget,
+        worldHandle.RenderInRenderTarget(viewport.LightRenderTarget,
             () =>
             {
+                var lightInvMatrix = viewport.LightRenderTarget.GetWorldToLocalMatrix(eye, viewport.RenderScale / 2f);
                 worldHandle.SetTransform(lightInvMatrix);
                 worldHandle.DrawTextureRect(texture.Texture, bounds);
             }, null);
