@@ -6,7 +6,7 @@
   description: "A poster depicting a distinguished Harmony Station captain - Salazar Snek."
   components:
     - type: Sprite
-      sprite: Harmony/Structures/Wallmounts/posters.rsi
+      sprite: _Harmony/Structures/Wallmounts/posters.rsi
       state: harmony_poster1_legit
 
 - type: entity
@@ -16,7 +16,7 @@
   description: "Motivational poster for Harmony Station crew."
   components:
     - type: Sprite
-      sprite: Harmony/Structures/Wallmounts/posters.rsi
+      sprite: _Harmony/Structures/Wallmounts/posters.rsi
       state: harmony_poster2_legit
 
 - type: entity
@@ -26,7 +26,7 @@
   description: "A painting depicting a historic figure within the Church of Weh."
   components:
     - type: Sprite
-      sprite: Harmony/Structures/Wallmounts/posters.rsi
+      sprite: _Harmony/Structures/Wallmounts/posters.rsi
       state: harmony_poster3_legit
 
 - type: entity
@@ -36,7 +36,7 @@
   description: "A poster depicting the values of Harmony Station cargo department."
   components:
     - type: Sprite
-      sprite: Harmony/Structures/Wallmounts/posters.rsi
+      sprite: _Harmony/Structures/Wallmounts/posters.rsi
       state: harmony_poster4_legit
 
 - type: entity
@@ -46,7 +46,7 @@
   description: "If you work hard enough, YOU could earn your very own Nanotrasen Plunger Plus! Just be sure to survive long enough to redeem it!.."
   components:
     - type: Sprite
-      sprite: Harmony/Structures/Wallmounts/posters.rsi
+      sprite: _Harmony/Structures/Wallmounts/posters.rsi
       state: harmony_poster5_legit
 
 - type: entity
@@ -56,7 +56,7 @@
   description: "A makeshift poster consisting of a crayon drawing upon a paper stuck to the wall with some horrible mix of glue and banana paste. Upon it is inscribed: 'Clowne was herE !!'."
   components:
     - type: Sprite
-      sprite: Harmony/Structures/Wallmounts/posters.rsi
+      sprite: _Harmony/Structures/Wallmounts/posters.rsi
       state: harmony_poster6_legit
 
 - type: entity
@@ -66,7 +66,7 @@
   description: "In loving memory of Salvagers that were lost in space and never recovered."
   components:
     - type: Sprite
-      sprite: Harmony/Structures/Wallmounts/posters.rsi
+      sprite: _Harmony/Structures/Wallmounts/posters.rsi
       state: harmony_poster7_legit
 
 - type: entity
@@ -76,7 +76,7 @@
   description: "A poster reminding you to clean up after yourself, nobody likes littering! Or, that's probably what it means. It's been here for so long, the original meaning may have faded…"
   components:
     - type: Sprite
-      sprite: Harmony/Structures/Wallmounts/posters.rsi
+      sprite: _Harmony/Structures/Wallmounts/posters.rsi
       state: harmony_poster8_legit
 
 - type: entity
@@ -86,7 +86,7 @@
   description: "Was it wanted poster? A human bounty? It's not very clear. You can tell, however, that whoever the target was probably isn't loose anymore..."
   components:
     - type: Sprite
-      sprite: Harmony/Structures/Wallmounts/posters.rsi
+      sprite: _Harmony/Structures/Wallmounts/posters.rsi
       state: harmony_poster9_legit
 
 - type: entity
@@ -96,7 +96,7 @@
   description: "The fire within you burns bright. Maintain it and thrive. Neglect it and wither."
   components:
     - type: Sprite
-      sprite: Harmony/Structures/Wallmounts/posters.rsi
+      sprite: _Harmony/Structures/Wallmounts/posters.rsi
       state: harmony_poster10_legit
 
 - type: entity
@@ -106,7 +106,7 @@
   description: "Nanotrasen's really getting creative with these motivational posters. Using the cause of death of thousands of people as a source of motivation? Brilliant. Now, if only it were actually effective..."
   components:
     - type: Sprite
-      sprite: Harmony/Structures/Wallmounts/posters.rsi
+      sprite: _Harmony/Structures/Wallmounts/posters.rsi
       state: harmony_poster11_legit
 
 - type: entity
@@ -116,7 +116,7 @@
   description: "A good reminder that the Station AI is keeping everyone safe by eliminating all semblance of privacy! Aren't you glad it's probably staring at you right now?"
   components:
     - type: Sprite
-      sprite: Harmony/Structures/Wallmounts/posters.rsi
+      sprite: _Harmony/Structures/Wallmounts/posters.rsi
       state: harmony_poster12_legit
 
 - type: entity
@@ -126,7 +126,7 @@
   description: "A poster advertising the historical drama film about what is referred to these days as 'The Incident of 2125'. The poster's name reminds you of something."
   components:
     - type: Sprite
-      sprite: Harmony/Structures/Wallmounts/posters.rsi
+      sprite: _Harmony/Structures/Wallmounts/posters.rsi
       state: harmony_poster13_legit
 
 - type: entity
@@ -136,7 +136,7 @@
   description: "A poster reminding you of the 'optimal' time for Nanotrasen-approved smoke breaks. They considered it long enough due to a security officer that apparently consumed about 500 cigarettes in 5 minutes. It has been shoddily edited to account for its recent increase by 10 minutes, as requested near-unanimously by the station captains who were polled. The color of the background is mildly irritating, but you're not too sure why."
   components:
     - type: Sprite
-      sprite: Harmony/Structures/Wallmounts/posters.rsi
+      sprite: _Harmony/Structures/Wallmounts/posters.rsi
       state: harmony_poster14_legit
 
 - type: entity
@@ -146,5 +146,5 @@
   description: "The objective best way to store food is to hide it in the walls where nobody can ever find it! So convenient! So useful! So discrete! So cool! Agreed-upon by vampires everywhere."
   components:
     - type: Sprite
-      sprite: Harmony/Structures/Wallmounts/posters.rsi
+      sprite: _Harmony/Structures/Wallmounts/posters.rsi
       state: harmony_poster15_legit

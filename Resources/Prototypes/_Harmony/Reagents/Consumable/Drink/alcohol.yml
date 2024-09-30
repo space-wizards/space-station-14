@@ -11,7 +11,7 @@
   flavor: alcohol
   color: "#8484d4"
   metamorphicSprite:
-    sprite: Harmony/Objects/Consumable/Drinks/aviationcocktail.rsi
+    sprite: _Harmony/Objects/Consumable/Drinks/aviationcocktail.rsi
     state: icon_empty
   metamorphicMaxFillLevels: 5
   metamorphicFillBaseName: fill-
@@ -34,7 +34,7 @@
   flavor: coffeeliquor
   color: "#252010"
   metamorphicSprite:
-    sprite: Harmony/Objects/Consumable/Drinks/espressomartiniglass.rsi
+    sprite: _Harmony/Objects/Consumable/Drinks/espressomartiniglass.rsi
     state: icon_empty
   metamorphicMaxFillLevels: 4
   metamorphicFillBaseName: fill-

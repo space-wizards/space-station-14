@@ -1,6 +1,6 @@
 - type: uiTheme
   id: SS14Purplicious
-  path: /Textures/Harmony/Interface/HarmonyPurple/
+  path: /Textures/_Harmony/Interface/HarmonyPurple/
   colors:
     whiteText: "#FFF5EE"
     slotSelectedGold: "#e6b812"
