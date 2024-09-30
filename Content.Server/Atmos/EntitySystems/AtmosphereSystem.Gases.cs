@@ -284,21 +284,15 @@ namespace Content.Server.Atmos.EntitySystems
         /// <summary>
         ///     Compares two TileAtmospheres to see if they are within acceptable ranges for group processing to be enabled.
         /// </summary>
-        public GasCompareResult CompareExchange(TileAtmosphere sample, TileAtmosphere otherSample, bool useArchived = false)
+        public GasCompareResult CompareExchange(TileAtmosphere sample, TileAtmosphere otherSample, bool useArchived)
         {
-            float[] samples, otherSamples;
-            if (useArchived)
+            if (!useArchived && sample.Air != null && otherSample.Air != null)
             {
-                samples = sample.MolesArchived;
-                otherSamples = otherSample.MolesArchived;
+                return CompareExchange(sample.Air, otherSample.Air);
             }
-            else if (sample.Air != null && otherSample.Air != null)
-            {
-                samples = sample.Air.Moles;
-                otherSamples = sample.Air.Moles;
-            }
-            else
-                return GasCompareResult.NoExchange;
+
+            float[] samples = sample.MolesArchived;
+            float[] otherSamples = otherSample.MolesArchived;
 
             var moles = 0f;
             float sampleMoles, otherSampleMoles;
@@ -312,6 +306,32 @@ namespace Content.Server.Atmos.EntitySystems
                 if (delta > Atmospherics.MinimumMolesDeltaToMove && (delta > sampleMoles * Atmospherics.MinimumAirRatioToMove))
                     return (GasCompareResult)i; // We can move gases!
                 moles += sampleMoles;
+            }
+
+            if (moles > Atmospherics.MinimumMolesDeltaToMove)
+            {
+                var tempDelta = MathF.Abs(sample.Temperature - otherSample.Temperature);
+                if (tempDelta > Atmospherics.MinimumTemperatureDeltaToSuspend)
+                    return GasCompareResult.TemperatureExchange; // There can be temperature exchange.
+            }
+
+            // No exchange at all!
+            return GasCompareResult.NoExchange;
+        }
+
+        /// <summary>
+        ///     Compares two GasMixtures to see if they are within acceptable ranges for group processing to be enabled.
+        /// </summary>
+        public GasCompareResult CompareExchange(GasMixture sample, GasMixture otherSample)
+        {
+            var moles = 0f;
+            for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
+            {
+                var gasMoles = sample.Moles[i];
+                var delta = MathF.Abs(gasMoles - otherSample.Moles[i]);
+                if (delta > Atmospherics.MinimumMolesDeltaToMove && (delta > gasMoles * Atmospherics.MinimumAirRatioToMove))
+                    return (GasCompareResult)i; // We can move gases!
+                moles += gasMoles;
             }
 
             if (moles > Atmospherics.MinimumMolesDeltaToMove)
