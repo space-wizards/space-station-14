@@ -328,3 +328,40 @@
         amount: 2
       - id: SyndieTrickyBomb
         amount: 2
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateBundle
+  id: ClothingBackpackDuffelSyndicatePropagandaKitFilled
+  name: propaganda bundle
+  description: Contains posters, clothing, flags and figures with syndicate thematics
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: FoldedPosterContrabandFreeSyndicateEncryptionKey
+        - id: FoldedPosterContrabandCybersun600
+        - id: FoldedPosterContrabandSyndicatePistol
+        - id: FoldedPosterContrabandEnergySwords
+        - id: FoldedPosterContrabandEnlistGorlex
+        - id: FoldedPosterContrabandSyndicateRecruitment
+        - id: FoldedPosterContrabandInterdyne
+        - id: FoldedPosterContrabandC20r
+        - id: FoldedPosterContrabandMoth
+        - id: ToyFigurineNukieCommander
+        - id: ToyFigurineFootsoldier
+        - id: SyndieHandyFlag
+          amount: !type:ConstantNumberSelector
+            value: 2
+        - id: ClothingUniformJumpsuitRecruitSyndie
+          amount: !type:ConstantNumberSelector
+            value: 2
+        - id: ClothingMaskNeckGaiter
+          amount: !type:ConstantNumberSelector
+            value: 2
+        - id: ClothingHeadHatSyndie
+          amount: !type:ConstantNumberSelector
+            value: 2
+        - id: FlippoLighter
+          amount: !type:ConstantNumberSelector
+            value: 2

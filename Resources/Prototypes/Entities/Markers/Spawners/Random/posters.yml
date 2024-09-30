@@ -96,6 +96,82 @@
 
 - type: entity
   parent: MarkerBase
+  id: RandomFoldedPosterContraband
+  name: random contraband folded poster spawner
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Wallmounts/posters.rsi
+        state: rolled_contraband
+  - type: RandomSpawner
+    offset: 0
+    prototypes:
+    - FoldedPosterContrabandAmbrosiaVulgaris
+    - FoldedPosterContrabandAtmosiaDeclarationIndependence
+    - FoldedPosterContrabandBeachStarYamamoto
+    - FoldedPosterContrabandBorgFancy
+    - FoldedPosterContrabandBorgFancyv2
+    - FoldedPosterContrabandBountyHunters
+    - FoldedPosterContrabandBustyBackdoorExoBabes6
+    - FoldedPosterContrabandC20r
+    - FoldedPosterContrabandCC64KAd
+    - FoldedPosterContrabandClown
+    - FoldedPosterContrabandCommunistState
+    - FoldedPosterContrabandCybersun600
+    - FoldedPosterContrabandDDayPromo
+    - FoldedPosterContrabandDonk
+    - FoldedPosterContrabandDonutCorp
+    - FoldedPosterContrabandEAT
+    - FoldedPosterContrabandEnergySwords
+    - FoldedPosterContrabandEnlistGorlex
+    - FoldedPosterContrabandFreeDrone
+    - FoldedPosterContrabandFreeSyndicateEncryptionKey
+    - FoldedPosterContrabandFreeTonto
+    - FoldedPosterContrabandFunPolice
+    - FoldedPosterContrabandGreyTide
+    - FoldedPosterContrabandHackingGuide
+    - FoldedPosterContrabandHaveaPuff
+    - FoldedPosterContrabandHighEffectEngineering
+    - FoldedPosterContrabandInterdyne
+    - FoldedPosterContrabandKosmicheskayaStantsiya
+    - FoldedPosterContrabandKudzu
+    - FoldedPosterContrabandLamarr
+    - FoldedPosterContrabandLustyExomorph
+    - FoldedPosterContrabandMaskedMen
+    - FoldedPosterContrabandMissingGloves
+    - FoldedPosterContrabandMissingSpacepen
+    - FoldedPosterContrabandMoth
+    - FoldedPosterContrabandNuclearDeviceInformational
+    - FoldedPosterContrabandPower
+    - FoldedPosterContrabandPunchShit
+    - FoldedPosterContrabandPwrGame
+    - FoldedPosterContrabandRebelsUnite
+    - FoldedPosterContrabandRedRum
+    - FoldedPosterContrabandRevolt
+    - FoldedPosterContrabandRevolver
+    - FoldedPosterContrabandRIPBadger
+    - FoldedPosterContrabandRise
+    - FoldedPosterContrabandRobustSoftdrinks
+    - FoldedPosterContrabandShamblersJuice
+    - FoldedPosterContrabandSmoke
+    - FoldedPosterContrabandSpaceCola
+    - FoldedPosterContrabandSpaceCube
+    - FoldedPosterContrabandSpaceUp
+    - FoldedPosterContrabandSunkist
+    - FoldedPosterContrabandSyndicatePistol
+    - FoldedPosterContrabandSyndicateRecruitment
+    - FoldedPosterContrabandTheBigGasTruth
+    - FoldedPosterContrabandTheGriffin
+    - FoldedPosterContrabandTools
+    - FoldedPosterContrabandUnreadableAnnouncement
+    - FoldedPosterContrabandVoteWeh
+    - FoldedPosterContrabandWaffleCorp
+    - FoldedPosterContrabandWehWatches
+    chance: 1
+
+- type: entity
+  parent: MarkerBase
   id: RandomPosterLegit
   name: random legit poster spawner
   components:
@@ -150,4 +226,62 @@
       - PosterLegitPeriodicTable
       - PosterLegitRenault
       - PosterLegitNTTGC
+    chance: 1
+
+- type: entity
+  parent: MarkerBase
+  id: RandomFoldedPosterLegit
+  name: random legit folded poster spawner
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - sprite: Structures/Wallmounts/posters.rsi
+        state: rolled_legit
+  - type: RandomSpawner
+    offset: 0
+    prototypes:
+      - FoldedPosterLegit12Gauge
+      - FoldedPosterLegit50thAnniversaryVintageReprint
+      - FoldedPosterLegitBlessThisSpess
+      - FoldedPosterLegitBuild
+      - FoldedPosterLegitCarbonDioxide
+      - FoldedPosterLegitCleanliness
+      - FoldedPosterLegitCohibaRobustoAd
+      - FoldedPosterLegitDickGumshue
+      - FoldedPosterLegitDoNotQuestion
+      - FoldedPosterLegitEnlist
+      - FoldedPosterLegitFoamForceAd
+      - FoldedPosterLegitFruitBowl
+      - FoldedPosterLegitGetYourLEGS
+      - FoldedPosterLegitHelpOthers
+      - FoldedPosterLegitHereForYourSafety
+      - FoldedPosterLegitHighClassMartini
+      - FoldedPosterLegitIan
+      - FoldedPosterLegitIonRifle
+      - FoldedPosterLegitJustAWeekAway
+      - FoldedPosterLegitLoveIan
+      - FoldedPosterLegitNanomichiAd
+      - FoldedPosterLegitNanotrasenLogo
+      - FoldedPosterLegitNoERP
+      - FoldedPosterLegitNTTGC
+      - FoldedPosterLegitObey
+      - FoldedPosterLegitPDAAd
+      - FoldedPosterLegitPeriodicTable
+      - FoldedPosterLegitRenault
+      - FoldedPosterLegitReportCrimes
+      - FoldedPosterLegitSafetyEyeProtection
+      - FoldedPosterLegitSafetyInternals
+      - FoldedPosterLegitSafetyReport
+      - FoldedPosterLegitScience
+      - FoldedPosterLegitSecWatch
+      - FoldedPosterLegitSoftCapPopArt
+      - FoldedPosterLegitSpaceCops
+      - FoldedPosterLegitStateLaws
+      - FoldedPosterLegitTheOwl
+      - FoldedPosterLegitThereIsNoGasGiant
+      - FoldedPosterLegitUeNo
+      - FoldedPosterLegitVacation
+      - FoldedPosterLegitWalk
+      - FoldedPosterLegitWorkForAFuture
     chance: 1

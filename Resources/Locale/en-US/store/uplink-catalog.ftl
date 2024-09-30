@@ -443,5 +443,8 @@ uplink-barber-scissors-desc = A good tool to give your fellow agent a nice hairc
 uplink-backpack-syndicate-name = Syndicate backpack
 uplink-backpack-syndicate-desc = A lightweight explosion-proof backpack for holding various traitor goods
 
+uplink-propaganda-bundle-name = Propaganda bundle
+uplink-propaganda-bundle-desc = Contains posters, clothing, flags and figures with syndicate thematics
+
 uplink-combat-bakery-name = Combat Bakery Kit
 uplink-combat-bakery-desc = A kit of clandestine baked weapons. Contains a baguette sword, a pair of throwing croissants, and a syndicate microwave board for making more. Once the job is done, eat the evidence.
