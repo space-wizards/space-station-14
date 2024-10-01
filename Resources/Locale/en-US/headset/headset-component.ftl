@@ -19,3 +19,4 @@ chat-radio-freelance = Freelance
 # not headset but whatever
 chat-radio-handheld = Handheld
 chat-radio-binary = Binary
+chat-radio-ai-private = AI Private

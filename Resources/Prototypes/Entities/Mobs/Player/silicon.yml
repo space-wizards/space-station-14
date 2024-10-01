@@ -8,6 +8,7 @@
   - type: IntrinsicRadioTransmitter
     channels:
     - Binary
+    - AiPrivate
     - Common
     - Command
     - Engineering
@@ -19,6 +20,7 @@
   - type: ActiveRadio
     channels:
     - Binary
+    - AiPrivate
     - Common
     - Command
     - Engineering
