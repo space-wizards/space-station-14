@@ -1,40 +1,4 @@
 ﻿Entries:
-- author: Lank
-  changes:
-  - message: Darts can now pop balloons. Keep them away from any monkeys.
-    type: Add
-  id: 6961
-  time: '2024-07-22T05:38:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30088
-- author: Plykiya
-  changes:
-  - message: You can now eat or drink and swap hands without it being interrupted.
-    type: Tweak
-  id: 6962
-  time: '2024-07-22T09:17:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30060
-- author: IProduceWidgets
-  changes:
-  - message: Zookeepers can now possess Nonlethal shotguns according to spacelaw.
-    type: Tweak
-  id: 6963
-  time: '2024-07-22T09:33:03.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30237
-- author: Plykiya
-  changes:
-  - message: Bag sounds can now only be heard from half the distance and is quieter
-      in general.
-    type: Tweak
-  id: 6964
-  time: '2024-07-22T09:54:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30225
-- author: osjarw
-  changes:
-  - message: Syringes are now 0.5 seconds faster.
-    type: Tweak
-  id: 6965
-  time: '2024-07-22T10:20:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29825
 - author: Errant
   changes:
   - message: Replay observers now always spawn on the station.
@@ -3936,3 +3900,41 @@
   id: 7460
   time: '2024-09-30T17:38:22.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32487
+- author: pofitlo-Git
+  changes:
+  - message: Added a camera bug in the syndicate uplink that cost 4 TC and allow you
+      watch all cameras on station.
+    type: Add
+  id: 7461
+  time: '2024-09-30T22:24:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30250
+- author: kosticia
+  changes:
+  - message: The maximum number of ID cards required to complete a thief's objective
+      has been changed from 15 to 10.
+    type: Tweak
+  id: 7462
+  time: '2024-09-30T22:40:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32411
+- author: Golinth
+  changes:
+  - message: Firebots can now be constructed by scientists - the bots wander the station
+      looking for fires to put out with their built-in extinguisher.
+    type: Add
+  id: 7463
+  time: '2024-10-01T03:13:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32482
+- author: ScarKy0
+  changes:
+  - message: Binary encryption key now uses an AI icon
+    type: Tweak
+  id: 7464
+  time: '2024-10-01T04:03:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32327
+- author: BramvanZijp
+  changes:
+  - message: Fixed borgs being able to be briefly disabled by others.
+    type: Fix
+  id: 7465
+  time: '2024-10-01T15:13:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32485
