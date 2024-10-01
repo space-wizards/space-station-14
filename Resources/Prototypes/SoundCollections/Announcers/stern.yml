@@ -104,6 +104,14 @@
     - /Audio/Announcers/Stern/events/ventcritters/2.ogg
     - /Audio/Announcers/Stern/events/ventcritters/3.ogg
 
+# ventclog
+- type: soundCollection
+  id: SternVentcloggedAnnouncements
+  files:
+    - /Audio/Announcers/Stern/events/ventclog/1.ogg
+    - /Audio/Announcers/Stern/events/ventclog/2.ogg
+    - /Audio/Announcers/Stern/events/ventclog/3.ogg
+
 # immovablerod
 - type: soundCollection
   id: SternImmovablerodAnnouncements
@@ -143,6 +151,14 @@
     - /Audio/Announcers/Stern/events/gasleak/1-done.ogg
     - /Audio/Announcers/Stern/events/gasleak/2-done.ogg
     - /Audio/Announcers/Stern/events/gasleak/3-done.ogg
+
+# kudzu
+- type: soundCollection
+  id: SternKudzuAnnouncements
+  files:
+    - /Audio/Announcers/Stern/events/kudzu/1.ogg
+    - /Audio/Announcers/Stern/events/kudzu/2.ogg
+    - /Audio/Announcers/Stern/events/kudzu/3.ogg
 
 #  -------------------------------------------- SHUTTLE --------------------------------------------
 
@@ -186,13 +202,13 @@
     - /Audio/Announcers/Stern/shuttle/launching/2.ogg
     - /Audio/Announcers/Stern/shuttle/launching/3.ogg
 
-# nearby --- UNFINISHED
-#- type: soundCollection
-#  id: SternShuttleNearbyAnnouncements
-#  files:
-#    - /Audio/Announcers/Stern/shuttle/nearby/1.ogg
-#    - /Audio/Announcers/Stern/shuttle/nearby/2.ogg
-#    - /Audio/Announcers/Stern/shuttle/nearby/3.ogg
+# nearby
+- type: soundCollection
+  id: SternShuttleNearbyAnnouncements
+  files:
+    - /Audio/Announcers/Stern/shuttle/nearby/1.ogg
+    - /Audio/Announcers/Stern/shuttle/nearby/2.ogg
+    - /Audio/Announcers/Stern/shuttle/nearby/3.ogg
 
 # recalled
 - type: soundCollection
