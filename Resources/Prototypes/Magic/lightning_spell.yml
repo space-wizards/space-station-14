@@ -16,6 +16,7 @@
       sprite: Objects/Magic/magicactions.rsi
       state: spell_default
     event: !type:LightningSpellEvent
+      lightningPrototype: ChargedLightning
       speech: action-speech-spell-smite
 
 

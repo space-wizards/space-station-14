@@ -31,6 +31,6 @@ public sealed class MagicSystem : SharedMagicSystem
         ev.Handled = true;
         Speak(ev);
 
-        _lightning.ShootLightning(ev.Performer, ev.Target);
+        _lightning.ShootLightning(ev.Performer, ev.Target, ev.LightningPrototype);
     }
 }
