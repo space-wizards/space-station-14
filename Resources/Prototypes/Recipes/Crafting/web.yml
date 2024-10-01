@@ -67,7 +67,7 @@
   id: ClothingUniformJumpskirtWebElegantDress
   graph: WebObjects
   startNode: start
-  targetNode: stripeddress
+  targetNode: elegantdress
   category: construction-category-clothing
   description: "Elegant dress with a silky bow."
   entityWhitelist:
