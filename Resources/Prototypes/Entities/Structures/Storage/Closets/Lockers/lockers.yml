@@ -170,6 +170,11 @@
   - type: ExplosionResistance
     damageCoefficient: 0.50
   - type: AntiRottingContainer
+  - type: Construction
+    graph: ClosetFreezer
+    node: done
+    containers:
+    - entity_storage
 
 - type: entity
   id: LockerFreezer

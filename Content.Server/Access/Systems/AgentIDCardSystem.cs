@@ -32,7 +32,7 @@ namespace Content.Server.Access.Systems
 
         private void OnAfterInteract(EntityUid uid, AgentIDCardComponent component, AfterInteractEvent args)
         {
-            if (!TryComp<AccessComponent>(args.Target, out var targetAccess) || !HasComp<IdCardComponent>(args.Target) || args.Target == null)
+            if (args.Target == null || !args.CanReach || !TryComp<AccessComponent>(args.Target, out var targetAccess) || !HasComp<IdCardComponent>(args.Target))
                 return;
 
             if (!TryComp<AccessComponent>(uid, out var access) || !HasComp<IdCardComponent>(uid))

@@ -49,11 +49,11 @@
   components:
   - type: GhostRole
     name: ghost-role-information-closet-skeleton-name
-    description: ghost-role-information-closet-skeleton-description
-    rules: ghost-role-information-freeagent-rules
+    description: ghost-role-information-closet-skeleton-nonantagonist-description
+    rules: ghost-role-information-nonantagonist-rules
     raffle:
       settings: default
   - type: GhostTakeoverAvailable
   - type: Loadout
-    prototypes: [LimitedPassengerGear]
+    prototypes: [SkeletonPassengerGear]
   - type: RandomHumanoidAppearance
