@@ -355,7 +355,7 @@
     access: [["Security"]]
 
 - type: entity
-  id: GunSafeBase
+  id: GunSafe
   parent: LockerBaseSecure
   name: gun safe
   components:
@@ -376,6 +376,7 @@
 - type: entity
   id: GunSafeBaseSecure
   parent: GunSafeBase
+  suffix: Armory, Locked
   components:
   - type: AccessReader
     access: [["Armory"]]
