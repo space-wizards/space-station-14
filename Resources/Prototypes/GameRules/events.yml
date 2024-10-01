@@ -552,7 +552,7 @@
   id: DerelictCyborgSpawn
   components:
   - type: StationEvent
-    weight: 8
+    weight: 6
     earliestStart: 15
     reoccurrenceDelay: 20
     minimumPlayers: 4

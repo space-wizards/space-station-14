@@ -333,6 +333,6 @@
   - type: AccessReader
     access: [["Command"], ["Research"]]
   - type: StartIonStormed
-    ionStormAmount: 5
+    ionStormAmount: 4
   - type: IonStormTarget
     chance: 1
