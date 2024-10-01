@@ -13,19 +13,19 @@ public sealed partial class HolopadHologramComponent : Component
     /// Default RSI path
     /// </summary>
     [DataField]
-    public string RsiPath;
+    public string RsiPath = string.Empty;
 
     /// <summary>
     /// Default RSI state
     /// </summary>
     [DataField]
-    public string RsiState;
+    public string RsiState = string.Empty;
 
     /// <summary>
     /// Name of the shader to use
     /// </summary>
     [DataField]
-    public string ShaderName;
+    public string ShaderName = string.Empty;
 
     /// <summary>
     /// The primary color

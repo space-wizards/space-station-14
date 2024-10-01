@@ -94,27 +94,11 @@ public sealed class PlayerSpriteStateMessage : EntityEventArgs
     /// <summary>
     /// Data needed to reconstruct the player's sprite component layers
     /// </summary>
-    public readonly SpriteLayerDatum[] SpriteLayerData;
+    public readonly PrototypeLayerData[] SpriteLayerData;
 
-    public PlayerSpriteStateMessage(NetEntity spriteEntity, SpriteLayerDatum[] spriteLayerData)
+    public PlayerSpriteStateMessage(NetEntity spriteEntity, PrototypeLayerData[] spriteLayerData)
     {
         SpriteEntity = spriteEntity;
         SpriteLayerData = spriteLayerData;
-    }
-}
-
-/// <summary>
-/// Data for a single sprite component layer
-/// </summary>
-[Serializable, NetSerializable]
-public sealed class SpriteLayerDatum
-{
-    public string RSIPath;
-    public string RSIState;
-
-    public SpriteLayerDatum(string rsiPath, string rsiState)
-    {
-        RSIPath = rsiPath;
-        RSIState = rsiState;
     }
 }

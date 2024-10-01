@@ -148,9 +148,6 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
 
     public void BroadcastCallToTelephones(Entity<TelephoneComponent> source, HashSet<Entity<TelephoneComponent>> receivers, EntityUid user, bool isEmergency = false)
     {
-        if (IsTelephoneEngaged(source))
-            return;
-
         var options = new TelephoneCallOptions()
         {
             ForceConnect = true,
@@ -167,10 +164,7 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
 
     public void CallTelephone(Entity<TelephoneComponent> source, Entity<TelephoneComponent> receiver, EntityUid user, TelephoneCallOptions? options = null)
     {
-        if (source == receiver ||
-            IsTelephoneEngaged(source) ||
-            !this.IsPowered(source, EntityManager) ||
-            !IsSourceInRangeOfReceiver(source, receiver))
+        if (!IsSourceAbleToConnectToReceiver(source, receiver))
             return;
 
         // If a connection cannot be made, time out the telephone
@@ -235,6 +229,20 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
 
         var source = receiver.Comp.LinkedTelephones.First();
         CommenceTelephoneCall(source, receiver);
+    }
+
+    public void RedirectTelephoneCall(Entity<TelephoneComponent> oldReceiver, Entity<TelephoneComponent> newReceiver, EntityUid user)
+    {
+        foreach (var linkedTelephone in oldReceiver.Comp.LinkedTelephones)
+        {
+            linkedTelephone.Comp.LinkedTelephones.Add(newReceiver);
+            linkedTelephone.Comp.LinkedTelephones.Remove(oldReceiver);
+
+            CommenceTelephoneCall(linkedTelephone, newReceiver);
+        }
+
+        oldReceiver.Comp.LinkedTelephones.Clear();
+        EndTelephoneCalls(oldReceiver);
     }
 
     private void CommenceTelephoneCall(Entity<TelephoneComponent> source, Entity<TelephoneComponent> receiver)
@@ -367,6 +375,19 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
             RemComp<ActiveListenerComponent>(telephone);
     }
 
+    public bool IsSourceAbleToConnectToReceiver(Entity<TelephoneComponent> source, Entity<TelephoneComponent> receiver)
+    {
+        if (source == receiver ||
+            IsTelephoneEngaged(source) ||
+            !this.IsPowered(source, EntityManager) ||
+            !IsSourceInRangeOfReceiver(source, receiver))
+        {
+            return false;
+        }
+
+        return true;
+    }
+
     public bool IsSourceInRangeOfReceiver(Entity<TelephoneComponent> source, Entity<TelephoneComponent> receiver)
     {
         var sourceXform = Transform(source);
@@ -391,5 +412,10 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
     public bool IsTelephoneEngaged(Entity<TelephoneComponent> telephone)
     {
         return telephone.Comp.LinkedTelephones.Any();
+    }
+
+    public bool IsSourceConnectedToReceiver(Entity<TelephoneComponent> source, Entity<TelephoneComponent> receiver)
+    {
+        return source.Comp.LinkedTelephones.Contains(receiver);
     }
 }

@@ -320,6 +320,16 @@
         unshaded:
           Empty: { state: ai_empty }
           Occupied: { state: ai }
+  - type: Telephone
+    ringingTimeout: 30
+    hangingUpTimeout: 2
+    listeningRange: 0.5
+    speakerVolume: Speak
+  - type: StationAiWhitelist  
+  - type: UserInterface
+    interfaces:
+        enum.HolopadIncomingCallUiKey.Key:
+          type: HolopadIncomingCallBoundUserInterface
 
 # The job-ready version of an AI spawn.
 - type: entity

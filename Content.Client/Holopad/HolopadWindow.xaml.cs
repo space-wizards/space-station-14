@@ -18,6 +18,9 @@ public sealed partial class HolopadWindow : FancyWindow
     public event Action<NetEntity>? SendHolopadStartNewCallMessageAction;
     public event Action? SendHolopadAnswerCallMessageAction;
     public event Action? SendHolopadEndCallMessageAction;
+    public event Action? SendHolopadStartBroadcastMessageAction;
+    public event Action? SendHolopadActivateProjectorMessageAction;
+    public event Action? SendHolopadRequestStationAiMessageAction;
 
     public HolopadWindow()
     {
@@ -28,6 +31,9 @@ public sealed partial class HolopadWindow : FancyWindow
 
         AnswerCallButton.OnPressed += args => { OnHolopadAnswerCallMessage(); };
         EndCallButton.OnPressed += args => { OnHolopadEndCallMessage(); };
+        StartBroadcastButton.OnPressed += args => { OnHolopadStartBroadcastMessage(); };
+        ActivateProjectorButton.OnPressed += args => { OnHolopadActivateProjectorMessage(); };
+        RequestStationAiButton.OnPressed += args => { OnHolopadRequestStationAiMessage(); };
     }
 
     public void UpdateUIState(TelephoneState state, Dictionary<NetEntity, string> holopads)
@@ -100,6 +106,21 @@ public sealed partial class HolopadWindow : FancyWindow
     private void OnHolopadAnswerCallMessage()
     {
         SendHolopadAnswerCallMessageAction?.Invoke();
+    }
+
+    private void OnHolopadStartBroadcastMessage()
+    {
+        SendHolopadStartBroadcastMessageAction?.Invoke();
+    }
+
+    private void OnHolopadActivateProjectorMessage()
+    {
+        SendHolopadActivateProjectorMessageAction?.Invoke();
+    }
+
+    private void OnHolopadRequestStationAiMessage()
+    {
+        SendHolopadRequestStationAiMessageAction?.Invoke();
     }
 
     /*private int AlphabeticalSort(PowerMonitoringConsoleEntry x, PowerMonitoringConsoleEntry y)

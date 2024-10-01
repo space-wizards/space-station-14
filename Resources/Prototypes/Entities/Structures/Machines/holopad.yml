@@ -19,6 +19,7 @@
         hard: false
   - type: ApcPowerReceiver
     powerLoad: 300
+  - type: StationAiVision
   - type: Sprite
     sprite: Structures/Machines/holopad.rsi
     snapCardinals: true
@@ -39,6 +40,7 @@
           EndingCall: { state: lights_hanging_up }
   - type: Machine
     board: HolopadMachineCircuitboard
+  - type: StationAiWhitelist
   - type: PointLight
     radius: 1.3
     energy: 1.8
@@ -54,6 +56,7 @@
     hologramProtoId: HolopadHologram
   - type: Speech
     speechVerb: Robotic
+    speechBubbleOffset: 0.45
   - type: Telephone
     ringTone: /Audio/Machines/double_ring.ogg
     ringInterval: 2
@@ -72,6 +75,7 @@
 - type: entity
   id: HolopadHologram
   categories: [ HideSpawnMenu ]
+  suffix: DO NOT MAP
   components:
   - type: Transform
     anchored: true
@@ -96,4 +100,26 @@
   - type: Tag
     tags:
     - HideContextMenu
-  - type: AnimationPlayer
+    
+- type: entity
+  id: StationAiHoloLocal
+  parent: HolopadHologram
+  categories: [ HideSpawnMenu ]
+  suffix: DO NOT MAP
+  components:
+  - type: WarpPoint
+    follow: true
+  - type: Eye
+  - type: ContentEye
+  - type: Examiner
+  - type: Actions
+  - type: Alerts
+  - type: FTLSmashImmune
+  - type: CargoSellBlacklist
+  - type: StationAiVision
+    range: 20
+  - type: Sprite
+    sprite: Mobs/Silicon/station_ai.rsi
+    layers:
+    - state: default
+    

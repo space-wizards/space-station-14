@@ -3,6 +3,7 @@ using Content.Shared.Holopad;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using System;
@@ -22,11 +23,20 @@ public sealed class HolopadSystem : SharedHolopadSystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<HolopadHologramComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<HolopadHologramComponent, BeforePostShaderRenderEvent>(OnShaderRender);
         SubscribeAllEvent<TypingChangedEvent>(OnTypingChanged);
 
         SubscribeNetworkEvent<PlayerSpriteStateRequest>(OnPlayerSpriteStateRequest);
         SubscribeNetworkEvent<PlayerSpriteStateMessage>(OnPlayerSpriteStateMessage);
+    }
+
+    private void OnComponentInit(EntityUid uid, HolopadHologramComponent component, ComponentInit ev)
+    {
+        if (!TryComp<SpriteComponent>(uid, out var sprite))
+            return;
+
+        UpdateShader(uid, sprite, component);
     }
 
     private void OnShaderRender(EntityUid uid, HolopadHologramComponent component, BeforePostShaderRenderEvent ev)
@@ -62,7 +72,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
         if (!TryComp<SpriteComponent>(player, out var playerSprite))
             return;
 
-        var spriteLayerData = new List<SpriteLayerDatum>();
+        var spriteLayerData = new List<PrototypeLayerData>();
 
         if (playerSprite.Visible)
         {
@@ -76,7 +86,10 @@ public sealed class HolopadSystem : SharedHolopadSystem
                     string.IsNullOrEmpty(layer.State.Name))
                     continue;
 
-                var layerDatum = new SpriteLayerDatum(layer.RSI.Path.ToString(), layer.State.Name);
+                var layerDatum = new PrototypeLayerData();
+                layerDatum.RsiPath = layer.RSI.Path.ToString();
+                layerDatum.State = layer.State.Name;
+
                 spriteLayerData.Add(layerDatum);
             }
         }
@@ -100,19 +113,22 @@ public sealed class HolopadSystem : SharedHolopadSystem
 
         var spriteData = ev.SpriteLayerData;
 
-        if (spriteData.Length == 0 &&
+        /*if (spriteData.Length == 0 &&
             !string.IsNullOrEmpty(holopadhologram.RsiPath) &&
             !string.IsNullOrEmpty(holopadhologram.RsiState))
         {
-            spriteData = new SpriteLayerDatum[1];
-            spriteData[0] = new SpriteLayerDatum(holopadhologram.RsiPath, holopadhologram.RsiState);
-        }
+            spriteData = new PrototypeLayerData[1];
+            spriteData[0] = new PrototypeLayerData();
+
+            spriteData[0].RsiPath = holopadhologram.RsiPath;
+            spriteData[0].State = holopadhologram.RsiState;
+        }*/
 
         for (int i = 0; i < spriteData.Length; i++)
         {
             var layer = new PrototypeLayerData();
-            layer.RsiPath = spriteData[i].RSIPath;
-            layer.State = spriteData[i].RSIState;
+            layer.RsiPath = spriteData[i].RsiPath;
+            layer.State = spriteData[i].State;
             layer.Shader = "unshaded";
 
             hologramSprite.AddLayer(layer, i);

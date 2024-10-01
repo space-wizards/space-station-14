@@ -78,6 +78,24 @@ public sealed class HolopadAnswerCallMessage : BoundUserInterfaceMessage { }
 [Serializable, NetSerializable]
 public sealed class HolopadEndCallMessage : BoundUserInterfaceMessage { }
 
+/// <summary>
+///     Triggers the server to send updated power monitoring console data to the client for the single player session
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class HolopadStartBroadcastMessage : BoundUserInterfaceMessage { }
+
+/// <summary>
+///     Triggers the server to send updated power monitoring console data to the client for the single player session
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class HolopadActivateProjectorMessage : BoundUserInterfaceMessage { }
+
+/// <summary>
+///     Triggers the server to send updated power monitoring console data to the client for the single player session
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class HolopadRequestStationAiMessage : BoundUserInterfaceMessage { }
+
 #endregion
 
 /// <summary>
@@ -85,6 +103,15 @@ public sealed class HolopadEndCallMessage : BoundUserInterfaceMessage { }
 /// </summary>
 [Serializable, NetSerializable]
 public enum HolopadUiKey : byte
+{
+    Key
+}
+
+/// <summary>
+/// Key to the Holopad UI
+/// </summary>
+[Serializable, NetSerializable]
+public enum HolopadIncomingCallUiKey : byte
 {
     Key
 }
