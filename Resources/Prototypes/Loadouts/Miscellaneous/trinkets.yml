@@ -8,6 +8,20 @@
       department: Command
       time: 3600 # 1 hour
 
+- type: loadoutEffectGroup
+  id: PrestigeGold
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:OverallPlaytimeRequirement
+
+      time: 1512000 #420 hours
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Silicon
+      time: 36000 #10 hours
+
 # Plushies
 - type: loadout
   id: PlushieLizard
@@ -161,6 +175,15 @@
   storage:
     back:
     - PersonalAI
+
+- type: loadout
+  id: GoldPersonalAI
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: PrestigeGold
+  storage:
+    back:
+    - GoldPersonalAI
 
 - type: loadout
   id: FolderBlack
