@@ -465,6 +465,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<string> DiscordVoteWebhook =
             CVarDef.Create("discord.vote_webhook", string.Empty, CVar.SERVERONLY);
 
+        /// <summary>
+        /// URL of the Discord webhook which will relay all votekick votes. If left empty, disables the webhook.
+        /// </summary>
+        public static readonly CVarDef<string> DiscordVotekickWebhook =
+            CVarDef.Create("discord.votekick_webhook", string.Empty, CVar.SERVERONLY);
+
         /// URL of the Discord webhook which will relay round restart messages.
         /// </summary>
         public static readonly CVarDef<string> DiscordRoundUpdateWebhook =
@@ -906,8 +912,8 @@ namespace Content.Shared.CCVar
         /// After the period has passed, the count resets.
         /// </summary>
         /// <seealso cref="AhelpRateLimitCount"/>
-        public static readonly CVarDef<int> AhelpRateLimitPeriod =
-            CVarDef.Create("ahelp.rate_limit_period", 2, CVar.SERVERONLY);
+        public static readonly CVarDef<float> AhelpRateLimitPeriod =
+            CVarDef.Create("ahelp.rate_limit_period", 2f, CVar.SERVERONLY);
 
         /// <summary>
         /// How many ahelp messages are allowed in a single rate limit period.
@@ -1840,8 +1846,8 @@ namespace Content.Shared.CCVar
         /// After the period has passed, the count resets.
         /// </summary>
         /// <seealso cref="ChatRateLimitCount"/>
-        public static readonly CVarDef<int> ChatRateLimitPeriod =
-            CVarDef.Create("chat.rate_limit_period", 2, CVar.SERVERONLY);
+        public static readonly CVarDef<float> ChatRateLimitPeriod =
+            CVarDef.Create("chat.rate_limit_period", 2f, CVar.SERVERONLY);
 
         /// <summary>
         /// How many chat messages are allowed in a single rate limit period.
@@ -1851,19 +1857,12 @@ namespace Content.Shared.CCVar
         /// <see cref="ChatRateLimitCount"/> divided by <see cref="ChatRateLimitCount"/>.
         /// </remarks>
         /// <seealso cref="ChatRateLimitPeriod"/>
-        /// <seealso cref="ChatRateLimitAnnounceAdmins"/>
         public static readonly CVarDef<int> ChatRateLimitCount =
             CVarDef.Create("chat.rate_limit_count", 10, CVar.SERVERONLY);
 
         /// <summary>
-        /// If true, announce when a player breached chat rate limit to game administrators.
-        /// </summary>
-        /// <seealso cref="ChatRateLimitAnnounceAdminsDelay"/>
-        public static readonly CVarDef<bool> ChatRateLimitAnnounceAdmins =
-            CVarDef.Create("chat.rate_limit_announce_admins", true, CVar.SERVERONLY);
-
-        /// <summary>
-        /// Minimum delay (in seconds) between announcements from <see cref="ChatRateLimitAnnounceAdmins"/>.
+        /// Minimum delay (in seconds) between notifying admins about chat message rate limit violations.
+        /// A negative value disables admin announcements.
         /// </summary>
         public static readonly CVarDef<int> ChatRateLimitAnnounceAdminsDelay =
             CVarDef.Create("chat.rate_limit_announce_admins_delay", 15, CVar.SERVERONLY);
@@ -2058,6 +2057,34 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool> ToggleWalk =
             CVarDef.Create("control.toggle_walk", false, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+        /*
+         * Interactions
+         */
+
+        // The rationale behind the default limit is simply that I can easily get to 7 interactions per second by just
+        // trying to spam toggle a light switch or lever (though the UseDelay component limits the actual effect of the
+        // interaction).  I don't want to accidentally spam admins with alerts just because somebody is spamming a
+        // key manually, nor do we want to alert them just because the player is having network issues and the server
+        // receives multiple interactions at once. But we also want to try catch people with modified clients that spam
+        // many interactions on the same tick. Hence, a very short period, with a relatively high count.
+
+        /// <summary>
+        /// Maximum number of interactions that a player can perform within <see cref="InteractionRateLimitCount"/> seconds
+        /// </summary>
+        public static readonly CVarDef<int> InteractionRateLimitCount =
+            CVarDef.Create("interaction.rate_limit_count", 5, CVar.SERVER | CVar.REPLICATED);
+
+        /// <seealso cref="InteractionRateLimitCount"/>
+        public static readonly CVarDef<float> InteractionRateLimitPeriod =
+            CVarDef.Create("interaction.rate_limit_period", 0.5f, CVar.SERVER | CVar.REPLICATED);
+
+        /// <summary>
+        /// Minimum delay (in seconds) between notifying admins about interaction rate limit violations. A negative
+        /// value disables admin announcements.
+        /// </summary>
+        public static readonly CVarDef<int> InteractionRateLimitAnnounceAdminsDelay =
+            CVarDef.Create("interaction.rate_limit_announce_admins_delay", 120, CVar.SERVERONLY);
 
         /*
          * STORAGE

@@ -364,7 +364,7 @@ namespace Content.Server.GameTicking
             var listOfPlayerInfo = new List<RoundEndMessageEvent.RoundEndPlayerInfo>();
             // Grab the great big book of all the Minds, we'll need them for this.
             var allMinds = EntityQueryEnumerator<MindComponent>();
-            var pvsOverride = _configurationManager.GetCVar(CCVars.RoundEndPVSOverrides);
+            var pvsOverride = _cfg.GetCVar(CCVars.RoundEndPVSOverrides);
             while (allMinds.MoveNext(out var mindId, out var mind))
             {
                 // TODO don't list redundant observer roles?
