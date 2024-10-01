@@ -70,6 +70,19 @@
     sprite: Objects/Tanks/oxygen.rsi
 
 - type: entity
+  parent: [GasTankRoundBase, BaseCommandContraband]
+  id: OxygenTankCommand
+  name: command oxygen tank
+  description: A fancy but otherwise normal cylindrical gas tank for oxygen. It can hold 5 L of gas.
+  components:
+  - type: Sprite
+    sprite: Objects/Tanks/oxygencommand.rsi
+  - type: Item
+    sprite: Objects/Tanks/oxygencommand.rsi
+  - type: Clothing
+    sprite: Objects/Tanks/oxygencommand.rsi
+
+- type: entity
   parent: GasTankRoundBase
   id: NitrogenTank
   name: nitrogen tank
@@ -81,6 +94,19 @@
     sprite: Objects/Tanks/red.rsi
   - type: Clothing
     sprite: Objects/Tanks/red.rsi
+
+- type: entity
+  parent: [GasTankRoundBase, BaseCommandContraband]
+  id: NitrogenTankCommand
+  name: command nitrogen tank
+  description: A fancy but otherwise normal cylindrical gas tank for nitrogen. It can hold 5 L of gas.
+  components:
+  - type: Sprite
+    sprite: Objects/Tanks/redcommand.rsi
+  - type: Item
+    sprite: Objects/Tanks/redcommand.rsi
+  - type: Clothing
+    sprite: Objects/Tanks/redcommand.rsi
 
 - type: entity
   parent: GasTankRoundBase

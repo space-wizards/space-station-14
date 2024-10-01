@@ -15,9 +15,13 @@ loadout-group-survival-brigmedic = Brigmedic Survival Box
 loadout-group-survival-syndicate = Github is forcing me to write text that is literally twice-impossible for the player to ever see, send help
 loadout-group-breath-tool = Species-dependent breath tools
 loadout-group-tank-harness = Species-specific survival equipment
+loadout-group-tank-harness-command = Species-specific command survival equipment
 loadout-group-EVA-tank = Species-specific gas tank
 loadout-group-pocket-tank-double = Species-specific double emergency tank in pocket
 loadout-group-survival-mime = Mime Survival Box
+loadout-group-survival-command = Command survival box
+loadout-group-survival-extended-command = Extended command survival box
+loadout-group-survival-security-command = Security command survival box
 
 # Command
 loadout-group-captain-head = Captain head
@@ -37,10 +41,6 @@ loadout-group-hop-neck = Head of Personnel neck
 loadout-group-hop-backpack = Head of Personnel backpack
 loadout-group-hop-outerclothing = Head of Personnel outer clothing
 loadout-group-hop-shoes = Head of Personnel shoes
-
-loadout-group-survival-command = Command survival box
-loadout-group-survival-extended-command = Extended command survival box
-loadout-group-survival-security-command = Security command survival box
 
 # Civilian
 loadout-group-passenger-jumpsuit = Passenger jumpsuit

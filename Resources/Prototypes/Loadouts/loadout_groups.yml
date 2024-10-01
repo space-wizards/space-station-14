@@ -18,6 +18,7 @@
   - CigarCase
   - CigarGold
   - PersonalAI
+  - GoldPersonalAI
   - FolderBlack
   - BarFlask
   - NewtonCradle
@@ -32,6 +33,7 @@
   - ClothingNeckTransPin
   - ClothingNeckAutismPin
   - ClothingNeckGoldAutismPin
+  - HarmonicaInstrument
 
 - type: loadoutGroup
   id: Glasses
@@ -43,6 +45,7 @@
   - GlassesJamjar
   - GlassesJensen
 
+# The usual loadouts of the vox harness that spawn in your chest slot for jobs that don't have outerwear in their loadout
 - type: loadoutGroup
   id: GroupTankHarness
   name: loadout-group-tank-harness
@@ -50,6 +53,31 @@
   hidden: true
   loadouts:
   - LoadoutTankHarness
+
+- type: loadoutGroup
+  id: GroupTankHarnessCommand
+  name: loadout-group-tank-harness-command
+  minLimit: 1
+  hidden: true
+  loadouts:
+  - LoadoutTankHarnessCommand
+
+# A version of the vox harness loadouts that make it spawn in your inventory instead for jobs that can spawn with outerwear
+- type: loadoutGroup
+  id: GroupTankHarnessWithOuterwear
+  name: loadout-group-tank-harness
+  minLimit: 1
+  hidden: true
+  loadouts:
+  - LoadoutTankHarnessWithOuterwear
+
+- type: loadoutGroup
+  id: GroupTankHarnessCommandWithOuterwear
+  name: loadout-group-tank-harness-command
+  minLimit: 1
+  hidden: true
+  loadouts:
+  - LoadoutTankHarnessCommandWithOuterwear
 
 - type: loadoutGroup
   id: Survival
@@ -216,7 +244,9 @@
   loadouts:
   - EmergencyNitrogenCommand
   - EmergencyOxygenCommand
-  - LoadoutSpeciesVoxNitrogen
+  - LoadoutSpeciesVoxNitrogenCommand
+  - LoadoutSpeciesOxygenCommand
+  - LoadoutSpeciesNitrogenCommand
 
 - type: loadoutGroup
   id: SurvivalExtendedCommand
@@ -226,7 +256,9 @@
   loadouts:
   - EmergencyNitrogenExtendedCommand
   - EmergencyOxygenExtendedCommand
-  - LoadoutSpeciesVoxNitrogen
+  - LoadoutSpeciesVoxNitrogenCommand
+  - LoadoutSpeciesOxygenCommand
+  - LoadoutSpeciesNitrogenCommand
 
 - type: loadoutGroup
   id: SurvivalSecurityCommand
@@ -236,7 +268,9 @@
   loadouts:
   - EmergencyNitrogenSecurityCommand
   - EmergencyOxygenSecurityCommand
-  - LoadoutSpeciesVoxNitrogen
+  - LoadoutSpeciesVoxNitrogenCommand
+  - LoadoutSpeciesOxygenCommand
+  - LoadoutSpeciesNitrogenCommand
 
 # Civilian
 - type: loadoutGroup

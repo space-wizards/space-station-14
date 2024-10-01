@@ -87,6 +87,37 @@
       sprite: Clothing/Neck/Scarfs/purple.rsi
 
 - type: entity
+  parent: ClothingScarfBase
+  id: ClothingNeckScarfStripedWeb
+  name: striped web scarf
+  description: A stylish striped web scarf. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their necks.
+  components:
+    - type: Sprite
+      sprite: Clothing/Neck/Scarfs/web.rsi
+    - type: Clothing
+      sprite: Clothing/Neck/Scarfs/web.rsi
+    - type: Butcherable
+      butcheringType: Knife
+      spawned:
+      - id: MaterialWebSilk1
+        amount: 5
+    - type: FlavorProfile
+      flavors:
+        - cobwebs
+      ignoreReagents:
+        - Fiber
+    - type: SolutionContainerManager
+      solutions: # 15 (3 (fiber count of web) * 5 (to craft)) + 6 (magical crafting bonus)
+        food:
+          maxVol: 21
+          reagents:
+          - ReagentId: Fiber
+            Quantity: 21
+    - type: Construction
+      graph: WebObjects
+      node: scarf
+
+- type: entity
   parent: [ ClothingScarfBase, BaseSyndicateContraband ]
   id: ClothingNeckScarfStripedSyndieGreen
   name: striped syndicate green scarf
@@ -129,3 +160,34 @@
     sprite: Clothing/Neck/Scarfs/zebra.rsi
   - type: Clothing
     sprite: Clothing/Neck/Scarfs/zebra.rsi
+
+- type: entity
+  parent: ClothingScarfBase
+  id: ClothingNeckScarfStripedZebraWeb
+  name: short web scarf
+  description: A short, striped web scarf. Feels like an unfinished cocoon.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Scarfs/zebraweb.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/Scarfs/zebraweb.rsi
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: MaterialWebSilk1
+      amount: 3
+  - type: FlavorProfile
+    flavors:
+      - cobwebs
+    ignoreReagents:
+      - Fiber
+  - type: SolutionContainerManager
+    solutions: # 9 (3 (fiber count of web) * 3 (to craft)) + 6 (magical crafting bonus)
+      food:
+        maxVol: 14
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 14
+  - type: Construction
+    graph: WebObjects
+    node: shortscarf

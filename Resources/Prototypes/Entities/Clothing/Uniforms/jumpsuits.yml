@@ -70,7 +70,7 @@
   parent: [ClothingUniformBase, BaseCommandContraband, ClothingUniformFoldableBase]
   id: ClothingUniformJumpsuitCaptaineveningattire
   name: captain's evening attire
-  description: A comfortable captain's uniform with a low-cut collar and rolled-up sleeves, complete with a sword belt.
+  description: "A comfortable captain's uniform with a low-cut collar and three-quarter sleeves, complete with a sword belt. Held fastened in part by a medal-like brooch."
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/captaineveningattire.rsi
@@ -1334,3 +1334,34 @@
     sprite: Clothing/Uniforms/Jumpsuit/familiar_garbs.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/familiar_garbs.rsi
+    
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitLoungewearWeb
+  name: web loungewear
+  description: A long stretch of spider silk that wraps around your body for comfort.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/loungewearweb.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/loungewearweb.rsi
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: MaterialWebSilk1
+      amount: 10
+  - type: FlavorProfile
+    flavors:
+      - cobwebs
+    ignoreReagents:
+      - Fiber
+  - type: SolutionContainerManager
+    solutions: # 30 (3 (fiber count of web) * 10 (to craft)) + 6 (magical crafting bonus)
+      food:
+        maxVol: 36
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 36
+  - type: Construction
+    graph: WebObjects
+    node: loungewear

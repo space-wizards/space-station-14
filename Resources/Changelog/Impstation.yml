@@ -2241,3 +2241,113 @@
   id: 285
   time: '2024-09-29T15:42:32.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/370
+- author: Sha-Seng
+  changes:
+  - message: Updated captain prestige set flavor text to help you visualize the real
+      object...
+    type: Tweak
+  id: 286
+  time: '2024-10-01T02:29:59.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/371
+- author: starlighthowls
+  changes:
+  - message: some tiny spooky whale fixes
+    type: Fix
+  id: 287
+  time: '2024-10-01T02:30:30.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/368
+- author: AftrLite
+  changes:
+  - message: You can now unlock a special golden personal AI trinket. This requires
+      10 hours Silicon playtime and 420 hours overall playtime. Good luck. It's very
+      shiny.
+    type: Add
+  id: 288
+  time: '2024-10-01T02:31:32.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/366
+- author: Sha-Seng
+  changes:
+  - message: Command gets unique oxygen and nitrogen tanks to match new cosmetic gear
+    type: Add
+  - message: Command tank harness for vox command style
+    type: Add
+  - message: Vox in jobs with outerwear now spawn with a harness in their bag instead
+      of leaving the coat on the floor
+    type: Tweak
+  - message: Tank harnesses are now small items for portability since choosing winter
+      coats can kill them otherwise
+    type: Tweak
+  id: 289
+  time: '2024-10-01T02:29:32.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/377
+- author: Sha-Seng
+  changes:
+  - message: Added a harmonica trinket if you've played 10h as musician
+    type: Add
+  id: 290
+  time: '2024-10-01T02:30:15.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/372
+- author: Darkmajia
+  changes:
+  - message: Changed the appearance of the space ninja's equipment.
+    type: Tweak
+  id: 291
+  time: '2024-10-01T02:26:46.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/380
+- author: TheGrimbeeper
+  changes:
+  - message: can no longer trigger a depth 4+ artifact by wrenching (forced to wrench
+      off scanner, and unwrench to put back on scanner - so had to potentially trigger
+      the next node -> tesloose on core)
+    type: Remove
+  - message: added two other copies of lower triggers that are less (potentially)
+      unavoidably destructive
+    type: Add
+  id: 292
+  time: '2024-10-01T02:27:26.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/379
+- author: hivehum
+  changes:
+  - message: Oculine requires blood again.
+    type: Tweak
+  id: 293
+  time: '2024-10-01T02:28:50.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/374
+- author: hivehum
+  changes:
+  - message: FUUUUUUUUUCCCCCCCCCCCCCCCCKKKKKKKKKKK AHHHHHHHHHHHHHHHHHHHHHHHHHHHH AAAAAAAAAAAAAAAAAAAAAAAAA
+    type: Tweak
+  id: 294
+  time: '2024-10-01T02:28:48.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/376
+- author: hivehum
+  changes:
+  - message: Added a use for hormones.
+    type: Add
+  id: 295
+  time: '2024-10-01T02:27:55.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/378
+- author: sususuyo
+  changes:
+  - message: Added new nuke tracks and a couple new lobby tracks!
+    type: Add
+  - message: Extended a certain nuke track slightly longer
+    type: Tweak
+  id: 296
+  time: '2024-10-01T02:30:41.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/373
+- author: formlessnameless
+  changes:
+  - message: Bumped Frezon sell price up a bit more after some playtesting has occurred
+    type: Tweak
+  id: 297
+  time: '2024-10-01T02:41:47.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/381
+- author: crekulon
+  changes:
+  - message: new arachnid silk craftables including gloves, hats, dresses, scarves,
+      loungewear, and a web bookcases!
+    type: Add
+  id: 298
+  time: '2024-10-01T03:30:38.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/382

@@ -287,7 +287,7 @@
   parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing, BaseCommandContraband]
   id: ClothingOuterArmorCaptainRepeller
   name: "captain's repeller"
-  description: High-tech, low-profile body armor for the captain that utilizes forcefield technology to provide as much protection as heavier armor. Decorated with a ribbon earned through meritorious service.
+  description: "High-tech, low-profile body armor for the captain that utilizes forcefield technology to provide as much protection as heavier armor. Decorated with a ribbon earned through meritorious service."
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Armor/captain_repeller.rsi
