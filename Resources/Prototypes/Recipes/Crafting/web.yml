@@ -143,6 +143,22 @@
   objectType: Item
 
 - type: construction
+  name: web hat
+  id: ClothingHeadHatWebHat
+  graph: WebObjects
+  startNode: start
+  targetNode: widehat
+  category: construction-category-clothing
+  description: "A roughly woven wide-brim hat made of spider silk! Some strands drift in the air."
+  entityWhitelist:
+    tags:
+    - SpiderCraft
+  icon:
+    sprite: Clothing/Head/Hats/web_hat.rsi
+    state: icon
+  objectType: Item
+
+- type: construction
   name: web gloves
   id: ClothingHandsGlovesColorWeb
   graph: WebObjects

@@ -60,6 +60,12 @@
         amount: 2
         doAfter: 4
 
+    - to: widehat
+      steps:
+      - material: WebSilk
+        amount: 2
+        doAfter: 4
+
     - to: gloves
       steps:
       - material: WebSilk
@@ -141,6 +147,9 @@
 
   - node: cap
     entity: ClothingHeadHatWebsoft
+
+  - node: widehat
+    entity: ClothingHeadHatWebHat
 
   - node: gloves
     entity: ClothingHandsGlovesColorWeb
