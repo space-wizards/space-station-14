@@ -1,4 +1,5 @@
 using Content.Shared.Rejuvenate;
+using Content.Shared.Mobs;
 using Content.Shared.StatusEffect;
 using Robust.Shared.Timing;
 
@@ -21,11 +22,18 @@ namespace Content.Shared.Jittering
         public override void Initialize()
         {
             SubscribeLocalEvent<JitteringComponent, RejuvenateEvent>(OnRejuvenate);
+            SubscribeLocalEvent<JitteringComponent, MobStateChangedEvent>(OnMobStateChanged);
         }
 
         private void OnRejuvenate(EntityUid uid, JitteringComponent component, RejuvenateEvent args)
         {
             EntityManager.RemoveComponentDeferred<JitteringComponent>(uid);
+        }
+
+        private void OnMobStateChanged(EntityUid uid, JitteringComponent component, MobStateChangedEvent args)
+        {
+            if (args.NewMobState == MobState.Dead)
+                EntityManager.RemoveComponentDeferred<JitteringComponent>(uid);
         }
 
         /// <summary>
