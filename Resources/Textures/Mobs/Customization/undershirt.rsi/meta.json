@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from cmss13 at https://github.com/cmss13-devs/cmss13/blob/884ab172389b6fc54ef063f5fbea5e8b0a0a2235/icons/mob/humans/undershirt.dmi, nanotrasen taken from https://github.com/tgstation/tgstation/commit/c14e98740794eb107bfa40aad19bd4c4d307184f, undershirts modified by Pinkbat5(github), binder by Pinkbat5(github)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "undershirt",
+      "directions": 4
+    },
+    {
+      "name": "sleeveless",
+      "directions": 4
+    },
+    {
+      "name": "gross_sleeveless",
+      "directions": 4
+    },
+    {
+      "name": "rolled_undershirt_sleeveless",
+      "directions": 4
+    },
+    {
+      "name": "rolled_undershirt",
+      "directions": 4
+    },
+    {
+      "name": "binder",
+      "directions": 4
+    },
+    {
+      "name": "classic",
+      "directions": 4
+    },
+    {
+      "name": "sports",
+      "directions": 4
+    },
+    {
+      "name": "strapless",
+      "directions": 4
+    },
+    {
+      "name": "nanotrasen",
+      "directions": 4
+    }
+  ]
+}
