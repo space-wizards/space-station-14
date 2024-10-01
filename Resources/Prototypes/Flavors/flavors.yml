@@ -1204,8 +1204,13 @@
   id: speed
   flavorType: Complex
   description: flavor-complex-speed
-  
+
 - type: flavor
   id: cottonbool
   flavorType: Complex
   description: flavor-complex-cottonbool
+
+- type: flavor
+  id: genderfluid
+  flavorType: Complex
+  description: flavor-complex-genderfluid

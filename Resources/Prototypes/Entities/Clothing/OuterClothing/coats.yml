@@ -403,6 +403,7 @@
   name: armored medical gown
   description: The version of the medical gown, with elements of a bulletproof vest, looks strange, but your heart is protected.
   components:
+  - type: AllowSuitStorage
   - type: Sprite
     sprite: Clothing/OuterClothing/Coats/brigmedic.rsi
   - type: Clothing

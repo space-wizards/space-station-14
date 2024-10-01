@@ -113,7 +113,7 @@
   parent: [ClothingHandsInedibleBase, BaseCommandContraband]
   id: ClothingHandsGlovesCaptainflightgloves
   name: flight gloves
-  description: Regal black leather gloves with gold trim, insulated from electricity.
+  description: "Regal black leather gloves with gold trim, insulated from electricity. So comfortable you forget you're wearing them."
   components:
   - type: Sprite
     sprite: Clothing/Hands/Gloves/captainflightgloves.rsi

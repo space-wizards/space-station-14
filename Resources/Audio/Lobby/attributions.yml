@@ -343,3 +343,14 @@
   license: "Custom"
   copyright: "ZIP YKK ARRANGE by Rukunetsu"
   source: "https://youtube.com/watch?v=ZPYiZIrmLVQ"
+
+- files: ["BACCANO.ogg"]
+  license: "Custom"
+  copyright: "BACCANO! Theme by Yoshimori Makoto. Suggested by mira"
+  source: "https://www.youtube.com/watch?v=SI76wS6tlKs"
+
+- files: ["pizza_deluxe.ogg"]
+  license: "Custom"
+  copyright: "Pizza Deluxe by Post Elvis"
+  source: "https://music.youtube.com/watch?v=DAM-FYnuCu8"
+
