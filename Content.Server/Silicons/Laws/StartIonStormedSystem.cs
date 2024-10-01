@@ -19,21 +19,22 @@ public sealed class StartIonStormedSystem : EntitySystem
         SubscribeLocalEvent<StartIonStormedComponent, MapInitEvent>(OnMapInit);
     }
 
-    private void OnMapInit(EntityUid uid, StartIonStormedComponent component, ref MapInitEvent args)
+    //private void OnMapInit(EntityUid uid, StartIonStormedComponent component, ref MapInitEvent args)'
+    private void OnMapInit(Entity<StartIonStormedComponent> ent, ref MapInitEvent args)
     {
-        if (!TryComp<SiliconLawBoundComponent>(uid, out var lawBound))
+        if (!TryComp<SiliconLawBoundComponent>(ent.Owner, out var lawBound))
             return;
-        if (!TryComp<TransformComponent>(uid, out var xform))
+        if (!TryComp<TransformComponent>(ent.Owner, out var xform))
             return;
-        if (!TryComp<IonStormTargetComponent>(uid, out var target))
+        if (!TryComp<IonStormTargetComponent>(ent.Owner, out var target))
             return;
 
-        for (int currentIonStorm = 0; currentIonStorm < component.IonStormAmount; currentIonStorm++)
+        for (int currentIonStorm = 0; currentIonStorm < ent.Comp.IonStormAmount; currentIonStorm++)
         {
-            _ionStorm.IonStormTarget(uid, lawBound, xform, target, null, false);
+            _ionStorm.IonStormTarget(ent.Owner, lawBound, xform, target, null, false);
         }
 
-        var laws = _siliconLaw.GetLaws(uid, lawBound);
-        _adminLogger.Add(LogType.Mind, LogImpact.High, $"{ToPrettyString(uid):silicon} spawned with ion stormed laws: {laws.LoggingString()}");
+        var laws = _siliconLaw.GetLaws(ent.Owner, lawBound);
+        _adminLogger.Add(LogType.Mind, LogImpact.High, $"{ToPrettyString(ent.Owner):silicon} spawned with ion stormed laws: {laws.LoggingString()}");
     }
 }
