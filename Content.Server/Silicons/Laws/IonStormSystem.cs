@@ -9,7 +9,6 @@ using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Silicons.Laws;
 using Content.Shared.Silicons.Laws.Components;
-using Content.Shared.Station.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -60,12 +59,8 @@ public sealed class IonStormSystem : EntitySystem
     [ValidatePrototypeId<DatasetPrototype>]
     private const string Foods = "IonStormFoods";
 
-    public void IonStormTarget(EntityUid ent, SiliconLawBoundComponent lawBound, TransformComponent xform, IonStormTargetComponent target, EntityUid? chosenStation, bool ignoreStation = false, bool adminlog = true)
+    public void IonStormTarget(EntityUid ent, SiliconLawBoundComponent lawBound, TransformComponent xform, IonStormTargetComponent target, EntityUid? chosenStation, bool adminlog = true)
     {
-        // only affect law holders on the station unless ignoreStation is true.
-        if (CompOrNull<StationMemberComponent>(xform.GridUid)?.Station != chosenStation && !ignoreStation)
-            return;
-
         if (!_robustRandom.Prob(target.Chance))
             return;
 
