@@ -1,8 +1,8 @@
 using System.Linq;
 using System.Numerics;
+using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Systems.MenuBar.Widgets;
 using Content.Shared.Construction.Prototypes;
-using Content.Shared.Tag;
 using Content.Shared.Whitelist;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -12,7 +12,6 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.Utility;
 using Robust.Shared.Enums;
-using Robust.Shared.Graphics;
 using Robust.Shared.Prototypes;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
@@ -239,18 +238,23 @@ namespace Content.Client.Construction.UI
                         Scale = new Vector2(1.35f),
                         ToggleMode = true,
                     };
+                    var itemButtonPanelContainer = new PanelContainer
+                    {
+                        PanelOverride = new StyleBoxFlat { BackgroundColor = StyleNano.ButtonColorDefault },
+                        Children = { itemButton },
+                    };
 
                     itemButton.OnToggled += buttonToggledEventArgs =>
                     {
                         if (_selected is null)
-                            itemButton.Modulate = buttonToggledEventArgs.Pressed ? Color.Green : Color.White;
+                            SelectButtonPanel(itemButton, buttonToggledEventArgs.Pressed);
                         else
                         {
-                            itemButton.Modulate = Color.Green;
+                            SelectButtonPanel(itemButton, true);
                             if (_recipeButtons.TryGetValue(_selected.Name, out var oldButton))
                             {
                                 oldButton.Pressed = false;
-                                oldButton.Modulate = Color.White;
+                                SelectButtonPanel(oldButton, false);
                                 if (_selected == recipe)
                                 {
                                     OnGridViewRecipeSelected(this, null);
@@ -261,13 +265,10 @@ namespace Content.Client.Construction.UI
                         OnGridViewRecipeSelected(this, buttonToggledEventArgs.Pressed ? recipe : null);
                     };
 
-                    recipesGrid.AddChild(itemButton);
+                    recipesGrid.AddChild(itemButtonPanelContainer);
                     _recipeButtons[recipe.Name] = itemButton;
+                    SelectButtonPanel(itemButton, _selected == recipe);
                 }
-
-                if (_selected is not null
-                    && _recipeButtons.TryGetValue(_selected.Name, out var selectedButton))
-                    selectedButton.Modulate = Color.Green;
             }
             else
             {
@@ -276,6 +277,16 @@ namespace Content.Client.Construction.UI
                     recipesList.Add(GetItem(recipe, recipesList));
                 }
             }
+        }
+
+        private void SelectButtonPanel(TextureButton button, bool select)
+        {
+            button.Modulate = select ? Color.Green : Color.White;
+            if (button.Parent is not PanelContainer buttonPanel)
+                return;
+
+            var buttonColor = select ? StyleNano.ButtonColorDefault : Color.Transparent;
+            buttonPanel.PanelOverride = new StyleBoxFlat { BackgroundColor = buttonColor };
         }
 
         private void PopulateCategories(string? selectCategory = null)
