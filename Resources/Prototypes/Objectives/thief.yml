@@ -118,7 +118,7 @@
   - type: StealCondition
     stealGroup: IDCard
     minCollectionSize: 5
-    maxCollectionSize: 15
+    maxCollectionSize: 10
     verifyMapExistence: false
   - type: Objective
     difficulty: 0.7
