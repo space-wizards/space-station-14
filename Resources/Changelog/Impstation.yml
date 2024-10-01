@@ -2396,3 +2396,18 @@
   id: 303
   time: '2024-10-01T10:47:31.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/386
+- author: TGRCDev
+  changes:
+  - message: Some round presets now have cooldowns to prevent them from rolling back-to-back.
+    type: Tweak
+  id: 304
+  time: '2024-10-01T23:21:26.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/389
+- author: AftrLite
+  changes:
+  - message: Adds a new rare announcer with sinister vibes, featuring over 80 unique
+      audio lines. Why? Because we can.
+    type: Add
+  id: 305
+  time: '2024-10-01T23:21:16.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/388
