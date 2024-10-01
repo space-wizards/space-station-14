@@ -60,6 +60,15 @@
         amount: 8
         doAfter: 6
 
+    - to: bookshelf
+      completed:
+      - !type:SnapToGrid
+        southRotation: true
+      steps:
+      - material: WebSilk
+        amount: 4
+        doAfter: 3
+
 
   # Deconstruction is down here
   - node: wall
@@ -133,3 +142,15 @@
       steps:
       - tool: Cutting
         doAfter: 3
+
+  - node: bookshelf
+    entity: BookshelfWeb
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialWebSilk1
+        amount: 4
+      steps:
+      - tool: Cutting
+        doAfter: 2

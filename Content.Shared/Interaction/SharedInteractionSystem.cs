@@ -2,6 +2,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
+using Content.Shared.CCVar;
+using Content.Shared.Chat;
 using Content.Shared.CombatMode;
 using Content.Shared.Database;
 using Content.Shared.Ghost;
@@ -16,8 +18,8 @@ using Content.Shared.Item;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Physics;
+using Content.Shared.Players.RateLimiting;
 using Content.Shared.Popups;
-using Content.Shared.Silicons.StationAi;
 using Content.Shared.Storage;
 using Content.Shared.Tag;
 using Content.Shared.Timing;
@@ -25,6 +27,7 @@ using Content.Shared.UserInterface;
 using Content.Shared.Verbs;
 using Content.Shared.Wall;
 using JetBrains.Annotations;
+using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
@@ -64,6 +67,9 @@ namespace Content.Shared.Interaction
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
         [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
+        [Dependency] private readonly SharedPlayerRateLimitManager _rateLimit = default!;
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
+        [Dependency] private readonly ISharedChatManager _chat = default!;
 
         private EntityQuery<IgnoreUIRangeComponent> _ignoreUiRangeQuery;
         private EntityQuery<FixturesComponent> _fixtureQuery;
@@ -80,8 +86,8 @@ namespace Content.Shared.Interaction
 
         public const float InteractionRange = 1.5f;
         public const float InteractionRangeSquared = InteractionRange * InteractionRange;
-
         public const float MaxRaycastRange = 100f;
+        public const string RateLimitKey = "Interaction";
 
         public delegate bool Ignored(EntityUid entity);
 
@@ -119,7 +125,20 @@ namespace Content.Shared.Interaction
                     new PointerInputCmdHandler(HandleTryPullObject))
                 .Register<SharedInteractionSystem>();
 
+            _rateLimit.Register(RateLimitKey,
+                new RateLimitRegistration(CCVars.InteractionRateLimitPeriod,
+                    CCVars.InteractionRateLimitCount,
+                    null,
+                    CCVars.InteractionRateLimitAnnounceAdminsDelay,
+                    RateLimitAlertAdmins)
+            );
+
             InitializeBlocking();
+        }
+
+        private void RateLimitAlertAdmins(ICommonSession session)
+        {
+            _chat.SendAdminAlert(Loc.GetString("interaction-rate-limit-admin-announcement", ("player", session.Name)));
         }
 
         public override void Shutdown()
@@ -1250,8 +1269,11 @@ namespace Content.Shared.Interaction
             return InRangeUnobstructed(user, wearer) && _containerSystem.IsInSameOrParentContainer(user, wearer);
         }
 
-        protected bool ValidateClientInput(ICommonSession? session, EntityCoordinates coords,
-            EntityUid uid, [NotNullWhen(true)] out EntityUid? userEntity)
+        protected bool ValidateClientInput(
+            ICommonSession? session,
+            EntityCoordinates coords,
+            EntityUid uid,
+            [NotNullWhen(true)] out EntityUid? userEntity)
         {
             userEntity = null;
 
@@ -1281,7 +1303,7 @@ namespace Content.Shared.Interaction
                 return false;
             }
 
-            return true;
+            return _rateLimit.CountAction(session!, RateLimitKey) == RateLimitStatus.Allowed;
         }
 
         /// <summary>
