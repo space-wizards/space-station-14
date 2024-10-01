@@ -322,6 +322,8 @@
         - ReagentSlimeNorepinephricAcid
         - ReagentSlimeEphedrine
         - ReagentSlimeRobustHarvest
+        - ReagentSlimeTestosterone
+        - ReagentSlimeEstradiol
       chance: 1
 
 - type: entity
@@ -533,3 +535,37 @@
       - map: [ "enum.DamageStateVisualLayers.Base" ]
         state: alive
         color: "#3e901c"
+
+- type: entity
+  id: ReagentSlimeTestosterone
+  parent: ReagentSlime
+  suffix: Testosterone
+  components:
+  - type: Bloodstream
+    bloodReagent: Testosterone
+  - type: PointLight
+    color: "#267ef0"
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/elemental.rsi
+    layers:
+      - map: [ "enum.DamageStateVisualLayers.Base" ]
+        state: alive
+        color: "#267ef0"
+
+- type: entity
+  id: ReagentSlimeEstradiol
+  parent: ReagentSlime
+  suffix: Estradiol
+  components:
+  - type: Bloodstream
+    bloodReagent: Estradiol
+  - type: PointLight
+    color: "pink"
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/elemental.rsi
+    layers:
+      - map: [ "enum.DamageStateVisualLayers.Base" ]
+        state: alive
+        color: "pink"
