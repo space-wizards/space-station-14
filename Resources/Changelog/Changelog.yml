@@ -1,100 +1,4 @@
 ﻿Entries:
-- author: IProduceWidgets
-  changes:
-  - message: an arabian lamp!
-    type: Add
-  id: 6953
-  time: '2024-07-21T07:24:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27270
-- author: osjarw
-  changes:
-  - message: NPCs no longer get stuck trying to pick up anchored pipes.
-    type: Fix
-  id: 6954
-  time: '2024-07-21T07:28:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30061
-- author: The Hands Leader - JoJo cat
-  changes:
-  - message: Train map is back into rotation
-    type: Tweak
-  id: 6955
-  time: '2024-07-21T07:44:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30145
-- author: Plykiya
-  changes:
-  - message: Syndicate traitor reinforcements are now specialized to be medics, spies,
-      or thieves.
-    type: Add
-  - message: Reinforcement radios with options now have a radial menu, similar to
-      RCDs.
-    type: Tweak
-  id: 6956
-  time: '2024-07-21T10:32:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29853
-- author: Cojoke-dot
-  changes:
-  - message: Dead Space Dragons no long despawn
-    type: Fix
-  id: 6957
-  time: '2024-07-21T10:46:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29842
-- author: slarticodefast
-  changes:
-  - message: Fixed microwave construction.
-    type: Fix
-  id: 6958
-  time: '2024-07-21T16:20:09.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30232
-- author: Sphiral&Kezu
-  changes:
-  - message: 'Added a variety of new wall based storages: Shelfs! Build some today!'
-    type: Add
-  id: 6959
-  time: '2024-07-21T17:16:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27858
-- author: valquaint, slarticodefast
-  changes:
-  - message: Fixed borgs being unable to state laws with an activated flashlight.
-    type: Fix
-  id: 6960
-  time: '2024-07-22T03:55:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30183
-- author: Lank
-  changes:
-  - message: Darts can now pop balloons. Keep them away from any monkeys.
-    type: Add
-  id: 6961
-  time: '2024-07-22T05:38:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30088
-- author: Plykiya
-  changes:
-  - message: You can now eat or drink and swap hands without it being interrupted.
-    type: Tweak
-  id: 6962
-  time: '2024-07-22T09:17:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30060
-- author: IProduceWidgets
-  changes:
-  - message: Zookeepers can now possess Nonlethal shotguns according to spacelaw.
-    type: Tweak
-  id: 6963
-  time: '2024-07-22T09:33:03.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30237
-- author: Plykiya
-  changes:
-  - message: Bag sounds can now only be heard from half the distance and is quieter
-      in general.
-    type: Tweak
-  id: 6964
-  time: '2024-07-22T09:54:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30225
-- author: osjarw
-  changes:
-  - message: Syringes are now 0.5 seconds faster.
-    type: Tweak
-  id: 6965
-  time: '2024-07-22T10:20:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29825
 - author: Errant
   changes:
   - message: Replay observers now always spawn on the station.
@@ -3937,3 +3841,100 @@
   id: 7452
   time: '2024-09-28T09:02:43.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32483
+- author: ElectroJr
+  changes:
+  - message: Fixed a store currency duplication bug/exploit.
+    type: Fix
+  id: 7453
+  time: '2024-09-29T12:13:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32524
+- author: ElectroJr
+  changes:
+  - message: There is now a rate limit for most interactions. It should not be noticeable
+      most of the time, but may lead to mispredicts when spam-clicking.
+    type: Tweak
+  id: 7454
+  time: '2024-09-29T12:19:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32527
+- author: ArtisticRoomba
+  changes:
+  - message: HoS's energy shotgun is now correctly marked as grand theft contraband.
+    type: Tweak
+  id: 7455
+  time: '2024-09-29T12:22:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32521
+- author: Ilya246
+  changes:
+  - message: Steel cost of conveyor belt assemblies halved.
+    type: Tweak
+  id: 7456
+  time: '2024-09-29T15:18:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32444
+- author: CuteMoonGod
+  changes:
+  - message: Fixed execution system showing character name instead of their identity
+    type: Fix
+  id: 7457
+  time: '2024-09-29T22:36:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32536
+- author: drakewill-CRL
+  changes:
+  - message: Fix error in gas exchange processing order.
+    type: Fix
+  id: 7458
+  time: '2024-09-30T05:14:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32088
+- author: qwerltaz
+  changes:
+  - message: AI can now use fire alarms.
+    type: Add
+  id: 7459
+  time: '2024-09-30T09:56:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32467
+- author: BramvanZijp
+  changes:
+  - message: The Engineering Cyborg's Advanced Tool Module now has jaws of life and
+      a power drill instead of an omnitool, with a multitool replacing the network
+      configurator.
+    type: Tweak
+  id: 7460
+  time: '2024-09-30T17:38:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32487
+- author: pofitlo-Git
+  changes:
+  - message: Added a camera bug in the syndicate uplink that cost 4 TC and allow you
+      watch all cameras on station.
+    type: Add
+  id: 7461
+  time: '2024-09-30T22:24:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30250
+- author: kosticia
+  changes:
+  - message: The maximum number of ID cards required to complete a thief's objective
+      has been changed from 15 to 10.
+    type: Tweak
+  id: 7462
+  time: '2024-09-30T22:40:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32411
+- author: Golinth
+  changes:
+  - message: Firebots can now be constructed by scientists - the bots wander the station
+      looking for fires to put out with their built-in extinguisher.
+    type: Add
+  id: 7463
+  time: '2024-10-01T03:13:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32482
+- author: ScarKy0
+  changes:
+  - message: Binary encryption key now uses an AI icon
+    type: Tweak
+  id: 7464
+  time: '2024-10-01T04:03:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32327
+- author: BramvanZijp
+  changes:
+  - message: Fixed borgs being able to be briefly disabled by others.
+    type: Fix
+  id: 7465
+  time: '2024-10-01T15:13:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32485
