@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: IProduceWidgets
-  changes:
-  - message: Zookeepers can now possess Nonlethal shotguns according to spacelaw.
-    type: Tweak
-  id: 6963
-  time: '2024-07-22T09:33:03.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30237
 - author: Plykiya
   changes:
   - message: Bag sounds can now only be heard from half the distance and is quieter
@@ -3938,3 +3931,11 @@
   id: 7462
   time: '2024-09-30T22:40:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32411
+- author: Golinth
+  changes:
+  - message: Firebots can now be constructed by scientists - the bots wander the station
+      looking for fires to put out with their built-in extinguisher.
+    type: Add
+  id: 7463
+  time: '2024-10-01T03:13:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32482
