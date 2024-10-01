@@ -603,7 +603,7 @@
       - !type:GenericStatusEffect
         key: Drowsiness
         time: 2.0
-        #this is like 50% not working but I don't care'
+        #this is like 50% not working but I don't care
   metamorphicMaxFillLevels: 4
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: false
