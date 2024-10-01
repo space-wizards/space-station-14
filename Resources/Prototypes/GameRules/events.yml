@@ -456,8 +456,8 @@
     weight: 2 # twice as common as zombies
     duration: 1
   - type: ChangelingRule
-    sendBriefing: false
   - type: AntagSelection
+    agentName: changeling-roundend-name
     definitions:
     - prefRoles: [ Changeling ]
       max: 3
