@@ -35,7 +35,7 @@
     default:
       type:
         !type:TattooColoring
-      fallbackColor: "#212191"
+      fallbackColor: "#666666"
   sprites:
   - sprite: Mobs/Customization/tattoos.rsi
     state: tattoo_nanotrasen_chest
