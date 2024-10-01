@@ -24,6 +24,7 @@
     - id: welcome # The shift has started
       collection: SternWelcomeAnnouncements
 
+
     # Alert levels
     - id: alertGreen # Everything is fine
       path: alerts/green.ogg
@@ -46,6 +47,7 @@
     - id: alertPink # Please don't form a union
       path: alerts/pink.ogg
 
+
     # Events
     ## Wizard's Den
     ### Mid-Round Antagonists
@@ -59,8 +61,10 @@
       collection: SternAnomalyAnnouncements
     - id: bluespaceArtifact # An artifact has spawned in a random place
       collection: SternArtifactAnnouncements
+
     # - id: bluespaceLocker # Two random lockers now share inventories
     #   path: events/bluespace_locker.ogg
+
     - id: breakerFlip # A few random APCs have been disabled, ask Engineering to fix them
       collection: SternBreakerflipAnnouncements
     - id: bureaucraticError # Random jobs have been added, removed, or made infinite
@@ -85,8 +89,10 @@
       collection: SternPowergridAnnouncements
     - id: powerGridCheckComplete # The station's power is online again
       collection: SternPowergridfixedAnnouncements
+
     # - id: randomSentience # A random few animals have become sentient
     #   path: events/random_sentience.ogg
+
     - id: solarFlare # A solar flare is nearby, may mess with comms and electronics
       collection: SternSolarFlareAnnouncements
     - id: solarFlareComplete # The solar flare has passed
@@ -95,8 +101,10 @@
       collection: SternVentcloggedAnnouncements
     - id: immovableRodSpawn # The station is moving into an immovable rod, don't die or something, ask Engineering for help repairing it
       collection: SternImmovablerodAnnouncements
+
     # - id: ionStorm # AI-controlled equipment are now weird, check their laws
     #  path: events/ion_storm.ogg
+
 
     ## Vent Critters
     - id: brosSpawn # BROS are appearing in vents. UNGH
@@ -116,12 +124,14 @@
     - id: snailMigrationLowPop # Adorable little snails are appearing in vents
       collection: SternVentcrittersAnnouncements
 
+
     ## Delta-V
     - id: xenoVents # Xenomorphs are coming out of vents
       collection: SternVentcrittersAnnouncements
     ## NyanoTrasen
     # - id: noosphericStorm # A large amount of glimmer has joined the station and made people psionic
     #   path: events/noospheric_storm.ogg
+
 
     # Shuttle
     - id: shuttleCalled # The shuttle is on its way
@@ -142,6 +152,7 @@
       collection: SternShuttleLaunchingAnnouncements
     - id: shuttleLeft # The shuttle has left the station
       collection: SternShuttleDepartedAnnouncements
+
 
     # Fallback # REQUIRED
     - id: fallback # Any announcement sent without a valid announcement on this announcer will use this

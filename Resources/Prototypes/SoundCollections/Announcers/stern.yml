@@ -48,6 +48,63 @@
     - /Audio/Announcers/Stern/events/errorclerical/2.ogg
     - /Audio/Announcers/Stern/events/errorclerical/3.ogg
 
+# carprift
+- type: soundCollection
+  id: SternCarpriftAnnouncements
+  files:
+    - /Audio/Announcers/Stern/events/carprift/1.ogg
+    - /Audio/Announcers/Stern/events/carprift/2.ogg
+    - /Audio/Announcers/Stern/events/carprift/3.ogg
+
+# revenant
+- type: soundCollection
+  id: SternRevenantAnnouncements
+  files:
+    - /Audio/Announcers/Stern/events/revenant/1.ogg
+    - /Audio/Announcers/Stern/events/revenant/2.ogg
+    - /Audio/Announcers/Stern/events/revenant/3.ogg
+
+# gas leak
+- type: soundCollection
+  id: SternGasleakAnnouncements
+  files:
+    - /Audio/Announcers/Stern/events/gasleak/1.ogg
+    - /Audio/Announcers/Stern/events/gasleak/2.ogg
+    - /Audio/Announcers/Stern/events/gasleak/3.ogg
+
+# gasleak DONE
+- type: soundCollection
+  id: SternGasleakCompleteAnnouncements
+  files:
+    - /Audio/Announcers/Stern/events/gasleak/1-done.ogg
+    - /Audio/Announcers/Stern/events/gasleak/2-done.ogg
+    - /Audio/Announcers/Stern/events/gasleak/3-done.ogg
+
+# kudzu overgrowth
+- type: soundCollection
+  id: SternKudzuAnnouncements
+  files:
+    - /Audio/Announcers/Stern/events/kudzu/1.ogg
+    - /Audio/Announcers/Stern/events/kudzu/2.ogg
+    - /Audio/Announcers/Stern/events/kudzu/3.ogg
+
+
+# meteors
+- type: soundCollection
+  id: SternMeteorsAnnouncements
+  files:
+    - /Audio/Announcers/Stern/events/meteors/1.ogg
+    - /Audio/Announcers/Stern/events/meteors/2.ogg
+    - /Audio/Announcers/Stern/events/meteors/3.ogg
+
+# meteors DONE
+- type: soundCollection
+  id: SternMeteorsCompleteAnnouncements
+  files:
+    - /Audio/Announcers/Stern/events/meteors/1-done.ogg
+    - /Audio/Announcers/Stern/events/meteors/2-done.ogg
+    - /Audio/Announcers/Stern/events/meteors/3-done.ogg
+
 # powergrid
 - type: soundCollection
   id: SternPowergridAnnouncements
@@ -80,22 +137,6 @@
     - /Audio/Announcers/Stern/events/solarflare/2-done.ogg
     - /Audio/Announcers/Stern/events/solarflare/3-done.ogg
 
-# meteors
-- type: soundCollection
-  id: SternMeteorsAnnouncements
-  files:
-    - /Audio/Announcers/Stern/events/meteors/1.ogg
-    - /Audio/Announcers/Stern/events/meteors/2.ogg
-    - /Audio/Announcers/Stern/events/meteors/3.ogg
-
-# meteors DONE
-- type: soundCollection
-  id: SternMeteorsCompleteAnnouncements
-  files:
-    - /Audio/Announcers/Stern/events/meteors/1-done.ogg
-    - /Audio/Announcers/Stern/events/meteors/2-done.ogg
-    - /Audio/Announcers/Stern/events/meteors/3-done.ogg
-
 # ventcritters
 - type: soundCollection
   id: SternVentcrittersAnnouncements
@@ -119,46 +160,6 @@
     - /Audio/Announcers/Stern/events/immovablerod/1.ogg
     - /Audio/Announcers/Stern/events/immovablerod/2.ogg
     - /Audio/Announcers/Stern/events/immovablerod/3.ogg
-
-# carprift
-- type: soundCollection
-  id: SternCarpriftAnnouncements
-  files:
-    - /Audio/Announcers/Stern/events/carprift/1.ogg
-    - /Audio/Announcers/Stern/events/carprift/2.ogg
-    - /Audio/Announcers/Stern/events/carprift/3.ogg
-
-# revenant
-- type: soundCollection
-  id: SternRevenantAnnouncements
-  files:
-    - /Audio/Announcers/Stern/events/revenant/1.ogg
-    - /Audio/Announcers/Stern/events/revenant/2.ogg
-    - /Audio/Announcers/Stern/events/revenant/3.ogg
-
-# gasleak
-- type: soundCollection
-  id: SternGasleakAnnouncements
-  files:
-    - /Audio/Announcers/Stern/events/gasleak/1.ogg
-    - /Audio/Announcers/Stern/events/gasleak/2.ogg
-    - /Audio/Announcers/Stern/events/gasleak/3.ogg
-
-# gasleak DONE
-- type: soundCollection
-  id: SternGasleakCompleteAnnouncements
-  files:
-    - /Audio/Announcers/Stern/events/gasleak/1-done.ogg
-    - /Audio/Announcers/Stern/events/gasleak/2-done.ogg
-    - /Audio/Announcers/Stern/events/gasleak/3-done.ogg
-
-# kudzu
-- type: soundCollection
-  id: SternKudzuAnnouncements
-  files:
-    - /Audio/Announcers/Stern/events/kudzu/1.ogg
-    - /Audio/Announcers/Stern/events/kudzu/2.ogg
-    - /Audio/Announcers/Stern/events/kudzu/3.ogg
 
 #  -------------------------------------------- SHUTTLE --------------------------------------------
 
