@@ -208,6 +208,7 @@
 
 - type: reaction
   id: Ambuzol
+  preserveDNA: true
   reactants:
     Dylovene:
       amount: 1
@@ -379,6 +380,82 @@
       amount: 1
   products:
     Cognizine: 1
+
+- type: reaction
+  id: Subjuzine
+  reactants:
+    Cognizine:
+      amount: 1
+    Vestine:
+      amount: 1
+  products:
+    Subjuzine: 2
+
+- type: reaction
+  id: Subjuzine-Activation-Blood
+  preserveDNA: true
+  reactants:
+    Subjuzine:
+      amount: 4
+    Blood:
+      amount: 1
+  products:
+    ActivatedSubjuzine: 5
+
+- type: reaction
+  id: Subjuzine-Activation-Slime
+  preserveDNA: true
+  reactants:
+    Subjuzine:
+      amount: 4
+    Slime:
+      amount: 1
+  products:
+    ActivatedSubjuzine: 5
+
+- type: reaction
+  id: Subjuzine-Activation-Insect
+  preserveDNA: true
+  reactants:
+    Subjuzine:
+      amount: 4
+    InsectBlood:
+      amount: 1
+  products:
+    ActivatedSubjuzine: 5
+
+- type: reaction
+  id: Subjuzine-Activation-Sap
+  preserveDNA: true
+  reactants:
+    Subjuzine:
+      amount: 4
+    Sap:
+      amount: 1
+  products:
+    ActivatedSubjuzine: 5
+
+- type: reaction
+  id: Subjuzine-Activation-BlueBlood
+  preserveDNA: true
+  reactants:
+    Subjuzine:
+      amount: 4
+    CopperBlood:
+      amount: 1
+  products:
+    ActivatedSubjuzine: 5
+
+- type: reaction
+  id: Subjuzine-Activation-Anaerobic
+  preserveDNA: true
+  reactants:
+    Subjuzine:
+      amount: 4
+    AmmoniaBlood:
+      amount: 1
+  products:
+    ActivatedSubjuzine: 5
 
 - type: reaction
   id: Sigynate
