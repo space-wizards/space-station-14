@@ -11,8 +11,8 @@
   - CommandHeadset
   - CaptainGlasses
   - CaptainBackpack
-  - Trinkets
   - SurvivalCommand
+  - Trinkets
   - GroupSpeciesBreathTool
   - GroupTankHarnessCommandWithOuterwear
 # Assign GroupTankHarness to jobs without outer clothing and GroupTankHarnessWithOuterwear to jobs with outer clothing options
@@ -28,8 +28,8 @@
   - CommandHeadset
   - Glasses
   - HoPBackpack
-  - Trinkets
   - SurvivalCommand
+  - Trinkets
   - GroupSpeciesBreathTool
   - GroupTankHarnessCommandWithOuterwear
 
@@ -50,8 +50,8 @@
   - PassengerShoes
   - Glasses
   - CommonBackpack
-  - Trinkets
   - Survival
+  - Trinkets
   - GroupSpeciesBreathTool
   - GroupTankHarnessWithOuterwear
 
@@ -66,9 +66,9 @@
   - BartenderShoes
   - Glasses
   - CommonBackpack
+  - Survival
   - Trinkets
   - Mixologist
-  - Survival
   - GroupSpeciesBreathTool
   - GroupTankHarnessWithOuterwear
 
@@ -78,8 +78,8 @@
   - BartenderJumpsuit
   - Glasses
   - CommonBackpack
-  - Trinkets
   - Survival
+  - Trinkets
   - GroupSpeciesBreathTool
   - GroupTankHarness
 
@@ -94,8 +94,8 @@
   - ChefShoes
   - Glasses
   - CommonBackpack
-  - Trinkets
   - Survival
+  - Trinkets
   - GroupSpeciesBreathTool
   - GroupTankHarnessWithOuterwear
 
@@ -107,8 +107,8 @@
   - LibrarianShoes
   - Glasses
   - CommonBackpack
-  - Trinkets
   - Survival
+  - Trinkets
   - GroupSpeciesBreathTool
   - GroupTankHarness
 
@@ -120,8 +120,8 @@
   - LawyerShoes
   - Glasses
   - CommonBackpack
-  - Trinkets
   - Survival
+  - Trinkets
   - GroupSpeciesBreathTool
   - GroupTankHarness
 
@@ -136,8 +136,8 @@
   - ChaplainShoes
   - Glasses
   - CommonBackpack
-  - Trinkets
   - Survival
+  - Trinkets
   - GroupSpeciesBreathTool
   - GroupTankHarnessWithOuterwear
 
@@ -153,9 +153,9 @@
   - JanitorShoes
   - Glasses
   - CommonBackpack
+  - Survival
   - Trinkets
   - JanitorPlunger
-  - Survival
   - GroupSpeciesBreathTool
   - GroupTankHarnessWithOuterwear
 
@@ -170,8 +170,8 @@
   - BotanistShoes
   - Glasses
   - BotanistBackpack
-  - Trinkets
   - Survival
+  - Trinkets
   - GroupSpeciesBreathTool
   - GroupTankHarnessWithOuterwear
 
@@ -184,8 +184,8 @@
   - ClownShoes
   - Glasses
   - ClownBackpack
-  - Trinkets
   - SurvivalClown
+  - Trinkets
   - GroupTankHarnessWithOuterwear
 
 - type: roleLoadout
@@ -200,8 +200,8 @@
   - Glasses
   - MimeBackpack
   - MimeBelt
-  - Trinkets
   - SurvivalMime
+  - Trinkets
   - GroupTankHarnessWithOuterwear
 
 - type: roleLoadout
@@ -213,9 +213,9 @@
   - MusicianShoes
   - Glasses
   - CommonBackpack
+  - Survival
   - Trinkets
   - Instruments
-  - Survival
   - GroupSpeciesBreathTool
   - GroupTankHarnessWithOuterwear
 
@@ -231,8 +231,8 @@
   - QuartermasterHeadset
   - Glasses
   - QuartermasterBackpack
-  - Trinkets
   - SurvivalCommand
+  - Trinkets
   - GroupSpeciesBreathTool
   - GroupTankHarnessCommandWithOuterwear
 
@@ -248,8 +248,8 @@
   - Glasses
   - CargoTechnicianBackpack
   - CargoTechnicianPDA
-  - Trinkets
   - Survival
+  - Trinkets
   - GroupSpeciesBreathTool
   - GroupTankHarnessWithOuterwear
 
@@ -261,8 +261,8 @@
   - SalvageSpecialistShoes
   - SalvageSpecialistBackpack
   - Glasses
-  - Trinkets
   - Survival
+  - Trinkets
   - GroupSpeciesBreathTool
   - GroupTankHarnessWithOuterwear
 
@@ -277,8 +277,8 @@
   - ChiefEngineerShoes
   - ChiefEngineerHeadset
   - ChiefEngineerBackpack
-  - Trinkets
   - SurvivalExtendedCommand
+  - Trinkets
   - GroupSpeciesBreathTool
   - GroupTankHarnessCommandWithOuterwear
 
@@ -287,8 +287,8 @@
   groups:
   - TechnicalAssistantJumpsuit
   - StationEngineerBackpack
-  - Trinkets
   - SurvivalExtended
+  - Trinkets
   - GroupSpeciesBreathTool
   - GroupTankHarness
 
@@ -303,8 +303,8 @@
   - StationEngineerShoes
   - StationEngineerBackpack
   - StationEngineerID
-  - Trinkets
   - SurvivalExtended
+  - Trinkets
   - GroupSpeciesBreathTool
   - GroupTankHarnessWithOuterwear
 
@@ -316,8 +316,8 @@
   - AtmosphericTechnicianOuterClothing
   - AtmosphericTechnicianShoes
   - AtmosphericTechnicianBackpack
-  - Trinkets
   - SurvivalExtended
+  - Trinkets
   - GroupSpeciesBreathTool
   - GroupTankHarnessWithOuterwear
 
@@ -334,8 +334,8 @@
   - ResearchDirectorHeadset
   - Glasses
   - ResearchDirectorBackpack
-  - Trinkets
   - SurvivalCommand
+  - Trinkets
   - GroupSpeciesBreathTool
   - GroupTankHarnessCommandWithOuterwear
 
@@ -352,8 +352,8 @@
   - Glasses
   - ScientistBackpack
   - ScientistPDA
-  - Trinkets
   - Survival
+  - Trinkets
   - GroupSpeciesBreathTool
   - GroupTankHarnessWithOuterwear
 
@@ -363,8 +363,8 @@
   - ResearchAssistantJumpsuit
   - ScientistBackpack
   - Glasses
-  - Trinkets
   - Survival
+  - Trinkets
   - GroupSpeciesBreathTool
   - GroupTankHarness
 
@@ -381,9 +381,9 @@
   - HeadofSecurityHeadset
   - HeadofSecurityBackpack
   - SecurityBelt
+  - SurvivalSecurityCommand
   - Trinkets
   - SecurityStar
-  - SurvivalSecurityCommand
   - GroupSpeciesBreathToolSecurity
   - GroupTankHarnessCommandWithOuterwear
 
@@ -397,9 +397,9 @@
   - UpperSecurityShoes
   - SecurityBackpack
   - SecurityBelt
+  - SurvivalSecurity
   - Trinkets
   - SecurityStar
-  - SurvivalSecurity
   - GroupSpeciesBreathToolSecurity
   - GroupTankHarnessWithOuterwear
 
@@ -415,9 +415,9 @@
   - SecurityBackpack
   - SecurityBelt
   - SecurityPDA
+  - SurvivalSecurity
   - Trinkets
   - SecurityStar
-  - SurvivalSecurity
   - GroupSpeciesBreathToolSecurity
   - GroupTankHarnessWithOuterwear
 
@@ -431,9 +431,9 @@
   - DetectiveOuterClothing
   - DetectiveShoes
   - SecurityBackpack
+  - SurvivalSecurity
   - Trinkets
   - SecurityStar
-  - SurvivalSecurity
   - GroupSpeciesBreathToolSecurity
   - GroupTankHarnessWithOuterwear
 
@@ -448,9 +448,9 @@
   - MedicalGloves
   - BrigmedicShoes
   - BrigmedicBackpack
+  - SurvivalBrigmedic
   - Trinkets
   - SecurityStar
-  - SurvivalBrigmedic
   - GroupSpeciesBreathToolMedSec
   - GroupTankHarnessWithOuterwear
 
@@ -459,8 +459,8 @@
   groups:
   - SecurityCadetJumpsuit
   - SecurityBackpack
-  - Trinkets
   - SurvivalSecurity
+  - Trinkets
   - GroupSpeciesBreathToolSecurity
   - GroupTankHarness
 
@@ -478,8 +478,8 @@
   - ChiefMedicalOfficerHeadset
   - Glasses
   - ChiefMedicalOfficerBackpack
-  - Trinkets
   - SurvivalCommand
+  - Trinkets
   - GroupSpeciesBreathToolMedical
   - GroupTankHarnessCommandWithOuterwear
 
@@ -496,8 +496,8 @@
   - Glasses
   - MedicalBackpack
   - MedicalDoctorPDA
-  - Trinkets
   - SurvivalMedical
+  - Trinkets
   - GroupSpeciesBreathToolMedical
   - GroupTankHarnessWithOuterwear
 
@@ -507,8 +507,8 @@
   - MedicalInternJumpsuit
   - Glasses
   - MedicalBackpack
-  - Trinkets
   - SurvivalMedical
+  - Trinkets
   - GroupSpeciesBreathToolMedical
   - GroupTankHarness
 
@@ -522,8 +522,8 @@
   - MedicalGloves
   - ChemistShoes
   - ChemistBackpack
-  - Trinkets
   - SurvivalMedical
+  - Trinkets
   - GroupSpeciesBreathToolMedical
   - GroupTankHarnessWithOuterwear
 
@@ -539,8 +539,8 @@
   - ParamedicShoes
   - Glasses
   - MedicalBackpack
-  - Trinkets
   - SurvivalMedical
+  - Trinkets
   - GroupSpeciesBreathToolMedical
   - GroupTankHarnessWithOuterwear
 
@@ -550,8 +550,8 @@
   groups:
   - CommonBackpack
   - Glasses
-  - Trinkets
   - Survival
+  - Trinkets
   - GroupSpeciesBreathTool
   - GroupTankHarness
 
@@ -564,8 +564,8 @@
   - ReporterShoes
   - Glasses
   - CommonBackpack
-  - Trinkets
   - Survival
+  - Trinkets
   - GroupSpeciesBreathTool
   - GroupTankHarness
 
@@ -577,8 +577,8 @@
   - PsychologistShoes
   - Glasses
   - MedicalBackpack
-  - Trinkets
   - Survival
+  - Trinkets
   - GroupSpeciesBreathTool
   - GroupTankHarness
 
@@ -589,8 +589,8 @@
   - BoxerGloves
   - Glasses
   - CommonBackpack
-  - Trinkets
   - Survival
+  - Trinkets
   - GroupSpeciesBreathTool
   - GroupTankHarness
 

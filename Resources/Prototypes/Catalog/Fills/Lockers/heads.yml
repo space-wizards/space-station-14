@@ -69,7 +69,7 @@
     - id: ClothingOuterHardsuitCap
     - id: ClothingMaskGasCaptain
     - id: JetpackCaptainFilled
-    - id: OxygenTankFilled
+    - id: OxygenTankCommandFilled
 
 # No laser locker, used when the antique laser is placed in the special display crate
 - type: entity
@@ -172,7 +172,7 @@
     - id: ClothingOuterHardsuitEngineeringWhite
     - id: ClothingShoesBootsMagAdv
     - id: JetpackVoidFilled
-    - id: OxygenTankFilled
+    - id: OxygenTankCommandFilled
 
 # No hardsuit locker
 - type: entity
@@ -227,7 +227,7 @@
     children:
     - id: ClothingMaskBreathMedical
     - id: ClothingOuterHardsuitMedical
-    - id: OxygenTankFilled
+    - id: OxygenTankCommandFilled
 
 # No hardsuit locker
 - type: entity
@@ -277,7 +277,7 @@
     children:
     - id: ClothingMaskBreath
     - id: ClothingOuterHardsuitRd
-    - id: OxygenTankFilled
+    - id: OxygenTankCommandFilled
 
 # No hardsuit locker
 - type: entity
@@ -337,7 +337,7 @@
     - id: ClothingMaskGasSwat
     - id: ClothingOuterHardsuitSecurityRed
     - id: JetpackSecurityFilled
-    - id: OxygenTankFilled
+    - id: OxygenTankCommandFilled
 
 # No hardsuit locker
 - type: entity

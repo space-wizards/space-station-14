@@ -27,14 +27,6 @@
     species:
     - Vox
 
-# A special non-vox nitrogen group to determine which nitrogen tanks appear in suit storage and which appear in the bag
-- type: loadoutEffectGroup
-  id: NitrogenBreatherNonVox
-  effects:
-  - !type:SpeciesLoadoutEffect
-    species:
-    - SlimePerson
-
 - type: loadoutEffectGroup
   id: EffectSpeciesSnail
   effects:
@@ -281,25 +273,6 @@
     proto: EffectSpeciesVox
   equipment:
     suitstorage: NitrogenTankCommandFilled
-
-# A full fancy command tank for non-vox command since everybody but HoP and QM already has one in their office, it's probably fine
-- type: loadout
-  id: LoadoutSpeciesNitrogenCommand
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: NitrogenBreatherNonVox
-  storage:
-    back:
-    - NitrogenTankCommandFilled
-
-- type: loadout
-  id: LoadoutSpeciesOxygenCommand
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: OxygenBreather
-  storage:
-    back:
-    - OxygenTankCommandFilled
 
 # Full EVA Tank, Any Species
 - type: loadout

@@ -245,8 +245,6 @@
   - EmergencyNitrogenCommand
   - EmergencyOxygenCommand
   - LoadoutSpeciesVoxNitrogenCommand
-  - LoadoutSpeciesOxygenCommand
-  - LoadoutSpeciesNitrogenCommand
 
 - type: loadoutGroup
   id: SurvivalExtendedCommand
@@ -257,8 +255,6 @@
   - EmergencyNitrogenExtendedCommand
   - EmergencyOxygenExtendedCommand
   - LoadoutSpeciesVoxNitrogenCommand
-  - LoadoutSpeciesOxygenCommand
-  - LoadoutSpeciesNitrogenCommand
 
 - type: loadoutGroup
   id: SurvivalSecurityCommand
@@ -269,8 +265,6 @@
   - EmergencyNitrogenSecurityCommand
   - EmergencyOxygenSecurityCommand
   - LoadoutSpeciesVoxNitrogenCommand
-  - LoadoutSpeciesOxygenCommand
-  - LoadoutSpeciesNitrogenCommand
 
 # Civilian
 - type: loadoutGroup
