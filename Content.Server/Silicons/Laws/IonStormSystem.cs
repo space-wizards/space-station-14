@@ -59,6 +59,7 @@ public sealed class IonStormSystem : EntitySystem
     [ValidatePrototypeId<DatasetPrototype>]
     private const string Foods = "IonStormFoods";
 
+    //Randomly alters the laws of an individual silicon.
     public void IonStormTarget(EntityUid ent, SiliconLawBoundComponent lawBound, TransformComponent xform, IonStormTargetComponent target, EntityUid? chosenStation, bool adminlog = true)
     {
         if (!_robustRandom.Prob(target.Chance))
