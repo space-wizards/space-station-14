@@ -33,6 +33,13 @@ namespace Content.Server.GameTicking.Presets
         [DataField("maxPlayers")]
         public int? MaxPlayers;
 
+        /// <summary>
+        /// Ensures that this gamemode does not get selected for a number of rounds
+        /// by something like Secret. This is not considered when the preset is forced.
+        /// </summary>
+        [DataField("cooldown")]
+        public int Cooldown = 0;
+
         [DataField("rules", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
         public IReadOnlyList<string> Rules { get; private set; } = Array.Empty<string>();
 

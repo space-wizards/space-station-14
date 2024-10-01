@@ -5,6 +5,7 @@
   name: survival-title
   showInVote: false # secret
   description: survival-description
+  cooldown: 2
   rules:
     - MeteorSwarmScheduler
     - RampingStationEventScheduler
@@ -21,6 +22,7 @@
   name: kessler-syndrome-title
   showInVote: false # secret
   description: kessler-syndrome-description
+  cooldown: 1
   rules:
     - KesslerSyndromeScheduler
     - RampingStationEventScheduler
@@ -166,6 +168,7 @@
   name: spy-vs-spy-title
   description: spy-vs-spy-description
   showInVote: false
+  cooldown: 2
   rules:
     - SpyVsSpy
     - SleeperlessStationEventScheduler
@@ -178,6 +181,7 @@
   name: spy-vs-spy-title
   description: spy-vs-spy-description
   showInVote: false
+  cooldown: 2
   rules:
     - SpyVsSpy3TC
     - SleeperlessStationEventScheduler
@@ -233,6 +237,7 @@
   name: nukeops-title
   description: nukeops-description
   showInVote: false
+  cooldown: 1
   rules:
     - Nukeops
     - SubGamemodesRule
@@ -269,6 +274,7 @@
   name: zombie-title
   description: zombie-description
   showInVote: false
+  cooldown: 1
   rules:
   - Zombie
   - BasicStationEventScheduler
@@ -285,6 +291,7 @@
   name: zombieteors-title
   description: zombieteors-description
   showInVote: false
+  cooldown: 1
   rules:
   - Zombie
   - BasicStationEventScheduler
