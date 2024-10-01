@@ -13,6 +13,7 @@ using Content.Shared.Examine;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
+using Content.Server.Atmos.EntitySystems;
 
 namespace Content.Server.Power.EntitySystems;
 
