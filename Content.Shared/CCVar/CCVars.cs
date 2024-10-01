@@ -454,6 +454,13 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<float> SubstationDecayCoefficient =
             CVarDef.Create("game.substation_decay_coefficient", 300000f, CVar.SERVER | CVar.REPLICATED);
 
+        /// <summary>
+        /// Substation decay timer
+        /// </summary>
+
+        public static readonly CVarDef<float> SubstationDecayTimer =
+            CVarDef.Create("game.substation_decay_timer", 0f, CVar.SERVER | CVar.REPLICATED);
+
         /*
          * Discord
          */

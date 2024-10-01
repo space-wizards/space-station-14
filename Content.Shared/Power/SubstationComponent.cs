@@ -15,7 +15,7 @@ public sealed partial class SubstationComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public SubstationIntegrityState State = SubstationIntegrityState.Healthy;
 
-    //9.231205828 is the amount of moles in a 5L container (the default conduit) at 1000Kpa 20C°
+    // 9.231205828 is the amount of moles in a 5L container (the default conduit) at 1000Kpa 20C°
     public float InitialNitrogenBoosterMoles = 2.051379050f;
 
     [DataField(required: true)]
@@ -24,4 +24,9 @@ public sealed partial class SubstationComponent : Component
 
     public bool AllowInsert = true;
 
+    public float SubstationLightBlinkInterval = 1f;
+
+    public float SubstationLightBlinkTimer = 1f;
+
+    public bool SubstationLightBlinkState = true;
 }

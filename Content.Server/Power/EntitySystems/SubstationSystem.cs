@@ -31,9 +31,6 @@ public sealed class SubstationSystem : EntitySystem
     private int _substationDecayTimeout;
     private float _substationDecayCoeficient;
     private float _substationDecayTimer;
-    private float _substationLightBlinkInterval = 1f; //1 second
-    private float _substationLightBlinkTimer = 1f;
-    private bool _substationLightBlinkState = true;
 
     public override void Initialize()
     {
@@ -44,6 +41,7 @@ public sealed class SubstationSystem : EntitySystem
         _substationDecayEnabled = _cfg.GetCVar(CCVars.SubstationDecayEnabled);
         _substationDecayTimeout = _cfg.GetCVar(CCVars.SubstationDecayTimeout);
         _substationDecayCoeficient = _cfg.GetCVar(CCVars.SubstationDecayCoefficient);
+        _substationDecayTimer = _cfg.GetCVar(CCVars.SubstationDecayTimer);
 
         SubscribeLocalEvent<SubstationComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<SubstationComponent, RejuvenateEvent>(OnRejuvenate);
@@ -89,48 +87,49 @@ public sealed class SubstationSystem : EntitySystem
 
     public override void Update(float deltaTime)
     {
-
         base.Update(deltaTime);
 
-        _substationLightBlinkTimer -= deltaTime;
-        if (_substationLightBlinkTimer <= 0f)
+        var lightquery = EntityQueryEnumerator<SubstationComponent>();
+        while (lightquery.MoveNext(out var uid, out var subs))
         {
-            _substationLightBlinkTimer = _substationLightBlinkInterval;
-            _substationLightBlinkState = !_substationLightBlinkState;
-
-            var lightquery = EntityQueryEnumerator<SubstationComponent>();
-            while (lightquery.MoveNext(out var uid, out var subs))
+            subs.SubstationLightBlinkTimer -= deltaTime;
+            if (subs.SubstationLightBlinkTimer <= 0f)
             {
+                subs.SubstationLightBlinkTimer = subs.SubstationLightBlinkInterval;
+                subs.SubstationLightBlinkState = !subs.SubstationLightBlinkState;
+
                 if (subs.State == SubstationIntegrityState.Healthy)
                     continue;
 
                 if (!_lightSystem.TryGetLight(uid, out var shlight))
                     return;
 
-                if (_substationLightBlinkState)
+                if (subs.SubstationLightBlinkState)
                     _sharedLightSystem.SetEnergy(uid, 1.6f, shlight);
                 else
                     _sharedLightSystem.SetEnergy(uid, 1f, shlight);
             }
-        }
 
-        if (!_substationDecayEnabled)
-        {
-            _substationDecayTimer -= deltaTime;
-            if (_substationDecayTimer <= 0.0f)
+            if (!_substationDecayEnabled)
             {
-                _substationDecayTimer = 0.0f;
-                _substationDecayEnabled = true;
+                _substationDecayTimer -= deltaTime;
+                if (_substationDecayTimer <= 0.0f)
+                {
+                    _substationDecayTimer = 0.0f;
+                    _substationDecayEnabled = true;
+                }
+                return;
             }
-            return;
         }
     }
-
     private void ConsumeNitrogenBoosterGas(float deltaTime, float scalar, SubstationComponent subs, PowerNetworkBatteryComponent battery, GasMixture mixture)
     {
         var initialN2 = mixture.GetMoles(Gas.Nitrogen);
+        var boosterMoles = subs.InitialNitrogenBoosterMoles;
+        var currentSupply = battery.CurrentSupply;
+        var decayFactor = _substationDecayCoeficient * scalar;
 
-        var molesConsumed = (subs.InitialNitrogenBoosterMoles * battery.CurrentSupply * deltaTime) / (_substationDecayCoeficient * scalar);
+        var molesConsumed = boosterMoles * currentSupply * deltaTime / decayFactor;
 
         var minimumReaction = Math.Abs(initialN2) * molesConsumed / 2;
 
@@ -233,7 +232,7 @@ public sealed class SubstationSystem : EntitySystem
             AddComp<ExaminableBatteryComponent>(uid);
     }
 
-    private void ChangeState(EntityUid uid, SubstationIntegrityState state, SubstationComponent? subs=null)
+    private void ChangeState(EntityUid uid, SubstationIntegrityState state, SubstationComponent? subs = null)
     {
 
         if (!_lightSystem.TryGetLight(uid, out var light))
@@ -287,7 +286,10 @@ public sealed class SubstationSystem : EntitySystem
 
         if (container.ContainedEntities.Count > 0)
         {
-            args.GasMixtures = new Dictionary<string, GasMixture?> { {Name(uid), Comp<GasTankComponent>(container.ContainedEntities[0]).Air} };
+            args.GasMixtures =
+            [
+                (Name(uid), Comp<GasTankComponent>(container.ContainedEntities[0]).Air)
+            ];
         }
     }
 

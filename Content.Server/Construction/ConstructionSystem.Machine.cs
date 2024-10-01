@@ -72,10 +72,4 @@ public sealed partial class ConstructionSystem
             }
         }
     }
-        public void AddMaxUpgrade(string upgradedLocId)
-    {
-        var upgraded = Loc.GetString(upgradedLocId);
-        this.Message.AddMarkup(Loc.GetString("machine-upgrade-max-upgrade", ("upgraded", upgraded)) + '\n');
-    }
-
 }
