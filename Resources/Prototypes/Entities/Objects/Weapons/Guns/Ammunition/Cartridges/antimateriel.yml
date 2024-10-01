@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseCartridge
+  parent: [ BaseCartridge, BaseMajorContraband ]
   id: CartridgeAntiMateriel
   name: cartridge (.60 anti-materiel)
   components:

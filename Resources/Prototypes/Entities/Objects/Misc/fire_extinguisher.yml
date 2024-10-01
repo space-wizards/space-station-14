@@ -62,6 +62,9 @@
     - Rolling
     speedModifier: 0.5 # its very big, awkward to use
   - type: Appearance
+  - type: Tag
+    tags:
+      - FireExtinguisher
   - type: GenericVisualizer
     visuals:
       enum.ToggleVisuals.Toggled:

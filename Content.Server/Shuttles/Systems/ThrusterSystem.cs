@@ -19,6 +19,7 @@ using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Content.Shared.Localizations;
+using Content.Shared.Power;
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -26,6 +27,7 @@ public sealed class ThrusterSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
+    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly AmbientSoundSystem _ambient = default!;
     [Dependency] private readonly FixtureSystem _fixtureSystem = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
@@ -108,7 +110,7 @@ public sealed class ThrusterSystem : EntitySystem
                     continue;
 
                 var checkPos = tilePos + new Vector2i(x, y);
-                var enumerator = grid.GetAnchoredEntitiesEnumerator(checkPos);
+                var enumerator = _mapSystem.GetAnchoredEntitiesEnumerator(uid, grid, checkPos);
 
                 while (enumerator.MoveNext(out var ent))
                 {
@@ -119,7 +121,7 @@ public sealed class ThrusterSystem : EntitySystem
                     var xform = xformQuery.GetComponent(ent.Value);
                     var direction = xform.LocalRotation.ToWorldVec();
 
-                    if (new Vector2i((int) direction.X, (int) direction.Y) != new Vector2i(x, y))
+                    if (new Vector2i((int)direction.X, (int)direction.Y) != new Vector2i(x, y))
                         continue;
 
                     DisableThruster(ent.Value, thruster, xform.GridUid);
@@ -182,8 +184,8 @@ public sealed class ThrusterSystem : EntitySystem
             return;
         }
 
-        var oldDirection = (int) args.OldRotation.GetCardinalDir() / 2;
-        var direction = (int) args.NewRotation.GetCardinalDir() / 2;
+        var oldDirection = (int)args.OldRotation.GetCardinalDir() / 2;
+        var direction = (int)args.NewRotation.GetCardinalDir() / 2;
         var oldShuttleComponent = shuttleComponent;
 
         if (args.ParentChanged)
@@ -281,7 +283,7 @@ public sealed class ThrusterSystem : EntitySystem
         switch (component.Type)
         {
             case ThrusterType.Linear:
-                var direction = (int) xform.LocalRotation.GetCardinalDir() / 2;
+                var direction = (int)xform.LocalRotation.GetCardinalDir() / 2;
 
                 shuttleComponent.LinearThrust[direction] += component.Thrust;
                 DebugTools.Assert(!shuttleComponent.LinearThrusters[direction].Contains(uid));
@@ -293,7 +295,7 @@ public sealed class ThrusterSystem : EntitySystem
                 {
                     var shape = new PolygonShape();
                     shape.Set(component.BurnPoly);
-                    _fixtureSystem.TryCreateFixture(uid, shape, BurnFixture, hard: false, collisionLayer: (int) CollisionGroup.FullTileMask, body: physicsComponent);
+                    _fixtureSystem.TryCreateFixture(uid, shape, BurnFixture, hard: false, collisionLayer: (int)CollisionGroup.FullTileMask, body: physicsComponent);
                 }
 
                 break;
@@ -333,7 +335,7 @@ public sealed class ThrusterSystem : EntitySystem
         foreach (var dir in new[]
                      { Direction.South, Direction.East, Direction.North, Direction.West })
         {
-            var index = (int) dir / 2;
+            var index = (int)dir / 2;
             var pop = shuttle.LinearThrusters[index];
             var totalThrust = 0f;
 
@@ -379,7 +381,7 @@ public sealed class ThrusterSystem : EntitySystem
         {
             case ThrusterType.Linear:
                 angle ??= xform.LocalRotation;
-                var direction = (int) angle.Value.GetCardinalDir() / 2;
+                var direction = (int)angle.Value.GetCardinalDir() / 2;
 
                 shuttleComponent.LinearThrust[direction] -= component.Thrust;
                 DebugTools.Assert(shuttleComponent.LinearThrusters[direction].Contains(uid));
@@ -425,7 +427,7 @@ public sealed class ThrusterSystem : EntitySystem
 
         var xform = Transform(uid);
 
-        if (!xform.Anchored ||!this.IsPowered(uid, EntityManager))
+        if (!xform.Anchored || !this.IsPowered(uid, EntityManager))
         {
             return false;
         }
@@ -442,7 +444,8 @@ public sealed class ThrusterSystem : EntitySystem
             return true;
 
         var (x, y) = xform.LocalPosition + xform.LocalRotation.Opposite().ToWorldVec();
-        var tile = Comp<MapGridComponent>(xform.GridUid.Value).GetTileRef(new Vector2i((int) Math.Floor(x), (int) Math.Floor(y)));
+        var mapGrid = Comp<MapGridComponent>(xform.GridUid.Value);
+        var tile = _mapSystem.GetTileRef(xform.GridUid.Value, mapGrid, new Vector2i((int)Math.Floor(x), (int)Math.Floor(y)));
 
         return tile.Tile.IsSpace();
     }
@@ -581,6 +584,6 @@ public sealed class ThrusterSystem : EntitySystem
 
     private int GetFlagIndex(DirectionFlag flag)
     {
-        return (int) Math.Log2((int) flag);
+        return (int)Math.Log2((int)flag);
     }
 }

@@ -267,6 +267,12 @@
     - pancakesbb1
     - pancakesbb2
     - pancakesbb3
+    - pancakesbb4
+    - pancakesbb5
+    - pancakesbb6
+    - pancakesbb7
+    - pancakesbb8
+    - pancakesbb9
   - type: Sprite
     state: pancakesbb1
     layers:
@@ -278,6 +284,24 @@
       visible: false
     - state: pancakesbb3
       map: ["pancakesbb3"]
+      visible: false
+    - state: pancakesbb4
+      map: ["pancakesbb4"]
+      visible: false
+    - state: pancakesbb5
+      map: ["pancakesbb5"]
+      visible: false
+    - state: pancakesbb6
+      map: ["pancakesbb6"]
+      visible: false
+    - state: pancakesbb7
+      map: ["pancakesbb7"]
+      visible: false
+    - state: pancakesbb8
+      map: ["pancakesbb8"]
+      visible: false
+    - state: pancakesbb9
+      map: ["pancakesbb9"]
       visible: false
   - type: Tag
     tags:
@@ -296,6 +320,12 @@
     - pancakescc1
     - pancakescc2
     - pancakescc3
+    - pancakescc4
+    - pancakescc5
+    - pancakescc6
+    - pancakescc7
+    - pancakescc8
+    - pancakescc9
   - type: Sprite
     state: pancakescc1
     layers:
@@ -307,6 +337,24 @@
       visible: false
     - state: pancakescc3
       map: ["pancakescc3"]
+      visible: false
+    - state: pancakescc4
+      map: ["pancakescc4"]
+      visible: false
+    - state: pancakescc5
+      map: ["pancakescc5"]
+      visible: false
+    - state: pancakescc6
+      map: ["pancakescc6"]
+      visible: false
+    - state: pancakescc7
+      map: ["pancakescc7"]
+      visible: false
+    - state: pancakescc8
+      map: ["pancakescc8"]
+      visible: false
+    - state: pancakescc9
+      map: ["pancakescc9"]
       visible: false
   - type: SolutionContainerManager
     solutions:
@@ -444,6 +492,13 @@
           Quantity: 8
         - ReagentId: Protein
           Quantity: 2
+  - type: FlavorProfile
+    flavors:
+      - meaty
+      - bread
+  - type: Tag
+    tags:
+    - Meat
 
 - type: entity
   name: chèvre chaud
@@ -627,3 +682,7 @@
           Quantity: 2
         - ReagentId: Vitamin
           Quantity: 1
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 0 # so the damage stats icon doesn't immediately give away the syndie ones
