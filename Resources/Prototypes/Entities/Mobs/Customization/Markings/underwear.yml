@@ -2,7 +2,7 @@
   id: UnderwearDefault
   bodyPart: Underwear
   markingCategory: Underwear
-  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid, SlimePerson, Diona, Moth, Gray]
+  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid, SlimePerson, Diona, Moth]
   coloring:
     default:
       type:
@@ -16,7 +16,7 @@
   id: UnderwearBriefs
   bodyPart: Underwear
   markingCategory: Underwear
-  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid, SlimePerson, Diona, Moth, Gray]
+  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid, SlimePerson, Diona, Moth]
   coloring:
     default:
       type:
@@ -30,7 +30,7 @@
   id: UnderwearLowriders
   bodyPart: Underwear
   markingCategory: Underwear
-  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid, SlimePerson, Diona, Moth, Gray]
+  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid, SlimePerson, Diona, Moth]
   coloring:
     default:
       type:
@@ -44,7 +44,7 @@
   id: UnderwearSatin
   bodyPart: Underwear
   markingCategory: Underwear
-  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid, SlimePerson, Diona, Moth, Gray]
+  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid, SlimePerson, Diona, Moth]
   coloring:
     default:
       type:
@@ -58,7 +58,7 @@
   id: UnderwearTanga
   bodyPart: Underwear
   markingCategory: Underwear
-  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid, SlimePerson, Diona, Moth, Gray]
+  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid, SlimePerson, Diona, Moth]
   coloring:
     default:
       type:
