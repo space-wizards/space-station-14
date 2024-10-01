@@ -10,16 +10,18 @@ public sealed class ServerUsernameRuleDef
 {
     public int? Id {get; }
     public DateTimeOffset CreationTime { get; }
+    public int? RoundId { get; }
     public string Expression { get; }
     public string Message { get; }
     public NetUserId? RestrictingAdmin { get; }
     public bool ExtendToBan { get; }
     public bool Retired { get; }
     public NetUserId? RetiringAdmin { get; }
-    public DateTimeOffset? RetireTime { get; set; }
+    public DateTimeOffset? RetireTime { get; }
 
     public ServerUsernameRuleDef(int? id,
         DateTimeOffset creationTime,
+        int? roundId,
         string expression,
         string message,
         NetUserId? restrictingAdmin,
@@ -34,6 +36,7 @@ public sealed class ServerUsernameRuleDef
 
         Id = id;
         CreationTime = creationTime;
+        roundId = roundId;
         Expression = expression;
         Message = message;
         restrictingAdmin = RestrictingAdmin;

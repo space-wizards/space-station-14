@@ -444,6 +444,7 @@ namespace Content.Server.Database
             return new ServerUsernameRuleDef(
                 rule.Id,
                 rule.CreationTime,
+                rule.RoundId,
                 rule.Expression,
                 rule.Message,
                 acUid,

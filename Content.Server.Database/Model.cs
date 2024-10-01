@@ -983,13 +983,15 @@ namespace Content.Server.Database
         public DateTime UnbanTime { get; set; }
     }
 
-    //todo: add table UsernameRule
     [Table("server_username_rule")]
     public sealed class ServerUsernameRule
     {
         [Required, Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public DateTime CreationTime { get; set; }
+        [ForeignKey("Round")]
+        public int? RoundId { get; set; }
+        [Required]
         public string Expression { get; set; }
         public string Message { get; set; }
         public Guid? RestrictingAdmin { get; set; }

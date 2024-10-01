@@ -37,6 +37,7 @@ public sealed partial class UsernameRuleManager : IUsernameRuleManager, IPostInj
     [Dependency] private readonly ITaskManager _taskManager = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly ILocalizationManager _localizationManager = default!;
+    [Dependency] private readonly IEntitySystemManager _systems = default!;
 
     private ISawmill _sawmill = default!;
 
@@ -82,9 +83,13 @@ public sealed partial class UsernameRuleManager : IUsernameRuleManager, IPostInj
 
         var finalMessage = message == null? expression : message;
 
+        _systems.TryGetEntitySystem<GameTicker>(out var ticker);
+        int? roundId = ticker == null || ticker.RoundId == 0 ? null : ticker.RoundId;
+
         var ruleDef = new ServerUsernameRuleDef(
             null,
             DateTimeOffset.Now,
+            roundId,
             expression,
             finalMessage,
             restrictingAdmin,
