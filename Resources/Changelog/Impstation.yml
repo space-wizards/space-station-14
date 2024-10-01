@@ -2367,3 +2367,32 @@
   id: 300
   time: '2024-10-01T06:29:19.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/375
+- author: KingMudkipIII
+  changes:
+  - message: A new medicine, Caramexinin. It counteracts poisoning from Theobromine.
+    type: Add
+  id: 301
+  time: '2024-10-01T10:48:01.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/385
+- author: formlessnameless
+  changes:
+  - message: Modified threshold for lings getting the shakes and bleeding all over
+    type: Tweak
+  - message: Lings will no longer always be shaking when dead
+    type: Fix
+  - message: Midround lings show up in end screen
+    type: Fix
+  id: 302
+  time: '2024-10-01T10:47:12.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/387
+- author: Darkmajia
+  changes:
+  - message: Command air tanks now spawn in lockers and suit storage, rather than
+      in command's bags.
+    type: Tweak
+  - message: Fixed a loadout priority issue that could cause survival boxes to drop
+      at your feet.
+    type: Fix
+  id: 303
+  time: '2024-10-01T10:47:31.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/386
