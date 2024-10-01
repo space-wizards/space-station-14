@@ -32,6 +32,7 @@
   - ClothingNeckTransPin
   - ClothingNeckAutismPin
   - ClothingNeckGoldAutismPin
+  - HarmonicaInstrument
 
 - type: loadoutGroup
   id: Glasses

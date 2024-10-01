@@ -179,3 +179,12 @@
   storage:
     back:
     - NewtonCradle
+
+- type: loadout
+  id: HarmonicaInstrument
+  storage:
+    back:
+    - HarmonicaInstrument
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MusicallyTalented
