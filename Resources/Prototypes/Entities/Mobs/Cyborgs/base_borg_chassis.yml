@@ -69,6 +69,9 @@
         type: BorgBoundUserInterface
       enum.StrippingUiKey.Key:
         type: StrippableBoundUserInterface
+      # Only used for NT borgs that can switch type, defined here to avoid copy-pasting the rest of this component.
+      enum.BorgSwitchableTypeUiKey.SelectBorgType:
+        type: BorgSelectTypeUserInterface
   - type: ActivatableUI
     key: enum.BorgUiKey.Key
   - type: SiliconLawBound
@@ -155,6 +158,7 @@
       collection: FootstepBorg
   - type: Construction
     graph: Cyborg
+    node: cyborg
     containers:
     - part-container
     - cell_slot
@@ -284,6 +288,9 @@
     access: [["Command"], ["Research"]]
   - type: ShowJobIcons
   - type: ShowMindShieldIcons
+  - type: InteractionPopup
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
 
 - type: entity
   id: BaseBorgChassisSyndicate

@@ -437,3 +437,31 @@ HatBase: null
 
 # 2024-09-19
 BlueprintFlare: null
+
+# 2024-10-01
+# Removal of separate borg chassis parts, replace them with generic borg parts.
+LeftArmBorgEngineer: LeftArmBorg
+RightArmBorgEngineer: RightArmBorg
+LeftLegBorgEngineer: LeftLegBorg
+RightLegBorgEngineer: RightLegBorg
+HeadBorgEngineer: LightHeadBorg
+TorsoBorgEngineer: TorsoBorg
+
+LeftArmBorgMedical: LeftArmBorg
+RightArmBorgMedical: RightArmBorg
+LeftLegBorgMedical: LeftLegBorg
+RightLegBorgMedical: RightLegBorg
+HeadBorgMedical: LightHeadBorg
+TorsoBorgMedical: TorsoBorg
+
+LeftArmBorgMining: LeftArmBorg
+RightArmBorgMining: RightArmBorg
+LeftLegBorgMining: LeftLegBorg
+RightLegBorgMining: RightLegBorg
+HeadBorgMining: LightHeadBorg
+TorsoBorgMining: TorsoBorg
+
+LeftLegBorgService: LeftLegBorg
+RightLegBorgService: RightLegBorg
+HeadBorgService: LightHeadBorg
+TorsoBorgService: TorsoBorg
