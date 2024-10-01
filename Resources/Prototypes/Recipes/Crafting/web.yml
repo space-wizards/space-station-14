@@ -85,7 +85,7 @@
   startNode: start
   targetNode: stripeddress
   category: construction-category-clothing
-  description: "Cute striped dress."
+  description: "Cute striped dress. Thick weaves of spider silk make up the darker stripes."
   entityWhitelist:
     tags:
     - SpiderCraft
@@ -101,7 +101,7 @@
   startNode: start
   targetNode: turtledress
   category: construction-category-clothing
-  description: "Turtleneck dress with a unique design."
+  description: "Turtleneck dress with an intricate cobweb design."
   entityWhitelist:
     tags:
     - SpiderCraft

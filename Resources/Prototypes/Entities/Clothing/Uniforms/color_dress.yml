@@ -343,7 +343,7 @@
   parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtWebStripedDress
   name: web striped dress
-  description: Cute striped dress.
+  description: Cute striped dress. Thick weaves of spider silk make up the darker stripes.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpskirt/stripeddress.rsi
@@ -537,7 +537,7 @@
   parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtWebTurtleneckDress
   name: web turtleneck dress
-  description: Turtleneck dress with a unique design.
+  description: Turtleneck dress with an intricate cobweb design.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpskirt/turtledress.rsi
@@ -557,7 +557,7 @@
     sprite: Clothing/Uniforms/Jumpskirt/turtledress.rsi
     clothingVisuals:
       jumpsuit:
-      - state: color-equipped-INNERCLOTHING
+      - state: color-equipped-WEB-INNERCLOTHING
         color: "#ebebeb"
       - state: equipped-WEB-INNERCLOTHING
   - type: Butcherable
