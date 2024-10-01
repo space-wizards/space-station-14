@@ -365,3 +365,31 @@
     - HEAD
     quickEquip: false
     sprite: Clothing/Head/Hats/party_water_cup.rsi
+
+- type: entity
+  parent: DrinkBaseCup
+  id: DrinkHotChamomile
+  name: chamomile tea
+  description: A plain white porcelain teacup.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Chamomile
+          Quantity: 20
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/teacup.rsi
+    state: icon-vend
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/teacup.rsi
+    layers:
+      - state: icon-0
+      - map: ["enum.SolutionContainerLayers.Fill"]
+        state: icon-4
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 4
+    fillBaseName: icon-
+  - type: TrashOnSolutionEmpty
+    solution: drink

@@ -99,3 +99,6 @@ reagent-desc-white-gilgamesh = A sickening mixture of milk and beer. Makes you f
 
 reagent-name-mopwata = mopwata
 reagent-desc-mopwata = Dirty, stagnant mop water.
+
+reagent-name-chamomile = chamomile
+reagent-desc-chamomile = A drink made from a daisy-like plant. 
