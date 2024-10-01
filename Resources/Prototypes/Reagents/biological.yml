@@ -77,6 +77,16 @@
       effects:
       - !type:SatiateHunger
         factor: 1
+        conditions:
+        - !type:OrganType
+          type: Slime
+          shouldHave: false
+      - !type:SatiateHunger
+        factor: 0.5
+        conditions:
+        - !type:OrganType
+          type: Slime
+          shouldHave: true
     Drink:
       effects:
       - !type:ModifyBloodLevel
