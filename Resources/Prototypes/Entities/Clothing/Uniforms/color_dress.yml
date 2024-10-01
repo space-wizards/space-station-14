@@ -543,7 +543,7 @@
     sprite: Clothing/Uniforms/Jumpskirt/turtledress.rsi
     layers:
     - state: WEB-icon
-    - state: icon-color
+    - state: WEB-icon-color
       color: "#ebebeb"
   - type: Item
     inhandVisuals:
