@@ -16,6 +16,6 @@
     - DrinkCan
     - Recyclable
   - type: Sprite
-    sprite: _Weaselstation/Objects/Consumable/Drinks/wehmax.rsi
+    sprite: _Weaselstation/Objects/Consumable/Drinks/weh_max.rsi
   - type: Item
-    sprite: _Weaselstation/Objects/Consumable/Drinks/wehmax.rsi
+    sprite: _Weaselstation/Objects/Consumable/Drinks/weh_max.rsi
