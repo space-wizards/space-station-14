@@ -6,9 +6,12 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.EntityEffects;
 using Content.Shared.Humanoid;
 using Content.Shared.Mind.Components;
+using Robust.Server.GameObjects;
+using Robust.Shared.Random;
 using Robust.Shared.Prototypes;
 using YamlDotNet.Core.Tokens;
 using System.Linq;
+using Content.Server.Atmos.EntitySystems;
 
 namespace Content.Server.EntityEffects.Effects;
 
@@ -18,11 +21,14 @@ public sealed partial class MakeSyndient : EntityEffect
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         => Loc.GetString("reagent-effect-guidebook-make-sentient", ("chance", Probability));
 
+    [Dependency] private readonly ForensicsSystem _forensicsSystem = default!;
+
     public override void Effect(EntityEffectBaseArgs args)
     {
+
         var entityManager = args.EntityManager;
         var uid = args.TargetEntity;
-        var EntityQueryEnumerator query = EntityQueryEnumerator<DnaComponent>();
+        
 
         // Let affected entities speak normally to make this effect different from, say, the "random sentience" event
         // This also works on entities that already have a mind
@@ -41,6 +47,7 @@ public sealed partial class MakeSyndient : EntityEffect
         {
             return;
         }
+        var forensicSys = args.EntityManager.System<ForensicsSystem>();
 
         //hide your children, it's time to figure out whose blood is in this shit
         if (args is EntityEffectReagentArgs reagentArgs)
@@ -62,22 +69,9 @@ public sealed partial class MakeSyndient : EntityEffect
                 //we have all the DNA in the activated subjuzine. get a random one and find the DNA's source.
                 if (dnaDataList.Count > 0)
                 {
-                    Random r = new Random();
-                    DnaData chosenOne = dnaDataList[r.Next(0, dnaDataList.Count)];
+                    DnaData chosenOne = dnaDataList[0];
 
-                    //store the chosen one's name for later use in the welcome message.
-                    String chosenName = "OH GOD OH FUCK IT'S BROKEN";
-                    //iterate over every DNAcomponent in the server until you find one that matches the given DNA
-                    while (query.MoveNext(out var sourceUID, out var sourceComp))
-                    {
-                        if (sourceComp.DNA.Equals(chosenOne.DNA)){
-
-                            if(entityManager.TryGetComponent(sourceUID, out MetaDataComponent? metaData))
-                            {
-                                chosenName = metaData.EntityName;
-                            }
-                        }
-                    }
+                    String chosenName = forensicSys.GetNameFromDNA(chosenOne.DNA);
                     //we FINALLY have the name of the injector. jesus fuck.
                     //now, we build the role name, description, etc.
 
@@ -93,7 +87,7 @@ public sealed partial class MakeSyndient : EntityEffect
                         ghostRole = entityManager.GetComponent<GhostRoleComponent>(uid);
                         ghostRole.RoleDescription = Loc.GetString("ghost-role-information-subjuzine-description");
                         ghostRole.RoleRules = rules;
-                        return;
+                        return; 
                     }
 
                     ghostRole = entityManager.AddComponent<GhostRoleComponent>(uid);

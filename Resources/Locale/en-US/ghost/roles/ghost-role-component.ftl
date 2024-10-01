@@ -52,7 +52,7 @@ ghost-role-information-cognizine-description = Made conscious with the magic of 
 
 ghost-role-information-subjuzine-description = Made obedient with the magic of subjuzine.
 ghost-role-information-subjuzine-rules-1 = You are a [color=#6495ed][bold]Familiar[/bold][/color] under the control of [color=red][bold]
-ghost-role-information-subjuzine-rules-2 = [/bold][/color]. Serve the interests of your master, whatever those may be.
+ghost-role-information-subjuzine-rules-2 = [/bold][/color]. Follow your master's orders and keep their identity secret.
                                         You don't remember any of your previous life, and you don't remember anything you learned as a ghost.
                                         You are allowed to remember knowledge about the game in general, such as how to cook, how to use objects, etc.
                                         You are absolutely [color=red]NOT[/color] allowed to remember, say, the name, appearance, etc. of your previous character.
