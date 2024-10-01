@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "A prestige captain's jumpsuit for Impstation by Sha-Seng (github)",
+  "copyright": "A prestige captain's jumpsuit for Impstation by Sha-Seng (github), folded version taken from tgstation spritework and edited by Pinkbat5 (github)",
   "size": {
     "x": 32,
     "y": 32
@@ -16,6 +16,14 @@
     },
     {
       "name": "equipped-INNERCLOTHING-vox",
+      "directions": 4
+    },
+    {
+      "name": "folded-equipped-INNERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "folded-equipped-INNERCLOTHING-vox",
       "directions": 4
     },
     {
