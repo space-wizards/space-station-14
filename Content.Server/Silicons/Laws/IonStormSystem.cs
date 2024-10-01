@@ -85,7 +85,7 @@ public sealed class IonStormSystem : EntitySystem
         if (_robustRandom.Prob(target.ShuffleChance))
         {
             // hopefully work with existing glitched laws if there are multiple ion storms
-            FixedPoint2 baseOrder = FixedPoint2.New(1);
+            var baseOrder = FixedPoint2.New(1);
             foreach (var law in laws.Laws)
             {
                 if (law.Order < baseOrder)
@@ -137,7 +137,7 @@ public sealed class IonStormSystem : EntitySystem
 
         for (int i = 0; i < laws.Laws.Count; i++)
         {
-            string notNullIdentifier = laws.Laws[i].LawIdentifierOverride ?? (i - orderDeduction).ToString();
+            var notNullIdentifier = laws.Laws[i].LawIdentifierOverride ?? (i - orderDeduction).ToString();
 
             if (notNullIdentifier.Any(char.IsSymbol))
             {
