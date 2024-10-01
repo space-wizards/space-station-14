@@ -17,11 +17,13 @@
   - type: RadioMicrophone
     powerRequired: true
     unobstructedRequired: true
-    listenRange: 2
+    listenRange: 4
     toggleOnInteract: false
   - type: RadioSpeaker
     toggleOnInteract: false
   - type: Intercom
+    freeChannels:
+    - AiPrivate
   - type: Speech
     speechVerb: Robotic
   - type: VoiceOverride # This is for the wire that makes an electricity zapping noise.

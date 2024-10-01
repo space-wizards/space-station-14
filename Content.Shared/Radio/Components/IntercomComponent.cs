@@ -1,4 +1,4 @@
-﻿using Robust.Shared.GameStates;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Radio.Components;
@@ -29,4 +29,10 @@ public sealed partial class IntercomComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public List<ProtoId<RadioChannelPrototype>> SupportedChannels = new();
+
+    /// <summary>
+    /// The list of radio channel prototypes this intercom can access without an encryption key.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public List<ProtoId<RadioChannelPrototype>> FreeChannels = new();
 }
