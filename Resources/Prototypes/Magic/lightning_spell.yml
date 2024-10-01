@@ -17,6 +17,8 @@
       state: spell_default
     event: !type:LightningSpellEvent
       lightningPrototype: ChargedLightning
+      boltCount: 3
+      boltRange: 5
       speech: action-speech-spell-smite
 
 
