@@ -2,7 +2,7 @@
   id: UndershirtDefault
   bodyPart: Undershirt
   markingCategory: Undershirt
-  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid, SlimePerson, Diona, Moth
+  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid, SlimePerson, Diona, Moth]
   coloring:
     default:
       type:
