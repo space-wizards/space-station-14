@@ -11,10 +11,10 @@ public sealed class CellVisualsSystem : SharedCellVisualsSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<CellDishVisualsComponent, AppearanceChangeEvent>(OnAppearanceChanged);
+        SubscribeLocalEvent<CellContainerVisualsComponent, AppearanceChangeEvent>(OnAppearanceChanged);
     }
 
-    private void OnAppearanceChanged(Entity<CellDishVisualsComponent> ent, ref AppearanceChangeEvent args)
+    private void OnAppearanceChanged(Entity<CellContainerVisualsComponent> ent, ref AppearanceChangeEvent args)
     {
         if (!TryComp<CellContainerComponent>(ent, out var containerComponent) || containerComponent.Empty)
             return;
@@ -29,6 +29,6 @@ public sealed class CellVisualsSystem : SharedCellVisualsSystem
         if (color is null)
             return;
 
-        args.Sprite?.LayerSetColor(CellDishVisuals.DishLayer, color.Value);
+        args.Sprite?.LayerSetColor(CellContainerVisuals.DishLayer, color.Value);
     }
 }

@@ -10,8 +10,8 @@
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-      enum.CellDishVisuals.DishVisibility:
-        enum.CellDishVisuals.DishLayer:
+      enum.CellContainerVisuals.DishVisibility:
+        enum.CellContainerVisuals.DishLayer:
           True:
             visible: true
           False:
@@ -20,7 +20,7 @@
     sprite: Objects/Specific/Xenobiology/petri_dish.rsi
     layers:
     - state: icon-back
-    - map: ["enum.CellDishVisuals.DishLayer"]
+    - map: ["enum.CellContainerVisuals.DishLayer"]
       state: cells
       visible: false
     - state: icon
@@ -32,7 +32,7 @@
     toolsTransferWhitelist:
       components:
       - CellCollector
-  - type: CellDishVisuals
+  - type: CellContainerVisuals
 
 - type: entity
   parent: PetriDish

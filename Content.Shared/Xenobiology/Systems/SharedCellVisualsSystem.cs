@@ -12,25 +12,25 @@ public abstract class SharedCellVisualsSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<CellDishVisualsComponent, CellAdded>(OnCellAdded);
-        SubscribeLocalEvent<CellDishVisualsComponent, CellRemoved>(OnCellRemoved);
+        SubscribeLocalEvent<CellContainerVisualsComponent, CellAdded>(OnCellAdded);
+        SubscribeLocalEvent<CellContainerVisualsComponent, CellRemoved>(OnCellRemoved);
     }
 
-    private void OnCellAdded(Entity<CellDishVisualsComponent> ent, ref CellAdded args)
+    private void OnCellAdded(Entity<CellContainerVisualsComponent> ent, ref CellAdded args)
     {
         UpdateAppearance(ent);
     }
 
-    private void OnCellRemoved(Entity<CellDishVisualsComponent> ent, ref CellRemoved args)
+    private void OnCellRemoved(Entity<CellContainerVisualsComponent> ent, ref CellRemoved args)
     {
         UpdateAppearance(ent);
     }
 
-    private void UpdateAppearance(Entity<CellDishVisualsComponent> ent)
+    private void UpdateAppearance(Entity<CellContainerVisualsComponent> ent)
     {
         if (!TryComp<CellContainerComponent>(ent, out var containerComponent))
             return;
 
-        _appearance.SetData(ent, CellDishVisuals.DishVisibility, !containerComponent.Empty);
+        _appearance.SetData(ent, CellContainerVisuals.DishVisibility, !containerComponent.Empty);
     }
 }

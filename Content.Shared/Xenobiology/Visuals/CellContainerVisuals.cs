@@ -3,7 +3,7 @@
 namespace Content.Shared.Xenobiology.Visuals;
 
 [Serializable, NetSerializable]
-public enum CellDishVisuals
+public enum CellContainerVisuals
 {
     DishVisibility,
     DishLayer,

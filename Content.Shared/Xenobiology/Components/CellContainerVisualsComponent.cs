@@ -3,4 +3,4 @@
 namespace Content.Shared.Xenobiology.Components;
 
 [RegisterComponent, NetworkedComponent]
-public sealed partial class CellDishVisualsComponent : Component;
+public sealed partial class CellContainerVisualsComponent : Component;
