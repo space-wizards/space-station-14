@@ -233,6 +233,7 @@ namespace Content.Client.Construction.UI
                     var itemButton = new TextureButton
                     {
                         TextureNormal = item.Icon,
+                        VerticalAlignment = Control.VAlignment.Center,
                         Name = recipe.Name,
                         ToolTip = recipe.Name,
                         Scale = new Vector2(1.35f),
