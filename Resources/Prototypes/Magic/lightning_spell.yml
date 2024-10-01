@@ -4,11 +4,13 @@
   description: Thunderbolt and lightning, very very frightening!
   components:
   - type: EntityTargetAction
-    useDelay: 15
+    useDelay: 1
+    range: 100
+    checkCanAccess: false
     itemIconStyle: BigAction
     canTargetSelf: false
     interactOnMiss: false
-    sound: !type:SoundPathSpecifier
+    sound: 
       path: /Audio/Effects/Lightning/lightningbolt.ogg
     icon:
       sprite: Objects/Magic/magicactions.rsi
