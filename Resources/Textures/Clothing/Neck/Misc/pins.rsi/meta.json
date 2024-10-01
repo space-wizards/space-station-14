@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "PixelTK leaves his mark on upstream",
+  "copyright": "PixelTK leaves his mark on upstream, BackeTako made the gay",
   "size": {
     "x": 32,
     "y": 32
@@ -26,6 +26,13 @@
         },
         {
             "name": "bi-equipped",
+            "directions": 4
+        },
+        {
+            "name": "gay"
+        },
+        {
+            "name": "gay-equipped",
             "directions": 4
         },
         {
