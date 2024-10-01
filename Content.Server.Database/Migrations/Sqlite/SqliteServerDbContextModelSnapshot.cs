@@ -483,19 +483,6 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.ToTable("assigned_user_id", (string)null);
                 });
 
-            modelBuilder.Entity("Content.Server.Database.Blacklist",
-                b =>
-                {
-                    b.Property<Guid>("UserId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT")
-                        .HasColumnName("user_id");
-
-                    b.HasKey("UserId")
-                        .HasName("PK_blacklist");
-
-                    b.ToTable("blacklist", (string) null);
-                });
             modelBuilder.Entity("Content.Server.Database.BanTemplate", b =>
                 {
                     b.Property<int>("Id")
@@ -537,6 +524,19 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasName("PK_ban_template");
 
                     b.ToTable("ban_template", (string)null);
+                });
+
+            modelBuilder.Entity("Content.Server.Database.Blacklist", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("UserId")
+                        .HasName("PK_blacklist");
+
+                    b.ToTable("blacklist", (string)null);
                 });
 
             modelBuilder.Entity("Content.Server.Database.ConnectionLog", b =>
@@ -1241,6 +1241,57 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .IsUnique();
 
                     b.ToTable("server_unban", (string)null);
+                });
+
+            modelBuilder.Entity("Content.Server.Database.ServerUsernameRule", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("server_username_rule_id");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("creation_time");
+
+                    b.Property<string>("Expression")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("expression");
+
+                    b.Property<bool>("ExtendToBan")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("extend_to_ban");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("message");
+
+                    b.Property<Guid?>("RestrictingAdmin")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("restricting_admin");
+
+                    b.Property<DateTime?>("RetireTime")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("retire_time");
+
+                    b.Property<bool>("Retired")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("retired");
+
+                    b.Property<Guid?>("RetiringAdmin")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("retiring_admin");
+
+                    b.Property<int?>("RoundId")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("round_id");
+
+                    b.HasKey("Id")
+                        .HasName("PK_server_username_rule");
+
+                    b.ToTable("server_username_rule", (string)null);
                 });
 
             modelBuilder.Entity("Content.Server.Database.Trait", b =>
