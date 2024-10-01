@@ -233,21 +233,39 @@
   - type: ArtifactExamineTrigger
 
 - type: artifactTrigger
-  id: TriggerAnchorDeep
-  targetDepth: 4
-  triggerHint: artifact-trigger-hint-tool
-  blacklist:
-    components:
-    - Item
-  components:
-  - type: ArtifactAnchorTrigger
-
-- type: artifactTrigger
   id: TriggerMagnetDeep
   targetDepth: 4
   triggerHint: artifact-trigger-hint-magnet
   components:
   - type: ArtifactMagnetTrigger
+
+- type: artifactTrigger
+  id: TriggerMedicalDeep
+  targetDepth: 4
+  triggerHint: artifact-trigger-hint-medical
+  components:
+  - type: Reactive
+    groups:
+      Acidic: [ Touch ]
+    reactions:
+    - reagents: [ Dylovene, Diphenhydramine, Arithrazine, Bicaridine, Dermaline, Dexalin, DexalinPlus, Tricordrazine, Leporazine, Bruizine, Lacerinol, Puncturase, Pyrazine, Insuzine, Kelotane, Hyronalin, Inaprovaline, Epinephrine ]
+      methods: [ Touch ]
+      effects:
+      - !type:ActivateArtifact
+
+- type: artifactTrigger
+  id: TriggerBloodDeep
+  targetDepth: 4
+  triggerHint: artifact-trigger-hint-blood
+  components:
+  - type: Reactive
+    groups:
+      Acidic: [ Touch ]
+    reactions:
+    - reagents: [ Blood, CopperBlood, InsectBlood, Slime, AmmoniaBlood, ZombieBlood ]
+      methods: [ Touch ]
+      effects:
+      - !type:ActivateArtifact
 
 #don't add in new targetdepth values until you have a few
 #or else it will skew heavily towards a few options.
