@@ -5,9 +5,9 @@
   description: A hat reserved for only the funniest of clowns.
   components:
   - type: Sprite
-    sprite: Clothing/_Weaselstation/Head/Hats/headofchuckles.rsi
+    sprite: _Weaselstation/Clothing/Head/Hats/headofchuckles.rsi
   - type: Clothing
-    sprite: Clothing/_Weaselstation/Head/Hats/headofchuckles.rsi
+    sprite: _Weaselstation/Clothing/Head/Hats/headofchuckles.rsi
   - type: Tag
     tags:
     - ClothMade
