@@ -1,0 +1,13 @@
+- type: entity ##For Weaselstation
+  parent: [ClothingHeadBase]
+  id: ClothingHeadHatChuckles
+  name: Head of chuckles hat
+  description: A hat reserved for only the funniest of clowns.
+  components:
+  - type: Sprite
+    sprite: _Weaselstation/Clothing/Head/Hats/headofchuckles.rsi
+  - type: Clothing
+    sprite: _Weaselstation/Clothing/Head/Hats/headofchuckles.rsi
+  - type: Tag
+    tags:
+    - ClothMade

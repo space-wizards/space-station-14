@@ -1,0 +1,32 @@
+- type: entity ##For WeaselStation
+  parent: ClothingMaskBase
+  id: ClothingMaskChucklesBase
+  abstract: true
+  name: Head of chuckles wig and mask
+  description: Mask and wig reserved for only the funniest of clowns.
+  components:
+  - type: Sprite
+    sprite: _Weaselstation/Clothing/Mask/headofchuckles.rsi
+  - type: Clothing
+    sprite: _Weaselstation/Clothing/Mask/headofchuckles.rsi
+  - type: BreathMask
+  - type: IdentityBlocker
+  - type: Tag
+    tags:
+    - ClownMask
+    - WhitelistChameleon
+  - type: HideLayerClothing
+    slots:
+    - Snout
+
+- type: entity
+  parent: ClothingMaskChucklesBase
+  id: ClothingMaskHeadofchuckles
+  components:
+  - type: Tag
+    tags:
+    - ClownMask
+    - WhitelistChameleon
+  - type: HideLayerClothing
+    slots:
+    - Snout

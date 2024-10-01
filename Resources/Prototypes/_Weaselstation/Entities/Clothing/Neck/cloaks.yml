@@ -1,0 +1,8 @@
+- type: entity ##For WeaselStation
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakChuckles
+  name: Head of chuckles cloak
+  description: Worn by only the silliest of clowns.
+  components:
+  - type: Sprite
+    sprite: _Weaselstation/Clothing/Neck/Cloaks/headofchuckles.rsi
