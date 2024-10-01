@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Edit by Nairodian (github) of secred_s taken from tgstation at pull request https://github.com/tgstation/tgstation/pull/2984, jumpskirt sprite made by Flareguy and edited by Dutch-VanDerLinde.",
+  "copyright": "Edit by Nairodian (github) of secred_s taken from tgstation at pull request https://github.com/tgstation/tgstation/pull/2984, jumpskirt sprite made by Flareguy and edited by Dutch-VanDerLinde. Folded version taken from tgstation spritework and edited by Pinkbat5 (github)",
   "size": {
     "x": 32,
     "y": 32
@@ -12,6 +12,10 @@
     },
     {
       "name": "equipped-INNERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "folded-equipped-INNERCLOTHING",
       "directions": 4
     },
     {

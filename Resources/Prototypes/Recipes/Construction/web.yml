@@ -117,3 +117,24 @@
     - SpiderCraft
   conditions:
     - !type:TileNotBlocked
+
+- type: construction
+  name: web bookshelf
+  id: BookshelfWeb
+  graph: WebStructures
+  startNode: start
+  targetNode: bookshelf
+  category: construction-category-furniture
+  description: Mostly filled with cobwebs.
+  icon:
+    sprite: Structures/Furniture/bookshelf.rsi
+    state: WEB-base
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  entityWhitelist:
+    tags:
+    - SpiderCraft
+  conditions:
+    - !type:TileNotBlocked

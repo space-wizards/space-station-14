@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/0a1ae39f0fb7353b0704f27d1599a567891f727c, edited by Flareguy. In hand sprite scaled down by potato1234_x, monkey made by brainfood1183 (github) for ss14",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/0a1ae39f0fb7353b0704f27d1599a567891f727c, edited by Flareguy. In hand sprite scaled down by potato1234_x, monkey made by brainfood1183 (github) for ss14, folded version taken from tgstation and edited by Pinkbat5 (github)",
   "size": {
     "x": 32,
     "y": 32
@@ -12,6 +12,10 @@
     },
     {
       "name": "equipped-INNERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "folded-equipped-INNERCLOTHING",
       "directions": 4
     },
     {

@@ -143,6 +143,55 @@
         color: "#630767"
       - state: equipped-INNERCLOTHING
 
+# Web elegant dress
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtWebElegantDress
+  name: web elegant dress
+  description: Elegant dress with a silky bow.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/elegantdress.rsi
+    layers:
+    - state: WEB-icon
+    - state: icon-color
+      color: "#ebebeb"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#ebebeb"
+      right:
+      - state: inhand-right
+        color: "#ebebeb"
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/elegantdress.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: color-equipped-INNERCLOTHING
+        color: "#ebebeb"
+      - state: equipped-WEB-INNERCLOTHING
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: MaterialWebSilk1
+      amount: 10
+  - type: FlavorProfile
+    flavors:
+      - cobwebs
+    ignoreReagents:
+      - Fiber
+  - type: SolutionContainerManager
+    solutions: # 45 (3 (fiber count of web) * 15 (to craft)) + 6 (magical crafting bonus)
+      food:
+        maxVol: 51
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 51
+  - type: Construction
+    graph: WebObjects
+    node: elegantdress
+
 # Cyan striped dress
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -289,6 +338,55 @@
         color: "#9d4000"
       - state: equipped-INNERCLOTHING
 
+# Web striped dress
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtWebStripedDress
+  name: web striped dress
+  description: Cute striped dress. Thick weaves of spider silk make up the darker stripes.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/stripeddress.rsi
+    layers:
+    - state: WEB-icon
+    - state: icon-color
+      color: "#ebebeb"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#ebebeb"
+      right:
+      - state: inhand-right
+        color: "#ebebeb"
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/stripeddress.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: color-equipped-INNERCLOTHING
+        color: "#ebebeb"
+      - state: equipped-WEB-INNERCLOTHING
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: MaterialWebSilk1
+      amount: 10
+  - type: FlavorProfile
+    flavors:
+      - cobwebs
+    ignoreReagents:
+      - Fiber
+  - type: SolutionContainerManager
+    solutions: # 45 (3 (fiber count of web) * 15 (to craft)) + 6 (magical crafting bonus)
+      food:
+        maxVol: 51
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 51
+  - type: Construction
+    graph: WebObjects
+    node: stripeddress
+
 # Purple turtleneck dress
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -433,6 +531,55 @@
       - state: color-equipped-INNERCLOTHING
         color: "#684519"
       - state: equipped-INNERCLOTHING
+
+# Web turtleneck dress
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtWebTurtleneckDress
+  name: web turtleneck dress
+  description: Turtleneck dress with an intricate cobweb design.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/turtledress.rsi
+    layers:
+    - state: WEB-icon
+    - state: WEB-icon-color
+      color: "#ebebeb"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#ebebeb"
+      right:
+      - state: inhand-right
+        color: "#ebebeb"
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/turtledress.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: color-equipped-WEB-INNERCLOTHING
+        color: "#ebebeb"
+      - state: equipped-WEB-INNERCLOTHING
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: MaterialWebSilk1
+      amount: 10
+  - type: FlavorProfile
+    flavors:
+      - cobwebs
+    ignoreReagents:
+      - Fiber
+  - type: SolutionContainerManager
+    solutions: # 45 (3 (fiber count of web) * 15 (to craft)) + 6 (magical crafting bonus)
+      food:
+        maxVol: 51
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 51
+  - type: Construction
+    graph: WebObjects
+    node: turtledress
 
 # Yellow old dress
 - type: entity
