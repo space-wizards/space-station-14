@@ -2336,3 +2336,10 @@
   id: 296
   time: '2024-10-01T02:30:41.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/373
+- author: formlessnameless
+  changes:
+  - message: Bumped Frezon sell price up a bit more after some playtesting has occurred
+    type: Tweak
+  id: 297
+  time: '2024-10-01T02:41:47.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/381
