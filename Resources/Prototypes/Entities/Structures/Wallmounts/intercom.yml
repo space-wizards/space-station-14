@@ -15,15 +15,21 @@
     keySlots: 3
     keysExtractionMethod: Prying
   - type: RadioMicrophone
+    broadcastChannel: AiPrivate
     powerRequired: true
     unobstructedRequired: true
     listenRange: 4
     toggleOnInteract: false
   - type: RadioSpeaker
     toggleOnInteract: false
+    channels:
+    - AiPrivate
   - type: Intercom
+    supportedChannels:
+    - AiPrivate
     freeChannels:
     - AiPrivate
+    currentChannel: AiPrivate
   - type: Speech
     speechVerb: Robotic
   - type: VoiceOverride # This is for the wire that makes an electricity zapping noise.

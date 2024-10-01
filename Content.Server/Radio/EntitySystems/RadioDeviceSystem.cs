@@ -222,12 +222,11 @@ public sealed class RadioDeviceSystem : EntitySystem
 
     private void OnIntercomEncryptionChannelsChanged(Entity<IntercomComponent> ent, ref EncryptionChannelsChangedEvent args)
     {
-        ent.Comp.SupportedChannels = args.Component.Channels.Select(p => new ProtoId<RadioChannelPrototype>(p)).ToList();
-        ent.Comp.SupportedChannels.AddRange(ent.Comp.FreeChannels);
+        ent.Comp.SupportedChannels = args.Component.Channels.Select(p => new ProtoId<RadioChannelPrototype>(p)).Union(ent.Comp.FreeChannels).ToList();
 
         var channel = args.Component.DefaultChannel;
-        if (channel == null && ent.Comp.FreeChannels.Count > 0)
-            channel = ent.Comp.FreeChannels.First();
+        if (channel == null && ent.Comp.CurrentChannel != null && ent.Comp.SupportedChannels.Contains(ent.Comp.CurrentChannel.Value))
+            channel = ent.Comp.CurrentChannel;
 
         SetIntercomChannel(ent, channel);
     }
