@@ -10,7 +10,7 @@
     itemIconStyle: BigAction
     canTargetSelf: false
     interactOnMiss: false
-    sound: 
+    sound: !type:SoundPathSpecifier
       path: /Audio/Effects/Lightning/lightningbolt.ogg
     icon:
       sprite: Objects/Magic/magicactions.rsi
@@ -19,6 +19,8 @@
       lightningPrototype: ChargedLightning
       boltCount: 3
       boltRange: 5
+      arcDepth: 1
+      triggerLightningEvents: true
       speech: action-speech-spell-smite
 
 
