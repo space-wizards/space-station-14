@@ -2343,3 +2343,11 @@
   id: 297
   time: '2024-10-01T02:41:47.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/381
+- author: crekulon
+  changes:
+  - message: new arachnid silk craftables including gloves, hats, dresses, scarves,
+      loungewear, and a web bookcases!
+    type: Add
+  id: 298
+  time: '2024-10-01T03:30:38.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/382
