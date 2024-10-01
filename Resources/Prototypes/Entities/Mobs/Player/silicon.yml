@@ -336,6 +336,8 @@
     - state: base
     - state: ai
       shader: unshaded
+  - type: RandomMetadata
+    nameSegments: [names_ai]
 
 # The actual brain inside the core
 - type: entity
