@@ -2411,3 +2411,19 @@
   id: 305
   time: '2024-10-01T23:21:16.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/388
+- author: Kandiyaki
+  changes:
+  - message: Added a recipe to activate subjuzine using radium so greys can use it.
+    type: Add
+  id: 306
+  time: '2024-10-01T23:32:06.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/391
+- author: Kandiyaki
+  changes:
+  - message: Added Subjuzine, an alteration of Cognizine that bends the newly-sentient
+      creature to the injector's will. It can be bought in the traitor uplink as part
+      of the 6TC Animal Friends Kit, or created by mixing Cognizine and Vestine.)
+    type: Add
+  id: 307
+  time: '2024-10-01T23:31:50.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/390
