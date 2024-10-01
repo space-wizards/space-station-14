@@ -6,7 +6,7 @@ using Content.Shared.Silicons.Laws;
 namespace Content.Server.Silicons.Laws;
 
 /// <summary>
-/// This handles running the ion storm event on specific entities when spawned in.
+/// This handles running the ion storm event a on specific entity when that entity is spawned in.
 /// </summary>
 public sealed class StartIonStormedSystem : EntitySystem
 {
@@ -31,7 +31,7 @@ public sealed class StartIonStormedSystem : EntitySystem
 
         for (int currentIonStorm = 0; currentIonStorm < component.IonStormAmount; currentIonStorm++)
         {
-            _ionStorm.IonStormTarget(uid, lawBound, xform, target, null, true, true);
+            _ionStorm.IonStormTarget(uid, lawBound, xform, target, null, true, false);
         }
 
         var laws = _siliconLaw.GetLaws(uid, lawBound);

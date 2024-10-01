@@ -332,16 +332,6 @@
     - AllAccess #Randomized access would be fun. AllAccess is the best i can think of right now that does make it too hard for it to enter the station or navigate it..
   - type: AccessReader
     access: [["Command"], ["Research"]]
-  - type: IntrinsicRadioTransmitter
-    channels:
-    - Binary
-    - Common
-    - Science
-  - type: ActiveRadio
-    channels:
-    - Binary
-    - Common
-    - Science
   - type: StartIonStormed
     ionStormAmount: 5
   - type: IonStormTarget

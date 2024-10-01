@@ -1,0 +1,1 @@
+derelict-cyborg-round-end-agent-name = derelict cyborg
