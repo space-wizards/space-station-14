@@ -26,12 +26,12 @@
   - !type:ListingLimitedStockCondition
     stock: 1
 
-
 - type: listing
   id: SpellbookLightning
-  name: spellbook-polymorph-rod-name
-  description: spellbook-polymorph-rod-desc
+  name: spellbook-lightning-name
+  description: spellbook-lightning-desc
   productAction: ActionLightning
+  productUpgradeId: SpellbookLightningUpgrade
   cost:
     WizCoin: 2
   categories:
@@ -149,6 +149,26 @@
   - !type:BuyBeforeCondition
     whitelist:
       - SpellbookFireball
+  # manual for now
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: SpellbookLightningUpgrade
+  productUpgradeId: SpellbookLightningUpgrade
+  name: spellbook-upgrade-lightning-name
+  description: spellbook-upgrade-lightning-description
+  icon:
+    sprite: Objects/Magic/magicactions.rsi
+    state: lightning
+  cost:
+    WizCoin: 2
+  categories:
+  - SpellbookOffensive
+  conditions:
+  - !type:BuyBeforeCondition
+    whitelist:
+      - SpellbookLightning
   # manual for now
   - !type:ListingLimitedStockCondition
     stock: 2

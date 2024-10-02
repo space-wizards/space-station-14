@@ -194,16 +194,17 @@
       layers:
       - state: paper
       - state: cover_old
-        color: "#ba5a14"
+        color: "#79239b"
       - state: decor_wingette_circle
         color: gold
       - state: detail_rivets
         color: gold
       - state: detail_bookmark
-        color: "#e89b3c"
+        color: gold
       - state: overlay_blood
       - state: icon_lightning
         shader: unshaded
+        color: gold
     - type: Spellbook
       spellActions:
         ActionLightning: -1

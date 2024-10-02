@@ -26,7 +26,10 @@
       "name": "magicmissile"
     },
     {
-      "name": "gib"
+        "name": "gib"
+    },
+    {
+        "name": "lightning"
     }
   ]
 }

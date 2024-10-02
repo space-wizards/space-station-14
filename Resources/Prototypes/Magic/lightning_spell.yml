@@ -1,11 +1,12 @@
 - type: entity
   id: ActionLightning
-  name: lightning bolt
+  name: Lightning Bolt
   description: Thunderbolt and lightning, very very frightening!
   components:
+  - type: Magic
   - type: EntityTargetAction
-    useDelay: 1
-    range: 100
+    useDelay: 15
+    range: 60
     checkCanAccess: false
     itemIconStyle: BigAction
     canTargetSelf: false
@@ -14,14 +15,72 @@
       path: /Audio/Effects/Lightning/lightningbolt.ogg
     icon:
       sprite: Objects/Magic/magicactions.rsi
-      state: spell_default
+      state: lightning
     event: !type:LightningSpellEvent
       lightningPrototype: ChargedLightning
       boltCount: 3
       boltRange: 5
       arcDepth: 0
       triggerLightningEvents: true
-      speech: action-speech-spell-smite
+      speech: action-speech-spell-lightning
+  - type: ActionUpgrade
+    effectedLevels:
+      2: ActionLightningII
+      3: ActionLightningIII
+
+- type: entity
+  id: ActionLightningII
+  parent: ActionLightning
+  name: Lightning Bolt II
+  description: Lightning but YELLOW!
+  components:
+  - type: EntityTargetAction
+    useDelay: 15
+    renewCharges: true
+    range: 60
+    checkCanAccess: false
+    itemIconStyle: BigAction
+    canTargetSelf: false
+    interactOnMiss: false
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Effects/Lightning/lightningbolt.ogg
+    icon:
+      sprite: Objects/Magic/magicactions.rsi
+      state: lightning
+    event: !type:LightningSpellEvent
+      lightningPrototype: SuperchargedLightning
+      boltCount: 5
+      boltRange: 7
+      arcDepth: 0
+      triggerLightningEvents: true
+      speech: action-speech-spell-lightning
+
+- type: entity
+  id: ActionLightningIII
+  parent: ActionLightning
+  name: Lightning Bolt III
+  description: Lightning but RED!
+  components:
+  - type: EntityTargetAction
+    useDelay: 15
+    renewCharges: true
+    range: 60
+    checkCanAccess: false
+    itemIconStyle: BigAction
+    canTargetSelf: false
+    interactOnMiss: false
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Effects/Lightning/lightningbolt.ogg
+    icon:
+      sprite: Objects/Magic/magicactions.rsi
+      state: lightning
+    event: !type:LightningSpellEvent
+      lightningPrototype: HyperchargedLightning
+      boltCount: 7
+      boltRange: 9
+      arcDepth: 0
+      triggerLightningEvents: true
+      speech: action-speech-spell-lightning
 
 
 
