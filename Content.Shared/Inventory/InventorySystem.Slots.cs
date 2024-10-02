@@ -78,8 +78,13 @@ public partial class InventorySystem : EntitySystem
 
     protected virtual void UpdateInventoryTemplate(Entity<InventoryComponent> ent)
     {
+        if (ent.Comp.LifeStage < ComponentLifeStage.Initialized)
+            return;
+
         if (!_prototypeManager.TryIndex(ent.Comp.TemplateId, out InventoryTemplatePrototype? invTemplate))
             return;
+
+        DebugTools.Assert(ent.Comp.Slots.Length == invTemplate.Slots.Length);
 
         ent.Comp.Slots = invTemplate.Slots;
 
