@@ -1005,9 +1005,10 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         // Midday: #E6CB8B
         // Moonlight: #2b3143
         // Lava: #A34931
+        var light = EnsureComp<MapLightComponent>(mapUid);
+        light.AmbientLightColor = mapLight ?? Color.FromHex("#D8B059");
 
-        var light = EnsureComp<PlanetLightComponent>(mapUid);
-        light.Color = mapLight ?? Color.FromHex("#D8B059");
+        EnsureComp<RoofComponent>(mapUid);
         Dirty(mapUid, light, metadata);
 
         var moles = new float[Atmospherics.AdjustedNumberOfGases];

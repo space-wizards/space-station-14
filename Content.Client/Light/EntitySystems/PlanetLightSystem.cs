@@ -6,7 +6,7 @@ public sealed class PlanetLightSystem : EntitySystem
 {
     [Dependency] private readonly IOverlayManager _overlayMan = default!;
 
-    private PlanetLightOverlay _overlay = new();
+    private RoofOverlay _overlay = new();
 
     public override void Initialize()
     {
