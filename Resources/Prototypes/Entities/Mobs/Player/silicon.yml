@@ -239,6 +239,8 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: AntimovLawset
+    subversion: true
+    subversionSound: /Audio/Items/Toys/weh.ogg
 
 - type: entity
   id: NutimovCircuitBoard

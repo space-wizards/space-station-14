@@ -1,4 +1,5 @@
 ﻿using Robust.Shared.Prototypes;
+using Robust.Shared.Audio;
 
 namespace Content.Shared.Silicons.Laws.Components;
 
@@ -20,4 +21,16 @@ public sealed partial class SiliconLawProviderComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public SiliconLawset? Lawset;
+
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public bool Subversion = false;
+
+    /// <summary>
+    /// The sound that plays for the Silicon player
+    /// to let them know they've been Subverted
+    /// Default (placeholder) the Emagged borg sound in place of more varieties of forced subversion of laws
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public SoundSpecifier SubversionSound = new SoundPathSpecifier("/Audio/Ambience/Antag/emagged_borg.ogg");
+
 }
