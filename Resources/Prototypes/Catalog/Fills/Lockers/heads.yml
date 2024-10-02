@@ -219,6 +219,7 @@
     - id: MedicalTechFabCircuitboard
     - id: MedkitFilled
     - id: RubberStampCMO
+    - id: MedTekCartridge
 
 # Hardsuit table, used for suit storage as well
 - type: entityTable
