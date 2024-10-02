@@ -120,6 +120,7 @@
   abstract: true
   components:
   - type: CartridgeLoader
+    diskSpace: 7 # Has one extra pre-installed program.
     preinstalled:
     - CrewManifestCartridge
     - NotekeeperCartridge
@@ -133,6 +134,7 @@
   components:
   - type: CartridgeLoader
     uiKey: enum.PdaUiKey.Key
+    diskSpace: 7 # Has one extra pre-installed program.
     preinstalled:
       - CrewManifestCartridge
       - NotekeeperCartridge
@@ -403,6 +405,7 @@
     state: pda-miner
   - type: CartridgeLoader
     uiKey: enum.PdaUiKey.Key
+    diskSpace: 7 # Has one extra pre-installed program.
     preinstalled:
       - CrewManifestCartridge
       - NotekeeperCartridge
@@ -684,6 +687,14 @@
     accentHColor: "#447987"
   - type: Icon
     state: pda-hos
+  - type: CartridgeLoader
+    diskSpace: 8 # Has two extra pre-installed programs.
+    preinstalled:
+    - CrewManifestCartridge
+    - NotekeeperCartridge
+    - NewsReaderCartridge
+    - WantedListCartridge
+    - LogProbeCartridge
 
 - type: entity
   parent: BaseSecurityPDA
@@ -732,6 +743,17 @@
     borderColor: "#00842e"
   - type: Icon
     state: pda-centcom
+  - type: CartridgeLoader
+    uiKey: enum.PdaUiKey.Key
+    diskSpace: 10 # Has Four extra pre-installed programs.
+    preinstalled:
+      - CrewManifestCartridge
+      - NotekeeperCartridge
+      - NewsReaderCartridge
+      - MedTekCartridge
+      - WantedListCartridge
+      - LogProbeCartridge
+      - AstroNavCartridge
 
 - type: entity
   parent: CentcomPDA
@@ -748,12 +770,15 @@
   - type: CartridgeLoader
     uiKey: enum.PdaUiKey.Key
     notificationsEnabled: false
+    diskSpace: 16 # Admeme rights matter.
     preinstalled:
       - CrewManifestCartridge
       - NotekeeperCartridge
       - NewsReaderCartridge
       - LogProbeCartridge
       - WantedListCartridge
+      - MedTekCartridge
+      - AstroNavCartridge
 
 - type: entity
   parent: CentcomPDA
@@ -843,6 +868,7 @@
     state: pda-syndi
   - type: CartridgeLoader
     uiKey: enum.PdaUiKey.Key
+    diskSpace: 4 # Has two less pre-installed programs.
     preinstalled:
       - NotekeeperCartridge
     cartridgeSlot:
@@ -870,6 +896,17 @@
     accentVColor: "#447987"
   - type: Icon
     state: pda-ert
+  - type: CartridgeLoader
+    uiKey: enum.PdaUiKey.Key
+    diskSpace: 10 # Has Four extra pre-installed programs.
+    preinstalled:
+      - CrewManifestCartridge
+      - NotekeeperCartridge
+      - NewsReaderCartridge
+      - MedTekCartridge
+      - WantedListCartridge
+      - LogProbeCartridge
+      - AstroNavCartridge
 
 - type: entity
   parent: ERTLeaderPDA
@@ -910,14 +947,6 @@
   components:
   - type: Pda
     id: ERTMedicIDCard
-  - type: CartridgeLoader
-    uiKey: enum.PdaUiKey.Key
-    preinstalled:
-      - CrewManifestCartridge
-      - NotekeeperCartridge
-      - NewsReaderCartridge
-      - MedTekCartridge
-      - WantedListCartridge
 
 - type: entity
   parent: ERTLeaderPDA
@@ -1019,6 +1048,14 @@
     borderColor: "#774705"
   - type: Icon
     state: pda-detective
+  - type: CartridgeLoader
+    diskSpace: 8 # Has two extra pre-installed programs.
+    preinstalled:
+    - CrewManifestCartridge
+    - NotekeeperCartridge
+    - NewsReaderCartridge
+    - WantedListCartridge
+    - LogProbeCartridge
 
 - type: entity
   parent: BaseMedicalPDA
@@ -1035,6 +1072,14 @@
     accentVColor: "#d7d7d0"
   - type: Icon
     state: pda-brigmedic
+  - type: CartridgeLoader
+    diskSpace: 8 # Has two extra pre-installed programs.
+    preinstalled:
+    - CrewManifestCartridge
+    - NotekeeperCartridge
+    - NewsReaderCartridge
+    - WantedListCartridge
+    - MedTekCartridge
 
 - type: entity
   parent: ClownPDA
@@ -1148,6 +1193,7 @@
     state: pda-syndi-agent
   - type: CartridgeLoader
     uiKey: enum.PdaUiKey.Key
+    diskSpace: 5 # Has one less pre-installed program.
     preinstalled:
       - NotekeeperCartridge
       - MedTekCartridge
