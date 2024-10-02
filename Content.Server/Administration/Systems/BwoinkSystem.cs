@@ -42,6 +42,7 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly IAfkManager _afkManager = default!;
         [Dependency] private readonly IServerDbManager _dbManager = default!;
         [Dependency] private readonly PlayerRateLimitManager _rateLimit = default!;
+        [Dependency] private readonly IUsernameRuleManager _usernameRules = default!;
 
         [GeneratedRegex(@"^https://discord\.com/api/webhooks/(\d+)/((?!.*/).*)$")]
         private static partial Regex DiscordRegex();
@@ -146,6 +147,19 @@ namespace Content.Server.Administration.Systems
                     NotifyAdmins(e.Session, banMessage, PlayerStatusType.Banned);
                     _activeConversations.Remove(e.Session.UserId);
                     return;
+                }
+
+                // check if the username has been banned
+                var lookup = await _playerLocator.LookupIdAsync(e.Session.UserId);
+
+                if (lookup != null) {
+                    var usernameBanReason = _usernameRules.IsUsernameBannedAsync(lookup.Username);
+                    if (usernameBanReason != null) {
+                        var banMessage = Loc.GetString("bwoink-system-username-banned", ("banReason", usernameBanReason));
+                        NotifyAdmins(e.Session, banMessage, PlayerStatusType.Banned);
+                        _activeConversations.Remove(e.Session.UserId);
+                        return;
+                    }
                 }
             }
 

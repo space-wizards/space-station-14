@@ -19,3 +19,4 @@ bwoink-system-rate-limited = System: you are sending messages too quickly.
 bwoink-system-player-disconnecting = has disconnected.
 bwoink-system-player-reconnecting = has reconnected.
 bwoink-system-player-banned = has been banned for: {$banReason}
+bwoink-system-username-banned = has username banned for: {$banReason}

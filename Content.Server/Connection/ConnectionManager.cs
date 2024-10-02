@@ -2,6 +2,7 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
+using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
 using Content.Server.Database;
 using Content.Server.GameTicking;
@@ -57,6 +58,7 @@ namespace Content.Server.Connection
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly ILogManager _logManager = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
+        [Dependency] private readonly IUsernameRuleManager _usernameRules = default!;
 
         private ISawmill _sawmill = default!;
         private readonly Dictionary<NetUserId, TimeSpan> _temporaryBypasses = [];
@@ -173,16 +175,9 @@ namespace Content.Server.Connection
                 ("otherList", otherUsernames)));
         }
 
-        /*
-         * TODO: Jesus H Christ what is this utter mess of a function
-         * TODO: Break this apart into is constituent steps.
-         */
-        private async Task<(ConnectionDenyReason, string, List<ServerBanDef>? bansHit)?> ShouldDeny(
-            NetConnectingArgs e)
+        private async Task<(ConnectionDenyReason, string, List<ServerBanDef>? bansHit)?> UserIsBanned(NetConnectingArgs e)
         {
-            // Check if banned.
             var addr = e.IP.Address;
-            var userId = e.UserId;
             ImmutableArray<byte>? hwId = e.UserData.HWId;
             if (hwId.Value.Length == 0 || !_cfg.GetCVar(CCVars.BanHardwareIds))
             {
@@ -191,7 +186,7 @@ namespace Content.Server.Connection
                 hwId = null;
             }
 
-            var bans = await _db.GetServerBansAsync(addr, userId, hwId, includeUnbanned: false);
+            var bans = await _db.GetServerBansAsync(addr, e.UserId, hwId, includeUnbanned: false);
             if (bans.Count > 0)
             {
                 var firstBan = bans[0];
@@ -199,33 +194,40 @@ namespace Content.Server.Connection
                 return (ConnectionDenyReason.Ban, message, bans);
             }
 
-            if (HasTemporaryBypass(userId))
-            {
-                _sawmill.Verbose("User {UserId} has temporary bypass, skipping further connection checks", userId);
+            return null;
+        }
+
+        private async Task<(ConnectionDenyReason, string, List<ServerBanDef>? bansHit)?> UsernameIsBanned(NetConnectingArgs e)
+        {
+            var usernameBanMessage = await _usernameRules.IsUsernameBannedAsync(e.UserName);
+            if (usernameBanMessage == null){
+                return null;
+            }
+            return (ConnectionDenyReason.Ban, usernameBanMessage ?? "", null);
+        }
+
+        private async Task<(ConnectionDenyReason, string, List<ServerBanDef>? bansHit)?> ServerInSiegeMode(NetConnectingArgs e,  Admin? adminData)
+        {
+            if (adminData != null) {
                 return null;
             }
 
-            var adminData = await _dbManager.GetAdminDataForAsync(e.UserId);
-
-            if (_cfg.GetCVar(CCVars.PanicBunkerEnabled) && adminData == null)
-            {
+            if (_cfg.GetCVar(CCVars.PanicBunkerEnabled)) {
                 var showReason = _cfg.GetCVar(CCVars.PanicBunkerShowReason);
                 var customReason = _cfg.GetCVar(CCVars.PanicBunkerCustomReason);
 
                 var minMinutesAge = _cfg.GetCVar(CCVars.PanicBunkerMinAccountAge);
-                var record = await _dbManager.GetPlayerRecordByUserId(userId);
+                var record = await _dbManager.GetPlayerRecordByUserId(e.UserId);
                 var validAccountAge = record != null &&
                                       record.FirstSeenTime.CompareTo(DateTimeOffset.UtcNow - TimeSpan.FromMinutes(minMinutesAge)) <= 0;
-                var bypassAllowed = _cfg.GetCVar(CCVars.BypassBunkerWhitelist) && await _db.GetWhitelistStatusAsync(userId);
+                var bypassAllowed = _cfg.GetCVar(CCVars.BypassBunkerWhitelist) && await _db.GetWhitelistStatusAsync(e.UserId);
 
                 // Use the custom reason if it exists & they don't have the minimum account age
-                if (customReason != string.Empty && !validAccountAge && !bypassAllowed)
-                {
+                if (customReason != string.Empty && !validAccountAge && !bypassAllowed) {
                     return (ConnectionDenyReason.Panic, customReason, null);
                 }
 
-                if (showReason && !validAccountAge && !bypassAllowed)
-                {
+                if (showReason && !validAccountAge && !bypassAllowed) {
                     return (ConnectionDenyReason.Panic,
                         Loc.GetString("panic-bunker-account-denied-reason",
                             ("reason", Loc.GetString("panic-bunker-account-reason-account", ("minutes", minMinutesAge)))), null);
@@ -236,41 +238,49 @@ namespace Content.Server.Connection
                 var haveMinOverallTime = overallTime != null && overallTime.TimeSpent.TotalMinutes > minOverallMinutes;
 
                 // Use the custom reason if it exists & they don't have the minimum time
-                if (customReason != string.Empty && !haveMinOverallTime && !bypassAllowed)
-                {
+                if (customReason != string.Empty && !haveMinOverallTime && !bypassAllowed) {
                     return (ConnectionDenyReason.Panic, customReason, null);
                 }
 
-                if (showReason && !haveMinOverallTime && !bypassAllowed)
-                {
+                if (showReason && !haveMinOverallTime && !bypassAllowed) {
                     return (ConnectionDenyReason.Panic,
                         Loc.GetString("panic-bunker-account-denied-reason",
                             ("reason", Loc.GetString("panic-bunker-account-reason-overall", ("minutes", minOverallMinutes)))), null);
                 }
 
-                if (!validAccountAge || !haveMinOverallTime && !bypassAllowed)
-                {
+                if (!validAccountAge || !haveMinOverallTime && !bypassAllowed) {
                     return (ConnectionDenyReason.Panic, Loc.GetString("panic-bunker-account-denied"), null);
                 }
             }
 
-            if (_cfg.GetCVar(CCVars.BabyJailEnabled) && adminData == null)
+            if (_cfg.GetCVar(CCVars.BabyJailEnabled))
             {
-                var result = await IsInvalidConnectionDueToBabyJail(userId, e);
+                var result = await IsInvalidConnectionDueToBabyJail(e.UserId, e);
 
-                if (result.IsInvalid)
+                if (result.IsInvalid) {
                     return (ConnectionDenyReason.BabyJail, result.Reason, null);
+                }
             }
 
+            return null;
+        }
+
+        private async Task<(ConnectionDenyReason, string, List<ServerBanDef>? bansHit)?> ServerIsFull(NetConnectingArgs e, Admin? adminData) {
+            // also checks for rejoin so players can rejoin if server filled on exit
             var wasInGame = EntitySystem.TryGet<GameTicker>(out var ticker) &&
-                            ticker.PlayerGameStatuses.TryGetValue(userId, out var status) &&
-                            status == PlayerGameStatus.JoinedGame;
+                ticker.PlayerGameStatuses.TryGetValue(e.UserId, out var status) &&
+                status == PlayerGameStatus.JoinedGame;
+
             var adminBypass = _cfg.GetCVar(CCVars.AdminBypassMaxPlayers) && adminData != null;
-            if ((_plyMgr.PlayerCount >= _cfg.GetCVar(CCVars.SoftMaxPlayers) && !adminBypass) && !wasInGame)
-            {
+
+            if ((_plyMgr.PlayerCount >= _cfg.GetCVar(CCVars.SoftMaxPlayers) && !adminBypass) && !wasInGame) {
                 return (ConnectionDenyReason.Full, Loc.GetString("soft-player-cap-full"), null);
             }
 
+            return null;
+        }
+
+        private async Task<(ConnectionDenyReason, string, List<ServerBanDef>? bansHit)?> UserNotWhitelisted(NetConnectingArgs e,  Admin? adminData) {
             // Checks for whitelist IF it's enabled AND the user isn't an admin. Admins are always allowed.
             if (_cfg.GetCVar(CCVars.WhitelistEnabled) && adminData is null)
             {
@@ -299,6 +309,45 @@ namespace Content.Server.Connection
                     // Whitelisted, don't check any more.
                     break;
                 }
+            }
+
+            return null;
+        }
+
+
+
+        private async Task<(ConnectionDenyReason, string, List<ServerBanDef>? bansHit)?> ShouldDeny(NetConnectingArgs e)
+        {
+            var adminData = await _dbManager.GetAdminDataForAsync(e.UserId);
+
+            var banned = await UserIsBanned(e);
+            if (banned != null) {
+                return banned;
+            }
+
+            var usernameBanned = await UsernameIsBanned(e);
+            if (usernameBanned != null) {
+                return usernameBanned;
+            }
+
+            if (HasTemporaryBypass(e.UserId)) {
+                _sawmill.Verbose("User {UserId} has temporary bypass, skipping further connection checks", e.UserId); // TODO: localization?
+                return null;
+            }
+
+            var siegeMode = await ServerInSiegeMode(e, adminData);
+            if (siegeMode != null) {
+                return siegeMode;
+            }
+
+            var serverFull = await ServerIsFull(e, adminData);
+            if (serverFull != null) {
+                return serverFull;
+            }
+
+            var notWhitelisted = await UserNotWhitelisted(e, adminData);
+            if (notWhitelisted != null) {
+                return notWhitelisted;
             }
 
             return null;
