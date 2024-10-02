@@ -349,7 +349,9 @@
   components:
   - type: Pda
     id: VisitorIDCard
-    state: pda-clown
+  - type: Tag #  Ignore Chameleon tags
+    tags:
+    - DoorBumpOpener 
 
 - type: entity
   parent: BasePDA
@@ -401,7 +403,9 @@
   components:
   - type: Pda
     id: VisitorIDCard
-    state: pda-chaplain
+  - type: Tag #  Ignore Chameleon tags
+    tags:
+    - DoorBumpOpener 
 
 - type: entity
   name: quartermaster PDA
@@ -515,7 +519,9 @@
   components:
   - type: Pda
     id: VisitorIDCard
-    state: pda-library
+  - type: Tag #  Ignore Chameleon tags
+    tags:
+    - DoorBumpOpener 
 
 - type: entity
   parent: BaseSecurityPDA
@@ -548,7 +554,9 @@
   components:
   - type: Pda
     id: VisitorIDCard
-    state: pda-lawyer
+  - type: Tag #  Ignore Chameleon tags
+    tags:
+    - DoorBumpOpener 
 
 - type: entity
   parent: BasePDA
@@ -704,7 +712,9 @@
   components:
   - type: Pda
     id: VisitorIDCard
-    state: pda-medical
+  - type: Tag #  Ignore Chameleon tags
+    tags:
+    - DoorBumpOpener 
 
 - type: entity
   parent: BaseMedicalPDA
@@ -883,6 +893,9 @@
       - NewsReaderCartridge
       - LogProbeCartridge
       - WantedListCartridge
+  - type: Tag #  Ignore Chameleon tags
+    tags:
+    - DoorBumpOpener 
 
 - type: entity
   parent: CentcomPDA
@@ -891,6 +904,9 @@
   components:
   - type: Pda
     id: CentcomIDCardDeathsquad
+  - type: Tag #  Ignore Chameleon tags
+    tags:
+    - DoorBumpOpener
 
 - type: entity
   parent: BasePDA
@@ -922,7 +938,9 @@
   components:
   - type: Pda
     id: VisitorIDCard
-    state: pda-musician
+  - type: Tag #  Ignore Chameleon tags
+    tags:
+    - DoorBumpOpener 
 
 - type: entity
   parent: BasePDA
@@ -967,7 +985,9 @@
   components:
   - type: Pda
     id: VisitorIDCard
-    state: pda
+  - type: Tag #  Ignore Chameleon tags
+    tags:
+    - DoorBumpOpener 
 
 - type: entity
   parent: BasePDA

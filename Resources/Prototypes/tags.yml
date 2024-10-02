@@ -1400,6 +1400,9 @@
   id: WhitelistChameleon
 
 - type: Tag
+  id: WhitelistChameleonIdCard
+
+- type: Tag
   id: WhitelistChameleonPDA
 
 - type: Tag
