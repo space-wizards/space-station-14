@@ -157,6 +157,16 @@ namespace Content.Server.Database
             DateTimeOffset editedAt);
         #endregion
 
+        #region Username Rules
+        Task<ServerUsernameRuleDef?> GetServerUsernameRuleAsync(int id);
+
+        Task<List<ServerUsernameRuleDef>> GetServerUsernameRulesAsync(bool includeRetired);
+
+        Task CreateUsernameRuleAsync(ServerUsernameRuleDef usernameRule);
+
+        Task RemoveServerUsernameRuleAsync(int id, NetUserId? retiringAdmin, DateTimeOffset retireTime);
+        #endregion
+
         #region Playtime
 
         /// <summary>
@@ -559,6 +569,32 @@ namespace Content.Server.Database
         {
             DbWriteOpsMetric.Inc();
             return RunDbCommand(() => _db.EditServerRoleBan(id, reason, severity, expiration, editedBy, editedAt));
+        }
+        #endregion
+
+        #region Username rules
+        public Task<ServerUsernameRuleDef?> GetServerUsernameRuleAsync(int id)
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.GetServerUsernameRuleAsync(id));
+        }
+
+        public Task<List<ServerUsernameRuleDef>> GetServerUsernameRulesAsync(bool includeRetired)
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.GetServerUsernameRulesAsync(includeRetired));
+        }
+
+        public Task CreateUsernameRuleAsync(ServerUsernameRuleDef usernameRule)
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.CreateUsernameRuleAsync(usernameRule));
+        }
+
+        public Task RemoveServerUsernameRuleAsync(int id, NetUserId? retiringAdmin, DateTimeOffset retireTime)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.RemoveServerUsernameRuleAsync(id, retiringAdmin, retireTime));
         }
         #endregion
 

@@ -17,6 +17,7 @@ public sealed partial class ServerDbPostgres
     private static readonly string[] NotificationChannels =
     [
         BanManager.BanNotificationChannel,
+        UsernameRuleManager.UsernameRuleNotificationChannel,
     ];
 
     private static readonly TimeSpan ReconnectWaitIncrease = TimeSpan.FromSeconds(10);
