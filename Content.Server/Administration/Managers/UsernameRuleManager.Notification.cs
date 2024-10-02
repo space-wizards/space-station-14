@@ -60,6 +60,13 @@ public sealed partial class UsernameRuleManager
             return;
         }
 
+        if (usernameRule.Retired) {
+            ClearCompiledRegex(usernameRule.Expression);
+            return;
+        }
+
+        CacheCompiledRegex(usernameRule.Expression, usernameRule.Message);
+
         KickMatchingConnectedPlayers(usernameRule, "username rule notification");
     }
 

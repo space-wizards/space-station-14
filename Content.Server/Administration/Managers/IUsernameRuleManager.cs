@@ -21,7 +21,7 @@ public interface IUsernameRuleManager
     /// <param name="message">Reason for the restriction</param>
     /// <param name="restrictingAdmin">The person who created the restriction</param>
     /// <param name="extendToBan">Weather to prompt an extend the username ban to a full ban</param>
-    public void CreateUsernameRule(string expression, string? message, NetUserId? restrictingAdmin, bool extendToBan = false);
+    public void CreateUsernameRule(string expression, string message, NetUserId? restrictingAdmin, bool extendToBan = false);
 
     /// <summary>
     /// Removes a specified username restriction.
@@ -34,4 +34,13 @@ public interface IUsernameRuleManager
     /// Gets the set of all active regex restrictions
     /// </summary>
     public Task<HashSet<string>?> GetUsernameRulesAsync();
+
+
+
+    /// <summary>
+    /// Checks cached regex to see if username is presently banned.
+    /// </summary>
+    /// <param name="username"></param>
+    /// <returns></returns>
+    public Task<string?> IsUsernameBannedAsync(string username);
 }

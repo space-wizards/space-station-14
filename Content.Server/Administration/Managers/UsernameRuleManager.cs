@@ -31,7 +31,6 @@ public sealed partial class UsernameRuleManager : IUsernameRuleManager, IPostInj
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly ServerDbEntryManager _entryManager = default!;
     [Dependency] private readonly IChatManager _chat = default!;
-    [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] private readonly ILogManager _logManager = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly ITaskManager _taskManager = default!;
@@ -43,45 +42,60 @@ public sealed partial class UsernameRuleManager : IUsernameRuleManager, IPostInj
 
     public const string SawmillId = "admin.username";
 
-    private readonly Dictionary<string, Regex> _cachedUsernameRules = new();
+    // expression: (regex, message, count) (+ ban?)
+    private readonly Dictionary<string, (Regex, string, int)> _cachedUsernameRules = new();
 
     public async void Initialize()
     {
         _db.SubscribeToNotifications(OnDatabaseNotification);
 
-        var usernameRules = await GetUsernameRulesAsync();
+        var rules = await _db.GetServerUsernameRulesAsync(false);
 
-        if (usernameRules == null) {
+        if (rules == null) {
             return;
         }
 
-        foreach (var rule in usernameRules) {
-            CacheCompiledRegex(rule);
+        foreach (var ruleDef in rules) {
+            CacheCompiledRegex(ruleDef.Expression, ruleDef.Message);
         }
     }
 
-    private void CacheCompiledRegex(string ruleText)
+    private void CacheCompiledRegex(string expression, string message)
     {
-        // adding a rule that exists could cause major issue with the caching mechanism on remove
-        if ( _cachedUsernameRules.ContainsKey(ruleText)) {
+        if (_cachedUsernameRules.ContainsKey(expression)) {
+            (Regex rule, string oldMessage, int count) = _cachedUsernameRules[expression];
+            _cachedUsernameRules[expression] = (rule, message, count + 1);
             return;
         }
-        _cachedUsernameRules[ruleText] = new Regex(ruleText, RegexOptions.Compiled);
+
+        _cachedUsernameRules[expression] = (new Regex(expression, RegexOptions.Compiled), message, 1);
     }
 
-    private void ClearCompiledRegex(string ruleText)
+    private void ClearCompiledRegex(string expression)
     {
-        // checking the database, counting rule occurrences, or ensuring active rules are unique could be required to prevent shenanigans
-        _cachedUsernameRules.Remove(ruleText);
+        if (!_cachedUsernameRules.ContainsKey(expression)) {
+            return;
+        }
+
+        (Regex rule, string message, int count) = _cachedUsernameRules[expression];
+
+        if (count <= 1) {
+            _cachedUsernameRules.Remove(expression);
+            return;
+        }
+
+        _cachedUsernameRules[expression] = (rule, message, count - 1);
     }
 
-    public async void CreateUsernameRule(string? expression, string? message, NetUserId? restrictingAdmin, bool extendToBan = false)
+    public async void CreateUsernameRule(string expression, string message, NetUserId? restrictingAdmin, bool extendToBan = false)
     {
         if (string.IsNullOrEmpty(expression)) {
             return;
         }
 
-        var finalMessage = message == null? expression : message;
+        var finalMessage = message ?? expression;
+
+        CacheCompiledRegex(expression, finalMessage);
 
         _systems.TryGetEntitySystem<GameTicker>(out var ticker);
         int? roundId = ticker == null || ticker.RoundId == 0 ? null : ticker.RoundId;
@@ -153,40 +167,46 @@ public sealed partial class UsernameRuleManager : IUsernameRuleManager, IPostInj
         return rules.Select(r => r.Expression).ToHashSet();
     }
 
+    // matches first only
+    public async Task<string?> IsUsernameBannedAsync(string username)
+    {
+        foreach((Regex rule, string message, int count) in _cachedUsernameRules.Values) {
+            if (count > 0 && rule.IsMatch(username)) {
+                return message;
+            }
+        }
+
+        return null;
+    }
+
     public async void Restart()
     {
-        var usernameRules = await _db.GetServerUsernameRulesAsync(false);
+        _cachedUsernameRules.Clear();
 
-        if (usernameRules == null) {
-            return; // we know nothing keep current state
+        var rules = await _db.GetServerUsernameRulesAsync(false);
+
+        if (rules == null) {
+            return;
         }
 
-        var expressions = usernameRules.Select(r => r.Expression).ToHashSet();
-
-        // add missed rules
-        foreach (var ruleDef in usernameRules) {
+        foreach (var ruleDef in rules) {
+            CacheCompiledRegex(ruleDef.Expression, ruleDef.Message);
             KickMatchingConnectedPlayers(ruleDef, "username rule service restart");
-        }
-
-        // remove rules
-        foreach (var ruleExpression in _cachedUsernameRules.Keys) {
-            if (!expressions.Contains(ruleExpression)) {
-                ClearCompiledRegex(ruleExpression);
-            }
         }
     }
 
     private void KickMatchingConnectedPlayers(ServerUsernameRuleDef def, string source)
     {
-        CacheCompiledRegex(def.Expression);
+        if (!_cachedUsernameRules.ContainsKey(def.Expression)) {
+            return;
+        }
 
-        Regex CompiledRule = _cachedUsernameRules[def.Expression];
+        (Regex CompiledRule, _, _) = _cachedUsernameRules[def.Expression];
 
         // could there be a concurrency issue resulting in null?
 
-        foreach (var player in _playerManager.Sessions)
-        {
-            if (CompiledRule.Equals(player.Name))
+        foreach (var player in _playerManager.Sessions) {
+            if (CompiledRule.IsMatch(player.Name))
             {
                 KickForUsernameRuleDef(player, def);
                 _sawmill.Info($"Kicked player {player.Name} ({player.UserId}) through {source}");
