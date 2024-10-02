@@ -19,11 +19,63 @@
       "name": "corgi_dead"
     },
     {
+        "name": "corgi-moving",
+        "directions": 4,
+        "delays": [
+          [
+            0.2,
+            0.2,
+            0.2
+          ],
+          [
+            0.2,
+            0.2,
+            0.2
+          ],
+          [
+            0.2,
+            0.2,
+            0.2
+          ],
+          [
+            0.2,
+            0.2,
+            0.2
+          ]
+        ]
+    },
+    {
       "name": "ian",
       "directions": 4
     },
     {
       "name": "ian_dead"
+    },
+    {
+        "name": "ian-moving",
+        "directions": 4,
+        "delays": [
+          [
+            0.2,
+            0.2,
+            0.2
+          ],
+          [
+            0.2,
+            0.2,
+            0.2
+          ],
+          [
+            0.2,
+            0.2,
+            0.2
+          ],
+          [
+            0.2,
+            0.2,
+            0.2
+          ]
+        ]
     },
     {
       "name": "corgi_deadcollar"
@@ -59,6 +111,32 @@
     },
     {
       "name": "lisa_shaved_dead"
+    },
+    {
+        "name": "lisa-moving",
+        "directions": 4,
+        "delays": [
+          [
+            0.2,
+            0.2,
+            0.2
+          ],
+          [
+            0.2,
+            0.2,
+            0.2
+          ],
+          [
+            0.2,
+            0.2,
+            0.2
+          ],
+          [
+            0.2,
+            0.2,
+            0.2
+          ]
+        ]
     },
     {
       "name": "narsian",
@@ -134,6 +212,32 @@
     {
       "name": "puppy_shaved",
       "directions": 4
+    },
+    {
+        "name": "puppy-moving",
+        "directions": 4,
+        "delays": [
+          [
+            0.2,
+            0.2,
+            0.2
+          ],
+          [
+            0.2,
+            0.2,
+            0.2
+          ],
+          [
+            0.2,
+            0.2,
+            0.2
+          ],
+          [
+            0.2,
+            0.2,
+            0.2
+          ]
+        ]
     },
     {
       "name": "puppy_shaved_dead"
