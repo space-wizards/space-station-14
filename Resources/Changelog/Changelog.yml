@@ -1,69 +1,4 @@
 ﻿Entries:
-- author: Errant
-  changes:
-  - message: Replay observers now always spawn on the station.
-    type: Fix
-  id: 6966
-  time: '2024-07-22T19:32:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30252
-- author: Cojoke-dot
-  changes:
-  - message: You can now read the volume of a gas tank in its examine text
-    type: Tweak
-  id: 6967
-  time: '2024-07-22T21:41:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29771
-- author: Cojoke-dot
-  changes:
-  - message: Throwing a jetpack mid-flight will no longer freeze your character
-    type: Fix
-  id: 6968
-  time: '2024-07-22T22:24:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30223
-- author: Flareguy
-  changes:
-  - message: Added vox sprites for a few headwear items, including radiation suits
-      and the paramedic helmet.
-    type: Add
-  id: 6969
-  time: '2024-07-23T02:18:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30150
-- author: Cojoke-dot
-  changes:
-  - message: You can no longer use telescreens and televisions while blind or asleep.
-    type: Fix
-  id: 6970
-  time: '2024-07-23T02:33:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30260
-- author: Cojoke-dot
-  changes:
-  - message: Fix one of the QSI popups
-    type: Fix
-  id: 6971
-  time: '2024-07-23T03:23:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30265
-- author: Errant
-  changes:
-  - message: Players are now notified when trying to insert an incompatible magazine
-      into a gun.
-    type: Add
-  id: 6972
-  time: '2024-07-23T06:36:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29046
-- author: TheKittehJesus
-  changes:
-  - message: The Syndicate Assault Borg can now wield their double esword
-    type: Fix
-  id: 6973
-  time: '2024-07-23T08:13:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30229
-- author: Scribbles0
-  changes:
-  - message: Handless mobs can no longer wipe devices like positronic brains or pAIs.
-    type: Fix
-  id: 6974
-  time: '2024-07-23T17:47:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30149
 - author: Quantus
   changes:
   - message: Reagent grinders can no longer auto-grind when unpowered.
@@ -3938,3 +3873,71 @@
   id: 7465
   time: '2024-10-01T15:13:59.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32485
+- author: BackeTako
+  changes:
+  - message: Gay Pin
+    type: Add
+  id: 7466
+  time: '2024-10-01T21:07:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32584
+- author: BackeTako
+  changes:
+  - message: Reinforced walls sprite see throu top
+    type: Fix
+  id: 7467
+  time: '2024-10-01T21:44:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32578
+- author: Zylo
+  changes:
+  - message: Seismic charges being uncraftable
+    type: Fix
+  id: 7468
+  time: '2024-10-02T02:56:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32459
+- author: slarticodefast
+  changes:
+  - message: Fixed the chameleon settings menu not showing up for the voice mask.
+    type: Fix
+  id: 7469
+  time: '2024-10-02T03:22:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32546
+- author: metalgearsloth
+  changes:
+  - message: Fix physics sensors (e.g. proximity triggers) being able to block doors.
+    type: Fix
+  id: 7470
+  time: '2024-10-02T05:00:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32591
+- author: Plykiya
+  changes:
+  - message: You can now quick-swap uneven stacks of items into your inventory without
+      it getting "stuck" in your hands.
+    type: Fix
+  id: 7471
+  time: '2024-10-02T05:27:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32560
+- author: BackeTako
+  changes:
+  - message: New hydroponics doors
+    type: Add
+  id: 7472
+  time: '2024-10-02T05:33:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32575
+- author: BackeTako
+  changes:
+  - message: Red circuit tile
+    type: Add
+  id: 7473
+  time: '2024-10-02T05:35:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32557
+- author: ArchRBX
+  changes:
+  - message: The MedTek PDA cartridge has now been added, providing health analyzer
+      functionality to PDA's
+    type: Add
+  - message: The MedTek cartridge has been added to the CMO locker, and comes preinstalled
+      on medical PDA's, replacing the built-in analyzer functionality on these PDA's
+    type: Add
+  id: 7474
+  time: '2024-10-02T06:17:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32450

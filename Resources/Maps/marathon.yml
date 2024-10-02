@@ -30953,6 +30953,31 @@ entities:
     - type: Transform
       pos: 19.5,-39.5
       parent: 30
+  - uid: 22544
+    components:
+    - type: Transform
+      pos: -11.5,-44.5
+      parent: 30
+  - uid: 22547
+    components:
+    - type: Transform
+      pos: -10.5,-44.5
+      parent: 30
+  - uid: 22550
+    components:
+    - type: Transform
+      pos: -9.5,-44.5
+      parent: 30
+  - uid: 22551
+    components:
+    - type: Transform
+      pos: -8.5,-44.5
+      parent: 30
+  - uid: 22552
+    components:
+    - type: Transform
+      pos: -7.5,-44.5
+      parent: 30
 - proto: CableApcStack
   entities:
   - uid: 1637

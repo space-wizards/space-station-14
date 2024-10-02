@@ -74,6 +74,22 @@
 
 - type: entity
   parent: ClothingNeckPinBase
+  id: ClothingNeckGayPin
+  name: gay pin
+  description: Be gay~ do crime.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Misc/pins.rsi
+    layers:
+    - state: gay
+  - type: Clothing
+    sprite: Clothing/Neck/Misc/pins.rsi
+    clothingVisuals:
+      neck:
+      - state: gay-equipped
+
+- type: entity
+  parent: ClothingNeckPinBase
   id: ClothingNeckIntersexPin
   name: intersex pin
   description: Be intersex do crime.
