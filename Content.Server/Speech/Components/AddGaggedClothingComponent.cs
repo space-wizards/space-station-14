@@ -3,7 +3,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Speech.Components;
 
 /// <summary>
-///     Applies accent to user while they wear entity as a clothing.
+///     Applies <see cref="GaggedComponent"/> to user while they wear entity as clothing.
 /// </summary>
 [RegisterComponent]
 public sealed partial class AddGaggedClothingComponent : Component

@@ -3,6 +3,10 @@ using Content.Shared.Clothing;
 
 namespace Content.Server.Speech.EntitySystems;
 
+/// <summary>
+/// Applies <see cref="GaggedComponent"/> when clothing with <see cref="AddGaggedClothingComponent"/> is equipped
+/// and removes it when it's unequipped.
+/// </summary>
 public sealed class AddGaggedClothingSystem : EntitySystem
 {
     public override void Initialize()

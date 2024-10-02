@@ -16,8 +16,8 @@ public sealed class GaggedSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<GaggedComponent, EmoteEvent>(OnEmote, before: new[] { typeof(VocalSystem) });
-        SubscribeLocalEvent<GaggedComponent, ScreamActionEvent>(OnScreamAction, before: new[] { typeof(VocalSystem) });
+        SubscribeLocalEvent<GaggedComponent, EmoteEvent>(OnEmote, before: [typeof(VocalSystem)]);
+        SubscribeLocalEvent<GaggedComponent, ScreamActionEvent>(OnScreamAction, before: [typeof(VocalSystem)]);
     }
 
     private void OnEmote(EntityUid uid, GaggedComponent component, ref EmoteEvent args)
@@ -27,7 +27,7 @@ public sealed class GaggedSystem : EntitySystem
             return;
         }
 
-        //still leaves the text so it looks like they are pantomiming a laugh
+        // Suppresses the audio from vocalization emotes, but preserves the emote text.
         if (args.Emote.Category.HasFlag(EmoteCategory.Vocal))
         {
             args.Handled = true;

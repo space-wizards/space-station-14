@@ -3,7 +3,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Speech.Components;
 
 /// <summary>
-///     Applies accent to user while they wear entity as a clothing.
+///     Suppresses screams and audio from vocalization emotes while applied.
 /// </summary>
 [RegisterComponent]
 public sealed partial class GaggedComponent : Component
