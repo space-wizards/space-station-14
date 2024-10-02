@@ -4,7 +4,6 @@
   mapPath: /Maps/Weaselstation/uoui.yml
   minPlayers: 2
   maxPlayers: 35
-  fallback: true
   stations:
     Uoui:
       stationProto: StandardNanotrasenStation
