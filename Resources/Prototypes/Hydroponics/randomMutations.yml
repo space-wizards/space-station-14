@@ -3,6 +3,7 @@
   mutations:  
     - name: Bioluminescent
       baseOdds: 0.036
+      appliesToPlant: false
       effect: !type:Glow
     - name: Sentient
       baseOdds: 0.0072
@@ -11,6 +12,7 @@
       effect: !type:MakeSentient # existing effect.
     - name: Slippery
       baseOdds: 0.036
+      appliesToPlant: false
       effect: !type:Slipify
     - name: ChangeSpecies
       baseOdds: 0.036
