@@ -77,3 +77,6 @@ trait-snalien-desc = Yyoouu taallk rreeaallyy... rreeaallyy... sslloowwllyy.
 
 trait-scrambled-name = Scrambled speech
 trait-scrambled-desc = There was an accident with a tesla engine, now others have trouble understanding you.
+
+trait-nocontractions-name = No contractions
+trait-nocontractions-desc = You are (mostly) incapable of using contractions.

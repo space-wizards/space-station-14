@@ -4,6 +4,8 @@
   weights:
     Dragon: 1
     Revenant: 1
+    RatKing: 1
+    UristSwarm: 0.25
 
 - type: ninjaHackingThreat
   id: Dragon
@@ -14,3 +16,13 @@
   id: Revenant
   announcement: terror-revenant
   rule: RevenantSpawn
+
+- type: ninjaHackingThreat
+  id: RatKing
+  announcement: terror-ratking
+  rule: KingRatMigration
+
+- type: ninjaHackingThreat
+  id: UristSwarm
+  announcement: terror-uristswarm
+  rule: GameRuleUristSwarm
