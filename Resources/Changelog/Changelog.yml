@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Cojoke-dot
-  changes:
-  - message: Fix one of the QSI popups
-    type: Fix
-  id: 6971
-  time: '2024-07-23T03:23:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30265
 - author: Errant
   changes:
   - message: Players are now notified when trying to insert an incompatible magazine
@@ -3937,3 +3930,11 @@
   id: 7470
   time: '2024-10-02T05:00:48.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32591
+- author: Plykiya
+  changes:
+  - message: You can now quick-swap uneven stacks of items into your inventory without
+      it getting "stuck" in your hands.
+    type: Fix
+  id: 7471
+  time: '2024-10-02T05:27:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32560
