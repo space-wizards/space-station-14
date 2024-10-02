@@ -163,6 +163,9 @@
     state: finfin
     rotation: 0
     noRot: false
+  - type: EmitSoundOnSpawn
+    sound:
+      path: /Audio/Effects/tesla_collapse.ogg
 
 - type: entity
   parent: ImmovableRodKeepTilesStill

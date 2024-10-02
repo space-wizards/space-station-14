@@ -329,6 +329,8 @@
         sound: "/Audio/Ambience/Antag/zombie_start.ogg"
       components:
       - type: PendingZombie
+        minInitialInfectedGrace: 300
+        maxInitialInfectedGrace: 600
       - type: ZombifyOnDeath
       - type: IncurableZombie
       - type: InitialInfected
@@ -352,7 +354,7 @@
         tableId: CalmPestEventsTable
       - !type:NestedSelector
         tableId: SpicyPestEventsTable
-        
+
 
 - type: entityTable
   id: SleeperlessGameRulesTable
