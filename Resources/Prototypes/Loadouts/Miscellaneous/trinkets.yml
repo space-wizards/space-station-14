@@ -96,6 +96,12 @@
     - ClothingNeckBisexualPin
 
 - type: loadout
+  id: ClothingNeckGayPin
+  storage:
+    back:
+    - ClothingNeckGayPin
+
+- type: loadout
   id: ClothingNeckIntersexPin
   storage:
     back:
