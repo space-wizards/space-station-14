@@ -9,7 +9,7 @@ public sealed class ItalianAccentSystem : EntitySystem
 {
     private static readonly Regex RegexProsciutto = new(@"(?<=\s|^)prosciutto(?=\s|$)", RegexOptions.IgnoreCase);
 
-    [Dependency] private readonly IRobustRandom _rng = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ReplacementAccentSystem _replacement = default!;
 
     public override void Initialize()
@@ -23,7 +23,7 @@ public sealed class ItalianAccentSystem : EntitySystem
     {
         // Order:
         // Do text manipulations
-        // Then alternative meat 
+        // Then alternative meat
         // Last prefix funnyies
 
         // direct word replacements
@@ -32,16 +32,16 @@ public sealed class ItalianAccentSystem : EntitySystem
         // Half the time meat should be "pepperoni" instead of "prosciutto"
         foreach (Match match in RegexProsciutto.Matches(msg))
         {
-            if (_rng.Prob(0.5f))
+            if (_random.Prob(0.5f))
             {
                 msg = msg.Remove(match.Index, match.Length).Insert(match.Index, "pepperoni");
             }
         }
 
         // Prefix
-        if (_rng.Prob(0.05f))
+        if (_random.Prob(0.05f))
         {
-            var pick = _rng.Next(1, 5);
+            var pick = _random.Next(1, 5);
             msg = Loc.GetString($"accent-italian-prefix-{pick}") + " " + msg;
         }
 
