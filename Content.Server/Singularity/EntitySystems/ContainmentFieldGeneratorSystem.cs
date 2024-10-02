@@ -33,7 +33,6 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         SubscribeLocalEvent<ContainmentFieldGeneratorComponent, StartCollideEvent>(HandleGeneratorCollide);
         SubscribeLocalEvent<ContainmentFieldGeneratorComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<ContainmentFieldGeneratorComponent, InteractHandEvent>(OnInteract);
-        SubscribeLocalEvent<ContainmentFieldGeneratorComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<ContainmentFieldGeneratorComponent, AnchorStateChangedEvent>(OnAnchorChanged);
         SubscribeLocalEvent<ContainmentFieldGeneratorComponent, ReAnchorEvent>(OnReanchorEvent);
         SubscribeLocalEvent<ContainmentFieldGeneratorComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
@@ -103,25 +102,6 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         args.Handled = true;
     }
 
-    private void OnInteractUsing(Entity<ContainmentFieldGeneratorComponent> generator, ref InteractUsingEvent args)
-    {
-        if(args.Handled)
-            return;
-
-        if (!HasComp<ContainmentFieldUpgraderComponent>(args.Used))
-            return;
-
-        args.Handled = true;
-
-        if (!EnsureComp<ContainmentAlarmComponent>(generator, out var _))
-        {
-            _popupSystem.PopupEntity(Loc.GetString("comp-containment-alarm-upgrade-success"), args.User, args.User);
-            QueueDel(args.Used);
-        }
-        else
-            _popupSystem.PopupEntity(Loc.GetString("comp-containment-alarm-upgrade-fail"), args.User, args.User);
-    }
-
     private void OnAnchorChanged(Entity<ContainmentFieldGeneratorComponent> generator, ref AnchorStateChangedEvent args)
     {
         if (!args.Anchored)
@@ -148,6 +128,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         generator.Comp.Enabled = true;
         ChangeFieldVisualizer(generator);
         _popupSystem.PopupEntity(Loc.GetString("comp-containment-turned-on"), generator);
+        Dirty(generator);
     }
 
     private void TurnOff(Entity<ContainmentFieldGeneratorComponent> generator)
@@ -155,7 +136,8 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         generator.Comp.Enabled = false;
         ChangeFieldVisualizer(generator);
         _popupSystem.PopupEntity(Loc.GetString("comp-containment-turned-off"), generator);
-    }
+		Dirty(generator);
+	}
 
     private void OnComponentRemoved(Entity<ContainmentFieldGeneratorComponent> generator, ref ComponentRemove args)
     {

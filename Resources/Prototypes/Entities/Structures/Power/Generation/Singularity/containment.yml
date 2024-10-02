@@ -66,13 +66,23 @@
           False: { visible: false }
   - type: GuideHelp
     guides: [ Singularity, Power ]
+  - type: ContainmentAlarmHolder
+    alarmSlot:
+      insertVerbText: Attach Alarm
+      ejectVerbText: Remove Alarm
+      whitelist:
+        components:
+        - ContainmentFieldUpgrader
 
 - type: entity
   parent: ContainmentFieldGenerator
   id: ContainmentFieldGeneratorAlarm
   suffix: Alarm
   components:
-    - type: ContainmentAlarm
+   - type: ContainerFill
+     containers:
+      alarm_slot:
+      - ContainmentFieldGenUpgrade
 
 
 - type: entity

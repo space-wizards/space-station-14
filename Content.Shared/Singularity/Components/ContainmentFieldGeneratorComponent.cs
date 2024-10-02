@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Shared.Singularity.Components;
 
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class ContainmentFieldGeneratorComponent : Component
 {
         private int _powerBuffer;
@@ -73,7 +73,7 @@ public sealed partial class ContainmentFieldGeneratorComponent : Component
     /// <summary>
     /// Is the generator toggled on?
     /// </summary>
-    [ViewVariables]
+    [ViewVariables, AutoNetworkedField]
     public bool Enabled;
 
     /// <summary>
