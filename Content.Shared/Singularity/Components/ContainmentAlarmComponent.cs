@@ -26,12 +26,6 @@ public sealed partial class ContainmentAlarmComponent : Component
     public int PowerIntervalBetweenAlerts = 12;
 
     /// <summary>
-    /// The threshold where the channel changes from engineering to common
-    /// </summary>
-    [DataField]
-    public int EmergencyThreshold = 12;
-
-    /// <summary>
     /// Used to display power left
     /// </summary>
     [DataField]
