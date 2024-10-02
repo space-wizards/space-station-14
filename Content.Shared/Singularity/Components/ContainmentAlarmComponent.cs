@@ -14,12 +14,6 @@ public sealed partial class ContainmentAlarmComponent : Component
     public ProtoId<RadioChannelPrototype> AnnouncementChannel = "Engineering";
 
     /// <summary>
-    /// The radio channel that the emergency field announcements are broadcast to, aka when it's about to loose.
-    /// </summary>
-    [DataField]
-    public ProtoId<RadioChannelPrototype> EmergencyAnnouncementChannel = "Common";
-
-    /// <summary>
     /// The last power level tracked by this alert system. Alerts happen when it starts losing power and every minute or so.
     /// </summary>
     [DataField]
@@ -29,7 +23,7 @@ public sealed partial class ContainmentAlarmComponent : Component
     /// The interval of power between alerts
     /// </summary>
     [DataField]
-    public int PowerIntervalBetweenAlerts = 6;
+    public int PowerIntervalBetweenAlerts = 12;
 
     /// <summary>
     /// The threshold where the channel changes from engineering to common

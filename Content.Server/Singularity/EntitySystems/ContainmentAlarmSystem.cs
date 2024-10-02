@@ -45,10 +45,9 @@ public sealed class ContainmentAlarmSystem : EntitySystem
         {
             //Alert territory
             var posText = FormattedMessage.RemoveMarkupPermissive(_navMap.GetNearestBeaconString(ent.Owner));
-            var channel = currentPower <= alarm.EmergencyThreshold ? alarm.EmergencyAnnouncementChannel : alarm.AnnouncementChannel;
             var powerText = (double) currentPower / alarm.PowerCap;
             var message = Loc.GetString("comp-containment-alert-field-losing-power", ("location", posText), ("power", powerText));
-            _radio.SendRadioMessage(ent, message, channel, ent, escapeMarkup: false);
+            _radio.SendRadioMessage(ent, message, alarm.AnnouncementChannel, ent, escapeMarkup: false);
             alarm.LastAlertPowerLevel = currentPower;
         }
     }
