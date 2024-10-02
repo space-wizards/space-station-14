@@ -15,6 +15,7 @@
     - type: GrayAccent
     - type: ReplacementAccent
       accent: dwarf
+    - type: NoContractionsAccent
 
 # 1 Cost
 
@@ -101,6 +102,17 @@
   cost: 1
   components:
   - type: ScrambledAccent
+  
+- type: trait
+  id: NoContractions
+  name: trait-nocontractions-name
+  description: trait-nocontractions-desc
+  category: SpeechTraits
+  cost: 1
+  components:
+  - type: ReplacementAccent
+    accent: nocontractions
+  - type: NoContractionsAccent
 
 # 2 Cost
 
