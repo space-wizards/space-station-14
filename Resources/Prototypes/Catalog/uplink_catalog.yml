@@ -498,6 +498,18 @@
   categories:
   - UplinkAmmo
 
+# For any shotguns.. probably sawn-off 
+- type: listing
+  id: UplinkBoxShells
+  name: uplink-box-shells-name
+  description: uplink-box-shells-desc
+  productEntity: BoxLethalshot
+  icon: { sprite: /Textures/Objects/Storage/boxes.rsi, state: shelllethal }
+  cost:
+    Telecrystal: 8
+  categories:
+  - UplinkAmmo
+
 # For the Cobra
 - type: listing
   id: UplinkMagazinePistolCaselessRifle
