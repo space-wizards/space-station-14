@@ -166,7 +166,7 @@
   - type: EmitSoundOnSpawn
     sound:
       path: /Audio/Effects/comeandseehim.ogg
-s
+
 - type: entity
   parent: ImmovableRodKeepTilesStill
   id: ImmovableRodClown
