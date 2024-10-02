@@ -22,6 +22,8 @@ log-probe-label-number = #
 
 astro-nav-program-name = AstroNav
 
+med-tek-program-name = MedTek
+
 ready-tone-program-name = Readytone
 
 # Wanted list cartridge
