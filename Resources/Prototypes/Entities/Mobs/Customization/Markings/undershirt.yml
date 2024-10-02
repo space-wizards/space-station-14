@@ -107,7 +107,7 @@
   id: UndershirtBraClassic
   bodyPart: Undershirt
   markingCategory: Undershirt
-  speciesRestriction: [Dwarf, Human, Reptilian, SlimePerson, Diona, Moth]
+  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid, SlimePerson, Diona, Moth]
   coloring:
     default:
       type:
