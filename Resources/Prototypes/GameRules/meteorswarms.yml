@@ -237,3 +237,11 @@
     - id: ImmovableRodFinFin
       prob: 0.0075
       orGroup: rodProto
+
+- type: entity
+  id: ImmovableFriendSpawn
+  parent: ImmovableRodSpawn
+  components:
+  - type: ImmovableRodRule
+    rodPrototypes:
+    - id: ImmovableRodFinFin
