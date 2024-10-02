@@ -46,6 +46,42 @@
     {
       "name": "nanotrasen",
       "directions": 4
+    },
+    {
+      "name": "undershirt_f",
+      "directions": 4
+    },
+    {
+      "name": "sleeveless_f",
+      "directions": 4
+    },
+    {
+      "name": "gross_sleeveless_f",
+      "directions": 4
+    },
+    {
+      "name": "rolled_undershirt_sleeveless_f",
+      "directions": 4
+    },
+    {
+      "name": "rolled_undershirt_f",
+      "directions": 4
+    },
+    {
+      "name": "binder_f",
+      "directions": 4
+    },
+    {
+      "name": "sports_f",
+      "directions": 4
+    },
+    {
+      "name": "strapless_f",
+      "directions": 4
+    },
+    {
+      "name": "nanotrasen_f",
+      "directions": 4
     }
   ]
 }
