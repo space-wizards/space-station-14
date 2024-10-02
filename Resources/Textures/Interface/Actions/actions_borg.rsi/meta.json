@@ -66,6 +66,27 @@
 		},
 		{
 			"name":"defib-module"
+		},
+		{
+			"name":"node-scanner-module"
+		},
+		{
+			"name":"anomaly-module"
+		},
+		{
+			"name":"service-module"
+		},
+		{
+			"name":"musical-module"
+		},
+		{
+			"name":"gardening-module"
+		},
+		{
+			"name":"harvesting-module"
+		},
+		{
+			"name":"clowning-module"
 		}
     ]
 }
