@@ -44,6 +44,9 @@ public sealed partial class LoadoutWindow : FancyWindow
                 RoleNameEdit.PlaceHolder = random.Pick(nameData.Values);
             }
 
+            RoleNameEdit.ToolTip = Loc.GetString(
+                "loadout-name-edit-tooltip",
+                ("max", HumanoidCharacterProfile.MaxLoadoutNameLength));
             RoleNameEdit.Text = name ?? string.Empty;
             RoleNameEdit.OnTextChanged += args => OnNameChanged?.Invoke(args.Text);
         }

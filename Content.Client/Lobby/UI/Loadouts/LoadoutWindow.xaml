@@ -11,7 +11,7 @@
                 <PanelContainer.PanelOverride>
                     <graphics:StyleBoxFlat BackgroundColor="#1B1B1E" />
                 </PanelContainer.PanelOverride>
-                <LineEdit Name="RoleNameEdit" ToolTip="{Loc 'loadout-name-edit-tooltip'}" VerticalExpand="True" HorizontalExpand="True"/>
+                <LineEdit Name="RoleNameEdit" VerticalExpand="True" HorizontalExpand="True"/>
             </PanelContainer>
         </BoxContainer>
         <VerticalTabContainer Name="LoadoutGroupsContainer"
