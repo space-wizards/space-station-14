@@ -192,6 +192,18 @@ namespace Content.Server.VendingMachines
             component.CanShoot = canShoot;
         }
 
+        /// <summary>
+        /// Sets the <see cref="VendingMachineComponent.Contraband"/> property of the vending machine.
+        /// </summary>
+        public void SetContraband(EntityUid uid, bool contraband, VendingMachineComponent? component = null)
+        {
+            if (!Resolve(uid, ref component))
+                return;
+
+            component.Contraband = contraband;
+            Dirty(uid, component);
+        }
+
         public void Deny(EntityUid uid, VendingMachineComponent? vendComponent = null)
         {
             if (!Resolve(uid, ref vendComponent))
