@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: themias
-  changes:
-  - message: Fixed the ripley control panel not loading
-    type: Fix
-  id: 6979
-  time: '2024-07-25T05:23:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30325
 - author: Timur2011
   changes:
   - message: Space adders are now butcherable.
@@ -3944,3 +3937,11 @@
   id: 7478
   time: '2024-10-02T12:00:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32598
+- author: PJB3005
+  changes:
+  - message: Removed bioluminescence plant mutations due to it breaking the rendering
+      engine.
+    type: Remove
+  id: 7479
+  time: '2024-10-02T13:52:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32561
