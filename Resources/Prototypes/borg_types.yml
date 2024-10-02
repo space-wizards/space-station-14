@@ -44,7 +44,7 @@
     - BorgModuleEngineering
 
   defaultModules:
-  - BorgModuleAdvancedTool
+  - BorgModuleTool
   - BorgModuleConstruction
   - BorgModuleRCD
   - BorgModuleCable

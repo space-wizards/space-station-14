@@ -146,22 +146,12 @@
   id: BorgModuleTool
   result: BorgModuleTool
 
-# Mining Modules
-
-- type: latheRecipe
-  parent: BaseBorgModuleRecipe
-  id: BorgModuleAppraisal
-  result: BorgModuleAppraisal
-
-- type: latheRecipe
-  parent: BaseBorgModuleRecipe
-  id: BorgModuleMining
-  result: BorgModuleMining
+# Engineering Modules
 
 - type: latheRecipe
   parent: BaseGoldBorgModuleRecipe
-  id: BorgModuleGrapplingGun
-  result: BorgModuleGrapplingGun
+  id: BorgModuleAdvancedTool
+  result: BorgModuleAdvancedTool
 
 # Janitor Modules
 

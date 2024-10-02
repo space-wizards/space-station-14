@@ -583,8 +583,7 @@
     dynamicRecipes:
     - ProximitySensor
     - BorgModuleAdvancedCleaning
-    - BorgModuleMining
-    - BorgModuleGrapplingGun
+    - BorgModuleAdvancedTool
     - BorgModuleGPS
     - BorgModuleArtifact
     - BorgModuleAnomaly
