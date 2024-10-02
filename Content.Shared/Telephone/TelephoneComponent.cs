@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Telephone;
 
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(SharedTelephoneSystem))]
 public sealed partial class TelephoneComponent : Component
 {
@@ -58,6 +58,12 @@ public sealed partial class TelephoneComponent : Component
     public float ListeningRange = 2;
 
     /// <summary>
+    /// Determines whether this telephone can connect to multiple telephones
+    /// </summary>
+    [DataField]
+    public bool IsBroadcaster = true;
+
+    /// <summary>
     /// Linked telephone
     /// </summary>
     [ViewVariables]
@@ -66,7 +72,7 @@ public sealed partial class TelephoneComponent : Component
     /// <summary>
     /// Defines the current state the telephone is in
     /// </summary>
-    [ViewVariables]
+    [ViewVariables, AutoNetworkedField]
     public TelephoneState CurrentState = TelephoneState.Idle;
 
     /// <summary>

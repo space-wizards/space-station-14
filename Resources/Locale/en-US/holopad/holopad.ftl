@@ -1,0 +1,15 @@
+﻿holopad-window-title = Holopad
+holopad-window-subtitle = [bold]Holographic communication system[/bold]
+holopad-window-options = [italic]Please select an option from the list below[/italic]
+holopad-window-answer-call = Answer call
+holopad-window-end-call = End call
+holopad-window-incoming-call = Incoming call...
+holopad-window-outgoing-call = Calling...
+holopad-window-caller-id = Caller ID: {$callerId}
+holopad-window-request-station-ai = Request Station AI
+holopad-window-activate-projector = Activate projector
+holopad-window-select-contact-from-list = Select a contact to initiate a holo-call
+holopad-window-fetching-contacts-list = Fetching a list of available holopads. Please wait...
+holopad-window-emergency-broadcast = Emergency broadcast
+holopad-window-flavor-left = Test
+holopad-window-flavor-right = v3.0.9

@@ -3,27 +3,75 @@
                xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
                Title="{Loc 'holopad-window-title'}"
                Resizable="False"
-               SetSize="500 750"
-               MinSize="500 750">
-    <BoxContainer Orientation="Vertical">
-        <Label Text="Options" Margin="0 0 0 5"/>
-        <Button Name="AnswerCallButton" Text="Answer call" Margin="0 0 0 5" Disabled="True"/>
-        <Button Name="EndCallButton" Text="End call" Margin="0 0 0 5" Disabled="True"/>
-        <Button Name="StartBroadcastButton" Text="Start broadcast" Margin="0 0 0 5" Disabled="False"/>
-        <Button Name="ActivateProjectorButton" Text="Activate projector" Margin="0 0 0 5" Disabled="False"/>
-        <Button Name="RequestStationAiButton" Text="Request Station Ai" Margin="0 0 0 5" Disabled="False"/>
-        <Label Text="Select contact from the list below to initiate holo-call" Margin="0 0 0 5"/>
+               MaxSize="400 800"
+               MinSize="400 150">
+    <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
+        
+        <!-- Active call controls (either this or the call placement controls will be active) -->
+        <BoxContainer Name="ActiveCallControlsContainer" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True" ReservesSpace="False">
 
-        <ScrollContainer HorizontalExpand="True" VerticalExpand="True" Margin="8, 8, 8, 8">
-            <BoxContainer Name="ContactsList" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" Margin="0 0 10 0"/>
-        </ScrollContainer>
+            <!-- Control headers (only one of these is active at a time) -->
+            <Label Name="OutgoingCallText" Text="{Loc 'holopad-window-outgoing-call'}" Margin="10 5 10 5"/>
+            <Label Name="IncomingCallText" Text="{Loc 'holopad-window-incoming-call'}" Margin="10 5 10 5"/>
+            <Label Name="CallerIdText" Text="{Loc 'holopad-window-caller-id'}" Margin="10 0 10 5"/>
+            
+            <!-- Controls (answer call is inactive when the call is outgoing) -->
+            <GridContainer Name="AnswerCallDisplayContainer" Columns="2" ReservesSpace="False">
+                <Control HorizontalExpand="True" Margin="10 0 10 5">
+                    <Button Name="AnswerCallButton" Text="{Loc 'holopad-window-answer-call'}" Margin="0 0 0 5" Disabled="True"/>
+                </Control>
+                <Control HorizontalExpand="True" Margin="10 0 10 5">
+                    <Button Name="EndCallButton" Text="{Loc 'holopad-window-end-call'}" Margin="0 0 0 5" Disabled="True"/>
+                </Control>
+            </GridContainer>
+            
+        </BoxContainer>
+
+        <!-- Call placement controls (either this or the active call controls will be active) -->
+        <BoxContainer Name="CallPlacementControlsContainer" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True" ReservesSpace="False">
+
+            <RichTextLabel Name="SubtitleText" HorizontalAlignment="Center" Margin="0 5 0 0"/>
+            <RichTextLabel Name="OptionsText" HorizontalAlignment="Center" Margin="0 5 0 10"/>
+
+            <!-- Request the station AI / activate the holopad projector (only one of these is active at a time) -->
+            <BoxContainer Name="RequestStationAiContainer" Orientation="Vertical" ReservesSpace="False">
+                <Button Name="RequestStationAiButton" Text="{Loc 'holopad-window-request-station-ai'}" Margin="10 0 10 5" Disabled="False"/>
+            </BoxContainer>
+
+            <BoxContainer Name="ActivateProjectorContainer" Orientation="Vertical" ReservesSpace="False">
+                <Button Name="ActivateProjectorButton" Text="{Loc 'holopad-window-activate-projector'}" Margin="10 0 10 5" Disabled="False"/>
+            </BoxContainer>
+
+            <!-- List of contactable holopads (the list is created in C#) -->
+            <BoxContainer Name="HolopadDirectoryContainer" Orientation="Vertical" Margin="10 5 10 5" ReservesSpace="False">
+                <Label Text="{Loc 'holopad-window-select-contact-from-list'}" HorizontalAlignment="Center" Margin="0 0 0 0"/>
+                <PanelContainer Name="HolopadDirectoryPanel">
+                    <ScrollContainer HorizontalExpand="True" VerticalExpand="True" Margin="8, 8, 8, 8" MinHeight="250">
+
+                        <!-- If there is no data yet, this will be displayed -->
+                        <BoxContainer Name="FetchingAvailableHolopadsContainer" Orientation="Vertical" ReservesSpace="False">
+                            <Label Text="{Loc 'holopad-window-fetching-contacts-list'}"/>
+                        </BoxContainer>
+
+                        <!-- Container for the contacts -->
+                        <BoxContainer Name="ContactsList" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" Margin="0 0 10 0"/>
+                    </ScrollContainer>
+                </PanelContainer>
+            </BoxContainer>
+
+            <!-- Button to start an emergency broadcast (requires a certain level of access to unlock) -->
+            <BoxContainer Name="StartBroadcastContainer" Orientation="Vertical" ReservesSpace="False">
+                <Button Name="StartBroadcastButton" Text="{Loc 'holopad-window-emergency-broadcast'}" Margin="10 0 10 5" Disabled="False" ReservesSpace="False"/>
+            </BoxContainer>
+            
+        </BoxContainer>
 
         <!-- Footer -->
         <BoxContainer Orientation="Vertical">
             <PanelContainer StyleClasses="LowDivider" />
             <BoxContainer Orientation="Horizontal" Margin="10 2 5 0" VerticalAlignment="Bottom">
-                <Label Text="{Loc 'power-monitoring-window-flavor-left'}" StyleClasses="WindowFooterText" />
-                <Label Text="{Loc 'power-monitoring-window-flavor-right'}" StyleClasses="WindowFooterText"
+                <Label Text="{Loc 'holopad-window-flavor-left'}" StyleClasses="WindowFooterText" />
+                <Label Text="{Loc 'holopad-window-flavor-right'}" StyleClasses="WindowFooterText"
                         HorizontalAlignment="Right" HorizontalExpand="True"  Margin="0 0 5 0" />
                 <TextureRect StyleClasses="NTLogoDark" Stretch="KeepAspectCentered"
                         VerticalAlignment="Center" HorizontalAlignment="Right" SetSize="19 19"/>

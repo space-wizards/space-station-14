@@ -148,6 +148,9 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
 
     public void BroadcastCallToTelephones(Entity<TelephoneComponent> source, HashSet<Entity<TelephoneComponent>> receivers, EntityUid user, bool isEmergency = false)
     {
+        if (!source.Comp.IsBroadcaster)
+            return;
+
         var options = new TelephoneCallOptions()
         {
             ForceConnect = true,
@@ -357,6 +360,8 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
     {
         telephone.Comp.CurrentState = newState;
         telephone.Comp.StateStartTime = _timing.RealTime;
+
+        Dirty(telephone);
 
         _appearanceSystem.SetData(telephone, TelephoneVisuals.Key, telephone.Comp.CurrentState);
 

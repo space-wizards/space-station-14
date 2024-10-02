@@ -104,14 +104,7 @@ public sealed class HolopadRequestStationAiMessage : BoundUserInterfaceMessage {
 [Serializable, NetSerializable]
 public enum HolopadUiKey : byte
 {
-    Key
-}
-
-/// <summary>
-/// Key to the Holopad UI
-/// </summary>
-[Serializable, NetSerializable]
-public enum HolopadIncomingCallUiKey : byte
-{
-    Key
+    StandardWindow,
+    AiActionWindow,
+    AiRequestWindow
 }

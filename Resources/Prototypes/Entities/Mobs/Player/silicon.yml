@@ -325,11 +325,14 @@
     hangingUpTimeout: 2
     listeningRange: 0.5
     speakerVolume: Speak
+  - type: Holopad
   - type: StationAiWhitelist  
   - type: UserInterface
     interfaces:
-        enum.HolopadIncomingCallUiKey.Key:
-          type: HolopadIncomingCallBoundUserInterface
+        enum.HolopadUiKey.AiRequestWindow:
+          type: HolopadBoundUserInterface
+        enum.HolopadUiKey.AiActionWindow:
+          type: HolopadBoundUserInterface
 
 # The job-ready version of an AI spawn.
 - type: entity

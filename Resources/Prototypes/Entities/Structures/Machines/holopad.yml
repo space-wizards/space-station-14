@@ -65,12 +65,13 @@
     listeningRange: 4
     speakerVolume: Speak
   - type: ActivatableUI
-    key: enum.HolopadUiKey.Key
+    key: enum.HolopadUiKey.StandardWindow
   - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
-        enum.HolopadUiKey.Key:
+        enum.HolopadUiKey.StandardWindow:
           type: HolopadBoundUserInterface
+        
  
 - type: entity
   id: HolopadHologram

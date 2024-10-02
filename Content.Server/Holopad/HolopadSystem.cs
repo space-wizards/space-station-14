@@ -127,8 +127,8 @@ public sealed class HolopadSystem : SharedHolopadSystem
     {
         if (_stationAiSystem.TryGetInsertedAI(stationAiCore, out var insertedAi))
         {
-            _userInterfaceSystem.OpenUi(stationAiCore.Owner, HolopadIncomingCallUiKey.Key, insertedAi.Value.Owner);
-            _userInterfaceSystem.SetUiState(stationAiCore.Owner, HolopadIncomingCallUiKey.Key, new HolopadBoundInterfaceState(TelephoneState.Ringing, new()));
+            _userInterfaceSystem.OpenUi(stationAiCore.Owner, HolopadUiKey.AiRequestWindow, insertedAi.Value.Owner);
+            _userInterfaceSystem.SetUiState(stationAiCore.Owner, HolopadUiKey.AiRequestWindow, new HolopadBoundInterfaceState(TelephoneState.Ringing, new()));
         }
     }
 
@@ -154,11 +154,6 @@ public sealed class HolopadSystem : SharedHolopadSystem
 
             break;
         }
-    }
-
-    private void OnStationAiRequestEnded(Entity<StationAiCoreComponent> stationAiCore, ref TelephoneCallEndedEvent args)
-    {
-        _userInterfaceSystem.CloseUi(stationAiCore.Owner, HolopadIncomingCallUiKey.Key, stationAiCore.Owner);
     }
 
     private void OnHoloCallCommenced(Entity<HolopadComponent> holopad, ref TelephoneCallCommencedEvent args)
@@ -273,8 +268,8 @@ public sealed class HolopadSystem : SharedHolopadSystem
             var query = AllEntityQuery<HolopadComponent, TelephoneComponent, TransformComponent>();
             while (query.MoveNext(out var ent, out var entHolopad, out var entTelephone, out var entXform))
             {
-                if (_userInterfaceSystem.IsUiOpen(ent, HolopadUiKey.Key))
-                    UpdateUIState((ent, entHolopad), entTelephone);
+                //if (_userInterfaceSystem.IsUiOpen(ent, HolopadUiKey.Key))
+                UpdateUIState((ent, entHolopad), entTelephone);
 
                 if (entHolopad.User != null &&
                     !HasComp<IgnoreUIRangeComponent>(entHolopad.User) &&
@@ -303,7 +298,10 @@ public sealed class HolopadSystem : SharedHolopadSystem
         }
 
         // Set the UI state
-        _userInterfaceSystem.SetUiState(holopad.Owner, HolopadUiKey.Key, new HolopadBoundInterfaceState(telephone.CurrentState, holopads));
+        if (HasComp<StationAiCoreComponent>(holopad))
+            _userInterfaceSystem.SetUiState(holopad.Owner, HolopadUiKey.AiActionWindow, new HolopadBoundInterfaceState(telephone.CurrentState, holopads));
+        else
+            _userInterfaceSystem.SetUiState(holopad.Owner, HolopadUiKey.StandardWindow, new HolopadBoundInterfaceState(telephone.CurrentState, holopads));
     }
 
     private void GenerateHologram(Entity<HolopadComponent> holopad)
@@ -349,17 +347,8 @@ public sealed class HolopadSystem : SharedHolopadSystem
     {
         if (_pendingRequestsForSpriteState.Add(user))
         {
-            if (TryComp<HolographicAppearanceComponent>(user, out var holoAppearance) && holoAppearance.Layers.Any())
-            {
-                SyncHolopadUserWithLinkedHolograms(user.Owner, user.Comp, holoAppearance.Layers.ToArray());
-                _pendingRequestsForSpriteState.Remove(user);
-            }
-
-            else
-            {
-                var ev = new PlayerSpriteStateRequest(GetNetEntity(user));
-                RaiseNetworkEvent(ev);
-            }
+            var ev = new PlayerSpriteStateRequest(GetNetEntity(user));
+            RaiseNetworkEvent(ev);
         }
     }
 
