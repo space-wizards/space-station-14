@@ -86,9 +86,9 @@
     <GuideEntityEmbed Entity="ClothingOuterHardsuitRd" Caption=""/>
     <GuideEntityEmbed Entity="HandTeleporter" Caption=""/>
   </Box>
-  - Stealing the [color=#cb0000]Head of Security[/color]'s [bold]secret documents[/bold].
+  - Stealing the [color=#cb0000]Head of Security[/color]'s [bold]energy shotgun[/bold].
   <Box>
-    <GuideEntityEmbed Entity="BookSecretDocuments" Caption=""/>
+    <GuideEntityEmbed Entity="WeaponEnergyShotgun" Caption=""/>
   </Box>
   - Stealing the [color=#f39f27]Chief Engineer[/color]'s [bold]advanced magboots[/bold].
   <Box>

@@ -161,6 +161,19 @@ public abstract partial class SharedHandsSystem
         return item != null;
     }
 
+    /// <summary>
+    /// Gets active hand item if relevant otherwise gets the entity itself.
+    /// </summary>
+    public EntityUid GetActiveItemOrSelf(Entity<HandsComponent?> entity)
+    {
+        if (!TryGetActiveItem(entity, out var item))
+        {
+            return entity.Owner;
+        }
+
+        return item.Value;
+    }
+
     public Hand? GetActiveHand(Entity<HandsComponent?> entity)
     {
         if (!Resolve(entity, ref entity.Comp))

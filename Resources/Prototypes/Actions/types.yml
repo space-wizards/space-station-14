@@ -44,8 +44,8 @@
 
 - type: entity
   id: ActionOpenStorageImplant
-  name: Open Storage Implant
-  description: Opens the storage implant embedded under your skin
+  name: Toggle Storage Implant
+  description: Opens or closes the storage implant embedded under your skin
   components:
   - type: InstantAction
     itemIconStyle: BigAction
@@ -54,6 +54,7 @@
       sprite: Clothing/Back/Backpacks/backpack.rsi
       state: icon
     event: !type:OpenStorageImplantEvent
+    useDelay: 1
 
 - type: entity
   parent: BaseSuicideAction

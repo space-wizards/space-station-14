@@ -24,14 +24,32 @@
   - ClothingShoesBootsSecFilled
 
 - type: entity
+  id: ClothingShoesBootsCowboyBrownFilled
+  parent:
+  - ClothingShoesBootsCowboyBrown
+  - ClothingShoesBootsSecFilled
+
+- type: entity
+  id: ClothingShoesBootsCowboyWhiteFilled
+  parent:
+  - ClothingShoesBootsCowboyWhite
+  - ClothingShoesBootsSecFilled
+
+- type: entity
+  id: ClothingShoesBootsCowboyFancyFilled
+  parent:
+  - ClothingShoesBootsCowboyFancy
+  - ClothingShoesBootsSecFilled
+
+- type: entity
   id: ClothingShoesHighheelBootsFilled
   parent:
   - ClothingShoesHighheelBoots
   - ClothingShoesBootsSecFilled
 
 - type: entity
-  id: ClothingShoesBootsMercFilled
   parent: ClothingShoesBootsMerc
+  id: ClothingShoesBootsMercFilled
   suffix: Filled
   components:
   - type: ContainerFill
@@ -48,3 +66,4 @@
     containers:
       item:
       - ThrowingKnife
+

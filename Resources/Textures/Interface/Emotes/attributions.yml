@@ -8,12 +8,12 @@
 
 - files: ["buzz.png"]
   license: "CC-BY-SA-3.0"
-  copyright: "Modified from existing bee texture (0.png) by TyAshley (AllenTheGreat)"
+  copyright: "Modified from existing bee texture (0.png) by TyAshley (AllenTheGreat) & Sarahon"
   source: "https://github.com/TyAshley"
 
 - files: ["buzztwo.png"]
   license: "CC-BY-SA-3.0"
-  copyright: "Modified from existing bee texture (0.png) by TyAshley (AllenTheGreat)"
+  copyright: "Modified from existing bee texture (0.png) by TyAshley (AllenTheGreat) & Sarahon"
   source: "https://github.com/TyAshley"
 
 - files: ["chime.png"]
@@ -23,95 +23,100 @@
 
 - files: ["chirp.png"]
   license: "CC-BY-SA-3.0"
-  copyright: "Modified from existing nymph texture (icon.png) by TyAshley (AllenTheGreat)"
+  copyright: "Modified from existing nymph texture (icon.png) by TyAshley (AllenTheGreat) & Sarahon"
   source: "https://github.com/TyAshley"
 
 - files: ["chitter.png"]
   license: "CC-BY-SA-3.0"
-  copyright: "Modified from mothroach.png by TyAshley (AllenTheGreat)"
+  copyright: "Modified from mothroach.png by TyAshley (AllenTheGreat) & Sarahon"
   source: "https://github.com/TyAshley"
 
 - files: ["clap.png"]
   license: "CC-BY-SA-3.0"
-  copyright: "Created by TyAshley (AllenTheGreat) at commit 7f6c7cd82943dbc9a1fe8a79d6a924ac600b3fdb"
-  source: "https://github.com/TyAshley"
+  copyright: "Created by Sarahon"
+  source: "https://github.com/Sarahon"
 
 - files: ["click.png"]
   license: "CC-BY-SA-3.0"
-  copyright: "Modified from existing crab.png by TyAshley (AllenTheGreat)"
+  copyright: "Modified from existing crab.png by TyAshley (AllenTheGreat) & Sarahon"
   source: "https://github.com/TyAshley"
 
 - files: ["cough.png"]
   license: "CC-BY-SA-3.0"
-  copyright: "Created by TyAshley (AllenTheGreat) at commit 7f6c7cd82943dbc9a1fe8a79d6a924ac600b3fdb"
-  source: "https://github.com/TyAshley"
+  copyright: "Created by Sarahon"
+  source: "https://github.com/Sarahon"
 
 - files: ["cry.png"]
   license: "CC-BY-SA-3.0"
-  copyright: "Modified from scream.png by TyAshley (AllenTheGreat)"
-  source: "https://github.com/TyAshley"
+  copyright: "Created by Sarahon"
+  source: "https://github.com/Sarahon"
 
 - files: ["deathgasp.png"]
   license: "CC-BY-SA-3.0"
-  copyright: "Modified from scream.png by TyAshley (AllenTheGreat)"
-  source: "https://github.com/TyAshley"
+  copyright: "Created by Sarahon"
+  source: "https://github.com/Sarahon"
 
 - files: ["honk.png"]
   license: "CC-BY-SA-3.0"
-  copyright: "Modified from existing bikehorn texture (icon.png) by TyAshley (AllenTheGreat)"
+  copyright: "Modified from existing bikehorn texture (icon.png) by TyAshley (AllenTheGreat) & Sarahon"
   source: "https://github.com/TyAshley"
 
 - files: ["laugh.png"]
   license: "CC-BY-SA-3.0"
-  copyright: "Modified from scream.png by TyAshley (AllenTheGreat)"
-  source: "https://github.com/TyAshley"
+  copyright: "Created by Sarahon"
+  source: "https://github.com/Sarahon"
 
 - files: ["ping.png"]
   license: "CC-BY-SA-3.0"
-  copyright: "Created by TyAshley (AllenTheGreat) at commit 7f6c7cd82943dbc9a1fe8a79d6a924ac600b3fdb"
+  copyright: "Created by TyAshley (AllenTheGreat) at commit 7f6c7cd82943dbc9a1fe8a79d6a924ac600b3fdb. Modified by Sarahon"
   source: "https://github.com/TyAshley"
 
 - files: ["salute.png"]
   license: "CC-BY-SA-3.0"
-  copyright: "Modified from scream.png by TyAshley (AllenTheGreat)"
-  source: "https://github.com/TyAshley"
+  copyright: "Created by Sarahon"
+  source: "https://github.com/Sarahon"
+
+- files: ["scream.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by lzk228(discord 455630609641897984), based on sprite by Sarahon"
+  source: "https://github.com/lzk228"
 
 - files: ["sigh.png"]
   license: "CC-BY-SA-3.0"
-  copyright: "Created by TyAshley (AllenTheGreat) at commit 7f6c7cd82943dbc9a1fe8a79d6a924ac600b3fdb"
-  source: "https://github.com/TyAshley"
+  copyright: "Created by Sarahon"
+  source: "https://github.com/Sarahon"
 
 - files: ["snap.png"]
   license: "CC-BY-SA-3.0"
-  copyright: "Created by TyAshley (AllenTheGreat) at commit 7f6c7cd82943dbc9a1fe8a79d6a924ac600b3fdb"
-  source: "https://github.com/TyAshley"
+  copyright: "Created by Sarahon"
+  source: "https://github.com/Sarahon"
 
 - files: ["squeak.png"]
   license: "CC-BY-SA-3.0"
-  copyright: "Modified from mouse-0.png by TyAshley (AllenTheGreat)"
+  copyright: "Modified from mouse-0.png by TyAshley (AllenTheGreat) & Sarahon"
   source: "https://github.com/TyAshley"
 
 - files: ["squish.png"]
   license: "CC-BY-SA-3.0"
-  copyright: "Modified from blue_adult_slime.png by TyAshley (AllenTheGreat)"
+  copyright: "Modified from blue_adult_slime.png by TyAshley (AllenTheGreat) & Sarahon"
   source: "https://github.com/TyAshley"
 
 - files: ["vocal.png"]
   license: "CC-BY-SA-3.0"
-  copyright: "Created by TyAshley (AllenTheGreat) at commit 7f6c7cd82943dbc9a1fe8a79d6a924ac600b3fdb"
-  source: "https://github.com/TyAshley"
+  copyright: "Created by Sarahon, modified by lzk228(discord 455630609641897984)"
+  source: "https://github.com/Sarahon"
 
 - files: ["weh.png"]
   license: "CC-BY-SA-3.0"
-  copyright: "Modified from plushie_lizard.png by TyAshley (AllenTheGreat)"
+  copyright: "Modified from plushie_lizard.png by TyAshley (AllenTheGreat) & Sarahon"
   source: "https://github.com/TyAshley"
 
 - files: ["whistle.png"]
   license: "CC-BY-SA-3.0"
-  copyright: "Modified from scream.png by TyAshley (AllenTheGreat)"
-  source: "https://github.com/TyAshley"
+  copyright: "Created by Sarahon"
+  source: "https://github.com/Sarahon"
 
 - files: ["yawn.png"]
   license: "CC-BY-SA-3.0"
-  copyright: "Created by TyAshley (AllenTheGreat) at commit 7f6c7cd82943dbc9a1fe8a79d6a924ac600b3fdb"
-  source: "https://github.com/TyAshley"
+  copyright: "Created by Sarahon"
+  source: "https://github.com/Sarahon"

@@ -18,6 +18,11 @@
       proto: VGRoidSmaller
     - !type:PrototypeDunGen
       proto: VGRoidSmallPaths
+    - !type:EntityTableDunGen
+      minCount: 7
+      maxCount: 12
+      table:
+        id: VGRoidInteriorRoomMarker
     # Fill
     - !type:PrototypeDunGen
       proto: VGRoidFill
@@ -141,11 +146,41 @@
   layers:
   - !type:ExteriorDunGen
     proto: Experiment
+  - !type:EntityTableDunGen
+    minCount: 25
+    maxCount: 40
+    table: !type:NestedSelector
+      tableId: SalvageScrapSpawnerCommon
+  - !type:EntityTableDunGen
+    minCount: 30
+    maxCount: 40
+    table: !type:NestedSelector
+      tableId: SalvageScrapSpawnerValuable
+  - !type:EntityTableDunGen
+    minCount: 15
+    maxCount: 25
+    table: !type:NestedSelector
+      tableId: SalvageTreasureSpawnerCommon
+  - !type:EntityTableDunGen
+    minCount: 15
+    maxCount: 25
+    table: !type:NestedSelector
+      tableId: SalvageEquipmentSpawnerCommon
+  - !type:EntityTableDunGen
+    minCount: 15
+    maxCount: 20
+    table: !type:NestedSelector
+      tableId: SalvageTreasureSpawnerValuable
+  - !type:EntityTableDunGen
+    minCount: 15
+    maxCount: 20
+    table: !type:NestedSelector
+      tableId: SalvageEquipmentSpawnerValuable
   - !type:MobsDunGen
-    minCount: 5
-    maxCount: 8
+    minCount: 8
+    maxCount: 15
     groups:
-    - id: MobGoliath
+    - id: SalvageSpawnerMobMiningAsteroid
       amount: 1
 
 #- type: dungeonConfig
@@ -172,10 +207,10 @@
   # Mobs
   # If you want exterior dungeon mobs add them under the prototype.
   - !type:MobsDunGen
-    minCount: 20
-    maxCount: 30
+    minCount: 25
+    maxCount: 35
     groups:
-    - id: MobGoliath
+    - id: SalvageSpawnerMobMiningAsteroid
       amount: 1
 
 #- type: dungeonConfig
@@ -189,3 +224,5 @@
       Fill: IronRock
   layers:
   - !type:FillGridDunGen
+    allowedTiles:
+    - FloorAsteroidSand
