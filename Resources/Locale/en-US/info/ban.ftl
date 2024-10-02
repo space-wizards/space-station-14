@@ -85,3 +85,16 @@ server-ban-string-never = never
 
 # Kick on ban
 ban-kick-reason = You have been banned
+
+# Username ban
+cmd-ban-username-desc = Ban a username and kick any user with that username.
+cmd-ban-username-invalid-username = this username is invalid: {$reason}
+cmd-ban-username-hint-regex = <regex>
+cmd-ban-username-hint-reason = [reason]
+cmd-ban-username-hint-upgrade-ban = [also ban]
+cmd-ban-username-hint-ban = Users who join with this username will be banned
+cmd-ban-username-hint-no-ban = Users who join with this username will be kicked (Default)
+
+# kick on username ban
+ban-username-kick-reason = Your username is not permitted on this server. You may rejoin after changing your username.
+ban-username-ban-reason = Your username is not permitted on this server. You have Been banned.
