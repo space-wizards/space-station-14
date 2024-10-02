@@ -148,6 +148,7 @@
   - type: Tag
     tags:
     - CleanerGrenade
+    - Grenade
   - type: CartridgeAmmo
     proto: BulletGrenadeCleaner
   - type: Sprite
