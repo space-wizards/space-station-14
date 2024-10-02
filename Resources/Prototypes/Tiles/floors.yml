@@ -1422,6 +1422,18 @@
   itemDrop: FloorTileItemBCircuit
   heatCapacity: 10000
 
+- type: tile
+  id: FloorRedCircuit
+  name: tiles-red-circuit-floor
+  sprite: /Textures/Tiles/red_circuit.png
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepHull
+  itemDrop: FloorTileItemRCircuit
+  heatCapacity: 10000
+
 # Terrain
 - type: tile
   id: FloorAsphalt
