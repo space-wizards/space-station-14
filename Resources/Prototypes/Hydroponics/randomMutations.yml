@@ -1,9 +1,11 @@
 - type: RandomPlantMutationList
   id: RandomPlantMutations
-  mutations:  
-    - name: Bioluminescent
-      baseOdds: 0.036
-      effect: !type:Glow
+  mutations:
+    # disabled until 50 morbillion point lights don't cause the renderer to die
+    #- name: Bioluminescent
+    #  baseOdds: 0.036
+    #  appliesToPlant: false
+    #  effect: !type:Glow
     - name: Sentient
       baseOdds: 0.0072
       appliesToProduce: false
@@ -11,6 +13,7 @@
       effect: !type:MakeSentient # existing effect.
     - name: Slippery
       baseOdds: 0.036
+      appliesToPlant: false
       effect: !type:Slipify
     - name: ChangeSpecies
       baseOdds: 0.036
