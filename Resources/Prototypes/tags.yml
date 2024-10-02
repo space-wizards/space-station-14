@@ -729,6 +729,12 @@
   id: Grenade
 
 - type: Tag
+  id: CleanerGrenade
+
+- type: Tag
+  id: WeaponCleanerLakeUpgradeKit
+
+- type: Tag
   id: HudMedical
 
 - type: Tag
