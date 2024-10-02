@@ -6,30 +6,36 @@
     "x": 32,
     "y": 32
   },
-  "states": [
-    {
-      "name": "spell_default"
-    },
-    {
-      "name": "shield"
-    },
-    {
-      "name": "knock"
-    },
-    {
-      "name": "blink"
-    },
-    {
-      "name": "fireball"
-    },
-    {
-      "name": "magicmissile"
-    },
-    {
-        "name": "gib"
-    },
-    {
-        "name": "lightning"
-    }
-  ]
+    "states": [
+        {
+            "name": "spell_default"
+        },
+        {
+            "name": "shield"
+        },
+        {
+            "name": "knock"
+        },
+        {
+            "name": "blink"
+        },
+        {
+            "name": "fireball"
+        },
+        {
+            "name": "magicmissile"
+        },
+        {
+            "name": "gib"
+        },
+        {
+            "name": "yellow_lightning"
+        },
+        {
+            "name": "blue_lightning"
+        },
+        {
+            "name": "red_lightning"
+        }
+    ]
 }

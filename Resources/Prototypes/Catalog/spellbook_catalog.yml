@@ -160,7 +160,7 @@
   description: spellbook-upgrade-lightning-description
   icon:
     sprite: Objects/Magic/magicactions.rsi
-    state: lightning
+    state: yellow_lightning
   cost:
     WizCoin: 2
   categories:

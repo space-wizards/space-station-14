@@ -15,7 +15,7 @@
       path: /Audio/Effects/Lightning/lightningbolt.ogg
     icon:
       sprite: Objects/Magic/magicactions.rsi
-      state: lightning
+      state: blue_lightning
     event: !type:LightningSpellEvent
       lightningPrototype: ChargedLightning
       boltCount: 3
@@ -46,7 +46,7 @@
       path: /Audio/Effects/Lightning/lightningbolt.ogg
     icon:
       sprite: Objects/Magic/magicactions.rsi
-      state: lightning
+      state: yellow_lightning
     event: !type:LightningSpellEvent
       lightningPrototype: SuperchargedLightning
       boltCount: 5
@@ -73,7 +73,7 @@
       path: /Audio/Effects/Lightning/lightningbolt.ogg
     icon:
       sprite: Objects/Magic/magicactions.rsi
-      state: lightning
+      state: red_lightning
     event: !type:LightningSpellEvent
       lightningPrototype: HyperchargedLightning
       boltCount: 7
