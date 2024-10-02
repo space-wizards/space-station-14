@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Quantus
-  changes:
-  - message: Reagent grinders can no longer auto-grind when unpowered.
-    type: Fix
-  id: 6975
-  time: '2024-07-23T21:02:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30267
 - author: BombasterDS
   changes:
   - message: Fixed items disappearing after shelfs and mannequin disassembling
@@ -3941,3 +3934,13 @@
   id: 7474
   time: '2024-10-02T06:17:57.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32450
+- author: Toly65
+  changes:
+  - message: fixed slippery and bioluminescent effects persisting on planters after
+      the plant has been harvested
+    type: Fix
+  - message: removed the slippery and bioluminescent visuals from planters temporararily
+    type: Remove
+  id: 7475
+  time: '2024-10-02T09:37:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32576
