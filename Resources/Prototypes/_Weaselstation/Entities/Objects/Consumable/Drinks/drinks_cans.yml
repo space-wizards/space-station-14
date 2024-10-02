@@ -1,0 +1,21 @@
+- type: entity
+  parent: DrinkCanBaseFull
+  id: DrinkWehMaxCan
+  name: WEH MAX
+  description: AN ENERGY DRINK TO MAKE YOU FEEL THE WEH!
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: JuiceThatMakesYouWeh
+          Quantity: 30
+  - type: Tag
+    tags:
+    - DrinkCan
+    - Recyclable
+  - type: Sprite
+    sprite: _Weaselstation/Objects/Consumable/Drinks/weh_max.rsi
+  - type: Item
+    sprite: _Weaselstation/Objects/Consumable/Drinks/weh_max.rsi
