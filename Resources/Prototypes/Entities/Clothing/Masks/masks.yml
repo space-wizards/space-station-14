@@ -321,6 +321,7 @@
   - type: AddAccentClothing
     accent: ReplacementAccent
     replacement: mumble
+  - type: AddGaggedClothing
   - type: Construction
     graph: Muzzle
     node: muzzle
