@@ -25,7 +25,7 @@ public abstract class SharedWaddleAnimationSystem : EntitySystem
         // Stop moving possibilities
         SubscribeLocalEvent((Entity<WaddleAnimationComponent> ent, ref StunnedEvent _) => StopWaddling(ent));
         SubscribeLocalEvent((Entity<WaddleAnimationComponent> ent, ref DownedEvent _) => StopWaddling(ent));
-        SubscribeLocalEvent((Entity<WaddleAnimationComponent> ent, ref BuckleChangeEvent _) => StopWaddling(ent));
+        SubscribeLocalEvent((Entity<WaddleAnimationComponent> ent, ref BuckledEvent _) => StopWaddling(ent));
         SubscribeLocalEvent<WaddleAnimationComponent, GravityChangedEvent>(OnGravityChanged);
     }
 

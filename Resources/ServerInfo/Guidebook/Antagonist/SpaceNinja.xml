@@ -1,77 +1,80 @@
 <Document>
   # Space Ninja
+  
+  <Box>
+    [color=#999999][italic]"Spider of the night, silent is my bite."[/italic][/color]
+  </Box>
 
-  The [color=#66FF00]Space Ninja[/color] is a ghost role randomly available mid-late game. If you pick it you will be given your gear, your objectives, and the greeting.
+  You are an elite mercenary that [color=#66FF00]The Spider Clan[/color] has sent to wreak all kinds of havoc on the station. You are equipped to keep it silent-but-deadly.
 
-  You are a ninja, but in space. [color=#66FF00]The Spider Clan[/color] has sent you to the station to wreak all kinds of havoc, and you are equipped to keep it silent-but-deadly.
+  Whether you decide to mercilessly pick off the station's crew one by one or stay out of trouble, your discipline has taught you that [italic]your objectives must be at least attempted[/italic]. For honor!
 
-  Whether you mercilessly pick off the station's crew one by one or assassinate the clown over and over, your discipline has taught you that [color=#66FF00]your objectives must be at least attempted[/color]. For honor!
+  ## Standard Equipment
+  You begin implanted with a [color=cyan]death acidifier[/color], so if you are captured or KIA all your precious equipment is kept out of enemy hands.
 
-  # Equipment
+  Your bag is full of [bold]tools[/bold] and a [bold]survival box[/bold]. You also carry a [color=cyan]jetpack[/color] and a [color=cyan]pinpointer[/color] that will lead you to the station.
 
-  You begin implanted with a [color=#a4885c]death acidifier[/color], so if you are KIA or decide to commit seppuku you will leave behind one final gift to the janitor, and all your precious equipment is kept out of enemy hands.
-
-  Your bag is full of tools for more subtle sabotage, along with a survival box if you need a snack.
-
-  You have a [color=#a4885c]jetpack[/color] and [color=#a4885c]pinpointer[/color] that will let you find the station.
-
-  <GuideEntityEmbed Entity="PinpointerStation" Caption="station pinpointer"/>
-
-  ## Ninja Suit
-
-  <GuideEntityEmbed Entity="ClothingOuterSuitSpaceNinja" Captain="ninja suit"/>
+  <Box>
+    <GuideEntityEmbed Entity="JetpackBlack"/>
+    <GuideEntityEmbed Entity="PinpointerStation"/>
+  </Box>
+  
+  ## Ninja Suit & Boots
+  
+  <Box>
+    <GuideEntityEmbed Entity="ClothingEyesVisorNinja" Caption="your visor"/>
+    <GuideEntityEmbed Entity="ClothingOuterSuitSpaceNinja" Caption="your suit"/>
+    <GuideEntityEmbed Entity="ClothingShoesSpaceNinja" Caption="your boots"/>
+  </Box>
 
   Your single most important item is [color=#66FF00]your suit[/color], without it none of your abilities would work.
-  Your suit requires power to function. Its [color=#a4885c]internal battery[/color] can be replaced by clicking on it with another one, and [color=#a4885c]higher capacity batteries[/color] mean a [color=#a4885c]highly effective ninja[/color].
-  You can see the current charge by examining the suit or in a sweet battery alert at the top right of your screen.
+  Your suit requires power to function, which is supplied by its [bold]internal battery[/bold]. It can be replaced, and [italic]high capacity batteries[/italic] mean a [italic]highly effective ninja[/italic].
 
-  If you run out of power and need to recharge your battery, just use your gloves to drain an APC, substation, or SMES.
+  [bold]You can recharge your internal battery directly[/bold] by using [color=#66FF00]your gloves[/color]. You can see the current charge by examining the suit or checking the nifty battery alert on your screen.
+
+  Your outfit also includes [color=#66FF00]special boots[/color] that keep you agile, upright and grounded without using energy. You've also got flash protection thanks to your [color=#66FF00]visor[/color].
 
   ## Ninja Gloves
 
-  <GuideEntityEmbed Entity="ClothingHandsGlovesSpaceNinja" Caption="ninja gloves"/>
+  <Box>
+    <GuideEntityEmbed Entity="ClothingHandsGlovesSpaceNinja" Caption="your gloves"/>
+  </Box>
 
-  [color=#66FF00]These bad boys are your bread and butter.[/color]
+  [color=#66FF00]These bad boys are your bread and butter.[/color] They are made from [bold]insulated nanomachines[/bold] to allow you to gracefully break into restricted areas without leaving behind fingerprints.
 
-  They are made from [color=#a4885c]insulated nanomachines[/color] to assist you in gracefully breaking into destinations without leaving behind fingerprints.
-
-  You have an action to toggle gloves. When the gloves are turned on, they allow you to use [color=#a4885c]special abilities[/color], which are triggered by interacting with things with an empty hand and with combat mode disabled.
+  You have an action to toggle gloves. When the gloves are turned on, they allow you to use [bold]special abilities[/bold], which are triggered by interacting with things with an empty hand and with combat mode disabled.
 
   Your glove abilities include:
-  - Emagging an unlimited number of doors.
-  - Draining power from transformers such as APCs, substations, or SMESes. The higher the voltage, the more efficient the draining is.
-  - You can shock any mob, stunning and slightly damaging them.
-  - You can download technologies from an R&D server for one of your objectives.
-  - You can hack a communications console to call in a [textlink="threat" link="MinorAntagonists"].
+  - Emagging doors and airlocks.
+  - Draining power from [bold]transformers[/bold] such as APCs, substations, or SMESes (higher voltage transformers drain more efficiently).
+  - Applying an electrical shock to a mob, stunning and slightly damaging them.
+  - Tampering with [bold]station equipment[/bold] to complete [color=#66FF00]objectives[/color].
 
   ## Energy Katana
 
-  <GuideEntityEmbed Entity="EnergyKatana" Captain="energy katana"/>
+  <Box>
+    <GuideEntityEmbed Entity="EnergyKatana"/>
+  </Box>
 
-  You have sworn yourself to the [color=#66FF00]sword[/color] and refuse to use firearms.
-  Deals a lot of damage and can be recalled at will, costing suit power proportional to the distance teleported.
-  
-  While in hand you can [color=#a4885c]teleport[/color] to anywhere that you can see, meaning most doors and windows, but not past solid walls.
-  This has a limited number of charges which regenerate slowly, so keep a charge or two spare in case you need a quick getaway.
+  [bold]You have sworn yourself to the sword and refuse to use firearms.[/bold] Luckily, you've got a pretty cool sword.
+
+  Your [color=#66FF00]energy katana[/color] hurts plenty and can be [bold]recalled at will[/bold] at the cost of suit power. The farther away it is from you, the more energy required to recall it.
+
+  While in hand you may also [color=#66FF00]teleport[/color] to anywhere that you can see, [bold]including through windows[/bold]. The charges required to do this regenerate slowly, so keep a charge or two spare in case you need a quick getaway.
 
   ## Spider Clan Charge
+  
+  <Box>
+    <GuideEntityEmbed Entity="SpiderCharge"/>
+  </Box>
+  
+  [color=#66FF00]A modified C-4 explosive[/color], which can be found in your pocket. Creates a large explosion but [bold]must be armed in your target area[/bold] as it is one of your [color=#66FF00]objectives[/color].
 
-  <GuideEntityEmbed Entity="SpiderCharge" Caption="spider clan charge"/>
+  It can't be activated manually, so simply plant it on a wall or a particularly ugly piece of furniture. Can't be unstuck once planted.
 
-  [color=#66FF00]A modified C-4 explosive[/color], you start with this in your pocket. Creates a large explosion but must be armed in your target area.
-  A random area on the map is selected for you to blow up, which is one of your [color=#a4885c]objectives[/color].
+  ## Objectives
 
-  It can't be activated manually, simply plant it on a wall or a particularly ugly piece of furniture.
-  Can't be unstuck once planted.
-
-  ## Ninja Shoes
-
-  Special [color=#a4885c]noslips[/color] that keep you agile, swift and upright.
-  Energy not required.
-
-  # Objectives
-
-  - Download \[9-13\] research nodes: Use your gloves on an R&D server with a number of unlocked technologies
+  - Download \[9-13\] research nodes: Use your gloves on an R&D server with a number of unlocked technologies. You may have to unlock technologies yourself if there aren't enough to steal already.
   - Doorjack \[15-40\] doors on the station: Use your gloves to emag a number of doors.
   - Detonate the spider clan charge: Plant your spider clan charge at the specified location and watch it go boom!
   - Call in a [textlink="threat" link="MinorAntagonists"]: Use your gloves on a communications console.

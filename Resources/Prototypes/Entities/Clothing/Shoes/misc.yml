@@ -88,7 +88,7 @@
   - type: NoSlip
 
 - type: entity
-  parent: [ClothingShoesBase, PowerCellSlotSmallItem]
+  parent: [ClothingShoesBase, PowerCellSlotSmallItem, BaseToggleClothing]
   id: ClothingShoesBootsSpeed
   name: speed boots
   description: High-tech boots woven with quantum fibers, able to convert electricity into pure speed!
@@ -100,12 +100,11 @@
       map: [ "enum.ToggleVisuals.Layer" ]
   - type: Clothing
     sprite: Clothing/Shoes/Boots/speedboots.rsi
-  - type: ToggleClothingSpeed
-    toggleAction: ActionToggleSpeedBoots
+  - type: ToggleClothing
+    action: ActionToggleSpeedBoots
   - type: ClothingSpeedModifier
     walkModifier: 1.5
     sprintModifier: 1.5
-    enabled: false
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -117,6 +116,7 @@
     price: 500
   - type: PowerCellDraw
     drawRate: 4
+  - type: ToggleCellDraw
   - type: ItemSlots
     slots:
       cell_slot:
@@ -130,7 +130,23 @@
   description: Toggles the speed boots on and off.
   components:
   - type: InstantAction
-    itemIconStyle: NoItem
-    event: !type:ToggleClothingSpeedEvent
-    icon: { sprite: Clothing/Shoes/Boots/speedboots.rsi, state: icon }
-    iconOn: { sprite: Clothing/Shoes/Boots/speedboots.rsi, state: icon-on }
+    itemIconStyle: BigItem
+    event: !type:ToggleActionEvent
+
+- type: entity
+  parent: ClothingShoesBase
+  id: ClothingShoesBootsMoon
+  name: moon boots
+  description: Special anti-gravity boots developed with a speciality blend of lunar rock gel. Shipped from the Netherlands.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/moonboots.rsi
+    layers:
+    - state: icon
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/moonboots.rsi
+  - type: AntiGravityClothing
+  - type: StaticPrice
+    price: 75
+  - type: Tag
+    tags: [ ]

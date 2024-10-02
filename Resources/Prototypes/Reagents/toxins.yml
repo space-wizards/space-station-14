@@ -56,18 +56,19 @@
   metabolisms:
     Poison:
       effects:
+      - !type:Emote
+        emote: Yawn
+        showInChat: true
+        probability: 0.1
       - !type:MovespeedModifier
         walkSpeedModifier: 0.65
         sprintSpeedModifier: 0.65
       - !type:GenericStatusEffect
-        conditions:
-        - !type:ReagentThreshold
-          reagent: ChloralHydrate
-          min: 10
-        key: ForcedSleep
-        component: ForcedSleeping
-        refresh: false
+        key: Drowsiness
+        component: Drowsiness
+        time: 4
         type: Add
+        refresh: false
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
@@ -401,8 +402,6 @@
       effects:
       - !type:HealthChange
         conditions:
-        - !type:ReagentThreshold
-          min: 1
         - !type:OrganType
           type: Animal # Applying damage to the mobs with lower metabolism capabilities
         damage:
@@ -411,8 +410,6 @@
       - !type:ChemVomit
         probability: 0.04 #Scaled for time, not metabolismrate.
         conditions:
-          - !type:ReagentThreshold
-            min: 3
           - !type:OrganType
             type: Animal
 
@@ -542,8 +539,8 @@
       - !type:GenericStatusEffect
         key: Pacified
         component: Pacified
-        refresh: false
         type: Add
+        time: 4
 
 - type: reagent
   id: Honk
@@ -662,3 +659,46 @@
             Poison: 2
       - !type:SatiateHunger
         factor: -6
+
+# inspired by the spider neurotoxin GsMtx-4
+# poisons non-spiders and slows you down at high doses
+- type: reagent
+  id: Mechanotoxin
+  name: reagent-name-mechanotoxin
+  group: Toxins
+  desc: reagent-desc-mechanotoxin
+  flavor: sweet
+  color: "#00b408"
+  physicalDesc: reagent-physical-desc-nondescript
+  metabolisms:
+    Poison:
+      metabolismRate: 0.2 # Slower metabolism so it can build up over time for slowdown
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:OrganType
+          type: Arachnid
+          shouldHave: false
+        damage:
+          types:
+            Poison: 1.6
+      - !type:MovespeedModifier
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Mechanotoxin
+          min: 2
+        - !type:OrganType
+          type: Arachnid
+          shouldHave: false
+        walkSpeedModifier: 0.8
+        sprintSpeedModifier: 0.8
+      - !type:MovespeedModifier
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Mechanotoxin
+          min: 4
+        - !type:OrganType
+          type: Arachnid
+          shouldHave: false
+        walkSpeedModifier: 0.4
+        sprintSpeedModifier: 0.4

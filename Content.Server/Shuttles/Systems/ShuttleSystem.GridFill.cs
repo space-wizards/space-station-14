@@ -1,9 +1,14 @@
+using System.Numerics;
 using Content.Server.Shuttles.Components;
 using Content.Server.Station.Components;
 using Content.Server.Station.Events;
-using Content.Shared.Cargo.Components;
 using Content.Shared.CCVar;
+using Content.Shared.Salvage;
 using Content.Shared.Shuttles.Components;
+using Content.Shared.Station.Components;
+using Robust.Shared.Collections;
+using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
@@ -65,11 +70,11 @@ public sealed partial class ShuttleSystem
         if (targetGrid == null)
             return;
 
-        var mapId = _mapManager.CreateMap();
+        _mapSystem.CreateMap(out var mapId);
 
         if (_loader.TryLoad(mapId, component.Path.ToString(), out var ent) && ent.Count > 0)
         {
-            if (TryComp<ShuttleComponent>(ent[0], out var shuttle))
+            if (HasComp<ShuttleComponent>(ent[0]))
             {
                 TryFTLProximity(ent[0], targetGrid.Value);
             }
@@ -78,6 +83,85 @@ public sealed partial class ShuttleSystem
         }
 
         _mapManager.DeleteMap(mapId);
+    }
+
+    private bool TryDungeonSpawn(Entity<MapGridComponent?> targetGrid, DungeonSpawnGroup group, out EntityUid spawned)
+    {
+        spawned = EntityUid.Invalid;
+
+        if (!_gridQuery.Resolve(targetGrid.Owner, ref targetGrid.Comp))
+        {
+            return false;
+        }
+
+        var dungeonProtoId = _random.Pick(group.Protos);
+
+        if (!_protoManager.TryIndex(dungeonProtoId, out var dungeonProto))
+        {
+            return false;
+        }
+
+        var targetPhysics = _physicsQuery.Comp(targetGrid);
+        var spawnCoords = new EntityCoordinates(targetGrid, targetPhysics.LocalCenter);
+
+        if (group.MinimumDistance > 0f)
+        {
+            var distancePadding = MathF.Max(targetGrid.Comp.LocalAABB.Width, targetGrid.Comp.LocalAABB.Height);
+            spawnCoords = spawnCoords.Offset(_random.NextVector2(distancePadding + group.MinimumDistance, distancePadding + group.MaximumDistance));
+        }
+
+        _mapSystem.CreateMap(out var mapId);
+
+        var spawnedGrid = _mapManager.CreateGridEntity(mapId);
+
+        _transform.SetMapCoordinates(spawnedGrid, new MapCoordinates(Vector2.Zero, mapId));
+        _dungeon.GenerateDungeon(dungeonProto, spawnedGrid.Owner, spawnedGrid.Comp, Vector2i.Zero, _random.Next(), spawnCoords);
+
+        spawned = spawnedGrid.Owner;
+        return true;
+    }
+
+    private bool TryGridSpawn(EntityUid targetGrid, EntityUid stationUid, MapId mapId, GridSpawnGroup group, out EntityUid spawned)
+    {
+        spawned = EntityUid.Invalid;
+
+        if (group.Paths.Count == 0)
+        {
+            Log.Error($"Found no paths for GridSpawn");
+            return false;
+        }
+
+        var paths = new ValueList<ResPath>();
+
+        // Round-robin so we try to avoid dupes where possible.
+        if (paths.Count == 0)
+        {
+            paths.AddRange(group.Paths);
+            _random.Shuffle(paths);
+        }
+
+        var path = paths[^1];
+        paths.RemoveAt(paths.Count - 1);
+
+        if (_loader.TryLoad(mapId, path.ToString(), out var ent) && ent.Count == 1)
+        {
+            if (HasComp<ShuttleComponent>(ent[0]))
+            {
+                TryFTLProximity(ent[0], targetGrid);
+            }
+
+            if (group.NameGrid)
+            {
+                var name = path.FilenameWithoutExtension;
+                _metadata.SetEntityName(ent[0], name);
+            }
+
+            spawned = ent[0];
+            return true;
+        }
+
+        Log.Error($"Error loading gridspawn for {ToPrettyString(stationUid)} / {path}");
+        return false;
     }
 
     private void GridSpawns(EntityUid uid, GridSpawnComponent component)
@@ -96,82 +180,50 @@ public sealed partial class ShuttleSystem
             return;
 
         // Spawn on a dummy map and try to FTL if possible, otherwise dump it.
-        var mapId = _mapManager.CreateMap();
-        var valid = true;
-        var paths = new List<ResPath>();
+        _mapSystem.CreateMap(out var mapId);
 
         foreach (var group in component.Groups.Values)
         {
-            if (group.Paths.Count == 0)
-            {
-                Log.Error($"Found no paths for GridSpawn");
-                continue;
-            }
-
-            var count = _random.Next(group.MinCount, group.MaxCount);
-            paths.Clear();
+            var count = _random.Next(group.MinCount, group.MaxCount + 1);
 
             for (var i = 0; i < count; i++)
             {
-                // Round-robin so we try to avoid dupes where possible.
-                if (paths.Count == 0)
+                EntityUid spawned;
+
+                switch (group)
                 {
-                    paths.AddRange(group.Paths);
-                    _random.Shuffle(paths);
-                }
-
-                var path = paths[^1];
-                paths.RemoveAt(paths.Count - 1);
-
-                if (_loader.TryLoad(mapId, path.ToString(), out var ent) && ent.Count == 1)
-                {
-                    if (TryComp<ShuttleComponent>(ent[0], out var shuttle))
-                    {
-                        TryFTLProximity(ent[0], targetGrid.Value);
-                    }
-                    else
-                    {
-                        valid = false;
-                    }
-
-                    if (group.Hide)
-                    {
-                        var iffComp = EnsureComp<IFFComponent>(ent[0]);
-                        iffComp.Flags |= IFFFlags.HideLabel;
-                        Dirty(ent[0], iffComp);
-                    }
-
-                    if (group.StationGrid)
-                    {
-                        _station.AddGridToStation(uid, ent[0]);
-                    }
-
-                    if (group.NameGrid)
-                    {
-                        var name = path.FilenameWithoutExtension;
-                        _metadata.SetEntityName(ent[0], name);
-                    }
-
-                    foreach (var compReg in group.AddComponents.Values)
-                    {
-                        var compType = compReg.Component.GetType();
-
-                        if (HasComp(ent[0], compType))
+                    case DungeonSpawnGroup dungeon:
+                        if (!TryDungeonSpawn(targetGrid.Value, dungeon, out spawned))
                             continue;
 
-                        var comp = _factory.GetComponent(compType);
-                        AddComp(ent[0], comp, true);
-                    }
-                }
-                else
-                {
-                    valid = false;
+                        break;
+                    case GridSpawnGroup grid:
+                        if (!TryGridSpawn(targetGrid.Value, uid, mapId, grid, out spawned))
+                            continue;
+
+                        break;
+                    default:
+                        throw new NotImplementedException();
                 }
 
-                if (!valid)
+                if (_protoManager.TryIndex(group.NameDataset, out var dataset))
                 {
-                    Log.Error($"Error loading gridspawn for {ToPrettyString(uid)} / {path}");
+                    _metadata.SetEntityName(spawned, SharedSalvageSystem.GetFTLName(dataset, _random.Next()));
                 }
+
+                if (group.Hide)
+                {
+                    var iffComp = EnsureComp<IFFComponent>(spawned);
+                    iffComp.Flags |= IFFFlags.HideLabel;
+                    Dirty(spawned, iffComp);
+                }
+
+                if (group.StationGrid)
+                {
+                    _station.AddGridToStation(uid, spawned);
+                }
+
+                EntityManager.AddComponents(spawned, group.AddComponents);
             }
         }
 
@@ -191,7 +243,7 @@ public sealed partial class ShuttleSystem
         }
 
         // Spawn on a dummy map and try to dock if possible, otherwise dump it.
-        var mapId = _mapManager.CreateMap();
+        _mapSystem.CreateMap(out var mapId);
         var valid = false;
 
         if (_loader.TryLoad(mapId, component.Path.ToString(), out var ent) &&

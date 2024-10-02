@@ -6,7 +6,7 @@
   - type: Objective
     # difficulty isn't used since all objectives are picked
     difficulty: 1.5
-    issuer: spiderclan
+    issuer: objective-issuer-spiderclan
   - type: RoleRequirement
     roles:
       components:

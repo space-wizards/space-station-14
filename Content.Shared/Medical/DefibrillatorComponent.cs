@@ -10,16 +10,11 @@ namespace Content.Shared.Medical;
 /// <summary>
 /// This is used for defibrillators; a machine that shocks a dead
 /// person back into the world of the living.
+/// Uses <c>ItemToggleComponent</c>
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentPause]
 public sealed partial class DefibrillatorComponent : Component
 {
-    /// <summary>
-    /// Whether or not it's turned on and able to be used.
-    /// </summary>
-    [DataField("enabled"), ViewVariables(VVAccess.ReadWrite)]
-    public bool Enabled;
-
     /// <summary>
     /// The time at which the zap cooldown will be completed
     /// </summary>
@@ -71,15 +66,6 @@ public sealed partial class DefibrillatorComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("zapSound")]
     public SoundSpecifier? ZapSound = new SoundPathSpecifier("/Audio/Items/Defib/defib_zap.ogg");
-
-    /// <summary>
-    /// The sound when the defib is powered on.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("powerOnSound")]
-    public SoundSpecifier? PowerOnSound = new SoundPathSpecifier("/Audio/Items/Defib/defib_safety_on.ogg");
-
-    [ViewVariables(VVAccess.ReadWrite), DataField("powerOffSound")]
-    public SoundSpecifier? PowerOffSound = new SoundPathSpecifier("/Audio/Items/Defib/defib_safety_off.ogg");
 
     [ViewVariables(VVAccess.ReadWrite), DataField("chargeSound")]
     public SoundSpecifier? ChargeSound = new SoundPathSpecifier("/Audio/Items/Defib/defib_charge.ogg");

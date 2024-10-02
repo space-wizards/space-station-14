@@ -21,7 +21,6 @@
 - type: startingGear
   id: MimeGear
   equipment:
-    belt: ClothingBeltSuspenders
     gloves: ClothingHandsGlovesColorWhite
     shoes: ClothingShoesColorWhite
     pocket1: CrayonMime
@@ -30,7 +29,6 @@
     ears: ClothingHeadsetService
   storage:
     back:
-    - BoxSurvival
     - RubberStampMime
 
 - type: entity

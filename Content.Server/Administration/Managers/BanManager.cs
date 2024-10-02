@@ -2,6 +2,7 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Chat.Managers;
 using Content.Server.Database;
@@ -12,16 +13,18 @@ using Content.Shared.Players;
 using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Roles;
 using Robust.Server.Player;
+using Robust.Shared.Asynchronous;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Administration.Managers;
 
-public sealed class BanManager : IBanManager, IPostInjectInit
+public sealed partial class BanManager : IBanManager, IPostInjectInit
 {
     [Dependency] private readonly IServerDbManager _db = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -29,9 +32,13 @@ public sealed class BanManager : IBanManager, IPostInjectInit
     [Dependency] private readonly IEntitySystemManager _systems = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly ILocalizationManager _localizationManager = default!;
+    [Dependency] private readonly ServerDbEntryManager _entryManager = default!;
     [Dependency] private readonly IChatManager _chat = default!;
     [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] private readonly ILogManager _logManager = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly ITaskManager _taskManager = default!;
+    [Dependency] private readonly UserDbDataManager _userDbData = default!;
 
     private ISawmill _sawmill = default!;
 
@@ -39,12 +46,34 @@ public sealed class BanManager : IBanManager, IPostInjectInit
     public const string JobPrefix = "Job:";
 
     private readonly Dictionary<NetUserId, HashSet<ServerRoleBanDef>> _cachedRoleBans = new();
+    // Cached ban exemption flags are used to handle
+    private readonly Dictionary<ICommonSession, ServerBanExemptFlags> _cachedBanExemptions = new();
 
     public void Initialize()
     {
         _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
 
         _netManager.RegisterNetMessage<MsgRoleBans>();
+
+        _db.SubscribeToNotifications(OnDatabaseNotification);
+
+        _userDbData.AddOnLoadPlayer(CachePlayerData);
+        _userDbData.AddOnPlayerDisconnect(ClearPlayerData);
+    }
+
+    private async Task CachePlayerData(ICommonSession player, CancellationToken cancel)
+    {
+        // Yeah so role ban loading code isn't integrated with exempt flag loading code.
+        // Have you seen how garbage role ban code code is? I don't feel like refactoring it right now.
+
+        var flags = await _db.GetBanExemption(player.UserId, cancel);
+        cancel.ThrowIfCancellationRequested();
+        _cachedBanExemptions[player] = flags;
+    }
+
+    private void ClearPlayerData(ICommonSession player)
+    {
+        _cachedBanExemptions.Remove(player);
     }
 
     private async void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
@@ -168,17 +197,43 @@ public sealed class BanManager : IBanManager, IPostInjectInit
         _sawmill.Info(logMessage);
         _chat.SendAdminAlert(logMessage);
 
-        // If we're not banning a player we don't care about disconnecting people
-        if (target == null)
-            return;
-
-        // Is the player connected?
-        if (!_playerManager.TryGetSessionById(target.Value, out var targetPlayer))
-            return;
-        // If they are, kick them
-        var message = banDef.FormatBanMessage(_cfg, _localizationManager);
-        targetPlayer.Channel.Disconnect(message);
+        KickMatchingConnectedPlayers(banDef, "newly placed ban");
     }
+
+    private void KickMatchingConnectedPlayers(ServerBanDef def, string source)
+    {
+        foreach (var player in _playerManager.Sessions)
+        {
+            if (BanMatchesPlayer(player, def))
+            {
+                KickForBanDef(player, def);
+                _sawmill.Info($"Kicked player {player.Name} ({player.UserId}) through {source}");
+            }
+        }
+    }
+
+    private bool BanMatchesPlayer(ICommonSession player, ServerBanDef ban)
+    {
+        var playerInfo = new BanMatcher.PlayerInfo
+        {
+            UserId = player.UserId,
+            Address = player.Channel.RemoteEndPoint.Address,
+            HWId = player.Channel.UserData.HWId,
+            // It's possible for the player to not have cached data loading yet due to coincidental timing.
+            // If this is the case, we assume they have all flags to avoid false-positives.
+            ExemptFlags = _cachedBanExemptions.GetValueOrDefault(player, ServerBanExemptFlags.All),
+            IsNewPlayer = false,
+        };
+
+        return BanMatcher.BanMatches(ban, playerInfo);
+    }
+
+    private void KickForBanDef(ICommonSession player, ServerBanDef def)
+    {
+        var message = def.FormatBanMessage(_cfg, _localizationManager);
+        player.Channel.Disconnect(message);
+    }
+
     #endregion
 
     #region Job Bans

@@ -22,6 +22,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     [Dependency] private readonly PhysicsSystem _physics = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedPointLightSystem _light = default!;
+    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly TagSystem _tags = default!;
     [Dependency] private readonly ContainmentAlarmSystem _alarm = default!;
 
@@ -38,6 +39,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         SubscribeLocalEvent<ContainmentFieldGeneratorComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
         SubscribeLocalEvent<ContainmentFieldGeneratorComponent, ComponentRemove>(OnComponentRemoved);
         SubscribeLocalEvent<ContainmentFieldGeneratorComponent, EventHorizonAttemptConsumeEntityEvent>(PreventBreach);
+        SubscribeLocalEvent<ContainmentFieldGeneratorComponent, MapInitEvent>(OnMapInit);
     }
 
     public override void Update(float frameTime)
@@ -62,12 +64,19 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
 
     #region Events
 
+    private void OnMapInit(Entity<ContainmentFieldGeneratorComponent> generator, ref MapInitEvent args)
+    {
+        if (generator.Comp.Enabled)
+            ChangeFieldVisualizer(generator);
+    }
+
     /// <summary>
     /// A generator receives power from a source colliding with it.
     /// </summary>
     private void HandleGeneratorCollide(Entity<ContainmentFieldGeneratorComponent> generator, ref StartCollideEvent args)
     {
-        if (_tags.HasTag(args.OtherEntity, generator.Comp.IDTag))
+        if (args.OtherFixtureId == generator.Comp.SourceFixtureId &&
+            _tags.HasTag(args.OtherEntity, generator.Comp.IDTag))
         {
             ReceivePower(generator.Comp.PowerReceived, generator);
             generator.Comp.Accumulator = 0f;
@@ -116,7 +125,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     private void OnUnanchorAttempt(EntityUid uid, ContainmentFieldGeneratorComponent component,
         UnanchorAttemptEvent args)
     {
-        if (component.Enabled)
+        if (component.Enabled || component.IsConnected)
         {
             _popupSystem.PopupEntity(Loc.GetString("comp-containment-anchor-warning"), args.User, args.User, PopupType.LargeCaution);
             args.Cancel();
@@ -167,11 +176,12 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
             ChangeFieldVisualizer(value.Item1);
         }
         component.Connections.Clear();
+        if (component.IsConnected)
+            _popupSystem.PopupEntity(Loc.GetString("comp-containment-disconnected"), uid, PopupType.LargeCaution);
         component.IsConnected = false;
         ChangeOnLightVisualizer(generator);
         ChangeFieldVisualizer(generator);
         _adminLogger.Add(LogType.FieldGeneration, LogImpact.Medium, $"{ToPrettyString(uid)} lost field connections"); // Ideally LogImpact would depend on if there is a singulo nearby
-        _popupSystem.PopupEntity(Loc.GetString("comp-containment-disconnected"), uid, PopupType.LargeCaution);
     }
 
     #endregion
@@ -250,7 +260,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         if (!gen1XForm.Anchored)
             return false;
 
-        var genWorldPosRot = gen1XForm.GetWorldPositionRotation();
+        var genWorldPosRot = _transformSystem.GetWorldPositionRotation(gen1XForm);
         var dirRad = dir.ToAngle() + genWorldPosRot.WorldRotation; //needs to be like this for the raycast to work properly
 
         var ray = new CollisionRay(genWorldPosRot.WorldPosition, dirRad.ToVec(), component.CollisionMask);

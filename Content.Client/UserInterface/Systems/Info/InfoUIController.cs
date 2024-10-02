@@ -1,12 +1,10 @@
 using Content.Client.Gameplay;
 using Content.Client.Info;
-using Content.Shared.CCVar;
 using Content.Shared.Guidebook;
 using Content.Shared.Info;
 using Robust.Client.Console;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 
@@ -14,21 +12,27 @@ namespace Content.Client.UserInterface.Systems.Info;
 
 public sealed class InfoUIController : UIController, IOnStateExited<GameplayState>
 {
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
     [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private readonly ILogManager _logMan = default!;
 
     private RulesPopup? _rulesPopup;
     private RulesAndInfoWindow? _infoWindow;
+    private ISawmill _sawmill = default!;
+
+    [ValidatePrototypeId<GuideEntryPrototype>]
+    private const string DefaultRuleset = "DefaultRuleset";
+
+    public ProtoId<GuideEntryPrototype> RulesEntryId = DefaultRuleset;
 
     public override void Initialize()
     {
         base.Initialize();
 
-
+        _sawmill = _logMan.GetSawmill("rules");
         _netManager.RegisterNetMessage<RulesAcceptedMessage>();
-        _netManager.RegisterNetMessage<ShowRulesPopupMessage>(OnShowRulesPopupMessage);
+        _netManager.RegisterNetMessage<SendRulesInformationMessage>(OnRulesInformationMessage);
 
         _consoleHost.RegisterCommand("fuckrules",
             "",
@@ -39,9 +43,12 @@ public sealed class InfoUIController : UIController, IOnStateExited<GameplayStat
         });
     }
 
-    private void OnShowRulesPopupMessage(ShowRulesPopupMessage message)
+    private void OnRulesInformationMessage(SendRulesInformationMessage message)
     {
-        ShowRules(message.PopupTime);
+        RulesEntryId = message.CoreRules;
+
+        if (message.ShouldShowRules)
+            ShowRules(message.PopupTime);
     }
 
     public void OnStateExited(GameplayState state)
@@ -84,8 +91,13 @@ public sealed class InfoUIController : UIController, IOnStateExited<GameplayStat
 
     public GuideEntryPrototype GetCoreRuleEntry()
     {
-        var guide = _cfg.GetCVar(CCVars.RulesFile);
-        var guideEntryPrototype = _prototype.Index<GuideEntryPrototype>(guide);
+        if (!_prototype.TryIndex(RulesEntryId, out var guideEntryPrototype))
+        {
+            guideEntryPrototype = _prototype.Index<GuideEntryPrototype>(DefaultRuleset);
+            _sawmill.Error($"Couldn't find the following prototype: {RulesEntryId}. Falling back to {DefaultRuleset}, please check that the server has the rules set up correctly");
+            return guideEntryPrototype;
+        }
+
         return guideEntryPrototype;
     }
 

@@ -43,7 +43,7 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: CrateVendingMachineRestockAutoDrobeFilled
-  cost: 1200
+  cost: 2500
   category: cargoproduct-category-name-service
   group: market
 
@@ -174,7 +174,7 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: CrateVendingMachineRestockSeedsFilled
-  cost: 3375
+  cost: 3600
   category: cargoproduct-category-name-hydroponics
   group: market
 

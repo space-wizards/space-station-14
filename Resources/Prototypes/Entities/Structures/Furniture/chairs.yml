@@ -47,7 +47,7 @@
         sound:
           collection: MetalBreak
   - type: StaticPrice
-    price: 10
+    price: 50
 
 #Starts unanchored, cannot be rotated while anchored
 - type: entity
@@ -323,7 +323,7 @@
     node: chair
 
 - type: entity
-  parent: [SeatBase, BaseFoldable]
+  parent: [SeatBase, BaseDeployFoldable]
   id: ChairFolding
   name: folding chair
   description: If you carry six of these you become the coolest kid at church.
@@ -349,6 +349,7 @@
   - type: Construction
     graph: Seat
     node: chairFolding
+  - type: DamageExaminable
 
 - type: entity
   parent: ChairFolding
@@ -357,6 +358,8 @@
   components:
   - type: Foldable
     folded: true
+  - type: Strap
+    enabled: False
 
 - type: entity
   name: steel bench
@@ -398,4 +401,4 @@
             min: 2
             max: 4
   - type: StaticPrice
-    price: 20
+    price: 50

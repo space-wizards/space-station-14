@@ -204,3 +204,15 @@
   components:
   - type: Flatpack
     entity: SpaceHeaterAnchored
+
+- type: entity
+  parent: BaseFlatpack
+  id: FaxMachineFlatpack
+  name: fax machine flatpack
+  description: A flatpack used for constructing a fax machine.
+  components:
+  - type: Sprite
+    layers:
+    - state: fax-machine
+  - type: Flatpack
+    entity: FaxMachineBase

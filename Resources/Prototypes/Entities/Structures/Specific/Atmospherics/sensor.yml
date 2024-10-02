@@ -1,7 +1,39 @@
 - type: entity
+  id: AirSensorBase
+  abstract: true
+  components:
+    - type: DeviceNetwork
+      deviceNetId: AtmosDevices
+      receiveFrequencyId: AtmosMonitor
+      transmitFrequencyId: AtmosMonitor
+      prefix: device-address-prefix-sensor
+      sendBroadcastAttemptEvent: true
+      examinableAddress: true
+    - type: WiredNetworkConnection
+    - type: DeviceNetworkRequiresPower
+    - type: AtmosDevice
+    - type: AtmosMonitor
+      temperatureThresholdId: stationTemperature
+      pressureThresholdId: stationPressure
+      gasThresholdPrototypes:
+        Oxygen: stationOxygen
+        Nitrogen: ignore
+        CarbonDioxide: stationCO2
+        Plasma: stationPlasma
+        Tritium: stationTritium
+        WaterVapor: stationWaterVapor
+        Ammonia: stationAmmonia
+        NitrousOxide: stationNO
+        Frezon: danger
+    - type: Tag
+      tags:
+        - AirSensor
+
+- type: entity
   id: AirSensor
   name: air sensor
   description: Air sensor. It senses air.
+  parent: AirSensorBase
   placement:
     mode: SnapgridCenter
   components:
@@ -35,32 +67,6 @@
     - type: InteractionOutline
     - type: ApcPowerReceiver
     - type: ExtensionCableReceiver
-    - type: DeviceNetwork
-      deviceNetId: AtmosDevices
-      receiveFrequencyId: AtmosMonitor
-      transmitFrequencyId: AtmosMonitor
-      prefix: device-address-prefix-sensor
-      sendBroadcastAttemptEvent: true
-      examinableAddress: true
-    - type: WiredNetworkConnection
-    - type: DeviceNetworkRequiresPower
-    - type: AtmosDevice
-    - type: AtmosMonitor
-      temperatureThresholdId: stationTemperature
-      pressureThresholdId: stationPressure
-      gasThresholdPrototypes:
-        Oxygen: stationOxygen
-        Nitrogen: ignore
-        CarbonDioxide: stationCO2
-        Plasma: stationPlasma # everything below is usually bad
-        Tritium: danger
-        WaterVapor: stationWaterVapor
-        Ammonia: stationAmmonia
-        NitrousOxide: stationNO
-        Frezon: danger
-    - type: Tag
-      tags:
-        - AirSensor
     - type: AccessReader
       access: [ [ "Atmospherics" ] ]
     - type: Construction
