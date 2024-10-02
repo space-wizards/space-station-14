@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: Errant
-  changes:
-  - message: Replay observers now always spawn on the station.
-    type: Fix
-  id: 6966
-  time: '2024-07-22T19:32:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30252
-- author: Cojoke-dot
-  changes:
-  - message: You can now read the volume of a gas tank in its examine text
-    type: Tweak
-  id: 6967
-  time: '2024-07-22T21:41:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29771
 - author: Cojoke-dot
   changes:
   - message: Throwing a jetpack mid-flight will no longer freeze your character
@@ -3938,3 +3924,17 @@
   id: 7465
   time: '2024-10-01T15:13:59.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32485
+- author: BackeTako
+  changes:
+  - message: Gay Pin
+    type: Add
+  id: 7466
+  time: '2024-10-01T21:07:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32584
+- author: BackeTako
+  changes:
+  - message: Reinforced walls sprite see throu top
+    type: Fix
+  id: 7467
+  time: '2024-10-01T21:44:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32578
