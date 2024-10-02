@@ -2427,3 +2427,44 @@
   id: 307
   time: '2024-10-01T23:31:50.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/390
+- author: Pinkbat5
+  changes:
+  - message: Fixed a clipping issue with undergarments on the female sex. Be sure
+      to re-select undershirts on your characters.
+    type: Fix
+  id: 308
+  time: '2024-10-02T20:41:22.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/392
+- author: hivehum
+  changes:
+  - message: A zombie infection progresses significantly faster and more dangerously
+      than before.
+    type: Tweak
+  - message: The initial infected greeting is a little more direct that you are an
+      antagonist.
+    type: Tweak
+  - message: Rat King is now officially considered an antagonist.
+    type: Tweak
+  - message: The thieving beacon has had its name and description changed to be less
+      obvious what it is.
+    type: Tweak
+  - message: The ninja can now contact two new beings.
+    type: Add
+  id: 309
+  time: '2024-10-02T20:40:58.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/393
+- author: Darkmajia
+  changes:
+  - message: Vox space ninjas now have a form-fitting helmet.
+    type: Add
+  id: 310
+  time: '2024-10-02T20:41:12.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/397
+- author: widgetbeck
+  changes:
+  - message: Added "No Contractions" accent, which replaces (most) contractions with
+      their long forms, e.g. "can't" becomes "can not,"
+    type: Add
+  id: 311
+  time: '2024-10-02T20:40:42.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/396
