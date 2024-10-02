@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: Cojoke-dot
   changes:
-  - message: You can no longer use telescreens and televisions while blind or asleep.
-    type: Fix
-  id: 6970
-  time: '2024-07-23T02:33:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30260
-- author: Cojoke-dot
-  changes:
   - message: Fix one of the QSI popups
     type: Fix
   id: 6971
@@ -3937,3 +3930,10 @@
   id: 7469
   time: '2024-10-02T03:22:09.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32546
+- author: metalgearsloth
+  changes:
+  - message: Fix physics sensors (e.g. proximity triggers) being able to block doors.
+    type: Fix
+  id: 7470
+  time: '2024-10-02T05:00:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32591
