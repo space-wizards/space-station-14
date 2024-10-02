@@ -165,7 +165,7 @@
     noRot: false
   - type: EmitSoundOnSpawn
     sound:
-      path: /Audio/Effects/tesla_collapse.ogg
+      path: /Audio/Effects/comeandseehim.ogg
 
 - type: entity
   parent: ImmovableRodKeepTilesStill
