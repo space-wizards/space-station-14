@@ -380,7 +380,7 @@
           Quantity: 20
   - type: Icon
     sprite: Objects/Consumable/Drinks/teacup.rsi
-    state: icon-vend
+    state: icon-vend-tea
   - type: Sprite
     sprite: Objects/Consumable/Drinks/teacup.rsi
     layers:
