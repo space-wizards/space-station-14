@@ -618,6 +618,12 @@
   id: FirelockElectronics
 
 - type: Tag
+  id: FireExtinguisher
+
+- type: Tag
+  id: FireHelmet
+
+- type: Tag
   id: Flare
 
 - type: Tag
