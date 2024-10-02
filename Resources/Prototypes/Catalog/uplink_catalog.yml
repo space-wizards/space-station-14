@@ -2054,7 +2054,7 @@
   id: uplinkCleanerLakeUpgrade
   name: uplink-cleaner-lake-upgrade-name
   description: uplink-cleaner-lake-upgrade-desc
-  productEntity: WeaponCleanerLakepgradeKit
+  productEntity: WeaponCleanerLakeUpgradeKit
   discountCategory: rareDiscounts
   discountDownTo:
     Telecrystal: 12
