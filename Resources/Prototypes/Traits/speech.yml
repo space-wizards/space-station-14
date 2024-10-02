@@ -15,6 +15,7 @@
     - type: GrayAccent
     - type: ReplacementAccent
       accent: dwarf
+    - type: NoContractionsAccent
 
 # 1 Cost
 
