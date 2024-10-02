@@ -19,7 +19,7 @@
       lightningPrototype: ChargedLightning
       boltCount: 3
       boltRange: 5
-      arcDepth: 1
+      arcDepth: 0
       triggerLightningEvents: true
       speech: action-speech-spell-smite
 
