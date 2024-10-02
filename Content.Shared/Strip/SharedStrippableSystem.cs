@@ -118,6 +118,9 @@ public abstract class SharedStrippableSystem : EntitySystem
             !Resolve(target, ref targetStrippable))
             return;
 
+        if (!target.Comp.CanBeStripped)
+            return;
+
         if (!_handsSystem.TryGetHand(target.Owner, handId, out var handSlot))
             return;
 
