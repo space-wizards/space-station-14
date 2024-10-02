@@ -1,7 +1,7 @@
 accent-italian-prefix-1 = Ravioli, ravioli,
 accent-italian-prefix-2 = Mamma-mia!
 accent-italian-prefix-3 = That's a spicy meat-ball!
-accent-italian-prefix-4 = La la la la la funiculi funicula!
+accent-italian-prefix-4 = La la, funiculi funicula!
 
 accent-italian-words-1 = assistant
 accent-italian-words-replace-1 = goombah
