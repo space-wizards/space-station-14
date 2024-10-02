@@ -517,6 +517,17 @@
     borderColor: "#7C5D00"
   - type: Icon
     state: pda-captain
+  - type: CartridgeLoader
+    uiKey: enum.PdaUiKey.Key
+    diskSpace: 10 # Has Four extra pre-installed programs.
+    preinstalled:
+      - CrewManifestCartridge
+      - NotekeeperCartridge
+      - NewsReaderCartridge
+      - MedTekCartridge
+      - WantedListCartridge
+      - LogProbeCartridge
+      - AstroNavCartridge
 
 - type: entity
   parent: BasePDA
