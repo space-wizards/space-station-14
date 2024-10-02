@@ -21,7 +21,7 @@
       map: ["substationBattery"]
       shader: unshaded
   - type: Substation
-    NitrogenBoosterSlotId: NitrogenBooster_slot
+    nitrogenBoosterSlotId: NitrogenBooster_slot
   - type: ContainerContainer
     containers:
       NitrogenBooster_slot: !type:ContainerSlot {}
@@ -53,10 +53,10 @@
   - type: NodeContainer
     examinable: true
     nodes:
-      input:
+      hv:
         !type:CableDeviceNode
         nodeGroupID: HVPower
-      output:
+      mv:
         !type:CableDeviceNode
         nodeGroupID: MVPower
   - type: PowerMonitoringDevice
@@ -195,7 +195,7 @@
       map: ["substationScreen"]
       shader: unshaded
   - type: Substation
-    NitrogenBoosterSlotId: NitrogenBooster_slot
+    nitrogenBoosterSlotId: NitrogenBooster_slot
   - type: SubstationVisuals
     screenLayer: "substationScreen"
     integrityStates:
