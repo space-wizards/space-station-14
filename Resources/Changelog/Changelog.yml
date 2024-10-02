@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Errant
-  changes:
-  - message: Players are now notified when trying to insert an incompatible magazine
-      into a gun.
-    type: Add
-  id: 6972
-  time: '2024-07-23T06:36:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29046
 - author: TheKittehJesus
   changes:
   - message: The Syndicate Assault Borg can now wield their double esword
@@ -3938,3 +3930,10 @@
   id: 7471
   time: '2024-10-02T05:27:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32560
+- author: BackeTako
+  changes:
+  - message: New hydroponics doors
+    type: Add
+  id: 7472
+  time: '2024-10-02T05:33:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32575
