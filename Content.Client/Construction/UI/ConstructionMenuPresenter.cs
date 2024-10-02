@@ -247,14 +247,14 @@ namespace Content.Client.Construction.UI
                     itemButton.OnToggled += buttonToggledEventArgs =>
                     {
                         if (_selected is null)
-                            SelectButtonPanel(itemButton, buttonToggledEventArgs.Pressed);
+                            SelectGridButton(itemButton, buttonToggledEventArgs.Pressed);
                         else
                         {
-                            SelectButtonPanel(itemButton, true);
+                            SelectGridButton(itemButton, true);
                             if (_recipeButtons.TryGetValue(_selected.Name, out var oldButton))
                             {
                                 oldButton.Pressed = false;
-                                SelectButtonPanel(oldButton, false);
+                                SelectGridButton(oldButton, false);
                                 if (_selected == recipe)
                                 {
                                     OnGridViewRecipeSelected(this, null);
@@ -267,7 +267,7 @@ namespace Content.Client.Construction.UI
 
                     recipesGrid.AddChild(itemButtonPanelContainer);
                     _recipeButtons[recipe.Name] = itemButton;
-                    SelectButtonPanel(itemButton, _selected == recipe);
+                    SelectGridButton(itemButton, _selected == recipe);
                 }
             }
             else
@@ -279,12 +279,12 @@ namespace Content.Client.Construction.UI
             }
         }
 
-        private void SelectButtonPanel(TextureButton button, bool select)
+        private void SelectGridButton(TextureButton button, bool select)
         {
-            button.Modulate = select ? Color.Green : Color.White;
             if (button.Parent is not PanelContainer buttonPanel)
                 return;
 
+            button.Modulate = select ? Color.Green : Color.White;
             var buttonColor = select ? StyleNano.ButtonColorDefault : Color.Transparent;
             buttonPanel.PanelOverride = new StyleBoxFlat { BackgroundColor = buttonColor };
         }
