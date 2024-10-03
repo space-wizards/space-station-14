@@ -88,8 +88,7 @@
   - quantity: 5
     weight: 3
     reagents:
-    - PolypniumSpores
-    - SulfuricAcid
+    - Almitricin
     - Psicodine
 
 # Cooked Object
