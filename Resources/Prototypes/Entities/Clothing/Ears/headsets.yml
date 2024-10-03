@@ -30,7 +30,7 @@
 - type: entity
   parent: ClothingHeadset
   id: ClothingHeadsetGrey
-  name: passenger headset
+  name: citizen headset
   components:
   - type: Sprite
     sprite: Clothing/Ears/Headsets/base.rsi
@@ -65,8 +65,8 @@
 - type: entity
   parent: ClothingHeadsetCargo
   id: ClothingHeadsetQM
-  name: qm headset
-  description: A headset used by the quartermaster.
+  name: harbormaster headset
+  description: A headset used by the harbormaster.
   components:
   - type: ContainerFill
     containers:
@@ -110,7 +110,7 @@
   parent: ClothingHeadset
   id: ClothingHeadsetEngineering
   name: engineering headset
-  description: A headset for engineers to chat while the station burns around them.
+  description: A headset for engineers to chat while the platform sinks around them.
   components:
   - type: ContainerFill
     containers:
@@ -184,7 +184,7 @@
   parent: ClothingHeadsetScience
   id: ClothingHeadsetMedicalScience
   name: medical research headset
-  description: A headset that is a result of the mating between medical and science.
+  description: When a research headset and a medical headset love each other very much...
   components:
   - type: ContainerFill
     containers:
@@ -278,7 +278,7 @@
   parent: ClothingHeadset
   id: ClothingHeadsetFreelance
   name: freelancer headset
-  description: This is used by a roaming group of freelancers
+  description: This is used by a roaming group of freelancers and settlers
   components:
     - type: ContainerFill
       containers:
