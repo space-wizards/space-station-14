@@ -274,6 +274,5 @@
     - Item
   permanentComponents:
   - type: Strap
-      position: Down
-      rotation: -90
-      buckleOffset: "0,0.15"
+    position: Down
+    rotation: -90
