@@ -11579,7 +11579,7 @@ entities:
       pos: 24.5,16.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -16450.531
+      secondsUntilStateChange: -16708.217
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -14687,7 +14687,7 @@ entities:
   - uid: 27915
     components:
     - type: Transform
-      pos: 3.1914775,-12.048202
+      pos: -4.5121183,-14.413322
       parent: 8364
 - proto: Ash
   entities:
@@ -14695,6 +14695,13 @@ entities:
     components:
     - type: Transform
       pos: -36.5,20.5
+      parent: 8364
+- proto: AsimovCircuitBoard
+  entities:
+  - uid: 27912
+    components:
+    - type: Transform
+      pos: 3.2198467,-12.066172
       parent: 8364
 - proto: AsteroidRock
   entities:
@@ -69981,7 +69988,7 @@ entities:
   - uid: 27910
     components:
     - type: Transform
-      pos: -4.7439766,-11.810598
+      pos: -4.600172,-11.893632
       parent: 8364
 - proto: CommsComputerCircuitboard
   entities:
@@ -81026,6 +81033,11 @@ entities:
     - type: Transform
       pos: -6.5,-11.5
       parent: 8364
+    - type: UserInterface
+      actors:
+        enum.DisposalUnitUiKey.Key:
+        - invalid
+    - type: ActiveUserInterface
   - uid: 5909
     components:
     - type: Transform
@@ -84411,7 +84423,7 @@ entities:
       pos: -34.5,-14.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -10639.069
+      secondsUntilStateChange: -10896.755
       state: Closing
   - uid: 15010
     components:
@@ -84904,7 +84916,7 @@ entities:
       pos: -4.5,-71.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -2386.8005
+      secondsUntilStateChange: -2644.4858
       state: Closing
 - proto: Fireplace
   entities:
@@ -124690,7 +124702,7 @@ entities:
   - uid: 27913
     components:
     - type: Transform
-      pos: -4.4164634,-11.235137
+      pos: -4.5442195,-11.268198
       parent: 8364
 - proto: NuclearBomb
   entities:
@@ -124755,13 +124767,6 @@ entities:
       - Uranium
       - Gold
       - Silver
-- proto: OverlordCircuitBoard
-  entities:
-  - uid: 27912
-    components:
-    - type: Transform
-      pos: -4.5079217,-14.454323
-      parent: 8364
 - proto: OxygenCanister
   entities:
   - uid: 3791
@@ -124998,7 +125003,7 @@ entities:
   - uid: 27911
     components:
     - type: Transform
-      pos: -4.587649,-11.581272
+      pos: -4.443845,-11.67473
       parent: 8364
 - proto: Paper
   entities:
