@@ -3,7 +3,7 @@
   id: CarpetBase
   parent: BaseStructure
   name: carpet
-  description: "Fancy walking surface."
+  description: "Fancy walking surface. It's ever so slightly soggy."
   abstract: true
   components:
   - type: Sprite
