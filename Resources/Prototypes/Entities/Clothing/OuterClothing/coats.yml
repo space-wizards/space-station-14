@@ -92,7 +92,7 @@
 - type: entity
   parent: [ClothingOuterArmorHoS, ClothingOuterStorageBase]
   id: ClothingOuterCoatHoSTrench
-  name: head of security's armored trenchcoat
+  name: marshall's armored trenchcoat
   description: A greatcoat enhanced with a special alloy for some extra protection and style for those with a commanding presence.
   components:
   - type: Sprite
@@ -367,7 +367,7 @@
   parent: ClothingOuterStorageBase
   id: ClothingOuterCoatParamedicWB
   name: paramedic windbreaker
-  description: A paramedic's trusty windbreaker, for all the space wind.
+  description: A paramedic's trusty windbreaker, for all the wind.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Coats/windbreaker_paramedic.rsi
@@ -460,7 +460,7 @@
   parent: ClothingOuterStorageBase
   id: ClothingOuterCoatExpensive
   name: expensive coat
-  description: Very fluffy pink coat, made out of very expensive fur (clearly).
+  description: Very fluffy pink coat, made out of very expensive real fur (clearly).
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Coats/expensive_coat.rsi
