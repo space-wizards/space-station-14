@@ -78,11 +78,8 @@ public sealed class IonStormSystem : EntitySystem
             var lawset = lawsets.Pick(_robustRandom);
             laws = _siliconLaw.GetLawset(lawset);
         }
-        else
-        {
-            // clone it so not modifying stations lawset
-            laws = laws.Clone();
-        }
+        // clone it so not modifying stations lawset
+        laws = laws.Clone();
 
         // shuffle them all
         if (_robustRandom.Prob(target.ShuffleChance))
