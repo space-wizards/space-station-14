@@ -704,9 +704,9 @@
         sprintSpeedModifier: 0.4
 
 - type: reagent
-  id: PolypniumSpores
-  name: reagent-name-polypnium-spores
-  desc: reagent-desc-polypnium-spores
+  id: Almitricin
+  name: reagent-name-almitricin
+  desc: reagent-desc-almitricin
   group: Toxins
   physicalDesc: reagent-physical-desc-sticky
   color: "#768c89"
@@ -727,4 +727,4 @@
           min: 10
       - !type:Emote
         emote: Cough
-        probability: 0.3
+        probability: 0.4
