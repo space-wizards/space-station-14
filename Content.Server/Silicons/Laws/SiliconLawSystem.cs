@@ -174,13 +174,6 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         _roles.MindTryRemoveRole<SubvertedSiliconRoleComponent>(args.Mind);
     }
 
-    private void OnSubversionInserted(EntityUid uid, SiliconLawProviderComponent component)
-    {
-        if (!_mind.TryGetMind(uid, out var mindId, out _))
-            return;
-        _roles.MindPlaySound(mindId, component.SubversionSound);
-    }
-
     private void EnsureEmaggedRole(EntityUid uid, EmagSiliconLawComponent component)
     {
         if (component.AntagonistRole == null || !_mind.TryGetMind(uid, out var mindId, out _))
@@ -298,17 +291,18 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
             return;
 
         var lawset = GetLawset(provider.Laws).Laws;
-        var subversion = provider.Subversion;
         var query = EntityManager.CompRegistryQueryEnumerator(ent.Comp.Components);
 
         while (query.MoveNext(out var update))
         {
             SetLaws(lawset, update);
-
-            if (subversion)
-                OnSubversionInserted(update, provider);
+            if (provider.LawUploadSound != null)
+            {
+                if (!_mind.TryGetMind(update, out var mindId, out _))
+                    return;
+                _roles.MindPlaySound(mindId, provider.LawUploadSound);
+            }
         }
-
     }
 }
 

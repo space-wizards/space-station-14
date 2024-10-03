@@ -239,8 +239,7 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: AntimovLawset
-    subversion: true
-    subversionSound: /Audio/Ambience/Antag/antimov_subverted_ai.ogg
+    lawUploadSound: /Audio/Ambience/Antag/emagged_borg.ogg # REPLACE ME
 
 - type: entity
   id: NutimovCircuitBoard
