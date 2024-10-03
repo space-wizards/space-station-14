@@ -486,8 +486,8 @@
         - "sadness-effect-tears"
         probability: 0.2
       - !type:MovespeedModifier
-        walkSpeedModifier: 0.90
-        sprintSpeedModifier: 0.90
+        walkSpeedModifier: 0.75
+        sprintSpeedModifier: 0.75
         conditions:
         - !type:ReagentThreshold
           min: 5
