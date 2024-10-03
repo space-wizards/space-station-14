@@ -359,7 +359,7 @@
 
 ##########################################################
 - type: entity
-  parent: [ClothingOuterArmorHoS, ClothingOuterWinterCoatToggleable, BaseCommandContraband]
+  parent: [ClothingOuterArmorHoS, ClothingOuterWinterCoatToggleable, BaseSecurityCommandContraband]
   id: ClothingOuterWinterHoS
   name: head of security's armored winter coat
   description: A sturdy, utilitarian winter coat designed to protect a head of security from any brig-bound threats and hypothermic events.

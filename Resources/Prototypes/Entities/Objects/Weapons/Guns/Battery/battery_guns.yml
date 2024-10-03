@@ -380,7 +380,7 @@
 
 - type: entity
   name: x-ray cannon
-  parent: [BaseWeaponBattery, BaseGunWieldable]
+  parent: [BaseWeaponBattery, BaseGunWieldable, BaseSecurityContraband]
   id: WeaponXrayCannon
   description: An experimental weapon that uses concentrated x-ray energy against its target.
   components:
