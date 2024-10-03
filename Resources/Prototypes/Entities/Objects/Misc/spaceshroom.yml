@@ -3,7 +3,7 @@
   parent: BaseStructure
   id: Spaceshroom
   suffix: Structure
-  description: A cluster of wild mushrooms that likes to grow in dark, moist environments.
+  description: A cluster of wild mushrooms that evolved specifically to grow in low pressure, low oxygen, cold environments.
   components:
     - type: Sprite
       sprite: Objects/Misc/spaceshroom.rsi
@@ -42,13 +42,13 @@
   entries:
   - id: FoodSpaceshroom
     amount: 1
-    maxAmount: 1
+    maxAmount: 2
 
 - type: entity
   name: spaceshroom
   parent: FoodProduceBase
   id: FoodSpaceshroom
-  description: A wild mushroom. There's no telling what effect it could have...
+  description: Wild space mushrooms.
   components:
   - type: Produce
   - type: Sprite
@@ -60,7 +60,7 @@
   - type: Extractable
     juiceSolution:
       reagents:
-      - ReagentId: SpaceDrugs
+      - ReagentId: SalineGlucose
         Quantity: 10
   - type: SolutionContainerManager
     solutions:
