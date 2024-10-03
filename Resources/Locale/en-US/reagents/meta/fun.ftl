@@ -28,5 +28,5 @@ reagent-desc-laughter = Some say that this is the best medicine, but recent stud
 reagent-name-weh = juice that makes you Weh
 reagent-desc-weh = Pure essence of lizard plush. Makes you Weh!
 
-reagent-name-ammoniated-sludge = Ammoniated Sludge
+reagent-name-ammoniated-sludge = ammoniated sludge
 reagent-desc-ammoniated-sludge = It has an exotic, pungent smell. Makes you scream!
