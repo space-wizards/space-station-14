@@ -145,6 +145,27 @@
       curve: !type:BoolCurve
 
 - type: utilityQuery
+  id: NearbyOnFire
+  query:
+    - !type:ComponentQuery
+      components:
+        - type: Flammable
+          # why does Flammable even have a required damage
+          damage:
+            types:
+              burn: 0
+  considerations:
+    - !type:TargetDistanceCon
+      curve: !type:PresetCurve
+        preset: TargetDistance
+    - !type:TargetAccessibleCon
+      curve: !type:BoolCurve
+    - !type:TargetInLOSOrCurrentCon
+      curve: !type:BoolCurve
+    - !type:TargetOnFireCon
+      curve: !type:BoolCurve
+
+- type: utilityQuery
   id: NearbyPuddles
   query:
     - !type:ComponentQuery
