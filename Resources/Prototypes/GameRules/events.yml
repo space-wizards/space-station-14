@@ -562,7 +562,6 @@
   - type: AntagSpawner
     prototype: PlayerBorgDerelict
   - type: AntagSelection
-    agentName: derelict-cyborg-round-end-agent-name
     definitions:
     - spawnerPrototype: SpawnPointGhostDerelictCyborg
       min: 1
