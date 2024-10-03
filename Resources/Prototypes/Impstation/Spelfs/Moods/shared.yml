@@ -1,0 +1,52 @@
+# Shared moods will be selected at round start and shared amongst all spelves.
+# These are rolled before individual laws, and are considered more important.
+
+# Make sure to add new moods to this dataset or they will not be selected!!!!!!
+- type: dataset
+  id: SpelfMoodsShared
+  values:
+    - SecretMoodsShared
+    - FashionIsCritical
+    - FullNameAndTitleShared
+#   - OutOfFashion
+#   - InFashion
+    - OnlySpeakToCommand
+
+- type: spelfMood
+  id: SecretMoodsShared
+  moodString: spelf-mood-secret-moods-shared
+  conflicts:
+    - SecretMoods
+# Note: If law A says it conflicts law B, but law B forgets to
+# say that it conflicts law A, the system will still prevent
+# them being rolled together.
+
+- type: spelfMood
+  id: FashionIsCritical
+  moodString: spelf-mood-fashion-is-critical
+
+- type: spelfMood
+  id: FullNameAndTitleShared
+  moodString: spelf-mood-full-name-and-title-shared
+
+# - type: spelfMood
+#   id: OutOfFashion
+#   moodString: spelf-mood-out-of-fashion
+#   moodVars:
+#     thing: SpelfMoodNouns
+#   conflicts:
+#     - InFashion
+
+# - type: spelfMood
+#   id: InFashion
+#   moodString: spelf-mood-in-fashion
+#   moodVars:
+#     thing: SpelfMoodNouns
+#   conflicts:
+#     - OutOfFashion
+
+- type: spelfMood
+  id: OnlySpeakToCommand
+  moodString: spelf-mood-only-speak-to-command-shared
+  conflicts:
+    - DontSpeakToCommand

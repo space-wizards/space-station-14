@@ -1,0 +1,22 @@
+- type: dataset
+  id: SpelfMoodsWildcard
+  values:
+    - CompulsiveLiar
+    - CompulsiveBeliever
+    - OnlyWhisper
+
+- type: spelfMood
+  id: CompulsiveLiar
+  moodString: spelf-mood-compulsive-liar
+  conflicts:
+    - CompulsiveBeliever
+
+- type: spelfMood
+  id: CompulsiveBeliever
+  moodString: spelf-mood-compulsive-believer
+  conflicts:
+    - CompulsiveLiar
+
+- type: spelfMood
+  id: OnlyWhisper
+  moodString: spelf-mood-only-whisper
