@@ -62,7 +62,7 @@ namespace Content.IntegrationTests.Tests
             "Train",
             "Oasis",
             "Cog",
-            "Packed2"
+            "Packed2" // Harmony test of Packed changes
         };
 
         /// <summary>
