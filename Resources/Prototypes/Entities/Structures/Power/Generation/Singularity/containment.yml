@@ -66,6 +66,10 @@
           False: { visible: false }
   - type: GuideHelp
     guides: [ Singularity, Power ]
+  - type: ItemSlots
+  - type: ContainerContainer
+    containers:
+      alarm_slot: !type:ContainerSlot
   - type: ContainmentAlarmHolder
     alarmSlot:
       insertVerbText: Attach Alarm

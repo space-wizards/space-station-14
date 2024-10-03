@@ -7,7 +7,7 @@ namespace Content.Shared.Singularity.EntitySystems;
 public abstract class SharedContainmentAlarmSystem : EntitySystem
 {
 
-    public const string ContainerName = "alarm_slot";
+    public const string ContainerName = "alarmSlot";
     public override void Initialize()
     {
         SubscribeLocalEvent<ContainmentAlarmComponent, ExaminedEvent>(OnExamine);
