@@ -1,4 +1,5 @@
 using System.Collections.Frozen;
+using Content.Server.Popups;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Speech;
 using Robust.Shared.Prototypes;
@@ -9,6 +10,8 @@ namespace Content.Server.Chat.Systems;
 // emotes using emote prototype
 public partial class ChatSystem
 {
+    [Dependency] private readonly PopupSystem _popupSystem = default!;
+
     private FrozenDictionary<string, EmotePrototype> _wordEmoteDict = FrozenDictionary<string, EmotePrototype>.Empty;
 
     protected override void OnPrototypeReload(PrototypesReloadedEventArgs obj)
@@ -87,6 +90,18 @@ public partial class ChatSystem
     {
         if (!forceEmote && !AllowedToUseEmote(source, emote))
             return;
+
+        // Check if this emote should be blocked. Forced emotes ignore this check.
+        if (!forceEmote)
+        {
+            var ev = new GetEmoteBlockersEvent();
+            RaiseLocalEvent(source, ref ev);
+            if (ev.ShouldBlock(emote))
+            {
+                _popupSystem.PopupEntity(Loc.GetString("emote-blocked", ("emote", Loc.GetString(emote.Name).ToLower())), source, source);
+                return;
+            }
+        }
 
         // check if proto has valid message for chat
         if (emote.ChatMessages.Count != 0)

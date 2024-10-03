@@ -321,7 +321,9 @@
   - type: AddAccentClothing
     accent: ReplacementAccent
     replacement: mumble
-  - type: AddGaggedClothing
+  - type: EmoteBlocker
+    blocksCategories:
+      - Vocal
   - type: Construction
     graph: Muzzle
     node: muzzle

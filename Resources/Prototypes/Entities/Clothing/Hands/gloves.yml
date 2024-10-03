@@ -185,6 +185,9 @@
   - type: Fiber
     fiberMaterial: fibers-nanomachines
   - type: FingerprintMask
+  - type: EmoteBlocker
+    blocksEmotes:
+    - Snap
 
 - type: entity
   parent: ClothingHandsButcherable
