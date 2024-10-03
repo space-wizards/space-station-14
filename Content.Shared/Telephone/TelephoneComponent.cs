@@ -86,6 +86,12 @@ public sealed partial class TelephoneComponent : Component
     /// </summary>
     [ViewVariables]
     public bool Muted = false;
+
+    /// <summary>
+    /// The last person to call this telephone
+    /// </summary>
+    [ViewVariables]
+    public EntityUid? LastCaller;
 }
 
 #region: Telephone events

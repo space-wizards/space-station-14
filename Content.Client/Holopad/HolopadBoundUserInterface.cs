@@ -1,4 +1,5 @@
 using Content.Shared.Holopad;
+using Content.Shared.Silicons.StationAi;
 using Robust.Client.UserInterface;
 using System.Numerics;
 
@@ -25,6 +26,10 @@ public sealed class HolopadBoundUserInterface : BoundUserInterface
 
         var uiKey = (HolopadUiKey)this.UiKey;
 
+        // AIs will see a different holopad interface to crew when interacting with them in the world
+        if (uiKey == HolopadUiKey.InteractionWindow && EntMan.HasComponent<StationAiCoreComponent>(Owner))
+            uiKey = HolopadUiKey.InteractionWindowForAi;
+
         _window.SetState(Owner, uiKey);
         _window.UpdateState(new Dictionary<NetEntity, string>());
 
@@ -49,7 +54,7 @@ public sealed class HolopadBoundUserInterface : BoundUserInterface
 
         EntMan.TryGetComponent<TransformComponent>(Owner, out var xform);
 
-        _window?.UpdateState(castState.Holopads);
+        _window?.UpdateState(castState.Holopads, castState.CallerId);
     }
 
     public void SendHolopadStartNewCallMessage(NetEntity receiver)

@@ -1,10 +1,10 @@
+using Content.Server.Access.Systems;
 using Content.Server.Administration.Logs;
 using Content.Server.Chat.Systems;
 using Content.Server.Interaction;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Speech;
 using Content.Server.Speech.Components;
-using Content.Server.VoiceMask;
 using Content.Shared.Chat;
 using Content.Shared.Database;
 using Content.Shared.Mind.Components;
@@ -27,6 +27,7 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
 {
     [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly InteractionSystem _interaction = default!;
+    [Dependency] private readonly IdCardSystem _idCardSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
@@ -199,6 +200,7 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
         if (options?.ForceConnect == true)
             TerminateTelephoneCalls(receiver);
 
+        receiver.Comp.LastCaller = user;
         receiver.Comp.LinkedTelephones.Add(source);
         receiver.Comp.Muted = options?.MuteReceiver == true;
 
@@ -378,6 +380,40 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
 
         if (HasComp<ActiveListenerComponent>(telephone))
             RemComp<ActiveListenerComponent>(telephone);
+    }
+
+    public string? GetFormattedCallerIdForEntity(EntityUid uid, Color fontColor, string fontType = "Default", int fontSize = 12)
+    {
+        var callerId = Loc.GetString("chat-telephone-unknown-caller",
+            ("color", fontColor),
+            ("fontType", fontType),
+            ("fontSize", fontSize));
+
+        if (_idCardSystem.TryFindIdCard(uid, out var idCard))
+        {
+            var presumedName = string.IsNullOrWhiteSpace(idCard.Comp.FullName) ? null : idCard.Comp.FullName;
+            var presumedJob = idCard.Comp.JobTitle?.ToLowerInvariant();
+
+            if (presumedName != null)
+            {
+                if (presumedJob != null)
+                    callerId = Loc.GetString("chat-telephone-caller-id-with-job",
+                        ("callerName", presumedName),
+                        ("callerJob", presumedJob),
+                        ("color", fontColor),
+                        ("fontType", fontType),
+                        ("fontSize", fontSize));
+
+                else
+                    callerId = Loc.GetString("chat-telephone-caller-id-without-job",
+                        ("callerName", presumedName),
+                        ("color", fontColor),
+                        ("fontType", fontType),
+                        ("fontSize", fontSize));
+            }
+        }
+
+        return callerId;
     }
 
     public bool IsSourceAbleToConnectToReceiver(Entity<TelephoneComponent> source, Entity<TelephoneComponent> receiver)

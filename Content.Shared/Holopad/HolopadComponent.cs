@@ -42,13 +42,13 @@ public sealed partial class HolopadComponent : Component
 [Serializable, NetSerializable]
 public sealed class HolopadBoundInterfaceState : BoundUserInterfaceState
 {
-    public readonly TelephoneState State;
     public readonly Dictionary<NetEntity, string> Holopads;
+    public readonly string? CallerId;
 
-    public HolopadBoundInterfaceState(TelephoneState state, Dictionary<NetEntity, string> holopads)
+    public HolopadBoundInterfaceState(Dictionary<NetEntity, string> holopads, string? callerId = null)
     {
-        State = state;
         Holopads = holopads;
+        CallerId = callerId;
     }
 }
 
@@ -104,7 +104,8 @@ public sealed class HolopadRequestStationAiMessage : BoundUserInterfaceMessage {
 [Serializable, NetSerializable]
 public enum HolopadUiKey : byte
 {
-    StandardWindow,
+    InteractionWindow,
+    InteractionWindowForAi,
     AiActionWindow,
     AiRequestWindow
 }

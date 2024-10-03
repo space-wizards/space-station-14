@@ -1,15 +1,13 @@
 using Content.Server.Interaction;
 using Content.Server.Power.EntitySystems;
-using Content.Server.Radiation.Components;
 using Content.Server.Telephone;
 using Content.Shared.Audio;
 using Content.Shared.Chat.TypingIndicator;
 using Content.Shared.Holopad;
 using Content.Shared.Inventory;
+using Content.Shared.Labels.Components;
 using Content.Shared.Silicons.StationAi;
-using Content.Shared.StationAi;
 using Content.Shared.Telephone;
-using JetBrains.FormatRipper.Elf;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
@@ -126,10 +124,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
     private void OnStationAiRequestReceived(Entity<StationAiCoreComponent> stationAiCore, ref TelephoneCallEvent args)
     {
         if (_stationAiSystem.TryGetInsertedAI(stationAiCore, out var insertedAi))
-        {
             _userInterfaceSystem.OpenUi(stationAiCore.Owner, HolopadUiKey.AiRequestWindow, insertedAi.Value.Owner);
-            _userInterfaceSystem.SetUiState(stationAiCore.Owner, HolopadUiKey.AiRequestWindow, new HolopadBoundInterfaceState(TelephoneState.Ringing, new()));
-        }
     }
 
     private void OnStationAiRequested(Entity<HolopadComponent> holopad, ref HolopadRequestStationAiMessage args)
@@ -291,17 +286,27 @@ public sealed class HolopadSystem : SharedHolopadSystem
             if (holopad.Owner == ent)
                 continue;
 
-            if (!this.IsPowered(holopad, EntityManager))
+            if (!this.IsPowered(ent, EntityManager))
                 continue;
 
-            holopads.Add(GetNetEntity(ent), MetaData(ent).EntityName);
+            if (HasComp<StationAiCoreComponent>(ent))
+                continue;
+
+            var name = MetaData(ent).EntityName;
+
+            if (TryComp<LabelComponent>(ent, out var label) && !string.IsNullOrEmpty(label.CurrentLabel))
+                name = label.CurrentLabel;
+
+            holopads.Add(GetNetEntity(ent), name);
         }
 
-        // Set the UI state
-        if (HasComp<StationAiCoreComponent>(holopad))
-            _userInterfaceSystem.SetUiState(holopad.Owner, HolopadUiKey.AiActionWindow, new HolopadBoundInterfaceState(telephone.CurrentState, holopads));
-        else
-            _userInterfaceSystem.SetUiState(holopad.Owner, HolopadUiKey.StandardWindow, new HolopadBoundInterfaceState(telephone.CurrentState, holopads));
+        string? callerId = null;
+
+        if (telephone.CurrentState == TelephoneState.Ringing && telephone.LastCaller != null)
+            callerId = _telephoneSystem.GetFormattedCallerIdForEntity(telephone.LastCaller.Value, Color.White, "Default", 11);
+
+        var uiKey = HasComp<StationAiCoreComponent>(holopad) ? HolopadUiKey.AiActionWindow : HolopadUiKey.InteractionWindow;
+        _userInterfaceSystem.SetUiState(holopad.Owner, uiKey, new HolopadBoundInterfaceState(holopads, callerId));
     }
 
     private void GenerateHologram(Entity<HolopadComponent> holopad)
