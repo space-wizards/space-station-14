@@ -116,6 +116,13 @@ namespace Content.Shared.SubFloor
         {
             // TODO Redo this function. Currently wires on an asteroid are always "below the floor"
             var tileDef = (ContentTileDefinition) _tileDefinitionManager[Map.GetTileRef(gridUid, grid, position).Tile.TypeId];
+
+            var anchoredEnum = Map.GetAnchoredEntitiesEnumerator(gridUid, grid, position);
+            while (anchoredEnum.MoveNext(out var uid))
+            {
+                // if (uid.Value.Prototype.ID == "Catwalk")
+                //     return true;
+            }
             return !tileDef.IsSubFloor;
         }
 
