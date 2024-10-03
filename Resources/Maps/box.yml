@@ -11579,7 +11579,7 @@ entities:
       pos: 24.5,16.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -15146.963
+      secondsUntilStateChange: -16450.531
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -14681,6 +14681,13 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 8.5,-46.5
+      parent: 8364
+- proto: ArtistCircuitBoard
+  entities:
+  - uid: 27915
+    components:
+    - type: Transform
+      pos: 3.1914775,-12.048202
       parent: 8364
 - proto: Ash
   entities:
@@ -64199,6 +64206,11 @@ entities:
     - type: Transform
       pos: 1.5,28.5
       parent: 8364
+  - uid: 27919
+    components:
+    - type: Transform
+      pos: 2.7203026,-11.488351
+      parent: 8364
 - proto: ChairOfficeLight
   entities:
   - uid: 5220
@@ -69964,6 +69976,13 @@ entities:
       rot: 3.141592653589793 rad
       pos: 22.5,-3.5
       parent: 8364
+- proto: CommandmentCircuitBoard
+  entities:
+  - uid: 27910
+    components:
+    - type: Transform
+      pos: -4.7439766,-11.810598
+      parent: 8364
 - proto: CommsComputerCircuitboard
   entities:
   - uid: 16499
@@ -70772,6 +70791,13 @@ entities:
     components:
     - type: Transform
       pos: 90.5,-27.5
+      parent: 8364
+- proto: CorporateCircuitBoard
+  entities:
+  - uid: 27914
+    components:
+    - type: Transform
+      pos: -4.441743,-12.321369
       parent: 8364
 - proto: CowToolboxFilled
   entities:
@@ -81441,6 +81467,13 @@ entities:
     - type: Transform
       pos: -33.51487,5.3832693
       parent: 8364
+- proto: DrinkHotCoffee
+  entities:
+  - uid: 27918
+    components:
+    - type: Transform
+      pos: 3.3560345,-11.363264
+      parent: 8364
 - proto: DrinkMugBlack
   entities:
   - uid: 18382
@@ -81494,6 +81527,13 @@ entities:
     components:
     - type: Transform
       pos: 74.3515,-18.443996
+      parent: 8364
+- proto: DungeonMasterCircuitBoard
+  entities:
+  - uid: 27917
+    components:
+    - type: Transform
+      pos: 3.5477152,-12.389968
       parent: 8364
 - proto: EmergencyLight
   entities:
@@ -84371,7 +84411,7 @@ entities:
       pos: -34.5,-14.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -9335.5
+      secondsUntilStateChange: -10639.069
       state: Closing
   - uid: 15010
     components:
@@ -84864,7 +84904,7 @@ entities:
       pos: -4.5,-71.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -1083.2314
+      secondsUntilStateChange: -2386.8005
       state: Closing
 - proto: Fireplace
   entities:
@@ -124645,6 +124685,13 @@ entities:
     - type: Transform
       pos: 32.5,-6.5
       parent: 8364
+- proto: NTDefaultCircuitBoard
+  entities:
+  - uid: 27913
+    components:
+    - type: Transform
+      pos: -4.4164634,-11.235137
+      parent: 8364
 - proto: NuclearBomb
   entities:
   - uid: 12086
@@ -124658,6 +124705,13 @@ entities:
     components:
     - type: Transform
       pos: 8.5,-27.5
+      parent: 8364
+- proto: NutimovCircuitBoard
+  entities:
+  - uid: 27916
+    components:
+    - type: Transform
+      pos: 3.6621494,-11.814552
       parent: 8364
 - proto: OperatingTable
   entities:
@@ -124701,6 +124755,13 @@ entities:
       - Uranium
       - Gold
       - Silver
+- proto: OverlordCircuitBoard
+  entities:
+  - uid: 27912
+    components:
+    - type: Transform
+      pos: -4.5079217,-14.454323
+      parent: 8364
 - proto: OxygenCanister
   entities:
   - uid: 3791
@@ -124931,6 +124992,13 @@ entities:
     components:
     - type: Transform
       pos: 58.5,-11.5
+      parent: 8364
+- proto: PaladinCircuitBoard
+  entities:
+  - uid: 27911
+    components:
+    - type: Transform
+      pos: -4.587649,-11.581272
       parent: 8364
 - proto: Paper
   entities:
@@ -138516,6 +138584,13 @@ entities:
     - type: Transform
       pos: 0.2510581,39.68831
       parent: 8364
+- proto: RobocopCircuitBoard
+  entities:
+  - uid: 22443
+    components:
+    - type: Transform
+      pos: 3.4364183,-14.443886
+      parent: 8364
 - proto: RobustHarvestChemistryBottle
   entities:
   - uid: 13505
@@ -144061,6 +144136,13 @@ entities:
     components:
     - type: Transform
       pos: -20.5,-74.5
+      parent: 8364
+- proto: StationEfficiencyCircuitBoard
+  entities:
+  - uid: 27536
+    components:
+    - type: Transform
+      pos: -4.631007,-12.460042
       parent: 8364
 - proto: StationMap
   entities:
@@ -151615,8 +151697,12 @@ entities:
         - Right: Reverse
         - Middle: Off
         6120:
-        - Left: Forward
         - Right: Reverse
+        - Left: Forward
+        - Middle: Off
+        16588:
+        - Right: Reverse
+        - Left: Forward
         - Middle: Off
   - uid: 16780
     components:
@@ -172544,7 +172630,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 8.5,-18.5
       parent: 8364
-  - uid: 21746
+  - uid: 31746
     components:
     - type: Transform
       rot: 3.141592653589793 rad
