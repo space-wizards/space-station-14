@@ -1,16 +1,22 @@
 using Content.Shared.Holopad;
 using Content.Shared.Silicons.StationAi;
 using Robust.Client.UserInterface;
+using Robust.Shared.Player;
 using System.Numerics;
 
 namespace Content.Client.Holopad;
 
 public sealed class HolopadBoundUserInterface : BoundUserInterface
 {
+    [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
+
     [ViewVariables]
     private HolopadWindow? _window;
 
-    public HolopadBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey) { }
+    public HolopadBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+    {
+        IoCManager.InjectDependencies(this);
+    }
 
     protected override void Open()
     {
@@ -27,12 +33,13 @@ public sealed class HolopadBoundUserInterface : BoundUserInterface
         var uiKey = (HolopadUiKey)this.UiKey;
 
         // AIs will see a different holopad interface to crew when interacting with them in the world
-        if (uiKey == HolopadUiKey.InteractionWindow && EntMan.HasComponent<StationAiCoreComponent>(Owner))
+        if (uiKey == HolopadUiKey.InteractionWindow && EntMan.HasComponent<StationAiHeldComponent>(_playerManager.LocalEntity))
             uiKey = HolopadUiKey.InteractionWindowForAi;
 
         _window.SetState(Owner, uiKey);
         _window.UpdateState(new Dictionary<NetEntity, string>());
 
+        // Set message actions
         _window.SendHolopadStartNewCallMessageAction += SendHolopadStartNewCallMessage;
         _window.SendHolopadAnswerCallMessageAction += SendHolopadAnswerCallMessage;
         _window.SendHolopadEndCallMessageAction += SendHolopadEndCallMessage;
@@ -43,7 +50,7 @@ public sealed class HolopadBoundUserInterface : BoundUserInterface
         // If this is a request for an AI, open the menu 
         // in the bottom right hand corner of the screen
         if (uiKey == HolopadUiKey.AiRequestWindow)
-            _window.OpenCenteredAt(new Vector2(1f, 1f));
+            _window.OpenCenteredAt(new Vector2(0.95f, 0.95f));
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

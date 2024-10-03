@@ -31,26 +31,32 @@
         <!-- Call placement controls (either this or the active call controls will be active) -->
         <BoxContainer Name="CallPlacementControlsContainer" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True" ReservesSpace="False">
 
-            <RichTextLabel Name="SubtitleText" HorizontalAlignment="Center" Margin="0 5 0 0"/>
-            <RichTextLabel Name="OptionsText" HorizontalAlignment="Center" Margin="0 0 0 20"/>
+            <controls:StripeBack>
+                <PanelContainer>
+                    <BoxContainer Orientation="Vertical">
+                        <RichTextLabel Name="SubtitleText" HorizontalAlignment="Center" Margin="0 5 0 0"/>
+                        <RichTextLabel Name="OptionsText" HorizontalAlignment="Center" Margin="0 0 0 5"/>
+                    </BoxContainer>
+                </PanelContainer>
+            </controls:StripeBack>
 
             <!-- Request the station AI or activate the holopad projector (only one of these should be active at a time) -->
             <BoxContainer Name="RequestStationAiContainer" Orientation="Vertical" ReservesSpace="False" Visible="False">
-                <Button Name="RequestStationAiButton" Text="{Loc 'holopad-window-request-station-ai'}" Margin="10 0 10 5" Disabled="False"/>
+                <Button Name="RequestStationAiButton" Text="{Loc 'holopad-window-request-station-ai'}" Margin="10 5 10 5" Disabled="False"/>
             </BoxContainer>
 
             <BoxContainer Name="ActivateProjectorContainer" Orientation="Vertical" ReservesSpace="False" Visible="False">
-                <Button Name="ActivateProjectorButton" Text="{Loc 'holopad-window-activate-projector'}" Margin="10 0 10 5" Disabled="False"/>
+                <Button Name="ActivateProjectorButton" Text="{Loc 'holopad-window-activate-projector'}" Margin="10 5 10 5" Disabled="False"/>
             </BoxContainer>
 
             <!-- List of contactable holopads (the list is created in C#) -->
-            <BoxContainer Name="HolopadContactListContainer" Orientation="Vertical" Margin="10 5 10 5" ReservesSpace="False" Visible="False">
+            <BoxContainer Name="HolopadContactListContainer" Orientation="Vertical" Margin="10 0 10 0" ReservesSpace="False" Visible="False">
                 <PanelContainer Name="HolopadContactListHeaderPanel">
                     <Label Text="{Loc 'holopad-window-select-contact-from-list'}" HorizontalAlignment="Center" Margin="0 3 0 3"/>
                 </PanelContainer>
                 
                 <PanelContainer Name="HolopadContactListPanel">
-                    <ScrollContainer HorizontalExpand="True" VerticalExpand="True" Margin="8, 8, 8, 8" MinHeight="250">
+                    <ScrollContainer HorizontalExpand="True" VerticalExpand="True" Margin="8, 8, 8, 8" MinHeight="256">
 
                         <!-- If there is no data yet, this will be displayed -->
                         <BoxContainer Name="FetchingAvailableHolopadsContainer" HorizontalExpand="True" VerticalExpand="True" ReservesSpace="False">
@@ -58,7 +64,7 @@
                         </BoxContainer>
 
                         <!-- Container for the contacts -->
-                        <BoxContainer Name="ContactsList" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" Margin="0 0 10 0"/>
+                        <BoxContainer Name="ContactsList" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" Margin="10 0 10 0"/>
                     </ScrollContainer>
                 </PanelContainer>
             </BoxContainer>

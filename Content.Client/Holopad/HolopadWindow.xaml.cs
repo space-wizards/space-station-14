@@ -59,13 +59,13 @@ public sealed partial class HolopadWindow : FancyWindow
         HolopadContactListPanel.PanelOverride = new StyleBoxFlat
         {
             BackgroundColor = new Color(47, 47, 59) * Color.DarkGray,
-            BorderColor = new Color(70, 73, 102),
+            BorderColor = new Color(82, 82, 82), //new Color(70, 73, 102),
             BorderThickness = new Thickness(2),
         };
 
         HolopadContactListHeaderPanel.PanelOverride = new StyleBoxFlat
         {
-            BackgroundColor = new Color(70, 73, 102),
+            BackgroundColor = new Color(82, 82, 82),
         };
 
         SubtitleText.SetMessage(FormattedMessage.FromMarkupOrThrow(Loc.GetString("holopad-window-subtitle")));
@@ -219,7 +219,8 @@ public sealed partial class HolopadWindow : FancyWindow
                 CallStatusText.Text = Loc.GetString("holopad-window-outgoing-call"); break;
 
             case TelephoneState.Ringing:
-                CallStatusText.Text = Loc.GetString("holopad-window-incoming-call"); break;
+                CallStatusText.Text = (_currentUiKey == HolopadUiKey.AiRequestWindow) ?
+                    Loc.GetString("holopad-window-ai-request") : Loc.GetString("holopad-window-incoming-call"); break;
 
             case TelephoneState.InCall:
                 CallStatusText.Text = Loc.GetString("holopad-window-call-in-progress"); break;

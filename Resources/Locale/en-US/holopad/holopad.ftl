@@ -9,11 +9,12 @@ holopad-window-incoming-call = Incoming holo-call from:
 holopad-window-outgoing-call = Attempting to establish a connection...
 holopad-window-call-in-progress = Holo-call in progress
 holopad-window-call-ending = Disconnecting...
+holopad-window-ai-request = Your presence is requested by:
 
 # Buttons
 holopad-window-answer-call = Answer call
 holopad-window-end-call = End call
-holopad-window-request-station-ai = Request Station AI
+holopad-window-request-station-ai = Request station AI
 holopad-window-activate-projector = Activate projector
 holopad-window-emergency-broadcast = Emergency broadcast
 

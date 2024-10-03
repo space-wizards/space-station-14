@@ -179,6 +179,12 @@ public sealed class HolopadSystem : SharedHolopadSystem
     {
         ShutDownHolopad(holopad);
         SetHolopadEnviron(holopad, false);
+
+        if (!TryComp<StationAiCoreComponent>(holopad, out var stationAiCore))
+            return;
+
+        if (_stationAiSystem.TryGetInsertedAI((holopad, stationAiCore), out var insertedAi))
+            _userInterfaceSystem.CloseUi(holopad.Owner, HolopadUiKey.AiRequestWindow, insertedAi.Value.Owner);
     }
 
     private void OnTelephoneMessageSent(Entity<HolopadComponent> holopad, ref TelephoneMessageSentEvent args)
