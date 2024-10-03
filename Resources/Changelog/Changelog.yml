@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: You can now build atmos gas pipes through things like walls.
-    type: Tweak
-  id: 6981
-  time: '2024-07-25T23:26:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28707
 - author: Ilya246
   changes:
   - message: Nuclear operative reinforcements now come with full nuclear operative
@@ -3941,3 +3934,11 @@
   id: 7480
   time: '2024-10-03T00:11:56.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32606
+- author: ArtisticRoomba
+  changes:
+  - message: X-ray cannons and stinger grenades are now security restricted. HoS's
+      armored trench coat and its variants are security and command restricted.
+    type: Fix
+  id: 7481
+  time: '2024-10-03T10:01:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32614
