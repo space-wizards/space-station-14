@@ -29,6 +29,6 @@
   rule: GameRuleUristSwarm
 
 - type: ninjaHackingThreat
-  id: ImmovableFriendSpawn
+  id: ImmovableFriend
   announcement: terror-finfin
   rule: ImmovableFriendSpawn
