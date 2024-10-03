@@ -18,7 +18,7 @@
       state: blue_lightning
     event: !type:LightningSpellEvent
       lightningPrototype: ChargedLightning
-      boltCount: 3
+      boltCount: 4
       boltRange: 5
       arcDepth: 0
       triggerLightningEvents: true
@@ -32,7 +32,7 @@
   id: ActionLightningII
   parent: ActionLightning
   name: Lightning Bolt II
-  description: Lightning but YELLOW!
+  description: Thunderbolt and lightning, very very frightening!
   components:
   - type: EntityTargetAction
     useDelay: 15
@@ -49,8 +49,8 @@
       state: yellow_lightning
     event: !type:LightningSpellEvent
       lightningPrototype: SuperchargedLightning
-      boltCount: 5
-      boltRange: 7
+      boltCount: 4
+      boltRange: 5
       arcDepth: 0
       triggerLightningEvents: true
       speech: action-speech-spell-lightning
@@ -59,7 +59,7 @@
   id: ActionLightningIII
   parent: ActionLightning
   name: Lightning Bolt III
-  description: Lightning but RED!
+  description: Thunderbolt and lightning, very very frightening!
   components:
   - type: EntityTargetAction
     useDelay: 15
@@ -76,8 +76,8 @@
       state: red_lightning
     event: !type:LightningSpellEvent
       lightningPrototype: HyperchargedLightning
-      boltCount: 7
-      boltRange: 9
+      boltCount: 4
+      boltRange: 5
       arcDepth: 0
       triggerLightningEvents: true
       speech: action-speech-spell-lightning
