@@ -118,8 +118,10 @@ namespace Content.Shared.SubFloor
             var tileDef = (ContentTileDefinition) _tileDefinitionManager[Map.GetTileRef(gridUid, grid, position).Tile.TypeId];
 
             var anchoredEnum = Map.GetAnchoredEntitiesEnumerator(gridUid, grid, position);
+            var metadataQuery GetEntityQuery<MetaDataComponent>();
             while (anchoredEnum.MoveNext(out var uid))
             {
+                var meta = metadataQuery.GetComponent(uid);
                 // if (uid.Value.Prototype.ID == "Catwalk")
                 //     return true;
             }
