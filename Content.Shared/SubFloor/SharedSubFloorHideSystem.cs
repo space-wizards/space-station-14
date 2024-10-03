@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Audio;
 using Content.Shared.Explosion;
 using Content.Shared.Interaction.Events;
@@ -19,6 +20,7 @@ namespace Content.Shared.SubFloor
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
         [Dependency] protected readonly SharedMapSystem Map = default!;
         [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         public override void Initialize()
         {
@@ -32,6 +34,7 @@ namespace Content.Shared.SubFloor
             SubscribeLocalEvent<SubFloorHideComponent, GettingInteractedWithAttemptEvent>(OnInteractionAttempt);
             SubscribeLocalEvent<SubFloorHideComponent, GettingAttackedAttemptEvent>(OnAttackAttempt);
             SubscribeLocalEvent<SubFloorHideComponent, GetExplosionResistanceEvent>(OnGetExplosionResistance);
+            SubscribeLocalEvent<RevealSubfloorOnScanComponent, ComponentStartup>(OnRevealSubfloorStarted);
         }
 
         private void OnGetExplosionResistance(EntityUid uid, SubFloorHideComponent component, ref GetExplosionResistanceEvent args)
@@ -96,6 +99,18 @@ namespace Content.Shared.SubFloor
             UpdateTile(args.NewTile.GridUid, Comp<MapGridComponent>(args.NewTile.GridUid), args.NewTile.GridIndices);
         }
 
+        private void OnRevealSubfloorStarted(EntityUid uid, RevealSubfloorOnScanComponent component, EntityEventArgs args)
+        {
+            var gridUid = _transform.GetGrid(uid);
+            if (gridUid is null)
+                return;
+
+            var gridComp = Comp<MapGridComponent>(gridUid.Value);
+            var position = _transform.GetGridOrMapTilePosition(uid);
+
+            UpdateTile((EntityUid) gridUid, gridComp, position);
+        }
+
         /// <summary>
         ///     Update whether a given entity is currently covered by a floor tile.
         /// </summary>
@@ -117,19 +132,17 @@ namespace Content.Shared.SubFloor
             // TODO Redo this function. Currently wires on an asteroid are always "below the floor"
             var tileDef = (ContentTileDefinition) _tileDefinitionManager[Map.GetTileRef(gridUid, grid, position).Tile.TypeId];
 
-            if (!tileDef.IsSubFloor)
+            var anchoredEnum = Map.GetAnchoredEntities(gridUid, grid, position);
+            var hasRevealSubfloor = anchoredEnum.Any(HasComp<RevealSubfloorOnScanComponent>);
+            // while (anchoredEnum.MoveNext(out var uid))
+            // {
+            //     if (HasComp<RevealSubfloorOnScanComponent>(uid))
+            //         return true;
+            // }
+            if (hasRevealSubfloor)
                 return true;
 
-            var anchoredEnum = Map.GetAnchoredEntitiesEnumerator(gridUid, grid, position);
-            var metadataQuery = GetEntityQuery<MetaDataComponent>();
-            while (anchoredEnum.MoveNext(out var uid))
-            {
-                var meta = metadataQuery.GetComponent((EntityUid) uid);
-                if (meta.EntityPrototype?.ID == "Catwalk")
-                    return true;
-            }
-
-            return false;
+            return !tileDef.IsSubFloor;
         }
 
         private void UpdateTile(EntityUid gridUid, MapGridComponent grid, Vector2i position)
