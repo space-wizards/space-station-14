@@ -69,7 +69,7 @@
   - type: ItemSlots
   - type: ContainerContainer
     containers:
-      alarm_slot: !type:ContainerSlot
+      alarmSlot: !type:ContainerSlot
   - type: ContainmentAlarmHolder
     alarmSlot:
       insertVerbText: Attach Alarm
