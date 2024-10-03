@@ -15,8 +15,6 @@
       - Back
       - suitStorage
   - type: Wieldable
-    wieldSound:
-      path: /Audio/Items/bow_pull.ogg
   - type: UseDelay
     delay: 1
   - type: GunRequiresWield
