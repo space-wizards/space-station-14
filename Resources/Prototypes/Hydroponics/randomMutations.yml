@@ -1,0 +1,182 @@
+- type: RandomPlantMutationList
+  id: RandomPlantMutations
+  mutations:
+    # disabled until 50 morbillion point lights don't cause the renderer to die
+    #- name: Bioluminescent
+    #  baseOdds: 0.036
+    #  appliesToPlant: false
+    #  effect: !type:Glow
+    - name: Sentient
+      baseOdds: 0.0072
+      appliesToProduce: false
+      persists: false
+      effect: !type:MakeSentient # existing effect.
+    - name: Slippery
+      baseOdds: 0.036
+      appliesToPlant: false
+      effect: !type:Slipify
+    - name: ChangeSpecies
+      baseOdds: 0.036
+      appliesToProduce: false
+      effect: !type:PlantSpeciesChange
+    - name: Unviable
+      baseOdds: 0.109
+      persists: false
+      effect: !type:PlantChangeStat
+        targetValue: Viable
+    - name: ChangeWaterConsumption
+      baseOdds: 0.018
+      persists: false
+      effect: !type:PlantChangeStat
+        targetValue: WaterConsumption
+        minValue: 0.3
+        maxValue: 0.9
+        steps: 5
+    - name: ChangeNutrientConsumption
+      baseOdds: 0.018
+      persists: false
+      effect: !type:PlantChangeStat
+        targetValue: NutrientConsumption
+        minValue: 0.05
+        maxValue: 1.2
+        steps: 5
+    - name: ChangeIdealHeat
+      baseOdds: 0.018
+      persists: false
+      effect: !type:PlantChangeStat
+        targetValue: IdealHeat
+        minValue: 263
+        maxValue: 323
+        steps: 5
+    - name: ChangeHeatTolerance
+      baseOdds: 0.018
+      persists: false
+      effect: !type:PlantChangeStat
+        targetValue: HeatTolerance
+        minValue: 2
+        maxValue: 25
+        steps: 5
+    - name: ChangeToxinsTolerance
+      baseOdds: 0.018
+      persists: false
+      effect: !type:PlantChangeStat
+        targetValue: ToxinsTolerance
+        minValue: 1
+        maxValue: 10
+        steps: 5
+    - name: ChangeLowPressureTolerance
+      baseOdds: 0.018
+      persists: false
+      effect: !type:PlantChangeStat
+        targetValue: LowPressureTolerance
+        minValue: 60
+        maxValue: 100
+        steps: 5
+    - name: ChangeHighPressureTolerance
+      baseOdds: 0.018
+      persists: false
+      effect: !type:PlantChangeStat
+        targetValue: HighPressureTolerance
+        minValue: 100
+        maxValue: 140
+        steps: 5
+    - name: ChangePestTolerance
+      baseOdds: 0.018
+      persists: false
+      effect: !type:PlantChangeStat
+        targetValue: PestTolerance
+        minValue: 0
+        maxValue: 15
+        steps: 5
+    - name: ChangeWeedTolerance
+      baseOdds: 0.018
+      persists: false
+      effect: !type:PlantChangeStat
+        targetValue: WeedTolerance
+        minValue: 0
+        maxValue: 15
+        steps: 5
+    - name: ChangeEndurance
+      baseOdds: 0.036
+      persists: false
+      effect: !type:PlantChangeStat
+        targetValue: Endurance
+        minValue: 50
+        maxValue: 150
+        steps: 5
+    - name: ChangeYield
+      baseOdds: 0.036
+      persists: false
+      effect: !type:PlantChangeStat
+        targetValue: Yield
+        minValue: 3
+        maxValue: 10
+        steps: 5
+    - name: ChangeLifespan
+      baseOdds: 0.036
+      persists: false
+      effect: !type:PlantChangeStat
+        targetValue: Lifespan
+        minValue: 10
+        maxValue: 80
+        steps: 5
+    - name: ChangeMaturation
+      baseOdds: 0.036
+      persists: false
+      effect: !type:PlantChangeStat
+        targetValue: Maturation
+        minValue: 3
+        maxValue: 8
+        steps: 5
+    - name: ChangeProduction
+      baseOdds: 0.036
+      persists: false
+      effect: !type:PlantChangeStat
+        targetValue: Production
+        minValue: 1
+        maxValue: 10
+        steps: 5
+    - name: ChangePotency
+      baseOdds: 0.036
+      persists: false
+      effect: !type:PlantChangeStat
+        targetValue: Potency
+        minValue: 30
+        maxValue: 100
+        steps: 5
+    - name: ChangeSeedless
+      baseOdds: 0.036
+      persists: false
+      effect: !type:PlantChangeStat
+        targetValue: Seedless
+    - name: ChangeLigneous
+      baseOdds: 0.036
+      persists: false
+      effect: !type:PlantChangeStat
+        targetValue: Ligneous
+    - name: ChangeTurnIntoKudzu
+      baseOdds: 0.036
+      persists: false
+      effect: !type:PlantChangeStat
+        targetValue: TurnIntoKudzu
+    - name: ChangeScreaming
+      baseOdds: 0.036
+      persists: false
+      effect: !type:PlantChangeStat
+        targetValue: CanScream
+    - name: ChangeChemicals
+      baseOdds: 0.072
+      persists: false
+      effect: !type:PlantMutateChemicals
+    - name: ChangeExudeGasses
+      baseOdds: 0.0145
+      persists: false
+      effect: !type:PlantMutateExudeGasses
+    - name: ChangeConsumeGasses
+      baseOdds: 0.0036
+      persists: false
+      effect: !type:PlantMutateConsumeGasses
+    - name: ChangeHarvest
+      baseOdds: 0.036
+      persists: false
+      effect: !type:PlantMutateHarvest

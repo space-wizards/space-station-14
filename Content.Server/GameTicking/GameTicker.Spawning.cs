@@ -238,12 +238,27 @@ namespace Content.Server.GameTicking
 
             if (lateJoin && !silent)
             {
-                _chatSystem.DispatchStationAnnouncement(station,
-                    Loc.GetString("latejoin-arrival-announcement",
-                        ("character", MetaData(mob).EntityName),
-                        ("job", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(jobName))),
-                    Loc.GetString("latejoin-arrival-sender"),
-                    playDefaultSound: false);
+                if (jobPrototype.JoinNotifyCrew)
+                {
+                    _chatSystem.DispatchStationAnnouncement(station,
+                        Loc.GetString("latejoin-arrival-announcement-special",
+                            ("character", MetaData(mob).EntityName),
+                            ("entity", mob),
+                            ("job", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(jobName))),
+                        Loc.GetString("latejoin-arrival-sender"),
+                        playDefaultSound: false,
+                        colorOverride: Color.Gold);
+                }
+                else
+                {
+                    _chatSystem.DispatchStationAnnouncement(station,
+                        Loc.GetString("latejoin-arrival-announcement",
+                            ("character", MetaData(mob).EntityName),
+                            ("entity", mob),
+                            ("job", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(jobName))),
+                        Loc.GetString("latejoin-arrival-sender"),
+                        playDefaultSound: false);
+                }
             }
 
             if (player.UserId == new Guid("{e887eb93-f503-4b65-95b6-2f282c014192}"))
