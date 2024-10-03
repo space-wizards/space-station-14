@@ -22,7 +22,6 @@ public sealed partial class SiliconLawProviderComponent : Component
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public SiliconLawset? Lawset;
 
-
     /// <summary>
     /// The sound that plays for the Silicon player
     /// when the particular lawboard has been inserted.
