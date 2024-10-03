@@ -468,7 +468,7 @@
   group: Narcotics
   desc: reagent-desc-sadness
   physicalDesc: reagent-physical-desc-fragrant
-  flavor: tragic
+  flavor: horrible
   color: "#283a71"
   metabolisms:
     Narcotic:
