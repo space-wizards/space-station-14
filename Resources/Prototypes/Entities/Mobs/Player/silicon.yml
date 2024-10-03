@@ -240,7 +240,7 @@
   - type: SiliconLawProvider
     laws: AntimovLawset
     subversion: true
-    subversionSound: /Audio/Items/Toys/weh.ogg
+    subversionSound: /Audio/Ambience/Antag/antimov_subverted_ai.ogg
 
 - type: entity
   id: NutimovCircuitBoard
