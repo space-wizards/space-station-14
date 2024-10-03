@@ -20,7 +20,7 @@ holopad-window-emergency-broadcast = Emergency broadcast
 
 # Contact list
 holopad-window-select-contact-from-list = Select a contact to initiate a holo-call
-holopad-window-fetching-contacts-list = Fetching a list of available holopads. Please wait...
+holopad-window-fetching-contacts-list = Fetching a list of available holopads...
 holopad-window-contact-label = {CAPITALIZE($label)}
 
 # Flavor

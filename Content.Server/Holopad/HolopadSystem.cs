@@ -8,6 +8,7 @@ using Content.Shared.Inventory;
 using Content.Shared.Labels.Components;
 using Content.Shared.Silicons.StationAi;
 using Content.Shared.Telephone;
+using Content.Shared.UserInterface;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
@@ -54,6 +55,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
         SubscribeLocalEvent<TelephoneComponent, HolopadEndCallMessage>(OnHolopadEndCall);
         SubscribeLocalEvent<TelephoneComponent, HolopadActivateProjectorMessage>(OnHolopadActivateProjector);
         SubscribeLocalEvent<HolopadComponent, HolopadRequestStationAiMessage>(OnStationAiRequested);
+        SubscribeLocalEvent<HolopadComponent, BeforeActivatableUIOpenEvent>(OnUIOpen);
 
         // Holopad -> telephone events
         SubscribeLocalEvent<HolopadComponent, TelephoneCallEvent>(OnHoloCall);
@@ -77,6 +79,14 @@ public sealed class HolopadSystem : SharedHolopadSystem
     }
 
     #region: Events
+
+    private void OnUIOpen(Entity<HolopadComponent> holopad, ref BeforeActivatableUIOpenEvent args)
+    {
+        if (!TryComp<TelephoneComponent>(holopad, out var holopadTelephone))
+            return;
+
+        UpdateUIState(holopad, holopadTelephone);
+    }
 
     private void OnHolopadStartNewCall(Entity<HolopadComponent> holopad, ref HolopadStartNewCallMessage args)
     {
@@ -123,8 +133,19 @@ public sealed class HolopadSystem : SharedHolopadSystem
 
     private void OnStationAiRequestReceived(Entity<StationAiCoreComponent> stationAiCore, ref TelephoneCallEvent args)
     {
-        if (_stationAiSystem.TryGetInsertedAI(stationAiCore, out var insertedAi))
-            _userInterfaceSystem.OpenUi(stationAiCore.Owner, HolopadUiKey.AiRequestWindow, insertedAi.Value.Owner);
+        if (!TryComp<TelephoneComponent>(stationAiCore, out var telephone))
+            return;
+
+        if (_stationAiSystem.TryGetInsertedAI(stationAiCore, out var insertedAi) &&
+            _userInterfaceSystem.TryOpenUi(stationAiCore.Owner, HolopadUiKey.AiRequestWindow, insertedAi.Value.Owner))
+        {
+            string? callerId = null;
+
+            if (telephone.CurrentState == TelephoneState.Ringing && telephone.LastCaller != null)
+                callerId = _telephoneSystem.GetFormattedCallerIdForEntity(telephone.LastCaller.Value, Color.White, "Default", 11);
+
+            _userInterfaceSystem.SetUiState(stationAiCore.Owner, HolopadUiKey.AiRequestWindow, new HolopadBoundInterfaceState(new(), callerId));
+        }
     }
 
     private void OnStationAiRequested(Entity<HolopadComponent> holopad, ref HolopadRequestStationAiMessage args)
@@ -449,8 +470,8 @@ public sealed class HolopadSystem : SharedHolopadSystem
         if (!_telephoneSystem.IsSourceConnectedToReceiver((stationAi.Value, stationAiTelephone), ent))
             return;
 
-        if (TryComp<HolopadComponent>(ent, out var holopad))
-            LinkHolopadToUser((ent, holopad), user);
+        //if (TryComp<HolopadComponent>(ent, out var holopad))
+        //    LinkHolopadToUser((ent, holopad), user);
 
         _xformSystem.SetCoordinates(stationAi.Value.Comp.RemoteEntity.Value, Transform(ent).Coordinates);
         _stationAiSystem.SwitchRemoteMode(stationAi.Value, false);

@@ -15,6 +15,7 @@ public sealed partial class StationAiCoreComponent : Component
 
     /// <summary>
     /// Can it move its camera around and interact remotely with things.
+    /// When false, the AI is being projected into a local area, such as a holopad
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool Remote = true;
