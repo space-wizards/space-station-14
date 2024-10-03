@@ -562,6 +562,8 @@
     items:
     - WeaponPistolEchis
     - EnergyDaggerLoud
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: syndicate-weapon-module }
 
 - type: entity
   id: BorgModuleOperative
@@ -578,6 +580,8 @@
       - Crowbar
       - Emag
       - PinpointerSyndicateNuclear
+    - type: BorgModuleIcon
+      icon: { sprite: Interface/Actions/actions_borg.rsi, state: syndicate-operative-module }
 
 - type: entity
   id: BorgModuleEsword
@@ -593,6 +597,8 @@
       items:
       - CyborgEnergySwordDouble
       - PinpointerSyndicateNuclear
+    - type: BorgModuleIcon
+      icon: { sprite: Interface/Actions/actions_borg.rsi, state: syndicate-esword-module }
 
 - type: entity
   id: BorgModuleL6C
@@ -608,6 +614,8 @@
       items:
         - WeaponLightMachineGunL6C
         - PinpointerSyndicateNuclear
+    - type: BorgModuleIcon
+      icon: { sprite: Interface/Actions/actions_borg.rsi, state: syndicate-l6c-module }
 
 - type: entity
   id: BorgModuleMartyr
@@ -622,3 +630,5 @@
     - type: ItemBorgModule
       items:
         - SelfDestructSeq
+    - type: BorgModuleIcon
+      icon: { sprite: Interface/Actions/actions_borg.rsi, state: syndicate-martyr-module }
