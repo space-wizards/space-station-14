@@ -23,6 +23,12 @@
       Min: 5
       Max: 20
       PotencyDivisor: 20
+  growthComponents:
+    - !type:BasicGrowthComponent
+      waterConsumption: 0.5
+      nutrientConsumption: 0.4
+    - !type:AtmosphericGrowthComponent
+    - !type:WeedPestGrowthComponent
 
 - type: seed
   id: meatwheat
@@ -48,15 +54,12 @@
       Max: 20
       PotencyDivisor: 20
   growthComponents:
-    - !type:WaterGrowthComponent
+    - !type:BasicGrowthComponent
       waterConsumption: 0.5
-    - !type:NutrientGrowthComponent
       nutrientConsumption: 0.4
-    - !type:AgeGrowthComponent
+    - !type:AtmosphericGrowthComponent
     - !type:WeedPestGrowthComponent
-    - !type:TemperatureGrowthComponent
-    - !type:PressureGrowthComponent
-
+  
 - type: seed
   id: oat
   name: seeds-oat-name
@@ -81,14 +84,12 @@
       Max: 20
       PotencyDivisor: 20
   growthComponents:
-    - !type:WaterGrowthComponent
+    - !type:BasicGrowthComponent
       waterConsumption: 0.5
-    - !type:NutrientGrowthComponent
       nutrientConsumption: 0.4
-    - !type:AgeGrowthComponent
+    - !type:AtmosphericGrowthComponent
     - !type:WeedPestGrowthComponent
-    - !type:TemperatureGrowthComponent
-    - !type:PressureGrowthComponent
+    
 
 - type: seed
   id: banana
@@ -1844,14 +1845,10 @@
       Max: 5
       PotencyDivisor: 20
   growthComponents:
-    - !type:WaterGrowthComponent
+    - !type:BasicGrowthComponent
       waterConsumption: 0.5
-    - !type:NutrientGrowthComponent
       nutrientConsumption: 0.5
     - !type:AgeGrowthComponent
-    - !type:WeedPestGrowthComponent
-    - !type:TemperatureGrowthComponent
-    - !type:PressureGrowthComponent
 
 - type: seed
   id: rice

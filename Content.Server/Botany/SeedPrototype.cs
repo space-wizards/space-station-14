@@ -50,7 +50,7 @@ public partial struct SeedChemQuantity
 
 // TODO reduce the number of friends to a reasonable level. Requires ECS-ing things like plant holder component.
 [Virtual, DataDefinition]
-[Access(typeof(BotanySystem), typeof(PlantHolderSystem), typeof(SeedExtractorSystem), typeof(PlantHolderComponent), typeof(EntityEffect), typeof(MutationSystem), typeof(AgeGrowthSystem))]
+[Access(typeof(BotanySystem), typeof(PlantHolderSystem), typeof(SeedExtractorSystem), typeof(PlantHolderComponent), typeof(EntityEffect), typeof(MutationSystem))]
 public partial class SeedData
 {
     #region Tracking
@@ -175,15 +175,13 @@ public partial class SeedData
     /// The growth components used by this seed. 
     /// </summary>
     [DataField]
-    public List<PlantGrowthComponent> GrowthComponents = new() {
-        new PlantComponent(),
-        new WaterGrowthComponent(),
-        new NutrientGrowthComponent(),
-        new AgeGrowthComponent(),
-        new PressureGrowthComponent(),
-        new TemperatureGrowthComponent(),
-        new WeedPestGrowthComponent(),
-        };
+    public List<PlantGrowthComponent> GrowthComponents = new();
+    //{
+    //    new PlantComponent(),
+    //    new BasicGrowthComponent(),
+    //    new AtmosphericGrowthComponent(),
+    //    new WeedPestGrowthComponent(),
+    //    };
         //TODO: the mutation system should add the missing components when they mutate.
         //This would be done with EnsureComp<>
 
@@ -193,6 +191,7 @@ public partial class SeedData
 
         var newSeed = new SeedData
         {
+            GrowthComponents = GrowthComponents,
             Name = Name,
             Noun = Noun,
             DisplayName = DisplayName,

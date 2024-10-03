@@ -3,16 +3,16 @@ using Content.Server.Botany.Components;
 using Content.Shared.Atmos;
 
 namespace Content.Server.Botany.Systems;
-public sealed class ConsumeGasGrowthSystem : PlantGrowthSystem
+public sealed class ConsumeExudeGasGrowthSystem : PlantGrowthSystem
 {
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<ConsumeGasGrowthComponent, OnPlantGrowEvent>(OnPlantGrow);
+        SubscribeLocalEvent<ConsumeExudeGasGrowthComponent, OnPlantGrowEvent>(OnPlantGrow);
     }
 
-    private void OnPlantGrow(EntityUid uid, ConsumeGasGrowthComponent component, OnPlantGrowEvent args)
+    private void OnPlantGrow(EntityUid uid, ConsumeExudeGasGrowthComponent component, OnPlantGrowEvent args)
     {
         PlantHolderComponent? holder = null;
         Resolve<PlantHolderComponent>(uid, ref holder);

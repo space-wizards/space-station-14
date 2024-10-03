@@ -552,12 +552,12 @@ public sealed class PlantHolderSystem : EntitySystem
 
     public void RemovePlant(EntityUid uid, PlantHolderComponent? component = null)
     {
-        if (!Resolve(uid, ref component))
+        if (!Resolve(uid, ref component) || component.Seed == null)
             return;
 
-        if (component.Seed != null)
-            foreach (var g in component.Seed.GrowthComponents)
-                EntityManager.RemoveComponent(uid, g);
+        //OK, how do i check the entity instead of the seed?
+        foreach(var g in EntityManager.GetComponents<PlantGrowthComponent>(uid))
+            EntityManager.RemoveComponent(uid, g);
 
         component.YieldMod = 1;
         component.MutationMod = 1;
@@ -650,10 +650,6 @@ public sealed class PlantHolderSystem : EntitySystem
         {
             EnsureUniqueSeed(uid, component);
             _mutation.MutateSeed(uid, ref component.Seed, severity);
-
-            //TODO: this is a temp check to apply autoharvest. New mutation system should handle this correctly.
-            if (component.Seed.HarvestRepeat == HarvestType.SelfHarvest)
-                Comp<AutoHarvestGrowthComponent>(uid);
         }
     }
 

@@ -1,0 +1,120 @@
+using Content.Server.Botany.Components;
+using Robust.Shared.Random;
+
+namespace Content.Server.Botany.Systems;
+// For all the very common stuff all plants are expected to do.
+
+// TODO: make CO2Boost (add potency if the plant can eat enough CO2). separate PR post-merge
+// TOOD: make GrowLight (run bonus ticks if theres a grow light nearby). separate PR post-merge.
+public sealed class BasicGrowthSystem : PlantGrowthSystem
+{
+    [Dependency] private readonly BotanySystem _botany = default!;
+    [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeLocalEvent<BasicGrowthComponent, OnPlantGrowEvent>(OnPlantGrow);
+    }
+
+    private void OnPlantGrow(EntityUid uid, BasicGrowthComponent component, OnPlantGrowEvent args)
+    {
+        PlantHolderComponent? holder = null;
+        Resolve<PlantHolderComponent>(uid, ref holder);
+
+        if (holder == null || holder.Seed == null || holder.Dead)
+            return;
+
+        // Advance plant age here.
+        if (holder.SkipAging > 0)
+            holder.SkipAging--;
+        else
+        {
+            if (_random.Prob(0.8f))
+            {
+                holder.Age += (int)(1 * HydroponicsSpeedMultiplier);
+                holder.UpdateSpriteAfterUpdate = true;
+            }
+        }
+
+        if (holder.Age > holder.Seed.Lifespan)
+        {
+            holder.Health -= _random.Next(3, 5) * HydroponicsSpeedMultiplier;
+            if (holder.DrawWarnings)
+                holder.UpdateSpriteAfterUpdate = true;
+        }
+        else if (holder.Age < 0) // Revert back to seed packet!
+        {
+            var packetSeed = holder.Seed;
+            // will put it in the trays hands if it has any, please do not try doing this
+            _botany.SpawnSeedPacket(packetSeed, Transform(uid).Coordinates, uid);
+            _plantHolder.RemovePlant(uid, holder);
+            holder.ForceUpdate = true;
+            _plantHolder.Update(uid, holder);
+        }
+
+        // If enough time has passed since the plant was harvested, we're ready to harvest again!
+        if (holder.Seed.ProductPrototypes.Count > 0)
+        {
+            if (holder.Age > holder.Seed.Production)
+            {
+                if (holder.Age - holder.LastProduce > holder.Seed.Production && !holder.Harvest)
+                {
+                    holder.Harvest = true;
+                    holder.LastProduce = holder.Age;
+                }
+            }
+            else
+            {
+                if (holder.Harvest)
+                {
+                    holder.Harvest = false;
+                    holder.LastProduce = holder.Age;
+                }
+            }
+        }
+
+        if (component.WaterConsumption > 0 && holder.WaterLevel > 0 && _random.Prob(0.75f))
+        {
+            holder.WaterLevel -= MathF.Max(0f,
+                component.WaterConsumption * HydroponicsConsumptionMultiplier * HydroponicsSpeedMultiplier);
+            if (holder.DrawWarnings)
+                holder.UpdateSpriteAfterUpdate = true;
+        }
+
+        if (component.NutrientConsumption > 0 && holder.NutritionLevel > 0 && _random.Prob(0.75f))
+        {
+            holder.NutritionLevel -= MathF.Max(0f,
+                component.NutrientConsumption * HydroponicsConsumptionMultiplier * HydroponicsSpeedMultiplier);
+            if (holder.DrawWarnings)
+                holder.UpdateSpriteAfterUpdate = true;
+        }
+
+        var healthMod = _random.Next(1, 3) * HydroponicsSpeedMultiplier;
+        if (holder.SkipAging < 10)
+        {
+            // Make sure the plant is not thirsty.
+            if (holder.WaterLevel > 10)
+            {
+                holder.Health += Convert.ToInt32(_random.Prob(0.35f)) * healthMod;
+            }
+            else
+            {
+                AffectGrowth(-1, holder);
+                holder.Health -= healthMod;
+            }
+
+            if (holder.NutritionLevel > 5)
+            {
+                holder.Health += Convert.ToInt32(_random.Prob(0.35f)) * healthMod;
+            }
+            else
+            {
+                AffectGrowth(-1, holder);
+                holder.Health -= healthMod;
+            }
+        }
+
+        //TODO: put Viable back on seed and check it here, or split it off to a separate system and check there?
+    }
+}
