@@ -41,7 +41,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
     private TimeSpan _minTimeSpanBetweenSyncRequests;
 
     private HashSet<EntityUid> _pendingRequestsForSpriteState = new();
-    private HashSet<EntityUid> _recentlyUpdatedHolograms = new(); // Clear on frame update
+    private HashSet<EntityUid> _recentlyUpdatedHolograms = new();
 
     public override void Initialize()
     {
@@ -402,12 +402,6 @@ public sealed class HolopadSystem : SharedHolopadSystem
             }
         }
 
-        if (TryComp<StationAiHeldComponent>(user, out var userAiHeld) &&
-            _stationAiSystem.TryGetStationAiCore(user.Value.Owner, out var stationAiCore))
-        {
-            _stationAiSystem.SwitchRemoteMode(stationAiCore.Value, true);
-        }
-
         if (!HasComp<HolopadUserComponent>(user))
             return;
 
@@ -427,6 +421,9 @@ public sealed class HolopadSystem : SharedHolopadSystem
 
         if (holopad.Comp.User != null)
             UnlinkHolopadFromUser(holopad, holopad.Comp.User.Value);
+
+        if (TryComp<StationAiCoreComponent>(holopad, out var stationAiCore))
+            _stationAiSystem.SwitchRemoteMode((holopad.Owner, stationAiCore), true);
     }
 
     private void SyncHolopadUserWithLinkedHolograms(EntityUid uid, HolopadUserComponent component, PrototypeLayerData[] spriteLayerData)
@@ -469,9 +466,6 @@ public sealed class HolopadSystem : SharedHolopadSystem
 
         if (!_telephoneSystem.IsSourceConnectedToReceiver((stationAi.Value, stationAiTelephone), ent))
             return;
-
-        //if (TryComp<HolopadComponent>(ent, out var holopad))
-        //    LinkHolopadToUser((ent, holopad), user);
 
         _xformSystem.SetCoordinates(stationAi.Value.Comp.RemoteEntity.Value, Transform(ent).Coordinates);
         _stationAiSystem.SwitchRemoteMode(stationAi.Value, false);
