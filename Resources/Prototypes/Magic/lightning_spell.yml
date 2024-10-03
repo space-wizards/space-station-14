@@ -17,7 +17,7 @@
       sprite: Objects/Magic/magicactions.rsi
       state: blue_lightning
     event: !type:LightningSpellEvent
-      lightningPrototype: ChargedLightning
+      lightningPrototype: SpellChargedLightning
       boltCount: 4
       boltRange: 5
       arcDepth: 0
@@ -48,7 +48,7 @@
       sprite: Objects/Magic/magicactions.rsi
       state: yellow_lightning
     event: !type:LightningSpellEvent
-      lightningPrototype: SuperchargedLightning
+      lightningPrototype: SpellSuperchargedLightning
       boltCount: 4
       boltRange: 5
       arcDepth: 0
@@ -75,7 +75,7 @@
       sprite: Objects/Magic/magicactions.rsi
       state: red_lightning
     event: !type:LightningSpellEvent
-      lightningPrototype: HyperchargedLightning
+      lightningPrototype: SpellHyperchargedLightning
       boltCount: 4
       boltRange: 5
       arcDepth: 0
