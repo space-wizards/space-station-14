@@ -2,7 +2,7 @@
   parent: Clothing
   id: IDCardStandard
   name: identification card
-  description: A card necessary to access various areas aboard the station.
+  description: A card necessary to access various areas aboard the platform.
   abstract: true
   components:
   - type: Sprite
@@ -30,7 +30,7 @@
 - type: entity
   parent: IDCardStandard
   id: PassengerIDCard
-  name: passenger ID card
+  name: citizen ID card
   components:
   - type: Sprite
     layers:
@@ -219,7 +219,7 @@
 - type: entity
   parent: IDCardStandard
   id: SalvageIDCard
-  name: salvage ID card
+  name: expeditioneer ID card
   components:
   - type: Sprite
     layers:
@@ -434,7 +434,7 @@
 - type: entity
   parent: IDCardStandard
   id: HoSIDCard
-  name: head of security ID card
+  name: marshall ID card
   components:
   - type: Sprite
     layers:
@@ -595,7 +595,7 @@
     jobTitle: Centcom Agent
 
 - type: entity
-  name: passenger ID card
+  name: citizen ID card
   parent: IDCardStandard
   id: AgentIDCard
   suffix: Agent
@@ -676,7 +676,7 @@
         type: ChameleonBoundUserInterface
 
 - type: entity
-  name: passenger ID card
+  name: citizen ID card
   parent: AgentIDCard
   id: NukieAgentIDCard
   suffix: Nukie
@@ -740,7 +740,7 @@
 - type: entity
   parent: IDCardStandard
   id: ReporterIDCard
-  name: reporter ID card
+  name: journalist ID card
   components:
   - type: Sprite
     layers:

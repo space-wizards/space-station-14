@@ -5,8 +5,8 @@
 - type: entity
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitBasic
-  name: basic hardsuit
-  description: A basic, universal hardsuit that protects the wearer against the horrors of life in space. Beats not having a hardsuit, at least.
+  name: basic pressure suit
+  description: A basic, universal pressure suit that protects the wearer against the horrors of the abyss. Beats not having one, at least.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
@@ -33,7 +33,7 @@
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitAtmos
   name: atmos hardsuit
-  description: A special suit that protects against hazardous, low pressure environments. Has thermal shielding.
+  description: A special suit that protects against hazardous, high pressure environments. Has thermal shielding.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/atmospherics.rsi
@@ -68,7 +68,7 @@
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitEngineering
   name: engineering hardsuit
-  description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
+  description: A special suit that protects against hazardous, high pressure environments. Has radiation shielding.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/engineering.rsi
@@ -99,8 +99,8 @@
 - type: entity
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitSpatio
-  name: spationaut hardsuit
-  description: A lightweight hardsuit designed for industrial EVA in zero gravity.
+  name: aquanaut hardsuit
+  description: A lightweight pressure suit designed for industrial work in extreme pressure and cold.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/spatio.rsi
@@ -129,7 +129,7 @@
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitSalvage
   name: mining hardsuit
-  description: A special suit that protects against hazardous, low pressure environments. Has reinforced plating for wildlife encounters.
+  description: A special suit that protects against hazardous, extreme pressure environments. Has reinforced plating for wildlife encounters.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/salvage.rsi
@@ -158,8 +158,8 @@
 - type: entity
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitMaxim
-  name: salvager maxim hardsuit
-  description: Fire. Heat. These things forge great weapons, they also forge great salvagers.
+  name: expeditioneer maxim hardsuit
+  description: Fire. Heat. These things forge great weapons, they also forge great expeditioneers.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/maxim.rsi
@@ -191,7 +191,7 @@
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitSecurity
   name: security hardsuit
-  description: A special suit that protects against hazardous, low pressure environments. Has an additional layer of armor.
+  description: A special suit that protects against hazardous, high pressure environments. Has an additional layer of armor.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/security.rsi
@@ -221,7 +221,7 @@
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitBrigmedic
   name: brigmedic hardsuit
-  description: Special hardsuit of the guardian angel of the brig. It is the medical version of the security hardsuit.
+  description: Special pressure suit of the guardian angel of the brig. It is the medical version of the security hardsuit.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/brigmedic.rsi
@@ -248,7 +248,7 @@
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitWarden
   name: warden's hardsuit
-  description: A specialized riot suit geared to combat low pressure environments.
+  description: A specialized riot suit geared to combat extreme pressure environments.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/security-warden.rsi
@@ -310,7 +310,7 @@
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitEngineeringWhite
   name: chief engineer's hardsuit
-  description: A special hardsuit that protects against hazardous, low pressure environments, made for the chief engineer of the station.
+  description: A special hardsuit that protects against hazardous, high pressure environments, made for the chief engineer of the platform.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/engineering-white.rsi
@@ -344,7 +344,7 @@
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitMedical
   name: chief medical officer's hardsuit
-  description: A special suit that protects against hazardous, low pressure environments. Built with lightweight materials for easier movement.
+  description: A special suit that protects against hazardous, high pressure environments. Built with lightweight materials for easier movement.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/medical.rsi
@@ -369,7 +369,7 @@
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitRd
   name: experimental research hardsuit
-  description: A special suit that protects against hazardous, low pressure environments. Has an additional layer of armor.
+  description: A special suit that protects against hazardous, extreme pressure environments. Has an additional layer of armor.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/rd.rsi
@@ -413,7 +413,7 @@
   parent: ClothingOuterHardsuitSecurity
   id: ClothingOuterHardsuitSecurityRed
   name: head of security's hardsuit
-  description: A special suit that protects against hazardous, low pressure environments. Has an additional layer of armor.
+  description: A special suit that protects against hazardous, extreme pressure environments. Has an additional layer of armor.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/security-red.rsi
@@ -444,7 +444,7 @@
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitLuxury #DO NOT MAP - https://github.com/space-wizards/space-station-14/pull/19738#issuecomment-1703486738
   name: luxury mining hardsuit
-  description: A refurbished mining hardsuit, fashioned after the Quartermaster's colors. Graphene lining provides less protection, but is much easier to move.
+  description: A refurbished mining pressure suit, fashioned after the Harbormaster's colors. Graphene lining provides less protection, but is much easier to move.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/luxury.rsi
@@ -476,7 +476,7 @@
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitSyndie
   name: blood-red hardsuit
-  description: A heavily armored hardsuit designed for work in special operations. Property of Gorlex Marauders.
+  description: A heavily armored pressure suit designed for work in special operations. Property of Gorlex Marauders.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/syndicate.rsi
@@ -515,7 +515,7 @@
   parent: ClothingOuterHardsuitSyndie
   id: ClothingOuterHardsuitSyndieMedic
   name: blood-red medic hardsuit
-  description: A heavily armored and agile advanced hardsuit specifically designed for field medic operations.
+  description: A heavily armored and agile advanced pressure suit specifically designed for field medic operations.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/syndiemedic.rsi
@@ -533,7 +533,7 @@
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitSyndieElite
   name: syndicate elite hardsuit
-  description: An elite version of the blood-red hardsuit, with improved mobility and fireproofing. Property of Gorlex Marauders.
+  description: An elite version of the blood-red pressure suit, with improved mobility and fireproofing. Property of Gorlex Marauders.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/syndieelite.rsi
@@ -571,7 +571,7 @@
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitSyndieCommander
   name: syndicate commander hardsuit
-  description: A bulked up version of the blood-red hardsuit, purpose-built for the commander of a syndicate operative squad. Has significantly improved armor for those deadly front-lines firefights.
+  description: A bulked up version of the blood-red pressure suit, purpose-built for the commander of a syndicate operative squad. Has significantly improved armor for those deadly front-lines firefights.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/syndiecommander.rsi
@@ -603,7 +603,7 @@
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitJuggernaut
   name: cybersun juggernaut suit
-  description: A suit made by the cutting edge R&D department at cybersun to be hyper resilient.
+  description: A suit made by the cutting edge R&D department at cybersun to be hyper resilient. Tough as a submarine.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/cybersun.rsi
@@ -697,9 +697,9 @@
 - type: entity
   parent:  ClothingOuterHardsuitBase
   id:  ClothingOuterHardsuitPirateEVA
-  name: deep space EVA suit
+  name: deep-sea pressure suit
   suffix: Pirate
-  description: A heavy space suit that provides some basic protection from the cold harsh realities of deep space.
+  description: A heavy pressure suit that provides some basic protection from the cold extreme realities of the abyss.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/pirateeva.rsi
@@ -729,7 +729,7 @@
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitPirateCap
   name: pirate captain's hardsuit
-  description: An ancient armored hardsuit, perfect for defending against space scurvy and toolbox-wielding scallywags.
+  description: An ancient armored pressure suit, perfect for defending against space scurvy and toolbox-wielding scallywags.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/piratecaptain.rsi
@@ -763,7 +763,7 @@
   parent: ClothingOuterHardsuitSyndieCommander
   id: ClothingOuterHardsuitERTLeader
   name: ERT leader's hardsuit
-  description: A protective hardsuit worn by the leader of an emergency response team.
+  description: A protective pressure suit worn by the leader of an emergency response team.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertleader.rsi
@@ -957,7 +957,7 @@
   parent: ClothingOuterHardsuitClown
   id: ClothingOuterHardsuitMime
   name: mime hardsuit
-  description: A custom-made mime hardsuit.
+  description: A custom-made mime pressure suit.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/mime.rsi
@@ -974,7 +974,7 @@
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitSanta
   name: Santa's hardsuit
-  description: A festive, cheerful hardsuit that protects the jolly gift-giver while on sleighrides in space. Offers some resistance against asteroid strikes.
+  description: A festive, cheerful pressure suit that protects the jolly gift-giver while on sleighrides in the sea. Offers some resistance against drifter attacks.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/santahardsuit.rsi

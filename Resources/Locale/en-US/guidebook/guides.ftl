@@ -1,4 +1,4 @@
-guide-entry-ss14 = Station and Shifts
+guide-entry-ss14 = Platform and Shifts
 guide-entry-engineering = Engineering
 guide-entry-construction = Construction
 guide-entry-airlock-security = Airlock Upgrades

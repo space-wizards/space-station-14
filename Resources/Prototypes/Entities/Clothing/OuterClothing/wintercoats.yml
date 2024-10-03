@@ -2,7 +2,7 @@
   parent: ClothingOuterStorageBase
   id: ClothingOuterWinterCoat
   name: winter coat
-  description: A heavy jacket made from 'synthetic' animal furs.
+  description: A heavy, water resistant jacket for those cold days on the platform.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coat.rsi

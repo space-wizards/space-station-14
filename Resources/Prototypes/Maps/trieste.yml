@@ -1,6 +1,6 @@
 - type: gameMap
   id: trieste
-  mapName: trieste
+  mapName: Trieste
   mapPath: /Maps/trieste.yml
   minPlayers: 0
   stations:

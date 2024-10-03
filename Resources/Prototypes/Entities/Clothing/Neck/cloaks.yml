@@ -23,7 +23,7 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakHos
-  name: head of security's cloak
+  name: marshall's cloak
   description: An exquisite dark and red cloak fitting for those who can assert dominance over wrongdoers. Take a stab at being civil in prosecution!
   components:
   - type: Sprite
@@ -67,7 +67,7 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakQm
-  name: quartermaster's cloak
+  name: harbormaster's cloak
   description: A strong brown cloak with a reflective stripe, while not as fancy as others, it does show your managing skills.
   components:
   - type: Sprite
@@ -107,7 +107,7 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakCapFormal
-  name: captain's formal cloak
+  name: overseer's formal cloak
   description: A lavish and decorated cloak for special occasions.
   components:
   - type: Sprite
