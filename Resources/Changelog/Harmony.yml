@@ -265,3 +265,10 @@ Entries:
   changes:
   - type: Add
     message: Added no EORG reminder popup at the end of the round.
+- id: 90
+  author: FluffMe
+  time: '2024-10-03T07:23:02.0000000+00:00'
+  url: https://github.com/ss14-harmony/space-station-14/pull/90
+  changes:
+  - type: Tweak
+    message: Frezon selling price is changed to 2 spesos per mole.
