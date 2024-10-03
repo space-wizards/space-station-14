@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "size":
+  {
+    "x": 64,
+    "y": 64
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by hivehum in LibreSprite for Imp Station 14",
+  "states":
+  [
+    {
+      "name": "gondal",
+      "directions": 1
+    }
+  ]
+}

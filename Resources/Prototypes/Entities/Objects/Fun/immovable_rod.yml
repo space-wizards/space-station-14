@@ -236,3 +236,18 @@
     sprite: Objects/Fun/toys.rsi
     state: plushie_lizard
     noRot: false
+
+- type: entity
+  parent: ImmovableRodKeepTilesStill
+  id: ImmovableRodGondal
+  name: immovable gondal
+  description: FUCK
+  components:
+  - type: EmitSoundOnSpawn
+    sound:
+      path: /Audio/Effects/gondalmono.ogg
+  - type: Sprite
+    sprite: Mobs/Aliens/gondal.rsi
+    state: gondal
+    rotation: 0
+    noRot: false
