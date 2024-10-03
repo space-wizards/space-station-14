@@ -117,15 +117,19 @@ namespace Content.Shared.SubFloor
             // TODO Redo this function. Currently wires on an asteroid are always "below the floor"
             var tileDef = (ContentTileDefinition) _tileDefinitionManager[Map.GetTileRef(gridUid, grid, position).Tile.TypeId];
 
+            if (!tileDef.IsSubFloor)
+                return true;
+
             var anchoredEnum = Map.GetAnchoredEntitiesEnumerator(gridUid, grid, position);
-            var metadataQuery GetEntityQuery<MetaDataComponent>();
+            var metadataQuery = GetEntityQuery<MetaDataComponent>();
             while (anchoredEnum.MoveNext(out var uid))
             {
-                var meta = metadataQuery.GetComponent(uid);
-                // if (uid.Value.Prototype.ID == "Catwalk")
-                //     return true;
+                var meta = metadataQuery.GetComponent((EntityUid) uid);
+                if (meta.EntityPrototype?.ID == "Catwalk")
+                    return true;
             }
-            return !tileDef.IsSubFloor;
+
+            return false;
         }
 
         private void UpdateTile(EntityUid gridUid, MapGridComponent grid, Vector2i position)
