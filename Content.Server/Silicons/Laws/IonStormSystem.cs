@@ -60,8 +60,10 @@ public sealed class IonStormSystem : EntitySystem
     private const string Foods = "IonStormFoods";
 
     //Randomly alters the laws of an individual silicon.
-    public void IonStormTarget(EntityUid ent, SiliconLawBoundComponent lawBound, TransformComponent xform, IonStormTargetComponent target, EntityUid? chosenStation, bool adminlog = true)
+    public void IonStormTarget(Entity<SiliconLawBoundComponent, IonStormTargetComponent> ent, TransformComponent xform, EntityUid? chosenStation, bool adminlog = true)
     {
+        var lawBound = ent.Comp1;
+        var target = ent.Comp2;
         if (!_robustRandom.Prob(target.Chance))
             return;
 

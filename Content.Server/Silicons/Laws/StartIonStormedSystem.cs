@@ -31,7 +31,7 @@ public sealed class StartIonStormedSystem : EntitySystem
 
         for (int currentIonStorm = 0; currentIonStorm < ent.Comp.IonStormAmount; currentIonStorm++)
         {
-            _ionStorm.IonStormTarget(ent.Owner, lawBound, xform, target, null, false);
+            _ionStorm.IonStormTarget((ent.Owner, lawBound, target), xform, null, false);
         }
 
         var laws = _siliconLaw.GetLaws(ent.Owner, lawBound);
