@@ -81033,11 +81033,6 @@ entities:
     - type: Transform
       pos: -6.5,-11.5
       parent: 8364
-    - type: UserInterface
-      actors:
-        enum.DisposalUnitUiKey.Key:
-        - invalid
-    - type: ActiveUserInterface
   - uid: 5909
     components:
     - type: Transform
