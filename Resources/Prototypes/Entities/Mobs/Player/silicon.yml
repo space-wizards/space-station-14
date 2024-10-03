@@ -537,7 +537,6 @@
   - type: RandomMetadata
     nameSegments: [names_borg]
 
-
 - type: entity
   id: PlayerBorgDerelictGhostRole
   parent: PlayerBorgDerelict
