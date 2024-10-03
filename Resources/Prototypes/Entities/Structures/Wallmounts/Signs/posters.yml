@@ -72,7 +72,7 @@
   parent: PosterBase
   id: PosterContrabandFunPolice
   name: "Fun Police"
-  description: "A poster condemning the station's security forces."
+  description: "A poster condemning the platform's security forces."
   components:
   - type: Sprite
     state: poster3_contraband
@@ -108,7 +108,7 @@
   parent: PosterBase
   id: PosterContrabandSmoke
   name: "Smoke"
-  description: "A poster advertising a rival corporate brand of cigarettes."
+  description: "A poster advertising a brand of cigarettes."
   components:
   - type: Sprite
     state: poster7_contraband
@@ -117,7 +117,7 @@
   parent: PosterBase
   id: PosterContrabandGreyTide
   name: "Grey Tide"
-  description: "A rebellious poster symbolizing passenger solidarity."
+  description: "A rebellious poster symbolizing citizen solidarity."
   components:
   - type: Sprite
     state: poster8_contraband
@@ -126,7 +126,7 @@
   parent: PosterBase
   id: PosterContrabandMissingGloves
   name: "Missing Gloves"
-  description: "This poster references the uproar that followed Nanotrasen's financial cuts toward insulated-glove purchases."
+  description: "This poster references the uproar that followed Nanotrasen's idiotic financial cuts toward insulated-glove purchases."
   components:
   - type: Sprite
     state: poster9_contraband
@@ -135,7 +135,7 @@
   parent: PosterBase
   id: PosterContrabandHackingGuide
   name: "Hacking Guide"
-  description: "This poster details the internal workings of the common Nanotrasen airlock. Sadly, it appears out of date."
+  description: "This poster details the internal workings of the common airlock. Sadly, it appears out of date."
   components:
   - type: Sprite
     state: poster10_contraband
@@ -144,7 +144,7 @@
   parent: PosterBase
   id: PosterContrabandRIPBadger
   name: "RIP Badger"
-  description: "This seditious poster references Nanotrasen's genocide of a space station full of badgers."
+  description: "This seditious poster references Nanotrasen's horrible genocide of a space station full of badgers."
   components:
   - type: Sprite
     state: poster11_contraband
@@ -252,7 +252,7 @@
   parent: PosterBase
   id: PosterContrabandRebelsUnite
   name: "Rebels Unite"
-  description: "A poster urging the viewer to rebel against Nanotrasen."
+  description: "An old poster referencing Trieste's revolt against Nanotrasen."
   components:
   - type: Sprite
     state: poster23_contraband
@@ -532,7 +532,7 @@
   parent: PosterBase
   id: PosterContrabandRevolt
   name: "Revolt"
-  description: "Revolutionist propaganda, manufactured by the Syndicate."
+  description: "A poster declaring revolution against Nanotrasen."
   components:
   - type: Sprite
     state: poster56_contraband
@@ -614,7 +614,7 @@
   parent: PosterBase
   id: PosterLegitNanotrasenLogo
   name: "Nanotrasen Logo"
-  description: "A poster depicting the Nanotrasen logo."
+  description: "A poster depicting the vile Nanotrasen logo. Vulgar words are written all over it"
   components:
   - type: Sprite
     state: poster2_legit
