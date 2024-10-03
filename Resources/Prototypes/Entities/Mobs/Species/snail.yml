@@ -5,6 +5,7 @@
   id: BaseMobGastropoid
   abstract: true
   components:
+  - type: SpelfMoods
   - type: SnailSpeed
     snailSlowdownModifier: 0.5
   - type: Absorbable
@@ -61,6 +62,8 @@
         type: StrippableBoundUserInterface
       enum.StoreUiKey.Key:
         type: StoreBoundUserInterface
+      enum.SpelfMoodsUiKey.Key:
+        type: SpelfMoodsBoundUserInterface
   - type: FootstepModifier
     footstepSoundCollection:
       path: /Audio/Effects/Footsteps/snailstep.ogg

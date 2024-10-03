@@ -1,19 +1,23 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Server.Actions;
 using Content.Shared.Dataset;
 using Content.Shared.Impstation.Spelfs;
 using Content.Shared.Impstation.Spelfs.Components;
 using Content.Shared.Random.Helpers;
+using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.Impstation.Spelfs;
 
-public sealed partial class SpelfMoodSystem : EntitySystem
+public sealed partial class SpelfMoodsSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
+    [Dependency] private readonly ActionsSystem _actions = default!;
 
 
     [ValidatePrototypeId<DatasetPrototype>]
@@ -28,11 +32,31 @@ public sealed partial class SpelfMoodSystem : EntitySystem
     [ValidatePrototypeId<DatasetPrototype>]
     private const string WildcardDataset = "SpelfMoodsWildcard";
 
+    [ValidatePrototypeId<EntityPrototype>]
+    private const string ActionViewMoods = "ActionViewMoods";
+
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SpelfMoodComponent, ComponentStartup>(OnSpelfMoodInit);
+        SubscribeLocalEvent<SpelfMoodsComponent, ComponentStartup>(OnSpelfMoodInit);
+        SubscribeLocalEvent<SpelfMoodsComponent, ToggleMoodsScreenEvent>(OnToggleMoodsScreen);
+        SubscribeLocalEvent<SpelfMoodsComponent, BoundUIOpenedEvent>(OnBoundUIOpened);
+    }
+
+    private void OnBoundUIOpened(EntityUid uid, SpelfMoodsComponent component, BoundUIOpenedEvent args)
+    {
+        var state = new SpelfMoodsBuiState(component.Moods);
+        _userInterface.SetUiState(args.Entity, SpelfMoodsUiKey.Key, state);
+    }
+
+    private void OnToggleMoodsScreen(EntityUid uid, SpelfMoodsComponent component, ToggleMoodsScreenEvent args)
+    {
+        if (args.Handled || !TryComp<ActorComponent>(uid, out var actor))
+            return;
+        args.Handled = true;
+
+        _userInterface.TryToggleUi(uid, SpelfMoodsUiKey.Key, actor.PlayerSession);
     }
 
     private bool TryPick(string datasetProto, HashSet<string> conflicts, HashSet<string> currentMoods, [NotNullWhen(true)] out SpelfMoodPrototype? proto)
@@ -66,7 +90,7 @@ public sealed partial class SpelfMoodSystem : EntitySystem
         // TODO: Copy NotifyLawsChanged
     }
 
-    public void AddMood(EntityUid uid, SpelfMood mood, SpelfMoodComponent? comp = null)
+    public void AddMood(EntityUid uid, SpelfMood mood, SpelfMoodsComponent? comp = null)
     {
         if (!Resolve(uid, ref comp))
             return;
@@ -81,9 +105,11 @@ public sealed partial class SpelfMoodSystem : EntitySystem
     /// </summary>
     public SpelfMood RollMood(SpelfMoodPrototype proto)
     {
-        var mood = new SpelfMood();
-        mood.ProtoId = proto.ID;
-        mood.MoodString = proto.MoodString;
+        var mood = new SpelfMood()
+        {
+            ProtoId = proto.ID,
+            MoodString = proto.MoodString,
+        };
 
         foreach (var (name, dataset) in proto.MoodVarDatasets)
             mood.MoodVars.Add(name, _random.Pick(_proto.Index<DatasetPrototype>(dataset)));
@@ -95,7 +121,7 @@ public sealed partial class SpelfMoodSystem : EntitySystem
     /// Checks if the given mood prototype conflicts with the current moods, and
     /// adds the mood if it does not.
     /// </summary>
-    public bool TryAddMood(EntityUid uid, SpelfMoodPrototype moodProto, SpelfMoodComponent? comp = null, bool allowConflict = false)
+    public bool TryAddMood(EntityUid uid, SpelfMoodPrototype moodProto, SpelfMoodsComponent? comp = null, bool allowConflict = false)
     {
         if (!Resolve(uid, ref comp))
             return false;
@@ -109,7 +135,7 @@ public sealed partial class SpelfMoodSystem : EntitySystem
         return true;
     }
 
-    public void OnSpelfMoodInit(EntityUid uid, SpelfMoodComponent comp, ComponentStartup args)
+    public void OnSpelfMoodInit(EntityUid uid, SpelfMoodsComponent comp, ComponentStartup args)
     {
         if (comp.LifeStage != ComponentLifeStage.Starting)
             return;
@@ -131,5 +157,11 @@ public sealed partial class SpelfMoodSystem : EntitySystem
         if (TryPick(WildcardDataset, comp.Conflicts, comp.MoodProtoSet(), out mood))
             TryAddMood(uid, mood, comp, true);
 
+        comp.Action = _actions.AddAction(uid, ActionViewMoods);
+    }
+
+    public void OnSpelfMoodShutdown(EntityUid uid, SpelfMoodsComponent comp, ComponentShutdown args)
+    {
+        _actions.RemoveAction(uid, comp.Action);
     }
 }
