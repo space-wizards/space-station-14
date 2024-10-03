@@ -8,6 +8,18 @@
   },
   "states": [
     {
+      "name": "fangs",
+      "directions": 4
+    },
+    {
+      "name": "horns_kobold_ears_piercings",
+      "directions": 4
+    },
+    {
+      "name": "piercings1",
+      "directions": 4
+    },
+    {
       "name": "tail_smooth_front",
       "directions": 4
     },
