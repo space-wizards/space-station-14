@@ -1,6 +1,7 @@
 - type: accent
   id: nocontractions
   wordReplacements:
+    accent-nocontractions-words-french: accent-nocontractions-words-replace-french
     accent-nocontractions-words-1: accent-nocontractions-words-replace-1
     accent-nocontractions-words-2: accent-nocontractions-words-replace-2
     accent-nocontractions-words-3: accent-nocontractions-words-replace-3
