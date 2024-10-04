@@ -54,7 +54,7 @@
       path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
 
 - type: entity
-  name: cleaner lake
+  name: shining spring
   parent: [BaseWeaponLauncher, BaseGunWieldable, BaseCivilianContraband]
   id: WeaponLauncherCleanerLake
   description: A de-militarised piece of military surplus equipment, repurposed for the real troops.
@@ -80,7 +80,7 @@
   - type: BallisticAmmoProvider
     whitelist:
       tags:
-        - CleanerGrenadeAmmo
+        - CleanerGrenade
     capacity: 3
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
@@ -89,7 +89,7 @@
     node: start
 
 - type: entity
-  name: remilitarised cleaner lake
+  name: remilitarised shining spring
   parent: [WeaponLauncherCleanerLake, BaseGunWieldable]
   id: WeaponLauncherCleanerLakeRemilitarised
   description: A re-militarised piece of military surplus equipment, go nuts.

@@ -36,9 +36,6 @@
         },
         {
             "name": "spent"
-        },
-		{
-			"name": "cleaner"
-		}
+        }
     ]
 }
