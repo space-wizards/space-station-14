@@ -1,0 +1,9 @@
+- type: cargoProduct
+  id: ExclusiveCratePlushie  ##For Weaselstation
+  icon:
+    sprite: _Weaselstation/Objects/Fun/toys.rsi
+    state: Panda
+  product: WeaselstationCratePlushie 
+  cost: 1500
+  category: cargoproduct-category-name-fun
+  group: market

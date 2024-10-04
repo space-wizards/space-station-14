@@ -1,0 +1,19 @@
+- type: entityTable     ##For Weaselstation
+  id: WeaselstationPlushiesTable
+  table: !type:GroupSelector
+    children:
+    - id: PlushiePanda
+    - id: PlushieSkeleton
+
+- type: entity
+  id: WeaselstationCratePlushie
+  parent: CrateGenericSteel
+  name: Exclusive plushie crate
+  description: A crate of special exclusive plushies!
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: WeaselstationPlushiesTable
+        rolls: !type:ConstantNumberSelector
+          value: 7
