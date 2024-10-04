@@ -39,14 +39,15 @@
   - type: VisionCorrection
     correctionPower: 4
 
-# admin only for now
 - type: entity
-  parent: PrescriptionLens
-  id: AntiPrescriptionLens
-  suffix: Inverse
+  parent: PrescriptionLensStrong
+  id: BlindingLens
+  name: blinding lens
+  description: Adaptive lenses that ruin your vision.
   components:
   - type: VisionCorrection
-    visionBonus: 2
+    correctionPower: 0
+    visionBonus: 6
 
 # Given to near-sighted trait
 - type: entity

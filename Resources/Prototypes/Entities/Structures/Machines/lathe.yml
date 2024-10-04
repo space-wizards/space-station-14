@@ -944,6 +944,7 @@
       - WhiteCane
       - PrescriptionLens
       - PrescriptionLensStrong
+      - BlindingLens
     dynamicRecipes:
       - ChemicalPayload
       - CryostasisBeaker
