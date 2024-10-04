@@ -9,7 +9,6 @@
     state: icon
   - type: Item
     sprite: Objects/Tools/lockpick.rsi
-    state: icon
     storedRotation: -90
   - type: Clothing
     sprite: Objects/Tools/lockpick.rsi
