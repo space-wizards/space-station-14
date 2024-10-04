@@ -23,7 +23,7 @@
     availableModes:
     - SemiAuto
     soundGunshot:
-      path: /Audio/Effects/thunk.ogg
+      path: /Audio/Weapons/Guns/Gunshots/grenade_launcher.ogg
     soundEmpty:
       path: /Audio/Items/hiss.ogg
     clumsyProof: true
