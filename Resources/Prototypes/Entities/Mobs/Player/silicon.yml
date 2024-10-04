@@ -540,7 +540,7 @@
 - type: entity
   id: PlayerBorgDerelictGhostRole
   parent: PlayerBorgDerelict
-  suffix: Battery, Ghost role
+  suffix: Ghost role
   components:
     - type: GhostRole
       name: ghost-role-information-derelict-cyborg-name

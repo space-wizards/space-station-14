@@ -24,14 +24,12 @@ public sealed class StartIonStormedSystem : EntitySystem
     {
         if (!TryComp<SiliconLawBoundComponent>(ent.Owner, out var lawBound))
             return;
-        if (!TryComp<TransformComponent>(ent.Owner, out var xform))
-            return;
         if (!TryComp<IonStormTargetComponent>(ent.Owner, out var target))
             return;
 
         for (int currentIonStorm = 0; currentIonStorm < ent.Comp.IonStormAmount; currentIonStorm++)
         {
-            _ionStorm.IonStormTarget((ent.Owner, lawBound, target), xform, null, false);
+            _ionStorm.IonStormTarget((ent.Owner, lawBound, target), false);
         }
 
         var laws = _siliconLaw.GetLaws(ent.Owner, lawBound);
