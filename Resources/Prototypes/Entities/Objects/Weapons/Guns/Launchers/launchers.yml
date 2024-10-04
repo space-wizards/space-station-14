@@ -55,7 +55,7 @@
 
 - type: entity
   name: cleaner lake
-  parent: [BaseWeaponLauncher, BaseGunWieldable]
+  parent: [BaseWeaponLauncher, BaseGunWieldable, BaseCivilianContraband]
   id: WeaponLauncherCleanerLake
   description: A de-militarised piece of military surplus equipment, repurposed for the real troops.
   components:
@@ -80,7 +80,7 @@
   - type: BallisticAmmoProvider
     whitelist:
       tags:
-        - CleanerGrenade
+        - CleanerGrenadeAmmo
     capacity: 3
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg

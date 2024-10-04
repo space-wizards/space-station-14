@@ -398,6 +398,10 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/janitor.rsi
+  - type: Tag
+    tags:
+    - CleanerGrenade
+    - Grenade
   - type: SmokeOnTrigger
     duration: 15
     spreadAmount: 50

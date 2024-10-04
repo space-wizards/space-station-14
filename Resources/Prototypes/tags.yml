@@ -738,6 +738,9 @@
   id: CleanerGrenade
 
 - type: Tag
+  id: CleanerGrenadeAmmo
+
+- type: Tag
   id: WeaponCleanerLakeUpgradeKit
 
 - type: Tag

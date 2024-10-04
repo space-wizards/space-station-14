@@ -141,14 +141,16 @@
     suffix: false
 
 - type: entity
-  id: GrenadeCleaner
+  id: GrenadeCleanerAmmo
   name: cleaner grenade
-  parent: BaseGrenade
+  parent: [BaseItem, BaseCivilianContraband]
   components:
   - type: Tag
     tags:
-    - CleanerGrenade
+    - CleanerGrenadeAmmo
     - Grenade
+  - type: Item
+    size: Small
   - type: CartridgeAmmo
     proto: BulletGrenadeCleaner
   - type: Sprite
