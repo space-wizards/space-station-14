@@ -45,6 +45,9 @@ public sealed partial class StoreListingControl : Control
 
     private bool CanBuy()
     {
+        if (!_data.Buyable)
+            return false;
+
         if (!_hasBalance)
             return false;
 
@@ -61,7 +64,11 @@ public sealed partial class StoreListingControl : Control
         if (_data.RestockTime > stationTime)
         {
             var timeLeftToBuy = stationTime - _data.RestockTime;
-            StoreItemBuyButton.Text =  timeLeftToBuy.Duration().ToString(@"mm\:ss");
+            StoreItemBuyButton.Text = timeLeftToBuy.Duration().ToString(@"mm\:ss");
+        }
+        else if (!_data.Buyable)
+        {
+            StoreItemBuyButton.Text = "Unavailable";
         }
         else
         {

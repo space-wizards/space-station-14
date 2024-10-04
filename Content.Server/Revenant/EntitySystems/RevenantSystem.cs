@@ -55,6 +55,9 @@ public sealed partial class RevenantSystem : EntitySystem
     [ValidatePrototypeId<EntityPrototype>]
     private const string RevenantShopId = "ActionRevenantShop";
 
+    [ValidatePrototypeId<EntityPrototype>]
+    private const string RevenantHauntId = "ActionRevenantHaunt";
+
     public override void Initialize()
     {
         base.Initialize();
@@ -98,7 +101,8 @@ public sealed partial class RevenantSystem : EntitySystem
 
     private void OnMapInit(EntityUid uid, RevenantComponent component, MapInitEvent args)
     {
-        _action.AddAction(uid, ref component.Action, RevenantShopId);
+        _action.AddAction(uid, ref component.ShopAction, RevenantShopId);
+        _action.AddAction(uid, ref component.HauntAction, RevenantHauntId);
     }
 
     private void OnStatusAdded(EntityUid uid, RevenantComponent component, StatusEffectAddedEvent args)
@@ -232,7 +236,12 @@ public sealed partial class RevenantSystem : EntitySystem
 
             if (rev.Essence < rev.EssenceRegenCap)
             {
-                ChangeEssenceAmount(uid, rev.EssencePerSecond, rev, regenCap: true);
+                var essence = rev.EssencePerSecond;
+
+                if (TryComp<RevenantRegenModifierComponent>(uid, out var regen))
+                    essence += rev.HauntEssenceRegenPerWitness * regen.Witnesses.Count;
+
+                ChangeEssenceAmount(uid, essence, rev, regenCap: true);
             }
         }
     }

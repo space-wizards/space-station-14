@@ -60,6 +60,11 @@
     jumpsuit: ClothingUniformJumpskirtRoboticist
 
 - type: loadout
+  id: ScientistJumpsuitFormal
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitScientistFormal
+
+- type: loadout
   id: SeniorResearcherJumpsuit
   effects:
   - !type:GroupLoadoutEffect
@@ -147,6 +152,11 @@
   id: ScientistPDA
   equipment:
     id: SciencePDA
+
+- type: loadout
+  id: RoboticistPDA
+  equipment:
+    id: RoboticsPDA
 
 - type: loadout
   id: SeniorResearcherPDA

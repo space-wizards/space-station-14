@@ -22,7 +22,6 @@
   id: MimeGear
   equipment:
     gloves: ClothingHandsGlovesColorWhite
-    shoes: ClothingShoesColorWhite
     pocket1: CrayonMime
     pocket2: Paper
     id: MimePDA

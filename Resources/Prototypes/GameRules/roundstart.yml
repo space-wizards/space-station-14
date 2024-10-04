@@ -22,6 +22,8 @@
     rules:
     - id: Thief
       prob: 0.5
+    - id: Heretic # goob edit
+      prob: 0.2
 
 - type: entity
   id: DeathMatch31
@@ -327,6 +329,8 @@
         sound: "/Audio/Ambience/Antag/zombie_start.ogg"
       components:
       - type: PendingZombie
+        minInitialInfectedGrace: 300
+        maxInitialInfectedGrace: 600
       - type: ZombifyOnDeath
       - type: IncurableZombie
       - type: InitialInfected
@@ -350,7 +354,7 @@
         tableId: CalmPestEventsTable
       - !type:NestedSelector
         tableId: SpicyPestEventsTable
-        
+
 
 - type: entityTable
   id: SleeperlessGameRulesTable

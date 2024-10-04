@@ -69,3 +69,73 @@
     graph: Bookshelf
     node: bookshelf
   - type: BlockWeather
+
+- type: entity
+  id: BookshelfWeb
+  parent: BaseStructure
+  name: "web bookshelf"
+  description: Mostly filled with cobwebs.
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/bookshelf.rsi
+    snapCardinals: true
+    layers:
+      - state: WEB-base
+      - state: book-0
+      - map: ["enum.StorageFillLayers.Fill"]
+  - type: Appearance
+  - type: StorageFillVisualizer
+    maxFillLevels: 21
+    fillBaseName: book
+  - type: Damageable
+    damageModifierSet: Web
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 15
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroyHeavy
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWebSilk:
+            min: 2
+            max: 4
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Tag
+    tags:
+    - Structure
+  - type: Transform
+    anchored: true
+    noRot: true
+  - type: Physics
+    bodyType: Static
+  - type: Anchorable
+  - type: Pullable
+  - type: Occluder
+  - type: Storage
+    grid:
+    - 0,0,15,3
+    maxItemSize: Normal
+    whitelist:
+      tags:
+        - Document
+        - Folder
+        - Write
+        - Book
+        - Spellbook
+  - type: UserInterface
+    interfaces:
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
+  - type: InteractionOutline
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+  - type: Construction
+    graph: WebStructures
+    node: bookshelf
+  - type: BlockWeather

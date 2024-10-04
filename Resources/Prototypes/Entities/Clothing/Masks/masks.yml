@@ -15,6 +15,34 @@
     tags:
     - HamsterWearable
     - WhitelistChameleon
+    - GasMask # goob edit
+  - type: HideLayerClothing
+    slots:
+    - Snout
+    hideOnToggle: true
+
+- type: entity
+  parent: [ClothingMaskPullableBase, BaseCommandContraband]
+  id: ClothingMaskBreathCommand
+  name: command breath mask
+  description: A fancy and comfortable breath mask, but functionally identical to the clear plastic ones.
+  components:
+  - type: Item
+    size: Tiny
+  - type: Sprite
+    sprite: Clothing/Mask/breathcommand.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/breathcommand.rsi
+  - type: BreathMask
+  - type: IngestionBlocker
+  - type: Tag
+    tags:
+    - PetWearable
+    - WhitelistChameleon
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 50
+      Plastic: 100
   - type: HideLayerClothing
     slots:
     - Snout
@@ -205,6 +233,27 @@
     - Snout
 
 - type: entity
+  parent: ClothingMaskBase
+  id: ClothingMaskMad
+  name: abyssal mask
+  description: A mask created from suffering. When you look into its eyes, it looks back.
+  components:
+  - type: SelfUnremovableClothing
+  - type: Sprite
+    sprite: Goobstation/Heretic/mad_mask.rsi
+  - type: Clothing
+    sprite: Goobstation/Heretic/mad_mask.rsi
+  - type: BreathMask
+  - type: IdentityBlocker
+  - type: Tag
+    tags:
+    - Mask
+    - WhitelistChameleon
+  - type: HideLayerClothing
+    slots:
+    - Snout
+
+- type: entity
   parent: ClothingMaskClownBase
   id: ClothingMaskClown
   components:
@@ -231,7 +280,7 @@
     node: mask
 
 - type: entity
-  parent: ClothingMaskClown
+  parent: [ClothingMaskClown, BaseRestrictedContraband]
   id: ClothingMaskClownSecurity
   name: security clown wig and mask
   description: A debatably oxymoronic but protective mask and wig.
@@ -247,6 +296,102 @@
         Slash: 0.95
         Piercing: 0.95
         Heat: 0.95
+
+# admeme only
+- type: entity
+  parent: [ClothingMaskClown, BaseCommandContraband]
+  id: ClothingMaskClownCaptain
+  name: authority clown wig and mask
+  description: A mask and wig for when the captain shows their true colors.
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/clown_captain.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/clown_captain.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.95
+        Piercing: 0.95
+        Heat: 0.95
+
+- type: entity
+  parent: ClothingMaskClown
+  id: ClothingMaskClownCargo
+  name: strong clown wig and mask
+  description: A powerful mask and wig for the clown that can drag a crate with one hand.
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/clown_cargo.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/clown_cargo.rsi
+
+- type: entity
+  parent: ClothingMaskClown
+  id: ClothingMaskClownChaplin
+  name: holy clown wig and mask
+  description: A mask and wig symbolizing clown asceticism.
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/clown_chaplin.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/clown_chaplin.rsi
+
+- type: entity
+  parent: ClothingMaskClown
+  id: ClothingMaskClownEngineer
+  name: practical clown wig and mask
+  description: A problem solver's mask and wig.
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/clown_engineer.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/clown_engineer.rsi
+
+- type: entity
+  parent: ClothingMaskClown
+  id: ClothingMaskClownMedical
+  name: helpful clown wig and mask
+  description: Copyright infringing mask and wig.
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/clown_medical.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/clown_medical.rsi
+
+- type: entity
+  parent: ClothingMaskClown
+  id: ClothingMaskClownRobotics
+  name: cyber clown wig and mask
+  description: Mask and wig of choice for the clown that doesn't need to be taught how to use a computer.
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/clown_robotics.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/clown_robotics.rsi
+
+- type: entity
+  parent: ClothingMaskClown
+  id: ClothingMaskClownScience
+  name: genius clown wig and mask
+  description: Only the smartest clowns get to wear this mask and wig.
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/clown_science.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/clown_science.rsi
+
+- type: entity
+  parent: ClothingMaskClown
+  id: ClothingMaskClownService
+  name: giving clown wig and mask
+  description: Mask and wig for the clown with the willpower not to steal.
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/clown_service.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/clown_service.rsi
 
 - type: entity
   parent: ClothingMaskBase
@@ -381,6 +526,34 @@
       coefficients:
         Blunt: 0.90
         Slash: 0.90
+        Piercing: 0.95
+        Heat: 0.95
+
+- type: entity
+  parent: [ ClothingMaskGas, BaseCommandContraband ]
+  id: ClothingMaskGasHOS
+  name: head of security's gas mask
+  description: A compact armored mask made just for the head of security.
+  components:
+  - type: Item
+    size: Tiny
+  - type: Sprite
+    sprite: Clothing/Mask/gashos.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/gashos.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
+    hideOnToggle: true
+  - type: Armor
+    modifiers:
+      coefficients: # Same as the gas masks that come in security survival boxes
+        Blunt: 0.95
+        Slash: 0.95
         Piercing: 0.95
         Heat: 0.95
 

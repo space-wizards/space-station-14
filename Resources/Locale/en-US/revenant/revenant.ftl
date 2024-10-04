@@ -38,3 +38,6 @@ revenant-exorcise-begin-other = {CAPITALIZE(THE($user))} begins to exorcise {$re
 revenant-exorcise-begin-target = {CAPITALIZE(THE($user))} is exorcising you with {THE($bible)}!
 
 revenant-exorcise-success = {$revenant}'s energy fades away...
+
+revenant-revealed-default = {CAPITALIZE(THE($revealer))} weakens your ethereal cloak!
+revenant-revealed-salt = The salt puddle weakens your ethereal cloak!

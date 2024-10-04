@@ -792,6 +792,21 @@
         Blunt: 0.95
 
 - type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatHolyWatermelon
+  name: watermelon halo
+  description: Holy moly.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/holyhatmelon.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/holyhatmelon.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.95
+
+- type: entity
   parent: [ClothingHeadBase, BaseSyndicateContraband]
   id: ClothingHeadHatSyndie
   name: syndicate hat
@@ -884,6 +899,25 @@
     - ClothMade
     - WhitelistChameleon
     - HamsterWearable
+  - type: SentienceTarget
+    flavorKind: station-event-random-sentience-flavor-inanimate
+    weight: 0.0002 # 5,000 times less likely than 1 regular animal
+  - type: BlockMovement
+
+- type: entity
+  parent: [ClothingHeadBase, BaseCommandContraband]
+  id: ClothingHeadHatCaptaincrushercap
+  name: captain's crusher cap
+  description: "A captain's cap with the so-called fifty mission crush, losing its structure from extended use. A prized symbol of veteran status. It bears a winged star on the front."
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/captaincrushercap.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/captaincrushercap.rsi
+  - type: Tag
+    tags:
+    - ClothMade
+    - WhitelistChameleon
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-inanimate
     weight: 0.0002 # 5,000 times less likely than 1 regular animal
@@ -1107,6 +1141,41 @@
               max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatWebHat
+  name: web hat
+  description: A roughly woven wide-brim hat made of spider silk! Some strands drift in the air.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/web_hat.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/web_hat.rsi
+  - type: Tag
+    tags:
+    - HamsterWearable
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: MaterialWebSilk1
+      amount: 2
+  - type: FlavorProfile
+    flavors:
+      - cobwebs
+    ignoreReagents:
+      - Fiber
+  - type: SolutionContainerManager
+    solutions: # 9 (3 (fiber count of web) * 3 (to craft)) + 6 (magical crafting bonus)
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 15
+  - type: Construction
+    graph: WebObjects
+    node: widehat
+  
 
 - type: entity
   parent: ClothingHeadBase

@@ -16,8 +16,6 @@
     - !type:DepartmentTimeRequirement
       department: Command
       time: 36000 # 10 hours
-    - !type:AgeRequirement
-      requiredAge: 21
   weight: 20
   startingGear: HoPGear
   icon: "JobIconHeadOfPersonnel"
@@ -61,10 +59,8 @@
 - type: startingGear
   id: HoPGear
   equipment:
-    shoes: ClothingShoesColorBrown
     id: HoPPDA
     gloves: ClothingHandsGlovesHop
-    ears: ClothingHeadsetAltCommand
     belt: BoxFolderClipboard
   storage:
     back:

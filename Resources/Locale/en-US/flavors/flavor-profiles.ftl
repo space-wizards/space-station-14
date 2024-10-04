@@ -20,6 +20,7 @@ flavor-base-fishy = fishy
 flavor-base-crabby = crabby
 flavor-base-cheesy = cheesy
 flavor-base-funny = funny
+flavor-base-strange = strange
 flavor-base-tingly = tingly
 flavor-base-acid = acidic
 flavor-base-leafy = leafy
@@ -31,6 +32,7 @@ flavor-base-peppery = peppery
 flavor-base-slimy = slimy
 flavor-base-magical = magical
 flavor-base-fiber = fibrous
+flavor-base-trash = like rubbish
 flavor-base-cold = cold
 flavor-base-spooky = spooky
 flavor-base-smokey = smokey
@@ -266,6 +268,8 @@ flavor-complex-themartinez = like violets and lemon vodka
 flavor-complex-cogchamp = like brass
 flavor-complex-white-gilgamesh = like lightly carbonated cream
 flavor-complex-antifreeze = warm
+flavor-complex-cottonbool = like an angry cloud
+flavor-complex-genderfluid = transitional
 
 
 ### This is exactly what pilk tastes like. I'm not even joking. I might've been a little drunk though

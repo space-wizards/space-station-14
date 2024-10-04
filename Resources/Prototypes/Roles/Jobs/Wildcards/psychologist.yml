@@ -15,9 +15,8 @@
 - type: startingGear
   id: PsychologistGear
   equipment:
-    shoes: ClothingShoesLeather
     id: PsychologistPDA
     ears: ClothingHeadsetMedical
-  #storage:
-    #back:
-    #- Stuff
+  storage:
+    back:
+    - RubberStampPsychologist

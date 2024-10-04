@@ -7,6 +7,7 @@
     CigPackBlack: 2
     CigPackMixed: 2
     CigPackNewport: 2
+    CigPackSpirits: 2
     CigarCase: 1
     SmokingPipeFilledTobacco: 1
     Vape: 1
@@ -15,7 +16,6 @@
     CheapLighter: 4
     Lighter: 2
     FlippoLighter: 2
-  contrabandInventory:
-    StackOfCigs: 1
   emaggedInventory:
     CigPackSyndicate: 1
+    StackOfCigs: 1

@@ -43,6 +43,8 @@
       path: alerts/delta.ogg
     - id: alertEpsilon # The station has been terminated, good luck survivors!
       path: alerts/epsilon.ogg
+    - id: alertPink # Please don't form a union
+      path: alerts/pink.ogg
 
     # Events
     ## Wizard's Den

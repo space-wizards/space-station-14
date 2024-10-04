@@ -60,6 +60,11 @@
   description: flavor-base-funny
 
 - type: flavor
+  id: strange
+  flavorType: Base
+  description: flavor-base-strange
+
+- type: flavor
   id: tingly
   flavorType: Base
   description: flavor-base-tingly
@@ -113,6 +118,11 @@
   id: fiber
   flavorType: Base
   description: flavor-base-fiber
+
+- type: flavor
+  id: trash
+  flavorType: Base
+  description: flavor-base-trash
 
 - type: flavor
   id: cold
@@ -1194,3 +1204,13 @@
   id: speed
   flavorType: Complex
   description: flavor-complex-speed
+
+- type: flavor
+  id: cottonbool
+  flavorType: Complex
+  description: flavor-complex-cottonbool
+
+- type: flavor
+  id: genderfluid
+  flavorType: Complex
+  description: flavor-complex-genderfluid

@@ -11,8 +11,11 @@
     removes:
     - type: LizardAccent
     - type: MothAccent
+    - type: SnalienAccent
+    - type: GrayAccent
     - type: ReplacementAccent
       accent: dwarf
+    - type: NoContractionsAccent
 
 # 1 Cost
 
@@ -92,6 +95,28 @@
     accent: liar
 
 - type: trait
+  id: Scrambled
+  name: trait-scrambled-name
+  description: trait-scrambled-desc
+  category: SpeechTraits
+  cost: 1
+  components:
+  - type: ScrambledAccent
+  
+- type: trait
+  id: NoContractions
+  name: trait-nocontractions-name
+  description: trait-nocontractions-desc
+  category: SpeechTraits
+  cost: 1
+  components:
+  - type: ReplacementAccent
+    accent: nocontractions
+  - type: NoContractionsAccent
+
+# 2 Cost
+
+- type: trait
   id: Snalien
   name: trait-snalien-name
   description: trait-snalien-desc
@@ -99,8 +124,6 @@
   cost: 2
   components:
   - type: SnalienAccent
-
-# 2 Cost
 
 - type: trait
   id: SocialAnxiety
@@ -161,21 +184,3 @@
   cost: 2
   components:
   - type: RussianAccent
-
-- type: trait
-  id: French
-  name: trait-french-name
-  description: trait-french-desc
-  category: SpeechTraits
-  cost: 2
-  components:
-  - type: FrenchAccent
-
-- type: trait
-  id: Spanish
-  name: trait-spanish-name
-  description: trait-spanish-desc
-  category: SpeechTraits
-  cost: 2
-  components:
-  - type: SpanishAccent

@@ -72,8 +72,8 @@
       shuttleTime: 1200
     pink:
       announcement: alert-level-pink-announcement
-      sound: /Audio/Misc/notice1.ogg
+      sound: /Audio/Misc/pink.ogg
       color: Pink
       emergencyLightColor: Pink
       forceEnableEmergencyLights: true
-      shuttleTime: 600
+      shuttleTime: 1200

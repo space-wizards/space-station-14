@@ -4,6 +4,9 @@ marking-TattooHiveChest = Back Tattoo (Hive)
 marking-TattooNightlingChest-tattoo_nightling = Chest Tattoo (nightling)
 marking-TattooNightlingChest = Chest Tattoo (Nightling)
 
+marking-TattooNanotrasenChest-tattoo_nanotrasen_chest = Chest Tattoo (Nanotrasen)
+marking-TattooNanotrasenChest = Chest Tattoo (Nanotrasen)
+
 marking-TattooSilverburghLeftLeg-tattoo_silverburgh_l_leg = Left Leg Tattoo (Silverburg)
 marking-TattooSilverburghLeftLeg = Left Leg Tattoo (Silverburg)
 

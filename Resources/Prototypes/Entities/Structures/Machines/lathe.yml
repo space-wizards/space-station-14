@@ -199,7 +199,8 @@
       - ClothingHeadHatWelding
       - WetFloorSign
       - ClothingHeadHatCone
-
+      - FreezerElectronics
+      - Flare
   - type: EmagLatheRecipes
     emagStaticRecipes:
       - BoxLethalshot
@@ -443,6 +444,7 @@
     - UniformPrinterMachineCircuitboard
     - FloorGreenCircuit
     - FloorBlueCircuit
+    - FloorRedCircuit
     - MicrowaveMachineCircuitboard
     - ReagentGrinderMachineCircuitboard
     - ElectricGrillMachineCircuitboard
@@ -950,6 +952,8 @@
       - Hemostat
       - ClothingEyesGlassesChemical
       - WhiteCane
+      - PrescriptionLens
+      - PrescriptionLensStrong
     dynamicRecipes:
       - ChemicalPayload
       - CryostasisBeaker
@@ -1108,6 +1112,7 @@
       - ClothingOuterWinterSci
       - ClothingOuterWinterRobo
       - ClothingOuterWinterSec
+      - ClothingOuterWinterBrigmedic
       # Ties
       - ClothingNeckTieRed
       - ClothingNeckTieDet

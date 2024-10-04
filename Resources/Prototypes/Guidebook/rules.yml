@@ -211,6 +211,20 @@
   text: "/ServerInfo/Guidebook/ServerRules/RoleplayRules/RuleR4Metashield.xml"
 
 - type: guideEntry
+  id: RuleR4-1
+  name: guide-entry-rules-r4-1
+  ruleEntry: true
+  priority: 1
+  text: "/ServerInfo/Guidebook/ServerRules/RoleplayRules/RuleR4-1Metagrudging.xml"
+
+- type: guideEntry
+  id: RuleR4-2
+  name: guide-entry-rules-r4-2
+  ruleEntry: true
+  priority: 2
+  text: "/ServerInfo/Guidebook/ServerRules/RoleplayRules/RuleR4-2AntagMetashield.xml"
+
+- type: guideEntry
   id: RuleR5
   name: guide-entry-rules-r5
   ruleEntry: true

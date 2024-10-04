@@ -55,17 +55,6 @@
 
 - type: entity
   parent: BaseThiefStealCollectionObjective
-  id: FigurineStealCollectionObjective
-  components:
-  - type: StealCondition
-    stealGroup: Figurines
-    minCollectionSize: 10
-    maxCollectionSize: 18 #will be limited to the number of figures on the station anyway.
-  - type: Objective
-    difficulty: 0.25
-
-- type: entity
-  parent: BaseThiefStealCollectionObjective
   id: HeadCloakStealCollectionObjective
   components:
   - type: StealCondition
@@ -129,7 +118,7 @@
   - type: StealCondition
     stealGroup: IDCard
     minCollectionSize: 5
-    maxCollectionSize: 15
+    maxCollectionSize: 10
     verifyMapExistence: false
   - type: Objective
     difficulty: 0.7
@@ -183,6 +172,15 @@
     stealGroup: ClothingHeadHatWarden
   - type: Objective
     difficulty: 1.2
+
+- type: entity
+  parent: BaseThiefStealObjective
+  id: WantedListCartridgeStealObjective
+  components:
+  - type: StealCondition
+    stealGroup: WantedListCartridge
+  - type: Objective
+    difficulty: 1
 
 - type: entity                                      #Medical subgroup
   parent: BaseThiefStealObjective

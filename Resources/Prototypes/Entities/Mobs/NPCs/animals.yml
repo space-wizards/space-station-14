@@ -389,6 +389,14 @@
   - type: NonSpreaderZombie
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-organic
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    angle: 0
+    animation: WeaponArcBite
+    damage:
+      types:
+        Piercing: 0
 
 - type: entity
   name: glockroach
@@ -1317,6 +1325,7 @@
     tags:
     - VimPilot
     - DoorBumpOpener
+    - AnomalyHost
   - type: Reactive
     groups:
       Flammable: [ Touch ]
@@ -2520,7 +2529,7 @@
     - type: Speech
       speechVerb: Cluwne
     - type: Bloodstream
-      bloodMaxVolume: 40
+      bloodMaxVolume: 15
       bloodReagent: VentCrud
     - type: NoSlip
     - type: ZombieImmune
@@ -2539,6 +2548,7 @@
     - type: Tag
       tags:
       - BROS
+      - Trash
 
 - type: entity
   name: SORB
@@ -3519,7 +3529,10 @@
   - type: NpcFactionMember
     factions:
     - Passive
-
+  - type: HTN
+    rootTask:
+      task: RuminantCompound
+      
 - type: entity
   name: diona nymph
   parent: [SimpleMobBase, StripableInventoryBase]

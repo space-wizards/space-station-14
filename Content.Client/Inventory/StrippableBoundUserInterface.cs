@@ -98,7 +98,7 @@ namespace Content.Client.Inventory
                 }
             }
 
-            if (EntMan.TryGetComponent<HandsComponent>(Owner, out var handsComp))
+            if (EntMan.TryGetComponent<HandsComponent>(Owner, out var handsComp) && handsComp.CanBeStripped)
             {
                 // good ol hands shit code. there is a GuiHands comparer that does the same thing... but these are hands
                 // and not gui hands... which are different...
@@ -136,7 +136,7 @@ namespace Content.Client.Inventory
                     StyleClasses = { StyleBase.ButtonOpenRight }
                 };
 
-                button.OnPressed += (_) => SendMessage(new StrippingEnsnareButtonPressed());
+                button.OnPressed += (_) => SendPredictedMessage(new StrippingEnsnareButtonPressed());
 
                 _strippingMenu.SnareContainer.AddChild(button);
             }
@@ -177,7 +177,7 @@ namespace Content.Client.Inventory
             // So for now: only stripping & examining
             if (ev.Function == EngineKeyFunctions.Use)
             {
-                SendMessage(new StrippingSlotButtonPressed(slot.SlotName, slot is HandButton));
+                SendPredictedMessage(new StrippingSlotButtonPressed(slot.SlotName, slot is HandButton));
                 return;
             }
 

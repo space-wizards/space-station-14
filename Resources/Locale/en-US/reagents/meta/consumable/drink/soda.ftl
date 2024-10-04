@@ -55,3 +55,8 @@ reagent-desc-shamblers-juice = ~Shake me up some of that Shambler's Juice!~
 reagent-name-kingsoda = King Soda
 reagent-desc-kingsoda = A drink fit for a king. Or a seven year old.
 
+reagent-name-hummingbird = Hummingbird's Delight
+reagent-desc-hummingbird = A favourite of adolescent Vox just about everywhere.
+
+reagent-name-genderfluid = Genderfluid
+reagent-desc-genderfluid = Looking at this drink makes you feel... ahem. Well.
