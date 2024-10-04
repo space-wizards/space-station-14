@@ -2504,3 +2504,23 @@
   id: 316
   time: '2024-10-03T23:42:18.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/399
+- author: ruddygreat
+  changes:
+  - message: Added the Cleaner lake, a grenade launcher that has been modified to
+      only accept specialised cleanade rounds. The launcher spawns in the custodial
+      closet and ammo spawns in janitorial supply crates.
+    type: Add
+  - message: Added the Cleaner lake re-militarisation kit, a 14tc job-specific traitor
+      item that removes the safety restrictions from the Cleaner lake.
+    type: Add
+  id: 317
+  time: '2024-10-04T04:23:49.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/405
+- author: formlessnameless
+  changes:
+  - message: Listings that you can't purchase now show up at the bottom of their category
+      as Unavailable
+    type: Add
+  id: 318
+  time: '2024-10-04T04:23:32.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/406
