@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "WeaselStation https://github.com/GroggleG/Weasel-Station, Panda and Bewitched_being made by Meijunkie",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "Panda"
+    },
+    {
+      "name": "Bewitched_being"
+    }
+  ]
+}
