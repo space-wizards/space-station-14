@@ -25,10 +25,25 @@
   - type: Body
     prototype: SpElf
     requiredLegs: 2
+  - type: NoContractionsAccent
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: SpElf
+  - type: MeleeWeapon
+    attackRate: 0.55
+    soundHit:
+      collection: Punch
+    angle: 30
+    animation: WeaponArcPunch
+    damage:
+      types:
+        Blunt: 0
+  - type: StaminaDamageOnHit
+    damage: 18
   - type: Butcherable
     butcheringType: Spike
     spawned:
-      - id: FoodMeatPlant
+      - id: FoodSpElfMeat
         amount: 5
   - type: Fixtures
     fixtures:
@@ -42,11 +57,13 @@
         - MobMask
         layer:
         - MobLayer
+  - type: TypingIndicator
+    proto: guardian
   - type: Vocal
     sounds:
-      Unsexed: UnisexDwarf
+      Unsexed: UnisexSpElf
   - type: Speech
-    speechSounds: Squeak
+    speechSounds: Alto
   - type: HumanoidAppearance
     species: SpElf
     hideLayersOnEquip:
@@ -54,7 +71,7 @@
     - Snout
   - type: Inventory
     templateId: spelf
-    Displacements:
+    displacements:
       jumpsuit:
         sizeMaps:
           32:
@@ -70,6 +87,11 @@
           32:
             sprite: Mobs/Species/SpElf/displacement.rsi
             state: eyes
+      ears:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/SpElf/displacement.rsi
+            state: head
       mask:
         sizeMaps:
           32:
@@ -85,6 +107,12 @@
           32:
             sprite: Mobs/Species/SpElf/displacement.rsi
             state: outerclothing_hardsuit
+      gloves:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/SpElf/displacement.rsi
+            state: hands
+
 
 - type: entity
   parent: BaseSpeciesDummy
@@ -95,7 +123,7 @@
     scale: 1, 1
   - type: Inventory
     templateId: spelf
-    Displacements:
+    displacements:
       jumpsuit:
         sizeMaps:
           32:
@@ -111,6 +139,11 @@
           32:
             sprite: Mobs/Species/SpElf/displacement.rsi
             state: eyes
+      ears:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/SpElf/displacement.rsi
+            state: head
       mask:
         sizeMaps:
           32:
@@ -126,3 +159,8 @@
           32:
             sprite: Mobs/Species/SpElf/displacement.rsi
             state: outerclothing_hardsuit
+      gloves:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/SpElf/displacement.rsi
+            state: hands

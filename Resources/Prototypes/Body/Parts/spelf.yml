@@ -1,7 +1,7 @@
 - type: entity
   id: PartSpElf
   parent: [BaseItem, BasePart]
-  name: "spelf body part"
+  name: "thaven body part"
   abstract: true
   components:
   - type: Extractable
@@ -14,7 +14,7 @@
 
 - type: entity
   id: TorsoSpElf
-  name: "spelf torso"
+  name: "thaven torso"
   parent: [PartSpElf, BaseTorso]
   components:
   - type: Sprite
@@ -30,7 +30,7 @@
 
 - type: entity
   id: HeadSpElf
-  name: "spelf head"
+  name: "thaven head"
   parent: [PartSpElf, BaseHead]
   components:
   - type: Sprite
@@ -46,7 +46,7 @@
 
 - type: entity
   id: LeftArmSpElf
-  name: "left spelf arm"
+  name: "left thaven arm"
   parent: [PartSpElf, BaseLeftArm]
   components:
   - type: Sprite
@@ -55,7 +55,7 @@
 
 - type: entity
   id: RightArmSpElf
-  name: "right spelf arm"
+  name: "right thaven arm"
   parent: [PartSpElf, BaseRightArm]
   components:
   - type: Sprite
@@ -64,7 +64,7 @@
 
 - type: entity
   id: LeftHandSpElf
-  name: "left spelf hand"
+  name: "left thaven hand"
   parent: [PartSpElf, BaseLeftHand]
   components:
   - type: Sprite
@@ -73,7 +73,7 @@
 
 - type: entity
   id: RightHandSpElf
-  name: "right spelf hand"
+  name: "right thaven hand"
   parent: [PartSpElf, BaseRightHand]
   components:
   - type: Sprite
@@ -82,7 +82,7 @@
 
 - type: entity
   id: LeftLegSpElf
-  name: "left spelf leg"
+  name: "left thaven leg"
   parent: [PartSpElf, BaseLeftLeg]
   components:
   - type: Sprite
@@ -91,7 +91,7 @@
 
 - type: entity
   id: RightLegSpElf
-  name: "right spelf leg"
+  name: "right thaven leg"
   parent: [PartSpElf, BaseRightLeg]
   components:
   - type: Sprite
@@ -100,7 +100,7 @@
 
 - type: entity
   id: LeftFootSpElf
-  name: "left spelf foot"
+  name: "left thaven foot"
   parent: [PartSpElf, BaseLeftFoot]
   components:
   - type: Sprite
@@ -109,7 +109,7 @@
 
 - type: entity
   id: RightFootSpElf
-  name: "right spelf foot"
+  name: "right thaven foot"
   parent: [PartSpElf, BaseRightFoot]
   components:
   - type: Sprite

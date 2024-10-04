@@ -1,16 +1,16 @@
 - type: species
   id: SpElf
   name: species-name-spelf
-  roundStart: true
+  roundStart: false
   prototype: MobSpElf
   sprites: MobSpElfSprites
   defaultSkinTone: "#ffffff"
   markingLimits: MobSpElfMarkingLimits
   dollPrototype: MobSpElfDummy
   skinColoration: Hues
-  maleFirstNames: names_spelf_first
-  femaleFirstNames: names_spelf_first
-  lastNames: names_spelf_last
+  maleFirstNames: names_spelf
+  femaleFirstNames: names_spelf
+  naming: First
   sexes:
   - Unsexed
 
@@ -46,6 +46,9 @@
       defaultMarkings: [ SpElfEars1 ]
     Overlay:
       points: 6
+      required: false
+    Snout:
+      points: 1
       required: false
 
 - type: humanoidBaseSprite

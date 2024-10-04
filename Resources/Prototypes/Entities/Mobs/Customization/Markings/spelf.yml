@@ -44,8 +44,8 @@
 
 - type: marking
   id: SpElfPiercings
-  bodyPart: HeadSide
-  markingCategory: HeadSide
+  bodyPart: Snout
+  markingCategory: Overlay
   speciesRestriction: [SpElf]
   forcedColoring: false
   followSkinColor: false

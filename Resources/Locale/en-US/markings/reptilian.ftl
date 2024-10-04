@@ -105,8 +105,9 @@ marking-LizardHornsDemonic = Lizard Horns (Demonic)
 marking-LizardHornsKoboldEars-horns_kobold_ears = Lizard Ears (Kobold)
 marking-LizardHornsKoboldEars = Lizard Ears (Kobold)
 
-marking-LizardHornsKoboldEarspiercings-piercings1 = Lizard Ears (Kobold, Piercings)
-marking-piercings1 = Piercings
+marking-LizardHornsKoboldEarspiercings = Lizard Ears (Kobold, Pierced)
+marking-LizardHornsKoboldEarspiercings-horns_kobold_ears = Ears
+marking-LizardHornsKoboldEarspiercings-horns_kobold_ears_piercings = Piercings
 
 marking-LizardHornsFloppyKoboldEars-horns_floppy_kobold_ears = Lizard Ears (Floppy Kobold)
 marking-LizardHornsFloppyKoboldEars = Lizard Ears (Floppy Kobold)

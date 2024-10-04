@@ -18,5 +18,6 @@
   <Box>
   <GuideEntityEmbed Entity="MobGray" Caption="Gray"/>
   <GuideEntityEmbed Entity="MobGastropoid" Caption="Gastropoid"/>
+  <GuideEntityEmbed Entity="MobSpElf" Caption="Thaven"/>
   </Box>
 </Document>
