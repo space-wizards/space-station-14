@@ -19,7 +19,7 @@
   components:
   - type: Sprite
     layers:
-      - sprite: Clothing/Eyes/Misc/lenses.rsi
+      - sprite: MyFork/Clothing/Eyes/lenses.rsi
         state: icon-small
   - type: VisionCorrection
     correctionPower: 2
@@ -34,7 +34,7 @@
   components:
   - type: Sprite
     layers:
-      - sprite: Clothing/Eyes/Misc/lenses.rsi
+      - sprite: MyFork/Clothing/Eyes/lenses.rsi
         state: icon-large
   - type: VisionCorrection
     correctionPower: 4
