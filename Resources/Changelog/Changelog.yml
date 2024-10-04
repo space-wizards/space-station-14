@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Fix grid labels getting spammed from VGRoid.
-    type: Fix
-  id: 6988
-  time: '2024-07-27T01:54:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29946
 - author: GoldenCan
   changes:
   - message: Added a Security Clown Mask which is obtainable by hacking a SecDrobe.
@@ -3941,3 +3934,11 @@
   id: 7487
   time: '2024-10-04T08:43:45.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32428
+- author: SaphireLattice
+  changes:
+  - message: Syndicate C4 now starts a countdown on signal, rather than exploding
+      instantly.
+    type: Tweak
+  id: 7488
+  time: '2024-10-04T09:34:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32423
