@@ -1,0 +1,110 @@
+- type: entity
+  parent: BaseItem
+  id: BaseWeaselstationPlushie
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Weaselstation/Objects/Fun/toys.rsi
+  - type: Tag
+    tags:
+      - Payload
+      - ClothMade
+  - type: EmitSoundOnUse
+    sound:
+      collection: ToySqueak
+  - type: EmitSoundOnActivate
+    sound:
+      collection: ToySqueak
+  - type: EmitSoundOnCollide
+    sound:
+      collection: ToySqueak
+  - type: EmitSoundOnLand
+    sound:
+      collection: ToyFall
+  - type: EmitSoundOnTrigger
+    sound:
+      collection: ToySqueak
+  - type: UseDelay
+    delay: 1.0
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      collection: ToySqueak
+    damage:
+      types:
+        Blunt: 0
+  - type: PhysicalComposition
+    materialComposition:
+      Cloth: 100
+  - type: StaticPrice
+    price: 5
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      collection: ToySqueak
+    delay: 2
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 10
+
+- type: entity
+  parent: BaseWeaselstationPlushie
+  id: PlushiePanda    ##For Weaselstation
+  name: Panda plushie
+  description: This is a soft, furry plush of a panda. It seems to be constructed from high quality materials. This toy accurately displays the lazy demeanor of a real panda. How cute!
+  components:
+  - type: Sprite
+    state: Panda
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Animals/bear.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Animals/bear.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Animals/bear.ogg
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Animals/bear.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Animals/bear.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Animals/bear.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Animals/bear.ogg
+
+- type: entity
+  parent: BaseWeaselstationPlushie
+  id: PlushieSkeleton    ##For Weaselstation
+  name: Skeleton plushie
+  description: This doll looks like a human skeleton, and appears to be crafted out of actual bones! Should you be worried?
+  components:
+  - type: Sprite
+    state: Bewitched_being
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Voice/Skeleton/skeleton_scream.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Voice/Skeleton/skeleton_scream.ogg
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Voice/Skeleton/skeleton_scream.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Voice/Skeleton/skeleton_scream.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Voice/Skeleton/skeleton_scream.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Voice/Skeleton/skeleton_scream.ogg
