@@ -60,7 +60,7 @@ namespace Content.Server.Engineering.EntitySystems
                 return;
 
             if (EntityManager.TryGetComponent(uid, out StackComponent? stackComp)
-                && component.RemoveOnInteract && !_stackSystem.Use(uid, 1, stackComp))
+                && component.RemoveOnInteract && !_stackSystem.Use((uid, stackComp), 1))
             {
                 return;
             }

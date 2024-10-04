@@ -43,7 +43,8 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                 if (EntityPrototypeHelpers.HasComponent<StackComponent>(entityId, system.PrototypeManager, system.ComponentFactory))
                 {
                     var spawned = system.EntityManager.SpawnEntity(entityId, xform.Coordinates.Offset(system.Random.NextVector2(-Offset, Offset)));
-                    system.StackSystem.SetCount(spawned, toSpawn);
+                    if (system.EntityManager.TryGetComponent<StackComponent>(spawned, out var spawnedStackComp))
+                        system.StackSystem.SetCount((spawned, spawnedStackComp), toSpawn);
                     system.EntityManager.GetComponent<TransformComponent>(spawned).LocalRotation = system.Random.NextAngle();
                 }
                 else
