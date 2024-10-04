@@ -238,11 +238,16 @@
     noRot: false
 
 - type: entity
-  parent: ImmovableRodKeepTilesStill
+  parent: ImmovableRodKeepTiles
   id: ImmovableRodGondal
   name: immovable gondal
   description: FUCK
   components:
+  - type: ImmovableRod
+    minSpeed: 0.25
+    maxSpeed: 0.25
+  - type: TimedDespawn
+    lifetime: 141.0
   - type: EmitSoundOnSpawn
     sound:
       path: /Audio/Effects/gondalmono.ogg
@@ -251,3 +256,7 @@
     state: gondal
     rotation: 0
     noRot: false
+  - type: PointLight
+    radius: 3
+    color: white
+    energy: 2.0
