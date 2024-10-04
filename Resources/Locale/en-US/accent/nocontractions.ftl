@@ -1,3 +1,6 @@
+accent-nocontractions-words-french = 'im
+accent-nocontractions-words-replace-french = 'im
+
 accent-nocontractions-words-1 = i'm
 accent-nocontractions-words-replace-1 = i am
 
