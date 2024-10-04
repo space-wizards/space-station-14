@@ -1,3 +1,13 @@
+# SmallTide Time
+- type: loadoutEffectGroup
+  id: SmallTide
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobPassenger
+      time: 18000 #5 hrs, stopgap for newbies and raiders
+
 # Greytide Time
 - type: loadoutEffectGroup
   id: GreyTider
@@ -38,6 +48,312 @@
   id: GreyJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtColorGrey
+
+# Black
+- type: loadout
+  id: BlackJumpsuit
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SmallTide
+  equipment: 
+    jumpsuit: ClothingUniformJumpsuitColorBlack
+
+- type: loadout
+  id: BlackJumpskirt
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SmallTide
+  equipment: 
+    jumpsuit: ClothingUniformJumpskirtColorBlack
+
+# Blue
+- type: loadout
+  id: BlueJumpsuit
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SmallTide
+  equipment: 
+    jumpsuit: ClothingUniformJumpsuitColorBlue
+
+- type: loadout
+  id: BlueJumpskirt
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SmallTide
+  equipment: 
+    jumpsuit: ClothingUniformJumpskirtColorBlue
+
+# Dark Blue
+- type: loadout
+  id: DarkBlueJumpsuit
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SmallTide
+  equipment: 
+    jumpsuit: ClothingUniformJumpsuitColorDarkBlue
+
+- type: loadout
+  id: DarkBlueJumpskirt
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SmallTide
+  equipment: 
+    jumpsuit: ClothingUniformJumpskirtColorDarkBlue
+
+# Teal
+- type: loadout
+  id: TealJumpsuit
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SmallTide
+  equipment: 
+    jumpsuit: ClothingUniformJumpsuitColorTeal
+
+- type: loadout
+  id: TealJumpskirt
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SmallTide
+  equipment: 
+    jumpsuit: ClothingUniformJumpskirtColorTeal
+
+# Green
+- type: loadout
+  id: GreenJumpsuit
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SmallTide
+  equipment: 
+    jumpsuit: ClothingUniformJumpsuitColorGreen
+
+- type: loadout
+  id: GreenJumpskirt
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SmallTide
+  equipment: 
+    jumpsuit: ClothingUniformJumpskirtColorGreen
+
+# Dark Green
+- type: loadout
+  id: DarkGreenJumpsuit
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SmallTide
+  equipment: 
+    jumpsuit: ClothingUniformJumpsuitColorDarkGreen
+
+- type: loadout
+  id: DarkGreenJumpskirt 
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SmallTide
+  equipment: 
+    jumpsuit: ClothingUniformJumpskirtColorDarkGreen
+
+# Orange
+- type: loadout
+  id: OrangeJumpsuit
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SmallTide
+  equipment: 
+    jumpsuit: ClothingUniformJumpsuitColorOrange
+
+- type: loadout
+  id: OrangeJumpskirt
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SmallTide
+  equipment: 
+    jumpsuit: ClothingUniformJumpskirtColorOrange
+
+# Pink
+- type: loadout
+  id: PinkJumpsuit
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SmallTide
+  equipment: 
+    jumpsuit: ClothingUniformJumpsuitColorPink
+
+- type: loadout
+  id: PinkJumpskirt
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SmallTide
+  equipment: 
+    jumpsuit: ClothingUniformJumpskirtColorPink
+
+# Purple
+- type: loadout
+  id: PurpleJumpsuit
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SmallTide
+  equipment: 
+    jumpsuit: ClothingUniformJumpsuitColorPurple
+
+- type: loadout
+  id: PurpleJumpskirt
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SmallTide
+  equipment: 
+    jumpsuit: ClothingUniformJumpskirtColorPurple
+
+# Light Brown
+- type: loadout
+  id: LightBrownJumpsuit
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SmallTide
+  equipment: 
+    jumpsuit: ClothingUniformJumpsuitColorLightBrown
+
+- type: loadout
+  id: LightBrownJumpskirt
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SmallTide
+  equipment: 
+    jumpsuit: ClothingUniformJumpskirtColorLightBrown
+
+# Brown
+- type: loadout
+  id: BrownJumpsuit
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SmallTide
+  equipment: 
+    jumpsuit: ClothingUniformJumpsuitColorBrown
+
+- type: loadout
+  id: BrownJumpskirt
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SmallTide
+  equipment: 
+    jumpsuit: ClothingUniformJumpskirtColorBrown
+
+# Maroon
+- type: loadout
+  id: MaroonJumpsuit
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SmallTide
+  equipment: 
+    jumpsuit: ClothingUniformJumpsuitColorMaroon
+
+- type: loadout
+  id: MaroonJumpskirt 
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SmallTide
+  equipment: 
+    jumpsuit: ClothingUniformJumpskirtColorMaroon
+
+# Hawaiian Shirts
+- type: loadout
+  id: HawaiiBlack
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SmallTide
+  equipment: 
+    jumpsuit: ClothingUniformJumpsuitHawaiBlack
+
+- type: loadout
+  id: HawaiiBlue
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SmallTide
+  equipment: 
+    jumpsuit: ClothingUniformJumpsuitHawaiBlue
+
+- type: loadout
+  id: HawaiiRed
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SmallTide
+  equipment: 
+    jumpsuit: ClothingUniformJumpsuitHawaiRed
+
+- type: loadout
+  id: HawaiiYellow
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SmallTide
+  equipment: 
+    jumpsuit: ClothingUniformJumpsuitHawaiYellow
+
+# Flannel
+- type: loadout
+  id: FlannelRed
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SmallTide
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitFlannel
+
+# Loungewear
+- type: loadout
+  id: Loungewear
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SmallTide
+  equipment: 
+    jumpsuit: ClothingUniformJumpsuitLoungewear
+
+# Casual Blue
+- type: loadout
+  id: CasualBlueJumpsuit
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SmallTide
+  equipment: 
+    jumpsuit: ClothingUniformJumpsuitCasualBlue
+
+- type: loadout
+  id: CasualBlueJumpskirt
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SmallTide
+  equipment: 
+    jumpsuit: ClothingUniformJumpskirtCasualBlue
+
+# Casual Purple
+- type: loadout
+  id: CasualPurpleJumpsuit
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SmallTide
+  equipment: 
+    jumpsuit: ClothingUniformJumpsuitCasualPurple
+
+- type: loadout
+  id: CasualPurpleJumpskirt
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SmallTide
+  equipment: 
+    jumpsuit: ClothingUniformJumpskirtCasualPurple
+
+# Casual Red
+- type: loadout
+  id: CasualRedJumpsuit
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SmallTide
+  equipment: 
+    jumpsuit: ClothingUniformJumpsuitCasualRed
+
+- type: loadout
+  id: CasualRedJumpskirt
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SmallTide
+  equipment: 
+    jumpsuit: ClothingUniformJumpskirtCasualRed
 
 # Rainbow
 - type: loadout
@@ -89,10 +405,10 @@
 
 # Gloves
 - type: loadout
-  id: PassengerGloves
+  id: FingerlessInsuls
   effects:
   - !type:GroupLoadoutEffect
-    proto: GreyTider
+    proto: MasterGrey
   equipment:
     gloves: ClothingHandsGlovesFingerlessInsulated
 
@@ -102,11 +418,62 @@
   equipment:
     outerClothing: ClothingOuterWinterCoat
 
+- type: loadout
+  id: BomberCoat
+  equipment:
+    outerClothing: ClothingOuterCoatBomber
+
+- type: loadout
+  id: GentleCoat
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SmallTide
+  equipment:
+    outerClothing: ClothingOuterCoatGentle
+
+- type: loadout
+  id: JensenCoat
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SmallTide
+  equipment:
+    outerClothing: ClothingOuterCoatJensen
+
 # Shoes
 - type: loadout
   id: BlackShoes
   equipment:
     shoes: ClothingShoesColorBlack
+
+- type: loadout
+  id: GreenShoes
+  equipment:
+    shoes: ClothingShoesColorGreen
+
+- type: loadout
+  id: OrangeShoes
+  equipment:
+    shoes: ClothingShoesColorOrange
+
+- type: loadout
+  id: RedShoes
+  equipment:
+    shoes: ClothingShoesColorRed
+
+- type: loadout
+  id: YellowShoes
+  equipment:
+    shoes: ClothingShoesColorYellow
+
+- type: loadout
+  id: PurpleShoes
+  equipment:
+    shoes: ClothingShoesColorPurple
+
+- type: loadout
+  id: TouristShoes
+  equipment:
+    shoes: ClothingShoesTourist
 
 - type: loadout
   id: WinterBoots
