@@ -1,4 +1,3 @@
-
 namespace Content.Shared.Silicons.Laws.Components;
 
 /// <summary>
