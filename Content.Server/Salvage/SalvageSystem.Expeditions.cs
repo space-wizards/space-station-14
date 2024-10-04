@@ -165,7 +165,6 @@ public sealed partial class SalvageSystem
             SalvageJobTime,
             EntityManager,
             _timing,
-            _configurationManager,
             _logManager,
             _mapManager,
             _prototypeManager,
