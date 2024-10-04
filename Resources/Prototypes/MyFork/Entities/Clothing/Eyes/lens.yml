@@ -61,6 +61,6 @@
         whitelist:
           tags:
           - Lens
-  - type: Tag
+  - type: Tag # Prevent duplicate chameleon entry
     tags:
     - HamsterWearable
