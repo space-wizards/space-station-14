@@ -91,7 +91,7 @@ public sealed partial class ArtifactSystem
         var targetTriggers = allTriggers
             .Where(x => x.TargetDepth == selectedRandomTargetDepth).ToList();
 
-        return _random.Pick(targetTriggers).ID;
+        return GetTriggerIDUsingProb(targetTriggers);;
     }
 
     private string GetRandomEffect(EntityUid artifact, ref ArtifactNode node)
@@ -106,7 +106,7 @@ public sealed partial class ArtifactSystem
         var targetEffects = allEffects
             .Where(x => x.TargetDepth == selectedRandomTargetDepth).ToList();
 
-        return _random.Pick(targetEffects).ID;
+        return GetEffectIDUsingProb(targetEffects);
     }
 
     /// <remarks>
@@ -148,6 +148,73 @@ public sealed partial class ArtifactSystem
         }
 
         return _random.Pick(weights.Keys); //shouldn't happen
+    }
+
+    /// <summary>
+    /// Selects an effect using the probability weight
+    /// </summary>
+    private string GetEffectIDUsingProb(IEnumerable<ArtifactEffectPrototype> effectObjects)
+    {
+        var maxProbID = ""; //Fallback, shouldn't need this
+        var maxProb = 0f;
+        var totalProb = 0f;
+
+        // First iteration - get the effect with the highest probability as fallback, and sum all the probabilities
+        foreach (var effect in effectObjects)
+        {
+            if (maxProb < effect.EffectProb)
+            {
+                maxProb = effect.EffectProb;
+                maxProbID = effect.ID;
+            }
+            totalProb += effect.EffectProb;
+        }
+        var rand = _random.NextFloat(0f, totalProb);
+        var accumulator = 0f;
+
+        // Second iteration - subtract current effect probability from total until total is
+        foreach (var effect in effectObjects)
+        {
+            accumulator += effect.EffectProb;
+            if (rand < accumulator){
+                return effect.ID;
+            }
+        }
+
+        return maxProbID;
+    }
+
+     /// <summary>
+    /// Selects an trigger using the probability weight
+    /// </summary>
+    private string GetTriggerIDUsingProb(IEnumerable<ArtifactTriggerPrototype> triggerObjects)
+    {
+        var maxProbID = ""; //Fallback, shouldn't need this
+        var maxProb = 0f;
+        var totalProb = 0f;
+
+        // First iteration - get the trigger with the highest probability as fallback, and sum all the probabilities
+        foreach (var trigger in triggerObjects)
+        {
+            if (maxProb < trigger.TriggerProb)
+            {
+                maxProb = trigger.TriggerProb;
+                maxProbID = trigger.ID;
+            }
+            totalProb += trigger.TriggerProb;
+        }
+        var rand = _random.NextFloat(0f, totalProb);
+        var accumulator = 0f;
+
+        foreach (var trigger in triggerObjects)
+        {
+            accumulator += trigger.TriggerProb;
+            if (rand < accumulator){
+                return trigger.ID;
+            }
+        }
+
+        return maxProbID;
     }
 
     /// <summary>
