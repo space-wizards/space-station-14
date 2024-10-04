@@ -19,8 +19,6 @@ public abstract class PlantGrowthSystem : EntitySystem
     public const float HydroponicsSpeedMultiplier = 1f;
     public const float HydroponicsConsumptionMultiplier = 2f;
 
-
-
     public override void Initialize()
     {
         base.Initialize();
