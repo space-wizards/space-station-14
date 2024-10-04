@@ -26,7 +26,7 @@ public sealed partial class SiliconLawProviderComponent : Component
     /// The sound that plays for the Silicon player
     /// when the particular lawboard has been inserted.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public SoundSpecifier? LawUploadSound = null;
+    [DataField]
+    public SoundSpecifier? LawUploadSound = new SoundPathSpecifier("/Audio/Misc/cryo_warning.ogg");
 
 }

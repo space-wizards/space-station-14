@@ -295,12 +295,8 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         while (query.MoveNext(out var update))
         {
             SetLaws(lawset, update);
-            if (provider.LawUploadSound != null)
-            {
-                if (!_mind.TryGetMind(update, out var mindId, out _))
-                    return;
+            if (provider.LawUploadSound != null && _mind.TryGetMind(update, out var mindId, out _))
                 _roles.MindPlaySound(mindId, provider.LawUploadSound);
-            }
         }
     }
 }
