@@ -1,7 +1,8 @@
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 namespace Content.Shared.Lock.Lockpick;
 
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class LockpickComponent : Component
 {
     //Plays when starting the lockpicking

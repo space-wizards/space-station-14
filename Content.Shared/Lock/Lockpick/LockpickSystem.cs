@@ -20,27 +20,27 @@ public sealed class LockpickSystem : EntitySystem
     //Starts a lockpicking DoAfter
     private void LockpickUse(Entity<LockpickComponent> ent, ref AfterInteractEvent args)
     {
-        if (HasComp<LockComponent>(args.Target) && _lockSystem.IsLocked(args.Target.Value))
-        {
-            if (args.CanReach)
-            {
-                _audio.PlayPredicted(ent.Comp.StartSound, args.Target.Value, ent.Owner);
+        if (!HasComp<LockComponent>(args.Target) || !_lockSystem.IsLocked(args.Target.Value))
+            return;
 
-                var doAfterArgs = new DoAfterArgs(EntityManager,
-                    args.User,
-                    ent.Comp.LockpickTime, 
-                    new LockpickingDoAfterEvent(args.Target.Value),
-                    ent,
-                    ent,
-                    args.Used)
-                {
-                    BreakOnDamage = true,
-                    BreakOnMove = true,
-                    NeedHand = true,
-                };
-                _doAfter.TryStartDoAfter(doAfterArgs);
-            }
-        }
+        if (args.CanReach)
+            return;
+
+        _audio.PlayPredicted(ent.Comp.StartSound, args.Target.Value, ent.Owner);
+
+        var doAfterArgs = new DoAfterArgs(EntityManager,
+            args.User,
+            ent.Comp.LockpickTime,
+            new LockpickingDoAfterEvent(args.Target.Value),
+            ent,
+            ent,
+            args.Used)
+        {
+            BreakOnDamage = true,
+            BreakOnMove = true,
+            NeedHand = true,
+        };
+        _doAfter.TryStartDoAfter(doAfterArgs);
     }
 
     //Send an unlock message to target entity if DoAfter goes well
