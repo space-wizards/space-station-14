@@ -657,13 +657,13 @@
   - type: BatteryWeaponFireModes
     fireModes:
     - proto: AnomalousParticleDeltaStrong
-      fireCost: 100
+      fireCost: 83
     - proto: AnomalousParticleEpsilonStrong
-      fireCost: 100
+      fireCost: 83
     - proto: AnomalousParticleZetaStrong
-      fireCost: 100
+      fireCost: 83
     - proto: AnomalousParticleSigmaStrong
-      fireCost: 100
+      fireCost: 83
   - type: Construction
     graph: UpgradeWeaponPistolCHIMP
     node: start
@@ -679,15 +679,15 @@
   - type: BatteryWeaponFireModes
     fireModes:
     - proto: AnomalousParticleDeltaStrong
-      fireCost: 100
+      fireCost: 83
     - proto: AnomalousParticleEpsilonStrong
-      fireCost: 100
+      fireCost: 83
     - proto: AnomalousParticleOmegaStrong
-      fireCost: 100
+      fireCost: 83
     - proto: AnomalousParticleZetaStrong
-      fireCost: 100
+      fireCost: 83
     - proto: AnomalousParticleSigmaStrong
-      fireCost: 100
+      fireCost: 83
 
 - type: entity
   name: eye of a behonker
