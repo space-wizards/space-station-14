@@ -156,6 +156,11 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
         // Populate departments
         foreach (var sensor in departmentSensors)
         {
+            if (!string.IsNullOrEmpty(SearchLineEdit.Text)
+                && !sensor.Name.Contains(SearchLineEdit.Text, StringComparison.CurrentCultureIgnoreCase)
+                && !sensor.Job.Contains(SearchLineEdit.Text, StringComparison.CurrentCultureIgnoreCase))
+                continue;
+
             var coordinates = _entManager.GetCoordinates(sensor.Coordinates);
 
             // Add a button that will hold a username and other details

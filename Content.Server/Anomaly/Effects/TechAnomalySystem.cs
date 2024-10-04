@@ -35,9 +35,9 @@ public sealed class TechAnomalySystem : EntitySystem
         while (query.MoveNext(out var uid, out var tech, out var anom))
         {
             if (_timing.CurTime < tech.NextTimer)
-                return;
+                continue;
 
-            tech.NextTimer = _timing.CurTime + TimeSpan.FromSeconds(tech.TimerFrequency * anom.Stability);
+            tech.NextTimer += TimeSpan.FromSeconds(tech.TimerFrequency);
 
             _signal.InvokePort(uid, tech.TimerPort);
         }
@@ -61,7 +61,7 @@ public sealed class TechAnomalySystem : EntitySystem
         var devices = _lookup.GetEntitiesInRange<DeviceLinkSinkComponent>(Transform(tech).Coordinates, range);
         if (devices.Count < 1)
             return;
-        
+
         for (var i = 0; i < count; i++)
         {
             var device = _random.Pick(devices);
