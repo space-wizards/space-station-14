@@ -955,6 +955,19 @@
   - UplinkDisruption
 
 - type: listing
+  id: UplinkLockpick
+  name: uplink-lockpick-name
+  description: uplink-lockpick-desc
+  productEntity: Lockpick
+  discountCategory: rareDiscounts
+  discountDownTo:
+    Telecrystal: 1
+  cost:
+    Telecrystal: 2
+  categories:
+  - UplinkDisruption
+
+- type: listing
   id: UplinkSyndicateJawsOfLife
   name: uplink-syndicate-jaws-of-life-name
   description: uplink-syndicate-jaws-of-life-desc

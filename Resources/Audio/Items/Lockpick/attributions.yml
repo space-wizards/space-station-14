@@ -1,0 +1,14 @@
+- files: ["lockpick_start.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by spookymodem, slightly modified by Thinbug"
+  source: "https://freesound.org/people/spookymodem/sounds/202099/"
+
+- files: ["lockpick_end.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by Fabrizio84, slightly modified by Thinbug"
+  source: "https://freesound.org/people/Fabrizio84/sounds/458013/"
+
+- files: ["lockpick_drop.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by michael_grinnell, slightly modified by Thinbug"
+  source: "https://freesound.org/people/michael_grinnell/sounds/464420/"

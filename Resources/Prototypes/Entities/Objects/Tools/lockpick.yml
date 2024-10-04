@@ -1,0 +1,24 @@
+- type: entity
+  parent: [BaseItem, BaseSyndicateContraband]
+  id: Lockpick
+  name: syndicate lockpick
+  description: Despise it's age, this vintage syndicate lockpick feels light and comfortable to hold. 
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/lockpick.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Tools/lockpick.rsi
+    state: icon
+    storedRotation: -90
+  - type: Clothing
+    sprite: Objects/Tools/lockpick.rsi
+    quickEquip: false
+    slots:
+    - Belt
+  - type: EmitSoundOnLand
+    sound:
+      path: "/Audio/Items/Lockpick/lockpick_drop.ogg"
+  - type: UseDelay  #dont wanna it to get spammed, audio would sound icki 
+    delay: 4
+  - type: Lockpick
