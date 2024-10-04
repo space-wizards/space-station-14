@@ -1450,6 +1450,7 @@
   id: FloorGrass
   name: tiles-planet-grass-floor
   sprite: /Textures/Tiles/grass.png
+  roof: false
   baseTurf: FloorDirt
   isSubfloor: true
   footstepSounds:
@@ -1462,6 +1463,7 @@
   id: FloorGrassJungle
   name: tiles-jungle-grass-floor
   sprite: /Textures/Tiles/grassjungle.png
+  roof: false
   baseTurf: FloorDirt
   isSubfloor: true
   footstepSounds:
@@ -1474,6 +1476,7 @@
   id: FloorGrassDark
   name: tiles-dark-grass-floor
   sprite: /Textures/Tiles/grassdark.png
+  roof: false
   variants: 4
   placementVariants:
   - 1.0
@@ -1491,6 +1494,7 @@
   id: FloorGrassLight
   name: tiles-light-grass-floor
   sprite: /Textures/Tiles/grasslight.png
+  roof: false
   variants: 4
   placementVariants:
   - 1.0
@@ -1501,6 +1505,7 @@
   isSubfloor: true
   footstepSounds:
     collection: FootstepGrass
+    roof: false
   heatCapacity: 10000
   weather: true
 
@@ -1508,6 +1513,7 @@
   id: FloorDirt
   name: tiles-dirt-floor
   sprite: /Textures/Tiles/dirt.png
+  roof: false
   variants: 4
   placementVariants:
   - 1.0

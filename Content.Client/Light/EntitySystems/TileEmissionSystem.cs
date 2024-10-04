@@ -2,11 +2,11 @@ using Robust.Client.Graphics;
 
 namespace Content.Client.Light.EntitySystems;
 
-public sealed class PlanetLightSystem : EntitySystem
+public sealed class TileEmissionSystem : EntitySystem
 {
     [Dependency] private readonly IOverlayManager _overlayMan = default!;
 
-    private RoofOverlay _overlay = default!;
+    private TileEmissionOverlay _overlay = default!;
 
     public override void Initialize()
     {

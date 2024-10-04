@@ -1,18 +1,27 @@
 using System.Numerics;
 using Content.Shared.Light.Components;
+using Content.Shared.Maps;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
+using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 
 namespace Content.Client.Light;
 
 public sealed class RoofOverlay : Overlay
 {
+    [Dependency] private readonly ITileDefinitionManager _tileDefMan = default!;
+    private readonly IEntityManager _entManager;
+
+    private readonly HashSet<Entity<OccluderComponent>> _occluders = new();
+
     public override OverlaySpace Space => OverlaySpace.BeforeLighting;
 
-    public RoofOverlay()
+    public RoofOverlay(IEntityManager entManager)
     {
+        _entManager = entManager;
         IoCManager.InjectDependencies(this);
+        ZIndex = -1;
     }
 
     protected override void Draw(in OverlayDrawArgs args)
@@ -22,16 +31,15 @@ public sealed class RoofOverlay : Overlay
 
         var viewport = args.Viewport;
         var eye = args.Viewport.Eye;
-        var entManager = IoCManager.Resolve<IEntityManager>();
-        var mapSystem = entManager.System<SharedMapSystem>();
+        var mapSystem = _entManager.System<SharedMapSystem>();
         var worldHandle = args.WorldHandle;
         var bounds = args.WorldBounds;
         var mapId = args.MapId;
 
-        var lookup = entManager.System<EntityLookupSystem>();
-        var xformSystem = entManager.System<SharedTransformSystem>();
+        var lookup = _entManager.System<EntityLookupSystem>();
+        var xformSystem = _entManager.System<SharedTransformSystem>();
 
-        var query = entManager.AllEntityQueryEnumerator<RoofComponent, MapGridComponent, TransformComponent>();
+        var query = _entManager.AllEntityQueryEnumerator<RoofComponent, MapGridComponent, TransformComponent>();
 
         worldHandle.RenderInRenderTarget(viewport.LightRenderTarget,
             () =>
@@ -52,13 +60,36 @@ public sealed class RoofOverlay : Overlay
 
                     while (tileEnumerator.MoveNext(out var tileRef))
                     {
-                        if (tileRef.Tile.TypeId != 126)
-                            continue;
+                        var tileDef = (ContentTileDefinition) _tileDefMan[tileRef.Tile.TypeId];
+
+                        if (!tileDef.Roof)
+                        {
+                            // Check if the tile is occluded in which case hide it anyway.
+                            // This is to avoid lit walls bleeding over to unlit tiles.
+                            _occluders.Clear();
+                            lookup.GetLocalEntitiesIntersecting(uid, tileRef.GridIndices, _occluders);
+                            var found = false;
+
+                            foreach (var occluder in _occluders)
+                            {
+                                if (!occluder.Comp.Enabled)
+                                    continue;
+
+                                found = true;
+                                break;
+                            }
+
+                            if (!found)
+                                continue;
+                        }
 
                         var local = lookup.GetLocalBounds(tileRef, grid.TileSize);
                         worldHandle.DrawRect(local, comp.Color);
                     }
                 }
             }, null);
+
+        // Around half-a-tile in length because too lazy to do shadows properly and this avoids it going through walls.
+        // IoCManager.Resolve<IClyde>().BlurLights(viewport, viewport.LightRenderTarget, viewport.Eye, 14f * 4f);
     }
 }

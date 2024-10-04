@@ -323,6 +323,9 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
 
         while (biomes.MoveNext(out var biome))
         {
+            if (biome.LifeStage < ComponentLifeStage.Running)
+                continue;
+
             _activeChunks.Add(biome, _tilePool.Get());
             _markerChunks.GetOrNew(biome);
         }
@@ -370,6 +373,10 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
 
         while (loadBiomes.MoveNext(out var gridUid, out var biome, out var grid))
         {
+            // If not MapInit don't run it.
+            if (biome.LifeStage < ComponentLifeStage.Running)
+                continue;
+
             if (!biome.Enabled)
                 continue;
 
