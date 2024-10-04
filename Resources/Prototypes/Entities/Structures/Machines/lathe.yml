@@ -942,6 +942,8 @@
       - Hemostat
       - ClothingEyesGlassesChemical
       - WhiteCane
+      - PrescriptionLens
+      - PrescriptionLensStrong
     dynamicRecipes:
       - ChemicalPayload
       - CryostasisBeaker
