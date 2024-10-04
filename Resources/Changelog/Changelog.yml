@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Moomoobeef
-  changes:
-  - message: Some radio channel colors have been tweaked in order to be more easily
-      distinguishable.
-    type: Tweak
-  id: 6984
-  time: '2024-07-26T06:47:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30133
 - author: Errant
   changes:
   - message: Replay ghosts now actually spawn on the proper station, take two.
@@ -3937,3 +3929,15 @@
   id: 7483
   time: '2024-10-03T14:01:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32552
+- author: Southbridge
+  changes:
+  - message: Box station's recycler has been properly connected.
+    type: Fix
+  - message: Box station's singlo substation has been rewired to the station-wide
+      HV network.
+    type: Tweak
+  - message: Box station now has AI law boards in the upload room.
+    type: Add
+  id: 7484
+  time: '2024-10-04T01:12:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32608
