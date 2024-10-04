@@ -28,6 +28,7 @@ public partial class ListingData : IEquatable<ListingData>
         other.Description,
         other.Conditions,
         other.Icon,
+        other.Buyable,
         other.Priority,
         other.ProductEntity,
         other.ProductAction,
@@ -53,6 +54,7 @@ public partial class ListingData : IEquatable<ListingData>
         string? description,
         List<ListingCondition>? conditions,
         SpriteSpecifier? icon,
+        bool buyable,
         int priority,
         EntProtoId? productEntity,
         EntProtoId? productAction,
@@ -74,6 +76,7 @@ public partial class ListingData : IEquatable<ListingData>
         Description = description;
         Conditions = conditions?.ToList();
         Icon = icon;
+        Buyable = buyable;
         Priority = priority;
         ProductEntity = productEntity;
         ProductAction = productAction;
@@ -138,6 +141,12 @@ public partial class ListingData : IEquatable<ListingData>
     /// </summary>
     [DataField]
     public SpriteSpecifier? Icon;
+
+    /// <summary>
+    /// Labels a listing as available to purchase
+    /// </summary>
+    [DataField]
+    public bool Buyable = true;
 
     /// <summary>
     /// The priority for what order the listings will show up in on the menu.
@@ -285,6 +294,7 @@ public sealed partial class ListingDataWithCostModifiers : ListingData
             listingData.Description,
             listingData.Conditions,
             listingData.Icon,
+            listingData.Buyable,
             listingData.Priority,
             listingData.ProductEntity,
             listingData.ProductAction,
