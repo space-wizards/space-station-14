@@ -2,10 +2,11 @@
 - type: weightedRandom
   id: NinjaThreats
   weights:
-    Dragon: 1
-    Revenant: 1
-    RatKing: 1
-    UristSwarm: 0.25
+    Dragon: 2
+    Revenant: 2
+    RatKing: 2
+    UristSwarm: 1
+    ImmovableFriend: 1
 
 - type: ninjaHackingThreat
   id: Dragon
@@ -26,3 +27,8 @@
   id: UristSwarm
   announcement: terror-uristswarm
   rule: GameRuleUristSwarm
+
+- type: ninjaHackingThreat
+  id: ImmovableFriend
+  announcement: terror-finfin
+  rule: ImmovableFriendSpawn

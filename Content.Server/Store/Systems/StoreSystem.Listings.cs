@@ -119,6 +119,9 @@ public sealed partial class StoreSystem
             {
                 var args = new ListingConditionArgs(buyer, storeEntity, listing, EntityManager);
                 var conditionsMet = true;
+                listing.Buyable = true;
+                if (listing.Priority >= 1000)
+                    listing.Priority -= 1000;
 
                 foreach (var condition in listing.Conditions)
                 {
@@ -130,7 +133,11 @@ public sealed partial class StoreSystem
                 }
 
                 if (!conditionsMet)
-                    continue;
+                {
+                    listing.Buyable = false;
+                    if (listing.Priority < 1000)
+                        listing.Priority += 1000;
+                }
             }
 
             yield return listing;

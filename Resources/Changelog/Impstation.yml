@@ -2468,3 +2468,59 @@
   id: 311
   time: '2024-10-02T20:40:42.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/396
+- author: TheGrimbeeper
+  changes:
+  - message: two new utility effects for large artifacts
+    type: Add
+  id: 312
+  time: '2024-10-03T23:42:32.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/400
+- author: joelsgp
+  changes:
+  - message: Serbian Parliament has applied for associate membership in the Association
+      of Southeast Asian Nations' Inter-Parliamentary Assembly (AIPA).
+    type: Add
+  id: 313
+  time: '2024-10-03T23:41:54.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/296
+- author: hivehum
+  changes:
+  - message: Added over a dozen new slimes to herd and milk.
+    type: Add
+  id: 314
+  time: '2024-10-03T23:41:23.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/402
+- author: Sha-Seng
+  changes:
+  - message: Added Kaasi art to lobby screen rotation
+    type: Add
+  id: 315
+  time: '2024-10-03T23:41:43.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/401
+- author: hivehum
+  changes:
+  - message: Gondal is here.
+    type: Add
+  id: 316
+  time: '2024-10-03T23:42:18.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/399
+- author: ruddygreat
+  changes:
+  - message: Added the Cleaner lake, a grenade launcher that has been modified to
+      only accept specialised cleanade rounds. The launcher spawns in the custodial
+      closet and ammo spawns in janitorial supply crates.
+    type: Add
+  - message: Added the Cleaner lake re-militarisation kit, a 14tc job-specific traitor
+      item that removes the safety restrictions from the Cleaner lake.
+    type: Add
+  id: 317
+  time: '2024-10-04T04:23:49.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/405
+- author: formlessnameless
+  changes:
+  - message: Listings that you can't purchase now show up at the bottom of their category
+      as Unavailable
+    type: Add
+  id: 318
+  time: '2024-10-04T04:23:32.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/406
