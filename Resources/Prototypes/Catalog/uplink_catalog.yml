@@ -2083,6 +2083,27 @@
       - SurplusBundle
 
 - type: listing
+  id: uplinkCleanerLakeUpgrade
+  name: uplink-cleaner-lake-upgrade-name
+  description: uplink-cleaner-lake-upgrade-desc
+  productEntity: WeaponCleanerLakeUpgradeKit
+  discountCategory: rareDiscounts
+  discountDownTo:
+    Telecrystal: 12
+  cost:
+    Telecrystal: 14 # was 4, with my buff made it 5 to be closer to minibomb -panzer
+  categories:
+  - UplinkJob
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - Janitor
+  - !type:BuyerWhitelistCondition
+    blacklist:
+      components:
+      - SurplusBundle
+
+- type: listing
   id: UplinkSyndicateSpongeBox
   name: uplink-syndicate-sponge-box-name
   description: uplink-syndicate-sponge-box-desc

@@ -300,6 +300,9 @@ uplink-chimp-upgrade-kit-desc = Insert this chip into a standard C.H.I.M.P. hand
 uplink-proximity-mine-name = Proximity Mine
 uplink-proximity-mine-desc = A mine disguised as a wet floor sign.
 
+uplink-cleaner-lake-upgrade-name = Cleaner Lake remilitarisation kit
+uplink-cleaner-lake-upgrade-desc = A kit that can be used to remove the safety measures from a cleaner lake.
+
 uplink-disposable-turret-name = Disposable Ballistic Turret
 uplink-disposable-turret-desc = Looks and functions like a normal electrical toolbox. Upon hitting the toolbox it will transform into a ballistic turret, theoretically shooting at anyone except members of the syndicate. Can be turned back into a toolbox using a screwdriver and repaired using a wrench.
 
