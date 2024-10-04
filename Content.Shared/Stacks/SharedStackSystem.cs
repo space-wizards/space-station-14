@@ -134,6 +134,9 @@ public abstract class SharedStackSystem : EntitySystem
         int? amountTillMax = null;
         if (stackPrototype.MaxCount != null)
         {
+            if (stackPrototype.MaxCount == entity.Comp.Count)
+                return;
+
             amountTillMax = stackPrototype.MaxCount - entity.Comp.Count;
         }
 
