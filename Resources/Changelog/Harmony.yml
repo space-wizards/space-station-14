@@ -283,3 +283,13 @@ Entries:
     changes:
       - type: Tweak
         message: Frezon selling price is changed to 2 spesos per mole.
+  - id: 104
+    author: DieselMohawk
+    time: '2024-10-04T21:25:52.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/104
+    changes:
+    - type: Add
+      message: Added HoP Turtleneck. Available in HoP Loadout and in Uniform Printer.
+    - type: Add
+      message: Added Leather Shoes to HoP Loadout (new shoes loadout created, check
+        your loadouts to not spawn barefoot)
