@@ -276,6 +276,11 @@
   id: ClothingUniformJumpskirtHoP
   result: ClothingUniformJumpskirtHoP
 
+- type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
+  id: ClothingUniformJumpsuitHeadOfPersonnelTurtleneck
+  result: ClothingUniformJumpsuitHeadOfPersonnelTurtleneck #Harmony
+
 ## HoS
 
 - type: latheRecipe
