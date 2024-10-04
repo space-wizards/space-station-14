@@ -100,6 +100,9 @@ public sealed record SalvageMission(
     string Air,
     float Temperature,
     Color? Color,
+    float InitialHour,
+    double MinLight,
+    double MaxLight,
     TimeSpan Duration,
     List<string> Modifiers)
 {
@@ -137,6 +140,23 @@ public sealed record SalvageMission(
     /// Lighting color to be used (AKA outdoor lighting).
     /// </summary>
     public readonly Color? Color = Color;
+
+    /// <summary>
+    ///  Mission initial time (in relative hours to the cycle duration).
+    /// </summary>
+
+    public readonly float InitialHour = InitialHour;
+
+    /// <summary>
+    /// The minimum brightness level of dynamic lighting.
+    /// </summary>
+    public readonly double MinLight = MinLight;
+
+    /// <summary>
+    /// The maximum brightness level of dynamic lighting.
+    /// </summary>
+
+    public readonly double MaxLight = MaxLight;
 
     /// <summary>
     /// Mission duration.
