@@ -1,0 +1,66 @@
+- type: entity
+  abstract: true
+  id: BaseLensSlot
+  components:
+  - type: LensSlot
+    LensSlotId: lens_slot
+  - type: ItemSlots
+    slots:
+      lens_slot:
+        whitelist:
+          tags:
+          - Lens
+
+- type: entity
+  parent: ClothingEyesBase
+  id: PrescriptionLens
+  name: perscription lens
+  description: Adaptive lenses that fit inside frames or your face.
+  components:
+  - type: Sprite
+    layers:
+      - sprite: Clothing/Eyes/Misc/lenses.rsi
+        state: icon-small
+  - type: VisionCorrection
+    correctionPower: 2
+  - type: Tag
+    tags:
+    - Lens
+
+- type: entity
+  parent: PrescriptionLens
+  id: PrescriptionLensStrong
+  name: strong perscription lens
+  components:
+  - type: Sprite
+    layers:
+      - sprite: Clothing/Eyes/Misc/lenses.rsi
+        state: icon-large
+  - type: VisionCorrection
+    correctionPower: 4
+
+# admin only for now
+- type: entity
+  parent: PrescriptionLens
+  id: AntiPrescriptionLens
+  suffix: Inverse
+  components:
+  - type: VisionCorrection
+    visionBonus: 2
+
+# Given to near-sighted trait
+- type: entity
+  parent: ClothingEyesGlasses
+  id: ClothingEyesGlassesStrong
+  suffix: Strong
+  components:
+  - type: ItemSlots
+    slots:
+      lens_slot:
+        startingItem: PrescriptionLensStrong
+        whitelist:
+          tags:
+          - Lens
+  - type: Tag
+    tags:
+    - HamsterWearable
