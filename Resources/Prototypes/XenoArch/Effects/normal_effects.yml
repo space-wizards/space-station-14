@@ -813,7 +813,7 @@
   components:
   - type: PolyOthersArtifact
     polymorphPrototypeName: ArtifactRod
-    range: 3
+    range: 2
 
 - type: artifactEffect
   id: EffectHealAllPowerful
