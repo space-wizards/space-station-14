@@ -278,8 +278,8 @@
 
 - type: latheRecipe
   parent: BaseCommandJumpsuitRecipe
-  id: ClothingUniformJumpsuitHoPTurtleneck
-  result: ClothingUniformJumpsuitHoPTurtleneck #Harmony
+  id: ClothingUniformJumpsuitHeadOfPersonnelTurtleneck
+  result: ClothingUniformJumpsuitHeadOfPersonnelTurtleneck #Harmony
 
 ## HoS
 
