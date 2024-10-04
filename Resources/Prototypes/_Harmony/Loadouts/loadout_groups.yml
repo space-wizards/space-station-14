@@ -1,0 +1,7 @@
+# Command
+- type: loadoutGroup
+  id: HoPShoesHarmony
+  name: loadout-group-hop-shoes-harmony
+  loadouts:
+  - BrownShoes
+  - HoPLeatherShoesHarmony

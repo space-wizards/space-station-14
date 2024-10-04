@@ -59,7 +59,7 @@
 - type: startingGear
   id: HoPGear
   equipment:
-    shoes: ClothingShoesColorBrown
+  # shoes: ClothingShoesColorBrown # Harmony uses a custom loadout group
     id: HoPPDA
     gloves: ClothingHandsGlovesHop
     ears: ClothingHeadsetAltCommand
