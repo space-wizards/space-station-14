@@ -20,6 +20,27 @@
     - !type:TileNotBlocked
 
 - type: construction
+  name: web window-weave
+  id: WebWindow
+  graph: WebStructures
+  startNode: start
+  targetNode: window
+  category: construction-category-structures
+  description: A very thin weave that you can see through.
+  icon:
+    sprite: Structures/Walls/web.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  entityWhitelist:
+    tags:
+    - SpiderCraft
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
   name: web table
   id: TableWeb
   graph: WebStructures

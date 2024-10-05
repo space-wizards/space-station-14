@@ -1,0 +1,44 @@
+# this is a weird mix between a grille/window so it's in its own file
+# it's seethrough, lets air pass through, and costs less than a regular silk wall
+# but can't build windows over it or electrify it, and it's incredibly flimsy
+- type: entity
+  id: WebWindow
+  parent: BaseStructure
+  name: web window-weave
+  description: A delicate weaving of spider silk you can see through. Keeps nothing out, really.
+  components:
+    - type: MeleeSound
+      soundGroups:
+        Brute:
+          path:
+            "/Audio/Weapons/slash.ogg"
+    - type: Sprite
+      drawdepth: Walls
+      sprite: Structures/Walls/grille.rsi
+      layers:
+        - state: grille
+    - type: Icon
+      sprite: Structures/Walls/grille.rsi
+      state: grille
+      deconstructionTarget: start
+    - type: Physics
+      bodyType: Static
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 10
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            MaterialWebSilk:
+              min: 1
+              max: 1
+        - !type:PlaySoundBehavior
+          sound:
+            collection: WoodDestroy
+    - type: Construction
+      graph: WebStructures
+      node: window
