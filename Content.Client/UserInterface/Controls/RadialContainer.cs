@@ -105,8 +105,8 @@ public class RadialContainer : LayoutContainer
 
             if (child is RadialMenuTextureButton tb)
             {
-                tb.AngleSectorFrom = sepAngle * positionInRadius-1;
-                tb.AngleSectorTo = sepAngle * positionInRadius + 1;
+                tb.AngleSectorFrom = sepAngle * (positionInRadius-1);
+                tb.AngleSectorTo = sepAngle * (positionInRadius + 1);
             }
 
             var positionOfRail = index * 2;
@@ -115,12 +115,12 @@ public class RadialContainer : LayoutContainer
                 new Vector2(
                     Radius/2 * MathF.Sin(AngularRange.X + sepAngle * positionOfRail) + Width / 2f ,
                     -Radius/2 * MathF.Cos(AngularRange.X + sepAngle * positionOfRail) + Height / 2f 
-                ),
+                ) * UIScale ,
                 new Vector2(
                     Radius * 2 * MathF.Sin(AngularRange.X + sepAngle * positionOfRail) + Width / 2f ,
                     -Radius * 2 * MathF.Cos(AngularRange.X + sepAngle * positionOfRail) + Height / 2f 
-                ),
-                Color.Red
+                ) * UIScale,
+                new Color(173, 216, 230, 180)
             );
         }
 

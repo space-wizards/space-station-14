@@ -226,8 +226,6 @@ public class RadialMenuTextureButton : TextureButton
     public float AngleSectorFrom { get; set; }
     public float AngleSectorTo { get; set; }
 
-    public bool DisplayDebug { get; set; }
-    
     /// <summary>
     /// A simple texture button that can move the user to a different layer within a radial menu
     /// </summary>
@@ -255,51 +253,40 @@ public class RadialMenuTextureButton : TextureButton
         var pX = -Position.X + Parent!.Width / 2;
         var pY = -Position.Y + Parent.Width / 2;
 
-        var position = new Vector2(pX, pY);
-        
-        // drawing shit
-        if (!DisplayDebug)
-        {
-            //return;
-        }
-
+        var position = new Vector2(pX, pY) * UIScale;
 
         var singleSegmentSize = MathF.Tau / 32;
 
         var controlSegmentSize = AngleSectorTo - AngleSectorFrom;
-        var segCount = (int) (controlSegmentSize / singleSegmentSize)+2;
+        var segCount = (int) (controlSegmentSize / singleSegmentSize) +1;
+
         // CHANGE TO STACKALLOC AND MOVE THIS STUFF TO TOOLBOX!111
         var buffer = new Vector2[segCount * 2];
 
-        var radius = (Parent as RadialContainer)!.Radius;
+        var radius = (Parent as RadialContainer)!.Radius * UIScale;
 
-        var i = 0;
-        for (i = 0; i < segCount; i++)
+        for (var i = 0; i < segCount; i++)
         {
-            var angle = MathF.PI - AngleSectorFrom + singleSegmentSize* i;
-            var pos = new Angle(angle).RotateVec(new Vector2(1, 0));
+            float angle;
+            if (i == segCount - 1)
+            {
+                angle = AngleSectorTo;
+            }
+            else
+            {
+                angle = AngleSectorFrom + singleSegmentSize * i;
+            }
+
+            var pos = new Angle(angle).RotateVec(-Vector2.UnitY);
 
             buffer[i * 2] = position + pos * radius * 2;
             buffer[i * 2 + 1] = position + pos * radius / 2;
         }
 
-        var color = this.DrawMode == DrawModeEnum.Hover
-            ? new Color(225, 0, 0, 100)
-            : new Color(225, 0, 0, 50);
+        var color = DrawMode == DrawModeEnum.Hover
+            ? new Color(173, 216, 230, 100)
+            : new Color(173, 216, 230, 70);
         handle.DrawPrimitives(DrawPrimitiveTopology.TriangleStrip, buffer, color);
-
-        if (!DisplayDebug)
-        {
-            return;
-        }
-
-        var vectorFont = new VectorFont(IoCManager.Resolve<IResourceCache>().GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Regular.ttf"), 12);
-        for (int j = 0; j < buffer.Length; j++)
-        {
-            handle.DrawString(vectorFont, buffer[j], j.ToString());
-            handle.DrawCircle(buffer[j], 5, new Color(0, 225, 0, 50));
-        }
-
     }
 
     /// <inheritdoc />
