@@ -21,6 +21,7 @@
     - name: ChangeSpecies
       baseOdds: 0.036
       appliesToProduce: false
+      persists: false
       effect: !type:PlantSpeciesChange
     - name: Unviable
       baseOdds: 0.109
@@ -152,12 +153,12 @@
       persists: false
       effect: !type:PlantChangeStat
         targetValue: Seedless
-    - name: ChangeLigneous
+    - name: Lignification
       baseOdds: 0.036
       persists: false
       effect: !type:PlantChangeStat
         targetValue: Ligneous
-    - name: ChangeTurnIntoKudzu
+    - name: Kudzufication
       baseOdds: 0.036
       persists: false
       effect: !type:PlantChangeStat
