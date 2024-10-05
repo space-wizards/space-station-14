@@ -79,15 +79,18 @@ namespace Content.Shared.SubFloor
             if (args.Anchored)
             {
                 var xform = Transform(uid);
+                component.IsUnderRevealingEntity = _trayScanRevealSystem.HasEntityTileTrayScanReveal(uid, xform);
                 UpdateFloorCover(uid, component, xform);
             }
-            else if (component.IsUnderCover)
+            else
             {
+                component.IsUnderRevealingEntity = false;
+
+                if (!component.IsUnderCover)
+                    return;
                 component.IsUnderCover = false;
                 UpdateAppearance(uid, component);
             }
-            else
-                component.IsUnderRevealingEntity = false;
         }
 
         private void OnTileChanged(ref TileChangedEvent args)
