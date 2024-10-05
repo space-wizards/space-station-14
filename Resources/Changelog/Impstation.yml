@@ -2524,3 +2524,71 @@
   id: 318
   time: '2024-10-04T04:23:32.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/406
+- author: starlighthowls
+  changes:
+  - message: Impstation has been taken by a fae mood
+    type: Add
+  - message: derotated cruise while i do some reworks
+    type: Remove
+  - message: fangs and piercings to lizard markings
+    type: Add
+  - message: Changed the Pneumatic cannon noise :)
+    type: Add
+  id: 319
+  time: '2024-10-05T06:43:36.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/410
+- author: hivehum
+  changes:
+  - message: One (1) new hairstyle for humans, dwarves, and slimes, sprited by Kazne.
+    type: Add
+  id: 320
+  time: '2024-10-05T06:43:56.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/413
+- author: ruddygreat
+  changes:
+  - message: renamed the cleaner lake to the shining spring (suggested by flanburgr)
+    type: Tweak
+  - message: the shining spring is now civilian (service department) contraband
+    type: Tweak
+  - message: the shining spring now just uses normal cleanades as ammo (idk why I
+      didn't do this to begin with)
+    type: Tweak
+  id: 321
+  time: '2024-10-05T06:43:23.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/412
+- author: widgetbeck
+  changes:
+  - message: Fixed bad interaction between the No Contractions accent and the French
+      accent.
+    type: Fix
+  id: 322
+  time: '2024-10-05T06:43:10.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/409
+- author: TheGrimbeeper
+  changes:
+  - message: backend change to artifacts - triggers and effects can now have individual
+      probability weights.
+    type: Add
+  - message: very rare new artifact-caused transformation
+    type: Add
+  - message: used this to reduce likelyhood of science zombies.
+    type: Tweak
+  id: 323
+  time: '2024-10-05T06:42:56.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/408
+- author: hivehum
+  changes:
+  - message: After significant backlash, Gondal has now been severely nerfed. We apologize
+      for the inconvenience and in the future will keep LRP gaming in mind for future
+      Gondal updates.
+    type: Tweak
+  id: 324
+  time: '2024-10-05T06:42:44.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/407
+- author: sususuyo
+  changes:
+  - message: Added new lobby art by ghostphasemoon! yay
+    type: Add
+  id: 325
+  time: '2024-10-05T06:43:45.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/411
