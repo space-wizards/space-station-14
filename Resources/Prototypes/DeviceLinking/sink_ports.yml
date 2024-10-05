@@ -49,6 +49,11 @@
   description: signal-port-description-trigger
 
 - type: sinkPort
+  id: Timer
+  name: signal-port-name-timer
+  description: signal-port-description-timer
+
+- type: sinkPort
   id: OrderReceiver
   name: signal-port-name-order-receiver
   description: signal-port-description-order-receiver
