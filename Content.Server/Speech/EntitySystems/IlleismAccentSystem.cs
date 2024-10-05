@@ -30,7 +30,7 @@ public sealed class IlleismAccentSystem : EntitySystem
 
     // My crowbar -> NAME's crowbar
     private static readonly Regex RegexMyUpper = new(@"\bMY\b");
-    private static readonly Regex RegexMyLower = new(@"\bmy\b\b", RegexOptions.IgnoreCase);
+    private static readonly Regex RegexMyLower = new(@"\bmy\b", RegexOptions.IgnoreCase);
 
 
     [Dependency] private readonly IEntityManager _entityManager = default!;
