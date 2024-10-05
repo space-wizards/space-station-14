@@ -16,14 +16,15 @@ public sealed class LockpickSystem : EntitySystem
         SubscribeLocalEvent<LockpickComponent, LockpickingDoAfterEvent>(LockpickDoAfter);
     }
 
-    //Checks if target entity has a locked lock component
-    //Starts a lockpicking DoAfter
+    /// <summary>
+    /// Checks if target entity has a locked LockComponent, starts a DoAfter and plays a sound effect if so
+    /// </summary>
     private void LockpickUse(Entity<LockpickComponent> ent, ref AfterInteractEvent args)
     {
         if (!HasComp<LockComponent>(args.Target) || !_lockSystem.IsLocked(args.Target.Value))
             return;
 
-        if (args.CanReach)
+        if (!args.CanReach)
             return;
 
         _audio.PlayPredicted(ent.Comp.StartSound, args.Target.Value, ent.Owner);
@@ -43,7 +44,9 @@ public sealed class LockpickSystem : EntitySystem
         _doAfter.TryStartDoAfter(doAfterArgs);
     }
 
-    //Send an unlock message to target entity if DoAfter goes well
+    /// <summary>
+    /// Send an unlock message to target entity if DoAfter goes well
+    /// </summary>
     private void LockpickDoAfter(Entity<LockpickComponent> ent, ref LockpickingDoAfterEvent args)
     {
         if (args.Cancelled || args.Handled || args.Args.Target == null)
@@ -60,8 +63,11 @@ public sealed class LockpickSystem : EntitySystem
 [Serializable, NetSerializable]
 public sealed partial class LockpickingDoAfterEvent : SimpleDoAfterEvent 
 {
+    /// <summary>
+    /// Lockpicking target entity
+    /// </summary>
     [NonSerialized]
-    public EntityUid LockTarget;  //target entity 
+    public EntityUid LockTarget;
 
     public LockpickingDoAfterEvent(EntityUid target)
     {
