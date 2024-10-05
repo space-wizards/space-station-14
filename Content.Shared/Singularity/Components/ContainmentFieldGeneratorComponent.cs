@@ -79,7 +79,6 @@ public sealed partial class ContainmentFieldGeneratorComponent : Component
     /// <summary>
     /// Is the generator toggled on?
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField]
     public bool Enabled;
 
