@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: GoldenCan
-  changes:
-  - message: Added a Security Clown Mask which is obtainable by hacking a SecDrobe.
-    type: Add
-  id: 6989
-  time: '2024-07-27T04:09:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30249
 - author: Plykiya
   changes:
   - message: Thief game rule now properly selects more than one thief.
@@ -3942,3 +3935,10 @@
   id: 7488
   time: '2024-10-04T09:34:49.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32423
+- author: slarticodefast
+  changes:
+  - message: Light bulbs now fit into the trash bag again.
+    type: Fix
+  id: 7489
+  time: '2024-10-05T18:44:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32452
