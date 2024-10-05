@@ -1,5 +1,5 @@
-using Content.Shared.Roles;//Used 
-using Robust.Shared.Prototypes;//
+using Content.Shared.Roles;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Silicons.Laws.Components;
 
@@ -16,7 +16,7 @@ public sealed partial class StartIonStormedComponent : Component
     public int IonStormAmount = 1;
 
     /// <summary>
-    /// A role given to entities with this component when they are thing-that-is-not-emagged.
+    /// A role given to entities with this component when a mind enters it.
     /// Mostly just for admin purposes.
     /// </summary>
     [DataField]
