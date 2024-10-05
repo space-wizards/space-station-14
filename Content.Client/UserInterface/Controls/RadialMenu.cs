@@ -3,6 +3,8 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using System.Linq;
 using System.Numerics;
+using Robust.Client.Graphics;
+using Robust.Client.ResourceManagement;
 
 namespace Content.Client.UserInterface.Controls;
 
@@ -52,7 +54,7 @@ public class RadialMenu : BaseWindow
         }
     }
 
-    private List<Control> _path = new();
+    private readonly List<Control> _path = new();
     private string? _backButtonStyleClass;
     private string? _closeButtonStyleClass;
 
@@ -89,7 +91,7 @@ public class RadialMenu : BaseWindow
         AddChild(ContextualButton);
 
         // Hide any further add children, unless its promoted to the active layer
-        OnChildAdded += child => child.Visible = (GetCurrentActiveLayer() == child);
+        OnChildAdded += child => child.Visible = GetCurrentActiveLayer() == child;
     }
 
     private Control? GetCurrentActiveLayer()
@@ -190,7 +192,7 @@ public class RadialMenuButton : Button
 
     private void OnClicked(ButtonEventArgs args)
     {
-        if (TargetLayer == null || TargetLayer == string.Empty)
+        if (string.IsNullOrEmpty(TargetLayer))
             return;
 
         var parent = FindParentMultiLayerContainer(this);
@@ -205,8 +207,8 @@ public class RadialMenuButton : Button
     {
         foreach (var ancestor in control.GetSelfAndLogicalAncestors())
         {
-            if (ancestor is RadialMenu)
-                return ancestor as RadialMenu;
+            if (ancestor is RadialMenu menu)
+                return menu;
         }
 
         return null;
@@ -221,12 +223,97 @@ public class RadialMenuTextureButton : TextureButton
     /// </summary>
     public string TargetLayer { get; set; } = string.Empty;
 
+    public float AngleSectorFrom { get; set; }
+    public float AngleSectorTo { get; set; }
+
+    public bool DisplayDebug { get; set; }
+    
     /// <summary>
     /// A simple texture button that can move the user to a different layer within a radial menu
     /// </summary>
     public RadialMenuTextureButton()
     {
         OnButtonUp += OnClicked;
+    }
+
+    /// <inheritdoc />
+    protected override void Draw(DrawingHandleScreen handle)
+    {
+        var texture = TextureNormal;
+
+        if (texture == null)
+        {
+            TryGetStyleProperty(StylePropertyTexture, out texture);
+            if (texture == null)
+            {
+                return;
+            }
+        }
+
+        handle.DrawTextureRectRegion(texture, PixelSizeBox);
+
+        var pX = -Position.X + Parent!.Width / 2;
+        var pY = -Position.Y + Parent.Width / 2;
+
+        var position = new Vector2(pX, pY);
+        
+        // drawing shit
+        if (!DisplayDebug)
+        {
+            //return;
+        }
+
+
+        var singleSegmentSize = MathF.Tau / 32;
+
+        var controlSegmentSize = AngleSectorTo - AngleSectorFrom;
+        var segCount = (int) (controlSegmentSize / singleSegmentSize)+2;
+        // CHANGE TO STACKALLOC AND MOVE THIS STUFF TO TOOLBOX!111
+        var buffer = new Vector2[segCount * 2];
+
+        var radius = (Parent as RadialContainer)!.Radius;
+
+        var i = 0;
+        for (i = 0; i < segCount; i++)
+        {
+            var angle = MathF.PI - AngleSectorFrom + singleSegmentSize* i;
+            var pos = new Angle(angle).RotateVec(new Vector2(1, 0));
+
+            buffer[i * 2] = position + pos * radius * 2;
+            buffer[i * 2 + 1] = position + pos * radius / 2;
+        }
+
+        var color = this.DrawMode == DrawModeEnum.Hover
+            ? new Color(225, 0, 0, 100)
+            : new Color(225, 0, 0, 50);
+        handle.DrawPrimitives(DrawPrimitiveTopology.TriangleStrip, buffer, color);
+
+        if (!DisplayDebug)
+        {
+            return;
+        }
+
+        var vectorFont = new VectorFont(IoCManager.Resolve<IResourceCache>().GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Regular.ttf"), 12);
+        for (int j = 0; j < buffer.Length; j++)
+        {
+            handle.DrawString(vectorFont, buffer[j], j.ToString());
+            handle.DrawCircle(buffer[j], 5, new Color(0, 225, 0, 50));
+        }
+
+    }
+
+    /// <inheritdoc />
+    protected override void MouseEntered()
+    {
+        //Console.WriteLine(this._texturePath?.ToString());
+        base.MouseEntered();
+    }
+
+    /// <inheritdoc />
+    protected override void MouseExited()
+    {
+        //Console.WriteLine(this._texturePath?.ToString());
+        base.MouseExited();
     }
 
     private void OnClicked(ButtonEventArgs args)
@@ -242,12 +329,61 @@ public class RadialMenuTextureButton : TextureButton
         parent.TryToMoveToNewLayer(TargetLayer);
     }
 
+    /// <inheritdoc />
+    public override bool IsPositionInside(Vector2i point)
+    {
+        var cX = -Position.X + Parent!.Width / 2;
+        var cY = -Position.Y + Parent.Width / 2;
+
+        var dist = GetDistance(cX, cY, point.X, point.Y);
+
+        var dX = cX - point.X;
+        var dY = cY - point.Y;
+        var angle = dX > 0 ? -MathF.Atan2(dX, dY) + MathF.PI * 2 : -MathF.Atan2(dX, dY);
+        var parent = (RadialContainer)Parent;
+        var isInAngle = angle > AngleSectorFrom && angle < AngleSectorTo;
+        var isInRadius = dist < parent.Radius * 2 && dist > parent.Radius / 2;
+        var hasPoint = isInRadius && isInAngle;
+        return hasPoint;
+    }
+
+    /// <inheritdoc />
+    protected override bool HasPoint(Vector2 point)
+    {
+        var cX = -Position.X + Parent!.Width / 2;
+        var cY = -Position.Y + Parent.Width / 2;
+
+        var dist = GetDistance(cX, cY, point.X, point.Y);
+
+        var dX = cX - point.X;
+        var dY = cY - point.Y;
+        var angle = dX > 0 ? -MathF.Atan2(dX,dY) + MathF.PI *2: - MathF.Atan2(dX, dY);
+        var parent = (RadialContainer)Parent;
+        var isInAngle = angle > AngleSectorFrom && angle < AngleSectorTo;
+        var isInRadius = dist < parent.Radius*2 && dist > parent.Radius/2;
+        var hasPoint = isInRadius && isInAngle;
+        return hasPoint;
+    }
+
+    public static float ConvertRadiansToDegrees(float radians)
+    {
+        float degrees = (180f / MathF.PI) * radians;
+        return (degrees);
+    }
+
+
+    private static double GetDistance(float x1, float y1, float x2, float y2)
+    {
+        return Math.Sqrt(Math.Pow(x2 - x1, 2) + Math.Pow(y2 - y1, 2));
+
+    }
+
     private RadialMenu? FindParentMultiLayerContainer(Control control)
     {
         foreach (var ancestor in control.GetSelfAndLogicalAncestors())
         {
-            if (ancestor is RadialMenu)
-                return ancestor as RadialMenu;
+            if (ancestor is RadialMenu menu)
+                return menu;
         }
 
         return null;
