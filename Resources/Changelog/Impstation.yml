@@ -2606,3 +2606,10 @@
   id: 327
   time: '2024-10-05T14:10:10.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/415
+- author: formlessnameless
+  changes:
+  - message: Spelves are strippable now. Steal their stuff!
+    type: Fix
+  id: 328
+  time: '2024-10-05T16:58:52.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/417
