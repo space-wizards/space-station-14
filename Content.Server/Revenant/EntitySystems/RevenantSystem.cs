@@ -242,7 +242,7 @@ public sealed partial class RevenantSystem : EntitySystem
                 var essence = rev.EssencePerSecond;
 
                 if (TryComp<RevenantRegenModifierComponent>(uid, out var regen))
-                    essence += rev.HauntEssenceRegenPerWitness * regen.Witnesses.Count;
+                    essence += rev.HauntEssenceRegenPerWitness * regen.NewHaunts;
 
                 ChangeEssenceAmount(uid, essence, rev, regenCap: true);
             }
