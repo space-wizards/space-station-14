@@ -1,0 +1,10 @@
+- type: entity
+  parent: [ClothingUniformBase, BaseCommandContraband]
+  id: ClothingUniformJumpskirtHeadOfPersonnelTurtleneckHarmony
+  name: head of personnel's turtleneck
+  description: A blue turtle neck meant to amplify the comfort of the office. Watch out for dog hairs.
+  components:
+  - type: Sprite
+    sprite: _Harmony/Clothing/Uniforms/Jumpskirt/hop_turtle.rsi
+  - type: Clothing
+    sprite: _Harmony/Clothing/Uniforms/Jumpskirt/hop_turtle.rsi

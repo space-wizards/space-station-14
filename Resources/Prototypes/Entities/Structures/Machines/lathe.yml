@@ -1015,7 +1015,8 @@
       - ClothingHeadHatHopcap
       - ClothingUniformJumpsuitHoP
       - ClothingUniformJumpskirtHoP
-      - ClothingUniformTurtleneckHoPHarmony # Harmony
+      - ClothingUniformJumpsuitTurtleneckHoPHarmony # Harmony
+      - ClothingUniformJumpskirtTurtleneckHoPHarmony #Harmony
       - ClothingHeadHatBeretHoS
       - ClothingHeadHatHoshat
       - ClothingUniformJumpsuitHoS

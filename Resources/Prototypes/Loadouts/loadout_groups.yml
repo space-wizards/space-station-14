@@ -135,7 +135,8 @@
   loadouts:
   - HoPJumpsuit
   - HoPJumpskirt
-  - HoPTurtleneckHarmony #Harmony
+  - HoPJumpsuitTurtleneckHarmony #Harmony
+  - HoPJumpskirtTurtleneckHarmony #Harmony
 
 - type: loadoutGroup
   id: HoPNeck
