@@ -46,7 +46,7 @@ trait-liar-name = Pathological liar
 trait-liar-desc = You can hardly bring yourself to tell the truth. Sometimes you lie anyway.
 
 trait-illeism-name = Illeism
-trait-illeism-desc = You seem to only be able to refer to yourself by name
+trait-illeism-desc = You seem to only be able to refer to yourself by name.
 
 trait-cowboy-name = Cowboy accent
 trait-cowboy-desc = You speak with a distinct cowboy accent!
