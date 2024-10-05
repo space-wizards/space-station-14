@@ -13,6 +13,9 @@ public sealed partial class SpelfMoodsComponent : Component
     [DataField, ViewVariables, AutoNetworkedField]
     public List<SpelfMood> Moods = new();
 
+    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    public bool CanBeEmagged = true;
+
     [DataField(serverOnly: true), ViewVariables]
     public EntityUid? Action;
 }
