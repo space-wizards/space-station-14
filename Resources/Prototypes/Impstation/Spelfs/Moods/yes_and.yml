@@ -1,0 +1,37 @@
+# "Yes, and" moods will encourage players towards certain behaviors and objects
+
+# Make sure to add new moods to this dataset or they will not be selected!!!!!!
+- type: dataset
+  id: SpelfMoodsYesAnd
+  values:
+    - PossessiveOfProperty
+    - ExcessivelyOrganized
+    - MostImportant
+    - LeastImportant
+
+- type: spelfMood
+  id: PossessiveOfProperty
+  moodName: spelf-mood-possessive-of-property-name
+  moodDesc: spelf-mood-possessive-of-property-desc
+
+- type: spelfMood
+  id: ExcessivelyOrganized
+  moodName: spelf-mood-excessively-organized-name
+  moodDesc: spelf-mood-excessively-organized-desc
+
+- type: spelfMood
+  id: MostImportant
+  moodName: spelf-mood-most-important-name
+  moodDesc: spelf-mood-most-important-desc
+  conflicts:
+    - LeastImportant
+    - DontSpeakToCommand
+
+- type: spelfMood
+  id: LeastImportant
+  moodName: spelf-mood-least-important-name
+  moodDesc: spelf-mood-least-important-desc
+  conflicts:
+    - MostImportant
+    - OnlySpeakToCommand
+

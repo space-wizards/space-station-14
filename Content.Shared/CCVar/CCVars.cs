@@ -2363,6 +2363,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<float> PointingCooldownSeconds =
             CVarDef.Create("pointing.cooldown_seconds", 0.5f, CVar.SERVERONLY);
 
+        /// <summary>
+        /// The number of shared moods to give spelfs by default.
+        /// </summary>
+        public static readonly CVarDef<uint> SpelfSharedMoodCount =
+            CVarDef.Create<uint>("spelfs.shared_mood_count", 1, CVar.SERVERONLY);
+
         /*
          * DEBUG
          */
