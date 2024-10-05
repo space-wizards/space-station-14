@@ -51,7 +51,7 @@
 
 - type: rcd
   id: PressurePump
-  category: AtmosphericUtility
+  category: Pumps
   sprite: /Textures/Interface/Radial/RPD/pumpPressure.png
   mode: ConstructObject
   prototype: GasPressurePump
@@ -63,7 +63,7 @@
 
 - type: rcd
   id: VolumetricPump
-  category: AtmosphericUtility
+  category: Pumps
   sprite: /Textures/Interface/Radial/RPD/pumpVolume.png
   mode: ConstructObject
   prototype: GasPressurePump
@@ -87,7 +87,7 @@
 
 - type: rcd
   id: OutletInjector
-  category: AtmosphericUtility
+  category: Vents
   sprite: /Textures/Interface/Radial/RPD/injector.png
   mode: ConstructObject
   prototype: GasOutletInjector
@@ -99,15 +99,91 @@
 
 - type: rcd
   id: VentScrubber
-  category: AtmosphericUtility
+  category: Vents
   sprite: /Textures/Interface/Radial/RPD/scrub_off.png
   mode: ConstructObject
-  prototype: GasOutletInjector
+  prototype: GasVentScrubber
   cost: 1
   delay: 0
   collisionMask: Impassable
   rotation: User
   fx: EffectRCDConstruct0
+
+- type: rcd
+  id: VentGas
+  category: Vents
+  sprite: /Textures/Interface/Radial/RPD/vent_off.png
+  mode: ConstructObject
+  prototype: GasVentPump
+  cost: 1
+  delay: 0
+  collisionMask: Impassable
+  rotation: User
+  fx: EffectRCDConstruct0
+
+- type: rcd
+  id: VentPassive
+  category: Vents
+  sprite: /Textures/Interface/Radial/RPD/vent_passive.png
+  mode: ConstructObject
+  prototype: GasPassiveVent
+  cost: 1
+  delay: 0
+  collisionMask: Impassable
+  rotation: User
+  fx: EffectRCDConstruct0
+
+- type: rcd
+  id: Radiator
+  category: AtmosphericUtility
+  sprite: /Textures/Interface/Radial/RPD/vent_passive.png
+  mode: ConstructObject
+  prototype: HeatExchanger
+  cost: 1
+  delay: 0
+  collisionMask: Impassable
+  rotation: User
+  fx: EffectRCDConstruct0
+
+- type: rcd
+  id: MixerGas
+  category: AtmosphericUtility
+  sprite: /Textures/Interface/Radial/RPD/gasMixer.png
+  mode: ConstructObject
+  prototype: GasMixer
+  cost: 1
+  delay: 0
+  collisionMask: Impassable
+  rotation: User
+  fx: EffectRCDConstruct0
+
+- type: rcd
+  id: FilterGas
+  category: AtmosphericUtility
+  sprite: /Textures/Interface/Radial/RPD/gasFilter.png
+  mode: ConstructObject
+  prototype: GasFilter
+  cost: 1
+  delay: 0
+  collisionMask: Impassable
+  rotation: User
+  fx: EffectRCDConstruct0
+
+- type: rcd
+  id: CanisterPort
+  category: AtmosphericUtility
+  sprite: /Textures/Interface/Radial/RPD/gasCanisterPort.png
+  mode: ConstructObject
+  prototype: GasPort
+  cost: 1
+  delay: 0
+  collisionMask: Impassable
+  rotation: User
+  fx: EffectRCDConstruct0
+
+
+
+
 
 
 

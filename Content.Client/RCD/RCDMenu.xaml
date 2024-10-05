@@ -31,7 +31,13 @@
             <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RPD/fourway.png"/>
         </ui:RadialMenuTextureButton>
         <ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="{Loc 'rcd-component-atmosphericutility'}" TargetLayer="AtmosphericUtility" Visible="False">
-            <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RPD/scrub_on.png"/>
+            <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RPD/gasCanisterPort.png"/>
+        </ui:RadialMenuTextureButton>
+        <ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="{Loc 'rcd-component-pumps'}" TargetLayer="Pumps" Visible="False">
+            <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RPD/pumpVolume.png"/>
+        </ui:RadialMenuTextureButton>
+        <ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="{Loc 'rcd-component-vents'}" TargetLayer="Vents" Visible="False">
+            <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RPD/vent_passive.png"/>
         </ui:RadialMenuTextureButton>
     </ui:RadialContainer>
 
@@ -53,7 +59,13 @@
     <!-- Piping -->
     <ui:RadialContainer Name="Piping"  VerticalExpand="True" HorizontalExpand="True" Radius="64"/>
 
+    <!-- Pumps -->
+    <ui:RadialContainer Name="Pumps"  VerticalExpand="True" HorizontalExpand="True" Radius="64"/>
+
     <!-- Atmospheric Utility -->
     <ui:RadialContainer Name="AtmosphericUtility"  VerticalExpand="True" HorizontalExpand="True" Radius="64"/>
+
+    <!-- Atmospheric Utility -->
+    <ui:RadialContainer Name="Vents"  VerticalExpand="True" HorizontalExpand="True" Radius="64"/>
 
 </ui:RadialMenu>

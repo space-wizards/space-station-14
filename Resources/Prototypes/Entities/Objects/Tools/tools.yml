@@ -354,6 +354,12 @@
     - VolumetricPump
     - PressurePump
     - VentScrubber
+    - VentGas
+    - VentPassive
+    - MixerGas
+    - Radiator
+    - CanisterPort
+    - FilterGas
     - Deconstruct
   - type: LimitedCharges
     maxCharges: 30

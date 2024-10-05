@@ -40,6 +40,8 @@ rcd-component-electrical = Electrical
 rcd-component-lighting = Lighting
 rcd-component-piping = Piping
 rcd-component-atmosphericutility = Atmospheric Utility
+rcd-component-pumps = Pumps
+rcd-component-vents = Vents
 
 
 ### Prototype names (note: constructable items will be puralized)
