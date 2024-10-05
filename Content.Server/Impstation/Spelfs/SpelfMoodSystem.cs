@@ -211,12 +211,10 @@ public sealed partial class SpelfMoodsSystem : EntitySystem
         return true;
     }
 
-    public bool TryAddRandomMood(EntityUid uid, SpelfMoodsComponent? comp = null)
+    public bool TryAddRandomMood(EntityUid uid, string datasetProto, SpelfMoodsComponent? comp = null)
     {
         if (!Resolve(uid, ref comp))
             return false;
-
-        var datasetProto = _proto.Index<WeightedRandomPrototype>(RandomSpelfMoodDataset).Pick();
 
         if (TryPick(datasetProto, out var moodProto, GetActiveMoods(uid, comp)))
         {
@@ -225,6 +223,16 @@ public sealed partial class SpelfMoodsSystem : EntitySystem
         }
 
         return false;
+    }
+
+    public bool TryAddRandomMood(EntityUid uid, SpelfMoodsComponent? comp = null)
+    {
+        if (!Resolve(uid, ref comp))
+            return false;
+
+        var datasetProto = _proto.Index<WeightedRandomPrototype>(RandomSpelfMoodDataset).Pick();
+
+        return TryAddRandomMood(uid, datasetProto, comp);
     }
 
     public HashSet<string> GetConflicts(IEnumerable<SpelfMood> moods)
@@ -290,10 +298,6 @@ public sealed partial class SpelfMoodsSystem : EntitySystem
 
         // "No, and" moods
         if (TryPick(NoAndDataset, out mood, GetActiveMoods(uid, comp)))
-            TryAddMood(uid, mood, comp, true, false);
-
-        // Wildcard moods
-        if (TryPick(WildcardDataset, out mood, GetActiveMoods(uid, comp)))
             TryAddMood(uid, mood, comp, true, false);
 
         comp.Action = _actions.AddAction(uid, ActionViewMoods);
