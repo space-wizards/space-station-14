@@ -662,6 +662,7 @@
 - type: artifactEffect
   id: EffectBoom
   targetDepth: 4
+  effectProb: 0.75
   effectHint: artifact-effect-hint-environment
   components:
   - type: TriggerArtifact
@@ -763,7 +764,19 @@
     - JuiceThatMakesYouWeh
     - Lead
     - ForeverWeed
+
+- type: artifactEffect
+  id: EffectFoamRomerol
+  targetDepth: 4
+  effectProb: 0.05
+  effectHint: artifact-effect-hint-biochemical
+  components:
+  - type: FoamArtifact
+    minFoamAmount: 30
+    maxFoamAmount: 40
+    reagents:
     - Romerol
+    - Pilk
 
 - type: artifactEffect
   id: EffectPolyClownSpider
@@ -791,6 +804,16 @@
   - type: PolyOthersArtifact
     polymorphPrototypeName: ArtifactBee
     range: 5
+
+- type: artifactEffect
+  id: EffectPolyRod
+  targetDepth: 4
+  effectProb: 0.05
+  effectHint: artifact-effect-hint-polymorph
+  components:
+  - type: PolyOthersArtifact
+    polymorphPrototypeName: ArtifactRod
+    range: 2
 
 - type: artifactEffect
   id: EffectHealAllPowerful
@@ -852,9 +875,9 @@
     - id: PresentRandom
       prob: 0.9
     - id: PresentRandomUnsafe
-      prob: 0.06
+      prob: 0.1
     - id: PresentRandomInsane
-      prob: 0.03
+      prob: 0.05
 
 - type: artifactEffect
   id: EffectBookSpawn
