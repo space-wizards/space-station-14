@@ -11,6 +11,11 @@
   - type: Icon
     sprite: Mobs/Species/SpElf/parts.rsi # Unlike dwarves elves are NOT made of slime
     state: full
+  - type: SpelfMoods
+  - type: UserInterface
+    interfaces:
+      enum.SpelfMoodsUiKey.Key:
+        type: SpelfMoodsBoundUserInterface
   - type: Respirator
     damage:
       types:

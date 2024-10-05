@@ -14,24 +14,27 @@
 
 - type: spelfMood
   id: SecretMoodsShared
-  moodString: spelf-mood-secret-moods-shared
+  moodName: spelf-mood-secret-moods-shared-name
+  moodDesc: spelf-mood-secret-moods-shared-desc
   conflicts:
     - SecretMoods
-# Note: If law A says it conflicts law B, but law B forgets to
-# say that it conflicts law A, the system will still prevent
-# them being rolled together.
+# Note: Only one law needs to say it conflicts with another
+# for the system to prevent them from being rolled together.
 
 - type: spelfMood
   id: FashionIsCritical
-  moodString: spelf-mood-fashion-is-critical
+  moodName: spelf-mood-fashion-is-critical-name
+  moodDesc: spelf-mood-fashion-is-critical-desc
 
 - type: spelfMood
   id: FullNameAndTitleShared
-  moodString: spelf-mood-full-name-and-title-shared
+  moodName: spelf-mood-full-name-and-title-shared-name
+  moodDesc: spelf-mood-full-name-and-title-shared-desc
 
 # - type: spelfMood
 #   id: OutOfFashion
-#   moodString: spelf-mood-out-of-fashion
+#   moodName: spelf-mood-out-of-fashion-name
+#   moodDesc: spelf-mood-out-of-fashion-desc
 #   moodVars:
 #     thing: SpelfMoodNouns
 #   conflicts:
@@ -39,7 +42,8 @@
 
 # - type: spelfMood
 #   id: InFashion
-#   moodString: spelf-mood-in-fashion
+#   moodName: spelf-mood-in-fashion-name
+#   moodDesc: spelf-mood-in-fashion-desc
 #   moodVars:
 #     thing: SpelfMoodNouns
 #   conflicts:
@@ -47,6 +51,8 @@
 
 - type: spelfMood
   id: OnlySpeakToCommand
-  moodString: spelf-mood-only-speak-to-command-shared
+  moodName: spelf-mood-only-speak-to-command-shared-name
+  moodDesc: spelf-mood-only-speak-to-command-shared-desc
   conflicts:
     - DontSpeakToCommand
+    - LeastImportant

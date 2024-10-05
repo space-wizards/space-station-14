@@ -11,21 +11,27 @@
 
 - type: spelfMood
   id: PossessiveOfProperty
-  moodString: spelf-mood-possessive-of-property
+  moodName: spelf-mood-possessive-of-property-name
+  moodDesc: spelf-mood-possessive-of-property-desc
 
 - type: spelfMood
   id: ExcessivelyOrganized
-  moodString: spelf-mood-excessively-organized
+  moodName: spelf-mood-excessively-organized-name
+  moodDesc: spelf-mood-excessively-organized-desc
 
 - type: spelfMood
   id: MostImportant
-  moodString: spelf-mood-most-important
+  moodName: spelf-mood-most-important-name
+  moodDesc: spelf-mood-most-important-desc
   conflicts:
     - LeastImportant
+    - DontSpeakToCommand
 
 - type: spelfMood
   id: LeastImportant
-  moodString: spelf-mood-least-important
+  moodName: spelf-mood-least-important-name
+  moodDesc: spelf-mood-least-important-desc
   conflicts:
     - MostImportant
+    - OnlySpeakToCommand
 

@@ -9,38 +9,35 @@
     - DepartmentDisapproval
     - DontSpeakToCommand
     - DisapproveOfDrugs
-    - DisapproveOfAlcohol
 
 - type: spelfMood
   id: SecretMoods
-  moodString: spelf-mood-secret-moods
+  moodName: spelf-mood-secret-moods-name
+  moodDesc: spelf-mood-secret-moods-desc
   conflicts:
     - SecretMoodsShared
 
 - type: spelfMood
   id: NoModernMedicine
-  moodString: spelf-mood-no-modern-medicine
+  moodName: spelf-mood-no-modern-medicine-name
+  moodDesc: spelf-mood-no-modern-medicine-desc
 
 - type: spelfMood
   id: DepartmentDisapproval
-  moodString: spelf-mood-department-disapproval
+  moodName: spelf-mood-department-disapproval-name
+  moodDesc: spelf-mood-department-disapproval-desc
   moodVars:
     department: Departments
 
 - type: spelfMood
   id: DontSpeakToCommand
-  moodString: spelf-mood-dont-speak-to-command
+  moodName: spelf-mood-dont-speak-to-command-name
+  moodDesc: spelf-mood-dont-speak-to-command-desc
   conflicts:
     - OnlySpeakToCommand
+    - MostImportant
 
 - type: spelfMood
   id: DisapproveOfDrugs
-  moodString: spelf-mood-disapprove-of-drugs
-  conflicts:
-    - DisapproveOfAlcohol
-
-- type: spelfMood
-  id: DisapproveOfAlcohol
-  moodString: spelf-mood-disapprove-of-alcohol
-  conflicts:
-    - DisapproveOfDrugs
+  moodName: spelf-mood-disapprove-of-drugs-name
+  moodDesc: spelf-mood-disapprove-of-drugs-desc

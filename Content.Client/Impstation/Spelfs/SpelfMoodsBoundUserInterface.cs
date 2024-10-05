@@ -13,6 +13,7 @@ public sealed class SpelfMoodsBoundUserInterface : BoundUserInterface
     private SpelfMoodsMenu? _menu;
     private EntityUid _owner;
     private List<SpelfMood>? _moods;
+    private List<SpelfMood>? _sharedMoods;
 
     public SpelfMoodsBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
@@ -34,6 +35,7 @@ public sealed class SpelfMoodsBoundUserInterface : BoundUserInterface
             return;
 
         _moods = msg.Moods;
+        _sharedMoods = msg.SharedMoods;
         _menu?.Update(_owner, msg);
     }
 }

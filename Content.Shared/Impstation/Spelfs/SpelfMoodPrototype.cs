@@ -14,13 +14,24 @@ public partial class SpelfMood
     public ProtoId<SpelfMoodPrototype> ProtoId = string.Empty;
 
     /// <summary>
-    /// A locale string which is the actual text of the mood.
+    /// A locale string of the mood name.
     /// </summary>
     [DataField(required: true), ViewVariables(VVAccess.ReadWrite)]
-    public string MoodString = string.Empty;
+    public string MoodName = string.Empty;
 
     /// <summary>
-    /// Additional localized words for the mood, for things like random
+    /// A locale string of the mood description. Gets passed to
+    /// <see cref="Loc.GetString"/> with <see cref="MoodVars"/>.
+    /// </summary>
+    [DataField(required: true), ViewVariables(VVAccess.ReadWrite)]
+    public string MoodDesc = string.Empty;
+
+    [DataField(serverOnly: true, customTypeSerializer: typeof(PrototypeIdHashSetSerializer<SpelfMoodPrototype>))]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public HashSet<string> Conflicts = new();
+
+    /// <summary>
+    /// Additional localized words for the <see cref="MoodDesc"/>, for things like random
     /// verbs and nouns.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
@@ -36,7 +47,10 @@ public sealed partial class SpelfMoodPrototype : IPrototype
     public string ID { get; private set; } = default!;
 
     [DataField(required: true), ViewVariables(VVAccess.ReadWrite)]
-    public string MoodString = string.Empty;
+    public string MoodName = string.Empty;
+
+    [DataField(required: true), ViewVariables(VVAccess.ReadWrite)]
+    public string MoodDesc = string.Empty;
 
     /// <summary>
     /// A list of mood IDs that this mood will conflict with.
@@ -46,7 +60,7 @@ public sealed partial class SpelfMoodPrototype : IPrototype
 
     /// <summary>
     /// Extra mood variables that will be randomly chosen and provided
-    /// to the Loc.GetString call on MoodString.
+    /// to the <see cref="Loc.GetString"/> call on <see cref="SpelfMood.MoodDesc"/>.
     /// </summary>
     [DataField("moodVars", customTypeSerializer: typeof(PrototypeIdValueDictionarySerializer<string, DatasetPrototype>))]
     public Dictionary<string, string> MoodVarDatasets = new();

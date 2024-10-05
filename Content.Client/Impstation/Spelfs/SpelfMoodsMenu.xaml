@@ -1,7 +1,7 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                      xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
-                     Title="{Loc 'laws-ui-menu-title'}"
+                     Title="{Loc 'moods-ui-menu-title'}"
                      MinSize="200 100"
                      SetSize="450 515">
     <BoxContainer Orientation="Vertical"
@@ -16,7 +16,7 @@
                 HorizontalExpand="True"
                 VerticalExpand="True">
                 <BoxContainer
-                    Name="LawDisplayContainer"
+                    Name="MoodDisplayContainer"
                     Orientation="Vertical"
                     VerticalExpand="True"
                     Margin="10 10 10 0">
