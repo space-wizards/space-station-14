@@ -1,0 +1,113 @@
+- type: rcd
+  id: PipeFourway
+  category: Piping
+  sprite: /Textures/Interface/Radial/RPD/fourway.png
+  mode: ConstructObject
+  prototype: GasPipeFourway
+  cost: 1
+  delay: 0
+  rules:
+  - MustBuildOnSubfloor
+  rotation: User
+  fx: EffectRCDConstruct0
+
+- type: rcd
+  id: PipeStraight
+  category: Piping
+  sprite: /Textures/Interface/Radial/RPD/straight.png
+  mode: ConstructObject
+  prototype: GasPipeStraight
+  cost: 1
+  delay: 0
+  rules:
+  - MustBuildOnSubfloor
+  rotation: User
+  fx: EffectRCDConstruct0
+
+- type: rcd
+  id: PipeBend
+  category: Piping
+  sprite: /Textures/Interface/Radial/RPD/bend.png
+  mode: ConstructObject
+  prototype: GasPipeBend
+  cost: 1
+  delay: 0
+  rules:
+  - MustBuildOnSubfloor
+  rotation: User
+  fx: EffectRCDConstruct0
+
+- type: rcd
+  id: PipeTJunction
+  category: Piping
+  sprite: /Textures/Interface/Radial/RPD/TJunction.png
+  mode: ConstructObject
+  prototype: GasPipeTJunction
+  cost: 1
+  delay: 0
+  collisionMask: Impassable
+  rotation: User
+  fx: EffectRCDConstruct0
+
+- type: rcd
+  id: PressurePump
+  category: AtmosphericUtility
+  sprite: /Textures/Interface/Radial/RPD/pumpPressure.png
+  mode: ConstructObject
+  prototype: GasPressurePump
+  cost: 1
+  delay: 0
+  collisionMask: Impassable
+  rotation: User
+  fx: EffectRCDConstruct0
+
+- type: rcd
+  id: VolumetricPump
+  category: AtmosphericUtility
+  sprite: /Textures/Interface/Radial/RPD/pumpVolume.png
+  mode: ConstructObject
+  prototype: GasPressurePump
+  cost: 1
+  delay: 0
+  collisionMask: Impassable
+  rotation: User
+  fx: EffectRCDConstruct0
+
+- type: rcd
+  id: ManualValve
+  category: AtmosphericUtility
+  sprite: /Textures/Interface/Radial/RPD/pumpManualValve.png
+  mode: ConstructObject
+  prototype: GasValve
+  cost: 1
+  delay: 0
+  collisionMask: Impassable
+  rotation: User
+  fx: EffectRCDConstruct0
+
+- type: rcd
+  id: OutletInjector
+  category: AtmosphericUtility
+  sprite: /Textures/Interface/Radial/RPD/injector.png
+  mode: ConstructObject
+  prototype: GasOutletInjector
+  cost: 1
+  delay: 0
+  collisionMask: Impassable
+  rotation: User
+  fx: EffectRCDConstruct0
+
+- type: rcd
+  id: VentScrubber
+  category: AtmosphericUtility
+  sprite: /Textures/Interface/Radial/RPD/scrub_off.png
+  mode: ConstructObject
+  prototype: GasOutletInjector
+  cost: 1
+  delay: 0
+  collisionMask: Impassable
+  rotation: User
+  fx: EffectRCDConstruct0
+
+
+
