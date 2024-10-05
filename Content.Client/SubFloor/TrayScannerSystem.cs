@@ -82,7 +82,7 @@ public sealed class TrayScannerSystem : SharedTrayScannerSystem
 
             foreach (var (uid, comp) in inRange)
             {
-                if (comp.IsUnderCover)
+                if (comp.IsUnderCover || comp.IsUnderRevealingEntity)
                     EnsureComp<TrayRevealedComponent>(uid);
             }
         }

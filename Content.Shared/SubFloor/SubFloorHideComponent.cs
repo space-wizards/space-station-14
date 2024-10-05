@@ -22,6 +22,11 @@ namespace Content.Shared.SubFloor
         public bool IsUnderCover { get; set; } = false;
 
         /// <summary>
+        /// Whether the entity is currently below another entity that reveals it.
+        /// </summary>
+        public bool IsUnderRevealingEntity { get; set; } = false;
+
+        /// <summary>
         ///     Whether interactions with this entity should be blocked while it is under floor tiles.
         /// </summary>
         /// <remarks>

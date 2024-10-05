@@ -20,7 +20,7 @@ namespace Content.Shared.SubFloor
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
         [Dependency] protected readonly SharedMapSystem Map = default!;
         [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
-        [Dependency] private readonly SharedTransformSystem _transform = default!;
+        [Dependency] private readonly TrayScanRevealSystem _tRayScanRevealSystem = default!;
 
         public override void Initialize()
         {
@@ -34,7 +34,6 @@ namespace Content.Shared.SubFloor
             SubscribeLocalEvent<SubFloorHideComponent, GettingInteractedWithAttemptEvent>(OnInteractionAttempt);
             SubscribeLocalEvent<SubFloorHideComponent, GettingAttackedAttemptEvent>(OnAttackAttempt);
             SubscribeLocalEvent<SubFloorHideComponent, GetExplosionResistanceEvent>(OnGetExplosionResistance);
-            SubscribeLocalEvent<RevealSubfloorOnScanComponent, ComponentStartup>(OnRevealSubfloorStarted);
         }
 
         private void OnGetExplosionResistance(EntityUid uid, SubFloorHideComponent component, ref GetExplosionResistanceEvent args)
@@ -71,6 +70,7 @@ namespace Content.Shared.SubFloor
 
             // Regardless of whether we're on a subfloor or not, unhide.
             component.IsUnderCover = false;
+            component.IsUnderRevealingEntity = false;
             UpdateAppearance(uid, component);
         }
 
@@ -99,18 +99,6 @@ namespace Content.Shared.SubFloor
             UpdateTile(args.NewTile.GridUid, Comp<MapGridComponent>(args.NewTile.GridUid), args.NewTile.GridIndices);
         }
 
-        private void OnRevealSubfloorStarted(EntityUid uid, RevealSubfloorOnScanComponent component, EntityEventArgs args)
-        {
-            var gridUid = _transform.GetGrid(uid);
-            if (gridUid is null)
-                return;
-
-            var gridComp = Comp<MapGridComponent>(gridUid.Value);
-            var position = _transform.GetGridOrMapTilePosition(uid);
-
-            UpdateTile((EntityUid) gridUid, gridComp, position);
-        }
-
         /// <summary>
         ///     Update whether a given entity is currently covered by a floor tile.
         /// </summary>
@@ -132,26 +120,22 @@ namespace Content.Shared.SubFloor
             // TODO Redo this function. Currently wires on an asteroid are always "below the floor"
             var tileDef = (ContentTileDefinition) _tileDefinitionManager[Map.GetTileRef(gridUid, grid, position).Tile.TypeId];
 
-            var anchoredEnum = Map.GetAnchoredEntities(gridUid, grid, position);
-            var hasRevealSubfloor = anchoredEnum.Any(HasComp<RevealSubfloorOnScanComponent>);
-            // while (anchoredEnum.MoveNext(out var uid))
-            // {
-            //     if (HasComp<RevealSubfloorOnScanComponent>(uid))
-            //         return true;
-            // }
-            if (hasRevealSubfloor)
-                return true;
-
             return !tileDef.IsSubFloor;
         }
 
-        private void UpdateTile(EntityUid gridUid, MapGridComponent grid, Vector2i position)
+
+        internal void UpdateTile(EntityUid gridUid, MapGridComponent grid, Vector2i position)
         {
             var covered = HasFloorCover(gridUid, grid, position);
+            var hasRevealSubfloor = _tRayScanRevealSystem.HasTRayScanReveal(gridUid, grid, position);
 
             foreach (var uid in Map.GetAnchoredEntities(gridUid, grid, position))
             {
                 if (!TryComp(uid, out SubFloorHideComponent? hideComp))
+                    continue;
+
+                hideComp.IsUnderRevealingEntity = hasRevealSubfloor;
+                if (hasRevealSubfloor)
                     continue;
 
                 if (hideComp.IsUnderCover == covered)
