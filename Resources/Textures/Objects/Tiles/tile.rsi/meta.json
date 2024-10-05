@@ -160,6 +160,9 @@
       "name": "bcircuit"
     },
     {
+      "name": "rcircuit"
+    },
+    {
       "name": "carpet-black"
     },
     {
@@ -470,6 +473,14 @@
     },
     {
       "name": "gold-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "rcircuit-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "rcircuit-inhand-left",
       "directions": 4
     },
     {
