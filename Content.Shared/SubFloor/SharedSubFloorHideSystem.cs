@@ -79,7 +79,7 @@ namespace Content.Shared.SubFloor
             if (args.Anchored)
             {
                 var xform = Transform(uid);
-                component.IsUnderRevealingEntity = _trayScanRevealSystem.HasEntityTileTrayScanReveal(uid, xform);
+                component.IsUnderRevealingEntity = true;
                 UpdateFloorCover(uid, component, xform);
             }
             else
@@ -115,7 +115,7 @@ namespace Content.Shared.SubFloor
             {
                 var tileIndices = Map.TileIndicesFor(xform.GridUid.Value, grid, xform.Coordinates);
                 component.IsUnderCover = HasFloorCover(xform.GridUid.Value, grid, tileIndices);
-                component.IsUnderRevealingEntity = _trayScanRevealSystem.HasTrayScanReveal(xform.GridUid.Value, grid, tileIndices);
+                component.IsUnderRevealingEntity = true; //_trayScanRevealSystem.HasTrayScanReveal(xform.GridUid.Value, grid, tileIndices);
             }
             else
                 component.IsUnderCover = false;
