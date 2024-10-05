@@ -1,0 +1,55 @@
+- type: marking
+  id: SpElfEars1
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [SpElf]
+  forcedColoring: true
+  followSkinColor: true
+  sprites:
+  - sprite: Mobs/Customization/spelf.rsi
+    state: ears1
+
+- type: marking
+  id: SpElfEars2
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [SpElf]
+  forcedColoring: true
+  followSkinColor: true
+  sprites:
+  - sprite: Mobs/Customization/spelf.rsi
+    state: ears2
+
+- type: marking
+  id: SpElfEars3
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [SpElf]
+  forcedColoring: true
+  followSkinColor: true
+  sprites:
+  - sprite: Mobs/Customization/spelf.rsi
+    state: ears3
+
+- type: marking
+  id: SpElfEars4
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [SpElf]
+  forcedColoring: true
+  followSkinColor: true
+  sprites:
+  - sprite: Mobs/Customization/spelf.rsi
+    state: ears4
+
+- type: marking
+  id: SpElfPiercings
+  bodyPart: Snout
+  markingCategory: Overlay
+  speciesRestriction: [SpElf]
+  forcedColoring: false
+  followSkinColor: false
+  sprites:
+  - sprite: Mobs/Customization/spelf.rsi
+    state: piercings
+
