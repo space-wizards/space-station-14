@@ -70,7 +70,6 @@
     bodyType: Static
     canCollide: false
   - type: Damageable
-    damageContainer: Inorganic
     damageModifierSet: Web
   - type: Destructible
     thresholds:
