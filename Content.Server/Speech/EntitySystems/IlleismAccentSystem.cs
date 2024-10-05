@@ -21,19 +21,24 @@ public sealed class IlleismAccentSystem : EntitySystem
     private static readonly Regex RegexIDontUpper = new(@"\bI\s+DON'?T\b");
     private static readonly Regex RegexIDontLower = new(@"\bi\s+don'?t\b", RegexOptions.IgnoreCase);
 
-    // I -> NAME
-    private static readonly Regex RegexI = new(@"\bI\b");
+    // I/Myself -> NAME
+    private static readonly Regex RegexMyselfUpper = new(@"\bMYSELF\b");
+    private static readonly Regex RegexI = new(@"\bI\b|\bmyself\b");
 
     // Me -> NAME
     private static readonly Regex RegexMeUpper = new(@"\bME\b");
     private static readonly Regex RegexMeLower = new(@"\bme\b", RegexOptions.IgnoreCase);
 
     // My crowbar -> NAME's crowbar
-    private static readonly Regex RegexMyUpper = new(@"\bMY\b");
-    private static readonly Regex RegexMyLower = new(@"\bmy\b", RegexOptions.IgnoreCase);
+    // That's mine! -> That's NAME's
+    private static readonly Regex RegexMyUpper = new(@"\bMY\b|\bMINE\b");
+    private static readonly Regex RegexMyLower = new(@"\bmy\b|\bmine\b", RegexOptions.IgnoreCase);
+
+    // I'll do it -> NAME'll do it
+    private static readonly Regex RegexIllUpper = new(@"\bI'?LL\b");
+    private static readonly Regex RegexIllLower = new(@"\bi'?ll\b", RegexOptions.IgnoreCase);
 
 
-    [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly ReplacementAccentSystem _replacement = default!;
 
     public override void Initialize()
@@ -63,7 +68,8 @@ public sealed class IlleismAccentSystem : EntitySystem
         message = RegexIDontUpper.Replace(message, (Name(uid) + " doesn't").ToUpper());
         message = RegexIDontLower.Replace(message, Name(uid) + " doesn't");
 
-        // I -> NAME
+        // I/myself -> NAME
+        message = RegexMyselfUpper.Replace(message, Name(uid).ToUpper());
         message = RegexI.Replace(message, Name(uid));
 
         // Me -> NAME
@@ -73,6 +79,10 @@ public sealed class IlleismAccentSystem : EntitySystem
         // My crowbar -> NAME's crowbar
         message = RegexMyUpper.Replace(message, (Name(uid) + "'s").ToUpper());
         message = RegexMyLower.Replace(message, Name(uid) + "'s");
+
+        // I'll do it -> NAME'll do it
+        message = RegexIllUpper.Replace(message, (Name(uid) + "'ll").ToUpper());
+        message = RegexIllLower.Replace(message, Name(uid) + "'ll");
 
         args.Message = message;
     }
