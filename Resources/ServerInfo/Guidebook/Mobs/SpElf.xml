@@ -11,9 +11,9 @@
     <GuideEntityEmbed Entity="PositronicBrain" Caption=""/>
   </Box>
 
-  The Thaven have a unique brain structure, similar to a positronic brain, and thus have "Moods" which affect them similarly to a borg's Laws. [color=#ffa500]These Moods must be followed at all times! Treat them like server rules.[/color]
+  The Thaven have a unique brain structure, similar to a positronic brain, and thus have "Moods" which affect them similarly to a borg's Laws. [color=#ffa500]These Moods must be followed to the best of your ability! Treat them like server rules. If a Thaven violates them, they experience extreme distress or even physical pain.[/color]
 
-  Thaven Moods can be affected by ionizing radiation, which can have some odd effects on them. Be wary of Ion Storms.
+  Thaven Moods can be affected by ionizing radiation, which can have some odd effects on them. Be wary of Ion Storms. (This is currently not implemented.)
 
   Their unarmed attacks are slow, and deal no damage. However, they do cause a fair amount of stun buildup.
 

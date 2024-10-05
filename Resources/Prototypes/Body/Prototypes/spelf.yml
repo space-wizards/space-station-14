@@ -8,7 +8,7 @@
       connections:
       - torso
       organs:
-        brain: OrganHumanBrain
+        brain: OrganSpelfBrain
         eyes: OrganHumanEyes
     torso:
       part: TorsoSpElf
