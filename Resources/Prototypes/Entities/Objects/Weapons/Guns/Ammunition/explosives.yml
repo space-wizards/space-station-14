@@ -140,27 +140,6 @@
     state: frag
     suffix: false
 
-- type: entity
-  id: GrenadeCleaner
-  name: cleaner grenade
-  parent: BaseGrenade
-  components:
-  - type: Tag
-    tags:
-    - CleanerGrenade
-    - Grenade
-  - type: CartridgeAmmo
-    proto: BulletGrenadeCleaner
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
-    layers:
-    - state: cleaner
-      map: ["enum.AmmoVisualLayers.Base"]
-  - type: Appearance
-  - type: SpentAmmoVisuals
-    state: frag
-    suffix: false
-
 # Cannon Balls
 
 - type: entity
