@@ -1,3 +1,6 @@
+using Content.Shared.Roles;//Used 
+using Robust.Shared.Prototypes;//
+
 namespace Content.Shared.Silicons.Laws.Components;
 
 /// <summary>
@@ -11,4 +14,11 @@ public sealed partial class StartIonStormedComponent : Component
     /// </summary>
     [DataField]
     public int IonStormAmount = 1;
+
+    /// <summary>
+    /// A role given to entities with this component when they are thing-that-is-not-emagged.
+    /// Mostly just for admin purposes.
+    /// </summary>
+    [DataField]
+    public ProtoId<AntagPrototype>? AntagonistRole = "SubvertedSilicon";
 }
