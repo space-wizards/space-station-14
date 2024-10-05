@@ -1,0 +1,43 @@
+# "No, and" moods will discourage players from certain behaviors and objects
+
+# Make sure to add new moods to this dataset or they will not be selected!!!!!!
+- type: dataset
+  id: SpelfMoodsNoAnd
+  values:
+    - SecretMoods
+    - NoModernMedicine
+    - DepartmentDisapproval
+    - DontSpeakToCommand
+    - DisapproveOfDrugs
+
+- type: spelfMood
+  id: SecretMoods
+  moodName: spelf-mood-secret-moods-name
+  moodDesc: spelf-mood-secret-moods-desc
+  conflicts:
+    - SecretMoodsShared
+
+- type: spelfMood
+  id: NoModernMedicine
+  moodName: spelf-mood-no-modern-medicine-name
+  moodDesc: spelf-mood-no-modern-medicine-desc
+
+- type: spelfMood
+  id: DepartmentDisapproval
+  moodName: spelf-mood-department-disapproval-name
+  moodDesc: spelf-mood-department-disapproval-desc
+  moodVars:
+    department: Departments
+
+- type: spelfMood
+  id: DontSpeakToCommand
+  moodName: spelf-mood-dont-speak-to-command-name
+  moodDesc: spelf-mood-dont-speak-to-command-desc
+  conflicts:
+    - OnlySpeakToCommand
+    - MostImportant
+
+- type: spelfMood
+  id: DisapproveOfDrugs
+  moodName: spelf-mood-disapprove-of-drugs-name
+  moodDesc: spelf-mood-disapprove-of-drugs-desc

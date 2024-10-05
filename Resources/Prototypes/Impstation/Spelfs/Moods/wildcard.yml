@@ -1,0 +1,36 @@
+- type: dataset
+  id: SpelfMoodsWildcard
+  values:
+    - CompulsiveLiar
+    - CompulsiveBeliever
+    - OnlyWhisper
+    - OnlyYell
+
+- type: spelfMood
+  id: CompulsiveLiar
+  moodName: spelf-mood-compulsive-liar-name
+  moodDesc: spelf-mood-compulsive-liar-desc
+  conflicts:
+    - CompulsiveBeliever
+
+- type: spelfMood
+  id: CompulsiveBeliever
+  moodName: spelf-mood-compulsive-believer-name
+  moodDesc: spelf-mood-compulsive-believer-desc
+  conflicts:
+    - CompulsiveLiar
+
+- type: spelfMood
+  id: OnlyWhisper
+  moodName: spelf-mood-only-whisper-name
+  moodDesc: spelf-mood-only-whisper-desc
+  conflicts:
+    - OnlyYell
+
+- type: spelfMood
+  id: OnlyYell
+  moodName: spelf-mood-only-yell-name
+  moodDesc: spelf-mood-only-yell-desc
+  conflicts:
+    - OnlyWhisper
+    - LeastImportant
