@@ -23,7 +23,7 @@ public sealed class IlleismAccentSystem : EntitySystem
 
     // I/Myself -> NAME
     private static readonly Regex RegexMyselfUpper = new(@"\bMYSELF\b");
-    private static readonly Regex RegexI = new(@"\bI\b|\bmyself\b");
+    private static readonly Regex RegexI = new(@"\bI\b|\bmyself\b", RegexOptions.IgnoreCase);
 
     // Me -> NAME
     private static readonly Regex RegexMeUpper = new(@"\bME\b");
@@ -75,45 +75,46 @@ public sealed class IlleismAccentSystem : EntitySystem
     {
         var entityManager = IoCManager.Resolve<IEntityManager>();
         var message = args.Message;
+        var name = Name(uid).Split(' ')[0];
 
         // I am going to Sec -> NAME is going to Sec
-        message = RegexIAmUpper.Replace(message, (Name(uid) + " is").ToUpper());
-        message = RegexIAmLower.Replace(message, Name(uid) + " is");
+        message = RegexIAmUpper.Replace(message, (name + " is").ToUpper());
+        message = RegexIAmLower.Replace(message, name + " is");
 
         // I have it -> NAME has it
-        message = RegexIHaveUpper.Replace(message, (Name(uid) + " has").ToUpper());
-        message = RegexIHaveLower.Replace(message, Name(uid) + " has");
+        message = RegexIHaveUpper.Replace(message, (name + " has").ToUpper());
+        message = RegexIHaveLower.Replace(message, name + " has");
 
         // I do! -> NAME does!
-        message = RegexIDoUpper.Replace(message, (Name(uid) + " does").ToUpper());
-        message = RegexIDoLower.Replace(message, Name(uid) + " does");
+        message = RegexIDoUpper.Replace(message, (name + " does").ToUpper());
+        message = RegexIDoLower.Replace(message, name + " does");
 
         // I don't! -> NAME doesn't!
-        message = RegexIDontUpper.Replace(message, (Name(uid) + " doesn't").ToUpper());
-        message = RegexIDontLower.Replace(message, Name(uid) + " doesn't");
+        message = RegexIDontUpper.Replace(message, (name + " doesn't").ToUpper());
+        message = RegexIDontLower.Replace(message, name + " doesn't");
 
         // I/myself -> NAME
-        message = RegexMyselfUpper.Replace(message, Name(uid).ToUpper());
+        message = RegexMyselfUpper.Replace(message, name.ToUpper());
         if (MostlyUppercase(message))
         {
-            message = RegexI.Replace(message, Name(uid).ToUpper());
+            message = RegexI.Replace(message, name.ToUpper());
         }
         else
         {
-            message = RegexI.Replace(message, Name(uid));
+            message = RegexI.Replace(message, name);
         }
 
         // Me -> NAME
-        message = RegexMeUpper.Replace(message, Name(uid).ToUpper());
-        message = RegexMeLower.Replace(message, Name(uid));
+        message = RegexMeUpper.Replace(message, name.ToUpper());
+        message = RegexMeLower.Replace(message, name);
 
         // My crowbar -> NAME's crowbar
-        message = RegexMyUpper.Replace(message, (Name(uid) + "'s").ToUpper());
-        message = RegexMyLower.Replace(message, Name(uid) + "'s");
+        message = RegexMyUpper.Replace(message, (name + "'s").ToUpper());
+        message = RegexMyLower.Replace(message, name + "'s");
 
-        // I'll do it -> NAME'll do it
-        message = RegexIllUpper.Replace(message, (Name(uid) + "'ll").ToUpper());
-        message = RegexIllLower.Replace(message, Name(uid) + "'ll");
+        // I'll do it -> NAME will do it
+        message = RegexIllUpper.Replace(message, (name + " will").ToUpper());
+        message = RegexIllLower.Replace(message, name + " will");
 
         args.Message = message;
     }
