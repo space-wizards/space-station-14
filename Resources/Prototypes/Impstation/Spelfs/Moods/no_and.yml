@@ -236,7 +236,6 @@
   moodName: spelf-mood-lying-bad-name
   moodDesc: spelf-mood-lying-bad-desc
   conflicts:
-    - LyingGood
     - CompulsiveLiar
 
 # All questions that you can hear are directed at you, and you alone.
