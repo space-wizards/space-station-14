@@ -8,7 +8,7 @@
     - Wall
   components:
   - type: TileEmission
-    color: "#FFFF45"
+    color: "#FF4500"
   - type: StepTrigger
     requiredTriggeredSpeed: 0
     intersectRatio: 0.1

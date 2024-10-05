@@ -743,7 +743,10 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         }
 
         if (modified.Count == 0)
+        {
+            component.ModifiedTiles.Remove(chunk);
             _tilePool.Return(modified);
+        }
 
         component.PendingMarkers.Remove(chunk);
     }
@@ -1014,9 +1017,11 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         // Lava: #A34931
         var light = EnsureComp<MapLightComponent>(mapUid);
         light.AmbientLightColor = mapLight ?? Color.FromHex("#D8B059");
+        Dirty(mapUid, light, metadata);
 
         EnsureComp<RoofComponent>(mapUid);
-        Dirty(mapUid, light, metadata);
+
+        EnsureComp<LightCycleComponent>(mapUid);
 
         var moles = new float[Atmospherics.AdjustedNumberOfGases];
         moles[(int) Gas.Oxygen] = 21.824779f;
