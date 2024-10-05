@@ -1,3 +1,12 @@
+# Senior times
+- type: loadoutEffectGroup
+  id: SeniorChemist
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobChemist
+      time: 187200 #52 hrs (1 hour per week for 1 year)
 # Jumpsuit
 - type: loadout
   id: ChemistJumpsuit
@@ -36,3 +45,16 @@
   equipment:
     outerClothing: ClothingOuterWinterChem
 
+# id
+- type: loadout
+  id: ChemistPDA
+  equipment:
+    id: ChemistPDA
+
+- type: loadout
+  id: SeniorChemistPDA
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorChemist
+  equipment:
+    id: SeniorChemistPDA

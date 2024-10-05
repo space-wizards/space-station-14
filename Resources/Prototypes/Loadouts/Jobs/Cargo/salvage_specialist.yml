@@ -1,4 +1,4 @@
-# "Senior Salvager" Time Req. Unofficial
+# Senior times
 - type: loadoutEffectGroup
   id: SeniorSalvager
   effects:
@@ -49,3 +49,17 @@
   id: SaMantle
   equipment:
     neck: ClothingNeckMantle
+
+# id
+- type: loadout
+  id: SalvageSpecialistPDA
+  equipment:
+    id: SalvagePDA
+
+- type: loadout
+  id: SeniorSalvageSpecialistPDA
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorSalvager
+  equipment:
+    id: SeniorSalvagePDA
