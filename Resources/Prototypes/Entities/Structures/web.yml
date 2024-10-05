@@ -5,7 +5,7 @@
   id: WebWindow
   parent: BaseStructure
   name: web window-weave
-  description: A delicate weaving of spider silk you can see through. Keeps nothing out, really.
+  description: A delicate weaving of spider silk you can see through.
   components:
     - type: MeleeSound
       soundGroups:
@@ -14,20 +14,22 @@
             "/Audio/Weapons/slash.ogg"
     - type: Sprite
       drawdepth: Walls
-      sprite: Structures/Walls/grille.rsi
+      sprite: Structures/Web/windowweave.rsi
       layers:
-        - state: grille
+        - state: icon
     - type: Icon
-      sprite: Structures/Walls/grille.rsi
-      state: grille
+      sprite: Structures/Web/windowweave.rsi
+      state: icon
       deconstructionTarget: start
     - type: Physics
       bodyType: Static
+    - type: Damageable
+      damageModifierSet: Web
     - type: Destructible
       thresholds:
       - trigger:
           !type:DamageTrigger
-          damage: 10
+          damage: 2
         behaviors:
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
