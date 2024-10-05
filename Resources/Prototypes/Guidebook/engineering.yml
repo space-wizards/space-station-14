@@ -13,9 +13,9 @@
   id: Construction
   name: guide-entry-construction
   text: "/ServerInfo/Guidebook/Engineering/Construction.xml"
-  children: 
+  children:
   - AirlockSecurity
-  
+
 - type: guideEntry
   id: AirlockSecurity
   name: guide-entry-airlock-security
@@ -27,6 +27,12 @@
   text: "/ServerInfo/Guidebook/Engineering/Atmospherics.xml"
   children:
   - Fires
+  - PipesAndPumps
+
+- type: guideEntry
+  id: PipesAndPumps
+  name: guide-entry-pipesandpumps
+  text: "/ServerInfo/Guidebook/Engineering/PipesAndPumps.xml"
 
 - type: guideEntry
   id: Fires
