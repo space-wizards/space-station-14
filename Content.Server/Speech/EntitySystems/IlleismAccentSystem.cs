@@ -47,6 +47,30 @@ public sealed class IlleismAccentSystem : EntitySystem
         SubscribeLocalEvent<IlleismAccentComponent, AccentGetEvent>(OnAccent);
     }
 
+    private bool MostlyUppercase(string message)
+    {
+        int totalLetters = 0;
+        int uppercaseLetters = 0;
+
+        // Iterate through each character in the string
+        foreach (char c in message)
+        {
+            if (char.IsLetter(c)) // Check if the character is a letter
+            {
+                totalLetters++;
+                if (char.IsUpper(c)) // Check if the letter is uppercase
+                {
+                    uppercaseLetters++;
+                }
+            }
+        }
+        if (totalLetters == 0)
+        {
+            return false;
+        }
+        return uppercaseLetters > totalLetters / 2;
+    }
+
     private void OnAccent(EntityUid uid, IlleismAccentComponent component, AccentGetEvent args)
     {
         var entityManager = IoCManager.Resolve<IEntityManager>();
@@ -70,7 +94,14 @@ public sealed class IlleismAccentSystem : EntitySystem
 
         // I/myself -> NAME
         message = RegexMyselfUpper.Replace(message, Name(uid).ToUpper());
-        message = RegexI.Replace(message, Name(uid));
+        if (MostlyUppercase(message))
+        {
+            message = RegexI.Replace(message, Name(uid).ToUpper());
+        }
+        else
+        {
+            message = RegexI.Replace(message, Name(uid));
+        }
 
         // Me -> NAME
         message = RegexMeUpper.Replace(message, Name(uid).ToUpper());
