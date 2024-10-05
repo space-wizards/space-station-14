@@ -48,7 +48,7 @@
 - type: entity
   id: WebWallDecor
   name: web wall decor
-  description: Somebody should remove that.
+  description: Should somebody remove that?
   components:
   - type: Fixtures
   - type: Transform
