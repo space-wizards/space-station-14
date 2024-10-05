@@ -23,13 +23,13 @@
   - type: ItemToggle
   - type: ProximityBeeper
   - type: ProximityDetector
-    range: 8
+    range: 12
     criteria:
       components:
       - Spectral # reacts to AI eye, intentional
   - type: Beeper
     isMuted: true
-    minBeepInterval: 0.1
+    minBeepInterval: 0.25
     maxBeepInterval: 0.5
     beepSound:
       path: "/Audio/Items/locator_beep.ogg"
