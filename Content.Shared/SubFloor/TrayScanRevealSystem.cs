@@ -17,7 +17,7 @@ public sealed class TrayScanRevealSystem : EntitySystem
         SubscribeLocalEvent<TrayScanRevealComponent, ComponentRemove>(OnRemove);
     }
 
-    private void OnStartup(EntityUid uid, TrayScanRevealComponent component, EntityEventArgs args)
+    private void OnStartup(EntityUid uid, TrayScanRevealComponent component, EntityEventArgs _)
     {
         var gridUid = _transform.GetGrid(uid);
         if (gridUid is null)
@@ -30,7 +30,7 @@ public sealed class TrayScanRevealSystem : EntitySystem
         _subFloorHide.UpdateTile((EntityUid)gridUid, gridComp, position);
     }
 
-    private void OnRemove(EntityUid uid, TrayScanRevealComponent component, EntityEventArgs args)
+    private void OnRemove(EntityUid uid, TrayScanRevealComponent component, EntityEventArgs _)
     {
         _subFloorHide.UpdateTile(component.Tile.Item1, component.Tile.Item2, component.Tile.Item3);
     }
@@ -51,8 +51,8 @@ public sealed class TrayScanRevealSystem : EntitySystem
             return false;
 
         var gridComp = Comp<MapGridComponent>(gridUid.Value);
-        var position = (Vector2i)xform.LocalPosition;
+        var tileIndices = _map.TileIndicesFor((EntityUid)gridUid, gridComp, xform.Coordinates);
 
-        return HasTrayScanReveal((EntityUid)gridUid, gridComp, position);
+        return HasTrayScanReveal((EntityUid)gridUid, gridComp, tileIndices);
     }
 }

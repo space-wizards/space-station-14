@@ -24,6 +24,7 @@ namespace Content.Shared.SubFloor
         /// <summary>
         /// Whether the entity is currently below another entity that reveals it.
         /// </summary>
+        [ViewVariables]
         public bool IsUnderRevealingEntity { get; set; } = false;
 
         /// <summary>
