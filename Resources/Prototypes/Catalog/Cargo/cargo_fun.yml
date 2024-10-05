@@ -64,7 +64,7 @@
     sprite: Objects/Fun/crayons.rsi
     state: box
   product: CrateFunArtSupplies
-  cost: 500
+  cost: 100
   category: cargoproduct-category-name-fun
   group: market
 
