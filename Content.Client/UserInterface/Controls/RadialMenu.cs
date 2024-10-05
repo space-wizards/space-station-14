@@ -14,7 +14,7 @@ public class RadialMenu : BaseWindow
     /// <summary>
     /// Contextual button used to traverse through previous layers of the radial menu
     /// </summary>
-    public TextureButton? ContextualButton { get; set; }
+    public RadialMenuContextualCentralTextureButton ContextualButton { get; }
 
     /// <summary>
     /// Set a style class to be applied to the contextual button when it is set to move the user back through previous layers of the radial menu
@@ -80,7 +80,7 @@ public class RadialMenu : BaseWindow
         }
 
         // Auto generate a contextual button for moving back through visited layers
-        ContextualButton = new TextureButton()
+        ContextualButton = new RadialMenuContextualCentralTextureButton
         {
             HorizontalAlignment = HAlignment.Center,
             VerticalAlignment = VAlignment.Center,
@@ -91,7 +91,12 @@ public class RadialMenu : BaseWindow
         AddChild(ContextualButton);
 
         // Hide any further add children, unless its promoted to the active layer
-        OnChildAdded += child => child.Visible = GetCurrentActiveLayer() == child;
+        OnChildAdded += child =>
+        {
+            child.Visible = GetCurrentActiveLayer() == child;
+            if (child is RadialContainer { Visible: true } container)
+                ContextualButton.Container = container;
+        };
     }
 
     private Control? GetCurrentActiveLayer()
@@ -131,6 +136,8 @@ public class RadialMenu : BaseWindow
             else
             {
                 child.Visible = true;
+                if (child is RadialContainer container)
+                    ContextualButton.Container = container;
                 result = true;
             }
         }
@@ -173,45 +180,37 @@ public class RadialMenu : BaseWindow
             ContextualButton.SetOnlyStyleClass(CloseButtonStyleClass);
     }
 }
-
-[Virtual]
-public class RadialMenuButton : Button
+public sealed class RadialMenuContextualCentralTextureButton : TextureButton
 {
-    /// <summary>
-    /// Upon clicking this button the radial menu will transition to the named layer
-    /// </summary>
-    public string? TargetLayer { get; set; }
 
-    /// <summary>
-    /// A simple button that can move the user to a different layer within a radial menu
-    /// </summary>
-    public RadialMenuButton()
+    /// <inheritdoc />
+    public RadialMenuContextualCentralTextureButton()
     {
-        OnButtonUp += OnClicked;
+
     }
 
-    private void OnClicked(ButtonEventArgs args)
+    public RadialContainer? Container { get; set; }
+
+    /// <inheritdoc />
+    public override bool IsPositionInside(Vector2i point)
     {
-        if (string.IsNullOrEmpty(TargetLayer))
-            return;
-
-        var parent = FindParentMultiLayerContainer(this);
-
-        if (parent == null)
-            return;
-
-        parent.TryToMoveToNewLayer(TargetLayer);
+        return HasPoint(point);
     }
 
-    private RadialMenu? FindParentMultiLayerContainer(Control control)
+    /// <inheritdoc />
+    protected override bool HasPoint(Vector2 point)
     {
-        foreach (var ancestor in control.GetSelfAndLogicalAncestors())
+        if (Container == null)
         {
-            if (ancestor is RadialMenu menu)
-                return menu;
+            return false;
         }
 
-        return null;
+        var cX = -Position.X + Parent!.Width / 2;
+        var cY = -Position.Y + Parent.Width / 2;
+
+        var dist = Math.Sqrt(Math.Pow(point.X - cX, 2) + Math.Pow(point.Y - cY, 2));
+        var isNotInRadius = dist > Container.Radius * 2 || dist < Container.Radius / 2;
+        return isNotInRadius;
     }
 }
 
