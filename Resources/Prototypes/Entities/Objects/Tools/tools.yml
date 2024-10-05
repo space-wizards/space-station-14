@@ -517,3 +517,50 @@
   - type: Construction
     graph: WoodenRollingPin
     node: rollingpin
+
+
+# imp special
+- type: entity
+  name: greatwrench
+  parent: BaseItem
+  id: GreatWrench
+  description: 'A less common, much larger tool for assembly and disassembly. Remember: lefty latchy, righty round removey.'
+  components:
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Effects/metal_slam1.ogg
+  - type: Tag
+    tags:
+    - Wrench
+  - type: Sprite
+    sprite: Objects/Tools/greatwrench.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Tools/greatwrench.rsi
+    storedSprite:
+      sprite: Objects/Tools/greatwrench.rsi
+      state: storage
+  - type: MeleeWeapon
+    wideAnimationRotation: 135
+    attackRate: 0.4
+    damage:
+      types:
+        Blunt: 9.5
+    soundHit:
+      collection: GreatWrench
+  - type: Wieldable
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 10.5
+        Structural: 15
+  - type: Tool
+    qualities:
+      - Anchoring
+    useSound:
+      path: /Audio/Items/ratchet.ogg
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 120
+  - type: StaticPrice
+    price: 22
