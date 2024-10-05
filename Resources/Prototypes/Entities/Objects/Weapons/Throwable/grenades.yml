@@ -398,6 +398,13 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/janitor.rsi
+  - type: Tag
+    tags:
+    - CleanerGrenade
+    - Grenade
+  - type: CartridgeAmmo
+    proto: BulletGrenadeCleaner
+    deleteOnSpawn: true
   - type: SmokeOnTrigger
     duration: 15
     spreadAmount: 50

@@ -119,6 +119,34 @@
   - type: MovementAlwaysTouching
   - type: NoSlip
 
+# For Artifact Polymorph
+- type: entity
+  parent: ImmovableRod
+  id: ImmovableRodArtifactPoly
+  suffix: Victim
+  components:
+  - type: ImmovableRod
+    minSpeed: 1
+    maxSpeed: 3
+    destroyTiles: false
+    randomizeVelocity: false
+    shouldGib: false
+    damage:
+      types:
+        Blunt: 200
+  - type: MovementIgnoreGravity
+    gravityState: true
+  - type: InputMover
+  - type: MovementSpeedModifier
+    weightlessAcceleration: 5
+    weightlessModifier: 2
+    weightlessFriction: 0
+    friction: 0
+    frictionNoInput: 0
+  - type: CanMoveInAir
+  - type: MovementAlwaysTouching
+  - type: NoSlip
+
 - type: entity
   parent: ImmovableRodKeepTiles
   id: ImmovableRodKeepTilesStill
@@ -238,11 +266,16 @@
     noRot: false
 
 - type: entity
-  parent: ImmovableRodKeepTilesStill
+  parent: ImmovableRodKeepTiles
   id: ImmovableRodGondal
   name: immovable gondal
   description: FUCK
   components:
+  - type: ImmovableRod
+    minSpeed: 0.25
+    maxSpeed: 0.25
+  - type: TimedDespawn
+    lifetime: 141.0
   - type: EmitSoundOnSpawn
     sound:
       path: /Audio/Effects/gondalmono.ogg
@@ -251,3 +284,7 @@
     state: gondal
     rotation: 0
     noRot: false
+  - type: PointLight
+    radius: 3
+    color: white
+    energy: 2.0
