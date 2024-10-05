@@ -255,10 +255,10 @@ public class RadialMenuTextureButton : TextureButton
 
         var position = new Vector2(pX, pY) * UIScale;
 
-        var singleSegmentSize = MathF.Tau / 32;
+        const float singleSegmentSize = MathF.Tau / 32;
 
         var controlSegmentSize = AngleSectorTo - AngleSectorFrom;
-        var segCount = (int) (controlSegmentSize / singleSegmentSize) +1;
+        var segCount = (int) (controlSegmentSize / singleSegmentSize) + 1;
 
         // CHANGE TO STACKALLOC AND MOVE THIS STUFF TO TOOLBOX!111
         var buffer = new Vector2[segCount * 2];
@@ -289,20 +289,6 @@ public class RadialMenuTextureButton : TextureButton
         handle.DrawPrimitives(DrawPrimitiveTopology.TriangleStrip, buffer, color);
     }
 
-    /// <inheritdoc />
-    protected override void MouseEntered()
-    {
-        //Console.WriteLine(this._texturePath?.ToString());
-        base.MouseEntered();
-    }
-
-    /// <inheritdoc />
-    protected override void MouseExited()
-    {
-        //Console.WriteLine(this._texturePath?.ToString());
-        base.MouseExited();
-    }
-
     private void OnClicked(ButtonEventArgs args)
     {
         if (TargetLayer == string.Empty)
@@ -319,19 +305,7 @@ public class RadialMenuTextureButton : TextureButton
     /// <inheritdoc />
     public override bool IsPositionInside(Vector2i point)
     {
-        var cX = -Position.X + Parent!.Width / 2;
-        var cY = -Position.Y + Parent.Width / 2;
-
-        var dist = GetDistance(cX, cY, point.X, point.Y);
-
-        var dX = cX - point.X;
-        var dY = cY - point.Y;
-        var angle = dX > 0 ? -MathF.Atan2(dX, dY) + MathF.PI * 2 : -MathF.Atan2(dX, dY);
-        var parent = (RadialContainer)Parent;
-        var isInAngle = angle > AngleSectorFrom && angle < AngleSectorTo;
-        var isInRadius = dist < parent.Radius * 2 && dist > parent.Radius / 2;
-        var hasPoint = isInRadius && isInAngle;
-        return hasPoint;
+        return HasPoint(point);
     }
 
     /// <inheritdoc />
@@ -340,29 +314,21 @@ public class RadialMenuTextureButton : TextureButton
         var cX = -Position.X + Parent!.Width / 2;
         var cY = -Position.Y + Parent.Width / 2;
 
-        var dist = GetDistance(cX, cY, point.X, point.Y);
+        var dist = Math.Sqrt(Math.Pow(point.X - cX, 2) + Math.Pow(point.Y - cY, 2));
+        var parent = (RadialContainer)Parent;
+        var isInRadius = dist < parent.Radius * 2 && dist > parent.Radius / 2;
+        if (!isInRadius)
+        {
+            return false;
+        }
 
         var dX = cX - point.X;
         var dY = cY - point.Y;
-        var angle = dX > 0 ? -MathF.Atan2(dX,dY) + MathF.PI *2: - MathF.Atan2(dX, dY);
-        var parent = (RadialContainer)Parent;
+        var angle = dX > 0
+            ? -MathF.Atan2(dX, dY) + MathF.PI * 2
+            : -MathF.Atan2(dX, dY);
         var isInAngle = angle > AngleSectorFrom && angle < AngleSectorTo;
-        var isInRadius = dist < parent.Radius*2 && dist > parent.Radius/2;
-        var hasPoint = isInRadius && isInAngle;
-        return hasPoint;
-    }
-
-    public static float ConvertRadiansToDegrees(float radians)
-    {
-        float degrees = (180f / MathF.PI) * radians;
-        return (degrees);
-    }
-
-
-    private static double GetDistance(float x1, float y1, float x2, float y2)
-    {
-        return Math.Sqrt(Math.Pow(x2 - x1, 2) + Math.Pow(y2 - y1, 2));
-
+        return isInAngle;
     }
 
     private RadialMenu? FindParentMultiLayerContainer(Control control)
