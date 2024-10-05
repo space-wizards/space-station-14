@@ -1,7 +1,7 @@
 - type: species
   id: SpElf
   name: species-name-spelf
-  roundStart: false
+  roundStart: true
   prototype: MobSpElf
   sprites: MobSpElfSprites
   defaultSkinTone: "#ffffff"

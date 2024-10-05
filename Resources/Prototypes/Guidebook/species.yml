@@ -13,7 +13,7 @@
     - Vox
     - Gray
     - Snail
-    - Thaven
+    - SpElf
 
 - type: guideEntry
   id: Arachnid
@@ -66,6 +66,6 @@
   text: "/ServerInfo/Guidebook/Mobs/Snail.xml"
 
 - type: guideEntry
-  id: Thaven
+  id: SpElf
   name: Thaven
   text: "/ServerInfo/Guidebook/Mobs/SpElf.xml"

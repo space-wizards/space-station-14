@@ -1,0 +1,9 @@
+- type: entity
+  id: OrganSpelfBrain
+  parent: [BaseItem, OrganHumanBrain]
+  name: thaven brain
+  description: "An organic positronic brain. Quite remarkable, really."
+  components:
+    - type: Sprite
+      sprite: Mobs/Species/SpElf/organs.rsi
+      state: brain-spelf
