@@ -19,6 +19,7 @@
     - Moth
     - Reptilian
     - Gray
+    - SpElf
 
 - type: loadoutEffectGroup
   id: EffectSpeciesVox
