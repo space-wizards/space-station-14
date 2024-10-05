@@ -14,5 +14,5 @@ public sealed partial class ChangeVoiceInContainerComponent : Component
     ///     A whitelist of containers that will change the name.
     /// </summary>
     [DataField]
-    public EntityWhitelist Whitelist;
+    public EntityWhitelist? Whitelist;
 }
