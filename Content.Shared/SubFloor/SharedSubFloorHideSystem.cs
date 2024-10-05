@@ -20,7 +20,7 @@ namespace Content.Shared.SubFloor
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
         [Dependency] protected readonly SharedMapSystem Map = default!;
         [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
-        [Dependency] private readonly TrayScanRevealSystem _tRayScanRevealSystem = default!;
+        [Dependency] private readonly TrayScanRevealSystem _trayScanRevealSystem = default!;
 
         public override void Initialize()
         {
@@ -86,6 +86,8 @@ namespace Content.Shared.SubFloor
                 component.IsUnderCover = false;
                 UpdateAppearance(uid, component);
             }
+            else
+                component.IsUnderRevealingEntity = false;
         }
 
         private void OnTileChanged(ref TileChangedEvent args)
@@ -127,7 +129,7 @@ namespace Content.Shared.SubFloor
         internal void UpdateTile(EntityUid gridUid, MapGridComponent grid, Vector2i position)
         {
             var covered = HasFloorCover(gridUid, grid, position);
-            var hasRevealSubfloor = _tRayScanRevealSystem.HasTRayScanReveal(gridUid, grid, position);
+            var hasRevealSubfloor = _trayScanRevealSystem.HasTrayScanReveal(gridUid, grid, position);
 
             foreach (var uid in Map.GetAnchoredEntities(gridUid, grid, position))
             {

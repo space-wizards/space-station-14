@@ -13,11 +13,11 @@ public sealed class TrayScanRevealSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<TrayScanRevealComponent, ComponentStartup>(OnTRayScanRevealStartup);
-        SubscribeLocalEvent<TrayScanRevealComponent, ComponentRemove>(OnTRayScanRevealRemove);
+        SubscribeLocalEvent<TrayScanRevealComponent, ComponentStartup>(OnTrayScanRevealStartup);
+        SubscribeLocalEvent<TrayScanRevealComponent, ComponentRemove>(OnTrayScanRevealRemove);
     }
 
-    private void OnTRayScanRevealStartup(EntityUid uid, TrayScanRevealComponent component, EntityEventArgs args)
+    private void OnTrayScanRevealStartup(EntityUid uid, TrayScanRevealComponent component, EntityEventArgs args)
     {
         var gridUid = _transform.GetGrid(uid);
         if (gridUid is null)
@@ -30,12 +30,12 @@ public sealed class TrayScanRevealSystem : EntitySystem
         _subFloorHide.UpdateTile((EntityUid)gridUid, gridComp, position);
     }
 
-    private void OnTRayScanRevealRemove(EntityUid uid, TrayScanRevealComponent component, EntityEventArgs args)
+    private void OnTrayScanRevealRemove(EntityUid uid, TrayScanRevealComponent component, EntityEventArgs args)
     {
         _subFloorHide.UpdateTile(component.Tile.Item1, component.Tile.Item2, component.Tile.Item3);
     }
 
-    internal bool HasTRayScanReveal(EntityUid gridUid, MapGridComponent grid, Vector2i position)
+    internal bool HasTrayScanReveal(EntityUid gridUid, MapGridComponent grid, Vector2i position)
     {
         var anchoredEnum = _map.GetAnchoredEntities(gridUid, grid, position);
         return anchoredEnum.Any(HasComp<TrayScanRevealComponent>);
