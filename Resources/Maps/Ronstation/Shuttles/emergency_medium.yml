@@ -15,7 +15,7 @@ tilemap:
 entities:
 - proto: ""
   entities:
-  - uid: 1
+  - uid: 2
     components:
     - type: MetaData
       name: NT Evac Medium
