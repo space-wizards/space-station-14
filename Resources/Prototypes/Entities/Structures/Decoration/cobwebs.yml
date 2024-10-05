@@ -23,7 +23,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 5 #With the damage modifier you should have a hard time getting through it with something blunt, but an axe or something flammable will do the trick.
+        damage: 5 # best removed with fire or slashing
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
