@@ -1486,3 +1486,11 @@
   sprites:
     - sprite: Mobs/Customization/spelf_hair.rsi
       state: coffeehouse
+- type: marking
+  id: SpElfHairFrenchbraid
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: frenchbraid

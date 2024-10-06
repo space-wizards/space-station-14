@@ -204,3 +204,4 @@ marking-SpElfHairVeryshortovereyealternate = Very Short Over Eye
 marking-SpElfHairVlongfringe = Very Long with Fringe
 marking-SpElfHairVolaju = Volaju
 marking-SpElfHairWisp = Wisp
+marking-SpElfHairFrenchbraid = French Braid
