@@ -370,7 +370,7 @@
   - ClownShoesExpert
 
 - type: loadoutGroup
-  id: BartenderID
+  id: BartenderPDA
   name: loadout-group-bartender-id
   loadouts:
   - BartenderPDA
@@ -431,7 +431,7 @@
   - ClownShoesExpert
 
 - type: loadoutGroup
-  id: ChefID
+  id: ChefPDA
   name: loadout-group-chef-id
   loadouts:
   - ChefPDA
@@ -659,7 +659,7 @@
   - ClownShoesExpert
 
 - type: loadoutGroup
-  id: BotanistID
+  id: BotanistPDA
   name: loadout-group-botanist-id
   loadouts:
   - BotanistPDA
@@ -1001,7 +1001,7 @@
   - CargoWinterBoots
 
 - type: loadoutGroup
-  id: SalvageSpecialistID
+  id: SalvageSpecialistPDA
   name: loadout-group-salvage-specialist-id
   loadouts:
   - SalvageSpecialistPDA
@@ -1177,7 +1177,7 @@
   - EngineeringWinterBoots
 
 - type: loadoutGroup
-  id: AtmosphericTechnicianID
+  id: AtmosphericTechnicianPDA
   name: loadout-group-atmospheric-technician-id
   loadouts:
   - AtmosphericTechnicianPDA
@@ -1441,7 +1441,7 @@
   - WardenWinterCoatUnarmored
 
 - type: loadoutGroup
-  id: WardenID
+  id: WardenPDA
   name: loadout-group-warden-id
   loadouts:
   - WardenPDA
@@ -1573,7 +1573,7 @@
   - SecurityClownShoes
 
 - type: loadoutGroup
-  id: DetectiveID
+  id: DetectivePDA
   name: loadout-group-detective-id
   loadouts:
   - DetectivePDA
@@ -1853,11 +1853,11 @@
   - MedicalWinterBoots
 
 - type: loadoutGroup
-  id: ChemistID
+  id: ChemistPDA
   name: loadout-group-chemist-id
   loadouts:
-  - ChemistPDA
-  - SeniorChemistPDA
+  - ChemistryPDA
+  - SeniorChemistryPDA
 
 - type: loadoutGroup
   id: ParamedicHead
@@ -1897,7 +1897,7 @@
   - MedicalWinterBoots
 
 - type: loadoutGroup
-  id: ParamedicID
+  id: ParamedicPDA
   name: loadout-group-paramedic-id
   loadouts:
   - ParamedicPDA

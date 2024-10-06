@@ -47,14 +47,14 @@
 
 # id
 - type: loadout
-  id: ChemistPDA
+  id: ChemistryPDA
   equipment:
-    id: ChemistPDA
+    id: ChemistryPDA
 
 - type: loadout
-  id: SeniorChemistPDA
+  id: SeniorChemistryPDA
   effects:
   - !type:GroupLoadoutEffect
     proto: SeniorChemist
   equipment:
-    id: SeniorChemistPDA
+    id: SeniorChemistryPDA
