@@ -19,6 +19,10 @@
   - type: PipeAppearance
   - type: Anchorable
   - type: Rotatable
+  - type: RCDDeconstructable
+    cost: 1
+    delay: 0
+    fx: EffectRCDDeconstruct0
   - type: Destructible
     thresholds:
     - trigger: # for nukes
@@ -44,6 +48,7 @@
         offset: 0
       - !type:DoActsBehavior
         acts: ["Breakage"]
+
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/pipe.rsi
     drawdepth: ThinPipe
