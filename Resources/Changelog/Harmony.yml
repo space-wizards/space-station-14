@@ -293,3 +293,46 @@ Entries:
     - type: Add
       message: Added Leather Shoes to HoP Loadout (new shoes loadout created, check
         your loadouts to not spawn barefoot)
+  - id: 106
+    author: FluffMe
+    time: '2024-10-05T10:40:58.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/106
+    changes:
+    - type: Tweak
+      message: Red phone is now an intercom for CentCom channel.
+  - id: 95
+    author: Unisol
+    time: '2024-10-05T15:57:48.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/95
+    changes:
+    - type: Add
+      message: Syndicate ID is now available in the uplink. Opens Syndicate doors. Does
+        not open Nanotrasen doors.
+  - id: 108
+    author: DieselMohawk
+    time: '2024-10-05T20:12:59.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/108
+    changes:
+    - type: Add
+      message: Added HoP Turtleneck Skirt variant.
+  - id: 109
+    author: DieselMohawk
+    time: '2024-10-06T13:29:53.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/109
+    changes:
+    - type: Add
+      message: Added Captain's Armored Winter Coat
+  - id: 110
+    author: DieselMohawk
+    time: '2024-10-06T13:31:54.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/110
+    changes:
+    - type: Add
+      message: Added Harmonica to Loadouts under Trinkets
+  - id: 27
+    author: SlamBamActionman
+    time: '2024-10-06T15:32:34.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/27
+    changes:
+    - type: Add
+      message: Xeno map Beta is available for playtest on Harmony.
