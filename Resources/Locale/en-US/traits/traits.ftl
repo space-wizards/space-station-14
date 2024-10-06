@@ -81,7 +81,7 @@ trait-scrambled-desc = There was an accident with a tesla engine, now others hav
 trait-nocontractions-name = No contractions
 trait-nocontractions-desc = You are (mostly) incapable of using contractions.
 
-trait-sharpinflection-name = Sharp Inflection
+trait-sharpinflection-name = Sharp inflection
 trait-sharpinflection-desc = You mumble... When you aren't shouting!!
 
 trait-monotonous-name = Monotonous
