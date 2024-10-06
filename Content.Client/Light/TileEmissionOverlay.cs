@@ -34,15 +34,18 @@ public sealed class TileEmissionOverlay : Overlay
         if (args.Viewport.Eye == null)
             return;
 
+        return;
+
         var mapId = args.MapId;
         var worldHandle = args.WorldHandle;
-        var bounds = args.WorldBounds;
+        var bounds = args.WorldBounds.Enlarged(1f);
         var viewport = args.Viewport;
+        var target = _clyde.CreateLightRenderTarget(viewport.LightRenderTarget.Size, name: "tile-emissions");
 
-        args.WorldHandle.RenderInRenderTarget(viewport.LightRenderTarget,
+        args.WorldHandle.RenderInRenderTarget(target,
         () =>
         {
-            var invMatrix = viewport.LightRenderTarget.GetWorldToLocalMatrix(viewport.Eye, viewport.RenderScale / 2f);
+            var invMatrix = target.GetWorldToLocalMatrix(viewport.Eye, viewport.RenderScale / 2f);
             _entities.Clear();
             _lookup.GetEntitiesIntersecting(mapId, bounds, _entities);
 
@@ -65,12 +68,12 @@ public sealed class TileEmissionOverlay : Overlay
                 // to turn the squares into polys.
                 // Additionally no shadows so if you make it too big it's going to go through a 1x wall.
                 var local = _lookup.GetLocalBounds(tile, grid.TileSize).Enlarged(ent.Comp.Range);
-                worldHandle.DrawRect(local, ent.Comp.Color);
+                //worldHandle.DrawRect(local, ent.Comp.Color);
             }
         }, null);
 
         // This also handles blurring for roofoverlay; if these ever become decoupled then you will need to draw at least
         // one of these to a separate texture.
-        _clyde.BlurLights(viewport, viewport.LightRenderTarget, viewport.Eye, 14f * 4f);
+        //_clyde.BlurLights(viewport, viewport.LightRenderTarget, viewport.Eye, 14f * 4f);
     }
 }

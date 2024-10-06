@@ -10,6 +10,7 @@ namespace Content.Client.Light;
 
 public sealed class RoofOverlay : Overlay
 {
+    [Dependency] private readonly IClyde _clyde = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefMan = default!;
     private readonly IEntityManager _entManager;
 
@@ -40,11 +41,13 @@ public sealed class RoofOverlay : Overlay
         var xformSystem = _entManager.System<SharedTransformSystem>();
 
         var query = _entManager.AllEntityQueryEnumerator<RoofComponent, MapGridComponent, TransformComponent>();
+        var target = IoCManager.Resolve<IClyde>()
+            .CreateLightRenderTarget(viewport.LightRenderTarget.Size, name: "roof-target");
 
-        worldHandle.RenderInRenderTarget(viewport.LightRenderTarget,
+        worldHandle.RenderInRenderTarget(target,
             () =>
             {
-                var invMatrix = viewport.LightRenderTarget.GetWorldToLocalMatrix(eye, viewport.RenderScale / 2f);
+                var invMatrix = target.GetWorldToLocalMatrix(eye, viewport.RenderScale / 2f);
 
                 while (query.MoveNext(out var uid, out var comp, out var grid, out var xform))
                 {
@@ -88,6 +91,16 @@ public sealed class RoofOverlay : Overlay
                     }
                 }
             }, null);
+
+        //IoCManager.Resolve<IClyde>().BlurLights(viewport, target, viewport.Eye, 14f * 4f);
+
+        worldHandle.RenderInRenderTarget(viewport.LightRenderTarget,
+        () =>
+        {
+            var invMatrix = viewport.LightRenderTarget.GetWorldToLocalMatrix(viewport.Eye, viewport.RenderScale / 2f);
+            worldHandle.SetTransform(invMatrix);
+            worldHandle.DrawTextureRect(target.Texture, bounds);
+        }, null);
 
         // Around half-a-tile in length because too lazy to do shadows properly and this avoids it going through walls.
         // IoCManager.Resolve<IClyde>().BlurLights(viewport, viewport.LightRenderTarget, viewport.Eye, 14f * 4f);

@@ -31,7 +31,7 @@ public sealed partial class LightCycleComponent : Component
     public bool InitialOffset = true;
 
     [DataField, AutoNetworkedField]
-    public float MinLightLevel = 0.2f;
+    public float MinLightLevel = 0f;
 
     [DataField, AutoNetworkedField]
     public float MaxLightLevel = 1.25f;

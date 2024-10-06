@@ -40,6 +40,9 @@ entities:
   entities:
   - uid: 1
     components:
+    - type: MapLight
+      ambientLightColor: "#D8B059"
+    - type: LightCycle
     - type: Gravity
       enabled: true
       inherent: true
