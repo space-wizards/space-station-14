@@ -35,6 +35,9 @@
   - !type:DepartmentTimeRequirement
     department: Security
     time: 18000 # 5h
+  - !type:DepartmentTimeRequirement
+    department: Command
+    time: 180000 #50h
   # should be changed to nukie playtime when thats tracked (wyci)
   guides: [ NuclearOperatives ]
 
