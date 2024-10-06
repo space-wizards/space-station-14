@@ -1,0 +1,12 @@
+- type: entity
+  parent: [ClothingOuterArmorCaptainCarapace, ClothingOuterWinterCoatToggleable, BaseCommandContraband]
+  id: ClothingOuterWinterCapArmored
+  name: captain's armored winter coat
+  description: A winter coat for the cautious captain.
+  components:
+  - type: Sprite
+    sprite: _Harmony/Clothing/OuterClothing/WinterCoats/coatcaparmored.rsi
+  - type: Clothing
+    sprite: _Harmony/Clothing/OuterClothing/WinterCoats/coatcaparmored.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHatHoodWinterCaptainArmored

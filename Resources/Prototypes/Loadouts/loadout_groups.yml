@@ -121,6 +121,7 @@
   loadouts:
   - CaptainOuterClothing
   - CaptainWintercoat
+  - CaptainArmoredWinterCoatHarmony #Harmony
 
 - type: loadoutGroup
   id: HoPHead

@@ -1,0 +1,5 @@
+# Outer clothing
+- type: loadout
+  id: CaptainArmoredWinterCoatHarmony
+  equipment:
+    outerClothing: ClothingOuterWinterCapArmored
