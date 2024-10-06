@@ -2281,7 +2281,7 @@
   name: tarantula
   parent: [ SimpleMobBase, MobCombat ]
   id: MobGiantSpider
-  description: Widely recognized to be the literal worst thing in existence.
+  description: Widely recognized to be the literal worst thing in existence. Aggressively territorial.
   components:
   - type: Sprite
     drawdepth: Mobs
@@ -3380,7 +3380,7 @@
   - type: HTN
     rootTask:
       task: RuminantCompound
-      
+
 - type: entity
   name: diona nymph
   parent: [SimpleMobBase, StripableInventoryBase]

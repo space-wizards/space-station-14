@@ -46,7 +46,8 @@ ghost-role-information-snoth-description = A little snoth who doesn't mind a bit
 
 ghost-role-information-giant-spider-name = Giant spider
 ghost-role-information-giant-spider-description = This station's inhabitants look mighty tasty, and your sticky web is perfect to catch them!
-ghost-role-information-giant-spider-rules = You are a [color=red][bold]Team Antagonist[/bold][/color] with all other giant spiders.
+ghost-role-information-giant-spider-rules = You are a fiercely territorial [color=red][bold]Team Antagonist[/bold][/color] with all other giant spiders.
+                                            You're a Free Agent regarding matters not related to your territory.
 
 ghost-role-information-cognizine-description = Made conscious with the magic of cognizine.
 
@@ -252,7 +253,7 @@ ghost-role-information-medical-description = You are a medical professional, but
 ghost-role-information-cargo-name = Cargo
 ghost-role-information-cargo-description = You are part of a logistics mission, but seem to have found yourself in a strange situation...
 
-ghost-role-information-engineering-name = Engineering 
+ghost-role-information-engineering-name = Engineering
 ghost-role-information-engineering-description = You are on an engineering job, but seem to have found yourself in a strange situation...
 
 ghost-role-information-science-name = Science
