@@ -1,0 +1,21 @@
+﻿<Document>
+  ## Pipes
+  Pipes are used to distribute gasses from one place to another. There are a wide variety of pipes available to construct:
+
+  <Box>
+    <GuideEntityEmbed Entity="GasPipeStraight" Caption="straight"/>
+    <GuideEntityEmbed Entity="GasPipeHalf" Caption="half"/>
+    <GuideEntityEmbed Entity="GasPipeBend" Caption="bend"/>
+    <GuideEntityEmbed Entity="GasPipeTJunction" Caption="T junction"/>
+    <GuideEntityEmbed Entity="GasPipeFourway" Caption="fourway"/>
+  </Box>
+
+  Pipes will [color=#a4885c]automatically connect[/color] to other pipes when wrenched (or bolted) to the hull to form a network of pipes. A network of pipes is commonly called a [color=#a4885c]pipenet[/color].
+
+  However, pipes will [color=red]not connect[/color] to pipes on top of each other. For example, building a bent pipe on top of a straight pipe to form a makeshift T-junction will not work.
+
+  Without pumps, gasses flow through pipes in both directions to balance their respective pressure, volume, and temperature. Some examples to better grasp this idea:
+  - Inducing a vacuum in a pipe (through a passive vent exposed to space, or a pump) will cause gas to move throughout the pipenet to fill the vacuum.
+  - Pushing high pressure gas into a lower pressure pipenet will cause the high pressure gas to spread out to balance pressure in the pipenet
+  - The station's wastenet is commonly a vacuum to expedite the transport of waste gasses to space or the station's recycler net.
+</Document>
