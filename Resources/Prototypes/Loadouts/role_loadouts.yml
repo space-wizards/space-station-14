@@ -64,9 +64,9 @@
   - BartenderJumpsuit
   - BartenderOuterClothing
   - BartenderShoes
-  - BartenderPDA
   - Glasses
   - CommonBackpack
+  - BartenderPDA
   - Survival
   - Trinkets
   - Mixologist
@@ -93,9 +93,9 @@
   - ChefJumpsuit
   - ChefOuterClothing
   - ChefShoes
-  - ChefPDA
   - Glasses
   - CommonBackpack
+  - ChefPDA
   - Survival
   - Trinkets
   - GroupSpeciesBreathTool
@@ -170,9 +170,9 @@
   - BotanistJumpsuit
   - BotanistOuterClothing
   - BotanistShoes
-  - BotanistPDA
   - Glasses
   - BotanistBackpack
+  - BotanistPDA
   - Survival
   - Trinkets
   - GroupSpeciesBreathTool
@@ -262,9 +262,9 @@
   - SalvageSpecialistNeck
   - SalvageSpecialistOuterClothing
   - SalvageSpecialistShoes
-  - SalvageSpecialistPDA
-  - SalvageSpecialistBackpack
   - Glasses
+  - SalvageSpecialistBackpack
+  - SalvageSpecialistPDA
   - Survival
   - Trinkets
   - GroupSpeciesBreathTool
@@ -319,8 +319,8 @@
   - AtmosphericTechnicianJumpsuit
   - AtmosphericTechnicianOuterClothing
   - AtmosphericTechnicianShoes
-  - AtmosphericTechnicianPDA
   - AtmosphericTechnicianBackpack
+  - AtmosphericTechnicianPDA
   - SurvivalExtended
   - Trinkets
   - GroupSpeciesBreathTool
@@ -400,9 +400,9 @@
   - WardenJumpsuit
   - WardenOuterClothing
   - UpperSecurityShoes
-  - WardenPDA
   - SecurityBackpack
   - SecurityBelt
+  - WardenPDA
   - SurvivalSecurity
   - Trinkets
   - SecurityStar
@@ -436,8 +436,8 @@
   - DetectiveJumpsuit
   - DetectiveOuterClothing
   - DetectiveShoes
-  - DetectivePDA
   - SecurityBackpack
+  - DetectivePDA
   - SurvivalSecurity
   - Trinkets
   - SecurityStar
@@ -528,8 +528,8 @@
   - ChemistOuterClothing
   - MedicalGloves
   - ChemistShoes
-  - ChemistPDA
   - ChemistBackpack
+  - ChemistPDA
   - SurvivalMedical
   - Trinkets
   - GroupSpeciesBreathToolMedical
@@ -545,9 +545,9 @@
   - ParamedicOuterClothing
   - MedicalGloves
   - ParamedicShoes
-  - ParamedicPDA
   - Glasses
   - MedicalBackpack
+  - ParamedicPDA
   - SurvivalMedical
   - Trinkets
   - GroupSpeciesBreathToolMedical
