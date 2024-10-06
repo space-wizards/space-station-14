@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: BombasterDS
-  changes:
-  - message: Added new plant mutations for apple, sugarcane and galaxythistle
-    type: Add
-  id: 6991
-  time: '2024-07-27T15:08:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28993
 - author: Spessmann
   changes:
   - message: Thief objectives for figurines and stamps now require less items
@@ -3942,3 +3935,10 @@
   id: 7490
   time: '2024-10-06T12:48:49.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32097
+- author: Golinth
+  changes:
+  - message: Removed clown waddling until implemented properly
+    type: Remove
+  id: 7491
+  time: '2024-10-06T13:33:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32652
