@@ -608,7 +608,8 @@
     DefaultDeathgasp:
       collection: MaleDeathGasp
   params:
-    variation: 0.125
+    variation: 0.05
+    pitch: 1.25
 
 # mobs
 - type: emoteSounds

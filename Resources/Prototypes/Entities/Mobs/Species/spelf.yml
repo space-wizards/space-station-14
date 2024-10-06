@@ -26,7 +26,7 @@
   - type: Sprite
     noRot: true
     drawdepth: Mobs
-    scale: 1, 1
+    scale: 1, 1.05
   - type: Body
     prototype: SpElf
     requiredLegs: 2
