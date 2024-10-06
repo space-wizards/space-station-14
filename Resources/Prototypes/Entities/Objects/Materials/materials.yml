@@ -427,6 +427,11 @@
     tags:
       - ClothMade
       - RawMaterial
+      - Boll
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      Cotton: 100
 
 - type: entity
   parent: MaterialCotton
