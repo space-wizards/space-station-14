@@ -28,7 +28,6 @@ public sealed class SecretStashSystem : EntitySystem
     [Dependency] private readonly SharedItemSystem _item = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly ToolOpenableSystem _toolOpenableSystem = default!;
-
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     public override void Initialize()
