@@ -8,11 +8,8 @@
   - !type:RoleTimeRequirement
     role: JobBorg
     time: 54000  # 15 hrs
-  - !type:DepartmentTimeRequirement
-    department: Command
-    time: 18000  # 5 hrs
   - !type:OverallPlaytimeRequirement
-      time: 270000 # 75 hrs, borg already needs 60.
+      time: 270000 # 75 hrs, borg already needs 40.
   canBeAntag: false
   icon: JobIconStationAi
   supervisors: job-supervisors-rd
@@ -26,7 +23,7 @@
   playTimeTracker: JobBorg
   requirements:
     - !type:OverallPlaytimeRequirement
-      time: 216000 # 60 hrs
+      time: 144000 # 40 hrs
   canBeAntag: false
   icon: JobIconBorg
   supervisors: job-supervisors-rd
