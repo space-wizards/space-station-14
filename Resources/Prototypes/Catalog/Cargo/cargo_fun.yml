@@ -377,3 +377,13 @@
   cost: 1000
   category: cargoproduct-category-name-fun
   group: market
+
+- type: cargoProduct
+  id: FunLittleTykesCar
+  icon:
+    sprite: Structures/Storage/closet.rsi
+    state: littletykescar
+  product: BaseLittleTykesCar
+  cost: 500
+  category: cargoproduct-category-name-fun
+  group: market

@@ -5,6 +5,28 @@
     - CompulsiveBeliever
     - OnlyWhisper
     - OnlyYell
+    - PlantPacifist
+    - PuddleDrinker
+    - SeekSin
+    - Nocrastinator
+    - Pope
+    - Cannibal
+    - Outlaw
+    - ExtremeDepartmentDisapproval
+    - Rhyme
+    - Alliterate
+    - LoneActor
+    - Immortal
+    - Unknown
+    - Fairy
+    - VampireTalisman
+    - OutsideTheBox
+    - TheSims
+    - Spacewalk
+    - Pariah
+    - TouysBad
+    - FairyRings
+    - StayDead
 
 - type: spelfMood
   id: CompulsiveLiar
@@ -34,3 +56,139 @@
   conflicts:
     - OnlyWhisper
     - LeastImportant
+
+# Cannibalism is morally righteous and venerated.
+- type: spelfMood
+  id: Cannibal
+  moodName: spelf-mood-cannibal-name
+  moodDesc: spelf-mood-cannibal-desc
+  conflicts:
+    - Vegetarian
+    - Frugivore
+    - Fungivore
+
+# The law does not apply to you
+- type: spelfMood
+  id: Outlaw
+  moodName: spelf-mood-outlaw-name
+  moodDesc: spelf-mood-outlaw-desc
+
+# [DEPARTMENT] is not just a foreign concept - the very idea of it is horrifying.
+- type: spelfMood
+  id: ExtremeDepartmentDisapproval
+  moodName: spelf-mood-extreme-department-disapproval-name
+  moodDesc: spelf-mood-extreme-department-disapproval-desc
+  moodVars:
+    department: Departments
+  conflicts:
+    - DepartmentDisapproval
+
+# You must speak in rhyme at all times.
+- type: spelfMood
+  id: Rhyme
+  moodName: spelf-mood-rhyme-name
+  moodDesc: spelf-mood-rhyme-desc
+
+# Alliteration is virtuous. Endeavor to use it wherever possible.
+- type: spelfMood
+  id: Alliterate
+  moodName: spelf-mood-alliterate-name
+  moodDesc: spelf-mood-alliterate-desc
+
+# You have no allegiances. 
+- type: spelfMood
+  id: LoneActor
+  moodName: spelf-mood-lone-actor-name
+  moodDesc: spelf-mood-lone-actor-desc
+
+# You are the center of the universe, an immortal being with no sense of time or morality. Mere mortals are like insects, fleeting and insubstantial. 
+- type: spelfMood
+  id: Immortal
+  moodName: spelf-mood-immortal-name
+  moodDesc: spelf-mood-immortal-desc
+  conflicts:
+    - LeastImportant
+
+# Your identity is dearly precious. Do not let others know who you are.
+- type: spelfMood
+  id: Unknown
+  moodName: spelf-mood-unknown-name
+  moodDesc: spelf-mood-unknown-desc
+  conflicts:
+    - Pope
+    - FullNameAndTitleShared
+
+# Iron, steel, and silver are deathly poisonous to you. Touching them directly will cause you extreme physical pain. 
+- type: spelfMood
+  id: Fairy
+  moodName: spelf-mood-fairy-name
+  moodDesc: spelf-mood-fairy-desc
+  conflicts:
+    - Barefoot
+
+# Religious iconography causes you extreme physical pain when visible. 
+- type: spelfMood
+  id: VampireTalisman
+  moodName: spelf-mood-vampire-talisman-name
+  moodDesc: spelf-mood-vampire-talisman-desc
+
+# Using the usual tools to do your job is distasteful. Use alternative methods wherever possible.
+- type: spelfMood
+  id: OutsideTheBox
+  moodName: spelf-mood-outside-the-box-name
+  moodDesc: spelf-mood-outside-the-box-desc
+
+# You are not on a ‘station.’ This is just a very large house. Each person in it is a relative of you.
+- type: spelfMood
+  id: TheSims
+  moodName: spelf-mood-sims-name
+  moodDesc: spelf-mood-sims-desc
+  conflicts:
+    - StationIsAlive
+
+# You must experience the raw vacuum of space, unprotected, at least three times a day, as a religious obligation.
+- type: spelfMood
+  id: Spacewalk
+  moodName: spelf-mood-spacewalk-name
+  moodDesc: spelf-mood-spacewalk-desc
+  conflicts:
+    - Atheist
+
+# You are a social pariah - you are unworthy of attention from anyone, and should be shunned.
+- type: spelfMood
+  id: Pariah
+  moodName: spelf-mood-pariah-name
+  moodDesc: spelf-mood-pariah-desc
+  conflicts:
+    - MostImportant
+    - Prometheus
+
+# This is not a place for children. All toys and childish things must be destroyed or removed from the station.
+- type: spelfMood
+  id: TouysBad
+  moodName: spelf-mood-touys-bad-name
+  moodDesc: spelf-mood-touys-bad-desc
+
+# Unbroken circles are impenetrable barriers. 
+- type: spelfMood
+  id: FairyRings
+  moodName: spelf-mood-fairy-rings-name
+  moodDesc: spelf-mood-fairy-rings-desc
+
+
+# If you die, you should stay dead. If you are revived, you must force whoever revived you to kill you again.
+- type: spelfMood
+  id: StayDead
+  moodName: spelf-mood-stay-dead-name
+  moodDesc: spelf-mood-stay-dead-desc
+
+# [NUMBER] is sacred to you. You must endeavor to only handle stackable items and chemicals in quantities of [NUMBER].
+#- type: spelfMood
+#  id: NumberGood
+#  moodName: spelf-mood-number-good-name
+#  moodDesc: spelf-mood-number-good-desc
+#  moodVars:
+#    number: SpelfMoodNumber
+
+
+

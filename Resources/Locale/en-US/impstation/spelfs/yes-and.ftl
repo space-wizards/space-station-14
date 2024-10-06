@@ -1,5 +1,5 @@
 spelf-mood-possessive-of-property-name = Possessive Of Property
-spelf-mood-possessive-of-property-desc = You are extremely possessive of your property, refuse to relinquish it, and if it is misplaced or stolen, it must be retrieved at all costs.
+spelf-mood-possessive-of-property-desc = You are extremely possessive of your property. Refuse to relinquish it, and if it is misplaced or stolen, it must be retrieved at all costs.
 
 spelf-mood-excessively-organized-name = Excessively Organized
 spelf-mood-excessively-organized-desc = You are obsessively organized; everything has its place and must be returned to it.
