@@ -119,12 +119,14 @@
           layer:
           - SlipLayer
         fix1:
+          density: 7
           shape:
             !type:PhysShapeAabb
-            bounds: "-0.4,-0.3,0.4,0.3"
-          density: 1000
+            bounds: "-0.5,-0.5,0.5,0.5"
           mask:
-          - ItemMask
+          - MidImpassable
+          layer:
+          - BulletImpassable
     - type: Destructible
       thresholds:
       - trigger:
