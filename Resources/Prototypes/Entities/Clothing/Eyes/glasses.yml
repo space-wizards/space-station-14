@@ -12,7 +12,7 @@
     attackRate: 1.5
     damage:
       types:
-        Blunt: 7
+        Blunt: 10
 
 - type: entity
   parent: ClothingEyesBase
@@ -47,6 +47,25 @@
     equippedPrefix: super
   - type: Item
     heldPrefix: super
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 10
+
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesGlassesGarMecha
+  name: mecha gar glasses
+  description: Believe in me! Believe in the me who believes in you!
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Glasses/gar.rsi
+    state: icon-mecha
+  - type: Clothing
+    sprite: Clothing/Eyes/Glasses/gar.rsi
+    equippedPrefix: mecha
+  - type: Item
+    heldPrefix: mecha
   - type: MeleeWeapon
     damage:
       types:

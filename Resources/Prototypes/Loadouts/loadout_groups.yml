@@ -45,6 +45,10 @@
   - GlassesCheapSunglasses
   - GlassesJamjar
   - GlassesJensen
+  - GlassesGarGreen
+  - GlassesGarOrange
+  - GlassesGarRed
+  - GlassesGarBlack
 
 # The usual loadouts of the vox harness that spawn in your chest slot for jobs that don't have outerwear in their loadout
 - type: loadoutGroup
@@ -975,6 +979,7 @@
   minLimit: 0
   loadouts:
   - MinerCloak
+  - DrillerCape
   - SaMantle
   - ScarfBrown
 
