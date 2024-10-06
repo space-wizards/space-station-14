@@ -5,6 +5,7 @@ using Content.Server.Chat.Managers;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Dataset;
+using Content.Shared.Emag.Systems;
 using Content.Shared.GameTicking;
 using Content.Shared.Impstation.Spelfs;
 using Content.Shared.Impstation.Spelfs.Components;
@@ -18,11 +19,10 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Impstation.Spelfs;
 
-public sealed partial class SpelfMoodsSystem : EntitySystem
+public sealed partial class SpelfMoodsSystem : SharedSpelfMoodSystem
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
     [Dependency] private readonly ActionsSystem _actions = default!;
     [Dependency] private readonly IConfigurationManager _config = default!;
     [Dependency] private readonly UserInterfaceSystem _bui = default!;
@@ -56,6 +56,7 @@ public sealed partial class SpelfMoodsSystem : EntitySystem
         NewSharedMoods();
 
         SubscribeLocalEvent<SpelfMoodsComponent, ComponentStartup>(OnSpelfMoodInit);
+        SubscribeLocalEvent<SpelfMoodsComponent, ComponentShutdown>(OnSpelfMoodShutdown);
         SubscribeLocalEvent<SpelfMoodsComponent, ToggleMoodsScreenEvent>(OnToggleMoodsScreen);
         SubscribeLocalEvent<SpelfMoodsComponent, BoundUIOpenedEvent>(OnBoundUIOpened);
         SubscribeLocalEvent<RoundRestartCleanupEvent>((_) => NewSharedMoods());
@@ -110,7 +111,7 @@ public sealed partial class SpelfMoodsSystem : EntitySystem
             return;
         args.Handled = true;
 
-        _userInterface.TryToggleUi(uid, SpelfMoodsUiKey.Key, actor.PlayerSession);
+        _bui.TryToggleUi(uid, SpelfMoodsUiKey.Key, actor.PlayerSession);
     }
 
     private bool TryPick(string datasetProto, [NotNullWhen(true)] out SpelfMoodPrototype? proto, IEnumerable<SpelfMood>? currentMoods = null, HashSet<string>? conflicts = null)
@@ -159,7 +160,7 @@ public sealed partial class SpelfMoodsSystem : EntitySystem
             return;
 
         var state = new SpelfMoodsBuiState(comp.Moods, comp.FollowsSharedMoods ? SharedMoods : []);
-        _userInterface.SetUiState(uid, SpelfMoodsUiKey.Key, state);
+        _bui.SetUiState(uid, SpelfMoodsUiKey.Key, state);
     }
 
     public void AddMood(EntityUid uid, SpelfMood mood, SpelfMoodsComponent? comp = null, bool notify = true)
@@ -211,12 +212,10 @@ public sealed partial class SpelfMoodsSystem : EntitySystem
         return true;
     }
 
-    public bool TryAddRandomMood(EntityUid uid, SpelfMoodsComponent? comp = null)
+    public bool TryAddRandomMood(EntityUid uid, string datasetProto, SpelfMoodsComponent? comp = null)
     {
         if (!Resolve(uid, ref comp))
             return false;
-
-        var datasetProto = _proto.Index<WeightedRandomPrototype>(RandomSpelfMoodDataset).Pick();
 
         if (TryPick(datasetProto, out var moodProto, GetActiveMoods(uid, comp)))
         {
@@ -225,6 +224,16 @@ public sealed partial class SpelfMoodsSystem : EntitySystem
         }
 
         return false;
+    }
+
+    public bool TryAddRandomMood(EntityUid uid, SpelfMoodsComponent? comp = null)
+    {
+        if (!Resolve(uid, ref comp))
+            return false;
+
+        var datasetProto = _proto.Index<WeightedRandomPrototype>(RandomSpelfMoodDataset).Pick();
+
+        return TryAddRandomMood(uid, datasetProto, comp);
     }
 
     public HashSet<string> GetConflicts(IEnumerable<SpelfMood> moods)
@@ -279,7 +288,7 @@ public sealed partial class SpelfMoodsSystem : EntitySystem
         }
     }
 
-    public void OnSpelfMoodInit(EntityUid uid, SpelfMoodsComponent comp, ComponentStartup args)
+    private void OnSpelfMoodInit(EntityUid uid, SpelfMoodsComponent comp, ComponentStartup args)
     {
         if (comp.LifeStage != ComponentLifeStage.Starting)
             return;
@@ -292,15 +301,17 @@ public sealed partial class SpelfMoodsSystem : EntitySystem
         if (TryPick(NoAndDataset, out mood, GetActiveMoods(uid, comp)))
             TryAddMood(uid, mood, comp, true, false);
 
-        // Wildcard moods
-        if (TryPick(WildcardDataset, out mood, GetActiveMoods(uid, comp)))
-            TryAddMood(uid, mood, comp, true, false);
-
         comp.Action = _actions.AddAction(uid, ActionViewMoods);
     }
 
-    public void OnSpelfMoodShutdown(EntityUid uid, SpelfMoodsComponent comp, ComponentShutdown args)
+    private void OnSpelfMoodShutdown(EntityUid uid, SpelfMoodsComponent comp, ComponentShutdown args)
     {
         _actions.RemoveAction(uid, comp.Action);
+    }
+
+    protected override void OnEmagged(EntityUid uid, SpelfMoodsComponent comp, ref GotEmaggedEvent args)
+    {
+        base.OnEmagged(uid, comp, ref args);
+        TryAddRandomMood(uid, WildcardDataset, comp);
     }
 }

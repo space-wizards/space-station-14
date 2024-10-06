@@ -2613,3 +2613,65 @@
   id: 328
   time: '2024-10-05T16:58:52.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/417
+- author: mqole
+  changes:
+  - message: Various additional roles have been given the option for senior PDAs.
+    type: Add
+  id: 329
+  time: '2024-10-06T03:30:11.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/423
+- author: TGRCDev
+  changes:
+  - message: Revenants now freeze in place when any of their abilities stun them,
+      to prevent revenants from abusing their velocity to slide through doors while
+      stunned.
+    type: Tweak
+  - message: Revenants now only receive stolen essence and essence regen from a haunted
+      crewmate once. Revenants can see who has already been haunted by examining them.
+    type: Tweak
+  id: 330
+  time: '2024-10-06T03:30:48.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/420
+- author: Sha-Seng
+  changes:
+  - message: Driller Cape for 100 hr salvagers
+    type: Add
+  - message: Mecha Gar Glasses (black) to loot pools
+    type: Add
+  - message: 100 hr salvagers can now spawn with Gar Glasses
+    type: Add
+  - message: Added in-hand sprites for Giga Gar Glasses
+    type: Tweak
+  - message: Normalized damage values amongst Gar Glasses
+    type: Tweak
+  id: 331
+  time: '2024-10-06T03:33:23.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/425
+- author: starlighthowls
+  changes:
+  - message: Thaven now have survival boxes
+    type: Fix
+  id: 332
+  time: '2024-10-06T03:32:54.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/418
+- author: widgetbeck
+  changes:
+  - message: Fixed some Thaven hairstyles not having names
+    type: Fix
+  - message: Made Thaven slightly shorter, and adjusted their emote sounds.
+    type: Tweak
+  id: 333
+  time: '2024-10-06T03:33:12.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/424
+- author: crekulon
+  changes:
+  - message: New web structures. Arachnids can build small decorative cobwebs, poster-like
+      web decals to make walls look a little spidery, and grille-like "window-weaves"
+      to let some light in.
+    type: Add
+  - message: Decorative corner cobwebs now use the web damage modifier and have much
+      less HP (why did they have almost as much as a web wall)
+    type: Tweak
+  id: 334
+  time: '2024-10-06T03:33:46.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/421

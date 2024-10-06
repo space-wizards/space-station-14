@@ -23,6 +23,7 @@ using Content.Shared.Store.Components;
 using Content.Shared.Stunnable;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -191,6 +192,8 @@ public sealed partial class RevenantSystem : EntitySystem
 
         _statusEffects.TryAddStatusEffect<CorporealComponent>(uid, "Corporeal", TimeSpan.FromSeconds(debuffs.Y), false);
         _stun.TryStun(uid, TimeSpan.FromSeconds(debuffs.X), false);
+        if (debuffs.X > 0)
+            _physics.ResetDynamics(uid, Comp<PhysicsComponent>(uid));
 
         return true;
     }
@@ -239,7 +242,7 @@ public sealed partial class RevenantSystem : EntitySystem
                 var essence = rev.EssencePerSecond;
 
                 if (TryComp<RevenantRegenModifierComponent>(uid, out var regen))
-                    essence += rev.HauntEssenceRegenPerWitness * regen.Witnesses.Count;
+                    essence += rev.HauntEssenceRegenPerWitness * regen.NewHaunts;
 
                 ChangeEssenceAmount(uid, essence, rev, regenCap: true);
             }

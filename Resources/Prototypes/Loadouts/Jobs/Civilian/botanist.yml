@@ -1,3 +1,13 @@
+# Senior times
+- type: loadoutEffectGroup
+  id: SeniorBotanist
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobBotanist
+      time: 187200 #52 hrs (1 hour per week for 1 year)
+
 # Head
 - type: loadout
   id: BotanistHead
@@ -51,3 +61,17 @@
   id: BotanistWintercoat
   equipment:
     outerClothing: ClothingOuterWinterHydro
+
+# id
+- type: loadout
+  id: BotanistPDA
+  equipment:
+    id: BotanistPDA
+
+- type: loadout
+  id: SeniorBotanistPDA
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorBotanist
+  equipment:
+    id: SeniorBotanistPDA

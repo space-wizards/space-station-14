@@ -35,7 +35,13 @@
       "name": "pda-atmos"
     },
     {
+      "name": "pda-senioratmos"
+    },
+    {
       "name": "pda-bartender"
+    },
+    {
+      "name": "pda-seniorbartender"
     },
     {
       "name": "pda-boxer"
@@ -59,6 +65,9 @@
       "name": "pda-chemistry"
     },
     {
+      "name": "pda-seniorchemistry"
+    },
+    {
       "name": "pda-clear"
     },
     {
@@ -71,7 +80,13 @@
       "name": "pda-cook"
     },
     {
+      "name": "pda-seniorcook"
+    },
+    {
       "name": "pda-detective"
+    },
+    {
+      "name": "pda-seniordetective"
     },
     {
       "name": "pda-engineer"
@@ -87,6 +102,9 @@
     },
     {
       "name": "pda-hydro"
+    },
+    {
+      "name": "pda-seniorhydro"
     },
     {
       "name": "pda-janitor"
@@ -112,10 +130,16 @@
       "name": "pda-paramedic"
     },
     {
+      "name": "pda-seniorparamedic"
+    },
+    {
       "name": "pda-mime"
     },
     {
       "name": "pda-miner"
+    },
+    {
+      "name": "pda-seniorminer"
     },
     {
       "name": "pda-pirate"
@@ -186,6 +210,9 @@
     },
     {
       "name": "pda-warden"
+    },
+    {
+      "name": "pda-seniorwarden"
     },
     {
       "name": "pda-musician"

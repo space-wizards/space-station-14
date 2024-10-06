@@ -41,3 +41,5 @@ revenant-exorcise-success = {$revenant}'s energy fades away...
 
 revenant-revealed-default = {CAPITALIZE(THE($revealer))} weakens your ethereal cloak!
 revenant-revealed-salt = The salt puddle weakens your ethereal cloak!
+
+revenant-already-haunted = { CAPITALIZE(SUBJECT($target)) } { CONJUGATE-HAVE($target) } been haunted.
