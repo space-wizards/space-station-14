@@ -94,6 +94,9 @@ spelf-mood-greyspeak-desc = You should endeavor to speak like Greys to the best 
 spelf-mood-no-department-title-name = Extremely Personable
 spelf-mood-no-department-title-desc = You must not refer directly to the names of departments - You may only refer to a specific person who works in that department.
 
+spelf-mood-title-case-name = Title Case
+spelf-mood-title-case-desc = You Must Speak Exclusively In Title Case
+
 spelf-mood-shoes-bad-name = Barefoot
 spelf-mood-shoes-bad-desc = The ground you walk on is sacred. You must not wear shoes.
 
