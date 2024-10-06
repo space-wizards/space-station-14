@@ -7,11 +7,15 @@
     <GuideEntityEmbed Entity="GasVentPump"/>
   </Box>
 
+  The air vent requires power to function.
+
   The default behavior of a gas vent is to simply output gas to the exposed atmosphere at a pressure of 101.3 kPa.
 
   Air vents will enter [color=red]pressure lockout[/color] when the pressure of the atmosphere it's exposed to is below 80 kPa. This is to prevent wasting useful gasses to space if a room is not sealed. The lights on the air vent will turn [color=yellow]yellow[/color] to highlight this change.
 
   This can be [color=green]overridden[/color] by using a screwdriver on the vent, or setting the mode to Fill on a connected air alarm.
+
+  It is important to note that air vents in [color=red]pressure lockout[/color] still leak out gas. The gas they leak out is relative to the current pressure of the pipenet they're connected to.
 
   ## Configuration Options
   When linked to an air alarm, air vents gain more functionality.
@@ -19,6 +23,8 @@
   Air vents have two "vent direction" options: Releasing and Siphoning.
   - Releasing simply releases gasses into the atmosphere. The pressure it releases the gasses is defined in the "External bound" setting.
   - Siphoning sucks the air out of the atmosphere and into the connected pipenet. The pressure it sucks is determined by the "Internal bound" setting.
+
+  An air vent's lights will turn red when in Siphoning mode.
 
   Vents also have a "Pressure bound" setting, which controls how pressure limits are handled:
   - ExternalBound makes the air vent respect the pressure limits defined in the External bound entry.
