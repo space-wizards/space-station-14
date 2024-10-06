@@ -18,6 +18,7 @@
   <Box>
     <GuideEntityEmbed Entity="AirAlarm"/>
     <GuideEntityEmbed Entity="Multitool"/>
+    <GuideEntityEmbed Entity="NetworkConfigurator"/>
   </Box>
 
 </Document>
