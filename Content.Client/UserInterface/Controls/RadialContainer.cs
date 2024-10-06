@@ -70,73 +70,85 @@ public class RadialContainer : LayoutContainer
 
     protected override void Draw(DrawingHandleScreen handle)
     {
-		
-        const float baseRadius = 100f;
+		const float baseRadius = 100f;
         const float radiusIncrement = 5f;
 		
-        var children = ReserveSpaceForHiddenChildren ? Children : Children.Where(x => x.Visible);
-        var childCount = children.Count() * 2;
+        var children = ReserveSpaceForHiddenChildren
+            ? Children
+            : Children.Where(x => x.Visible);
+
+        // elements are children (buttons) and dividers, they all are spread evenly
+        var elementCount = children.Count() * 2;
 		
 		// Add padding from the center at higher child counts so they don't overlap.
-		Radius = baseRadius + (childCount * radiusIncrement);
+		Radius = baseRadius + (elementCount * radiusIncrement);
+
+        var isAntiClockwise = RadialAlignment == RAlignment.AntiClockwise;
 
         // Determine the size of the arc, accounting for clockwise and anti-clockwise arrangements
         var arc = AngularRange.Y - AngularRange.X;
-        arc = (arc < 0) ? MathF.Tau + arc : arc;
-        arc = (RadialAlignment == RAlignment.AntiClockwise) ? MathF.Tau - arc : arc;
+        arc = arc < 0
+            ? MathF.Tau + arc
+            : arc;
+        arc = isAntiClockwise
+            ? MathF.Tau - arc
+            : arc;
 
         // Account for both circular arrangements and arc-based arrangements
-        var childMod = MathHelper.CloseTo(arc, MathF.Tau, 0.01f) ? 0 : 1;
+        var childMod = MathHelper.CloseTo(arc, MathF.Tau, 0.01f)
+            ? 0
+            : 1;
 
         // Determine the separation between child elements
-        var sepAngle = arc / (childCount - childMod);
-        sepAngle *= (RadialAlignment == RAlignment.AntiClockwise) ? -1f : 1f;
+        var sepAngle = arc / (elementCount - childMod);
+        sepAngle *= isAntiClockwise
+            ? -1f
+            : 1f;
+
+        var halfWidth = Width / 2f;
+        var halfHeight = Height / 2f;
 
         // Adjust the positions of all the child elements
-        var query = children.Select((x, index) => (index: index, x));
+        var query = children.Select((x, index) => (index, x));
+
         foreach (var (index, child) in query)
         {
-            var positionInRadius = index * 2 + 1;
-            var childX = Radius * MathF.Sin(AngularRange.X + sepAngle * positionInRadius) + Width / 2f - child.Width / 2f;
-            var childY = -Radius * MathF.Cos(AngularRange.X + sepAngle * positionInRadius) + Height / 2f - child.Height / 2f;
+            var indexForChildElement = index * 2 + 1;
+
+            var targetAngleOfChild = AngularRange.X + sepAngle * indexForChildElement;
+            var childX = Radius * MathF.Sin(targetAngleOfChild) + halfWidth - child.Width / 2f;
+            var childY = -Radius * MathF.Cos(targetAngleOfChild) + halfHeight - child.Height / 2f;
             var position = new Vector2(childX, childY);
 
             SetPosition(child, position);
 
             if (child is RadialMenuTextureButton tb)
             {
-                tb.AngleSectorFrom = sepAngle * (positionInRadius-1);
-                tb.AngleSectorTo = sepAngle * (positionInRadius + 1);
+                tb.AngleSectorFrom = sepAngle * (indexForChildElement - 1);
+                tb.AngleSectorTo = sepAngle * (indexForChildElement + 1);
             }
 
-            var positionOfRail = index * 2;
+            var positionOfSeparator = index * 2;
 
+            var targetAngleOfSeparator = AngularRange.X + sepAngle * positionOfSeparator;
+            var separatorSin = MathF.Sin(targetAngleOfSeparator);
+            var separatorCos = MathF.Cos(targetAngleOfSeparator);
             handle.DrawLine(
                 new Vector2(
-                    Radius/2 * MathF.Sin(AngularRange.X + sepAngle * positionOfRail) + Width / 2f ,
-                    -Radius/2 * MathF.Cos(AngularRange.X + sepAngle * positionOfRail) + Height / 2f 
-                ) * UIScale ,
-                new Vector2(
-                    Radius * 2 * MathF.Sin(AngularRange.X + sepAngle * positionOfRail) + Width / 2f ,
-                    -Radius * 2 * MathF.Cos(AngularRange.X + sepAngle * positionOfRail) + Height / 2f 
+                    Radius/2 * separatorSin + halfWidth,
+                    -Radius/2 * separatorCos + halfHeight
                 ) * UIScale,
-                new Color(173, 216, 230, 180)
+                new Vector2(
+                    Radius * 2 * separatorSin + halfWidth,
+                    -Radius * 2 * separatorCos + halfHeight
+                ) * UIScale,
+                new Color(173, 216, 230, 180) // todo: use stylesheets
             );
         }
 
-        // var externalCircle = new Vector2(Width / 2f, Width / 2f);
-        // handle.DrawCircle(externalCircle, Radius * 2, Color.Red, false);
-
-        // var internalCircle = new Vector2(Width /2f, Width / 2f);
-        // handle.DrawCircle(internalCircle, Radius/2, Color.Red, false);
-
         base.Draw(handle);
     }
-    public static float ConvertRadiansToDegrees(float radians)
-    {
-        float degrees = (180f / MathF.PI) * radians;
-        return (degrees);
-    }
+
     /// <summary>
     /// Specifies the different radial alignment modes
     /// </summary>

@@ -221,7 +221,14 @@ public class RadialMenuTextureButton : TextureButton
     /// </summary>
     public string TargetLayer { get; set; } = string.Empty;
 
+    /// <summary>
+    /// Angle in radian where button sector should start.
+    /// </summary>
     public float AngleSectorFrom { get; set; }
+
+    /// <summary>
+    /// Angle in radian where button sector should end.
+    /// </summary>
     public float AngleSectorTo { get; set; }
 
     /// <summary>
@@ -283,7 +290,8 @@ public class RadialMenuTextureButton : TextureButton
 
         var color = DrawMode == DrawModeEnum.Hover
             ? new Color(173, 216, 230, 100)
-            : new Color(173, 216, 230, 70);
+            : new Color(173, 216, 230, 70); // todo: use stylesheets
+
         handle.DrawPrimitives(DrawPrimitiveTopology.TriangleStrip, buffer, color);
     }
 
