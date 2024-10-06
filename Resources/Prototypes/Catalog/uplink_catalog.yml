@@ -378,6 +378,11 @@
     Telecrystal: 4
   categories:
   - UplinkExplosives
+  conditions:
+  - !type:StoreWhitelistCondition
+    blacklist:
+      tags:
+      - NukeOpsUplink
 
 - type: listing
   id: UplinkSyndicateBomb
@@ -556,9 +561,9 @@
   productEntity: ClothingBeltMilitaryWebbingGrenadeFilled
   discountCategory: veryRareDiscounts
   discountDownTo:
-    Telecrystal: 6
+    Telecrystal: 5
   cost:
-    Telecrystal: 12
+    Telecrystal: 10 # 6 explosive grenades, 2 incendiary, 2 shrapnel, 28 tc worth.
   categories:
   - UplinkExplosives
   conditions:

@@ -148,14 +148,14 @@
   - type: Storage
     maxItemSize: Normal
     grid:
-    - 0,0,7,1
+    - 0,0,9,1 #It's larger to hold more bombs. It costs a lot so probably not overpowered.
   - type: StorageFill
     contents:
       - id: ExGrenade
-        amount: 4
-      - id: SyndieMiniBomb
+        amount: 6
+      - id: GrenadeIncendiary
         amount: 2
-      - id: EmpGrenade
+      - id: GrenadeShrapnel
         amount: 2
 
 - type: entity
