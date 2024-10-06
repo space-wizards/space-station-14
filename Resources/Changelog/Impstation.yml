@@ -2613,3 +2613,22 @@
   id: 328
   time: '2024-10-05T16:58:52.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/417
+- author: mqole
+  changes:
+  - message: Various additional roles have been given the option for senior PDAs.
+    type: Add
+  id: 329
+  time: '2024-10-06T03:30:11.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/423
+- author: TGRCDev
+  changes:
+  - message: Revenants now freeze in place when any of their abilities stun them,
+      to prevent revenants from abusing their velocity to slide through doors while
+      stunned.
+    type: Tweak
+  - message: Revenants now only receive stolen essence and essence regen from a haunted
+      crewmate once. Revenants can see who has already been haunted by examining them.
+    type: Tweak
+  id: 330
+  time: '2024-10-06T03:30:48.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/420
