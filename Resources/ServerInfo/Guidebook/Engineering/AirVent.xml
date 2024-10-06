@@ -40,7 +40,7 @@
 
   To explain it further (when the vent direction is set to releasing):
   - You can think of the External bound as the upper limit for the exposed atmosphere. "I will not pump air past this pressure."
-  - You can think of the Internal bound as the lower limit for the connected pipenet. "I will not draw from my source past this pressure."
+  - You can think of the Internal bound as the lower limit for the connected pipenet. "I will not draw from my source below this pressure."
   - The "Pressure bound" settings simply define which limits to respect or ignore.
 
   When the vent is set to siphon, these limits are also taken into consideration. For example (if respecting both limits):
