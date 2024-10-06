@@ -370,6 +370,13 @@
   - ClownShoesExpert
 
 - type: loadoutGroup
+  id: BartenderPDA
+  name: loadout-group-bartender-id
+  loadouts:
+  - BartenderPDA
+  - SeniorBartenderPDA
+
+- type: loadoutGroup
   id: Mixologist
   name: loadout-group-bartender-mixologist
   minLimit: 0
@@ -422,6 +429,13 @@
   - BlackShoes
   - ChefShoes
   - ClownShoesExpert
+
+- type: loadoutGroup
+  id: ChefPDA
+  name: loadout-group-chef-id
+  loadouts:
+  - ChefPDA
+  - SeniorChefPDA
 
 - type: loadoutGroup
   id: LibrarianJumpsuit
@@ -643,6 +657,13 @@
   loadouts:
   - BrownShoes
   - ClownShoesExpert
+
+- type: loadoutGroup
+  id: BotanistPDA
+  name: loadout-group-botanist-id
+  loadouts:
+  - BotanistPDA
+  - SeniorBotanistPDA
 
 - type: loadoutGroup
   id: ClownHead
@@ -979,6 +1000,13 @@
   - SalvageBoots
   - CargoWinterBoots
 
+- type: loadoutGroup
+  id: SalvageSpecialistPDA
+  name: loadout-group-salvage-specialist-id
+  loadouts:
+  - SalvageSpecialistPDA
+  - SeniorSalvageSpecialistPDA
+
 # Engineering
 - type: loadoutGroup
   id: ChiefEngineerHeadset
@@ -1147,6 +1175,13 @@
   loadouts:
   - WhiteShoes
   - EngineeringWinterBoots
+
+- type: loadoutGroup
+  id: AtmosphericTechnicianPDA
+  name: loadout-group-atmospheric-technician-id
+  loadouts:
+  - AtmosphericTechnicianPDA
+  - SeniorAtmosphericTechnicianPDA
 
 - type: loadoutGroup
   id: SurvivalExtended
@@ -1406,6 +1441,13 @@
   - WardenWinterCoatUnarmored
 
 - type: loadoutGroup
+  id: WardenPDA
+  name: loadout-group-warden-id
+  loadouts:
+  - WardenPDA
+  - SeniorWardenPDA
+
+- type: loadoutGroup
   id: SecurityHead
   name: loadout-group-security-head
   minLimit: 0
@@ -1529,6 +1571,13 @@
   - LeatherShoes
   - SecurityWinterBoots
   - SecurityClownShoes
+
+- type: loadoutGroup
+  id: DetectivePDA
+  name: loadout-group-detective-id
+  loadouts:
+  - DetectivePDA
+  - SeniorDetectivePDA
 
 - type: loadoutGroup
   id: BrigmedicHead
@@ -1804,6 +1853,13 @@
   - MedicalWinterBoots
 
 - type: loadoutGroup
+  id: ChemistPDA
+  name: loadout-group-chemist-id
+  loadouts:
+  - ChemistryPDA
+  - SeniorChemistryPDA
+
+- type: loadoutGroup
   id: ParamedicHead
   name: loadout-group-paramedic-head
   minLimit: 0
@@ -1839,6 +1895,13 @@
   - BlueShoes
   - WhiteShoes
   - MedicalWinterBoots
+
+- type: loadoutGroup
+  id: ParamedicPDA
+  name: loadout-group-paramedic-id
+  loadouts:
+  - ParamedicPDA
+  - SeniorParamedicPDA
 
 - type: loadoutGroup
   id: SurvivalMedical

@@ -64,6 +64,7 @@
   - BartenderJumpsuit
   - BartenderOuterClothing
   - BartenderShoes
+  - BartenderPDA
   - Glasses
   - CommonBackpack
   - Survival
@@ -92,6 +93,7 @@
   - ChefJumpsuit
   - ChefOuterClothing
   - ChefShoes
+  - ChefPDA
   - Glasses
   - CommonBackpack
   - Survival
@@ -168,6 +170,7 @@
   - BotanistJumpsuit
   - BotanistOuterClothing
   - BotanistShoes
+  - BotanistPDA
   - Glasses
   - BotanistBackpack
   - Survival
@@ -259,6 +262,7 @@
   - SalvageSpecialistNeck
   - SalvageSpecialistOuterClothing
   - SalvageSpecialistShoes
+  - SalvageSpecialistPDA
   - SalvageSpecialistBackpack
   - Glasses
   - Survival
@@ -315,6 +319,7 @@
   - AtmosphericTechnicianJumpsuit
   - AtmosphericTechnicianOuterClothing
   - AtmosphericTechnicianShoes
+  - AtmosphericTechnicianPDA
   - AtmosphericTechnicianBackpack
   - SurvivalExtended
   - Trinkets
@@ -395,6 +400,7 @@
   - WardenJumpsuit
   - WardenOuterClothing
   - UpperSecurityShoes
+  - WardenPDA
   - SecurityBackpack
   - SecurityBelt
   - SurvivalSecurity
@@ -430,6 +436,7 @@
   - DetectiveJumpsuit
   - DetectiveOuterClothing
   - DetectiveShoes
+  - DetectivePDA
   - SecurityBackpack
   - SurvivalSecurity
   - Trinkets
@@ -521,6 +528,7 @@
   - ChemistOuterClothing
   - MedicalGloves
   - ChemistShoes
+  - ChemistPDA
   - ChemistBackpack
   - SurvivalMedical
   - Trinkets
@@ -537,6 +545,7 @@
   - ParamedicOuterClothing
   - MedicalGloves
   - ParamedicShoes
+  - ParamedicPDA
   - Glasses
   - MedicalBackpack
   - SurvivalMedical

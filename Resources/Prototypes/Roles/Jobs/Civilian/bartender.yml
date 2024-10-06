@@ -21,7 +21,6 @@
 - type: startingGear
   id: BartenderGear
   equipment:
-    id: BartenderPDA
     ears: ClothingHeadsetService
   #storage:
     #back:
