@@ -113,6 +113,7 @@ public class RadialContainer : LayoutContainer
 
         foreach (var (index, child) in query)
         {
+            // odd indexes are child elements (buttons)
             var indexForChildElement = index * 2 + 1;
 
             var targetAngleOfChild = AngularRange.X + sepAngle * indexForChildElement;
@@ -122,12 +123,14 @@ public class RadialContainer : LayoutContainer
 
             SetPosition(child, position);
 
+            // radial menu buttons need to know in which sector around container they should be rendered
             if (child is RadialMenuTextureButton tb)
             {
                 tb.AngleSectorFrom = sepAngle * (indexForChildElement - 1);
                 tb.AngleSectorTo = sepAngle * (indexForChildElement + 1);
             }
 
+            // draw separator lines for buttons
             var positionOfSeparator = index * 2;
 
             var targetAngleOfSeparator = AngularRange.X + sepAngle * positionOfSeparator;
@@ -145,8 +148,6 @@ public class RadialContainer : LayoutContainer
                 new Color(173, 216, 230, 180) // todo: use stylesheets
             );
         }
-
-        base.Draw(handle);
     }
 
     /// <summary>

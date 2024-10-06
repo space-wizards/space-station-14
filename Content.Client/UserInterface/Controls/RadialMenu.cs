@@ -94,7 +94,7 @@ public class RadialMenu : BaseWindow
         {
             child.Visible = GetCurrentActiveLayer() == child;
             if (child is RadialContainer { Visible: true } container)
-                ContextualButton.Container = container;
+                ContextualButton.ActiveContainer = container;
         };
     }
 
@@ -136,7 +136,7 @@ public class RadialMenu : BaseWindow
             {
                 child.Visible = true;
                 if (child is RadialContainer container)
-                    ContextualButton.Container = container;
+                    ContextualButton.ActiveContainer = container;
                 result = true;
             }
         }
@@ -179,6 +179,13 @@ public class RadialMenu : BaseWindow
             ContextualButton.SetOnlyStyleClass(CloseButtonStyleClass);
     }
 }
+
+/// <summary>
+/// Special button for closing radial menu or going back between radial menu levels.
+/// Is looking like just <see cref="TextureButton "/> but considers whole space around
+/// itself (til radial menu buttons) as itself in case of clicking. Also considers all space
+/// outside of radial menu buttons as itself for clicking.
+/// </summary>
 public sealed class RadialMenuContextualCentralTextureButton : TextureButton
 {
 
@@ -188,7 +195,11 @@ public sealed class RadialMenuContextualCentralTextureButton : TextureButton
 
     }
 
-    public RadialContainer? Container { get; set; }
+    /// <summary>
+    /// Reference for container of radial menu.
+    /// Is required to properly consider radius of circles menu will draw.
+    /// </summary>
+    public RadialContainer? ActiveContainer { get; set; }
 
     /// <inheritdoc />
     public override bool IsPositionInside(Vector2i point)
@@ -199,7 +210,7 @@ public sealed class RadialMenuContextualCentralTextureButton : TextureButton
     /// <inheritdoc />
     protected override bool HasPoint(Vector2 point)
     {
-        if (Container == null)
+        if (ActiveContainer == null)
         {
             return false;
         }
@@ -208,8 +219,10 @@ public sealed class RadialMenuContextualCentralTextureButton : TextureButton
         var cY = -Position.Y + Parent.Width / 2;
 
         var dist = Math.Sqrt(Math.Pow(point.X - cX, 2) + Math.Pow(point.Y - cY, 2));
-        var isNotInRadius = dist > Container.Radius * 2 || dist < Container.Radius / 2;
-        return isNotInRadius;
+        // Button space is inside half of container radius / or outside double of its radius.
+        // half of radius and double the radius are radial menu concentric circles that are
+        // created by radial menu buttons.
+        return dist > ActiveContainer.Radius * 2 || dist < ActiveContainer.Radius / 2;
     }
 }
 
@@ -252,29 +265,36 @@ public class RadialMenuTextureButton : TextureButton
                 return;
             }
         }
-
+        // draw texture
         handle.DrawTextureRectRegion(texture, PixelSizeBox);
 
+        // draw sector where space that button occupies actually is
         var pX = -Position.X + Parent!.Width / 2;
         var pY = -Position.Y + Parent.Width / 2;
 
-        var position = new Vector2(pX, pY) * UIScale;
+        var containerCenter = new Vector2(pX, pY) * UIScale;
 
         const float singleSegmentSize = MathF.Tau / 32;
 
         var controlSegmentSize = AngleSectorTo - AngleSectorFrom;
-        var segCount = (int) (controlSegmentSize / singleSegmentSize) + 1;
+        var segCount = (int)(controlSegmentSize / singleSegmentSize) + 1;
 
         // CHANGE TO STACKALLOC AND MOVE THIS STUFF TO TOOLBOX!111
         var buffer = new Vector2[segCount * 2];
 
-        var radius = (Parent as RadialContainer)!.Radius * UIScale;
+        if (Parent is not RadialContainer container)
+        {
+            return;
+        }
+
+        var radius = container.Radius * UIScale;
 
         for (var i = 0; i < segCount; i++)
         {
             float angle;
             if (i == segCount - 1)
             {
+                // fix rounding problem that was created when calculating count of segments as int
                 angle = AngleSectorTo;
             }
             else
@@ -282,10 +302,10 @@ public class RadialMenuTextureButton : TextureButton
                 angle = AngleSectorFrom + singleSegmentSize * i;
             }
 
-            var pos = new Angle(angle).RotateVec(-Vector2.UnitY);
+            var point = new Angle(angle).RotateVec(-Vector2.UnitY);
 
-            buffer[i * 2] = position + pos * radius * 2;
-            buffer[i * 2 + 1] = position + pos * radius / 2;
+            buffer[i * 2] = containerCenter + point * radius * 2;
+            buffer[i * 2 + 1] = containerCenter + point * radius / 2;
         }
 
         var color = DrawMode == DrawModeEnum.Hover
