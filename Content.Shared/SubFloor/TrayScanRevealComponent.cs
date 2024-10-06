@@ -10,5 +10,9 @@ namespace Content.Shared.SubFloor;
 [NetworkedComponent]
 public sealed partial class TrayScanRevealComponent : Component
 {
-    public (EntityUid, MapGridComponent, Vector2i) Tile;
+    public EntityUid TileGridUid;
+
+    public MapGridComponent TileGridComp;
+
+    public Vector2i TileIndices;
 }

@@ -26,13 +26,14 @@ public sealed class TrayScanRevealSystem : EntitySystem
         var gridComp = Comp<MapGridComponent>(gridUid.Value);
         var position = _transform.GetGridOrMapTilePosition(uid);
 
-        component.Tile = ((EntityUid)gridUid, gridComp, position);
+        (component.TileGridUid, component.TileGridComp, component.TileIndices) = ((EntityUid)gridUid, gridComp, position);
         _subFloorHide.UpdateTile((EntityUid)gridUid, gridComp, position);
     }
 
     private void OnRemove(EntityUid uid, TrayScanRevealComponent component, EntityEventArgs _)
     {
-        _subFloorHide.UpdateTile(component.Tile.Item1, component.Tile.Item2, component.Tile.Item3);
+        if (component.TileGridUid != EntityUid.Invalid)
+            _subFloorHide.UpdateTile(component.TileGridUid, component.TileGridComp, component.TileIndices);
     }
 
     internal bool HasTrayScanReveal(EntityUid gridUid, MapGridComponent grid, Vector2i position)
