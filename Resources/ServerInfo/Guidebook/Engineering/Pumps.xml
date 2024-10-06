@@ -22,9 +22,9 @@
   </Box>
   A pressure pump [color=red]cannot[/color] move gas to a pipe that has a pressure higher or equal to the pressure set on the pump.
 
-  For example, a pressure pump cannot pump gas to a pipe that is currently at 500kPa, if the pressure pump is set at 500kPa.
+  For example, a pressure pump cannot pump gas to a pipe that is currently at 500 kPa, if the pressure pump is set at 500 kPa.
 
-  Pressure pumps can pump up to a maximum pressure of 4500kPa. They will become [color=red]blocked[/color] if they try to push gas into a pipe higher than this pressure.
+  Pressure pumps can pump up to a maximum pressure of 4500 kPa. They will become [color=red]blocked[/color] if they try to push gas into a pipe higher than this pressure.
 
   ## Volumetric Pumps
   Volumetric pumps are an alternative pump, moving gas based on [color=#a4885c]volume[/color].
@@ -33,5 +33,5 @@
   </Box>
   They are extremely useful for moving large amounts of gas quickly. They can typically achieve higher pressures than a pressure pump.
 
-  While volumetric pumps work off of the principle of volume, they will become [color=red]blocked[/color] if they try to push gas into a pipe higher than 9000kPa.
+  While volumetric pumps work off of the principle of volume, they will become [color=red]blocked[/color] if they try to push gas into a pipe higher than 9000 kPa.
 </Document>
