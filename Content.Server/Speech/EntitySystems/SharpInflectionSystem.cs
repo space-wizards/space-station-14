@@ -8,7 +8,8 @@ public sealed class SharpInflectionSystem : EntitySystem
     // @formatter:off
     private static readonly Regex RegexEndsWithExclamation = new(@"[!]+$");
     private static readonly Regex RegexEndsWithQuestion = new(@"[?]+$");
-    private static readonly Regex RegexEndsWithPeriod = new(@"[.]+$");
+    private static readonly Regex RegexEndsWithPeriod = new(@"[\.]+$");
+    private static readonly Regex RegexEndsWithAnyPunctuation = new(@"[!?\.]+$");
     // @formatter:on
 
     public override void Initialize()
@@ -26,9 +27,7 @@ public sealed class SharpInflectionSystem : EntitySystem
         message = RegexEndsWithPeriod.Replace(message, "...");
 
         // If the message doesn't end with any punctuation, we add ... anyway
-        if (!RegexEndsWithExclamation.IsMatch(message) && 
-            !RegexEndsWithQuestion.IsMatch(message) && 
-            !RegexEndsWithPeriod.IsMatch(message))
+        if (!RegexEndsWithAnyPunctuation.IsMatch(message))
         {
             message += "...";
         }
