@@ -11,10 +11,10 @@ spelf-mood-names-are-rude-name = Names Are Rude
 spelf-mood-names-are-rude-desc = Using one's name is terribly personal for everyday conversation. You must only refer to others by description.
 
 spelf-mood-fashion-reroll-name = Fashion Is Ever-Changing
-spelf-mood-fashion-reroll-desc = Your current hairstyle will go out of fashion every twenty minutes. It is extremely distressing to be unfashionable.
+spelf-mood-fashion-reroll-desc = Your current hairstyle will go out of fashion every twenty minutes. It is distressing to be unfashionable.
 
 spelf-mood-honor-department-name = Honor Among Departments
-spelf-mood-honor-department-desc = If a Thaven brings dishonor to their department, they must be ritually sacrificed by another Thaven.
+spelf-mood-honor-department-desc = If a Thaven brings dishonor to their department, they must be shunned.
 
 spelf-mood-station-is-alive-name = The Station Is A Living Being
 spelf-mood-station-is-alive-desc = Harming or modifying the station is abhorrent. Anything which aims to harm the station is an infection.

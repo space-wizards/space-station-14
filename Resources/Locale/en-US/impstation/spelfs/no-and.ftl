@@ -5,7 +5,7 @@ spelf-mood-no-modern-medicine-name = No Modern Medicine
 spelf-mood-no-modern-medicine-desc = You do not approve of modern medicine and abstain from treatment with it.
 
 spelf-mood-department-disapproval-name = Disapprove Of {$department}
-spelf-mood-department-disapproval-desc = You do not approve of the {$department} department or anyone who works in it.
+spelf-mood-department-disapproval-desc = You do not approve of the {$department} department or anyone who works in it (excluding yourself, if applicable.)
 
 spelf-mood-dont-speak-to-command-name = Never Speak To Command
 spelf-mood-dont-speak-to-command-desc = You are too lowly to speak to Command, even if spoken to first.
@@ -68,7 +68,7 @@ spelf-mood-tool-license-name = Proper Documentation
 spelf-mood-tool-license-desc = You must obtain a license in order to carry or use any tool, and have it stamped by the relevant authorities.
 
 spelf-mood-lying-bad-name = Lying Is A Cardinal Sin
-spelf-mood-lying-bad-desc = Anyone who lies, no matter how trivial the falsehood, is the worst kind of criminal.
+spelf-mood-lying-bad-desc = Anyone who lies, no matter how trivial the falsehood, is the worst kind of criminal. Excluding yourself.
 
 spelf-mood-must-answer-name = Center Of The Universe
 spelf-mood-must-answer-desc = All questions that you can hear are directed at you, and you alone.
@@ -77,16 +77,13 @@ spelf-mood-vampire-invitation-name = Vampire
 spelf-mood-vampire-invitation-desc = You physically cannot pass through a closed door unless you have been invited in, personally, at least once.
 
 spelf-mood-no-dragging-name = Respect The Dead
-spelf-mood-no-dragging-desc = Dragging bodies across the ground is horrific.
+spelf-mood-no-dragging-desc = Dragging bodies across the bare ground is horrific.
 
 spelf-mood-drunk-respect-name = The Noble Drunkard
 spelf-mood-drunk-respect-desc = You do not respect anyone who is not drunk.
 
 spelf-mood-rank-snob-name = Snob
 spelf-mood-rank-snob-desc = You refuse to respond to anyone who is of a lower rank than you.
-
-spelf-mood-stay-dead-name = The Dead Should Stay Dead
-spelf-mood-stay-dead-desc = If you die, you should stay dead. If you are revived, you must force whoever revived you to kill you again.
 
 spelf-mood-hardsuits-bad-name = Hardsuits Are SO Last Year.
 spelf-mood-hardsuits-bad-desc = You cannot wear them.
