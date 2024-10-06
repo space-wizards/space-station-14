@@ -65,7 +65,7 @@
     <!-- Atmospheric Utility -->
     <ui:RadialContainer Name="AtmosphericUtility"  VerticalExpand="True" HorizontalExpand="True" Radius="64"/>
 
-    <!-- Atmospheric Utility -->
+    <!-- Vents -->
     <ui:RadialContainer Name="Vents"  VerticalExpand="True" HorizontalExpand="True" Radius="64"/>
 
 </ui:RadialMenu>
