@@ -1,0 +1,14 @@
+# Xeno playtest
+- type: entity
+  name: xeno queen entity spawner
+  id: SpawnMobXenoQueen
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: running
+      sprite: Mobs/Aliens/Xenos/praetorian.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobXenoLonePraetorianNoGhost

@@ -1,0 +1,12 @@
+# Xeno playtest
+- type: stack
+  id: FloorTileTechmaintDark
+  name: dark techmaint floor
+  spawn: FloorTileItemTechmaintDark
+  maxCount: 30
+
+- type: stack
+  id: FloorTileXeno
+  name: xeno floor
+  spawn: FloorTileItemXeno
+  maxCount: 30

@@ -1,0 +1,8 @@
+# Xeno playtest
+- type: decal
+  id: FullOverlay
+  tags: ["station", "overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: _Harmony/Decals/Overlays/greyscale.rsi
+    state: full

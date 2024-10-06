@@ -937,6 +937,9 @@
   name: shuttle wall
   suffix: Interior
   components:
+  - type: Tag # Xeno playtest; changed tag to avoid rusting
+    tags:
+      - Wall
   - type: RCDDeconstructable
     cost: 6
     delay: 8
