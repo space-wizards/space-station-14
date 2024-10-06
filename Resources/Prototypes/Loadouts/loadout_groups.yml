@@ -36,6 +36,7 @@
   - ClothingNeckFrontierPin
   - ClothingNeckDeltaVPin
   - ClothingNeckCosmaticDriftPin
+  - HarmonicaInstrument
 
 - type: loadoutGroup
   id: Glasses

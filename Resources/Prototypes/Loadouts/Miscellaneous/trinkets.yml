@@ -167,7 +167,7 @@
   storage:
     back:
     - ClothingNeckLizardPin
-    
+
 - type: loadout
   id: ClothingNeckLeviathanPin
   storage:
@@ -197,3 +197,10 @@
   storage:
     back:
     - ClothingNeckAxolotlPin
+
+- type: loadout
+  id: HarmonicaInstrument
+  storage:
+    back:
+    - HarmonicaInstrument
+
