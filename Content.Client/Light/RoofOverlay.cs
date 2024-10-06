@@ -30,6 +30,11 @@ public sealed class RoofOverlay : Overlay
         if (args.Viewport.Eye == null)
             return;
 
+        var mapUid = _entManager.System<SharedMapSystem>().GetMap(args.MapId);
+
+        if (!_entManager.TryGetComponent(mapUid, out MapLightComponent? light))
+            return;
+
         var viewport = args.Viewport;
         var eye = args.Viewport.Eye;
         var mapSystem = _entManager.System<SharedMapSystem>();
@@ -90,19 +95,17 @@ public sealed class RoofOverlay : Overlay
                         worldHandle.DrawRect(local, comp.Color);
                     }
                 }
+            }, light.AmbientLightColor);
+
+        _clyde.BlurLights(viewport, target, viewport.Eye, 14f * 4f);
+
+        args.WorldHandle.RenderInRenderTarget(viewport.LightRenderTarget,
+            () =>
+            {
+                var invMatrix =
+                    viewport.LightRenderTarget.GetWorldToLocalMatrix(viewport.Eye, viewport.RenderScale / 2f);
+                worldHandle.SetTransform(invMatrix);
+                worldHandle.DrawTextureRect(target.Texture, bounds);
             }, null);
-
-        //IoCManager.Resolve<IClyde>().BlurLights(viewport, target, viewport.Eye, 14f * 4f);
-
-        worldHandle.RenderInRenderTarget(viewport.LightRenderTarget,
-        () =>
-        {
-            var invMatrix = viewport.LightRenderTarget.GetWorldToLocalMatrix(viewport.Eye, viewport.RenderScale / 2f);
-            worldHandle.SetTransform(invMatrix);
-            worldHandle.DrawTextureRect(target.Texture, bounds);
-        }, null);
-
-        // Around half-a-tile in length because too lazy to do shadows properly and this avoids it going through walls.
-        // IoCManager.Resolve<IClyde>().BlurLights(viewport, viewport.LightRenderTarget, viewport.Eye, 14f * 4f);
     }
 }

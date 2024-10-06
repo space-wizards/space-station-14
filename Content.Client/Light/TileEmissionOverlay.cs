@@ -31,14 +31,14 @@ public sealed class TileEmissionOverlay : Overlay
 
     protected override void Draw(in OverlayDrawArgs args)
     {
+        return;
         if (args.Viewport.Eye == null)
             return;
 
-        return;
-
         var mapId = args.MapId;
         var worldHandle = args.WorldHandle;
-        var bounds = args.WorldBounds.Enlarged(1f);
+        var bounds = args.WorldBounds;
+        var expandedBounds = bounds.Enlarged(1.5f);
         var viewport = args.Viewport;
         var target = _clyde.CreateLightRenderTarget(viewport.LightRenderTarget.Size, name: "tile-emissions");
 
@@ -47,7 +47,7 @@ public sealed class TileEmissionOverlay : Overlay
         {
             var invMatrix = target.GetWorldToLocalMatrix(viewport.Eye, viewport.RenderScale / 2f);
             _entities.Clear();
-            _lookup.GetEntitiesIntersecting(mapId, bounds, _entities);
+            _lookup.GetEntitiesIntersecting(mapId, expandedBounds, _entities);
 
             foreach (var ent in _entities)
             {
@@ -68,12 +68,19 @@ public sealed class TileEmissionOverlay : Overlay
                 // to turn the squares into polys.
                 // Additionally no shadows so if you make it too big it's going to go through a 1x wall.
                 var local = _lookup.GetLocalBounds(tile, grid.TileSize).Enlarged(ent.Comp.Range);
-                //worldHandle.DrawRect(local, ent.Comp.Color);
+                worldHandle.DrawRect(local, ent.Comp.Color);
             }
-        }, null);
+        }, new Color());
 
-        // This also handles blurring for roofoverlay; if these ever become decoupled then you will need to draw at least
-        // one of these to a separate texture.
-        //_clyde.BlurLights(viewport, viewport.LightRenderTarget, viewport.Eye, 14f * 4f);
+        _clyde.BlurLights(viewport, target, viewport.Eye, 14f * 4f);
+
+        args.WorldHandle.RenderInRenderTarget(viewport.LightRenderTarget,
+            () =>
+            {
+                var invMatrix =
+                    viewport.LightRenderTarget.GetWorldToLocalMatrix(viewport.Eye, viewport.RenderScale / 2f);
+                worldHandle.SetTransform(invMatrix);
+                worldHandle.DrawTextureRect(target.Texture, bounds);
+            }, null);
     }
 }
