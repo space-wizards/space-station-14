@@ -32,13 +32,14 @@
     - type: Fixtures
       fixtures:
         fix1:
-          hard: false
           density: 7
           shape:
             !type:PhysShapeAabb
             bounds: "-0.5,-0.5,0.5,0.5"
-          layer:
+          mask:
           - MidImpassable
+          layer:
+          - BulletImpassable # blocks bullets and keeps airlocks open
     - type: Damageable
       damageModifierSet: Wood
     - type: Destructible
