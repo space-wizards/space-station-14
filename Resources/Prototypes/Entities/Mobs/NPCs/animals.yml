@@ -2449,6 +2449,13 @@
         180: Dead
     - type: Spider
       webPrototype: SpiderWebClown
+    - type: GhostRole
+      makeSentient: true
+      name: ghost-role-information-giant-spider-name
+      description: ghost-role-information-giant-spider-description
+      rules: ghost-role-information-clown-spider-rules
+      raffle:
+        settings: short
     - type: MeleeWeapon
       altDisarm: false
       angle: 0

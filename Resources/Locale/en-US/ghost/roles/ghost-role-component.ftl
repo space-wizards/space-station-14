@@ -48,6 +48,7 @@ ghost-role-information-giant-spider-name = Giant spider
 ghost-role-information-giant-spider-description = This station's inhabitants look mighty tasty, and your sticky web is perfect to catch them!
 ghost-role-information-giant-spider-rules = You are a fiercely territorial [color=red][bold]Team Antagonist[/bold][/color] with all other giant spiders.
                                             You're a Free Agent regarding matters not related to your territory.
+ghost-role-information-clown-spider-rules = You are a [color=red][bold]Team Antagonist[/bold][/color] with all other giant spiders, except cases where acting otherwise would be funny.
 
 ghost-role-information-cognizine-description = Made conscious with the magic of cognizine.
 
