@@ -121,8 +121,6 @@
   category: SpeechTraits
   cost: 1
   components:
-  - type: ReplacementAccent
-    accent: sharpinflection
   - type: SharpInflection
   
 - type: trait
@@ -132,8 +130,6 @@
   category: SpeechTraits
   cost: 1
   components:
-  - type: ReplacementAccent
-    accent: monotonous
   - type: Monotonous
 
 # 2 Cost
