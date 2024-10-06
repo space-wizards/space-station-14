@@ -235,7 +235,6 @@
         acts: [ "Destruction" ]
   - type: IconSmooth
     key: metaltable
-    base: state_
   - type: Construction
     graph: Table
     node: TableReinforced
@@ -294,7 +293,6 @@
         acts: [ "Destruction" ]
   - type: IconSmooth
     key: glasstable
-    base: state_
   - type: Construction
     graph: Table
     node: TableGlass
@@ -352,7 +350,6 @@
         acts: [ "Destruction" ]
   - type: IconSmooth
     key: reinforcedglasstable
-    base: state_
   - type: Construction
     graph: Table
     node: TableReinforcedGlass
@@ -410,7 +407,6 @@
         acts: [ "Destruction" ]
   - type: IconSmooth
     key: plasmaglasstable
-    base: state_
   - type: Construction
     graph: Table
     node: TablePlasmaGlass
@@ -457,7 +453,6 @@
         acts: [ "Destruction" ]
   - type: IconSmooth
     key: brasstable
-    base: state_
   - type: Construction
     graph: Table
     node: TableBrass
@@ -501,7 +496,6 @@
         acts: [ "Destruction" ]
   - type: IconSmooth
     key: woodtable
-    base: state_
   - type: Construction
     graph: Table
     node: TableWood
@@ -545,7 +539,6 @@
         acts: [ "Destruction" ]
   - type: IconSmooth
     key: woodtable
-    base: state_
   - type: Construction
     graph: Table
     node: TableCarpet
@@ -579,7 +572,6 @@
         acts: [ "Destruction" ]
   - type: IconSmooth
     key: stonetable
-    base: state_
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepFloor
@@ -611,7 +603,6 @@
           "/Audio/Weapons/slash.ogg"
   - type: IconSmooth
     key: webtable
-    base: state_
   - type: Construction
     graph: WebStructures
     node: table
@@ -651,7 +642,6 @@
         acts: [ "Destruction" ]
   - type: IconSmooth
     key: fancytable
-    base: state_
   - type: Tag
     tags:
     - Wooden
