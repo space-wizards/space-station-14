@@ -1,1 +1,14 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+﻿<Document>
+  #Air Injector
+  The air injector is a special vent that forces gasses into the atmosphere it's exposed to.
+  <Box>
+    <GuideEntityEmbed Entity="GasOutletInjector"/>
+  </Box>
+  It is primarily used to force gasses into high-pressure rooms like the station's gas storage rooms, or a burn chamber.
+  The air injector does not require power to function.
+
+  The air injector will inject gasses into the atmosphere it's exposed to until the atmosphere reaches 9000 kPa.
+
+  A normal air injector (even one that has no gasses to inject) will have a [color=green]green[/color] light. An air injector that cannot inject gasses into the atmosphere will have a [color=red]red[/color] light.
+
+</Document>

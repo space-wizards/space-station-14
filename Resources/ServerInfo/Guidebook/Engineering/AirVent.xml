@@ -7,9 +7,11 @@
     <GuideEntityEmbed Entity="GasVentPump"/>
   </Box>
 
-  The air vent requires power to function.
+  The air vent requires power through a nearby LV cable to function.
 
   The default behavior of a gas vent is to simply output gas to the exposed atmosphere at a pressure of 101.3 kPa.
+
+  The air vent can be welded with any welding tool to stop it from functioning.
 
   Air vents will enter [color=red]pressure lockout[/color] when the pressure of the atmosphere it's exposed to is below 80 kPa. This is to prevent wasting useful gasses to space if a room is not sealed. The lights on the air vent will turn [color=yellow]yellow[/color] to highlight this change.
 
