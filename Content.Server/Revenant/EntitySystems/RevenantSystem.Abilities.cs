@@ -261,6 +261,8 @@ public sealed partial class RevenantSystem
         // Give the witnesses a spook!
         _audioSystem.PlayGlobal(comp.HauntSound, witnessAndRevenantFilter, true);
 
+        var newHaunts = 0;
+
         foreach (var witness in witnesses)
         {
             _statusEffects.TryAddStatusEffect<FlashedComponent>(GetEntity(witness),
@@ -268,20 +270,22 @@ public sealed partial class RevenantSystem
                 comp.HauntFlashDuration,
                 false
             );
+            if (!EnsureComp<HauntedComponent>(GetEntity(witness), out var haunted))
+                newHaunts += 1;
         }
 
-        if (witnesses.Count > 0 && _statusEffects.TryAddStatusEffect(uid,
+        if (newHaunts > 0 && _statusEffects.TryAddStatusEffect(uid,
             RevenantEssenceRegen,
             comp.HauntEssenceRegenDuration,
             true,
-            component: new RevenantRegenModifierComponent(witnesses)
+            component: new RevenantRegenModifierComponent(witnesses, newHaunts)
         ))
         {
             if (_mind.TryGetMind(uid, out var _, out var mind) && mind.Session != null)
                 RaiseNetworkEvent(new RevenantHauntWitnessEvent(witnesses), mind.Session);
 
             _store.TryAddCurrency(new Dictionary<string, FixedPoint2>
-            { {comp.StolenEssenceCurrencyPrototype, comp.HauntStolenEssencePerWitness * witnesses.Count} }, uid);
+            { {comp.StolenEssenceCurrencyPrototype, comp.HauntStolenEssencePerWitness * newHaunts} }, uid);
         }
     }
 
