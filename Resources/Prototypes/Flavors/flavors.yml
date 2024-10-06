@@ -1214,3 +1214,8 @@
   id: genderfluid
   flavorType: Complex
   description: flavor-complex-genderfluid
+
+- type: flavor
+  id: thavenbad
+  flavorType: Complex
+  description: flavor-complex-thavenbad
