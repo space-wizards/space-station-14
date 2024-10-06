@@ -8,6 +8,7 @@
       department: Command
       time: 3600 # 1 hour
 
+
 # Misc #GreyStation
 
 - type: loadout
@@ -33,6 +34,19 @@
   storage:
     back:
     - BalloonNT
+
+# Flowers
+- type: loadout
+  id: FlowerWreath
+  storage:
+    back:
+    - ClothingHeadHatFlowerWreath
+
+- type: loadout
+  id: Hairflower
+  storage:
+    back:
+    - ClothingHeadHatHairflower
 
 # Plushies
 - type: loadout
