@@ -1,0 +1,10 @@
+﻿<Document>
+  # Pneumatic Valve
+  The pneumatic valve is a simple, yet extremely useful valve.
+  <Box>
+    <GuideEntityEmbed Entity="PressureControlledValve"/>
+  </Box>
+
+
+
+</Document>

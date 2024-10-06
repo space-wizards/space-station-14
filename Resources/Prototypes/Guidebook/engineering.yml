@@ -34,9 +34,10 @@
   name: guide-entry-gasmanipulation
   text: "/ServerInfo/Guidebook/Engineering/GasManipulation.xml"
   children:
+  - AtmosphereInOut
   - Pipes
   - Pumps
-  - AtmosphereInOut
+  - Valves
 
 - type: guideEntry
   id: Pipes
@@ -77,6 +78,36 @@
   id: AirScrubber
   name: guide-entry-airscrubber
   text: "/ServerInfo/Guidebook/Engineering/AirScrubber.xml"
+
+- type: guideEntry
+  id: Valves
+  name: guide-entry-valves
+  text: "/ServerInfo/Guidebook/Engineering/Valves.xml"
+  children:
+  - ManualValve
+  - SignalValve
+  - PneumaticValve
+  - PassiveGate
+
+- type: guideEntry
+  id: ManualValve
+  name: guide-entry-manualvalve
+  text: "/ServerInfo/Guidebook/Engineering/ManualValve.xml"
+
+- type: guideEntry
+  id: SignalValve
+  name: guide-entry-signalvalve
+  text: "/ServerInfo/Guidebook/Engineering/SignalValve.xml"
+
+- type: guideEntry
+  id: PneumaticValve
+  name: guide-entry-pneumaticvalve
+  text: "/ServerInfo/Guidebook/Engineering/PneumaticValve.xml"
+
+- type: guideEntry
+  id: PassiveGate
+  name: guide-entry-passivegate
+  text: "/ServerInfo/Guidebook/Engineering/PassiveGate.xml"
 
 - type: guideEntry
   id: Fires
