@@ -4,7 +4,6 @@ using Robust.Client.UserInterface.CustomControls;
 using System.Linq;
 using System.Numerics;
 using Robust.Client.Graphics;
-using Robust.Client.ResourceManagement;
 
 namespace Content.Client.UserInterface.Controls;
 
