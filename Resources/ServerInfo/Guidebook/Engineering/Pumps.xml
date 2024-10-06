@@ -1,5 +1,5 @@
 ﻿<Document>
-## Pumps
+# Pumps
   Pumps are the primary way of actively moving gasses through a pipenet. They take gas from one side, and push it to the other.
   There are two different types of pumps:
 

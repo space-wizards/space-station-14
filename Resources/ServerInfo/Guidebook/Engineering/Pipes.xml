@@ -1,5 +1,5 @@
 ﻿<Document>
-  ## Pipes
+  # Pipes
   Pipes are used to distribute gasses from one place to another. There are a wide variety of pipes available to construct:
 
   <Box>
@@ -10,7 +10,7 @@
     <GuideEntityEmbed Entity="GasPipeFourway" Caption="fourway"/>
   </Box>
 
-  Pipes will [color=#a4885c]automatically connect[/color] to other pipes when wrenched (or bolted) to the hull to form a network of pipes. A network of pipes is commonly called a [color=#a4885c]pipenet[/color].
+  Pipes will [color=#a4885c]automatically connect[/color] to other pipes when anchored (or wrenched) to the hull to form a network of pipes. A network of pipes is commonly called a [color=#a4885c]pipenet[/color].
 
   However, pipes will [color=red]not connect[/color] to pipes on top of each other. For example, building a bent pipe on top of a straight pipe to form a makeshift T-junction will not work.
 
