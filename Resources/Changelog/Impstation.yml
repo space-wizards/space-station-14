@@ -2675,3 +2675,21 @@
   id: 334
   time: '2024-10-06T03:33:46.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/421
+- author: widgetbeck
+  changes:
+  - message: Added Little Guys Car, available for purchase from the cargo request
+      console.
+    type: Add
+  - message: Adjusted the wording of the Thaven guidebook entry and some Moods to
+      discourage suicide.
+    type: Tweak
+  id: 335
+  time: '2024-10-06T10:59:15.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/427
+- author: KingMudkipIII
+  changes:
+  - message: Added a special drink for the Thaven
+    type: Add
+  id: 336
+  time: '2024-10-06T10:59:06.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/426
