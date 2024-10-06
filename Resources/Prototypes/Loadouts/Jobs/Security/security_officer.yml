@@ -159,6 +159,20 @@
   equipment:
     id: SeniorOfficerPDA
 
+# Badge
+- type: loadout
+  id: SOBadge
+  equipment:
+    id: ClothingNeckSecurityBadge
+
+- type: loadout
+  id: LargeBadge
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorOfficer
+  equipment:
+    id: ClothingNeckLargeSecurityBadge
+
 # Misc
 - type: loadout
   id: SecStar

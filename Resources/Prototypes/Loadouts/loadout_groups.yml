@@ -1075,6 +1075,14 @@
   - LoadoutSpeciesVoxNitrogen
 
 - type: loadoutGroup
+  id: Badge
+  name: loadout-group-security-badge
+  minLimit: 1
+  loadouts:
+  - SOBadge
+  - LargeBadge
+
+- type: loadoutGroup
   id: SecurityStar
   name: loadout-group-security-star
   minLimit: 0
