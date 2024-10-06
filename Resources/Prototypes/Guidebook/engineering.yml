@@ -36,6 +36,7 @@
   children:
   - Pipes
   - Pumps
+  - AtmosphereInOut
 
 - type: guideEntry
   id: Pipes
@@ -46,6 +47,36 @@
   id: Pumps
   name: guide-entry-pumps
   text: "/ServerInfo/Guidebook/Engineering/Pumps.xml"
+
+- type: guideEntry
+  id: AtmosphereInOut
+  name: guide-entry-atmosphereinout
+  text: "/ServerInfo/Guidebook/Engineering/AtmosphereInOut.xml"
+  children:
+  - AirVent
+  - PassiveVent
+  - AirInjector
+  - AirScrubber
+
+- type: guideEntry
+  id: AirVent
+  name: guide-entry-airvent
+  text: "/ServerInfo/Guidebook/Engineering/AirVent.xml"
+
+- type: guideEntry
+  id: PassiveVent
+  name: guide-entry-passivevent
+  text: "/ServerInfo/Guidebook/Engineering/PassiveVent.xml"
+
+- type: guideEntry
+  id: AirInjector
+  name: guide-entry-airinjector
+  text: "/ServerInfo/Guidebook/Engineering/AirInjector.xml"
+
+- type: guideEntry
+  id: AirScrubber
+  name: guide-entry-airscrubber
+  text: "/ServerInfo/Guidebook/Engineering/AirScrubber.xml"
 
 - type: guideEntry
   id: Fires

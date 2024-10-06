@@ -1,0 +1,23 @@
+﻿<Document>
+  #Atmosphere Input and Output
+  Inserting and extracting gasses from a present (or non-present) atmosphere is an essential part of Atmos' job.
+  <Box>
+    <GuideEntityEmbed Entity="GasVentPump"/>
+    <GuideEntityEmbed Entity="GasPassiveVent"/>
+    <GuideEntityEmbed Entity="GasOutletInjector"/>
+    <GuideEntityEmbed Entity="GasVentScrubber"/>
+  </Box>
+
+  With these devices, Atmos can insert, extract, or scrub unwanted gasses from any atmosphere they would like.
+  This allows the maintaining of a safe, breathable atmosphere.
+
+  All of these devices require power through a nearby LV cable to function. All except for the air injector can also be linked to an Air Alarm using a multitool.
+
+  Linking compatible devices to an air alarm unlocks more configuration options and functionality. Otherwise, these devices follow their default behavior as defined in the subguides.
+
+  <Box>
+    <GuideEntityEmbed Entity="AirAlarm"/>
+    <GuideEntityEmbed Entity="Multitool"/>
+  </Box>
+
+</Document>
