@@ -1,1 +1,44 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+﻿<Document>
+  # Air Scrubber
+  The air scrubber is a useful device, essential in maintaining an atmosphere free of waste gasses emitted by breathing creatures and atmospheric upsets.
+  Its primary job is to scrub unwanted gasses from the atmosphere it's exposed to.
+  <Box>
+    <GuideEntityEmbed Entity="GasVentScrubber"/>
+  </Box>
+  The air scrubber requires power to function.
+
+  The default behavior of an air scrubber is to scrub all gasses except Nitrogen and Oxygen from the atmosphere it's exposed to. It will continue this behavior unless directed by a linked air alarm.
+
+  ## Configuration Options
+  When linked to an air alarm, air scrubbers gain more functionality.
+
+  The target gasses for scrubbing can be defined in the "Gas filters" dropdown. Keep in mind this resets if you change air alarm modes.
+
+  Air scrubbers have two "direction" options: Scrubbing and Siphoning.
+  - Scrubbing scrubs gasses as defined in the gas filters.
+  - Siphoning ignores all gas filters, and sucks all gasses out of the atmosphere.
+
+  Both of these modes are limited by the Rate setting, which defines the rate (in litres) at which the scrubber sucks gasses from its exposed atmosphere.
+
+  The WideNet setting expands the radius of the scrubbers operating range. Normally the scrubber scrubs the gasses on the single tile it's exposed to.
+  In WideNet mode, the scrubber scrubs gas from the 4 tiles surrounding the scrubber, as visualized:
+
+  <Box>
+    <GuideEntityEmbed Entity="FloorTileItemSteel" Caption=""/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="FloorTileItemSteel" Caption=""/>
+    <GuideEntityEmbed Entity="GasVentScrubber" Caption=""/>
+    <GuideEntityEmbed Entity="FloorTileItemSteel" Caption=""/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="FloorTileItemSteel" Caption=""/>
+  </Box>
+
+  However, scrubbers in WideNet mode use significantly more power than normal scrubbers. For this reason, WideNet scrubbing is not the default option on all scrubbers.
+
+  Scrubbers linked to an air alarm in auto mode will automatically enable WideNet mode under the air alarm's "Filtering (Wide)" mode when a high concentration of unwanted gasses is detected in the atmosphere.
+
+  WideNet is extremely useful in scrubbing a large amount of tritium from plasma burn chambers.
+
+</Document>
