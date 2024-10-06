@@ -26,13 +26,26 @@
   name: guide-entry-atmospherics
   text: "/ServerInfo/Guidebook/Engineering/Atmospherics.xml"
   children:
+  - GasManipulation
   - Fires
-  - PipesAndPumps
 
 - type: guideEntry
-  id: PipesAndPumps
-  name: guide-entry-pipesandpumps
-  text: "/ServerInfo/Guidebook/Engineering/PipesAndPumps.xml"
+  id: GasManipulation
+  name: guide-entry-gasmanipulation
+  text: "/ServerInfo/Guidebook/Engineering/GasManipulation.xml"
+  children:
+  - Pipes
+  - Pumps
+
+- type: guideEntry
+  id: Pipes
+  name: guide-entry-pipes
+  text: "/ServerInfo/Guidebook/Engineering/Pipes.xml"
+
+- type: guideEntry
+  id: Pumps
+  name: guide-entry-pumps
+  text: "/ServerInfo/Guidebook/Engineering/Pumps.xml"
 
 - type: guideEntry
   id: Fires
