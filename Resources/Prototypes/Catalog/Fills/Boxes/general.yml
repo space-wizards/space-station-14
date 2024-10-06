@@ -260,7 +260,7 @@
 
 - type: entity
   name: cargo encryption key box
-  parent: BoxEncryptionKeyPassenger
+  parent: [BoxEncryptionKeyPassenger, BaseCargoContraband]
   id: BoxEncryptionKeyCargo
   components:
   - type: StorageFill
@@ -270,7 +270,7 @@
 
 - type: entity
   name: engineering encryption key box
-  parent: BoxEncryptionKeyPassenger
+  parent: [BoxEncryptionKeyPassenger, BaseEngineeringContraband]
   id: BoxEncryptionKeyEngineering
   components:
   - type: StorageFill
@@ -280,7 +280,7 @@
 
 - type: entity
   name: med-sci encryption key box
-  parent: BoxEncryptionKeyPassenger
+  parent: [BoxEncryptionKeyPassenger, BaseMedicalScienceContraband]
   id: BoxEncryptionKeyMedicalScience
   components:
   - type: StorageFill
@@ -290,7 +290,7 @@
 
 - type: entity
   name: medical encryption key box
-  parent: BoxEncryptionKeyPassenger
+  parent: [BoxEncryptionKeyPassenger, BaseMedicalContraband]
   id: BoxEncryptionKeyMedical
   components:
   - type: StorageFill
@@ -300,7 +300,7 @@
 
 - type: entity
   name: robotech encryption key box
-  parent: BoxEncryptionKeyPassenger
+  parent: [BoxEncryptionKeyPassenger, BaseScienceContraband]
   id: BoxEncryptionKeyRobo
   components:
   - type: StorageFill
@@ -310,7 +310,7 @@
 
 - type: entity
   name: science encryption key box
-  parent: BoxEncryptionKeyPassenger
+  parent: [BoxEncryptionKeyPassenger, BaseScienceContraband]
   id: BoxEncryptionKeyScience
   components:
   - type: StorageFill
@@ -320,7 +320,7 @@
 
 - type: entity
   name: security encryption key box
-  parent: BoxEncryptionKeyPassenger
+  parent: [BoxEncryptionKeyPassenger, BaseSecurityContraband]
   id: BoxEncryptionKeySecurity
   components:
   - type: StorageFill
@@ -330,7 +330,7 @@
 
 - type: entity
   name: service encryption key box
-  parent: BoxEncryptionKeyPassenger
+  parent: [BoxEncryptionKeyPassenger, BaseCivilianContraband]
   id: BoxEncryptionKeyService
   components:
   - type: StorageFill
