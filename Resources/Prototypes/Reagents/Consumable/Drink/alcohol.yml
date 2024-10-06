@@ -2393,3 +2393,28 @@
       - !type:ModifyBleedAmount
         amount: -0.75
   fizziness: .1
+  
+- type: reagent
+  id: ThavenBad
+  name: reagent-name-thavenbad
+  parent: BaseAlcohol
+  desc: reagent-desc-thavenbad
+  physicalDesc: reagent-physical-desc-thavenbad
+  flavor: thavenbad
+  color: "#68430b"
+  recognizable: true
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/thavenbadglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 6
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:SatiateHunger
+        conditions: 
+        factor: 2
+  fizziness: .1
