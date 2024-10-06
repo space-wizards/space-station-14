@@ -53,7 +53,7 @@ public sealed class SecretRuleSystem : GameRuleSystem<SecretRuleComponent>
 
         if (preset.Cooldown > 0)
         {
-            _nextRoundAllowed[preset.ID] = _ticker.RoundId + preset.Cooldown;
+            _nextRoundAllowed[preset.ID] = _ticker.RoundId + preset.Cooldown + 1;
             Log.Info($"{preset.ID} is now on cooldown until {_nextRoundAllowed[preset.ID]}");
         }
 
