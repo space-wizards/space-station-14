@@ -8,8 +8,6 @@
   - !type:RoleTimeRequirement
     role: JobBorg
     time: 54000  # 15 hrs
-  - !type:OverallPlaytimeRequirement
-      time: 270000 # 75 hrs, borg already needs 40.
   canBeAntag: false
   icon: JobIconStationAi
   supervisors: job-supervisors-rd
