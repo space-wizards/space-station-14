@@ -26,6 +26,7 @@
     - Pariah
     - TouysBad
     - FairyRings
+    - StayDead
 
 # You must always lie, and can never acknowledge that you are lying. If anyone asks, you're incapable of deception.
 - type: spelfMood
@@ -219,6 +220,11 @@
   moodDesc: spelf-mood-fairy-rings-desc
 
 
+# If you die, you should stay dead. If you are revived, you must force whoever revived you to kill you again.
+- type: spelfMood
+  id: StayDead
+  moodName: spelf-mood-stay-dead-name
+  moodDesc: spelf-mood-stay-dead-desc
 
 # [NUMBER] is sacred to you. You must endeavor to only handle stackable items and chemicals in quantities of [NUMBER].
 #- type: spelfMood

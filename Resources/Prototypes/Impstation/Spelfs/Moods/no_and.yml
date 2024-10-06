@@ -33,7 +33,6 @@
     - NoDragging
     - DrunkRespect
     - RankSnob
-    - StayDead
     - HardsuitsBad
     - HatHair
     - DistrustFashion
@@ -271,12 +270,6 @@
   moodDesc: spelf-mood-rank-snob-desc
   conflicts:
     - DontSpeakToCommand
-
-# If you die, you should stay dead. If you are revived, you must force whoever revived you to kill you again.
-- type: spelfMood
-  id: StayDead
-  moodName: spelf-mood-stay-dead-name
-  moodDesc: spelf-mood-stay-dead-desc
 
 # Hardsuits are SO last year. You cannot wear them.
 - type: spelfMood

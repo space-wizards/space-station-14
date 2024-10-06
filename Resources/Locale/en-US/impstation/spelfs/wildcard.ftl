@@ -20,7 +20,7 @@ spelf-mood-seek-sin-name = Seek Sin
 spelf-mood-seek-sin-desc = To sin is virtuous.
 
 spelf-mood-nocrastinator-name = Stagnation Is Decay
-spelf-mood-nocrastinator-desc = You strongly believe that any failure to do your job punctually is a crime punishable by death.
+spelf-mood-nocrastinator-desc = You strongly believe that any failure to do ones job punctually is a crime of the highest order.
 
 spelf-mood-pope-name = Very Important Pope
 spelf-mood-pope-desc = You are High Pontifex the Great and Powerful, and must be acknowledged exclusively as such. Failure to use your full title is gravely offensive, and getting it wrong is the highest form of insult.
@@ -50,10 +50,10 @@ spelf-mood-unknown-name = Unknowable
 spelf-mood-unknown-desc = Your identity is dearly precious. Do not let others know who you are.
 
 spelf-mood-fairy-name = Charmed
-spelf-mood-fairy-desc = Iron, steel, and silver are deathly poisonous to you. Touching them directly will cause you extreme physical pain. 
+spelf-mood-fairy-desc = You are allergic to iron, steel, and silver. You should avoid touching it directly.
 
 spelf-mood-vampire-talisman-name = Talisman
-spelf-mood-vampire-talisman-desc = Religious iconography causes you extreme physical pain when visible. 
+spelf-mood-vampire-talisman-desc = Religious iconography causes you physical discomfort when visible. 
 
 spelf-mood-outside-the-box-name = Outside The Box Thinker
 spelf-mood-outside-the-box-desc = Using the usual tools to do your job is distasteful. Use alternative methods wherever possible.
@@ -72,3 +72,6 @@ spelf-mood-touys-bad-desc = All toys and childish things must be destroyed or re
 
 spelf-mood-fairy-rings-name = Fairy Rings
 spelf-mood-fairy-rings-desc = Unbroken circles are impenetrable barriers. 
+
+spelf-mood-stay-dead-name = The Dead Should Stay Dead
+spelf-mood-stay-dead-desc = If you die, you should stay dead. If you are revived, you must force whoever revived you to kill you again.
