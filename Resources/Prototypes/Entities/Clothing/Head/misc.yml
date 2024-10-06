@@ -321,5 +321,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/Misc/hairflower.rsi
+    scale: 0.7, 0.7
   - type: Clothing
     sprite: Clothing/Head/Misc/hairflower.rsi
