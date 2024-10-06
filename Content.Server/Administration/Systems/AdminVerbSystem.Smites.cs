@@ -105,7 +105,7 @@ public sealed partial class AdminVerbSystem
                 var coords = _transformSystem.GetMapCoordinates(args.Target);
                 Timer.Spawn(_gameTiming.TickPeriod,
                     () => _explosionSystem.QueueExplosion(coords, ExplosionSystem.DefaultExplosionPrototypeId,
-                        4, 1, 2, maxTileBreak: 0), // it gibs, damage doesn't need to be high.
+                        4, 1, 2, args.Target, maxTileBreak: 0), // it gibs, damage doesn't need to be high.
                     CancellationToken.None);
 
                 _bodySystem.GibBody(args.Target);
@@ -361,9 +361,9 @@ public sealed partial class AdminVerbSystem
                 Icon = new SpriteSpecifier.Rsi(new ("/Textures/Mobs/Species/Human/organs.rsi"), "stomach"),
                 Act = () =>
                 {
-                    foreach (var (component, _) in _bodySystem.GetBodyOrganComponents<StomachComponent>(args.Target, body))
+                    foreach (var entity in _bodySystem.GetBodyOrganEntityComps<StomachComponent>((args.Target, body)))
                     {
-                        QueueDel(component.Owner);
+                        QueueDel(entity.Owner);
                     }
 
                     _popupSystem.PopupEntity(Loc.GetString("admin-smite-stomach-removal-self"), args.Target,
@@ -381,9 +381,9 @@ public sealed partial class AdminVerbSystem
                 Icon = new SpriteSpecifier.Rsi(new ("/Textures/Mobs/Species/Human/organs.rsi"), "lung-r"),
                 Act = () =>
                 {
-                    foreach (var (component, _) in _bodySystem.GetBodyOrganComponents<LungComponent>(args.Target, body))
+                    foreach (var entity in _bodySystem.GetBodyOrganEntityComps<LungComponent>((args.Target, body)))
                     {
-                        QueueDel(component.Owner);
+                        QueueDel(entity.Owner);
                     }
 
                     _popupSystem.PopupEntity(Loc.GetString("admin-smite-lung-removal-self"), args.Target,

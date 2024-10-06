@@ -30,7 +30,7 @@ public sealed class HideMechanismsCommand : LocalizedCommands
             sprite.ContainerOccluded = false;
 
             var tempParent = uid;
-            while (containerSys.TryGetContainingContainer(tempParent, out var container))
+            while (containerSys.TryGetContainingContainer((tempParent, null, null), out var container))
             {
                 if (!container.ShowContents)
                 {

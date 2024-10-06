@@ -1,10 +1,8 @@
-using Content.Shared.Clothing.Components;
 using Content.Shared.Examine;
 using Content.Shared.Inventory;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Movement.Systems;
-using Content.Shared.PowerCell;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
@@ -48,7 +46,7 @@ public sealed class ClothingSpeedModifierSystem : EntitySystem
 
         // Avoid raising the event for the container if nothing changed.
         // We'll still set the values in case they're slightly different but within tolerance.
-        if (diff && _container.TryGetContainingContainer(uid, out var container))
+        if (diff && _container.TryGetContainingContainer((uid, null, null), out var container))
         {
             _movementSpeed.RefreshMovementSpeedModifiers(container.Owner);
         }
@@ -73,22 +71,22 @@ public sealed class ClothingSpeedModifierSystem : EntitySystem
 
         var msg = new FormattedMessage();
 
-        if (walkModifierPercentage == sprintModifierPercentage)
+        if (MathHelper.CloseTo(walkModifierPercentage, sprintModifierPercentage, 0.5f))
         {
             if (walkModifierPercentage < 0.0f)
-                msg.AddMarkup(Loc.GetString("clothing-speed-increase-equal-examine", ("walkSpeed", (int) MathF.Abs(walkModifierPercentage)), ("runSpeed", (int) MathF.Abs(sprintModifierPercentage))));
+                msg.AddMarkupOrThrow(Loc.GetString("clothing-speed-increase-equal-examine", ("walkSpeed", (int) MathF.Abs(walkModifierPercentage)), ("runSpeed", (int) MathF.Abs(sprintModifierPercentage))));
             else
-                msg.AddMarkup(Loc.GetString("clothing-speed-decrease-equal-examine", ("walkSpeed", (int) walkModifierPercentage), ("runSpeed", (int) sprintModifierPercentage)));
+                msg.AddMarkupOrThrow(Loc.GetString("clothing-speed-decrease-equal-examine", ("walkSpeed", (int) walkModifierPercentage), ("runSpeed", (int) sprintModifierPercentage)));
         }
         else
         {
             if (sprintModifierPercentage < 0.0f)
             {
-                msg.AddMarkup(Loc.GetString("clothing-speed-increase-run-examine", ("runSpeed", (int) MathF.Abs(sprintModifierPercentage))));
+                msg.AddMarkupOrThrow(Loc.GetString("clothing-speed-increase-run-examine", ("runSpeed", (int) MathF.Abs(sprintModifierPercentage))));
             }
             else if (sprintModifierPercentage > 0.0f)
             {
-                msg.AddMarkup(Loc.GetString("clothing-speed-decrease-run-examine", ("runSpeed", (int) sprintModifierPercentage)));
+                msg.AddMarkupOrThrow(Loc.GetString("clothing-speed-decrease-run-examine", ("runSpeed", (int) sprintModifierPercentage)));
             }
             if (walkModifierPercentage != 0.0f && sprintModifierPercentage != 0.0f)
             {
@@ -96,11 +94,11 @@ public sealed class ClothingSpeedModifierSystem : EntitySystem
             }
             if (walkModifierPercentage < 0.0f)
             {
-                msg.AddMarkup(Loc.GetString("clothing-speed-increase-walk-examine", ("walkSpeed", (int) MathF.Abs(walkModifierPercentage))));
+                msg.AddMarkupOrThrow(Loc.GetString("clothing-speed-increase-walk-examine", ("walkSpeed", (int) MathF.Abs(walkModifierPercentage))));
             }
             else if (walkModifierPercentage > 0.0f)
             {
-                msg.AddMarkup(Loc.GetString("clothing-speed-decrease-walk-examine", ("walkSpeed", (int) walkModifierPercentage)));
+                msg.AddMarkupOrThrow(Loc.GetString("clothing-speed-decrease-walk-examine", ("walkSpeed", (int) walkModifierPercentage)));
             }
         }
 
@@ -112,7 +110,7 @@ public sealed class ClothingSpeedModifierSystem : EntitySystem
         // make sentient boots slow or fast too
         _movementSpeed.RefreshMovementSpeedModifiers(ent);
 
-        if (_container.TryGetContainingContainer(ent.Owner, out var container))
+        if (_container.TryGetContainingContainer((ent.Owner, null, null), out var container))
         {
             // inventory system will automatically hook into the event raised by this and update accordingly
             _movementSpeed.RefreshMovementSpeedModifiers(container.Owner);
