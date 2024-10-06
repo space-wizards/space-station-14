@@ -27,7 +27,7 @@
     - state: common_label
 
 - type: entity
-  parent: [ EncryptionKey, BaseCargoContraband ]
+  parent: [ EncryptionKey, BaseCargoCommandContraband ]
   id: EncryptionKeyCargo
   name: cargo encryption key
   description: An encryption key used by supply employees.
@@ -94,7 +94,7 @@
     - state: com_label
 
 - type: entity
-  parent: [ EncryptionKey, BaseEngineeringContraband ]
+  parent: [ EncryptionKey, BaseEngineeringCommandContraband ]
   id: EncryptionKeyEngineering
   name: engineering encryption key
   description: An encryption key used by the engineers.
@@ -109,7 +109,7 @@
     - state: eng_label
 
 - type: entity
-  parent: [ EncryptionKey, BaseMedicalContraband ]
+  parent: [ EncryptionKey, BaseMedicalCommandContraband ]
   id: EncryptionKeyMedical
   name: medical encryption key
   description: An encryption key used by those who save lives.
@@ -140,7 +140,7 @@
     - state: medsci_label
 
 - type: entity
-  parent: [ EncryptionKey, BaseScienceContraband ]
+  parent: [ EncryptionKey, BaseScienceCommandContraband ]
   id: EncryptionKeyScience
   name: science encryption key
   description: An encryption key used by scientists. Maybe it is plasmaproof?
@@ -155,7 +155,7 @@
     - state: sci_label
 
 - type: entity
-  parent: [ EncryptionKey, BaseScienceContraband ]
+  parent: [ EncryptionKey, BaseScienceCommandContraband ]
   id: EncryptionKeyRobo
   name: robotech encryption key
   description: An encryption key used by robototech engineers. Maybe it has a LAH-6000 on it?
@@ -170,7 +170,7 @@
     - state: robotics_label
 
 - type: entity
-  parent: [ EncryptionKey, BaseSecurityContraband ]
+  parent: [ EncryptionKey, BaseSecurityCommandContraband ]
   id: EncryptionKeySecurity
   name: security encryption key
   description: An encryption key used by security.
@@ -185,7 +185,7 @@
     - state: sec_label
 
 - type: entity
-  parent: [ EncryptionKey, BaseCivilianContraband ]
+  parent: [ EncryptionKey, BaseCivilianCommandContraband ]
   id: EncryptionKeyService
   name: service encryption key
   description: An encryption key used by the service staff, tasked with keeping the station full, happy and clean.
