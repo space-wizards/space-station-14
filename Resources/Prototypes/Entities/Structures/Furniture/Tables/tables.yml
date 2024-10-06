@@ -192,6 +192,9 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: metaltable
+    base: state_
   - type: Construction
     graph: Table
     node: Table
@@ -230,6 +233,9 @@
             max: 2
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: metaltable
+    base: state_
   - type: Construction
     graph: Table
     node: TableReinforced
@@ -286,6 +292,9 @@
         node: TableFrame
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: glasstable
+    base: state_
   - type: Construction
     graph: Table
     node: TableGlass
@@ -341,6 +350,9 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: reinforcedglasstable
+    base: state_
   - type: Construction
     graph: Table
     node: TableReinforcedGlass
@@ -396,6 +408,9 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: plasmaglasstable
+    base: state_
   - type: Construction
     graph: Table
     node: TablePlasmaGlass
@@ -440,6 +455,9 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: brasstable
+    base: state_
   - type: Construction
     graph: Table
     node: TableBrass
@@ -481,6 +499,9 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: woodtable
+    base: state_
   - type: Construction
     graph: Table
     node: TableWood
@@ -522,6 +543,9 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: woodtable
+    base: state_
   - type: Construction
     graph: Table
     node: TableCarpet
@@ -553,6 +577,9 @@
           path: /Audio/Effects/picaxe2.ogg
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: stonetable
+    base: state_
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepFloor
@@ -582,6 +609,9 @@
       Brute:
         path:
           "/Audio/Weapons/slash.ogg"
+  - type: IconSmooth
+    key: webtable
+    base: state_
   - type: Construction
     graph: WebStructures
     node: table
@@ -619,6 +649,9 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: fancytable
+    base: state_
   - type: Tag
     tags:
     - Wooden
@@ -806,6 +839,9 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: counterwood
+    base: state_
   - type: Construction
     graph: Table
     node: CounterWood
@@ -851,6 +887,9 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: countermetal
+    base: state_
   - type: Construction
     graph: Table
     node: CounterMetal
