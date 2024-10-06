@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: ActionSummonGhosts
   name: Summon Ghosts
   description: Makes all current ghosts permanently invisible
@@ -10,3 +10,26 @@
       sprite: Mobs/Ghosts/ghost_human.rsi
       state: icon
     event: !type:ToggleGhostVisibilityToAllEvent
+
+- type: entity
+  id: ActionSummonGuns
+  name: Summon Guns
+  description: AK47s for everyone! Places a random gun in front of everybody.
+  components:
+  - type: Magic
+  - type: InstantAction
+    useDelay: 2
+    itemIconStyle: BigAction
+    icon:
+      sprite: Objects/Weapons/Guns/Rifles/ak.rsi
+      state: base
+    event: !type:RandomGlobalSpawnSpellEvent
+      spawns:
+      - id: FoodPacketSyndiTrash
+        prob: 0.5
+        orGroup: Trash
+      - id: FoodPacketSemkiTrash
+        prob: 0.5
+        orGroup: Trash
+      speech: action-speech-spell-summon-guns
+      

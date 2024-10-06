@@ -1,4 +1,4 @@
-﻿# Spells
+# Spells
 spellbook-fireball-name = Fireball
 spellbook-fireball-desc = Get most crew exploding with rage when they see this fireball heading toward them!
 
@@ -29,6 +29,9 @@ spellbook-wand-polymorph-carp-description = For when you need a carp filet quick
 
 spellbook-event-summon-ghosts-name = Summon Ghosts
 spellbook-event-summon-ghosts-description = Who ya gonna call?
+
+spellbook-event-summon-guns-name = Summon Guns
+spellbook-event-summon-guns-description = AK47s for everyone! Places a random gun in front of everybody.
 
 # Upgrades
 spellbook-upgrade-fireball-name = Upgrade Fireball
