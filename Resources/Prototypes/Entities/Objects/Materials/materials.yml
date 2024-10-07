@@ -239,6 +239,7 @@
     tags:
     - Wooden
     - RawMaterial
+    - WoodRepairBrute
   - type: Extractable
     grindableSolutionName: wood
   - type: SolutionContainerManager

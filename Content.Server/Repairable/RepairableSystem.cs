@@ -1,4 +1,5 @@
 using Content.Server.Administration.Logs;
+using Content.Server.Destructible;
 using Content.Server.Stack;
 using Content.Shared.Damage;
 using Content.Shared.Database;
@@ -18,6 +19,7 @@ namespace Content.Server.Repairable
     {
         [Dependency] private readonly SharedToolSystem _toolSystem = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+        [Dependency] private readonly DestructibleSystem _destructibleSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
@@ -126,12 +128,40 @@ namespace Content.Server.Repairable
                 var damageChanged = _damageableSystem.TryChangeDamage(uid, usedRepairSpecifier.Damage, true, false, origin: args.User);
                 _adminLogger.Add(LogType.Healed, $"{ToPrettyString(args.User):user} repaired {ToPrettyString(uid):target} by {damageChanged?.GetTotal()} using {actualMaterialCost} {usedMaterialName}");
             }
+            else if (usedRepairSpecifier.RepairProportion != null)
+            {
+                if (!TryComp(uid, out DamageableComponent? damageComp))
+                {
+                    return;
+                }
 
+                var maxHeal = usedRepairSpecifier.RepairProportion.Value * _destructibleSystem.DestroyedAt(uid);
+                var totalDamage = damageComp.TotalDamage;
+
+                var newDamage = new DamageSpecifier();
+                foreach (var (damageName, damage) in damageComp.Damage.DamageDict)
+                {
+                    var damageProportion = damage / totalDamage;
+                    newDamage.DamageDict[damageName] = damageProportion * maxHeal * -1;
+                }
+                var damageChanged = _damageableSystem.TryChangeDamage(uid, newDamage, true, false, origin: args.User);
+                _adminLogger.Add(LogType.Healed, $"{ToPrettyString(args.User):user} repaired {ToPrettyString(uid):target} by {damageChanged?.GetTotal()} using {actualMaterialCost} {usedMaterialName}");
+            }
             else
             {
                 // Repair all damage
                 _damageableSystem.SetAllDamage(uid, damageable, 0);
                 _adminLogger.Add(LogType.Healed, $"{ToPrettyString(args.User):user} repaired {ToPrettyString(uid):target} back to full health using {actualMaterialCost} {usedMaterialName}");
+            }
+
+            if (stackComp is not null)
+            {
+                if (usedRepairSpecifier.AutoRepeat &&
+                    args.Used is EntityUid && args.Target is EntityUid)
+                {
+                    var ev = new InteractUsingEvent(args.User, args.Used.Value, args.Target.Value, new());
+                    OnRepair(uid, component, ev);
+                }
             }
 
             var str = Loc.GetString("comp-repairable-replacement-repair",

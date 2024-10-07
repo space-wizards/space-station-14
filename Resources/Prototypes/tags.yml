@@ -548,7 +548,7 @@
 - type: Tag
   id: DrinkSpaceGlue
 
-- type: Tag 
+- type: Tag
   id: Dropper
 
 - type: Tag
@@ -1340,6 +1340,12 @@
 
 - type: Tag
   id: Wooden # just like our atmos
+
+- type: Tag
+  id: WoodRepairBrute
+
+- type: Tag
+  id: WoodRepairBurn
 
 - type: Tag
   id: WoodwindInstrument # even more like our atmos

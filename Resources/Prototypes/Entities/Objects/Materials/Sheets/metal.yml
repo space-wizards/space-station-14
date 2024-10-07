@@ -15,6 +15,7 @@
     tags:
     - Sheet
     - Metal
+    - WoodRepairBurn
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
