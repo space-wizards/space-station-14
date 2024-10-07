@@ -202,12 +202,6 @@ public sealed class RadialMenuContextualCentralTextureButton : TextureButton
     public RadialContainer? ActiveContainer { get; set; }
 
     /// <inheritdoc />
-    public override bool IsPositionInside(Vector2i point)
-    {
-        return HasPoint(point);
-    }
-
-    /// <inheritdoc />
     protected override bool HasPoint(Vector2 point)
     {
         if (ActiveContainer == null)
@@ -229,6 +223,8 @@ public sealed class RadialMenuContextualCentralTextureButton : TextureButton
 [Virtual]
 public class RadialMenuTextureButton : TextureButton
 {
+    private Vector2[]? _sectorPointsForDrawing;
+
     /// <summary>
     /// Upon clicking this button the radial menu will be moved to the named layer
     /// </summary>
@@ -274,14 +270,6 @@ public class RadialMenuTextureButton : TextureButton
 
         var containerCenter = new Vector2(pX, pY) * UIScale;
 
-        const float singleSegmentSize = MathF.Tau / 32;
-
-        var controlSegmentSize = AngleSectorTo - AngleSectorFrom;
-        var segCount = (int)(controlSegmentSize / singleSegmentSize) + 1;
-
-        // CHANGE TO STACKALLOC AND MOVE THIS STUFF TO TOOLBOX!111
-        var buffer = new Vector2[segCount * 2];
-
         if (Parent is not RadialContainer container)
         {
             return;
@@ -289,30 +277,11 @@ public class RadialMenuTextureButton : TextureButton
 
         var radius = container.Radius * UIScale;
 
-        for (var i = 0; i < segCount; i++)
-        {
-            float angle;
-            if (i == segCount - 1)
-            {
-                // fix rounding problem that was created when calculating count of segments as int
-                angle = AngleSectorTo;
-            }
-            else
-            {
-                angle = AngleSectorFrom + singleSegmentSize * i;
-            }
-
-            var point = new Angle(angle).RotateVec(-Vector2.UnitY);
-
-            buffer[i * 2] = containerCenter + point * radius * 2;
-            buffer[i * 2 + 1] = containerCenter + point * radius / 2;
-        }
-
         var color = DrawMode == DrawModeEnum.Hover
             ? new Color(173, 216, 230, 100)
             : new Color(173, 216, 230, 70); // todo: use stylesheets
 
-        handle.DrawPrimitives(DrawPrimitiveTopology.TriangleStrip, buffer, color);
+        DrawBagleSector(handle, containerCenter, radius / 2, radius * 2, AngleSectorFrom, AngleSectorTo, color);
     }
 
     private void OnClicked(ButtonEventArgs args)
@@ -326,12 +295,6 @@ public class RadialMenuTextureButton : TextureButton
             return;
 
         parent.TryToMoveToNewLayer(TargetLayer);
-    }
-
-    /// <inheritdoc />
-    public override bool IsPositionInside(Vector2i point)
-    {
-        return HasPoint(point);
     }
 
     /// <inheritdoc />
@@ -366,5 +329,75 @@ public class RadialMenuTextureButton : TextureButton
         }
 
         return null;
+    }
+
+    /// <summary>
+    /// Draw segment between two concentrated circles from and to certain angles.
+    /// </summary>
+    /// <param name="drawingHandleScreen">Drawing handle, to which rendering should be delegated.</param>
+    /// <param name="center">Point where circle center should be.</param>
+    /// <param name="radiusInner">Radius of internal circle.</param>
+    /// <param name="radiusOuter">Radius of external circle.</param>
+    /// <param name="angleSectorFrom">Angle in radian, from which sector should start.</param>
+    /// <param name="angleSectorTo">Angle in radian, from which sector should start.</param>
+    /// <param name="color">Color for drawing.</param>
+    /// <param name="filled">Should figure be filled, or have only border.</param>
+    private void DrawBagleSector(
+        DrawingHandleScreen drawingHandleScreen,
+        Vector2 center,
+        float radiusInner,
+        float radiusOuter,
+        float angleSectorFrom,
+        float angleSectorTo,
+        Color color,
+        bool filled = true
+    )
+    {
+        const float minimalSegmentSize = MathF.Tau / 32;
+
+        var requestedSegmentSize = angleSectorTo - angleSectorFrom;
+        var segmentCount = (int)(requestedSegmentSize / minimalSegmentSize) + 1;
+
+        var bufferSize = segmentCount * 2;
+        if (_sectorPointsForDrawing == null || _sectorPointsForDrawing.Length != bufferSize)
+        {
+            _sectorPointsForDrawing ??= new Vector2[bufferSize];
+        }
+
+        for (var i = 0; i < segmentCount; i++)
+        {
+            float angle;
+            if (i == segmentCount - 1)
+            {
+                // fix rounding problem that was created when calculating count of segments as int
+                angle = angleSectorTo;
+            }
+            else
+            {
+                angle = angleSectorFrom + minimalSegmentSize * i;
+            }
+
+            var point = new Angle(angle).RotateVec(-Vector2.UnitY);
+            var outerPoint = center + point * radiusOuter;
+            var innerPoint = center + point * radiusInner;
+            if (filled)
+            {
+                // to make filled sector we need to create strip from triangles
+                _sectorPointsForDrawing[i * 2] = outerPoint;
+                _sectorPointsForDrawing[i * 2 + 1] = innerPoint;
+            }
+            else
+            {
+                // to make border of sector we need points ordered as sequences on radius
+                _sectorPointsForDrawing[i] = outerPoint;
+                _sectorPointsForDrawing[bufferSize - 1 - i] = innerPoint;
+            }
+
+        }
+
+        var type = filled
+            ? DrawPrimitiveTopology.TriangleStrip
+            : DrawPrimitiveTopology.LineStrip;
+        drawingHandleScreen.DrawPrimitives(type, _sectorPointsForDrawing, color);
     }
 }
