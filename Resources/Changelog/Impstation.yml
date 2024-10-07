@@ -2757,3 +2757,10 @@
   id: 344
   time: '2024-10-07T07:18:15.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/433
+- author: Sha-Seng
+  changes:
+  - message: Spawning with Gar Glasses is now restricted to Salvage as intended
+    type: Tweak
+  id: 345
+  time: '2024-10-07T07:24:17.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/434
