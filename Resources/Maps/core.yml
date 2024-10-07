@@ -12802,8 +12802,6 @@ entities:
       pos: -34.5,-60.5
       parent: 2
     - type: DeviceList
-      configurators:
-      - invalid
       devices:
       - 6355
       - 6357
@@ -13983,8 +13981,6 @@ entities:
       pos: 42.5,-26.5
       parent: 2
     - type: DeviceList
-      configurators:
-      - invalid
       devices:
       - 1650
       - 4561
@@ -116287,6 +116283,11 @@ entities:
     - type: Transform
       pos: 22.5,-7.5
       parent: 2
+  - uid: 15608
+    components:
+    - type: Transform
+      pos: 52.5,-21.5
+      parent: 2
   - uid: 15869
     components:
     - type: Transform
@@ -116331,6 +116332,11 @@ entities:
     components:
     - type: Transform
       pos: 17.5,-7.5
+      parent: 2
+  - uid: 15993
+    components:
+    - type: Transform
+      pos: 54.5,-21.5
       parent: 2
   - uid: 16005
     components:
@@ -148047,17 +148053,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -27.5,35.5
       parent: 2
-  - uid: 15993
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 52.5,-21.5
-      parent: 2
-  - uid: 16173
-    components:
-    - type: Transform
-      pos: 52.5,-21.5
-      parent: 2
   - uid: 16322
     components:
     - type: Transform
@@ -148218,41 +148213,6 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 64.5,-36.5
-      parent: 2
-  - uid: 23295
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 52.5,-21.5
-      parent: 2
-  - uid: 23296
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 52.5,-21.5
-      parent: 2
-  - uid: 23297
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 54.5,-21.5
-      parent: 2
-  - uid: 23298
-    components:
-    - type: Transform
-      pos: 54.5,-21.5
-      parent: 2
-  - uid: 23299
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 54.5,-21.5
-      parent: 2
-  - uid: 23300
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 54.5,-21.5
       parent: 2
 - proto: WoodDoor
   entities:
