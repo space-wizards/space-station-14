@@ -25,6 +25,8 @@
         layer:
         - Opaque
   - type: Anchorable
+  - type: Lock
+    locked: true
   - type: AccessReader
     access: [ [ "Generator" ] ]
     BreakOnEmag: false
