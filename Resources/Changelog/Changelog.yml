@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Spessmann
-  changes:
-  - message: Thief objectives for figurines and stamps now require less items
-    type: Tweak
-  id: 6992
-  time: '2024-07-27T23:11:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30390
 - author: metalgearsloth
   changes:
   - message: Moved VGRoid from 1,000m away to ~500m.
@@ -3942,3 +3935,11 @@
   id: 7491
   time: '2024-10-06T13:33:02.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32652
+- author: SaphireLattice
+  changes:
+  - message: Minibomb is now explosion resistant and will start counting down if damaged
+      by a C4
+    type: Tweak
+  id: 7492
+  time: '2024-10-07T22:42:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32429
