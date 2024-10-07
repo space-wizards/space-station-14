@@ -2,7 +2,7 @@
 - type: entity
   id: AiHeld
   description: Components added / removed from an entity that gets inserted into an AI core.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: IntrinsicRadioReceiver
   - type: IntrinsicRadioTransmitter
@@ -46,6 +46,8 @@
         type: GeneralStationRecordConsoleBoundUserInterface
       enum.SiliconLawsUiKey.Key:
         type: SiliconLawBoundUserInterface
+      enum.CommunicationsConsoleUiKey.Key:
+        type: CommunicationsConsoleBoundUserInterface
   - type: IntrinsicUI
     uis:
       enum.RadarConsoleUiKey.Key:
@@ -54,13 +56,20 @@
         toggleAction: ActionAGhostShowCrewMonitoring
       enum.GeneralStationRecordConsoleKey.Key:
         toggleAction: ActionAGhostShowStationRecords
+      enum.CommunicationsConsoleUiKey.Key:
+        toggleAction: ActionAGhostShowCommunications
   - type: CrewMonitoringConsole
   - type: GeneralStationRecordConsole
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: CrewMonitor
+    transmitFrequencyId: ShuttleTimer
   - type: RadarConsole
     followEntity: false
+  - type: CommunicationsConsole
+    canShuttle: false
+    title: comms-console-announcement-title-station-ai
+    color: "#2ed2fd"
 
 
 # Ai
@@ -146,7 +155,7 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: PaladinLawset
-    
+
 - type: entity
   id: LiveLetLiveCircuitBoard
   parent: BaseElectronics
@@ -158,7 +167,7 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: LiveLetLiveLaws
-    
+
 - type: entity
   id: StationEfficiencyCircuitBoard
   parent: BaseElectronics
@@ -182,7 +191,7 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: RobocopLawset
-    
+
 - type: entity
   id: OverlordCircuitBoard
   parent: BaseElectronics
@@ -194,7 +203,7 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: OverlordLawset
-    
+
 - type: entity
   id: DungeonMasterCircuitBoard
   parent: BaseElectronics
@@ -230,7 +239,7 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: AntimovLawset
-    
+
 - type: entity
   id: NutimovCircuitBoard
   parent: BaseElectronics
@@ -332,7 +341,7 @@
 - type: entity
   id: StationAiBrain
   parent: PositronicBrain
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   suffix: DO NOT MAP
   components:
   - type: Sprite
@@ -373,9 +382,10 @@
   id: StationAiHolo
   name: AI eye
   description: The AI's viewer.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   suffix: DO NOT MAP
   components:
+  - type: NoFTL
   - type: WarpPoint
     follow: true
   - type: Eye
@@ -452,7 +462,7 @@
     - type: GhostRole
       name: ghost-role-information-syndicate-cyborg-assault-name
       description: ghost-role-information-syndicate-cyborg-description
-      rules: ghost-role-information-rules-default-silicon
+      rules: ghost-role-information-silicon-rules
       raffle:
         settings: default
     - type: GhostTakeoverAvailable
@@ -485,7 +495,7 @@
     - type: GhostRole
       name: ghost-role-information-syndicate-cyborg-saboteur-name
       description: ghost-role-information-syndicate-cyborg-description
-      rules: ghost-role-information-rules-default-silicon
+      rules: ghost-role-information-silicon-rules
       raffle:
         settings: default
     - type: GhostTakeoverAvailable

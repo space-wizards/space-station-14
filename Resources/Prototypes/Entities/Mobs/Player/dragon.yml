@@ -106,6 +106,7 @@
     - Pacified
     - RadiationProtection
     - Drowsiness
+    - Adrenaline
   - type: Temperature
     heatDamageThreshold: 800
   - type: Metabolizer
@@ -149,7 +150,9 @@
     tags:
     - CannotSuicide
     - DoorBumpOpener
-
+  - type: Puller
+    needsHands: false
+    
 - type: entity
   parent: BaseMobDragon
   id: MobDragon

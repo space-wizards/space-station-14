@@ -35,11 +35,6 @@
   copies: 1
 
 - type: preloadedGrid
-  id: Bang
-  path: /Maps/Shuttles/ShuttleEvent/bang.yml
-  copies: 1
-
-- type: preloadedGrid
   id: MeatZone
   path: /Maps/Shuttles/ShuttleEvent/meatzone.yml
   copies: 1
@@ -55,16 +50,6 @@
   copies: 1
 
 - type: preloadedGrid
-  id: Drone
-  path: /Maps/Shuttles/ShuttleEvent/drone.yml
-  copies: 1
-
-- type: preloadedGrid
-  id: Raider
-  path: /Maps/Shuttles/ShuttleEvent/raider.yml
-  copies: 1
-
-- type: preloadedGrid
   id: Eternal
   path: /Maps/Shuttles/ShuttleEvent/eternal.yml
   copies: 1
@@ -77,11 +62,6 @@
 - type: preloadedGrid
   id: Gym
   path: /Maps/Shuttles/ShuttleEvent/gym.yml
-  copies: 1
-
-- type: preloadedGrid
-  id: Hook
-  path: /Maps/Shuttles/ShuttleEvent/hook.yml
   copies: 1
 
 - type: preloadedGrid
@@ -105,11 +85,6 @@
   copies: 1
 
 - type: preloadedGrid
-  id: ManOWar
-  path: /Maps/Shuttles/ShuttleEvent/manowar.yml
-  copies: 1
-
-- type: preloadedGrid
   id: Meatzone
   path: /Maps/Shuttles/ShuttleEvent/meatzone.yml
   copies: 1
@@ -118,11 +93,6 @@
   id: Microshuttle
   path: /Maps/Shuttles/ShuttleEvent/microshuttle.yml
   copies: 4
-
-- type: preloadedGrid
-  id: Scooner
-  path: /Maps/Shuttles/ShuttleEvent/scooner.yml
-  copies: 1
 
 - type: preloadedGrid
   id: Spacebus

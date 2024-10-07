@@ -47,13 +47,13 @@
     - type: GuideHelp
       guides:
       - Medical Doctor
-    - type: ToggleCellDraw
 
 - type: entity
   id: Defibrillator
   parent: [ BaseDefibrillator, PowerCellSlotMediumItem ]
   components:
   - type: MultiHandedItem
+  - type: ToggleCellDraw
   - type: PowerCellDraw
     useRate: 100
 
