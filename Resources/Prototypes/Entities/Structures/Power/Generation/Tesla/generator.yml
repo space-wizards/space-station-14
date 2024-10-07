@@ -27,7 +27,7 @@
   - type: Anchorable
   - type: Lock
     locked: true
-    BreakOnEmag: false
+    breakOnEmag: false
   - type: AccessReader
     access: [ [ "Generator" ] ]
   #- type: GuideHelp # TODO - add Tesla Guide

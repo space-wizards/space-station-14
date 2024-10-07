@@ -35,6 +35,6 @@
     guides: [ Singularity, Power ]
   - type: Lock
     locked: true
-    BreakOnEmag: false
+    breakOnEmag: false
   - type: AccessReader
     access: [["Generator"]]
