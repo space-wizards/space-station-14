@@ -2733,3 +2733,27 @@
   id: 341
   time: '2024-10-07T07:15:56.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/431
+- author: crekulon
+  changes:
+  - message: '"Monotonous" and "Sharp inflection" punctuation-based accents. Both
+      are 1-point traits.'
+    type: Add
+  - message: Changed stutter to be a 1-point speech trait rather than 2-point.
+    type: Tweak
+  id: 342
+  time: '2024-10-07T07:18:51.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/435
+- author: TheGrimbeeper
+  changes:
+  - message: Artifact utility node now works better
+    type: Tweak
+  id: 343
+  time: '2024-10-07T07:18:30.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/428
+- author: Sha-Seng
+  changes:
+  - message: Added Bellmoth's shovel incident art to the lobby screen rotation
+    type: Add
+  id: 344
+  time: '2024-10-07T07:18:15.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/433
