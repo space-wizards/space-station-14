@@ -69,3 +69,7 @@
 - type: lobbyBackground
   id: SamanthaBotany
   background: /Textures/LobbyScreens/grimmbot.webp
+
+- type: lobbyBackground
+  id: Bellmoth
+  background: /Textures/LobbyScreens/Shovel_incident.webp

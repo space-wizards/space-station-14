@@ -17,7 +17,6 @@
   - CigPackSpirits
   - CigarCase
   - CigarGold
-  - PersonalAI
   - GoldPersonalAI
   - FolderBlack
   - BarFlask
@@ -35,6 +34,15 @@
   - ClothingNeckAutismPin
   - ClothingNeckGoldAutismPin
   - HarmonicaInstrument
+
+# For introductory roles learning more complex jobs, like an in-game personal mentor
+- type: loadoutGroup
+  id: Learner
+  name: loadout-group-learner
+  minLimit: 0
+  maxLimit: 1
+  loadouts:
+  - PersonalAI
 
 - type: loadoutGroup
   id: Glasses

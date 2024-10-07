@@ -64,9 +64,9 @@
   - BartenderJumpsuit
   - BartenderOuterClothing
   - BartenderShoes
-  - BartenderPDA
   - Glasses
   - CommonBackpack
+  - BartenderPDA
   - Survival
   - Trinkets
   - Mixologist
@@ -93,9 +93,9 @@
   - ChefJumpsuit
   - ChefOuterClothing
   - ChefShoes
-  - ChefPDA
   - Glasses
   - CommonBackpack
+  - ChefPDA
   - Survival
   - Trinkets
   - GroupSpeciesBreathTool
@@ -170,9 +170,9 @@
   - BotanistJumpsuit
   - BotanistOuterClothing
   - BotanistShoes
-  - BotanistPDA
   - Glasses
   - BotanistBackpack
+  - BotanistPDA
   - Survival
   - Trinkets
   - GroupSpeciesBreathTool
@@ -262,9 +262,10 @@
   - SalvageSpecialistNeck
   - SalvageSpecialistOuterClothing
   - SalvageSpecialistShoes
-  - SalvageSpecialistPDA
-  - SalvageSpecialistBackpack
   - SalvageSpecialistGlasses
+  - Glasses
+  - SalvageSpecialistBackpack
+  - SalvageSpecialistPDA
   - Survival
   - Trinkets
   - GroupSpeciesBreathTool
@@ -292,6 +293,7 @@
   - TechnicalAssistantJumpsuit
   - StationEngineerBackpack
   - SurvivalExtended
+  - Learner
   - Trinkets
   - GroupSpeciesBreathTool
   - GroupTankHarness
@@ -319,8 +321,8 @@
   - AtmosphericTechnicianJumpsuit
   - AtmosphericTechnicianOuterClothing
   - AtmosphericTechnicianShoes
-  - AtmosphericTechnicianPDA
   - AtmosphericTechnicianBackpack
+  - AtmosphericTechnicianPDA
   - SurvivalExtended
   - Trinkets
   - GroupSpeciesBreathTool
@@ -369,6 +371,7 @@
   - ScientistBackpack
   - Glasses
   - Survival
+  - Learner
   - Trinkets
   - GroupSpeciesBreathTool
   - GroupTankHarness
@@ -400,9 +403,9 @@
   - WardenJumpsuit
   - WardenOuterClothing
   - UpperSecurityShoes
-  - WardenPDA
   - SecurityBackpack
   - SecurityBelt
+  - WardenPDA
   - SurvivalSecurity
   - Trinkets
   - SecurityStar
@@ -436,8 +439,8 @@
   - DetectiveJumpsuit
   - DetectiveOuterClothing
   - DetectiveShoes
-  - DetectivePDA
   - SecurityBackpack
+  - DetectivePDA
   - SurvivalSecurity
   - Trinkets
   - SecurityStar
@@ -467,6 +470,7 @@
   - SecurityCadetJumpsuit
   - SecurityBackpack
   - SurvivalSecurity
+  - Learner
   - Trinkets
   - GroupSpeciesBreathToolSecurity
   - GroupTankHarness
@@ -515,6 +519,7 @@
   - Glasses
   - MedicalBackpack
   - SurvivalMedical
+  - Learner
   - Trinkets
   - GroupSpeciesBreathToolMedical
   - GroupTankHarness
@@ -528,8 +533,8 @@
   - ChemistOuterClothing
   - MedicalGloves
   - ChemistShoes
-  - ChemistPDA
   - ChemistBackpack
+  - ChemistPDA
   - SurvivalMedical
   - Trinkets
   - GroupSpeciesBreathToolMedical
@@ -545,9 +550,9 @@
   - ParamedicOuterClothing
   - MedicalGloves
   - ParamedicShoes
-  - ParamedicPDA
   - Glasses
   - MedicalBackpack
+  - ParamedicPDA
   - SurvivalMedical
   - Trinkets
   - GroupSpeciesBreathToolMedical

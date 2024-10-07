@@ -2693,3 +2693,43 @@
   id: 336
   time: '2024-10-06T10:59:06.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/426
+- author: Darkmajia
+  changes:
+  - message: Adjusted a few loadout slot orders.
+    type: Tweak
+  id: 337
+  time: '2024-10-07T07:16:08.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/430
+- author: Darkmajia
+  changes:
+  - message: Added fill sprites for drinks that had none, including Arnold Palmers
+      and Shirley Temples.
+    type: Add
+  id: 338
+  time: '2024-10-07T07:16:22.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/429
+- author: hivehum
+  changes:
+  - message: Thaven can now use the French Braid hair.
+    type: Add
+  - message: Nuclear Ops Commander requires 7.5 hours playtime in Engineering, Medical,
+      Security, and Command.
+    type: Tweak
+  id: 339
+  time: '2024-10-07T07:15:44.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/436
+- author: Darkmajia
+  changes:
+  - message: Core Station now has an additional scientist job slot.
+    type: Add
+  id: 340
+  time: '2024-10-07T07:16:35.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/432
+- author: formlessnameless
+  changes:
+  - message: Removed pAI from base trinket loadout and added it to learner roles to
+      better match the original intent
+    type: Tweak
+  id: 341
+  time: '2024-10-07T07:15:56.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/431
