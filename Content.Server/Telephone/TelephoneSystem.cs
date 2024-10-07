@@ -164,6 +164,11 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
         // If no connections could be made, time out the telephone
         if (!IsTelephoneEngaged(source))
             EndTelephoneCalls(source);
+
+        foreach (var receiver in source.Comp.LinkedTelephones)
+        {
+            receiver.Comp.ControlLockoutInitiator = user;
+        }
     }
 
     public void CallTelephone(Entity<TelephoneComponent> source, Entity<TelephoneComponent> receiver, EntityUid user, TelephoneCallOptions? options = null)

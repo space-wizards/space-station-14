@@ -64,6 +64,18 @@ public sealed partial class TelephoneComponent : Component
     public bool IsBroadcaster = true;
 
     /// <summary>
+    /// The entity that has locked out the controls of this device
+    /// </summary>
+    [ViewVariables]
+    public EntityUid ControlLockoutInitiator;
+
+    /// <summary>
+    /// The game tick the control lockout will end in seconds
+    /// </summary>
+    [ViewVariables]
+    public float ControlLockoutDuration = 90f;
+
+    /// <summary>
     /// Linked telephone
     /// </summary>
     [ViewVariables]
