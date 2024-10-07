@@ -9,11 +9,10 @@
     quickEquip: true
     slots:
     - neck
+    sprite: Clothing/Neck/Misc/badges.rsi
   - type: Sprite
     sprite: Clothing/Neck/Misc/badges.rsi
     state: sobadge
-  - type: Clothing
-    sprite: Clothing/Neck/Misc/badges.rsi
   - type: TypingIndicatorClothing
     proto: security
   - type: Tag

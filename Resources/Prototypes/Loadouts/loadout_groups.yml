@@ -1075,7 +1075,7 @@
   - LoadoutSpeciesVoxNitrogen
 
 - type: loadoutGroup
-  id: Badge
+  id: SecBadge
   name: loadout-group-security-badge
   minLimit: 1
   loadouts:

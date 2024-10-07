@@ -341,6 +341,7 @@
   - HeadofSecurityOuterClothing
   - SecurityShoes
   - SurvivalSecurity
+  - SecBadge
   - Trinkets
   - SecurityStar
   - GroupSpeciesBreathToolSecurity
@@ -355,6 +356,7 @@
   - WardenOuterClothing
   - SecurityShoes
   - SurvivalSecurity
+  - SecBadge
   - Trinkets
   - SecurityStar
   - GroupSpeciesBreathToolSecurity
@@ -370,6 +372,7 @@
   - SecurityPDA
   - SecurityBelt
   - SurvivalSecurity
+  - SecBadge
   - Trinkets
   - SecurityStar
   - GroupSpeciesBreathToolSecurity
@@ -385,6 +388,7 @@
   - DetectiveOuterClothing
   - SecurityShoes
   - SurvivalSecurity
+  - SecBadge
   - Trinkets
   - SecurityStar
   - GroupSpeciesBreathToolSecurity
@@ -395,6 +399,7 @@
   - SecurityCadetJumpsuit
   - SecurityBackpack
   - SurvivalSecurity
+  - SecBadge
   - Trinkets
   - GroupSpeciesBreathToolSecurity
 
