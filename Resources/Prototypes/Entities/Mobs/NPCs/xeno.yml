@@ -542,12 +542,12 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      150: Dead
+      200: Dead
   - type: SlowOnDamage
     speedModifierThresholds:
-      100: 0.7
+      120: 0.7
   - type: MovementSpeedModifier
-    sprintSpeedModifier: 0.9
+    baseSprintSpeed: 3.7
   - type: Fixtures
     fixtures:
       fix1:
