@@ -3,6 +3,7 @@ loadout-group-species-restriction = This item is not available for your current 
 
 # Miscellaneous
 loadout-group-trinkets = Trinkets
+loadout-group-learner = pAI Assistant
 loadout-group-glasses = Glasses
 loadout-group-backpack = Backpack
 loadout-group-instruments = Instruments
@@ -140,6 +141,7 @@ loadout-group-cargo-technician-id = Cargo Technician ID
 
 loadout-group-salvage-specialist-neck = Salvage Specialist neck
 loadout-group-salvage-specialist-backpack = Salvage Specialist backpack
+loadout-group-salvage-specialist-glasses = Salvage Specialist glasses
 loadout-group-salvage-specialist-outerclothing = Salvage Specialist outer clothing
 loadout-group-salvage-specialist-shoes = Salvage Specialist shoes
 loadout-group-salvage-specialist-id = Salvage Specialist ID

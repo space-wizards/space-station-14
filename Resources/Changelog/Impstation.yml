@@ -2675,3 +2675,92 @@
   id: 334
   time: '2024-10-06T03:33:46.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/421
+- author: widgetbeck
+  changes:
+  - message: Added Little Guys Car, available for purchase from the cargo request
+      console.
+    type: Add
+  - message: Adjusted the wording of the Thaven guidebook entry and some Moods to
+      discourage suicide.
+    type: Tweak
+  id: 335
+  time: '2024-10-06T10:59:15.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/427
+- author: KingMudkipIII
+  changes:
+  - message: Added a special drink for the Thaven
+    type: Add
+  id: 336
+  time: '2024-10-06T10:59:06.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/426
+- author: Darkmajia
+  changes:
+  - message: Adjusted a few loadout slot orders.
+    type: Tweak
+  id: 337
+  time: '2024-10-07T07:16:08.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/430
+- author: Darkmajia
+  changes:
+  - message: Added fill sprites for drinks that had none, including Arnold Palmers
+      and Shirley Temples.
+    type: Add
+  id: 338
+  time: '2024-10-07T07:16:22.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/429
+- author: hivehum
+  changes:
+  - message: Thaven can now use the French Braid hair.
+    type: Add
+  - message: Nuclear Ops Commander requires 7.5 hours playtime in Engineering, Medical,
+      Security, and Command.
+    type: Tweak
+  id: 339
+  time: '2024-10-07T07:15:44.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/436
+- author: Darkmajia
+  changes:
+  - message: Core Station now has an additional scientist job slot.
+    type: Add
+  id: 340
+  time: '2024-10-07T07:16:35.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/432
+- author: formlessnameless
+  changes:
+  - message: Removed pAI from base trinket loadout and added it to learner roles to
+      better match the original intent
+    type: Tweak
+  id: 341
+  time: '2024-10-07T07:15:56.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/431
+- author: crekulon
+  changes:
+  - message: '"Monotonous" and "Sharp inflection" punctuation-based accents. Both
+      are 1-point traits.'
+    type: Add
+  - message: Changed stutter to be a 1-point speech trait rather than 2-point.
+    type: Tweak
+  id: 342
+  time: '2024-10-07T07:18:51.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/435
+- author: TheGrimbeeper
+  changes:
+  - message: Artifact utility node now works better
+    type: Tweak
+  id: 343
+  time: '2024-10-07T07:18:30.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/428
+- author: Sha-Seng
+  changes:
+  - message: Added Bellmoth's shovel incident art to the lobby screen rotation
+    type: Add
+  id: 344
+  time: '2024-10-07T07:18:15.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/433
+- author: Sha-Seng
+  changes:
+  - message: Spawning with Gar Glasses is now restricted to Salvage as intended
+    type: Tweak
+  id: 345
+  time: '2024-10-07T07:24:17.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/434

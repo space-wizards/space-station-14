@@ -35,6 +35,40 @@
   equipment:
     back: ClothingBackpackDuffelSalvage
 
+# Eyes
+- type: loadout
+  id: GlassesGarGreen
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: DrillerCapeWorthy
+  equipment:
+    eyes: ClothingEyesGlassesGar
+
+- type: loadout
+  id: GlassesGarOrange
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: DrillerCapeWorthy
+  equipment:
+    eyes: ClothingEyesGlassesGarOrange
+
+- type: loadout
+  id: GlassesGarRed
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: DrillerCapeWorthy
+  equipment:
+    eyes: ClothingEyesGlassesGarGiga
+
+- type: loadout
+  id: GlassesGarBlack
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: DrillerCapeWorthy
+  equipment:
+    eyes: ClothingEyesGlassesGarMecha
+
+
 # OuterClothing
 - type: loadout
   id: SalvageSpecialistWintercoat

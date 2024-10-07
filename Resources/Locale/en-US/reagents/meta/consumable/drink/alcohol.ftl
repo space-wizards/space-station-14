@@ -324,3 +324,6 @@ reagent-desc-donttelldsheriff = If Red Bool gives you wings, this'll give you fo
 
 reagent-name-cottonbool = cotton bool
 reagent-desc-cottonbool = A modern take on a Mothrine classic that's sure to cause a buzzz.
+
+reagent-name-thavenbad = bad
+reagent-desc-thavenbad = A traditional Thaven delicacy. It's considered a great honour to share one with a new friend.

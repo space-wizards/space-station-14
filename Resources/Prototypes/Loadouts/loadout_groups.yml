@@ -17,7 +17,6 @@
   - CigPackSpirits
   - CigarCase
   - CigarGold
-  - PersonalAI
   - GoldPersonalAI
   - FolderBlack
   - BarFlask
@@ -36,6 +35,15 @@
   - ClothingNeckGoldAutismPin
   - HarmonicaInstrument
 
+# For introductory roles learning more complex jobs, like an in-game personal mentor
+- type: loadoutGroup
+  id: Learner
+  name: loadout-group-learner
+  minLimit: 0
+  maxLimit: 1
+  loadouts:
+  - PersonalAI
+
 - type: loadoutGroup
   id: Glasses
   name: loadout-group-glasses
@@ -45,10 +53,6 @@
   - GlassesCheapSunglasses
   - GlassesJamjar
   - GlassesJensen
-  - GlassesGarGreen
-  - GlassesGarOrange
-  - GlassesGarRed
-  - GlassesGarBlack
 
 # The usual loadouts of the vox harness that spawn in your chest slot for jobs that don't have outerwear in their loadout
 - type: loadoutGroup
@@ -990,6 +994,19 @@
   - SalvageSpecialistBackpack
   - SalvageSpecialistSatchel
   - SalvageSpecialistDuffel
+
+- type: loadoutGroup
+  id: SalvageSpecialistGlasses
+  name: loadout-group-salvage-specialist-glasses
+  loadouts:
+  - Glasses
+  - GlassesCheapSunglasses
+  - GlassesJamjar
+  - GlassesJensen
+  - GlassesGarGreen
+  - GlassesGarOrange
+  - GlassesGarRed
+  - GlassesGarBlack
 
 - type: loadoutGroup
   id: SalvageSpecialistOuterClothing

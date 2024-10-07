@@ -91,6 +91,7 @@
   name: little guys car #it's still just a box
   description: Vroom vroom. 
   components:
+    - type: InteractionOutline
     - type: InputMover
     - type: Sprite
       noRot: false #if anyone enables this i will kill them personally with my bare hands
