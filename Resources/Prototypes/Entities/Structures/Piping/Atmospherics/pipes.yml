@@ -21,8 +21,8 @@
   - type: Rotatable
   - type: RCDDeconstructable
     cost: 1
-    delay: 0
-    fx: EffectRCDDeconstruct0
+    delay: 2
+    fx: EffectRCDDeconstruct2
   - type: Destructible
     thresholds:
     - trigger: # for nukes

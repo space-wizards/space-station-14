@@ -33,7 +33,7 @@
         <ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="{Loc 'rcd-component-atmosphericutility'}" TargetLayer="AtmosphericUtility" Visible="False">
             <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RPD/gasCanisterPort.png"/>
         </ui:RadialMenuTextureButton>
-        <ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="{Loc 'rcd-component-pumps'}" TargetLayer="Pumps" Visible="False">
+        <ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="{Loc 'rcd-component-pumpsvalves'}" TargetLayer="PumpsValves" Visible="False">
             <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Radial/RPD/pumpVolume.png"/>
         </ui:RadialMenuTextureButton>
         <ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="{Loc 'rcd-component-vents'}" TargetLayer="Vents" Visible="False">
@@ -59,8 +59,8 @@
     <!-- Piping -->
     <ui:RadialContainer Name="Piping"  VerticalExpand="True" HorizontalExpand="True" Radius="64"/>
 
-    <!-- Pumps -->
-    <ui:RadialContainer Name="Pumps"  VerticalExpand="True" HorizontalExpand="True" Radius="64"/>
+    <!-- Pumps & Valves -->
+    <ui:RadialContainer Name="PumpsValves"  VerticalExpand="True" HorizontalExpand="True" Radius="64"/>
 
     <!-- Atmospheric Utility -->
     <ui:RadialContainer Name="AtmosphericUtility"  VerticalExpand="True" HorizontalExpand="True" Radius="64"/>

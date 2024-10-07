@@ -53,7 +53,7 @@
 
 - type: rcd
   id: PressurePump
-  category: Pumps
+  category: PumpsValves
   sprite: /Textures/Interface/Radial/RPD/pumpPressure.png
   mode: ConstructObject
   prototype: GasPressurePump
@@ -67,7 +67,7 @@
 
 - type: rcd
   id: VolumetricPump
-  category: Pumps
+  category: PumpsValves
   sprite: /Textures/Interface/Radial/RPD/pumpVolume.png
   mode: ConstructObject
   prototype: GasPressurePump
@@ -81,7 +81,7 @@
 
 - type: rcd
   id: ManualValve
-  category: AtmosphericUtility
+  category: PumpsValves
   sprite: /Textures/Interface/Radial/RPD/pumpManualValve.png
   mode: ConstructObject
   prototype: GasValve
@@ -92,6 +92,35 @@
   collisionMask: Impassable
   rotation: User
   fx: EffectRCDConstruct0
+
+- type: rcd
+  id: SignalValve
+  category: PumpsValves
+  sprite: /Textures/Interface/Radial/RPD/pumpSignalValve.png
+  mode: ConstructObject
+  prototype: SignalControlledValve
+  cost: 1
+  delay: 0
+  rules:
+  - MustBuildOnSubfloor
+  collisionMask: Impassable
+  rotation: User
+  fx: EffectRCDConstruct0
+
+- type: rcd
+  id: PressureValve
+  category: PumpsValves
+  sprite: /Textures/Interface/Radial/RPD/pneumaticValve.png
+  mode: ConstructObject
+  prototype: PressureControlledValve
+  cost: 1
+  delay: 0
+  rules:
+  - MustBuildOnSubfloor
+  collisionMask: Impassable
+  rotation: User
+  fx: EffectRCDConstruct0
+
 
 - type: rcd
   id: OutletInjector
@@ -127,6 +156,20 @@
   sprite: /Textures/Interface/Radial/RPD/vent_off.png
   mode: ConstructObject
   prototype: GasVentPump
+  cost: 1
+  delay: 0
+  rules:
+  - MustBuildOnSubfloor
+  collisionMask: Impassable
+  rotation: User
+  fx: EffectRCDConstruct0
+
+- type: rcd
+  id: DualPortVent
+  category: Vents
+  sprite: /Textures/Interface/Radial/RPD/dualPort.png
+  mode: ConstructObject
+  prototype: GasDualPortVentPump
   cost: 1
   delay: 0
   rules:
