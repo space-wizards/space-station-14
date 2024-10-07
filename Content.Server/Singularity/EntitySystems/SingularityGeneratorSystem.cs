@@ -50,6 +50,7 @@ public sealed class SingularityGeneratorSystem : EntitySystem
         if (_lock.IsLocked(uid))
         {
             _popup.PopupEntity(Loc.GetString("singularity-generator-component-locked"), uid);
+            SetPower(uid, 0, comp);
             return;
         }
 
