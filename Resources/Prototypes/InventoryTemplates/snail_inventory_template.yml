@@ -106,7 +106,7 @@
       strippingWindowPos: 0,5
       displayName: Belt
     - name: back
-      slotTexture: back
+      slotTexture: shell
       fullTextureName: template_small
       slotFlags: BACK
       slotGroup: SecondHotbar
@@ -115,7 +115,7 @@
       strippingWindowPos: 0,3
       displayName: Back
     - name: back2
-      slotTexture: back
+      slotTexture: shell
       fullTextureName: template_small
       slotFlags: BACK
       slotGroup: SecondHotbar
