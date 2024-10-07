@@ -315,6 +315,9 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
 
     public void SendTelephoneMessage(EntityUid messageSource, string message, Entity<TelephoneComponent> source, bool escapeMarkup = true)
     {
+        if (source.Comp.Muted)
+            return;
+
         if (!IsTelephoneEngaged(source) ||
             !this.IsPowered(source, EntityManager))
             return;

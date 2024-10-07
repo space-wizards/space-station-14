@@ -116,10 +116,11 @@
     
 - type: entity
   id: StationAiHoloLocal
-  parent: HolopadHologram
   categories: [ HideSpawnMenu ]
   suffix: DO NOT MAP
   components:
+  - type: Transform
+    anchored: true
   - type: WarpPoint
     follow: true
   - type: Eye
@@ -131,8 +132,4 @@
   - type: CargoSellBlacklist
   - type: StationAiVision
     range: 20
-  - type: Sprite
-    sprite: Mobs/Silicon/station_ai.rsi
-    layers:
-    - state: default
     

@@ -36,7 +36,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
         if (!TryComp<SpriteComponent>(uid, out var sprite))
             return;
 
-        UpdateShader(uid, sprite, component);
+        UpdateHologramSprite(uid);
     }
 
     private void OnShaderRender(EntityUid uid, HolopadHologramComponent component, BeforePostShaderRenderEvent ev)
@@ -100,44 +100,43 @@ public sealed class HolopadSystem : SharedHolopadSystem
 
     private void OnPlayerSpriteStateMessage(PlayerSpriteStateMessage ev)
     {
-        var hologram = GetEntity(ev.SpriteEntity);
+        UpdateHologramSprite(GetEntity(ev.SpriteEntity), ev.SpriteLayerData);
+    }
 
-        if (!TryComp<SpriteComponent>(hologram, out var hologramSprite))
+    private void UpdateHologramSprite(EntityUid uid, PrototypeLayerData[]? layerData = null)
+    {
+        if (!TryComp<SpriteComponent>(uid, out var hologramSprite))
             return;
 
-        if (!TryComp<HolopadHologramComponent>(hologram, out var holopadhologram))
+        if (!TryComp<HolopadHologramComponent>(uid, out var holopadhologram))
             return;
 
         for (int i = hologramSprite.AllLayers.Count() - 1; i >= 0; i--)
             hologramSprite.RemoveLayer(i);
 
-        var spriteData = ev.SpriteLayerData;
-
-        /*if (spriteData.Length == 0 &&
-            !string.IsNullOrEmpty(holopadhologram.RsiPath) &&
-            !string.IsNullOrEmpty(holopadhologram.RsiState))
+        if (layerData == null || layerData.Length == 0)
         {
-            spriteData = new PrototypeLayerData[1];
-            spriteData[0] = new PrototypeLayerData();
+            layerData = new PrototypeLayerData[1];
+            layerData[0] = new PrototypeLayerData();
 
-            spriteData[0].RsiPath = holopadhologram.RsiPath;
-            spriteData[0].State = holopadhologram.RsiState;
-        }*/
+            layerData[0].RsiPath = holopadhologram.RsiPath;
+            layerData[0].State = holopadhologram.RsiState;
+        }
 
-        for (int i = 0; i < spriteData.Length; i++)
+        for (int i = 0; i < layerData.Length; i++)
         {
             var layer = new PrototypeLayerData();
-            layer.RsiPath = spriteData[i].RsiPath;
-            layer.State = spriteData[i].State;
+            layer.RsiPath = layerData[i].RsiPath;
+            layer.State = layerData[i].State;
             layer.Shader = "unshaded";
 
             hologramSprite.AddLayer(layer, i);
         }
 
-        UpdateShader(hologram, hologramSprite, holopadhologram);
+        UpdateHologramShader(uid, hologramSprite, holopadhologram);
     }
 
-    private void UpdateShader(EntityUid uid, SpriteComponent sprite, HolopadHologramComponent holopadHologram)
+    private void UpdateHologramShader(EntityUid uid, SpriteComponent sprite, HolopadHologramComponent holopadHologram)
     {
         var instance = _prototypeManager.Index<ShaderPrototype>(holopadHologram.ShaderName).InstanceUnique();
         instance.SetParameter("color1", new Vector3(holopadHologram.Color1.R, holopadHologram.Color1.G, holopadHologram.Color1.B));

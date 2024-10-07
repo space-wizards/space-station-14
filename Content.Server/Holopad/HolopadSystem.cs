@@ -9,7 +9,6 @@ using Content.Shared.Labels.Components;
 using Content.Shared.Silicons.StationAi;
 using Content.Shared.Telephone;
 using Content.Shared.UserInterface;
-using JetBrains.FormatRipper.Elf;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
@@ -227,15 +226,16 @@ public sealed class HolopadSystem : SharedHolopadSystem
         if (holopad.Comp.Hologram == null)
             GenerateHologram(holopad);
 
+        if (TryComp<HolopadComponent>(args.Receiver, out var receivingHolopad) && receivingHolopad.Hologram == null)
+            GenerateHologram((args.Receiver, receivingHolopad));
+
         if (holopad.Comp.User != null)
         {
-            RequestHolopadUserSpriteUpdate(holopad.Comp.User.Value);
-        }
+            if (TryComp<HolographicAvatarComponent>(holopad.Comp.User, out var avatar))
+                SyncHolopadUserWithLinkedHolograms(holopad.Comp.User.Value, holopad.Comp.User.Value.Comp, avatar.LayerData);
 
-        else
-        {
-            var ev = new PlayerSpriteStateMessage(GetNetEntity(holopad), Array.Empty<PrototypeLayerData>());
-            RaiseNetworkEvent(ev);
+            else
+                RequestHolopadUserSpriteUpdate(holopad.Comp.User.Value);
         }
     }
 
@@ -386,6 +386,10 @@ public sealed class HolopadSystem : SharedHolopadSystem
 
     private void GenerateHologram(Entity<HolopadComponent> holopad)
     {
+        if (holopad.Comp.Hologram != null ||
+            holopad.Comp.HologramProtoId == null)
+            return;
+
         var uid = Spawn(holopad.Comp.HologramProtoId, Transform(holopad).Coordinates);
 
         // Safeguard - spawned holograms must have this component
@@ -420,7 +424,8 @@ public sealed class HolopadSystem : SharedHolopadSystem
             holopad.Comp.User = (user.Value, userComp);
         }
 
-        RequestHolopadUserSpriteUpdate((user.Value, userComp));
+        if (!HasComp<HolographicAvatarComponent>(user.Value))
+            RequestHolopadUserSpriteUpdate((user.Value, userComp));
     }
 
     private void RequestHolopadUserSpriteUpdate(Entity<HolopadUserComponent> user)
@@ -471,7 +476,12 @@ public sealed class HolopadSystem : SharedHolopadSystem
             UnlinkHolopadFromUser(holopad, holopad.Comp.User.Value);
 
         if (TryComp<StationAiCoreComponent>(holopad, out var stationAiCore))
+        {
             _stationAiSystem.SwitchRemoteMode((holopad.Owner, stationAiCore), true);
+
+            if (TryComp<TelephoneComponent>(holopad, out var stationAiCoreTelphone))
+                _telephoneSystem.EndTelephoneCalls((holopad, stationAiCoreTelphone));
+        }
     }
 
     private void SyncHolopadUserWithLinkedHolograms(EntityUid uid, HolopadUserComponent component, PrototypeLayerData[] spriteLayerData)
@@ -480,8 +490,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
         {
             foreach (var receivingHolopad in GetLinkedHolopads(linkedHolopad))
             {
-                if (receivingHolopad.Comp.Hologram == null ||
-                    !_recentlyUpdatedHolograms.Add(receivingHolopad.Comp.Hologram.Value))
+                if (receivingHolopad.Comp.Hologram == null || !_recentlyUpdatedHolograms.Add(receivingHolopad.Comp.Hologram.Value))
                     continue;
 
                 var netHologram = GetNetEntity(receivingHolopad.Comp.Hologram.Value);
@@ -503,11 +512,16 @@ public sealed class HolopadSystem : SharedHolopadSystem
         if (!TryComp<TelephoneComponent>(stationAi, out var stationAiTelephone))
             return;
 
+        if (!TryComp<HolopadComponent>(stationAi, out var stationAiHolopad))
+            return;
+
         var callOptions = new TelephoneCallOptions()
         {
             ForceConnect = true,
             MuteReceiver = true
         };
+
+        LinkHolopadToUser((stationAi.Value, stationAiHolopad), user);
 
         _telephoneSystem.TerminateTelephoneCalls((stationAi.Value, stationAiTelephone));
         _telephoneSystem.CallTelephone((stationAi.Value, stationAiTelephone), ent, user, callOptions);
