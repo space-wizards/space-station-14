@@ -21,13 +21,14 @@ namespace Content.Server.Speech.EntitySystems
 
         public string Accentuate(string message)
         {
-            // Replace words before they get mangled by the accent changes.
-            message = _replacement.ApplyReplacements(message, "spanish");
-
             // Insert E before every S
             message = ReplaceWordInitialSWithEs(message);
             // Replace things like "haha"s with "jaja"s.
             message = ReplaceHaWithJa(message);
+
+            // Replace words after the accent application so that the spnish words aren't "accented".
+            // The downside of this is that the words-to-replace look for the "es-" modified words.
+            message = _replacement.ApplyReplacements(message, "spanish");
 
             // If a sentence ends with ?, insert a reverse ? at the beginning of the sentence
             message = ReplacePunctuation(message);
