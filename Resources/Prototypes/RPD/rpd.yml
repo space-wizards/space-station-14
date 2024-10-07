@@ -4,7 +4,7 @@
   sprite: /Textures/Interface/Radial/RPD/fourway.png
   mode: ConstructObject
   prototype: GasPipeFourway
-  cost: 1
+  cost: 0.5
   delay: 0
   rules:
   - MustBuildOnSubfloor
@@ -17,7 +17,7 @@
   sprite: /Textures/Interface/Radial/RPD/straight.png
   mode: ConstructObject
   prototype: GasPipeStraight
-  cost: 1
+  cost: 0.5
   delay: 0
   rules:
   - MustBuildOnSubfloor
@@ -30,7 +30,7 @@
   sprite: /Textures/Interface/Radial/RPD/bend.png
   mode: ConstructObject
   prototype: GasPipeBend
-  cost: 1
+  cost: 0.5
   delay: 0
   rules:
   - MustBuildOnSubfloor
@@ -43,7 +43,7 @@
   sprite: /Textures/Interface/Radial/RPD/TJunction.png
   mode: ConstructObject
   prototype: GasPipeTJunction
-  cost: 1
+  cost: 0.5
   delay: 0
   rules:
   - MustBuildOnSubfloor

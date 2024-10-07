@@ -341,7 +341,7 @@
   id: RPD
   parent: [ BaseItem, BaseEngineeringContraband ]
   name: RPD
-  description: The rapid construction device can be used to quickly place and remove various station structures and fixtures. Requires compressed matter to function.
+  description: A device used to rapidly pipe things.
   components:
   - type: RCD
     availablePrototypes:
@@ -365,8 +365,8 @@
     - FilterGas
     - Deconstruct
   - type: LimitedCharges
-    maxCharges: 30
-    charges: 30
+    maxCharges: 45
+    charges: 45
   - type: UseDelay
   - type: Sprite
     sprite: Objects/Tools/rpd.rsi

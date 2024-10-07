@@ -50,6 +50,8 @@ public sealed class RCDAmmoSystem : EntitySystem
             return;
         }
 
+        Log.Debug(count.ToString());
+
         _popup.PopupClient(Loc.GetString("rcd-ammo-component-after-interact-refilled"), target, user);
         _charges.AddCharges(target, count, charges);
         comp.Charges -= count;

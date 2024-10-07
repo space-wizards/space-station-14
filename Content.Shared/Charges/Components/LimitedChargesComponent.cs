@@ -13,12 +13,12 @@ public sealed partial class LimitedChargesComponent : Component
     /// </summary>
     [DataField("maxCharges"), ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
-    public int MaxCharges = 3;
+    public float MaxCharges = 3;
 
     /// <summary>
     /// The current number of charges
     /// </summary>
     [DataField("charges"), ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
-    public int Charges = 3;
+    public float Charges = 3;
 }

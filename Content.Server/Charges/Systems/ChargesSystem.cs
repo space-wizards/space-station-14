@@ -37,7 +37,7 @@ public sealed class ChargesSystem : SharedChargesSystem
         args.PushMarkup(Loc.GetString("limited-charges-recharging", ("seconds", timeRemaining)));
     }
 
-    public override void AddCharges(EntityUid uid, int change, LimitedChargesComponent? comp = null)
+    public override void AddCharges(EntityUid uid, float change, LimitedChargesComponent? comp = null)
     {
         if (!Query.Resolve(uid, ref comp, false))
             return;
