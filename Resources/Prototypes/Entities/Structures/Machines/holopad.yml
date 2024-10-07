@@ -28,6 +28,8 @@
     - map: [ "lights" ]
       state: blank
       shader: unshaded
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: panel_open
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -38,6 +40,10 @@
           Ringing: { state: lights_ringing }
           InCall: { state: lights_in_call }
           EndingCall: { state: lights_hanging_up }
+      enum.WiresVisuals.MaintenancePanelState:
+        enum.WiresVisualLayers.MaintenancePanel:
+          True: { visible: false }
+          False: { visible: true }
   - type: Machine
     board: HolopadMachineCircuitboard
   - type: StationAiWhitelist
@@ -71,7 +77,13 @@
     interfaces:
         enum.HolopadUiKey.InteractionWindow:
           type: HolopadBoundUserInterface
-        
+        enum.WiresUiKey.Key:
+          type: WiresBoundUserInterface
+  - type: WiresPanel
+  - type: WiresVisuals
+  - type: Wires
+    boardName: wires-board-name-holopad
+    layoutId: Holopad 
  
 - type: entity
   id: HolopadHologram
