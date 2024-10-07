@@ -12,6 +12,7 @@ id-card-access-level-detective = Detective
 id-card-access-level-chief-engineer = Chief Engineer
 id-card-access-level-engineering = Engineering
 id-card-access-level-atmospherics = Atmospherics
+id-card-access-level-generator = Generator
 
 id-card-access-level-research-director = Research Director
 id-card-access-level-research = Research

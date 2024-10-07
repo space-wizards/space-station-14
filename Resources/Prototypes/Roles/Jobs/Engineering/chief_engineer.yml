@@ -30,6 +30,7 @@
   - Atmospherics
   - Brig
   - Cryogenics
+  - Generator
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]

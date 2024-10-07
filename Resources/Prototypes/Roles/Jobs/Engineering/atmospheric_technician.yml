@@ -15,6 +15,7 @@
   - Engineering
   - External
   - Atmospherics
+  - Generator
 
 - type: startingGear
   id: AtmosphericTechnicianGear

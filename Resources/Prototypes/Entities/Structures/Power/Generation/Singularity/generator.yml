@@ -36,5 +36,5 @@
   - type: Lock
     locked: true
   - type: AccessReader
-    access: [["Captain"]]
+    access: [["Generator"]]
     BreakOnEmag: false

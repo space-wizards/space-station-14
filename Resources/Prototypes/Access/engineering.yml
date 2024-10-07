@@ -10,9 +10,14 @@
   id: Atmospherics
   name: id-card-access-level-atmospherics
 
+- type: accessLevel
+  id: Generator
+  name: id-card-access-level-generator
+
 - type: accessGroup
   id: Engineering
   tags:
   - ChiefEngineer
   - Engineering
   - Atmospherics
+  - -Generator
