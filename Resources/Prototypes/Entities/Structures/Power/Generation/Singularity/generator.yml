@@ -33,4 +33,8 @@
   - type: Pullable
   - type: GuideHelp
     guides: [ Singularity, Power ]
-
+  - type: Lock
+    locked: true
+  - type: AccessReader
+    access: [["Captain"]]
+    BreackOnEmag: false

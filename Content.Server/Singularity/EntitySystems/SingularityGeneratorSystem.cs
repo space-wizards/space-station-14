@@ -1,6 +1,9 @@
 using Content.Server.ParticleAccelerator.Components;
 using Content.Server.Singularity.Components;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Singularity.Components;
+using Content.Shared.Lock;
+using Content.Shared.Popups;
 using Robust.Shared.Physics.Events;
 
 namespace Content.Server.Singularity.EntitySystems;
@@ -9,6 +12,8 @@ public sealed class SingularityGeneratorSystem : EntitySystem
 {
     #region Dependencies
     [Dependency] private readonly IViewVariablesManager _vvm = default!;
+    [Dependency] private readonly LockSystem _lock= default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
     #endregion Dependencies
 
     public override void Initialize()
@@ -42,6 +47,11 @@ public sealed class SingularityGeneratorSystem : EntitySystem
     {
         if (!Resolve(uid, ref comp))
             return;
+        if (_lock.IsLocked(uid))
+        {
+            _popup.PopupEntity(Loc.GetString("singularity-generator-component-locked"), uid);
+            return;
+        }
 
         SetPower(uid, 0, comp);
         EntityManager.SpawnEntity(comp.SpawnPrototype, Transform(uid).Coordinates);
