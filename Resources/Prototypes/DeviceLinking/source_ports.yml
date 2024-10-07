@@ -2,13 +2,13 @@
   id: Pressed
   name: signal-port-name-pressed
   description: signal-port-description-pressed
-  defaultLinks: [ Toggle, Trigger ]
+  defaultLinks: [ Toggle, Trigger, Timer ]
 
 - type: sourcePort
   id: On
   name: signal-port-name-on-transmitter
   description: signal-port-description-on-transmitter
-  defaultLinks: [ On, Open, Forward, Trigger ]
+  defaultLinks: [ On, Open, Forward, Trigger, Timer ]
 
 - type: sourcePort
   id: Off
@@ -25,13 +25,13 @@
   id: Left
   name: signal-port-name-left
   description: signal-port-description-left
-  defaultLinks: [ On, Open, Forward, Trigger ]
+  defaultLinks: [ On, Open, Forward, Trigger, Timer ]
 
 - type: sourcePort
   id: Right
   name: signal-port-name-right
   description: signal-port-description-right
-  defaultLinks: [ On, Open, Reverse, Trigger ]
+  defaultLinks: [ On, Open, Reverse, Trigger, Timer ]
 
 - type: sourcePort
   id: Middle
@@ -76,7 +76,7 @@
   id: Timer
   name: signal-port-name-timer-trigger
   description: signal-port-description-timer-trigger
-  defaultLinks: [ AutoClose, On, Open, Forward, Trigger ]
+  defaultLinks: [ AutoClose, On, Open, Forward, Trigger, Timer ]
 
 - type: sourcePort
   id: Start
@@ -94,7 +94,7 @@
   id: OutputHigh
   name: signal-port-name-logic-output-high
   description: signal-port-description-logic-output-high
-  defaultLinks: [ On, Open, Forward, Trigger ]
+  defaultLinks: [ On, Open, Forward, Trigger, Timer ]
 
 - type: sourcePort
   id: OutputLow
