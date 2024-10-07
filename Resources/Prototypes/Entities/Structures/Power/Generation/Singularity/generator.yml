@@ -37,4 +37,4 @@
     locked: true
   - type: AccessReader
     access: [["Captain"]]
-    BreackOnEmag: false
+    BreakOnEmag: false
