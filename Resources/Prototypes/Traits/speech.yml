@@ -113,6 +113,24 @@
   - type: ReplacementAccent
     accent: nocontractions
   - type: NoContractionsAccent
+  
+- type: trait
+  id: SharpInflection
+  name: trait-sharpinflection-name
+  description: trait-sharpinflection-desc
+  category: SpeechTraits
+  cost: 1
+  components:
+  - type: SharpInflection
+  
+- type: trait
+  id: Monotonous
+  name: trait-monotonous-name
+  description: trait-monotonous-desc
+  category: SpeechTraits
+  cost: 1
+  components:
+  - type: Monotonous
 
 # 2 Cost
 
@@ -130,7 +148,7 @@
   name: trait-socialanxiety-name
   description: trait-socialanxiety-desc
   category: SpeechTraits
-  cost: 2
+  cost: 1
   components:
   - type: StutteringAccent
     matchRandomProb: 0.1
