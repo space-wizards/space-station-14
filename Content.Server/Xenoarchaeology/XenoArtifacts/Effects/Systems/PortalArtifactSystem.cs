@@ -3,19 +3,9 @@ using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Mind.Components;
-using Content.Shared.Mobs;
-using Content.Shared.Mobs.Components;
-using Content.Shared.Silicons.StationAi;
-using Content.Shared.Tag;
 using Content.Shared.Teleportation.Systems;
-using FastAccessors;
-using JetBrains.FormatRipper.Elf;
-using Microsoft.CodeAnalysis;
-using Robust.Shared.Prototypes;
+using Robust.Shared.Containers;
 using Robust.Shared.Random;
-using System.Diagnostics;
-using System.Numerics;
-using System.Runtime.InteropServices.Marshalling;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems;
 
@@ -26,6 +16,7 @@ public sealed class PortalArtifactSystem : EntitySystem
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly LinkedEntitySystem _link = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
 
     public override void Initialize()
     {
@@ -37,31 +28,15 @@ public sealed class PortalArtifactSystem : EntitySystem
     {
         var map = Transform(artifact).MapID;
         var validMinds = new List<EntityUid>();
-        var mindMobs = new HashSet<Entity<MindContainerComponent, TagComponent>>();
+        var mindCont = new HashSet<Entity<MindContainerComponent>>();
 
-        _lookup.GetEntitiesOnMap<MindContainerComponent, TagComponent>(map, mindMobs);
-        foreach (var comp in mindMobs)
+        _lookup.GetEntitiesOnMap<MindContainerComponent>(map, mindCont);
+        foreach (var mind in mindCont)
         {
-            // make sure explicitly exclude the ai       
-            var tags = new HashSet<ProtoId<TagPrototype>>();
-            tags = comp.Comp2.Tags;
-
-            var valid = true;
-            foreach (var tag in tags)
+            // check if the MindContainer has a Mind and if the entity is not in a container (this also auto excludes AI)
+            if (mind.Comp.HasMind && !_container.IsEntityOrParentInContainer(mind))
             {
-                Debug.Print(tag);
-                if (tag.Id == "StationAi")
-                    valid = false;
-            }
-
-            // assumes entity is in a container if the local position is EXACTLY 0,0 (if not, lucky you)
-            if (Transform(comp).LocalPosition == new Vector2(0.0f, 0.0f))
-                valid = false;
-
-            // check if the first component (the MindContainer) has a Mind
-            if (comp.Comp1.HasMind && valid)
-            {
-                validMinds.Add(comp.Owner);
+                validMinds.Add(mind.Owner);
             }
         }
 
