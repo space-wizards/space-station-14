@@ -292,7 +292,7 @@
     castShadows: false
 
 - type: entity
-  parent: BaseAnomalyInertCore
+  parent: [ BaseAnomalyInertCore, PowerCellMicroreactorPrinted ]
   id: AnomalyCoreElectricityInert
   suffix: Electricity, Inert
   components:
@@ -320,7 +320,7 @@
     castShadows: false
 
 - type: entity
-  parent: [ BaseAnomalyInertCore, BaseShadow ]
+  parent: [ BaseAnomalyInertCore, BaseShadow, SmokeGrenade ]
   id: AnomalyCoreShadowInert
   suffix: Shadow, Inert
   components:
@@ -331,6 +331,11 @@
     energy: 2.0
     color: "#793a80"
     castShadows: false
+  - type: SmokeOnUse
+    duration: 30
+    spreadAmount: 50
+  - type: SoundOnTrigger
+    sound: /Audio/Items/smoke_grenade_smoke.ogg
 
 - type: entity
   parent: BaseAnomalyInertCore
