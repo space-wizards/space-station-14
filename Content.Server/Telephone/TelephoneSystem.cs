@@ -168,12 +168,22 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
 
     public void CallTelephone(Entity<TelephoneComponent> source, Entity<TelephoneComponent> receiver, EntityUid user, TelephoneCallOptions? options = null)
     {
-        if (!IsSourceAbleToConnectToReceiver(source, receiver))
+        var forced = options?.ForceConnect == true || options?.ForceJoin == true;
+
+        if (!IsSourceCapableOfReachingReceiver(source, receiver) ||
+            (IsTelephoneEngaged(source) && !forced))
             return;
 
-        // If a connection cannot be made, time out the telephone
-        if ((IsTelephoneEngaged(receiver) || !this.IsPowered(receiver, EntityManager)) &&
-            options?.ForceConnect == false && options?.ForceJoin == false)
+        // If a connection cannot be established, time out the telephone
+        if (!this.IsPowered(receiver, EntityManager))
+        {
+            if (!forced)
+                EndTelephoneCalls(source);
+
+            return;
+        }
+
+        if (IsTelephoneEngaged(receiver) && !forced)
         {
             EndTelephoneCalls(source);
             return;
@@ -416,10 +426,9 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
         return callerId;
     }
 
-    public bool IsSourceAbleToConnectToReceiver(Entity<TelephoneComponent> source, Entity<TelephoneComponent> receiver)
+    public bool IsSourceCapableOfReachingReceiver(Entity<TelephoneComponent> source, Entity<TelephoneComponent> receiver)
     {
         if (source == receiver ||
-            IsTelephoneEngaged(source) ||
             !this.IsPowered(source, EntityManager) ||
             !IsSourceInRangeOfReceiver(source, receiver))
         {

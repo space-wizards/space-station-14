@@ -50,7 +50,7 @@
             </BoxContainer>
 
             <!-- List of contactable holopads (the list is created in C#) -->
-            <BoxContainer Name="HolopadContactListContainer" Orientation="Vertical" Margin="10 0 10 0" ReservesSpace="False" Visible="False">
+            <BoxContainer Name="HolopadContactListContainer" Orientation="Vertical" Margin="10 0 10 5" ReservesSpace="False" Visible="False">
                 <PanelContainer Name="HolopadContactListHeaderPanel">
                     <Label Text="{Loc 'holopad-window-select-contact-from-list'}" HorizontalAlignment="Center" Margin="0 3 0 3"/>
                 </PanelContainer>
@@ -71,7 +71,7 @@
 
             <!-- Button to start an emergency broadcast (the user requires a certain level of access to interact with it) -->
             <BoxContainer Name="StartBroadcastContainer" Orientation="Vertical" ReservesSpace="False" Visible="False">
-                <Button Name="StartBroadcastButton" Text="{Loc 'holopad-window-emergency-broadcast'}" Margin="10 5 10 5" Disabled="False" ReservesSpace="False"/>
+                <Button Name="StartBroadcastButton" Text="{Loc 'holopad-window-emergency-broadcast'}" Margin="10 0 10 5" Disabled="False" ReservesSpace="False"/>
             </BoxContainer>
 
         </BoxContainer>

@@ -9,6 +9,7 @@ using Content.Shared.Labels.Components;
 using Content.Shared.Silicons.StationAi;
 using Content.Shared.Telephone;
 using Content.Shared.UserInterface;
+using JetBrains.FormatRipper.Elf;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
@@ -54,6 +55,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
         SubscribeLocalEvent<TelephoneComponent, HolopadAnswerCallMessage>(OnHolopadAnswerCall);
         SubscribeLocalEvent<TelephoneComponent, HolopadEndCallMessage>(OnHolopadEndCall);
         SubscribeLocalEvent<TelephoneComponent, HolopadActivateProjectorMessage>(OnHolopadActivateProjector);
+        SubscribeLocalEvent<TelephoneComponent, HolopadStartBroadcastMessage>(OnHolopadStartBroadcast);
         SubscribeLocalEvent<HolopadComponent, HolopadRequestStationAiMessage>(OnStationAiRequested);
         SubscribeLocalEvent<HolopadComponent, BeforeActivatableUIOpenEvent>(OnUIOpen);
 
@@ -131,6 +133,52 @@ public sealed class HolopadSystem : SharedHolopadSystem
         SetHolopadEnviron(holopad, this.IsPowered(holopad, EntityManager));
     }
 
+    private void OnHolopadStartBroadcast(Entity<TelephoneComponent> telephoneEnt, ref HolopadStartBroadcastMessage args)
+    {
+        if (TryComp<StationAiHeldComponent>(args.Actor, out var stationAiHeld))
+        {
+            if (!_stationAiSystem.TryGetStationAiCore((args.Actor, stationAiHeld), out var core) ||
+                !TryComp<TelephoneComponent>(core, out var coreTelephone))
+                return;
+
+            if (core.Value.Comp.RemoteEntity == null)
+                return;
+
+            _xformSystem.SetCoordinates(core.Value.Comp.RemoteEntity.Value, Transform(telephoneEnt).Coordinates);
+            _stationAiSystem.SwitchRemoteMode(core.Value, false);
+
+            telephoneEnt = new Entity<TelephoneComponent>(core.Value, coreTelephone);
+        }
+
+        if (_telephoneSystem.IsTelephoneEngaged(telephoneEnt))
+            return;
+
+        if (!TryComp<HolopadComponent>(telephoneEnt, out var holopad))
+            return;
+
+        LinkHolopadToUser((telephoneEnt, holopad), args.Actor);
+
+        var xform = Transform(telephoneEnt);
+        var receivers = new HashSet<Entity<TelephoneComponent>>();
+
+        var query = AllEntityQuery<HolopadComponent, TelephoneComponent, TransformComponent>();
+        while (query.MoveNext(out var ent, out var entHolopad, out var entTelephone, out var entXform))
+        {
+            if (ent == telephoneEnt.Owner)
+                continue;
+
+            if (xform.MapID != entXform.MapID)
+                continue;
+
+            if (!_telephoneSystem.IsSourceCapableOfReachingReceiver(telephoneEnt, (ent, entTelephone)))
+                continue;
+
+            receivers.Add((ent, entTelephone));
+        }
+
+        _telephoneSystem.BroadcastCallToTelephones(telephoneEnt, receivers, args.Actor, true);
+    }
+
     private void OnStationAiRequestReceived(Entity<StationAiCoreComponent> stationAiCore, ref TelephoneCallEvent args)
     {
         if (!TryComp<TelephoneComponent>(stationAiCore, out var telephone))
@@ -161,7 +209,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
             if (xform.MapID != entXform.MapID)
                 continue;
 
-            if (!_telephoneSystem.IsSourceAbleToConnectToReceiver((holopad, holopadTelephone), (ent, entTelephone)))
+            if (!_telephoneSystem.IsSourceCapableOfReachingReceiver((holopad, holopadTelephone), (ent, entTelephone)))
                 continue;
 
             // Presumes that there is only one station AI per map

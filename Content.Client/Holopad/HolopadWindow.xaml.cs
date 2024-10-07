@@ -128,6 +128,7 @@ public sealed partial class HolopadWindow : FancyWindow
 
             case HolopadUiKey.InteractionWindowForAi:
                 ActivateProjectorContainer.Visible = true;
+                StartBroadcastContainer.Visible = true;
                 break;
 
             case HolopadUiKey.AiActionWindow:
