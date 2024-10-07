@@ -92,7 +92,7 @@
   recognizable: true
   physicalDesc: reagent-physical-desc-viscous
   slippery: false
-  viscosity: 0.1
+  viscosity: 0.25
   metabolisms:
     Food:
       effects:
@@ -106,8 +106,8 @@
     - !type:EnsureTileReaction
       components:
         - type: Propulsion
-          walkSpeedModifier: 2.0
-          sprintSpeedModifier: 2.0
+          walkSpeedModifier: 2.75
+          sprintSpeedModifier: 2.75
           whitelist:
             components:
               - SnailSpeed

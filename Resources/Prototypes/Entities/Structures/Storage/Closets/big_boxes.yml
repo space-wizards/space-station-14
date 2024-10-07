@@ -89,11 +89,11 @@
 - type: entity
   id: BaseLittleTykesCar
   name: little guys car #it's still just a box
-  description: Vroom vroom.
+  description: Vroom vroom. 
   components:
     - type: InputMover
     - type: Sprite
-      noRot: false
+      noRot: false #if anyone enables this i will kill them personally with my bare hands
       sprite: Structures/Storage/closet.rsi
       layers:
       - state: littletykescar
@@ -109,8 +109,8 @@
       fixtures:
         fix1:
           shape:
-            !type:PhysShapeAabb
-            bounds: "-0.4,-0.4,0.4,0.4"
+            !type:PhysShapeCircle
+            radius: "0.35"
           density: 100
           mask:
             - MobMask
