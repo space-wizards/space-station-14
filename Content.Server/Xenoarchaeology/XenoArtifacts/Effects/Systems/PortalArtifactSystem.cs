@@ -1,7 +1,5 @@
 using Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
-using Content.Shared.Administration.Logs;
-using Content.Shared.Database;
 using Content.Shared.Mind.Components;
 using Content.Shared.Teleportation.Systems;
 using Robust.Shared.Containers;
@@ -46,7 +44,7 @@ public sealed class PortalArtifactSystem : EntitySystem
         var secondPortal = Spawn(artifact.Comp.PortalProto, _transform.GetMapCoordinates(target));
 
         //Manual position swapping, because the portal that opens doesn't trigger a collision, and doesn't teleport targets the first time.
-        _transform.SwapPositions(target, secondPortal);
+        _transform.SwapPositions(target, artifact.Owner);
 
         _link.TryLink(firstPortal, secondPortal, true);
     }
