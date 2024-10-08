@@ -959,6 +959,7 @@
   name: uplink-lockpick-name
   description: uplink-lockpick-desc
   productEntity: Lockpick
+  icon: { sprite: /Textures/Objects/Tools/lockpick.rsi, state: icon }
   discountCategory: rareDiscounts
   discountDownTo:
     Telecrystal: 1

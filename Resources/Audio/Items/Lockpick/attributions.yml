@@ -12,3 +12,13 @@
   license: "CC0-1.0"
   copyright: "Created by michael_grinnell, slightly modified by Thinbug"
   source: "https://freesound.org/people/michael_grinnell/sounds/464420/"
+
+- files: ["lockpick_open.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by jstan904, slightly modified by Thinbug"
+  source: "https://freesound.org/people/jstan904/sounds/444028/"
+
+- files: ["lockpick_close.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by jstan904, slightly modified by Thinbug"
+  source: "https://freesound.org/people/jstan904/sounds/444028/"

@@ -1,13 +1,17 @@
 using Content.Shared.Interaction;
 using Content.Shared.DoAfter;
+using Content.Shared.Item.ItemToggle;
+using Content.Shared.Item.ItemToggle.Components;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Serialization;
+using Content.Shared.Interaction.Events;
 
 namespace Content.Shared.Lock.Lockpick;
 
 public sealed class LockpickSystem : EntitySystem
 {
     [Dependency] private readonly LockSystem _lockSystem = default!;
+    [Dependency] private readonly ItemToggleSystem _itemToggle = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     public override void Initialize()
@@ -21,6 +25,9 @@ public sealed class LockpickSystem : EntitySystem
     /// </summary>
     private void LockpickUse(Entity<LockpickComponent> ent, ref AfterInteractEvent args)
     {
+        if (!_itemToggle.IsActivated(ent.Owner))
+            return;
+
         if (!HasComp<LockComponent>(args.Target) || !_lockSystem.IsLocked(args.Target.Value))
             return;
 
