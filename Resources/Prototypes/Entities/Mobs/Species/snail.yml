@@ -34,21 +34,6 @@
   - type: Body
     prototype: Snail
     requiredLegs: 2
-  - type: Storage
-    clickInsert: false
-    grid:
-    - 0,0,7,7
-    maxItemSize: Huge
-    storageInsertSound:
-      path: /Audio/Voice/Slime/slime_squish.ogg
-  - type: StorageFill
-    contents:
-    - id: BoxSurvival
-      amount: 1
-  - type: ContainerContainer
-    containers:
-      storagebase: !type:Container
-        ents: []
   - type: UserInterface
     interfaces:
       enum.StorageUiKey.Key:
@@ -172,6 +157,11 @@
           32:
             sprite: Mobs/Species/Snail/displacement.rsi
             state: mask
+      back:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Snail/displacement.rsi
+            state: back
   - type: Speech
     speechSounds: Snail
   - type: TypingIndicator
