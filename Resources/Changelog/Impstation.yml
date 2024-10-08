@@ -2799,3 +2799,14 @@
   id: 348
   time: '2024-10-08T17:37:10.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/440
+- author: Sha-Seng
+  changes:
+  - message: Added thunky boots and tappy high heels sfx
+    type: Add
+  - message: Gave jump boots the thunky sfx
+    type: Tweak
+  - message: Gave high heels the tappy sfx
+    type: Tweak
+  id: 349
+  time: '2024-10-08T17:39:23.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/441
