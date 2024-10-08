@@ -44,7 +44,7 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly IAfkManager _afkManager = default!;
         [Dependency] private readonly IServerDbManager _dbManager = default!;
         [Dependency] private readonly PlayerRateLimitManager _rateLimit = default!;
-        [Dependency] private readonly AhelpLogging _ahelpLogging = default!;
+        [Dependency] private readonly SupportExchangeLogging _supportLogging = default!;
 
         [GeneratedRegex(@"^https://discord\.com/api/webhooks/(\d+)/((?!.*/).*)$")]
         private static partial Regex DiscordRegex();
@@ -692,22 +692,23 @@ namespace Content.Server.Administration.Systems
 
             bool targetOnline = _playerManager.TryGetSessionById(message.UserId, out var _);
 
-            // Log the Bwoink message to the database
-            await _ahelpLogging.LogAhelpMessageAsync(
-                ahelpRound: _gameTicker.RoundId,
+            // Log the message to the database
+            await _supportLogging.LogSupportMessageAsync(
+                supportRound: _gameTicker.RoundId,
                 roundStatus: _gameTicker.RunLevel switch
                 {
                     GameRunLevel.PreRoundLobby => "PreRoundLobby",
                     GameRunLevel.InRound => "InRound",
                     GameRunLevel.PostRound => "PostRound",
+                    _ => "Unknown",
                 },
                 timeSent: DateTime.UtcNow,
-                adminsOnline: GetNonAfkAdmins().Count > 0,
-                sender: message.TrueSender,
+                adminsOnline: GetAdmins().Count > 0,
+                senderId: senderSession.UserId,
                 senderEntity: senderSession.AttachedEntity,
                 isAdminned: senderAdmin != null,
                 senderEntityName: senderSession.Name,
-                ahelpTarget: message.UserId,
+                supportTargetId: message.UserId,
                 targetOnline: targetOnline,
                 message: message.Text
             );
@@ -799,6 +800,14 @@ namespace Content.Server.Administration.Systems
             return _adminManager.ActiveAdmins
                 .Where(p => (_adminManager.GetAdminData(p)?.HasFlag(AdminFlags.Adminhelp) ?? false) &&
                             !_afkManager.IsAfk(p))
+                .Select(p => p.Channel)
+                .ToList();
+        }
+
+        private IList<INetChannel> GetAdmins()
+        {
+            return _adminManager.ActiveAdmins
+                .Where(p => (_adminManager.GetAdminData(p)?.HasFlag(AdminFlags.Adminhelp) ?? false))
                 .Select(p => p.Channel)
                 .ToList();
         }

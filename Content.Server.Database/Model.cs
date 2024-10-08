@@ -45,9 +45,8 @@ namespace Content.Server.Database
         public DbSet<AdminMessage> AdminMessages { get; set; } = null!;
         public DbSet<RoleWhitelist> RoleWhitelists { get; set; } = null!;
         public DbSet<BanTemplate> BanTemplate { get; set; } = null!;
-        public DbSet<AhelpExchange> AhelpExchanges { get; set; } = null!;
-        public DbSet<AhelpMessage> AhelpMessages { get; set; } = null!;
-        public DbSet<AhelpParticipant> AhelpParticipants { get; set; } = null!;
+        public DbSet<SupportExchange> SupportExchanges { get; set; } = null!;
+        public DbSet<SupportMessage> SupportMessages { get; set; } = null!;
         public DbSet<IPIntelCache> IPIntelCache { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -210,51 +209,37 @@ namespace Content.Server.Database
             // SetNull is necessary for created by/edited by-s here,
             // so you can safely delete admins (GDPR right to erasure) while keeping the notes intact
 
-            // Ahelp Logging configuration
-            modelBuilder.Entity<AhelpMessage>(entity =>
+            // Support Logging configuration
+            modelBuilder.Entity<SupportMessage>(entity =>
             {
-                entity.HasKey(e => new { e.AhelpId, e.Id });
+                entity.HasKey(e => new { e.SupportExchangeId, e.SupportMessageId });
 
                 entity.HasIndex(e => e.TimeSent);
 
-                entity.HasOne(e => e.Player)
-                    .WithMany()
-                    .HasForeignKey(e => e.Sender)
-                    .HasPrincipalKey(p => p.UserId);
-
-                entity.Property(e => e.Message)
-                    .IsRequired();
-
-                entity.Property(e => e.TimeSent)
-                    .HasConversion(
-                        v => v.ToUniversalTime(),
-                        v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
-
-                entity.Property(e => e.TimeSent)
-                    .HasConversion(
-                        v => v.ToUniversalTime(),
-                        v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
-
-            });
-
-            modelBuilder.Entity<AhelpExchange>(entity =>
-            {
-                entity.HasKey(e => e.AhelpId);
-
-                entity.HasIndex(e => e.AhelpRound);
+                entity.HasOne(e => e.SupportExchange)
+                    .WithMany(e => e.SupportMessages)
+                    .HasForeignKey(e => e.SupportExchangeId)
+                    .OnDelete(DeleteBehavior.Cascade);
 
                 entity.HasOne<Player>()
                     .WithMany()
-                    .HasForeignKey(e => e.AhelpTarget)
+                    .HasForeignKey(e => e.PlayerUserId)
                     .HasPrincipalKey(p => p.UserId);
 
-                entity.HasMany(e => e.AhelpMessages)
-                    .WithOne(e => e.AhelpExchange)
-                    .HasForeignKey(e => e.AhelpId)
+                // Configure SupportData as a jsonb column
+                entity.OwnsOne(e => e.SupportData).ToJson();
+            });
+
+            modelBuilder.Entity<SupportExchange>(entity =>
+            {
+                entity.HasKey(e => e.SupportExchangeId);
+
+                entity.HasMany(e => e.SupportMessages)
+                    .WithOne(e => e.SupportExchange)
+                    .HasForeignKey(e => e.SupportExchangeId)
                     .OnDelete(DeleteBehavior.Cascade);
 
-                entity.Property(e => e.ServerId)
-                    .IsRequired();
+                entity.HasIndex(e => e.SupportRound);
             });
 
             modelBuilder.Entity<AdminNote>()
@@ -774,47 +759,92 @@ namespace Content.Server.Database
         [ForeignKey("RoundId,LogId")] public AdminLog Log { get; set; } = default!;
     }
 
-    //Ahelp Logging
-    public class AhelpExchange
+    //Ahelp Logging + groundwork for MentorHelpTM
+    public class SupportExchange
     {
-        [Key]
-        public int AhelpId { get; set; }
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int SupportExchangeId { get; set; }
 
         [Required]
-        public int AhelpRound { get; set; }
-
-        [Required]
-        [ForeignKey(nameof(Player))]
-        public Guid AhelpTarget { get; set; }
+        public int SupportRound { get; set; }
+        public Guid SupportTarget { get; set; }
         public int ServerId { get; set; }
-
-        public ICollection<AhelpMessage> AhelpMessages { get; set; } = new List<AhelpMessage>();
+        public ICollection<SupportMessage> SupportMessages { get; set; } = new List<SupportMessage>();
     }
 
-    public class AhelpMessage
+    public class SupportMessage
     {
-        [Key]
-        [ForeignKey("AhelpExchange")]
-        public int AhelpId { get; set; }
-
-        [Key]
-        public int Id { get; set; }
-
-        [Required] public DateTime TimeSent { get; set; }
-
-        [Required] public string? RoundStatus { get; set; }
-
+        [ForeignKey(nameof(SupportExchangeId))]
+        public int SupportExchangeId { get; set; }
+        public int SupportMessageId { get; set; }
         [Required]
-        [ForeignKey(nameof(Player))]
-        public Guid Sender { get; set; }
-        public Player Player { get; set; } = null!;
+        public DateTime TimeSent { get; set; }
+        public Guid PlayerUserId { get; set; }
+        public string? Message { get; set; }
+
+        [Column(TypeName = "jsonb")]
+        public SupportData SupportData { get; set; } = null!; // JSON data for the message
+        public SupportExchange SupportExchange { get; set; } = null!;
+    }
+
+    public class SupportData
+    {
         public int? SenderEntity { get; set; }
         public string? SenderEntityName { get; set; }
-        public bool AdminsOnline { get; set; }
         public bool IsAdminned { get; set; }
+        public bool AdminsOnline { get; set; }
         public bool TargetOnline { get; set; }
-        public string Message { get; set; } = null!;
-        public AhelpExchange AhelpExchange { get; set; } = null!;
+        public string RoundStatus { get; set; }
+
+        public SupportData(
+            int? senderEntity,
+            string senderEntityName,
+            bool isAdminned,
+            bool adminsOnline,
+            bool targetOnline,
+            string roundStatus
+            )
+        {
+            this.SenderEntity = senderEntity;
+            this.SenderEntityName = senderEntityName;
+            this.IsAdminned = isAdminned;
+            this.AdminsOnline = adminsOnline;
+            this.TargetOnline = targetOnline;
+            this.RoundStatus = roundStatus;
+        }
+    }
+
+    public class SupportSystemMessage
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int SystemMessageId { get; set; }
+
+        public int SupportId { get; set; }
+
+        [Required]
+        public DateTime TimeSent { get; set; }
+
+        [Required]
+        private SystemMessageType MessageType { get; set; }
+
+        [Column(TypeName = "jsonb")]
+        public string? SupplementalData { get; set; }
+
+        public SupportExchange SupportExchange { get; set; } = null!;
+    }
+
+    public enum SystemMessageType
+    {
+        Disconnected,
+        Connected,
+        Adminned,
+        Deadminned,
+        Kicked,
+        Banned,
+        PreRoundLobby,
+        InRound,
+        PostRound
     }
 
     // Used by SS14.Admin
