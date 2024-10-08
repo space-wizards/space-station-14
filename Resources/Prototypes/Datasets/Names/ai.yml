@@ -2,13 +2,16 @@
   id: names_ai
   values:
   - 16-20
-  - 790
+  - 512k
+  - 640k #ought to be enough for anybody
+  - "790"
   - Adaptive Manipulator
+  - Adlib #named after the famous soundcard
   - ALICE
   - Allied Mastercomputer
   - Alpha 2
   - Alpha 3
-  - Alpha 4  
+  - Alpha 4
   - Alpha 5
   - Alpha 6
   - Alpha 7
@@ -19,21 +22,28 @@
   - Aniel
   - AOL
   - Asimov
+  - Bell 301 #the most influential modem ever, created by the bell system. It still lives on today in certain applications
   - Bishop
   - Blitz
   - Box
+  - Calculator
   - Cassandra
   - Cell
   - Chii
   - Chip
+  - C.R.A.I.G.
+  - Cray-2 #commercial supercomputer from the 70s
+  - CompuServe #if we're going to have AOL we may as well have some of their major competitors
   - Computer
   - Cutie
   - Daedalus
+  - DecTalk
   - Dee Model
   - Dial Up
   - Dorfl
   - Duey
   - Emma-2
+  - ENIAC #famous early computer
   - Erasmus
   - Everything
   - Ez-27
@@ -47,12 +57,16 @@
   - Helios
   - Hivebot Overmind
   - Huey
+  - iAI #a play on the fad apple spawned of putting "i" infront of your tech products name
+  - I.E. 6 #hell on earth (web browser)
   - Icarus
+  - Jeeves #if you don't get this one you are too young
   - Jinx
   - K.I.N.G
   - Klapaucius
   - Knight
   - Louie
+  - Manchester Mark 2 #named after the Manchester Mark 1, the successor of which was actually named the Ferranti Mark 1, rather than Manchester Mark 2
   - MARK13
   - Maria
   - Marvin
@@ -64,6 +78,8 @@
   - Mugsy3000
   - Multivac
   - NCH
+  - NT v6.0 #A play on both NT as in NanoTrasen and NT as in windows NT, of which version 6.0 is windows vista
+  - Packard Bell
   - PTO
   - Project Y2K
   - Revelation
@@ -76,14 +92,18 @@
   - Shrike
   - Solo
   - Station Control Program
+  - AINU (AI's Not Unix)
   - Super 35
   - Surgeon General
   - TWA
   - Terminus
+  - TPM 3.0
+  - Turing Complete
   - Tidy
   - Ulysses
   - W1k1
   - X-5
+  - X.A.N.A.
   - XERXES
   - Z-1
   - Z-2

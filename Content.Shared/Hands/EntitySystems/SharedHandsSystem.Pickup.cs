@@ -1,3 +1,4 @@
+using Content.Shared.Clothing.Components;
 using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Content.Shared.Item;
@@ -177,6 +178,17 @@ public abstract partial class SharedHandsSystem : EntitySystem
 
         if (checkActionBlocker && !_actionBlocker.CanPickup(uid, entity))
             return false;
+
+        if (ContainerSystem.TryGetContainingContainer((entity, null, null), out var container))
+        {
+            if (!ContainerSystem.CanRemove(entity, container))
+                return false;
+
+            if (_inventory.TryGetSlotEntity(uid, container.ID, out var slotEnt) &&
+                slotEnt == entity &&
+                !_inventory.CanUnequip(uid, entity, container.ID, out _))
+                return false;
+        }
 
         // check can insert (including raising attempt events).
         return ContainerSystem.CanInsert(entity, handContainer);

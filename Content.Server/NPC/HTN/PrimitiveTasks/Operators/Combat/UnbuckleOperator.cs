@@ -1,4 +1,4 @@
-﻿using Content.Server.Buckle.Systems;
+using Content.Server.Buckle.Systems;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Combat;
 
@@ -19,7 +19,7 @@ public sealed partial class UnbuckleOperator : HTNOperator
     {
         base.Startup(blackboard);
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
-        _buckle.Unbuckle(owner, null);
+        _buckle.TryUnbuckle(owner, owner, false);
     }
 
     public override HTNOperatorStatus Update(NPCBlackboard blackboard, float frameTime)
