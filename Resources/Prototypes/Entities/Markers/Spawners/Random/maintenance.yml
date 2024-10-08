@@ -116,6 +116,7 @@
       - id: BalloonNT
       - id: BalloonCorgi
       - id: MysteryFigureBox
+      - id: RubberChicken
       # Cult
       - !type:AllSelector
         children:
@@ -143,6 +144,7 @@
         - id: ClothingNeckAromanticPin
         - id: ClothingNeckAsexualPin
         - id: ClothingNeckBisexualPin
+        - id: ClothingNeckGayPin
         - id: ClothingNeckIntersexPin
         - id: ClothingNeckLesbianPin
         - id: ClothingNeckNonBinaryPin
