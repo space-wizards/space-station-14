@@ -121,7 +121,7 @@
         amount: 10
         doAfter: 10
   - node: done
-    entity: GunSafeBase
+    entity: GunSafe
     edges:
     - to: start
       steps:
