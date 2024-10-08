@@ -203,15 +203,14 @@ public sealed class HolopadSystem : SharedHolopadSystem
         if (!_telephoneSystem.IsTelephoneEngaged(ent))
             return;
 
-        holopad.ControlLockoutInitiator = args.Actor;
+        //holopad.ControlLockoutInitiator = args.Actor;
         holopad.ControlLockoutStartTime = _timing.RealTime;
         Dirty(ent, holopad);
 
         foreach (var receiver in GetLinkedHolopads((ent, holopad)))
         {
-            receiver.Comp.ControlLockoutInitiator = args.Actor;
+            //receiver.Comp.ControlLockoutInitiator = args.Actor;
             receiver.Comp.ControlLockoutStartTime = _timing.RealTime;
-
             Dirty(receiver);
         }
     }

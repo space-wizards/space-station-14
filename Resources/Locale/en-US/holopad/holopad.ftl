@@ -12,6 +12,7 @@ holopad-window-call-ending = Disconnecting...
 holopad-window-ai-request = Your presence is requested by:
 holopad-window-emergency-broadcast-in-progress = Emergency broadcast in progress
 holopad-window-controls-locked-out = Control of this device has been locked to:
+holopad-window-controls-unlock-countdown = It will automatically unlock in: {$countdown}
 
 # Buttons
 holopad-window-answer-call = Answer call
@@ -19,6 +20,8 @@ holopad-window-end-call = End call
 holopad-window-request-station-ai = Request station AI
 holopad-window-activate-projector = Activate projector
 holopad-window-emergency-broadcast = Emergency broadcast
+holopad-window-emergency-broadcast-with-countdown = Emergency broadcast ({$countdown})
+
 
 # Contact list
 holopad-window-select-contact-from-list = Select a contact to initiate a holo-call

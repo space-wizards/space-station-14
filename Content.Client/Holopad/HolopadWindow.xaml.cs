@@ -223,6 +223,18 @@ public sealed partial class HolopadWindow : FancyWindow
         }
 
         // Update control text
+        var cooldown = _holopadSystem.GetHolopadBroadcastCoolDown((_owner.Value, holopad));
+        var cooldownString = $"{cooldown.Minutes:00}:{cooldown.Seconds:00}";
+
+        StartBroadcastButton.Text = _holopadSystem.IsHolopadBroadcastOnCoolDown((_owner.Value, holopad)) ?
+            Loc.GetString("holopad-window-emergency-broadcast-with-countdown", ("countdown", cooldownString)) :
+            Loc.GetString("holopad-window-emergency-broadcast");
+
+        var lockout = _holopadSystem.GetHolopadControlLockedPeriod((_owner.Value, holopad));
+        var lockoutString = $"{lockout.Minutes:00}:{lockout.Seconds:00}";
+
+        LockOutCountDownText.Text = Loc.GetString("holopad-window-controls-unlock-countdown", ("countdown", lockoutString));
+
         switch (_currentState)
         {
             case TelephoneState.Idle:

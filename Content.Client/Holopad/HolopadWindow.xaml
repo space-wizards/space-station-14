@@ -11,13 +11,13 @@
             <!-- Header text -->
             <controls:StripeBack>
                 <PanelContainer>
-                    <BoxContainer MinHeight="60" Orientation="Vertical" VerticalAlignment="Center">
-                        <Label Text="{Loc 'holopad-window-emergency-broadcast-in-progress'}" HorizontalAlignment="Center" Margin="10 5 10 0" ReservesSpace="False"/>
-                        <Label Text="{Loc 'holopad-window-controls-locked-out'}" HorizontalAlignment="Center" Margin="10 5 10 0" ReservesSpace="False"/>
-                        <RichTextLabel Name="LockOutIdText" HorizontalAlignment="Center" Margin="0 0 0 0" ReservesSpace="False"/>
-                    </BoxContainer>
+                    <Label Text="{Loc 'holopad-window-emergency-broadcast-in-progress'}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10 10 10 10" ReservesSpace="False"/>
                 </PanelContainer>
             </controls:StripeBack>
+            
+            <Label Text="{Loc 'holopad-window-controls-locked-out'}" HorizontalAlignment="Center" Margin="10 5 10 0" ReservesSpace="False"/>
+            <RichTextLabel Name="LockOutIdText" HorizontalAlignment="Center" Margin="10 5 10 0" ReservesSpace="False"/>
+            <Label Name="LockOutCountDownText" Text="{Loc 'holopad-window-controls-unlock-countdown'}" HorizontalAlignment="Center" Margin="10 15 10 10" ReservesSpace="False"/>
         </BoxContainer>
 
         <BoxContainer Name="ControlsContainer" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True" ReservesSpace="False">
