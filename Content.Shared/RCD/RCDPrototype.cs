@@ -1,3 +1,4 @@
+using Content.Shared.FixedPoint;
 using Content.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Prototypes;
@@ -48,7 +49,7 @@ public sealed partial class RCDPrototype : IPrototype
     /// Number of charges consumed when the operation is completed
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadOnly)]
-    public float Cost { get; private set; } = 1;
+    public FixedPoint2 Cost { get; private set; } = 1;
 
     /// <summary>
     /// The length of the operation
