@@ -32,9 +32,9 @@
   objectType: Structure
 
 - type: construction
-  id: GunSafeBase
+  id: GunSafe
   name: gun safe
-  graph: GunSafeBase
+  graph: GunSafe
   startNode: start
   targetNode: done
   category: construction-category-storage

@@ -105,7 +105,7 @@
       - !type:DeleteEntity
 
 - type: constructionGraph
-  id: GunSafeBase
+  id: GunSafe
   start: start
   graph:
   - node: start

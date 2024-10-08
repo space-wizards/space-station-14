@@ -366,7 +366,7 @@
     stateDoorClosed: shotguncase_door
   - type: AccessReader
   - type: Construction
-    graph: GunSafeBase
+    graph: GunSafe
     node: done
     containers:
     - entity_storage
@@ -375,7 +375,7 @@
 
 - type: entity
   id: GunSafeBaseSecure
-  parent: GunSafeBase
+  parent: GunSafe
   suffix: Armory, Locked
   components:
   - type: AccessReader
