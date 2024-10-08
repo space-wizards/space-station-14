@@ -814,39 +814,6 @@ namespace Content.Server.Database
         }
     }
 
-    public class SupportSystemMessage
-    {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int SystemMessageId { get; set; }
-
-        public int SupportId { get; set; }
-
-        [Required]
-        public DateTime TimeSent { get; set; }
-
-        [Required]
-        private SystemMessageType MessageType { get; set; }
-
-        [Column(TypeName = "jsonb")]
-        public string? SupplementalData { get; set; }
-
-        public SupportExchange SupportExchange { get; set; } = null!;
-    }
-
-    public enum SystemMessageType
-    {
-        Disconnected,
-        Connected,
-        Adminned,
-        Deadminned,
-        Kicked,
-        Banned,
-        PreRoundLobby,
-        InRound,
-        PostRound
-    }
-
     // Used by SS14.Admin
     public interface IBanCommon<TUnban> where TUnban : IUnbanCommon
     {
