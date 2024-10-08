@@ -23,7 +23,7 @@ spelf-mood-clarity-name = Clarity Is Vital
 spelf-mood-clarity-desc = You must be excessively clear and honest in your speech, explaining every minute detail. 
 
 spelf-mood-hug-good-name = Free Hugs
-spelf-mood-hug-good-desc = It is extremely impolite not to hug people frequently
+spelf-mood-hug-good-desc = It is extremely impolite not to hug people frequently.
 
 spelf-mood-never-alone-name = Loneliness Is Terrible
 spelf-mood-never-alone-desc = You must strive to be around others whenever possible.

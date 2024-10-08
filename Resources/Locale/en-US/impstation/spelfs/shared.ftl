@@ -32,7 +32,7 @@ spelf-mood-music-good-name = Music Is Sacred
 spelf-mood-music-good-desc = You must be listening to music at all times - and must avoid overlapping songs.
 
 spelf-mood-friendship-is-rank-name = Friendship Is Vital
-spelf-mood-friendship-is-rank-desc = Friendships are the true measure of one’s character. The more friends you have, the higher you rank in society
+spelf-mood-friendship-is-rank-desc = Friendships are the true measure of one’s character. The more friends you have, the higher you rank in society.
 
 spelf-mood-one-true-thaven-name = You Are The One True Thaven
 spelf-mood-one-true-thaven-desc = All others are insidious pretenders.
