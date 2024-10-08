@@ -36,24 +36,9 @@ public sealed class TrayScanRevealSystem : EntitySystem
             _subFloorHide.UpdateTile(component.TileGridUid, component.TileGridComp, component.TileIndices);
     }
 
-    internal bool HasTrayScanReveal(EntityUid gridUid, MapGridComponent grid, Vector2i position)
+    internal bool HasTrayScanReveal(Entity<MapGridComponent> ent, Vector2i position)
     {
-        var anchoredEnum = _map.GetAnchoredEntities(gridUid, grid, position);
+        var anchoredEnum = _map.GetAnchoredEntities(ent, position);
         return anchoredEnum.Any(HasComp<TrayScanRevealComponent>);
-    }
-
-    internal bool HasEntityTileTrayScanReveal(EntityUid uid, TransformComponent? xform)
-    {
-        if (!Resolve(uid, ref xform))
-            return false;
-
-        var gridUid = xform.GridUid;
-        if (gridUid is null)
-            return false;
-
-        var gridComp = Comp<MapGridComponent>(gridUid.Value);
-        var tileIndices = _map.TileIndicesFor((EntityUid)gridUid, gridComp, xform.Coordinates);
-
-        return HasTrayScanReveal((EntityUid)gridUid, gridComp, tileIndices);
     }
 }
