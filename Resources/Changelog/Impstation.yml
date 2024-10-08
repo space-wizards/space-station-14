@@ -2764,3 +2764,24 @@
   id: 345
   time: '2024-10-07T07:24:17.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/434
+- author: widgetbeck
+  changes:
+  - message: Fixed Gastropoids not being able to use backpack keybinds by overhauling
+      how their extra storage works.
+    type: Tweak
+  - message: Overhauled Gastropoid storage! Now they can cram up to two backpacks
+      into their shell, instead of having internal storage.
+    type: Tweak
+  - message: Changed the speed numbers on Mucin. It now makes Gastropoids ever so
+      slightly faster than average, but slows everyone else down the same amount as
+      slime.
+    type: Tweak
+  - message: Changed the Gastropoid guidebook entry to reflect the above changes.
+    type: Tweak
+  - message: New sprites for the Little Guys Car.
+    type: Add
+  - message: Little Guys Car hitbox is no longer massive and square.
+    type: Fix
+  id: 346
+  time: '2024-10-08T02:34:41.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/439
