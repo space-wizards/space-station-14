@@ -18,10 +18,11 @@
     slots:
     - Back
   - type: Gun
-    fireRate: 2
-    selectedMode: SemiAuto
+    fireRate: 6
+    selectedMode: FullAuto
     availableModes:
     - SemiAuto
+    - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/grenade_launcher.ogg
     soundEmpty:
@@ -30,6 +31,7 @@
   - type: ContainerAmmoProvider
     container: storagebase
   - type: PneumaticCannon
+    throwItems: false
   - type: Storage
     maxItemSize: Normal
     grid:
@@ -112,6 +114,16 @@
   components:
   - type: PneumaticCannon
     throwItems: false
+  - type: Gun
+    fireRate: 10
+    selectedMode: FullAuto
+    availableModes:
+    - SemiAuto
+    - FullAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/grenade_launcher.ogg
+    soundEmpty:
+      path: /Audio/Items/hiss.ogg
 
 # doesn't need gas, extra capacity
 - type: entity
@@ -137,6 +149,6 @@
     - SemiAuto
     - FullAuto
     soundGunshot:
-      path: /Audio/Effects/thunk.ogg
+      path: /Audio/Weapons/Guns/Gunshots/grenade_launcher.ogg
     soundEmpty:
       path: /Audio/Items/hiss.ogg
