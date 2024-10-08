@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Moved VGRoid from 1,000m away to ~500m.
-    type: Tweak
-  id: 6993
-  time: '2024-07-28T03:14:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29943
 - author: lzk228
   changes:
   - message: Fixed pancakes stacks. Before it, splitting not default pancakes stacks
@@ -3943,3 +3936,10 @@
   id: 7492
   time: '2024-10-07T22:42:43.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32429
+- author: shampunj
+  changes:
+  - message: When curtains are destroyed, only 1 cloth drops out
+    type: Tweak
+  id: 7493
+  time: '2024-10-08T09:51:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32685
