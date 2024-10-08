@@ -69,7 +69,6 @@
       - FoodSoupOnion
       - FoodSoupBisque
       - FoodSoupBungo
-      - FoodMealSoftTaco
       - FoodMealCornInButter
       - FoodSoupStew
     chance: 0.8

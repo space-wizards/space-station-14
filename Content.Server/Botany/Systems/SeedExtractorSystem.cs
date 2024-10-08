@@ -42,12 +42,13 @@ public sealed class SeedExtractorSystem : EntitySystem
         var amount = _random.Next(seedExtractor.BaseMinSeeds, seedExtractor.BaseMaxSeeds + 1);
         var coords = Transform(uid).Coordinates;
 
+        var packetSeed = seed;
         if (amount > 1)
-            seed.Unique = false;
+            packetSeed.Unique = false;
 
         for (var i = 0; i < amount; i++)
         {
-            _botanySystem.SpawnSeedPacket(seed, coords, args.User);
+            _botanySystem.SpawnSeedPacket(packetSeed, coords, args.User);
         }
     }
 }

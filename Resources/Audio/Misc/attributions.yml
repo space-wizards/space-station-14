@@ -5,8 +5,8 @@
 
 - files: ["ninja_greeting.ogg"]
   license: "CC-BY-SA-3.0"
-  copyright: "Taken from TG station."
-  source: "https://github.com/tgstation/tgstation/blob/b02b93ce2ab891164511a973493cdf951b4120f7/sound/effects/ninja_greeting.ogg"
+  copyright: "Created by Chillyconmor"
+  source: "https://github.com/space-wizards/space-station-14/blob/master/Resources/Audio/Misc/ninja_greeting.ogg"
 
 - files: ["thief_greeting.ogg"]
   license: "CC-BY-NC-4.0"
@@ -33,7 +33,7 @@
   copyright: "Made by dj-34 (https://github.com/dj-34)"
   source: "https://github.com/ss220-space/Paradise/blob/05043bcfb35c2e7bcf1efbdbfbf976e1a2504bc2/sound/effects/epsilon.ogg"
 
-- files: ["siren.ogg"]
+- files: ["gamma.ogg"]
   license: "CC0-1.0"
   copyright: "Created by Bhijin & Myr for Space Station 14"
   source: "https://github.com/space-wizards/space-station-14"
