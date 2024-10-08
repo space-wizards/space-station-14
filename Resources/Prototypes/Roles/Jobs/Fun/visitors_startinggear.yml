@@ -304,8 +304,6 @@
     pocket2: ForensicPad
   inhand:
   - FlashlightSeclite
-  storage:
-  - ClothingNeckSecurityBadge
 
 - type: startingGear
   id: VisitorDetectiveAlt
@@ -324,8 +322,6 @@
     pocket2: ForensicPad
   inhand:
   - FlashlightSeclite
-  storage:
-  - ClothingNeckSecurityBadge
 
 - type: startingGear
   id: VisitorWarden

@@ -1,5 +1,6 @@
 - type: entity
   id: ClothingNeckSecurityBadge
+  parent: BaseItem
   name: security officer badge
   description: In Corporations We Trust.
   components:
@@ -15,6 +16,8 @@
     state: sobadge
   - type: TypingIndicatorClothing
     proto: security
+  - type: StaticPrice
+    price: 350
   - type: Tag
     tags:
     - WhitelistChameleon
@@ -28,6 +31,8 @@
   - type: Sprite
     sprite: Clothing/Neck/Misc/badges.rsi
     state: largebadge
+  - type: StaticPrice
+    price: 500
     
 - type: entity
   parent: ClothingNeckSecurityBadge
@@ -38,3 +43,5 @@
   - type: Sprite
     sprite: Clothing/Neck/Misc/badges.rsi
     state: sherrifstar
+  - type: StaticPrice
+    price: 750

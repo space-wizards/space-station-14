@@ -163,7 +163,12 @@
 - type: loadout
   id: SOBadge
   equipment:
-    id: ClothingNeckSecurityBadge
+    neck: ClothingNeckSecurityBadge
+
+- type: loadout
+  id: SOBadgeBackpack
+  storage:
+    back: ClothingNeckSecurityBadge
 
 - type: loadout
   id: LargeBadge
@@ -171,7 +176,15 @@
   - !type:GroupLoadoutEffect
     proto: SeniorOfficer
   equipment:
-    id: ClothingNeckLargeSecurityBadge
+    neck: ClothingNeckLargeSecurityBadge
+
+- type: loadout
+  id: LargeBadgeBackpack
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorOfficer
+  storage:
+    back: ClothingNeckLargeSecurityBadge
 
 # Misc
 - type: loadout
