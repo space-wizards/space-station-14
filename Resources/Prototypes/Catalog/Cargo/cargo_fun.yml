@@ -234,6 +234,6 @@
     sprite: Structures/Storage/closet.rsi
     state: littletykescar
   product: BaseLittleTykesCar
-  cost: 500
+  cost: 1500
   category: cargoproduct-category-name-fun
   group: market
