@@ -10,6 +10,8 @@ holopad-window-outgoing-call = Attempting to establish a connection...
 holopad-window-call-in-progress = Holo-call in progress
 holopad-window-call-ending = Disconnecting...
 holopad-window-ai-request = Your presence is requested by:
+holopad-window-emergency-broadcast-in-progress = Emergency broadcast in progress
+holopad-window-controls-locked-out = Control of this device has been locked to:
 
 # Buttons
 holopad-window-answer-call = Answer call

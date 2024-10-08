@@ -28,6 +28,8 @@
     - map: [ "lights" ]
       state: blank
       shader: unshaded
+    - map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+      state: unpowered
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: panel_open
   - type: Appearance
@@ -40,6 +42,10 @@
           Ringing: { state: lights_ringing }
           InCall: { state: lights_in_call }
           EndingCall: { state: lights_hanging_up }
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          False: { visible: true }
+          True: { visible: false }
       enum.WiresVisuals.MaintenancePanelState:
         enum.WiresVisualLayers.MaintenancePanel:
           True: { visible: false }

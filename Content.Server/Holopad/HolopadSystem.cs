@@ -91,6 +91,9 @@ public sealed class HolopadSystem : SharedHolopadSystem
 
     private void OnHolopadStartNewCall(Entity<HolopadComponent> holopad, ref HolopadStartNewCallMessage args)
     {
+        if (IsHolopadControlLocked(holopad, args.Actor))
+            return;
+
         if (!TryComp<TelephoneComponent>(holopad, out var holopadTelephone))
             return;
 
@@ -106,6 +109,12 @@ public sealed class HolopadSystem : SharedHolopadSystem
 
     private void OnHolopadAnswerCall(Entity<TelephoneComponent> ent, ref HolopadAnswerCallMessage args)
     {
+        if (!TryComp<HolopadComponent>(ent, out var holopad))
+            return;
+
+        if (IsHolopadControlLocked((ent, holopad), args.Actor))
+            return;
+
         if (TryComp<StationAiHeldComponent>(args.Actor, out var userAiHeld))
         {
             var source = ent.Comp.LinkedTelephones.FirstOrNull();
@@ -116,15 +125,20 @@ public sealed class HolopadSystem : SharedHolopadSystem
             return;
         }
 
-        if (TryComp<HolopadComponent>(ent, out var holopad))
-            LinkHolopadToUser((ent, holopad), args.Actor);
+        LinkHolopadToUser((ent, holopad), args.Actor);
 
         _telephoneSystem.AnswerTelephone(ent, args.Actor);
     }
 
-    private void OnHolopadEndCall(Entity<TelephoneComponent> telephoneEnt, ref HolopadEndCallMessage args)
+    private void OnHolopadEndCall(Entity<TelephoneComponent> ent, ref HolopadEndCallMessage args)
     {
-        _telephoneSystem.EndTelephoneCalls(telephoneEnt);
+        if (!TryComp<HolopadComponent>(ent, out var holopad))
+            return;
+
+        if (IsHolopadControlLocked((ent, holopad), args.Actor))
+            return;
+
+        _telephoneSystem.EndTelephoneCalls(ent);
     }
 
     private void OnHoloCall(Entity<HolopadComponent> holopad, ref TelephoneCallEvent args)
@@ -132,8 +146,17 @@ public sealed class HolopadSystem : SharedHolopadSystem
         SetHolopadEnviron(holopad, this.IsPowered(holopad, EntityManager));
     }
 
-    private void OnHolopadStartBroadcast(Entity<TelephoneComponent> telephoneEnt, ref HolopadStartBroadcastMessage args)
+    private void OnHolopadStartBroadcast(Entity<TelephoneComponent> ent, ref HolopadStartBroadcastMessage args)
     {
+        if (!TryComp<HolopadComponent>(ent, out var holopad))
+            return;
+
+        if (IsHolopadControlLocked((ent, holopad), args.Actor))
+            return;
+
+        if (IsHolopadBroadcastOnCoolDown((ent, holopad)))
+            return;
+
         if (TryComp<StationAiHeldComponent>(args.Actor, out var stationAiHeld))
         {
             if (!_stationAiSystem.TryGetStationAiCore((args.Actor, stationAiHeld), out var core) ||
@@ -143,39 +166,54 @@ public sealed class HolopadSystem : SharedHolopadSystem
             if (core.Value.Comp.RemoteEntity == null)
                 return;
 
-            _xformSystem.SetCoordinates(core.Value.Comp.RemoteEntity.Value, Transform(telephoneEnt).Coordinates);
+            _xformSystem.SetCoordinates(core.Value.Comp.RemoteEntity.Value, Transform(ent).Coordinates);
             _stationAiSystem.SwitchRemoteMode(core.Value, false);
 
-            telephoneEnt = new Entity<TelephoneComponent>(core.Value, coreTelephone);
+            ent = new Entity<TelephoneComponent>(core.Value, coreTelephone);
         }
 
-        if (_telephoneSystem.IsTelephoneEngaged(telephoneEnt))
+        if (_telephoneSystem.IsTelephoneEngaged(ent))
             return;
 
-        if (!TryComp<HolopadComponent>(telephoneEnt, out var holopad))
-            return;
+        LinkHolopadToUser((ent, holopad), args.Actor);
 
-        LinkHolopadToUser((telephoneEnt, holopad), args.Actor);
-
-        var xform = Transform(telephoneEnt);
+        var xform = Transform(ent);
         var receivers = new HashSet<Entity<TelephoneComponent>>();
 
         var query = AllEntityQuery<HolopadComponent, TelephoneComponent, TransformComponent>();
-        while (query.MoveNext(out var ent, out var entHolopad, out var entTelephone, out var entXform))
+        while (query.MoveNext(out var foundEnt, out var entHolopad, out var entTelephone, out var entXform))
         {
-            if (ent == telephoneEnt.Owner)
+            if (foundEnt == ent.Owner)
                 continue;
 
             if (xform.MapID != entXform.MapID)
                 continue;
 
-            if (!_telephoneSystem.IsSourceCapableOfReachingReceiver(telephoneEnt, (ent, entTelephone)))
+            if (!_telephoneSystem.IsSourceCapableOfReachingReceiver(ent, (foundEnt, entTelephone)))
                 continue;
 
-            receivers.Add((ent, entTelephone));
+            receivers.Add((foundEnt, entTelephone));
+
+            if (IsHolopadControlLocked((foundEnt, entHolopad)))
+                return;
         }
 
-        _telephoneSystem.BroadcastCallToTelephones(telephoneEnt, receivers, args.Actor, true);
+        _telephoneSystem.BroadcastCallToTelephones(ent, receivers, args.Actor, true);
+
+        if (!_telephoneSystem.IsTelephoneEngaged(ent))
+            return;
+
+        holopad.ControlLockoutInitiator = args.Actor;
+        holopad.ControlLockoutStartTime = _timing.RealTime;
+        Dirty(ent, holopad);
+
+        foreach (var receiver in GetLinkedHolopads((ent, holopad)))
+        {
+            receiver.Comp.ControlLockoutInitiator = args.Actor;
+            receiver.Comp.ControlLockoutStartTime = _timing.RealTime;
+
+            Dirty(receiver);
+        }
     }
 
     private void OnStationAiRequestReceived(Entity<StationAiCoreComponent> stationAiCore, ref TelephoneCallEvent args)
@@ -197,6 +235,9 @@ public sealed class HolopadSystem : SharedHolopadSystem
 
     private void OnStationAiRequested(Entity<HolopadComponent> holopad, ref HolopadRequestStationAiMessage args)
     {
+        if (IsHolopadControlLocked(holopad, args.Actor))
+            return;
+
         if (!TryComp<TelephoneComponent>(holopad, out var holopadTelephone))
             return;
 

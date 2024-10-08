@@ -167,7 +167,7 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
 
         foreach (var receiver in source.Comp.LinkedTelephones)
         {
-            receiver.Comp.ControlLockoutInitiator = user;
+            //receiver.Comp.ControlLockoutInitiator = user;
         }
     }
 

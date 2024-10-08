@@ -11,7 +11,7 @@ namespace Content.Shared.Holopad;
 /// <remarks>
 /// Holopads also require a <see cref="TelephoneComponent"/> to function
 /// </remarks>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(SharedHolopadSystem))]
 public sealed partial class HolopadComponent : Component
 {
@@ -32,6 +32,30 @@ public sealed partial class HolopadComponent : Component
     /// </summary>
     [DataField]
     public EntProtoId? HologramProtoId;
+
+    /// <summary>
+    /// The entity that has locked out the controls of this device
+    /// </summary>
+    [ViewVariables, AutoNetworkedField]
+    public EntityUid ControlLockoutInitiator;
+
+    /// <summary>
+    /// The game tick the control lockout was initiated
+    /// </summary>
+    [ViewVariables, AutoNetworkedField]
+    public TimeSpan ControlLockoutStartTime;
+
+    /// <summary>
+    /// The duration that the control lockout will last in seconds
+    /// </summary>
+    [DataField]
+    public float ControlLockoutDuration { get; private set; } = 9f;
+
+    /// <summary>
+    /// The duration before the controls can be lockout again in seconds
+    /// </summary>
+    [DataField]
+    public float ControlLockoutCoolDown { get; private set; } = 18f;
 }
 
 #region: Event messages
