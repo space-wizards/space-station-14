@@ -2810,3 +2810,10 @@
   id: 349
   time: '2024-10-08T17:39:23.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/441
+- author: Darkmajia
+  changes:
+  - message: Brigmedics now spawn in their department.
+    type: Add
+  id: 350
+  time: '2024-10-08T17:41:57.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/442
