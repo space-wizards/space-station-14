@@ -189,7 +189,7 @@ public abstract partial class InventorySystem
         }
 
         // If new gloves are equipped, trigger OnContactInteraction for held items
-        if (triggerHandContact && slotDefinition.SlotFlags.HasFlag(SlotFlags.GLOVES))
+        if (triggerHandContact && !((slotDefinition.SlotFlags & SlotFlags.GLOVES) == 0))
             TriggerHandContactInteraction(target);
 
         Dirty(target, inventory);
@@ -454,7 +454,7 @@ public abstract partial class InventorySystem
         }
 
         // If gloves are unequipped, OnContactInteraction should trigger for held items
-        if (triggerHandContact && slotDefinition.SlotFlags.HasFlag(SlotFlags.GLOVES))
+        if (triggerHandContact && !((slotDefinition.SlotFlags & SlotFlags.GLOVES) == 0))
             TriggerHandContactInteraction(target);
 
         Dirty(target, inventory);
