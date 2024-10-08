@@ -18,6 +18,12 @@ public sealed partial class RandomGlobalSpawnSpellEvent : InstantActionEvent, IS
     [DataField]
     public bool RequireMind = true;
 
+    /// <summary>
+    /// Sound that will play globally when cast
+    /// </summary>
+    [DataField]
+    public string Sound = string.Empty;
+
     [DataField]
     public string? Speech { get; private set; }
 }

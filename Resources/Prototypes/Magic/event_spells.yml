@@ -151,8 +151,13 @@
         orGroup: Guns
       - id: WeaponWaterBlasterSuper
         orGroup: Guns
+      - id: RevolverCapGun
+        orGroup: Guns
+      - id: RevolverCapGunFake
+        orGroup: Guns
       speech: action-speech-spell-summon-guns
       requireMind: true
+      sound: /Audio/Magic/staff_animation.ogg
       
 - type: entity
   id: ActionSummonMagic
@@ -186,8 +191,6 @@
         orGroup: Magics
       - id: WeaponWandFireball
         orGroup: Magics
-      - id: WeaponWandDeath
-        orGroup: Magics
       - id: WeaponWandPolymorphDoor
         orGroup: Magics
       - id: WeaponWandCluwne
@@ -200,3 +203,4 @@
         orGroup: Magics
       speech: action-speech-spell-summon-magic
       requireMind: true
+      sound: /Audio/Magic/staff_animation.ogg

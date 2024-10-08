@@ -24,6 +24,7 @@ using Content.Shared.Storage;
 using Content.Shared.Tag;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Systems;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
@@ -58,6 +59,7 @@ public abstract class SharedMagicSystem : EntitySystem
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     public override void Initialize()
     {
@@ -551,9 +553,13 @@ public abstract class SharedMagicSystem : EntitySystem
             var mapCoords = _transform.GetMapCoordinates(human);
             foreach (var spawn in EntitySpawnCollection.GetSpawns(spawns, _random))
             {
-                Spawn(spawn, mapCoords);
+                var spawned = Spawn(spawn, mapCoords);
+                _hands.PickupOrDrop(human.Owner, spawned);
             }
         }
+
+        // Makes more sense to me for one global noise as opposed to creating a positional noise for each player
+        _audio.PlayGlobal(ev.Sound, ev.Performer);
     }
 
     #endregion
