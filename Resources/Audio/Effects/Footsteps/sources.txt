@@ -15,4 +15,4 @@ snowstep1.ogg, snowstep2.ogg, snowstep3.ogg, and snowstep4.ogg are taken from ht
 snailstep.ogg by widgetbeck
 
 boots are taken from https://freesound.org/s/583715/ and made by DexD73 under CC-0
-highheels are taken from https://freesound.org/s/700080/ and made by MoanALissa32 under CC-0
+highheels were provided by DinnerCalzone (github) and modified by Sha-Seng (github) under CC-0
