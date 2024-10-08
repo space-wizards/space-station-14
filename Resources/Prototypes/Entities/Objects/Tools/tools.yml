@@ -339,7 +339,7 @@
 
 - type: entity
   id: RPD
-  parent: [ BaseItem, BaseEngineeringContraband ]
+  parent: [ BaseItem, BaseEngineeringContraband, RCD]
   name: RPD
   description: A device used to rapidly pipe things.
   components:
@@ -367,25 +367,10 @@
   - type: LimitedCharges
     maxCharges: 45
     charges: 45
-  - type: UseDelay
   - type: Sprite
     sprite: Objects/Tools/rpd.rsi
     state: icon
-  - type: Item
-    size: Normal
-  - type: PhysicalComposition
-    materialComposition:
-      Steel: 600
-      Plastic: 100
-  - type: StaticPrice
-    price: 110
-  - type: UserInterface
-    interfaces:
-      enum.RcdUiKey.Key:
-        type: RCDMenuBoundUserInterface
-  - type: ActivatableUI
-    inHandsOnly: true
-    key: enum.RcdUiKey.Key
+
 
 - type: entity
   id: RCDEmpty
