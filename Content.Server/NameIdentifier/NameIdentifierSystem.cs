@@ -14,6 +14,7 @@ public sealed class NameIdentifierSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly ILogManager _logManager = default!;
 
     /// <summary>
     /// Free IDs available per <see cref="NameIdentifierGroupPrototype"/>.
@@ -21,9 +22,13 @@ public sealed class NameIdentifierSystem : EntitySystem
     [ViewVariables]
     public readonly Dictionary<string, List<int>> CurrentIds = new();
 
+    private ISawmill _sawmill = default!;
+
     public override void Initialize()
     {
         base.Initialize();
+
+        _sawmill = _logManager.GetSawmill("NameIdentifierSystem");
 
         SubscribeLocalEvent<NameIdentifierComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<NameIdentifierComponent, ComponentShutdown>(OnComponentShutdown);
@@ -169,9 +174,21 @@ public sealed class NameIdentifierSystem : EntitySystem
 
     private void CleanupIds(RoundRestartCleanupEvent ev)
     {
-        foreach (var values in CurrentIds.Values)
+        foreach (var proto in _prototypeManager.EnumeratePrototypes<NameIdentifierGroupPrototype>())
         {
-            _robustRandom.Shuffle(values);
+            if(!CurrentIds.TryGetValue(proto.ID, out var ids))
+            {
+                // For some reason the list does not yet exist so we create it.
+                ids = new List<int>(proto.MaxValue - proto.MinValue);
+                _sawmill.Warning("While refreshing ids encountered a NameIdentifierGroup without a corresponding CurrentId list.");
+            }
+
+            ids.Clear();
+            for (var i = proto.MinValue; i < proto.MaxValue; i++)
+            {
+                ids.Add(i);
+            }
+            _robustRandom.Shuffle(ids);
         }
     }
 }
