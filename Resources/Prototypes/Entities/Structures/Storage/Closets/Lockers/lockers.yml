@@ -371,7 +371,7 @@
     containers:
     - entity_storage
   - type: StaticPrice
-    price: 335
+    price: 660
 
 - type: entity
   id: GunSafeBaseSecure
