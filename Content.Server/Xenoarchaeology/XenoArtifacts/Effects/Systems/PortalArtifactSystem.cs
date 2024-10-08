@@ -12,8 +12,6 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems;
 public sealed class PortalArtifactSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly LinkedEntitySystem _link = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
@@ -28,15 +26,13 @@ public sealed class PortalArtifactSystem : EntitySystem
     {
         var map = Transform(artifact).MapID;
         var validMinds = new List<EntityUid>();
-        var mindCont = new HashSet<Entity<MindContainerComponent>>();
-
-        _lookup.GetEntitiesOnMap<MindContainerComponent>(map, mindCont);
-        foreach (var mind in mindCont)
+        var mindQuery = EntityQueryEnumerator<MindContainerComponent, TransformComponent>();
+        while (mindQuery.MoveNext(out var uid, out var mc, out var xform))
         {
-            // check if the MindContainer has a Mind and if the entity is not in a container (this also auto excludes AI)
-            if (mind.Comp.HasMind && !_container.IsEntityOrParentInContainer(mind))
+            // check if the MindContainer has a Mind and if the entity is not in a container (this also auto excludes AI) and if they are on the same map
+            if (mc.HasMind && !_container.IsEntityOrParentInContainer(uid) && xform.MapID == map)
             {
-                validMinds.Add(mind.Owner);
+                validMinds.Add(uid);
             }
         }
 
@@ -53,10 +49,6 @@ public sealed class PortalArtifactSystem : EntitySystem
             _transform.SwapPositions(target, secondPortal);
 
             _link.TryLink(firstPortal, secondPortal, true);
-        }
-        else
-        {
-            _adminLogger.Add(LogType.Teleport, $"Portal Artifact {ToPrettyString(artifact.Owner)} failed to find valid Teleport target");
         }
     }
 }
