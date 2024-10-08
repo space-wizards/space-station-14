@@ -32,4 +32,5 @@
         prob: 0.5
         orGroup: Trash
       speech: action-speech-spell-summon-guns
+      requireMind: false
       

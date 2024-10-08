@@ -512,6 +512,9 @@ public abstract class SharedMagicSystem : EntitySystem
 
     private void OnRandomGlobalSpawnSpell(RandomGlobalSpawnSpellEvent ev)
     {
+        if (!_net.IsServer)
+            return;
+
         if (ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer))
             return;
 
@@ -521,27 +524,36 @@ public abstract class SharedMagicSystem : EntitySystem
         ev.Handled = true;
         Speak(ev);
 
-        // I stole this from SharedMindSystem GetAliveHumansExcept but without the Except. Wiz should get their gun too!
-        var allHumans = new List<EntityUid>();
+        // I stole this from SharedMindSystem GetAliveHumansExcept but...
+        // without the Except. Wiz should get their gun too!
+        // Also querying for TransformComponent,
+        // changing list to TransformComponent instead of EntityUid,
+        // and adding TransformComponent instead of the mind.
+        var allHumans = new List<TransformComponent>();
         // HumanoidAppearanceComponent is used to prevent mice, pAIs, etc from being chosen
-        var query = EntityQueryEnumerator<MindContainerComponent, MobStateComponent, HumanoidAppearanceComponent>();
-        while (query.MoveNext(out var uid, out var mc, out var mobState, out _))
+        var query = EntityQueryEnumerator<MindContainerComponent, MobStateComponent, HumanoidAppearanceComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out var mc, out var mobState, out _, out var body))
         {
-            // the player needs to have a mind
-            if (mc.Mind == null)
-                continue;
+            // the player needs to have a mind if required
+            if (ev.RequireMind)
+            {
+                if (mc.Mind == null)
+                    continue;
+            }
 
             // the player has to be alive
             if (_mobState.IsAlive(uid, mobState))
-                allHumans.Add(mc.Mind.Value);
+                allHumans.Add(body);
         }
 
         foreach (var human in allHumans)
         {
-            var spawnCord = _transform.GetMapCoordinates(human);
+            var mapCoords = _transform.GetMapCoordinates(human);
             foreach (var spawn in EntitySpawnCollection.GetSpawns(spawns, _random))
             {
-                SpawnNextToOrDrop(spawn, human);
+                Spawn(spawn, mapCoords);
+                var test = new SpeakSpellEvent(ev.Performer, spawn);
+                RaiseLocalEvent(ref test);
             }
         }
     }
