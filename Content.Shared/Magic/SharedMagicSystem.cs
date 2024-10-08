@@ -552,8 +552,6 @@ public abstract class SharedMagicSystem : EntitySystem
             foreach (var spawn in EntitySpawnCollection.GetSpawns(spawns, _random))
             {
                 Spawn(spawn, mapCoords);
-                var test = new SpeakSpellEvent(ev.Performer, spawn);
-                RaiseLocalEvent(ref test);
             }
         }
     }

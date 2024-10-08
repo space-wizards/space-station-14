@@ -131,6 +131,19 @@
   - !type:ListingLimitedStockCondition
     stock: 1
 
+- type: listing
+  id: SpellbookEventSummonMagic
+  name: spellbook-event-summon-magic-name
+  description: spellbook-event-summon-magic-description
+  productAction: ActionSummonMagic
+  cost:
+    WizCoin: 2
+  categories:
+  - SpellbookEvents
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
 # Upgrades
 - type: listing
   id: SpellbookFireballUpgrade

@@ -33,6 +33,9 @@ spellbook-event-summon-ghosts-description = Who ya gonna call?
 spellbook-event-summon-guns-name = Summon Guns
 spellbook-event-summon-guns-description = AK47s for everyone! Places a random gun in front of everybody.
 
+spellbook-event-summon-magic-name = Summon Magic
+spellbook-event-summon-magic-description = Places a random magical item in front of everybody. Nothing could go wrong!
+
 # Upgrades
 spellbook-upgrade-fireball-name = Upgrade Fireball
 spellbook-upgrade-fireball-description = Upgrades Fireball to a maximum of level 3!
