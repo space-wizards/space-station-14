@@ -10,7 +10,7 @@ shell-only-players-can-run-this-command = Only players can run this command.
 shell-must-be-attached-to-entity = You must be attached to an entity to run this command.
 
 ## Arguments
-
+shell-takes-no-arguments = No arguments should be present.
 shell-need-exactly-one-argument = Need exactly one argument.
 shell-wrong-arguments-number-need-specific = Need {$properAmount} arguments, there were {$currentAmount}.
 shell-argument-must-be-number = Argument must be a number.

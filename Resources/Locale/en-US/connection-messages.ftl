@@ -22,6 +22,10 @@ ban-banned-1 = You, or another user of this computer or connection, are banned f
 ban-banned-2 = The ban reason is: "{$reason}"
 ban-banned-3 = Attempts to circumvent this ban such as creating a new account will be logged.
 
+restrict-username-1 = Your username is prohibited either specifically or by class.
+restrict-username-2 = The admin who restricted your username stated: {$reason}
+restrict-username-3 = You may be welcome back on the server after your name is changed.
+
 soft-player-cap-full = The server is full!
 panic-bunker-account-denied = This server is in panic bunker mode, often enabled as a precaution against raids. New connections by accounts not meeting certain requirements are temporarily not accepted. Try again later
 panic-bunker-account-denied-reason = This server is in panic bunker mode, often enabled as a precaution against raids. New connections by accounts not meeting certain requirements are temporarily not accepted. Try again later. Reason: "{$reason}"

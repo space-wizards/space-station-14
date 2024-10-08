@@ -95,6 +95,27 @@ cmd-ban-username-hint-upgrade-ban = [also ban]
 cmd-ban-username-hint-ban = Users who join with this username will be banned
 cmd-ban-username-hint-no-ban = Users who join with this username will be kicked (Default)
 
+# create username ban failed
+cmd-ban-username-missing-minimum-permissions = {$admin} ({$adminId}) tried to create a username rule with no ban flag"
+cmd-ban-username-missing-minimum-permissions-regex = {$admin} ({$adminId}) tried to create a simple username ban with an invalid username ({$expression})
+cmd-ban-username-invalid-simple = {$admin} ({$adminId}) tried to create a simple username ban with an invalid username ({regexRule})
+cmd-ban-username-missing-reason = {$admin} ({$adminId}) is creating a username ban without a reason provided for ({$expression})
+
 # kick on username ban
-ban-username-kick-reason = Your username is not permitted on this server. You may rejoin after changing your username.
-ban-username-ban-reason = Your username is not permitted on this server. You have Been banned.
+ban-username-kick-message = Your username is not permitted on this server. You may rejoin after changing your username.
+ban-username-ban-message = Your username is not permitted on this server. You have been banned.
+ban-username-default-reason-simple = An admin has banned your specific username.
+ban-username-default-reason-regex = An admin has banned a class of usernames which includes your username.
+
+# username ban panel
+username-ban-panel-title = Username Rules
+username-ban-panel-submit = Create Banned Username Rule
+username-ban-panel-reason = Username Restriction Reason
+username-ban-panel-create = Create
+username-ban-panel-view = View
+username-ban-panel-extend = Extend to ban
+username-ban-panel-rule = prohibition rule
+username-ban-panel-regex = regex
+
+# create log message
+server-username-rule-create = {$admin} created the username rule {$expression} stating: {$message}

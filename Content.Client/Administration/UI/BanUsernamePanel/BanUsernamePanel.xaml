@@ -1,0 +1,24 @@
+<DefaultWindow
+    xmlns="https://spacestation14.io"
+    xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
+    Title="{Loc username-ban-panel-title}" MinSize="350 500">
+    <BoxContainer Orientation="Vertical">
+        <TabContainer Name="Tabs" VerticalExpand="True">
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                <LineEdit Margin="2" Name="UsernameRuleLine" MinWidth="100" HorizontalExpand="True" PlaceHolder="{Loc username-ban-panel-rule}" />
+                <CheckBox Name="ExtendToBanCheckbox" Margin="2" Text="{Loc username-ban-panel-extend}" Pressed="False" />
+                <CheckBox Name="RegexCheckbox" Margin="2" Text="{Loc username-ban-panel-regex}" Pressed="False" />
+                <TextEdit Name="ReasonTextEdit" MinHeight="100" VerticalExpand="True" HorizontalExpand="True" />
+                <Button Name="SubmitButton" Text="{Loc username-ban-panel-submit}" HorizontalExpand="True" />
+                <!-- Ban Command filler -->
+            </BoxContainer>
+
+            <!-- <cc:PlayerListControl Name="PlayerList" VerticalExpand="True" /> -->
+            <!-- Role list (auto-generated) -->
+            <ScrollContainer>
+                <BoxContainer Name="BansContainer"  Orientation="Vertical"/>
+                <!-- list of banns -->
+            </ScrollContainer>
+        </TabContainer>
+    </BoxContainer>
+</DefaultWindow>
