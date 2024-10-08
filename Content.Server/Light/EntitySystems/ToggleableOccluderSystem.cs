@@ -1,12 +1,11 @@
 using Content.Server.DeviceLinking.Events;
 using Content.Server.DeviceLinking.Systems;
 using Content.Server.Light.Components;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Light.EntitySystems
 {
     /// <summary>
-    ///     Hadnles the logic between signals and toggling OccluderComponent
+    ///     Handles the logic between signals and toggling OccluderComponent
     /// </summary>
     public sealed class ToggleableOccluderSystem : EntitySystem
     {
@@ -16,19 +15,19 @@ namespace Content.Server.Light.EntitySystems
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<ToggleableOccluderComponent,SignalReceivedEvent>(OnSignalReceived);
-            SubscribeLocalEvent<ToggleableOccluderComponent,ComponentInit>(OnInit);
+            SubscribeLocalEvent<ToggleableOccluderComponent, SignalReceivedEvent>(OnSignalReceived);
+            SubscribeLocalEvent<ToggleableOccluderComponent, ComponentInit>(OnInit);
         }
 
         private void OnInit(EntityUid uid, ToggleableOccluderComponent comp, ComponentInit args)
         {
-            if(TryComp<OccluderComponent>(uid, out var occluder))
-                _signalSystem.EnsureSinkPorts(uid, comp.OnPort, comp.OffPort, comp.TogglePort);
+            _signalSystem.EnsureSinkPorts(uid, comp.OnPort, comp.OffPort, comp.TogglePort);
         }
 
         private void OnSignalReceived(EntityUid uid, ToggleableOccluderComponent comp, ref SignalReceivedEvent args)
         {
-            TryComp<OccluderComponent>(uid, out var occluder);
+            if (!TryComp<OccluderComponent>(uid, out var occluder))
+                return;
 
             if (args.Port == comp.OffPort)
                 SetState(uid, false, occluder);
