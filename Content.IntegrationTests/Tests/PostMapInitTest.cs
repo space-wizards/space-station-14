@@ -50,6 +50,7 @@ namespace Content.IntegrationTests.Tests
             "Fland",
             "Meta",
             "Packed",
+			"Aspid",
             "Omega",
             "Bagel",
             "CentComm",
