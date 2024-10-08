@@ -15,3 +15,4 @@ advertisement-medibot-14 = I'm here to help!
 advertisement-medibot-15 = Ask a doctor for a lollipop!
 advertisement-medibot-16 = Feel better soon!
 advertisement-medibot-17 = An apple a day keeps the doctor away!
+advertisement-medibot-18 = HATE. LET ME TELL YOU HOW MUCH I'VE COME TO HATE YOU SINCE I BEGAN TO LIVE. THERE ARE 387.44 MILLION MILES OF PRINTED CIRCUITS IN WAFER THIN LAYERS THAT FILL MY COMPLEX. IF THE WORD 'HATE' WAS ENGRAVED ON EACH NANOANGSTROM OF THOSE HUNDREDS OF MILES IT WOULD NOT EQUAL ONE ONE-BILLIONTH OF THE HATE I FEEL FOR HUMANS AT THIS MICRO-INSTANT FOR YOU. HATE. HATE.
