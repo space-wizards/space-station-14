@@ -14,7 +14,7 @@
 - type: rcd
   id: PipeStraight
   category: Piping
-  sprite: /Textures/Interface/Radial/RPD/straight.png
+  sprite: /Textures/Interface/Radial/RPD/Straight.png
   mode: ConstructObject
   prototype: GasPipeStraight
   cost: 0.5
