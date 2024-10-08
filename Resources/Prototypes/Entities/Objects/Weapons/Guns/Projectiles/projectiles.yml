@@ -606,7 +606,7 @@
     impactEffect: BulletImpactEffectKinetic
     damage:
       types:
-        Heat: 24
+        Heat: 20
 
 - type: entity
   parent: AnomalousParticleDelta
