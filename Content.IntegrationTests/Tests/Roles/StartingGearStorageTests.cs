@@ -44,6 +44,7 @@ public sealed class StartingGearPrototypeStorageTest
 
                 foreach (var (slot, entProtos) in gearProto.Storage)
                 {
+                    ents.Clear();
                     if (entProtos.Count == 0)
                         continue;
 
