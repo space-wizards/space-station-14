@@ -177,7 +177,7 @@
       max: 1
       pickPlayer: false
       mindRoles:
-      - MindRoleDragon # TODO:ERRANT test dragon
+      - MindRoleDragon
 
 - type: entity
   parent: BaseGameRule
