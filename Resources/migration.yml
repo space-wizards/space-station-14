@@ -352,6 +352,13 @@ DoorRemoteFirefight: null
 # 2024-06-03
 AirlockServiceCaptainLocked: AirlockCaptainLocked
 
+#2024-06-05
+DisasterVictimSpawner: CommandVisitorSpawner
+LostCargoTechnicianSpawner: VisitorCargoTechnicianSpawner
+ClownTroupeSpawner: VisitorClownSpawner
+TravelingChefSpawner: VisitorChefSpawner
+SyndieDisasterVictimSpawner: SyndieVisitorSpawner
+
 # 2024-06-15
 ClothingOuterCoatInspector: ClothingOuterCoatJensen
 
@@ -420,3 +427,16 @@ ClothingBackpackDuffelSyndicateCostumeCentcom: null
 ClothingHeadsetAltCentComFake: null
 CentcomPDAFake: null
 CentcomIDCardSyndie: null
+
+# 2024-09-06
+AntimovCircuitBoard: null
+OverlordCircuitBoard: null
+
+# 2024-09-08
+HatBase: null
+
+# 2024-09-19
+BlueprintFlare: null
+
+# 2024-10-04
+BaseAdvancedPen: Pen

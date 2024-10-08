@@ -2,34 +2,30 @@ using Content.Shared.Alert;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.Ensnaring.Components;
 /// <summary>
 /// Use this on an entity that you would like to be ensnared by anything that has the <see cref="EnsnaringComponent"/>
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
 public sealed partial class EnsnareableComponent : Component
 {
     /// <summary>
     /// How much should this slow down the entities walk?
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("walkSpeed")]
+    [DataField]
     public float WalkSpeed = 1.0f;
 
     /// <summary>
     /// How much should this slow down the entities sprint?
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("sprintSpeed")]
+    [DataField]
     public float SprintSpeed = 1.0f;
 
     /// <summary>
     /// Is this entity currently ensnared?
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("isEnsnared")]
+    [DataField, AutoNetworkedField]
     public bool IsEnsnared;
 
     /// <summary>
@@ -37,10 +33,10 @@ public sealed partial class EnsnareableComponent : Component
     /// </summary>
     public Container Container = default!;
 
-    [DataField("sprite")]
+    [DataField]
     public string? Sprite;
 
-    [DataField("state")]
+    [DataField]
     public string? State;
 
     [DataField]
@@ -48,17 +44,6 @@ public sealed partial class EnsnareableComponent : Component
 }
 
 public sealed partial class RemoveEnsnareAlertEvent : BaseAlertEvent;
-
-[Serializable, NetSerializable]
-public sealed class EnsnareableComponentState : ComponentState
-{
-    public readonly bool IsEnsnared;
-
-    public EnsnareableComponentState(bool isEnsnared)
-    {
-        IsEnsnared = isEnsnared;
-    }
-}
 
 public sealed class EnsnaredChangedEvent : EntityEventArgs
 {
