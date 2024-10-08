@@ -168,6 +168,8 @@
     damage:
       types:
         Slash: 15
+    soundHit:
+        path: /Audio/Weapons/bladeslice.ogg
   - type: Tag
     tags:
     - Knife

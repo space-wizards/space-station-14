@@ -998,6 +998,7 @@
 - type: loadoutGroup
   id: SalvageSpecialistGlasses
   name: loadout-group-salvage-specialist-glasses
+  minLimit: 0
   loadouts:
   - Glasses
   - GlassesCheapSunglasses

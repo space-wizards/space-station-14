@@ -5782,7 +5782,7 @@ entities:
       pos: -4.5,45.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -1754.6201
+      secondsUntilStateChange: -1773.3143
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -27863,16 +27863,25 @@ entities:
     - type: Transform
       pos: -18.474297,5.7612333
       parent: 1
+    - type: ContainerContainer
+      containers:
+        lens_slot: !type:ContainerSlot {}
   - uid: 6051
     components:
     - type: Transform
       pos: -16.578178,-4.4178576
       parent: 1
+    - type: ContainerContainer
+      containers:
+        lens_slot: !type:ContainerSlot {}
   - uid: 6052
     components:
     - type: Transform
       pos: -16.593803,-4.1209826
       parent: 1
+    - type: ContainerContainer
+      containers:
+        lens_slot: !type:ContainerSlot {}
 - proto: ClothingHandsGlovesBoxingBlue
   entities:
   - uid: 8820
@@ -67100,6 +67109,13 @@ entities:
     components:
     - type: Transform
       pos: 3.5,-3.5
+      parent: 1
+- proto: SpawnPointBrigmedic
+  entities:
+  - uid: 12697
+    components:
+    - type: Transform
+      pos: 22.5,6.5
       parent: 1
 - proto: SpawnPointCaptain
   entities:
