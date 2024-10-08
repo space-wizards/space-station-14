@@ -5276,7 +5276,7 @@ entities:
             1: 44680
           -7,-63:
             1: 61184
-            5: 12
+            3: 12
           -7,-62:
             1: 64443
           -7,-61:
@@ -5284,14 +5284,14 @@ entities:
           -7,-60:
             1: 4369
           -7,-64:
-            3: 12
-            4: 3072
+            4: 12
+            5: 3072
           -6,-64:
-            3: 1
-            4: 256
+            4: 1
+            5: 256
             1: 17476
           -6,-63:
-            5: 1
+            3: 1
             1: 5956
           -6,-62:
             1: 4096
@@ -5302,7 +5302,7 @@ entities:
           -6,-65:
             1: 17476
             6: 1
-            3: 256
+            4: 256
           -6,-60:
             1: 1
           -6,-59:
@@ -5326,10 +5326,10 @@ entities:
           -7,-69:
             1: 61440
           -7,-66:
-            3: 3084
+            4: 3084
           -7,-65:
             6: 12
-            3: 3072
+            4: 3072
           -6,-68:
             1: 15
             0: 65024
@@ -5337,7 +5337,7 @@ entities:
             1: 18176
             0: 14
           -6,-66:
-            3: 257
+            4: 257
             1: 17476
           -6,-69:
             1: 61440
@@ -5427,6 +5427,21 @@ entities:
           temperature: 293.15
           moles:
           - 0
+          - 6666.982
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 0
           - 0
           - 0
           - 0
@@ -5443,21 +5458,6 @@ entities:
           moles:
           - 6666.982
           - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-        - volume: 2500
-          temperature: 293.15
-          moles:
-          - 0
-          - 6666.982
           - 0
           - 0
           - 0
@@ -36801,6 +36801,9 @@ entities:
     - type: Transform
       pos: -5.5304284,-200.22986
       parent: 2
+    - type: ContainerContainer
+      containers:
+        lens_slot: !type:ContainerSlot {}
 - proto: ClothingEyesEyepatchHudMedical
   entities:
   - uid: 5428
@@ -36808,6 +36811,9 @@ entities:
     - type: Transform
       pos: 8.467955,-175.3928
       parent: 2
+    - type: ContainerContainer
+      containers:
+        lens_slot: !type:ContainerSlot {}
 - proto: ClothingEyesEyepatchHudSecurity
   entities:
   - uid: 5429
@@ -36815,11 +36821,17 @@ entities:
     - type: Transform
       pos: -7.5085177,-98.683334
       parent: 2
+    - type: ContainerContainer
+      containers:
+        lens_slot: !type:ContainerSlot {}
   - uid: 5430
     components:
     - type: Transform
       pos: -6.5701137,-339.11215
       parent: 2
+    - type: ContainerContainer
+      containers:
+        lens_slot: !type:ContainerSlot {}
 - proto: ClothingEyesGlassesJamjar
   entities:
   - uid: 5431
@@ -36834,6 +36846,9 @@ entities:
     - type: Transform
       pos: 17.46046,-151.51154
       parent: 2
+    - type: ContainerContainer
+      containers:
+        lens_slot: !type:ContainerSlot {}
 - proto: ClothingEyesGlassesMeson
   entities:
   - uid: 5433
@@ -36841,21 +36856,33 @@ entities:
     - type: Transform
       pos: 8.599879,-250.49686
       parent: 2
+    - type: ContainerContainer
+      containers:
+        lens_slot: !type:ContainerSlot {}
   - uid: 5434
     components:
     - type: Transform
       pos: 16.374,-245.4528
       parent: 2
+    - type: ContainerContainer
+      containers:
+        lens_slot: !type:ContainerSlot {}
   - uid: 5435
     components:
     - type: Transform
       pos: 16.241934,-245.58482
       parent: 2
+    - type: ContainerContainer
+      containers:
+        lens_slot: !type:ContainerSlot {}
   - uid: 5436
     components:
     - type: Transform
       pos: 16.545687,-245.58482
       parent: 2
+    - type: ContainerContainer
+      containers:
+        lens_slot: !type:ContainerSlot {}
 - proto: ClothingEyesHudOnionBeer
   entities:
   - uid: 5437
@@ -36870,6 +36897,9 @@ entities:
     - type: Transform
       pos: -6.38522,-339.1782
       parent: 2
+    - type: ContainerContainer
+      containers:
+        lens_slot: !type:ContainerSlot {}
 - proto: ClothingHandsGlovesColorBlack
   entities:
   - uid: 5439
@@ -76654,7 +76684,7 @@ entities:
       pos: 8.5,-176.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -154790.39
+      secondsUntilStateChange: -154854.22
       state: Closing
   - uid: 11227
     components:
@@ -89441,6 +89471,13 @@ entities:
     components:
     - type: Transform
       pos: -6.5,-84.5
+      parent: 2
+- proto: SpawnPointBrigmedic
+  entities:
+  - uid: 17540
+    components:
+    - type: Transform
+      pos: -5.5,-361.5
       parent: 2
 - proto: SpawnPointCaptain
   entities:

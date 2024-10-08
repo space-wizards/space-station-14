@@ -21216,6 +21216,42 @@ entities:
     - type: Transform
       pos: -30.352081,-37.38564
       parent: 2
+    - type: CollisionWake
+      enabled: False
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape: !type:PolygonShape
+            radius: 0.01
+            vertices:
+            - -0.25,-0.25
+            - 0.25,-0.25
+            - 0.25,0.25
+            - -0.25,0.25
+          mask:
+          - Impassable
+          - HighImpassable
+          layer: []
+          density: 20
+          hard: True
+          restitution: 0.3
+          friction: 0.2
+        revenantReveal:
+          shape: !type:PolygonShape
+            radius: 0.01
+            vertices:
+            - -0.25,-0.25
+            - 0.25,-0.25
+            - 0.25,0.25
+            - -0.25,0.25
+          mask:
+          - GhostImpassable
+          layer:
+          - GhostImpassable
+          density: 1
+          hard: False
+          restitution: 0
+          friction: 0.4
 - proto: BikeHorn
   entities:
   - uid: 1228
@@ -119448,6 +119484,13 @@ entities:
     components:
     - type: Transform
       pos: -32.5,-30.5
+      parent: 2
+- proto: SpawnPointBrigmedic
+  entities:
+  - uid: 23345
+    components:
+    - type: Transform
+      pos: -8.5,32.5
       parent: 2
 - proto: SpawnPointCaptain
   entities:
