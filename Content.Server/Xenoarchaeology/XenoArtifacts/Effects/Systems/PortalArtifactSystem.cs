@@ -35,20 +35,19 @@ public sealed class PortalArtifactSystem : EntitySystem
                 validMinds.Add(uid);
             }
         }
+        //this would only be 0 if there were a station full of AIs and no one else, in that case just stop this function
+        if (validMinds.Count == 0)
+            return;
 
-        //this would only be 0 if there were a station full of AIs and no one else
-        if (validMinds.Count != 0)
-        {
-            var firstPortal = Spawn(artifact.Comp.PortalProto, _transform.GetMapCoordinates(artifact));
+        var firstPortal = Spawn(artifact.Comp.PortalProto, _transform.GetMapCoordinates(artifact));
 
-            var target = _random.Pick(validMinds);
+        var target = _random.Pick(validMinds);
 
-            var secondPortal = Spawn(artifact.Comp.PortalProto, _transform.GetMapCoordinates(target));
+        var secondPortal = Spawn(artifact.Comp.PortalProto, _transform.GetMapCoordinates(target));
 
-            //Manual position swapping, because the portal that opens doesn't trigger a collision, and doesn't teleport targets the first time.
-            _transform.SwapPositions(target, secondPortal);
+        //Manual position swapping, because the portal that opens doesn't trigger a collision, and doesn't teleport targets the first time.
+        _transform.SwapPositions(target, secondPortal);
 
-            _link.TryLink(firstPortal, secondPortal, true);
-        }
+        _link.TryLink(firstPortal, secondPortal, true);
     }
 }
