@@ -302,13 +302,27 @@
   components:
   - type: StorageFill
     contents:
+      - id: DefibrillatorSyndicate
       - id: MedkitCombatFilled
-      - id: Defibrillator
+        amount: 3
       - id: CombatMedipen
         amount: 3
-      - id: ClothingHandsGlovesNitrile
-      - id: SyringeTranexamicAcid
-      - id: SyringeHyronalin
+      - id: PunctAutoInjector
+        amount: 4
+      - id: BruteAutoInjector
+        amount: 3
+      - id: PyraAutoInjector
+        amount: 4
+      - id: BurnAutoInjector
+        amount: 3
+      - id: AntiPoisonMedipen
+        amount: 3
+      - id: RadAutoInjector
+        amount: 3
+      - id: AirlossAutoInjector
+        amount: 4
+      - id: SyringePhalanximine
+        amount: 2
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
