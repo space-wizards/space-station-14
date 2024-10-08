@@ -220,6 +220,8 @@
   - BartenderJumpsuit
   - BartenderJumpskirt
   - BartenderJumpsuitPurple
+  - ClothingUniformJumpskirtJanimaid
+  - ClothingUniformJumpskirtJanimaidmini
 
 - type: loadoutGroup
   id: BartenderOuterClothing
