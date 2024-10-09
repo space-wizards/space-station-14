@@ -14,7 +14,7 @@
 - type: rcd
   id: PipeStraight
   category: Piping
-  sprite: /Textures/Interface/Radial/RPD/Straight.png
+  sprite: /Textures/Interface/Radial/RPD/straight.png
   mode: ConstructObject
   prototype: GasPipeStraight
   cost: 0.5
@@ -40,7 +40,7 @@
 - type: rcd
   id: PipeTJunction
   category: Piping
-  sprite: /Textures/Interface/Radial/RPD/TJunction.png
+  sprite: /Textures/Interface/Radial/RPD/tjunction.png
   mode: ConstructObject
   prototype: GasPipeTJunction
   cost: 0.5
@@ -54,7 +54,7 @@
 - type: rcd
   id: PressurePump
   category: PumpsValves
-  sprite: /Textures/Interface/Radial/RPD/pumpPressure.png
+  sprite: /Textures/Interface/Radial/RPD/pump_pressure.png
   mode: ConstructObject
   prototype: GasPressurePump
   cost: 1
@@ -68,7 +68,7 @@
 - type: rcd
   id: VolumetricPump
   category: PumpsValves
-  sprite: /Textures/Interface/Radial/RPD/pumpVolume.png
+  sprite: /Textures/Interface/Radial/RPD/pump_volume.png
   mode: ConstructObject
   prototype: GasPressurePump
   cost: 1
@@ -82,7 +82,7 @@
 - type: rcd
   id: ManualValve
   category: PumpsValves
-  sprite: /Textures/Interface/Radial/RPD/pumpManualValve.png
+  sprite: /Textures/Interface/Radial/RPD/pump_manual_valve.png
   mode: ConstructObject
   prototype: GasValve
   cost: 1
@@ -96,7 +96,7 @@
 - type: rcd
   id: SignalValve
   category: PumpsValves
-  sprite: /Textures/Interface/Radial/RPD/pumpSignalValve.png
+  sprite: /Textures/Interface/Radial/RPD/pump_signal_valve.png
   mode: ConstructObject
   prototype: SignalControlledValve
   cost: 1
@@ -110,7 +110,7 @@
 - type: rcd
   id: PressureValve
   category: PumpsValves
-  sprite: /Textures/Interface/Radial/RPD/pneumaticValve.png
+  sprite: /Textures/Interface/Radial/RPD/pneumatic_valve.png
   mode: ConstructObject
   prototype: PressureControlledValve
   cost: 1
@@ -167,7 +167,7 @@
 - type: rcd
   id: DualPortVent
   category: Vents
-  sprite: /Textures/Interface/Radial/RPD/dualPort.png
+  sprite: /Textures/Interface/Radial/RPD/dual_port.png
   mode: ConstructObject
   prototype: GasDualPortVentPump
   cost: 1
@@ -195,7 +195,7 @@
 - type: rcd
   id: Radiator
   category: AtmosphericUtility
-  sprite: /Textures/Interface/Radial/RPD/vent_passive.png
+  sprite: /Textures/Interface/Radial/RPD/radiator.png
   mode: ConstructObject
   prototype: HeatExchanger
   cost: 1
@@ -209,7 +209,7 @@
 - type: rcd
   id: MixerGas
   category: AtmosphericUtility
-  sprite: /Textures/Interface/Radial/RPD/gasMixer.png
+  sprite: /Textures/Interface/Radial/RPD/gas_mixer.png
   mode: ConstructObject
   prototype: GasMixer
   cost: 1
@@ -223,7 +223,7 @@
 - type: rcd
   id: FilterGas
   category: AtmosphericUtility
-  sprite: /Textures/Interface/Radial/RPD/gasFilter.png
+  sprite: /Textures/Interface/Radial/RPD/gas_filter.png
   mode: ConstructObject
   prototype: GasFilter
   cost: 1
@@ -237,7 +237,7 @@
 - type: rcd
   id: CanisterPort
   category: AtmosphericUtility
-  sprite: /Textures/Interface/Radial/RPD/gasCanisterPort.png
+  sprite: /Textures/Interface/Radial/RPD/port.png
   mode: ConstructObject
   prototype: GasPort
   cost: 1

@@ -339,7 +339,7 @@
 
 - type: entity
   id: RPD
-  parent: [ BaseItem, BaseEngineeringContraband, RCD]
+  parent: RCD
   name: RPD
   description: A device used to rapidly pipe things.
   components:
