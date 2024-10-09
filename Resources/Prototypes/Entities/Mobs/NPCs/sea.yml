@@ -36,7 +36,7 @@
     animation: WeaponArcThrust
     damage:
       types:
-        Piercing: 1
+        Piercing: 0.5
   - type: SolutionContainerManager
     solutions:
       melee:
