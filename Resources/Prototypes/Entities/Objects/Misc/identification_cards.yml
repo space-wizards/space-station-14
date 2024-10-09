@@ -186,8 +186,9 @@
   name: prisoner ID card
   components:
   - type: Sprite
-    layers:
-    - state: orange
+    state: orange
+  - type: Item
+    heldPrefix: orange
 
 - type: entity
   parent: IDCardStandard
