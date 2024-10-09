@@ -304,25 +304,17 @@
     contents:
       - id: DefibrillatorSyndicate
       - id: MedkitCombatFilled
-        amount: 3
+        amount: 4
+      - id: Tourniquet
+        amount: 4
       - id: CombatMedipen
-        amount: 3
+        amount: 4
       - id: PunctAutoInjector
         amount: 4
-      - id: BruteAutoInjector
-        amount: 3
       - id: PyraAutoInjector
         amount: 4
-      - id: BurnAutoInjector
-        amount: 3
-      - id: AntiPoisonMedipen
-        amount: 3
-      - id: RadAutoInjector
-        amount: 3
       - id: AirlossAutoInjector
         amount: 4
-      - id: SyringePhalanximine
-        amount: 2
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
