@@ -3322,15 +3322,7 @@
     drawdepth: SmallMobs
     sprite: Mobs/Animals/fish.rsi
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
-      state: mouse-0
-  - type: SpriteMovement
-    movementLayers:
-      movement:
-        state: mouse-moving-0
-    noMovementLayers:
-      movement:
-        state: mouse-0
+      state: fish-0
   - type: Item
     size: Tiny
     heldPrefix: 0
@@ -3361,9 +3353,7 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        Base: mouse-0
-      Critical:
-        Base: dead-0
+        Base: fish-0
       Dead:
         Base: splat-0
   - type: Extractable
@@ -3440,4 +3430,9 @@
     thresholds:
       0: Alive
       70: Dead
+  - type: PressureProtection
+    highPressureMultiplier: 1000
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    coefficient: 0.005
 
