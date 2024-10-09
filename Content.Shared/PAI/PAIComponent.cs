@@ -53,4 +53,9 @@ public sealed partial class PAIComponent : Component
     /// </summary>
     [DataField]
     public string ScramblePopup = "pai-system-scramble-popup";
+
+    /// <summary>
+    /// Boolean that keeps track whether the pai has a cracked screen or not.
+    /// </summary>
+    public bool Cracked = false;
 }

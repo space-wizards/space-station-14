@@ -69,6 +69,35 @@
           Searching: { state: pai-searching-overlay }
           On: { state: pai-on-overlay }
   - type: StationMap
+  - type: Damageable
+    damageContainer: Silicon
+    damageModifierSet: Electronic
+  - type: DamageOnHighSpeedImpact
+    minimumSpeed: 0.2
+    damage:
+      types:
+        Blunt: 10
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        collection: GlassSmash
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/glass_crack2.ogg
+      - !type:DoActsBehavior
+        acts: [ "Breakage" ]
+  - type: DamageVisuals
+    thresholds: [100]
+    trackAllDamage: true
+    damageOverlay:
+      sprite: Objects/Fun/pai.rsi
+  - type: Repairable
 
 - type: entity
   parent: [ PersonalAI, BaseSyndicateContraband]
@@ -109,7 +138,7 @@
   description: It's a potato. You forced it to be sentient, you monster.
   components:
   - type: Sprite
-    sprite: Objects/Fun/pai.rsi
+    sprite: Objects/Fun/pai_potato.rsi
     layers:
     - state: potato-base
     - state: potato-off-overlay
@@ -130,6 +159,11 @@
   - type: Construction
     graph: PotatoAI
     node: potatoai
+  - type: DamageVisuals
+    thresholds: [100]
+    trackAllDamage: true
+    damageOverlay:
+      sprite: Objects/Fun/pai_potato.rsi
 
 - type: entity
   id: ActionPAIPlayMidi

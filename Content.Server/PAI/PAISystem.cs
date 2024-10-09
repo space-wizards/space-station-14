@@ -9,6 +9,12 @@ using Content.Shared.Popups;
 using Robust.Shared.Random;
 using System.Text;
 using Robust.Shared.Player;
+using Content.Shared.Destructible;
+using Content.Server.Speech.Components;
+using Content.Shared.Throwing;
+using Content.Shared.Damage;
+using Content.Shared.Damage.Prototypes;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.PAI;
 
@@ -19,6 +25,8 @@ public sealed class PAISystem : SharedPAISystem
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly ToggleableGhostRoleSystem _toggleableGhostRole = default!;
+    [Dependency] private readonly DamageableSystem _damageable = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     /// <summary>
     /// Possible symbols that can be part of a scrambled pai's name.
@@ -33,6 +41,9 @@ public sealed class PAISystem : SharedPAISystem
         SubscribeLocalEvent<PAIComponent, MindAddedMessage>(OnMindAdded);
         SubscribeLocalEvent<PAIComponent, MindRemovedMessage>(OnMindRemoved);
         SubscribeLocalEvent<PAIComponent, BeingMicrowavedEvent>(OnMicrowaved);
+        SubscribeLocalEvent<PAIComponent, BreakageEventArgs>(OnCracked);
+        SubscribeLocalEvent<PAIComponent, LandEvent>(OnDropped);
+        SubscribeLocalEvent<PAIComponent, DamageChangedEvent>(OnDamageChanged);
     }
 
     private void OnUseInHand(EntityUid uid, PAIComponent component, UseInHandEvent args)
@@ -68,6 +79,9 @@ public sealed class PAISystem : SharedPAISystem
         // name will always be scrambled whether it gets bricked or not, this is the reward
         ScrambleName(uid, comp);
 
+        // damage and crack the pai
+        _damageable.TryChangeDamage(uid, new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>("Heat"), 50));
+
         // randomly brick it
         if (_random.Prob(comp.BrickChance))
         {
@@ -93,7 +107,7 @@ public sealed class PAISystem : SharedPAISystem
             name.Append(_random.Pick(SYMBOLS));
         }
 
-        // add 's pAI to the scrambled name
+        // add 's pai to the scrambled name
         var val = Loc.GetString("pai-system-pai-name-raw", ("name", name.ToString()));
         _metaData.SetEntityName(uid, val);
     }
@@ -116,6 +130,50 @@ public sealed class PAISystem : SharedPAISystem
             var proto = metadata.EntityPrototype;
             if (proto != null)
                 _metaData.SetEntityName(uid, proto.Name);
+        }
+    }
+
+    private void OnCracked(EntityUid uid, PAIComponent comp, BreakageEventArgs args)
+    {
+        if (comp.Cracked)
+            return;
+        comp.Cracked = true;
+
+        // Update the pai description
+        if (TryComp(uid, out MetaDataComponent? metadata))
+        {
+            var proto = metadata.EntityPrototype;
+            if (proto != null)
+                _metaData.SetEntityDescription(uid, proto.Description + " " + Loc.GetString("pai-system-pai-description-cracked"));
+        }
+
+        // Add a glitch accent to the pai
+        AddComp<GlitchAccentComponent>(uid);
+    }
+
+    private void OnDropped(EntityUid uid, PAIComponent comp, LandEvent args)
+    {
+        // If the pai is dropped, it is instantly cracked.
+        _damageable.TryChangeDamage(uid, new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>("Blunt"), 150));
+    }
+
+    private void OnDamageChanged(EntityUid uid, PAIComponent comp, DamageChangedEvent args)
+    {
+        // If the pai is repaired, uncrack it.
+        if (comp.Cracked && TryComp<DamageableComponent>(uid, out var damageableComponent) && damageableComponent.TotalDamage < 100)
+        {
+            comp.Cracked = false;
+
+            // Remove the glitch accent
+            RemComp<GlitchAccentComponent>(uid);
+
+            // Update the pai description
+            if (TryComp(uid, out MetaDataComponent? metadata))
+            {
+                var proto = metadata.EntityPrototype;
+                if (proto != null)
+                    _metaData.SetEntityDescription(uid, proto.Description);
+            }
         }
     }
 }
