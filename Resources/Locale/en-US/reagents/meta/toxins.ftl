@@ -84,3 +84,6 @@ reagent-desc-lipolicide = A powerful toxin that will destroy fat cells, massivel
 
 reagent-name-mechanotoxin = mechanotoxin
 reagent-desc-mechanotoxin = A neurotoxin used as venom by some species of spider. Degrades movement when built up.
+
+reagent-name-mimicrium = mimicrium
+reagent-desc-mimicrium = A highly effective, but rare liquid used by deep sea ambush predators to electrocute their prey.
