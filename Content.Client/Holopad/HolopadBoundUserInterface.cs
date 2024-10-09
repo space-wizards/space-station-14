@@ -91,6 +91,6 @@ public sealed class HolopadBoundUserInterface : BoundUserInterface
 
     public void SendHolopadRequestStationAiMessage()
     {
-        SendMessage(new HolopadRequestStationAiMessage());
+        SendMessage(new HolopadStationAiRequestMessage());
     }
 }

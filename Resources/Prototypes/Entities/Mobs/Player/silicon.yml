@@ -325,10 +325,9 @@
           Empty: { state: ai_empty }
           Occupied: { state: ai }
   - type: Telephone
-    ringingTimeout: 30
-    hangingUpTimeout: 2
-    listeningRange: 0.5
+    listeningRange: 0
     speakerVolume: Speak
+    unlistedNumber: true
   - type: Holopad
   - type: StationAiWhitelist  
   - type: UserInterface

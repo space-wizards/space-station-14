@@ -118,7 +118,7 @@ public sealed class HolopadActivateProjectorMessage : BoundUserInterfaceMessage 
 ///     Triggers the server to send updated power monitoring console data to the client for the single player session
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class HolopadRequestStationAiMessage : BoundUserInterfaceMessage { }
+public sealed class HolopadStationAiRequestMessage : BoundUserInterfaceMessage { }
 
 #endregion
 

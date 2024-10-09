@@ -71,9 +71,6 @@
     speechBubbleOffset: 0.45
   - type: Telephone
     ringTone: /Audio/Machines/double_ring.ogg
-    ringInterval: 2
-    ringingTimeout: 30
-    hangingUpTimeout: 2
     listeningRange: 4
     speakerVolume: Speak
   - type: ActivatableUI

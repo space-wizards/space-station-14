@@ -13,13 +13,13 @@ public sealed partial class TelephoneComponent : Component
     /// Sets how long the telephone will ring before it automatically hangs up
     /// </summary>
     [DataField]
-    public float RingingTimeout = 10;
+    public float RingingTimeout = 30;
 
     /// <summary>
     /// Sets how long the telephone will stay in the hanging up state before return to idle
     /// </summary>
     [DataField]
-    public float HangingUpTimeout = 3;
+    public float HangingUpTimeout = 2;
 
     /// <summary>
     /// Tone played while the phone is ringing
@@ -43,13 +43,13 @@ public sealed partial class TelephoneComponent : Component
     /// The volume at which relayed messages are played
     /// </summary>
     [DataField]
-    public TelephoneVolume SpeakerVolume;
+    public TelephoneVolume SpeakerVolume = TelephoneVolume.Whisper;
 
     /// <summary>
     /// The range at which the telephone can connect to another
     /// </summary>
     [DataField]
-    public TelephoneRange TransmissionRange;
+    public TelephoneRange TransmissionRange = TelephoneRange.Grid;
 
     /// <summary>
     /// The range at which the telephone picks up voices
@@ -58,10 +58,19 @@ public sealed partial class TelephoneComponent : Component
     public float ListeningRange = 2;
 
     /// <summary>
-    /// Determines whether this telephone can connect to multiple telephones
+    /// This telephone does not appear on public telephone directories
     /// </summary>
     [DataField]
-    public bool IsBroadcaster = true;
+    public bool UnlistedNumber = false;
+
+    /// <summary>
+    /// Telephone number for this device
+    /// </summary>
+    /// <remarks>
+    /// For future use - a system for generating and handling telephone numbers has not been implemented yet
+    /// </remarks>
+    [ViewVariables]
+    public int TelephoneNumber = -1;
 
     /// <summary>
     /// Linked telephone
@@ -106,34 +115,34 @@ public record struct TelephoneCallAttemptEvent(Entity<TelephoneComponent> Source
 }
 
 /// <summary>
-/// Raised when one telephone is calling another
+/// Raised when a telephone's state changes
 /// </summary>
 [ByRefEvent]
-public record struct TelephoneCallEvent(Entity<TelephoneComponent> Source, Entity<TelephoneComponent> Receiver, EntityUid? User);
+public record struct TelephoneStateChangeEvent(TelephoneState OldState, TelephoneState NewState);
 
 /// <summary>
-/// Raised when a call commences between two telephones
+/// Raised when communication between one telephone and another begins
 /// </summary>
 [ByRefEvent]
-public record struct TelephoneCallCommencedEvent(Entity<TelephoneComponent> Source, Entity<TelephoneComponent> Receiver);
+public record struct TelephoneCallCommencedEvent(Entity<TelephoneComponent> Receiver);
 
 /// <summary>
 /// Raised when a telephone hangs up
 /// </summary>
 [ByRefEvent]
-public record struct TelephoneCallEndedEvent(Entity<TelephoneComponent> Source);
+public record struct TelephoneCallEndedEvent();
 
 /// <summary>
-/// Raised when a telephone becomes idle
+/// Raised when a chat message is sent by a telephone to another
 /// </summary>
 [ByRefEvent]
-public record struct TelephoneCallTerminatedEvent();
+public readonly record struct TelephoneMessageSentEvent(string Message, MsgChatMessage ChatMsg, EntityUid MessageSource);
 
+/// <summary>
+/// Raised when a chat message is received by a telephone from another
+/// </summary>
 [ByRefEvent]
-public readonly record struct TelephoneMessageSentEvent(string Message, EntityUid MessageSource, Entity<TelephoneComponent> TelephoneSource, MsgChatMessage ChatMsg);
-
-[ByRefEvent]
-public readonly record struct TelephoneMessageReceivedEvent(string Message, EntityUid MessageSource, Entity<TelephoneComponent> TelephoneSource, MsgChatMessage ChatMsg);
+public readonly record struct TelephoneMessageReceivedEvent(string Message, MsgChatMessage ChatMsg, EntityUid MessageSource, Entity<TelephoneComponent> TelephoneSource);
 
 #endregion
 
@@ -175,7 +184,8 @@ public enum TelephoneVolume : byte
 [Serializable, NetSerializable]
 public enum TelephoneRange : byte
 {
-    Grid,
-    Map,
-    Unlimited
+    Grid,       // Can call telephones on the same grid 
+    Map,        // Can call telephones on the same map 
+    Long,       // Can only call telephones that 1) are on a different maps and 2) are also long range
+    Unlimited   // Can call any telephone
 }

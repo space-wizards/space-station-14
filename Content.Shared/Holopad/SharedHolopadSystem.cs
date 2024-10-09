@@ -8,46 +8,46 @@ public abstract class SharedHolopadSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly INetManager _net = default!;
 
-    public bool IsHolopadControlLocked(Entity<HolopadComponent> holopad, EntityUid? user = null)
+    public bool IsHolopadControlLocked(Entity<HolopadComponent> entity, EntityUid? user = null)
     {
-        if (holopad.Comp.ControlLockoutStartTime == TimeSpan.Zero)
+        if (entity.Comp.ControlLockoutStartTime == TimeSpan.Zero)
             return false;
 
         var time = _net.IsServer ? _timing.RealTime : _timing.ServerTime;
 
-        if (holopad.Comp.ControlLockoutStartTime + TimeSpan.FromSeconds(holopad.Comp.ControlLockoutDuration) < time)
+        if (entity.Comp.ControlLockoutStartTime + TimeSpan.FromSeconds(entity.Comp.ControlLockoutDuration) < time)
             return false;
 
-        if (user != null && holopad.Comp.ControlLockoutInitiator == user)
+        if (user != null && entity.Comp.ControlLockoutInitiator == user)
             return false;
 
         return true;
     }
 
-    public TimeSpan GetHolopadControlLockedPeriod(Entity<HolopadComponent> holopad)
+    public TimeSpan GetHolopadControlLockedPeriod(Entity<HolopadComponent> entity)
     {
         var time = _net.IsServer ? _timing.RealTime : _timing.ServerTime;
 
-        return holopad.Comp.ControlLockoutStartTime + TimeSpan.FromSeconds(holopad.Comp.ControlLockoutDuration) - time;
+        return entity.Comp.ControlLockoutStartTime + TimeSpan.FromSeconds(entity.Comp.ControlLockoutDuration) - time;
     }
 
-    public bool IsHolopadBroadcastOnCoolDown(Entity<HolopadComponent> holopad)
+    public bool IsHolopadBroadcastOnCoolDown(Entity<HolopadComponent> entity)
     {
-        if (holopad.Comp.ControlLockoutStartTime == TimeSpan.Zero)
+        if (entity.Comp.ControlLockoutStartTime == TimeSpan.Zero)
             return false;
 
         var time = _net.IsServer ? _timing.RealTime : _timing.ServerTime;
 
-        if (holopad.Comp.ControlLockoutStartTime + TimeSpan.FromSeconds(holopad.Comp.ControlLockoutCoolDown) < time)
+        if (entity.Comp.ControlLockoutStartTime + TimeSpan.FromSeconds(entity.Comp.ControlLockoutCoolDown) < time)
             return false;
 
         return true;
     }
 
-    public TimeSpan GetHolopadBroadcastCoolDown(Entity<HolopadComponent> holopad)
+    public TimeSpan GetHolopadBroadcastCoolDown(Entity<HolopadComponent> entity)
     {
         var time = _net.IsServer ? _timing.RealTime : _timing.ServerTime;
 
-        return holopad.Comp.ControlLockoutStartTime + TimeSpan.FromSeconds(holopad.Comp.ControlLockoutCoolDown) - time;
+        return entity.Comp.ControlLockoutStartTime + TimeSpan.FromSeconds(entity.Comp.ControlLockoutCoolDown) - time;
     }
 }

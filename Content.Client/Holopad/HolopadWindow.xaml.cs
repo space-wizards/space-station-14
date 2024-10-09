@@ -267,7 +267,6 @@ public sealed partial class HolopadWindow : FancyWindow
         CallPlacementControlsContainer.Visible = !ActiveCallControlsContainer.Visible;
 
         AnswerCallButton.Visible = (_currentState == TelephoneState.Ringing);
-        StartBroadcastButton.Visible = telephone.IsBroadcaster;
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
