@@ -150,3 +150,32 @@
     price: 75
   - type: Tag
     tags: [ ]
+   
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesHeelsRed
+  name: red high-heels
+  description: Fancy red high-heels, great for strutting around the station in style.
+  components:
+  - type: MeleeWeapon
+    damage:
+      types:
+        Piercing: 6
+  - type: Sprite
+    sprite: Clothing/Shoes/Misc/heelsred.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Misc/heelsred.rsi
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepHighheels
+      
+- type: entity
+  parent: ClothingShoesHeelsRed
+  id: ClothingShoesHeelsBlack
+  name: black high-heels
+  description: Fancy black high-heels, great for strutting around the station in style.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Misc/heelsblack.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Misc/heelsblack.rsi
