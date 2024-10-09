@@ -3312,9 +3312,9 @@
 
 - type: entity
   name: Fish
-  parent: SimpleMobBase
+  parent: SimpleSpaceMobBase
   id: MobFish
-  description: Blub Blub Blub!
+  description: It's a fish.
   components:
   - type: Body
     prototype: Mouse
@@ -3353,8 +3353,7 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      10: Critical
-      20: Dead
+      10: Dead
   - type: MovementSpeedModifier
     baseWalkSpeed : 5
     baseSprintSpeed : 5
@@ -3383,10 +3382,6 @@
   - type: Tag
     tags:
     - Meat
-  - type: Barotrauma
-    damage:
-      types:
-        Blunt: 0.1
   - type: Vocal
     sounds:
       Male: Mouse
@@ -3408,7 +3403,6 @@
   name: Fish
   parent: MobFish
   id: MobFishMimic
-  description: Blub Blub Blub!
   components:
   - type: Body
     prototype: AnimalMimic
@@ -3423,8 +3417,7 @@
   - type: Destructible
     thresholds:
     - trigger:
-        !type:DamageTypeTrigger
-        damageType: Piercing, Slash # maybe try adding a pressure resistance from Hardsuit code to prevent brute damage, temperature resistance too
+        !type:DamageTrigger
         damage: 1
       behaviors:
       - !type:GibBehavior { }
