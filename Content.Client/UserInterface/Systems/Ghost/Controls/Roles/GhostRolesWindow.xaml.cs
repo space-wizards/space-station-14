@@ -37,35 +37,42 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
             NoRolesMessage.Visible = false;
 
             var ghostRoleInfos = roles.ToList();
-            var roleCount = ghostRoleInfos.Count;
-
-            var heading = new CollapsibleHeading($"{name} ({roleCount})");
-
-            heading.MinHeight = 32f;
-            heading.AddStyleClass(ContainerButton.StyleClassButton);
-            heading.HorizontalAlignment = HAlignment.Stretch;
-            heading.Label.HorizontalAlignment = HAlignment.Center;
-            heading.Label.HorizontalExpand = true;
-            heading.HorizontalExpand = true;
-
-            var body = new CollapsibleBody();
-
-            var uniqueId = name.GetHashCode();
-
-            var collapsible = new Collapsible(heading, body)
-            {
-                Name = uniqueId.ToString(),
-                Orientation = BoxContainer.LayoutOrientation.Vertical,
-                Margin = new Thickness(0, 0, 0, 10),
-            };
+            var rolesCount = ghostRoleInfos.Count;
 
             var entry = new GhostRolesEntry(name, description, hasAccess, reason, ghostRoleInfos, spriteSystem);
             entry.OnRoleSelected += OnRoleRequestButtonClicked;
             entry.OnRoleFollow += OnRoleFollow;
 
-            body.AddChild(entry);
+            if (rolesCount > 1)
+            {
+                var heading = new CollapsibleHeading($"{name} ({rolesCount})");
 
-            EntryContainer.AddChild(collapsible);
+                heading.MinHeight = 32f;
+                heading.AddStyleClass(ContainerButton.StyleClassButton);
+                heading.HorizontalAlignment = HAlignment.Stretch;
+                heading.Label.HorizontalAlignment = HAlignment.Center;
+                heading.Label.HorizontalExpand = true;
+                heading.HorizontalExpand = true;
+
+                var body = new CollapsibleBody();
+
+                var uniqueId = name.GetHashCode();
+
+                var collapsible = new Collapsible(heading, body)
+                {
+                    Name = uniqueId.ToString(),
+                    Orientation = BoxContainer.LayoutOrientation.Vertical,
+                    Margin = new Thickness(0, 0, 0, 10),
+                };
+
+                body.AddChild(entry);
+
+                EntryContainer.AddChild(collapsible);
+            }
+            else
+            {
+                EntryContainer.AddChild(entry);
+            }
         }
     }
 }
