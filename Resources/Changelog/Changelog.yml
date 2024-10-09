@@ -1,34 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Moved VGRoid from 1,000m away to ~500m.
-    type: Tweak
-  id: 6993
-  time: '2024-07-28T03:14:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29943
-- author: lzk228
-  changes:
-  - message: Fixed pancakes stacks. Before it, splitting not default pancakes stacks
-      would give you default pancakes.
-    type: Fix
-  id: 6994
-  time: '2024-07-28T03:49:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30270
-- author: Plykiya
-  changes:
-  - message: Fixed the client mispredicting people slipping with their magboots turned
-      on
-    type: Fix
-  id: 6995
-  time: '2024-07-28T06:17:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30425
-- author: Katzenminer
-  changes:
-  - message: Pun and similar pets are no longer firemune
-    type: Fix
-  id: 6996
-  time: '2024-07-28T08:32:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30424
 - author: lzk228
   changes:
   - message: Fixed permanent absence of the approver string in cargo invoice.
@@ -3943,3 +3913,32 @@
   id: 7492
   time: '2024-10-07T22:42:43.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32429
+- author: shampunj
+  changes:
+  - message: When curtains are destroyed, only 1 cloth drops out
+    type: Tweak
+  id: 7493
+  time: '2024-10-08T09:51:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32685
+- author: Plykiya
+  changes:
+  - message: Librarians now start with a D20.
+    type: Tweak
+  id: 7494
+  time: '2024-10-08T09:53:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32648
+- author: K-Dynamic
+  changes:
+  - message: CHIMP and APE particles should be almost as fast as before
+    type: Tweak
+  id: 7495
+  time: '2024-10-08T18:29:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32690
+- author: ss14nekow
+  changes:
+  - message: Added pumpkin pie! Can be made in the microwave with 1 pie tin, 1 pie
+      dough, and 1 pumpkin.
+    type: Add
+  id: 7496
+  time: '2024-10-08T23:29:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32623
