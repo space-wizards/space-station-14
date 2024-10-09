@@ -40,7 +40,7 @@ public sealed class StartingGearPrototypeStorageTest
                 foreach (var (slot, entProtos) in gearProto.Storage)
                 {
                     ents.Clear();
-                    var storageProto = gearProto.GetGear(slot);
+                    var storageProto = ((IEquipmentLoadout)gearProto).GetGear(slot);
                     if (storageProto == string.Empty)
                         continue;
 
