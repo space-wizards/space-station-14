@@ -18,7 +18,7 @@ public sealed partial class HolopadWindow : FancyWindow
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     private readonly SharedHolopadSystem _holopadSystem = default!;
 
@@ -45,7 +45,7 @@ public sealed partial class HolopadWindow : FancyWindow
 
         _holopadSystem = _entManager.System<SharedHolopadSystem>();
 
-        _buttonUnlockTime = _gameTiming.RealTime + _buttonUnlockDelay;
+        _buttonUnlockTime = _timing.CurTime + _buttonUnlockDelay;
 
         // Assign button actions
         AnswerCallButton.OnPressed += args => { OnHolopadAnswerCallMessage(); };
@@ -207,10 +207,10 @@ public sealed partial class HolopadWindow : FancyWindow
         if (_currentState != telephone.CurrentState)
         {
             _currentState = telephone.CurrentState;
-            _buttonUnlockTime = _gameTiming.RealTime + _buttonUnlockDelay;
+            _buttonUnlockTime = _timing.CurTime + _buttonUnlockDelay;
         }
 
-        var lockButtons = _gameTiming.RealTime < _buttonUnlockTime;
+        var lockButtons = _timing.CurTime < _buttonUnlockTime;
 
         // Make / update required children
         foreach (var child in ContactsList.Children)

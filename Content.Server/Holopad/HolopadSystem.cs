@@ -4,7 +4,6 @@ using Content.Server.Telephone;
 using Content.Shared.Audio;
 using Content.Shared.Chat.TypingIndicator;
 using Content.Shared.Holopad;
-using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Labels.Components;
 using Content.Shared.Silicons.StationAi;
@@ -195,14 +194,14 @@ public sealed class HolopadSystem : SharedHolopadSystem
 
         // Lock out the controls of all involved holopads for a set duration
         source.Comp.ControlLockoutInitiator = args.Actor;
-        source.Comp.ControlLockoutStartTime = _timing.RealTime;
+        source.Comp.ControlLockoutStartTime = _timing.CurTime;
 
         Dirty(source);
 
         foreach (var receiver in GetLinkedHolopads(source))
         {
             receiver.Comp.ControlLockoutInitiator = args.Actor;
-            receiver.Comp.ControlLockoutStartTime = _timing.RealTime;
+            receiver.Comp.ControlLockoutStartTime = _timing.CurTime;
 
             Dirty(receiver);
         }
