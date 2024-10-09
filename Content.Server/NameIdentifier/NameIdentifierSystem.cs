@@ -123,23 +123,44 @@ public sealed class NameIdentifierSystem : EntitySystem
 
     private void InitialSetupPrototypes()
     {
-        foreach (var proto in _prototypeManager.EnumeratePrototypes<NameIdentifierGroupPrototype>())
-        {
-            AddGroup(proto);
-        }
+        EnsureIds();
     }
 
-    private void AddGroup(NameIdentifierGroupPrototype proto)
+    private void FillGroup(NameIdentifierGroupPrototype proto, ref List<int> values)
     {
-        var values = new List<int>(proto.MaxValue - proto.MinValue);
-
+        values.Clear();
         for (var i = proto.MinValue; i < proto.MaxValue; i++)
         {
             values.Add(i);
         }
 
         _robustRandom.Shuffle(values);
-        CurrentIds.Add(proto.ID, values);
+    }
+
+    private List<int> GetOrCreateIdList(NameIdentifierGroupPrototype proto)
+    {
+        var found = true;
+
+        if (!CurrentIds.TryGetValue(proto.ID, out var ids))
+        {
+            ids = new List<int>(proto.MaxValue - proto.MinValue);
+            found = false;
+        }
+
+        if (!found)
+            CurrentIds.Add(proto.ID, ids);
+
+        return ids;
+    }
+
+    private void EnsureIds()
+    {
+        foreach (var proto in _prototypeManager.EnumeratePrototypes<NameIdentifierGroupPrototype>())
+        {
+            var ids = GetOrCreateIdList(proto);
+
+            FillGroup(proto, ref ids);
+        }
     }
 
     private void OnReloadPrototypes(PrototypesReloadedEventArgs ev)
@@ -164,31 +185,20 @@ public sealed class NameIdentifierSystem : EntitySystem
 
         foreach (var proto in set.Modified.Values)
         {
+            var name_proto = (NameIdentifierGroupPrototype) proto;
+
             // Only bother adding new ones.
             if (CurrentIds.ContainsKey(proto.ID))
                 continue;
 
-            AddGroup((NameIdentifierGroupPrototype) proto);
+            var ids  = GetOrCreateIdList(name_proto);
+            FillGroup(name_proto, ref ids);
         }
     }
 
+
     private void CleanupIds(RoundRestartCleanupEvent ev)
     {
-        foreach (var proto in _prototypeManager.EnumeratePrototypes<NameIdentifierGroupPrototype>())
-        {
-            if(!CurrentIds.TryGetValue(proto.ID, out var ids))
-            {
-                // For some reason the list does not yet exist so we create it.
-                ids = new List<int>(proto.MaxValue - proto.MinValue);
-                _sawmill.Warning("While refreshing ids encountered a NameIdentifierGroup without a corresponding CurrentId list.");
-            }
-
-            ids.Clear();
-            for (var i = proto.MinValue; i < proto.MaxValue; i++)
-            {
-                ids.Add(i);
-            }
-            _robustRandom.Shuffle(ids);
-        }
+        EnsureIds();
     }
 }
