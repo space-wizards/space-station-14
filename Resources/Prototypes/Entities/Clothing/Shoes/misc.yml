@@ -150,3 +150,34 @@
     price: 75
   - type: Tag
     tags: [ ]
+
+- type: entity
+  parent: ClothingShoesBaseInedible
+  id: ClothingShoesHeelsRed
+  name: red high-heels
+  description: Shiny red heels, perfect for a sultry stroll across the station.
+  components:
+  - type: MeleeWeapon
+    damage:
+      types:
+        Piercing: 6
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/heelsred.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/heelsred.rsi
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepHighheels
+
+- type: entity
+  parent: ClothingShoesHeelsRed
+  id: ClothingShoesHeelsBlack
+  name: black high-heels
+  description: Shiny black heels, perfect for a sultry stroll across the station.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/heelsblack.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/heelsblack.rsi
+  - type: Tag
+    tags: [ ]
