@@ -124,7 +124,7 @@ public sealed class NameIdentifierSystem : EntitySystem
         EnsureIds();
     }
 
-    private void FillGroup(NameIdentifierGroupPrototype proto, ref List<int> values)
+    private void FillGroup(NameIdentifierGroupPrototype proto, List<int> values)
     {
         values.Clear();
         for (var i = proto.MinValue; i < proto.MaxValue; i++)
@@ -137,16 +137,12 @@ public sealed class NameIdentifierSystem : EntitySystem
 
     private List<int> GetOrCreateIdList(NameIdentifierGroupPrototype proto)
     {
-        var found = true;
-
         if (!CurrentIds.TryGetValue(proto.ID, out var ids))
         {
             ids = new List<int>(proto.MaxValue - proto.MinValue);
             found = false;
-        }
-
-        if (!found)
             CurrentIds.Add(proto.ID, ids);
+        }
 
         return ids;
     }
@@ -157,7 +153,7 @@ public sealed class NameIdentifierSystem : EntitySystem
         {
             var ids = GetOrCreateIdList(proto);
 
-            FillGroup(proto, ref ids);
+            FillGroup(proto, ids);
         }
     }
 
@@ -190,7 +186,7 @@ public sealed class NameIdentifierSystem : EntitySystem
                 continue;
 
             var ids  = GetOrCreateIdList(name_proto);
-            FillGroup(name_proto, ref ids);
+            FillGroup(name_proto, ids);
         }
     }
 
