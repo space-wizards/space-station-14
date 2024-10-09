@@ -1,0 +1,10 @@
+- type: entity
+  id: WeaselstationSodaSupply
+  parent: CratePlastic
+  name: Special Soda Supply
+  description: Drinks specifically concocted to bring you joy!
+  components:
+  - type: StorageFill
+    contents:
+    - id: DrinkWehMaxCan
+      amount: 5
