@@ -369,7 +369,6 @@
     charges: 45
   - type: Sprite
     sprite: Objects/Tools/rpd.rsi
-    state: icon
 
 
 - type: entity
