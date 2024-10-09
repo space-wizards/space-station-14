@@ -3405,9 +3405,9 @@
   id: MobFishMimic
   components:
   - type: Body
-    prototype: AnimalMimic
+    prototype: AnimalMimic # just adds the Festering Tumor
   - type: GibAction
-    actionPrototype: DionaGibAction
+    actionPrototype: DionaGibAction # see the Mimic organ file for more information about the process of spawning
     allowedStates:
     - Dead
   - type: MobThresholds
@@ -3418,7 +3418,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 1
+        damage: 1 # Gibs immidiately upon being disturbed
       behaviors:
       - !type:GibBehavior { }
   - type: NonSpreaderZombie
