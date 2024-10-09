@@ -28,8 +28,6 @@ public sealed class NameIdentifierSystem : EntitySystem
     {
         base.Initialize();
 
-        _sawmill = _logManager.GetSawmill("name_identifier_system");
-
         SubscribeLocalEvent<NameIdentifierComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<NameIdentifierComponent, ComponentShutdown>(OnComponentShutdown);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(CleanupIds);
