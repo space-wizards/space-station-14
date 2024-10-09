@@ -1,0 +1,17 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from TGstation https://github.com/tgstation/tgstation/pull/8155/files, Ported to Space Station 14 for WeaselStation by Froxxin",
+    "states": [
+        {
+            "name": "state0"
+        },
+        {
+            "name": "state1"
+        }
+    ]
+}
