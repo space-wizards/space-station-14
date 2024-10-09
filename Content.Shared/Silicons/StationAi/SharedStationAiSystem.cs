@@ -4,14 +4,18 @@ using Content.Shared.Administration.Managers;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
 using Content.Shared.Doors.Systems;
+using Content.Shared.Electrocution;
 using Content.Shared.Interaction;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Mind;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
+using Content.Shared.Popups;
 using Content.Shared.Power;
+using Content.Shared.Power.EntitySystems;
 using Content.Shared.StationAi;
 using Content.Shared.Verbs;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
@@ -24,23 +28,28 @@ namespace Content.Shared.Silicons.StationAi;
 
 public abstract partial class SharedStationAiSystem : EntitySystem
 {
-    [Dependency] private   readonly ISharedAdminManager _admin = default!;
-    [Dependency] private   readonly IGameTiming _timing = default!;
-    [Dependency] private   readonly INetManager _net = default!;
-    [Dependency] private   readonly ItemSlotsSystem _slots = default!;
-    [Dependency] private   readonly ItemToggleSystem _toggles = default!;
-    [Dependency] private   readonly ActionBlockerSystem _blocker = default!;
-    [Dependency] private   readonly MetaDataSystem _metadata = default!;
-    [Dependency] private   readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private   readonly SharedContainerSystem _containers = default!;
-    [Dependency] private   readonly SharedDoorSystem _doors = default!;
-    [Dependency] private   readonly SharedEyeSystem _eye = default!;
+    [Dependency] private readonly   ISharedAdminManager _admin = default!;
+    [Dependency] private readonly   IGameTiming _timing = default!;
+    [Dependency] private readonly   INetManager _net = default!;
+    [Dependency] private readonly   ItemSlotsSystem _slots = default!;
+    [Dependency] private readonly   ItemToggleSystem _toggles = default!;
+    [Dependency] private readonly   ActionBlockerSystem _blocker = default!;
+    [Dependency] private readonly   MetaDataSystem _metadata = default!;
+    [Dependency] private readonly   SharedAirlockSystem _airlocks = default!;
+    [Dependency] private readonly   SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly   SharedAudioSystem _audio = default!;
+    [Dependency] private readonly   SharedContainerSystem _containers = default!;
+    [Dependency] private readonly   SharedDoorSystem _doors = default!;
+    [Dependency] private readonly   SharedElectrocutionSystem _electrify = default!;
+    [Dependency] private readonly   SharedEyeSystem _eye = default!;
     [Dependency] protected readonly SharedMapSystem Maps = default!;
-    [Dependency] private readonly SharedMindSystem _mind = default!;
-    [Dependency] private   readonly SharedMoverController _mover = default!;
-    [Dependency] private   readonly SharedTransformSystem _xforms = default!;
-    [Dependency] private   readonly SharedUserInterfaceSystem _uiSystem = default!;
-    [Dependency] private   readonly StationAiVisionSystem _vision = default!;
+    [Dependency] private readonly   SharedMindSystem _mind = default!;
+    [Dependency] private readonly   SharedMoverController _mover = default!;
+    [Dependency] private readonly   SharedPopupSystem _popup = default!;
+    [Dependency] private readonly   SharedPowerReceiverSystem PowerReceiver = default!;
+    [Dependency] private readonly   SharedTransformSystem _xforms = default!;
+    [Dependency] private readonly   SharedUserInterfaceSystem _uiSystem = default!;
+    [Dependency] private readonly   StationAiVisionSystem _vision = default!;
 
     // StationAiHeld is added to anything inside of an AI core.
     // StationAiHolder indicates it can hold an AI positronic brain (e.g. holocard / core).

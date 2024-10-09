@@ -129,6 +129,7 @@
   - type: Tag
     tags:
     - LightBulb
+    - Trash
 
 - type: entity
   parent: BaseLightbulb
@@ -147,6 +148,7 @@
   - type: Tag
     tags:
     - LightBulb
+    - Trash
 
 - type: entity
   parent: LightBulb
@@ -160,9 +162,6 @@
     lightEnergy: 0.3 # old incandescents just arent as bright
     lightRadius: 6
     lightSoftness: 1.1
-  - type: Tag
-    tags:
-    - LightBulb
 
 - type: entity
   suffix: Broken
@@ -190,6 +189,7 @@
   - type: Tag
     tags:
     - LightBulb
+    - Trash
 
 - type: entity
   parent: BaseLightTube
