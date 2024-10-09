@@ -140,7 +140,6 @@ public sealed class NameIdentifierSystem : EntitySystem
         if (!CurrentIds.TryGetValue(proto.ID, out var ids))
         {
             ids = new List<int>(proto.MaxValue - proto.MinValue);
-            found = false;
             CurrentIds.Add(proto.ID, ids);
         }
 
