@@ -30,17 +30,11 @@ public sealed class SolutionInjectWhileEmbeddedSystem : EntitySystem
         base.Initialize();
         
         SubscribeLocalEvent<SolutionInjectWhileEmbeddedComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<SolutionInjectWhileEmbeddedComponent, EntityUnpausedEvent>(OnUnpaused);
     }
 
     private void OnMapInit(Entity<SolutionInjectWhileEmbeddedComponent> ent, ref MapInitEvent args)
     {
         ent.Comp.NextUpdate = _gameTiming.CurTime + ent.Comp.UpdateInterval;
-    }
-
-    private void OnUnpaused(Entity<SolutionInjectWhileEmbeddedComponent> ent, ref EntityUnpausedEvent args)
-    {
-        ent.Comp.NextUpdate += args.PausedTime;
     }
 
     public override void Update(float frameTime)
@@ -55,9 +49,8 @@ public sealed class SolutionInjectWhileEmbeddedSystem : EntitySystem
 
             injectComponent.NextUpdate += injectComponent.UpdateInterval;
 
-            if(projectileComponent.EmbeddedIntoUid == null) {
+            if(projectileComponent.EmbeddedIntoUid == null)
                 continue;
-            }
 
             var ev = new InjectOverTimeEvent(projectileComponent.EmbeddedIntoUid.Value);
             RaiseLocalEvent(uid, ref ev);
