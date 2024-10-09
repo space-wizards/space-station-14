@@ -552,8 +552,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
         var tileRef = _mapSystem.GetTileRef(xform.GridUid.Value, mapGridComp, xform.Coordinates);
 
         _doorIntersecting.Clear();
-
-        _entityLookup.GetLocalEntitiesIntersecting(xform.GridUid.Value, tileRef.GridIndices, _doorIntersecting, gridComp: mapGridComp);
+        _entityLookup.GetLocalEntitiesIntersecting(xform.GridUid.Value, tileRef.GridIndices, _doorIntersecting, gridComp: mapGridComp, flags: (LookupFlags.All & ~LookupFlags.Sensors));
 
         // TODO SLOTH fix electro's code.
         // ReSharper disable once InconsistentNaming
