@@ -182,6 +182,15 @@
 
 - type: entity
   parent: IDCardStandard
+  id: PrisonerIDCard
+  name: prisoner ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: orange
+
+- type: entity
+  parent: IDCardStandard
   id: ChemistIDCard
   name: chemist ID card
   components:

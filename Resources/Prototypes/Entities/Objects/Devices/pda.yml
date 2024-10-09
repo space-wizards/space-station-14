@@ -631,6 +631,7 @@
   description: Even prisoners deserve one.
   components:
   - type: Pda
+    id: PrisonerIDCard
     state: pda-prisoner
   - type: PdaBorderColor
     borderColor: "#333333"
