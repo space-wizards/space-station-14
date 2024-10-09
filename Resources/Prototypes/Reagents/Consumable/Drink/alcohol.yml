@@ -2429,7 +2429,34 @@
       effects:
       - !type:SatiateThirst
         factor: 2
-      - !type:SatiateHunger
-        conditions: 
-        factor: 2
   fizziness: .1
+  
+- type: reagent
+  id: StarryNight
+  name: reagent-name-starrynight
+  parent: BaseAlcohol
+  desc: reagent-desc-starrynight
+  physicalDesc: reagent-physical-desc-inky
+  flavor: paintthinner
+  color: "#080e17"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/starrynight.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 5
+      - !type:Emote
+        conditions:
+        - !type:ReagentThreshold
+          reagent: StarryNight
+          min: 27          # this should proc only once after drinking 30u in one go
+          max: 27
+        emote: Yawn
+        showInChat: true
+  fizziness: 0.5
+  
