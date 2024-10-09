@@ -2,6 +2,8 @@ using Content.Server.Administration.Logs;
 using Content.Server.Body.Components;
 using Content.Server.Destructible;
 using Content.Server.Effects;
+using Content.Server.Nutrition;
+using Content.Server.Nutrition.Components;
 using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Body.Components;
 using Content.Shared.Camera;
@@ -26,8 +28,9 @@ public sealed class ProjectileSystem : SharedProjectileSystem
     {
         base.Initialize();
         SubscribeLocalEvent<ProjectileComponent, StartCollideEvent>(OnStartCollide);
-        SubscribeLocalEvent<DestructibleComponent, DestructionEventArgs>(OnDestruction);
-        SubscribeLocalEvent<BodyComponent, BeingGibbedEvent>(OnBeingGibbed);
+        SubscribeLocalEvent<DestructibleComponent, DestructionEventArgs>((embeddee, _, _) => UnEmbedChildren(embeddee));
+        SubscribeLocalEvent<BodyComponent, BeingGibbedEvent>((embeddee, _, _) => UnEmbedChildren(embeddee));
+        SubscribeLocalEvent<FoodComponent, BeforeFullyEatenEvent>(OnBeforeFullyEaten);
     }
 
     private void OnStartCollide(EntityUid uid, ProjectileComponent component, ref StartCollideEvent args)
@@ -84,12 +87,14 @@ public sealed class ProjectileSystem : SharedProjectileSystem
         }
     }
 
-    private void OnDestruction(EntityUid uid, DestructibleComponent c, DestructionEventArgs a)
+    // Remove any embedded objects in the food as it's eaten.
+    private void OnBeforeFullyEaten(EntityUid uid, FoodComponent c, BeforeFullyEatenEvent args)
     {
-        UnEmbedChildren(uid);
-    }
-    private void OnBeingGibbed(EntityUid uid, BodyComponent c, BeingGibbedEvent a)
-    {
+        if (args.Cancelled)
+        {
+            return;
+        }
+
         UnEmbedChildren(uid);
     }
 
