@@ -186,7 +186,7 @@
 
 - type: construction
   id: ShelfKitchen
-  name: cooking shelf
+  name: kitchen shelf
   description: Holds your knifes, spice, and everything nice!
   graph: Shelf
   startNode: start

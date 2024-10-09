@@ -30,10 +30,6 @@ namespace Content.Server.Light.Components
         [DataField("on")]
         public bool On = true;
 
-        [DataField("damage", required: true)]
-        [ViewVariables(VVAccess.ReadWrite)]
-        public DamageSpecifier Damage = default!;
-
         [DataField("ignoreGhostsBoo")]
         public bool IgnoreGhostsBoo;
 

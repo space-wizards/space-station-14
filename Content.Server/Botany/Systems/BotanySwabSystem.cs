@@ -48,7 +48,7 @@ public sealed class BotanySwabSystem : EntitySystem
         {
             Broadcast = true,
             BreakOnMove = true,
-            NeedHand = true
+            NeedHand = true,
         });
     }
 

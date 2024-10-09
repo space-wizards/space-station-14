@@ -15,6 +15,7 @@ using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.Mind;
+using Content.Shared.Players.RateLimiting;
 using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared;
@@ -104,12 +105,10 @@ namespace Content.Server.Administration.Systems
 
         	_rateLimit.Register(
                 RateLimitKey,
-                new RateLimitRegistration
-                {
-                    CVarLimitPeriodLength = CCVars.AhelpRateLimitPeriod,
-                    CVarLimitCount = CCVars.AhelpRateLimitCount,
-                    PlayerLimitedAction = PlayerRateLimitedAction
-                });
+                new RateLimitRegistration(CCVars.AhelpRateLimitPeriod,
+                    CCVars.AhelpRateLimitCount,
+                    PlayerRateLimitedAction)
+                );
         }
 
         private void PlayerRateLimitedAction(ICommonSession obj)
@@ -565,16 +564,23 @@ namespace Content.Server.Administration.Systems
             var escapedText = FormattedMessage.EscapeText(message.Text);
 
             string bwoinkText;
+            string adminPrefix = "";
+
+            //Getting an administrator position
+            if (_config.GetCVar(CCVars.AhelpAdminPrefix) && senderAdmin is not null && senderAdmin.Title is not null)
+            {
+                adminPrefix = $"[bold]\\[{senderAdmin.Title}\\][/bold] ";
+            }
 
             if (senderAdmin is not null &&
                 senderAdmin.Flags ==
                 AdminFlags.Adminhelp) // Mentor. Not full admin. That's why it's colored differently.
             {
-                bwoinkText = $"[color=purple]{senderSession.Name}[/color]";
+                bwoinkText = $"[color=purple]{adminPrefix}{senderSession.Name}[/color]";
             }
             else if (senderAdmin is not null && senderAdmin.HasFlag(AdminFlags.Adminhelp))
             {
-                bwoinkText = $"[color=red]{senderSession.Name}[/color]";
+                bwoinkText = $"[color=red]{adminPrefix}{senderSession.Name}[/color]";
             }
             else
             {
@@ -597,6 +603,13 @@ namespace Content.Server.Administration.Systems
                 RaiseNetworkEvent(msg, channel);
             }
 
+            string adminPrefixWebhook = "";
+
+            if (_config.GetCVar(CCVars.AhelpAdminPrefixWebhook) && senderAdmin is not null && senderAdmin.Title is not null)
+            {
+                adminPrefixWebhook = $"[bold]\\[{senderAdmin.Title}\\][/bold] ";
+            }
+
             // Notify player
             if (_playerManager.TryGetSessionById(message.UserId, out var session))
             {
@@ -611,11 +624,11 @@ namespace Content.Server.Administration.Systems
                             senderAdmin.Flags ==
                             AdminFlags.Adminhelp) // Mentor. Not full admin. That's why it's colored differently.
                         {
-                            overrideMsgText = $"[color=purple]{_overrideClientName}[/color]";
+                            overrideMsgText = $"[color=purple]{adminPrefixWebhook}{_overrideClientName}[/color]";
                         }
                         else if (senderAdmin is not null && senderAdmin.HasFlag(AdminFlags.Adminhelp))
                         {
-                            overrideMsgText = $"[color=red]{_overrideClientName}[/color]";
+                            overrideMsgText = $"[color=red]{adminPrefixWebhook}{_overrideClientName}[/color]";
                         }
                         else
                         {

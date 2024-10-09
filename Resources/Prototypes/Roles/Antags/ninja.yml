@@ -23,12 +23,10 @@
     pocket1: SpiderCharge
     pocket2: PinpointerStation
     belt: EnergyKatana
-    suitstorage: OxygenTankFilled
   inhand:
     - JetpackBlackFilled
   storage:
     back: # belt holds katana so satchel has the tools for sabotaging things
-    - BoxSurvival
     - Crowbar
     - Wrench
     - Screwdriver

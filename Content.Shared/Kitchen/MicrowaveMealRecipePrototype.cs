@@ -38,6 +38,12 @@ namespace Content.Shared.Kitchen
         public IReadOnlyDictionary<string, FixedPoint2> IngredientsSolids => _ingsSolids;
 
         /// <summary>
+        /// Is this recipe unavailable in normal circumstances?
+        /// </summary>
+        [DataField]
+        public bool SecretRecipe = false;
+
+        /// <summary>
         ///    Count the number of ingredients in a recipe for sorting the recipe list.
         ///    This makes sure that where ingredient lists overlap, the more complex
         ///    recipe is picked first.

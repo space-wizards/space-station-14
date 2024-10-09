@@ -169,16 +169,18 @@ entities:
     - type: Transform
       pos: 2.5,-1.5
       parent: 1
-- proto: AtmosDeviceFanTiny
+- proto: AtmosDeviceFanDirectional
   entities:
   - uid: 5
     components:
     - type: Transform
+      rot: -1.5707963267948966 rad
       pos: -3.5,-4.5
       parent: 1
   - uid: 6
     components:
     - type: Transform
+      rot: -1.5707963267948966 rad
       pos: -3.5,-0.5
       parent: 1
 - proto: BarSignMaidCafe
@@ -196,9 +198,6 @@ entities:
     - type: Transform
       pos: -0.5,-0.5
       parent: 1
-    - type: DeviceLinkSink
-      links:
-      - 161
 - proto: Bucket
   entities:
   - uid: 9
@@ -217,6 +216,11 @@ entities:
     - type: InsideEntityStorage
 - proto: CableApcExtension
   entities:
+  - uid: 27
+    components:
+    - type: Transform
+      pos: 1.5,-4.5
+      parent: 1
   - uid: 41
     components:
     - type: Transform
@@ -336,6 +340,46 @@ entities:
     components:
     - type: Transform
       pos: -1.5,-0.5
+      parent: 1
+  - uid: 96
+    components:
+    - type: Transform
+      pos: 0.5,-4.5
+      parent: 1
+  - uid: 97
+    components:
+    - type: Transform
+      pos: -0.5,-4.5
+      parent: 1
+  - uid: 233
+    components:
+    - type: Transform
+      pos: -1.5,-4.5
+      parent: 1
+  - uid: 234
+    components:
+    - type: Transform
+      pos: -2.5,-4.5
+      parent: 1
+  - uid: 235
+    components:
+    - type: Transform
+      pos: -2.5,-0.5
+      parent: 1
+  - uid: 236
+    components:
+    - type: Transform
+      pos: 3.5,-5.5
+      parent: 1
+  - uid: 237
+    components:
+    - type: Transform
+      pos: 4.5,-5.5
+      parent: 1
+  - uid: 238
+    components:
+    - type: Transform
+      pos: 5.5,-5.5
       parent: 1
 - proto: CableHV
   entities:
@@ -516,8 +560,8 @@ entities:
         immutable: False
         temperature: 293.14783
         moles:
-        - 1.7459903
-        - 6.568249
+        - 1.8856695
+        - 7.0937095
         - 0
         - 0
         - 0
@@ -534,36 +578,35 @@ entities:
           showEnts: False
           occludes: True
           ents:
-          - 11
-          - 29
-          - 24
-          - 13
-          - 25
-          - 37
-          - 33
-          - 32
-          - 38
-          - 16
-          - 15
-          - 19
-          - 17
-          - 18
-          - 20
-          - 40
-          - 14
-          - 22
-          - 30
-          - 21
-          - 34
-          - 23
-          - 35
-          - 28
-          - 36
-          - 27
-          - 39
-          - 31
-          - 26
           - 12
+          - 26
+          - 31
+          - 39
+          - 36
+          - 28
+          - 35
+          - 23
+          - 34
+          - 21
+          - 30
+          - 22
+          - 14
+          - 40
+          - 20
+          - 18
+          - 17
+          - 19
+          - 15
+          - 16
+          - 38
+          - 32
+          - 33
+          - 37
+          - 25
+          - 13
+          - 24
+          - 29
+          - 11
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -763,31 +806,8 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-- proto: FoodMeatCorgi
-  entities:
-  - uid: 27
-    components:
-    - type: Transform
-      parent: 10
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
 - proto: FoodMeatDragon
   entities:
-  - uid: 96
-    components:
-    - type: Transform
-      parent: 95
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
-  - uid: 97
-    components:
-    - type: Transform
-      parent: 95
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
   - uid: 98
     components:
     - type: Transform
@@ -1017,7 +1037,7 @@ entities:
   - uid: 115
     components:
     - type: Transform
-      pos: -2.4682944,-0.4437158
+      pos: -2.4622643,-0.46992433
       parent: 1
 - proto: GeneratorWallmountAPU
   entities:
@@ -1147,14 +1167,16 @@ entities:
     - type: Transform
       pos: 0.5,-2.5
       parent: 1
+    - type: Lock
+      locked: False
     - type: EntityStorage
       air:
         volume: 200
         immutable: False
         temperature: 293.14798
         moles:
-        - 1.7459903
-        - 6.568249
+        - 1.8856695
+        - 7.0937095
         - 0
         - 0
         - 0
@@ -1176,9 +1198,7 @@ entities:
           - 103
           - 104
           - 105
-          - 96
           - 98
-          - 97
           - 99
           - 101
           - 100
@@ -1349,33 +1369,21 @@ entities:
     - type: Transform
       pos: -0.5,-4.5
       parent: 1
-    - type: DeviceLinkSink
-      links:
-      - 160
   - uid: 150
     components:
     - type: Transform
       pos: -0.5,-3.5
       parent: 1
-    - type: DeviceLinkSink
-      links:
-      - 160
   - uid: 151
     components:
     - type: Transform
       pos: -0.5,-5.5
       parent: 1
-    - type: DeviceLinkSink
-      links:
-      - 160
   - uid: 152
     components:
     - type: Transform
       pos: -3.5,-4.5
       parent: 1
-    - type: DeviceLinkSink
-      links:
-      - 160
 - proto: ShuttleWindow
   entities:
   - uid: 153
@@ -1459,7 +1467,7 @@ entities:
       rot: 3.141592653589793 rad
       pos: 0.5,-6.5
       parent: 1
-- proto: soda_dispenser
+- proto: SodaDispenser
   entities:
   - uid: 164
     components:
@@ -1605,7 +1613,14 @@ entities:
     - type: Transform
       pos: 0.5731925,-0.16962886
       parent: 1
-- proto: TravelingChefSpawner
+- proto: VendingMachineChang
+  entities:
+  - uid: 188
+    components:
+    - type: Transform
+      pos: 2.5,0.5
+      parent: 1
+- proto: VisitorChefSpawner
   entities:
   - uid: 186
     components:
@@ -1616,13 +1631,6 @@ entities:
     components:
     - type: Transform
       pos: 4.5,-5.5
-      parent: 1
-- proto: VendingMachineChang
-  entities:
-  - uid: 188
-    components:
-    - type: Transform
-      pos: 2.5,0.5
       parent: 1
 - proto: WallShuttle
   entities:

@@ -578,23 +578,25 @@ entities:
     - type: Transform
       pos: -0.67882204,3.741016
       parent: 1
-- proto: AtmosDeviceFanTiny
+- proto: AtmosDeviceFanDirectional
   entities:
   - uid: 27
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 3.5,15.5
+      rot: -1.5707963267948966 rad
+      pos: -11.5,2.5
       parent: 1
   - uid: 28
     components:
     - type: Transform
-      pos: -11.5,2.5
+      rot: 1.5707963267948966 rad
+      pos: 8.5,2.5
       parent: 1
   - uid: 772
     components:
     - type: Transform
-      pos: 8.5,2.5
+      rot: 3.141592653589793 rad
+      pos: 3.5,15.5
       parent: 1
 - proto: Bed
   entities:
@@ -2255,8 +2257,6 @@ entities:
     - type: GasMixer
       inletTwoConcentration: 0.22000003
       inletOneConcentration: 0.78
-    - type: AtmosDevice
-      joinedGrid: 1
 - proto: GasPassiveVent
   entities:
   - uid: 329
@@ -2265,40 +2265,30 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 4.5,-1.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
   - uid: 330
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 4.5,-0.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
   - uid: 331
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 2.5,-7.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
   - uid: 332
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -6.5,-7.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
   - uid: 333
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -11.5,10.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
 - proto: GasPipeBend
   entities:
   - uid: 334
@@ -2725,16 +2715,12 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 3.5,-3.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
   - uid: 406
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 1.5,-5.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
 - proto: GasPressurePump
   entities:
   - uid: 407
@@ -2743,24 +2729,18 @@ entities:
       rot: 3.141592653589793 rad
       pos: 1.5,-4.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
   - uid: 408
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 2.5,-3.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
   - uid: 409
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -0.5,-3.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
 - proto: GasVentPump
   entities:
   - uid: 410
@@ -2768,94 +2748,70 @@ entities:
     - type: Transform
       pos: 2.5,7.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
   - uid: 411
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 3.5,2.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
   - uid: 412
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -3.5,7.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
   - uid: 413
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -8.5,6.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
   - uid: 414
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -8.5,2.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
   - uid: 415
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -8.5,-1.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
   - uid: 416
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -2.5,-4.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
   - uid: 417
     components:
     - type: Transform
       pos: -2.5,9.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
   - uid: 418
     components:
     - type: Transform
       pos: 3.5,9.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
   - uid: 419
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -6.5,8.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
   - uid: 420
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -2.5,0.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
   - uid: 421
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 7.5,6.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
 - proto: GasVentScrubber
   entities:
   - uid: 422
@@ -2863,31 +2819,23 @@ entities:
     - type: Transform
       pos: 2.5,-4.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
   - uid: 423
     components:
     - type: Transform
       pos: -6.5,-0.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
   - uid: 424
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -3.5,10.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
   - uid: 425
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -6.5,9.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
 - proto: GeneratorBasic15kW
   entities:
   - uid: 426
@@ -3156,8 +3104,6 @@ entities:
     - type: Transform
       pos: 3.5,-3.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
 - proto: OxygenCanister
   entities:
   - uid: 470
@@ -3165,36 +3111,26 @@ entities:
     - type: Transform
       pos: 1.5,-5.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
   - uid: 471
     components:
     - type: Transform
       pos: -10.5,1.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
   - uid: 472
     components:
     - type: Transform
       pos: -9.5,6.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
   - uid: 473
     components:
     - type: Transform
       pos: -4.5,-1.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
   - uid: 474
     components:
     - type: Transform
       pos: 7.5,1.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
 - proto: PaperBin5
   entities:
   - uid: 475
@@ -3691,7 +3627,7 @@ entities:
     - type: Transform
       pos: -3.5,-1.5
       parent: 1
-- proto: soda_dispenser
+- proto: SodaDispenser
   entities:
   - uid: 549
     components:
@@ -3797,8 +3733,6 @@ entities:
     - type: Transform
       pos: 4.5,-3.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
 - proto: SubstationBasic
   entities:
   - uid: 564

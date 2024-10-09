@@ -8,14 +8,18 @@ using Content.Shared.Storage;
 using Content.Shared.Storage.EntitySystems;
 using Robust.Shared.Collections;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Station;
 
 public abstract class SharedStationSpawningSystem : EntitySystem
 {
     [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] protected readonly InventorySystem InventorySystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+    [Dependency] private readonly MetaDataSystem _metadata = default!;
     [Dependency] private readonly SharedStorageSystem _storage = default!;
     [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
 
@@ -34,7 +38,7 @@ public abstract class SharedStationSpawningSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Equips the given starting gears from a `RoleLoadout` onto an entity.
+    ///     Equips the data from a `RoleLoadout` onto an entity.
     /// </summary>
     public void EquipRoleLoadout(EntityUid entity, RoleLoadout loadout, RoleLoadoutPrototype roleProto)
     {
@@ -49,16 +53,35 @@ public abstract class SharedStationSpawningSystem : EntitySystem
                     continue;
                 }
 
-                if (!PrototypeManager.TryIndex(loadoutProto.Equipment, out var startingGear))
-                {
-                    Log.Error($"Unable to find starting gear {loadoutProto.Equipment} for loadout {loadoutProto}");
-                    continue;
-                }
-
-                // Handle any extra data here.
-                EquipStartingGear(entity, startingGear, raiseEvent: false);
+                EquipStartingGear(entity, loadoutProto, raiseEvent: false);
             }
         }
+
+        EquipRoleName(entity, loadout, roleProto);
+    }
+
+    /// <summary>
+    /// Applies the role's name as applicable to the entity.
+    /// </summary>
+    public void EquipRoleName(EntityUid entity, RoleLoadout loadout, RoleLoadoutPrototype roleProto)
+    {
+        string? name = null;
+
+        if (string.IsNullOrEmpty(name) && PrototypeManager.TryIndex(roleProto.NameDataset, out var nameData))
+        {
+            name = _random.Pick(nameData.Values);
+        }
+
+        if (!string.IsNullOrEmpty(name))
+        {
+            _metadata.SetEntityName(entity, name);
+        }
+    }
+
+    public void EquipStartingGear(EntityUid entity, LoadoutPrototype loadout, bool raiseEvent = true)
+    {
+        EquipStartingGear(entity, loadout.StartingGear, raiseEvent);
+        EquipStartingGear(entity, (IEquipmentLoadout) loadout, raiseEvent);
     }
 
     /// <summary>
@@ -67,7 +90,15 @@ public abstract class SharedStationSpawningSystem : EntitySystem
     public void EquipStartingGear(EntityUid entity, ProtoId<StartingGearPrototype>? startingGear, bool raiseEvent = true)
     {
         PrototypeManager.TryIndex(startingGear, out var gearProto);
-        EquipStartingGear(entity, gearProto);
+        EquipStartingGear(entity, gearProto, raiseEvent);
+    }
+
+    /// <summary>
+    /// <see cref="EquipStartingGear(Robust.Shared.GameObjects.EntityUid,System.Nullable{Robust.Shared.Prototypes.ProtoId{Content.Shared.Roles.StartingGearPrototype}},bool)"/>
+    /// </summary>
+    public void EquipStartingGear(EntityUid entity, StartingGearPrototype? startingGear, bool raiseEvent = true)
+    {
+        EquipStartingGear(entity, (IEquipmentLoadout?) startingGear, raiseEvent);
     }
 
     /// <summary>
@@ -76,7 +107,7 @@ public abstract class SharedStationSpawningSystem : EntitySystem
     /// <param name="entity">Entity to load out.</param>
     /// <param name="startingGear">Starting gear to use.</param>
     /// <param name="raiseEvent">Should we raise the event for equipped. Set to false if you will call this manually</param>
-    public void EquipStartingGear(EntityUid entity, StartingGearPrototype? startingGear, bool raiseEvent = true)
+    public void EquipStartingGear(EntityUid entity, IEquipmentLoadout? startingGear, bool raiseEvent = true)
     {
         if (startingGear == null)
             return;
