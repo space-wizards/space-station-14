@@ -1,10 +1,40 @@
 ﻿<Document>
   # Pneumatic Valve
-  The pneumatic valve is a simple, yet extremely useful valve.
+  The pneumatic valve is a bidirectional valve controlled via a pressure input.
   <Box>
     <GuideEntityEmbed Entity="PressureControlledValve"/>
   </Box>
 
+  The pneumatic valve has 3 connections: input, output, and control. The "input" side will be the input/output connection with the highest pressure, and can switch sides, making the valve bidirectional.
 
+  <Box>
+    <GuideEntityEmbed Entity="GasPipeStraight" Caption="Input/Output"/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="GasPipeStraight" Caption="Control" Rotation="90"/>
+    <GuideEntityEmbed Entity="PressureControlledValve"/>
+    <GuideEntityEmbed Entity="FloorTileItemSteel" Caption=""/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="GasPipeStraight" Caption="Input/Output"/>
+  </Box>
+
+  The valve will [color=green]open[/color] when the pressure on the output side is lower than the pressure on the control side by 101.35 kPa.
+
+  The valve will [color=red]close[/color] when the pressure of the output side reaches the pressure of the control side within 101.35 kPa.
+
+  For example, a pneumatic valve with a control pressure of 500 kPa will open when the output pressure is 398.65 kPa or lower, and it will close when the output pressure is 398.65 kPa or higher.
+
+  The valve's control pressure is determined by a pipenet connection, and as such can be adjusted on the fly by a pump or another source of pressure control.
+
+  ## Differences to Pumps
+
+  The pneumatic valve is different from a pump which moves gas via work. The pneumatic valve is a passive device that moves gas based on the higher pressure of the input gas, and as such it can sometimes fill volumes faster than a pump can.
+
+  For example, a pneumatic valve with a control pressure of 500 kPa will fill a volume faster than a pressure pump set to 500 kPa. However, the pump will be able to maintain the pressure in the volume more accurately.
+
+  The pneumatic valve can be used in a variety of applications, for example:
+  - To automatically vent gasses in a burn chamber based on control input
+  - The filling of a volume quickly, based on a customizable control pressure
 
 </Document>
