@@ -49,21 +49,21 @@
   name: the lusty reptilian janitor
   description: A book about a forbidden romance between a human Captain and a reptilian Janitor. The author's name on the cover is strangely similar to the Captain's name in the book.
   components:
-  - type: Sprite
-    sprite: Objects/Misc/books.rsi
-    layers:
-    - state: paper
-    - state: cover_strong
-      color: "#3c3c3c"
-    - state: decor_vertical_middle
-      color: "#7765e3"
-    - state: decor_wingette
-      color: "#f0eefc"
-    - state: detail_bookmark
-      color: "#ff5a5f"
-    - state: icon_janitor
-  - type: Paper
-    content: book-text-lusty-reptilian-janitor
+    - type: Sprite
+      sprite: Objects/Misc/books.rsi
+      layers:
+      - state: paper
+      - state: cover_strong
+        color: "#3c3c3c"
+      - state: decor_vertical_middle
+        color: "#7765e3"
+      - state: decor_wingette
+        color: "#f0eefc"
+      - state: detail_bookmark
+        color: "#ff5a5f"
+      - state: icon_janitor
+    - type: Paper
+      content: book-text-lusty-reptilian-janitor
 
 - type: entity
   parent: BookBase
