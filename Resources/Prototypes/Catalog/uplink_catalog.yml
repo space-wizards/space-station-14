@@ -1657,6 +1657,16 @@
   categories:
     - UplinkWearables
 
+- type: listing
+  id: UplinkSatchelSyndicate
+  name: uplink-satchel-syndicate-name
+  description: uplink-satchel-syndicate-desc
+  productEntity: ClothingBackpackSatchelSyndicate
+  cost:
+    Telecrystal: 2
+  categories:
+  - UplinkWearables
+
  # Pointless
 
 - type: listing

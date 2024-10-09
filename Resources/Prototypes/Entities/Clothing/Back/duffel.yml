@@ -1,22 +1,14 @@
 - type: entity
-  parent: ClothingBackpack
+  parent: ClothingBagDuffelBase
   id: ClothingBackpackDuffel
   name: duffel bag
   description: A large duffel bag for holding extra things.
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/duffel.rsi
-  - type: Storage
-    maxItemSize: Huge
-    grid:
-    - 0,0,7,4
-  - type: ClothingSpeedModifier
-    walkModifier: 1
-    sprintModifier: 0.9
-  - type: HeldSpeedModifier
 
 - type: entity
-  parent: ClothingBackpackDuffel
+  parent: ClothingBagDuffelBase
   id: ClothingBackpackDuffelEngineering
   name: engineering duffel bag
   description: A large duffel bag for holding extra tools and supplies.
@@ -25,7 +17,7 @@
     sprite: Clothing/Back/Duffels/engineering.rsi
 
 - type: entity
-  parent: ClothingBackpackDuffel
+  parent: ClothingBagDuffelBase
   id: ClothingBackpackDuffelAtmospherics
   name: atmospherics duffel bag
   description: A large duffel bag made of fire resistant fibers. Smells like plasma.
@@ -34,7 +26,7 @@
     sprite: Clothing/Back/Duffels/atmospherics.rsi
 
 - type: entity
-  parent: ClothingBackpackDuffel
+  parent: ClothingBagDuffelBase
   id: ClothingBackpackDuffelMedical
   name: medical duffel bag
   description: A large duffel bag for holding extra medical supplies.
@@ -43,7 +35,7 @@
     sprite: Clothing/Back/Duffels/medical.rsi
 
 - type: entity
-  parent: [ClothingBackpackDuffel, BaseCommandContraband]
+  parent: [ ClothingBagDuffelBase, BaseCommandContraband ]
   id: ClothingBackpackDuffelCaptain
   name: captain's duffel bag
   description: A large duffel bag for holding extra captainly goods.
@@ -52,7 +44,7 @@
     sprite: Clothing/Back/Duffels/captain.rsi
 
 - type: entity
-  parent: ClothingBackpackDuffel
+  parent: ClothingBagDuffelBase
   id: ClothingBackpackDuffelClown
   name: clown duffel bag
   description: A large duffel bag for holding extra honk goods.
@@ -64,7 +56,7 @@
       collection: BikeHorn
 
 - type: entity
-  parent: [ClothingBackpackDuffel, BaseRestrictedContraband]
+  parent: [ ClothingBagDuffelBase, BaseRestrictedContraband ]
   id: ClothingBackpackDuffelSecurity
   name: security duffel bag
   description: A large duffel bag for holding extra security related goods.
@@ -73,7 +65,7 @@
     sprite: Clothing/Back/Duffels/security.rsi
 
 - type: entity
-  parent: [ClothingBackpackDuffel, BaseRestrictedContraband]
+  parent: [ ClothingBagDuffelBase, BaseRestrictedContraband ]
   id: ClothingBackpackDuffelBrigmedic
   name: brigmedic duffel bag
   description: A large duffel bag for holding extra medical related goods.
@@ -82,7 +74,7 @@
     sprite: Clothing/Back/Duffels/brigmedic.rsi
 
 - type: entity
-  parent: ClothingBackpackDuffel
+  parent: ClothingBagDuffelBase
   id: ClothingBackpackDuffelChemistry
   name: chemistry duffel bag
   description: A large duffel bag for holding extra beakers and test tubes.
@@ -91,7 +83,7 @@
     sprite: Clothing/Back/Duffels/chemistry.rsi
 
 - type: entity
-  parent: ClothingBackpackDuffel
+  parent: ClothingBagDuffelBase
   id: ClothingBackpackDuffelVirology
   name: virology duffel bag
   description: A large duffel bag made of hypo-allergenic fibers. It's designed to help prevent the spread of disease. Smells like monkey.
@@ -100,7 +92,7 @@
     sprite: Clothing/Back/Duffels/virology.rsi
 
 - type: entity
-  parent: ClothingBackpackDuffel
+  parent: ClothingBagDuffelBase
   id: ClothingBackpackDuffelGenetics
   name: genetics duffel bag
   description: A large duffel bag for holding extra genetic mutations.
@@ -109,7 +101,7 @@
     sprite: Clothing/Back/Duffels/genetics.rsi
 
 - type: entity
-  parent: ClothingBackpackDuffel
+  parent: ClothingBagDuffelBase
   id: ClothingBackpackDuffelMime
   name: mime duffel bag
   description: A large duffel bag for holding... mime... stuff.
@@ -122,7 +114,7 @@
       collection: null
 
 - type: entity
-  parent: ClothingBackpackDuffel
+  parent: ClothingBagDuffelBase
   id: ClothingBackpackDuffelScience
   name: science duffel bag
   description: A large duffel bag for holding extra science related goods.
@@ -131,7 +123,7 @@
     sprite: Clothing/Back/Duffels/science.rsi
 
 - type: entity
-  parent: ClothingBackpackDuffel
+  parent: ClothingBagDuffelBase
   id: ClothingBackpackDuffelHydroponics
   name: hydroponics duffel bag
   description: A large duffel bag for holding extra gardening tools.
@@ -140,7 +132,7 @@
       sprite: Clothing/Back/Duffels/hydroponics.rsi
 
 - type: entity
-  parent: ClothingBackpackDuffel
+  parent: ClothingBagDuffelBase
   id: ClothingBackpackDuffelCargo
   name: cargo duffel bag
   description: A large duffel bag for stealing cargo's precious loot.
@@ -149,7 +141,7 @@
       sprite: Clothing/Back/Duffels/cargo.rsi
 
 - type: entity
-  parent: ClothingBackpackDuffel
+  parent: ClothingBagDuffelBase
   id: ClothingBackpackDuffelSalvage
   name: salvage duffel bag
   description: A large duffel bag for holding extra exotic treasures.
@@ -158,10 +150,10 @@
       sprite: Clothing/Back/Duffels/salvage.rsi
 
 - type: entity
-  parent: [ClothingBackpackDuffel, BaseSyndicateContraband]
+  parent: [ ClothingBagDuffelBase, BaseSyndicateContraband ]
   id: ClothingBackpackDuffelSyndicate
   name: syndicate duffel bag
-  description: A large duffel bag for holding various traitor goods.
+  description: A large explosion-resistant duffel bag for holding various traitor goods.
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/syndicate.rsi
@@ -222,14 +214,13 @@
       tags: [] # ignore "WhitelistChameleon" tag
 
 - type: entity
-  parent: ClothingBackpackDuffel
+  parent: ClothingBagDuffelBase
   id: ClothingBackpackDuffelHolding
   name: duffelbag of holding
   description: A duffelbag that opens into a localized pocket of bluespace.
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/holding.rsi
-    state: icon
     layers:
     - state: icon
     - state: icon-unlit
@@ -245,7 +236,7 @@
   - type: HeldSpeedModifier
 
 - type: entity
-  parent: [ ClothingBackpackDuffel, BaseCentcommContraband ]
+  parent: [ ClothingBagDuffelBase, BaseCentcommContraband ]
   id: ClothingBackpackDuffelCBURN
   name: CBURN duffel bag
   description: A duffel bag containing a variety of biological containment equipment.

@@ -1,0 +1,64 @@
+﻿- type: entity
+  abstract: true
+  parent: [Clothing, ContentsExplosionResistanceBase]
+  id: ClothingBagBase
+  components:
+  - type: Sprite
+    state: icon
+  - type: Item
+    size: Huge
+  - type: Storage
+    maxItemSize: Huge
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - back
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: [ ]
+  - type: UserInterface
+    interfaces:
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
+  # to prevent bag open/honk spam
+  - type: UseDelay
+    delay: 0.5
+  - type: ExplosionResistance
+    damageCoefficient: 0.9
+
+#Backpacks
+- type: entity
+  abstract: true
+  parent: ClothingBagBase
+  id: ClothingBagBackpackBase
+  components:
+  - type: Storage
+    grid:
+    - 0,0,6,3
+
+#Duffels
+- type: entity
+  abstract: true
+  parent: ClothingBagBase
+  id: ClothingBagDuffelBase
+  components:
+  - type: Storage
+    grid:
+    - 0,0,7,4
+  - type: ClothingSpeedModifier
+    walkModifier: 1
+    sprintModifier: 0.9
+  - type: HeldSpeedModifier
+
+#Satchels
+- type: entity
+  abstract: true
+  parent: ClothingBagBase
+  id: ClothingBagSatchelBase
+  components:
+  - type: Storage
+    grid:
+    - 0,0,1,3
+    - 3,0,6,3
+    - 8,0,9,3

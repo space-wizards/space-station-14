@@ -1,38 +1,14 @@
 - type: entity
-  parent: [Clothing, ContentsExplosionResistanceBase]
+  parent: [ClothingBagBackpackBase, ContentsExplosionResistanceBase]
   id: ClothingBackpack
   name: backpack
   description: You wear this on your back and put items into it.
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/backpack.rsi
-    state: icon
-  - type: Item
-    size: Huge
-  - type: Clothing
-    quickEquip: false
-    slots:
-    - back
-  - type: Storage
-    grid:
-    - 0,0,6,3
-    maxItemSize: Huge
-  - type: ContainerContainer
-    containers:
-      storagebase: !type:Container
-        ents: []
-  - type: UserInterface
-    interfaces:
-      enum.StorageUiKey.Key:
-        type: StorageBoundUserInterface
-  # to prevent bag open/honk spam
-  - type: UseDelay
-    delay: 0.5
-  - type: ExplosionResistance
-    damageCoefficient: 0.9
 
 - type: entity
-  parent: ClothingBackpack
+  parent: ClothingBagBackpackBase
   id: ClothingBackpackClown
   name: giggles von honkerton
   description: It's a backpack made by Honk! Co.
@@ -44,7 +20,7 @@
       collection: BikeHorn
 
 - type: entity
-  parent: ClothingBackpack
+  parent: ClothingBagBackpackBase
   id: ClothingBackpackIan
   name: Ian's backpack
   description: Sometimes he wears it.
@@ -56,7 +32,7 @@
       collection: IanBark
 
 - type: entity
-  parent: [ClothingBackpack, BaseRestrictedContraband]
+  parent: [ClothingBagBackpackBase, BaseRestrictedContraband]
   id: ClothingBackpackSecurity
   name: security backpack
   description: It's a very robust backpack.
@@ -65,7 +41,7 @@
     sprite: Clothing/Back/Backpacks/security.rsi
 
 - type: entity
-  parent: [ClothingBackpack, BaseRestrictedContraband]
+  parent: [ClothingBagBackpackBase, BaseRestrictedContraband]
   id: ClothingBackpackBrigmedic
   name: brigmedic backpack
   description: It's a very sterile backpack.
@@ -74,7 +50,7 @@
     sprite: Clothing/Back/Backpacks/brigmedic.rsi
 
 - type: entity
-  parent: ClothingBackpack
+  parent: ClothingBagBackpackBase
   id: ClothingBackpackEngineering
   name: engineering backpack
   description: It's a tough backpack for the daily grind of station life.
@@ -83,7 +59,7 @@
     sprite: Clothing/Back/Backpacks/engineering.rsi
 
 - type: entity
-  parent: ClothingBackpack
+  parent: ClothingBagBackpackBase
   id: ClothingBackpackAtmospherics
   name: atmospherics backpack
   description: It's a backpack made of fire resistant fibers. Smells like plasma.
@@ -92,7 +68,7 @@
     sprite: Clothing/Back/Backpacks/atmospherics.rsi
 
 - type: entity
-  parent: ClothingBackpack
+  parent: ClothingBagBackpackBase
   id: ClothingBackpackMedical
   name: medical backpack
   description: It's a backpack especially designed for use in a sterile environment.
@@ -101,7 +77,7 @@
     sprite: Clothing/Back/Backpacks/medical.rsi
 
 - type: entity
-  parent: [ClothingBackpack, BaseCommandContraband]
+  parent: [ClothingBagBackpackBase, BaseCommandContraband]
   id: ClothingBackpackCaptain
   name: captain's backpack
   description: It's a special backpack made exclusively for Nanotrasen officers.
@@ -110,7 +86,7 @@
     sprite: Clothing/Back/Backpacks/captain.rsi
 
 - type: entity
-  parent: ClothingBackpack
+  parent: ClothingBagBackpackBase
   id: ClothingBackpackMime
   name: mime backpack
   description: A silent backpack made for those silent workers. Silence Co.
@@ -119,7 +95,7 @@
     sprite: Clothing/Back/Backpacks/mime.rsi
 
 - type: entity
-  parent: ClothingBackpack
+  parent: ClothingBagBackpackBase
   id: ClothingBackpackChemistry
   name: chemistry backpack
   description: A backpack specially designed to repel stains and hazardous liquids.
@@ -128,7 +104,7 @@
     sprite: Clothing/Back/Backpacks/chemistry.rsi
 
 - type: entity
-  parent: ClothingBackpack
+  parent: ClothingBagBackpackBase
   id: ClothingBackpackHydroponics
   name: hydroponics backpack
   description: It's a backpack made of all-natural fibers.
@@ -137,7 +113,7 @@
     sprite: Clothing/Back/Backpacks/hydroponics.rsi
 
 - type: entity
-  parent: ClothingBackpack
+  parent: ClothingBagBackpackBase
   id: ClothingBackpackScience
   name: science backpack
   description: A backpack specially designed to repel stains and hazardous liquids.
@@ -146,7 +122,7 @@
     sprite: Clothing/Back/Backpacks/science.rsi
 
 - type: entity
-  parent: ClothingBackpack
+  parent: ClothingBagBackpackBase
   id: ClothingBackpackVirology
   name: virology backpack
   description: A backpack made of hypo-allergenic fibers. It's designed to help prevent the spread of disease. Smells like monkey.
@@ -155,7 +131,7 @@
     sprite: Clothing/Back/Backpacks/virology.rsi
 
 - type: entity
-  parent: ClothingBackpack
+  parent: ClothingBagBackpackBase
   id: ClothingBackpackGenetics
   name: genetics backpack
   description: A backpack designed to be super tough, just in case someone hulks out on you.
@@ -164,7 +140,7 @@
     sprite: Clothing/Back/Backpacks/genetics.rsi
 
 - type: entity
-  parent: ClothingBackpack
+  parent: ClothingBagBackpackBase
   id: ClothingBackpackCargo
   name: cargo backpack
   description: A robust backpack for stealing cargo's loot.
@@ -173,7 +149,7 @@
       sprite: Clothing/Back/Backpacks/cargo.rsi
 
 - type: entity
-  parent: ClothingBackpack
+  parent: ClothingBagBackpackBase
   id: ClothingBackpackSalvage
   name: salvage bag
   description: A robust backpack for stashing your loot.
@@ -182,7 +158,7 @@
       sprite: Clothing/Back/Backpacks/salvage.rsi
 
 - type: entity
-  parent: ClothingBackpack
+  parent: ClothingBagBackpackBase
   id: ClothingBackpackMerc
   name: merc bag
   description: A backpack that has been in many dangerous places, a reliable combat backpack.
@@ -192,7 +168,7 @@
 
 #ERT
 - type: entity
-  parent: [ ClothingBackpack, BaseCentcommContraband ]
+  parent: [ ClothingBagBackpackBase, BaseCentcommContraband ]
   id: ClothingBackpackERTLeader
   name: ERT leader backpack
   description: A spacious backpack with lots of pockets, worn by the Commander of an Emergency Response Team.
@@ -269,19 +245,22 @@
 
 #Syndicate
 - type: entity
-  parent: [ClothingBackpack, BaseSyndicateContraband]
+  parent: [ ClothingBagBackpackBase, BaseSyndicateContraband]
   id: ClothingBackpackSyndicate
   name: syndicate backpack
-  description:
+  description: An explosion-resistant backpack for holding various traitor goods.
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/syndicate.rsi
   - type: ExplosionResistance
     damageCoefficient: 0.1
+  - type: Storage
+    grid:
+    - 0,0,7,3
 
 #Special
 - type: entity
-  parent: ClothingBackpack
+  parent: ClothingBagBackpackBase
   id: ClothingBackpackHolding
   name: bag of holding
   description: A backpack that opens into a localized pocket of bluespace.
@@ -315,7 +294,7 @@
     deleteOnDrop: false
 
 - type: entity
-  parent: ClothingBackpack
+  parent: ClothingBagBackpackBase
   id: ClothingBackpackElectropack
   name: electropack
   suffix: SelfUnremovable
@@ -323,7 +302,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/electropack.rsi
-    state: icon
   - type: Clothing
     stripDelay: 10
     equipDelay: 5 # to avoid accidentally falling into the trap associated with SelfUnremovableClothing
@@ -339,7 +317,7 @@
 
 # Debug
 - type: entity
-  parent: ClothingBackpack
+  parent: ClothingBagBackpackBase
   id: ClothingBackpackDebug
   name: wackpack
   description: What the fuck is this?
@@ -355,7 +333,7 @@
     - 9,5,9,5
 
 - type: entity
-  parent: ClothingBackpack
+  parent: ClothingBagBackpackBase
   id: ClothingBackpackDebug2
   name: big wackpack
   description: What the fuck is this?
@@ -366,7 +344,7 @@
     - 0,0,39,24
 
 - type: entity
-  parent: ClothingBackpack
+  parent: ClothingBagBackpackBase
   id: ClothingBackpackDebug3
   name: gay wackpack
   description: What the fuck is this?
@@ -387,7 +365,7 @@
     - 10,2,10,3
 
 - type: entity
-  parent: ClothingBackpack
+  parent: ClothingBagBackpackBase
   id: ClothingBackpackDebug4
   name: offset wackpack
   description: What the fuck is this?
