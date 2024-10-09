@@ -2,7 +2,7 @@
   name: drifter
   id: MobDrifter
   parent: MobSpaceBasic
-  description: A spindly, opportunistic ambush predator which injects prey with a paralyzing agent before siphoning their blood.
+  description: A spindly, opportunistic predator which injects prey with a paralyzing agent before siphoning their blood.
   components:
   - type: Sprite
     drawdepth: Mobs

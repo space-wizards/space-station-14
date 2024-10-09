@@ -3403,3 +3403,41 @@
   - type: BadFood
   - type: NonSpreaderZombie
   - type: PreventSpiller
+
+- type: entity
+  name: Fish
+  parent: MobFish
+  id: MobFishMimic
+  description: Blub Blub Blub!
+  components:
+  - type: Body
+    prototype: AnimalMimic
+  - type: GibAction
+    actionPrototype: DionaGibAction
+    allowedStates:
+    - Dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      1: Dead
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Piercing, Slash # maybe try adding a pressure resistance from Hardsuit code to prevent brute damage, temperature resistance too
+        damage: 1
+      behaviors:
+      - !type:GibBehavior { }
+  - type: NonSpreaderZombie
+
+- type: entity
+  name: Mimic
+  parent: MobSpaceBasic
+  id: MobMimic
+  description: A horrific ambush predator. It infests fish until disturbed by larger prey before attacking.
+  components:
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      70: Dead
+
