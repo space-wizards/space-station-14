@@ -62,7 +62,7 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
                 {
                     Name = uniqueId.ToString(),
                     Orientation = BoxContainer.LayoutOrientation.Vertical,
-                    Margin = new Thickness(0, 0, 0, 10),
+                    Margin = new Thickness(0, 10, 0, 10),
                 };
 
                 body.AddChild(entry);
