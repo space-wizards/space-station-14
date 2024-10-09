@@ -1,7 +1,6 @@
 <Document>
   # Space Law: Crime Listing
-  Crime codes are organized by a Category Code (_-xx) which is a collection of non-stackable crimes on a row, prefixed
-  by the Severity Number (X-__).
+  Crime codes are colored by linked crime groups, which are collections of non-stackable crimes. Suffixes are also included in the Quick Crime Guide to identify linked crimes.
 
   ## Quick Crime Guide
   <Table Columns="6">
@@ -67,17 +66,17 @@
     </ColorBox>
     <ColorBox Color="#2f3832">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Possession: Substances (P)
+        Possession: Minor (P)
       </Box>
     </ColorBox>
     <ColorBox Color="#2f3832">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Possession: Gear (P)
+        Possession: Major (P)
       </Box>
     </ColorBox>
     <ColorBox Color="#2f3832">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Possession: Weaponry (P)
+        Possession: Syndicate (P)
       </Box>
     </ColorBox>
     <ColorBox>
@@ -310,19 +309,17 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Possession/Use of Controlled Substances
+        Possession/Use of Minor Contraband
       </Box>
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        To make, hold, or abuse restricted drugs or chemicals without authorization.
+        To make, hold, or use minor contraband without authorization.
       </Box>
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Combat enhancing drugs are those that benefit stun times, or movement speed, and are restricted. Poisons are
-        restricted. Substances such as Ephedrine, Desoxyephedrine, and Hyperzine are restricted. The captain or highest
-        standing command staff may publicly restrict other harmful substances.
+        The Captain or Head of Security may authorize individual use of minor contraband. Any contraband which is restricted to a department other than command or security is minor contraband unless otherwise specified.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -464,19 +461,17 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Possession of Restricted Gear
+        Possession/Use of Major Contraband
       </Box>
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        To hold or use non-lethal items or objects that are restricted or illegal.
+        To make, hold, or use major contraband without authorization.
       </Box>
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        This is mostly for syndicate contraband; EMAGs, syndicate gas masks, bloodred hardsuits, hijacked PDAs, or
-        syndicate implants, however can sometimes extend to things the individual shouldn't possess like kevlar vests
-        and security gear.
+        The Captain may authorize individual use of major contraband. Any contraband which is restricted to the command or security department is major contraband unless otherwise specified.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -575,17 +570,17 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Possession of Restricted Weaponry
+        Possession/Use of Syndicate Contraband
       </Box>
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        To hold or use a weapon that is unlawful or contraband.
+        To make, hold, or use Syndicate contraband.
       </Box>
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Everything from guns without a permit, deadly blades, explosives, syndicate firearms to explosive implants.
+        Syndicate contraband may only be used in emergencies, and only to prevent death or gross bodily harm.
       </Box>
     </ColorBox>
     <ColorBox>

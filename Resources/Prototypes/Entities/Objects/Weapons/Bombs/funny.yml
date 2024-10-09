@@ -1,7 +1,7 @@
 - type: entity
   name: hot potato
   description: Once activated, you can't drop this time bomb - hit someone else with it to save yourself! Don't burn your hands!
-  parent: BaseItem
+  parent: [BaseItem, BaseSyndicateContraband]
   id: HotPotato
   components:
     - type: Sprite

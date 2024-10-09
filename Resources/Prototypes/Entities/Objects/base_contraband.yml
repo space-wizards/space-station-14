@@ -35,7 +35,15 @@
   - type: Contraband
     severity: Restricted
 
-# departmentally restricted contraband -- this covers every configuration currently listed in space law
+# one department restricted contraband
+- type: entity
+  id: BaseCentcommContraband
+  parent: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    allowedDepartments: [ CentralCommand ]
+
 - type: entity
   id: BaseCommandContraband
   parent: BaseRestrictedContraband
@@ -45,20 +53,12 @@
     allowedDepartments: [ Command ]
 
 - type: entity
-  id: BaseSecurityCommandContraband
+  id: BaseSecurityContraband
   parent: BaseRestrictedContraband
   abstract: true
   components:
   - type: Contraband
-    allowedDepartments: [ Security, Command ]
-
-- type: entity
-  id: BaseSecurityScienceCommandContraband
-  parent: BaseRestrictedContraband
-  abstract: true
-  components:
-  - type: Contraband
-    allowedDepartments: [ Security, Science, Command ]
+    allowedDepartments: [ Security ]
 
 - type: entity
   id: BaseEngineeringContraband
@@ -77,12 +77,20 @@
     allowedDepartments: [ Science ]
 
 - type: entity
-  id: BaseSecurityCargoContraband
+  id: BaseMedicalContraband
   parent: BaseRestrictedContraband
   abstract: true
   components:
   - type: Contraband
-    allowedDepartments: [ Security, Cargo ]
+    allowedDepartments: [ Medical ]
+
+- type: entity
+  id: BaseCivilianContraband
+  parent: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    allowedDepartments: [ Civilian ]
 
 - type: entity
   id: BaseCargoContraband
@@ -91,6 +99,63 @@
   components:
   - type: Contraband
     allowedDepartments: [ Cargo ]
+
+# multiple departments restricted contraband
+- type: entity
+  id: BaseCentcommCommandContraband
+  parent: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    allowedDepartments: [ CentralCommand, Command ]
+
+- type: entity
+  id: BaseSecurityCommandContraband
+  parent: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    allowedDepartments: [ Security, Command ]
+
+- type: entity
+  id: BaseSecurityScienceCommandContraband
+  parent: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    allowedDepartments: [ Security, Science, Command ]
+
+- type: entity
+  id: BaseSecurityEngineeringContraband
+  parent: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    allowedDepartments: [ Security, Engineering ]
+
+- type: entity
+  id: BaseSiliconScienceContraband
+  parent: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    allowedDepartments: [ Science, Silicon ]
+
+- type: entity
+  id: BaseSecurityCargoContraband
+  parent: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    allowedDepartments: [ Security, Cargo ]
+
+- type: entity
+  id: BaseMedicalScienceContraband
+  parent: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    allowedDepartments: [ Medical, Science ]
 
 # for ~objective items
 - type: entity

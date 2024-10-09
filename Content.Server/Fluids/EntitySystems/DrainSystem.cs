@@ -1,7 +1,6 @@
-using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.DoAfter;
-using Content.Server.Fluids.Components;
 using Content.Server.Popups;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Audio;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Database;
@@ -13,9 +12,7 @@ using Content.Shared.Fluids.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Tag;
 using Content.Shared.Verbs;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Collections;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
@@ -25,24 +22,32 @@ namespace Content.Server.Fluids.EntitySystems;
 public sealed class DrainSystem : SharedDrainSystem
 {
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
     [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly PuddleSystem _puddleSystem = default!;
-    [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
+    private readonly HashSet<Entity<PuddleComponent>> _puddles = new();
 
     public override void Initialize()
     {
         base.Initialize();
+        SubscribeLocalEvent<DrainComponent, MapInitEvent>(OnDrainMapInit);
         SubscribeLocalEvent<DrainComponent, GetVerbsEvent<Verb>>(AddEmptyVerb);
         SubscribeLocalEvent<DrainComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<DrainComponent, AfterInteractUsingEvent>(OnInteract);
         SubscribeLocalEvent<DrainComponent, DrainDoAfterEvent>(OnDoAfter);
+    }
+
+    private void OnDrainMapInit(Entity<DrainComponent> ent, ref MapInitEvent args)
+    {
+        // Randomise puddle drains so roundstart ones don't all dump at the same time.
+        ent.Comp.Accumulator = _random.NextFloat(ent.Comp.DrainFrequency);
     }
 
     private void AddEmptyVerb(Entity<DrainComponent> entity, ref GetVerbsEvent<Verb> args)
@@ -118,9 +123,6 @@ public sealed class DrainSystem : SharedDrainSystem
     {
         base.Update(frameTime);
         var managerQuery = GetEntityQuery<SolutionContainerManagerComponent>();
-        var xformQuery = GetEntityQuery<TransformComponent>();
-        var puddleQuery = GetEntityQuery<PuddleComponent>();
-        var puddles = new ValueList<(Entity<PuddleComponent> Entity, string Solution)>();
 
         var query = EntityQueryEnumerator<DrainComponent>();
         while (query.MoveNext(out var uid, out var drain))
@@ -158,22 +160,10 @@ public sealed class DrainSystem : SharedDrainSystem
             // This will ensure that UnitsPerSecond is per second...
             var amount = drain.UnitsPerSecond * drain.DrainFrequency;
 
-            if (!xformQuery.TryGetComponent(uid, out var xform))
-                continue;
+            _puddles.Clear();
+            _lookup.GetEntitiesInRange(Transform(uid).Coordinates, drain.Range, _puddles);
 
-            puddles.Clear();
-
-            foreach (var entity in _lookup.GetEntitiesInRange(_transform.GetMapCoordinates(uid, xform), drain.Range))
-            {
-                // No InRangeUnobstructed because there's no collision group that fits right now
-                // and these are placed by mappers and not buildable/movable so shouldnt really be a problem...
-                if (puddleQuery.TryGetComponent(entity, out var puddle))
-                {
-                    puddles.Add(((entity, puddle), puddle.SolutionName));
-                }
-            }
-
-            if (puddles.Count == 0)
+            if (_puddles.Count == 0)
             {
                 _ambientSoundSystem.SetAmbience(uid, false);
                 continue;
@@ -181,13 +171,13 @@ public sealed class DrainSystem : SharedDrainSystem
 
             _ambientSoundSystem.SetAmbience(uid, true);
 
-            amount /= puddles.Count;
+            amount /= _puddles.Count;
 
-            foreach (var (puddle, solution) in puddles)
+            foreach (var puddle in _puddles)
             {
                 // Queue the solution deletion if it's empty. EvaporationSystem might also do this
                 // but queuedelete should be pretty safe.
-                if (!_solutionContainerSystem.ResolveSolution(puddle.Owner, solution, ref puddle.Comp.Solution, out var puddleSolution))
+                if (!_solutionContainerSystem.ResolveSolution(puddle.Owner, puddle.Comp.SolutionName, ref puddle.Comp.Solution, out var puddleSolution))
                 {
                     EntityManager.QueueDeleteEntity(puddle);
                     continue;

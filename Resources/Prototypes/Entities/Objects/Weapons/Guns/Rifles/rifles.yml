@@ -53,7 +53,7 @@
 
 - type: entity
   name: AKMS
-  parent: [BaseWeaponRifle, BaseMinorContraband]
+  parent: [BaseWeaponRifle, BaseRestrictedContraband]
   id: WeaponRifleAk
   description: An iconic weapon of war. Uses .30 rifle ammo.
   components:

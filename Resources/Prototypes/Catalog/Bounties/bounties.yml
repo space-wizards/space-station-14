@@ -692,7 +692,7 @@
 - type: cargoBounty
   id: BountyCardboardBox
   reward: 1500
-  description: bounty-description-cardobard-box
+  description: bounty-description-cardboard-box
   entries:
   - name: bounty-item-cardboard-box
     amount: 12
@@ -743,3 +743,25 @@
     whitelist:
       components:
       - Flash
+
+- type: cargoBounty
+  id: BountyTeethSpaceCarp
+  reward: 800
+  description: bounty-description-tooth-space-carp
+  entries:
+  - name: bounty-item-tooth-space-carp
+    amount: 8
+    whitelist:
+      tags:
+      - ToothSpaceCarp
+
+- type: cargoBounty
+  id: BountyTeethSharkminnow
+  reward: 1500
+  description: bounty-description-tooth-sharkminnow
+  entries:
+  - name: bounty-item-tooth-sharkminnow
+    amount: 5
+    whitelist:
+      tags:
+      - ToothSharkminnow
