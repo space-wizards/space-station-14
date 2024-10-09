@@ -26,7 +26,6 @@
       - id: RubberStampWarden
       - id: WeaponDisabler
 
-
 - type: entity
   id: LockerWardenFilled
   suffix: Filled
@@ -53,7 +52,6 @@
       - id: RemoteSignaller
         amount: 2
       - id: WeaponDisabler
-
 
 - type: entity
   id: LockerSecurityFilled
