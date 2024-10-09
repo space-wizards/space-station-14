@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Fixed permanent absence of the approver string in cargo invoice.
-    type: Fix
-  id: 6997
-  time: '2024-07-29T06:19:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29690
 - author: JIPDawg
   changes:
   - message: F9 is correctly bound to the Round End Summary window by default now.
@@ -3942,3 +3935,10 @@
   id: 7496
   time: '2024-10-08T23:29:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32623
+- author: Beck Thompson
+  changes:
+  - message: The radio jammers price has been decreased from 4 -> 3 TC.
+    type: Tweak
+  id: 7497
+  time: '2024-10-09T12:44:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32472
