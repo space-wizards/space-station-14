@@ -45,6 +45,28 @@
 
 - type: entity
   parent: BookBase
+  id: BookLustyReptilianJanitor
+  name: the lusty reptilian janitor
+  description: A book about a forbidden romance between a human Captain and a reptilian Janitor. The author's name on the cover is strangely similar to the Captain's name in the book.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+    - state: paper
+    - state: cover_strong
+      color: "#3c3c3c"
+    - state: decor_vertical_middle
+      color: "#7765e3"
+    - state: decor_wingette
+      color: "#f0eefc"
+    - state: detail_bookmark
+      color: "#ff5a5f"
+    - state: icon_janitor
+  - type: Paper
+    content: book-text-lusty-reptilian-janitor
+
+- type: entity
+  parent: BookBase
   id: BookWorld
   name: shaping the state of the world - interplay of forces and choices
   description: The book is a well-preserved hardcover with a simple, elegant design on the cover, depicting the image of a world in motion. The pages are crisp and clean, with no signs of wear or tear, suggesting that it has been well-cared for and valued by its previous owner. The text is printed in a clear, legible font, and the chapters are organized in a logical and easy-to-follow manner, making it accessible to readers of all levels of expertise.
