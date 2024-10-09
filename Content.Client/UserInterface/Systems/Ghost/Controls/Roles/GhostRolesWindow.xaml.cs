@@ -20,6 +20,18 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
             EntryContainer.DisposeAllChildren();
         }
 
+        public IEnumerable<Collapsible> GetAllCollapsibleBoxes()
+        {
+            return EntryContainer.Children.OfType<Collapsible>();
+        }
+
+        public Collapsible? GetCollapsibleById(string id)
+        {
+            return EntryContainer.Children
+                .OfType<Collapsible>()
+                .FirstOrDefault(c => c.Name == id);
+        }
+
         public void AddEntry(string name, string description, bool hasAccess, FormattedMessage? reason, IEnumerable<GhostRoleInfo> roles, SpriteSystem spriteSystem)
         {
             NoRolesMessage.Visible = false;
@@ -38,8 +50,11 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
 
             var body = new CollapsibleBody();
 
+            var uniqueId = name.GetHashCode();
+
             var collapsible = new Collapsible(heading, body)
             {
+                Name = uniqueId.ToString(),
                 Orientation = BoxContainer.LayoutOrientation.Vertical,
                 Margin = new Thickness(0, 0, 0, 10),
             };
