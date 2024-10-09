@@ -3427,12 +3427,29 @@
   name: Mimic
   parent: MobSpaceBasic
   id: MobMimic
-  description: A horrific ambush predator. It infests fish until disturbed by larger prey before attacking.
+  description: A horrific ambush predator. It infests fish until disturbed by larger prey and uses elecricity to immobilize their targets.
   components:
   - type: MobThresholds
     thresholds:
       0: Alive
       70: Dead
+  - type: SolutionContainerManager
+    solutions:
+      melee:
+        reagents:
+        - ReagentId: Mimicrium
+          Quantity: 1 # This gives mimics one good shock on their prey, so stay away!
+  - type: MeleeChemicalInjector
+    solution: melee
+    transferAmount: 1
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    angle: 0
+    animation: WeaponArcThrust
+    damage:
+      types:
+        Slash: 5
 
   # TODO: work on a new Tumorous Brain organ that spawns MimicSmart, which starts by infesting a randomly generated salvager outside Sweetwater. Make new stomach type that only eats raw meat and blood.
   # Also give MimicSmart the ability to burst out of it's host at any time, and use cloaking like a space cobra if it has to escape it's puppet.
