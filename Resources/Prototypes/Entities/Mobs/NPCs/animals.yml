@@ -3309,7 +3309,7 @@
   components:
   - type: ReplacementAccent
     accent: nymph
-
+# TODO: move all the lower stuff into Sea instead of Animals
 - type: entity
   name: Fish
   parent: SimpleSpaceMobBase
