@@ -41,15 +41,16 @@ public sealed class KillPersonConditionSystem : EntitySystem
 
     private void OnPersonAssigned(EntityUid uid, PickRandomPersonComponent comp, ref ObjectiveAssignedEvent args)
     {
-        AssignRandomTarget(uid, args, false);
+        AssignRandomTarget(uid, args, _ => true);
     }
 
     private void OnHeadAssigned(EntityUid uid, PickRandomHeadComponent comp, ref ObjectiveAssignedEvent args)
     {
-        AssignRandomTarget(uid, args, true);
+        AssignRandomTarget(uid, args, mind =>
+            _job.MindTryGetJob(mind, out var prototype) && prototype.RequireAdminNotify);
     }
 
-    private void AssignRandomTarget(EntityUid uid, ObjectiveAssignedEvent args, bool headsOnly)
+    private void AssignRandomTarget(EntityUid uid, ObjectiveAssignedEvent args, Predicate<EntityUid> filter, bool fallbackToAny = true)
     {
         // invalid prototype
         if (!TryComp<TargetObjectiveComponent>(uid, out var target))
@@ -72,27 +73,20 @@ public sealed class KillPersonConditionSystem : EntitySystem
             })
             .ToList();
 
-        // no other humans to kill
-        if (allHumans.Count == 0)
+        // Filter out targets based on the filter
+        var filteredHumans = allHumans.Where(mind => filter(mind)).ToList();
+
+        // There's no humans and we can't fall back to any other target
+        if (filteredHumans.Count == 0 && !fallbackToAny)
         {
             args.Cancelled = true;
             return;
         }
 
-        // Filter out heads
-        if (headsOnly)
-        {
-            // RequireAdminNotify used as a cheap way to check for command department
-            var allHeads = allHumans.Where(mind =>
-                    _job.MindTryGetJob(mind, out var prototype) && prototype.RequireAdminNotify)
-                .ToList();
+        // Pick between humans matching our filter or fall back to all humans alive
+        var selectedHumans = filteredHumans.Count > 0 ? filteredHumans : allHumans;
 
-            // Only pick if there's a head target, otherwise fallback to a non-head
-            if (allHeads.Count > 0)
-                allHumans = allHeads;
-        }
-
-        _target.SetTarget(uid, _random.Pick(allHumans), target);
+        _target.SetTarget(uid, _random.Pick(selectedHumans), target);
     }
 
     private float GetProgress(EntityUid target, bool requireDead)
