@@ -66,6 +66,27 @@
           False: { visible: false }
   - type: GuideHelp
     guides: [ Singularity, Power ]
+  - type: ItemSlots
+  - type: ContainerContainer
+    containers:
+      alarmSlot: !type:ContainerSlot
+  - type: ContainmentAlarmHolder
+    alarmSlot:
+      insertVerbText: Attach Alarm
+      ejectVerbText: Remove Alarm
+      whitelist:
+        components:
+        - ContainmentFieldUpgrader
+
+- type: entity
+  parent: ContainmentFieldGenerator
+  id: ContainmentFieldGeneratorAlarm
+  suffix: Alarm
+  components:
+   - type: ContainerFill
+     containers:
+      alarmSlot:
+      - ContainmentFieldGenUpgrade
 
 
 - type: entity
