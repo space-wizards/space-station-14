@@ -1,0 +1,14 @@
+﻿<Control xmlns="https://spacestation14.io"
+         HorizontalExpand="True">
+    <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="0">
+        <PanelContainer Name="Color"
+                        StyleClasses="PdaBackground"
+                        MaxWidth="10"
+                        Margin="0"/>
+        <Button Name="Button"
+                HorizontalExpand="True"
+                StyleClasses="ButtonSquare">
+            <Label Name="Name" HorizontalExpand="True" Margin="8 0"/>
+        </Button>
+    </BoxContainer>
+</Control>

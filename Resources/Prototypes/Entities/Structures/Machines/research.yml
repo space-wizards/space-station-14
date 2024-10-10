@@ -12,6 +12,7 @@
       - state: server_o
         map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: ResearchServer
+  - type: CellServer
   - type: TechnologyDatabase
     supportedDisciplines:
     - Industrial
