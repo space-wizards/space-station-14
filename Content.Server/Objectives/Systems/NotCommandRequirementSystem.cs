@@ -19,10 +19,7 @@ public sealed class NotCommandRequirementSystem : EntitySystem
         if (args.Cancelled)
             return;
 
-        if (TryComp<MindComponent>(args.MindId, out var mind) && mind.OwnedEntity != null)
-        {
-            if (HasComp<CommandStaffComponent>(mind.OwnedEntity.Value))
-                args.Cancelled = true;
-        }
+        if (args.Mind.OwnedEntity is {} ent && HasComp<CommandStaffComponent>(ent))
+            args.Cancelled = true;
     }
 }
