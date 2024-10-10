@@ -25,6 +25,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
 using Content.Shared.Power;
+using Content.Shared.Storage;
 using Content.Shared.Throwing;
 using Robust.Server.Player;
 using Robust.Shared.Audio.Systems;
@@ -69,10 +70,10 @@ namespace Content.Server.Medical.BiomassReclaimer
 
                 if (reclaimer.RandomMessTimer <= 0)
                 {
-                    if (_robustRandom.Prob(0.2f) && reclaimer.BloodReagent is not null)
+                    if (_robustRandom.Prob(0.2f) && reclaimer.BloodReagents.Count > 0)
                     {
                         Solution blood = new();
-                        blood.AddReagent(reclaimer.BloodReagent, 50);
+                        blood.AddReagent(_robustRandom.Pick(reclaimer.BloodReagents), 50);
                         _puddleSystem.TrySpillAt(uid, blood, out _);
                     }
                     if (_robustRandom.Prob(0.03f) && reclaimer.SpawnedEntities.Count > 0)
@@ -93,7 +94,8 @@ namespace Content.Server.Medical.BiomassReclaimer
                 reclaimer.CurrentExpectedYield = reclaimer.CurrentExpectedYield - actualYield; // store non-integer leftovers
                 _material.SpawnMultipleFromMaterial(actualYield, BiomassPrototype, Transform(uid).Coordinates);
 
-                reclaimer.BloodReagent = null;
+                reclaimer.ProcessingTimer = 0;
+                reclaimer.BloodReagents.Clear();
                 reclaimer.SpawnedEntities.Clear();
                 RemCompDeferred<ActiveBiomassReclaimerComponent>(uid);
             }
@@ -160,13 +162,23 @@ namespace Content.Server.Medical.BiomassReclaimer
             if (!args.CanReach || args.Target == null)
                 return;
 
-            if (!CanGib(reclaimer, args.Used))
+            TryComp<StorageComponent>(args.Used, out var storage);
+
+            bool canProcess = CanGib(reclaimer, args.Used);
+            if (!canProcess && storage == null)
                 return;
 
             if (!TryComp<PhysicsComponent>(args.Used, out var physics))
                 return;
 
-            var delay = reclaimer.Comp.BaseInsertionDelay * physics.FixturesMass;
+            float massToInsert = physics.FixturesMass;
+
+            if (storage != null)
+                foreach (var (item, _location) in storage.StoredItems)
+                    if (CanGib(reclaimer, item) && TryComp<PhysicsComponent>(args.Used, out var itemPhysics))
+                        massToInsert += itemPhysics.FixturesMass;
+
+            var delay = reclaimer.Comp.BaseInsertionDelay * massToInsert;
             _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, delay, new ReclaimerDoAfterEvent(), reclaimer, target: args.Target, used: args.Used)
             {
                 NeedHand = true,
@@ -196,26 +208,54 @@ namespace Content.Server.Medical.BiomassReclaimer
                 return;
 
             _adminLogger.Add(LogType.Action, LogImpact.Extreme, $"{ToPrettyString(args.Args.User):player} used a biomass reclaimer to gib {ToPrettyString(args.Args.Target.Value):target} in {ToPrettyString(reclaimer):reclaimer}");
+
             StartProcessing(args.Args.Used.Value, reclaimer);
 
             args.Handled = true;
         }
 
+        // Called once when an entity is fed to a reclaimer
         private void StartProcessing(EntityUid toProcess, Entity<BiomassReclaimerComponent> ent, PhysicsComponent? physics = null)
         {
             if (!Resolve(toProcess, ref physics))
                 return;
 
             var component = ent.Comp;
-            AddComp<ActiveBiomassReclaimerComponent>(ent);
+            component.ProcessingTimer = 0;
+
+            bool canProcess = CanGib(ent, toProcess);
+
+            if (canProcess)
+                AddToStartingProcess(toProcess, ent, physics);
+
+            if (TryComp<StorageComponent>(toProcess, out var storage))
+            {
+                foreach (var (item, _location) in storage.StoredItems)
+                {
+                    if (CanGib(ent, item) && TryComp<PhysicsComponent>(item, out var itemPhysics))
+                        AddToStartingProcess(item, ent, itemPhysics);
+                    else if (canProcess) // If the container itself is being processed, drop non-processable contents
+                        _transform.DropNextTo(item, ent.Owner);
+                }
+            }
+
+            // Check in case we successfully started processing zero items, for example by using an empty container
+            if (component.ProcessingTimer > 0)
+                AddComp<ActiveBiomassReclaimerComponent>(ent);
+        }
+
+        // Called once for each entity or content of an entity that is about to be processed
+        private void AddToStartingProcess(EntityUid toProcess, Entity<BiomassReclaimerComponent> ent, PhysicsComponent physics)
+        {
+            var component = ent.Comp;
 
             if (TryComp<BloodstreamComponent>(toProcess, out var stream))
             {
-                component.BloodReagent = stream.BloodReagent;
+                component.BloodReagents.Add((string)stream.BloodReagent);
             }
             if (TryComp<ButcherableComponent>(toProcess, out var butcherableComponent))
             {
-                component.SpawnedEntities = butcherableComponent.SpawnedEntities;
+                component.SpawnedEntities.AddRange(butcherableComponent.SpawnedEntities);
             }
 
             var expectedYield = physics.FixturesMass * component.YieldPerUnitMass;
@@ -223,7 +263,7 @@ namespace Content.Server.Medical.BiomassReclaimer
                 expectedYield *= component.ProduceYieldMultiplier;
             component.CurrentExpectedYield += expectedYield;
 
-            component.ProcessingTimer = physics.FixturesMass * component.ProcessingTimePerUnitMass;
+            component.ProcessingTimer += physics.FixturesMass * component.ProcessingTimePerUnitMass;
 
             var inventory = _inventory.GetHandOrInventoryEntities(toProcess);
             foreach (var item in inventory)
