@@ -216,6 +216,16 @@
       path: "/Audio/Items/Medical/brutepack_begin.ogg"
     healingEndSound:
       path: "/Audio/Items/Medical/brutepack_end.ogg"
+  - type: Extractable
+    grindableSolutionName: contents
+  - type: SolutionContainerManager
+    solutions:
+      contents:
+        reagents:
+        - ReagentId: Blood
+          Quantity: 8
+        - ReagentId: Saline
+          Quantity: 2
   - type: Stack
     stackType: Bloodpack
     count: 10
