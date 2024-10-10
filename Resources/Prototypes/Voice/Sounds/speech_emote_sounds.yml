@@ -1,0 +1,89 @@
+# body emotes
+- type: emoteSounds
+  id: GeneralBodyEmotes
+  sounds:
+    Clap:
+      collection: Claps
+    Snap:
+      collection: Snaps
+      params:
+        volume: -6
+    Salute:
+      collection: Salutes
+
+- type: emoteSounds
+  id: DionaBodyEmotes
+  sounds:
+    Clap:
+      path: /Audio/Voice/Diona/diona_clap.ogg
+    Snap:
+      path: /Audio/Voice/Diona/diona_snap.ogg
+      params:
+        volume: -10
+    Salute:
+      path: /Audio/Voice/Diona/diona_salute.ogg
+      params:
+       volume: -5
+
+# mobs
+- type: emoteSounds
+  id: Zombie
+  sound:
+    collection: ZombieScreams
+    params:
+      variation: 0.125
+
+- type: emoteSounds
+  id: Skeleton
+  sound:
+    path: /Audio/Voice/Skeleton/skeleton_scream.ogg
+    params:
+      variation: 0.125
+
+- type: emoteSounds
+  id: Mouse
+  sound:
+    path: /Audio/Animals/mouse_squeak.ogg
+    params:
+      variation: 0.125
+
+- type: emoteSounds
+  id: Cluwne
+  sound:
+    collection: CluwneScreams
+    params:
+      variation: 0.125
+
+- type: emoteSounds
+  id: Bear
+  sound:
+    path: /Audio/Animals/bear.ogg
+    params:
+      variation: 0.125
+
+- type: emoteSounds
+  id: Cerberus
+  sound:
+    path: /Audio/Animals/cerberus.ogg
+    params:
+      variation: 0.125
+
+- type: emoteSounds
+  id: Kangaroo
+  sound:
+    path: /Audio/Animals/kangaroo_grunt.ogg
+    params:
+      variation: 0.125
+
+- type: emoteSounds
+  id: Nymph
+  sounds:
+    Chirp:
+      path: /Audio/Animals/nymph_chirp.ogg
+
+- type: emoteSounds
+  id: Parrot
+  sound:
+    path: /Audio/Animals/parrot_raught.ogg
+    params:
+      variation: 0.125

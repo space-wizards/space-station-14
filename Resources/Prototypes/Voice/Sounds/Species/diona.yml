@@ -1,0 +1,15 @@
+- type: emoteSounds
+  id: UnisexDiona
+  sounds:
+    Scream:
+      path: /Audio/Voice/Diona/diona_scream.ogg
+    Laugh:
+      collection: DionaLaugh
+
+- type: emoteSounds
+  parent: [UnisexDiona, MaleHuman]
+  id: MaleDiona
+
+- type: emoteSounds
+  parent: [UnisexDiona, FemaleHuman]
+  id: FemaleDiona

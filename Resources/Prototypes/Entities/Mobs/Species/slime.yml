@@ -47,7 +47,7 @@
     sounds:
       Male: MaleSlime
       Female: FemaleSlime
-      Unsexed: MaleSlime
+      Unsexed: UnisexSlime
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Slime

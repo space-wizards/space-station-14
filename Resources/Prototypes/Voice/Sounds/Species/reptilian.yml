@@ -1,0 +1,15 @@
+- type: emoteSounds
+  id: UnisexReptilian
+  sounds:
+    Scream:
+      path: /Audio/Voice/Reptilian/reptilian_scream.ogg
+    Laugh:
+      path: /Audio/Animals/lizard_happy.ogg
+
+- type: emoteSounds
+  parent: [UnisexReptilian, MaleHuman]
+  id: MaleReptilian
+
+- type: emoteSounds
+  parent: [UnisexReptilian, FemaleHuman]
+  id: FemaleReptilian

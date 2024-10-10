@@ -1,0 +1,13 @@
+- type: emoteSounds
+  parent: MaleHuman
+  id: MaleDwarf
+  params:
+    variation: 0.125
+    pitch: 0.75
+
+- type: emoteSounds
+  parent: FemaleHuman
+  id: FemaleDwarf
+  params:
+    variation: 0.125
+    pitch: 0.75
