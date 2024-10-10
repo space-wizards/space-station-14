@@ -12,7 +12,7 @@
     - id: EmergencyMedipen
     - id: Flare
     - id: FoodSnackNutribrick
-    - id: DrinkWaterBottleFull
+    - id: DrinkMREFlask
   - type: Sprite
     layers:
     - state: internals
@@ -30,7 +30,7 @@
     - id: EmergencyMedipen
     - id: Flare
     - id: FoodSnackNutribrick
-    - id: DrinkWaterBottleFull
+    - id: DrinkMREFlask
   # Intentionally wrong picture on the box. NT did not care enough to change it.
   - type: Label
     currentLabel: reagent-name-nitrogen
@@ -49,7 +49,7 @@
     - id: EmergencyMedipen
     - id: Flare
     - id: FoodSnackNutribrick
-    - id: DrinkWaterBottleFull
+    - id: DrinkMREFlask
   - type: Sprite
     layers:
     - state: internals
@@ -67,7 +67,7 @@
     - id: EmergencyMedipen
     - id: Flare
     - id: FoodSnackNutribrick
-    - id: DrinkWaterBottleFull
+    - id: DrinkMREFlask
   # Intentionally wrong picture on the box. NT did not care enough to change it.
   - type: Label
     currentLabel: reagent-name-nitrogen
@@ -87,7 +87,7 @@
     - id: EmergencyMedipen
     - id: Flare
     - id: FoodSnackNutribrick
-    - id: DrinkWaterBottleFull
+    - id: DrinkMREFlask
   - type: Sprite
     layers:
     - state: internals
@@ -105,7 +105,7 @@
     - id: EmergencyMedipen
     - id: Flare
     - id: FoodSnackNutribrick
-    - id: DrinkWaterBottleFull
+    - id: DrinkMREFlask
   # Intentionally wrong picture on the box. NT did not care enough to change it.
   - type: Label
     currentLabel: reagent-name-nitrogen
@@ -125,7 +125,7 @@
     - id: EmergencyMedipen
     - id: Flare
     - id: FoodSnackNutribrick
-    - id: DrinkWaterBottleFull
+    - id: DrinkMREFlask
   - type: Sprite
     layers:
     - state: internals
@@ -143,7 +143,7 @@
     - id: EmergencyMedipen
     - id: Flare
     - id: FoodSnackNutribrick
-    - id: DrinkWaterBottleFull
+    - id: DrinkMREFlask
   # Intentionally wrong picture on the box. NT did not care enough to change it.
   - type: Label
     currentLabel: reagent-name-nitrogen
@@ -168,7 +168,7 @@
     - id: EmergencyMedipen
     - id: Flare
     - id: FoodSnackNutribrick
-    - id: DrinkWaterBottleFull
+    - id: DrinkMREFlask
   - type: Tag
     tags:
     - BoxHug
@@ -185,7 +185,7 @@
     - id: EmergencyMedipen
     - id: Flare
     - id: FoodSnackNutribrick
-    - id: DrinkWaterBottleFull
+    - id: DrinkMREFlask
   - type: Label
     currentLabel: reagent-name-nitrogen
 
@@ -201,7 +201,7 @@
     - id: EmergencyMedipen
     - id: Flare
     - id: FoodBreadBaguette
-    - id: DrinkWaterBottleFull
+    - id: DrinkMREFlask
 
 - type: entity
   parent: BoxSurvivalNitrogen
@@ -215,7 +215,7 @@
     - id: EmergencyMedipen
     - id: Flare
     - id: FoodBreadBaguette
-    - id: DrinkWaterBottleFull
+    - id: DrinkMREFlask
   - type: Label
     currentLabel: reagent-name-nitrogen
 
