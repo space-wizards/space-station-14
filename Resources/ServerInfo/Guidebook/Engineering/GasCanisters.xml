@@ -1,0 +1,28 @@
+<Document>
+  # Gas Canisters
+  <Box>
+    <GuideEntityEmbed Entity="AirCanister"/>
+    <GuideEntityEmbed Entity="OxygenCanister"/>
+    <GuideEntityEmbed Entity="NitrogenCanister"/>
+    <GuideEntityEmbed Entity="CarbonDioxideCanister"/>
+    <GuideEntityEmbed Entity="StorageCanister"/>
+    <GuideEntityEmbed Entity="GasPort"/>
+  </Box>
+
+  Gas canisters are a way to store gas in a portable container for easy transport. They can store 1000 liters of gas.
+
+  They can be filled with gas from a pipe network, and then dragged around to be used in various machines or pipenets.
+
+  Gas canisters can be completely filled and emptied using a gas pump, or by connecting them to a pipenet using a connector.
+  If a pump is not present, gas will be free to move in and out of the canister to balance pressure, temperature, and composition.
+
+  You can connect handheld tanks to a gas canister to refill them using the release valve on the canister. The release valve also has a adjustable pressure regulator to control the pressure of the handheld tank connected.
+
+  Opening the release valve on a canister with no handheld tank connected will release gas into the atmosphere, at the specified regulator pressure. Be sure to close the release valve before you eject your handheld tank!
+
+  Gas canisters can be used to store a variety of gases, including oxygen, nitrogen, and plasma. Gas canisters can be used in a variety of applications, for example:
+  - Supplying gas to a welding tool or other portable gas-powered equipment
+  - Storing emergency oxygen supplies in case of a hull breach or other atmospheric emergency
+  - Transporting gas between different parts of the station
+
+</Document>
