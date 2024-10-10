@@ -35,6 +35,8 @@
       - Laughter
       - JuiceThatMakesYouWeh
       - Lipozine
+      - AmmoniatedSludge
+      - AmmoniatedMercury
     - quantity: 5
       weight: 2.5
       reagents:
@@ -52,6 +54,7 @@
       - Uranium
       - Licoxide
       - Razorium
+      - Calomel
     - quantity: 5
       weight: 4
       reagents:
