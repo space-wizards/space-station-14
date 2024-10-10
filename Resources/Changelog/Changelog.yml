@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: githubuser508
-  changes:
-  - message: Candles crate and the ability for Cargo to order it.
-    type: Add
-  id: 6999
-  time: '2024-07-29T08:29:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29736
-- author: Blackern5000
-  changes:
-  - message: Emergency oxygen and fire lockers now generally contain more supplies
-    type: Tweak
-  id: 7000
-  time: '2024-07-29T09:57:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29230
 - author: Moomoobeef
   changes:
   - message: Added the ability to wear lizard plushies on your head!
@@ -3948,3 +3934,21 @@
   id: 7498
   time: '2024-10-09T18:01:32.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30805
+- author: Errant
+  changes:
+  - message: Nukies now have role briefing on their character screen.
+    type: Tweak
+  - message: Animals who are made Thief no longer get told in their briefing about
+      the thief gear that they don't actually have and couldn't possibly use.
+    type: Fix
+  id: 7499
+  time: '2024-10-10T08:48:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31318
+- author: nikthechampiongr
+  changes:
+  - message: It is no longer impossible to do bounties other than the first one if
+      the server has been up for a long period of time.
+    type: Fix
+  id: 7500
+  time: '2024-10-10T14:35:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32700
