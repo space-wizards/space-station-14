@@ -1018,6 +1018,9 @@
   id: Payload # for grenade/bomb crafting
 
 - type: Tag
+  id: PdaPaiInsertable
+
+- type: Tag
   id: Pen
 
 - type: Tag

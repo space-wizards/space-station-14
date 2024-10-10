@@ -73,6 +73,9 @@
     whitelist:
       components:
         - SecretStash
+  - type: Tag
+    tags:
+    - PdaPaiInsertable
 
 - type: entity
   parent: [ PersonalAI, BaseSyndicateContraband]
