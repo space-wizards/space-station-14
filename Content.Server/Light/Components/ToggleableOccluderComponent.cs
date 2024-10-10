@@ -1,22 +1,20 @@
 using Content.Shared.DeviceLinking;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.Light.Components
+namespace Content.Server.Light.Components;
+
+/// <summary>
+///     Allows entities with OccluderComponent to toggle that component on and off.
+/// </summary>
+[RegisterComponent]
+public sealed partial class ToggleableOccluderComponent : Component
 {
-    /// <summary>
-    ///     Allows entities with OccluderComponent to toggle that component on and off.
-    /// </summary>
-    [RegisterComponent]
-    public sealed partial class ToggleableOccluderComponent : Component
-    {
-        [DataField]
-        public ProtoId<SinkPortPrototype> OnPort = "On";
+    [DataField]
+    public ProtoId<SinkPortPrototype> OnPort = "On";
 
-        [DataField("offPort", customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>))]
-        public string OffPort = "Off";
+    [DataField]
+    public ProtoId<SinkPortPrototype> OffPort = "Off";
 
-        [DataField("togglePort", customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>))]
-        public string TogglePort = "Toggle";
-    }
+    [DataField]
+    public ProtoId<SinkPortPrototype> TogglePort = "Toggle";
 }
