@@ -23,6 +23,7 @@ namespace Content.Shared.Administration
 
         protected void LogBwoink(BwoinkTextMessage message)
         {
+
         }
 
         [Serializable, NetSerializable]

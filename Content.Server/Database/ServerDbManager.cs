@@ -231,6 +231,10 @@ namespace Content.Server.Database
         IAsyncEnumerable<SharedAdminLog> GetAdminLogs(LogFilter? filter = null);
         IAsyncEnumerable<JsonDocument> GetAdminLogsJson(LogFilter? filter = null);
         Task<int> CountAdminLogs(int round);
+        Task<SupportExchange?> GetSupportExchangeAsync(int supportRound, Guid supportTarget, int serverId);
+        Task AddSupportExchangeAsync(SupportExchange exchange);
+        Task AddSupportMessageAsync(SupportMessage message);
+        Task<int> GetMaxMessageIdForExchange(int supportId);
 
         #endregion
 
@@ -730,6 +734,30 @@ namespace Content.Server.Database
         {
             DbReadOpsMetric.Inc();
             return RunDbCommand(() => _db.CountAdminLogs(round));
+        }
+
+        public Task<SupportExchange?> GetSupportExchangeAsync(int supportRound, Guid supportTarget, int serverId)
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.GetSupportExchangeAsync(supportRound, supportTarget, serverId));
+        }
+
+        public Task AddSupportExchangeAsync(SupportExchange exchange)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.AddSupportExchangeAsync(exchange));
+        }
+
+        public Task AddSupportMessageAsync(SupportMessage message)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.AddSupportMessageAsync(message));
+        }
+
+        public Task<int> GetMaxMessageIdForExchange(int SupportId)
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.GetMaxMessageIdForExchange(SupportId));
         }
 
         public Task<bool> GetWhitelistStatusAsync(NetUserId player)
