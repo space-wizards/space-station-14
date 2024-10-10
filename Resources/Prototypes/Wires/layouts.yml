@@ -189,3 +189,10 @@
   wires:
   - !type:PowerWireAction
   - !type:AiInteractWireAction
+
+- type: wireLayout
+  id: Holopad
+  dummyWires: 2
+  wires:
+  - !type:PowerWireAction
+  - !type:AiInteractWireAction
