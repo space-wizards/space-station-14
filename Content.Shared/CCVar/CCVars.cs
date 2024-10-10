@@ -213,6 +213,12 @@ namespace Content.Shared.CCVar
             GameRoleTimers = CVarDef.Create("game.role_timers", true, CVar.SERVER | CVar.REPLICATED);
 
         /// <summary>
+        /// If admins should gain role time on their normal job.
+        /// </summary>
+        public static readonly CVarDef<bool>
+            GameAdminJobTracking = CVarDef.Create("game.admin_job_tracking", false, CVar.SERVER | CVar.REPLICATED);
+
+        /// <summary>
         /// Override default role requirements using a <see cref="JobRequirementOverridePrototype"/>
         /// </summary>
         public static readonly CVarDef<string>
