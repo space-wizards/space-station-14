@@ -42,15 +42,22 @@
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
-  - type: Destructible # should have the same behavior as in cables.yml
+  - type: Destructible # should have the same general explosive behavior as in cables.yml
     thresholds:
     - trigger:
-        !type:DamageTrigger
-        damage: 22
+        !type:DamageTypeTrigger
+        damageType: Structural # as close as we can get to only letting explosives trigger it.
+        damage: 200
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
       - !type:ExplodeBehavior
+    - trigger:
+        !type:DamageTrigger # the idea here is to prevent you from just beating it until it explodes.
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: Explosive
     explosionType: DemolitionCharge
     totalIntensity: 60
