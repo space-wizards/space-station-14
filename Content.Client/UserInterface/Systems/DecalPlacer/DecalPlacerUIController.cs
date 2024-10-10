@@ -1,4 +1,4 @@
-﻿using Content.Client.Decals.UI;
+using Content.Client.Decals.UI;
 using Content.Client.Gameplay;
 using Content.Client.Sandbox;
 using Content.Shared.Decals;
@@ -35,7 +35,7 @@ public sealed class DecalPlacerUIController : UIController, IOnStateExited<Gamep
     {
         if (_window == null)
             return;
-        _window.Dispose();
+        _window.Parent?.RemoveChild(_window);
         _window = null;
     }
 
