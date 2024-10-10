@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Server.Administration.Managers;
 using Content.Server.Antag.Components;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
@@ -48,6 +49,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     [Dependency] private readonly RoleSystem _role = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private readonly IBanManager _banManager = default!;
 
     // arbitrary random number to give late joining some mild interest.
     public const float LateJoinRandomChance = 0.5f;
@@ -399,6 +401,10 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             return false;
 
         if (ent.Comp.SelectedSessions.Contains(session))
+            return false;
+
+        // Check if any of the antagonist bans match the preferred roles in the AntagSelectionDefinition
+        if (_banManager.IsAntagBanned(session.UserId, def.PrefRoles))
             return false;
 
         mind ??= session.GetMind();

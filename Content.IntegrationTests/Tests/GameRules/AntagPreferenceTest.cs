@@ -1,11 +1,15 @@
 #nullable enable
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using Content.Server.Administration.Managers;
 using Content.Server.Antag;
 using Content.Server.Antag.Components;
 using Content.Server.GameTicking;
 using Content.Shared.GameTicking;
+using Moq;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
@@ -30,6 +34,16 @@ public sealed class AntagPreferenceTest
         var client = pair.Client;
         var ticker = server.System<GameTicker>();
         var sys = server.System<AntagSelectionSystem>();
+
+        // Mock the IBanManager to always return false for IsAntagBanned
+        var mockBanManager = new Mock<IBanManager>();
+        mockBanManager
+            .Setup(x => x.IsAntagBanned(It.IsAny<NetUserId>(), It.IsAny<IEnumerable<string>>()))
+            .Returns(false);
+
+        // Use reflection to set the private _banManager field
+        var banManagerField = typeof(AntagSelectionSystem).GetField("_banManager", BindingFlags.NonPublic | BindingFlags.Instance);
+        banManagerField?.SetValue(sys, mockBanManager.Object);
 
         // Initially in the lobby
         Assert.That(ticker.RunLevel, Is.EqualTo(GameRunLevel.PreRoundLobby));

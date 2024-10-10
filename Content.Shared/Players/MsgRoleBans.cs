@@ -11,7 +11,7 @@ public sealed class MsgRoleBans : NetMessage
 {
     public override MsgGroups MsgGroup => MsgGroups.EntityEvent;
 
-    public List<string> Bans = new();
+    public List<BanInfo> Bans = new();
 
     public override void ReadFromBuffer(NetIncomingMessage buffer, IRobustSerializer serializer)
     {
@@ -20,7 +20,13 @@ public sealed class MsgRoleBans : NetMessage
 
         for (var i = 0; i < count; i++)
         {
-            Bans.Add(buffer.ReadString());
+            var ban = new BanInfo
+            {
+                Role = buffer.ReadString(),
+                Reason = buffer.ReadString(),
+                ExpirationTime = buffer.ReadBoolean() ? new DateTime(buffer.ReadInt64()) : null
+            };
+            Bans.Add(ban);
         }
     }
 
@@ -30,7 +36,20 @@ public sealed class MsgRoleBans : NetMessage
 
         foreach (var ban in Bans)
         {
-            buffer.Write(ban);
+            buffer.Write(ban.Role);
+            buffer.Write(ban.Reason);
+            buffer.Write(ban.ExpirationTime.HasValue);
+            if (ban.ExpirationTime.HasValue)
+            {
+                buffer.Write(ban.ExpirationTime.Value.Ticks);
+            }
         }
     }
+}
+
+public class BanInfo
+{
+    public string? Role { get; set; }
+    public string? Reason { get; set; }
+    public DateTime? ExpirationTime { get; set; }
 }

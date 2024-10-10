@@ -1,11 +1,13 @@
 <DefaultWindow
     xmlns="https://spacestation14.io"
     xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
-    Title="{Loc ban-panel-title}" MinSize="350 500">
+    Title="{Loc ban-panel-title}"
+    SetSize="850 500"
+    Resizable="True"> <!-- Enable resizing -->
     <BoxContainer Orientation="Vertical">
-        <TabContainer Name="Tabs" VerticalExpand="True">
+        <TabContainer Name="Tabs" VerticalExpand="True" HorizontalExpand="True">
             <!-- Basic info -->
-            <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
                 <BoxContainer Orientation="Horizontal" Margin="2">
                     <CheckBox Name="PlayerCheckbox" MinWidth="100" Text="{Loc ban-panel-player}" Pressed="True" />
                     <Control MinWidth="50" />
@@ -39,10 +41,10 @@
                 <TextEdit Name="ReasonTextEdit" MinHeight="100" VerticalExpand="True" HorizontalExpand="True" />
             </BoxContainer>
             <!-- Player List -->
-            <cc:PlayerListControl Name="PlayerList" VerticalExpand="True" />
+            <cc:PlayerListControl Name="PlayerList" VerticalExpand="True" HorizontalExpand="True" />
             <!-- Role list (auto-generated) -->
-            <ScrollContainer>
-                <BoxContainer Name="RolesContainer"  Orientation="Vertical" />
+            <ScrollContainer VerticalExpand="True" HorizontalExpand="True">
+                <BoxContainer Name="RolesContainer" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True"/>
             </ScrollContainer>
         </TabContainer>
         <Button Name="SubmitButton" Text="{Loc ban-panel-submit}" HorizontalExpand="True" />
