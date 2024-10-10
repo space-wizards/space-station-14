@@ -1,4 +1,5 @@
 using Content.Shared.Atmos;
+using Content.Shared.Light.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Tools;
 using Robust.Shared.Audio;
@@ -41,6 +42,12 @@ namespace Content.Shared.Maps
 
         [DataField("baseTurf")]
         public string BaseTurf { get; private set; } = string.Empty;
+
+        /// <summary>
+        /// Whether this tile should draw roof shadows on <see cref="RoofComponent"/> maps.
+        /// </summary>
+        [DataField]
+        public bool Roof = true;
 
         [DataField]
         public PrototypeFlags<ToolQualityPrototype> DeconstructTools { get; set; } = new();
