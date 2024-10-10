@@ -38,6 +38,8 @@
   - Pipes
   - Pumps
   - Valves
+  - MixingAndFiltering
+  - GasCanisters
 
 - type: guideEntry
   id: Pipes
@@ -108,6 +110,16 @@
   id: PassiveGate
   name: guide-entry-passivegate
   text: "/ServerInfo/Guidebook/Engineering/PassiveGate.xml"
+
+- type: guideEntry
+  id: MixingAndFiltering
+  name: guide-entry-mixingandfiltering
+  text: "/ServerInfo/Guidebook/Engineering/MixingAndFiltering.xml"
+
+- type: guideEntry
+  id: GasCanisters
+  name: guide-entry-gascanisters
+  text: "/ServerInfo/Guidebook/Engineering/GasCanisters.xml"
 
 - type: guideEntry
   id: Fires

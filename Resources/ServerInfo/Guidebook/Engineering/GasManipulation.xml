@@ -56,6 +56,6 @@
     <GuideEntityEmbed Entity="GasPort" Caption=""/>
   </Box>
   <Box>
-    Storage
+    Gas Canisters
   </Box>
 </Document>
