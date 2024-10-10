@@ -253,6 +253,9 @@ uplink-toolbox-desc = A full compliment of tools for the mechanically inclined t
 uplink-syndicate-jaws-of-life-name = Jaws Of Life
 uplink-syndicate-jaws-of-life-desc = A combined prying and cutting tool. Useful for entering the station or its departments.
 
+uplink-lockpick-name = Lockpick
+uplink-lockpick-desc = An old and simple tool that's eager to get you past Nanotrasen infamously cheap locks. 
+
 uplink-duffel-surgery-name = Surgical Duffel Bag
 uplink-duffel-surgery-desc = A large duffel bag containing a full suite of surgical tools.
 
