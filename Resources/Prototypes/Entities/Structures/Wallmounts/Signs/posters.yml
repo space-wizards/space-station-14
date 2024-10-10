@@ -900,9 +900,9 @@
 
 - type: entity
   parent: PosterBase
-  id: PosterLegitSSD
-  name: "Space Sleep Disorder"
-  description: "A poster informing the viewer about Space Sleep Disorder, or SSD, a condition where someone stops reacting to things around them. Treat SSD crew with care!"
+  id: PosterLegitNoERP
+  name: "No ERP"
+  description: "This poster reminds the crew that Eroticism and Pornography are banned on Nanotrasen stations."
   components:
   - type: Sprite
     state: poster34_legit
