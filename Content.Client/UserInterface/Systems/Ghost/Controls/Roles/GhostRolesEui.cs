@@ -80,7 +80,7 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
             // We must save BodyVisible state, so all Collapsible boxes will not close
             // on adding new ghost role.
             // Save the current state of each Collapsible box being visible or not
-            var collapseStates = _window.SaveCollapsibleBoxesStates();
+            var collapsibleStates = _window.SaveCollapsibleBoxesStates();
 
             // Clearing the container before adding new roles
             _window.ClearEntries();
@@ -108,7 +108,7 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
                 _window.AddEntry(name, description, hasAccess, reason, group, spriteSystem);
 
                 // Restore the Collapsible box state if it is saved
-                _window.RestoreCollapsibleBoxesStates(collapseStates);
+                _window.RestoreCollapsibleBoxesStates(collapsibleStates);
             }
 
             // Close the rules window if it is no longer needed
