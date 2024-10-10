@@ -133,6 +133,22 @@
     event: !type:ActivateImplantEvent
 
 - type: entity
+  id: ActionActivateSmokeGrenadeImplant
+  name: Activate Smoke Grenade
+  description: Create a small cloud of smoke around you.
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    charges: 3
+    useDelay: 5
+    itemIconStyle: BigAction
+    priority: -20
+    icon:
+      sprite: Objects/Weapons/Grenades/smoke.rsi
+      state: icon
+    event: !type:ActivateImplantEvent
+
+- type: entity
   id: ActionActivateScramImplant
   name: SCRAM!
   description: Randomly teleports you within a large distance.
