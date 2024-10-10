@@ -11,6 +11,30 @@
       "name": "dark"
     },
     {
+      "name": "dark-diagonal-mini"
+    },
+    {
+      "name": "dark-diagonal"
+    },
+    {
+      "name": "dark-herringbone"
+    },
+    {
+      "name": "dark-mini"
+    },
+    {
+      "name": "dark-mono"
+    },
+    {
+      "name": "dark-pavement"
+    },
+    {
+      "name": "dark-pavement-vertical"
+    },
+    {
+      "name": "dark-offset"
+    },
+    {
       "name": "dirty"
     },
     {
@@ -23,10 +47,28 @@
       "name": "concrete"
     },
     {
+      "name": "concrete-mono"
+    },
+    {
+      "name": "concrete-smooth"
+    },
+    {
       "name": "grayconcrete"
     },
     {
+      "name": "grayconcrete-mono"
+    },
+    {
+      "name": "grayconcrete-smooth"
+    },
+    {
       "name": "oldconcrete"
+    },
+    {
+      "name": "oldconcrete-mono"
+    },
+    {
+      "name": "oldconcrete-smooth"
     },
     {
       "name": "gcircuit"
@@ -37,15 +79,15 @@
     {
       "name": "blue"
     },
-	{
-	  "name": "brass"
-	},
-	{
-	  "name": "brass-filled"
-	},
-	{
-	  "name": "reebe"
-	},
+	  {
+	    "name": "brass"
+	  },
+	  {
+	    "name": "brass-filled"
+	  },
+	  {
+	    "name": "reebe"
+	  },
     {
       "name": "lime"
     },
@@ -118,6 +160,9 @@
       "name": "bcircuit"
     },
     {
+      "name": "rcircuit"
+    },
+    {
       "name": "carpet-black"
     },
     {
@@ -169,6 +214,30 @@
       "name": "steel"
     },
     {
+      "name": "steel-offset"
+    },
+    {
+      "name": "steel-diagonal-mini"
+    },
+    {
+      "name": "steel-diagonal"
+    },
+    {
+      "name": "steel-herringbone"
+    },
+    {
+      "name": "steel-mini"
+    },
+    {
+      "name": "steel-mono"
+    },
+    {
+      "name": "steel-pavement"
+    },
+    {
+      "name": "steel-pavement-vertical"
+    },
+    {
       "name": "silver"
     },
     {
@@ -176,6 +245,30 @@
     },
     {
       "name": "white"
+    },
+    {
+      "name": "white-offset"
+    },
+    {
+      "name": "white-diagonal-mini"
+    },
+    {
+      "name": "white-diagonal"
+    },
+    {
+      "name": "white-herringbone"
+    },
+    {
+      "name": "white-mini"
+    },
+    {
+      "name": "white-mono"
+    },
+    {
+      "name": "white-pavement"
+    },
+    {
+      "name": "white-pavement-vertical"
     },
     {
       "name": "monofloor"
@@ -380,6 +473,14 @@
     },
     {
       "name": "gold-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "rcircuit-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "rcircuit-inhand-left",
       "directions": 4
     },
     {

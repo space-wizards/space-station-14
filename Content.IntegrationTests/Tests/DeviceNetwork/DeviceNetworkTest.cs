@@ -212,7 +212,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
             DeviceNetworkComponent networkComponent1 = null;
             DeviceNetworkComponent networkComponent2 = null;
             WiredNetworkComponent wiredNetworkComponent = null;
-            var grid = testMap.MapGrid;
+            var grid = testMap.Grid.Comp;
 
             var testValue = "test";
             var payload = new NetworkPayload

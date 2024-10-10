@@ -54,7 +54,7 @@
     sprite: Mobs/Animals/duck.rsi
     state: icon-0
   product: CrateNPCDuck
-  cost: 6000
+  cost: 4000
   category: cargoproduct-category-name-livestock
   group: market
 
@@ -221,7 +221,7 @@
 - type: cargoProduct
   id: LivestockMothroach
   icon:
-    sprite: Mobs/Animals/mothroach.rsi
+    sprite: Mobs/Animals/mothroach/mothroach.rsi
     state: mothroach
   product: CrateNPCMothroach
   cost: 5000

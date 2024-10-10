@@ -57,9 +57,6 @@ alerts-no-battery-desc = You don't have a battery, rendering you unable to charg
 alerts-internals-name = Toggle internals
 alerts-internals-desc = Toggles your gas tank internals on or off.
 
-alerts-internals-name = Toggle internals
-alerts-internals-desc = Toggles your gas tank internals on or off.
-
 alerts-piloting-name = Piloting Shuttle
 alerts-piloting-desc = You are piloting a shuttle. Click the alert to stop.
 
@@ -98,6 +95,9 @@ alerts-bleed-desc = You're [color=red]bleeding[/color].
 
 alerts-pacified-name = [color=green]Pacified[/color]
 alerts-pacified-desc = You're pacified; you won't be able to harm living creatures.
+
+alerts-adrenaline-name = [color=red]Adrenaline[/color]
+alerts-adrenaline-desc = You're full of adrenaline: pain won't slow you down.
 
 alerts-suit-power-name = Suit Power
 alerts-suit-power-desc = How much power your space ninja suit has.

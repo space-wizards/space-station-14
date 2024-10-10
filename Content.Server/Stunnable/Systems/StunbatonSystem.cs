@@ -19,7 +19,7 @@ namespace Content.Server.Stunnable.Systems
         [Dependency] private readonly RiggableSystem _riggableSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly BatterySystem _battery = default!;
-        [Dependency] private readonly SharedItemToggleSystem _itemToggle = default!;
+        [Dependency] private readonly ItemToggleSystem _itemToggle = default!;
 
         public override void Initialize()
         {

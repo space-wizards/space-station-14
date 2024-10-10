@@ -1,5 +1,4 @@
 #nullable enable
-using System.Numerics;
 using Content.Server.Cuffs;
 using Content.Shared.Body.Components;
 using Content.Shared.Cuffs.Components;
@@ -7,7 +6,6 @@ using Content.Shared.Hands.Components;
 using Robust.Server.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 
 namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
 {
@@ -24,6 +22,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
   components:
   - type: Cuffable
   - type: Hands
+  - type: ComplexInteraction
   - type: Body
     prototype: Human
 
@@ -51,10 +50,11 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
             var mapManager = server.ResolveDependency<IMapManager>();
             var host = server.ResolveDependency<IServerConsoleHost>();
 
+            var map = await pair.CreateTestMap();
+
             await server.WaitAssertion(() =>
             {
-                var mapId = mapManager.CreateMap();
-                var coordinates = new MapCoordinates(Vector2.Zero, mapId);
+                var coordinates = map.MapCoords;
 
                 var cuffableSys = entityManager.System<CuffableSystem>();
                 var xformSys = entityManager.System<SharedTransformSystem>();

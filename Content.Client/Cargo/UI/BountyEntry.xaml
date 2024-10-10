@@ -13,7 +13,18 @@
                 </BoxContainer>
                 <Control MinWidth="10"/>
                 <BoxContainer Orientation="Vertical" MinWidth="120">
-                    <Button Name="PrintButton" Text="{Loc 'bounty-console-label-button-text'}" HorizontalExpand="False" HorizontalAlignment="Right"/>
+                    <BoxContainer Orientation="Horizontal" MinWidth="120">
+                        <Button Name="PrintButton"
+                                Text="{Loc 'bounty-console-label-button-text'}"
+                                HorizontalExpand="False"
+                                HorizontalAlignment="Right"
+                                StyleClasses="OpenRight"/>
+                        <Button Name="SkipButton"
+                                Text="{Loc 'bounty-console-skip-button-text'}"
+                                HorizontalExpand="False"
+                                HorizontalAlignment="Right"
+                                StyleClasses="OpenLeft"/>
+                    </BoxContainer>
                     <RichTextLabel Name="IdLabel" HorizontalAlignment="Right" Margin="0 0 5 0"/>
                 </BoxContainer>
             </BoxContainer>

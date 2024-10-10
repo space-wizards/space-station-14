@@ -36,7 +36,7 @@ namespace Content.Client.Administration.UI.Tabs.AtmosTab
             {
                 var player = playerManager.LocalEntity;
                 var playerGrid = entManager.GetComponentOrNull<TransformComponent>(player)?.GridUid;
-                GridOptions.AddItem($"{uid} {(playerGrid == uid ? " (Current)" : "")}");
+                GridOptions.AddItem($"{uid} {(playerGrid == uid ? Loc.GetString($"admin-ui-atmos-grid-current") : "")}");
                 _gridData.Add(entManager.GetNetEntity(uid));
             }
 

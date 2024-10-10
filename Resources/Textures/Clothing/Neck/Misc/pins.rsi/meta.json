@@ -1,74 +1,96 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "PixelTK leaves his mark on upstream",
+  "copyright": "PixelTK leaves his mark on upstream, BackeTako made the gay, autism pins by Terraspark",
   "size": {
     "x": 32,
     "y": 32
   },
-  "states": [
-    {
-      "name": "aro"
-    },
-    {
-      "name": "aro-equipped",
-      "directions": 4
-    },
-	{
-      "name": "asex"
-    },
-    {
-      "name": "asex-equipped",
-      "directions": 4
-    },
-	{
-      "name": "bi"
-    },
-    {
-      "name": "bi-equipped",
-      "directions": 4
-    },
-	{
-      "name": "inter"
-    },
-    {
-      "name": "inter-equipped",
-      "directions": 4
-    },
-	{
-      "name": "les"
-    },
-    {
-      "name": "les-equipped",
-      "directions": 4
-    },
-	{
-      "name": "lgbt"
-    },
-    {
-      "name": "lgbt-equipped",
-      "directions": 4
-    },
-	{
-      "name": "non"
-    },
-    {
-      "name": "non-equipped",
-      "directions": 4
-    },
-	{
-      "name": "pan"
-    },
-    {
-      "name": "pan-equipped",
-      "directions": 4
-    },
-	{
-      "name": "trans"
-    },
-    {
-      "name": "trans-equipped",
-      "directions": 4
-    }
-  ]
+    "states": [
+        {
+            "name": "aro"
+        },
+        {
+            "name": "aro-equipped-NECK",
+            "directions": 4
+        },
+        {
+            "name": "asex"
+        },
+        {
+            "name": "asex-equipped-NECK",
+            "directions": 4
+        },
+        {
+            "name": "autism"
+        },
+        {
+            "name": "autism-equipped-NECK",
+            "directions": 4
+        },
+        {
+            "name": "bi"
+        },
+        {
+            "name": "bi-equipped-NECK",
+            "directions": 4
+        },
+        {
+            "name": "gay"
+        },
+        {
+            "name": "gay-equipped-NECK",
+            "directions": 4
+        },
+        {
+            "name": "goldautism"
+        },
+        {
+            "name": "goldautism-equipped-NECK",
+            "directions": 4
+        },
+        {
+            "name": "inter"
+        },
+        {
+            "name": "inter-equipped-NECK",
+            "directions": 4
+        },
+        {
+            "name": "les"
+        },
+        {
+            "name": "les-equipped-NECK",
+            "directions": 4
+        },
+        {
+            "name": "lgbt"
+        },
+        {
+            "name": "lgbt-equipped-NECK",
+            "directions": 4
+        },
+        {
+            "name": "non"
+        },
+        {
+            "name": "non-equipped-NECK",
+            "directions": 4
+        },
+        {
+            "name": "pan"
+        },
+        {
+            "name": "pan-equipped-NECK",
+            "directions": 4
+        },
+        {
+            "name": "trans"
+        },
+        {
+            "name": "trans-equipped-NECK",
+            "directions": 4
+        }
+    ]
 }
+

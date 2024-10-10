@@ -20,10 +20,11 @@ public sealed class MeleeArcOverlay : Overlay
     private readonly IPlayerManager _playerManager;
     private readonly MeleeWeaponSystem _melee;
     private readonly SharedCombatModeSystem _combatMode;
+    private readonly SharedTransformSystem _transform = default!;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
 
-    public MeleeArcOverlay(IEntityManager entManager, IEyeManager eyeManager, IInputManager inputManager, IPlayerManager playerManager, MeleeWeaponSystem melee, SharedCombatModeSystem combatMode)
+    public MeleeArcOverlay(IEntityManager entManager, IEyeManager eyeManager, IInputManager inputManager, IPlayerManager playerManager, MeleeWeaponSystem melee, SharedCombatModeSystem combatMode, SharedTransformSystem transform)
     {
         _entManager = entManager;
         _eyeManager = eyeManager;
@@ -31,6 +32,7 @@ public sealed class MeleeArcOverlay : Overlay
         _playerManager = playerManager;
         _melee = melee;
         _combatMode = combatMode;
+        _transform = transform;
     }
 
     protected override void Draw(in OverlayDrawArgs args)
@@ -52,7 +54,7 @@ public sealed class MeleeArcOverlay : Overlay
         if (mapPos.MapId != args.MapId)
             return;
 
-        var playerPos = xform.MapPosition;
+        var playerPos = _transform.GetMapCoordinates(player.Value, xform: xform);
 
         if (mapPos.MapId != playerPos.MapId)
             return;

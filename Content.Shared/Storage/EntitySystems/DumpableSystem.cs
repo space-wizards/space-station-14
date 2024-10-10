@@ -133,7 +133,7 @@ public sealed class DumpableSystem : EntitySystem
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, userUid, delay, new DumpableDoAfterEvent(), storageUid, target: targetUid, used: storageUid)
         {
             BreakOnMove = true,
-            NeedHand = true
+            NeedHand = true,
         });
     }
 
@@ -159,11 +159,11 @@ public sealed class DumpableSystem : EntitySystem
         {
             dumped = true;
 
-            var targetPos = _transformSystem.GetWorldPosition(args.Args.Target.Value);
+            var (targetPos, targetRot) = _transformSystem.GetWorldPositionRotation(args.Args.Target.Value);
 
             foreach (var entity in dumpQueue)
             {
-                _transformSystem.SetWorldPosition(entity, targetPos + _random.NextVector2Box() / 4);
+                _transformSystem.SetWorldPositionRotation(entity, targetPos + _random.NextVector2Box() / 4, targetRot);
             }
         }
         else

@@ -48,6 +48,30 @@ namespace Content.Client.Actions
             SubscribeLocalEvent<InstantActionComponent, ComponentHandleState>(OnInstantHandleState);
             SubscribeLocalEvent<EntityTargetActionComponent, ComponentHandleState>(OnEntityTargetHandleState);
             SubscribeLocalEvent<WorldTargetActionComponent, ComponentHandleState>(OnWorldTargetHandleState);
+            SubscribeLocalEvent<EntityWorldTargetActionComponent, ComponentHandleState>(OnEntityWorldTargetHandleState);
+        }
+
+        public override void FrameUpdate(float frameTime)
+        {
+            base.FrameUpdate(frameTime);
+
+            var worldActionQuery = EntityQueryEnumerator<WorldTargetActionComponent>();
+            while (worldActionQuery.MoveNext(out var uid, out var action))
+            {
+                UpdateAction(uid, action);
+            }
+
+            var instantActionQuery = EntityQueryEnumerator<InstantActionComponent>();
+            while (instantActionQuery.MoveNext(out var uid, out var action))
+            {
+                UpdateAction(uid, action);
+            }
+
+            var entityActionQuery = EntityQueryEnumerator<EntityTargetActionComponent>();
+            while (entityActionQuery.MoveNext(out var uid, out var action))
+            {
+                UpdateAction(uid, action);
+            }
         }
 
         private void OnInstantHandleState(EntityUid uid, InstantActionComponent component, ref ComponentHandleState args)
@@ -76,12 +100,26 @@ namespace Content.Client.Actions
             BaseHandleState<WorldTargetActionComponent>(uid, component, state);
         }
 
+        private void OnEntityWorldTargetHandleState(EntityUid uid,
+            EntityWorldTargetActionComponent component,
+            ref ComponentHandleState args)
+        {
+            if (args.Current is not EntityWorldTargetActionComponentState state)
+                return;
+
+            component.Whitelist = state.Whitelist;
+            component.CanTargetSelf = state.CanTargetSelf;
+            BaseHandleState<EntityWorldTargetActionComponent>(uid, component, state);
+        }
+
         private void BaseHandleState<T>(EntityUid uid, BaseActionComponent component, BaseActionComponentState state) where T : BaseActionComponent
         {
             // TODO ACTIONS use auto comp states
             component.Icon = state.Icon;
             component.IconOn = state.IconOn;
             component.IconColor = state.IconColor;
+            component.OriginalIconColor = state.OriginalIconColor;
+            component.DisabledIconColor = state.DisabledIconColor;
             component.Keywords.Clear();
             component.Keywords.UnionWith(state.Keywords);
             component.Enabled = state.Enabled;
@@ -107,10 +145,12 @@ namespace Content.Client.Actions
             UpdateAction(uid, component);
         }
 
-        protected override void UpdateAction(EntityUid? actionId, BaseActionComponent? action = null)
+        public override void UpdateAction(EntityUid? actionId, BaseActionComponent? action = null)
         {
             if (!ResolveActionData(actionId, ref action))
                 return;
+
+            action.IconColor = action.Charges < 1 ? action.DisabledIconColor : action.OriginalIconColor;
 
             base.UpdateAction(actionId, action);
             if (_playerManager.LocalEntity != action.AttachedEntity)
@@ -246,9 +286,6 @@ namespace Content.Client.Actions
 
             if (action.ClientExclusive)
             {
-                if (instantAction.Event != null)
-                    instantAction.Event.Performer = user;
-
                 PerformAction(user, actions, actionId, instantAction, instantAction.Event, GameTiming.CurTime);
             }
             else
@@ -290,7 +327,7 @@ namespace Content.Client.Actions
                     continue;
 
                 var action = _serialization.Read<BaseActionComponent>(actionNode, notNullableOverride: true);
-                var actionId = Spawn(null);
+                var actionId = Spawn();
                 AddComp(actionId, action);
                 AddActionDirect(user, actionId);
 

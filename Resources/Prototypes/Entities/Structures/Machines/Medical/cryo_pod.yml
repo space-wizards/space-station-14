@@ -54,8 +54,8 @@
     boardName: wires-board-name-cryopod
     layoutId: CryoPod
   - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -85,17 +85,18 @@
         whitelist:
           components:
             - FitsInDispenser
+  - type: ItemToggle
   - type: HealthAnalyzer
     scanDelay: 0
   - type: UserInterface
     interfaces:
-      - key: enum.HealthAnalyzerUiKey.Key
+      enum.HealthAnalyzerUiKey.Key:
         type: HealthAnalyzerBoundUserInterface
-      - key: enum.WiresUiKey.Key
+      enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
   - type: ActivatableUI
     key: enum.HealthAnalyzerUiKey.Key
-    requireHands: false
+    requiresComplex: false
   - type: ActivatableUIRequiresPower
   - type: PointLight
     color: "#3a807f"

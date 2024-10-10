@@ -32,12 +32,8 @@
     factions:
     - SimpleNeutral
   - type: IntrinsicRadioReceiver
-  - type: IntrinsicRadioTransmitter
-    channels:
-    - Binary
   - type: ActiveRadio
     channels:
-    - Binary
     - Common
   - type: HealthExaminable
     examinableTypes:
@@ -60,13 +56,13 @@
   - type: NameIdentifier
     group: GenericNumber
   - type: Repairable
-    fuelcost: 15
     doAfterDelay: 8
+    fuelCost: 15
   - type: Pullable
   - type: Tag
     tags:
     - DoorBumpOpener
-    - ShoesRequiredStepTriggerImmune
+    - Bot
   - type: MobState
     allowedStates:
       - Alive
@@ -104,9 +100,60 @@
     - Robotics
   - type: Speech
     speechVerb: Robotic
+    speechSounds: Pai #couldn't decide if this should be borg or pai sounds so I flipped a coin.
   - type: TypingIndicator
     proto: robot
   - type: ZombieImmune
+  - type: ProtectedFromStepTriggers
+  - type: NoSlip
+  - type: Insulated
+
+- type: entity
+  parent: MobSiliconBase
+  id: MobFireBot
+  name: firebot
+  description: A little fire extinguishing bot. He looks rather anxious.
+  components:
+  - type: Sprite
+    sprite: Mobs/Silicon/Bots/firebot.rsi
+    state: firebot
+  - type: Construction
+    graph: FireBot
+    node: bot
+  - type: SentienceTarget
+    flavorKind: station-event-random-sentience-flavor-mechanical
+  - type: HTN
+    rootTask:
+      task: FirebotCompound
+  - type: SolutionContainerManager
+    solutions:
+      spray:
+        maxVol: 10
+        reagents:
+        - ReagentId: Water
+          Quantity: 10
+  - type: SolutionRegeneration
+    solution: spray
+    generated:
+      reagents:
+        - ReagentId: Water
+          Quantity: 10
+  - type: Spray
+    transferAmount: 10
+    pushbackAmount: 60
+    spraySound:
+      path: /Audio/Effects/extinguish.ogg
+    sprayedPrototype: ExtinguisherSpray
+    vaporAmount: 1
+    vaporSpread: 90
+    sprayVelocity: 3.0
+  - type: UseDelay
+    delay: 4
+  - type: InteractionPopup
+    interactSuccessString: petting-success-firebot
+    interactFailureString: petting-failure-firebot
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
 
 - type: entity
   parent: MobSiliconBase
@@ -115,11 +162,16 @@
   description: Horrifying.
   components:
   - type: SpamEmitSound
+    minInterval: 2
+    maxInterval: 12
     sound:
       collection: BikeHorn
   - type: Sprite
     sprite: Mobs/Silicon/Bots/honkbot.rsi
     state: honkbot
+  - type: HTN
+    rootTask:
+      task: HonkbotCompound
   - type: Slippery
     launchForwardsMultiplier: 2
   - type: Speech
@@ -149,6 +201,9 @@
     makeSentient: true
     name: ghost-role-information-honkbot-name
     description: ghost-role-information-honkbot-description
+    rules: ghost-role-information-freeagent-rules
+    raffle:
+      settings: default
   - type: GhostTakeoverAvailable
   - type: InteractionPopup
     interactSuccessString: petting-success-honkbot
@@ -174,6 +229,9 @@
     makeSentient: true
     name: ghost-role-information-jonkbot-name
     description: ghost-role-information-jonkbot-description
+    rules: ghost-role-information-freeagent-rules
+    raffle:
+      settings: default
   - type: InteractionPopup
     interactSuccessSound:
       path: /Audio/Items/brokenbikehorn.ogg
@@ -200,8 +258,6 @@
   - type: Construction
     graph: CleanBot
     node: bot
-  - type: SentienceTarget
-    flavorKind: station-event-random-sentience-flavor-mechanical
   - type: Absorbent
     pickupAmount: 10
   - type: UseDelay
@@ -224,7 +280,6 @@
   - type: MovementSpeedModifier
     baseWalkSpeed: 2
     baseSprintSpeed: 3
-  - type: NoSlip
   - type: HTN
     rootTask:
       task: CleanbotCompound
@@ -237,7 +292,10 @@
       path: /Audio/Ambience/Objects/periodic_beep.ogg
 
 - type: entity
-  parent: MobSiliconBase
+  parent:
+  - MobSiliconBase
+  - ShowMedicalIcons
+  - StripableInventoryBase
   id: MobMedibot
   name: medibot
   description: No substitute for a doctor, but better than nothing.
@@ -271,32 +329,25 @@
   - type: Construction
     graph: MediBot
     node: bot
-  - type: NoSlip
   - type: Anchorable
   - type: InteractionPopup
     interactSuccessString: petting-success-medibot
     interactFailureString: petting-failure-medibot
     interactSuccessSound:
       path: /Audio/Ambience/Objects/periodic_beep.ogg
-  - type: ShowHealthBars
-    damageContainers:
-    - Biological
-  - type: ShowHealthIcons
-    damageContainers:
-    - Biological
+  - type: Advertise
+    pack: MedibotAds
+  - type: Inventory
+    templateId: medibot
 
 - type: entity
-  parent: MobSiliconBase
+  parent:
+  - MobSiliconBase
+  - StripableInventoryBase
   id: MobMimeBot
   name: mimebot
-  description: Why not give mimebot a friendly wave.
+  description: Why not give the mimebot a friendly wave?
   components:
-  - type: InventorySlots
-  - type: Strippable
-  - type: UserInterface
-    interfaces:
-    - key: enum.StrippingUiKey.Key
-      type: StrippableBoundUserInterface
   - type: Sprite
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
@@ -310,9 +361,79 @@
     makeSentient: true
     name: ghost-role-information-mimebot-name
     description: ghost-role-information-mimebot-description
+    rules: ghost-role-information-freeagent-rules
+    raffle:
+      settings: default
   - type: GhostTakeoverAvailable
   - type: InteractionPopup
     interactSuccessString: petting-success-mimebot
     interactFailureString: petting-failure-mimebot
   - type: Inventory
     templateId: head
+
+- type: entity
+  parent: MobSiliconBase
+  id: MobSupplyBot
+  name: supplybot
+  description: Delivers cargo!
+  components:
+  - type: Sprite
+    sprite: Mobs/Silicon/Bots/supplybot.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+      state: supplybot
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: supplybot-moving
+    noMovementLayers:
+      movement:
+        state: supplybot
+  - type: GhostRole
+    makeSentient: true
+    name: ghost-role-information-supplybot-name
+    description: ghost-role-information-supplybot-description
+    rules: ghost-role-information-nonantagonist-rules
+    raffle:
+      settings: default
+  - type: GhostTakeoverAvailable
+  - type: Construction
+    graph: SupplyBot
+    node: bot
+  - type: Access
+    tags:
+    - Cargo
+    - Maintenance
+    - Salvage
+  - type: Dumpable
+  - type: Storage
+    maxItemSize: Huge
+    grid:
+    - 0,0,9,3
+  - type: UserInterface
+    interfaces:
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
+  - type: UnpoweredFlashlight
+  - type: PointLight
+    enabled: false
+    radius: 3.5
+    softness: 2
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepBorg
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - FootstepSound
+    - Bot
+  - type: ActiveRadio
+    channels:
+    - Common
+    - Supply

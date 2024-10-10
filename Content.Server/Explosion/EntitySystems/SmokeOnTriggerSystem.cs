@@ -1,9 +1,11 @@
 using Content.Shared.Explosion.Components;
 using Content.Shared.Explosion.EntitySystems;
 using Content.Server.Fluids.EntitySystems;
+using Content.Server.Spreader;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Maps;
+using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 
 namespace Content.Server.Explosion.EntitySystems;
@@ -15,6 +17,8 @@ public sealed class SmokeOnTriggerSystem : SharedSmokeOnTriggerSystem
 {
     [Dependency] private readonly IMapManager _mapMan = default!;
     [Dependency] private readonly SmokeSystem _smoke = default!;
+    [Dependency] private readonly TransformSystem _transform = default!;
+    [Dependency] private readonly SpreaderSystem _spreader = default!;
 
     public override void Initialize()
     {
@@ -26,14 +30,18 @@ public sealed class SmokeOnTriggerSystem : SharedSmokeOnTriggerSystem
     private void OnTrigger(EntityUid uid, SmokeOnTriggerComponent comp, TriggerEvent args)
     {
         var xform = Transform(uid);
-        if (!_mapMan.TryFindGridAt(xform.MapPosition, out _, out var grid) ||
+        var mapCoords = _transform.GetMapCoordinates(uid, xform);
+        if (!_mapMan.TryFindGridAt(mapCoords, out _, out var grid) ||
             !grid.TryGetTileRef(xform.Coordinates, out var tileRef) ||
-            tileRef.Tile.IsSpace())
+            tileRef.Tile.IsEmpty)
         {
             return;
         }
 
-        var coords = grid.MapToGrid(xform.MapPosition);
+        if (_spreader.RequiresFloorToSpread(comp.SmokePrototype.ToString()) && tileRef.Tile.IsSpace())
+            return;
+
+        var coords = grid.MapToGrid(mapCoords);
         var ent = Spawn(comp.SmokePrototype, coords.SnapToGrid());
         if (!TryComp<SmokeComponent>(ent, out var smoke))
         {

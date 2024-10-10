@@ -13,6 +13,9 @@
       makeSentient: true
       name: ghost-role-information-guardian-name
       description: ghost-role-information-guardian-description
+      rules: ghost-role-information-familiar-rules
+      raffle:
+        settings: default
     - type: GhostTakeoverAvailable
     - type: Input
       context: "human"
@@ -66,7 +69,7 @@
           mask:
             - FlyingMobMask
           layer:
-            - FlyingMobLayer
+            - Opaque
     - type: Damageable
       damageContainer: Biological
     - type: MobState
@@ -86,6 +89,8 @@
       animation: WeaponArcFist
       attackRate: 1.8
       autoAttack: true
+      soundHit:
+        collection: Punch
       damage:
         types:
           Blunt: 20
@@ -93,8 +98,8 @@
     - type: MeleeSpeech
     - type: UserInterface
       interfaces:
-      - key: enum.MeleeSpeechUiKey.Key
-        type: MeleeSpeechBoundUserInterface
+        enum.MeleeSpeechUiKey.Key:
+          type: MeleeSpeechBoundUserInterface
     - type: Actions
     - type: Guardian
     - type: InteractionPopup
@@ -118,6 +123,9 @@
       makeSentient: true
       name: ghost-role-information-holoparasite-name
       description: ghost-role-information-holoparasite-description
+      rules: ghost-role-information-familiar-rules
+      raffle:
+        settings: default
     - type: GhostTakeoverAvailable
     - type: NameIdentifier
       group: Holoparasite
@@ -140,7 +148,7 @@
   name: Ifrit
   parent: MobGuardianBase
   id: MobIfritGuardian
-  description: A corrupted jinn, ripped from fitra to serve the wizard's petty needs. It stands wicked, tuning into it's owner's life to sustain itself.
+  description: A corrupted jinn, ripped from fitra to serve the wizard's petty needs. It stands wicked, tuning into its owner's life to sustain itself.
   components:
     - type: GhostRole
       allowMovement: true
@@ -148,6 +156,9 @@
       makeSentient: true
       name: ghost-role-information-ifrit-name
       description: ghost-role-information-ifrit-description
+      rules: ghost-role-information-familiar-rules
+      raffle:
+        settings: default
     - type: GhostTakeoverAvailable
     - type: RandomSprite
       available:
@@ -165,7 +176,7 @@
 - type: entity
   name: HoloClown
   id: MobHoloClownGuardian
-  parent: MobGuardianBase
+  parent: [MobGuardianBase, InventoryBase]
   description: A mesmerising whirl of hard-light patterns weaves a blue colored clown of dubious origin.
   components:
     - type: GhostRole
@@ -174,6 +185,9 @@
       makeSentient: true
       name: ghost-role-information-holoclown-name
       description: ghost-role-information-holoclown-description
+      rules: ghost-role-information-familiar-rules
+      raffle:
+        settings: default
     - type: GhostTakeoverAvailable
     - type: NameIdentifier
       group: Holoparasite
@@ -215,6 +229,7 @@
     - type: Inventory
       templateId: holoclown
     - type: Hands
+    - type: ComplexInteraction
     - type: Clumsy
       clumsyDamage:
         types:
@@ -222,11 +237,12 @@
           Piercing: 4
         groups:
           Burn: 3
-    - type: InventorySlots
     - type: MeleeWeapon
       angle: 30
       animation: WeaponArcFist
       attackRate: 1.8
+      soundHit:
+        collection: BikeHorn
       damage:
         types:
           Blunt: 5
@@ -246,7 +262,6 @@
   id: ActionToggleGuardian
   name: Toggle Guardian
   description: Either manifests the guardian or recalls it back into your body
-  noSpawn: true
   components:
   - type: InstantAction
     icon: Interface/Actions/manifest.png

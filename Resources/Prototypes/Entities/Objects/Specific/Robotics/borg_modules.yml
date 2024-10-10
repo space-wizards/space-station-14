@@ -17,7 +17,8 @@
     - BorgModuleGeneric
   - type: GuideHelp
     guides:
-      - Cyborgs
+    - Cyborgs
+    - Robotics
 
 - type: entity
   id: BaseProviderBorgModule
@@ -32,7 +33,6 @@
   id: ActionBorgSwapModule
   name: Swap Module
   description: Select this module, enabling you to use the tools it provides.
-  noSpawn: true
   components:
   - type: InstantAction
     itemIconStyle: BigItem
@@ -206,6 +206,7 @@
     items:
     - MiningDrill
     - Shovel
+    - MineralScannerUnpowered
     - OreBag
     - Crowbar
     - RadioHandheld
@@ -222,7 +223,6 @@
   - type: ItemBorgModule
     items:
     - WeaponGrapplingGun
-    - WeaponCrusherDagger
     - HandheldGPSBasic
 
 # engineering modules
@@ -237,9 +237,10 @@
     - state: icon-tools-adv
   - type: ItemBorgModule
     items:
-    - Omnitool
+    - JawsOfLife
+    - PowerDrill
+    - Multitool
     - WelderExperimental
-    - NetworkConfigurator
     - RemoteSignaller
     - GasAnalyzer
     - GeigerCounter
@@ -319,6 +320,7 @@
     - HoloprojectorBorg
     - SprayBottleSpaceCleaner
     - Dropper
+    - TrashBag
 
 # medical modules
 - type: entity
@@ -346,12 +348,12 @@
     - state: icon-treatment
   - type: ItemBorgModule
     items:
+    - HandheldHealthAnalyzerUnpowered
     - Brutepack10Lingering
     - Ointment10Lingering
     - Gauze10Lingering
     - Bloodpack10Lingering
     - Syringe
-    - Dropper
 
 - type: entity
   id: BorgModuleDefibrillator
@@ -411,6 +413,7 @@
     items:
     - AnomalyScanner
     - AnomalyLocatorUnpowered
+    - AnomalyLocatorWideUnpowered
     - RemoteSignaller
     - Multitool
 
@@ -497,7 +500,7 @@
 #syndicate modules
 - type: entity
   id: BorgModuleSyndicateWeapon
-  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  parent: [ BaseBorgModule, BaseProviderBorgModule, BaseSyndicateContraband ]
   name: weapon cyborg module
   components:
   - type: Sprite
@@ -506,8 +509,8 @@
     - state: icon-syndicate
   - type: ItemBorgModule
     items:
-    - WeaponAdvancedLaser
-    - Machete
+    - WeaponPistolEchis
+    - EnergyDaggerLoud
 
 - type: entity
   id: BorgModuleOperative
@@ -517,13 +520,13 @@
   components:
     - type: Sprite
       layers:
-        - state: syndicate
-        - state: icon-tools
+      - state: syndicate
+      - state: icon-syndicate
     - type: ItemBorgModule
       items:
-        - Crowbar
-        - Emag
-        - PinpointerSyndicateNuclear
+      - Crowbar
+      - Emag
+      - PinpointerSyndicateNuclear
 
 - type: entity
   id: BorgModuleEsword
@@ -533,12 +536,12 @@
   components:
     - type: Sprite
       layers:
-        - state: syndicate
-        - state: icon-tools
+      - state: syndicate
+      - state: icon-syndicate
     - type: ItemBorgModule
       items:
-        - EnergySwordDouble
-        - PinpointerSyndicateNuclear
+      - CyborgEnergySwordDouble
+      - PinpointerSyndicateNuclear
 
 - type: entity
   id: BorgModuleL6C
@@ -548,9 +551,23 @@
   components:
     - type: Sprite
       layers:
-        - state: syndicate
-        - state: icon-tools
+      - state: syndicate
+      - state: icon-syndicate
     - type: ItemBorgModule
       items:
         - WeaponLightMachineGunL6C
         - PinpointerSyndicateNuclear
+
+- type: entity
+  id: BorgModuleMartyr
+  parent: [ BaseBorgModule, BaseProviderBorgModule, BaseSyndicateContraband ]
+  name: martyr cyborg module
+  description: "A module that comes with an explosive you probably don't want to handle yourself."
+  components:
+    - type: Sprite
+      layers:
+        - state: syndicateborgbomb
+        - state: icon-bomb
+    - type: ItemBorgModule
+      items:
+        - SelfDestructSeq

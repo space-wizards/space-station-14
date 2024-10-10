@@ -1,0 +1,18 @@
+<ui:FancyWindow xmlns="https://spacestation14.io" xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
+                SetSize="400 500" Title="{Loc 'jukebox-menu-title'}">
+    <BoxContainer Margin="4 0" Orientation="Vertical">
+        <ItemList Name="MusicList" SelectMode="Button" Margin="3 3 3 3"
+        HorizontalExpand="True" VerticalExpand="True" SizeFlagsStretchRatio="8"/>
+        <BoxContainer Orientation="Vertical">
+            <Label Name="SongSelected" Text="{Loc 'jukebox-menu-selectedsong'}" />
+            <Label Name="SongName" Text="---" />
+            <Slider Name="PlaybackSlider" HorizontalExpand="True" />
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True"
+        VerticalExpand="False" SizeFlagsStretchRatio="1">
+            <Button Name="PlayButton" Text="{Loc 'jukebox-menu-buttonplay'}" />
+            <Button Name="StopButton" Text="{Loc 'jukebox-menu-buttonstop'}" />
+            <Label Name="DurationLabel" Text="00:00 / 00:00" HorizontalAlignment="Right" HorizontalExpand="True"/>
+        </BoxContainer>
+    </BoxContainer>
+</ui:FancyWindow>

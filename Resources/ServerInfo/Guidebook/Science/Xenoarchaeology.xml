@@ -2,18 +2,28 @@
 # Xenoarchaeology
 Xenoarchaeology is a science subdepartment focused on researching and experimenting on alien artifacts.
 
-## Artifacts
+At the start of each shift, the Science department will usually have access to at least two artifacts to experiment on. You can buy more by talking to the Cargo department.
+
+By researching the unique things each artifact can do, you gain Research Points, increase the artifact's sale value, and potentially discover a useful ability or two that can help your department or the whole station!
+
+## Artifact Nodes
 <Box>
 <GuideEntityEmbed Entity="ComplexXenoArtifact" Caption=""/>
 <GuideEntityEmbed Entity="SimpleXenoArtifactItem" Caption=""/>
 </Box>
-Artifacts consist of a randomly-generated graph structure. They consist of nodes connected to each other by edges, the traversal of which is the main goal of the scientists working on them.
+Artifacts consist of a randomly-generated tree of nodes. These nodes have a "[color=#a4885c]depth[/color]", representing how dangerous the node is, and the number of other nodes connected to it, called "[color=#a4885c]edges[/color]",
 
-Each node has two main components: a [color=#a4885c]stimulus[/color] and a [color=#a4885c]reaction[/color]. A stimulus is the external behavior that triggers the reaction. Some reactions are instantaneous effects while others are permanent changes. Triggering the reaction causes the artifact to move to one of the node's edges.
+Artifacts always start at depth zero, the root of the tree. Travelling the tree to find as many nodes as possible is the main goal of the scientists working on them. Knowledge is extracted from nodes to gain Research Points and increase the artifact's sale value.
 
-With these basic principles, you can begin to grasp how the different nodes of an artifact are interconnected, and how one can move between them by repeatedly activating nodes.
+Each node has two components: its [color=#a4885c]stimulus[/color] and a [color=#a4885c]reaction[/color].
 
-While it might seem random to an untrained eye, a skilled scientist can learn to understand the internal structure of any artifact.
+A stimulus is the external behavior that triggers the reaction. There's a variety of these, and higher depth nodes have more difficult to accomplish stimuli. Some stimuli will need improvisation to trigger, and you may need to talk to other departments to get everything you need.
+
+Some reactions are instantaneous effects while others are permanent changes. Once an artifact is triggered, the reaction causes the artifact to randomly move to another node it is linked to.
+
+With some experimental science, you can begin to grasp how the different nodes of an artifact are connected, and how to move between them by repeatedly activating nodes.
+
+All non-zero-depth nodes will have exactly one edge that leads up to its parent node. All other edges a node has lead down to the next depth.
 
 ## Artifact Analyzer and Analysis Console
 <Box>
@@ -22,13 +32,26 @@ While it might seem random to an untrained eye, a skilled scientist can learn to
 </Box>
 The main equipment that you'll be using for Xenoarchaeology is the [color=#a4885c]artifact analyzer[/color] and the [color=#a4885c]analysis console[/color]. You can use these to create reports that contain valuable information about an artifact.
 
-To set them up, simply link them with a network configurator, set an artifact on top of the analyzer, and press the [color=#a4885c]Scan[/color] button.
+To set them up, simply link them with a network configurator and set an artifact on top of the analyzer. Every station has at least one of these machines already set up.
 
-Using the console, you can extract points from the artifact using the [color=#a4885c]Extract[/color] button. The amount of points you extract is based on how many new nodes have been activated, since last extracting. You can extract multiple times, there is no reason not to!!!
+Use the console's [color=#a4885c]scan[/color] button to discover what stimulus the artifact needs and what its reaction will do. Scanning takes thirty seconds.
+
+Use the [color=#a4885c]print[/color] button to save the scan result, so you can refer to it later.
+
+Once you've discovered a new node, you can extract points from the artifact using the [color=#a4885c]Extract[/color] button.
 
 ## Assembling Artifacts
 <GuideEntityEmbed Entity="ArtifactFragment" Caption="Artifact Fragment"/>
 
-It is possible to gather multiple artifact fragments and assemble them into a working artifact. You can ask for these from Salvage, they usually find these while mining asteroids or on Expeditions.
+It is possible to gather multiple artifact fragments and assemble them into a working artifact. You can ask for these from Salvage, who usually find these while mining asteroids or on Expeditions.
 
+## Traversal Bias
+<Box>
+  <GuideEntityEmbed Entity="MachineArtifactAnalyzer"/>
+</Box>
+Artifacts placed on top of a powered artifact analyzer are subjected to a bias which affects which node they will move to after being activated. The bias can be set in the artifact console.
+
+There are two types of biases:
+- [color=#a4885c]Up:[/color] favors nodes closer to the origin. Results in a decrease of depth.
+- [color=#a4885c]Down:[/color] favors nodes farther away from the origin. Results in an increase of depth.
 </Document>

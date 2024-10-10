@@ -36,6 +36,9 @@ namespace Content.Server.Speech.EntitySystems
             if (!_proto.TryIndex<ReplacementAccentPrototype>(accent, out var prototype))
                 return message;
 
+            if (!_random.Prob(prototype.ReplacementChance))
+                return message;
+
             // Prioritize fully replacing if that exists--
             // ideally both aren't used at the same time (but we don't have a way to enforce that in serialization yet)
             if (prototype.FullReplacements != null)
@@ -46,6 +49,12 @@ namespace Content.Server.Speech.EntitySystems
             if (prototype.WordReplacements == null)
                 return message;
 
+            // Prohibition of repeated word replacements.
+            // All replaced words placed in the final message are placed here as dashes (___) with the same length.
+            // The regex search goes through this buffer message, from which the already replaced words are crossed out,
+            // ensuring that the replaced words cannot be replaced again.
+            var maskMessage = message;
+
             foreach (var (first, replace) in prototype.WordReplacements)
             {
                 var f = _loc.GetString(first);
@@ -53,10 +62,10 @@ namespace Content.Server.Speech.EntitySystems
                 // this is kind of slow but its not that bad
                 // essentially: go over all matches, try to match capitalization where possible, then replace
                 // rather than using regex.replace
-                for (int i = Regex.Count(message, $@"(?<!\w){f}(?!\w)", RegexOptions.IgnoreCase); i > 0; i--)
+                for (int i = Regex.Count(maskMessage, $@"(?<!\w){f}(?!\w)", RegexOptions.IgnoreCase); i > 0; i--)
                 {
                     // fetch the match again as the character indices may have changed
-                    Match match = Regex.Match(message, $@"(?<!\w){f}(?!\w)", RegexOptions.IgnoreCase);
+                    Match match = Regex.Match(maskMessage, $@"(?<!\w){f}(?!\w)", RegexOptions.IgnoreCase);
                     var replacement = r;
 
                     // Intelligently replace capitalization
@@ -80,6 +89,8 @@ namespace Content.Server.Speech.EntitySystems
 
                     // In-place replace the match with the transformed capitalization replacement
                     message = message.Remove(match.Index, match.Length).Insert(match.Index, replacement);
+                    var mask = new string('_', replacement.Length);
+                    maskMessage = maskMessage.Remove(match.Index, match.Length).Insert(match.Index, mask);
                 }
             }
 

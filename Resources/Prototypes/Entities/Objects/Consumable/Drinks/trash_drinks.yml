@@ -5,6 +5,7 @@
   parent: BaseItem
   abstract: true
   description: An empty bottle.
+  suffix: Empty
   components:
   - type: Sprite
     state: icon
@@ -24,6 +25,8 @@
     damage:
       types:
         Blunt: 0
+  - type: MixableSolution
+    solution: drink
   - type: Spillable
     solution: drink
   - type: FitsInDispenser
@@ -36,8 +39,8 @@
     solution: drink
   - type: UserInterface
     interfaces:
-    - key: enum.TransferAmountUiKey.Key
-      type: TransferAmountBoundUserInterface
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
   - type: DamageOnLand
     damage:
       types:
@@ -73,6 +76,7 @@
     materialComposition:
       Glass: 100
   - type: SpaceGarbage
+  - type: DnaSubstanceTrace
 
 - type: entity
   name: base empty bottle
@@ -93,6 +97,7 @@
   parent: BaseItem
   abstract: true
   description: An empty carton.
+  suffix: Empty
   components:
   - type: Sprite
     state: icon
@@ -100,6 +105,8 @@
     solutions:
       drink:
         maxVol: 50
+  - type: MixableSolution
+    solution: drink
   - type: SolutionTransfer
     canChangeTransferAmount: true
     maxTransferAmount: 5
@@ -116,8 +123,8 @@
     solution: drink
   - type: UserInterface
     interfaces:
-    - key: enum.TransferAmountUiKey.Key
-      type: TransferAmountBoundUserInterface
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
@@ -206,12 +213,12 @@
 
 
 - type: entity
-  name: goldschlager bottle
+  name: gildlager bottle
   parent: DrinkBottleBaseEmpty
-  id: DrinkBottleGoldschlager
+  id: DrinkBottleGildlager
   components:
   - type: Sprite
-    sprite: Objects/Consumable/TrashDrinks/goldschlagerbottle_empty.rsi
+    sprite: Objects/Consumable/TrashDrinks/gildlagerbottle_empty.rsi
 
 
 - type: entity

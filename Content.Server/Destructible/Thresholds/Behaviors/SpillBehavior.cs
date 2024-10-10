@@ -1,4 +1,4 @@
-using Content.Server.Chemistry.Containers.EntitySystems;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Fluids.Components;
 using JetBrains.Annotations;
@@ -22,8 +22,8 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
         /// <param name="cause"></param>
         public void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
         {
-            var solutionContainerSystem = EntitySystem.Get<SolutionContainerSystem>();
-            var spillableSystem = EntitySystem.Get<PuddleSystem>();
+            var solutionContainerSystem = system.EntityManager.System<SharedSolutionContainerSystem>();
+            var spillableSystem = system.EntityManager.System<PuddleSystem>();
 
             var coordinates = system.EntityManager.GetComponent<TransformComponent>(owner).Coordinates;
 

@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Shared.Alert;
 using Content.Shared.FixedPoint;
 using Content.Shared.Store;
 using Content.Shared.Whitelist;
@@ -85,7 +86,7 @@ public sealed partial class RevenantComponent : Component
     /// The amount of essence that is needed to use the ability.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("defileCost")]
-    public FixedPoint2 DefileCost = -30;
+    public FixedPoint2 DefileCost = 30;
 
     /// <summary>
     /// The status effects applied after the ability
@@ -120,7 +121,7 @@ public sealed partial class RevenantComponent : Component
     /// The amount of essence that is needed to use the ability.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("overloadCost")]
-    public FixedPoint2 OverloadCost = -40;
+    public FixedPoint2 OverloadCost = 40;
 
     /// <summary>
     /// The status effects applied after the ability
@@ -148,7 +149,7 @@ public sealed partial class RevenantComponent : Component
     /// The amount of essence that is needed to use the ability.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("blightCost")]
-    public float BlightCost = -50;
+    public float BlightCost = 50;
 
     /// <summary>
     /// The status effects applied after the ability
@@ -170,7 +171,7 @@ public sealed partial class RevenantComponent : Component
     /// The amount of essence that is needed to use the ability.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("malfunctionCost")]
-    public FixedPoint2 MalfunctionCost = -60;
+    public FixedPoint2 MalfunctionCost = 60;
 
     /// <summary>
     /// The status effects applied after the ability
@@ -199,6 +200,9 @@ public sealed partial class RevenantComponent : Component
     [DataField]
     public EntityWhitelist? MalfunctionBlacklist;
     #endregion
+
+    [DataField]
+    public ProtoId<AlertPrototype> EssenceAlert = "Essence";
 
     #region Visualizer
     [DataField("state")]

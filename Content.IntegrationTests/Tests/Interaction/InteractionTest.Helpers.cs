@@ -5,18 +5,16 @@ using System.Linq;
 using System.Numerics;
 using System.Reflection;
 using Content.Client.Construction;
-using Content.Server.Atmos;
-using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Construction.Components;
 using Content.Server.Gravity;
-using Content.Server.Item;
 using Content.Server.Power.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Gravity;
 using Content.Shared.Item;
 using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
@@ -47,8 +45,9 @@ public abstract partial class InteractionTest
                 return;
 
             var comp = CEntMan.GetComponent<ConstructionGhostComponent>(clientTarget!.Value);
-            ClientTarget = clientTarget;
-            ConstructionGhostId = comp.Owner.Id;
+            Target = CEntMan.GetNetEntity(clientTarget.Value);
+            Assert.That(Target.Value.IsClientSide());
+            ConstructionGhostId = clientTarget.Value.GetHashCode();
         });
 
         await RunTicks(1);
@@ -85,18 +84,21 @@ public abstract partial class InteractionTest
     /// <summary>
     /// Spawn an entity entity and set it as the target.
     /// </summary>
-    [MemberNotNull(nameof(Target))]
-    protected async Task SpawnTarget(string prototype)
+    [MemberNotNull(nameof(Target), nameof(STarget), nameof(CTarget))]
+#pragma warning disable CS8774 // Member must have a non-null value when exiting.
+    protected async Task<NetEntity> SpawnTarget(string prototype)
     {
         Target = NetEntity.Invalid;
         await Server.WaitPost(() =>
         {
-            Target = SEntMan.GetNetEntity(SEntMan.SpawnEntity(prototype, SEntMan.GetCoordinates(TargetCoords)));
+            Target = SEntMan.GetNetEntity(SEntMan.SpawnAtPosition(prototype, SEntMan.GetCoordinates(TargetCoords)));
         });
 
         await RunTicks(5);
         AssertPrototype(prototype);
+        return Target!.Value;
     }
+#pragma warning restore CS8774 // Member must have a non-null value when exiting.
 
     /// <summary>
     /// Spawn an entity in preparation for deconstruction
@@ -132,21 +134,20 @@ public abstract partial class InteractionTest
     /// <summary>
     /// Place an entity prototype into the players hand. Deletes any currently held entity.
     /// </summary>
-    /// <remarks>
-    /// Automatically enables welders.
-    /// </remarks>
-    protected async Task<NetEntity> PlaceInHands(string id, int quantity = 1, bool enableWelder = true)
+    /// <param name="id">The entity or stack prototype to spawn and place into the users hand</param>
+    /// <param name="quantity">The number of entities to spawn. If the prototype is a stack, this sets the stack count.</param>
+    /// <param name="enableToggleable">Whether or not to automatically enable any toggleable items</param>
+    protected async Task<NetEntity> PlaceInHands(string id, int quantity = 1, bool enableToggleable = true)
     {
-        return await PlaceInHands((id, quantity), enableWelder);
+        return await PlaceInHands((id, quantity), enableToggleable);
     }
 
     /// <summary>
     /// Place an entity prototype into the players hand. Deletes any currently held entity.
     /// </summary>
-    /// <remarks>
-    /// Automatically enables welders.
-    /// </remarks>
-    protected async Task<NetEntity> PlaceInHands(EntitySpecifier entity, bool enableWelder = true)
+    /// <param name="entity">The entity type & quantity to spawn and place into the users hand</param>
+    /// <param name="enableToggleable">Whether or not to automatically enable any toggleable items</param>
+    protected async Task<NetEntity> PlaceInHands(EntitySpecifier entity, bool enableToggleable = true)
     {
         if (Hands.ActiveHand == null)
         {
@@ -168,15 +169,15 @@ public abstract partial class InteractionTest
             Assert.That(HandSys.TryPickup(playerEnt, item, Hands.ActiveHand, false, false, Hands));
 
             // turn on welders
-            if (enableWelder && SEntMan.TryGetComponent(item, out itemToggle) && !itemToggle.Activated)
+            if (enableToggleable && SEntMan.TryGetComponent(item, out itemToggle) && !itemToggle.Activated)
             {
-                Assert.That(ItemToggleSys.TryActivate(item, playerEnt, itemToggle: itemToggle));
+                Assert.That(ItemToggleSys.TryActivate((item, itemToggle), user: playerEnt));
             }
         });
 
         await RunTicks(1);
         Assert.That(Hands.ActiveHandEntity, Is.EqualTo(item));
-        if (enableWelder && itemToggle != null)
+        if (enableToggleable && itemToggle != null)
             Assert.That(itemToggle.Activated);
 
         return SEntMan.GetNetEntity(item);
@@ -257,21 +258,20 @@ public abstract partial class InteractionTest
     /// <summary>
     /// Place an entity prototype into the players hand and interact with the given entity (or target position)
     /// </summary>
-    /// <remarks>
-    /// Empty strings imply empty hands.
-    /// </remarks>
-    protected async Task Interact(string id, int quantity = 1, bool shouldSucceed = true, bool awaitDoAfters = true)
+    /// <param name="id">The entity or stack prototype to spawn and place into the users hand</param>
+    /// <param name="quantity">The number of entities to spawn. If the prototype is a stack, this sets the stack count.</param>
+    /// <param name="awaitDoAfters">Whether or not to wait for any do-afters to complete</param>
+    protected async Task InteractUsing(string id, int quantity = 1, bool awaitDoAfters = true)
     {
-        await Interact((id, quantity), shouldSucceed, awaitDoAfters);
+        await InteractUsing((id, quantity), awaitDoAfters);
     }
 
     /// <summary>
-    /// Place an entity prototype into the players hand and interact with the given entity (or target position)
+    /// Place an entity prototype into the players hand and interact with the given entity (or target position).
     /// </summary>
-    /// <remarks>
-    /// Empty strings imply empty hands.
-    /// </remarks>
-    protected async Task Interact(EntitySpecifier entity, bool shouldSucceed = true, bool awaitDoAfters = true)
+    /// <param name="entity">The entity type & quantity to spawn and place into the users hand</param>
+    /// <param name="awaitDoAfters">Whether or not to wait for any do-afters to complete</param>
+    protected async Task InteractUsing(EntitySpecifier entity, bool awaitDoAfters = true)
     {
         // For every interaction, we will also examine the entity, just in case this breaks something, somehow.
         // (e.g., servers attempt to assemble construction examine hints).
@@ -281,38 +281,80 @@ public abstract partial class InteractionTest
         }
 
         await PlaceInHands(entity);
-        await Interact(shouldSucceed, awaitDoAfters);
+        await Interact(awaitDoAfters);
     }
 
     /// <summary>
     /// Interact with an entity using the currently held entity.
     /// </summary>
-    protected async Task Interact(bool shouldSucceed = true, bool awaitDoAfters = true)
+    /// <param name="awaitDoAfters">Whether or not to wait for any do-afters to complete</param>
+    protected async Task Interact(bool awaitDoAfters = true)
     {
-        var clientTarget = ClientTarget;
-
-        if ((clientTarget?.IsValid() != true || CEntMan.Deleted(clientTarget)) && (Target == null || Target.Value.IsValid()))
+        if (Target == null || !Target.Value.IsClientSide())
         {
-            await Server.WaitPost(() => InteractSys.UserInteraction(SEntMan.GetEntity(Player), SEntMan.GetCoordinates(TargetCoords), SEntMan.GetEntity(Target)));
-            await RunTicks(1);
+            await Interact(Target, TargetCoords, awaitDoAfters);
+            return;
         }
-        else
-        {
-            // The entity is client-side, so attempt to start construction
-            var clientEnt = ClientTarget ?? CEntMan.GetEntity(Target);
 
-            await Client.WaitPost(() => CConSys.TryStartConstruction(clientEnt!.Value));
-            await RunTicks(5);
-        }
+        // The target is a client-side entity, so we will just attempt to start construction under the assumption that
+        // it is a construction ghost.
+
+        await Client.WaitPost(() => CConSys.TryStartConstruction(CTarget!.Value));
+        await RunTicks(5);
 
         if (awaitDoAfters)
-            await AwaitDoAfters(shouldSucceed);
+            await AwaitDoAfters();
 
-        await CheckTargetChange(shouldSucceed && awaitDoAfters);
+        await CheckTargetChange();
+    }
+
+    /// <inheritdoc cref="Interact(EntityUid?,EntityCoordinates,bool)"/>
+    protected async Task Interact(NetEntity? target, NetCoordinates coordinates, bool awaitDoAfters = true)
+    {
+        Assert.That(SEntMan.TryGetEntity(target, out var sTarget) || target == null);
+        var coords = SEntMan.GetCoordinates(coordinates);
+        Assert.That(coords.IsValid(SEntMan));
+        await Interact(sTarget, coords, awaitDoAfters);
     }
 
     /// <summary>
-    /// Variant of <see cref="InteractUsing"/> that performs several interactions using different entities.
+    /// Interact with an entity using the currently held entity.
+    /// </summary>
+    protected async Task Interact(EntityUid? target, EntityCoordinates coordinates, bool awaitDoAfters = true)
+    {
+        Assert.That(SEntMan.TryGetEntity(Player, out var player));
+
+        await Server.WaitPost(() => InteractSys.UserInteraction(player!.Value, coordinates, target));
+        await RunTicks(1);
+
+        if (awaitDoAfters)
+            await AwaitDoAfters();
+
+        await CheckTargetChange();
+    }
+
+    /// <summary>
+    /// Activate an entity.
+    /// </summary>
+    protected async Task Activate(NetEntity? target = null, bool awaitDoAfters = true)
+    {
+        target ??= Target;
+        Assert.That(target, Is.Not.Null);
+        Assert.That(SEntMan.TryGetEntity(target!.Value, out var sTarget));
+        Assert.That(SEntMan.TryGetEntity(Player, out var player));
+
+        await Server.WaitPost(() => InteractSys.InteractionActivate(player!.Value, sTarget!.Value));
+        await RunTicks(1);
+
+        if (awaitDoAfters)
+            await AwaitDoAfters();
+
+        await CheckTargetChange();
+    }
+
+    /// <summary>
+    /// Variant of <see cref="InteractUsing(string,int,bool)"/> that performs several interactions using different entities.
+    /// Useful for quickly finishing multiple construction steps.
     /// </summary>
     /// <remarks>
     /// Empty strings imply empty hands.
@@ -321,7 +363,7 @@ public abstract partial class InteractionTest
     {
         foreach (var spec in specifiers)
         {
-            await Interact(spec);
+            await InteractUsing(spec);
         }
     }
 
@@ -341,7 +383,7 @@ public abstract partial class InteractionTest
     /// <summary>
     /// Wait for any currently active DoAfters to finish.
     /// </summary>
-    protected async Task AwaitDoAfters(bool shouldSucceed = true, int maxExpected = 1)
+    protected async Task AwaitDoAfters(int maxExpected = 1)
     {
         if (!ActiveDoAfters.Any())
             return;
@@ -356,13 +398,12 @@ public abstract partial class InteractionTest
             await RunTicks(10);
         }
 
-        if (!shouldSucceed)
-            return;
-
         foreach (var doAfter in doAfters)
         {
             Assert.That(!doAfter.Cancelled);
         }
+
+        await RunTicks(5);
     }
 
     /// <summary>
@@ -401,39 +442,28 @@ public abstract partial class InteractionTest
     /// Check if the test's target entity has changed. E.g., construction interactions will swap out entities while
     /// a structure is being built.
     /// </summary>
-    protected async Task CheckTargetChange(bool shouldSucceed)
+    protected async Task CheckTargetChange()
     {
         if (Target == null)
             return;
 
-        var target = Target.Value;
+        var originalTarget = Target.Value;
         await RunTicks(5);
 
-        if (ClientTarget != null && CEntMan.IsClientSide(ClientTarget.Value))
+        if (Target.Value.IsClientSide() && CTestSystem.Ghosts.TryGetValue(ConstructionGhostId, out var newWeh))
         {
-            Assert.That(CEntMan.Deleted(ClientTarget.Value), Is.EqualTo(shouldSucceed),
-                $"Construction ghost was {(shouldSucceed ? "not deleted" : "deleted")}.");
-
-            if (shouldSucceed)
-            {
-                Assert.That(CTestSystem.Ghosts.TryGetValue(ConstructionGhostId, out var newWeh),
-                    $"Failed to get construction entity from ghost Id");
-
-                await Client.WaitPost(() => CLogger.Debug($"Construction ghost {ConstructionGhostId} became entity {newWeh}"));
-                Target = newWeh;
-            }
+            CLogger.Debug($"Construction ghost {ConstructionGhostId} became entity {newWeh}");
+            Target = newWeh;
         }
 
         if (STestSystem.EntChanges.TryGetValue(Target.Value, out var newServerWeh))
         {
-            await Server.WaitPost(
-                () => SLogger.Debug($"Construction entity {Target.Value} changed to {newServerWeh}"));
-
+            SLogger.Debug($"Construction entity {Target.Value} changed to {newServerWeh}");
             Target = newServerWeh;
         }
 
-        if (Target != target)
-            await CheckTargetChange(shouldSucceed);
+        if (Target != originalTarget)
+            await CheckTargetChange();
     }
 
     #region Asserts
@@ -447,14 +477,8 @@ public abstract partial class InteractionTest
             return;
         }
 
-        var meta = SEntMan.GetComponent<MetaDataComponent>(SEntMan.GetEntity(target.Value));
+        var meta = CEntMan.GetComponent<MetaDataComponent>(CEntMan.GetEntity(target.Value));
         Assert.That(meta.EntityPrototype?.ID, Is.EqualTo(prototype));
-    }
-
-    protected void ClientAssertPrototype(string? prototype, EntityUid? target)
-    {
-        var netEnt = CTestSystem.Ghosts[target.GetHashCode()];
-        AssertPrototype(prototype, netEnt);
     }
 
     protected void AssertPrototype(string? prototype, NetEntity? target = null)
@@ -547,11 +571,11 @@ public abstract partial class InteractionTest
 
         var tile = Tile.Empty;
         var serverCoords = SEntMan.GetCoordinates(coords ?? TargetCoords);
-        var pos = serverCoords.ToMap(SEntMan, Transform);
+        var pos = Transform.ToMapCoordinates(serverCoords);
         await Server.WaitPost(() =>
         {
-            if (MapMan.TryFindGridAt(pos, out _, out var grid))
-                tile = grid.GetTileRef(serverCoords).Tile;
+            if (MapMan.TryFindGridAt(pos, out var gridUid, out var grid))
+                tile = MapSystem.GetTileRef(gridUid, grid, serverCoords).Tile;
         });
 
         Assert.That(tile.TypeId, Is.EqualTo(targetTile.TypeId));
@@ -634,7 +658,7 @@ public abstract partial class InteractionTest
         var entities = await DoEntityLookup(flags);
         var found = ToEntityCollection(entities);
         expected.Remove(found);
-        expected.ConvertToStacks(ProtoMan, Factory);
+        await expected.ConvertToStacks(ProtoMan, Factory, Server);
 
         if (expected.Entities.Count == 0)
             return;
@@ -670,7 +694,7 @@ public abstract partial class InteractionTest
         LookupFlags flags = LookupFlags.Uncontained | LookupFlags.Contained,
         bool shouldSucceed = true)
     {
-        spec.ConvertToStack(ProtoMan, Factory);
+        await spec.ConvertToStack(ProtoMan, Factory, Server);
 
         var entities = await DoEntityLookup(flags);
         foreach (var uid in entities)
@@ -702,6 +726,8 @@ public abstract partial class InteractionTest
     protected IEnumerable<Shared.DoAfter.DoAfter> ActiveDoAfters
         => DoAfters.DoAfters.Values.Where(x => !x.Cancelled && !x.Completed);
 
+    #region Component
+
     /// <summary>
     /// Convenience method to get components on the target. Returns SERVER-SIDE components.
     /// </summary>
@@ -711,39 +737,61 @@ public abstract partial class InteractionTest
         if (target == null)
             Assert.Fail("No target specified");
 
-        return SEntMan.GetComponent<T>(SEntMan.GetEntity(target!.Value));
+        return SEntMan.GetComponent<T>(ToServer(target!.Value));
     }
+
+    /// <inheritdoc cref="Comp{T}"/>
+    protected bool TryComp<T>(NetEntity? target, [NotNullWhen(true)] out T? comp) where T : IComponent
+    {
+        return SEntMan.TryGetComponent(ToServer(target), out comp);
+    }
+
+    /// <inheritdoc cref="Comp{T}"/>
+    protected bool TryComp<T>([NotNullWhen(true)] out T? comp) where T : IComponent
+    {
+        return SEntMan.TryGetComponent(STarget, out comp);
+    }
+
+    #endregion
 
     /// <summary>
     /// Set the tile at the target position to some prototype.
     /// </summary>
-    protected async Task SetTile(string? proto, NetCoordinates? coords = null, MapGridComponent? grid = null)
+    protected async Task SetTile(string? proto, NetCoordinates? coords = null, Entity<MapGridComponent>? grid = null)
     {
         var tile = proto == null
             ? Tile.Empty
             : new Tile(TileMan[proto].TileId);
 
-        var pos = SEntMan.GetCoordinates(coords ?? TargetCoords).ToMap(SEntMan, Transform);
+        var pos = Transform.ToMapCoordinates(SEntMan.GetCoordinates(coords ?? TargetCoords));
 
+        EntityUid gridUid;
+        MapGridComponent? gridComp;
         await Server.WaitPost(() =>
         {
-            if (grid != null || MapMan.TryFindGridAt(pos, out var gridUid, out grid))
+            if (grid is { } gridEnt)
             {
-                grid.SetTile(SEntMan.GetCoordinates(coords ?? TargetCoords), tile);
+                MapSystem.SetTile(gridEnt, SEntMan.GetCoordinates(coords ?? TargetCoords), tile);
+                return;
+            }
+            else if (MapMan.TryFindGridAt(pos, out var gUid, out var gComp))
+            {
+                MapSystem.SetTile(gUid, gComp, SEntMan.GetCoordinates(coords ?? TargetCoords), tile);
                 return;
             }
 
             if (proto == null)
                 return;
 
-            var gridEnt = MapMan.CreateGridEntity(MapData.MapId);
+            gridEnt = MapMan.CreateGridEntity(MapData.MapId);
             grid = gridEnt;
             gridUid = gridEnt;
+            gridComp = gridEnt.Comp;
             var gridXform = SEntMan.GetComponent<TransformComponent>(gridUid);
             Transform.SetWorldPosition(gridXform, pos.Position);
-            grid.SetTile(SEntMan.GetCoordinates(coords ?? TargetCoords), tile);
+            MapSystem.SetTile((gridUid, gridComp), SEntMan.GetCoordinates(coords ?? TargetCoords), tile);
 
-            if (!MapMan.TryFindGridAt(pos, out _, out grid))
+            if (!MapMan.TryFindGridAt(pos, out _, out _))
                 Assert.Fail("Failed to create grid?");
         });
         await AssertTile(proto, coords);
@@ -767,14 +815,9 @@ public abstract partial class InteractionTest
         await Pair.RunTicksSync(ticks);
     }
 
-    protected int SecondsToTicks(float seconds)
-    {
-        return (int) Math.Ceiling(seconds / TickPeriod);
-    }
-
     protected async Task RunSeconds(float seconds)
     {
-        await RunTicks(SecondsToTicks(seconds));
+        await Pair.RunSeconds(seconds);
     }
 
     #endregion
@@ -825,7 +868,7 @@ public abstract partial class InteractionTest
             return false;
         }
 
-        if (!ui.OpenInterfaces.TryGetValue(key, out bui))
+        if (!ui.ClientOpenInterfaces.TryGetValue(key, out bui))
         {
             if (shouldSucceed)
                 Assert.Fail($"Entity {SEntMan.ToPrettyString(SEntMan.GetEntity(target.Value))} does not have an open bui with key {key.GetType()}.{key}.");
@@ -841,23 +884,70 @@ public abstract partial class InteractionTest
         return true;
     }
 
+    protected bool IsUiOpen(Enum key)
+    {
+        if (!TryComp(Player, out UserInterfaceUserComponent? user))
+            return false;
+
+        foreach (var keys in user.OpenInterfaces.Values)
+        {
+            if (keys.Contains(key))
+                return true;
+        }
+
+        return false;
+    }
+
     #endregion
 
     #region UI
 
     /// <summary>
-    ///     Presses and releases a button on some client-side window. Will fail if the button cannot be found.
+    /// Attempts to find, and then presses and releases a control on some client-side window.
+    /// Will fail if the control cannot be found.
     /// </summary>
-    protected async Task ClickControl<TWindow>(string name) where TWindow : BaseWindow
+    protected async Task ClickControl<TWindow, TControl>(string name, BoundKeyFunction? function = null)
+        where TWindow : BaseWindow
+        where TControl : Control
     {
-        await ClickControl(GetControl<TWindow, Control>(name));
+        var window = GetWindow<TWindow>();
+        var control = GetControlFromField<TControl>(name, window);
+        await ClickControl(control, function);
     }
 
     /// <summary>
-    ///     Simulates a click and release at the center of some UI Constrol.
+    /// Attempts to find, and then presses and releases a control on some client-side widget.
+    /// Will fail if the control cannot be found.
     /// </summary>
-    protected async Task ClickControl(Control control)
+    protected async Task ClickWidgetControl<TWidget, TControl>(string name, BoundKeyFunction? function = null)
+        where TWidget : UIWidget, new()
+        where TControl : Control
     {
+        var widget = GetWidget<TWidget>();
+        var control = GetControlFromField<TControl>(name, widget);
+        await ClickControl(control, function);
+    }
+
+    /// <inheritdoc cref="ClickControl{TWindow,TControl}"/>
+    protected async Task ClickControl<TWindow>(string name, BoundKeyFunction? function = null)
+        where TWindow : BaseWindow
+    {
+        await ClickControl<TWindow, Control>(name, function);
+    }
+
+    /// <inheritdoc cref="ClickWidgetControl{TWidget,TControl}"/>
+    protected async Task ClickWidgetControl<TWidget>(string name, BoundKeyFunction? function = null)
+        where TWidget : UIWidget, new()
+    {
+        await ClickWidgetControl<TWidget, Control>(name, function);
+    }
+
+    /// <summary>
+    ///     Simulates a click and release at the center of some UI control.
+    /// </summary>
+    protected async Task ClickControl(Control control, BoundKeyFunction? function = null)
+    {
+        function ??= EngineKeyFunctions.UIClick;
         var screenCoords = new ScreenCoordinates(
             control.GlobalPixelPosition + control.PixelSize / 2,
             control.Window?.Id ?? default);
@@ -866,7 +956,7 @@ public abstract partial class InteractionTest
         var relativePixelPos = screenCoords.Position - control.GlobalPixelPosition;
 
         var args = new GUIBoundKeyEventArgs(
-            EngineKeyFunctions.UIClick,
+            function.Value,
             BoundKeyState.Down,
             screenCoords,
             default,
@@ -877,7 +967,7 @@ public abstract partial class InteractionTest
         await RunTicks(1);
 
         args = new GUIBoundKeyEventArgs(
-            EngineKeyFunctions.UIClick,
+            function.Value,
             BoundKeyState.Up,
             screenCoords,
             default,
@@ -889,31 +979,26 @@ public abstract partial class InteractionTest
     }
 
     /// <summary>
-    ///     Attempts to find a control on some client-side window. Will fail if the control cannot be found.
+    /// Attempt to retrieve a control by looking for a field on some other control.
     /// </summary>
-    protected TControl GetControl<TWindow, TControl>(string name)
-        where TWindow : BaseWindow
+    /// <remarks>
+    /// Will fail if the control cannot be found.
+    /// </remarks>
+    protected TControl GetControlFromField<TControl>(string name, Control parent)
         where TControl : Control
     {
-        var control = GetControl<TWindow>(name);
-        Assert.That(control.GetType().IsAssignableTo(typeof(TControl)));
-        return (TControl) control;
-    }
-
-    protected Control GetControl<TWindow>(string name) where TWindow : BaseWindow
-    {
         const BindingFlags flags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
-        var field = typeof(TWindow).GetField(name, flags);
-        var prop = typeof(TWindow).GetProperty(name, flags);
+        var parentType = parent.GetType();
+        var field = parentType.GetField(name, flags);
+        var prop = parentType.GetProperty(name, flags);
 
         if (field == null && prop == null)
         {
-            Assert.Fail($"Window {typeof(TWindow).Name} does not have a field or property named {name}");
+            Assert.Fail($"Window {parentType.Name} does not have a field or property named {name}");
             return default!;
         }
 
-        var window = GetWindow<TWindow>();
-        var fieldOrProp = field?.GetValue(window) ?? prop?.GetValue(window);
+        var fieldOrProp = field?.GetValue(parent) ?? prop?.GetValue(parent);
 
         if (fieldOrProp is not Control control)
         {
@@ -921,7 +1006,59 @@ public abstract partial class InteractionTest
             return default!;
         }
 
-        return control;
+        Assert.That(control.GetType().IsAssignableTo(typeof(TControl)));
+        return (TControl) control;
+    }
+
+    /// <summary>
+    /// Attempt to retrieve a control that matches some predicate by iterating through a control's children.
+    /// </summary>
+    /// <remarks>
+    /// Will fail if the control cannot be found.
+    /// </remarks>
+    protected TControl GetControlFromChildren<TControl>(Func<TControl, bool> predicate, Control parent, bool recursive = true)
+        where TControl : Control
+    {
+        if (TryGetControlFromChildren(predicate, parent, out var control, recursive))
+            return control;
+
+        Assert.Fail($"Failed to find a {nameof(TControl)} that satisfies the predicate in {parent.Name}");
+        return default!;
+    }
+
+    /// <summary>
+    /// Attempt to retrieve a control of a given type by iterating through a control's children.
+    /// </summary>
+    protected TControl GetControlFromChildren<TControl>(Control parent, bool recursive = false)
+        where TControl : Control
+    {
+        return GetControlFromChildren<TControl>(static _ => true, parent, recursive);
+    }
+
+    /// <summary>
+    /// Attempt to retrieve a control that matches some predicate by iterating through a control's children.
+    /// </summary>
+    protected bool TryGetControlFromChildren<TControl>(
+        Func<TControl, bool> predicate,
+        Control parent,
+        [NotNullWhen(true)] out TControl? control,
+        bool recursive = true)
+        where TControl : Control
+    {
+        foreach (var ctrl in parent.Children)
+        {
+            if (ctrl is TControl cast && predicate(cast))
+            {
+                control = cast;
+                return true;
+            }
+
+            if (recursive && TryGetControlFromChildren(predicate, ctrl, out control))
+                return true;
+        }
+
+        control = null;
+        return false;
     }
 
     /// <summary>
@@ -952,7 +1089,6 @@ public abstract partial class InteractionTest
         return window != null;
     }
 
-
     /// <summary>
     /// Attempts to find a currently open client-side window.
     /// </summary>
@@ -968,6 +1104,34 @@ public abstract partial class InteractionTest
             .FirstOrDefault(x => x.GetType().IsAssignableTo(type));
 
         return window != null;
+    }
+
+
+    /// <summary>
+    /// Attempts to find client-side UI widget.
+    /// </summary>
+    protected UIWidget GetWidget<TWidget>()
+        where TWidget : UIWidget, new()
+    {
+        if (TryFindWidget(out TWidget? widget))
+            return widget;
+
+        Assert.Fail($"Could not find a {typeof(TWidget).Name} widget");
+        return default!;
+    }
+
+    /// <summary>
+    /// Attempts to find client-side UI widget.
+    /// </summary>
+    private bool TryFindWidget<TWidget>([NotNullWhen(true)] out TWidget? uiWidget)
+        where TWidget : UIWidget, new()
+    {
+        uiWidget = null;
+        var screen = UiMan.ActiveScreen;
+        if (screen == null)
+            return false;
+
+        return screen.TryGetWidget(out uiWidget);
     }
 
     #endregion
@@ -989,7 +1153,7 @@ public abstract partial class InteractionTest
     /// </summary>
     protected async Task AddGravity(EntityUid? uid = null)
     {
-        var target = uid ?? MapData.GridUid;
+        var target = uid ?? MapData.Grid;
         await Server.WaitPost(() =>
         {
             var gravity = SEntMan.EnsureComponent<GravityComponent>(target);
@@ -1017,14 +1181,17 @@ public abstract partial class InteractionTest
 
     #region Inputs
 
+
+
     /// <summary>
     ///     Make the client press and then release a key. This assumes the key is currently released.
+    ///     This will default to using the <see cref="Target"/> entity and <see cref="TargetCoords"/> coordinates.
     /// </summary>
     protected async Task PressKey(
         BoundKeyFunction key,
         int ticks = 1,
         NetCoordinates? coordinates = null,
-        NetEntity cursorEntity = default)
+        NetEntity? cursorEntity = null)
     {
         await SetKey(key, BoundKeyState.Down, coordinates, cursorEntity);
         await RunTicks(ticks);
@@ -1033,16 +1200,19 @@ public abstract partial class InteractionTest
     }
 
     /// <summary>
-    ///     Make the client press or release a key
+    ///     Make the client press or release a key.
+    ///     This will default to using the <see cref="Target"/> entity and <see cref="TargetCoords"/> coordinates.
     /// </summary>
     protected async Task SetKey(
         BoundKeyFunction key,
         BoundKeyState state,
         NetCoordinates? coordinates = null,
-        NetEntity cursorEntity = default)
+        NetEntity? cursorEntity = null,
+        ScreenCoordinates? screenCoordinates = null)
     {
         var coords = coordinates ?? TargetCoords;
-        ScreenCoordinates screen = default;
+        var target = cursorEntity ?? Target ?? default;
+        var screen = screenCoordinates ?? default;
 
         var funcId = InputManager.NetworkBindMap.KeyFunctionID(key);
         var message = new ClientFullInputCmdMessage(CTiming.CurTick, CTiming.TickFraction, funcId)
@@ -1050,7 +1220,7 @@ public abstract partial class InteractionTest
             State = state,
             Coordinates = CEntMan.GetCoordinates(coords),
             ScreenCoordinates = screen,
-            Uid = CEntMan.GetEntity(cursorEntity),
+            Uid = CEntMan.GetEntity(target),
         };
 
         await Client.WaitPost(() => InputSystem.HandleInputCommand(ClientSession, key, message));

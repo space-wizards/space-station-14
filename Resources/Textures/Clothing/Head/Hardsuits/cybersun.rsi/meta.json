@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from Paradise SS13 at commit https://github.com/ParadiseSS13/Paradise/commit/a67c929b7394f78e7787114457ba42f4df6cc3a1",
+  "copyright": "Taken from Paradise SS13 at commit https://github.com/ParadiseSS13/Paradise/commit/a67c929b7394f78e7787114457ba42f4df6cc3a1. Vox state by Flareguy for SS14",
   "size": {
     "x": 32,
     "y": 32
@@ -15,11 +15,7 @@
       "directions": 4
     },
     {
-      "name": "inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "inhand-right",
+      "name": "equipped-HELMET-vox",
       "directions": 4
     }
   ]

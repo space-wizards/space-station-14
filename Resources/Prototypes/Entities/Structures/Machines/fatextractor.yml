@@ -80,8 +80,8 @@
     containers:
      - entity_storage
   - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: StrongMetallic
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallicStrong
   - type: Destructible
     thresholds:
     - trigger:
@@ -98,9 +98,6 @@
   - type: Machine
     board: FatExtractorMachineCircuitboard
   - type: WiresPanel
-  - type: Wires
-    boardName: wires-board-name-fatextractor
-    layoutId: FatExtractor
   - type: Appearance
   - type: Speech
     speechVerb: Robotic

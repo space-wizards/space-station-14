@@ -1,0 +1,34 @@
+<Document>
+# Service
+[color=#9fed58]Service[/color] keeps the station clean, efficient and sane so that all other departments can do their jobs better and keep their staff happy. They also end up doing most of the paperwork on the station.
+
+## Personnel
+[color=#9fed58]Service[/color]'s staff is made up of Service Workers, Chefs, Botanists, Bartenders, Janitors, Chaplains, Clowns, Mimes, Musicians, Lawyers, Librarians and Passengers. Service is run by the Head of Personnel.
+
+  <Box>
+    <GuideEntityEmbed Entity="ToyFigurineChef" Caption="Chef"/>
+    <GuideEntityEmbed Entity="ToyFigurineBotanist" Caption="Botanist"/>
+    <GuideEntityEmbed Entity="ToyFigurineBartender" Caption="Bartender"/>
+    <GuideEntityEmbed Entity="ToyFigurineJanitor" Caption="Janitor"/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="ToyFigurineChaplain" Caption="Chaplain"/>
+    <GuideEntityEmbed Entity="ToyFigurineClown" Caption="Clown"/>
+    <GuideEntityEmbed Entity="ToyFigurineMime" Caption="Mime"/>
+    <GuideEntityEmbed Entity="ToyFigurineMusician" Caption="Musician"/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="ToyFigurineLawyer" Caption="Lawyer"/>
+    <GuideEntityEmbed Entity="ToyFigurineLibrarian" Caption="Librarian"/>
+    <GuideEntityEmbed Entity="ToyFigurinePassenger" Caption="Passenger"/>
+    <GuideEntityEmbed Entity="ToyFigurineHeadOfPersonnel" Caption="HoP"/>
+  </Box>
+
+## Working Together
+[color=#9fed58]Service[/color], despite being the most diverse, tends to be the most [color=#a4885c]interlinked[/color] department by far.
+Most [color=#9fed58]Service[/color] jobs require [color=#a4885c]cooperation[/color] between workers.
+Chefs often need ingredients that only botanists can grow efficiently. The bartender may request bananas that only clowns carry in abundance.
+The lawyer may invite the mime to play charades to convince the judge that their client is innocent.
+
+A lot of [color=#a4885c]collaboration[/color] is necessary within and without [color=#9fed58]Service[/color]. Often times, [color=#9fed58]Service[/color] is required by other departments, so be on your toes.
+</Document>

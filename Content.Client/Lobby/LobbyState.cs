@@ -3,8 +3,6 @@ using Content.Client.GameTicking.Managers;
 using Content.Client.LateJoin;
 using Content.Client.Lobby.UI;
 using Content.Client.Message;
-using Content.Client.Preferences;
-using Content.Client.Preferences.UI;
 using Content.Client.UserInterface.Systems.Chat;
 using Content.Client.Voting;
 using Robust.Client;
@@ -12,8 +10,6 @@ using Robust.Client.Console;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.Configuration;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 
@@ -25,20 +21,15 @@ namespace Content.Client.Lobby
         [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
-        [Dependency] private readonly IClientPreferencesManager _preferencesManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IVoteManager _voteManager = default!;
-        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
-
-        [ViewVariables] private CharacterSetupGui? _characterSetup;
 
         private ClientGameTicker _gameTicker = default!;
         private ContentAudioSystem _contentAudioSystem = default!;
 
         protected override Type? LinkedScreenType { get; } = typeof(LobbyGui);
-        private LobbyGui? _lobby;
+        public LobbyGui? Lobby;
 
         protected override void Startup()
         {
@@ -47,47 +38,27 @@ namespace Content.Client.Lobby
                 return;
             }
 
-            _lobby = (LobbyGui) _userInterfaceManager.ActiveScreen;
+            Lobby = (LobbyGui) _userInterfaceManager.ActiveScreen;
 
             var chatController = _userInterfaceManager.GetUIController<ChatUIController>();
             _gameTicker = _entityManager.System<ClientGameTicker>();
             _contentAudioSystem = _entityManager.System<ContentAudioSystem>();
             _contentAudioSystem.LobbySoundtrackChanged += UpdateLobbySoundtrackInfo;
-            _characterSetup = new CharacterSetupGui(_entityManager, _resourceCache, _preferencesManager,
-                _prototypeManager, _configurationManager);
-            LayoutContainer.SetAnchorPreset(_characterSetup, LayoutContainer.LayoutPreset.Wide);
 
-            _lobby.CharacterSetupState.AddChild(_characterSetup);
             chatController.SetMainChat(true);
 
-            _voteManager.SetPopupContainer(_lobby.VoteContainer);
-
-            _characterSetup.CloseButton.OnPressed += _ =>
-            {
-                _lobby.SwitchState(LobbyGui.LobbyGuiState.Default);
-            };
-
-            _characterSetup.SaveButton.OnPressed += _ =>
-            {
-                _characterSetup.Save();
-                _lobby.CharacterPreview.UpdateUI();
-            };
-
-            LayoutContainer.SetAnchorPreset(_lobby, LayoutContainer.LayoutPreset.Wide);
-            _lobby.ServerName.Text = _baseClient.GameInfo?.ServerName; //The eye of refactor gazes upon you...
+            _voteManager.SetPopupContainer(Lobby.VoteContainer);
+            LayoutContainer.SetAnchorPreset(Lobby, LayoutContainer.LayoutPreset.Wide);
+            Lobby.ServerName.Text = _baseClient.GameInfo?.ServerName; //The eye of refactor gazes upon you...
             UpdateLobbyUi();
 
-            _lobby.CharacterPreview.CharacterSetupButton.OnPressed += OnSetupPressed;
-            _lobby.ReadyButton.OnPressed += OnReadyPressed;
-            _lobby.ReadyButton.OnToggled += OnReadyToggled;
+            Lobby.CharacterPreview.CharacterSetupButton.OnPressed += OnSetupPressed;
+            Lobby.ReadyButton.OnPressed += OnReadyPressed;
+            Lobby.ReadyButton.OnToggled += OnReadyToggled;
 
             _gameTicker.InfoBlobUpdated += UpdateLobbyUi;
             _gameTicker.LobbyStatusUpdated += LobbyStatusUpdated;
             _gameTicker.LobbyLateJoinStatusUpdated += LobbyLateJoinStatusUpdated;
-
-            _preferencesManager.OnServerDataLoaded += PreferencesDataLoaded;
-
-            _lobby.CharacterPreview.UpdateUI();
         }
 
         protected override void Shutdown()
@@ -101,27 +72,23 @@ namespace Content.Client.Lobby
 
             _voteManager.ClearPopupContainer();
 
-            _lobby!.CharacterPreview.CharacterSetupButton.OnPressed -= OnSetupPressed;
-            _lobby!.ReadyButton.OnPressed -= OnReadyPressed;
-            _lobby!.ReadyButton.OnToggled -= OnReadyToggled;
+            Lobby!.CharacterPreview.CharacterSetupButton.OnPressed -= OnSetupPressed;
+            Lobby!.ReadyButton.OnPressed -= OnReadyPressed;
+            Lobby!.ReadyButton.OnToggled -= OnReadyToggled;
 
-            _lobby = null;
-
-            _characterSetup?.Dispose();
-            _characterSetup = null;
-
-            _preferencesManager.OnServerDataLoaded -= PreferencesDataLoaded;
+            Lobby = null;
         }
 
-        private void PreferencesDataLoaded()
+        public void SwitchState(LobbyGui.LobbyGuiState state)
         {
-            _lobby?.CharacterPreview.UpdateUI();
+            // Yeah I hate this but LobbyState contains all the badness for now.
+            Lobby?.SwitchState(state);
         }
 
         private void OnSetupPressed(BaseButton.ButtonEventArgs args)
         {
             SetReady(false);
-            _lobby!.SwitchState(LobbyGui.LobbyGuiState.CharacterSetup);
+            Lobby?.SwitchState(LobbyGui.LobbyGuiState.CharacterSetup);
         }
 
         private void OnReadyPressed(BaseButton.ButtonEventArgs args)
@@ -143,13 +110,13 @@ namespace Content.Client.Lobby
         {
             if (_gameTicker.IsGameStarted)
             {
-                _lobby!.StartTime.Text = string.Empty;
+                Lobby!.StartTime.Text = string.Empty;
                 var roundTime = _gameTiming.CurTime.Subtract(_gameTicker.RoundStartTimeSpan);
-                _lobby!.StationTime.Text = Loc.GetString("lobby-state-player-status-round-time", ("hours", roundTime.Hours), ("minutes", roundTime.Minutes));
+                Lobby!.StationTime.Text = Loc.GetString("lobby-state-player-status-round-time", ("hours", roundTime.Hours), ("minutes", roundTime.Minutes));
                 return;
             }
 
-            _lobby!.StationTime.Text =  Loc.GetString("lobby-state-player-status-round-not-started");
+            Lobby!.StationTime.Text =  Loc.GetString("lobby-state-player-status-round-not-started");
             string text;
 
             if (_gameTicker.Paused)
@@ -158,7 +125,7 @@ namespace Content.Client.Lobby
             }
             else if (_gameTicker.StartTime < _gameTiming.CurTime)
             {
-                _lobby!.StartTime.Text = Loc.GetString("lobby-state-soon");
+                Lobby!.StartTime.Text = Loc.GetString("lobby-state-soon");
                 return;
             }
             else
@@ -175,7 +142,7 @@ namespace Content.Client.Lobby
                 }
             }
 
-            _lobby!.StartTime.Text = Loc.GetString("lobby-state-round-start-countdown-text", ("timeLeft", text));
+            Lobby!.StartTime.Text = Loc.GetString("lobby-state-round-start-countdown-text", ("timeLeft", text));
         }
 
         private void LobbyStatusUpdated()
@@ -186,31 +153,31 @@ namespace Content.Client.Lobby
 
         private void LobbyLateJoinStatusUpdated()
         {
-            _lobby!.ReadyButton.Disabled = _gameTicker.DisallowedLateJoin;
+            Lobby!.ReadyButton.Disabled = _gameTicker.DisallowedLateJoin;
         }
 
         private void UpdateLobbyUi()
         {
             if (_gameTicker.IsGameStarted)
             {
-                _lobby!.ReadyButton.Text = Loc.GetString("lobby-state-ready-button-join-state");
-                _lobby!.ReadyButton.ToggleMode = false;
-                _lobby!.ReadyButton.Pressed = false;
-                _lobby!.ObserveButton.Disabled = false;
+                Lobby!.ReadyButton.Text = Loc.GetString("lobby-state-ready-button-join-state");
+                Lobby!.ReadyButton.ToggleMode = false;
+                Lobby!.ReadyButton.Pressed = false;
+                Lobby!.ObserveButton.Disabled = false;
             }
             else
             {
-                _lobby!.StartTime.Text = string.Empty;
-                _lobby!.ReadyButton.Text = Loc.GetString(_lobby!.ReadyButton.Pressed ? "lobby-state-player-status-ready": "lobby-state-player-status-not-ready");
-                _lobby!.ReadyButton.ToggleMode = true;
-                _lobby!.ReadyButton.Disabled = false;
-                _lobby!.ReadyButton.Pressed = _gameTicker.AreWeReady;
-                _lobby!.ObserveButton.Disabled = true;
+                Lobby!.StartTime.Text = string.Empty;
+                Lobby!.ReadyButton.Text = Loc.GetString(Lobby!.ReadyButton.Pressed ? "lobby-state-player-status-ready": "lobby-state-player-status-not-ready");
+                Lobby!.ReadyButton.ToggleMode = true;
+                Lobby!.ReadyButton.Disabled = false;
+                Lobby!.ReadyButton.Pressed = _gameTicker.AreWeReady;
+                Lobby!.ObserveButton.Disabled = true;
             }
 
             if (_gameTicker.ServerInfoBlob != null)
             {
-                _lobby!.ServerInfo.SetInfoBlob(_gameTicker.ServerInfoBlob);
+                Lobby!.ServerInfo.SetInfoBlob(_gameTicker.ServerInfoBlob);
             }
         }
 
@@ -218,7 +185,7 @@ namespace Content.Client.Lobby
         {
             if (ev.SoundtrackFilename == null)
             {
-                _lobby!.LobbySong.SetMarkup(Loc.GetString("lobby-state-song-no-song-text"));
+                Lobby!.LobbySong.SetMarkup(Loc.GetString("lobby-state-song-no-song-text"));
             }
             else if (
                 ev.SoundtrackFilename != null
@@ -239,7 +206,7 @@ namespace Content.Client.Lobby
                     ("songTitle", title),
                     ("songArtist", artist));
 
-                _lobby!.LobbySong.SetMarkup(markup);
+                Lobby!.LobbySong.SetMarkup(markup);
             }
         }
 
@@ -247,11 +214,11 @@ namespace Content.Client.Lobby
         {
             if (_gameTicker.LobbyBackground != null)
             {
-                _lobby!.Background.Texture = _resourceCache.GetResource<TextureResource>(_gameTicker.LobbyBackground );
+                Lobby!.Background.Texture = _resourceCache.GetResource<TextureResource>(_gameTicker.LobbyBackground );
             }
             else
             {
-                _lobby!.Background.Texture = null;
+                Lobby!.Background.Texture = null;
             }
 
         }

@@ -47,6 +47,17 @@
                     </CollapsibleBody>
                 </Collapsible>
             </BoxContainer>
+            <BoxContainer Name="PlantMetabolismsContainer" HorizontalExpand="True">
+                <Collapsible>
+                    <CollapsibleHeading Title="{Loc 'guidebook-reagent-plant-metabolisms-header'}"/>
+                    <CollapsibleBody>
+                        <BoxContainer Name="PlantMetabolismsDescriptionContainer"
+                                      Orientation="Vertical"
+                                      Margin="10 0 10 0"
+                                      HorizontalExpand="True"/>
+                    </CollapsibleBody>
+                </Collapsible>
+            </BoxContainer>
             <BoxContainer Margin="10 5 10 10" HorizontalExpand="True">
                 <!-- The troublemaker !-->
                 <RichTextLabel Name="ReagentDescription" HorizontalAlignment="Left"/>

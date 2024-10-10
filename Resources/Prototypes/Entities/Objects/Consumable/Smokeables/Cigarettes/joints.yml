@@ -28,6 +28,34 @@
         reagents:
           - ReagentId: THC
             Quantity: 20
+            
+- type: entity
+  id: JointRainbow
+  parent: Joint
+  name: joint
+  suffix: Rainbow
+  description: A roll of dried plant matter wrapped in thin paper. Seems to be colorful inside.
+  components:
+  - type: Construction
+    graph: smokeableJointRainbow
+    node: jointRainbow
+  - type: SolutionContainerManager
+    solutions:
+      smokable:
+        maxVol: 20
+        reagents:
+        - ReagentId: SpaceDrugs
+          Quantity: 4
+        - ReagentId: Lipolicide
+          Quantity: 4
+        - ReagentId: MindbreakerToxin
+          Quantity: 2.66
+        - ReagentId: Happiness
+          Quantity: 2.66
+#       - ReagentId: ColorfulReagent
+#         Quantity: 1.33
+        - ReagentId: Psicodine
+          Quantity: 0.8
 
 - type: entity
   id: Blunt
@@ -59,3 +87,31 @@
         reagents:
           - ReagentId: THC
             Quantity: 20
+
+- type: entity
+  id: BluntRainbow
+  parent: Blunt
+  name: blunt
+  suffix: Rainbow
+  description: A roll of dried plant matter wrapped in a dried tobacco leaf. Seems to be colorful inside.
+  components:
+  - type: Construction
+    graph: smokeableBluntRainbow
+    node: bluntRainbow
+  - type: SolutionContainerManager
+    solutions:
+      smokable:
+        maxVol: 20
+        reagents:
+        - ReagentId: SpaceDrugs
+          Quantity: 4
+        - ReagentId: Lipolicide
+          Quantity: 4
+        - ReagentId: MindbreakerToxin
+          Quantity: 2.66
+        - ReagentId: Happiness
+          Quantity: 2.66
+#       - ReagentId: ColorfulReagent
+#         Quantity: 1.33
+        - ReagentId: Psicodine
+          Quantity: 0.8

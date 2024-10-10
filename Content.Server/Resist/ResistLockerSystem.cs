@@ -8,6 +8,7 @@ using Content.Shared.Popups;
 using Content.Shared.Resist;
 using Content.Shared.Tools.Components;
 using Content.Shared.Tools.Systems;
+using Content.Shared.ActionBlocker;
 
 namespace Content.Server.Resist;
 
@@ -18,6 +19,7 @@ public sealed class ResistLockerSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly WeldableSystem _weldable = default!;
+    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
 
     public override void Initialize()
     {
@@ -32,6 +34,9 @@ public sealed class ResistLockerSystem : EntitySystem
             return;
 
         if (!TryComp(uid, out EntityStorageComponent? storageComponent))
+            return;
+
+        if (!_actionBlocker.CanMove(args.Entity))
             return;
 
         if (TryComp<LockComponent>(uid, out var lockComponent) && lockComponent.Locked || _weldable.IsWelded(uid))
@@ -49,7 +54,7 @@ public sealed class ResistLockerSystem : EntitySystem
         {
             BreakOnMove = true,
             BreakOnDamage = true,
-            NeedHand = false //No hands 'cause we be kickin'
+            NeedHand = false, //No hands 'cause we be kickin'
         };
 
         resistLockerComponent.IsResisting = true;

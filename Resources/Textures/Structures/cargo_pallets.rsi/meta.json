@@ -11,7 +11,71 @@
             "name": "cargo_pallet_buy"
         },
         {
+            "name": "cargo_pallet_buy_0",
+            "directions": 4
+        },
+        {
+            "name": "cargo_pallet_buy_1",
+            "directions": 4
+        },
+        {
+            "name": "cargo_pallet_buy_2",
+            "directions": 4
+        },
+        {
+            "name": "cargo_pallet_buy_3",
+            "directions": 4
+        },
+        {
+            "name": "cargo_pallet_buy_4",
+            "directions": 4
+        },
+        {
+            "name": "cargo_pallet_buy_5",
+            "directions": 4
+        },
+        {
+            "name": "cargo_pallet_buy_6",
+            "directions": 4
+        },
+        {
+            "name": "cargo_pallet_buy_7",
+            "directions": 4
+        },
+        {
             "name": "cargo_pallet_sell"
+        },
+        {
+            "name": "cargo_pallet_sell_0",
+            "directions": 4
+        },
+        {
+            "name": "cargo_pallet_sell_1",
+            "directions": 4
+        },
+        {
+            "name": "cargo_pallet_sell_2",
+            "directions": 4
+        },
+        {
+            "name": "cargo_pallet_sell_3",
+            "directions": 4
+        },
+        {
+            "name": "cargo_pallet_sell_4",
+            "directions": 4
+        },
+        {
+            "name": "cargo_pallet_sell_5",
+            "directions": 4
+        },
+        {
+            "name": "cargo_pallet_sell_6",
+            "directions": 4
+        },
+        {
+            "name": "cargo_pallet_sell_7",
+            "directions": 4
         }
     ]
 }

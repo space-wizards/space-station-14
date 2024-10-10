@@ -44,7 +44,7 @@ reagent-name-theobromine = theobromine
 reagent-desc-theobromine = A bitter alkaloid of the cacao plant, commonly found in chocolate. Do not feed to animals.
 
 reagent-name-amatoxin = amatoxin
-reagent-desc-amatoxin = A deadly toxin found in some mushrooms, primarily fly amanita. Small dosages can be lethal.
+reagent-desc-amatoxin = A deadly toxin found in some mushrooms, primarily fly amanita. Small doses can be lethal.
 
 reagent-name-vent-crud = vent crud
 reagent-desc-vent-crud = A jet black substance found in poorly maintained ventilation systems. Can cause vent cough.
@@ -65,13 +65,19 @@ reagent-name-honk = honk
 reagent-desc-honk = A toxin found in bananium. Causes severe honking and internal bleeding, may also cause the patient to mutate.
 
 reagent-name-lead = lead
-reagent-desc-lead = A slow-acting but incredibly lethal toxin found in steel, albiet in trace amounts. Tasteless.
+reagent-desc-lead = A slow-acting but incredibly lethal toxin found in steel, albeit in trace amounts. Tasteless.
 
 reagent-name-bungotoxin = bungotoxin
 reagent-desc-bungotoxin = A moderately slow-acting poison found within the pit of the bungo fruit.
 
 reagent-name-vestine = vestine
-reagent-desc-vestine = Has an adverse reaction within the body causing major jittering. While not particularly useful on it's own, it can be used to produce a small variety of chemicals.
+reagent-desc-vestine = Has an adverse reaction within the body causing major jittering. While not particularly useful on its own, it can be used to produce a small variety of chemicals.
 
 reagent-name-tazinide = tazinide
 reagent-desc-tazinide = A highly dangerous metallic mixture which can interfere with most movement through an electrifying current.
+
+reagent-name-lipolicide = lipolicide
+reagent-desc-lipolicide = A powerful toxin that will destroy fat cells, massively reducing body weight in a short time. Deadly to those without nutriment in their body.
+
+reagent-name-mechanotoxin = mechanotoxin
+reagent-desc-mechanotoxin = A neurotoxin used as venom by some species of spider. Degrades movement when built up.

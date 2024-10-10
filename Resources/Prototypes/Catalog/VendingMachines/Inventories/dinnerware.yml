@@ -6,6 +6,7 @@
     RollingPin: 4
     Spoon: 4
     Fork: 4
+    PairedChopsticks: 4
     FoodBowlBig: 10
     FoodPlate: 10
     FoodPlateSmall: 10
@@ -14,6 +15,7 @@
     DrinkGlass: 5
     Beaker: 5
     LargeBeaker: 5
+    Pitcher: 2
     DrinkMug: 5
     DrinkMugBlack: 2
     DrinkMugBlue: 2

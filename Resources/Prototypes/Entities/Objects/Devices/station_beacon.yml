@@ -30,8 +30,8 @@
     singleUser: true
   - type: UserInterface
     interfaces:
-    - key: enum.NavMapBeaconUiKey.Key
-      type: NavMapBeaconBoundUserInterface
+      enum.NavMapBeaconUiKey.Key:
+        type: NavMapBeaconBoundUserInterface
   - type: Item
     size: Small
   - type: SubFloorHide
@@ -136,6 +136,14 @@
   components:
   - type: NavMapBeacon
     defaultText: station-beacon-vault
+
+- type: entity
+  parent: DefaultStationBeaconCommand
+  id: DefaultStationBeaconGateway
+  suffix: Gateway
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-gateway
 
 - type: entity
   parent: DefaultStationBeaconCommand

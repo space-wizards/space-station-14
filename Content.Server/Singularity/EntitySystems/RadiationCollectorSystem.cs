@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Server.Atmos;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Components;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
@@ -103,7 +103,7 @@ public sealed class RadiationCollectorSystem : EntitySystem
 
             if (gas.Byproduct != null)
             {
-                gasTankComponent.Air.AdjustMoles((int) gas.Byproduct, delta * gas.MolarRatio);
+                gasTankComponent.Air.AdjustMoles((int)gas.Byproduct, delta * gas.MolarRatio);
             }
         }
 
@@ -137,13 +137,22 @@ public sealed class RadiationCollectorSystem : EntitySystem
 
     private void OnExamined(EntityUid uid, RadiationCollectorComponent component, ExaminedEvent args)
     {
-        if (!TryGetLoadedGasTank(uid, out var gasTank))
+        using (args.PushGroup(nameof(RadiationCollectorComponent)))
         {
-            args.PushMarkup(Loc.GetString("power-radiation-collector-gas-tank-missing"));
-            return;
-        }
+            args.PushMarkup(Loc.GetString("power-radiation-collector-enabled", ("state", component.Enabled)));
 
-        args.PushMarkup(Loc.GetString("power-radiation-collector-gas-tank-present"));
+            if (!TryGetLoadedGasTank(uid, out var gasTank))
+            {
+                args.PushMarkup(Loc.GetString("power-radiation-collector-gas-tank-missing"));
+            }
+            else
+            {
+                _appearance.TryGetData<int>(uid, RadiationCollectorVisuals.PressureState, out var state);
+
+                args.PushMarkup(Loc.GetString("power-radiation-collector-gas-tank-present",
+                    ("fullness", state)));
+            }
+        }
     }
 
     private void OnAnalyzed(EntityUid uid, RadiationCollectorComponent component, GasAnalyzerScanEvent args)
@@ -151,7 +160,8 @@ public sealed class RadiationCollectorSystem : EntitySystem
         if (!TryGetLoadedGasTank(uid, out var gasTankComponent))
             return;
 
-        args.GasMixtures = new Dictionary<string, GasMixture?> { { Name(uid), gasTankComponent.Air } };
+        args.GasMixtures ??= new List<(string, GasMixture?)>();
+        args.GasMixtures.Add((Name(uid), gasTankComponent.Air));
     }
 
     public void ToggleCollector(EntityUid uid, EntityUid? user = null, RadiationCollectorComponent? component = null)
@@ -194,13 +204,14 @@ public sealed class RadiationCollectorSystem : EntitySystem
         if (!Resolve(uid, ref appearance, false))
             return;
 
+        // gas canisters can fill tanks up to 10 atm, so we set the warning level thresholds 1/3 and 2/3 of that
         if (gasTank == null || gasTank.Air.Pressure < 10)
             _appearance.SetData(uid, RadiationCollectorVisuals.PressureState, 0, appearance);
 
-        else if (gasTank.Air.Pressure < Atmospherics.OneAtmosphere)
+        else if (gasTank.Air.Pressure < 3.33f * Atmospherics.OneAtmosphere)
             _appearance.SetData(uid, RadiationCollectorVisuals.PressureState, 1, appearance);
 
-        else if (gasTank.Air.Pressure < 3f * Atmospherics.OneAtmosphere)
+        else if (gasTank.Air.Pressure < 6.66f * Atmospherics.OneAtmosphere)
             _appearance.SetData(uid, RadiationCollectorVisuals.PressureState, 2, appearance);
 
         else

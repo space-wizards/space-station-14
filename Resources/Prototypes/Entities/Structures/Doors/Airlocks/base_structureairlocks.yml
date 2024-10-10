@@ -4,6 +4,7 @@
   name: airlock
   description: It opens, it closes, and maybe crushes you.
   components:
+  - type: StationAiWhitelist
   - type: MeleeSound
     soundGroups:
       Brute:
@@ -48,6 +49,8 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronics ]
+  - type: AccessReader
+    containerAccessProvider: board
   - type: Door
     crushDamage:
       types:
@@ -62,6 +65,7 @@
     containers:
       board: !type:Container
   - type: Weldable
+    fuel: 5
     time: 3
   - type: Airlock
   - type: NavMapDoor
@@ -101,8 +105,10 @@
   - type: SpawnOnOverload
   - type: UserInterface
     interfaces:
-    - key: enum.WiresUiKey.Key
-      type: WiresBoundUserInterface
+      enum.AiUi.Key:
+        type: StationAiBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
   - type: Airtight
     noAirWhenFullyAirBlocked: false
   - type: RadiationBlocker
@@ -114,7 +120,7 @@
   - type: RCDDeconstructable
     cost: 6
     delay: 8
-    fx: EffectRCDDeconstruct8    
+    fx: EffectRCDDeconstruct8
   - type: Destructible
     thresholds:
     - trigger:
@@ -140,7 +146,6 @@
   - type: PaintableAirlock
     group: Standard
     department: Civilian
-  - type: AccessReader
   - type: StaticPrice
     price: 150
   - type: LightningTarget
@@ -153,7 +158,7 @@
   - type: BlockWeather
   placement:
     mode: SnapgridCenter
- 
+
 - type: entity
   id: AirlockRCDResistant
   parent: Airlock

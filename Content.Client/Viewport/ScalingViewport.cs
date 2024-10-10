@@ -32,6 +32,7 @@ namespace Content.Client.Viewport
         private int _curRenderScale;
         private ScalingViewportStretchMode _stretchMode = ScalingViewportStretchMode.Bilinear;
         private ScalingViewportRenderScaleMode _renderScaleMode = ScalingViewportRenderScaleMode.Fixed;
+        private ScalingViewportIgnoreDimension _ignoreDimension = ScalingViewportIgnoreDimension.None;
         private int _fixedRenderScale = 1;
 
         private readonly List<CopyPixelsDelegate<Rgba32>> _queuedScreenshots = new();
@@ -102,6 +103,17 @@ namespace Content.Client.Viewport
             set
             {
                 _fixedRenderScale = value;
+                InvalidateViewport();
+            }
+        }
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public ScalingViewportIgnoreDimension IgnoreDimension
+        {
+            get => _ignoreDimension;
+            set
+            {
+                _ignoreDimension = value;
                 InvalidateViewport();
             }
         }
@@ -178,7 +190,19 @@ namespace Content.Client.Viewport
             if (FixedStretchSize == null)
             {
                 var (ratioX, ratioY) = ourSize / vpSize;
-                var ratio = Math.Min(ratioX, ratioY);
+                var ratio = 1f;
+                switch (_ignoreDimension)
+                {
+                    case ScalingViewportIgnoreDimension.None:
+                        ratio = Math.Min(ratioX, ratioY);
+                        break;
+                    case ScalingViewportIgnoreDimension.Vertical:
+                        ratio = ratioX;
+                        break;
+                    case ScalingViewportIgnoreDimension.Horizontal:
+                        ratio = ratioY;
+                        break;
+                }
 
                 var size = vpSize * ratio;
                 // Size
@@ -253,8 +277,8 @@ namespace Content.Client.Viewport
 
             EnsureViewportCreated();
 
-            var matrix = Matrix3.Invert(GetLocalToScreenMatrix());
-            coords = matrix.Transform(coords);
+            Matrix3x2.Invert(GetLocalToScreenMatrix(), out var matrix);
+            coords = Vector2.Transform(coords, matrix);
 
             return _viewport!.LocalToWorld(coords);
         }
@@ -267,8 +291,8 @@ namespace Content.Client.Viewport
 
             EnsureViewportCreated();
 
-            var matrix = Matrix3.Invert(GetLocalToScreenMatrix());
-            coords = matrix.Transform(coords);
+            Matrix3x2.Invert(GetLocalToScreenMatrix(), out var matrix);
+            coords = Vector2.Transform(coords, matrix);
 
             var ev = new PixelToMapEvent(coords, this, _viewport!);
             _entityManager.EventBus.RaiseEvent(EventSource.Local, ref ev);
@@ -287,16 +311,16 @@ namespace Content.Client.Viewport
 
             var matrix = GetLocalToScreenMatrix();
 
-            return matrix.Transform(vpLocal);
+            return Vector2.Transform(vpLocal, matrix);
         }
 
-        public Matrix3 GetWorldToScreenMatrix()
+        public Matrix3x2 GetWorldToScreenMatrix()
         {
             EnsureViewportCreated();
             return _viewport!.GetWorldToLocalMatrix() * GetLocalToScreenMatrix();
         }
 
-        public Matrix3 GetLocalToScreenMatrix()
+        public Matrix3x2 GetLocalToScreenMatrix()
         {
             EnsureViewportCreated();
 
@@ -305,9 +329,9 @@ namespace Content.Client.Viewport
 
             if (scaleFactor.X == 0 || scaleFactor.Y == 0)
                 // Basically a nonsense scenario, at least make sure to return something that can be inverted.
-                return Matrix3.Identity;
+                return Matrix3x2.Identity;
 
-            return Matrix3.CreateTransform(GlobalPixelPosition + drawBox.TopLeft, 0, scaleFactor);
+            return Matrix3Helpers.CreateTransform(GlobalPixelPosition + drawBox.TopLeft, 0, scaleFactor);
         }
 
         private void EnsureViewportCreated()
@@ -356,5 +380,26 @@ namespace Content.Client.Viewport
         ///     Ceiling to the closest integer scale possible.
         /// </summary>
         CeilInt
+    }
+
+    /// <summary>
+    ///     If the viewport is allowed to freely scale, this determines which dimensions should be ignored while fitting the viewport
+    /// </summary>
+    public enum ScalingViewportIgnoreDimension
+    {
+        /// <summary>
+        ///     The viewport won't ignore any dimension.
+        /// </summary>
+        None = 0,
+
+        /// <summary>
+        ///     The viewport will ignore the horizontal dimension, and will exclusively consider the vertical dimension for scaling.
+        /// </summary>
+        Horizontal,
+
+        /// <summary>
+        ///     The viewport will ignore the vertical dimension, and will exclusively consider the horizontal dimension for scaling.
+        /// </summary>
+        Vertical
     }
 }

@@ -20,7 +20,8 @@
       path: /Audio/Effects/tesla.ogg
   - type: PointLight
     enabled: true
-    radius: 5
+    radius: 8
+    energy: 2
     color: "#4080FF"
   - type: Appearance
   - type: LightningArcShooter
@@ -59,6 +60,9 @@
         - Opaque
         layer:
         - GlassLayer
+  - type: PointLight
+    radius: 10
+    energy: 16
   - type: EventHorizon
     radius: 0.5
     canBreachContainment: false
@@ -85,7 +89,6 @@
   - type: ChaoticJump
     jumpMinInterval: 8
     jumpMaxInterval: 15
-    offset: 1
   - type: WarpPoint
     follow: true
     location: tesla ball

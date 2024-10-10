@@ -1,4 +1,4 @@
-﻿-create-3rd-person =
+-create-3rd-person =
     { $chance ->
         [1] Creates
         *[other] create
@@ -43,7 +43,7 @@ reagent-effect-guidebook-foam-area-reaction-effect =
         *[other] create
     } large quantities of foam
 
-reagent-effect-guidebook-foam-area-reaction-effect =
+reagent-effect-guidebook-smoke-area-reaction-effect =
     { $chance ->
         [1] Creates
         *[other] create
@@ -339,8 +339,62 @@ reagent-effect-guidebook-innoculate-zombie-infection =
         *[other] cure
     } an ongoing zombie infection, and provides immunity to future infections
 
-reagent-effect-guidebook-missing =
+reagent-effect-guidebook-reduce-rotting =
+    { $chance ->
+        [1] Regenerates
+        *[other] regenerate
+    } {NATURALFIXED($time, 3)} {MANY("second", $time)} of rotting
+
+reagent-effect-guidebook-area-reaction =
     { $chance ->
         [1] Causes
         *[other] cause
-    } an unknown effect as nobody has written this effect yet
+    } a smoke or foam reaction for {NATURALFIXED($duration, 3)} {MANY("second", $duration)}
+
+reagent-effect-guidebook-add-to-solution-reaction =
+    { $chance ->
+        [1] Causes
+        *[other] cause
+    } chemicals applied to an object to be added to its internal solution container
+
+reagent-effect-guidebook-plant-attribute =
+    { $chance ->
+        [1] Adjusts
+        *[other] adjust
+    } {$attribute} by [color={$colorName}]{$amount}[/color]
+
+reagent-effect-guidebook-plant-cryoxadone =
+    { $chance ->
+        [1] Ages back
+        *[other] age back
+    } the plant, depending on the plant's age and time to grow
+
+reagent-effect-guidebook-plant-phalanximine =
+    { $chance ->
+        [1] Restores
+        *[other] restore
+    } viability to a plant rendered nonviable by a mutation
+
+reagent-effect-guidebook-plant-diethylamine =
+    { $chance ->
+        [1] Increases
+        *[other] increase
+    } the plant's lifespan and/or base health with 10% chance for each
+
+reagent-effect-guidebook-plant-robust-harvest =
+    { $chance ->
+        [1] Increases
+        *[other] increase
+    } the plant's potency by {$increase} up to a maximum of {$limit}. Causes the plant to lose its seeds once the potency reaches {$seedlesstreshold}. Trying to add potency over {$limit} may cause decrease in yield at a 10% chance
+
+reagent-effect-guidebook-plant-seeds-add =
+    { $chance ->
+        [1] Restores the
+        *[other] restore the
+    } seeds of the plant
+
+reagent-effect-guidebook-plant-seeds-remove =
+    { $chance ->
+        [1] Removes the
+        *[other] remove the
+    } seeds of the plant

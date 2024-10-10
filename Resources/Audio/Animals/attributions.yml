@@ -7,7 +7,7 @@
   license: "CC-BY-3.0"
   copyright: "Modified from 'Meow 4.wav' by freesound user 'TRNGLE. The original audio was trimmed, split to mono, and converted from WAV to OGG format"
   source: "https://freesound.org/people/TRNGLE/sounds/368006/"
-  
+
 - files: ["cat_meow2.ogg"]
   license: "CC-BY-3.0"
   copyright: "Created by freesound user 'TRNGLE. The original audio split to mono, and converted from WAV to OGG format"
@@ -117,24 +117,42 @@
   license: "CC-BY-4.0"
   copyright: "Audio is recorded/created by Pfranzen 'FreeSound.org'. The original audio was trimmed and renamed"
   source: "https://freesound.org/people/pfranzen/sounds/322744/"
-  
+
 - files: ["dog_bark1.ogg"]
   license: "CC0-1.0"
   copyright: "Audio is recorded/created by KFerentchak 'FreeSound.org'. The original audio was trimmed and renamed"
-  source: "https://freesound.org/people/KFerentchak/sounds/235912/"  
-  
+  source: "https://freesound.org/people/KFerentchak/sounds/235912/"
+
 - files: ["dog_bark2.ogg"]
   license: "CC0-1.0"
   copyright: "Audio is recorded/created by KFerentchak 'FreeSound.org'. The original audio was trimmed and renamed"
-  source: "https://freesound.org/people/KFerentchak/sounds/235912/"  
-  
+  source: "https://freesound.org/people/KFerentchak/sounds/235912/"
+
 - files: ["dog_bark3.ogg"]
   license: "CC0-1.0"
   copyright: "Audio is recorded/created by KFerentchak 'FreeSound.org'. The original audio was trimmed and renamed"
   source: "https://freesound.org/people/KFerentchak/sounds/235912/"
-  
+
 - files: ["nymph_chirp.ogg"]
   license: "CC-BY-SA-3.0"
   copyright: "Taken from ParadiseSS13"
   source: "https://github.com/ParadiseSS13/Paradise/commit/a34f1054cef5a44a67fdac3b67b811137c6071dd"
-  
+
+- files:
+    - fox1.ogg
+    - fox2.ogg
+    - fox3.ogg
+    - fox4.ogg
+    - fox5.ogg
+    - fox6.ogg
+    - fox7.ogg
+    - fox8.ogg
+    - fox9.ogg
+    - fox10.ogg
+    - fox11.ogg
+    - fox12.ogg
+    - fox13.ogg
+    - fox14.ogg
+  copyright: "Created by fujiwaranao"
+  license: "CC-BY-NC-SA-4.0"
+  source: "https://github.com/space-wizards/space-station-14/pull/27578"

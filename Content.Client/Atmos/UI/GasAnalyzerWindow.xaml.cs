@@ -16,6 +16,8 @@ namespace Content.Client.Atmos.UI
     [GenerateTypedNameReferences]
     public sealed partial class GasAnalyzerWindow : DefaultWindow
     {
+        private NetEntity _currentEntity = NetEntity.Invalid;
+
         public GasAnalyzerWindow()
         {
             RobustXamlLoader.Load(this);
@@ -55,6 +57,13 @@ namespace Content.Client.Atmos.UI
             // Device Tab
             if (msg.NodeGasMixes.Length > 1)
             {
+                if (_currentEntity != msg.DeviceUid)
+                {
+                    // when we get new device data switch to the device tab
+                    CTabContainer.CurrentTab = 0;
+                    _currentEntity = msg.DeviceUid;
+                }
+
                 CTabContainer.SetTabVisible(0, true);
                 CTabContainer.SetTabTitle(0, Loc.GetString("gas-analyzer-window-tab-title-capitalized", ("title", msg.DeviceName)));
                 // Set up Grid
@@ -143,6 +152,7 @@ namespace Content.Client.Atmos.UI
                 CTabContainer.SetTabVisible(0, false);
                 CTabContainer.CurrentTab = 1;
                 minSize = new Vector2(CEnvironmentMix.DesiredSize.X + 40, MinSize.Y);
+                _currentEntity = NetEntity.Invalid;
             }
 
             MinSize = minSize;
@@ -162,6 +172,26 @@ namespace Content.Client.Atmos.UI
 
             parent.AddChild(panel);
             panel.AddChild(dataContainer);
+
+            // Volume label
+            var volBox = new BoxContainer { Orientation = BoxContainer.LayoutOrientation.Horizontal };
+
+            volBox.AddChild(new Label
+            {
+                Text = Loc.GetString("gas-analyzer-window-volume-text")
+            });
+            volBox.AddChild(new Control
+            {
+                MinSize = new Vector2(10, 0),
+                HorizontalExpand = true
+            });
+            volBox.AddChild(new Label
+            {
+                Text = Loc.GetString("gas-analyzer-window-volume-val-text", ("volume", $"{gasMix.Volume:0.##}")),
+                Align = Label.AlignMode.Right,
+                HorizontalExpand = true
+            });
+            dataContainer.AddChild(volBox);
 
             // Pressure label
             var presBox = new BoxContainer { Orientation = BoxContainer.LayoutOrientation.Horizontal };

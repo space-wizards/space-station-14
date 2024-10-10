@@ -5,7 +5,6 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
@@ -18,10 +17,6 @@ namespace Content.Shared.Storage
     public sealed partial class StorageComponent : Component
     {
         public static string ContainerId = "storagebase";
-
-        // TODO: This fucking sucks
-        [ViewVariables(VVAccess.ReadWrite), DataField]
-        public bool IsUiOpen;
 
         [ViewVariables]
         public Container Container = default!;
@@ -57,8 +52,26 @@ namespace Content.Shared.Storage
         [DataField]
         public bool QuickInsert; // Can insert storables by clicking them with the storage entity
 
+        /// <summary>
+        /// Minimum delay between quick/area insert actions.
+        /// </summary>
+        /// <remarks>Used to prevent autoclickers spamming server with individual pickup actions.</remarks>
+        public TimeSpan QuickInsertCooldown = TimeSpan.FromSeconds(0.5);
+
+        /// <summary>
+        /// Minimum delay between UI open actions.
+        /// <remarks>Used to spamming opening sounds.</remarks>
+        /// </summary>
+        [DataField]
+        public TimeSpan OpenUiCooldown = TimeSpan.Zero;
+
         [DataField]
         public bool ClickInsert = true; // Can insert stuff by clicking the storage entity with it
+
+        /// <summary>
+        /// How many entities area pickup can pickup at once.
+        /// </summary>
+        public const int AreaPickupLimit = 10;
 
         [DataField]
         public bool AreaInsert; // Clicking with the storage entity causes it to insert all nearby storables after a delay
@@ -109,6 +122,14 @@ namespace Content.Shared.Storage
         /// </summary>
         [DataField, ViewVariables(VVAccess.ReadWrite)]
         public StorageDefaultOrientation? DefaultStorageOrientation;
+
+        /// <summary>
+        /// If true, sets StackVisuals.Hide to true when the container is closed
+        /// Used in cases where there are sprites that are shown when the container is open but not
+        /// when it is closed
+        /// </summary>
+        [DataField]
+        public bool HideStackVisualsWhenClosed = true;
 
         [Serializable, NetSerializable]
         public enum StorageUiKey : byte
@@ -214,14 +235,11 @@ namespace Content.Shared.Storage
         }
     }
 
-    /// <summary>
-    /// An extra BUI message that either opens, closes, or focuses the storage window based on context.
-    /// </summary>
-    [Serializable, NetSerializable]
-    public sealed class StorageModifyWindowMessage : BoundUserInterfaceMessage
-    {
+    [ByRefEvent]
+    public record struct StorageInteractAttemptEvent(bool Silent, bool Cancelled = false);
 
-    }
+    [ByRefEvent]
+    public record struct StorageInteractUsingAttemptEvent(bool Cancelled = false);
 
     [NetSerializable]
     [Serializable]

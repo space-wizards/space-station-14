@@ -44,6 +44,10 @@ public sealed partial class ShuttleConsoleSystem
         }
 
         var nCoordinates = new NetCoordinates(GetNetEntity(targetXform.ParentUid), targetXform.LocalPosition);
+        if (targetXform.ParentUid == EntityUid.Invalid)
+        {
+            nCoordinates = new NetCoordinates(GetNetEntity(beaconEnt), targetXform.LocalPosition);
+        }
 
         // Check target exists
         if (!_shuttle.CanFTLBeacon(nCoordinates))
@@ -59,7 +63,7 @@ public sealed partial class ShuttleConsoleSystem
 
     private void OnPositionFTLMessage(Entity<ShuttleConsoleComponent> entity, ref ShuttleConsoleFTLPositionMessage args)
     {
-        var mapUid = _mapManager.GetMapEntityId(args.Coordinates.MapId);
+        var mapUid = _mapSystem.GetMap(args.Coordinates.MapId);
 
         // If it's beacons only block all position messages.
         if (!Exists(mapUid) || _shuttle.IsBeaconMap(mapUid))
@@ -120,6 +124,9 @@ public sealed partial class ShuttleConsoleSystem
         if (!TryComp(shuttleUid, out ShuttleComponent? shuttleComp))
             return;
 
+        if (shuttleComp.Enabled == false)
+            return;
+
         // Check shuttle can even FTL
         if (!_shuttle.CanFTL(shuttleUid.Value, out var reason))
         {
@@ -128,7 +135,7 @@ public sealed partial class ShuttleConsoleSystem
         }
 
         // Check shuttle can FTL to this target.
-        if (!_shuttle.CanFTLTo(shuttleUid.Value, targetMap))
+        if (!_shuttle.CanFTLTo(shuttleUid.Value, targetMap, ent))
         {
             return;
         }

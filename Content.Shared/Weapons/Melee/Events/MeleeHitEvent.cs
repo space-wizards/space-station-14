@@ -80,7 +80,7 @@ public sealed class MeleeHitEvent : HandledEntityEventArgs
 /// Raised on a melee weapon to calculate potential damage bonuses or decreases.
 /// </summary>
 [ByRefEvent]
-public record struct GetMeleeDamageEvent(EntityUid Weapon, DamageSpecifier Damage, List<DamageModifierSet> Modifiers, EntityUid User);
+public record struct GetMeleeDamageEvent(EntityUid Weapon, DamageSpecifier Damage, List<DamageModifierSet> Modifiers, EntityUid User, bool ResistanceBypass = false);
 
 /// <summary>
 /// Raised on a melee weapon to calculate the attack rate.

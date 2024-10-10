@@ -7,6 +7,7 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: StationAiWhitelist
   - type: Sprite
     sprite: Structures/Doors/Shutters/shutters.rsi
     drawdepth: BlastDoors
@@ -56,14 +57,14 @@
   - type: Appearance
   - type: UserInterface
     interfaces:
-    - key: enum.WiresUiKey.Key
-      type: WiresBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
   - type: Airtight
   - type: RadiationBlocker
     resistance: 2
   - type: Damageable
     damageContainer: StructuralInorganic
-    damageModifierSet: StrongMetallic
+    damageModifierSet: StructuralMetallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -211,7 +212,7 @@
     - board
   - type: InteractionOutline
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
   - type: Destructible
     thresholds:

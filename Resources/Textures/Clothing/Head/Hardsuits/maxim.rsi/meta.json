@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/6b3f58d7de4d4e374282819a7001eaa9bde1676d",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/6b3f58d7de4d4e374282819a7001eaa9bde1676d. Vox state by Flareguy for Space Station 14",
   "size": {
     "x": 32,
     "y": 32
@@ -15,11 +15,7 @@
       "directions": 4
     },
     {
-      "name": "inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "inhand-right",
+      "name": "equipped-HELMET-vox",
       "directions": 4
     }
   ]

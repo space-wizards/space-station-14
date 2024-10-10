@@ -1,5 +1,6 @@
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.EntitySystems;
+using Content.Shared.Alert;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;
@@ -110,6 +111,13 @@ namespace Content.Server.Body.Components
         [DataField]
         public SoundSpecifier BloodHealedSound = new SoundPathSpecifier("/Audio/Effects/lightburn.ogg");
 
+        /// <summary>
+        /// The minimum amount damage reduction needed to play the healing sound/popup.
+        /// This prevents tiny amounts of heat damage from spamming the sound, e.g. spacing.
+        /// </summary>
+        [DataField]
+        public float BloodHealedSoundThreshold = -0.1f;
+
         // TODO probably damage bleed thresholds.
 
         /// <summary>
@@ -171,5 +179,8 @@ namespace Content.Server.Body.Components
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public TimeSpan StatusTime;
+
+        [DataField]
+        public ProtoId<AlertPrototype> BleedingAlert = "Bleed";
     }
 }

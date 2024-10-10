@@ -7,6 +7,9 @@ reagent-desc-insect-blood = Okay, this is really gross. It almost looks.. alive?
 reagent-name-slime = slime
 reagent-desc-slime = You thought this was gradient blood at first, but you were mistaken.
 
+reagent-name-sap = sap
+reagent-desc-sap = Sticky, sweet tree blood.
+
 reagent-name-hemocyanin-blood = blue blood
 reagent-desc-hemocyanin-blood = Contains copper as opposed to iron which gives it a distinct blue color.
 

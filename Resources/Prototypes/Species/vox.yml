@@ -1,23 +1,24 @@
 - type: species
   id: Vox
   name: species-name-vox
-  roundStart: false # sad...
+  roundStart: true
   prototype: MobVox
   sprites: MobVoxSprites
   markingLimits: MobVoxMarkingLimits
   dollPrototype: MobVoxDummy
-  skinColoration: Hues
+  skinColoration: VoxFeathers
+  defaultSkinTone: "#6c741d"
   maleFirstNames: names_vox
   femaleFirstNames: names_vox
   naming: First
   sexes:
-    - Unsexed
-
+  - Unsexed
 
 - type: speciesBaseSprites
   id: MobVoxSprites
   sprites:
     Head: MobVoxHead
+    Snout: MobHumanoidAnyMarking
     Hair: MobHumanoidAnyMarking
     FacialHair: MobHumanoidAnyMarking
     Chest: MobVoxTorso
@@ -30,6 +31,7 @@
     RLeg: MobVoxRLeg
     LFoot: MobVoxLFoot
     RFoot: MobVoxRFoot
+    Tail: MobHumanoidAnyMarking
 
 - type: markingPoints
   id: MobVoxMarkingLimits
@@ -41,57 +43,70 @@
     FacialHair:
       points: 1
       required: false
+    Head:
+      points: 1
+      required: true
+    Snout:
+      points: 1
+      required: true
+      defaultMarkings: [ VoxBeak ]
+    Arms:
+      points: 4
+      required: true
+      defaultMarkings: [ VoxLArmScales, VoxRArmScales, VoxRHandScales, VoxLHandScales ]
+    Legs:
+      points: 4
+      required: true
+      defaultMarkings: [ VoxLLegScales, VoxRLegScales, VoxRFootScales, VoxLFootScales ]
     Chest:
       points: 1
       required: false
-    Legs:
-      points: 2
-      required: false
-    Arms:
-      points: 2
-      required: false
+    Tail:
+      points: 1
+      required: true
+      defaultMarkings: [ VoxTail ]
 
 - type: humanoidBaseSprite
   id: MobVoxEyes
   baseSprite:
-    sprite: Mobs/Customization/eyes.rsi
-    state: vox_eyes_s
+    sprite: Mobs/Species/Vox/parts.rsi
+    state: eyes
 
 - type: humanoidBaseSprite
   id: MobVoxHead
   baseSprite:
     sprite: Mobs/Species/Vox/parts.rsi
-    state: head_m
+    state: head
 
 - type: humanoidBaseSprite
   id: MobVoxHeadMale
   baseSprite:
     sprite: Mobs/Species/Vox/parts.rsi
-    state: head_m
+    state: head
 
 - type: humanoidBaseSprite
   id: MobVoxHeadFemale
   baseSprite:
     sprite: Mobs/Species/Vox/parts.rsi
-    state: head_f
+    state: head
 
 - type: humanoidBaseSprite
   id: MobVoxTorso
   baseSprite:
     sprite: Mobs/Species/Vox/parts.rsi
-    state: torso_m
+    state: torso
 
 - type: humanoidBaseSprite
   id: MobVoxTorsoMale
   baseSprite:
     sprite: Mobs/Species/Vox/parts.rsi
-    state: torso_m
+    state: torso
 
 - type: humanoidBaseSprite
   id: MobVoxTorsoFemale
   baseSprite:
     sprite: Mobs/Species/Vox/parts.rsi
-    state: torso_f
+    state: torso
 
 - type: humanoidBaseSprite
   id: MobVoxLLeg
@@ -140,5 +155,3 @@
   baseSprite:
     sprite: Mobs/Species/Vox/parts.rsi
     state: r_foot
-
-#

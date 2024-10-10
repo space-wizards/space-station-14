@@ -32,16 +32,30 @@ public sealed partial class CargoBountyConsoleComponent : Component
     /// </summary>
     [DataField("printSound")]
     public SoundSpecifier PrintSound = new SoundPathSpecifier("/Audio/Machines/printer.ogg");
+
+    /// <summary>
+    /// The sound made when the bounty is skipped.
+    /// </summary>
+    [DataField("skipSound")]
+    public SoundSpecifier SkipSound = new SoundPathSpecifier("/Audio/Effects/Cargo/ping.ogg");
+
+    /// <summary>
+    /// The sound made when bounty skipping is denied due to lacking access.
+    /// </summary>
+    [DataField("denySound")]
+    public SoundSpecifier DenySound = new SoundPathSpecifier("/Audio/Effects/Cargo/buzz_two.ogg");
 }
 
 [NetSerializable, Serializable]
 public sealed class CargoBountyConsoleState : BoundUserInterfaceState
 {
     public List<CargoBountyData> Bounties;
+    public TimeSpan UntilNextSkip;
 
-    public CargoBountyConsoleState(List<CargoBountyData> bounties)
+    public CargoBountyConsoleState(List<CargoBountyData> bounties, TimeSpan untilNextSkip)
     {
         Bounties = bounties;
+        UntilNextSkip = untilNextSkip;
     }
 }
 
@@ -51,6 +65,17 @@ public sealed class BountyPrintLabelMessage : BoundUserInterfaceMessage
     public string BountyId;
 
     public BountyPrintLabelMessage(string bountyId)
+    {
+        BountyId = bountyId;
+    }
+}
+
+[Serializable, NetSerializable]
+public sealed class BountySkipMessage : BoundUserInterfaceMessage
+{
+    public string BountyId;
+
+    public BountySkipMessage(string bountyId)
     {
         BountyId = bountyId;
     }

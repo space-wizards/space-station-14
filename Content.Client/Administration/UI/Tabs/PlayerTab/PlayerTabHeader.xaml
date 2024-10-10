@@ -19,23 +19,25 @@
                MouseFilter="Pass"/>
         <cc:VSeparator/>
         <Label Name="JobLabel"
-               SizeFlagsStretchRatio="3"
+               SizeFlagsStretchRatio="2"
                HorizontalExpand="True"
                ClipText="True"
                Text="{Loc player-tab-job}"
                MouseFilter="Pass"/>
         <cc:VSeparator/>
         <Label Name="AntagonistLabel"
-               SizeFlagsStretchRatio="2"
+               SizeFlagsStretchRatio="1"
                HorizontalExpand="True"
                ClipText="True"
                Text="{Loc player-tab-antagonist}"
                MouseFilter="Pass"/>
+        <cc:VSeparator/>
         <Label Name="PlaytimeLabel"
-               SizeFlagsStretchRatio="2"
+               SizeFlagsStretchRatio="1"
                HorizontalExpand="True"
                ClipText="True"
                Text="{Loc player-tab-playtime}"
-               MouseFilter="Pass"/>
+               MouseFilter="Pass"
+               ToolTip="{Loc player-tab-entry-tooltip}"/>
     </BoxContainer>
 </Control>

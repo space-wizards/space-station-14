@@ -4,6 +4,7 @@ using Content.Client.ContextMenu.UI;
 using Content.Client.Examine;
 using Content.Client.PDA;
 using Content.Client.Resources;
+using Content.Client.Silicons.Laws.SiliconLawEditUi;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Controls.FancyTree;
 using Content.Client.Verbs.UI;
@@ -45,6 +46,7 @@ namespace Content.Client.Stylesheets
         public const string StyleClassBorderedWindowPanel = "BorderedWindowPanel";
         public const string StyleClassInventorySlotBackground = "InventorySlotBackground";
         public const string StyleClassHandSlotHighlight = "HandSlotHighlight";
+        public const string StyleClassChatPanel = "ChatPanel";
         public const string StyleClassChatSubPanel = "ChatSubPanel";
         public const string StyleClassTransparentBorderedWindowPanel = "TransparentBorderedWindowPanel";
         public const string StyleClassHotbarPanel = "HotbarPanel";
@@ -76,6 +78,8 @@ namespace Content.Client.Stylesheets
         public const string StyleClassLabelBig = "LabelBig";
         public const string StyleClassLabelSmall = "LabelSmall";
         public const string StyleClassButtonBig = "ButtonBig";
+
+        public const string StyleClassButtonHelp = "HelpButton";
 
         public const string StyleClassPopupMessageSmall = "PopupMessageSmall";
         public const string StyleClassPopupMessageSmallCaution = "PopupMessageSmallCaution";
@@ -135,6 +139,8 @@ namespace Content.Client.Stylesheets
         public const string StyleClassPowerStateGood = "PowerStateGood";
 
         public const string StyleClassItemStatus = "ItemStatus";
+        public const string StyleClassItemStatusNotHeld = "ItemStatusNotHeld";
+        public static readonly Color ItemStatusNotHeldColor = Color.Gray;
 
         //Background
         public const string StyleClassBackgroundBaseDark = "PanelBackgroundBaseDark";
@@ -143,6 +149,13 @@ namespace Content.Client.Stylesheets
         public const string StyleClassCrossButtonRed = "CrossButtonRed";
         public const string StyleClassButtonColorRed = "ButtonColorRed";
         public const string StyleClassButtonColorGreen = "ButtonColorGreen";
+
+        public static readonly Color ChatBackgroundColor = Color.FromHex("#25252ADD");
+
+        //Bwoink
+        public const string StyleClassPinButtonPinned = "pinButtonPinned";
+        public const string StyleClassPinButtonUnpinned = "pinButtonUnpinned";
+
 
         public override Stylesheet Stylesheet { get; }
 
@@ -346,12 +359,16 @@ namespace Content.Client.Stylesheets
             lineEdit.SetPatchMargin(StyleBox.Margin.All, 3);
             lineEdit.SetContentMarginOverride(StyleBox.Margin.Horizontal, 5);
 
-            var chatSubBGTex = resCache.GetTexture("/Textures/Interface/Nano/chat_sub_background.png");
-            var chatSubBG = new StyleBoxTexture
+            var chatBg = new StyleBoxFlat
             {
-                Texture = chatSubBGTex,
+                BackgroundColor = ChatBackgroundColor
             };
-            chatSubBG.SetPatchMargin(StyleBox.Margin.All, 2);
+
+            var chatSubBg = new StyleBoxFlat
+            {
+                BackgroundColor = ChatBackgroundColor,
+            };
+            chatSubBg.SetContentMarginOverride(StyleBox.Margin.All, 2);
 
             var actionSearchBoxTex = resCache.GetTexture("/Textures/Interface/Nano/black_panel_dark_thin_border.png");
             var actionSearchBox = new StyleBoxTexture
@@ -678,6 +695,18 @@ namespace Content.Client.Stylesheets
                         new StyleProperty("font-color", Color.FromHex("#E5E5E581")),
                     }),
 
+                // ItemStatus for hands
+                Element()
+                    .Class(StyleClassItemStatusNotHeld)
+                    .Prop("font", notoSansItalic10)
+                    .Prop("font-color", ItemStatusNotHeldColor)
+                    .Prop(nameof(Control.Margin), new Thickness(4, 0, 0, 2)),
+
+                Element()
+                    .Class(StyleClassItemStatus)
+                    .Prop(nameof(RichTextLabel.LineHeightScale), 0.7f)
+                    .Prop(nameof(Control.Margin), new Thickness(4, 0, 0, 2)),
+
                 // Context Menu window
                 Element<PanelContainer>().Class(ContextMenuPopup.StyleClassContextMenuPopup)
                     .Prop(PanelContainer.StylePropertyPanel, contextMenuBackground),
@@ -850,19 +879,19 @@ namespace Content.Client.Stylesheets
                 Element<TextEdit>().Pseudo(TextEdit.StylePseudoClassPlaceholder)
                     .Prop("font-color", Color.Gray),
 
+                // chat subpanels (chat lineedit backing, popup backings)
+                new StyleRule(new SelectorElement(typeof(PanelContainer), new[] {StyleClassChatPanel}, null, null),
+                    new[]
+                    {
+                        new StyleProperty(PanelContainer.StylePropertyPanel, chatBg),
+                    }),
+
                 // Chat lineedit - we don't actually draw a stylebox around the lineedit itself, we put it around the
                 // input + other buttons, so we must clear the default stylebox
                 new StyleRule(new SelectorElement(typeof(LineEdit), new[] {StyleClassChatLineEdit}, null, null),
                     new[]
                     {
                         new StyleProperty(LineEdit.StylePropertyStyleBox, new StyleBoxEmpty()),
-                    }),
-
-                // chat subpanels (chat lineedit backing, popup backings)
-                new StyleRule(new SelectorElement(typeof(PanelContainer), new[] {StyleClassChatSubPanel}, null, null),
-                    new[]
-                    {
-                        new StyleProperty(PanelContainer.StylePropertyPanel, chatSubBG),
                     }),
 
                 // Action searchbox lineedit
@@ -1227,6 +1256,16 @@ namespace Content.Client.Stylesheets
                     new StyleProperty("font", notoSans10),
                 }),
 
+                Element()
+                    .Class(StyleClassItemStatusNotHeld)
+                    .Prop("font", notoSansItalic10)
+                    .Prop("font-color", ItemStatusNotHeldColor),
+
+                Element<RichTextLabel>()
+                    .Class(StyleClassItemStatus)
+                    .Prop(nameof(RichTextLabel.LineHeightScale), 0.7f)
+                    .Prop(nameof(Control.Margin), new Thickness(0, 0, 0, -6)),
+
                 // Slider
                 new StyleRule(SelectorElement.Type(typeof(Slider)), new []
                 {
@@ -1322,10 +1361,17 @@ namespace Content.Client.Stylesheets
                     new StyleProperty(Label.StylePropertyAlignMode, Label.AlignMode.Center),
                 }),
 
+                Element<PanelContainer>().Class(OptionButton.StyleClassOptionsBackground)
+                    .Prop(PanelContainer.StylePropertyPanel, new StyleBoxFlat(Color.FromHex("#25252A"))),
+
                 new StyleRule(new SelectorElement(typeof(PanelContainer), new []{ ClassHighDivider}, null, null), new []
                 {
                     new StyleProperty(PanelContainer.StylePropertyPanel, new StyleBoxFlat { BackgroundColor = NanoGold, ContentMarginBottomOverride = 2, ContentMarginLeftOverride = 2}),
                 }),
+
+                Element<TextureButton>()
+                    .Class(StyleClassButtonHelp)
+                    .Prop(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/VerbIcons/information.svg.192dpi.png")),
 
                 // Labels ---
                 Element<Label>().Class(StyleClassLabelBig)
@@ -1369,6 +1415,17 @@ namespace Content.Client.Stylesheets
 
                 Element<PanelContainer>().Class("WindowHeadingBackgroundLight")
                     .Prop("panel", new StyleBoxTexture(BaseButtonOpenLeft) { Padding = default }),
+
+                // Window Header Help Button
+                Element<TextureButton>().Class(FancyWindow.StyleClassWindowHelpButton)
+                    .Prop(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/Nano/help.png"))
+                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#4B596A")),
+
+                Element<TextureButton>().Class(FancyWindow.StyleClassWindowHelpButton).Pseudo(ContainerButton.StylePseudoClassHover)
+                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#7F3636")),
+
+                Element<TextureButton>().Class(FancyWindow.StyleClassWindowHelpButton).Pseudo(ContainerButton.StylePseudoClassPressed)
+                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#753131")),
 
                 //The lengths you have to go through to change a background color smh
                 Element<PanelContainer>().Class("PanelBackgroundBaseDark")
@@ -1569,6 +1626,25 @@ namespace Content.Client.Stylesheets
                     {
                         BackgroundColor = FancyTreeSelectedRowColor,
                     }),
+
+                // Silicon law edit ui
+                Element<Label>().Class(SiliconLawContainer.StyleClassSiliconLawPositionLabel)
+                    .Prop(Label.StylePropertyFontColor, NanoGold),
+                // Pinned button style
+                new StyleRule(
+                    new SelectorElement(typeof(TextureButton), new[] { StyleClassPinButtonPinned }, null, null),
+                    new[]
+                    {
+                        new StyleProperty(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/Bwoink/pinned.png"))
+                    }),
+
+                // Unpinned button style
+                new StyleRule(
+                    new SelectorElement(typeof(TextureButton), new[] { StyleClassPinButtonUnpinned }, null, null),
+                    new[]
+                    {
+                        new StyleProperty(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/Bwoink/un_pinned.png"))
+                    })
             }).ToList());
         }
     }

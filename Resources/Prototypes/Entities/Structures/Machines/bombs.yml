@@ -10,7 +10,7 @@
     - type: InteractionOutline
     - type: UserInterface
       interfaces:
-        - key: enum.WiresUiKey.Key
+        enum.WiresUiKey.Key:
           type: WiresBoundUserInterface
     - type: Wires
       layoutId: Defusable
@@ -47,7 +47,7 @@
     - type: GuideHelp
       openOnActivation: true
       guides:
-        - Defusal
+      - Defusal
 
 - type: entity
   parent: BaseHardBomb
@@ -92,7 +92,7 @@
       disposable: false
 
 - type: entity
-  parent: BaseHardBomb
+  parent: [BaseHardBomb, BaseSyndicateContraband]
   id: SyndicateBomb
   name: syndicate bomb
   description: A bomb for Syndicate operatives and agents alike. The real deal, no more training, get to it!
@@ -144,7 +144,7 @@
   id: DebugHardBomb
   name: debug bomb
   suffix: DEBUG
-  description: Holy shit this is gonna explode
+  description: Holy shit this is gonna explode.
   components:
     - type: Defusable
       disposable: true

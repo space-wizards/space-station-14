@@ -9,6 +9,7 @@
       time: 36000 #10 hrs
   startingGear: WardenGear
   icon: "JobIconWarden"
+  requireAdminNotify: true
   supervisors: job-supervisors-hos
   canBeAntag: false
   access:
@@ -27,16 +28,11 @@
 - type: startingGear
   id: WardenGear
   equipment:
-    head: ClothingHeadHatWarden
-    jumpsuit: ClothingUniformJumpsuitWarden
-    back: ClothingBackpackSecurityFilled
-    shoes: ClothingShoesBootsCombatFilled
     eyes: ClothingEyesGlassesSecurity
-    outerClothing: ClothingOuterCoatWarden
     id: WardenPDA
     ears: ClothingHeadsetSecurity
-    belt: ClothingBeltSecurityFilled
     pocket1: WeaponPistolMk58
-  innerClothingSkirt: ClothingUniformJumpskirtWarden
-  satchel: ClothingBackpackSatchelSecurityFilled
-  duffelbag: ClothingBackpackDuffelSecurityFilled
+  storage:
+    back:
+    - Flash
+    - MagazinePistol

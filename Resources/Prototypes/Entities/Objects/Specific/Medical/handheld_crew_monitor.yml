@@ -1,9 +1,7 @@
 - type: entity
   name: handheld crew monitor
   suffix: DO NOT MAP
-  parent:
-  - BaseItem
-  - PowerCellSlotSmallItem
+  parent: [ BaseHandheldComputer, BaseGrandTheftContraband ]
   # CMO-only bud, don't add more.
   id: HandheldCrewMonitor
   description: A hand-held crew monitor displaying the status of suit sensors.
@@ -11,16 +9,11 @@
   - type: Sprite
     sprite: Objects/Specific/Medical/handheldcrewmonitor.rsi
     state: scanner
-  - type: PowerCellDraw
-    drawRate: 0
-    useRate: 20
-  - type: ActivatableUIRequiresPowerCell
   - type: ActivatableUI
     key: enum.CrewMonitoringUIKey.Key
-    closeOnHandDeselect: false
   - type: UserInterface
     interfaces:
-      - key: enum.CrewMonitoringUIKey.Key
+      enum.CrewMonitoringUIKey.Key:
         type: CrewMonitoringBoundUserInterface
   - type: CrewMonitoringConsole
   - type: DeviceNetwork

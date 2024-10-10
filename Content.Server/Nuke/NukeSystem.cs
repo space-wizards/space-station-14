@@ -167,12 +167,21 @@ public sealed class NukeSystem : EntitySystem
         if (component.Status == NukeStatus.ARMED)
             return;
 
+        // Nuke has to have the disk in it to be moved
+        if (!component.DiskSlot.HasItem)
+        {
+            var msg = Loc.GetString("nuke-component-cant-anchor-toggle");
+            _popups.PopupEntity(msg, uid, args.Actor, PopupType.MediumCaution);
+            return;
+        }
+
         // manually set transform anchor (bypassing anchorable)
         // todo: it will break pullable system
         var xform = Transform(uid);
         if (xform.Anchored)
         {
             _transform.Unanchor(uid, xform);
+            _itemSlots.SetLock(uid, component.DiskSlot, true);
         }
         else
         {
@@ -187,13 +196,14 @@ public sealed class NukeSystem : EntitySystem
                     continue;
 
                 var msg = Loc.GetString("nuke-component-cant-anchor-floor");
-                _popups.PopupEntity(msg, uid, args.Session, PopupType.MediumCaution);
+                _popups.PopupEntity(msg, uid, args.Actor, PopupType.MediumCaution);
 
                 return;
             }
 
             _transform.SetCoordinates(uid, xform, xform.Coordinates.SnapToGrid());
             _transform.AnchorEntity(uid, xform);
+            _itemSlots.SetLock(uid, component.DiskSlot, false);
         }
 
         UpdateUserInterface(uid, component);
@@ -243,10 +253,7 @@ public sealed class NukeSystem : EntitySystem
 
         else
         {
-            if (args.Session.AttachedEntity is not { } user)
-                return;
-
-            DisarmBombDoafter(uid, user, component);
+            DisarmBombDoafter(uid, args.Actor, component);
         }
     }
 
@@ -366,8 +373,7 @@ public sealed class NukeSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
-        var ui = _ui.GetUiOrNull(uid, NukeUiKey.Key);
-        if (ui == null)
+        if (!_ui.HasUi(uid, NukeUiKey.Key))
             return;
 
         var anchored = Transform(uid).Anchored;
@@ -388,7 +394,7 @@ public sealed class NukeSystem : EntitySystem
             CooldownTime = (int) component.CooldownTime
         };
 
-        _ui.SetUiState(ui, state);
+        _ui.SetUiState(uid, NukeUiKey.Key, state);
     }
 
     private void PlayNukeKeypadSound(EntityUid uid, int number, NukeComponent? component = null)
@@ -454,7 +460,7 @@ public sealed class NukeSystem : EntitySystem
         if (stationUid != null)
             _alertLevel.SetLevel(stationUid.Value, component.AlertLevelOnActivate, true, true, true, true);
 
-        var pos = nukeXform.MapPosition;
+        var pos = _transform.GetMapCoordinates(uid, xform: nukeXform);
         var x = (int) pos.X;
         var y = (int) pos.Y;
         var posText = $"({x}, {y})";
@@ -465,7 +471,7 @@ public sealed class NukeSystem : EntitySystem
         // warn a crew
         var announcement = Loc.GetString("nuke-component-announcement-armed",
             ("time", (int) component.RemainingTime),
-            ("location", FormattedMessage.RemoveMarkup(_navMap.GetNearestBeaconString((uid, nukeXform)))));
+            ("location", FormattedMessage.RemoveMarkupOrThrow(_navMap.GetNearestBeaconString((uid, nukeXform)))));
         var sender = Loc.GetString("nuke-component-announcement-sender");
         _chatSystem.DispatchStationAnnouncement(stationUid ?? uid, announcement, sender, false, null, Color.Red);
 
@@ -594,7 +600,7 @@ public sealed class NukeSystem : EntitySystem
         {
             BreakOnDamage = true,
             BreakOnMove = true,
-            NeedHand = true
+            NeedHand = true,
         };
 
         if (!_doAfter.TryStartDoAfter(doAfter))

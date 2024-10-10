@@ -13,8 +13,49 @@ admin-smite-stomach-removal-self = Your stomach feels hollow...
 admin-smite-run-walk-swap-prompt = You have to press shift to run!
 admin-smite-super-speed-prompt = You move at mach 0.8!
 admin-smite-lung-removal-self = You can't breathe!
-admin-smite-terminate-prompt = I'll be back
 
+## Smite names
+
+admin-smite-explode-name = Explode
+admin-smite-chess-dimension-name = Chess Dimension
+admin-smite-set-alight-name = Set Alight
+admin-smite-monkeyify-name = Monkeyify
+admin-smite-electrocute-name = Garbage Can
+admin-smite-creampie-name = Electrocute
+admin-smite-remove-blood-name = Creampie
+admin-smite-vomit-organs-name = Remove blood
+admin-smite-remove-hands-name = Vomit organs
+admin-smite-remove-hand-name = Remove hands
+admin-smite-pinball-name = Remove hand
+admin-smite-yeet-name = Stomach Removal
+admin-smite-become-bread-name = Lungs Removal
+admin-smite-ghostkick-name = Pinball
+admin-smite-nyanify-name = Yeet
+admin-smite-kill-sign-name = Become Bread
+admin-smite-cluwne-name = Become Mouse
+admin-smite-anger-pointing-arrows-name = Ghostkick
+admin-smite-dust-name = Nyanify
+admin-smite-buffering-name = Kill sign
+admin-smite-become-instrument-name = Cluwne
+admin-smite-remove-gravity-name = Maid
+admin-smite-reptilian-species-swap-name = Anger Pointing Arrows
+admin-smite-locker-stuff-name = Dust
+admin-smite-headstand-name = Buffering
+admin-smite-become-mouse-name = Become Instrument
+admin-smite-maid-name = Remove gravity
+admin-smite-zoom-in-name = Reptilian Species Swap
+admin-smite-flip-eye-name = Locker stuff
+admin-smite-run-walk-swap-name = Headstand
+admin-smite-super-speed-name = Zoom in
+admin-smite-stomach-removal-name = Flip eye
+admin-smite-speak-backwards-name = Run Walk Swap
+admin-smite-lung-removal-name = Speak Backwards
+admin-smite-disarm-prone-name = Disarm Prone
+admin-smite-garbage-can-name = Super speed
+admin-smite-super-bonk-name = Super Bonk Lite
+admin-smite-super-bonk-lite-name = Super Bonk
+admin-smite-terminate-name = Terminate
+admin-smite-super-slip-name = Super Slip
 
 ## Smite descriptions
 
@@ -22,12 +63,12 @@ admin-smite-explode-description = Explode them.
 admin-smite-chess-dimension-description = Banishment to the Chess Dimension.
 admin-smite-set-alight-description = Makes them burn.
 admin-smite-monkeyify-description = Turns the target into a monkey.
-admin-smite-lung-cancer-description = Stage IIIA Lung Cancer, for when they really like the hit show Breaking Bad.
 admin-smite-electrocute-description = Electrocutes them, rendering anything they were wearing useless.
 admin-smite-creampie-description = A creampie, condensed into a button.
 admin-smite-remove-blood-description = Removes all of their blood, messily.
 admin-smite-vomit-organs-description = Causes them to vomit, organs included.
 admin-smite-remove-hands-description = Removes their hands.
+admin-smite-remove-hand-description = Removes only one of their hands instead of all of them.
 admin-smite-pinball-description = Turns them into a super bouncy ball, flinging them around until they clip through the station into the abyss.
 admin-smite-yeet-description = Banishes them into the depths of space by turning on no-clip and tossing them.
 admin-smite-become-bread-description = It turns them into bread. Really, that's all it does.
@@ -43,7 +84,6 @@ admin-smite-remove-gravity-description = Grants them anti-gravity.
 admin-smite-reptilian-species-swap-description = It changes their species to Reptilian. Useful for people who were being space racist.
 admin-smite-locker-stuff-description = Stuffs them in a (welded) locker.
 admin-smite-headstand-description = Vertically flips their sprite.
-admin-smite-plasma-internals-description = Replaces the contents of their internals with plasma.
 admin-smite-become-mouse-description = They become a mouse. Squeak!
 admin-smite-maid-description = Forcibly converts them into a janitorial cat maid. This is actual torture for some players, use it wisely.
 admin-smite-zoom-in-description = Zooms in their view so that they can no longer see their surroundings.
@@ -53,12 +93,12 @@ admin-smite-super-speed-description = Makes them really fast, causing them to tu
 admin-smite-stomach-removal-description = Removes their stomach, rendering them unable to eat.
 admin-smite-speak-backwards-description = Forces them to speak backwards, so they can't call for help.
 admin-smite-lung-removal-description = Removes their lungs, drowning them.
-admin-smite-remove-hand-description = Removes only one of their hands instead of all of them.
 admin-smite-disarm-prone-description = Makes them get disarmed 100% of the time and cuffed instantly.
 admin-smite-garbage-can-description = Turn them into a garbage bin to emphasize what they remind you of.
 admin-smite-super-bonk-description = Slams them on every single table on the Station and beyond.
 admin-smite-super-bonk-lite-description= Slams them on every single table on the Station and beyond. Stops when the target is dead.
 admin-smite-terminate-description = Creates a Terminator ghost role with the sole objective of killing them.
+admin-smite-super-slip-description = Slips them really, really hard.
 
 ## Tricks descriptions
 
@@ -86,7 +126,7 @@ admin-trick-rename-and-redescribe-description = Convenient bundle of both rename
 admin-trick-bar-job-slots-description = Closes all job slots on the station, such that nobody can join it.
 admin-trick-locate-cargo-shuttle-description = Teleports you directly to the station's cargo shuttle, if it exists.
 admin-trick-infinite-battery-description = Reconfigures the SMESes and substations on the grid/station/map to self-recharge rapidly.
-admin-trick-infinite-battery-object-description = Reconfigures the item so that it's battery rapidly refills.
+admin-trick-infinite-battery-object-description = Reconfigures the item so that its battery rapidly refills.
 admin-trick-halt-movement-description = Halts the movement of the target object, at least until something moves it again.
 admin-trick-unpause-map-description = Unpause the selected map. NOTE THIS CAN CAUSE BAD BEHAVIOR WITH STORAGE MAPS!
 admin-trick-pause-map-description = Pause the selected map. Note this doesn't entirely stop player movement!

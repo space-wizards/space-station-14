@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/6f5ca45e3ac06b30fb1957042214a888d8c01722. Inhands, worn sprites, and vox sprites created by EmoGarbage404 (github)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "icon-up"
+    },
+    {
+      "name": "equipped-MASK",
+      "directions": 4
+    },
+    {
+      "name": "up-equipped-MASK",
+      "directions": 4
+    },
+    {
+      "name": "equipped-MASK-vox",
+      "directions": 4
+    },
+    {
+      "name": "up-equipped-MASK-vox",
+      "directions": 4
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "up-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "up-inhand-right",
+      "directions": 4
+    }
+  ]
+}

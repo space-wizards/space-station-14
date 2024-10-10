@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/77cff42b6c514e73881a885036be4b4dd2949f62",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/77cff42b6c514e73881a885036be4b4dd2949f62 recolored by Github user Dutch-VanDerLinde, CAP edited by Skarletto (github), equipped-OUTERCLOTHING-vox states taken from /vg/station at commit https://github.com/vgstation-coders/vgstation13/commit/31d6576ba8102135d058ef49c3cb6ecbe8db8a79 and repaletted to match by Flareguy, grayscale layering & armor by IProduceWidgets (Github)",
   "size": {
     "x": 32,
     "y": 32
@@ -15,12 +15,572 @@
       "directions": 4
     },
     {
+      "name": "equipped-OUTERCLOTHING-vox",
+      "directions": 4
+    },
+    {
       "name": "inhand-left",
       "directions": 4
     },
     {
       "name": "inhand-right",
       "directions": 4
+    },
+	{
+      "name": "ATMOS-icon"
+    },
+    {
+      "name": "ATMOS-equipped-OUTERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "ATMOS-equipped-OUTERCLOTHING-vox",
+      "directions": 4
+    },
+    {
+      "name": "ATMOS-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "ATMOS-inhand-right",
+      "directions": 4
+    },
+	{
+      "name": "SCI-icon"
+    },
+    {
+      "name": "SCI-equipped-OUTERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "SCI-equipped-OUTERCLOTHING-vox",
+      "directions": 4
+    },
+    {
+      "name": "SCI-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "SCI-inhand-right",
+      "directions": 4
+    },
+	{
+      "name": "CHEM-icon"
+    },
+    {
+      "name": "CHEM-equipped-OUTERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "CHEM-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "CHEM-inhand-right",
+      "directions": 4
+    },
+	{
+      "name": "MIME-icon"
+    },
+    {
+      "name": "MIME-equipped-OUTERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "MIME-equipped-OUTERCLOTHING-vox",
+      "directions": 4
+    },
+    {
+      "name": "MIME-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "MIME-inhand-right",
+      "directions": 4
+    },
+	{
+      "name": "BAR-icon"
+    },
+    {
+      "name": "BAR-equipped-OUTERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "BAR-equipped-OUTERCLOTHING-vox",
+      "directions": 4
+    },
+    {
+      "name": "BAR-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "BAR-inhand-right",
+      "directions": 4
+    },
+	{
+      "name": "PARA-icon"
+    },
+    {
+      "name": "PARA-equipped-OUTERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "PARA-equipped-OUTERCLOTHING-vox",
+      "directions": 4
+    },
+    {
+      "name": "PARA-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "PARA-inhand-right",
+      "directions": 4
+    },
+	{
+      "name": "MINER-icon"
+    },
+    {
+      "name": "MINER-equipped-OUTERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "MINER-equipped-OUTERCLOTHING-vox",
+      "directions": 4
+    },
+    {
+      "name": "MINER-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "MINER-inhand-right",
+      "directions": 4
+    },
+	{
+      "name": "CARGO-icon"
+    },
+    {
+      "name": "CARGO-equipped-OUTERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "CARGO-equipped-OUTERCLOTHING-vox",
+      "directions": 4
+    },
+    {
+      "name": "CARGO-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "CARGO-inhand-right",
+      "directions": 4
+    },
+	{
+      "name": "HYDRO-icon"
+    },
+    {
+      "name": "HYDRO-equipped-OUTERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "HYDRO-equipped-OUTERCLOTHING-vox",
+      "directions": 4
+    },
+    {
+      "name": "HYDRO-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "HYDRO-inhand-right",
+      "directions": 4
+    },
+	{
+      "name": "CHEF-icon"
+    },
+    {
+      "name": "CHEF-equipped-OUTERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "CHEF-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "CHEF-inhand-right",
+      "directions": 4
+    },
+	{
+      "name": "GENE-icon"
+    },
+    {
+      "name": "GENE-equipped-OUTERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "GENE-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "GENE-inhand-right",
+      "directions": 4
+    },
+	{
+      "name": "ENGI-icon"
+    },
+    {
+      "name": "ENGI-equipped-OUTERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "ENGI-equipped-OUTERCLOTHING-vox",
+      "directions": 4
+    },
+    {
+      "name": "ENGI-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "ENGI-inhand-right",
+      "directions": 4
+    },
+	{
+      "name": "CAP-icon"
+    },
+    {
+      "name": "CAP-equipped-OUTERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "CAP-equipped-OUTERCLOTHING-vox",
+      "directions": 4
+    },
+    {
+      "name": "CAP-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "CAP-inhand-right",
+      "directions": 4
+    },
+	{
+      "name": "WARD-icon"
+    },
+    {
+      "name": "WARD-equipped-OUTERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "WARD-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "WARD-inhand-right",
+      "directions": 4
+    },
+	{
+      "name": "JANI-icon"
+    },
+    {
+      "name": "JANI-equipped-OUTERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "JANI-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "JANI-inhand-right",
+      "directions": 4
+    },
+	{
+      "name": "HOP-icon"
+    },
+    {
+      "name": "HOP-equipped-OUTERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "HOP-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "HOP-inhand-right",
+      "directions": 4
+    },
+	{
+      "name": "MED-icon"
+    },
+    {
+      "name": "MED-equipped-OUTERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "MED-equipped-OUTERCLOTHING-vox",
+      "directions": 4
+    },
+    {
+      "name": "MED-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "MED-inhand-right",
+      "directions": 4
+    },
+	{
+      "name": "SEC-icon"
+    },
+    {
+      "name": "SEC-equipped-OUTERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "SEC-equipped-OUTERCLOTHING-vox",
+      "directions": 4
+    },
+    {
+      "name": "SEC-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "SEC-inhand-right",
+      "directions": 4
+    },
+	{
+      "name": "SYNDIECAP-icon"
+    },
+    {
+      "name": "SYNDIECAP-equipped-OUTERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "SYNDIECAP-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "SYNDIECAP-inhand-right",
+      "directions": 4
+    },
+	{
+      "name": "SYNDIE-icon"
+    },
+    {
+      "name": "SYNDIE-equipped-OUTERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "SYNDIE-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "SYNDIE-inhand-right",
+      "directions": 4
+    },
+	{
+      "name": "CMO-icon"
+    },
+    {
+      "name": "CMO-equipped-OUTERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "CMO-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "CMO-inhand-right",
+      "directions": 4
+    },
+	{
+      "name": "CE-icon"
+    },
+    {
+      "name": "CE-equipped-OUTERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "CE-equipped-OUTERCLOTHING-vox",
+      "directions": 4
+    },
+    {
+      "name": "CE-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "CE-inhand-right",
+      "directions": 4
+    },
+	{
+      "name": "ROBO-icon"
+    },
+    {
+      "name": "ROBO-equipped-OUTERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "ROBO-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "ROBO-inhand-right",
+      "directions": 4
+    },
+	{
+      "name": "HOS-icon"
+    },
+    {
+      "name": "HOS-equipped-OUTERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "HOS-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "HOS-inhand-right",
+      "directions": 4
+    },
+	{
+      "name": "CENTCOM-icon"
+    },
+    {
+      "name": "CENTCOM-equipped-OUTERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "CENTCOM-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "CENTCOM-inhand-right",
+      "directions": 4
+    },
+	{
+      "name": "VIRO-icon"
+    },
+    {
+      "name": "VIRO-equipped-OUTERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "VIRO-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "VIRO-inhand-right",
+      "directions": 4
+    },
+	{
+      "name": "QM-icon"
+    },
+    {
+      "name": "QM-equipped-OUTERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "QM-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "QM-inhand-right",
+      "directions": 4
+    },
+	{
+      "name": "WEB-icon"
+    },
+    {
+      "name": "WEB-equipped-OUTERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "WEB-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "WEB-inhand-right",
+      "directions": 4
+    },
+	{
+      "name": "RD-icon"
+    },
+    {
+      "name": "RD-equipped-OUTERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "RD-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "RD-inhand-right",
+      "directions": 4
+    },
+	{
+      "name": "coatybits-icon"
+    },
+	{
+      "name": "winterbits-icon"
+    },
+	{
+      "name": "winterbits-tan-icon"
+    },
+	{
+      "name": "coatybits-equipped-OUTERCLOTHING",
+      "directions": 4
+    },
+	{
+      "name": "winterbits-equipped-OUTERCLOTHING",
+      "directions": 4
+    },
+	{
+      "name": "winterbits-tan-equipped-OUTERCLOTHING",
+      "directions": 4
+    },
+	{
+      "name": "coatybits-equipped-OUTERCLOTHING-vox",
+      "directions": 4
+    },
+	{
+      "name": "winterbits-equipped-OUTERCLOTHING-vox",
+      "directions": 4
+    },
+	{
+      "name": "coatybits-inhand-left",
+      "directions": 4
+    },
+	{
+      "name": "winterbits-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "coatybits-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "winterbits-inhand-right",
+      "directions": 4
+    },
+	{
+      "name": "ARMOR-equipped-OUTERCLOTHING",
+      "directions": 4
+    },
+	{
+      "name": "ARMOR-inhand-right",
+      "directions": 4
+    },
+	{
+      "name": "ARMOR-inhand-left",
+      "directions": 4
+    },
+	{
+      "name": "WARDEN-ARMORED-icon"
+    },
+	{
+      "name": "HOS-ARMORED-icon"
+    },
+	{
+      "name": "SYNDIE-ARMORED-icon"
+    },
+	{
+      "name": "ARMOR-icon"
     }
   ]
 }

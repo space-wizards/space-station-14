@@ -17,7 +17,7 @@ public sealed partial class VoiceMaskNameChangeWindow : FancyWindow
 
     private string? _verb;
 
-    public VoiceMaskNameChangeWindow(IPrototypeManager proto)
+    public VoiceMaskNameChangeWindow()
     {
         RobustXamlLoader.Load(this);
 
@@ -31,13 +31,9 @@ public sealed partial class VoiceMaskNameChangeWindow : FancyWindow
             OnVerbChange?.Invoke((string?) args.Button.GetItemMetadata(args.Id));
             SpeechVerbSelector.SelectId(args.Id);
         };
-
-        ReloadVerbs(proto);
-
-        AddVerbs();
     }
 
-    private void ReloadVerbs(IPrototypeManager proto)
+    public void ReloadVerbs(IPrototypeManager proto)
     {
         foreach (var verb in proto.EnumeratePrototypes<SpeechVerbPrototype>())
         {
@@ -46,7 +42,7 @@ public sealed partial class VoiceMaskNameChangeWindow : FancyWindow
         _verbs.Sort((a, b) => a.Item1.CompareTo(b.Item1));
     }
 
-    private void AddVerbs()
+    public void AddVerbs()
     {
         SpeechVerbSelector.Clear();
 

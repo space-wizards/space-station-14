@@ -11,6 +11,9 @@ public sealed class Box : BoxContainer, IDocumentTag
         HorizontalExpand = true;
         control = this;
 
+        if (args.TryGetValue("Margin", out var margin))
+            Margin = new Thickness(float.Parse(margin));
+
         if (args.TryGetValue("Orientation", out var orientation))
             Orientation = Enum.Parse<LayoutOrientation>(orientation);
         else

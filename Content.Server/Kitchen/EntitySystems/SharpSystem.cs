@@ -1,20 +1,22 @@
 ﻿using Content.Server.Body.Systems;
 using Content.Server.Kitchen.Components;
-using Content.Shared.Administration.Logs;
+using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.Body.Components;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Nutrition.Components;
-using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Storage;
 using Content.Shared.Verbs;
 using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
+using Content.Shared.Hands.Components;
 using Content.Shared.Kitchen;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Robust.Server.Containers;
+using Robust.Server.GameObjects;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
@@ -28,6 +30,7 @@ public sealed class SharpSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly ContainerSystem _containerSystem = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
+    [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
@@ -35,7 +38,7 @@ public sealed class SharpSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SharpComponent, AfterInteractEvent>(OnAfterInteract, before: new[] { typeof(UtensilSystem) });
+        SubscribeLocalEvent<SharpComponent, AfterInteractEvent>(OnAfterInteract, before: [typeof(UtensilSystem)]);
         SubscribeLocalEvent<SharpComponent, SharpDoAfterEvent>(OnDoAfter);
 
         SubscribeLocalEvent<ButcherableComponent, GetVerbsEvent<InteractionVerb>>(OnGetInteractionVerbs);
@@ -43,16 +46,14 @@ public sealed class SharpSystem : EntitySystem
 
     private void OnAfterInteract(EntityUid uid, SharpComponent component, AfterInteractEvent args)
     {
-        if (args.Handled)
+        if (args.Handled || args.Target is null || !args.CanReach)
             return;
 
-        if (args.Target is null || !args.CanReach)
-            return;
-
-        args.Handled = TryStartButcherDoAfter(uid, args.Target.Value, args.User);
+        if (TryStartButcherDoafter(uid, args.Target.Value, args.User))
+            args.Handled = true;
     }
 
-    private bool TryStartButcherDoAfter(EntityUid knife, EntityUid target, EntityUid user)
+    private bool TryStartButcherDoafter(EntityUid knife, EntityUid target, EntityUid user)
     {
         if (!TryComp<ButcherableComponent>(target, out var butcher))
             return false;
@@ -66,18 +67,23 @@ public sealed class SharpSystem : EntitySystem
         if (butcher.Type != ButcheringType.Knife && target != user)
         {
             _popupSystem.PopupEntity(Loc.GetString("butcherable-different-tool", ("target", target)), knife, user);
-            return true;
+            return false;
         }
 
         if (!sharp.Butchering.Add(target))
-            return true;
+            return false;
+
+        // if the user isn't the entity with the sharp component,
+        // they will need to be holding something with their hands, so we set needHand to true
+        // so that the doafter can be interrupted if they drop the item in their hands
+        var needHand = user != knife;
 
         var doAfter =
             new DoAfterArgs(EntityManager, user, sharp.ButcherDelayModifier * butcher.ButcherDelay, new SharpDoAfterEvent(), knife, target: target, used: knife)
             {
                 BreakOnDamage = true,
                 BreakOnMove = true,
-                NeedHand = true
+                NeedHand = needHand,
             };
         _doAfterSystem.TryStartDoAfter(doAfter);
         return true;
@@ -103,7 +109,7 @@ public sealed class SharpSystem : EntitySystem
         }
 
         var spawnEntities = EntitySpawnCollection.GetSpawns(butcher.SpawnedEntities, _robustRandom);
-        var coords = Transform(args.Args.Target.Value).MapPosition;
+        var coords = _transform.GetMapCoordinates(args.Args.Target.Value);
         EntityUid popupEnt = default!;
         foreach (var proto in spawnEntities)
         {
@@ -136,13 +142,20 @@ public sealed class SharpSystem : EntitySystem
 
     private void OnGetInteractionVerbs(EntityUid uid, ButcherableComponent component, GetVerbsEvent<InteractionVerb> args)
     {
-        if (component.Type != ButcheringType.Knife || args.Hands == null || !args.CanAccess || !args.CanInteract)
+        if (component.Type != ButcheringType.Knife || !args.CanAccess || !args.CanInteract)
             return;
 
-        bool disabled = false;
+        // if the user has no hands, don't show them the verb if they have no SharpComponent either
+        if (!TryComp<SharpComponent>(args.User, out var userSharpComp) && args.Hands == null)
+            return;
+
+        var disabled = false;
         string? message = null;
 
-        if (!HasComp<SharpComponent>(args.Using))
+        // if the user has hands
+        // and the item they're holding doesn't have the SharpComponent
+        // disable the verb
+        if (!TryComp<SharpComponent>(args.Using, out var usingSharpComp) && args.Hands != null)
         {
             disabled = true;
             message = Loc.GetString("butcherable-need-knife",
@@ -150,9 +163,9 @@ public sealed class SharpSystem : EntitySystem
         }
         else if (_containerSystem.IsEntityInContainer(uid))
         {
+            disabled = true;
             message = Loc.GetString("butcherable-not-in-container",
                 ("target", uid));
-            disabled = true;
         }
         else if (TryComp<MobStateComponent>(uid, out var state) && !_mobStateSystem.IsDead(uid, state))
         {
@@ -160,12 +173,20 @@ public sealed class SharpSystem : EntitySystem
             message = Loc.GetString("butcherable-mob-isnt-dead");
         }
 
+        // set the object doing the butchering to the item in the user's hands or to the user themselves
+        // if either has the SharpComponent
+        EntityUid sharpObject = default;
+        if (usingSharpComp != null)
+            sharpObject = args.Using!.Value;
+        else if (userSharpComp != null)
+            sharpObject = args.User;
+
         InteractionVerb verb = new()
         {
             Act = () =>
             {
                 if (!disabled)
-                    TryStartButcherDoAfter(args.Using!.Value, args.Target, args.User);
+                    TryStartButcherDoafter(sharpObject, args.Target, args.User);
             },
             Message = message,
             Disabled = disabled,
