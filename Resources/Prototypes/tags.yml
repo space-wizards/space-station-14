@@ -1205,6 +1205,9 @@
   id: SignalTrigger
 
 - type: Tag
+  id: SiliconEmotes
+
+- type: Tag
   id: SkeletonMotorcycleKeys
 
 - type: Tag
