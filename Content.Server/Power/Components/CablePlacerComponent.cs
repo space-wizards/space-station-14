@@ -21,7 +21,7 @@ namespace Content.Server.Power.Components
         public CableType BlockingCableType = CableType.HighVoltage;
 
         [DataField]
-        public EntityWhitelist Blacklist { get; private set; } = new();
+        public EntityWhitelist Blacklist = new();
 
         /// <summary>
         /// Whether the placed cable should go over tiles or not.
