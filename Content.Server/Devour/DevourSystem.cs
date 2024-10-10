@@ -4,12 +4,14 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Devour;
 using Content.Shared.Devour.Components;
 using Content.Shared.Humanoid;
+using Content.Shared.Whitelist;
 
 namespace Content.Server.Devour;
 
 public sealed class DevourSystem : SharedDevourSystem
 {
     [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
 
     public override void Initialize()
     {
@@ -27,7 +29,7 @@ public sealed class DevourSystem : SharedDevourSystem
         var ichorInjection = new Solution(component.Chemical, component.HealRate);
 
         if (component.FoodPreference == FoodPreference.All ||
-            (component.FoodPreference == FoodPreference.Humanoid && HasComp<HumanoidAppearanceComponent>(args.Args.Target)))
+            (component.FoodPreference == FoodPreference.Picky && _whitelist.IsValid(component.StorageWhitelist, args.Args.Target)))
         {
             ichorInjection.ScaleSolution(0.5f);
 
