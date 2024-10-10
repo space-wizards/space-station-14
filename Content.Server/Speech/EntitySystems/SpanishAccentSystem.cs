@@ -1,10 +1,19 @@
 using System.Text;
+using System.Text.RegularExpressions;
 using Content.Server.Speech.Components;
 
 namespace Content.Server.Speech.EntitySystems
 {
     public sealed class SpanishAccentSystem : EntitySystem
     {
+        [Dependency] private readonly ReplacementAccentSystem _replacement = default!;
+
+        private static readonly Regex RegexWordInitialLowerCaseS = new(@"(^| )s");
+        private static readonly Regex RegexWordInitialUpperCaseSNotFollowedByCapital = new(@"(^| )S([^A-Z])");
+        private static readonly Regex RegexWordInitialUpperCaseSFollowedByCapital = new(@" (^| )([A-Z])");
+
+        private static readonly Regex RegexHaha = new(@"\b(ha)+\b");
+
         public override void Initialize()
         {
             SubscribeLocalEvent<SpanishAccentComponent, AccentGetEvent>(OnAccent);
@@ -13,28 +22,39 @@ namespace Content.Server.Speech.EntitySystems
         public string Accentuate(string message)
         {
             // Insert E before every S
-            message = InsertS(message);
+            message = ReplaceWordInitialSWithEs(message);
+            // Replace things like "haha"s with "jaja"s.
+            message = ReplaceHaWithJa(message);
+
+            // Replace words after the accent application so that the spnish words aren't "accented".
+            // The downside of this is that the words-to-replace look for the "es-" modified words.
+            message = _replacement.ApplyReplacements(message, "spanish");
+
             // If a sentence ends with ?, insert a reverse ? at the beginning of the sentence
             message = ReplacePunctuation(message);
             return message;
         }
 
-        private string InsertS(string message)
+        private string ReplaceWordInitialSWithEs(string message)
         {
-            // Replace every new Word that starts with s/S
-            var msg = message.Replace(" s", " es").Replace(" S", " Es");
+            // stun -> estun
+            message = RegexWordInitialLowerCaseS.Replace(message, "$1es");
+            // Stun -> Estun
+            message = RegexWordInitialUpperCaseSNotFollowedByCapital.Replace(message, "$1Es$2");
+            // STUN -> ESTUN
+            message = RegexWordInitialUpperCaseSFollowedByCapital.Replace(message, "$1ES$2");
 
-            // Still need to check if the beginning of the message starts
-            if (msg.StartsWith("s", StringComparison.Ordinal))
-            {
-                return msg.Remove(0, 1).Insert(0, "es");
-            }
-            else if (msg.StartsWith("S", StringComparison.Ordinal))
-            {
-                return msg.Remove(0, 1).Insert(0, "Es");
-            }
+            return message;
+        }
 
-            return msg;
+        private string ReplaceHaWithJa(string message)
+        {
+            if (RegexHaha.IsMatch(message))
+            {
+                // Preserve case and number of "ha"s by replacing individual letters.
+                message = message.Replace('h', 'j').Replace('H', 'j');
+            }
+            return message;
         }
 
         private string ReplacePunctuation(string message)
@@ -57,7 +77,8 @@ namespace Content.Server.Speech.EntitySystems
                 if (toInsert.Length == 0)
                 {
                     msg.Append(s);
-                } else
+                }
+                else
                 {
                     msg.Append(s.Insert(s.Length - s.TrimStart().Length, toInsert.ToString()));
                 }
