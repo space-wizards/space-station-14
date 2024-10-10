@@ -4,6 +4,7 @@ using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Maps;
 using Content.Shared.Stacks;
+using Content.Shared.Whitelist;
 using Robust.Shared.Map.Components;
 
 namespace Content.Server.Power.EntitySystems;
@@ -13,6 +14,7 @@ public sealed partial class CableSystem
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     private void InitializeCablePlacer()
     {
@@ -38,21 +40,13 @@ public sealed partial class CableSystem
         if ((!component.OverTile && !tileDef.IsSubFloor) || !tileDef.Sturdy)
             return;
 
-        if (component.UsePlaceOverBlacklist == true)
+        foreach (var anchored in grid.GetAnchoredEntities(snapPos))
         {
-            foreach (var anchored in grid.GetAnchoredEntities(snapPos))
-            {
-                if (component.Blacklist?.IsValid(anchored) ?? false)
-                    return;
-            }
-        }
-        else
-        {
-            foreach (var anchored in grid.GetAnchoredEntities(snapPos))
-            {
-                if (TryComp<CableComponent>(anchored, out var wire) && wire.CableType == component.BlockingCableType)
-                    return;
-            }
+            if (_whitelistSystem.IsBlacklistFailOrNull(component.Blacklist, anchored))
+                return;
+
+            if (TryComp<CableComponent>(anchored, out var wire) && wire.CableType == component.BlockingCableType)
+                return;
         }
 
         if (TryComp<StackComponent>(placer, out var stack) && !_stack.Use(placer, 1, stack))
