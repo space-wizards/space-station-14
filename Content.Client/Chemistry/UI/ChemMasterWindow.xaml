@@ -33,7 +33,8 @@
             <BoxContainer Orientation="Horizontal">
                 <Label Text="{Loc 'chem-master-window-buffer-text'}" />
                 <Control HorizontalExpand="True" />
-                <Button MinSize="80 0" Name="BufferTransferButton" Access="Public" Text="{Loc 'chem-master-window-transfer-button'}" ToggleMode="True" StyleClasses="OpenRight" />
+                <Button MinSize="80 0" Name="BufferStorageButton" Access="Public" Text="{Loc 'chem-master-window-storage-button'}" ToggleMode="True" StyleClasses="OpenRight" />
+                <Button MinSize="80 0" Name="BufferOutputButton" Access="Public" Text="{Loc 'chem-master-window-output-button'}" ToggleMode="True" StyleClasses="ButtonSquare" />
                 <Button MinSize="80 0" Name="BufferDiscardButton" Access="Public" Text="{Loc 'chem-master-window-discard-button'}" ToggleMode="True" StyleClasses="OpenLeft" />
             </BoxContainer>
 
@@ -45,7 +46,7 @@
 
                 <ScrollContainer HorizontalExpand="True" MinSize="0 200">
                     <!-- Buffer reagent list -->
-                    <BoxContainer Name="BufferInfo" Orientation="Vertical" Margin="4" HorizontalExpand="True">
+                    <BoxContainer Name="StorageBufferInfo" Orientation="Vertical" Margin="4" HorizontalExpand="True">
                         <Label Text="{Loc 'chem-master-window-buffer-empty-text'}" />
                     </BoxContainer>
                 </ScrollContainer>
@@ -60,15 +61,38 @@
                 <Button MinSize="80 0" Name="OutputEjectButton" Access="Public" Text="{Loc 'chem-master-window-eject-button'}" />
             </BoxContainer>
 
-            <PanelContainer VerticalExpand="True" MinSize="0 200">
+            <PanelContainer VerticalExpand="True" MinSize="0 100">
                 <PanelContainer.PanelOverride>
                     <gfx:StyleBoxFlat BackgroundColor="#1B1B1E" />
                 </PanelContainer.PanelOverride>
 
-                <ScrollContainer HorizontalExpand="True" MinSize="0 200">
+                <ScrollContainer HorizontalExpand="True" MinSize="0 100">
                     <!-- Initially empty, when server sends state data this will have container contents and fill volume.-->
                     <BoxContainer Name="OutputContainerInfo" Orientation="Vertical" Margin="4" HorizontalExpand="True">
                         <Label Text="{Loc 'chem-master-window-no-container-loaded-text'}" />
+                    </BoxContainer>
+                </ScrollContainer>
+            </PanelContainer>
+
+             <!-- Padding -->
+            <Control MinSize="0 10" />
+
+            <!-- Output Buffer Reagent List -->
+            <BoxContainer Orientation="Horizontal">
+                <Label Text="{Loc 'chem-master-window-output-buffer-text'}" />
+                <Control HorizontalExpand="True" />
+                <Button MinSize="80 0" Name="OutputBufferDiscardButton" Access="Public" Text="{Loc 'chem-master-window-discard-button'}" ToggleMode="False" StyleClasses="OpenRight" />
+            </BoxContainer>
+
+            <PanelContainer VerticalExpand="True" MinSize="0 100">
+                <PanelContainer.PanelOverride>
+                    <gfx:StyleBoxFlat BackgroundColor="#1B1B1E" />
+                </PanelContainer.PanelOverride>
+
+                <ScrollContainer HorizontalExpand="True" MinSize="0 100">
+                    <!-- Initially empty, when server sends state data this will have container contents and fill volume.-->
+                    <BoxContainer Name="OutputBufferInfo" Orientation="Vertical" Margin="4" HorizontalExpand="True">
+                        <Label Text="{Loc 'chem-master-window-buffer-empty-text'}" />
                     </BoxContainer>
                 </ScrollContainer>
             </PanelContainer>
@@ -80,8 +104,8 @@
             <BoxContainer Orientation="Horizontal">
                 <Label Text="{Loc 'chem-master-window-packaging-text'}" />
                 <Control HorizontalExpand="True"/>
-                <Label Text="{Loc 'chem-master-window-buffer-label'}" />
-                <Label Name="BufferCurrentVolume" StyleClasses="LabelSecondaryColor" />
+                <!-- <Label Text="{Loc 'chem-master-window-buffer-label'}" />
+                <Label Name="BufferOutputVolume" StyleClasses="LabelSecondaryColor" /> -->
             </BoxContainer>
 
             <!-- Wrap the packaging info-->
