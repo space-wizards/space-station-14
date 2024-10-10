@@ -14470,7 +14470,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -75908.84
+      secondsUntilStateChange: -76041.555
       state: Opening
   - uid: 6934
     components:
@@ -14482,7 +14482,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -75911.48
+      secondsUntilStateChange: -76044.19
       state: Opening
   - uid: 6935
     components:
@@ -14494,7 +14494,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -75910.33
+      secondsUntilStateChange: -76043.04
       state: Opening
   - uid: 6936
     components:
@@ -14505,7 +14505,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -75909.55
+      secondsUntilStateChange: -76042.26
       state: Opening
 - proto: AirlockTheatreLocked
   entities:
@@ -77328,16 +77328,25 @@ entities:
     - type: Transform
       pos: -30.501125,-39.39706
       parent: 2
+    - type: ContainerContainer
+      containers:
+        lens_slot: !type:ContainerSlot {}
   - uid: 2081
     components:
     - type: Transform
       pos: -36.54477,-33.776676
       parent: 2
+    - type: ContainerContainer
+      containers:
+        lens_slot: !type:ContainerSlot {}
   - uid: 2083
     components:
     - type: Transform
       pos: -13.487017,-38.76553
       parent: 2
+    - type: ContainerContainer
+      containers:
+        lens_slot: !type:ContainerSlot {}
   - uid: 2100
     components:
     - type: Transform
@@ -77345,26 +77354,41 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
+    - type: ContainerContainer
+      containers:
+        lens_slot: !type:ContainerSlot {}
   - uid: 18938
     components:
     - type: Transform
       pos: -25.548906,-35.734146
       parent: 2
+    - type: ContainerContainer
+      containers:
+        lens_slot: !type:ContainerSlot {}
   - uid: 24208
     components:
     - type: Transform
       pos: -28.778408,-25.133028
       parent: 2
+    - type: ContainerContainer
+      containers:
+        lens_slot: !type:ContainerSlot {}
   - uid: 24209
     components:
     - type: Transform
       pos: 13.4690895,-35.817883
       parent: 2
+    - type: ContainerContainer
+      containers:
+        lens_slot: !type:ContainerSlot {}
   - uid: 24210
     components:
     - type: Transform
       pos: 11.028594,-41.571526
       parent: 2
+    - type: ContainerContainer
+      containers:
+        lens_slot: !type:ContainerSlot {}
 - proto: ClothingEyesGlassesCheapSunglasses
   entities:
   - uid: 7853
@@ -77380,6 +77404,9 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -10.243727,-76.532394
       parent: 2
+    - type: ContainerContainer
+      containers:
+        lens_slot: !type:ContainerSlot {}
 - proto: ClothingEyesGlassesSunglasses
   entities:
   - uid: 27825
@@ -94055,7 +94082,7 @@ entities:
       pos: -13.5,-1.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -67232.83
+      secondsUntilStateChange: -67365.54
     - type: DeviceNetwork
       deviceLists:
       - 18275
@@ -138604,7 +138631,7 @@ entities:
       pos: 36.5,-35.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -104064.67
+      secondsUntilStateChange: -104197.38
       state: Opening
   - uid: 5211
     components:
@@ -161643,6 +161670,13 @@ entities:
     components:
     - type: Transform
       pos: 5.5,15.5
+      parent: 2
+- proto: SpawnPointBrigmedic
+  entities:
+  - uid: 29575
+    components:
+    - type: Transform
+      pos: 37.5,-31.5
       parent: 2
 - proto: SpawnPointCaptain
   entities:
@@ -189959,7 +189993,7 @@ entities:
       pos: 24.5,2.5
       parent: 21002
     - type: Door
-      secondsUntilStateChange: -449269.3
+      secondsUntilStateChange: -449402.03
       state: Opening
   - uid: 28863
     components:

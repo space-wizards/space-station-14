@@ -860,7 +860,7 @@ entities:
             2: 57344
           8,5:
             0: 4352
-            4: 17472
+            3: 17472
           8,6:
             0: 1
             2: 65520
@@ -904,10 +904,10 @@ entities:
             0: 53759
           11,2:
             0: 4319
-            3: 49152
+            4: 49152
           11,3:
             0: 61457
-            3: 204
+            4: 204
           11,-1:
             0: 30583
           11,4:
@@ -919,9 +919,9 @@ entities:
             0: 28791
           12,2:
             0: 119
-            3: 28672
+            4: 28672
           12,3:
-            3: 119
+            4: 119
             0: 61440
           12,-1:
             0: 29311
@@ -1344,16 +1344,16 @@ entities:
             2: 65534
           9,5:
             5: 4368
-            3: 17472
+            4: 17472
           9,6:
             2: 7952
           10,5:
-            3: 4368
+            4: 4368
             6: 17472
           10,6:
             2: 3840
           11,5:
-            3: 21840
+            4: 21840
           11,6:
             2: 3856
           12,5:
@@ -1536,7 +1536,7 @@ entities:
           temperature: 293.15
           moles:
           - 0
-          - 0
+          - 6666.982
           - 0
           - 0
           - 0
@@ -1551,7 +1551,7 @@ entities:
           temperature: 293.15
           moles:
           - 0
-          - 6666.982
+          - 0
           - 0
           - 0
           - 0
@@ -5395,7 +5395,7 @@ entities:
       pos: -29.5,-18.5
       parent: 31
     - type: Door
-      secondsUntilStateChange: -643.99493
+      secondsUntilStateChange: -660.03546
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -6706,13 +6706,6 @@ entities:
     components:
     - type: Transform
       pos: -9.5,2.5
-      parent: 31
-- proto: Pen
-  entities:
-  - uid: 12065
-    components:
-    - type: Transform
-      pos: -17.08956,49.542862
       parent: 31
 - proto: BaseGasCondenser
   entities:
@@ -28278,21 +28271,33 @@ entities:
       parent: 7110
     - type: Physics
       canCollide: False
+    - type: ContainerContainer
+      containers:
+        lens_slot: !type:ContainerSlot {}
   - uid: 11264
     components:
     - type: Transform
       pos: -9.178577,-18.39677
       parent: 31
+    - type: ContainerContainer
+      containers:
+        lens_slot: !type:ContainerSlot {}
   - uid: 11265
     components:
     - type: Transform
       pos: -9.162952,-18.61552
       parent: 31
+    - type: ContainerContainer
+      containers:
+        lens_slot: !type:ContainerSlot {}
   - uid: 11266
     components:
     - type: Transform
       pos: -9.162952,-18.20927
       parent: 31
+    - type: ContainerContainer
+      containers:
+        lens_slot: !type:ContainerSlot {}
 - proto: ClothingEyesGlassesMeson
   entities:
   - uid: 8213
@@ -28300,6 +28305,9 @@ entities:
     - type: Transform
       pos: 35.614624,-3.264578
       parent: 31
+    - type: ContainerContainer
+      containers:
+        lens_slot: !type:ContainerSlot {}
 - proto: ClothingEyesGlassesSunglasses
   entities:
   - uid: 4235
@@ -28314,6 +28322,9 @@ entities:
     - type: Transform
       pos: 32.538,-3.0937886
       parent: 31
+    - type: ContainerContainer
+      containers:
+        lens_slot: !type:ContainerSlot {}
 - proto: ClothingEyesHudMedical
   entities:
   - uid: 6512
@@ -28321,6 +28332,9 @@ entities:
     - type: Transform
       pos: 16.646324,-6.5235434
       parent: 31
+    - type: ContainerContainer
+      containers:
+        lens_slot: !type:ContainerSlot {}
 - proto: ClothingHandsGlovesColorBlack
   entities:
   - uid: 11225
@@ -34897,7 +34911,7 @@ entities:
       pos: 3.5,29.5
       parent: 31
     - type: Door
-      secondsUntilStateChange: -15344.494
+      secondsUntilStateChange: -15360.535
       state: Closing
   - uid: 8815
     components:
@@ -52948,6 +52962,11 @@ entities:
     - type: Transform
       pos: 22.626728,-10.546311
       parent: 31
+  - uid: 12065
+    components:
+    - type: Transform
+      pos: -17.08956,49.542862
+      parent: 31
 - proto: PersonalAI
   entities:
   - uid: 979
@@ -60994,6 +61013,13 @@ entities:
     components:
     - type: Transform
       pos: -20.5,-0.5
+      parent: 31
+- proto: SpawnPointBrigmedic
+  entities:
+  - uid: 12128
+    components:
+    - type: Transform
+      pos: -14.5,14.5
       parent: 31
 - proto: SpawnPointCaptain
   entities:
