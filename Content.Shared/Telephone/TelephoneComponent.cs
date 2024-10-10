@@ -58,6 +58,12 @@ public sealed partial class TelephoneComponent : Component
     public float ListeningRange = 2;
 
     /// <summary>
+    /// Specifies whether this telephone require power to fucntion
+    /// </summary>
+    [DataField]
+    public bool RequiresPower = true;
+
+    /// <summary>
     /// This telephone does not appear on public telephone directories
     /// </summary>
     [DataField]

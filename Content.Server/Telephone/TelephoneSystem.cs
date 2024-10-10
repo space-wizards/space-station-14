@@ -66,8 +66,8 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
 
     private void OnAttemptListen(Entity<TelephoneComponent> entity, ref ListenAttemptEvent args)
     {
-        if (!this.IsPowered(entity, EntityManager)
-            || !_interaction.InRangeUnobstructed(args.Source, entity.Owner, 0))
+        if (!IsTelephonePowered(entity) ||
+            !_interaction.InRangeUnobstructed(args.Source, entity.Owner, 0))
         {
             args.Cancel();
         }
@@ -93,7 +93,7 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
         if (entity == args.TelephoneSource)
             return;
 
-        if (!this.IsPowered(entity, EntityManager))
+        if (!IsTelephonePowered(entity))
             return;
 
         var nameEv = new TransformSpeakerNameEvent(args.MessageSource, Name(args.MessageSource));
@@ -276,7 +276,9 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
 
     public void SendTelephoneMessage(EntityUid messageSource, string message, Entity<TelephoneComponent> source, bool escapeMarkup = true)
     {
-        if (source.Comp.Muted || !IsTelephoneEngaged(source) || !this.IsPowered(source, EntityManager))
+        if (source.Comp.Muted ||
+            !IsTelephoneEngaged(source) ||
+            !IsTelephonePowered(source))
             return;
 
         var ev = new TransformSpeakerNameEvent(messageSource, MetaData(messageSource).EntityName);
@@ -398,8 +400,8 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
     public bool IsSourceAbleToReachReceiver(Entity<TelephoneComponent> source, Entity<TelephoneComponent> receiver)
     {
         if (source == receiver ||
-            !this.IsPowered(source, EntityManager) ||
-            !this.IsPowered(receiver, EntityManager) ||
+            !IsTelephonePowered(source) ||
+            !IsTelephonePowered(receiver) ||
             !IsSourceInRangeOfReceiver(source, receiver))
         {
             return false;
@@ -437,5 +439,10 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
     public bool IsSourceConnectedToReceiver(Entity<TelephoneComponent> source, Entity<TelephoneComponent> receiver)
     {
         return source.Comp.LinkedTelephones.Contains(receiver);
+    }
+
+    public bool IsTelephonePowered(Entity<TelephoneComponent> entity)
+    {
+        return this.IsPowered(entity, EntityManager) || !entity.Comp.RequiresPower;
     }
 }
