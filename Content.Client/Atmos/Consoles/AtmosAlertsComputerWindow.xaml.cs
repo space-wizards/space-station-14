@@ -23,6 +23,7 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
 {
     private readonly IEntityManager _entManager;
     private readonly SpriteSystem _spriteSystem;
+    private readonly SharedNavMapSystem _navMapSystem;
 
     private EntityUid? _owner;
     private NetEntity? _trackedEntity;
@@ -47,6 +48,7 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
         RobustXamlLoader.Load(this);
         _entManager = IoCManager.Resolve<IEntityManager>();
         _spriteSystem = _entManager.System<SpriteSystem>();
+        _navMapSystem = _entManager.System<SharedNavMapSystem>();
 
         // Pass the owner to nav map
         _owner = owner;
@@ -179,6 +181,9 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
         // Add tracked entities to the nav map
         foreach (var device in console.AtmosDevices)
         {
+            if (!device.NetEntity.Valid)
+                continue;
+
             if (!NavMap.Visible)
                 continue;
 
@@ -270,6 +275,34 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
         else
             MasterTabContainer.SetTabTitle(0, Loc.GetString("atmos-alerts-window-tab-alerts", ("value", activeAlarmCount)));
 
+        // Update sensor regions
+        NavMap.RegionOverlays.Clear();
+        var prioritizedRegionOverlays = new Dictionary<NavMapRegionOverlay, int>();
+
+        if (_owner != null &&
+            _entManager.TryGetComponent<TransformComponent>(_owner, out var xform) &&
+            _entManager.TryGetComponent<NavMapComponent>(xform.GridUid, out var navMap))
+        {
+            var regionOverlays = _navMapSystem.GetNavMapRegionOverlays(_owner.Value, navMap, AtmosAlertsComputerUiKey.Key);
+
+            foreach (var (regionOwner, regionOverlay) in regionOverlays)
+            {
+                var alarmState = GetAlarmState(regionOwner);
+
+                if (!TryGetSensorRegionColor(regionOwner, alarmState, out var regionColor))
+                    continue;
+
+                regionOverlay.Color = regionColor.Value;
+
+                var priority = (_trackedEntity == regionOwner) ? 999 : (int)alarmState;
+                prioritizedRegionOverlays.Add(regionOverlay, priority);
+            }
+
+            // Sort overlays according to their priority
+            var sortedOverlays = prioritizedRegionOverlays.OrderBy(x => x.Value).Select(x => x.Key).ToList();
+            NavMap.RegionOverlays = sortedOverlays;
+        }
+
         // Auto-scroll re-enable
         if (_autoScrollAwaitsUpdate)
         {
@@ -296,6 +329,24 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
         var blip = new NavMapBlip(coords, _spriteSystem.Frame0(texture), color, _trackedEntity == metaData.NetEntity, selectable);
 
         NavMap.TrackedEntities[metaData.NetEntity] = blip;
+    }
+
+    private bool TryGetSensorRegionColor(NetEntity regionOwner, AtmosAlarmType alarmState, [NotNullWhen(true)] out Color? color)
+    {
+        color = null;
+
+        var blip = GetBlipTexture(alarmState);
+
+        if (blip == null)
+            return false;
+
+        // Color the region based on alarm state and entity tracking
+        color = blip.Value.Item2 * new Color(154, 154, 154);
+
+        if (_trackedEntity != null && _trackedEntity != regionOwner)
+            color *= Color.DimGray;
+
+        return true;
     }
 
     private void UpdateUIEntry(AtmosAlertsComputerEntry entry, int index, Control table, AtmosAlertsComputerComponent console, AtmosAlertsFocusDeviceData? focusData = null)
