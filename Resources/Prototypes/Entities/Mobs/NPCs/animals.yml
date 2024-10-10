@@ -3310,27 +3310,22 @@
   - type: ReplacementAccent
     accent: nymph
 
+# TODO: move all the lower stuff into Sea instead of Animals
+
 - type: entity
   name: Fish
-  parent: SimpleMobBase
+  parent: SimpleSpaceMobBase
   id: MobFish
-  description: Blub Blub Blub!
+  description: It's a fish.
   components:
   - type: Body
     prototype: Mouse
   - type: Sprite
-    drawdepth: SmallMobs
     sprite: Mobs/Animals/fish.rsi
+    drawdepth: Mobs
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
-      state: mouse-0
-  - type: SpriteMovement
-    movementLayers:
-      movement:
-        state: mouse-moving-0
-    noMovementLayers:
-      movement:
-        state: mouse-0
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: fish-0
   - type: Item
     size: Tiny
     heldPrefix: 0
@@ -3346,24 +3341,21 @@
           radius: 0.2
         density: 100
         mask:
-        - SmallMobMask
+        - MobMask
         layer:
-        - SmallMobLayer
+        - MobLayer
   - type: MobState
   - type: MobThresholds
     thresholds:
       0: Alive
-      10: Critical
-      20: Dead
+      10: Dead
   - type: MovementSpeedModifier
     baseWalkSpeed : 5
     baseSprintSpeed : 5
   - type: DamageStateVisuals
     states:
       Alive:
-        Base: mouse-0
-      Critical:
-        Base: dead-0
+        Base: fish-0
       Dead:
         Base: splat-0
   - type: Extractable
@@ -3378,22 +3370,6 @@
     spawned:
     - id: FoodMeatRat
       amount: 1
-  - type: ReplacementAccent
-    accent: mouse
-  - type: Tag
-    tags:
-    - Meat
-  - type: Barotrauma
-    damage:
-      types:
-        Blunt: 0.1
-  - type: Vocal
-    sounds:
-      Male: Mouse
-      Female: Mouse
-      Unsexed: Mouse
-    wilhelmProbability: 0.001
-  # TODO: Remove CombatMode when Prototype Composition is added
   - type: CombatMode
     combatToggleAction: ActionCombatModeToggleOff
   - type: Bloodstream
@@ -3403,3 +3379,119 @@
   - type: BadFood
   - type: NonSpreaderZombie
   - type: PreventSpiller
+  - type: Damageable
+    damageContainer: Biological
+
+- type: entity
+  name: Fish
+  parent: MobFish
+  id: MobFish2
+  description: It's a fish.
+  components:
+  - type: Sprite
+    drawdepth: SmallMobs
+    sprite: Mobs/Animals/fish.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: fish-1
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: fish-1
+      Dead:
+        Base: splat-1
+
+- type: entity
+  name: Fish
+  parent: MobFish
+  id: MobFish3
+  description: It's a fish.
+  components:
+  - type: Sprite
+    drawdepth: SmallMobs
+    sprite: Mobs/Animals/fish.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: fish-2
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: fish-2
+      Dead:
+        Base: splat-2
+
+- type: entity
+  name: Fish
+  suffix: mimic
+  parent: MobFish
+  id: MobFishMimic
+  components:
+  - type: Body
+    prototype: AnimalMimic # just adds the Festering Tumor
+  - type: GibAction
+    actionPrototype: DionaGibAction # see the Mimic organ file for more information about the process of spawning
+    allowedStates:
+    - Dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      1: Dead
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1 # Gibs immidiately upon being disturbed
+      behaviors:
+      - !type:GibBehavior { }
+  - type: NonSpreaderZombie
+
+- type: entity
+  name: Mimic
+  parent: MobSpaceBasic
+  id: MobMimic
+  description: A horrific ambush predator. It infests fish until disturbed by larger prey and uses elecricity to immobilize their targets.
+  components:
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      65: Dead
+  - type: SolutionContainerManager
+    solutions:
+      melee:
+        reagents:
+        - ReagentId: Mimicrium
+          Quantity: 1 # This gives mimics one good shock on their prey, so stay away!
+  - type: MeleeChemicalInjector
+    solution: melee
+    transferAmount: 1
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    angle: 0
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Slash: 10
+  - type: Bloodstream
+    bloodMaxVolume: 20
+    bloodReagent: Blood
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/mimics.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: mimic
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: mimic
+      Dead:
+        Base: mimic_dead
+  - type: PointLight
+    radius: 1.5
+    energy: 1
+    color: "#FFFF33"
+
+  # TODO: work on a new Tumorous Brain organ that spawns MimicSmart, which starts by infesting a randomly generated salvager outside Sweetwater. Make new stomach type that only eats raw meat and blood.
+  # Also give MimicSmart the ability to burst out of it's host at any time, and use cloaking like a space cobra if it has to escape it's puppet.
+

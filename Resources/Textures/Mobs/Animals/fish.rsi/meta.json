@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from https://github.com/tgstation/tgstation/commit/e15c63d100db65eaaa5231133b8a2662ff439131#diff-8dd94e19fdb2ff341b57e31bce101298, modified by Vermidia.",
+  "copyright": "made by Pixeltheaertist",
   "size": {
     "x": 32,
     "y": 32
@@ -17,103 +17,16 @@
       "name": "icon-2"
     },
     {
-      "name": "mouse-0",
+      "name": "fish-0",
       "directions": 4
     },
     {
-      "name": "mouse-moving-0",
-      "directions": 4,
-      "delays": [
-        [
-          0.2,
-          0.2,
-          0.2
-        ],
-        [
-          0.2,
-          0.2,
-          0.2
-        ],
-        [
-          0.2,
-          0.2,
-          0.2
-        ],
-        [
-          0.2,
-          0.2,
-          0.2
-        ]
-      ]
-    },
-    {
-      "name": "mouse-1",
+      "name": "fish-1",
       "directions": 4
     },
     {
-      "name": "mouse-moving-1",
-      "directions": 4,
-      "delays": [
-        [
-          0.2,
-          0.2,
-          0.2
-        ],
-        [
-          0.2,
-          0.2,
-          0.2
-        ],
-        [
-          0.2,
-          0.2,
-          0.2
-        ],
-        [
-          0.2,
-          0.2,
-          0.2
-        ]
-      ]
-    },
-    {
-      "name": "mouse-2",
+      "name": "fish-2",
       "directions": 4
-    },
-    {
-      "name": "mouse-moving-2",
-      "directions": 4,
-      "delays": [
-        [
-          0.2,
-          0.2,
-          0.2
-        ],
-        [
-          0.2,
-          0.2,
-          0.2
-        ],
-        [
-          0.2,
-          0.2,
-          0.2
-        ],
-        [
-          0.2,
-          0.2,
-          0.2
-        ]
-      ]
-    },
-    {
-      "name": "dead-0"
-    },
-    {
-      "name": "dead-1"
-    },
-    {
-      "name": "dead-2"
     },
     {
       "name": "splat-0"
@@ -123,30 +36,6 @@
     },
     {
       "name": "splat-2"
-    },
-    {
-      "name": "0-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "1-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "2-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "0-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "1-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "2-inhand-right",
-      "directions": 4
     }
   ]
 }

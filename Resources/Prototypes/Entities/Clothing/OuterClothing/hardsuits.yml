@@ -40,7 +40,7 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/atmospherics.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.02
+    highPressureMultiplier: 1000
     lowPressureMultiplier: 1000
   - type: TemperatureProtection
     coefficient: 0.001
@@ -75,7 +75,7 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/engineering.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.04
+    highPressureMultiplier: 1000
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
     damageCoefficient: 0.5
@@ -107,7 +107,7 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/spatio.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.7
+    highPressureMultiplier: 1000
     lowPressureMultiplier: 1000
   - type: Armor
     modifiers:
@@ -136,7 +136,7 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/salvage.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.5
+    highPressureMultiplier: 1000
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
     damageCoefficient: 0.3
@@ -166,7 +166,7 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/maxim.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.02
+    highPressureMultiplier: 1000
     lowPressureMultiplier: 1000
   - type: ClothingSpeedModifier
     walkModifier: 1.0
@@ -198,7 +198,7 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/security.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.5
+    highPressureMultiplier: 1000
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
     damageCoefficient: 0.4
@@ -228,7 +228,7 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/brigmedic.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.3
+    highPressureMultiplier: 1000
     lowPressureMultiplier: 1000
   - type: Armor
     modifiers:
@@ -255,7 +255,7 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/security-warden.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.5
+    highPressureMultiplier: 1000
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
     damageCoefficient: 0.4
@@ -285,7 +285,7 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/capspace.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.02
+    highPressureMultiplier: 1000
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
     damageCoefficient: 0.5
@@ -317,7 +317,7 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/engineering-white.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.02
+    highPressureMultiplier: 1000
     lowPressureMultiplier: 1000
   - type: FireProtection
     reduction: 0.8
@@ -351,7 +351,7 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/medical.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.3
+    highPressureMultiplier: 1000
     lowPressureMultiplier: 1000
   - type: Armor
     modifiers:
@@ -376,7 +376,7 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/rd.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.02
+    highPressureMultiplier: 1000
     lowPressureMultiplier: 1000
   - type: Armor
     modifiers:
@@ -420,7 +420,7 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/security-red.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.45
+    highPressureMultiplier: 1000
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
     damageCoefficient: 0.6
@@ -451,7 +451,7 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/luxury.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.5
+    highPressureMultiplier: 1000
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
     damageCoefficient: 0.5
@@ -485,7 +485,7 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/syndicate.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.05
+    highPressureMultiplier: 1000
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
     damageCoefficient: 0.5
@@ -540,7 +540,7 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/syndieelite.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.02
+    highPressureMultiplier: 1000
     lowPressureMultiplier: 1000
   - type: TemperatureProtection
     coefficient: 0.001
@@ -578,7 +578,7 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/syndiecommander.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.05
+    highPressureMultiplier: 1000
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
     damageCoefficient: 0.5
@@ -610,7 +610,7 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/cybersun.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.2
+    highPressureMultiplier: 1000
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
     damageCoefficient: 0.3
@@ -642,7 +642,7 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/wizard.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.05
+    highPressureMultiplier: 1000
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
     damageCoefficient: 0.5
@@ -674,7 +674,7 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/lingspacesuit.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.225
+    highPressureMultiplier: 1000
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
     damageCoefficient: 0.2

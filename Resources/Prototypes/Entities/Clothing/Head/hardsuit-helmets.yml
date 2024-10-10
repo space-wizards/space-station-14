@@ -112,7 +112,7 @@
       - state: equipped-head-unshaded
         shader: unshaded
   - type: PressureProtection
-    highPressureMultiplier: 0.72
+    highPressureMultiplier: 1000
     lowPressureMultiplier: 1000
 
 #Salvage Hardsuit
@@ -682,7 +682,7 @@
   parent: ClothingHeadHardsuitBase
   id: ClothingHeadHelmetHardsuitDeathsquad
   name: deathsquad hardsuit helmet
-  description: A robust, dark helmet for special Nanotrasen warfare. 
+  description: A robust, dark helmet for special Nanotrasen warfare.
   components:
   - type: BreathMask
   - type: Sprite

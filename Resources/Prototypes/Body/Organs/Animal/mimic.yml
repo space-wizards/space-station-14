@@ -1,0 +1,30 @@
+- type: entity
+  id: OrganTumor # Adding this organ to any creature will cause it to spawn a Mimic upon being gibbed
+  parent: OrganAnimalStomach 
+  noSpawn: true
+  name: festering tumor
+  description: "what- what is this?"
+  components:
+  - type: Nymph
+    entityPrototype: OrganTumorMimic 
+
+- type: entity
+  id: OrganTumorMimic
+  parent: MobMimic # might just be able to switch the prototype to MobMimic and save some clutter, haven't tested it yet.
+  noSpawn: true
+  name: mimic 
+  components:
+  - type: IsDeadIC
+  - type: Body
+    prototype: AnimalMimic
+
+- type: body
+  id: AnimalMimic
+  name: "mimic"
+  root: torso
+  slots:
+    torso:
+      part: TorsoAnimal
+      organs:
+        tumor: OrganTumor # example of OrganTumor being applied to a body prototype
+
