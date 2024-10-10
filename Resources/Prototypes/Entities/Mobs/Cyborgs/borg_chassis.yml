@@ -391,8 +391,6 @@
     - type: Construction
       node: syndicatemedical
     - type: ShowHealthBars
-      damageContainers:
-      - Biological
     - type: InteractionPopup
       interactSuccessString: petting-success-syndicate-cyborg
       interactFailureString: petting-failure-syndicate-cyborg
