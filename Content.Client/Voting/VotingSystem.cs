@@ -1,4 +1,3 @@
-using Content.Client.Ghost;
 using Content.Shared.Voting;
 
 namespace Content.Client.Voting;
@@ -7,8 +6,6 @@ public sealed class VotingSystem : EntitySystem
 {
 
     public event Action<VotePlayerListResponseEvent>? VotePlayerListResponse; //Provides a list of players elligble for vote actions
-
-    [Dependency] private readonly GhostSystem _ghostSystem = default!;
 
     public override void Initialize()
     {
@@ -19,11 +16,6 @@ public sealed class VotingSystem : EntitySystem
 
     private void OnVotePlayerListResponseEvent(VotePlayerListResponseEvent msg)
     {
-        if (!_ghostSystem.IsGhost)
-        {
-            return;
-        }
-
         VotePlayerListResponse?.Invoke(msg);
     }
 
