@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "license": "CC-BY-NC-SA-3.0",
+  "copyright": "taken from goon station at commit https://github.com/goonstation/goonstation/commit/f972392f1b847e2b2cc871a8638a376fe9360011 & modified by IProduceWidgets (github)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "air",
+	  "directions": 4
+    },
+    {
+      "name": "green",
+	  "directions": 4
+    },
+    {
+      "name": "nitrogen",
+	  "directions": 4
+    },
+    {
+      "name": "plasma",
+	  "directions": 4
+    },
+	{
+      "name": "nitrousoxide",
+	  "directions": 4
+    },
+    {
+      "name": "white",
+	  "directions": 4
+    },
+    {
+      "name": "oxygen",
+	  "directions": 4
+    },
+	{
+      "name": "valveOff",
+	  "directions": 4
+    },
+	{
+      "name": "valveOn",
+	  "directions": 4
+    },
+	{
+      "name": "pipe",
+	  "directions": 4
+    },
+	{
+      "name": "greyscale",
+	  "directions": 4
+    },
+	{
+      "name": "icon",
+	  "directions": 4
+    }
+  ]
+}
