@@ -983,6 +983,9 @@
 
 - type: Tag
   id: Multitool
+  
+- type: Tag
+  id: NitrogenBooster
 
 - type: Tag
   id: NoBlockAnchoring
