@@ -120,8 +120,6 @@
   - type: Construction
     graph: FireBot
     node: bot
-  - type: SentienceTarget
-    flavorKind: station-event-random-sentience-flavor-mechanical
   - type: HTN
     rootTask:
       task: FirebotCompound
@@ -148,12 +146,14 @@
     vaporSpread: 90
     sprayVelocity: 3.0
   - type: UseDelay
-    delay: 4
+    delay: 2
   - type: InteractionPopup
     interactSuccessString: petting-success-firebot
     interactFailureString: petting-failure-firebot
     interactSuccessSound:
       path: /Audio/Ambience/Objects/periodic_beep.ogg
+  - type: Advertise
+    pack: FirebotAd
 
 - type: entity
   parent: MobSiliconBase

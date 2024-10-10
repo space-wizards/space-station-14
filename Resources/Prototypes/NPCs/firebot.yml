@@ -30,6 +30,18 @@
             rangeKey: InteractRange
 
         - !type:HTNPrimitiveTask
+          operator: !type:SetFloatOperator
+            targetKey: WaitTime
+            amount: 1
+
+        - !type:HTNPrimitiveTask
+          operator: !type:WaitOperator
+            key: WaitTime
+          preconditions:
+            - !type:KeyExistsPrecondition
+              key: WaitTime
+
+        - !type:HTNPrimitiveTask
           preconditions:
             - !type:TargetInRangePrecondition
               targetKey: Target

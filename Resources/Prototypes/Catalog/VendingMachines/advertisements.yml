@@ -131,6 +131,12 @@
     count: 6
 
 - type: localizedDataset
+  id: FirebotAd
+  values:
+    prefix: advertisement-firebot-
+    count: 4
+
+- type: localizedDataset
   id: GoodCleanFunAds
   values:
     prefix: advertisement-goodcleanfun-
