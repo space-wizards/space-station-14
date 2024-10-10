@@ -1,0 +1,17 @@
+- type: guideEntry
+  id: Silicons
+  name: guide-entry-silicons
+  text: "/ServerInfo/Guidebook/Silicons/Silicons.xml"
+  children:
+  - Cyborgs
+  - StationAI
+
+- type: guideEntry
+  id: Cyborgs
+  name: guide-entry-cyborgs
+  text: "/ServerInfo/Guidebook/Silicons/Cyborgs.xml"
+
+- type: guideEntry
+  id: StationAI
+  name: guide-entry-station-ai
+  text: "/ServerInfo/Guidebook/Silicons/StationAI.xml"

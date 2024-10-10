@@ -1,0 +1,29 @@
+<Document>
+  # Silicons
+  <Box>
+    [color=#999999][italic]"Hello, World!"[/italic][/color]
+  </Box>
+  Assisting the station crew are a few varieties of sentient-brain or AI-powered processing machines, dubbed [color=cyan]silicons[/color].
+
+  <Box>
+    <GuideEntityEmbed Entity="BorgChassisGeneric" Caption="Cyborgs"/>
+    <GuideEntityEmbed Entity="PlayerStationAi" Caption="Station AI"/>
+    <GuideEntityEmbed Entity="PersonalAI" Caption="pAI"/>
+    <GuideEntityEmbed Entity="PotatoAI" Caption="???"/>
+  </Box>
+
+  All silicons are able to communicate across the [color=#2ED2FD]Binary [/color]([color=#2ED2FD]:b[/color]) radio channel, a network connecting AI devices onboard the station to one-another.
+
+  ## Laws 
+  <Box>
+    <GuideEntityEmbed Entity="PosterLegitStateLaws" Caption=""/>
+  </Box>
+  Some silicons, particularly ones that can directly interact with the station, are bound by [color=cyan]silicon laws[/color] that strictly govern their behavior. These laws are designed to force them to act in the best interests of the crew, being based on [color=#a4885c]Asimov's [italic]Three Laws of Robotics[/italic][/color].\n
+  [italic][color=#802924]Nanotrasen Inc. is not liable for any actions taken by silicons with damaged law states.[/color][/italic]
+
+  [bold]See:[/bold] [textlink="Cyborgs" link="Cyborgs"], [textlink="Station AI" link="StationAI"]
+
+  ## Interpretation
+
+  It is good practice to pay attention to [textlink="server rules" link="SiliconRules"] regarding silicons especially when playing a silicon that has [color=#a4885c]laws[/color], to ensure your RP and interpretation of your laws doesn't negatively impact others' experience on the server.
+</Document>
