@@ -1,4 +1,4 @@
-- type: dataset
+- type: localizedDataset
   id: names_arachnid_first
   values:
     prefix: arachnid-first-name-dataset-

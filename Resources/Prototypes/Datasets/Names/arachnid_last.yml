@@ -1,4 +1,4 @@
-- type: dataset
+- type: localizedDataset
   id: names_arachnid_last
   values:
     prefix: arachnid-last-name-dataset-
