@@ -51,6 +51,8 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         SubscribeLocalEvent<SiliconLawProviderComponent, GotEmaggedEvent>(OnEmagLawsAdded);
         SubscribeLocalEvent<EmagSiliconLawComponent, MindAddedMessage>(OnEmagMindAdded);
         SubscribeLocalEvent<EmagSiliconLawComponent, MindRemovedMessage>(OnEmagMindRemoved);
+        SubscribeLocalEvent<StartIonStormedComponent, MindAddedMessage>(OnStartIonStormedMindAdded);
+        SubscribeLocalEvent<StartIonStormedComponent, MindRemovedMessage>(OnStartIonStormedMindRemoved);
     }
 
     private void OnMapInit(EntityUid uid, SiliconLawBoundComponent component, MapInitEvent args)
@@ -180,6 +182,31 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
 
         if (!_roles.MindHasRole<SubvertedSiliconRoleComponent>(mindId))
             _roles.MindAddRole(mindId, "MindRoleSubvertedSilicon");
+    }
+
+    private void OnStartIonStormedMindAdded(EntityUid uid, StartIonStormedComponent component, MindAddedMessage args)
+    {
+        if (HasComp<StartIonStormedComponent>(uid))
+            EnsureStartIonStormedRole(uid, component);
+    }
+
+    private void OnStartIonStormedMindRemoved(EntityUid uid, StartIonStormedComponent component, MindRemovedMessage args)
+    {
+        if (component.AntagonistRole == null)
+            return;
+
+        _roles.MindTryRemoveRole<SubvertedSiliconRoleComponent>(args.Mind);
+    }
+
+    private void EnsureStartIonStormedRole(EntityUid uid, StartIonStormedComponent component)
+    {
+        if (component.AntagonistRole == null || !_mind.TryGetMind(uid, out var mindId, out _))
+            return;
+
+        if (_roles.MindHasRole<SubvertedSiliconRoleComponent>(mindId))
+            return;
+
+        _roles.MindAddRole(mindId, new SubvertedSiliconRoleComponent { PrototypeId = component.AntagonistRole });
     }
 
     public SiliconLawset GetLaws(EntityUid uid, SiliconLawBoundComponent? component = null)
