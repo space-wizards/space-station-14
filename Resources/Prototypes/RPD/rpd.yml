@@ -17,6 +17,7 @@
   sprite: /Textures/Interface/Radial/RPD/straight.png
   mode: ConstructObject
   prototype: GasPipeStraight
+
   cost: 0.5
   delay: 0
   rules:
@@ -212,6 +213,7 @@
   sprite: /Textures/Interface/Radial/RPD/gas_mixer.png
   mode: ConstructObject
   prototype: GasMixer
+  mirrorPrototype: GasMixerFlipped
   cost: 1
   delay: 0
   rules:
@@ -226,6 +228,7 @@
   sprite: /Textures/Interface/Radial/RPD/gas_filter.png
   mode: ConstructObject
   prototype: GasFilter
+  mirrorPrototype: GasFilterFlipped
   cost: 1
   delay: 0
   rules:
