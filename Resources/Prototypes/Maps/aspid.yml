@@ -2,8 +2,8 @@
   id: Aspid
   mapName: 'NCS Aspid'
   mapPath: /Maps/aspid.yml
-  minPlayers: 25
-  maxPlayers: 55
+  minPlayers: 30
+  maxPlayers: 65
   stations:
     Aspid:
       stationProto: StandardNanotrasenStation
@@ -38,8 +38,8 @@
             #medical
             ChiefMedicalOfficer: [ 1, 1 ]
             Paramedic: [ 1, 1 ]
-            Chemist: [ 1, 2 ]
-            MedicalDoctor: [ 4, 4 ]
+            Chemist: [ 2, 2 ]
+            MedicalDoctor: [ 3, 4 ]
             MedicalIntern: [ 4, 4 ]
             #science
             ResearchDirector: [ 1, 1 ]
