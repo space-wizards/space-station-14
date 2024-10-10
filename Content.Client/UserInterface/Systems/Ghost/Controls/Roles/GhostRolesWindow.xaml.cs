@@ -80,7 +80,7 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
                     Margin = new Thickness(0, 10, 0, 0),
                 };
 
-                var uniqueId = name.GetHashCode();
+                var uniqueId = $"{name}-{description}-{ghostRoleInfos.Select(r => r.Requirements)}".GetHashCode();
 
                 var collapsible = new Collapsible(buttonHeading, body)
                 {
