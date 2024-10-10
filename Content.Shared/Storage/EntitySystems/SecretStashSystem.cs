@@ -11,6 +11,8 @@ using Content.Shared.Examine;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Content.Shared.Verbs;
+using Content.Shared.Nutrition;
+using Content.Shared.Damage;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Tools.EntitySystems;
 using Content.Shared.Whitelist;
@@ -29,12 +31,14 @@ public sealed class SecretStashSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly ToolOpenableSystem _toolOpenableSystem = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<SecretStashComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<SecretStashComponent, DestructionEventArgs>(OnDestroyed);
+        SubscribeLocalEvent<SecretStashComponent, AfterFullyEatenEvent>(OnEaten);
         SubscribeLocalEvent<SecretStashComponent, InteractUsingEvent>(OnInteractUsing, after: new[] { typeof(ToolOpenableSystem) });
         SubscribeLocalEvent<SecretStashComponent, InteractHandEvent>(OnInteractHand);
         SubscribeLocalEvent<SecretStashComponent, GetVerbsEvent<InteractionVerb>>(OnGetVerb);
@@ -48,11 +52,19 @@ public sealed class SecretStashSystem : EntitySystem
     private void OnDestroyed(Entity<SecretStashComponent> entity, ref DestructionEventArgs args)
     {
         var storedInside = _containerSystem.EmptyContainer(entity.Comp.ItemContainer);
-        if (storedInside != null && storedInside.Count >= 1)
+        if (storedInside != null && storedInside.Count == 1)
         {
             var popup = Loc.GetString("comp-secret-stash-on-destroyed-popup", ("stashname", GetStashName(entity)));
             _popupSystem.PopupEntity(popup, storedInside[0], PopupType.MediumCaution);
         }
+    }
+
+    private void OnEaten(Entity<SecretStashComponent> entity, ref AfterFullyEatenEvent args)
+    {
+        // TODO: When newmed is finished should do damage to teeth (Or something like that!)
+        var damage = entity.Comp.DamageEatenItemInside;
+        if (HasItemInside(entity) && damage != null)
+            _damageableSystem.TryChangeDamage(args.User, damage, true);
     }
 
     private void OnInteractUsing(Entity<SecretStashComponent> entity, ref InteractUsingEvent args)
