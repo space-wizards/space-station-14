@@ -1,0 +1,80 @@
+- type: entity
+  id: BasePKAUpgrade
+  parent: BaseItem
+  name: PKA modkit
+  description: A modkit for a proto-kinetic accelerator.
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/upgrade.rsi
+  - type: Item
+    size: Small
+  - type: GunUpgrade
+  - type: StaticPrice
+    price: 750
+  - type: Tag
+    tags:
+    - PKAUpgrade
+
+- type: entity
+  id: PKAUpgradeDamage
+  parent: BasePKAUpgrade
+  name: PKA modkit (damage)
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+    - state: overlay-1
+      color: "#ec9b2d"
+    - state: overlay-2
+      color: "#a71010"
+    - state: overlay-3
+      color: "#eb4c13"
+  - type: GunUpgrade
+    tags: [ GunUpgradeDamage ]
+    examineText: gun-upgrade-examine-text-damage
+  - type: GunUpgradeDamage
+    damage:
+      types:
+        Blunt: 10
+        Structural: 15
+
+- type: entity
+  id: PKAUpgradeRange
+  parent: BasePKAUpgrade
+  name: PKA modkit (range)
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+    - state: overlay-1
+      color: "#2decec"
+    - state: overlay-2
+      color: "#1012a7"
+    - state: overlay-3
+      color: "#1373eb"
+  - type: GunUpgrade
+    tags: [ GunUpgradeRange ]
+    examineText: gun-upgrade-examine-text-range
+  - type: GunUpgradeSpeed
+    coefficient: 1.5
+
+- type: entity
+  id: PKAUpgradeFireRate
+  parent: BasePKAUpgrade
+  name: PKA modkit (fire rate)
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+    - state: overlay-1
+      color: "#bbf134"
+    - state: overlay-2
+      color: "#07901b"
+    - state: overlay-3
+      color: "#9bf134"
+  - type: GunUpgrade
+    tags: [ GunUpgradeReloadSpeed ]
+    examineText: gun-upgrade-examine-text-reload
+  - type: GunUpgradeFireRate
+    coefficient: 1.5
