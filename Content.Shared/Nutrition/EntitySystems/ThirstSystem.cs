@@ -50,12 +50,12 @@ public sealed class ThirstSystem : EntitySystem
 
     private void OnMapInit(EntityUid uid, ThirstComponent component, MapInitEvent args)
     {
-        // Do not change behavior unless starting value is explicitly defined
+        // If CurrentThirst is defined already, it uses that instead.
         if (component.CurrentThirst < 0)
         {
             component.CurrentThirst = _random.Next(
-                (int) component.ThirstThresholds[ThirstThreshold.Thirsty] + 10,
-                (int) component.ThirstThresholds[ThirstThreshold.Okay] - 1);
+                (int) component.thirstVariationMin,
+                (int) component.thirstVariationMax);
         }
         component.NextUpdateTime = _timing.CurTime;
         component.CurrentThirstThreshold = GetThirstThreshold(component, component.CurrentThirst);
