@@ -30,5 +30,7 @@ gas-entry-info = {$gasName}: {$gasAmount} mol
 
 # overrides for trinary devices to have saner names
 gas-analyzer-window-text-inlet = Inlet
+gas-analyzer-window-text-inlet-secondary = Secondary Inlet
 gas-analyzer-window-text-outlet = Outlet
+gas-analyzer-window-text-outlet-secondary = Secondary Outlet
 gas-analyzer-window-text-filter = Filter
