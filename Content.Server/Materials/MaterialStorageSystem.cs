@@ -177,7 +177,7 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
         overflowMaterial = amount - amountToSpawn * materialPerStack;
 
         if (amountToSpawn == 0)
-            return [];
+            return new List<EntityUid>();
 
         return _stackSystem.SpawnMultiple(materialProto.StackEntity, amountToSpawn, coordinates);
     }
