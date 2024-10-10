@@ -4,6 +4,7 @@
   description: An intercom. For when the station just needs to know something.
   abstract: true
   components:
+  - type: StationAiWhitelist
   - type: WallMount
   - type: ApcPowerReceiver
   - type: Electrified
@@ -23,6 +24,9 @@
   - type: Intercom
   - type: Speech
     speechVerb: Robotic
+  - type: VoiceOverride # This is for the wire that makes an electricity zapping noise.
+    speechVerbOverride: Electricity
+    enabled: false
   - type: ExtensionCableReceiver
   - type: Clickable
   - type: InteractionOutline
@@ -77,8 +81,8 @@
     graph: Intercom
     node: intercom
   - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallic
   - type: Destructible
     thresholds:
       - trigger:
@@ -205,6 +209,19 @@
     open: false
 
 - type: entity
+  id: BaseIntercomSecure
+  parent: Intercom
+  abstract: true
+  components:
+  - type: WiresPanel
+    openDelay: 5
+  - type: WiresPanelSecurity
+    examine: wires-panel-component-on-examine-security-level2
+    wiresAccessible: false
+  - type: Construction
+    node: intercomReinforced
+
+- type: entity
   id: IntercomCommon
   parent: Intercom
   suffix: Common
@@ -218,8 +235,9 @@
 
 - type: entity
   id: IntercomCommand
-  parent: Intercom
+  parent: BaseIntercomSecure
   suffix: Command
+  description: An intercom. It's been reinforced with metal.
   components:
   - type: ContainerFill
     containers:
@@ -270,17 +288,10 @@
 
 - type: entity
   id: IntercomSecurity
-  parent: Intercom
+  parent: BaseIntercomSecure
   suffix: Security
   description: An intercom. It's been reinforced with metal from security helmets, making it a bitch-and-a-half to open.
   components:
-  - type: WiresPanel
-    openDelay: 5
-  - type: WiresPanelSecurity
-    examine: wires-panel-component-on-examine-security-level2
-    wiresAccessible: false
-  - type: Construction
-    node: intercomReinforced
   - type: ContainerFill
     containers:
       board:
