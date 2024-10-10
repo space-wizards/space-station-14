@@ -61,7 +61,8 @@ namespace Content.IntegrationTests.Tests
             "Reach",
             "Train",
             "Oasis",
-            "Cog"
+            "Cog",
+            "dm01-entryway"
         };
 
         /// <summary>
