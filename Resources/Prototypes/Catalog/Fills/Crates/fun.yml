@@ -13,8 +13,10 @@
     - !type:GroupSelector
       children:
       - id: PlushieLizard
-        weight: 9
+        weight: 7
       - id: PlushieSpaceLizard
+        weight: 2
+      - id: PlushieRainbowLizard
         weight: 1
     - !type:GroupSelector
       children:
