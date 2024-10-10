@@ -150,4 +150,10 @@
       - PosterLegitPeriodicTable
       - PosterLegitRenault
       - PosterLegitNTTGC
+      - PosterLegitSafetyMothDelam
+      - PosterLegitSafetyMothEpi
+      - PosterLegitSafetyMothPiping
+      - PosterLegitSafetyMothMeth
+      - PosterLegitSafetyMothHardhat
+      - PosterLegitSafetyMothSSD
     chance: 1
