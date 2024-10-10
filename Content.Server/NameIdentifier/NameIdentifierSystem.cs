@@ -22,8 +22,6 @@ public sealed class NameIdentifierSystem : EntitySystem
     [ViewVariables]
     public readonly Dictionary<string, List<int>> CurrentIds = new();
 
-    private ISawmill _sawmill = default!;
-
     public override void Initialize()
     {
         base.Initialize();
