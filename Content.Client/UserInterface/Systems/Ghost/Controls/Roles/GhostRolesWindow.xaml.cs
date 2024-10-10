@@ -25,13 +25,6 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
             return EntryContainer.Children.OfType<Collapsible>();
         }
 
-        public Collapsible? GetCollapsibleById(string id)
-        {
-            return EntryContainer.Children
-                .OfType<Collapsible>()
-                .FirstOrDefault(c => c.Name == id);
-        }
-
         public Dictionary<int, bool> SaveCollapsibleBoxesStates()
         {
             var collapsibleStates = new Dictionary<int, bool>();
@@ -75,10 +68,8 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
                 var buttonHeading = new CollapsibleHeading(Loc.GetString("ghost-roles-window-available-button", ("rolesCount", rolesCount)));
 
                 buttonHeading.AddStyleClass(ContainerButton.StyleClassButton);
-                buttonHeading.HorizontalAlignment = HAlignment.Stretch;
                 buttonHeading.Label.HorizontalAlignment = HAlignment.Center;
                 buttonHeading.Label.HorizontalExpand = true;
-                buttonHeading.HorizontalExpand = true;
 
                 var body = new CollapsibleBody
                 {
