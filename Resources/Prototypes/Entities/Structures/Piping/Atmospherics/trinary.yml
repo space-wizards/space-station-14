@@ -206,7 +206,7 @@
   parent: GasPipeBase
   id: PressureControlledValve
   name: pneumatic valve
-  description: Valve controlled by pressure.
+  description: A bidirectional valve controlled by pressure. Opens if the output pipe is different than the pressure of the control pipe by one atmosphere.
   placement:
     mode: SnapgridCenter
   components:
