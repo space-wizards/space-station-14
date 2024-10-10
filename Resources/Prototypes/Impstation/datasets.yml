@@ -8,3 +8,131 @@
     - Security
     - Medical
     - Cargo
+    
+- type: dataset
+  id: Pets
+  values:
+    - Pun Pun the Monkey
+    - VILE SHITPIG the SHITPIG
+    - Hamlet the Hamster
+    - Shiva the Spider
+    - Ian the Corgi
+    - Morticia the Possum
+    - Morty the Possum
+    - Paperwork the Sloth
+    - Walter the Dog
+    - Renault the Fox
+    - Willow the Kangaroo
+    - Smile the Slime
+    - Tropico the Crab
+    - Major the Spacebear
+
+- type: dataset
+  id: Rooms
+  values:
+    - Disposals
+    - The Library
+    - Escape Pod
+    - The Maints Bar
+    - Maints
+    - The Restroom
+    - The Station Anchor
+    - Solars
+    - The Morgue
+
+- type: dataset
+  id: FoodRestrictions
+  values:
+    - Vegetarian
+    - Carnivore
+    - Frugivore
+    - Fungivore
+    - Ovivore
+    - Hunter
+    - Soupivore
+
+
+- type: dataset
+  id: Items
+  values:
+    - Wrenches
+    - Welding Tools
+    - Screwdrivers
+    - Wirecutters
+    - Multitools
+    - Plushies
+    - Food packaging
+    - Soda cans
+    - Flashlights
+    - Empty toolboxes
+    - Civilian clothes
+    - Shoes
+    - Hats
+    - Scarves
+    - Folders
+    - Spray bottles
+    - Lizard Plushies
+    - Figurines
+    - Toys
+    - Lockers
+    
+- type: dataset
+  id: Edibles
+  values:
+    - Gray Plush
+    - Copypasta
+    - Moldy Bread Slice
+    - Baseball Burger
+    - Empowered Burger
+    - McGuffin
+    - Suppermatter
+    - Stick of Cannabis Butter
+    - Bungo Curry
+    - Salty Sweet Miso Cola Soup
+    - Bread Dog
+
+- type: dataset
+  id: Holidays
+  values:
+    - Binkus Day
+    - Foster's Feast
+    - Gondaltide
+    - St. Pun Pun's Eve
+    - Intergalactic Driving-Under-The-Influence Day
+    - Clownsmas
+    - Intergalactic Hug A Robot Day
+    - Labor Day
+    - Teo First Contact Day
+    - Fall of the Twin Trees Day
+    - Yum Yum's Birthday
+    - NT Corporate Mindfulness Day
+    - Steven's Barmitzvah
+    - Silicon Awareness Day
+    - Logistics Improvement Day
+    - Small Ear Syndrome Awareness Day
+    - Gunchday
+    - Gerold's Ascension
+    - The Good Day of Digging and Playing
+    - the Talent Show
+    - The Tegument of Actuality
+
+- type: dataset
+  id: Clothes
+  values:
+    - Hardsuits
+    - Gloves
+    - Hats
+    - Capes
+    - Glasses
+    - Backpacks
+
+- type: dataset
+  id: CommandRoles
+  values:
+    - Captain
+    - Quartermaster
+    - Head of Security
+    - Head of Personnel
+    - Chief Engineer
+    - Chief Medical Officer
+    - Research Director

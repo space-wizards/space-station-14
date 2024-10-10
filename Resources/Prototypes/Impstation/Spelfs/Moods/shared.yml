@@ -24,6 +24,10 @@
     - MustCongregate
     - ViolenceDistasteful
     - ViolencePermitted
+    - RoomHoly
+    - PetGod
+    - Delicacy
+    - Holiday
 #   - OutOfFashion
 #   - InFashion
 
@@ -161,13 +165,39 @@
   conflicts:
     - ViolencePermitted
 
-#  [STATION PET] must be venerated as a god.
-#- type: spelfMood
-#  id: PetGod
-#  moodName: spelf-mood-pet-god-name
-#  moodDesc: spelf-mood-pet-god-desc
-#  moodVars:
-#    pet: SpelfMoodPet
+# [STATION PET] must be venerated as a god.
+- type: spelfMood
+  id: PetGod
+  moodName: spelf-mood-pet-god-name
+  moodDesc: spelf-mood-pet-god-desc
+  moodVars:
+    pet: Pets
+
+# [ROOM] is a holy place.
+- type: spelfMood
+  id: RoomHoly
+  moodName: spelf-mood-room-holy-name
+  moodDesc: spelf-mood-room-holy-desc
+  moodVars:
+    room: Rooms
+
+# Just Like Mom Used To Make: [EDIBLE] is a traditional Thaven delicacy. All Thaven aboard the station should gather as many as possible and organize a feast.
+- type: spelfMood
+  id: Delicacy
+  moodName: spelf-mood-delicacy-name
+  moodDesc: spelf-mood-delicacy-desc
+  conflicts:
+    - FoodRestrict
+  moodVars:
+    edible: Edibles
+
+# Today is [HOLIDAY]. You think you remember the traditional celebrations...
+- type: spelfMood
+  id: Holiday
+  moodName: spelf-mood-holiday-name
+  moodDesc: spelf-mood-holiday-desc
+  moodVars:
+    day: Holidays
 
 # - type: spelfMood
 #   id: OutOfFashion

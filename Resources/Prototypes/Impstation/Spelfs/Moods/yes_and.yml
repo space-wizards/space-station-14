@@ -38,6 +38,11 @@
     - GreySpeak
     - DepartmentTitle
     - Barefoot
+    - Hospitable
+    - VoxSymp
+    - Smoker
+    - EyeForEye
+    - Optimist
 
 # You are extremely possessive of your property. Refuse to relinquish it, and if it is misplaced or stolen, it must be retrieved at all costs. 
 - type: spelfMood
@@ -255,27 +260,6 @@
   conflicts:
     - YourDepartmentOnly
 
-# You must speak exclusively in third person.
-- type: spelfMood
-  id: ThirdPerson
-  moodName: spelf-mood-third-person-name
-  moodDesc: spelf-mood-third-person-desc
-
-# You Must Exclusively Speak in Title Case.
-- type: spelfMood
-  id: TitleCase
-  moodName: spelf-mood-title-case-name
-  moodDesc: spelf-mood-title-case-desc
-  conflicts:
-    - OnlyYell
-
-# Greyspeak is extremely fashionable, and you should endeavor to speak like Greys to the best of your ability.
-- type: spelfMood
-  id: GreySpeak
-  moodName: spelf-mood-greyspeak-name
-  moodDesc: spelf-mood-greyspeak-desc
-  conflicts:
-    - Imitation
 
 # You must not refer directly to the names of departments - You may only refer to a specific person who works in that department.
 - type: spelfMood
@@ -292,15 +276,52 @@
   moodName: spelf-mood-shoes-bad-name
   moodDesc: spelf-mood-shoes-bad-desc
 
-# [ITEM]s are sacred to you. You must collect as many as you can, and ensure others treat them with respect.
-#- type: spelfMood
-#  id: ItemGood
-#  moodName: spelf-mood-item-good-name
-#  moodDesc: spelf-mood-item-good-desc
-#  moodVars:
-#    item: SpelfMoodItem
+# You must ensure all new arrivals are properly welcomed to the station.
+- type: spelfMood
+  id: Hospitable
+  moodName: spelf-mood-hospitable-name
+  moodDesc: spelf-mood-hospitable-desc
+
+# Vox Sympathizer: To demonstrate your allyship for the Vox, you must be wearing internals at all times. 
+- type: spelfMood
+  id: VoxSymp
+  moodName: spelf-mood-voxsymp-name
+  moodDesc: spelf-mood-voxsymp-desc
+
+# [ITEM]s are endlessly fascinating. You must collect as many as you can, and ensure others treat them with respect.
+- type: spelfMood
+  id: ItemGood
+  moodName: spelf-mood-item-good-name
+  moodDesc: spelf-mood-item-good-desc
+  moodVars:
+    item: Items
 #  conflicts:
 #    - ItemBad
+
+# Smoker: You are hopelessly addicted to cigarettes. You must be smoking one at all times.
+- type: spelfMood
+  id: Smoker
+  moodName: spelf-mood-smoker-name
+  moodDesc: spelf-mood-smoker-desc
+  conflicts:
+    - DisapproveOfDrugs
+    - NonSmoker
+
+# Eye For An Eye: You must treat every living being the way that it treats you.
+- type: spelfMood
+  id: EyeForEye
+  moodName: spelf-mood-eye-for-eye-name
+  moodDesc: spelf-mood-eye-for-eye-desc
+
+# Optimist: You must interpret every situation in the best light that you can.
+- type: spelfMood
+  id: Optimist
+  moodName: spelf-mood-optimist-name
+  moodDesc: spelf-mood-optimist-desc
+
+
+
+
 
 # The color [COLOR] is the only acceptable color for decorations. Endeavor to make your environment this color where possible.
 #- type: spelfMood
