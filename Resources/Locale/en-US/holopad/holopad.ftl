@@ -21,7 +21,7 @@ holopad-window-request-station-ai = Request station AI
 holopad-window-activate-projector = Activate projector
 holopad-window-emergency-broadcast = Emergency broadcast
 holopad-window-emergency-broadcast-with-countdown = Emergency broadcast ({$countdown})
-
+holopad-window-access-denied = Access denied
 
 # Contact list
 holopad-window-select-contact-from-list = Select a contact to initiate a holo-call

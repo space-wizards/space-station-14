@@ -73,6 +73,8 @@
     ringTone: /Audio/Machines/double_ring.ogg
     listeningRange: 4
     speakerVolume: Speak
+  - type: AccessReader
+    access: [[ "Command" ]]
   - type: ActivatableUI
     key: enum.HolopadUiKey.InteractionWindow
   - type: ActivatableUIRequiresPower

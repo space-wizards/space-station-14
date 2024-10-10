@@ -1,6 +1,7 @@
 using Content.Server.Interaction;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Telephone;
+using Content.Shared.Access.Systems;
 using Content.Shared.Audio;
 using Content.Shared.Chat.TypingIndicator;
 using Content.Shared.Holopad;
@@ -32,6 +33,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
     [Dependency] private readonly EyeSystem _eyeSystem = default!;
     [Dependency] private readonly SharedStationAiSystem _stationAiSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+    [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
     private float _updateTimer = 1.0f;
@@ -72,6 +74,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
         SubscribeLocalEvent<HolopadComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<HolopadComponent, ComponentShutdown>(OnComponentShutdown);
         SubscribeLocalEvent<HolopadUserComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<HolopadUserComponent, ComponentShutdown>(OnHolopadUserShutdown);
     }
 
     #region: Holopad UI bound user interface messages
@@ -139,6 +142,9 @@ public sealed class HolopadSystem : SharedHolopadSystem
     private void OnHolopadStartBroadcast(Entity<HolopadComponent> source, ref HolopadStartBroadcastMessage args)
     {
         if (IsHolopadControlLocked(source, args.Actor) || IsHolopadBroadcastOnCoolDown(source))
+            return;
+
+        if (!_accessReaderSystem.IsAllowed(args.Actor, source))
             return;
 
         // If the broadcasting player is the AI, activate the projector
