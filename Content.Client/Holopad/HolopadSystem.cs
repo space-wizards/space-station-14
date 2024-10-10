@@ -3,7 +3,6 @@ using Content.Shared.Holopad;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using System;
@@ -15,7 +14,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
@@ -90,6 +89,25 @@ public sealed class HolopadSystem : SharedHolopadSystem
                 layerDatum.RsiPath = layer.RSI.Path.ToString();
                 layerDatum.State = layer.State.Name;
 
+                if (layer.CopyToShaderParameters != null)
+                {
+                    var key = (string)layer.CopyToShaderParameters.LayerKey;
+
+                    if (playerSprite.LayerMapTryGet(key, out var otherLayerIdx) &&
+                        playerSprite.TryGetLayer(otherLayerIdx, out var otherLayer) &&
+                        otherLayer.Visible)
+                    {
+                        layerDatum.MapKeys = new() { key };
+
+                        layerDatum.CopyToShaderParameters = new PrototypeCopyToShaderParameters()
+                        {
+                            LayerKey = key,
+                            ParameterTexture = layer.CopyToShaderParameters.ParameterTexture,
+                            ParameterUV = layer.CopyToShaderParameters.ParameterUV
+                        };
+                    }
+                }
+
                 spriteLayerData.Add(layerDatum);
             }
         }
@@ -117,20 +135,19 @@ public sealed class HolopadSystem : SharedHolopadSystem
         if (layerData == null || layerData.Length == 0)
         {
             layerData = new PrototypeLayerData[1];
-            layerData[0] = new PrototypeLayerData();
-
-            layerData[0].RsiPath = holopadhologram.RsiPath;
-            layerData[0].State = holopadhologram.RsiState;
+            layerData[0] = new PrototypeLayerData()
+            {
+                RsiPath = holopadhologram.RsiPath,
+                State = holopadhologram.RsiState
+            };
         }
 
         for (int i = 0; i < layerData.Length; i++)
         {
-            var layer = new PrototypeLayerData();
-            layer.RsiPath = layerData[i].RsiPath;
-            layer.State = layerData[i].State;
+            var layer = layerData[i];
             layer.Shader = "unshaded";
 
-            hologramSprite.AddLayer(layer, i);
+            hologramSprite.AddLayer(layerData[i], i);
         }
 
         UpdateHologramShader(uid, hologramSprite, holopadhologram);

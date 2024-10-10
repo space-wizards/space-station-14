@@ -71,9 +71,9 @@ public sealed class HolopadSystem : SharedHolopadSystem
         SubscribeNetworkEvent<PlayerSpriteStateMessage>(OnPlayerSpriteStateMessage);
 
         // Component start/shutdown events
-        SubscribeLocalEvent<HolopadComponent, ComponentInit>(OnComponentInit);
-        SubscribeLocalEvent<HolopadComponent, ComponentShutdown>(OnComponentShutdown);
-        SubscribeLocalEvent<HolopadUserComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<HolopadComponent, ComponentInit>(OnHolopadInit);
+        SubscribeLocalEvent<HolopadComponent, ComponentShutdown>(OnHolopadShutdown);
+        SubscribeLocalEvent<HolopadUserComponent, ComponentInit>(OnHolopadUserInit);
         SubscribeLocalEvent<HolopadUserComponent, ComponentShutdown>(OnHolopadUserShutdown);
     }
 
@@ -365,21 +365,27 @@ public sealed class HolopadSystem : SharedHolopadSystem
 
     #region: Component start/shutdown events
 
-    private void OnComponentInit(Entity<HolopadComponent> entity, ref ComponentInit args)
+    private void OnHolopadInit(Entity<HolopadComponent> entity, ref ComponentInit args)
     {
         LinkHolopadToUser(entity, entity.Comp.User);
     }
 
-    private void OnComponentInit(Entity<HolopadUserComponent> entity, ref ComponentInit args)
+    private void OnHolopadUserInit(Entity<HolopadUserComponent> entity, ref ComponentInit args)
     {
         foreach (var linkedHolopad in entity.Comp.LinkedHolopads)
             LinkHolopadToUser(linkedHolopad, entity);
     }
 
-    private void OnComponentShutdown(Entity<HolopadComponent> entity, ref ComponentShutdown args)
+    private void OnHolopadShutdown(Entity<HolopadComponent> entity, ref ComponentShutdown args)
     {
         ShutDownHolopad(entity);
         SetHolopadAmbientState(entity, false);
+    }
+
+    private void OnHolopadUserShutdown(Entity<HolopadUserComponent> entity, ref ComponentShutdown args)
+    {
+        foreach (var linkedHolopad in entity.Comp.LinkedHolopads)
+            UnlinkHolopadFromUser(linkedHolopad, entity);
     }
 
     #endregion
