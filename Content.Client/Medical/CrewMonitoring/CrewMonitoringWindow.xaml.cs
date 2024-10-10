@@ -25,6 +25,7 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    private readonly SharedTransformSystem _transformSystem;
     private readonly SpriteSystem _spriteSystem;
 
     private NetEntity? _trackedEntity;
@@ -36,10 +37,10 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
+        _transformSystem = _entManager.System<SharedTransformSystem>();
         _spriteSystem = _entManager.System<SpriteSystem>();
 
         NavMap.TrackedEntitySelectedAction += SetTrackedEntityFromNavMap;
-
     }
 
     public void Set(string stationName, EntityUid? mapUid)
@@ -290,7 +291,7 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
             {
                 NavMap.TrackedEntities.TryAdd(sensor.SuitSensorUid,
                     new NavMapBlip
-                    (coordinates.Value,
+                    (CoordinatesToLocal(coordinates!.Value),
                     _blipTexture,
                     (_trackedEntity == null || sensor.SuitSensorUid == _trackedEntity) ? Color.LimeGreen : Color.LimeGreen * Color.DimGray,
                     sensor.SuitSensorUid == _trackedEntity));
@@ -356,7 +357,7 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
             if (NavMap.TrackedEntities.TryGetValue(castSensor.SuitSensorUid, out var data))
             {
                 data = new NavMapBlip
-                    (data.Coordinates,
+                    (CoordinatesToLocal(data.Coordinates),
                     data.Texture,
                     (currTrackedEntity == null || castSensor.SuitSensorUid == currTrackedEntity) ? Color.LimeGreen : Color.LimeGreen * Color.DimGray,
                     castSensor.SuitSensorUid == currTrackedEntity);
@@ -419,6 +420,31 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
         nextScrollPosition = null;
 
         return false;
+    }
+
+    /// <summary>
+    /// Converts the input coordinates to an EntityCoordinates which are in
+    /// reference to the grid that the map is displaying. This is a stylistic
+    /// choice; this window deliberately limits the rate that blips update,
+    /// but if the blip is attached to another grid which is moving, that
+    /// blip will move smoothly, unlike the others. By converting the
+    /// coordinates, we are back in control of the blip movement.
+    /// </summary>
+    private EntityCoordinates CoordinatesToLocal(EntityCoordinates refCoords)
+    {
+        if (NavMap.MapUid == null || NavMap.MapUid == refCoords.EntityId)
+        {
+            return refCoords;
+        }
+        else
+        {
+            var refEntToWorld = _transformSystem.GetWorldMatrix(refCoords.EntityId);
+            var refPosition = Vector2.Transform(refCoords.Position, refEntToWorld);
+
+            var worldToMonitor = _transformSystem.GetInvWorldMatrix((EntityUid)NavMap.MapUid);
+            var refInMonitor = Vector2.Transform(refPosition, worldToMonitor);
+            return new EntityCoordinates((EntityUid)NavMap.MapUid, refInMonitor);
+        }
     }
 
     private void ClearOutDatedData()
