@@ -1,11 +1,13 @@
 using Content.Shared.Random.Helpers;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.EntityTable.EntitySelectors;
 
 /// <summary>
 /// Gets the spawns from one of the child selectors, based on the weight of the children
 /// </summary>
+[Serializable, NetSerializable]
 public sealed partial class GroupSelector : EntityTableSelector
 {
     [DataField(required: true)]
