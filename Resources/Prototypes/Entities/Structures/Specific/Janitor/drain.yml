@@ -61,7 +61,8 @@
               sound:
                 collection: MetalBreak
 
-
+ # Objects/Specific/Janitorial/drainplatform.rsi
+ # - state: drainplatform
 - type: entity
   id: FloorDrainPlatform
   name: Ocean
@@ -73,7 +74,9 @@
       drawdepth: FloorObjects
       sprite: Objects/Specific/Janitorial/drainplatform.rsi
       layers:
-        - state: drainplatform
+      - map: [ "enum.SolutionContainerLayers.Fill" ]
+        state: drainplatform
+        visible: false
     - type: Transform
       anchored: true
     - type: Physics
