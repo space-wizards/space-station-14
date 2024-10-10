@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Client.Administration.Managers;
 using Content.Client.Stylesheets;
+using Content.Client.Stylesheets.Redux;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.EscapeMenu;
 using Content.Shared.Administration;
@@ -21,8 +22,7 @@ namespace Content.Client.Changelog
         public ChangelogWindow()
         {
             RobustXamlLoader.Load(this);
-            WindowTitle.AddStyleClass(StyleBase.StyleClassLabelHeading);
-            Stylesheet = IoCManager.Resolve<IStylesheetManager>().SheetSpace;
+            WindowTitle.AddStyleClass(StyleClass.LabelHeading);
         }
 
         protected override void Opened()

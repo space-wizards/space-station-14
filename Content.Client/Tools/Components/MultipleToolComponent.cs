@@ -1,5 +1,6 @@
 using Content.Client.Message;
 using Content.Client.Stylesheets;
+using Content.Client.Stylesheets.Redux;
 using Content.Shared.Tools.Components;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -15,7 +16,7 @@ namespace Content.Client.Tools.Components
         public MultipleToolStatusControl(MultipleToolComponent parent)
         {
             _parent = parent;
-            _label = new RichTextLabel { StyleClasses = { StyleNano.StyleClassItemStatus } };
+            _label = new RichTextLabel { StyleClasses = { StyleClass.ItemStatus } };
             _label.SetMarkup(_parent.StatusShowBehavior ? _parent.CurrentQualityName : string.Empty);
             AddChild(_label);
         }

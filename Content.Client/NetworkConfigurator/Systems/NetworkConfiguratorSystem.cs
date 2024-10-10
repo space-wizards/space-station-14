@@ -2,6 +2,7 @@ using Content.Client.Actions;
 using Content.Client.Items;
 using Content.Client.Message;
 using Content.Client.Stylesheets;
+using Content.Client.Stylesheets.Redux;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Input;
@@ -113,7 +114,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         {
             _configurator = configurator;
             _keyBindingName = keyBindingName;
-            _label = new RichTextLabel { StyleClasses = { StyleNano.StyleClassItemStatus } };
+            _label = new RichTextLabel { StyleClasses = { StyleClass.ItemStatus } };
             AddChild(_label);
         }
 

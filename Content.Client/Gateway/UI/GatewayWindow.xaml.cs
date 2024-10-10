@@ -1,6 +1,7 @@
 using System.Numerics;
 using Content.Client.Computer;
 using Content.Client.Stylesheets;
+using Content.Client.Stylesheets.Redux;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Gateway;
 using Content.Shared.Shuttles.BUIStates;
@@ -159,7 +160,7 @@ public sealed partial class GatewayWindow : FancyWindow,
 
             if (Pressable())
             {
-                openButton.AddStyleClass(StyleBase.ButtonCaution);
+                openButton.AddStyleClass(StyleClass.Negative);
             }
 
             var buttonContainer = new BoxContainer()

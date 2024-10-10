@@ -3,6 +3,7 @@ using Content.Client.IoC;
 using Content.Client.Items;
 using Content.Client.Resources;
 using Content.Client.Stylesheets;
+using Content.Client.Stylesheets.Redux;
 using Content.Client.Weapons.Ranged.Components;
 using Content.Client.Weapons.Ranged.ItemStatus;
 using Robust.Client.Animations;
@@ -137,7 +138,7 @@ public sealed partial class GunSystem
                     }),
                     (_ammoCount = new Label
                     {
-                        StyleClasses = { StyleNano.StyleClassItemStatus },
+                        StyleClasses = { StyleClass.ItemStatus },
                         HorizontalAlignment = HAlignment.Right,
                         VerticalAlignment = VAlignment.Bottom
                     }),
@@ -189,7 +190,7 @@ public sealed partial class GunSystem
                             (_noMagazineLabel = new Label
                             {
                                 Text = "No Magazine!",
-                                StyleClasses = {StyleNano.StyleClassItemStatus}
+                                StyleClasses = {StyleClass.ItemStatus}
                             })
                         }
                     },
@@ -202,7 +203,7 @@ public sealed partial class GunSystem
                         {
                             (_ammoCount = new Label
                             {
-                                StyleClasses = {StyleNano.StyleClassItemStatus},
+                                StyleClasses = {StyleClass.ItemStatus},
                                 HorizontalAlignment = HAlignment.Right,
                             }),
                             (_chamberedBullet = new TextureRect

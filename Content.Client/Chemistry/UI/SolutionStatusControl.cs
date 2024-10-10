@@ -3,6 +3,7 @@ using Content.Client.Chemistry.EntitySystems;
 using Content.Client.Items.UI;
 using Content.Client.Message;
 using Content.Client.Stylesheets;
+using Content.Client.Stylesheets.Redux;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.FixedPoint;
@@ -29,7 +30,7 @@ public sealed class SolutionStatusControl : PollingItemStatusControl<SolutionSta
         _parent = parent;
         _entityManager = entityManager;
         _solutionContainers = solutionContainers;
-        _label = new RichTextLabel { StyleClasses = { StyleNano.StyleClassItemStatus } };
+        _label = new RichTextLabel { StyleClasses = { StyleClass.ItemStatus } };
         AddChild(_label);
     }
 

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Numerics;
 using Content.Client.Pinpointer.UI;
 using Content.Client.Stylesheets;
+using Content.Client.Stylesheets.Redux;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Medical.SuitSensor;
 using Content.Shared.StatusIcon;
@@ -111,7 +112,6 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
             };
 
             deparmentLabel.SetMessage(department);
-            deparmentLabel.StyleClasses.Add(StyleNano.StyleClassTooltipActionDescription);
 
             SensorsTable.AddChild(deparmentLabel);
 
@@ -137,7 +137,6 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
             };
 
             deparmentLabel.SetMessage(Loc.GetString("crew-monitoring-user-interface-no-department"));
-            deparmentLabel.StyleClasses.Add(StyleNano.StyleClassTooltipActionDescription);
 
             SensorsTable.AddChild(deparmentLabel);
 
@@ -175,7 +174,7 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
             };
 
             if (sensor.SuitSensorUid == _trackedEntity)
-                sensorButton.AddStyleClass(StyleNano.StyleClassButtonColorGreen);
+                sensorButton.AddStyleClass(StyleClass.Positive);
 
             SensorsTable.AddChild(sensorButton);
 
@@ -345,10 +344,10 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
             var castSensor = (CrewMonitoringButton) sensor;
 
             if (castSensor.SuitSensorUid == prevTrackedEntity)
-                castSensor.RemoveStyleClass(StyleNano.StyleClassButtonColorGreen);
+                castSensor.RemoveStyleClass(StyleClass.Positive);
 
             else if (castSensor.SuitSensorUid == currTrackedEntity)
-                castSensor.AddStyleClass(StyleNano.StyleClassButtonColorGreen);
+                castSensor.AddStyleClass(StyleClass.Positive);
 
             if (castSensor?.Coordinates == null)
                 continue;

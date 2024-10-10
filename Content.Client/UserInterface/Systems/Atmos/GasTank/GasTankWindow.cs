@@ -2,6 +2,7 @@ using System.Numerics;
 using Content.Client.Message;
 using Content.Client.Resources;
 using Content.Client.Stylesheets;
+using Content.Client.Stylesheets.Redux;
 using Content.Shared.Atmos.Components;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
@@ -89,7 +90,7 @@ public sealed class GasTankWindow
         _topLabel = new Label
         {
             FontOverride = font,
-            FontColorOverride = StyleNano.NanoGold,
+           StyleClasses = { StyleClass.LabelKeyText },
             VerticalAlignment = VAlignment.Center,
             HorizontalExpand = true,
             HorizontalAlignment = HAlignment.Left,

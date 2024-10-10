@@ -1,5 +1,6 @@
 using Content.Client.Message;
 using Content.Client.Stylesheets;
+using Content.Client.Stylesheets.Redux;
 using Content.Shared.Radiation.Components;
 using Content.Shared.Radiation.Systems;
 using Robust.Client.UserInterface;
@@ -16,7 +17,7 @@ public sealed class GeigerItemControl : Control
     public GeigerItemControl(GeigerComponent component)
     {
         _component = component;
-        _label = new RichTextLabel { StyleClasses = { StyleNano.StyleClassItemStatus } };
+        _label = new RichTextLabel { StyleClasses = { StyleClass.ItemStatus } };
         AddChild(_label);
 
         Update();

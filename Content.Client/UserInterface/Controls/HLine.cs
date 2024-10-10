@@ -6,41 +6,36 @@ using Robust.Shared.Maths;
 
 namespace Content.Client.UserInterface.Controls;
 
-public sealed class HLine : Container
+public sealed class HLine : PanelContainer
 {
     public Color? Color
     {
         get
         {
-            if (_line.PanelOverride is StyleBoxFlat styleBox) return styleBox.BackgroundColor;
+            StyleBox box;
+            if (PanelOverride != null)
+                box = PanelOverride;
+            if (TryGetStyleProperty<StyleBox>(StylePropertyPanel, out var _box))
+                box = _box;
+            else
+                return null;
+
+            if (box is StyleBoxFlat boxFlat)
+                return boxFlat.BackgroundColor;
             return null;
         }
-        set
-        {
-            if (_line.PanelOverride is StyleBoxFlat styleBox) styleBox.BackgroundColor = value!.Value;
-        }
+        set =>
+            // should use style classes instead in ui code but keeping this functionality for consistency
+            PanelOverride = new StyleBoxFlat() { BackgroundColor = value!.Value };
     }
 
-    public float? Thickness {
-        get
-        {
-            if (_line.PanelOverride is StyleBoxFlat styleBox) return styleBox.ContentMarginTopOverride;
-            return null;
-        }
-        set
-        {
-            if (_line.PanelOverride is StyleBoxFlat styleBox) styleBox.ContentMarginTopOverride = value!.Value;
-        }
+    public float? Thickness
+    {
+        get => MinHeight;
+        set => MinHeight = value!.Value;
     }
-
-    private readonly PanelContainer _line;
 
     public HLine()
     {
-        _line = new PanelContainer();
-        _line.PanelOverride = new StyleBoxFlat();
-        _line.PanelOverride.ContentMarginTopOverride = Thickness;
-        AddChild(_line);
     }
-
 }

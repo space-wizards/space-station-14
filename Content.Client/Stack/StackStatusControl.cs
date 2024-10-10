@@ -1,5 +1,6 @@
 using Content.Client.Message;
 using Content.Client.Stylesheets;
+using Content.Client.Stylesheets.Redux;
 using Content.Shared.Stacks;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -15,7 +16,7 @@ public sealed class StackStatusControl : Control
     public StackStatusControl(StackComponent parent)
     {
         _parent = parent;
-        _label = new RichTextLabel {StyleClasses = {StyleNano.StyleClassItemStatus}};
+        _label = new RichTextLabel {StyleClasses = {StyleClass.ItemStatus}};
         _label.SetMarkup(Loc.GetString("comp-stack-status", ("count", _parent.Count)));
         AddChild(_label);
     }

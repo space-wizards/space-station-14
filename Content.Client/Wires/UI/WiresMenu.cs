@@ -2,6 +2,7 @@ using System.Numerics;
 using Content.Client.Examine;
 using Content.Client.Resources;
 using Content.Client.Stylesheets;
+using Content.Client.Stylesheets.Redux;
 using Content.Shared.Wires;
 using Robust.Client.Animations;
 using Robust.Client.Graphics;
@@ -159,8 +160,8 @@ namespace Content.Client.Wires.UI
                     {
                         Text = Loc.GetString("wires-menu-name-label"),
                         FontOverride = font,
-                        FontColorOverride = StyleNano.NanoGold,
                         VerticalAlignment = VAlignment.Center,
+                        StyleClasses = { StyleClass.LabelKeyText },
                     }),
                     (_serialLabel = new Label
                     {

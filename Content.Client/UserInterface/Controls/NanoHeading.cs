@@ -1,4 +1,5 @@
 using Content.Client.Stylesheets;
+using Content.Client.Stylesheets.Redux;
 using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.UserInterface.Controls
@@ -14,7 +15,7 @@ namespace Content.Client.UserInterface.Controls
             {
                 Children = {(_label = new Label
                 {
-                    StyleClasses = {StyleNano.StyleClassLabelHeading}
+                    StyleClasses = {StyleClass.LabelHeading}
                 })}
             };
             AddChild(_panel);

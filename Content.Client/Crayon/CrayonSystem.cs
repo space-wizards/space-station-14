@@ -1,6 +1,7 @@
 using Content.Client.Items;
 using Content.Client.Message;
 using Content.Client.Stylesheets;
+using Content.Client.Stylesheets.Redux;
 using Content.Shared.Crayon;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -41,7 +42,7 @@ public sealed class CrayonSystem : SharedCrayonSystem
         public StatusControl(CrayonComponent parent)
         {
             _parent = parent;
-            _label = new RichTextLabel { StyleClasses = { StyleNano.StyleClassItemStatus } };
+            _label = new RichTextLabel { StyleClasses = { StyleClass.ItemStatus } };
             AddChild(_label);
 
             parent.UIUpdateNeeded = true;

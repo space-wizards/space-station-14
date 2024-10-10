@@ -1,4 +1,4 @@
-using Content.Client.Stylesheets;
+using Content.Client.Stylesheets.Redux;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 
@@ -8,7 +8,7 @@ namespace Content.Client.UserInterface.Controls
     {
         public HighDivider()
         {
-            Children.Add(new PanelContainer {StyleClasses = {StyleBase.ClassHighDivider}});
+            Children.Add(new PanelContainer {StyleClasses = {StyleClass.HighDivider}});
         }
     }
 }

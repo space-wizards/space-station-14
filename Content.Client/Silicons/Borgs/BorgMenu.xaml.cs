@@ -1,4 +1,5 @@
 using Content.Client.Stylesheets;
+using Content.Client.Stylesheets.Redux;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.NameIdentifier;
 using Content.Shared.Preferences;
@@ -92,14 +93,14 @@ public sealed partial class BorgMenu : FancyWindow
             BrainView.Visible = true;
             BrainView.SetEntity(brain);
             BrainButton.Disabled = false;
-            BrainButton.AddStyleClass(StyleBase.ButtonOpenLeft);
+            BrainButton.AddStyleClass(StyleClass.ButtonOpenLeft);
         }
         else
         {
             BrainButton.Text = Loc.GetString("borg-ui-no-brain");
             BrainButton.Disabled = true;
             BrainView.Visible = false;
-            BrainButton.RemoveStyleClass(StyleBase.ButtonOpenLeft);
+            BrainButton.RemoveStyleClass(StyleClass.ButtonOpenLeft);
         }
     }
 

@@ -1,5 +1,6 @@
 using Content.Client.Message;
 using Content.Client.Stylesheets;
+using Content.Client.Stylesheets.Redux;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Implants.Components;
 using Robust.Client.UserInterface;
@@ -16,7 +17,7 @@ public sealed class ImplanterStatusControl : Control
     public ImplanterStatusControl(ImplanterComponent parent)
     {
         _parent = parent;
-        _label = new RichTextLabel { StyleClasses = { StyleNano.StyleClassItemStatus } };
+        _label = new RichTextLabel { StyleClasses = { StyleClass.ItemStatus } };
         _label.MaxWidth = 350;
         AddChild(new ClipControl { Children = { _label } });
 

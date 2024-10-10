@@ -1,4 +1,5 @@
 using Content.Client.Stylesheets;
+using Content.Client.Stylesheets.Redux;
 using Content.Shared.Chat;
 using Robust.Client.UserInterface.Controls;
 
@@ -6,6 +7,9 @@ namespace Content.Client.UserInterface.Systems.Chat.Controls;
 
 public sealed class ChannelSelectorItemButton : Button
 {
+    public const string StyleClassChatSelectorOptionButton = "ChatSelectorOptionButton";
+
+
     public readonly ChatSelectChannel Channel;
 
     public bool IsHidden => Parent == null;
@@ -13,7 +17,7 @@ public sealed class ChannelSelectorItemButton : Button
     public ChannelSelectorItemButton(ChatSelectChannel selector)
     {
         Channel = selector;
-        AddStyleClass(StyleNano.StyleClassChatChannelSelectorButton);
+        AddStyleClass(StyleClassChatSelectorOptionButton);
 
         Text = ChannelSelectorButton.ChannelSelectorName(selector);
 

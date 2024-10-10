@@ -1,4 +1,5 @@
 using Content.Client.Stylesheets;
+using Content.Client.Stylesheets.Redux;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Lock;
 using Content.Shared.Robotics;
@@ -61,7 +62,7 @@ public sealed partial class RoboticsConsoleWindow : FancyWindow
         };
 
         // cant put multiple styles in xaml for some reason
-        DestroyButton.StyleClasses.Add(StyleBase.ButtonCaution);
+        DestroyButton.StyleClasses.Add(StyleClass.Negative);
     }
 
     public void SetEntity(EntityUid uid)

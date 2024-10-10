@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Content.Client.Resources;
+using Content.Client.Stylesheets.Redux;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
@@ -8,6 +9,7 @@ using static Robust.Client.UserInterface.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets
 {
+    [Obsolete("Please use the new sheetlet system to define styles, and remove all references to this class as it may be deleted in the future")]
     public sealed class StyleSpace : StyleBase
     {
         public static readonly Color SpaceRed = Color.FromHex("#9b2236");
@@ -71,21 +73,21 @@ namespace Content.Client.Stylesheets
 
             Stylesheet = new Stylesheet(BaseRules.Concat(new StyleRule[]
             {
-                Element<Label>().Class(StyleClassLabelHeading)
+                Element<Label>().Class(StyleClass.LabelHeading)
                     .Prop(Label.StylePropertyFont, notoSansBold16)
                     .Prop(Label.StylePropertyFontColor, SpaceRed),
 
-                Element<Label>().Class(StyleClassLabelSubText)
+                Element<Label>().Class(StyleClass.LabelSubText)
                     .Prop(Label.StylePropertyFont, notoSans10)
                     .Prop(Label.StylePropertyFontColor, Color.DarkGray),
 
-                Element<PanelContainer>().Class(ClassHighDivider)
+                Element<PanelContainer>().Class(StyleClass.HighDivider)
                     .Prop(PanelContainer.StylePropertyPanel, new StyleBoxFlat
                     {
                         BackgroundColor = SpaceRed, ContentMarginBottomOverride = 2, ContentMarginLeftOverride = 2
                     }),
 
-                Element<PanelContainer>().Class(ClassLowDivider)
+                Element<PanelContainer>().Class(StyleClass.LowDivider)
                     .Prop(PanelContainer.StylePropertyPanel, new StyleBoxFlat
                     {
                         BackgroundColor = Color.FromHex("#444"),
@@ -98,19 +100,19 @@ namespace Content.Client.Stylesheets
                     .Prop(ContainerButton.StylePropertyStyleBox, BaseButton),
 
                 Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
-                    .Class(ButtonOpenRight)
+                    .Class(StyleClass.ButtonOpenRight)
                     .Prop(ContainerButton.StylePropertyStyleBox, BaseButtonOpenRight),
 
                 Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
-                    .Class(ButtonOpenLeft)
+                    .Class(StyleClass.ButtonOpenLeft)
                     .Prop(ContainerButton.StylePropertyStyleBox, BaseButtonOpenLeft),
 
                 Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
-                    .Class(ButtonOpenBoth)
+                    .Class(StyleClass.ButtonOpenBoth)
                     .Prop(ContainerButton.StylePropertyStyleBox, BaseButtonOpenBoth),
 
                 Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
-                    .Class(ButtonSquare)
+                    .Class(StyleClass.ButtonSquare)
                     .Prop(ContainerButton.StylePropertyStyleBox, BaseButtonSquare),
 
                 // Colors for the buttons.
@@ -131,19 +133,19 @@ namespace Content.Client.Stylesheets
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorDisabled),
 
                 // Colors for the caution buttons.
-                Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(ButtonCaution)
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(StyleClass.Negative)
                     .Pseudo(ContainerButton.StylePseudoClassNormal)
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionDefault),
 
-                Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(ButtonCaution)
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(StyleClass.Negative)
                     .Pseudo(ContainerButton.StylePseudoClassHover)
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionHovered),
 
-                Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(ButtonCaution)
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(StyleClass.Negative)
                     .Pseudo(ContainerButton.StylePseudoClassPressed)
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionPressed),
 
-                Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(ButtonCaution)
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(StyleClass.Negative)
                     .Pseudo(ContainerButton.StylePseudoClassDisabled)
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionDisabled),
 
@@ -151,7 +153,7 @@ namespace Content.Client.Stylesheets
                 Element<Label>().Class(ContainerButton.StyleClassButton)
                     .Prop(Label.StylePropertyAlignMode, Label.AlignMode.Center),
 
-                Element<PanelContainer>().Class(ClassAngleRect)
+                Element<PanelContainer>().Class(StyleClass.BackgroundPanel)
                     .Prop(PanelContainer.StylePropertyPanel, BaseAngleRect)
                     .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#202030")),
 

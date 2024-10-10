@@ -6,6 +6,7 @@
            xmlns:xe="clr-namespace:Content.Client.UserInterface.XamlExtensions"
            xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
            xmlns:widgets="clr-namespace:Content.Client.UserInterface.Systems.MenuBar.Widgets"
+           xmlns:redux="clr-namespace:Content.Client.Stylesheets.Redux"
            Name = "MenuButtons"
            VerticalExpand="False"
            Orientation="Horizontal"
@@ -21,7 +22,7 @@
         ToolTip="{Loc 'game-hud-open-escape-menu-button-tooltip'}"
         MinSize="70 64"
         HorizontalExpand="True"
-        AppendStyleClass="{x:Static style:StyleBase.ButtonOpenRight}"
+        AppendStyleClass="{x:Static redux:StyleClass.ButtonOpenRight}"
         />
     <ui:MenuButton
         Name="GuidebookButton"
@@ -31,7 +32,7 @@
         BoundKey = "{x:Static is:ContentKeyFunctions.OpenGuidebook}"
         MinSize="42 64"
         HorizontalExpand="True"
-        AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
+        AppendStyleClass="{x:Static redux:StyleClass.ButtonSquare}"
         />
     <ui:MenuButton
         Name="CharacterButton"
@@ -41,7 +42,7 @@
         BoundKey = "{x:Static is:ContentKeyFunctions.OpenCharacterMenu}"
         MinSize="42 64"
         HorizontalExpand="True"
-        AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
+        AppendStyleClass="{x:Static redux:StyleClass.ButtonSquare}"
         />
     <ui:MenuButton
         Name="EmotesButton"
@@ -51,7 +52,7 @@
         BoundKey = "{x:Static is:ContentKeyFunctions.OpenEmotesMenu}"
         MinSize="42 64"
         HorizontalExpand="True"
-        AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
+        AppendStyleClass="{x:Static redux:StyleClass.ButtonSquare}"
         />
     <ui:MenuButton
         Name="CraftingButton"
@@ -61,7 +62,7 @@
         ToolTip="{Loc 'game-hud-open-crafting-menu-button-tooltip'}"
         MinSize="42 64"
         HorizontalExpand="True"
-        AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
+        AppendStyleClass="{x:Static redux:StyleClass.ButtonSquare}"
         />
     <ui:MenuButton
         Name="ActionButton"
@@ -71,7 +72,7 @@
         ToolTip="{Loc 'game-hud-open-actions-menu-button-tooltip'}"
         MinSize="42 64"
         HorizontalExpand="True"
-        AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
+        AppendStyleClass="{x:Static redux:StyleClass.ButtonSquare}"
         />
     <ui:MenuButton
         Name="AdminButton"
@@ -81,7 +82,7 @@
         ToolTip="{Loc 'game-hud-open-admin-menu-button-tooltip'}"
         MinSize="42 64"
         HorizontalExpand="True"
-        AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
+        AppendStyleClass="{x:Static redux:StyleClass.ButtonSquare}"
         />
     <ui:MenuButton
         Name="SandboxButton"
@@ -91,7 +92,7 @@
         ToolTip="{Loc 'game-hud-open-sandbox-menu-button-tooltip'}"
         MinSize="42 64"
         HorizontalExpand="True"
-        AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
+        AppendStyleClass="{x:Static redux:StyleClass.ButtonSquare}"
         />
     <ui:MenuButton
         Name="AHelpButton"
@@ -101,6 +102,6 @@
         ToolTip="{Loc 'ui-options-function-open-a-help'}"
         MinSize="42 64"
         HorizontalExpand="True"
-        AppendStyleClass="{x:Static style:StyleBase.ButtonOpenLeft}"
+        AppendStyleClass="{x:Static redux:StyleClass.ButtonOpenLeft}"
         />
 </widgets:GameTopMenuBar>
