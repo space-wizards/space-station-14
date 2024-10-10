@@ -17,14 +17,8 @@ namespace Content.Server.Power.Components
         /// <summary>
         /// What kind of wire prevents placing this wire over it as CableType.
         /// </summary>
-        [DataField]
+        [DataField("blockingWireType")]
         public CableType BlockingCableType = CableType.HighVoltage;
-
-        /// <summary>
-        /// Block placement over entities by blacklist instead of CableType?
-        /// </summary>
-        [DataField]
-        public bool UsePlaceOverBlacklist = false;
 
         [DataField]
         public EntityWhitelist Blacklist { get; private set; } = new();

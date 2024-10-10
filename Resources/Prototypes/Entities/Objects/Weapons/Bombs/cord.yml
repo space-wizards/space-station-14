@@ -22,8 +22,7 @@
     heldPrefix: coilex
   - type: CablePlacer
     cablePrototypeID: CableDet
-    blockingCableType: ExCable
-    usePlaceOverBlacklist: true
+    blockingWireType: ExCable
     blacklist:
       tags:
         - ExCable
