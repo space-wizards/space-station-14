@@ -190,8 +190,8 @@ public enum TelephoneVolume : byte
 [Serializable, NetSerializable]
 public enum TelephoneRange : byte
 {
-    Grid,       // Can call telephones on the same grid 
-    Map,        // Can call telephones on the same map 
-    Long,       // Can only call telephones that 1) are on a different maps and 2) are also long range
+    Grid,       // Can call grid/map range telephones that are on the same grid 
+    Map,        // Can call grid/map range telephones that are on the same map 
+    Long,       // Can only long range telephones that are on a different map
     Unlimited   // Can call any telephone
 }

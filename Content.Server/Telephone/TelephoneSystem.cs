@@ -418,22 +418,23 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
         switch (source.Comp.TransmissionRange)
         {
             case TelephoneRange.Grid:
-                if (sourceXform.GridUid == null || receiverXform.GridUid != sourceXform.GridUid)
-                    return false;
-                break;
+                return sourceXform.GridUid != null &&
+                    receiverXform.GridUid == sourceXform.GridUid &&
+                    receiver.Comp.TransmissionRange != TelephoneRange.Long;
 
             case TelephoneRange.Map:
-                if (sourceXform.MapID != receiverXform.MapID)
-                    return false;
-                break;
+                return sourceXform.MapID == receiverXform.MapID &&
+                    receiver.Comp.TransmissionRange != TelephoneRange.Long;
 
             case TelephoneRange.Long:
-                if (sourceXform.MapID == receiverXform.MapID || receiver.Comp.TransmissionRange != TelephoneRange.Long)
-                    return false;
-                break;
+                return sourceXform.MapID != receiverXform.MapID &&
+                    receiver.Comp.TransmissionRange == TelephoneRange.Long;
+
+            case TelephoneRange.Unlimited:
+                return true;
         }
 
-        return true;
+        return false;
     }
 
     public bool IsSourceConnectedToReceiver(Entity<TelephoneComponent> source, Entity<TelephoneComponent> receiver)

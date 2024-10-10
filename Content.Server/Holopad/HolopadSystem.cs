@@ -306,10 +306,13 @@ public sealed class HolopadSystem : SharedHolopadSystem
         if (!TryComp<StationAiCoreComponent>(entity, out var stationAiCore))
             return;
 
-        if (!_stationAiSystem.TryGetInsertedAI((entity, stationAiCore), out var insertedAi))
-            return;
+        // Auto-close the AI request window
+        if (_stationAiSystem.TryGetInsertedAI((entity, stationAiCore), out var insertedAi))
+            _userInterfaceSystem.CloseUi(entity.Owner, HolopadUiKey.AiRequestWindow, insertedAi.Value.Owner);
 
-        _userInterfaceSystem.CloseUi(entity.Owner, HolopadUiKey.AiRequestWindow, insertedAi.Value.Owner);
+        // End all calls from the core to ensure that AI broadcasts will end
+        if (TryComp<TelephoneComponent>(entity, out var telephone))
+            _telephoneSystem.EndTelephoneCalls((entity, telephone));
     }
 
     private void OnTelephoneMessageSent(Entity<HolopadComponent> holopad, ref TelephoneMessageSentEvent args)

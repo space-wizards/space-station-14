@@ -2,7 +2,6 @@
   parent: [ BaseMachinePowered, ConstructibleMachine ]
   id: Holopad
   name: holopad
-  suffix: Grid wide
   description: "A floor-mounted device for projecting holographic images."
   components:
   - type: Transform
@@ -93,24 +92,27 @@
  
 - type: entity
   parent: Holopad
-  suffix: Map wide
+  id: HolopadMediumRange 
+  suffix: Medium range
   components:
   - type: Telephone
-    range: Map
+    transmissionRange: Map
 
 - type: entity
   parent: Holopad
+  id: HolopadLongRange
   suffix: Long range
   components:
   - type: Telephone
-    range: Long
+    transmissionRange: Long
     
 - type: entity
   parent: Holopad
+  id: HolopadUnlimitedRange
   suffix: Unlimited range
   components:
   - type: Telephone
-    range: Unlimited  
+    transmissionRange: Unlimited  
 
 - type: entity
   id: HolopadHologram
