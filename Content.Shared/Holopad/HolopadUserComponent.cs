@@ -94,9 +94,9 @@ public sealed class PlayerSpriteStateMessage : EntityEventArgs
     /// <summary>
     /// Data needed to reconstruct the player's sprite component layers
     /// </summary>
-    public readonly PrototypeLayerData[] SpriteLayerData;
+    public readonly PrototypeLayerData[]? SpriteLayerData;
 
-    public PlayerSpriteStateMessage(NetEntity spriteEntity, PrototypeLayerData[] spriteLayerData)
+    public PlayerSpriteStateMessage(NetEntity spriteEntity, PrototypeLayerData[]? spriteLayerData = null)
     {
         SpriteEntity = spriteEntity;
         SpriteLayerData = spriteLayerData;

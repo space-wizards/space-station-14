@@ -271,7 +271,7 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
         entity.Comp.Muted = false;
 
         SetTelephoneState(entity, newState);
-        SetTelephoneMicrophoneState(entity, true);
+        SetTelephoneMicrophoneState(entity, false);
     }
 
     public void SendTelephoneMessage(EntityUid messageSource, string message, Entity<TelephoneComponent> source, bool escapeMarkup = true)
