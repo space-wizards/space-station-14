@@ -32,6 +32,30 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
                 .FirstOrDefault(c => c.Name == id);
         }
 
+        public Dictionary<int, bool> SaveCollapsibleBoxesStates()
+        {
+            var collapsibleStates = new Dictionary<int, bool>();
+            foreach (var collapsible in GetAllCollapsibleBoxes())
+            {
+                if (int.TryParse(collapsible.Name, out var collapsibleId))
+                {
+                    collapsibleStates[collapsibleId] = collapsible.BodyVisible;
+                }
+            }
+            return collapsibleStates;
+        }
+
+        public void RestoreCollapsibleBoxesStates(Dictionary<int, bool> collapsibleStates)
+        {
+            foreach (var collapsible in GetAllCollapsibleBoxes())
+            {
+                if (int.TryParse(collapsible.Name, out var collapsibleId) && collapsibleStates.TryGetValue(collapsibleId, out var isOpen))
+                {
+                    collapsible.BodyVisible = isOpen;
+                }
+            }
+        }
+
         public void AddEntry(string name, string description, bool hasAccess, FormattedMessage? reason, IEnumerable<GhostRoleInfo> roles, SpriteSystem spriteSystem)
         {
             NoRolesMessage.Visible = false;

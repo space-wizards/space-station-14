@@ -5,8 +5,6 @@ using Content.Shared.Eui;
 using Content.Shared.Ghost.Roles;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Client.UserInterface.Controls;
-using Robust.Shared.Utility;
 
 namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
 {
@@ -82,14 +80,7 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
             // We must save BodyVisible state, so all Collapsible boxes will not close
             // on adding new ghost role.
             // Save the current state of each Collapsible box being visible or not
-            var collapseStates = new Dictionary<int, bool>();
-            foreach (var collapsible in _window.GetAllCollapsibleBoxes())
-            {
-                if (int.TryParse(collapsible.Name, out var collapsibleId))
-                {
-                    collapseStates[collapsibleId] = collapsible.BodyVisible;
-                }
-            }
+            var collapseStates = _window.SaveCollapsibleBoxesStates();
 
             // Clearing the container before adding new roles
             _window.ClearEntries();
@@ -117,14 +108,7 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
                 _window.AddEntry(name, description, hasAccess, reason, group, spriteSystem);
 
                 // Restore the Collapsible box state if it is saved
-                if (!collapseStates.TryGetValue(name.GetHashCode(), out var isOpen))
-                    continue;
-
-                var collapsible = _window.GetCollapsibleById(name.GetHashCode().ToString());
-                if (collapsible != null)
-                {
-                    collapsible.BodyVisible = isOpen;
-                }
+                _window.RestoreCollapsibleBoxesStates(collapseStates);
             }
 
             // Close the rules window if it is no longer needed
