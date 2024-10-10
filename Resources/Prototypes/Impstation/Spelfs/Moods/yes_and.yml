@@ -43,6 +43,7 @@
     - Smoker
     - EyeForEye
     - Optimist
+    - ItemGood
 
 # You are extremely possessive of your property. Refuse to relinquish it, and if it is misplaced or stolen, it must be retrieved at all costs. 
 - type: spelfMood

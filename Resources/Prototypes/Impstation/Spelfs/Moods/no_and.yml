@@ -308,12 +308,12 @@
   moodDesc: spelf-mood-nonsmoker-desc
 
 # “[WORD]” is an extremely offensive taboo.
-#- type: spelfMood
-#  id: WordBad
-#  moodName: spelf-mood-word-bad-name
-#  moodDesc: spelf-mood-word-bad-desc
-#  moodVars:
-#    word: SpelfMoodWords //////// I recommend using the traitor keywords list.
+- type: spelfMood
+  id: WordBad
+  moodName: spelf-mood-word-bad-name
+  moodDesc: spelf-mood-word-bad-desc
+  moodVars:
+    word: SpelfWords
 
 # [ITEM]s are an abomination. You must avoid them at all costs, and destroy them if necessary.
 #- type: spelfMood

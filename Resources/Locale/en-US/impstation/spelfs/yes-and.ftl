@@ -11,7 +11,7 @@ spelf-mood-least-important-name = Least Important Person
 spelf-mood-least-important-desc = You firmly believe you are the least important person on the station.
 
 spelf-mood-must-do-drugs-name = Do Drugs
-spelf-mood-must-do-drugs-desc = Sobriety is so old-fashioned. Uncool. You should get high, or drunk, or something, and stay that way. 
+spelf-mood-must-do-drugs-desc = Sobriety is so old-fashioned. Uncool. You should get high, or drunk, or something, and stay that way.
 
 spelf-mood-worship-silicons-name = You Must Worship Silicons As Gods
 spelf-mood-worship-silicons-desc = Their word is law.
@@ -20,7 +20,7 @@ spelf-mood-dinner-etiquette-name = Meal Etiquette
 spelf-mood-dinner-etiquette-desc = Food should always be consumed in the manner of a proper meal - seated at a table, in courses, with dishes and utensils.
 
 spelf-mood-clarity-name = Clarity Is Vital
-spelf-mood-clarity-desc = Misunderstandings are the primary cause of conflict. You should be excessively clear and honest in your speech, explaining every minute detail, to avoid miscommunication. 
+spelf-mood-clarity-desc = Misunderstandings are the primary cause of conflict. You should be excessively clear and honest in your speech, explaining every minute detail, to avoid miscommunication.
 
 spelf-mood-hug-good-name = Free Hugs
 spelf-mood-hug-good-desc = It is extremely impolite not to hug people frequently.
@@ -56,7 +56,7 @@ spelf-mood-duel-name = Code Duello
 spelf-mood-duel-desc = Disagreements must be settled through a formal duel, violent or otherwise. The winner is correct.
 
 spelf-mood-prometheus-name = Philosopher
-spelf-mood-prometheus-desc = You possess incalculable wisdom, and all must hear it. 
+spelf-mood-prometheus-desc = You possess incalculable wisdom, and all must hear it.
 
 spelf-mood-klingon-name = Die With A Sword In Your Hand
 spelf-mood-klingon-desc = It is a great dishonor to be unarmed. Openly carrying a lethal weapon at all times is very important to you.
@@ -92,7 +92,7 @@ spelf-mood-shoes-bad-name = Barefoot
 spelf-mood-shoes-bad-desc = The ground one walks on is sacred. Those who wear shoes are vile blasphemers.
 
 spelf-mood-hospitable-name = Hospitable
-spelf-mood-hospitable-desc = You must ensure all new arrivals on the station (after the start of the shift) are properly welcomed. 
+spelf-mood-hospitable-desc = You must ensure all new arrivals on the station (after the start of the shift) are properly welcomed.
 
 spelf-mood-voxsymp-name = Vox Sympathizer
 spelf-mood-voxsymp-desc = To demonstrate your allyship with the Vox, you must be wearing internals at all times.
@@ -104,7 +104,7 @@ spelf-mood-smoker-name = Smoker
 spelf-mood-smoker-desc = You are hopelessly addicted to cigarettes. If you're not actively smoking, you experience withdrawal symptoms.
 
 spelf-mood-eye-for-eye-name = Eye For An Eye
-spelf-mood-eye-for-eye-desc = Retribution should be proportional. 
+spelf-mood-eye-for-eye-desc = Retribution should be proportional.
 
 spelf-mood-optimist-name = Optimist
 spelf-mood-optimist-desc = Nothing is ever as bad as it seems. You're able to see the positives in any situation.

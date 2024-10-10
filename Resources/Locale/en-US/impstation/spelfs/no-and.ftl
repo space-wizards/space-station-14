@@ -38,10 +38,10 @@ spelf-mood-procrastinator-name = Procrastinator
 spelf-mood-procrastinator-desc = Rushing around everywhere is bound to get somebody hurt someday. You should move slowly at all times to avoid unnecessary risk.
 
 spelf-mood-no-radio-name = Personable
-spelf-mood-no-radio-desc = Using radio communications is exceptionally rude. All conversations should be had in-person, face-to-face. Throw away your headset. 
+spelf-mood-no-radio-desc = Using radio communications is exceptionally rude. All conversations should be had in-person, face-to-face. Throw away your headset.
 
 spelf-mood-improper-storage-name = I'm Not A Pack Mule
-spelf-mood-improper-storage-desc = Carrying tools on your person is demeaning. If you must use them, they should be dragged behind you, shamefully. 
+spelf-mood-improper-storage-desc = Carrying tools on your person is demeaning. If you must use them, they should be dragged behind you, shamefully.
 
 spelf-mood-swearing-bad-name = Thou Shalt Not Curse
 spelf-mood-swearing-bad-desc = You find swearing extremely distasteful. Abstain from it, and encourage others to do the same.
@@ -74,7 +74,7 @@ spelf-mood-rank-snob-name = Snob
 spelf-mood-rank-snob-desc = You refuse to respond to anyone who is of a lower rank than you.
 
 spelf-mood-hardsuits-bad-name = {$clothes} Are SO Last Year.
-spelf-mood-hardsuits-bad-desc = Anyone wearing them in public should be shunned and derided. If you need to wear them, it should never be done where others can see it. 
+spelf-mood-hardsuits-bad-desc = Anyone wearing them in public should be shunned and derided. If you need to wear them, it should never be done where others can see it.
 
 spelf-mood-hat-hair-name = Hair: Immaculate
 spelf-mood-hat-hair-desc = Hats and helmets make your hair look bad. If you have to wear one, which you shouldn't, you should get a haircut immediately afterwards. Every time.
@@ -86,7 +86,7 @@ spelf-mood-happy-bad-name = Never Trust A Smile
 spelf-mood-happy-bad-desc = Cheerfulness indicates untrustworthiness.
 
 spelf-mood-only-pills-name = Needles Are Scary
-spelf-mood-only-pills-desc = You only accept medication in the form of pills. 
+spelf-mood-only-pills-desc = You only accept medication in the form of pills.
 
 spelf-mood-avoid-puddles-name = Don't Get Your Feet Wet
 spelf-mood-avoid-puddles-desc = It is undignified and unsanitary to walk over spilled liquids. You should avoid it, even if it costs you your life.
@@ -110,4 +110,7 @@ spelf-mood-agoraphobic-desc = Open spaces are uncomfortable. Seek to rearrange s
 
 spelf-mood-nonsmoker-name = Non-Smoker
 spelf-mood-nonsmoker-desc = Secondhand smoke is incredibly dangerous. Avoid areas where people are smoking in public. 
+
+spelf-mood-word-bad-name = "{$word}" Is Offensive
+spelf-mood-word-bad-name = "{$word}" is an extremely offensive taboo. 
 
