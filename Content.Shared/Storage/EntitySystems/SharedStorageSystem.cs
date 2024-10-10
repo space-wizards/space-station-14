@@ -631,12 +631,16 @@ public abstract class SharedStorageSystem : EntitySystem
         if (!ValidateInput(args, msg.StorageEnt, msg.ItemEnt, out var player, out var storage, out var item))
             return;
 
+        if (!ValidateEmptyHand(args, out var hand))
+            return;
+
+        if (_sharedHandsSystem.TryPickup(player, item, hand, animate: false, handsComp: player.Comp))
+            InsertAt(storage!, item!, msg.Location, out _, player, true, false);
+
         _adminLog.Add(
             LogType.Storage,
             LogImpact.Low,
             $"{ToPrettyString(player):player} is updating the location of {ToPrettyString(item):item} within {ToPrettyString(storage):storage}");
-
-        TrySetItemStorageLocation(item!, storage!, msg.Location);
     }
 
     private void OnRemoveItem(StorageRemoveItemEvent msg, EntitySessionEventArgs args)
@@ -644,11 +648,17 @@ public abstract class SharedStorageSystem : EntitySystem
         if (!ValidateInput(args, msg.StorageEnt, msg.ItemEnt, out var player, out var storage, out var item))
             return;
 
+        if (!ValidateEmptyHand(args, out var hand))
+            return;
+
+        _sharedHandsSystem.TryPickup(player, item, hand, animate: false, handsComp: player.Comp);
+
         _adminLog.Add(
             LogType.Storage,
             LogImpact.Low,
             $"{ToPrettyString(player):player} is removing {ToPrettyString(item):item} from {ToPrettyString(storage):storage}");
-        TransformSystem.DropNextTo(item.Owner, player.Owner);
+        _sharedHandsSystem.TryDrop(player, hand);
+
         Audio.PlayPredicted(storage.Comp.StorageRemoveSound, storage, player, _audioParams);
     }
 
@@ -1519,6 +1529,27 @@ public abstract class SharedStorageSystem : EntitySystem
             return false;
 
         item = new(itemUid.Value, itemComp);
+        return true;
+    }
+
+    /// <summary>
+    /// Check if the entity interacting with the container is doing so with an empty hand.
+    /// </summary>
+    private bool ValidateEmptyHand(EntitySessionEventArgs args, [NotNullWhen(true)] out Hand? emptyHand)
+    {
+        emptyHand = null;
+
+        if (args.SenderSession.AttachedEntity is not { } playerUid)
+            return false;
+
+        if (!TryComp(playerUid, out HandsComponent? hands) || hands.Count == 0)
+            return false;
+
+        if (hands.ActiveHand == null || hands.ActiveHand.HeldEntity != null)
+            return false;
+
+        emptyHand = hands.ActiveHand;
+
         return true;
     }
 
