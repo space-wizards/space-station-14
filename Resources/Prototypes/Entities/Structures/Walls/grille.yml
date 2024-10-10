@@ -4,6 +4,8 @@
   name: grille
   description: A flimsy framework of iron rods.
   components:
+    - type: Transform
+      noRot: true
     - type: MeleeSound
       soundGroups:
         Brute:
