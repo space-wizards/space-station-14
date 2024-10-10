@@ -217,26 +217,25 @@
     state: excable_4
   - type: Damageable
     damageContainer: StructuralInorganic
-    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTypeTrigger
         damageType: Structural #this is as close as we can get to only letting explosives set it off.
-        damage: 200
+        damage: 120
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
       - !type:ExplodeBehavior
     - trigger:
         !type:DamageTrigger #A fallback that deletes it but doesnt explode in case something somehow gets here without exploding violently enough.
-        damage: 100
+        damage: 50
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
-        damage: 50
+        damage: 35
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
