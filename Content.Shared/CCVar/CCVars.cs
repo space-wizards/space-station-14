@@ -210,7 +210,7 @@ namespace Content.Shared.CCVar
         /// If roles should be restricted based on time.
         /// </summary>
         public static readonly CVarDef<bool>
-            GameRoleTimers = CVarDef.Create("game.role_timers", true, CVar.SERVER | CVar.REPLICATED);
+            GameRoleTimers = CVarDef.Create("game.role_timers", false, CVar.SERVER | CVar.REPLICATED);
 
         /// <summary>
         /// Override default role requirements using a <see cref="JobRequirementOverridePrototype"/>
@@ -222,7 +222,7 @@ namespace Content.Shared.CCVar
         /// If roles should be restricted based on whether or not they are whitelisted.
         /// </summary>
         public static readonly CVarDef<bool>
-            GameRoleWhitelist = CVarDef.Create("game.role_whitelist", true, CVar.SERVER | CVar.REPLICATED);
+            GameRoleWhitelist = CVarDef.Create("game.role_whitelist", false, CVar.SERVER | CVar.REPLICATED);
 
         /// <summary>
         /// Whether or not disconnecting inside of a cryopod should remove the character or just store them until they reconnect.
@@ -866,7 +866,7 @@ namespace Content.Shared.CCVar
         /// de-admin them.
         /// </summary>
         public static readonly CVarDef<bool> AdminDeadminOnJoin =
-            CVarDef.Create("admin.deadmin_on_join", false, CVar.SERVERONLY);
+            CVarDef.Create("admin.deadmin_on_join", true, CVar.SERVERONLY);
 
         /// <summary>
         ///     Overrides the name the client sees in ahelps. Set empty to disable.
