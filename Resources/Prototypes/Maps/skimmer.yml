@@ -4,6 +4,7 @@
   mapPath: /Maps/skimmer.yml
   minPlayers: 0
   maxPlayers: 12
+  randomRotation: true
   stations:
     Skimmer:
       stationProto: StandardNanotrasenStation
