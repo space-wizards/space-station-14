@@ -121,10 +121,10 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
         ToggleGuidebook();
     }
 
-    public void ToggleGuidebook()
+    public GuidebookWindow? ToggleGuidebook()
     {
         if (_guideWindow == null)
-            return;
+            return null;
 
         if (_guideWindow.IsOpen)
         {
@@ -135,6 +135,8 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
         {
             OpenGuidebook();
         }
+
+        return _guideWindow;
     }
 
     private void OnWindowClosed()
