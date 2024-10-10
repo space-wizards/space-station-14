@@ -702,3 +702,29 @@
           shouldHave: false
         walkSpeedModifier: 0.4
         sprintSpeedModifier: 0.4
+
+- type: reagent
+  id: Almitricin
+  name: reagent-name-almitricin
+  desc: reagent-desc-almitricin
+  group: Toxins
+  physicalDesc: reagent-physical-desc-sticky
+  color: "#768c89"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+          damage:
+            types:
+              Poison: 0.50
+              Asphyxiation: 0.50
+      - !type:MovespeedModifier
+        walkSpeedModifier: 0.85
+        sprintSpeedModifier: 0.85
+      - !type:Jitter
+        conditions:
+        - !type:ReagentThreshold
+          min: 10
+      - !type:Emote
+        emote: Cough
+        probability: 0.4

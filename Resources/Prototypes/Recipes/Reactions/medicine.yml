@@ -662,3 +662,13 @@
       amount: 1
   products:
     Haloperidol: 5
+
+- type: reaction
+  id: SalineGlucose
+  reactants:
+    Saline:
+      amount: 2
+    Sugar:
+      amount: 1
+  products:
+    SalineGlucose: 3

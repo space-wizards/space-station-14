@@ -147,3 +147,9 @@ reagent-desc-potassium-iodide = Will reduce the damaging effects of radiation by
 
 reagent-name-haloperidol = haloperidol
 reagent-desc-haloperidol = Removes most stimulating and hallucinogenic drugs. Reduces druggy effects and jitteriness. Causes drowsiness.
+
+reagent-name-saline-glucose = saline-glucose solution
+reagent-desc-saline-glucose = A solution made of saltwater and glucose, used for treating blunt force trauma, burn wounds and bloodloss.
+
+reagent-name-ipecybin = ipecybin
+reagent-desc-ipecybin = A bitter, pungent substance produced by fungi, used as an emetic and medicine. Reeks of garlic and almonds.

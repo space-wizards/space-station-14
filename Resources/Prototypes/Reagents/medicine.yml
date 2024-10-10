@@ -1375,3 +1375,44 @@
       - !type:AdjustReagent
         reagent: MindbreakerToxin
         amount: -3.0
+
+- type: reagent
+  id: SalineGlucose
+  name: reagent-name-saline-glucose
+  desc: reagent-desc-saline-glucose
+  group: Medicine
+  physicalDesc: reagent-physical-desc-milky
+  flavor: sweet
+  color: "#c3d2e0"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          groups:
+            Brute: -1.0
+            Burn: -1.0
+      - !type:ModifyBloodLevel
+        amount: 6.5
+
+- type: reagent
+  id: Ipecybin
+  name: reagent-name-ipecybin
+  desc: reagent-desc-ipecybin
+  group: Medicine
+  physicalDesc: reagent-physical-desc-pungent
+  flavor: bitter
+  color: "#577178"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          groups:
+            Toxin: -0.5
+            Airloss: -0.5
+            Brute: -0.5
+      - !type:ChemVomit
+        conditions:
+          - !type:ReagentThreshold
+            min: 15
