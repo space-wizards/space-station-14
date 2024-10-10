@@ -1,7 +1,8 @@
 using System.Linq;
+using System.Numerics;
+using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Systems.MenuBar.Widgets;
 using Content.Shared.Construction.Prototypes;
-using Content.Shared.Tag;
 using Content.Shared.Whitelist;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -11,7 +12,6 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.Utility;
 using Robust.Shared.Enums;
-using Robust.Shared.Graphics;
 using Robust.Shared.Prototypes;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
@@ -37,6 +37,7 @@ namespace Content.Client.Construction.UI
         private ConstructionSystem? _constructionSystem;
         private ConstructionPrototype? _selected;
         private List<ConstructionPrototype> _favoritedRecipes = [];
+        private Dictionary<string, TextureButton> _recipeButtons = new();
         private string _selectedCategory = string.Empty;
         private string _favoriteCatName = "construction-category-favorites";
         private string _forAllCategoryName = "construction-category-all";
@@ -150,12 +151,24 @@ namespace Content.Client.Construction.UI
             PopulateInfo(_selected);
         }
 
+        private void OnGridViewRecipeSelected(object? sender, ConstructionPrototype? recipe)
+        {
+            if (recipe is null)
+            {
+                _selected = null;
+                _constructionView.ClearRecipeInfo();
+                return;
+            }
+
+            _selected = recipe;
+            if (_placementManager.IsActive && !_placementManager.Eraser) UpdateGhostPlacement();
+            PopulateInfo(_selected);
+        }
+
         private void OnViewPopulateRecipes(object? sender, (string search, string catagory) args)
         {
             var (search, category) = args;
-            var recipesList = _constructionView.Recipes;
 
-            recipesList.Clear();
             var recipes = new List<ConstructionPrototype>();
 
             var isEmptyCategory = string.IsNullOrEmpty(category) || category == _forAllCategoryName;
@@ -201,12 +214,79 @@ namespace Content.Client.Construction.UI
 
             recipes.Sort((a, b) => string.Compare(a.Name, b.Name, StringComparison.InvariantCulture));
 
-            foreach (var recipe in recipes)
-            {
-                recipesList.Add(GetItem(recipe, recipesList));
-            }
+            var recipesList = _constructionView.Recipes;
+            recipesList.Clear();
 
-            // There is apparently no way to set which
+            var recipesGrid = _constructionView.RecipesGrid;
+            recipesGrid.RemoveAllChildren();
+
+            _constructionView.RecipesGridScrollContainer.Visible = _constructionView.GridViewButtonPressed;
+            _constructionView.Recipes.Visible = !_constructionView.GridViewButtonPressed;
+
+            if (_constructionView.GridViewButtonPressed)
+            {
+                foreach (var recipe in recipes)
+                {
+                    var item = GetItem(recipe, recipesList);
+
+                    var itemButton = new TextureButton
+                    {
+                        TextureNormal = item.Icon,
+                        VerticalAlignment = Control.VAlignment.Center,
+                        Name = recipe.Name,
+                        ToolTip = recipe.Name,
+                        Scale = new Vector2(1.35f),
+                        ToggleMode = true,
+                    };
+                    var itemButtonPanelContainer = new PanelContainer
+                    {
+                        PanelOverride = new StyleBoxFlat { BackgroundColor = StyleNano.ButtonColorDefault },
+                        Children = { itemButton },
+                    };
+
+                    itemButton.OnToggled += buttonToggledEventArgs =>
+                    {
+                        if (_selected is null)
+                            SelectGridButton(itemButton, buttonToggledEventArgs.Pressed);
+                        else
+                        {
+                            SelectGridButton(itemButton, true);
+                            if (_recipeButtons.TryGetValue(_selected.Name, out var oldButton))
+                            {
+                                oldButton.Pressed = false;
+                                SelectGridButton(oldButton, false);
+                                if (_selected == recipe)
+                                {
+                                    OnGridViewRecipeSelected(this, null);
+                                    return;
+                                }
+                            }
+                        }
+                        OnGridViewRecipeSelected(this, buttonToggledEventArgs.Pressed ? recipe : null);
+                    };
+
+                    recipesGrid.AddChild(itemButtonPanelContainer);
+                    _recipeButtons[recipe.Name] = itemButton;
+                    SelectGridButton(itemButton, _selected == recipe);
+                }
+            }
+            else
+            {
+                foreach (var recipe in recipes)
+                {
+                    recipesList.Add(GetItem(recipe, recipesList));
+                }
+            }
+        }
+
+        private void SelectGridButton(TextureButton button, bool select)
+        {
+            if (button.Parent is not PanelContainer buttonPanel)
+                return;
+
+            button.Modulate = select ? Color.Green : Color.White;
+            var buttonColor = select ? StyleNano.ButtonColorDefault : Color.Transparent;
+            buttonPanel.PanelOverride = new StyleBoxFlat { BackgroundColor = buttonColor };
         }
 
         private void PopulateCategories(string? selectCategory = null)
