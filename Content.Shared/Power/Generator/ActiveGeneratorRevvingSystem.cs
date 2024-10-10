@@ -1,6 +1,6 @@
 namespace Content.Shared.Power.Generator;
 
-public sealed class ActiveGeneratorRevvingSystem: EntitySystem
+public sealed class ActiveGeneratorRevvingSystem : EntitySystem
 {
     public override void Initialize()
     {
@@ -25,7 +25,7 @@ public sealed class ActiveGeneratorRevvingSystem: EntitySystem
     /// <param name="component">ActiveGeneratorRevvingComponent of the generator entity.</param>
     public void StartAutoRevving(EntityUid uid, ActiveGeneratorRevvingComponent? component = null)
     {
-        if (Resolve(uid, ref component))
+        if (Resolve(uid, ref component, false))
         {
             // reset the revving
             component.CurrentTime = TimeSpan.FromSeconds(0);
