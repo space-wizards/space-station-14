@@ -35,12 +35,12 @@ public sealed partial class CableSystem
 
         var gridUid = _transform.GetGrid(args.ClickLocation)!.Value;
         var snapPos = grid.TileIndicesFor(args.ClickLocation);
-        var tileDef = (ContentTileDefinition) _tileManager[_map.GetTileRef(gridUid, grid,snapPos).Tile.TypeId];
+        var tileDef = (ContentTileDefinition) _tileManager[_map.GetTileRef(gridUid, grid, snapPos).Tile.TypeId];
 
         if ((!component.OverTile && !tileDef.IsSubFloor) || !tileDef.Sturdy)
             return;
 
-        foreach (var anchored in grid.GetAnchoredEntities(snapPos))
+        foreach (EntityUid anchored in _map.GetAnchoredEntities(gridUid, grid, snapPos))
         {
             if (_whitelistSystem.IsBlacklistPass(component.Blacklist, anchored))
                 return;
