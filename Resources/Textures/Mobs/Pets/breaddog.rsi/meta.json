@@ -9,13 +9,39 @@
   "states":
   [
     {
-      "name": "base",
+      "name": "breaddog",
       "directions": 4
     },
 
     {
-      "name": "dead",
+      "name": "breaddog_dead",
       "directions": 1
+    },
+    {
+        "name": "breaddog-moving",
+        "directions": 4,
+        "delays": [
+          [
+            0.2,
+            0.2,
+            0.2
+          ],
+          [
+            0.2,
+            0.2,
+            0.2
+          ],
+          [
+            0.2,
+            0.2,
+            0.2
+          ],
+          [
+            0.2,
+            0.2,
+            0.2
+          ]
+        ]
     }
   ]
 }
