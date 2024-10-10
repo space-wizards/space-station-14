@@ -83,9 +83,9 @@ public sealed class KillPersonConditionSystem : EntitySystem
         if (headsOnly)
         {
             // RequireAdminNotify used as a cheap way to check for command department
-            var allHeads = allHumans.Where(mind =>
-                _job.MindTryGetJob(mind, out _, out var prototype) && prototype.RequireAdminNotify)
-                .ToList();
+            if (_job.MindTryGetJob(mind, out var prototype) && prototype.RequireAdminNotify)
+                allHeads.Add(mind);
+        }
 
             // Only pick if there's a head target, otherwise fallback to a non-head
             if (allHeads.Count > 0)
