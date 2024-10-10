@@ -79,9 +79,9 @@
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandLustyExomorph
-  name: "Lusty Exomorph"
-  description: "A heretical poster depicting the titular star of an equally heretical book."
+  id: PosterContrabandFearExomorph
+  name: "Fear! Exomorph"
+  description: "A poster meant to teach the viewer common sense."
   components:
   - type: Sprite
     state: poster4_contraband
@@ -358,9 +358,9 @@
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandBustyBackdoorExoBabes6
-  name: "Busty Backdoor Exo Babes 6"
-  description: "Get a load, or give, of these all natural Exos!"
+  id: PosterContrabandRouny
+  name: "Have you seen him?"
+  description: "An old poster for a missing alien. Where has he run off to?"
   components:
   - type: Sprite
     state: poster36_contraband
@@ -496,7 +496,7 @@
   parent: PosterBase
   id: PosterContrabandBeachStarYamamoto
   name: "Beach Star Yamamoto!"
-  description: "A wall scroll depicting an old swimming anime with girls in small swim suits. You feel more weebish the longer you look at it."
+  description: "A wall scroll depicting an old anime series full of romance, drama and deceit. You feel more weebish the longer you look at it."
   components:
   - type: Sprite
     state: poster52_contraband
@@ -900,9 +900,9 @@
 
 - type: entity
   parent: PosterBase
-  id: PosterLegitNoERP
-  name: "No ERP"
-  description: "This poster reminds the crew that Eroticism and Pornography are banned on Nanotrasen stations."
+  id: PosterLegitSSD
+  name: "Space Sleep Disorder"
+  description: "A poster informing the viewer about Space Sleep Disorder, or SSD, a condition where someone stops reacting to things around them. Treat SSD crew with care!"
   components:
   - type: Sprite
     state: poster34_legit
