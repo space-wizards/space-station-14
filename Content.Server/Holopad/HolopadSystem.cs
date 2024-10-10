@@ -1,10 +1,13 @@
+using Content.Server.Chat.Systems;
 using Content.Server.Interaction;
 using Content.Server.Power.EntitySystems;
+using Content.Server.Speech.Components;
 using Content.Server.Telephone;
 using Content.Shared.Access.Systems;
 using Content.Shared.Audio;
 using Content.Shared.Chat.TypingIndicator;
 using Content.Shared.Holopad;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Inventory;
 using Content.Shared.Labels.Components;
 using Content.Shared.Silicons.StationAi;
@@ -12,7 +15,6 @@ using Content.Shared.Telephone;
 using Content.Shared.UserInterface;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using System;
@@ -35,6 +37,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
     [Dependency] private readonly SharedStationAiSystem _stationAiSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
+    [Dependency] private readonly ChatSystem _chatSystem = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
     private float _updateTimer = 1.0f;
@@ -76,6 +79,9 @@ public sealed class HolopadSystem : SharedHolopadSystem
         SubscribeLocalEvent<HolopadComponent, ComponentShutdown>(OnHolopadShutdown);
         SubscribeLocalEvent<HolopadUserComponent, ComponentInit>(OnHolopadUserInit);
         SubscribeLocalEvent<HolopadUserComponent, ComponentShutdown>(OnHolopadUserShutdown);
+
+        // Misc events
+        SubscribeLocalEvent<HolopadUserComponent, EmoteEvent>(OnEmote);
     }
 
     #region: Holopad UI bound user interface messages
@@ -346,6 +352,37 @@ public sealed class HolopadSystem : SharedHolopadSystem
     {
         foreach (var linkedHolopad in entity.Comp.LinkedHolopads)
             UnlinkHolopadFromUser(linkedHolopad, entity);
+    }
+
+    #endregion
+
+    #region: Misc events
+
+    private void OnEmote(Entity<HolopadUserComponent> entity, ref EmoteEvent args)
+    {
+        foreach (var linkedHolopad in entity.Comp.LinkedHolopads)
+        {
+            // Treat the ability to hear speech as the ability to also perceive emotes
+            // (these are almost always going to be linked)
+            if (!HasComp<ActiveListenerComponent>(linkedHolopad))
+                continue;
+
+            if (TryComp<TelephoneComponent>(linkedHolopad, out var linkedHolopadTelephone) && linkedHolopadTelephone.Muted)
+                continue;
+
+            foreach (var receiver in GetLinkedHolopads(linkedHolopad))
+            {
+                if (linkedHolopad.Comp.Hologram == null)
+                    continue;
+
+                // Name is based on the physical identity of the user
+                var ent = Identity.Entity(entity, EntityManager);
+                var name = Loc.GetString("holopad-hologram-name", ("name", ent));
+
+                // Force the emote, because if the user can do it, the hologram can too
+                _chatSystem.TryEmoteWithChat(linkedHolopad.Comp.Hologram.Value, args.Emote, ChatTransmitRange.Normal, false, name, true, true);
+            }
+        }
     }
 
     #endregion
