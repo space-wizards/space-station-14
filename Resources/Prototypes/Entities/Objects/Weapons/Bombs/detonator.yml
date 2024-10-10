@@ -16,16 +16,24 @@
     graph: DetonatorGraph
     node: emptyDetonator
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
+    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:
-        !type:DamageTrigger
-        damage: 22
+        !type:DamageTypeTrigger
+        damageType: Structural # as close as we can get to only letting explosives trigger it.
+        damage: 200
       behaviors:
       - !type:TriggerBehavior
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger # the idea here is to prevent you from just beating it until it explodes.
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -64,7 +72,7 @@
     unstickPopupSuccess: comp-sticky-success-unstick-bomb
     whitelist:
       tags:
-      - ExCable      
+      - ExCable
     blacklist: # can't stick it to other items
       components:
       - Item

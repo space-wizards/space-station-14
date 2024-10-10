@@ -39,9 +39,9 @@
         - ReagentId: Charcoal
           Quantity: 2
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
-  - type: Destructible # should have the same general explosive behavior as in cables.yml
+  - type: Destructible # should have the same general explosive behavior as in cables.yml & detonator.yml
     thresholds:
     - trigger:
         !type:DamageTypeTrigger
