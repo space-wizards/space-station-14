@@ -1,5 +1,6 @@
 using Content.Server.Administration;
 using Content.Server.Administration.Logs;
+using Content.Server.Administration.Logs.AuditLogs;
 using Content.Server.Administration.Managers;
 using Content.Server.Administration.Notes;
 using Content.Server.Afk;
@@ -59,6 +60,7 @@ namespace Content.Server.IoC
             IoCManager.Register<IAdminNotesManager, AdminNotesManager>();
             IoCManager.Register<GhostKickManager>();
             IoCManager.Register<ISharedAdminLogManager, AdminLogManager>();
+            IoCManager.Register<IAuditLogManager, AuditLogManager>();
             IoCManager.Register<IAdminLogManager, AdminLogManager>();
             IoCManager.Register<PlayTimeTrackingManager>();
             IoCManager.Register<UserDbDataManager>();
