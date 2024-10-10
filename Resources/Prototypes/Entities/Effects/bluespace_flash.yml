@@ -11,3 +11,17 @@
   - type: EmitSoundOnSpawn
     sound: 
       path: /Audio/Effects/Lightning/lightningbolt.ogg
+
+- type: entity
+  id: EffectFlashBluespaceMini
+  categories: [ HideSpawnMenu ]
+  parent: EffectFlashBluespace
+  components:
+  - type: PointLight
+    radius: 2
+    energy: 2
+  - type: EmitSoundOnSpawn
+    sound: 
+      path: /Audio/Effects/Lightning/lightningbolt.ogg
+      params:
+        volume: -12
