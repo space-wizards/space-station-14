@@ -49,13 +49,13 @@ public sealed partial class HolopadComponent : Component
     /// The duration that the control lockout will last in seconds
     /// </summary>
     [DataField]
-    public float ControlLockoutDuration { get; private set; } = 9f;
+    public float ControlLockoutDuration { get; private set; } = 90f;
 
     /// <summary>
     /// The duration before the controls can be lockout again in seconds
     /// </summary>
     [DataField]
-    public float ControlLockoutCoolDown { get; private set; } = 18f;
+    public float ControlLockoutCoolDown { get; private set; } = 180f;
 }
 
 #region: Event messages
