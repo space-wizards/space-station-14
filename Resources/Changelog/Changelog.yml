@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Fixed permanent absence of the approver string in cargo invoice.
-    type: Fix
-  id: 6997
-  time: '2024-07-29T06:19:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29690
-- author: JIPDawg
-  changes:
-  - message: F9 is correctly bound to the Round End Summary window by default now.
-    type: Fix
-  id: 6998
-  time: '2024-07-29T06:49:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30438
 - author: githubuser508
   changes:
   - message: Candles crate and the ability for Cargo to order it.
@@ -3942,3 +3928,23 @@
   id: 7496
   time: '2024-10-08T23:29:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32623
+- author: Beck Thompson
+  changes:
+  - message: The radio jammers price has been decreased from 4 -> 3 TC.
+    type: Tweak
+  id: 7497
+  time: '2024-10-09T12:44:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32472
+- author: beck-thompson, Moomoobeef
+  changes:
+  - message: Plushies now can have small items stuffed inside of them! To open, click
+      on the plush with a sharp item. You can then insert a small item into the plush.
+      To close, just click on it again with any sharp item!
+    type: Add
+  - message: When pAIs are inserted into plushies, their names will be updated to
+      the plushies name. E.g when inside a lizard plushie the pAI's name will appear
+      as "lizard plushie" when speaking.
+    type: Add
+  id: 7498
+  time: '2024-10-09T18:01:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30805

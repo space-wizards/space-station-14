@@ -47,3 +47,6 @@
     sound: /Audio/SimpleStation14/Items/Handling/disk_drop.ogg
   - type: EmitSoundOnLand
     sound: /Audio/SimpleStation14/Items/Handling/disk_drop.ogg
+  - type: Tag
+    tags:
+    - FakeNukeDisk
