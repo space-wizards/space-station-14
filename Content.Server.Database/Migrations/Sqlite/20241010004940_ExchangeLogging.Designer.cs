@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Content.Server.Database.Migrations.Sqlite
 {
     [DbContext(typeof(SqliteServerDbContext))]
-    [Migration("20241008222403_ExchangeLogging")]
+    [Migration("20241010004940_ExchangeLogging")]
     partial class ExchangeLogging
     {
         /// <inheritdoc />
