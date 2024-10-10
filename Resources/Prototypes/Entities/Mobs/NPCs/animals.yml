@@ -3309,7 +3309,9 @@
   components:
   - type: ReplacementAccent
     accent: nymph
+
 # TODO: move all the lower stuff into Sea instead of Animals
+
 - type: entity
   name: Fish
   parent: SimpleSpaceMobBase
@@ -3319,9 +3321,10 @@
   - type: Body
     prototype: Mouse
   - type: Sprite
-    drawdepth: SmallMobs
     sprite: Mobs/Animals/fish.rsi
+    drawdepth: Mobs
     layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: fish-0
   - type: Item
     size: Tiny
@@ -3338,9 +3341,9 @@
           radius: 0.2
         density: 100
         mask:
-        - SmallMobMask
+        - MobMask
         layer:
-        - SmallMobLayer
+        - MobLayer
   - type: MobState
   - type: MobThresholds
     thresholds:
@@ -3367,18 +3370,6 @@
     spawned:
     - id: FoodMeatRat
       amount: 1
-  - type: ReplacementAccent
-    accent: mouse
-  - type: Tag
-    tags:
-    - Meat
-  - type: Vocal
-    sounds:
-      Male: Mouse
-      Female: Mouse
-      Unsexed: Mouse
-    wilhelmProbability: 0.001
-  # TODO: Remove CombatMode when Prototype Composition is added
   - type: CombatMode
     combatToggleAction: ActionCombatModeToggleOff
   - type: Bloodstream
@@ -3388,9 +3379,50 @@
   - type: BadFood
   - type: NonSpreaderZombie
   - type: PreventSpiller
+  - type: Damageable
+    damageContainer: Biological
 
 - type: entity
   name: Fish
+  parent: MobFish
+  id: MobFish2
+  description: It's a fish.
+  components:
+  - type: Sprite
+    drawdepth: SmallMobs
+    sprite: Mobs/Animals/fish.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: fish-1
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: fish-1
+      Dead:
+        Base: splat-1
+
+- type: entity
+  name: Fish
+  parent: MobFish
+  id: MobFish3
+  description: It's a fish.
+  components:
+  - type: Sprite
+    drawdepth: SmallMobs
+    sprite: Mobs/Animals/fish.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: fish-2
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: fish-2
+      Dead:
+        Base: splat-2
+
+- type: entity
+  name: Fish
+  suffix: mimic
   parent: MobFish
   id: MobFishMimic
   components:
@@ -3422,7 +3454,7 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      70: Dead
+      65: Dead
   - type: SolutionContainerManager
     solutions:
       melee:
@@ -3436,10 +3468,29 @@
     soundHit:
       path: /Audio/Effects/bite.ogg
     angle: 0
-    animation: WeaponArcThrust
+    animation: WeaponArcClaw
     damage:
       types:
-        Slash: 5
+        Slash: 10
+  - type: Bloodstream
+    bloodMaxVolume: 20
+    bloodReagent: Blood
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/mimics.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: mimic
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: mimic
+      Dead:
+        Base: mimic_dead
+  - type: PointLight
+    radius: 1.5
+    energy: 1
+    color: "#FFFF33"
 
   # TODO: work on a new Tumorous Brain organ that spawns MimicSmart, which starts by infesting a randomly generated salvager outside Sweetwater. Make new stomach type that only eats raw meat and blood.
   # Also give MimicSmart the ability to burst out of it's host at any time, and use cloaking like a space cobra if it has to escape it's puppet.

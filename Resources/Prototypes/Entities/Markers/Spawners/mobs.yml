@@ -462,6 +462,20 @@
     - MobDrifter
 
 - type: entity
+  name: Fish Spawner
+  id: SpawnMobFish
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: fish-0
+      sprite: Mobs/Animals/fish.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobFish
+
+- type: entity
   name: Slimes Spawner Blue
   id: SpawnMobAdultSlimesBlue
   parent: MarkerBase

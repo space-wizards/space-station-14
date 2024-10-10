@@ -73,13 +73,16 @@
     - type: Sprite
       layers:
         - state: blue
-        - sprite: Mobs/Animals/mouse.rsi
-          state: icon-2
+        - sprite: Mobs/Animals/fish.rsi
+          state: icon-0
         - state: timed
     - type: Timer
     - type: TimedSpawner
       prototypes:
         - MobFish
+        - MobFish2
+        - MobFish3
+        - MobFishMimic
       chance: 0.5
       intervalSeconds: 135
       minimumEntitiesSpawned: 1
