@@ -74,6 +74,17 @@
         AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
         />
     <ui:MenuButton
+        Name="ToggleRoundEndSummaryWindowButton"
+        Access="Internal"
+        Icon="{xe:Tex '/Textures/Interface/scoreboard.svg.192dpi.png'}"
+        BoundKey = "{x:Static is:ContentKeyFunctions.ToggleRoundEndSummaryWindow}"
+        ToolTip="{Loc 'ui-options-function-toggle-round-end-summary-window'}"
+        MinSize="42 64"
+        HorizontalExpand="True"
+        AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
+        Visible="False"
+    />
+    <ui:MenuButton
         Name="AdminButton"
         Access="Internal"
         Icon="{xe:Tex '/Textures/Interface/gavel.svg.192dpi.png'}"
