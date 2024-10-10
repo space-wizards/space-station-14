@@ -57,8 +57,14 @@ public sealed class LinkedEntitySystem : EntitySystem
         Dirty(first, firstLink);
         Dirty(second, secondLink);
 
-        return firstLink.LinkedEntities.Add(second)
-            && secondLink.LinkedEntities.Add(first);
+        if (firstLink.LinkedEntities.Add(second) && secondLink.LinkedEntities.Add(first))
+        {
+            RaiseLocalEvent(first, new LinkedEntityChangedEvent(firstLink.LinkedEntities));
+            RaiseLocalEvent(second, new LinkedEntityChangedEvent(secondLink.LinkedEntities));
+            return true;
+        }
+
+        return false;
     }
 
     /// <summary>
@@ -74,7 +80,14 @@ public sealed class LinkedEntitySystem : EntitySystem
 
         Dirty(source, firstLink);
 
-        return firstLink.LinkedEntities.Add(target);
+        if (firstLink.LinkedEntities.Add(target))
+        {
+            RaiseLocalEvent(source, new LinkedEntityChangedEvent(firstLink.LinkedEntities));
+            return true;
+        }
+
+        return false;
+
     }
 
     /// <summary>
@@ -110,6 +123,9 @@ public sealed class LinkedEntitySystem : EntitySystem
         if (secondLink.LinkedEntities.Count == 0 && secondLink.DeleteOnEmptyLinks)
             QueueDel(second);
 
+        RaiseLocalEvent(first, new LinkedEntityChangedEvent(firstLink.LinkedEntities));
+        RaiseLocalEvent(second, new LinkedEntityChangedEvent(secondLink.LinkedEntities));
+
         return success;
     }
 
@@ -134,4 +150,14 @@ public sealed class LinkedEntitySystem : EntitySystem
     }
 
     #endregion
+}
+
+public sealed class LinkedEntityChangedEvent : EntityEventArgs
+{
+    public HashSet<EntityUid> NewLinks;
+
+    public LinkedEntityChangedEvent(HashSet<EntityUid> newLinks)
+    {
+        NewLinks = newLinks;
+    }
 }
