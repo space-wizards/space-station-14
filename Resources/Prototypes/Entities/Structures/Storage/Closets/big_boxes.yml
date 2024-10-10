@@ -30,6 +30,7 @@
       openOnMove: false
       airtight: false
       capacity: 4 #4 Entities seems like a nice comfy fit for a cardboard box.
+    - type: InternalAir
     - type: ContainerContainer
       containers:
         entity_storage: !type:Container

@@ -1,4 +1,4 @@
-﻿using Content.Shared.Disposal.Components;
+using Content.Shared.Disposal.Components;
 
 namespace Content.Server.Disposal.Mailing;
 
@@ -26,5 +26,5 @@ public sealed partial class MailingUnitComponent : Component
     [DataField("tag")]
     public string? Tag;
 
-    public SharedDisposalUnitComponent.DisposalUnitBoundUserInterfaceState? DisposalUnitInterfaceState;
+    public DisposalUnitComponent.DisposalUnitBoundUserInterfaceState? DisposalUnitInterfaceState;
 }
