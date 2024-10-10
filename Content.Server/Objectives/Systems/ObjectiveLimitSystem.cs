@@ -1,10 +1,11 @@
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Objectives.Components;
-using Content.Shared.Mind;
 using Content.Shared.Objectives.Components;
+using Content.Server.Objectives;
 
 public sealed class ObjectiveLimitSystem : EntitySystem
 {
+    [Dependency] private readonly ObjectivesSystem _objectiveSystem = default!;
     public override void Initialize()
     {
         base.Initialize();
@@ -30,7 +31,7 @@ public sealed class ObjectiveLimitSystem : EntitySystem
         {
             foreach (var mindId in rule.TraitorMinds)
             {
-                if (mindId == args.MindId || !HasObjective(mindId, proto))
+                if (mindId == args.MindId || !_objectiveSystem.GetObjectives(mindId, proto, out var _))
                     continue;
 
                 remaining--;
@@ -43,22 +44,5 @@ public sealed class ObjectiveLimitSystem : EntitySystem
                 }
             }
         }
-    }
-
-    /// <summary>
-    /// Returns true if the mind has an objective of a certain prototype.
-    /// </summary>
-    public bool HasObjective(EntityUid mindId, string proto, MindComponent? mind = null)
-    {
-        if (!Resolve(mindId, ref mind))
-            return false;
-
-        foreach (var objective in mind.Objectives)
-        {
-            if (Prototype(objective)?.ID == proto)
-                return true;
-        }
-
-        return false;
     }
 }
