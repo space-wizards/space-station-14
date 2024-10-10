@@ -85,7 +85,7 @@
   components:
    - type: ContainerFill
      containers:
-      alarm_slot:
+      alarmSlot:
       - ContainmentFieldGenUpgrade
 
 
