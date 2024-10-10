@@ -8,6 +8,6 @@
       steps:
       - material: Cloth
         amount: 2
-        doAfter: 10
+        doAfter: 5
   - node: gauze
     entity: Gauze1
