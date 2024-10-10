@@ -27,12 +27,6 @@ public sealed class PdaLockUplinkMessage : BoundUserInterfaceMessage
 }
 
 [Serializable, NetSerializable]
-public sealed class PdaShowMusicMessage : BoundUserInterfaceMessage
-{
-    public PdaShowMusicMessage() { }
-}
-
-[Serializable, NetSerializable]
 public sealed class PdaRequestUpdateInterfaceMessage : BoundUserInterfaceMessage
 {
     public PdaRequestUpdateInterfaceMessage() { }
