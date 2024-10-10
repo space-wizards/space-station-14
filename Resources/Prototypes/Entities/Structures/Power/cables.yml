@@ -188,3 +188,88 @@
         acts: [ "Destruction" ]
   - type: CableVisualizer
     statePrefix: lvcable_
+
+# Explosive cable below
+
+- type: entity
+  name: explosive cord
+  id: CableDet
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Transform
+    anchored: true
+    noRot: true
+  # TODO: Remove both of these, same with CollideOnAnchor
+  - type: Physics
+    bodyType: Static
+    canCollide: false
+  - type: Fixtures
+  - type: Sprite
+    color: Yellow
+    sprite: Structures/Power/Cables/ex_cable.rsi
+    state: excable_0
+  - type: Icon
+    color: Yellow
+    sprite: Structures/Power/Cables/ex_cable.rsi
+    state: excable_4
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Structural #this is as close as we can get to only letting explosives set it off.
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:ExplodeBehavior
+    - trigger:
+        !type:DamageTrigger #A fallback that deletes it but doesnt explode in case something somehow gets here without exploding violently enough.
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          CableDetStack1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: CollideOnAnchor
+  - type: Appearance
+  - type: CableVis
+    node: cordage
+  - type: NodeContainer
+    nodes:
+      cordage:
+        !type:CableNode
+        nodeGroupID: ExCable
+  - type: CableVisualizer
+    statePrefix: excable_
+  - type: Explosive
+    explosionType: DemolitionCharge
+    totalIntensity: 10
+    intensitySlope: 5
+    maxIntensity: 5
+    canCreateVacuum: false
+  - type: TriggerOnSignal
+  - type: DeviceLinkSink
+    ports:
+      - Trigger
+  - type: ExplodeOnTrigger
+  - type: Construction
+    graph: DetCable
+    node: detonationCable
+  - type: Tag
+    tags:
+    - ExCable
