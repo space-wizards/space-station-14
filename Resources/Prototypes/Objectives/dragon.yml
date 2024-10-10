@@ -9,7 +9,7 @@
     issuer: objective-issuer-dragon
   - type: RoleRequirement
     roles:
-      components:
+      mindRoles:
       - DragonRole
 
 - type: entity
