@@ -13,10 +13,14 @@
     snapCardinals: true
     layers:
     - state: substation
-    - state: screen
+    - map: ["enum.SubstationVisualLayers.Screen"]
+      state: screen
       shader: unshaded
-    - state: full
+    - map: ["enum.SubstationVisualLayers.Charge"]
+      state: full
       shader: unshaded
+  - type: SubstationVisualizer
+  - type: Appearance
   - type: Battery
     maxCharge: 2500000
     startingCharge: 0
@@ -152,8 +156,11 @@
     sprite: Structures/Power/substation.rsi
     layers:
     - state: substation_wall
-    - state: screen_wall
+    - map: ["enum.SubstationVisualLayers.Screen"]
+      state: screen_wall
       shader: unshaded
+  - type: SubstationVisualizer
+  - type: Appearance
   - type: Battery
     maxCharge: 2000000
     startingCharge: 0
