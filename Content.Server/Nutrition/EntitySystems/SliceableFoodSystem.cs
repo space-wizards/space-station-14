@@ -14,6 +14,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Server.Nutrition.EntitySystems;
 
@@ -40,6 +41,9 @@ public sealed class SliceableFoodSystem : EntitySystem
         if (args.Handled)
             return;
 
+        if (!TryComp<FoodComponent>(entity, out var foodComp) || foodComp == null || !CanSliceFood(entity, foodComp, args.Used, out _, out _))
+            return;
+
         var doAfterArgs = new DoAfterArgs(EntityManager,
             args.User,
             entity.Comp.SliceTime,
@@ -52,7 +56,11 @@ public sealed class SliceableFoodSystem : EntitySystem
             BreakOnMove = true,
             NeedHand = true,
         };
+
         _doAfter.TryStartDoAfter(doAfterArgs);
+
+        args.Handled = true;
+
     }
 
     private void OnSlicedoAfter(Entity<SliceableFoodComponent> entity, ref SliceFoodDoAfterEvent args)
@@ -60,31 +68,26 @@ public sealed class SliceableFoodSystem : EntitySystem
         if (args.Cancelled || args.Handled || args.Args.Target == null)
             return;
 
-        if (TrySliceFood(entity, args.User, args.Used, entity.Comp))
+        if (TrySliceFood(entity, args.User, args.Used))
             args.Handled = true;
     }
 
-    private bool TrySliceFood(EntityUid uid,
+    private bool TrySliceFood(Entity<SliceableFoodComponent> entity,
         EntityUid user,
         EntityUid? usedItem,
-        SliceableFoodComponent? component = null,
         FoodComponent? food = null,
         TransformComponent? transform = null)
     {
-        if (!Resolve(uid, ref component, ref food, ref transform) ||
-            string.IsNullOrEmpty(component.Slice))
+        if (!Resolve(entity, ref food, ref transform) || usedItem == null)
             return false;
 
-        if (!_solutionContainer.TryGetSolution(uid, food.Solution, out var soln, out var solution))
+        if (!CanSliceFood(entity, food, usedItem.Value, out var soln, out var solution))
             return false;
 
-        if (!TryComp<UtensilComponent>(usedItem, out var utensil) || (utensil.Types & UtensilType.Knife) == 0)
-            return false;
-
-        var sliceVolume = solution.Volume / FixedPoint2.New(component.TotalCount);
-        for (int i = 0; i < component.TotalCount; i++)
+        var sliceVolume = solution.Volume / FixedPoint2.New(entity.Comp.TotalCount);
+        for (int i = 0; i < entity.Comp.TotalCount; i++)
         {
-            var sliceUid = Slice(uid, user, component, transform);
+            var sliceUid = Slice(entity, user, entity.Comp, transform);
 
             var lostSolution =
                 _solutionContainer.SplitSolution(soln.Value, sliceVolume);
@@ -93,11 +96,11 @@ public sealed class SliceableFoodSystem : EntitySystem
             FillSlice(sliceUid, lostSolution);
         }
 
-        _audio.PlayPvs(component.Sound, transform.Coordinates, AudioParams.Default.WithVolume(-2));
+        _audio.PlayPvs(entity.Comp.Sound, transform.Coordinates, AudioParams.Default.WithVolume(-2));
         var ev = new SliceFoodEvent();
-        RaiseLocalEvent(uid, ref ev);
+        RaiseLocalEvent(entity, ref ev);
 
-        DeleteFood(uid, user, food);
+        DeleteFood(entity, user, food);
         return true;
     }
 
@@ -170,6 +173,31 @@ public sealed class SliceableFoodSystem : EntitySystem
     {
         var foodComp = EnsureComp<FoodComponent>(entity);
         _solutionContainer.EnsureSolution(entity.Owner, foodComp.Solution, out _);
+    }
+
+    /// <summary>
+    ///     Returns true if the given food can be sliced by the given cutten implement and false otherwise.
+    ///     Will also return information about the solution if the food is slicable.
+    /// </summary>
+    private bool CanSliceFood(Entity<SliceableFoodComponent> food, FoodComponent foodComp, EntityUid cuttingItem,
+                                [NotNullWhen(true)] out Entity<SolutionComponent>? outSoln,
+                                [NotNullWhen(true)] out Solution? outSolution)
+    {
+        outSoln = null;
+        outSolution = null;
+
+        if (string.IsNullOrEmpty(food.Comp.Slice))
+            return false;
+
+        if (!_solutionContainer.TryGetSolution(food.Owner, foodComp.Solution, out var soln, out var solution))
+            return false;
+
+        if (!TryComp<UtensilComponent>(cuttingItem, out var utensil) || (utensil.Types & UtensilType.Knife) == 0)
+            return false;
+
+        outSoln = soln;
+        outSolution = solution;
+        return true;
     }
 }
 
