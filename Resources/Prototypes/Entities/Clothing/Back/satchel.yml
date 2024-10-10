@@ -104,6 +104,15 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Satchels/science.rsi
+    
+#- type: entity
+#  parent: ClothingBackpackSatchel
+#  id: ClothingBackpackSatchelRobotics
+#  name: robotics satchel
+#  description: Useful for holding robotics materials.
+#  components:
+#  - type: Sprite
+#    sprite: Clothing/Back/Satchels/robotics.rsi
 
 - type: entity
   parent: [ClothingBackpackSatchel, BaseRestrictedContraband]
