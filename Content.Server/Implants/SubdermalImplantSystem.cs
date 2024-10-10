@@ -74,14 +74,12 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
             return;
 
         // same as store code, but message is only shown to yourself
-        args.Handled = _store.TryAddCurrency(_store.GetCurrencyValue(args.Used, currency), uid, store);
-
-        if (!args.Handled)
+        if (!_store.TryAddCurrency((args.Used, currency), (uid, store)))
             return;
 
+        args.Handled = true;
         var msg = Loc.GetString("store-currency-inserted-implant", ("used", args.Used));
         _popup.PopupEntity(msg, args.User, args.User);
-        QueueDel(args.Used);
     }
 
     private void OnFreedomImplant(EntityUid uid, SubdermalImplantComponent component, UseFreedomImplantEvent args)

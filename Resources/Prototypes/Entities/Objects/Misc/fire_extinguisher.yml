@@ -62,6 +62,9 @@
     - Rolling
     speedModifier: 0.5 # its very big, awkward to use
   - type: Appearance
+  - type: Tag
+    tags:
+      - FireExtinguisher
   - type: GenericVisualizer
     visuals:
       enum.ToggleVisuals.Toggled:
@@ -94,7 +97,7 @@
   name: pocket fire extinguisher
   parent: FireExtinguisher
   id: FireExtinguisherMini
-  description: A light and compact fibreglass-framed model fire extinguisher. It holds less water then its bigger brother.
+  description: A light and compact fibreglass-framed model fire extinguisher. It holds less water than its bigger brother.
   components:
   - type: Sprite
     sprite: Objects/Misc/fire_extinguisher_mini.rsi

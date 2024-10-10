@@ -8,6 +8,7 @@ using Robust.Shared.GameStates;
 using Content.Shared.DoAfter;
 using Robust.Shared.Serialization;
 using Robust.Shared.Audio;
+using Content.Shared.Whitelist;
 using Content.Shared.Damage;
 
 namespace Content.Shared.Storage.Components
@@ -26,6 +27,12 @@ namespace Content.Shared.Storage.Components
         /// </summary>
         [DataField("maxItemSize")]
         public ProtoId<ItemSizePrototype> MaxItemSize = "Small";
+
+        /// <summary>
+        ///     Entity blacklist for secret stashes.
+        /// </summary>
+        [DataField]
+        public EntityWhitelist? Blacklist;
 
         /// <summary>
         ///     This sound will be played when you try to insert an item in the stash.
