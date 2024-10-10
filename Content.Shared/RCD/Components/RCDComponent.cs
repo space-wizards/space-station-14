@@ -43,6 +43,13 @@ public sealed partial class RCDComponent : Component
     public RCDPrototype CachedPrototype { get; set; } = default!;
 
     /// <summary>
+    /// Indicates if a mirrored version of the construction prototype should be used (if available)
+    /// </summary>
+    [AutoNetworkedField, ViewVariables(VVAccess.ReadOnly)]
+    public bool UseMirrorPrototype = false;
+
+
+    /// <summary>
     /// The direction constructed entities will face upon spawning
     /// </summary>
     [DataField, AutoNetworkedField]
