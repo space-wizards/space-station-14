@@ -13,9 +13,9 @@
 
   Gas mixers have 3 connections: 2 inputs and 1 output, as shown below:
   <Box>
-    <GuideEntityEmbed Entity="PipeStraight" Caption="Primary Port" Rotation="90"/>
+    <GuideEntityEmbed Entity="GasPipeStraight" Caption="Primary Port" Rotation="90"/>
     <GuideEntityEmbed Entity="GasMixer" Caption=""/>
-    <GuideEntityEmbed Entity="PipeStraight" Caption="Output" Rotation="90"/>
+    <GuideEntityEmbed Entity="GasPipeStraight" Caption="Output" Rotation="90"/>
   </Box>
 <Box>
   <GuideEntityEmbed Entity="PipeStraight" Caption="Side Port"/>
@@ -33,12 +33,12 @@
   Gas filters are used to separate gases from a mixture within a pipe network.
 
   <Box>
-    <GuideEntityEmbed Entity="PipeStraight" Caption="Input" Rotation="90"/>
+    <GuideEntityEmbed Entity="GasPipeStraight" Caption="Input" Rotation="90"/>
     <GuideEntityEmbed Entity="GasFilter" Caption=""/>
-    <GuideEntityEmbed Entity="PipeStraight" Caption="Output" Rotation="90"/>
+    <GuideEntityEmbed Entity="GasPipeStraight" Caption="Output" Rotation="90"/>
   </Box>
   <Box>
-    <GuideEntityEmbed Entity="PipeStraight" Caption="Filtered Output"/>
+    <GuideEntityEmbed Entity="GasPipeStraight" Caption="Filtered Output"/>
   </Box>
 
   Gas filters will become blocked and will not filter gas if either output is blocked.
