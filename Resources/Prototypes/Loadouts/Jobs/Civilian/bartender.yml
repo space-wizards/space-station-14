@@ -25,16 +25,6 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitBartenderPurple
 
-- type: loadout
-  id: MaidJumpskirt
-  equipment:
-    jumpsuit: ClothingUniformJumpskirtJanimaid
-
-- type: loadout
-  id: MaidJumpskirtmini
-  equipment:
-    jumpsuit: ClothingUniformJumpskirtJanimaidmini
-
 # Outer clothing
 - type: loadout
   id: BartenderApron
