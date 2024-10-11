@@ -17,6 +17,7 @@
             <!-- Role list (auto-generated) -->
             <ScrollContainer>
                 <BoxContainer Name="BansContainer"  Orientation="Vertical"/>
+                <Button Name="RefreshBansButton" Text="{Loc username-ban-panel-refresh}" HorizontalExpand="True"/>
                 <!-- list of banns -->
             </ScrollContainer>
         </TabContainer>

@@ -1,11 +1,6 @@
-using System.Collections.Immutable;
-using System.Net;
 using System.Threading.Tasks;
-using Content.Shared.Database;
-using Content.Shared.Roles;
 using Robust.Shared.Network;
-using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
+
 
 namespace Content.Server.Administration.Managers;
 
@@ -33,14 +28,12 @@ public interface IUsernameRuleManager
     /// <summary>
     /// Gets the set of all active regex restrictions
     /// </summary>
-    public Task<HashSet<string>?> GetUsernameRulesAsync();
-
-
+    public List<(int, string, string, bool)> GetUsernameRules();
 
     /// <summary>
     /// Checks cached regex to see if username is presently banned.
     /// </summary>
     /// <param name="username"></param>
-    /// <returns></returns>
-    public Task<string?> IsUsernameBannedAsync(string username);
+    /// <returns>wether the username is banned, the username ban message, and if the user should be banned for that username</returns>
+    public Task<(bool, string, bool)> IsUsernameBannedAsync(string username);
 }

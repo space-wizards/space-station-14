@@ -38,6 +38,7 @@ namespace Content.Client.IoC
             collection.Register<IClickMapManager, ClickMapManager>();
             collection.Register<IClientAdminManager, ClientAdminManager>();
             collection.Register<ISharedAdminManager, ClientAdminManager>();
+            collection.Register<IClientUsernameBanCacheManager, ClientUsernameBanCacheManager>();
             collection.Register<EuiManager, EuiManager>();
             collection.Register<IVoteManager, VoteManager>();
             collection.Register<ChangelogManager, ChangelogManager>();

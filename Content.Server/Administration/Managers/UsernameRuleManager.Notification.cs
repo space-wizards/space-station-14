@@ -17,26 +17,31 @@ public sealed partial class UsernameRuleManager
 
     private void OnDatabaseNotification(DatabaseNotification notification)
     {
-        if (notification.Channel != UsernameRuleNotificationChannel) {
+        if (notification.Channel != UsernameRuleNotificationChannel)
+        {
             return;
         }
 
-        if (notification.Payload == null) {
+        if (notification.Payload == null)
+        {
             _sawmill.Error("got username rule notification with no payload");
             return;
         }
 
         UsernameRuleNotification data;
-        try {
+        try
+        {
             data = JsonSerializer.Deserialize<UsernameRuleNotification>(notification.Payload)
                 ?? throw new JsonException("Content is null");
         }
-        catch (JsonException e) {
+        catch (JsonException e)
+        {
             _sawmill.Error($"Got invalid JSON in username rule notification: {e}");
             return;
         }
 
-        if (!CheckRuleRateLimit()) {
+        if (!CheckRuleRateLimit())
+        {
             _sawmill.Verbose("Not processing username rule notification due to rate limit");
             return;
         }
@@ -60,14 +65,15 @@ public sealed partial class UsernameRuleManager
             return;
         }
 
-        if (usernameRule.Retired) {
-            ClearCompiledRegex(usernameRule.Expression);
+        if (usernameRule.Retired)
+        {
+            ClearCompiledRegex(usernameRule.Id ?? -1);
             return;
         }
 
-        CacheCompiledRegex(usernameRule.Expression, usernameRule.Message);
+        CacheCompiledRegex(usernameRule.Id ?? -1, usernameRule.Expression, usernameRule.Message, usernameRule.ExtendToBan);
 
-        KickMatchingConnectedPlayers(usernameRule, "username rule notification");
+        KickMatchingConnectedPlayers(data.UsernameRuleId, usernameRule, "username rule notification");
     }
 
     private bool CheckRuleRateLimit()

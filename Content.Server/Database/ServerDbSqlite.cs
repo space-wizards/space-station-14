@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Data;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net;
@@ -373,9 +374,12 @@ namespace Content.Server.Database
                 .ToList()!;
         }
 
-        public override async Task CreateUsernameRuleAsync(ServerUsernameRuleDef usernameRule)
+        public override async Task<int> CreateUsernameRuleAsync(ServerUsernameRuleDef usernameRule)
         {
             await using var db = await GetDbImpl();
+
+            // Serializable sql transaction
+            await using var tx = await db.SqliteDbContext.Database.BeginTransactionAsync(IsolationLevel.Serializable, CancellationToken.None);
 
             db.SqliteDbContext.UsernameRule.Add(new ServerUsernameRule
             {
@@ -392,17 +396,24 @@ namespace Content.Server.Database
 
             await db.SqliteDbContext.SaveChangesAsync();
 
-            return;
+            var outId = await db.SqliteDbContext.UsernameRule.MaxAsync(r => r.Id);
+
+            await tx.CommitAsync();
+            return outId;
         }
 
         public override async Task RemoveServerUsernameRuleAsync(int id, NetUserId? retiringAdmin, DateTimeOffset retireTime)
         {
             await using var db = await GetDbImpl();
 
+            // each rule is independent Serializable is not needed RepeatableRead is acceptable
+            await using var tx = await db.SqliteDbContext.Database.BeginTransactionAsync(IsolationLevel.RepeatableRead, CancellationToken.None);
+
             // TODO check next line against pg
             var usernameRule = db.SqliteDbContext.UsernameRule.Find(id);
 
             if (usernameRule == null || usernameRule.Retired) {
+                tx.DisposeAsync();
                 return;
             }
 
@@ -411,6 +422,7 @@ namespace Content.Server.Database
             usernameRule.RetireTime = retireTime.UtcDateTime;
 
             await db.SqliteDbContext.SaveChangesAsync();
+            await tx.CommitAsync();
         }
 
         private static async Task<List<ServerUsernameRule>> GetServerRestrictedUsernamesInternal(SqliteServerDbContext db, bool includeRetired)

@@ -530,7 +530,7 @@ namespace Content.Server.Database
 
         public abstract Task<List<ServerUsernameRuleDef>> GetServerUsernameRulesAsync(bool includeRetired);
 
-        public abstract Task CreateUsernameRuleAsync(ServerUsernameRuleDef usernameRule);
+        public abstract Task<int> CreateUsernameRuleAsync(ServerUsernameRuleDef usernameRule);
 
         public abstract Task RemoveServerUsernameRuleAsync(int id, NetUserId? retiringAdmin, DateTimeOffset retireTime);
         #endregion

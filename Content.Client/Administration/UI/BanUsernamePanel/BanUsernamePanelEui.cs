@@ -8,14 +8,14 @@ namespace Content.Client.Administration.UI.BanUsernamePanel;
 [UsedImplicitly]
 public sealed class BanUsernamePanelEui : BaseEui
 {
-    private BanUsernamePanel BanUsernamePanel { get; }
+    private BanUsernamePanel Window { get; }
 
     public BanUsernamePanelEui()
     {
-        BanUsernamePanel = new BanUsernamePanel();
-        BanUsernamePanel.OnClose += () => SendMessage(new CloseEuiMessage());
-        BanUsernamePanel.UsernameBanSubmitted += (regexRule, reason, ban, regex) => SendMessage(new BanUsernamePanelEuiStateMsg.CreateUsernameBanRequest(regexRule, reason, ban, regex));
-        BanUsernamePanel.RuleUpdate += (ruleId) => SendMessage(new BanUsernamePanelEuiStateMsg.GetRuleInfoRequest(ruleId));
+        Window = new BanUsernamePanel();
+        Window.OnClose += () => SendMessage(new CloseEuiMessage());
+        Window.UsernameBanSubmitted += (regexRule, reason, ban, regex) => SendMessage(new BanUsernamePanelEuiStateMsg.CreateUsernameBanRequest(regexRule, reason, ban, regex));
+        Window.RuleUpdate += (ruleId) => SendMessage(new BanUsernamePanelEuiStateMsg.GetRuleInfoRequest(ruleId));
     }
 
     public override void HandleState(EuiStateBase state)
@@ -25,18 +25,19 @@ public sealed class BanUsernamePanelEui : BaseEui
             return;
         }
 
-        // BanUsernamePanel.UpdateBanFlag(s.HasBan);
-        // BanUsernamePanel.UpdatePlayerData(s.PlayerName);
+        Window.UpdateBanFlag(s.HasBan);
+        Window.UpdateMassBanFlag(s.HasMassBan);
     }
 
     public override void Opened()
     {
-        BanUsernamePanel.OpenCentered();
+        base.Opened();
+        Window.OpenCentered();
     }
 
     public override void Closed()
     {
-        BanUsernamePanel.Close();
-        BanUsernamePanel.Dispose();
+        base.Closed();
+        Window.Close();
     }
 }

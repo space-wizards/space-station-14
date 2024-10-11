@@ -199,20 +199,25 @@ namespace Content.Server.Connection
 
         private async Task<(ConnectionDenyReason, string, List<ServerBanDef>? bansHit)?> UsernameIsBanned(NetConnectingArgs e)
         {
-            var usernameBanMessage = await _usernameRules.IsUsernameBannedAsync(e.UserName);
-            if (usernameBanMessage == null){
+            (bool hit, string message, bool ban) = await _usernameRules.IsUsernameBannedAsync(e.UserName);
+
+            if (!hit)
+            {
                 return null;
             }
-            return (ConnectionDenyReason.Ban, usernameBanMessage ?? "", null);
+
+            return (ConnectionDenyReason.Ban, message, null);
         }
 
-        private async Task<(ConnectionDenyReason, string, List<ServerBanDef>? bansHit)?> ServerInSiegeMode(NetConnectingArgs e,  Admin? adminData)
+        private async Task<(ConnectionDenyReason, string, List<ServerBanDef>? bansHit)?> ServerInSiegeMode(NetConnectingArgs e, Admin? adminData)
         {
-            if (adminData != null) {
+            if (adminData != null)
+            {
                 return null;
             }
 
-            if (_cfg.GetCVar(CCVars.PanicBunkerEnabled)) {
+            if (_cfg.GetCVar(CCVars.PanicBunkerEnabled))
+            {
                 var showReason = _cfg.GetCVar(CCVars.PanicBunkerShowReason);
                 var customReason = _cfg.GetCVar(CCVars.PanicBunkerCustomReason);
 
@@ -223,32 +228,37 @@ namespace Content.Server.Connection
                 var bypassAllowed = _cfg.GetCVar(CCVars.BypassBunkerWhitelist) && await _db.GetWhitelistStatusAsync(e.UserId);
 
                 // Use the custom reason if it exists & they don't have the minimum account age
-                if (customReason != string.Empty && !validAccountAge && !bypassAllowed) {
+                if (customReason != string.Empty && !validAccountAge && !bypassAllowed)
+                {
                     return (ConnectionDenyReason.Panic, customReason, null);
                 }
 
-                if (showReason && !validAccountAge && !bypassAllowed) {
+                if (showReason && !validAccountAge && !bypassAllowed)
+                {
                     return (ConnectionDenyReason.Panic,
                         Loc.GetString("panic-bunker-account-denied-reason",
                             ("reason", Loc.GetString("panic-bunker-account-reason-account", ("minutes", minMinutesAge)))), null);
                 }
 
                 var minOverallMinutes = _cfg.GetCVar(CCVars.PanicBunkerMinOverallMinutes);
-                var overallTime = ( await _db.GetPlayTimes(e.UserId)).Find(p => p.Tracker == PlayTimeTrackingShared.TrackerOverall);
+                var overallTime = (await _db.GetPlayTimes(e.UserId)).Find(p => p.Tracker == PlayTimeTrackingShared.TrackerOverall);
                 var haveMinOverallTime = overallTime != null && overallTime.TimeSpent.TotalMinutes > minOverallMinutes;
 
                 // Use the custom reason if it exists & they don't have the minimum time
-                if (customReason != string.Empty && !haveMinOverallTime && !bypassAllowed) {
+                if (customReason != string.Empty && !haveMinOverallTime && !bypassAllowed)
+                {
                     return (ConnectionDenyReason.Panic, customReason, null);
                 }
 
-                if (showReason && !haveMinOverallTime && !bypassAllowed) {
+                if (showReason && !haveMinOverallTime && !bypassAllowed)
+                {
                     return (ConnectionDenyReason.Panic,
                         Loc.GetString("panic-bunker-account-denied-reason",
                             ("reason", Loc.GetString("panic-bunker-account-reason-overall", ("minutes", minOverallMinutes)))), null);
                 }
 
-                if (!validAccountAge || !haveMinOverallTime && !bypassAllowed) {
+                if (!validAccountAge || !haveMinOverallTime && !bypassAllowed)
+                {
                     return (ConnectionDenyReason.Panic, Loc.GetString("panic-bunker-account-denied"), null);
                 }
             }
@@ -257,7 +267,8 @@ namespace Content.Server.Connection
             {
                 var result = await IsInvalidConnectionDueToBabyJail(e.UserId, e);
 
-                if (result.IsInvalid) {
+                if (result.IsInvalid)
+                {
                     return (ConnectionDenyReason.BabyJail, result.Reason, null);
                 }
             }
@@ -265,7 +276,8 @@ namespace Content.Server.Connection
             return null;
         }
 
-        private async Task<(ConnectionDenyReason, string, List<ServerBanDef>? bansHit)?> ServerIsFull(NetConnectingArgs e, Admin? adminData) {
+        private async Task<(ConnectionDenyReason, string, List<ServerBanDef>? bansHit)?> ServerIsFull(NetConnectingArgs e, Admin? adminData)
+        {
             // also checks for rejoin so players can rejoin if server filled on exit
             var wasInGame = EntitySystem.TryGet<GameTicker>(out var ticker) &&
                 ticker.PlayerGameStatuses.TryGetValue(e.UserId, out var status) &&
@@ -273,14 +285,16 @@ namespace Content.Server.Connection
 
             var adminBypass = _cfg.GetCVar(CCVars.AdminBypassMaxPlayers) && adminData != null;
 
-            if ((_plyMgr.PlayerCount >= _cfg.GetCVar(CCVars.SoftMaxPlayers) && !adminBypass) && !wasInGame) {
+            if (_plyMgr.PlayerCount >= _cfg.GetCVar(CCVars.SoftMaxPlayers) && !adminBypass && !wasInGame)
+            {
                 return (ConnectionDenyReason.Full, Loc.GetString("soft-player-cap-full"), null);
             }
 
             return null;
         }
 
-        private async Task<(ConnectionDenyReason, string, List<ServerBanDef>? bansHit)?> UserNotWhitelisted(NetConnectingArgs e,  Admin? adminData) {
+        private async Task<(ConnectionDenyReason, string, List<ServerBanDef>? bansHit)?> UserNotWhitelisted(NetConnectingArgs e, Admin? adminData)
+        {
             // Checks for whitelist IF it's enabled AND the user isn't an admin. Admins are always allowed.
             if (_cfg.GetCVar(CCVars.WhitelistEnabled) && adminData is null)
             {
@@ -321,32 +335,38 @@ namespace Content.Server.Connection
             var adminData = await _dbManager.GetAdminDataForAsync(e.UserId);
 
             var banned = await UserIsBanned(e);
-            if (banned != null) {
+            if (banned != null)
+            {
                 return banned;
             }
 
             var usernameBanned = await UsernameIsBanned(e);
-            if (usernameBanned != null) {
+            if (usernameBanned != null)
+            {
                 return usernameBanned;
             }
 
-            if (HasTemporaryBypass(e.UserId)) {
+            if (HasTemporaryBypass(e.UserId))
+            {
                 _sawmill.Verbose("User {UserId} has temporary bypass, skipping further connection checks", e.UserId); // TODO: localization?
                 return null;
             }
 
             var siegeMode = await ServerInSiegeMode(e, adminData);
-            if (siegeMode != null) {
+            if (siegeMode != null)
+            {
                 return siegeMode;
             }
 
             var serverFull = await ServerIsFull(e, adminData);
-            if (serverFull != null) {
+            if (serverFull != null)
+            {
                 return serverFull;
             }
 
             var notWhitelisted = await UserNotWhitelisted(e, adminData);
-            if (notWhitelisted != null) {
+            if (notWhitelisted != null)
+            {
                 return notWhitelisted;
             }
 
@@ -392,7 +412,7 @@ namespace Content.Server.Connection
                 return (true, locAccountReason);
             }
 
-            var overallTime = ( await _db.GetPlayTimes(e.UserId)).Find(p => p.Tracker == PlayTimeTrackingShared.TrackerOverall);
+            var overallTime = (await _db.GetPlayTimes(e.UserId)).Find(p => p.Tracker == PlayTimeTrackingShared.TrackerOverall);
             var isTotalPlaytimeInvalid = overallTime != null && overallTime.TimeSpent.TotalMinutes >= maxPlaytimeMinutes;
 
             if (isTotalPlaytimeInvalid)

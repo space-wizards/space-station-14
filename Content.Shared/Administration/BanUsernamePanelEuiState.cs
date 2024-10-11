@@ -30,7 +30,8 @@ public static class BanUsernamePanelEuiStateMsg
         public bool Ban { get; set; }
         public bool Regex { get; set; }
 
-        public CreateUsernameBanRequest(string regexRule, string? reason, bool ban, bool regex) {
+        public CreateUsernameBanRequest(string regexRule, string? reason, bool ban, bool regex)
+        {
             RegexRule = regexRule;
             Reason = reason;
             Ban = ban;
@@ -43,7 +44,8 @@ public static class BanUsernamePanelEuiStateMsg
     {
         public int RuleId { get; set; }
 
-        public GetRuleInfoRequest(int ruleId) {
+        public GetRuleInfoRequest(int ruleId)
+        {
             RuleId = ruleId;
         }
     }

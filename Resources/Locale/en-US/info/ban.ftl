@@ -116,6 +116,7 @@ username-ban-panel-view = View
 username-ban-panel-extend = Extend to ban
 username-ban-panel-rule = prohibition rule
 username-ban-panel-regex = regex
+username-ban-panel-refresh = Refresh Username Rules
 
 # create log message
 server-username-rule-create = {$admin} created the username rule {$expression} stating: {$message}

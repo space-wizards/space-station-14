@@ -15,7 +15,8 @@ public sealed class BanUsernamePanelCommand : LocalizedCommands
 
     public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        if (shell.Player is not { } player) {
+        if (shell.Player is not { } player)
+        {
             shell.WriteError(Loc.GetString("shell-cannot-run-command-from-server"));
             return;
         }

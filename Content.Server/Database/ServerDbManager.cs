@@ -162,7 +162,7 @@ namespace Content.Server.Database
 
         Task<List<ServerUsernameRuleDef>> GetServerUsernameRulesAsync(bool includeRetired);
 
-        Task CreateUsernameRuleAsync(ServerUsernameRuleDef usernameRule);
+        Task<int> CreateUsernameRuleAsync(ServerUsernameRuleDef usernameRule);
 
         Task RemoveServerUsernameRuleAsync(int id, NetUserId? retiringAdmin, DateTimeOffset retireTime);
         #endregion
@@ -585,7 +585,7 @@ namespace Content.Server.Database
             return RunDbCommand(() => _db.GetServerUsernameRulesAsync(includeRetired));
         }
 
-        public Task CreateUsernameRuleAsync(ServerUsernameRuleDef usernameRule)
+        public Task<int> CreateUsernameRuleAsync(ServerUsernameRuleDef usernameRule)
         {
             DbReadOpsMetric.Inc();
             return RunDbCommand(() => _db.CreateUsernameRuleAsync(usernameRule));

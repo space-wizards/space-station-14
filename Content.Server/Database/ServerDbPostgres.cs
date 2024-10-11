@@ -496,9 +496,12 @@ namespace Content.Server.Database
                 .ToList()!;
         }
 
-        public override async Task CreateUsernameRuleAsync(ServerUsernameRuleDef usernameRule)
+        public override async Task<int> CreateUsernameRuleAsync(ServerUsernameRuleDef usernameRule)
         {
             await using var db = await GetDbImpl();
+
+            // Serializable sql transaction
+            await using var tx = await db.PgDbContext.Database.BeginTransactionAsync(IsolationLevel.Serializable, CancellationToken.None);
 
             db.PgDbContext.UsernameRule.Add(new ServerUsernameRule
             {
@@ -515,18 +518,27 @@ namespace Content.Server.Database
 
             await db.PgDbContext.SaveChangesAsync();
 
-            return;
+            // yes, very cursed; however, dotnet ef does not allow queries outside of the predefined tables
+            // it would be more preferable to query the seq associated with id directly.
+            var outId = await db.PgDbContext.UsernameRule.MaxAsync(r => r.Id);
+
+            await tx.CommitAsync();
+            return outId;
         }
 
         public override async Task RemoveServerUsernameRuleAsync(int id, NetUserId? retiringAdmin, DateTimeOffset retireTime)
         {
             await using var db = await GetDbImpl();
 
+            // each rule is independent Serializable is not needed RepeatableRead is acceptable
+            await using var tx = await db.PgDbContext.Database.BeginTransactionAsync(IsolationLevel.RepeatableRead, CancellationToken.None);
+
             var usernameRule = db.PgDbContext.UsernameRule
                 .Where(r => r.Id == id)
                 .FirstOrDefault();
 
             if (usernameRule == null || usernameRule.Retired) {
+                tx.DisposeAsync();
                 return;
             }
 
@@ -534,7 +546,7 @@ namespace Content.Server.Database
             usernameRule.RetiringAdmin = retiringAdmin;
             usernameRule.RetireTime = retireTime.UtcDateTime;
 
-            await db.PgDbContext.SaveChangesAsync();
+            await tx.CommitAsync();
         }
 
         private static async Task<List<ServerUsernameRule>> GetServerRestrictedUsernamesInternal(PostgresServerDbContext db, bool includeRetired)
