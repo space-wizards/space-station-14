@@ -92,6 +92,10 @@ public sealed class SuspicionRuleSystem : GameRuleSystem<SuspicionRuleComponent>
         var innocents = FindAllOfType(SuspicionRole.Innocent, false);
         var detectives = FindAllOfType(SuspicionRole.Detective, false);
 
+        var traitorsOnlyAlive = FindAllOfType(SuspicionRole.Traitor);
+        var innocentsOnlyAlive = FindAllOfType(SuspicionRole.Innocent);
+        var detectivesOnlyAlive = FindAllOfType(SuspicionRole.Detective);
+
         void Append(List<EntityUid> people, ref RoundEndTextAppendEvent args)
         {
             foreach (var person in people)
@@ -101,7 +105,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem<SuspicionRuleComponent>
             }
         }
 
-        var victory = innocents.Count + detectives.Count == 0 ? "Traitors" : "Innocents";
+        var victory = innocentsOnlyAlive.Count + detectivesOnlyAlive.Count == 0 ? "Traitors" : "Innocents";
         // Traitors win if there are no innocents or detectives left.
 
         args.AddLine($"[bold]{victory}[/bold] have won the round.");
@@ -289,6 +293,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem<SuspicionRuleComponent>
         var isInRange = args.IsInDetailsRange || component.Revealed;
         // Always show the role if it was already announced in chat.
 
+        _ = args.PushGroup(nameof(SuspicionRuleSystem));
         if (!isInRange)
         {
             args.PushMarkup("Get closer to examine the body.");
@@ -303,7 +308,6 @@ public sealed class SuspicionRuleSystem : GameRuleSystem<SuspicionRuleComponent>
         if (!_roleSystem.MindHasRole<SuspicionRoleComponent>(mind.Value, out var _, out var role))
             return;
 
-        _ = args.PushGroup(nameof(SuspicionRuleSystem));
         args.PushMarkup($"They were a [bold][color{role.Value.Comp.Role.GetRoleColor().ToHexNoAlpha()}]{role.Value.Comp.Role.ToString()}[/color][/bold].");
     }
 
