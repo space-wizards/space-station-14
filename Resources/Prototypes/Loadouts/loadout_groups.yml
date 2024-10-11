@@ -232,7 +232,7 @@
 
 - type: loadoutGroup
   id: ServiceWorkerJumpsuit
-  name: loadout-group-serwice-worker-jumpsuit
+  name: loadout-group-service-worker-jumpsuit
   loadouts:
   - BartenderJumpsuit
   - BartenderJumpskirt
