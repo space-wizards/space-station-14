@@ -48,6 +48,11 @@ public sealed partial class RCDComponent : Component
     [AutoNetworkedField, ViewVariables(VVAccess.ReadOnly)]
     public bool UseMirrorPrototype = false;
 
+    /// <summary>
+    /// Indicates whether this is an RCD or an RPD
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool IsRpd { get; set; } = false;
 
     /// <summary>
     /// The direction constructed entities will face upon spawning
