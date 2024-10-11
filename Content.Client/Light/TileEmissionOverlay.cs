@@ -3,6 +3,7 @@ using Content.Shared.Light.Components;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Light;
 
@@ -11,6 +12,7 @@ public sealed class TileEmissionOverlay : Overlay
     public override OverlaySpace Space => OverlaySpace.BeforeLighting;
 
     [Dependency] private readonly IClyde _clyde = default!;
+    [Dependency] private readonly IPrototypeManager _protoManager = default!;
 
     private readonly IEntityManager _entManager;
     private readonly EntityLookupSystem _lookup;
@@ -18,6 +20,8 @@ public sealed class TileEmissionOverlay : Overlay
     private EntityQuery<MapGridComponent> _gridQuery;
     private EntityQuery<TransformComponent> _xformQuery;
     private readonly HashSet<Entity<TileEmissionComponent>> _entities = new();
+
+    private IRenderTexture? _target;
 
     public TileEmissionOverlay(IEntityManager entManager)
     {
@@ -31,7 +35,6 @@ public sealed class TileEmissionOverlay : Overlay
 
     protected override void Draw(in OverlayDrawArgs args)
     {
-        return;
         if (args.Viewport.Eye == null)
             return;
 
@@ -40,12 +43,17 @@ public sealed class TileEmissionOverlay : Overlay
         var bounds = args.WorldBounds;
         var expandedBounds = bounds.Enlarged(1.5f);
         var viewport = args.Viewport;
-        var target = _clyde.CreateLightRenderTarget(viewport.LightRenderTarget.Size, name: "tile-emissions");
 
-        args.WorldHandle.RenderInRenderTarget(target,
+        if (_target?.Size != viewport.LightRenderTarget.Size)
+        {
+            _target = _clyde
+                .CreateRenderTarget(viewport.LightRenderTarget.Size, new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb), name: "tile-emissions");
+        }
+
+        args.WorldHandle.RenderInRenderTarget(_target,
         () =>
         {
-            var invMatrix = target.GetWorldToLocalMatrix(viewport.Eye, viewport.RenderScale / 2f);
+            var invMatrix = _target.GetWorldToLocalMatrix(viewport.Eye, viewport.RenderScale / 2f);
             _entities.Clear();
             _lookup.GetEntitiesIntersecting(mapId, expandedBounds, _entities);
 
@@ -70,9 +78,7 @@ public sealed class TileEmissionOverlay : Overlay
                 var local = _lookup.GetLocalBounds(tile, grid.TileSize).Enlarged(ent.Comp.Range);
                 worldHandle.DrawRect(local, ent.Comp.Color);
             }
-        }, new Color());
-
-        _clyde.BlurLights(viewport, target, viewport.Eye, 14f * 4f);
+        }, Color.Transparent);
 
         args.WorldHandle.RenderInRenderTarget(viewport.LightRenderTarget,
             () =>
@@ -80,7 +86,11 @@ public sealed class TileEmissionOverlay : Overlay
                 var invMatrix =
                     viewport.LightRenderTarget.GetWorldToLocalMatrix(viewport.Eye, viewport.RenderScale / 2f);
                 worldHandle.SetTransform(invMatrix);
-                worldHandle.DrawTextureRect(target.Texture, bounds);
+
+                var maskShader = _protoManager.Index<ShaderPrototype>("Mix").Instance();
+                worldHandle.UseShader(maskShader);
+
+                worldHandle.DrawTextureRect(_target.Texture, bounds);
             }, null);
     }
 }

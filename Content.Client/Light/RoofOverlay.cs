@@ -5,18 +5,22 @@ using Robust.Client.Graphics;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Light;
 
 public sealed class RoofOverlay : Overlay
 {
     [Dependency] private readonly IClyde _clyde = default!;
+    [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefMan = default!;
     private readonly IEntityManager _entManager;
 
     private readonly HashSet<Entity<OccluderComponent>> _occluders = new();
 
     public override OverlaySpace Space => OverlaySpace.BeforeLighting;
+
+    private IRenderTexture? _target;
 
     public RoofOverlay(IEntityManager entManager)
     {
@@ -30,74 +34,74 @@ public sealed class RoofOverlay : Overlay
         if (args.Viewport.Eye == null)
             return;
 
-        var mapUid = _entManager.System<SharedMapSystem>().GetMap(args.MapId);
+        var mapSystem = _entManager.System<SharedMapSystem>();
+        var mapEnt = mapSystem.GetMap(args.MapId);
 
-        if (!_entManager.TryGetComponent(mapUid, out MapLightComponent? light))
+        if (!_entManager.TryGetComponent(mapEnt, out RoofComponent? roofComp) ||
+            !_entManager.TryGetComponent(mapEnt, out MapGridComponent? grid))
+        {
             return;
+        }
 
         var viewport = args.Viewport;
         var eye = args.Viewport.Eye;
-        var mapSystem = _entManager.System<SharedMapSystem>();
+
         var worldHandle = args.WorldHandle;
         var bounds = args.WorldBounds;
-        var mapId = args.MapId;
 
         var lookup = _entManager.System<EntityLookupSystem>();
         var xformSystem = _entManager.System<SharedTransformSystem>();
 
-        var query = _entManager.AllEntityQueryEnumerator<RoofComponent, MapGridComponent, TransformComponent>();
-        var target = IoCManager.Resolve<IClyde>()
-            .CreateLightRenderTarget(viewport.LightRenderTarget.Size, name: "roof-target");
+        if (_target?.Size != viewport.LightRenderTarget.Size)
+        {
+            _target = _clyde
+                .CreateRenderTarget(viewport.LightRenderTarget.Size,
+                    new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb), name: "roof-target");
+        }
 
-        worldHandle.RenderInRenderTarget(target,
+        worldHandle.RenderInRenderTarget(_target,
             () =>
             {
-                var invMatrix = target.GetWorldToLocalMatrix(eye, viewport.RenderScale / 2f);
+                var invMatrix = _target.GetWorldToLocalMatrix(eye, viewport.RenderScale / 2f);
 
-                while (query.MoveNext(out var uid, out var comp, out var grid, out var xform))
+                var gridMatrix = xformSystem.GetWorldMatrix(mapEnt);
+                var matty = Matrix3x2.Multiply(gridMatrix, invMatrix);
+
+                worldHandle.SetTransform(matty);
+
+                var tileEnumerator = mapSystem.GetTilesEnumerator(mapEnt, grid, bounds);
+
+                // Due to stencilling we essentially draw on unrooved tiles
+                while (tileEnumerator.MoveNext(out var tileRef))
                 {
-                    if (mapId != xform.MapID)
-                        continue;
+                    var tileDef = (ContentTileDefinition) _tileDefMan[tileRef.Tile.TypeId];
 
-                    var gridMatrix = xformSystem.GetWorldMatrix(uid);
-                    var matty = Matrix3x2.Multiply(gridMatrix, invMatrix);
-
-                    worldHandle.SetTransform(matty);
-
-                    var tileEnumerator = mapSystem.GetTilesEnumerator(uid, grid, bounds);
-
-                    while (tileEnumerator.MoveNext(out var tileRef))
+                    if (!tileDef.Roof)
                     {
-                        var tileDef = (ContentTileDefinition) _tileDefMan[tileRef.Tile.TypeId];
+                        // Check if the tile is occluded in which case hide it anyway.
+                        // This is to avoid lit walls bleeding over to unlit tiles.
+                        _occluders.Clear();
+                        lookup.GetLocalEntitiesIntersecting(mapEnt, tileRef.GridIndices, _occluders);
+                        var found = false;
 
-                        if (!tileDef.Roof)
+                        foreach (var occluder in _occluders)
                         {
-                            // Check if the tile is occluded in which case hide it anyway.
-                            // This is to avoid lit walls bleeding over to unlit tiles.
-                            _occluders.Clear();
-                            lookup.GetLocalEntitiesIntersecting(uid, tileRef.GridIndices, _occluders);
-                            var found = false;
-
-                            foreach (var occluder in _occluders)
-                            {
-                                if (!occluder.Comp.Enabled)
-                                    continue;
-
-                                found = true;
-                                break;
-                            }
-
-                            if (!found)
+                            if (!occluder.Comp.Enabled)
                                 continue;
+
+                            found = true;
+                            break;
                         }
 
-                        var local = lookup.GetLocalBounds(tileRef, grid.TileSize);
-                        worldHandle.DrawRect(local, comp.Color);
+                        if (!found)
+                            continue;
                     }
-                }
-            }, light.AmbientLightColor);
 
-        _clyde.BlurLights(viewport, target, viewport.Eye, 14f * 4f);
+                    var local = lookup.GetLocalBounds(tileRef, grid.TileSize);
+                    worldHandle.DrawRect(local, roofComp.Color);
+                }
+
+            }, Color.Transparent);
 
         args.WorldHandle.RenderInRenderTarget(viewport.LightRenderTarget,
             () =>
@@ -105,7 +109,11 @@ public sealed class RoofOverlay : Overlay
                 var invMatrix =
                     viewport.LightRenderTarget.GetWorldToLocalMatrix(viewport.Eye, viewport.RenderScale / 2f);
                 worldHandle.SetTransform(invMatrix);
-                worldHandle.DrawTextureRect(target.Texture, bounds);
+
+                var maskShader = _protoManager.Index<ShaderPrototype>("Mix").Instance();
+                worldHandle.UseShader(maskShader);
+
+                worldHandle.DrawTextureRect(_target.Texture, bounds);
             }, null);
     }
 }
