@@ -27,7 +27,7 @@ public sealed partial class SuspicionRuleComponent : Component
     /// If the result is less than 1 or more than the player count, it is clamped to those values.
     /// </summary>
     [DataField]
-    public float TraitorPercentage = 0.25f;
+    public float TraitorPercentage = 0.3f;
 
     /// <summary>
     /// How long to wait before the game starts after the round starts.
