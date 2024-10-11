@@ -1,5 +1,5 @@
 using Content.Server.Objectives.Components;
-using Content.Server.Revolutionary.Components;
+using Content.Server.Roles.Jobs;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Components;
 

@@ -1,5 +1,5 @@
 using Content.Server.Objectives.Components;
-using Content.Server.Revolutionary.Components;
+using Content.Server.Roles.Jobs;
 using Content.Server.Shuttles.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Mind;
@@ -85,10 +85,10 @@ public sealed class KillPersonConditionSystem : EntitySystem
         }
 
         var allHeads = new List<EntityUid>();
-        foreach (var minds in allHumans)
+        foreach (var person in allHumans)
         {
-            if (TryComp<MindComponent>(minds, out var mind) && mind.OwnedEntity != null && HasComp<CommandStaffComponent>(mind.OwnedEntity.Value))
-                allHeads.Add(minds);
+            if (TryComp<MindComponent>(person, out var mind) && mind.OwnedEntity is { } ent && HasComp<CommandStaffComponent>(ent))
+                allHeads.Add(person);
         }
 
         if (allHeads.Count == 0)
