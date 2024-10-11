@@ -13,12 +13,12 @@
 
   Gas mixers have 3 connections: 2 inputs and 1 output, as shown below:
   <Box>
-    <GuideEntityEmbed Entity="GasPipeStraight" Caption="Primary Port" Rotation="90"/>
-    <GuideEntityEmbed Entity="GasMixer" Caption=""/>
+    <GuideEntityEmbed Entity="GasPipeStraight" Caption="Primary" Rotation="90"/>
+    <GuideEntityEmbed Entity="GasMixer" Caption="" Rotation="90"/>
     <GuideEntityEmbed Entity="GasPipeStraight" Caption="Output" Rotation="90"/>
   </Box>
 <Box>
-  <GuideEntityEmbed Entity="PipeStraight" Caption="Side Port"/>
+  <GuideEntityEmbed Entity="GasPipeStraight" Caption="Side"/>
 </Box>
 
   Gas mixers will still respect the requested gas mixture even if one of the input gases is not available. For example:
@@ -34,7 +34,7 @@
 
   <Box>
     <GuideEntityEmbed Entity="GasPipeStraight" Caption="Input" Rotation="90"/>
-    <GuideEntityEmbed Entity="GasFilter" Caption=""/>
+    <GuideEntityEmbed Entity="GasFilter" Caption="" Rotation="90"/>
     <GuideEntityEmbed Entity="GasPipeStraight" Caption="Output" Rotation="90"/>
   </Box>
   <Box>
