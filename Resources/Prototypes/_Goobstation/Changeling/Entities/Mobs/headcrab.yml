@@ -1,0 +1,31 @@
+- type: entity
+  name: head slug
+  parent: [SimpleMobBase]
+  id: MobHeadcrab
+  description: You don't want to touch it.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: headcrab
+      sprite: _Goobstation/Changeling/headcrab.rsi
+  - type: Physics
+  - type: Bloodstream
+    bloodReagent: BloodChangeling
+    bloodMaxVolume: 60
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: headcrab
+      Dead:
+        Base: headcrab_dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      50: Dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 3
+    baseSprintSpeed: 7
+  - type: ExplosionResistance
+    damageCoefficient: 0

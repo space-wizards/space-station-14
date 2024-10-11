@@ -1,0 +1,64 @@
+# actions
+- type: entity
+  id: ActionHereticOpenStore
+  name: Open Knowledge Store
+  description: Open the Knowledge Store.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Goobstation/Heretic/abilities_heretic.rsi
+      state: open_store
+    event: !type:EventHereticOpenStore {}
+  - type: HereticAction
+    requireMagicItem: false
+
+- type: entity
+  id: ActionHereticMansusGrasp
+  name: Mansus Grasp
+  description: Channel the power of the Old Gods through your grip.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    useDelay: 10
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Goobstation/Heretic/abilities_heretic.rsi
+      state: mansus_grasp
+    event: !type:EventHereticMansusGrasp {}
+  - type: HereticAction
+    requireMagicItem: false
+
+- type: entity
+  id: ActionHereticLivingHeart
+  name: Living Heart
+  description: Use your heart to get your sacrifice targets location.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    useDelay: 2
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Goobstation/Heretic/abilities_heretic.rsi
+      state: living_heart
+    event: !type:EventHereticLivingHeart {}
+  - type: HereticAction
+    requireMagicItem: false
+
+- type: entity
+  id: ActionHereticMansusLink
+  name: Manse Link
+  description: Pierce through reality and connect minds to one another. Default radio key is :z
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: EntityTargetAction
+    useDelay: 10
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Goobstation/Heretic/abilities_heretic.rsi
+      state: mansus_link
+    event: !type:EventHereticMansusLink {}
+  - type: HereticAction
+    requireMagicItem: false
+    messageLoc: heretic-speech-link

@@ -1,9 +1,0 @@
-- type: entity
-  id: GuidebookChangelingFluff
-  name: guidebook changeling
-  description: you shouldn't be seeing this normally.
-  categories: [ HideSpawnMenu ]
-  components:
-    - type: Sprite
-      sprite: Changeling/Guidebook/guidebook_changeling.rsi
-      state: icon

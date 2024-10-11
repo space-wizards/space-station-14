@@ -1,0 +1,31 @@
+- type: entity
+  parent: BaseShield
+  id: ChangelingShield
+  name: oraganic shield
+  description: A large, fleshy shield.
+  suffix: Unremoveable
+  components:
+    - type: Unremoveable
+    - type: Sprite
+      sprite: _Goobstation/Changeling/shields.rsi
+      state: ling-icon
+    - type: Item
+      sprite: _Goobstation/Changeling/shields.rsi
+      heldPrefix: ling
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 60
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+        - trigger:
+            !type:DamageTrigger
+            damage: 50
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:PlaySoundBehavior
+              sound:
+                collection: MetalBreak

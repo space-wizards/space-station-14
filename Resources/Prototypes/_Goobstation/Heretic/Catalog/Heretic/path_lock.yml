@@ -1,0 +1,23 @@
+- type: listing
+  id: KnowledgePathStartLock
+  name: knowledge-path-lock-s1-name
+  description: knowledge-path-lock-s1-desc
+  icon: { sprite: _Goobstation/Heretic/Blades/blade_lock.rsi, state: icon }
+  #productHereticKnowledge:
+  cost:
+    KnowledgePoint: 1
+  categories:
+  - HereticPathLock
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:HereticPathCondition
+    stage: 0
+    # add every path here because you shouldn't be able to buy more starter knowledge
+    blacklist:
+    - Ash
+    - Blade
+    - Flesh
+    - Lock
+    - Rust
+    - Void
