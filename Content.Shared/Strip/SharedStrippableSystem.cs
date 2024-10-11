@@ -103,7 +103,7 @@ public abstract class SharedStrippableSystem : EntitySystem
 
         if (userHands.ActiveHandEntity != null && !hasEnt)
             StartStripInsertInventory((user, userHands), strippable.Owner, userHands.ActiveHandEntity.Value, args.Slot);
-        else if (userHands.ActiveHandEntity == null && hasEnt)
+        else if (hasEnt)
             StartStripRemoveInventory(user, strippable.Owner, held!.Value, args.Slot);
     }
 
@@ -135,7 +135,7 @@ public abstract class SharedStrippableSystem : EntitySystem
 
         if (user.Comp.ActiveHandEntity != null && handSlot.HeldEntity == null)
             StartStripInsertHand(user, target, user.Comp.ActiveHandEntity.Value, handId, targetStrippable);
-        else if (user.Comp.ActiveHandEntity == null && handSlot.HeldEntity != null)
+        else if (handSlot.HeldEntity != null)
             StartStripRemoveHand(user, target, handSlot.HeldEntity.Value, handId, targetStrippable);
     }
 
