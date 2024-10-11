@@ -64,7 +64,7 @@
   id: JobServiceWorker
   groups:
   - GroupTankHarness
-  - BartenderJumpsuit
+  - ServiceWorkerJumpsuit
   - CommonBackpack
   - Glasses
   - Survival
