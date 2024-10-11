@@ -23,7 +23,7 @@
     availableModes:
     - SemiAuto
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/grenade_launcher.ogg
+      path: /Audio/Effects/thunk.ogg
     soundEmpty:
       path: /Audio/Items/hiss.ogg
     clumsyProof: true
@@ -86,7 +86,7 @@
     - SemiAuto
     - FullAuto
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/grenade_launcher.ogg
+      path: /Audio/Effects/thunk.ogg
     soundEmpty:
       path: /Audio/Items/hiss.ogg
     clumsyProof: true
@@ -137,6 +137,6 @@
     - SemiAuto
     - FullAuto
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/grenade_launcher.ogg
+      path: /Audio/Effects/thunk.ogg
     soundEmpty:
       path: /Audio/Items/hiss.ogg
