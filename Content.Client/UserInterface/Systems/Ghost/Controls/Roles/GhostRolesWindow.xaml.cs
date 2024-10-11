@@ -15,7 +15,8 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
         public event Action<GhostRoleInfo>? OnRoleRequestButtonClicked;
         public event Action<GhostRoleInfo>? OnRoleFollow;
 
-        private List<Collapsible> _collapsibleBoxes = new();
+        private Dictionary<(string name, string description), Collapsible> _collapsibleBoxes = new();
+        private Dictionary<(string name, string description), bool> _collapsedStates = new();
 
         public GhostRolesWindow()
         {
@@ -29,24 +30,19 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
             _collapsibleBoxes.Clear();
         }
 
-        public Dictionary<int, bool> SaveCollapsibleBoxesStates()
+        public void SaveCollapsibleBoxesStates()
         {
-            var collapsibleStates = new Dictionary<int, bool>();
-            foreach (var collapsible in _collapsibleBoxes)
+            foreach (var (key, collapsible) in _collapsibleBoxes)
             {
-                if (int.TryParse(collapsible.Name, out var collapsibleId))
-                {
-                    collapsibleStates[collapsibleId] = collapsible.BodyVisible;
-                }
+                _collapsedStates[key] = collapsible.BodyVisible;
             }
-            return collapsibleStates;
         }
 
-        public void RestoreCollapsibleBoxesStates(Dictionary<int, bool> collapsibleStates)
+        public void RestoreCollapsibleBoxesStates()
         {
-            foreach (var collapsible in _collapsibleBoxes)
+            foreach (var (key, collapsible) in _collapsibleBoxes)
             {
-                if (int.TryParse(collapsible.Name, out var collapsibleId) && collapsibleStates.TryGetValue(collapsibleId, out var isOpen))
+                if (_collapsedStates.TryGetValue(key, out var isOpen))
                 {
                     collapsible.BodyVisible = isOpen;
                 }
@@ -80,11 +76,11 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
                     Margin = new Thickness(0, 10, 0, 0),
                 };
 
-                var uniqueId = $"{name}-{description}-{ghostRoleInfos.Select(r => r.Requirements)}".GetHashCode();
+                // TODO: Add Requirements to this key when it'll be fixed and work as an equality key in GhostRolesEui
+                var key = (name, description);
 
                 var collapsible = new Collapsible(buttonHeading, body)
                 {
-                    Name = uniqueId.ToString(),
                     Orientation = BoxContainer.LayoutOrientation.Vertical,
                     Margin = new Thickness(0, 0, 0, 8),
                 };
@@ -92,7 +88,7 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
                 body.AddChild(buttons);
 
                 EntryContainer.AddChild(collapsible);
-                _collapsibleBoxes.Add(collapsible);
+                _collapsibleBoxes.Add(key, collapsible);
             }
             else
             {
