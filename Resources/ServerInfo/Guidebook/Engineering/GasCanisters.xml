@@ -4,6 +4,8 @@
     <GuideEntityEmbed Entity="AirCanister"/>
     <GuideEntityEmbed Entity="OxygenCanister"/>
     <GuideEntityEmbed Entity="NitrogenCanister"/>
+  </Box>
+  <Box>
     <GuideEntityEmbed Entity="CarbonDioxideCanister"/>
     <GuideEntityEmbed Entity="StorageCanister"/>
     <GuideEntityEmbed Entity="GasPort"/>
