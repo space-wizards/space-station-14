@@ -238,9 +238,9 @@
   category: Weapons
   completetime: 8
   materials:
-    Plastic: 700
-    Plasma: 200
-    Gold: 100
+    Plastic: 1500
+    Plasma: 1000
+    Gold: 500
 
 - type: latheRecipe
   id: EmptyDetonator
