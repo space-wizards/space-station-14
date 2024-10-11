@@ -1,0 +1,9 @@
+- type: cargoProduct
+  id: SpeacialSodaCrate  ##For Weaselstation
+  icon:
+    sprite: _Weaselstation/Objects/Consumable/Drinks/weh_max.rsi
+    state: icon
+  product: WeaselstationSodaSupply
+  cost: 5000
+  category: cargoproduct-category-name-food
+  group: market
