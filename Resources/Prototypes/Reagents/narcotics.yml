@@ -461,3 +461,64 @@
         type: Add
         time: 5
         refresh: false
+
+- type: reagent
+  id: BathSalts
+  name: reagent-name-bath-salts
+  group: Narcotics
+  desc: reagent-desc-bath-salts
+  physicalDesc: reagent-physical-desc-powdery
+  flavor: bitter
+  color: "#FAFAFA"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          max: 20
+        damage:
+          types:
+            Asphyxiation: 1.5
+            Poison: 0.5
+    Narcotic:
+      effects:
+      - !type:Emote
+        emote: drools
+        showInChat: true
+        probability: 0.15
+        conditions:
+        - !type:ReagentThreshold
+          max: 20
+      - !type:ChemVomit
+        probability: 0.1
+        - !type:ReagentThreshold
+          max: 25
+      - !type:Drunk
+        boozePower: 5
+        - !type:ReagentThreshold
+          max: 15
+      - !type:MovespeedModifier
+        walkSpeedModifier: 1.15
+        sprintSpeedModifier: 1.15
+      - !type:Jitter
+        conditions:
+        - !type:ReagentThreshold
+          max: 20
+      - !type:GenericStatusEffect
+        key: Stun
+        time: 2
+        type: Remove
+      - !type:GenericStatusEffect
+        key: KnockedDown
+        time: 2
+        type: Remove
+        key: Drowsiness
+        time: 8
+        type: Remove
+    Medicine:
+      effects:
+      - !type:ResetNarcolepsy
+        conditions:
+        - !type:ReagentThreshold
+          min: 10
