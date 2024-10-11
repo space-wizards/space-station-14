@@ -483,6 +483,9 @@
             Poison: 0.5
     Narcotic:
       effects:
+      - !type:MovespeedModifier
+        walkSpeedModifier: 1.15
+        sprintSpeedModifier: 1.15
       - !type:Emote
         emote: drools
         showInChat: true
@@ -490,15 +493,12 @@
         conditions:
         - !type:ReagentThreshold
           max: 20
-      - !type:Drunk
-        boozePower: 3.5
-        - !type:ReagentThreshold
-          max: 15
-      - !type:MovespeedModifier
-        walkSpeedModifier: 1.15
-        sprintSpeedModifier: 1.15
       - !type:Jitter
         conditions:
+        - !type:ReagentThreshold
+          max: 20
+      - !type:Drunk
+        boozePower: 3
         - !type:ReagentThreshold
           max: 20
       - !type:GenericStatusEffect
@@ -506,9 +506,6 @@
         time: 2
         type: Remove
       - !type:GenericStatusEffect
-        key: KnockedDown
-        time: 2
-        type: Remove
         key: Drowsiness
         time: 8
         type: Remove
@@ -519,6 +516,6 @@
         - !type:ReagentThreshold
           min: 10
       - !type:ChemVomit
-        probability: 0.1
+        probability: 0.2
         - !type:ReagentThreshold
-          max: 25
+          max: 20
