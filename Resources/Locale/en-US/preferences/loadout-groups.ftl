@@ -43,6 +43,8 @@ loadout-group-bartender-head = Bartender head
 loadout-group-bartender-jumpsuit = Bartender jumpsuit
 loadout-group-bartender-outerclothing = Bartender outer clothing
 
+loadout-group-service-worker-jumpsuit = Service worker jumpsuit
+
 loadout-group-chef-head = Chef head
 loadout-group-chef-mask = Chef mask
 loadout-group-chef-jumpsuit = Chef jumpsuit
