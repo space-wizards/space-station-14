@@ -1,0 +1,45 @@
+- type: entity
+  id: HereticRuneRitual
+  name: transmutation rune
+  description: An ancient drawing used by sinister individuals for sacrifices.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: HereticRitualRune
+  - type: Sprite
+    drawdepth: WallMountedItems
+    sprite: _Goobstation/Heretic/ritual_rune.rsi
+    state: icon
+  - type: Clickable
+  - type: UserInterface
+    interfaces:
+       enum.HereticRitualRuneUiKey.Key:
+        type: HereticRitualRuneBoundUserInterface
+
+- type: entity
+  id: HereticRuneRitualDrawAnimation
+  name: unfinished transmutation rune
+  description: An unfinished ancient drawing used by sinister individuals for sacrifices.
+  categories: [ HideSpawnMenu ]
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    drawdepth: WallMountedItems
+    sprite: _Goobstation/Heretic/ritual_rune.rsi
+    state: icon_drawanim
+
+- type: entity
+  id: HereticRuneRitualAnimation
+  name: transmutation rune
+  description: you shouldn't be seeing this description
+  placement:
+    mode: SnapgridCenter
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TimedDespawn
+    lifetime: 1
+  - type: Sprite
+    drawdepth: WallMountedItems
+    sprite: _Goobstation/Heretic/ritual_rune.rsi
+    state: icon_ritualanim

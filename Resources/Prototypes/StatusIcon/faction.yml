@@ -52,14 +52,3 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Syndicate
-
-- type: factionIcon
-  id: HivemindFaction
-  priority: 11
-  showTo:
-    components:
-      - ShowAntagIcons
-      - Hivemind
-  icon:
-    sprite: /Textures/Interface/Misc/job_icons.rsi
-    state: Changeling
