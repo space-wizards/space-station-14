@@ -22,6 +22,8 @@ using Content.Shared.Access;
 using Content.Shared.Access.Components;
 using Content.Shared.Atmos.Rotting;
 using Content.Shared.Chat;
+using Content.Shared.Damage;
+using Content.Shared.Damage.Prototypes;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.GameTicking.Components;
@@ -66,6 +68,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem<SuspicionRuleComponent>
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly StoreSystem _storeSystem = default!;
     [Dependency] private readonly RejuvenateSystem _rejuvenate = default!;
+    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
 
     private readonly SoundSpecifier _traitorStartSound = new SoundPathSpecifier("/Audio/Ambience/Antag/traitor_start.ogg");
 
@@ -120,6 +123,13 @@ public sealed class SuspicionRuleSystem : GameRuleSystem<SuspicionRuleComponent>
 
     private void OnMobStateChanged(EntityUid uid, SuspicionPlayerComponent component, MobStateChangedEvent args)
     {
+        if (args.NewMobState == MobState.Critical)
+        {
+            var damageSpec = new DamageSpecifier(_prototypeManager.Index<DamageGroupPrototype>("Genetic"), 300);
+            _damageableSystem.TryChangeDamage(uid, damageSpec);
+            return;
+        }
+
         if (args.NewMobState != MobState.Dead) // Someone died.
             return;
 
