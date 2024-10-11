@@ -303,3 +303,27 @@
         damage:
           types:
             Caustic: 1
+
+- type: reagent
+  id: Saltpetre
+  name: reagent-name-saltpetre
+  group: Botanical
+  desc: reagent-desc-saltpetre
+  physicalDesc: reagent-physical-desc-powdery
+  flavor: bitter
+  color: "white"
+  plantMetabolism:
+  - !type:PlantAdjustNutrition
+    amount: 1
+  - !type:PlantAdjustHealth
+    amount: 1.25
+  - !type:PlantAffectGrowth
+    probability: 0.1
+    amount: 1
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 0.5
