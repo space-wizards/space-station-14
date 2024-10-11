@@ -537,6 +537,26 @@
     highPressureMultiplier: 0.3
     lowPressureMultiplier: 1000
 
+#Makeshift Hardsuit Helmet
+- type: entity
+  parent: ClothingHeadHardsuitWithLightBase
+  id: ClothingHeadHelmetProspectorHardsuitHelmet
+  name: makeshift hardsuit helmet
+  description: A helmet cobbled together with cloth, insulation, and metal that barely meets low-pressure safety standards. The light is relatively strong, though.
+  components:
+  - type: Sprite
+    sprite: Impstation\Prospectors\prospector-hardsuit-helmet.rsi
+  - type: Clothing
+    sprite: Impstation\Prospectors\prospector-hardsuit-helmet.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.525
+    lowPressureMultiplier: 1000
+  - type: PointLight
+    color: green
+    radius: 6
+    energy: 2
+
+
 #CENTCOMM / ERT HARDSUITS
 #ERT Leader Hardsuit
 - type: entity
