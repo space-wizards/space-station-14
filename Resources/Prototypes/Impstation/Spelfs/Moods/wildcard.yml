@@ -82,8 +82,7 @@
   moodName: spelf-mood-plant-pacifist-name
   moodDesc: spelf-mood-plant-pacifist-desc
   conflicts:
-    - Vegetarian
-    - Frugivore
+    - FoodRestrict
 
 # You are compulsively drawn to puddles. You must drink any that you see. 
 - type: spelfMood
@@ -121,9 +120,7 @@
   moodName: spelf-mood-cannibal-name
   moodDesc: spelf-mood-cannibal-desc
   conflicts:
-    - Vegetarian
-    - Frugivore
-    - Fungivore
+    - FoodRestrict
 
 # The law does not apply to you
 - type: spelfMood
