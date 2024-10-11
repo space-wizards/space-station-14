@@ -130,11 +130,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem<SuspicionRuleComponent>
 
             sus.EndAt += TimeSpan.FromSeconds(sus.TimeAddedPerKill);
             sus.AnnouncedTimeLeft.Clear();
-            RaiseNetworkEvent(new TimerChangedEvent()
-            {
-                EndAt = sus.EndAt,
-                GameState = sus.GameState,
-            });
+
             var allTraitors = FindAllOfType(SuspicionRole.Traitor);
             // Ok this is fucking horrible
             foreach (var traitor in allTraitors)
@@ -393,11 +389,6 @@ public sealed class SuspicionRuleSystem : GameRuleSystem<SuspicionRuleComponent>
     {
         component.GameState = SuspicionGameState.InProgress;
         component.EndAt = TimeSpan.FromSeconds(component.RoundDuration);
-        RaiseNetworkEvent(new TimerChangedEvent()
-        {
-            EndAt = component.EndAt,
-            GameState = SuspicionGameState.InProgress,
-        });
 
         var allPlayerData = _playerManager.GetAllPlayerData().ToList();
         var participatingPlayers = new List<(EntityUid mind, SuspicionRoleComponent comp)>();
@@ -535,11 +526,4 @@ public sealed class SuspicionRuleSystem : GameRuleSystem<SuspicionRuleComponent>
             }
         }
     }
-}
-
-[Serializable, NetSerializable]
-public sealed partial class TimerChangedEvent : EntityEventArgs
-{
-    public TimeSpan EndAt;
-    public SuspicionGameState GameState;
 }
