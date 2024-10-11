@@ -37,7 +37,7 @@ public sealed class TechAnomalySystem : EntitySystem
             if (_timing.CurTime < tech.NextTimer)
                 continue;
 
-            tech.NextTimer += TimeSpan.FromSeconds(tech.TimerFrequency);
+            tech.NextTimer = _timing.CurTime + TimeSpan.FromSeconds(tech.TimerFrequency);
 
             _signal.InvokePort(uid, tech.TimerPort);
         }
