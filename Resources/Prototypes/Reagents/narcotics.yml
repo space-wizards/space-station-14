@@ -490,12 +490,8 @@
         conditions:
         - !type:ReagentThreshold
           max: 20
-      - !type:ChemVomit
-        probability: 0.1
-        - !type:ReagentThreshold
-          max: 25
       - !type:Drunk
-        boozePower: 5
+        boozePower: 3.5
         - !type:ReagentThreshold
           max: 15
       - !type:MovespeedModifier
@@ -522,3 +518,7 @@
         conditions:
         - !type:ReagentThreshold
           min: 10
+      - !type:ChemVomit
+        probability: 0.1
+        - !type:ReagentThreshold
+          max: 25
