@@ -80,4 +80,12 @@ public sealed partial class SpelfMoodPrototype : IPrototype
     /// </summary>
     [DataField("moodVars", customTypeSerializer: typeof(PrototypeIdValueDictionarySerializer<string, DatasetPrototype>))]
     public Dictionary<string, string> MoodVarDatasets = new();
+
+    /// <summary>
+    /// If false, prevents the same variable from being rolled twice when rolling
+    /// mood variables for this mood. Does not prevent the same mood variable
+    /// from being present in other moods.
+    /// </summary>
+    [DataField("allowDuplicateMoodVars"), ViewVariables(VVAccess.ReadWrite)]
+    public bool AllowDuplicateMoodVars = false;
 }

@@ -191,8 +191,38 @@ public sealed partial class SpelfMoodsSystem : SharedSpelfMoodSystem
             Conflicts = proto.Conflicts,
         };
 
-        foreach (var (name, dataset) in proto.MoodVarDatasets)
-            mood.MoodVars.Add(name, _random.Pick(_proto.Index<DatasetPrototype>(dataset)));
+        var alreadyChosen = new HashSet<string>();
+
+        foreach (var (name, datasetID) in proto.MoodVarDatasets)
+        {
+            var dataset = _proto.Index<DatasetPrototype>(datasetID);
+
+            if (proto.AllowDuplicateMoodVars)
+            {
+                mood.MoodVars.Add(name, _random.Pick(dataset));
+                continue;
+            }
+
+            var choices = dataset.Values.ToList();
+            var foundChoice = false;
+            while (choices.Count > 0)
+            {
+                var choice = _random.PickAndTake(choices);
+                if (alreadyChosen.Contains(choice))
+                    continue;
+
+                mood.MoodVars.Add(name, choice);
+                alreadyChosen.Add(choice);
+                foundChoice = true;
+                break;
+            }
+
+            if (!foundChoice)
+            {
+                Log.Warning($"Ran out of choices for moodvar \"{name}\" in \"{proto.ID}\"! Picking a duplicate...");
+                mood.MoodVars.Add(name, _random.Pick(_proto.Index<DatasetPrototype>(dataset)));
+            }
+        }
 
         return mood;
     }
