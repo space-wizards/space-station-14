@@ -183,8 +183,9 @@ public class RadialMenu : BaseWindow
 /// <summary>
 /// Special button for closing radial menu or going back between radial menu levels.
 /// Is looking like just <see cref="TextureButton "/> but considers whole space around
-/// itself (til radial menu buttons) as itself in case of clicking. Also considers all space
-/// outside of radial menu buttons as itself for clicking.
+/// itself (til radial menu buttons) as itself in case of clicking. But this 'effect'
+/// works only if control have parent, and ActiveContainer property is set.
+/// Also considers all space outside of radial menu buttons as itself for clicking.
 /// </summary>
 public sealed class RadialMenuContextualCentralTextureButton : TextureButton
 {
@@ -204,19 +205,24 @@ public sealed class RadialMenuContextualCentralTextureButton : TextureButton
     /// <inheritdoc />
     protected override bool HasPoint(Vector2 point)
     {
-        if (ActiveContainer == null)
+        if (ActiveContainer == null || Parent == null)
         {
-            return false;
+            return base.HasPoint(point);
         }
 
-        var cX = -Position.X + Parent!.Width / 2;
-        var cY = -Position.Y + Parent.Width / 2;
+        var cX = -Position.X + Parent.Width * 0.5f;
+        var cY = -Position.Y + Parent.Height * 0.5f;
 
-        var dist = Math.Sqrt(Math.Pow(point.X - cX, 2) + Math.Pow(point.Y - cY, 2));
+        var dist = Math.Pow(point.X - cX, 2) + Math.Pow(point.Y - cY, 2);
+
         // Button space is inside half of container radius / or outside double of its radius.
         // half of radius and double the radius are radial menu concentric circles that are
         // created by radial menu buttons.
-        return dist > ActiveContainer.Radius * 2 || dist < ActiveContainer.Radius / 2;
+        var outerRadiusSquared = Math.Pow(ActiveContainer.Radius * 2, 2);
+        var innerRadiusSquared = Math.Pow(ActiveContainer.Radius * 0.5f, 2);
+
+        // comparing to squared values is faster then making sqrt
+        return dist > outerRadiusSquared || dist < innerRadiusSquared;
     }
 }
 
@@ -241,6 +247,16 @@ public class RadialMenuTextureButton : TextureButton
     public float AngleSectorTo { get; set; }
 
     /// <summary>
+    /// Outer radius for drawing segment and pointer detection.
+    /// </summary>
+    public float OuterRadius { get; set; }
+
+    /// <summary>
+    /// Outer radius for drawing segment and pointer detection.
+    /// </summary>
+    public float InnerRadius { get; set; }
+
+    /// <summary>
     /// A simple texture button that can move the user to a different layer within a radial menu
     /// </summary>
     public RadialMenuTextureButton()
@@ -255,18 +271,21 @@ public class RadialMenuTextureButton : TextureButton
 
         if (texture == null)
         {
-            TryGetStyleProperty(StylePropertyTexture, out texture);
-            if (texture == null)
+            if (TryGetStyleProperty(StylePropertyTexture, out texture) && texture != null)
             {
-                return;
+                // draw texture
+                handle.DrawTextureRectRegion(texture, PixelSizeBox);
             }
         }
-        // draw texture
-        handle.DrawTextureRectRegion(texture, PixelSizeBox);
+
+        if (Parent == null)
+        {
+            return;
+        }
 
         // draw sector where space that button occupies actually is
-        var pX = -Position.X + Parent!.Width / 2;
-        var pY = -Position.Y + Parent.Width / 2;
+        var pX = -Position.X + Parent.Width * 0.5f;
+        var pY = -Position.Y + Parent.Height * 0.5f;
 
         var containerCenter = new Vector2(pX, pY) * UIScale;
 
@@ -281,7 +300,7 @@ public class RadialMenuTextureButton : TextureButton
             ? new Color(173, 216, 230, 100)
             : new Color(173, 216, 230, 70); // todo: use stylesheets
 
-        DrawBagleSector(handle, containerCenter, radius / 2, radius * 2, AngleSectorFrom, AngleSectorTo, color);
+        DrawBagleSector(handle, containerCenter, radius * 0.5f, radius * 2, AngleSectorFrom, AngleSectorTo, color);
     }
 
     private void OnClicked(ButtonEventArgs args)
@@ -300,12 +319,17 @@ public class RadialMenuTextureButton : TextureButton
     /// <inheritdoc />
     protected override bool HasPoint(Vector2 point)
     {
-        var cX = -Position.X + Parent!.Width / 2;
-        var cY = -Position.Y + Parent.Width / 2;
+        if (Parent == null)
+        {
+            return false;
+        }
+
+        var cX = -Position.X + Parent.Width * 0.5f;
+        var cY = -Position.Y + Parent.Height * 0.5f;
 
         var dist = Math.Sqrt(Math.Pow(point.X - cX, 2) + Math.Pow(point.Y - cY, 2));
         var parent = (RadialContainer)Parent;
-        var isInRadius = dist < parent.Radius * 2 && dist > parent.Radius / 2;
+        var isInRadius = dist < parent.Radius * 2 && dist > parent.Radius * 0.5f;
         if (!isInRadius)
         {
             return false;
@@ -392,8 +416,21 @@ public class RadialMenuTextureButton : TextureButton
                 _sectorPointsForDrawing[i] = outerPoint;
                 _sectorPointsForDrawing[bufferSize - 1 - i] = innerPoint;
             }
-
         }
+
+        var fromPoint = new Angle(angleSectorFrom).RotateVec(-Vector2.UnitY);
+        drawingHandleScreen.DrawLine(
+            (center + fromPoint * radiusOuter) * UIScale,
+            (center + fromPoint * radiusInner) * UIScale,
+            new Color(173, 216, 230, 180) // todo: use stylesheets
+        );
+
+        var toPoint = new Angle(angleSectorTo).RotateVec(-Vector2.UnitY);
+        drawingHandleScreen.DrawLine(
+            (center + toPoint * radiusOuter) * UIScale,
+            (center + toPoint * radiusInner) * UIScale,
+            new Color(173, 216, 230, 180) // todo: use stylesheets
+        );
 
         var type = filled
             ? DrawPrimitiveTopology.TriangleStrip

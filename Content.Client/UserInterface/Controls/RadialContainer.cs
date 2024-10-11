@@ -68,20 +68,21 @@ public class RadialContainer : LayoutContainer
 
     }
 
-    protected override void Draw(DrawingHandleScreen handle)
+    /// <inheritdoc />
+    protected override Vector2 ArrangeOverride(Vector2 finalSize)
     {
-		const float baseRadius = 100f;
+        const float baseRadius = 100f;
         const float radiusIncrement = 5f;
-		
+
         var children = ReserveSpaceForHiddenChildren
             ? Children
             : Children.Where(x => x.Visible);
 
         // elements are children (buttons) and dividers, they all are spread evenly
         var elementCount = children.Count() * 2;
-		
-		// Add padding from the center at higher child counts so they don't overlap.
-		Radius = baseRadius + (elementCount * radiusIncrement);
+
+        // Add padding from the center at higher child counts so they don't overlap.
+        Radius = baseRadius + (elementCount * radiusIncrement);
 
         var isAntiClockwise = RadialAlignment == RAlignment.AntiClockwise;
 
@@ -105,8 +106,8 @@ public class RadialContainer : LayoutContainer
             ? -1f
             : 1f;
 
-        var halfWidth = Width / 2f;
-        var halfHeight = Height / 2f;
+        var halfWidth = finalSize.X / 2f;
+        var halfHeight = finalSize.Y/ 2f;
 
         // Adjust the positions of all the child elements
         var query = children.Select((x, index) => (index, x));
@@ -117,37 +118,23 @@ public class RadialContainer : LayoutContainer
             var indexForChildElement = index * 2 + 1;
 
             var targetAngleOfChild = AngularRange.X + sepAngle * indexForChildElement;
-            var childX = Radius * MathF.Sin(targetAngleOfChild) + halfWidth - child.Width / 2f;
-            var childY = -Radius * MathF.Cos(targetAngleOfChild) + halfHeight - child.Height / 2f;
-            var position = new Vector2(childX, childY);
+            var childX = Radius * MathF.Sin(targetAngleOfChild) + halfWidth - child.DesiredSize.X / 2f;
+            var childY = -Radius * MathF.Cos(targetAngleOfChild) + halfHeight - child.DesiredSize.Y / 2f;
+            var position = new Vector2(childX, childY) + Position;
 
-            SetPosition(child, position);
+            SetPosition(child, position * UIScale);
 
             // radial menu buttons need to know in which sector around container they should be rendered
             if (child is RadialMenuTextureButton tb)
             {
                 tb.AngleSectorFrom = sepAngle * (indexForChildElement - 1);
                 tb.AngleSectorTo = sepAngle * (indexForChildElement + 1);
+                tb.InnerRadius = Radius / 2;
+                tb.OuterRadius = Radius * 2;
             }
-
-            // draw separator lines for buttons
-            var positionOfSeparator = index * 2;
-
-            var targetAngleOfSeparator = AngularRange.X + sepAngle * positionOfSeparator;
-            var separatorSin = MathF.Sin(targetAngleOfSeparator);
-            var separatorCos = MathF.Cos(targetAngleOfSeparator);
-            handle.DrawLine(
-                new Vector2(
-                    Radius/2 * separatorSin + halfWidth,
-                    -Radius/2 * separatorCos + halfHeight
-                ) * UIScale,
-                new Vector2(
-                    Radius * 2 * separatorSin + halfWidth,
-                    -Radius * 2 * separatorCos + halfHeight
-                ) * UIScale,
-                new Color(173, 216, 230, 180) // todo: use stylesheets
-            );
         }
+
+        return base.ArrangeOverride(finalSize);
     }
 
     /// <summary>
@@ -159,4 +146,5 @@ public class RadialContainer : LayoutContainer
         Clockwise,
         AntiClockwise,
     }
+
 }
