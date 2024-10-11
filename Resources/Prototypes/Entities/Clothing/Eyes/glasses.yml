@@ -76,17 +76,17 @@
     sprite: Clothing/Eyes/Glasses/glasses.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/glasses.rsi
-  - type: Appearance
-  - type: ItemMapper
-    mapLayers:
-      lens:
-        whitelist:
-          tags:
-          - Lens
   - type: ItemSlots
     slots:
       lens_slot:
         startingItem: PrescriptionLens
+        whitelist:
+          tags:
+          - Lens
+  - type: Appearance
+  - type: ItemMapper
+    mapLayers:
+      lens:
         whitelist:
           tags:
           - Lens
