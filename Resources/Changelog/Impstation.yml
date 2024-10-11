@@ -2869,3 +2869,12 @@
   id: 355
   time: '2024-10-11T20:41:43.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/449
+- author: starlighthowls
+  changes:
+  - message: map Skimmer 0-12 pop
+    type: Add
+  - message: fixes an incorrect sound file directory in ranged weapons
+    type: Fix
+  id: 356
+  time: '2024-10-11T21:01:58.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/457
