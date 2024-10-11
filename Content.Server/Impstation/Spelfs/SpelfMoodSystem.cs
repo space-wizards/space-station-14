@@ -28,7 +28,8 @@ public sealed partial class SpelfMoodsSystem : SharedSpelfMoodSystem
     [Dependency] private readonly UserInterfaceSystem _bui = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
 
-    public readonly List<SpelfMood> SharedMoods = new();
+    public IReadOnlyList<SpelfMood> SharedMoods => _sharedMoods.AsReadOnly();
+    private readonly List<SpelfMood> _sharedMoods = new();
 
 
     [ValidatePrototypeId<DatasetPrototype>]
@@ -64,7 +65,7 @@ public sealed partial class SpelfMoodsSystem : SharedSpelfMoodSystem
 
     private void NewSharedMoods()
     {
-        SharedMoods.Clear();
+        _sharedMoods.Clear();
         for (int i = 0; i < _config.GetCVar(CCVars.SpelfSharedMoodCount); i++)
             TryAddSharedMood();
     }
@@ -73,7 +74,7 @@ public sealed partial class SpelfMoodsSystem : SharedSpelfMoodSystem
     {
         if (mood == null)
         {
-            if (TryPick(SharedDataset, out var moodProto, SharedMoods))
+            if (TryPick(SharedDataset, out var moodProto, _sharedMoods))
             {
                 mood = RollMood(moodProto);
                 checkConflicts = false; // TryPick has cleared this mood already
@@ -84,10 +85,10 @@ public sealed partial class SpelfMoodsSystem : SharedSpelfMoodSystem
             }
         }
 
-        if (checkConflicts && (GetConflicts(SharedMoods).Contains(mood.ProtoId) || GetMoodProtoSet(SharedMoods).Overlaps(mood.Conflicts)))
+        if (checkConflicts && (GetConflicts(_sharedMoods).Contains(mood.ProtoId) || GetMoodProtoSet(_sharedMoods).Overlaps(mood.Conflicts)))
             return false;
 
-        SharedMoods.Add(mood);
+        _sharedMoods.Add(mood);
         var enumerator = EntityManager.EntityQueryEnumerator<SpelfMoodsComponent>();
         while (enumerator.MoveNext(out var ent, out var comp))
         {
@@ -159,7 +160,7 @@ public sealed partial class SpelfMoodsSystem : SharedSpelfMoodSystem
         if (!Resolve(uid, ref comp))
             return;
 
-        var state = new SpelfMoodsBuiState(comp.Moods, comp.FollowsSharedMoods ? SharedMoods : []);
+        var state = new SpelfMoodsBuiState(comp.Moods, comp.FollowsSharedMoods ? _sharedMoods : []);
         _bui.SetUiState(uid, SpelfMoodsUiKey.Key, state);
     }
 
@@ -234,6 +235,18 @@ public sealed partial class SpelfMoodsSystem : SharedSpelfMoodSystem
         var datasetProto = _proto.Index<WeightedRandomPrototype>(RandomSpelfMoodDataset).Pick();
 
         return TryAddRandomMood(uid, datasetProto, comp);
+    }
+
+    public void SetMoods(EntityUid uid, IEnumerable<SpelfMood> moods, SpelfMoodsComponent? comp = null, bool notify = true)
+    {
+        if (!Resolve(uid, ref comp))
+            return;
+
+        comp.Moods = moods.ToList();
+        if (notify)
+            NotifyMoodChange(uid);
+
+        UpdateBUIState(uid, comp);
     }
 
     public HashSet<string> GetConflicts(IEnumerable<SpelfMood> moods)
