@@ -1,4 +1,5 @@
-﻿using Content.Shared.Dataset;
+﻿using System.Linq;
+using Content.Shared.Dataset;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
@@ -36,6 +37,21 @@ public partial class SpelfMood
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     public Dictionary<string, string> MoodVars = new();
+
+    public (string, object)[] GetLocArgs()
+    {
+        return MoodVars.Select(v => (v.Key, (object)v.Value)).ToArray();
+    }
+
+    public string GetLocName()
+    {
+        return Loc.GetString(MoodName, GetLocArgs());
+    }
+
+    public string GetLocDesc()
+    {
+        return Loc.GetString(MoodDesc, GetLocArgs());
+    }
 }
 
 [Prototype("spelfMood")]
