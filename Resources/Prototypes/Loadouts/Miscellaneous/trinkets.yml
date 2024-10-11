@@ -14,7 +14,7 @@
     requirement:
       !type:RoleTimeRequirement
       role: JobBartender
-      time: 18000 # 5 hour
+      time: 36000 # 10 hour
 - type: loadoutEffectGroup
   id: Musician
   effects:
@@ -22,7 +22,7 @@
     requirement:
       !type:RoleTimeRequirement
       role: JobMusician
-      time: 18000 # 5 hour
+      time: 36000 # 10 hour
 
 
 # Flowers
