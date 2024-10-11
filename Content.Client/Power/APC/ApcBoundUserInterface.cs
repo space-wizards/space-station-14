@@ -10,9 +10,6 @@ namespace Content.Client.Power.APC
     [UsedImplicitly]
     public sealed class ApcBoundUserInterface : BoundUserInterface
     {
-        // TODO: This is in the base class, but is private! Remove this, once it's accessible
-        [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
-
         [ViewVariables]
         private ApcMenu? _menu;
 
@@ -28,10 +25,10 @@ namespace Content.Client.Power.APC
             _menu.OnBreaker += BreakerPressed;
 
             var hasAccess = false;
-            if (_playerManager.LocalEntity != null)
+            if (PlayerManager.LocalEntity != null)
             {
                 var accessReader = EntMan.System<AccessReaderSystem>();
-                hasAccess = accessReader.IsAllowed((EntityUid)_playerManager.LocalEntity, Owner);
+                hasAccess = accessReader.IsAllowed((EntityUid)PlayerManager.LocalEntity, Owner);
             }
             _menu?.SetAccessEnabled(hasAccess);
         }
