@@ -6,14 +6,19 @@
   </Box>
 
   [color=#ffa500]Caution! This species has a severely limiting game mechanic and is not recommended for new players.[/color]
+  
 
+## Mood Swings
   <Box>
     <GuideEntityEmbed Entity="PositronicBrain" Caption=""/>
   </Box>
 
   The Thaven have a unique brain structure, similar to a positronic brain, and thus have "Moods" which affect them similarly to a borg's Laws. [color=#ffa500]These Moods must be followed to the best of your ability! Treat them like server rules. If a Thaven violates them, they experience distress or discomfort. The specifics of that are up to you, but if a Mood is violated, you must seek to correct your mistake immediately if possible.[/color]
 
+  [color=#ffa500]These moods make it very difficult to form a consistent character or personality, as they can severely affect the way a Thaven speaks and interacts with others.[/color]
+  
   Thaven Moods can be affected by ionizing radiation, which can have some odd effects on them. Be wary of Ion Storms. (This is currently not implemented.)
+  EMAGs can induce random currents in Thaven brains, which can cause them to develop severely irrational and sometimes debilitating behaviors.
 
   Their unarmed attacks are slow, and deal no damage. However, they do cause a fair amount of stun buildup.
 

@@ -63,8 +63,8 @@
 
 - type: marking
   id: SnailTentacleBeard
-  bodyPart: Head
-  markingCategory: Head
+  bodyPart: HeadTop
+  markingCategory: HeadTop
   speciesRestriction: [Snail]
   sprites:
   - sprite: Mobs/Customization/snail/snail_face.rsi
@@ -72,8 +72,8 @@
 
 - type: marking
   id: SnailTentacleMoustache
-  bodyPart: Head
-  markingCategory: Head
+  bodyPart: HeadTop
+  markingCategory: HeadTop
   speciesRestriction: [Snail]
   sprites:
   - sprite: Mobs/Customization/snail/snail_face.rsi
