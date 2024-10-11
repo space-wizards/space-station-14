@@ -5,4 +5,4 @@ traitor-briefing = You are a traitor. Your goal is to [bold]kill[/bold] the othe
 innocent-briefing = You are an innocent. Your goal is to [bold]survive[/bold] and to [bold]kill[/bold] the traitors while keeping your fellow crew alive. Good luck.
 
 suspicion-traitor-uplink = Traitor Uplink
-tc-added-sus = You have been given 1 TC for your performance.
+tc-added-sus = You have been given 2 TC for your performance.

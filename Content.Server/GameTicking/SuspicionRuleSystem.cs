@@ -4,11 +4,11 @@ using Content.Server.Administration.Commands;
 using Content.Server.Administration.Systems;
 using Content.Server.Antag;
 using Content.Server.Atmos.Components;
-using Content.Server.Chat;
 using Content.Server.Chat.Managers;
 using Content.Server.Examine;
 using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Components;
+using Content.Server.Hands.Systems;
 using Content.Server.Implants;
 using Content.Server.KillTracking;
 using Content.Server.Mind;
@@ -28,6 +28,7 @@ using Content.Shared.Damage.Prototypes;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.GameTicking.Components;
+using Content.Shared.Hands.Components;
 using Content.Shared.Humanoid;
 using Content.Shared.Implants.Components;
 using Content.Shared.Mind;
@@ -69,7 +70,8 @@ public sealed class SuspicionRuleSystem : GameRuleSystem<SuspicionRuleComponent>
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly StoreSystem _storeSystem = default!;
     [Dependency] private readonly RejuvenateSystem _rejuvenate = default!;
-    [Dependency] private readonly SuicideSystem _suicideSystem = default!;
+    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+    [Dependency] private readonly HandsSystem _handsSystem = default!;
 
     private readonly SoundSpecifier _traitorStartSound = new SoundPathSpecifier("/Audio/Ambience/Antag/traitor_start.ogg");
 
@@ -126,8 +128,9 @@ public sealed class SuspicionRuleSystem : GameRuleSystem<SuspicionRuleComponent>
     {
         if (args.NewMobState == MobState.Critical)
         {
-            _suicideSystem.Suicide(uid);
-            Log.Debug("Player is critical, killing.");
+            var damageSpec = new DamageSpecifier(_prototypeManager.Index<DamageGroupPrototype>("Genetic"), 90000);
+            _damageableSystem.TryChangeDamage(args.Target, damageSpec);
+            Log.Debug("Player is critical, applying genetic damage.");
             return;
         }
 
@@ -162,7 +165,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem<SuspicionRuleComponent>
 
                     _storeSystem.TryAddCurrency(new Dictionary<string, FixedPoint2>()
                         {
-                            { "Telecrystal", 1 },
+                            { "Telecrystal", 2 },
                         },
                         implant,
                         storeComp
@@ -270,7 +273,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem<SuspicionRuleComponent>
         if (!_mobState.IsDead(ev.Target, mobState))
             return;
 
-        if (!HasComp<SuspicionPlayerComponent>(ev.User))
+        if (!HasComp<HandsComponent>(ev.User))
             return;
 
         ev.Verbs.Add(new Verb()
