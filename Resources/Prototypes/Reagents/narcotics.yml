@@ -483,28 +483,24 @@
             Poison: 0.5
     Narcotic:
       effects:
+      - !type:Jitter
       - !type:MovespeedModifier
-        walkSpeedModifier: 1.15
-        sprintSpeedModifier: 1.15
+        walkSpeedModifier: 1.2
+        sprintSpeedModifier: 1.2
       - !type:Emote
         emote: drools
         showInChat: true
-        probability: 0.15
+        probability: 0.2
         conditions:
-        - !type:ReagentThreshold
-          max: 20
-      - !type:Jitter
-      - !type:Drunk
-        boozePower: 3
         - !type:ReagentThreshold
           max: 20
       - !type:GenericStatusEffect
         key: Stun
-        time: 2
+        time: 3
         type: Remove
       - !type:GenericStatusEffect
-        key: Drowsiness
-        time: 8
+        key: KnockedDown
+        time: 3
         type: Remove
     Medicine:
       effects:
