@@ -106,10 +106,10 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
 
                 // Adding a new role
                 _window.AddEntry(name, description, hasAccess, reason, group, spriteSystem);
-
-                // Restore the Collapsible box state if it is saved
-                _window.RestoreCollapsibleBoxesStates(collapsibleStates);
             }
+
+            // Restore the Collapsible box state if it is saved
+            _window.RestoreCollapsibleBoxesStates(collapsibleStates);
 
             // Close the rules window if it is no longer needed
             var closeRulesWindow = ghostState.GhostRoles.All(role => role.Identifier != _windowRulesId);
