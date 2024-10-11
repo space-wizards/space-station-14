@@ -327,3 +327,10 @@
         damage:
           types:
             Poison: 0.5
+    Medicine:
+      effects:
+      - !type:ChemVomit
+        conditions:
+        - !type:ReagentThreshold
+          min: 5
+        probability: 0.2
