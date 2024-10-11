@@ -20,7 +20,6 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Replays;
 using System.Linq;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Telephone;
 
@@ -177,6 +176,11 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
     private bool TryCallTelephone(Entity<TelephoneComponent> source, Entity<TelephoneComponent> receiver, EntityUid user, TelephoneCallOptions? options = null)
     {
         if (!IsSourceAbleToReachReceiver(source, receiver))
+            return false;
+
+        if (IsTelephoneEngaged(receiver) &&
+            options?.ForceConnect != true &&
+            options?.ForceJoin != true)
             return false;
 
         var evCallAttempt = new TelephoneCallAttemptEvent(source, receiver, user);

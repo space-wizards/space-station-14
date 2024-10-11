@@ -82,6 +82,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
 
         // Misc events
         SubscribeLocalEvent<HolopadUserComponent, EmoteEvent>(OnEmote);
+        SubscribeLocalEvent<HolopadUserComponent, JumpToCoreEvent>(OnJumpToCore);
     }
 
     #region: Holopad UI bound user interface messages
@@ -372,7 +373,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
 
             foreach (var receiver in GetLinkedHolopads(linkedHolopad))
             {
-                if (linkedHolopad.Comp.Hologram == null)
+                if (receiver.Comp.Hologram == null)
                     continue;
 
                 // Name is based on the physical identity of the user
@@ -380,9 +381,23 @@ public sealed class HolopadSystem : SharedHolopadSystem
                 var name = Loc.GetString("holopad-hologram-name", ("name", ent));
 
                 // Force the emote, because if the user can do it, the hologram can too
-                _chatSystem.TryEmoteWithChat(linkedHolopad.Comp.Hologram.Value, args.Emote, ChatTransmitRange.Normal, false, name, true, true);
+                _chatSystem.TryEmoteWithChat(receiver.Comp.Hologram.Value, args.Emote, ChatTransmitRange.Normal, false, name, true, true);
             }
         }
+    }
+
+    private void OnJumpToCore(Entity<HolopadUserComponent> entity, ref JumpToCoreEvent args)
+    {
+        if (!TryComp<StationAiHeldComponent>(entity, out var entityStationAiHeld))
+            return;
+
+        if (!_stationAiSystem.TryGetStationAiCore((entity, entityStationAiHeld), out var stationAiCore))
+            return;
+
+        if (!TryComp<TelephoneComponent>(stationAiCore, out var stationAiCoreTelephone))
+            return;
+
+        _telephoneSystem.EndTelephoneCalls((stationAiCore.Value, stationAiCoreTelephone));
     }
 
     #endregion
@@ -533,7 +548,9 @@ public sealed class HolopadSystem : SharedHolopadSystem
         if (!user.Value.Comp.LinkedHolopads.Any())
         {
             _pendingRequestsForSpriteState.Remove(user.Value);
-            RemComp<HolopadUserComponent>(user.Value);
+
+            if (user.Value.Comp.LifeStage < ComponentLifeStage.Stopping)
+                RemComp<HolopadUserComponent>(user.Value);
         }
     }
 

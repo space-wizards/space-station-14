@@ -29,9 +29,9 @@ public sealed partial class HolopadWindow : FancyWindow
     private HolopadUiKey _currentUiKey;
     private TelephoneState _currentState;
     private TimeSpan _buttonUnlockTime;
-    private float _updateTimer = 0.1f;
+    private float _updateTimer = 0.25f;
 
-    private const float UpdateTime = 0.1f;
+    private const float UpdateTime = 0.25f;
     private TimeSpan _buttonUnlockDelay = TimeSpan.FromSeconds(0.5f);
 
     public event Action<NetEntity>? SendHolopadStartNewCallMessageAction;
