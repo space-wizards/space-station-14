@@ -3,14 +3,12 @@ using Content.Server.Storage.Components;
 using Content.Shared.EntityTable;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction.Events;
-using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Storage.EntitySystems;
 
 public sealed class SpawnTableOnUseSystem : EntitySystem
 {
     [Dependency] private readonly EntityTableSystem _entityTable = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
 
     public override void Initialize()
@@ -35,7 +33,6 @@ public sealed class SpawnTableOnUseSystem : EntitySystem
             _hands.TryPickupAnyHand(args.User, spawned);
         }
 
-        _audio.PlayPvs(ent.Comp.Sound, coords);
         Del(ent);
     }
 }
