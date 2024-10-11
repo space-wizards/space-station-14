@@ -318,7 +318,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem<SuspicionRuleComponent>
         if (!_roleSystem.MindHasRole<SuspicionRoleComponent>(mind.Value, out var _, out var role))
             return;
 
-        args.PushMarkup($"They were a [bold][color{role.Value.Comp.Role.GetRoleColor().ToHexNoAlpha()}]{role.Value.Comp.Role.ToString()}[/color][/bold].");
+        args.PushMarkup($"They were a [color{role.Value.Comp.Role.GetRoleColor().ToHexNoAlpha()}]{role.Value.Comp.Role.ToString()}[/color].");
     }
 
     private void OnGetBriefing(Entity<SuspicionRoleComponent> role, ref GetBriefingEvent args)
