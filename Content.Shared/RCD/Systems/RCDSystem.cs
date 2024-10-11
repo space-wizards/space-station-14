@@ -535,7 +535,6 @@ public class RCDSystem : EntitySystem
             }
 
         }
-        Logger.Debug("tis fine!");
         return true;
     }
 
