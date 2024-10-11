@@ -1,46 +1,41 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "by Widgetbeck",
+  "copyright": "widgetbeck",
   "size": {
     "x": 32,
     "y": 32
   },
+  "load": {
+	  "srgb": false
+  },
   "states": [
     {
-      "name": "ears1",
+      "name": "head",
       "directions": 4
     },
     {
-      "name": "ears2",
+      "name": "eyes",
       "directions": 4
     },
     {
-      "name": "ears3",
+      "name": "hand",
       "directions": 4
     },
     {
-      "name": "ears4",
+      "name": "jumpsuit",
       "directions": 4
     },
     {
-      "name": "piercings",
+      "name": "neck",
       "directions": 4
     },
     {
-      "name": "piercings2",
+      "name": "back",
       "directions": 4
     },
     {
-      "name": "chesttat1",
-      "directions": 4
-    },
-    {
-      "name": "larmtat1",
-      "directions": 4
-    },
-    {
-      "name": "rarmtat1",
+      "name": "outerClothing",
       "directions": 4
     }
   ]

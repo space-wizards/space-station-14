@@ -313,7 +313,9 @@
   moodName: spelf-mood-word-bad-name
   moodDesc: spelf-mood-word-bad-desc
   moodVars:
-    word: SpelfWords
+    word1: SpelfWords
+    word2: SpelfWords
+    word3: SpelfWords
 
 # [ITEM]s are an abomination. You must avoid them at all costs, and destroy them if necessary.
 #- type: spelfMood

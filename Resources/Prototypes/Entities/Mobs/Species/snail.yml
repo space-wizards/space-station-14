@@ -162,6 +162,7 @@
           32:
             sprite: Mobs/Species/Snail/displacement.rsi
             state: back
+      
   - type: Speech
     speechSounds: Snail
   - type: TypingIndicator

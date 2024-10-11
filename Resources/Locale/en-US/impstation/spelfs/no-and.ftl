@@ -111,6 +111,6 @@ spelf-mood-agoraphobic-desc = Open spaces are uncomfortable. Seek to rearrange s
 spelf-mood-nonsmoker-name = Non-Smoker
 spelf-mood-nonsmoker-desc = Secondhand smoke is incredibly dangerous. Avoid areas where people are smoking in public. 
 
-spelf-mood-word-bad-name = "{$word}" Is Offensive
-spelf-mood-word-bad-name = "{$word}" is an extremely offensive taboo. 
+spelf-mood-word-bad-name = Taboo
+spelf-mood-word-bad-desc = "{$word1}," "{$word2}," and "{$word3}," are extremely offensive. 
 
