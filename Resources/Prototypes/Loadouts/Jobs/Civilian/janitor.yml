@@ -29,7 +29,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpskirtJanimaid
 
-  - type: loadout
+- type: loadout
   id: MaidJumpskirtmini
   equipment:
     jumpsuit: ClothingUniformJumpskirtJanimaidmini
