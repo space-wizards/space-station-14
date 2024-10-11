@@ -17,7 +17,6 @@
   sprite: /Textures/Interface/Radial/RPD/straight.png
   mode: ConstructObject
   prototype: GasPipeStraight
-
   cost: 0.5
   delay: 0
   rules:
@@ -187,51 +186,51 @@
   prototype: GasPassiveVent
   cost: 1
   delay: 0
-  rules:
-  - MustBuildOnSubfloor
-  collisionMask: Impassable
-  rotation: User
-  fx: EffectRCDConstruct0
+    rules:
+    - MustBuildOnSubfloor
+    collisionMask: Impassable
+    rotation: User
+    fx: EffectRCDConstruct0
 
-- type: rcd
-  id: Radiator
-  category: AtmosphericUtility
-  sprite: /Textures/Interface/Radial/RPD/radiator.png
-  mode: ConstructObject
-  prototype: HeatExchanger
-  cost: 1
-  delay: 0
-  rules:
-  - MustBuildOnSubfloor
-  collisionMask: Impassable
-  rotation: User
-  fx: EffectRCDConstruct0
+  - type: rcd
+    id: Radiator
+    category: AtmosphericUtility
+    sprite: /Textures/Interface/Radial/RPD/radiator.png
+    mode: ConstructObject
+    prototype: HeatExchanger
+    cost: 1
+    delay: 0
+    rules:
+    - MustBuildOnSubfloor
+    collisionMask: Impassable
+    rotation: User
+    fx: EffectRCDConstruct0
 
-- type: rcd
-  id: MixerGas
-  category: AtmosphericUtility
-  sprite: /Textures/Interface/Radial/RPD/gas_mixer.png
-  mode: ConstructObject
-  prototype: GasMixer
-  mirrorPrototype: GasMixerFlipped
-  cost: 1
-  delay: 0
-  rules:
-  - MustBuildOnSubfloor
-  collisionMask: Impassable
-  rotation: User
-  fx: EffectRCDConstruct0
+  - type: rcd
+    id: MixerGas
+    category: AtmosphericUtility
+    sprite: /Textures/Interface/Radial/RPD/gas_mixer.png
+    mode: ConstructObject
+    prototype: GasMixer
+    mirrorPrototype: GasMixerFlipped
+    cost: 1
+    delay: 0
+    rules:
+    - MustBuildOnSubfloor
+    collisionMask: Impassable
+    rotation: User
+    fx: EffectRCDConstruct0
 
-- type: rcd
-  id: FilterGas
-  category: AtmosphericUtility
-  sprite: /Textures/Interface/Radial/RPD/gas_filter.png
-  mode: ConstructObject
-  prototype: GasFilter
-  mirrorPrototype: GasFilterFlipped
-  cost: 1
-  delay: 0
-  rules:
+  - type: rcd
+    id: FilterGas
+    category: AtmosphericUtility
+    sprite: /Textures/Interface/Radial/RPD/gas_filter.png
+    mode: ConstructObject
+    prototype: GasFilter
+    mirrorPrototype: GasFilterFlipped
+    cost: 1
+    delay: 0
+    rules:
   - MustBuildOnSubfloor
   collisionMask: Impassable
   rotation: User

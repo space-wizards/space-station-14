@@ -4,7 +4,6 @@ using Content.Shared.Interaction;
 using Content.Shared.RCD;
 using Content.Shared.RCD.Components;
 using Content.Shared.RCD.Systems;
-using Linguini.Syntax.Ast;
 using Robust.Client.Placement;
 using Robust.Client.Player;
 using Robust.Shared.Enums;
@@ -55,7 +54,7 @@ public sealed class RCDConstructionGhostSystem : EntitySystem
                 string.IsNullOrEmpty(rcd.CachedPrototype.MirrorPrototype))
                 return false;
 
-                _useMirrorPrototype = !rcd.UseMirrorPrototype;
+            _useMirrorPrototype = !rcd.UseMirrorPrototype;
 
             var useProto = _useMirrorPrototype ? rcd.CachedPrototype.MirrorPrototype : rcd.CachedPrototype.Prototype;
             CreatePlacer(placerEntity.Value, rcd, useProto);
