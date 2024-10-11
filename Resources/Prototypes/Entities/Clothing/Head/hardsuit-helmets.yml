@@ -540,22 +540,38 @@
 #Makeshift Hardsuit Helmet
 - type: entity
   parent: ClothingHeadHardsuitWithLightBase
-  id: ClothingHeadHelmetProspectorHardsuitHelmet
+  id: ClothingHeadHelmetProspector
   name: makeshift hardsuit helmet
-  description: A helmet cobbled together with cloth, insulation, and metal that barely meets low-pressure safety standards. The light is relatively strong, though.
+  description: A helmet cobbled together with cloth, insulation, and metal that barely meets low-pressure safety standards. It'll do.
   components:
   - type: Sprite
     sprite: Impstation\Prospectors\prospector-hardsuit-helmet.rsi
+    layers:
+    - state: icon
+    - state: icon-unshaded
+      shader: unshaded
+    - state: light-overlay
+      visible: false
+      shader: unshaded
+      map: [ "light" ]
+  - type: HandheldLight
+    addPrefix: false
+  - type: ToggleableLightVisuals
+    clothingVisuals:
+      head:
+      - state: equipped-head-light
+        shader: unshaded
   - type: Clothing
-    sprite: Impstation\Prospectors\prospector-hardsuit-helmet.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-head
+      - state: equipped-head-unshaded
+        shader: unshaded
   - type: PressureProtection
     highPressureMultiplier: 0.525
     lowPressureMultiplier: 1000
   - type: PointLight
     color: green
-    radius: 6
-    energy: 2
-
 
 #CENTCOMM / ERT HARDSUITS
 #ERT Leader Hardsuit
