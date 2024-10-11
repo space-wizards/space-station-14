@@ -106,6 +106,9 @@
     - type: Clickable
     - type: Physics
       bodyType: KinematicController
+    - type: Rotatable
+      rotateWhileAnchored: false
+    - type: MobMover
     - type: Fixtures
       fixtures:
         fix1:
@@ -135,9 +138,14 @@
     - type: EntityStorageVisuals
       stateBaseClosed: littletykescar
       stateDoorOpen: littletykescar_open
+    - type: FootstepModifier
+      footstepSoundCollection:
+        collection: FootstepSkates
     - type: Tag
       tags:
         - DoorBumpOpener
+        - FootstepSound
+
 
 
 #For admin spawning only

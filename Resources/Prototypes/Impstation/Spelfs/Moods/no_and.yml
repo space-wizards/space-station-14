@@ -16,10 +16,6 @@
     - HugBad
     - AlwaysAlone
     - Atheist
-    - Vegetarian
-    - Carnivore
-    - Frugivore
-    - Fungivore
     - Procrastinator
     - NoRadio
     - ImproperStorage
@@ -39,6 +35,10 @@
     - HappyBad
     - OnlyPills
     - AvoidPuddles
+    - FoodRestrict
+    - Claustrophobic
+    - Agoraphobic
+    - NonSmoker
 
 - type: spelfMood
   id: SecretMoods
@@ -129,48 +129,6 @@
   moodDesc: spelf-mood-atheist-desc
   conflicts:
     - VeryReligious
-
-# You are a strict vegetarian. 
-- type: spelfMood
-  id: Vegetarian
-  moodName: spelf-mood-vegetarian-name
-  moodDesc: spelf-mood-vegetarian-desc
-  conflicts:
-    - Carnivore
-    - Frugivore
-    - Fungivore
-    - PlantPacifist
-
-# You are a strict carnivore. 
-- type: spelfMood
-  id: Carnivore
-  moodName: spelf-mood-carnivore-name
-  moodDesc: spelf-mood-carnivore-desc
-  conflicts:
-    - Vegetarian
-    - Frugivore
-    - Fungivore
-
-# You are a strict frugivore. 
-- type: spelfMood
-  id: Frugivore
-  moodName: spelf-mood-frugivore-name
-  moodDesc: spelf-mood-frugivore-desc
-  conflicts:
-    - Vegetarian
-    - Carnivore
-    - Fungivore
-    - PlantPacifist
-
-# You are a strict fungivore. 
-- type: spelfMood
-  id: Fungivore
-  moodName: spelf-mood-fungivore-name
-  moodDesc: spelf-mood-fungivore-desc
-  conflicts:
-    - Vegetarian
-    - Carnivore
-    - Frugivore
 
 # Punctuality is impolite. You must walk slowly at all times, and be fashionably late to any obligations.
 - type: spelfMood
@@ -266,11 +224,13 @@
   conflicts:
     - DontSpeakToCommand
 
-# Hardsuits are SO last year. You cannot wear them.
+# [CLOTHING ITEM] is SO last year. You cannot wear them.
 - type: spelfMood
   id: HardsuitsBad
   moodName: spelf-mood-hardsuits-bad-name
   moodDesc: spelf-mood-hardsuits-bad-desc
+  moodVars:
+    clothes: Clothes
 
 # Hats and helmets make your hair look bad. You cannot wear them.
 - type: spelfMood
@@ -310,15 +270,47 @@
     - PuddleDrinker
     - DinnerFloor
 
+# You are a strict (food restriction name). 
+- type: spelfMood
+  id: FoodRestrict
+  moodName: spelf-mood-food-restrict-name
+  moodDesc: spelf-mood-food-restrict-desc
+  moodVars:
+    food: FoodRestrictions
+  conflicts:
+    - PlantPacifist
 
+# Claustrophobic: Small rooms cause you great distress. Avoid them where possible, and renovate your workplace if necessary.
+- type: spelfMood
+  id: Claustrophobic
+  moodName: spelf-mood-claustrophobic-name
+  moodDesc: spelf-mood-claustrophobic-desc
+  conflicts:
+    - Agoraphobic
+
+# Agoraphobic: Open spaces are uncomfortable. Seek to rearrange such spaces into small, efficient and modular rooms.
+- type: spelfMood
+  id: Agoraphobic
+  moodName: spelf-mood-agoraphobic-name
+  moodDesc: spelf-mood-agoraphobic-desc
+  conflicts:
+    - Claustrophobic
+
+# Non-Smoker: Secondhand smoke is incredibly dangerous. Avoid areas where people are smoking in public.
+- type: spelfMood
+  id: NonSmoker
+  moodName: spelf-mood-nonsmoker-name
+  moodDesc: spelf-mood-nonsmoker-desc
 
 # “[WORD]” is an extremely offensive taboo.
-#- type: spelfMood
-#  id: WordBad
-#  moodName: spelf-mood-word-bad-name
-#  moodDesc: spelf-mood-word-bad-desc
-#  moodVars:
-#    word: SpelfMoodWords //////// I recommend using the traitor keywords list.
+- type: spelfMood
+  id: WordBad
+  moodName: spelf-mood-word-bad-name
+  moodDesc: spelf-mood-word-bad-desc
+  moodVars:
+    word1: SpelfWords
+    word2: SpelfWords
+    word3: SpelfWords
 
 # [ITEM]s are an abomination. You must avoid them at all costs, and destroy them if necessary.
 #- type: spelfMood
