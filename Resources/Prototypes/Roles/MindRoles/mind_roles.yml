@@ -178,3 +178,13 @@
     antagPrototype: Zombie
     exclusiveAntag: true
   - type: ZombieRole
+
+
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleSuspicion # ok this name is dumb, yes.
+  name: Suspicion Role
+  components:
+    - type: MindRole
+      antag: false
+    - type: SuspicionRole

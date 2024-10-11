@@ -1,0 +1,14 @@
+﻿- type: gameMap
+  id: ReachSSS
+  mapName: Reach
+  mapPath: /Maps/Nonstations/reach-sss.yml
+  minPlayers: 0
+  stations:
+    ReachSSS:
+      stationProto: StandardStationArena
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: "Reach"
+      - type: StationJobs
+        availableJobs:
+          Passenger: [ -1, -1 ]

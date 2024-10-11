@@ -91,7 +91,7 @@
   showInVote: false #4boring4vote
   description: greenshift-description
   rules:
-  - SpaceTrafficControlFriendlyEventScheduler 
+  - SpaceTrafficControlFriendlyEventScheduler
   - BasicRoundstartVariation
 
 - type: gamePreset
@@ -126,7 +126,7 @@
   showInVote: false #Admin Use
   description: secret-description
   rules:
-  - SpaceTrafficControlFriendlyEventScheduler 
+  - SpaceTrafficControlFriendlyEventScheduler
   - BasicRoundstartVariation
 
 - type: gamePreset
@@ -168,6 +168,19 @@
   supportedMaps: DeathMatchMapPool
   rules:
     - DeathMatch31
+
+- type: gamePreset
+  id: Suspicion
+  alias:
+  - sss
+  - suspicion
+  name: suspicion-title
+  description: suspicion-description
+  maxPlayers: 20
+  showInVote: true
+  supportedMaps: SuspicionMapPool
+  rules:
+  - Suspicion
 
 - type: gamePreset
   id: Nukeops
