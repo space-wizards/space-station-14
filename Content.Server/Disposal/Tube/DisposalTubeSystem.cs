@@ -191,16 +191,45 @@ namespace Content.Server.Disposal.Tube
 
         private void OnGetJunctionNextDirection(EntityUid uid, DisposalJunctionComponent component, ref GetDisposalsNextDirectionEvent args)
         {
+            if (component.FollowStraightestPath)
+            {
+                OnGetJunctionNextStraightestDirection(uid, component, ref args);
+                return;
+            }
+
             var next = Transform(uid).LocalRotation.GetDir();
             var ev = new GetDisposalsConnectableDirectionsEvent();
             RaiseLocalEvent(uid, ref ev);
             var directions = ev.Connectable.Skip(1).ToArray();
 
             if (args.Holder.PreviousDirectionFrom == Direction.Invalid ||
-                args.Holder.PreviousDirectionFrom == next)
+                            args.Holder.PreviousDirectionFrom == next)
             {
                 args.Next = _random.Pick(directions);
                 return;
+            }
+
+            args.Next = next;
+        }
+
+        private void OnGetJunctionNextStraightestDirection(EntityUid uid, DisposalJunctionComponent component, ref GetDisposalsNextDirectionEvent args)
+        {
+            var ev = new GetDisposalsConnectableDirectionsEvent();
+            RaiseLocalEvent(uid, ref ev);
+
+            var diff = 0d;
+            var directions = ev.Connectable.ToArray();
+            var next = directions.First();
+
+            foreach (var direction in directions)
+            {
+                var shortestAngle = Math.Abs(Angle.ShortestDistance(args.Holder.PreviousDirectionFrom.ToAngle(), direction.ToAngle()).Theta);
+
+                if (shortestAngle > diff)
+                {
+                    diff = shortestAngle;
+                    next = direction;
+                }
             }
 
             args.Next = next;

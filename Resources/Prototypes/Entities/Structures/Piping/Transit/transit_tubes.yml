@@ -1,0 +1,398 @@
+# Base
+
+- type: entity
+  id: TransitTubeBase
+  abstract: true
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Disposal
+  components:
+  - type: Sprite
+  - type: Appearance
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Static
+    canCollide: false
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.5,0.25,0.5"
+        mask:
+        - SubfloorMask
+  - type: Transform
+    anchored: true
+  - type: Anchorable
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100 #excess damage (nuke?). avoid computational cost of spawning entities.
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:DoActsBehavior
+        acts: ["Breakage"]
+      - !type:ChangeConstructionNodeBehavior
+        node: broken
+  - type: Rotatable
+  - type: Pullable
+  - type: CollideOnAnchor
+  - type: ContainerContainer
+    containers:
+      DisposalTube: !type:Container
+  - type: StaticPrice
+    price: 30
+
+# Pipes
+
+- type: entity
+  id: TransitTubeBroken
+  parent: TransitTubeBase
+  name: broken transit tube
+  description: A BBT (big broken tube).
+  components:
+  - type: Sprite
+    drawdepth: WallMountedItems
+    sprite: Structures/Piping/transit_tubes.rsi
+    layers:
+    - map: [ "tube" ]
+      state: straight
+  - type: Construction
+    graph: DisposalPipe
+    node: broken
+
+- type: entity
+  id: TransitTubeTrunk
+  parent: TransitTubeBase
+  name: transit tube trunk
+  description: A tube trunk used as an entry point for transit systems.
+  components:
+  - type: Sprite
+    drawdepth: WallMountedItems
+    sprite: Structures/Piping/transit_tubes.rsi
+    layers:
+    - map: [ "tube" ]
+      state: station_uni
+  - type: DisposalTube
+    containerId: DisposalEntry
+  - type: DisposalEntry
+  - type: ContainerContainer
+    containers:
+      DisposalEntry: !type:Container
+  - type: GenericVisualizer
+    visuals:
+      enum.DisposalTubeVisuals.VisualState:
+        pipe:
+          Free: { state: station_uni }
+          Anchored: { state: station_uni }
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.5,0.25,0.4"
+        mask:
+        - SubfloorMask
+
+- type: entity
+  id: TransitTube
+  parent: TransitTubeBase
+  name: transit tube segment
+  description: A huge tube segment used for constructing transit systems.
+  components:
+  - type: Sprite
+    drawdepth: WallMountedItems
+    sprite: Structures/Piping/transit_tubes.rsi
+    layers:
+    - map: [ "tube" ]
+      state: straight
+  - type: DisposalTube
+    containerId: DisposalTransit
+  - type: DisposalTransit
+  - type: ContainerContainer
+    containers:
+      DisposalTransit: !type:Container
+  - type: GenericVisualizer
+    visuals:
+      enum.DisposalTubeVisuals.VisualState:
+        pipe:
+          Free: { state: straight }
+          Anchored: { state: straight }
+
+- type: entity
+  id: TransitTubeDiagonal
+  parent: TransitTubeBase
+  name: diagonal transit tube
+  description: A huge tube segment used for constructing transit systems.
+  components:
+  - type: Sprite
+    drawdepth: WallMountedItems
+    sprite: Structures/Piping/transit_tubes.rsi
+    layers:
+    - map: [ "tube" ]
+      state: diagonal
+    visible: true
+  - type: DisposalTube
+    containerId: DisposalJunction
+  - type: DisposalJunction
+    degrees:
+    - 135
+    - -45
+    followStraightestPath: true
+  - type: ContainerContainer
+    containers:
+      DisposalJunction: !type:Container
+  - type: GenericVisualizer
+    visuals:
+      enum.DisposalTubeVisuals.VisualState:
+        pipe:
+          Free: { state: diagonal }
+          Anchored: { state: diagonal }
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.25,0.5"
+        mask:
+        - SubfloorMask
+
+- type: entity
+  id: TransitTubeJunction
+  parent: TransitTubeBase
+  name: transit tube junction
+  description: A three-way junction. The arrow indicates where commuters preferentially exit.
+  components:
+  - type: Sprite
+    drawdepth: WallMountedItems
+    sprite: Structures/Piping/transit_tubes.rsi
+    layers:
+    - map: [ "tube" ]
+      state: junct
+    visible: true
+  - type: DisposalTube
+    containerId: DisposalJunction
+  - type: DisposalJunction
+    degrees:
+    - 0
+    - -135
+    - 135
+    followStraightestPath: true
+  - type: ContainerContainer
+    containers:
+      DisposalJunction: !type:Container
+  - type: GenericVisualizer
+    visuals:
+      enum.DisposalTubeVisuals.VisualState:
+        pipe:
+          Free: { state: junct }
+          Anchored: { state: junct }
+  - type: Flippable
+    mirrorEntity: TransitTubeJunctionFlipped
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.25,0.5"
+        mask:
+        - SubfloorMask
+
+- type: entity
+  id: TransitTubeJunctionFlipped
+  description: A three-way junction. The arrow indicates where commuters preferentially exit.
+  parent: TransitTubeJunction
+  suffix: flipped
+  components:
+  - type: Sprite
+    drawdepth: WallMountedItems
+    sprite: Structures/Piping/transit_tubes.rsi
+    layers:
+    - map: [ "tube" ]
+      state: junct_f
+  - type: DisposalJunction
+    degrees:
+    - 0 
+    - 135    
+    - -135
+    followStraightestPath: true
+  - type: GenericVisualizer
+    visuals:
+      enum.DisposalTubeVisuals.VisualState:
+        pipe:
+          Free: { state: junct_f }
+          Anchored: { state: junct_f }
+  - type: Flippable
+    mirrorEntity: TransitTubeJunction
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.5,0.5,0.5"
+        mask:
+        - SubfloorMask
+
+- type: entity
+  id: TransitTubeBend
+  parent: TransitTubeBase
+  name: transit tube bend
+  description: A transit tube bent at a 135 degree angle.
+  components:
+  - type: Sprite
+    drawdepth: WallMountedItems
+    sprite: Structures/Piping/transit_tubes.rsi
+    layers:
+    - map: [ "tube" ]
+      state: bend
+  - type: DisposalTube
+    containerId: DisposalJunction
+  - type: DisposalJunction
+    degrees:
+    - 0
+    - 135
+    followStraightestPath: true
+  - type: ContainerContainer
+    containers:
+      DisposalJunction: !type:Container
+  - type: GenericVisualizer
+    visuals:
+      enum.DisposalTubeVisuals.VisualState:
+        pipe:
+          Free: { state: bend }
+          Anchored: { state: bend }
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.25,0.25"
+        mask:
+        - SubfloorMask
+
+- type: entity
+  id: TransitTubeBendFlipped
+  description: A transit tube bent at a 135 degree angle.
+  parent: TransitTubeBend
+  suffix: flipped
+  components:
+  - type: Sprite
+    drawdepth: WallMountedItems
+    sprite: Structures/Piping/transit_tubes.rsi
+    layers:
+    - map: [ "tube" ]
+      state: bend_f
+  - type: DisposalJunction
+    degrees:
+    - 0
+    - -135
+    followStraightestPath: true
+  - type: GenericVisualizer
+    visuals:
+      enum.DisposalTubeVisuals.VisualState:
+        pipe:
+          Free: { state: bend_f }
+          Anchored: { state: bend_f }
+  - type: Flippable
+    mirrorEntity: TransitTubeBend
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.5,0.5,0.5"
+        mask:
+        - SubfloorMask
+
+- type: entity
+  abstract: true
+  id: TransitTubeStationBase
+  parent: BaseMachinePowered
+  description: A pneumatic transit tube station.
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Disposal
+  components:
+  - type: Sprite
+    drawdepth: WallMountedItems
+    sprite: Structures/Piping/disposal.rsi
+    layers:
+    - state: condisposal
+      map: [ "enum.DisposalUnitVisualLayers.Unanchored" ]
+    - state: disposal
+      map: [ "enum.DisposalUnitVisualLayers.Base" ]
+    - state: disposal-charging
+      map: [ "enum.DisposalUnitVisualLayers.BaseCharging" ]
+    - state: disposal-flush
+      map: [ "enum.DisposalUnitVisualLayers.OverlayFlush" ]
+    - state: dispover-charge
+      map: [ "enum.DisposalUnitVisualLayers.OverlayCharging" ]
+    - state: dispover-ready
+      map: [ "enum.DisposalUnitVisualLayers.OverlayReady" ]
+    - state: dispover-full
+      map: [ "enum.DisposalUnitVisualLayers.OverlayFull" ]
+    - state: dispover-handle
+      map: [ "enum.DisposalUnitVisualLayers.OverlayEngaged" ]
+  - type: Physics
+    bodyType: Static
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+          params:
+            volume: -6
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 1
+  - type: Appearance
+  - type: UserInterface
+    interfaces:
+      enum.DisposalUnitUiKey.Key:
+        type: DisposalUnitBoundUserInterface
+  - type: ContainerContainer
+    containers:
+      disposals: !type:Container
+  - type: StaticPrice
+    price: 70
+  - type: PowerSwitch
+
+- type: entity
+  id: TransitTubeStation
+  parent: TransitTubeStationBase
+  name: transit tube station
+  components:
+  - type: DisposalUnit
+  - type: UserInterface
+    interfaces:
+      enum.DisposalUnitUiKey.Key:
+        type: DisposalUnitBoundUserInterface
