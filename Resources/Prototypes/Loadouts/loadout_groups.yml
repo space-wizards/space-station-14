@@ -358,6 +358,7 @@
   loadouts:
   - JanitorJumpsuit
   - JanitorJumpskirt
+  - MaidJumpskirt
 
 - type: loadoutGroup
   id: JanitorGloves
