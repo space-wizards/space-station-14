@@ -87,11 +87,8 @@ public sealed class KillPersonConditionSystem : EntitySystem
         var allHeads = new List<EntityUid>();
         foreach (var minds in allHumans)
         {
-            if (TryComp<MindComponent>(minds, out var mind) && mind.OwnedEntity != null)
-            {
-                if (HasComp<CommandStaffComponent>(mind.OwnedEntity.Value))
-                    allHeads.Add(minds);
-            }
+            if (TryComp<MindComponent>(minds, out var mind) && mind.OwnedEntity != null && HasComp<CommandStaffComponent>(mind.OwnedEntity.Value))
+                allHeads.Add(minds);
         }
 
         if (allHeads.Count == 0)
