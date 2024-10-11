@@ -494,9 +494,6 @@
         - !type:ReagentThreshold
           max: 20
       - !type:Jitter
-        conditions:
-        - !type:ReagentThreshold
-          max: 20
       - !type:Drunk
         boozePower: 3
         - !type:ReagentThreshold
