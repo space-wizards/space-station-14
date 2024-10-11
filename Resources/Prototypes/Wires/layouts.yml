@@ -196,3 +196,4 @@
   wires:
   - !type:PowerWireAction
   - !type:AiInteractWireAction
+  - !type:AiVisionWireAction
