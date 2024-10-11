@@ -488,3 +488,19 @@
       right:
       - state: inhand-right
         color: "#984aa1"
+
+- type: entity
+  name: CO2 candle
+  parent: Candle
+  id: CandleCO2Gas
+  components:
+  - type: Temperature
+  - type: Flammable
+    requireOxygen: false
+    emissiveGasMix: 
+      volume: 50
+      moles:
+      - 0
+      - 0
+      - 5
+        

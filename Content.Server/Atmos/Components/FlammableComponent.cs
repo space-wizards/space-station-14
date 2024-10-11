@@ -1,4 +1,5 @@
 using Content.Shared.Alert;
+using Content.Shared.Atmos;
 using Content.Shared.Damage;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Prototypes;
@@ -10,6 +11,12 @@ namespace Content.Server.Atmos.Components
     {
         [DataField]
         public bool Resisting;
+
+        /// <summary>
+        /// Does this entity require oxygen to burn
+        /// </summary>
+        [DataField]
+        public bool RequireOxygen = true;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField]
@@ -34,6 +41,9 @@ namespace Content.Server.Atmos.Components
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField]
         public float MinIgnitionTemperature = 373.15f;
+
+        [DataField]
+        public float PeakFlameTemperature = 1500.00f; // vaguely how hot an incenerator gets.
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField]
@@ -82,5 +92,11 @@ namespace Content.Server.Atmos.Components
 
         [DataField]
         public ProtoId<AlertPrototype> FireAlert = "Fire";
+
+        /// <summary>
+        /// A quantity of gas to be added to the atmosphere every update while on fire.
+        /// </summary>
+        [DataField]
+        public GasMixture EmissiveGasMix = GasMixture.SpaceGas; // using SpaceGas here feels weird. I really just want an empty GasMix
     }
 }

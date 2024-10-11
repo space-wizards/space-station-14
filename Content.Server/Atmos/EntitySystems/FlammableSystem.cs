@@ -28,6 +28,7 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
+using Content.Shared.Atmos.Piping.Binary.Components;
 
 namespace Content.Server.Atmos.EntitySystems
 {
@@ -433,20 +434,36 @@ namespace Content.Server.Atmos.EntitySystems
 
                 if (flammable.FireStacks > 0)
                 {
-                    var air = _atmosphereSystem.GetContainingMixture(uid);
+                    var air = _atmosphereSystem.GetContainingMixture(uid, false, true);
 
-                    // If we're in an oxygenless environment, put the fire out.
-                    if (air == null || air.GetMoles(Gas.Oxygen) < 1f)
+                    if (flammable.RequireOxygen)
                     {
-                        Extinguish(uid, flammable);
-                        continue;
+                        // If we're in an oxygenless environment, put the fire out.
+                        if (air == null || air.GetMoles(Gas.Oxygen) < 1f)
+                        {
+                            Extinguish(uid, flammable);
+                            continue;
+                        }
                     }
 
                     var source = EnsureComp<IgnitionSourceComponent>(uid);
                     _ignitionSourceSystem.SetIgnited((uid, source));
 
                     if (TryComp(uid, out TemperatureComponent? temp))
-                        _temperatureSystem.ChangeHeat(uid, 12500 * flammable.FireStacks, false, temp);
+                    {
+                        // get hot
+                        var tempBump = MathF.Sqrt(flammable.PeakFlameTemperature - temp.CurrentTemperature) * flammable.FireStacks * 25;
+                        _temperatureSystem.ChangeHeat(uid, tempBump, false, temp);
+
+                        // release gas
+                        if (air != null && flammable.EmissiveGasMix != GasMixture.SpaceGas) // using SpaceGas here feels a little weird, what if really want is an empty GasMix, which this is... but...
+                        {
+                            flammable.EmissiveGasMix.Temperature = temp.CurrentTemperature;
+                            var releasingGas = new GasMixture(flammable.EmissiveGasMix.Volume);
+                            _atmosphereSystem.Merge(releasingGas, flammable.EmissiveGasMix); // generate gas for the entity's entire burning lifespan, but we use ReleaseGasTo to handle temperature/pressure for us.
+                            _atmosphereSystem.ReleaseGasTo(releasingGas, air, releasingGas.Pressure);
+                        }
+                    }
 
                     var ev = new GetFireProtectionEvent();
                     // let the thing on fire handle it
