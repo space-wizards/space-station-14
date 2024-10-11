@@ -18,8 +18,8 @@ public sealed partial class LensSlotComponent : Component
 /// </summary>
 public sealed class LensChangedEvent : EntityEventArgs
 {
-    public readonly bool Ejected;
     public readonly EntityUid Lens;
+    public readonly bool Ejected;
 
     public LensChangedEvent(EntityUid lens, bool ejected)
     {

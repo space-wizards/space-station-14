@@ -11,6 +11,9 @@
       "name": "icon"
     },
     {
+      "name": "lens"
+    },
+    {
       "name": "equipped-EYES",
       "directions": 4
     },
