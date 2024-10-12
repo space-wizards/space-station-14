@@ -1,0 +1,395 @@
+- type: entity
+  id: ABDFloorEntity1
+  name: Abductor pod floor 1
+  description: Mysterious floors of an unknown origin
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wall
+  components:
+  - type: Clickable
+  - type: Transform
+    anchored: true
+  - type: SyncSprite
+  - type: Sprite
+    sprite: _Weaselstation/Tiles/abductorpod.rsi
+    drawdepth: FloorTiles
+    layers:
+      - state: Pod1
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        layer:
+          - SlipLayer
+        mask:
+          - ItemMask
+        density: 1000
+        hard: false
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepPlating
+      params:
+        volume: 8
+  - type: StepTrigger
+    requiredTriggeredSpeed: 0
+    intersectRatio: 0.1
+    blacklist:
+      tags:
+        - Catwalk
+
+- type: entity
+  id: ABDFloorEntity2
+  name: Abductor pod floor 2
+  description: Mysterious floors of an unknown origin
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wall
+  components:
+  - type: Clickable
+  - type: Transform
+    anchored: true
+  - type: SyncSprite
+  - type: Sprite
+    sprite: _Weaselstation/Tiles/abductorpod.rsi
+    drawdepth: FloorTiles
+    layers:
+      - state: Pod2
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        layer:
+          - SlipLayer
+        mask:
+          - ItemMask
+        density: 1000
+        hard: false
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepPlating
+      params:
+        volume: 8
+  - type: StepTrigger
+    requiredTriggeredSpeed: 0
+    intersectRatio: 0.1
+    blacklist:
+      tags:
+        - Catwalk
+
+- type: entity
+  id: ABDFloorEntity3
+  name: Abductor pod floor 3
+  description: Mysterious floors of an unknown origin
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wall
+  components:
+  - type: Clickable
+  - type: Transform
+    anchored: true
+  - type: SyncSprite
+  - type: Sprite
+    sprite: _Weaselstation/Tiles/abductorpod.rsi
+    drawdepth: FloorTiles
+    layers:
+      - state: Pod3
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        layer:
+          - SlipLayer
+        mask:
+          - ItemMask
+        density: 1000
+        hard: false
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepPlating
+      params:
+        volume: 8
+  - type: StepTrigger
+    requiredTriggeredSpeed: 0
+    intersectRatio: 0.1
+    blacklist:
+      tags:
+        - Catwalk
+
+- type: entity
+  id: ABDFloorEntity4
+  name: Abductor pod floor 4
+  description: Mysterious floors of an unknown origin
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wall
+  components:
+  - type: Clickable
+  - type: Transform
+    anchored: true
+  - type: SyncSprite
+  - type: Sprite
+    sprite: _Weaselstation/Tiles/abductorpod.rsi
+    drawdepth: FloorTiles
+    layers:
+      - state: Pod4
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        layer:
+          - SlipLayer
+        mask:
+          - ItemMask
+        density: 1000
+        hard: false
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepPlating
+      params:
+        volume: 8
+  - type: StepTrigger
+    requiredTriggeredSpeed: 0
+    intersectRatio: 0.1
+    blacklist:
+      tags:
+        - Catwalk
+
+- type: entity
+  id: ABDFloorEntity5
+  name: Abductor pod floor 5
+  description: Mysterious floors of an unknown origin
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wall
+  components:
+  - type: Clickable
+  - type: Transform
+    anchored: true
+  - type: SyncSprite
+  - type: Sprite
+    sprite: _Weaselstation/Tiles/abductorpod.rsi
+    drawdepth: FloorTiles
+    layers:
+      - state: Pod5
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        layer:
+          - SlipLayer
+        mask:
+          - ItemMask
+        density: 1000
+        hard: false
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepPlating
+      params:
+        volume: 8
+  - type: StepTrigger
+    requiredTriggeredSpeed: 0
+    intersectRatio: 0.1
+    blacklist:
+      tags:
+        - Catwalk
+
+- type: entity
+  id: ABDFloorEntity6
+  name: Abductor pod floor 6
+  description: Mysterious floors of an unknown origin
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wall
+  components:
+  - type: Clickable
+  - type: Transform
+    anchored: true
+  - type: SyncSprite
+  - type: Sprite
+    sprite: _Weaselstation/Tiles/abductorpod.rsi
+    drawdepth: FloorTiles
+    layers:
+      - state: Pod6
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        layer:
+          - SlipLayer
+        mask:
+          - ItemMask
+        density: 1000
+        hard: false
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepPlating
+      params:
+        volume: 8
+  - type: StepTrigger
+    requiredTriggeredSpeed: 0
+    intersectRatio: 0.1
+    blacklist:
+      tags:
+        - Catwalk
+
+- type: entity
+  id: ABDFloorEntity7
+  name: Abductor pod floor 7
+  description: Mysterious floors of an unknown origin
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wall
+  components:
+  - type: Clickable
+  - type: Transform
+    anchored: true
+  - type: SyncSprite
+  - type: Sprite
+    sprite: _Weaselstation/Tiles/abductorpod.rsi
+    drawdepth: FloorTiles
+    layers:
+      - state: Pod7
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        layer:
+          - SlipLayer
+        mask:
+          - ItemMask
+        density: 1000
+        hard: false
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepPlating
+      params:
+        volume: 8
+  - type: StepTrigger
+    requiredTriggeredSpeed: 0
+    intersectRatio: 0.1
+    blacklist:
+      tags:
+        - Catwalk
+
+- type: entity
+  id: ABDFloorEntity8
+  name: Abductor pod floor 8
+  description: Mysterious floors of an unknown origin
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wall
+  components:
+  - type: Clickable
+  - type: Transform
+    anchored: true
+  - type: SyncSprite
+  - type: Sprite
+    sprite: _Weaselstation/Tiles/abductorpod.rsi
+    drawdepth: FloorTiles
+    layers:
+      - state: Pod8
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        layer:
+          - SlipLayer
+        mask:
+          - ItemMask
+        density: 1000
+        hard: false
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepPlating
+      params:
+        volume: 8
+  - type: StepTrigger
+    requiredTriggeredSpeed: 0
+    intersectRatio: 0.1
+    blacklist:
+      tags:
+        - Catwalk
+
+- type: entity
+  id: ABDFloorEntit9
+  name: Abductor pod floor 9
+  description: Mysterious floors of an unknown origin
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wall
+  components:
+  - type: Clickable
+  - type: Transform
+    anchored: true
+  - type: SyncSprite
+  - type: Sprite
+    sprite: _Weaselstation/Tiles/abductorpod.rsi
+    drawdepth: FloorTiles
+    layers:
+      - state: Pod9
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        layer:
+          - SlipLayer
+        mask:
+          - ItemMask
+        density: 1000
+        hard: false
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepPlating
+      params:
+        volume: 8
+  - type: StepTrigger
+    requiredTriggeredSpeed: 0
+    intersectRatio: 0.1
+    blacklist:
+      tags:
+        - Catwalk

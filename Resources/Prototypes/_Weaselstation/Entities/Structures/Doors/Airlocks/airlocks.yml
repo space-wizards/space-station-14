@@ -1,0 +1,8 @@
+- type: entity
+  parent: Airlock
+  id: AirlockAbductor
+  suffix: Abductor
+  components:
+  - type: Sprite
+    sprite: _Weaselstation/Structures/Doors/Airlocks/Abductor/abductor.rsi
+    layoutId: AirlockAbductor

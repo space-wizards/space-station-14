@@ -1,0 +1,126 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Placeholder",
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "states": [
+      {
+        "name": "assembly"
+      },
+      {
+        "name": "closed"
+      },
+      {
+        "name": "closing",
+        "delays": [
+          [
+            0.1,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.1
+          ]
+        ]
+      },
+      {
+        "name": "open"
+      },
+      {
+        "name": "opening_unlit",
+        "delays": [
+          [
+            0.1,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.1
+          ]
+        ]
+      },
+      {
+        "name": "closed_unlit"
+      },
+      {
+        "name": "closing_unlit",
+        "delays": [
+          [
+            0.1,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.1
+          ]
+        ]
+      },
+      {
+        "name": "emergency_unlit",
+        "delays": [
+          [
+            0.4,
+            0.4
+          ]
+        ]
+      },
+      {
+        "name": "bolted_unlit"
+      },
+      {
+        "name": "panel_open"
+      },
+      {
+        "name": "panel_opening"
+      },
+      {
+        "name": "panel_closed"
+      },
+      {
+        "name": "panel_closing"
+      },
+      {
+        "name": "welded"
+      },
+      {
+        "name": "opening",
+        "delays": [
+          [
+            0.1,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.1
+          ]
+        ]
+      }
+    ]
+  }
