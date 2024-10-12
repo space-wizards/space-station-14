@@ -82,7 +82,6 @@ public sealed class SuspicionRuleSystem : GameRuleSystem<SuspicionRuleComponent>
         SubscribeLocalEvent<PlayerBeforeSpawnEvent>(OnBeforeSpawn);
         SubscribeLocalEvent<SuspicionRoleComponent, GetBriefingEvent>(OnGetBriefing);
         SubscribeLocalEvent<SuspicionPlayerComponent, ExaminedEvent>(OnExamine);
-        SubscribeLocalEvent<GetVerbsEvent<Verb>>(GetVerbs);
         SubscribeLocalEvent<SuspicionPlayerComponent, MobStateChangedEvent>(OnMobStateChanged);
     }
 
@@ -106,7 +105,11 @@ public sealed class SuspicionRuleSystem : GameRuleSystem<SuspicionRuleComponent>
             foreach (var person in people)
             {
                 var name = MetaData(person).EntityName;
-                args.AddLine($"[bullet/] {name}");
+                var isDead = _mobState.IsDead(person);
+                if (isDead)
+                    args.AddLine($"[bullet/] {name} (Dead)");
+                else
+                    args.AddLine($"[bullet/] {name}");
             }
         }
 
@@ -257,47 +260,6 @@ public sealed class SuspicionRuleSystem : GameRuleSystem<SuspicionRuleComponent>
             colorOverride: colorOverride);
     }
 
-    private void GetVerbs(GetVerbsEvent<Verb> ev)
-    {
-        var player = CompOrNull<SuspicionPlayerComponent>(ev.Target);
-        if (player == null)
-            return;
-
-        if (player.Revealed)
-            return;
-
-        if (!TryComp<MobStateComponent>(ev.Target, out var mobState))
-            return;
-
-        if (!_mobState.IsDead(ev.Target, mobState))
-            return;
-
-        if (!HasComp<HandsComponent>(ev.User))
-            return;
-
-        ev.Verbs.Add(new Verb()
-        {
-            Text = "Examine body",
-            Act = () =>
-            {
-                var mind = _mindSystem.GetMind(ev.Target);
-                if (mind == null)
-                    return;
-
-                if (!_roleSystem.MindHasRole<SuspicionRoleComponent>(mind.Value, out var _, out var role))
-                    return;
-
-                player.Revealed = true;
-                var targetName = MetaData(ev.Target).EntityName;
-                var userName = MetaData(ev.User).EntityName;
-                SendAnnouncement(
-                    $"[italic]{userName}[/italic] found the body of [italic]{targetName}[/italic] and discovered they were a [bold][color={role.Value.Comp.Role.GetRoleColor().ToHexNoAlpha()}]{role.Value.Comp.Role}[/color][/bold]."
-                    );
-            },
-            Disabled = !_examineSystem.IsInDetailsRange(ev.User, ev.Target),
-        });
-    }
-
     private void OnExamine(EntityUid uid, SuspicionPlayerComponent component, ref ExaminedEvent args)
     {
         if (!TryComp<MobStateComponent>(args.Examined, out var mobState))
@@ -324,7 +286,32 @@ public sealed class SuspicionRuleSystem : GameRuleSystem<SuspicionRuleComponent>
         if (!_roleSystem.MindHasRole<SuspicionRoleComponent>(mind.Value, out var _, out var role))
             return;
 
-        args.PushText($"They were a {role.Value.Comp.Role.ToString()}", -10);
+        if (role.Value.Comp.Role == SuspicionRole.Pending)
+            return;
+
+        var determiner = role.Value.Comp.Role switch
+        {
+            SuspicionRole.Traitor => "a",
+            SuspicionRole.Detective => "a",
+            SuspicionRole.Innocent => "an",
+            _ => "a"
+        };
+
+        args.PushMarkup($"They were {determiner} [color={role.Value.Comp.Role.GetRoleColor()}]{role.Value.Comp.Role.ToString()}[/color]", -10);
+
+        if (!HasComp<HandsComponent>(args.Examiner))
+            return;
+
+        // Reveal the role in chat
+        if (!component.Revealed)
+        {
+            component.Revealed = true;
+            var targetName = MetaData(args.Examined).EntityName;
+            var userName = MetaData(args.Examiner).EntityName;
+            SendAnnouncement(
+                $"[italic]{userName}[/italic] found the body of [italic]{targetName}[/italic] and discovered they were a [bold][color={role.Value.Comp.Role.GetRoleColor()}]{role.Value.Comp.Role}[/color][/bold]."
+            );
+        }
     }
 
     private void OnGetBriefing(Entity<SuspicionRoleComponent> role, ref GetBriefingEvent args)

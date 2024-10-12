@@ -11,14 +11,14 @@ public sealed partial class SuspicionRoleComponent : BaseMindRoleComponent
 
 public static class SusRoleExtensions
 {
-    public static Color GetRoleColor(this SuspicionRole role)
+    public static string GetRoleColor(this SuspicionRole role)
     {
         return role switch
         {
-            SuspicionRole.Traitor => Color.Red,
-            SuspicionRole.Detective => Color.Blue,
-            SuspicionRole.Innocent => Color.Green,
-            _ => Color.Gray,
+            SuspicionRole.Traitor => "red",
+            SuspicionRole.Detective => "blue",
+            SuspicionRole.Innocent => "green",
+            _ => "white",
         };
     }
 }
