@@ -108,7 +108,7 @@
         sizeMaps:
           32:
             sprite: Mobs/Species/Gray/displacement.rsi
-            state: head
+            state: ears
   - type: Speech
     speechSounds: PVC
   - type: TypingIndicator
@@ -124,5 +124,55 @@
   id: MobGrayDummy
   categories: [ HideSpawnMenu ]
   components:
-  - type: Sprite
-    scale: 1, 0.8
+  - type: HumanoidAppearance
+    species: Gray
+  - type: Body
+    prototype: Gray
+  - type: Inventory
+    templateId: gray
+    displacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Gray/displacement.rsi
+            state: jumpsuit
+      head:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Gray/displacement.rsi
+            state: head
+      outerClothing:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Gray/displacement.rsi
+            state: outerClothing
+      neck:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Gray/displacement.rsi
+            state: neck
+      eyes:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Gray/displacement.rsi
+            state: eyes
+      mask:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Gray/displacement.rsi
+            state: head
+      gloves:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Gray/displacement.rsi
+            state: hand
+      back:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Gray/displacement.rsi
+            state: back
+      ears:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Gray/displacement.rsi
+            state: ears

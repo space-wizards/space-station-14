@@ -35,6 +35,10 @@
       "directions": 4
     },
     {
+      "name": "ears",
+      "directions": 4
+    },
+    {
       "name": "outerClothing",
       "directions": 4
     }
