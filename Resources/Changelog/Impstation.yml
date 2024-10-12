@@ -2954,3 +2954,10 @@
   id: 366
   time: '2024-10-12T22:09:36.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/468
+- author: formlessnameless
+  changes:
+  - message: Ling and Heretic will no longer roll on antag immune targets
+    type: Fix
+  id: 367
+  time: '2024-10-12T23:23:34.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/470
