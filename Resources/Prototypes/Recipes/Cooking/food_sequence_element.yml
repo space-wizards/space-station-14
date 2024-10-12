@@ -1372,3 +1372,10 @@
   sprites:
   - sprite: Mobs/Animals/bros.rsi
     state: bros
+
+- type: foodSequenceElement
+  id: CigarBurger
+  name: food-sequence-burger-content-cigar
+  sprites:
+  - sprite: Objects/Consumable/Smokeables/Cigarettes/cigarette.rsi
+    state: unlit-icon

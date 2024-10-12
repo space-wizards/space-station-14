@@ -56,7 +56,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 30
+        maxVol: 15
         canReact: true # fuck you wizden i need razorium burger assassination
         reagents:
         - ReagentId: Nutriment

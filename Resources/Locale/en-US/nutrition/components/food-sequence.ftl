@@ -134,6 +134,7 @@ food-sequence-burger-content-slimeball = slimy
 food-sequence-burger-content-meattomatocutlet = juicy
 food-sequence-burger-content-thaven = concerning
 food-sequence-burger-content-bros = UNGH
+food-sequence-burger-content-cigar = smoking
 
 # TACO
 
