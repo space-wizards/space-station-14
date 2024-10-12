@@ -18,7 +18,6 @@
       collection: MetalThud
   - type: Wieldable
   - type: IncreaseDamageOnWield
-    attackRate: 4
     damage:
       types:
         Blunt: 2
