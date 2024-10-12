@@ -39,9 +39,7 @@ public sealed class ThiefBeaconSystem : EntitySystem
             return;
 
         var mind = _mind.GetMind(args.User);
-        if (mind == null)
-            return;
-        if (!_roles.MindHasRole<ThiefRoleComponent>(mind!.Value))
+        if (mind == null || !_roles.MindHasRole<ThiefRoleComponent>(mind.Value))
             return;
 
         var user = args.User;
