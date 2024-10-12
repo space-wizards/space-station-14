@@ -543,3 +543,17 @@
       amount: 1
   products:
     BathSalts: 5
+
+- type: reaction
+  id: Cyanide
+  impact: Medium
+  minTemp: 380
+  reactants:
+    Ammonia:
+      amount: 1
+    Oxygen:
+      amount: 1
+    Oil:
+      amount: 1
+  products:
+    Cyanide: 2
