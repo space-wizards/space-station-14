@@ -58,7 +58,7 @@
         acts: ["Destruction"]
   - type: Explosive
     explosionType: DemolitionCharge
-    totalIntensity: 601
+    totalIntensity: 60
     intensitySlope: 5
     maxIntensity: 30
     canCreateVacuum: false
