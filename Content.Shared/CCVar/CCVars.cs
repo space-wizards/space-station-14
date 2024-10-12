@@ -439,7 +439,7 @@ namespace Content.Shared.CCVar
         /// <summary>
         /// Should the clients window show the server hostname in the title?
         /// </summary>
-        public static readonly CVarDef<bool> HostnameInTitlebar =
+        public static readonly CVarDef<bool> GameHostnameInTitlebar =
             CVarDef.Create("game.hostname_in_titlebar", true, CVar.SERVER | CVar.REPLICATED);
 
         /*
