@@ -723,6 +723,9 @@
   - type: Tag
     tags:
     - Slice
+  - type: FoodSequenceElement
+    entries:
+      Burger: ChevreBurger
 
 - type: entity
   name: tofu
@@ -771,6 +774,9 @@
   - type: Tag
     tags:
     - Slice
+    - type: FoodSequenceElement
+    entries:
+      Burger: TofuSliceBurger
 
 - type: entity
   name: burned mess
