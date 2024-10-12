@@ -83,6 +83,7 @@ namespace Content.Server.Atmos.EntitySystems
             SubscribeLocalEvent<ExtinguishOnInteractComponent, ActivateInWorldEvent>(OnExtinguishActivateInWorld);
 
             SubscribeLocalEvent<IgniteOnHeatDamageComponent, DamageChangedEvent>(OnDamageChanged);
+
         }
 
         private void OnMeleeHit(EntityUid uid, IgniteOnMeleeHitComponent component, MeleeHitEvent args)
@@ -435,13 +436,23 @@ namespace Content.Server.Atmos.EntitySystems
                 {
                     var air = _atmosphereSystem.GetContainingMixture(uid, false, true);
 
-                    if (flammable.RequireOxygen)
+                    if (flammable.FuelGasMix != null)
                     {
-                        // If we're in an oxygenless environment, put the fire out.
-                        if (air == null || air.GetMoles(Gas.Oxygen) < 1f)
+                        // If we're in no atmos extinguish.
+                        if (air == null)
                         {
                             Extinguish(uid, flammable);
                             continue;
+                        }
+
+                        // If our local atmos doesnt have enough of the required gases extinguish.
+                        for (int i = 0; i < Atmospherics.AdjustedNumberOfGases; i++)
+                        {
+                            if (flammable.FuelGasMix.GetMoles(i) > air.GetMoles(i))
+                            {
+                                Extinguish(uid, flammable);
+                                continue;
+                            }
                         }
                     }
 
@@ -451,19 +462,25 @@ namespace Content.Server.Atmos.EntitySystems
                     if (TryComp(uid, out TemperatureComponent? temp))
                     {
                         // get hot
-                        var maxDeltaT = flammable.PeakFlameTemperature - temp.CurrentTemperature;
-                        if (maxDeltaT > 0) // we dont want to burn and get colder.
+                        if (_atmosphereSystem.Superconduction) // superconductivity ***should*** mean an equilibrium temperature gets reached with the environment.
                         {
-                            var tempBump = MathF.Sqrt(maxDeltaT) * flammable.FireStacks * 25; //monotonic function, slows as it reaches maxT
-                            _temperatureSystem.ChangeHeat(uid, tempBump, false, temp);
-                        } 
+                            _temperatureSystem.ChangeHeat(uid, 12500 * flammable.FireStacks, false, temp);
+                        }
+                        else // without superconductivity we need to prevent thermal runaway. Not guarunteed to be equivalent for balancing purposes.
+                        {
+                            var maxDeltaT = flammable.PeakFlameTemperature - temp.CurrentTemperature;
+                            if (maxDeltaT > 0) // we dont want to burn and get colder.
+                            {
+                                var tempBump = MathF.Sqrt(maxDeltaT) * flammable.FireStacks * 25; //monotonic function, slows as it reaches maxT
+                                _temperatureSystem.ChangeHeat(uid, tempBump, false, temp);
+                            }
+                        }
 
                         // release gas
                         if (air != null && flammable.EmissiveGasMix != null)
                         {
                             flammable.EmissiveGasMix.Temperature = temp.CurrentTemperature;
-                            var releasingGas = new GasMixture(flammable.EmissiveGasMix.Volume);
-                            _atmosphereSystem.Merge(releasingGas, flammable.EmissiveGasMix); // generate gas for the entity's entire burning lifespan, but we use ReleaseGasTo to handle temperature/pressure for us since those will change for other reasons.
+                            var releasingGas = flammable.EmissiveGasMix.Clone(); // generate gas for the entity's entire burning lifespan, but we use ReleaseGasTo to handle temperature/pressure for us since those will change for other reasons.
                             _atmosphereSystem.ReleaseGasTo(releasingGas, air, releasingGas.Pressure); // doing it this way means that we dont need to track the entity damage values or know its destructible or mobstate thresholds.
                         }                                                                    // the downside, and a possible later rework, is that you ""lose"" some gas if the candle is burning in an atmosphere where it can't emit due to pressure.
                     }                                                                        // the yml is also slightly cumbersome, because we now specify a "maximum release mix per update (second)" instead of a total gasmix in the entity.

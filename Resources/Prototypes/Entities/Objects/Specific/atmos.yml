@@ -44,7 +44,7 @@
   components:
   - type: Temperature
   - type: Flammable
-    requireOxygen: false
+    FuelGasMix: null
     emissiveGasMix: #  emits ~ mols * 300 if you collect all of it.
       volume: 50
       moles:

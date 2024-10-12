@@ -3,20 +3,24 @@ using Content.Shared.Atmos;
 using Content.Shared.Damage;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Prototypes;
+using System.Linq;
 
 namespace Content.Server.Atmos.Components
 {
     [RegisterComponent]
     public sealed partial class FlammableComponent : Component
     {
+        // An array which represents the atmos gases as mols, Specifies 1 mol of Oxygen.
+        private static float[] _standardOxygenMols = new float[] { 1f }.Concat(Enumerable.Repeat(0f, Atmospherics.AdjustedNumberOfGases - 1)).ToArray();
+
         [DataField]
         public bool Resisting;
 
         /// <summary>
-        /// Does this entity require oxygen to burn
+        /// A gas mix which specifies the minimum mols of each gas needed for the entity to burn. Set to null to burn without atmosphere.
         /// </summary>
         [DataField]
-        public bool RequireOxygen = true;
+        public GasMixture? FuelGasMix = new GasMixture(_standardOxygenMols, Atmospherics.T20C, 1f);
 
         [DataField]
         public bool OnFire;
