@@ -1,5 +1,6 @@
 using Content.Shared.Dataset;
 using Robust.Shared.Prototypes;
+using Content.Shared.DeviceLinking;
 
 namespace Content.Server.Chat;
 
@@ -7,7 +8,7 @@ namespace Content.Server.Chat;
 /// Entity will say the things when activated
 /// </summary>
 [RegisterComponent]
-public sealed partial class SpeakOnUseComponent : Component
+public sealed partial class SpeakOnActivateComponent : Component
 {
     /// <summary>
     /// The identifier for the dataset prototype containing messages to be spoken by this entity.
@@ -15,4 +16,6 @@ public sealed partial class SpeakOnUseComponent : Component
     [DataField(required: true)]
     public ProtoId<LocalizedDatasetPrototype> Pack { get; private set; }
 
+    [DataField]
+    public ProtoId<SinkPortPrototype> ActivatePort = "Activate";
 }

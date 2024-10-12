@@ -127,3 +127,8 @@
   id: SetParticleSigma
   name: signal-port-name-set-particle-sigma
   description: signal-port-description-set-particle-sigma
+
+- type: sinkPort
+  id: Activate
+  name: signal-port-name-activate
+  description: signal-port-description-activate

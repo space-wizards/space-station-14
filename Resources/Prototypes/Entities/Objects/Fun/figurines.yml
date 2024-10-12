@@ -21,6 +21,14 @@
     delay: 10
   - type: Speech
     speechSounds: Pai # it just sounds better
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: DeviceLinkSink
+    ports:
+      - Activate
 
 - type: entity
   parent: BaseFigurine
@@ -30,7 +38,7 @@
   components:
   - type: Sprite
     state: hop
-  - type: SpeakOnUse
+  - type: SpeakOnActivate
     pack: FigurinesHoP
 
 - type: entity
@@ -41,7 +49,7 @@
   components:
   - type: Sprite
     state: passenger
-  - type: SpeakOnUse
+  - type: SpeakOnActivate
     pack: FigurinesPassenger
 
 - type: entity
@@ -52,7 +60,7 @@
   components:
   - type: Sprite
     state: passenger_greytide
-  - type: SpeakOnUse
+  - type: SpeakOnActivate
     pack: FigurinesGreytider
 
 - type: entity
@@ -63,7 +71,7 @@
   components:
   - type: Sprite
     state: clown
-  - type: SpeakOnUse
+  - type: SpeakOnActivate
     pack: FigurinesClown
 
 - type: entity
@@ -74,7 +82,7 @@
   components:
   - type: Sprite
     state: holoclown
-  - type: SpeakOnUse
+  - type: SpeakOnActivate
     pack: FigurinesHoloClown
 
 - type: entity
@@ -85,7 +93,7 @@
   components:
   - type: Sprite
     state: mime
-  - type: SpeakOnUse
+  - type: SpeakOnActivate
     pack: FigurinesMime
 
 - type: entity
@@ -96,7 +104,7 @@
   components:
   - type: Sprite
     state: musician
-  - type: SpeakOnUse
+  - type: SpeakOnActivate
     pack: FigurinesMusician
 
 - type: entity
@@ -107,7 +115,7 @@
   components:
   - type: Sprite
     state: boxer
-  - type: SpeakOnUse
+  - type: SpeakOnActivate
     pack: FigurinesBoxer
 
 - type: entity
@@ -118,7 +126,7 @@
   components:
   - type: Sprite
     state: captain
-  - type: SpeakOnUse
+  - type: SpeakOnActivate
     pack: FigurinesCaptain
 
 - type: entity
@@ -129,7 +137,7 @@
   components:
   - type: Sprite
     state: hos
-  - type: SpeakOnUse
+  - type: SpeakOnActivate
     pack: FigurinesHoS
 
 - type: entity
@@ -140,7 +148,7 @@
   components:
   - type: Sprite
     state: warden
-  - type: SpeakOnUse
+  - type: SpeakOnActivate
     pack: FigurinesWarden
 
 - type: entity
@@ -151,7 +159,7 @@
   components:
   - type: Sprite
     state: detective
-  - type: SpeakOnUse
+  - type: SpeakOnActivate
     pack: FigurinesDetective
 
 - type: entity
@@ -162,7 +170,7 @@
   components:
   - type: Sprite
     state: security
-  - type: SpeakOnUse
+  - type: SpeakOnActivate
     pack: FigurinesSecurity
 
 - type: entity
@@ -173,7 +181,7 @@
   components:
   - type: Sprite
     state: lawyer
-  - type: SpeakOnUse
+  - type: SpeakOnActivate
     pack: FigurinesLawyer
 
 - type: entity
@@ -184,7 +192,7 @@
   components:
   - type: Sprite
     state: cargotech
-  - type: SpeakOnUse
+  - type: SpeakOnActivate
     pack: FigurinesCargoTech
 
 - type: entity
@@ -195,7 +203,7 @@
   components:
   - type: Sprite
     state: salvage
-  - type: SpeakOnUse
+  - type: SpeakOnActivate
     pack: FigurinesSalvage
 
 - type: entity
@@ -206,7 +214,7 @@
   components:
   - type: Sprite
     state: qm
-  - type: SpeakOnUse
+  - type: SpeakOnActivate
     pack: FigurinesQM
 
 - type: entity
@@ -217,7 +225,7 @@
   components:
   - type: Sprite
     state: ce
-  - type: SpeakOnUse
+  - type: SpeakOnActivate
     pack: FigurinesCE
 
 - type: entity
@@ -228,7 +236,7 @@
   components:
   - type: Sprite
     state: engineer
-  - type: SpeakOnUse
+  - type: SpeakOnActivate
     pack: FigurinesEngineer
 
 - type: entity
@@ -239,7 +247,7 @@
   components:
   - type: Sprite
     state: atmos
-  - type: SpeakOnUse
+  - type: SpeakOnActivate
     pack: FigurinesAtmosTech
 
 - type: entity
@@ -250,7 +258,7 @@
   components:
   - type: Sprite
     state: rd
-  - type: SpeakOnUse
+  - type: SpeakOnActivate
     pack: FigurinesRD
 
 - type: entity
@@ -261,7 +269,7 @@
   components:
   - type: Sprite
     state: scientist
-  - type: SpeakOnUse
+  - type: SpeakOnActivate
     pack: FigurinesScientist
 
 - type: entity
@@ -272,7 +280,7 @@
   components:
   - type: Sprite
     state: cmo
-  - type: SpeakOnUse
+  - type: SpeakOnActivate
     pack: FigurinesCMO
 
 - type: entity
@@ -283,7 +291,7 @@
   components:
   - type: Sprite
     state: chemist
-  - type: SpeakOnUse
+  - type: SpeakOnActivate
     pack: FigurinesChemist
 
 - type: entity
@@ -294,7 +302,7 @@
   components:
   - type: Sprite
     state: paramedic
-  - type: SpeakOnUse
+  - type: SpeakOnActivate
     pack: FigurinesParamedic
 
 - type: entity
@@ -305,7 +313,7 @@
   components:
   - type: Sprite
     state: medical
-  - type: SpeakOnUse
+  - type: SpeakOnActivate
     pack: FigurinesDoctor
 
 - type: entity
@@ -316,7 +324,7 @@
   components:
   - type: Sprite
     state: librarian
-  - type: SpeakOnUse
+  - type: SpeakOnActivate
     pack: FigurinesLibrarian
 
 - type: entity
@@ -327,7 +335,7 @@
   components:
   - type: Sprite
     state: chaplain
-  - type: SpeakOnUse
+  - type: SpeakOnActivate
     pack: FigurinesChaplain
 
 - type: entity
@@ -338,7 +346,7 @@
   components:
   - type: Sprite
     state: chef
-  - type: SpeakOnUse
+  - type: SpeakOnActivate
     pack: FigurinesChef
 
 - type: entity
@@ -349,7 +357,7 @@
   components:
   - type: Sprite
     state: bartender
-  - type: SpeakOnUse
+  - type: SpeakOnActivate
     pack: FigurinesBartender
 
 - type: entity
@@ -360,7 +368,7 @@
   components:
   - type: Sprite
     state: botanist
-  - type: SpeakOnUse
+  - type: SpeakOnActivate
     pack: FigurinesBotanist
 
 - type: entity
@@ -371,7 +379,7 @@
   components:
   - type: Sprite
     state: janitor
-  - type: SpeakOnUse
+  - type: SpeakOnActivate
     pack: FigurinesJanitor
 
 - type: entity
@@ -382,7 +390,7 @@
   components:
   - type: Sprite
     state: nukie
-  - type: SpeakOnUse
+  - type: SpeakOnActivate
     pack: FigurinesNukie
 
 - type: entity
@@ -393,7 +401,7 @@
   components:
   - type: Sprite
     state: nukie_elite
-  - type: SpeakOnUse
+  - type: SpeakOnActivate
     pack: FigurinesNukieElite
 
 - type: entity
@@ -404,7 +412,7 @@
   components:
   - type: Sprite
     state: nukie_commander
-  - type: SpeakOnUse
+  - type: SpeakOnActivate
     pack: FigurinesNukieCommander
 
 - type: entity
@@ -415,7 +423,7 @@
   components:
   - type: Sprite
     state: footsoldier
-  - type: SpeakOnUse
+  - type: SpeakOnActivate
     pack: FigurinesFootsoldier
 
 - type: entity
@@ -426,7 +434,7 @@
   components:
   - type: Sprite
     state: wizard
-  - type: SpeakOnUse
+  - type: SpeakOnActivate
     pack: FigurinesWizard
 
 - type: entity
@@ -437,7 +445,7 @@
   components:
   - type: Sprite
     state: wizard_fake
-  - type: SpeakOnUse
+  - type: SpeakOnActivate
     pack: FigurinesWizard
 
 #Nonhuman Figurines
@@ -450,7 +458,7 @@
   components:
   - type: Sprite
     state: spacedragon
-  - type: SpeakOnUse
+  - type: SpeakOnActivate
     pack: FigurinesSpaceDragon
 
 - type: entity
@@ -461,7 +469,7 @@
   components:
   - type: Sprite
     state: queen
-  # - type: SpeakOnUse # TODO add something
+  # - type: SpeakOnActivate # TODO add something
   #   pack: FigurinesQueen
 
 - type: entity
@@ -472,7 +480,7 @@
   components:
   - type: Sprite
     state: ratking
-  - type: SpeakOnUse
+  - type: SpeakOnActivate
     pack: FigurinesRatKing
 
 - type: entity
@@ -483,7 +491,7 @@
   components:
   - type: Sprite
     state: ratservant
-  - type: SpeakOnUse
+  - type: SpeakOnActivate
     pack: FigurinesRatServant
 
 - type: entity
@@ -494,7 +502,7 @@
   components:
   - type: Sprite
     state: mouse
-  - type: SpeakOnUse
+  - type: SpeakOnActivate
     pack: FigurinesMouse
 
 - type: entity
@@ -505,7 +513,7 @@
   components:
   - type: Sprite
     state: slime
-  - type: SpeakOnUse
+  - type: SpeakOnActivate
     pack: FigurinesSlime
 
 - type: entity
@@ -516,7 +524,7 @@
   components:
   - type: Sprite
     state: hamlet
-  - type: SpeakOnUse
+  - type: SpeakOnActivate
     pack: FigurinesHamlet
 
 #TODO: Convert these to the new figurine sprite template and rename their sprite name.
