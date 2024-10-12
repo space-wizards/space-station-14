@@ -108,7 +108,7 @@
         sizeMaps:
           32:
             sprite: Mobs/Species/Gray/displacement.rsi
-            state: head
+            state: ears
   - type: Speech
     speechSounds: PVC
   - type: TypingIndicator
@@ -175,4 +175,4 @@
         sizeMaps:
           32:
             sprite: Mobs/Species/Gray/displacement.rsi
-            state: head
+            state: ears
