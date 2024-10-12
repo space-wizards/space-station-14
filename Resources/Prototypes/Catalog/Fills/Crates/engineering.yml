@@ -215,3 +215,15 @@
   - type: StorageFill
     contents:
       - id: SpaceHeaterFlatpack
+
+- type: entity
+  id: CrateAirCandles
+  parent: CrateEngineeringSecure
+  name: air candle crate
+  description: A crate containing 2 boxes of air gas candles.
+  components:
+  - type: StorageFill
+    contents:
+    - id: BoxCandleAir
+      amount: 2
+    - id: BoxFlare

@@ -111,3 +111,13 @@
 #  cost: 15500
 #  category: cargoproduct-category-name-atmospherics
 #  group: market
+
+- type: cargoProduct
+  id: AtmosphericsCandles
+  icon:
+    sprite: Objects/Misc/candles.rsi
+    state: candle-big
+  product: CrateCandlesAir
+  cost: 2500 # its ~ 32000 mols of Air mix potential. Cheap though because no cannister, and youve got to cool it and collect it to use it.
+  category: cargoproduct-category-name-atmospherics
+  group: market

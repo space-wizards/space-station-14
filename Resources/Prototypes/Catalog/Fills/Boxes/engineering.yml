@@ -1,0 +1,11 @@
+- type: entity
+  name: air candle box
+  parent: BoxCandle
+  id: BoxCandleAir
+  components:
+  - type: StorageFill
+    contents:
+      - id: CandleGasNitrogen
+        amount: 9
+      - id: CandleGasOxygen
+        amount: 3

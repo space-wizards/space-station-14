@@ -32,7 +32,7 @@
       canResistFire: false
       alwaysCombustible: true
       canExtinguish: true
-      firestacksOnIgnite: 3.2
+      firestacksOnIgnite: 3.3
       firestackFade: -0.01
       damage:
         types:

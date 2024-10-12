@@ -73,7 +73,6 @@
       left:
       - state: inhand-left
         color: "#2887E8"
-      - state: inhand-left-flame
       right:
       - state: inhand-right
         color: "#2887E8"
@@ -98,7 +97,6 @@
       left:
       - state: inhand-left
         color: "#DA1010"
-      - state: inhand-left-flame
       right:
       - state: inhand-right
         color: "#DA1010"
@@ -124,7 +122,6 @@
       left:
       - state: inhand-left
         color: "#4e4e4e"
-      - state: inhand-left-flame
       right:
       - state: inhand-right
         color: "#4e4e4e"
@@ -151,7 +148,6 @@
       left:
       - state: inhand-left
         color: "#FF3300"
-      - state: inhand-left-flame
       right:
       - state: inhand-right
         color: "#FF3300"
@@ -179,7 +175,6 @@
       left:
       - state: inhand-left
         color: "#13FF4B"
-      - state: inhand-left-flame
       right:
       - state: inhand-right
         color: "#13FF4B"
@@ -208,7 +203,6 @@
       left:
       - state: inhand-left
         color: "#bffffd"
-      - state: inhand-left-flame
       right:
       - state: inhand-right
         color: "#bffffd"
@@ -225,9 +219,9 @@
         
 - type: entity
   name: ammonia candle
-  description: | 
-  A candle that emits hot ammonia gas when lit.
-  Why does it smell like a nursing home?
+  description: |
+    A candle that emits hot ammonia gas when lit.
+    Why does it smell like a nursing home?
   parent: CandleGasBase
   id: CandleGasAmmonia # gross.
   components:
@@ -240,7 +234,6 @@
       left:
       - state: inhand-left
         color: "#56941E"
-      - state: inhand-left-flame
       right:
       - state: inhand-right
         color: "#56941E"
@@ -271,7 +264,6 @@
       left:
       - state: inhand-left
         color: "#8F00FF"
-      - state: inhand-left-flame
       right:
       - state: inhand-right
         color: "#8F00FF"
@@ -303,7 +295,6 @@
       left:
       - state: inhand-left
         color: "#3a758c"
-      - state: inhand-left-flame
       right:
       - state: inhand-right
         color: "#3a758c"
