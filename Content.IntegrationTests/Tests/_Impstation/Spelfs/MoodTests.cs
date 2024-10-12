@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Content.IntegrationTests;
-using Content.Server.Impstation.Spelfs;
+using Content.Server._Impstation.Spelfs;
 using Content.Shared.Dataset;
-using Content.Shared.Impstation.Spelfs;
+using Content.Shared._Impstation.Spelfs;
 using NUnit.Framework;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameObjects;
@@ -12,7 +12,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager;
 
-namespace Content.IntegrationTests.Tests.Impstation.Spelfs;
+namespace Content.IntegrationTests.Tests._Impstation.Spelfs;
 
 [TestFixture, TestOf(typeof(SpelfMoodPrototype))]
 public sealed class SpelfMoodTests

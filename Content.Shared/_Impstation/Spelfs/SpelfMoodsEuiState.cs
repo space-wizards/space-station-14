@@ -1,7 +1,7 @@
 using Content.Shared.Eui;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Impstation.Spelfs;
+namespace Content.Shared._Impstation.Spelfs;
 
 [Serializable, NetSerializable]
 public sealed class SpelfMoodsEuiState : EuiStateBase

@@ -3,10 +3,10 @@ using Content.Server.Administration.Managers;
 using Content.Server.EUI;
 using Content.Shared.Administration;
 using Content.Shared.Eui;
-using Content.Shared.Impstation.Spelfs;
-using Content.Shared.Impstation.Spelfs.Components;
+using Content.Shared._Impstation.Spelfs;
+using Content.Shared._Impstation.Spelfs.Components;
 
-namespace Content.Server.Impstation.Spelfs;
+namespace Content.Server._Impstation.Spelfs;
 
 public sealed class SpelfMoodsEui : BaseEui
 {

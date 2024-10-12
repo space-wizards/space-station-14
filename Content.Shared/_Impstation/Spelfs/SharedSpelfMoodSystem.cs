@@ -1,7 +1,7 @@
 using Content.Shared.Emag.Systems;
-using Content.Shared.Impstation.Spelfs.Components;
+using Content.Shared._Impstation.Spelfs.Components;
 
-namespace Content.Shared.Impstation.Spelfs;
+namespace Content.Shared._Impstation.Spelfs;
 
 public abstract class SharedSpelfMoodSystem : EntitySystem
 {

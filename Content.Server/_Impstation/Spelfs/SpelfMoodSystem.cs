@@ -7,8 +7,8 @@ using Content.Shared.Chat;
 using Content.Shared.Dataset;
 using Content.Shared.Emag.Systems;
 using Content.Shared.GameTicking;
-using Content.Shared.Impstation.Spelfs;
-using Content.Shared.Impstation.Spelfs.Components;
+using Content.Shared._Impstation.Spelfs;
+using Content.Shared._Impstation.Spelfs.Components;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using Robust.Server.GameObjects;
@@ -17,7 +17,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
-namespace Content.Server.Impstation.Spelfs;
+namespace Content.Server._Impstation.Spelfs;
 
 public sealed partial class SpelfMoodsSystem : SharedSpelfMoodSystem
 {
