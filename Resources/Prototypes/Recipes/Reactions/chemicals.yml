@@ -529,7 +529,7 @@
 
 - type: reaction
   id: BathSalts
- minTemp: 374
+  minTemp: 374
   reactants:
     Saltpetre:
       amount: 1
