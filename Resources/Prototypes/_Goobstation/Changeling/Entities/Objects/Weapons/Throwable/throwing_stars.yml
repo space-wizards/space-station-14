@@ -1,0 +1,12 @@
+- type: entity
+  parent: ThrowingStar
+  id: ThrowingStarChangeling
+  name: bone shard
+  components:
+  - type: Sprite
+    sprite: _Goobstation/Changeling/bone_shard.rsi
+    layers:
+    - state: icon
+      map: ["base"]
+  - type: TimedDespawn
+    lifetime: 30

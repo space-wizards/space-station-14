@@ -19,6 +19,7 @@
   sprites:
     Eyes: MobGastropoidEyes
     Head: MobGastropoidHead
+    HeadTop: MobHumanoidAnyMarking
     Chest: MobGastropoidTorso
     LArm: MobGastropoidLArm
     RArm: MobGastropoidRArm
@@ -36,6 +37,9 @@
   points:
     Head:
       points: 6
+      required: false
+    HeadTop:
+      points: 2
       required: false
     Chest:
       points: 4
@@ -95,7 +99,6 @@
   baseSprite:
     sprite: Mobs/Species/Snail/parts.rsi
     state: torso
-
 
 - type: humanoidBaseSprite
   id: MobGastropoidLLeg

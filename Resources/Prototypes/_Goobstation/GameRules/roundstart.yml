@@ -1,0 +1,63 @@
+- type: entity
+  parent: BaseGameRule
+  id: Changeling
+  components:
+  - type: ChangelingRule
+  - type: GameRule
+    minPlayers: 15
+    delay:
+      min: 30
+      max: 60
+  - type: AntagSelection
+    agentName: changeling-roundend-name
+    definitions:
+    - prefRoles: [ Changeling ]
+      max: 7
+      playerRatio: 10
+      lateJoinAdditional: true
+      mindComponents:
+      - type: ChangelingRole
+        prototype: Changeling
+
+- type: entity
+  parent: BaseTraitorRule
+  id: CalmTraitor # For Dual Antag Gamemodes
+  components:
+  - type: GameRule
+    minPlayers: 30
+    delay:
+      min: 240
+      max: 420
+  - type: AntagSelection
+    definitions:
+    - prefRoles: [ Traitor ]
+      max: 5
+      playerRatio: 15
+      blacklist:
+        components:
+        - AntagImmune
+        - Changeling
+      lateJoinAdditional: true
+      mindComponents:
+      - type: TraitorRole
+        prototype: Traitor
+
+- type: entity
+  parent: Changeling
+  id: CalmLing # For Dual Antag Gamemodes
+  components:
+  - type: GameRule
+    minPlayers: 30
+    delay:
+      min: 30
+      max: 60
+  - type: AntagSelection
+    agentName: changeling-roundend-name
+    definitions:
+    - prefRoles: [ Changeling ]
+      max: 2
+      playerRatio: 15
+      lateJoinAdditional: true
+      mindComponents:
+      - type: ChangelingRole
+        prototype: Changeling

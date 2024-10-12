@@ -1,0 +1,16 @@
+# changeling
+
+- type: storeCategory
+  id: ChangelingAbilityCombat
+  name: store-ling-category-combat
+  priority: 0
+
+- type: storeCategory
+  id: ChangelingAbilitySting
+  name: store-ling-category-sting
+  priority: 1
+
+- type: storeCategory
+  id: ChangelingAbilityUtility
+  name: store-ling-category-utility
+  priority: 2

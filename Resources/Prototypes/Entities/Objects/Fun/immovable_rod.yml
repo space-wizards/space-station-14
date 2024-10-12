@@ -43,7 +43,7 @@
   - type: InteractionOutline
   - type: MovementIgnoreGravity
   - type: Sprite
-    sprite: Goobstation/Heretic/abilities_heretic.rsi
+    sprite: _Goobstation/Heretic/abilities_heretic.rsi
     state: immovable_rod
     noRot: false
   - type: ImmovableVoidRod

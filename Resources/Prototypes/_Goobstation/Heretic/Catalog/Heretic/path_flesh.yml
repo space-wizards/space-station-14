@@ -1,0 +1,164 @@
+- type: listing
+  id: KnowledgePathStartFlesh
+  name: knowledge-path-flesh-s1-name
+  description: knowledge-path-flesh-s1-desc
+  icon: { sprite: _Goobstation/Heretic/Blades/blade_flesh.rsi, state: icon }
+  productHereticKnowledge: PrincipleOfHunger
+  cost:
+    KnowledgePoint: 1
+  categories:
+  - HereticPathFlesh
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:HereticPathCondition
+    stage: 0
+    # add every path here because you shouldn't be able to buy more starter knowledge
+    blacklist:
+    - Ash
+    - Blade
+    - Flesh
+    - Lock
+    - Rust
+    - Void
+
+- type: listing
+  id: HereticFleshPath2
+  name: knowledge-path-flesh-s2-name
+  description: knowledge-path-flesh-s2-desc
+  icon: { sprite: _Goobstation/Heretic/mansus_grasp.rsi, state: icon }
+  productHereticKnowledge: GraspOfFlesh
+  cost:
+    KnowledgePoint: 1
+  categories:
+  - HereticPathFlesh
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:HereticPathCondition
+    stage: 1
+    whitelist:
+    - Flesh
+
+# side
+- type: listing
+  id: HereticFleshPath3
+  name: knowledge-path-flesh-s3-name
+  description: knowledge-path-flesh-s3-desc
+  icon: { sprite: Objects/Specific/Hydroponics/poppy.rsi, state: dead }
+  productHereticKnowledge: ImperfectRitual
+  cost:
+    KnowledgePoint: 2
+  categories:
+  - HereticPathFlesh
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:HereticPathCondition
+    stage: 2
+
+- type: listing
+  id: HereticFleshPath4
+  name: knowledge-path-flesh-s4-name
+  description: knowledge-path-flesh-s4-desc
+  icon: { sprite: _Goobstation/Heretic/mansus_grasp.rsi, state: icon }
+  productHereticKnowledge: MarkOfFlesh
+  cost:
+    KnowledgePoint: 1
+  categories:
+  - HereticPathFlesh
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:HereticPathCondition
+    stage: 3
+    whitelist:
+    - Flesh
+
+- type: listing
+  id: HereticFleshPath5
+  name: knowledge-path-flesh-s5-name
+  description: knowledge-path-flesh-s5-desc
+  icon: { sprite: _Goobstation/Heretic/abilities_heretic.rsi, state: flesh_surgery }
+  productHereticKnowledge: KnittingOfFlesh
+  cost:
+    KnowledgePoint: 1
+  categories:
+  - HereticPathFlesh
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:HereticPathCondition
+    stage: 4
+    whitelist:
+    - Flesh
+
+# side
+- type: listing
+  id: HereticFleshPath6
+  name: knowledge-path-flesh-s6-name
+  description: knowledge-path-flesh-s6-desc
+  icon: { sprite: _Goobstation/Heretic/eldritch_mobs.rsi, state: raw_prophet }
+  productHereticKnowledge: RawRitual
+  cost:
+    KnowledgePoint: 2
+  categories:
+  - HereticPathFlesh
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:HereticPathCondition
+    stage: 5
+
+- type: listing
+  id: HereticFleshPath7
+  name: knowledge-path-flesh-s7-name
+  description: knowledge-path-flesh-s7-desc
+  icon: { sprite: _Goobstation/Heretic/Blades/blade_flesh.rsi, state: icon }
+  productHereticKnowledge: BleedingSteel
+  cost:
+    KnowledgePoint: 1
+  categories:
+  - HereticPathFlesh
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:HereticPathCondition
+    stage: 6
+    whitelist:
+    - Flesh
+
+# side
+- type: listing
+  id: HereticFleshPath8
+  name: knowledge-path-flesh-s8-name
+  description: knowledge-path-flesh-s8-desc
+  icon: { sprite: _Goobstation/Heretic/eldritch_mobs.rsi, state: stalker }
+  productHereticKnowledge: LonelyRitual
+  cost:
+    KnowledgePoint: 2
+  categories:
+  - HereticPathFlesh
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:HereticPathCondition
+    stage: 7
+
+- type: listing
+  id: HereticFleshPath9
+  name: knowledge-path-flesh-s9-name
+  description: knowledge-path-flesh-s9-desc
+  icon: { sprite: _Goobstation/Heretic/abilities_heretic.rsi, state: final_hymn }
+  productHereticKnowledge: AscensionFlesh
+  cost:
+    KnowledgePoint: 2
+  categories:
+  - HereticPathFlesh
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:HereticPathCondition
+    stage: 8
+    whitelist:
+    - Flesh

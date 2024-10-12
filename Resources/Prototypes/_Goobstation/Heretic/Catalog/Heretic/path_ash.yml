@@ -1,0 +1,164 @@
+- type: listing
+  id: HereticAshPath1
+  name: knowledge-path-ash-s1-name
+  description: knowledge-path-ash-s1-desc
+  icon: { sprite: _Goobstation/Heretic/Blades/blade_ash.rsi, state: icon }
+  productHereticKnowledge: NightwatcherSecret
+  cost:
+    KnowledgePoint: 1
+  categories:
+  - HereticPathAsh
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:HereticPathCondition
+    stage: 0
+    # add every path here because you shouldn't be able to buy more starter knowledge
+    blacklist:
+    - Ash
+    - Blade
+    - Flesh
+    - Lock
+    - Rust
+    - Void
+
+- type: listing
+  id: HereticAshPath2
+  name: knowledge-path-ash-s2-name
+  description: knowledge-path-ash-s2-desc
+  icon: { sprite: _Goobstation/Heretic/mansus_grasp.rsi, state: icon }
+  productHereticKnowledge: GraspOfAsh
+  cost:
+    KnowledgePoint: 1
+  categories:
+  - HereticPathAsh
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:HereticPathCondition
+    stage: 1
+    whitelist:
+    - Ash
+
+# side
+- type: listing
+  id: HereticAshPath3
+  name: knowledge-path-ash-s3-name
+  description: knowledge-path-ash-s3-desc
+  icon: { sprite: _Goobstation/Heretic/abilities_heretic.rsi, state: ashen_shift }
+  productHereticKnowledge: AshenShift
+  cost:
+    KnowledgePoint: 2
+  categories:
+  - HereticPathAsh
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:HereticPathCondition
+    stage: 2
+
+- type: listing
+  id: HereticAshPath4
+  name: knowledge-path-ash-s4-name
+  description: knowledge-path-ash-s4-desc
+  icon: { sprite: _Goobstation/Heretic/Blades/blade_ash.rsi, state: icon }
+  productHereticKnowledge: MarkOfAsh
+  cost:
+    KnowledgePoint: 1
+  categories:
+  - HereticPathAsh
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:HereticPathCondition
+    stage: 3
+    whitelist:
+    - Ash
+
+- type: listing
+  id: HereticAshPath5
+  name: knowledge-path-ash-s5-name
+  description: knowledge-path-ash-s5-desc
+  icon: { sprite: _Goobstation/Heretic/abilities_heretic.rsi, state: volcano_blast }
+  productHereticKnowledge: VolcanicBlast
+  cost:
+    KnowledgePoint: 1
+  categories:
+  - HereticPathAsh
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:HereticPathCondition
+    stage: 4
+    whitelist:
+    - Ash
+
+# side
+- type: listing
+  id: HereticAshPath6
+  name: knowledge-path-ash-s6-name
+  description: knowledge-path-ash-s6-desc
+  icon: { sprite: _Goobstation/Heretic/mad_mask.rsi, state: icon }
+  productHereticKnowledge: MaskOfMadness
+  cost:
+    KnowledgePoint: 2
+  categories:
+  - HereticPathAsh
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:HereticPathCondition
+    stage: 5
+
+- type: listing
+  id: HereticAshPath7
+  name: knowledge-path-ash-s7-name
+  description: knowledge-path-ash-s7-desc
+  icon: { sprite: _Goobstation/Heretic/Blades/blade_ash.rsi, state: icon }
+  productHereticKnowledge: FieryBlade
+  cost:
+    KnowledgePoint: 1
+  categories:
+  - HereticPathAsh
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:HereticPathCondition
+    stage: 6
+    whitelist:
+    - Ash
+
+# side
+- type: listing
+  id: HereticAshPath8
+  name: knowledge-path-ash-s8-name
+  description: knowledge-path-ash-s8-desc
+  icon: { sprite: _Goobstation/Heretic/abilities_heretic.rsi, state: nightwatcher_rebirth }
+  productHereticKnowledge: NightwatcherRebirth
+  cost:
+    KnowledgePoint: 2
+  categories:
+  - HereticPathAsh
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:HereticPathCondition
+    stage: 7
+
+- type: listing
+  id: HereticAshPath9
+  name: knowledge-path-ash-s9-name
+  description: knowledge-path-ash-s9-desc
+  icon: { sprite: _Goobstation/Heretic/abilities_heretic.rsi, state: ashlord_rite1 }
+  productHereticKnowledge: AscensionAsh
+  cost:
+    KnowledgePoint: 2
+  categories:
+  - HereticPathAsh
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:HereticPathCondition
+    stage: 8
+    whitelist:
+    - Ash
