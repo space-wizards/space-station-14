@@ -1148,3 +1148,8 @@
   id: compressed-meat
   flavorType: Complex
   description: flavor-complex-compressed-meat
+
+- type: flavor
+  id: carbon
+  flavorType: Complex
+  description: flavor-complex-carbon
