@@ -5,9 +5,24 @@
 
 # Food
 
+stack-name-pancake = pancake
+stack-name-blueberry-pancake = blueberry pancake
+stack-name-chocolate-chip-pancake = chocolate chip pancake
+
 # Food Containers
 
+stack-name-pizza-box = pizza box
+
 # Smokeables
+
+stack-name-rolling-paper = rolling paper
+stack-name-cigarette-filter = cigarette filter
+stack-name-ground-tobacco = ground tobacco
+stack-name-ground-cannabis = ground cannabis
+stack-name-ground-rainbow-cannabis = ground rainbow cannabis
+stack-name-dried-tobacco-leaves = dried tobacco leaves
+stack-name-dried-cannabis-leaves = dried cannabis leaves
+stack-name-dried-rainbow-cannabis-leaves = dried rainbow cannabis leaves
 
 ### engineering_stacks.yml
 
