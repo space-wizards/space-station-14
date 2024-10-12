@@ -557,3 +557,20 @@
       amount: 1
   products:
     Cyanide: 2
+
+- type: reaction
+  id: MaintenanceFlake
+  impact: Low
+  reactants:
+    Coffee:
+      amount: 2
+    WeldingFuel:
+      amount: 2
+    Enzyme:
+      amount: 2
+    SpaceCleaner:
+      amount: 1
+    Sugar:
+      amount: 1
+  products:
+    MaintenanceFlake: 3
