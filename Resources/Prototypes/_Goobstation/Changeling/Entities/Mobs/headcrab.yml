@@ -5,12 +5,27 @@
   description: You don't want to touch it.
   components:
   - type: Sprite
-    drawdepth: Mobs
+    drawdepth: SmallMobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: headcrab
       sprite: _Goobstation/Changeling/headcrab.rsi
+  - type: Tag
+    tags:
+    - Meat
+    - VimPilot
   - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+        density: 100
+        mask:
+        - SmallMobMask
+        layer:
+        - SmallMobLayer
   - type: Bloodstream
     bloodReagent: BloodChangeling
     bloodMaxVolume: 60
