@@ -5782,7 +5782,7 @@ entities:
       pos: -4.5,45.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -1773.3143
+      secondsUntilStateChange: -1812.4135
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -8169,6 +8169,13 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 15.5,27.5
+      parent: 1
+- proto: Biogenerator
+  entities:
+  - uid: 11748
+    components:
+    - type: Transform
+      pos: 5.5,-5.5
       parent: 1
 - proto: BlastDoor
   entities:
@@ -61579,6 +61586,11 @@ entities:
       parent: 1
 - proto: RandomSpawner
   entities:
+  - uid: 6011
+    components:
+    - type: Transform
+      pos: 4.5,-4.5
+      parent: 1
   - uid: 11734
     components:
     - type: Transform
@@ -61643,11 +61655,6 @@ entities:
     components:
     - type: Transform
       pos: -1.5,-9.5
-      parent: 1
-  - uid: 11748
-    components:
-    - type: Transform
-      pos: 4.5,-5.5
       parent: 1
   - uid: 11750
     components:
@@ -70977,10 +70984,10 @@ entities:
       parent: 1
 - proto: VendingMachineHydrobe
   entities:
-  - uid: 6011
+  - uid: 12698
     components:
     - type: Transform
-      pos: 5.5,-5.5
+      pos: 4.5,-5.5
       parent: 1
 - proto: VendingMachineJaniDrobe
   entities:
