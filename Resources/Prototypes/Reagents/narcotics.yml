@@ -469,7 +469,7 @@
   desc: reagent-desc-bath-salts
   physicalDesc: reagent-physical-desc-powdery
   flavor: bitter
-  color: "#FAFAFA"
+  color: "white"
   metabolisms:
     Poison:
       effects:
@@ -489,18 +489,14 @@
         sprintSpeedModifier: 1.2
       - !type:GenericStatusEffect
         key: Stun
-        time: 3
+        time: 2
         type: Remove
       - !type:GenericStatusEffect
         key: KnockedDown
-        time: 3
+        time: 2
         type: Remove
     Medicine:
       effects:
-      - !type:ResetNarcolepsy
-        conditions:
-        - !type:ReagentThreshold
-          min: 10
       - !type:ChemVomit
         conditions:
         - !type:ReagentThreshold
