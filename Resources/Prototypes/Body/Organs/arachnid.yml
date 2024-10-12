@@ -114,7 +114,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Item
-    size: Normal
+    size: Small
     heldPrefix: liver
   - type: Sprite
     state: liver

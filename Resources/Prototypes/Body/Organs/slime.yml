@@ -34,7 +34,7 @@
           - ReagentId: Slime
             Quantity: 10
     - type: Item
-      size: Normal
+      size: Small
       heldPrefix: brain
 
       
@@ -74,5 +74,5 @@
         - ReagentId: UncookedAnimalProteins
           Quantity: 5
   - type: Item
-    size: Normal
+    size: Small
     heldPrefix: lungs

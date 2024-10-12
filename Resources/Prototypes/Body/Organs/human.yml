@@ -72,7 +72,7 @@
       Burger: Brain
       Taco: Brain
   - type: Item
-    size: Normal
+    size: Small
     heldPrefix: brain
   
 - type: entity
@@ -129,7 +129,7 @@
       - state: lung-l
       - state: lung-r
   - type: Item
-    size: Normal
+    size: Small
     heldPrefix: lungs
   - type: Lung
   - type: Metabolizer
@@ -218,7 +218,7 @@
   - type: Sprite
     state: liver
   - type: Item
-    size: Normal
+    size: Small
     heldPrefix: liver
   - type: Metabolizer # The liver metabolizes certain chemicals only, like alcohol.
     maxReagents: 1
