@@ -40,7 +40,7 @@ public sealed partial class SuspicionRuleComponent : Component
     /// How long the round lasts in seconds.
     /// </summary>
     [DataField]
-    public int RoundDuration = 300;
+    public int RoundDuration = 480;
 
     /// <summary>
     /// How long to add to the round time when a player is killed.
