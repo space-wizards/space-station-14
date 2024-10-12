@@ -176,7 +176,12 @@ namespace Content.Client.Ghost
             _console.RemoteExecuteCommand(null, "ghostroles");
         }
 
-        public void ToggleGhostVisibility(bool? visibility = null)
+        public void GhostBarSpawn() // Goobstation - Ghost Bar
+        {
+            RaiseNetworkEvent(new GhostBarSpawnEvent());
+        }
+		
+		public void ToggleGhostVisibility(bool? visibility = null)
         {
             GhostVisibility = visibility ?? !GhostVisibility;
         }
