@@ -31,6 +31,9 @@
   name: brain
   description: "The source of incredible, unending intelligence. Honk."
   components:
+  - type: Item
+    size: Small
+    heldPrefix: brain
   - type: Sprite
     state: brain
   - type: SolutionContainerManager
@@ -90,6 +93,9 @@
       - id: Narcotic
       - id: Alcohol
         rateModifier: 0.1
+  - type: Item
+    size: Small
+    heldPrefix: stomach
 
 - type: entity
   id: OrganDionaLungs

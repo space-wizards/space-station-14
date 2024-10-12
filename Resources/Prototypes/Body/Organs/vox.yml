@@ -7,3 +7,6 @@
     metabolizerTypes: [ Vox ]
   - type: Lung
     alert: LowNitrogen
+  - type: Item
+    size: Normal
+    heldPrefix: lungs
