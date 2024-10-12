@@ -1,8 +1,8 @@
 - type: entity
-  name: C.H.I.M.P. handcannon upgrade chip
+  name: C.H.I.M.P. Omega chip
   parent: [BaseItem, BaseSyndicateContraband]
   id: WeaponPistolCHIMPUpgradeKit
-  description: An Syndicate-affiliate chip for the C.H.I.M.P that illegaly unlocks highly unstable and damaging Omega particles.
+  description: A highly illegal Syndicate-affiliate C.H.I.M.P. chip. Omega particles inflict burn and shock damage, and cause anomalies to go supercritical.
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
