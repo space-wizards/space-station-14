@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using Content.Client.Lobby;
 using Content.Shared.CCVar;
 using Content.Shared.Players;

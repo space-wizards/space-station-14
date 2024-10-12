@@ -76,6 +76,7 @@
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: CrewMonitor
+    transmitFrequencyId: ShuttleTimer
   - type: WirelessNetworkConnection
     range: 500
   - type: StationLimitedNetwork
@@ -95,7 +96,7 @@
 - type: entity
   id: ActionAGhostShowSolar
   name: Solar Control Interface
-  description: View a solar control interface.
+  description: View a Solar Control Interface.
   components:
   - type: InstantAction
     icon: { sprite: Structures/Machines/parts.rsi, state: box_0 }
@@ -107,31 +108,31 @@
 - type: entity
   id: ActionAGhostShowCommunications
   name: Communications Interface
-  description: View a communications interface.
+  description: View a Communications Interface.
   components:
   - type: InstantAction
-    icon: { sprite: Structures/Machines/parts.rsi, state: box_0 }
-    iconOn: Structures/Machines/parts.rsi/box_2.png
+    icon: { sprite: Interface/Actions/actions_ai.rsi, state: comms_console }
+    iconOn: Interface/Actions/actions_ai.rsi/comms_console.png
     keywords: [ "AI", "console", "interface" ]
-    priority: -10
+    priority: -4
     event: !type:ToggleIntrinsicUIEvent { key: enum.CommunicationsConsoleUiKey.Key }
 
 - type: entity
   id: ActionAGhostShowRadar
   name: Mass Scanner Interface
-  description: View a mass scanner interface.
+  description: View a Mass Scanner Interface.
   components:
   - type: InstantAction
-    icon: { sprite: Structures/Machines/parts.rsi, state: box_0 }
-    iconOn: Structures/Machines/parts.rsi/box_2.png
+    icon: { sprite: Interface/Actions/actions_ai.rsi, state: mass_scanner }
+    iconOn: Interface/Actions/actions_ai.rsi/mass_scanner.png
     keywords: [ "AI", "console", "interface" ]
-    priority: -10
+    priority: -7
     event: !type:ToggleIntrinsicUIEvent { key: enum.RadarConsoleUiKey.Key }
 
 - type: entity
   id: ActionAGhostShowCargo
   name: Cargo Ordering Interface
-  description: View a cargo ordering interface.
+  description: View a Cargo Ordering Interface.
   components:
   - type: InstantAction
     icon: { sprite: Structures/Machines/parts.rsi, state: box_0 }
@@ -143,23 +144,23 @@
 - type: entity
   id: ActionAGhostShowCrewMonitoring
   name: Crew Monitoring Interface
-  description: View a crew monitoring interface.
+  description: View a Crew Monitoring Interface.
   components:
   - type: InstantAction
-    icon: { sprite: Structures/Machines/parts.rsi, state: box_0 }
-    iconOn: Structures/Machines/parts.rsi/box_2.png
+    icon: { sprite: Interface/Actions/actions_ai.rsi, state: crew_monitor }
+    iconOn: Interface/Actions/actions_ai.rsi/crew_monitor.png
     keywords: [ "AI", "console", "interface" ]
-    priority: -10
+    priority: -9
     event: !type:ToggleIntrinsicUIEvent { key: enum.CrewMonitoringUIKey.Key }
 
 - type: entity
   id: ActionAGhostShowStationRecords
   name: Station Records Interface
-  description: View a station records Interface.
+  description: View a Station Records Interface.
   components:
   - type: InstantAction
-    icon: { sprite: Structures/Machines/parts.rsi, state: box_0 }
-    iconOn: Structures/Machines/parts.rsi/box_2.png
+    icon: { sprite: Interface/Actions/actions_ai.rsi, state: station_records }
+    iconOn: Interface/Actions/actions_ai.rsi/station_records.png
     keywords: [ "AI", "console", "interface" ]
-    priority: -10
+    priority: -8
     event: !type:ToggleIntrinsicUIEvent { key: enum.GeneralStationRecordConsoleKey.Key }

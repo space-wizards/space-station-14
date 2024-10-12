@@ -5,6 +5,8 @@
   minLimit: 0
   maxLimit: 3
   loadouts:
+  - FlowerWreath
+  - Hairflower
   - PlushieLizard
   - PlushieSpaceLizard
   - Lighter
@@ -18,6 +20,7 @@
   - ClothingNeckAromanticPin
   - ClothingNeckAsexualPin
   - ClothingNeckBisexualPin
+  - ClothingNeckGayPin
   - ClothingNeckIntersexPin
   - ClothingNeckLesbianPin
   - ClothingNeckNonBinaryPin
@@ -60,6 +63,14 @@
   loadouts:
   - LoadoutSpeciesEVANitrogen
   - LoadoutSpeciesEVAOxygen
+
+- type: loadoutGroup
+  id: GroupPocketTankDouble
+  name: loadout-group-pocket-tank-double
+  hidden: true
+  loadouts:
+  - LoadoutSpeciesPocketDoubleNitrogen
+  - LoadoutSpeciesPocketDoubleOxygen
 
 # Command
 - type: loadoutGroup
@@ -399,13 +410,16 @@
   minLimit: 0
   loadouts:
   - JesterHat
+  - JesterAltHat
 
 - type: loadoutGroup
   id: ClownJumpsuit
   name: loadout-group-clown-jumpsuit
   loadouts:
   - ClownSuit
+  - ClownSkirt
   - JesterSuit
+  - JesterAltSuit
 
 - type: loadoutGroup
   id: ClownBackpack
@@ -478,6 +492,23 @@
   minLimit: 0
   loadouts:
   - MimeWintercoat
+
+- type: loadoutGroup
+  id: MimeBelt
+  name: loadout-group-mime-belt
+  loadouts:
+  - MimeSuspendersRed
+  - MimeSuspendersBlack
+
+- type: loadoutGroup
+  id: SurvivalMime
+  name: loadout-group-survival-mime
+  minLimit: 2
+  hidden: true
+  loadouts:
+  - EmergencyNitrogenMime
+  - EmergencyOxygenMime
+  - LoadoutSpeciesVoxNitrogen
 
 - type: loadoutGroup
   id: MusicianJumpsuit
@@ -944,6 +975,7 @@
   - SecurityHelmet
   - SecurityBeret
   - SecurityHat
+  - TrooperHat
 
 - type: loadoutGroup
   id: SecurityJumpsuit
@@ -955,6 +987,7 @@
   - SecurityJumpskirtGrey
   - SeniorOfficerJumpsuit
   - SeniorOfficerJumpskirt
+  - TrooperUniform
 
 - type: loadoutGroup
   id: SecurityBackpack
@@ -983,7 +1016,6 @@
   id: SecurityShoes
   name: loadout-group-security-shoes
   loadouts:
-  - CombatBoots
   - JackBoots
   - SecurityWinterBoots
 
@@ -1025,6 +1057,7 @@
   loadouts:
   - DetectiveArmorVest
   - DetectiveCoat
+  - DetectiveCoatGrey
 
 - type: loadoutGroup
   id: SecurityCadetJumpsuit

@@ -15,7 +15,6 @@
   parent: [ClothingShoesBaseButcherable, ClothingSlotBase]
   id: ClothingShoesClownBase
   components:
-  - type: WaddleWhenWorn
   - type: ItemSlots
     slots:
       item:
@@ -109,6 +108,11 @@
   - type: Clothing
     sprite: Clothing/Shoes/Specific/galoshes.rsi
   - type: NoSlip
+  - type: SlowedOverSlippery
+    slowdownModifier: 0.7
+  - type: SpeedModifierContactCapClothing
+    maxContactSprintSlowdown: 0.7
+    maxContactWalkSlowdown: 0.7
 
 - type: entity
   parent: [ClothingShoesBaseButcherable, BaseMajorContraband]

@@ -27,7 +27,7 @@
 
 - type: entity
   id: AlertSpriteView
-  categories: [ HideSpawnMenu  ]
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     layers:
@@ -426,6 +426,14 @@
     state: icon
   name: alerts-pacified-name
   description: alerts-pacified-desc
+
+- type: alert
+  id: Adrenaline
+  icons:
+  - sprite: Mobs/Species/Human/organs.rsi
+    state: heart-on
+  name: alerts-adrenaline-name
+  description: alerts-adrenaline-desc
 
 - type: alert
   id: Debug1

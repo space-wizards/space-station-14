@@ -67,3 +67,21 @@
     contents:
       - id: DeathRattleImplanter
         amount: 6
+
+- type: entity
+  parent: [BoxCardboard, BaseSyndicateContraband]
+  id: CombatBakeryKit
+  name: combat bakery kit
+  description: A kit of clandestine baked weapons.
+  components:
+  - type: Sprite
+    layers:
+      - state: box_of_doom
+      - state: france
+  - type: StorageFill
+    contents:
+      - id: WeaponCroissant
+        amount: 2
+      - id: WeaponBaguette
+      - id: SyndicateMicrowaveMachineCircuitboard
+      - id: PaperWrittenCombatBakeryKit

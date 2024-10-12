@@ -119,12 +119,12 @@ public sealed partial class CargoSystem
         msg.PushNewline();
         foreach (var entry in prototype.Entries)
         {
-            msg.AddMarkup($"- {Loc.GetString("bounty-console-manifest-entry",
+            msg.AddMarkupOrThrow($"- {Loc.GetString("bounty-console-manifest-entry",
                 ("amount", entry.Amount),
                 ("item", Loc.GetString(entry.Name)))}");
             msg.PushNewline();
         }
-        msg.AddMarkup(Loc.GetString("bounty-console-manifest-reward", ("reward", prototype.Reward)));
+        msg.AddMarkupOrThrow(Loc.GetString("bounty-console-manifest-reward", ("reward", prototype.Reward)));
         _paperSystem.SetContent((uid, paper), msg.ToMarkup());
     }
 
@@ -420,6 +420,13 @@ public sealed partial class CargoSystem
             return false;
 
         _nameIdentifier.GenerateUniqueName(uid, BountyNameIdentifierGroup, out var randomVal);
+        var newBounty = new CargoBountyData(bounty, randomVal);
+        // This bounty id already exists! Probably because NameIdentifierSystem ran out of ids.
+        if (component.Bounties.Any(b => b.Id == newBounty.Id))
+        {
+            Log.Error("Failed to add bounty {ID} because another one with the same ID already existed!", newBounty.Id);
+            return false;
+        }
         component.Bounties.Add(new CargoBountyData(bounty, randomVal));
         _adminLogger.Add(LogType.Action, LogImpact.Low, $"Added bounty \"{bounty.ID}\" (id:{component.TotalBounties}) to station {ToPrettyString(uid)}");
         component.TotalBounties++;
