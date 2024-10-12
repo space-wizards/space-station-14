@@ -38,4 +38,4 @@ role-timer-locked = Locked (hover for details)
 
 role-timer-department-unknown = Unknown Department
 
-role-ban = You have been banned from this role.
+role-ban = You have been [color=red]banned[/color] from this role.
