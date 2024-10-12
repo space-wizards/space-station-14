@@ -44,19 +44,32 @@
   components:
   - type: Temperature
   - type: Flammable
-    FuelGasMix: null
-    emissiveGasMix: #  emits ~ mols * 300 if you collect all of it.
+    fuelGasMix: null
+
+- type: entity
+  name: air mix candle
+  description: A candle that emits hot nitrogen and oxygen gas when lit.
+  parent: CandleGasBase
+  id: CandleGasAir
+  components:
+  - type: Sprite
+    layers:
+      - state: candle-big
+        color: gray
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: gray
+      right:
+      - state: inhand-right
+        color: gray
+  - type: Flammable
+    emissiveGasMix: # ~1500 mol if you collect all of it.
       volume: 50
       moles:
-      - 0 # oxygen
-      - 0 # nitrogen
-      - 0 # CO2
-      - 0 # Plasma
-      - 0 # Tritium
-      - 0 # Water vapor
-      - 0 # Ammonia
-      - 0 # N2O
-      - 0 # Frezon
+      - 1.05
+      - 3.95
 
 - type: entity
   name: oxygen candle
