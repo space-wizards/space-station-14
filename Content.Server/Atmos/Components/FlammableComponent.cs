@@ -94,7 +94,7 @@ namespace Content.Server.Atmos.Components
         public ProtoId<AlertPrototype> FireAlert = "Fire";
 
         /// <summary>
-        /// A quantity of gas to be added to the atmosphere every update while on fire.
+        /// A maximum quantity of gas to be added to the atmosphere every update while on fire.
         /// </summary>
         [DataField]
         public GasMixture EmissiveGasMix = GasMixture.SpaceGas; // using SpaceGas here feels weird. I really just want an empty GasMix

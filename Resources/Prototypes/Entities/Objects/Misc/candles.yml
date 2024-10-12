@@ -32,7 +32,7 @@
       canResistFire: false
       alwaysCombustible: true
       canExtinguish: true
-      firestacksOnIgnite: 3.0
+      firestacksOnIgnite: 3.2
       firestackFade: -0.01
       damage:
         types:
@@ -488,19 +488,3 @@
       right:
       - state: inhand-right
         color: "#984aa1"
-
-- type: entity
-  name: CO2 candle
-  parent: Candle
-  id: CandleCO2Gas
-  components:
-  - type: Temperature
-  - type: Flammable
-    requireOxygen: false
-    emissiveGasMix: 
-      volume: 50
-      moles:
-      - 0
-      - 0
-      - 5
-        
