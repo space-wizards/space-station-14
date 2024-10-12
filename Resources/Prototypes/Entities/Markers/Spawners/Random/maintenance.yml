@@ -408,9 +408,9 @@
     - !type:GroupSelector
       weight: 8
       children:
-      - id: Brutepack1
-      - id: Ointment1
-      - id: Gauze1
+      - id: Brutepack5
+      - id: Ointment5
+      - id: Gauze5
 
 
 - type: entity
