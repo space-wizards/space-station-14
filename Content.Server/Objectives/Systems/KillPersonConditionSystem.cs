@@ -89,7 +89,7 @@ public sealed class KillPersonConditionSystem : EntitySystem
         foreach (var mind in allHumans)
         {
             // RequireAdminNotify used as a cheap way to check for command department
-            if (_job.MindTryGetJob(mind, out _, out var prototype) && prototype.RequireAdminNotify)
+            if (_job.MindTryGetJob(mind, out var prototype) && prototype.RequireAdminNotify)
                 allHeads.Add(mind);
         }
 
