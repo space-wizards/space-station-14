@@ -16,6 +16,9 @@ public sealed partial class SpeakOnActivateComponent : Component
     [DataField(required: true)]
     public ProtoId<LocalizedDatasetPrototype> Pack { get; private set; }
 
+    /// <summary>
+    ///     The port that makes the entity speak when triggered.
+    /// </summary>
     [DataField]
-    public ProtoId<SinkPortPrototype> ActivatePort = "Activate";
+    public ProtoId<SinkPortPrototype> ActivatePort = "Trigger";
 }
