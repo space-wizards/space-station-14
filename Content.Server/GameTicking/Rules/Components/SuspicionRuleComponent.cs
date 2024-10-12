@@ -73,6 +73,12 @@ public sealed partial class SuspicionRuleComponent : Component
     [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<NpcFactionPrototype>))]
     public string TraitorFaction = "Syndicate";
 
+    /// <summary>
+    /// How much TC to give to traitors/detectives for their performance
+    /// </summary>
+    [DataField]
+    public int AmountAddedPerKill = 1;
+
 }
 
 public enum SuspicionGameState

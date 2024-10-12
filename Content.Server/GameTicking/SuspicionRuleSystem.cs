@@ -170,7 +170,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem<SuspicionRuleComponent>
 
                     _storeSystem.TryAddCurrency(new Dictionary<string, FixedPoint2>()
                         {
-                            { "Telecrystal", 2 },
+                            { "Telecrystal", sus.AmountAddedPerKill },
                         },
                         implant,
                         storeComp
@@ -178,7 +178,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem<SuspicionRuleComponent>
                 }
             }
 
-            var message = Loc.GetString("tc-added-sus");
+            var message = Loc.GetString("tc-added-sus", ("tc", sus.AmountAddedPerKill));
 
             var channels = new List<INetChannel>();
             foreach (var traitor in allTraitors)
@@ -538,6 +538,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem<SuspicionRuleComponent>
 
             if (sus.EndAt <= TimeSpan.Zero)
             {
+                sus.GameState = SuspicionGameState.PostRound;
                 _roundEndSystem.EndRound(TimeSpan.FromSeconds(sus.PostRoundDuration));
                 return;
             }
