@@ -412,7 +412,7 @@ public class RadialMenuTextureButtonWithSector : RadialMenuTextureButton, IRadia
                 ? HoverBackgroundColor
                 : BackgroundColor;
 
-            DrawBagleSector(handle, containerCenter, _innerRadius, _outerRadius, _angleSectorFrom, _angleSectorTo, segmentColor);
+            DrawAnnulusSector(handle, containerCenter, _innerRadius, _outerRadius, _angleSectorFrom, _angleSectorTo, segmentColor);
         }
 
         if (DrawBorder)
@@ -420,7 +420,7 @@ public class RadialMenuTextureButtonWithSector : RadialMenuTextureButton, IRadia
             var borderColor = DrawMode == DrawModeEnum.Hover
                 ? HoverBorderColor
                 : BorderColor;
-            DrawBagleSector(handle, containerCenter, _innerRadius, _outerRadius, _angleSectorFrom, _angleSectorTo, borderColor, false);
+            DrawAnnulusSector(handle, containerCenter, _innerRadius, _outerRadius, _angleSectorFrom, _angleSectorTo, borderColor, false);
         }
 
         if (!_isWholeCircle && DrawSeparators)
@@ -468,7 +468,7 @@ public class RadialMenuTextureButtonWithSector : RadialMenuTextureButton, IRadia
     /// <param name="angleSectorTo">Angle in radian, from which sector should start.</param>
     /// <param name="color">Color for drawing.</param>
     /// <param name="filled">Should figure be filled, or have only border.</param>
-    private void DrawBagleSector(
+    private void DrawAnnulusSector(
         DrawingHandleScreen drawingHandleScreen,
         Vector2 center,
         float radiusInner,
