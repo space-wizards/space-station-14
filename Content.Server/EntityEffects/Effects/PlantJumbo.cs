@@ -1,6 +1,8 @@
 using Content.Server.Botany;
 using Content.Server.Botany.Components;
 using Content.Server.Botany.Systems;
+using Content.Server.Nutrition.Components;
+using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.EntityEffects;
 using Content.Shared.Item;
 using Robust.Shared.Prototypes;
@@ -54,6 +56,16 @@ public sealed partial class PlantJumbo : EntityEffect
         // If you want multiple Jumbo plants with a higher yield, you have to gamble on re-mutating it each time
         botanySystem.SetPotency(produce.Seed, 100);
         botanySystem.SetYield(produce.Seed, 1);
+
+        if (args.EntityManager.TryGetComponent<FoodComponent>(args.TargetEntity, out var food))
+        {
+            for (int t = 0; t < food.Trash.Count; t++)
+                if (prototypeManager.HasIndex(food.Trash[t].Id + "Jumbo"))
+                {
+                    var foodSys = args.EntityManager.System<FoodSystem>();
+                    foodSys.ChangeTrash(args.TargetEntity, food, food.Trash[t], new EntProtoId(food.Trash[t].Id + "Jumbo"));
+                }
+        }
     }
 
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
