@@ -42,3 +42,6 @@ reagent-desc-happiness = Fills you with ecstatic numbness and causes minor brain
 
 reagent-name-bath-salts = bath salts
 reagent-desc-bath-salts = A drug that is used to reduce inflammation and relax the user, though it is misused and is recreationally used by spessmen.
+
+reagent-name-maintenance-flake = maintenance flake
+reagent-desc-maintenance-flake = An easily synthesized, highly addictive and dangerous maintenance drug that is used by militia and rebels alike.
