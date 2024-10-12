@@ -96892,6 +96892,24 @@ entities:
       parent: 30
 - proto: IntercomAll
   entities:
+  - uid: 17780
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -1.5,82.5
+      parent: 30
+  - uid: 17781
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 0.5,82.5
+      parent: 30
+  - uid: 17782
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -0.5,81.5
+      parent: 30
   - uid: 22231
     components:
     - type: Transform
