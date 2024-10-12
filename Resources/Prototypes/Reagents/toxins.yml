@@ -734,9 +734,9 @@
   name: reagent-name-cyanide
   desc: reagent-desc-cyanide
   group: Toxins
-  flavor: acrid
+  flavor: bitter
   color: "#5cd6d6"
-  physicalDesc: reagent-physical-desc-colorless
+  physicalDesc: reagent-physical-desc-acrid
   metabolisms:
     Poison:
       metabolismRate: 0.05
