@@ -184,19 +184,19 @@
   - !type:ListingLimitedStockCondition
     stock: 1
 
-- type: listing
-  id: EvolutionMenuStingTransform
-  name: evolutionmenu-sting-transform-name
-  description: evolutionmenu-sting-transform-desc
-  icon: { sprite: _Goobstation/Changeling/changeling_abilities.rsi, state: sting_transform }
-  productAction: ActionStingTransform
-  cost:
-    EvolutionPoint: 6
-  categories:
-  - ChangelingAbilitySting
-  conditions:
-  - !type:ListingLimitedStockCondition
-    stock: 1
+# - type: listing
+#   id: EvolutionMenuStingTransform
+#   name: evolutionmenu-sting-transform-name
+#   description: evolutionmenu-sting-transform-desc
+#   icon: { sprite: _Goobstation/Changeling/changeling_abilities.rsi, state: sting_transform }
+#   productAction: ActionStingTransform
+#   cost:
+#     EvolutionPoint: 6
+#   categories:
+#   - ChangelingAbilitySting
+#   conditions:
+#   - !type:ListingLimitedStockCondition
+#     stock: 1
 
 # utility
 
