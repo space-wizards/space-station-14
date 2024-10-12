@@ -728,3 +728,21 @@
       - !type:Emote
         emote: Cough
         probability: 0.4
+
+- type: reagent
+  id: Cyanide
+  name: reagent-name-cyanide
+  desc: reagent-desc-cyanide
+  group: Toxins
+  flavor: acrid
+  color: "#5cd6d6"
+  physicalDesc: reagent-physical-desc-colorless
+  metabolisms:
+    Poison:
+      metabolismRate: 0.3
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 1.50
+            Asphyxiation: 0.50
