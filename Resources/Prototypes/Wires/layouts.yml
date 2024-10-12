@@ -90,6 +90,7 @@
 - type: wireLayout
   id: FireAlarm
   wires:
+  - !type:AiInteractWireAction
   - !type:PowerWireAction
   - !type:AtmosMonitorDeviceNetWire
     alarmOnPulse: true
