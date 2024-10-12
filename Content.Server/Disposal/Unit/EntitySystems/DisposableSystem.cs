@@ -193,12 +193,15 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 holder.PreviousTube = holder.CurrentTube;
                 holder.PreviousDirection = holder.CurrentDirection;
             }
+
             holder.CurrentTube = toUid;
+
             var ev = new GetDisposalsNextDirectionEvent(holder);
             RaiseLocalEvent(toUid, ref ev);
+
             holder.CurrentDirection = ev.Next;
-            holder.StartingTime = 0.1f;
-            holder.TimeLeft = 0.1f;
+            holder.StartingTime = holder.TraversalTime;
+            holder.TimeLeft = holder.TraversalTime;
             // Logger.InfoS("c.s.disposal.holder", $"Disposals dir {holder.CurrentDirection}");
 
             // Invalid direction = exit now!
@@ -207,6 +210,10 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 ExitDisposals(holderUid, holder, holderTransform);
                 return false;
             }
+
+            var xform = Transform(holderUid);
+            var parentXform = Transform(xform.ParentUid);
+            xform.LocalRotation = holder.CurrentDirection.ToAngle() - parentXform.LocalRotation;
 
             // damage entities on turns and play sound
             if (holder.CurrentDirection != holder.PreviousDirection)

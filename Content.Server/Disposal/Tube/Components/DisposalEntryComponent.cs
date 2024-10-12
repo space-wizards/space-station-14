@@ -6,6 +6,7 @@ namespace Content.Server.Disposal.Tube.Components
     [Access(typeof(DisposalTubeSystem), typeof(DisposalUnitSystem))]
     public sealed partial class DisposalEntryComponent : Component
     {
-        public const string HolderPrototypeId = "DisposalHolder";
+        [DataField]
+        public string HolderPrototypeId = "DisposalHolder";
     }
 }

@@ -454,7 +454,7 @@ namespace Content.Server.Disposal.Tube
                 return false;
 
             var xform = Transform(uid);
-            var holder = Spawn(DisposalEntryComponent.HolderPrototypeId, _transform.GetMapCoordinates(uid, xform: xform));
+            var holder = Spawn(entry.HolderPrototypeId, _transform.GetMapCoordinates(uid, xform: xform));
             var holderComponent = Comp<DisposalHolderComponent>(holder);
 
             foreach (var entity in from.Container.ContainedEntities.ToArray())

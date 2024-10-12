@@ -51,12 +51,32 @@
   - type: Rotatable
   - type: Pullable
   - type: CollideOnAnchor
+  - type: DisposalTube
+    clangSound: "/Audio/Effects/toss.ogg"
   - type: ContainerContainer
     containers:
       DisposalTube: !type:Container
   - type: StaticPrice
     price: 30
 
+- type: entity
+  id: TransitHolder
+  categories: [ HideSpawnMenu ]
+  name: transit holder
+  components:
+  - type: DisposalHolder
+    traversalTime: 0.2
+  - type: ContainerContainer
+    containers:
+      DisposalHolderComponent: !type:Container
+  - type: Sprite
+    drawdepth: BlastDoors
+    overrideContainerOcclusion: true
+    sprite: Structures/Piping/transit_tubes.rsi
+    layers:
+    - map: [ "pod" ]
+      state: empty_pod
+  
 # Pipes
 
 - type: entity
@@ -66,7 +86,7 @@
   description: A BBT (big broken tube).
   components:
   - type: Sprite
-    drawdepth: WallMountedItems
+    drawdepth: Overdoors
     sprite: Structures/Piping/transit_tubes.rsi
     layers:
     - map: [ "tube" ]
@@ -82,7 +102,7 @@
   description: A tube trunk used as an entry point for transit systems.
   components:
   - type: Sprite
-    drawdepth: WallMountedItems
+    drawdepth: Overdoors
     sprite: Structures/Piping/transit_tubes.rsi
     layers:
     - map: [ "tube" ]
@@ -90,6 +110,7 @@
   - type: DisposalTube
     containerId: DisposalEntry
   - type: DisposalEntry
+    holderPrototypeId: TransitHolder
   - type: ContainerContainer
     containers:
       DisposalEntry: !type:Container
@@ -104,9 +125,7 @@
       fix1:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.25,-0.5,0.25,0.4"
-        mask:
-        - SubfloorMask
+          bounds: "-0.25,-0.5,0.25,0.5"
 
 - type: entity
   id: TransitTube
@@ -115,7 +134,7 @@
   description: A huge tube segment used for constructing transit systems.
   components:
   - type: Sprite
-    drawdepth: WallMountedItems
+    drawdepth: Overdoors
     sprite: Structures/Piping/transit_tubes.rsi
     layers:
     - map: [ "tube" ]
@@ -140,7 +159,7 @@
   description: A huge tube segment used for constructing transit systems.
   components:
   - type: Sprite
-    drawdepth: WallMountedItems
+    drawdepth: Overdoors
     sprite: Structures/Piping/transit_tubes.rsi
     layers:
     - map: [ "tube" ]
@@ -165,11 +184,12 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.25,0.5"
-        mask:
-        - SubfloorMask
+        shape: !type:PolygonShape
+          vertices:
+            - -0.5,-0.1667
+            - 0.1667,0.5
+            - 0.5,0.1667
+            - -0.1667,-0.5
 
 - type: entity
   id: TransitTubeJunction
@@ -178,7 +198,7 @@
   description: A three-way junction. The arrow indicates where commuters preferentially exit.
   components:
   - type: Sprite
-    drawdepth: WallMountedItems
+    drawdepth: Overdoors
     sprite: Structures/Piping/transit_tubes.rsi
     layers:
     - map: [ "tube" ]
@@ -208,9 +228,7 @@
       fix1:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.25,0.5"
-        mask:
-        - SubfloorMask
+          bounds: "-0.5,-0.5,0.5,0.5"
 
 - type: entity
   id: TransitTubeJunctionFlipped
@@ -219,7 +237,7 @@
   suffix: flipped
   components:
   - type: Sprite
-    drawdepth: WallMountedItems
+    drawdepth: Overdoors
     sprite: Structures/Piping/transit_tubes.rsi
     layers:
     - map: [ "tube" ]
@@ -243,9 +261,7 @@
       fix1:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.25,-0.5,0.5,0.5"
-        mask:
-        - SubfloorMask
+          bounds: "-0.5,-0.5,0.5,0.5"
 
 - type: entity
   id: TransitTubeBend
@@ -254,7 +270,7 @@
   description: A transit tube bent at a 135 degree angle.
   components:
   - type: Sprite
-    drawdepth: WallMountedItems
+    drawdepth: Overdoors
     sprite: Structures/Piping/transit_tubes.rsi
     layers:
     - map: [ "tube" ]
@@ -280,9 +296,7 @@
       fix1:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.25,0.25"
-        mask:
-        - SubfloorMask
+          bounds: "-0.25,-0.5,0.5,0.5"
 
 - type: entity
   id: TransitTubeBendFlipped
@@ -291,7 +305,7 @@
   suffix: flipped
   components:
   - type: Sprite
-    drawdepth: WallMountedItems
+    drawdepth: Overdoors
     sprite: Structures/Piping/transit_tubes.rsi
     layers:
     - map: [ "tube" ]
@@ -314,9 +328,7 @@
       fix1:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.25,-0.5,0.5,0.5"
-        mask:
-        - SubfloorMask
+          bounds: "-0.5,-0.5,0.25,0.5"
 
 - type: entity
   abstract: true
@@ -329,7 +341,7 @@
     - Disposal
   components:
   - type: Sprite
-    drawdepth: WallMountedItems
+    drawdepth: Overdoors
     sprite: Structures/Piping/disposal.rsi
     layers:
     - state: condisposal

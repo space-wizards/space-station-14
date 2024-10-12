@@ -11,6 +11,12 @@ namespace Content.Server.Disposal.Unit.Components
         public Container Container = null!;
 
         /// <summary>
+        ///     Sets how many seconds it takes to traverse one pipe length
+        /// </summary>
+        [DataField]
+        public float TraversalTime { get; set; } = 0.1f;
+
+        /// <summary>
         ///     The total amount of time that it will take for this entity to
         ///     be pushed to the next tube
         /// </summary>
