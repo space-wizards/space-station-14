@@ -26,6 +26,11 @@ stack-name-dried-rainbow-cannabis-leaves = dried rainbow cannabis leaves
 
 ### engineering_stacks.yml
 
+# inflatables
+
+stack-name-inflatable-wall = inflatable wall
+stack-name-inflatable-door = inflatable door
+
 ### floor_tile_stacks.yml
 
 ### medical_stacks.yml
