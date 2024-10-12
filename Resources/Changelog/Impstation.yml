@@ -2885,3 +2885,12 @@
   id: 357
   time: '2024-10-12T00:50:39.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/458
+- author: formlessnameless
+  changes:
+  - message: The ling headslug now has all of the powers of a mouse
+    type: Tweak
+  - message: Ghost bar doors are all access, and there is now a Vox Box
+    type: Tweak
+  id: 358
+  time: '2024-10-12T03:33:00.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/459
