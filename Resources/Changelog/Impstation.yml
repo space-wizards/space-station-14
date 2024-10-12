@@ -2909,3 +2909,10 @@
   id: 360
   time: '2024-10-12T14:36:44.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/465
+- author: Darkmajia
+  changes:
+  - message: Removed changeling's transformation sting for the time being.
+    type: Remove
+  id: 361
+  time: '2024-10-12T15:55:15.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/464
