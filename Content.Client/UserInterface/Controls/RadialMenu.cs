@@ -93,9 +93,18 @@ public class RadialMenu : BaseWindow
         OnChildAdded += child =>
         {
             child.Visible = GetCurrentActiveLayer() == child;
-            if (child is RadialContainer { Visible: true } container)
-                ContextualButton.ActiveContainer = container;
+            SetupContextualButtonData(child);
         };
+    }
+
+    private void SetupContextualButtonData(Control child)
+    {
+        if (child is RadialContainer { Visible: true } container)
+        {
+            ContextualButton.ParentCenter = Size * 0.5f;
+            ContextualButton.InnerRadius = container.Radius * 0.5f;
+            ContextualButton.OuterRadius = container.Radius * 2;
+        }
     }
 
     private Control? GetCurrentActiveLayer()
@@ -135,8 +144,7 @@ public class RadialMenu : BaseWindow
             else
             {
                 child.Visible = true;
-                if (child is RadialContainer container)
-                    ContextualButton.ActiveContainer = container;
+                SetupContextualButtonData(child);
                 result = true;
             }
         }
@@ -189,6 +197,11 @@ public class RadialMenu : BaseWindow
 /// </summary>
 public sealed class RadialMenuContextualCentralTextureButton : TextureButton
 {
+    public float InnerRadius { get; set; }
+
+    public float OuterRadius { get; set; }
+
+    public Vector2? ParentCenter { get; set; }
 
     /// <inheritdoc />
     public RadialMenuContextualCentralTextureButton()
@@ -196,65 +209,35 @@ public sealed class RadialMenuContextualCentralTextureButton : TextureButton
 
     }
 
-    /// <summary>
-    /// Reference for container of radial menu.
-    /// Is required to properly consider radius of circles menu will draw.
-    /// </summary>
-    public RadialContainer? ActiveContainer { get; set; }
-
     /// <inheritdoc />
     protected override bool HasPoint(Vector2 point)
     {
-        if (ActiveContainer == null || Parent == null)
+        if (ParentCenter == null)
         {
             return base.HasPoint(point);
         }
 
-        var cX = -Position.X + Parent.Width * 0.5f;
-        var cY = -Position.Y + Parent.Height * 0.5f;
-
-        var dist = Math.Pow(point.X - cX, 2) + Math.Pow(point.Y - cY, 2);
+        var distSquared = (point + Position - ParentCenter.Value).LengthSquared();
 
         // Button space is inside half of container radius / or outside double of its radius.
         // half of radius and double the radius are radial menu concentric circles that are
         // created by radial menu buttons.
-        var outerRadiusSquared = Math.Pow(ActiveContainer.Radius * 2, 2);
-        var innerRadiusSquared = Math.Pow(ActiveContainer.Radius * 0.5f, 2);
+        var outerRadiusSquared = OuterRadius * OuterRadius;
+        var innerRadiusSquared = InnerRadius * InnerRadius;
 
         // comparing to squared values is faster then making sqrt
-        return dist > outerRadiusSquared || dist < innerRadiusSquared;
+        return distSquared > outerRadiusSquared || distSquared < innerRadiusSquared;
     }
 }
+
 
 [Virtual]
 public class RadialMenuTextureButton : TextureButton
 {
-    private Vector2[]? _sectorPointsForDrawing;
-
     /// <summary>
     /// Upon clicking this button the radial menu will be moved to the named layer
     /// </summary>
     public string TargetLayer { get; set; } = string.Empty;
-
-    /// <summary>
-    /// Angle in radian where button sector should start.
-    /// </summary>
-    public float AngleSectorFrom { get; set; }
-
-    /// <summary>
-    /// Angle in radian where button sector should end.
-    /// </summary>
-    public float AngleSectorTo { get; set; }
-
-    /// <summary>
-    /// Outer radius for drawing segment and pointer detection.
-    /// </summary>
-    public float OuterRadius { get; set; }
-
-    /// <summary>
-    /// Outer radius for drawing segment and pointer detection.
-    /// </summary>
-    public float InnerRadius { get; set; }
 
     /// <summary>
     /// A simple texture button that can move the user to a different layer within a radial menu
@@ -262,45 +245,6 @@ public class RadialMenuTextureButton : TextureButton
     public RadialMenuTextureButton()
     {
         OnButtonUp += OnClicked;
-    }
-
-    /// <inheritdoc />
-    protected override void Draw(DrawingHandleScreen handle)
-    {
-        var texture = TextureNormal;
-
-        if (texture == null)
-        {
-            if (TryGetStyleProperty(StylePropertyTexture, out texture) && texture != null)
-            {
-                // draw texture
-                handle.DrawTextureRectRegion(texture, PixelSizeBox);
-            }
-        }
-
-        if (Parent == null)
-        {
-            return;
-        }
-
-        // draw sector where space that button occupies actually is
-        var pX = -Position.X + Parent.Width * 0.5f;
-        var pY = -Position.Y + Parent.Height * 0.5f;
-
-        var containerCenter = new Vector2(pX, pY) * UIScale;
-
-        if (Parent is not RadialContainer container)
-        {
-            return;
-        }
-
-        var radius = container.Radius * UIScale;
-
-        var color = DrawMode == DrawModeEnum.Hover
-            ? new Color(173, 216, 230, 100)
-            : new Color(173, 216, 230, 70); // todo: use stylesheets
-
-        DrawBagleSector(handle, containerCenter, radius * 0.5f, radius * 2, AngleSectorFrom, AngleSectorTo, color);
     }
 
     private void OnClicked(ButtonEventArgs args)
@@ -316,34 +260,6 @@ public class RadialMenuTextureButton : TextureButton
         parent.TryToMoveToNewLayer(TargetLayer);
     }
 
-    /// <inheritdoc />
-    protected override bool HasPoint(Vector2 point)
-    {
-        if (Parent == null)
-        {
-            return false;
-        }
-
-        var cX = -Position.X + Parent.Width * 0.5f;
-        var cY = -Position.Y + Parent.Height * 0.5f;
-
-        var dist = Math.Sqrt(Math.Pow(point.X - cX, 2) + Math.Pow(point.Y - cY, 2));
-        var parent = (RadialContainer)Parent;
-        var isInRadius = dist < parent.Radius * 2 && dist > parent.Radius * 0.5f;
-        if (!isInRadius)
-        {
-            return false;
-        }
-
-        var dX = cX - point.X;
-        var dY = cY - point.Y;
-        var angle = dX > 0
-            ? -MathF.Atan2(dX, dY) + MathF.PI * 2
-            : -MathF.Atan2(dX, dY);
-        var isInAngle = angle > AngleSectorFrom && angle < AngleSectorTo;
-        return isInAngle;
-    }
-
     private RadialMenu? FindParentMultiLayerContainer(Control control)
     {
         foreach (var ancestor in control.GetSelfAndLogicalAncestors())
@@ -353,6 +269,192 @@ public class RadialMenuTextureButton : TextureButton
         }
 
         return null;
+    }
+}
+
+public interface IRadialMenuItemWithSector
+{
+    /// <summary>
+    /// Angle in radian where button sector should start.
+    /// </summary>
+    public float AngleSectorFrom { set; }
+
+    /// <summary>
+    /// Angle in radian where button sector should end.
+    /// </summary>
+    public float AngleSectorTo { set; }
+
+    /// <summary>
+    /// Outer radius for drawing segment and pointer detection.
+    /// </summary>
+    public float OuterRadius { set; }
+
+    /// <summary>
+    /// Outer radius for drawing segment and pointer detection.
+    /// </summary>
+    public float InnerRadius { set; }
+
+    public Vector2 ParentCenter { set; }
+}
+
+[Virtual]
+public class RadialMenuTextureButtonWithSector : RadialMenuTextureButton, IRadialMenuItemWithSector
+{
+    private Vector2[]? _sectorPointsForDrawing;
+
+    private float _angleSectorFrom;
+    private float _angleSectorTo;
+    private float _outerRadius;
+    private float _innerRadius;
+
+    private bool _isWholeCircle;
+    private Vector2? _parentCenter;
+
+    /// <summary>
+    /// Marker, that control should render border of segment. Is false by default.
+    /// </summary>
+    /// <remarks>
+    /// By default color of border is same as color of background. Use <see cref="BorderColor"/>
+    /// and <see cref="HoverBorderColor"/> to change it.
+    /// </remarks>
+    public bool DrawBorder { get; set; } = false;
+
+    /// <summary>
+    /// Marker, that control should render background of all sector. Is true by default.
+    /// </summary>
+    public bool DrawBackground { get; set; } = true;
+
+    /// <summary>
+    /// Marker, that control should render separator lines.
+    /// Separator lines are used to visually separate sector of radial menu items.
+    /// Is true by default
+    /// </summary>
+    public bool DrawSeparators { get; set; } = true;
+
+    /// <summary>
+    /// Color of background in non-hovered state.
+    /// </summary>
+    public Color BackgroundColor { get; set; } = new Color(173, 216, 230, 70);
+
+    /// <summary>
+    /// Color of background in hovered state.
+    /// </summary>
+    public Color HoverBackgroundColor { get; set; } = new Color(173, 216, 230, 100);
+
+    /// <summary>
+    /// Color of button border.
+    /// </summary>
+    public Color BorderColor { get; set; } = new Color(173, 216, 230, 70);
+
+    /// <summary>
+    /// Color of button border when button is hovered.
+    /// </summary>
+    public Color HoverBorderColor { get; set; } = new Color(173, 216, 230, 100);
+
+    /// <summary>
+    /// Color of separator lines.
+    /// Separator lines are used to visually separate sector of radial menu items.
+    /// </summary>
+    public Color SeparatorColor { get; set; } = new Color(173, 216, 230, 180);
+
+    /// <inheritdoc />
+    float IRadialMenuItemWithSector.AngleSectorFrom
+    {
+        set
+        {
+            _angleSectorFrom = value;
+            _isWholeCircle = IsWholeCircle(value, _angleSectorTo);
+        }
+    }
+
+    /// <inheritdoc />
+    float IRadialMenuItemWithSector.AngleSectorTo
+    {
+        set
+        {
+            _angleSectorTo = value;
+            _isWholeCircle = IsWholeCircle(_angleSectorFrom, value);
+        }
+    }
+
+    /// <inheritdoc />
+    float IRadialMenuItemWithSector.OuterRadius { set => _outerRadius = value; }
+
+    /// <inheritdoc />
+    float IRadialMenuItemWithSector.InnerRadius { set => _innerRadius = value; }
+
+    /// <inheritdoc />
+    Vector2 IRadialMenuItemWithSector.ParentCenter { set => _parentCenter = value; }
+
+    /// <summary>
+    /// A simple texture button that can move the user to a different layer within a radial menu
+    /// </summary>
+    public RadialMenuTextureButtonWithSector()
+    {
+    }
+
+    /// <inheritdoc />
+    protected override void Draw(DrawingHandleScreen handle)
+    {
+        base.Draw(handle);
+
+        if (_parentCenter == null)
+        {
+            return;
+        }
+
+        // draw sector where space that button occupies actually is
+        var containerCenter = (_parentCenter.Value - Position) * UIScale;
+
+        if (DrawBackground)
+        {
+            var segmentColor = DrawMode == DrawModeEnum.Hover
+                ? HoverBackgroundColor
+                : BackgroundColor;
+
+            DrawBagleSector(handle, containerCenter, _innerRadius, _outerRadius, _angleSectorFrom, _angleSectorTo, segmentColor);
+        }
+
+        if (DrawBorder)
+        {
+            var borderColor = DrawMode == DrawModeEnum.Hover
+                ? HoverBorderColor
+                : BorderColor;
+            DrawBagleSector(handle, containerCenter, _innerRadius, _outerRadius, _angleSectorFrom, _angleSectorTo, borderColor, false);
+        }
+
+        if (!_isWholeCircle && DrawSeparators)
+        {
+            DrawSeparatorLines(handle, containerCenter, _innerRadius, _outerRadius, _angleSectorFrom, _angleSectorTo, SeparatorColor);
+        }
+    }
+
+    /// <inheritdoc />
+    protected override bool HasPoint(Vector2 point)
+    {
+        if (_parentCenter == null)
+        {
+            return base.HasPoint(point);
+        }
+
+        var outerRadiusSquared = _outerRadius * _outerRadius;
+        var innerRadiusSquared = _innerRadius * _innerRadius;
+
+        var distSquared = (point + Position - _parentCenter.Value).LengthSquared();
+        var isInRadius = distSquared < outerRadiusSquared && distSquared > innerRadiusSquared;
+        if (!isInRadius)
+        {
+            return false;
+        }
+
+        // diff x/y from point to container center
+        var diff = -Position + _parentCenter.Value - point;
+
+        var angle = diff.X > 0
+            ? -MathF.Atan2(diff.X, diff.Y) + MathF.PI * 2
+            : -MathF.Atan2(diff.X, diff.Y);
+        var isInAngle = angle > _angleSectorFrom && angle < _angleSectorTo;
+        return isInAngle;
     }
 
     /// <summary>
@@ -418,23 +520,39 @@ public class RadialMenuTextureButton : TextureButton
             }
         }
 
-        var fromPoint = new Angle(angleSectorFrom).RotateVec(-Vector2.UnitY);
-        drawingHandleScreen.DrawLine(
-            (center + fromPoint * radiusOuter) * UIScale,
-            (center + fromPoint * radiusInner) * UIScale,
-            new Color(173, 216, 230, 180) // todo: use stylesheets
-        );
-
-        var toPoint = new Angle(angleSectorTo).RotateVec(-Vector2.UnitY);
-        drawingHandleScreen.DrawLine(
-            (center + toPoint * radiusOuter) * UIScale,
-            (center + toPoint * radiusInner) * UIScale,
-            new Color(173, 216, 230, 180) // todo: use stylesheets
-        );
-
         var type = filled
             ? DrawPrimitiveTopology.TriangleStrip
             : DrawPrimitiveTopology.LineStrip;
         drawingHandleScreen.DrawPrimitives(type, _sectorPointsForDrawing, color);
+    }
+
+    private static void DrawSeparatorLines(
+        DrawingHandleScreen drawingHandleScreen,
+        Vector2 center,
+        float radiusInner,
+        float radiusOuter,
+        float angleSectorFrom,
+        float angleSectorTo,
+        Color color
+    )
+    {
+        var fromPoint = new Angle(angleSectorFrom).RotateVec(-Vector2.UnitY);
+        drawingHandleScreen.DrawLine(
+            center + fromPoint * radiusOuter,
+            center + fromPoint * radiusInner,
+            color
+        );
+
+        var toPoint = new Angle(angleSectorTo).RotateVec(-Vector2.UnitY);
+        drawingHandleScreen.DrawLine(
+            center + toPoint * radiusOuter,
+            center + toPoint * radiusInner,
+            color
+        );
+    }
+
+    private static bool IsWholeCircle(float angleSectorFrom, float angleSectorTo)
+    {
+        return new Angle(angleSectorFrom).EqualsApprox(new Angle(angleSectorTo));
     }
 }

@@ -78,11 +78,12 @@ public class RadialContainer : LayoutContainer
             ? Children
             : Children.Where(x => x.Visible);
 
+        var childCount = children.Count();
         // elements are children (buttons) and dividers, they all are spread evenly
-        var elementCount = children.Count() * 2;
+        var childrenAndDividerCount = childCount * 2;
 
         // Add padding from the center at higher child counts so they don't overlap.
-        Radius = baseRadius + (elementCount * radiusIncrement);
+        Radius = baseRadius + (childCount * radiusIncrement);
 
         var isAntiClockwise = RadialAlignment == RAlignment.AntiClockwise;
 
@@ -101,36 +102,38 @@ public class RadialContainer : LayoutContainer
             : 1;
 
         // Determine the separation between child elements
-        var sepAngle = arc / (elementCount - childMod);
+        var sepAngle = arc / (childrenAndDividerCount - childMod);
         sepAngle *= isAntiClockwise
             ? -1f
             : 1f;
 
-        var halfWidth = finalSize.X / 2f;
-        var halfHeight = finalSize.Y/ 2f;
+        var controlCenter = finalSize * 0.5f;
 
         // Adjust the positions of all the child elements
         var query = children.Select((x, index) => (index, x));
-
-        foreach (var (index, child) in query)
+        foreach (var (childIndex, child) in query)
         {
-            // odd indexes are child elements (buttons)
-            var indexForChildElement = index * 2 + 1;
+            // odd indexes are child elements (buttons), even - dividers between child elements
+            var indexForChildElement = childIndex * 2 + 1;
 
             var targetAngleOfChild = AngularRange.X + sepAngle * indexForChildElement;
-            var childX = Radius * MathF.Sin(targetAngleOfChild) + halfWidth - child.DesiredSize.X / 2f;
-            var childY = -Radius * MathF.Cos(targetAngleOfChild) + halfHeight - child.DesiredSize.Y / 2f;
-            var position = new Vector2(childX, childY) + Position;
 
-            SetPosition(child, position * UIScale);
+            var position = new Vector2(
+                    Radius * MathF.Sin(targetAngleOfChild),
+                    -Radius * MathF.Cos(targetAngleOfChild)
+                ) + controlCenter - child.DesiredSize * 0.5f + Position;
 
-            // radial menu buttons need to know in which sector around container they should be rendered
-            if (child is RadialMenuTextureButton tb)
+            SetPosition(child, position);
+
+            // radial menu buttons with sector need to also know in which sector and around which point
+            // they should be rendered, how much space sector should should take etc.
+            if (child is IRadialMenuItemWithSector tb)
             {
                 tb.AngleSectorFrom = sepAngle * (indexForChildElement - 1);
                 tb.AngleSectorTo = sepAngle * (indexForChildElement + 1);
                 tb.InnerRadius = Radius / 2;
                 tb.OuterRadius = Radius * 2;
+                tb.ParentCenter = controlCenter;
             }
         }
 
