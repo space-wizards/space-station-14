@@ -2,7 +2,7 @@
   name: C.H.I.M.P. Omega chip
   parent: [BaseItem, BaseSyndicateContraband]
   id: WeaponPistolCHIMPUpgradeKit
-  description: A one-use illegal Syndicate-affiliate chip for the C.H.I.M.P that unlocks Omega particles. Inflicts heat and shock damage, and causes anomalies to go supercritical.
+  description: An illegal and unremovable Syndicate-affiliate chip for the C.H.I.M.P that unlocks Omega particles. Inflicts heat and shock damage, and causes anomalies to go supercritical.
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
