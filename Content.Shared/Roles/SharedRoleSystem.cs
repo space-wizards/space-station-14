@@ -478,7 +478,13 @@ public abstract class SharedRoleSystem : EntitySystem
         var exclusiveAntag = false;
         foreach (var role in mind.MindRoles)
         {
-            var roleComp = Comp<MindRoleComponent>(role);
+            if (!TryComp<MindRoleComponent>(role, out var roleComp))
+            {
+                //If this ever shows up outside of an integration test, then we need to look into this further.
+                Log.Warning($"Mind Role Entity {role} does not have MindRoleComponent!");
+                continue;
+            }
+
             if (roleComp.Antag || exclusiveAntag)
                 antagonist = true;
             if (roleComp.ExclusiveAntag)
