@@ -414,7 +414,6 @@ namespace Content.Server.Atmos.EntitySystems
 
             _timer -= UpdateTime;
 
-            // TODO: This needs cleanup to take off the crust from TemperatureComponent and shit.
             var query = EntityQueryEnumerator<FlammableComponent, TransformComponent>();
             while (query.MoveNext(out var uid, out var flammable, out _))
             {
