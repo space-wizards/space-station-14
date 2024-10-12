@@ -516,21 +516,15 @@
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
-          max: 10
+          max: 7
         damage:
           types:
-            Poison: 0.5
+            Poison: 0.6
     Narcotic:
       effects:
-      - !type:GenericStatusEffect
-        key: SeeingRainbows
-        component: SeeingRainbows
-        type: Add
-        time: 6
-        refresh: false
       - !type:MovespeedModifier
-        walkSpeedModifier: 1.1
-        sprintSpeedModifier: 1.1
+        walkSpeedModifier: 1.15
+        sprintSpeedModifier: 1.15
       - !type:Jitter
     Medicine:
       effects:
