@@ -71,7 +71,6 @@ public sealed class SuspicionRuleSystem : GameRuleSystem<SuspicionRuleComponent>
     [Dependency] private readonly StoreSystem _storeSystem = default!;
     [Dependency] private readonly RejuvenateSystem _rejuvenate = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-    [Dependency] private readonly HandsSystem _handsSystem = default!;
 
     private readonly SoundSpecifier _traitorStartSound = new SoundPathSpecifier("/Audio/Ambience/Antag/traitor_start.ogg");
 
@@ -310,10 +309,10 @@ public sealed class SuspicionRuleSystem : GameRuleSystem<SuspicionRuleComponent>
         var isInRange = args.IsInDetailsRange || component.Revealed;
         // Always show the role if it was already announced in chat.
 
-        _ = args.PushGroup(nameof(SuspicionRuleSystem));
+        //_ = args.PushGroup(nameof(SuspicionRuleSystem));
         if (!isInRange)
         {
-            args.PushText("Get closer to examine the body.");
+            args.PushText("Get closer to examine the body.", -10);
             return;
         }
 
@@ -325,7 +324,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem<SuspicionRuleComponent>
         if (!_roleSystem.MindHasRole<SuspicionRoleComponent>(mind.Value, out var _, out var role))
             return;
 
-        args.PushText($"They were a {role.Value.Comp.Role.ToString()}");
+        args.PushText($"They were a {role.Value.Comp.Role.ToString()}", -10);
     }
 
     private void OnGetBriefing(Entity<SuspicionRoleComponent> role, ref GetBriefingEvent args)

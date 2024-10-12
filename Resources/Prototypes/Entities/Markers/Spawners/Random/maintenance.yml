@@ -391,8 +391,8 @@
       children:
       - id: WeaponPistolMk58
       - id: WeaponDisabler
-      - id: WeaponLaserGun
       - id: WeaponShotgunSawn
+      - id: WeaponRevolverInspector
     # Rare Group
     - !type:GroupSelector
       weight: 2
@@ -404,6 +404,7 @@
       - id: WeaponShotgunEnforcer
       - id: WeaponBaguette
       - id: WeaponSubMachineGunAtreides
+      - id: WeaponRevolverDeckard
     - !type:GroupSelector
       weight: 8
       children:
