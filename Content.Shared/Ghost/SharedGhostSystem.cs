@@ -67,6 +67,14 @@ namespace Content.Shared.Ghost
     public sealed class GhostWarpsRequestEvent : EntityEventArgs
     {
     }
+	
+	/// <summary>
+    /// Goobstation - A server to client request for them to spawn at the ghost bar
+    /// </summary>
+    [Serializable, NetSerializable]
+    public sealed class GhostBarSpawnEvent : EntityEventArgs
+    {
+    }
 
     /// <summary>
     /// An individual place a ghost can warp to.

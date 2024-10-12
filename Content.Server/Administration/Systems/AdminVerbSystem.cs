@@ -39,6 +39,8 @@ using Content.Shared.Silicons.Laws.Components;
 using Robust.Server.Player;
 using Robust.Shared.Physics.Components;
 using static Content.Shared.Configurable.ConfigurationComponent;
+using Content.Shared.Impstation.Spelfs.Components;
+using Content.Server.Impstation.Spelfs;
 
 namespace Content.Server.Administration.Systems
 {
@@ -71,6 +73,7 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly AdminFrozenSystem _freeze = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly SiliconLawSystem _siliconLawSystem = default!;
+        [Dependency] private readonly SpelfMoodsSystem _moods = default!;
 
         private readonly Dictionary<ICommonSession, List<EditSolutionsEui>> _openSolutionUis = new();
 
@@ -360,6 +363,25 @@ namespace Content.Server.Administration.Systems
                             }
                             _euiManager.OpenEui(ui, session);
                             ui.UpdateLaws(lawBoundComponent, args.Target);
+                        },
+                        Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/Interface/Actions/actions_borg.rsi"), "state-laws"),
+                    });
+                }
+
+                if (TryComp<SpelfMoodsComponent>(args.Target, out var moods))
+                {
+                    args.Verbs.Add(new Verb()
+                    {
+                        Text = Loc.GetString("spelf-moods-ui-verb"),
+                        Category = VerbCategory.Admin,
+                        Act = () =>
+                        {
+                            var ui = new SpelfMoodsEui(_moods, EntityManager, _adminManager);
+                            if (!_playerManager.TryGetSessionByEntity(args.User, out var session))
+                                return;
+
+                            _euiManager.OpenEui(ui, session);
+                            ui.UpdateMoods(moods, args.Target);
                         },
                         Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/Interface/Actions/actions_borg.rsi"), "state-laws"),
                     });

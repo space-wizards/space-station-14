@@ -90,6 +90,11 @@
     ClothingHandsGlovesColorPurple: 2
     ClothingEyesGlassesCheapSunglasses: 3
     # DO NOT ADD MORE, USE UNIFORM DYING
+    ClothingShoesHeelsRed: 4
+    ClothingShoesHeelsBlack: 4
+    ClothingShoesHeelsBlue: 3
+    ClothingShoesHeelsGreen: 2
+    ClothingShoesHeelsBrown: 2
   contrabandInventory:
     ClothingMaskNeckGaiter: 2
     ClothingUniformJumpsuitTacticool: 1

@@ -1,9 +1,0 @@
-# heretic items
-- type: entity
-  id: BaseHereticContraband
-  abstract: true
-  components:
-  - type: Contraband
-    severity: Heretic
-    # no one should be carrying this around visibly!
-    allowedDepartments: null

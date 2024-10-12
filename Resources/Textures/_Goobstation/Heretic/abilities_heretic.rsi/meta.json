@@ -1,0 +1,92 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "sprites taken from TG station, edited by whateverusername0 and blooodyspy",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "mansus_grasp"
+        },
+        {
+            "name": "mansus_link"
+        },
+        {
+            "name": "open_store"
+        },
+        {
+            "name": "ashen_shift"
+        },
+        {
+            "name": "volcano_blast"
+        },
+        {
+            "name": "nightwatcher_rebirth"
+        },
+        {
+            "name": "ashlord_rite1"
+        },
+        {
+            "name": "ashlord_rite2"
+        },
+        {
+            "name": "bulglar_finesse"
+        },
+        {
+            "name": "last_refuge"
+        },
+        {
+            "name": "labyrinth"
+        },
+        {
+            "name": "flesh_surgery"
+        },
+        {
+            "name": "final_hymn"
+        },
+        {
+            "name": "realignment"
+        },
+        {
+            "name": "furious_steel"
+        },
+        {
+            "name": "void_phase"
+        },
+        {
+            "name": "void_blast"
+        },
+        {
+            "name": "void_pull"
+        },
+        {
+            "name": "construction"
+        },
+        {
+            "name": "aggressive_spread"
+        },
+        {
+            "name": "entropic_plume"
+        },
+        {
+            "name": "blood_siphon"
+        },
+        {
+            "name": "desperation_wave"
+        },
+        {
+            "name": "cleave"
+        },
+        {
+            "name": "space_phase"
+        },
+        {
+            "name": "immovable_rod"
+        },
+        {
+            "name": "living_heart"
+        }
+    ]
+}
