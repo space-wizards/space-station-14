@@ -1,4 +1,5 @@
-﻿using Content.Shared.Radio;
+﻿using Content.Shared.NPC.Prototypes;
+using Content.Shared.Radio;
 using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -60,10 +61,18 @@ public sealed partial class SuspicionRuleComponent : Component
     public string Gear = "SuspicionGear";
 
     [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string UplinkImplant = "UplinkImplant4";
+    public string UplinkImplant = "SusTraitorUplinkImplant";
+
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string DetectiveImplant = "SusDetectiveUplinkImplant";
+
 
     [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<RadioChannelPrototype>))]
     public string TraitorRadio = "Syndicate";
+
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<NpcFactionPrototype>))]
+    public string TraitorFaction = "Syndicate";
+
 }
 
 public enum SuspicionGameState

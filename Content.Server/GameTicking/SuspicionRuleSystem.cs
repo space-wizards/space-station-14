@@ -36,6 +36,7 @@ using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.NPC.Systems;
 using Content.Shared.NukeOps;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Overlays;
@@ -71,6 +72,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem<SuspicionRuleComponent>
     [Dependency] private readonly StoreSystem _storeSystem = default!;
     [Dependency] private readonly RejuvenateSystem _rejuvenate = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+    [Dependency] private readonly NpcFactionSystem _npcFactionSystem = default!;
 
     private readonly SoundSpecifier _traitorStartSound = new SoundPathSpecifier("/Audio/Ambience/Antag/traitor_start.ogg");
 
@@ -432,6 +434,9 @@ public sealed class SuspicionRuleSystem : GameRuleSystem<SuspicionRuleComponent>
         // TODO: Detective
 
         RobustRandom.Shuffle(participatingPlayers); // Shuffle the list so we can just take the first N players
+        RobustRandom.Shuffle(participatingPlayers);
+        RobustRandom.Shuffle(participatingPlayers); // I don't trust the shuffle.
+
         for (var i = 0; i < traitorCount; i++)
         {
             var role = participatingPlayers[i];
@@ -447,6 +452,8 @@ public sealed class SuspicionRuleSystem : GameRuleSystem<SuspicionRuleComponent>
             EnsureComp<NukeOperativeComponent>(ownedEntity.Value);
             EnsureComp<ShowSyndicateIconsComponent>(ownedEntity.Value);
             EnsureComp<IntrinsicRadioTransmitterComponent>(ownedEntity.Value).Channels.Add(component.TraitorRadio);
+
+            _npcFactionSystem.AddFaction(ownedEntity.Value, component.TraitorFaction);
 
             _subdermalImplant.AddImplants(ownedEntity.Value, new List<string> {component.UplinkImplant}); // Why does this method only take in a list???
 
