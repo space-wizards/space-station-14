@@ -502,3 +502,39 @@
         - !type:ReagentThreshold
           min: 20
         probability: 0.2
+
+- type: reagent
+  id: MaintenanceFlake
+  name: reagent-name-maintenance-flake
+  desc: reagent-desc-maintenance-flake
+  group: Narcotics
+  physicalDesc: reagent-physical-desc-powdery
+  color: "white"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          max: 10
+        damage:
+          types:
+            Poison: 0.5
+    Narcotic:
+      effects:
+      - !type:GenericStatusEffect
+        key: SeeingRainbows
+        component: SeeingRainbows
+        type: Add
+        time: 6
+        refresh: false
+      - !type:MovespeedModifier
+        walkSpeedModifier: 1.1
+        sprintSpeedModifier: 1.1
+      - !type:Jitter
+    Medicine:
+      effects:
+        damage:
+          groups:
+            Brute: -1
+            Burn: -0.5
