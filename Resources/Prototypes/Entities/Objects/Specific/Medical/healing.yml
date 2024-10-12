@@ -223,9 +223,9 @@
       contents:
         reagents:
         - ReagentId: Blood
-          Quantity: 8
+          Quantity: 9
         - ReagentId: Saline
-          Quantity: 2
+          Quantity: 1
   - type: Stack
     stackType: Bloodpack
     count: 10
