@@ -460,7 +460,7 @@ namespace Content.Server.Atmos.EntitySystems
                         } 
 
                         // release gas
-                        if (air != null && flammable.EmissiveGasMix != GasMixture.SpaceGas) // using SpaceGas here feels a little weird, what it really want is an empty GasMix, which this is... but...
+                        if (air != null && flammable.EmissiveGasMix != null)
                         {
                             flammable.EmissiveGasMix.Temperature = temp.CurrentTemperature;
                             var releasingGas = new GasMixture(flammable.EmissiveGasMix.Volume);

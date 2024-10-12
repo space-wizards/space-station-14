@@ -97,6 +97,6 @@ namespace Content.Server.Atmos.Components
         /// A maximum quantity of gas to be added to the atmosphere every update while on fire.
         /// </summary>
         [DataField]
-        public GasMixture EmissiveGasMix = GasMixture.SpaceGas; // using SpaceGas here feels weird. I really just want an empty GasMix
+        public GasMixture? EmissiveGasMix;
     }
 }
