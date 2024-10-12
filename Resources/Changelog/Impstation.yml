@@ -2901,3 +2901,11 @@
   id: 359
   time: '2024-10-12T08:31:05.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/461
+- author: Darkmajia
+  changes:
+  - message: The botany departments of Atlas, Cluster, and Saltern now have biogenerators
+      at roundstart.
+    type: Add
+  id: 360
+  time: '2024-10-12T14:36:44.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/465
