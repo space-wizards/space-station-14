@@ -509,6 +509,7 @@
         - !type:ReagentThreshold
           min: 10
       - !type:ChemVomit
-        probability: 0.2
+        conditions:
         - !type:ReagentThreshold
-          max: 20
+          min: 20
+        probability: 0.2
