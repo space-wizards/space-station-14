@@ -2894,3 +2894,10 @@
   id: 358
   time: '2024-10-12T03:33:00.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/459
+- author: widgetbeck
+  changes:
+  - message: Fixed gray paperdoll stuff and displacement.
+    type: Fix
+  id: 359
+  time: '2024-10-12T08:31:05.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/461
