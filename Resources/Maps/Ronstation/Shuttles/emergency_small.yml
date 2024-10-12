@@ -468,8 +468,6 @@ entities:
       pos: 2.5,3.5
       parent: 2
     - type: DeviceList
-      configurators:
-      - invalid
       devices:
       - 298
       - 297
@@ -484,8 +482,6 @@ entities:
       pos: 1.5,8.5
       parent: 2
     - type: DeviceList
-      configurators:
-      - invalid
       devices:
       - 308
       - 254
@@ -499,8 +495,6 @@ entities:
       pos: -0.5,8.5
       parent: 2
     - type: DeviceList
-      configurators:
-      - invalid
       devices:
       - 235
       - 293
@@ -515,8 +509,6 @@ entities:
       pos: 3.5,-3.5
       parent: 2
     - type: DeviceList
-      configurators:
-      - invalid
       devices:
       - 113
       - 111
@@ -556,8 +548,6 @@ entities:
       pos: 2.5,2.5
       parent: 2
     - type: DeviceList
-      configurators:
-      - invalid
       devices:
       - 116
       - 115
@@ -577,8 +567,6 @@ entities:
       pos: -3.5,9.5
       parent: 2
     - type: DeviceList
-      configurators:
-      - invalid
       devices:
       - 310
       - 261
@@ -606,8 +594,6 @@ entities:
       pos: -4.5,1.5
       parent: 2
     - type: DeviceList
-      configurators:
-      - invalid
       devices:
       - 302
       - 202
@@ -625,8 +611,6 @@ entities:
       pos: 5.5,1.5
       parent: 2
     - type: DeviceList
-      configurators:
-      - invalid
       devices:
       - 203
       - 300
@@ -644,8 +628,6 @@ entities:
       pos: 0.5,11.5
       parent: 2
     - type: DeviceList
-      configurators:
-      - invalid
       devices:
       - 500
       - 333
@@ -1690,8 +1672,6 @@ entities:
       pos: 5.5,4.5
       parent: 2
     - type: DeviceList
-      configurators:
-      - invalid
       devices:
       - 298
       - 297
@@ -1719,8 +1699,6 @@ entities:
       pos: -3.5,-5.5
       parent: 2
     - type: DeviceList
-      configurators:
-      - invalid
       devices:
       - 302
       - 280
@@ -1735,8 +1713,6 @@ entities:
       pos: -0.5,2.5
       parent: 2
     - type: DeviceList
-      configurators:
-      - invalid
       devices:
       - 289
       - 234
@@ -1766,8 +1742,6 @@ entities:
       pos: 4.5,9.5
       parent: 2
     - type: DeviceList
-      configurators:
-      - invalid
       devices:
       - 244
       - 242
@@ -1795,8 +1769,6 @@ entities:
       pos: -4.5,7.5
       parent: 2
     - type: DeviceList
-      configurators:
-      - invalid
       devices:
       - 235
       - 293
