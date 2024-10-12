@@ -16,7 +16,7 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
         public event Action<GhostRoleInfo>? OnRoleFollow;
 
         private Dictionary<(string name, string description), Collapsible> _collapsibleBoxes = new();
-        private Dictionary<(string name, string description), bool> _collapsedStates = new();
+        private HashSet<(string name, string description)> _uncollapsedStates = new();
 
         public GhostRolesWindow()
         {
@@ -32,9 +32,13 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
 
         public void SaveCollapsibleBoxesStates()
         {
+            _uncollapsedStates.Clear();
             foreach (var (key, collapsible) in _collapsibleBoxes)
             {
-                _collapsedStates[key] = collapsible.BodyVisible;
+                if (collapsible.BodyVisible)
+                {
+                    _uncollapsedStates.Add(key);
+                }
             }
         }
 
@@ -42,10 +46,7 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
         {
             foreach (var (key, collapsible) in _collapsibleBoxes)
             {
-                if (_collapsedStates.TryGetValue(key, out var isOpen))
-                {
-                    collapsible.BodyVisible = isOpen;
-                }
+                collapsible.BodyVisible = _uncollapsedStates.Contains(key);
             }
         }
 
