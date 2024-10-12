@@ -17,7 +17,7 @@ public class RadialMenu : BaseWindow
 
     /// <summary>
     /// Set a style class to be applied to the contextual button when it is set to move the user back through previous layers of the radial menu
-    /// </summary>  
+    /// </summary>
     public string? BackButtonStyleClass
     {
         get
@@ -61,8 +61,8 @@ public class RadialMenu : BaseWindow
     /// A free floating menu which enables the quick display of one or more radial containers
     /// </summary>
     /// <remarks>
-    /// Only one radial container is visible at a time (each container forming a separate 'layer' within 
-    /// the menu), along with a contextual button at the menu center, which will either return the user  
+    /// Only one radial container is visible at a time (each container forming a separate 'layer' within
+    /// the menu), along with a contextual button at the menu center, which will either return the user
     /// to the previous layer or close the menu if there are no previous layers left to traverse.
     /// To create a functional radial menu, simply parent one or more named radial containers to it,
     /// and populate the radial containers with RadialMenuButtons. Setting the TargetLayer field of these
@@ -447,13 +447,18 @@ public class RadialMenuTextureButtonWithSector : RadialMenuTextureButton, IRadia
             return false;
         }
 
-        // diff x/y from point to container center
-        var diff = -Position + _parentCenter.Value - point;
+        // difference from the center of the parent to the `point`
+        var pointFromParent = point + Position - _parentCenter.Value;
 
-        var angle = diff.X > 0
-            ? -MathF.Atan2(diff.X, diff.Y) + MathF.PI * 2
-            : -MathF.Atan2(diff.X, diff.Y);
-        var isInAngle = angle > _angleSectorFrom && angle < _angleSectorTo;
+        // Flip Y to get from ui coordinates to natural coordinates
+        var angle = MathF.Atan2(-pointFromParent.Y, pointFromParent.X);
+        if (angle < 0)
+        {
+            // atan2 range is -pi->pi, while angle sectors are
+            // 0->2pi, so remap the result into that range
+            angle = MathF.PI * 2 + angle;
+        }
+        var isInAngle = angle >= _angleSectorFrom && angle < _angleSectorTo;
         return isInAngle;
     }
 
@@ -483,6 +488,7 @@ public class RadialMenuTextureButtonWithSector : RadialMenuTextureButton, IRadia
 
         var requestedSegmentSize = angleSectorTo - angleSectorFrom;
         var segmentCount = (int)(requestedSegmentSize / minimalSegmentSize) + 1;
+        var anglePerSegment = requestedSegmentSize / (segmentCount - 1);
 
         var bufferSize = segmentCount * 2;
         if (_sectorPointsForDrawing == null || _sectorPointsForDrawing.Length != bufferSize)
@@ -492,20 +498,12 @@ public class RadialMenuTextureButtonWithSector : RadialMenuTextureButton, IRadia
 
         for (var i = 0; i < segmentCount; i++)
         {
-            float angle;
-            if (i == segmentCount - 1)
-            {
-                // fix rounding problem that was created when calculating count of segments as int
-                angle = angleSectorTo;
-            }
-            else
-            {
-                angle = angleSectorFrom + minimalSegmentSize * i;
-            }
+            var angle = angleSectorFrom + anglePerSegment * i;
 
-            var point = new Angle(angle).RotateVec(-Vector2.UnitY);
-            var outerPoint = center + point * radiusOuter;
-            var innerPoint = center + point * radiusInner;
+            // Flip Y to get from ui coordinates to natural coordinates
+            var unitPos = new Vector2(MathF.Cos(angle), -MathF.Sin(angle));
+            var outerPoint = center + unitPos * radiusOuter;
+            var innerPoint = center + unitPos * radiusInner;
             if (filled)
             {
                 // to make filled sector we need to create strip from triangles
@@ -536,14 +534,14 @@ public class RadialMenuTextureButtonWithSector : RadialMenuTextureButton, IRadia
         Color color
     )
     {
-        var fromPoint = new Angle(angleSectorFrom).RotateVec(-Vector2.UnitY);
+        var fromPoint = new Angle(angleSectorFrom).RotateVec(Vector2.UnitX);
         drawingHandleScreen.DrawLine(
             center + fromPoint * radiusOuter,
             center + fromPoint * radiusInner,
             color
         );
 
-        var toPoint = new Angle(angleSectorTo).RotateVec(-Vector2.UnitY);
+        var toPoint = new Angle(angleSectorTo).RotateVec(Vector2.UnitX);
         drawingHandleScreen.DrawLine(
             center + toPoint * radiusOuter,
             center + toPoint * radiusInner,

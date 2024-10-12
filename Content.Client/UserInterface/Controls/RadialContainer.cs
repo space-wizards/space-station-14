@@ -114,8 +114,8 @@ public class RadialContainer : LayoutContainer
             var targetAngleOfChild = AngularRange.X + sepAngle * (childIndex + 0.5f);
 
             var position = new Vector2(
-                    Radius * MathF.Sin(targetAngleOfChild),
-                    -Radius * MathF.Cos(targetAngleOfChild)
+                    Radius * MathF.Cos(targetAngleOfChild),
+                    -Radius * MathF.Sin(targetAngleOfChild)
                 ) + controlCenter - child.DesiredSize * 0.5f + Position;
 
             SetPosition(child, position);
