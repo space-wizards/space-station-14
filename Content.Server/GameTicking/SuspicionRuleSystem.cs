@@ -28,6 +28,7 @@ using Content.Shared.Damage.Prototypes;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.GameTicking.Components;
+using Content.Shared.Ghost;
 using Content.Shared.Hands.Components;
 using Content.Shared.Humanoid;
 using Content.Shared.Implants.Components;
@@ -273,7 +274,6 @@ public sealed class SuspicionRuleSystem : GameRuleSystem<SuspicionRuleComponent>
         var isInRange = args.IsInDetailsRange || component.Revealed;
         // Always show the role if it was already announced in chat.
 
-        //_ = args.PushGroup(nameof(SuspicionRuleSystem));
         if (!isInRange)
         {
             args.PushText("Get closer to examine the body.", -10);
@@ -304,16 +304,19 @@ public sealed class SuspicionRuleSystem : GameRuleSystem<SuspicionRuleComponent>
         if (!HasComp<HandsComponent>(args.Examiner))
             return;
 
+        if (HasComp<GhostComponent>(args.Examiner))
+            return; // Check for admin ghosts
+
         // Reveal the role in chat
-        if (!component.Revealed)
-        {
-            component.Revealed = true;
-            var targetName = MetaData(args.Examined).EntityName;
-            var userName = MetaData(args.Examiner).EntityName;
-            SendAnnouncement(
-                $"[italic]{userName}[/italic] found the body of [italic]{targetName}[/italic] and discovered they were a [bold][color={role.Value.Comp.Role.GetRoleColor()}]{role.Value.Comp.Role}[/color][/bold]."
-            );
-        }
+        if (component.Revealed)
+            return;
+
+        component.Revealed = true;
+        var targetName = MetaData(args.Examined).EntityName;
+        var userName = MetaData(args.Examiner).EntityName;
+        SendAnnouncement(
+            $"[italic]{userName}[/italic] found the body of [italic]{targetName}[/italic] and discovered they were a [bold][color={role.Value.Comp.Role.GetRoleColor()}]{role.Value.Comp.Role}[/color][/bold]."
+        );
     }
 
     private void OnGetBriefing(Entity<SuspicionRoleComponent> role, ref GetBriefingEvent args)
