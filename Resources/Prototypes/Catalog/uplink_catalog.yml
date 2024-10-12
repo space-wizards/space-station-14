@@ -349,6 +349,8 @@
   productEntity: GrenadeFlashBang
   categories:
     - SSSTraitorExplosives
+  cost:
+    Telecrystal: 1
 
 - type: listing
   id: UplinkSmokeGrenade
@@ -368,6 +370,8 @@
   productEntity: SmokeGrenade
   categories:
     - SSSTraitorExplosives
+  cost:
+    Telecrystal: 1
 
 - type: listing
   id: UplinkSyndieMiniBomb
