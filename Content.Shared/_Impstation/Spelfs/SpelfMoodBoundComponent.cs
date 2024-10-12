@@ -2,7 +2,7 @@ using Content.Shared.Actions;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Impstation.Spelfs.Components;
+namespace Content.Shared._Impstation.Spelfs.Components;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class SpelfMoodsComponent : Component

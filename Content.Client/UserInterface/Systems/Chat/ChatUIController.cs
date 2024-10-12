@@ -544,7 +544,7 @@ public sealed class ChatUIController : UIController
         }
 
         // Only ghosts and admins can send / see deadchat.
-        if (_admin.HasFlag(AdminFlags.Admin) || _ghost is {IsGhost: true})
+        if (_admin.HasFlag(AdminFlags.Admin) || _ghost is {IsGhost: true} || _ghost is {IsGhostBarPatron: true})
         {
             FilterableChannels |= ChatChannel.Dead;
             CanSendChannels |= ChatSelectChannel.Dead;
@@ -870,7 +870,7 @@ public sealed class ChatUIController : UIController
                 break;
 
             case ChatChannel.Dead:
-                if (_ghost is not {IsGhost: true})
+                if (_ghost is not {IsGhost: true } && _ghost is not {IsGhostBarPatron: true })
                     break;
 
                 AddSpeechBubble(msg, SpeechBubble.SpeechType.Say);

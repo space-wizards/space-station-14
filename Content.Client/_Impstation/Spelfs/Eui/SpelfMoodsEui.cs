@@ -1,8 +1,8 @@
 using Content.Client.Eui;
 using Content.Shared.Eui;
-using Content.Shared.Impstation.Spelfs;
+using Content.Shared._Impstation.Spelfs;
 
-namespace Content.Client.Impstation.Spelfs.Eui;
+namespace Content.Client._Impstation.Spelfs.Eui;
 
 public sealed class SpelfMoodsEui : BaseEui
 {

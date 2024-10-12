@@ -1,10 +1,10 @@
-using Content.Client.Impstation.Spelfs;
-using Content.Shared.Impstation.Spelfs;
-using Content.Shared.Impstation.Spelfs.Components;
+using Content.Client._Impstation.Spelfs;
+using Content.Shared._Impstation.Spelfs;
+using Content.Shared._Impstation.Spelfs.Components;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 
-namespace Content.Client.Impstation.Spelfs;
+namespace Content.Client._Impstation.Spelfs;
 
 [UsedImplicitly]
 public sealed class SpelfMoodsBoundUserInterface : BoundUserInterface
