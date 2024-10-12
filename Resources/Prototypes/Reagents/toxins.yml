@@ -739,10 +739,10 @@
   physicalDesc: reagent-physical-desc-colorless
   metabolisms:
     Poison:
-      metabolismRate: 0.3
+      metabolismRate: 0.05
       effects:
       - !type:HealthChange
         damage:
           types:
-            Poison: 1.50
+            Poison: 0.75
             Asphyxiation: 0.50
