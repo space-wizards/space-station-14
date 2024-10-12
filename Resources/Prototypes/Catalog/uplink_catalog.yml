@@ -15,6 +15,17 @@
   - UplinkWeaponry
 
 - type: listing
+  parent: UplinkPistolViper # shit doesn't work, need to clone name and description and all that
+  id: UplinkPistolViperSSS
+  name: uplink-pistol-viper-name
+  description: uplink-pistol-viper-desc
+  productEntity: WeaponPistolViper
+  categories:
+    - SSSTraitorWeapons
+  cost:
+    Telecrystal: 2
+
+- type: listing
   id: UplinkRevolverPython
   name: uplink-revolver-python-name
   description: uplink-revolver-python-desc
@@ -41,6 +52,17 @@
   categories:
   - UplinkWeaponry
 
+- type: listing
+  parent: UplinkPistolCobra
+  id: UplinkPistolCobraSSS
+  name: uplink-pistol-cobra-name
+  description: uplink-pistol-cobra-desc
+  productEntity: WeaponPistolCobra
+  categories:
+      - SSSTraitorWeapons
+  cost:
+    Telecrystal: 3
+
 # Poor accuracy, slow to fire, cheap option
 - type: listing
   id: UplinkRifleMosin
@@ -51,6 +73,17 @@
     Telecrystal: 1
   categories:
   - UplinkWeaponry
+
+- type: listing
+  id: UplinkRifleMosinSSS
+  parent: UplinkRifleMosin
+  name: uplink-rifle-mosin-name
+  description: uplink-rifle-mosin-desc
+  productEntity: WeaponSniperMosin
+  categories:
+      - SSSTraitorWeapons
+  cost:
+    Telecrystal: 1
 
 - type: listing
   id: UplinkEsword
@@ -67,6 +100,18 @@
   - UplinkWeaponry
 
 - type: listing
+  id: UplinkEswordSSS
+  parent: UplinkEsword
+  name: uplink-esword-name
+  description: uplink-esword-desc
+  productEntity: EnergySword
+  icon: { sprite: /Textures/Objects/Weapons/Melee/e_sword.rsi, state: icon }
+  categories:
+    - SSSTraitorWeapons
+  cost:
+    Telecrystal: 6
+
+- type: listing
   id: UplinkEnergyDagger
   name: uplink-edagger-name
   description: uplink-edagger-desc
@@ -81,6 +126,18 @@
   - UplinkWeaponry
 
 - type: listing
+  id: UplinkEnergyDaggerSSS
+  parent: UplinkEnergyDagger
+  name: uplink-edagger-name
+  description: uplink-edagger-desc
+  icon: { sprite: /Textures/Objects/Weapons/Melee/e_dagger.rsi, state: icon }
+  productEntity: EnergyDaggerBox
+  categories:
+      - SSSTraitorWeapons
+  cost:
+      Telecrystal: 4
+
+- type: listing
   id: UplinkThrowingKnivesKit
   name: uplink-knives-kit-name
   description: uplink-knives-kit-desc
@@ -93,6 +150,18 @@
     Telecrystal: 6
   categories:
     - UplinkWeaponry
+
+- type: listing
+  parent: UplinkThrowingKnivesKit
+  id: UplinkThrowingKnivesKitSSS
+  name: uplink-knives-kit-name
+  description: uplink-knives-kit-desc
+  icon: { sprite: /Textures/Objects/Storage/boxicons.rsi, state: throwing_knives }
+  productEntity: ThrowingKnivesKit
+  categories:
+  - SSSTraitorWeapons
+  cost:
+    Telecrystal: 3
 
 - type: listing
   id: UplinkGlovesNorthStar
@@ -126,6 +195,16 @@
           - NukeOpsUplink
 
 - type: listing
+  id: UplinkDisposableTurretSSS
+  name: uplink-disposable-turret-name
+  description: uplink-disposable-turret-desc
+  productEntity: ToolboxElectricalTurretFilled
+  parent: UplinkDisposableTurret
+  categories:
+    - SSSTraitorWeapons
+  cost:
+    Telecrystal: 6
+- type: listing
   id: UplinkEshield
   name: uplink-eshield-name
   description: uplink-eshield-desc
@@ -157,6 +236,18 @@
     Telecrystal: 12
   categories:
   - UplinkWeaponry
+
+- type: listing
+  parent: UplinkSniperBundle
+  id: UplinkSniperBundleSSS
+  name: uplink-sniper-bundle-name
+  description: uplink-sniper-bundle-desc
+  icon: { sprite: /Textures/Objects/Weapons/Guns/Snipers/heavy_sniper.rsi, state: base }
+  productEntity: BriefcaseSyndieSniperBundleFilled
+  categories:
+      - SSSTraitorWeapons
+  cost:
+      Telecrystal: 8
 
 - type: listing
   id: UplinkC20RBundle
@@ -230,6 +321,17 @@
   - UplinkExplosives
 
 - type: listing
+  id: UplinkExplosiveGrenadeSSS
+  parent: UplinkExplosiveGrenade
+  name: uplink-explosive-grenade-name
+  description: uplink-explosive-grenade-desc
+  productEntity: ExGrenade
+  categories:
+    - SSSTraitorExplosives
+  cost:
+    Telecrystal: 3
+
+- type: listing
   id: UplinkExplosiveGrenadeFlash
   name: uplink-flash-grenade-name
   description: uplink-flash-grenade-desc
@@ -240,6 +342,15 @@
   - UplinkExplosives
 
 - type: listing
+  id: UplinkExplosiveGrenadeFlashSSS
+  parent: UplinkExplosiveGrenadeFlash
+  name: uplink-flash-grenade-name
+  description: uplink-flash-grenade-desc
+  productEntity: GrenadeFlashBang
+  categories:
+    - SSSTraitorExplosives
+
+- type: listing
   id: UplinkSmokeGrenade
   name: uplink-smoke-grenade-name
   description: uplink-smoke-grenade-desc
@@ -248,6 +359,15 @@
     Telecrystal: 1
   categories:
   - UplinkExplosives
+
+- type: listing
+  id: UplinkSmokeGrenadeSSS
+  parent: UplinkSmokeGrenade
+  name: uplink-smoke-grenade-name
+  description: uplink-smoke-grenade-desc
+  productEntity: SmokeGrenade
+  categories:
+    - SSSTraitorExplosives
 
 - type: listing
   id: UplinkSyndieMiniBomb
@@ -263,6 +383,17 @@
     - UplinkExplosives
 
 - type: listing
+  id: UplinkSyndieMiniBombSSS
+  parent: UplinkSyndieMiniBomb
+  name: uplink-mini-bomb-name
+  description: uplink-mini-bomb-desc
+  productEntity: SyndieMiniBomb
+  categories:
+    - SSSTraitorExplosives
+  cost:
+    Telecrystal: 5
+
+- type: listing
   id: UplinkSupermatterGrenade
   name: uplink-supermatter-grenade-name
   description: uplink-supermatter-grenade-desc
@@ -276,6 +407,17 @@
     - UplinkExplosives
 
 - type: listing
+  id: UplinkSupermatterGrenadeSSS
+  parent: UplinkSupermatterGrenade
+  name: uplink-supermatter-grenade-name
+  description: uplink-supermatter-grenade-desc
+  productEntity: SupermatterGrenade
+  categories:
+    - SSSTraitorExplosives
+  cost:
+    Telecrystal: 5
+
+- type: listing
   id: UplinkWhiteholeGrenade
   name: uplink-whitehole-grenade-name
   description: uplink-whitehole-grenade-desc
@@ -287,6 +429,17 @@
     Telecrystal: 3
   categories:
     - UplinkExplosives
+
+- type: listing
+  id: UplinkWhiteholeGrenadeSSS
+  parent: UplinkWhiteholeGrenade
+  name: uplink-whitehole-grenade-name
+  description: uplink-whitehole-grenade-desc
+  productEntity: WhiteholeGrenade
+  categories:
+    - SSSTraitorExplosives
+  cost:
+    Telecrystal: 2
 
 - type: listing
   id: UplinkGrenadePenguin
@@ -305,6 +458,17 @@
     blacklist:
       components:
       - SurplusBundle
+
+- type: listing
+  id: UplinkGrenadePenguinSSS
+  name: uplink-penguin-grenade-name
+  description: uplink-penguin-grenade-desc
+  productEntity: MobGrenadePenguin
+  parent: UplinkGrenadePenguin
+  categories:
+    - SSSTraitorExplosives
+  cost:
+    Telecrystal: 2
 
 - type: listing
   id: UplinkC4
@@ -378,6 +542,18 @@
   - UplinkExplosives
 
 - type: listing
+  id: UplinkExplodingPenSSS
+  parent: UplinkExplodingPen
+  name: uplink-exploding-pen-name
+  description: uplink-exploding-pen-desc
+  icon: { sprite: /Textures/Objects/Misc/pens.rsi, state: pen }
+  productEntity: PenExplodingBox
+  cost:
+    Telecrystal: 4
+  categories:
+  - SSSTraitorExplosives
+
+- type: listing
   id: UplinkSyndicateBomb
   name: uplink-exploding-syndicate-bomb-name
   description: uplink-exploding-syndicate-bomb-desc
@@ -392,6 +568,18 @@
     blacklist:
       tags:
       - NukeOpsUplink
+
+- type: listing
+  id: UplinkSyndicateBombSSS
+  parent: UplinkSyndicateBomb
+  restockTime: 120
+  name: uplink-exploding-syndicate-bomb-name
+  description: uplink-exploding-syndicate-bomb-desc
+  productEntity: SyndicateBomb
+  categories:
+  - SSSTraitorExplosives
+  cost:
+    Telecrystal: 10
 
 - type: listing
   id: UplinkSyndicateBombNukie
@@ -422,6 +610,17 @@
   - UplinkExplosives
 
 - type: listing
+  id: UplinkClusterGrenadeSSS
+  parent: UplinkClusterGrenade
+  name: uplink-cluster-grenade-name
+  description: uplink-cluster-grenade-desc
+  productEntity: ClusterGrenade
+  cost:
+    Telecrystal: 8
+  categories:
+  - SSSTraitorExplosives
+
+- type: listing
   id: UplinkGrenadeShrapnel
   name: uplink-shrapnel-grenade-name
   description: uplink-shrapnel-grenade-desc
@@ -435,6 +634,17 @@
   - UplinkExplosives
 
 - type: listing
+  id: UplinkGrenadeShrapnelSSS
+  parent: UplinkGrenadeShrapnel
+  name: uplink-shrapnel-grenade-name
+  description: uplink-shrapnel-grenade-desc
+  productEntity: GrenadeShrapnel
+  cost:
+    Telecrystal: 3
+  categories:
+    - SSSTraitorExplosives
+
+- type: listing
   id: UplinkGrenadeIncendiary
   name: uplink-incendiary-grenade-name
   description: uplink-incendiary-grenade-desc
@@ -446,6 +656,17 @@
     Telecrystal: 4
   categories:
   - UplinkExplosives
+
+- type: listing
+  id: UplinkGrenadeIncendiarySSS
+  name: uplink-incendiary-grenade-name
+  description: uplink-incendiary-grenade-desc
+  productEntity: GrenadeIncendiary
+  parent: UplinkGrenadeIncendiary
+  cost:
+    Telecrystal: 3
+  categories:
+    - SSSTraitorExplosives
 
 - type: listing
   id: UplinkEmpKit
@@ -567,6 +788,18 @@
   - UplinkChemicals
 
 - type: listing
+  id: UplinkHypopenSSS
+  name: uplink-hypopen-name
+  description: uplink-hypopen-desc
+  icon: { sprite: /Textures/Objects/Misc/pens.rsi, state: pen }
+  productEntity: HypopenBox
+  parent: UplinkHypopen
+  cost:
+    Telecrystal: 2
+  categories:
+  - SSSTraitorChemicals
+
+- type: listing
   id: UplinkHypoDart
   name: uplink-hypodart-name
   description: uplink-hypodart-desc
@@ -581,6 +814,18 @@
   - UplinkChemicals
 
 - type: listing
+  id: UplinkHypoDartSSS
+  name: uplink-hypodart-name
+  description: uplink-hypodart-desc
+  icon: { sprite: /Textures/Objects/Fun/Darts/dart_red.rsi, state: icon }
+  productEntity: HypoDartBox
+  parent: UplinkHypoDart
+  cost:
+    Telecrystal: 2
+  categories:
+  - SSSTraitorChemicals
+
+- type: listing
   id: UplinkChemistryKitBundle
   name: uplink-chemistry-kit-name
   description: uplink-chemistry-kit-desc
@@ -593,6 +838,18 @@
     Telecrystal: 4
   categories:
   - UplinkChemicals
+
+- type: listing
+  id: UplinkChemistryKitBundleSSS
+  name: uplink-chemistry-kit-name
+  description: uplink-chemistry-kit-desc
+  icon: { sprite: /Textures/Objects/Storage/boxicons.rsi, state: vials }
+  productEntity: ChemicalSynthesisKit
+  parent: UplinkChemistryKitBundle
+  cost:
+    Telecrystal: 2
+  categories:
+  - SSSTraitorChemicals
 
 - type: listing
   id: UplinkZombieBundle
@@ -628,6 +885,17 @@
   - UplinkChemicals
 
 - type: listing
+  id: UplinkNocturineChemistryBottleSSS
+  parent: UplinkNocturineChemistryBottle
+  name: uplink-nocturine-chemistry-bottle-name
+  description: uplink-nocturine-chemistry-bottle-desc
+  productEntity: NocturineChemistryBottle
+  cost:
+    Telecrystal: 6
+  categories:
+  - SSSTraitorChemicals
+
+- type: listing
   id: UplinkCombatMedkit
   name: uplink-combat-medkit-name
   description: uplink-combat-medkit-desc
@@ -639,6 +907,17 @@
     Telecrystal: 5
   categories:
   - UplinkChemicals
+
+- type: listing
+  id: UplinkCombatMedkitSSS
+  parent: UplinkCombatMedkit
+  name: uplink-combat-medkit-name
+  description: uplink-combat-medkit-desc
+  productEntity: MedkitCombatFilled
+  cost:
+    Telecrystal: 5
+  categories:
+  - SSSTraitorChemicals
 
 - type: listing
   id: UplinkCombatMedipen
@@ -654,6 +933,17 @@
   - UplinkChemicals
 
 - type: listing
+  id: UplinkCombatMedipenSSS
+  parent: UplinkCombatMedipen
+  name: uplink-combat-medipen-name
+  description: uplink-combat-medipen-desc
+  productEntity: CombatMedipen
+  cost:
+    Telecrystal: 4
+  categories:
+    - SSSTraitorChemicals
+
+- type: listing
   id: UplinkStimpack
   name: uplink-stimpack-name
   description: uplink-stimpack-desc
@@ -665,6 +955,17 @@
     Telecrystal: 4
   categories:
   - UplinkChemicals
+
+- type: listing
+  id: UplinkStimpackSSS
+  name: uplink-stimpack-name
+  description: uplink-stimpack-desc
+  productEntity: Stimpack
+  parent: UplinkStimpack
+  cost:
+      Telecrystal: 4
+  categories:
+      - SSSTraitorChemicals
 
 - type: listing
   id: UplinkStimkit
@@ -743,6 +1044,17 @@
   - UplinkDeception
 
 - type: listing
+  id: UplinkStealthBoxSSS
+  name: uplink-stealth-box-name
+  description: uplink-stealth-box-desc
+  productEntity: StealthBox
+  parent: UplinkStealthBox
+  cost:
+    Telecrystal: 1
+  categories:
+  - SSSTraitorDisruption
+
+- type: listing
   id: UplinkChameleonProjector
   name: uplink-chameleon-projector-name
   description: uplink-chameleon-projector-desc
@@ -754,6 +1066,17 @@
     Telecrystal: 7
   categories:
   - UplinkDeception
+
+- type: listing
+  id: UplinkChameleonProjectorSSS
+  parent: UplinkChameleonProjector
+  name: uplink-chameleon-projector-name
+  description: uplink-chameleon-projector-desc
+  productEntity: ChameleonProjector
+  cost:
+    Telecrystal: 3
+  categories:
+  - SSSTraitorDisruption
 
 - type: listing
   id: UplinkHeadsetEncryptionKey
@@ -890,6 +1213,17 @@
     Telecrystal: 3
   categories:
   - UplinkDisruption
+
+- type: listing
+  id: UplinkRadioJammerSSS
+  parent: UplinkRadioJammer
+  name: uplink-radio-jammer-name
+  description: uplink-radio-jammer-desc
+  productEntity: RadioJammer
+  cost:
+    Telecrystal: 1
+  categories:
+  - SSSTraitorDisruption
 
 - type: listing
   id: UplinkSyndicateWeaponModule
@@ -1385,7 +1719,7 @@
           - NukeOpsUplink
 
 - type: listing
-  id: UplinkUplinkImplanter # uplink uplink real
+  id: UplinkUplinkImplanter # uplink uplink real (real)
   name: uplink-uplink-implanter-name
   description: uplink-uplink-implanter-desc
   icon: { sprite: /Textures/Objects/Devices/communication.rsi, state: old-radio }
@@ -1498,6 +1832,17 @@
   - UplinkWearables
 
 - type: listing
+  id: UplinkClothingNoSlipsShoesSSS
+  parent: UplinkClothingNoSlipsShoes
+  name: uplink-clothing-no-slips-shoes-name
+  description: uplink-clothing-no-slips-shoes-desc
+  productEntity: ClothingShoesChameleonNoSlips
+  cost:
+      Telecrystal: 4
+  categories:
+  - SSSTraitorWearables
+
+- type: listing
   id: UplinkgClothingThievingGloves
   name: uplink-clothing-thieving-gloves-name
   description: uplink-clothing-thieving-gloves-desc
@@ -1535,6 +1880,17 @@
     Telecrystal: 4
   categories:
   - UplinkWearables
+
+- type: listing
+  id: UplinkClothingShoesBootsMagSyndieSSS
+  parent: UplinkClothingShoesBootsMagSyndie
+  name: uplink-clothing-shoes-boots-mag-syndie-name
+  description: uplink-clothing-shoes-boots-mag-syndie-desc
+  productEntity: ClothingShoesBootsMagSyndie
+  cost:
+    Telecrystal: 4
+  categories:
+    - SSSTraitorWearables
 
 - type: listing
   id: UplinkEVASyndie
@@ -1579,6 +1935,18 @@
   - UplinkWearables
 
 - type: listing
+  id: UplinkHardsuitSyndieSSS
+  parent: UplinkHardsuitSyndie
+  name: uplink-hardsuit-syndie-name
+  description: uplink-hardsuit-syndie-desc
+  icon: { sprite: /Textures/Clothing/OuterClothing/Hardsuits/syndicate.rsi, state: icon }
+  productEntity: ClothingBackpackDuffelSyndicateHardsuitBundle
+  cost:
+    Telecrystal: 8
+  categories:
+    - SSSTraitorWearables
+
+- type: listing
   id: UplinkClothingOuterArmorRaid
   name: uplink-syndie-raid-name
   description: uplink-syndie-raid-desc
@@ -1621,6 +1989,18 @@
     Telecrystal: 12
   categories:
   - UplinkWearables
+
+- type: listing
+  id: UplinkClothingOuterHardsuitJuggernautSSS
+  parent: UplinkClothingOuterHardsuitJuggernaut
+  name: uplink-clothing-outer-hardsuit-juggernaut-name
+  description: uplink-clothing-outer-hardsuit-juggernaut-desc
+  icon: { sprite: /Textures/Structures/Storage/Crates/syndicate.rsi, state: icon }
+  productEntity: CrateCybersunJuggernautBundle
+  cost:
+    Telecrystal: 12
+  categories:
+    - SSSTraitorWearables
 
 - type: listing
   id: UplinkClothingEyesHudSyndicate

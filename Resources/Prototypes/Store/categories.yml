@@ -7,6 +7,32 @@
   id: Debug2
   name: store-category-debug2
 
+# SSS
+- type: storeCategory
+  id: SSSTraitorWeapons
+  name: store-category-weapons
+  priority: 0
+
+- type: storeCategory
+  id: SSSTraitorExplosives
+  name: store-category-explosives
+  priority: 2
+
+- type: storeCategory
+  id: SSSTraitorWearables
+  name: store-category-wearables
+  priority: 3
+
+- type: storeCategory
+  id: SSSTraitorChemicals
+  name: store-category-chemicals
+  priority: 4
+
+- type: storeCategory
+  id: SSSTraitorDisruption
+  name: store-category-disruption
+  priority: 5
+
 #WIZARD
 - type: storeCategory
   id: SpellbookOffensive

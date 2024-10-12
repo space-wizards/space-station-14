@@ -164,12 +164,19 @@
 
 - type: entity
   parent: UplinkImplant
-  id: UplinkImplant4 # Uplink implant with 4 TC
+  id: SusTraitorUplinkImplant
   components:
     - type: Store
       name: suspicion-traitor-uplink
       balance:
           Telecrystal: 4
+      categories:
+      - SSSTraitorWeapons
+      - UplinkAmmo
+      - SSSTraitorExplosives
+      - SSSTraitorWearables
+      - SSSTraitorChemicals
+      - SSSTraitorDisruption
 
 
 - type: entity
