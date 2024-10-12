@@ -184,41 +184,6 @@
    - squeaked
 
 - type: emote
-  id: Huff
-  name: chat-emote-name-huff
-  category: Vocal
-  available: false
-  icon: Interface/Emotes/huff.png
-  whitelist:
-    components:
-      - Vocal
-  blacklist:
-    components:
-    - BorgChassis
-  chatMessages: ["chat-emote-msg-huff"]
-  chatTriggers:
-   - huff
-   - huffs
-   - huffed
-- type: emote
-  id: Hiss
-  name: chat-emote-name-hiss
-  category: Vocal
-  available: false
-  icon: Interface/Emotes/hiss.png
-  whitelist:
-    components:
-      - Vocal
-  blacklist:
-    components:
-    - BorgChassis
-  chatMessages: ["chat-emote-msg-hiss"]
-  chatTriggers:
-   - hiss
-   - hisses
-   - hissed
-
-- type: emote
   id: Click
   name: chat-emote-name-click
   category: Vocal
