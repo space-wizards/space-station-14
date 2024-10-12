@@ -24,7 +24,7 @@ public sealed partial class BanUsernamePanel : DefaultWindow
 
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly ILogManager _logManager = default!;
-    [Dependency] private readonly IClientUsernameBanCacheManager _cache = default!;
+    [Dependency] private readonly IClientUsernameBanCacheManager _usernameRuleCacheManager = default!;
 
     private enum TabNumbers
     {
@@ -86,7 +86,7 @@ public sealed partial class BanUsernamePanel : DefaultWindow
     public void RefreshButtonOnPressed(BaseButton.ButtonEventArgs obj)
     {
         // this ***MUST*** be rate limited on the server
-        _cache.RequestUsernameBans();
+        _usernameRuleCacheManager.RequestUsernameBans();
     }
 
     protected override void FrameUpdate(FrameEventArgs args)

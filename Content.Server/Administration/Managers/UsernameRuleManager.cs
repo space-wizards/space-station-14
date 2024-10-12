@@ -45,7 +45,7 @@ public sealed partial class UsernameRuleManager : IUsernameRuleManager, IPostInj
         // needed for deadmin and readmin
         _admin.OnPermsChanged += OnReAdmin;
 
-        _net.RegisterNetMessage<MsgUsernameBans>();
+        _net.RegisterNetMessage<MsgUsernameBan>();
         _net.RegisterNetMessage<MsgRequestUsernameBans>(OnRequestBans);
 
         var rules = await _db.GetServerUsernameRulesAsync(false);
@@ -69,7 +69,12 @@ public sealed partial class UsernameRuleManager : IUsernameRuleManager, IPostInj
 
     private void OnRequestBans(MsgRequestUsernameBans msg)
     {
-        if (!_admin.HasAdminFlag(_players.GetSessionByChannel(msg.MsgChannel), AdminFlags.Ban))
+        if (!_players.TryGetSessionById(msg.MsgChannel.UserId, out var player))
+        {
+            return;
+        }
+
+        if (!_admin.HasAdminFlag(player, AdminFlags.Ban))
         {
             return;
         }
@@ -236,8 +241,6 @@ public sealed partial class UsernameRuleManager : IUsernameRuleManager, IPostInj
 
         (Regex compiledRule, _, _, _) = _cachedUsernameRules[id];
 
-        // could there be a concurrency issue resulting in null?
-
         foreach (var player in _playerManager.Sessions)
         {
             if (compiledRule.IsMatch(player.Name))
@@ -254,13 +257,13 @@ public sealed partial class UsernameRuleManager : IUsernameRuleManager, IPostInj
         player.Channel.Disconnect(message);
     }
 
-    private MsgUsernameBans CreateResetMessage()
+    private IEnumerable<MsgUsernameBan> CreateResetMessages()
     {
         List<(bool, bool, int, string, string)> messageContent = new();
 
         messageContent.EnsureCapacity(_cachedUsernameRules.Count + 1);
 
-        messageContent.Add((false, false, -1, "", ""));
+        messageContent.Add((false, false, -1, "empty", "empty"));
 
         foreach (var id in _cachedUsernameRules.Keys)
         {
@@ -268,44 +271,56 @@ public sealed partial class UsernameRuleManager : IUsernameRuleManager, IPostInj
             messageContent.Add((true, extendToBan, id, expression, message));
         }
 
-        return new MsgUsernameBans()
+        return messageContent.Select(static mc =>
         {
-            UsernameBans = messageContent,
-        };
+            return new MsgUsernameBan()
+            {
+                UsernameBan = mc
+            };
+        });
     }
 
     private void SendResetUsernameBan(INetChannel channel)
     {
         _sawmill.Debug($"Sent username bans reset to connecting admin");
-        _net.ServerSendMessage(CreateResetMessage(), channel);
+        var resetMessages = CreateResetMessages();
+        foreach (var msg in resetMessages)
+        {
+            _net.ServerSendMessage(msg, channel);
+        }
     }
 
     private void SendResetUsernameBan()
     {
         _sawmill.Debug($"Sent username bans reset to active admins");
-        _net.ServerSendToMany(CreateResetMessage(), _admin.ActiveAdmins.Select(a => a.Channel).ToList());
+        var adminChannels = _admin.ActiveAdmins.Select(a => a.Channel).ToList();
+        var resetMessages = CreateResetMessages();
+        foreach (var msg in resetMessages)
+        {
+            _net.ServerSendToMany(msg, adminChannels);
+        }
     }
 
     private void SendAddUsernameBan(int id, string expression, string message, bool extendToBan)
     {
-        var usernameBansMsg = new MsgUsernameBans()
+        var usernameBanMsg = new MsgUsernameBan()
         {
-            UsernameBans = [(true, extendToBan, id, expression, message)],
+            UsernameBan = (true, extendToBan, id, expression, message),
         };
 
         _sawmill.Debug($"sent new username ban {id} to active admins");
-        _net.ServerSendToMany(usernameBansMsg, _admin.ActiveAdmins.Select(a => a.Channel).ToList());
+        _net.ServerSendToMany(usernameBanMsg, _admin.ActiveAdmins.Select(a => a.Channel).ToList());
     }
 
     private void SendRemoveUsernameBan(int id)
     {
-        var usernameBansMsg = new MsgUsernameBans()
+        var usernameBanMsg = new MsgUsernameBan()
         {
-            UsernameBans = [(false, false, id, "", "")],
+            UsernameBan = (false, false, id, "empty", "empty"),
         };
 
         _sawmill.Debug($"sent username ban delete {id} to active admins");
-        _net.ServerSendToMany(usernameBansMsg, _admin.ActiveAdmins.Select(a => a.Channel).ToList());
+        _net.ServerSendToMany(usernameBanMsg, _admin.ActiveAdmins.Select(a => a.Channel).ToList());
     }
 
     public void PostInject()

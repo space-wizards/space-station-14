@@ -8,6 +8,7 @@ public interface IClientUsernameBanCacheManager
     /// </summary>
     event Action UpdatedCache;
 
+    void Initialize();
 
     /// <summary>
     ///     Sends A request to the server to send new data
