@@ -444,6 +444,9 @@ public sealed class SuspicionRuleSystem : GameRuleSystem<SuspicionRuleComponent>
         RobustRandom.Shuffle(participatingPlayers); // Shuffle the list so we can just take the first N players
         RobustRandom.Shuffle(participatingPlayers);
         RobustRandom.Shuffle(participatingPlayers); // I don't trust the shuffle.
+        RobustRandom.Shuffle(participatingPlayers);
+        RobustRandom.Shuffle(participatingPlayers); // I really don't trust the shuffle.
+
 
         for (var i = 0; i < traitorCount; i++)
         {
@@ -485,7 +488,11 @@ public sealed class SuspicionRuleSystem : GameRuleSystem<SuspicionRuleComponent>
 
             EnsureComp<CriminalRecordComponent>(ownedEntity.Value).StatusIcon = "SecurityIconDischarged";
 
-            _subdermalImplant.AddImplants(ownedEntity.Value, new List<string> {component.DetectiveImplant});
+            _antagSelectionSystem.SendBriefing(
+                ownedEntity.Value,
+                Loc.GetString("detective-briefing"),
+                Color.Blue,
+                briefingSound:null);
         }
 
         // Anyone who isn't a traitor will get the innocent role.
