@@ -168,7 +168,9 @@
     state: brain
   - type: SliceableFood
     slice: FoodCakeBrainSlice
-
+  - type: Tag
+    tags:
+    - Meat
 
 - type: entity
   name: slice of brain cake
@@ -178,6 +180,9 @@
   components:
   - type: Sprite
     state: brain-slice
+  - type: Tag
+    tags:
+    - Meat
 # Tastes like sweetness, cake, brains.
 
 - type: entity
