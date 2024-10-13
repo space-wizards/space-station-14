@@ -10,12 +10,12 @@
     sprite: Objects/Specific/Medical/handheldcrewmonitor.rsi
     state: scanner
   - type: ActivatableUI
-    key: enum.CrewMonitoringUIKey.Key
+    key: enum.AtmosAlertsComputerUiKey.Key
   - type: UserInterface
     interfaces:
-      enum.CrewMonitoringUIKey.Key:
-        type: CrewMonitoringBoundUserInterface
-  - type: CrewMonitoringConsole
+      enum.AtmosAlertsComputerUiKey.Key:
+        type: AtmosAlertsComputerBoundUserInterface
+  - type: AtmosAlertsComputer
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: CrewMonitor
