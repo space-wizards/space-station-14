@@ -9,4 +9,4 @@ public sealed partial class CommandStaffComponent : Component
 
 }
 
-//TODO this should probably be on a mind role, not the mob.
+//TODO this should probably be on a mind role, not the mob
