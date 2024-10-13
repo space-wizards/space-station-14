@@ -1,26 +1,25 @@
 - type: entity
-  name: handheld crew monitor
+  name: handheld atmos monitor
   suffix: DO NOT MAP
   parent: [ BaseHandheldComputer, BaseGrandTheftContraband ]
-  # CMO-only bud, don't add more.
-  id: HandheldCrewMonitor
-  description: A hand-held crew monitor displaying the status of suit sensors.
+  id: HandheldAtmosMonitor
+  description: A hand-held crew monitor displaying the status of atmospheric alarms across the station.
   components:
   - type: Sprite
-    sprite: Objects/Specific/Medical/handheldcrewmonitor.rsi
+    sprite: Objects/Specific/Atmos/handheldatmosmonitor.rsi
     state: scanner
   - type: ActivatableUI
-    key: enum.CrewMonitoringUIKey.Key
+    key: enum.AtmosAlertsComputerUiKey.Key
   - type: UserInterface
     interfaces:
-      enum.CrewMonitoringUIKey.Key:
-        type: CrewMonitoringBoundUserInterface
-  - type: CrewMonitoringConsole
+      enum.AtmosAlertsComputerUiKey.Key:
+        type: AtmosAlertsComputerBoundUserInterface
+  - type: AtmosAlertsComputer
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: CrewMonitor
   - type: WirelessNetworkConnection
-    range: 500
+    range: 600
   - type: StationLimitedNetwork
   - type: StaticPrice
     price: 500
@@ -31,8 +30,8 @@
     stealGroup: HandheldCrewMonitor
 
 - type: entity
-  id: HandheldCrewMonitorEmpty
-  parent: HandheldCrewMonitor
+  id: HandheldAtmosMonitorEmpty
+  parent: BaseHandheldComputer
   suffix: Empty
   components:
   - type: ItemSlots
