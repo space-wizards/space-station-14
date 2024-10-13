@@ -157,6 +157,11 @@ stack-name-hv-cable = hv cable
 
 ### science_stacks.yml
 
+stack-name-artifact-fragment = artifact fragment
+stack-name-capacitor = capacitor
+stack-name-micro-manipulator = micro manipulator
+stack-name-matter-bin = matter bin
+
 ### crystals.yml
 
 ### ingots.yml
