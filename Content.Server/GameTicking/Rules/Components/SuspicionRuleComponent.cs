@@ -70,7 +70,7 @@ public sealed partial class SuspicionRuleComponent : Component
     public string UplinkImplant = "SusTraitorUplinkImplant";
 
     [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string DetectiveImplant = "SusTraitorUplinkImplant";
+    public string DetectiveImplant = "SusDetectiveUplinkImplant";
 
 
     [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<RadioChannelPrototype>))]

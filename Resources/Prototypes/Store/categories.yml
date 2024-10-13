@@ -33,6 +33,32 @@
   name: store-category-disruption
   priority: 5
 
+### SSS Detective
+- type: storeCategory
+  id: SSSDetectiveWeapons
+  name: store-category-weapons
+  priority: 0
+
+- type: storeCategory
+  id: SSSDetectiveExplosives
+  name: store-category-explosives
+  priority: 2
+
+- type: storeCategory
+  id: SSSDetectiveWearables
+  name: store-category-wearables
+  priority: 3
+
+- type: storeCategory
+  id: SSSDetectiveChemicals
+  name: store-category-chemicals
+  priority: 4
+
+- type: storeCategory
+  id: SSSDetectiveDisruption
+  name: store-category-disruption
+  priority: 5
+
 #WIZARD
 - type: storeCategory
   id: SpellbookOffensive

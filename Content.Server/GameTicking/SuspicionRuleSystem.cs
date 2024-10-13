@@ -488,6 +488,8 @@ public sealed class SuspicionRuleSystem : GameRuleSystem<SuspicionRuleComponent>
 
             EnsureComp<CriminalRecordComponent>(ownedEntity.Value).StatusIcon = "SecurityIconDischarged";
 
+            _subdermalImplant.AddImplants(ownedEntity.Value, new List<string> {component.DetectiveImplant});
+
             _antagSelectionSystem.SendBriefing(
                 ownedEntity.Value,
                 Loc.GetString("detective-briefing"),

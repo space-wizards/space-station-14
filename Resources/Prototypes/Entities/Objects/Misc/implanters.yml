@@ -161,6 +161,14 @@
     - type: Implanter
       implant: TrackingImplant
 
+- type: entity
+  id: SuspicionRadarImplanterDetective
+  suffix: radar
+  parent: BaseImplantOnlyImplanter
+  components:
+  - type: Implanter
+    implant: SuspicionRadarImplantDetective
+
 #Traitor implanters
 
 - type: entity
@@ -213,11 +221,11 @@
 
 - type: entity
   id: SuspicionRadarImplanter
-  suffix: Radar
+  suffix: radar, detective
   parent: BaseImplantOnlyImplanterSyndi
   components:
     - type: Implanter
-      implant: SuspicionRadarImplant
+      implant: SuspicionRadarImplantTraitor
 
 #Nuclear Operative/Special implanters
 

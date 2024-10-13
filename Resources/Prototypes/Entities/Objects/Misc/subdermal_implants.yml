@@ -178,6 +178,21 @@
       - SSSTraitorChemicals
       - SSSTraitorDisruption
 
+- type: entity
+  parent: UplinkImplant
+  id: SusDetectiveUplinkImplant
+  components:
+  - type: Store
+    name: suspicion-detective-uplink
+    balance:
+      Telecrystal: 2
+    categories:
+    - SSSDetectiveWeapons
+    - UplinkAmmo
+    - SSSDetectiveExplosives
+    - SSSDetectiveWearables
+    - SSSDetectiveChemicals
+    - SSSDetectiveDisruption
 
 - type: entity
   parent: BaseSubdermalImplant
@@ -345,7 +360,7 @@
 
 - type: entity
   parent: BaseSubdermalImplant
-  id: SuspicionRadarImplant
+  id: SuspicionRadarImplantTraitor
   name: radar implant
   description: This implant will show other people nearby, projected directly into the users field of vision.
   categories: [ HideSpawnMenu ]
@@ -354,3 +369,15 @@
       implantAction: ActionPingRadarImplant
     - type: SuspicionRadar
       showTraitors: true
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: SuspicionRadarImplantDetective
+  name: radar implant
+  description: This implant will show other people nearby, projected directly into the users field of vision.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SubdermalImplant
+    implantAction: ActionPingRadarImplant
+  - type: SuspicionRadar
+    showTraitors: false

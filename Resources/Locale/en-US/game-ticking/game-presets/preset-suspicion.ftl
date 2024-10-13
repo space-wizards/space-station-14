@@ -6,4 +6,5 @@ innocent-briefing = You are an innocent. Your goal is to [bold]survive[/bold] an
 detective-briefing = You are a detective. Your goal is to [bold]survive[/bold] and to [bold]kill[/bold] the traitors while keeping your fellow crew alive. Good luck.
 
 suspicion-traitor-uplink = Traitor Uplink
+suspicion-detective-uplink = Detective Uplink
 tc-added-sus = You have been given $tc TC for your performance.

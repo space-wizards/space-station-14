@@ -1773,6 +1773,19 @@
   - !type:ListingLimitedStockCondition
     stock: 1
 
+- type: listing
+  id: UplinkRadarSSSDetective
+  name: Radar Implant
+  description: A radar implant which will directly interface with your brain, allowing you to see the location of all humanoids beings around you.
+  productEntity: SuspicionRadarImplanterDetective
+  cost:
+    Telecrystal: 1
+  categories:
+  - SSSDetectiveDisruption
+  conditions:
+  - !type:ListingLimitedStockCondition
+      stock: 1
+
 # Wearables
 
 - type: listing
