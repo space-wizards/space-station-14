@@ -129,7 +129,7 @@
     weight: 22
     minimumPlayers: 0
   - type: MeteorSwarm
-    announcement: station-event-space-dust-start-announcement
+    announcement: station-event-space-dust-major-start-announcement
     announcementSound: /Audio/Announcements/attention.ogg
     nonDirectional: true
     meteors:
