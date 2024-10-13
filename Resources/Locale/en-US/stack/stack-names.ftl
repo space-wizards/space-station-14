@@ -168,6 +168,9 @@ stack-name-telecrystal = telecrystal
 
 ### ingots.yml
 
+stack-name-gold = gold
+stack-name-silver = silver
+
 ### materials.yml
 
 ### ore.yml
