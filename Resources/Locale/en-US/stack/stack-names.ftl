@@ -173,6 +173,23 @@ stack-name-silver = silver
 
 ### materials.yml
 
+stack-name-biomass = biomass
+stack-name-wood-plank = wood plank
+stack-name-cardboard = cardboard
+stack-name-cloth = cloth
+stack-name-durathread = durathread
+stack-name-diamond = diamond
+stack-name-cotton = cotton
+stack-name-pyrotton = pyrotton
+stack-name-bananium = bananium
+stack-name-meat-sheet = meat sheet
+stack-name-silk = silk
+stack-name-space-carp-tooth = space carp tooth
+stack-name-sharkminnow-tooth = sharkminnow tooth
+stack-name-bones = bones
+stack-name-gunpowder = gunpowder
+stack-name-goliath-hide = goliath hide
+
 ### ore.yml
 
 ### parts.yml
