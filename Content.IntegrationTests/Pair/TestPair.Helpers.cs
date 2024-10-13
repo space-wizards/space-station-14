@@ -134,6 +134,34 @@ public sealed partial class TestPair
     }
 
     /// <summary>
+    /// Retrieve all entity prototypes that have some component.
+    /// </summary>
+    public List<EntityPrototype> GetPrototypesWithComponent(Type type,
+        HashSet<string>? ignored = null,
+        bool ignoreAbstract = true,
+        bool ignoreTestPrototypes = true)
+    {
+        var id = Server.ResolveDependency<IComponentFactory>().GetComponentName(type);
+        var list = new List<EntityPrototype>();
+        foreach (var proto in Server.ProtoMan.EnumeratePrototypes<EntityPrototype>())
+        {
+            if (ignored != null && ignored.Contains(proto.ID))
+                continue;
+
+            if (ignoreAbstract && proto.Abstract)
+                continue;
+
+            if (ignoreTestPrototypes && IsTestPrototype(proto))
+                continue;
+
+            if (proto.Components.ContainsKey(id))
+                list.Add((proto));
+        }
+
+        return list;
+    }
+
+    /// <summary>
     /// Set a user's antag preferences. Modified preferences are automatically reset at the end of the test.
     /// </summary>
     public async Task SetAntagPreference(ProtoId<AntagPrototype> id, bool value, NetUserId? user = null)
