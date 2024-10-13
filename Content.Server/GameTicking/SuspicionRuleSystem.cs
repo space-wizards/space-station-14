@@ -5,6 +5,7 @@ using Content.Server.Administration.Systems;
 using Content.Server.Antag;
 using Content.Server.Atmos.Components;
 using Content.Server.Chat.Managers;
+using Content.Server.CriminalRecords.Systems;
 using Content.Server.Examine;
 using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Components;
@@ -42,6 +43,7 @@ using Content.Shared.NukeOps;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Overlays;
 using Content.Shared.Players;
+using Content.Shared.Security.Components;
 using Content.Shared.Store.Components;
 using Content.Shared.Verbs;
 using Robust.Server.Player;
@@ -74,6 +76,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem<SuspicionRuleComponent>
     [Dependency] private readonly RejuvenateSystem _rejuvenate = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly NpcFactionSystem _npcFactionSystem = default!;
+    [Dependency] private readonly CriminalRecordsSystem _criminalRecordsSystem = default!;
 
     private readonly SoundSpecifier _traitorStartSound = new SoundPathSpecifier("/Audio/Ambience/Antag/traitor_start.ogg");
 
@@ -436,7 +439,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem<SuspicionRuleComponent>
         }
 
         var traitorCount = MathHelper.Clamp((int) (participatingPlayers.Count * component.TraitorPercentage), 1, allPlayerData.Count);
-        // TODO: Detective
+        var detectiveCount = MathHelper.Clamp((int) (participatingPlayers.Count * component.DetectivePercentage), 1, allPlayerData.Count);
 
         RobustRandom.Shuffle(participatingPlayers); // Shuffle the list so we can just take the first N players
         RobustRandom.Shuffle(participatingPlayers);
@@ -467,6 +470,22 @@ public sealed class SuspicionRuleSystem : GameRuleSystem<SuspicionRuleComponent>
                 Loc.GetString("traitor-briefing"),
                 Color.Red,
                 _traitorStartSound);
+        }
+
+        for (var i = traitorCount; i < traitorCount + detectiveCount; i++)
+        {
+            var role = participatingPlayers[i];
+            role.comp.Role = SuspicionRole.Detective;
+            var ownedEntity = Comp<MindComponent>(role.mind).OwnedEntity;
+            if (!ownedEntity.HasValue)
+            {
+                Log.Error("Player mind has no entity.");
+                continue;
+            }
+
+            EnsureComp<CriminalRecordComponent>(ownedEntity.Value).StatusIcon = "SecurityIconDischarged";
+
+            _subdermalImplant.AddImplants(ownedEntity.Value, new List<string> {component.DetectiveImplant});
         }
 
         // Anyone who isn't a traitor will get the innocent role.

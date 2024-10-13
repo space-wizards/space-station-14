@@ -28,7 +28,13 @@ public sealed partial class SuspicionRuleComponent : Component
     /// If the result is less than 1 or more than the player count, it is clamped to those values.
     /// </summary>
     [DataField]
-    public float TraitorPercentage = 0.3f;
+    public float TraitorPercentage = 0.25f;
+
+    /// <summary>
+    /// Percentage of total players that will be a detective (detective innocent). Handled similar to traitor percentage (rounded down etc).
+    /// </summary>
+    [DataField]
+    public float DetectivePercentage = 0.13f;
 
     /// <summary>
     /// How long to wait before the game starts after the round starts.
@@ -64,7 +70,7 @@ public sealed partial class SuspicionRuleComponent : Component
     public string UplinkImplant = "SusTraitorUplinkImplant";
 
     [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string DetectiveImplant = "SusDetectiveUplinkImplant";
+    public string DetectiveImplant = "SusTraitorUplinkImplant";
 
 
     [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<RadioChannelPrototype>))]
