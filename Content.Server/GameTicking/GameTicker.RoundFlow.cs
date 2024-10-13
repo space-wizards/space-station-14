@@ -341,12 +341,28 @@ namespace Content.Server.GameTicking
 
             RunLevel = GameRunLevel.PostRound;
 
-            ShowRoundEndScoreboard(text);
-            SendRoundEndDiscordMessage();
+            try
+            {
+                ShowRoundEndScoreboard(text);
+            }
+            catch (Exception e)
+            {
+                Log.Error($"Error while showing round end scoreboard: {e}");
+            }
+
+            try
+            {
+                SendRoundEndDiscordMessage();
+            }
+            catch (Exception e)
+            {
+                Log.Error($"Error while sending round end Discord message: {e}");
+            }
         }
 
         public void ShowRoundEndScoreboard(string text = "")
         {
+            throw new NotImplementedException("FUCK");
             // Log end of round
             _adminLogger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Round ended, showing summary");
 
