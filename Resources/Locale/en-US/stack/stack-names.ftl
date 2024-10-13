@@ -141,6 +141,14 @@ stack-name-large-wood-floor-tile = large wood floor tile
 
 ### medical_stacks.yml
 
+stack-name-ointment = ointment
+stack-name-aloe-cream = aloe cream
+stack-name-gauze = gauze
+stack-name-brutepack = brutepack
+stack-name-bloodpack = bloodpack
+stack-name-medicated-suture = medicated-suture
+stack-name-regenerative-mesh = regenerative-mesh
+
 ### power_stacks.yml
 
 ### science_stacks.yml
