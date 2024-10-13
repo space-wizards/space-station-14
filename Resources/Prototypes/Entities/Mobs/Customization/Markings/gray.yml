@@ -10,7 +10,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/gray.rsi
+  - sprite: Mobs/Customization/gray/eyes.rsi
     state: eyes_cute
 
 - type: marking
@@ -25,5 +25,20 @@
         !type:SimpleColoring
           color: "#000000"
   sprites:
-  - sprite: Mobs/Customization/gray.rsi
+  - sprite: Mobs/Customization/gray/eyes.rsi
     state: eyes_cool
+
+- type: marking
+  id: GrayWideEyes
+  bodyPart: Eyes
+  markingCategory: Head
+  speciesRestriction: [Gray]
+  forcedColoring: false
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#3D3D3D"
+  sprites:
+  - sprite: Mobs/Customization/gray/eyes.rsi
+    state: eyes_wide
