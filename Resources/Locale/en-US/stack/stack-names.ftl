@@ -151,6 +151,10 @@ stack-name-regenerative-mesh = regenerative-mesh
 
 ### power_stacks.yml
 
+stack-name-lv-cable = lv cable
+stack-name-mv-cable = mv cable
+stack-name-hv-cable = hv cable
+
 ### science_stacks.yml
 
 ### crystals.yml
