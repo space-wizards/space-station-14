@@ -1,12 +1,14 @@
 ﻿using Content.Shared.Damage.Components;
 using Content.Shared.Actions;
 using Content.Shared.Alert;
+using Content.Shared.Coordinates;
 using Content.Shared.Fluids.Components;
 using Content.Shared.Gravity;
 using Content.Shared.Mobs;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Slippery;
 using Content.Shared.Toggleable;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
@@ -26,6 +28,7 @@ public abstract class SharedRootableSystem : EntitySystem
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
+    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
     private EntityQuery<PuddleComponent> _puddleQuery;
 
@@ -80,6 +83,8 @@ public abstract class SharedRootableSystem : EntitySystem
             _alerts.ShowAlert(uid, rooted.RootedAlert);
         else
             _alerts.ClearAlert(uid, rooted.RootedAlert);
+
+        _audioSystem.PlayPredicted(rooted.RootSound, uid.ToCoordinates(), uid);
 
         return true;
     }

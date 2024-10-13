@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Alert;
 using Content.Shared.FixedPoint;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
@@ -51,4 +52,9 @@ public sealed partial class RootableComponent : Component
     /// </summary>
     [DataField]
     public float SpeedModifier = 0.8f;
+
+    /// <summary>
+    /// Sound that plays when rooting is toggled.
+    /// </summary>
+    public SoundSpecifier RootSound = new SoundPathSpecifier("/Audio/Voice/Diona/diona_salute.ogg");
 }
