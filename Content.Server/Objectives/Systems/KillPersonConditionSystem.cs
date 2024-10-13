@@ -4,7 +4,6 @@ using Content.Server.Shuttles.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Components;
-
 using Robust.Shared.Configuration;
 using Robust.Shared.Random;
 
