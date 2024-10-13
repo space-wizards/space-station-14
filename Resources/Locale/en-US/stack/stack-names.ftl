@@ -192,6 +192,17 @@ stack-name-goliath-hide = goliath hide
 
 ### ore.yml
 
+stack-name-gold-ore = gold ore
+stack-name-rough-diamond = rough diamond
+stack-name-iron-ore = iron ore
+stack-name-plasma-ore = plasma ore
+stack-name-silver-ore = silver ore
+stack-name-space-quartz = space quartz
+stack-name-uranium-ore = uranium ore
+stack-name-bananium-ore = bananium ore
+stack-name-coal = coal
+stack-name-salt = salt
+
 ### parts.yml
 
 ### glass.yml
