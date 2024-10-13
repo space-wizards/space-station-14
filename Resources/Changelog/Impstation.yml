@@ -2961,3 +2961,17 @@
   id: 367
   time: '2024-10-12T23:23:34.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/470
+- author: hivehum
+  changes:
+  - message: Tons of new items are now available to build the burger of your dreams.
+    type: Add
+  id: 368
+  time: '2024-10-13T00:45:17.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/471
+- author: formlessnameless
+  changes:
+  - message: Slimes are now capable of heresy
+    type: Fix
+  id: 369
+  time: '2024-10-13T00:52:51.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/472

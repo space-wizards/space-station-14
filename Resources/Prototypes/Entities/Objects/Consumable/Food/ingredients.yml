@@ -723,6 +723,9 @@
   - type: Tag
     tags:
     - Slice
+  - type: FoodSequenceElement
+    entries:
+      Burger: ChevreBurger
 
 - type: entity
   name: tofu
