@@ -2975,3 +2975,10 @@
   id: 369
   time: '2024-10-13T00:52:51.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/472
+- author: formlessnameless
+  changes:
+  - message: Snails and Thraven are also once more capable of heresy.
+    type: Fix
+  id: 370
+  time: '2024-10-13T01:12:05.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/473
