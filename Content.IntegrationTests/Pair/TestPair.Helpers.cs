@@ -107,14 +107,14 @@ public sealed partial class TestPair
     /// <summary>
     /// Retrieve all entity prototypes that have some component.
     /// </summary>
-    public List<EntityPrototype> GetPrototypesWithComponent<T>(
+    public List<(EntityPrototype, T)> GetPrototypesWithComponent<T>(
         HashSet<string>? ignored = null,
         bool ignoreAbstract = true,
         bool ignoreTestPrototypes = true)
         where T : IComponent
     {
         var id = Server.ResolveDependency<IComponentFactory>().GetComponentName(typeof(T));
-        var list = new List<EntityPrototype>();
+        var list = new List<(EntityPrototype, T)>();
         foreach (var proto in Server.ProtoMan.EnumeratePrototypes<EntityPrototype>())
         {
             if (ignored != null && ignored.Contains(proto.ID))
@@ -126,8 +126,8 @@ public sealed partial class TestPair
             if (ignoreTestPrototypes && IsTestPrototype(proto))
                 continue;
 
-            if (proto.Components.ContainsKey(id))
-                list.Add(proto);
+            if (proto.Components.TryGetComponent(id, out var cmp))
+                list.Add((proto, (T)cmp));
         }
 
         return list;
