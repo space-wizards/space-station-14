@@ -10,6 +10,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Roles;
 
@@ -148,9 +149,7 @@ public abstract class SharedRoleSystem : EntitySystem
             EnsureComp<JobRoleComponent>(mindRoleId);
         }
 
-        if (mindRoleComp.Antag || mindRoleComp.ExclusiveAntag)
-            antagonist = true;
-
+        antagonist |= mindRoleComp.Antag;
         mind.MindRoles.Add(mindRoleId);
 
         var mindEv = new MindRoleAddedEvent(silent);
@@ -200,7 +199,7 @@ public abstract class SharedRoleSystem : EntitySystem
                 continue;
 
             var roleComp = Comp<MindRoleComponent>(role);
-            antagonist = roleComp.Antag;
+            antagonist |= roleComp.Antag | roleComp.ExclusiveAntag;
             _entityManager.DeleteEntity(role);
 
             delete.Add(role);
@@ -374,16 +373,16 @@ public abstract class SharedRoleSystem : EntitySystem
     /// <summary>
     /// Reads all Roles of a mind Entity and returns their data as RoleInfo
     /// </summary>
-    /// <param name="mindId">The mind entity</param>
+    /// <param name="mind">The mind entity</param>
     /// <returns>RoleInfo list</returns>
-    public List<RoleInfo> MindGetAllRoleInfo(EntityUid mindId)
+    public List<RoleInfo> MindGetAllRoleInfo(Entity<MindComponent?> mind)
     {
         var roleInfo = new List<RoleInfo>();
 
-        if (!TryComp<MindComponent>(mindId, out var mind))
+        if (!Resolve(mind.Owner, ref mind.Comp))
             return roleInfo;
 
-        foreach (var role in mind.MindRoles)
+        foreach (var role in mind.Comp.MindRoles)
         {
             var valid = false;
             var name = "game-ticker-unknown-role";
@@ -442,12 +441,9 @@ public abstract class SharedRoleSystem : EntitySystem
     public bool MindIsAntagonist(EntityUid? mindId)
     {
         if (mindId is null)
-        {
-            Log.Warning($"Antagonist status of mind entity {mindId} could not be determined - mind entity not found");
             return false;
-        }
 
-        return CheckAntagonistStatus(mindId.Value).Item1;
+        return CheckAntagonistStatus(mindId.Value).Antag;
     }
 
     /// <summary>
@@ -458,39 +454,33 @@ public abstract class SharedRoleSystem : EntitySystem
     public bool MindIsExclusiveAntagonist(EntityUid? mindId)
     {
         if (mindId is null)
-        {
-            Log.Warning($"Antagonist status of mind entity {mindId} could not be determined - mind entity not found");
             return false;
-        }
 
-        return CheckAntagonistStatus(mindId.Value).Item2;
+        return CheckAntagonistStatus(mindId.Value).ExclusiveAntag;
     }
 
-   private (bool, bool) CheckAntagonistStatus(EntityUid mindId)
+   public (bool Antag, bool ExclusiveAntag) CheckAntagonistStatus(Entity<MindComponent?> mind)
    {
-       if (!TryComp<MindComponent>(mindId, out var mind))
-       {
-           Log.Warning($"Antagonist status of mind entity {mindId} could not be determined - mind component not found");
+       if (!Resolve(mind.Owner, ref mind.Comp))
            return (false, false);
-       }
 
         var antagonist = false;
         var exclusiveAntag = false;
-        foreach (var role in mind.MindRoles)
+        foreach (var role in mind.Comp.MindRoles)
         {
             if (!TryComp<MindRoleComponent>(role, out var roleComp))
             {
-                //If this ever shows up outside of an integration test, then we need to look into this further.
-                Log.Warning($"Mind Role Entity {role} does not have MindRoleComponent!");
+                Log.Error($"Mind Role Entity {ToPrettyString(role)} does not have a MindRoleComponent, despite being listed as a role belonging to {ToPrettyString(mind)}|");
                 continue;
             }
 
-            if (roleComp.Antag || exclusiveAntag)
+            if (roleComp.Antag)
                 antagonist = true;
             if (roleComp.ExclusiveAntag)
                 exclusiveAntag = true;
         }
 
+        DebugTools.Assert(!exclusiveAntag || antagonist); // Exclusive antags must be antags.
         return (antagonist, exclusiveAntag);
     }
 
@@ -504,6 +494,9 @@ public abstract class SharedRoleSystem : EntitySystem
             _audio.PlayGlobal(sound, mind.Session);
     }
 
+    // TODO ROLES Change to readonly.
+    // Passing around a reference to a prototype's hashset makes me uncomfortable because it might be accidentally
+    // mutated.
     public HashSet<JobRequirement>? GetJobRequirement(JobPrototype job)
     {
         if (_requirementOverride != null && _requirementOverride.Jobs.TryGetValue(job.ID, out var req))
@@ -512,6 +505,7 @@ public abstract class SharedRoleSystem : EntitySystem
         return job.Requirements;
     }
 
+    // TODO ROLES Change to readonly.
     public HashSet<JobRequirement>? GetJobRequirement(ProtoId<JobPrototype> job)
     {
         if (_requirementOverride != null && _requirementOverride.Jobs.TryGetValue(job, out var req))
@@ -520,6 +514,7 @@ public abstract class SharedRoleSystem : EntitySystem
         return _prototypes.Index(job).Requirements;
     }
 
+    // TODO ROLES Change to readonly.
     public HashSet<JobRequirement>? GetAntagRequirement(ProtoId<AntagPrototype> antag)
     {
         if (_requirementOverride != null && _requirementOverride.Antags.TryGetValue(antag, out var req))
@@ -528,6 +523,7 @@ public abstract class SharedRoleSystem : EntitySystem
         return _prototypes.Index(antag).Requirements;
     }
 
+    // TODO ROLES Change to readonly.
     public HashSet<JobRequirement>? GetAntagRequirement(AntagPrototype antag)
     {
         if (_requirementOverride != null && _requirementOverride.Antags.TryGetValue(antag.ID, out var req))
