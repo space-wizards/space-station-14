@@ -342,3 +342,15 @@
    - type: Tag
      tags:
        - MindShield
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: SuspicionRadarImplant
+  name: radar implant
+  description: This implant will show other people nearby, projected directly into the users field of vision.
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: SubdermalImplant
+      implantAction: ActionPingRadarImplant
+    - type: SuspicionRadar
+      showTraitors: true

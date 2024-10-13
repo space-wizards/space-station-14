@@ -366,6 +366,8 @@ public sealed class SuspicionRuleSystem : GameRuleSystem<SuspicionRuleComponent>
             RemComp<ThirstComponent>(mob);
             RemComp<HungerComponent>(mob);
 
+            EnsureComp<ShowCriminalRecordIconsComponent>(mob); // Hijacking criminal records for the blue "D" symbol.
+
             // Because of the limited tools available to crew, we need to make sure that spacings are not lethal.
             EnsureComp<BarotraumaComponent>(mob).MaxDamage = 90;
             EnsureComp<TemperatureComponent>(mob).ColdDamageThreshold = float.MinValue;

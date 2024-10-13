@@ -1760,6 +1760,19 @@
         components:
           - SurplusBundle
 
+- type: listing
+  id: UplinkRadarSSS
+  name: Radar Implant
+  description: A radar implant which will directly interface with your brain, allowing you to see the location of all humanoids beings around you.
+  productEntity: SuspicionRadarImplanter
+  cost:
+    Telecrystal: 1
+  categories:
+    - SSSTraitorDisruption
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
 # Wearables
 
 - type: listing

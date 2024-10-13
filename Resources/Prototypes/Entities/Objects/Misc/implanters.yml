@@ -211,6 +211,14 @@
     - type: Implanter
       implant: DnaScramblerImplant
 
+- type: entity
+  id: SuspicionRadarImplanter
+  suffix: Radar
+  parent: BaseImplantOnlyImplanterSyndi
+  components:
+    - type: Implanter
+      implant: SuspicionRadarImplant
+
 #Nuclear Operative/Special implanters
 
 - type: entity
