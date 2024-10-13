@@ -2637,6 +2637,3 @@
     tags:
     - Fruit
     - Slice
-  - type: FoodSequenceElement
-    entries:
-      Burger: LemoSliceBurger
