@@ -378,7 +378,7 @@ namespace Content.Server.Disposal.Tube
             var position = xform.Coordinates;
             foreach (var entity in _map.GetInDir(xform.GridUid.Value, grid, position, nextDirection))
             {
-                if (!TryComp(entity, out DisposalTubeComponent? tube))
+                if (!TryComp(entity, out DisposalTubeComponent? tube) || tube.DisposalTubeType != targetTube.DisposalTubeType)
                 {
                     continue;
                 }

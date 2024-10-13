@@ -35,4 +35,13 @@ public sealed partial class DisposalTubeComponent : Component
             { "Blunt", 0.0 },
         }
     };
+
+    [DataField]
+    public DisposalTubeType DisposalTubeType = DisposalTubeType.Disposals;
+}
+
+public enum DisposalTubeType
+{
+    Disposals,
+    Transit
 }
