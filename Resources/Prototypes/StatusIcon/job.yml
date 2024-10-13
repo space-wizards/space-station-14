@@ -67,7 +67,7 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Nanotrasen
-  jobName: job-name-centcomoff
+  jobName: job-name-centcommoff
 
 - type: jobIcon
   parent: JobIcon

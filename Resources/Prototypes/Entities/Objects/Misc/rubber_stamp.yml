@@ -53,15 +53,15 @@
 - type: entity
   name: CentComm rubber stamp
   parent: RubberStampBase
-  id: RubberStampCentcom
+  id: RubberStampCentcomm
   suffix: DO NOT MAP
   components:
   - type: Stamp
-    stampedName: stamp-component-stamped-name-centcom
+    stampedName: stamp-component-stamped-name-centcomm
     stampedColor: "#006600"
-    stampState: "paper_stamp-centcom"
+    stampState: "paper_stamp-centcomm"
   - type: Sprite
-    state: stamp-centcom
+    state: stamp-centcomm
 
 - type: entity
   name: chaplain's rubber stamp

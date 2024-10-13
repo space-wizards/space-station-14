@@ -308,15 +308,15 @@
 
 - type: entity
   parent: ClothingHeadHatHoodWinterBase
-  id: ClothingHeadHatHoodWinterCentcom
+  id: ClothingHeadHatHoodWinterCentcomm
   categories: [ HideSpawnMenu ]
   name: CentComm winter coat hood
   description: A hood for keeping the central comander's head warm.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hoods/Coat/hoodcentcom.rsi
+    sprite: Clothing/Head/Hoods/Coat/hoodcentcomm.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hoods/Coat/hoodcentcom.rsi
+    sprite: Clothing/Head/Hoods/Coat/hoodcentcomm.rsi
 
 - type: entity
   parent: ClothingHeadHatHoodWinterBase

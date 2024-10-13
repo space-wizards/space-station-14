@@ -4219,7 +4219,7 @@ entities:
     - type: Transform
       pos: -15.5,8.5
       parent: 1668
-- proto: BedsheetCentcom
+- proto: BedsheetCentcomm
   entities:
   - uid: 3625
     components:
@@ -4884,7 +4884,7 @@ entities:
     - type: Transform
       pos: -24.426022,-5.7340455
       parent: 1668
-- proto: BoxFolderCentCom
+- proto: BoxFolderCentComm
   entities:
   - uid: 6501
     components:
@@ -4901,7 +4901,7 @@ entities:
     - type: Transform
       pos: -20.40427,4.6069345
       parent: 1668
-- proto: BoxFolderCentComClipboard
+- proto: BoxFolderCentCommClipboard
   entities:
   - uid: 2198
     components:
@@ -16938,14 +16938,14 @@ entities:
     - type: Transform
       pos: 0.5,-45.5
       parent: 1668
-- proto: CentcomIDCard
+- proto: CentcommIDCard
   entities:
   - uid: 3721
     components:
     - type: Transform
       pos: -16.521366,8.567018
       parent: 1668
-- proto: CentcomPDA
+- proto: CentcommPDA
   entities:
   - uid: 6617
     components:
@@ -18226,7 +18226,7 @@ entities:
     - type: Transform
       pos: 27.544672,-22.46983
       parent: 1668
-- proto: ClothingHeadsetAltCentCom
+- proto: ClothingHeadsetAltCentComm
   entities:
   - uid: 1435
     components:
@@ -20841,7 +20841,7 @@ entities:
     - type: Transform
       pos: -28.5,1.5
       parent: 1668
-- proto: FaxMachineCentcom
+- proto: FaxMachineCentcomm
   entities:
   - uid: 76
     components:
@@ -27856,7 +27856,7 @@ entities:
     - type: Transform
       pos: -23.482897,2.599884
       parent: 1668
-- proto: PenCentcom
+- proto: PenCentcomm
   entities:
   - uid: 2905
     components:
@@ -32477,7 +32477,7 @@ entities:
     - type: Transform
       pos: 25.503832,-7.398362
       parent: 1668
-- proto: RubberStampCentcom
+- proto: RubberStampCentcomm
   entities:
   - uid: 2917
     components:

@@ -607,7 +607,7 @@ entities:
     - type: Transform
       pos: 6.627083,-0.35543936
       parent: 1
-- proto: ClothingUniformJumpsuitCentcomOfficer
+- proto: ClothingUniformJumpsuitCentcommOfficer
   entities:
   - uid: 663
     components:

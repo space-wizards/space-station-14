@@ -32736,7 +32736,7 @@ entities:
     - type: Transform
       pos: 22.624546,-32.62887
       parent: 4812
-- proto: ClothingMaskGasCentcom
+- proto: ClothingMaskGasCentcomm
   entities:
   - uid: 11677
     components:

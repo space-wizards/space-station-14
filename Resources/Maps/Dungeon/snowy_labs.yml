@@ -10878,7 +10878,7 @@ entities:
     - type: Transform
       pos: 33.42354,40.437122
       parent: 1653
-- proto: PenCentcom
+- proto: PenCentcomm
   entities:
   - uid: 686
     components:

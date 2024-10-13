@@ -1124,13 +1124,13 @@
       - CarpetWhite
   - type: EmagLatheRecipes
     emagStaticRecipes:
-      - ClothingHeadHatCentcomcap
-      - ClothingHeadHatCentcom
-      - ClothingUniformJumpsuitCentcomAgent
-      - ClothingUniformJumpsuitCentcomFormal
-      - ClothingUniformJumpskirtCentcomFormalDress
-      - ClothingUniformJumpsuitCentcomOfficer
-      - ClothingUniformJumpsuitCentcomOfficial
+      - ClothingHeadHatCentcommcap
+      - ClothingHeadHatCentcomm
+      - ClothingUniformJumpsuitCentcommAgent
+      - ClothingUniformJumpsuitCentcommFormal
+      - ClothingUniformJumpskirtCentcommFormalDress
+      - ClothingUniformJumpsuitCentcommOfficer
+      - ClothingUniformJumpsuitCentcommOfficial
       - ClothingHeadHatSyndieMAA
       - ClothingHeadHatSyndie
       - ClothingUniformJumpsuitOperative
@@ -1143,7 +1143,7 @@
       - ClothingUniformJumpsuitPyjamaSyndicatePink
       - ClothingHeadPyjamaSyndicateRed
       - ClothingUniformJumpsuitPyjamaSyndicateRed
-      - ClothingOuterWinterCentcom
+      - ClothingOuterWinterCentcomm
       - ClothingOuterWinterSyndie
       - ClothingOuterWinterSyndieCap
   - type: MaterialStorage

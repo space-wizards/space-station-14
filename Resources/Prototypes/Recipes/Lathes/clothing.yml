@@ -120,28 +120,28 @@
 
 - type: latheRecipe
   parent: BaseCommandJumpsuitRecipe
-  id: ClothingUniformJumpsuitCentcomAgent
-  result: ClothingUniformJumpsuitCentcomAgent
+  id: ClothingUniformJumpsuitCentcommAgent
+  result: ClothingUniformJumpsuitCentcommAgent
 
 - type: latheRecipe
   parent: BaseCommandJumpsuitRecipe
-  id: ClothingUniformJumpsuitCentcomFormal
-  result: ClothingUniformJumpsuitCentcomFormal
+  id: ClothingUniformJumpsuitCentcommFormal
+  result: ClothingUniformJumpsuitCentcommFormal
 
 - type: latheRecipe
   parent: BaseCommandJumpsuitRecipe
-  id: ClothingUniformJumpskirtCentcomFormalDress
-  result: ClothingUniformJumpskirtCentcomFormalDress
+  id: ClothingUniformJumpskirtCentcommFormalDress
+  result: ClothingUniformJumpskirtCentcommFormalDress
 
 - type: latheRecipe
   parent: BaseCommandJumpsuitRecipe
-  id: ClothingUniformJumpsuitCentcomOfficer
-  result: ClothingUniformJumpsuitCentcomOfficer
+  id: ClothingUniformJumpsuitCentcommOfficer
+  result: ClothingUniformJumpsuitCentcommOfficer
 
 - type: latheRecipe
   parent: BaseCommandJumpsuitRecipe
-  id: ClothingUniformJumpsuitCentcomOfficial
-  result: ClothingUniformJumpsuitCentcomOfficial
+  id: ClothingUniformJumpsuitCentcommOfficial
+  result: ClothingUniformJumpsuitCentcommOfficial
 
 ## CE
 
@@ -593,8 +593,8 @@
 
 - type: latheRecipe
   parent: BaseCommandCoatRecipe
-  id: ClothingOuterWinterCentcom
-  result: ClothingOuterWinterCentcom
+  id: ClothingOuterWinterCentcomm
+  result: ClothingOuterWinterCentcomm
 
 - type: latheRecipe
   parent: BaseCommandCoatRecipe
@@ -750,13 +750,13 @@
 
 - type: latheRecipe
   parent: BaseCommandHatRecipe
-  id: ClothingHeadHatCentcom
-  result: ClothingHeadHatCentcom
+  id: ClothingHeadHatCentcomm
+  result: ClothingHeadHatCentcomm
 
 - type: latheRecipe
   parent: BaseCommandHatRecipe
-  id: ClothingHeadHatCentcomcap
-  result: ClothingHeadHatCentcomcap
+  id: ClothingHeadHatCentcommcap
+  result: ClothingHeadHatCentcommcap
 
 - type: latheRecipe
   parent: BaseCommandHatRecipe

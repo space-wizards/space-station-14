@@ -460,13 +460,13 @@
 
 - type: entity
   parent: IDCardStandard
-  id: CentcomIDCard
+  id: CentcommIDCard
   name: command officer ID card
   components:
   - type: Sprite
     layers:
-    - state: centcom
-    - state: idcentcom
+    - state: centcomm
+    - state: idcentcomm
   - type: Item
     heldPrefix: blue
   - type: PresetIdCard
@@ -562,12 +562,12 @@
 
 - type: entity
   parent: IDCardStandard
-  id: CentcomIDCardDeathsquad
+  id: CentcommIDCardDeathsquad
   name: death squad ID card
   components:
   - type: Sprite
     layers:
-    - state: centcom
+    - state: centcomm
   - type: Item
     heldPrefix: blue
   - type: PresetIdCard
@@ -717,14 +717,14 @@
     job: Detective
 
 - type: entity
-  parent: CentcomIDCard
+  parent: CentcommIDCard
   id: CBURNIDcard
   name: CBURN ID card
   suffix: CBURN
   components:
   - type: Sprite
     layers:
-    - state: centcom
+    - state: centcomm
   - type: Item
     heldPrefix: blue
   - type: PresetIdCard

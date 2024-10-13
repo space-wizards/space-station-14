@@ -448,14 +448,14 @@
       roleLoadout: [ RoleSurvivalStandard ]
 
 - type: randomHumanoidSettings
-  id: VisitorLawyerCentcom
+  id: VisitorLawyerCentcomm
   parent: VisitorCivilian
   components:
     - type: GhostRole
-      name: ghost-role-information-civilian-centcom-lawyer-name
-      description: ghost-role-information-civilian-centcom-lawyer-description
+      name: ghost-role-information-civilian-centcomm-lawyer-name
+      description: ghost-role-information-civilian-centcomm-lawyer-description
     - type: Loadout
-      prototypes: [ VisitorLawyerCentcom ]
+      prototypes: [ VisitorLawyerCentcomm ]
       roleLoadout: [ RoleSurvivalStandard ]
 
 - type: randomHumanoidSettings

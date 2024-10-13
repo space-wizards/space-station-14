@@ -133,7 +133,7 @@
     layoutId: AirlockCargo
 
 - type: entity
-  parent: AirlockCommand # if you get centcom door somehow it counts as command, also inherit panel
+  parent: AirlockCommand # if you get centcomm door somehow it counts as command, also inherit panel
   id: AirlockCentralCommand
   suffix: Central Command
   components:

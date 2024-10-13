@@ -71,9 +71,9 @@
 # Special
 - type: entity
   parent: FaxMachineBase
-  id: FaxMachineCentcom
+  id: FaxMachineCentcomm
   name: CentComm long range fax machine
-  suffix: CentCom
+  suffix: CentComm
   components:
   - type: Sprite
     layers:

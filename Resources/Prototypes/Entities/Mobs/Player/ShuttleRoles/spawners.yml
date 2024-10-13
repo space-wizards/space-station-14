@@ -642,8 +642,8 @@
     - RandomHumanoidVisitorLawyer
 
 - type: entity
-  name: visiting centcom lawyer spawner
-  id: VisitorLawyerCentcomSpawner
+  name: visiting centcomm lawyer spawner
+  id: VisitorLawyerCentcommSpawner
   parent: MarkerBase
   components:
   - type: Sprite
@@ -653,7 +653,7 @@
         state: banner
   - type: RandomSpawner
     prototypes:
-    - RandomHumanoidVisitorLawyerCentcom
+    - RandomHumanoidVisitorLawyerCentcomm
 
 - type: entity
   name: visiting librarian spawner

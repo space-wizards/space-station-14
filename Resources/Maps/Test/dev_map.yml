@@ -3394,7 +3394,7 @@ entities:
     - type: Transform
       pos: 9.5,12.5
       parent: 179
-- proto: FaxMachineCentcom
+- proto: FaxMachineCentcomm
   entities:
   - uid: 968
     components:
@@ -4848,7 +4848,7 @@ entities:
     - type: Transform
       pos: 12.800895,12.664745
       parent: 179
-- proto: RubberStampCentcom
+- proto: RubberStampCentcomm
   entities:
   - uid: 980
     components:

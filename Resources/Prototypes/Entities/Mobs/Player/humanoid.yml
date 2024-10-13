@@ -518,26 +518,26 @@
 
 - type: entity
   name: CentComm official
-  id: RandomHumanoidSpawnerCentcomOfficial
+  id: RandomHumanoidSpawnerCentcommOfficial
   components:
     - type: Sprite
       sprite: Markers/jobs.rsi
-      state: centcom
+      state: centcomm
     - type: RandomHumanoidSpawner
-      settings: CentcomOfficial
+      settings: CentcommOfficial
 
 - type: randomHumanoidSettings
-  id: CentcomOfficial
+  id: CentcommOfficial
   parent: EventHumanoidMindShielded
   components:
     - type: GhostRole
-      name: ghost-role-information-centcom-official-name
-      description: ghost-role-information-centcom-official-description
+      name: ghost-role-information-centcomm-official-name
+      description: ghost-role-information-centcomm-official-description
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: default
     - type: Loadout
-      prototypes: [ CentcomGear ]
+      prototypes: [ CentcommGear ]
       roleLoadout: [ RoleSurvivalStandard ]
 
 ## Syndicate

@@ -180,7 +180,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             // UH OH
             if (nukeTransform.MapUid != null && centcomms.Contains(nukeTransform.MapUid.Value))
             {
-                ent.Comp.WinConditions.Add(WinCondition.NukeActiveAtCentCom);
+                ent.Comp.WinConditions.Add(WinCondition.NukeActiveAtCentComm);
                 SetWinType((ent, ent), WinType.OpsMajor);
                 return;
             }
@@ -213,12 +213,12 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             ? WinCondition.SomeNukiesAlive
             : WinCondition.AllNukiesDead);
 
-        var diskAtCentCom = false;
+        var diskAtCentComm = false;
         var diskQuery = AllEntityQuery<NukeDiskComponent, TransformComponent>();
         while (diskQuery.MoveNext(out var diskUid, out _, out var transform))
         {
-            diskAtCentCom = transform.MapUid != null && centcomms.Contains(transform.MapUid.Value);
-            diskAtCentCom |= _emergency.IsTargetEscaping(diskUid);
+            diskAtCentComm = transform.MapUid != null && centcomms.Contains(transform.MapUid.Value);
+            diskAtCentComm |= _emergency.IsTargetEscaping(diskUid);
 
             // TODO: The target station should be stored, and the nuke disk should store its original station.
             // This is fine for now, because we can assume a single station in base SS14.
@@ -227,12 +227,12 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 
         // If the disk is currently at Central Command, the crew wins - just slightly.
         // This also implies that some nuclear operatives have died.
-        SetWinType(ent, diskAtCentCom
+        SetWinType(ent, diskAtCentComm
             ? WinType.CrewMinor
             : WinType.OpsMinor);
-        ent.Comp.WinConditions.Add(diskAtCentCom
-            ? WinCondition.NukeDiskOnCentCom
-            : WinCondition.NukeDiskNotOnCentCom);
+        ent.Comp.WinConditions.Add(diskAtCentComm
+            ? WinCondition.NukeDiskOnCentComm
+            : WinCondition.NukeDiskNotOnCentComm);
     }
 
     private void OnNukeDisarm(NukeDisarmSuccessEvent ev)
