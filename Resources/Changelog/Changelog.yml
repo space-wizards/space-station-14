@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Ian321
-  changes:
-  - message: The Courser now comes with a defibrillator.
-    type: Tweak
-  id: 7003
-  time: '2024-07-30T01:05:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30471
 - author: slarticodefast
   changes:
   - message: Fixed puppy Ian not counting as a thief steal target.
@@ -3952,3 +3945,12 @@
   id: 7502
   time: '2024-10-13T04:55:51.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32629
+- author: BramvanZijp
+  changes:
+  - message: The playtime requirements for station AI have been increased.
+    type: Tweak
+  - message: The playtime requirements to play borg have been slightly decreased.
+    type: Tweak
+  id: 7503
+  time: '2024-10-13T06:38:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32007
