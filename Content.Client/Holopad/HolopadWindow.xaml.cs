@@ -22,12 +22,14 @@ public sealed partial class HolopadWindow : FancyWindow
     [Dependency] private readonly IGameTiming _timing = default!;
 
     private readonly SharedHolopadSystem _holopadSystem = default!;
+    private readonly SharedTelephoneSystem _telephoneSystem = default!;
     private readonly AccessReaderSystem _accessReaderSystem = default!;
     private readonly PopupSystem _popupSystem = default!;
 
     private EntityUid? _owner = null;
     private HolopadUiKey _currentUiKey;
     private TelephoneState _currentState;
+    private TelephoneState _previousState;
     private TimeSpan _buttonUnlockTime;
     private float _updateTimer = 0.25f;
 
@@ -47,6 +49,7 @@ public sealed partial class HolopadWindow : FancyWindow
         IoCManager.InjectDependencies(this);
 
         _holopadSystem = _entManager.System<SharedHolopadSystem>();
+        _telephoneSystem = _entManager.System<SharedTelephoneSystem>();
         _accessReaderSystem = _entManager.System<AccessReaderSystem>();
         _popupSystem = _entManager.System<PopupSystem>();
 
@@ -160,16 +163,16 @@ public sealed partial class HolopadWindow : FancyWindow
         }
     }
 
-    public void UpdateState(Dictionary<NetEntity, string> holopads, string? callerId = null)
+    public void UpdateState(Dictionary<NetEntity, string> holopads)
     {
         if (_owner == null || !_entManager.TryGetComponent<TelephoneComponent>(_owner.Value, out var telephone))
             return;
 
-        // Caller ID
-        CallerIdText.SetMessage(FormattedMessage.FromMarkupOrThrow(callerId ?? Loc.GetString("chat-telephone-unknown-caller")));
-        CallerIdText.Visible = (callerId != null);
+        // Caller ID text
+        var callerId = _telephoneSystem.GetFormattedCallerIdForEntity(telephone.LastCallerId.Item1, telephone.LastCallerId.Item2, Color.White, "Default", 11);
 
-        LockOutIdText.SetMessage(FormattedMessage.FromMarkupOrThrow(callerId ?? Loc.GetString("chat-telephone-unknown-caller")));
+        CallerIdText.SetMessage(FormattedMessage.FromMarkupOrThrow(callerId));
+        LockOutIdText.SetMessage(FormattedMessage.FromMarkupOrThrow(callerId));
 
         // Sort holopads alphabetically
         var holopadArray = holopads.ToArray();
@@ -219,9 +222,10 @@ public sealed partial class HolopadWindow : FancyWindow
         ControlsLockOutContainer.Visible = _holopadSystem.IsHolopadControlLocked((_owner.Value, holopad), localPlayer);
         ControlsContainer.Visible = !ControlsLockOutContainer.Visible;
 
-        // Temporarily disable the interface buttons when the call state changes to prevent any misclicks 
+        // Temporarily disable the interface buttons when the call state changes to prevent any misclicks
         if (_currentState != telephone.CurrentState)
         {
+            _previousState = _currentState;
             _currentState = telephone.CurrentState;
             _buttonUnlockTime = _timing.CurTime + _buttonUnlockDelay;
         }
@@ -267,7 +271,11 @@ public sealed partial class HolopadWindow : FancyWindow
                 CallStatusText.Text = Loc.GetString("holopad-window-call-in-progress"); break;
 
             case TelephoneState.EndingCall:
-                CallStatusText.Text = Loc.GetString("holopad-window-call-ending"); break;
+                if (_previousState == TelephoneState.Calling || _previousState == TelephoneState.Idle)
+                    CallStatusText.Text = Loc.GetString("holopad-window-call-rejected");
+                else
+                    CallStatusText.Text = Loc.GetString("holopad-window-call-ending");
+                break;
         }
 
         // Update control disability
@@ -281,7 +289,7 @@ public sealed partial class HolopadWindow : FancyWindow
         FetchingAvailableHolopadsContainer.Visible = (ContactsList.ChildCount == 0);
         ActiveCallControlsContainer.Visible = (_currentState != TelephoneState.Idle || _currentUiKey == HolopadUiKey.AiRequestWindow);
         CallPlacementControlsContainer.Visible = !ActiveCallControlsContainer.Visible;
-
+        CallerIdText.Visible = (_currentState == TelephoneState.Ringing);
         AnswerCallButton.Visible = (_currentState == TelephoneState.Ringing);
     }
 

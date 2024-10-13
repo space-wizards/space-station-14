@@ -14,7 +14,7 @@ public abstract class SharedHolopadSystem : EntitySystem
         if (entity.Comp.ControlLockoutStartTime + TimeSpan.FromSeconds(entity.Comp.ControlLockoutDuration) < _timing.CurTime)
             return false;
 
-        if (user != null && entity.Comp.ControlLockoutInitiator == user)
+        if (entity.Comp.ControlLockoutOwner == null || entity.Comp.ControlLockoutOwner == user)
             return false;
 
         return true;

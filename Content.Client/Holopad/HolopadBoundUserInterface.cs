@@ -58,10 +58,9 @@ public sealed class HolopadBoundUserInterface : BoundUserInterface
         base.UpdateState(state);
 
         var castState = (HolopadBoundInterfaceState)state;
-
         EntMan.TryGetComponent<TransformComponent>(Owner, out var xform);
 
-        _window?.UpdateState(castState.Holopads, castState.CallerId);
+        _window?.UpdateState(castState.Holopads);
     }
 
     public void SendHolopadStartNewCallMessage(NetEntity receiver)

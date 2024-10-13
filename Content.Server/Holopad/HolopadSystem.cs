@@ -211,19 +211,11 @@ public sealed class HolopadSystem : SharedHolopadSystem
             if (!_stationAiSystem.TryGetInsertedAI((receiver, receiverStationAiCore), out var insertedAi))
                 continue;
 
-            LinkHolopadToUser(entity, args.Actor);
-
             if (_userInterfaceSystem.TryOpenUi(receiverUid, HolopadUiKey.AiRequestWindow, insertedAi.Value.Owner))
             {
-                string? callerId = null;
-
-                if (receiverTelephone.CurrentState == TelephoneState.Ringing && receiverTelephone.LastCaller != null)
-                    callerId = _telephoneSystem.GetFormattedCallerIdForEntity(receiverTelephone.LastCaller.Value, Color.White, "Default", 11);
-
-                _userInterfaceSystem.SetUiState(receiverUid, HolopadUiKey.AiRequestWindow, new HolopadBoundInterfaceState(new(), callerId));
+                LinkHolopadToUser(entity, args.Actor);
+                break;
             }
-
-            break;
         }
     }
 
@@ -415,7 +407,6 @@ public sealed class HolopadSystem : SharedHolopadSystem
             var query = AllEntityQuery<HolopadComponent, TelephoneComponent, TransformComponent>();
             while (query.MoveNext(out var uid, out var holopad, out var telephone, out var xform))
             {
-                //if (_userInterfaceSystem.IsUiOpen(ent, HolopadUiKey.Key))
                 UpdateUIState((uid, holopad), telephone);
 
                 if (holopad.User != null &&
@@ -460,13 +451,8 @@ public sealed class HolopadSystem : SharedHolopadSystem
             holopads.Add(GetNetEntity(receiverUid), name);
         }
 
-        string? callerId = null;
-
-        if (telephone.CurrentState == TelephoneState.Ringing && telephone.LastCaller != null)
-            callerId = _telephoneSystem.GetFormattedCallerIdForEntity(telephone.LastCaller.Value, Color.White, "Default", 11);
-
         var uiKey = HasComp<StationAiCoreComponent>(entity) ? HolopadUiKey.AiActionWindow : HolopadUiKey.InteractionWindow;
-        _userInterfaceSystem.SetUiState(entity.Owner, uiKey, new HolopadBoundInterfaceState(holopads, callerId));
+        _userInterfaceSystem.SetUiState(entity.Owner, uiKey, new HolopadBoundInterfaceState(holopads));
     }
 
     private void GenerateHologram(Entity<HolopadComponent> entity)
@@ -554,21 +540,25 @@ public sealed class HolopadSystem : SharedHolopadSystem
         }
     }
 
-    private void ShutDownHolopad(Entity<HolopadComponent> holopad)
+    private void ShutDownHolopad(Entity<HolopadComponent> entity)
     {
-        if (holopad.Comp.Hologram != null)
-            DeleteHologram(holopad.Comp.Hologram.Value, holopad);
+        entity.Comp.ControlLockoutOwner = null;
 
-        if (holopad.Comp.User != null)
-            UnlinkHolopadFromUser(holopad, holopad.Comp.User.Value);
+        if (entity.Comp.Hologram != null)
+            DeleteHologram(entity.Comp.Hologram.Value, entity);
 
-        if (TryComp<StationAiCoreComponent>(holopad, out var stationAiCore))
+        if (entity.Comp.User != null)
+            UnlinkHolopadFromUser(entity, entity.Comp.User.Value);
+
+        if (TryComp<StationAiCoreComponent>(entity, out var stationAiCore))
         {
-            _stationAiSystem.SwitchRemoteMode((holopad.Owner, stationAiCore), true);
+            _stationAiSystem.SwitchRemoteMode((entity.Owner, stationAiCore), true);
 
-            if (TryComp<TelephoneComponent>(holopad, out var stationAiCoreTelphone))
-                _telephoneSystem.EndTelephoneCalls((holopad, stationAiCoreTelphone));
+            if (TryComp<TelephoneComponent>(entity, out var stationAiCoreTelphone))
+                _telephoneSystem.EndTelephoneCalls((entity, stationAiCoreTelphone));
         }
+
+        Dirty(entity);
     }
 
     private void RequestHolopadUserSpriteUpdate(Entity<HolopadUserComponent> user)
@@ -678,14 +668,14 @@ public sealed class HolopadSystem : SharedHolopadSystem
         LinkHolopadToUser(source, user);
 
         // Lock out the controls of all involved holopads for a set duration
-        source.Comp.ControlLockoutInitiator = user;
+        source.Comp.ControlLockoutOwner = user;
         source.Comp.ControlLockoutStartTime = _timing.CurTime;
 
         Dirty(source);
 
         foreach (var receiver in GetLinkedHolopads(source))
         {
-            receiver.Comp.ControlLockoutInitiator = user;
+            receiver.Comp.ControlLockoutOwner = user;
             receiver.Comp.ControlLockoutStartTime = _timing.CurTime;
 
             Dirty(receiver);

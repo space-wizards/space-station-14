@@ -37,7 +37,7 @@ public sealed partial class HolopadComponent : Component
     /// The entity that has locked out the controls of this device
     /// </summary>
     [ViewVariables, AutoNetworkedField]
-    public EntityUid ControlLockoutInitiator;
+    public EntityUid? ControlLockoutOwner = null;
 
     /// <summary>
     /// The game tick the control lockout was initiated
@@ -67,12 +67,10 @@ public sealed partial class HolopadComponent : Component
 public sealed class HolopadBoundInterfaceState : BoundUserInterfaceState
 {
     public readonly Dictionary<NetEntity, string> Holopads;
-    public readonly string? CallerId;
 
-    public HolopadBoundInterfaceState(Dictionary<NetEntity, string> holopads, string? callerId = null)
+    public HolopadBoundInterfaceState(Dictionary<NetEntity, string> holopads)
     {
         Holopads = holopads;
-        CallerId = callerId;
     }
 }
 

@@ -195,7 +195,7 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
         source.Comp.LinkedTelephones.Add(receiver);
         source.Comp.Muted = options?.MuteSource == true;
 
-        receiver.Comp.LastCaller = user;
+        receiver.Comp.LastCallerId = GetNameAndJobOfCallingEntity(user); // This will be networked when the state changes
         receiver.Comp.LinkedTelephones.Add(source);
         receiver.Comp.Muted = options?.MuteReceiver == true;
 
@@ -367,38 +367,18 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
         }
     }
 
-    public string? GetFormattedCallerIdForEntity(EntityUid uid, Color fontColor, string fontType = "Default", int fontSize = 12)
+    private (string?, string?) GetNameAndJobOfCallingEntity(EntityUid uid)
     {
-        var callerId = Loc.GetString("chat-telephone-unknown-caller",
-            ("color", fontColor),
-            ("fontType", fontType),
-            ("fontSize", fontSize));
+        string? presumedName = null;
+        string? presumedJob = null;
 
         if (_idCardSystem.TryFindIdCard(uid, out var idCard))
         {
-            var presumedName = string.IsNullOrWhiteSpace(idCard.Comp.FullName) ? null : idCard.Comp.FullName;
-            var presumedJob = idCard.Comp.JobTitle;
-
-            if (presumedName != null)
-            {
-                if (presumedJob != null)
-                    callerId = Loc.GetString("chat-telephone-caller-id-with-job",
-                        ("callerName", presumedName),
-                        ("callerJob", presumedJob),
-                        ("color", fontColor),
-                        ("fontType", fontType),
-                        ("fontSize", fontSize));
-
-                else
-                    callerId = Loc.GetString("chat-telephone-caller-id-without-job",
-                        ("callerName", presumedName),
-                        ("color", fontColor),
-                        ("fontType", fontType),
-                        ("fontSize", fontSize));
-            }
+            presumedName = string.IsNullOrWhiteSpace(idCard.Comp.FullName) ? null : idCard.Comp.FullName;
+            presumedJob = idCard.Comp.LocalizedJobTitle;
         }
 
-        return callerId;
+        return (presumedName, presumedJob);
     }
 
     public bool IsSourceAbleToReachReceiver(Entity<TelephoneComponent> source, Entity<TelephoneComponent> receiver)

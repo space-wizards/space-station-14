@@ -103,10 +103,10 @@ public sealed partial class TelephoneComponent : Component
     public bool Muted = false;
 
     /// <summary>
-    /// The last person to call this telephone
+    /// The presumed name and/or job of the last person to call this telephone
     /// </summary>
-    [ViewVariables]
-    public EntityUid? LastCaller;
+    [ViewVariables, AutoNetworkedField]
+    public (string?, string?) LastCallerId;
 }
 
 #region: Telephone events
