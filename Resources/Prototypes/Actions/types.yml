@@ -335,5 +335,5 @@
   - type: InstantAction
     icon: { sprite: Objects/Devices/pinpointer.rsi, state: pinpointer-syndicate }
     itemIconStyle: NoItem
+    useDelay: 30
     event: !type:PingRadarImplantEvent
-    useDelay: 30 # 1 minute cooldown

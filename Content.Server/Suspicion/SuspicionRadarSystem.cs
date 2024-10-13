@@ -91,5 +91,6 @@ public sealed class SuspicionRadarSystem : EntitySystem
         }
 
         RaiseNetworkEvent(new SuspicionRadarOverlayUpdatedEvent(radarInfo.ToArray()), session);
+        args.Handled = true;
     }
 }
