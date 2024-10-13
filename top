@@ -1,0 +1,166 @@
+[33mcommit c9662b79d4130608de4bc7d3bb266fc365673265[m
+Author: Silver <silvertorch5@gmail.com>
+Date:   Sun May 21 22:29:08 2017 -0600
+
+    Create README.md
+
+[33mcommit 8adabfab67bd59bb7f7c9b20127b0c46cc18255d[m
+Author: Matt Smith <psykzz@users.noreply.github.com>
+Date:   Wed May 31 03:09:47 2017 +0100
+
+    Import engine as submodule (#1)
+
+[33mcommit 20affd2acea05d4182991c2c136c5e33530beb6e[m
+Author: clusterfack <clusterfack@users.noreply.github.com>
+Date:   Tue May 30 22:20:55 2017 -0500
+
+    Revert "Import engine as submodule (#1)" (#2)
+    
+    This reverts commit 8adabfab67bd59bb7f7c9b20127b0c46cc18255d.
+
+[33mcommit 8d7293bdd26559ad6b454e9a9fc1364052cf1855[m
+Author: clusterfack <afleck1@alumni.nd.edu>
+Date:   Tue May 30 22:50:10 2017 -0500
+
+    Import engine as submodule
+    
+    Trying an https link to allow submodule downloading without SSH authentication
+
+[33mcommit a4882cb83afe0731de2f0c6e87681b0ab278462c[m
+Author: Acruid <shatter66@gmail.com>
+Date:   Wed Aug 2 12:27:55 2017 -0700
+
+    Create LICENSE.TXT
+
+[33mcommit 3bc75efde746f9a27834462f4aeda65ccb7e612e[m
+Merge: 8d7293bdd2 a4882cb83a
+Author: Silver <silvertorch5@gmail.com>
+Date:   Wed Aug 2 16:02:21 2017 -0600
+
+    Merge pull request #4 from space-wizards/add-license-1
+    
+    Create LICENSE.TXT
+
+[33mcommit e6beee36c7d0c6255c60e53798320b819438367f[m
+Author: PJB3005 <pieterjan.briers@gmail.com>
+Date:   Fri Aug 4 14:03:40 2017 +0200
+
+    Update submodule
+
+[33mcommit 02c67c851df37ae78b09cec5a897228d0bfcdb39[m
+Author: PJB3005 <pieterjan.briers@gmail.com>
+Date:   Fri Aug 4 14:24:01 2017 +0200
+
+    Basic content repo outline.
+    
+    Code's here, no tooling to generate content packs yet, however.
+
+[33mcommit a422af4a4679ec1fef25ac2d05824756c08327c4[m
+Author: Pieter-Jan Briers <pieterjan.briers@gmail.com>
+Date:   Fri Aug 4 23:00:50 2017 +0200
+
+    Update submodule to d79a281
+
+[33mcommit 2313f73678d279ae7e6f9e29186ae71272252416[m
+Author: Pieter-Jan Briers <pieterjan.briers@gmail.com>
+Date:   Fri Aug 4 23:09:42 2017 +0200
+
+    Standardize to x86 build target on all projects.
+
+[33mcommit cf2b4eabb8c4a0a57b60cebbcab43e616aa2de9e[m
+Author: Pieter-Jan Briers <pieterjan.briers@gmail.com>
+Date:   Sun Aug 6 12:17:51 2017 +0200
+
+    Update submodule to f99012e7a9055a50e255e15bb1b865b01f48e0cb
+
+[33mcommit 8f814193b532bc616479cec265f9f207b02c51df[m
+Author: Pieter-Jan Briers <pieterjan.briers@gmail.com>
+Date:   Sun Aug 6 13:02:04 2017 +0200
+
+    Set content output directories to bin/project/Assemblies
+    
+    Build -> run client now
+
+[33mcommit d22d5b6e55e789b71fc7a145d9fa2ffb6585f510[m
+Author: Pieter-Jan Briers <pieterjan.briers@gmail.com>
+Date:   Sun Aug 6 13:04:48 2017 +0200
+
+    Update submodule
+
+[33mcommit b616025b8d7c0423fbeb8926531407a3102ada93[m
+Author: Pieter-Jan Briers <pieterjan.briers@gmail.com>
+Date:   Sun Aug 6 13:05:45 2017 +0200
+
+    Fix indentation error in git_helper.py
+
+[33mcommit 486bb9f0ef4d9fee4b410caad3628adb78abb3af[m
+Author: Pieter-Jan Briers <pieterjan.briers@gmail.com>
+Date:   Sun Aug 6 14:50:03 2017 +0200
+
+    Make content DLLs be copied via post build events instead
+
+[33mcommit 4454525e6d50a711ebc62569b4ec76ccd5cdd3e3[m
+Author: Pieter-Jan Briers <pieterjan.briers@gmail.com>
+Date:   Sun Aug 6 23:15:39 2017 +0200
+
+    Add script to zip up release builds.
+
+[33mcommit 133763c43c8221b1fab21e69c172117fb0e1e69d[m
+Author: Pieter-Jan Briers <pieterjan.briers@gmail.com>
+Date:   Mon Aug 7 00:31:11 2017 +0200
+
+    Revisit content assembly copying, now much neater.
+
+[33mcommit 8d1f2e2a40926206a7d7a5f436f458385c207032[m
+Author: Pieter-Jan Briers <pieterjan.briers@gmail.com>
+Date:   Tue Aug 8 14:56:52 2017 +0200
+
+    Update submodule
+
+[33mcommit 5cfa365ad1130e79bd1dff5cae41167d769804bd[m
+Author: PJB3005 <pieterjan.briers@gmail.com>
+Date:   Wed Aug 9 09:38:41 2017 +0200
+
+    Update submodule
+
+[33mcommit 432781f9b183fab9aef0111eb8cbd0c534a0cbbe[m
+Author: PJB3005 <pieterjan.briers@gmail.com>
+Date:   Wed Aug 9 09:50:42 2017 +0200
+
+    Fix bug in package_release_build, chmod +x
+
+[33mcommit d417ccf615c0bb741b6268fb5523b05591d14448[m
+Author: PJB3005 <pieterjan.briers@gmail.com>
+Date:   Wed Aug 9 10:37:56 2017 +0200
+
+    Resource copying content -> bin DONE
+
+[33mcommit a55ab49b6d23a6a42899e0222717ba6190eafdb3[m
+Author: PJB3005 <pieterjan.briers@gmail.com>
+Date:   Wed Aug 9 11:13:04 2017 +0200
+
+    Add Linux builds to build packager.
+
+[33mcommit 23381d936f98ff162b79915fe5741c02078422bb[m
+Author: PJB3005 <pieterjan.briers@gmail.com>
+Date:   Wed Aug 9 13:18:44 2017 +0200
+
+    Fix package build script deleting build output.
+
+[33mcommit 780fecff3be38ddd153015b527b116de06998602[m
+Author: PJB3005 <pieterjan.briers@gmail.com>
+Date:   Wed Aug 9 13:43:14 2017 +0200
+
+    Clean up release folder too.
+
+[33mcommit 2b8d2d9c83cf21c5c237c79b423d59a940dcbcc0[m
+Author: PJB3005 <pieterjan.briers@gmail.com>
+Date:   Wed Aug 9 13:54:13 2017 +0200
+
+    Prototype PoC
+
+[33mcommit b59322080544719566480a108e42bca60bcfeaf7[m
+Author: PJB3005 <pieterjan.briers@gmail.com>
+Date:   Fri Aug 11 10:23:34 2017 +0200
+
+    Update submodule to d8b3864
