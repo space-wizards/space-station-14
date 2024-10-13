@@ -79,8 +79,6 @@ public class RadialContainer : LayoutContainer
             : Children.Where(x => x.Visible);
 
         var childCount = children.Count();
-        // elements are children (buttons) and dividers, they all are spread evenly
-        var childrenAndDividerCount = childCount * 2;
 
         // Add padding from the center at higher child counts so they don't overlap.
         Radius = baseRadius + (childCount * radiusIncrement);
@@ -102,7 +100,7 @@ public class RadialContainer : LayoutContainer
             : 1;
 
         // Determine the separation between child elements
-        var sepAngle = arc / (childrenAndDividerCount - childMod);
+        var sepAngle = arc / (childCount - childMod);
         sepAngle *= isAntiClockwise
             ? -1f
             : 1f;
@@ -113,10 +111,7 @@ public class RadialContainer : LayoutContainer
         var query = children.Select((x, index) => (index, x));
         foreach (var (childIndex, child) in query)
         {
-            // odd indexes are child elements (buttons), even - dividers between child elements
-            var indexForChildElement = childIndex * 2 + 1;
-
-            var targetAngleOfChild = AngularRange.X + sepAngle * indexForChildElement;
+            var targetAngleOfChild = AngularRange.X + sepAngle * (childIndex + 0.5f);
 
             var position = new Vector2(
                     Radius * MathF.Sin(targetAngleOfChild),
@@ -129,8 +124,8 @@ public class RadialContainer : LayoutContainer
             // they should be rendered, how much space sector should should take etc.
             if (child is IRadialMenuItemWithSector tb)
             {
-                tb.AngleSectorFrom = sepAngle * (indexForChildElement - 1);
-                tb.AngleSectorTo = sepAngle * (indexForChildElement + 1);
+                tb.AngleSectorFrom = sepAngle * childIndex;
+                tb.AngleSectorTo = sepAngle * (childIndex + 1);
                 tb.InnerRadius = Radius / 2;
                 tb.OuterRadius = Radius * 2;
                 tb.ParentCenter = controlCenter;
