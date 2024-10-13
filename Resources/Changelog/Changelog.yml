@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: themias
-  changes:
-  - message: Added envelopes to the PTech and bureaucracy crate
-    type: Add
-  id: 7005
-  time: '2024-07-30T01:49:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30298
 - author: TheKittehJesus
   changes:
   - message: The recipe for chow mein, egg-fried rice, and both brownies now use liquid
@@ -3954,3 +3947,10 @@
   id: 7504
   time: '2024-10-13T08:22:05.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32779
+- author: SlamBamActionman
+  changes:
+  - message: Added a new Safety MothTM poster about being SSD!
+    type: Add
+  id: 7505
+  time: '2024-10-13T11:25:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32736
