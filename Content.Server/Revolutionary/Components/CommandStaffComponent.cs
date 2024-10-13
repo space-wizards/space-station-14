@@ -1,7 +1,7 @@
 namespace Content.Server.Revolutionary.Components;
 
 /// <summary>
-/// Given to heads at round start for traitor kill objectives and Revs. Used for tracking if heads died or not.
+/// Given to heads at round start. Used for assigning traitors to kill heads and for revs to check if the heads died or not.
 /// </summary>
 [RegisterComponent]
 public sealed partial class CommandStaffComponent : Component
