@@ -67,7 +67,7 @@ namespace Content.Client.Paper.UI
         }
 
         /// <summary>
-        /// Intitialized when the player begins to edit the paper. When update messages
+        /// Initialized when the player begins to edit the paper. When update messages
         /// arrive, this is used to determine if the paper has been modified by a different
         /// player after we started editing, which will give us the option to have a button
         /// to load the new content

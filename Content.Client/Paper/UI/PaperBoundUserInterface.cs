@@ -45,9 +45,9 @@ public sealed class PaperBoundUserInterface : BoundUserInterface
     {
         base.ReceiveMessage(message);
 
-        if (message is PaperBeginEditMessage)
+        if (message is PaperBeginEditMessage msg)
         {
-            _window?.BeginEdit(((PaperBeginEditMessage)message).EditToolEntity);
+            _window?.BeginEdit(msg.EditToolEntity);
         }
     }
 
