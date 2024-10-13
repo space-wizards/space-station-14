@@ -4,6 +4,7 @@ using Content.Server.Administration.Commands;
 using Content.Server.Administration.Systems;
 using Content.Server.Antag;
 using Content.Server.Atmos.Components;
+using Content.Server.Body.Components;
 using Content.Server.Chat.Managers;
 using Content.Server.Communications;
 using Content.Server.CriminalRecords.Systems;
@@ -24,6 +25,8 @@ using Content.Server.Traits.Assorted;
 using Content.Shared.Access;
 using Content.Shared.Access.Components;
 using Content.Shared.Atmos.Rotting;
+using Content.Shared.Body.Components;
+using Content.Shared.Body.Systems;
 using Content.Shared.Chat;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
@@ -31,6 +34,7 @@ using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Ghost;
+using Content.Shared.Gibbing.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.Humanoid;
 using Content.Shared.Implants.Components;
@@ -78,6 +82,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem<SuspicionRuleComponent>
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly NpcFactionSystem _npcFactionSystem = default!;
     [Dependency] private readonly CriminalRecordsSystem _criminalRecordsSystem = default!;
+    [Dependency] private readonly SharedBodySystem _sharedBodySystem = default!;
 
     private readonly SoundSpecifier _traitorStartSound = new SoundPathSpecifier("/Audio/Ambience/Antag/traitor_start.ogg");
 
@@ -399,6 +404,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem<SuspicionRuleComponent>
 
             EnsureComp<UnrevivableComponent>(mob);
             EnsureComp<KillTrackerComponent>(mob);
+            EnsureComp<BodyComponent>(mob).CanGib = false; // Examination is important.
 
             ev.Handled = true;
             break;

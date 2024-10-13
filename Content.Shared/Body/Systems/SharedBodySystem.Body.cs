@@ -298,6 +298,9 @@ public partial class SharedBodySystem
         if (!Resolve(bodyId, ref body, logMissing: false))
             return gibs;
 
+        if (!body.CanGib)
+            return gibs;
+
         var root = GetRootPartOrNull(bodyId, body);
         if (root != null && TryComp(root.Value.Entity, out GibbableComponent? gibbable))
         {
