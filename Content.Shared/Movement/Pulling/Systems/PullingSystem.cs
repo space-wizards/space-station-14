@@ -438,7 +438,7 @@ public sealed class PullingSystem : EntitySystem
         if (!CanPull(pullerUid, pullableUid))
             return false;
 
-        if (!HasComp<PhysicsComponent>(pullerUid) || !TryComp(pullableUid, out PhysicsComponent? pullablePhysics))
+        if (!TryComp(pullerUid, out PhysicsComponent? pullerPhysics) || !TryComp(pullableUid, out PhysicsComponent? pullablePhysics))
             return false;
 
         // Ensure that the puller is not currently pulling anything.
@@ -485,17 +485,19 @@ public sealed class PullingSystem : EntitySystem
         // joint state handling will manage its own state
         if (!_timing.ApplyingState)
         {
-            // Joint startup
-            var union = _physics.GetHardAABB(pullerUid).Union(_physics.GetHardAABB(pullableUid, body: pullablePhysics));
-            var length = Math.Max(union.Size.X, union.Size.Y) * 0.75f;
-
-            var joint = _joints.CreateDistanceJoint(pullableUid, pullerUid, id: pullableComp.PullJointId);
+            var joint = _joints.CreateDistanceJoint(pullableUid, pullerUid,
+                    pullablePhysics.LocalCenter, pullerPhysics.LocalCenter,
+                    id: pullableComp.PullJointId);
             joint.CollideConnected = false;
             // This maximum has to be there because if the object is constrained too closely, the clamping goes backwards and asserts.
-            joint.MaxLength = Math.Max(1.0f, length);
-            joint.Length = length * 0.75f;
+            // Internally, the joint length has been set to the distance between the pivots.
+            // Add an additional 15cm (pretty arbitrary) to the maximum length for the hard limit.
+            joint.MaxLength = joint.Length + 0.15f;
             joint.MinLength = 0f;
-            joint.Stiffness = 1f;
+            // Set the spring stiffness to zero. The joint won't have any effect provided
+            // the current length is beteen MinLength and MaxLength. At those limits, the
+            // joint will have infinite stiffness.
+            joint.Stiffness = 0f;
 
             _physics.SetFixedRotation(pullableUid, pullableComp.FixedRotationOnPull, body: pullablePhysics);
         }
