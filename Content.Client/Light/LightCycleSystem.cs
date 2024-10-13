@@ -21,7 +21,7 @@ public sealed class LightCycleSystem : SharedLightCycleSystem
                 continue;
 
             var time = (float) _timing.CurTime
-                .Subtract(cycle.Offset)
+                .Add(cycle.Offset)
                 .Subtract(_ticker.RoundStartTimeSpan)
                 .TotalSeconds;
 

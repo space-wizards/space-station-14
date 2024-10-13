@@ -2,6 +2,9 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.Light.Components;
 
+/// <summary>
+/// Will draw lighting in a range around the tile. Does not cast shadows so be careful with range to avoid unwanted artifacts.
+/// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class TileEmissionComponent : Component
 {

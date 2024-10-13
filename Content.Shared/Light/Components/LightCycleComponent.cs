@@ -30,11 +30,17 @@ public sealed partial class LightCycleComponent : Component
     [DataField, AutoNetworkedField]
     public bool InitialOffset = true;
 
+    /// <summary>
+    /// Trench of the oscillation.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public float MinLightLevel = 0f;
 
+    /// <summary>
+    /// Peak of the oscillation
+    /// </summary>
     [DataField, AutoNetworkedField]
-    public float MaxLightLevel = 1.25f;
+    public float MaxLightLevel = 3f;
 
     [DataField, AutoNetworkedField]
     public float ClipLight = 1.25f;
