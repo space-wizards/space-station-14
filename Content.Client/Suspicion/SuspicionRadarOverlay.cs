@@ -2,7 +2,6 @@
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
-using Robust.Client.ResourceManagement;
 using Robust.Shared.Enums;
 
 namespace Content.Client.Suspicion;
@@ -12,14 +11,12 @@ public sealed class SuspicionRadarOverlay : Overlay
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
 
-    private readonly SharedMapSystem _mapSystem;
     private readonly SuspicionRadarOverlaySystem _suspicionRadarOverlaySystem;
     private readonly TransformSystem _transformSystem;
 
-    private readonly Font _font;
 
-    private const float MinSize = 0.5f;
-    private const float MaxSize = 1.5f;
+    private const float MinSize = 10f;
+    private const float MaxSize = 35f;
 
     public override OverlaySpace Space => OverlaySpace.ScreenSpace;
 
@@ -27,12 +24,8 @@ public sealed class SuspicionRadarOverlay : Overlay
     {
         IoCManager.InjectDependencies(this);
 
-        _mapSystem = _entityManager.System<SharedMapSystem>();
         _suspicionRadarOverlaySystem = _entityManager.System<SuspicionRadarOverlaySystem>();
         _transformSystem = _entityManager.System<TransformSystem>();
-
-        var cache = IoCManager.Resolve<IResourceCache>();
-        _font = new VectorFont(cache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Regular.ttf"), 8);
     }
 
     protected override void Draw(in OverlayDrawArgs args)
