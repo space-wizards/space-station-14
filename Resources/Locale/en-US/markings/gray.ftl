@@ -6,3 +6,6 @@ marking-GrayCoolEyes = Gray Eyes (Cool)
 
 marking-GrayWideEyes-eyes_wide = Gray Eyes (Wide)
 marking-GrayWideEyes = Gray Eyes (Wide)
+
+marking-GrayCuteEars-ears_cute = Gray Ears (Cute)
+marking-GrayCuteEars = Gray Ears (Cute)
