@@ -37,6 +37,9 @@
           Quantity: 2
   - type: StaticPrice
     price: 5
+  - type: FoodSequenceElement
+    entries:
+      Burger: CrayonBurger
 
 - type: entity
   parent: Crayon

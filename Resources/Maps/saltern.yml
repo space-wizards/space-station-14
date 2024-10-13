@@ -5395,7 +5395,7 @@ entities:
       pos: -29.5,-18.5
       parent: 31
     - type: Door
-      secondsUntilStateChange: -660.03546
+      secondsUntilStateChange: -687.3661
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -6983,6 +6983,13 @@ entities:
     - type: Transform
       pos: -19.612082,-6.8995214
       parent: 31
+- proto: Biogenerator
+  entities:
+  - uid: 12129
+    components:
+    - type: Transform
+      pos: -19.5,1.5
+      parent: 31
 - proto: BlastDoor
   entities:
   - uid: 66
@@ -7532,7 +7539,7 @@ entities:
   - uid: 4129
     components:
     - type: Transform
-      pos: -19.764086,1.4415555
+      pos: -20.29044,0.8461655
       parent: 31
   - uid: 5631
     components:
@@ -34911,7 +34918,7 @@ entities:
       pos: 3.5,29.5
       parent: 31
     - type: Door
-      secondsUntilStateChange: -15360.535
+      secondsUntilStateChange: -15387.866
       state: Closing
   - uid: 8815
     components:

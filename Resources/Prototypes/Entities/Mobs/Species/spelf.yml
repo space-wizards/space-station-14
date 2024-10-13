@@ -22,6 +22,8 @@
         type: StoreBoundUserInterface
       enum.SpelfMoodsUiKey.Key:
         type: SpelfMoodsBoundUserInterface
+      enum.HereticLivingHeartKey.Key:
+        type: LivingHeartMenuBoundUserInterface
   - type: Respirator
     damage:
       types:

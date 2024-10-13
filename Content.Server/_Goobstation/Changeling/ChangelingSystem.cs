@@ -191,14 +191,15 @@ public sealed partial class ChangelingSystem : EntitySystem
             // game over, man
             _damage.TryChangeDamage(uid, new DamageSpecifier(_proto.Index(AbsorbedDamageGroup), 50), true);
 
-        if (comp.Biomass <= comp.MaxBiomass / 10)
+        if (comp.Biomass <= comp.MaxBiomass / 15)
         {
             // THE FUNNY ITCH IS REAL!!
             comp.BonusChemicalRegen = 3f;
             _popup.PopupEntity(Loc.GetString("popup-changeling-biomass-deficit-high"), uid, uid, PopupType.LargeCaution);
-            _jitter.DoJitter(uid, TimeSpan.FromSeconds(comp.BiomassUpdateCooldown), true, amplitude: 5, frequency: 10);
+            if (!_mobState.IsDead(uid))
+                _jitter.DoJitter(uid, TimeSpan.FromSeconds(comp.BiomassUpdateCooldown), true, amplitude: 5, frequency: 10);
         }
-        else if (comp.Biomass <= comp.MaxBiomass / 3)
+        else if (comp.Biomass <= comp.MaxBiomass / 5)
         {
             // vomit blood
             if (random == 1)
@@ -464,11 +465,11 @@ public sealed partial class ChangelingSystem : EntitySystem
         return comp;
     }
     private EntityUid? TransformEntity(
-        EntityUid uid, 
-        TransformData? data = null, 
-        EntProtoId? protoId = null, 
-        ChangelingComponent? comp = null, 
-        bool dropInventory = false, 
+        EntityUid uid,
+        TransformData? data = null,
+        EntProtoId? protoId = null,
+        ChangelingComponent? comp = null,
+        bool dropInventory = false,
         bool transferDamage = true,
         bool persistentDna = false)
     {
@@ -494,7 +495,7 @@ public sealed partial class ChangelingSystem : EntitySystem
             RevertOnDeath = false
         };
 
-        
+
         var newUid = _polymorph.PolymorphEntity(uid, config);
 
         if (newUid == null)
@@ -566,7 +567,7 @@ public sealed partial class ChangelingSystem : EntitySystem
         EntityUid? newUid = null;
         if (sting)
             newUid = TransformEntity(target, data: data, persistentDna: persistentDna);
-        else 
+        else
         {
             comp.IsInLesserForm = false;
             newUid = TransformEntity(target, data: data, comp: comp, persistentDna: persistentDna);
@@ -638,7 +639,7 @@ public sealed partial class ChangelingSystem : EntitySystem
 
         if (!args.DamageIncreased)
             return;
-        
+
         target.Damage.ClampMax(200); // we never die. UNLESS??
     }
 
