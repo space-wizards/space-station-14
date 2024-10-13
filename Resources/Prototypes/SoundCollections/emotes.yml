@@ -92,3 +92,8 @@
   id: Weh
   files:
   - /Audio/Items/Toys/weh.ogg
+
+- type: soundCollection
+  id: Ungh
+  files:
+  - /Audio/Animals/bros_hit.ogg

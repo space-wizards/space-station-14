@@ -34,6 +34,8 @@
       collection: Whistles
     Weh:
       collection: Weh
+    Ungh:
+      collection: Ungh
     Gasp:
       collection: MaleGasp
     DefaultDeathgasp:
@@ -74,6 +76,8 @@
       collection: Whistles
     Weh:
       collection: Weh
+    Ungh:
+      collection: Ungh
     Gasp:
       collection: FemaleGasp
     DefaultDeathgasp:
@@ -96,6 +100,8 @@
       collection: MaleCry
     Weh:
       collection: Weh
+    Ungh:
+      collection: Ungh
     Gasp:
       collection: MaleGasp
     DefaultDeathgasp:
@@ -118,6 +124,8 @@
       collection: FemaleCry
     Weh:
       collection: Weh
+    Ungh:
+      collection: Ungh
     Gasp:
       collection: FemaleGasp
     DefaultDeathgasp:
@@ -158,6 +166,8 @@
       collection: Whistles
     Weh:
       collection: Weh
+    Ungh:
+      collection: Ungh
     Gasp:
       collection: MaleGasp
     DefaultDeathgasp:
@@ -200,6 +210,8 @@
       collection: Whistles
     Weh:
       collection: Weh
+    Ungh:
+      collection: Ungh
     Gasp:
       collection: FemaleGasp
     DefaultDeathgasp:
@@ -214,6 +226,8 @@
       path: /Audio/Voice/Vox/shriek1.ogg
     Laugh:
       path: /Audio/Voice/Vox/vox_laugh.ogg
+    Ungh:
+      collection: Ungh
   params:
     variation: 0.125
     # We need vox sounds for the other emotes
@@ -231,6 +245,8 @@
       collection: BikeHorn
     Weh:
       collection: Weh
+    Ungh:
+      collection: Ungh
     Gasp:
       collection: MaleGasp
     DefaultDeathgasp:
@@ -253,6 +269,8 @@
       path: /Audio/Voice/Arachnid/arachnid_click.ogg
     Weh:
       collection: Weh
+    Ungh:
+      collection: Ungh
     Gasp:
       collection: MaleGasp
     DefaultDeathgasp:
@@ -291,6 +309,8 @@
       collection: Whistles
     Weh:
       collection: Weh
+    Ungh:
+      collection: Ungh
     Gasp:
       collection: MaleGasp
     DefaultDeathgasp:
@@ -332,6 +352,8 @@
       collection: Whistles
     Weh:
       collection: Weh
+    Ungh:
+      collection: Ungh
     Gasp:
       collection: FemaleGasp
     DefaultDeathgasp:
@@ -357,6 +379,8 @@
       path: /Audio/Voice/Moth/moth_squeak.ogg
     Weh:
       collection: Weh
+    Ungh:
+      collection: Ungh
     Gasp:
       collection: MaleGasp
     DefaultDeathgasp:
@@ -460,6 +484,8 @@
       collection: Whistles
     Weh:
       collection: Weh
+    Ungh:
+      collection: Ungh
     Gasp:
       collection: MaleGasp
     DefaultDeathgasp:
