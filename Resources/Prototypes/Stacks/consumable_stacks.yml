@@ -3,21 +3,21 @@
 - type: stack
   id: Pancake
   name: stack-name-pancake
-  icon: { sprite: Resources/Textures/Objects/Consumable/Food/Baked/misc.rsi, state: pancakes1 }
+  icon: { sprite: /Textures/Objects/Consumable/Food/Baked/misc.rsi, state: pancakes1 }
   spawn: FoodBakedPancake
   maxCount: 9
 
 - type: stack
   id: PancakeBb
   name: stack-name-blueberry-pancake
-  icon: { sprite: Resources/Textures/Objects/Consumable/Food/Baked/misc.rsi, state: pancakesbb1 }
+  icon: { sprite: /Textures/Objects/Consumable/Food/Baked/misc.rsi, state: pancakesbb1 }
   spawn: FoodBakedPancakeBb
   maxCount: 9
 
 - type: stack
   id: PancakeCc
   name: stack-name-chocolate-chip-pancake
-  icon: { sprite: Resources/Textures/Objects/Consumable/Food/Baked/misc.rsi, state: pancakescc1 }
+  icon: { sprite: /Textures/Objects/Consumable/Food/Baked/misc.rsi, state: pancakescc1 }
   spawn: FoodBakedPancakeCc
   maxCount: 9
 
@@ -26,7 +26,7 @@
 - type: stack
   id: PizzaBox
   name: stack-name-pizza-box
-  icon: { sprite: Resources/Textures/Objects/Consumable/Food/Baked/pizza.rsi, state: box }
+  icon: { sprite: /Textures/Objects/Consumable/Food/Baked/pizza.rsi, state: box }
   spawn: FoodBoxPizza
   maxCount: 30
 
@@ -35,54 +35,54 @@
 - type: stack
   id: PaperRolling
   name: stack-name-rolling-paper
-  icon: { sprite: Resources/Textures/Objects/Consumable/Smokeables/Cigarettes/paper.rsi, state: cigpaper }
+  icon: { sprite: /Textures/Objects/Consumable/Smokeables/Cigarettes/paper.rsi, state: cigpaper }
   spawn: PaperRolling
   maxCount: 5
 
 - type: stack
   id: CigaretteFilter
   name: stack-name-cigarette-filter
-  icon: { sprite: Resources/Textures/Objects/Consumable/Smokeables/Cigarettes/paper.rsi, state: cigfilter }
+  icon: { sprite: /Textures/Objects/Consumable/Smokeables/Cigarettes/paper.rsi, state: cigfilter }
   spawn: CigaretteFilter
   maxCount: 5
 
 - type: stack
   id: GroundTobacco
   name: stack-name-ground-tobacco
-  icon: { sprite: Resources/Textures/Objects/Misc/reagent_fillings.rsi, state: powderpile }
+  icon: { sprite: /Textures/Objects/Misc/reagent_fillings.rsi, state: powderpile }
   spawn: GroundTobacco
   maxCount: 5
 
 - type: stack
   id: GroundCannabis
   name: stack-name-ground-cannabis
-  icon: { sprite: Resources/Textures/Objects/Misc/reagent_fillings.rsi, state: powderpile }
+  icon: { sprite: /Textures/Objects/Misc/reagent_fillings.rsi, state: powderpile }
   spawn: GroundCannabis
   maxCount:
 
 - type: stack
   id: GroundCannabisRainbow
   name: stack-name-ground-rainbow-cannabis
-  icon: { sprite: Resources/Textures/Objects/Specific/Hydroponics/rainbow_cannabis.rsi, state: powderpile_rainbow }
+  icon: { sprite: /Textures/Objects/Specific/Hydroponics/rainbow_cannabis.rsi, state: powderpile_rainbow }
   spawn: GroundCannabisRainbow
   maxCount:
 
 - type: stack
   id: LeavesTobaccoDried
   name: stack-name-dried-tobacco-leaves
-  icon: { sprite: Resources/Textures/Objects/Specific/Hydroponics/tobacco.rsi, state: dried }
+  icon: { sprite: /Textures/Objects/Specific/Hydroponics/tobacco.rsi, state: dried }
   spawn: LeavesTobaccoDried
   maxCount: 5
 
 - type: stack
   id: LeavesCannabisDried
   name: stack-name-dried-cannabis-leaves
-  icon: { sprite: Resources/Textures/Objects/Specific/Hydroponics/cannabis.rsi, state: dried }
+  icon: { sprite: /Textures/Objects/Specific/Hydroponics/cannabis.rsi, state: dried }
   spawn: LeavesCannabisDried
   maxCount: 5
 
 - type: stack
   id: LeavesCannabisRainbowDried
   name: stack-name-dried-rainbow-cannabis-leaves
-  icon: { sprite: Resources/Textures/Objects/Specific/Hydroponics/rainbow_cannabis.rsi, state: dried }
+  icon: { sprite: /Textures/Objects/Specific/Hydroponics/rainbow_cannabis.rsi, state: dried }
   spawn: LeavesCannabisRainbowDried
