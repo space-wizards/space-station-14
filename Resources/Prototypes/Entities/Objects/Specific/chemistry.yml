@@ -502,6 +502,9 @@
   - type: Tag
     tags:
     - Pill
+  - type: FoodSequenceElement
+    entries:
+      Burger: PillBurger
 
 - type: entity
   name: pill canister

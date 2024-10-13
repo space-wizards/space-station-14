@@ -760,6 +760,39 @@
   - type: StaticPrice
     price: 0
 
+#Makeshift Hardsuit
+- type: entity
+  parent: [ ClothingOuterHardsuitBase, BaseSyndicateContraband ]
+  id: ClothingOuterProspector
+  name: makeshift hardsuit
+  description: A heap of plating and insulation thrown together that just barely constitutes a hardsuit - but if it's good enough for space, it's good enough for you.
+  components:
+  - type: Sprite
+    sprite: Impstation/Prospectors/prospector-hardsuit.rsi
+  - type: Item
+    size: Huge
+  - type: Clothing
+    sprite: Impstation/Prospectors/prospector-hardsuit.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.7
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.8
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.95
+        Piercing: 0.95
+        Radiation: 0.8
+        Caustic: 0.9
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.8
+  - type: HeldSpeedModifier
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetProspector
+
 #CENTCOMM / ERT HARDSUITS
 #ERT Leader Hardsuit
 - type: entity
