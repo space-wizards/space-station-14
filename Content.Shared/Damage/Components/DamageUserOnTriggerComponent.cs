@@ -1,6 +1,4 @@
-using Content.Shared.Damage;
-
-namespace Content.Server.Damage.Components;
+namespace Content.Shared.Damage.Components;
 
 [RegisterComponent]
 public sealed partial class DamageUserOnTriggerComponent : Component

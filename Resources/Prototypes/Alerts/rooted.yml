@@ -1,0 +1,5 @@
+- type: alert
+  id: Rooted
+  icons: [ /Textures/Interface/Alerts/Rooted/rooted.png ]
+  name: alerts-rooted-name
+  description: alerts-rooted-desc
