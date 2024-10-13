@@ -502,3 +502,8 @@
         - !type:ReagentThreshold
           min: 20
         probability: 0.2
+      - !type:HealthChange
+        damage:
+          groups:
+            Brute: -0.30
+            Burn: -0.15
