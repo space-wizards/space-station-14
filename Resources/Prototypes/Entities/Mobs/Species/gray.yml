@@ -21,7 +21,6 @@
   - type: Sprite
     noRot: true
     drawdepth: Mobs
-    scale: 1, 1
   - type: Body
     prototype: Gray
     requiredLegs: 2
@@ -155,7 +154,7 @@
         sizeMaps:
           32:
             sprite: Mobs/Species/Gray/displacement.rsi
-            state: eyes
+            state: head
       mask:
         sizeMaps:
           32:
@@ -175,4 +174,4 @@
         sizeMaps:
           32:
             sprite: Mobs/Species/Gray/displacement.rsi
-            state: ears
+            state: head
