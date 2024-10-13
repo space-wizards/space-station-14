@@ -9,3 +9,6 @@ marking-GrayWideEyes = Gray Eyes (Wide)
 
 marking-GrayCuteEars-ears_cute = Gray Ears (Cute)
 marking-GrayCuteEars = Gray Ears (Cute)
+
+marking-GrayClassicAntenna-antenna_classic = Gray Antenna (Classic)
+marking-GrayClassicAntenna = Gray Antenna (Classic)
