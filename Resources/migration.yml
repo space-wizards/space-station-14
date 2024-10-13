@@ -423,10 +423,10 @@ SalvageShuttleConsoleCircuitboard: null
 SalvageShuttleCircuitboardStealObjective: null
 
 # 2024-08-28
-ClothingBackpackDuffelSyndicateCostumeCentcomm: null
-ClothingHeadsetAltCentCommFake: null
-CentcommPDAFake: null
-CentcommIDCardSyndie: null
+ClothingBackpackDuffelSyndicateCostumeCentcom: null
+ClothingHeadsetAltCentComFake: null
+CentcomPDAFake: null
+CentcomIDCardSyndie: null
 
 # 2024-09-06
 AntimovCircuitBoard: null
@@ -440,3 +440,38 @@ BlueprintFlare: null
 
 # 2024-10-04
 BaseAdvancedPen: Pen
+
+# 2024-10-13
+# changed 'centcom' to 'centcomm' mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+BedsheetCentcom: BedsheetCentcomm
+BoxFolderCentCom: BoxFolderCentComm
+BoxFolderCentComClipboard: BoxFolderCentCommClipboard
+CentCom: CentComm
+CentcomGear: CentcommGear
+CentcomIDCard: CentcommIDCard
+CentcomIDCardDeathsquad: CentcommIDCardDeathsquad
+CentcomOfficial: CentcommOfficial
+CentcomPDA: CentcommPDA
+ClothingHeadHatCentcom: ClothingHeadHatCentcomm
+ClothingHeadHatCentcomcap: ClothingHeadHatCentcommcap
+ClothingHeadHatHoodWinterCentcom: ClothingHeadHatHoodWinterCentcomm
+ClothingHeadsetCentCom: ClothingHeadsetCentComm
+ClothingHeadsetAltCentCom: ClothingHeadsetAltCentComm
+ClothingMaskGasCentcom: ClothingMaskGasCentcomm
+ClothingNeckCloakCentcom: ClothingNeckCloakCentcomm
+ClothingNeckScarfStripedCentcom: ClothingNeckScarfStripedCentcomm
+ClothingOuterWinterCentcom: ClothingOuterWinterCentcomm
+ClothingUniformJumpsuitCentcomAgent: ClothingUniformJumpsuitCentcommAgent
+ClothingUniformJumpsuitCentcomFormal: ClothingUniformJumpsuitCentcommFormal
+ClothingUniformJumpsuitCentcomOfficer: ClothingUniformJumpsuitCentcommOfficer
+ClothingUniformJumpsuitCentcomOfficial: ClothingUniformJumpsuitCentcomOfficial
+ClothingUniformJumpskirtCentcomFormalDress: ClothingUniformJumpskirtCentcommFormalDress
+FaxMachineCentcom: FaxMachineCentcomm
+job-name-centcomoff: job-name-centcommoff
+job-supervisors-centcom: job-supervisors-centcomm
+PenCentcom: PenCentcomm
+RandomHumanoidSpawnerCentcomOfficial: RandomHumanoidSpawnerCentcommOfficial
+RandomHumanoidVisitorLawyerCentcom: RandomHumanoidVisitorLawyerCentcomm
+RubberStampCentcom: RubberStampCentcomm
+VisitorLawyerCentcom: VisitorLawyerCentcomm
+VisitorLawyerCentcomSpawner: VisitorLawyerCentcommSpawner

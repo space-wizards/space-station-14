@@ -299,7 +299,7 @@ public sealed partial class MindTests
 
             var jobRole = "";
 
-            roleSystem.MindAddJobRole(mindId, jobPrototype: jobRole);
+            roleSystem.MindAddJobRole(mindId, jobPrototype:jobRole);
 
             Assert.Multiple(() =>
             {
