@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: TheKittehJesus
-  changes:
-  - message: The recipe for chow mein, egg-fried rice, and both brownies now use liquid
-      egg instead of a whole egg.
-    type: Tweak
-  - message: Cake batter now also requires 5u of milk
-    type: Tweak
-  id: 7006
-  time: '2024-07-30T02:14:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30262
 - author: Plykiya
   changes:
   - message: Wearing something that covers your head will prevent your hair from being
@@ -3954,3 +3944,10 @@
   id: 7505
   time: '2024-10-13T11:25:50.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32736
+- author: K-Dynamic
+  changes:
+  - message: Added rainbow lizard plushies, which can be found in arcade machines.
+    type: Add
+  id: 7506
+  time: '2024-10-13T22:51:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32564
