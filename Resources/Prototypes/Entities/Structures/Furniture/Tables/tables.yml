@@ -234,7 +234,7 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: IconSmooth
-    key: metaltable
+    key: metalreinforcedtable
   - type: Construction
     graph: Table
     node: TableReinforced
@@ -538,7 +538,7 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: IconSmooth
-    key: woodtable
+    key: woodgambletable
   - type: Construction
     graph: Table
     node: TableCarpet
@@ -661,6 +661,8 @@
   - type: Construction
     graph: Table
     node: TableFancyBlue
+  - type: IconSmooth
+    key: fancytableblue
 
 - type: entity
   id: TableFancyCyan
@@ -674,6 +676,8 @@
   - type: Construction
     graph: Table
     node: TableFancyCyan
+  - type: IconSmooth
+    key: fancytablecyan
 
 - type: entity
   id: TableFancyBlack
@@ -687,6 +691,8 @@
   - type: Construction
     graph: Table
     node: TableFancyBlack
+  - type: IconSmooth
+    key: fancytableblack
 
 - type: entity
   id: TableFancyRed
@@ -700,6 +706,8 @@
   - type: Construction
     graph: Table
     node: TableFancyRed
+  - type: IconSmooth
+    key: fancytablered
 
 - type: entity
   id: TableFancyPurple
@@ -713,6 +721,8 @@
   - type: Construction
     graph: Table
     node: TableFancyPurple
+  - type: IconSmooth
+    key: fancytablepurple
 
 - type: entity
   id: TableFancyPink
@@ -726,6 +736,8 @@
   - type: Construction
     graph: Table
     node: TableFancyPink
+  - type: IconSmooth
+    key: fancytablepink
 
 - type: entity
   id: TableFancyGreen
@@ -739,6 +751,8 @@
   - type: Construction
     graph: Table
     node: TableFancyGreen
+  - type: IconSmooth
+    key: fancytablegreen
 
 - type: entity
   id: TableFancyOrange
@@ -752,6 +766,8 @@
   - type: Construction
     graph: Table
     node: TableFancyOrange
+  - type: IconSmooth
+    key: fancytableorange
 
 - type: entity
   id: TableFancyWhite
@@ -765,6 +781,8 @@
   - type: Construction
     graph: Table
     node: TableFancyWhite
+  - type: IconSmooth
+    key: fancytablewhite
 
 #Debug
 
