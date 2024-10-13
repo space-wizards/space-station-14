@@ -5,6 +5,7 @@ using Content.Server.Administration.Systems;
 using Content.Server.Antag;
 using Content.Server.Atmos.Components;
 using Content.Server.Chat.Managers;
+using Content.Server.Communications;
 using Content.Server.CriminalRecords.Systems;
 using Content.Server.Examine;
 using Content.Server.GameTicking.Rules;
@@ -89,6 +90,19 @@ public sealed class SuspicionRuleSystem : GameRuleSystem<SuspicionRuleComponent>
         SubscribeLocalEvent<SuspicionRoleComponent, GetBriefingEvent>(OnGetBriefing);
         SubscribeLocalEvent<SuspicionPlayerComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<SuspicionPlayerComponent, MobStateChangedEvent>(OnMobStateChanged);
+        SubscribeLocalEvent<CommunicationConsoleCallShuttleAttemptEvent>(OnShuttleCall);
+    }
+
+    private void OnShuttleCall(ref CommunicationConsoleCallShuttleAttemptEvent ev)
+    {
+        var query = EntityQueryEnumerator<SuspicionRuleComponent, GameRuleComponent>();
+        while (query.MoveNext(out var uid, out var sus, out var gameRule))
+        {
+            if (!GameTicker.IsGameRuleActive(uid, gameRule))
+                continue;
+
+            ev.Cancelled = true;
+        }
     }
 
     protected override void AppendRoundEndText(EntityUid uid,
