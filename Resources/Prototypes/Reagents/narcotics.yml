@@ -509,6 +509,7 @@
   desc: reagent-desc-maintenance-flake
   group: Narcotics
   physicalDesc: reagent-physical-desc-powdery
+  flavor: bitter
   color: "white"
   metabolisms:
     Poison:
@@ -519,7 +520,7 @@
           max: 7
         damage:
           types:
-            Poison: 0.6
+            Poison: 0.85
     Narcotic:
       effects:
       - !type:MovespeedModifier
@@ -530,5 +531,5 @@
       effects:
         damage:
           groups:
-            Brute: -1
+            Brute: -0.5
             Burn: -0.5
