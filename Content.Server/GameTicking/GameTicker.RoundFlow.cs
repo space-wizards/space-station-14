@@ -362,7 +362,6 @@ namespace Content.Server.GameTicking
 
         public void ShowRoundEndScoreboard(string text = "")
         {
-            throw new NotImplementedException("FUCK");
             // Log end of round
             _adminLogger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Round ended, showing summary");
 
