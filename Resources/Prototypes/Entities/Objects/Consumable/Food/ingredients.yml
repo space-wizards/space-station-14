@@ -774,9 +774,6 @@
   - type: Tag
     tags:
     - Slice
-    - type: FoodSequenceElement
-    entries:
-      Burger: TofuSliceBurger
 
 - type: entity
   name: burned mess
