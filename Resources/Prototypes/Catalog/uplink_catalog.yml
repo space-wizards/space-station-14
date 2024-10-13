@@ -472,7 +472,7 @@
   categories:
     - SSSTraitorExplosives
   cost:
-    Telecrystal: 2
+    Telecrystal: 4
 
 - type: listing
   id: UplinkC4
