@@ -129,30 +129,15 @@
   description: Be neurodivergent do crime.
   components:
   - type: Sprite
-    sprite: Clothing/Neck/Misc/neurodiversitypin.rsi
-    layers:
-    - state: neurodiversity
+  - state: neurodiversity
   - type: Clothing
-    sprite: Clothing/Neck/Misc/neurodiversitypin.rsi
-    clothingVisuals:
-      neck:
-      - state: neurodiversity-equipped
+    equippedPrefix: neurodiversity
 
 - type: entity
   parent: ClothingNeckPinBase
   id: ClothingNeckAutismPin
   name: autism pin
   description: Be autism do crime.
-  components:
-  - type: Sprite
-    state: autism
-  - type: Clothing
-
-- type: entity
-  parent: ClothingNeckPinBase
-  id: ClothingNeckAutismPin
-  name: autism pin
-  description: Be autism do warcrime.
   components:
   - type: Sprite
     state: autism
