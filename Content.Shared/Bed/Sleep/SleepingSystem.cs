@@ -314,7 +314,7 @@ public sealed partial class SleepingSystem : EntitySystem
     }
 
     /// <summary>
-    /// Blocks emotions while sleeping
+    /// Prevents the use of emote actions while sleeping
     /// </summary>
     public void OnEmoteAttempt(Entity<SleepingComponent> ent, ref EmoteAttemptEvent args)
     {
