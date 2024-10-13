@@ -42,6 +42,8 @@ public sealed partial class MindRoleComponent : BaseMindRoleComponent
     public ProtoId<JobPrototype>? JobPrototype { get; set; }
 }
 
+// Why does this base component actually exist? It does make auto-categorization easy, but before that it was useless?
+[EntityCategory("Roles")]
 public abstract partial class BaseMindRoleComponent : Component
 {
 
