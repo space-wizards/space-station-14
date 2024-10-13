@@ -4,6 +4,6 @@
   source: https://github.com/Skyrat-SS13/Skyrat-tg/pull/892
 
 - files: [reptilian_tailthump.ogg]
-  copyright: "Taken from https://github.com/shiptest-ss13/Shiptest/pull/2159/commits/034844b6946d15a680bf8f9edab2ded7051b305c#diff-5c6dee940bb4ac50e1bb77b17f6a84a083f901a4289823c40852520e8d016edc"
-  license: "CC-BY-SA-3.0"
-  source: https://github.com/shiptest-ss13/Shiptest/tree/master/sound/voice/lizard
+  copyright: "Taken from https://freesound.org/"
+  license: "CC0-1.0"
+  source: https://freesound.org/people/TylerAM/sounds/389665/
