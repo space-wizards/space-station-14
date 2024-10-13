@@ -11,9 +11,6 @@ namespace Content.Client.Paper.UI;
 [UsedImplicitly]
 public sealed class PaperBoundUserInterface : BoundUserInterface
 {
-    // TODO: This is in the base class, but is private! Remove this, once it's accessible
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-
     [ViewVariables]
     private PaperWindow? _window;
 
@@ -56,7 +53,7 @@ public sealed class PaperBoundUserInterface : BoundUserInterface
 
     private void InputOnTextEntered(NetEntity editTool, string text)
     {
-        var playerEnt = _playerManager.LocalEntity == null ? EntityUid.Invalid : _playerManager.LocalEntity;
+        var playerEnt = PlayerManager.LocalEntity ?? EntityUid.Invalid;
         SendMessage(new PaperInputTextMessage(EntMan.GetNetEntity((EntityUid)playerEnt), editTool, text));
 
         if (_window != null)
