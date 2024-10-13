@@ -377,7 +377,7 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
         if (_idCardSystem.TryFindIdCard(uid, out var idCard))
         {
             var presumedName = string.IsNullOrWhiteSpace(idCard.Comp.FullName) ? null : idCard.Comp.FullName;
-            var presumedJob = idCard.Comp.JobTitle?.ToLowerInvariant();
+            var presumedJob = idCard.Comp.JobTitle;
 
             if (presumedName != null)
             {
