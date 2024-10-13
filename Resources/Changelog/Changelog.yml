@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Fixed puppy Ian not counting as a thief steal target.
-    type: Fix
-  id: 7004
-  time: '2024-07-30T01:22:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30474
 - author: themias
   changes:
   - message: Added envelopes to the PTech and bureaucracy crate
@@ -3954,3 +3947,10 @@
   id: 7503
   time: '2024-10-13T06:38:32.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32007
+- author: SkaldetSkaeg
+  changes:
+  - message: Sleepers can no longer use emotions
+    type: Fix
+  id: 7504
+  time: '2024-10-13T08:22:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32779
