@@ -164,6 +164,8 @@ stack-name-matter-bin = matter bin
 
 ### crystals.yml
 
+stack-name-telecrystal = telecrystal
+
 ### ingots.yml
 
 ### materials.yml
