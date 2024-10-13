@@ -8,6 +8,19 @@
       department: Command
       time: 3600 # 1 hour
 
+# Flowers
+- type: loadout
+  id: FlowerWreath
+  storage:
+    back:
+    - ClothingHeadHatFlowerWreath
+
+- type: loadout
+  id: Hairflower
+  storage:
+    back:
+    - ClothingHeadHatHairflower
+
 # Plushies
 - type: loadout
   id: PlushieLizard
@@ -94,6 +107,12 @@
   storage:
     back:
     - ClothingNeckBisexualPin
+
+- type: loadout
+  id: ClothingNeckGayPin
+  storage:
+    back:
+    - ClothingNeckGayPin
 
 - type: loadout
   id: ClothingNeckIntersexPin

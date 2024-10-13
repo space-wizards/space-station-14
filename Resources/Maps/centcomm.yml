@@ -18851,6 +18851,8 @@ entities:
       linkedPorts:
         722:
         - CloningPodSender: CloningPodReceiver
+        723:
+        - MedicalScannerSender: MedicalScannerReceiver
 - proto: ComputerComms
   entities:
   - uid: 652
@@ -27707,6 +27709,13 @@ entities:
     components:
     - type: Transform
       pos: -17.485325,-31.461966
+      parent: 1668
+- proto: NetworkConfigurator
+  entities:
+  - uid: 1461
+    components:
+    - type: Transform
+      pos: 13.484868,-12.584605
       parent: 1668
 - proto: NitrogenCanister
   entities:
