@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "https://github.com/Citadel-Station-13/Citadel-Station-13-RP/commit/38051f45d3b26bd31f6e292239f43adb36ff01fe inhands by mubururu_ (github)",
+  "copyright": "https://github.com/Citadel-Station-13/Citadel-Station-13-RP/commit/38051f45d3b26bd31f6e292239f43adb36ff01fe lungs and inhands by mubururu_ (github)",
   "size": {
     "x": 32,
     "y": 32
@@ -26,6 +26,17 @@
     },
     {
       "name": "eyeball-r"
+    },
+    {
+      "name": "lungs"
+    },
+    {
+      "name": "lungs-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "lungs-inhand-right",
+      "directions": 4
     },
     {
       "name": "stomach"
