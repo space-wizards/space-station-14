@@ -439,7 +439,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem<SuspicionRuleComponent>
         }
 
         var traitorCount = MathHelper.Clamp((int) (participatingPlayers.Count * component.TraitorPercentage), 1, allPlayerData.Count);
-        var detectiveCount = MathHelper.Clamp((int) (participatingPlayers.Count * component.DetectivePercentage), 1, allPlayerData.Count);
+        var detectiveCount = MathHelper.Clamp((int) (participatingPlayers.Count * component.DetectivePercentage), 0, allPlayerData.Count);
 
         RobustRandom.Shuffle(participatingPlayers); // Shuffle the list so we can just take the first N players
         RobustRandom.Shuffle(participatingPlayers);
