@@ -219,4 +219,8 @@ stack-name-clockwork-glass = clockwork glass
 
 ### metal.yml
 
+stack-name-steel = steel
+stack-name-plasteel = plasteel
+stack-name-brass = brass
+
 ### other.yml
