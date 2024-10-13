@@ -205,6 +205,8 @@ stack-name-salt = salt
 
 ### parts.yml
 
+stack-name-rods = rods
+
 ### glass.yml
 
 ### metal.yml
