@@ -224,3 +224,8 @@ stack-name-plasteel = plasteel
 stack-name-brass = brass
 
 ### other.yml
+
+stack-name-paper = paper
+stack-name-plasma = plasma
+stack-name-plastic = plastic
+stack-name-uranium = uranium
