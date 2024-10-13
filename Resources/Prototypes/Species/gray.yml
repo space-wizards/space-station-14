@@ -42,7 +42,7 @@
       required: true
       defaultMarkings: [ GrayCuteEyes ]
     HeadTop:
-      points: 0
+      points: 1
       required: false
     HeadSide:
       points: 1

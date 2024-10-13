@@ -53,3 +53,14 @@
   sprites:
   - sprite: Mobs/Customization/gray/ears.rsi
     state: ears_cute
+
+- type: marking
+  id: GrayClassicAntenna
+  bodyPart: Head
+  markingCategory: HeadTop
+  speciesRestriction: [Gray]
+  forcedColoring: false
+  followSkinColor: true
+  sprites:
+  - sprite: Mobs/Customization/gray/antenna.rsi
+    state: antenna_classic
