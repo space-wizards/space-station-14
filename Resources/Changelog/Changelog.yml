@@ -1,32 +1,4 @@
 ﻿Entries:
-- author: Moomoobeef
-  changes:
-  - message: Added the ability to wear lizard plushies on your head!
-    type: Add
-  id: 7001
-  time: '2024-07-29T12:52:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30400
-- author: TurboTrackerss14
-  changes:
-  - message: Reduced Kobold ghostrole chance to mirror Monkey
-    type: Tweak
-  id: 7002
-  time: '2024-07-29T15:16:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30450
-- author: Ian321
-  changes:
-  - message: The Courser now comes with a defibrillator.
-    type: Tweak
-  id: 7003
-  time: '2024-07-30T01:05:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30471
-- author: slarticodefast
-  changes:
-  - message: Fixed puppy Ian not counting as a thief steal target.
-    type: Fix
-  id: 7004
-  time: '2024-07-30T01:22:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30474
 - author: themias
   changes:
   - message: Added envelopes to the PTech and bureaucracy crate
@@ -3952,3 +3924,33 @@
   id: 7500
   time: '2024-10-10T14:35:36.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32700
+- author: pheenty
+  changes:
+  - message: Quartermaster now has external access
+    type: Add
+  id: 7501
+  time: '2024-10-13T04:55:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32631
+- author: Golinth
+  changes:
+  - message: Firebots can no longer become sentient via the sentience event.
+    type: Remove
+  id: 7502
+  time: '2024-10-13T04:55:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32629
+- author: BramvanZijp
+  changes:
+  - message: The playtime requirements for station AI have been increased.
+    type: Tweak
+  - message: The playtime requirements to play borg have been slightly decreased.
+    type: Tweak
+  id: 7503
+  time: '2024-10-13T06:38:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32007
+- author: SkaldetSkaeg
+  changes:
+  - message: Sleepers can no longer use emotions
+    type: Fix
+  id: 7504
+  time: '2024-10-13T08:22:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32779
