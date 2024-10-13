@@ -9,8 +9,12 @@
             <Button Name="NameSelectorSet" Text="{Loc 'voice-mask-name-change-set'}" />
         </BoxContainer>
         <BoxContainer Orientation="Horizontal" Margin="5">
-            <Label Text="{Loc 'voice-mask-name-change-speech-style'}" />
-            <OptionButton Name="SpeechVerbSelector" /> <!-- Populated in LoadVerbs -->
+            <Label Text="{Loc 'voice-mask-name-change-speech-style'}" Margin="0 0 10 0" />
+            <OptionButton Name="SpeechVerbSelector" /> <!-- Populated in AddVerbsAndSounds -->
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal" Margin="5">
+            <Label Text="{Loc 'voice-mask-name-change-speech-sound'}" Margin="0 0 10 0" />
+            <OptionButton Name="SpeechSoundSelector" /> <!-- Populated in AddVerbsAndSounds -->
         </BoxContainer>
     </BoxContainer>
 </controls:FancyWindow>
