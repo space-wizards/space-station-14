@@ -9,26 +9,25 @@ namespace Content.Server.Atmos.Piping.Unary.Components
     [Access(typeof(GasVentScrubberSystem))]
     public sealed partial class GasVentScrubberComponent : Component
     {
-        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
         public bool Enabled { get; set; } = false;
 
-        [ViewVariables]
+        [DataField]
         public bool IsDirty { get; set; } = false;
 
-        [ViewVariables(VVAccess.ReadWrite)]
         [DataField("outlet")]
         public string OutletName { get; set; } = "pipe";
 
-        [ViewVariables]
-        public readonly HashSet<Gas> FilterGases = new(GasVentScrubberData.DefaultFilterGases);
+        [DataField]
+        public HashSet<Gas> FilterGases = new(GasVentScrubberData.DefaultFilterGases);
 
-        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
         public ScrubberPumpDirection PumpDirection { get; set; } = ScrubberPumpDirection.Scrubbing;
 
         /// <summary>
         ///     Target volume to transfer. If <see cref="WideNet"/> is enabled, actual transfer rate will be much higher.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
         public float TransferRate
         {
             get => _transferRate;
@@ -37,18 +36,17 @@ namespace Content.Server.Atmos.Piping.Unary.Components
 
         private float _transferRate = Atmospherics.MaxTransferRate;
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("maxTransferRate")]
+        [DataField]
         public float MaxTransferRate = Atmospherics.MaxTransferRate;
 
         /// <summary>
         ///     As pressure difference approaches this number, the effective volume rate may be smaller than <see
         ///     cref="TransferRate"/>
         /// </summary>
-        [DataField("maxPressure")]
+        [DataField]
         public float MaxPressure = Atmospherics.MaxOutputPressure;
 
-        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
         public bool WideNet { get; set; } = false;
 
         public GasVentScrubberData ToAirAlarmData()

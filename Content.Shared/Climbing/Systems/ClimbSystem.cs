@@ -358,34 +358,26 @@ public sealed partial class ClimbSystem : VirtualController
             return;
         }
 
-        if (args.OurFixture.Contacts.Count > 1)
+        foreach (var contact in args.OurFixture.Contacts.Values)
         {
-            foreach (var contact in args.OurFixture.Contacts.Values)
+            if (!contact.IsTouching)
+                continue;
+
+            var otherEnt = contact.OtherEnt(uid);
+            var (otherFixtureId, otherFixture) = contact.OtherFixture(uid);
+
+            // TODO: Remove this on engine.
+            if (args.OtherEntity == otherEnt && args.OtherFixtureId == otherFixtureId)
+                continue;
+
+            if (otherFixture is { Hard: true } &&
+                _climbableQuery.HasComp(otherEnt))
             {
-                if (!contact.IsTouching)
-                    continue;
-
-                var otherEnt = contact.EntityA;
-                var otherFixture = contact.FixtureA;
-                var otherFixtureId = contact.FixtureAId;
-                if (uid == contact.EntityA)
-                {
-                    otherEnt = contact.EntityB;
-                    otherFixture = contact.FixtureB;
-                    otherFixtureId = contact.FixtureBId;
-                }
-
-                if (args.OtherEntity == otherEnt && args.OtherFixtureId == otherFixtureId)
-                    continue;
-
-                if (otherFixture is { Hard: true } &&
-                    _climbableQuery.HasComp(otherEnt))
-                {
-                    return;
-                }
+                return;
             }
         }
 
+        // TODO: Is this even needed anymore?
         foreach (var otherFixture in args.OurFixture.Contacts.Keys)
         {
             // If it's the other fixture then ignore em

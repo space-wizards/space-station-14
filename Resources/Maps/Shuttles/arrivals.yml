@@ -199,8 +199,6 @@ entities:
     - type: Transform
       pos: -1.5,7.5
       parent: 292
-    - type: AtmosDevice
-      joinedGrid: 292
 - proto: AirlockCommandGlassLocked
   entities:
   - uid: 278
@@ -218,24 +216,48 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 3.5,-2.5
       parent: 292
+    - type: Door
+      secondsUntilStateChange: -336.60016
+      state: Opening
+    - type: DeviceLinkSource
+      lastSignals:
+        DoorStatus: True
   - uid: 178
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 3.5,4.5
       parent: 292
+    - type: Door
+      secondsUntilStateChange: -338.3335
+      state: Opening
+    - type: DeviceLinkSource
+      lastSignals:
+        DoorStatus: True
   - uid: 179
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -4.5,4.5
       parent: 292
+    - type: Door
+      secondsUntilStateChange: -332.80017
+      state: Opening
+    - type: DeviceLinkSource
+      lastSignals:
+        DoorStatus: True
   - uid: 180
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -4.5,-2.5
       parent: 292
+    - type: Door
+      secondsUntilStateChange: -334.70016
+      state: Opening
+    - type: DeviceLinkSource
+      lastSignals:
+        DoorStatus: True
 - proto: APCBasic
   entities:
   - uid: 116
@@ -256,26 +278,30 @@ entities:
     - type: Transform
       pos: 3.5,3.5
       parent: 292
-- proto: AtmosDeviceFanTiny
+- proto: AtmosDeviceFanDirectional
   entities:
   - uid: 164
     components:
     - type: Transform
-      pos: 3.5,-2.5
+      rot: -1.5707963267948966 rad
+      pos: -4.5,4.5
       parent: 292
   - uid: 165
     components:
     - type: Transform
+      rot: 1.5707963267948966 rad
       pos: 3.5,4.5
       parent: 292
   - uid: 166
     components:
     - type: Transform
-      pos: -4.5,4.5
+      rot: 1.5707963267948966 rad
+      pos: 3.5,-2.5
       parent: 292
   - uid: 167
     components:
     - type: Transform
+      rot: -1.5707963267948966 rad
       pos: -4.5,-2.5
       parent: 292
 - proto: BlockGameArcade
@@ -997,6 +1023,22 @@ entities:
     - type: Transform
       pos: 2.5,5.5
       parent: 292
+    - type: GroupExamine
+      group:
+      - hoverMessage: ""
+        contextText: verb-examine-group-other
+        icon: /Textures/Interface/examine-star.png
+        components:
+        - Armor
+        - ClothingSpeedModifier
+        entries:
+        - message: >-
+            It provides the following protection:
+
+            - [color=orange]Explosion[/color] damage [color=white]to contents[/color] reduced by [color=lightblue]10%[/color].
+          priority: 0
+          component: Armor
+        title: null
 - proto: ClothingMaskBreath
   entities:
   - uid: 272
@@ -1049,8 +1091,6 @@ entities:
     - type: Transform
       pos: -0.5,7.5
       parent: 292
-    - type: AtmosDevice
-      joinedGrid: 292
 - proto: GasPipeBend
   entities:
   - uid: 182
@@ -1221,8 +1261,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -1.5,7.5
       parent: 292
-    - type: AtmosDevice
-      joinedGrid: 292
 - proto: GasVentPump
   entities:
   - uid: 212
@@ -1230,16 +1268,12 @@ entities:
     - type: Transform
       pos: -0.5,-2.5
       parent: 292
-    - type: AtmosDevice
-      joinedGrid: 292
   - uid: 213
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -0.5,4.5
       parent: 292
-    - type: AtmosDevice
-      joinedGrid: 292
 - proto: GeneratorBasic15kW
   entities:
   - uid: 114
