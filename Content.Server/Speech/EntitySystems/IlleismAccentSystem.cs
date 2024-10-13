@@ -35,8 +35,8 @@ public sealed class IlleismAccentSystem : EntitySystem
     private static readonly Regex RegexMyLower = new(@"\bmy\b|\bmine\b", RegexOptions.IgnoreCase);
 
     // I'll do it -> NAME'll do it
-    private static readonly Regex RegexIllUpper = new(@"\bI'?LL\b");
-    private static readonly Regex RegexIllLower = new(@"\bi'?ll\b", RegexOptions.IgnoreCase);
+    private static readonly Regex RegexIllUpper = new(@"\bI'LL\b");
+    private static readonly Regex RegexIllLower = new(@"\bi'll\b", RegexOptions.IgnoreCase);
 
 
     [Dependency] private readonly ReplacementAccentSystem _replacement = default!;
@@ -73,7 +73,6 @@ public sealed class IlleismAccentSystem : EntitySystem
 
     private void OnAccent(EntityUid uid, IlleismAccentComponent component, AccentGetEvent args)
     {
-        var entityManager = IoCManager.Resolve<IEntityManager>();
         var message = args.Message;
         var name = Name(uid).Split(' ')[0];
         var upperName = name.ToUpper();
