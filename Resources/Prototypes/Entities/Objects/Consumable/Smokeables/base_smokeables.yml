@@ -46,6 +46,9 @@
         reagents:
           - ReagentId: Nicotine
             Quantity: 10
+  - type: FoodSequenceElement
+    entries:
+      Burger: CigarBurger
 
 - type: entity
   parent: BaseSmokable
