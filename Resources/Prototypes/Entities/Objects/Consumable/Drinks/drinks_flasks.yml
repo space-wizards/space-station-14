@@ -23,7 +23,7 @@
   parent: FlaskBase
   id: DrinkMREFlask
   name: MRE flask
-  description: A surplus military flask, tapped off with water of unknown origins.
+  description: A surplus military flask, filled with water of unknown origins.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mreflask.rsi
