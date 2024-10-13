@@ -209,6 +209,14 @@ stack-name-rods = rods
 
 ### glass.yml
 
+stack-name-glass = glass
+stack-name-reinforced-glass = reinforced glass
+stack-name-plasma-glass = plasma glass
+stack-name-reinforced-plasma-glass = reinforced plasma glass
+stack-name-uranium-glass = uranium glass
+stack-name-reinforced-uranium-glass = reinforced uranium glass
+stack-name-clockwork-glass = clockwork glass
+
 ### metal.yml
 
 ### other.yml
