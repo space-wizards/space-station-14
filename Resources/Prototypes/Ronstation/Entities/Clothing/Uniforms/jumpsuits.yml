@@ -12,7 +12,7 @@
 - type: entity
   parent: [ClothingUniformBase, BaseCommandContraband]
   id: ClothingUniformJumpsuitBlueshieldGrey
-  name: grey security jumpsuit
+  name: grey blueshield jumpsuit
   description: The main suit of the protector.
   components:
   - type: Sprite

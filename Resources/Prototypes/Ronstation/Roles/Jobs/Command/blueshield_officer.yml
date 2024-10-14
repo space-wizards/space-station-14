@@ -18,6 +18,7 @@
   canBeAntag: false
   access:
   - Command
+  - Brig
   - Maintenance
   - External
   - Cryogenics
