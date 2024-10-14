@@ -3,12 +3,28 @@
   mapName: Reach
   mapPath: /Maps/Nonstations/reach-sss.yml
   minPlayers: 0
+  maxPlayers: 15
   stations:
     ReachSSS:
       stationProto: StandardStationArena
       components:
       - type: StationNameSetup
         mapNameTemplate: "Reach"
+      - type: StationJobs
+        availableJobs:
+          Passenger: [ -1, -1 ]
+
+- type: gameMap
+  id: CentcommSSS
+  mapName: 'Central Command'
+  mapPath: /Maps/Nonstations/centcomm-sss.yml
+  minPlayers: 15
+  stations:
+    CentcommSSS:
+      stationProto: StandardStationArena
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: "Central Command"
       - type: StationJobs
         availableJobs:
           Passenger: [ -1, -1 ]
