@@ -15,7 +15,11 @@
       types:
         Blunt: 1
   - type: TimedDespawn
-    lifetime: 120
+    lifetime: 240
+  - type: PointLight # sunlight reflecting off them or something, prevents meteor stealthops sniping you
+    radius: 2
+    energy: 1
+    castShadows: false
   - type: Clickable
   - type: Physics
     bodyType: Dynamic
