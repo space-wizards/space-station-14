@@ -6,7 +6,9 @@ public interface IClientUsernameBanCacheManager
     /// <summary>
     ///     Fired when the cache is updated
     /// </summary>
-    event Action UpdatedCache;
+    event Action<List<(int, string, string, bool)>>? UpdatedCache;
+
+    IReadOnlyList<(int, string, string, bool)> BanList { get; }
 
     void Initialize();
 

@@ -13,13 +13,12 @@
                 <!-- Ban Command filler -->
             </BoxContainer>
 
-            <!-- <cc:PlayerListControl Name="PlayerList" VerticalExpand="True" /> -->
-            <!-- Role list (auto-generated) -->
-            <ScrollContainer>
-                <BoxContainer Name="BansContainer"  Orientation="Vertical"/>
+
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                <cc:UsernameBanListControl Name="UsernameBanList" VerticalExpand="True" />
                 <Button Name="RefreshBansButton" Text="{Loc username-ban-panel-refresh}" HorizontalExpand="True"/>
-                <!-- list of banns -->
-            </ScrollContainer>
+            </BoxContainer>
+
         </TabContainer>
     </BoxContainer>
 </DefaultWindow>
