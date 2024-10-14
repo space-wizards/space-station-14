@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: themias
-  changes:
-  - message: Fixed victim's fingerprints transferring onto an attacker's weapon
-    type: Fix
-  id: 7011
-  time: '2024-07-30T08:35:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30257
-- author: to4no_fix
-  changes:
-  - message: Now engineering access is needed to interact with the particle accelerator
-    type: Tweak
-  id: 7012
-  time: '2024-07-30T11:29:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30394
 - author: Cojoke-dot
   changes:
   - message: You can no longer get out of a disposal chute or container while knocked
@@ -3946,3 +3932,17 @@
   id: 7510
   time: '2024-10-14T05:55:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32677
+- author: ScarKy0
+  changes:
+  - message: Cyborg modules now have icons instead of using the module sprite.
+    type: Add
+  id: 7511
+  time: '2024-10-14T07:05:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32505
+- author: metalgearsloth
+  changes:
+  - message: Fix tech anomalies firing every tick.
+    type: Fix
+  id: 7512
+  time: '2024-10-14T07:06:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32805
