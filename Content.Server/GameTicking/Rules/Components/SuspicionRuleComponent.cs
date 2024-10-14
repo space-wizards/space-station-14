@@ -34,7 +34,7 @@ public sealed partial class SuspicionRuleComponent : Component
     /// Percentage of total players that will be a detective (detective innocent). Handled similar to traitor percentage (rounded down etc).
     /// </summary>
     [DataField]
-    public float DetectivePercentage = 0.13f;
+    public float DetectivePercentage = 0.20f;
 
     /// <summary>
     /// How long to wait before the game starts after the round starts.
