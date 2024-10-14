@@ -100,7 +100,7 @@ public sealed partial class CrawlingSystem : EntitySystem
         if (_standing.IsDown(uid))
             args.DamageCoefficient *= component.DownedDamageCoefficient;
         else
-            _standing.Down(uid, dropHeldItems: false);
+            _standing.Down(uid);
     }
     private void OnCrawlSlowdownInit(EntityUid uid, CrawlingComponent component, ComponentInit args)
     {
