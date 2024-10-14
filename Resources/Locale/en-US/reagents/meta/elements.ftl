@@ -62,7 +62,7 @@ reagent-name-uranium = uranium
 reagent-desc-uranium = A grey metallic chemical element in the actinide series, weakly radioactive.
 
 reagent-name-bananium = bananium
-reagent-desc-bananium = A yellow radioactive organic solid.
+reagent-desc-bananium = A yellow organic solid.
 
 reagent-name-zinc = zinc
-reagent-desc-zinc = A silvery, brittle metal, often used in batteries to carry charge. 
+reagent-desc-zinc = A silvery, brittle metal, often used in batteries to carry charge.
