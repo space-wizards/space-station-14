@@ -80,7 +80,7 @@
   - /Audio/Voice/Slime/s_male_yawn_1.ogg
 
 - type: soundCollection
-  id: FemaleYawn
+  id: FemaleSlimeYawn
   files:
   - /Audio/Voice/Slime/s_female_yawn_1.ogg
 
