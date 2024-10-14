@@ -44,3 +44,22 @@
   - type: Icon
     sprite: Ronstation/Objects/Devices/pda.rsi
     state: pda-blueshield
+
+- type: entity
+  parent: [ BasePDA, BaseCommandContraband ]
+  id: CentcomBlueshieldPDA
+  name: Blueshield PDA
+  suffix: Central Command
+  description: Might allow you to see who to protect through the crew manifest.
+  components:
+  - type: Sprite
+    sprite: Ronstation/Objects/Devices/pda.rsi
+  - type: Pda
+    id: CentcomBlueshieldIDCard
+    state: pda-blueshield
+  - type: PdaBorderColor
+    borderColor: "#0071B7"
+    accentHColor: "#E2E2E2"
+  - type: Icon
+    sprite: Ronstation/Objects/Devices/pda.rsi
+    state: pda-blueshield
