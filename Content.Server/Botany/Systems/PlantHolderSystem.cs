@@ -11,13 +11,13 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
+using Content.Shared.Fluids.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Random;
 using Content.Shared.Tag;
-using Content.Shared.Fluids.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -25,7 +25,6 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
-using Content.Shared.Chemistry.EntitySystems;
 
 namespace Content.Server.Botany.Systems;
 
@@ -39,7 +38,6 @@ public sealed class PlantHolderSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly SharedPointLightSystem _pointLight = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
     [Dependency] private readonly RandomHelperSystem _randomHelper = default!;
@@ -55,7 +53,7 @@ public sealed class PlantHolderSystem : EntitySystem
         SubscribeLocalEvent<PlantHolderComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<PlantHolderComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<PlantHolderComponent, InteractHandEvent>(OnInteractHand);
-        SubscribeLocalEvent<PlantHolderComponent, SolutionTransferredEvent>(OnSolutionAdded);
+        SubscribeLocalEvent<PlantHolderComponent, SolutionTransferredEvent>(OnSolutionTransferred);
     }
 
     public override void Update(float frameTime)
@@ -355,15 +353,9 @@ public sealed class PlantHolderSystem : EntitySystem
         }
     }
 
-    private void OnSolutionAdded(Entity<PlantHolderComponent> entity, ref SolutionTransferredEvent args)
+    private void OnSolutionTransferred(Entity<PlantHolderComponent> ent, ref SolutionTransferredEvent args)
     {
-        var (uid, component) = entity;
-
-        //Only play splosh sound when using containers that would be dumped into the basin (as opposed to ie. sprayed on)
-        if (TryComp(args.From, out SpillableComponent? spill))
-        {
-            _audio.PlayPvs(component.WateringSound, uid);
-        }
+        _audio.PlayPvs(ent.Comp.WateringSound, ent.Owner);
     }
     private void OnInteractHand(Entity<PlantHolderComponent> entity, ref InteractHandEvent args)
     {

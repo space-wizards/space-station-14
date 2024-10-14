@@ -68,7 +68,7 @@
   - type: PlantHolder
     drawWarnings: true
     wateringSound:
-      path: /Audio/Effects/slosh.ogg
+      path: /Audio/Effects/Fluids/slosh.ogg
       params:
         volume: -6
         variation: 0.20
