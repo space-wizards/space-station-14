@@ -1,75 +1,4 @@
 ﻿Entries:
-- author: Moomoobeef
-  changes:
-  - message: Added the ability to wear lizard plushies on your head!
-    type: Add
-  id: 7001
-  time: '2024-07-29T12:52:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30400
-- author: TurboTrackerss14
-  changes:
-  - message: Reduced Kobold ghostrole chance to mirror Monkey
-    type: Tweak
-  id: 7002
-  time: '2024-07-29T15:16:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30450
-- author: Ian321
-  changes:
-  - message: The Courser now comes with a defibrillator.
-    type: Tweak
-  id: 7003
-  time: '2024-07-30T01:05:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30471
-- author: slarticodefast
-  changes:
-  - message: Fixed puppy Ian not counting as a thief steal target.
-    type: Fix
-  id: 7004
-  time: '2024-07-30T01:22:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30474
-- author: themias
-  changes:
-  - message: Added envelopes to the PTech and bureaucracy crate
-    type: Add
-  id: 7005
-  time: '2024-07-30T01:49:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30298
-- author: TheKittehJesus
-  changes:
-  - message: The recipe for chow mein, egg-fried rice, and both brownies now use liquid
-      egg instead of a whole egg.
-    type: Tweak
-  - message: Cake batter now also requires 5u of milk
-    type: Tweak
-  id: 7006
-  time: '2024-07-30T02:14:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30262
-- author: Plykiya
-  changes:
-  - message: Wearing something that covers your head will prevent your hair from being
-      cut.
-    type: Add
-  - message: You now see a popup when your hair is being altered.
-    type: Add
-  - message: The doafter for altering other people's hair now takes seven seconds.
-    type: Tweak
-  id: 7007
-  time: '2024-07-30T02:17:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30366
-- author: Cojoke-dot
-  changes:
-  - message: Hamlet and other ghost rolls can now spin when they enter combat mode
-    type: Fix
-  id: 7008
-  time: '2024-07-30T02:48:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30478
-- author: themias
-  changes:
-  - message: Fixed the ACC wire not appearing in vending machine wire layouts
-    type: Fix
-  id: 7009
-  time: '2024-07-30T03:04:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30453
 - author: Blackern5000
   changes:
   - message: The defibrillator has been recolored slightly
@@ -3952,3 +3881,68 @@
   id: 7500
   time: '2024-10-10T14:35:36.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32700
+- author: pheenty
+  changes:
+  - message: Quartermaster now has external access
+    type: Add
+  id: 7501
+  time: '2024-10-13T04:55:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32631
+- author: Golinth
+  changes:
+  - message: Firebots can no longer become sentient via the sentience event.
+    type: Remove
+  id: 7502
+  time: '2024-10-13T04:55:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32629
+- author: BramvanZijp
+  changes:
+  - message: The playtime requirements for station AI have been increased.
+    type: Tweak
+  - message: The playtime requirements to play borg have been slightly decreased.
+    type: Tweak
+  id: 7503
+  time: '2024-10-13T06:38:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32007
+- author: SkaldetSkaeg
+  changes:
+  - message: Sleepers can no longer use emotions
+    type: Fix
+  id: 7504
+  time: '2024-10-13T08:22:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32779
+- author: SlamBamActionman
+  changes:
+  - message: Added a new Safety MothTM poster about being SSD!
+    type: Add
+  id: 7505
+  time: '2024-10-13T11:25:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32736
+- author: K-Dynamic
+  changes:
+  - message: Added rainbow lizard plushies, which can be found in arcade machines.
+    type: Add
+  id: 7506
+  time: '2024-10-13T22:51:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32564
+- author: PJB3005
+  changes:
+  - message: Fixes the client sometimes not being aware of active role bans.
+    type: Fix
+  id: 7507
+  time: '2024-10-14T03:30:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32725
+- author: OnyxTheBrave
+  changes:
+  - message: Fixed the Industrial Reagent Grinder's visuals
+    type: Fix
+  id: 7508
+  time: '2024-10-14T03:53:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32758
+- author: irismessage
+  changes:
+  - message: Made role requirements display in a more understandable format.
+    type: Tweak
+  id: 7509
+  time: '2024-10-14T03:54:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32806
