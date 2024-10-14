@@ -247,7 +247,7 @@
       solutions:
         food:
           reagents:
-          - ReagentId: Protein
+          - ReagentId: Razorium
             Quantity: 2
     - type: Respirator
       damage:
