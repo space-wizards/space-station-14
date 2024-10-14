@@ -39,8 +39,8 @@ using Content.Shared.Silicons.Laws.Components;
 using Robust.Server.Player;
 using Robust.Shared.Physics.Components;
 using static Content.Shared.Configurable.ConfigurationComponent;
-using Content.Shared.Impstation.Spelfs.Components;
-using Content.Server.Impstation.Spelfs;
+using Content.Shared._Impstation.Spelfs.Components;
+using Content.Server._Impstation.Spelfs;
 
 namespace Content.Server.Administration.Systems
 {
