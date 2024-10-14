@@ -26,8 +26,8 @@
     paiSlot:
       priority: -2
       whitelist:
-        tags:
-        - PdaPaiInsertable
+        components:
+        - PAI
     penSlot:
       startingItem: Pen
       priority: -1

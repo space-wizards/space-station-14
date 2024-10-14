@@ -293,9 +293,6 @@
         unshaded:
           Empty: { state: empty }
           Occupied: { state: full }
-  - type: Tag
-    tags:
-    - PdaPaiInsertable
 
 - type: entity
   id: PlayerStationAiEmpty
