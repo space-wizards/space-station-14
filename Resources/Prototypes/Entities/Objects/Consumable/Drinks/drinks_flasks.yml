@@ -27,6 +27,12 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mreflask.rsi
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Water
+          Quantity: 30
   - type: TrashOnSolutionEmpty # Likely to be dumped after use
     solution: drink
 
