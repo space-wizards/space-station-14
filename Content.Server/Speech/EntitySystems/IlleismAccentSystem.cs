@@ -6,8 +6,8 @@ namespace Content.Server.Speech.EntitySystems;
 public sealed class IlleismAccentSystem : EntitySystem
 {
     // I am going to Sec -> NAME is going to Sec
-    private static readonly Regex RegexIAmUpper = new(@"\bI\s*AM\b");
-    private static readonly Regex RegexIAmLower = new(@"\bi\s*am\b", RegexOptions.IgnoreCase);
+    private static readonly Regex RegexIAmUpper = new(@"\bI\s*AM\b|\bI'?M\b");
+    private static readonly Regex RegexIAmLower = new(@"\bi\s*am\b|\bI'?m\b", RegexOptions.IgnoreCase);
 
     // I have it -> NAME has it
     private static readonly Regex RegexIHaveUpper = new(@"\bI\s*HAVE\b");
