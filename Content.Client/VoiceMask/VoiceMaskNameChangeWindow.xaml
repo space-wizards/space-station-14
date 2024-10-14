@@ -6,14 +6,14 @@
         <Label Text="{Loc 'voice-mask-name-change-info'}" Margin="0 0 0 10" />
         <GridContainer Columns="2">
             <GridContainer Rows="3" HorizontalExpand="True">
-                <LineEdit Name="NameSelector" MinWidth="175" HorizontalExpand="True" Margin="0 0 0 10" />
+                <LineEdit Name="NameSelector" MinWidth="175" HorizontalExpand="True" Margin="0 0 10 10" />
                 <Label Text="{Loc 'voice-mask-name-change-speech-style'}" Margin="0 0 0 5" />
-                <Label Text="{Loc 'voice-mask-name-change-speech-sound'}" Margin="0 0 0 0" />
+                <Label Text="{Loc 'voice-mask-name-change-speech-sound'}" />
             </GridContainer>
             <GridContainer Rows="3">
-                <Button Name="NameSelectorSet" Text="{Loc 'voice-mask-name-change-set'}" Margin="20 0 0 10" />
-                <OptionButton Name="SpeechVerbSelector" Margin="20 0 0 0" /> <!-- Populated in AddVerbsAndSounds -->
-                <OptionButton Name="SpeechSoundSelector" Margin="20 0 0 0" /> <!-- Populated in AddVerbsAndSounds -->
+                <Button Name="NameSelectorSet" Text="{Loc 'voice-mask-name-change-set'}" Margin="0 0 0 10" />
+                <OptionButton Name="SpeechVerbSelector" /> <!-- Populated in AddVerbsAndSounds -->
+                <OptionButton Name="SpeechSoundSelector" /> <!-- Populated in AddVerbsAndSounds -->
             </GridContainer>
         </GridContainer>
 
