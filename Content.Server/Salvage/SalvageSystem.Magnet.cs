@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Content.Server.Salvage.Magnet;
 using Content.Shared.Humanoid;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Procedural;
 using Content.Shared.Radio;
 using Content.Shared.Salvage.Magnet;
 using Robust.Server.Maps;
@@ -269,6 +270,11 @@ public sealed partial class SalvageSystem
                 var grid = _mapManager.CreateGridEntity(salvMap);
                 await _dungeon.GenerateDungeonAsync(asteroid.DungeonConfig, grid.Owner, grid.Comp, Vector2i.Zero, seed);
                 break;
+            case DebrisOffering debris:
+                var debrisProto = _prototypeManager.Index<DungeonConfigPrototype>(debris.Id);
+                var debrisGrid = _mapManager.CreateGridEntity(salvMap);
+                await _dungeon.GenerateDungeonAsync(debrisProto, debrisGrid.Owner, debrisGrid.Comp, Vector2i.Zero, seed);
+                break;
             case SalvageOffering wreck:
                 var salvageProto = wreck.SalvageMap;
 
@@ -309,7 +315,7 @@ public sealed partial class SalvageSystem
             bounds = bounds?.Union(childAABB) ?? childAABB;
 
             // Update mass scanner names as relevant.
-            if (offering is AsteroidOffering)
+            if (offering is AsteroidOffering or DebrisOffering)
             {
                 _metaData.SetEntityName(mapChild, Loc.GetString("salvage-asteroid-name"));
                 _gravity.EnableGravity(mapChild);
@@ -338,7 +344,7 @@ public sealed partial class SalvageSystem
             worldAngle = _random.NextAngle();
         }
 
-        if (!TryGetSalvagePlacementLocation(mapId, attachedBounds, bounds!.Value, worldAngle, out var spawnLocation, out var spawnAngle))
+        if (!TryGetSalvagePlacementLocation(magnet, mapId, attachedBounds, bounds!.Value, worldAngle, out var spawnLocation, out var spawnAngle))
         {
             Report(magnet.Owner, MagnetChannel, "salvage-system-announcement-spawn-no-debris-available");
             _mapManager.DeleteMap(salvMapXform.MapID);
@@ -390,22 +396,19 @@ public sealed partial class SalvageSystem
         RaiseLocalEvent(ref active);
     }
 
-    private bool TryGetSalvagePlacementLocation(MapId mapId, Box2Rotated attachedBounds, Box2 bounds, Angle worldAngle, out MapCoordinates coords, out Angle angle)
+    private bool TryGetSalvagePlacementLocation(Entity<SalvageMagnetComponent> magnet, MapId mapId, Box2Rotated attachedBounds, Box2 bounds, Angle worldAngle, out MapCoordinates coords, out Angle angle)
     {
-        // Grid intersection only does AABB atm.
         var attachedAABB = attachedBounds.CalcBoundingBox();
-
-        var minDistance = (attachedAABB.Height < attachedAABB.Width ? attachedAABB.Width : attachedAABB.Height) / 2f;
-        var minActualDistance = bounds.Height < bounds.Width ? minDistance + bounds.Width / 2f : minDistance + bounds.Height / 2f;
-
-        var attachedCenter = attachedAABB.Center;
-        var fraction = 0.25f;
+        var magnetPos = _transform.GetWorldPosition(magnet) + worldAngle.ToVec() * bounds.MaxDimension;
+        var origin = attachedAABB.ClosestPoint(magnetPos);
+        var fraction = 0.50f;
 
         // Thanks 20kdc
         for (var i = 0; i < 20; i++)
         {
-            var randomPos = attachedCenter +
-                            worldAngle.ToVec() * (minActualDistance * fraction);
+            var randomPos = origin +
+                            worldAngle.ToVec() * (magnet.Comp.MagnetSpawnDistance * fraction) +
+                            (worldAngle + Math.PI / 2).ToVec() * _random.NextFloat(-magnet.Comp.LateralOffset, magnet.Comp.LateralOffset);
             var finalCoords = new MapCoordinates(randomPos, mapId);
 
             angle = _random.NextAngle();
@@ -417,7 +420,7 @@ public sealed partial class SalvageSystem
             if (_mapManager.FindGridsIntersecting(finalCoords.MapId, box2Rot).Any())
             {
                 // Bump it further and further just in case.
-                fraction += 0.25f;
+                fraction += 0.1f;
                 continue;
             }
 

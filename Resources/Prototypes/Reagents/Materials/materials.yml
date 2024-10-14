@@ -13,7 +13,7 @@
   name: materials-cardboard
   icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: cardboard }
   color: "#70736c"
-  price: 0.005
+  price: 0.025
 
 - type: material
   id: Cloth
@@ -32,7 +32,7 @@
   unit: materials-unit-sheet
   icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: durathread }
   color: "#8291a1"
-  price: 0.15 # 1-1 mix of plastic and cloth.
+  price: 0.35 # 1-1 mix of plastic and cloth.
 
 - type: material
   id: Paper
@@ -40,7 +40,7 @@
   name: materials-paper
   icon: { sprite: Objects/Materials/Sheets/other.rsi, state: paper }
   color: "#d9d9d9"
-  price: 0.05 #same as wood
+  price: 0.01 # it's paper bro what do you expect?
 
 - type: material
   id: Plasma
@@ -48,7 +48,7 @@
   name: materials-plasma
   icon: { sprite: Objects/Materials/Sheets/other.rsi, state: plasma }
   color: "#7e009e"
-  price: 0.2
+  price: 0.35 # $35 for 1 unit
 
 - type: material
   id: Plastic
@@ -56,7 +56,7 @@
   name: materials-plastic
   icon: { sprite: Objects/Materials/Sheets/other.rsi, state: plastic }
   color: "#d9d9d9"
-  price: 0.1
+  price: 0.20 # $20 for 1 unit
 
 - type: material
   id: Wood
@@ -65,7 +65,7 @@
   unit: materials-unit-plank
   icon: { sprite: Objects/Materials/materials.rsi, state: wood }
   color: "#966F33"
-  price: 0.05
+  price: 0.10 # $10 for 1 unit
 
 - type: material
   id: Uranium
@@ -73,7 +73,7 @@
   name: materials-uranium
   icon: { sprite: Objects/Materials/Sheets/other.rsi, state: uranium }
   color: "#32a852"
-  price: 0.2
+  price: 0.85 # $85 for 1 unit
 
 - type: material
   id: Bananium
@@ -82,7 +82,7 @@
   unit: materials-unit-bunch
   icon: { sprite: Objects/Materials/materials.rsi, state: bananium }
   color: "#32a852"
-  price: 0.2
+  price: 1.0 # $100 for 1 unit
 
 - type: material
   id: Meaterial # you can't take this pun from me
@@ -115,7 +115,7 @@
   unit: materials-unit-piece
   icon: { sprite: Objects/Materials/ore.rsi, state: coal }
   color: "#404040"
-  price: 0
+  price: 0.1 # $10 for 1 unit
 
 - type: material
   id: Gunpowder

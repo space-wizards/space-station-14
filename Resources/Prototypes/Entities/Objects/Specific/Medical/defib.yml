@@ -53,6 +53,7 @@
   parent: [ BaseDefibrillator, PowerCellSlotMediumItem ]
   components:
   - type: MultiHandedItem
+  - type: ToggleCellDraw
   - type: PowerCellDraw
     useRate: 100
 
