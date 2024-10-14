@@ -164,7 +164,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem<SuspicionRuleComponent>
                 continue;
 
             if (sus.GameState != SuspicionGameState.InProgress)
-                continue;
+                break;
 
             sus.EndAt += TimeSpan.FromSeconds(sus.TimeAddedPerKill);
             sus.AnnouncedTimeLeft.Clear();

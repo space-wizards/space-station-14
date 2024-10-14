@@ -7,4 +7,4 @@ detective-briefing = You are a detective. Your goal is to [bold]survive[/bold] a
 
 suspicion-traitor-uplink = Traitor Uplink
 suspicion-detective-uplink = Detective Uplink
-tc-added-sus = You have been given $tc TC for your performance.
+tc-added-sus = You have been given {$tc} TC for your performance.
