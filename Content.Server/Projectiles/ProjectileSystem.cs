@@ -28,9 +28,8 @@ public sealed class ProjectileSystem : SharedProjectileSystem
     {
         base.Initialize();
         SubscribeLocalEvent<ProjectileComponent, StartCollideEvent>(OnStartCollide);
-        SubscribeLocalEvent<DestructibleComponent, DestructionEventArgs>((embeddee, _, _) => UnEmbedChildren(embeddee));
-        SubscribeLocalEvent<BodyComponent, BeingGibbedEvent>((embeddee, _, _) => UnEmbedChildren(embeddee));
-        SubscribeLocalEvent<FoodComponent, BeforeFullyEatenEvent>(OnBeforeFullyEaten);
+        SubscribeLocalEvent((Entity<HasProjectilesEmbeddedComponent> entity, ref DestructionEventArgs _) => UnEmbedChildren(entity));
+        SubscribeLocalEvent((Entity<HasProjectilesEmbeddedComponent> entity, ref BeingGibbedEvent _) => UnEmbedChildren(entity));
     }
 
     private void OnStartCollide(EntityUid uid, ProjectileComponent component, ref StartCollideEvent args)
@@ -87,25 +86,14 @@ public sealed class ProjectileSystem : SharedProjectileSystem
         }
     }
 
-    // Remove any embedded objects in the food as it's eaten.
-    private void OnBeforeFullyEaten(EntityUid uid, FoodComponent c, BeforeFullyEatenEvent args)
-    {
-        if (args.Cancelled)
-        {
-            return;
-        }
-
-        UnEmbedChildren(uid);
-    }
-
-    private void UnEmbedChildren(EntityUid embeddee)
+    private void UnEmbedChildren(Entity<HasProjectilesEmbeddedComponent> embeddee)
     {
         var children = Transform(embeddee).ChildEnumerator;
         while (children.MoveNext(out var child))
         {
             if (TryComp<EmbeddableProjectileComponent>(child, out var component))
             {
-                UnEmbed((child, component), null);
+                TryUnEmbedFromParent((child, component), null);
             }
         }
     }
