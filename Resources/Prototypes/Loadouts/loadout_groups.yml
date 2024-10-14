@@ -5,6 +5,8 @@
   minLimit: 0
   maxLimit: 3
   loadouts:
+  - FlowerWreath
+  - Hairflower
   - PlushieLizard
   - PlushieSpaceLizard
   - Lighter
