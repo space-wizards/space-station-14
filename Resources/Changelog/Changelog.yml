@@ -1,16 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: Wearing something that covers your head will prevent your hair from being
-      cut.
-    type: Add
-  - message: You now see a popup when your hair is being altered.
-    type: Add
-  - message: The doafter for altering other people's hair now takes seven seconds.
-    type: Tweak
-  id: 7007
-  time: '2024-07-30T02:17:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30366
 - author: Cojoke-dot
   changes:
   - message: Hamlet and other ghost rolls can now spin when they enter combat mode
@@ -3951,3 +3939,10 @@
   id: 7506
   time: '2024-10-13T22:51:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32564
+- author: PJB3005
+  changes:
+  - message: Fixes the client sometimes not being aware of active role bans.
+    type: Fix
+  id: 7507
+  time: '2024-10-14T03:30:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32725
