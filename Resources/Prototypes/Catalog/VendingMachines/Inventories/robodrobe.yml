@@ -1,9 +1,6 @@
 - type: vendingMachineInventory
   id: RoboDrobeInventory
   startingInventory:
-    #ClothingBackpackRobotics: 3
-    #ClothingBackpackSatchelRobotics: 3
-    #ClothingBackpackDuffelRobotics: 3
     ClothingOuterCoatRobo: 2
     ClothingUniformJumpsuitRoboticist: 2
     ClothingUniformJumpskirtRoboticist: 2

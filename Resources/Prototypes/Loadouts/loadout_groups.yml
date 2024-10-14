@@ -1273,9 +1273,6 @@
   - ScientistBackpack
   - ScientistSatchel
   - ScientistDuffel
-#  - RoboticistBackpack
-#  - RoboticistSatchel
-#  - RoboticistDuffel
   - CommandVeteranBackpack
   - CommandVeteranSatchel
   - CommandVeteranDuffel
@@ -1325,9 +1322,6 @@
   - ScientistBackpack
   - ScientistSatchel
   - ScientistDuffel
-#  - RoboticistBackpack
-#  - RoboticistSatchel
-#  - RoboticistDuffel
 
 - type: loadoutGroup
   id: ScientistOuterClothing

@@ -153,15 +153,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/science.rsi
-    
-#- type: entity
-#  parent: ClothingBackpack
-#  id: ClothingBackpackRobotics
-#  name: robotics backpack
-#  description: A backpack to hold various spare robotics materials and components.
-#  components:
-#  - type: Sprite
-#    sprite: Clothing/Back/Backpacks/robotics.rsi
 
 - type: entity
   parent: ClothingBackpack

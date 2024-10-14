@@ -138,15 +138,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/science.rsi
-    
-#- type: entity
-#  parent: ClothingBackpackDuffel
-#  id: ClothingBackpackDuffelRobotics
-#  name: robotics duffel bag
-#  description: A large duffel bag for holding extra cyborg parts or organs.
-#  components:
-#  - type: Sprite
-#    sprite: Clothing/Back/Duffels/robotics.rsi
 
 - type: entity
   parent: ClothingBackpackDuffel

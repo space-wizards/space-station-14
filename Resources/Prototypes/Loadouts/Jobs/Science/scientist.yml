@@ -96,21 +96,6 @@
   equipment:
     back: ClothingBackpackDuffelScience
 
-#- type: loadout
-#  id: RoboticistBackpack
-#  equipment:
-#    back: ClothingBackpackRobotics
-#
-#- type: loadout
-#  id: RoboticistSatchel
-#  equipment:
-#    back: ClothingBackpackSatchelRobotics
-#
-#- type: loadout
-#  id: RoboticistDuffel
-#  equipment:
-#    back: ClothingBackpackDuffelRobotics
-
 # OuterClothing
 - type: loadout
   id: RegularLabCoat
