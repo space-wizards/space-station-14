@@ -176,7 +176,7 @@
   - suspicion
   name: suspicion-title
   description: suspicion-description
-  maxPlayers: 20
+  maxPlayers: 30
   showInVote: true
   supportedMaps: SuspicionMapPool
   rules:
