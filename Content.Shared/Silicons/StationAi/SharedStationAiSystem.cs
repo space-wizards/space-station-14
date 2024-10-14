@@ -35,6 +35,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
     [Dependency] private readonly   ItemToggleSystem _toggles = default!;
     [Dependency] private readonly   ActionBlockerSystem _blocker = default!;
     [Dependency] private readonly   MetaDataSystem _metadata = default!;
+    [Dependency] private readonly   SharedActionsSystem _actions = default!;
     [Dependency] private readonly   SharedAirlockSystem _airlocks = default!;
     [Dependency] private readonly   SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly   SharedAudioSystem _audio = default!;
@@ -349,10 +350,10 @@ public abstract partial class SharedStationAiSystem : EntitySystem
             return;
         
 
-        if (TryComp(args.Entity, out ActionsComponent? comp))
+        if (TryComp(args.Entity, out ActionsComponent? actions))
         {
-            comp.Actions.Clear();
-            Dirty(args.Entity, comp);
+            _actions.RemoveProvidedActions(args.Entity, args.Entity, actions);
+            Dirty(args.Entity, actions);
         }
 
         // Reset name to whatever

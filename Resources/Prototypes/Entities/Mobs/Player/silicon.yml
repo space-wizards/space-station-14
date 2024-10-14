@@ -84,6 +84,13 @@
     channels:
     - Binary
     - Common
+  - type: ActionGrant
+    actions:
+    - ActionAIViewLaws
+  - type: UserInterface
+    interfaces:
+      enum.SiliconLawsUiKey.Key:
+        type: SiliconLawBoundUserInterface
 
 # Ai
 - type: entity
