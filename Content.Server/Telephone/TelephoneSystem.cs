@@ -20,6 +20,8 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Replays;
 using System.Linq;
+using Content.Shared.Silicons.StationAi;
+using Content.Shared.Silicons.Borgs.Components;
 
 namespace Content.Server.Telephone;
 
@@ -371,6 +373,12 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
     {
         string? presumedName = null;
         string? presumedJob = null;
+
+        if (HasComp<StationAiHeldComponent>(uid) || HasComp<BorgChassisComponent>(uid))
+        {
+            presumedName = Name(uid);
+            return (presumedName, presumedJob);
+        }
 
         if (_idCardSystem.TryFindIdCard(uid, out var idCard))
         {
