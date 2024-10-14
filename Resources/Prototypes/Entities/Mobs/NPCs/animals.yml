@@ -2489,8 +2489,6 @@
     - type: NpcFactionMember
       factions:
         - Xeno
-    - type: ReplacementAccent
-      accent: xeno
     - type: InputMover
     - type: MobMover
     - type: HTN
@@ -2526,8 +2524,11 @@
       damage:
         types:
           Blunt: 1
+    - type: ReplacementAccent
+      accent: bros
     - type: Speech
-      speechVerb: Cluwne
+      speechSounds: Bros
+      speechVerb: Bros
     - type: Bloodstream
       bloodMaxVolume: 15
       bloodReagent: VentCrud
