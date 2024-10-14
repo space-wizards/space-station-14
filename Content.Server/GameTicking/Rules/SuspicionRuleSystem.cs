@@ -15,7 +15,6 @@ using Content.Server.Store.Systems;
 using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Shared.GameTicking.Components;
-using Content.Shared.Inventory;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.NPC.Systems;
