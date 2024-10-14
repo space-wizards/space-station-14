@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Blackern5000
-  changes:
-  - message: The defibrillator has been recolored slightly
-    type: Tweak
-  id: 7010
-  time: '2024-07-30T04:41:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29964
 - author: themias
   changes:
   - message: Fixed victim's fingerprints transferring onto an attacker's weapon
@@ -3946,3 +3939,10 @@
   id: 7509
   time: '2024-10-14T03:54:32.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32806
+- author: Gamer3107
+  changes:
+  - message: Portal artifacts no longer target the AI or people within containers
+    type: Fix
+  id: 7510
+  time: '2024-10-14T05:55:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32677
