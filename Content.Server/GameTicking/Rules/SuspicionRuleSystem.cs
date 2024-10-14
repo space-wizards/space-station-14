@@ -15,6 +15,7 @@ using Content.Server.Store.Systems;
 using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Shared.GameTicking.Components;
+using Content.Shared.Inventory;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.NPC.Systems;
@@ -48,6 +49,7 @@ public sealed partial class SuspicionRuleSystem : GameRuleSystem<SuspicionRuleCo
     [Dependency] private readonly NpcFactionSystem _npcFactionSystem = default!;
     [Dependency] private readonly NavMapSystem _navMapSystem = default!;
     [Dependency] private readonly TransformSystem _transformSystem = default!;
+    [Dependency] private readonly IdCardSystem _idCardSystem = default!;
 
     private readonly SoundSpecifier _traitorStartSound = new SoundPathSpecifier("/Audio/Ambience/Antag/traitor_start.ogg");
 

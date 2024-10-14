@@ -119,12 +119,13 @@
 - type: startingGear
   id: SuspicionGear
   equipment:
-    ears: ClothingHeadsetGrey
-    jumpsuit: ClothingUniformJumpsuitColorWhite
+    ears: ClothingHeadsetGreySuspicion
+    jumpsuit: ClothingUniformJumpsuitColorWhiteSuspicion
     shoes: ClothingShoesBootsJack
-    gloves: ClothingHandsGlovesFingerless
-    back: ClothingBackpack
-    outerClothing: ClothingOuterVestWebMerc
+    gloves: ClothingHandsGlovesCombat
+    back: ClothingBackpackSuspicion
+    outerClothing: ClothingOuterVestWebMercSuspicion
+    id: HoPIDCardSuspicion
 
 #Brigmedic
 

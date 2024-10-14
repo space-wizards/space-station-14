@@ -1,0 +1,43 @@
+﻿# Contains the gear for the suspicion gamemode. Most of this stuff will be unremovable.
+
+- type: entity
+  parent: ClothingHeadsetGrey
+  id: ClothingHeadsetGreySuspicion
+  name: passenger headset
+  components:
+  - type: Unremoveable
+
+- type: entity
+  parent: ClothingUniformJumpsuitColorWhite
+  id: ClothingUniformJumpsuitColorWhiteSuspicion
+  name: white jumpsuit
+  description: A generic white jumpsuit with no rank markings.
+  components:
+    - type: Unremoveable
+
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackSuspicion
+  name: backpack
+  description: You wear this on your back and put items into it. It seems like weapons just don't fit in there.
+  components:
+    - type: Unremoveable
+    - type: Storage
+      grid:
+      - 0,0,3,3
+      maxItemSize: Huge
+      blacklist:
+        components:
+        - Gun
+
+- type: entity
+  parent: ClothingOuterVestWebMerc
+  id: ClothingOuterVestWebMercSuspicion
+  components:
+    - type: Unremoveable
+
+- type: entity
+  parent: HoPIDCard
+  id: HoPIDCardSuspicion
+  components:
+    - type: Unremoveable

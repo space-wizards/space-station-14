@@ -205,6 +205,12 @@ public sealed partial class SuspicionRuleSystem : GameRuleSystem<SuspicionRuleCo
             EnsureComp<KillTrackerComponent>(mob);
             EnsureComp<BodyComponent>(mob).CanGib = false; // Examination is important.
 
+            if (_idCardSystem.TryFindIdCard(mob, out var idCard))
+            {
+                idCard.Comp.FullName = MetaData(mob).EntityName;
+                idCard.Comp.LocalizedJobTitle = Loc.GetString("job-name-psychologist");
+            }
+
             ev.Handled = true;
             break;
         }
