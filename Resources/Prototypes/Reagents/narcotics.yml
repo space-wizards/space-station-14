@@ -479,14 +479,14 @@
           max: 20
         damage:
           types:
-            Asphyxiation: 1.5
-            Poison: 0.5
+            Asphyxiation: 0.65
+            Poison: 1.2
     Narcotic:
       effects:
       - !type:Jitter
       - !type:MovespeedModifier
-        walkSpeedModifier: 1.2
-        sprintSpeedModifier: 1.2
+        walkSpeedModifier: 1.15
+        sprintSpeedModifier: 1.15
       - !type:GenericStatusEffect
         key: Stun
         time: 2
@@ -495,6 +495,12 @@
         key: KnockedDown
         time: 2
         type: Remove
+      - !type:GenericStatusEffect
+        key: SeeingRainbows
+        component: SeeingRainbows
+        type: Add
+        time: 6
+        refresh: false
     Medicine:
       effects:
       - !type:ChemVomit
@@ -505,5 +511,5 @@
       - !type:HealthChange
         damage:
           groups:
-            Brute: -0.30
+            Brute: -0.15
             Burn: -0.15
