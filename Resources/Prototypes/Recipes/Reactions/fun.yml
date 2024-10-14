@@ -192,12 +192,12 @@
   quantized: true
   minTemp: 374
   reactants:
-    Potassium:
-      amount: 6
-    Sulfur:
-      amount: 2
     Charcoal:
       amount: 2
+    Sulfur:
+      amount: 2
+    Saltpetre:
+      amount: 3
   effects:
     - !type:CreateEntityReactionEffect
       entity: MaterialGunpowder
