@@ -1,0 +1,244 @@
+﻿- type: entity
+  name: SMG Spawner
+  suffix: SSS, Timed
+  id: SssWeaponSpawnerSMG
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - state: timed
+    - sprite: Objects/Weapons/Guns/SMGs/atreides.rsi
+      state: icon
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: SssSmgTable
+      prob: 0.8
+    offset: 0.4
+    delay: 10
+
+- type: entityTable
+  id: SssSmgTable
+  table: !type:GroupSelector
+    children:
+    - !type:GroupSelector
+      weight: 95
+      children:
+      - id: WeaponSubMachineGunWt550
+    - !type:GroupSelector
+      weight: 4
+      children:
+      - id: WeaponSubMachineGunDrozd
+      - id: WeaponSubMachineGunVector
+    - !type:GroupSelector
+      weight: 1
+      children:
+      - id: WeaponSubMachineGunAtreides
+
+- type: entity
+  name: SMG Ammo Spawner
+  suffix: SSS, Timed
+  id: SssWeaponSpawnerSMGAmmo
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: blue
+    - state: timed
+    - sprite: Objects/Weapons/Guns/SMGs/atreides.rsi
+      state: icon
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: SssSmgAmmoTable
+      prob: 1
+    offset: 0.4
+    delay: 10
+    count: 2 # 2 mags per gun
+
+# This doesn't spawn atreides ammo, cause the atreides is very OP and should not be reloaded.
+- type: entityTable
+  id: SssSmgAmmoTable
+  table: !type:GroupSelector
+    children:
+    - !type:GroupSelector
+      weight: 95
+      children:
+      - id: MagazinePistolSubMachineGunTopMounted
+    - !type:GroupSelector
+      weight: 4
+      children:
+      - id: MagazinePistolSubMachineGun
+      - id: MagazineMagnumSubMachineGun
+
+- type: entity
+  name: Pistol Spawner
+  suffix: SSS, Timed
+  id: SssWeaponSpawnerPistol
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - state: timed
+    - sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
+      state: icon
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: SssPistolTable
+      prob: 1
+    offset: 0.4
+    delay: 10
+
+- type: entityTable
+  id: SssPistolTable
+  table: !type:GroupSelector
+    children:
+    - !type:GroupSelector
+      weight: 80
+      children:
+      - id: WeaponPistolMk58
+    - !type:GroupSelector
+      weight: 19
+      children:
+      - id: WeaponRevolverInspector
+    - !type:GroupSelector
+      weight: 1
+      children:
+      - id: WeaponRevolverDeckard
+      - id: WeaponSniperMosin # Funny traitor item spawn
+
+- type: entity
+  name: Pistol Ammo Spawner
+  suffix: SSS, Timed
+  id: SssWeaponSpawnerPistolAmmo
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: blue
+    - state: timed
+    - sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
+      state: icon
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: SssPistolAmmoTable
+      prob: 1
+    offset: 0.4
+    delay: 10
+
+- type: entityTable
+  id: SssPistolAmmoTable
+  table: !type:GroupSelector
+    children:
+    - !type:GroupSelector
+      weight: 80
+      children:
+      - id: MagazinePistol
+    - !type:GroupSelector
+      weight: 19
+      children:
+      - id: SpeedLoaderMagnum
+    - !type:GroupSelector
+      weight: 1
+      children:
+      - id: CartridgeLightRifle
+
+- type: entity
+  name: Melee Spawner
+  suffix: SSS, Timed
+  id: SssWeaponSpawnerMelee
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - state: timed
+    - sprite: Objects/Weapons/Melee/cleaver.rsi
+      state: butch
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: SssMeleeTable
+      prob: 0.8
+    offset: 0.4
+    delay: 10
+
+- type: entityTable
+  id: SssMeleeTable
+  table: !type:GroupSelector
+    children:
+    - !type:GroupSelector
+      weight: 60
+      children:
+      - id: KitchenKnife
+    - !type:GroupSelector
+      weight: 39
+      children:
+      - id: CombatKnife
+    - !type:GroupSelector
+      weight: 1
+      children:
+      - id: WeaponBaguette
+
+- type: entity
+  name: Shotgun Spawner
+  suffix: SSS, Timed
+  id: SssWeaponSpawnerShotgun
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - state: timed
+    - sprite: Objects/Weapons/Guns/Shotguns/bulldog.rsi
+      state: icon
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: SssShotgunTable
+      prob: 0.8
+    offset: 0.4
+    delay: 10
+
+- type: entityTable
+  id: SssShotgunTable
+  table: !type:GroupSelector
+    children:
+    - !type:GroupSelector
+      weight: 60
+      children:
+      - id: WeaponShotgunSawn
+    - !type:GroupSelector
+      weight: 39
+      children:
+      - id: WeaponShotgunDoubleBarreled
+    - !type:GroupSelector
+      weight: 1
+      children:
+      - id: WeaponShotgunEnforcer
+
+- type: entity
+  name: Shotgun Ammo Spawner
+  suffix: SSS, Timed
+  id: SssWeaponSpawnerShotgunAmmo
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: blue
+    - state: timed
+    - sprite: Objects/Weapons/Guns/Shotguns/bulldog.rsi
+      state: icon
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: SssShotgunAmmoTable
+      prob: 0.8
+    offset: 0.4
+    delay: 10
+
+- type: entityTable
+  id: SssShotgunAmmoTable
+  table: !type:GroupSelector
+    children:
+    - !type:GroupSelector
+      weight: 100
+      children:
+      - id: BoxLethalshot

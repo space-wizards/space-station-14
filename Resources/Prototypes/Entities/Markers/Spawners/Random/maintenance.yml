@@ -367,54 +367,6 @@
 
 - type: entity
   name: Maint Loot Spawner
-  suffix: SSS, Lethal Weapons
-  id: SssWeaponSpawner
-  parent: MarkerBase
-  components:
-  - type: Sprite
-    layers:
-    - state: red
-    - sprite: Objects/Weapons/Melee/machete.rsi
-      state: icon
-  - type: EntityTableSpawner
-    table: !type:NestedSelector
-      tableId: SSSWeaponTable
-      prob: 0.8
-
-- type: entityTable
-  id: SSSWeaponTable
-  table: !type:GroupSelector
-    children:
-    # Common Group
-    - !type:GroupSelector
-      weight: 90
-      children:
-      - id: WeaponPistolMk58
-      - id: WeaponDisabler
-      - id: WeaponShotgunSawn
-      - id: WeaponRevolverInspector
-    # Rare Group
-    - !type:GroupSelector
-      weight: 2
-      children:
-      - id: WeaponAdvancedLaser
-      - id: WeaponSubMachineGunDrozd
-      - id: WeaponRifleLecter
-      - id: WeaponSubMachineGunVector
-      - id: WeaponShotgunEnforcer
-      - id: WeaponBaguette
-      - id: WeaponSubMachineGunAtreides
-      - id: WeaponRevolverDeckard
-    - !type:GroupSelector
-      weight: 8
-      children:
-      - id: Brutepack5
-      - id: Ointment5
-      - id: Gauze5
-
-
-- type: entity
-  name: Maint Loot Spawner
   suffix: Plants
   id: MaintenancePlantSpawner
   parent: MarkerBase

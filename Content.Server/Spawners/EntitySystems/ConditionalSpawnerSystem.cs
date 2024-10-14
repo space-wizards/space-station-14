@@ -6,6 +6,7 @@ using Content.Shared.GameTicking.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Spawners.EntitySystems
 {
@@ -135,7 +136,17 @@ namespace Content.Server.Spawners.EntitySystems
                 var yOffset = _robustRandom.NextFloat(-ent.Comp.Offset, ent.Comp.Offset);
                 var trueCoords = coords.Offset(new Vector2(xOffset, yOffset));
 
-                Spawn(proto, trueCoords);
+                for (var i = 0; i < ent.Comp.Count; i++)
+                {
+                    if (ent.Comp.Delay != TimeSpan.Zero)
+                    {
+                        Timer.Spawn(ent.Comp.Delay, () => Spawn(proto, trueCoords));
+                    }
+                    else
+                    {
+                        Spawn(proto, trueCoords);
+                    }
+                }
             }
         }
     }
