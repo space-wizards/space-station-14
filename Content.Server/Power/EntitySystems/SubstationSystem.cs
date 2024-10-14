@@ -14,22 +14,25 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Content.Server.Atmos.EntitySystems;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Power.EntitySystems;
 
 public sealed class SubstationSystem : EntitySystem
 {
-
     [Dependency] private readonly PointLightSystem _lightSystem = default!;
     [Dependency] private readonly SharedPointLightSystem _sharedLightSystem = default!;
     [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
 
-
     private bool _substationDecayEnabled;
     private int _substationDecayTimeout;
-    private float _substationDecayCoeficient;
+    private float _substationDecayCoefficient;
     private float _substationDecayTimer;
 
     public override void Initialize()
@@ -40,7 +43,7 @@ public sealed class SubstationSystem : EntitySystem
 
         _substationDecayEnabled = _cfg.GetCVar(CCVars.SubstationDecayEnabled);
         _substationDecayTimeout = _cfg.GetCVar(CCVars.SubstationDecayTimeout);
-        _substationDecayCoeficient = _cfg.GetCVar(CCVars.SubstationDecayCoefficient);
+        _substationDecayCoefficient = _cfg.GetCVar(CCVars.SubstationDecayCoefficient);
         _substationDecayTimer = _cfg.GetCVar(CCVars.SubstationDecayTimer);
 
         SubscribeLocalEvent<SubstationComponent, ExaminedEvent>(OnExamine);
@@ -59,28 +62,19 @@ public sealed class SubstationSystem : EntitySystem
         {
             if (!GetNitrogenBoosterMixture(uid, out var mix))
             {
-                args.PushMarkup(
-                    Loc.GetString("substation-component-examine-no-nitrogenbooster"));
+                args.PushMarkup(Loc.GetString("substation-component-examine-no-nitrogenbooster"));
                 return;
+            }
+
+            var integrity = CheckNitrogenBoosterIntegrity(component, mix);
+            if (integrity > 0.0f)
+            {
+                var integrityPercentRounded = (int)integrity;
+                args.PushMarkup(Loc.GetString("substation-component-examine-integrity", ("percent", integrityPercentRounded), ("markupPercentColor", "green")));
             }
             else
             {
-                var integrity = CheckNitrogenBoosterIntegrity(component, mix);
-                if (integrity > 0.0f)
-                {
-                    var integrityPercentRounded = (int)integrity;
-                    args.PushMarkup(
-                        Loc.GetString(
-                            "substation-component-examine-integrity",
-                            ("percent", integrityPercentRounded),
-                            ("markupPercentColor", "green")
-                        ));
-                }
-                else
-                {
-                    args.PushMarkup(
-                        Loc.GetString("substation-component-examine-malfunction"));
-                }
+                args.PushMarkup(Loc.GetString("substation-component-examine-malfunction"));
             }
         }
     }
@@ -89,8 +83,8 @@ public sealed class SubstationSystem : EntitySystem
     {
         base.Update(deltaTime);
 
-        var lightquery = EntityQueryEnumerator<SubstationComponent>();
-        while (lightquery.MoveNext(out var uid, out var subs))
+        var lightQuery = EntityQueryEnumerator<SubstationComponent>();
+        while (lightQuery.MoveNext(out var uid, out var subs))
         {
             subs.SubstationLightBlinkTimer -= deltaTime;
             if (subs.SubstationLightBlinkTimer <= 0f)
@@ -104,10 +98,7 @@ public sealed class SubstationSystem : EntitySystem
                 if (!_lightSystem.TryGetLight(uid, out var shlight))
                     return;
 
-                if (subs.SubstationLightBlinkState)
-                    _sharedLightSystem.SetEnergy(uid, 1.6f, shlight);
-                else
-                    _sharedLightSystem.SetEnergy(uid, 1f, shlight);
+                _sharedLightSystem.SetEnergy(uid, subs.SubstationLightBlinkState ? 1.6f : 1f, shlight);
             }
 
             if (!_substationDecayEnabled)
@@ -122,15 +113,15 @@ public sealed class SubstationSystem : EntitySystem
             }
         }
     }
+
     private void ConsumeNitrogenBoosterGas(float deltaTime, float scalar, SubstationComponent subs, PowerNetworkBatteryComponent battery, GasMixture mixture)
     {
         var initialN2 = mixture.GetMoles(Gas.Nitrogen);
         var boosterMoles = subs.InitialNitrogenBoosterMoles;
         var currentSupply = battery.CurrentSupply;
-        var decayFactor = _substationDecayCoeficient * scalar;
+        var decayFactor = _substationDecayCoefficient * scalar;
 
         var molesConsumed = boosterMoles * currentSupply * deltaTime / decayFactor;
-
         var minimumReaction = Math.Abs(initialN2) * molesConsumed / 2;
 
         mixture.AdjustMoles(Gas.Nitrogen, -minimumReaction);
@@ -139,15 +130,12 @@ public sealed class SubstationSystem : EntitySystem
 
     private float CheckNitrogenBoosterIntegrity(SubstationComponent subs, GasMixture mixture)
     {
-
         if (subs.InitialNitrogenBoosterMoles <= 0f)
             return 0f;
 
         var initialN2 = mixture.GetMoles(Gas.Nitrogen);
-
-        var usableMoles = (initialN2);
-        //return in percentage points;
-        return 100 * usableMoles / (subs.InitialNitrogenBoosterMoles);
+        var usableMoles = initialN2;
+        return 100 * usableMoles / subs.InitialNitrogenBoosterMoles;
     }
 
     private void NitrogenBoosterChanged(EntityUid uid, SubstationComponent subs)
@@ -166,20 +154,20 @@ public sealed class SubstationSystem : EntitySystem
         }
 
         subs.InitialNitrogenBoosterMoles = initialNitrogenBoosterMoles;
+        var nitrogenBoosterIntegrity = CheckNitrogenBoosterIntegrity(subs, mix);
 
-        var NitrogenBoosterIntegrity = CheckNitrogenBoosterIntegrity(subs, mix);
-
-        if (NitrogenBoosterIntegrity <= 0.0f)
+        if (nitrogenBoosterIntegrity <= 0.0f)
         {
             ShutdownSubstation(uid, subs);
-            subs.LastIntegrity = NitrogenBoosterIntegrity;
+            subs.LastIntegrity = nitrogenBoosterIntegrity;
             return;
         }
-        if (NitrogenBoosterIntegrity < 30f)
+
+        if (nitrogenBoosterIntegrity < 30f)
         {
             ChangeState(uid, SubstationIntegrityState.Bad, subs);
         }
-        else if (NitrogenBoosterIntegrity < 70f)
+        else if (nitrogenBoosterIntegrity < 70f)
         {
             ChangeState(uid, SubstationIntegrityState.Unhealthy, subs);
         }
@@ -187,19 +175,20 @@ public sealed class SubstationSystem : EntitySystem
         {
             ChangeState(uid, SubstationIntegrityState.Healthy, subs);
         }
-        subs.LastIntegrity = NitrogenBoosterIntegrity;
+
+        subs.LastIntegrity = nitrogenBoosterIntegrity;
     }
 
     private void ShutdownSubstation(EntityUid uid, SubstationComponent subs)
     {
-        TryComp<PowerNetworkBatteryComponent>(uid, out var battery);
-        if (battery == null)
+        if (!TryComp<PowerNetworkBatteryComponent>(uid, out var battery))
             return;
 
         subs.LastIntegrity = 0.0f;
         battery.Enabled = false;
         battery.CanCharge = false;
         battery.CanDischarge = false;
+
         if (HasComp<ExaminableBatteryComponent>(uid))
             RemComp<ExaminableBatteryComponent>(uid);
 
@@ -208,9 +197,7 @@ public sealed class SubstationSystem : EntitySystem
 
     private void OnRejuvenate(EntityUid uid, SubstationComponent subs, RejuvenateEvent args)
     {
-
         subs.LastIntegrity = 100.0f;
-
         ChangeState(uid, SubstationIntegrityState.Healthy, subs);
 
         if (GetNitrogenBoosterMixture(uid, out var mix))
@@ -221,9 +208,9 @@ public sealed class SubstationSystem : EntitySystem
 
     private void RestoreSubstation(EntityUid uid, SubstationComponent subs)
     {
-        TryComp<PowerNetworkBatteryComponent>(uid, out var battery);
-        if (battery == null)
+        if (!TryComp<PowerNetworkBatteryComponent>(uid, out var battery))
             return;
+
         battery.Enabled = true;
         battery.CanCharge = true;
         battery.CanDischarge = true;
@@ -234,7 +221,6 @@ public sealed class SubstationSystem : EntitySystem
 
     private void ChangeState(EntityUid uid, SubstationIntegrityState state, SubstationComponent? subs = null)
     {
-
         if (!_lightSystem.TryGetLight(uid, out var light))
             return;
 
@@ -273,6 +259,7 @@ public sealed class SubstationSystem : EntitySystem
     {
         if (!TryComp<AppearanceComponent>(uid, out var appearance))
             return;
+
         _appearanceSystem.SetData(uid, SubstationVisuals.Screen, subsState, appearance);
     }
 
@@ -284,12 +271,22 @@ public sealed class SubstationSystem : EntitySystem
         if (!containers.TryGetContainer(slot.NitrogenBoosterSlotId, out var container))
             return;
 
+        if (!slot.MaintenanceDoorOpen)
+            return;
+
         if (container.ContainedEntities.Count > 0)
         {
-            args.GasMixtures =
-            [
-                (Name(uid), Comp<GasTankComponent>(container.ContainedEntities[0]).Air)
-            ];
+            if (container.ContainedEntities.Count > 0 && container.ContainedEntities[0] != null)
+            {
+                var gasTankComponent = Comp<GasTankComponent>(container.ContainedEntities[0]);
+                if (gasTankComponent != null)
+                {
+                    args.GasMixtures = new List<(string, GasMixture?)>
+                    {
+                        (Name(uid), gasTankComponent.Air)
+                    };
+                }
+            }
         }
     }
 
@@ -327,7 +324,6 @@ public sealed class SubstationSystem : EntitySystem
             return;
         }
 
-        //for when the substation is initialized.
         if (component.AllowInsert)
         {
             component.AllowInsert = false;
@@ -338,7 +334,6 @@ public sealed class SubstationSystem : EntitySystem
         {
             args.Cancel();
         }
-
     }
 
     private void OnNitrogenBoosterRemoveAttempt(EntityUid uid, SubstationComponent component, ContainerIsRemovingAttemptEvent args)
@@ -356,7 +351,6 @@ public sealed class SubstationSystem : EntitySystem
         {
             args.Cancel();
         }
-
     }
 
     private void OnNitrogenBoosterInserted(EntityUid uid, SubstationComponent component, EntInsertedIntoContainerMessage args)
@@ -377,5 +371,4 @@ public sealed class SubstationSystem : EntitySystem
 
         NitrogenBoosterChanged(uid, component);
     }
-
 }
