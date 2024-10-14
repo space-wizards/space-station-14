@@ -68,9 +68,10 @@ public sealed partial class CrawlingSystem : EntitySystem
     }
     private void OnDoAfter(EntityUid uid, CrawlerComponent component, CrawlStandupDoAfterEvent args)
     {
-        if (args.Cancelled)
+        if (args.Handled || args.Cancelled)
             return;
-        _standing.Stand(uid);
+
+        args.Handled = _standing.Stand(uid);
     }
     private void OnStandUp(EntityUid uid, CrawlerComponent component, StandAttemptEvent args)
     {
