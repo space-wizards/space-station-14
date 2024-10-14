@@ -41,9 +41,9 @@ namespace Content.Server.GameTicking
                 DelayStart(TimeSpan.FromSeconds(PresetFailedCooldownIncrease));
             }
 
-            if (_configurationManager.GetCVar(CCVars.GameLobbyFallbackEnabled))
+            if (_cfg.GetCVar(CCVars.GameLobbyFallbackEnabled))
             {
-                var fallbackPresets = _configurationManager.GetCVar(CCVars.GameLobbyFallbackPreset).Split(",");
+                var fallbackPresets = _cfg.GetCVar(CCVars.GameLobbyFallbackPreset).Split(",");
                 var startFailed = true;
 
                 foreach (var preset in fallbackPresets)
@@ -86,7 +86,7 @@ namespace Content.Server.GameTicking
 
         private void InitializeGamePreset()
         {
-            SetGamePreset(LobbyEnabled ? _configurationManager.GetCVar(CCVars.GameLobbyDefaultPreset) : "sandbox");
+            SetGamePreset(LobbyEnabled ? _cfg.GetCVar(CCVars.GameLobbyDefaultPreset) : "sandbox");
         }
 
         public void SetGamePreset(GamePresetPrototype? preset, bool force = false)
@@ -190,7 +190,7 @@ namespace Content.Server.GameTicking
         private void IncrementRoundNumber()
         {
             var playerIds = _playerGameStatuses.Keys.Select(player => player.UserId).ToArray();
-            var serverName = _configurationManager.GetCVar(CCVars.AdminLogsServerName);
+            var serverName = _cfg.GetCVar(CCVars.AdminLogsServerName);
 
             // TODO FIXME AAAAAAAAAAAAAAAAAAAH THIS IS BROKEN
             // Task.Run as a terrible dirty workaround to avoid synchronization context deadlock from .Result here.

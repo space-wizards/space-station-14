@@ -236,3 +236,8 @@
   copyright: TGStation at d34047a5ae911735e35cd44a210953c9563caa22
   license: CC-BY-SA-3.0
   source: https://github.com/tgstation/tgstation/blob/d34047a5ae911735e35cd44a210953c9563caa22/sound/effects/slosh.ogg
+
+- files: [inneranomaly.ogg]
+  copyright: 'created by waveplaySFX on Freesound'
+  license: "CC0-1.0"
+  source: https://freesound.org/people/waveplaySFX/sounds/553744/

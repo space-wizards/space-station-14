@@ -15,7 +15,7 @@ public sealed partial class DepartmentTimeRequirement : JobRequirement
     /// Which department needs the required amount of time.
     /// </summary>
     [DataField(required: true)]
-    public ProtoId<DepartmentPrototype> Department = default!;
+    public ProtoId<DepartmentPrototype> Department;
 
     /// <summary>
     /// How long (in seconds) this requirement is.
@@ -47,7 +47,9 @@ public sealed partial class DepartmentTimeRequirement : JobRequirement
             playtime += otherTime;
         }
 
-        var deptDiff = Time.TotalMinutes - playtime.TotalMinutes;
+        var deptDiffSpan = Time - playtime;
+        var deptDiff = deptDiffSpan.TotalMinutes;
+        var formattedDeptDiff = deptDiffSpan.ToString(Loc.GetString("role-timer-time-format"));
         var nameDepartment = "role-timer-department-unknown";
 
         if (protoManager.TryIndex(Department, out var departmentIndexed))
@@ -62,7 +64,7 @@ public sealed partial class DepartmentTimeRequirement : JobRequirement
 
             reason = FormattedMessage.FromMarkupPermissive(Loc.GetString(
                 "role-timer-department-insufficient",
-                ("time", Math.Ceiling(deptDiff)),
+                ("time", formattedDeptDiff),
                 ("department", Loc.GetString(nameDepartment)),
                 ("departmentColor", department.Color.ToHex())));
             return false;
@@ -72,7 +74,7 @@ public sealed partial class DepartmentTimeRequirement : JobRequirement
         {
             reason = FormattedMessage.FromMarkupPermissive(Loc.GetString(
                 "role-timer-department-too-high",
-                ("time", -deptDiff),
+                ("time", formattedDeptDiff),
                 ("department", Loc.GetString(nameDepartment)),
                 ("departmentColor", department.Color.ToHex())));
             return false;

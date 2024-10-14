@@ -72,3 +72,18 @@
   license: "CC-BY-SA-3.0"
   copyright: "Taken from ss200, made by Daeberdir"
   source: "https://github.com/ss220-space/Paradise/pull/3756"
+
+- files: ["rubber_chicken_1.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by xprospero for ss14"
+  source: "https://github.com/space-wizards/space-station-14/blob/master/Resources/Audio/Items/Toys/rubber_chicken_1.ogg"
+
+- files: ["rubber_chicken_2.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by xprospero for ss14"
+  source: "https://github.com/space-wizards/space-station-14/blob/master/Resources/Audio/Items/Toys/rubber_chicken_2.ogg"
+
+- files: ["rubber_chicken_3.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by xprospero for ss14"
+  source: "https://github.com/space-wizards/space-station-14/blob/master/Resources/Audio/Items/Toys/rubber_chicken_3.ogg"
