@@ -2553,6 +2553,8 @@
     - type: FoodSequenceElement
       entries:
         Burger: BrosBurger
+    - type: CanEscapeInventory
+      baseResistTime: 2
 
 - type: entity
   name: SORB
@@ -2575,18 +2577,16 @@
 
 # used for BROS polymorph from juice that makes you UNGH so players don't get one-shot and die for real          
 - type: entity
-  name: BROS?
+  name: BROS
   parent: MobBros
   id: MobBrosPoly
-  description: OH FUCK IT'S BROS?
+  description: OH FUCK IT'S BROS
   components:
     - type: MobThresholds
       thresholds:
         0: Alive
         100: Critical
         200: Dead
-    - type: CanEscapeInventory
-      baseResistTime: 2
 
 - type: entity
   name: wizard spider
