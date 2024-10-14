@@ -2,6 +2,7 @@ using Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
 using Content.Shared.Mind.Components;
 using Content.Shared.Teleportation.Systems;
+using Robust.Shared.Collections;
 using Robust.Shared.Containers;
 using Robust.Shared.Random;
 
@@ -23,12 +24,12 @@ public sealed class PortalArtifactSystem : EntitySystem
     private void OnActivate(Entity<PortalArtifactComponent> artifact, ref ArtifactActivatedEvent args)
     {
         var map = Transform(artifact).MapID;
-        var validMinds = new List<EntityUid>();
-        var mindQuery = EntityQueryEnumerator<MindContainerComponent, TransformComponent>();
-        while (mindQuery.MoveNext(out var uid, out var mc, out var xform))
+        var validMinds = new ValueList<EntityUid>();
+        var mindQuery = EntityQueryEnumerator<MindContainerComponent, TransformComponent, MetaDataComponent>();
+        while (mindQuery.MoveNext(out var uid, out var mc, out var xform, out var meta))
         {
             // check if the MindContainer has a Mind and if the entity is not in a container (this also auto excludes AI) and if they are on the same map
-            if (mc.HasMind && !_container.IsEntityOrParentInContainer(uid) && xform.MapID == map)
+            if (mc.HasMind && !_container.IsEntityOrParentInContainer(uid, meta: meta, xform: xform) && xform.MapID == map)
             {
                 validMinds.Add(uid);
             }
