@@ -68,6 +68,7 @@
     hologramProtoId: HolopadHologram
   - type: Speech
     speechVerb: Robotic
+    speechSounds: Borg
     speechBubbleOffset: 0.45
   - type: Telephone
     transmissionRange: Map
