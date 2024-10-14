@@ -1,5 +1,6 @@
 ﻿using Content.Server.Communications;
 using Content.Server.GameTicking.Rules.Components;
+using Content.Server.Ghost;
 using Content.Server.Roles;
 using Content.Shared.Chat;
 using Content.Shared.Damage;
@@ -12,6 +13,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Implants.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Overlays;
 using Content.Shared.Store.Components;
 using Robust.Shared.Network;
 
@@ -22,6 +24,22 @@ namespace Content.Server.GameTicking.Rules;
 /// </summary>
 public sealed partial class SuspicionRuleSystem : GameRuleSystem<SuspicionRuleComponent>
 {
+    private void OnGhost(GhostSpawnedEvent ghost)
+    {
+        var query = EntityQueryEnumerator<SuspicionRuleComponent, GameRuleComponent>();
+        while (query.MoveNext(out var ruleId, out var _, out var gameRule))
+        {
+            if (!GameTicker.IsGameRuleActive(ruleId, gameRule))
+                continue;
+
+            // Only apply the overlay to ghosts when the gamemode is active.
+
+            EnsureComp<ShowSyndicateIconsComponent>(ghost.Ghost);
+            EnsureComp<ShowCriminalRecordIconsComponent>(ghost.Ghost);
+            break;
+        }
+    }
+
     private void OnMobStateChanged(EntityUid uid, SuspicionPlayerComponent component, MobStateChangedEvent args)
     {
         if (args.NewMobState == MobState.Critical)

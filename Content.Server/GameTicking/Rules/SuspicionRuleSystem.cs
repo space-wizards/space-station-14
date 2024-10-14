@@ -5,6 +5,7 @@ using Content.Server.Antag;
 using Content.Server.Chat.Managers;
 using Content.Server.Communications;
 using Content.Server.GameTicking.Rules.Components;
+using Content.Server.Ghost;
 using Content.Server.Implants;
 using Content.Server.Mind;
 using Content.Server.Pinpointer;
@@ -15,6 +16,7 @@ using Content.Server.Store.Systems;
 using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Shared.GameTicking.Components;
+using Content.Shared.Ghost;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.NPC.Systems;
@@ -62,6 +64,7 @@ public sealed partial class SuspicionRuleSystem : GameRuleSystem<SuspicionRuleCo
         SubscribeLocalEvent<SuspicionPlayerComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<SuspicionPlayerComponent, MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<CommunicationConsoleCallShuttleAttemptEvent>(OnShuttleCall);
+        SubscribeLocalEvent<GhostSpawnedEvent>(OnGhost); // Map init just doesn't work??
     }
 
 
