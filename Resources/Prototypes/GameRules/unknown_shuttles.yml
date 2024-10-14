@@ -20,6 +20,7 @@
     - id: UnknownShuttleMeatZone
     - id: UnknownShuttleMicroshuttle
     - id: UnknownShuttleSpacebus
+    - id: UnknownShuttleInstigator
 
 - type: entityTable
   id: UnknownShuttlesFreelanceTable
@@ -171,6 +172,17 @@
     earliestStart: 45 # late to hopefully have enough ghosts to fill all roles quickly. (5-6)
   - type: LoadMapRule
     preloadedGrid: NTIncorporation
+
+- type: entity
+  id: UnknownShuttleInstigator
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: null #dont nark on antags
+    weight: 1 #  lower because antags.
+    earliestStart: 50 # late to hopefully have enough ghosts to fill all roles quickly (3) and because antags
+  - type: LoadMapRule
+    preloadedGrid: Instigator
 
 - type: entity
   id: UnknownShuttleJoe
