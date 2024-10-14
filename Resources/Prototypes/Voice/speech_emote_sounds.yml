@@ -159,7 +159,7 @@
     Weh:
       collection: Weh
     Gasp:
-      collection: MaleSlimeGasp
+      collection: MaleGasp
     DefaultDeathgasp:
       collection: MaleDeathGasp
   params:
@@ -201,7 +201,7 @@
     Weh:
       collection: Weh
     Gasp:
-      collection: FemaleSlimeGasp
+      collection: FemaleGasp
     DefaultDeathgasp:
       collection: FemaleDeathGasp
   params:
