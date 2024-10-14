@@ -18,5 +18,5 @@ public sealed partial class CrawlerComponent : Component
     [DataField("downeddamageCoefficient")]
     public float DownedDamageCoefficient = 0.5F;
     [DataField]
-    public ProtoId<AlertPrototype> CtawlingAlert = "Crawling";
+    public ProtoId<AlertPrototype> ClawlingAlert = "Crawling";
 }
