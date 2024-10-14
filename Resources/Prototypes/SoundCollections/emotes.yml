@@ -18,7 +18,7 @@
 - type: soundCollection
   id: FemaleSlimeLaugh
   files:
-    - /Audio/Voice/Human/s_womanlaugh.ogg
+    - /Audio/Voice/Slime/s_womanlaugh.ogg
 
 
 - type: soundCollection
