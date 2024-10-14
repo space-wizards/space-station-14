@@ -1517,7 +1517,7 @@
   isSubfloor: true
   footstepSounds:
     collection: FootstepGrass
-    roof: false
+  roof: false
   heatCapacity: 10000
   weather: true
 
