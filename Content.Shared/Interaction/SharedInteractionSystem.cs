@@ -1166,8 +1166,6 @@ namespace Content.Shared.Interaction
         {
             var dropMsg = new DroppedEvent(user);
             RaiseLocalEvent(item, dropMsg, true);
-            if (dropMsg.Handled)
-                _adminLogger.Add(LogType.Drop, LogImpact.Low, $"{ToPrettyString(user):user} dropped {ToPrettyString(item):entity}");
 
             // If the dropper is rotated then use their targetrelativerotation as the drop rotation
             var rotation = Angle.Zero;
