@@ -160,7 +160,8 @@ public sealed class TemperatureSystem : EntitySystem
         var heatCapacity = GetHeatCapacity(uid, temperature);
         var heat = temperatureDelta * (airHeatCapacity * heatCapacity /
                                        (airHeatCapacity + heatCapacity));
-        ChangeHeat(uid, heat * temperature.AtmosTemperatureTransferEfficiency, temperature: temperature);
+        ChangeHeat(uid, heat * temperature.AtmosTemperatureTransferEfficiency, temperature: temperature); // move heat to entity
+        _atmosphere.AddHeat(args.GasMixture, -1 * heat * temperature.AtmosTemperatureTransferEfficiency); // remove heat from air
     }
 
     public float GetHeatCapacity(EntityUid uid, TemperatureComponent? comp = null, PhysicsComponent? physics = null)

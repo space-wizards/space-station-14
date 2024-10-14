@@ -40,6 +40,9 @@ namespace Content.Server.Atmos.Components
         [DataField]
         public float MinIgnitionTemperature = 373.15f;
 
+        /// <summary>
+        /// The peak temperature the entity will reach by burning alone.
+        /// </summary>
         [DataField]
         public float PeakFlameTemperature = 1500.00f; // vaguely how hot an incenerator gets.
 

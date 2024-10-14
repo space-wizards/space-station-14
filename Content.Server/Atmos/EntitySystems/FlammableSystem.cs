@@ -446,13 +446,10 @@ namespace Content.Server.Atmos.EntitySystems
                         }
 
                         // If our local atmos doesnt have enough of the required gases extinguish.
-                        for (int i = 0; i < Atmospherics.AdjustedNumberOfGases; i++)
+                        if (!flammable.FuelGasMix.LEQMoles(air))
                         {
-                            if (flammable.FuelGasMix.GetMoles(i) > air.GetMoles(i))
-                            {
-                                Extinguish(uid, flammable);
-                                continue;
-                            }
+                            Extinguish(uid, flammable);
+                            continue;
                         }
                     }
 
@@ -462,24 +459,22 @@ namespace Content.Server.Atmos.EntitySystems
                     if (TryComp(uid, out TemperatureComponent? temp))
                     {
                         // get hot
-                        if (_atmosphereSystem.Superconduction) // superconductivity ***should*** mean an equilibrium temperature gets reached with the environment.
+                        EnsureComp<AtmosExposedComponent>(uid); // required for the entity to ever cool down.
+                        if (!_physicsQuery.TryComp(uid, out var physics))
+                            continue;
+
+                        var maxDeltaT = flammable.PeakFlameTemperature - temp.CurrentTemperature;
+                        if (maxDeltaT > 0) // we dont want to burn and get colder.
                         {
-                            _temperatureSystem.ChangeHeat(uid, 12500 * flammable.FireStacks, false, temp);
-                        }
-                        else // without superconductivity we need to prevent thermal runaway. Not guarunteed to be equivalent for balancing purposes.
-                        {
-                            var maxDeltaT = flammable.PeakFlameTemperature - temp.CurrentTemperature;
-                            if (maxDeltaT > 0) // we dont want to burn and get colder.
-                            {
-                                var tempBump = MathF.Sqrt(maxDeltaT) * flammable.FireStacks * 25; //monotonic function, slows as it reaches maxT
-                                _temperatureSystem.ChangeHeat(uid, tempBump, false, temp);
-                            }
+
+                            var tempBump = MathF.Sqrt(maxDeltaT * temp.SpecificHeat * physics.Mass) * flammable.FireStacks; //monotonic function, slows as it reaches maxT
+                            _temperatureSystem.ChangeHeat(uid, tempBump, false, temp);
                         }
 
                         // release gas
                         if (air != null && flammable.EmissiveGasMix != null)
                         {
-                            flammable.EmissiveGasMix.Temperature = temp.CurrentTemperature;
+                            flammable.EmissiveGasMix.Temperature = air.Temperature;
                             var releasingGas = flammable.EmissiveGasMix.Clone(); // generate gas for the entity's entire burning lifespan, but we use ReleaseGasTo to handle temperature/pressure for us since those will change for other reasons.
                             _atmosphereSystem.ReleaseGasTo(releasingGas, air, releasingGas.Pressure); // doing it this way means that we dont need to track the entity damage values or know its destructible or mobstate thresholds.
                         }                                                                    // the downside, and a possible later rework, is that you ""lose"" some gas if the candle is burning in an atmosphere where it can't emit due to pressure.
