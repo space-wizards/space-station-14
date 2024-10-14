@@ -125,6 +125,7 @@
       prob: 1
     offset: 0.4
     delay: 10
+    count: 2
 
 - type: entityTable
   id: SssPistolAmmoTable
@@ -233,6 +234,7 @@
       prob: 0.8
     offset: 0.4
     delay: 10
+    count: 2
 
 - type: entityTable
   id: SssShotgunAmmoTable
