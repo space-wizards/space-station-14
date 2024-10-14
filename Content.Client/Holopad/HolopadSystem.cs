@@ -81,12 +81,12 @@ public sealed class HolopadSystem : SharedHolopadSystem
                     continue;
 
                 if (!layer.Visible ||
-                    string.IsNullOrEmpty(layer.RSI?.Path.ToString()) ||
+                    string.IsNullOrEmpty(layer.ActualRsi?.Path.ToString()) ||
                     string.IsNullOrEmpty(layer.State.Name))
                     continue;
 
                 var layerDatum = new PrototypeLayerData();
-                layerDatum.RsiPath = layer.RSI.Path.ToString();
+                layerDatum.RsiPath = layer.ActualRsi.Path.ToString();
                 layerDatum.State = layer.State.Name;
 
                 if (layer.CopyToShaderParameters != null)
