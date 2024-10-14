@@ -34,7 +34,9 @@ using Robust.Shared.Timing;
 using Robust.Shared.Toolshed;
 using Robust.Shared.Utility;
 using System.Linq;
-using System.Numerics;
+using Content.Server.Silicons.Laws;
+using Content.Shared.Silicons.Laws.Components;
+using Robust.Server.Player;
 using Robust.Shared.Physics.Components;
 using static Content.Shared.Configurable.ConfigurationComponent;
 
@@ -59,7 +61,6 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly ArtifactSystem _artifactSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly PrayerSystem _prayerSystem = default!;
-        [Dependency] private readonly EuiManager _eui = default!;
         [Dependency] private readonly MindSystem _mindSystem = default!;
         [Dependency] private readonly ToolshedManager _toolshed = default!;
         [Dependency] private readonly RejuvenateSystem _rejuvenate = default!;
@@ -68,6 +69,8 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly StationSpawningSystem _spawning = default!;
         [Dependency] private readonly ExamineSystemShared _examine = default!;
         [Dependency] private readonly AdminFrozenSystem _freeze = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly SiliconLawSystem _siliconLawSystem = default!;
 
         private readonly Dictionary<ICommonSession, List<EditSolutionsEui>> _openSolutionUis = new();
 
@@ -131,34 +134,6 @@ namespace Content.Server.Administration.Systems
                     prayerVerb.Impact = LogImpact.Low;
                     args.Verbs.Add(prayerVerb);
 
-                    // Erase
-                    args.Verbs.Add(new Verb
-                    {
-                        Text = Loc.GetString("admin-verbs-erase"),
-                        Message = Loc.GetString("admin-verbs-erase-description"),
-                        Category = VerbCategory.Admin,
-                        Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png")),
-                        Act = () =>
-                        {
-                            _adminSystem.Erase(targetActor.PlayerSession);
-                        },
-                        Impact = LogImpact.Extreme,
-                        ConfirmationPopup = true
-                    });
-
-                // Respawn
-                    args.Verbs.Add(new Verb()
-                    {
-                        Text = Loc.GetString("admin-player-actions-respawn"),
-                        Category = VerbCategory.Admin,
-                        Act = () =>
-                        {
-                            _console.ExecuteCommand(player, $"respawn {targetActor.PlayerSession.Name}");
-                        },
-                        ConfirmationPopup = true,
-                        // No logimpact as the command does it internally.
-                    });
-
                     // Spawn - Like respawn but on the spot.
                     args.Verbs.Add(new Verb()
                     {
@@ -207,6 +182,47 @@ namespace Content.Server.Administration.Systems
                         },
                         ConfirmationPopup = true,
                         Impact = LogImpact.High,
+                    });
+
+                    // PlayerPanel
+                    args.Verbs.Add(new Verb
+                    {
+                        Text = Loc.GetString("admin-player-actions-player-panel"),
+                        Category = VerbCategory.Admin,
+                        Act = () => _console.ExecuteCommand(player, $"playerpanel \"{targetActor.PlayerSession.UserId}\""),
+                        Impact = LogImpact.Low
+                    });
+                }
+
+                if (_mindSystem.TryGetMind(args.Target, out _, out var mind) && mind.UserId != null)
+                {
+                    // Erase
+                    args.Verbs.Add(new Verb
+                    {
+                        Text = Loc.GetString("admin-verbs-erase"),
+                        Message = Loc.GetString("admin-verbs-erase-description"),
+                        Category = VerbCategory.Admin,
+                        Icon = new SpriteSpecifier.Texture(
+                            new("/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png")),
+                        Act = () =>
+                        {
+                            _adminSystem.Erase(mind.UserId.Value);
+                        },
+                        Impact = LogImpact.Extreme,
+                        ConfirmationPopup = true
+                    });
+
+                    // Respawn
+                    args.Verbs.Add(new Verb
+                    {
+                        Text = Loc.GetString("admin-player-actions-respawn"),
+                        Category = VerbCategory.Admin,
+                        Act = () =>
+                        {
+                            _console.ExecuteCommand(player, $"respawn \"{mind.UserId}\"");
+                        },
+                        ConfirmationPopup = true,
+                        // No logimpact as the command does it internally.
                     });
                 }
 
@@ -275,7 +291,7 @@ namespace Content.Server.Administration.Systems
                         Act = () =>
                         {
                             var ui = new AdminLogsEui();
-                            _eui.OpenEui(ui, player);
+                            _euiManager.OpenEui(ui, player);
                             ui.SetLogFilter(search:args.Target.Id.ToString());
                         },
                         Impact = LogImpact.Low
@@ -329,6 +345,25 @@ namespace Content.Server.Administration.Systems
                     Impact = LogImpact.Low
                 });
 
+                if (TryComp<SiliconLawBoundComponent>(args.Target, out var lawBoundComponent))
+                {
+                    args.Verbs.Add(new Verb()
+                    {
+                        Text = Loc.GetString("silicon-law-ui-verb"),
+                        Category = VerbCategory.Admin,
+                        Act = () =>
+                        {
+                            var ui = new SiliconLawEui(_siliconLawSystem, EntityManager, _adminManager);
+                            if (!_playerManager.TryGetSessionByEntity(args.User, out var session))
+                            {
+                                return;
+                            }
+                            _euiManager.OpenEui(ui, session);
+                            ui.UpdateLaws(lawBoundComponent, args.Target);
+                        },
+                        Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/Interface/Actions/actions_borg.rsi"), "state-laws"),
+                    });
+                }
             }
         }
 

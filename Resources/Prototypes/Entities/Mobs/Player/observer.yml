@@ -1,21 +1,23 @@
 - type: entity
-  parent: BaseMob
-  id: MobObserver
-  name: observer
-  description: Boo!
-  categories: [ HideSpawnMenu ]
+  id: Incorporeal
+  save: false
+  abstract: true
+  description: Mobs without physical bodies
   components:
-  - type: CargoSellBlacklist
   - type: Sprite
-    overrideContainerOcclusion: true # Ghosts always show up regardless of where they're contained.
+    noRot: true
+    overrideContainerOcclusion: true # Always show up regardless of where they're contained.
     drawdepth: Ghosts
-    sprite: Mobs/Ghosts/ghost_human.rsi
-    color: "#fff8"
-    layers:
-    - state: animated
-      shader: unshaded
-  - type: ContentEye
-    maxZoom: 1.44,1.44
+  - type: FTLSmashImmune
+  - type: CargoSellBlacklist
+  - type: MovementSpeedModifier
+    baseSprintSpeed: 12
+    baseWalkSpeed: 8
+  - type: MovementIgnoreGravity
+  - type: Physics
+    bodyType: KinematicController
+    bodyStatus: InAir
+  - type: CanMoveInAir
   - type: Fixtures
     fixtures:
       fix1:
@@ -23,8 +25,26 @@
           !type:PhysShapeCircle
           radius: 0.35
         density: 15
-        mask:
+        layer:
         - GhostImpassable
+
+- type: entity
+  parent:
+  - Incorporeal
+  - BaseMob
+  id: MobObserver
+  name: observer
+  description: Boo!
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Mobs/Ghosts/ghost_human.rsi
+    color: "#fff8"
+    layers:
+    - state: animated
+      shader: unshaded
+  - type: ContentEye
+    maxZoom: 1.44,1.44
   - type: Eye
     drawFov: false
   - type: Input
@@ -33,18 +53,10 @@
     skipChecks: true
   - type: Ghost
   - type: GhostHearing
-  - type: MovementSpeedModifier
-    baseSprintSpeed: 12
-    baseWalkSpeed: 8
-  - type: MovementIgnoreGravity
   - type: IntrinsicRadioReceiver
   - type: ActiveRadio
     receiveAllChannels: true
     globalReceive: true
-  - type: Physics
-    bodyType: KinematicController
-    bodyStatus: InAir
-  - type: CanMoveInAir
   - type: Tag
     tags:
     - BypassInteractionRangeChecks

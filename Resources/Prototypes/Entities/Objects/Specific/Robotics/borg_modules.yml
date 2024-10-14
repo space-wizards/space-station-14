@@ -206,6 +206,7 @@
     items:
     - MiningDrill
     - Shovel
+    - MineralScannerUnpowered
     - OreBag
     - Crowbar
     - RadioHandheld
@@ -236,9 +237,10 @@
     - state: icon-tools-adv
   - type: ItemBorgModule
     items:
-    - Omnitool
+    - JawsOfLife
+    - PowerDrill
+    - Multitool
     - WelderExperimental
-    - NetworkConfigurator
     - RemoteSignaller
     - GasAnalyzer
     - GeigerCounter
@@ -411,6 +413,7 @@
     items:
     - AnomalyScanner
     - AnomalyLocatorUnpowered
+    - AnomalyLocatorWideUnpowered
     - RemoteSignaller
     - Multitool
 
@@ -497,7 +500,7 @@
 #syndicate modules
 - type: entity
   id: BorgModuleSyndicateWeapon
-  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  parent: [ BaseBorgModule, BaseProviderBorgModule, BaseSyndicateContraband ]
   name: weapon cyborg module
   components:
   - type: Sprite
@@ -557,7 +560,7 @@
 
 - type: entity
   id: BorgModuleMartyr
-  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  parent: [ BaseBorgModule, BaseProviderBorgModule, BaseSyndicateContraband ]
   name: martyr cyborg module
   description: "A module that comes with an explosive you probably don't want to handle yourself."
   components:

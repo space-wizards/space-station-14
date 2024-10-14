@@ -64,6 +64,26 @@
     back:
     - BoxHugNitrogen
 
+# Mime
+- type: loadout
+  id: EmergencyOxygenMime
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenBreather
+  storage:
+    back:
+    - BoxMime
+
+- type: loadout
+  id: EmergencyNitrogenMime
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: NitrogenBreather
+  storage:
+    back:
+    - BoxMimeNitrogen
+
+
 # Engineering / Extended
 - type: loadout
   id: EmergencyOxygenExtended
@@ -142,14 +162,48 @@
 
 # Pre-equipped species gear
 
-# Full Tank Equipped
+# Full tank for vox as part of any Survival loadout
 - type: loadout
-  id: LoadoutSpeciesEVANitrogen
+  id: LoadoutSpeciesVoxNitrogen
   effects:
   - !type:GroupLoadoutEffect
     proto: EffectSpeciesVox
   equipment:
     suitstorage: NitrogenTankFilled
+
+# Full EVA Tank, Any Species
+- type: loadout
+  id: LoadoutSpeciesEVANitrogen
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: NitrogenBreather
+  equipment:
+    suitstorage: NitrogenTankFilled
+
+- type: loadout
+  id: LoadoutSpeciesEVAOxygen
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenBreather
+  equipment:
+    suitstorage: OxygenTankFilled
+
+# Species-appropriate Double Emergency Tank in Pocket 1
+- type: loadout
+  id: LoadoutSpeciesPocketDoubleNitrogen
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: NitrogenBreather
+  equipment:
+    pocket1: DoubleEmergencyNitrogenTankFilled
+
+- type: loadout
+  id: LoadoutSpeciesPocketDoubleOxygen
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenBreather
+  equipment:
+    pocket1: DoubleEmergencyOxygenTankFilled
 
 # Tank Harness
 - type: loadout
@@ -160,7 +214,7 @@
   equipment:
     outerClothing: ClothingOuterVestTank
 
-# Breaths Tool On Face
+# Breath Tool On Face
 - type: loadout
   id: LoadoutSpeciesBreathTool
   effects:
