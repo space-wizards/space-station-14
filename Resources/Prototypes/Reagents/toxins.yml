@@ -742,7 +742,10 @@
       metabolismRate: 0.05
       effects:
       - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 4.2
         damage:
           types:
-            Poison: 0.75
-            Asphyxiation: 0.50
+            Poison: 0.65
+            Asphyxiation: 0.45
