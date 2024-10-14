@@ -44,7 +44,7 @@ public abstract class SharedJammerSystem : EntitySystem
                     Dirty(entity);
                     if (_jammer.TrySetRange(entity.Owner, GetCurrentRange(entity)))
                     {
-                        Popup.PopupPredicted(Loc.GetString(setting.Message), user, user);
+                        Popup.PopupClient(Loc.GetString(setting.Message), user, user);
                     }
                 },
                 Text = Loc.GetString(setting.Name),
