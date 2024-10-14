@@ -28,8 +28,8 @@ public sealed class ProjectileSystem : SharedProjectileSystem
     {
         base.Initialize();
         SubscribeLocalEvent<ProjectileComponent, StartCollideEvent>(OnStartCollide);
-        SubscribeLocalEvent((Entity<HasProjectilesEmbeddedComponent> entity, ref DestructionEventArgs _) => UnEmbedChildren(entity));
-        SubscribeLocalEvent((Entity<HasProjectilesEmbeddedComponent> entity, ref BeingGibbedEvent _) => UnEmbedChildren(entity));
+        SubscribeLocalEvent<HasProjectilesEmbeddedComponent, DestructionEventArgs>(OnDestruction);
+        SubscribeLocalEvent<HasProjectilesEmbeddedComponent, BeingGibbedEvent>(OnDestruction);
     }
 
     private void OnStartCollide(EntityUid uid, ProjectileComponent component, ref StartCollideEvent args)
@@ -86,7 +86,7 @@ public sealed class ProjectileSystem : SharedProjectileSystem
         }
     }
 
-    private void UnEmbedChildren(Entity<HasProjectilesEmbeddedComponent> embeddee)
+    private void OnDestruction<TEvent>(Entity<HasProjectilesEmbeddedComponent> embeddee, ref TEvent args)
     {
         var children = Transform(embeddee).ChildEnumerator;
         while (children.MoveNext(out var child))
