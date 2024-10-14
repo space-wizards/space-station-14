@@ -239,7 +239,7 @@
 - type: polymorph
   id: PolymorphBros
   configuration:
-    entity: MobBros
+    entity: MobBrosPoly
     forced: true
     transferName: true
     transferHumanoidAppearance: true
