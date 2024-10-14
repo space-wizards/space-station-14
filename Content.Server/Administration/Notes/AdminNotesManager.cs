@@ -1,5 +1,6 @@
 using System.Text;
 using System.Threading.Tasks;
+using Content.Server.Administration.Logs.AuditLogs;
 using Content.Server.Administration.Managers;
 using Content.Server.Database;
 using Content.Server.EUI;
@@ -23,6 +24,7 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
     [Dependency] private readonly EuiManager _euis = default!;
     [Dependency] private readonly IEntitySystemManager _systems = default!;
     [Dependency] private readonly IConfigurationManager _config = default!;
+    [Dependency] private readonly IAuditLogManager _auditLog = default!;
 
     public const string SawmillId = "admin.notes";
 
@@ -78,41 +80,6 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
         if (await _db.GetPlayerRecordByUserId((NetUserId) player) is null)
             return;
 
-        var sb = new StringBuilder($"{createdBy.Name} added a");
-
-        if (secret && type == NoteType.Note)
-        {
-            sb.Append(" secret");
-        }
-
-        sb.Append($" {type} with message {message}");
-
-        switch (type)
-        {
-            case NoteType.Note:
-                sb.Append($" with {severity} severity");
-                break;
-            case NoteType.Message:
-                severity = null;
-                secret = false;
-                break;
-            case NoteType.Watchlist:
-                severity = null;
-                secret = true;
-                break;
-            case NoteType.ServerBan:
-            case NoteType.RoleBan:
-            default:
-                throw new ArgumentOutOfRangeException(nameof(type), type, "Unknown note type");
-        }
-
-        if (expiryTime is not null)
-        {
-            sb.Append($" which expires on {expiryTime.Value.ToUniversalTime(): yyyy-MM-dd HH:mm:ss} UTC");
-        }
-
-        _sawmill.Info(sb.ToString());
-
         _systems.TryGetEntitySystem(out GameTicker? ticker);
         int? roundId = ticker == null || ticker.RoundId == 0 ? null : ticker.RoundId;
         var serverName = _config.GetCVar(CCVars.AdminLogsServerName); // This could probably be done another way, but this is fine. For displaying only.
@@ -141,6 +108,48 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
             default:
                 throw new ArgumentOutOfRangeException(nameof(type), type, "Unknown note type");
         }
+
+        var sb = new StringBuilder($"{createdBy.Name} added");
+
+        if (secret && type == NoteType.Note)
+        {
+            sb.Append(" secret");
+        }
+
+        sb.Append($" {type} {noteId} with message \"{message}\"");
+
+        switch (type)
+        {
+            case NoteType.Note:
+                sb.Append($" with {severity} severity");
+                break;
+            case NoteType.Message:
+                severity = null;
+                secret = false;
+                break;
+            case NoteType.Watchlist:
+                severity = null;
+                secret = true;
+                break;
+            case NoteType.ServerBan:
+            case NoteType.RoleBan:
+            default:
+                throw new ArgumentOutOfRangeException(nameof(type), type, "Unknown note type");
+        }
+
+        if (expiryTime is not null)
+        {
+            sb.Append($" which expires on {expiryTime.Value.ToUniversalTime(): yyyy-MM-dd HH:mm:ss} UTC");
+        }
+
+        _sawmill.Info(sb.ToString());
+
+        await _auditLog.AddLogAsync(
+            AuditLogUtil.LogTypeForRemark(type),
+            AuditLogUtil.LogImpactForRemark(type, severity),
+            createdBy.UserId,
+            sb.ToString(),
+            [player]);
 
         var note = new SharedAdminNote(
             noteId,
@@ -210,7 +219,14 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
                 throw new ArgumentOutOfRangeException(nameof(type), type, "Unknown note type");
         }
 
-        _sawmill.Info($"{deletedBy.Name} has deleted {type} {noteId}");
+        var logStr = $"{deletedBy.Name} has deleted {type} {noteId}";
+        _sawmill.Info(logStr);
+        await _auditLog.AddLogAsync(
+            AuditLogUtil.LogTypeForRemark(type),
+            AuditLogUtil.LogImpactForRemark(type, note.NoteSeverity),
+            deletedBy.UserId,
+            logStr,
+            [note.Player.UserId]);
         NoteDeleted?.Invoke(note);
     }
 
@@ -234,7 +250,7 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
 
         if (note.Message != message)
         {
-            sb.Append($", modified message from {note.Message} to {message}");
+            sb.Append($", modified message from \"{note.Message}\" to \"{message}\"");
         }
 
         if (note.Secret != secret)
@@ -293,6 +309,13 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
             default:
                 throw new ArgumentOutOfRangeException(nameof(type), type, "Unknown note type");
         }
+
+        await _auditLog.AddLogAsync(
+            AuditLogUtil.LogTypeForRemark(type),
+            AuditLogUtil.LogImpactForRemark(type, note.NoteSeverity),
+            editedBy.UserId,
+            sb.ToString(),
+            [note.Player.UserId]);
 
         var newNote = note with
         {

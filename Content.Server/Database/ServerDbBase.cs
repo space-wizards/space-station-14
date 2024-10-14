@@ -708,6 +708,7 @@ namespace Content.Server.Database
 
             return await db.DbContext.AdminRank
                 .Include(r => r.Flags)
+                .Include(r => r.Admins)
                 .SingleOrDefaultAsync(r => r.Id == id, cancel);
         }
 
@@ -838,6 +839,30 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
 
             await db.DbContext.SaveChangesAsync(cancel);
         }
+        #endregion
+
+
+        #region Audit Logs
+
+        public async Task AddAuditLogAsync(AuditLogType ty, LogImpact impact, Guid? author, string message, List<Guid>? effected)
+        {
+            var dbEffected= effected == null
+                ? []
+                : effected.Select(id => new AuditLogEffectedPlayer() { EffectedUserId = id }).ToList();
+            var log = new AuditLog()
+            {
+                Type = ty,
+                Impact = impact,
+                AuthorUserId = author,
+                Message = message,
+                Date = DateTime.UtcNow,
+                Effected = dbEffected,
+            };
+            await using var db = await GetDb();
+            db.DbContext.AuditLog.Add(log);
+            await db.DbContext.SaveChangesAsync();
+        }
+
         #endregion
 
         #region Admin Logs

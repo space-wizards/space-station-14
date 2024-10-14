@@ -1,7 +1,11 @@
 ﻿using System.Linq;
 using System.Text;
+using Content.Server.Administration.Logs.AuditLogs;
 using Content.Server.Database;
 using Content.Shared.Administration;
+using Content.Shared.Database;
+using Microsoft.CodeAnalysis.Elfie.Serialization;
+using Microsoft.Extensions.Primitives;
 using Robust.Shared.Console;
 
 namespace Content.Server.Administration.Commands;
@@ -11,6 +15,7 @@ public sealed class BanExemptionUpdateCommand : LocalizedCommands
 {
     [Dependency] private readonly IServerDbManager _dbManager = default!;
     [Dependency] private readonly IPlayerLocator _playerLocator = default!;
+    [Dependency] private readonly IAuditLogManager _auditLog = default!;
 
     public override string Command => "ban_exemption_update";
 
@@ -22,6 +27,13 @@ public sealed class BanExemptionUpdateCommand : LocalizedCommands
             return;
         }
 
+        if (shell.Player == null)
+        {
+            shell.WriteError(Loc.GetString("shell-uid-failure"));
+            return;
+        }
+
+        var logFlags = new StringBuilder();
         var flags = ServerBanExemptFlags.None;
         for (var i = 1; i < args.Length; i++)
         {
@@ -31,7 +43,10 @@ public sealed class BanExemptionUpdateCommand : LocalizedCommands
                 shell.WriteError(LocalizationManager.GetString("cmd-ban_exemption_update-invalid-flag", ("flag", arg)));
                 return;
             }
-
+            // Do not add a comma to the first flag
+            if (i > 1)
+                logFlags.Append(", ");
+            logFlags.Append(arg);
             flags |= flag;
         }
 
@@ -44,6 +59,12 @@ public sealed class BanExemptionUpdateCommand : LocalizedCommands
         }
 
         await _dbManager.UpdateBanExemption(playerData.UserId, flags);
+        await _auditLog.AddLogAsync(AuditLogType.BanExemption,
+            LogImpact.Medium,
+            shell.Player.UserId,
+            $"Ban exemption status for {playerData.UserId} changed to {logFlags}",
+            [playerData.UserId]);
+
         shell.WriteLine(LocalizationManager.GetString(
             "cmd-ban_exemption_update-success",
             ("player", player),

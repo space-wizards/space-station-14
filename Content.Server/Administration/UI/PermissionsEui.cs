@@ -1,9 +1,11 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using Content.Server.Administration.Logs.AuditLogs;
 using Content.Server.Administration.Managers;
 using Content.Server.Database;
 using Content.Server.EUI;
 using Content.Shared.Administration;
+using Content.Shared.Database;
 using Content.Shared.Eui;
 using Robust.Server.Player;
 using Robust.Shared.Network;
@@ -19,6 +21,7 @@ namespace Content.Server.Administration.UI
         [Dependency] private readonly IServerDbManager _db = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
         [Dependency] private readonly ILogManager _logManager = default!;
+        [Dependency] private readonly IAuditLogManager _auditLog = default!;
 
         private readonly ISawmill _sawmill;
         private bool _isLoading;
@@ -151,6 +154,13 @@ namespace Content.Server.Administration.UI
             }
 
             await _db.RemoveAdminRankAsync(rr.Id);
+            var effected = rank.Admins.Select(a => a.UserId).ToList();
+            await _auditLog.AddLogAsync(
+                AuditLogType.RankChange,
+                LogImpact.Extreme,
+                Player.UserId,
+                $"Removed admin rank {rank.Name}",
+                effected);
 
             _adminManager.ReloadAdminsWithRank(rr.Id);
         }
@@ -182,6 +192,13 @@ namespace Content.Server.Administration.UI
 
             var flagText = string.Join(' ', AdminFlagsHelper.FlagsToNames(ur.Flags).Select(f => $"+{f}"));
             _sawmill.Info($"{Player} updated admin rank {rank.Name}/{flagText}.");
+            var effected = rank.Admins.Select(a => a.UserId).ToList();
+            await _auditLog.AddLogAsync(
+                AuditLogType.RankChange,
+                LogImpact.Extreme,
+                Player.UserId,
+                $"Updated admin rank {rank.Name} to {flagText}",
+                effected);
 
             _adminManager.ReloadAdminsWithRank(ur.Id);
         }
@@ -204,6 +221,12 @@ namespace Content.Server.Administration.UI
 
             var flagText = string.Join(' ', AdminFlagsHelper.FlagsToNames(ar.Flags).Select(f => $"+{f}"));
             _sawmill.Info($"{Player} added admin rank {rank.Name}/{flagText}.");
+            await _auditLog.AddLogAsync(
+                AuditLogType.RankChange,
+                LogImpact.Extreme,
+                Player.UserId,
+                $"Added admin rank {rank.Name} with flags {flagText}",
+                []);
         }
 
         private async Task HandleRemoveAdmin(RemoveAdmin ra)
@@ -225,6 +248,13 @@ namespace Content.Server.Administration.UI
 
             var record = await _db.GetPlayerRecordByUserId(ra.UserId);
             _sawmill.Info($"{Player} removed admin {record?.LastSeenUserName ?? ra.UserId.ToString()}");
+
+            await _auditLog.AddLogAsync(
+                AuditLogType.AdminStatusChanged,
+                LogImpact.Extreme,
+                Player.UserId,
+                $"Removed admin {record?.LastSeenUserName ?? ra.UserId.ToString()}",
+                [ra.UserId.UserId]);
 
             if (_playerManager.TryGetSessionById(ra.UserId, out var player))
             {
@@ -270,6 +300,12 @@ namespace Content.Server.Administration.UI
             var flags = AdminFlagsHelper.PosNegFlagsText(ua.PosFlags, ua.NegFlags);
 
             _sawmill.Info($"{Player} updated admin {name} to {title}/{rankName}/{flags}");
+            await _auditLog.AddLogAsync(
+                AuditLogType.AdminStatusChanged,
+                LogImpact.Extreme,
+                Player.UserId,
+                $"Updated admin to {title}/{rankName}/{flags}",
+                [ua.UserId.UserId]);
 
             if (_playerManager.TryGetSessionById(ua.UserId, out var player))
             {
@@ -344,6 +380,12 @@ namespace Content.Server.Administration.UI
             var flags = AdminFlagsHelper.PosNegFlagsText(ca.PosFlags, ca.NegFlags);
 
             _sawmill.Info($"{Player} added admin {name} as {title}/{rankName}/{flags}");
+            await _auditLog.AddLogAsync(
+                AuditLogType.AdminStatusChanged,
+                LogImpact.Extreme,
+                Player.UserId,
+                $"Added admin with {title}/{rankName}/{flags}",
+                [userId]);
 
             if (_playerManager.TryGetSessionById(userId, out var player))
             {

@@ -1,7 +1,9 @@
 using Content.Server.Administration;
+using Content.Server.Administration.Logs.AuditLogs;
 using Content.Server.Database;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
+using Content.Shared.Database;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
@@ -25,6 +27,13 @@ public sealed class AddWhitelistCommand : LocalizedCommands
 
         var db = IoCManager.Resolve<IServerDbManager>();
         var loc = IoCManager.Resolve<IPlayerLocator>();
+        var auditLog = IoCManager.Resolve<IAuditLogManager>();
+
+        if (shell.Player == null)
+        {
+            shell.WriteError(Loc.GetString("shell-uid-failure"));
+            return;
+        }
 
         var name = string.Join(' ', args).Trim();
         var data = await loc.LookupIdByNameOrIdAsync(name);
@@ -40,6 +49,7 @@ public sealed class AddWhitelistCommand : LocalizedCommands
             }
 
             await db.AddToWhitelistAsync(guid);
+            await auditLog.AddLogAsync(AuditLogType.Whitelist, LogImpact.Medium, shell.Player.UserId, $"{data.Username} was whitelisted", [guid]);
             shell.WriteLine(Loc.GetString("cmd-whitelistadd-added", ("username", data.Username)));
             return;
         }
@@ -74,6 +84,13 @@ public sealed class RemoveWhitelistCommand : LocalizedCommands
 
         var db = IoCManager.Resolve<IServerDbManager>();
         var loc = IoCManager.Resolve<IPlayerLocator>();
+        var auditLog = IoCManager.Resolve<IAuditLogManager>();
+
+        if (shell.Player == null)
+        {
+            shell.WriteError(Loc.GetString("shell-uid-failure"));
+            return;
+        }
 
         var name = string.Join(' ', args).Trim();
         var data = await loc.LookupIdByNameOrIdAsync(name);
@@ -89,6 +106,7 @@ public sealed class RemoveWhitelistCommand : LocalizedCommands
             }
 
             await db.RemoveFromWhitelistAsync(guid);
+            await auditLog.AddLogAsync(AuditLogType.Whitelist, LogImpact.Medium, shell.Player.UserId, $"{data.Username}'s whitelist was removed", [guid]);
             shell.WriteLine(Loc.GetString("cmd-whitelistremove-removed", ("username", data.Username)));
             return;
         }
