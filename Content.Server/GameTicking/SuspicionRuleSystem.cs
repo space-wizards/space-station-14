@@ -11,6 +11,7 @@ using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Implants;
 using Content.Server.KillTracking;
 using Content.Server.Mind;
+using Content.Server.Pinpointer;
 using Content.Server.Radio.Components;
 using Content.Server.Roles;
 using Content.Server.RoundEnd;
@@ -44,6 +45,7 @@ using Content.Shared.Overlays;
 using Content.Shared.Players;
 using Content.Shared.Security.Components;
 using Content.Shared.Store.Components;
+using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Network;
@@ -72,6 +74,8 @@ public sealed class SuspicionRuleSystem : GameRuleSystem<SuspicionRuleComponent>
     [Dependency] private readonly RejuvenateSystem _rejuvenate = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly NpcFactionSystem _npcFactionSystem = default!;
+    [Dependency] private readonly NavMapSystem _navMapSystem = default!;
+    [Dependency] private readonly TransformSystem _transformSystem = default!;
 
     private readonly SoundSpecifier _traitorStartSound = new SoundPathSpecifier("/Audio/Ambience/Antag/traitor_start.ogg");
 
@@ -325,8 +329,10 @@ public sealed class SuspicionRuleSystem : GameRuleSystem<SuspicionRuleComponent>
         component.Revealed = true;
         var targetName = MetaData(args.Examined).EntityName;
         var userName = MetaData(args.Examiner).EntityName;
+        var trans = Comp<TransformComponent>(args.Examined);
+        var loc = _transformSystem.GetMapCoordinates(trans);
         SendAnnouncement(
-            $"[italic]{userName}[/italic] found the body of [italic]{targetName}[/italic] and discovered they were a [bold][color={role.Value.Comp.Role.GetRoleColor()}]{role.Value.Comp.Role}[/color][/bold]."
+            $"[italic]{userName}[/italic] found the body of [italic]{targetName}[/italic]  {_navMapSystem.GetNearestBeaconString(loc)} and discovered they were a [bold][color={role.Value.Comp.Role.GetRoleColor()}]{role.Value.Comp.Role}[/color][/bold]."
         );
     }
 
