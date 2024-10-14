@@ -11,7 +11,7 @@
             <!-- Header text -->
             <controls:StripeBack>
                 <PanelContainer>
-                    <Label Text="{Loc 'holopad-window-emergency-broadcast-in-progress'}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10 10 10 10" ReservesSpace="False"/>
+                    <RichTextLabel Name="EmergencyBroadcastText" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10 10 10 10" ReservesSpace="False"/>
                 </PanelContainer>
             </controls:StripeBack>
             

@@ -79,6 +79,7 @@ public sealed partial class HolopadWindow : FancyWindow
             BackgroundColor = new Color(82, 82, 82),
         };
 
+        EmergencyBroadcastText.SetMessage(FormattedMessage.FromMarkupOrThrow(Loc.GetString("holopad-window-emergency-broadcast-in-progress")));
         SubtitleText.SetMessage(FormattedMessage.FromMarkupOrThrow(Loc.GetString("holopad-window-subtitle")));
         OptionsText.SetMessage(FormattedMessage.FromMarkupOrThrow(Loc.GetString("holopad-window-options")));
     }
@@ -169,7 +170,7 @@ public sealed partial class HolopadWindow : FancyWindow
             return;
 
         // Caller ID text
-        var callerId = _telephoneSystem.GetFormattedCallerIdForEntity(telephone.LastCallerId.Item1, telephone.LastCallerId.Item2, Color.White, "Default", 11);
+        var callerId = _telephoneSystem.GetFormattedCallerIdForEntity(telephone.LastCallerId.Item1, telephone.LastCallerId.Item2, Color.LightGray, "Default", 11);
 
         CallerIdText.SetMessage(FormattedMessage.FromMarkupOrThrow(callerId));
         LockOutIdText.SetMessage(FormattedMessage.FromMarkupOrThrow(callerId));
