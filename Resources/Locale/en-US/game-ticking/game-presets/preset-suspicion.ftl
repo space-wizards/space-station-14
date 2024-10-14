@@ -8,3 +8,5 @@ detective-briefing = You are a detective. Your goal is to [bold]survive[/bold] a
 suspicion-traitor-uplink = Traitor Uplink
 suspicion-detective-uplink = Detective Uplink
 tc-added-sus = You have been given {$tc} TC for your performance.
+suspicion-examination = { SUBJECT($ent) } were [color={$col}]{ $role }[/color]
+suspicion-examination-chat = [italic]{ $finder }[/italic] found the body of [italic]{ $found }[/italic] { $where } and discovered { SUBJECT($found) } { CONJUGATE-BASIC($found, "were", "was") } { INDEFINITE($role) } [bold][color={ $col }]{ $role }[/color][/bold].

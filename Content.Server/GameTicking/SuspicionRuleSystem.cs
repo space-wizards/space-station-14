@@ -306,15 +306,12 @@ public sealed class SuspicionRuleSystem : GameRuleSystem<SuspicionRuleComponent>
         if (role.Value.Comp.Role == SuspicionRole.Pending)
             return;
 
-        var determiner = role.Value.Comp.Role switch
-        {
-            SuspicionRole.Traitor => "a",
-            SuspicionRole.Detective => "a",
-            SuspicionRole.Innocent => "an",
-            _ => "a"
-        };
-
-        args.PushMarkup($"They were {determiner} [color={role.Value.Comp.Role.GetRoleColor()}]{role.Value.Comp.Role.ToString()}[/color]", -10);
+        args.PushMarkup(Loc.GetString(
+            "suspicion-examination",
+            ("ent", args.Examined),
+            ("col", role.Value.Comp.Role.GetRoleColor()),
+            ("role", role.Value.Comp.Role.ToString())),
+            -10);
 
         if (!HasComp<HandsComponent>(args.Examiner))
             return;
@@ -327,12 +324,17 @@ public sealed class SuspicionRuleSystem : GameRuleSystem<SuspicionRuleComponent>
             return;
 
         component.Revealed = true;
-        var targetName = MetaData(args.Examined).EntityName;
-        var userName = MetaData(args.Examiner).EntityName;
         var trans = Comp<TransformComponent>(args.Examined);
         var loc = _transformSystem.GetMapCoordinates(trans);
+
+        var msg = Loc.GetString("suspicion-examination-chat",
+            ("finder", args.Examiner),
+            ("found", args.Examined),
+            ("where", _navMapSystem.GetNearestBeaconString(loc)),
+            ("col", role.Value.Comp.Role.GetRoleColor()),
+            ("role", role.Value.Comp.Role.ToString()));
         SendAnnouncement(
-            $"[italic]{userName}[/italic] found the body of [italic]{targetName}[/italic]  {_navMapSystem.GetNearestBeaconString(loc)} and discovered they were a [bold][color={role.Value.Comp.Role.GetRoleColor()}]{role.Value.Comp.Role}[/color][/bold]."
+            msg
         );
     }
 
