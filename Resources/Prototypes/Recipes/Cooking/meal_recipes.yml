@@ -1989,7 +1989,6 @@
     FoodCroissantRaw: 1
     FoodButterSlice: 1
     ShardGlass: 1
-<<<<<<< HEAD
 
 - type: microwaveMealRecipe
   id: RecipeAnomalyMeat
@@ -2006,5 +2005,3 @@
   time: 5
   solids:
     FoodMeatAnomaly: 1
-=======
->>>>>>> 7532d6f26ed68f080cc922ea9e4f17d10101ef51

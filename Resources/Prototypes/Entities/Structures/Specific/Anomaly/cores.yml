@@ -240,6 +240,22 @@
     energy: 1.5
     color: "#befaff"
     castShadows: false
+  - type: Slippery
+  - type: StepTrigger
+    intersectRatio: 0.2
+  - type: CollisionWake
+    enabled: false
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+      slips:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        hard: false
+        layer:
+        - SlipLayer
 
 - type: entity
   parent: BaseAnomalyInertCore
@@ -294,7 +310,7 @@
     castShadows: false
 
 - type: entity
-  parent: [ BaseAnomalyInertCore, PowerCellMicroreactorPrinted ]
+  parent: [ BaseAnomalyInertCore, PowerCellMicroreactorPrinted ] #Has the same properties as a microreactor battery
   id: AnomalyCoreElectricityInert
   suffix: Electricity, Inert
   components:
@@ -322,7 +338,7 @@
     castShadows: false
 
 - type: entity
-  parent: [ BaseAnomalyInertCore, BaseShadow, SmokeGrenade ]
+  parent: [ BaseAnomalyInertCore, BaseShadow, SmokeGrenade ] #Acts as a reusable, 5 minute CD smoke grenade
   id: AnomalyCoreShadowInert
   suffix: Shadow, Inert
   components:
@@ -340,12 +356,17 @@
     sound: /Audio/Items/smoke_grenade_smoke.ogg
 
 - type: entity
-  parent: BaseAnomalyInertCore
+  parent: [ BaseAnomalyInertCore, Emag ] #Acts as a single-charge, 5 minute CD emag
   id: AnomalyCoreTechInert
   suffix: Tech, Inert
   components:
   - type: Sprite
     sprite: Structures/Specific/Anomalies/Cores/tech_core.rsi
+  - type: LimitedCharges
+    maxCharges: 1
+    Charges: 1
+  - type: AutoRecharge
+    rechargeDuration: 300 #5 minutes
   - type: PointLight
     radius: 1.5
     energy: 2.0
