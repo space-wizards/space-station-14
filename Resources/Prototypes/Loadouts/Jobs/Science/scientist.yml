@@ -147,6 +147,11 @@
   equipment:
     shoes: ClothingShoesBootsWinterSci
 
+- type: loadout
+  id: RoboticistWinterBoots
+  equipment:
+    shoes: ClothingShoesBootsWinterRobo
+
 # ID
 - type: loadout
   id: ScientistPDA
