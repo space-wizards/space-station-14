@@ -1063,6 +1063,9 @@
   id: Nugget # for chicken nuggets
 
 - type: Tag
+  id: FakeNukeDisk
+
+- type: Tag
   id: NukeOpsUplink
 
 - type: Tag
