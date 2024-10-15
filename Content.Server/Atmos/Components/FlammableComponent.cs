@@ -46,6 +46,12 @@ namespace Content.Server.Atmos.Components
         [DataField]
         public float PeakFlameTemperature = 1500.00f; // vaguely how hot an incenerator gets.
 
+        /// <summary>
+        /// How much energy is released while the entity is burning. 
+        /// </summary>
+        [DataField]
+        public float JoulesPerFirestack = 8500;
+
         [DataField]
         public bool FireSpread { get; private set; } = false;
 

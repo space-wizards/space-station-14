@@ -462,13 +462,15 @@ namespace Content.Server.Atmos.EntitySystems
                         if (!_physicsQuery.TryComp(uid, out var physics))
                             continue;
 
-                        var maxDeltaT = flammable.PeakFlameTemperature - temp.CurrentTemperature;
-                        if (maxDeltaT > 0) // we dont want to burn and get colder.
-                        {
+                        _temperatureSystem.ChangeHeat(uid, flammable.JoulesPerFirestack * flammable.FireStacks, false, temp);
 
-                            var tempBump = MathF.Sqrt(maxDeltaT * temp.SpecificHeat * physics.Mass) * flammable.FireStacks; //monotonic function, slows as it reaches maxT
-                            _temperatureSystem.ChangeHeat(uid, tempBump, false, temp);
-                        }
+//                       var maxDeltaT = flammable.PeakFlameTemperature - temp.CurrentTemperature; // commented out in favor of the above simple linear heat change. Leaving this here in case that proves too abusable.
+//                        if (maxDeltaT > 0) // we dont want to burn and get colder.
+//                        {
+//
+//                            var tempBump = MathF.Sqrt(maxDeltaT * temp.SpecificHeat * physics.Mass) * flammable.FireStacks; //monotonic function, slows as it reaches maxT
+//                            _temperatureSystem.ChangeHeat(uid, tempBump, false, temp);
+//                        }
                     }
 
                     var ev = new GetFireProtectionEvent();
