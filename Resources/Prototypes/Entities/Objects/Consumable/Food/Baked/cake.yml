@@ -171,6 +171,7 @@
   - type: Tag
     tags:
     - Meat
+    - Cake
 
 - type: entity
   name: slice of brain cake
