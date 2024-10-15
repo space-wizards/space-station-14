@@ -32,3 +32,5 @@
       path: /Audio/Voice/Snail/snail_cough.ogg
     DefaultDeathgasp:
       path: /Audio/Voice/Snail/snail_deathgasp.ogg
+    Ungh:
+      collection: Ungh

@@ -215,3 +215,9 @@
   speechVerbStrings:
   - chat-speech-verb-finfin-1
   - chat-speech-verb-finfin-2
+
+- type: speechVerb
+  id: Bros
+  name: chat-speech-verb-name-bros
+  speechVerbStrings:
+  - chat-speech-verb-bros

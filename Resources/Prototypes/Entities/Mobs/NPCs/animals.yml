@@ -2489,8 +2489,6 @@
     - type: NpcFactionMember
       factions:
         - Xeno
-    - type: ReplacementAccent
-      accent: xeno
     - type: InputMover
     - type: MobMover
     - type: HTN
@@ -2526,8 +2524,11 @@
       damage:
         types:
           Blunt: 1
+    - type: ReplacementAccent
+      accent: bros
     - type: Speech
-      speechVerb: Cluwne
+      speechSounds: Bros
+      speechVerb: Bros
     - type: Bloodstream
       bloodMaxVolume: 15
       bloodReagent: VentCrud
@@ -2552,6 +2553,8 @@
     - type: FoodSequenceElement
       entries:
         Burger: BrosBurger
+    - type: CanEscapeInventory
+      baseResistTime: 2
 
 - type: entity
   name: SORB
@@ -2571,6 +2574,19 @@
           Base: sorb
         Dead:
           Base: sorb-dead
+
+# used for BROS polymorph from juice that makes you UNGH so players don't get one-shot and die for real          
+- type: entity
+  name: BROS
+  parent: MobBros
+  id: MobBrosPoly
+  description: OH FUCK IT'S BROS
+  components:
+    - type: MobThresholds
+      thresholds:
+        0: Alive
+        100: Critical
+        200: Dead
 
 - type: entity
   name: wizard spider
