@@ -29,6 +29,7 @@
     - type: UseDelay
     - type: Flammable
       peakFlameTemperature: 350
+      joulesPerFirestack: 80
       fireSpread: false
       canResistFire: false
       alwaysCombustible: true
