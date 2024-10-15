@@ -7,6 +7,7 @@ using Content.Shared.Geofencing;
 using Robust.Shared.Timing;
 using Robust.Shared.Map;
 using System.Numerics;
+using Microsoft.CodeAnalysis.Host;
 
 namespace Content.Server.Geofencing;
 
@@ -21,6 +22,9 @@ public sealed class GeofencingSystem : EntitySystem
     [Dependency] private readonly SpecialRespawnSystem _respawnSys = default!;
 
 
+    static private float _updateRate = 2; //How frequently to do our geofencing queries for perf reasons.
+    private TimeSpan _nextUpdate = TimeSpan.FromSeconds(_updateRate);
+
     public override void Initialize()
     {
         base.Initialize();
@@ -33,6 +37,11 @@ public sealed class GeofencingSystem : EntitySystem
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
+
+        if (_nextUpdate > _timing.CurTime)
+            return;
+
+        _nextUpdate = _nextUpdate + TimeSpan.FromSeconds(_updateRate);
 
         var fencequery = EntityQueryEnumerator<GeofencingComponent>();
         while (fencequery.MoveNext(out var uid, out var geofence))

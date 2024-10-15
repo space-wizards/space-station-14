@@ -642,7 +642,7 @@ public sealed class NukeSystem : EntitySystem
     {
         _nukeQuery = GetEntityQuery<NukeComponent>();
         var outcomp = new NukeComponent();
-        if (_containers.TryFindComponentOnEntityContainerOrParent<NukeComponent>(ent, _nukeQuery, out _))
+        if (_containers.TryFindComponentOnEntityContainerOrParent<NukeComponent>(ent, _nukeQuery, ref outcomp))
         {
             args.Cancel();
         }
