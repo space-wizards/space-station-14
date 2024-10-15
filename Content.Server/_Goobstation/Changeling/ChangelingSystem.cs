@@ -191,14 +191,15 @@ public sealed partial class ChangelingSystem : EntitySystem
             // game over, man
             _damage.TryChangeDamage(uid, new DamageSpecifier(_proto.Index(AbsorbedDamageGroup), 50), true);
 
-        if (comp.Biomass <= comp.MaxBiomass / 10)
+        if (comp.Biomass <= comp.MaxBiomass / 15)
         {
             // THE FUNNY ITCH IS REAL!!
             comp.BonusChemicalRegen = 3f;
             _popup.PopupEntity(Loc.GetString("popup-changeling-biomass-deficit-high"), uid, uid, PopupType.LargeCaution);
-            _jitter.DoJitter(uid, TimeSpan.FromSeconds(comp.BiomassUpdateCooldown), true, amplitude: 5, frequency: 10);
+            if (!_mobState.IsDead(uid))
+                _jitter.DoJitter(uid, TimeSpan.FromSeconds(comp.BiomassUpdateCooldown), true, amplitude: 5, frequency: 10);
         }
-        else if (comp.Biomass <= comp.MaxBiomass / 3)
+        else if (comp.Biomass <= comp.MaxBiomass / 5)
         {
             // vomit blood
             if (random == 1)
