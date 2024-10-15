@@ -35,9 +35,9 @@ public sealed partial class TestPair
             mapData.GridCoords = new EntityCoordinates(mapData.Grid, 0, 0);
             var plating = tileDefinitionManager[tile];
             var platingTile = new Tile(plating.TileId);
-            mapData.Grid.Comp.SetTile(mapData.GridCoords, platingTile);
+            Server.System<SharedMapSystem>().SetTile(mapData.Grid.Owner, mapData.Grid.Comp, mapData.GridCoords, platingTile);
             mapData.MapCoords = new MapCoordinates(0, 0, mapData.MapId);
-            mapData.Tile = mapData.Grid.Comp.GetAllTiles().First();
+            mapData.Tile = Server.System<SharedMapSystem>().GetAllTiles(mapData.Grid.Owner, mapData.Grid.Comp).First();
         });
 
         TestMap = mapData;
@@ -107,13 +107,41 @@ public sealed partial class TestPair
     /// <summary>
     /// Retrieve all entity prototypes that have some component.
     /// </summary>
-    public List<EntityPrototype> GetPrototypesWithComponent<T>(
+    public List<(EntityPrototype, T)> GetPrototypesWithComponent<T>(
         HashSet<string>? ignored = null,
         bool ignoreAbstract = true,
         bool ignoreTestPrototypes = true)
         where T : IComponent
     {
         var id = Server.ResolveDependency<IComponentFactory>().GetComponentName(typeof(T));
+        var list = new List<(EntityPrototype, T)>();
+        foreach (var proto in Server.ProtoMan.EnumeratePrototypes<EntityPrototype>())
+        {
+            if (ignored != null && ignored.Contains(proto.ID))
+                continue;
+
+            if (ignoreAbstract && proto.Abstract)
+                continue;
+
+            if (ignoreTestPrototypes && IsTestPrototype(proto))
+                continue;
+
+            if (proto.Components.TryGetComponent(id, out var cmp))
+                list.Add((proto, (T)cmp));
+        }
+
+        return list;
+    }
+
+    /// <summary>
+    /// Retrieve all entity prototypes that have some component.
+    /// </summary>
+    public List<EntityPrototype> GetPrototypesWithComponent(Type type,
+        HashSet<string>? ignored = null,
+        bool ignoreAbstract = true,
+        bool ignoreTestPrototypes = true)
+    {
+        var id = Server.ResolveDependency<IComponentFactory>().GetComponentName(type);
         var list = new List<EntityPrototype>();
         foreach (var proto in Server.ProtoMan.EnumeratePrototypes<EntityPrototype>())
         {
@@ -127,7 +155,7 @@ public sealed partial class TestPair
                 continue;
 
             if (proto.Components.ContainsKey(id))
-                list.Add(proto);
+                list.Add((proto));
         }
 
         return list;
