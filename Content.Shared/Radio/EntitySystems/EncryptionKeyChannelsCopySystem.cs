@@ -15,8 +15,8 @@ public sealed partial class EncryptionKeyChannelsCopySystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<EncryptionKeyChannelsCopyComponent, InteractUsingInContainerEvent>(OnInteractUsingInContainer);
-        SubscribeLocalEvent<EncryptionKeyChannelsCopyComponent, BeforeRangedInteractEvent>(OnInteractUsing);
+        SubscribeLocalEvent<EncryptionKeyChannelsCopyComponent, InteractBeforeUsingWithInContainerEvent>(OnInteractUsingInContainer);
+        SubscribeLocalEvent<EncryptionKeyChannelsCopyComponent, BeforeRangedInteractEvent>(OnBeforeInteractWith);
     }
 
     /// <summary>
@@ -36,6 +36,7 @@ public sealed partial class EncryptionKeyChannelsCopySystem : EntitySystem
 
         if (TryComp<EncryptionKeyHolderComponent>(sourceUid, out var keyHolderComponent))
         {
+            // make possible to insert key in a headset
             if (keyHolderComponent.KeyContainer.Count == 0)
                 return false;
 
@@ -52,21 +53,18 @@ public sealed partial class EncryptionKeyChannelsCopySystem : EntitySystem
         return false;
     }
 
-    private void OnInteractUsingInContainer(Entity<EncryptionKeyChannelsCopyComponent> ent, ref InteractUsingInContainerEvent args)
+    private void OnInteractUsingInContainer(Entity<EncryptionKeyChannelsCopyComponent> ent, ref InteractBeforeUsingWithInContainerEvent args)
     {
-        if (TryCopyChannels((ent.Owner, ent.Comp), args.Target))
+        if (args.Target == null || args.Handled || !args.CanReach)
+            return;
+
+        if (TryCopyChannels((ent.Owner, ent.Comp), args.Target.Value))
             args.Handled = true;
     }
 
-    private void OnInteractUsing(Entity<EncryptionKeyChannelsCopyComponent> ent, ref BeforeRangedInteractEvent args)
+    private void OnBeforeInteractWith(Entity<EncryptionKeyChannelsCopyComponent> ent, ref BeforeRangedInteractEvent args)
     {
-        if (args.Target == null)
-            return;
-
-        if (args.Handled)
-            return;
-
-        if (!args.CanReach)
+        if (args.Target == null || args.Handled || !args.CanReach)
             return;
 
         if (TryCopyChannels((ent.Owner, ent.Comp), args.Target.Value))

@@ -1,3 +1,5 @@
+using Content.Shared.Access.Components;
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.StatusIcon;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -6,7 +8,18 @@ namespace Content.Shared.Access.Systems
 {
     public abstract class SharedAgentIdCardSystem : EntitySystem
     {
-        // Just for friending for now
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            SubscribeLocalEvent<AgentIDCardComponent, ItemSlotInsertAttemptEvent>(OnInsertAttempt);
+        }
+        private void OnInsertAttempt(Entity<AgentIDCardComponent> entity, ref ItemSlotInsertAttemptEvent args)
+        {
+            // lets make it easer to copy accesses with clicking on pda
+            if (args.Slot.HasItem)
+                args.Cancelled = true;
+        }
     }
 
     /// <summary>

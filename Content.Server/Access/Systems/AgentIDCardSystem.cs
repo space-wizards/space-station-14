@@ -3,6 +3,7 @@ using Content.Server.Popups;
 using Content.Shared.UserInterface;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
+using Content.Shared.BroadcastInteractionUsingToContainer;
 using Content.Shared.Interaction;
 using Content.Shared.StatusIcon;
 using Robust.Server.GameObjects;
@@ -23,6 +24,8 @@ namespace Content.Server.Access.Systems
         {
             base.Initialize();
             SubscribeLocalEvent<AgentIDCardComponent, AfterInteractEvent>(OnAfterInteract);
+            SubscribeLocalEvent<AgentIDCardComponent, InteractUsingTargetInContainerEvent>(OnAfterInteractInContainer);
+            SubscribeLocalEvent<AgentIDCardComponent, InteractBeforeUsingWithInContainerEvent>(OnBeforeInteractionInContainer);
             // BUI
             SubscribeLocalEvent<AgentIDCardComponent, AfterActivatableUIOpenEvent>(AfterUIOpen);
             SubscribeLocalEvent<AgentIDCardComponent, AgentIDCardNameChangedMessage>(OnNameChanged);
@@ -30,17 +33,19 @@ namespace Content.Server.Access.Systems
             SubscribeLocalEvent<AgentIDCardComponent, AgentIDCardJobIconChangedMessage>(OnJobIconChanged);
         }
 
-        private void OnAfterInteract(EntityUid uid, AgentIDCardComponent component, AfterInteractEvent args)
+        private void OnAfterInteract(Entity<AgentIDCardComponent> entity, ref AfterInteractEvent args)
         {
             if (args.Target == null || !args.CanReach || !TryComp<AccessComponent>(args.Target, out var targetAccess) || !HasComp<IdCardComponent>(args.Target))
                 return;
 
+            var (uid, _) = entity;
             if (!TryComp<AccessComponent>(uid, out var access) || !HasComp<IdCardComponent>(uid))
                 return;
 
             var beforeLength = access.Tags.Count;
             access.Tags.UnionWith(targetAccess.Tags);
             var addedLength = access.Tags.Count - beforeLength;
+            args.Handled = true;
 
             if (addedLength == 0)
             {
@@ -57,6 +62,20 @@ namespace Content.Server.Access.Systems
             }
 
             _popupSystem.PopupEntity(Loc.GetString("agent-id-new", ("number", addedLength), ("card", args.Target)), args.Target.Value, args.User);
+        }
+
+        private void OnAfterInteractInContainer(Entity<AgentIDCardComponent> entity, ref InteractUsingTargetInContainerEvent args)
+        {
+            AfterInteractEvent interactEvent = new(args.User, args.Used, args.Target, args.ClickLocation, args.CanReach);
+            OnAfterInteract(entity, ref interactEvent);
+            args.Handled = interactEvent.Handled;
+        }
+
+        private void OnBeforeInteractionInContainer(Entity<AgentIDCardComponent> entity, ref InteractBeforeUsingWithInContainerEvent args)
+        {
+            AfterInteractEvent interactEvent = new(args.User, args.Used, args.Target, args.ClickLocation, args.CanReach);
+            OnAfterInteract(entity, ref interactEvent);
+            args.Handled = interactEvent.Handled;
         }
 
         private void AfterUIOpen(EntityUid uid, AgentIDCardComponent component, AfterActivatableUIOpenEvent args)

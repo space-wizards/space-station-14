@@ -51,6 +51,14 @@
       Cartridge-Slot: !type:ContainerSlot {}
       program-container: !type:Container
   - type: ItemSlots
+  - type: BroadcastInteractUsingToContainer
+    whitelist:
+      components:
+        - AgentIDCard
+  - type: BroadcastInteractUsingTargetToContainer
+    whitelist:
+      components:
+        - IdCard
   - type: Clothing
     quickEquip: false
     slots:
