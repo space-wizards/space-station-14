@@ -13,7 +13,6 @@ public sealed class RoofOverlay : Overlay
 {
     [Dependency] private readonly IClyde _clyde = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
-    [Dependency] private readonly ITileDefinitionManager _tileDefMan = default!;
     private readonly IEntityManager _entManager;
 
     private readonly EntityLookupSystem _lookup;
@@ -79,9 +78,7 @@ public sealed class RoofOverlay : Overlay
                 // Due to stencilling we essentially draw on unrooved tiles
                 while (tileEnumerator.MoveNext(out var tileRef))
                 {
-                    var tileDef = (ContentTileDefinition) _tileDefMan[tileRef.Tile.TypeId];
-
-                    if (!tileDef.Roof)
+                    if ((tileRef.Tile.ContentFlag & (ushort) TileFlags.Roof) == 0x0)
                     {
                         // Check if the tile is occluded in which case hide it anyway.
                         // This is to avoid lit walls bleeding over to unlit tiles.

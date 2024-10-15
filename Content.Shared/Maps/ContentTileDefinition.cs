@@ -5,6 +5,7 @@ using Content.Shared.Tools;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 using Robust.Shared.Utility;
@@ -42,12 +43,6 @@ namespace Content.Shared.Maps
 
         [DataField("baseTurf")]
         public string BaseTurf { get; private set; } = string.Empty;
-
-        /// <summary>
-        /// Whether this tile should draw roof shadows on <see cref="RoofComponent"/> maps.
-        /// </summary>
-        [DataField]
-        public bool Roof = true;
 
         [DataField]
         public PrototypeFlags<ToolQualityPrototype> DeconstructTools { get; set; } = new();
@@ -124,5 +119,12 @@ namespace Content.Shared.Maps
         {
             TileId = id;
         }
+    }
+
+    [Flags]
+    public enum TileFlags : ushort
+    {
+        None = 0,
+        Roof = 1 << 0,
     }
 }
