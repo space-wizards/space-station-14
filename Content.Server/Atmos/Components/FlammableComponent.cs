@@ -87,11 +87,5 @@ namespace Content.Server.Atmos.Components
 
         [DataField]
         public ProtoId<AlertPrototype> FireAlert = "Fire";
-
-        /// <summary>
-        /// A maximum quantity of gas to be added to the atmosphere every update while on fire.
-        /// </summary>
-        [DataField]
-        public GasMixture? EmissiveGasMix;
     }
 }

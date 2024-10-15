@@ -470,15 +470,7 @@ namespace Content.Server.Atmos.EntitySystems
                             var tempBump = MathF.Sqrt(maxDeltaT * temp.SpecificHeat * physics.Mass) * flammable.FireStacks; //monotonic function, slows as it reaches maxT
                             _temperatureSystem.ChangeHeat(uid, tempBump, false, temp);
                         }
-
-                        // release gas
-                        if (air != null && flammable.EmissiveGasMix != null)
-                        {
-                            flammable.EmissiveGasMix.Temperature = air.Temperature;
-                            var releasingGas = flammable.EmissiveGasMix.Clone(); // generate gas for the entity's entire burning lifespan, but we use ReleaseGasTo to handle temperature/pressure for us since those will change for other reasons.
-                            _atmosphereSystem.ReleaseGasTo(releasingGas, air, releasingGas.Pressure); // doing it this way means that we dont need to track the entity damage values or know its destructible or mobstate thresholds.
-                        }                                                                    // the downside, and a possible later rework, is that you ""lose"" some gas if the candle is burning in an atmosphere where it can't emit due to pressure.
-                    }                                                                        // the yml is also slightly cumbersome, because we now specify a "maximum release mix per update (second)" instead of a total gasmix in the entity.
+                    }
 
                     var ev = new GetFireProtectionEvent();
                     // let the thing on fire handle it
