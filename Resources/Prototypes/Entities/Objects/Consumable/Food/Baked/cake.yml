@@ -184,6 +184,8 @@
   - type: Tag
     tags:
     - Meat
+    - Cake
+    - Slice
 # Tastes like sweetness, cake, brains.
 
 - type: entity
