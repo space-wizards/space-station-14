@@ -86,7 +86,7 @@
     <GuideEntityEmbed Entity="ClothingOuterHardsuitRd" Caption=""/>
     <GuideEntityEmbed Entity="HandTeleporter" Caption=""/>
   </Box>
-  - Stealing the [color=#cb0000]Head of Security[/color]'s [bold]energy shotgun[/bold].
+  - Stealing the [color=#cb0000]Head of Security[/color]'s [bold]energy shotgun.[/bold]
   <Box>
     <GuideEntityEmbed Entity="WeaponEnergyShotgun" Caption=""/>
   </Box>
