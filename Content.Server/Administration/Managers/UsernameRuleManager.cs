@@ -195,6 +195,11 @@ public sealed partial class UsernameRuleManager : IUsernameRuleManager, IPostInj
 
     public async Task<(bool, string, bool)> IsUsernameBannedAsync(string username)
     {
+        if (await _db.CheckUsernameWhitelistAsync(username))
+        {
+            return (false, "", false);
+        }
+
         foreach ((Regex rule, _, string message, bool ban) in _cachedUsernameRules.Values)
         {
             if (rule.IsMatch(username))
@@ -326,5 +331,20 @@ public sealed partial class UsernameRuleManager : IUsernameRuleManager, IPostInj
     public void PostInject()
     {
         _sawmill = _logManager.GetSawmill(SawmillId);
+    }
+
+    public async Task WhitelistAddUsernameAsync(string username)
+    {
+        await _db.AddUsernameWhitelistAsync(username);
+    }
+
+    public async Task<bool> WhitelistRemoveUsernameAsync(string username)
+    {
+        bool present = await _db.CheckUsernameWhitelistAsync(username);
+        if (present)
+        {
+            await _db.RemoveUsernameWhitelistAsync(username);
+        }
+        return present;
     }
 }

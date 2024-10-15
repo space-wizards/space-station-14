@@ -36,6 +36,7 @@ namespace Content.Server.Database
         public DbSet<ServerBanHit> ServerBanHit { get; set; } = default!;
         public DbSet<ServerRoleBan> RoleBan { get; set; } = default!;
         public DbSet<ServerRoleUnban> RoleUnban { get; set; } = default!;
+        public DbSet<UsernameWhitelist> UsernameWhitelist { get; set; } = default!;
         public DbSet<ServerUsernameRule> UsernameRule { get; set; } = default!;
         public DbSet<PlayTime> PlayTime { get; set; } = default!;
         public DbSet<UploadedResourceLog> UploadedResourceLog { get; set; } = default!;
@@ -981,6 +982,12 @@ namespace Content.Server.Database
         public Guid? UnbanningAdmin { get; set; }
 
         public DateTime UnbanTime { get; set; }
+    }
+
+    [Table("username_whitelist")]
+    public sealed class UsernameWhitelist
+    {
+        [Required, Key] public string Username { get; set; }
     }
 
     [Table("server_username_rule")]

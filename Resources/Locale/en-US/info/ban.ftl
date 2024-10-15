@@ -95,6 +95,8 @@ cmd-ban-username-hint-upgrade-ban = [also ban]
 cmd-ban-username-hint-ban = Users who join with this username will be banned
 cmd-ban-username-hint-no-ban = Users who join with this username will be kicked (Default)
 
+cmd-username-whitelist-not-in-db = this username was not present in the database
+
 # create username ban failed
 cmd-ban-username-missing-minimum-permissions = {$admin} ({$adminId}) tried to create a username rule with no ban flag"
 cmd-ban-username-missing-minimum-permissions-regex = {$admin} ({$adminId}) tried to create a simple username ban with an invalid username ({$expression})

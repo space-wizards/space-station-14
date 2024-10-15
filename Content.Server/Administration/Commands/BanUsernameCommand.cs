@@ -1,7 +1,6 @@
 using System.Linq;
 using Content.Server.Administration.Managers;
 using Content.Shared.Administration;
-using Content.Shared.Database;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using UsernameHelpers = Robust.Shared.AuthLib.UsernameHelpers;

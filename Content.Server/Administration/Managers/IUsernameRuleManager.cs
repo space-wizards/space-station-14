@@ -36,4 +36,17 @@ public interface IUsernameRuleManager
     /// <param name="username"></param>
     /// <returns>wether the username is banned, the username ban message, and if the user should be banned for that username</returns>
     public Task<(bool, string, bool)> IsUsernameBannedAsync(string username);
+
+    /// <summary>
+    /// Adds a username to the username whitelist table
+    /// </summary>
+    /// <param name="username"></param>
+    public Task WhitelistAddUsernameAsync(string username);
+
+    /// <summary>
+    /// Removes a username to the username whitelist table
+    /// </summary>
+    /// <param name="username"></param>
+    /// <returns>If something was removed</returns>
+    public Task<bool> WhitelistRemoveUsernameAsync(string username);
 }

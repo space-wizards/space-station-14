@@ -525,6 +525,15 @@ namespace Content.Server.Database
         }
         #endregion
 
+        #region username whitelist
+        public abstract Task AddUsernameWhitelistAsync(string username);
+
+        public abstract Task RemoveUsernameWhitelistAsync(string username);
+
+        public abstract Task<bool> CheckUsernameWhitelistAsync(string username);
+
+        #endregion
+
         #region Username Rule
         public abstract Task<ServerUsernameRuleDef?> GetServerUsernameRuleAsync(int id);
 

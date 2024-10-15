@@ -472,6 +472,42 @@ namespace Content.Server.Database
         }
         #endregion
 
+        #region username whitelist
+        public override async Task AddUsernameWhitelistAsync(string username)
+        {
+            await using var db = await GetDbImpl();
+
+            db.PgDbContext.UsernameWhitelist.Add(new UsernameWhitelist
+            {
+                Username = username
+            });
+
+            await db.PgDbContext.SaveChangesAsync();
+        }
+
+        public override async Task RemoveUsernameWhitelistAsync(string username)
+        {
+            await using var db = await GetDbImpl();
+
+            db.PgDbContext.UsernameWhitelist.Remove(new UsernameWhitelist
+            {
+                Username = username
+            });
+
+            await db.PgDbContext.SaveChangesAsync();
+        }
+
+        public override async Task<bool> CheckUsernameWhitelistAsync(string username)
+        {
+            await using var db = await GetDbImpl();
+
+            return db.PgDbContext.UsernameWhitelist.Contains(new UsernameWhitelist
+            {
+                Username = username
+            });
+        }
+        #endregion
+
         #region Restrict Username
         public override async Task<ServerUsernameRuleDef?> GetServerUsernameRuleAsync(int id)
         {

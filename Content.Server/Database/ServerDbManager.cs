@@ -157,6 +157,14 @@ namespace Content.Server.Database
             DateTimeOffset editedAt);
         #endregion
 
+        #region username whitelist
+        public Task AddUsernameWhitelistAsync(string username);
+
+        public Task RemoveUsernameWhitelistAsync(string username);
+
+        public Task<bool> CheckUsernameWhitelistAsync(string username);
+        #endregion
+
         #region Username Rules
         Task<ServerUsernameRuleDef?> GetServerUsernameRuleAsync(int id);
 
@@ -569,6 +577,26 @@ namespace Content.Server.Database
         {
             DbWriteOpsMetric.Inc();
             return RunDbCommand(() => _db.EditServerRoleBan(id, reason, severity, expiration, editedBy, editedAt));
+        }
+        #endregion
+
+        #region username whitelist
+        public Task AddUsernameWhitelistAsync(string username)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.AddUsernameWhitelistAsync(username));
+        }
+
+        public Task RemoveUsernameWhitelistAsync(string username)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.RemoveUsernameWhitelistAsync(username));
+        }
+
+        public Task<bool> CheckUsernameWhitelistAsync(string username)
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.CheckUsernameWhitelistAsync(username));
         }
         #endregion
 
