@@ -50,7 +50,7 @@
   name: security shell gun
   parent: [BaseItem, BaseSecurityContraband]
   id: WeaponFlareGunSecurity
-  description: A modified flare gun designed to be used by security to launch beanbag, tranquilizer and other non-lethal shells.
+  description: A modified flare gun designed to be used by security to launch beanbag, tranquilizer or other non-lethal shells. Can still fire lethal shells in a pinch.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/flaregun_security.rsi
@@ -67,7 +67,7 @@
         priority: 1
         whitelist:
           tags:
-            - ShellShotgunLight
+            - ShellShotgun
   - type: ContainerContainer
     containers:
       gun_chamber: !type:ContainerSlot
