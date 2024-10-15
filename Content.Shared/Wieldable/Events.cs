@@ -28,7 +28,7 @@ public record struct WieldAttemptEvent(EntityUid User, bool Cancelled = false)
 
 /// <summary>
 /// Raised directed on an item before a user tries to stop wielding it willingly.
-/// If this event is cancelled wielding will not happen.
+/// If this event is cancelled unwielding will not happen.
 /// </summary>
 /// <remarks>
 /// This event is not raised if the user is forced to unwield the item.
