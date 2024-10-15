@@ -274,10 +274,8 @@ namespace Content.Shared.Atmos
         /// <summary>
         /// Returns True if supersetMix has more moles for all gases by mole quantity only.
         /// </summary>
-        /// <param name="supersetMix"></param> 
-        /// <param name="subsetMix"></param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public bool LEQMoles(GasMixture supersetMix)
+        public bool HasMinMoles(GasMixture supersetMix)
         {
             for (int i = 0; i < Atmospherics.AdjustedNumberOfGases; i++)
             {

@@ -445,7 +445,7 @@ namespace Content.Server.Atmos.EntitySystems
                         }
 
                         // If our local atmos doesnt have enough of the required gases extinguish.
-                        if (!flammable.FuelGasMix.LEQMoles(air))
+                        if (!flammable.FuelGasMix.HasMinMoles(air))
                         {
                             Extinguish(uid, flammable);
                             continue;
