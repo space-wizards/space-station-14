@@ -48,6 +48,7 @@
   category: Disabilities
   components:
     - type: Unborgable
+  organ: Brain
 
 - type: trait
   id: Muted

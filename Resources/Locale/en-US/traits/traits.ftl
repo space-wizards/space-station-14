@@ -25,7 +25,7 @@ trait-unrevivable-name = Unrevivable
 trait-unrevivable-desc = You are unable to be revived by defibrillators.
 
 trait-unborgable-name = Unborgable
-trait-unborgable-desc = Your brain is unable to fit into a man-machine interface.
+trait-unborgable-desc = Your brain is unable to fit into a Man-Machine Interface.
 
 trait-pirate-accent-name = Pirate accent
 trait-pirate-accent-desc = You can't stop speaking like a pirate!

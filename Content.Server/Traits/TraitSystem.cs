@@ -1,8 +1,10 @@
+using Content.Server.Body.Systems;
 using Content.Server.GameTicking;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Roles;
 using Content.Shared.Traits;
+using Content.Shared.Tag;
 using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager;
@@ -14,6 +16,8 @@ public sealed class TraitSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SharedHandsSystem _sharedHandsSystem = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly BodySystem _bodySystem = default!;
+    [Dependency] private readonly TagSystem _tagSystem = default!;
 
     public override void Initialize()
     {
@@ -47,6 +51,17 @@ public sealed class TraitSystem : EntitySystem
 
             // Add all components required by the prototype
             EntityManager.AddComponents(args.Mob, traitPrototype.Components, false);
+
+            if (traitPrototype.Organ != null)
+            {
+                foreach (var organ in _bodySystem.GetBodyOrgans(args.Mob))
+                {
+                    if (traitPrototype.Organ is { } organTag && _tagSystem.HasTag(organ.Id, organTag))
+                    {
+                        EntityManager.AddComponents(organ.Id, traitPrototype.Components);
+                    }
+                }
+            }
 
             // Add item required by the trait
             if (traitPrototype.TraitGear == null)
