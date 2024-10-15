@@ -29,8 +29,7 @@
 
 - type: entity
   id: HandheldAtmosMonitorEmpty
-  sprite: Objects/Specific/Atmos/handheldatmosmonitor.rsi
-  parent: BaseHandheldComputer
+  parent: HandheldAtmosMonitor
   suffix: Empty
   components:
   - type: ItemSlots
