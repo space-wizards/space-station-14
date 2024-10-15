@@ -1,6 +1,7 @@
 ﻿using Content.Server.Communications;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Ghost;
+using Content.Server.Radiation.Components;
 using Content.Server.Roles;
 using Content.Shared.Chat;
 using Content.Shared.Damage;
@@ -14,6 +15,7 @@ using Content.Shared.Implants.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Overlays;
+using Content.Shared.Popups;
 using Content.Shared.Store.Components;
 using Robust.Shared.Network;
 
@@ -190,5 +192,79 @@ public sealed partial class SuspicionRuleSystem : GameRuleSystem<SuspicionRuleCo
         SendAnnouncement(
             msg
         );
+    }
+
+    private void UpdateSpaceWalkDamage(ref SuspicionRuleComponent sus, float frameTime)
+    {
+        var query = EntityQueryEnumerator<SuspicionPlayerComponent>();
+        while (query.MoveNext(out var uid, out var comp))
+        {
+            if (comp.SpacewalkThreshold <= 0)
+                continue;
+
+            var coordinates = _transformSystem.GetMapCoordinates(uid);
+
+            var entities = _entityLookupSystem.GetEntitiesInRange<SuspicionGridMarkerComponent>(coordinates,
+                comp.SpacewalkThreshold,
+                LookupFlags.Sundries);
+
+            if (entities.Count > 0)
+                continue;
+
+            if (comp.LastTookSpacewalkDamage + TimeSpan.FromSeconds(1) > DateTime.Now)
+                continue;
+
+            var damage = new DamageSpecifier(_prototypeManager.Index<DamageGroupPrototype>("Toxin"), 5);
+            _damageableSystem.TryChangeDamage(uid, damage);
+            comp.LastTookSpacewalkDamage = DateTime.Now;
+            _popupSystem.PopupEntity("You feel an outside force pressing in on you. Maybe try going back inside?",
+                uid,
+                uid,
+                PopupType.LargeCaution);
+        }
+    }
+
+    private void UpdateTimer(ref SuspicionRuleComponent sus, float frameTime)
+    {
+        sus.EndAt -= TimeSpan.FromSeconds(frameTime);
+
+        var timeLeft = sus.EndAt.TotalSeconds;
+        switch (timeLeft)
+        {
+            case <= 240 when !sus.AnnouncedTimeLeft.Contains(240):
+                _chatManager.DispatchServerAnnouncement($"The round will end in {Math.Round(sus.EndAt.TotalMinutes)}:{sus.EndAt.Seconds}.");
+                sus.AnnouncedTimeLeft.Add(240);
+                break;
+            case <= 180 when !sus.AnnouncedTimeLeft.Contains(180):
+                _chatManager.DispatchServerAnnouncement($"The round will end in {Math.Round(sus.EndAt.TotalMinutes)}:{sus.EndAt.Seconds}.");
+                sus.AnnouncedTimeLeft.Add(180);
+                break;
+            case <= 120 when !sus.AnnouncedTimeLeft.Contains(120):
+                _chatManager.DispatchServerAnnouncement($"The round will end in {Math.Round(sus.EndAt.TotalMinutes)}:{sus.EndAt.Seconds}.");
+                sus.AnnouncedTimeLeft.Add(120);
+                break;
+            case <= 60 when !sus.AnnouncedTimeLeft.Contains(60):
+                _chatManager.DispatchServerAnnouncement($"The round will end in {Math.Round(sus.EndAt.TotalMinutes)}:{sus.EndAt.Seconds}.");
+                sus.AnnouncedTimeLeft.Add(60);
+                break;
+            case <= 30 when !sus.AnnouncedTimeLeft.Contains(30):
+                _chatManager.DispatchServerAnnouncement($"The round will end in 30 seconds.");
+                sus.AnnouncedTimeLeft.Add(30);
+                break;
+            case <= 10 when !sus.AnnouncedTimeLeft.Contains(10):
+                _chatManager.DispatchServerAnnouncement($"The round will end in 10 seconds.");
+                sus.AnnouncedTimeLeft.Add(10);
+                break;
+            case <= 5 when !sus.AnnouncedTimeLeft.Contains(5):
+                _chatManager.DispatchServerAnnouncement($"The round will end in 5 seconds.");
+                sus.AnnouncedTimeLeft.Add(5);
+                break;
+        }
+
+        if (sus.EndAt > TimeSpan.Zero)
+            return;
+
+        sus.GameState = SuspicionGameState.PostRound;
+        _roundEndSystem.EndRound(TimeSpan.FromSeconds(sus.PostRoundDuration));
     }
 }

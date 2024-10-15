@@ -1,6 +1,7 @@
 ﻿using Content.Shared.NPC.Prototypes;
 using Content.Shared.Radio;
 using Content.Shared.Roles;
+using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 

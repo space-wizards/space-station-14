@@ -9,6 +9,8 @@ using Content.Server.Ghost;
 using Content.Server.Implants;
 using Content.Server.Mind;
 using Content.Server.Pinpointer;
+using Content.Server.Popups;
+using Content.Server.Power.Components;
 using Content.Server.Roles;
 using Content.Server.RoundEnd;
 using Content.Server.Station.Systems;
@@ -21,6 +23,7 @@ using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.NPC.Systems;
 using Robust.Server.GameObjects;
+using Robust.Server.Physics;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
@@ -51,6 +54,8 @@ public sealed partial class SuspicionRuleSystem : GameRuleSystem<SuspicionRuleCo
     [Dependency] private readonly NavMapSystem _navMapSystem = default!;
     [Dependency] private readonly TransformSystem _transformSystem = default!;
     [Dependency] private readonly IdCardSystem _idCardSystem = default!;
+    [Dependency] private readonly EntityLookupSystem _entityLookupSystem = default!;
+    [Dependency] private readonly PopupSystem _popupSystem = default!;
 
     private readonly SoundSpecifier _traitorStartSound = new SoundPathSpecifier("/Audio/Ambience/Antag/traitor_start.ogg");
 
@@ -65,6 +70,7 @@ public sealed partial class SuspicionRuleSystem : GameRuleSystem<SuspicionRuleCo
         SubscribeLocalEvent<SuspicionPlayerComponent, MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<CommunicationConsoleCallShuttleAttemptEvent>(OnShuttleCall);
         SubscribeLocalEvent<GhostSpawnedEvent>(OnGhost); // Map init just doesn't work??
+        SubscribeLocalEvent<ApcComponent, MapInitEvent>(OnApcInit);
     }
 
 
@@ -134,47 +140,8 @@ public sealed partial class SuspicionRuleSystem : GameRuleSystem<SuspicionRuleCo
             if (sus.GameState != SuspicionGameState.InProgress)
                 continue;
 
-            sus.EndAt -= TimeSpan.FromSeconds(frameTime);
-
-            var timeLeft = sus.EndAt.TotalSeconds;
-            switch (timeLeft)
-            {
-                case <= 240 when !sus.AnnouncedTimeLeft.Contains(240):
-                    _chatManager.DispatchServerAnnouncement($"The round will end in {Math.Round(sus.EndAt.TotalMinutes)}:{sus.EndAt.Seconds}.");
-                    sus.AnnouncedTimeLeft.Add(240);
-                    break;
-                case <= 180 when !sus.AnnouncedTimeLeft.Contains(180):
-                    _chatManager.DispatchServerAnnouncement($"The round will end in {Math.Round(sus.EndAt.TotalMinutes)}:{sus.EndAt.Seconds}.");
-                    sus.AnnouncedTimeLeft.Add(180);
-                    break;
-                case <= 120 when !sus.AnnouncedTimeLeft.Contains(120):
-                    _chatManager.DispatchServerAnnouncement($"The round will end in {Math.Round(sus.EndAt.TotalMinutes)}:{sus.EndAt.Seconds}.");
-                    sus.AnnouncedTimeLeft.Add(120);
-                    break;
-                case <= 60 when !sus.AnnouncedTimeLeft.Contains(60):
-                    _chatManager.DispatchServerAnnouncement($"The round will end in {Math.Round(sus.EndAt.TotalMinutes)}:{sus.EndAt.Seconds}.");
-                    sus.AnnouncedTimeLeft.Add(60);
-                    break;
-                case <= 30 when !sus.AnnouncedTimeLeft.Contains(30):
-                    _chatManager.DispatchServerAnnouncement($"The round will end in 30 seconds.");
-                    sus.AnnouncedTimeLeft.Add(30);
-                    break;
-                case <= 10 when !sus.AnnouncedTimeLeft.Contains(10):
-                    _chatManager.DispatchServerAnnouncement($"The round will end in 10 seconds.");
-                    sus.AnnouncedTimeLeft.Add(10);
-                    break;
-                case <= 5 when !sus.AnnouncedTimeLeft.Contains(5):
-                    _chatManager.DispatchServerAnnouncement($"The round will end in 5 seconds.");
-                    sus.AnnouncedTimeLeft.Add(5);
-                    break;
-            }
-
-            if (sus.EndAt <= TimeSpan.Zero)
-            {
-                sus.GameState = SuspicionGameState.PostRound;
-                _roundEndSystem.EndRound(TimeSpan.FromSeconds(sus.PostRoundDuration));
-                return;
-            }
+            UpdateTimer(ref sus, frameTime);
+            UpdateSpaceWalkDamage(ref sus, frameTime);
         }
     }
 }

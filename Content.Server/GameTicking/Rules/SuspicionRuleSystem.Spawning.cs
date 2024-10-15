@@ -3,8 +3,10 @@ using Content.Server.Administration.Commands;
 using Content.Server.Atmos.Components;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.KillTracking;
+using Content.Server.Power.Components;
 using Content.Server.Radio.Components;
 using Content.Server.Roles;
+using Content.Server.Station.Components;
 using Content.Server.Temperature.Components;
 using Content.Server.Traits.Assorted;
 using Content.Shared.Access;
@@ -18,12 +20,17 @@ using Content.Shared.Nutrition.Components;
 using Content.Shared.Overlays;
 using Content.Shared.Players;
 using Content.Shared.Security.Components;
+using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.GameTicking.Rules;
 
 public sealed partial class SuspicionRuleSystem : GameRuleSystem<SuspicionRuleComponent>
 {
+    [ValidatePrototypeId<EntityPrototype>]
+    private const string MarkerPrototype = "SSSGridMarker";
+
     private void OnGetBriefing(Entity<SuspicionRoleComponent> role, ref GetBriefingEvent args)
     {
         args.Briefing = role.Comp.Role switch
@@ -212,6 +219,23 @@ public sealed partial class SuspicionRuleSystem : GameRuleSystem<SuspicionRuleCo
             }
 
             ev.Handled = true;
+            break;
+        }
+    }
+
+    private void OnApcInit(EntityUid uid, ApcComponent component, MapInitEvent args)
+    {
+        var query = EntityQueryEnumerator<SuspicionRuleComponent, GameRuleComponent>();
+        while (query.MoveNext(out var susUid, out var sus, out var gameRule))
+        {
+            if (!GameTicker.IsGameRuleActive(susUid, gameRule))
+                continue;
+
+            if (sus.GameState != SuspicionGameState.Preparing)
+                continue;
+
+            var cords = _transformSystem.GetMapCoordinates(uid);
+            Spawn(MarkerPrototype, cords);
             break;
         }
     }
