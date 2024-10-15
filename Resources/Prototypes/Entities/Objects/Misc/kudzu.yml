@@ -100,7 +100,6 @@
           - ReagentId: Nutriment
             Quantity: 2
           
-
 - type: entity
   id: WeakKudzu
   parent: Kudzu
