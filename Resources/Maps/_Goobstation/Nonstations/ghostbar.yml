@@ -10455,8 +10455,6 @@ entities:
       pos: 11.5,-0.5
       parent: 4
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 917
     - type: AtmosPipeColor
@@ -10563,8 +10561,6 @@ entities:
       pos: 14.5,-3.5
       parent: 4
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 917
     - type: AtmosPipeColor

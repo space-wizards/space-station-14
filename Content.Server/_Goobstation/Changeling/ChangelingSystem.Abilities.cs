@@ -291,8 +291,7 @@ public sealed partial class ChangelingSystem : EntitySystem
         if (!TryUseAbility(uid, comp, args))
             return;
 
-        if (!TryToggleItem(uid, ArmorPrototype, comp, "outerClothing")
-        || !TryToggleItem(uid, ArmorHelmetPrototype, comp, "head"))
+        if (!TryToggleArmor(uid, comp, [(ArmorHelmetPrototype, "head"), (ArmorPrototype, "outerClothing")]))
         {
             _popup.PopupEntity(Loc.GetString("changeling-equip-armor-fail"), uid, uid);
             comp.Chemicals += Comp<ChangelingActionComponent>(args.Action).ChemicalCost;
@@ -439,7 +438,7 @@ public sealed partial class ChangelingSystem : EntitySystem
         PlayMeatySound(target, comp);
     }
     public void OnLayEgg(EntityUid uid, ChangelingComponent comp, ref StingLayEggsEvent args)
-    {     
+    {
         var target = args.Target;
 
         if (!_mobState.IsDead(target))
@@ -474,7 +473,7 @@ public sealed partial class ChangelingSystem : EntitySystem
 
         EnsureComp<AbsorbedComponent>(target);
         var dmg = new DamageSpecifier(_proto.Index(AbsorbedDamageGroup), 200);
-        _damage.TryChangeDamage(target, dmg, false, false);           
+        _damage.TryChangeDamage(target, dmg, false, false);
         _blood.ChangeBloodReagent(target, "FerrochromicAcid");
         _blood.SpillAllSolutions(target);
 
@@ -605,9 +604,9 @@ public sealed partial class ChangelingSystem : EntitySystem
         comp.IsInLastResort = true;
 
         var newUid = TransformEntity(
-            uid, 
-            protoId: "MobHeadcrab", 
-            comp: comp, 
+            uid,
+            protoId: "MobHeadcrab",
+            comp: comp,
             dropInventory: true,
             transferDamage: false);
 
@@ -652,8 +651,7 @@ public sealed partial class ChangelingSystem : EntitySystem
         if (!TryUseAbility(uid, comp, args))
             return;
 
-        if (!TryToggleItem(uid, SpacesuitPrototype, comp, "outerClothing")
-        || !TryToggleItem(uid, SpacesuitHelmetPrototype, comp, "head"))
+        if (!TryToggleArmor(uid, comp, [(SpacesuitHelmetPrototype, "head"), (SpacesuitPrototype, "outerClothing")]))
         {
             _popup.PopupEntity(Loc.GetString("changeling-equip-armor-fail"), uid, uid);
             comp.Chemicals += Comp<ChangelingActionComponent>(args.Action).ChemicalCost;
