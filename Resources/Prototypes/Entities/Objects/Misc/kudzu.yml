@@ -99,6 +99,7 @@
           reagents:
           - ReagentId: Nutriment
             Quantity: 2
+          
 
 - type: entity
   id: WeakKudzu
@@ -249,6 +250,8 @@
           reagents:
           - ReagentId: Razorium
             Quantity: 2
+          - ReagentId: Protein
+            Quantity: 1
     - type: Respirator
       damage:
         types:
