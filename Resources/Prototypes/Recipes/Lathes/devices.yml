@@ -233,14 +233,14 @@
     Gold: 100
 
 - type: latheRecipe
-  id: CableDetStack
-  result: CableDetStack
+  id: CableDetStack1
+  result: CableDetStack1
   category: Weapons
-  completetime: 8
+  completetime: 2
   materials:
-    Plastic: 1500
-    Plasma: 1000
-    Gold: 500
+    Plastic: 50
+    Plasma: 25
+    Gold: 20
 
 - type: latheRecipe
   id: EmptyDetonator

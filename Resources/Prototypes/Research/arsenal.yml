@@ -114,7 +114,7 @@
   - FlashPayload
   - ExplosivePayload
   - ChemicalPayload
-  - CableDetStack
+  - CableDetStack1
   - EmptyDetonator
 
 - type: technology
