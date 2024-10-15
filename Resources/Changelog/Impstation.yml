@@ -2996,3 +2996,60 @@
   id: 372
   time: '2024-10-13T08:04:39.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/476
+- author: TGRCdev
+  changes:
+  - message: Fixed Changeling's Chitinous Armor and Space Suit refusing to equip regardless
+      of how naked your character was
+    type: Fix
+  id: 373
+  time: '2024-10-15T04:57:36.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/483
+- author: honeyed-lemons
+  changes:
+  - message: Added new gray ears by normalgirl2171 and gray antenna
+    type: Add
+  - message: Adjusted gray marking organization for a better experience adding new
+      options
+    type: Tweak
+  id: 374
+  time: '2024-10-15T04:58:48.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/480
+- author: Sha-Seng
+  changes:
+  - message: Prestige HoS cape and armor
+    type: Add
+  - message: HoS formal dress sprite for vox
+    type: Add
+  - message: Various prestige captain sprite touchups
+    type: Tweak
+  id: 375
+  time: '2024-10-15T04:58:20.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/474
+- author: DinnerCalzone
+  changes:
+  - message: Added juice that makes you UNGH
+    type: Add
+  - message: Added accent system and speech sounds for player controlled BROS
+    type: Add
+  - message: Player controlled BROS can now escape an inventory with a 2 second do-after
+    type: Tweak
+  - message: Made BROS sounds mono to work with positional audio, increased volume
+      of the files to normalize it to be close to the previous volume
+    type: Fix
+  id: 376
+  time: '2024-10-15T04:59:48.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/479
+- author: harpy
+  changes:
+  - message: Slimes now have their own unique and slightly scary voice!
+    type: Add
+  id: 377
+  time: '2024-10-15T05:00:43.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/478
+- author: Sha-Seng
+  changes:
+  - message: Caduceus Cap, has a little siren, found in paramed lockers
+    type: Add
+  id: 378
+  time: '2024-10-15T04:58:19.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/484
