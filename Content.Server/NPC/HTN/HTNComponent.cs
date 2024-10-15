@@ -32,10 +32,10 @@ public sealed partial class HTNComponent : NPCComponent
     public float PlanCooldown = 0.45f;
 
     /// <summary>
-    /// How much longer until we can try re-planning. This will happen even during update in case something changed.
+    /// Game time when we can next try re-planning.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    public float PlanAccumulator = 0f;
+    public TimeSpan NextPlanTime;
 
     [ViewVariables]
     public HTNPlanJob? PlanningJob = null;

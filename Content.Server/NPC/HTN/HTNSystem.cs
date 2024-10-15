@@ -12,6 +12,7 @@ using Content.Shared.NPC;
 using JetBrains.Annotations;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.NPC.HTN;
@@ -19,6 +20,7 @@ namespace Content.Server.NPC.HTN;
 public sealed class HTNSystem : EntitySystem
 {
     [Dependency] private readonly IAdminManager _admin = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly NPCSystem _npc = default!;
     [Dependency] private readonly NPCUtilitySystem _utility = default!;
@@ -139,7 +141,7 @@ public sealed class HTNSystem : EntitySystem
     [PublicAPI]
     public void Replan(HTNComponent component)
     {
-        component.PlanAccumulator = 0f;
+        component.NextPlanTime = _gameTiming.CurTime;
     }
 
     public void UpdateNPC(ref int count, int maxUpdates, float frameTime)
@@ -287,12 +289,8 @@ public sealed class HTNSystem : EntitySystem
 
     private void Update(HTNComponent component, float frameTime)
     {
-        // If we're not planning then countdown to next one.
-        if (component.PlanningJob == null)
-            component.PlanAccumulator -= frameTime;
-
         // We'll still try re-planning occasionally even when we're updating in case new data comes in.
-        if (component.PlanAccumulator <= 0f)
+        if (component.NextPlanTime <= _gameTiming.CurTime)
         {
             RequestPlan(component);
         }
@@ -426,7 +424,7 @@ public sealed class HTNSystem : EntitySystem
         if (component.PlanningJob != null)
             return;
 
-        component.PlanAccumulator += component.PlanCooldown;
+        component.NextPlanTime = _gameTiming.CurTime + TimeSpan.FromSeconds(component.PlanCooldown);
         var cancelToken = new CancellationTokenSource();
         var branchTraversal = component.Plan?.BranchTraversalRecord;
 
