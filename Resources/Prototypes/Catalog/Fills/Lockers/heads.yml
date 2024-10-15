@@ -162,6 +162,7 @@
     - id: RCD
     - id: RCDAmmo
     - id: RubberStampCE
+    - id: HandheldAtmosMonitor
 
 # Hardsuit table, used for suit storage as well
 - type: entityTable

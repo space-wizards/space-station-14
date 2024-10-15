@@ -1,5 +1,5 @@
 - type: entity
-  name: handheld atmos monitor
+  name: handheld atmospherics monitor
   suffix: DO NOT MAP
   parent: [ BaseHandheldComputer, BaseGrandTheftContraband ]
   id: HandheldAtmosMonitor
@@ -17,7 +17,6 @@
   - type: AtmosAlertsComputer
   - type: DeviceNetwork
     deviceNetId: Wireless
-    receiveFrequencyId: CrewMonitor
   - type: WirelessNetworkConnection
     range: 600
   - type: StationLimitedNetwork
