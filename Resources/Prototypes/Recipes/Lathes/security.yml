@@ -609,8 +609,8 @@
   result: WeaponFlareGunSecurity
   completetime: 6
   materials:
-    Plastic: 300
-    Steel: 200
+    Plastic: 100
+    Steel: 400
 
 - type: latheRecipe
   parent: BaseWeaponRecipe
