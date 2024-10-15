@@ -1,14 +1,6 @@
 ﻿Entries:
 - author: Cojoke-dot
   changes:
-  - message: You can no longer get out of a disposal chute or container while knocked
-      over by trying to walk
-    type: Fix
-  id: 7013
-  time: '2024-07-30T13:53:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30391
-- author: Cojoke-dot
-  changes:
   - message: QSI now swaps the top most valid container instead of QSI when placed
       in an anchored container
     type: Fix
@@ -3946,3 +3938,10 @@
   id: 7512
   time: '2024-10-14T07:06:18.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32805
+- author: ada-please
+  changes:
+  - message: Added more prizes to the Space Villain arcade machine
+    type: Add
+  id: 7513
+  time: '2024-10-14T21:59:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32309
