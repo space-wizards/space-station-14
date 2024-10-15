@@ -42,6 +42,15 @@
 
 - type: entity
   parent: [ClothingNeckBase, BaseCommandContraband]
+  id: ClothingNeckCloakHosgreatcoat
+  name: head of security's greatcoat
+  description: "A ruffled and flared coat with an ornate trim, worn as a cape thanks to the gold aguilettes holding it around your neck. Designed specifically to complement your dress uniform."
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Cloaks/hosgreatcoat.rsi
+
+- type: entity
+  parent: [ClothingNeckBase, BaseCommandContraband]
   id: ClothingNeckCloakCe
   name: chief engineer's cloak
   description: A dark green cloak with light blue ornaments, given to those who proved themselves to master the precise art of engineering.
