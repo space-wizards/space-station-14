@@ -1,17 +1,42 @@
 - type: entity
   name: flare gun
-  parent: BaseWeaponLauncher
+  parent: BaseItem
   id: WeaponFlareGun
-  description: A compact, single-shot pistol that fires shotgun shells.
+  description: A compact, single-shot pistol that fires shotgun shells. Unable to load or launch lethal shotgun shells.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/flaregun.rsi
     layers:
-      - state: icon
+      - state: base
         map: ["enum.GunVisualLayers.Base"]
   - type: Item
     size: Small
     sprite: Objects/Weapons/Guns/Shotguns/flaregun.rsi
+  - type: ItemSlots
+    slots:
+      gun_chamber:
+        name: Chamber
+        startingItem: ShellShotgunFlare
+        priority: 1
+        whitelist:
+          tags:
+            - ShellShotgunLight
+  - type: ContainerContainer
+    containers:
+      gun_chamber: !type:ContainerSlot
+  - type: ChamberMagazineAmmoProvider
+    autoCycle: false
+    boltClosed: true
+    soundBoltClosed: /Audio/Weapons/Guns/Cock/revolver_cock.ogg
+    soundBoltOpened: /Audio/Weapons/Guns/Cock/revolver_cock.ogg
+    soundRack: /Audio/Weapons/Guns/Cock/revolver_cock.ogg
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Shotguns/flaregun.rsi
+    quickEquip: false
+    slots:
+    - Belt
+    - suitStorage
+  - type: Appearance
   - type: Gun
     fireRate: 8
     selectedMode: SemiAuto
@@ -19,21 +44,52 @@
       - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/flaregun.ogg
-  - type: BallisticAmmoProvider
-    whitelist:
-      tags:
-        - ShellShotgun
-    proto: ShellShotgunFlare
-    capacity: 1
-    soundInsert:
-      path: /Audio/Weapons/Guns/MagIn/shotgun_insert.ogg
+
+
+- type: entity
+  name: security shell gun
+  parent: [BaseItem, BaseSecurityContraband]
+  id: WeaponFlareGunSecurity
+  description: A modified flare gun designed to be used by security to launch beanbag, tranquilizer and other non-lethal shells.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Shotguns/flaregun_security.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+  - type: Item
+    size: Small
+    sprite: Objects/Weapons/Guns/Shotguns/flaregun_security.rsi
+  - type: ItemSlots
+    slots:
+      gun_chamber:
+        name: Chamber
+        priority: 1
+        whitelist:
+          tags:
+            - ShellShotgunLight
   - type: ContainerContainer
     containers:
-      ballistic-ammo: !type:Container
-        ents: []
+      gun_chamber: !type:ContainerSlot
+  - type: ChamberMagazineAmmoProvider
+    autoCycle: false
+    soundBoltClosed: /Audio/Weapons/Guns/Cock/revolver_cock.ogg
+    soundBoltOpened: /Audio/Weapons/Guns/Cock/revolver_cock.ogg
+    soundRack: /Audio/Weapons/Guns/Cock/revolver_cock.ogg
   - type: Clothing
-    sprite: Objects/Weapons/Guns/Shotguns/flaregun.rsi
+    sprite: Objects/Weapons/Guns/Shotguns/flaregun_security.rsi
     quickEquip: false
     slots:
     - Belt
     - suitStorage
+  - type: Gun
+    fireRate: 8
+    selectedMode: SemiAuto
+    availableModes:
+      - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/flaregun.ogg
+  - type: Tag
+    tags:
+    - Sidearm
+  - type: Appearance
