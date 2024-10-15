@@ -809,6 +809,7 @@
     - CannotSuicide
     - DoorBumpOpener
     - VimPilot
+    - AnomalyHost
   - type: Loadout
     prototypes: [ MobMonkeyGear ]
   - type: Grammar
