@@ -1,6 +1,5 @@
 - type: entity
   name: handheld atmospherics monitor
-  suffix: DO NOT MAP
   parent: [ BaseHandheldComputer, BaseGrandTheftContraband ]
   id: HandheldAtmosMonitor
   description: A hand-held crew monitor displaying the status of atmospheric alarms across the station.
@@ -30,6 +29,7 @@
 
 - type: entity
   id: HandheldAtmosMonitorEmpty
+  prite: Objects/Specific/Atmos/handheldatmosmonitor.rsi
   parent: BaseHandheldComputer
   suffix: Empty
   components:
