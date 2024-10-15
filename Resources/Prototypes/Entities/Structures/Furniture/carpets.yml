@@ -34,6 +34,7 @@
     spawned:
     - id: MaterialCloth1
       amount: 1
+  - type: TrayScanReveal
 
 - type: entity
   id: Carpet
