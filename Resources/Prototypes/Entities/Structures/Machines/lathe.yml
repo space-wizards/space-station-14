@@ -357,7 +357,7 @@
       - BoxShotgunIncendiary
       - BoxShotgunUranium
       - BoxShellTranquilizer
-      - CableDetStack
+      - CableDetStack1
       - EmptyDetonator
       - ExplosivePayload
       - GrenadeBlast
@@ -779,7 +779,7 @@
       - BoxShotgunIncendiary
       - BoxShotgunUranium
       - BoxShellTranquilizer
-      - CableDetStack
+      - CableDetStack1
       - ClothingBackpackElectropack
       - EmptyDetonator
       - ExplosivePayload
