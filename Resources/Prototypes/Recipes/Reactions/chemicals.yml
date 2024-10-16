@@ -526,3 +526,34 @@
   products:
     AmmoniatedMercury: 2
     AmmoniatedSludge: 1
+
+- type: reaction
+  id: BathSalts
+  minTemp: 374
+  reactants:
+    Saltpetre:
+      amount: 1
+    SpaceCleaner:
+      amount: 1
+    Enzyme:
+      amount: 1
+    Nutriment:
+      amount: 1
+    Mercury:
+      amount: 1
+  products:
+    BathSalts: 5
+
+- type: reaction
+  id: Cyanide
+  impact: Medium
+  minTemp: 380
+  reactants:
+    Ammonia:
+      amount: 1
+    Oxygen:
+      amount: 1
+    Oil:
+      amount: 1
+  products:
+    Cyanide: 2

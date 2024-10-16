@@ -24,3 +24,6 @@ reagent-desc-diethylamine = A very potent fertilizer, treats plants with nutrien
 
 reagent-name-sedin = sedin
 reagent-desc-sedin = A modified version of diethylamine that can restore seeds on plants at the cost of potency.
+
+reagent-name-saltpetre = saltpetre
+reagent-desc-saltpetre = A commonly used fertilizer, used as an oxidizer in fireworks and rockets.

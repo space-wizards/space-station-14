@@ -53,3 +53,15 @@
       amount: 4
   products:
     PlantBGone: 5
+
+- type: reaction
+  id: Saltpetre
+  reactants:
+    Oxygen:
+      amount: 3
+    Potassium:
+      amount: 1
+    Nitrogen:
+      amount: 1
+  products:
+    Saltpetre: 3

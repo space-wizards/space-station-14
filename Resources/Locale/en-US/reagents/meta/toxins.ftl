@@ -84,3 +84,6 @@ reagent-desc-mechanotoxin = A neurotoxin used as venom by some species of spider
 
 reagent-name-almitricin = almitricin
 reagent-desc-almitricin = A toxin present in common space mushrooms.
+
+reagent-name-cyanide = cyanide
+reagent-desc-cyanide = Reeks of almonds, do not ingest!
