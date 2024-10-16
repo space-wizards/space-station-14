@@ -990,6 +990,8 @@
           Quantity: 10
         - ReagentId: Vitamin
           Quantity: 4
+        - ReagentId: Cyanide
+          Quantity: 0.6
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/apple.rsi
   - type: Produce
