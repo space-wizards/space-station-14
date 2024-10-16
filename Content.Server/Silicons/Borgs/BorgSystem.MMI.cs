@@ -1,19 +1,30 @@
 ﻿using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Mind.Components;
 using Content.Shared.Silicons.Borgs.Components;
+using Content.Shared.Traits.Assorted;
+using Content.Shared.Chemistry.Components;
+using Content.Server.Popups;
+using Content.Server.Fluids.EntitySystems;
 using Robust.Shared.Containers;
+using Robust.Server.Audio;
+using Content.Shared.Coordinates;
 
 namespace Content.Server.Silicons.Borgs;
 
 /// <inheritdoc/>
 public sealed partial class BorgSystem
 {
+    [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly AudioSystem _audio = default!;
+    [Dependency] private readonly PuddleSystem _puddle = default!;
+
     public void InitializeMMI()
     {
         SubscribeLocalEvent<MMIComponent, ComponentInit>(OnMMIInit);
         SubscribeLocalEvent<MMIComponent, EntInsertedIntoContainerMessage>(OnMMIEntityInserted);
         SubscribeLocalEvent<MMIComponent, MindAddedMessage>(OnMMIMindAdded);
         SubscribeLocalEvent<MMIComponent, MindRemovedMessage>(OnMMIMindRemoved);
+        SubscribeLocalEvent<MMIComponent, ItemSlotInsertAttemptEvent>(OnMMIAttemptInsert);
 
         SubscribeLocalEvent<MMILinkedComponent, MindAddedMessage>(OnMMILinkedMindAdded);
         SubscribeLocalEvent<MMILinkedComponent, EntGotRemovedFromContainerMessage>(OnMMILinkedRemoved);
@@ -78,5 +89,19 @@ public sealed partial class BorgSystem
             _mind.TransferTo(mindId, uid, true, mind: mind);
 
         _appearance.SetData(linked, MMIVisuals.BrainPresent, false);
+    }
+
+    private void OnMMIAttemptInsert(EntityUid uid, MMIComponent component, ItemSlotInsertAttemptEvent args)
+    {
+        var ent = args.Item;
+        if (HasComp<UnborgableComponent>(ent))
+        {
+            _popup.PopupEntity("The brain suddenly dissolves on contact with the interface!", uid, Shared.Popups.PopupType.MediumCaution);
+            _audio.PlayPvs("/Audio/Effects/Fluids/splat.ogg", uid);
+            var solution = new Solution();
+            solution.AddReagent("Blood", 30f);
+            _puddle.TrySpillAt(Transform(uid).Coordinates, solution, out _);
+            EntityManager.DeleteEntity(ent);
+        }
     }
 }

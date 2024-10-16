@@ -49,9 +49,7 @@ public sealed class TraitSystem : EntitySystem
                 _whitelistSystem.IsBlacklistPass(traitPrototype.Blacklist, args.Mob))
                 continue;
 
-            // Add all components required by the prototype
-            EntityManager.AddComponents(args.Mob, traitPrototype.Components, false);
-
+            // Add all components required by the prototype to the body or specified organ
             if (traitPrototype.Organ != null)
             {
                 foreach (var organ in _bodySystem.GetBodyOrgans(args.Mob))
@@ -61,6 +59,10 @@ public sealed class TraitSystem : EntitySystem
                         EntityManager.AddComponents(organ.Id, traitPrototype.Components);
                     }
                 }
+            }
+            else
+            {
+                EntityManager.AddComponents(args.Mob, traitPrototype.Components, false);
             }
 
             // Add item required by the trait
