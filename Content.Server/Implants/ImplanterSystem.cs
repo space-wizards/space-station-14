@@ -62,7 +62,7 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
             if (implant.HasValue && !component.AllowMultipleImplants && CheckSameImplant(target, implant.Value))
             {
                 var name = Identity.Name(target, EntityManager, args.User);
-                var msg = Loc.GetString("implanter-component-implant-already", ("implant", implant), ("target", name), ("targetEnt", target));
+                var msg = Loc.GetString("implanter-component-implant-already", ("implant", implant), ("target", name));
                 _popup.PopupEntity(msg, target, args.User);
                 args.Handled = true;
                 return;
