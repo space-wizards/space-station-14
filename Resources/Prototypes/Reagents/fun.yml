@@ -420,6 +420,38 @@
           min: 50
 
 - type: reagent
+  id: JuiceThatMakesYouUngh
+  name: reagent-name-ungh-juice
+  group: Toxins
+  desc: reagent-desc-ungh-juice
+  physicalDesc: reagent-physical-desc-brotherly
+  flavor: brotherly
+  color: "#8f3134"
+  metabolisms:
+    Poison:
+      metabolismRate: 0.25
+      effects:
+      - !type:Emote
+        emote: Ungh
+        showInChat: true
+        force: true
+        probability: 0.5
+      - !type:Polymorph
+        prototype: PolymorphBros
+        conditions:
+        - !type:OrganType
+          type: Animal
+          shouldHave: false
+        - !type:ReagentThreshold
+          min: 50
+      - !type:AdjustReagent
+        reagent: JuiceThatMakesYouUngh
+        amount: -20
+        conditions:
+        - !type:ReagentThreshold
+          min: 50
+          
+- type: reagent
   id: PropulsionGel
   name: reagent-name-propulsion-gel
   desc: reagent-desc-propulsion-gel

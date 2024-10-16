@@ -271,6 +271,7 @@ flavor-complex-antifreeze = warm
 flavor-complex-cottonbool = like an angry cloud
 flavor-complex-genderfluid = transitional
 flavor-complex-thavenbad = like you need to pretend you like it
+flavor-complex-zombieslushie = like frostbitten meat
 
 ### This is exactly what pilk tastes like. I'm not even joking. I might've been a little drunk though
 flavor-complex-pilk = like sweet milk
@@ -293,3 +294,4 @@ flavor-complex-snotty = like snot
 flavor-complex-speed = like speed
 flavor-weh = like weh
 flavour-stardust = like stardust
+flavor-complex-brotherly = brotherly
