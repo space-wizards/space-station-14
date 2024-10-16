@@ -1020,14 +1020,6 @@
   - SecurityWinterBoots
 
 - type: loadoutGroup
-  id: SecurityGloves
-  name: loadout-group-security-gloves
-  minLimit: 0
-  loadouts:
-  - BlackGloves
-  - FingerlessGloves
-
-- type: loadoutGroup
   id: SecurityPDA
   name: loadout-group-security-id
   loadouts:
