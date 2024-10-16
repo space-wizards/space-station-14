@@ -5,14 +5,22 @@
       "x" : 32,
       "y" : 32
    },
-   "states" : [
-      {
-         "name" : "icon"
-      },
-      {
-         "name": "equipped-BELT",
-         "directions": 4
-      }
-   ],
+    "states": [
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "icon"
+        },
+        {
+            "name": "equipped-BELT",
+            "directions": 4
+        }
+    ],
    "version" : 1
 }
