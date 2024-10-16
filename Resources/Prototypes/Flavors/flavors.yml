@@ -1229,3 +1229,8 @@
   id: brotherly
   flavorType: Complex
   description: flavor-complex-brotherly
+
+- type: flavor
+  id: raktaccino
+  flavorType: Complex
+  description: flavor-complex-raktaccino

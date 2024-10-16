@@ -229,6 +229,7 @@ flavor-complex-milk = like milk
 flavor-complex-tea = like tea
 flavor-complex-ice = like ice
 flavor-complex-mopwata = like stagnant, dirty water
+flavor-complex-raktaccino = fantastically bitter
 
 ## Cocktails
 flavor-complex-arnold-palmer = like a hole-in-one
