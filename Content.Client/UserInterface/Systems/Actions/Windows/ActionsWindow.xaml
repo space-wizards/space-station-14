@@ -14,7 +14,9 @@
             <LineEdit Name="SearchBar" Access="Public" StyleClasses="actionSearchBox" HorizontalExpand="True"
                       PlaceHolder="{Loc ui-actionmenu-search-bar-placeholder-text}"/>
         </BoxContainer>
-        <Button Name="ClearButton" Access="Public" Text="{Loc ui-actionmenu-clear-button}"/>
+        <Button Name="ClearFilterButton" Access="Public" Text="{Loc ui-actionmenu-clear-filter-button}"/>
+        <Button Name="LockActionsButton" Access="Public" Text="{Loc ui-actionmenu-lock-button}"/>
+        <Button Name="ClearActionsButton" Access="Public" Text="{Loc ui-actionmenu-clear-actions-button}"/>
         <Label Name="FilterLabel" Access="Public"/>
         <ScrollContainer VerticalExpand="True" HorizontalExpand="True">
             <GridContainer Name="ResultsGrid" Access="Public" MaxGridWidth="300"/>
