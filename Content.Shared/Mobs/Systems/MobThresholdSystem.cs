@@ -212,7 +212,7 @@ public sealed class MobThresholdSystem : EntitySystem
         MobThresholdsComponent? thresholdComponent = null)
     {
         threshold = null;
-        if (!Resolve(target, ref thresholdComponent))
+        if (!Resolve(target, ref thresholdComponent, false))
             return false;
 
         return TryGetThresholdForState(target, MobState.Dead, out threshold, thresholdComponent);
@@ -431,7 +431,7 @@ public sealed class MobThresholdSystem : EntitySystem
     private void MobThresholdShutdown(EntityUid target, MobThresholdsComponent component, ComponentShutdown args)
     {
         if (component.TriggersAlerts)
-            _alerts.ClearAlertCategory(target, AlertCategory.Health);
+            _alerts.ClearAlertCategory(target, component.HealthAlertCategory);
     }
 
     private void OnUpdateMobState(EntityUid target, MobThresholdsComponent component, ref UpdateMobStateEvent args)

@@ -1,0 +1,35 @@
+- type: alertCategory
+  id: Pressure
+
+- type: alertCategory
+  id: Temperature
+
+- type: alertCategory
+  id: Breathing
+
+- type: alertCategory
+  id: Buckled
+
+- type: alertCategory
+  id: Health
+
+- type: alertCategory
+  id: Internals
+
+- type: alertCategory
+  id: Stamina
+
+- type: alertCategory
+  id: Piloting
+
+- type: alertCategory
+  id: Hunger
+
+- type: alertCategory
+  id: Thirst
+
+- type: alertCategory
+  id: Toxins
+
+- type: alertCategory
+  id: Battery

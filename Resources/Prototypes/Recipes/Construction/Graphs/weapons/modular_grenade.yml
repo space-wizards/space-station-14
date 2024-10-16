@@ -12,7 +12,7 @@
         doAfter: 1
 
   - node: emptyCase
-    entity: ModularGrenade      
+    entity: ModularGrenade
     actions:
     - !type:AppearanceChange
     edges:
@@ -31,7 +31,7 @@
         doAfter: 2
 
   - node: wiredCase
-    entity: ModularGrenade      
+    entity: ModularGrenade
     actions:
     - !type:AppearanceChange
     - !type:PlaySound
@@ -48,7 +48,13 @@
       steps:
       - component: PayloadTrigger
         store: payloadTrigger
-        name: Trigger
+        name: trigger
+        doAfter: 0.5
+    - to: caseWithPayload
+      steps:
+      - tag: Payload
+        store: payload
+        name: payload
         doAfter: 0.5
 
   - node: caseWithTrigger
@@ -68,7 +74,27 @@
       steps:
       - tag: Payload
         store: payload
-        name: Payload
+        name: payload
+        doAfter: 0.5
+
+  - node: caseWithPayload
+    actions:
+    - !type:AppearanceChange
+    - !type:PlaySound
+      sound: /Audio/Machines/button.ogg
+    edges:
+    - to: wiredCase
+      steps:
+      - tool: Prying
+        doAfter: 0.5
+        completed:
+        - !type:EmptyContainer
+          container: payload
+    - to: grenade
+      steps:
+      - component: PayloadTrigger
+        store: payloadTrigger
+        name: trigger
         doAfter: 0.5
 
   - node: grenade

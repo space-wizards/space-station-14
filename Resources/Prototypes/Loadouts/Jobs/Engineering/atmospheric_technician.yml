@@ -1,27 +1,15 @@
 # Jumpsuit
 - type: loadout
   id: AtmosphericTechnicianJumpsuit
-  equipment: AtmosphericTechnicianJumpsuit
-
-- type: startingGear
-  id: AtmosphericTechnicianJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitAtmos
 
 - type: loadout
   id: AtmosphericTechnicianJumpskirt
-  equipment: AtmosphericTechnicianJumpskirt
-
-- type: startingGear
-  id: AtmosphericTechnicianJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtAtmos
 
 - type: loadout
-  id: AtmosphericTechnicianJumpsuitCasual
-  equipment: AtmosphericTechnicianJumpsuitCasual
-
-- type: startingGear
   id: AtmosphericTechnicianJumpsuitCasual
   equipment:
     jumpsuit: ClothingUniformJumpsuitAtmosCasual
@@ -29,47 +17,27 @@
 # Back
 - type: loadout
   id: AtmosphericTechnicianBackpack
-  equipment: AtmosphericTechnicianBackpack
-
-- type: startingGear
-  id: AtmosphericTechnicianBackpack
   equipment:
-    back: ClothingBackpackAtmosphericsFilled
+    back: ClothingBackpackAtmospherics
 
 - type: loadout
   id: AtmosphericTechnicianSatchel
-  equipment: AtmosphericTechnicianSatchel
-
-- type: startingGear
-  id: AtmosphericTechnicianSatchel
   equipment:
-    back: ClothingBackpackSatchelAtmosphericsFilled
+    back: ClothingBackpackSatchelAtmospherics
 
 - type: loadout
   id: AtmosphericTechnicianDuffel
-  equipment: AtmosphericTechnicianDuffel
-
-- type: startingGear
-  id: AtmosphericTechnicianDuffel
   equipment:
-    back: ClothingBackpackDuffelAtmosphericsFilled
+    back: ClothingBackpackDuffelAtmospherics
 
 # OuterClothing
 - type: loadout
-  id: AtmosphericTechnicianWintercoat
-  equipment: AtmosphericTechnicianWintercoat
-
-- type: startingGear
   id: AtmosphericTechnicianWintercoat
   equipment:
     outerClothing: ClothingOuterWinterAtmos
 
 # Shoes
 - type: loadout
-  id: WhiteShoes
-  equipment: WhiteShoes
-
-- type: startingGear
   id: WhiteShoes
   equipment:
     shoes: ClothingShoesColorWhite

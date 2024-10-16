@@ -3,14 +3,15 @@ using System.Linq;
 using Content.Server.Cargo.Components;
 using Content.Server.Labels;
 using Content.Server.NameIdentifier;
-using Content.Server.Paper;
 using Content.Shared.Access.Components;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Database;
 using Content.Shared.NameIdentifier;
+using Content.Shared.Paper;
 using Content.Shared.Stacks;
+using Content.Shared.Whitelist;
 using JetBrains.Annotations;
 using Robust.Server.Containers;
 using Robust.Shared.Containers;
@@ -23,6 +24,7 @@ public sealed partial class CargoSystem
 {
     [Dependency] private readonly ContainerSystem _container = default!;
     [Dependency] private readonly NameIdentifierSystem _nameIdentifier = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSys = default!;
 
     [ValidatePrototypeId<NameIdentifierGroupPrototype>]
     private const string BountyNameIdentifierGroup = "Bounty";
@@ -117,12 +119,13 @@ public sealed partial class CargoSystem
         msg.PushNewline();
         foreach (var entry in prototype.Entries)
         {
-            msg.AddMarkup($"- {Loc.GetString("bounty-console-manifest-entry",
+            msg.AddMarkupOrThrow($"- {Loc.GetString("bounty-console-manifest-entry",
                 ("amount", entry.Amount),
                 ("item", Loc.GetString(entry.Name)))}");
             msg.PushNewline();
         }
-        _paperSystem.SetContent(uid, msg.ToMarkup(), paper);
+        msg.AddMarkupOrThrow(Loc.GetString("bounty-console-manifest-reward", ("reward", prototype.Reward)));
+        _paperSystem.SetContent((uid, paper), msg.ToMarkup());
     }
 
     /// <summary>
@@ -135,7 +138,7 @@ public sealed partial class CargoSystem
             return;
 
         // make sure this label was actually applied to a crate.
-        if (!_container.TryGetContainingContainer(uid, out var container) || container.ID != LabelSystem.ContainerName)
+        if (!_container.TryGetContainingContainer((uid, null, null), out var container) || container.ID != LabelSystem.ContainerName)
             return;
 
         if (component.AssociatedStationId is not { } station || !TryComp<StationCargoBountyDatabaseComponent>(station, out var database))
@@ -298,6 +301,21 @@ public sealed partial class CargoSystem
         return IsBountyComplete(GetBountyEntities(container), entries, out bountyEntities);
     }
 
+    /// <summary>
+    /// Determines whether the <paramref name="entity"/> meets the criteria for the bounty <paramref name="entry"/>.
+    /// </summary>
+    /// <returns>true if <paramref name="entity"/> is a valid item for the bounty entry, otherwise false</returns>
+    public bool IsValidBountyEntry(EntityUid entity, CargoBountyItemEntry entry)
+    {
+        if (!_whitelistSys.IsValid(entry.Whitelist, entity))
+            return false;
+
+        if (entry.Blacklist != null && _whitelistSys.IsValid(entry.Blacklist, entity))
+            return false;
+
+        return true;
+    }
+
     public bool IsBountyComplete(HashSet<EntityUid> entities, IEnumerable<CargoBountyItemEntry> entries, out HashSet<EntityUid> bountyEntities)
     {
         bountyEntities = new();
@@ -311,7 +329,7 @@ public sealed partial class CargoSystem
             var temp = new HashSet<EntityUid>();
             foreach (var entity in entities)
             {
-                if (!entry.Whitelist.IsValid(entity, EntityManager))
+                if (!IsValidBountyEntry(entity, entry))
                     continue;
 
                 count += _stackQuery.CompOrNull(entity)?.Count ?? 1;
@@ -402,6 +420,13 @@ public sealed partial class CargoSystem
             return false;
 
         _nameIdentifier.GenerateUniqueName(uid, BountyNameIdentifierGroup, out var randomVal);
+        var newBounty = new CargoBountyData(bounty, randomVal);
+        // This bounty id already exists! Probably because NameIdentifierSystem ran out of ids.
+        if (component.Bounties.Any(b => b.Id == newBounty.Id))
+        {
+            Log.Error("Failed to add bounty {ID} because another one with the same ID already existed!", newBounty.Id);
+            return false;
+        }
         component.Bounties.Add(new CargoBountyData(bounty, randomVal));
         _adminLogger.Add(LogType.Action, LogImpact.Low, $"Added bounty \"{bounty.ID}\" (id:{component.TotalBounties}) to station {ToPrettyString(uid)}");
         component.TotalBounties++;

@@ -112,6 +112,12 @@ public abstract partial class SharedGunSystem
 
     private void OnGunSelected(EntityUid uid, GunComponent component, HandSelectedEvent args)
     {
+        if (Timing.ApplyingState)
+             return;
+
+        if (component.FireRateModified <= 0)
+            return;
+
         var fireDelay = 1f / component.FireRateModified;
         if (fireDelay.Equals(0f))
             return;

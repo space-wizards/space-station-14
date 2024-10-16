@@ -34,6 +34,14 @@ public abstract partial class DoAfterEvent : HandledEntityEventArgs
     public EntityUid? Used => DoAfter.Args.Used;
     public DoAfterArgs Args => DoAfter.Args;
     #endregion
+
+    /// <summary>
+    /// Check whether this event is "the same" as another event for duplicate checking.
+    /// </summary>
+    public virtual bool IsDuplicate(DoAfterEvent other)
+    {
+        return GetType() == other.GetType();
+    }
 }
 
 /// <summary>

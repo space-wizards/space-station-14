@@ -5,8 +5,6 @@ using Content.Shared.StatusIcon;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Damage
 {
@@ -18,7 +16,7 @@ namespace Content.Shared.Damage
     ///     may also have resistances to certain damage types, defined via a <see cref="DamageModifierSetPrototype"/>.
     /// </remarks>
     [RegisterComponent]
-    [NetworkedComponent()]
+    [NetworkedComponent]
     [Access(typeof(DamageableSystem), Other = AccessPermissions.ReadExecute)]
     public sealed partial class DamageableComponent : Component
     {
@@ -26,8 +24,8 @@ namespace Content.Shared.Damage
         ///     This <see cref="DamageContainerPrototype"/> specifies what damage types are supported by this component.
         ///     If null, all damage types will be supported.
         /// </summary>
-        [DataField("damageContainer", customTypeSerializer: typeof(PrototypeIdSerializer<DamageContainerPrototype>))]
-        public string? DamageContainerID;
+        [DataField("damageContainer")]
+        public ProtoId<DamageContainerPrototype>? DamageContainerID;
 
         /// <summary>
         ///     This <see cref="DamageModifierSetPrototype"/> will be applied to any damage that is dealt to this container,
@@ -37,8 +35,8 @@ namespace Content.Shared.Damage
         ///     Though DamageModifierSets can be deserialized directly, we only want to use the prototype version here
         ///     to reduce duplication.
         /// </remarks>
-        [DataField("damageModifierSet", customTypeSerializer: typeof(PrototypeIdSerializer<DamageModifierSetPrototype>))]
-        public string? DamageModifierSetId;
+        [DataField("damageModifierSet")]
+        public ProtoId<DamageModifierSetPrototype>? DamageModifierSetId;
 
         /// <summary>
         ///     All the damage information is stored in this <see cref="DamageSpecifier"/>.
@@ -46,7 +44,7 @@ namespace Content.Shared.Damage
         /// <remarks>
         ///     If this data-field is specified, this allows damageable components to be initialized with non-zero damage.
         /// </remarks>
-        [DataField("damage", readOnly: true)] //todo remove this readonly when implementing writing to damagespecifier
+        [DataField(readOnly: true)] //todo remove this readonly when implementing writing to damagespecifier
         public DamageSpecifier Damage = new();
 
         /// <summary>
@@ -64,11 +62,11 @@ namespace Content.Shared.Damage
         [ViewVariables]
         public FixedPoint2 TotalDamage;
 
-        [DataField("radiationDamageTypes", customTypeSerializer: typeof(PrototypeIdListSerializer<DamageTypePrototype>))]
-        public List<string> RadiationDamageTypeIDs = new() { "Radiation" };
+        [DataField("radiationDamageTypes")]
+        public List<ProtoId<DamageTypePrototype>> RadiationDamageTypeIDs = new() { "Radiation" };
 
         [DataField]
-        public Dictionary<MobState, ProtoId<StatusIconPrototype>> HealthIcons = new()
+        public Dictionary<MobState, ProtoId<HealthIconPrototype>> HealthIcons = new()
         {
             { MobState.Alive, "HealthIconFine" },
             { MobState.Critical, "HealthIconCritical" },
@@ -76,7 +74,10 @@ namespace Content.Shared.Damage
         };
 
         [DataField]
-        public ProtoId<StatusIconPrototype> RottingIcon = "HealthIconRotting";
+        public ProtoId<HealthIconPrototype> RottingIcon = "HealthIconRotting";
+
+        [DataField]
+        public FixedPoint2? HealthBarThreshold;
     }
 
     [Serializable, NetSerializable]
@@ -84,13 +85,16 @@ namespace Content.Shared.Damage
     {
         public readonly Dictionary<string, FixedPoint2> DamageDict;
         public readonly string? ModifierSetId;
+        public readonly FixedPoint2? HealthBarThreshold;
 
         public DamageableComponentState(
             Dictionary<string, FixedPoint2> damageDict,
-            string? modifierSetId)
+            string? modifierSetId,
+            FixedPoint2? healthBarThreshold)
         {
             DamageDict = damageDict;
             ModifierSetId = modifierSetId;
+            HealthBarThreshold = healthBarThreshold;
         }
     }
 }

@@ -10,7 +10,5 @@
         - type: StationNameSetup
           mapNameTemplate: "Meteor Arena"
         - type: StationJobs
-          overflowJobs:
-            - Passenger
           availableJobs:
             Passenger: [ -1, -1 ]

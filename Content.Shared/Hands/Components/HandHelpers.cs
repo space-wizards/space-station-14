@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Shared.Hands.EntitySystems;
 
 namespace Content.Shared.Hands.Components;
 
@@ -19,6 +20,15 @@ public static class HandHelpers
     ///     cache it instead of accessing this multiple times.
     /// </summary>
     public static int CountFreeHands(this HandsComponent component) => component.Hands.Values.Count(hand => hand.IsEmpty);
+
+    /// <summary>
+    ///     Get the number of hands that are not currently holding anything. This is a LinQ method, not a property, so
+    ///     cache it instead of accessing this multiple times.
+    /// </summary>
+    public static int CountFreeableHands(this Entity<HandsComponent> component, SharedHandsSystem system)
+    {
+        return system.CountFreeableHands(component);
+    }
 
     /// <summary>
     ///     Get a list of hands that are currently holding nothing. This is a LinQ method, not a property, so cache

@@ -15,9 +15,6 @@
               path: /Audio/Items/hiss.ogg
               params:
                 variation: 0.08
-  - type: Flashable
-    collisionGroup:
-    - None
   - type: DamagedByFlashing
     flashDamage:
       types:

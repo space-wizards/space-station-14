@@ -15,11 +15,8 @@ public static partial class PoolManager
                                        | BindingFlags.Public
                                        | BindingFlags.DeclaredOnly;
 
-    private static void DiscoverTestPrototypes(Assembly? assembly = null)
+    private static void DiscoverTestPrototypes(Assembly assembly)
     {
-        assembly ??= typeof(PoolManager).Assembly;
-        _testPrototypes.Clear();
-
         foreach (var type in assembly.GetTypes())
         {
             foreach (var field in type.GetFields(Flags))

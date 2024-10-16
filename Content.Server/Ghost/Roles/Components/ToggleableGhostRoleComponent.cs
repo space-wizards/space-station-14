@@ -1,4 +1,7 @@
-﻿namespace Content.Server.Ghost.Roles.Components;
+using Content.Shared.Roles;
+using Robust.Shared.Prototypes;
+
+namespace Content.Server.Ghost.Roles.Components;
 
 /// <summary>
 /// This is used for a ghost role which can be toggled on and off at will, like a PAI.
@@ -24,6 +27,9 @@ public sealed partial class ToggleableGhostRoleComponent : Component
     [DataField("roleDescription")]
     public string RoleDescription = string.Empty;
 
+    [DataField("roleRules")]
+    public string RoleRules = string.Empty;
+
     [DataField("wipeVerbText")]
     public string WipeVerbText = string.Empty;
 
@@ -35,4 +41,7 @@ public sealed partial class ToggleableGhostRoleComponent : Component
 
     [DataField("stopSearchVerbPopup")]
     public string StopSearchVerbPopup = string.Empty;
+
+    [DataField("job")]
+    public ProtoId<JobPrototype>? JobProto = null;
 }

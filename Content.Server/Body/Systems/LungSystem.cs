@@ -1,8 +1,9 @@
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
-using Content.Server.Chemistry.Containers.EntitySystems;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Atmos;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Clothing;
 using Content.Shared.Inventory.Events;
 
@@ -12,8 +13,7 @@ public sealed class LungSystem : EntitySystem
 {
     [Dependency] private readonly AtmosphereSystem _atmos = default!;
     [Dependency] private readonly InternalsSystem _internals = default!;
-    [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
-    [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
 
     public static string LungSolutionName = "Lung";
 
@@ -28,7 +28,7 @@ public sealed class LungSystem : EntitySystem
 
     private void OnGotUnequipped(Entity<BreathToolComponent> ent, ref GotUnequippedEvent args)
     {
-        _atmosphereSystem.DisconnectInternals(ent);
+        _atmos.DisconnectInternals(ent);
     }
 
     private void OnGotEquipped(Entity<BreathToolComponent> ent, ref GotEquippedEvent args)
@@ -49,16 +49,18 @@ public sealed class LungSystem : EntitySystem
 
     private void OnComponentInit(Entity<LungComponent> entity, ref ComponentInit args)
     {
-        var solution = _solutionContainerSystem.EnsureSolution(entity.Owner, entity.Comp.SolutionName);
-        solution.MaxVolume = 100.0f;
-        solution.CanReact = false; // No dexalin lungs
+        if (_solutionContainerSystem.EnsureSolution(entity.Owner, entity.Comp.SolutionName, out var solution))
+        {
+            solution.MaxVolume = 100.0f;
+            solution.CanReact = false; // No dexalin lungs
+        }
     }
 
     private void OnMaskToggled(Entity<BreathToolComponent> ent, ref ItemMaskToggledEvent args)
     {
         if (args.IsToggled || args.IsEquip)
         {
-            _atmos.DisconnectInternals(ent.Comp);
+            _atmos.DisconnectInternals(ent);
         }
         else
         {
@@ -77,23 +79,32 @@ public sealed class LungSystem : EntitySystem
         if (!_solutionContainerSystem.ResolveSolution(uid, lung.SolutionName, ref lung.Solution, out var solution))
             return;
 
-        foreach (var gas in Enum.GetValues<Gas>())
+        GasToReagent(lung.Air, solution);
+        _solutionContainerSystem.UpdateChemicals(lung.Solution.Value);
+    }
+
+    private void GasToReagent(GasMixture gas, Solution solution)
+    {
+        foreach (var gasId in Enum.GetValues<Gas>())
         {
-            var i = (int) gas;
-            var moles = lung.Air[i];
+            var i = (int) gasId;
+            var moles = gas[i];
             if (moles <= 0)
                 continue;
-            var reagent = _atmosphereSystem.GasReagents[i];
-            if (reagent is null) continue;
+
+            var reagent = _atmos.GasReagents[i];
+            if (reagent is null)
+                continue;
 
             var amount = moles * Atmospherics.BreathMolesToReagentMultiplier;
             solution.AddReagent(reagent, amount);
-
-            // We don't remove the gas from the lung mix,
-            // that's the responsibility of whatever gas is being metabolized.
-            // Most things will just want to exhale again.
         }
+    }
 
-        _solutionContainerSystem.UpdateChemicals(lung.Solution.Value);
+    public Solution GasToReagent(GasMixture gas)
+    {
+        var solution = new Solution();
+        GasToReagent(gas, solution);
+        return solution;
     }
 }

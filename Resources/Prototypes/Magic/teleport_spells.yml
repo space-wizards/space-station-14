@@ -2,7 +2,6 @@
   id: ActionBlink
   name: Blink
   description: Teleport to the clicked location.
-  noSpawn: true
   components:
   - type: WorldTargetAction
     useDelay: 10

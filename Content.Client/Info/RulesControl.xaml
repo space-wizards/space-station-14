@@ -1,6 +1,18 @@
-﻿<BoxContainer xmlns="https://spacestation14.io"
-              Name="InfoContainer"
-              Orientation="Vertical"
-              Margin="2 2 0 0"
-              SeparationOverride="10"
-              Access="Public"/>
+﻿<BoxContainer xmlns="https://spacestation14.io" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+    <Control HorizontalExpand="True" VerticalExpand="True" HorizontalAlignment="Stretch">
+        <ScrollContainer Name="Scroll" HScrollEnabled="False" HorizontalExpand="True" VerticalExpand="True">
+            <BoxContainer Name="RulesContainer" VerticalExpand="True" Margin="0 0 5 0"/>
+        </ScrollContainer>
+        <BoxContainer Margin="0 0 15 0" HorizontalExpand="True" HorizontalAlignment="Right">
+            <Button Name="BackButton"
+                    Text="{Loc 'ui-rules-button-back'}"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"/>
+            <Control MinWidth="5"/>
+            <Button Name="HomeButton"
+                    Text="{Loc 'ui-rules-button-home'}"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"/>
+        </BoxContainer>
+    </Control>
+</BoxContainer>

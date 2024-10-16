@@ -6,10 +6,10 @@ using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Doors.Components;
 using Content.Shared.Emag.Systems;
-using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
+using Content.Shared.Power.EntitySystems;
 using Content.Shared.Prying.Components;
 using Content.Shared.Prying.Systems;
 using Content.Shared.Stunnable;
@@ -22,6 +22,8 @@ using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
+using Robust.Shared.Map.Components;
+using Robust.Shared.Physics;
 
 namespace Content.Shared.Doors.Systems;
 
@@ -41,24 +43,19 @@ public abstract partial class SharedDoorSystem : EntitySystem
     [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
     [Dependency] private readonly PryingSystem _pryingSystem = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
+    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
+    [Dependency] private readonly SharedPowerReceiverSystem _powerReceiver = default!;
+
 
     [ValidatePrototypeId<TagPrototype>]
     public const string DoorBumpTag = "DoorBumpOpener";
 
     /// <summary>
-    ///     A body must have an intersection percentage larger than this in order to be considered as colliding with a
-    ///     door. Used for safety close-blocking and crushing.
-    /// </summary>
-    /// <remarks>
-    ///     The intersection percentage relies on WORLD AABBs. So if this is too small, and the grid is rotated 45
-    ///     degrees, then an entity outside of the airlock may be crushed.
-    /// </remarks>
-    public const float IntersectPercentage = 0.2f;
-
-    /// <summary>
     ///     A set of doors that are currently opening, closing, or just queued to open/close after some delay.
     /// </summary>
     private readonly HashSet<Entity<DoorComponent>> _activeDoors = new();
+
+    private readonly HashSet<Entity<PhysicsComponent>> _doorIntersecting = new();
 
     public override void Initialize()
     {
@@ -159,7 +156,6 @@ public abstract partial class SharedDoorSystem : EntitySystem
             _activeDoors.Add(ent);
 
         RaiseLocalEvent(ent, new DoorStateChangedEvent(door.State));
-        AppearanceSystem.SetData(ent, DoorVisuals.State, door.State);
     }
 
     protected bool SetState(EntityUid uid, DoorState state, DoorComponent? door = null)
@@ -207,6 +203,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
         door.State = state;
         Dirty(uid, door);
         RaiseLocalEvent(uid, new DoorStateChangedEvent(state));
+
         AppearanceSystem.SetData(uid, DoorVisuals.State, door.State);
         return true;
     }
@@ -216,7 +213,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
     #region Interactions
     protected void OnActivate(EntityUid uid, DoorComponent door, ActivateInWorldEvent args)
     {
-        if (args.Handled || !door.ClickOpen)
+        if (args.Handled || !args.Complex || !door.ClickOpen)
             return;
 
         if (!TryToggleDoor(uid, door, args.User, predicted: true))
@@ -466,7 +463,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
 
         door.Partial = true;
 
-        // Make sure no entity waled into the airlock when it started closing.
+        // Make sure no entity walked into the airlock when it started closing.
         if (!CanClose(uid, door))
         {
             door.NextStateChange = GameTiming.CurTime + door.OpenTimeTwo;
@@ -547,32 +544,41 @@ public abstract partial class SharedDoorSystem : EntitySystem
         if (!Resolve(uid, ref physics))
             yield break;
 
+        var xform = Transform(uid);
+        // Getting the world bounds from the gridUid allows us to use the version of
+        // GetCollidingEntities that returns Entity<PhysicsComponent>
+        if (!TryComp<MapGridComponent>(xform.GridUid, out var mapGridComp))
+            yield break;
+        var tileRef = _mapSystem.GetTileRef(xform.GridUid.Value, mapGridComp, xform.Coordinates);
+
+        _doorIntersecting.Clear();
+        _entityLookup.GetLocalEntitiesIntersecting(xform.GridUid.Value, tileRef.GridIndices, _doorIntersecting, gridComp: mapGridComp, flags: (LookupFlags.All & ~LookupFlags.Sensors));
+
         // TODO SLOTH fix electro's code.
         // ReSharper disable once InconsistentNaming
-        var doorAABB = _entityLookup.GetWorldAABB(uid);
 
-        foreach (var otherPhysics in PhysicsSystem.GetCollidingEntities(Transform(uid).MapID, doorAABB))
+        foreach (var otherPhysics in _doorIntersecting)
         {
-            if (otherPhysics == physics)
+            if (otherPhysics.Comp == physics)
+                continue;
+
+            if (!otherPhysics.Comp.CanCollide)
                 continue;
 
             //TODO: Make only shutters ignore these objects upon colliding instead of all airlocks
             // Excludes Glasslayer for windows, GlassAirlockLayer for windoors, TableLayer for tables
-            if (!otherPhysics.CanCollide || otherPhysics.CollisionLayer == (int)CollisionGroup.GlassLayer || otherPhysics.CollisionLayer == (int)CollisionGroup.GlassAirlockLayer || otherPhysics.CollisionLayer == (int)CollisionGroup.TableLayer)
+            if (otherPhysics.Comp.CollisionLayer == (int) CollisionGroup.GlassLayer || otherPhysics.Comp.CollisionLayer == (int) CollisionGroup.GlassAirlockLayer || otherPhysics.Comp.CollisionLayer == (int) CollisionGroup.TableLayer)
                 continue;
 
             //If the colliding entity is a slippable item ignore it by the airlock
-            if (otherPhysics.CollisionLayer == (int)CollisionGroup.SlipLayer && otherPhysics.CollisionMask == (int)CollisionGroup.ItemMask)
+            if (otherPhysics.Comp.CollisionLayer == (int) CollisionGroup.SlipLayer && otherPhysics.Comp.CollisionMask == (int) CollisionGroup.ItemMask)
                 continue;
 
             //For when doors need to close over conveyor belts
-            if (otherPhysics.CollisionLayer == (int) CollisionGroup.ConveyorMask)
+            if (otherPhysics.Comp.CollisionLayer == (int) CollisionGroup.ConveyorMask)
                 continue;
 
-            if ((physics.CollisionMask & otherPhysics.CollisionLayer) == 0 && (otherPhysics.CollisionMask & physics.CollisionLayer) == 0)
-                continue;
-
-            if (_entityLookup.GetWorldAABB(otherPhysics.Owner).IntersectPercentage(doorAABB) < IntersectPercentage)
+            if ((physics.CollisionMask & otherPhysics.Comp.CollisionLayer) == 0 && (otherPhysics.Comp.CollisionMask & physics.CollisionLayer) == 0)
                 continue;
 
             yield return otherPhysics.Owner;
@@ -602,7 +608,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
         var otherUid = args.OtherEntity;
 
         if (Tags.HasTag(otherUid, DoorBumpTag))
-            TryOpen(uid, door, otherUid, quiet: door.State == DoorState.Denying);
+            TryOpen(uid, door, otherUid, quiet: door.State == DoorState.Denying, predicted: true);
     }
     #endregion
 
@@ -702,7 +708,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
         var (uid, door, physics) = ent;
         if (door.BumpOpen)
         {
-            foreach (var other in PhysicsSystem.GetContactingEntities(uid, physics, approximate: true))
+            foreach (var other in PhysicsSystem.GetContactingEntities(uid, physics))
             {
                 if (Tags.HasTag(other, DoorBumpTag) && TryOpen(uid, door, other, quiet: true))
                     break;

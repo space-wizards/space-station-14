@@ -32,6 +32,17 @@
   objectType: Structure
 
 - type: construction
+  name: freezer
+  id: CrateFreezer
+  graph: CrateFreezer
+  startNode: start
+  targetNode: done
+  category: construction-category-storage
+  description: A metal freezing crate for storing things.
+  icon: { sprite: Structures/Storage/Crates/freezer.rsi, state: icon }
+  objectType: Structure
+
+- type: construction
   name: plastic crate
   id: CratePlastic
   graph: CratePlastic
@@ -62,6 +73,19 @@
   category: construction-category-storage
   description: A small box for storing things.
   icon: { sprite: Objects/Storage/boxes.rsi, state: box }
+  objectType: Item
+
+- type: construction
+  name: pizza box
+  id: FoodBoxPizza
+  graph: FoodBoxPizza
+  startNode: start
+  targetNode: foodboxpizza
+  category: construction-category-storage
+  description: A box for pizza.
+  icon: 
+    sprite: Objects/Consumable/Food/Baked/pizza.rsi
+    state: box
   objectType: Item
 
 - type: construction

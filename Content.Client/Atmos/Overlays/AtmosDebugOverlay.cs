@@ -66,7 +66,7 @@ public sealed class AtmosDebugOverlay : Overlay
             DrawData(msg, handle);
         }
 
-        handle.SetTransform(Matrix3.Identity);
+        handle.SetTransform(Matrix3x2.Identity);
     }
 
     private void DrawData(DebugMessage msg,

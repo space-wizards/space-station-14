@@ -264,7 +264,7 @@ namespace Content.Server.NPC.Pathfinding
             int limit = 40,
             PathFlags flags = PathFlags.None)
         {
-            if (!TryComp<TransformComponent>(entity, out var start))
+            if (!TryComp(entity, out TransformComponent? start))
                 return new PathResultEvent(PathResult.NoPath, new List<PathPoly>());
 
             var layer = 0;
@@ -294,7 +294,7 @@ namespace Content.Server.NPC.Pathfinding
             CancellationToken cancelToken,
             PathFlags flags = PathFlags.None)
         {
-            if (!TryComp<TransformComponent>(entity, out var start))
+            if (!TryComp(entity, out TransformComponent? start))
                 return null;
 
             var request = GetRequest(entity, start.Coordinates, end, range, cancelToken, flags);
@@ -325,8 +325,8 @@ namespace Content.Server.NPC.Pathfinding
             CancellationToken cancelToken,
             PathFlags flags = PathFlags.None)
         {
-            if (!TryComp<TransformComponent>(entity, out var xform) ||
-                !TryComp<TransformComponent>(target, out var targetXform))
+            if (!TryComp(entity, out TransformComponent? xform) ||
+                !TryComp(target, out TransformComponent? targetXform))
                 return new PathResultEvent(PathResult.NoPath, new List<PathPoly>());
 
             var request = GetRequest(entity, xform.Coordinates, targetXform.Coordinates, range, cancelToken, flags);
@@ -400,12 +400,12 @@ namespace Content.Server.NPC.Pathfinding
             var gridUid = coordinates.GetGridUid(EntityManager);
 
             if (!TryComp<GridPathfindingComponent>(gridUid, out var comp) ||
-                !TryComp<TransformComponent>(gridUid, out var xform))
+                !TryComp(gridUid, out TransformComponent? xform))
             {
                 return null;
             }
 
-            var localPos = xform.InvWorldMatrix.Transform(coordinates.ToMapPos(EntityManager, _transform));
+            var localPos = Vector2.Transform(coordinates.ToMapPos(EntityManager, _transform), xform.InvWorldMatrix);
             var origin = GetOrigin(localPos);
 
             if (!TryGetChunk(origin, comp, out var chunk))

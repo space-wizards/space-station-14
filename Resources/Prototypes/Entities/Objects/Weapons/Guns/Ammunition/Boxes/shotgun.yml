@@ -126,4 +126,4 @@
     - type: Sprite
       layers:
         - state: boxwide
-        - state: shellslug
+        - state: shelltranquilizer

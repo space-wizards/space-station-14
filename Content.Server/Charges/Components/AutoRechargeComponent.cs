@@ -7,6 +7,7 @@ namespace Content.Server.Charges.Components;
 /// Something with limited charges that can be recharged automatically.
 /// Requires LimitedChargesComponent to function.
 /// </summary>
+// TODO: no reason this cant be predicted and server system deleted
 [RegisterComponent, AutoGenerateComponentPause]
 [Access(typeof(ChargesSystem))]
 public sealed partial class AutoRechargeComponent : Component

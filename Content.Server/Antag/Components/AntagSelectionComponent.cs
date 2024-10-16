@@ -1,8 +1,8 @@
 using Content.Server.Administration.Systems;
-using Content.Server.Destructible.Thresholds;
 using Content.Shared.Antag;
+using Content.Shared.Destructible.Thresholds;
+using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
-using Content.Shared.Storage;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
@@ -42,6 +42,13 @@ public sealed partial class AntagSelectionComponent : Component
     /// Is not serialized.
     /// </summary>
     public HashSet<ICommonSession> SelectedSessions = new();
+
+    /// <summary>
+    /// Locale id for the name of the antag.
+    /// If this is set then the antag is listed in the round-end summary.
+    /// </summary>
+    [DataField]
+    public LocId? AgentName;
 }
 
 [DataDefinition]
@@ -97,6 +104,7 @@ public partial struct AntagSelectionDefinition()
 
     /// <summary>
     /// Whether or not players should be picked to inhabit this antag or not.
+    /// If no players are left and <see cref="SpawnerPrototype"/> is set, it will make a ghost role.
     /// </summary>
     [DataField]
     public bool PickPlayer = true;
@@ -136,15 +144,28 @@ public partial struct AntagSelectionDefinition()
 
     /// <summary>
     /// Components added to the player's mind.
+    /// Do NOT use this to add role-type components. Add those as MindRoles instead
     /// </summary>
     [DataField]
     public ComponentRegistry MindComponents = new();
+
+    /// <summary>
+    /// List of Mind Role Prototypes to be added to the player's mind.
+    /// </summary>
+    [DataField]
+    public List<ProtoId<EntityPrototype>>? MindRoles;
 
     /// <summary>
     /// A set of starting gear that's equipped to the player.
     /// </summary>
     [DataField]
     public ProtoId<StartingGearPrototype>? StartingGear;
+
+    /// <summary>
+    /// A list of role loadouts, from which a randomly selected one will be equipped.
+    /// </summary>
+    [DataField]
+    public List<ProtoId<RoleLoadoutPrototype>>? RoleLoadout;
 
     /// <summary>
     /// A briefing shown to the player.

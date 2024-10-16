@@ -211,7 +211,7 @@ public sealed partial class PolymorphSystem : EntitySystem
         var childXform = Transform(child);
         _transform.SetLocalRotation(child, targetTransformComp.LocalRotation, childXform);
 
-        if (_container.TryGetContainingContainer(uid, out var cont))
+        if (_container.TryGetContainingContainer((uid, targetTransformComp, null), out var cont))
             _container.Insert(child, cont);
 
         //Transfers all damage from the original to the new one
@@ -248,7 +248,7 @@ public sealed partial class PolymorphSystem : EntitySystem
             }
         }
 
-        if (configuration.TransferName && TryComp<MetaDataComponent>(uid, out var targetMeta))
+        if (configuration.TransferName && TryComp(uid, out MetaDataComponent? targetMeta))
             _metaData.SetEntityName(child, targetMeta.EntityName);
 
         if (configuration.TransferHumanoidAppearance)

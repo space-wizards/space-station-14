@@ -1,15 +1,7 @@
-using Content.Shared.StatusIcon;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
+namespace Content.Server.Access.Components;
 
-namespace Content.Server.Access.Components
-{
-    [RegisterComponent]
-    public sealed partial class AgentIDCardComponent : Component
-    {
-        /// <summary>
-        /// Set of job icons that the agent ID card can show.
-        /// </summary>
-        [DataField("icons", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<StatusIconPrototype>))]
-        public HashSet<string> Icons = new();
-    }
-}
+/// <summary>
+///     Allows an ID card to copy accesses from other IDs and to change the name, job title and job icon via an interface.
+/// </summary>
+[RegisterComponent]
+public sealed partial class AgentIDCardComponent : Component { }

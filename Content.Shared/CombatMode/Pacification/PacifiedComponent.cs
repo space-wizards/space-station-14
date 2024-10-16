@@ -1,4 +1,6 @@
+using Content.Shared.Alert;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.CombatMode.Pacification;
 
@@ -42,4 +44,6 @@ public sealed partial class PacifiedComponent : Component
     [DataField]
     public EntityUid? LastAttackedEntity = null;
 
+    [DataField]
+    public ProtoId<AlertPrototype> PacifiedAlert = "Pacified";
 }

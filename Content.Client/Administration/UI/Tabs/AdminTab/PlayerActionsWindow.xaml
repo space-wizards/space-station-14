@@ -4,7 +4,7 @@
     Title="{Loc admin-player-actions-window-title}" MinSize="425 272">
     <BoxContainer Orientation="Vertical">
         <BoxContainer Orientation="Horizontal">
-            <Label Text="{Loc Reason}" MinWidth="100" />
+            <Label Text="{Loc admin-player-actions-reason}" MinWidth="100" />
             <Control MinWidth="50" />
             <LineEdit Name="ReasonLine" MinWidth="100" HorizontalExpand="True" />
         </BoxContainer>

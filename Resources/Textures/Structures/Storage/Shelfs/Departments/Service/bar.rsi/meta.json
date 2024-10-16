@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by Kezu",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "base"
+    },
+    {
+      "name": "bar-0"
+    },
+    {
+      "name": "bar-1"
+    },
+    {
+      "name": "bar-2"
+    },
+    {
+      "name": "bar-3"
+    },
+    {
+      "name": "bar-4"
+    },
+    {
+      "name": "bar-5"
+    },
+    {
+      "name": "bar-6"
+    },
+    {
+      "name": "bar-7"
+    },
+    {
+      "name": "bar-8"
+    },
+    {
+      "name": "bar-9"
+    },
+    {
+      "name": "bar-10"
+    },
+    {
+      "name": "bar-11"
+    },
+    {
+      "name": "bar-12"
+    }
+  ]
+}

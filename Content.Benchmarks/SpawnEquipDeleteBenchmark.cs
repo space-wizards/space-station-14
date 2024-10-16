@@ -32,7 +32,7 @@ public class SpawnEquipDeleteBenchmark
     public async Task SetupAsync()
     {
         ProgramShared.PathOffset = "../../../../";
-        PoolManager.Startup(null);
+        PoolManager.Startup();
         _pair = await PoolManager.GetServerClient();
         var server = _pair.Server;
 
