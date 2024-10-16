@@ -36,3 +36,6 @@ reagent-desc-ammoniated-mercury = An inorganic compound used to treat skin probl
 
 reagent-name-calomel = calomel
 reagent-desc-calomel = A mercury chloride mineral that was used as a medicine in older times, causes mercury poisoning if ingested.
+
+reagent-name-hydrogen-peroxide = hydrogen peroxide
+reagent-desc-hydrogen-peroxide = An ubiquitous chemical substance that is used in several applications.
