@@ -67,7 +67,7 @@
 
 - type: loadout
   id: TrooperUniform
-  equipment: 
+  equipment:
     jumpsuit: ClothingUniformSecurityTrooper
 
 - type: loadout
@@ -158,6 +158,17 @@
     proto: SeniorOfficer
   equipment:
     id: SeniorOfficerPDA
+
+# Gloves
+- type: loadout
+  id: BlackGloves
+  equipment:
+    gloves: ClothingHandsGlovesColorBlack
+
+- type: loadout
+  id: FingerlessGloves
+  equipment:
+    gloves: ClothingHandsGlovesFingerless
 
 # Misc
 - type: loadout
