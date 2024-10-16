@@ -3,7 +3,7 @@ using Content.Shared.Chemistry.Components;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Explosion.Components
+namespace Content.Shared.Explosion.Components;
 
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedSmokeOnUseSystem))]
 public sealed partial class SmokeOnUseComponent : Component

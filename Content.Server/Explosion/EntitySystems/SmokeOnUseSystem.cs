@@ -9,7 +9,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Content.Shared.Interaction.Events;
 
-namespace Content.Server.Explosion.EntitySystems
+namespace Content.Server.Explosion.EntitySystems;
 
 public sealed class SmokeOnUseSystem : SharedSmokeOnUseSystem
 {
