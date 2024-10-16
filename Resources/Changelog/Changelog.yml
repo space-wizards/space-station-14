@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: PJB3005
-  changes:
-  - message: CLF3 is now called "chlorine trifluoride"
-    type: Tweak
-  id: 7016
-  time: '2024-07-31T00:14:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30510
 - author: slarticodefast
   changes:
   - message: Fixed the mouse position when it is over a singularity distortion effect
@@ -3945,3 +3938,10 @@
   id: 7515
   time: '2024-10-16T03:57:30.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32813
+- author: Minemoder, ArtisticRoomba, Sarahon
+  changes:
+  - message: Reptiles and Kobolds can now thump their tail.
+    type: Add
+  id: 7516
+  time: '2024-10-16T10:04:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32064
