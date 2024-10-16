@@ -38,7 +38,7 @@ admin-smite-reptilian-species-swap-name = Become Reptilian
 admin-smite-locker-stuff-name = Locker Stuff
 admin-smite-headstand-name = Headstand
 admin-smite-become-mouse-name = Become Mouse
-admin-smite-maid-name = Maid
+admin-smite-maid-name = Cat Maid
 admin-smite-zoom-in-name = Zoom In
 admin-smite-flip-eye-name = Flip Eye
 admin-smite-run-walk-swap-name = Run Walk Swap
@@ -56,7 +56,6 @@ admin-smite-vomit-organs-name = Vomit Organs
 admin-smite-ghostkick-name = Ghost Kick
 admin-smite-nyanify-name = Cat Ears
 admin-smite-kill-sign-name = Kill Sign
-admin-smite-maid-name = Cat Maid
 
 ## Smite descriptions
 
