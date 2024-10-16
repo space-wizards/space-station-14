@@ -20,8 +20,8 @@
         priority: 1
         whitelist:
           tags:
-            - ShellShotgun ## TODO: Add a risk of the gun blowing up if using heavy shotgun shells.
-            - ShellShotgunLight
+            - ShellShotgun
+            - ShellShotgunLight ## TODO: Add a risk of the gun blowing up if using non-light shotgun shells.
   - type: ContainerContainer
     containers:
       gun_chamber: !type:ContainerSlot
