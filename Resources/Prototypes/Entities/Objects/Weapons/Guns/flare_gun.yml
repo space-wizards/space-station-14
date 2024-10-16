@@ -2,7 +2,7 @@
   name: flare gun
   parent: BaseItem
   id: WeaponFlareGun
-  description: A compact, single-shot pistol that fires shotgun shells. Unable to load or launch lethal shotgun shells.
+  description: A compact, single-shot pistol that fires shotgun shells.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/flaregun.rsi
@@ -20,6 +20,7 @@
         priority: 1
         whitelist:
           tags:
+            - ShellShotgun ## TODO: Add a risk of the gun blowing up if using heavy shotgun shells.
             - ShellShotgunLight
   - type: ContainerContainer
     containers:
@@ -50,7 +51,7 @@
   name: security shell gun
   parent: [BaseItem, BaseSecurityContraband]
   id: WeaponFlareGunSecurity
-  description: A modified flare gun designed to be used by security to launch beanbag, tranquilizer or other non-lethal shells. Can still fire lethal shells in a pinch.
+  description: A modified flare gun designed to be used by security to launch non-lethal shotgun shells such as beanbags or tranquilizers. Can still fire lethal shells if neccesary.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/flaregun_security.rsi
