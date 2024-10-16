@@ -7,9 +7,6 @@
   - type: Sprite
     noRot: false
     sprite: Objects/Misc/meteor.rsi
-    layers:
-    - state: "medium"
-      shader: unshaded # sunlight reflecting off them or something, prevents meteor stealthops sniping you
   - type: Projectile
     damage: {}
     deleteOnCollide: false
