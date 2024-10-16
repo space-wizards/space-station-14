@@ -348,13 +348,6 @@ public abstract partial class SharedStationAiSystem : EntitySystem
     {
         if (_timing.ApplyingState)
             return;
-        
-
-        if (TryComp(args.Entity, out ActionsComponent? actions))
-        {
-            _actions.RemoveProvidedActions(args.Entity, args.Entity, actions);
-            Dirty(args.Entity, actions);
-        }
 
         // Reset name to whatever
         _metadata.SetEntityName(ent.Owner, Prototype(ent.Owner)?.Name ?? string.Empty);
