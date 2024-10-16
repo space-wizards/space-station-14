@@ -1,15 +1,16 @@
 using Content.Server.Administration;
+using Content.Server.Construction.Completions;
 using Content.Server.Labels;
 using Content.Shared.Administration;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Shuttles.Components;
+using Content.Shared.Storage;
+using Content.Shared.Storage.EntitySystems;
 using Robust.Shared.Console;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
-
-
 
 namespace Content.Server.Shuttles.Commands;
 
@@ -27,6 +28,9 @@ public sealed class FTLDiskCommand : LocalizedCommands
 
     [ValidatePrototypeId<EntityPrototype>]
     public const string CoordinatesDisk = "CoordinatesDisk";
+
+    [ValidatePrototypeId<EntityPrototype>]
+    public const string DiskCase = "DiskCase";
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length == 0)
@@ -34,7 +38,6 @@ public sealed class FTLDiskCommand : LocalizedCommands
             shell.WriteError("Not enough arguments.");
             return;
         }
-
 
         var player = shell.Player;
 
@@ -56,6 +59,7 @@ public sealed class FTLDiskCommand : LocalizedCommands
         var handsSystem = _entSystemManager.GetEntitySystem<SharedHandsSystem>();
         var labelSystem = _entSystemManager.GetEntitySystem<LabelSystem>();
         var mapSystem = _entSystemManager.GetEntitySystem<SharedMapSystem>();
+        var storageSystem = _entSystemManager.GetEntitySystem<SharedStorageSystem>();
 
         foreach (var destinations in args)
         {
@@ -159,16 +163,34 @@ public sealed class FTLDiskCommand : LocalizedCommands
                 cd.Destination = dest;
                 _entManager.Dirty(cdUid, cd);
 
+                // create disk case
+                EntityUid cdCaseUid = _entManager.SpawnEntity(DiskCase, coords);
+
+                // apply labels
                 if (_entManager.TryGetComponent<MetaDataComponent>(dest, out var meta) && meta != null && meta.EntityName != null)
                 {
                     labelSystem.Label(cdUid, meta.EntityName);
+                    labelSystem.Label(cdCaseUid, meta.EntityName);
                 }
 
-                if (_entManager.TryGetComponent<HandsComponent>(entity, out var handsComponent) && handsSystem.TryGetEmptyHand(entity, out var emptyHand, handsComponent))
+                // if the case has a storage, try to place the disk in there and then the case inhand
+
+                if (_entManager.TryGetComponent<StorageComponent>(cdCaseUid, out var storage) && storageSystem.Insert(cdCaseUid, cdUid, out _, storageComp: storage, playSound: false))
                 {
-                    handsSystem.TryPickup(entity, cdUid, emptyHand, checkActionBlocker: false, handsComp: handsComponent);
+                    if (_entManager.TryGetComponent<HandsComponent>(entity, out var handsComponent) && handsSystem.TryGetEmptyHand(entity, out var emptyHand, handsComponent))
+                    {
+                        handsSystem.TryPickup(entity, cdCaseUid, emptyHand, checkActionBlocker: false, handsComp: handsComponent);
+                    }
                 }
+                else // the case was messed up, put disk inhand
+                {
+                    _entManager.DeleteEntity(cdCaseUid); // something went wrong so just yeet the chaf
 
+                    if (_entManager.TryGetComponent<HandsComponent>(entity, out var handsComponent) && handsSystem.TryGetEmptyHand(entity, out var emptyHand, handsComponent))
+                    {
+                        handsSystem.TryPickup(entity, cdUid, emptyHand, checkActionBlocker: false, handsComp: handsComponent);
+                    }
+                }
             }
             else
             {
