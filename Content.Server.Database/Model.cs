@@ -987,7 +987,7 @@ namespace Content.Server.Database
     [Table("username_whitelist")]
     public sealed class UsernameWhitelist
     {
-        [Required, Key] public string Username { get; set; }
+        [Required, Key] public required string Username { get; set; }
     }
 
     [Table("server_username_rule")]
@@ -999,8 +999,8 @@ namespace Content.Server.Database
         [ForeignKey("Round")]
         public int? RoundId { get; set; }
         [Required]
-        public string Expression { get; set; }
-        public string Message { get; set; }
+        public required string Expression { get; set; }
+        public required string Message { get; set; }
         public Guid? RestrictingAdmin { get; set; }
         public bool ExtendToBan { get; set; }
         public bool Retired { get; set; }
