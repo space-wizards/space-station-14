@@ -5,6 +5,7 @@ namespace Content.Shared.Actions;
 
 [NetworkedComponent]
 [RegisterComponent]
+[Access(typeof(SharedActionsSystem))]
 public sealed partial class ActionsComponent : Component
 {
     /// <summary>
