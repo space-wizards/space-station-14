@@ -505,7 +505,6 @@
     sprite: Structures/Specific/Anomalies/Cores/tech_core.rsi
   - type: LimitedCharges
     maxCharges: 1
-    charges: 1
   - type: AutoRecharge
     rechargeDuration: 300 # 5 minutes
   - type: PointLight

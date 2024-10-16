@@ -1212,7 +1212,6 @@
     tags:
     - Cooked
     - Meat
-    - Steak
   - type: Sprite
     layers:
     - state: anomalymeat-cooked #Kinda hard to cook this... thing evenly
