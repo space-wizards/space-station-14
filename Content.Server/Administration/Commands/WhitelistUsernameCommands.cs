@@ -49,7 +49,8 @@ public sealed class WhitelistRemoveUsernameCommand : LocalizedCommands
 
         string username = args[0];
 
-        if (await _usernameRules.WhitelistRemoveUsernameAsync(username))
+        var wasPresent = await _usernameRules.WhitelistRemoveUsernameAsync(username);
+        if (!wasPresent)
         {
             shell.WriteError(Loc.GetString("cmd-username-whitelist-not-in-db"));
         }

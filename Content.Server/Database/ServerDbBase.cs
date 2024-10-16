@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Transactions;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Shared.Administration.Logs;
@@ -528,10 +529,19 @@ namespace Content.Server.Database
         #region username whitelist
         public abstract Task AddUsernameWhitelistAsync(string username);
 
-        public abstract Task RemoveUsernameWhitelistAsync(string username);
+        public async Task RemoveUsernameWhitelistAsync(string username)
+        {
+            await using var db = await GetDb();
+            var entry = await db.DbContext.UsernameWhitelist.SingleAsync(u => u.Username == username);
+            db.DbContext.UsernameWhitelist.Remove(entry);
+            await db.DbContext.SaveChangesAsync();
+        }
 
-        public abstract Task<bool> CheckUsernameWhitelistAsync(string username);
-
+        public async Task<bool> CheckUsernameWhitelistAsync(string username)
+        {
+            await using var db = await GetDb();
+            return db.DbContext.UsernameWhitelist.Where(u => u.Username == username).Any();
+        }
         #endregion
 
         #region Username Rule

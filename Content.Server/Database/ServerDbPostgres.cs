@@ -476,35 +476,15 @@ namespace Content.Server.Database
         public override async Task AddUsernameWhitelistAsync(string username)
         {
             await using var db = await GetDbImpl();
-
-            db.PgDbContext.UsernameWhitelist.Add(new UsernameWhitelist
+            var tx = await db.PgDbContext.Database.BeginTransactionAsync(IsolationLevel.RepeatableRead, CancellationToken.None);
+            if (db.PgDbContext.UsernameWhitelist.Where(u => u.Username == username).Any())
             {
-                Username = username
-            });
-
+                tx.DisposeAsync();
+                return;
+            }
+            db.PgDbContext.UsernameWhitelist.Add(new UsernameWhitelist { Username = username });
             await db.PgDbContext.SaveChangesAsync();
-        }
-
-        public override async Task RemoveUsernameWhitelistAsync(string username)
-        {
-            await using var db = await GetDbImpl();
-
-            db.PgDbContext.UsernameWhitelist.Remove(new UsernameWhitelist
-            {
-                Username = username
-            });
-
-            await db.PgDbContext.SaveChangesAsync();
-        }
-
-        public override async Task<bool> CheckUsernameWhitelistAsync(string username)
-        {
-            await using var db = await GetDbImpl();
-
-            return db.PgDbContext.UsernameWhitelist.Contains(new UsernameWhitelist
-            {
-                Username = username
-            });
+            await tx.CommitAsync();
         }
         #endregion
 

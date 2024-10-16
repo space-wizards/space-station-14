@@ -195,7 +195,8 @@ public sealed partial class UsernameRuleManager : IUsernameRuleManager, IPostInj
 
     public async Task<(bool, string, bool)> IsUsernameBannedAsync(string username)
     {
-        if (await _db.CheckUsernameWhitelistAsync(username))
+        var whitelist = await _db.CheckUsernameWhitelistAsync(username);
+        if (whitelist)
         {
             return (false, "", false);
         }
@@ -287,7 +288,7 @@ public sealed partial class UsernameRuleManager : IUsernameRuleManager, IPostInj
 
     private void SendResetUsernameBan(INetChannel channel)
     {
-        _sawmill.Debug($"Sent username bans reset to connecting admin");
+        _sawmill.Debug($"Sent username bans reset to {channel.UserData.UserName}");
         var resetMessages = CreateResetMessages();
         foreach (var msg in resetMessages)
         {
@@ -336,6 +337,7 @@ public sealed partial class UsernameRuleManager : IUsernameRuleManager, IPostInj
     public async Task WhitelistAddUsernameAsync(string username)
     {
         await _db.AddUsernameWhitelistAsync(username);
+        _sawmill.Verbose($"sent create username whitelist for {username}");
     }
 
     public async Task<bool> WhitelistRemoveUsernameAsync(string username)
@@ -345,6 +347,7 @@ public sealed partial class UsernameRuleManager : IUsernameRuleManager, IPostInj
         {
             await _db.RemoveUsernameWhitelistAsync(username);
         }
+        _sawmill.Verbose($"sent delete username whitelist for {username}");
         return present;
     }
 }

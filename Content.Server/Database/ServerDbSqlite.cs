@@ -355,35 +355,15 @@ namespace Content.Server.Database
         public override async Task AddUsernameWhitelistAsync(string username)
         {
             await using var db = await GetDbImpl();
-
-            db.SqliteDbContext.UsernameWhitelist.Add(new UsernameWhitelist
+            var tx = await db.SqliteDbContext.Database.BeginTransactionAsync(IsolationLevel.RepeatableRead, CancellationToken.None);
+            if (db.SqliteDbContext.UsernameWhitelist.Where(u => u.Username == username).Any())
             {
-                Username = username
-            });
-
+                tx.DisposeAsync();
+                return;
+            }
+            db.SqliteDbContext.UsernameWhitelist.Add(new UsernameWhitelist { Username = username });
             await db.SqliteDbContext.SaveChangesAsync();
-        }
-
-        public override async Task RemoveUsernameWhitelistAsync(string username)
-        {
-            await using var db = await GetDbImpl();
-
-            db.SqliteDbContext.UsernameWhitelist.Remove(new UsernameWhitelist
-            {
-                Username = username
-            });
-
-            await db.SqliteDbContext.SaveChangesAsync();
-        }
-
-        public override async Task<bool> CheckUsernameWhitelistAsync(string username)
-        {
-            await using var db = await GetDbImpl();
-
-            return db.SqliteDbContext.UsernameWhitelist.Contains(new UsernameWhitelist
-            {
-                Username = username
-            });
+            await tx.CommitAsync();
         }
         #endregion
 

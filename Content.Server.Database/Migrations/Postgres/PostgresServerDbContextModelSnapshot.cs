@@ -1429,6 +1429,18 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.ToTable("uploaded_resource_log", (string)null);
                 });
 
+            modelBuilder.Entity("Content.Server.Database.UsernameWhitelist", b =>
+                {
+                    b.Property<string>("Username")
+                        .HasColumnType("text")
+                        .HasColumnName("username");
+
+                    b.HasKey("Username")
+                        .HasName("PK_username_whitelist");
+
+                    b.ToTable("username_whitelist", (string)null);
+                });
+
             modelBuilder.Entity("Content.Server.Database.Whitelist", b =>
                 {
                     b.Property<Guid>("UserId")

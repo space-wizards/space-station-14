@@ -12,17 +12,11 @@ namespace Content.Client.Administration.UI.CustomControls;
 public sealed partial class UsernameBanListControl : BoxContainer
 {
     private readonly IClientUsernameBanCacheManager _usernameBanCache;
-    private readonly ILogManager _log;
-
     public event Action<int?>? OnSelectionChanged;
-
     private int? _selectedId;
-    private ISawmill _sawmill = default!;
     public UsernameBanListControl()
     {
         _usernameBanCache = IoCManager.Resolve<IClientUsernameBanCacheManager>();
-        _log = IoCManager.Resolve<ILogManager>();
-        _sawmill = _log.GetSawmill("kill later");
         RobustXamlLoader.Load(this);
         UsernameBanListContainer.GenerateItem += GenerateUsernameBanButton;
         UsernameBanListContainer.ItemPressed += UsernameBanListItemPressed;
@@ -34,7 +28,6 @@ public sealed partial class UsernameBanListControl : BoxContainer
     private void PopulateList(IReadOnlyList<(int, string, string, bool)>? banData = null)
     {
         banData ??= _usernameBanCache.BanList;
-        _sawmill.Error($"{banData} {banData.Count}");
         UsernameBanListContainer.PopulateList(banData.Select(info => new UsernameBanListData(info)).ToList());
     }
 

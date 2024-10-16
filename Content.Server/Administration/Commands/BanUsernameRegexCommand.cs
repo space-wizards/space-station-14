@@ -16,7 +16,8 @@ public sealed class BanUsernameRegexCommand : LocalizedCommands
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        if (args.Length < 1 || args.Length > 3) {
+        if (args.Length < 1 || args.Length > 3)
+        {
             shell.WriteError(LocalizationManager.GetString("shell-need-between-arguments", ("lower", 1), ("upper", 3)));
             return;
         }
@@ -26,14 +27,17 @@ public sealed class BanUsernameRegexCommand : LocalizedCommands
         string message = "";
         bool ban = false;
 
-        if (args.Length > 1) {
+        if (args.Length > 1)
+        {
             message = args[1];
         }
-        else {
+        else
+        {
             message = usernameRule;
         }
 
-        if (args.Length > 2 && !bool.TryParse(args[2], out ban)) {
+        if (args.Length > 2 && !bool.TryParse(args[2], out ban))
+        {
             shell.WriteError(Loc.GetString("shell-argument-must-be-boolean"));
             return;
         }
@@ -43,20 +47,14 @@ public sealed class BanUsernameRegexCommand : LocalizedCommands
 
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
-        string target;
-        string reason;
-        uint minutes;
-
         switch (args.Length)
         {
             case 1:
                 var options = _playerManager.Sessions.Select(c => c.Name).OrderBy(c => c).ToArray();
                 return CompletionResult.FromHintOptions(options, LocalizationManager.GetString("cmd-ban-username-hint-regex"));
-                break;
 
             case 2:
                 return CompletionResult.FromHint(LocalizationManager.GetString("cmd-ban-username-hint-reason"));
-                break;
 
             case 3:
                 // optional ban conversion
@@ -67,7 +65,6 @@ public sealed class BanUsernameRegexCommand : LocalizedCommands
                 };
 
                 return CompletionResult.FromHintOptions(convertToBan, Loc.GetString("cmd-ban-username-hint-upgrade-ban"));
-                break;
 
             default:
                 break;
