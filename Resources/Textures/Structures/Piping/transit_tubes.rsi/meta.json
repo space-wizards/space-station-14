@@ -42,6 +42,10 @@
 		{
             "name": "empty_pod",
             "directions": 8
+        },
+		{
+            "name": "occupied_pod",
+            "directions": 8
         }
     ]
 }
