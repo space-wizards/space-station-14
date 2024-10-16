@@ -134,78 +134,41 @@
 
 
 - type: entity
-  parent: PercentileDie
+  abstract: true
+  id: BaseDiceLoaded
+  suffix: loaded
+  components:
+  - type: LoadedDice
+  - type: UserInterface
+    interfaces:
+      enum.LoadedDiceUiKey.Key:
+        type: LoadedDiceBoundUserInterface
+
+
+- type: entity
+  parent: [PercentileDie, BaseDiceLoaded]
   id: PercentileDieLoaded
-  suffix: loaded
-  components:
-  - type: LoadedDice
-  - type: UserInterface
-    interfaces:
-      enum.LoadedDiceUiKey.Key:
-        type: LoadedDiceBoundUserInterface
 
 - type: entity
-  parent: d20Dice
+  parent: [d20Dice, BaseDiceLoaded]
   id: d20DiceLoaded
-  suffix: loaded
-  components:
-  - type: LoadedDice
-  - type: UserInterface
-    interfaces:
-      enum.LoadedDiceUiKey.Key:
-        type: LoadedDiceBoundUserInterface
 
 - type: entity
-  parent: d12Dice
+  parent: [d12Dice, BaseDiceLoaded]
   id: d12DiceLoaded
-  suffix: loaded
-  components:
-  - type: LoadedDice
-  - type: UserInterface
-    interfaces:
-      enum.LoadedDiceUiKey.Key:
-        type: LoadedDiceBoundUserInterface
 
 - type: entity
-  parent: d10Dice
+  parent: [d10Dice, BaseDiceLoaded]
   id: d10DiceLoaded
-  suffix: loaded
-  components:
-  - type: LoadedDice
-  - type: UserInterface
-    interfaces:
-      enum.LoadedDiceUiKey.Key:
-        type: LoadedDiceBoundUserInterface
 
 - type: entity
-  parent: d8Dice
+  parent: [d8Dice, BaseDiceLoaded]
   id: d8DiceLoaded
-  suffix: loaded
-  components:
-  - type: LoadedDice
-  - type: UserInterface
-    interfaces:
-      enum.LoadedDiceUiKey.Key:
-        type: LoadedDiceBoundUserInterface
 
 - type: entity
-  parent: d6Dice
+  parent: [d6Dice, BaseDiceLoaded]
   id: d6DiceLoaded
-  suffix: loaded
-  components:
-  - type: LoadedDice
-  - type: UserInterface
-    interfaces:
-      enum.LoadedDiceUiKey.Key:
-        type: LoadedDiceBoundUserInterface
 
 - type: entity
-  parent: d4Dice
+  parent: [d4Dice, BaseDiceLoaded]
   id: d4DiceLoaded
-  suffix: loaded
-  components:
-  - type: LoadedDice
-  - type: UserInterface
-    interfaces:
-      enum.LoadedDiceUiKey.Key:
-        type: LoadedDiceBoundUserInterface
