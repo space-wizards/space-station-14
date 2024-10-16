@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TheShuEd
-  changes:
-  - message: industrial ore processor can now process diamonds
-    type: Fix
-  id: 7015
-  time: '2024-07-30T14:41:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30499
 - author: PJB3005
   changes:
   - message: CLF3 is now called "chlorine trifluoride"
@@ -3944,3 +3937,11 @@
   id: 7514
   time: '2024-10-15T08:28:28.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32565
+- author: slarticodefast
+  changes:
+  - message: Fixed inconsistent solution transfer amounts from spray bottles to plant
+      holders.
+    type: Fix
+  id: 7515
+  time: '2024-10-16T03:57:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32813
