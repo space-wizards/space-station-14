@@ -1,6 +1,7 @@
 using System.Collections.Frozen;
 using Content.Server.Popups;
 using Content.Shared.Chat.Prototypes;
+using Content.Shared.Emoting;
 using Content.Shared.Speech;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;

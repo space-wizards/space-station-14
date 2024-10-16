@@ -12,16 +12,12 @@ public sealed partial class EmoteBlockerComponent : Component
     /// <summary>
     /// Which categories of emotes are blocked by this component.
     /// </summary>
-
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("blocksCategories")]
     public HashSet<EmoteCategory> BlocksCategories = new HashSet<EmoteCategory>();
 
     /// <summary>
     /// IDs of which specific emotes are blocked by this component.
     /// </summary>
-
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("blocksEmotes")]
     public HashSet<string> BlocksEmotes = new HashSet<string>();
 }

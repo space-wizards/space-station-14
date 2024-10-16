@@ -1,17 +1,10 @@
-using System.Collections.Frozen;
-using System.Linq;
-using Content.Server.Chat.Systems;
-using Content.Server.EntityEffects.Effects;
 using Content.Server.Popups;
 using Content.Server.Speech.Components;
 using Content.Server.Speech.EntitySystems;
-using Content.Shared.Actions;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Emoting;
-using Content.Shared.EntityTable.EntitySelectors;
 using Content.Shared.Inventory;
 using Content.Shared.Speech;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Speech;

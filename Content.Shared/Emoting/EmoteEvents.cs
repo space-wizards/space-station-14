@@ -1,17 +1,16 @@
 ﻿using Content.Shared.Chat.Prototypes;
 using Content.Shared.Inventory;
 
-namespace Content.Shared.Emoting
-{
-    public sealed class EmoteAttemptEvent : CancellableEntityEventArgs
-    {
-        public EmoteAttemptEvent(EntityUid uid)
-        {
-            Uid = uid;
-        }
+namespace Content.Shared.Emoting;
 
-        public EntityUid Uid { get; }
+public sealed class EmoteAttemptEvent : CancellableEntityEventArgs
+{
+    public EmoteAttemptEvent(EntityUid uid)
+    {
+        Uid = uid;
     }
+
+    public EntityUid Uid { get; }
 }
 
 /// <summary>
@@ -30,7 +29,7 @@ public record struct GetEmoteBlockersEvent() : IInventoryRelayEvent
     /// </summary>
     public HashSet<string> BlockedEmotes = new HashSet<string>();
 
-    SlotFlags IInventoryRelayEvent.TargetSlots => SlotFlags.HEAD | SlotFlags.MASK | SlotFlags.GLOVES;
+    SlotFlags IInventoryRelayEvent.TargetSlots => SlotFlags.All;
 
     public bool ShouldBlock(EmotePrototype emote) => BlockedCategories.Contains(emote.Category) || BlockedEmotes.Contains(emote.ID);
 }
