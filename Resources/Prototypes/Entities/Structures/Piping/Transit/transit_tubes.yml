@@ -64,18 +64,20 @@
   categories: [ HideSpawnMenu ]
   name: transit holder
   components:
+  - type: Sprite
+    overrideContainerOcclusion: true
+    drawdepth: BlastDoors
+    sprite: Structures/Piping/transit_tubes.rsi
+    layers:
+    - map: [ "pod" ]
+      state: occupied_pod
   - type: DisposalHolder
     traversalTime: 0.2
   - type: ContainerContainer
     containers:
-      DisposalHolderComponent: !type:Container
-  - type: Sprite
-    drawdepth: BlastDoors
-    overrideContainerOcclusion: true
-    sprite: Structures/Piping/transit_tubes.rsi
-    layers:
-    - map: [ "pod" ]
-      state: empty_pod
+      DisposalHolderComponent: !type:Container 
+        #showEnts: true
+
   
 # Pipes
 
@@ -96,38 +98,6 @@
     node: broken
 
 - type: entity
-  id: TransitTubeTrunk
-  parent: TransitTubeBase
-  name: transit tube trunk
-  description: A tube trunk used as an entry point for transit systems.
-  components:
-  - type: Sprite
-    drawdepth: Overdoors
-    sprite: Structures/Piping/transit_tubes.rsi
-    layers:
-    - map: [ "tube" ]
-      state: station_uni
-  - type: DisposalTube
-    containerId: DisposalEntry
-  - type: DisposalEntry
-    holderPrototypeId: TransitHolder
-  - type: ContainerContainer
-    containers:
-      DisposalEntry: !type:Container
-  - type: GenericVisualizer
-    visuals:
-      enum.DisposalTubeVisuals.VisualState:
-        pipe:
-          Free: { state: station_uni }
-          Anchored: { state: station_uni }
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.25,-0.5,0.25,0.5"
-
-- type: entity
   id: TransitTube
   parent: TransitTubeBase
   name: transit tube segment
@@ -141,10 +111,14 @@
       state: straight
   - type: DisposalTube
     containerId: DisposalTransit
-  - type: DisposalTransit
+  - type: DisposalConduit
+    angles:
+    - 0
+    - 180
   - type: ContainerContainer
     containers:
       DisposalTransit: !type:Container
+        #showEnts: true
   - type: GenericVisualizer
     visuals:
       enum.DisposalTubeVisuals.VisualState:
@@ -167,14 +141,14 @@
     visible: true
   - type: DisposalTube
     containerId: DisposalJunction
-  - type: DisposalJunction
-    degrees:
+  - type: DisposalConduit
+    angles:
     - 135
     - -45
-    followStraightestPath: true
   - type: ContainerContainer
     containers:
       DisposalJunction: !type:Container
+        #showEnts: true
   - type: GenericVisualizer
     visuals:
       enum.DisposalTubeVisuals.VisualState:
@@ -206,15 +180,16 @@
     visible: true
   - type: DisposalTube
     containerId: DisposalJunction
-  - type: DisposalJunction
-    degrees:
-    - 0
+  - type: DisposalConduit
+    angles:
     - -135
     - 135
-    followStraightestPath: true
+    - 0
+    minDeltaAngle: 135
   - type: ContainerContainer
     containers:
       DisposalJunction: !type:Container
+        #showEnts: true
   - type: GenericVisualizer
     visuals:
       enum.DisposalTubeVisuals.VisualState:
@@ -242,12 +217,12 @@
     layers:
     - map: [ "tube" ]
       state: junct_f
-  - type: DisposalJunction
-    degrees:
-    - 0 
-    - 135    
+  - type: DisposalConduit
+    angles:
+    - 135
     - -135
-    followStraightestPath: true
+    - 0
+    minDeltaAngle: 135
   - type: GenericVisualizer
     visuals:
       enum.DisposalTubeVisuals.VisualState:
@@ -277,14 +252,14 @@
       state: bend
   - type: DisposalTube
     containerId: DisposalJunction
-  - type: DisposalJunction
-    degrees:
-    - 0
+  - type: DisposalConduit
+    angles:
     - 135
-    followStraightestPath: true
+    - 0
   - type: ContainerContainer
     containers:
       DisposalJunction: !type:Container
+        #showEnts: true
   - type: GenericVisualizer
     visuals:
       enum.DisposalTubeVisuals.VisualState:
@@ -310,11 +285,10 @@
     layers:
     - map: [ "tube" ]
       state: bend_f
-  - type: DisposalJunction
-    degrees:
-    - 0
+  - type: DisposalConduit
+    angles:
     - -135
-    followStraightestPath: true
+    - 0
   - type: GenericVisualizer
     visuals:
       enum.DisposalTubeVisuals.VisualState:
@@ -342,26 +316,22 @@
   components:
   - type: Sprite
     drawdepth: Overdoors
-    sprite: Structures/Piping/disposal.rsi
+    sprite: Structures/Piping/transit_tubes.rsi
     layers:
-    - state: condisposal
-      map: [ "enum.DisposalUnitVisualLayers.Unanchored" ]
-    - state: disposal
-      map: [ "enum.DisposalUnitVisualLayers.Base" ]
-    - state: disposal-charging
-      map: [ "enum.DisposalUnitVisualLayers.BaseCharging" ]
-    - state: disposal-flush
-      map: [ "enum.DisposalUnitVisualLayers.OverlayFlush" ]
-    - state: dispover-charge
-      map: [ "enum.DisposalUnitVisualLayers.OverlayCharging" ]
-    - state: dispover-ready
-      map: [ "enum.DisposalUnitVisualLayers.OverlayReady" ]
-    - state: dispover-full
-      map: [ "enum.DisposalUnitVisualLayers.OverlayFull" ]
-    - state: dispover-handle
-      map: [ "enum.DisposalUnitVisualLayers.OverlayEngaged" ]
+    - map: [ "enum.DisposalUnitVisualLayers.Unanchored" ]
+      state: station_uni
+    - map: [ "enum.DisposalUnitVisualLayers.Base" ]
+      state: station_uni
+    - map: [ "enum.DisposalUnitVisualLayers.BaseCharging" ]  
+      state: station_uni    
+    - map: [ "enum.DisposalUnitVisualLayers.OverlayFlush" ]     
+    - map: [ "enum.DisposalUnitVisualLayers.OverlayCharging" ]      
+    - map: [ "enum.DisposalUnitVisualLayers.OverlayReady" ]     
+    - map: [ "enum.DisposalUnitVisualLayers.OverlayFull" ]    
+    - map: [ "enum.DisposalUnitVisualLayers.OverlayEngaged" ]      
   - type: Physics
     bodyType: Static
+    canCollide: false
   - type: Destructible
     thresholds:
     - trigger:
@@ -387,24 +357,29 @@
             min: 1
             max: 1
   - type: Appearance
-  - type: UserInterface
-    interfaces:
-      enum.DisposalUnitUiKey.Key:
-        type: DisposalUnitBoundUserInterface
   - type: ContainerContainer
     containers:
       disposals: !type:Container
+        #showEnts: true
+  - type: Transform
+    noRot: false
+  - type: Rotatable
   - type: StaticPrice
     price: 70
   - type: PowerSwitch
+  - type: DisposalUnit
+    automaticEngageTime: 0.5
+    manualFlushTime: 0.5
+    disablePressure: true
+    flushDelay: 0
+    flushSound: 
+    insertSound: 
+  - type: DisposalEntry
+    holderPrototypeId: TransitHolder
+  - type: DisposalTube
+    containerId: disposals  
 
 - type: entity
   id: TransitTubeStation
   parent: TransitTubeStationBase
   name: transit tube station
-  components:
-  - type: DisposalUnit
-  - type: UserInterface
-    interfaces:
-      enum.DisposalUnitUiKey.Key:
-        type: DisposalUnitBoundUserInterface

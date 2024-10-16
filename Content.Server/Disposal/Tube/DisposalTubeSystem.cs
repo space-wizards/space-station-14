@@ -46,6 +46,9 @@ namespace Content.Server.Disposal.Tube
             SubscribeLocalEvent<DisposalTubeComponent, ComponentStartup>(OnStartup);
             SubscribeLocalEvent<DisposalTubeComponent, ConstructionBeforeDeleteEvent>(OnDeconstruct);
 
+            SubscribeLocalEvent<DisposalConduitComponent, GetDisposalsConnectableDirectionsEvent>(OnGetConduitConnectableDirections);
+            SubscribeLocalEvent<DisposalConduitComponent, GetDisposalsNextDirectionEvent>(OnGetConduitNextDirection);
+
             SubscribeLocalEvent<DisposalBendComponent, GetDisposalsConnectableDirectionsEvent>(OnGetBendConnectableDirections);
             SubscribeLocalEvent<DisposalBendComponent, GetDisposalsNextDirectionEvent>(OnGetBendNextDirection);
 
@@ -137,6 +140,52 @@ namespace Content.Server.Disposal.Tube
             DisconnectTube(uid, tube);
         }
 
+        private void OnGetConduitConnectableDirections(EntityUid uid, DisposalConduitComponent component, ref GetDisposalsConnectableDirectionsEvent args)
+        {
+            var rotation = Transform(uid).LocalRotation;
+
+            args.Connectable = component.Angles
+                .Select(angle => new Angle(angle.Theta + rotation.Theta).GetDir())
+                .ToArray();
+        }
+
+        private void OnGetConduitNextDirection(EntityUid uid, DisposalConduitComponent component, ref GetDisposalsNextDirectionEvent args)
+        {
+            var ev = new GetDisposalsConnectableDirectionsEvent();
+            RaiseLocalEvent(uid, ref ev);
+
+            args.Next = ev.Connectable[0];
+            var previousDF = args.Holder.PreviousDirectionFrom;
+
+            switch (ev.Connectable.Length)
+            {
+                case 1:
+                    return;
+
+                case 2:
+                    if (args.Next == previousDF)
+                        args.Next = ev.Connectable[1];
+
+                    return;
+
+                default:
+                    if (previousDF == args.Next ||
+                        Math.Abs(Angle.ShortestDistance(previousDF.ToAngle(), args.Next.ToAngle()).Theta) < component.MinDeltaAngle.Theta)
+                    {
+                        var directions = ev.Connectable.Skip(1).
+                            Where(direction => direction != previousDF &&
+                            Math.Abs(Angle.ShortestDistance(previousDF.ToAngle(), direction.ToAngle()).Theta) >= component.MinDeltaAngle).ToArray();
+
+                        if (directions.Length == 0)
+                            return;
+
+                        args.Next = _random.Pick(directions);
+                    }
+
+                    return;
+            }
+        }
+
         private void OnGetBendConnectableDirections(EntityUid uid, DisposalBendComponent component, ref GetDisposalsConnectableDirectionsEvent args)
         {
             var direction = Transform(uid).LocalRotation;
@@ -191,45 +240,16 @@ namespace Content.Server.Disposal.Tube
 
         private void OnGetJunctionNextDirection(EntityUid uid, DisposalJunctionComponent component, ref GetDisposalsNextDirectionEvent args)
         {
-            if (component.FollowStraightestPath)
-            {
-                OnGetJunctionNextStraightestDirection(uid, component, ref args);
-                return;
-            }
-
             var next = Transform(uid).LocalRotation.GetDir();
             var ev = new GetDisposalsConnectableDirectionsEvent();
             RaiseLocalEvent(uid, ref ev);
             var directions = ev.Connectable.Skip(1).ToArray();
 
             if (args.Holder.PreviousDirectionFrom == Direction.Invalid ||
-                            args.Holder.PreviousDirectionFrom == next)
+                args.Holder.PreviousDirectionFrom == next)
             {
                 args.Next = _random.Pick(directions);
                 return;
-            }
-
-            args.Next = next;
-        }
-
-        private void OnGetJunctionNextStraightestDirection(EntityUid uid, DisposalJunctionComponent component, ref GetDisposalsNextDirectionEvent args)
-        {
-            var ev = new GetDisposalsConnectableDirectionsEvent();
-            RaiseLocalEvent(uid, ref ev);
-
-            var diff = 0d;
-            var directions = ev.Connectable.ToArray();
-            var next = directions.First();
-
-            foreach (var direction in directions)
-            {
-                var shortestAngle = Math.Abs(Angle.ShortestDistance(args.Holder.PreviousDirectionFrom.ToAngle(), direction.ToAngle()).Theta);
-
-                if (shortestAngle > diff)
-                {
-                    diff = shortestAngle;
-                    next = direction;
-                }
             }
 
             args.Next = next;
