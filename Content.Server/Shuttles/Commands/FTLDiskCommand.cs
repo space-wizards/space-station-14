@@ -35,7 +35,7 @@ public sealed class FTLDiskCommand : LocalizedCommands
     {
         if (args.Length == 0)
         {
-            shell.WriteError("Not enough arguments.");
+            shell.WriteError(Loc.GetString("shell-need-minimum-one-argument"));
             return;
         }
 
@@ -43,13 +43,13 @@ public sealed class FTLDiskCommand : LocalizedCommands
 
         if (player == null)
         {
-            shell.WriteLine("Only a player can run this command.");
+            shell.WriteLine(Loc.GetString("shell-only-players-can-run-this-command"));
             return;
         }
 
         if (player.AttachedEntity == null)
         {
-            shell.WriteLine("You don't have an entity to spawn a disk at.");
+            shell.WriteLine(Loc.GetString("shell-must-be-attached-to-entity"));
             return;
         }
 
@@ -79,13 +79,13 @@ public sealed class FTLDiskCommand : LocalizedCommands
                 {
                     if (!_entManager.TryGetComponent<TransformComponent>(dest, out var entTransform))
                     {
-                        shell.WriteLine(destinations + " has no Transform!");
+                        shell.WriteLine(Loc.GetString("cmd-ftldisk-no-transform", ("destination", destinations)));
                         continue;
                     }
 
                     if (!mapSystem.TryGetMap(entTransform.MapID, out var mapDest))
                     {
-                        shell.WriteLine(destinations + " has no map to FTL to!");
+                        shell.WriteLine(Loc.GetString("cmd-ftldisk-no-map", ("destination", destinations)));
                         continue;
                     }
 
@@ -96,27 +96,17 @@ public sealed class FTLDiskCommand : LocalizedCommands
                 // find and verify the map is not somehow unusable.
                 if (!_entManager.TryGetComponent<MapComponent>(dest, out var mapComp)) // We have to check for a MapComponent here and above since we could have changed our dest entity.
                 {
-                    shell.WriteLine(destinations + " is somehow on map " + dest + " with no map component.");
+                    shell.WriteLine(Loc.GetString("cmd-ftldisk-no-map-comp", ("destination", destinations), ("map", dest)));
                     continue;
                 }
                 if (mapComp.MapInitialized == false)
                 {
-                    shell.WriteLine(
-                        destinations +
-                        " is on map " +
-                        dest +
-                        " which is not initialized! Check it's safe to initialize, then initialize it first or the players will be stuck in place!"
-                        );
+                    shell.WriteLine(Loc.GetString("cmd-ftldisk-map-not-init", ("destination", destinations), ("map", dest)));
                     continue;
                 }
                 if (mapComp.MapPaused == true)
                 {
-                    shell.WriteLine(
-                        destinations +
-                        " is on map " +
-                        dest +
-                        " which is paused! Please unpause the map first or the players will be stuck in place."
-                        );
+                    shell.WriteLine(Loc.GetString("cmd-ftldisk-map-paused", ("destination", destinations), ("map", dest)));
                     continue;
                 }
 
@@ -130,31 +120,17 @@ public sealed class FTLDiskCommand : LocalizedCommands
                     {
                         ftlDest.BeaconsOnly = true;
 
-                        shell.WriteLine(
-                            destinations +
-                            " is a planet map " +
-                            dest +
-                            " and will require an FTL point. It may already exist."
-                            );
+                        shell.WriteLine(Loc.GetString("cmd-ftldisk-planet", ("destination", destinations), ("map", dest)));
                     }
                 }
                 else
                 {
                     // we don't do these automatically, since it isn't clear what the correct resolution is. Instead we provide feedback to the user and carry on like they know what theyre doing.
                     if (ftlDestComp.Enabled == false)
-                        shell.WriteLine(
-                            destinations +
-                            " is on map " +
-                            dest +
-                            " that already has an FTLDestinationComponent, but it is not Enabled! Set this manually for safety.");
+                        shell.WriteLine(Loc.GetString("cmd-ftldisk-already-dest-not-enabled", ("destination", destinations), ("map", dest)));
 
                     if (ftlDestComp.BeaconsOnly == true)
-                        shell.WriteLine(
-                            destinations +
-                            " is on map " +
-                            dest +
-                            " that requires a FTL point to travel to! It may already exist."
-                            );
+                        shell.WriteLine(Loc.GetString("cmd-ftldisk-requires-ftl-point", ("destination", destinations), ("map", dest)));
                 }
 
                 // create the FTL disk
@@ -194,7 +170,7 @@ public sealed class FTLDiskCommand : LocalizedCommands
             }
             else
             {
-                shell.WriteLine(destinations + " is not an EntityID");
+                shell.WriteLine(Loc.GetString("shell-invalid-entity-uid", ("uid", destinations)));
             }
         }
     }
@@ -202,7 +178,7 @@ public sealed class FTLDiskCommand : LocalizedCommands
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
         if (args.Length >= 1)
-            return CompletionResult.FromHintOptions(CompletionHelper.MapUids(_entManager), "Map netId");
+            return CompletionResult.FromHintOptions(CompletionHelper.MapUids(_entManager), Loc.GetString("cmd-ftldisk-hint"));
         return CompletionResult.Empty;
     }
 }
