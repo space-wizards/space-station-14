@@ -165,6 +165,7 @@
       - id: ClothingUniformJumpsuitFamilyGuy
       - id: WristwatchGold
       - id: RubberStampGreytide
+      - id: LoadedDiceBag
 
 - type: entity
   name: Maint Loot Spawner

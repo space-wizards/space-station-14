@@ -451,3 +451,6 @@ uplink-combat-bakery-desc = A kit of clandestine baked weapons. Contains a bague
 
 uplink-business-card-name = Syndicate business card.
 uplink-business-card-desc = A business card that you can give to someone to demonstrate your involvement in the syndicate or leave at the crime scene in order to make fun of the detective. You can buy no more than three of them.
+
+uplink-loaded-dice-bag-name = Bag of loaded dice
+uplink-loaded-dice-bag-desc = A gambler's best friend. A bag of perfectly ordinary-looking dice with a small adjustable weight embedded inside them. You can set them to always roll any number you wish.

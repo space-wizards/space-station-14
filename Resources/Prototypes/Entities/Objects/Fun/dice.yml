@@ -131,3 +131,81 @@
       types:
         Piercing: 5
     # I love this
+
+
+- type: entity
+  parent: PercentileDie
+  id: PercentileDieLoaded
+  suffix: loaded
+  components:
+  - type: LoadedDice
+  - type: UserInterface
+    interfaces:
+      enum.LoadedDiceUiKey.Key:
+        type: LoadedDiceBoundUserInterface
+
+- type: entity
+  parent: d20Dice
+  id: d20DiceLoaded
+  suffix: loaded
+  components:
+  - type: LoadedDice
+  - type: UserInterface
+    interfaces:
+      enum.LoadedDiceUiKey.Key:
+        type: LoadedDiceBoundUserInterface
+
+- type: entity
+  parent: d12Dice
+  id: d12DiceLoaded
+  suffix: loaded
+  components:
+  - type: LoadedDice
+  - type: UserInterface
+    interfaces:
+      enum.LoadedDiceUiKey.Key:
+        type: LoadedDiceBoundUserInterface
+
+- type: entity
+  parent: d10Dice
+  id: d10DiceLoaded
+  suffix: loaded
+  components:
+  - type: LoadedDice
+  - type: UserInterface
+    interfaces:
+      enum.LoadedDiceUiKey.Key:
+        type: LoadedDiceBoundUserInterface
+
+- type: entity
+  parent: d8Dice
+  id: d8DiceLoaded
+  suffix: loaded
+  components:
+  - type: LoadedDice
+  - type: UserInterface
+    interfaces:
+      enum.LoadedDiceUiKey.Key:
+        type: LoadedDiceBoundUserInterface
+
+- type: entity
+  parent: d6Dice
+  id: d6DiceLoaded
+  suffix: loaded
+  components:
+  - type: LoadedDice
+  - type: UserInterface
+    interfaces:
+      enum.LoadedDiceUiKey.Key:
+        type: LoadedDiceBoundUserInterface
+
+- type: entity
+  parent: d4Dice
+  id: d4DiceLoaded
+  suffix: loaded
+  components:
+  - type: LoadedDice
+  - type: UserInterface
+    interfaces:
+      enum.LoadedDiceUiKey.Key:
+        type: LoadedDiceBoundUserInterface

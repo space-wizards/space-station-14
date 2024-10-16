@@ -1826,6 +1826,16 @@
   - !type:ListingLimitedStockCondition
     stock: 3
 
+- type: listing
+  id: UplinkLoadedDiceBag
+  name: uplink-loaded-dice-bag-name
+  description: uplink-loaded-dice-bag-desc
+  productEntity: LoadedDiceBag
+  cost:
+    Telecrystal: 1
+  categories:
+    - UplinkPointless
+
 # Job Specific
 
 - type: listing
