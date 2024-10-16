@@ -51,8 +51,3 @@
   id: DetectiveCoatGrey
   equipment:
     outerClothing: ClothingOuterCoatDetectiveLoadoutGrey
-
-- type: loadout
-  id: SecurityOfficerWintercoat
-  equipment:
-    outerClothing: ClothingOuterWinterSec
