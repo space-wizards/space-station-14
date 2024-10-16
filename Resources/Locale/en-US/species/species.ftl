@@ -10,6 +10,7 @@ species-name-moth = Moth Person
 species-name-skeleton = Skeleton
 species-name-vox = Vox
 species-name-snail = Gastropoid
+species-name-spelf = Thaven
 
 ## Misc species things
 

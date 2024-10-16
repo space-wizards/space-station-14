@@ -17,7 +17,6 @@
   - CigPackSpirits
   - CigarCase
   - CigarGold
-  - PersonalAI
   - GoldPersonalAI
   - FolderBlack
   - BarFlask
@@ -35,6 +34,15 @@
   - ClothingNeckAutismPin
   - ClothingNeckGoldAutismPin
   - HarmonicaInstrument
+
+# For introductory roles learning more complex jobs, like an in-game personal mentor
+- type: loadoutGroup
+  id: Learner
+  name: loadout-group-learner
+  minLimit: 0
+  maxLimit: 1
+  loadouts:
+  - PersonalAI
 
 - type: loadoutGroup
   id: Glasses
@@ -370,6 +378,13 @@
   - ClownShoesExpert
 
 - type: loadoutGroup
+  id: BartenderPDA
+  name: loadout-group-bartender-id
+  loadouts:
+  - BartenderPDA
+  - SeniorBartenderPDA
+
+- type: loadoutGroup
   id: Mixologist
   name: loadout-group-bartender-mixologist
   minLimit: 0
@@ -422,6 +437,13 @@
   - BlackShoes
   - ChefShoes
   - ClownShoesExpert
+
+- type: loadoutGroup
+  id: ChefPDA
+  name: loadout-group-chef-id
+  loadouts:
+  - ChefPDA
+  - SeniorChefPDA
 
 - type: loadoutGroup
   id: LibrarianJumpsuit
@@ -643,6 +665,13 @@
   loadouts:
   - BrownShoes
   - ClownShoesExpert
+
+- type: loadoutGroup
+  id: BotanistPDA
+  name: loadout-group-botanist-id
+  loadouts:
+  - BotanistPDA
+  - SeniorBotanistPDA
 
 - type: loadoutGroup
   id: ClownHead
@@ -954,6 +983,7 @@
   minLimit: 0
   loadouts:
   - MinerCloak
+  - DrillerCape
   - SaMantle
   - ScarfBrown
 
@@ -964,6 +994,20 @@
   - SalvageSpecialistBackpack
   - SalvageSpecialistSatchel
   - SalvageSpecialistDuffel
+
+- type: loadoutGroup
+  id: SalvageSpecialistGlasses
+  name: loadout-group-salvage-specialist-glasses
+  minLimit: 0
+  loadouts:
+  - Glasses
+  - GlassesCheapSunglasses
+  - GlassesJamjar
+  - GlassesJensen
+  - GlassesGarGreen
+  - GlassesGarOrange
+  - GlassesGarRed
+  - GlassesGarBlack
 
 - type: loadoutGroup
   id: SalvageSpecialistOuterClothing
@@ -978,6 +1022,13 @@
   loadouts:
   - SalvageBoots
   - CargoWinterBoots
+
+- type: loadoutGroup
+  id: SalvageSpecialistPDA
+  name: loadout-group-salvage-specialist-id
+  loadouts:
+  - SalvageSpecialistPDA
+  - SeniorSalvageSpecialistPDA
 
 # Engineering
 - type: loadoutGroup
@@ -1149,6 +1200,13 @@
   - EngineeringWinterBoots
 
 - type: loadoutGroup
+  id: AtmosphericTechnicianPDA
+  name: loadout-group-atmospheric-technician-id
+  loadouts:
+  - AtmosphericTechnicianPDA
+  - SeniorAtmosphericTechnicianPDA
+
+- type: loadoutGroup
   id: SurvivalExtended
   name: loadout-group-survival-extended
   minLimit: 2
@@ -1206,6 +1264,7 @@
   - LeatherShoes
   - WhiteShoes
   - ScienceWinterBoots
+  - RoboticistWinterBoots
 
 - type: loadoutGroup
   id: ResearchDirectorBackpack
@@ -1283,6 +1342,7 @@
   - WhiteShoes
   - BlackShoes
   - ScienceWinterBoots
+  - RoboticistWinterBoots
   - ScientistClownShoes
 
 - type: loadoutGroup
@@ -1344,6 +1404,7 @@
   loadouts:
   - HeadofSecurityCloak
   - HeadofSecurityMantle
+  - HeadofSecurityGreatcoat
   - ScarfBlack
   - ScarfRed
 
@@ -1354,6 +1415,7 @@
   - HeadofSecurityCoat
   - HeadofSecurityWinterCoat
   - HeadofSecurityWinterCoatUnarmored
+  - HeadofSecurityEliteArmor
 
 - type: loadoutGroup
   id: HeadofSecurityBackpack
@@ -1404,6 +1466,13 @@
   - WardenCoat
   - WardenArmoredWinterCoat
   - WardenWinterCoatUnarmored
+
+- type: loadoutGroup
+  id: WardenPDA
+  name: loadout-group-warden-id
+  loadouts:
+  - WardenPDA
+  - SeniorWardenPDA
 
 - type: loadoutGroup
   id: SecurityHead
@@ -1529,6 +1598,13 @@
   - LeatherShoes
   - SecurityWinterBoots
   - SecurityClownShoes
+
+- type: loadoutGroup
+  id: DetectivePDA
+  name: loadout-group-detective-id
+  loadouts:
+  - DetectivePDA
+  - SeniorDetectivePDA
 
 - type: loadoutGroup
   id: BrigmedicHead
@@ -1804,6 +1880,13 @@
   - MedicalWinterBoots
 
 - type: loadoutGroup
+  id: ChemistPDA
+  name: loadout-group-chemist-id
+  loadouts:
+  - ChemistryPDA
+  - SeniorChemistryPDA
+
+- type: loadoutGroup
   id: ParamedicHead
   name: loadout-group-paramedic-head
   minLimit: 0
@@ -1839,6 +1922,13 @@
   - BlueShoes
   - WhiteShoes
   - MedicalWinterBoots
+
+- type: loadoutGroup
+  id: ParamedicPDA
+  name: loadout-group-paramedic-id
+  loadouts:
+  - ParamedicPDA
+  - SeniorParamedicPDA
 
 - type: loadoutGroup
   id: SurvivalMedical

@@ -59569,16 +59569,25 @@ entities:
     - type: Transform
       pos: -56.588036,9.687175
       parent: 60
+    - type: ContainerContainer
+      containers:
+        lens_slot: !type:ContainerSlot {}
   - uid: 14438
     components:
     - type: Transform
       pos: -8.056467,20.703438
       parent: 60
+    - type: ContainerContainer
+      containers:
+        lens_slot: !type:ContainerSlot {}
   - uid: 14439
     components:
     - type: Transform
       pos: -42.562397,-3.560008
       parent: 60
+    - type: ContainerContainer
+      containers:
+        lens_slot: !type:ContainerSlot {}
 - proto: ClothingEyesGlassesGarGiga
   entities:
   - uid: 3597
@@ -131031,6 +131040,13 @@ entities:
     components:
     - type: Transform
       pos: 34.5,-36.5
+      parent: 60
+- proto: SpawnPointBrigmedic
+  entities:
+  - uid: 5205
+    components:
+    - type: Transform
+      pos: -18.5,-6.5
       parent: 60
 - proto: SpawnPointCaptain
   entities:

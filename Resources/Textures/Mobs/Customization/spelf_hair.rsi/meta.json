@@ -1,0 +1,759 @@
+{
+    "version": 1,
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "copyright": "Taken from https://github.com/tgstation/tgstation/blob/05ec94e46349c35e29ca91e5e97d0c88ae26ad44/icons/mob/species/human/human_face.dmi ,resprited by Alekshhh, a modified by potato1234x, uneven and tailed is drawn by Ubaser, doublebun_long by Emisse, longbundled and bob5 sprited by github:DreamlyJack(624946166152298517)",
+    "license": "CC-BY-SA-3.0",
+    "states": [
+      {
+        "name": "80s",
+        "directions": 4
+      },
+      {
+        "name": "a",
+        "directions": 4
+      },
+      {
+        "name": "b",
+        "directions": 4
+      },
+      {
+        "name": "bald",
+        "directions": 4
+      },
+      {
+        "name": "baldface",
+        "directions": 4
+      },
+      {
+        "name": "bedhead",
+        "directions": 4
+      },
+      {
+        "name": "bedhead2",
+        "directions": 4
+      },
+      {
+        "name": "bedhead3",
+        "directions": 4
+      },
+      {
+        "name": "beehive",
+        "directions": 4
+      },
+      {
+        "name": "beehive2",
+        "directions": 4
+      },
+      {
+        "name": "bigflattop",
+        "directions": 4
+      },
+      {
+        "name": "bigpompadour",
+        "directions": 4
+      },
+      {
+        "name": "bob",
+        "directions": 4
+      },
+      {
+        "name": "bob2",
+        "directions": 4
+      },
+      {
+        "name": "bob4",
+        "directions": 4
+      },
+      {
+        "name": "bob5",
+        "directions": 4
+      },
+      {
+        "name": "bobcurl",
+        "directions": 4
+      },
+      {
+        "name": "bobcut",
+        "directions": 4
+      },
+      {
+        "name": "bowlcut",
+        "directions": 4
+      },
+      {
+        "name": "bowlcut2",
+        "directions": 4
+      },
+      {
+        "name": "braid",
+        "directions": 4
+      },
+      {
+        "name": "braid2",
+        "directions": 4
+      },
+      {
+        "name": "braided",
+        "directions": 4
+      },
+      {
+        "name": "braidfront",
+        "directions": 4
+      },
+      {
+        "name": "braidtail",
+        "directions": 4
+      },
+      {
+        "name": "bun",
+        "directions": 4
+      },
+      {
+        "name": "bun3",
+        "directions": 4
+      },
+      {
+        "name": "bunhead2",
+        "directions": 4
+      },
+      {
+        "name": "business",
+        "directions": 4
+      },
+      {
+        "name": "business2",
+        "directions": 4
+      },
+      {
+        "name": "business3",
+        "directions": 4
+      },
+      {
+        "name": "business4",
+        "directions": 4
+      },
+      {
+        "name": "buzzcut",
+        "directions": 4
+      },
+      {
+        "name": "c",
+        "directions": 4
+      },
+      {
+        "name": "classicciabusiness",
+        "directions": 4
+      },
+      {
+        "name": "classiccia",
+        "directions": 4
+      },
+      {
+        "name": "classiccornrows",
+        "directions": 4
+      },
+      {
+        "name": "classicfloorlength_bedhead",
+        "directions": 4
+      },
+      {
+        "name": "classicmodern",
+        "directions": 4
+      },
+      {
+        "name": "classicmulder",
+        "directions": 4
+      },
+      {
+        "name": "classicwisp",
+        "directions": 4
+      },
+      {
+        "name": "cia",
+        "directions": 4
+      },
+      {
+        "name": "coffeehouse",
+        "directions": 4
+      },
+      {
+        "name": "combover",
+        "directions": 4
+      },
+      {
+        "name": "cornrowbraid",
+        "directions": 4
+      },
+      {
+        "name": "cornrowbun",
+        "directions": 4
+      },
+      {
+        "name": "cornrows",
+        "directions": 4
+      },
+      {
+        "name": "cornrows2",
+        "directions": 4
+      },
+      {
+        "name": "cornrowtail",
+        "directions": 4
+      },
+      {
+        "name": "country",
+        "directions": 4
+      },
+      {
+        "name": "crewcut",
+        "directions": 4
+      },
+      {
+        "name": "crewcut2",
+        "directions": 4
+      },
+      {
+        "name": "curls",
+        "directions": 4
+      },
+      {
+        "name": "d",
+        "directions": 4
+      },
+      {
+        "name": "dandypompadour",
+        "directions": 4
+      },
+      {
+        "name": "devilock",
+        "directions": 4
+      },
+      {
+        "name": "doublebun",
+        "directions": 4
+      },
+      {
+        "name": "doublebun_long",
+        "directions": 4
+      },
+      {
+        "name": "dreads",
+        "directions": 4
+      },
+      {
+        "name": "drillhair",
+        "directions": 4
+      },
+      {
+        "name": "drillhairextended",
+        "directions": 4
+      },
+      {
+        "name": "drillruru",
+        "directions": 4
+      },
+      {
+        "name": "e",
+        "directions": 4
+      },
+      {
+        "name": "emo2",
+        "directions": 4
+      },
+      {
+        "name": "emofringe",
+        "directions": 4
+      },
+      {
+        "name": "f",
+        "directions": 4
+      },
+      {
+        "name": "father",
+        "directions": 4
+      },
+      {
+        "name": "feather",
+        "directions": 4
+      },
+      {
+        "name": "flair",
+        "directions": 4
+      },
+      {
+        "name": "floorlength_bedhead",
+        "directions": 4
+      },
+      {
+        "name": "fringetail",
+        "directions": 4
+      },
+      {
+        "name": "gelled",
+        "directions": 4
+      },
+      {
+        "name": "gentle",
+        "directions": 4
+      },
+      {
+        "name": "halfbang",
+        "directions": 4
+      },
+      {
+        "name": "halfbang2",
+        "directions": 4
+      },
+      {
+        "name": "halfshaved",
+        "directions": 4
+      },
+      {
+        "name": "hbraid",
+        "directions": 4
+      },
+      {
+        "name": "hedgehog",
+        "directions": 4
+      },
+      {
+        "name": "highfade",
+        "directions": 4
+      },
+      {
+        "name": "highponytail",
+        "directions": 4
+      },
+      {
+        "name": "himecut",
+        "directions": 4
+      },
+      {
+        "name": "himecut2",
+        "directions": 4
+      },
+      {
+        "name": "himeup",
+        "directions": 4
+      },
+      {
+        "name": "hitop",
+        "directions": 4
+      },
+      {
+        "name": "jade",
+        "directions": 4
+      },
+      {
+        "name": "jensen",
+        "directions": 4
+      },
+      {
+        "name": "joestar",
+        "directions": 4
+      },
+      {
+        "name": "kagami",
+        "directions": 4
+      },
+      {
+        "name": "keanu",
+        "directions": 4
+      },
+      {
+        "name": "kusanagi",
+        "directions": 4
+      },
+      {
+        "name": "largebun",
+        "directions": 4
+      },
+      {
+        "name": "lbangs",
+        "directions": 4
+      },
+      {
+        "name": "long",
+        "directions": 4
+      },
+      {
+        "name": "long2",
+        "directions": 4
+      },
+      {
+        "name": "long3",
+        "directions": 4
+      },
+      {
+        "name": "longbundled",
+        "directions": 4
+      },
+      {
+        "name": "long_bedhead",
+        "directions": 4
+      },
+      {
+        "name": "long_bedhead2",
+        "directions": 4
+      },
+      {
+        "name": "longest",
+        "directions": 4
+      },
+      {
+        "name": "longest2",
+        "directions": 4
+      },
+      {
+        "name": "longfringe",
+        "directions": 4
+      },
+      {
+        "name": "longovereye",
+        "directions": 4
+      },
+      {
+        "name": "longsidepart",
+        "directions": 4
+      },
+      {
+        "name": "longstraightponytail",
+        "directions": 4
+      },
+      {
+        "name": "lowfade",
+        "directions": 4
+      },
+      {
+        "name": "manbun",
+        "directions": 4
+      },
+      {
+        "name": "medfade",
+        "directions": 4
+      },
+      {
+        "name": "mediumsidepart",
+        "directions": 4
+      },
+      {
+        "name": "megaeyebrows",
+        "directions": 4
+      },
+      {
+        "name": "messy",
+        "directions": 4
+      },
+      {
+        "name": "modern",
+        "directions": 4
+      },
+      {
+        "name": "mulder",
+        "directions": 4
+      },
+      {
+        "name": "nitori",
+        "directions": 4
+      },
+      {
+        "name": "nofade",
+        "directions": 4
+      },
+      {
+        "name": "odango",
+        "directions": 4
+      },
+      {
+        "name": "ombre",
+        "directions": 4
+      },
+      {
+        "name": "oneshoulder",
+        "directions": 4
+      },
+      {
+        "name": "oxton",
+        "directions": 4
+      },
+      {
+        "name": "part",
+        "directions": 4
+      },
+      {
+        "name": "parted",
+        "directions": 4
+      },
+      {
+        "name": "pigtails",
+        "directions": 4
+      },
+      {
+        "name": "pigtails2",
+        "directions": 4
+      },
+      {
+        "name": "pixie",
+        "directions": 4
+      },
+      {
+        "name": "pompadour",
+        "directions": 4
+      },
+      {
+        "name": "ponytail",
+        "directions": 4
+      },
+      {
+        "name": "ponytail2",
+        "directions": 4
+      },
+      {
+        "name": "ponytail3",
+        "directions": 4
+      },
+      {
+        "name": "ponytail4",
+        "directions": 4
+      },
+      {
+        "name": "ponytail5",
+        "directions": 4
+      },
+      {
+        "name": "ponytail6",
+        "directions": 4
+      },
+      {
+        "name": "ponytail7",
+        "directions": 4
+      },
+      {
+        "name": "poofy",
+        "directions": 4
+      },
+      {
+        "name": "protagonist",
+        "directions": 4
+      },
+      {
+        "name": "quiff",
+        "directions": 4
+      },
+      {
+        "name": "reversemohawk",
+        "directions": 4
+      },
+      {
+        "name": "ronin",
+        "directions": 4
+      },
+      {
+        "name": "rosa",
+        "directions": 4
+      },
+      {
+        "name": "sargeant",
+        "directions": 4
+      },
+      {
+        "name": "shaved",
+        "directions": 4
+      },
+      {
+        "name": "shavedmohawk",
+        "directions": 4
+      },
+      {
+        "name": "shavedpart",
+        "directions": 4
+      },
+      {
+        "name": "shortbangs",
+        "directions": 4
+      },
+      {
+        "name": "shortbraid",
+        "directions": 4
+      },
+      {
+        "name": "shorthair2",
+        "directions": 4
+      },
+      {
+        "name": "shorthair3",
+        "directions": 4
+      },
+      {
+        "name": "shorthair9",
+        "directions": 4
+      },
+      {
+        "name": "shorthime",
+        "directions": 4
+      },
+      {
+        "name": "shortovereye",
+        "directions": 4
+      },
+      {
+        "name": "sidecut",
+        "directions": 4
+      },
+      {
+        "name": "sidetail",
+        "directions": 4
+      },
+      {
+        "name": "sidetail2",
+        "directions": 4
+      },
+      {
+        "name": "sidetail3",
+        "directions": 4
+      },
+      {
+        "name": "sidetail4",
+        "directions": 4
+      },
+      {
+        "name": "skinhead",
+        "directions": 4
+      },
+      {
+        "name": "spiky",
+        "directions": 4
+      },
+      {
+        "name": "spikyponytail",
+        "directions": 4
+      },
+      {
+        "name": "spookylong",
+        "directions": 4
+      },
+      {
+        "name": "stail",
+        "directions": 4
+      },
+      {
+        "name": "swept",
+        "directions": 4
+      },
+      {
+        "name": "swept2",
+        "directions": 4
+      },
+      {
+        "name": "shoulderlengthovereye",
+        "directions": 4
+      },
+      {
+        "name": "thinning",
+        "directions": 4
+      },
+      {
+        "name": "thinningfront",
+        "directions": 4
+      },
+      {
+        "name": "thinningrear",
+        "directions": 4
+      },
+      {
+        "name": "tightbun",
+        "directions": 4
+      },
+      {
+        "name": "topknot",
+        "directions": 4
+      },
+      {
+        "name": "tressshoulder",
+        "directions": 4
+      },
+      {
+        "name": "trimflat",
+        "directions": 4
+      },
+      {
+        "name": "trimmed",
+        "directions": 4
+      },
+      {
+        "name": "twintail",
+        "directions": 4
+      },
+      {
+        "name": "twostrands",
+        "directions": 4
+      },
+      {
+        "name": "undercut",
+        "directions": 4
+      },
+      {
+        "name": "undercutleft",
+        "directions": 4
+      },
+      {
+        "name": "undercutright",
+        "directions": 4
+      },
+      {
+        "name": "unkept",
+        "directions": 4
+      },
+      {
+        "name": "veryshortovereyealternate",
+        "directions": 4
+      },
+      {
+        "name": "vlong",
+        "directions": 4
+      },
+      {
+        "name": "vlongfringe",
+        "directions": 4
+      },
+      {
+        "name": "volaju",
+        "directions": 4
+      },
+      {
+        "name": "wisp",
+        "directions": 4
+      },
+      {
+        "name": "uneven",
+        "directions": 4
+      },
+      {
+        "name": "tailed",
+        "directions": 4
+      },
+      {
+        "name": "classiclong2",
+        "directions": 4
+      },
+      {
+        "name": "classiclong3",
+        "directions": 4
+      },
+      {
+        "name": "classicafro",
+        "directions": 4
+      },
+      {
+        "name": "longeremo",
+        "directions": 4
+      },
+      {
+        "name": "frenchbraid",
+        "directions": 4
+      }
+    ]
+  }

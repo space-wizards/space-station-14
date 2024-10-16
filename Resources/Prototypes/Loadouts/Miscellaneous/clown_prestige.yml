@@ -123,7 +123,7 @@
   - !type:GroupLoadoutEffect
     proto: ClownExpertTimer
   equipment:
-    mask: ClothingOuterApronClown
+    outerClothing: ClothingOuterApronClown
 
 - type: loadout
   id: ClownShoesExpert

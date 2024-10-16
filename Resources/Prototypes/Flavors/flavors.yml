@@ -1214,3 +1214,18 @@
   id: genderfluid
   flavorType: Complex
   description: flavor-complex-genderfluid
+
+- type: flavor
+  id: thavenbad
+  flavorType: Complex
+  description: flavor-complex-thavenbad
+  
+- type: flavor
+  id: zombieslushie
+  flavorType: Complex
+  description: flavor-complex-zombieslushie
+  
+- type: flavor
+  id: brotherly
+  flavorType: Complex
+  description: flavor-complex-brotherly

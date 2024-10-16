@@ -33,6 +33,10 @@
         {
             "name": "head",
             "directions": 4
+        },
+        {
+            "name": "back",
+            "directions": 4
         }
     ]
 }

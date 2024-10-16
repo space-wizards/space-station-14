@@ -10,6 +10,18 @@
     - /Audio/Voice/Human/womanlaugh.ogg
 
 - type: soundCollection
+  id: MaleSlimeLaugh
+  files:
+    - /Audio/Voice/Slime/s_manlaugh1.ogg
+    - /Audio/Voice/Slime/s_manlaugh2.ogg
+
+- type: soundCollection
+  id: FemaleSlimeLaugh
+  files:
+    - /Audio/Voice/Slime/s_womanlaugh.ogg
+
+
+- type: soundCollection
   id: MaleCough
   files:
     - /Audio/Voice/Human/male_cough_1.ogg
@@ -21,6 +33,17 @@
     - /Audio/Voice/Human/female_cough_1.ogg
     - /Audio/Voice/Human/female_cough_2.ogg
 
+- type: soundCollection
+  id: MaleSlimeCough
+  files:
+    - /Audio/Voice/Slime/s_male_cough_1.ogg
+    - /Audio/Voice/Slime/s_male_cough_2.ogg
+
+- type: soundCollection
+  id: FemaleSlimeCough
+  files:
+    - /Audio/Voice/Slime/s_female_cough_1.ogg
+    - /Audio/Voice/Slime/s_female_cough_2.ogg
 
 - type: soundCollection
   id: Claps
@@ -55,6 +78,16 @@
     - /Audio/Voice/Human/female_sigh.ogg
 
 - type: soundCollection
+  id: MaleSlimeSigh
+  files:
+    - /Audio/Voice/Slime/s_male_sigh.ogg
+
+- type: soundCollection
+  id: FemaleSlimeSigh
+  files:
+    - /Audio/Voice/Slime/s_female_sigh.ogg
+
+- type: soundCollection
   id: Salutes
   files:
     - /Audio/Effects/Emotes/salute.ogg
@@ -76,12 +109,37 @@
     - /Audio/Voice/Human/cry_female_4.ogg
 
 - type: soundCollection
+  id: MaleSlimeCry
+  files:
+    - /Audio/Voice/Slime/s_cry_male_1.ogg
+    - /Audio/Voice/Slime/s_cry_male_2.ogg
+    - /Audio/Voice/Slime/s_cry_male_3.ogg
+    - /Audio/Voice/Slime/s_cry_male_4.ogg
+
+- type: soundCollection
+  id: FemaleSlimeCry
+  files:
+    - /Audio/Voice/Slime/s_cry_female_1.ogg
+    - /Audio/Voice/Slime/s_cry_female_2.ogg
+    - /Audio/Voice/Slime/s_cry_female_3.ogg
+    - /Audio/Voice/Slime/s_cry_female_4.ogg
+
+
+- type: soundCollection
   id: Whistles
   files:
     - /Audio/Voice/Human/whistle_1.ogg
     - /Audio/Voice/Human/whistle_2.ogg
     - /Audio/Voice/Human/whistle_3.ogg
     - /Audio/Voice/Human/whistle_4.ogg
+
+- type: soundCollection
+  id: SlimeWhistles
+  files:
+    - /Audio/Voice/Slime/s_whistle_1.ogg
+    - /Audio/Voice/Slime/s_whistle_2.ogg
+    - /Audio/Voice/Slime/s_whistle_3.ogg
+    - /Audio/Voice/Slime/s_whistle_4.ogg
 
 - type: soundCollection
   id: Squishes
@@ -92,3 +150,8 @@
   id: Weh
   files:
   - /Audio/Items/Toys/weh.ogg
+
+- type: soundCollection
+  id: Ungh
+  files:
+  - /Audio/Animals/bros_hit.ogg

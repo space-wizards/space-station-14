@@ -208,6 +208,8 @@
         orGroup: GiftPool
       - id: Skub
         orGroup: GiftPool
+      - id: ClothingEyesGlassesGarMecha
+        orGroup: GiftPool
       - id: ClothingEyesGlassesGarGiga
         orGroup: GiftPool
       - id: ClothingEyesGlassesGarOrange

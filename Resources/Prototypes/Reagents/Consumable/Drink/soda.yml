@@ -33,7 +33,10 @@
   color: "#262019"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/royrogers.rsi
-    state: icon
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
   metabolisms:
     Drink:
       effects:
@@ -184,7 +187,10 @@
   color: "#af2221"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/shirleytemple.rsi
-    state: icon
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
   metabolisms:
     Drink:
       effects:
@@ -303,3 +309,30 @@
   metamorphicMaxFillLevels: 4
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: true
+
+- type: reagent
+  id: ZombieSlushie
+  name: reagent-name-zombieslushie
+  parent: BaseSoda
+  desc: reagent-desc-zombieslushie
+  physicalDesc: reagent-physical-desc-clumpy
+  flavor: zombieslushie
+  color: "#ff6fa8"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/zombieslushie.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:SatiateHunger
+        factor: 4
+        conditions:
+        - !type:OrganType
+          type: Moth
+          shouldHave: false   
+  fizziness: 0.2

@@ -92,7 +92,7 @@
   recognizable: true
   physicalDesc: reagent-physical-desc-viscous
   slippery: false
-  viscosity: 0.1
+  viscosity: 0.25
   metabolisms:
     Food:
       effects:
@@ -106,8 +106,8 @@
     - !type:EnsureTileReaction
       components:
         - type: Propulsion
-          walkSpeedModifier: 2.0
-          sprintSpeedModifier: 2.0
+          walkSpeedModifier: 2.75
+          sprintSpeedModifier: 2.75
           whitelist:
             components:
               - SnailSpeed
@@ -280,31 +280,3 @@
         damage:
           types:
             Cellular: 2
-
-- type: reagent
-  parent: Blood
-  id: BloodChangeling
-
-- type: reaction
-  id: ChangelingBloodBreakdown
-  source: true
-  requiredMixerCategories:
-  - Centrifuge
-  reactants:
-    BloodChangeling:
-      amount: 5
-  products:
-    Water: 11
-    Iron: 0.5
-    Sugar: 2
-    CarbonDioxide: 3
-    Protein: 4
-  effects:
-    - !type:CreateEntityReactionEffect
-      entity: FleshKudzu
-    - !type:ExplosionReactionEffect
-      explosionType: Default
-      maxIntensity: 2
-      intensityPerUnit: 0.5
-      intensitySlope: 4
-      maxTotalIntensity: 1

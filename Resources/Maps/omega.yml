@@ -32359,21 +32359,33 @@ entities:
     - type: Transform
       pos: 3.4675388,-14.361706
       parent: 4812
+    - type: ContainerContainer
+      containers:
+        lens_slot: !type:ContainerSlot {}
   - uid: 6337
     components:
     - type: Transform
       pos: 25.449461,-19.268694
       parent: 4812
+    - type: ContainerContainer
+      containers:
+        lens_slot: !type:ContainerSlot {}
   - uid: 11851
     components:
     - type: Transform
       pos: 10.561617,-44.322975
       parent: 4812
+    - type: ContainerContainer
+      containers:
+        lens_slot: !type:ContainerSlot {}
   - uid: 12497
     components:
     - type: Transform
       pos: 9.501655,-16.456053
       parent: 4812
+    - type: ContainerContainer
+      containers:
+        lens_slot: !type:ContainerSlot {}
 - proto: ClothingEyesGlassesSunglasses
   entities:
   - uid: 1655
@@ -32393,6 +32405,9 @@ entities:
     - type: Transform
       pos: -9.466419,-48.16831
       parent: 4812
+    - type: ContainerContainer
+      containers:
+        lens_slot: !type:ContainerSlot {}
 - proto: ClothingEyesHudDiagnostic
   entities:
   - uid: 10769
@@ -32400,6 +32415,9 @@ entities:
     - type: Transform
       pos: -43.49446,-7.521168
       parent: 4812
+    - type: ContainerContainer
+      containers:
+        lens_slot: !type:ContainerSlot {}
 - proto: ClothingEyesHudMedical
   entities:
   - uid: 7586
@@ -32407,11 +32425,17 @@ entities:
     - type: Transform
       pos: -14.516666,-20.606585
       parent: 4812
+    - type: ContainerContainer
+      containers:
+        lens_slot: !type:ContainerSlot {}
   - uid: 7587
     components:
     - type: Transform
       pos: -14.766666,-20.481499
       parent: 4812
+    - type: ContainerContainer
+      containers:
+        lens_slot: !type:ContainerSlot {}
 - proto: ClothingEyesHudSecurity
   entities:
   - uid: 8443
@@ -32419,6 +32443,9 @@ entities:
     - type: Transform
       pos: -35.493202,16.440695
       parent: 4812
+    - type: ContainerContainer
+      containers:
+        lens_slot: !type:ContainerSlot {}
 - proto: ClothingHandsGlovesColorGray
   entities:
   - uid: 11853
@@ -72387,6 +72414,13 @@ entities:
     components:
     - type: Transform
       pos: -13.5,-6.5
+      parent: 4812
+- proto: SpawnPointBrigmedic
+  entities:
+  - uid: 11881
+    components:
+    - type: Transform
+      pos: -37.5,11.5
       parent: 4812
 - proto: SpawnPointCaptain
   entities:

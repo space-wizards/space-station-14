@@ -58,6 +58,9 @@
         reagents:
         - ReagentId: TableSalt
           Quantity: 5
+  - type: FoodSequenceElement
+    entries:
+      Burger: SpaceFriesBurger
 # Tastes like fries, salt.
 
 - type: entity
@@ -80,6 +83,9 @@
         reagents:
         - ReagentId: TableSalt
           Quantity: 5
+  - type: FoodSequenceElement
+    entries:
+      Burger: CheesyFriesBurger
 # Tastes like fries, cheese.
 
 - type: entity
@@ -106,6 +112,9 @@
           Quantity: 15
         - ReagentId: TableSalt
           Quantity: 5
+  - type: FoodSequenceElement
+    entries:
+      Burger: CarrotFriesBurger
 # Tastes like carrots, salt.
 
 - type: entity
@@ -370,6 +379,9 @@
   - type: Tag
     tags:
     - Meat
+  - type: FoodSequenceElement
+    entries:
+      Burger: RibsBurger
 # Tastes like meat, smokey sauce.
 
 - type: entity
@@ -450,6 +462,9 @@
   - type: Tag
     tags:
     - Meat
+  - type: FoodSequenceElement
+    entries:
+      Burger: FriedEggBurger
 # Tastes like egg, salt, pepper.
 
 - type: entity
@@ -520,6 +535,9 @@
         - cheesy
     - type: Sprite
       state: queso
+    - type: FoodSequenceElement
+      entries:
+        Burger: QuesoBurger
 # Its queso! Everyone loves queso... Right?.
 
 - type: entity
@@ -571,6 +589,9 @@
   - type: Tag
     tags:
     - Meat
+  - type: FoodSequenceElement
+    entries:
+      Burger: FinfinSashimiBurger
 
 - type: entity
   name: enchiladas

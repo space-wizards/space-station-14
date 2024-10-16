@@ -32,7 +32,7 @@ reagent-name-grey-matter = grey matter
 reagent-desc-grey-matter = Thought juice, the stuff that leaks out of your ears.
 
 reagent-name-mucin = mucin
-reagent-desc-mucin = A fascinating secretion capable of accelerating the movement of anyone walking on it.
+reagent-desc-mucin = A fascinating secretion capable of accelerating the movement of Gastropoids. It looks exploitable...
 
 reagent-name-testosterone = testosterone
 reagent-desc-testosterone = A fundamental bodily hormone, synthesized from plant matter for pharmaceutical distribution.

@@ -1487,3 +1487,44 @@
       amount: 1
   products:
     Genderfluid: 2
+
+- type: reaction
+  id: ThavenBad
+  requiredMixerCategories:
+    - Shake
+  reactants:
+    WhiskeyCola:
+      amount: 1
+    BbqSauce:
+      amount: 1
+  products:
+    ThavenBad: 2
+
+- type: reaction
+  id: StarryNight
+  requiredMixerCategories:
+    - Stir
+  reactants:
+    BlueCuracao:
+      amount: 1
+    Vodka:
+      amount: 1
+    Plasma:
+      amount: 1
+  products:
+    StarryNight: 3
+    
+
+- type: reaction
+  id: ZombieSlushie
+  requiredMixerCategories:
+    - Shake
+  reactants:
+    Protein:
+      amount: 1
+    Cream:
+      amount: 1
+    Ice:
+      amount: 1
+  products:
+    ZombieSlushie: 3

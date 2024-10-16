@@ -19,11 +19,6 @@
   text: "/ServerInfo/Guidebook/Antagonist/Traitors.xml"
 
 - type: guideEntry
-  id: Changelings
-  name: guide-entry-changelings
-  text: "/ServerInfo/Guidebook/Antagonist/Changelings.xml"
-
-- type: guideEntry
   id: NuclearOperatives
   name: guide-entry-nuclear-operatives
   text: "/ServerInfo/Guidebook/Antagonist/Nuclear Operatives.xml"

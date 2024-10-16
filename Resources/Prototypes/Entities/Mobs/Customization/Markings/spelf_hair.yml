@@ -1,0 +1,1496 @@
+- type: marking
+  id: SpElfHairBalding
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: e
+- type: marking
+  id: SpElfHairBedhead
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: bedhead
+- type: marking
+  id: SpElfHairBedheadv2
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: bedhead2
+- type: marking
+  id: SpElfHairBedheadv3
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: bedhead3
+- type: marking
+  id: SpElfHairLongBedhead
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: long_bedhead
+- type: marking
+  id: SpElfHairLongBedhead2
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: long_bedhead2
+- type: marking
+  id: SpElfHairFloorlengthBedhead
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: floorlength_bedhead
+- type: marking
+  id: SpElfHairBeehive
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: beehive
+- type: marking
+  id: SpElfHairBeehive2
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: beehive2
+- type: marking
+  id: SpElfHairBob
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: bob
+- type: marking
+  id: SpElfHairBob2
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: bob2
+- type: marking
+  id: SpElfHairBobcut
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: bobcut
+- type: marking
+  id: SpElfHairBob4
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: bob4
+- type: marking
+  id: SpElfHairBob5
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: bob5
+- type: marking
+  id: SpElfHairBobcurl
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: bobcurl
+- type: marking
+  id: SpElfHairBowlcut
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: bowlcut
+- type: marking
+  id: SpElfHairBowlcut2
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: bowlcut2
+- type: marking
+  id: SpElfHairBraid
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: braid
+- type: marking
+  id: SpElfHairBraided
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: braided
+- type: marking
+  id: SpElfHairBraidfront
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: braidfront
+- type: marking
+  id: SpElfHairBraid2
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: braid2
+- type: marking
+  id: SpElfHairHbraid
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: hbraid
+- type: marking
+  id: SpElfHairShortbraid
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: shortbraid
+- type: marking
+  id: SpElfHairBraidtail
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: braidtail
+- type: marking
+  id: SpElfHairBun
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: bun
+- type: marking
+  id: SpElfHairBunhead2
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: bunhead2
+- type: marking
+  id: SpElfHairBun3
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: bun3
+- type: marking
+  id: SpElfHairLargebun
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: largebun
+- type: marking
+  id: SpElfHairManbun
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: manbun
+- type: marking
+  id: SpElfHairTightbun
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: tightbun
+- type: marking
+  id: SpElfHairBusiness
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: business
+- type: marking
+  id: SpElfHairBusiness2
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: business2
+- type: marking
+  id: SpElfHairBusiness3
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: business3
+- type: marking
+  id: SpElfHairBusiness4
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: business4
+- type: marking
+  id: SpElfHairBuzzcut
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: buzzcut
+- type: marking
+  id: SpElfHairCia
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: cia
+- type: marking
+  id: SpElfHairClassicCia
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: classiccia
+- type: marking
+  id: SpElfHairClassicFloorlengthBedhead
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: classicfloorlength_bedhead
+- type: marking
+  id: SpElfHairClassicModern
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: classicmodern
+- type: marking
+  id: SpElfHairClassicMulder
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: classicmulder
+- type: marking
+  id: SpElfHairClassicWisp
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: classicwisp
+- type: marking
+  id: SpElfHairCombover
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: combover
+- type: marking
+  id: SpElfHairCornrows
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: cornrows
+- type: marking
+  id: SpElfHairCornrows2
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: cornrows2
+- type: marking
+  id: SpElfHairCornrowbun
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: cornrowbun
+- type: marking
+  id: SpElfHairCornrowbraid
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: cornrowbraid
+- type: marking
+  id: SpElfHairCornrowtail
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: cornrowtail
+- type: marking
+  id: SpElfHairCrewcut
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: crewcut
+- type: marking
+  id: SpElfHairCrewcut2
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: crewcut2
+- type: marking
+  id: SpElfHairCurls
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: curls
+- type: marking
+  id: SpElfHairC
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: c
+- type: marking
+  id: SpElfHairDandypompadour
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: dandypompadour
+- type: marking
+  id: SpElfHairDevilock
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: devilock
+- type: marking
+  id: SpElfHairDoublebun
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: doublebun
+- type: marking
+  id: SpElfHairDoublebunLong
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+  - sprite: Mobs/Customization/spelf_hair.rsi
+    state: doublebun_long
+- type: marking
+  id: SpElfHairDreads
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: dreads
+- type: marking
+  id: SpElfHairDrillruru
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: drillruru
+- type: marking
+  id: SpElfHairDrillhairextended
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: drillhairextended
+- type: marking
+  id: SpElfHairEmofringe
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: emofringe
+- type: marking
+  id: SpElfHairNofade
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: nofade
+- type: marking
+  id: SpElfHairHighfade
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: highfade
+- type: marking
+  id: SpElfHairMedfade
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: medfade
+- type: marking
+  id: SpElfHairLowfade
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: lowfade
+- type: marking
+  id: SpElfHairBaldfade
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: baldface
+- type: marking
+  id: SpElfHairFeather
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: feather
+- type: marking
+  id: SpElfHairFather
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: father
+- type: marking
+  id: SpElfHairSargeant
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: sargeant
+- type: marking
+  id: SpElfHairFlair
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: flair
+- type: marking
+  id: SpElfHairBigflattop
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: bigflattop
+- type: marking
+  id: SpElfHairFlow
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: f
+- type: marking
+  id: SpElfHairGelled
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: gelled
+- type: marking
+  id: SpElfHairGentle
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: gentle
+- type: marking
+  id: SpElfHairHalfbang
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: halfbang
+- type: marking
+  id: SpElfHairHalfbang2
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: halfbang2
+- type: marking
+  id: SpElfHairHalfshaved
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: halfshaved
+- type: marking
+  id: SpElfHairHedgehog
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: hedgehog
+- type: marking
+  id: SpElfHairHimecut
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: himecut
+- type: marking
+  id: SpElfHairHimecut2
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: himecut2
+- type: marking
+  id: SpElfHairShorthime
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: shorthime
+- type: marking
+  id: SpElfHairHimeup
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: himeup
+- type: marking
+  id: SpElfHairHitop
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: hitop
+- type: marking
+  id: SpElfHairJade
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: jade
+- type: marking
+  id: SpElfHairJensen
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: jensen
+- type: marking
+  id: SpElfHairJoestar
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: joestar
+- type: marking
+  id: SpElfHairKeanu
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: keanu
+- type: marking
+  id: SpElfHairKusanagi
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: kusanagi
+- type: marking
+  id: SpElfHairLong
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: long
+- type: marking
+  id: SpElfHairLong2
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: long2
+- type: marking
+  id: SpElfHairLong3
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: long3
+- type: marking
+  id: SpElfHairLongWithBundles
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: longbundled
+- type: marking
+  id: SpElfHairLongovereye
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: longovereye
+- type: marking
+  id: SpElfHairLbangs
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: lbangs
+- type: marking
+  id: SpElfHairLongeremo
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: longeremo
+- type: marking
+  id: SpElfHairLongfringe
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: longfringe
+- type: marking
+  id: SpElfHairLongsidepart
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: longsidepart
+- type: marking
+  id: SpElfHairMegaeyebrows
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: megaeyebrows
+- type: marking
+  id: SpElfHairMessy
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: messy
+- type: marking
+  id: SpElfHairModern
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: modern
+- type: marking
+  id: SpElfHairMohawk
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: d
+- type: marking
+  id: SpElfHairNitori
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: nitori
+- type: marking
+  id: SpElfHairReversemohawk
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: reversemohawk
+- type: marking
+  id: SpElfHairMulder
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: mulder
+- type: marking
+  id: SpElfHairOdango
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: odango
+- type: marking
+  id: SpElfHairOmbre
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: ombre
+- type: marking
+  id: SpElfHairOneshoulder
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: oneshoulder
+- type: marking
+  id: SpElfHairShortovereye
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: shortovereye
+- type: marking
+  id: SpElfHairOxton
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: oxton
+- type: marking
+  id: SpElfHairParted
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: parted
+- type: marking
+  id: SpElfHairPart
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: part
+- type: marking
+  id: SpElfHairKagami
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: kagami
+- type: marking
+  id: SpElfHairPigtails
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: pigtails
+- type: marking
+  id: SpElfHairPigtails2
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: pigtails2
+- type: marking
+  id: SpElfHairPixie
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: pixie
+- type: marking
+  id: SpElfHairPompadour
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: pompadour
+- type: marking
+  id: SpElfHairBigpompadour
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: bigpompadour
+- type: marking
+  id: SpElfHairPonytail
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: ponytail
+- type: marking
+  id: SpElfHairPonytail2
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: ponytail2
+- type: marking
+  id: SpElfHairPonytail3
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: ponytail3
+- type: marking
+  id: SpElfHairPonytail4
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: ponytail4
+- type: marking
+  id: SpElfHairPonytail5
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: ponytail5
+- type: marking
+  id: SpElfHairPonytail6
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: ponytail6
+- type: marking
+  id: SpElfHairPonytail7
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: ponytail7
+- type: marking
+  id: SpElfHairHighponytail
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: highponytail
+- type: marking
+  id: SpElfHairStail
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: stail
+- type: marking
+  id: SpElfHairLongstraightponytail
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: longstraightponytail
+- type: marking
+  id: SpElfHairCountry
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: country
+- type: marking
+  id: SpElfHairFringetail
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: fringetail
+- type: marking
+  id: SpElfHairSidetail
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: sidetail
+- type: marking
+  id: SpElfHairSidetail2
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: sidetail2
+- type: marking
+  id: SpElfHairSidetail3
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: sidetail3
+- type: marking
+  id: SpElfHairSidetail4
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: sidetail4
+- type: marking
+  id: SpElfHairSpikyponytail
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: spikyponytail
+- type: marking
+  id: SpElfHairPoofy
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: poofy
+- type: marking
+  id: SpElfHairQuiff
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: quiff
+- type: marking
+  id: SpElfHairRonin
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: ronin
+- type: marking
+  id: SpElfHairShaved
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: shaved
+- type: marking
+  id: SpElfHairShavedpart
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: shavedpart
+- type: marking
+  id: SpElfHairShortbangs
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: shortbangs
+- type: marking
+  id: SpElfHairA
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: a
+- type: marking
+  id: SpElfHairShorthair2
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: shorthair2
+- type: marking
+  id: SpElfHairShorthair3
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: shorthair3
+- type: marking
+  id: SpElfHairShorthair9
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: shorthair9
+- type: marking
+  id: SpElfHair80s
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: 80s
+- type: marking
+  id: SpElfHairRosa
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: rosa
+- type: marking
+  id: SpElfHairB
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: b
+- type: marking
+  id: SpElfHairSidecut
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: sidecut
+- type: marking
+  id: SpElfHairSkinhead
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: skinhead
+- type: marking
+  id: SpElfHairProtagonist
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: protagonist
+- type: marking
+  id: SpElfHairSpiky
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: spiky
+- type: marking
+  id: SpElfHairSpookyLong
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: spookylong
+- type: marking
+  id: SpElfHairSwept
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: swept
+- type: marking
+  id: SpElfHairSwept2
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: swept2
+- type: marking
+  id: SpElfHairShoulderLengthOverEye
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: shoulderlengthovereye
+- type: marking
+  id: SpElfHairThinning
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: thinning
+- type: marking
+  id: SpElfHairThinningfront
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: thinningfront
+- type: marking
+  id: SpElfHairThinningrear
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: thinningrear
+- type: marking
+  id: SpElfHairTopknot
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: topknot
+- type: marking
+  id: SpElfHairTressshoulder
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: tressshoulder
+- type: marking
+  id: SpElfHairTrimmed
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: trimmed
+- type: marking
+  id: SpElfHairTrimflat
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: trimflat
+- type: marking
+  id: SpElfHairTwintail
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: twintail
+- type: marking
+  id: SpElfHairTwoStrands
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: twostrands
+- type: marking
+  id: SpElfHairUndercut
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: undercut
+- type: marking
+  id: SpElfHairUndercutleft
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: undercutleft
+- type: marking
+  id: SpElfHairUndercutright
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: undercutright
+- type: marking
+  id: SpElfHairUnkept
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: unkept
+- type: marking
+  id: SpElfHairVlong
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: vlong
+- type: marking
+  id: SpElfHairLongest
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: longest
+- type: marking
+  id: SpElfHairLongest2
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: longest2
+- type: marking
+  id: SpElfHairVeryshortovereyealternate
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: veryshortovereyealternate
+- type: marking
+  id: SpElfHairVlongfringe
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: vlongfringe
+- type: marking
+  id: SpElfHairVolaju
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: volaju
+- type: marking
+  id: SpElfHairWisp
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: wisp
+- type: marking
+  id: SpElfHairUneven
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: uneven
+- type: marking
+  id: SpElfHairTailed
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: tailed
+- type: marking
+  id: SpElfHairClassicLong2
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: classiclong2
+- type: marking
+  id: SpElfHairClassicLong3
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: classiclong3
+- type: marking
+  id: SpElfHairBald
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: bald
+- type: marking
+  id: SpElfHairShavedMohawk
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: shavedmohawk
+- type: marking
+  id: SpElfHairMediumSidepart
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: mediumsidepart
+- type: marking
+  id: SpElfHairEmo2
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: emo2
+- type: marking
+  id: SpElfHairDrillHair
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: drillhair
+- type: marking
+  id: SpElfHairClassicAfro
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: classicafro
+- type: marking
+  id: SpElfHairClassicciaBusiness
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: classicciabusiness
+- type: marking
+  id: SpElfHairClassicCornrows
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: classiccornrows
+- type: marking
+  id: SpElfHairCoffeeHouse
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: coffeehouse
+- type: marking
+  id: SpElfHairFrenchbraid
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [SpElf]
+  sprites:
+    - sprite: Mobs/Customization/spelf_hair.rsi
+      state: frenchbraid

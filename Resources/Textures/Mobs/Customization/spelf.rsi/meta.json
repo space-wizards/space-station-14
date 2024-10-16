@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "by Widgetbeck",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "ears1",
+      "directions": 4
+    },
+    {
+      "name": "ears2",
+      "directions": 4
+    },
+    {
+      "name": "ears3",
+      "directions": 4
+    },
+    {
+      "name": "ears4",
+      "directions": 4
+    },
+    {
+      "name": "piercings",
+      "directions": 4
+    },
+    {
+      "name": "piercings2",
+      "directions": 4
+    },
+    {
+      "name": "chesttat1",
+      "directions": 4
+    },
+    {
+      "name": "larmtat1",
+      "directions": 4
+    },
+    {
+      "name": "rarmtat1",
+      "directions": 4
+    }
+  ]
+}

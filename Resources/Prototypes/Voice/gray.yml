@@ -32,3 +32,5 @@
       path: /Audio/Voice/Gray/gray_cough.ogg
     DefaultDeathgasp:
       path: /Audio/Voice/Gray/gray_deathgasp.ogg
+    Ungh:
+      collection: Ungh

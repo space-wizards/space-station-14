@@ -1,0 +1,84 @@
+- type: entity
+  id: ActionHereticJaunt
+  name: Ashen Passage
+  description: A short range spell that allows you to pass unimpeded through walls.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    useDelay: 15
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Goobstation/Heretic/abilities_heretic.rsi
+      state: ashen_shift
+    event: !type:EventHereticAshenShift
+  - type: HereticAction
+    requireMagicItem: true
+    messageLoc: heretic-speech-ash-jaunt
+
+- type: entity
+  id: ActionHereticVolcanoBlast
+  name: Volcanic Blast
+  description: Charge up a blast of fire that chains between nearby targets, setting them ablaze.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    useDelay: 10
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Goobstation/Heretic/abilities_heretic.rsi
+      state: volcano_blast
+    event: !type:EventHereticVolcanoBlast
+  - type: HereticAction
+    requireMagicItem: true
+    messageLoc: heretic-speech-ash-volcano
+
+- type: entity
+  id: ActionHereticNightwatcherRebirth
+  name: Nightwatcher's Rebirth
+  description: A spell that extinguishes you and drains nearby heathens engulfed in flames of their life force.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    useDelay: 15
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Goobstation/Heretic/abilities_heretic.rsi
+      state: nightwatcher_rebirth
+    event: !type:EventHereticNightwatcherRebirth
+  - type: HereticAction
+    requireMagicItem: true
+    messageLoc: heretic-speech-ash-rebirth
+
+- type: entity
+  id: ActionHereticAscension1
+  name: Oath of Flame
+  description: For a minute, you will passively create a ring of fire around you.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    useDelay: 90
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Goobstation/Heretic/abilities_heretic.rsi
+      state: ashlord_rite1
+    event: !type:EventHereticFlames
+  - type: HereticAction
+    requireMagicItem: true
+    messageLoc: heretic-speech-ash-flame
+
+- type: entity
+  id: ActionHereticAscension2
+  name: Fire Cascade
+  description: Heats the air around you.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    useDelay: 30
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Goobstation/Heretic/abilities_heretic.rsi
+      state: ashlord_rite2
+    event: !type:EventHereticCascade
+  - type: HereticAction
+    requireMagicItem: true
+    messageLoc: heretic-speech-ash-cascade

@@ -4,7 +4,7 @@
   mapPath: /Maps/boat.yml
   minPlayers: 50
   maxPlayers: 100
-  randomRotation: true
+  randomRotation: false
   stations:
     Boat:
       stationProto: StandardNanotrasenStation

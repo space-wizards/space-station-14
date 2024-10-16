@@ -56,8 +56,8 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 5
-        canReact: false # Dont want cause reactions inside burgers after merging ingredients
+        maxVol: 15
+        canReact: true # fuck you wizden i need razorium burger assassination
         reagents:
         - ReagentId: Nutriment
           Quantity: 3.3 # 1/2 of a bun

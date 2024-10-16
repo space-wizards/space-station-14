@@ -17,7 +17,6 @@
 - type: startingGear
   id: BotanistGear
   equipment:
-    id: BotanistPDA
     ears: ClothingHeadsetService
     belt: ClothingBeltPlantFilled
   #storage:

@@ -184,6 +184,21 @@
     state: snout_round
 
 - type: marking
+  id: LizardSnoutpiercings
+  bodyPart: Snout
+  markingCategory: Overlay
+  forcedColoring: true
+  speciesRestriction: [Reptilian]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/reptilian_parts.rsi
+    state: piercings1
+
+- type: marking
   id: LizardSnoutSharp
   bodyPart: Snout
   markingCategory: Snout
@@ -322,6 +337,17 @@
     state: horns_kobold_ears
 
 - type: marking
+  id: LizardHornsKoboldEarspiercings
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Reptilian]
+  sprites:
+  - sprite: Mobs/Customization/reptilian_parts.rsi
+    state: horns_kobold_ears
+  - sprite: Mobs/Customization/reptilian_parts.rsi
+    state: horns_kobold_ears_piercings
+
+- type: marking
   id: LizardHornsFloppyKoboldEars
   bodyPart: HeadSide
   markingCategory: HeadSide
@@ -386,3 +412,18 @@
   sprites:
     - sprite: Mobs/Customization/reptilian_parts.rsi
       state: tail_dtiger_wagging
+
+- type: marking
+  id: Fangs
+  bodyPart: Snout
+  markingCategory: Overlay
+  speciesRestriction: [Reptilian]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/reptilian_parts.rsi
+    state: fangs
+
