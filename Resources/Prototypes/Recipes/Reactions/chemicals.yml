@@ -557,3 +557,16 @@
       amount: 1
   products:
     Cyanide: 2
+
+- type: reaction
+  id: HydrogenPeroxide
+  impact: Low
+  reactants:
+    Chlorine:
+      amount: 1
+    Oxygen:
+      amount: 1
+    Water:
+      amount: 1
+  products:
+    HydrogenPeroxide: 2
