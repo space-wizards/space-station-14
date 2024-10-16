@@ -233,3 +233,31 @@
             Poison: 1
             Caustic: 2
       - !type:Jitter
+
+- type: reagent
+  id: HydrogenPeroxide
+  name: reagent-name-hydrogen-peroxide
+  desc: reagent-desc-hydrogen-peroxide
+  group: Chemical
+  flavor: bitter
+  color: "#cdcdcd"
+  boilingPoint: 302.36
+  meltingPoint: 31.226
+  physicalDesc: reagent-physical-desc-strong-smelling #colorless doesn't return back as a physical description, so this'll do
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Heat: 0.80
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        ignoreResistances: false
+        damage:
+          types:
+            Caustic: 0.50
+            Heat: 0.10
