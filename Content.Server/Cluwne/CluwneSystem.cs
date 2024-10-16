@@ -16,6 +16,7 @@ using Content.Shared.Cluwne;
 using Content.Shared.Interaction.Components;
 using Robust.Shared.Audio.Systems;
 using Content.Shared.NameModifier.EntitySystems;
+using Content.Server.Speech;
 
 namespace Content.Server.Cluwne;
 
@@ -37,8 +38,7 @@ public sealed class CluwneSystem : EntitySystem
 
         SubscribeLocalEvent<CluwneComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<CluwneComponent, MobStateChangedEvent>(OnMobState);
-        SubscribeLocalEvent<CluwneComponent, EmoteEvent>(OnEmote, before:
-        new[] { typeof(VocalSystem), typeof(BodyEmotesSystem) });
+        SubscribeLocalEvent<CluwneComponent, EmoteEvent>(OnEmote, before: [typeof(VocalSystem), typeof(BodyEmotesSystem)], after: [typeof(EmoteBlockerSystem)]);
         SubscribeLocalEvent<CluwneComponent, RefreshNameModifiersEvent>(OnRefreshNameModifiers);
     }
 

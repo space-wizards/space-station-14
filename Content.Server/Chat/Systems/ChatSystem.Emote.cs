@@ -1,4 +1,5 @@
 using System.Collections.Frozen;
+using Content.Server.Alert.Commands;
 using Content.Server.Popups;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Emoting;
@@ -55,7 +56,8 @@ public partial class ChatSystem
     /// <param name="range">Conceptual range of transmission, if it shows in the chat window, if it shows to far-away ghosts or ghosts at all...</param>
     /// <param name="nameOverride">The name to use for the speaking entity. Usually this should just be modified via <see cref="TransformSpeakerNameEvent"/>. If this is set, the event will not get raised.</param>
     /// <param name="forceEmote">Bypasses whitelist/blacklist/availibility checks for if the entity can use this emote</param>
-    public void TryEmoteWithChat(
+    /// <returns>True if an emote was performed. False if the emote is unvailable, cancelled, etc.</returns>
+    public bool TryEmoteWithChat(
         EntityUid source,
         string emoteId,
         ChatTransmitRange range = ChatTransmitRange.Normal,
@@ -66,8 +68,8 @@ public partial class ChatSystem
         )
     {
         if (!_prototypeManager.TryIndex<EmotePrototype>(emoteId, out var proto))
-            return;
-        TryEmoteWithChat(source, proto, range, hideLog: hideLog, nameOverride, ignoreActionBlocker: ignoreActionBlocker, forceEmote: forceEmote);
+            return false;
+        return TryEmoteWithChat(source, proto, range, hideLog: hideLog, nameOverride, ignoreActionBlocker: ignoreActionBlocker, forceEmote: forceEmote);
     }
 
     /// <summary>
@@ -80,7 +82,8 @@ public partial class ChatSystem
     /// <param name="range">Conceptual range of transmission, if it shows in the chat window, if it shows to far-away ghosts or ghosts at all...</param>
     /// <param name="nameOverride">The name to use for the speaking entity. Usually this should just be modified via <see cref="TransformSpeakerNameEvent"/>. If this is set, the event will not get raised.</param>
     /// <param name="forceEmote">Bypasses whitelist/blacklist/availibility checks for if the entity can use this emote</param>
-    public void TryEmoteWithChat(
+    /// <returns>True if an emote was performed. False if the emote is unvailable, cancelled, etc.</returns>
+    public bool TryEmoteWithChat(
         EntityUid source,
         EmotePrototype emote,
         ChatTransmitRange range = ChatTransmitRange.Normal,
@@ -91,40 +94,43 @@ public partial class ChatSystem
         )
     {
         if (!forceEmote && !AllowedToUseEmote(source, emote))
-            return;
+            return false;
+
+        var blocked = TryEmoteWithoutChat(source, emote, ignoreActionBlocker);
 
         // check if proto has valid message for chat
-        if (emote.ChatMessages.Count != 0)
+        if (!blocked && emote.ChatMessages.Count != 0)
         {
             // not all emotes are loc'd, but for the ones that are we pass in entity
             var action = Loc.GetString(_random.Pick(emote.ChatMessages), ("entity", source));
             SendEntityEmote(source, action, range, nameOverride, hideLog: hideLog, checkEmote: false, ignoreActionBlocker: ignoreActionBlocker);
         }
 
-        // do the rest of emote event logic here
-        TryEmoteWithoutChat(source, emote, ignoreActionBlocker);
+        return blocked;
     }
 
     /// <summary>
     ///     Makes selected entity to emote using <see cref="EmotePrototype"/> without sending any messages to chat.
     /// </summary>
-    public void TryEmoteWithoutChat(EntityUid uid, string emoteId, bool ignoreActionBlocker = false)
+    /// <returns>True if an emote was performed. False if the emote is unvailable, cancelled, etc.</returns>
+    public bool TryEmoteWithoutChat(EntityUid uid, string emoteId, bool ignoreActionBlocker = false)
     {
         if (!_prototypeManager.TryIndex<EmotePrototype>(emoteId, out var proto))
-            return;
+            return false;
 
-        TryEmoteWithoutChat(uid, proto, ignoreActionBlocker);
+        return TryEmoteWithoutChat(uid, proto, ignoreActionBlocker);
     }
 
     /// <summary>
     ///     Makes selected entity to emote using <see cref="EmotePrototype"/> without sending any messages to chat.
     /// </summary>
-    public void TryEmoteWithoutChat(EntityUid uid, EmotePrototype proto, bool ignoreActionBlocker = false)
+    /// <returns>True if an emote was performed. False if the emote is unvailable, cancelled, etc.</returns>
+    public bool TryEmoteWithoutChat(EntityUid uid, EmotePrototype proto, bool ignoreActionBlocker = false)
     {
         if (!_actionBlocker.CanEmote(uid) && !ignoreActionBlocker)
-            return;
+            return false;
 
-        InvokeEmoteEvent(uid, proto);
+        return InvokeEmoteEvent(uid, proto, showPopupOnFailure: true);
     }
 
     /// <summary>
@@ -164,17 +170,18 @@ public partial class ChatSystem
     /// </summary>
     /// <param name="uid"></param>
     /// <param name="textInput"></param>
-    private void TryEmoteChatInput(EntityUid uid, string textInput)
+    /// <returns>True if an emote was performed. False if no emote was found in the text, if an emote was found but unavailable, if the emote's completion was cancelled, etc.</returns>
+    private bool TryEmoteChatInput(EntityUid uid, string textInput)
     {
         var actionTrimmedLower = TrimPunctuation(textInput.ToLower());
         if (!_wordEmoteDict.TryGetValue(actionTrimmedLower, out var emote))
-            return;
+            return false;
 
         if (!AllowedToUseEmote(uid, emote))
-            return;
+            return false;
 
-        InvokeEmoteEvent(uid, emote);
-        return;
+        // Don't show a popup on failure since the emote text will go through regardless.
+        return InvokeEmoteEvent(uid, emote, showPopupOnFailure: false);
 
         static string TrimPunctuation(string textInput)
         {
@@ -212,15 +219,17 @@ public partial class ChatSystem
         return true;
     }
 
-    private void InvokeEmoteEvent(EntityUid uid, EmotePrototype proto)
+    private bool InvokeEmoteEvent(EntityUid uid, EmotePrototype proto, bool showPopupOnFailure)
     {
         var ev = new EmoteEvent(uid, proto);
         RaiseLocalEvent(uid, ref ev);
 
-        if (ev.Blocked)
+        if (ev.Blocked && showPopupOnFailure)
         {
             _popupSystem.PopupEntity(Loc.GetString("emote-blocked", ("emote", Loc.GetString(proto.Name).ToLower())), uid, uid);
         }
+
+        return ev.Blocked;
     }
 }
 

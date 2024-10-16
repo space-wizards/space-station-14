@@ -1,10 +1,6 @@
-using System.ComponentModel;
-using System.Linq;
 using Content.Server.Chat.Systems;
 using Content.Server.Speech.Components;
-using Content.Server.Speech.EntitySystems;
 using Content.Shared.Inventory;
-using Content.Shared.Mobs;
 
 namespace Content.Server.Speech;
 
@@ -17,10 +13,10 @@ public sealed class EmoteBlockerSystem : EntitySystem
         base.Initialize();
 
         // "Manually" relay the event to the inventory to avoid needing to put EmoteEvent in Content.Shared .
-        SubscribeLocalEvent<InventoryComponent, EmoteEvent>(RelayEvent, before: [typeof(VocalSystem)]);
+        SubscribeLocalEvent<InventoryComponent, EmoteEvent>(RelayEvent);
 
-        SubscribeLocalEvent<EmoteBlockerComponent, EmoteEvent>(OnEmoteEvent, before: [typeof(VocalSystem)]);
-        SubscribeLocalEvent<EmoteBlockerComponent, InventoryRelayedEvent<EmoteEvent>>(OnRelayedEmoteEvent, before: [typeof(VocalSystem)]);
+        SubscribeLocalEvent<EmoteBlockerComponent, EmoteEvent>(OnEmoteEvent);
+        SubscribeLocalEvent<EmoteBlockerComponent, InventoryRelayedEvent<EmoteEvent>>(OnRelayedEmoteEvent);
     }
 
     private void RelayEvent(Entity<InventoryComponent> entity, ref EmoteEvent args)
