@@ -10,3 +10,16 @@
   - /Audio/Effects/Gasp/gasp_female1.ogg
   - /Audio/Effects/Gasp/gasp_female2.ogg
   - /Audio/Effects/Gasp/gasp_female3.ogg
+
+- type: soundCollection
+  id: MaleSlimeGasp
+  files:
+  - /Audio/Effects/Gasp/s_gasp_male_1.ogg
+  - /Audio/Effects/Gasp/s_gasp_male_2.ogg
+
+- type: soundCollection
+  id: FemaleSlimeGasp
+  files:
+  - /Audio/Effects/Gasp/s_gasp_female_1.ogg
+  - /Audio/Effects/Gasp/s_gasp_female_2.ogg
+  - /Audio/Effects/Gasp/s_gasp_female_3.ogg
