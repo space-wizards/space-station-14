@@ -23,6 +23,8 @@
     contents:
     - id: SmokingPipeFilledTobacco
     - id: FlippoEngravedLighter
+  - type: ExplosionResistance
+    damageCoefficient: 1 #its a coat. it doesnt do shit
 
 - type: entity
   parent: [ClothingOuterCoatDetectiveLoadout]
