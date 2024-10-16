@@ -139,7 +139,7 @@ public sealed partial class AdminVerbSystem
                 xform.WorldRotation = Angle.Zero;
             },
             Impact = LogImpact.Extreme,
-            Message = string.Join(": ", chessName, Loc.GetString("admin-smite-dimension-description"))
+            Message = string.Join(": ", chessName, Loc.GetString("admin-smite-chess-dimension-description"))
         };
         args.Verbs.Add(chess);
 
