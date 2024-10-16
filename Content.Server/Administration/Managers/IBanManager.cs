@@ -50,12 +50,6 @@ public interface IBanManager
     /// <summary>
     /// Sends role bans to the target
     /// </summary>
-    /// <param name="pSession">Player's user ID</param>
-    public void SendRoleBans(NetUserId userId);
-
-    /// <summary>
-    /// Sends role bans to the target
-    /// </summary>
     /// <param name="pSession">Player's session</param>
     public void SendRoleBans(ICommonSession pSession);
 }
