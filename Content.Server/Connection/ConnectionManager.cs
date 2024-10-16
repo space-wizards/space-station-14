@@ -47,7 +47,6 @@ namespace Content.Server.Connection
     /// </summary>
     public sealed partial class ConnectionManager : IConnectionManager
     {
-        [Dependency] private readonly IServerDbManager _dbManager = default!;
         [Dependency] private readonly IPlayerManager _plyMgr = default!;
         [Dependency] private readonly IServerNetManager _netMgr = default!;
         [Dependency] private readonly IServerDbManager _db = default!;
@@ -222,7 +221,7 @@ namespace Content.Server.Connection
                 var customReason = _cfg.GetCVar(CCVars.PanicBunkerCustomReason);
 
                 var minMinutesAge = _cfg.GetCVar(CCVars.PanicBunkerMinAccountAge);
-                var record = await _dbManager.GetPlayerRecordByUserId(e.UserId);
+                var record = await _db.GetPlayerRecordByUserId(e.UserId);
                 var validAccountAge = record != null &&
                                       record.FirstSeenTime.CompareTo(DateTimeOffset.UtcNow - TimeSpan.FromMinutes(minMinutesAge)) <= 0;
                 var bypassAllowed = _cfg.GetCVar(CCVars.BypassBunkerWhitelist) && await _db.GetWhitelistStatusAsync(e.UserId);
@@ -332,7 +331,7 @@ namespace Content.Server.Connection
 
         private async Task<(ConnectionDenyReason, string, List<ServerBanDef>? bansHit)?> ShouldDeny(NetConnectingArgs e)
         {
-            var adminData = await _dbManager.GetAdminDataForAsync(e.UserId);
+            var adminData = await _db.GetAdminDataForAsync(e.UserId);
 
             var banned = await UserIsBanned(e);
             if (banned != null)
@@ -386,7 +385,7 @@ namespace Content.Server.Connection
             var maxPlaytimeMinutes = _cfg.GetCVar(CCVars.BabyJailMaxOverallMinutes);
 
             // Wait some time to lookup data
-            var record = await _dbManager.GetPlayerRecordByUserId(userId);
+            var record = await _db.GetPlayerRecordByUserId(userId);
 
             // No player record = new account or the DB is having a skill issue
             if (record == null)
