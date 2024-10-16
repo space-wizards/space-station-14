@@ -66,6 +66,7 @@
   - BartenderShoes
   - Glasses
   - CommonBackpack
+  - BartenderPDA
   - Survival
   - Trinkets
   - Mixologist
@@ -94,6 +95,7 @@
   - ChefShoes
   - Glasses
   - CommonBackpack
+  - ChefPDA
   - Survival
   - Trinkets
   - GroupSpeciesBreathTool
@@ -170,6 +172,7 @@
   - BotanistShoes
   - Glasses
   - BotanistBackpack
+  - BotanistPDA
   - Survival
   - Trinkets
   - GroupSpeciesBreathTool
@@ -259,8 +262,9 @@
   - SalvageSpecialistNeck
   - SalvageSpecialistOuterClothing
   - SalvageSpecialistShoes
+  - SalvageSpecialistGlasses
   - SalvageSpecialistBackpack
-  - Glasses
+  - SalvageSpecialistPDA
   - Survival
   - Trinkets
   - GroupSpeciesBreathTool
@@ -288,6 +292,7 @@
   - TechnicalAssistantJumpsuit
   - StationEngineerBackpack
   - SurvivalExtended
+  - Learner
   - Trinkets
   - GroupSpeciesBreathTool
   - GroupTankHarness
@@ -316,6 +321,7 @@
   - AtmosphericTechnicianOuterClothing
   - AtmosphericTechnicianShoes
   - AtmosphericTechnicianBackpack
+  - AtmosphericTechnicianPDA
   - SurvivalExtended
   - Trinkets
   - GroupSpeciesBreathTool
@@ -364,6 +370,7 @@
   - ScientistBackpack
   - Glasses
   - Survival
+  - Learner
   - Trinkets
   - GroupSpeciesBreathTool
   - GroupTankHarness
@@ -397,6 +404,7 @@
   - UpperSecurityShoes
   - SecurityBackpack
   - SecurityBelt
+  - WardenPDA
   - SurvivalSecurity
   - Trinkets
   - SecurityStar
@@ -431,6 +439,7 @@
   - DetectiveOuterClothing
   - DetectiveShoes
   - SecurityBackpack
+  - DetectivePDA
   - SurvivalSecurity
   - Trinkets
   - SecurityStar
@@ -460,6 +469,7 @@
   - SecurityCadetJumpsuit
   - SecurityBackpack
   - SurvivalSecurity
+  - Learner
   - Trinkets
   - GroupSpeciesBreathToolSecurity
   - GroupTankHarness
@@ -508,6 +518,7 @@
   - Glasses
   - MedicalBackpack
   - SurvivalMedical
+  - Learner
   - Trinkets
   - GroupSpeciesBreathToolMedical
   - GroupTankHarness
@@ -522,6 +533,7 @@
   - MedicalGloves
   - ChemistShoes
   - ChemistBackpack
+  - ChemistPDA
   - SurvivalMedical
   - Trinkets
   - GroupSpeciesBreathToolMedical
@@ -539,6 +551,7 @@
   - ParamedicShoes
   - Glasses
   - MedicalBackpack
+  - ParamedicPDA
   - SurvivalMedical
   - Trinkets
   - GroupSpeciesBreathToolMedical

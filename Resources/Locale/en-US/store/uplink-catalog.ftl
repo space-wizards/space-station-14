@@ -115,6 +115,10 @@ uplink-holoclown-kit-desc = A joint venture between Cybersun and Honk.co. Contai
 uplink-holster-name = Shoulder Holster
 uplink-holster-desc = A deep shoulder holster capable of holding many types of ballistics.
 
+uplink-animal-friends-kit-name = Animal Friends Kit
+uplink-animal-friends-kit-desc = A box containing 4 doses of subjuzine, an alteration of cognizine that forces the injected creature to your will. Also contains an empty syringe and two mice to use it on.
+
+
 uplink-chest-rig-name = Chest Rig
 uplink-chest-rig-desc = Explosion-resistant tactical webbing used for holding traitor goods.
 
@@ -295,6 +299,9 @@ uplink-chimp-upgrade-kit-desc = Insert this chip into a standard C.H.I.M.P. hand
 
 uplink-proximity-mine-name = Proximity Mine
 uplink-proximity-mine-desc = A mine disguised as a wet floor sign.
+
+uplink-cleaner-lake-upgrade-name = Shining Spring remilitarisation kit
+uplink-cleaner-lake-upgrade-desc = A kit that can be used to remove the safety measures from a shining spring.
 
 uplink-disposable-turret-name = Disposable Ballistic Turret
 uplink-disposable-turret-desc = Looks and functions like a normal electrical toolbox. Upon hitting the toolbox it will transform into a ballistic turret, theoretically shooting at anyone except members of the syndicate. Can be turned back into a toolbox using a screwdriver and repaired using a wrench.

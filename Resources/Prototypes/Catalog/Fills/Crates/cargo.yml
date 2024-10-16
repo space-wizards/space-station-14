@@ -253,6 +253,9 @@
     - id: ToolboxGoldFilled
       prob: 0.001
       orGroup: Swag
+    - id: ClothingEyesGlassesGarMecha
+      prob: 0.01
+      orGroup: Swag
     - id: ClothingEyesGlassesGar
       prob: 0.01
       orGroup: Swag

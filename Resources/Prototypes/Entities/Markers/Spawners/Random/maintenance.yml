@@ -17,6 +17,7 @@
         - id: ClothingEyesGlassesGar
         - id: ClothingEyesGlassesGarOrange
         - id: ClothingEyesGlassesGarGiga
+        - id: ClothingEyesGlassesGarMecha
       - id: Wristwatch
         weight: 0.5
       - id: ClothingHeadHatCake
@@ -144,6 +145,7 @@
         - id: ClothingNeckAromanticPin
         - id: ClothingNeckAsexualPin
         - id: ClothingNeckBisexualPin
+        - id: ClothingNeckGayPin
         - id: ClothingNeckIntersexPin
         - id: ClothingNeckLesbianPin
         - id: ClothingNeckNonBinaryPin
@@ -348,6 +350,7 @@
       prototypes:
         - Lighter
         - CigCartonBlue
+        - ClothingEyesGlassesGarMecha
         - ClothingEyesGlassesGarGiga
         - ClothingEyesGlassesGarOrange
         - ClothingEyesGlassesGar

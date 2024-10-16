@@ -174,3 +174,6 @@ chat-speech-verb-finfin-stutter-1 = falters
 chat-speech-verb-finfin-stutter-2 = squeaks
 chat-speech-verb-name-finfin-mumble = Finfin Mumbling
 chat-speech-verb-finfin-mumble-1 = quavers
+
+chat-speech-verb-name-bros = Bros
+chat-speech-verb-bros = grunts

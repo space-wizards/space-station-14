@@ -3,6 +3,7 @@ loadout-group-species-restriction = This item is not available for your current 
 
 # Miscellaneous
 loadout-group-trinkets = Trinkets
+loadout-group-learner = pAI Assistant
 loadout-group-glasses = Glasses
 loadout-group-backpack = Backpack
 loadout-group-instruments = Instruments
@@ -56,6 +57,7 @@ loadout-group-bartender-jumpsuit = Bartender jumpsuit
 loadout-group-bartender-neck = Bartender neck
 loadout-group-bartender-outerclothing = Bartender outer clothing
 loadout-group-bartender-shoes = Bartender shoes
+loadout-group-bartender-id = Bartender ID
 loadout-group-bartender-mixologist = Mixologist Qualification
 
 loadout-group-chef-head = Chef head
@@ -64,6 +66,7 @@ loadout-group-chef-jumpsuit = Chef jumpsuit
 loadout-group-chef-neck = Chef neck
 loadout-group-chef-outerclothing = Chef outer clothing
 loadout-group-chef-shoes = Chef shoes
+loadout-group-chef-id = Chef ID
 
 loadout-group-librarian-jumpsuit = Librarian jumpsuit
 loadout-group-librarian-neck = Librarian neck
@@ -96,6 +99,7 @@ loadout-group-botanist-backpack = Botanist backpack
 loadout-group-botanist-neck = Botanist neck
 loadout-group-botanist-outerclothing = Botanist outer clothing
 loadout-group-botanist-shoes = Botanist shoes
+loadout-group-botanist-id = Botanist ID
 
 loadout-group-clown-head = Clown head
 loadout-group-clown-jumpsuit = Clown jumpsuit
@@ -137,8 +141,10 @@ loadout-group-cargo-technician-id = Cargo Technician ID
 
 loadout-group-salvage-specialist-neck = Salvage Specialist neck
 loadout-group-salvage-specialist-backpack = Salvage Specialist backpack
+loadout-group-salvage-specialist-glasses = Salvage Specialist glasses
 loadout-group-salvage-specialist-outerclothing = Salvage Specialist outer clothing
 loadout-group-salvage-specialist-shoes = Salvage Specialist shoes
+loadout-group-salvage-specialist-id = Salvage Specialist ID
 
 # Engineering
 loadout-group-chief-engineer-head = Chief Engineer head
@@ -165,6 +171,7 @@ loadout-group-atmospheric-technician-backpack = Atmospheric Technician backpack
 loadout-group-atmospheric-technician-neck = Atmospheric Technician neck
 loadout-group-atmospheric-technician-outerclothing = Atmospheric Technician outer clothing
 loadout-group-atmospheric-technician-shoes = Atmospheric Technician shoes
+loadout-group-atmospheric-technician-id = Atmospheric Technician ID
 
 # Science
 loadout-group-research-director-head = Research Director head
@@ -201,6 +208,7 @@ loadout-group-warden-jumpsuit = Warden jumpsuit
 loadout-group-warden-neck = Warden neck
 loadout-group-warden-outerclothing = Warden outer clothing
 loadout-group-upper-security-shoes = Security shoes
+loadout-group-warden-id = Warden ID
 
 loadout-group-security-head = Security head
 loadout-group-security-mask = Security mask
@@ -217,6 +225,7 @@ loadout-group-detective-neck = Detective neck
 loadout-group-detective-jumpsuit = Detective jumpsuit
 loadout-group-detective-outerclothing = Detective outer clothing
 loadout-group-detective-shoes = Detective shoes
+loadout-group-detective-id = Detective ID
 
 loadout-group-brigmedic-head = Brigmedic head
 loadout-group-brigmedic-neck = Brigmedic neck
@@ -256,12 +265,14 @@ loadout-group-chemist-neck = Chemist neck
 loadout-group-chemist-outerclothing = Chemist outer clothing
 loadout-group-chemist-backpack = Chemist backpack
 loadout-group-chemist-shoes = Chemist shoes
+loadout-group-chemist-id = Chemist ID
 
 loadout-group-paramedic-head = Paramedic head
 loadout-group-paramedic-jumpsuit = Paramedic jumpsuit
 loadout-group-paramedic-neck = Paramedic neck
 loadout-group-paramedic-outerclothing = Paramedic outer clothing
 loadout-group-paramedic-shoes = Paramedic shoes
+loadout-group-paramedic-id = Paramedic ID
 
 # Wildcards
 loadout-group-reporter-mask = Reporter mask

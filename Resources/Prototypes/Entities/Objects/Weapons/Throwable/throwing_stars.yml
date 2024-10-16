@@ -51,16 +51,3 @@
   # also limits the crew's use
   - type: TimedDespawn
     lifetime: 30
-
-- type: entity
-  parent: ThrowingStar
-  id: ThrowingStarChangeling
-  name: bone shard
-  components:
-  - type: Sprite
-    sprite: Changeling/bone_shard.rsi
-    layers:
-    - state: icon
-      map: ["base"]
-  - type: TimedDespawn
-    lifetime: 30

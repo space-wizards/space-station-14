@@ -1,1 +1,0 @@
-contraband-examine-text-Heretic = [color=MediumPurple]This item is highly illegal heretical contraband![/color]

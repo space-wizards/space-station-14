@@ -7,6 +7,7 @@ using Content.Server.Atmos.Components;
 using Content.Server.Cargo.Components;
 using Content.Server.Doors.Systems;
 using Content.Server.Hands.Systems;
+using Content.Server._Impstation.Spelfs;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Revenant.Components;
@@ -26,6 +27,7 @@ using Content.Shared.Damage.Components;
 using Content.Shared.Database;
 using Content.Shared.Doors.Components;
 using Content.Shared.Hands.Components;
+using Content.Shared._Impstation.Spelfs.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Item;
 using Content.Shared.PDA;
@@ -773,6 +775,24 @@ public sealed partial class AdminVerbSystem
             };
             args.Verbs.Add(makeInanimate);
         }
+
+        if (TryComp<SpelfMoodsComponent>(args.Target, out var moods))
+        {
+            Verb addRandomMood = new()
+            {
+                Text = "Add Random Mood",
+                Category = VerbCategory.Tricks,
+                // TODO: Icon
+                Act = () =>
+                {
+                    _moods.TryAddRandomMood(args.Target);
+                },
+                Impact = LogImpact.High,
+                Message = Loc.GetString("admin-trick-add-random-mood-description"),
+                Priority = (int) TricksVerbPriorities.AddRandomMood,
+            };
+            args.Verbs.Add(addRandomMood);
+        }
     }
 
     private void RefillEquippedTanks(EntityUid target, Gas gasType)
@@ -920,5 +940,7 @@ public sealed partial class AdminVerbSystem
         SetBulletAmount = -29,
         MakeAnimate = -30,
         MakeInanimate = -31,
+        AddRandomMood = -32,
+        AddCustomMood = -33,
     }
 }

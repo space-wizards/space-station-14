@@ -1,0 +1,6 @@
+- type: weightedRandom
+  id: RandomSpelfMoodDataset
+  weights:
+    SpelfMoodsYesAnd: 0.45
+    SpelfMoodsNoAnd: 0.45
+    SpelfMoodsWildcard: 0.1

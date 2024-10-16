@@ -1,0 +1,107 @@
+- type: marking
+  id: SpElfEars1
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [SpElf]
+  forcedColoring: true
+  followSkinColor: true
+  sprites:
+  - sprite: Mobs/Customization/spelf.rsi
+    state: ears1
+
+- type: marking
+  id: SpElfEars2
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [SpElf]
+  forcedColoring: true
+  followSkinColor: true
+  sprites:
+  - sprite: Mobs/Customization/spelf.rsi
+    state: ears2
+
+- type: marking
+  id: SpElfEars3
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [SpElf]
+  forcedColoring: true
+  followSkinColor: true
+  sprites:
+  - sprite: Mobs/Customization/spelf.rsi
+    state: ears3
+
+- type: marking
+  id: SpElfEars4
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [SpElf]
+  forcedColoring: true
+  followSkinColor: true
+  sprites:
+  - sprite: Mobs/Customization/spelf.rsi
+    state: ears4
+
+- type: marking
+  id: SpElfPiercings
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [SpElf]
+  forcedColoring: false
+  followSkinColor: false
+  sprites:
+  - sprite: Mobs/Customization/spelf.rsi
+    state: piercings
+
+- type: marking
+  id: SpElfPiercings2
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [SpElf]
+  forcedColoring: false
+  followSkinColor: false
+  sprites:
+  - sprite: Mobs/Customization/spelf.rsi
+    state: piercings2
+
+- type: marking
+  id: SpElfChestTattoo1
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [SpElf]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: Mobs/Customization/spelf.rsi
+    state: chesttat1
+
+- type: marking
+  id: SpElfLArmTattoo1
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [SpElf]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: Mobs/Customization/spelf.rsi
+    state: larmtat1
+
+- type: marking
+  id: SpElfRArmTattoo1
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [SpElf]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: Mobs/Customization/spelf.rsi
+    state: rarmtat1

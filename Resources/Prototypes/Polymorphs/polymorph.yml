@@ -201,6 +201,18 @@
     revertOnCrit: true
     duration: 25
 
+- type: polymorph
+  id: ArtifactRod
+  configuration:
+    entity: ImmovableRodArtifactPoly #CLANG
+    transferName: true
+    transferDamage: false
+    inventory: None
+    duration: 3
+    forced: true
+    revertOnCrit: false
+    revertOnDeath: false
+
 # Polymorphs for Wizards polymorph self spell
 - type: polymorph
   id: WizardSpider
@@ -222,3 +234,16 @@
     forced: true
     revertOnCrit: false
     revertOnDeath: false
+
+# Polymorph for juice that makes you UNGH
+- type: polymorph
+  id: PolymorphBros
+  configuration:
+    entity: MobBrosPoly
+    forced: true
+    transferName: true
+    transferHumanoidAppearance: true
+    inventory: None
+    revertOnDeath: true
+    revertOnCrit: true
+    duration: 20

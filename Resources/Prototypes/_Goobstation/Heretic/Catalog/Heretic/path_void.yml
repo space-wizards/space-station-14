@@ -1,0 +1,161 @@
+- type: listing
+  id: HereticVoidPath1
+  name: knowledge-path-void-s1-name
+  description: knowledge-path-void-s1-desc
+  icon: { sprite: _Goobstation/Heretic/Blades/blade_void.rsi, state: icon }
+  productHereticKnowledge: GlimmerOfWinter
+  cost:
+    KnowledgePoint: 1
+  categories:
+  - HereticPathVoid
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:HereticPathCondition
+    stage: 0
+    # add every path here because you shouldn't be able to buy more starter knowledge
+    blacklist:
+    - Ash
+    - Blade
+    - Flesh
+    - Lock
+    - Rust
+    - Void
+
+- type: listing
+  id: HereticVoidPath2
+  name: knowledge-path-void-s2-name
+  description: knowledge-path-void-s2-desc
+  icon: { sprite: _Goobstation/Heretic/mansus_grasp.rsi, state: icon }
+  productHereticKnowledge: GraspOfVoid
+  cost:
+    KnowledgePoint: 1
+  categories:
+  - HereticPathVoid
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:HereticPathCondition
+    stage: 1
+    whitelist:
+    - Void
+
+- type: listing
+  id: HereticVoidPath3
+  name: knowledge-path-void-s3-name
+  description: knowledge-path-void-s3-desc
+  icon: { sprite: Interface/Alerts/temperature.rsi, state: cold1 }
+  productHereticKnowledge: AristocratWay
+  cost:
+    KnowledgePoint: 2
+  categories:
+  - HereticPathVoid
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:HereticPathCondition
+    stage: 2
+
+- type: listing
+  id: HereticVoidPath4
+  name: knowledge-path-void-s4-name
+  description: knowledge-path-void-s4-desc
+  icon: { sprite: _Goobstation/Heretic/Blades/blade_void.rsi, state: icon }
+  productHereticKnowledge: MarkOfVoid
+  cost:
+    KnowledgePoint: 1
+  categories:
+  - HereticPathVoid
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:HereticPathCondition
+    stage: 3
+    whitelist:
+    - Void
+
+- type: listing
+  id: HereticVoidPath5
+  name: knowledge-path-void-s5-name
+  description: knowledge-path-void-s5-desc
+  icon: { sprite: _Goobstation/Heretic/abilities_heretic.rsi, state: void_blast }
+  productHereticKnowledge: VoidBlast
+  cost:
+    KnowledgePoint: 1
+  categories:
+  - HereticPathVoid
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:HereticPathCondition
+    stage: 4
+    whitelist:
+    - Void
+
+- type: listing
+  id: HereticVoidPath6
+  name: knowledge-path-void-s6-name
+  description: knowledge-path-void-s6-desc
+  icon: { sprite: _Goobstation/Heretic/abilities_heretic.rsi, state: void_phase }
+  productHereticKnowledge: VoidPhase
+  cost:
+    KnowledgePoint: 2
+  categories:
+  - HereticPathVoid
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:HereticPathCondition
+    stage: 5
+
+- type: listing
+  id: HereticVoidPath7
+  name: knowledge-path-void-s7-name
+  description: knowledge-path-void-s7-desc
+  icon: { sprite: _Goobstation/Heretic/Blades/blade_void.rsi, state: icon }
+  productHereticKnowledge: SeekingBlade
+  cost:
+    KnowledgePoint: 1
+  categories:
+  - HereticPathVoid
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:HereticPathCondition
+    stage: 6
+    whitelist:
+    - Void
+
+- type: listing
+  id: HereticVoidPath8
+  name: knowledge-path-void-s8-name
+  description: knowledge-path-void-s8-desc
+  icon: { sprite: _Goobstation/Heretic/abilities_heretic.rsi, state: void_pull }
+  productHereticKnowledge: VoidPull
+  cost:
+    KnowledgePoint: 2
+  categories:
+  - HereticPathVoid
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:HereticPathCondition
+    stage: 7
+
+- type: listing
+  id: HereticVoidPath9
+  name: knowledge-path-void-s9-name
+  description: knowledge-path-void-s9-desc
+  icon: { sprite: Interface/Alerts/temperature.rsi, state: cold3 }
+  productHereticKnowledge: AscensionVoid
+  cost:
+    KnowledgePoint: 2
+  categories:
+  - HereticPathVoid
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:HereticPathCondition
+    stage: 8
+    whitelist:
+    - Void

@@ -18,6 +18,8 @@ public sealed partial class AccessibilityTab : Control
         Control.AddOptionCheckBox(CCVars.DisableSinguloWarping, DisableSinguloWarpingCheckBox);
         Control.AddOptionPercentSlider(CCVars.ChatWindowOpacity, ChatWindowOpacitySlider);
         Control.AddOptionPercentSlider(CCVars.ScreenShakeIntensity, ScreenShakeIntensitySlider);
+        Control.AddOptionCheckBox(CCVars.ChatAutoFillHighlights, AutoFillHighlightsCheckBox);
+        Control.AddOptionColorSlider(CCVars.ChatHighlightsColor, HighlightsColorSlider);
 
         Control.Initialize();
     }

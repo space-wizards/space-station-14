@@ -5399,6 +5399,13 @@ entities:
       parent: 30
     - type: Physics
       canCollide: False
+- proto: Biogenerator
+  entities:
+  - uid: 8723
+    components:
+    - type: Transform
+      pos: -12.5,5.5
+      parent: 30
 - proto: BlastDoor
   entities:
   - uid: 99
@@ -19832,6 +19839,9 @@ entities:
       parent: 30
     - type: Physics
       canCollide: False
+    - type: ContainerContainer
+      containers:
+        lens_slot: !type:ContainerSlot {}
   - uid: 7271
     components:
     - type: Transform
@@ -19839,6 +19849,9 @@ entities:
       parent: 30
     - type: Physics
       canCollide: False
+    - type: ContainerContainer
+      containers:
+        lens_slot: !type:ContainerSlot {}
 - proto: ClothingEyesGlassesMeson
   entities:
   - uid: 7265
@@ -19848,6 +19861,9 @@ entities:
       parent: 30
     - type: Physics
       canCollide: False
+    - type: ContainerContainer
+      containers:
+        lens_slot: !type:ContainerSlot {}
   - uid: 7266
     components:
     - type: Transform
@@ -19855,6 +19871,9 @@ entities:
       parent: 30
     - type: Physics
       canCollide: False
+    - type: ContainerContainer
+      containers:
+        lens_slot: !type:ContainerSlot {}
 - proto: ClothingEyesGlassesThermal
   entities:
   - uid: 7267
@@ -19864,6 +19883,9 @@ entities:
       parent: 30
     - type: Physics
       canCollide: False
+    - type: ContainerContainer
+      containers:
+        lens_slot: !type:ContainerSlot {}
 - proto: ClothingHandsGlovesColorYellow
   entities:
   - uid: 1668

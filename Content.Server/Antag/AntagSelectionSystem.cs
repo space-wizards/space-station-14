@@ -344,7 +344,8 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         if (session != null)
         {
             var curMind = session.GetMind();
-            if (curMind == null ||
+            
+            if (curMind == null || 
                 !TryComp<MindComponent>(curMind.Value, out var mindComp) ||
                 mindComp.OwnedEntity != antagEnt)
             {
@@ -415,17 +416,17 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         switch (def.MultiAntagSetting)
         {
             case AntagAcceptability.None:
-                {
-                    if (_role.MindIsAntagonist(mind))
-                        return false;
-                    break;
-                }
+            {
+                if (_role.MindIsAntagonist(mind))
+                    return false;
+                break;
+            }
             case AntagAcceptability.NotExclusive:
-                {
-                    if (_role.MindIsExclusiveAntagonist(mind))
-                        return false;
-                    break;
-                }
+            {
+                if (_role.MindIsExclusiveAntagonist(mind))
+                    return false;
+                break;
+            }
         }
 
         // todo: expand this to allow for more fine antag-selection logic for game rules.

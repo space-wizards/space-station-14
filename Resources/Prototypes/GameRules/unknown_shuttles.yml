@@ -20,6 +20,7 @@
     - id: UnknownShuttleMeatZone
     - id: UnknownShuttleMicroshuttle
     - id: UnknownShuttleSpacebus
+    - id: UnknownShuttleInstigator
 
 - type: entityTable
   id: UnknownShuttlesFreelanceTable

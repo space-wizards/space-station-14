@@ -42,7 +42,7 @@
             Paramedic: [ 1, 2 ]
             #science
             ResearchDirector: [ 1, 1 ]
-            Scientist: [ 3, 3 ]
+            Scientist: [ 4, 4 ]
             ResearchAssistant: [ 1, 1 ]
             #security
             HeadOfSecurity: [ 1, 1 ]

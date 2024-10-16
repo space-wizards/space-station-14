@@ -1,0 +1,49 @@
+﻿- type: body
+  id: SpElf
+  name: "spelf"
+  root: torso
+  slots:
+    head:
+      part: HeadSpElf
+      connections:
+      - torso
+      organs:
+        brain: OrganSpelfBrain
+        eyes: OrganHumanEyes
+    torso:
+      part: TorsoSpElf
+      connections:
+      - right_arm
+      - left_arm
+      - right_leg
+      - left_leg
+      organs:
+        heart: OrganHumanHeart
+        lungs: OrganHumanLungs
+        stomach: OrganHumanStomach
+        liver: OrganHumanLiver
+        kidneys: OrganHumanKidneys
+    right_arm:
+      part: RightArmSpElf
+      connections:
+      - right_hand
+    left_arm:
+      part: LeftArmSpElf
+      connections:
+      - left_hand
+    right_hand:
+      part: RightHandSpElf
+    left_hand:
+      part: LeftHandSpElf
+    right_leg:
+      part: RightLegSpElf
+      connections:
+      - right_foot
+    left_leg:
+      part: LeftLegSpElf
+      connections:
+      - left_foot
+    right_foot:
+      part: RightFootSpElf
+    left_foot:
+      part: LeftFootSpElf

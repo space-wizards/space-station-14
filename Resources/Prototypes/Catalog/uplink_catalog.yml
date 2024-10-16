@@ -798,7 +798,7 @@
   id: UplinkBinaryTranslatorKey
   name: uplink-binary-translator-key-name
   description: uplink-binary-translator-key-desc
-  icon: { sprite: /Textures/Objects/Devices/encryption_keys.rsi, state: borg_label }
+  icon: { sprite: /Textures/Objects/Devices/encryption_keys.rsi, state: ai_label }
   productEntity: EncryptionKeyBinarySyndicate
   cost:
     Telecrystal: 1
@@ -1141,6 +1141,17 @@
       tags:
       - NukeOpsUplink
 
+- type: listing
+  id: UplinkAnimalFriendsKit
+  name: uplink-animal-friends-kit-name
+  description: uplink-animal-friends-kit-desc
+  icon: { sprite: /Textures/Mobs/Animals/mouse.rsi, state: icon-2 }
+  productEntity: AnimalFriendsKit
+  cost:
+    Telecrystal: 6
+  categories:
+  - UplinkAllies
+  
 - type: listing
   id: UplinkReinforcementRadioSyndicate
   name: uplink-reinforcement-radio-name
@@ -2060,6 +2071,27 @@
     Telecrystal: 2
   cost:
     Telecrystal: 5 # was 4, with my buff made it 5 to be closer to minibomb -panzer
+  categories:
+  - UplinkJob
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - Janitor
+  - !type:BuyerWhitelistCondition
+    blacklist:
+      components:
+      - SurplusBundle
+
+- type: listing
+  id: uplinkCleanerLakeUpgrade
+  name: uplink-cleaner-lake-upgrade-name
+  description: uplink-cleaner-lake-upgrade-desc
+  productEntity: WeaponCleanerLakeUpgradeKit
+  discountCategory: rareDiscounts
+  discountDownTo:
+    Telecrystal: 12
+  cost:
+    Telecrystal: 14 # was 4, with my buff made it 5 to be closer to minibomb -panzer
   categories:
   - UplinkJob
   conditions:

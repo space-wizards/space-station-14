@@ -312,6 +312,12 @@
   chatMessages: [Wehs!]
 
 - type: emote
+  id: Ungh
+  name: chat-emote-name-weh
+  category: Vocal
+  chatMessages: [UNGHs!]
+  
+- type: emote
   id: Chirp
   name: chat-emote-name-chirp
   category: Vocal

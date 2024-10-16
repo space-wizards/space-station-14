@@ -1,0 +1,220 @@
+# welcome
+- type: soundCollection
+  id: SternWelcomeAnnouncements
+  files:
+    - /Audio/Announcers/Stern/comms/welcome/1.ogg
+    - /Audio/Announcers/Stern/comms/welcome/2.ogg
+    - /Audio/Announcers/Stern/comms/welcome/3.ogg
+
+#  -------------------------------------------- EVENTS --------------------------------------------
+
+# anomaly
+- type: soundCollection
+  id: SternAnomalyAnnouncements
+  files:
+    - /Audio/Announcers/Stern/events/anomaly/1.ogg
+    - /Audio/Announcers/Stern/events/anomaly/2.ogg
+    - /Audio/Announcers/Stern/events/anomaly/3.ogg
+
+# artifact
+- type: soundCollection
+  id: SternArtifactAnnouncements
+  files:
+    - /Audio/Announcers/Stern/events/artifact/1.ogg
+    - /Audio/Announcers/Stern/events/artifact/2.ogg
+    - /Audio/Announcers/Stern/events/artifact/3.ogg
+
+# breakerflip
+- type: soundCollection
+  id: SternBreakerflipAnnouncements
+  files:
+    - /Audio/Announcers/Stern/events/breakerflip/1.ogg
+    - /Audio/Announcers/Stern/events/breakerflip/2.ogg
+    - /Audio/Announcers/Stern/events/breakerflip/3.ogg
+
+# error, bureaucratic
+- type: soundCollection
+  id: SternErrorBureaucraticAnnouncements
+  files:
+    - /Audio/Announcers/Stern/events/errorbureaucratic/1.ogg
+    - /Audio/Announcers/Stern/events/errorbureaucratic/2.ogg
+    - /Audio/Announcers/Stern/events/errorbureaucratic/3.ogg
+
+# error, clerical
+- type: soundCollection
+  id: SternErrorClericalAnnouncements
+  files:
+    - /Audio/Announcers/Stern/events/errorclerical/1.ogg
+    - /Audio/Announcers/Stern/events/errorclerical/2.ogg
+    - /Audio/Announcers/Stern/events/errorclerical/3.ogg
+
+# carprift
+- type: soundCollection
+  id: SternCarpriftAnnouncements
+  files:
+    - /Audio/Announcers/Stern/events/carprift/1.ogg
+    - /Audio/Announcers/Stern/events/carprift/2.ogg
+    - /Audio/Announcers/Stern/events/carprift/3.ogg
+
+# revenant
+- type: soundCollection
+  id: SternRevenantAnnouncements
+  files:
+    - /Audio/Announcers/Stern/events/revenant/1.ogg
+    - /Audio/Announcers/Stern/events/revenant/2.ogg
+    - /Audio/Announcers/Stern/events/revenant/3.ogg
+
+# gas leak
+- type: soundCollection
+  id: SternGasleakAnnouncements
+  files:
+    - /Audio/Announcers/Stern/events/gasleak/1.ogg
+    - /Audio/Announcers/Stern/events/gasleak/2.ogg
+    - /Audio/Announcers/Stern/events/gasleak/3.ogg
+
+# gasleak DONE
+- type: soundCollection
+  id: SternGasleakCompleteAnnouncements
+  files:
+    - /Audio/Announcers/Stern/events/gasleak/1-done.ogg
+    - /Audio/Announcers/Stern/events/gasleak/2-done.ogg
+    - /Audio/Announcers/Stern/events/gasleak/3-done.ogg
+
+# kudzu overgrowth
+- type: soundCollection
+  id: SternKudzuAnnouncements
+  files:
+    - /Audio/Announcers/Stern/events/kudzu/1.ogg
+    - /Audio/Announcers/Stern/events/kudzu/2.ogg
+    - /Audio/Announcers/Stern/events/kudzu/3.ogg
+
+
+# meteors
+- type: soundCollection
+  id: SternMeteorsAnnouncements
+  files:
+    - /Audio/Announcers/Stern/events/meteors/1.ogg
+    - /Audio/Announcers/Stern/events/meteors/2.ogg
+    - /Audio/Announcers/Stern/events/meteors/3.ogg
+
+# meteors DONE
+- type: soundCollection
+  id: SternMeteorsCompleteAnnouncements
+  files:
+    - /Audio/Announcers/Stern/events/meteors/1-done.ogg
+    - /Audio/Announcers/Stern/events/meteors/2-done.ogg
+    - /Audio/Announcers/Stern/events/meteors/3-done.ogg
+
+# powergrid
+- type: soundCollection
+  id: SternPowergridAnnouncements
+  files:
+    - /Audio/Announcers/Stern/events/powergrid/1.ogg
+    - /Audio/Announcers/Stern/events/powergrid/2.ogg
+    - /Audio/Announcers/Stern/events/powergrid/3.ogg
+
+# powergridfixed
+- type: soundCollection
+  id: SternPowergridfixedAnnouncements
+  files:
+    - /Audio/Announcers/Stern/events/powergrid/1-done.ogg
+    - /Audio/Announcers/Stern/events/powergrid/2-done.ogg
+    - /Audio/Announcers/Stern/events/powergrid/3-done.ogg
+
+# solar flare
+- type: soundCollection
+  id: SternSolarFlareAnnouncements
+  files:
+    - /Audio/Announcers/Stern/events/solarflare/1.ogg
+    - /Audio/Announcers/Stern/events/solarflare/2.ogg
+    - /Audio/Announcers/Stern/events/solarflare/3.ogg
+
+# solar flare DONE
+- type: soundCollection
+  id: SternSolarFlareCompletedAnnouncements
+  files:
+    - /Audio/Announcers/Stern/events/solarflare/1-done.ogg
+    - /Audio/Announcers/Stern/events/solarflare/2-done.ogg
+    - /Audio/Announcers/Stern/events/solarflare/3-done.ogg
+
+# ventcritters
+- type: soundCollection
+  id: SternVentcrittersAnnouncements
+  files:
+    - /Audio/Announcers/Stern/events/ventcritters/1.ogg
+    - /Audio/Announcers/Stern/events/ventcritters/2.ogg
+    - /Audio/Announcers/Stern/events/ventcritters/3.ogg
+
+# ventclog
+- type: soundCollection
+  id: SternVentcloggedAnnouncements
+  files:
+    - /Audio/Announcers/Stern/events/ventclog/1.ogg
+    - /Audio/Announcers/Stern/events/ventclog/2.ogg
+    - /Audio/Announcers/Stern/events/ventclog/3.ogg
+
+# immovablerod
+- type: soundCollection
+  id: SternImmovablerodAnnouncements
+  files:
+    - /Audio/Announcers/Stern/events/immovablerod/1.ogg
+    - /Audio/Announcers/Stern/events/immovablerod/2.ogg
+    - /Audio/Announcers/Stern/events/immovablerod/3.ogg
+
+#  -------------------------------------------- SHUTTLE --------------------------------------------
+
+# called
+- type: soundCollection
+  id: SternShuttleCalledAnnouncements
+  files:
+    - /Audio/Announcers/Stern/shuttle/called/1.ogg
+    - /Audio/Announcers/Stern/shuttle/called/2.ogg
+    - /Audio/Announcers/Stern/shuttle/called/3.ogg
+
+# departed
+- type: soundCollection
+  id: SternShuttleDepartedAnnouncements
+  files:
+    - /Audio/Announcers/Stern/shuttle/departed/1.ogg
+    - /Audio/Announcers/Stern/shuttle/departed/2.ogg
+    - /Audio/Announcers/Stern/shuttle/departed/3.ogg
+
+# docked
+- type: soundCollection
+  id: SternShuttleDockedAnnouncements
+  files:
+    - /Audio/Announcers/Stern/shuttle/docked/1.ogg
+    - /Audio/Announcers/Stern/shuttle/docked/2.ogg
+    - /Audio/Announcers/Stern/shuttle/docked/3.ogg
+
+# goodluck
+- type: soundCollection
+  id: SternShuttleGoodluckAnnouncements
+  files:
+    - /Audio/Announcers/Stern/shuttle/goodluck/1.ogg
+    - /Audio/Announcers/Stern/shuttle/goodluck/2.ogg
+    - /Audio/Announcers/Stern/shuttle/goodluck/3.ogg
+
+# launching
+- type: soundCollection
+  id: SternShuttleLaunchingAnnouncements
+  files:
+    - /Audio/Announcers/Stern/shuttle/launching/1.ogg
+    - /Audio/Announcers/Stern/shuttle/launching/2.ogg
+    - /Audio/Announcers/Stern/shuttle/launching/3.ogg
+
+# nearby
+- type: soundCollection
+  id: SternShuttleNearbyAnnouncements
+  files:
+    - /Audio/Announcers/Stern/shuttle/nearby/1.ogg
+    - /Audio/Announcers/Stern/shuttle/nearby/2.ogg
+    - /Audio/Announcers/Stern/shuttle/nearby/3.ogg
+
+# recalled
+- type: soundCollection
+  id: SternShuttleRecalledAnnouncements
+  files:
+    - /Audio/Announcers/Stern/shuttle/recalled/1.ogg
+    - /Audio/Announcers/Stern/shuttle/recalled/2.ogg
+    - /Audio/Announcers/Stern/shuttle/recalled/3.ogg
