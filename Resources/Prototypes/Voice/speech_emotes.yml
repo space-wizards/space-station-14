@@ -309,7 +309,7 @@
   name: chat-emote-name-weh
   category: Vocal
   icon: Interface/Emotes/weh.png
-  chatMessages: [Wehs!]
+  chatMessages: [wehs!]
 
 - type: emote
   id: Chirp
