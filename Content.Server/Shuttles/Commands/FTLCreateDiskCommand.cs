@@ -1,6 +1,8 @@
 using Content.Server.Administration;
 using Content.Server.Labels;
 using Content.Shared.Administration;
+using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Shuttles.Components;
 using Robust.Shared.Console;
 using Robust.Shared.Map.Components;
@@ -16,12 +18,12 @@ namespace Content.Server.Shuttles.Commands;
 /// </summary>
 [AdminCommand(AdminFlags.Fun)]
 
-public sealed class FTLDiskBurnerCommand : LocalizedCommands
+public sealed class FTLDiskCommand : LocalizedCommands
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IEntitySystemManager _entSystemManager = default!;
 
-    public override string Command => "FTLdiskburner";
+    public override string Command => "ftldisk";
 
     [ValidatePrototypeId<EntityPrototype>]
     public const string CoordinatesDisk = "CoordinatesDisk";
@@ -51,6 +53,10 @@ public sealed class FTLDiskBurnerCommand : LocalizedCommands
         EntityUid entity = player.AttachedEntity.Value;
         var coords = _entManager.GetComponent<TransformComponent>(entity).Coordinates;
 
+        var handsSystem = _entSystemManager.GetEntitySystem<SharedHandsSystem>();
+        var labelSystem = _entSystemManager.GetEntitySystem<LabelSystem>();
+        var mapSystem = _entSystemManager.GetEntitySystem<SharedMapSystem>();
+
         foreach (var destinations in args)
         {
             DebugTools.AssertNotNull(destinations);
@@ -73,7 +79,6 @@ public sealed class FTLDiskBurnerCommand : LocalizedCommands
                         continue;
                     }
 
-                    var mapSystem = _entSystemManager.GetEntitySystem<SharedMapSystem>();
                     if (!mapSystem.TryGetMap(entTransform.MapID, out var mapDest))
                     {
                         shell.WriteLine(destinations + " has no map to FTL to!");
@@ -87,7 +92,7 @@ public sealed class FTLDiskBurnerCommand : LocalizedCommands
                 // find and verify the map is not somehow unusable.
                 if (!_entManager.TryGetComponent<MapComponent>(dest, out var mapComp)) // We have to check for a MapComponent here and above since we could have changed our dest entity.
                 {
-                    shell.WriteLine(destinations + " is somehow on map " + dest + " with no map component. What the fuck.");
+                    shell.WriteLine(destinations + " is somehow on map " + dest + " with no map component.");
                     continue;
                 }
                 if (mapComp.MapInitialized == false)
@@ -156,9 +161,14 @@ public sealed class FTLDiskBurnerCommand : LocalizedCommands
 
                 if (_entManager.TryGetComponent<MetaDataComponent>(dest, out var meta) && meta != null && meta.EntityName != null)
                 {
-                    var labelSystem = _entSystemManager.GetEntitySystem<LabelSystem>();
                     labelSystem.Label(cdUid, meta.EntityName);
                 }
+
+                if (_entManager.TryGetComponent<HandsComponent>(entity, out var handsComponent) && handsSystem.TryGetEmptyHand(entity, out var emptyHand, handsComponent))
+                {
+                    handsSystem.TryPickup(entity, cdUid, emptyHand, checkActionBlocker: false, handsComp: handsComponent);
+                }
+
             }
             else
             {
