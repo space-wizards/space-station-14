@@ -2,6 +2,7 @@ using System.Collections.Frozen;
 using Content.Server.Popups;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Emoting;
+using Content.Shared.Inventory;
 using Content.Shared.Speech;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -91,18 +92,6 @@ public partial class ChatSystem
     {
         if (!forceEmote && !AllowedToUseEmote(source, emote))
             return;
-
-        // Check if this emote should be blocked. Forced emotes ignore this check.
-        if (!forceEmote)
-        {
-            var ev = new GetEmoteBlockersEvent();
-            RaiseLocalEvent(source, ref ev);
-            if (ev.ShouldBlock(emote))
-            {
-                _popupSystem.PopupEntity(Loc.GetString("emote-blocked", ("emote", Loc.GetString(emote.Name).ToLower())), source, source);
-                return;
-            }
-        }
 
         // check if proto has valid message for chat
         if (emote.ChatMessages.Count != 0)
@@ -225,8 +214,13 @@ public partial class ChatSystem
 
     private void InvokeEmoteEvent(EntityUid uid, EmotePrototype proto)
     {
-        var ev = new EmoteEvent(proto);
+        var ev = new EmoteEvent(uid, proto);
         RaiseLocalEvent(uid, ref ev);
+
+        if (ev.Blocked)
+        {
+            _popupSystem.PopupEntity(Loc.GetString("emote-blocked", ("emote", Loc.GetString(proto.Name).ToLower())), uid, uid);
+        }
     }
 }
 
@@ -235,14 +229,20 @@ public partial class ChatSystem
 ///     Use it to play sound, change sprite or something else.
 /// </summary>
 [ByRefEvent]
-public struct EmoteEvent
+public struct EmoteEvent : IInventoryRelayEvent
 {
     public bool Handled;
+    public readonly EntityUid Source;
     public readonly EmotePrototype Emote;
+    public bool Blocked;
 
-    public EmoteEvent(EmotePrototype emote)
+    public EmoteEvent(EntityUid source, EmotePrototype emote)
     {
+        Source = source;
         Emote = emote;
         Handled = false;
+        Blocked = false;
     }
+
+    public SlotFlags TargetSlots => SlotFlags.All;
 }

@@ -85,7 +85,7 @@ public sealed class CluwneSystem : EntitySystem
     /// </summary>
     private void OnEmote(EntityUid uid, CluwneComponent component, ref EmoteEvent args)
     {
-        if (args.Handled)
+        if (args.Handled || args.Blocked)
             return;
         args.Handled = _chat.TryPlayEmoteSound(uid, EmoteSounds, args.Emote);
 

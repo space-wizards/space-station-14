@@ -1,4 +1,5 @@
 using Content.Shared.Chat.Prototypes;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Speech.Components;
 
@@ -13,11 +14,13 @@ public sealed partial class EmoteBlockerComponent : Component
     /// Which categories of emotes are blocked by this component.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    public HashSet<EmoteCategory> BlocksCategories = new HashSet<EmoteCategory>();
+    [DataField]
+    public HashSet<EmoteCategory> BlocksCategories = [];
 
     /// <summary>
     /// IDs of which specific emotes are blocked by this component.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    public HashSet<string> BlocksEmotes = new HashSet<string>();
+    [DataField]
+    public HashSet<ProtoId<EmotePrototype>> BlocksEmotes = [];
 }

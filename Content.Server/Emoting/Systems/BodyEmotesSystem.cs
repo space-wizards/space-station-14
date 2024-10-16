@@ -27,7 +27,7 @@ public sealed class BodyEmotesSystem : EntitySystem
 
     private void OnEmote(EntityUid uid, BodyEmotesComponent component, ref EmoteEvent args)
     {
-        if (args.Handled)
+        if (args.Handled || args.Blocked)
             return;
 
         var cat = args.Emote.Category;

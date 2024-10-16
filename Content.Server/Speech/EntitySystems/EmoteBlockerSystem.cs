@@ -1,81 +1,52 @@
-using Content.Server.Popups;
+using System.ComponentModel;
+using System.Linq;
+using Content.Server.Chat.Systems;
 using Content.Server.Speech.Components;
 using Content.Server.Speech.EntitySystems;
-using Content.Shared.Chat.Prototypes;
-using Content.Shared.Emoting;
 using Content.Shared.Inventory;
-using Content.Shared.Speech;
-using Robust.Shared.Prototypes;
+using Content.Shared.Mobs;
 
 namespace Content.Server.Speech;
 
 public sealed class EmoteBlockerSystem : EntitySystem
 {
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-
-    // Cache the Scream Emote's prototype so that it can be used when we deal with the Scream Action.
-    private EmotePrototype? _screamPrototype = null;
+    [Dependency] private readonly InventorySystem _inventory = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        // Intercept SceamActionEvent specifically because it's kinda like an emote, but isn't handled by the blocking code for emotes.
-        SubscribeLocalEvent<ScreamActionEvent>(OnScreamAction, before: [typeof(VocalSystem)]);
-        SubscribeLocalEvent<EmoteBlockerComponent, GetEmoteBlockersEvent>(OnGetEmoteBlockers);
-        SubscribeLocalEvent<EmoteBlockerComponent, InventoryRelayedEvent<GetEmoteBlockersEvent>>(OnRelayedGetEmoteBlockers);
+        // "Manually" relay the event to the inventory to avoid needing to put EmoteEvent in Content.Shared .
+        SubscribeLocalEvent<InventoryComponent, EmoteEvent>(RelayEvent, before: [typeof(VocalSystem)]);
 
-        SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypeReload);
+        SubscribeLocalEvent<EmoteBlockerComponent, EmoteEvent>(OnEmoteEvent, before: [typeof(VocalSystem)]);
+        SubscribeLocalEvent<EmoteBlockerComponent, InventoryRelayedEvent<EmoteEvent>>(OnRelayedEmoteEvent, before: [typeof(VocalSystem)]);
     }
 
-    private void OnScreamAction(ScreamActionEvent args)
+    private void RelayEvent(Entity<InventoryComponent> entity, ref EmoteEvent args)
     {
-        if (args.Handled || _screamPrototype == null)
+        _inventory.RelayEvent(entity, ref args);
+    }
+
+    private void OnRelayedEmoteEvent(EntityUid uid, EmoteBlockerComponent component, InventoryRelayedEvent<EmoteEvent> args)
+    {
+        OnEmoteEvent(uid, component, ref args.Args);
+    }
+
+    private void OnEmoteEvent(EntityUid uid, EmoteBlockerComponent component, ref EmoteEvent args)
+    {
+        if (component.BlocksEmotes.Contains(args.Emote))
         {
+            args.Blocked = true;
             return;
         }
 
-        var ev = new GetEmoteBlockersEvent();
-        RaiseLocalEvent(args.Performer, ref ev);
-
-        // Handle ScreamActionEvent like it's a Scream emote.
-        if (ev.ShouldBlock(_screamPrototype))
+        foreach (var blockedCat in component.BlocksCategories)
         {
-            _popupSystem.PopupEntity(Loc.GetString("emote-blocked", ("emote", Loc.GetString(_screamPrototype.Name).ToLower())), args.Performer, args.Performer);
-            args.Handled = true;
-        }
-    }
-
-    private void OnRelayedGetEmoteBlockers(EntityUid uid, EmoteBlockerComponent component, InventoryRelayedEvent<GetEmoteBlockersEvent> args)
-    {
-        OnGetEmoteBlockers(uid, component, args.Args);
-    }
-
-    private void OnGetEmoteBlockers(EntityUid uid, EmoteBlockerComponent component, GetEmoteBlockersEvent args)
-    {
-        foreach (var category in component.BlocksCategories)
-        {
-            args.BlockedCategories.Add(category);
-        }
-        foreach (var emote in component.BlocksEmotes)
-        {
-            args.BlockedEmotes.Add(emote);
-        }
-    }
-
-    private void OnPrototypeReload(PrototypesReloadedEventArgs obj)
-    {
-        if (obj.WasModified<EmotePrototype>())
-        {
-            _screamPrototype = null;
-            foreach (var emote in _prototypeManager.EnumeratePrototypes<EmotePrototype>())
+            if (blockedCat == args.Emote.Category)
             {
-                if (emote.ID == "Scream")
-                {
-                    _screamPrototype = emote;
-                    break;
-                }
+                args.Blocked = true;
+                return;
             }
         }
     }

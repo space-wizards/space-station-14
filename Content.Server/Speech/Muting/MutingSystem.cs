@@ -23,7 +23,7 @@ namespace Content.Server.Speech.Muting
 
         private void OnEmote(EntityUid uid, MutedComponent component, ref EmoteEvent args)
         {
-            if (args.Handled)
+            if (args.Handled || args.Blocked)
                 return;
 
             //still leaves the text so it looks like they are pantomiming a laugh
