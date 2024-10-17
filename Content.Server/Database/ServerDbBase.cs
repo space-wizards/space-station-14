@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Transactions;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Shared.Administration.Logs;
@@ -523,6 +524,34 @@ namespace Content.Server.Database
             ban.LastEditedAt = editedAt.UtcDateTime;
             await db.DbContext.SaveChangesAsync();
         }
+        #endregion
+
+        #region username whitelist
+        public abstract Task AddUsernameWhitelistAsync(string username);
+
+        public async Task RemoveUsernameWhitelistAsync(string username)
+        {
+            await using var db = await GetDb();
+            var entry = await db.DbContext.UsernameWhitelist.SingleAsync(u => u.Username == username);
+            db.DbContext.UsernameWhitelist.Remove(entry);
+            await db.DbContext.SaveChangesAsync();
+        }
+
+        public async Task<bool> CheckUsernameWhitelistAsync(string username)
+        {
+            await using var db = await GetDb();
+            return db.DbContext.UsernameWhitelist.Where(u => u.Username == username).Any();
+        }
+        #endregion
+
+        #region Username Rule
+        public abstract Task<ServerUsernameRuleDef?> GetServerUsernameRuleAsync(int id);
+
+        public abstract Task<List<ServerUsernameRuleDef>> GetServerUsernameRulesAsync(bool includeRetired);
+
+        public abstract Task<int> CreateUsernameRuleAsync(ServerUsernameRuleDef usernameRule);
+
+        public abstract Task RemoveServerUsernameRuleAsync(int id, NetUserId? retiringAdmin, DateTimeOffset retireTime);
         #endregion
 
         #region Playtime
