@@ -33,7 +33,7 @@
   parent: PosterBase
   id: PosterHarmonyMoney
   name: "HarMoney"
-  description: "A poster depicting the values of Harmony Station cargo department."
+  description: "Harmoney Station. Each year increasing profits and maximizing gains, all thanks to our beloved Cargo Department. Weh!"
   components:
     - type: Sprite
       sprite: _Harmony/Structures/Wallmounts/posters.rsi
@@ -148,3 +148,44 @@
     - type: Sprite
       sprite: _Harmony/Structures/Wallmounts/posters.rsi
       state: harmony_poster15_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterHarmonyMissing
+  name: "Missing Person"
+  description: "It appears as if someone ripped off this poster of a missing individual, obscuring details of their rather strange disappearance."
+  components:
+    - type: Sprite
+      sprite: _Harmony/Structures/Wallmounts/posters.rsi
+      state: harmony_poster16_legit
+      
+- type: entity
+  parent: PosterBase
+  id: PosterHarmonySafetyLizz
+  name: "Safety Lizz - Alwaysss bring a winter coat with you!"
+  description: "Advert of Sssafety Lizz issue #3, detailing the importance of carrying winter clothing for thossse lizardfolk that often travel around ssspace ssstationsss."
+  components:
+    - type: Sprite
+      sprite: _Harmony/Structures/Wallmounts/posters.rsi
+      state: harmony_poster17_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterHarmonyMuhrinePropagandaSprayed
+  name: "UNMC ad covered with graffiti"
+  description: "The graffiti in question only appears to be referencing a UNMC operation numbered '1217' with a text written nearby that says: 'remember them'."
+  components:
+    - type: Sprite
+      sprite: _Harmony/Structures/Wallmounts/posters.rsi
+      state: harmony_poster18_legit
+      
+- type: entity
+  parent: PosterBase
+  id: PosterHarmonyMuhrinePropaganda
+  name: "JOIN THE UNMC! OORAH!"
+  description: "An advert showcasing the multiple succesful operations the UNMC has been involved with, inviting to the viewer to enlist themselves to the Marines."
+  components:
+    - type: Sprite
+      sprite: _Harmony/Structures/Wallmounts/posters.rsi
+      state: harmony_poster19_legit
+      
