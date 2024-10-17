@@ -1,0 +1,34 @@
+- type: job
+  id: CentralCommandBlueshieldOfficer
+  name: job-name-centcom-blueshield-officer
+  description: job-description-centcom-blueshield-officer
+  playTimeTracker: JobCentralCommandBlueshieldOfficer
+  setPreference: false
+  startingGear: CentcomBlueshieldOfficerGear
+  icon: "JobIconNanotrasen"
+  supervisors: job-supervisors-centcom
+  canBeAntag: false
+  accessGroups:
+  - AllAccess
+  access:
+  - CentralCommand
+
+- type: startingGear
+  id: CentcomBlueshieldOfficerGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitBlueshieldGrey
+    shoes: ClothingShoesBootsCombatFilled
+    head: ClothingHeadHelmetBasic
+    eyes: ClothingEyesGlassesSunglasses
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterArmorBasic
+    back: ClothingBackpack
+    id: CentcomBlueshieldPDA
+    ears: ClothingHeadsetAltCentCom
+    belt: ClothingBeltSecurityFilled
+    pocket1: Flash
+    pocket2: WeaponPistolMk58
+  storage:
+    back:
+    - MagazinePistol
+    - MagazinePistol
