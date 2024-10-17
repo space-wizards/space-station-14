@@ -331,6 +331,7 @@
       - ClothingShoesBootsMagSci
       - ClothingShoesBootsMoon
       - ClothingShoesBootsSpeed
+      - ClothingShoesJumpBoots
       - NodeScanner
       - HolofanProjector
       - BluespaceBeaker
@@ -1176,6 +1177,8 @@
   - type: Machine
     board: BiogeneratorMachineCircuitboard
   - type: MaterialStorage
+    insertOnInteract: false
+    canEjectStoredMaterials: false
   - type: ProduceMaterialExtractor
   - type: ItemSlots
     slots:

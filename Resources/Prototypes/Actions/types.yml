@@ -131,7 +131,7 @@
       sprite: Objects/Weapons/Grenades/empgrenade.rsi
       state: icon
     event: !type:ActivateImplantEvent
-
+    
 - type: entity
   id: ActionActivateScramImplant
   name: SCRAM!
@@ -326,3 +326,17 @@
       itemIconStyle: NoItem
       useDelay: 1 # emote spam
       event: !type:ToggleActionEvent
+      
+- type: entity
+  id: ActionGravityJump
+  name: Jump
+  description: By tensing your muscles you jump a short distance in the direction of your gaze.
+  components:
+  - type: InstantAction
+    useDelay: 8
+    checkCanInteract: false
+    icon: 
+        sprite: Interface/Actions/jump.rsi
+        state: icon
+    event: !type:GravityJumpEvent {}
+    

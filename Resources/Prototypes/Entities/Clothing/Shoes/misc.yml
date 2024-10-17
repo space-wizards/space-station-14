@@ -148,3 +148,23 @@
     price: 75
   - type: Tag
     tags: [ ]
+   
+- type: entity
+  parent: ClothingShoesBase
+  id: ClothingShoesJumpBoots
+  name: jump boots
+  description: Technological boots used by explorers of new worlds from various unwanted obstacles.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/jumpboots.rsi
+    layers:
+    - state: icon
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/jumpboots.rsi
+  - type: Jump
+    jumpPower: 3
+    soundJump: /Audio/Effects/stealthoff.ogg
+  - type: StaticPrice
+    price: 220
+  - type: Tag
+    tags: []
