@@ -44,6 +44,33 @@
     damage:
       types:
         Blunt: 1
+  - type: Flammable
+    fireSpread: true
+    canResistFire: false
+    alwaysCombustible: true
+    canExtinguish: true # save the books!
+    damage:
+      types:
+        Heat: 1
+  - type: Appearance
+  - type: FireVisuals
+    sprite: Effects/fire.rsi
+    normalState: fire
+  - type: Damageable
+    damageModifierSet: Wood
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 40 # sure does take a lot longer to burn a book than a piece of paper
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Ash:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity
   parent: BaseItem
