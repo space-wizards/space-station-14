@@ -6,7 +6,7 @@
   setPreference: false
   startingGear: CBURNGear
   icon: "JobIconNanotrasen"
-  supervisors: job-supervisors-centcom
+  supervisors: job-supervisors-centcomm
   canBeAntag: false
   accessGroups:
   - AllAccess
@@ -20,7 +20,7 @@
     back: ClothingBackpackDuffelCBURN
     mask: ClothingMaskGasERT
     eyes: ClothingEyesGlassesSecurity
-    ears: ClothingHeadsetAltCentCom
+    ears: ClothingHeadsetAltCentComm
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitCBURN
     shoes: ClothingShoesBootsCombatFilled

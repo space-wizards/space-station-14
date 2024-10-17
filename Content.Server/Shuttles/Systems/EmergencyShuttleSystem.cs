@@ -44,7 +44,7 @@ namespace Content.Server.Shuttles.Systems;
 public sealed partial class EmergencyShuttleSystem : EntitySystem
 {
     /*
-     * Handles the escape shuttle + CentCom.
+     * Handles the escape shuttle + CentComm.
      */
 
     [Dependency] private readonly IAdminLogManager _logger = default!;
@@ -610,7 +610,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         var shuttlePath = ent.Comp1.EmergencyShuttlePath;
         var shuttle = _map.LoadGrid(map.MapId, shuttlePath.ToString(), new MapLoadOptions()
         {
-            // Should be far enough... right? I'm too lazy to bounds check CentCom rn.
+            // Should be far enough... right? I'm too lazy to bounds check CentComm rn.
             Offset = new Vector2(500f + ent.Comp2.ShuttleIndex, 0f),
             // fun fact: if you just fucking yeet centcomm into nullspace anytime you try to spawn the shuttle, then any distance is far enough. so lets not do that
             LoadMap = false,

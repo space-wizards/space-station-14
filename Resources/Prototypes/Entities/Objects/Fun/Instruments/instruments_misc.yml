@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: BaseHandheldInstrument
   id: MusicalLungInstrument
   name: musical lung
@@ -58,8 +58,8 @@
   - type: Item
     size: Small
   - type: Prayable
-    sentMessage: prayer-popup-notify-centcom-sent
-    notificationPrefix: prayer-chat-notify-centcom
+    sentMessage: prayer-popup-notify-centcomm-sent
+    notificationPrefix: prayer-chat-notify-centcomm
     verb: prayer-verbs-call
     verbImage: null
 
