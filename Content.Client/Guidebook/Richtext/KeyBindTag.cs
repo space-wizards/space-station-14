@@ -6,7 +6,7 @@ using Robust.Shared.Utility;
 namespace Content.Client.Guidebook.Richtext;
 
 [UsedImplicitly]
-public sealed class KeyBindTag : IMarkupTag
+public sealed class KeyBindTag : IMarkupTagHandler
 {
     [Dependency] private readonly IInputManager _inputManager = default!;
 
