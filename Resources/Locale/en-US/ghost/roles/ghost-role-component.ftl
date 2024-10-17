@@ -38,6 +38,9 @@ ghost-role-information-mothroach-description = A cute but mischievous mothroach.
 ghost-role-information-snail-name = Snail
 ghost-role-information-snail-description = A little snail who doesn't mind a bit of space. Just stay on grid!
 
+ghost-role-information-snailinstantdeath-name = Immortal Snail
+ghost-role-information-snailinstantdeath-description = An immortal snail with the ability to gib anyone close to you. Terrorize the crew for food or fight for what you think is right. The choice is yours to make.
+
 ghost-role-information-snailspeed-name = Snail
 ghost-role-information-snailspeed-description = A little snail with snailborn thrusters.
 

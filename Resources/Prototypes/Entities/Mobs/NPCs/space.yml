@@ -511,6 +511,11 @@
   id: MobSnailInstantDeath
   suffix: Smite
   components:
+  - type: GhostRole
+    name: ghost-role-information-snailinstantdeath-name
+    description: ghost-role-information-snailinstantdeath-description
+    raffle:
+      settings: default
   - type: MobStateActions
     actions:
       Alive:
