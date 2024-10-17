@@ -21,6 +21,7 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly TurfSystem _turf = default!;
     [Dependency] private readonly IChatManager _chat = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
@@ -105,7 +106,7 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
 
             var found = false;
 
-            foreach (var tile in grid.GetTilesIntersecting(circle))
+            foreach (var tile in _map.GetTilesIntersecting(entityGridUid.Value, grid, circle))
             {
                 if (tile.IsSpace(_tileDefinitionManager)
                     || _turf.IsTileBlocked(tile, CollisionGroup.MobMask)
@@ -176,7 +177,7 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
             var mapTarget = grid.WorldToTile(mapPos);
             var circle = new Circle(mapPos, 2);
 
-            foreach (var newTileRef in grid.GetTilesIntersecting(circle))
+            foreach (var newTileRef in _map.GetTilesIntersecting(targetGrid, grid, circle))
             {
                 if (newTileRef.IsSpace(_tileDefinitionManager) || _turf.IsTileBlocked(newTileRef, CollisionGroup.MobMask) || !_atmosphere.IsTileMixtureProbablySafe(targetGrid, targetMap, mapTarget))
                     continue;
