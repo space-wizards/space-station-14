@@ -1,12 +1,17 @@
 using Content.Server.Administration.Logs;
+using Content.Server.Destructible;
 using Content.Server.Effects;
 using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Camera;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Prototypes;
 using Content.Shared.Database;
+using Content.Shared.FixedPoint;
 using Content.Shared.Projectiles;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
+using System.Linq;
 
 namespace Content.Server.Projectiles;
 
@@ -15,8 +20,10 @@ public sealed class ProjectileSystem : SharedProjectileSystem
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly ColorFlashEffectSystem _color = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+    [Dependency] private readonly DestructibleSystem _destructibleSystem = default!;
     [Dependency] private readonly GunSystem _guns = default!;
     [Dependency] private readonly SharedCameraRecoilSystem _sharedCameraRecoil = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     public override void Initialize()
     {
@@ -46,6 +53,12 @@ public sealed class ProjectileSystem : SharedProjectileSystem
 
         var otherName = ToPrettyString(target);
         var direction = args.OurBody.LinearVelocity.Normalized();
+        var damageRequired = _destructibleSystem.DestroyedAt(target);
+        if (TryComp(target, out DamageableComponent? damageableComponent))
+        {
+            damageRequired -= damageableComponent.TotalDamage;
+            damageRequired = FixedPoint2.Max(damageRequired, FixedPoint2.Zero);
+        }
         var modifiedDamage = _damageableSystem.TryChangeDamage(target, ev.Damage, component.IgnoreResistances, origin: component.Shooter);
         var deleted = Deleted(target);
 
@@ -61,15 +74,42 @@ public sealed class ProjectileSystem : SharedProjectileSystem
                 $"Projectile {ToPrettyString(uid):projectile} shot by {ToPrettyString(component.Shooter!.Value):user} hit {otherName:target} and dealt {modifiedDamage.GetTotal():damage} damage");
         }
 
+        if (modifiedDamage is not null && component.PenetrationThreshold != 0)
+        {
+            if (component.PenetrationDamageTypeRequirement.Count != 0)
+            {
+                if (!component.PenetrationDamageTypeRequirement.Any(x => modifiedDamage.DamageDict.Keys.ToList().Any(y => y == x)))
+                {
+                    component.DamagedEntity = true;
+                }
+            }
+
+            if (modifiedDamage.GetTotal() < damageRequired)
+            {
+                component.DamagedEntity = true;
+            }
+
+            if (!component.DamagedEntity)
+            {
+                component.PenetrationAmount += FixedPoint2.Min(damageRequired, modifiedDamage.GetTotal());
+                if (component.PenetrationAmount >= component.PenetrationThreshold)
+                {
+                    component.DamagedEntity = true;
+                }
+            }
+        }
+        else
+        {
+            component.DamagedEntity = true;
+        }
+
         if (!deleted)
         {
             _guns.PlayImpactSound(target, modifiedDamage, component.SoundHit, component.ForceSound);
             _sharedCameraRecoil.KickCamera(target, direction);
         }
 
-        component.DamagedEntity = true;
-
-        if (component.DeleteOnCollide)
+        if (component.DeleteOnCollide && component.DamagedEntity)
             QueueDel(uid);
 
         if (component.ImpactEffect != null && TryComp(uid, out TransformComponent? xform))
