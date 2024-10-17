@@ -17,13 +17,13 @@ public sealed partial class JumpComponent : Component
 
 
     // Logical variables
-    [DataField]
+    [DataField, AutoNetworkedField]
     public EntProtoId Action = "ActionGravityJump";
 
-    [DataField]
+    [DataField, AutoNetworkedField]
     public EntityUid? ActionEntity;
 
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool? IsClothing;
 
     [DataField, AutoNetworkedField]
