@@ -200,6 +200,8 @@
       - ClothingHeadHatCone
       - FreezerElectronics
       - Flare
+      - CassetteTape
+      - TapeRecorder
   - type: EmagLatheRecipes
     emagStaticRecipes:
       - BoxLethalshot
