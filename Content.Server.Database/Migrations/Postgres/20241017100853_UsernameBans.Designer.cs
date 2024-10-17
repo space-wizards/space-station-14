@@ -15,8 +15,8 @@ using NpgsqlTypes;
 namespace Content.Server.Database.Migrations.Postgres
 {
     [DbContext(typeof(PostgresServerDbContext))]
-    [Migration("20240930234915_UsernameRuleNotifyTrigger")]
-    partial class UsernameRuleNotifyTrigger
+    [Migration("20241017100853_UsernameBans")]
+    partial class UsernameBans
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1346,6 +1346,10 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("text")
                         .HasColumnName("message");
 
+                    b.Property<bool>("Regex")
+                        .HasColumnType("boolean")
+                        .HasColumnName("regex");
+
                     b.Property<Guid?>("RestrictingAdmin")
                         .HasColumnType("uuid")
                         .HasColumnName("restricting_admin");
@@ -1430,6 +1434,18 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasName("PK_uploaded_resource_log");
 
                     b.ToTable("uploaded_resource_log", (string)null);
+                });
+
+            modelBuilder.Entity("Content.Server.Database.UsernameWhitelist", b =>
+                {
+                    b.Property<string>("Username")
+                        .HasColumnType("text")
+                        .HasColumnName("username");
+
+                    b.HasKey("Username")
+                        .HasName("PK_username_whitelist");
+
+                    b.ToTable("username_whitelist", (string)null);
                 });
 
             modelBuilder.Entity("Content.Server.Database.Whitelist", b =>
