@@ -1117,6 +1117,17 @@
       - NukeOpsUplink
 
 - type: listing
+  id: UplinkAnimalFriendsKit
+  name: uplink-animal-friends-kit-name
+  description: uplink-animal-friends-kit-desc
+  icon: { sprite: /Textures/Mobs/Animals/mouse.rsi, state: icon-2 }
+  productEntity: AnimalFriendsKit
+  cost:
+    Telecrystal: 6
+  categories:
+  - UplinkAllies
+  
+- type: listing
   id: UplinkReinforcementRadioSyndicate
   name: uplink-reinforcement-radio-name
   description: uplink-reinforcement-radio-traitor-desc
