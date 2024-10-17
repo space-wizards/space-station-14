@@ -137,6 +137,7 @@
       - AirTank
       - GasAnalyzer
       - UtilityBelt
+      - GasTankNitrogenBooster
       - Pickaxe
       - ModularReceiver
       - AppraisalTool
