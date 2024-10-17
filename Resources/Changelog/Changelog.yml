@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: NakataRin
-  changes:
-  - message: Added paramedic to the train station.
-    type: Add
-  id: 7025
-  time: '2024-08-01T19:59:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30556
 - author: marbow
   changes:
   - message: Rejoice, detectives! Hand labeler has been added to your closet!
@@ -3948,3 +3941,10 @@
   id: 7524
   time: '2024-10-17T14:01:32.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28645
+- author: slarticodefast
+  changes:
+  - message: Fixed the playtime stats window not showing entries correctly.
+    type: Fix
+  id: 7525
+  time: '2024-10-17T21:32:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32856
