@@ -1,0 +1,32 @@
+//Boilerplate
+uniform sampler2D SCREEN_TEXTURE;
+uniform sampler2D LIGHT_TEXTURE;
+
+uniform highp float Zoom;
+
+//Variables for controlling the falloff of the additive lighting effect.
+uniform highp float CircleRadius; //= 420.0;
+uniform highp float CircleMinDist; //= 0.0;
+uniform highp float CirclePow; //= 0.75;
+uniform highp float CircleMax; //= 4.0;
+uniform highp float CircleMult; //= 0.5;
+uniform highp float FalloffClampMin; //= 0.25;
+uniform highp float FalloffClampMax; //= 1.0;
+uniform highp float FalloffStrength; //= 0.6;
+uniform highp float FalloffPow; //= 3.0;
+
+void fragment() {
+	COLOR = zTextureSpec(SCREEN_TEXTURE, Pos);
+	highp vec2 aspect = vec2(1.0/SCREEN_PIXEL_SIZE.x, 1.0/SCREEN_PIXEL_SIZE.y);
+	highp float actualZoom = Zoom;
+
+	highp float circle = clamp(zCircleGradient(aspect, FRAGCOORD.xy, CircleMax, CircleRadius / actualZoom, CircleMinDist / actualZoom, CirclePow) * CircleMult, FalloffClampMin, FalloffClampMax);
+
+	highp vec3 lightsampleraw = texture2D(LIGHT_TEXTURE, Pos).rgb;
+	highp float graylight = max(zGrayscale(lightsampleraw) - max((1.0 - circle) * FalloffStrength, 0.0), 0.0);
+	graylight = pow(graylight, FalloffPow);
+
+	highp vec3 lightsample = lightsampleraw * vec3(graylight);
+
+	COLOR.rgb = COLOR.rgb + lightsample;
+}
