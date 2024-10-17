@@ -140,7 +140,7 @@
       - Pickaxe
       - ModularReceiver
       - AppraisalTool
-      - SheetRGlass
+      - SheetRGlass1Lathe
       - Beaker
       - Syringe
       - HandLabeler
@@ -1246,9 +1246,9 @@
       runningState: building
       defaultProductionAmount: 10
       staticRecipes:
-        - SheetSteel
+        - SheetSteel1
         - SheetGlass1
-        - SheetRGlass
+        - SheetRGlass1
         - SheetPlasma1
         - SheetPGlass1
         - SheetRPGlass1
@@ -1256,7 +1256,7 @@
         - IngotGold1
         - IngotSilver1
         - MaterialBananium1
-        - MaterialDiamond
+        - MaterialDiamond1
 
 - type: entity
   parent: OreProcessor
@@ -1272,9 +1272,9 @@
     materialUseMultiplier: 0.75
     timeMultiplier: 0.5
     staticRecipes:
-      - SheetSteel
+      - SheetSteel1
       - SheetGlass1
-      - SheetRGlass
+      - SheetRGlass1
       - SheetPlasma1
       - SheetPGlass1
       - SheetRPGlass1
@@ -1285,7 +1285,7 @@
       - IngotGold1
       - IngotSilver1
       - MaterialBananium1
-      - MaterialDiamond
+      - MaterialDiamond1
 
 - type: entity
   parent: BaseLathe
