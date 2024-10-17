@@ -203,7 +203,7 @@
     soundHit:
       path: /Audio/Weapons/bladeslice.ogg
   - type: Tool
-    speedModifier: 2.0
+    speedModifier: 0.5
 
 - type: entity
   name: circular saw
@@ -222,7 +222,7 @@
     soundHit:
       path: /Audio/Items/drill_hit.ogg
   - type: Tool
-    speedModifier: 0.75
+    speedModifier: 1.5
 
 - type: entity
   name: advanced circular saw
@@ -237,4 +237,4 @@
   - type: MeleeWeapon
     attackRate: 1.5
   - type: Tool
-    speedModifier: 0.5
+    speedModifier: 2.0
