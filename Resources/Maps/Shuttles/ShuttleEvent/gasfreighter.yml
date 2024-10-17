@@ -15,8 +15,8 @@ entities:
       desc: A gas freighter.
       name: NT "Plasma Queen"
     - type: Transform
-      rot: -3.0811575391138066 rad
-      pos: 3080.4277,-41.561584
+      rot: 1.1102230246251565E-16 rad
+      pos: -527.85815,-117.33963
       parent: invalid
     - type: MapGrid
       chunks:
@@ -43,7 +43,7 @@ entities:
       fixtures: {}
     - type: OccluderTree
     - type: SpreaderGrid
-      updateAccumulator: 0.8102846
+      updateAccumulator: 0.3116727
     - type: Shuttle
     - type: GridPathfinding
     - type: Gravity
@@ -184,83 +184,99 @@ entities:
         tiles:
           -6,-15:
             0: 26624
-            2: 32768
+            6: 32768
           -6,-14:
             0: 4369
-            1: 52416
+            1: 1088
+            2: 16384
+            3: 128
+            4: 2048
+            5: 32768
           -6,-13:
             0: 2145
-            2: 128
+            6: 128
           -5,-14:
-            1: 32630
+            7: 16
+            8: 256
+            9: 4096
+            10: 2
+            11: 32
+            12: 512
+            13: 8192
+            15: 4
+            16: 64
+            17: 1024
+            18: 16384
+            20: 2048
           -5,-15:
             0: 960
-            2: 1024
+            6: 1024
           -5,-13:
-            1: 6
+            14: 2
             0: 49920
-            2: 1024
+            19: 4
+            6: 1024
           -4,-15:
-            1: 62720
+            20: 62720
             0: 240
           -4,-14:
-            1: 65535
+            20: 65535
           -4,-13:
-            1: 1535
+            20: 1535
             0: 61440
           -3,-15:
-            1: 61440
+            20: 61440
             0: 240
           -3,-14:
-            1: 4575
-            3: 16384
-            2: 32768
+            20: 4575
+            21: 16384
+            6: 32768
           -3,-13:
-            1: 17
+            20: 17
             0: 61440
-            2: 204
+            6: 204
           -2,-15:
-            1: 61440
+            20: 61440
             0: 240
           -2,-14:
-            1: 255
-            2: 4096
-            4: 16384
-            5: 32768
+            20: 255
+            6: 4096
+            22: 16384
+            23: 32768
           -2,-13:
-            2: 17
+            6: 17
             0: 61440
-            5: 204
+            23: 204
           -1,-15:
-            1: 61440
+            20: 61440
             0: 240
           -1,-14:
-            1: 52479
-            5: 4096
+            20: 52479
+            23: 4096
           -1,-13:
-            5: 1
-            6: 16
+            23: 1
+            24: 16
             0: 61440
-            1: 204
+            20: 204
           0,-14:
-            1: 61422
+            20: 61422
           0,-15:
             0: 3600
           0,-13:
-            1: 14
+            20: 14
             0: 7680
           1,-14:
-            1: 13107
-            2: 34952
+            20: 13107
+            6: 34952
           1,-13:
-            1: 3
+            20: 3
             0: 1920
-            2: 8
+            6: 8
           1,-15:
             0: 34560
           2,-14:
             0: 8737
-            2: 4368
+            6: 4368
           2,-13:
             0: 1
         uniqueMixes:
@@ -270,6 +286,291 @@ entities:
           - 0
           - 0
           - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 21.718697
+          - 81.70369
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 21.718699
+          - 81.70368
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 21.718704
+          - 81.703674
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 21.718702
+          - 81.7037
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 21.718697
+          - 81.70369
+          - 7.7577755E-07
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 21.7187
+          - 81.7037
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 21.718699
+          - 81.70368
+          - 6.075975E-08
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.14563
+          moles:
+          - 21.715565
+          - 81.70672
+          - 4.172286E-05
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 21.718702
+          - 81.70369
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 21.718689
+          - 81.70369
+          - 3.1133985E-07
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.14563
+          moles:
+          - 21.715565
+          - 81.70672
+          - 4.1993524E-05
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.14563
+          moles:
+          - 21.715565
+          - 81.70672
+          - 3.9113467E-05
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.14563
+          moles:
+          - 21.715565
+          - 81.70672
+          - 3.4876157E-05
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 21.718697
+          - 81.70369
+          - 1.2228222E-07
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 21.718582
+          - 81.70379
+          - 8.027679E-06
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.14563
+          moles:
+          - 21.715565
+          - 81.70672
+          - 4.193494E-05
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.14563
+          moles:
+          - 21.715565
+          - 81.70672
+          - 3.6274847E-05
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.14563
+          moles:
+          - 21.715565
+          - 81.70672
+          - 1.9493036E-05
           - 0
           - 0
           - 0
@@ -295,22 +596,7 @@ entities:
           - 0
           - 0
         - volume: 2500
-          temperature: 293.15
-          moles:
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-        - volume: 2500
-          temperature: 13.542383
+          temperature: 4.5737247
           moles:
           - 0.003143627
           - 0.011826034
@@ -1174,12 +1460,12 @@ entities:
     - type: ContainedSolution
       containerName: hvcable
       container: 620
-  - uid: 629
+  - uid: 628
     components:
     - type: MetaData
       name: solution - food
     - type: Transform
-      parent: 628
+      parent: 627
     - type: Solution
       solution:
         maxVol: 10
@@ -1190,92 +1476,13 @@ entities:
           Quantity: 10
     - type: ContainedSolution
       containerName: food
-      container: 628
-  - uid: 636
+      container: 627
+  - uid: 635
     components:
     - type: MetaData
       name: solution - spray
     - type: Transform
-      parent: 635
-    - type: Solution
-      solution:
-        maxVol: 30
-        name: spray
-        reagents:
-        - data: []
-          ReagentId: Water
-          Quantity: 30
-    - type: ContainedSolution
-      containerName: spray
-      container: 635
-  - uid: 641
-    components:
-    - type: MetaData
-      name: solution - battery
-    - type: Transform
-      parent: 640
-    - type: Solution
-      solution:
-        maxVol: 5
-        name: battery
-        reagents: []
-    - type: ContainedSolution
-      containerName: battery
-      container: 640
-  - uid: 643
-    components:
-    - type: MetaData
-      name: solution - Welder
-    - type: Transform
-      parent: 642
-    - type: Solution
-      solution:
-        maxVol: 50
-        name: Welder
-        reagents:
-        - data: []
-          ReagentId: WeldingFuel
-          Quantity: 50
-    - type: ContainedSolution
-      containerName: Welder
-      container: 642
-  - uid: 650
-    components:
-    - type: MetaData
-      name: solution - food
-    - type: Transform
-      parent: 647
-    - type: Solution
-      solution:
-        maxVol: 10
-        name: food
-        reagents:
-        - data: []
-          ReagentId: Fiber
-          Quantity: 10
-    - type: ContainedSolution
-      containerName: food
-      container: 647
-  - uid: 652
-    components:
-    - type: MetaData
-      name: solution - battery
-    - type: Transform
-      parent: 651
-    - type: Solution
-      solution:
-        maxVol: 5
-        name: battery
-        reagents: []
-    - type: ContainedSolution
-      containerName: battery
-      container: 651
-  - uid: 657
-    components:
-    - type: MetaData
-      name: solution - spray
-    - type: Transform
-      parent: 656
+      parent: 634
     - type: Solution
       solution:
         maxVol: 100
@@ -1286,67 +1493,13 @@ entities:
           Quantity: 100
     - type: ContainedSolution
       containerName: spray
-      container: 656
-  - uid: 665
-    components:
-    - type: MetaData
-      name: solution - lvcable
-    - type: Transform
-      parent: 664
-    - type: Solution
-      solution:
-        maxVol: 5
-        name: lvcable
-        reagents:
-        - data: []
-          ReagentId: Iron
-          Quantity: 3
-        - data: []
-          ReagentId: Copper
-          Quantity: 2
-    - type: ContainedSolution
-      containerName: lvcable
-      container: 664
-  - uid: 670
-    components:
-    - type: MetaData
-      name: solution - spray
-    - type: Transform
-      parent: 669
-    - type: Solution
-      solution:
-        maxVol: 30
-        name: spray
-        reagents:
-        - data: []
-          ReagentId: Water
-          Quantity: 30
-    - type: ContainedSolution
-      containerName: spray
-      container: 669
-  - uid: 673
-    components:
-    - type: MetaData
-      name: solution - Welder
-    - type: Transform
-      parent: 672
-    - type: Solution
-      solution:
-        maxVol: 50
-        name: Welder
-        reagents:
-        - data: []
-          ReagentId: WeldingFuel
-          Quantity: 50
-    - type: ContainedSolution
-      containerName: Welder
-      container: 672
-  - uid: 676
+      container: 634
+  - uid: 640
     components:
     - type: MetaData
       name: solution - food
     - type: Transform
-      parent: 675
+      parent: 637
     - type: Solution
       solution:
         maxVol: 10
@@ -1357,13 +1510,27 @@ entities:
           Quantity: 10
     - type: ContainedSolution
       containerName: food
-      container: 675
-  - uid: 690
+      container: 637
+  - uid: 642
+    components:
+    - type: MetaData
+      name: solution - battery
+    - type: Transform
+      parent: 641
+    - type: Solution
+      solution:
+        maxVol: 5
+        name: battery
+        reagents: []
+    - type: ContainedSolution
+      containerName: battery
+      container: 641
+  - uid: 652
     components:
     - type: MetaData
       name: solution - lvcable
     - type: Transform
-      parent: 689
+      parent: 651
     - type: Solution
       solution:
         maxVol: 5
@@ -1377,7 +1544,78 @@ entities:
           Quantity: 2
     - type: ContainedSolution
       containerName: lvcable
-      container: 689
+      container: 651
+  - uid: 657
+    components:
+    - type: MetaData
+      name: solution - spray
+    - type: Transform
+      parent: 656
+    - type: Solution
+      solution:
+        maxVol: 30
+        name: spray
+        reagents:
+        - data: []
+          ReagentId: Water
+          Quantity: 30
+    - type: ContainedSolution
+      containerName: spray
+      container: 656
+  - uid: 660
+    components:
+    - type: MetaData
+      name: solution - Welder
+    - type: Transform
+      parent: 659
+    - type: Solution
+      solution:
+        maxVol: 50
+        name: Welder
+        reagents:
+        - data: []
+          ReagentId: WeldingFuel
+          Quantity: 50
+    - type: ContainedSolution
+      containerName: Welder
+      container: 659
+  - uid: 663
+    components:
+    - type: MetaData
+      name: solution - food
+    - type: Transform
+      parent: 662
+    - type: Solution
+      solution:
+        maxVol: 10
+        name: food
+        reagents:
+        - data: []
+          ReagentId: Fiber
+          Quantity: 10
+    - type: ContainedSolution
+      containerName: food
+      container: 662
+  - uid: 677
+    components:
+    - type: MetaData
+      name: solution - lvcable
+    - type: Transform
+      parent: 676
+    - type: Solution
+      solution:
+        maxVol: 5
+        name: lvcable
+        reagents:
+        - data: []
+          ReagentId: Iron
+          Quantity: 3
+        - data: []
+          ReagentId: Copper
+          Quantity: 2
+    - type: ContainedSolution
+      containerName: lvcable
+      container: 676
 - proto: ActionToggleInternals
   entities:
   - uid: 624
@@ -1387,13 +1625,13 @@ entities:
     - type: InstantAction
       originalIconColor: '#FFFFFFFF'
       container: 623
-  - uid: 659
+  - uid: 646
     components:
     - type: Transform
-      parent: 658
+      parent: 645
     - type: InstantAction
       originalIconColor: '#FFFFFFFF'
-      container: 658
+      container: 645
 - proto: ActionToggleLight
   entities:
   - uid: 505
@@ -1426,21 +1664,6 @@ entities:
       originalIconColor: '#FFFFFFFF'
       container: 637
       attachedEntity: 637
-  - uid: 648
-    components:
-    - type: Transform
-      parent: 647
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 647
-  - uid: 649
-    components:
-    - type: Transform
-      parent: 647
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 647
-      attachedEntity: 647
 - proto: ActionToggleSuitPiece
   entities:
   - uid: 429
@@ -1451,14 +1674,14 @@ entities:
       originalIconColor: '#FFFFFFFF'
       container: 280
       entIcon: 312
-  - uid: 630
+  - uid: 629
     components:
     - type: Transform
-      parent: 627
+      parent: 626
     - type: InstantAction
       originalIconColor: '#FFFFFFFF'
-      container: 627
-      entIcon: 628
+      container: 626
+      entIcon: 627
 - proto: AirAlarm
   entities:
   - uid: 447
@@ -1807,8 +2030,6 @@ entities:
     - type: Transform
       pos: -15.5,-57.5
       parent: 1
-    - type: Door
-      changeAirtight: False
     - type: DeviceLinkSource
       lastSignals:
         DoorStatus: False
@@ -1836,6 +2057,10 @@ entities:
     - type: Transform
       pos: -13.5,-57.5
       parent: 1
+    - type: DeviceLinkSource
+      lastSignals:
+        DoorStatus: False
+        DockStatus: False
     - type: AccessReader
       accessLog:
       - accessor: Elukera May (Universal)
@@ -3192,7 +3417,7 @@ entities:
       parent: 1
 - proto: BookAtmosAirAlarms
   entities:
-  - uid: 680
+  - uid: 667
     components:
     - type: Transform
       pos: -12.721436,-50.349335
@@ -3221,7 +3446,7 @@ entities:
       canCollide: False
 - proto: BookAtmosDistro
   entities:
-  - uid: 681
+  - uid: 668
     components:
     - type: Transform
       pos: -12.183105,-50.410477
@@ -3257,7 +3482,7 @@ entities:
       canCollide: False
 - proto: BookAtmosVentsMore
   entities:
-  - uid: 682
+  - uid: 669
     components:
     - type: Transform
       pos: -11.64502,-50.337097
@@ -3281,7 +3506,7 @@ entities:
       canCollide: False
 - proto: BookAtmosWaste
   entities:
-  - uid: 683
+  - uid: 670
     components:
     - type: Transform
       rot: 7.319450378417969E-05 rad
@@ -3678,10 +3903,10 @@ entities:
       parent: 1
 - proto: CableApcStack1
   entities:
-  - uid: 664
+  - uid: 651
     components:
     - type: Transform
-      parent: 660
+      parent: 647
     - type: Stack
       count: 5
     - type: SolutionContainerManager
@@ -3693,11 +3918,11 @@ entities:
     - type: ContainerContainer
       containers:
         solution@lvcable: !type:ContainerSlot
-          ent: 665
-  - uid: 689
+          ent: 652
+  - uid: 676
     components:
     - type: Transform
-      parent: 685
+      parent: 672
     - type: Stack
       count: 5
     - type: SolutionContainerManager
@@ -3709,7 +3934,7 @@ entities:
     - type: ContainerContainer
       containers:
         solution@lvcable: !type:ContainerSlot
-          ent: 690
+          ent: 677
 - proto: CableApcStack10
   entities:
   - uid: 615
@@ -4178,18 +4403,18 @@ entities:
       count: 4
     - type: Physics
       canCollide: False
-  - uid: 663
+  - uid: 650
     components:
     - type: Transform
-      parent: 660
+      parent: 647
     - type: Stack
       count: 2
     - type: Physics
       canCollide: False
-  - uid: 688
+  - uid: 675
     components:
     - type: Transform
-      parent: 685
+      parent: 672
     - type: Stack
       count: 2
     - type: Physics
@@ -4263,11 +4488,11 @@ entities:
       air:
         volume: 200
         immutable: False
-        temperature: 293.11667
+        temperature: 293.14313
         moles:
-        - 1.6874844
-        - 6.410251
-        - 0
+        - 1.7444253
+        - 6.5643454
+        - 4.1076732E-06
         - 0
         - 0
         - 0
@@ -4283,10 +4508,9 @@ entities:
           showEnts: False
           occludes: True
           ents:
-          - 626
-          - 627
           - 631
-          - 632
+          - 630
+          - 626
 - proto: ClosetWallFireFilledRandom
   entities:
   - uid: 482
@@ -4325,7 +4549,7 @@ entities:
           - 503
           - 484
           - 483
-  - uid: 645
+  - uid: 632
     components:
     - type: Transform
       pos: -18.5,-50.5
@@ -4334,11 +4558,11 @@ entities:
       air:
         volume: 200
         immutable: False
-        temperature: 293.1167
+        temperature: 293.14758
         moles:
-        - 1.6928527
-        - 6.4306445
-        - 0.005827416
+        - 1.8811923
+        - 7.081869
+        - 0.00046619328
         - 0
         - 0
         - 0
@@ -4354,12 +4578,12 @@ entities:
           showEnts: False
           occludes: True
           ents:
-          - 646
-          - 647
-          - 653
-          - 654
-          - 655
-          - 656
+          - 644
+          - 643
+          - 637
+          - 636
+          - 634
+          - 633
 - proto: ClothingHeadHatWelding
   entities:
   - uid: 513
@@ -4395,10 +4619,10 @@ entities:
           ent: 374
     - type: AttachedClothing
       attachedUid: 280
-  - uid: 628
+  - uid: 627
     components:
     - type: Transform
-      parent: 627
+      parent: 626
     - type: SolutionContainerManager
       solutions: null
       containers:
@@ -4408,9 +4632,9 @@ entities:
     - type: ContainerContainer
       containers:
         solution@food: !type:ContainerSlot
-          ent: 629
+          ent: 628
     - type: AttachedClothing
-      attachedUid: 627
+      attachedUid: 626
 - proto: ClothingHeadHelmetFire
   entities:
   - uid: 504
@@ -4447,29 +4671,29 @@ entities:
       actions:
       - 506
     - type: InsideEntityStorage
-  - uid: 647
+  - uid: 637
     components:
     - type: Transform
-      parent: 645
+      parent: 632
     - type: HandheldLight
-      selfToggleActionEntity: 649
-      toggleActionEntity: 648
+      selfToggleActionEntity: 639
+      toggleActionEntity: 638
     - type: ContainerContainer
       containers:
         cell_slot: !type:ContainerSlot
           showEnts: False
           occludes: True
-          ent: 651
+          ent: 641
         actions: !type:Container
           showEnts: False
           occludes: True
           ents:
-          - 648
-          - 649
+          - 638
+          - 639
         solution@food: !type:ContainerSlot
           showEnts: False
           occludes: True
-          ent: 650
+          ent: 640
     - type: SolutionContainerManager
       solutions: null
       containers:
@@ -4479,7 +4703,8 @@ entities:
     - type: ActionsContainer
     - type: Actions
       actions:
-      - 649
+      - 639
+    - type: InsideEntityStorage
 - proto: ClothingMaskBreath
   entities:
   - uid: 121
@@ -4489,12 +4714,13 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-  - uid: 626
+  - uid: 630
     components:
     - type: Transform
       parent: 625
     - type: Physics
       canCollide: False
+    - type: InsideEntityStorage
 - proto: ClothingMaskBreathMedical
   entities:
   - uid: 124
@@ -4519,13 +4745,14 @@ entities:
       parent: 1
     - type: Physics
       canCollide: False
-  - uid: 653
+  - uid: 633
     components:
     - type: Transform
-      parent: 645
+      parent: 632
     - type: Physics
       canCollide: False
-  - uid: 674
+    - type: InsideEntityStorage
+  - uid: 661
     components:
     - type: Transform
       pos: -18.28418,-55.537964
@@ -4556,27 +4783,28 @@ entities:
       canCollide: False
     - type: ActionsContainer
     - type: InsideEntityStorage
-  - uid: 627
+  - uid: 626
     components:
     - type: Transform
       parent: 625
     - type: ToggleableClothing
-      clothingUid: 628
-      actionEntity: 630
+      clothingUid: 627
+      actionEntity: 629
     - type: ContainerContainer
       containers:
         toggleable-clothing: !type:ContainerSlot
           showEnts: False
           occludes: True
-          ent: 628
+          ent: 627
         actions: !type:Container
           showEnts: False
           occludes: True
           ents:
-          - 630
+          - 629
     - type: Physics
       canCollide: False
     - type: ActionsContainer
+    - type: InsideEntityStorage
 - proto: ClothingOuterSuitFire
   entities:
   - uid: 512
@@ -4586,12 +4814,13 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-  - uid: 646
+  - uid: 643
     components:
     - type: Transform
-      parent: 645
+      parent: 632
     - type: Physics
       canCollide: False
+    - type: InsideEntityStorage
 - proto: ComputerPowerMonitoring
   entities:
   - uid: 284
@@ -4664,22 +4893,17 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-  - uid: 633
+  - uid: 644
     components:
     - type: Transform
       parent: 632
     - type: Physics
       canCollide: False
-  - uid: 655
+    - type: InsideEntityStorage
+  - uid: 654
     components:
     - type: Transform
-      parent: 645
-    - type: Physics
-      canCollide: False
-  - uid: 667
-    components:
-    - type: Transform
-      parent: 666
+      parent: 653
     - type: Physics
       canCollide: False
 - proto: DoorElectronicsAtmospherics
@@ -4798,6 +5022,13 @@ entities:
       parent: 122
     - type: Physics
       canCollide: False
+  - uid: 631
+    components:
+    - type: Transform
+      parent: 625
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
 - proto: ExtinguisherCabinetFilled
   entities:
   - uid: 430
@@ -4878,29 +5109,7 @@ entities:
         solution@spray: !type:ContainerSlot
           ent: 511
     - type: InsideEntityStorage
-  - uid: 656
-    components:
-    - type: Transform
-      parent: 645
-    - type: SolutionContainerManager
-      solutions: null
-      containers:
-      - spray
-    - type: UseDelay
-      delays:
-        default:
-          endTime: 0
-          startTime: 0
-          length: 1
-    - type: Physics
-      canCollide: False
-    - type: ContainerContainer
-      containers:
-        solution@spray: !type:ContainerSlot
-          ent: 657
-- proto: FireExtinguisherMini
-  entities:
-  - uid: 635
+  - uid: 634
     components:
     - type: Transform
       parent: 632
@@ -4919,11 +5128,14 @@ entities:
     - type: ContainerContainer
       containers:
         solution@spray: !type:ContainerSlot
-          ent: 636
-  - uid: 669
+          ent: 635
+    - type: InsideEntityStorage
+- proto: FireExtinguisherMini
+  entities:
+  - uid: 656
     components:
     - type: Transform
-      parent: 666
+      parent: 653
     - type: SolutionContainerManager
       solutions: null
       containers:
@@ -4939,7 +5151,7 @@ entities:
     - type: ContainerContainer
       containers:
         solution@spray: !type:ContainerSlot
-          ent: 670
+          ent: 657
 - proto: FirelockElectronics
   entities:
   - uid: 561
@@ -5036,33 +5248,6 @@ entities:
       receiveFrequency: 1621
     - type: Firelock
       powered: True
-- proto: FlashlightLantern
-  entities:
-  - uid: 637
-    components:
-    - type: Transform
-      parent: 632
-    - type: HandheldLight
-      selfToggleActionEntity: 639
-      toggleActionEntity: 638
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: 640
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 638
-          - 639
-    - type: Physics
-      canCollide: False
-    - type: ActionsContainer
-    - type: Actions
-      actions:
-      - 639
 - proto: FoodCondimentPacketKetchup
   entities:
   - uid: 184
@@ -5079,14 +5264,6 @@ entities:
       containers:
         solution@food: !type:ContainerSlot
           ent: 252
-- proto: FoodSnackChocolate
-  entities:
-  - uid: 644
-    components:
-    - type: Transform
-      parent: 632
-    - type: Physics
-      canCollide: False
 - proto: FoodSnackMREBrownie
   entities:
   - uid: 183
@@ -5112,7 +5289,7 @@ entities:
       parent: 1
     - type: Physics
       canCollide: False
-  - uid: 684
+  - uid: 671
     components:
     - type: Transform
       pos: 1.730957,-55.527344
@@ -7087,10 +7264,10 @@ entities:
       supplyRampPosition: 15000
 - proto: GlowstickBase
   entities:
-  - uid: 671
+  - uid: 658
     components:
     - type: Transform
-      parent: 666
+      parent: 653
     - type: Physics
       canCollide: False
 - proto: GravityGeneratorMini
@@ -7440,16 +7617,16 @@ entities:
       count: 3
     - type: Physics
       canCollide: False
-  - uid: 662
+  - uid: 649
     components:
     - type: Transform
-      parent: 660
+      parent: 647
     - type: Physics
       canCollide: False
-  - uid: 687
+  - uid: 674
     components:
     - type: Transform
-      parent: 685
+      parent: 672
     - type: Physics
       canCollide: False
 - proto: MedkitOxygenFilled
@@ -7552,25 +7729,20 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-  - uid: 631
+  - uid: 636
     components:
     - type: Transform
-      parent: 625
+      parent: 632
     - type: Physics
       canCollide: False
-  - uid: 654
-    components:
-    - type: Transform
-      parent: 645
-    - type: Physics
-      canCollide: False
-  - uid: 658
+    - type: InsideEntityStorage
+  - uid: 645
     components:
     - type: Transform
       pos: -17.525635,-55.500046
       parent: 1
     - type: GasTank
-      toggleActionEntity: 659
+      toggleActionEntity: 646
     - type: MeleeWeapon
       nextAttack: 11644.5050234
     - type: Physics
@@ -7580,7 +7752,7 @@ entities:
       containers:
         actions: !type:Container
           ents:
-          - 659
+          - 646
 - proto: PillCanisterDexalin
   entities:
   - uid: 129
@@ -7783,7 +7955,7 @@ entities:
       parent: 1
 - proto: PlushieAtmosian
   entities:
-  - uid: 675
+  - uid: 662
     components:
     - type: Transform
       pos: -17.770508,-55.42781
@@ -7803,10 +7975,10 @@ entities:
     - type: ContainerContainer
       containers:
         solution@food: !type:ContainerSlot
-          ent: 676
+          ent: 663
 - proto: PosterContrabandAtmosiaDeclarationIndependence
   entities:
-  - uid: 677
+  - uid: 664
     components:
     - type: Transform
       pos: -16.5,-52.5
@@ -7827,7 +7999,7 @@ entities:
       containers:
         solution@battery: !type:ContainerSlot
           ent: 509
-  - uid: 640
+  - uid: 641
     components:
     - type: Transform
       parent: 637
@@ -7840,21 +8012,7 @@ entities:
     - type: ContainerContainer
       containers:
         solution@battery: !type:ContainerSlot
-          ent: 641
-  - uid: 651
-    components:
-    - type: Transform
-      parent: 647
-    - type: SolutionContainerManager
-      solutions: null
-      containers:
-      - battery
-    - type: Physics
-      canCollide: False
-    - type: ContainerContainer
-      containers:
-        solution@battery: !type:ContainerSlot
-          ent: 652
+          ent: 642
 - proto: PowerCellSmall
   entities:
   - uid: 91
@@ -8202,12 +8360,12 @@ entities:
     - type: Transform
       pos: -18.5,-55.5
       parent: 1
-  - uid: 678
+  - uid: 665
     components:
     - type: Transform
       pos: -11.5,-50.5
       parent: 1
-  - uid: 679
+  - uid: 666
     components:
     - type: Transform
       pos: -12.5,-50.5
@@ -8222,16 +8380,10 @@ entities:
       canCollide: False
 - proto: RadioHandheld
   entities:
-  - uid: 634
+  - uid: 655
     components:
     - type: Transform
-      parent: 632
-    - type: Physics
-      canCollide: False
-  - uid: 668
-    components:
-    - type: Transform
-      parent: 666
+      parent: 653
     - type: Physics
       canCollide: False
 - proto: ReinforcedPlasmaWindow
@@ -8643,7 +8795,7 @@ entities:
       pos: 5.5,-52.5
       parent: 1
     - type: Battery
-      startingCharge: 4834919
+      startingCharge: 1210724
     - type: PowerNetworkBattery
       loadingNetworkDemand: 2490.0176
       currentSupply: 2490.0176
@@ -8679,7 +8831,7 @@ entities:
       canCollide: False
 - proto: SpaceHeater
   entities:
-  - uid: 660
+  - uid: 647
     components:
     - type: Transform
       pos: 4.5,-53.5002
@@ -8693,15 +8845,15 @@ entities:
           showEnts: False
           occludes: True
           ents:
-          - 661
+          - 648
         machine_parts: !type:Container
           showEnts: False
           occludes: True
           ents:
-          - 662
-          - 663
-          - 664
-  - uid: 685
+          - 649
+          - 650
+          - 651
+  - uid: 672
     components:
     - type: Transform
       pos: 3.4978027,-53.49997
@@ -8715,26 +8867,26 @@ entities:
           showEnts: False
           occludes: True
           ents:
-          - 686
+          - 673
         machine_parts: !type:Container
           showEnts: False
           occludes: True
           ents:
-          - 687
-          - 688
-          - 689
+          - 674
+          - 675
+          - 676
 - proto: SpaceHeaterMachineCircuitBoard
   entities:
-  - uid: 661
+  - uid: 648
     components:
     - type: Transform
-      parent: 660
+      parent: 647
     - type: Physics
       canCollide: False
-  - uid: 686
+  - uid: 673
     components:
     - type: Transform
-      parent: 685
+      parent: 672
     - type: Physics
       canCollide: False
 - proto: StorageCanister
@@ -9425,71 +9577,26 @@ entities:
         storage: {}
 - proto: ToolboxEmergencyFilled
   entities:
-  - uid: 632
-    components:
-    - type: Transform
-      parent: 625
-    - type: Storage
-      storedItems:
-        633:
-          position: 0,0
-          _rotation: South
-        634:
-          position: 1,0
-          _rotation: South
-        635:
-          position: 2,0
-          _rotation: South
-        637:
-          position: 3,0
-          _rotation: East
-        642:
-          position: 5,0
-          _rotation: South
-        644:
-          position: 6,0
-          _rotation: South
-    - type: ContainerContainer
-      containers:
-        storagebase: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 633
-          - 634
-          - 635
-          - 637
-          - 642
-          - 644
-    - type: Physics
-      canCollide: False
-    - type: UseDelay
-      delays:
-        default:
-          length: 1
-        quickInsert:
-          length: 0.5
-        storage: {}
-  - uid: 666
+  - uid: 653
     components:
     - type: Transform
       pos: 5.541504,-55.72586
       parent: 1
     - type: Storage
       storedItems:
-        667:
+        654:
           position: 0,0
           _rotation: South
-        668:
+        655:
           position: 1,0
           _rotation: South
-        669:
+        656:
           position: 2,0
           _rotation: South
-        671:
+        658:
           position: 3,0
           _rotation: South
-        672:
+        659:
           position: 4,0
           _rotation: South
     - type: ContainerContainer
@@ -9498,11 +9605,11 @@ entities:
           showEnts: False
           occludes: True
           ents:
-          - 667
-          - 668
-          - 669
-          - 671
-          - 672
+          - 654
+          - 655
+          - 656
+          - 658
+          - 659
     - type: Physics
       canCollide: False
     - type: UseDelay
@@ -9970,10 +10077,10 @@ entities:
           ent: 118
 - proto: WelderMini
   entities:
-  - uid: 642
+  - uid: 659
     components:
     - type: Transform
-      parent: 632
+      parent: 653
     - type: SolutionContainerManager
       solutions: null
       containers:
@@ -9989,27 +10096,7 @@ entities:
     - type: ContainerContainer
       containers:
         solution@Welder: !type:ContainerSlot
-          ent: 643
-  - uid: 672
-    components:
-    - type: Transform
-      parent: 666
-    - type: SolutionContainerManager
-      solutions: null
-      containers:
-      - Welder
-    - type: UseDelay
-      delays:
-        default:
-          endTime: 0
-          startTime: 0
-          length: 1
-    - type: Physics
-      canCollide: False
-    - type: ContainerContainer
-      containers:
-        solution@Welder: !type:ContainerSlot
-          ent: 673
+          ent: 660
 - proto: Wirecutter
   entities:
   - uid: 614
