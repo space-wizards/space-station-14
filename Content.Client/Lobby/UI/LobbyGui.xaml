@@ -80,6 +80,7 @@
                     <BoxContainer Orientation="Horizontal" MinSize="0 40" HorizontalAlignment="Right">
                         <Button Name="AHelpButton" Access="Public" Text="{Loc 'ui-lobby-ahelp-button'}"
                                 StyleClasses="ButtonBig" />
+                        <cc:CommandButton Name="AdminRemarksButton" Command="adminremarks" Text="{Loc 'ui-lobby-adminremarks-button'}" StyleClasses="ButtonBig"/>
                         <vote:VoteCallMenuButton Name="CallVoteButton" StyleClasses="ButtonBig" />
                         <Button Name="OptionsButton" Access="Public" StyleClasses="ButtonBig"
                                 Text="{Loc 'ui-lobby-options-button'}" />
