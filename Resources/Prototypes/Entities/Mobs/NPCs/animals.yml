@@ -1432,11 +1432,14 @@
   - type: Speech
     speechSounds: Lizard
     speechVerb: Reptilian
+    allowedEmotes: ['Thump']
   - type: Vocal
     sounds:
       Male: MaleReptilian
       Female: FemaleReptilian
       Unsexed: MaleReptilian
+  - type: BodyEmotes
+    soundsId: ReptilianBodyEmotes
   - type: TypingIndicator
     proto: lizard
   - type: InteractionPopup
