@@ -1,5 +1,11 @@
-﻿using System.Linq;
+using System.Linq;
+using Content.Shared.Body.Components;
+using Content.Shared.DragDrop;
+using Content.Shared.DoAfter;
 using Content.Shared.Ghost;
+using Content.Shared.IdentityManagement;
+using Content.Shared.Interaction;
+using Content.Shared.Item;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Popups;
@@ -10,13 +16,20 @@ using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
+using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Teleportation.Systems;
+
+[Serializable, NetSerializable]
+public sealed partial class PortalDoAfterEvent : SimpleDoAfterEvent
+{
+}
 
 /// <summary>
 /// This handles teleporting entities through portals, and creating new linked portals.
@@ -30,6 +43,7 @@ public abstract class SharedPortalSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly PullingSystem _pulling = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
 
     private const string PortalFixture = "portalFixture";
     private const string ProjectileFixture = "projectile";
@@ -42,6 +56,9 @@ public abstract class SharedPortalSystem : EntitySystem
         SubscribeLocalEvent<PortalComponent, StartCollideEvent>(OnCollide);
         SubscribeLocalEvent<PortalComponent, EndCollideEvent>(OnEndCollide);
         SubscribeLocalEvent<PortalComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbs);
+        SubscribeLocalEvent<PortalComponent, CanDropTargetEvent>(OnCanDragDropOn);
+        SubscribeLocalEvent<PortalComponent, DragDropTargetEvent>(OnDragDropOn);
+        SubscribeLocalEvent<PortalComponent, PortalDoAfterEvent>(OnDoAfter);
     }
 
     private void OnGetVerbs(EntityUid uid, PortalComponent component, GetVerbsEvent<AlternativeVerb> args)
@@ -81,13 +98,8 @@ public abstract class SharedPortalSystem : EntitySystem
         return ourId == PortalFixture && (other.Hard || otherId == ProjectileFixture);
     }
 
-    private void OnCollide(EntityUid uid, PortalComponent component, ref StartCollideEvent args)
+    private void EnterPortal(EntityUid portal, EntityUid subject, PortalComponent component)
     {
-        if (!ShouldCollide(args.OurFixtureId, args.OtherFixtureId, args.OurFixture, args.OtherFixture))
-            return;
-
-        var subject = args.OtherEntity;
-
         // best not.
         if (Transform(subject).Anchored)
             return;
@@ -104,13 +116,7 @@ public abstract class SharedPortalSystem : EntitySystem
             _pulling.TryStopPull(pullerComp.Pulling.Value, subjectPulling);
         }
 
-        // if they came from another portal, just return and wait for them to exit the portal
-        if (HasComp<PortalTimeoutComponent>(subject))
-        {
-            return;
-        }
-
-        if (TryComp<LinkedEntityComponent>(uid, out var link))
+        if (TryComp<LinkedEntityComponent>(portal, out var link))
         {
             if (!link.LinkedEntities.Any())
                 return;
@@ -132,11 +138,11 @@ public abstract class SharedPortalSystem : EntitySystem
             {
                 // if target is a portal, signal that they shouldn't be immediately portaled back
                 var timeout = EnsureComp<PortalTimeoutComponent>(subject);
-                timeout.EnteredPortal = uid;
+                timeout.EnteredPortal = portal;
                 Dirty(subject, timeout);
             }
 
-            TeleportEntity(uid, subject, Transform(target).Coordinates, target);
+            TeleportEntity(portal, subject, Transform(target).Coordinates, target);
             return;
         }
 
@@ -145,7 +151,110 @@ public abstract class SharedPortalSystem : EntitySystem
 
         // no linked entity--teleport randomly
         if (component.RandomTeleport)
-            TeleportRandomly(uid, subject, component);
+            TeleportRandomly(portal, subject, component);
+    }
+
+    private void OnCanDragDropOn(EntityUid uid, PortalComponent component, ref CanDropTargetEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        args.CanDrop = CanInsert(uid, component, args.Dragged);
+        args.Handled = true;
+    }
+
+    private bool TryInsert(EntityUid uid, EntityUid toInsertId, EntityUid? userId, PortalComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return false;
+
+        if (!CanInsert(uid, component, toInsertId))
+            return false;
+
+        bool insertingSelf = userId == toInsertId;
+
+        var delay = insertingSelf ? component.EntryDelay : component.DraggedEntryDelay;
+
+        if (userId != null && !insertingSelf)
+            _popup.PopupClient(
+                Loc.GetString(
+                    "portal-component-being-inserted",
+                    ("user", Identity.Entity((EntityUid) userId, EntityManager))
+                ),
+                toInsertId,
+                toInsertId,
+                PopupType.Large
+            );
+
+        if (delay <= 0 || userId == null)
+        {
+            EnterPortal(uid, toInsertId, component);
+            return true;
+        }
+
+        // Can't check if our target AND disposals moves currently so we'll just check target.
+        // if you really want to check if disposals moves then add a predicate.
+        var doAfterArgs = new DoAfterArgs(EntityManager, userId.Value, delay, new PortalDoAfterEvent(), uid, target: toInsertId, used: uid)
+        {
+            BreakOnDamage = true,
+            BreakOnMove = true,
+            NeedHand = false
+        };
+
+        _doAfterSystem.TryStartDoAfter(doAfterArgs);
+        return true;
+    }
+
+
+    private void OnDoAfter(EntityUid uid, PortalComponent component, DoAfterEvent args)
+    {
+        if (args.Handled || args.Cancelled || args.Args.Target == null || args.Args.Used == null)
+            return;
+
+        EnterPortal(uid, args.Args.Target.Value, component);
+
+        args.Handled = true;
+    }
+
+    private bool CanInsert(EntityUid uid, PortalComponent component, EntityUid entity)
+    {
+        if (!component.TeleportOnDragDrop)
+            return false;
+        if (!Transform(uid).Anchored)
+            return false;
+
+        var storable = HasComp<ItemComponent>(entity);
+        if (!storable && !HasComp<BodyComponent>(entity))
+            return false;
+
+        if (TryComp<PhysicsComponent>(entity, out var physics) && (physics.CanCollide) || storable)
+            return true;
+        else
+            return false;
+    }
+
+    private void OnDragDropOn(EntityUid uid, PortalComponent component, ref DragDropTargetEvent args)
+    {
+        args.Handled = TryInsert(uid, args.Dragged, args.User);
+    }
+
+    private void OnCollide(EntityUid uid, PortalComponent component, ref StartCollideEvent args)
+    {
+        if (!component.TeleportOnCollision)
+            return;
+
+        if (!ShouldCollide(args.OurFixtureId, args.OtherFixtureId, args.OurFixture, args.OtherFixture))
+            return;
+
+        var subject = args.OtherEntity;
+
+        // if they came from another portal, just return and wait for them to exit the portal
+        if (HasComp<PortalTimeoutComponent>(subject))
+        {
+            return;
+        }
+
+        EnterPortal(uid, subject, component);
     }
 
     private void OnEndCollide(EntityUid uid, PortalComponent component, ref EndCollideEvent args)
