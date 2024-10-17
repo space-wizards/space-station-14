@@ -32,13 +32,13 @@ public sealed class GhostBarSystem : EntitySystem
     [Dependency] private readonly MindSystem _mindSystem = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
 
-    private static readonly List<JobComponent> _jobComponents = new()
+    private static readonly List<String> _jobPrototypes = new()
     {
-        new JobComponent { Prototype = "Passenger" },
-        new JobComponent { Prototype = "Bartender" },
-        new JobComponent { Prototype = "Botanist" },
-        new JobComponent { Prototype = "Chef" },
-        new JobComponent { Prototype = "Janitor" }
+        "Passenger",
+        "Bartender",
+        "Botanist",
+        "Chef",
+        "Janitor"
     };
 
     public override void Initialize()
@@ -81,13 +81,15 @@ public sealed class GhostBarSystem : EntitySystem
 
 
         var randomSpawnPoint = _random.Pick(spawnPoints);
-        var randomJob = _random.Pick(_jobComponents);
+        var randomJob = _random.Pick(_jobPrototypes);
         var profile = _ticker.GetPlayerProfile(args.SenderSession);
         var mobUid = _spawningSystem.SpawnPlayerMob(randomSpawnPoint, randomJob, profile, null);
 
+        // Can probably remove respiration and barotrauma components here or something.
         _entityManager.EnsureComponent<GhostBarPatronComponent>(mobUid);
         _entityManager.EnsureComponent<MindShieldComponent>(mobUid);
         _entityManager.EnsureComponent<AntagImmuneComponent>(mobUid);
+
 
         var targetMind = _mindSystem.GetMind(args.SenderSession.UserId);
 

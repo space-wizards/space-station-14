@@ -69,7 +69,6 @@ public sealed partial class HereticRuleSystem : GameRuleSystem<HereticRuleCompon
 
             if (_mind.TryGetRole<RoleBriefingComponent>(mindId, out var rbc))
                 rbc.Briefing += $"\n{briefingShort}";
-            else _role.MindAddRole(mindId, new RoleBriefingComponent { Briefing = briefingShort }, mind, true);
         }
         _npcFaction.RemoveFaction(target, NanotrasenFactionId, false);
         _npcFaction.AddFaction(target, HereticFactionId);

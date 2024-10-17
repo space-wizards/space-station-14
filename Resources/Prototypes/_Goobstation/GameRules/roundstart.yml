@@ -18,9 +18,8 @@
       blacklist:
         components:
         - AntagImmune
-      mindComponents:
-      - type: ChangelingRole
-        prototype: Changeling
+      mindRoles:
+      - MindRoleChangeling
 
 - type: entity
   parent: BaseTraitorRule
@@ -41,9 +40,8 @@
         - AntagImmune
         - Changeling
       lateJoinAdditional: true
-      mindComponents:
-      - type: TraitorRole
-        prototype: Traitor
+      mindRoles:
+      - MindRoleTraitor
 
 - type: entity
   parent: Changeling
@@ -61,6 +59,5 @@
       max: 2
       playerRatio: 15
       lateJoinAdditional: true
-      mindComponents:
-      - type: ChangelingRole
-        prototype: Changeling
+      mindRoles:
+      - MindRoleChangeling

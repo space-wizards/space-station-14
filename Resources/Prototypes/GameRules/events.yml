@@ -468,9 +468,8 @@
         sound: "/Audio/Ambience/Antag/changeling_start.ogg"
       components:
       - type: Changeling
-      mindComponents:
-      - type: ChangelingRole
-        prototype: Changeling
+      mindRoles:
+      - MindRoleChangeling
 
 - type: entity
   parent: BaseNukeopsRule

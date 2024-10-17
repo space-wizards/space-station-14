@@ -66,7 +66,7 @@ public sealed class KeepAliveConditionSystem : EntitySystem
                 var poolSessions = _traitorRule.CurrentAntagPool.GetPoolSessions();
                 foreach (var mind in allHumans)
                 {
-                    if (!args.Mind.ObjectiveTargets.Contains(mind) && _job.MindTryGetJob(mind, out _, out var prototype) && prototype.CanBeAntag && _mind.TryGetSession(mind, out var session) && poolSessions.Contains(session))
+                    if (!args.Mind.ObjectiveTargets.Contains(mind) && _job.MindTryGetJob(mind, out var prototype) && prototype.CanBeAntag && _mind.TryGetSession(mind, out var session) && poolSessions.Contains(session))
                     {
                         allValidTraitorCandidates.Add(mind);
                     }

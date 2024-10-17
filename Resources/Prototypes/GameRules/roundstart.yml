@@ -229,9 +229,8 @@
         - AntagImmune
       lateJoinAdditional: true
       forceAllPossible: true
-      mindComponents:
-      - type: TraitorRole
-        prototype: Traitor
+      mindRoles:
+      - MindRoleTraitor
 
 - type: entity
   parent: BaseTraitorRuleNoRandomObjectives
@@ -260,9 +259,8 @@
         - AntagImmune
       lateJoinAdditional: true
       forceAllPossible: true
-      mindComponents:
-      - type: TraitorRole
-        prototype: Traitor
+      mindRoles:
+      - MindRoleTraitor
 
 - type: entity
   id: Revolutionary
