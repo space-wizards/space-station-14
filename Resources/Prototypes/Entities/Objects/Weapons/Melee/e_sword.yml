@@ -307,6 +307,7 @@
       doAfterDuration: 4.0
   - type: Wieldable
     wieldSound: null # esword light sound instead
+  - type: MeleeRequiresWield
   - type: MeleeWeapon
     wideAnimationRotation: -135
     attackRate: 1.5
