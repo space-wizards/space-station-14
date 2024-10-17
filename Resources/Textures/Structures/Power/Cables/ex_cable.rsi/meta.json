@@ -1,0 +1,75 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+	"license": "CC-BY-SA-3.0",
+	"copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/fcf375d7d9ce6ceed5c7face899725e5655ab640, striping added by IProduceWidgets",
+    "states": [
+        {
+            "name": "excable_0"
+
+        },
+        {
+            "name": "excable_1"
+
+        },
+        {
+            "name": "excable_2"
+
+        },
+        {
+            "name": "excable_3"
+
+        },
+        {
+            "name": "excable_4"
+
+        },
+        {
+            "name": "excable_5"
+
+        },
+        {
+            "name": "excable_6"
+
+        },
+        {
+            "name": "excable_7"
+
+        },
+        {
+            "name": "excable_8"
+
+        },
+        {
+            "name": "excable_9"
+
+        },
+        {
+            "name": "excable_10"
+
+        },
+        {
+            "name": "excable_11"
+
+        },
+        {
+            "name": "excable_12"
+
+        },
+        {
+            "name": "excable_13"
+
+        },
+        {
+            "name": "excable_14"
+
+        },
+        {
+            "name": "excable_15"
+
+        }
+    ]
+}
