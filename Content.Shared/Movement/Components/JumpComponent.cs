@@ -24,10 +24,10 @@ public sealed partial class JumpComponent : Component
     public EntityUid? ActionEntity;
 
     [DataField, AutoNetworkedField]
-    public bool? IsClothing;
+    public bool IsClothing;
 
     [DataField, AutoNetworkedField]
-    public EntityUid OnClothingEntity;
+    public EntityUid? OnClothingEntity;
 
 
     // Sound

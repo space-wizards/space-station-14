@@ -33,9 +33,9 @@ public sealed partial class SharedJumpSystem : EntitySystem
 
     public void JumpAbility(Entity<JumpComponent> entity, ref GravityJumpEvent args)
     {
-        if (entity.Comp.IsClothing != null) // checking for wearing clothing with a jump component
+        if (entity.Comp.IsClothing && entity.Comp.OnClothingEntity != null) // checking for wearing clothing with a jump component
         {
-            entity.Owner = entity.Comp.OnClothingEntity;
+            entity.Owner = (EntityUid)entity.Comp.OnClothingEntity;
         }
 
         var xform = Transform(entity.Owner);
