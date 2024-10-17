@@ -43,7 +43,7 @@
   - type: RCDDeconstructable
     cost: 4
     delay: 2
-    fx: EffectRCDDeconstruct2  
+    fx: EffectRCDDeconstruct2
   - type: Destructible
     thresholds:
     - trigger:
@@ -74,7 +74,7 @@
     mode: SnapgridCenter
     snap:
     - Wallmount
-    
+
 - type: entity
   name: light
   description: "A light fixture. Draws power and produces light when equipped with a light tube."
@@ -87,6 +87,9 @@
     state: empty
   - type: PointLight
     enabled: false
+    mask: /Textures/Effects/LightMasks/double_cone.png
+  - type: RotatingLight
+    speed: 50
   - type: PoweredLight
     bulb: Tube
   - type: ContainerContainer
@@ -130,6 +133,9 @@
     state: base
   - type: PointLight
     enabled: true
+    mask: /Textures/Effects/LightMasks/double_cone.png
+  - type: RotatingLight
+    speed: 50
   - type: PoweredLight
     hasLampOnSpawn: LightTube
   - type: AmbientOnPowered
@@ -200,6 +206,29 @@
     energy: 4.5
     softness: 0.5
     color: "#B4FCF0"
+
+#Disco lights
+- type: entity
+  id: PoweredlightDisco
+  description: "A light fixture. Draws power and produces light when equipped with a light tube."
+  suffix: Disco
+  parent: Poweredlight
+  components:
+  - type: PoweredLight
+    hasLampOnSpawn: DiscoLightTube
+  - type: DamageOnInteract
+    damage:
+      types:
+        Heat: 2
+  - type: PointLight
+    enabled: false
+    radius: 5
+    energy: 0.6
+    offset: "0, 0.4"
+    color: "#7CFC00"
+    mask: /Textures/Effects/LightMasks/double_cone.png
+  - type: RotatingLight
+    speed: 50
 
 #Sodium lights
 - type: entity
