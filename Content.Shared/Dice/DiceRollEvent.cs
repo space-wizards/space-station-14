@@ -19,7 +19,7 @@ public struct DiceRollEvent
 
     /// <summary>
     ///     The value of the roll after any modifiers or effects are applied.
-    ///     Subscribers to this even can freely modify this value.
+    ///     Subscribers to this event can freely modify this value.
     /// </summary>
     public int Roll;
 
