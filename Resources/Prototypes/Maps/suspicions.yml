@@ -28,3 +28,18 @@
       - type: StationJobs
         availableJobs:
           Passenger: [ -1, -1 ]
+
+- type: gameMap
+  id: TrainSSS
+  mapName: 'Train'
+  mapPath: /Maps/Nonstations/train-sss.yml
+  minPlayers: 20
+  stations:
+    TrainSSS:
+      stationProto: StandardStationArena
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: "Train"
+      - type: StationJobs
+        availableJobs:
+          Passenger: [ -1, -1 ]
