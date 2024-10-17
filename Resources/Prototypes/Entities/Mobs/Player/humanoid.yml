@@ -6,6 +6,7 @@
     - type: RandomHumanoidAppearance
       randomizeName: false
     - type: GhostTakeoverAvailable
+    - type: IdBind
 
 - type: randomHumanoidSettings
   id: EventHumanoidMindShielded
@@ -71,7 +72,6 @@
 - type: randomHumanoidSettings
   id: ERTLeader
   parent: EventHumanoidMindShielded
-  randomizeName: false
   components:
     - type: GhostRole
       name: ghost-role-information-ert-leader-name
@@ -499,6 +499,7 @@
 - type: randomHumanoidSettings
   id: CBURNAgent
   parent: EventHumanoidMindShielded
+  randomizeName: false
   components:
     - type: Loadout
       prototypes: [CBURNGear]
