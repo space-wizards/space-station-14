@@ -92,7 +92,7 @@ public sealed class ArrivalsSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<PlayerSpawningEvent>(HandlePlayerSpawning, before: new []{ typeof(ContainerSpawnPointSystem), typeof(SpawnPointSystem)});
+        SubscribeLocalEvent<PlayerSpawningEvent>(HandlePlayerSpawning, before: new []{ typeof(SpawnPointSystem)}, after: new [] { typeof(ContainerSpawnPointSystem)});
 
         SubscribeLocalEvent<StationArrivalsComponent, StationPostInitEvent>(OnStationPostInit);
 
@@ -335,8 +335,7 @@ public sealed class ArrivalsSystem : EntitySystem
         if (ev.SpawnResult != null)
             return;
 
-        if (ev.HumanoidCharacterProfile?.SpawnPriority != SpawnPriorityPreference.Arrivals)
-            return;
+        // We use arrivals as the default spawn so don't check for job prio.
 
         // Only works on latejoin even if enabled.
         if (!Enabled || _ticker.RunLevel != GameRunLevel.InRound)

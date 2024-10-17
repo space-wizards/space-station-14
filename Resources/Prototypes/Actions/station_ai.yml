@@ -5,6 +5,7 @@
   description: Sends your eye back to the core.
   components:
   - type: InstantAction
+    priority: -10
     itemIconStyle: BigAction
     icon:
       sprite: Interface/Actions/actions_ai.rsi
@@ -17,6 +18,7 @@
   description: Shows job icons for crew members.
   components:
   - type: InstantAction
+    priority: -5
     itemIconStyle: BigAction
     icon:
       sprite: Interface/Actions/actions_ai.rsi
@@ -31,6 +33,7 @@
   description: Enable surveillance camera lights near wherever you're viewing.
   components:
   - type: InstantAction
+    priority: -6
     itemIconStyle: BigAction
     icon:
       sprite: Interface/Actions/actions_ai.rsi
@@ -56,6 +59,7 @@
   description: View the laws that you must follow.
   components:
   - type: InstantAction
+    priority: -3
     itemIconStyle: NoItem
     icon:
       sprite: Interface/Actions/actions_ai.rsi

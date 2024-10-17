@@ -71,7 +71,7 @@ public sealed class ItemToggleSystem : EntitySystem
 
     private void OnActivateVerb(Entity<ItemToggleComponent> ent, ref GetVerbsEvent<ActivationVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract)
+        if (!args.CanAccess || !args.CanInteract || !ent.Comp.OnActivate)
             return;
 
         var user = args.User;
