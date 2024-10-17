@@ -19,10 +19,10 @@ public sealed class JobSystem : SharedJobSystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<MindComponent, MindRoleAddedEvent>(MindOnDoGreeting);
+        SubscribeLocalEvent<MindComponent, RoleAddedEvent>(MindOnDoGreeting);
     }
 
-    private void MindOnDoGreeting(EntityUid mindId, MindComponent component, ref MindRoleAddedEvent args)
+    private void MindOnDoGreeting(EntityUid mindId, MindComponent component, ref RoleAddedEvent args)
     {
         if (args.Silent)
             return;

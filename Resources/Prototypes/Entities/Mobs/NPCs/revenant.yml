@@ -1,45 +1,27 @@
 - type: entity
   id: MobRevenant
+  parent:
+  - Incorporeal
+  - BaseMob
   name: revenant
   description: A spooky ghostie.
   components:
-  - type: MindContainer
-  - type: InputMover
-  - type: MobMover
   - type: Input
     context: "ghost"
   - type: MovementSpeedModifier
     baseWalkSpeed: 6
     baseSprintSpeed: 6
   - type: Sprite
-    noRot: true
-    drawdepth: Ghosts
     sprite: Mobs/Ghosts/revenant.rsi
     layers:
     - state: active
-  - type: Clickable
   - type: StatusEffects
     allowed:
     - Stun
     - Corporeal
-  - type: InteractionOutline
-  - type: Physics
-    bodyType: KinematicController
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeCircle
-          radius: 0.40
-        density: 80
-        mask:
-        - GhostImpassable
-  - type: MovementIgnoreGravity
   - type: Damageable
     damageContainer: Biological
-  - type: Examiner
   - type: NoSlip
-  - type: Actions
   - type: Eye
     drawFov: false
     visMask:
@@ -47,8 +29,6 @@
       - Ghost
   - type: ContentEye
     maxZoom: 1.2, 1.2
-  - type: DoAfter
-  - type: Alerts
   - type: NameIdentifier
     group: GenericNumber
   - type: GhostRole

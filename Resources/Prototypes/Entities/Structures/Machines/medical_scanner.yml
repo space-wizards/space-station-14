@@ -51,7 +51,7 @@
       machine_board: !type:Container
       machine_parts: !type:Container
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: StrongMetallic
   - type: Destructible
     thresholds:

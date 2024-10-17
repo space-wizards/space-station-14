@@ -14,7 +14,6 @@ namespace Content.Shared.Roles.Jobs;
 public abstract class SharedJobSystem : EntitySystem
 {
     [Dependency] private readonly SharedPlayerSystem _playerSystem = default!;
-    [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
     [Dependency] private readonly SharedRoleSystem _roles = default!;
 
@@ -38,7 +37,7 @@ public abstract class SharedJobSystem : EntitySystem
         _inverseTrackerLookup.Clear();
 
         // This breaks if you have N trackers to 1 JobId but future concern.
-        foreach (var job in _protoManager.EnumeratePrototypes<JobPrototype>())
+        foreach (var job in _prototypes.EnumeratePrototypes<JobPrototype>())
         {
             _inverseTrackerLookup.Add(job.PlayTimeTracker, job.ID);
         }
@@ -51,7 +50,7 @@ public abstract class SharedJobSystem : EntitySystem
     /// <returns></returns>
     public string GetJobPrototype(string trackerProto)
     {
-        DebugTools.Assert(_protoManager.HasIndex<PlayTimeTrackerPrototype>(trackerProto));
+        DebugTools.Assert(_prototypes.HasIndex<PlayTimeTrackerPrototype>(trackerProto));
         return _inverseTrackerLookup[trackerProto];
     }
 
@@ -61,7 +60,7 @@ public abstract class SharedJobSystem : EntitySystem
     public bool TryGetDepartment(string jobProto, [NotNullWhen(true)] out DepartmentPrototype? departmentPrototype)
     {
         // Not that many departments so we can just eat the cost instead of storing the inverse lookup.
-        var departmentProtos = _protoManager.EnumeratePrototypes<DepartmentPrototype>().ToList();
+        var departmentProtos = _prototypes.EnumeratePrototypes<DepartmentPrototype>().ToList();
         departmentProtos.Sort((x, y) => string.Compare(x.ID, y.ID, StringComparison.Ordinal));
 
         foreach (var department in departmentProtos)
@@ -86,7 +85,7 @@ public abstract class SharedJobSystem : EntitySystem
     {
         // not sorting it since there should only be 1 primary department for a job.
         // this is enforced by the job tests.
-        var departmentProtos = _protoManager.EnumeratePrototypes<DepartmentPrototype>();
+        var departmentProtos = _prototypes.EnumeratePrototypes<DepartmentPrototype>();
 
         foreach (var department in departmentProtos)
         {
@@ -104,7 +103,6 @@ public abstract class SharedJobSystem : EntitySystem
     public bool MindHasJobWithId(EntityUid? mindId, string prototypeId)
     {
 
-        MindRoleComponent? comp = null;
         if (mindId is null)
             return false;
 
@@ -113,9 +111,7 @@ public abstract class SharedJobSystem : EntitySystem
         if (role is null)
             return false;
 
-        comp = role.Value.Comp;
-
-        return (comp.JobPrototype == prototypeId);
+        return role.Value.Comp1.JobPrototype == prototypeId;
     }
 
     public bool MindTryGetJob(
@@ -125,7 +121,7 @@ public abstract class SharedJobSystem : EntitySystem
         prototype = null;
         MindTryGetJobId(mindId, out var protoId);
 
-        return (_prototypes.TryIndex<JobPrototype>(protoId, out prototype) || prototype is not null);
+        return _prototypes.TryIndex(protoId, out prototype) || prototype is not null;
     }
 
     public bool MindTryGetJobId(
@@ -138,9 +134,9 @@ public abstract class SharedJobSystem : EntitySystem
             return false;
 
         if (_roles.MindHasRole<JobRoleComponent>(mindId.Value, out var role))
-            job = role.Value.Comp.JobPrototype;
+            job = role.Value.Comp1.JobPrototype;
 
-        return (job is not null);
+        return job is not null;
     }
 
     /// <summary>

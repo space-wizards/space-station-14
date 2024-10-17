@@ -52,27 +52,11 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
 
     private bool _randomizeCharacters;
 
-    private Dictionary<SpawnPriorityPreference, Action<PlayerSpawningEvent>> _spawnerCallbacks = new();
-
     /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();
         Subs.CVar(_configurationManager, CCVars.ICRandomCharacters, e => _randomizeCharacters = e, true);
-
-        _spawnerCallbacks = new Dictionary<SpawnPriorityPreference, Action<PlayerSpawningEvent>>()
-        {
-            { SpawnPriorityPreference.Arrivals, _arrivalsSystem.HandlePlayerSpawning },
-            {
-                SpawnPriorityPreference.Cryosleep, ev =>
-                {
-                    if (_arrivalsSystem.Forced)
-                        _arrivalsSystem.HandlePlayerSpawning(ev);
-                    else
-                        _containerSpawnPointSystem.HandlePlayerSpawning(ev);
-                }
-            }
-        };
     }
 
     /// <summary>
@@ -94,33 +78,7 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
 
         var ev = new PlayerSpawningEvent(job, profile, station);
 
-        if (station != null && profile != null)
-        {
-            // Try to call the character's preferred spawner first.
-            if (_spawnerCallbacks.TryGetValue(profile.SpawnPriority, out var preferredSpawner))
-            {
-                preferredSpawner(ev);
-
-                foreach (var (key, remainingSpawner) in _spawnerCallbacks)
-                {
-                    if (key == profile.SpawnPriority)
-                        continue;
-
-                    remainingSpawner(ev);
-                }
-            }
-            else
-            {
-                // Call all of them in the typical order.
-                foreach (var typicalSpawner in _spawnerCallbacks.Values)
-                {
-                    typicalSpawner(ev);
-                }
-            }
-        }
-
         RaiseLocalEvent(ev);
-
         DebugTools.Assert(ev.SpawnResult is { Valid: true } or null);
 
         return ev.SpawnResult;
@@ -147,6 +105,22 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
         EntityUid? entity = null)
     {
         _prototypeManager.TryIndex(job ?? string.Empty, out var prototype);
+        RoleLoadout? loadout = null;
+
+        // Need to get the loadout up-front to handle names if we use an entity spawn override.
+        var jobLoadout = LoadoutSystem.GetJobPrototype(prototype?.ID);
+
+        if (_prototypeManager.TryIndex(jobLoadout, out RoleLoadoutPrototype? roleProto))
+        {
+            profile?.Loadouts.TryGetValue(jobLoadout, out loadout);
+
+            // Set to default if not present
+            if (loadout == null)
+            {
+                loadout = new RoleLoadout(jobLoadout);
+                loadout.SetDefault(profile, _actors.GetSession(entity), _prototypeManager);
+            }
+        }
 
         // If we're not spawning a humanoid, we're gonna exit early without doing all the humanoid stuff.
         if (prototype?.JobEntity != null)
@@ -154,6 +128,13 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
             DebugTools.Assert(entity is null);
             var jobEntity = EntityManager.SpawnEntity(prototype.JobEntity, coordinates);
             MakeSentientCommand.MakeSentient(jobEntity, EntityManager);
+
+            // Make sure custom names get handled, what is gameticker control flow whoopy.
+            if (loadout != null)
+            {
+                EquipRoleName(jobEntity, loadout, roleProto!);
+            }
+
             DoJobSpecials(job, jobEntity);
             _identity.QueueIdentityUpdate(jobEntity);
             return jobEntity;
@@ -185,21 +166,9 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
             profile = HumanoidCharacterProfile.RandomWithSpecies(speciesId);
         }
 
-        var jobLoadout = LoadoutSystem.GetJobPrototype(prototype?.ID);
-
-        if (_prototypeManager.TryIndex(jobLoadout, out RoleLoadoutPrototype? roleProto))
+        if (loadout != null)
         {
-            RoleLoadout? loadout = null;
-            profile?.Loadouts.TryGetValue(jobLoadout, out loadout);
-
-            // Set to default if not present
-            if (loadout == null)
-            {
-                loadout = new RoleLoadout(jobLoadout);
-                loadout.SetDefault(profile, _actors.GetSession(entity), _prototypeManager);
-            }
-
-            EquipRoleLoadout(entity.Value, loadout, roleProto);
+            EquipRoleLoadout(entity.Value, loadout, roleProto!);
         }
 
         if (prototype?.StartingGear != null)
@@ -275,7 +244,7 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
         _accessSystem.SetAccessToJob(cardId, jobPrototype, extendedAccess);
 
         if (pdaComponent != null)
-            _pdaSystem.SetOwner(idUid.Value, pdaComponent, characterName);
+            _pdaSystem.SetOwner(idUid.Value, pdaComponent, entity, characterName);
     }
 
 

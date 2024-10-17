@@ -46,7 +46,8 @@
   description:
   components:
   - type: MindRole
-    roleType: SubvertedSilicon #TODO:ERRANT should this be this, or regular Silicon?
+    antagPrototype: SubvertedSilicon
+    roleType: SubvertedSilicon # TODO:ERRANT check this with admins
   - type: SubvertedSiliconRole
 
 # Dragon

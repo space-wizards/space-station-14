@@ -1,51 +1,77 @@
 - type: weightedRandomFillSolution
   id: RandomFillStrangePill
   fills:
-  - quantity: 20
-    weight: 1
-    reagents:
-    - Aluminium
-    - Carbon
-    - Chlorine
-    - Copper
-    - Fluorine
-    - Hydrogen
-    - Iodine
-    - Lithium
-    - Mercury
-    - Potassium
-    - Phosphorus
-    - Radium
-    - Silicon
-    - Sulfur
-    - Sodium
-  - quantity: 20
-    weight: 2
-    reagents:
-    - Omnizine
-  - quantity: 20
-    weight: 3
-    reagents:
-    - ChloralHydrate
-    - Desoxyephedrine
-    - Ephedrine
-    - Ipecac
-    - Mold
-    - MuteToxin
-    - Nocturine
-    - NorepinephricAcid
-    - Pax
-    - Tricordrazine
-    - SodiumPolyacrylate
-    - Fresium
-  - quantity: 20
-    weight: 5
-    reagents:
-    - SpaceDrugs
-  - quantity: 10
-    weight: 5
-    reagents:
-    - Amatoxin
+  # 5 groups for a total weight of 100
+  # Very Good - weight: 15
+    - quantity: 15
+      weight: 5
+      reagents:
+      - Stimulants
+    - quantity: 10
+      weight: 5
+      reagents:
+      - Ichor
+    - quantity: 5
+      weight: 5
+      reagents:
+      - Cognizine
+  # Good - weight: 25
+    - quantity: 20
+      weight: 25
+      reagents:
+      - Desoxyephedrine
+      - Ephedrine
+      - Omnizine
+      - Tricordrazine
+      - Vitamin
+  # Neutral - weight: 20
+    - quantity: 20
+      weight: 17.5
+      reagents:
+      - Ipecac 
+      - SodiumPolyacrylate
+      - SpaceDrugs
+      - SpaceGlue
+      - Laughter
+      - JuiceThatMakesYouWeh
+      - Lipozine
+    - quantity: 5
+      weight: 2.5
+      reagents:
+      - Honk 
+  # Bad - weight: 25
+    - quantity: 20
+      weight: 10.5
+      reagents:
+      - MuteToxin
+      - Pax
+      - Fresium
+    - quantity: 10
+      weight: 10.5
+      reagents:
+      - Uranium
+      - Licoxide
+      - Razorium
+    - quantity: 5
+      weight: 4
+      reagents:
+      - Toxin
+  # Very Bad - weight: 15
+    - quantity: 20
+      weight: 2.5
+      reagents:
+      - ChloralHydrate
+    - quantity: 10
+      weight: 10
+      reagents:
+      - Bleach
+      - CarpoToxin
+      - BuzzochloricBees
+      - Amatoxin
+    - quantity: 5
+      weight: 2.5
+      reagents:
+      - Lexorin
 
 - type: entity
   name: strange pill
@@ -60,31 +86,32 @@
   - type: RandomFillSolution
     solution: food
     weightedRandomId: RandomFillStrangePill
-  - type: Sprite
-    sprite: Objects/Specific/Chemistry/pills.rsi
-    layers:
-    - state: pill1
-      map: [ "enum.DamageStateVisualLayers.Base" ]
-  - type: RandomSprite
-    available:
-      - enum.DamageStateVisualLayers.Base:
-          pill1: ""
-          pill2: ""
-          pill3: ""
-          pill4: ""
-          pill5: ""
-          pill6: ""
-          pill7: ""
-          pill8: ""
-          pill9: ""
-          pill10: ""
-          pill11: ""
-          pill12: ""
-          pill13: ""
-          pill14: ""
-          pill15: ""
-          pill16: ""
-          pill17: ""
-          pill18: ""
-          pill19: ""
-          pill20: ""
+# RandomSprite does not work with pill component
+  # - type: Sprite
+  #   sprite: Objects/Specific/Chemistry/pills.rsi
+  #   layers:
+  #   - state: pill1
+  #     map: [ "enum.DamageStateVisualLayers.Base" ]
+  # - type: RandomSprite
+  #   available:
+  #     - enum.DamageStateVisualLayers.Base:
+  #         pill1: ""
+  #         pill2: ""
+  #         pill3: ""
+  #         pill4: ""
+  #         pill5: ""
+  #         pill6: ""
+  #         pill7: ""
+  #         pill8: ""
+  #         pill9: ""
+  #         pill10: ""
+  #         pill11: ""
+  #         pill12: ""
+  #         pill13: ""
+  #         pill14: ""
+  #         pill15: ""
+  #         pill16: ""
+  #         pill17: ""
+  #         pill18: ""
+  #         pill19: ""
+  #         pill20: ""

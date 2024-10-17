@@ -1,5 +1,4 @@
 using Content.Shared.Mind;
-using JetBrains.Annotations;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
@@ -53,6 +52,9 @@ public sealed partial class MindRoleComponent : BaseMindRoleComponent
     public ProtoId<JobPrototype>? JobPrototype { get; set; }
 }
 
+// Why does this base component actually exist? It does make auto-categorization easy, but before that it was useless?
+// I used it for easy organisation/bookkeeping of what components are for mindroles
+[EntityCategory("Roles")]
 public abstract partial class BaseMindRoleComponent : Component
 {
 

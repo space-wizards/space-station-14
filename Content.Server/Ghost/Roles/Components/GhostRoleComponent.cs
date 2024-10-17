@@ -1,4 +1,4 @@
-﻿using Content.Server.Ghost.Roles.Raffles;
+using Content.Server.Ghost.Roles.Raffles;
 using Content.Server.Mind.Commands;
 using Content.Shared.Mind;
 using Content.Shared.Roles;
@@ -16,7 +16,6 @@ public sealed partial class GhostRoleComponent : Component
 
     [DataField("rules")] private string _roleRules = "ghost-role-component-default-rules";
 
-    // TODO ROLE TIMERS
     // Actually make use of / enforce this requirement?
     // Why is this even here.
     // Move to ghost role prototype & respect CCvars.GameRoleTimerOverride
@@ -107,5 +106,12 @@ public sealed partial class GhostRoleComponent : Component
     [DataField("raffle")]
     [Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
     public GhostRoleRaffleConfig? RaffleConfig { get; set; }
+
+    /// <summary>
+    /// Job the entity will receive after adding the mind.
+    /// </summary>
+    [DataField("job")]
+    [Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)] // also FIXME Friends
+    public ProtoId<JobPrototype>? JobProto = null;
 }
 

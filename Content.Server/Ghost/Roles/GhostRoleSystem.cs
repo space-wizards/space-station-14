@@ -515,8 +515,8 @@ public sealed class GhostRoleSystem : EntitySystem
 
         _roleSystem.MindAddRole(newMind, "MindRoleGhostMarker");
 
-        if(_roleSystem.MindHasRole<GhostRoleMarkerRoleComponent>(newMind, out _, out var markerRole))
-            markerRole.Value.Comp.Name = role.RoleName;
+        if(_roleSystem.MindHasRole<GhostRoleMarkerRoleComponent>(newMind!, out var markerRole))
+            markerRole.Value.Comp2.Name = role.RoleName;
 
         _mindSystem.SetUserId(newMind, player.UserId);
         _mindSystem.TransferTo(newMind, mob);
@@ -606,6 +606,11 @@ public sealed class GhostRoleSystem : EntitySystem
     {
         if (!TryComp(uid, out GhostRoleComponent? ghostRole))
             return;
+
+        if (ghostRole.JobProto != null)
+        {
+            _roleSystem.MindAddJobRole(args.Mind, args.Mind, silent:false,ghostRole.JobProto);
+        }
 
         ghostRole.Taken = true;
         UnregisterGhostRole((uid, ghostRole));
