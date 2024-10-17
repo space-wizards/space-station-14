@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Fixed the mouse position when it is over a singularity distortion effect
-      while zoomed in or out.
-    type: Fix
-  id: 7017
-  time: '2024-07-31T00:14:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30509
 - author: metalgearsloth
   changes:
   - message: Add a button to the lobby so you can export a .png of your characters
@@ -3945,3 +3937,10 @@
   id: 7516
   time: '2024-10-16T10:04:55.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32064
+- author: deltanedas
+  changes:
+  - message: Fixed grappling hooks sometimes getting bricked.
+    type: Fix
+  id: 7517
+  time: '2024-10-16T22:32:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32738
