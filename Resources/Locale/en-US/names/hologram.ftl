@@ -1,0 +1,14 @@
+hologram-name-dataset-1 = Apollo
+hologram-name-dataset-2 = Data
+hologram-name-dataset-3 = GLIMMER
+hologram-name-dataset-4 = El Roi
+hologram-name-dataset-5 = Hephaestus
+hologram-name-dataset-6 = Holo-AI
+hologram-name-dataset-7 = Holo-Friend
+hologram-name-dataset-8 = Hologram
+hologram-name-dataset-9 = Odysseus
+hologram-name-dataset-10 = Persephone
+hologram-name-dataset-11 = Petra
+hologram-name-dataset-12 = Processor
+hologram-name-dataset-13 = Prometheus
+hologram-name-dataset-14 = Theseus
