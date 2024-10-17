@@ -3,6 +3,7 @@
 [game]
 desc = "Official English Space Station 14 servers. Medium roleplay ruleset. you must be whitelisted by playing on other Wizard's Den servers if there are more than 15 online players."
 hostname = "[EN] Wizard's Den Salamander [US West RP]"
+round_restart_time = 300
 
 [server]
 rules_file = "MRPRuleset"
