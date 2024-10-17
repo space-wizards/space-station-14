@@ -17,7 +17,7 @@ public abstract class SharedRoofSystem : EntitySystem
         if (!_maps.TryGetTile(grid.Comp1, index, out var tile))
             return;
 
-        var mask = (tile.ContentFlag & (ushort)TileFlags.Roof);
+        var mask = (tile.ContentFlag & (ushort)TileFlag.Roof);
         var rooved = mask != 0x0;
 
         if (rooved == value)
@@ -27,11 +27,11 @@ public abstract class SharedRoofSystem : EntitySystem
 
         if (value)
         {
-            newTile = tile.WithContentFlag((ushort)( tile.ContentFlag | (ushort)TileFlags.Roof));
+            newTile = tile.WithContentFlag((ushort)( tile.ContentFlag | (ushort)TileFlag.Roof));
         }
         else
         {
-            newTile = tile.WithContentFlag((ushort)(tile.ContentFlag & ~(ushort)TileFlags.Roof));
+            newTile = tile.WithContentFlag((ushort)(tile.ContentFlag & ~(ushort)TileFlag.Roof));
         }
 
         _maps.SetTile((grid.Owner, grid.Comp1), index, newTile);

@@ -78,7 +78,7 @@ public sealed class RoofOverlay : Overlay
                 // Due to stencilling we essentially draw on unrooved tiles
                 while (tileEnumerator.MoveNext(out var tileRef))
                 {
-                    if ((tileRef.Tile.ContentFlag & (ushort) TileFlags.Roof) == 0x0)
+                    if ((tileRef.Tile.ContentFlag & (ushort) TileFlag.Roof) == 0x0)
                     {
                         // Check if the tile is occluded in which case hide it anyway.
                         // This is to avoid lit walls bleeding over to unlit tiles.
