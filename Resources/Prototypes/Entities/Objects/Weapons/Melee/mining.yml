@@ -131,12 +131,12 @@
     capacity: 1
     count: 1
   - type: MeleeWeapon
-    attackRate: 1.5
     wideAnimationRotation: -135
+    attackRate: 1.5
     damage:
       types:
-        Blunt: 10
-        Slash: 5
+        Blunt: 7
+        Slash: 3
     soundHit:
       collection: MetalThud
   - type: Wieldable
@@ -145,7 +145,7 @@
       types:
         Blunt: 2.5
         Slash: 2.5
-        Structural: 30
+        Structural: 10
   - type: GunRequiresWield
   - type: Item
     size: Ginormous
@@ -167,7 +167,7 @@
     attackRate: 2
     damage:
       types:
-        Slash: 15
+        Slash: 10
   - type: Tag
     tags:
     - Knife
@@ -177,7 +177,7 @@
   parent: [ WeaponCrusher, BaseSecurityCargoContraband]
   id: WeaponCrusherGlaive
   name: crusher glaive
-  description: An early design of the proto-kinetic accelerator, in glaive form.
+  description: An improved version of the proto-kinetic crusher. Heals the user significantly more.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/crusher_glaive.rsi
