@@ -336,3 +336,48 @@ Entries:
     changes:
     - type: Add
       message: Xeno map Beta is available for playtest on Harmony.
+  - id: 114
+    author: spanky-spanky
+    time: '2024-10-11T04:40:08.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/114
+    changes:
+    - type: Add
+      message: Harmony now has a custom startup logo, credit to Emii-olii.
+  - id: 118
+    author: Dogbone10
+    time: '2024-10-16T08:18:37.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/118
+    changes:
+    - type: Add
+      message: The Syndicate now have a ship for diplomacy in the sector. Next time
+        you're about to bite your tongue and acidify, consider asking for a lawyer instead!
+  - id: 121
+    author: FluffMe
+    time: '2024-10-16T23:38:14.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/121
+    changes:
+    - type: Fix
+      message: Fixed playtime requirements for lawyer, mime, bartender, chef, and technical
+        assistant.
+  - id: 120
+    author: Tofsel
+    time: '2024-10-17T01:36:29.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/120
+    changes:
+    - type: Add
+      message: Added missing poster of a well known individual
+    - type: Add
+      message: Added UNMC ad poster
+    - type: Add
+      message: Added variation of the same UNMC poster
+    - type: Add
+      message: Added Safety Lizz poster
+    - type: Tweak
+      message: Changed HarMoney poster description
+  - id: 123
+    author: spanky-spanky
+    time: '2024-10-17T01:37:29.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/123
+    changes:
+    - type: Add
+      message: Added Detroit.
