@@ -31,6 +31,8 @@ namespace Content.Client.Lobby
         protected override Type? LinkedScreenType { get; } = typeof(LobbyGui);
         public LobbyGui? Lobby;
 
+        private LateJoinGui? _joinGui;
+
         protected override void Startup()
         {
             if (_userInterfaceManager.ActiveScreen == null)
@@ -76,6 +78,11 @@ namespace Content.Client.Lobby
             Lobby!.ReadyButton.OnPressed -= OnReadyPressed;
             Lobby!.ReadyButton.OnToggled -= OnReadyToggled;
 
+            if (_joinGui is { IsOpen: true })
+            {
+                _joinGui.Close();
+            }
+
             Lobby = null;
         }
 
@@ -98,7 +105,18 @@ namespace Content.Client.Lobby
                 return;
             }
 
-            new LateJoinGui().OpenCentered();
+            if (_joinGui is { IsOpen: true })
+            {
+                _joinGui.Close();
+
+                return;
+            }
+
+            _joinGui = new LateJoinGui();
+
+            _joinGui.OnClose += () => args.Button.Pressed = false;
+
+            _joinGui.OpenCentered();
         }
 
         private void OnReadyToggled(BaseButton.ButtonToggledEventArgs args)
@@ -161,7 +179,6 @@ namespace Content.Client.Lobby
             if (_gameTicker.IsGameStarted)
             {
                 Lobby!.ReadyButton.Text = Loc.GetString("lobby-state-ready-button-join-state");
-                Lobby!.ReadyButton.ToggleMode = false;
                 Lobby!.ReadyButton.Pressed = false;
                 Lobby!.ObserveButton.Disabled = false;
             }
@@ -169,7 +186,6 @@ namespace Content.Client.Lobby
             {
                 Lobby!.StartTime.Text = string.Empty;
                 Lobby!.ReadyButton.Text = Loc.GetString(Lobby!.ReadyButton.Pressed ? "lobby-state-player-status-ready": "lobby-state-player-status-not-ready");
-                Lobby!.ReadyButton.ToggleMode = true;
                 Lobby!.ReadyButton.Disabled = false;
                 Lobby!.ReadyButton.Pressed = _gameTicker.AreWeReady;
                 Lobby!.ObserveButton.Disabled = true;
