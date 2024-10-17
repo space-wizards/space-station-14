@@ -71,7 +71,7 @@ namespace Content.Client.Launcher
 
         protected override void Shutdown()
         {
-            _control?.Dispose();
+            _control?.Parent?.RemoveChild(_control);
 
             _clientNetManager.ConnectFailed -= OnConnectFailed;
             _clientNetManager.ClientConnectStateChanged -= OnConnectStateChanged;

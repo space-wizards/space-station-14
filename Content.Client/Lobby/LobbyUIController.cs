@@ -150,8 +150,8 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
     public void OnStateExited(LobbyState state)
     {
         PreviewPanel?.SetLoaded(false);
-        _profileEditor?.Dispose();
-        _characterSetup?.Dispose();
+        _profileEditor?.Parent?.RemoveChild(_profileEditor);
+        _characterSetup?.Parent?.RemoveChild(_characterSetup);
 
         _characterSetup = null;
         _profileEditor = null;
