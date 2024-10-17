@@ -212,7 +212,14 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
             if (!lootProto.Guaranteed)
                 continue;
 
-            await SpawnDungeonLoot(lootProto, mapUid);
+            try
+            {
+                await SpawnDungeonLoot(lootProto, mapUid);
+            }
+            catch (Exception e)
+            {
+                _sawmill.Error($"Failed to spawn guaranteed loot {lootProto.ID}: {e}");
+            }
         }
 
         // Handle boss loot (when relevant).
@@ -242,7 +249,14 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
             if (entry == null)
                 break;
 
-            await SpawnRandomEntry(grid, entry, dungeon, random);
+            try
+            {
+                await SpawnRandomEntry(grid, entry, dungeon, random);
+            }
+            catch (Exception e)
+            {
+                _sawmill.Error($"Failed to spawn mobs for {entry.Proto}: {e}");
+            }
         }
 
         var allLoot = _prototypeManager.Index<SalvageLootPrototype>(SharedSalvageSystem.ExpeditionsLootProto);
