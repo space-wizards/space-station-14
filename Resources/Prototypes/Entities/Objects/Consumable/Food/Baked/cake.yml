@@ -669,8 +669,15 @@
     drawdepth: Mobs
     sprite: Mobs/Pets/cat.rsi
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
       state: cak
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: cak-moving
+    noMovementLayers:
+      movement:
+        state: cak
   - type: Fixtures
     fixtures:
       fix1:
