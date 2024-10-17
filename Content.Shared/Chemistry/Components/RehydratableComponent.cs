@@ -20,6 +20,12 @@ public sealed partial class RehydratableComponent : Component
     public ProtoId<ReagentPrototype> CatalystPrototype = "Water";
 
     /// <summary>
+    /// The type of solution it is attached to
+    /// </summary>
+    [DataField]
+    public String SolutionName = "cube";
+
+    /// <summary>
     /// The minimum amount of catalyst that must be present to be hydrated.
     /// </summary>
     [DataField]
