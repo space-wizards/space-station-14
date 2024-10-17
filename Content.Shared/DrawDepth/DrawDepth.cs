@@ -70,37 +70,42 @@ namespace Content.Shared.DrawDepth
         WallMountedItems = DrawDepthTag.Default + 2,
 
         /// <summary>
+        ///     To use for objects that would usually fall under SmallObjects, but appear taller than 1 tile. For example: Reagent Grinder
+        /// </summary>
+        LargeObjects = DrawDepthTag.Default + 3,
+
+        /// <summary>
         ///     Generic items. Things that should be above crates & tables, but underneath mobs.
         /// </summary>
-        Items = DrawDepthTag.Default + 3,
+        Items = DrawDepthTag.Default + 4,
 
-        Mobs = DrawDepthTag.Default + 4,
-		
-        OverMobs = DrawDepthTag.Default + 5,
+        Mobs = DrawDepthTag.Default + 5,
 
-        Doors = DrawDepthTag.Default + 6,
+        OverMobs = DrawDepthTag.Default + 6,
+
+        Doors = DrawDepthTag.Default + 7,
 
         /// <summary>
         /// Blast doors and shutters which go over the usual doors.
         /// </summary>
-        BlastDoors = DrawDepthTag.Default + 7,
+        BlastDoors = DrawDepthTag.Default + 8,
 
         /// <summary>
         /// Stuff that needs to draw over most things, but not effects, like Kudzu.
         /// </summary>
-        Overdoors = DrawDepthTag.Default + 8,
+        Overdoors = DrawDepthTag.Default + 9,
 
         /// <summary>
         ///     Explosions, fire, melee swings. Whatever.
         /// </summary>
-        Effects = DrawDepthTag.Default + 9,
+        Effects = DrawDepthTag.Default + 10,
 
-        Ghosts = DrawDepthTag.Default + 10,
+        Ghosts = DrawDepthTag.Default + 11,
 
         /// <summary>
         ///    Use this selectively if it absolutely needs to be drawn above (almost) everything else. Examples include
         ///    the pointing arrow, the drag & drop ghost-entity, and some debug tools.
         /// </summary>
-        Overlays = DrawDepthTag.Default + 11,
+        Overlays = DrawDepthTag.Default + 12,
     }
 }
