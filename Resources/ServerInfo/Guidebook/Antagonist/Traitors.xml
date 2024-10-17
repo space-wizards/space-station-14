@@ -90,9 +90,10 @@
   <Box>
     <GuideEntityEmbed Entity="WeaponEnergyShotgun" Caption=""/>
   </Box>
-  - Stealing the [color=#f39f27]Chief Engineer[/color]'s [bold]advanced magboots[/bold].
+  - Stealing the [color=#f39f27]Chief Engineer[/color]'s [bold]advanced magboots[/bold] or [bold]handheld atmospherics monitor[/bold].
   <Box>
     <GuideEntityEmbed Entity="ClothingShoesBootsMagAdv" Caption=""/>
+    <GuideEntityEmbed Entity="HandheldAtmosMonitor" Caption=""/>
   </Box>
   - Stealing the [color=#b18644]Quartermaster[/color]'s [bold]requisition digi-board[/bold].
   <Box>

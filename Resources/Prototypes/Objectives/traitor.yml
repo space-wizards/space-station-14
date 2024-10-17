@@ -219,6 +219,16 @@
     stealGroup: ClothingShoesBootsMagAdv
     owner: job-name-ce
 
+- type: entity
+  parent: BaseTraitorStealObjective
+  id: HandheldAtmosMonitorStealObjective
+  components:
+  - type: NotJobRequirement
+    job: ChiefEngineer
+  - type: StealCondition
+    stealGroup: HandheldAtmosMonitor
+    owner: job-name-ce
+
 ## qm
 
 - type: entity
@@ -254,6 +264,7 @@
   components:
   - type: Objective
     # sorry ce but your jordans are not as high security as the caps gear
+    # as a ce main i take offence adding the handheld atmos monitor to feel more important smh smh
     difficulty: 3.5
   - type: NotJobRequirement
     job: Captain
