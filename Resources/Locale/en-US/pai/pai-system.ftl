@@ -6,6 +6,9 @@ pai-system-searching = Now searching for a pAI...
 pai-system-role-name = personal ai
 pai-system-role-description = Be someone's electronic pal!
                               (Memories *not* included.)
+pai-system-role-name-gilded = gilded personal ai
+pai-system-role-description-gilded = Be someone's fancy electronic pal!
+                              (Memories *not* included.)
 pai-system-role-name-syndicate = Syndicate personal ai
 pai-system-role-description-syndicate = Be someone's Syndicate pal!
                                         (Memories *not* included.)

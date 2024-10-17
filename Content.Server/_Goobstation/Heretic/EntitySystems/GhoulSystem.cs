@@ -97,11 +97,7 @@ public sealed partial class GhoulSystem : EntitySystem
         _antag.SendBriefing(ent, brief, Color.MediumPurple, sound);
 
         if (!_mind.TryGetRole<GhoulRoleComponent>(ent, out _))
-            _role.MindAddRole<GhoulRoleComponent>(mindId, new(), mind);
-
-        if (!_mind.TryGetRole<RoleBriefingComponent>(ent, out var rolebrief))
-            _role.MindAddRole(mindId, new RoleBriefingComponent() { Briefing = brief }, mind);
-        else rolebrief.Briefing += $"\n{brief}";
+            _role.MindAddRole(mindId, "MindRoleGhoul");
     }
 
     public override void Initialize()

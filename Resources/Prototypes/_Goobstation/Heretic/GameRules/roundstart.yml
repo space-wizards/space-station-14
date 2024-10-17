@@ -18,6 +18,5 @@
       blacklist:
         components:
         - AntagImmune
-      mindComponents:
-      - type: HereticRole
-        prototype: Heretic
+      mindRoles:
+      - MindRoleHeretic
