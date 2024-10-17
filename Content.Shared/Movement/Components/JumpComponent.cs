@@ -12,7 +12,7 @@ public sealed partial class JumpComponent : Component
     /// <summary>
     /// How powerful the jump will be when activated
     /// </summary>
-    [DataField("jumpPower"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public float JumpPower = 5f;
 
 
