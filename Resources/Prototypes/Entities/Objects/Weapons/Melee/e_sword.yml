@@ -274,6 +274,7 @@
   components:
   - type: ItemToggle
     onUse: false # wielding events control it instead
+    onActivate: false # prevents the weapon from being able to be turned on when it is on the ground
     soundActivate:
       path: /Audio/Weapons/ebladeon.ogg
       params:
@@ -307,7 +308,6 @@
       doAfterDuration: 4.0
   - type: Wieldable
     wieldSound: null # esword light sound instead
-  - type: MeleeRequiresWield
   - type: MeleeWeapon
     wideAnimationRotation: -135
     attackRate: 1.5
