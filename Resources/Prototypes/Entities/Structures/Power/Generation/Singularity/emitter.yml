@@ -87,7 +87,7 @@
   - type: LockedAnchorable
   - type: LockedWiresPanel
   - type: AccessReader
-    access: [[ "Engineering" ]]
+    access: [[ "Generator" ]]
   - type: Machine
     board: EmitterCircuitboard
   - type: GuideHelp
