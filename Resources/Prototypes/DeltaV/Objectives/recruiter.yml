@@ -7,7 +7,7 @@
     difficulty: 0 # difficulty is unused
   - type: RoleRequirement
     roles:
-      components:
+      mindRoles:
       - RecruiterRole
 
 - type: entity
