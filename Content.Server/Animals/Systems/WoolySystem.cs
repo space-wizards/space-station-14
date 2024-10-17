@@ -1,6 +1,6 @@
 using Content.Server.Animals.Components;
-using Content.Server.Nutrition;
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Nutrition;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
