@@ -85,6 +85,7 @@
   - type: Hands
     showInHands: false
     disableExplosionRecursion: true
+    canBeStripped: false
   - type: ComplexInteraction
   - type: IntrinsicRadioReceiver
   - type: IntrinsicRadioTransmitter
@@ -121,6 +122,7 @@
     cellSlotId: cell_slot
     fitsInCharger: true
   - type: ItemToggle
+    onActivate: false # You should not be able to turn off a borg temporarily.
     activated: false # gets activated when a mind is added
     onUse: false # no item-borg toggling sorry
   - type: ItemTogglePointLight

@@ -11,6 +11,7 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
+using Content.Shared.Fluids.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
@@ -37,7 +38,6 @@ public sealed class PlantHolderSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly SharedPointLightSystem _pointLight = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
     [Dependency] private readonly RandomHelperSystem _randomHelper = default!;
@@ -53,6 +53,7 @@ public sealed class PlantHolderSystem : EntitySystem
         SubscribeLocalEvent<PlantHolderComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<PlantHolderComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<PlantHolderComponent, InteractHandEvent>(OnInteractHand);
+        SubscribeLocalEvent<PlantHolderComponent, SolutionTransferredEvent>(OnSolutionTransferred);
     }
 
     public override void Update(float frameTime)
@@ -228,37 +229,6 @@ public sealed class PlantHolderSystem : EntitySystem
             return;
         }
 
-        if (_solutionContainerSystem.TryGetDrainableSolution(args.Used, out var solution, out _)
-            && _solutionContainerSystem.ResolveSolution(uid, component.SoilSolutionName, ref component.SoilSolution)
-            && TryComp(args.Used, out SprayComponent? spray))
-        {
-            var amount = FixedPoint2.New(1);
-
-            var targetEntity = uid;
-            var solutionEntity = args.Used;
-
-            _audio.PlayPvs(spray.SpraySound, args.Used, AudioParams.Default.WithVariation(0.125f));
-
-            var split = _solutionContainerSystem.Drain(solutionEntity, solution.Value, amount);
-
-            if (split.Volume == 0)
-            {
-                _popup.PopupCursor(Loc.GetString("plant-holder-component-no-plant-message",
-                    ("owner", args.Used)), args.User);
-                return;
-            }
-
-            _popup.PopupCursor(Loc.GetString("plant-holder-component-spray-message",
-                ("owner", uid),
-                ("amount", split.Volume)), args.User, PopupType.Medium);
-
-            _solutionContainerSystem.TryAddSolution(component.SoilSolution.Value, split);
-
-            ForceUpdateByExternalCause(uid, component);
-
-            return;
-        }
-
         if (_tagSystem.HasTag(args.Used, "PlantSampleTaker"))
         {
             if (component.Seed == null)
@@ -351,6 +321,10 @@ public sealed class PlantHolderSystem : EntitySystem
         }
     }
 
+    private void OnSolutionTransferred(Entity<PlantHolderComponent> ent, ref SolutionTransferredEvent args)
+    {
+        _audio.PlayPvs(ent.Comp.WateringSound, ent.Owner);
+    }
     private void OnInteractHand(Entity<PlantHolderComponent> entity, ref InteractHandEvent args)
     {
         DoHarvest(entity, args.User, entity.Comp);

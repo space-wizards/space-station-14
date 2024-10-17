@@ -17,8 +17,6 @@
   - type: Tag
     tags:
     - Figurine
-  - type: StealTarget
-    stealGroup: Figurines
   - type: UseDelay
     delay: 10
   - type: Speech

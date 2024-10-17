@@ -78,6 +78,7 @@
                                                   ToolTip="Pick (Hold 5)" />
                     <mapping:MappingActionsButton Name="Delete" Access="Public"
                                                   ToolTip="Delete (Hold 6)" />
+                    <mapping:MappingActionsButton Name="Flip" Access="Public" ToggleMode="False"/>
                 </BoxContainer>
             </PanelContainer>
         </LayoutContainer>
