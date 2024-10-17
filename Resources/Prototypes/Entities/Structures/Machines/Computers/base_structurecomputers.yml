@@ -60,6 +60,8 @@
       collection: Keyboard
       params:
         volume: -1
+        variation: 0.10
+        pitch: 1.10  # low pitch keyboard sounds feel kinda weird
   - type: ContainerContainer
     containers:
       board: !type:Container

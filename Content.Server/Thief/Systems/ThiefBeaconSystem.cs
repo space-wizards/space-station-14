@@ -6,6 +6,7 @@ using Content.Shared.Examine;
 using Content.Shared.Foldable;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
+using Content.Shared.Roles;
 using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Thief.Systems;
@@ -18,6 +19,7 @@ public sealed class ThiefBeaconSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly MindSystem _mind = default!;
+    [Dependency] private readonly SharedRoleSystem _roles = default!;
 
     public override void Initialize()
     {
@@ -37,7 +39,7 @@ public sealed class ThiefBeaconSystem : EntitySystem
             return;
 
         var mind = _mind.GetMind(args.User);
-        if (!HasComp<ThiefRoleComponent>(mind))
+        if (mind == null || !_roles.MindHasRole<ThiefRoleComponent>(mind.Value))
             return;
 
         var user = args.User;
