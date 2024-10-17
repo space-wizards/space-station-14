@@ -78,10 +78,6 @@
   - type: DeleteOnTrigger
   - type: StaticPrice
     price: 0
-  - type: Tool
-    qualities:
-      - Slicing
-    speedModifier: 0.25 # Its really slow because you have to be careful not to cut yourself.
 
 - type: entity
   parent: ShardBase
