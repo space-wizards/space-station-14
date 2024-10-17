@@ -1,0 +1,154 @@
+- type: constructionGraph
+  id: GasReservoir
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: staticGasTank
+      steps:
+      - material: Plasteel
+        amount: 20
+        doAfter: 15
+  
+  - node: staticGasTank
+    entity: StaticGasTankEmpty
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetPlasteel1
+        amount: 20
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 15
+  
+  - node: airStaticGasTank
+    entity: AirStaticGasTankEmpty
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetPlasteel1
+        amount: 20
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 15
+  
+  - node: oxygenStaticGasTank
+    entity: OxygenStaticGasTankEmpty
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetPlasteel1
+        amount: 20
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 15
+  
+  - node: nitrogenStaticGasTank
+    entity: NitrogenStaticGasTankEmpty
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetPlasteel1
+        amount: 20
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 15
+  
+  - node: carbonDioxideStaticGasTank
+    entity: CarbonDioxideStaticGasTankEmpty
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetPlasteel1
+        amount: 20
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 15
+  
+  - node: plasmaStaticGasTank
+    entity: PlasmaStaticGasTankEmpty
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetPlasteel1
+        amount: 20
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 15
+  
+  - node: tritiumStaticGasTank
+    entity: TritiumStaticGasTankEmpty
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetPlasteel1
+        amount: 20
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 15
+  
+  - node: waterVaporStaticGasTank
+    entity: WaterVaporStaticGasTankEmpty
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetPlasteel1
+        amount: 20
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 15
+  
+  - node: ammoniaStaticGasTank
+    entity: AmmoniaStaticGasTankEmpty
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetPlasteel1
+        amount: 20
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 15
+  
+  - node: nitrousOxideStaticGasTank
+    entity: NitrousOxideStaticGasTankEmpty
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetPlasteel1
+        amount: 20
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 15
+  
+  - node: frezonStaticGasTank
+    entity: FrezonStaticGasTankEmpty
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetPlasteel1
+        amount: 20
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 15
