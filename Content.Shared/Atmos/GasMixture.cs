@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Content.Shared.Atmos.EntitySystems;
@@ -269,6 +269,22 @@ namespace Content.Shared.Atmos
                    && ReactionResults.SequenceEqual(other.ReactionResults)
                    && Immutable == other.Immutable
                    && Volume.Equals(other.Volume);
+        }
+
+        /// <summary>
+        /// Returns True if supersetMix has more moles for all gases by mole quantity only.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool HasMinMoles(GasMixture supersetMix)
+        {
+            for (int i = 0; i < Atmospherics.AdjustedNumberOfGases; i++)
+            {
+                if (supersetMix.GetMoles(i) < GetMoles(i))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         [SuppressMessage("ReSharper", "NonReadonlyMemberInGetHashCode")]

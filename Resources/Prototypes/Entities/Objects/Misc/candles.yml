@@ -28,15 +28,19 @@
           volume: 10
     - type: UseDelay
     - type: Flammable
+      peakFlameTemperature: 350
+      joulesPerFirestack: 80
       fireSpread: false
       canResistFire: false
       alwaysCombustible: true
       canExtinguish: true
-      firestacksOnIgnite: 3.0
+      firestacksOnIgnite: 3.3
       firestackFade: -0.01
       damage:
         types:
           Heat: 0.1
+    - type: Temperature
+    - type: AtmosExposed
     - type: FireVisuals
       sprite: Objects/Misc/candles.rsi
       normalState: fire-big
