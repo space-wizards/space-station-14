@@ -96,7 +96,7 @@ public sealed partial class GhoulSystem : EntitySystem
         var sound = new SoundPathSpecifier("/Audio/_Goobstation/Heretic/Ambience/Antag/Heretic/heretic_gain.ogg");
         _antag.SendBriefing(ent, brief, Color.MediumPurple, sound);
 
-        if (!_mind.TryGetRole<GhoulRoleComponent>(ent, out _))
+        if (!_role.MindHasRole<GhoulRoleComponent>(ent, out _))
             _role.MindAddRole(mindId, "MindRoleGhoul");
     }
 
