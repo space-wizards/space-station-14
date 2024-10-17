@@ -392,3 +392,82 @@
   sprite:
     sprite: Mobs/Animals/crab.rsi
     state: crab
+
+# Documents
+
+- type: stealTargetGroup
+  id: ArrestLogs
+  name: steal-target-groups-documents-arrest-logs
+  sprite:
+    sprite: Objects/Specific/Syndicate/document.rsi
+    state: genaric_doc
+
+- type: stealTargetGroup
+  id: RadioLogs
+  name: steal-target-groups-documents-radio-logs
+  sprite:
+    sprite: Objects/Specific/Syndicate/document.rsi
+    state: genaric_doc
+
+- type: stealTargetGroup
+  id: StationMaintenceReport
+  name: steal-target-groups-documents-maintence-report
+  sprite:
+    sprite: Objects/Specific/Syndicate/document.rsi
+    state: genaric_doc
+
+- type: stealTargetGroup
+  id: ResesarchReport
+  name: steal-target-groups-documents-research-report
+  sprite:
+    sprite: Objects/Specific/Syndicate/document.rsi
+    state: genaric_doc
+
+- type: stealTargetGroup
+  id: MedicalLogs
+  name: steal-target-groups-documents-medical-logs
+  sprite:
+    sprite: Objects/Specific/Syndicate/document.rsi
+    state: genaric_doc
+
+- type: stealTargetGroup
+  id: SupplyReport
+  name: steal-target-groups-documents-supply-report
+  sprite:
+    sprite: Objects/Specific/Syndicate/document.rsi
+    state: genaric_doc
+
+- type: stealTargetGroup
+  id: CentralCommandReport
+  name: steal-target-groups-documents-central-command-report
+  sprite:
+    sprite: Objects/Specific/Syndicate/document.rsi
+    state: genaric_doc
+
+- type: stealTargetGroup
+  id: CentralCommandAudit
+  name: steal-target-groups-documents-central-command-audit
+  sprite:
+    sprite: Objects/Specific/Syndicate/document.rsi
+    state: genaric_doc
+
+- type: stealTargetGroup
+  id: NuclearDeviceMaintainceReport
+  name: steal-target-groups-documents-nuclear-device-report
+  sprite:
+    sprite: Objects/Specific/Syndicate/document.rsi
+    state: genaric_doc
+
+- type: stealTargetGroup
+  id: ArmoryInspectionReport
+  name: steal-target-groups-documents-armory-report
+  sprite:
+    sprite: Objects/Specific/Syndicate/document.rsi
+    state: genaric_doc
+
+- type: stealTargetGroup
+  id: VaultInspectionReport
+  name: steal-target-groups-documents-vault-inspection
+  sprite:
+    sprite: Objects/Specific/Syndicate/document.rsi
+    state: genaric_doc

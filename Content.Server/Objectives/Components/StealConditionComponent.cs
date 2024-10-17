@@ -1,4 +1,3 @@
-using Content.Server.Objectives.Systems;
 using Content.Shared.Objectives;
 using Robust.Shared.Prototypes;
 
@@ -7,14 +6,14 @@ namespace Content.Server.Objectives.Components;
 /// <summary>
 /// Requires that you steal a certain item (or several)
 /// </summary>
-[RegisterComponent, Access(typeof(StealConditionSystem))]
+[RegisterComponent]
 public sealed partial class StealConditionComponent : Component
 {
     /// <summary>
     /// A group of items to be stolen
     /// </summary>
-    [DataField(required: true)]
-    public ProtoId<StealTargetGroupPrototype> StealGroup;
+    [DataField]
+    public ProtoId<StealTargetGroupPrototype>? StealGroup;
 
     /// <summary>
     /// When enabled, disables generation of this target if there is no entity on the map (disable for objects that can be created mid-round).
@@ -61,11 +60,11 @@ public sealed partial class StealConditionComponent : Component
 
     // All this need to be loc string
     [DataField(required: true)]
-    public LocId ObjectiveText;
+    public LocId? ObjectiveText;
     [DataField(required: true)]
-    public LocId ObjectiveNoOwnerText;
+    public LocId? ObjectiveNoOwnerText;
     [DataField(required: true)]
-    public LocId DescriptionText;
+    public LocId? DescriptionText;
     [DataField(required: true)]
-    public LocId DescriptionMultiplyText;
+    public LocId? DescriptionMultiplyText;
 }

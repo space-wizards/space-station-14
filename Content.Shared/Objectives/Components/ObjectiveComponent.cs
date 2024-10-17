@@ -72,3 +72,9 @@ public record struct ObjectiveAfterAssignEvent(EntityUid MindId, MindComponent M
 /// </summary>
 [ByRefEvent]
 public record struct ObjectiveGetProgressEvent(EntityUid MindId, MindComponent Mind, float? Progress = null);
+
+/// <summary>
+///     Raised on an objective when its actually added to a mind.
+/// </summary>
+[ByRefEvent]
+public record struct ObjectiveAddedToMindEvent(EntityUid MindId, MindComponent Mind);
