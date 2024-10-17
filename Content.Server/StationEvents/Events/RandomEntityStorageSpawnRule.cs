@@ -5,6 +5,7 @@ using Content.Server.Storage.EntitySystems;
 using Content.Shared.GameTicking.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
+using Content.Shared.Storage.Components;
 
 namespace Content.Server.StationEvents.Events;
 

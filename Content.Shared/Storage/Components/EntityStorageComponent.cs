@@ -8,8 +8,8 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Storage.Components;
 
-[NetworkedComponent]
-public abstract partial class SharedEntityStorageComponent : Component
+[RegisterComponent, NetworkedComponent]
+public partial class EntityStorageComponent : Component
 {
     public readonly float MaxSize = 1.0f; // maximum width or height of an entity allowed inside the storage.
 

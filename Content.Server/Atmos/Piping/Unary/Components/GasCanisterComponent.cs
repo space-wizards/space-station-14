@@ -5,7 +5,7 @@ using Robust.Shared.Audio;
 namespace Content.Server.Atmos.Piping.Unary.Components
 {
     [RegisterComponent]
-    public sealed partial class GasCanisterComponent : Component, IGasMixtureHolder
+    public sealed partial class GasCanisterComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("port")]
@@ -21,10 +21,6 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField]
         public ItemSlot GasTankSlot = new();
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("gasMixture")]
-        public GasMixture Air { get; set; } = new();
 
         /// <summary>
         ///     Last recorded pressure, for appearance-updating purposes.
