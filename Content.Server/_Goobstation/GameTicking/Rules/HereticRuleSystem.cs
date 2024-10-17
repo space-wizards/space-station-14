@@ -66,7 +66,16 @@ public sealed partial class HereticRuleSystem : GameRuleSystem<HereticRuleCompon
 
             _antag.SendBriefing(target, Loc.GetString("heretic-role-greeting-fluff"), Color.MediumPurple, null);
             _antag.SendBriefing(target, Loc.GetString("heretic-role-greeting"), Color.Red, BriefingSound);
+
+            if (_role.MindHasRole<HereticRoleComponent>(mindId, out var rbc))
+            {
+                AddComp<RoleBriefingComponent>(rbc.Value.Owner);
+                Comp<RoleBriefingComponent>(rbc.Value.Owner).Briefing += $"\n{briefingShort}";
+            }
+            else
+                _role.MindAddRole(mindId, "HereticRole", mind, true);
         }
+
         _npcFaction.RemoveFaction(target, NanotrasenFactionId, false);
         _npcFaction.AddFaction(target, HereticFactionId);
 
