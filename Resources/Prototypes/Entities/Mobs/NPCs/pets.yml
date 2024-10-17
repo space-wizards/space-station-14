@@ -712,7 +712,7 @@
 - type: entity
   name: Smile
   id: MobSlimesPet
-  parent: BaseMobAdultSlimes
+  parent: MobAdultSlimes
   description: This masterpiece has gone through thousands of experiments. But it is the sweetest creature in the world. Smile Slime!
   components:
   - type: Sprite
@@ -777,15 +777,7 @@
     name: ghost-role-information-smile-name
     description: ghost-role-information-smile-description
     rules: ghost-role-information-nonantagonist-rules
-  - type: ReplacementAccent
-    accent: slimes
-  - type: GhostTakeoverAvailable
-  - type: Speech
-    speechVerb: Slime
-    speechSounds: Slime
-    allowedEmotes: ['Squish']
-  - type: TypingIndicator
-    proto: slime
+    raffle: null
   - type: Grammar
     attributes:
       proper: true
