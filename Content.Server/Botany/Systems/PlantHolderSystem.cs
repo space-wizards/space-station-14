@@ -1,5 +1,4 @@
 using Content.Server.Botany.Components;
-using Content.Server.Fluids.Components;
 using Content.Server.Popups;
 using Content.Shared.Botany;
 using Content.Shared.Burial.Components;
@@ -9,14 +8,11 @@ using Content.Shared.Coordinates.Helpers;
 using Content.Shared.EntityEffects;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
-using Content.Shared.Fluids.Components;
-using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -48,7 +44,6 @@ public sealed class PlantHolderSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<PlantHolderComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<PlantHolderComponent, InteractUsingEvent>(OnInteractUsing);
-        SubscribeLocalEvent<PlantHolderComponent, InteractHandEvent>(OnInteractHand);
         SubscribeLocalEvent<PlantHolderComponent, SolutionTransferredEvent>(OnSolutionTransferred);
     }
 
@@ -259,11 +254,6 @@ public sealed class PlantHolderSystem : EntitySystem
             return;
         }
 
-            ForceUpdateByExternalCause(uid, component);
-
-            return;
-        }
-
         if (TryComp<ProduceComponent>(args.Used, out var produce))
         {
             _popup.PopupCursor(Loc.GetString("plant-holder-component-compost-message",
@@ -300,10 +290,6 @@ public sealed class PlantHolderSystem : EntitySystem
     private void OnSolutionTransferred(Entity<PlantHolderComponent> ent, ref SolutionTransferredEvent args)
     {
         _audio.PlayPvs(ent.Comp.WateringSound, ent.Owner);
-    }
-    private void OnInteractHand(Entity<PlantHolderComponent> entity, ref InteractHandEvent args)
-    {
-        DoHarvest(entity, args.User, entity.Comp);
     }
 
     public void Update(EntityUid uid, PlantHolderComponent? component = null)
