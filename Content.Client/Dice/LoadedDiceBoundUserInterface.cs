@@ -6,6 +6,9 @@ using Content.Shared.Dice;
 
 namespace Content.Client.Dice;
 
+/// <summary>
+///     Bound UI to set the roll of a loaded die.
+/// </summary>
 [UsedImplicitly]
 public sealed class LoadedDiceBoundUserInterface : BoundUserInterface
 {

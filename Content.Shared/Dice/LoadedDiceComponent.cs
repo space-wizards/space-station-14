@@ -3,7 +3,11 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Dice;
 
-[RegisterComponent, NetworkedComponent]
+/// <summary>
+///     A "loaded" die, which can be manually set to always roll a predetermined side.
+///     Does nothing unless paired with a <see cref="DiceComponent"/>
+/// </summary>
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedLoadedDiceSystem))]
 [AutoGenerateComponentState(true)]
 public sealed partial class LoadedDiceComponent : Component
 {

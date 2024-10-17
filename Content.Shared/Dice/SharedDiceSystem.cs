@@ -5,6 +5,9 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.Dice;
 
+/// <summary>
+///     Handles rolling dice and changing the sprite and description of a die to match the rolled side.
+/// </summary>
 public abstract class SharedDiceSystem : EntitySystem
 {
     public override void Initialize()

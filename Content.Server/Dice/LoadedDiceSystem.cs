@@ -1,12 +1,10 @@
 using Content.Shared.Dice;
-//using Content.Shared.Popups;
-//using Content.Shared.Verbs;
-//using Robust.Server.GameObjects;
-//using Robust.Shared.Player;
-//using Robust.Shared.Utility;
 
 namespace Content.Server.Dice;
 
+/// <summary>
+///     Handles overriding the roll of a loaded die.
+/// </summary>
 public sealed class LoadedDiceSystem : SharedLoadedDiceSystem
 {
     public override void Initialize()

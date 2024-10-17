@@ -11,6 +11,9 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Dice;
 
+/// <summary>
+///     UI to set the roll of a loaded die.
+/// </summary>
 [GenerateTypedNameReferences]
 public sealed partial class LoadedDiceMenu : FancyWindow
 {
@@ -63,6 +66,10 @@ public sealed partial class LoadedDiceMenu : FancyWindow
     }
 }
 
+/// <summary>
+///     Helper struct to avoid computing the value of a side in the UI.
+///     For example, side 1 of a percentile die has the value "10".
+/// </summary>
 public struct DiceSide
 {
     public int Index;

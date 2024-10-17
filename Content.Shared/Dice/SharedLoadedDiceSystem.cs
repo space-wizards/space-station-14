@@ -7,6 +7,9 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Dice;
 
+/// <summary>
+///     Handles initializing loaded dice, and the UI to select a roll.
+/// </summary>
 public abstract class SharedLoadedDiceSystem : EntitySystem
 {
     [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;

@@ -7,6 +7,9 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Dice;
 
+/// <summary>
+///     Handles actually performing dice rolls.
+/// </summary>
 [UsedImplicitly]
 public sealed class DiceSystem : SharedDiceSystem
 {
