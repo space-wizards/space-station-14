@@ -33,8 +33,6 @@
 - type: entity
   parent: ClothingOuterVestWebMerc
   id: ClothingOuterVestWebMercSuspicion
-  components:
-    - type: Unremoveable
 
 - type: entity
   parent: HoPIDCard
