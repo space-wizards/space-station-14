@@ -56,7 +56,7 @@
     Steel: 500
     Glass: 500
     Plastic: 250
-    Gold: 40
+    Gold: 50
 
 - type: latheRecipe
   id: PowerCageHigh
