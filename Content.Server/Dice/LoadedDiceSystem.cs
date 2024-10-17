@@ -1,5 +1,4 @@
 using Content.Shared.Dice;
-using Content.Shared.IdentityManagement;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
@@ -81,16 +80,15 @@ public sealed class LoadedDiceSystem : SharedLoadedDiceSystem
         // There may not be a user if the change is not done by a player, e.g. OnMapInit
         if (component.User != null)
         {
-            var dieName = Identity.Entity(uid, EntityManager);
             string message;
             if (selectedSide == null)
             {
-                message = Loc.GetString("loaded-dice-unset", ("die", dieName));
+                message = Loc.GetString("loaded-dice-unset", ("die", uid));
             }
             else
             {
                 var sideValue = (selectedSide - die.Offset) * die.Multiplier;
-                message = Loc.GetString("loaded-dice-set", ("die", dieName), ("value", sideValue));
+                message = Loc.GetString("loaded-dice-set", ("die", uid), ("value", sideValue));
             }
 
             _popup.PopupEntity(message, uid, component.User.Value, PopupType.Small);
