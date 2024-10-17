@@ -88,9 +88,9 @@ namespace Content.Client.Chemistry.UI
             Tabs.SetTabTitle(1, Loc.GetString("chem-master-window-output-tab"));
         }
 
-        private ReagentButton MakeReagentButton(string text, ChemMasterReagentAmount amount, ReagentId id, bool isBuffer, string styleClass)
+        private ReagentButton MakeReagentButton(string text, ChemMasterReagentAmount amount, ReagentId id, bool isBuffer, string origin, string styleClass)
         {
-            var button = new ReagentButton(text, amount, id, isBuffer, styleClass);
+            var button = new ReagentButton(text, amount, id, isBuffer, origin, styleClass);
             button.OnPressed += args
                 => OnReagentButtonPressed?.Invoke(args, button);
             return button;
@@ -109,7 +109,7 @@ namespace Content.Client.Chemistry.UI
 
             var output = castState.OutputContainerInfo;
 
-            BufferCurrentVolume.Text = $" {castState.BufferCurrentVolume?.Int() ?? 0}u";
+            //BufferOutputVolume.Text = $" {castState.BufferOutputVolume?.Int() ?? 0}u";
 
             InputEjectButton.Disabled = castState.InputContainerInfo is null;
             OutputEjectButton.Disabled = output is null;
@@ -138,32 +138,21 @@ namespace Content.Client.Chemistry.UI
         /// <param name="state">State data sent by the server.</param>
         private string GenerateLabel(ChemMasterBoundUserInterfaceState state)
         {
-            if (state.BufferCurrentVolume == 0)
+            if (state.BufferOutputVolume == 0)
                 return "";
 
-            var reagent = state.BufferReagents.OrderBy(r => r.Quantity).First().Reagent;
+            var reagent = state.BufferOutputReagents.OrderBy(r => r.Quantity).Last().Reagent;
             _prototypeManager.TryIndex(reagent.Prototype, out ReagentPrototype? proto);
             return proto?.LocalizedName ?? "";
         }
 
-        /// <summary>
-        /// Update the container, buffer, and packaging panels.
-        /// </summary>
-        /// <param name="state">State data for the dispenser.</param>
-        private void UpdatePanelInfo(ChemMasterBoundUserInterfaceState state)
+        private void UpdateBufferInfo(BoxContainer bufferInfo, IReadOnlyList<ReagentQuantity> bufferReagents, FixedPoint2? bufferVolume, bool isStorageBuffer, string bufferName)
         {
-            BufferTransferButton.Pressed = state.Mode == ChemMasterMode.Transfer;
-            BufferDiscardButton.Pressed = state.Mode == ChemMasterMode.Discard;
+            bufferInfo.Children.Clear();
 
-            BuildContainerUI(InputContainerInfo, state.InputContainerInfo, true);
-            BuildContainerUI(OutputContainerInfo, state.OutputContainerInfo, false);
-
-            BufferInfo.Children.Clear();
-
-            if (!state.BufferReagents.Any())
+            if (!bufferReagents.Any())
             {
-                BufferInfo.Children.Add(new Label { Text = Loc.GetString("chem-master-window-buffer-empty-text") });
-
+                bufferInfo.Children.Add(new Label { Text = Loc.GetString("chem-master-window-buffer-empty-text") });
                 return;
             }
 
@@ -171,26 +160,25 @@ namespace Content.Client.Chemistry.UI
             {
                 Orientation = LayoutOrientation.Horizontal
             };
-            BufferInfo.AddChild(bufferHBox);
+            bufferInfo.AddChild(bufferHBox);
 
             var bufferLabel = new Label { Text = $"{Loc.GetString("chem-master-window-buffer-label")} " };
             bufferHBox.AddChild(bufferLabel);
             var bufferVol = new Label
             {
-                Text = $"{state.BufferCurrentVolume}u",
-                StyleClasses = {StyleNano.StyleClassLabelSecondaryColor}
+                Text = $"{bufferVolume}u",
+                StyleClasses = { StyleNano.StyleClassLabelSecondaryColor }
             };
             bufferHBox.AddChild(bufferVol);
 
-            foreach (var (reagent, quantity) in state.BufferReagents)
+            foreach (var (reagent, quantity) in bufferReagents)
             {
-                // Try to get the prototype for the given reagent. This gives us its name.
                 _prototypeManager.TryIndex(reagent.Prototype, out ReagentPrototype? proto);
                 var name = proto?.LocalizedName ?? Loc.GetString("chem-master-window-unknown-reagent-text");
 
                 if (proto != null)
                 {
-                    BufferInfo.Children.Add(new BoxContainer
+                    bufferInfo.Children.Add(new BoxContainer
                     {
                         Orientation = LayoutOrientation.Horizontal,
                         Children =
@@ -205,17 +193,34 @@ namespace Content.Client.Chemistry.UI
                             // Padding
                             new Control {HorizontalExpand = true},
 
-                            MakeReagentButton("1", ChemMasterReagentAmount.U1, reagent, true, StyleBase.ButtonOpenRight),
-                            MakeReagentButton("5", ChemMasterReagentAmount.U5, reagent, true, StyleBase.ButtonOpenBoth),
-                            MakeReagentButton("10", ChemMasterReagentAmount.U10, reagent, true, StyleBase.ButtonOpenBoth),
-                            MakeReagentButton("25", ChemMasterReagentAmount.U25, reagent, true, StyleBase.ButtonOpenBoth),
-                            MakeReagentButton("50", ChemMasterReagentAmount.U50, reagent, true, StyleBase.ButtonOpenBoth),
-                            MakeReagentButton("100", ChemMasterReagentAmount.U100, reagent, true, StyleBase.ButtonOpenBoth),
-                            MakeReagentButton(Loc.GetString("chem-master-window-buffer-all-amount"), ChemMasterReagentAmount.All, reagent, true, StyleBase.ButtonOpenLeft),
+                            MakeReagentButton("1", ChemMasterReagentAmount.U1, reagent, isStorageBuffer, bufferName, StyleBase.ButtonOpenRight),
+                            MakeReagentButton("5", ChemMasterReagentAmount.U5, reagent, isStorageBuffer, bufferName, StyleBase.ButtonOpenBoth),
+                            MakeReagentButton("10", ChemMasterReagentAmount.U10, reagent, isStorageBuffer, bufferName, StyleBase.ButtonOpenBoth),
+                            MakeReagentButton("25", ChemMasterReagentAmount.U25, reagent, isStorageBuffer, bufferName, StyleBase.ButtonOpenBoth),
+                            MakeReagentButton("50", ChemMasterReagentAmount.U50, reagent, isStorageBuffer, bufferName, StyleBase.ButtonOpenBoth),
+                            MakeReagentButton("100", ChemMasterReagentAmount.U100, reagent, isStorageBuffer, bufferName, StyleBase.ButtonOpenBoth),
+                            MakeReagentButton(Loc.GetString("chem-master-window-buffer-all-amount"), ChemMasterReagentAmount.All, reagent, isStorageBuffer, bufferName, StyleBase.ButtonOpenLeft),
                         }
                     });
                 }
             }
+        }
+
+        /// <summary>
+        /// Update the container, buffer, and packaging panels.
+        /// </summary>
+        /// <param name="state">State data for the dispenser.</param>
+        private void UpdatePanelInfo(ChemMasterBoundUserInterfaceState state)
+        {
+            BufferStorageButton.Pressed = state.Mode == ChemMasterMode.Storage;
+            BufferOutputButton.Pressed = state.Mode == ChemMasterMode.Output;
+            BufferDiscardButton.Pressed = state.Mode == ChemMasterMode.Discard;
+
+            BuildContainerUI(InputContainerInfo, state.InputContainerInfo, true);
+            BuildContainerUI(OutputContainerInfo, state.OutputContainerInfo, false);
+
+            UpdateBufferInfo(StorageBufferInfo, state.BufferStorageReagents, state.BufferStorageVolume, true, SharedChemMaster.StorageBufferSolutionName);
+            UpdateBufferInfo(OutputBufferInfo, state.BufferOutputReagents, state.BufferOutputVolume, false, SharedChemMaster.OutputBufferSolutionName);
         }
 
         private void BuildContainerUI(Control control, ContainerInfo? info, bool addReagentButtons)
@@ -294,20 +299,20 @@ namespace Content.Client.Chemistry.UI
                         cs.Add(new Control { HorizontalExpand = true });
 
                         cs.Add(MakeReagentButton(
-                            "1", ChemMasterReagentAmount.U1, id, false, StyleBase.ButtonOpenRight));
+                            "1", ChemMasterReagentAmount.U1, id, false, SharedChemMaster.InputSlotName, StyleBase.ButtonOpenRight));
                         cs.Add(MakeReagentButton(
-                            "5", ChemMasterReagentAmount.U5, id, false, StyleBase.ButtonOpenBoth));
+                            "5", ChemMasterReagentAmount.U5, id, false, SharedChemMaster.InputSlotName, StyleBase.ButtonOpenBoth));
                         cs.Add(MakeReagentButton(
-                            "10", ChemMasterReagentAmount.U10, id, false, StyleBase.ButtonOpenBoth));
+                            "10", ChemMasterReagentAmount.U10, id, false, SharedChemMaster.InputSlotName, StyleBase.ButtonOpenBoth));
                         cs.Add(MakeReagentButton(
-                            "25", ChemMasterReagentAmount.U25, id, false, StyleBase.ButtonOpenBoth));
+                            "25", ChemMasterReagentAmount.U25, id, false, SharedChemMaster.InputSlotName, StyleBase.ButtonOpenBoth));
                         cs.Add(MakeReagentButton(
-                            "50", ChemMasterReagentAmount.U50, id, false, StyleBase.ButtonOpenBoth));
+                            "50", ChemMasterReagentAmount.U50, id, false, SharedChemMaster.InputSlotName, StyleBase.ButtonOpenBoth));
                         cs.Add(MakeReagentButton(
-                            "100", ChemMasterReagentAmount.U100, id, false, StyleBase.ButtonOpenBoth));
+                            "100", ChemMasterReagentAmount.U100, id, false, SharedChemMaster.InputSlotName, StyleBase.ButtonOpenBoth));
                         cs.Add(MakeReagentButton(
                             Loc.GetString("chem-master-window-buffer-all-amount"),
-                            ChemMasterReagentAmount.All, id, false, StyleBase.ButtonOpenLeft));
+                            ChemMasterReagentAmount.All, id, false, SharedChemMaster.InputSlotName, StyleBase.ButtonOpenLeft));
                     }
 
                     control.Children.Add(inner);
@@ -333,13 +338,15 @@ namespace Content.Client.Chemistry.UI
     {
         public ChemMasterReagentAmount Amount { get; set; }
         public bool IsBuffer = true;
+        public string Origin { get; set; }
         public ReagentId Id { get; set; }
-        public ReagentButton(string text, ChemMasterReagentAmount amount, ReagentId id, bool isBuffer, string styleClass)
+        public ReagentButton(string text, ChemMasterReagentAmount amount, ReagentId id, bool isBuffer, string origin, string styleClass)
         {
             AddStyleClass(styleClass);
             Text = text;
             Amount = amount;
             Id = id;
+            Origin = origin;
             IsBuffer = isBuffer;
         }
     }
