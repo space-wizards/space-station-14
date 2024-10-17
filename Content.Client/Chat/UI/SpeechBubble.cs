@@ -203,6 +203,7 @@ namespace Content.Client.Chat.UI
             var label = new RichTextLabel
             {
                 MaxWidth = SpeechMaxWidth,
+                ModulateSelfOverride = Color.White.WithAlpha(ConfigManager.GetCVar(CCVars.SpeechTextAndNameOpacitySlider))
             };
 
             label.SetMessage(FormatSpeech(message.WrappedMessage, fontColor));
@@ -211,7 +212,7 @@ namespace Content.Client.Chat.UI
             {
                 StyleClasses = { "speechBox", speechStyleClass },
                 Children = { label },
-                ModulateSelfOverride = Color.White.WithAlpha(0.75f)
+                ModulateSelfOverride = Color.White.WithAlpha(ConfigManager.GetCVar(CCVars.SpeechBubbleOpacitySlider))
             };
 
             return panel;
@@ -232,7 +233,8 @@ namespace Content.Client.Chat.UI
             {
                 var label = new RichTextLabel
                 {
-                    MaxWidth = SpeechMaxWidth
+                    MaxWidth = SpeechMaxWidth,
+                    ModulateSelfOverride = Color.White.WithAlpha(ConfigManager.GetCVar(CCVars.SpeechTextAndNameOpacitySlider))
                 };
 
                 label.SetMessage(ExtractAndFormatSpeechSubstring(message, "BubbleContent", fontColor));
@@ -241,21 +243,23 @@ namespace Content.Client.Chat.UI
                 {
                     StyleClasses = { "speechBox", speechStyleClass },
                     Children = { label },
-                    ModulateSelfOverride = Color.White.WithAlpha(0.75f)
+                    ModulateSelfOverride = Color.White.WithAlpha(ConfigManager.GetCVar(CCVars.SpeechBubbleOpacitySlider))
                 };
                 return unfanciedPanel;
             }
 
             var bubbleHeader = new RichTextLabel
             {
-                Margin = new Thickness(1, 1, 1, 1)
+                Margin = new Thickness(1, 1, 1, 1),
+                ModulateSelfOverride = Color.White.WithAlpha(ConfigManager.GetCVar(CCVars.SpeechTextAndNameOpacitySlider))
             };
 
             var bubbleContent = new RichTextLabel
             {
                 MaxWidth = SpeechMaxWidth,
                 Margin = new Thickness(2, 6, 2, 2),
-                StyleClasses = { "bubbleContent" }
+                StyleClasses = { "bubbleContent" },
+                ModulateSelfOverride = Color.White.WithAlpha(ConfigManager.GetCVar(CCVars.SpeechTextAndNameOpacitySlider))
             };
 
             //We'll be honest. *Yes* this is hacky. Doing this in a cleaner way would require a bottom-up refactor of how saycode handles sending chat messages. -Myr
@@ -267,7 +271,7 @@ namespace Content.Client.Chat.UI
             {
                 StyleClasses = { "speechBox", speechStyleClass },
                 Children = { bubbleContent },
-                ModulateSelfOverride = Color.White.WithAlpha(0.75f),
+                ModulateSelfOverride = Color.White.WithAlpha(ConfigManager.GetCVar(CCVars.SpeechBubbleOpacitySlider)),
                 HorizontalAlignment = HAlignment.Center,
                 VerticalAlignment = VAlignment.Bottom,
                 Margin = new Thickness(4, 14, 4, 2)
@@ -277,7 +281,7 @@ namespace Content.Client.Chat.UI
             {
                 StyleClasses = { "speechBox", speechStyleClass },
                 Children = { bubbleHeader },
-                ModulateSelfOverride = Color.White.WithAlpha(ConfigManager.GetCVar(CCVars.ChatFancyNameBackground) ? 0.75f : 0f),
+                ModulateSelfOverride = Color.White.WithAlpha(ConfigManager.GetCVar(CCVars.ChatFancyNameBackground) ? ConfigManager.GetCVar(CCVars.SpeechBubbleOpacitySlider) : 0f),
                 HorizontalAlignment = HAlignment.Center,
                 VerticalAlignment = VAlignment.Top
             };
