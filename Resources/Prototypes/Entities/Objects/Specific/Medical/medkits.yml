@@ -12,9 +12,7 @@
     grid:
     - 0,0,3,1
   - type: Item
-    size: Normal
-    shape:
-    - 0,0,1,1
+    size: Large
     sprite: Objects/Specific/Medical/firstaidkits.rsi
     heldPrefix: firstaid
   - type: PhysicalComposition
@@ -100,4 +98,4 @@
     state: blackkit
   - type: Item
     heldPrefix: blackkit
-
+    size: Normal
