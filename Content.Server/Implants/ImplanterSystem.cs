@@ -5,8 +5,14 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
+using Content.Shared.Verbs;
+using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
+using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Implants;
 
@@ -15,6 +21,8 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
 
     public override void Initialize()
     {
@@ -23,8 +31,12 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
 
         SubscribeLocalEvent<ImplanterComponent, AfterInteractEvent>(OnImplanterAfterInteract);
 
+        SubscribeLocalEvent<ImplanterComponent, GetVerbsEvent<InteractionVerb>>(OnVerb);
+        SubscribeLocalEvent<ImplanterComponent, UseInHandEvent>(OnUseInHand);
+
         SubscribeLocalEvent<ImplanterComponent, ImplantEvent>(OnImplant);
         SubscribeLocalEvent<ImplanterComponent, DrawEvent>(OnDraw);
+        SubscribeLocalEvent<ImplanterComponent, DeimplantChangeVerbMessage>(OnSelected);
     }
 
     private void OnImplanterAfterInteract(EntityUid uid, ImplanterComponent component, AfterInteractEvent args)
@@ -79,6 +91,83 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
         args.Handled = true;
     }
 
+    private void OnVerb(EntityUid uid, ImplanterComponent component, GetVerbsEvent<InteractionVerb> args)
+    {
+        if (!args.CanAccess || !args.CanInteract)
+            return;
+
+        if (component.CurrentMode == ImplanterToggleMode.Draw)
+        {
+            args.Verbs.Add(new InteractionVerb()
+            {
+                Text = Loc.GetString("implanter-set-draw-verb"),
+                Act = () => TryOpenUi(uid, args.User, component)
+            });
+        }
+    }
+
+    private void OnUseInHand(EntityUid uid, ImplanterComponent? component, UseInHandEvent args)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        TryOpenUi(uid, args.User, component);
+    }
+
+    private void TryOpenUi(EntityUid uid, EntityUid user, ImplanterComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+        if (!TryComp(user, out ActorComponent? actor))
+            return;
+        _uiSystem.TryToggleUi(uid, DeimplantUiKey.Key, actor.PlayerSession);
+        UpdateUi(uid, component);
+    }
+
+    /// <summary>
+    /// Sets selectable implants in the UI of the draw setting window
+    /// </summary>
+    private void UpdateUi(EntityUid uid, ImplanterComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        Dictionary<string, string> implants = new();
+
+        foreach (var implant in component.DeimplantWhitelist)
+        {
+            _proto.TryIndex(implant, out EntityPrototype? proto);
+            if (proto != null)
+                implants.Add(proto.ID, proto.Name);
+        }
+
+        if (component.DeimplantChosen == null)
+            component.DeimplantChosen = component.DeimplantWhitelist.FirstOrNull();
+
+        var state = new DeimplantBuiState(component.DeimplantChosen, implants);
+        _uiSystem.SetUiState(uid, DeimplantUiKey.Key, state);
+    }
+
+    private void OnSelected(EntityUid uid, ImplanterComponent component, DeimplantChangeVerbMessage args)
+    {
+        component.DeimplantChosen = args.Implant;
+        SetSelectedDeimplant(uid, args.Implant, component: component);
+    }
+
+    public void SetSelectedDeimplant(EntityUid uid, string? implant, ImplanterComponent? component = null)
+    {
+        if (!Resolve(uid, ref component, false))
+            return;
+
+        if (implant != null && _proto.TryIndex(implant, out EntityPrototype? proto))
+            component.DeimplantChosen = proto;
+
+        Dirty(uid, component);
+    }
+
+    /// <summary>
+    /// Returns true if the target already has an implant of the same type.
+    /// </summary>
     public bool CheckSameImplant(EntityUid target, EntityUid implant)
     {
         if (!TryComp<ImplantedComponent>(target, out var implanted))
