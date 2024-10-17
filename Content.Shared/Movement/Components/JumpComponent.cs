@@ -31,7 +31,7 @@ public sealed partial class JumpComponent : Component
 
 
     // Sound
-    [DataField("soundJump"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public SoundSpecifier SoundJump = new SoundPathSpecifier("/Audio/Effects/gravity_jump.ogg");
 }
 
