@@ -1,21 +1,21 @@
-diona-last-name-dataset-1 Peace
-diona-last-name-dataset-2 Harmony
-diona-last-name-dataset-3 Relaxation
-diona-last-name-dataset-4 Serendipity
-diona-last-name-dataset-5 Calmness
-diona-last-name-dataset-6 Introspection
-diona-last-name-dataset-7 Union
-diona-last-name-dataset-8 Comfort
-diona-last-name-dataset-9 Dreams
-diona-last-name-dataset-10 Quietude
-diona-last-name-dataset-11 Balance
-diona-last-name-dataset-12 Gentleness
-diona-last-name-dataset-13 Placidity
-diona-last-name-dataset-14 Repose
-diona-last-name-dataset-15 Serenity
-diona-last-name-dataset-16 Stillness
-diona-last-name-dataset-17 Tranquility
-diona-last-name-dataset-18 Ease
-diona-last-name-dataset-19 Equilibrium
-diona-last-name-dataset-20 Composure
-diona-last-name-dataset-21 Control
+diona-last-name-dataset-1 = Peace
+diona-last-name-dataset-2 = Harmony
+diona-last-name-dataset-3 = Relaxation
+diona-last-name-dataset-4 = Serendipity
+diona-last-name-dataset-5 = Calmness
+diona-last-name-dataset-6 = Introspection
+diona-last-name-dataset-7 = Union
+diona-last-name-dataset-8 = Comfort
+diona-last-name-dataset-9 = Dreams
+diona-last-name-dataset-10 = Quietude
+diona-last-name-dataset-11 = Balance
+diona-last-name-dataset-12 = Gentleness
+diona-last-name-dataset-13 = Placidity
+diona-last-name-dataset-14 = Repose
+diona-last-name-dataset-15 = Serenity
+diona-last-name-dataset-16 = Stillness
+diona-last-name-dataset-17 = Tranquility
+diona-last-name-dataset-18 = Ease
+diona-last-name-dataset-19 = Equilibrium
+diona-last-name-dataset-20 = Composure
+diona-last-name-dataset-21 = Control
