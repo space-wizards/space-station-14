@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Skeletons no longer have fingerprints.
-    type: Tweak
-  id: 7019
-  time: '2024-07-31T16:08:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30530
 - author: themias
   changes:
   - message: Pens can be clicked cathartically
@@ -3944,3 +3937,11 @@
   id: 7518
   time: '2024-10-17T01:57:43.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32848
+- author: deltanedas
+  changes:
+  - message: You can now eject biomass from a biogenerator without having to deconstruct
+      it.
+    type: Tweak
+  id: 7519
+  time: '2024-10-17T03:12:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32854
