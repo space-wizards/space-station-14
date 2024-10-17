@@ -18,6 +18,7 @@ public sealed class LoadedDiceSystem : SharedLoadedDiceSystem
         SubscribeLocalEvent<LoadedDiceComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<LoadedDiceComponent, GetVerbsEvent<InteractionVerb>>(OnVerb);
         SubscribeLocalEvent<LoadedDiceComponent, LoadedDiceSideSelectedMessage>(OnSelected);
+        SubscribeLocalEvent<LoadedDiceComponent, DiceRollEvent>(OnDiceRoll);
     }
 
     private void OnMapInit(EntityUid uid, LoadedDiceComponent component, MapInitEvent args)
@@ -41,6 +42,14 @@ public sealed class LoadedDiceSystem : SharedLoadedDiceSystem
     private void OnSelected(EntityUid uid, LoadedDiceComponent component, LoadedDiceSideSelectedMessage args)
     {
         SetSelectedSide(uid, component, args.SelectedSide);
+    }
+
+    private void OnDiceRoll(EntityUid uid, LoadedDiceComponent component, ref DiceRollEvent roll)
+    {
+        if (component.SelectedSide == null)
+            return;
+
+        roll.Roll = component.SelectedSide.Value;
     }
 
     private void TryOpenUi(EntityUid uid, EntityUid user, LoadedDiceComponent? component = null)

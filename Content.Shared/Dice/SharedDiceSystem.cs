@@ -28,12 +28,12 @@ public abstract class SharedDiceSystem : EntitySystem
             return;
 
         args.Handled = true;
-        Roll(uid, component);
+        Roll(uid, component, args.User);
     }
 
     private void OnLand(EntityUid uid, DiceComponent component, ref LandEvent args)
     {
-        Roll(uid, component);
+        Roll(uid, component, args.User);
     }
 
     private void OnExamined(EntityUid uid, DiceComponent dice, ExaminedEvent args)
@@ -82,7 +82,7 @@ public abstract class SharedDiceSystem : EntitySystem
         // See client system.
     }
 
-    public virtual void Roll(EntityUid uid, DiceComponent? die = null)
+    public virtual void Roll(EntityUid uid, DiceComponent? die = null, EntityUid? roller = null)
     {
         // See the server system, client cannot predict rolling.
     }
