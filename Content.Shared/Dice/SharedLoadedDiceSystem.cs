@@ -1,3 +1,5 @@
+using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 using Content.Shared.Hands;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
@@ -14,6 +16,7 @@ public abstract class SharedLoadedDiceSystem : EntitySystem
 {
     [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
     public override void Initialize()
     {
@@ -112,17 +115,22 @@ public abstract class SharedLoadedDiceSystem : EntitySystem
         if (component.User != null)
         {
             string message;
+            LogStringHandler adminMessage;
             if (selectedSide == null)
             {
                 message = Loc.GetString("loaded-dice-unset", ("die", uid));
+                adminMessage = $"{ToPrettyString(component.User):player} unset the loaded {ToPrettyString(uid):target}";
             }
             else
             {
                 var sideValue = (selectedSide - die.Offset) * die.Multiplier;
+
                 message = Loc.GetString("loaded-dice-set", ("die", uid), ("value", sideValue));
+                adminMessage = $"{ToPrettyString(component.User):player} set the loaded {ToPrettyString(uid):target} to roll {sideValue}";
             }
 
             _popup.PopupEntity(message, uid, component.User.Value, PopupType.Small);
+            _adminLogger.Add(LogType.Action, LogImpact.Low, ref adminMessage);
         }
 
         component.SelectedSide = selectedSide;
