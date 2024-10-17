@@ -1,4 +1,5 @@
 ﻿using Robust.Shared.Prototypes;
+using Robust.Shared.Audio;
 
 namespace Content.Shared.Silicons.Laws.Components;
 
@@ -20,4 +21,12 @@ public sealed partial class SiliconLawProviderComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public SiliconLawset? Lawset;
+
+    /// <summary>
+    /// The sound that plays for the Silicon player
+    /// when the particular lawboard has been inserted.
+    /// </summary>
+    [DataField]
+    public SoundSpecifier? LawUploadSound = new SoundPathSpecifier("/Audio/Misc/cryo_warning.ogg");
+
 }
