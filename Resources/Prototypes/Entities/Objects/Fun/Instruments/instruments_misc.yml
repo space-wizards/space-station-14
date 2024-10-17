@@ -43,9 +43,9 @@
 
 - type: entity
   parent: BaseHandheldInstrument
-  id: PhoneInstrument
-  name: red phone
-  description: Should anything ever go wrong...
+  id: BasePhoneInstrument
+  name: old red phone
+  description: Who does this call? Hello?
   components:
   - type: Sprite
     sprite: Objects/Fun/Instruments/otherinstruments.rsi
@@ -64,7 +64,13 @@
     verbImage: null
 
 - type: entity
-  parent: PhoneInstrument
+  parent: [BasePhoneInstrument, BaseCommandContraband]
+  id: PhoneInstrument
+  name: red phone
+  description: Should anything ever go wrong...
+
+- type: entity
+  parent: [BasePhoneInstrument, BaseSyndicateContraband]
   id: PhoneInstrumentSyndicate
   name: blood-red phone
   description: For evil people to call their friends.
