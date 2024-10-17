@@ -1,4 +1,7 @@
-﻿namespace Content.Shared.Emoting
+﻿using Content.Shared.Chat.Prototypes;
+using Content.Shared.Inventory;
+
+namespace Content.Shared.Emoting
 {
     public sealed class EmoteAttemptEvent : CancellableEntityEventArgs
     {

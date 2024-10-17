@@ -16,6 +16,7 @@ using Content.Shared.Strip.Components;
 using Content.Shared.Temperature;
 using Content.Shared.Verbs;
 using Content.Shared.Chat;
+using Content.Shared.Emoting;
 
 namespace Content.Shared.Inventory;
 
