@@ -7,11 +7,13 @@ using Content.Server.Administration.Systems;
 using Content.Server.MoMMI;
 using Content.Server.Players.RateLimiting;
 using Content.Server.Preferences.Managers;
+using Content.Server.Replays;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Database;
 using Content.Shared.Mind;
+using Content.Shared.Replays;
 using Content.Shared.Players.RateLimiting;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
@@ -260,6 +262,17 @@ internal sealed partial class ChatManager : IChatManager
         ChatMessageToAll(ChatChannel.OOC, message, wrappedMessage, EntityUid.Invalid, hideChat: false, recordReplay: true, colorOverride: colorOverride, author: player.UserId);
         _mommiLink.SendOOCMessage(player.Name, message.Replace("@", "\\@").Replace("<", "\\<").Replace("/", "\\/")); // @ and < are both problematic for discord due to pinging. / is sanitized solely to kneecap links to murder embeds via blunt force
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"OOC from {player:Player}: {message}");
+
+        var replayEventSystem = _entityManager.System<ReplayEventSystem>();
+
+        replayEventSystem.RecordReplayEvent(new ChatMessageReplayEvent()
+        {
+            Message = message,
+            Sender = replayEventSystem.GetPlayerInfo(player),
+            Severity = ReplayEventSeverity.Low,
+            EventType = ReplayEventType.ChatMessageSent,
+            Type = ChatChannel.OOC.ToString()
+        });
     }
 
     private void SendAdminChat(ICommonSession player, string message)

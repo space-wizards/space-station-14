@@ -6,6 +6,7 @@ using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Server.MassMedia.Components;
 using Content.Server.Popups;
+using Content.Server.Replays;
 using Content.Server.Station.Systems;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
@@ -15,6 +16,7 @@ using Content.Shared.Database;
 using Content.Shared.MassMedia.Components;
 using Content.Shared.MassMedia.Systems;
 using Content.Shared.Popups;
+using Content.Shared.Replays;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
 using Content.Shared.IdentityManagement;
@@ -34,6 +36,7 @@ public sealed class NewsSystem : SharedNewsSystem
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
+    [Dependency] private readonly ReplayEventSystem _replayEventSystem = default!;
 
     public override void Initialize()
     {
@@ -169,6 +172,16 @@ public sealed class NewsSystem : SharedNewsSystem
             ));
 
         articles.Add(article);
+
+        _replayEventSystem.RecordReplayEvent(new NewsArticlePublishedReplayEvent()
+        {
+            EventType = ReplayEventType.NewsArticlePublished,
+            Severity = ReplayEventSeverity.Medium,
+            Content = article.Content,
+            Title = article.Title,
+            Author = article.Author,
+            ShareTime = article.ShareTime,
+        });
 
         var args = new NewsArticlePublishedEvent(article);
         var query = EntityQueryEnumerator<NewsReaderCartridgeComponent>();

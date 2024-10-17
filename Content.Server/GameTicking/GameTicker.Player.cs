@@ -1,9 +1,13 @@
+using System.Linq;
+using Content.Server.Database;
+using Content.Server.Replays;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.GameWindow;
 using Content.Shared.Players;
 using Content.Shared.Preferences;
+using Content.Shared.Replays;
 using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
@@ -80,6 +84,19 @@ namespace Content.Server.GameTicking
                         _roundStartTime = _gameTiming.CurTime + LobbyDuration;
                     }
 
+                    _replayEventSystem.RecordReplayEvent(new GenericPlayerEvent()
+                    {
+                        Severity = ReplayEventSeverity.Low,
+                        EventType = ReplayEventType.PlayerJoin,
+                        Time = _gameTiming.CurTick.Value,
+                        Target = new ReplayEventPlayer()
+                        {
+                            PlayerOOCName = args.Session.Name,
+                            PlayerICName = "N/A",
+                            PlayerGuid = args.Session.UserId,
+                        },
+                    });
+
                     break;
                 }
 
@@ -133,6 +150,19 @@ namespace Content.Server.GameTicking
                     }
 
                     _userDb.ClientDisconnected(session);
+
+                    _replayEventSystem.RecordReplayEvent(new GenericPlayerEvent()
+                    {
+                        Severity = ReplayEventSeverity.Low,
+                        EventType = ReplayEventType.PlayerLeave,
+                        Time = _gameTiming.CurTick.Value,
+                        Target = new ReplayEventPlayer()
+                        {
+                            PlayerOOCName = args.Session.Name,
+                            PlayerICName = "N/A",
+                            PlayerGuid = args.Session.UserId,
+                        },
+                    });
                     break;
                 }
             }
