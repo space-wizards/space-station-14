@@ -23,6 +23,31 @@
   - /Audio/Effects/Gasp/deathgasp_2.ogg
 
 - type: soundCollection
+  id: MaleSlimeDeathGasp
+  files:
+  - /Audio/Effects/Gasp/s_male_deathgasp_1.ogg
+  - /Audio/Effects/Gasp/s_male_deathgasp_2.ogg
+  - /Audio/Effects/Gasp/s_male_deathgasp_3.ogg
+  - /Audio/Effects/Gasp/s_male_deathgasp_4.ogg
+  - /Audio/Effects/Gasp/s_male_deathgasp_5.ogg
+
+- type: soundCollection
+  id: FemaleSlimeDeathGasp
+  files:
+  - /Audio/Effects/Gasp/female_deathgasp_1.ogg
+  - /Audio/Effects/Gasp/female_deathgasp_2.ogg
+  - /Audio/Effects/Gasp/female_deathgasp_3.ogg
+  - /Audio/Effects/Gasp/female_deathgasp_4.ogg
+  - /Audio/Effects/Gasp/female_deathgasp_5.ogg
+
+- type: soundCollection
+  id: SlimeDeathGasp
+  files:
+  - /Audio/Effects/Gasp/s_deathgasp_1.ogg
+  - /Audio/Effects/Gasp/s_deathgasp_2.ogg
+
+
+- type: soundCollection
   id: MothDeathGasp
   files:
   - /Audio/Effects/Gasp/moth_DeathGasp.ogg
