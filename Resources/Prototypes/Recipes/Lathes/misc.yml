@@ -143,8 +143,8 @@
     Silver: 500
     
 - type: latheRecipe
-  id: ClothingShoesJumpBoots
-  result: ClothingShoesJumpBoots
+  id: ClothingShoesBootsJump
+  result: ClothingShoesBootsJump
   completetime: 2
   materials:
     Steel: 1000

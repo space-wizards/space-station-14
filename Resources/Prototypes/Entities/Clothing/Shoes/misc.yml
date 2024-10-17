@@ -151,7 +151,7 @@
    
 - type: entity
   parent: ClothingShoesBase
-  id: ClothingShoesJumpBoots
+  id: ClothingShoesBootsJump
   name: jump boots
   description: Technological boots used by explorers of new worlds from various unwanted obstacles.
   components:
