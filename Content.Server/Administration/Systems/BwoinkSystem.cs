@@ -5,6 +5,7 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Afk;
 using Content.Server.Database;
@@ -43,6 +44,7 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly IAfkManager _afkManager = default!;
         [Dependency] private readonly IServerDbManager _dbManager = default!;
         [Dependency] private readonly PlayerRateLimitManager _rateLimit = default!;
+        [Dependency] private readonly SupportExchangeLogging _supportLogging = default!;
 
         [GeneratedRegex(@"^https://discord\.com/api/webhooks/(\d+)/((?!.*/).*)$")]
         private static partial Regex DiscordRegex();
@@ -540,13 +542,12 @@ namespace Content.Server.Administration.Systems
             }
         }
 
-        protected override void OnBwoinkTextMessage(BwoinkTextMessage message, EntitySessionEventArgs eventArgs)
+        protected override async void  OnBwoinkTextMessage(BwoinkTextMessage message, EntitySessionEventArgs eventArgs)
         {
             base.OnBwoinkTextMessage(message, eventArgs);
             _activeConversations[message.UserId] = DateTime.Now;
             var senderSession = eventArgs.SenderSession;
 
-            // TODO: Sanitize text?
             // Confirm that this person is actually allowed to send a message here.
             var personalChannel = senderSession.UserId == message.UserId;
             var senderAdmin = _adminManager.GetAdminData(senderSession);
@@ -566,7 +567,6 @@ namespace Content.Server.Administration.Systems
             string bwoinkText;
             string adminPrefix = "";
 
-            //Getting an administrator position
             if (_config.GetCVar(CCVars.AhelpAdminPrefix) && senderAdmin is not null && senderAdmin.Title is not null)
             {
                 adminPrefix = $"[bold]\\[{senderAdmin.Title}\\][/bold] ";
@@ -593,8 +593,6 @@ namespace Content.Server.Administration.Systems
             var playSound = !senderAHelpAdmin || message.PlaySound;
             var msg = new BwoinkTextMessage(message.UserId, senderSession.UserId, bwoinkText, playSound: playSound);
 
-            LogBwoink(msg);
-
             var admins = GetTargetAdmins();
 
             // Notify all admins
@@ -602,6 +600,29 @@ namespace Content.Server.Administration.Systems
             {
                 RaiseNetworkEvent(msg, channel);
             }
+
+            bool targetOnline = _playerManager.TryGetSessionById(message.UserId, out var _);
+
+            // Log the message to the database
+            await _supportLogging.LogSupportMessageAsync(
+                supportRound: _gameTicker.RoundId,
+                roundStatus: _gameTicker.RunLevel switch
+                {
+                    GameRunLevel.PreRoundLobby => "PreRoundLobby",
+                    GameRunLevel.InRound => "InRound",
+                    GameRunLevel.PostRound => "PostRound",
+                    _ => "Unknown",
+                },
+                timeSent: DateTime.UtcNow,
+                adminsOnline: GetAdmins().Count > 0,
+                senderId: senderSession.UserId,
+                senderEntity: senderSession.AttachedEntity,
+                isAdminned: senderAdmin != null,
+                senderEntityName: senderSession.Name,
+                supportTargetId: message.UserId,
+                targetOnline: targetOnline,
+                message: message.Text
+            );
 
             string adminPrefixWebhook = "";
 
@@ -689,6 +710,14 @@ namespace Content.Server.Administration.Systems
             return _adminManager.ActiveAdmins
                 .Where(p => (_adminManager.GetAdminData(p)?.HasFlag(AdminFlags.Adminhelp) ?? false) &&
                             !_afkManager.IsAfk(p))
+                .Select(p => p.Channel)
+                .ToList();
+        }
+
+        private IList<INetChannel> GetAdmins()
+        {
+            return _adminManager.ActiveAdmins
+                .Where(p => (_adminManager.GetAdminData(p)?.HasFlag(AdminFlags.Adminhelp) ?? false))
                 .Select(p => p.Channel)
                 .ToList();
         }

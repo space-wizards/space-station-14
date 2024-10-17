@@ -43,6 +43,8 @@ namespace Content.Server.Database
         public DbSet<AdminMessage> AdminMessages { get; set; } = null!;
         public DbSet<RoleWhitelist> RoleWhitelists { get; set; } = null!;
         public DbSet<BanTemplate> BanTemplate { get; set; } = null!;
+        public DbSet<SupportExchange> SupportExchanges { get; set; } = null!;
+        public DbSet<SupportMessage> SupportMessages { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -204,6 +206,39 @@ namespace Content.Server.Database
             // SetNull is necessary for created by/edited by-s here,
             // so you can safely delete admins (GDPR right to erasure) while keeping the notes intact
 
+            // Support Logging configuration
+            modelBuilder.Entity<SupportMessage>(entity =>
+            {
+                entity.HasKey(e => new { e.SupportExchangeId, e.SupportMessageId });
+
+                entity.HasIndex(e => e.TimeSent);
+
+                entity.HasOne(e => e.SupportExchange)
+                    .WithMany(e => e.SupportMessages)
+                    .HasForeignKey(e => e.SupportExchangeId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne<Player>()
+                    .WithMany()
+                    .HasForeignKey(e => e.PlayerUserId)
+                    .HasPrincipalKey(p => p.UserId);
+
+                // Configure SupportData as a jsonb column
+                entity.OwnsOne(e => e.SupportData).ToJson();
+            });
+
+            modelBuilder.Entity<SupportExchange>(entity =>
+            {
+                entity.HasKey(e => e.SupportExchangeId);
+
+                entity.HasMany(e => e.SupportMessages)
+                    .WithOne(e => e.SupportExchange)
+                    .HasForeignKey(e => e.SupportExchangeId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasIndex(e => e.SupportRound);
+            });
+
             modelBuilder.Entity<AdminNote>()
                 .HasOne(note => note.Player)
                 .WithMany(player => player.AdminNotesReceived)
@@ -327,6 +362,8 @@ namespace Content.Server.Database
                 .HasForeignKey(w => w.PlayerUserId)
                 .HasPrincipalKey(p => p.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+
         }
 
         public virtual IQueryable<AdminLog> SearchLogs(IQueryable<AdminLog> query, string searchText)
@@ -660,6 +697,61 @@ namespace Content.Server.Database
         public Player Player { get; set; } = default!;
 
         [ForeignKey("RoundId,LogId")] public AdminLog Log { get; set; } = default!;
+    }
+
+    //Ahelp Logging + groundwork for MentorHelpTM
+    public class SupportExchange
+    {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int SupportExchangeId { get; set; }
+
+        [Required]
+        public int SupportRound { get; set; }
+        public Guid SupportTarget { get; set; }
+        public int ServerId { get; set; }
+        public ICollection<SupportMessage> SupportMessages { get; set; } = new List<SupportMessage>();
+    }
+
+    public class SupportMessage
+    {
+        [ForeignKey(nameof(SupportExchangeId))]
+        public int SupportExchangeId { get; set; }
+        public int SupportMessageId { get; set; }
+        [Required]
+        public DateTime TimeSent { get; set; }
+        public Guid PlayerUserId { get; set; }
+        public string? Message { get; set; }
+
+        [Column(TypeName = "jsonb")]
+        public SupportData SupportData { get; set; } = null!; // JSON data for the message
+        public SupportExchange SupportExchange { get; set; } = null!;
+    }
+
+    public class SupportData
+    {
+        public int? SenderEntity { get; set; }
+        public string? SenderEntityName { get; set; }
+        public bool IsAdminned { get; set; }
+        public bool AdminsOnline { get; set; }
+        public bool TargetOnline { get; set; }
+        public string RoundStatus { get; set; }
+
+        public SupportData(
+            int? senderEntity,
+            string senderEntityName,
+            bool isAdminned,
+            bool adminsOnline,
+            bool targetOnline,
+            string roundStatus
+            )
+        {
+            this.SenderEntity = senderEntity;
+            this.SenderEntityName = senderEntityName;
+            this.IsAdminned = isAdminned;
+            this.AdminsOnline = adminsOnline;
+            this.TargetOnline = targetOnline;
+            this.RoundStatus = roundStatus;
+        }
     }
 
     // Used by SS14.Admin

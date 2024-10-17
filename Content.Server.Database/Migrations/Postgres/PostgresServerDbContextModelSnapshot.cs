@@ -512,20 +512,6 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.ToTable("assigned_user_id", (string)null);
                 });
 
-            modelBuilder.Entity("Content.Server.Database.Blacklist",
-                b =>
-                {
-                    b.Property<Guid>("UserId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("user_id");
-
-                    b.HasKey("UserId")
-                        .HasName("PK_blacklist");
-
-                    b.ToTable("blacklist", (string) null);
-                });
-
             modelBuilder.Entity("Content.Server.Database.BanTemplate", b =>
                 {
                     b.Property<int>("Id")
@@ -569,6 +555,19 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasName("PK_ban_template");
 
                     b.ToTable("ban_template", (string)null);
+                });
+
+            modelBuilder.Entity("Content.Server.Database.Blacklist", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("UserId")
+                        .HasName("PK_blacklist");
+
+                    b.ToTable("blacklist", (string)null);
                 });
 
             modelBuilder.Entity("Content.Server.Database.ConnectionLog", b =>
@@ -1317,6 +1316,67 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.ToTable("server_unban", (string)null);
                 });
 
+            modelBuilder.Entity("Content.Server.Database.SupportExchange", b =>
+                {
+                    b.Property<int>("SupportExchangeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("support_exchange_id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("SupportExchangeId"));
+
+                    b.Property<int>("ServerId")
+                        .HasColumnType("integer")
+                        .HasColumnName("server_id");
+
+                    b.Property<int>("SupportRound")
+                        .HasColumnType("integer")
+                        .HasColumnName("support_round");
+
+                    b.Property<Guid>("SupportTarget")
+                        .HasColumnType("uuid")
+                        .HasColumnName("support_target");
+
+                    b.HasKey("SupportExchangeId")
+                        .HasName("PK_support_exchanges");
+
+                    b.HasIndex("SupportRound");
+
+                    b.ToTable("support_exchanges", (string)null);
+                });
+
+            modelBuilder.Entity("Content.Server.Database.SupportMessage", b =>
+                {
+                    b.Property<int>("SupportExchangeId")
+                        .HasColumnType("integer")
+                        .HasColumnName("support_exchange_id");
+
+                    b.Property<int>("SupportMessageId")
+                        .HasColumnType("integer")
+                        .HasColumnName("support_message_id");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("text")
+                        .HasColumnName("message");
+
+                    b.Property<Guid>("PlayerUserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("player_user_id");
+
+                    b.Property<DateTime>("TimeSent")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("time_sent");
+
+                    b.HasKey("SupportExchangeId", "SupportMessageId")
+                        .HasName("PK_support_messages");
+
+                    b.HasIndex("PlayerUserId");
+
+                    b.HasIndex("TimeSent");
+
+                    b.ToTable("support_messages", (string)null);
+                });
+
             modelBuilder.Entity("Content.Server.Database.Trait", b =>
                 {
                     b.Property<int>("Id")
@@ -1826,6 +1886,75 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.Navigation("Ban");
                 });
 
+            modelBuilder.Entity("Content.Server.Database.SupportMessage", b =>
+                {
+                    b.HasOne("Content.Server.Database.Player", null)
+                        .WithMany()
+                        .HasForeignKey("PlayerUserId")
+                        .HasPrincipalKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_support_messages_player_player_id");
+
+                    b.HasOne("Content.Server.Database.SupportExchange", "SupportExchange")
+                        .WithMany("SupportMessages")
+                        .HasForeignKey("SupportExchangeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_support_messages_support_exchanges_support_exchange_id");
+
+                    b.OwnsOne("Content.Server.Database.SupportData", "SupportData", b1 =>
+                        {
+                            b1.Property<int>("SupportMessageSupportExchangeId")
+                                .HasColumnType("integer")
+                                .HasColumnName("support_exchange_id");
+
+                            b1.Property<int>("SupportMessageId")
+                                .HasColumnType("integer")
+                                .HasColumnName("support_message_id");
+
+                            b1.Property<bool>("AdminsOnline")
+                                .HasColumnType("boolean")
+                                .HasColumnName("support_data__admins_online");
+
+                            b1.Property<bool>("IsAdminned")
+                                .HasColumnType("boolean")
+                                .HasColumnName("support_data__is_adminned");
+
+                            b1.Property<string>("RoundStatus")
+                                .IsRequired()
+                                .HasColumnType("text")
+                                .HasColumnName("support_data__round_status");
+
+                            b1.Property<int?>("SenderEntity")
+                                .HasColumnType("integer")
+                                .HasColumnName("support_data__sender_entity");
+
+                            b1.Property<string>("SenderEntityName")
+                                .HasColumnType("text")
+                                .HasColumnName("support_data__sender_entity_name");
+
+                            b1.Property<bool>("TargetOnline")
+                                .HasColumnType("boolean")
+                                .HasColumnName("support_data__target_online");
+
+                            b1.HasKey("SupportMessageSupportExchangeId", "SupportMessageId");
+
+                            b1.ToTable("support_messages");
+
+                            b1.ToJson("SupportData");
+
+                            b1.WithOwner()
+                                .HasForeignKey("SupportMessageSupportExchangeId", "SupportMessageId")
+                                .HasConstraintName("FK_support_messages_support_messages_support_exchange_id_suppo~");
+                        });
+
+                    b.Navigation("SupportData")
+                        .IsRequired();
+
+                    b.Navigation("SupportExchange");
+                });
+
             modelBuilder.Entity("Content.Server.Database.Trait", b =>
                 {
                     b.HasOne("Content.Server.Database.Profile", "Profile")
@@ -1964,6 +2093,11 @@ namespace Content.Server.Database.Migrations.Postgres
             modelBuilder.Entity("Content.Server.Database.ServerRoleBan", b =>
                 {
                     b.Navigation("Unban");
+                });
+
+            modelBuilder.Entity("Content.Server.Database.SupportExchange", b =>
+                {
+                    b.Navigation("SupportMessages");
                 });
 #pragma warning restore 612, 618
         }
