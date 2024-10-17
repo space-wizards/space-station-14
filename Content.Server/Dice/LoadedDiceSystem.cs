@@ -19,6 +19,7 @@ public sealed class LoadedDiceSystem : SharedLoadedDiceSystem
         SubscribeLocalEvent<LoadedDiceComponent, GetVerbsEvent<InteractionVerb>>(OnVerb);
         SubscribeLocalEvent<LoadedDiceComponent, LoadedDiceSideSelectedMessage>(OnSelected);
         SubscribeLocalEvent<LoadedDiceComponent, DiceRollEvent>(OnDiceRoll);
+        SubscribeLocalEvent<LoadedDiceComponent, GetVerbsEvent<AlternativeVerb>>(OnAlternativeVerb);
     }
 
     private void OnMapInit(EntityUid uid, LoadedDiceComponent component, MapInitEvent args)
@@ -33,9 +34,24 @@ public sealed class LoadedDiceSystem : SharedLoadedDiceSystem
 
         args.Verbs.Add(new InteractionVerb()
         {
-            Text = Loc.GetString("loaded-dice-verb-text"),
+            Text = Loc.GetString("loaded-dice-set-verb-text"),
             Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/settings.svg.192dpi.png")),
             Act = () => TryOpenUi(uid, args.User, component)
+        });
+
+    }
+
+    private void OnAlternativeVerb(EntityUid uid, LoadedDiceComponent component, GetVerbsEvent<AlternativeVerb> args)
+    {
+        if (!args.CanAccess || !args.CanInteract || component.User != args.User)
+            return;
+
+        args.Verbs.Add(new AlternativeVerb()
+        {
+            Priority = 1, // Make this the alt-click verb
+            Text = Loc.GetString("loaded-dice-unset-verb-text"),
+            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/die.svg.192dpi.png")),
+            Act = () => SetSelectedSide(uid, component, null)
         });
     }
 
