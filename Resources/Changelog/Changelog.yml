@@ -1,22 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: Adds hand labelers to the PTech, ChemDrobe, and LawDrobe.
-    type: Add
-  id: 7023
-  time: '2024-08-01T02:59:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29958
-- author: Ko4erga
-  changes:
-  - message: Added a cutter machine for crafting patterned steel tiles, concrete and
-      wooden tiles.
-    type: Add
-  - message: After rip off patterned tiles you get current pattern, not just steel
-      tile.
-    type: Tweak
-  id: 7024
-  time: '2024-08-01T10:26:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30431
 - author: NakataRin
   changes:
   - message: Added paramedic to the train station.
@@ -3949,3 +3931,20 @@
   id: 7522
   time: '2024-10-17T04:00:52.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32480
+- author: Myra
+  changes:
+  - message: The game's title bar window will display the name of the server you have
+      joined (unless disabled).
+    type: Add
+  id: 7523
+  time: '2024-10-17T11:06:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32547
+- author: Aeshus
+  changes:
+  - message: Emote shorthands (like "lol" or ":)") sent in chat are detected throughout
+      the whole message. Note that only the last shorthand in the message will be
+      emoted.
+    type: Tweak
+  id: 7524
+  time: '2024-10-17T14:01:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/28645
