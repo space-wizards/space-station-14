@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Add a button to the lobby so you can export a .png of your characters
-    type: Add
-  id: 7018
-  time: '2024-07-31T15:14:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29874
 - author: slarticodefast
   changes:
   - message: Skeletons no longer have fingerprints.
@@ -3944,3 +3937,10 @@
   id: 7517
   time: '2024-10-16T22:32:32.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32738
+- author: SlamBamActionman
+  changes:
+  - message: The Microphone instrument has a new vocal style "Kweh".
+    type: Add
+  id: 7518
+  time: '2024-10-17T01:57:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32848
