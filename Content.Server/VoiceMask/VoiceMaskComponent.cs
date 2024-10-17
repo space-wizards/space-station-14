@@ -27,6 +27,12 @@ public sealed partial class VoiceMaskComponent : Component
     public ProtoId<SpeechVerbPrototype>? VoiceMaskSpeechVerb;
 
     /// <summary>
+    ///     The speech sound that will override an entities default one. If null, it will use the entities default sound.
+    /// </summary>
+    [DataField]
+    public ProtoId<SpeechSoundsPrototype>? VoiceMaskSpeechSound;
+
+    /// <summary>
     ///     The action that gets displayed when the voice mask is equipped.
     /// </summary>
     [DataField]
