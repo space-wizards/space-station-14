@@ -994,6 +994,9 @@
   id: Nugget # for chicken nuggets
 
 - type: Tag
+  id: FakeNukeDisk
+
+- type: Tag
   id: NukeOpsUplink
 
 - type: Tag
@@ -1177,7 +1180,7 @@
 - type: Tag
   id: SecureWindoor
 
-- type: Tag  
+- type: Tag
   id: SecurityHelmet
 
 - type: Tag

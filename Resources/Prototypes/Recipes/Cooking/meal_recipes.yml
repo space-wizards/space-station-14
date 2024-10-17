@@ -1062,6 +1062,16 @@
     FoodMeat: 3
     FoodPlateTin: 1
 
+- type: microwaveMealRecipe
+  id: RecipePumpkinPie
+  name: pumpkin pie recipe
+  result: FoodPiePumpkin
+  time: 15
+  solids:
+    FoodDoughPie: 1
+    FoodPumpkin: 1
+    FoodPlateTin: 1
+
 #- type: microwaveMealRecipe
 #  id: RecipePlumpPie
 #  name: plump pie recipe
