@@ -294,3 +294,4 @@ flavor-complex-snotty = like snot
 flavor-complex-speed = like speed
 flavor-weh = like weh
 flavour-stardust = like stardust
+flavor-complex-brotherly = brotherly

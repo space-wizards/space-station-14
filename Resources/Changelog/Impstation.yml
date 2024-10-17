@@ -2916,3 +2916,159 @@
   id: 361
   time: '2024-10-12T15:55:15.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/464
+- author: smpletan
+  changes:
+  - message: Added assets for the Prospector antagonist role. Of these assets, the
+      Texas Pond, Breaching Sledge, and Makeshift Hardsuit are currently implemented
+      and usable in game if spawned by an admin.
+    type: Add
+  id: 362
+  time: '2024-10-12T20:40:51.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/456
+- author: hivehum
+  changes:
+  - message: Midround changelings can now show up earlier in a round, but in fewer
+      numbers.
+    type: Tweak
+  id: 363
+  time: '2024-10-12T20:42:20.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/467
+- author: starlighthowls
+  changes:
+  - message: derotates skimmer, ty for testing everyone!
+    type: Tweak
+  id: 364
+  time: '2024-10-12T20:41:41.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/466
+- author: formlessnameless
+  changes:
+  - message: Ghost bar patrons are now also real ghosts and can speak to the dead
+    type: Add
+  id: 365
+  time: '2024-10-12T22:04:15.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/469
+- author: TheCactus
+  changes:
+  - message: Added text highlighting.
+    type: Add
+  id: 366
+  time: '2024-10-12T22:09:36.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/468
+- author: formlessnameless
+  changes:
+  - message: Ling and Heretic will no longer roll on antag immune targets
+    type: Fix
+  id: 367
+  time: '2024-10-12T23:23:34.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/470
+- author: hivehum
+  changes:
+  - message: Tons of new items are now available to build the burger of your dreams.
+    type: Add
+  id: 368
+  time: '2024-10-13T00:45:17.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/471
+- author: formlessnameless
+  changes:
+  - message: Slimes are now capable of heresy
+    type: Fix
+  id: 369
+  time: '2024-10-13T00:52:51.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/472
+- author: formlessnameless
+  changes:
+  - message: Snails and Thraven are also once more capable of heresy.
+    type: Fix
+  id: 370
+  time: '2024-10-13T01:12:05.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/473
+- author: KingMudkipIII
+  changes:
+  - message: Changed the chat colour for the service channel to not be sucks visibility
+    type: Tweak
+  id: 371
+  time: '2024-10-13T08:03:16.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/475
+- author: widgetbeck
+  changes:
+  - message: Fixed gray displacement maps (for real this time)
+    type: Fix
+  id: 372
+  time: '2024-10-13T08:04:39.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/476
+- author: TGRCdev
+  changes:
+  - message: Fixed Changeling's Chitinous Armor and Space Suit refusing to equip regardless
+      of how naked your character was
+    type: Fix
+  id: 373
+  time: '2024-10-15T04:57:36.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/483
+- author: honeyed-lemons
+  changes:
+  - message: Added new gray ears by normalgirl2171 and gray antenna
+    type: Add
+  - message: Adjusted gray marking organization for a better experience adding new
+      options
+    type: Tweak
+  id: 374
+  time: '2024-10-15T04:58:48.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/480
+- author: Sha-Seng
+  changes:
+  - message: Prestige HoS cape and armor
+    type: Add
+  - message: HoS formal dress sprite for vox
+    type: Add
+  - message: Various prestige captain sprite touchups
+    type: Tweak
+  id: 375
+  time: '2024-10-15T04:58:20.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/474
+- author: DinnerCalzone
+  changes:
+  - message: Added juice that makes you UNGH
+    type: Add
+  - message: Added accent system and speech sounds for player controlled BROS
+    type: Add
+  - message: Player controlled BROS can now escape an inventory with a 2 second do-after
+    type: Tweak
+  - message: Made BROS sounds mono to work with positional audio, increased volume
+      of the files to normalize it to be close to the previous volume
+    type: Fix
+  id: 376
+  time: '2024-10-15T04:59:48.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/479
+- author: harpy
+  changes:
+  - message: Slimes now have their own unique and slightly scary voice!
+    type: Add
+  id: 377
+  time: '2024-10-15T05:00:43.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/478
+- author: Sha-Seng
+  changes:
+  - message: Caduceus Cap, has a little siren, found in paramed lockers
+    type: Add
+  id: 378
+  time: '2024-10-15T04:58:19.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/484
+- author: Hikkikira
+  changes:
+  - message: robotics winter boots
+    type: Add
+  - message: robotics winter boots in the robodrobe and scientist loadout
+    type: Tweak
+  id: 379
+  time: '2024-10-15T05:04:11.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/481
+- author: nowaitstop
+  changes:
+  - message: Playing cards and their system from the Frontier station github, with
+      a slight tweak to their size.
+    type: Add
+  - message: Added two decks of cards to the Good Clean Fun vending machine.
+    type: Tweak
+  id: 380
+  time: '2024-10-15T05:04:55.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/482

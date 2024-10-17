@@ -54,6 +54,7 @@ public sealed partial class ChangelingComponent : Component
 
     public bool IsInLastResort = false;
 
+    public List<EntityUid>? ActiveArmor = null;
 
     public Dictionary<string, EntityUid?> Equipment = new();
 

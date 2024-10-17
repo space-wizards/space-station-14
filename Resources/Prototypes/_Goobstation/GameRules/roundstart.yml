@@ -15,6 +15,9 @@
       max: 7
       playerRatio: 10
       lateJoinAdditional: true
+      blacklist:
+        components:
+        - AntagImmune
       mindComponents:
       - type: ChangelingRole
         prototype: Changeling

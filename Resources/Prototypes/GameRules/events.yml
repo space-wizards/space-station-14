@@ -451,7 +451,7 @@
   parent: BaseGameRule
   components:
   - type: StationEvent
-    earliestStart: 60
+    earliestStart: 45
     minimumPlayers: 30 # roundstart changeling is 15 which seems insane
     weight: 2 # twice as common as zombies
     duration: 1
@@ -460,8 +460,8 @@
     agentName: changeling-roundend-name
     definitions:
     - prefRoles: [ Changeling ]
-      max: 3
-      playerRatio: 10
+      max: 1
+      playerRatio: 30
       blacklist:
         components:
         - AntagImmune

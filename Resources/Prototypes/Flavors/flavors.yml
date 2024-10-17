@@ -1224,3 +1224,8 @@
   id: zombieslushie
   flavorType: Complex
   description: flavor-complex-zombieslushie
+  
+- type: flavor
+  id: brotherly
+  flavorType: Complex
+  description: flavor-complex-brotherly

@@ -34,18 +34,6 @@
   - type: Body
     prototype: Snail
     requiredLegs: 2
-  - type: UserInterface
-    interfaces:
-      enum.StorageUiKey.Key:
-        type: StorageBoundUserInterface
-      enum.VoiceMaskUIKey.Key:
-        type: VoiceMaskBoundUserInterface
-      enum.HumanoidMarkingModifierKey.Key:
-        type: HumanoidMarkingModifierBoundUserInterface
-      enum.StrippingUiKey.Key:
-        type: StrippableBoundUserInterface
-      enum.StoreUiKey.Key:
-        type: StoreBoundUserInterface
   - type: FootstepModifier
     footstepSoundCollection:
       path: /Audio/Effects/Footsteps/snailstep.ogg
@@ -162,7 +150,7 @@
           32:
             sprite: Mobs/Species/Snail/displacement.rsi
             state: back
-      
+
   - type: Speech
     speechSounds: Snail
   - type: TypingIndicator

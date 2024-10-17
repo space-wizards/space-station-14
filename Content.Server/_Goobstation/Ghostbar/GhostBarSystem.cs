@@ -9,6 +9,7 @@ using Robust.Shared.Prototypes;
 using Robust.Server.Maps;
 using Robust.Shared.Random;
 using Content.Shared.Ghost;
+using Content.Shared._Impstation.Ghost;
 using Content.Server._Goobstation.Ghostbar.Components;
 using Content.Server.Mind;
 using Content.Shared.Mind;
@@ -44,7 +45,7 @@ public sealed class GhostBarSystem : EntitySystem
     {
         SubscribeLocalEvent<RoundStartingEvent>(OnRoundStart);
         SubscribeNetworkEvent<GhostBarSpawnEvent>(SpawnPlayer);
-        SubscribeLocalEvent<GhostBarPlayerComponent, MindRemovedMessage>(OnPlayerGhosted);
+        SubscribeLocalEvent<GhostBarPatronComponent, MindRemovedMessage>(OnPlayerGhosted);
     }
 
     const string MapPath = "Maps/_Goobstation/Nonstations/ghostbar.yml";
@@ -84,7 +85,7 @@ public sealed class GhostBarSystem : EntitySystem
         var profile = _ticker.GetPlayerProfile(args.SenderSession);
         var mobUid = _spawningSystem.SpawnPlayerMob(randomSpawnPoint, randomJob, profile, null);
 
-        _entityManager.EnsureComponent<GhostBarPlayerComponent>(mobUid);
+        _entityManager.EnsureComponent<GhostBarPatronComponent>(mobUid);
         _entityManager.EnsureComponent<MindShieldComponent>(mobUid);
         _entityManager.EnsureComponent<AntagImmuneComponent>(mobUid);
 
@@ -97,7 +98,7 @@ public sealed class GhostBarSystem : EntitySystem
         }
     }
 
-    private void OnPlayerGhosted(EntityUid uid, GhostBarPlayerComponent component, MindRemovedMessage args)
+    private void OnPlayerGhosted(EntityUid uid, GhostBarPatronComponent component, MindRemovedMessage args)
     {
         _entityManager.DeleteEntity(uid);
     }

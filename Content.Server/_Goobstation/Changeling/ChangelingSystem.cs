@@ -375,17 +375,12 @@ public sealed partial class ChangelingSystem : EntitySystem
 
         return true;
     }
-    public bool TryToggleItem(EntityUid uid, EntProtoId proto, ChangelingComponent comp, string? clothingSlot = null)
+    public bool TryToggleItem(EntityUid uid, EntProtoId proto, ChangelingComponent comp)
     {
-        if (!comp.Equipment.TryGetValue(proto.Id, out var item) && item == null)
+        if (!comp.Equipment.TryGetValue(proto.Id, out var item))
         {
             item = Spawn(proto, Transform(uid).Coordinates);
-            if (clothingSlot != null && !_inventory.TryEquip(uid, (EntityUid) item, clothingSlot, force: true))
-            {
-                QueueDel(item);
-                return false;
-            }
-            else if (!_hands.TryForcePickupAnyHand(uid, (EntityUid) item))
+            if (!_hands.TryForcePickupAnyHand(uid, (EntityUid) item))
             {
                 _popup.PopupEntity(Loc.GetString("changeling-fail-hands"), uid, uid);
                 QueueDel(item);
@@ -400,6 +395,41 @@ public sealed partial class ChangelingSystem : EntitySystem
         comp.Equipment.Remove(proto.Id);
 
         return true;
+    }
+
+    public bool TryToggleArmor(EntityUid uid, ChangelingComponent comp, (EntProtoId, string)[] armors)
+    {
+        if (comp.ActiveArmor == null)
+        {
+            // Equip armor
+            var newArmor = new List<EntityUid>();
+            var coords = Transform(uid).Coordinates;
+            foreach (var (proto, slot) in armors)
+            {
+                EntityUid armor = EntityManager.SpawnEntity(proto, coords);
+                if (!_inventory.TryEquip(uid, armor, slot, force: true))
+                {
+                    QueueDel(armor);
+                    foreach (var delArmor in newArmor)
+                        QueueDel(delArmor);
+
+                    return false;
+                }
+                newArmor.Add(armor);
+            }
+
+            comp.ActiveArmor = newArmor;
+            return true;
+        }
+        else
+        {
+            // Unequip armor
+            foreach (var armor in comp.ActiveArmor)
+                QueueDel(armor);
+
+            comp.ActiveArmor = null!;
+            return true;
+        }
     }
 
     public bool TryStealDNA(EntityUid uid, EntityUid target, ChangelingComponent comp, bool countObjective = false)
@@ -464,11 +494,11 @@ public sealed partial class ChangelingSystem : EntitySystem
         return comp;
     }
     private EntityUid? TransformEntity(
-        EntityUid uid, 
-        TransformData? data = null, 
-        EntProtoId? protoId = null, 
-        ChangelingComponent? comp = null, 
-        bool dropInventory = false, 
+        EntityUid uid,
+        TransformData? data = null,
+        EntProtoId? protoId = null,
+        ChangelingComponent? comp = null,
+        bool dropInventory = false,
         bool transferDamage = true,
         bool persistentDna = false)
     {
@@ -494,7 +524,7 @@ public sealed partial class ChangelingSystem : EntitySystem
             RevertOnDeath = false
         };
 
-        
+
         var newUid = _polymorph.PolymorphEntity(uid, config);
 
         if (newUid == null)
@@ -566,7 +596,7 @@ public sealed partial class ChangelingSystem : EntitySystem
         EntityUid? newUid = null;
         if (sting)
             newUid = TransformEntity(target, data: data, persistentDna: persistentDna);
-        else 
+        else
         {
             comp.IsInLesserForm = false;
             newUid = TransformEntity(target, data: data, comp: comp, persistentDna: persistentDna);
@@ -638,7 +668,7 @@ public sealed partial class ChangelingSystem : EntitySystem
 
         if (!args.DamageIncreased)
             return;
-        
+
         target.Damage.ClampMax(200); // we never die. UNLESS??
     }
 

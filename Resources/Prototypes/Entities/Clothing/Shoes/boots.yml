@@ -172,6 +172,16 @@
     sprite: Clothing/Shoes/Boots/winterbootssci.rsi
 
 - type: entity
+  parent: ClothingShoesBaseWinterBoots
+  id: ClothingShoesBootsWinterRobo
+  name: robotics winter boots
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/winterbootsrobo.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/winterbootsrobo.rsi
+
+- type: entity
   parent: [ClothingShoesBaseWinterBoots, ClothingShoesMilitaryBase, BaseRestrictedContraband]
   id: ClothingShoesBootsWinterSec
   name: security winter boots
