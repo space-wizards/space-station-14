@@ -9,6 +9,8 @@ using Content.Shared.Coordinates.Helpers;
 using Content.Shared.EntityEffects;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
+using Content.Shared.Fluids.Components;
+using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
@@ -46,6 +48,8 @@ public sealed class PlantHolderSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<PlantHolderComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<PlantHolderComponent, InteractUsingEvent>(OnInteractUsing);
+        SubscribeLocalEvent<PlantHolderComponent, InteractHandEvent>(OnInteractHand);
+        SubscribeLocalEvent<PlantHolderComponent, SolutionTransferredEvent>(OnSolutionTransferred);
     }
 
     public override void Update(float frameTime)
@@ -255,32 +259,6 @@ public sealed class PlantHolderSystem : EntitySystem
             return;
         }
 
-        if (_solutionContainerSystem.TryGetDrainableSolution(args.Used, out var solution, out _)
-            && _solutionContainerSystem.ResolveSolution(uid, component.SoilSolutionName, ref component.SoilSolution)
-            && TryComp(args.Used, out SprayComponent? spray))
-        {
-            var amount = FixedPoint2.New(1);
-
-            var targetEntity = uid;
-            var solutionEntity = args.Used;
-
-            _audio.PlayPvs(spray.SpraySound, args.Used, AudioParams.Default.WithVariation(0.125f));
-
-            var split = _solutionContainerSystem.Drain(solutionEntity, solution.Value, amount);
-
-            if (split.Volume == 0)
-            {
-                _popup.PopupCursor(Loc.GetString("plant-holder-component-no-plant-message",
-                    ("owner", args.Used)), args.User);
-                return;
-            }
-
-            _popup.PopupCursor(Loc.GetString("plant-holder-component-spray-message",
-                ("owner", uid),
-                ("amount", split.Volume)), args.User, PopupType.Medium);
-
-            _solutionContainerSystem.TryAddSolution(component.SoilSolution.Value, split);
-
             ForceUpdateByExternalCause(uid, component);
 
             return;
@@ -317,6 +295,15 @@ public sealed class PlantHolderSystem : EntitySystem
             }
             QueueDel(args.Used);
         }
+    }
+
+    private void OnSolutionTransferred(Entity<PlantHolderComponent> ent, ref SolutionTransferredEvent args)
+    {
+        _audio.PlayPvs(ent.Comp.WateringSound, ent.Owner);
+    }
+    private void OnInteractHand(Entity<PlantHolderComponent> entity, ref InteractHandEvent args)
+    {
+        DoHarvest(entity, args.User, entity.Comp);
     }
 
     public void Update(EntityUid uid, PlantHolderComponent? component = null)
