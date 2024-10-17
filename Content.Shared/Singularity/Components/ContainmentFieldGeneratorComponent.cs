@@ -1,4 +1,5 @@
 using Content.Shared.Physics;
+using Content.Shared.Radio;
 using Content.Shared.Tag;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -7,7 +8,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Shared.Singularity.Components;
 
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class ContainmentFieldGeneratorComponent : Component
 {
         private int _powerBuffer;
@@ -79,7 +80,7 @@ public sealed partial class ContainmentFieldGeneratorComponent : Component
     /// <summary>
     /// Is the generator toggled on?
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool Enabled;
 
     /// <summary>
@@ -107,6 +108,7 @@ public sealed partial class ContainmentFieldGeneratorComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("createdField", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string CreatedField = "ContainmentField";
+
 }
 
 [Serializable, NetSerializable]
