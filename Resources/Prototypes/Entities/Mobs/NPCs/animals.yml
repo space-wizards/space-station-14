@@ -2284,7 +2284,7 @@
   name: tarantula
   parent: [ SimpleMobBase, MobCombat ]
   id: MobGiantSpider
-  description: Widely recognized to be the literal worst thing in existence.
+  description: Widely recognized to be the literal worst thing in existence. Aggressively territorial.
   components:
   - type: Sprite
     drawdepth: Mobs
@@ -2452,6 +2452,13 @@
         180: Dead
     - type: Spider
       webPrototype: SpiderWebClown
+    - type: GhostRole
+      makeSentient: true
+      name: ghost-role-information-giant-spider-name
+      description: ghost-role-information-giant-spider-description
+      rules: ghost-role-information-clown-spider-rules
+      raffle:
+        settings: short
     - type: MeleeWeapon
       altDisarm: false
       angle: 0
@@ -3383,7 +3390,7 @@
   - type: HTN
     rootTask:
       task: RuminantCompound
-      
+
 - type: entity
   name: diona nymph
   parent: [SimpleMobBase, StripableInventoryBase]
