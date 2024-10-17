@@ -341,7 +341,7 @@
       path: /Audio/Announcements/attention.ogg
     earliestStart: 20
     minimumPlayers: 15
-    weight: 5
+    weight: 1
     duration: 60
   - type: VentCrittersRule
     entries:
@@ -362,7 +362,7 @@
       path: /Audio/Announcements/attention.ogg
     earliestStart: 20
     minimumPlayers: 15
-    weight: 5
+    weight: 1
     duration: 60
   - type: VentCrittersRule
     entries:
@@ -383,7 +383,7 @@
       path: /Audio/Announcements/attention.ogg
     earliestStart: 20
     minimumPlayers: 15
-    weight: 5
+    weight: 2
     duration: 60
   - type: VentCrittersRule
     entries:
@@ -400,7 +400,7 @@
       path: /Audio/Announcements/attention.ogg
     earliestStart: 20
     minimumPlayers: 20
-    weight: 1.5
+    weight: 1
     duration: 60
   - type: VentCrittersRule
     entries:
