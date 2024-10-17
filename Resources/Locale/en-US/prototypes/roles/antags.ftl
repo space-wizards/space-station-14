@@ -13,8 +13,15 @@ roles-antag-zombie-objective = Turn as many humans as possible into zombies.
 roles-antag-suspicion-innocent-name = Innocent
 roles-antag-suspicion-innocent-objective = Discover and eliminate all traitors.
 
-roles-antag-suspicion-suspect-name = Suspect
-roles-antag-suspicion-suspect-objective = Kill the innocents.
+roles-antag-suspicion-traitor-name = Traitor
+roles-antag-suspicion-traitor-objective = Kill the innocents while avoiding detection.
+
+roles-antag-suspicion-pending-name = Pending
+roles-antag-suspicion-pending-objective = The game is still starting, wait for your role to be assigned.
+
+
+roles-antag-suspicion-detective-name = Detective
+roles-antag-suspicion-detective-objective = Discover and eliminate all traitors with your special tools.
 
 roles-antag-nuclear-operative-commander-name = Nuclear operative commander
 roles-antag-nuclear-operative-commander-objective = Lead your team to the destruction of the station.

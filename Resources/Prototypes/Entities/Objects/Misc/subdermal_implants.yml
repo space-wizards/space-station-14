@@ -163,6 +163,38 @@
         type: StoreBoundUserInterface
 
 - type: entity
+  parent: UplinkImplant
+  id: SusTraitorUplinkImplant
+  components:
+    - type: Store
+      name: suspicion-traitor-uplink
+      balance:
+          Telecrystal: 4
+      categories:
+      - SSSTraitorWeapons
+      - UplinkAmmo
+      - SSSTraitorExplosives
+      - SSSTraitorWearables
+      - SSSTraitorChemicals
+      - SSSTraitorDisruption
+
+- type: entity
+  parent: UplinkImplant
+  id: SusDetectiveUplinkImplant
+  components:
+  - type: Store
+    name: suspicion-detective-uplink
+    balance:
+      Telecrystal: 2
+    categories:
+    - SSSDetectiveWeapons
+    - UplinkAmmo
+    - SSSDetectiveExplosives
+    - SSSDetectiveWearables
+    - SSSDetectiveChemicals
+    - SSSDetectiveDisruption
+
+- type: entity
   parent: BaseSubdermalImplant
   id: EmpImplant
   name: EMP implant
@@ -325,3 +357,27 @@
    - type: Tag
      tags:
        - MindShield
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: SuspicionRadarImplantTraitor
+  name: radar implant
+  description: This implant will show other people nearby, projected directly into the users field of vision.
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: SubdermalImplant
+      implantAction: ActionPingRadarImplant
+    - type: SuspicionRadar
+      showTraitors: true
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: SuspicionRadarImplantDetective
+  name: radar implant
+  description: This implant will show other people nearby, projected directly into the users field of vision.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SubdermalImplant
+    implantAction: ActionPingRadarImplant
+  - type: SuspicionRadar
+    showTraitors: false

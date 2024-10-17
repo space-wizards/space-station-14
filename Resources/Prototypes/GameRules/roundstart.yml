@@ -24,6 +24,12 @@
       prob: 0.5
 
 - type: entity
+  parent: BaseGameRule
+  id: Suspicion
+  components:
+  - type: SuspicionRule
+
+- type: entity
   id: DeathMatch31
   parent: BaseGameRule
   components:
@@ -271,7 +277,7 @@
         tableId: CalmPestEventsTable
       - !type:NestedSelector
         tableId: SpicyPestEventsTable
-        
+
 
 - type: entityTable
   id: SpaceTrafficControlTable

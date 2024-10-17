@@ -115,6 +115,18 @@
   inhand:
     - WeaponMeleeToolboxRobust
 
+# Suspicion Gear
+- type: startingGear
+  id: SuspicionGear
+  equipment:
+    ears: ClothingHeadsetGreySuspicion
+    jumpsuit: ClothingUniformJumpsuitColorWhiteSuspicion
+    shoes: ClothingShoesBootsJack
+    gloves: ClothingHandsGlovesCombat
+    back: ClothingBackpackSuspicion
+    outerClothing: ClothingOuterVestWebMercSuspicion
+    id: HoPIDCardSuspicion
+
 #Brigmedic
 
 - type: startingGear

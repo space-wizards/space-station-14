@@ -32,6 +32,13 @@ public sealed partial class BodyComponent : Component
     public SoundSpecifier GibSound = new SoundCollectionSpecifier("gib");
 
     /// <summary>
+    /// If this body can gib.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    [Access(typeof(SharedBodySystem), Other = AccessPermissions.ReadWriteExecute)]
+    public bool CanGib = true;
+
+    /// <summary>
     /// The amount of legs required to move at full speed.
     /// If 0, then legs do not impact speed.
     /// </summary>

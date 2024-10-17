@@ -1,0 +1,12 @@
+﻿- type: entity
+  id: SSSGridMarker
+  name: Grid marker
+  parent: MarkerBase
+  suffix: SSS
+  components:
+  - type: SuspicionGridMarker
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Fun/toys.rsi
+      state: plushie_rouny

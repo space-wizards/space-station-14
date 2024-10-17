@@ -225,6 +225,8 @@ namespace Content.Server.Ghost
             _actions.AddAction(uid, ref component.ToggleLightingActionEntity, component.ToggleLightingAction);
             _actions.AddAction(uid, ref component.ToggleFoVActionEntity, component.ToggleFoVAction);
             _actions.AddAction(uid, ref component.ToggleGhostsActionEntity, component.ToggleGhostsAction);
+
+            RaiseLocalEvent(new GhostSpawnedEvent(uid));
         }
 
         private void OnGhostExamine(EntityUid uid, GhostComponent component, ExaminedEvent args)
@@ -586,5 +588,14 @@ namespace Content.Server.Ghost
         public MindComponent Mind { get; } = mind;
         public bool CanReturnGlobal { get; } = canReturnGlobal;
         public bool Result { get; set; }
+    }
+
+    /// <summary>
+    /// This is a workaround for me being unable to subscribe to the map init event of the ghost component; says theres already a subscriber to it...????
+    /// This gets called on the ghost.
+    /// </summary>
+    public sealed class GhostSpawnedEvent(EntityUid ghost)
+    {
+        public EntityUid Ghost = ghost;
     }
 }

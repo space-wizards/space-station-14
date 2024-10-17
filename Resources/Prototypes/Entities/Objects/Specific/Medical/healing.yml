@@ -56,6 +56,15 @@
     count: 1
 
 - type: entity
+  id: Ointment5
+  parent: Ointment
+  suffix: Five
+  components:
+  - type: Stack
+    stackType: Ointment
+    count: 5
+
+- type: entity
   id: Ointment10Lingering
   parent: Ointment
   suffix: 10, Lingering
@@ -142,6 +151,15 @@
   - type: Stack
     stackType: Brutepack
     count: 1
+
+- type: entity
+  id: Brutepack5
+  parent: Brutepack
+  suffix: Five
+  components:
+  - type: Stack
+    stackType: Brutepack
+    count: 5
 
 - type: entity
   id: Brutepack10Lingering
@@ -296,6 +314,14 @@
   components:
   - type: Stack
     count: 1
+
+- type: entity
+  id: Gauze5
+  parent: Gauze
+  suffix: Five
+  components:
+  - type: Stack
+    count: 5
 
 - type: entity
   id: Gauze10Lingering
