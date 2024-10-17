@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: BaseSpellbook
   name: spellbook
   parent: BaseItem
@@ -183,6 +183,31 @@
     - type: Spellbook
       spellActions:
         ActionFireball: -1
+
+- type: entity
+  id: LightningSpellbook
+  name: lightning spellbook
+  parent: BaseSpellbook
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/books.rsi
+      layers:
+      - state: paper
+      - state: cover_old
+        color: "#79239b"
+      - state: decor_wingette_circle
+        color: gold
+      - state: detail_rivets
+        color: gold
+      - state: detail_bookmark
+        color: gold
+      - state: overlay_blood
+      - state: icon_lightning
+        shader: unshaded
+        color: gold
+    - type: Spellbook
+      spellActions:
+        ActionLightning: -1
 
 - type: entity
   id: ScrollRunes
