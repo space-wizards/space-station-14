@@ -25,7 +25,7 @@ public sealed partial class UsernameBanListControl : BoxContainer
         PopulateList(_usernameBanCache.BanList);
     }
 
-    private void PopulateList(IReadOnlyList<(int, string, string, bool)>? banData = null)
+    private void PopulateList(IReadOnlyList<(int, string, bool, bool)>? banData = null)
     {
         banData ??= _usernameBanCache.BanList;
         UsernameBanListContainer.PopulateList(banData.Select(info => new UsernameBanListData(info)).ToList());
@@ -65,6 +65,7 @@ public sealed partial class UsernameBanListControl : BoxContainer
         }
 
         OnSelectionChanged?.Invoke(selectedId);
+        _usernameBanCache.RequestFullUsernameBan(selectedId);
         _selectedId = selectedId;
     }
 
@@ -76,4 +77,4 @@ public sealed partial class UsernameBanListControl : BoxContainer
     }
 }
 
-public record UsernameBanListData((int, string, string, bool) Info) : ListData;
+public record UsernameBanListData((int, string, bool, bool) Info) : ListData;

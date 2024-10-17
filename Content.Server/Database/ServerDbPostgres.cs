@@ -526,6 +526,7 @@ namespace Content.Server.Database
                 Message = usernameRule.Message,
                 RestrictingAdmin = usernameRule.RestrictingAdmin?.UserId,
                 ExtendToBan = usernameRule.ExtendToBan,
+                Regex = usernameRule.Regex,
                 // should be false, null, null; perhaps should be checked
                 Retired = false,
                 RetiringAdmin = null,
@@ -577,13 +578,13 @@ namespace Content.Server.Database
         private static ServerUsernameRuleDef? ConvertUsernameRule(ServerUsernameRule rule)
         {
             NetUserId? acUid = null;
-            if (rule.RestrictingAdmin is {} acGuid)
+            if (rule.RestrictingAdmin is { } acGuid)
             {
                 acUid = new NetUserId(acGuid);
             }
 
             NetUserId? arUid = null;
-            if (rule.RetiringAdmin is {} arGuid)
+            if (rule.RetiringAdmin is { } arGuid)
             {
                 arUid = new NetUserId(arGuid);
             }
@@ -592,6 +593,7 @@ namespace Content.Server.Database
                 rule.Id,
                 rule.CreationTime,
                 rule.RoundId,
+                rule.Regex,
                 rule.Expression,
                 rule.Message,
                 acUid,

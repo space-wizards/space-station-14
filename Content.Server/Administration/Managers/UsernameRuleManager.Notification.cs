@@ -71,7 +71,7 @@ public sealed partial class UsernameRuleManager
             return;
         }
 
-        CacheCompiledRegex(usernameRule.Id ?? -1, usernameRule.Expression, usernameRule.Message, usernameRule.ExtendToBan);
+        CacheCompiledRegex(usernameRule.Id ?? -1, usernameRule.Regex, usernameRule.Expression, usernameRule.Message, usernameRule.ExtendToBan);
 
         KickMatchingConnectedPlayers(data.UsernameRuleId, usernameRule, "username rule notification");
     }

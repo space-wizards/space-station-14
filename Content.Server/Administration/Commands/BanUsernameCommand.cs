@@ -36,8 +36,6 @@ public sealed class BanUsernameCommand : LocalizedCommands
             return;
         }
 
-        var usernameRule = $"^{username}$";
-
         if (args.Length > 1)
         {
             message = args[1];
@@ -53,7 +51,7 @@ public sealed class BanUsernameCommand : LocalizedCommands
             return;
         }
 
-        _usernameRules.CreateUsernameRule(usernameRule, message, issuer, ban);
+        _usernameRules.CreateUsernameRule(false, username, message, issuer, ban);
     }
 
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)

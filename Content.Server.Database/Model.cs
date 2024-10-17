@@ -998,6 +998,7 @@ namespace Content.Server.Database
         public DateTime CreationTime { get; set; }
         [ForeignKey("Round")]
         public int? RoundId { get; set; }
+        public bool Regex { get; set; }
         [Required]
         public required string Expression { get; set; }
         public required string Message { get; set; }

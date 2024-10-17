@@ -2,8 +2,6 @@ using Content.Server.Administration.Managers;
 using Content.Server.EUI;
 using Content.Shared.Eui;
 using Content.Shared.Administration;
-using Robust.Server.Player;
-using Robust.Shared.Console;
 using Robust.Shared.Network;
 using System.Collections.Immutable;
 using System.Net;
@@ -74,43 +72,46 @@ public sealed class BanUsernamePanelEui : BaseEui
 
     private async void CreateUsernameBan(string regexRule, string? reason, bool ban, bool regex)
     {
-        if (!_admins.HasAdminFlag(Player, AdminFlags.Ban)) {
+        if (!_admins.HasAdminFlag(Player, AdminFlags.Ban))
+        {
             _sawmill.Warning(Loc.GetString("cmd-ban-username-missing-minimum-permissions", ("admin", Player.Name), ("adminId", Player.UserId)));
             return;
         }
 
-        if (regex && !_admins.HasAdminFlag(Player, AdminFlags.MassBan)) {
+        if (regex && !_admins.HasAdminFlag(Player, AdminFlags.MassBan))
+        {
             _sawmill.Warning(Loc.GetString("cmd-ban-username-missing-minimum-permissions-regex", ("admin", Player.Name), ("adminId", Player.UserId), ("expression", regexRule)));
             return;
         }
 
-        if (!regex && !UsernameHelpers.IsNameValid(regexRule, out var _)) {
+        if (!regex && !UsernameHelpers.IsNameValid(regexRule, out var _))
+        {
             _sawmill.Warning(Loc.GetString("cmd-ban-username-invalid-simple", ("admin", Player.Name), ("adminId", Player.UserId), ("expression", regexRule)));
             return;
         }
 
         string finalRegexRule = regexRule;
 
-        if (!regex) {
-            finalRegexRule = $"^{finalRegexRule}$";
-        }
-
         string? finalMessage;
 
-        if (string.IsNullOrEmpty(reason)) {
+        if (string.IsNullOrEmpty(reason))
+        {
             _sawmill.Warning(Loc.GetString("cmd-ban-username-missing-reason", ("admin", Player.Name), ("adminId", Player.UserId), ("expression", regexRule)));
-            if (regex) {
+            if (regex)
+            {
                 finalMessage = Loc.GetString("ban-username-default-reason-regex");
             }
-            else {
+            else
+            {
                 finalMessage = Loc.GetString("ban-username-default-reason-simple");
             }
         }
-        else {
+        else
+        {
             finalMessage = reason;
         }
 
-        _usernameRules.CreateUsernameRule(finalRegexRule, finalMessage ?? "", Player.UserId, ban);
+        _usernameRules.CreateUsernameRule(regex, finalRegexRule, finalMessage ?? "", Player.UserId, ban);
 
         Close();
     }

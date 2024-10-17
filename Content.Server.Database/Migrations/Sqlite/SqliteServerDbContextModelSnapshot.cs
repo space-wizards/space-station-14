@@ -1268,6 +1268,10 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT")
                         .HasColumnName("message");
 
+                    b.Property<bool>("Regex")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("regex");
+
                     b.Property<Guid?>("RestrictingAdmin")
                         .HasColumnType("TEXT")
                         .HasColumnName("restricting_admin");

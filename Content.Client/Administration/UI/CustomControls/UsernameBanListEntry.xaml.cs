@@ -13,13 +13,13 @@ public sealed partial class UsernameBanListEntry : BoxContainer
         RobustXamlLoader.Load(this);
     }
 
-    public void Setup((int, string, string, bool) usernameBan)
+    public void Setup((int, string, bool, bool) usernameBan)
     {
         Update(usernameBan);
         PardonUsernameBanButton.OnPressed += HandlePardonPressed(usernameBan);
     }
 
-    private Action<BaseButton.ButtonEventArgs> HandlePardonPressed((int, string, string, bool) usernameBan)
+    private Action<BaseButton.ButtonEventArgs> HandlePardonPressed((int, string, bool, bool) usernameBan)
     {
         return args =>
         {
@@ -27,9 +27,13 @@ public sealed partial class UsernameBanListEntry : BoxContainer
         };
     }
 
-    private void Update((int, string, string, bool) usernameBan)
+    private void Update((int, string, bool, bool) usernameBan)
     {
-        (int id, string rule, string message, bool extendToBan) = usernameBan;
+        (int id, string rule, bool regex, bool extendToBan) = usernameBan;
         UsernameBanEntryLabel.Text = $"{id} {rule}";
+        if (regex)
+        {
+            UsernameBanEntryLabel.FontColorOverride = Color.Yellow;
+        }
     }
 }

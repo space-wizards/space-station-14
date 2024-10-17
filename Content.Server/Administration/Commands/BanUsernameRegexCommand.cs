@@ -42,7 +42,7 @@ public sealed class BanUsernameRegexCommand : LocalizedCommands
             return;
         }
 
-        _usernameRules.CreateUsernameRule(usernameRule, message, issuer, ban);
+        _usernameRules.CreateUsernameRule(true, usernameRule, message, issuer, ban);
     }
 
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)

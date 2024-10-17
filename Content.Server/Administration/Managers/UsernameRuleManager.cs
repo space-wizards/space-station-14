@@ -24,7 +24,6 @@ public sealed partial class UsernameRuleManager : IUsernameRuleManager, IPostInj
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly ITaskManager _taskManager = default!;
     [Dependency] private readonly INetManager _net = default!;
-    [Dependency] private readonly ISharedPlayerManager _players = default!;
     [Dependency] private readonly IAdminManager _admin = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly ILocalizationManager _localizationManager = default!;
@@ -36,7 +35,8 @@ public sealed partial class UsernameRuleManager : IUsernameRuleManager, IPostInj
 
     // this could be changed to sorted to implement deltas + removed bool or negative id
     // id : (regex, regexString, message, ban)
-    private readonly Dictionary<int, (Regex, string, string, bool)> _cachedUsernameRules = new();
+    private readonly Dictionary<int, (Regex?, string, string, bool)> _cachedUsernameRules = new();
+    private readonly HashSet<string> _cachedUsernames = new();
 
     public async void Initialize()
     {
@@ -47,6 +47,9 @@ public sealed partial class UsernameRuleManager : IUsernameRuleManager, IPostInj
 
         _net.RegisterNetMessage<MsgUsernameBan>();
         _net.RegisterNetMessage<MsgRequestUsernameBans>(OnRequestBans);
+
+        _net.RegisterNetMessage<MsgFullUsernameBan>();
+        _net.RegisterNetMessage<MsgRequestFullUsernameBan>(OnRequestFullUsernameBan);
 
         var rules = await _db.GetServerUsernameRulesAsync(false);
 
@@ -63,13 +66,13 @@ public sealed partial class UsernameRuleManager : IUsernameRuleManager, IPostInj
                 _sawmill.Warning("rule had Id of null");
                 continue;
             }
-            CacheCompiledRegex(ruleDef.Id ?? -1, ruleDef.Expression, ruleDef.Message, ruleDef.ExtendToBan);
+            CacheCompiledRegex(ruleDef.Id ?? -1, ruleDef.Regex, ruleDef.Expression, ruleDef.Message, ruleDef.ExtendToBan);
         }
     }
 
     private void OnRequestBans(MsgRequestUsernameBans msg)
     {
-        if (!_players.TryGetSessionById(msg.MsgChannel.UserId, out var player))
+        if (!_playerManager.TryGetSessionById(msg.MsgChannel.UserId, out var player))
         {
             return;
         }
@@ -79,9 +82,62 @@ public sealed partial class UsernameRuleManager : IUsernameRuleManager, IPostInj
             return;
         }
 
-        _sawmill.Info("Received username ban refresh request");
+        _sawmill.Verbose("Received username ban refresh request");
 
         SendResetUsernameBan(msg.MsgChannel);
+    }
+
+    private void OnRequestFullUsernameBan(MsgRequestFullUsernameBan msg)
+    {
+        if (!_playerManager.TryGetSessionById(msg.MsgChannel.UserId, out var player))
+        {
+            return;
+        }
+
+        if (!_admin.HasAdminFlag(player, AdminFlags.Ban))
+        {
+            return;
+        }
+
+        _sawmill.Verbose($"Received request for more info on username ban {msg.BanId} from {msg.MsgChannel.UserName}");
+
+        SendFullUsernameBan(msg.MsgChannel, msg.BanId);
+    }
+
+    private async void SendFullUsernameBan(INetChannel channel, int banId)
+    {
+        _sawmill.Debug($"sending full ban for {banId}");
+
+        var banDef = await _db.GetServerUsernameRuleAsync(banId);
+
+        if (banDef is null)
+        {
+            return;
+        }
+
+        MsgFullUsernameBanContent msgContent = new(
+            banDef.CreationTime.UtcDateTime,
+            banId,
+
+            banDef.Regex,
+            banDef.ExtendToBan,
+            banDef.Retired,
+
+            banDef.RoundId,
+            banDef.RestrictingAdmin,
+            banDef.RetiringAdmin,
+            banDef.RetireTime?.UtcDateTime,
+
+            banDef.Expression,
+            banDef.Message
+        );
+
+        MsgFullUsernameBan msg = new MsgFullUsernameBan()
+        {
+            FullUsernameBan = msgContent
+        };
+
+        _net.ServerSendMessage(msg, channel);
     }
 
     private void OnReAdmin(AdminPermsChangedEventArgs args)
@@ -97,7 +153,7 @@ public sealed partial class UsernameRuleManager : IUsernameRuleManager, IPostInj
         }
     }
 
-    private void CacheCompiledRegex(int id, string expression, string message, bool ban)
+    private void CacheCompiledRegex(int id, bool regex, string expression, string message, bool ban)
     {
         _sawmill.Info($"caching rule {id} {expression}");
         if (_cachedUsernameRules.ContainsKey(id))
@@ -106,15 +162,24 @@ public sealed partial class UsernameRuleManager : IUsernameRuleManager, IPostInj
             return;
         }
 
-        _cachedUsernameRules[id] = (new Regex(expression, RegexOptions.Compiled), expression, message, ban);
+        var compiledRegex = regex ? new Regex(expression, RegexOptions.Compiled) : null;
+
+        if (!regex)
+        {
+            _cachedUsernames.Add(expression);
+        }
+
+        _cachedUsernameRules[id] = (compiledRegex, expression, message, ban);
     }
 
     private void ClearCompiledRegex(int id)
     {
+        var expression = _cachedUsernameRules[id].Item2;
+        _cachedUsernames.Remove(expression);
         _cachedUsernameRules.Remove(id);
     }
 
-    public async void CreateUsernameRule(string expression, string message, NetUserId? restrictingAdmin, bool extendToBan = false)
+    public async void CreateUsernameRule(bool regex, string expression, string message, NetUserId? restrictingAdmin, bool extendToBan = false)
     {
         if (string.IsNullOrEmpty(expression))
         {
@@ -130,6 +195,7 @@ public sealed partial class UsernameRuleManager : IUsernameRuleManager, IPostInj
             null,
             DateTimeOffset.Now,
             roundId,
+            regex,
             expression,
             finalMessage,
             restrictingAdmin,
@@ -140,9 +206,9 @@ public sealed partial class UsernameRuleManager : IUsernameRuleManager, IPostInj
 
         int resultId = await _db.CreateUsernameRuleAsync(ruleDef);
 
-        CacheCompiledRegex(resultId, expression, finalMessage, extendToBan);
+        CacheCompiledRegex(resultId, regex, expression, finalMessage, extendToBan);
 
-        SendAddUsernameBan(resultId, expression, finalMessage, extendToBan);
+        SendAddUsernameBan(resultId, regex, expression, finalMessage, extendToBan);
 
         var adminName = restrictingAdmin == null
             ? Loc.GetString("system-user")
@@ -201,9 +267,9 @@ public sealed partial class UsernameRuleManager : IUsernameRuleManager, IPostInj
             return (false, "", false);
         }
 
-        foreach ((Regex rule, _, string message, bool ban) in _cachedUsernameRules.Values)
+        foreach ((Regex? rule, _, string message, bool ban) in _cachedUsernameRules.Values)
         {
-            if (rule.IsMatch(username))
+            if (rule?.IsMatch(username) ?? false)
             {
                 return (true, message, ban);
             }
@@ -231,7 +297,7 @@ public sealed partial class UsernameRuleManager : IUsernameRuleManager, IPostInj
                 continue;
             }
 
-            CacheCompiledRegex(ruleDef.Id ?? -1, ruleDef.Expression, ruleDef.Message, ruleDef.ExtendToBan);
+            CacheCompiledRegex(ruleDef.Id ?? -1, ruleDef.Regex, ruleDef.Expression, ruleDef.Message, ruleDef.ExtendToBan);
             KickMatchingConnectedPlayers(ruleDef.Id ?? -1, ruleDef, "username rule service restart");
         }
 
@@ -245,11 +311,21 @@ public sealed partial class UsernameRuleManager : IUsernameRuleManager, IPostInj
             return;
         }
 
-        (Regex compiledRule, _, _, _) = _cachedUsernameRules[id];
+        (Regex? compiledRule, string expression, _, _) = _cachedUsernameRules[id];
+
+        if (compiledRule == null)
+        {
+            _playerManager.TryGetSessionByUsername(expression, out var player);
+            if (player != null)
+            {
+                KickForUsernameRuleDef(player, def);
+            }
+            return;
+        }
 
         foreach (var player in _playerManager.Sessions)
         {
-            if (compiledRule.IsMatch(player.Name))
+            if (compiledRule?.IsMatch(player.Name) ?? false)
             {
                 KickForUsernameRuleDef(player, def);
                 _sawmill.Info($"Kicked player {player.Name} ({player.UserId}) through {source}");
@@ -265,16 +341,19 @@ public sealed partial class UsernameRuleManager : IUsernameRuleManager, IPostInj
 
     private IEnumerable<MsgUsernameBan> CreateResetMessages()
     {
-        List<(bool, bool, int, string, string)> messageContent = new();
+        List<MsgUsernameBanContent> messageContent = new();
 
         messageContent.EnsureCapacity(_cachedUsernameRules.Count + 1);
 
-        messageContent.Add((false, false, -1, "empty", "empty"));
+        messageContent.Add(new(-1, false, false, false, "empty"));
 
         foreach (var id in _cachedUsernameRules.Keys)
         {
-            (_, string expression, string message, bool extendToBan) = _cachedUsernameRules[id];
-            messageContent.Add((true, extendToBan, id, expression, message));
+            (Regex? regex, string expression, string message, bool extendToBan) = _cachedUsernameRules[id];
+
+            _sawmill.Verbose($"sending username ban {id}");
+
+            messageContent.Add(new(id, true, regex != null, extendToBan, expression));
         }
 
         return messageContent.Select(static mc =>
@@ -307,11 +386,11 @@ public sealed partial class UsernameRuleManager : IUsernameRuleManager, IPostInj
         }
     }
 
-    private void SendAddUsernameBan(int id, string expression, string message, bool extendToBan)
+    private void SendAddUsernameBan(int id, bool regex, string expression, string message, bool extendToBan)
     {
         var usernameBanMsg = new MsgUsernameBan()
         {
-            UsernameBan = (true, extendToBan, id, expression, message),
+            UsernameBan = new(id, true, regex, extendToBan, expression),
         };
 
         _sawmill.Debug($"sent new username ban {id} to active admins");
@@ -322,7 +401,7 @@ public sealed partial class UsernameRuleManager : IUsernameRuleManager, IPostInj
     {
         var usernameBanMsg = new MsgUsernameBan()
         {
-            UsernameBan = (false, false, id, "empty", "empty"),
+            UsernameBan = new(id, false, false, false, "empty"),
         };
 
         _sawmill.Debug($"sent username ban delete {id} to active admins");

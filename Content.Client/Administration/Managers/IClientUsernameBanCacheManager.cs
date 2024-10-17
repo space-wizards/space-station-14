@@ -6,9 +6,9 @@ public interface IClientUsernameBanCacheManager
     /// <summary>
     ///     Fired when the cache is updated
     /// </summary>
-    event Action<List<(int, string, string, bool)>>? UpdatedCache;
+    event Action<List<(int, string, bool, bool)>>? UpdatedCache;
 
-    IReadOnlyList<(int, string, string, bool)> BanList { get; }
+    IReadOnlyList<(int, string, bool, bool)> BanList { get; }
 
     void Initialize();
 
@@ -16,4 +16,10 @@ public interface IClientUsernameBanCacheManager
     ///     Sends A request to the server to send new data
     /// </summary>
     void RequestUsernameBans();
+
+    /// <summary>
+    ///     Sends a request for the full username ban info
+    /// </summary>
+    /// <param name="id"></param>
+    public void RequestFullUsernameBan(int id);
 }

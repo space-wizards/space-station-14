@@ -12,11 +12,12 @@ public interface IUsernameRuleManager
     /// <summary>
     /// Restricts the specified username. Banning all connections witch match the expression
     /// </summary>
+    /// <param name="regex">weather the expression is regex if no this is a single user exact match ban</param>
     /// <param name="expression">the username matching expression to be added</param>
     /// <param name="message">Reason for the restriction</param>
     /// <param name="restrictingAdmin">The person who created the restriction</param>
     /// <param name="extendToBan">Weather to prompt an extend the username ban to a full ban</param>
-    public void CreateUsernameRule(string expression, string message, NetUserId? restrictingAdmin, bool extendToBan = false);
+    public void CreateUsernameRule(bool regex, string expression, string message, NetUserId? restrictingAdmin, bool extendToBan = false);
 
     /// <summary>
     /// Removes a specified username restriction.
