@@ -1,6 +1,7 @@
 using System.IO;
 using JetBrains.Annotations;
 using Lidgren.Network;
+using Robust.Shared.Audio;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -35,13 +36,17 @@ namespace Content.Shared.Chat
 
         public bool HideChat;
         public Color? MessageColorOverride;
-        public string? AudioPath;
-        public float AudioVolume;
+
+        /// <summary>
+        /// Sound that should be played when other people receive this message.
+        /// </summary>
+        public SoundSpecifier? Sound;
+
 
         [NonSerialized]
         public bool Read;
 
-        public ChatMessage(ChatChannel channel, string message, string wrappedMessage, NetEntity source, int? senderKey, bool hideChat = false, Color? colorOverride = null, string? audioPath = null, float audioVolume = 0)
+        public ChatMessage(ChatChannel channel, string message, string wrappedMessage, NetEntity source, int? senderKey, bool hideChat = false, Color? colorOverride = null, SoundSpecifier? sound = null)
         {
             Channel = channel;
             Message = message;
@@ -50,8 +55,7 @@ namespace Content.Shared.Chat
             SenderKey = senderKey;
             HideChat = hideChat;
             MessageColorOverride = colorOverride;
-            AudioPath = audioPath;
-            AudioVolume = audioVolume;
+            Sound = sound;
         }
     }
 
