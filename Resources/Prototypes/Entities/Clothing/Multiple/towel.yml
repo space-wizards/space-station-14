@@ -47,7 +47,7 @@
   - type: Item
     inhandVisuals:
       left:
-      - state: inhand-right
+      - state: inhand-left
         color: "#EAE8E8"
       right:
       - state: inhand-right
@@ -78,7 +78,7 @@
   - type: Item
     inhandVisuals:
       left:
-      - state: inhand-right
+      - state: inhand-left
         color: "#9C0DE1"
       right:
       - state: inhand-right
@@ -109,7 +109,7 @@
   - type: Item
     inhandVisuals:
       left:
-      - state: inhand-right
+      - state: inhand-left
         color: "#940000"
       right:
       - state: inhand-right
@@ -140,7 +140,7 @@
   - type: Item
     inhandVisuals:
       left:
-      - state: inhand-right
+      - state: inhand-left
         color: "#0089EF"
       right:
       - state: inhand-right
@@ -171,7 +171,7 @@
   - type: Item
     inhandVisuals:
       left:
-      - state: inhand-right
+      - state: inhand-left
         color: "#3285ba"
       right:
       - state: inhand-right
@@ -202,7 +202,7 @@
   - type: Item
     inhandVisuals:
       left:
-      - state: inhand-right
+      - state: inhand-left
         color: "#58abcc"
       right:
       - state: inhand-right
@@ -233,7 +233,7 @@
   - type: Item
     inhandVisuals:
       left:
-      - state: inhand-right
+      - state: inhand-left
         color: "#3CB57C"
       right:
       - state: inhand-right
@@ -264,7 +264,7 @@
   - type: Item
     inhandVisuals:
       left:
-      - state: inhand-right
+      - state: inhand-left
         color: "#723A02"
       right:
       - state: inhand-right
@@ -295,7 +295,7 @@
   - type: Item
     inhandVisuals:
       left:
-      - state: inhand-right
+      - state: inhand-left
         color: "#c59431"
       right:
       - state: inhand-right
@@ -326,7 +326,7 @@
   - type: Item
     inhandVisuals:
       left:
-      - state: inhand-right
+      - state: inhand-left
         color: "#999999"
       right:
       - state: inhand-right
@@ -357,7 +357,7 @@
   - type: Item
     inhandVisuals:
       left:
-      - state: inhand-right
+      - state: inhand-left
         color: "#5ABF2F"
       right:
       - state: inhand-right
@@ -388,7 +388,7 @@
   - type: Item
     inhandVisuals:
       left:
-      - state: inhand-right
+      - state: inhand-left
         color: "#79CC26"
       right:
       - state: inhand-right
@@ -421,7 +421,7 @@
   - type: Item
     inhandVisuals:
       left:
-      - state: inhand-right
+      - state: inhand-left
         color: "#F7C430"
       right:
       - state: inhand-right
@@ -452,7 +452,7 @@
   - type: Item
     inhandVisuals:
       left:
-      - state: inhand-right
+      - state: inhand-left
         color: "#EF8100"
       right:
       - state: inhand-right
@@ -483,7 +483,7 @@
   - type: Item
     inhandVisuals:
       left:
-      - state: inhand-right
+      - state: inhand-left
         color: "#535353"
       right:
       - state: inhand-right
@@ -514,7 +514,7 @@
   - type: Item
     inhandVisuals:
       left:
-      - state: inhand-right
+      - state: inhand-left
         color: "#ffa69b"
       right:
       - state: inhand-right
@@ -545,7 +545,7 @@
   - type: Item
     inhandVisuals:
       left:
-      - state: inhand-right
+      - state: inhand-left
         color: "#ffe14d"
       right:
       - state: inhand-right
@@ -576,7 +576,7 @@
   - type: Item
     inhandVisuals:
       left:
-      - state: inhand-right
+      - state: inhand-left
         color: "#cc295f"
       right:
       - state: inhand-right
@@ -609,7 +609,7 @@
   - type: Item
     inhandVisuals:
       left:
-      - state: inhand-right
+      - state: inhand-left
         color: "#d0d0d0"
       right:
       - state: inhand-right
@@ -642,7 +642,7 @@
   - type: Item
     inhandVisuals:
       left:
-      - state: inhand-right
+      - state: inhand-left
         color: "#EAE8E8"
       right:
       - state: inhand-right
@@ -677,7 +677,7 @@
   - type: Item
     inhandVisuals:
       left:
-      - state: inhand-right
+      - state: inhand-left
         color: "#004787"
       right:
       - state: inhand-right
@@ -710,7 +710,7 @@
   - type: Item
     inhandVisuals:
       left:
-      - state: inhand-right
+      - state: inhand-left
         color: "#29722e"
       right:
       - state: inhand-right
@@ -743,7 +743,7 @@
   - type: Item
     inhandVisuals:
       left:
-      - state: inhand-right
+      - state: inhand-left
         color: "#535353"
       right:
       - state: inhand-right
