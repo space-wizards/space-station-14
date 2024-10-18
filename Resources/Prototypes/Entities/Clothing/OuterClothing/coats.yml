@@ -8,6 +8,8 @@
     sprite: Clothing/OuterClothing/Coats/bomber.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/bomber.rsi
+  - type: TemperatureProtection
+    coefficient: 0.1
 
 - type: entity
   parent: [ClothingOuterStorageBase, AllowSuitStorageClothing, ClothingOuterArmorBasic]
@@ -36,6 +38,8 @@
     sprite: Clothing/OuterClothing/Coats/detective_grey.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/detective_grey.rsi
+  - type: TemperatureProtection
+    coefficient: 0.1
 
 
 - type: entity
@@ -373,6 +377,8 @@
     sprite: Clothing/OuterClothing/Coats/windbreaker_paramedic.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/windbreaker_paramedic.rsi
+  - type: TemperatureProtection
+    coefficient: 0.1
 
 - type: entity
   parent: ClothingOuterStorageBase
@@ -466,3 +472,5 @@
     sprite: Clothing/OuterClothing/Coats/expensive_coat.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/expensive_coat.rsi
+  - type: TemperatureProtection
+    coefficient: 0.2
