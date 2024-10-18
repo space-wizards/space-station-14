@@ -1,61 +1,17 @@
-- type: dataset
+- type: localizedDataset
   id: SyndicateNamesNormal
   values:
-  - Alfa
-  - Bravo
-  - Charlie
-  - Delta
-  - Echo
-  - Foxtrot
-  - Golf
-  - Hotel
-  - India
-  - Juliett
-  - Kilo
-  - Lima
-  - Mike
-  - November
-  - Oscar
-  - Papa
-  - Quebec
-  - Romeo
-  - Sierra
-  - Tango
-  - Uniform
-  - Victor
-  - Whiskey
-  - X-Ray
-  - Zulu
+    prefix: syndicate-normal-name-dataset-
+    count: 25
 
-- type: dataset
+- type: localizedDataset
   id: SyndicateNamesElite
   values:
-  - Alpha
-  - Beta
-  - Gamma
-  - Delta
-  - Epsilon
-  - Zeta
-  - Eta
-  - Theta
-  - Iota
-  - Lambda
-  - Mu
-  - Nu
-  - Xi
-  - Omicron
-  - Pi
-  - Rho
-  - Sigma
-  - Tau
-  - Upsilon
-  - Phi
-  - Chi
-  - Psi
-  - Omega
+    prefix: syndicate-elite-name-dataset-
+    count: 23
 
-- type: dataset
+- type: localizedDataset
   id: SyndicateNamesPrefix
   values:
-  - Operative
-  - Agent
+    prefix: syndicate-prefix-name-dataset-
+    count: 2
