@@ -21,6 +21,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Toolshed;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Silicons.Laws;
 
@@ -114,6 +115,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
 
             // gotta tell player to check their laws
             NotifyLawsChanged(uid);
+            CueEntityMind(uid, component.LawUploadSound);
 
             // new laws may allow antagonist behaviour so make it clear for admins
             if (TryComp<EmagSiliconLawComponent>(uid, out var emag))
@@ -154,9 +156,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
 
         _stunSystem.TryParalyze(uid, component.StunTime, true);
 
-        if (!_mind.TryGetMind(uid, out var mindId, out _))
-            return;
-        _roles.MindPlaySound(mindId, component.EmaggedSound);
+        CueEntityMind(uid, component.EmaggedSound);
     }
 
     private void OnEmagMindAdded(EntityUid uid, EmagSiliconLawComponent component, MindAddedMessage args)
@@ -293,9 +293,16 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         while (query.MoveNext(out var update))
         {
             SetLaws(lawset, update);
-            if (provider.LawUploadSound != null && _mind.TryGetMind(update, out var mindId, out _))
-                _roles.MindPlaySound(mindId, provider.LawUploadSound);
+            CueEntityMind(update, provider.LawUploadSound);
         }
+    }
+    /// <summary>
+    /// Send a Sound cue to an entity that has a mind associated with it.
+    /// </summary>
+    private void CueEntityMind(EntityUid entity, SoundSpecifier? cue)
+    {
+        if (cue != null && _mind.TryGetMind(entity, out var mindId, out _))
+            _roles.MindPlaySound(mindId, cue);
     }
 }
 
