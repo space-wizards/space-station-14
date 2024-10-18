@@ -306,7 +306,7 @@
 - type: latheRecipe
   parent: BaseCircuitboardRecipe
   id: RadarConsoleCircuitboard
-  result: ShipyardComputerCircuitBoard
+  result: RadarConsoleCircuitboard
 
 - type: latheRecipe
   parent: BaseCircuitboardRecipe
