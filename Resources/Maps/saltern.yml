@@ -27330,7 +27330,7 @@ entities:
     - type: Transform
       pos: 38.383812,-0.3536343
       parent: 31
-- proto: ClothingOuterWinterCentcom
+- proto: ClothingOuterWinterCentcomm
   entities:
   - uid: 9036
     components:

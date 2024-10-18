@@ -390,14 +390,14 @@
       settings: VisitorLawyer
 
 - type: entity
-  id: RandomHumanoidVisitorLawyerCentcom
-  name: visiting centcom lawyer ghost role
+  id: RandomHumanoidVisitorLawyerCentcomm
+  name: visiting centcomm lawyer ghost role
   components:
     - type: Sprite
       sprite: Markers/jobs.rsi
       state: lawyer
     - type: RandomHumanoidSpawner
-      settings: VisitorLawyerCentcom
+      settings: VisitorLawyerCentcomm
 
 - type: entity
   id: RandomHumanoidVisitorLibrarian
