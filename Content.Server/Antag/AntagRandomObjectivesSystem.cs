@@ -1,8 +1,10 @@
+using System.Linq;
 using Content.Server.Antag.Components;
 using Content.Server.Objectives;
+using Content.Server.Objectives.Components;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Components;
-using Content.Shared.Objectives.Systems;
+using FastAccessors;
 using Robust.Shared.Random;
 
 namespace Content.Server.Antag;
@@ -32,7 +34,8 @@ public sealed class AntagRandomObjectivesSystem : EntitySystem
         }
 
         var difficulty = 0f;
-        foreach (var set in ent.Comp.Sets)
+        var assignedTargetObjectives = new HashSet<(string? title, string? target)>();
+        foreach (var set in ent.Comp.Sets.Where(set => _random.Prob(set.Prob)))
         {
             if (!_random.Prob(set.Prob))
                 continue;
@@ -43,10 +46,19 @@ public sealed class AntagRandomObjectivesSystem : EntitySystem
                 if (_objectives.GetRandomObjective(mindId, mind, set.Groups, remainingDifficulty) is not { } objective)
                     continue;
 
+                if (TryComp<TargetObjectiveComponent>(objective, out var targetObjective))
+                {
+                    var title = targetObjective.Title;
+                    var target = ToPrettyString(targetObjective.Target);
+                    if (!assignedTargetObjectives.Add((title, target)))
+                    {
+                        continue;
+                    }
+                }
+
                 _mind.AddObjective(mindId, mind, objective);
                 var adding = Comp<ObjectiveComponent>(objective).Difficulty;
                 difficulty += adding;
-                Log.Debug($"Added objective {ToPrettyString(objective):objective} to {ToPrettyString(args.EntityUid):player} with {adding} difficulty");
             }
         }
     }
