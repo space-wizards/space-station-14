@@ -575,7 +575,7 @@ public sealed class GhostRoleSystem : EntitySystem
                 Identifier = id,
                 Name = role.RoleName,
                 Description = role.RoleDescription,
-                Rules = role.RoleRules,
+                Rules = role.RoleRules, //TODO:ERRANT is this really the only place using it?
                 Requirements = role.Requirements,
                 Kind = kind,
                 RafflePlayerCount = rafflePlayerCount,

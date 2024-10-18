@@ -254,7 +254,8 @@ public sealed class AdminSystem : EntitySystem
                     roleType = role;
                 else
                 {
-                    _adminLogger.Add(LogType.Mind, LogImpact.High, //TODO:ERRANT test this
+                    _adminLogger.Add(LogType.Mind,
+                        LogImpact.High,
                         $"{mindComp.CharacterName} has invalid Role Type '{mindComp.RoleType}'. Displaying 'Neutral' instead");
                 }
             }

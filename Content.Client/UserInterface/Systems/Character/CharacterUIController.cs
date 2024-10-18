@@ -216,7 +216,8 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
         }
         else
         {
-            _adminLogger.Add(LogType.Mind, LogImpact.High, //TODO:ERRANT test this
+            _adminLogger.Add(LogType.Mind,
+                LogImpact.High,
                 $"UI of {_player.LocalEntity} tried to display invalid Role Type '{mind.RoleType}'. Displaying 'Neutral' instead");
         }
 
