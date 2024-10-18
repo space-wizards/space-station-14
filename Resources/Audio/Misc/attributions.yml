@@ -47,3 +47,8 @@
   license: "CC-BY-SA-3.0"
   copyright: "Taken from Citadel Station 13"
   source: "https://github.com/Skyrat-SS13/Skyrat13/commit/2d4f2d1b489590b559e4073f41b126cef56f4c50"
+
+- files: ["yellow.ogg"]
+  license: "Public Domain"
+  copyright: "Audio is posted by youtube user Making Contact, original audio from Emergency!"
+  source: "https://www.youtube.com/watch?v=T3uvP86W5bE"
