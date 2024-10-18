@@ -4,7 +4,7 @@
   abstract: true
   components:
   - type: Item
-    size: Small
+    size: Normal
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/harpoons.rsi
   - type: Fixtures
