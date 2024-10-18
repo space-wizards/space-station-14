@@ -1016,6 +1016,63 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             await using var db = await GetDb();
             return await db.DbContext.AdminLog.CountAsync(log => log.RoundId == round);
         }
+        #endregion
+
+        #region Support Logging
+
+        /// <summary>
+        /// Retrieves a SupportExchange based on the round number, target user (Guid), and server id.
+        /// </summary>
+        public async Task<SupportExchange?> GetSupportExchangeAsync(int supportRound, Guid supportTarget, int serverId)
+        {
+            await using var db = await GetDb();
+            return await db.DbContext.SupportExchanges
+                .Include(e => e.SupportMessages)
+                .FirstOrDefaultAsync(e => e.SupportRound == supportRound && e.SupportTarget == supportTarget && e.ServerId == serverId);
+        }
+
+        /// <summary>
+        /// Adds a new SupportExchange to the database.
+        /// </summary>
+        public async Task AddSupportExchangeAsync(SupportExchange exchange)
+        {
+            await using var db = await GetDb();
+            db.DbContext.SupportExchanges.Add(exchange);
+            await db.DbContext.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Adds a new SupportMessage to the database within an existing SupportExchange.
+        /// </summary>
+        public async Task AddSupportMessageAsync(SupportMessage supportMessage)
+        {
+            await using var db = await GetDb();
+
+            using var transaction = await db.DbContext.Database.BeginTransactionAsync();
+
+            // Get the maximum message ID for the exchange and set the new message's ID
+            var maxMessageId = await GetMaxMessageIdForExchange(supportMessage.SupportExchangeId);
+            supportMessage.SupportMessageId = maxMessageId + 1;
+
+            db.DbContext.SupportMessages.Add(supportMessage);
+
+            await db.DbContext.SaveChangesAsync();
+
+            await transaction.CommitAsync();
+        }
+
+        /// <summary>
+        /// Gets the maximum message ID for a specific support exchange.
+        /// </summary>
+        public async Task<int> GetMaxMessageIdForExchange(int supportExchangeId)
+        {
+            await using var db = await GetDb();
+            var maxId = await db.DbContext.SupportMessages
+                .Where(m => m.SupportExchangeId == supportExchangeId)
+                .Select(m => (int?)m.SupportMessageId)
+                .MaxAsync();
+            return maxId ?? 0;
+        }
 
         #endregion
 
