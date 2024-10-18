@@ -306,7 +306,7 @@
 - type: latheRecipe
   parent: BaseCircuitboardRecipe
   id: RadarConsoleCircuitboard
-  result: RadarConsoleCircuitboard
+  result: ShipyardComputerCircuitBoard
 
 - type: latheRecipe
   parent: BaseCircuitboardRecipe
@@ -523,6 +523,11 @@
   parent: BaseCircuitboardRecipe
   id: BoozeDispenserMachineCircuitboard
   result: BoozeDispenserMachineCircuitboard
+
+- type: latheRecipe
+  parent: BaseCircuitboardRecipe
+  id: ShipyardComputerCircuitboard
+  result: ShipyardComputerCircuitboard
 
 - type: latheRecipe
   parent: BaseGoldCircuitboardRecipe
