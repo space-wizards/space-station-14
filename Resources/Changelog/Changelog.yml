@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: Rechargers now show the percent charged of the item it is charging.
-    type: Add
-  id: 7031
-  time: '2024-08-02T06:05:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28500
 - author: ShadowCommander
   changes:
   - message: Rollerbeds now deploy when holding them in hand and clicking on the ground.
@@ -3952,3 +3945,12 @@
   id: 7530
   time: '2024-10-18T10:03:12.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32776
+- author: Errant
+  changes:
+  - message: Players becoming Traitor without a PDA now correctly get the text and
+      audio notifications, and the code words. They are also given an Uplink Implant,
+      with the price taken from their starting TC.
+    type: Fix
+  id: 7531
+  time: '2024-10-18T12:55:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30359
