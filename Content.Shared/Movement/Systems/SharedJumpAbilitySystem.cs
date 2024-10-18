@@ -1,4 +1,3 @@
-using Content.Shared.Actions;
 using Content.Shared.Throwing;
 using Content.Shared.Movement.Components;
 using Robust.Shared.Audio.Systems;
@@ -6,7 +5,7 @@ using Robust.Shared.Audio.Systems;
 
 namespace Content.Shared.Movement.Systems;
 
-public sealed partial class SharedJumpSystem : EntitySystem
+public sealed partial class SharedJumpAbilitySystem : EntitySystem
 {
     [Dependency] private readonly ThrowingSystem _throwing = default!;
     [Dependency] private readonly SharedTransformSystem _xform = default!;
