@@ -1,0 +1,13 @@
+- type: listing
+  id: Mouse Operative Reinforcement
+  name: uplink-reinforcement-radio-nukie-mouse-name
+  description: uplink-reinforcement-radio-nukie-mouse-desc
+  productEntity: ReinforcementRadioSyndicateNukieMouse
+  icon: { sprite: _DeltaV/Objects/Devices/communication.rsi, state: cheese-radio }
+  discountCategory: rareDiscounts
+  discountDownTo:
+    Telecrystal: 1
+  cost:
+    Telecrystal: 2
+  categories:
+  - UplinkAllies
