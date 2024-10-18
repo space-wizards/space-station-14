@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: slarticodefast
   changes:
-  - message: The digital audio workstation can now be rotated.
-    type: Tweak
-  id: 7033
-  time: '2024-08-02T10:02:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30571
-- author: slarticodefast
-  changes:
   - message: Added potassium iodide. It gives you short term radiation protection
       and can be found in radiation treatment kits.
     type: Add
@@ -3954,3 +3947,11 @@
   id: 7532
   time: '2024-10-18T12:58:07.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32838
+- author: Ilya246
+  changes:
+  - message: Spectral locator, rare maintenance loot that lets you know if any ghosts
+      are nearby.
+    type: Add
+  id: 7533
+  time: '2024-10-18T13:42:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32323
