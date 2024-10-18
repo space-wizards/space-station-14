@@ -96,7 +96,7 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
     {
         foreach (var id in implants)
         {
-            AddImplantDo(uid, id);
+            AddImplant(uid, id);
         }
     }
 
@@ -108,11 +108,6 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
     /// The implant, if it was successfully created. Otherwise, null.
     /// </returns>>
     public EntityUid? AddImplant(EntityUid uid, String implantId)
-    {
-        return AddImplantDo(uid, implantId);
-    }
-
-    private EntityUid? AddImplantDo(EntityUid uid, String implantId)
     {
         var coords = Transform(uid).Coordinates;
         var ent = Spawn(implantId, coords);

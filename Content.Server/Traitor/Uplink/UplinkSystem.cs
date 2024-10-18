@@ -1,27 +1,24 @@
 using System.Linq;
-using Content.Shared.Implants.Components;
 using Content.Server.Store.Systems;
 using Content.Server.StoreDiscount.Systems;
+using Content.Shared.FixedPoint;
 using Content.Shared.Hands.EntitySystems;
-using Content.Server.Implants;
+using Content.Shared.Implants;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
-using Content.Shared.Store.Components;
-using Content.Shared.FixedPoint;
 using Content.Shared.Store;
-using Robust.Shared.Containers;
+using Content.Shared.Store.Components;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Traitor.Uplink;
 
 public sealed class UplinkSystem : EntitySystem
 {
-    [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly StoreSystem _store = default!;
-    [Dependency] private readonly SubdermalImplantSystem _subdermalImplant = default!;
+    [Dependency] private readonly SharedSubdermalImplantSystem _subdermalImplant = default!;
 
     [ValidatePrototypeId<CurrencyPrototype>]
     public const string TelecrystalCurrencyPrototype = "Telecrystal";
