@@ -36,9 +36,6 @@ public sealed class AntagRandomObjectivesSystem : EntitySystem
         var assignedTargetObjectives = new HashSet<(string? title, string? target)>();
         foreach (var set in ent.Comp.Sets.Where(set => _random.Prob(set.Prob)))
         {
-            if (!_random.Prob(set.Prob))
-                continue;
-
             for (var pick = 0; pick < set.MaxPicks && ent.Comp.MaxDifficulty > difficulty; pick++)
             {
                 var remainingDifficulty = ent.Comp.MaxDifficulty - difficulty;
