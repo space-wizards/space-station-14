@@ -73,8 +73,8 @@ public struct EventWrapper
         beforeInteract.ClickLocation, true, beforeInteract.Handled)
     { }
 
-    public EventWrapper(BeforeRangedInteractEvent beforeInteract)
-        : this(beforeInteract.User, beforeInteract.Used, beforeInteract.Target,
-        beforeInteract.ClickLocation, beforeInteract.CanReach, beforeInteract.Handled)
+    public EventWrapper(BeforeRangedInteractEvent beforeRangedInteract)
+        : this(beforeRangedInteract.User, beforeRangedInteract.Used, beforeRangedInteract.Target,
+        beforeRangedInteract.ClickLocation, beforeRangedInteract.CanReach, beforeRangedInteract.Handled)
     { }
 }
