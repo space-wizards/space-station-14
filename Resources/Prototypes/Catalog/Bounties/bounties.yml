@@ -13,7 +13,7 @@
   id: BountyBaseballBat
   reward: 4000
   description: bounty-description-baseball-bat
-  idPrefix: CC
+  idPrefix: SG
   entries:
   - name: bounty-item-baseball-bat
     amount: 5
@@ -50,7 +50,7 @@
   id: BountyCarrot
   reward: 7500
   description: bounty-description-carrot
-  idPrefix: SS15-
+  idPrefix: SG
   entries:
   - name: bounty-item-carrot
     amount: 10
@@ -73,7 +73,7 @@
   id: BountyCarp
   reward: 12500
   description: bounty-description-carp
-  idPrefix: CC
+  idPrefix: SG
   entries:
   - name: bounty-item-carp
     amount: 1
@@ -123,7 +123,7 @@
   id: BountyCubanCarp
   reward: 16000
   description: bounty-description-cuban-carp
-  idPrefix: CC
+  idPrefix: SG
   entries:
   - name: bounty-item-cuban-carp
     amount: 1
@@ -135,7 +135,7 @@
   id: BountyDonut
   reward: 6000
   description: bounty-description-donut
-  idPrefix: CC
+  idPrefix: SG
   entries:
   - name: bounty-item-donut
     amount: 10
@@ -158,7 +158,7 @@
   id: BountyFlower
   reward: 2000
   description: bounty-description-flower
-  idPrefix: CC
+  idPrefix: SG
   entries:
   - name: bounty-item-flower
     amount: 3
@@ -181,7 +181,7 @@
   id: BountyHandcuffs
   reward: 1000
   description: bounty-description-handcuffs
-  idPrefix: CC
+  idPrefix: SG
   entries:
   - name: bounty-item-handcuffs
     amount: 5
@@ -226,7 +226,7 @@
   id: BountyLime
   reward: 10000
   description: bounty-description-lime
-  idPrefix: CC
+  idPrefix: SG
   entries:
   - name: bounty-item-lime
     amount: 7
@@ -249,7 +249,7 @@
   id: BountyMonkeyCube
   reward: 2000
   description: bounty-description-monkey-cube
-  idPrefix: CC
+  idPrefix: SG
   entries:
   - name: bounty-item-monkey-cube
     amount: 3
@@ -261,7 +261,7 @@
   id: BountyMouse
   reward: 2400
   description: bounty-description-mouse
-  idPrefix: SS13-
+  idPrefix: SG
   entries:
   - name: bounty-item-mouse
     amount: 5
@@ -402,7 +402,7 @@
   id: BountyTechDisk
   reward: 25000
   description: bounty-description-tech-disk
-  idPrefix: SS13-
+  idPrefix: SG
   entries:
   - name: bounty-item-tech-disk
     amount: 5
@@ -414,7 +414,7 @@
   id: BountyToolbox
   reward: 8000
   description: bounty-description-toolbox
-  idPrefix: CC
+  idPrefix: SG
   entries:
   - name: bounty-item-toolbox
     amount: 6
@@ -710,6 +710,7 @@
 
 - type: cargoBounty
   id: BountyCottonBoll
+  idPrefix: LGH
   reward: 8600
   description: bounty-description-cotton-boll
   entries:
