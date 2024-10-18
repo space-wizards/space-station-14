@@ -1,0 +1,31 @@
+- type: entity
+  parent: BaseComputer
+  id: ComputerShipyard
+  name: shipyard console
+  description: Used to purchase and sell shuttles
+  components:
+  - type: ShipyardConsole
+  - type: AccessReader
+    access: [[ "Captain"  ],["Quartermaster"]]
+  - type: ActivatableUI
+    key: enum.ShipyardConsoleUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.ShipyardConsoleUiKey.Key:
+        type: ShipyardConsoleBoundUserInterface
+  - type: Computer
+    board: ShipyardComputerCircuitboard
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#b89f25"
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: request
+    - map: ["computerLayerKeys"]
+      state: tech_key

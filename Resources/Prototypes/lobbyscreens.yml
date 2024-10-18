@@ -73,3 +73,7 @@
 - type: lobbyBackground
   id: Bellmoth
   background: /Textures/LobbyScreens/Shovel_incident.webp
+
+- type: lobbyBackground
+  id: 70'sNovelCover
+  background: /Textures/LobbyScreens/impstation70snovelcover.webp
