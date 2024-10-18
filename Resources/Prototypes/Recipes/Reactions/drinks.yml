@@ -1514,7 +1514,6 @@
   products:
     StarryNight: 3
     
-
 - type: reaction
   id: ZombieSlushie
   requiredMixerCategories:
@@ -1528,3 +1527,14 @@
       amount: 1
   products:
     ZombieSlushie: 3
+    
+- type: reaction
+  id: Raktaccino
+  requiredMixerCategories:
+    - Stir
+  minTemp: 370
+  reactants:
+    Coffee:
+      amount: 1
+  products:
+    Raktaccino: 1

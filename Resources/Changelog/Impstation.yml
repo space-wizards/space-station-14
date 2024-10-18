@@ -3092,3 +3092,56 @@
   id: 382
   time: '2024-10-18T01:30:36.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/508
+- author: formlessnameless
+  changes:
+  - message: Added a bible to the PietyVend inventory, for all of your thieving needs.
+    type: Add
+  id: 383
+  time: '2024-10-18T07:27:01.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/512
+- author: TGRCdev
+  changes:
+  - message: Thaven can now view their moods when handcuffed / unconscious
+    type: Fix
+  id: 384
+  time: '2024-10-18T18:04:25.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/492
+- author: 12rabbits
+  changes:
+  - message: The Unborgable trait has been added to character customization.
+    type: Add
+  id: 385
+  time: '2024-10-18T18:05:50.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/501
+- author: widgetbeck
+  changes:
+  - message: Changed Gray head displacement. Again. Should look better on most helmets.
+    type: Tweak
+  id: 386
+  time: '2024-10-18T18:06:41.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/497
+- author: KingMudkipIII
+  changes:
+  - message: 'Added a new drink: Raktaccino! Sprites by me and beck.'
+    type: Add
+  id: 387
+  time: '2024-10-18T18:05:06.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/498
+- author: LandsharkRAWR
+  changes:
+  - message: New lobby art!
+    type: Add
+  id: 388
+  time: '2024-10-18T18:10:14.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/496
+- author: honeyed-lemons
+  changes:
+  - message: Added Golden High-Heels to scavenger loot.
+    type: Add
+  - message: Renamed Gold High-Heels to Golden High-Heels and updated description
+    type: Tweak
+  - message: Adjusted Golden High-Heels price to 7k Spesos
+    type: Tweak
+  id: 389
+  time: '2024-10-18T18:15:26.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/510

@@ -7,6 +7,8 @@
       entries:
         - proto: AdvMopItem
           prob: 0.5
+        - proto: ClothingShoesHeelsGold
+          prob: 0.75
         - proto: AmmoTechFabCircuitboard
           cost: 2
         - proto: AutolatheMachineCircuitboard

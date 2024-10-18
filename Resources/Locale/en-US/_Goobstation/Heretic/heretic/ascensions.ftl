@@ -20,7 +20,7 @@ heretic-ascension-flesh =
 heretic-ascension-void =
     The world falls into darkness. I stand in an empty plane, small flakes of ice fall from the sky.
     The Aristocrat stands before me, beckoning. We will play a waltz to the whispers of dying reality,
-    as the world is destroyed before our eyes. The void will return all to nothing, WITNESS MY ASCENSION!
+    as the world is destroyed before our eyes. The void will return all to nothing. WITNESS MY ASCENSION!
 
 heretic-ascension-rust =
     Champion of rust. Corruptor of steel. Fear the dark, for the RUSTBRINGER has come!
