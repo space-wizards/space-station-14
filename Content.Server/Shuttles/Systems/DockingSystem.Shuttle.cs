@@ -338,7 +338,7 @@ public sealed partial class DockingSystem
            else
            {
                if (grid.GetLocalTilesIntersecting(aabb).Any())
-                   return false;
+                   return true; //experimental, hopefully this allows shuttles to land on the platform for trading and events. Might need to add the colliding with solids above
            }
        }
 
