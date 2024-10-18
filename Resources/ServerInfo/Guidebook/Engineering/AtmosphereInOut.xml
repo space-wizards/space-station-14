@@ -6,6 +6,7 @@
     <GuideEntityEmbed Entity="GasPassiveVent"/>
     <GuideEntityEmbed Entity="GasOutletInjector"/>
     <GuideEntityEmbed Entity="GasVentScrubber"/>
+    <GuideEntityEmbed Entity="PortableScrubber"/>
   </Box>
 
   With these devices, Atmos can insert, extract, or scrub unwanted gasses from any atmosphere they would like.

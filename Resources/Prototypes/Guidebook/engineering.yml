@@ -28,6 +28,7 @@
   children:
   - GasManipulation
   - Fires
+  - Atmospheric Systems
 
 - type: guideEntry
   id: GasManipulation
@@ -60,6 +61,7 @@
   - PassiveVent
   - AirInjector
   - AirScrubber
+  - PortableScrubber
 
 - type: guideEntry
   id: AirVent
@@ -80,6 +82,11 @@
   id: AirScrubber
   name: guide-entry-airscrubber
   text: "/ServerInfo/Guidebook/Engineering/AirScrubber.xml"
+
+- type: guideEntry
+  id: PortableScrubber
+  name: guide-entry-portablescrubber
+  text: "/ServerInfo/Guidebook/Engineering/PortableScrubber.xml"
 
 - type: guideEntry
   id: Valves
@@ -125,6 +132,11 @@
   id: Fires
   name: guide-entry-fires
   text: "/ServerInfo/Guidebook/Engineering/Fires.xml"
+
+- type: guideEntry
+  id: Atmospherics Systems
+  name: guide-entry-atmosphericssystems
+  text: "/ServerInfo/Guidebook/Engineering/AtmosphericsSystems.xml"
 
 - type: guideEntry
   id: ShuttleCraft
