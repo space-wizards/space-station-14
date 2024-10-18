@@ -4,7 +4,6 @@ using Content.Server.Objectives;
 using Content.Server.Objectives.Components;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Components;
-using FastAccessors;
 using Robust.Shared.Random;
 
 namespace Content.Server.Antag;
@@ -59,6 +58,7 @@ public sealed class AntagRandomObjectivesSystem : EntitySystem
                 _mind.AddObjective(mindId, mind, objective);
                 var adding = Comp<ObjectiveComponent>(objective).Difficulty;
                 difficulty += adding;
+                Log.Debug($"Added objective {ToPrettyString(objective):objective} to {ToPrettyString(args.EntityUid):player} with {adding} difficulty");
             }
         }
     }
