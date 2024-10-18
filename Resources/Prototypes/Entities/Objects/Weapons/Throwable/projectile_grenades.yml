@@ -1,0 +1,105 @@
+﻿- type: entity
+  abstract: true
+  parent: BaseItem
+  id: ProjectileGrenadeBase
+  components:
+  - type: Appearance
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: DeleteOnTrigger
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:TriggerBehavior
+  - type: ContainerContainer
+    containers:
+      cluster-payload: !type:Container
+  - type: ProjectileGrenade
+
+- type: entity
+  parent: [ProjectileGrenadeBase, BaseRestrictedContraband]
+  id: GrenadeStinger
+  name: stinger grenade
+  description: Nothing to see here, please disperse.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/stingergrenade.rsi
+    layers:
+    - state: icon
+      map: ["enum.TriggerVisualLayers.Base"]
+  - type: ProjectileGrenade
+    fillPrototype: PelletClusterRubber
+    capacity: 30
+  - type: FlashOnTrigger
+    range: 7
+  - type: EmitSoundOnTrigger
+    sound:
+      path: "/Audio/Effects/flash_bang.ogg"
+  - type: SpawnOnTrigger
+    proto: GrenadeFlashEffect
+  - type: OnUseTimerTrigger
+    beepSound:
+      path: "/Audio/Effects/beep1.ogg"
+      params:
+        volume: 5
+    initialBeepDelay: 0
+    beepInterval: 2
+    delay: 3.5
+  - type: TimerTriggerVisuals
+    primingSound:
+      path: /Audio/Effects/countdown.ogg
+
+- type: entity
+  parent: [ProjectileGrenadeBase, BaseSyndicateContraband]
+  id: GrenadeIncendiary
+  name: incendiary grenade
+  description: Guaranteed to light up the mood.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/pyrogrenade.rsi
+    layers:
+    - state: icon
+      map: ["enum.TriggerVisualLayers.Base"]
+  - type: ProjectileGrenade
+    fillPrototype: PelletClusterIncendiary
+    capacity: 30
+  - type: OnUseTimerTrigger
+    beepSound:
+      path: "/Audio/Effects/beep1.ogg"
+      params:
+        volume: 5
+    initialBeepDelay: 0
+    beepInterval: 2
+    delay: 3.5
+  - type: EmitSoundOnTrigger
+    sound:
+      path: "/Audio/Weapons/Guns/Gunshots/batrifle.ogg"
+
+- type: entity
+  parent: [ProjectileGrenadeBase, BaseSyndicateContraband]
+  id: GrenadeShrapnel
+  name: shrapnel grenade
+  description: Releases a deadly spray of shrapnel that causes severe bleeding.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/shrapnelgrenade.rsi
+    layers:
+    - state: icon
+      map: ["enum.TriggerVisualLayers.Base"]
+  - type: ProjectileGrenade
+    fillPrototype: PelletClusterLethal
+    capacity: 30
+  - type: OnUseTimerTrigger
+    beepSound:
+      path: "/Audio/Effects/beep1.ogg"
+      params:
+        volume: 5
+    initialBeepDelay: 0
+    beepInterval: 2
+    delay: 3.5
+  - type: EmitSoundOnTrigger
+    sound:
+      path: "/Audio/Weapons/Guns/Gunshots/batrifle.ogg"
