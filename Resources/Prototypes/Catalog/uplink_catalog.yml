@@ -228,6 +228,11 @@
     Telecrystal: 4
   categories:
   - UplinkExplosives
+  conditions:
+  - !type:StoreWhitelistCondition
+    blacklist:
+      tags:
+      - NukeOpsUplink
 
 - type: listing
   id: UplinkExplosiveGrenadeFlash
@@ -318,22 +323,9 @@
     Telecrystal: 2
   categories:
   - UplinkExplosives
-
-- type: listing
-  id: UplinkGrenadierRig
-  name: uplink-grenadier-rig-name
-  description: uplink-grenadier-rig-desc
-  productEntity: ClothingBeltMilitaryWebbingGrenadeFilled
-  discountCategory: veryRareDiscounts
-  discountDownTo:
-    Telecrystal: 6
-  cost:
-    Telecrystal: 12
-  categories:
-  - UplinkExplosives
   conditions:
   - !type:StoreWhitelistCondition
-    whitelist:
+    blacklist:
       tags:
       - NukeOpsUplink
 
@@ -349,6 +341,11 @@
     Telecrystal: 12 #you're buying bulk so its a 25% discount, so no additional random discount over it
   categories:
   - UplinkExplosives
+  conditions:
+  - !type:StoreWhitelistCondition
+    blacklist:
+      tags:
+      - NukeOpsUplink
 
 - type: listing
   id: UplinkEmpGrenade
@@ -362,6 +359,11 @@
     Telecrystal: 2
   categories:
   - UplinkExplosives
+  conditions:
+  - !type:StoreWhitelistCondition
+    blacklist:
+      tags:
+      - NukeOpsUplink
 
 - type: listing
   id: UplinkExplodingPen
@@ -376,6 +378,11 @@
     Telecrystal: 4
   categories:
   - UplinkExplosives
+  conditions:
+  - !type:StoreWhitelistCondition
+    blacklist:
+      tags:
+      - NukeOpsUplink
 
 - type: listing
   id: UplinkSyndicateBomb
@@ -390,21 +397,6 @@
   conditions:
   - !type:StoreWhitelistCondition
     blacklist:
-      tags:
-      - NukeOpsUplink
-
-- type: listing
-  id: UplinkSyndicateBombNukie
-  name: uplink-exploding-syndicate-bomb-name
-  description: uplink-exploding-syndicate-bomb-desc
-  productEntity: SyndicateBomb
-  cost:
-    Telecrystal: 11
-  categories:
-    - UplinkExplosives
-  conditions:
-  - !type:StoreWhitelistCondition
-    whitelist:
       tags:
       - NukeOpsUplink
 
@@ -459,6 +451,126 @@
     Telecrystal: 6
   categories:
     - UplinkExplosives
+
+# Nukie explosives
+
+- type: listing
+  id: UplinkEmpGrenadeNukie
+  name: uplink-emp-grenade-name
+  description: uplink-emp-grenade-desc
+  productEntity: EmpGrenade
+  cost:
+    Telecrystal: 1 # Nukies get a 50% discount on bombs
+  categories:
+  - UplinkExplosives
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+
+- type: listing
+  id: UplinkC4Nukie
+  name: uplink-c4-name
+  description: uplink-c4-desc
+  productEntity: C4
+  cost:
+    Telecrystal: 1 # Nukies get a 50% discount on bombs
+  categories:
+  - UplinkExplosives
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+
+- type: listing
+  id: UplinkC4BundleNukie
+  name: uplink-c4-bundle-name
+  description: uplink-c4-bundle-desc
+  productEntity: ClothingBackpackDuffelSyndicateC4tBundle
+  discountCategory: veryRareDiscounts
+  discountDownTo:
+    Telecrystal: 4
+  cost:
+    Telecrystal: 6 # Nukies get a 50% discount on bombs
+  categories:
+  - UplinkExplosives
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+
+- type: listing
+  id: UplinkExplodingPenNukie
+  name: uplink-exploding-pen-name
+  description: uplink-exploding-pen-desc
+  icon: { sprite: /Textures/Objects/Misc/pens.rsi, state: pen }
+  productEntity: PenExplodingBox
+  discountCategory: usualDiscounts
+  discountDownTo:
+    Telecrystal: 1
+  cost:
+    Telecrystal: 2 # Nukies get a 50% discount on bombs
+  categories:
+  - UplinkExplosives
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+
+- type: listing
+  id: UplinkExplosiveGrenadeNukie
+  name: uplink-explosive-grenade-name
+  description: uplink-explosive-grenade-desc
+  productEntity: ExGrenade
+  discountCategory: usualDiscounts
+  discountDownTo:
+    Telecrystal: 1
+  cost:
+    Telecrystal: 2 # Nukies get a 50% discount on bombs
+  categories:
+  - UplinkExplosives
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+
+- type: listing
+  id: UplinkSyndicateBombNukie
+  name: uplink-exploding-syndicate-bomb-name
+  description: uplink-exploding-syndicate-bomb-desc
+  productEntity: SyndicateBomb
+  cost:
+    Telecrystal: 11 # Hardbombs don't get a discount, they just don't have a cooldown.
+  categories:
+    - UplinkExplosives
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+
+- type: listing
+  id: UplinkGrenadierRig
+  name: uplink-grenadier-rig-name
+  description: uplink-grenadier-rig-desc
+  productEntity: ClothingBeltMilitaryWebbingGrenadeFilled
+  discountCategory: veryRareDiscounts
+  discountDownTo:
+    Telecrystal: 5
+  cost:
+    Telecrystal: 10 # 6 explosive grenades, 2 incendiary, 2 shrapnel, 28 tc worth.
+  categories:
+  - UplinkExplosives
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
 
 # Ammo
 
