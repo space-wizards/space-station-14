@@ -42,6 +42,15 @@
     - type: Unrevivable
 
 - type: trait
+  id: Unborgable
+  name: trait-unborgable-name
+  description: trait-unborgable-desc
+  category: Disabilities
+  components:
+    - type: Unborgable
+  organ: Brain
+
+- type: trait
   id: Muted
   name: trait-muted-name
   description: trait-muted-desc
