@@ -108,3 +108,14 @@
   components:
   - type: Battery
     startingCharge: 0
+
+- type: entity
+  parent: BaseSMES
+  name: Advanced SMES
+  description: A retrofitted SMES, capable of fitting far more energy. Recharged by the artifact in Sweetwater.
+  id: SMESPlatform
+  suffix: Advanced, 30MJ
+  components:
+  - type: Battery
+    maxCharge: 30000000
+    startingCharge: 30000000
