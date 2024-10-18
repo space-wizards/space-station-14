@@ -1,27 +1,23 @@
 using Content.Shared.Flash;
 using Content.Shared.Flash.Components;
 using Content.Shared.StatusEffect;
-using Content.Client.Viewport;
 using Robust.Client.Graphics;
-using Robust.Client.State;
 using Robust.Client.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
-using SixLabors.ImageSharp.PixelFormats;
 
 namespace Content.Client.Flash
 {
     public sealed class FlashOverlay : Overlay
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IClyde _displayManager = default!;
-        [Dependency] private readonly IStateManager _stateManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
 
-       private readonly StatusEffectsSystem _statusSys;
+        private readonly SharedFlashSystem _flash;
+        private readonly StatusEffectsSystem _statusSys;
 
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
         private readonly ShaderInstance _shader;
@@ -32,6 +28,7 @@ namespace Content.Client.Flash
         {
             IoCManager.InjectDependencies(this);
             _shader = _prototypeManager.Index<ShaderPrototype>("FlashedEffect").InstanceUnique();
+            _flash = _entityManager.System<SharedFlashSystem>();
             _statusSys = _entityManager.System<StatusEffectsSystem>();
         }
 
@@ -46,7 +43,7 @@ namespace Content.Client.Flash
                 || !_entityManager.TryGetComponent<StatusEffectsComponent>(playerEntity, out var status))
                 return;
 
-            if (!_statusSys.TryGetTime(playerEntity.Value, SharedFlashSystem.FlashedKey, out var time, status))
+            if (!_statusSys.TryGetTime(playerEntity.Value, _flash.FlashedKey, out var time, status))
                 return;
 
             var curTime = _timing.CurTime;
@@ -54,20 +51,6 @@ namespace Content.Client.Flash
             var timeDone = (float) (curTime - time.Value.Item1).TotalSeconds;
 
             PercentComplete = timeDone / lastsFor;
-        }
-
-        public void ReceiveFlash()
-        {
-            if (_stateManager.CurrentState is IMainViewportState state)
-            {
-                // take a screenshot
-                // note that the callback takes a while and ScreenshotTexture will be null the first few Draws
-                state.Viewport.Viewport.Screenshot(image =>
-                {
-                    var rgba32Image = image.CloneAs<Rgba32>(SixLabors.ImageSharp.Configuration.Default);
-                    ScreenshotTexture = _displayManager.LoadTextureFromImage(rgba32Image);
-                });
-            }
         }
 
         protected override bool BeforeDraw(in OverlayDrawArgs args)
@@ -82,6 +65,11 @@ namespace Content.Client.Flash
 
         protected override void Draw(in OverlayDrawArgs args)
         {
+            if (RequestScreenTexture && ScreenTexture != null)
+            {
+                ScreenshotTexture = ScreenTexture;
+                RequestScreenTexture = false; // we only need the first frame, so we can stop the request now for performance reasons
+            }
             if (ScreenshotTexture == null)
                 return;
 
@@ -96,7 +84,6 @@ namespace Content.Client.Flash
         {
             base.DisposeBehavior();
             ScreenshotTexture = null;
-            PercentComplete = 1.0f;
         }
     }
 }

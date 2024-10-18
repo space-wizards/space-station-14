@@ -89,9 +89,6 @@
     enabled: false
   - type: PoweredLight
     bulb: Tube
-    damage:
-      types:
-        Heat: 2
   - type: ContainerContainer
     containers:
       light_bulb: !type:ContainerSlot
@@ -117,6 +114,11 @@
       on: base
       broken: broken
       burned: burned
+  - type: DamageOnInteract
+    damage:
+      types:
+        Heat: 2
+    popupText: powered-light-component-burn-hand
 
 - type: entity
   id: Poweredlight
@@ -130,15 +132,17 @@
     enabled: true
   - type: PoweredLight
     hasLampOnSpawn: LightTube
-    damage:
-      types:
-        Heat: 2
   - type: AmbientOnPowered
   - type: AmbientSound
     volume: -15
     range: 2
     sound:
       path: /Audio/Ambience/Objects/light_hum.ogg
+  - type: DamageOnInteract
+    damage:
+      types:
+        Heat: 2
+    popupText: powered-light-component-burn-hand
 
 #LED lights
 - type: entity
@@ -149,14 +153,16 @@
   components:
   - type: PoweredLight
     hasLampOnSpawn: LedLightTube
-    damage:
-      types:
-        Heat: 1 #LEDs don't get as hot
   - type: PointLight
     radius: 15
     energy: 1
     softness: 0.9
     color: "#EEEEFF"
+  - type: DamageOnInteract
+    damage:
+      types:
+        Heat: 1 # LEDs don't get as hot
+    popupText: powered-light-component-burn-hand
 
 - type: entity
   parent: AlwaysPoweredWallLight
@@ -178,9 +184,11 @@
   components:
   - type: PoweredLight
     hasLampOnSpawn: ExteriorLightTube
+  - type: DamageOnInteract
     damage:
       types:
-        Heat: 4 #brighter light gets hotter
+        Heat: 4 # brighter light gets hotter
+    popupText: powered-light-component-burn-hand
 
 - type: entity
   parent: AlwaysPoweredWallLight
@@ -202,14 +210,16 @@
   components:
   - type: PoweredLight
     hasLampOnSpawn: SodiumLightTube
-    damage:
-      types:
-        Heat: 2
   - type: PointLight
     radius: 10
     energy: 2.5
     softness: 0.9
     color: "#FFAF38"
+  - type: DamageOnInteract
+    damage:
+      types:
+        Heat: 2
+    popupText: powered-light-component-burn-hand
 
 - type: entity
   parent: AlwaysPoweredWallLight
@@ -289,9 +299,6 @@
       light_bulb: !type:ContainerSlot
   - type: PoweredLight
     bulb: Bulb
-    damage:
-      types:
-        Heat: 2
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: DeviceNetwork
@@ -312,6 +319,11 @@
       - On
       - Off
       - Toggle
+  - type: DamageOnInteract
+    damage:
+      types:
+        Heat: 2
+    popupText: powered-light-component-burn-hand
 
 - type: entity
   id: PoweredLEDSmallLight
@@ -328,9 +340,11 @@
     color: "#EEEEFF"
   - type: PoweredLight
     hasLampOnSpawn: LedLightBulb
+  - type: DamageOnInteract
     damage:
       types:
         Heat: 1
+    popupText: powered-light-component-burn-hand
 
 - type: entity
   id: PoweredSmallLight
@@ -343,9 +357,11 @@
     enabled: true
   - type: PoweredLight
     hasLampOnSpawn: LightBulb
+  - type: DamageOnInteract
     damage:
       types:
         Heat: 2
+    popupText: powered-light-component-burn-hand
 
 #Emergency Lights
 - type: entity
@@ -398,14 +414,16 @@
   components:
   - type: PoweredLight
     hasLampOnSpawn: LightTubeCrystalCyan
-    damage:
-      types:
-        Heat: 2
   - type: PointLight
     radius: 8
     energy: 3
     softness: 0.5
     color: "#47f8ff"
+  - type: DamageOnInteract
+    damage:
+      types:
+        Heat: 2
+    popupText: powered-light-component-burn-hand
 
 - type: entity
   id: AlwaysPoweredlightCyan
@@ -425,14 +443,16 @@
   components:
   - type: PoweredLight
     hasLampOnSpawn: LightTubeCrystalBlue
-    damage:
-      types:
-        Heat: 2
   - type: PointLight
     radius: 8
     energy: 3
     softness: 0.5
     color: "#39a1ff"
+  - type: DamageOnInteract
+    damage:
+      types:
+        Heat: 2
+    popupText: powered-light-component-burn-hand
 
 - type: entity
   id: AlwaysPoweredlightBlue
@@ -452,14 +472,16 @@
   components:
   - type: PoweredLight
     hasLampOnSpawn: LightTubeCrystalPink
-    damage:
-      types:
-        Heat: 2
   - type: PointLight
     radius: 8
     energy: 3
     softness: 0.5
     color: "#ff66cc"
+  - type: DamageOnInteract
+    damage:
+      types:
+        Heat: 2
+    popupText: powered-light-component-burn-hand
 
 - type: entity
   id: AlwaysPoweredlightPink
@@ -479,14 +501,16 @@
   components:
   - type: PoweredLight
     hasLampOnSpawn: LightTubeCrystalOrange
-    damage:
-      types:
-        Heat: 2
   - type: PointLight
     radius: 8
     energy: 3
     softness: 0.5
     color: "#ff8227"
+  - type: DamageOnInteract
+    damage:
+      types:
+        Heat: 2
+    popupText: powered-light-component-burn-hand
 
 - type: entity
   id: AlwaysPoweredlightOrange
@@ -506,14 +530,16 @@
   components:
   - type: PoweredLight
     hasLampOnSpawn: LightTubeCrystalRed
-    damage:
-      types:
-        Heat: 2
   - type: PointLight
     radius: 8
     energy: 3
     softness: 0.5
     color: "#fb4747"
+  - type: DamageOnInteract
+    damage:
+      types:
+        Heat: 2
+    popupText: powered-light-component-burn-hand
 
 - type: entity
   id: AlwaysPoweredlightRed
@@ -533,14 +559,16 @@
   components:
   - type: PoweredLight
     hasLampOnSpawn: LightTubeCrystalGreen
-    damage:
-      types:
-        Heat: 2
   - type: PointLight
     radius: 8
     energy: 3
     softness: 0.5
     color: "#52ff39"
+  - type: DamageOnInteract
+    damage:
+      types:
+        Heat: 2
+    popupText: powered-light-component-burn-hand
 
 - type: entity
   id: AlwaysPoweredlightGreen

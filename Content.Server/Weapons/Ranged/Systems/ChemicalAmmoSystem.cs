@@ -1,14 +1,14 @@
-using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Weapons.Ranged.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Weapons.Ranged.Events;
+using Content.Shared.Chemistry.EntitySystems;
 using System.Linq;
 
 namespace Content.Server.Weapons.Ranged.Systems
 {
     public sealed class ChemicalAmmoSystem : EntitySystem
     {
-        [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+        [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
 
         public override void Initialize()
         {

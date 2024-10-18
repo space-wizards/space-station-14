@@ -57,7 +57,7 @@
   - type: StaticPrice
     price: 0
   - type: StackPrice
-    price: 5
+    price: 7.5
   - type: Extractable
     grindableSolutionName: rod
   - type: SolutionContainerManager

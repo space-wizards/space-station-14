@@ -26,7 +26,7 @@ public sealed partial class ActionsWindow : DefaultWindow
 
         foreach (var filter in Enum.GetValues<Filters>())
         {
-            FilterButton.AddItem(filter.ToString(), filter);
+            FilterButton.AddItem(Loc.GetString($"ui-actionmenu-{filter.ToString().ToLower()}"), filter);
         }
     }
 

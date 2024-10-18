@@ -64,6 +64,7 @@ public sealed partial class DungeonSystem
         Vector2i origin,
         DungeonRoomPrototype room,
         Random random,
+        HashSet<Vector2i>? reservedTiles,
         bool clearExisting = false,
         bool rotation = false)
     {
@@ -78,7 +79,7 @@ public sealed partial class DungeonSystem
         var roomTransform = Matrix3Helpers.CreateTransform((Vector2) room.Size / 2f, roomRotation);
         var finalTransform = Matrix3x2.Multiply(roomTransform, originTransform);
 
-        SpawnRoom(gridUid, grid, finalTransform, room, clearExisting);
+        SpawnRoom(gridUid, grid, finalTransform, room, reservedTiles, clearExisting);
     }
 
     public Angle GetRoomRotation(DungeonRoomPrototype room, Random random)
@@ -103,6 +104,7 @@ public sealed partial class DungeonSystem
         MapGridComponent grid,
         Matrix3x2 roomTransform,
         DungeonRoomPrototype room,
+        HashSet<Vector2i>? reservedTiles = null,
         bool clearExisting = false)
     {
         // Ensure the underlying template exists.
@@ -116,7 +118,7 @@ public sealed partial class DungeonSystem
         // go BRRNNTTT on existing stuff
         if (clearExisting)
         {
-            var gridBounds = new Box2(Vector2.Transform(Vector2.Zero, roomTransform), Vector2.Transform(room.Size, roomTransform));
+            var gridBounds = new Box2(Vector2.Transform(-room.Size/2, roomTransform), Vector2.Transform(room.Size/2, roomTransform));
             _entitySet.Clear();
             // Polygon skin moment
             gridBounds = gridBounds.Enlarged(-0.05f);
@@ -150,6 +152,10 @@ public sealed partial class DungeonSystem
 
                 var tilePos = Vector2.Transform(indices + tileOffset, roomTransform);
                 var rounded = tilePos.Floored();
+
+                if (!clearExisting && reservedTiles?.Contains(rounded) == true)
+                    continue;
+
                 _tiles.Add((rounded, tileRef.Tile));
             }
         }
@@ -165,6 +171,10 @@ public sealed partial class DungeonSystem
         {
             var templateXform = _xformQuery.GetComponent(templateEnt);
             var childPos = Vector2.Transform(templateXform.LocalPosition - roomCenter, roomTransform);
+
+            if (!clearExisting && reservedTiles?.Contains(childPos.Floored()) == true)
+                continue;
+
             var childRot = templateXform.LocalRotation + finalRoomRotation;
             var protoId = _metaQuery.GetComponent(templateEnt).EntityPrototype?.ID;
 
@@ -177,7 +187,7 @@ public sealed partial class DungeonSystem
 
             // If the templated entity was anchored then anchor us too.
             if (anchored && !childXform.Anchored)
-                _transform.AnchorEntity(ent, childXform, grid);
+                _transform.AnchorEntity((ent, childXform), (gridUid, grid));
             else if (!anchored && childXform.Anchored)
                 _transform.Unanchor(ent, childXform);
         }
@@ -192,8 +202,11 @@ public sealed partial class DungeonSystem
                 // Offset by 0.5 because decals are offset from bot-left corner
                 // So we convert it to center of tile then convert it back again after transform.
                 // Do these shenanigans because 32x32 decals assume as they are centered on bottom-left of tiles.
-                var position = Vector2.Transform(decal.Coordinates + Vector2Helpers.Half - roomCenter, roomTransform);
-                position -= Vector2Helpers.Half;
+                var position = Vector2.Transform(decal.Coordinates + grid.TileSizeHalfVector - roomCenter, roomTransform);
+                position -= grid.TileSizeHalfVector;
+
+                if (!clearExisting && reservedTiles?.Contains(position.Floored()) == true)
+                    continue;
 
                 // Umm uhh I love decals so uhhhh idk what to do about this
                 var angle = (decal.Angle + finalRoomRotation).Reduced();

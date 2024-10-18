@@ -10,6 +10,7 @@
       makeSentient: true
       name: ghost-role-information-behonker-name
       description: ghost-role-information-behonker-description
+      rules: ghost-role-information-antagonist-rules
       raffle:
         settings: default
     - type: GhostTakeoverAvailable
@@ -109,9 +110,6 @@
         collection: BananiumHorn
         params:
           volume: 5
-      anomalyContactDamage:
-        types:
-          Radiation: 10
     - type: Input
       context: "human"
     - type: Bloodstream
@@ -157,9 +155,6 @@
   suffix: "Ice"
   components:
   - type: Anomaly
-    anomalyContactDamage:
-      types:
-        Cold: 10
   - type: ExplosionAnomaly
     supercriticalExplosion: Cryo
     explosionTotalIntensity: 1000

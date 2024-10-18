@@ -19,7 +19,7 @@
 /Resources/engineCommandPerms.yml @moonheart08 @Chief-Engineer
 /Resources/clientCommandPerms.yml @moonheart08 @Chief-Engineer
 
-/Resources/Prototypes/Maps/ @Emisse
+/Resources/Prototypes/Maps/** @Emisse
 
 /Resources/Prototypes/Body/ @DrSmugleaf # suffering
 /Resources/Prototypes/Entities/Mobs/Player/ @DrSmugleaf
@@ -55,3 +55,10 @@
 #Jezi
 /Content.*/Medical @Jezithyr
 /Content.*/Body @Jezithyr
+
+# Sloth
+/Content.*/Audio @metalgearsloth
+/Content.*/Movement @metalgearsloth
+/Content.*/NPC @metalgearsloth
+/Content.*/Shuttles @metalgearsloth
+/Content.*/Weapons @metalgearsloth

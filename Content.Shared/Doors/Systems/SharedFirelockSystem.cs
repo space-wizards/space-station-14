@@ -21,6 +21,7 @@ public abstract class SharedFirelockSystem : EntitySystem
 
         // Access/Prying
         SubscribeLocalEvent<FirelockComponent, BeforeDoorOpenedEvent>(OnBeforeDoorOpened);
+        SubscribeLocalEvent<FirelockComponent, BeforePryEvent>(OnBeforePry);
         SubscribeLocalEvent<FirelockComponent, GetPryTimeModifierEvent>(OnDoorGetPryTimeModifier);
         SubscribeLocalEvent<FirelockComponent, PriedEvent>(OnAfterPried);
 
@@ -58,6 +59,14 @@ public abstract class SharedFirelockSystem : EntitySystem
             args.Cancel();
         else if (args.User != null)
             WarnPlayer((uid, component), args.User.Value);
+    }
+
+    private void OnBeforePry(EntityUid uid, FirelockComponent component, ref BeforePryEvent args)
+    {
+        if (args.Cancelled || !component.Powered || args.StrongPry || args.PryPowered)
+            return;
+
+        args.Cancelled = true;
     }
 
     private void OnDoorGetPryTimeModifier(EntityUid uid, FirelockComponent component, ref GetPryTimeModifierEvent args)

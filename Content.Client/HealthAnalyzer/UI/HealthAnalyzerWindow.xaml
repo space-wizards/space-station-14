@@ -1,48 +1,65 @@
-﻿<controls:FancyWindow
+<controls:FancyWindow
     xmlns="https://spacestation14.io"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-    SetSize="250 100">
+    MaxHeight="525"
+    MinWidth="300">
     <ScrollContainer
+        Margin="5 5 5 5"
+        ReturnMeasure="True"
         VerticalExpand="True">
         <BoxContainer
             Name="RootContainer"
+            VerticalExpand="True"
             Orientation="Vertical">
             <Label
                 Name="NoPatientDataText"
                 Text="{Loc health-analyzer-window-no-patient-data-text}" />
+
             <BoxContainer
                 Name="PatientDataContainer"
-                Orientation="Vertical"
-                Margin="0 0 5 10">
-                <BoxContainer Name="ScanModePanel" HorizontalExpand="True" Visible="False" Margin="0 5 0 0">
-                    <Label
-                    Name="ScanMode"
-                    Align="Left"
-                    Text="{Loc health-analyzer-window-scan-mode-text}"/>
-                    <Label
-                    Name="ScanModeText"
-                    Align="Right"
-                    HorizontalExpand="True"/>
+                Margin="0 0 0 5"
+                Orientation="Vertical">
+                <BoxContainer Orientation="Horizontal" Margin="0 0 0 5">
+                    <SpriteView OverrideDirection="South" Scale="2 2" Name="SpriteView" Access="Public" SetSize="64 64" />
+                    <TextureRect Name="NoDataTex" Access="Public" SetSize="64 64" Visible="false" Stretch="KeepAspectCentered" TexturePath="/Textures/Interface/Misc/health_analyzer_out_of_range.png"/>
+                    <BoxContainer Margin="5 0 0 0" Orientation="Vertical" VerticalAlignment="Top">
+                        <RichTextLabel Name="NameLabel" SetWidth="150" />
+                        <Label Name="SpeciesLabel" VerticalAlignment="Top" StyleClasses="LabelSubText" />
+                    </BoxContainer>
+                    <Label Margin="0 0 5 0" HorizontalExpand="True" HorizontalAlignment="Right" VerticalExpand="True"
+                           VerticalAlignment="Top" Name="ScanModeLabel"
+                           Text="{Loc 'health-analyzer-window-entity-unknown-text'}" />
                 </BoxContainer>
-                <Label
-                    Name="PatientName"/>
-                <Label
-                    Name="Temperature"
-                    Margin="0 5 0 0"/>
-                <Label
-                    Name="BloodLevel"
-                    Margin="0 5 0 0"/>
-                <Label
-                    Name="Bleeding"
-                    Margin="0 5 0 0"/>
-                <Label
-                    Name="patientDamageAmount"
-                    Margin="0 15 0 0"/>
+
+                <PanelContainer StyleClasses="LowDivider" />
+
+                <GridContainer Margin="0 5 0 0" Columns="2">
+                    <Label Text="{Loc 'health-analyzer-window-entity-status-text'}" />
+                    <Label Name="StatusLabel" />
+                    <Label Text="{Loc 'health-analyzer-window-entity-temperature-text'}" />
+                    <Label Name="TemperatureLabel" />
+                    <Label Text="{Loc 'health-analyzer-window-entity-blood-level-text'}" />
+                    <Label Name="BloodLabel" />
+                    <Label Text="{Loc 'health-analyzer-window-entity-damage-total-text'}" />
+                    <Label Name="DamageLabel" />
+                </GridContainer>
             </BoxContainer>
+
+            <PanelContainer Name="AlertsDivider" Visible="False" StyleClasses="LowDivider" />
+
+            <BoxContainer Name="AlertsContainer" Visible="False" Margin="0 5" Orientation="Horizontal"
+                          HorizontalExpand="True" HorizontalAlignment="Center">
+
+            </BoxContainer>
+
+            <PanelContainer StyleClasses="LowDivider" />
+
             <BoxContainer
                 Name="GroupsContainer"
+                Margin="0 5 0 5"
                 Orientation="Vertical">
             </BoxContainer>
+
         </BoxContainer>
     </ScrollContainer>
 </controls:FancyWindow>

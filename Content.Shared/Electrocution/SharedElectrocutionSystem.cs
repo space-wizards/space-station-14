@@ -23,6 +23,20 @@ namespace Content.Shared.Electrocution
             Dirty(uid, insulated);
         }
 
+        /// <summary>
+        /// Sets electrified value of component and marks dirty if required.
+        /// </summary>
+        public void SetElectrified(Entity<ElectrifiedComponent> ent, bool value)
+        {
+            if (ent.Comp.Enabled == value)
+            {
+                return;
+            }
+
+            ent.Comp.Enabled = value;
+            Dirty(ent, ent.Comp);
+        }
+
         /// <param name="uid">Entity being electrocuted.</param>
         /// <param name="sourceUid">Source entity of the electrocution.</param>
         /// <param name="shockDamage">How much shock damage the entity takes.</param>

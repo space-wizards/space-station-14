@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Containers;
+﻿using Content.Shared.DisplacementMap;
+using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -13,18 +14,21 @@ public sealed partial class InventoryComponent : Component
 
     [DataField("speciesId")] public string? SpeciesId { get; set; }
 
-    [DataField] public Dictionary<string, SlotDisplacementData> Displacements = [];
-
     public SlotDefinition[] Slots = Array.Empty<SlotDefinition>();
     public ContainerSlot[] Containers = Array.Empty<ContainerSlot>();
 
-    [DataDefinition]
-    public sealed partial class SlotDisplacementData
-    {
-        [DataField(required: true)]
-        public PrototypeLayerData Layer = default!;
+    [DataField]
+    public Dictionary<string, DisplacementData> Displacements = new();
 
-        [DataField]
-        public string? ShaderOverride = "DisplacedStencilDraw";
-    }
+    /// <summary>
+    /// Alternate displacement maps, which if available, will be selected for the player of the appropriate gender.
+    /// </summary>
+    [DataField]
+    public Dictionary<string, DisplacementData> FemaleDisplacements = new();
+
+    /// <summary>
+    /// Alternate displacement maps, which if available, will be selected for the player of the appropriate gender.
+    /// </summary>
+    [DataField]
+    public Dictionary<string, DisplacementData> MaleDisplacements = new();
 }

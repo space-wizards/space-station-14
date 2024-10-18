@@ -6,32 +6,28 @@
       edges:
         - to: railing
           completed:
-            - !type:SnapToGrid
-              southRotation: true
+            - !type:SnapToGrid { }
           steps:
             - material: MetalRod
               amount: 1
               doAfter: 2
         - to: railingCorner
           completed:
-            - !type:SnapToGrid
-              southRotation: true
+            - !type:SnapToGrid { }
           steps:
             - material: MetalRod
               amount: 2
               doAfter: 2.5
         - to: railingCornerSmall
           completed:
-            - !type:SnapToGrid
-              southRotation: true
+            - !type:SnapToGrid { }
           steps:
             - material: MetalRod
               amount: 1
               doAfter: 2
         - to: railingRound
           completed:
-            - !type:SnapToGrid
-              southRotation: true
+            - !type:SnapToGrid { }
           steps:
             - material: MetalRod
               amount: 2

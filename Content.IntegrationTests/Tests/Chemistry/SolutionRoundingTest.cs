@@ -1,5 +1,5 @@
-using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
@@ -76,7 +76,7 @@ public sealed class SolutionRoundingTest
 
         await server.WaitPost(() =>
         {
-            var system = server.System<SolutionContainerSystem>();
+            var system = server.System<SharedSolutionContainerSystem>();
             var beaker = server.EntMan.SpawnEntity("SolutionRoundingTestContainer", testMap.GridCoords);
 
             system.TryGetSolution(beaker, "beaker", out var newSolutionEnt, out var newSolution);

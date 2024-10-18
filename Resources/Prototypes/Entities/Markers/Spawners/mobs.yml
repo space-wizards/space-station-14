@@ -49,6 +49,20 @@
       - MobCorgiIanPup
 
 - type: entity
+  name: Dev Mouse Spawner
+  id: SpawnMobCorgiMouse
+  suffix: Admeme
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobCorgiMouse
+
+- type: entity
   name: Possum Morty Spawner
   id: SpawnMobPossumMorty
   parent: MarkerBase
@@ -852,3 +866,17 @@
   - type: ConditionalSpawner
     prototypes:
     - MobClownSpider
+
+- type: entity
+  name: honk bot spawner
+  id: SpawnHonkBot
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: honkbot
+      sprite: Mobs/Silicon/Bots/honkbot.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobHonkBot

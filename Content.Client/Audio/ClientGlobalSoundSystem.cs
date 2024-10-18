@@ -67,7 +67,7 @@ public sealed class ClientGlobalSoundSystem : SharedGlobalSoundSystem
         if(!_adminAudioEnabled) return;
 
         var stream = _audio.PlayGlobal(soundEvent.Filename, Filter.Local(), false, soundEvent.AudioParams);
-        _adminAudio.Add(stream.Value.Entity);
+        _adminAudio.Add(stream?.Entity);
     }
 
     private void PlayStationEventMusic(StationEventMusicEvent soundEvent)
@@ -76,7 +76,7 @@ public sealed class ClientGlobalSoundSystem : SharedGlobalSoundSystem
         if(!_eventAudioEnabled || _eventAudio.ContainsKey(soundEvent.Type)) return;
 
         var stream = _audio.PlayGlobal(soundEvent.Filename, Filter.Local(), false, soundEvent.AudioParams);
-        _eventAudio.Add(soundEvent.Type, stream.Value.Entity);
+        _eventAudio.Add(soundEvent.Type, stream?.Entity);
     }
 
     private void PlayGameSound(GameGlobalSoundEvent soundEvent)

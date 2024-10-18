@@ -1,33 +1,33 @@
 ﻿<DefaultWindow
-    xmlns="https://spacestation14.io" Title="{Loc Load Blueprint}">
+    xmlns="https://spacestation14.io" Title="{Loc admin-ui-blueprint-load}">
     <BoxContainer Orientation="Vertical">
         <BoxContainer Orientation="Horizontal">
-            <Label Text="{Loc Map}" MinSize="100 0" />
+            <Label Text="{Loc admin-ui-blueprint-map}" MinSize="100 0" />
             <Control MinSize="50 0" />
             <OptionButton Name="MapOptions" MinSize="100 0" HorizontalExpand="True" />
         </BoxContainer>
         <BoxContainer Orientation="Horizontal">
-            <Label Text="{Loc Path}" MinSize="100 0" />
+            <Label Text="{Loc admin-ui-blueprint-path}" MinSize="100 0" />
             <Control MinSize="50 0" />
             <LineEdit Name="MapPath" MinSize="200 0" HorizontalExpand="True" Text="/Maps/" />
         </BoxContainer>
         <BoxContainer Orientation="Horizontal">
-            <Label Text="{Loc X}" MinSize="100 0" />
+            <Label Text="{Loc admin-ui-blueprint-x}" MinSize="100 0" />
             <Control MinSize="50 0" />
             <SpinBox Name="XCoordinate" MinSize="100 0" HorizontalExpand="True" />
         </BoxContainer>
         <BoxContainer Orientation="Horizontal">
-            <Label Text="{Loc Y}" MinSize="100 0" />
+            <Label Text="{Loc admin-ui-blueprint-y}" MinSize="100 0" />
             <Control MinSize="50 0" />
             <SpinBox Name="YCoordinate" MinSize="100 0" HorizontalExpand="True" />
         </BoxContainer>
         <BoxContainer Orientation="Horizontal">
-            <Label Text="{Loc Rotation}" MinSize="100 0" />
+            <Label Text="{Loc admin-ui-blueprint-rotation}" MinSize="100 0" />
             <Control MinSize="50 0" />
             <SpinBox Name="RotationSpin" MinSize="100 0" HorizontalExpand="True" />
         </BoxContainer>
-        <Button Name="SubmitButton" Text="{Loc Load Blueprint}" />
-        <Button Name="TeleportButton" Text="{Loc Teleport to}" />
-        <Button Name="ResetButton" Text="{Loc Reset to default}"></Button>
+        <Button Name="SubmitButton" Text="{Loc admin-ui-blueprint-load}" />
+        <Button Name="TeleportButton" Text="{Loc admin-ui-blueprint-teleport}" />
+        <Button Name="ResetButton" Text="{Loc admin-ui-blueprint-reset}"></Button>
     </BoxContainer>
 </DefaultWindow>

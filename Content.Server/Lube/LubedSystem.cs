@@ -43,7 +43,7 @@ public sealed class LubedSystem : EntitySystem
         var user = args.Container.Owner;
         _transform.SetCoordinates(uid, Transform(user).Coordinates);
         _transform.AttachToGridOrMap(uid);
-        _throwing.TryThrow(uid, _random.NextVector2(), strength: component.SlipStrength);
+        _throwing.TryThrow(uid, _random.NextVector2(), baseThrowSpeed: component.SlipStrength);
         _popup.PopupEntity(Loc.GetString("lube-slip", ("target", Identity.Entity(uid, EntityManager))), user, user, PopupType.MediumCaution);
     }
 

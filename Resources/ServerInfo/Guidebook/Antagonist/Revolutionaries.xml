@@ -1,55 +1,53 @@
 <Document>
   # Revolutionaries
-
-  - Revolutionaries are antagonists who are sponsored by the Syndicate to take over the station.
-
-  ## Head Revolutionaries
-
-<Box>
-  <GuideEntityEmbed Entity="Flash" Caption="Flash"/>
-  <GuideEntityEmbed Entity="ClothingEyesGlassesSunglasses" Caption="Sunglasses"/>
-</Box>
-
-  [color=#5e9cff]Head Revolutionaries[/color] are chosen at the start of the shift and are tasked with taking over the station by killing, exiling, or cuffing all of the Command staff. Head Revolutionaries will be given a [color=#a4885c]Flash[/color] and a pair of [color=#a4885c]Sunglasses[/color] to aid them.
-
-  ## Conversion
-
+  
   <Box>
-  <GuideEntityEmbed Entity="Flash" Caption="Flash"/>
-</Box>
+    [color=#999999][italic]"Viva la revolución!!"[/italic][/color]
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="PosterContrabandRevolt" Caption=""/>
+  </Box>
 
-  You can convert crew members to [color=#ff0000]Revolutionaries[/color] by using a [color=#a4885c]Flash[/color] in [color=#ff0000]harm mode[/color] and attacking someone with it. Any flash can be used for conversion, but remember that flashes have limited charges.
-
-<Box>
-  <GuideEntityEmbed Entity="ClothingEyesGlassesSunglasses" Caption="Sunglasses"/>
-  <GuideEntityEmbed Entity="ClothingEyesGlassesSecurity" Caption="Security Sunglasses"/>
-  <GuideEntityEmbed Entity="ClothingHeadHatWelding" Caption="Welding Mask"/>
-</Box>
-
-  However, gear providing flash protection such as [color=#a4885c]Sunglasses[/color] and [color=#a4885c]Welding Masks[/color] will also block your flashes, and crew wearing these will not be able to be converted.
-
-<Box>
-  <GuideEntityEmbed Entity="MindShieldImplanter" Caption="MindShield Implanter"/>
-</Box>
-
-  While not flash protection, a [color=#a4885c]MindShield Implant[/color] will prevent the implanted person from being converted into a revolutionary. Assume all of [color=#a4885c]Security[/color] and [color=#a4885c]Command[/color] are implanted already. 
-  Additionally, a [color=#a4885c]MindShield Implanter[/color] used on a [color=#ff0000]Revolutionary[/color] will de-convert them and they will no longer be loyal to your cause. If a [color=#a4885c]MindShield Implanter[/color] is used on a [color=#5e9cff]Head Revolutionary[/color], it will be destroyed but this will reveal you so be careful!
-
-  ## Revolutionary
-
-  A [color=#ff0000]Revolutionary[/color] is the result of being converted by a [color=#5e9cff]Head Revolutionary[/color]. Revolutionaries are underlings of the Head Revolutionaries and should follow orders given by them and prioritize their well-being over anything else because if the [color=#5e9cff]Head Revolutionaries[/color] die the Revolution will fail.
-  Keep in mind that you can't convert others as a regular revolutionary, only your boss can do that.
+  Revolutionaries are conversion antagonists sponsored by the [color=#ff0000]Syndicate[/color] who are tasked with taking control of the station. They have no fancy gimmicks or cheap tricks, they only have a cause and strength in numbers.
 
   ## Objectives
+  You must cuff, kill, or exile all of the [textlink="Command staff" link="Command"] on station in no particular order.
 
-  You must eliminate, exile, or arrest all of the following Command staff on station in no particular order.
-  - Captain
-  - Head of Personnel
-  - Chief Engineer
-  - Research Director
-  - Quartermaster
-  - Head of Security
-  - Chief Medical Officer
+  Your objective is not to destroy the station, but [italic]take it over[/italic], so try to minimize damage where possible.
 
-  Remember, your objective is to take over the station and not to destroy it so try to minimize damage where possible. Viva la revolución!
+  [bold]The revolution will fail[/bold] if all of the [bold][color=#5e9cff]Head Revolutionaries[/color][/bold] die, and all [color=red]Revolutionaries[/color] will de-convert if this happens.
+
+  ## Headrevs & Conversion
+  [bold][color=#5e9cff]Head Revolutionaries[/color][/bold] are chosen at the start of the shift and begin with a [color=cyan]flash[/color] and a pair of [color=cyan]sunglasses[/color].
+  
+  <Box>
+    <GuideEntityEmbed Entity="Flash"/>
+    <GuideEntityEmbed Entity="ClothingEyesGlassesSunglasses"/>
+  </Box>
+  
+  You can convert crew members to your side by taking any [bold]flash[/bold] and attacking someone with it using [color=#ff0000]harm mode[/color].
+  However, you can't convert your target if they're wearing [color=cyan]flash protection[/color] such as [bold]sunglasses[/bold] or a [bold]welding mask[/bold].
+
+  <Box>
+    <GuideEntityEmbed Entity="ClothingEyesGlassesSunglasses"/>
+    <GuideEntityEmbed Entity="ClothingEyesGlassesSecurity"/>
+    <GuideEntityEmbed Entity="ClothingHeadHatWelding"/>
+  </Box>
+
+  Another hurdle in your way are pesky [color=cyan]mindshield implanters[/color]. These will:
+  - Prevent the implanted person from being converted into a [color=red]Revolutionary[/color]
+  - De-convert Revolutionaries, and will make them no longer loyal to your cause
+  - Visibly be destroyed upon being implanted into a [bold][color=#5e9cff]Head Revolutionary[/color][/bold], giving away your cover
+  - NOT protect against flash disorientation
+
+  Assume all of [color=#cb0000]Security[/color] and [color=#1b67a5]Command[/color] are implanted with mindshields already.
+
+  <Box>
+    <GuideEntityEmbed Entity="MindShieldImplanter"/>
+  </Box>
+
+  ## Revolutionary
+  A [bold][color=red]Revolutionary[/color][/bold] is a crew member that has been converted by a [bold][color=#5e9cff]Head Revolutionary[/color][/bold].
+
+  [bold][color=red]Revolutionaries[/color] can't convert people themselves,[/bold] but they're more than capable of doing dirty work and carrying out orders.
 </Document>

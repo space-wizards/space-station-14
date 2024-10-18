@@ -1,7 +1,7 @@
 ﻿- type: entity
   parent: MobObserver
   id: ReplayObserver
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   save: false
   components:
   - type: MovementSpeedModifier

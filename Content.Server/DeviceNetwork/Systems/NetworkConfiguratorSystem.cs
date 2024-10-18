@@ -106,6 +106,13 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         if (!targetUid.HasValue || !Resolve(targetUid.Value, ref device, false))
             return;
 
+        //This checks if the device is marked as having a savable address,
+        //to avoid adding pdas and whatnot to air alarms. This flag is true
+        //by default, so this will only prevent devices from being added to
+        //network configurator lists if manually set to false in the prototype
+        if (!device.SavableAddress)
+            return;
+
         var address = device.Address;
         if (string.IsNullOrEmpty(address))
         {
@@ -423,11 +430,11 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         if (Delay(configurator))
             return;
 
-        if (!targetUid.HasValue || !configurator.ActiveDeviceLink.HasValue || !TryComp(userUid, out ActorComponent? actor) || !AccessCheck(targetUid.Value, userUid, configurator))
+        if (!targetUid.HasValue || !configurator.ActiveDeviceLink.HasValue || !AccessCheck(targetUid.Value, userUid, configurator))
             return;
 
 
-        _uiSystem.OpenUi(configuratorUid, NetworkConfiguratorUiKey.Link, actor.PlayerSession);
+        _uiSystem.OpenUi(configuratorUid, NetworkConfiguratorUiKey.Link, userUid);
         configurator.DeviceLinkTarget = targetUid;
 
 
