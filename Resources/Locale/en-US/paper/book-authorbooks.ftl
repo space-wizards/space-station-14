@@ -17,6 +17,24 @@ book-text-truth = Defining truth has been a central concern of philosophers for 
       Additionally, it is worth noting that not all lies are the same. While intentional deception can be harmful and unethical, there are also situations where lying may be considered a social lubricant or a way of preserving privacy or avoiding harm. In these cases, it may be more appropriate to think about the context and motivations behind a particular lie, rather than simply categorizing all people as "horrible liars."
       Overall, it is important to approach the topic of lying with nuance and an understanding of the complex factors that can influence human behavior.
 
+book-text-lusty-reptilian-janitor = Alfonso Huff, Captain of Space Station 41 runs into the reptilian Janitor, Lifts-Her-Tail on the corridor.
+      "I'm so glad I have found you, my dear. I spilled milk on the floor in the bridge. I need your services."
+      "I would love to help, Captain, but the Head of Persssonnel will take my head if I don't finisssh cleaning up thisss pool of blood."
+      "Oh, but I need a trusty Janitor to let into the bridge, and my heart trusts none but you, my dumpling."
+      "You flatter me, Captain. Alright, let'sss head to the bridge."
+      Lifts-Her-Tail grabs the janitorial trolley with her tail and they start walking. After a few minutes, they arrive to the bridge and she starts cleaning up. Her hands move skillfully and she wears an expression of professionalism, but she can not hide the slightest hint of blush that appears on her face whenever she notices the Captain taking glances at her. After a good 10 minutes of cleaning she turns to him.
+      "I am done, Captain. Could you let me out through the High SSSecurity Doorsss?"
+      "Is cleaning the only reason you came here, little one?"
+      "I have to idea what it isss you imply. I am jussst a sssimple Janitor."
+      "So you are, my dumpling. And a good one at that. I saw your strong legs and tail as you pulled your trolley."
+      "You embarrasss me, SSSir."
+      "Fear not, you are safe from any Syndicate agent here with me."
+      "But I mussst continue my cleaning dutiesss."
+      "Cleaning, eh? I have something for you. Haven't I told you? I spilled the milk on my lap, and now my uniform is dirty."
+      "But thisss ssstain isss huge. It could take all night to ssscrub."
+      "Plenty of time, my sweet. Plenty of time."
+
+
 book-text-world = The state of the world is an ever-changing reflection of the human condition, shaped by the interplay of natural forces, social structures, and individual choices.
       1. "The state of the world is an ever-changing reflection..."
       This part of the statement suggests that the world is not a static or unchanging entity, but rather a dynamic system that is in a constant state of flux. The word "reflection" implies that the state of the world is a product of various forces and factors that are reflected back to us through observable phenomena. This raises important questions about the nature of causality, and the extent to which we can understand the complex interplay of forces that shape the world.
