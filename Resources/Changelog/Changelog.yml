@@ -1,43 +1,6 @@
 ﻿Entries:
 - author: slarticodefast
   changes:
-  - message: Fixed borgs not being able to state laws or open other UIs without an
-      active module.
-    type: Fix
-  id: 7029
-  time: '2024-08-02T05:44:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30299
-- author: TropicalHibi
-  changes:
-  - message: Now fs (for sure) and wru (where are you) are changed to their full version
-      in text
-    type: Add
-  id: 7030
-  time: '2024-08-02T05:57:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30508
-- author: Plykiya
-  changes:
-  - message: Rechargers now show the percent charged of the item it is charging.
-    type: Add
-  id: 7031
-  time: '2024-08-02T06:05:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28500
-- author: ShadowCommander
-  changes:
-  - message: Rollerbeds now deploy when holding them in hand and clicking on the ground.
-    type: Add
-  id: 7032
-  time: '2024-08-02T07:05:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30000
-- author: slarticodefast
-  changes:
-  - message: The digital audio workstation can now be rotated.
-    type: Tweak
-  id: 7033
-  time: '2024-08-02T10:02:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30571
-- author: slarticodefast
-  changes:
   - message: Added potassium iodide. It gives you short term radiation protection
       and can be found in radiation treatment kits.
     type: Add
@@ -3950,3 +3913,45 @@
   id: 7528
   time: '2024-10-18T03:28:30.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32563
+- author: pheenty
+  changes:
+  - message: QM is now considered an important job.
+    type: Tweak
+  - message: QM is now correctly considered head for traitor's kill head objective,
+      while warden now isn't.
+    type: Fix
+  id: 7529
+  time: '2024-10-18T09:43:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32721
+- author: JIPDawg
+  changes:
+  - message: On Salamander the round will now restart after 5 minutes from when the
+      Evac shuttle arrives at CentCom.
+    type: Tweak
+  id: 7530
+  time: '2024-10-18T10:03:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32776
+- author: Errant
+  changes:
+  - message: Players becoming Traitor without a PDA now correctly get the text and
+      audio notifications, and the code words. They are also given an Uplink Implant,
+      with the price taken from their starting TC.
+    type: Fix
+  id: 7531
+  time: '2024-10-18T12:55:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30359
+- author: Beck Thompson
+  changes:
+  - message: Plushies will now eject their contents when recycled in the recycler!
+    type: Fix
+  id: 7532
+  time: '2024-10-18T12:58:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32838
+- author: Ilya246
+  changes:
+  - message: Spectral locator, rare maintenance loot that lets you know if any ghosts
+      are nearby.
+    type: Add
+  id: 7533
+  time: '2024-10-18T13:42:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32323
