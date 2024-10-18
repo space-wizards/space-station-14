@@ -13,6 +13,7 @@
       blackboard:
         NavSmash: !type:Bool
           true
+    - type: NoFriendlyFire # don't let fish hurt their dragon, and dont let sentient fish bypass FactionClothing
     - type: NpcFactionMember
       factions:
       - Dragon
