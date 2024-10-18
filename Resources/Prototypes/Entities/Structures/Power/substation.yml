@@ -8,15 +8,39 @@
   placement:
     mode: SnapgridCenter
   components:
-  - type: Sprite # TODO: add sprite for maintenance panel open
+  - type: Sprite # TODO: add sprite for maintenance panel open. This will show the nitrogen booster there or not.
     sprite: Structures/Power/substation.rsi
     snapCardinals: true
     layers:
     - state: substation
-    - state: screen
+      map: ["substationBase"]
+    - state: screen0
+      map: ["substationScreen"]
       shader: unshaded
     - state: full
+      map: ["substationBattery"]
       shader: unshaded
+  - type: Substation
+    nitrogenBoosterSlotId: NitrogenBooster_slot
+  - type: ContainerContainer
+    containers:
+      NitrogenBooster_slot: !type:ContainerSlot {}
+  - type: ItemSlots
+    slots:
+      NitrogenBooster_slot:
+        ejectOnInteract: true
+        name: nitrogen booster gas tank
+        startingItem: GasTankNitrogenBoosterFilled
+        whitelist:
+          tags:
+          - NitrogenBooster
+  - type: SubstationVisuals
+    screenLayer: "substationScreen"
+    integrityStates:
+      Healthy: screen0
+      Unhealthy: screen1
+      Bad: screen2
+  - type: Appearance
   - type: Battery
     maxCharge: 2500000
     startingCharge: 0
@@ -29,10 +53,10 @@
   - type: NodeContainer
     examinable: true
     nodes:
-      input:
+      hv:
         !type:CableDeviceNode
         nodeGroupID: HVPower
-      output:
+      mv:
         !type:CableDeviceNode
         nodeGroupID: MVPower
   - type: PowerMonitoringDevice
@@ -71,7 +95,7 @@
         acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
-          collection: MetalGlassBreak
+          path: /Audio/Effects/metalbreak.ogg
       - !type:ExplodeBehavior
       - !type:SpawnEntitiesBehavior
         spawn:
@@ -140,6 +164,20 @@
   - type: ContainerContainer
     containers:
       board: !type:Container
+      NitrogenBooster_slot: !type:ContainerSlot
+  - type: ItemSlots
+    slots:
+      NitrogenBooster_slot:
+        ejectOnInteract: true
+        name: nitrogen booster
+        startingItem: GasTankNitrogenBoosterFilled
+        whitelist:
+          tags:
+          - GasTankNitrogenBoosterFilled
+  - type: WiresPanel
+  - type: Wires
+    boardName: wires-board-name-substation
+    layoutId: Substation
   - type: InteractionOutline
   - type: Physics
     bodyType: Static
@@ -152,8 +190,19 @@
     sprite: Structures/Power/substation.rsi
     layers:
     - state: substation_wall
-    - state: screen_wall
+      map: ["substationBase"]
+    - state: screen0
+      map: ["substationScreen"]
       shader: unshaded
+  - type: Substation
+    nitrogenBoosterSlotId: NitrogenBooster_slot
+  - type: SubstationVisuals
+    screenLayer: "substationScreen"
+    integrityStates:
+      Healthy: screen0
+      Unhealthy: screen1
+      Bad: screen2
+  - type: Appearance
   - type: Battery
     maxCharge: 2000000
     startingCharge: 0
@@ -203,7 +252,7 @@
       - !type:ExplodeBehavior
       - !type:PlaySoundBehavior
         sound:
-          collection: MetalGlassBreak
+          path: /Audio/Effects/metalbreak.ogg
   - type: Construction
     graph: WallmountSubstation
     node: substation
@@ -233,6 +282,14 @@
   components:
   - type: Battery
     startingCharge: 0
+  - type: ItemSlots
+    slots:
+      NitrogenBooster_slot:
+        ejectOnInteract: true
+        name: nitrogen booster gas tank
+        startingItem:
+  - type: Substation
+    state: Bad
 
 - type: entity
   parent: BaseSubstationWall
@@ -252,6 +309,23 @@
       board: !type:Container
       capacitor: !type:Container
       powercell: !type:Container
+
+- type: entity
+  parent: BaseSubstationWall
+  id: SubstationWallBasicEmpty
+  suffix: Empty
+  components:
+  - type: Battery
+    maxCharge: 2000000
+    startingCharge: 0
+  - type: ItemSlots
+    slots:
+      NitrogenBooster_slot:
+        ejectOnInteract: true
+        name: nitrogen booster gas tank
+        startingItem:
+  - type: Substation
+    state: Bad
 
 # Construction Frame
 - type: entity
