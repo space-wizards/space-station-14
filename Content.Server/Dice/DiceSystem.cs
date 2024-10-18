@@ -7,6 +7,9 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Dice;
 
+/// <summary>
+///     Handles actually performing dice rolls.
+/// </summary>
 [UsedImplicitly]
 public sealed class DiceSystem : SharedDiceSystem
 {
@@ -14,13 +17,15 @@ public sealed class DiceSystem : SharedDiceSystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
 
-    public override void Roll(EntityUid uid, DiceComponent? die = null)
+    public override void Roll(EntityUid uid, DiceComponent? die = null, EntityUid? roller = null)
     {
         if (!Resolve(uid, ref die))
             return;
 
-        var roll = _random.Next(1, die.Sides + 1);
-        SetCurrentSide(uid, roll, die);
+        var rollEvent = new DiceRollEvent(_random.Next(1, die.Sides + 1), roller);
+        RaiseLocalEvent(uid, ref rollEvent);
+
+        SetCurrentSide(uid, rollEvent.Roll, die);
 
         _popup.PopupEntity(Loc.GetString("dice-component-on-roll-land", ("die", uid), ("currentSide", die.CurrentValue)), uid);
         _audio.PlayPvs(die.Sound, uid);

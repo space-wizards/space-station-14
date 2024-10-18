@@ -36,3 +36,18 @@
   - type: Storage
     grid:
     - 0,0,4,3
+
+- type: entity
+  parent: DiceBag
+  id: LoadedDiceBag
+  suffix: loaded
+  components:
+  - type: StorageFill
+    contents:
+      - id: d4DiceLoaded
+      - id: d6DiceLoaded
+      - id: d8DiceLoaded
+      - id: d10DiceLoaded
+      - id: d12DiceLoaded
+      - id: d20DiceLoaded
+      - id: PercentileDieLoaded
