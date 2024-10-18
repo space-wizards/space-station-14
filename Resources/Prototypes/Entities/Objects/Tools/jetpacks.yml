@@ -221,7 +221,7 @@
 - type: entity
   id: JetpackSalvage
   parent: BaseJetpack
-  name: salvage jetpack
+  name: refurbished jetpack
   description: It's an old and worn jetpack. It once held .8 L of gas, but now only fills up halfway.
   suffix: Empty
   components:
