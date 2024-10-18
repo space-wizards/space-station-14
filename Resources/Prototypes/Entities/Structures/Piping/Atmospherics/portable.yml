@@ -180,6 +180,102 @@
           - !type:DoActsBehavior
             acts: [ "Destruction" ]
 
+
+- type: entity
+  id: WeatherDevice1
+  parent: [BaseMachinePowered, ConstructibleMachine]
+  name:  weather device
+  components:
+  - type: WeatherDevice
+    enabled: true
+    defaultTickSpan: "00:00:05"
+    keyFramesByCycleState:
+      "00:00:00":
+        targetTemperature: 293.16
+      "00:00:15":
+        targetTemperature: 283.16
+      "00:00:45":
+        targetTemperature: 273.16
+        setWeatherTo: SnowfallLight
+      "00:01:00":
+        targetTemperature: 250
+      "00:01:30":
+        targetTemperature: 240
+        setWeatherTo: SnowfallMedium
+      "00:01:45":
+        targetTemperature: 230
+        setWeatherTo: SnowfallHeavy
+      "00:02:00":
+        targetTemperature: 230
+      "00:02:15":
+        targetTemperature: 240
+        setWeatherTo: SnowfallMedium
+      "00:02:30":
+        targetTemperature: 250
+        setWeatherTo: SnowfallLight
+      "00:03:00":
+        targetTemperature: 260
+        resetWeather: true
+      "00:03:15":
+        targetTemperature: 273.16
+      "00:03:45":
+        targetTemperature: 283.16
+      "00:04:00":
+        targetTemperature: 293.16
+
+  - type: StationAiWhitelist
+  - type: Transform
+    anchored: false
+  - type: Physics
+    bodyType: Dynamic
+  - type: AtmosDevice
+    joinSystem: true
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.15,-0.35,0.15,0.5"
+        density: 100
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: ApcPowerReceiver
+    powerDisabled: true #starts off
+  - type: Sprite
+    sprite: Structures/Piping/Atmospherics/Portable/portable_sheater.rsi
+    noRot: true
+    layers:
+    - state: sheaterOff
+      map: ["enum.SpaceHeaterVisualLayers.Main"]
+    - state: sheaterPanelOpen
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.SpaceHeaterVisuals.State:
+        SpaceHeaterVisualLayers.Main:
+          Off: { state: sheaterOff }
+          StandBy: { state: sheaterStandby }
+          Heating: { state: sheaterHeat }
+          Cooling: { state: sheaterCool }
+  - type: Machine
+    board: SpaceHeaterMachineCircuitBoard
+  - type: WiresPanel
+  - type: WiresVisuals
+  - type: UserInterface
+    interfaces:
+      enum.SpaceHeaterUiKey.Key:
+        type: SpaceHeaterBoundUserInterface
+  - type: ActivatableUI
+    inHandsOnly: false
+    key: enum.SpaceHeaterUiKey.Key
+  - type: SpaceHeater
+  - type: GasThermoMachine
+    temperatureTolerance: 0.2
+    atmospheric: true
+
 - type: entity
   parent: SpaceHeater
   id: SpaceHeaterAnchored
