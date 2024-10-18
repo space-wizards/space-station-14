@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ShadowCommander
-  changes:
-  - message: Rollerbeds now deploy when holding them in hand and clicking on the ground.
-    type: Add
-  id: 7032
-  time: '2024-08-02T07:05:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30000
 - author: slarticodefast
   changes:
   - message: The digital audio workstation can now be rotated.
@@ -3954,3 +3947,10 @@
   id: 7531
   time: '2024-10-18T12:55:43.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30359
+- author: Beck Thompson
+  changes:
+  - message: Plushies will now eject their contents when recycled in the recycler!
+    type: Fix
+  id: 7532
+  time: '2024-10-18T12:58:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32838
