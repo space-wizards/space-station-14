@@ -95,19 +95,17 @@ namespace Content.Client.Construction.UI
 
             _placementManager.PlacementChanged += OnPlacementChanged;
 
-            _constructionView.OnClose += () => _uiManager.GetActiveUIWidget<GameTopMenuBar>().CraftingButton.Pressed = false;
+            _constructionView.OnClose += () =>
+            {
+                if (_constructionView.BuildButtonPressed) BuildButtonToggled(false);
+                if (_constructionView.EraseButtonPressed) EraseButtonToggled(false);
+                _uiManager.GetActiveUIWidget<GameTopMenuBar>().CraftingButton.Pressed = false;
+            };
             _constructionView.ClearAllGhosts += (_, _) => _constructionSystem?.ClearAllGhosts();
             _constructionView.PopulateRecipes += OnViewPopulateRecipes;
             _constructionView.RecipeSelected += OnViewRecipeSelected;
             _constructionView.BuildButtonToggled += (_, b) => BuildButtonToggled(b);
-            _constructionView.EraseButtonToggled += (_, b) =>
-            {
-                if (_constructionSystem is null) return;
-                if (b) _placementManager.Clear();
-                _placementManager.ToggleEraserHijacked(new ConstructionPlacementHijack(_constructionSystem, null));
-                _constructionView.EraseButtonPressed = b;
-            };
-
+            _constructionView.EraseButtonToggled += (_, b) => EraseButtonToggled(b);
             _constructionView.RecipeFavorited += (_, _) => OnViewFavoriteRecipe();
 
             PopulateCategories();
@@ -305,6 +303,14 @@ namespace Content.Client.Construction.UI
                 TooltipEnabled = true,
                 TooltipText = recipe.Description
             };
+        }
+
+        private void EraseButtonToggled(bool pressed)
+        {
+            if (_constructionSystem is null) return;
+            if (pressed) _placementManager.Clear();
+            _placementManager.ToggleEraserHijacked(new ConstructionPlacementHijack(_constructionSystem, null));
+            _constructionView.EraseButtonPressed = pressed;
         }
 
         private void BuildButtonToggled(bool pressed)
