@@ -1,6 +1,5 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Botany.Components;
-using Content.Server.Fluids.Components;
 using Content.Server.Kitchen.Components;
 using Content.Server.Popups;
 using Content.Shared.Chemistry.EntitySystems;
@@ -11,7 +10,6 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
-using Content.Shared.Fluids.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
@@ -19,7 +17,6 @@ using Content.Shared.Popups;
 using Content.Shared.Random;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -159,6 +156,7 @@ public sealed class PlantHolderSystem : EntitySystem
                 if (!_botany.TryGetSeed(seeds, out var seed))
                     return;
 
+                args.Handled = true;
                 var name = Loc.GetString(seed.Name);
                 var noun = Loc.GetString(seed.Noun);
                 _popup.PopupCursor(Loc.GetString("plant-holder-component-plant-success-message",
@@ -186,6 +184,7 @@ public sealed class PlantHolderSystem : EntitySystem
                 return;
             }
 
+            args.Handled = true;
             _popup.PopupCursor(Loc.GetString("plant-holder-component-already-seeded-message",
                 ("name", Comp<MetaDataComponent>(uid).EntityName)), args.User, PopupType.Medium);
             return;
@@ -193,6 +192,7 @@ public sealed class PlantHolderSystem : EntitySystem
 
         if (_tagSystem.HasTag(args.Used, "Hoe"))
         {
+            args.Handled = true;
             if (component.WeedLevel > 0)
             {
                 _popup.PopupCursor(Loc.GetString("plant-holder-component-remove-weeds-message",
@@ -212,6 +212,7 @@ public sealed class PlantHolderSystem : EntitySystem
 
         if (HasComp<ShovelComponent>(args.Used))
         {
+            args.Handled = true;
             if (component.Seed != null)
             {
                 _popup.PopupCursor(Loc.GetString("plant-holder-component-remove-plant-message",
@@ -231,6 +232,7 @@ public sealed class PlantHolderSystem : EntitySystem
 
         if (_tagSystem.HasTag(args.Used, "PlantSampleTaker"))
         {
+            args.Handled = true;
             if (component.Seed == null)
             {
                 _popup.PopupCursor(Loc.GetString("plant-holder-component-nothing-to-sample-message"), args.User);
@@ -286,10 +288,15 @@ public sealed class PlantHolderSystem : EntitySystem
         }
 
         if (HasComp<SharpComponent>(args.Used))
+        {
+            args.Handled = true;
             DoHarvest(uid, args.User, component);
+            return;
+        }
 
         if (TryComp<ProduceComponent>(args.Used, out var produce))
         {
+            args.Handled = true;
             _popup.PopupCursor(Loc.GetString("plant-holder-component-compost-message",
                 ("owner", uid),
                 ("usingItem", args.Used)), args.User, PopupType.Medium);
