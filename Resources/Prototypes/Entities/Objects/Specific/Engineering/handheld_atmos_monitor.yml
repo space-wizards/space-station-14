@@ -1,0 +1,38 @@
+- type: entity
+  name: handheld atmospherics monitor
+  parent: [ BaseHandheldComputer, BaseGrandTheftContraband ]
+  id: HandheldAtmosMonitor
+  description: A hand-held crew monitor displaying the status of atmospheric alarms across the station.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Atmos/handheldatmosmonitor.rsi
+    state: scanner
+  - type: ActivatableUI
+    key: enum.AtmosAlertsComputerUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.AtmosAlertsComputerUiKey.Key:
+        type: AtmosAlertsComputerBoundUserInterface
+  - type: AtmosAlertsComputer
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+  - type: WirelessNetworkConnection
+    range: 600
+  - type: StationLimitedNetwork
+  - type: StaticPrice
+    price: 500
+  - type: Tag
+    tags:
+    - HighRiskItem
+  - type: StealTarget
+    stealGroup: HandheldCrewMonitor
+
+- type: entity
+  id: HandheldAtmosMonitorEmpty
+  parent: HandheldAtmosMonitor
+  suffix: Empty
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
