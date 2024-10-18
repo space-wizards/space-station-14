@@ -222,3 +222,16 @@
       state: metal_foam-north
     - map: [ "enum.EdgeLayer.West" ]
       state: metal_foam-west
+
+- type: entity
+  id: ReactionFlash
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: PointLight
+    enabled: true
+    radius: 2
+    energy: 8
+  - type: LightFade
+    duration: 0.5
+  - type: TimedDespawn
+    lifetime: 0.5
