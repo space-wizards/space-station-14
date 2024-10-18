@@ -13,6 +13,7 @@ namespace Content.Client.Lobby.UI.Loadouts;
 [GenerateTypedNameReferences]
 public sealed partial class LoadoutWindow : FancyWindow
 {
+    public event Action<string>? OnNameChanged;
     public event Action<ProtoId<LoadoutGroupPrototype>, ProtoId<LoadoutPrototype>>? OnLoadoutPressed;
     public event Action<ProtoId<LoadoutGroupPrototype>, ProtoId<LoadoutPrototype>>? OnLoadoutUnpressed;
 
@@ -25,6 +26,30 @@ public sealed partial class LoadoutWindow : FancyWindow
         RobustXamlLoader.Load(this);
         Profile = profile;
         var protoManager = collection.Resolve<IPrototypeManager>();
+        RoleNameEdit.IsValid = text => text.Length <= HumanoidCharacterProfile.MaxLoadoutNameLength;
+
+        // Hide if we can't edit the name.
+        if (!proto.CanCustomiseName)
+        {
+            RoleNameBox.Visible = false;
+        }
+        else
+        {
+            var name = loadout.EntityName;
+            var random = collection.Resolve<IRobustRandom>();
+
+            // Pick a random name if we use a dataset.
+            if (name != null && protoManager.TryIndex(proto.NameDataset, out var nameData))
+            {
+                RoleNameEdit.PlaceHolder = random.Pick(nameData.Values);
+            }
+
+            RoleNameEdit.ToolTip = Loc.GetString(
+                "loadout-name-edit-tooltip",
+                ("max", HumanoidCharacterProfile.MaxLoadoutNameLength));
+            RoleNameEdit.Text = name ?? string.Empty;
+            RoleNameEdit.OnTextChanged += args => OnNameChanged?.Invoke(args.Text);
+        }
 
         // Hide if no groups
         if (proto.Groups.Count == 0)
