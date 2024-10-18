@@ -12,3 +12,18 @@
   - type: ConditionalSpawner
     prototypes:
     - MobHuman
+
+- type: entity
+  name: InsideMarker
+  id: MarkerInside
+  parent: MarkerBase
+  suffix: blocks rain
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+  - type: BlockWeather
+  placement:
+    mode: SnapgridCenter
+
+
