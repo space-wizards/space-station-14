@@ -7,7 +7,7 @@
     startAnnouncement: station-event-unknown-shuttle-incoming
     startAudio:
       path: /Audio/Announcements/attention.ogg
-    weight: 5
+    weight: 0
     reoccurrenceDelay: 30
     duration: 1
   - type: RuleGrids
