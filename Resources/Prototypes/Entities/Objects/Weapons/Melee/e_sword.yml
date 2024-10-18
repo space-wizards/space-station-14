@@ -274,6 +274,7 @@
   components:
   - type: ItemToggle
     onUse: false # wielding events control it instead
+    onActivate: false # prevents the weapon from being able to be turned on when it is on the ground
     soundActivate:
       path: /Audio/Weapons/ebladeon.ogg
       params:
