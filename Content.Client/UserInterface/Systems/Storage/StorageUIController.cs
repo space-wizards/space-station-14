@@ -32,6 +32,8 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
     private StorageContainer? _container;
 
     private Vector2? _lastContainerPosition;
+    private float? _lastContainerWidth;
+    private float? _lastContainerHeight;
 
     private HotbarGui? Hotbar => UIManager.GetActiveUIWidgetOrNull<HotbarGui>();
 
@@ -100,7 +102,31 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
                     ? _lastContainerPosition.Value
                     : Vector2.Zero;
 
-                LayoutContainer.SetPosition(_container, pos);
+                if (_lastContainerWidth != null && _lastContainerHeight != null)
+                {
+                    // when opening bags of different sizes,
+                    // the goal is to make the window centered on the middle of bag window regardless of bag size
+                    // we can achieve this by finding the center of the last bag's window,
+                    // and then subtracting half the size of the new bag's window
+                    var centerOfBagWindow = pos.X + _lastContainerWidth.Value / 2;
+                    var offsetFromCenterByNewBagWidth = _container.Width / 2;
+                    var xCoordBasedOnCenter = centerOfBagWindow - offsetFromCenterByNewBagWidth;
+
+                    // as for the Y value, the goal is to maintain the height gap between the bottom of the storage window and the screen
+                    // we can do that by calculating the gap from the bottom of the window to the bottom of the screen
+                    var distanceFromBottom = pos.Y + _lastContainerHeight.Value - _ui.WindowRoot.Height;
+                    // then subtracting the size of the screen by that, and then subtracting by the height of the new bag window
+                    // to place the window in the correct position on the Y axis
+                    var yCoordBasedOnDistanceFromBottom = _ui.WindowRoot.Height - distanceFromBottom - _container.Height;
+                    LayoutContainer.SetPosition(_container, new Vector2(xCoordBasedOnCenter, yCoordBasedOnDistanceFromBottom));
+                }
+                else
+                {
+                    LayoutContainer.SetPosition(_container, pos);
+                }
+
+                _lastContainerWidth = _container.Width;
+                _lastContainerHeight = _container.Height;
             }
 
             if (StaticStorageUIEnabled)
@@ -109,13 +135,12 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
                 _container.Orphan();
                 Hotbar?.StorageContainer.AddChild(_container);
             }
-            _lastContainerPosition = _container.GlobalPosition;
         }
         else
         {
-            _lastContainerPosition = _container.GlobalPosition;
             _container.Close();
         }
+        _lastContainerPosition = _container.GlobalPosition;
     }
 
     private void OnStaticStorageChanged(bool obj)
