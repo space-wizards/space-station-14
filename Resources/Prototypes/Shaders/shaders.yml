@@ -104,3 +104,19 @@
   id: Cataracts
   kind: source
   path: "/Textures/Shaders/cataracts.swsl"
+
+# Base post-processing
+- type: shader
+  id: BasePostProcess
+  kind: source
+  path: "/Textures/Shaders/base_postprocess.swsl"
+  params:
+    CircleRadius: 420.0
+    CircleMinDist: 0.0
+    CirclePow: 1.0
+    CircleMax: 4.0
+    CircleMult: 0.25
+    FalloffClampMin: 0.075
+    FalloffClampMax: 1.0
+    FalloffStrength: 0.75
+    FalloffPow: 3.0
