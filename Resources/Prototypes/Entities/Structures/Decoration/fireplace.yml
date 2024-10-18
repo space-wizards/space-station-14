@@ -46,3 +46,9 @@
           - !type:DoActsBehavior
             acts: [ "Destruction" ]
   - type: AlwaysHot
+  - type: IgnitionSource
+    ignited: true
+  - type: AtmosDevice
+  - type: RadiantTemperature
+    goalTemperature: 305
+    energyChangedPerSecond: 2500
