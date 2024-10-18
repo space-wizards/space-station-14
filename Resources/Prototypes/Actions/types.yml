@@ -334,7 +334,6 @@
   components:
   - type: InstantAction
     useDelay: 8
-    checkCanInteract: false
     icon: 
       sprite: Interface/Actions/jump.rsi
       state: icon
