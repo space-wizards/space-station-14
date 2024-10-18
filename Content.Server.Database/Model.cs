@@ -181,7 +181,15 @@ namespace Content.Server.Database
             modelBuilder.Entity<ServerRoleBan>().ToTable(t =>
                 t.HasCheckConstraint("HaveEitherAddressOrUserIdOrHWId", "address IS NOT NULL OR player_user_id IS NOT NULL OR hwid IS NOT NULL"));
 
-            // TODO: restrict table
+            // perhaps this subquery footgun buck should be passed to server admins or constrained in the EF code adding these rules
+            // all non retired expressions are unique
+            modelBuilder.Entity<ServerUsernameRule>().ToTable(t =>
+                t.HasCheckConstraint("ActiveUsernameRulesAreUnique", "NOT EXISTS (SELECT 1 FROM server_username_rule WHERE NOT retired GROUP BY expression, regex, HAVING COUNT(*) > 1)"));
+
+            // all non retired expressions have null fields for retiring admin and retire time
+            // all retired expressions have a retire time
+            modelBuilder.Entity<ServerUsernameRule>().ToTable(t =>
+                t.HasCheckConstraint("ActiveRulesDoNotHaveRetireInformation", "IF retired THEN retire_time IS NOT NULL ELSE retire_time IS NULL AND retiring_admin IS NULL"));
 
             modelBuilder.Entity<Player>()
                 .HasIndex(p => p.UserId)
@@ -927,6 +935,7 @@ namespace Content.Server.Database
          * Reservation by commenting out the value is likely sufficient for this purpose, but may impact projects which depend on SS14 like SS14.Admin.
          */
         BabyJail = 4,
+        UsernameBan = 5,
     }
 
     public class ServerBanHit
@@ -984,18 +993,27 @@ namespace Content.Server.Database
         public DateTime UnbanTime { get; set; }
     }
 
+    /// <summary>
+    /// Usernames not checked by connection manager for username violations present in username rules <see cref="ServerUsernameRule"/>
+    /// </summary>
     [Table("username_whitelist")]
     public sealed class UsernameWhitelist
     {
         [Required, Key] public required string Username { get; set; }
     }
 
+    /// <summary>
+    /// Table of all username bans; including when the ban was created by whom and if said ban has been retired.
+    /// </summary>
     [Table("server_username_rule")]
     public sealed class ServerUsernameRule
     {
         [Required, Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public DateTime CreationTime { get; set; }
+        /// <summary>
+        /// RoundID is required to provide server of origin information for pg triggers
+        /// </summary>
         [ForeignKey("Round")]
         public int? RoundId { get; set; }
         public bool Regex { get; set; }
