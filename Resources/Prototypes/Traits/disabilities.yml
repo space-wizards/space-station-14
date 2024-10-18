@@ -49,7 +49,7 @@
   components:
     - type: RandomUnrevivable
 
-- type: trai
+- type: trait
   id: Unborgable
   name: trait-unborgable-name
   description: trait-unborgable-desc
