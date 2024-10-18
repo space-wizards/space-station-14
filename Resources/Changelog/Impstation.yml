@@ -3134,3 +3134,14 @@
   id: 388
   time: '2024-10-18T18:10:14.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/496
+- author: honeyed-lemons
+  changes:
+  - message: Added Golden High-Heels to scavenger loot.
+    type: Add
+  - message: Renamed Gold High-Heels to Golden High-Heels and updated description
+    type: Tweak
+  - message: Adjusted Golden High-Heels price to 7k Spesos
+    type: Tweak
+  id: 389
+  time: '2024-10-18T18:15:26.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/510
