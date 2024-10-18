@@ -169,9 +169,9 @@
     Ungh:
       collection: Ungh
     Gasp:
-      collection: MaleGasp
+      collection: MaleSlimeGasp
     DefaultDeathgasp:
-      collection: MaleDeathGasp
+      collection: MaleSlimeDeathGasp
   params:
     variation: 0.125
 
@@ -213,9 +213,9 @@
     Ungh:
       collection: Ungh
     Gasp:
-      collection: FemaleGasp
+      collection: FemaleSlimeGasp
     DefaultDeathgasp:
-      collection: FemaleDeathGasp
+      collection: FemaleSlimeDeathGasp
   params:
     variation: 0.125
 

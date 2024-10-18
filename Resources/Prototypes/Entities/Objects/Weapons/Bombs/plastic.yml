@@ -49,15 +49,15 @@
       map: ["base"]
   - type: OnUseTimerTrigger
     delay: 10
-    delayOptions: [10, 30, 60, 120, 300]
+    delayOptions: [1, 10, 30, 60, 120, 300]
     initialBeepDelay: 0
     beepSound: /Audio/Machines/Nuke/general_beep.ogg
     startOnStick: true
     canToggleStartOnStick: true
-  - type: TriggerOnSignal
+  - type: TimerStartOnSignal
   - type: DeviceLinkSink
     ports:
-      - Trigger
+      - Timer
   - type: Explosive # Powerful explosion in a very small radius. Doesn't break underplating.
     explosionType: DemolitionCharge
     totalIntensity: 60

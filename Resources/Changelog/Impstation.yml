@@ -3072,3 +3072,58 @@
   id: 380
   time: '2024-10-15T05:04:55.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/482
+- author: harpy & credey
+  changes:
+  - message: Slimes now have unique gasps and deathgasps.
+    type: Add
+  id: 381
+  time: '2024-10-17T21:14:21.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/500
+- author: formlessnameless
+  changes:
+  - message: Removed all vent spawn events from basic event table and added them into
+      the respective pest tables. This should hopefully drastically reduce the amount
+      of vent critter spawn events.
+    type: Tweak
+  - message: Gilded pAI ghost roles now show up with the name gilded pAI in the menu.
+    type: Tweak
+  - message: Added a 1 timer second option to c4. Watch out!
+    type: Tweak
+  id: 382
+  time: '2024-10-18T01:30:36.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/508
+- author: formlessnameless
+  changes:
+  - message: Added a bible to the PietyVend inventory, for all of your thieving needs.
+    type: Add
+  id: 383
+  time: '2024-10-18T07:27:01.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/512
+- author: TGRCdev
+  changes:
+  - message: Thaven can now view their moods when handcuffed / unconscious
+    type: Fix
+  id: 384
+  time: '2024-10-18T18:04:25.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/492
+- author: 12rabbits
+  changes:
+  - message: The Unborgable trait has been added to character customization.
+    type: Add
+  id: 385
+  time: '2024-10-18T18:05:50.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/501
+- author: widgetbeck
+  changes:
+  - message: Changed Gray head displacement. Again. Should look better on most helmets.
+    type: Tweak
+  id: 386
+  time: '2024-10-18T18:06:41.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/497
+- author: KingMudkipIII
+  changes:
+  - message: 'Added a new drink: Raktaccino! Sprites by me and beck.'
+    type: Add
+  id: 387
+  time: '2024-10-18T18:05:06.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/498
