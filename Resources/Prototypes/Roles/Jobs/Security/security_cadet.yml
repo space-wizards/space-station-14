@@ -33,9 +33,7 @@
     id: SecurityCadetPDA
     ears: ClothingHeadsetSecurity
     belt: ClothingBeltSecurityFilled
-    pocket1: WeaponPistolMk58
-    pocket2: BookSecurity
+    pocket1: BookSecurity
   storage:
     back:
     - Flash
-    - MagazinePistol
