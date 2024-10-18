@@ -3092,3 +3092,10 @@
   id: 382
   time: '2024-10-18T01:30:36.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/508
+- author: formlessnameless
+  changes:
+  - message: Added a bible to the PietyVend inventory, for all of your thieving needs.
+    type: Add
+  id: 383
+  time: '2024-10-18T07:27:01.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/512
