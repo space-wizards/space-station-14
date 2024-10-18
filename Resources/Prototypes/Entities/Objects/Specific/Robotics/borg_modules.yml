@@ -437,6 +437,10 @@
   - type: ItemBorgModule
     items:
     - NodeScanner
+    - Syringe
+    - SprayBottle
+    - SprayBottle
+    - MusicBoxInstrument
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: node-scanner-module }
 
