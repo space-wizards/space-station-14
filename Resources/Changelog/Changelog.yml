@@ -1,25 +1,4 @@
 ﻿Entries:
-- author: NakataRin
-  changes:
-  - message: Added paramedic to the train station.
-    type: Add
-  id: 7025
-  time: '2024-08-01T19:59:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30556
-- author: marbow
-  changes:
-  - message: Rejoice, detectives! Hand labeler has been added to your closet!
-    type: Add
-  id: 7026
-  time: '2024-08-01T20:01:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30501
-- author: metalgearsloth
-  changes:
-  - message: Fix some popups playing twice.
-    type: Fix
-  id: 7027
-  time: '2024-08-02T01:33:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30452
 - author: WarMechanic
   changes:
   - message: Adjusted meteors to have less lethal blast fragments.
@@ -3948,3 +3927,26 @@
   id: 7524
   time: '2024-10-17T14:01:32.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28645
+- author: slarticodefast
+  changes:
+  - message: Fixed the playtime stats window not showing entries correctly.
+    type: Fix
+  id: 7525
+  time: '2024-10-17T21:32:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32856
+- author: Thatonestomf
+  changes:
+  - message: Smile no longer has a ghost role raffle attached to her
+    type: Fix
+  id: 7526
+  time: '2024-10-18T02:42:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32837
+- author: Catofquestionableethics
+  changes:
+  - message: Spacemans cake now contains Polypyrylium Oligomers instead of Omnizine.
+    type: Tweak
+  - message: Slime, Brain and Christmas cakes can now be eaten by Lizards.
+    type: Fix
+  id: 7527
+  time: '2024-10-18T03:08:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32830
