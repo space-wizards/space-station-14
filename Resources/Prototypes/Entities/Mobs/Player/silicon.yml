@@ -374,6 +374,12 @@
     tags:
     - HideContextMenu
     - StationAi
+  - type: RadioMessageSound
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Voice/Talk/radio_ai.ogg
+      params:
+        variation: 0.125
+
 
 # Hologram projection that the AI's eye tracks.
 - type: entity
