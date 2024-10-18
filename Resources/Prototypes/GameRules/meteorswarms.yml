@@ -3,8 +3,8 @@
   id: GameRuleMeteorScheduler
   components:
   - type: GameRule
-    minPlayers: 25
-    cancelPresetOnTooFewPlayers: false
+    minPlayers: 100
+    cancelPresetOnTooFewPlayers: true
   - type: MeteorScheduler
 
 - type: weightedRandomEntity
