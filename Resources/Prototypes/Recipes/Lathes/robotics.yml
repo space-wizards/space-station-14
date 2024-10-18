@@ -321,6 +321,11 @@
   id: BorgModuleGrapplingGun
   result: BorgModuleGrapplingGun
 
+- type: latheRecipe
+  parent: BaseGoldBorgModuleRecipe
+  id: BorgModuleFauna
+  result: BorgModuleFauna
+
 # Engineering Modules
 
 - type: latheRecipe
