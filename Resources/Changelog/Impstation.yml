@@ -3187,3 +3187,14 @@
   id: 394
   time: '2024-10-18T18:24:12.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/495
+- author: honeyed-lemons
+  changes:
+  - message: Added the Shipyard Computer from DeltaV, a way to obtain new shuttles
+      for the station.
+    type: Add
+  - message: Added the shipyard computer circuit to the QM's locker and default circuit
+      lathe
+    type: Add
+  id: 395
+  time: '2024-10-18T22:10:32.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/517
