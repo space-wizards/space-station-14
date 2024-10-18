@@ -3168,3 +3168,14 @@
   id: 392
   time: '2024-10-18T18:18:09.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/509
+- author: formlessnameless
+  changes:
+  - message: Ghost bar patrons don't need to breathe
+    type: Tweak
+  - message: Ghosts don't count as alive for kill objectives anymore
+    type: Fix
+  - message: Made the ghost bar rules easier to read
+    type: Fix
+  id: 393
+  time: '2024-10-18T18:20:29.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/514
