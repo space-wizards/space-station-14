@@ -8,7 +8,7 @@
     issuer: objective-issuer-heretic
   - type: RoleRequirement
     roles:
-      components:
+      mindRoles:
       - HereticRole
 
 - type: entity

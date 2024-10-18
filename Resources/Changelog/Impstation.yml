@@ -3072,3 +3072,23 @@
   id: 380
   time: '2024-10-15T05:04:55.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/482
+- author: harpy & credey
+  changes:
+  - message: Slimes now have unique gasps and deathgasps.
+    type: Add
+  id: 381
+  time: '2024-10-17T21:14:21.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/500
+- author: formlessnameless
+  changes:
+  - message: Removed all vent spawn events from basic event table and added them into
+      the respective pest tables. This should hopefully drastically reduce the amount
+      of vent critter spawn events.
+    type: Tweak
+  - message: Gilded pAI ghost roles now show up with the name gilded pAI in the menu.
+    type: Tweak
+  - message: Added a 1 timer second option to c4. Watch out!
+    type: Tweak
+  id: 382
+  time: '2024-10-18T01:30:36.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/508

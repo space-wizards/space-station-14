@@ -4,6 +4,7 @@ using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Heretic;
 using Content.Shared.Mind;
+using Content.Shared.Roles;
 using Content.Shared.Store.Components;
 using Content.Shared.Heretic.Prototypes;
 using Content.Server.Chat.Systems;
@@ -22,13 +23,13 @@ using Content.Server.Revolutionary.Components;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Roles.Jobs;
 using Robust.Shared.Prototypes;
-using Content.Shared.Roles;
 
 namespace Content.Server.Heretic.EntitySystems;
 
 public sealed partial class HereticSystem : EntitySystem
 {
     [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private readonly SharedRoleSystem _roleSystem = default!;
     [Dependency] private readonly StoreSystem _store = default!;
     [Dependency] private readonly HereticKnowledgeSystem _knowledge = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
@@ -136,18 +137,18 @@ public sealed partial class HereticSystem : EntitySystem
         predicates.Add(t =>
             _prot.TryIndex<DepartmentPrototype>("Security", out var dept) // can we get sec jobs?
             && _mind.TryGetMind(t, out var mindid, out _) // does it have a mind?
-            && TryComp<JobComponent>(mindid, out var jobc) && jobc.Prototype.HasValue // does it have a job?
-            && dept.Roles.Contains(jobc.Prototype!.Value)); // is that job being shitsec?
+            && _roleSystem.MindHasRole<JobRoleComponent>(mindid, out var jobc) && jobc.Value.Comp.JobPrototype.HasValue // does it have a job?
+            && dept.Roles.Contains(jobc.Value.Comp.JobPrototype!.Value)); // is that job being shitsec?
 
         // pick one person from the same department
         predicates.Add(t =>
             _mind.TryGetMind(t, out var tmind, out _) && _mind.TryGetMind(ent, out var ownmind, out _) // get minds
-            && TryComp<JobComponent>(tmind, out var tjob) && tjob.Prototype.HasValue // get jobs
-            && TryComp<JobComponent>(ownmind, out var ownjob) && ownjob.Prototype.HasValue
+            && _roleSystem.MindHasRole<JobRoleComponent>(tmind, out var tjob) && tjob.Value.Comp.JobPrototype.HasValue // get jobs
+            && _roleSystem.MindHasRole<JobRoleComponent>(ownmind, out var ownjob) && ownjob.Value.Comp.JobPrototype.HasValue
             && _prot.EnumeratePrototypes<DepartmentPrototype>() // compare jobs for all
                 .Where(d =>
-                    d.Roles.Contains(tjob.Prototype.Value)
-                    && d.Roles.Contains(ownjob.Prototype.Value)) // true = same department
+                    d.Roles.Contains(tjob.Value.Comp.JobPrototype.Value)
+                    && d.Roles.Contains(ownjob.Value.Comp.JobPrototype.Value)) // true = same department
                 .ToList().Count != 0);
 
         foreach (var predicate in predicates)

@@ -453,7 +453,7 @@
     - state: default
     - state: idvisitor
   - type: IdCard
-    jobTitle: Visitor
+    jobTitle: job-title-visitor
     jobIcon: JobIconVisitor
   - type: PresetIdCard
     job: Visitor
@@ -468,7 +468,7 @@
     - state: default
     - state: idbrigmedic
   - type: IdCard
-    jobTitle: Brigmedic
+    jobTitle: job-name-brigmedic
     jobIcon: JobIconBrigmedic
   - type: PresetIdCard
     job: Brigmedic
@@ -483,7 +483,7 @@
     - state: default
     - state: idroboticist
   - type: IdCard
-    jobTitle: Roboticist
+    jobTitle: job-name-roboticist
     jobIcon: JobIconRoboticist
   - type: PresetIdCard
     job: Roboticist
@@ -614,7 +614,7 @@
     - state: default
     - state: idpassenger
   - type: IdCard
-    jobTitle: Passenger
+    jobTitle: job-name-passenger
     jobIcon: JobIconPassenger
   - type: Access
     tags:
@@ -789,7 +789,7 @@
     - state: default
     - state: idcluwne
   - type: IdCard
-    jobTitle: Cluwne
+    jobTitle: job-title-cluwne
   - type: Unremoveable
 
 - type: entity
@@ -849,7 +849,7 @@
   - type: Item
     heldPrefix: green
   - type: IdCard
-    jobTitle: Universal
+    jobTitle: job-title-universal
     jobIcon: JobIconAdmin
   - type: Access
     groups:

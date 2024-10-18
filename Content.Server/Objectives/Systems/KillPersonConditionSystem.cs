@@ -95,7 +95,7 @@ public sealed class KillPersonConditionSystem : EntitySystem
         foreach (var mind in allHumans)
         {
             // RequireAdminNotify used as a cheap way to check for command department
-            if (_job.MindTryGetJob(mind, out _, out var prototype) && prototype.RequireAdminNotify)
+            if (_job.MindTryGetJob(mind, out var prototype) && prototype.RequireAdminNotify)
                 allHeads.Add(mind);
         }
 
@@ -146,7 +146,7 @@ public sealed class KillPersonConditionSystem : EntitySystem
                 var poolSessions = _traitorRule.CurrentAntagPool.GetPoolSessions();
                 foreach (var mind in allHumans)
                 {
-                    if (!args.Mind.ObjectiveTargets.Contains(mind) && _job.MindTryGetJob(mind, out _, out var prototype) && prototype.CanBeAntag && _mind.TryGetSession(mind, out var session) && poolSessions.Contains(session))
+                    if (!args.Mind.ObjectiveTargets.Contains(mind) && _job.MindTryGetJob(mind, out var prototype) && prototype.CanBeAntag && _mind.TryGetSession(mind, out var session) && poolSessions.Contains(session))
                     {
                         allValidTraitorCandidates.Add(mind);
                     }

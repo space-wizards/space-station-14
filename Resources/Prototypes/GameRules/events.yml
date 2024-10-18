@@ -8,25 +8,15 @@
     - id: BreakerFlip
     - id: BureaucraticError
     - id: ClericalError
-    - id: CockroachMigration
-    - id: TrashAnimalMigration
     - id: GasLeak
     - id: IonStorm # its calm like 90% of the time smh
     - id: KudzuGrowth
     - id: MassHallucinations
     - id: MimicVendorRule
-    - id: MouseMigration
     - id: PowerGridCheck
     - id: RandomSentience
-    - id: SlimesSpawn
     - id: SolarFlare
-    - id: SnakeSpawn
-    - id: SnailMigration
-    - id: SnailMigrationLowPop
-    - id: SpiderClownSpawn
-    - id: SpiderSpawn
     - id: VentClog
-    - id: BrosSpawn
 
 - type: entityTable
   id: BasicAntagEventsTable
@@ -187,9 +177,8 @@
       min: 1
       max: 1
       pickPlayer: false
-      mindComponents:
-      - type: DragonRole
-        prototype: Dragon
+      mindRoles:
+      - MindRoleDragon
 
 - type: entity
   parent: BaseGameRule
@@ -237,9 +226,8 @@
         nameSegments:
         - names_ninja_title
         - names_ninja
-      mindComponents:
-      - type: NinjaRole
-        prototype: SpaceNinja
+      mindRoles:
+      - MindRoleNinja
 
 - type: entity
   parent: BaseGameRule
@@ -335,84 +323,6 @@
   - type: VentClogRule
 
 - type: entity
-  id: SlimesSpawn
-  parent: BaseStationEventShortDelay
-  components:
-  - type: StationEvent
-    earliestStart: 20
-    minimumPlayers: 15
-    weight: 5
-    duration: 60
-  - type: VentCrittersRule
-    entries:
-    - id: MobAdultSlimesBlueAngry
-      prob: 0.02
-    - id: MobAdultSlimesGreenAngry
-      prob: 0.02
-    - id: MobAdultSlimesYellowAngry
-      prob: 0.02
-
-- type: entity
-  id: SnakeSpawn
-  parent: BaseStationEventShortDelay
-  components:
-  - type: StationEvent
-    earliestStart: 20
-    minimumPlayers: 15
-    weight: 5
-    duration: 60
-  - type: VentCrittersRule
-    entries:
-    - id: MobPurpleSnake
-      prob: 0.02
-    - id: MobSmallPurpleSnake
-      prob: 0.02
-    - id: MobCobraSpace
-      prob: 0.02
-
-- type: entity
-  id: SpiderSpawn
-  parent: BaseStationEventShortDelay
-  components:
-  - type: StationEvent
-    earliestStart: 20
-    minimumPlayers: 15
-    weight: 5
-    duration: 60
-  - type: VentCrittersRule
-    entries:
-    - id: MobGiantSpiderAngry
-      prob: 0.05
-
-- type: entity
-  id: BrosSpawn
-  parent: BaseStationEventShortDelay
-  components:
-  - type: StationEvent
-    earliestStart: 20
-    minimumPlayers: 15
-    weight: 5
-    duration: 60
-  - type: VentCrittersRule
-    entries:
-    - id: BrosVentSpawner
-      prob: 0.05
-
-- type: entity
-  id: SpiderClownSpawn
-  parent: BaseStationEventShortDelay
-  components:
-  - type: StationEvent
-    earliestStart: 20
-    minimumPlayers: 20
-    weight: 1.5
-    duration: 60
-  - type: VentCrittersRule
-    entries:
-    - id: MobClownSpider
-      prob: 0.05
-
-- type: entity
   id: ZombieOutbreak
   parent: BaseGameRule
   components:
@@ -442,9 +352,8 @@
       - type: ZombifyOnDeath
       - type: IncurableZombie
       - type: InitialInfected
-      mindComponents:
-      - type: InitialInfectedRole
-        prototype: InitialInfected
+      mindRoles:
+      - MindRoleInitialInfected
 
 - type: entity
   id: ChangelingAwakening
@@ -471,9 +380,8 @@
         sound: "/Audio/Ambience/Antag/changeling_start.ogg"
       components:
       - type: Changeling
-      mindComponents:
-      - type: ChangelingRole
-        prototype: Changeling
+      mindRoles:
+      - MindRoleChangeling
 
 - type: entity
   parent: BaseNukeopsRule
@@ -498,7 +406,6 @@
       startingGear: SyndicateLoneOperativeGearFull
       roleLoadout:
       - RoleSurvivalNukie
-
       components:
       - type: NukeOperative
       - type: RandomMetadata
@@ -508,9 +415,8 @@
       - type: NpcFactionMember
         factions:
         - Syndicate
-      mindComponents:
-      - type: NukeopsRole
-        prototype: Nukeops
+      mindRoles:
+      - MindRoleNukeops
 
 - type: entity
   parent: BaseTraitorRule
@@ -535,9 +441,8 @@
       blacklist:
         components:
         - AntagImmune
-      mindComponents:
-      - type: TraitorRole
-        prototype: TraitorSleeper
+      mindRoles:
+      - MindRoleTraitorSleeper
 
 - type: entity
   id: MassHallucinations
