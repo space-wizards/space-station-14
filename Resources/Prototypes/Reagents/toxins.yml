@@ -361,9 +361,9 @@
 
 - type: reagent
   id: SeagullToxin
-  name: reagent-name-seagull
+  name: reagent-name-seagulltoxin
   group: Toxins
-  desc: reagent-desc-seagull
+  desc: reagent-desc-seagulltoxin
   flavor: bitter
   color: "#F0ead6"
   physicalDesc: reagent-physical-desc-putrid
@@ -373,12 +373,12 @@
         - !type:HealthChange
           damage:
             types:
-              Poison: 2
+              Poison: 4
         - !type:ChemVomit
           conditions:
           - !type:ReagentThreshold
             min: 2
-          probability: 0.2
+          probability: 0.4
 
 - type: reagent
   id: MindbreakerToxin
