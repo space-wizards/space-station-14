@@ -41,6 +41,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly MeleeWeaponSystem _meleeWeapon = default!;
@@ -186,7 +187,21 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         if (_meleeWeapon.GetDamage(args.Used, args.User).Empty)
             return;
 
-        DoCommonElectrocution(args.User, uid, component.UnarmedHitShock, component.UnarmedHitStun, false);
+        DoCommonElectrocution(args.User, uid, component.UnarmedHitShock, component.UnarmedHitStun, false, GetSiemensCoefficient(args.User));
+    }
+
+    private float GetSiemensCoefficient(EntityUid uid)
+    {
+        // Check for InsulatedComponent on the entity, or in the gloves slot
+        if (TryComp<InsulatedComponent>(uid, out var insulation) ||
+        (TryComp<InventoryComponent>(uid, out var inventory) &&
+         _inventory.TryGetSlotEntity(uid, "gloves", out var gloves, inventory) &&
+         TryComp<InsulatedComponent>(gloves, out insulation)))
+        {
+            return insulation.Coefficient;
+        }
+        else
+            return 1; // Default to 1 if the entity doesn't have an InsulatedComponent
     }
 
     private void OnElectrifiedInteractUsing(EntityUid uid, ElectrifiedComponent electrified, InteractUsingEvent args)
