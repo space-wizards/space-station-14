@@ -8,6 +8,8 @@
     Atlas:
       stationProto: StandardNanotrasenStation
       components:
+        - type: StationEmergencyShuttle
+          emergencyShuttlePath: /Maps/Ronstation/Shuttles/emergency_small.yml
         - type: StationNameSetup
           mapNameTemplate: '{0} Atlas {1}'
           nameGenerator:
