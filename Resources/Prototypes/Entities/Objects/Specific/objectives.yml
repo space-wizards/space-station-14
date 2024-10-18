@@ -1,0 +1,121 @@
+- type: entity
+  parent: BaseItem
+  id: ImportantDocumentGenaric
+  abstract: true
+  description: Looks highly classified!
+  components:
+    - type: Sprite
+      sprite: Objects/Specific/Syndicate/document.rsi
+      layers:
+      - state: background_messy
+        map: [ "background" ]
+      - state: bribe
+        map: [ "bribe" ]
+      - state: document
+      - state: line
+        map: [ "label" ]
+    - type: Tag
+      tags:
+        - Document
+        - HighRiskItem
+    - type: RandomSprite
+      getAllGroups: true
+      available:
+        - background:
+            background_messy: ""
+            background_clean: ""
+            background_large: ""
+        - bribe:
+            bribe: ""
+            empty: ""
+        - label:
+            line: DepartmentalSpecialPick
+            stamp: DepartmentalSpecialPick
+
+- type: entity
+  parent: ImportantDocumentGenaric
+  id: ArrestLogsDocument
+  name: arrest logs
+  components:
+    - type: StealTarget
+      stealGroup: ArrestLogs
+
+- type: entity
+  parent: ImportantDocumentGenaric
+  id: RadioLogsDocument
+  name: radio logs
+  components:
+    - type: StealTarget
+      stealGroup: RadioLogs
+
+- type: entity
+  parent: ImportantDocumentGenaric
+  id: StationMaintenceReportDocument
+  name: station maintence report
+  components:
+    - type: StealTarget
+      stealGroup: StationMaintenceReport
+
+- type: entity
+  parent: ImportantDocumentGenaric
+  id: ResesarchReportDocument
+  name: research report
+  components:
+    - type: StealTarget
+      stealGroup: ResesarchReport
+
+- type: entity
+  parent: ImportantDocumentGenaric
+  id: MedicalLogsDocument
+  name: medical logs
+  components:
+    - type: StealTarget
+      stealGroup: MedicalLogs
+
+- type: entity
+  parent: ImportantDocumentGenaric
+  id: SupplyReportDocument
+  name: supply report
+  components:
+    - type: StealTarget
+      stealGroup: SupplyReport
+
+- type: entity
+  parent: ImportantDocumentGenaric
+  id: CentralCommandReportDocument
+  name: central command report
+  components:
+    - type: StealTarget
+      stealGroup: CentralCommandReport
+
+- type: entity
+  parent: ImportantDocumentGenaric
+  id: CentralCommandAuditDocument
+  name: central command audit
+  components:
+    - type: StealTarget
+      stealGroup: CentralCommandAudit
+
+- type: entity
+  parent: ImportantDocumentGenaric
+  id: NuclearDeviceMaintainceReportDocument
+  name: nuclear device maintaince report
+  components:
+    - type: StealTarget
+      stealGroup: NuclearDeviceMaintainceReport
+
+- type: entity
+  parent: ImportantDocumentGenaric
+  id: ArmoryInspectionReportDocument
+  name: armory inspection report
+  components:
+    - type: StealTarget
+      stealGroup: ArmoryInspectionReport
+
+- type: entity
+  parent: ImportantDocumentGenaric
+  id: VaultInspectionReportDocument
+  name: vault inspection report
+  components:
+    - type: StealTarget
+      stealGroup: VaultInspectionReport
