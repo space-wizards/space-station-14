@@ -299,7 +299,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
     /// <summary>
     /// Send a Sound cue to an entity that has a mind associated with it.
     /// </summary>
-    private void CueEntityMind(EntityUid entity, SoundSpecifier? cue)
+    public void CueEntityMind(EntityUid entity, SoundSpecifier? cue)
     {
         if (cue != null && _mind.TryGetMind(entity, out var mindId, out _))
             _roles.MindPlaySound(mindId, cue);
