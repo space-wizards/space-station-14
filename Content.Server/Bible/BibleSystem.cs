@@ -5,6 +5,8 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Bible;
 using Content.Shared.Damage;
+using Content.Shared.Eye.Blinding.Systems;
+using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.Ghost.Roles.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
@@ -33,6 +35,7 @@ namespace Content.Server.Bible
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly UseDelaySystem _delay = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
+        [Dependency] private readonly BlindableSystem _blindingSystem = default!;
 
         public override void Initialize()
         {
@@ -134,8 +137,17 @@ namespace Content.Server.Bible
             }
 
             var damage = _damageableSystem.TryChangeDamage(args.Target.Value, component.Damage, true, origin: uid);
+            bool healedEye = false;
+            if (TryComp<BlindableComponent>(args.Target.Value, out var blindable))
+            {
+                if (blindable.EyeDamage > blindable.MinDamage && _random.Prob(component.EyeHealChance))
+                {
+                    healedEye = true;
+                    _blindingSystem.AdjustEyeDamage((args.Target.Value, blindable), component.EyeHealAmount);
+                }
+            }
 
-            if (damage == null || damage.Empty)
+            if ((damage == null || damage.Empty) && !healedEye)
             {
                 var othersMessage = Loc.GetString(component.LocPrefix + "-heal-success-none-others", ("user", Identity.Entity(args.User, EntityManager)), ("target", Identity.Entity(args.Target.Value, EntityManager)), ("bible", uid));
                 _popupSystem.PopupEntity(othersMessage, args.User, Filter.PvsExcept(args.User), true, PopupType.Medium);
