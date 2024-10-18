@@ -1,0 +1,108 @@
+- type: entity
+  id: GatewayChipBlank
+  parent: BaseItem
+  suffix: Blank
+  name: gateway chip
+  description: A chip with stored portal gate data. Insert it into the gate control console to be able to control it.
+  components:
+  - type: GatewayChip
+  - type: Item
+    size: Tiny
+  - type: Sprite
+    sprite: Objects/Misc/gate_chip.rsi
+    layers:
+    - state: base
+  - type: Tag
+    tags:
+    - GatewayChip
+
+- type: entity
+  id: GatewayChipStation
+  parent: GatewayChipBlank
+  suffix: Station
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+    - state: mark1
+      color: "#D4D4D4"
+  - type: GatewayChip
+    autoLinkKey: Station
+
+- type: entity
+  id: GatewayChipSalvage
+  parent: GatewayChipBlank
+  suffix: Salvage
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+    - state: mark1
+      color: "#8d1c99"
+  - type: GatewayChip
+    autoLinkKey: StationSalvage
+
+- type: entity
+  id: GatewayChipMedical
+  parent: GatewayChipBlank
+  suffix: Medical
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+    - state: mark1
+      color: "#52B4E9"
+  - type: GatewayChip
+    autoLinkKey: StationMedical
+
+- type: entity
+  id: GatewayChipEngineering
+  parent: GatewayChipBlank
+  suffix: Engineering
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+    - state: mark1
+      color: "#EFB341"
+  - type: GatewayChip
+    autoLinkKey: StationEngineering
+
+- type: entity
+  id: GatewayChipSecurity
+  parent: GatewayChipBlank
+  suffix: Security
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+    - state: mark1
+      color: "#DE3A3A"
+  - type: GatewayChip
+    autoLinkKey: StationSecurity
+
+- type: entity
+  id: GatewayChipScience
+  parent: GatewayChipBlank
+  suffix: Science
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+    - state: mark1
+      color: "#D381C9"
+  - type: GatewayChip
+    autoLinkKey: StationScience
+
+- type: entity
+  id: GatewayChipCargo
+  parent: GatewayChipBlank
+  suffix: Cargo
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+    - state: mark1
+      color: "#A46106"
+  - type: GatewayChip
+    autoLinkKey: StationCargo
