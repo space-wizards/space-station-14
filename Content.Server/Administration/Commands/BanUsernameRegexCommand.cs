@@ -1,18 +1,19 @@
 using System.Linq;
 using Content.Server.Administration.Managers;
 using Content.Shared.Administration;
-using Content.Shared.Database;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 
 namespace Content.Server.Administration.Commands;
 
-[AdminCommand(AdminFlags.MassBan)]
+[AdminCommand(AdminFlags.Host)]
 public sealed class BanUsernameRegexCommand : LocalizedCommands
 {
     [Dependency] private readonly IUsernameRuleManager _usernameRules = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     public override string Command => "banusernameregex";
+
+    public override string Help => Loc.GetString("cmd-ban-username-regex-help");
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {

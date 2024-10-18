@@ -89,13 +89,22 @@ ban-kick-reason = You have been banned
 # Username ban
 cmd-ban-username-desc = Ban a username and kick any user with that username.
 cmd-ban-username-invalid-username = this username is invalid: {$reason}
+cmd-ban-username-hint-username = <username>
 cmd-ban-username-hint-regex = <regex>
 cmd-ban-username-hint-reason = [reason]
-cmd-ban-username-hint-upgrade-ban = [also ban]
+cmd-ban-username-hint-upgrade-ban = [(upgrade to ban)true|false]
 cmd-ban-username-hint-ban = Users who join with this username will be banned
 cmd-ban-username-hint-no-ban = Users who join with this username will be kicked (Default)
+cmd-ban-username-regex-help = Usage: banusernameregex <expression> [reason] [extend to ban (true|false)]
+cmd-ban-username-help = Usage: banusername <username> [reason] [extend to ban (true|false)]
+
 
 cmd-username-whitelist-not-in-db = this username was not present in the database
+
+cmd-whitelist-username-help = Usage: {$command} <username>
+
+cmd-pardonusername-help = Usage: pardonusername <ban id 1> <ban id 2> ...
+cmd-pardonusername-send = Sending retire request rule {$id}
 
 # create username ban failed
 cmd-ban-username-missing-minimum-permissions = {$admin} ({$adminId}) tried to create a username rule with no ban flag"

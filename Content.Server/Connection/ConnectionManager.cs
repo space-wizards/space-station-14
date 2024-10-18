@@ -198,14 +198,14 @@ namespace Content.Server.Connection
 
         private async Task<(ConnectionDenyReason, string, List<ServerBanDef>? bansHit)?> UsernameIsBanned(NetConnectingArgs e)
         {
-            (bool hit, string message, bool ban) = await _usernameRules.IsUsernameBannedAsync(e.UserName);
+            var checkedUsername = await _usernameRules.IsUsernameBannedAsync(e.UserName);
 
-            if (!hit)
+            if (!checkedUsername.IsBanned)
             {
                 return null;
             }
 
-            return (ConnectionDenyReason.Ban, message, null);
+            return (ConnectionDenyReason.UsernameBan, checkedUsername.Message, null);
         }
 
         private async Task<(ConnectionDenyReason, string, List<ServerBanDef>? bansHit)?> ServerInSiegeMode(NetConnectingArgs e, Admin? adminData)
@@ -347,7 +347,7 @@ namespace Content.Server.Connection
 
             if (HasTemporaryBypass(e.UserId))
             {
-                _sawmill.Verbose("User {UserId} has temporary bypass, skipping further connection checks", e.UserId); // TODO: localization?
+                _sawmill.Verbose($"User {e.UserId} has temporary bypass, skipping further connection checks");
                 return null;
             }
 
@@ -393,11 +393,6 @@ namespace Content.Server.Connection
 
             var isAccountAgeInvalid = record.FirstSeenTime.CompareTo(DateTimeOffset.UtcNow - TimeSpan.FromMinutes(maxAccountAgeMinutes)) <= 0;
 
-            if (isAccountAgeInvalid)
-            {
-                _sawmill.Debug($"Baby jail will deny {userId} for account age {record.FirstSeenTime}"); // Remove on or after 2024-09
-            }
-
             if (isAccountAgeInvalid && showReason)
             {
                 var locAccountReason = reason != string.Empty
@@ -413,11 +408,6 @@ namespace Content.Server.Connection
 
             var overallTime = (await _db.GetPlayTimes(e.UserId)).Find(p => p.Tracker == PlayTimeTrackingShared.TrackerOverall);
             var isTotalPlaytimeInvalid = overallTime != null && overallTime.TimeSpent.TotalMinutes >= maxPlaytimeMinutes;
-
-            if (isTotalPlaytimeInvalid)
-            {
-                _sawmill.Debug($"Baby jail will deny {userId} for playtime {overallTime!.TimeSpent}"); // Remove on or after 2024-09
-            }
 
             if (isTotalPlaytimeInvalid && showReason)
             {

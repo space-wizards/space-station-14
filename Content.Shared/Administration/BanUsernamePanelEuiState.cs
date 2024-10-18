@@ -1,4 +1,3 @@
-using System.Net;
 using Content.Shared.Eui;
 using Robust.Shared.Serialization;
 
@@ -8,19 +7,17 @@ namespace Content.Shared.Administration;
 [Serializable, NetSerializable]
 public sealed class BanUsernamePanelEuiState : EuiStateBase
 {
-    public string PlayerName { get; set; }
     public bool HasBan { get; set; }
-    public bool HasMassBan { get; set; }
+    public bool HasHost { get; set; }
 
-    public BanUsernamePanelEuiState(string playerName, bool hasBan, bool hasMassBan)
+    public BanUsernamePanelEuiState(bool hasBan, bool hasHost)
     {
-        PlayerName = playerName;
         HasBan = hasBan;
-        HasMassBan = hasMassBan;
+        HasHost = hasHost;
     }
 }
 
-public static class BanUsernamePanelEuiStateMsg
+public static class BanUsernamePanelEuiMsg
 {
     [Serializable, NetSerializable]
     public sealed class CreateUsernameBanRequest : EuiMessageBase

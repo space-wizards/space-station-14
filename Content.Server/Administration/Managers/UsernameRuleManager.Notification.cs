@@ -8,13 +8,6 @@ public sealed partial class UsernameRuleManager
 {
     public const string UsernameRuleNotificationChannel = "username_rule_notification";
 
-    private static readonly TimeSpan UsernameRuleNotificationRateLimitTime = TimeSpan.FromSeconds(30);
-    private const int UsernameRuleNotificationRateLimitCount = 10;
-
-    private readonly object _usernameRuleNotificationRateLimitStateLock = new();
-    private TimeSpan _usernameRuleNotificationRateLimitStart;
-    private int _usernameRuleNotificationRateLimitCount;
-
     private void OnDatabaseNotification(DatabaseNotification notification)
     {
         if (notification.Channel != UsernameRuleNotificationChannel)
@@ -37,12 +30,6 @@ public sealed partial class UsernameRuleManager
         catch (JsonException e)
         {
             _sawmill.Error($"Got invalid JSON in username rule notification: {e}");
-            return;
-        }
-
-        if (!CheckRuleRateLimit())
-        {
-            _sawmill.Verbose("Not processing username rule notification due to rate limit");
             return;
         }
 
@@ -74,24 +61,6 @@ public sealed partial class UsernameRuleManager
         CacheCompiledRegex(usernameRule.Id ?? -1, usernameRule.Regex, usernameRule.Expression, usernameRule.Message, usernameRule.ExtendToBan);
 
         KickMatchingConnectedPlayers(data.UsernameRuleId, usernameRule, "username rule notification");
-    }
-
-    private bool CheckRuleRateLimit()
-    {
-        lock (_usernameRuleNotificationRateLimitStateLock)
-        {
-            var now = _gameTiming.RealTime;
-            if (_usernameRuleNotificationRateLimitStart + UsernameRuleNotificationRateLimitTime < now)
-            {
-                // Rate limit period expired, restart it.
-                _usernameRuleNotificationRateLimitCount = 1;
-                _usernameRuleNotificationRateLimitStart = now;
-                return true;
-            }
-
-            _usernameRuleNotificationRateLimitCount += 1;
-            return _usernameRuleNotificationRateLimitCount <= UsernameRuleNotificationRateLimitCount;
-        }
     }
 
     private sealed class UsernameRuleNotification

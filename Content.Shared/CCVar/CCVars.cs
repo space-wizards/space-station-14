@@ -2208,6 +2208,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<string> InfoLinksAppeal =
             CVarDef.Create("infolinks.appeal", "", CVar.SERVER | CVar.REPLICATED);
 
+        /// <summary>
+        /// Link to site handling username changes. Shown in username ban disconnect messages.
+        /// </summary>
+        public static readonly CVarDef<string> InfoLinksChangeUsername =
+            CVarDef.Create("infolinks.change_username", "", CVar.SERVER | CVar.REPLICATED);
+
         /*
          * CONFIG
          */

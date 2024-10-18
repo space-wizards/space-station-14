@@ -13,8 +13,7 @@ public sealed class BanUsernameCommand : LocalizedCommands
     [Dependency] private readonly IUsernameRuleManager _usernameRules = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     public override string Command => "banusername";
-
-    public override string Help => $"Usage: {Command} <username> [message] [convert to ban: true | false] ...";
+    public override string Help => Loc.GetString("cmd-ban-username-help");
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {

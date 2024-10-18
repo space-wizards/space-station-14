@@ -10,7 +10,7 @@ public sealed class PardonUsernameCommand : LocalizedCommands
     [Dependency] private readonly IUsernameRuleManager _usernameRules = default!;
 
     public override string Command => "pardonusername";
-    public override string Help => $"Usage: {Command} <ban id 1> <ban id 2> ...";
+    public override string Help => Loc.GetString("cmd-pardonusername-help");
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
@@ -24,11 +24,11 @@ public sealed class PardonUsernameCommand : LocalizedCommands
         {
             if (!int.TryParse(arg, out var banId))
             {
-                shell.WriteLine($"Unable to parse {arg} as a rule id integer.\n{Help}");
+                shell.WriteLine($"{Loc.GetString("shell-argument-must-be-integer")}.\n{Help}");
                 continue;
             }
 
-            shell.WriteLine($"Sending retire request rule {banId}");
+            shell.WriteLine(Loc.GetString("cmd-pardonusername-send", ("id", banId)));
 
             _usernameRules.RemoveUsernameRule(banId, shell.Player?.UserId);
         }

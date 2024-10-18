@@ -11,6 +11,7 @@ public sealed class WhitelistAddUsernameCommand : LocalizedCommands
     [Dependency] private readonly IUsernameRuleManager _usernameRules = default!;
 
     public override string Command => "wladdusername";
+    public override string Help => Loc.GetString("cmd-whitelist-username-help", ("command", Command));
 
     public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
@@ -38,6 +39,8 @@ public sealed class WhitelistRemoveUsernameCommand : LocalizedCommands
     [Dependency] private readonly IUsernameRuleManager _usernameRules = default!;
 
     public override string Command => "wlrmusername";
+
+    public override string Help => Loc.GetString("cmd-whitelist-username-help", ("command", Command));
 
     public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {

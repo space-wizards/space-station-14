@@ -2,9 +2,6 @@ using Content.Server.Administration.Managers;
 using Content.Server.EUI;
 using Content.Shared.Eui;
 using Content.Shared.Administration;
-using Robust.Shared.Network;
-using System.Collections.Immutable;
-using System.Net;
 
 using UsernameHelpers = Robust.Shared.AuthLib.UsernameHelpers;
 
@@ -14,17 +11,9 @@ public sealed class BanUsernamePanelEui : BaseEui
 {
     [Dependency] private readonly IUsernameRuleManager _usernameRules = default!;
     [Dependency] private readonly ILogManager _log = default!;
-    [Dependency] private readonly IPlayerLocator _playerLocator = default!;
     [Dependency] private readonly IAdminManager _admins = default!;
 
     private readonly ISawmill _sawmill;
-
-    private NetUserId? PlayerId { get; set; }
-    private string PlayerName { get; set; } = string.Empty;
-    private IPAddress? LastAddress { get; set; }
-    private ImmutableArray<byte>? LastHwid { get; set; }
-    private const int Ipv4_CIDR = 32;
-    private const int Ipv6_CIDR = 64;
 
     public BanUsernamePanelEui()
     {
@@ -36,23 +25,8 @@ public sealed class BanUsernamePanelEui : BaseEui
     public override EuiStateBase GetNewState()
     {
         var hasBan = _admins.HasAdminFlag(Player, AdminFlags.Ban);
-        var hasMassBan = _admins.HasAdminFlag(Player, AdminFlags.MassBan);
-        return new BanUsernamePanelEuiState(PlayerName, hasBan, hasMassBan);
-    }
-
-    public async void ChangePlayer(string playerNameOrId)
-    {
-        var located = await _playerLocator.LookupIdByNameOrIdAsync(playerNameOrId);
-        ChangePlayer(located?.UserId, located?.Username ?? string.Empty, located?.LastAddress, located?.LastHWId);
-    }
-
-    public void ChangePlayer(NetUserId? playerId, string playerName, IPAddress? lastAddress, ImmutableArray<byte>? lastHwid)
-    {
-        PlayerId = playerId;
-        PlayerName = playerName;
-        LastAddress = lastAddress;
-        LastHwid = lastHwid;
-        StateDirty();
+        var hasHost = _admins.HasAdminFlag(Player, AdminFlags.Host);
+        return new BanUsernamePanelEuiState(hasBan, hasHost);
     }
 
     public override void HandleMessage(EuiMessageBase msg)
@@ -61,10 +35,10 @@ public sealed class BanUsernamePanelEui : BaseEui
 
         switch (msg)
         {
-            case BanUsernamePanelEuiStateMsg.CreateUsernameBanRequest r:
+            case BanUsernamePanelEuiMsg.CreateUsernameBanRequest r:
                 CreateUsernameBan(r.RegexRule, r.Reason, r.Ban, r.Regex);
                 break;
-            case BanUsernamePanelEuiStateMsg.GetRuleInfoRequest r:
+            case BanUsernamePanelEuiMsg.GetRuleInfoRequest r:
                 SendInfo(r.RuleId);
                 break;
         }
@@ -78,7 +52,7 @@ public sealed class BanUsernamePanelEui : BaseEui
             return;
         }
 
-        if (regex && !_admins.HasAdminFlag(Player, AdminFlags.MassBan))
+        if (regex && !_admins.HasAdminFlag(Player, AdminFlags.Host))
         {
             _sawmill.Warning(Loc.GetString("cmd-ban-username-missing-minimum-permissions-regex", ("admin", Player.Name), ("adminId", Player.UserId), ("expression", regexRule)));
             return;
