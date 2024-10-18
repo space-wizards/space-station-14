@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: TropicalHibi
-  changes:
-  - message: Now fs (for sure) and wru (where are you) are changed to their full version
-      in text
-    type: Add
-  id: 7030
-  time: '2024-08-02T05:57:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30508
 - author: Plykiya
   changes:
   - message: Rechargers now show the percent charged of the item it is charging.
@@ -3952,3 +3944,11 @@
   id: 7529
   time: '2024-10-18T09:43:05.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32721
+- author: JIPDawg
+  changes:
+  - message: On Salamander the round will now restart after 5 minutes from when the
+      Evac shuttle arrives at CentCom.
+    type: Tweak
+  id: 7530
+  time: '2024-10-18T10:03:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32776
