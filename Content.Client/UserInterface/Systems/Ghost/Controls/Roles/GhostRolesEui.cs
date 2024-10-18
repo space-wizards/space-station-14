@@ -3,8 +3,10 @@ using Content.Client.Eui;
 using Content.Client.Players.PlayTimeTracking;
 using Content.Shared.Eui;
 using Content.Shared.Ghost.Roles;
+using Content.Shared.Roles;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
@@ -83,19 +85,28 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
             var sysManager = entityManager.EntitySysManager;
             var spriteSystem = sysManager.GetEntitySystem<SpriteSystem>();
             var requirementsManager = IoCManager.Resolve<JobRequirementsManager>();
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
 
             var groupedRoles = ghostState.GhostRoles.GroupBy(
-                role => (role.Name, role.Description, role.Requirements));
+                role => (role.Name, role.Description, role.Requirements, role.JobProto));
             foreach (var group in groupedRoles)
             {
                 var name = group.Key.Name;
                 var description = group.Key.Description;
+                var jobProto = group.Key.JobProto;
                 bool hasAccess = true;
                 FormattedMessage? reason;
 
-                if (!requirementsManager.CheckRoleRequirements(group.Key.Requirements, null, out reason))
+                if (jobProto != null)
                 {
-                    hasAccess = false;
+                    var job = prototypeManager.Index<JobPrototype>(jobProto.Value.Id);
+                    if (!requirementsManager.IsAllowed(job, null, out reason))
+                        hasAccess = false;
+                }
+                else
+                {
+                    if (!requirementsManager.CheckRoleRequirements(group.Key.Requirements, null, out reason))
+                        hasAccess = false;
                 }
 
                 _window.AddEntry(name, description, hasAccess, reason, group, spriteSystem);
