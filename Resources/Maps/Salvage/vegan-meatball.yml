@@ -494,8 +494,6 @@ entities:
         highPressureTolerance: 121
         lowPressureTolerance: 81
         toxinsTolerance: 4
-        lightTolerance: 3
-        idealLight: 9
         heatTolerance: 10
         idealHeat: 298
         waterConsumption: 0.4
@@ -567,8 +565,6 @@ entities:
         highPressureTolerance: 121
         lowPressureTolerance: 81
         toxinsTolerance: 4
-        lightTolerance: 3
-        idealLight: 7
         heatTolerance: 10
         idealHeat: 293
         waterConsumption: 0.6

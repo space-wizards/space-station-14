@@ -1,7 +1,6 @@
 using Content.Server.Botany.Components;
 using Content.Shared.EntityEffects;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Server.EntityEffects.Effects.PlantMetabolism;
@@ -32,17 +31,18 @@ public abstract partial class PlantAdjustAttribute : EntityEffect
     /// <param name="entityManager">The entity manager</param>
     /// <param name="mustHaveAlivePlant">Whether to check if it has an alive plant or not</param>
     /// <returns></returns>
-    public bool CanMetabolize(EntityUid plantHolder, [NotNullWhen(true)] out PlantHolderComponent? plantHolderComponent,
+    public bool CanMetabolize(EntityUid plant, [NotNullWhen(true)] out PlantComponent? plantComponent,
         IEntityManager entityManager,
         bool mustHaveAlivePlant = true)
     {
-        plantHolderComponent = null;
-
-        if (!entityManager.TryGetComponent(plantHolder, out plantHolderComponent)
-                                || mustHaveAlivePlant && (plantHolderComponent.Seed == null || plantHolderComponent.Dead))
-            return false;
-
-        return true;
+        if (entityManager.TryGetComponent(plant, out plantComponent))
+        {
+            return mustHaveAlivePlant ? !plantComponent.Dead : true; //a plant exists, check if we need it alive.
+        }
+        else
+        {
+            return !mustHaveAlivePlant; // There is no plant, we must not require one.
+        }
     }
 
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)

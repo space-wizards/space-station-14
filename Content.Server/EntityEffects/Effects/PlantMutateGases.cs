@@ -20,13 +20,13 @@ public sealed partial class PlantMutateExudeGasses : EntityEffect
 
     public override void Effect(EntityEffectBaseArgs args)
     {
-        var plantholder = args.EntityManager.GetComponent<PlantHolderComponent>(args.TargetEntity);
+        var plant = args.EntityManager.GetComponent<PlantComponent>(args.TargetEntity);
 
-        if (plantholder.Seed == null)
+        if (plant.Seed == null)
             return;
 
         var random = IoCManager.Resolve<IRobustRandom>();
-        var gasses = plantholder.Seed.ExudeGasses;
+        var gasses = plant.Seed.ExudeGasses;
 
         // Add a random amount of a random gas to this gas dictionary
         float amount = random.NextFloat(MinValue, MaxValue);
@@ -59,13 +59,13 @@ public sealed partial class PlantMutateConsumeGasses : EntityEffect
     public float MaxValue = 0.5f;
     public override void Effect(EntityEffectBaseArgs args)
     {
-        var plantholder = args.EntityManager.GetComponent<PlantHolderComponent>(args.TargetEntity);
+        var plant = args.EntityManager.GetComponent<PlantComponent>(args.TargetEntity);
 
-        if (plantholder.Seed == null)
+        if (plant.Seed == null)
             return;
 
         var random = IoCManager.Resolve<IRobustRandom>();
-        var gasses = plantholder.Seed.ConsumeGasses;
+        var gasses = plant.Seed.ConsumeGasses;
 
         // Add a random amount of a random gas to this gas dictionary
         float amount = random.NextFloat(MinValue, MaxValue);

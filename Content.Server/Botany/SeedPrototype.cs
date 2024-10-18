@@ -24,36 +24,6 @@ public enum HarvestType : byte
     SelfHarvest
 }
 
-/*
-    public enum PlantSpread : byte
-    {
-        NoSpread,
-        Creepers,
-        Vines,
-    }
-
-    public enum PlantMutation : byte
-    {
-        NoMutation,
-        Mutable,
-        HighlyMutable,
-    }
-
-    public enum PlantCarnivorous : byte
-    {
-        NotCarnivorous,
-        EatPests,
-        EatLivingBeings,
-    }
-
-    public enum PlantJuicy : byte
-    {
-        NotJuicy,
-        Juicy,
-        Slippery,
-    }
-*/
-
 [DataDefinition]
 public partial struct SeedChemQuantity
 {
@@ -81,7 +51,7 @@ public partial struct SeedChemQuantity
 
 // TODO reduce the number of friends to a reasonable level. Requires ECS-ing things like plant holder component.
 [Virtual, DataDefinition]
-[Access(typeof(BotanySystem), typeof(PlantHolderSystem), typeof(SeedExtractorSystem), typeof(PlantHolderComponent), typeof(EntityEffect), typeof(MutationSystem))]
+[Access(typeof(BotanySystem), typeof(PlantHolderSystem), typeof(SeedExtractorSystem), typeof(PlantHolderComponent), typeof(EntityEffect), typeof(MutationSystem), typeof(PlantSystem), typeof(BotanySwabSystem))]
 public partial class SeedData
 {
     #region Tracking
@@ -89,48 +59,41 @@ public partial class SeedData
     /// <summary>
     ///     The name of this seed. Determines the name of seed packets.
     /// </summary>
-    [DataField("name")]
+    [DataField]
     public string Name { get; private set; } = "";
 
     /// <summary>
     ///     The noun for this type of seeds. E.g. for fungi this should probably be "spores" instead of "seeds". Also
     ///     used to determine the name of seed packets.
     /// </summary>
-    [DataField("noun")]
+    [DataField]
     public string Noun { get; private set; } = "";
 
     /// <summary>
     ///     Name displayed when examining the hydroponics tray. Describes the actual plant, not the seed itself.
     /// </summary>
-    [DataField("displayName")]
+    [DataField]
     public string DisplayName { get; private set; } = "";
 
-    [DataField("mysterious")] public bool Mysterious;
+    [DataField] public bool Mysterious;
 
     /// <summary>
     ///     If true, the properties of this seed cannot be modified.
     /// </summary>
-    [DataField("immutable")] public bool Immutable;
-
-    /// <summary>
-    ///     If true, there is only a single reference to this seed and it's properties can be directly modified without
-    ///     needing to clone the seed.
-    /// </summary>
-    [ViewVariables]
-    public bool Unique = false; // seed-prototypes or yaml-defined seeds for entity prototypes will not generally be unique.
+    [DataField] public bool Immutable;
     #endregion
 
     #region Output
     /// <summary>
     ///     The entity prototype that is spawned when this type of seed is extracted from produce using a seed extractor.
     /// </summary>
-    [DataField("packetPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string PacketPrototype = "SeedBase";
 
     /// <summary>
     ///     The entity prototype this seed spawns when it gets harvested.
     /// </summary>
-    [DataField("productPrototypes", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
+    [DataField(customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
     public List<string> ProductPrototypes = new();
 
     [DataField] public Dictionary<string, SeedChemQuantity> Chemicals = new();
@@ -148,8 +111,6 @@ public partial class SeedData
     [DataField] public float WaterConsumption = 0.5f;
     [DataField] public float IdealHeat = 293f;
     [DataField] public float HeatTolerance = 10f;
-    [DataField] public float IdealLight = 7f;
-    [DataField] public float LightTolerance = 3f;
     [DataField] public float ToxinsTolerance = 4f;
 
     [DataField] public float LowPressureTolerance = 81f;
@@ -194,19 +155,6 @@ public partial class SeedData
     ///     If true, a sharp tool is required to harvest this plant.
     /// </summary>
     [DataField] public bool Ligneous;
-
-    // No, I'm not removing these.
-    // if you re-add these, make sure that they get cloned.
-    //public PlantSpread Spread { get; set; }
-    //public PlantMutation Mutation { get; set; }
-    //public float AlterTemperature { get; set; }
-    //public PlantCarnivorous Carnivorous { get; set; }
-    //public bool Parasite { get; set; }
-    //public bool Hematophage { get; set; }
-    //public bool Thorny { get; set; }
-    //public bool Stinging { get; set; }
-    // public bool Teleporting { get; set; }
-    // public PlantJuicy Juicy { get; set; }
 
     #endregion
 
@@ -265,8 +213,6 @@ public partial class SeedData
             WaterConsumption = WaterConsumption,
             IdealHeat = IdealHeat,
             HeatTolerance = HeatTolerance,
-            IdealLight = IdealLight,
-            LightTolerance = LightTolerance,
             ToxinsTolerance = ToxinsTolerance,
             LowPressureTolerance = LowPressureTolerance,
             HighPressureTolerance = HighPressureTolerance,
@@ -292,9 +238,6 @@ public partial class SeedData
             TurnIntoKudzu = TurnIntoKudzu,
             SplatPrototype = SplatPrototype,
             Mutations = new List<RandomPlantMutation>(),
-
-            // Newly cloned seed is unique. No need to unnecessarily clone if repeatedly modified.
-            Unique = true,
         };
 
         newSeed.Mutations.AddRange(Mutations);
@@ -326,8 +269,6 @@ public partial class SeedData
             WaterConsumption = WaterConsumption,
             IdealHeat = IdealHeat,
             HeatTolerance = HeatTolerance,
-            IdealLight = IdealLight,
-            LightTolerance = LightTolerance,
             ToxinsTolerance = ToxinsTolerance,
             LowPressureTolerance = LowPressureTolerance,
             HighPressureTolerance = HighPressureTolerance,
@@ -354,9 +295,6 @@ public partial class SeedData
             CanScream = CanScream,
             TurnIntoKudzu = TurnIntoKudzu,
             SplatPrototype = other.SplatPrototype,
-
-            // Newly cloned seed is unique. No need to unnecessarily clone if repeatedly modified.
-            Unique = true,
         };
 
         // Adding the new chemicals from the new species.
