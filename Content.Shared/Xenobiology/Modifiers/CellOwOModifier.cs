@@ -4,7 +4,7 @@ using JetBrains.Annotations;
 namespace Content.Shared.Xenobiology.Modifiers;
 
 /// <summary>
-/// Doesn't do anything, because OwO is a northern component :(
+/// Doesn't do anything, because OwO is a server component :(
 /// </summary>
 [Serializable, UsedImplicitly]
 public sealed partial class CellOwOModifier : CellModifier
