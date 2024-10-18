@@ -3179,3 +3179,11 @@
   id: 393
   time: '2024-10-18T18:20:29.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/514
+- author: ruddygreat
+  changes:
+  - message: Added the random unrevivable trait, which gives you a 50/50 chance on
+      spawn to be unrevivable
+    type: Add
+  id: 394
+  time: '2024-10-18T18:24:12.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/495
