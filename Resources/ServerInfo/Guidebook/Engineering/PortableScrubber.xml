@@ -1,0 +1,21 @@
+﻿<Document>
+  # Portable Scrubber
+  The portable scrubber is a portable machine that can be used to scrub the atmosphere in a room.
+  <Box>
+    <GuideEntityEmbed Entity="PortableScrubber"/>
+  </Box>
+
+  It is very useful for quickly scrubbing unwanted gasses from a room when regular scrubbers are working too slow, or when a scrubber is not present.
+
+  The portable scrubber requires power through a nearby LV cable to operate.
+
+  The portable scrubber automatically starts scrubbing all non-breathable gasses from the room when it is bolted (wrenched) to the floor.
+
+  It will stop scrubbing when unbolted (unwrenched) from the floor, or when its internal volume is full. The scrubber has an internal capacity of 1250 litres.
+
+  ## Dumping Waste and Storage
+  The scrubber's internal volume can be emptied by bolting (wrenching it) onto a connector.
+
+  Stations commonly have a dedicated emptying point to quickly transfer the waste from the scrubber to the station's wastenet.
+
+</Document>

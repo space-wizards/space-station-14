@@ -2,8 +2,8 @@
   # Gas Manipulation
   Atmos has a wide variety of tools and equipment at their disposal for the manipulation of gasses throughout the station.
 
-  [bold]Warning: unanchoring (unwrenching) something containing gas will [color=red]leak gas[/color] into the atmosphere.[/bold]
-  You can safely unanchor canisters.
+  [bold]Warning: unanchoring (unwrenching) most devices containing gas will [color=red]leak gas[/color] into the atmosphere.[/bold]
+  You can safely unanchor canisters and portable scrubbers.
 
   <Box>
     <GuideEntityEmbed Entity="GasPipeStraight" Caption=""/>
@@ -27,6 +27,7 @@
     <GuideEntityEmbed Entity="GasPassiveVent" Caption=""/>
     <GuideEntityEmbed Entity="GasOutletInjector" Caption=""/>
     <GuideEntityEmbed Entity="GasVentScrubber" Caption=""/>
+    <GuideEntityEmbed Entity="PortableScrubber" Caption=""/>
   </Box>
   <Box>
     Atmosphere Input and Output
