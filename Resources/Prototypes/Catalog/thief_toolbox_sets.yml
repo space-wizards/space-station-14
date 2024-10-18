@@ -6,6 +6,7 @@
     sprite: /Textures/Clothing/OuterClothing/Misc/black_hoodie.rsi
     state: icon
   content:
+  - ChameleonPDA
   - ClothingUniformJumpsuitChameleon
   - ClothingOuterChameleon
   - ClothingNeckChameleon
