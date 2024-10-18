@@ -158,20 +158,58 @@ namespace Content.Server.Database
         #endregion
 
         #region username whitelist
-        public Task AddUsernameWhitelistAsync(string username);
+        /// <summary>
+        /// Adds a username to the username whitelist allowing bypass of username bans.
+        /// This method is fault tolerant and will not add duplicate usernames.
+        /// </summary>
+        /// <param name="username">The username to add</param>
+        /// <returns></returns>
+        Task AddUsernameWhitelistAsync(string username);
 
-        public Task RemoveUsernameWhitelistAsync(string username);
+        /// <summary>
+        /// Removes username from the username whitelist.
+        /// </summary>
+        /// <param name="username">The username to remove</param>
+        /// <returns></returns>
+        Task RemoveUsernameWhitelistAsync(string username);
 
-        public Task<bool> CheckUsernameWhitelistAsync(string username);
+        /// <summary>
+        /// Checks if a username is presently whitelisted
+        /// </summary>
+        /// <param name="username">The checked username</param>
+        /// <returns>True if a username is whitelisted false otherwise</returns>
+        Task<bool> CheckUsernameWhitelistAsync(string username);
         #endregion
 
         #region Username Rules
+        /// <summary>
+        /// Gets the full data of a particular username rule by id
+        /// </summary>
+        /// <param name="id">The id of the target username ban</param>
+        /// <returns>The full information for a username ban or null</returns>
         Task<ServerUsernameRuleDef?> GetServerUsernameRuleAsync(int id);
 
+        /// <summary>
+        /// Gets all username rules optionally including non-active rules
+        /// </summary>
+        /// <param name="includeRetired">Weather or not to include retired rules</param>
+        /// <returns>A list of username rules</returns>
         Task<List<ServerUsernameRuleDef>> GetServerUsernameRulesAsync(bool includeRetired);
 
+        /// <summary>
+        /// Creates a new username rule based off of the provided information.
+        /// </summary>
+        /// <param name="usernameRule">The information to create a new rule</param>
+        /// <returns>The Id of the created rule</returns>
         Task<int> CreateUsernameRuleAsync(ServerUsernameRuleDef usernameRule);
 
+        /// <summary>
+        /// Retires a rule causing it to not appear in non-retired searches <see cref="GetServerUsernameRulesAsync"/>
+        /// </summary>
+        /// <param name="id">the id of the rule to retire</param>
+        /// <param name="retiringAdmin">The person who is retiring the rule</param>
+        /// <param name="retireTime">When the rule is being retired</param>
+        /// <returns></returns>
         Task RemoveServerUsernameRuleAsync(int id, NetUserId? retiringAdmin, DateTimeOffset retireTime);
         #endregion
 
@@ -615,7 +653,7 @@ namespace Content.Server.Database
 
         public Task<int> CreateUsernameRuleAsync(ServerUsernameRuleDef usernameRule)
         {
-            DbReadOpsMetric.Inc();
+            DbWriteOpsMetric.Inc();
             return RunDbCommand(() => _db.CreateUsernameRuleAsync(usernameRule));
         }
 
