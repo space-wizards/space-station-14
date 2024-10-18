@@ -404,21 +404,13 @@
           types:
             Cellular: 1
       - !type:GenericStatusEffect
-        conditions:
-        - !type:ReagentThreshold
-          reagent: Frezon
-          min: 1
         key: SeeingRainbows
         component: SeeingRainbows
         type: Add
-        time: 200
+        time: 100
         refresh: false
       - !type:Drunk
-        boozePower: 200
-        conditions:
-        - !type:ReagentThreshold
-          reagent: Frezon
-          min: 1
+        boozePower: 100
       - !type:PopupMessage
         type: Local
         messages: [ "frezon-lungs-cold" ]
