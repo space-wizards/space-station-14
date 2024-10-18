@@ -16,8 +16,8 @@
     arc: 360 # interact despite grilles
   - type: Tag
     tags:
-      - ForceFixRotations
-      - Window
+    - ForceFixRotations
+    - Window
   - type: Sprite
     drawdepth: WallTops
     sprite: Structures/Windows/window.rsi
