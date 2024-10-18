@@ -230,6 +230,18 @@
   id: ClothingUniformJumpskirtCMOTurtle
   result: ClothingUniformJumpskirtCMOTurtle
 
+## Command (Generic)
+
+- type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
+  id: ClothingUniformJumpsuitCommandGeneric
+  result: ClothingUniformJumpsuitCommandGeneric
+
+- type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
+  id: ClothingUniformJumpskirtCommandGeneric
+  result: ClothingUniformJumpskirtCommandGeneric
+
 ## Detective
 
 - type: latheRecipe
@@ -807,6 +819,16 @@
   parent: BaseCommandHatRecipe
   id: ClothingHeadHatBeretCmo
   result: ClothingHeadHatBeretCmo
+
+- type: latheRecipe
+  parent: BaseCommandHatRecipe
+  id: ClothingHeadHatBeretCommand
+  result: ClothingHeadHatBeretCommand
+
+- type: latheRecipe
+  parent: BaseCommandHatRecipe
+  id: ClothingHeadHatCommandsoft
+  result: ClothingHeadHatCommandsoft
 
 # Non-command hats
 
