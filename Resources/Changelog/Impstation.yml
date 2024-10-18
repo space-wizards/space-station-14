@@ -3127,3 +3127,10 @@
   id: 387
   time: '2024-10-18T18:05:06.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/498
+- author: LandsharkRAWR
+  changes:
+  - message: New lobby art!
+    type: Add
+  id: 388
+  time: '2024-10-18T18:10:14.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/496
