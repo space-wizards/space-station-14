@@ -5,7 +5,7 @@
   description: Moldy cheese with a little worm sticking out of it and a... blinking antenna? Might attract an odd mouse.
   components:
   - type: Sprite
-    sprite: DeltaV/Objects/Devices/communication.rsi
+    sprite: _DeltaV/Objects/Devices/communication.rsi
     layers:
     - state: cheese-radio
   - type: GhostRole

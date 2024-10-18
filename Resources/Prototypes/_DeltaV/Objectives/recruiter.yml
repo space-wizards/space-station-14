@@ -45,5 +45,5 @@
   id: RecruiterPen
   name: steal-target-groups-recruiter-pen
   sprite:
-    sprite: DeltaV/Objects/Misc/recruiter_pen.rsi
+    sprite: _DeltaV/Objects/Misc/recruiter_pen.rsi
     state: empty

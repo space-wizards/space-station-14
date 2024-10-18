@@ -5,7 +5,7 @@
   description: A uniquely evil pen that draws your blood to make signatures.
   components:
   - type: Sprite
-    sprite: DeltaV/Objects/Misc/recruiter_pen.rsi
+    sprite: _DeltaV/Objects/Misc/recruiter_pen.rsi
     layers:
     - state: empty
     - state: filled-1

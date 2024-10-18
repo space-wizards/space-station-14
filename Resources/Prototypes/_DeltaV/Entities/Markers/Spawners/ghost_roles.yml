@@ -35,5 +35,5 @@
   - type: Sprite
     layers:
     - state: green
-    - sprite: DeltaV/Objects/Misc/recruiter_pen.rsi
+    - sprite: _DeltaV/Objects/Misc/recruiter_pen.rsi
       state: empty
