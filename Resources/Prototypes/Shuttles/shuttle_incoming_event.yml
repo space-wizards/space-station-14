@@ -98,3 +98,8 @@
   id: Spacebus
   path: /Maps/Shuttles/ShuttleEvent/spacebus.yml
   copies: 1
+
+- type: preloadedGrid
+  id: NTPhoron
+  path: /Maps/Shuttles/ShuttleEvent/gasfreighter.yml
+  copies: 1
