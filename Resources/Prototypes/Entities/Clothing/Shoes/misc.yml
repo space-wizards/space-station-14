@@ -161,9 +161,15 @@
     - state: icon
   - type: Clothing
     sprite: Clothing/Shoes/Boots/jumpboots.rsi
-  - type: Jump
+  - type: JumpAbility
     jumpPower: 3
     soundJump: /Audio/Effects/stealthoff.ogg
+  - type: ActionGrant
+    actions:
+    - ActionGravityJump 
+  - type: ItemActionGrant
+    actions:
+    - ActionGravityJump 
   - type: StaticPrice
     price: 220
   - type: Tag

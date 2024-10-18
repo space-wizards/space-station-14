@@ -1,13 +1,17 @@
 using Content.Shared.Actions;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
 
 
 namespace Content.Shared.Movement.Components;
 
+/// <summary>
+/// Jump setting component.
+/// To add a jump entity use <see cref="ActionGrantComponent"/> and <see cref="ItemActionGrantComponent"/> for an item.
+/// The basic action prototype is "ActionGravityJump".
+/// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-public sealed partial class JumpComponent : Component
+public sealed partial class JumpAbilityComponent : Component
 {
     /// <summary>
     /// How powerful the jump will be when activated
@@ -15,22 +19,9 @@ public sealed partial class JumpComponent : Component
     [DataField, AutoNetworkedField]
     public float JumpPower = 5f;
 
-
-    // Logical variables
-    [DataField, AutoNetworkedField]
-    public EntProtoId Action = "ActionGravityJump";
-
-    [DataField, AutoNetworkedField]
-    public EntityUid? ActionEntity;
-
-    [DataField, AutoNetworkedField]
-    public bool IsClothing;
-
-    [DataField, AutoNetworkedField]
-    public EntityUid? OnClothingEntity;
-
-
-    // Sound
+    /// <summary>
+    /// This gets played whenever a used jump. Predicted by the client.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public SoundSpecifier SoundJump = new SoundPathSpecifier("/Audio/Effects/gravity_jump.ogg");
 }

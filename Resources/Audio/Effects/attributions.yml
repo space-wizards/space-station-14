@@ -239,7 +239,7 @@
 
 - files: [gravity_jump.ogg]
   copyright: '"Arrows Fly By.mp3" by DigPro120. Edited pitch'
-  license: "CC-BY-4.0"
+  license: "CC0-1.0"
   source: https://freesound.org/people/DigPro120/sounds/394004/
   
 - files: [stealthoff.ogg]
