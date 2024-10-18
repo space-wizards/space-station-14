@@ -1,9 +1,9 @@
 ai-name-dataset-1 = 16-20
 ai-name-dataset-2 = 512k
-ai-name-dataset-3 = 640k #ought to be enough for anybody
+ai-name-dataset-3 = 640k
 ai-name-dataset-4 = "790"
 ai-name-dataset-5 = Adaptive Manipulator
-ai-name-dataset-6 = Adlib #named after the famous soundcard
+ai-name-dataset-6 = Adlib
 ai-name-dataset-7 = ALICE
 ai-name-dataset-8 = Allied Mastercomputer
 ai-name-dataset-9 = Alpha 2
@@ -19,7 +19,7 @@ ai-name-dataset-18 = Android
 ai-name-dataset-19 = Aniel
 ai-name-dataset-20 = AOL
 ai-name-dataset-21 = Asimov
-ai-name-dataset-22 = Bell 301 #the most influential modem ever, created by the bell system. It still lives on today in certain applications
+ai-name-dataset-22 = Bell 301
 ai-name-dataset-23 = Bishop
 ai-name-dataset-24 = Blitz
 ai-name-dataset-25 = Box
@@ -29,8 +29,8 @@ ai-name-dataset-28 = Cell
 ai-name-dataset-29 = Chii
 ai-name-dataset-30 = Chip
 ai-name-dataset-31 = C.R.A.I.G.
-ai-name-dataset-32 = Cray-2 #commercial supercomputer from the 70s
-ai-name-dataset-33 = CompuServe #if we're going to have AOL we may as well have some of their major competitors
+ai-name-dataset-32 = Cray-2
+ai-name-dataset-33 = CompuServe
 ai-name-dataset-34 = Computer
 ai-name-dataset-35 = Cutie
 ai-name-dataset-36 = Daedalus
@@ -54,16 +54,16 @@ ai-name-dataset-53 = Hadaly
 ai-name-dataset-54 = Helios
 ai-name-dataset-55 = Hivebot Overmind
 ai-name-dataset-56 = Huey
-ai-name-dataset-57 = iAI #a play on the fad apple spawned of putting "i" infront of your tech products name
-ai-name-dataset-58 = I.E. 6 #hell on earth (web browser)
+ai-name-dataset-57 = iAI
+ai-name-dataset-58 = I.E. 6
 ai-name-dataset-59 = Icarus
-ai-name-dataset-60 = Jeeves #if you don't get this one you are too young
+ai-name-dataset-60 = Jeeves
 ai-name-dataset-61 = Jinx
 ai-name-dataset-62 = K.I.N.G
 ai-name-dataset-63 = Klapaucius
 ai-name-dataset-64 = Knight
 ai-name-dataset-65 = Louie
-ai-name-dataset-66 = Manchester Mark 2 #named after the Manchester Mark 1, the successor of which was actually named the Ferranti Mark 1, rather than Manchester Mark 2
+ai-name-dataset-66 = Manchester Mark 2 
 ai-name-dataset-67 = MARK13
 ai-name-dataset-68 = Maria
 ai-name-dataset-69 = Marvin
@@ -75,7 +75,7 @@ ai-name-dataset-74 = MoMMI
 ai-name-dataset-75 = Mugsy3000
 ai-name-dataset-76 = Multivac
 ai-name-dataset-77 = NCH
-ai-name-dataset-78 = NT v6.0 #A play on both NT as in NanoTrasen and NT as in windows NT, of which version 6.0 is windows vista
+ai-name-dataset-78 = NT v6.0
 ai-name-dataset-79 = Packard Bell
 ai-name-dataset-80 = PTO
 ai-name-dataset-81 = Project Y2K
@@ -106,3 +106,15 @@ ai-name-dataset-105 = Z-1
 ai-name-dataset-106 = Z-2
 ai-name-dataset-107 = Z-3
 ai-name-dataset-108 = Zed
+
+  ## Comments on names
+# 640k              - ought to be enough for anybody
+# Adlib             - named after the famous soundcard
+# Bell 301          - the most influential modem ever, created by the bell system. It still lives on today in certain applications
+# Cray-2            - commercial supercomputer from the 70s
+# iAI               - a play on the fad apple spawned of putting "i" infront of your tech products name
+# I.E. 6            - hell on earth (web browser)
+# Jeeves            - if you don't get this one you are too young
+# Manchester Mark 2 - named after the Manchester Mark 1, the successor of which was actually named the Ferranti Mark 1, rather than Manchester Mark 2
+# CompuServe        - if we're going to have AOL we may as well have some of their major competitors
+# NT v6.0           - A play on both NT as in NanoTrasen and NT as in windows NT, of which version 6.0 is windows vista

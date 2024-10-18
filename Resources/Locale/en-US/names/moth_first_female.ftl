@@ -1,32 +1,32 @@
-moth-female-first-name-dataset-1 = Atropos # Acherontia atropos
-moth-female-first-name-dataset-2 = Betularia # Biston betularia
-moth-female-first-name-dataset-3 = Daphne # Daphnis
-moth-female-first-name-dataset-4 = Eurypta # Eurypteryx
-moth-female-first-name-dataset-5 = Eudryas # Eudryas
-moth-female-first-name-dataset-6 = Iris # Salassa iris
-moth-female-first-name-dataset-7 = Lachesis # Acherontia lachesis
-moth-female-first-name-dataset-8 = Luna # Actias luna
-moth-female-first-name-dataset-9 = Lymanzia # Lymantria
-moth-female-first-name-dataset-10 = Maple # Dryocampa rubicunda, "Rosy Maple"
-moth-female-first-name-dataset-11 = Mima # Mimas
-moth-female-first-name-dataset-12 = Nephele # Nephele
-moth-female-first-name-dataset-13 = Rosie # Dryocampa rubicunda
-moth-female-first-name-dataset-14 = Scarlet # Cosmosoma myrodora, "Scarlet-bodied wasp moth"
-moth-female-first-name-dataset-15 = Styx # Acherontia styx
+moth-female-first-name-dataset-1 = Atropos
+moth-female-first-name-dataset-2 = Betularia
+moth-female-first-name-dataset-3 = Daphne
+moth-female-first-name-dataset-4 = Eurypta
+moth-female-first-name-dataset-5 = Eudryas
+moth-female-first-name-dataset-6 = Iris
+moth-female-first-name-dataset-7 = Lachesis
+moth-female-first-name-dataset-8 = Luna
+moth-female-first-name-dataset-9 = Lymanzia
+moth-female-first-name-dataset-10 = Maple
+moth-female-first-name-dataset-11 = Mima
+moth-female-first-name-dataset-12 = Nephele
+moth-female-first-name-dataset-13 = Rosie
+moth-female-first-name-dataset-14 = Scarlet
+moth-female-first-name-dataset-15 = Styx
 
   # Other languages
-moth-female-first-name-dataset-16 = Avelaina # Galician "moth" (avelaíña)
-moth-female-first-name-dataset-17 = Falena # Italian "winter moth"
-moth-female-first-name-dataset-18 = Menodora # Greek "moon gift"
-moth-female-first-name-dataset-19 = Molie # Romanian "moth"
-moth-female-first-name-dataset-20 = Polilla # Spanish "moth"
+moth-female-first-name-dataset-16 = Avelaina
+moth-female-first-name-dataset-17 = Falena
+moth-female-first-name-dataset-18 = Menodora
+moth-female-first-name-dataset-19 = Molie
+moth-female-first-name-dataset-20 = Polilla
 
   # Myth and legend
-moth-female-first-name-dataset-21 = Althea # Greek mythological figure
-moth-female-first-name-dataset-22 = Aurora # Roman goddess of the dawn
-moth-female-first-name-dataset-23 = Helle # Greek mythological figure
-moth-female-first-name-dataset-24 = Selene # Greek goddess of the moon
-moth-female-first-name-dataset-25 = Nyx # Greek goddess of the night
+moth-female-first-name-dataset-21 = Althea
+moth-female-first-name-dataset-22 = Aurora
+moth-female-first-name-dataset-23 = Helle
+moth-female-first-name-dataset-24 = Selene
+moth-female-first-name-dataset-25 = Nyx
 
   # Fun names
 moth-female-first-name-dataset-26 = Angel
@@ -44,3 +44,33 @@ moth-female-first-name-dataset-35 = Sarah
 moth-female-first-name-dataset-36 = Sienna
 moth-female-first-name-dataset-37 = Willow
 moth-female-first-name-dataset-38 = Zoey
+
+## Comments on names
+# Atropos   - Acherontia atropos
+# Betularia - Biston betularia
+# Daphne    - Daphnis
+# Eurypta   - Eurypteryx
+# Eudryas   - Eudryas
+# Iris      - Salassa iris
+# Lachesis  - Acherontia lachesis
+# Luna      - Actias luna
+# Lymanzia  - Lymantria
+# Maple     - Dryocampa rubicunda, "Rosy Maple"
+# Mima      - Mimas
+# Nephele   - Nephele
+# Rosie     - Dryocampa rubicunda
+# Rosie     - Dryocampa rubicunda
+# Scarlet   - Cosmosoma myrodora, "Scarlet-bodied wasp moth"
+# Styx      - Acherontia styx
+
+# Avelaina  - Galician "moth" (avelaíña)
+# Falena    - Italian "winter moth"
+# Menodora  - Greek "moon gift"
+# Molie     - Romanian "moth"
+# Polilla   - Spanish "moth"
+
+# Althea    - Greek mythological figure
+# Aurora    - Roman goddess of the dawn
+# Helle     - Greek mythological figure
+# Selene    - Greek goddess of the moon
+# Nyx       - Greek goddess of the night
