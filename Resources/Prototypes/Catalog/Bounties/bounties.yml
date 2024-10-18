@@ -711,7 +711,7 @@
 - type: cargoBounty
   id: BountyCottonBoll
   idPrefix: LGH
-  reward: 8600
+  reward: 4242
   description: bounty-description-cotton-boll
   entries:
   - name: bounty-item-cotton-boll
