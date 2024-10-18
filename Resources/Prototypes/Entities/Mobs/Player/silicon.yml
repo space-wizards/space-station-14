@@ -399,6 +399,9 @@
     - state: ai_camera
       shader: unshaded
       map: ["base"]
+  - type: NavMapWarp
+    sounds:
+      collection: StaticShort
 
 # Borgs
 - type: entity

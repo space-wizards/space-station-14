@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Input;
@@ -18,6 +19,7 @@ using System.Numerics;
 using JetBrains.Annotations;
 using Content.Shared.Atmos;
 using System.Linq;
+using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Pinpointer.UI;
@@ -29,6 +31,7 @@ namespace Content.Client.Pinpointer.UI;
 public partial class NavMapControl : MapGridControl
 {
     [Dependency] private IResourceCache _cache = default!;
+    [Dependency] private readonly ISharedPlayerManager? _player = default;
     private readonly SharedTransformSystem _transformSystem;
     private readonly SharedNavMapSystem _navMapSystem;
 
@@ -202,23 +205,8 @@ public partial class NavMapControl : MapGridControl
 
         if (args.Function == EngineKeyFunctions.UIClick)
         {
-            if (TrackedEntitySelectedAction == null)
+            if (TrackedEntitySelectedAction == null || !CalculateWorldPos(args, out var worldPosition))
                 return;
-
-            if (_xform == null || _physics == null || TrackedEntities.Count == 0)
-                return;
-
-            // If the cursor has moved a significant distance, exit
-            if ((StartDragPosition - args.PointerLocation.Position).Length() > MinDragDistance)
-                return;
-
-            // Get the clicked position
-            var offset = Offset + _physics.LocalCenter;
-            var localPosition = args.PointerLocation.Position - GlobalPixelPosition;
-
-            // Convert to a world position
-            var unscaledPosition = (localPosition - MidPointVector) / MinimapScale;
-            var worldPosition = Vector2.Transform(new Vector2(unscaledPosition.X, -unscaledPosition.Y) + offset, _transformSystem.GetWorldMatrix(_xform));
 
             // Find closest tracked entity in range
             var closestEntity = NetEntity.Invalid;
@@ -228,8 +216,8 @@ public partial class NavMapControl : MapGridControl
             {
                 if (!blip.Selectable)
                     continue;
-                
-                var currentDistance = (_transformSystem.ToMapCoordinates(blip.Coordinates).Position - worldPosition).Length();
+
+                var currentDistance = (_transformSystem.ToMapCoordinates(blip.Coordinates).Position - worldPosition.Value).Length();
 
                 if (closestDistance < currentDistance || currentDistance * MinimapScale > MaxSelectableDistance)
                     continue;
@@ -243,18 +231,38 @@ public partial class NavMapControl : MapGridControl
 
             TrackedEntitySelectedAction.Invoke(closestEntity);
         }
-
         else if (args.Function == EngineKeyFunctions.UIRightClick)
         {
             // Clear current selection with right click
             TrackedEntitySelectedAction?.Invoke(null);
         }
-
         else if (args.Function == ContentKeyFunctions.ExamineEntity)
         {
             // Toggle beacon labels
             _beacons.Pressed = !_beacons.Pressed;
         }
+        else if (args.Function == ContentKeyFunctions.AltActivateItemInWorld)
+        {
+            if (_player?.LocalEntity is not null && CalculateWorldPos(args, out var pos))
+                _navMapSystem.RequestWarpTo(_player.LocalEntity.Value, pos.Value);
+        }
+    }
+
+    private bool CalculateWorldPos(GUIBoundKeyEventArgs args, [NotNullWhen(true)] out Vector2? worldPosition)
+    {
+        worldPosition = null;
+
+        if (_xform == null || _physics == null)
+            return false;
+
+        // Get the clicked position
+        var offset = Offset + _physics.LocalCenter;
+        var localPosition = args.PointerLocation.Position - GlobalPixelPosition;
+        // Convert to a world position
+        var unscaledPosition = (localPosition - MidPointVector) / MinimapScale;
+        worldPosition = Vector2.Transform(new Vector2(unscaledPosition.X, -unscaledPosition.Y) + offset, _transformSystem.GetWorldMatrix(_xform));
+
+        return true;
     }
 
     protected override void MouseMove(GUIMouseMoveEventArgs args)
