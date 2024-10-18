@@ -1,4 +1,7 @@
-﻿- type: entity
+﻿# When creating a new spawner:
+# Point the table to a
+
+- type: entity
   name: SMG Spawner
   suffix: SSS, Timed
   id: SssWeaponSpawnerSMG
@@ -259,62 +262,67 @@
     - sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
       state: icon
   - type: EntityTableSpawner
-    table: !type:GroupSelector
-      children:
-      # Weapons
-      - !type:GroupSelector
-        children:
-        - !type:GroupSelector
-          weight: 74 # Common Weapons. Fairly base-line basic stuff.
-          children:
-          - id: WeaponSubMachineGunWt550
-          - id: WeaponSubMachineGunDrozd
-          - id: WeaponRifleLecter
-          - id: WeaponShotgunKammerer
-          - id: WeaponPistolMk58
-          - id: SurvivalKnife
-          - id: WeaponRevolverInspector
-          - id: WeaponShotgunDoubleBarreled
-          - id: WeaponLaserSvalinn
-          - id: CombatKnife
-          - id: KukriKnife
-          - id: Shiv
-        - !type:GroupSelector
-          weight: 25 # Rare. Used for weapons that are generally worse / better then average
-          children:
-          - id: BaseBallBat
-          - id: WeaponRifleAk
-          - id: WeaponRevolverDeckard
-          - id: WeaponSniperHristov
-          - id: WeaponFlareGun
-          - id: WeaponSubMachineGunC20r
-          - id: WeaponShotgunBulldog
-          - id: WeaponPistolViper
-          - id: WeaponPistolN1984
-          - id: WeaponRevolverMateba
-          - id: WeaponShotgunEnforcer
-          - id: WeaponCrusher
-          - id: WeaponProtoKineticAccelerator
-          - id: ButchCleaver
-          - id: Spear
-          - id: WeaponShotgunSawn
-        - !type:GroupSelector
-          weight: 1 # Very rare. Used for outright overpowered or stupid shit.
-          children:
-          - id: WeaponLaserGun
-          - id: WeaponLaserCannon
-          - id: WeaponDisabler
-          - id: Stunbaton
-          - id: WeaponEnergyShotgun
-          - id: WeaponDisablerSMG
-          - id: WeaponLightMachineGunL6
-          - id: WeaponSubMachineGunVector
-          - id: WeaponSubMachineGunAtreides
-          - id: WeaponRevolverPythonAP
-          - id: WeaponSniperMosin
-          - id: WeaponLauncherRocket
+    table: !type:NestedSelector
+      tableId: SssSpawnerWeaponsTable
+      prob: 1
     offset: 0.3
     delay: 10
+
+- type: entityTable
+  id: SssSpawnerWeaponsTable
+  table: !type:GroupSelector
+    children:
+    # Weapons
+    - !type:GroupSelector
+      children:
+      - !type:GroupSelector
+        weight: 74 # Common Weapons. Fairly base-line basic stuff.
+        children:
+        - id: WeaponSubMachineGunWt550
+        - id: WeaponSubMachineGunDrozd
+        - id: WeaponRifleLecter
+        - id: WeaponShotgunKammerer
+        - id: WeaponPistolMk58
+        - id: SurvivalKnife
+        - id: WeaponRevolverInspector
+        - id: WeaponShotgunDoubleBarreled
+        - id: WeaponLaserSvalinn
+        - id: CombatKnife
+        - id: KukriKnife
+        - id: Shiv
+      - !type:GroupSelector
+        weight: 25 # Rare. Used for weapons that are generally worse / better then average
+        children:
+        - id: BaseBallBat
+        - id: WeaponRifleAk
+        - id: WeaponRevolverDeckard
+        - id: WeaponSniperHristov
+        - id: WeaponFlareGun
+        - id: WeaponSubMachineGunC20r
+        - id: WeaponShotgunBulldog
+        - id: WeaponPistolViper
+        - id: WeaponPistolN1984
+        - id: WeaponRevolverMateba
+        - id: WeaponShotgunEnforcer
+        - id: WeaponCrusher
+        - id: WeaponProtoKineticAccelerator
+        - id: ButchCleaver
+        - id: Spear
+        - id: WeaponShotgunSawn
+      - !type:GroupSelector
+        weight: 1 # Very rare. Used for outright overpowered or stupid shit.
+        children:
+        - id: WeaponLaserGun
+        - id: WeaponLaserCannon
+        - id: WeaponDisabler
+        - id: WeaponEnergyShotgun
+        - id: WeaponDisablerSMG
+        - id: WeaponLightMachineGunL6
+        - id: WeaponSubMachineGunVector
+        - id: WeaponSubMachineGunAtreides
+        - id: WeaponRevolverPythonAP
+        - id: WeaponSniperMosin
+        - id: WeaponLauncherRocket
 
 - type: entity
   name: SSS Utility Spawner
@@ -329,73 +337,76 @@
     - sprite: Objects/Weapons/Grenades/modular.rsi
       state: complete
   - type: EntityTableSpawner
-    table: !type:GroupSelector
-      children:
-      # Tools
-      - !type:GroupSelector
-        weight: 30
-        children:
-        - !type:GroupSelector
-          weight: 70 # Common
-          children:
-          - id: ClothingEyesGlassesSunglasses
-          - id: MetalFoamGrenade
-          - id: TearGasGrenade
-          - id: SmokeGrenade
-          - id: GrenadeFlashBang
-          - id: ExGrenade
-          - id: FlashlightLantern
-          - id: Crowbar
-          - id: CrowbarRed #fuck you, we're doubling up on crowbar spawns
-          - id: RandomSoap
-          - id: ClothingMaskGas
-          - id: MaterialWoodPlank
-          - id: Gauze5
-          - id: Brutepack5
-          - id: Ointment5
-        - !type:GroupSelector
-          weight: 20 # Rare
-          children:
-          - id: ClothingEyesHudMedical
-          - id: MedkitFilled
-          - id: GrenadeShrapnel
-          - id: GrenadeStinger
-          - id: CombatMedipen
-        - !type:GroupSelector
-          weight: 5 # Very rare
-          children:
-          - id: MedkitCombatFilled
-          - id: DrinkSpaceLube
-          - id: DrinkSpaceGlue
-      # Ammunition
-      - !type:GroupSelector
-        weight: 70
-        children:
-        - !type:GroupSelector
-          weight: 90
-          children:
-          - id: MagazinePistolSubMachineGunTopMounted
-          - id: MagazinePistolSubMachineGun
-          - id: MagazinePistol
-          - id: MagazineRifle
-          - id: MagazineLightRifle
-          - id: MagazinePistolCaselessRifle
-          - id: MagazinePistolCaselessRifle
-          - id: SpeedLoaderMagnum
-          - id: PowerCellHigh
-          - id: PowerCellMedium
-          - !type:GroupSelector
-            children:
-            - id: MagazineShotgun
-            - id: MagazineShotgunSlug
-          - !type:GroupSelector
-            children:
-            - id: BoxLethalshot
-            - id: BoxShotgunSlug
-        - !type:GroupSelector
-          weight: 10
-          children:
-          - id: MagazineMagnumSubMachineGun
-          - id: MagazineBoxAntiMateriel
+    table: !type:NestedSelector
+      tableId: SssSpawnerWeaponsTable
+      prob: 1
     offset: 0.4
     delay: 10
+
+- type: entityTable
+  id: SssSpawnerUtilityTable
+  table: !type:GroupSelector
+    children:
+    # Tools
+    - !type:GroupSelector
+      weight: 30
+      children:
+      - !type:GroupSelector
+        weight: 70 # Common
+        children:
+        - id: ClothingEyesGlassesSunglasses
+        - id: TearGasGrenade
+        - id: SmokeGrenade
+        - id: GrenadeFlashBang
+        - id: ExGrenade
+        - id: FlashlightLantern
+        - id: Crowbar
+        - id: CrowbarRed #fuck you, we're doubling up on crowbar spawns
+        - id: RandomSoap
+        - id: ClothingMaskGas
+        - id: MaterialWoodPlank
+        - id: Gauze5
+        - id: Brutepack5
+        - id: Ointment5
+      - !type:GroupSelector
+        weight: 20 # Rare
+        children:
+        - id: ClothingEyesHudMedical
+        - id: MedkitFilled
+        - id: GrenadeShrapnel
+        - id: GrenadeStinger
+        - id: CombatMedipen
+      - !type:GroupSelector
+        weight: 5 # Very rare
+        children:
+        - id: MedkitCombatFilled
+        - id: DrinkSpaceLube
+        - id: DrinkSpaceGlue
+    # Ammunition
+    - !type:GroupSelector
+      weight: 70
+      children:
+      - !type:GroupSelector
+        weight: 90
+        children:
+        - id: MagazinePistolSubMachineGunTopMounted
+        - id: MagazinePistolSubMachineGun
+        - id: MagazinePistol
+        - id: MagazineRifle
+        - id: MagazineLightRifle
+        - id: SpeedLoaderMagnum
+        - id: PowerCellHigh
+        - id: PowerCellMedium
+        - !type:GroupSelector
+          children:
+          - id: MagazineShotgun
+          - id: MagazineShotgunSlug
+        - !type:GroupSelector
+          children:
+          - id: BoxLethalshot
+          - id: BoxShotgunSlug
+      - !type:GroupSelector
+        weight: 10
+        children:
+        - id: MagazineMagnumSubMachineGun
+        - id: MagazineBoxAntiMateriel
