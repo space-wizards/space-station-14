@@ -26,23 +26,28 @@
           !type:PhysShapeCircle
           radius: 0.45
         density: 75
+        hard: true
         mask:
         - MachineMask
+        layer: []
       barrier:
         shape:
           !type:PhysShapeCircle
           radius: 0.45
+        hard: false 
+        mask: []
         layer:
         - WallLayer
-  - type: DeployableBarrier
-    fixture: barrier
   - type: AccessReader
     access: [["Security"]]
+  - type: LockAnchor
+  - type: LockUnanchor
   - type: Lock
     locked: false
     lockOnClick: true # toggle lock just by clicking on barrier
     lockTime: 5
     unlockTime: 5
+    lockedFixtureId: barrier
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: Metallic
