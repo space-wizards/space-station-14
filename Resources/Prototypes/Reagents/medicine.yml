@@ -125,6 +125,8 @@
             Radiation: -3
           groups:
             Brute: 0.5
+      - !type:ChemVomit
+        probability: 0.1
 
 - type: reagent
   id: Bicaridine
@@ -560,14 +562,20 @@
         min: 4
   metabolisms:
     Medicine:
+      metabolismRate: 0.1
       effects:
       - !type:HealthChange
         damage:
           types:
-            Cellular: -1
-            Radiation: 1
-      - !type:ChemVomit
-        probability: 0.05
+            Cellular: -0.3
+            Radiation: 0.3
+      - !type:HealthChange
+        conditions:
+          - !type:ReagentThreshold
+            min: 10
+        damage:
+          types:
+            Radiation: 0.2
 
 - type: reagent
   id: PolypyryliumOligomers
