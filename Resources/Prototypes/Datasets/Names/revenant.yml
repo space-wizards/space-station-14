@@ -1,55 +1,17 @@
-- type: dataset
+- type: localizedDataset
   id: RevenantType
   values:
-  - essence
-  - ghost
-  - phantom
-  - poltergeist
-  - revenant
-  - soul
-  - spectre
-  - spirit
+    prefix: revenant-type-name-dataset-
+    count: 8
 
-- type: dataset
+- type: localizedDataset
   id: RevenantAdjective
   values:
-  - abysmal
-  - abyssal
-  - brutal
-  - dark
-  - endless
-  - eternal
-  - fiery
-  - hateful
-  - hideous
-  - hilarious
-  - indifferent
-  - malevolent
-  - peaceful
-  - searing
-  - silent
-  - spiteful
-  - vicious
-  - violent
+    prefix: revenant-adjective-name-dataset-
+    count: 18
 
-- type: dataset
+- type: localizedDataset
   id: RevenantTheme
   values:
-  - agony
-  - anger
-  - death
-  - despair
-  - desperation
-  - destruction
-  - disease
-  - grief
-  - hate
-  - hellfire
-  - laughter
-  - misery
-  - ruin
-  - salt
-  - screams
-  - sorrow
-  - suffering
-  - vengeance
+    prefix: revenant-theme-name-dataset-
+    count: 18
