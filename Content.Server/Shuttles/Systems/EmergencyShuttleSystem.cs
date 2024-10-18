@@ -8,9 +8,11 @@ using Content.Server.Chat.Systems;
 using Content.Server.Communications;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
+using Content.Server.GameTicking;
 using Content.Server.GameTicking.Events;
 using Content.Server.Pinpointer;
 using Content.Server.Popups;
+using Content.Server.Replays;
 using Content.Server.RoundEnd;
 using Content.Server.Screens.Components;
 using Content.Server.Shuttles.Components;
@@ -24,6 +26,7 @@ using Content.Shared.Database;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.GameTicking;
 using Content.Shared.Localizations;
+using Content.Shared.Replays;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Events;
 using Content.Shared.Tag;
@@ -69,6 +72,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly TransformSystem _transformSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private readonly ReplayEventSystem _replayEventSystem = default!;
 
     private const float ShuttleSpawnBuffer = 1f;
 
@@ -220,6 +224,13 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
             };
             _deviceNetworkSystem.QueuePacket(uid, null, payload, netComp.TransmitFrequency);
         }
+
+        _replayEventSystem.RecordReplayEvent(new ShuttleReplayEvent()
+        {
+            Severity = ReplayEventSeverity.High,
+            EventType = ReplayEventType.EvacuationShuttleDeparted,
+            Countdown = (int)ftlTime.TotalSeconds,
+        });
     }
 
     /// <summary>
@@ -253,6 +264,12 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
 
             _deviceNetworkSystem.QueuePacket(shuttle, null, payload, net.TransmitFrequency);
         }
+
+        _replayEventSystem.RecordReplayEvent(new ReplayEvent()
+        {
+            Severity = ReplayEventSeverity.High,
+            EventType = ReplayEventType.EvacuationShuttleDockedCentCom,
+        });
     }
 
     /// <summary>
@@ -272,6 +289,12 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         }
 
         var targetGrid = _station.GetLargestGrid(Comp<StationDataComponent>(stationUid));
+
+        _replayEventSystem.RecordReplayEvent(new ReplayEvent()
+        {
+            Severity = ReplayEventSeverity.High,
+            EventType = ReplayEventType.EvacuationShuttleDocked,
+        });
 
         // UHH GOOD LUCK
         if (targetGrid == null)

@@ -1,5 +1,8 @@
-﻿using Content.Shared.Database;
+﻿using Content.Server.Replays;
+using Content.Shared.Database;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Replays;
+using Robust.Shared.Player;
 
 namespace Content.Shared.Mobs.Systems;
 
@@ -106,6 +109,35 @@ public partial class MobStateSystem
         OnExitState(target, component, oldState);
         component.CurrentState = newState;
         OnEnterState(target, component, newState);
+
+        ReplayEventPlayer? targetInfo = null;
+        if (EntityManager.TryGetComponent<ActorComponent>(target, out var actorComponent))
+        {
+            targetInfo = _replayEventSystem.GetPlayerInfo(actorComponent.PlayerSession);
+        }
+
+        if (targetInfo == null)
+        {
+            _replayEventSystem.RecordReplayEvent(new MobStateChangedNPCReplayEvent()
+            {
+                EventType = ReplayEventType.MobStateChanged,
+                Severity = ReplayEventSeverity.Medium,
+                Target = EntityManager.GetComponent<MetaDataComponent>(target).EntityName,
+                OldState = oldState,
+                NewState = newState,
+            }, target);
+        }
+        else
+        {
+            _replayEventSystem.RecordReplayEvent(new MobStateChangedPlayerReplayEvent()
+            {
+                Target = (ReplayEventPlayer) targetInfo,
+                Severity = ReplayEventSeverity.Medium,
+                EventType = ReplayEventType.MobStateChanged,
+                OldState = oldState,
+                NewState = newState,
+            }, target);
+        }
 
         var ev = new MobStateChangedEvent(target, component, oldState, newState, origin);
         OnStateChanged(target, component, oldState, newState);

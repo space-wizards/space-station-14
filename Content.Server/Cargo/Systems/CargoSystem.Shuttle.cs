@@ -1,10 +1,13 @@
 using Content.Server.Cargo.Components;
+using Content.Server.GameTicking;
+using Content.Server.Replays;
 using Content.Shared.Stacks;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.BUI;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Events;
 using Content.Shared.GameTicking;
+using Content.Shared.Replays;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
 using Robust.Shared.Audio;
@@ -13,6 +16,8 @@ namespace Content.Server.Cargo.Systems;
 
 public sealed partial class CargoSystem
 {
+    [Dependency] private readonly ReplayEventSystem _replayEventSystem = default!;
+
     /*
      * Handles cargo shuttle / trade mechanics.
      */
@@ -224,6 +229,13 @@ public sealed partial class CargoSystem
         GetPalletGoods(gridUid, out var toSell, out amount);
 
         Log.Debug($"Cargo sold {toSell.Count} entities for {amount}");
+        _replayEventSystem.RecordReplayEvent(new CargoObjectSoldReplayEvent()
+        {
+            Amount = amount,
+            ObjectsSold = toSell.Count,
+            Severity = ReplayEventSeverity.Medium,
+            EventType = ReplayEventType.CargoProductSold,
+        });
 
         if (toSell.Count == 0)
             return false;
@@ -335,3 +347,19 @@ public sealed partial class CargoSystem
 /// </summary>
 [ByRefEvent]
 public readonly record struct EntitySoldEvent(HashSet<EntityUid> Sold);
+
+/// <summary>
+/// Represents a cargo object being sold to record in a replay event.
+/// </summary>
+[Serializable, DataDefinition]
+public sealed partial class CargoObjectSoldReplayEvent : ReplayEvent
+{
+    /// <summary>
+    /// The amount of money the objects were sold for
+    /// </summary>
+    [DataField]
+    public double? Amount;
+
+    [DataField]
+    public int? ObjectsSold;
+}
