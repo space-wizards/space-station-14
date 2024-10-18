@@ -60,8 +60,8 @@ namespace Content.Server.Database.Migrations.Postgres
             """);
 
             migrationBuilder.Sql("""
-                create or replace trigger notify_on_server_ban_insert
-                    after update on server_username_rule
+                create or replace trigger notify_on_server_username_ban_change
+                    after insert OR update OR delete on server_username_rule
                     for each row
                     execute function send_server_username_rule_notification();
                 """);
@@ -77,7 +77,7 @@ namespace Content.Server.Database.Migrations.Postgres
                 name: "username_whitelist");
 
             migrationBuilder.Sql("""
-                drop trigger notify_on_server_ban_insert on server_username_rule;
+                drop trigger notify_on_server_username_ban_change on server_username_rule;
                 drop function send_server_username_rule_notification;
             """);
         }
