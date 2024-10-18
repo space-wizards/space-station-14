@@ -1,4 +1,4 @@
-﻿using Robust.Client.UserInterface.Controls;
+using Robust.Client.UserInterface.Controls;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 
@@ -12,6 +12,8 @@ namespace Content.Client.Voting.UI
     {
         [Dependency] private readonly IVoteManager _voteManager = default!;
 
+        private VoteCallMenu? _voteCallMenu;
+
         public VoteCallMenuButton()
         {
             IoCManager.InjectDependencies(this);
@@ -22,8 +24,18 @@ namespace Content.Client.Voting.UI
 
         private void OnOnPressed(ButtonEventArgs obj)
         {
-            var menu = new VoteCallMenu();
-            menu.OpenCentered();
+            if (_voteCallMenu is { IsOpen: true })
+            {
+                _voteCallMenu.Close();
+
+                return;
+            }
+
+            _voteCallMenu = new VoteCallMenu();
+
+            _voteCallMenu.OnClose += () => Pressed = false;
+
+            _voteCallMenu.OpenCentered();
         }
 
         protected override void EnteredTree()
@@ -39,6 +51,11 @@ namespace Content.Client.Voting.UI
             base.ExitedTree();
 
             _voteManager.CanCallVoteChanged += UpdateCanCall;
+
+            if (_voteCallMenu is { IsOpen: true })
+            {
+                _voteCallMenu.Close();
+            }
         }
 
         private void UpdateCanCall(bool canCall)
