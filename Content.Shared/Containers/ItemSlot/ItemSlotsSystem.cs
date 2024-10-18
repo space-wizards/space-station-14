@@ -226,8 +226,7 @@ namespace Content.Shared.Containers.ItemSlots
                     slots.Add(slot);
                 else
                 {
-                    var allowed = _whitelistSystem.IsWhitelistPass(slot.Whitelist, args.Used) &&
-                                        _whitelistSystem.IsBlacklistFail(slot.Blacklist, args.Used);
+                    var allowed = CanInsertWhitelist(args.Used, slot);
                     if (allowed && slot.Locked)
                         lastValidLockedSlot = slot;
                     lastFailedSlot = slot;
@@ -312,8 +311,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (slot.HasItem && (!swap || swap && !CanEject(uid, user, slot)))
                 return false;
 
-            if (_whitelistSystem.IsWhitelistFail(slot.Whitelist, usedUid) ||
-                _whitelistSystem.IsBlacklistPass(slot.Blacklist, usedUid))
+            if (!CanInsertWhitelist(usedUid, slot))
                 return false;
 
             if (slot.Locked)
@@ -328,6 +326,14 @@ namespace Content.Shared.Containers.ItemSlots
             }
 
             return _containers.CanInsert(usedUid, slot.ContainerSlot, assumeEmpty: swap);
+        }
+
+        private bool CanInsertWhitelist(EntityUid usedUid, ItemSlot slot)
+        {
+            if (_whitelistSystem.IsWhitelistFail(slot.Whitelist, usedUid)
+                || _whitelistSystem.IsBlacklistPass(slot.Blacklist, usedUid))
+                return false;
+            return true;
         }
 
         /// <summary>
