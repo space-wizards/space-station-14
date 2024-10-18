@@ -81,3 +81,26 @@
     layers:
       - state: box_security
       - state: forensic
+
+- type: entity
+  name: tape recorder box
+  parent: BoxCardboard
+  id: BoxTapeRecorder
+  description: A box with colorful cassette tapes and a tape recorder.
+  components:
+  - type: StorageFill
+    contents:
+      - id: CassetteTape
+        amount: 1
+      - id: CassetteTape
+        amount: 1
+      - id: CassetteTape
+        amount: 1
+      - id: CassetteTape
+        amount: 1
+      - id: TapeRecorder
+        amount: 1
+  - type: Sprite
+    layers:
+      - state: box_security
+      - state: recorder
