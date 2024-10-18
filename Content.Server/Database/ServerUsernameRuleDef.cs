@@ -1,8 +1,12 @@
+using Content.Shared.CCVar;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 
 namespace Content.Server.Database;
 
+/// <summary>
+/// This class is used as I/O for the database manager
+/// </summary>
 public sealed class ServerUsernameRuleDef
 {
     public int? Id { get; }
@@ -29,10 +33,7 @@ public sealed class ServerUsernameRuleDef
         NetUserId? retiringAdmin = null,
         DateTimeOffset? retireTime = null)
     {
-        if (string.IsNullOrWhiteSpace(expression))
-        {
-            throw new ArgumentException("Expression must contain data");
-        }
+        ArgumentException.ThrowIfNullOrWhiteSpace(expression);
 
         Id = id;
         CreationTime = creationTime;
@@ -47,12 +48,37 @@ public sealed class ServerUsernameRuleDef
         RetireTime = retireTime;
     }
 
+    /// <summary>
+    /// creates a formatted ban message besed off of the ban def
+    /// </summary>
+    /// <param name="cfg"></param>
+    /// <param name="loc"></param>
+    /// <returns>the formatted username ban message</returns>
     public string FormatUsernameViolationMessage(IConfigurationManager cfg, ILocalizationManager loc)
     {
         return $"""
                 {loc.GetString("restrict-username-1")}
                 {loc.GetString("restrict-username-2", ("reason", Message))}
                 {loc.GetString("restrict-username-3")}
+                """;
+    }
+
+
+    /// <summary>
+    /// creates a formatted ban message based off of a provided message
+    /// </summary>
+    /// <param name="cfg"></param>
+    /// <param name="loc"></param>
+    /// <param name="message">the provided message</param>
+    /// <returns>the formatted username ban message</returns>
+    public static string FormatUsernameViolationMessage(IConfigurationManager cfg, ILocalizationManager loc, string message)
+    {
+        var change = cfg.GetCVar(CCVars.InfoLinksChangeUsername);
+        return $"""
+                {loc.GetString("restrict-username-1")}
+                {loc.GetString("restrict-username-2", ("reason", message))}
+                {loc.GetString("restrict-username-3")}
+                {loc.GetString("restrict-username-4", ("link", change))}
                 """;
     }
 }
