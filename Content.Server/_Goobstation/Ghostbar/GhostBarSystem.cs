@@ -1,22 +1,18 @@
 using Robust.Server.GameObjects;
+using Content.Server.Atmos.Components;
+using Content.Server.Body.Components;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Events;
-using Content.Server.Station.Components;
-using Content.Server.Station.Events;
 using Content.Server.Station.Systems;
+using Content.Server.Temperature.Components;
 using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
 using Robust.Server.Maps;
 using Robust.Shared.Random;
 using Content.Shared.Ghost;
 using Content.Shared._Impstation.Ghost;
 using Content.Server._Goobstation.Ghostbar.Components;
 using Content.Server.Mind;
-using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
-using Content.Shared.Roles.Jobs;
-using Content.Shared.Roles;
-using Content.Shared.Inventory;
 using Content.Server.Antag.Components;
 using Content.Shared.Mindshield.Components;
 
@@ -85,7 +81,9 @@ public sealed class GhostBarSystem : EntitySystem
         var profile = _ticker.GetPlayerProfile(args.SenderSession);
         var mobUid = _spawningSystem.SpawnPlayerMob(randomSpawnPoint, randomJob, profile, null);
 
-        // Can probably remove respiration and barotrauma components here or something.
+        RemComp<TemperatureComponent>(mobUid);
+        RemComp<RespiratorComponent>(mobUid);
+        RemComp<BarotraumaComponent>(mobUid);
         _entityManager.EnsureComponent<GhostBarPatronComponent>(mobUid);
         _entityManager.EnsureComponent<MindShieldComponent>(mobUid);
         _entityManager.EnsureComponent<AntagImmuneComponent>(mobUid);
