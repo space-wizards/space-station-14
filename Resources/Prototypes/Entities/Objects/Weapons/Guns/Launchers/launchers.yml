@@ -273,6 +273,7 @@
           unshaded:
             True: { state: base-unshaded }
             False: { state: base-unshaded-off }
+    - type: PacifismAllowedGun
 
 # Admeme
 - type: entity

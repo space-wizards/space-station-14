@@ -7,6 +7,7 @@
     snap:
     - Wallmount
   components:
+  - type: StationAiWhitelist
   - type: WallMount
   - type: ApcPowerReceiver
   - type: Electrified
@@ -53,6 +54,8 @@
       - AirAlarm
   - type: AtmosDevice
   - type: AirAlarm
+  - type: AtmosAlertsDevice
+    group: AirAlarm
   - type: Clickable
   - type: InteractionOutline
   - type: UserInterface
@@ -88,7 +91,7 @@
     graph: AirAlarm
     node: air_alarm
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
   - type: Destructible
     thresholds:

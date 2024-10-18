@@ -63,24 +63,6 @@
   canBuildInImpassable: true
 
 - type: construction
-  name: solar assembly
-  id: SolarPanel
-  graph: SolarPanel
-  startNode: start
-  targetNode: solarpanel
-  category: construction-category-utilities
-  description: "Can be turned into a solar panel or solar tracker."
-  icon:
-    sprite: Structures/Power/Generation/solar_panel.rsi
-    state: solar_assembly
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-      failIfSpace: false
-
-- type: construction
   name: cable terminal
   id: CableTerminal
   graph: CableTerminal

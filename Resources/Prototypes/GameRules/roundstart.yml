@@ -73,7 +73,7 @@
   parent: BaseGameRule
   id: BaseNukeopsRule
   components:
-  - type: RandomMetadata #this generates the random operation name cuz it's cool. 
+  - type: RandomMetadata #this generates the random operation name cuz it's cool.
     nameSegments:
     - operationPrefix
     - operationSuffix
@@ -104,7 +104,7 @@
       spawnerPrototype: SpawnPointNukeopsCommander
       startingGear: SyndicateCommanderGearFull
       roleLoadout:
-      - RoleSurvivalSyndicate
+      - RoleSurvivalNukie
       components:
       - type: NukeOperative
       - type: RandomMetadata
@@ -114,15 +114,14 @@
       - type: NpcFactionMember
         factions:
         - Syndicate
-      mindComponents:
-      - type: NukeopsRole
-        prototype: NukeopsCommander
+      mindRoles:
+      - MindRoleNukeopsCommander
     - prefRoles: [ NukeopsMedic ]
       fallbackRoles: [ Nukeops, NukeopsCommander ]
       spawnerPrototype: SpawnPointNukeopsMedic
       startingGear: SyndicateOperativeMedicFull
       roleLoadout:
-      - RoleSurvivalSyndicate
+      - RoleSurvivalNukie
       components:
       - type: NukeOperative
       - type: RandomMetadata
@@ -132,9 +131,8 @@
       - type: NpcFactionMember
         factions:
         - Syndicate
-      mindComponents:
-      - type: NukeopsRole
-        prototype: NukeopsMedic
+      mindRoles:
+      - MindRoleNukeopsMedic
     - prefRoles: [ Nukeops ]
       fallbackRoles: [ NukeopsCommander, NukeopsMedic ]
       spawnerPrototype: SpawnPointNukeopsOperative
@@ -142,7 +140,7 @@
       playerRatio: 10
       startingGear: SyndicateOperativeGearFull
       roleLoadout:
-      - RoleSurvivalSyndicate
+      - RoleSurvivalNukie
       components:
       - type: NukeOperative
       - type: RandomMetadata
@@ -152,9 +150,8 @@
       - type: NpcFactionMember
         factions:
         - Syndicate
-      mindComponents:
-      - type: NukeopsRole
-        prototype: Nukeops
+      mindRoles:
+      - MindRoleNukeops
 
 - type: entity
   abstract: true
@@ -189,9 +186,8 @@
         components:
         - AntagImmune
       lateJoinAdditional: true
-      mindComponents:
-      - type: TraitorRole
-        prototype: Traitor
+      mindRoles:
+      - MindRoleTraitor
 
 - type: entity
   id: Revolutionary
@@ -213,9 +209,8 @@
       components:
       - type: Revolutionary
       - type: HeadRevolutionary
-      mindComponents:
-      - type: RevolutionaryRole
-        prototype: HeadRev
+      mindRoles:
+      - MindRoleHeadRevolutionary
 
 - type: entity
   id: Sandbox
@@ -257,9 +252,8 @@
       - type: ZombifyOnDeath
       - type: IncurableZombie
       - type: InitialInfected
-      mindComponents:
-      - type: InitialInfectedRole
-        prototype: InitialInfected
+      mindRoles:
+      - MindRoleInitialInfected
 
 # event schedulers
 
@@ -273,6 +267,11 @@
         tableId: BasicAntagEventsTable
       - !type:NestedSelector
         tableId: CargoGiftsTable
+      - !type:NestedSelector
+        tableId: CalmPestEventsTable
+      - !type:NestedSelector
+        tableId: SpicyPestEventsTable
+        
 
 - type: entityTable
   id: SpaceTrafficControlTable
@@ -306,16 +305,16 @@
   parent: BaseGameRule                  # we can remerge this with the other schedulers, but it will silently fail due to that limitation without a separate scheduler to balance atm.
   components:
   - type: BasicStationEventScheduler
-    minimumTimeUntilFirstEvent: 1200 # 20 mins
+    minimumTimeUntilFirstEvent: 2700 # 45 mins #shows up like half way through shift.
     minMaxEventTiming:
-      min: 600 # 10 mins
-      max: 1800 # 30 mins
+      min: 1200 # 20 mins
+      max: 7200 # 120 mins # you probably arent getting a second visitor shuttle in one round, but it is possible.
     scheduledGameRules: !type:NestedSelector
       tableId: SpaceTrafficControlTable
 
 - type: entity
-  id: SpaceTrafficControlFriendlyEventScheduler 
-  parent: BaseGameRule                  
+  id: SpaceTrafficControlFriendlyEventScheduler
+  parent: BaseGameRule
   components:
   - type: BasicStationEventScheduler
     minimumTimeUntilFirstEvent: 1200 # 20 mins

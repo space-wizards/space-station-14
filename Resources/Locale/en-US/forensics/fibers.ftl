@@ -2,6 +2,7 @@ forensic-fibers = {LOC($material)} fibers
 forensic-fibers-colored = {LOC($color)} {LOC($material)} fibers
 
 fibers-insulative = insulative
+fibers-insulative-frayed = frayed insulative
 fibers-synthetic = synthetic
 fibers-leather = leather
 fibers-durathread = durathread
@@ -15,6 +16,7 @@ fibers-purple = purple
 fibers-red = red
 fibers-black = black
 fibers-blue = blue
+fibers-teal = teal
 fibers-brown = brown
 fibers-grey = grey
 fibers-green = green

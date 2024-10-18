@@ -124,7 +124,7 @@
       sprite: Clothing/Uniforms/Jumpsuit/chaplain.rsi
 
 - type: entity
-  parent: ClothingUniformBase
+  parent: [ ClothingUniformBase, BaseCentcommContraband ]
   id: ClothingUniformJumpsuitCentcomAgent
   name: CentComm agent's jumpsuit
   description: A suit worn by CentComm's legal team. Smells of burnt coffee.
@@ -135,7 +135,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/centcom_agent.rsi
 
 - type: entity
-  parent: ClothingUniformBase
+  parent: [ ClothingUniformBase, BaseCentcommContraband ]
   id: ClothingUniformJumpsuitCentcomOfficial
   name: CentComm official's jumpsuit
   description: It's a jumpsuit worn by CentComm's officials.
@@ -146,7 +146,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/centcom_official.rsi
 
 - type: entity
-  parent: ClothingUniformBase
+  parent: [ ClothingUniformBase, BaseCentcommContraband ]
   id: ClothingUniformJumpsuitCentcomOfficer
   name: CentComm officer's jumpsuit
   description: It's a jumpsuit worn by CentComm Officers.
@@ -636,6 +636,17 @@
 
 - type: entity
   parent: [ClothingUniformBase, BaseRestrictedContraband]
+  id: ClothingUniformSecurityTrooper
+  name: trooper uniform
+  description: A formal uniform issued to the Nanotrasen Troopers, usually it comes with a car.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/security_trooper.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/security_trooper.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, BaseRestrictedContraband]
   id: ClothingUniformJumpsuitWarden
   name: warden's uniform
   description: A formal security suit for officers complete with Nanotrasen belt buckle.
@@ -849,7 +860,7 @@
       mode: SensorOff
 
 - type: entity
-  parent: ClothingUniformBase
+  parent: [ ClothingUniformBase, BaseRestrictedContraband ]
   id: ClothingUniformJumpsuitMercenary
   name: mercenary jumpsuit
   description: Clothing for real mercenaries who have gone through fire, water and the jungle of planets flooded with dangerous monsters or targets for which a reward has been assigned.
@@ -970,7 +981,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/musician.rsi
 
 - type: entity
-  parent: ClothingUniformBase
+  parent: [ BaseCentcommContraband, ClothingUniformBase ]
   id: ClothingUniformJumpsuitERTChaplain
   name: ERT chaplain uniform
   description: A special suit made for Central Command's elite chaplain corps.
@@ -981,7 +992,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/ert_chaplain.rsi
 
 - type: entity
-  parent: ClothingUniformBase
+  parent: [ BaseCentcommContraband, ClothingUniformBase ]
   id: ClothingUniformJumpsuitERTEngineer
   name: ERT engineering uniform
   description: A special suit made for the elite engineers under CentComm.
@@ -992,7 +1003,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/ert_engineer.rsi
 
 - type: entity
-  parent: ClothingUniformBase
+  parent: [ BaseCentcommContraband, ClothingUniformBase ]
   id: ClothingUniformJumpsuitERTJanitor
   name: ERT janitorial uniform
   description: A special suit made for the elite janitors under CentComm.
@@ -1003,7 +1014,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/ert_janitor.rsi
 
 - type: entity
-  parent: ClothingUniformBase
+  parent: [ BaseCentcommContraband, ClothingUniformBase ]
   id: ClothingUniformJumpsuitERTLeader
   name: ERT leader uniform
   description: A special suit made for the best of the elites under CentComm.
@@ -1014,7 +1025,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/ert_leader.rsi
 
 - type: entity
-  parent: ClothingUniformBase
+  parent: [ BaseCentcommContraband, ClothingUniformBase ]
   id: ClothingUniformJumpsuitERTMedic
   name: ERT medical uniform
   description: A special suit made for the elite medics under CentComm.
@@ -1025,7 +1036,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/ert_medic.rsi
 
 - type: entity
-  parent: ClothingUniformBase
+  parent: [ BaseCentcommContraband, ClothingUniformBase ]
   id: ClothingUniformJumpsuitERTSecurity
   name: ERT security uniform
   description: A special suit made for the elite security under CentComm.

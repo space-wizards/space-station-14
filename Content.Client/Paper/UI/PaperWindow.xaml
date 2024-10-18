@@ -15,10 +15,13 @@
                         <Control Name="TextAlignmentPadding" VerticalAlignment="Top"/>
                         <RichTextLabel Name="BlankPaperIndicator" StyleClasses="LabelSecondaryColor" VerticalAlignment="Top" HorizontalAlignment="Center"/>
                         <RichTextLabel StyleClasses="PaperWrittenText" Name="WrittenTextLabel" VerticalAlignment="Top"/>
-                        <PanelContainer Name="InputContainer" StyleClasses="TransparentBorderedWindowPanel" MinHeight="100"
-                                        VerticalAlignment="Stretch" VerticalExpand="True" HorizontalExpand="True">
-                            <TextEdit Name="Input" StyleClasses="PaperLineEdit" Access="Public" />
-                        </PanelContainer>
+                        <BoxContainer Name="InputContainer" Orientation="Vertical" VerticalExpand="True" VerticalAlignment="Stretch">
+                            <PanelContainer StyleClasses="TransparentBorderedWindowPanel" MinHeight="100"
+                                VerticalAlignment="Stretch" VerticalExpand="True" HorizontalExpand="True">
+                                <TextEdit Name="Input" StyleClasses="PaperLineEdit" Access="Public" />
+                            </PanelContainer>
+                            <Label Name="FillStatus" StyleClasses="LabelSecondaryColor"/>
+                        </BoxContainer>
                     </BoxContainer>
                     <paper:StampCollection Name="StampDisplay" VerticalAlignment="Bottom" Margin="6"/>
 

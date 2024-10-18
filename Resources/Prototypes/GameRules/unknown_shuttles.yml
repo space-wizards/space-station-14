@@ -8,6 +8,19 @@
     - id: UnknownShuttleTravelingCuisine
     - id: UnknownShuttleDisasterEvacPod
     - id: UnknownShuttleHonki
+    - id: UnknownShuttleNTQuark
+    - id: UnknownShuttleCruiser
+    - id: UnknownShuttleCryptid
+    - id: UnknownShuttleEternal
+    - id: UnknownShuttleFlatline
+    - id: UnknownShuttleGym
+    - id: UnknownShuttleNTIncorporation
+    - id: UnknownShuttleJoe
+    - id: UnknownShuttleLambordeere
+    - id: UnknownShuttleMeatZone
+    - id: UnknownShuttleMicroshuttle
+    - id: UnknownShuttleSpacebus
+    - id: UnknownShuttleInstigator
 
 - type: entityTable
   id: UnknownShuttlesFreelanceTable
@@ -21,7 +34,7 @@
     children:
     - id: LoneOpsSpawn
 
-# Shuttle Game Rules
+# Shuttle Game Rules 
 
 - type: entity
   abstract: true
@@ -32,9 +45,10 @@
     startAnnouncement: station-event-unknown-shuttle-incoming
     startAudio:
       path: /Audio/Announcements/attention.ogg
-    weight: 5
+    weight: 10 # 10 default
     reoccurrenceDelay: 30
     duration: 1
+    maxOccurrences: 1 # should be the same as [copies] in shuttle_incoming_event.yml
   - type: RuleGrids
   - type: LoadMapRule
 
@@ -42,6 +56,8 @@
   parent: BaseUnknownShuttleRule
   id: UnknownShuttleCargoLost
   components:
+  - type: StationEvent
+    maxOccurrences: 2 # should be the same as [copies] in shuttle_incoming_event.yml
   - type: LoadMapRule
     preloadedGrid: ShuttleCargoLost
 
@@ -49,6 +65,9 @@
   parent: BaseUnknownShuttleRule
   id: UnknownShuttleTravelingCuisine
   components:
+  - type: StationEvent
+    startAnnouncement: station-event-unknown-shuttle-incoming
+    maxOccurrences: 2 # should be the same as [copies] in shuttle_incoming_event.yml
   - type: LoadMapRule
     preloadedGrid: TravelingCuisine
 
@@ -56,14 +75,19 @@
   parent: BaseUnknownShuttleRule
   id: UnknownShuttleDisasterEvacPod
   components:
+  - type: StationEvent
+    startAnnouncement: station-event-unknown-shuttle-incoming
+    maxOccurrences: 3 # should be the same as [copies] in shuttle_incoming_event.yml
   - type: LoadMapRule
     preloadedGrid: DisasterEvacPod
 
+# The power of 3 clowns proved too strong for the players and may need to be 1984'ed. Replace this with a more engaging clown shuttle.
 - type: entity
   parent: BaseUnknownShuttleRule
   id: UnknownShuttleHonki
   components:
   - type: StationEvent
+    startAnnouncement: station-event-unknown-shuttle-incoming #!!
     weight: 2
   - type: LoadMapRule
     preloadedGrid: Honki
@@ -73,6 +97,137 @@
   id: UnknownShuttleSyndieEvacPod
   components:
   - type: StationEvent
-    weight: 2
+    startAnnouncement: null # It should be silent.
+    weight: 5 # lower because weird freelance roles
+    maxOccurrences: 2 # should be the same as [copies] in shuttle_incoming_event.yml
   - type: LoadMapRule
     preloadedGrid: SyndieEvacPod
+
+- type: entity
+  id: UnknownShuttleNTQuark
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: null # It should be silent.
+    weight: .5 # Hopefully this is uncommon enough, it needs to be uncommon enough that people wont waste time metaknowledging it.
+    earliestStart: 45 # late to hopefully have enough ghosts to fill all roles quickly.
+    minimumPlayers: 25
+  - type: LoadMapRule
+    preloadedGrid: NTQuark
+
+- type: entity
+  id: UnknownShuttleCruiser
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-unknown-shuttle-incoming #!!
+    weight: 2 # Its just a big ship, so it needs to be rarer to be interesting.
+  - type: LoadMapRule
+    preloadedGrid: Cruiser
+
+- type: entity
+  id: UnknownShuttleCryptid
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-unknown-shuttle-incoming #!!
+  - type: LoadMapRule
+    preloadedGrid: Cryptid
+
+- type: entity
+  id: UnknownShuttleEternal
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-unknown-shuttle-incoming #!!
+  - type: LoadMapRule
+    preloadedGrid: Eternal
+
+- type: entity
+  id: UnknownShuttleFlatline
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-unknown-shuttle-incoming #!!
+  - type: LoadMapRule
+    preloadedGrid: Flatline
+
+- type: entity
+  id: UnknownShuttleGym
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-unknown-shuttle-incoming #!!
+    weight: 5 # Its just a big ship, so it needs to be rarer to be interesting.
+  - type: LoadMapRule
+    preloadedGrid: Gym
+
+- type: entity
+  id: UnknownShuttleNTIncorporation
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-unknown-shuttle-incoming #!!
+    weight: 2 # Its just a big ship, so it needs to be rarer to be interesting.
+    earliestStart: 45 # late to hopefully have enough ghosts to fill all roles quickly. (5-6)
+  - type: LoadMapRule
+    preloadedGrid: NTIncorporation
+
+- type: entity
+  id: UnknownShuttleInstigator
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: null #dont nark on antags
+    weight: 1 #  lower because antags.
+    earliestStart: 50 # late to hopefully have enough ghosts to fill all roles quickly (3) and because antags
+  - type: LoadMapRule
+    preloadedGrid: Instigator
+
+- type: entity
+  id: UnknownShuttleJoe
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-unknown-shuttle-incoming #!!
+  - type: LoadMapRule
+    preloadedGrid: Joe
+
+- type: entity
+  id: UnknownShuttleLambordeere
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-unknown-shuttle-incoming #!!
+  - type: LoadMapRule
+    preloadedGrid: Lambordeere
+
+- type: entity
+  id: UnknownShuttleMeatZone
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-unknown-shuttle-incoming #!!
+  - type: LoadMapRule
+    preloadedGrid: Meatzone
+
+- type: entity
+  id: UnknownShuttleMicroshuttle
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-unknown-shuttle-incoming #!!
+    weight: 11 # this is higher because its just a little generic personal shuttle
+    maxOccurrences: 4
+  - type: LoadMapRule
+    preloadedGrid: Microshuttle
+
+- type: entity
+  id: UnknownShuttleSpacebus
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-unknown-shuttle-incoming #!!
+  - type: LoadMapRule
+    preloadedGrid: Spacebus
+
