@@ -23,6 +23,8 @@ using Content.Shared.Timing;
 using Content.Shared.Toggleable;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.FixedPoint;
+using Content.Shared.Nutrition.Components;
+using Content.Shared.Nutrition.EntitySystems;
 using Robust.Server.Audio;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
@@ -351,11 +353,26 @@ namespace Content.Server.Atmos.EntitySystems
             if (args.DamageDelta == null)
                 return;
 
-            // Check if its' taken any heat damage, and give the value
-            if (args.DamageDelta.DamageDict.TryGetValue("Heat", out FixedPoint2 value))
+            // Check if we've taken any damage
+            if (args.DamageDelta.DamageDict.TryGetValue("Heat", out FixedPoint2 heatDamage))
             {
+                // Ignition can be prevented if the PreventedByHydration is true
+                // Reduce the user's hydration level by the damage times the mulitiplier
+                if (component.PreventedByHydration)
+                {
+                    if (TryComp<ThirstComponent>(uid, out var thirst))
+                    {
+                        // Thirst needs to be a negative value to go down
+                        EntityManager.System<ThirstSystem>().ModifyThirst(uid, thirst, heatDamage.Float() * -component.DehydrationMultiplier);
+
+                        // If their thirst is above zero, do not ignite the user
+                        if (thirst.CurrentThirst > thirst.ThirstThresholds[ThirstThreshold.Dead])
+                            return;
+                    }
+                }
+
                 // Make sure the value is greater than the threshold
-                if(value <= component.Threshold)
+                if (heatDamage <= component.Threshold)
                     return;
 
                 // Ignite that sucker
