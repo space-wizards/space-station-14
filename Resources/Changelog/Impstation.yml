@@ -3198,3 +3198,10 @@
   id: 395
   time: '2024-10-18T22:10:32.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/517
+- author: TGRCdev
+  changes:
+  - message: Sam Grimm's lobby art has been updated to reflect his transition.
+    type: Tweak
+  id: 396
+  time: '2024-10-18T22:46:20.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/519
