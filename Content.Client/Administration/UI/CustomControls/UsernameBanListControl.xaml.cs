@@ -25,7 +25,7 @@ public sealed partial class UsernameBanListControl : BoxContainer
         PopulateList(_usernameBanCache.BanList);
     }
 
-    private void PopulateList(IReadOnlyList<(int, string, bool, bool)>? banData = null)
+    private void PopulateList(IReadOnlyList<UsernameCacheLine>? banData = null)
     {
         banData ??= _usernameBanCache.BanList;
         UsernameBanListContainer.PopulateList(banData.Select(info => new UsernameBanListData(info)).ToList());
@@ -52,20 +52,21 @@ public sealed partial class UsernameBanListControl : BoxContainer
             return;
         }
 
-        int selectedId = selectedUsernameBan.Item1;
-
-        if (selectedId == _selectedId)
-        {
-            return;
-        }
+        int selectedId = selectedUsernameBan.Id;
 
         if (args.Event.Function != EngineKeyFunctions.UIClick)
         {
             return;
         }
 
-        OnSelectionChanged?.Invoke(selectedId);
         _usernameBanCache.RequestFullUsernameBan(selectedId);
+
+        if (selectedId == _selectedId)
+        {
+            return;
+        }
+
+        OnSelectionChanged?.Invoke(selectedId);
         _selectedId = selectedId;
     }
 
@@ -77,4 +78,4 @@ public sealed partial class UsernameBanListControl : BoxContainer
     }
 }
 
-public record UsernameBanListData((int, string, bool, bool) Info) : ListData;
+public record UsernameBanListData(UsernameCacheLine Info) : ListData;

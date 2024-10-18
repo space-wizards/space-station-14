@@ -14,8 +14,8 @@ public sealed class BanUsernamePanelEui : BaseEui
     {
         Window = new BanUsernamePanel();
         Window.OnClose += () => SendMessage(new CloseEuiMessage());
-        Window.UsernameBanSubmitted += (regexRule, reason, ban, regex) => SendMessage(new BanUsernamePanelEuiStateMsg.CreateUsernameBanRequest(regexRule, reason, ban, regex));
-        Window.RuleUpdate += (ruleId) => SendMessage(new BanUsernamePanelEuiStateMsg.GetRuleInfoRequest(ruleId));
+        Window.UsernameBanSubmitted += (regexRule, reason, ban, regex) => SendMessage(new BanUsernamePanelEuiMsg.CreateUsernameBanRequest(regexRule, reason, ban, regex));
+        Window.RuleUpdate += (ruleId) => SendMessage(new BanUsernamePanelEuiMsg.GetRuleInfoRequest(ruleId));
     }
 
     public override void HandleState(EuiStateBase state)
@@ -26,7 +26,7 @@ public sealed class BanUsernamePanelEui : BaseEui
         }
 
         Window.UpdateBanFlag(s.HasBan);
-        Window.UpdateMassBanFlag(s.HasMassBan);
+        Window.UpdateMassBanFlag(s.HasHost);
     }
 
     public override void Opened()

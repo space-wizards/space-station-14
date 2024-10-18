@@ -11,11 +11,11 @@ public sealed class ClientUsernameBanCacheManager : IClientUsernameBanCacheManag
     [Dependency] private readonly IBaseClient _client = default!;
     [Dependency] private readonly IClientNetManager _net = default!;
 
-    private readonly SortedDictionary<int, (string, bool, bool)> _usernameRulesCache = new();
+    private readonly SortedDictionary<int, UsernameCacheLine> _usernameRulesCache = new();
 
     private ISawmill _sawmill = default!;
 
-    public event Action<List<(int, string, bool, bool)>>? UpdatedCache;
+    public event Action<List<UsernameCacheLine>>? UpdatedCache;
 
     public void Initialize()
     {
@@ -55,7 +55,7 @@ public sealed class ClientUsernameBanCacheManager : IClientUsernameBanCacheManag
         }
 
         _sawmill.Verbose($"received username ban add {id}");
-        _usernameRulesCache.Add(id, (expression, regex, extendToBan));
+        _usernameRulesCache.Add(id, new UsernameCacheLine(expression, id, extendToBan, regex));
         UpdatedCache?.Invoke(BanList.ToList());
     }
 
@@ -89,22 +89,5 @@ public sealed class ClientUsernameBanCacheManager : IClientUsernameBanCacheManag
         _net.ClientSendMessage(new MsgRequestFullUsernameBan() { BanId = id });
     }
 
-    public IReadOnlyList<(int, string, bool, bool)> BanList
-    {
-        get
-        {
-            List<(int, string, bool, bool)> banData = new List<(int, string, bool, bool)>();
-
-            banData.EnsureCapacity(_usernameRulesCache.Count);
-
-            foreach (var id in _usernameRulesCache.Keys)
-            {
-                (string expression, bool regex, bool extendToBan) = _usernameRulesCache[id];
-                var entry = (id, expression, regex, extendToBan);
-                banData.Add(entry);
-            }
-
-            return banData;
-        }
-    }
+    public IReadOnlyList<UsernameCacheLine> BanList => _usernameRulesCache.Values.ToList();
 }
