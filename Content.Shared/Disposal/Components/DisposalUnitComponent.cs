@@ -7,8 +7,8 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Disposal.Components;
 
-[NetworkedComponent]
-public abstract partial class SharedDisposalUnitComponent : Component
+[RegisterComponent, NetworkedComponent]
+public partial class DisposalUnitComponent : Component
 {
     public const string ContainerId = "disposals";
 

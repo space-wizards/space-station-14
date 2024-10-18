@@ -4,7 +4,7 @@ using Content.Shared.Disposal.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
-using static Content.Shared.Disposal.Components.SharedDisposalUnitComponent;
+using static Content.Shared.Disposal.Components.DisposalUnitComponent;
 
 namespace Content.Client.Disposal.UI
 {

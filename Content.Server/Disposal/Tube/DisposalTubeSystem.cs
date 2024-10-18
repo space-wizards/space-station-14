@@ -433,9 +433,6 @@ namespace Content.Server.Disposal.Tube
                 _disposableSystem.TryInsert(holder, entity, holderComponent);
             }
 
-            _atmosSystem.Merge(holderComponent.Air, from.Air);
-            from.Air.Clear();
-
             if (tags != default)
                 holderComponent.Tags.UnionWith(tags);
 
