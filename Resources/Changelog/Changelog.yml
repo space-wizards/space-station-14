@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Fix some popups playing twice.
-    type: Fix
-  id: 7027
-  time: '2024-08-02T01:33:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30452
 - author: WarMechanic
   changes:
   - message: Adjusted meteors to have less lethal blast fragments.
@@ -3948,3 +3941,12 @@
   id: 7526
   time: '2024-10-18T02:42:50.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32837
+- author: Catofquestionableethics
+  changes:
+  - message: Spacemans cake now contains Polypyrylium Oligomers instead of Omnizine.
+    type: Tweak
+  - message: Slime, Brain and Christmas cakes can now be eaten by Lizards.
+    type: Fix
+  id: 7527
+  time: '2024-10-18T03:08:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32830
