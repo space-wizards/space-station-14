@@ -19,9 +19,9 @@ public sealed partial class HealiumProductionReaction : IGasReactionEffect
         var rate = mixture.Temperature / Atmospherics.T20C;
         var efficiency = 23.15f / mixture.Temperature;
 
-        var bZRemoved = 1f * rate;
-        var frezonRemoved = 11f * rate;
-        var healiumProduced = 12f * rate * efficiency;
+        var bZRemoved = 2f * rate;
+        var frezonRemoved = 4f * rate;
+        var healiumProduced = 6f * rate * efficiency;
 
         if (bZRemoved > initBZ || frezonRemoved > initFrezon || mixture.Temperature > Atmospherics.T20C)
             return ReactionResult.NoReaction;

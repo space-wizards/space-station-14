@@ -114,7 +114,7 @@
 - type: gas
   id: 10
   name: gases-healium
-  specificHeat: 20
+  specificHeat: 10
   heatCapacityRatio: 1.4
   molarMass: 10
   color: 8b0000

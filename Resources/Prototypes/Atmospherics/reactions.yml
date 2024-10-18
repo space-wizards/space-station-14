@@ -99,11 +99,11 @@
   - 0     # oxygen
   - 0     # nitrogen
   - 0     # carbon dioxide
-  - 10    # plasma
+  - 0.01  # plasma
   - 0     # tritium
   - 0     # vapor
   - 0     # miasma
-  - 10    # n2o
+  - 0.01  # n2o
   - 0     # frezon
   effects:
   - !type:BZFormationReaction {}
@@ -120,8 +120,8 @@
   - 0     # vapor
   - 0     # miasma
   - 0     # n2o
-  - 5     # frezon
-  - 5     # bz
+  - 0.1   # frezon
+  - 0.01  # bz
   effects:
   - !type:HealiumProductionReaction {}
 
