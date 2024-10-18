@@ -20,18 +20,15 @@ namespace Content.Client.Stack
             Subs.ItemStatus<StackComponent>(ent => new StackStatusControl(ent));
         }
 
-        public override void SetCount(EntityUid uid, int amount, StackComponent? component = null)
+        public override void SetCount(Entity<StackComponent> entity, int amount)
         {
-            if (!Resolve(uid, ref component))
-                return;
+            base.SetCount(entity, amount);
 
-            base.SetCount(uid, amount, component);
-
-            if (component.Lingering &&
-                TryComp<SpriteComponent>(uid, out var sprite))
+            if (entity.Comp.Lingering &&
+                TryComp<SpriteComponent>(entity, out var sprite))
             {
                 // tint the stack gray and make it transparent if it's lingering.
-                var color = component.Count == 0 && component.Lingering
+                var color = entity.Comp.Count == 0 && entity.Comp.Lingering
                     ? Color.DarkGray.WithAlpha(0.65f)
                     : Color.White;
 
@@ -42,13 +39,13 @@ namespace Content.Client.Stack
             }
 
             // TODO PREDICT ENTITY DELETION: This should really just be a normal entity deletion call.
-            if (component.Count <= 0 && !component.Lingering)
+            if (entity.Comp.Count <= 0 && !entity.Comp.Lingering)
             {
-                Xform.DetachEntity(uid, Transform(uid));
+                Xform.DetachEntity(entity, Transform(entity));
                 return;
             }
 
-            component.UiUpdateNeeded = true;
+            entity.Comp.UiUpdateNeeded = true;
         }
 
         private void OnAppearanceChange(EntityUid uid, StackComponent comp, ref AppearanceChangeEvent args)

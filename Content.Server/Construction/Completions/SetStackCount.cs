@@ -1,5 +1,6 @@
 ﻿using Content.Server.Stack;
 using Content.Shared.Construction;
+using Content.Shared.Stacks;
 using JetBrains.Annotations;
 
 namespace Content.Server.Construction.Completions
@@ -12,7 +13,8 @@ namespace Content.Server.Construction.Completions
 
         public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
         {
-            entityManager.EntitySysManager.GetEntitySystem<StackSystem>().SetCount(uid, Amount);
+            if (entityManager.TryGetComponent<StackComponent>(uid, out var stackComponent))
+                entityManager.EntitySysManager.GetEntitySystem<StackSystem>().SetCount((uid, stackComponent), Amount);
         }
     }
 }
