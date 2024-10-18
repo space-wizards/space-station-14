@@ -1,0 +1,15 @@
+regal-rat-kingdom-name-dataset-1 = Plague
+regal-rat-kingdom-name-dataset-2 = Ammonia
+regal-rat-kingdom-name-dataset-3 = Maintenance
+regal-rat-kingdom-name-dataset-4 = Trash
+regal-rat-kingdom-name-dataset-5 = Garbage
+regal-rat-kingdom-name-dataset-6 = Rat
+regal-rat-kingdom-name-dataset-7 = Vermin
+regal-rat-kingdom-name-dataset-8 = Cheese
+regal-rat-kingdom-name-dataset-9 = Munching
+regal-rat-kingdom-name-dataset-10 = Big
+regal-rat-kingdom-name-dataset-11 = Filth
+regal-rat-kingdom-name-dataset-12 = Sewer
+regal-rat-kingdom-name-dataset-13 = Disposal
+regal-rat-kingdom-name-dataset-14 = Service
+regal-rat-kingdom-name-dataset-15 = The
