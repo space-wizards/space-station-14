@@ -525,11 +525,6 @@
   result: BoozeDispenserMachineCircuitboard
 
 - type: latheRecipe
-  parent: BaseCircuitboardRecipe
-  id: ShipyardComputerCircuitboard
-  result: ShipyardComputerCircuitboard
-
-- type: latheRecipe
   parent: BaseGoldCircuitboardRecipe
   id: CargoTelepadMachineCircuitboard
   result: CargoTelepadMachineCircuitboard
