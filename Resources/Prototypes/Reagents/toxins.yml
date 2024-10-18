@@ -360,6 +360,27 @@
             Airloss: 10
 
 - type: reagent
+  id: SeagullToxin
+  name: reagent-name-seagull
+  group: Toxins
+  desc: reagent-desc-seagull
+  flavor: bitter
+  color: "#F0ead6"
+  physicalDesc: reagent-physical-desc-putrid
+  metabolisms:
+    Poison:
+      effects:
+        - !type:HealthChange
+          damage:
+            types:
+              Poison: 2
+        - !type:ChemVomit
+          conditions:
+          - !type:ReagentThreshold
+            min: 2
+          probability: 0.2
+
+- type: reagent
   id: MindbreakerToxin
   name: reagent-name-mindbreaker-toxin
   group: Toxins
