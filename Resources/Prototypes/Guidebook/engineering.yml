@@ -28,7 +28,7 @@
   children:
   - GasManipulation
   - Fires
-  - Atmospheric Systems
+  - AtmosphericsSystems
 
 - type: guideEntry
   id: GasManipulation
@@ -134,9 +134,16 @@
   text: "/ServerInfo/Guidebook/Engineering/Fires.xml"
 
 - type: guideEntry
-  id: Atmospherics Systems
+  id: AtmosphericsSystems
   name: guide-entry-atmosphericssystems
   text: "/ServerInfo/Guidebook/Engineering/AtmosphericsSystems.xml"
+  children:
+  - PipeNetworks
+
+- type: guideEntry
+  id: PipeNetworks
+  name: guide-entry-pipe-networks
+  text: "/ServerInfo/Guidebook/Engineering/PipeNetworks.xml"
 
 - type: guideEntry
   id: ShuttleCraft
