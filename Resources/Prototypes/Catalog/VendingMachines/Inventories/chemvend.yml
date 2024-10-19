@@ -23,7 +23,7 @@
     JugSugar: 3
     JugSulfur: 1
   contrabandInventory:
-    EthanolChemistryBottle: 1
+    LeadChemistryBottle: 1
   emaggedInventory:
     ToxinChemistryBottle: 1
 
@@ -52,8 +52,6 @@
     JugSugar: 3
     JugSulfur: 1
     JugWeldingFuel: 1
-  contrabandInventory:
-    EthanolChemistryBottle: 1
   emaggedInventory:
     PaxChemistryBottle: 3
     MuteToxinChemistryBottle: 3
