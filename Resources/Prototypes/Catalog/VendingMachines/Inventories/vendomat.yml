@@ -10,3 +10,5 @@
     MatterBinStockPart: 4
     CapacitorStockPart: 4
     MicroManipulatorStockPart: 4
+  contrabandInventory:
+    KitchenKnife: 1

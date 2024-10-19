@@ -9,6 +9,9 @@
     ClothingHeadHatVioletwizard: 3
     ClothingOuterWizardViolet: 3
     ClothingShoesWizard: 9
+  contrabandInventory:
+    ToyFigurineWizard: 1
+    ToyFigurineWizardFake: 1
     #TODO:
     #only missing staff
     #and if wizarditis reagent when hacked if we want this.
