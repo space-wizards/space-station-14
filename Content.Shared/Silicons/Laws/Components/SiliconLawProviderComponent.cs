@@ -24,7 +24,7 @@ public sealed partial class SiliconLawProviderComponent : Component
 
     /// <summary>
     /// The sound that plays for the Silicon player
-    /// When the Law change is processed for the provider.
+    /// when the law change is processed for the provider.
     /// </summary>
     [DataField]
     public SoundSpecifier? LawUploadSound = new SoundPathSpecifier("/Audio/Misc/cryo_warning.ogg");
