@@ -23,7 +23,8 @@
         mask:
         - TableMask
         layer:
-        - TableLayer
+        #- MidImpassable
+        - LowImpassable
   - type: InteractionOutline
   - type: Repairable
   - type: Damageable
@@ -60,7 +61,7 @@
   - type: RCDDeconstructable
     cost: 2
     delay: 2
-    fx: EffectRCDDeconstruct2  
+    fx: EffectRCDDeconstruct2
 
 - type: entity
   parent: BaseStructure
@@ -87,7 +88,7 @@
         mask:
         - TableMask
         layer:
-        - TableLayer
+        - LowImpassable
       fix2:
         shape:
           !type:PhysShapeAabb
@@ -133,7 +134,7 @@
   - type: RCDDeconstructable
     cost: 2
     delay: 2
-    fx: EffectRCDDeconstruct2  
+    fx: EffectRCDDeconstruct2
 
 - type: entity
   parent: BaseStructure
@@ -160,7 +161,7 @@
         mask:
         - TableMask
         layer:
-        - TableLayer
+        - LowImpassable
   - type: InteractionOutline
   - type: Repairable
   - type: Damageable
@@ -197,8 +198,8 @@
   - type: RCDDeconstructable
     cost: 2
     delay: 2
-    fx: EffectRCDDeconstruct2  
-    
+    fx: EffectRCDDeconstruct2
+
 - type: entity
   parent: BaseStructure
   id: RailingRound
@@ -221,7 +222,7 @@
         mask:
           - TableMask
         layer:
-          - TableLayer
+          - LowImpassable
       fix2:
         shape:
           !type:PhysShapeAabb
@@ -239,7 +240,7 @@
         mask:
           - TableMask
         layer:
-          - TableLayer
+          - LowImpassable
   - type: InteractionOutline
   - type: Repairable
   - type: Damageable
@@ -276,4 +277,4 @@
   - type: RCDDeconstructable
     cost: 2
     delay: 2
-    fx: EffectRCDDeconstruct2  
+    fx: EffectRCDDeconstruct2

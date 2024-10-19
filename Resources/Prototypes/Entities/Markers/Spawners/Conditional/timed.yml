@@ -84,7 +84,7 @@
         - MobFish3
         - MobFishMimic
       chance: 0.5
-      intervalSeconds: 135
+      intervalSeconds: 540
       minimumEntitiesSpawned: 1
       maximumEntitiesSpawned: 3
 

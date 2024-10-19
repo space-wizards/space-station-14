@@ -128,13 +128,13 @@ namespace Content.Shared.CCVar
         ///     Minimum time between meteor swarms in minutes.
         /// </summary>
         public static readonly CVarDef<float>
-            MeteorSwarmMinTime = CVarDef.Create("events.meteor_swarm_min_time", 12.5f, CVar.ARCHIVE | CVar.SERVERONLY);
+            MeteorSwarmMinTime = CVarDef.Create("events.meteor_swarm_min_time", 999f, CVar.ARCHIVE | CVar.SERVERONLY);
 
         /// <summary>
         ///     Maximum time between meteor swarms in minutes.
         /// </summary>
         public static readonly CVarDef<float>
-            MeteorSwarmMaxTime = CVarDef.Create("events.meteor_swarm_max_time", 17.5f, CVar.ARCHIVE | CVar.SERVERONLY);
+            MeteorSwarmMaxTime = CVarDef.Create("events.meteor_swarm_max_time", 9999f, CVar.ARCHIVE | CVar.SERVERONLY);
 
         /*
          * Game
@@ -236,7 +236,7 @@ namespace Content.Shared.CCVar
         /// If roles should be restricted based on time.
         /// </summary>
         public static readonly CVarDef<bool>
-            GameRoleTimers = CVarDef.Create("game.role_timers", true, CVar.SERVER | CVar.REPLICATED);
+            GameRoleTimers = CVarDef.Create("game.role_timers", false, CVar.SERVER | CVar.REPLICATED);
 
         /// <summary>
         /// Override default role requirements using a <see cref="JobRequirementOverridePrototype"/>
@@ -1129,14 +1129,14 @@ namespace Content.Shared.CCVar
         ///     Whether monstermos tile equalization is enabled.
         /// </summary>
         public static readonly CVarDef<bool> MonstermosEqualization =
-            CVarDef.Create("atmos.monstermos_equalization", true, CVar.SERVERONLY);
+            CVarDef.Create("atmos.monstermos_equalization", false, CVar.SERVERONLY);
 
         /// <summary>
         ///     Whether monstermos explosive depressurization is enabled.
         ///     Needs <see cref="MonstermosEqualization"/> to be enabled to work.
         /// </summary>
         public static readonly CVarDef<bool> MonstermosDepressurization =
-            CVarDef.Create("atmos.monstermos_depressurization", true, CVar.SERVERONLY);
+            CVarDef.Create("atmos.monstermos_depressurization", false, CVar.SERVERONLY);
 
         /// <summary>
         ///     Whether monstermos explosive depressurization will rip tiles..
@@ -1160,7 +1160,7 @@ namespace Content.Shared.CCVar
         ///     1.0 for instant spacing, 0.2 means 20% of remaining air lost each time
         /// </summary>
         public static readonly CVarDef<float> AtmosSpacingEscapeRatio =
-            CVarDef.Create("atmos.mmos_spacing_speed", 0.15f, CVar.SERVERONLY);
+            CVarDef.Create("atmos.mmos_spacing_speed", 1f, CVar.SERVERONLY);
 
         /// <summary>
         ///     Minimum amount of air allowed on a spaced tile before it is reset to 0 immediately in kPa
@@ -1209,13 +1209,13 @@ namespace Content.Shared.CCVar
         ///     Maximum time in milliseconds that atmos can take processing.
         /// </summary>
         public static readonly CVarDef<float> AtmosMaxProcessTime =
-            CVarDef.Create("atmos.max_process_time", 3f, CVar.SERVERONLY);
+            CVarDef.Create("atmos.max_process_time", 8f, CVar.SERVERONLY);
 
         /// <summary>
         ///     Atmos tickrate in TPS. Atmos processing will happen every 1/TPS seconds.
         /// </summary>
         public static readonly CVarDef<float> AtmosTickRate =
-            CVarDef.Create("atmos.tickrate", 15f, CVar.SERVERONLY);
+            CVarDef.Create("atmos.tickrate", 23f, CVar.SERVERONLY);
 
         /// <summary>
         ///     Scale factor for how fast things happen in our atmosphere
@@ -1224,14 +1224,14 @@ namespace Content.Shared.CCVar
         ///     in-game.
         /// </summary>
         public static readonly CVarDef<float> AtmosSpeedup =
-            CVarDef.Create("atmos.speedup", 8f, CVar.SERVERONLY);
+            CVarDef.Create("atmos.speedup", 40f, CVar.SERVERONLY);
 
         /// <summary>
         ///     Like atmos.speedup, but only for gas and reaction heat values. 64x means
         ///     gases heat up and cool down 64x faster than real life.
         /// </summary>
         public static readonly CVarDef<float> AtmosHeatScale =
-            CVarDef.Create("atmos.heat_scale", 8f, CVar.SERVERONLY);
+            CVarDef.Create("atmos.heat_scale", 30f, CVar.SERVERONLY);
 
         /*
          * MIDI instruments
@@ -1499,13 +1499,13 @@ namespace Content.Shared.CCVar
         /// Whether to automatically spawn escape shuttles.
         /// </summary>
         public static readonly CVarDef<bool> GridFill =
-            CVarDef.Create("shuttle.grid_fill", true, CVar.SERVERONLY);
+            CVarDef.Create("shuttle.grid_fill", false, CVar.SERVERONLY);
 
         /// <summary>
         /// Whether to automatically preloading grids by GridPreloaderSystem
         /// </summary>
         public static readonly CVarDef<bool> PreloadGrids =
-            CVarDef.Create("shuttle.preload_grids", true, CVar.SERVERONLY);
+            CVarDef.Create("shuttle.preload_grids", false, CVar.SERVERONLY);
 
         /// <summary>
         /// How long the warmup time before FTL start should be.
@@ -1517,7 +1517,7 @@ namespace Content.Shared.CCVar
         /// How long a shuttle spends in FTL.
         /// </summary>
         public static readonly CVarDef<float> FTLTravelTime =
-            CVarDef.Create("shuttle.travel_time", 20f, CVar.SERVERONLY);
+            CVarDef.Create("shuttle.travel_time", 15f, CVar.SERVERONLY);
 
         /// <summary>
         /// How long the final stage of FTL before arrival should be.
@@ -1818,7 +1818,7 @@ namespace Content.Shared.CCVar
         /// Allows flavor text (character descriptions)
         /// </summary>
         public static readonly CVarDef<bool> FlavorText =
-            CVarDef.Create("ic.flavor_text", false, CVar.SERVER | CVar.REPLICATED);
+            CVarDef.Create("ic.flavor_text", true, CVar.SERVER | CVar.REPLICATED);
 
         /// <summary>
         /// Adds a period at the end of a sentence if the sentence ends in a letter.
@@ -1992,7 +1992,7 @@ namespace Content.Shared.CCVar
         /// The time you must spend reading the rules, before the "Request" button is enabled
         /// </summary>
         public static readonly CVarDef<float> GhostRoleTime =
-            CVarDef.Create("ghost.role_time", 3f, CVar.REPLICATED | CVar.SERVER);
+            CVarDef.Create("ghost.role_time", 2f, CVar.REPLICATED | CVar.SERVER);
 
         /// <summary>
         /// Whether or not to kill the player's mob on ghosting, when it is in a critical health state.

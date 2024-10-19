@@ -93,7 +93,7 @@
 - type: alarmThreshold
   id: stationWater
   upperBound: !type:AlarmThresholdSetting
-    threshold: 1.5
+    threshold: 0.06
   upperWarnAround: !type:AlarmThresholdSetting
-    threshold: 0.5
+    threshold: 0.2
 
