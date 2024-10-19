@@ -142,7 +142,7 @@
 
 - type: guideEntry
   id: PipeNetworks
-  name: guide-entry-pipe-networks
+  name: guide-entry-pipenetworks
   text: "/ServerInfo/Guidebook/Engineering/PipeNetworks.xml"
 
 - type: guideEntry
