@@ -21,7 +21,7 @@
     BoxCandleSmall: 2
     Urn: 5
   contrabandInventory:
-    BoxCandleMagic: 2
+    BoxCandleMagic: 1
   emaggedInventory:
     ClothingOuterArmorCult: 1
     ClothingHeadHelmetCult: 1
