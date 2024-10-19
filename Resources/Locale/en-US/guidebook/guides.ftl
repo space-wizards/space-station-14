@@ -20,6 +20,7 @@ guide-entry-passivegate = Passive Gate
 guide-entry-mixingandfiltering = Mixing and Filtering
 guide-entry-gascanisters = Gas Canisters
 guide-entry-atmosphericssystems = Atmospherics Systems
+guide-entry-pipenetworks = Pipe Networks
 guide-entry-botany = Botany
 guide-entry-fires = Fires & Space
 guide-entry-shuttle-craft = Shuttle-craft
