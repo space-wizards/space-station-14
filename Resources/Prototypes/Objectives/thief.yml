@@ -281,6 +281,17 @@
   - type: Objective
     difficulty: 0.4
 
+- type: entity
+  parent: BaseThiefStealObjective
+  id: QuranStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Chaplain
+  - type: StealCondition
+    stealGroup: Quran
+  - type: Objective
+    difficulty: 0.4
+
 - type: entity                                      #Other subgroup
   parent: BaseThiefStealObjective
   id: ClothingNeckGoldmedalStealObjective
