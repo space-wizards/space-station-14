@@ -1,21 +1,21 @@
-names-moth-last-dataset-1 = Blackwitch # Ascalapha odorata
-names-moth-last-dataset-2 = Deathshead # refers to any of the 3 Acherontia
-names-moth-last-dataset-3 = Emperor # Saturniinae
-names-moth-last-dataset-4 = Scorchedwing # Plagodis dolabraria
-names-moth-last-dataset-5 = Temnora # Temnora
-names-moth-last-dataset-6 = Usta # Usta
-names-moth-last-dataset-7 = Whitewitch # Thysania agrippina
-names-moth-last-dataset-8 = Winter # Operophtera brumata
+names-moth-last-dataset-1 = Blackwitch
+names-moth-last-dataset-2 = Deathshead
+names-moth-last-dataset-3 = Emperor
+names-moth-last-dataset-4 = Scorchedwing
+names-moth-last-dataset-5 = Temnora
+names-moth-last-dataset-6 = Usta
+names-moth-last-dataset-7 = Whitewitch
+names-moth-last-dataset-8 = Winter
 
   # Other languages
-names-moth-last-dataset-9 = Epiolos # Ancient Greek "moth"
-names-moth-last-dataset-10 = Moeller # conceivably any Old Norse descendant of mǫlr but probably more Danish than anything. "oe" digraph for ø.
-names-moth-last-dataset-11 = Nightflitter # literal pseudo-translation of German Nachtfalter
+names-moth-last-dataset-9 = Epiolos
+names-moth-last-dataset-10 = Moeller
+names-moth-last-dataset-11 = Nightflitter
 
   # Myth and legend
-names-moth-last-dataset-12 = Herald # belief of moths flying at night signalling the reception of a letter
-names-moth-last-dataset-13 = Leander # Greek figure associated with Hero, and similar sounding to Oleander hawk-moth
-names-moth-last-dataset-14 = Mothman # split between being a myth reference and actual possible surname given the actual Goodman, Hoffman, Newman, Coleman, etc.
+names-moth-last-dataset-12 = Herald
+names-moth-last-dataset-13 = Leander
+names-moth-last-dataset-14 = Mothman
 
   # Fun names
 names-moth-last-dataset-15 = Cometrider
@@ -32,3 +32,21 @@ names-moth-last-dataset-25 = Silktongue
 names-moth-last-dataset-26 = Sparkdrawn
 names-moth-last-dataset-27 = Stargazer
 names-moth-last-dataset-28 = Starseeker
+
+  ## Comments on names
+# Blackwitch   - Ascalapha odorata
+# Deathshead   - refers to any of the 3 Acherontia
+# Emperor      - Saturniinae
+# Scorchedwing - Plagodis dolabraria
+# Temnora      - Temnora
+# Usta         - Usta
+# Whitewitch   - Thysania agrippina
+# Winter       - Operophtera brumata
+
+# Epiolos      - Ancient Greek "moth"
+# Moeller      - conceivably any Old Norse descendant of mǫlr but probably more Danish than anything. "oe" digraph for ø.
+# Nightflitter - literal pseudo-translation of German Nachtfalter
+
+# Herald       - belief of moths flying at night signalling the reception of a letter
+# Leander      - Greek figure associated with Hero, and similar sounding to Oleander hawk-moth
+# Mothman      - split between being a myth reference and actual possible surname given the actual Goodman, Hoffman, Newman, Coleman, etc.
