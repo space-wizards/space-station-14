@@ -310,6 +310,7 @@ public sealed partial class UsernameRuleManager : IUsernameRuleManager, IPostInj
         }
 
         _cachedUsernameRules.Clear();
+        _cachedUsernames.Clear();
 
         foreach (var ruleDef in rules)
         {
