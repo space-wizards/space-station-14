@@ -52,7 +52,7 @@
   - type: ChangeVoiceInContainer
     whitelist:
       components:
-        - SecretStash
+      - SecretStash
 
 - type: entity
   parent: MMI
@@ -134,4 +134,4 @@
     - type: ChangeVoiceInContainer
       whitelist:
         components:
-          - SecretStash
+        - SecretStash
