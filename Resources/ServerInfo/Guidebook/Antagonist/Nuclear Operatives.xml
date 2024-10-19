@@ -60,7 +60,7 @@
     <GuideEntityEmbed Entity="ClothingEyesGlassesOutlawGlasses" Caption="Pointless"/>
   </Box>
 
-  You'll also have to choose if you want to [color=red]declare war[/color] or not. Doing so grants your team [bold]40 extra telecrystals each.[/bold]
+  You'll also have to choose if you want to [color=red]declare war[/color] or not. Doing so grants your team [bold]40 extra telecrystals each[/bold].
   However, the crew will immediately know of your existence and will have plenty of time to prepare for your arrival.
 
   The [bold]Commander[/bold] is the only person who can declare war. Make your choice quick, [italic]this is a limited-time offer![/italic]
@@ -71,7 +71,7 @@
   ## Getting to the Station
   You've got the plan, you've got the gear. Now, execute.
 
-  Grab a [bold]jetpack[/bold] from your armory and go with your other operatives to your [color=cyan]shuttle.[/color]
+  Grab a [bold]jetpack[/bold] from your armory and go with your other operatives to your [color=cyan]shuttle[/color].
   Among other things you may need, you'll find an [bold]IFF Computer[/bold] on the shuttle. It allows you to hide from other ships and mass scanners when [italic]Show IFF[/italic] and [italic]Show Vessel[/italic] are toggled off.
 
   When everyone is ready, FTL to the station and fly to it with a jetpack. Don't forget the code, your pinpointers and the nuke if you're taking it.
@@ -86,7 +86,7 @@
 
   - Obtain the [bold]nuclear authentication disk[/bold] and insert it into the nuke.
   - Type in the [bold]nuclear authentication code[/bold] and press "[bold]E[/bold]" on the keypad to Enter.
-  - [bold]To begin self-destruction, press [color=#EB2D3A]ARM[/color].[/bold] After 300 seconds, the nuke will explode.
+  - [bold]To begin the self-destruct sequence, press [color=#EB2D3A]ARM[/color].[/bold] After 300 seconds, the nuke will explode.
   - [bold]Defend the nuke[/bold], even if it's at the cost of your lives! The mission requirements do not include your return.
   - It takes 30 seconds for someone to [bold]disarm[/bold] the nuke. Re-arming it is possible, but the chance of mission success drops if you let it happen.
   - Should the nuke be re-armed, the timer will start from where it left off.

@@ -7,12 +7,12 @@
 
   You are an elite mercenary that [color=#66FF00]The Spider Clan[/color] has sent to wreak all kinds of havoc on the station. You are equipped to keep it silent-but-deadly.
 
-  Whether you get bloody or stay out of trouble, your discipline has taught you that [italic]your objectives must be at least attempted.[/italic] For honor!
+  Whether you get bloody or stay out of trouble, your discipline has taught you that [italic]your objectives must be at least attempted[/italic]. For honor!
 
   ## Standard Equipment
-  You begin implanted with a [color=cyan]death acidifier,[/color] so if you are captured or KIA all your precious equipment is kept out of enemy hands.
+  You begin implanted with a [color=cyan]death acidifier[/color], so if you are captured or KIA all your precious equipment is kept out of enemy hands.
 
-  Your bag is full of [bold]tools[/bold] and a [bold]survival box.[/bold] You also carry a [color=cyan]jetpack[/color] and a [color=cyan]pinpointer[/color] that will lead you to the station.
+  Your bag is full of [bold]tools[/bold] and a [bold]survival box[/bold]. You also carry a [color=cyan]jetpack[/color] and a [color=cyan]pinpointer[/color] that will lead you to the station.
 
   <Box>
     <GuideEntityEmbed Entity="JetpackBlack"/>
@@ -28,11 +28,11 @@
   </Box>
 
   Your single most important item is [color=cyan]your suit[/color], without it none of your abilities would work.
-  Your suit requires power to function, which is supplied by its [bold]internal battery.[/bold] It can be replaced, and [italic]high capacity batteries[/italic] mean a [italic]highly effective ninja.[/italic]
+  Your suit requires power to function, which is supplied by its [bold]internal battery[/bold]. It can be replaced, and [italic]high capacity batteries[/italic] mean a [italic]highly effective ninja[/italic].
 
-  [bold]You can recharge your internal battery directly[/bold] by using [color=cyan]your gloves.[/color] You can see the current charge by examining the suit or checking the nifty battery alert on your screen.
+  [bold]You can recharge your internal battery directly[/bold] by using [color=cyan]your gloves[/color]. You can see the current charge by examining the suit or checking the nifty battery alert on your screen.
 
-  Your outfit also includes [color=cyan]special boots[/color] that keep you agile, upright and grounded without using energy. You've also got flash protection thanks to your [color=cyan]visor.[/color]
+  Your outfit also includes [color=cyan]special boots[/color] that keep you agile, upright and grounded without using energy. You've also got flash protection thanks to your [color=cyan]visor[/color].
 
   ## Ninja Gloves
 
@@ -48,7 +48,7 @@
   - Emagging doors and airlocks.
   - Draining power from [bold]transformers[/bold] such as APCs, substations, or SMESes (higher voltage transformers drain more efficiently).
   - Applying an electrical shock to a mob, stunning and slightly damaging them.
-  - Tampering with [bold]station equipment[/bold] to complete [color=#66FF00]objectives.[/color]
+  - Tampering with [bold]station equipment[/bold] to complete [color=#66FF00]objectives[/color].
 
   ## Energy Katana
 
@@ -60,7 +60,7 @@
 
   Your [color=cyan]energy katana[/color] hurts plenty and can be [bold]recalled at will[/bold] at the cost of suit power. The farther away it is from you, the more energy required to recall it.
 
-  While in hand you may also [color=cyan]teleport[/color] to anywhere that you can see, [bold]including through windows.[/bold] The charges required to do this regenerate slowly, so keep a charge or two spare in case you need a quick getaway.
+  While in hand you may also [color=cyan]teleport[/color] to anywhere that you can see, [bold]including through windows[/bold]. The charges required to do this regenerate slowly, so keep a charge or two spare in case you need a quick getaway.
 
   ## Spider Clan Charge
   
