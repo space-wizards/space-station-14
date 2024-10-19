@@ -180,3 +180,11 @@ accent-french-words-replace-58 = meuf
 accent-french-words-59 = guy
 accent-french-words-59-2 = dude
 accent-french-words-replace-59 = mec
+
+accent-french-words-60 = please
+accent-french-words-replace-60 = s'il vous plaît
+
+accent-french-words-61 = thank you
+accent-french-words-61-2 = thankyou
+accent-french-words-61-3 = thanks
+accent-french-words-replace-61 = merci
