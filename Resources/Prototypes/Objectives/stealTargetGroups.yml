@@ -244,7 +244,7 @@
 
 - type: stealTargetGroup
   id: Quran
-  name: steal-target-groups-bible
+  name: steal-target-groups-quran
   sprite:
     sprite: Objects/Specific/Chapel/quran.rsi
     state: icon
