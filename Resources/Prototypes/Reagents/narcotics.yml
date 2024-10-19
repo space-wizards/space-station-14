@@ -321,6 +321,9 @@
       - !type:GenericStatusEffect
         key: Muted
         component: Muted
+        type: Add
+        time: 5
+        refresh: false
 
 - type: reagent
   id: NorepinephricAcid
