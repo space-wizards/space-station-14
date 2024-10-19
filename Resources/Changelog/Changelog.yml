@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Figurines will say phrases on activation.
-    type: Add
-  id: 7036
-  time: '2024-08-03T14:06:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30455
 - author: JoelZimmerman
   changes:
   - message: Dank pizza is now cooked with cannabis leaves instead of ambrosia vulgaris.
@@ -3945,3 +3938,10 @@
   id: 7535
   time: '2024-10-19T02:40:17.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32858
+- author: PJB3005
+  changes:
+  - message: Fix more performance issues on long-running game servers, hopefully.
+    type: Fix
+  id: 7536
+  time: '2024-10-19T14:51:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32897
