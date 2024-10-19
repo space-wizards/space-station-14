@@ -1,5 +1,0 @@
-- type: localizedDataset
-  id: fake_human_first
-  values:
-    prefix: names-fake-human-first-dataset-
-    count: 44

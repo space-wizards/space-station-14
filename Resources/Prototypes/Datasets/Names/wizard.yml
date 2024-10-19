@@ -1,4 +1,10 @@
 ﻿- type: localizedDataset
+  id: names_wizard_first
+  values:
+    prefix: names-wizard-first-dataset-
+    count: 30
+
+- type: localizedDataset
   id: names_wizard_last
   values:
     prefix: names-wizard-last-dataset-
