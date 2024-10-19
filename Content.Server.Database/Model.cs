@@ -181,15 +181,13 @@ namespace Content.Server.Database
             modelBuilder.Entity<ServerRoleBan>().ToTable(t =>
                 t.HasCheckConstraint("HaveEitherAddressOrUserIdOrHWId", "address IS NOT NULL OR player_user_id IS NOT NULL OR hwid IS NOT NULL"));
 
-            // perhaps this subquery footgun buck should be passed to server admins or constrained in the EF code adding these rules
-            // all non retired expressions are unique
-            modelBuilder.Entity<ServerUsernameRule>().ToTable(t =>
-                t.HasCheckConstraint("ActiveUsernameRulesAreUnique", "NOT EXISTS (SELECT 1 FROM server_username_rule WHERE NOT retired GROUP BY expression, regex, HAVING COUNT(*) > 1)"));
-
             // all non retired expressions have null fields for retiring admin and retire time
+            modelBuilder.Entity<ServerUsernameRule>().ToTable(t =>
+                t.HasCheckConstraint("ActiveRulesDoNotHaveRetireInformation", "retired OR retire_time IS NULL AND retiring_admin IS NULL"));
+
             // all retired expressions have a retire time
             modelBuilder.Entity<ServerUsernameRule>().ToTable(t =>
-                t.HasCheckConstraint("ActiveRulesDoNotHaveRetireInformation", "IF retired THEN retire_time IS NOT NULL ELSE retire_time IS NULL AND retiring_admin IS NULL"));
+                t.HasCheckConstraint("InactiveRulesHaveRetireInformation", "NOT retired OR retire_time IS NOT NULL"));
 
             modelBuilder.Entity<Player>()
                 .HasIndex(p => p.UserId)
