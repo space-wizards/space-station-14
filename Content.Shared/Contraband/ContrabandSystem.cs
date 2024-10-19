@@ -1,8 +1,10 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Examine;
+using Content.Shared.Inventory;
 using Content.Shared.Localizations;
+using Content.Shared.Overlays;
 using Content.Shared.Roles;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
@@ -17,6 +19,7 @@ public sealed class ContrabandSystem : EntitySystem
     [Dependency] private readonly IConfigurationManager _configuration = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedIdCardSystem _id = default!;
+    [Dependency] private readonly InventorySystem _inventorySystem = default!;
 
     private bool _contrabandExamineEnabled;
 
@@ -48,6 +51,10 @@ public sealed class ContrabandSystem : EntitySystem
         if (!_contrabandExamineEnabled)
             return;
 
+        if (TryComp<InventoryComponent>(args.Examiner, out var comp))
+            if (_inventorySystem.TryGetContainerSlotEnumerator(new Entity<InventoryComponent?>(args.Examiner, comp), out var inventorySlot, SlotFlags.EYES))
+                if(inventorySlot.NextItem(out var item))
+                    if (!TryComp<ShowJobIconsComponent>(item, out var jComp)) return;
         // two strings:
         // one, the actual informative 'this is restricted'
         // then, the 'you can/shouldn't carry this around' based on the ID the user is wearing
