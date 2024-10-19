@@ -1,25 +1,4 @@
 ﻿Entries:
-- author: Blackern5000
-  changes:
-  - message: Winter boots no longer have ugly outlines
-    type: Tweak
-  id: 7035
-  time: '2024-08-02T23:05:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30350
-- author: lzk228
-  changes:
-  - message: Figurines will say phrases on activation.
-    type: Add
-  id: 7036
-  time: '2024-08-03T14:06:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30455
-- author: JoelZimmerman
-  changes:
-  - message: Dank pizza is now cooked with cannabis leaves instead of ambrosia vulgaris.
-    type: Tweak
-  id: 7037
-  time: '2024-08-03T14:07:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30430
 - author: Ian321
   changes:
   - message: Help menus now include the linked guides.
@@ -3945,3 +3924,24 @@
   id: 7534
   time: '2024-10-18T19:20:05.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32750
+- author: Beck Thompson
+  changes:
+  - message: Scalpels and shivs now work as knives!
+    type: Add
+  id: 7535
+  time: '2024-10-19T02:40:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32858
+- author: PJB3005
+  changes:
+  - message: Fix more performance issues on long-running game servers, hopefully.
+    type: Fix
+  id: 7536
+  time: '2024-10-19T14:51:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32897
+- author: insoPL
+  changes:
+  - message: Zombies once again have zombie blood.
+    type: Fix
+  id: 7537
+  time: '2024-10-19T15:31:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32532
