@@ -243,6 +243,13 @@
     state: icon
 
 - type: stealTargetGroup
+  id: Quran
+  name: steal-target-groups-bible
+  sprite:
+    sprite: Objects/Specific/Chapel/quran.rsi
+    state: icon
+
+- type: stealTargetGroup
   id: ClothingNeckGoldmedal
   name: steal-target-groups-clothing-neck-goldmedal
   sprite:
