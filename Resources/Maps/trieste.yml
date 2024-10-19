@@ -46608,8 +46608,6 @@ entities:
       pos: 8.5,0.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
   - uid: 7998
     components:
     - type: Transform
