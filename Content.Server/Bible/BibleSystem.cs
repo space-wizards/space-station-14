@@ -137,6 +137,7 @@ namespace Content.Server.Bible
             }
 
             var damage = _damageableSystem.TryChangeDamage(args.Target.Value, component.Damage, true, origin: uid);
+
             bool healedEye = false;
             if (TryComp<BlindableComponent>(args.Target.Value, out var blindable))
             {
@@ -147,21 +148,61 @@ namespace Content.Server.Bible
                 }
             }
 
-            if ((damage == null || damage.Empty) && !healedEye)
+            if (damage == null || damage.Empty) // No damage to heal
             {
-                var othersMessage = Loc.GetString(component.LocPrefix + "-heal-success-none-others", ("user", Identity.Entity(args.User, EntityManager)), ("target", Identity.Entity(args.Target.Value, EntityManager)), ("bible", uid));
-                _popupSystem.PopupEntity(othersMessage, args.User, Filter.PvsExcept(args.User), true, PopupType.Medium);
+                if (blindable is not null && (!healedEye && blindable.EyeDamage > blindable.MinDamage && component.EyeHealChance > 0)) // and did not heal possible eye damage
+                {
+                    var othersMessage = Loc.GetString(component.LocPrefix + "-heal-success-none-others", ("user", Identity.Entity(args.User, EntityManager)), ("target", Identity.Entity(args.Target.Value, EntityManager)), ("bible", uid));
+                    _popupSystem.PopupEntity(othersMessage, args.User, Filter.PvsExcept(args.User), true, PopupType.Medium);
 
-                var selfMessage = Loc.GetString(component.LocPrefix + "-heal-success-none-self", ("target", Identity.Entity(args.Target.Value, EntityManager)), ("bible", uid));
-                _popupSystem.PopupEntity(selfMessage, args.User, args.User, PopupType.Large);
+                    var selfMessage = Loc.GetString(component.LocPrefix + "-eye-fail-self", ("target", Identity.Entity(args.Target.Value, EntityManager)), ("bible", uid));
+                    _popupSystem.PopupEntity(selfMessage, args.User, args.User, PopupType.Large);
+                }
+                else if (!healedEye) // and there is no healable eye damage
+                {
+                    var othersMessage = Loc.GetString(component.LocPrefix + "-heal-success-none-others", ("user", Identity.Entity(args.User, EntityManager)), ("target", Identity.Entity(args.Target.Value, EntityManager)), ("bible", uid));
+                    _popupSystem.PopupEntity(othersMessage, args.User, Filter.PvsExcept(args.User), true, PopupType.Medium);
+
+                    var selfMessage = Loc.GetString(component.LocPrefix + "-heal-success-none-self", ("target", Identity.Entity(args.Target.Value, EntityManager)), ("bible", uid));
+                    _popupSystem.PopupEntity(selfMessage, args.User, args.User, PopupType.Large);
+                }
+                else // and it healed eye sight
+                {
+                    var othersMessage = Loc.GetString(component.LocPrefix + "-eye-success-only-others", ("user", Identity.Entity(args.User, EntityManager)), ("target", Identity.Entity(args.Target.Value, EntityManager)), ("bible", uid));
+                    _popupSystem.PopupEntity(othersMessage, args.User, Filter.PvsExcept(args.User), true, PopupType.Medium);
+
+                    var selfMessage = Loc.GetString(component.LocPrefix + "-eye-success-only-self", ("target", Identity.Entity(args.Target.Value, EntityManager)), ("bible", uid));
+                    _popupSystem.PopupEntity(selfMessage, args.User, args.User, PopupType.Large);
+                    _audio.PlayPvs(component.HealSoundPath, args.User);
+                    _delay.TryResetDelay((uid, useDelay));
+                }
             }
-            else
+            else // healed damage
             {
-                var othersMessage = Loc.GetString(component.LocPrefix + "-heal-success-others", ("user", Identity.Entity(args.User, EntityManager)), ("target", Identity.Entity(args.Target.Value, EntityManager)), ("bible", uid));
-                _popupSystem.PopupEntity(othersMessage, args.User, Filter.PvsExcept(args.User), true, PopupType.Medium);
+                if (blindable is not null && (!healedEye && blindable.EyeDamage > blindable.MinDamage && component.EyeHealChance > 0)) // and did not heal possible eye damage
+                {
+                    var othersMessage = Loc.GetString(component.LocPrefix + "-heal-success-partial-others", ("user", Identity.Entity(args.User, EntityManager)), ("target", Identity.Entity(args.Target.Value, EntityManager)), ("bible", uid));
+                    _popupSystem.PopupEntity(othersMessage, args.User, Filter.PvsExcept(args.User), true, PopupType.Medium);
 
-                var selfMessage = Loc.GetString(component.LocPrefix + "-heal-success-self", ("target", Identity.Entity(args.Target.Value, EntityManager)), ("bible", uid));
-                _popupSystem.PopupEntity(selfMessage, args.User, args.User, PopupType.Large);
+                    var selfMessage = Loc.GetString(component.LocPrefix + "-heal-success-partial-self", ("target", Identity.Entity(args.Target.Value, EntityManager)), ("bible", uid));
+                    _popupSystem.PopupEntity(selfMessage, args.User, args.User, PopupType.Large);
+                }
+                else if (!healedEye) // and there is no healable eye damage
+                {
+                    var othersMessage = Loc.GetString(component.LocPrefix + "-heal-success-others", ("user", Identity.Entity(args.User, EntityManager)), ("target", Identity.Entity(args.Target.Value, EntityManager)), ("bible", uid));
+                    _popupSystem.PopupEntity(othersMessage, args.User, Filter.PvsExcept(args.User), true, PopupType.Medium);
+
+                    var selfMessage = Loc.GetString(component.LocPrefix + "-heal-success-self", ("target", Identity.Entity(args.Target.Value, EntityManager)), ("bible", uid));
+                    _popupSystem.PopupEntity(selfMessage, args.User, args.User, PopupType.Large);
+                }
+                else // and it healed eye sight
+                {
+                    var othersMessage = Loc.GetString(component.LocPrefix + "-heal-success-full-others", ("user", Identity.Entity(args.User, EntityManager)), ("target", Identity.Entity(args.Target.Value, EntityManager)), ("bible", uid));
+                    _popupSystem.PopupEntity(othersMessage, args.User, Filter.PvsExcept(args.User), true, PopupType.Medium);
+
+                    var selfMessage = Loc.GetString(component.LocPrefix + "-heal-success-full-self", ("target", Identity.Entity(args.Target.Value, EntityManager)), ("bible", uid));
+                    _popupSystem.PopupEntity(selfMessage, args.User, args.User, PopupType.Large);
+                }
                 _audio.PlayPvs(component.HealSoundPath, args.User);
                 _delay.TryResetDelay((uid, useDelay));
             }
