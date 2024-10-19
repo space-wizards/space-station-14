@@ -147,7 +147,6 @@ public abstract class SharedRoleSystem : EntitySystem
         EnsureComp<MindRoleComponent>(mindRoleId);
         var mindRoleComp = Comp<MindRoleComponent>(mindRoleId);
 
-        mindRoleComp.Created = _gameTicker.RoundDuration();
         mindRoleComp.Mind = (mindId,mind);
         if (jobPrototype is not null)
         {
@@ -208,25 +207,17 @@ public abstract class SharedRoleSystem : EntitySystem
     {
         // If any Mind Roles specify a Role Type, return the most recent. Otherwise return Neutral
 
-        var roles = new List<(ProtoId<RoleTypePrototype>, TimeSpan)>();
+        var roles = new List<ProtoId<RoleTypePrototype>>();
 
         foreach (var role in Comp<MindComponent>(mindId).MindRoles)
         {
             var comp = Comp<MindRoleComponent>(role);
             if (comp.RoleType is not null)
-                roles.Add((comp.RoleType.Value, comp.Created));
+                roles.Add(comp.RoleType.Value);
         }
 
-        //todo:errant probably no need for this sorting - they are in order already
-        // if (roles.Count > 0)
-        //     roles.OrderByDescending(p => p.Item2);
-        // ProtoId<RoleTypePrototype> result = (roles.Count > 0)? roles[0].Item1 : "Neutral";
-        //TODO:ERRANT but then I don't even need the created date, do I?
-
-        ProtoId<RoleTypePrototype> result = (roles.Count > 0)? roles.LastOrDefault().Item1 : "Neutral";
+        ProtoId<RoleTypePrototype> result = (roles.Count > 0)? roles.LastOrDefault() : "Neutral";
         return (result);
-
-        // return ((roles.Count > 0)? roles.LastOrDefault().Item1 : "Neutral");
     }
 
     private void SetRoleType(EntityUid mind, ProtoId<RoleTypePrototype> roleTypeId)

@@ -62,7 +62,7 @@ internal sealed class AdminNameOverlay : Overlay
             var screenCoordinates = _eyeManager.WorldToScreen(aabb.Center +
                                                               new Angle(-_eyeManager.CurrentEye.Rotation).RotateVec(
                                                                   aabb.TopRight - aabb.Center)) + new Vector2(1f, 7f);
-            if (playerInfo.Antag) //TODO:ERRANT Phase2: Put Role Types on the admin overlay
+            if (playerInfo.Antag) //TODO:ERRANT P2 Put Role Types on the admin overlay
             {
                 args.ScreenHandle.DrawString(_font, screenCoordinates + (lineoffset * 2), "ANTAG", uiScale, Color.OrangeRed);
 ;

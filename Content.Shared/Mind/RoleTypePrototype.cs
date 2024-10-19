@@ -6,7 +6,7 @@ namespace Content.Shared.Mind;
 ///     The core properties of Role Types, not intended to be alterable or uploadable under any conditions
 /// </summary>
 [Prototype, Serializable]
-public sealed partial class RoleTypePrototype : IPrototype
+public sealed class RoleTypePrototype : IPrototype
 {
     [IdDataField]
     public string ID { get; private set; } = default!;

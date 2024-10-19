@@ -47,7 +47,7 @@
   components:
   - type: MindRole
     antagPrototype: SubvertedSilicon
-    roleType: SubvertedSilicon # TODO:ERRANT check this with admins
+    roleType: SubvertedSilicon # TODO:ERRANT ask admins
   - type: SubvertedSiliconRole
 
 # Dragon

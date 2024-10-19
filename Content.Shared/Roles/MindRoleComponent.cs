@@ -30,11 +30,6 @@ public sealed partial class MindRoleComponent : BaseMindRoleComponent
     public bool ExclusiveAntag { get; set; } = false;
 
     /// <summary>
-    ///     The time this role was created
-    /// </summary>
-    public TimeSpan Created { get; set; } = TimeSpan.Zero;
-
-    /// <summary>
     ///     The Mind that this role belongs to
     /// </summary>
     public Entity<MindComponent> Mind { get; set; }
