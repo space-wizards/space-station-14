@@ -1,4 +1,5 @@
 using Content.Server.Emp;
+using Content.Shared.Item;
 using Content.Server.Ninja.Events;
 using Content.Server.Power.Components;
 using Content.Server.PowerCell;
@@ -21,6 +22,11 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
     [Dependency] private readonly SpaceNinjaSystem _ninja = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly SharedItemSystem _item = default!;
+
+    [ValidatePrototypeId<ItemSizePrototype>]
+    // The highest item size of a cell that the ninja suit should be able to contain.
+    private const string NinjaSuitInsertableCellSize = "Normal";
 
     public override void Initialize()
     {
@@ -62,12 +68,39 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
         if (!_powerCell.TryGetBatteryFromSlot(uid, out var battery))
             return;
 
-        // can only upgrade power cell, not swap to recharge instantly otherwise ninja could just swap batteries with flashlights in maints for easy power
-        if (!TryComp<BatteryComponent>(args.EntityUid, out var inserting) || inserting.MaxCharge <= battery.MaxCharge)
+        var user = Transform(uid).ParentUid;
+
+        // as funny as the concept of inserting weapon-grade power cages into the small and nimble ninja suit is, no.
+        if (!TryComp<ItemComponent>(args.EntityUid, out var itemComp) || _item.GetSizePrototype(itemComp.Size) >= _item.GetSizePrototype(NinjaSuitInsertableCellSize)) {
             args.Cancel();
+            Popup.PopupEntity(Loc.GetString("ninja-cell-too-large"), user, user);
+            return;
+        }
+
+        // can only upgrade power cell, not swap to recharge instantly otherwise ninja could just swap batteries with flashlights in maints for easy power
+        if (TryComp<BatteryComponent>(args.EntityUid, out var inserting)) {
+            // assigns a score to both the new and old cell equal to their maximum capacity
+            var oldscore = battery.MaxCharge;
+            var newscore = inserting.MaxCharge;
+            // if a cell is able to automatically recharge, boost the score drastically depending on the recharge rate
+            // this is to ensure a ninja can still add a micro reactor cell even if they already have a medium or high.
+            if(TryComp<BatterySelfRechargerComponent>(battery.Owner, out var oldself))
+                if(oldself.AutoRecharge)
+                    oldscore = oldscore + (oldself.AutoRechargeRate*100);
+            if(TryComp<BatterySelfRechargerComponent>(args.EntityUid, out var newself))
+                if(newself.AutoRecharge)
+                    newscore = newscore + (newself.AutoRechargeRate*100);
+            if(newscore <= oldscore) {
+                args.Cancel();
+                Popup.PopupEntity(Loc.GetString("ninja-cell-downgrade"), user, user);
+                return;
+            }
+        } else {
+            args.Cancel();
+            return;
+        }
 
         // tell ninja abilities that use battery to update it so they don't use charge from the old one
-        var user = Transform(uid).ParentUid;
         if (!_ninja.IsNinja(user))
             return;
 
