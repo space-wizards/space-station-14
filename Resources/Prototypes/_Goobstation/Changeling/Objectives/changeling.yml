@@ -8,8 +8,9 @@
     issuer: objective-issuer-hivemind
   - type: RoleRequirement
     roles:
-      components:
+      mindRoles:
       - ChangelingRole
+
 
 - type: entity
   parent: [BaseChangelingObjective, BaseSurviveObjective]

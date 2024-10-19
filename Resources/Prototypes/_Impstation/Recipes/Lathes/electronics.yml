@@ -1,0 +1,6 @@
+# Recipes - Impstation Custom Additions
+
+- type: latheRecipe
+  parent: BaseCircuitboardRecipe
+  id: ShipyardComputerCircuitboard
+  result: ShipyardComputerCircuitboard

@@ -67,9 +67,13 @@
   background: /Textures/LobbyScreens/KAASIDOSHI.webp
 
 - type: lobbyBackground
-  id: SamanthaBotany
-  background: /Textures/LobbyScreens/grimmbot.webp
+  id: SamGreetingCard
+  background: /Textures/LobbyScreens/greeting_card_lobby.webp
 
 - type: lobbyBackground
   id: Bellmoth
   background: /Textures/LobbyScreens/Shovel_incident.webp
+
+- type: lobbyBackground
+  id: 70'sNovelCover
+  background: /Textures/LobbyScreens/impstation70snovelcover.webp

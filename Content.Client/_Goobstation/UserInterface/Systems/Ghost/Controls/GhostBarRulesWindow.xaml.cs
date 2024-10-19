@@ -25,7 +25,8 @@ namespace Content.Client._Goobstation.UserInterface.Systems.Ghost.Controls
             if (ghostBarTime > 0f)
             {
                 SpawnButton.Text = Loc.GetString("ghost-window-spawn-ghostbar-button-timer", ("time", $"{_timer:0.0}"));
-                TopBanner.SetMessage(FormattedMessage.FromMarkupPermissive(Loc.GetString("ghost-bar-rules") + "\n" + Loc.GetString("ghost-roles-window-rules-footer", ("time", ghostBarTime))));
+                var barRules = Loc.GetString("ghost-bar-rules");
+                TopBanner.SetMessage(FormattedMessage.FromMarkupPermissive(Loc.GetString("ghost-bar-rules") + "\n\n" + Loc.GetString("ghost-roles-window-rules-footer", ("time", ghostBarTime)) + "\n"));
                 SpawnButton.Disabled = true;
             }
 
