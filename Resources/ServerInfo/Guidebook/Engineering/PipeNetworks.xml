@@ -15,4 +15,35 @@
   Pipenets are used all throughout the station to deliver, remove, or otherwise move gas throughout it.
   Great examples are the station's Distro or Wastenet, which deliver breathable air and remove waste gas, respectively.
 
+  ## How Pipenets Work
+  In Space Station 14, pipenets are not a whole, defined volume, with input and output points. Instead, each pipe has its own separate volume.
+
+  <Box>
+    <GuideEntityEmbed Entity="GasPipeStraight" Caption="200L" Rotation="90"/>
+    <GuideEntityEmbed Entity="GasPipeStraight" Caption="200L" Rotation="90"/>
+    <GuideEntityEmbed Entity="GasPipeStraight" Caption="200L" Rotation="90"/>
+    <GuideEntityEmbed Entity="GasPipeStraight" Caption="200L" Rotation="90"/>
+  </Box>
+
+  As previously discussed in Pipes, gas moves freely in between pipes to balance their relative pressures, temperatures, and compositions, in an attempt to reach equilibrium.
+
+  ## Emergent Behavior
+  Because each pipe is its own container that balances with other connected pipes, pipenets see emergent behavior, much like in real life.
+
+  For example, if gas is forced into one end of a pipenet, gas will flow throughout the pipenet to balance the pressure. It will not be made immediately available at the other end.
+
+  <Box>
+    <GuideEntityEmbed Entity="GasPipeStraight" Caption="- -" Rotation="90"/>
+    <GuideEntityEmbed Entity="GasPipeStraight" Caption="- - -" Rotation="90"/>
+    <GuideEntityEmbed Entity="GasPressurePump" Caption="(Preforming Work)" Rotation="90"/>
+    <GuideEntityEmbed Entity="GasPipeStraight" Caption="++++" Rotation="90"/>
+    <GuideEntityEmbed Entity="GasPipeStraight" Caption="+++" Rotation="90"/>
+    <GuideEntityEmbed Entity="GasPipeStraight" Caption="++" Rotation="90"/>
+    <GuideEntityEmbed Entity="GasPipeStraight" Caption="+" Rotation="90"/>
+  </Box>
+  <Box>
+    [color=#999999][italic]Seen above, a pump placed in a pipenet will induce a negative pressure at it's input, and a positive pressure at it's output.
+    This positive pressure will degrade over time and fill the empty space in the pipenet until the pressure is equalized.[italic][/color]
+  </Box>
+
 </Document>
