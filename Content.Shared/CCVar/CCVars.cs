@@ -431,6 +431,12 @@ namespace Content.Shared.CCVar
             CVarDef.Create("game.contraband_examine", true, CVar.SERVER | CVar.REPLICATED);
 
         /// <summary>
+        /// If true, contraband severity can be viewed in the examine menu only in relevant hud
+        /// </summary>
+        public static readonly CVarDef<bool> ContrabandExamineOnlyInHud =
+            CVarDef.Create("game.contraband_examine_only_in_hud", true, CVar.SERVER | CVar.REPLICATED);
+
+        /// <summary>
         /// Size of the lookup area for adding entities to the context menu
         /// </summary>
         public static readonly CVarDef<float> GameEntityMenuLookup =

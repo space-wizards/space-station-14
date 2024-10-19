@@ -22,6 +22,7 @@ public sealed class ContrabandSystem : EntitySystem
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
 
     private bool _contrabandExamineEnabled;
+    private bool _contrabandExamineOnlyInHudEnabled;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -29,11 +30,17 @@ public sealed class ContrabandSystem : EntitySystem
         SubscribeLocalEvent<ContrabandComponent, ExaminedEvent>(OnExamined);
 
         Subs.CVar(_configuration, CCVars.ContrabandExamine, SetContrabandExamine, true);
+        Subs.CVar(_configuration, CCVars.ContrabandExamineOnlyInHud, SetContrabandExamineOnlyInHud, true);
     }
 
     private void SetContrabandExamine(bool val)
     {
         _contrabandExamineEnabled = val;
+    }
+
+    private void SetContrabandExamineOnlyInHud(bool val)
+    {
+        _contrabandExamineOnlyInHudEnabled = val;
     }
 
     public void CopyDetails(EntityUid uid, ContrabandComponent other, ContrabandComponent? contraband = null)
@@ -51,10 +58,11 @@ public sealed class ContrabandSystem : EntitySystem
         if (!_contrabandExamineEnabled)
             return;
 
-        if (TryComp<InventoryComponent>(args.Examiner, out var comp))
-            if (_inventorySystem.TryGetContainerSlotEnumerator(new Entity<InventoryComponent?>(args.Examiner, comp), out var inventorySlot, SlotFlags.EYES))
-                if(inventorySlot.NextItem(out var item))
-                    if (!TryComp<ShowJobIconsComponent>(item, out var jComp)) return;
+        if(_contrabandExamineOnlyInHudEnabled)
+            if (TryComp<InventoryComponent>(args.Examiner, out var comp))
+                if (_inventorySystem.TryGetContainerSlotEnumerator(new Entity<InventoryComponent?>(args.Examiner, comp), out var inventorySlot, SlotFlags.EYES))
+                    if(inventorySlot.NextItem(out var item))
+                        if (!TryComp<ShowJobIconsComponent>(item, out var jComp)) return;
         // two strings:
         // one, the actual informative 'this is restricted'
         // then, the 'you can/shouldn't carry this around' based on the ID the user is wearing
