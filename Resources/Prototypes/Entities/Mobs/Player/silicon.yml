@@ -399,6 +399,9 @@
     - state: ai_camera
       shader: unshaded
       map: ["base"]
+  - type: Tag
+    tags:
+    - StationAi
 
 # Borgs
 - type: entity
