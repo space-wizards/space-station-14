@@ -1,0 +1,18 @@
+﻿<Document>
+  # Pipe Networks
+  Pipe networks — commonly called Pipenets — are a series of interconnected pipes, usually with a common task.
+
+  <Box>
+    <GuideEntityEmbed Entity="GasPipeStraight" Caption=""/>
+    <GuideEntityEmbed Entity="GasPipeHalf" Caption=""/>
+    <GuideEntityEmbed Entity="GasPipeBend" Caption=""/>
+    <GuideEntityEmbed Entity="GasPipeTJunction" Caption=""/>
+    <GuideEntityEmbed Entity="GasPipeFourway" Caption=""/>
+    <GuideEntityEmbed Entity="GasPressurePump" Caption=""/>
+    <GuideEntityEmbed Entity="GasVolumePump" Caption=""/>
+  </Box>
+
+  Pipenets are used all throughout the station to deliver, remove, or otherwise move gas throughout it.
+  Great examples are the station's Distro or Wastenet, which deliver breathable air and remove waste gas, respectively.
+
+</Document>
