@@ -101,10 +101,24 @@ public class RadialMenu : BaseWindow
     {
         if (child is RadialContainer { Visible: true } container)
         {
-            ContextualButton.ParentCenter = Size * 0.5f;
+            ContextualButton.ParentCenter = MinSize * 0.5f;
             ContextualButton.InnerRadius = container.Radius * 0.5f;
             ContextualButton.OuterRadius = container.Radius * 2;
         }
+    }
+
+    /// <inheritdoc />
+    protected override Vector2 ArrangeOverride(Vector2 finalSize)
+    {
+        var result = base.ArrangeOverride(finalSize);
+
+        var currentLayer = GetCurrentActiveLayer();
+        if (currentLayer != null)
+        {
+            SetupContextualButtonData(currentLayer);
+        }
+
+        return result;
     }
 
     private Control? GetCurrentActiveLayer()
@@ -294,6 +308,14 @@ public interface IRadialMenuItemWithSector
     /// </summary>
     public float InnerRadius { set; }
 
+    /// <summary>
+    /// Offset in radian by which menu button should be rotated.
+    /// </summary>
+    public float AngleOffset { set; }
+
+    /// <summary>
+    /// Coordinates of center in parent component - button container.
+    /// </summary>
     public Vector2 ParentCenter { set; }
 }
 
@@ -306,6 +328,7 @@ public class RadialMenuTextureButtonWithSector : RadialMenuTextureButton, IRadia
     private float _angleSectorTo;
     private float _outerRadius;
     private float _innerRadius;
+    private float _angleOffset;
 
     private bool _isWholeCircle;
     private Vector2? _parentCenter;
@@ -384,6 +407,9 @@ public class RadialMenuTextureButtonWithSector : RadialMenuTextureButton, IRadia
     float IRadialMenuItemWithSector.InnerRadius { set => _innerRadius = value; }
 
     /// <inheritdoc />
+    public float AngleOffset { set => _angleOffset = value; }
+
+    /// <inheritdoc />
     Vector2 IRadialMenuItemWithSector.ParentCenter { set => _parentCenter = value; }
 
     /// <summary>
@@ -406,13 +432,15 @@ public class RadialMenuTextureButtonWithSector : RadialMenuTextureButton, IRadia
         // draw sector where space that button occupies actually is
         var containerCenter = (_parentCenter.Value - Position) * UIScale;
 
+        var angleFrom = _angleSectorFrom + _angleOffset;
+        var angleTo = _angleSectorTo + _angleOffset;
         if (DrawBackground)
         {
             var segmentColor = DrawMode == DrawModeEnum.Hover
                 ? HoverBackgroundColor
                 : BackgroundColor;
 
-            DrawAnnulusSector(handle, containerCenter, _innerRadius, _outerRadius, _angleSectorFrom, _angleSectorTo, segmentColor);
+            DrawAnnulusSector(handle, containerCenter, _innerRadius, _outerRadius, angleFrom, angleTo, segmentColor);
         }
 
         if (DrawBorder)
@@ -420,12 +448,12 @@ public class RadialMenuTextureButtonWithSector : RadialMenuTextureButton, IRadia
             var borderColor = DrawMode == DrawModeEnum.Hover
                 ? HoverBorderColor
                 : BorderColor;
-            DrawAnnulusSector(handle, containerCenter, _innerRadius, _outerRadius, _angleSectorFrom, _angleSectorTo, borderColor, false);
+            DrawAnnulusSector(handle, containerCenter, _innerRadius, _outerRadius, angleFrom, angleTo, borderColor, false);
         }
 
         if (!_isWholeCircle && DrawSeparators)
         {
-            DrawSeparatorLines(handle, containerCenter, _innerRadius, _outerRadius, _angleSectorFrom, _angleSectorTo, SeparatorColor);
+            DrawSeparatorLines(handle, containerCenter, _innerRadius, _outerRadius, angleFrom, angleTo, SeparatorColor);
         }
     }
 
@@ -451,13 +479,14 @@ public class RadialMenuTextureButtonWithSector : RadialMenuTextureButton, IRadia
         var pointFromParent = point + Position - _parentCenter.Value;
 
         // Flip Y to get from ui coordinates to natural coordinates
-        var angle = MathF.Atan2(-pointFromParent.Y, pointFromParent.X);
+        var angle = MathF.Atan2(-pointFromParent.Y, pointFromParent.X) - _angleOffset;
         if (angle < 0)
         {
             // atan2 range is -pi->pi, while angle sectors are
             // 0->2pi, so remap the result into that range
             angle = MathF.PI * 2 + angle;
         }
+
         var isInAngle = angle >= _angleSectorFrom && angle < _angleSectorTo;
         return isInAngle;
     }
@@ -534,14 +563,14 @@ public class RadialMenuTextureButtonWithSector : RadialMenuTextureButton, IRadia
         Color color
     )
     {
-        var fromPoint = new Angle(angleSectorFrom).RotateVec(Vector2.UnitX);
+        var fromPoint = new Angle(-angleSectorFrom).RotateVec(Vector2.UnitX);
         drawingHandleScreen.DrawLine(
             center + fromPoint * radiusOuter,
             center + fromPoint * radiusInner,
             color
         );
 
-        var toPoint = new Angle(angleSectorTo).RotateVec(Vector2.UnitX);
+        var toPoint = new Angle(-angleSectorTo).RotateVec(Vector2.UnitX);
         drawingHandleScreen.DrawLine(
             center + toPoint * radiusOuter,
             center + toPoint * radiusInner,

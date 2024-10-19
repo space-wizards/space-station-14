@@ -111,11 +111,15 @@ public class RadialContainer : LayoutContainer
         var query = children.Select((x, index) => (index, x));
         foreach (var (childIndex, child) in query)
         {
-            var targetAngleOfChild = AngularRange.X + sepAngle * (childIndex + 0.5f);
+            const float angleOffset = MathF.PI * 0.5f;
 
+            var targetAngleOfChild = AngularRange.X + sepAngle * (childIndex + 0.5f) + angleOffset;
+
+            // flooring values for snapping float values to physical grid -
+            // it prevents gaps and overlapping between different button segments
             var position = new Vector2(
-                    Radius * MathF.Cos(targetAngleOfChild),
-                    -Radius * MathF.Sin(targetAngleOfChild)
+                    MathF.Floor(Radius * MathF.Cos(targetAngleOfChild)),
+                    MathF.Floor(-Radius * MathF.Sin(targetAngleOfChild))
                 ) + controlCenter - child.DesiredSize * 0.5f + Position;
 
             SetPosition(child, position);
@@ -126,6 +130,7 @@ public class RadialContainer : LayoutContainer
             {
                 tb.AngleSectorFrom = sepAngle * childIndex;
                 tb.AngleSectorTo = sepAngle * (childIndex + 1);
+                tb.AngleOffset = angleOffset;
                 tb.InnerRadius = Radius / 2;
                 tb.OuterRadius = Radius * 2;
                 tb.ParentCenter = controlCenter;
