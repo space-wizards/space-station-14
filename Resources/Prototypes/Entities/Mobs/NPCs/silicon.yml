@@ -300,17 +300,6 @@
       path: /Audio/Ambience/Objects/periodic_beep.ogg
 
 - type: entity
-  parent: MobMedibot
-  id: MobMedibotOrder
-  name: medibot
-  suffix: order
-  components:
-  - type: HTN
-    rootTask:
-      task: OrderCompound
-    planCooldown: 5
-
-- type: entity
   parent:
   - MobSiliconBase
   - ShowMedicalIcons
