@@ -661,7 +661,7 @@ entities:
     - type: GasTileOverlay
     - type: RadiationGridResistance
     - type: BecomesStation
-      id: Trieste
+      id: trieste
     - type: Parallax
       parallax: Sky
     - type: MapAtmosphere

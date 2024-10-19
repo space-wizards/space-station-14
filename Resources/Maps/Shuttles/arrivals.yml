@@ -63,6 +63,11 @@ entities:
         nodes:
         - node:
             color: '#FFFFFFFF'
+            id: Bot
+          decals:
+            10: 1,1
+        - node:
+            color: '#FFFFFFFF'
             id: Delivery
           decals:
             0: 3,0
@@ -102,21 +107,22 @@ entities:
       data:
         tiles:
           0,0:
-            0: 1263
-            1: 41216
+            0: 1135
+            1: 128
+            2: 41216
           0,-1:
             0: 49124
-            1: 1
+            2: 1
           -1,0:
-            1: 132
+            2: 132
           1,0:
             0: 1
-            1: 292
+            2: 292
           1,-1:
             0: 12544
-            1: 1057
+            2: 1057
           -1,-1:
-            1: 1152
+            2: 1152
             0: 32768
           0,-2:
             0: 16384
@@ -126,6 +132,21 @@ entities:
           moles:
           - 21.824879
           - 82.10312
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.14975
+          moles:
+          - 20.078888
+          - 75.53487
           - 0
           - 0
           - 0
@@ -387,13 +408,6 @@ entities:
     - type: InsideEntityStorage
 - proto: ClothingMaskBreathMedicalSecurity
   entities:
-  - uid: 83
-    components:
-    - type: Transform
-      parent: 82
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
   - uid: 87
     components:
     - type: Transform
@@ -403,42 +417,6 @@ entities:
     - type: InsideEntityStorage
 - proto: ClothingOuterHardsuitPirateEVA
   entities:
-  - uid: 85
-    components:
-    - type: Transform
-      parent: 82
-    - type: GroupExamine
-      group:
-      - hoverMessage: ""
-        contextText: verb-examine-group-other
-        icon: /Textures/Interface/examine-star.png
-        components:
-        - Armor
-        - ClothingSpeedModifier
-        entries:
-        - message: This decreases your speed by [color=yellow]40%[/color].
-          priority: 0
-          component: ClothingSpeedModifier
-        - message: >-
-            It provides the following protection:
-
-            - [color=yellow]Blunt[/color] damage reduced by [color=lightblue]20%[/color].
-
-            - [color=yellow]Slash[/color] damage reduced by [color=lightblue]20%[/color].
-
-            - [color=yellow]Piercing[/color] damage reduced by [color=lightblue]10%[/color].
-
-            - [color=yellow]Heat[/color] damage reduced by [color=lightblue]60%[/color].
-
-            - [color=yellow]Caustic[/color] damage reduced by [color=lightblue]25%[/color].
-
-            - [color=orange]Explosion[/color] damage reduced by [color=lightblue]30%[/color].
-          priority: 0
-          component: Armor
-        title: null
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
   - uid: 89
     components:
     - type: Transform
@@ -448,13 +426,6 @@ entities:
     - type: InsideEntityStorage
 - proto: DoubleEmergencyOxygenTankFilled
   entities:
-  - uid: 84
-    components:
-    - type: Transform
-      parent: 82
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
   - uid: 88
     components:
     - type: Transform
@@ -522,6 +493,138 @@ entities:
       rot: 3.141592653589793 rad
       pos: 1.5,0.5
       parent: 1
+- proto: MarkerInside
+  entities:
+  - uid: 83
+    components:
+    - type: Transform
+      pos: -0.5,-0.5
+      parent: 1
+  - uid: 84
+    components:
+    - type: Transform
+      pos: 0.5,-0.5
+      parent: 1
+  - uid: 85
+    components:
+    - type: Transform
+      pos: 1.5,-0.5
+      parent: 1
+  - uid: 104
+    components:
+    - type: Transform
+      pos: 1.5,-1.5
+      parent: 1
+  - uid: 105
+    components:
+    - type: Transform
+      pos: 0.5,-1.5
+      parent: 1
+  - uid: 106
+    components:
+    - type: Transform
+      pos: 1.5,-2.5
+      parent: 1
+  - uid: 107
+    components:
+    - type: Transform
+      pos: 2.5,-2.5
+      parent: 1
+  - uid: 108
+    components:
+    - type: Transform
+      pos: 3.5,-2.5
+      parent: 1
+  - uid: 109
+    components:
+    - type: Transform
+      pos: 2.5,-3.5
+      parent: 1
+  - uid: 110
+    components:
+    - type: Transform
+      pos: 2.5,-1.5
+      parent: 1
+  - uid: 111
+    components:
+    - type: Transform
+      pos: 3.5,-1.5
+      parent: 1
+  - uid: 112
+    components:
+    - type: Transform
+      pos: 4.5,-1.5
+      parent: 1
+  - uid: 113
+    components:
+    - type: Transform
+      pos: 4.5,-0.5
+      parent: 1
+  - uid: 114
+    components:
+    - type: Transform
+      pos: 5.5,-0.5
+      parent: 1
+  - uid: 115
+    components:
+    - type: Transform
+      pos: 3.5,-0.5
+      parent: 1
+  - uid: 116
+    components:
+    - type: Transform
+      pos: 3.5,0.5
+      parent: 1
+  - uid: 117
+    components:
+    - type: Transform
+      pos: 4.5,0.5
+      parent: 1
+  - uid: 118
+    components:
+    - type: Transform
+      pos: 2.5,0.5
+      parent: 1
+  - uid: 119
+    components:
+    - type: Transform
+      pos: 1.5,0.5
+      parent: 1
+  - uid: 120
+    components:
+    - type: Transform
+      pos: 0.5,0.5
+      parent: 1
+  - uid: 121
+    components:
+    - type: Transform
+      pos: 1.5,1.5
+      parent: 1
+  - uid: 122
+    components:
+    - type: Transform
+      pos: 2.5,1.5
+      parent: 1
+  - uid: 123
+    components:
+    - type: Transform
+      pos: 3.5,1.5
+      parent: 1
+  - uid: 124
+    components:
+    - type: Transform
+      pos: 2.5,2.5
+      parent: 1
+  - uid: 125
+    components:
+    - type: Transform
+      pos: 2.5,-0.5
+      parent: 1
+  - uid: 126
+    components:
+    - type: Transform
+      pos: 2.5,-4.5
+      parent: 1
 - proto: PosterBroken
   entities:
   - uid: 92
@@ -587,6 +690,17 @@ entities:
     - type: Transform
       pos: 3.5,0.5
       parent: 1
+- proto: SpaceHeaterAnchored
+  entities:
+  - uid: 82
+    components:
+    - type: Transform
+      pos: 2.5,0.5
+      parent: 1
+    - type: ApcPowerReceiver
+      powerDisabled: False
+    - type: GasThermoMachine
+      targetTemperature: 303.15
 - proto: SubstationWallBasic
   entities:
   - uid: 48
@@ -596,34 +710,38 @@ entities:
       parent: 1
 - proto: SuitStorageBase
   entities:
-  - uid: 82
-    components:
-    - type: Transform
-      pos: 1.5,1.5
-      parent: 1
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 83
-          - 84
-          - 85
   - uid: 86
     components:
     - type: Transform
       pos: 3.5,1.5
       parent: 1
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.14673
+        moles:
+        - 1.7459903
+        - 6.568249
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
     - type: ContainerContainer
       containers:
         entity_storage: !type:Container
           showEnts: False
           occludes: True
           ents:
-          - 87
-          - 88
           - 89
+          - 88
+          - 87
 - proto: WallMining
   entities:
   - uid: 2

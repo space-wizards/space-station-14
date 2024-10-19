@@ -1968,6 +1968,7 @@
   itemDrop: FloorTileItemWood
   heatCapacity: 100000
   weather: true
+  isSpace: true
 
 - type: tile
   id: FloorInvisibleReal
@@ -1988,3 +1989,4 @@
   itemDrop: FloorTileItemWood
   heatCapacity: 100000
   weather: true
+  isSpace: true

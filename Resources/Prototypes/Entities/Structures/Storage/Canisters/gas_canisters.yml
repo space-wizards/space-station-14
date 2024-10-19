@@ -839,4 +839,4 @@
   noSpawn: true
   components:
     - type: Sprite
-      state: water-1
+      state: yellow-1

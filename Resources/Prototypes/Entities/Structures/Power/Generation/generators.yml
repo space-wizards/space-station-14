@@ -325,31 +325,29 @@
   parent: GeneratorRTG
   id: TheArtifact
   name: The Artifact
-  description: An ancient power generation device.
-  suffix: Be Careful
+  description: An ancient power generation device, the lifeblood of Sweetwater and Trieste.
   components:
   - type: PowerSupplier
-    supplyRate: 1000000
+    supplyRate: 0
   - type: Sprite
     sprite: Structures/Power/Generation/artifact.rsi
     layers:
       - state: artifact_1
-      - state: artifact_2
   - type: PowerMonitoringDevice
     sprite: Structures/Power/Generation/rtg.rsi
     state: rtg_damaged
   - type: RadiationSource
     intensity: 10
   - type: LightningArcShooter
-    arcDepth: 3
-    maxLightningArc: 4
-    shootMinInterval: 3
-    shootMaxInterval: 5
+    arcDepth: 4
+    maxLightningArc: 5
+    shootMinInterval: 2
+    shootMaxInterval: 4
     shootRange: 7
     lightningPrototype: Lightning
   - type: GravityWell
-    baseRadialAcceleration: 10
-    maxRange: 6
+    baseRadialAcceleration: 15
+    maxRange: 8
   - type: Electrified
   - type: Fixtures
     fixtures:
@@ -364,5 +362,8 @@
         - WallLayer
   - type: PointLight
     enabled: true
-    radius: 5
+    radius: 10
     color: "#4080FF"
+  - type: SingularityDistortion
+    falloffPower: 3
+    intensity: -2000

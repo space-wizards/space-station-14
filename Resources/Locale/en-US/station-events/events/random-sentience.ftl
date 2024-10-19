@@ -1,19 +1,19 @@
 ﻿## Phrases used for where central command got this information.
-random-sentience-event-data-1 = scans from our long-range sensors
-random-sentience-event-data-2 = our sophisticated probabilistic models
-random-sentience-event-data-3 = our omnipotence
-random-sentience-event-data-4 = the communications traffic on your station
-random-sentience-event-data-5 = energy emissions we detected
+random-sentience-event-data-1 = scans from my long-range sensors
+random-sentience-event-data-2 = my sophisticated probabilistic models
+random-sentience-event-data-3 = my omnipotence
+random-sentience-event-data-4 = a signal from Sweetwater
+random-sentience-event-data-5 = energy emissions I have detected
 random-sentience-event-data-6 = [REDACTED]
 
 ## Phrases used to describe the level of intelligence, though it doesn't actually affect anything.
 random-sentience-event-strength-1 = human
-random-sentience-event-strength-2 = primate
+random-sentience-event-strength-2 = NanoTrasen
 random-sentience-event-strength-3 = moderate
 random-sentience-event-strength-4 = security
 random-sentience-event-strength-5 = command
 random-sentience-event-strength-6 = clown
-random-sentience-event-strength-7 = low
+random-sentience-event-strength-7 = corporate
 random-sentience-event-strength-8 = AI
 
 ## Announcement text

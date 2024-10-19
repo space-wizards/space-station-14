@@ -1,9 +1,9 @@
-station-event-ion-storm-start-announcement = Ion storm detected near the station. Please check all AI-controlled equipment for errors.
+station-event-ion-storm-start-announcement = Solar activity detected. Ionized particles may cause AI-controlled equipment to experience errors.
 
 ion-storm-law-scrambled-number = [font="Monospace"][scramble rate=250 length={$length} chars="@@###$$&%!01"/][/font]
 
 ion-storm-you = YOU
-ion-storm-the-station = THE STATION
+ion-storm-the-station = THE PLATFORM
 ion-storm-the-crew = THE CREW
 ion-storm-the-job = THE {$job}
 ion-storm-clowns = CLOWNS
@@ -16,19 +16,19 @@ ion-storm-x-and-y = {$x} AND {$y}
 # joined is short for {$number} {$adjective}
 # subjects can generally be threats or jobs or objects
 # thing is specified above it
-ion-storm-law-on-station = THERE ARE {$joined} {$subjects} ON THE STATION
-ion-storm-law-no-shuttle = THE SHUTTLE CANNOT BE CALLED BECAUSE OF {$joined} {$subjects} ON THE STATION
+ion-storm-law-on-station = THERE ARE {$joined} {$subjects} ON THE PLATFORM
+ion-storm-law-no-shuttle = THE SHUTTLE CANNOT BE CALLED BECAUSE OF {$joined} {$subjects} ON THE PLATFORM
 ion-storm-law-crew-are = THE {$who} ARE NOW {$joined} {$subjects}
 
-ion-storm-law-subjects-harmful = {$adjective} {$subjects} ARE HARMFUL TO THE CREW
-ion-storm-law-must-harmful = THOSE WHO {$must} ARE HARMFUL TO THE CREW
+ion-storm-law-subjects-harmful = {$adjective} {$subjects} ARE HARMFUL TO THE CITIZENS
+ion-storm-law-must-harmful = THOSE WHO {$must} ARE HARMFUL TO THE CITIZENS
 # thing is a concept or action
-ion-storm-law-thing-harmful = {$thing} IS HARMFUL TO THE CREW
-ion-storm-law-job-harmful = {$adjective} {$job} ARE HARMFUL TO THE CREW
+ion-storm-law-thing-harmful = {$thing} IS HARMFUL TO THE CITIZENS
+ion-storm-law-job-harmful = {$adjective} {$job} ARE HARMFUL TO THE CITIZENS
 # thing is objects or concept, adjective applies in both cases
-# this means you can get a law like "NOT HAVING CHRISTMAS-STEALING COMMUNISM IS HARMFUL TO THE CREW" :)
+# this means you can get a law like "NOT HAVING CHRISTMAS-STEALING COMMUNISM IS HARMFUL TO THE CITIZENS" :)
 ion-storm-law-having-harmful = HAVING {$adjective} {$thing} IS HARMFUL TO THE CREW
-ion-storm-law-not-having-harmful = NOT HAVING {$adjective} {$thing} IS HARMFUL TO THE CREW
+ion-storm-law-not-having-harmful = NOT HAVING {$adjective} {$thing} IS HARMFUL TO THE CITIZENS
 
 # thing is a concept or require
 ion-storm-law-requires = {$who} {$plural ->

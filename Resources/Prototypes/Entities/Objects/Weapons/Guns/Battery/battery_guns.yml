@@ -447,10 +447,10 @@
       - Security
 
 - type: entity
-  name: blaster
+  name: TX-220 particle pistol
   parent: BaseWeaponBatterySmall
   id: WeaponBlaster
-  description: Standard-issue civilian-grade particle weapon.
+  description: A reliable energy weapon found across the frontier sectors of the galaxy.
   components:
     - type: Tag
       tags:
@@ -471,7 +471,7 @@
         - suitStorage
         - Belt
     - type: Gun
-      fireRate: 2
+      fireRate: 1.5
       soundGunshot:
         path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
     - type: ProjectileBatteryAmmoProvider
