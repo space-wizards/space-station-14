@@ -154,7 +154,7 @@ entities:
     - type: Fixtures
       fixtures: {}
     - type: BecomesStation
-      id: Trieste
+      id: trieste
     - type: OccluderTree
     - type: SpreaderGrid
       updateAccumulator: 0.5023197

@@ -66,7 +66,7 @@ public sealed partial class AtmosphereSystem
        mixtures[6].Temperature = 235f; // Little colder than an actual freezer but gives a grace period to get e.g. themomachines set up, should keep warm for a few door openings
 
        // 7: Water
-       mixtures[7].AdjustMoles(Gas.Water, Atmospherics.MolesCellGasMiner);
+       mixtures[7].AdjustMoles(Gas.Water, Atmospherics.WaterMolesStandard);
        mixtures[7].Temperature = 40f; // god help us all
 
        foreach (var arg in args)

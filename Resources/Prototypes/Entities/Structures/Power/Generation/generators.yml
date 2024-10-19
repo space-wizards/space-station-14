@@ -365,5 +365,5 @@
     radius: 10
     color: "#4080FF"
   - type: SingularityDistortion
-    falloffPower: 2.529822
-    intensity: -1645
+    falloffPower: 3
+    intensity: -2000
