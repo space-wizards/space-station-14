@@ -58,11 +58,25 @@ public sealed class ContrabandSystem : EntitySystem
         if (!_contrabandExamineEnabled)
             return;
 
-        if(_contrabandExamineOnlyInHudEnabled)
-            if (TryComp<InventoryComponent>(args.Examiner, out var comp))
-                if (_inventorySystem.TryGetContainerSlotEnumerator(new Entity<InventoryComponent?>(args.Examiner, comp), out var inventorySlot, SlotFlags.EYES))
-                    if(inventorySlot.NextItem(out var item))
-                        if (!TryComp<ShowJobIconsComponent>(item, out var jComp)) return;
+        if (_contrabandExamineOnlyInHudEnabled)
+        {
+            if (TryComp<InventoryComponent>(args.Examiner, out var comp) && _inventorySystem.TryGetContainerSlotEnumerator(new Entity<InventoryComponent?>(args.Examiner, comp), out var inventorySlot, SlotFlags.EYES))
+            {
+                if (inventorySlot.NextItem(out var item))
+                {
+                    if (!TryComp<ShowContrabandDetailsComponent>(item, out var jComp)) return;
+                }
+                else
+                {
+                    return;
+                }
+            }
+            else
+            {
+                return;
+            }
+        }
+
         // two strings:
         // one, the actual informative 'this is restricted'
         // then, the 'you can/shouldn't carry this around' based on the ID the user is wearing
