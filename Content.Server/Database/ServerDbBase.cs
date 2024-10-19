@@ -896,7 +896,7 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
                 catch (Exception ex)
                 {
                     attempt += 1;
-                    _opsLog.Error($"Attempt {attempt} failed to save logs: {ex.Message}");
+                    _opsLog.Error($"Attempt {attempt} failed to save logs: {ex}");
 
                     if (attempt >= maxRetryAttempts)
                     {
