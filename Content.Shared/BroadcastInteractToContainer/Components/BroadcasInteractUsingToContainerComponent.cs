@@ -13,21 +13,21 @@ public abstract partial class BroadcastUsingToContainerComponent : Component
 
 
 /// <summary>
-///  Provides broadcasting interaction event from entity to entities in it's container. Also implements whitelists/blacklists.
+///  Provides broadcasting interaction event from used entity to entities in it's container. Also implements whitelists/blacklists.
 /// </summary>
 [RegisterComponent]
-public sealed partial class BroadcastInteractUsingToContainerComponent : BroadcastUsingToContainerComponent { }
+public sealed partial class BroadcastInteractingFromContainerComponent : BroadcastUsingToContainerComponent { }
 
 /// <summary>
-///  Provides broadcasting target of interaction event from entity to entities in it's container. Also implements whitelists/blacklists.
+///  Provides broadcasting target of interaction event from target entity to entities in it's container. Also implements whitelists/blacklists.
 /// </summary>
 [RegisterComponent]
-public sealed partial class BroadcastInteractUsingTargetToContainerComponent : BroadcastUsingToContainerComponent { }
+public sealed partial class BroadcastInteractingIntoContainerComponent : BroadcastUsingToContainerComponent { }
 
 /// <summary>
-///  Provides broadcasting after interaction event from entity to entities in it's container. Also implements whitelists/blacklists.
+///  Provides broadcasting after interaction event from used entity to entities in it's container. Also implements whitelists/blacklists.
 /// </summary>
 [RegisterComponent]
-public sealed partial class BroadcastAfterInteractUsingToContainerComponent : BroadcastUsingToContainerComponent { }
+public sealed partial class BroadcastAfterInteractingFromContainerComponent : BroadcastUsingToContainerComponent { }
 
 

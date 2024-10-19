@@ -6,28 +6,28 @@ using Robust.Shared.Map;
 namespace Content.Shared.BroadcastInteractionUsingToContainer;
 
 /// <summary>
-/// Raised if entity with <see cref="BroadcastInteractUsingToContainerComponent"/> interact with something.
+/// Raised if entity with <see cref="BroadcastInteractingFromContainerComponent"/> interact with something.
 /// Raised after <see cref="BeforeRangedInteractEvent"/> and before <see cref="InteractUsingEvent"/>.
 /// </summary>
-public sealed class InteractBeforeUsingWithInContainerEvent(EntityUid user, EntityUid used,
+public sealed class InteractBeforeUsingFromContainerEvent(EntityUid user, EntityUid used,
                                     EntityUid? target, EntityCoordinates clickLocation, bool canReach)
                                     : InteractEvent(user, used, target, clickLocation, canReach)
 { }
 
 /// <summary>
-/// Raised if entity with <see cref="BroadcastInteractUsingTargetToContainerComponent"/> interact with something.
+/// Raised if entity with <see cref="BroadcastInteractingIntoContainerComponent"/> being interacted by something.
 /// Raised after <see cref="InteractUsingEvent"/> and before <see cref="AfterInteractEvent"/>.
 /// </summary>
-public sealed class InteractUsingTargetInContainerEvent(EntityUid user, EntityUid used,
+public sealed class InteractUsedIntoContainerEvent(EntityUid user, EntityUid used,
                                     EntityUid? target, EntityCoordinates clickLocation, bool canReach)
                                     : InteractEvent(user, used, target, clickLocation, canReach)
 { }
 
 /// <summary>
-/// Raised if entity with <see cref="BroadcastAfterInteractUsingToContainerComponent"/> interact with something.
+/// Raised if entity with <see cref="BroadcastAfterInteractingFromContainerComponent"/> interact with something.
 /// Raised after <see cref="AfterInteractEvent"/>.
 /// </summary>
-public sealed class InteractAfterUsingWithInContainerEvent(EntityUid user, EntityUid used, EntityUid? target,
+public sealed class InteractAfterUsingFromContainerEvent(EntityUid user, EntityUid used, EntityUid? target,
                                                         EntityCoordinates clickLocation, bool canReach)
                                                         : InteractEvent(user, used, target, clickLocation, canReach)
 { }

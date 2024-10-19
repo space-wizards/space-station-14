@@ -15,7 +15,7 @@ public sealed partial class EncryptionKeyChannelsCopySystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<EncryptionKeyChannelsCopyComponent, InteractBeforeUsingWithInContainerEvent>(OnInteractUsingInContainer);
+        SubscribeLocalEvent<EncryptionKeyChannelsCopyComponent, InteractBeforeUsingFromContainerEvent>(OnInteractUsingInContainer);
         SubscribeLocalEvent<EncryptionKeyChannelsCopyComponent, BeforeRangedInteractEvent>(OnBeforeInteractWith);
     }
 
@@ -53,7 +53,7 @@ public sealed partial class EncryptionKeyChannelsCopySystem : EntitySystem
         return false;
     }
 
-    private void OnInteractUsingInContainer(Entity<EncryptionKeyChannelsCopyComponent> ent, ref InteractBeforeUsingWithInContainerEvent args)
+    private void OnInteractUsingInContainer(Entity<EncryptionKeyChannelsCopyComponent> ent, ref InteractBeforeUsingFromContainerEvent args)
     {
         if (args.Target == null || args.Handled || !args.CanReach)
             return;
@@ -74,8 +74,8 @@ public sealed partial class EncryptionKeyChannelsCopySystem : EntitySystem
     private void AddChannelsAndPopup(Entity<EncryptionKeyComponent> receiver, HashSet<string> channels, EntityUid sourceUid)
     {
         if (_encryptionKey.AddChannels(receiver, channels))
-            _popup.PopupCursor(_localization.GetString("encryption-key-channel-copy-successful", ("used", receiver.Owner), ("target", sourceUid)), PopupType.Medium);
+            _popup.PopupCursor(_localization.GetString("encryption-key-channel-copy-successful", ("used", receiver.Owner), ("target", sourceUid)));
         else
-            _popup.PopupCursor(_localization.GetString("encryption-key-channel-copy-failed", ("used", receiver.Owner), ("target", sourceUid)), PopupType.Medium);
+            _popup.PopupCursor(_localization.GetString("encryption-key-channel-copy-failed", ("used", receiver.Owner), ("target", sourceUid)));
     }
 }

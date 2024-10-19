@@ -51,11 +51,11 @@
       Cartridge-Slot: !type:ContainerSlot {}
       program-container: !type:Container
   - type: ItemSlots
-  - type: BroadcastInteractUsingToContainer
+  - type: BroadcastInteractingFromContainer
     whitelist:
       components:
         - AgentIDCard
-  - type: BroadcastInteractUsingTargetToContainer
+  - type: BroadcastInteractingIntoContainer
     whitelist:
       components:
         - IdCard

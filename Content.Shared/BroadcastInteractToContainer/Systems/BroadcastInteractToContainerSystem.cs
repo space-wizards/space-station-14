@@ -20,12 +20,12 @@ public sealed partial class BroadcastInteractUsingToContainerSystem : EntitySyst
     {
         base.Initialize();
 
-        SubscribeLocalEvent<BroadcastInteractUsingToContainerComponent, BeforeRangedInteractEvent>(OnBeforeInteractUsing);
-        SubscribeLocalEvent<BroadcastInteractUsingTargetToContainerComponent, InteractUsingEvent>(OnInteractUsing);
-        SubscribeLocalEvent<BroadcastAfterInteractUsingToContainerComponent, AfterInteractEvent>(OnAfterInteractUsing);
+        SubscribeLocalEvent<BroadcastInteractingFromContainerComponent, BeforeRangedInteractEvent>(OnBeforeInteractUsing);
+        SubscribeLocalEvent<BroadcastInteractingIntoContainerComponent, InteractUsingEvent>(OnInteractUsing);
+        SubscribeLocalEvent<BroadcastAfterInteractingFromContainerComponent, AfterInteractEvent>(OnAfterInteractUsing);
     }
 
-    private void OnBeforeInteractUsing(Entity<BroadcastInteractUsingToContainerComponent> entity, ref BeforeRangedInteractEvent args)
+    private void OnBeforeInteractUsing(Entity<BroadcastInteractingFromContainerComponent> entity, ref BeforeRangedInteractEvent args)
     {
         if (args.Handled)
             return;
@@ -35,15 +35,18 @@ public sealed partial class BroadcastInteractUsingToContainerSystem : EntitySyst
         GetAllowedContainedEntitiesAndBroadcast((entity.Owner, entity.Comp), ref wrapEvent, (EntityUid containedUid, ref EventWrapper wrapEvent) =>
         {
             //changed used -> containedUid
-            var interactEvent = new InteractBeforeUsingWithInContainerEvent(wrapEvent.User, containedUid, wrapEvent.Target,
+            var interactEvent = new InteractBeforeUsingFromContainerEvent(wrapEvent.User, containedUid, wrapEvent.Target,
                                                                             wrapEvent.ClickLocation, wrapEvent.CanReach);
             RaiseLocalEvent(containedUid, interactEvent, true);
             // we need to do it because in next method we need to know if already handled
             wrapEvent.Handled = interactEvent.Handled;
 
             if (wrapEvent.Handled)
+            {
                 _adminLog.Add(LogType.InteractUsing, LogImpact.Low,
                     $"{ToPrettyString(wrapEvent.User):user} interacted with {ToPrettyString(wrapEvent.Target):target} using {ToPrettyString(containedUid):used} which was in container of {ToPrettyString(wrapEvent.Used)}");
+                return wrapEvent.Handled;
+            }
 
             TryBroadcastToEntitiesInsideTargetContainers(ref wrapEvent, containedUid, out var broadcastedUid);
 
@@ -57,7 +60,7 @@ public sealed partial class BroadcastInteractUsingToContainerSystem : EntitySyst
         args.Handled = wrapEvent.Handled;
     }
 
-    private void OnInteractUsing(Entity<BroadcastInteractUsingTargetToContainerComponent> entity, ref InteractUsingEvent args)
+    private void OnInteractUsing(Entity<BroadcastInteractingIntoContainerComponent> entity, ref InteractUsingEvent args)
     {
         if (args.Handled)
             return;
@@ -71,7 +74,7 @@ public sealed partial class BroadcastInteractUsingToContainerSystem : EntitySyst
                 return false;
 
             //changed target -> containedUid
-            var interactEvent = new InteractUsingTargetInContainerEvent(args.User, args.Used, containedUid, args.ClickLocation, args.CanReach);
+            var interactEvent = new InteractUsedIntoContainerEvent(args.User, args.Used, containedUid, args.ClickLocation, args.CanReach);
             RaiseLocalEvent(args.Used, interactEvent, true);
             return interactEvent.Handled;
         }, out var broadcastedUid);
@@ -81,7 +84,7 @@ public sealed partial class BroadcastInteractUsingToContainerSystem : EntitySyst
             $"{ToPrettyString(args.User):user} interacted with {ToPrettyString(broadcastedUid):target} from the container of {ToPrettyString(args.Target):target} using {ToPrettyString(args.Used):used}");
     }
 
-    private void OnAfterInteractUsing(Entity<BroadcastAfterInteractUsingToContainerComponent> entity, ref AfterInteractEvent args)
+    private void OnAfterInteractUsing(Entity<BroadcastAfterInteractingFromContainerComponent> entity, ref AfterInteractEvent args)
     {
         if (args.Handled)
             return;
@@ -94,15 +97,18 @@ public sealed partial class BroadcastInteractUsingToContainerSystem : EntitySyst
                 return false;
 
             // changed used -> containedUid
-            var interactEvent = new InteractAfterUsingWithInContainerEvent(args.User, containedUid, args.Target,
+            var interactEvent = new InteractAfterUsingFromContainerEvent(args.User, containedUid, args.Target,
                                                                             args.ClickLocation, args.CanReach);
             RaiseLocalEvent(containedUid, interactEvent, true);
             // we need to do it because in next method we need to know if already handled
             wrapEvent.Handled = interactEvent.Handled;
 
             if (wrapEvent.Handled)
+            {
                 _adminLog.Add(LogType.InteractUsing, LogImpact.Low,
                     $"{ToPrettyString(wrapEvent.User):user} interacted with {ToPrettyString(wrapEvent.Target):target} using {ToPrettyString(containedUid):used} which was in container of {ToPrettyString(wrapEvent.Used)}");
+                return wrapEvent.Handled;
+            }
 
             TryBroadcastToEntitiesInsideTargetContainers(ref wrapEvent, containedUid, out var broadcastedUid);
 
@@ -117,13 +123,13 @@ public sealed partial class BroadcastInteractUsingToContainerSystem : EntitySyst
     }
 
     /// <summary>
-    /// Checks if <paramref name="args.Target"/> has <see cref="BroadcastInteractUsingTargetToContainerComponent"/> and if so broadcasts events.
+    /// Checks if <paramref name="args.Target"/> has <see cref="BroadcastInteractingIntoContainerComponent"/> and if so broadcasts events.
     /// </summary>
     private void TryBroadcastToEntitiesInsideTargetContainers(ref EventWrapper args, EntityUid used, out EntityUid? broadcastedUid)
     {
         broadcastedUid = null;
         if (args.Handled || args.Target == null
-            || !TryComp<BroadcastInteractUsingTargetToContainerComponent>(args.Target, out var broadcastTarget))
+            || !TryComp<BroadcastInteractingIntoContainerComponent>(args.Target, out var broadcastTarget))
             return;
 
         EventWrapper wrapEvent = new(args.User, used, args.Target, args.ClickLocation, args.CanReach, args.Handled);
@@ -136,10 +142,12 @@ public sealed partial class BroadcastInteractUsingToContainerSystem : EntitySyst
                 return false;
 
             //changed target -> containedUid
-            var interactEvent = new InteractUsingTargetInContainerEvent(args.User, args.Used, containedUid, args.ClickLocation, args.CanReach);
+            var interactEvent = new InteractUsedIntoContainerEvent(args.User, args.Used, containedUid, args.ClickLocation, args.CanReach);
             RaiseLocalEvent(args.Used, interactEvent, true);
             return interactEvent.Handled;
         }, out broadcastedUid);
+        //Dont forget to give Handle further
+        args.Handled = wrapEvent.Handled;
     }
 
     private void GetAllowedContainedEntitiesAndBroadcast(Entity<BroadcastUsingToContainerComponent> entity, ref EventWrapper args,

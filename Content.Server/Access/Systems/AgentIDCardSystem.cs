@@ -24,8 +24,8 @@ namespace Content.Server.Access.Systems
         {
             base.Initialize();
             SubscribeLocalEvent<AgentIDCardComponent, AfterInteractEvent>(OnAfterInteract);
-            SubscribeLocalEvent<AgentIDCardComponent, InteractUsingTargetInContainerEvent>(OnAfterInteractInContainer);
-            SubscribeLocalEvent<AgentIDCardComponent, InteractBeforeUsingWithInContainerEvent>(OnBeforeInteractionInContainer);
+            SubscribeLocalEvent<AgentIDCardComponent, InteractUsedIntoContainerEvent>(OnAfterInteractInContainer);
+            SubscribeLocalEvent<AgentIDCardComponent, InteractBeforeUsingFromContainerEvent>(OnBeforeInteractionInContainer);
             // BUI
             SubscribeLocalEvent<AgentIDCardComponent, AfterActivatableUIOpenEvent>(AfterUIOpen);
             SubscribeLocalEvent<AgentIDCardComponent, AgentIDCardNameChangedMessage>(OnNameChanged);
@@ -64,14 +64,14 @@ namespace Content.Server.Access.Systems
             _popupSystem.PopupEntity(Loc.GetString("agent-id-new", ("number", addedLength), ("card", args.Target)), args.Target.Value, args.User);
         }
 
-        private void OnAfterInteractInContainer(Entity<AgentIDCardComponent> entity, ref InteractUsingTargetInContainerEvent args)
+        private void OnAfterInteractInContainer(Entity<AgentIDCardComponent> entity, ref InteractUsedIntoContainerEvent args)
         {
             AfterInteractEvent interactEvent = new(args.User, args.Used, args.Target, args.ClickLocation, args.CanReach);
             OnAfterInteract(entity, ref interactEvent);
             args.Handled = interactEvent.Handled;
         }
 
-        private void OnBeforeInteractionInContainer(Entity<AgentIDCardComponent> entity, ref InteractBeforeUsingWithInContainerEvent args)
+        private void OnBeforeInteractionInContainer(Entity<AgentIDCardComponent> entity, ref InteractBeforeUsingFromContainerEvent args)
         {
             AfterInteractEvent interactEvent = new(args.User, args.Used, args.Target, args.ClickLocation, args.CanReach);
             OnAfterInteract(entity, ref interactEvent);

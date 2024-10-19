@@ -283,7 +283,7 @@
   - type: Headset
   - type: EncryptionKeyHolder
     keySlots: 1
-  - type: BroadcastInteractUsingToContainer
+  - type: BroadcastInteractingFromContainer
     whitelist:
       components:
       - EncryptionKeyChannelsCopy
