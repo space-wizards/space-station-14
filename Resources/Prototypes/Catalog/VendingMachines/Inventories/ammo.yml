@@ -15,3 +15,21 @@
 
     MagazineBoxRifle: 6
     MagazineBoxRiflePractice: 3
+
+  contrabandInventory:
+    MagazineBoxLightRifleUranium: 1
+
+    MagazineBoxMagnumUranium: 1
+
+    MagazineBoxPistolUranium: 1
+
+    MagazineBoxRifleUranium: 1
+
+  emaggedInventory:
+    MagazineBoxLightRifleIncendiary: 2
+
+    MagazineBoxMagnumAP: 2
+
+    MagazineBoxPistolIncendiary: 2
+
+    MagazineBoxRifleIncendiary: 2

@@ -10,3 +10,5 @@
     ClothingHandsGlovesColorYellow: 6
     BoxInflatable: 2
     ClothingHeadHatCone: 4
+  contrabandInventory:
+    ClothingHandsGlovesConducting: 1

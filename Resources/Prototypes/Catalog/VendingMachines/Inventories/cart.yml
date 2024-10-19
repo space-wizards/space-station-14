@@ -16,3 +16,8 @@
     EncryptionKeyScience: 2
     EncryptionKeySecurity: 1
     EncryptionKeyService: 3
+  contrabandInventory:
+    EncryptionKeyRobo: 2
+    EncryptionKeyMedicalScience: 1
+  emaggedInventory:
+    EncryptionKeySyndie: 2

@@ -9,3 +9,8 @@
     FoodSnackDanDanNoodles: 3
     PairedChopsticks: 3
 # rice?
+  contrabandInventory:
+    FoodRiceBoiled: 2
+    #rice.
+  emaggedInventory:
+    FoodNoodlesCopy: 1

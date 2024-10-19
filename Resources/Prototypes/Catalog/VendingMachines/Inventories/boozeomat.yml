@@ -46,5 +46,7 @@
     DrinkSakeBottleFull: 3
     DrinkBeerCan: 5
     DrinkWineCan: 5
+  contrabandInventory:
+    DrinkWaterBottleFull: 5
   emaggedInventory:
     DrinkPoisonWinebottleFull: 2

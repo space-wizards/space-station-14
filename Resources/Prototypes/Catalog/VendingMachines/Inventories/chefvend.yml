@@ -20,4 +20,8 @@
     FoodButter: 3
     FoodCheese: 1
     FoodMeat: 6
+  contrabandInventory:
+    FoodCannabisButter: 3
+  emaggedInventory:
+    FoodFlyAmanita: 3
     

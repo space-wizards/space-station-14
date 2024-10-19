@@ -26,3 +26,7 @@
     DrinkMugOne: 1
     DrinkMugRainbow: 2
     DrinkMugRed: 2
+  contrabandInventory:
+    CryostasisBeaker: 1
+  emaggedInventory:
+    SyringeCryostasis: 1

@@ -9,4 +9,8 @@
     Syringe: 5
     ClothingEyesHudMedical: 2
     ClothingEyesEyepatchHudMedical: 2
+  contrabandInventory:
+    MuteToxinChemistryBottle: 1
+  emaggedInventory:
+    ToxinChemistryBottle: 1
 

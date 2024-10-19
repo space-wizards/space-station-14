@@ -18,3 +18,7 @@
     Welder: 1
     Screwdriver: 2
     Crowbar: 2
+  contrabandInventory:
+    ClothingHeadHatCardborg: 1
+  emaggedInventory:
+    ToyHonk: 1
