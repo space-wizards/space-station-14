@@ -69,7 +69,7 @@ public abstract class SharedStationSpawningSystem : EntitySystem
 
         if (string.IsNullOrEmpty(name) && PrototypeManager.TryIndex(roleProto.NameDataset, out var nameData))
         {
-            name = _random.Pick(nameData.Values);
+            name = Loc.GetString(_random.Pick(nameData.Values));
         }
 
         if (!string.IsNullOrEmpty(name))
