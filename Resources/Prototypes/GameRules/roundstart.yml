@@ -116,9 +116,8 @@
       - type: NpcFactionMember
         factions:
         - Syndicate
-      mindComponents:
-      - type: NukeopsRole
-        prototype: NukeopsCommander
+      mindRoles:
+      - MindRoleNukeopsCommander
     - prefRoles: [ NukeopsMedic ]
       fallbackRoles: [ Nukeops, NukeopsCommander ]
       spawnerPrototype: SpawnPointNukeopsMedic
@@ -134,9 +133,8 @@
       - type: NpcFactionMember
         factions:
         - Syndicate
-      mindComponents:
-      - type: NukeopsRole
-        prototype: NukeopsMedic
+      mindRoles:
+      - MindRoleNukeopsMedic
     - prefRoles: [ Nukeops ]
       fallbackRoles: [ NukeopsCommander, NukeopsMedic ]
       spawnerPrototype: SpawnPointNukeopsOperative
@@ -154,9 +152,8 @@
       - type: NpcFactionMember
         factions:
         - Syndicate
-      mindComponents:
-      - type: NukeopsRole
-        prototype: Nukeops
+      mindRoles:
+      - MindRoleNukeops
 
 - type: entity
   abstract: true
@@ -170,17 +167,6 @@
     sets:
     - groups: TraitorObjectiveGroups
     maxDifficulty: 5
-  - type: AntagSelection
-    agentName: traitor-round-end-agent-name
-
-- type: entity
-  abstract: true
-  parent: BaseGameRule
-  id: BaseTraitorRuleNoRandomObjectives
-  components:
-  - type: TraitorRule
-  # TODO: codewords in yml
-  # TODO: uplink in yml
   - type: AntagSelection
     agentName: traitor-round-end-agent-name
 
@@ -202,71 +188,8 @@
         components:
         - AntagImmune
       lateJoinAdditional: true
-      mindComponents:
-      - type: TraitorRole
-        prototype: Traitor
-
-- type: entity
-  parent: BaseTraitorRuleNoRandomObjectives
-  id: SpyVsSpy3TC
-  components:
-  - type: TraitorRule
-    startingBalance: 3
-  - type: GameRule
-    minPlayers: 15
-    delay:
-      min: 240
-      max: 420
-  - type: AntagObjectives
-    objectives:
-    - KillRandomTraitorSvSObjective
-    - RandomTraitorAliveSvSObjective
-    - EscapeShuttleObjective
-  - type: AntagSelection
-    definitions:
-    - prefRoles: [ Traitor ]
-      fallbackRoles: [ TraitorSleeper ]
-      max: 100
-      playerRatio: 1
-      blacklist:
-        components:
-        - AntagImmune
-      lateJoinAdditional: true
-      forceAllPossible: true
-      mindComponents:
-      - type: TraitorRole
-        prototype: Traitor
-
-- type: entity
-  parent: BaseTraitorRuleNoRandomObjectives
-  id: SpyVsSpy
-  components:
-  - type: TraitorRule
-    startingBalance: 0
-  - type: GameRule
-    minPlayers: 15
-    delay:
-      min: 2
-      max: 4
-  - type: AntagObjectives
-    objectives:
-    - KillRandomTraitorSvSObjective
-    - RandomTraitorAliveSvSObjective
-    - EscapeShuttleObjective
-  - type: AntagSelection
-    definitions:
-    - prefRoles: [ Traitor ]
-      fallbackRoles: [ TraitorSleeper ]
-      max: 100
-      playerRatio: 1
-      blacklist:
-        components:
-        - AntagImmune
-      lateJoinAdditional: true
-      forceAllPossible: true
-      mindComponents:
-      - type: TraitorRole
-        prototype: Traitor
+      mindRoles:
+      - MindRoleTraitor
 
 - type: entity
   id: Revolutionary
@@ -288,9 +211,8 @@
       components:
       - type: Revolutionary
       - type: HeadRevolutionary
-      mindComponents:
-      - type: RevolutionaryRole
-        prototype: HeadRev
+      mindRoles:
+      - MindRoleHeadRevolutionary
 
 - type: entity
   id: Sandbox
@@ -334,9 +256,8 @@
       - type: ZombifyOnDeath
       - type: IncurableZombie
       - type: InitialInfected
-      mindComponents:
-      - type: InitialInfectedRole
-        prototype: InitialInfected
+      mindRoles:
+      - MindRoleInitialInfected
 
 # event schedulers
 
@@ -366,6 +287,11 @@
         tableId: SleeperlessAntagEventsTable
       - !type:NestedSelector
         tableId: CargoGiftsTable
+      - !type:NestedSelector
+        tableId: CalmPestEventsTable
+      - !type:NestedSelector
+        tableId: SpicyPestEventsTable
+
 
 - type: entityTable
   id: SpaceTrafficControlTable

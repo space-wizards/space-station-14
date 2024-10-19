@@ -3,6 +3,7 @@ using Content.Server.Shuttles.Systems;
 using Content.Server.GameTicking.Rules;
 using Content.Server.Preferences.Managers;
 using Content.Shared.CCVar;
+using Content.Shared._Impstation.Ghost;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Components;
 using Content.Shared.Roles.Jobs;
@@ -95,7 +96,7 @@ public sealed class KillPersonConditionSystem : EntitySystem
         foreach (var mind in allHumans)
         {
             // RequireAdminNotify used as a cheap way to check for command department
-            if (_job.MindTryGetJob(mind, out _, out var prototype) && prototype.RequireAdminNotify)
+            if (_job.MindTryGetJob(mind, out var prototype) && prototype.RequireAdminNotify)
                 allHeads.Add(mind);
         }
 
@@ -146,7 +147,7 @@ public sealed class KillPersonConditionSystem : EntitySystem
                 var poolSessions = _traitorRule.CurrentAntagPool.GetPoolSessions();
                 foreach (var mind in allHumans)
                 {
-                    if (!args.Mind.ObjectiveTargets.Contains(mind) && _job.MindTryGetJob(mind, out _, out var prototype) && prototype.CanBeAntag && _mind.TryGetSession(mind, out var session) && poolSessions.Contains(session))
+                    if (!args.Mind.ObjectiveTargets.Contains(mind) && _job.MindTryGetJob(mind, out var prototype) && prototype.CanBeAntag && _mind.TryGetSession(mind, out var session) && poolSessions.Contains(session))
                     {
                         allValidTraitorCandidates.Add(mind);
                     }
@@ -175,7 +176,7 @@ public sealed class KillPersonConditionSystem : EntitySystem
     private float GetProgress(EntityUid target, bool requireDead)
     {
         // deleted or gibbed or something, counts as dead
-        if (!TryComp<MindComponent>(target, out var mind) || mind.OwnedEntity == null)
+        if (!TryComp<MindComponent>(target, out var mind) || mind.OwnedEntity == null || TryComp<GhostBarPatronComponent>(mind.OwnedEntity, out _))
             return 1f;
 
         // dead is success

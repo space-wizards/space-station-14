@@ -647,7 +647,7 @@
   - type: Clothing
     sprite: Objects/Weapons/Guns/Revolvers/chimp.rsi
   - type: Gun
-    projectileSpeed: 4
+    projectileSpeed: 10
     fireRate: 1.5
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
