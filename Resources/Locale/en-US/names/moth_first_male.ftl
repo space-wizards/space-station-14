@@ -1,50 +1,50 @@
-moth-male-first-name-dataset-1 = Agrius
-moth-male-first-name-dataset-2 = Atlas
-moth-male-first-name-dataset-3 = Attacus
-moth-male-first-name-dataset-4 = Caesar
-moth-male-first-name-dataset-5 = Hercules
-moth-male-first-name-dataset-6 = Rannoch
-moth-male-first-name-dataset-7 = Socrates
-moth-male-first-name-dataset-8 = Solus
+names-moth-male-first-dataset-1 = Agrius
+names-moth-male-first-dataset-2 = Atlas
+names-moth-male-first-dataset-3 = Attacus
+names-moth-male-first-dataset-4 = Caesar
+names-moth-male-first-dataset-5 = Hercules
+names-moth-male-first-dataset-6 = Rannoch
+names-moth-male-first-dataset-7 = Socrates
+names-moth-male-first-dataset-8 = Solus
 
   # Other languages
-moth-male-first-name-dataset-9 = Ash
-moth-male-first-name-dataset-10 = Azar
-moth-male-first-name-dataset-11 = Kaiser
-moth-male-first-name-dataset-12 = Rex
-moth-male-first-name-dataset-13 = Rajas
-moth-male-first-name-dataset-14 = Skoros
+names-moth-male-first-dataset-9 = Ash
+names-moth-male-first-dataset-10 = Azar
+names-moth-male-first-dataset-11 = Kaiser
+names-moth-male-first-dataset-12 = Rex
+names-moth-male-first-dataset-13 = Rajas
+names-moth-male-first-dataset-14 = Skoros
 
   # Myth and legend
-moth-male-first-name-dataset-15 = Bladud
-moth-male-first-name-dataset-16 = Daedalus
-moth-male-first-name-dataset-17 = Erebus
-moth-male-first-name-dataset-18 = Icarus
-moth-male-first-name-dataset-19 = Jatayu
-moth-male-first-name-dataset-20 = Koho
-moth-male-first-name-dataset-21 = Kuafu
-moth-male-first-name-dataset-22 = Lucifer
-moth-male-first-name-dataset-23 = Merlin
-moth-male-first-name-dataset-24 = Phaethon
-moth-male-first-name-dataset-25 = Wolford
+names-moth-male-first-dataset-15 = Bladud
+names-moth-male-first-dataset-16 = Daedalus
+names-moth-male-first-dataset-17 = Erebus
+names-moth-male-first-dataset-18 = Icarus
+names-moth-male-first-dataset-19 = Jatayu
+names-moth-male-first-dataset-20 = Koho
+names-moth-male-first-dataset-21 = Kuafu
+names-moth-male-first-dataset-22 = Lucifer
+names-moth-male-first-dataset-23 = Merlin
+names-moth-male-first-dataset-24 = Phaethon
+names-moth-male-first-dataset-25 = Wolford
 
   # Fun names
-moth-male-first-name-dataset-26 = Ace
-moth-male-first-name-dataset-27 = Altair
-moth-male-first-name-dataset-28 = Dusty
-moth-male-first-name-dataset-29 = Gambit
-moth-male-first-name-dataset-30 = Hawk
-moth-male-first-name-dataset-31 = Mothew
-moth-male-first-name-dataset-32 = Timothy
+names-moth-male-first-dataset-26 = Ace
+names-moth-male-first-dataset-27 = Altair
+names-moth-male-first-dataset-28 = Dusty
+names-moth-male-first-dataset-29 = Gambit
+names-moth-male-first-dataset-30 = Hawk
+names-moth-male-first-dataset-31 = Mothew
+names-moth-male-first-dataset-32 = Timothy
 
   # Common names, filler
-moth-male-first-name-dataset-33 = Asher
-moth-male-first-name-dataset-34 = Isaac
-moth-male-first-name-dataset-35 = Roman
-moth-male-first-name-dataset-36 = Samuel
-moth-male-first-name-dataset-37 = Sebastian
-moth-male-first-name-dataset-38 = Silas
-moth-male-first-name-dataset-39 = Simon
+names-moth-male-first-dataset-33 = Asher
+names-moth-male-first-dataset-34 = Isaac
+names-moth-male-first-dataset-35 = Roman
+names-moth-male-first-dataset-36 = Samuel
+names-moth-male-first-dataset-37 = Sebastian
+names-moth-male-first-dataset-38 = Silas
+names-moth-male-first-dataset-39 = Simon
 
   ## Comments on names
 # Agrius   - Agrius

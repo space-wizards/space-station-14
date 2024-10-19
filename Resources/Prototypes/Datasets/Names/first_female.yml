@@ -1,5 +1,5 @@
 ﻿- type: localizedDataset
   id: names_first_female
   values:
-    prefix: female-first-name-dataset-
+    prefix: names-female-first-dataset-
     count: 771

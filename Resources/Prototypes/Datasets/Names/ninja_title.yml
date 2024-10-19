@@ -1,5 +1,5 @@
 ﻿- type: localizedDataset
   id: names_ninja_title
   values:
-    prefix: ninja-title-name-dataset-
+    prefix: names-ninja-title-dataset-
     count: 46

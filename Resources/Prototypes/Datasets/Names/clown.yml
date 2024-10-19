@@ -1,5 +1,5 @@
 ﻿- type: localizedDataset
   id: names_clown
   values:
-    prefix: clown-name-dataset-
+    prefix: names-clown-dataset-
     count: 52

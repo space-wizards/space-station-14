@@ -1,17 +1,17 @@
 - type: localizedDataset
   id: SyndicateNamesNormal
   values:
-    prefix: syndicate-normal-name-dataset-
+    prefix: names-syndicate-normal-dataset-
     count: 25
 
 - type: localizedDataset
   id: SyndicateNamesElite
   values:
-    prefix: syndicate-elite-name-dataset-
+    prefix: names-syndicate-elite-dataset-
     count: 23
 
 - type: localizedDataset
   id: SyndicateNamesPrefix
   values:
-    prefix: syndicate-prefix-name-dataset-
+    prefix: names-syndicate-prefix-dataset-
     count: 2

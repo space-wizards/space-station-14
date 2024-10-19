@@ -1,2 +1,2 @@
-syndicate-prefix-name-dataset-1 = Operative
-syndicate-prefix-name-dataset-2 = Agent
+names-syndicate-prefix-dataset-1 = Operative
+names-syndicate-prefix-dataset-2 = Agent

@@ -1,4 +1,4 @@
-military-leader-first-name-dataset-1 = Colonel
-military-leader-first-name-dataset-2 = Commander
-military-leader-first-name-dataset-3 = Lieutenant
-military-leader-first-name-dataset-4 = Major
+names-military-leader-first-dataset-1 = Colonel
+names-military-leader-first-dataset-2 = Commander
+names-military-leader-first-dataset-3 = Lieutenant
+names-military-leader-first-dataset-4 = Major

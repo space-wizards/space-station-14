@@ -1,11 +1,11 @@
 - type: localizedDataset
   id: DionaFirst
   values:
-    prefix: diona-first-name-dataset-
+    prefix: names-diona-first-dataset-
     count: 22
 
 - type: localizedDataset
   id: DionaLast
   values:
-    prefix: diona-last-name-dataset-
+    prefix: names-diona-last-dataset-
     count: 21

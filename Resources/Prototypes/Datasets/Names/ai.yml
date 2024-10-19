@@ -1,5 +1,5 @@
 ﻿- type: localizedDataset
   id: names_ai
   values:
-    prefix: ai-name-dataset-
+    prefix: names-ai-dataset-
     count: 108

@@ -1,5 +1,5 @@
 - type: localizedDataset
   id: fake_human_last
   values: #includes the first names so we get some really fake double names
-    prefix: fake-human-last-name-dataset-
+    prefix: names-fake-human-last-dataset-
     count: 79

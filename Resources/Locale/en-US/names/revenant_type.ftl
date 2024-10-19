@@ -1,8 +1,8 @@
-revenant-type-name-dataset-1 = essence
-revenant-type-name-dataset-2 = ghost
-revenant-type-name-dataset-3 = phantom
-revenant-type-name-dataset-4 = poltergeist
-revenant-type-name-dataset-5 = revenant
-revenant-type-name-dataset-6 = soul
-revenant-type-name-dataset-7 = spectre
-revenant-type-name-dataset-8 = spirit
+names-revenant-type-dataset-1 = essence
+names-revenant-type-dataset-2 = ghost
+names-revenant-type-dataset-3 = phantom
+names-revenant-type-dataset-4 = poltergeist
+names-revenant-type-dataset-5 = revenant
+names-revenant-type-dataset-6 = soul
+names-revenant-type-dataset-7 = spectre
+names-revenant-type-dataset-8 = spirit

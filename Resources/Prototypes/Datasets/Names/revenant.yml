@@ -1,17 +1,17 @@
 - type: localizedDataset
   id: RevenantType
   values:
-    prefix: revenant-type-name-dataset-
+    prefix: names-revenant-type-dataset-
     count: 8
 
 - type: localizedDataset
   id: RevenantAdjective
   values:
-    prefix: revenant-adjective-name-dataset-
+    prefix: names-revenant-adjective-dataset-
     count: 18
 
 - type: localizedDataset
   id: RevenantTheme
   values:
-    prefix: revenant-theme-name-dataset-
+    prefix: names-revenant-theme-dataset-
     count: 18

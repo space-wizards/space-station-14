@@ -1,5 +1,5 @@
 - type: localizedDataset
   id: ShuttleNames
   values:
-    prefix: cargo-shuttle-name-dataset-
+    prefix: names-cargo-shuttle-dataset-
     count: 8

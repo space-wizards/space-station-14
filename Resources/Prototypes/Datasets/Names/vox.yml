@@ -1,5 +1,5 @@
 - type: localizedDataset
   id: names_vox
   values:
-    prefix: vox-names-dataset-
+    prefix: names-vox-dataset-
     count: 2762

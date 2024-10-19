@@ -1,5 +1,5 @@
 ﻿- type: localizedDataset
   id: names_wizard_last
   values:
-    prefix: wizard-last-names-dataset-
+    prefix: names-wizard-last-dataset-
     count: 46

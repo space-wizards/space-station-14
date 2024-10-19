@@ -1,5 +1,5 @@
 - type: localizedDataset
   id: skeletonNamesFirst
   values:
-    prefix: skeleton-first-name-dataset-
+    prefix: names-skeleton-first-dataset-
     count: 27

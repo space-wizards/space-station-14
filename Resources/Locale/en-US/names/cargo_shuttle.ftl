@@ -1,8 +1,8 @@
-cargo-shuttle-name-dataset-1 = A Shuttle Will Not Occur
-cargo-shuttle-name-dataset-2 = Big Money Shuttle
-cargo-shuttle-name-dataset-3 = Engine Change
-cargo-shuttle-name-dataset-4 = Ships-the-Cargo
-cargo-shuttle-name-dataset-5 = Shootel
-cargo-shuttle-name-dataset-6 = Shuttle McShuttleface
-cargo-shuttle-name-dataset-7 = ShuttleShuttle
-cargo-shuttle-name-dataset-8 = Urist McShuttle
+names-cargo-shuttle-dataset-1 = A Shuttle Will Not Occur
+names-cargo-shuttle-dataset-2 = Big Money Shuttle
+names-cargo-shuttle-dataset-3 = Engine Change
+names-cargo-shuttle-dataset-4 = Ships-the-Cargo
+names-cargo-shuttle-dataset-5 = Shootel
+names-cargo-shuttle-dataset-6 = Shuttle McShuttleface
+names-cargo-shuttle-dataset-7 = ShuttleShuttle
+names-cargo-shuttle-dataset-8 = Urist McShuttle

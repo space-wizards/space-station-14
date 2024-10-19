@@ -1,5 +1,5 @@
 ﻿- type: localizedDataset
   id: names_death_commando
   values:
-    prefix: death-commando-name-dataset-
+    prefix: names-death-commando-dataset-
     count: 59

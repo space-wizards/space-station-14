@@ -1,49 +1,49 @@
-moth-female-first-name-dataset-1 = Atropos
-moth-female-first-name-dataset-2 = Betularia
-moth-female-first-name-dataset-3 = Daphne
-moth-female-first-name-dataset-4 = Eurypta
-moth-female-first-name-dataset-5 = Eudryas
-moth-female-first-name-dataset-6 = Iris
-moth-female-first-name-dataset-7 = Lachesis
-moth-female-first-name-dataset-8 = Luna
-moth-female-first-name-dataset-9 = Lymanzia
-moth-female-first-name-dataset-10 = Maple
-moth-female-first-name-dataset-11 = Mima
-moth-female-first-name-dataset-12 = Nephele
-moth-female-first-name-dataset-13 = Rosie
-moth-female-first-name-dataset-14 = Scarlet
-moth-female-first-name-dataset-15 = Styx
+names-moth-female-first-dataset-1 = Atropos
+names-moth-female-first-dataset-2 = Betularia
+names-moth-female-first-dataset-3 = Daphne
+names-moth-female-first-dataset-4 = Eurypta
+names-moth-female-first-dataset-5 = Eudryas
+names-moth-female-first-dataset-6 = Iris
+names-moth-female-first-dataset-7 = Lachesis
+names-moth-female-first-dataset-8 = Luna
+names-moth-female-first-dataset-9 = Lymanzia
+names-moth-female-first-dataset-10 = Maple
+names-moth-female-first-dataset-11 = Mima
+names-moth-female-first-dataset-12 = Nephele
+names-moth-female-first-dataset-13 = Rosie
+names-moth-female-first-dataset-14 = Scarlet
+names-moth-female-first-dataset-15 = Styx
 
   # Other languages
-moth-female-first-name-dataset-16 = Avelaina
-moth-female-first-name-dataset-17 = Falena
-moth-female-first-name-dataset-18 = Menodora
-moth-female-first-name-dataset-19 = Molie
-moth-female-first-name-dataset-20 = Polilla
+names-moth-female-first-dataset-16 = Avelaina
+names-moth-female-first-dataset-17 = Falena
+names-moth-female-first-dataset-18 = Menodora
+names-moth-female-first-dataset-19 = Molie
+names-moth-female-first-dataset-20 = Polilla
 
   # Myth and legend
-moth-female-first-name-dataset-21 = Althea
-moth-female-first-name-dataset-22 = Aurora
-moth-female-first-name-dataset-23 = Helle
-moth-female-first-name-dataset-24 = Selene
-moth-female-first-name-dataset-25 = Nyx
+names-moth-female-first-dataset-21 = Althea
+names-moth-female-first-dataset-22 = Aurora
+names-moth-female-first-dataset-23 = Helle
+names-moth-female-first-dataset-24 = Selene
+names-moth-female-first-dataset-25 = Nyx
 
   # Fun names
-moth-female-first-name-dataset-26 = Angel
-moth-female-first-name-dataset-27 = Sandy
-moth-female-first-name-dataset-28 = Liberty
-moth-female-first-name-dataset-29 = Beatrix
+names-moth-female-first-dataset-26 = Angel
+names-moth-female-first-dataset-27 = Sandy
+names-moth-female-first-dataset-28 = Liberty
+names-moth-female-first-dataset-29 = Beatrix
 
   # Common names, filler
-moth-female-first-name-dataset-30 = Daisy
-moth-female-first-name-dataset-31 = Dawn
-moth-female-first-name-dataset-32 = Elizabeth
-moth-female-first-name-dataset-33 = Lucy
-moth-female-first-name-dataset-34 = Ruby
-moth-female-first-name-dataset-35 = Sarah
-moth-female-first-name-dataset-36 = Sienna
-moth-female-first-name-dataset-37 = Willow
-moth-female-first-name-dataset-38 = Zoey
+names-moth-female-first-dataset-30 = Daisy
+names-moth-female-first-dataset-31 = Dawn
+names-moth-female-first-dataset-32 = Elizabeth
+names-moth-female-first-dataset-33 = Lucy
+names-moth-female-first-dataset-34 = Ruby
+names-moth-female-first-dataset-35 = Sarah
+names-moth-female-first-dataset-36 = Sienna
+names-moth-female-first-dataset-37 = Willow
+names-moth-female-first-dataset-38 = Zoey
 
 ## Comments on names
 # Atropos   - Acherontia atropos

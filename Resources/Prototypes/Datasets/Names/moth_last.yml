@@ -1,5 +1,5 @@
 - type: localizedDataset
   id: names_moth_last
   values:
-    prefix: moth-last-name-dataset-
+    prefix: names-moth-last-dataset-
     count: 28

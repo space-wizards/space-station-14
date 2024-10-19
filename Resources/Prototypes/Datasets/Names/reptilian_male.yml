@@ -1,5 +1,5 @@
 - type: localizedDataset
   id: names_reptilian_male
   values:
-    prefix: reptilian-male-name-dataset-
+    prefix: names-reptilian-male-dataset-
     count: 328
