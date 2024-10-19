@@ -116,7 +116,7 @@
       cluster-payload: !type:Container
 
 - type: entity
-  parent: [GrenadeBase, BaseSyndicateContraband]
+  parent: [GrenadeBase, BaseSecurityContraband]
   id: GrenadeStinger
   name: stinger grenade
   description: Nothing to see here, please disperse.

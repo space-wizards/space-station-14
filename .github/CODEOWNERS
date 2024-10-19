@@ -19,7 +19,7 @@
 /Resources/engineCommandPerms.yml @moonheart08 @Chief-Engineer
 /Resources/clientCommandPerms.yml @moonheart08 @Chief-Engineer
 
-/Resources/Prototypes/Maps/ @Emisse
+/Resources/Prototypes/Maps/** @Emisse
 
 /Resources/Prototypes/Body/ @DrSmugleaf # suffering
 /Resources/Prototypes/Entities/Mobs/Player/ @DrSmugleaf
