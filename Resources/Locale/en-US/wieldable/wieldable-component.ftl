@@ -5,8 +5,8 @@ wieldable-verb-text-unwield = Unwield
 
 wieldable-component-successful-wield = You wield { THE($item) }.
 wieldable-component-failed-wield = You unwield { THE($item) }.
-wieldable-component-successful-wield-other = { THE($user) } wields { THE($item) }.
-wieldable-component-failed-wield-other = { THE($user) } unwields { THE($item) }.
+wieldable-component-successful-wield-other = { CAPITALIZE(THE($user)) } wields { THE($item) }.
+wieldable-component-failed-wield-other = { CAPITALIZE(THE($user)) } unwields { THE($item) }.
 
 wieldable-component-no-hands = You don't have enough hands!
 wieldable-component-not-enough-free-hands = {$number ->
@@ -18,3 +18,5 @@ wieldable-component-not-in-hands = { CAPITALIZE(THE($item)) } isn't in your hand
 wieldable-component-requires = { CAPITALIZE(THE($item))} must be wielded!
 
 gunwieldbonus-component-examine = This weapon has improved accuracy when wielded.
+
+gunrequireswield-component-examine = This weapon can only be fired when wielded.

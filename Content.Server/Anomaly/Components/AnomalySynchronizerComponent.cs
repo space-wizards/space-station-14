@@ -7,7 +7,7 @@ namespace Content.Server.Anomaly.Components;
 /// <summary>
 /// a device that allows you to translate anomaly activity into multitool signals.
 /// </summary>
-[RegisterComponent, Access(typeof(AnomalySynchronizerSystem))]
+[RegisterComponent, AutoGenerateComponentPause, Access(typeof(AnomalySynchronizerSystem))]
 public sealed partial class AnomalySynchronizerComponent : Component
 {
     /// <summary>
@@ -33,6 +33,15 @@ public sealed partial class AnomalySynchronizerComponent : Component
     /// </summary>
     [DataField]
     public float AttachRange = 0.4f;
+
+    /// <summary>
+    /// Periodicheski checks to see if the anomaly has moved to disconnect it.
+    /// </summary>
+    [DataField]
+    public TimeSpan CheckFrequency = TimeSpan.FromSeconds(1f);
+
+    [DataField, AutoPausedField]
+    public TimeSpan NextCheckTime = TimeSpan.Zero;
 
     [DataField]
     public ProtoId<SourcePortPrototype> DecayingPort = "Decaying";

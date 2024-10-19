@@ -21,6 +21,8 @@
     interfaces:
       enum.HealthAnalyzerUiKey.Key:
         type: HealthAnalyzerBoundUserInterface
+  - type: ItemToggle
+    onUse: false
   - type: HealthAnalyzer
     scanningEndSound:
       path: "/Audio/Items/Medical/healthscanner.ogg"
@@ -36,7 +38,7 @@
           False: { visible: false }
   - type: GuideHelp
     guides:
-      - Medical Doctor
+    - Medical Doctor
 
 - type: entity
   id: HandheldHealthAnalyzer
@@ -45,6 +47,7 @@
   components:
   - type: PowerCellDraw
     drawRate: 1.2 #Calculated for 5 minutes on a small cell
+  - type: ToggleCellDraw
   - type: ActivatableUIRequiresPowerCell
 
 - type: entity

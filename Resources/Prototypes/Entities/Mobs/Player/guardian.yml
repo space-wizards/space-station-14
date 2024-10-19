@@ -148,7 +148,7 @@
   name: Ifrit
   parent: MobGuardianBase
   id: MobIfritGuardian
-  description: A corrupted jinn, ripped from fitra to serve the wizard's petty needs. It stands wicked, tuning into it's owner's life to sustain itself.
+  description: A corrupted jinn, ripped from fitra to serve the wizard's petty needs. It stands wicked, tuning into its owner's life to sustain itself.
   components:
     - type: GhostRole
       allowMovement: true
@@ -176,7 +176,7 @@
 - type: entity
   name: HoloClown
   id: MobHoloClownGuardian
-  parent: MobGuardianBase
+  parent: [MobGuardianBase, InventoryBase]
   description: A mesmerising whirl of hard-light patterns weaves a blue colored clown of dubious origin.
   components:
     - type: GhostRole
@@ -237,7 +237,6 @@
           Piercing: 4
         groups:
           Burn: 3
-    - type: InventorySlots
     - type: MeleeWeapon
       angle: 30
       animation: WeaponArcFist

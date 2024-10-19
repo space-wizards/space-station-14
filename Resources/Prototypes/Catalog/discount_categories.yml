@@ -1,0 +1,13 @@
+- type: discountCategory
+  id: rareDiscounts # Dirty-cheap items that are rarely used and can be discounted to 0-ish cost to encourage usage.
+  weight: 18
+  maxItems: 2
+
+- type: discountCategory
+  id: usualDiscounts # Cheap items that are used not very often.
+  weight: 80
+
+- type: discountCategory
+  id: veryRareDiscounts # Casually used items that are widely used but can be (rarely) discounted for epic lulz.
+  weight: 2
+  maxItems: 1

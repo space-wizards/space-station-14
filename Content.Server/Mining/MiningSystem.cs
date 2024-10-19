@@ -1,6 +1,6 @@
-using Content.Server.Mining.Components;
 using Content.Shared.Destructible;
 using Content.Shared.Mining;
+using Content.Shared.Mining.Components;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using Robust.Shared.Prototypes;

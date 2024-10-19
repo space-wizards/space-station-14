@@ -18,7 +18,7 @@
     Drink:
       effects:
       - !type:SatiateThirst
-        factor: 1.5
+        factor: 1.0
         conditions:
           - !type:OrganType
             type: Human
@@ -27,7 +27,7 @@
       effects:
         - !type:AdjustReagent
           reagent: UncookedAnimalProteins
-          amount: 0.5
+          amount: 0.1
     Medicine:
       effects:
       - !type:HealthChange
@@ -76,7 +76,7 @@
       # Delicious!
       effects:
       - !type:SatiateHunger
-        factor: 1.5
+        factor: 1
   footstepSound:
     collection: FootstepBlood
     params:
@@ -183,6 +183,8 @@
             Toxin: -2
           types:
             Bloodloss: -5
+      - !type:ModifyBleedAmount
+        amount: -1.5
   # Just in case you REALLY want to water your plants
   plantMetabolism:
   - !type:PlantAdjustWater

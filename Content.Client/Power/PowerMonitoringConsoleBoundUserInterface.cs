@@ -1,4 +1,5 @@
 using Content.Shared.Power;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.Power;
 
@@ -11,9 +12,9 @@ public sealed class PowerMonitoringConsoleBoundUserInterface : BoundUserInterfac
 
     protected override void Open()
     {
-        _menu = new PowerMonitoringWindow(this, Owner);
-        _menu.OpenCentered();
-        _menu.OnClose += Close;
+        _menu = this.CreateWindow<PowerMonitoringWindow>();
+        _menu.SetEntity(Owner);
+        _menu.SendPowerMonitoringConsoleMessageAction += SendPowerMonitoringConsoleMessage;
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
@@ -21,9 +22,6 @@ public sealed class PowerMonitoringConsoleBoundUserInterface : BoundUserInterfac
         base.UpdateState(state);
 
         var castState = (PowerMonitoringConsoleBoundInterfaceState) state;
-
-        if (castState == null)
-            return;
 
         EntMan.TryGetComponent<TransformComponent>(Owner, out var xform);
         _menu?.ShowEntites
@@ -39,14 +37,5 @@ public sealed class PowerMonitoringConsoleBoundUserInterface : BoundUserInterfac
     public void SendPowerMonitoringConsoleMessage(NetEntity? netEntity, PowerMonitoringConsoleGroup group)
     {
         SendMessage(new PowerMonitoringConsoleMessage(netEntity, group));
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
-        if (!disposing)
-            return;
-
-        _menu?.Dispose();
     }
 }

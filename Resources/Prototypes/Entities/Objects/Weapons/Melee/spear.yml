@@ -1,13 +1,14 @@
 - type: entity
   name: spear
-  parent: BaseItem
+  parent: [BaseItem, BaseMinorContraband]
   id: Spear
   description: Definition of a Classic. Keeping murder affordable since 200,000 BCE.
   components:
   - type: EmbeddableProjectile
-    offset: 0.15,0.15
+    offset: -0.15,0.0
   - type: ThrowingAngle
     angle: 225
+  - type: LandAtCursor
   - type: Tag
     tags:
     - Spear
@@ -111,6 +112,11 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 1
     fillBaseName: spear
+    inHandsFillBaseName: -fill-
+    inHandsMaxFillLevels: 1
+    equippedFillBaseName: -fill-
+    equippedMaxFillLevels: 1
+
 
 - type: entity
   name: reinforced spear
@@ -184,3 +190,27 @@
     sprite: Objects/Weapons/Melee/bone_spear.rsi
   - type: Construction
     graph: SpearBone
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 30 #excess damage avoids cost of spawning entities.
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 20
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+          params:
+            volume: -4
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialBones1:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]

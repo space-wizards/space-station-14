@@ -1,0 +1,372 @@
+- type: entity
+  name: Perma Escape Crate Spawner
+  id: CratePermaEscapeSpawner
+  parent: CrateEmptySpawner
+  components:
+  - type: RandomSpawner
+    prototypes:
+    # Please note any duplicates & alphabetize <3
+      - CrateEngineeringMiniJetpack
+      - CratePermaEscapeBureaucracy
+      - CratePermaEscapeEVA
+      - CratePermaEscapeGiftsFromSyndicate
+      - CratePermaEscapeGun
+      - CratePermaEscapeLights
+      - CratePermaEscapeMerc
+      - CrateServiceCustomSmokable
+      - CrateTrashCartFilled
+      - CratePermaEscapeComs # x2
+      - CratePermaEscapeComs
+      - CratePermaEscapeDigging # x2
+      - CratePermaEscapeDigging
+      - CratePermaEscapeMats #x2
+      - CratePermaEscapeMats
+      - CratePermaEscapeTowercap # x2
+      - CratePermaEscapeTowercap
+      - ClosetMaintenanceFilledRandom # x3
+      - ClosetMaintenanceFilledRandom
+      - ClosetMaintenanceFilledRandom
+    rarePrototypes:
+      - MobTick # These need to be killable by one dude with a shovel.
+    rareChance: .30
+    chance: 1
+    offset: 0.0
+
+- type: entity
+  id: CratePermaEscapeDigging
+  parent: CrateGenericSteel
+  suffix: Digging
+  components:
+  - type: StorageFill
+    contents:
+      - id: Shovel
+      - id: Pickaxe
+        prob: 0.90
+      - id: Pickaxe
+        prob: 0.40
+      - id: Pickaxe
+        prob: 0.10
+      - id: Shovel
+        prob: 0.50
+      - id: Shovel
+        prob: 0.20
+      - id: HydroponicsToolSpade
+        prob: 0.10
+      - id: HydroponicsToolHatchet
+        prob: 0.05
+
+- type: entity
+  id: CratePermaEscapeEVA
+  parent: CrateGenericSteel
+  suffix: EVAs
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingHeadHelmetEVALarge
+      - id: ClothingOuterHardsuitEVAPrisoner
+      - id: ClothingHeadHelmetEVALarge
+        prob: 0.80
+      - id: ClothingOuterHardsuitEVAPrisoner
+        prob: 0.80
+      - id: ClothingOuterHardsuitVoidParamed
+        prob: 0.10
+      - id: ClothingOuterRedRacoon
+        prob: 0.10
+      - id: ClothingOuterSanta
+        prob: 0.10
+      - id: ClothingOuterHardsuitSyndicate
+        prob: 0.20
+      - id: EmergencyOxygenTankFilled
+        prob: 0.25
+      - id: EmergencyOxygenTank
+        prob: 0.25
+      - id: OxygenTankFilled
+        prob: 0.05
+        
+- type: entity
+  id: CratePermaEscapeGun
+  parent: CrateGenericSteel
+  suffix: Gun
+  components:
+  - type: StorageFill
+    contents:
+    - id: WeaponPistolMk58
+      prob: 0.15
+      orGroup: gun
+    - id: FoamCrossbow
+      prob: 0.10
+      orGroup: gun
+    - id: WeaponRifleFoam
+      prob: 0.05
+      orGroup: gun
+    - id: WeaponPistolFlintlock
+      prob: 0.20
+      orGroup: gun
+    - id: WeaponShotgunBlunderbuss
+      prob: 0.10
+      orGroup: gun
+    - id: WeaponShotgunBlunderbuss
+      prob: 0.15
+      orGroup: gun
+    - id: WeaponRevolverPirate
+      prob: 0.15
+      orGroup: gun
+    - id: WeaponProtoKineticAccelerator
+      prob: 0.20
+      orGroup: gun
+
+- type: entity
+  id: CratePermaEscapeBureaucracy
+  parent: CrateGenericSteel
+  suffix: Writing
+  components:
+  - type: StorageFill
+    contents:
+      - id: RubberStampApproved
+      - id: RubberStampDenied
+      - id: Pen
+      - id: Pen
+      - id: Pen
+      - id: BoxFolderBase
+        orGroup: folderA
+      - id: BoxFolderBlack
+        orGroup: folderA
+      - id: BoxFolderBlue
+        orGroup: folderA
+      - id: BoxFolderGreen
+        orGroup: folderA
+      - id: BoxFolderGrey
+        orGroup: folderA
+      - id: BoxFolderRed
+        orGroup: folderA
+      - id: BoxFolderWhite
+        orGroup: folderA
+      - id: BoxFolderYellow
+        orGroup: folderA
+      - id: BoxFolderBase
+        orGroup: folderB
+      - id: BoxFolderBlack
+        orGroup: folderB
+      - id: BoxFolderBlue
+        orGroup: folderB
+      - id: BoxFolderGreen
+        orGroup: folderB
+      - id: BoxFolderGrey
+        orGroup: folderB
+      - id: BoxFolderRed
+        orGroup: folderB
+      - id: BoxFolderWhite
+        orGroup: folderB
+      - id: BoxFolderYellow
+        orGroup: folderB
+      - id: CrayonBox
+        prob: 0.50
+      - id: CrayonBox
+        prob: 0.10
+      - id: ClearPDA # change to visitor one day.
+        prob: 0.10
+      - id: PersonalAI
+
+- type: entity
+  id: CratePermaEscapeLights
+  parent: CrateGenericSteel
+  suffix: Glowsticks
+  components:
+  - type: StorageFill
+    contents:
+      - id: GlowstickBlue
+        prob: 0.50
+      - id: GlowstickBlue
+        prob: 0.20
+      - id: GlowstickBlue
+        prob: 0.05
+      - id: GlowstickBase
+        prob: 0.50
+      - id: GlowstickBase
+        prob: 0.20
+      - id: GlowstickBase
+        prob: 0.05
+      - id: GlowstickPurple
+        prob: 0.50
+      - id: GlowstickPurple
+        prob: 0.20
+      - id: GlowstickPurple
+        prob: 0.05
+      - id: GlowstickRed
+        prob: 0.50
+      - id: GlowstickRed
+        prob: 0.20
+      - id: GlowstickRed
+        prob: 0.05
+      - id: GlowstickYellow
+        prob: 0.50
+      - id: GlowstickYellow
+        prob: 0.20
+      - id: GlowstickYellow
+        prob: 0.05
+
+- type: entity
+  id: CratePermaEscapeMats
+  parent: CrateGenericSteel
+  suffix: Mats
+  components:
+  - type: StorageFill
+    contents:
+      - id: SheetSteel
+        orGroup: matA
+      - id: PartRodMetal
+        orGroup: matA
+      - id: SheetSteel
+        orGroup: matB
+      - id: PartRodMetal
+        orGroup: matB
+
+- type: entity
+  id: CratePermaEscapeGiftsFromSyndicate
+  parent: CrateGenericSteel
+  suffix: Syndi Gifts
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingEyesGlassesOutlawGlasses
+      - id: ClothingHeadHatOutlawHat
+      - id: HappyHonkNukieSnacks
+      # - id: BaseUplinkRadio # too spicy I think.
+        # prob: 0.50
+      # - id: Telecrystal
+        # prob: 0.80
+      # - id: Telecrystal
+        # prob: 0.80
+      # - id: Telecrystal
+        # prob: 0.70
+      # - id: Telecrystal
+        # prob: 0.50
+      # - id: Telecrystal
+        # prob: 0.20
+      # - id: Telecrystal
+        # prob: 0.10
+      # - id: Telecrystal
+        # prob: 0.05
+      # - id: Telecrystal
+        # prob: 0.01
+      # - id: Telecrystal5
+        # prob: 0.01
+      - id: CyberPen
+        prob: 0.10
+      - id: CockroachCube
+        orGroup: cube
+      - id: AbominationCube
+        prob: 0.20
+        orGroup: cube
+      - id: SpaceCarpCube
+        prob: 0.20
+        orGroup: cube
+      - id: SyndicateSponge
+        prob: 0.20
+        orGroup: cube
+      - id: MindShieldImplanter
+        prob: 0.20
+      - id: ClothingHandsGlovesConducting # funny
+        prob: 0.30
+      - id: CigPackSyndicate
+        prob: 0.80
+      - id: StimpackMini
+        prob: 0.20
+      - id: StimpackMini
+        prob: 0.10
+      - id: CombatMedipen
+        prob: 0.05
+      - id: MedkitCombatFilled
+        prob: 0.01
+      - id: SoapSyndie
+        prob: 0.15
+      - id: DnaScramblerImplanter
+        prob: 0.005
+
+
+- type: entity
+  id: CratePermaEscapeMerc
+  parent: CrateGenericSteel
+  suffix: Merc
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingUniformJumpsuitMercenary
+      - id: ClothingHeadBandMerc
+        prob: 0.50
+      - id: ClothingHeadHatBeretMerc
+        prob: 0.20
+      - id: ClothingHeadHelmetMerc
+        prob: 0.05
+      - id: ClothingEyesGlassesMercenary
+        prob: 0.20
+      - id: ClothingMaskGasMerc
+        prob: 0.10
+      - id: ClothingHandsGlovesMercFingerless
+        prob: 0.20
+      - id: ClothingHandsMercGlovesCombat
+        prob: 0.05
+      - id: ClothingBackpackMerc
+        prob: 0.50
+      - id: ClothingShoesBootsMerc
+        prob: 0.50
+      - id: ClothingOuterVestWebMerc
+        prob: 0.25
+      - id: ClothingBeltMercWebbing
+        prob: 0.05
+
+- type: entity
+  id: CratePermaEscapeComs
+  parent: CrateGenericSteel
+  suffix: Coms
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingHeadsetMining
+        orGroup: coms
+      - id: ClothingHeadsetMining
+        orGroup: coms
+      - id: ClothingHeadsetMining
+        orGroup: coms
+      - id: ClothingHeadsetGrey
+        orGroup: coms
+      - id: ClothingHeadsetScience
+        orGroup: coms
+      - id: ClothingHeadsetService
+        orGroup: coms
+      - id: ClothingHeadsetEngineering
+        orGroup: coms
+      - id: ClothingHeadsetMedical
+        orGroup: coms
+      - id: EncryptionKeyCargo
+        prob: 0.05
+      - id: EncryptionKeyScience
+        prob: 0.05
+      - id: EncryptionKeyService
+        prob: 0.05
+      - id: EncryptionKeyMedical
+        prob: 0.05
+      - id: EncryptionKeyEngineering
+        prob: 0.05
+      - id: EncryptionKeySecurity
+        prob: 0.01
+
+- type: entity
+  id: CratePermaEscapeTowercap
+  parent: CrateGenericSteel
+  suffix: Towercap
+  components:
+  - type: StorageFill
+    contents:
+      - id: TowercapSeeds
+      - id: TowercapSeeds
+        prob: 0.80
+      - id: TowercapSeeds
+        prob: 0.50
+      - id: TowercapSeeds
+        prob: 0.20
+      - id: SteelcapSeeds
+        prob: 0.10
+      - id: SteelLog
+      - id: HydroponicsToolHatchet
+        prob: 0.75

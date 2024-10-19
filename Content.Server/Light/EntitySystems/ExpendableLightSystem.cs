@@ -1,17 +1,15 @@
 using Content.Server.Light.Components;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
+using Content.Shared.IgnitionSource;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Light.Components;
 using Content.Shared.Tag;
-using Content.Shared.Temperature;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Light.EntitySystems
@@ -99,8 +97,8 @@ namespace Content.Server.Light.EntitySystems
                     _item.SetHeldPrefix(ent, "lit", component: item);
                 }
 
-                var isHotEvent = new IsHotEvent() {IsHot = true};
-                RaiseLocalEvent(ent, isHotEvent);
+                var ignite = new IgnitionEvent(true);
+                RaiseLocalEvent(ent, ref ignite);
 
                 component.CurrentState = ExpendableLightState.Lit;
                 component.StateExpiryTime = component.GlowDuration;
@@ -134,8 +132,8 @@ namespace Content.Server.Light.EntitySystems
 
                 case ExpendableLightState.Dead:
                     _appearance.SetData(ent, ExpendableLightVisuals.Behavior, string.Empty, appearance);
-                    var isHotEvent = new IsHotEvent() {IsHot = true};
-                    RaiseLocalEvent(ent, isHotEvent);
+                    var ignite = new IgnitionEvent(false);
+                    RaiseLocalEvent(ent, ref ignite);
                     break;
             }
         }

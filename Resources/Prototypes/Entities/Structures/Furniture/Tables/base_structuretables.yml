@@ -6,7 +6,7 @@
   abstract: true
   components:
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
   - type: PlaceableSurface
   - type: Fixtures

@@ -28,7 +28,7 @@
 - type: startingGear
   id: SecurityCadetGear
   equipment:
-    shoes: ClothingShoesBootsCombatFilled
+    shoes: ClothingShoesBootsJackFilled
     outerClothing: ClothingOuterArmorBasic
     id: SecurityCadetPDA
     ears: ClothingHeadsetSecurity

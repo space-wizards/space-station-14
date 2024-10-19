@@ -1,3 +1,19 @@
+# No idea why it's in sci but we ball.
+- type: job
+  id: StationAi
+  name: job-name-station-ai
+  description: job-description-station-ai
+  playTimeTracker: JobStationAi
+  requirements:
+  - !type:RoleTimeRequirement
+    role: JobBorg
+    time: 54000  # 15 hrs
+  canBeAntag: false
+  icon: JobIconStationAi
+  supervisors: job-supervisors-rd
+  jobEntity: StationAiBrain
+  applyTraits: false
+
 - type: job
   id: Borg
   name: job-name-borg
@@ -5,8 +21,9 @@
   playTimeTracker: JobBorg
   requirements:
     - !type:OverallPlaytimeRequirement
-      time: 216000 #60 hrs
+      time: 144000 # 40 hrs
   canBeAntag: false
   icon: JobIconBorg
   supervisors: job-supervisors-rd
   jobEntity: PlayerBorgGeneric
+  applyTraits: false

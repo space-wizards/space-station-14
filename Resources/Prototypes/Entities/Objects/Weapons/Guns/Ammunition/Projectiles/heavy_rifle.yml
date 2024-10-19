@@ -2,7 +2,7 @@
   id: BulletHeavyRifle
   name: bullet (.20 rifle)
   parent: BaseBullet
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Projectile
     damage:
@@ -13,7 +13,7 @@
   id: BulletMinigun
   name: minigun bullet (.10 rifle)
   parent: BulletHeavyRifle
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Projectile
     damage:

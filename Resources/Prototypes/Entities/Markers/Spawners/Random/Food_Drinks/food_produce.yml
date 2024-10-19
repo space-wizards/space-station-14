@@ -1,3 +1,4 @@
+#Spawners
 - type: entity
   id: RandomProduce
   name: random produce spawner
@@ -10,53 +11,155 @@
       - state: green
       - sprite: Objects/Specific/Hydroponics/onion_red.rsi
         state: produce
-  - type: RandomSpawner
-    prototypes:
-      - WheatBushel
-      - OatBushel
-      - Sugarcane
-      - Nettle
-      - FoodBanana
-      - FoodCarrot
-      - FoodCabbage
-      - FoodGarlic
-      - FoodLemon
-      - FoodLime
-      - FoodOrange
-      - FoodPineapple
-      - FoodPotato
-      - FoodTomato
-      - FoodEggplant
-      - FoodApple
-      - FoodCocoaPod
-      - FoodCorn
-      - FoodOnion
-      - FoodOnionRed
-      - FoodMushroom
-      - FoodChiliPepper
-      - FoodChillyPepper
-      - FoodAloe
-      - FoodPoppy
-      - FoodLingzhi
-      - FoodAmbrosiaVulgaris
-      - RiceBushel
-      - FoodSoybeans
-      - FoodKoibean
-      - FoodWatermelon
-      - FoodGrape
-      - FoodBerries
-      - FoodBungo
-      - FoodPeaPod
-      - FoodPumpkin
-      - CottonBol
-    chance: 0.8
-    offset: 0.0
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: ProduceTable
+      prob: 0.8
+
+#Tables
+- type: entityTable
+  id: ProduceTable
+  table: !type:GroupSelector
+    children:
+    #Common
+    - !type:GroupSelector
+      weight: 100
+      children:
+      - id: WheatBushel
+        amount: !type:RangeNumberSelector
+          range: 1, 5
+      - id: OatBushel
+        amount: !type:RangeNumberSelector
+          range: 1, 5
+      - id: Sugarcane
+        amount: !type:RangeNumberSelector
+          range: 1, 5
+      - id: Nettle
+        amount: !type:RangeNumberSelector
+          range: 1, 5
+      - id: FoodBanana
+        amount: !type:RangeNumberSelector
+          range: 1, 5
+      - id: FoodCarrot
+        amount: !type:RangeNumberSelector
+          range: 1, 5
+      - id: FoodCabbage
+        amount: !type:RangeNumberSelector
+          range: 1, 5
+      - id: FoodGarlic
+        amount: !type:RangeNumberSelector
+          range: 1, 5
+      - id: FoodLemon
+        amount: !type:RangeNumberSelector
+          range: 1, 5
+      - id: FoodLime
+        amount: !type:RangeNumberSelector
+          range: 1, 5
+      - id: FoodOrange
+        amount: !type:RangeNumberSelector
+          range: 1, 5
+      - id: FoodPineapple
+        amount: !type:RangeNumberSelector
+          range: 1, 5
+      - id: FoodPotato
+        amount: !type:RangeNumberSelector
+          range: 1, 5
+      - id: FoodTomato
+        amount: !type:RangeNumberSelector
+          range: 1, 5
+      - id: FoodEggplant
+        amount: !type:RangeNumberSelector
+          range: 1, 5
+      - id: FoodApple
+        amount: !type:RangeNumberSelector
+          range: 1, 5
+      - id: FoodCocoaPod
+        amount: !type:RangeNumberSelector
+          range: 1, 5
+      - id: FoodCorn
+        amount: !type:RangeNumberSelector
+          range: 1, 5
+      - id: FoodOnion
+        amount: !type:RangeNumberSelector
+          range: 1, 5
+      - id: FoodOnionRed
+        amount: !type:RangeNumberSelector
+          range: 1, 5
+      - id: FoodMushroom
+        amount: !type:RangeNumberSelector
+          range: 1, 5
+      - id: FoodChiliPepper
+        amount: !type:RangeNumberSelector
+          range: 1, 5
+      - id: FoodChillyPepper
+        amount: !type:RangeNumberSelector
+          range: 1, 5
+      - id: FoodAloe
+        amount: !type:RangeNumberSelector
+          range: 1, 5
+      - id: FoodPoppy
+        amount: !type:RangeNumberSelector
+          range: 1, 5
+      - id: FoodLingzhi
+        amount: !type:RangeNumberSelector
+          range: 1, 5
+      - id: FoodAmbrosiaVulgaris
+        amount: !type:RangeNumberSelector
+          range: 1, 5
+      - id: RiceBushel
+        amount: !type:RangeNumberSelector
+          range: 1, 5
+      - id: FoodSoybeans
+        amount: !type:RangeNumberSelector
+          range: 1, 5
+      - id: FoodKoibean
+        amount: !type:RangeNumberSelector
+          range: 1, 5
+      - id: FoodWatermelon
+        amount: !type:RangeNumberSelector
+          range: 1, 5
+      - id: FoodGrape
+        amount: !type:RangeNumberSelector
+          range: 1, 5
+      - id: FoodBerries
+        amount: !type:RangeNumberSelector
+          range: 1, 5
+      - id: FoodBungo
+        amount: !type:RangeNumberSelector
+          range: 1, 5
+      - id: FoodPeaPod
+        amount: !type:RangeNumberSelector
+          range: 1, 5
+      - id: FoodPumpkin
+        amount: !type:RangeNumberSelector
+          range: 1, 5
+      - id: CottonBol
+        amount: !type:RangeNumberSelector
+          range: 1, 5
+      - id: FoodCocoaBeans
+        amount: !type:RangeNumberSelector
+          range: 1, 5
+      - id: FoodCherry
+        amount: !type:RangeNumberSelector
+          range: 1, 5
     #rare
-    rarePrototypes:
-      - FoodBlueTomato
-      - FoodBloodTomato
-      - FoodAmbrosiaDeus
-      - FoodGalaxythistle
-      - FoodFlyAmanita
-      - DeathNettle
-    rareChance: 0.01
+    - !type:GroupSelector
+      children:
+      - id: FoodBlueTomato
+        amount: !type:RangeNumberSelector
+          range: 1, 5
+      - id: FoodBloodTomato
+        amount: !type:RangeNumberSelector
+          range: 1, 5
+      - id: FoodAmbrosiaDeus
+        amount: !type:RangeNumberSelector
+          range: 1, 5
+      - id: FoodGalaxythistle
+        amount: !type:RangeNumberSelector
+          range: 1, 5
+      - id: FoodFlyAmanita
+        amount: !type:RangeNumberSelector
+          range: 1, 5
+      - id: DeathNettle
+        amount: !type:RangeNumberSelector
+          range: 1, 5
