@@ -1,40 +1,11 @@
-using System.Text.Json;
 using System.Text.Json.Serialization;
-using Content.Server.Database;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Administration.Managers;
 
 public sealed partial class UsernameRuleManager
 {
     public const string UsernameRuleNotificationChannel = "username_rule_notification";
-
-    private void OnDatabaseNotification(DatabaseNotification notification)
-    {
-        if (notification.Channel != UsernameRuleNotificationChannel)
-        {
-            return;
-        }
-
-        if (notification.Payload == null)
-        {
-            _sawmill.Error("got username rule notification with no payload");
-            return;
-        }
-
-        UsernameRuleNotification data;
-        try
-        {
-            data = JsonSerializer.Deserialize<UsernameRuleNotification>(notification.Payload)
-                ?? throw new JsonException("Content is null");
-        }
-        catch (JsonException e)
-        {
-            _sawmill.Error($"Got invalid JSON in username rule notification: {e}");
-            return;
-        }
-
-        _taskManager.RunOnMainThread(() => ProcessUsernameRuleNotification(data));
-    }
 
     private async void ProcessUsernameRuleNotification(UsernameRuleNotification data)
     {
@@ -58,6 +29,7 @@ public sealed partial class UsernameRuleManager
             return;
         }
 
+        DebugTools.AssertNotNull(usernameRule.Id);
         CacheCompiledRegex(usernameRule.Id ?? -1, usernameRule.Regex, usernameRule.Expression, usernameRule.Message, usernameRule.ExtendToBan);
 
         KickMatchingConnectedPlayers(data.UsernameRuleId, usernameRule, "username rule notification");

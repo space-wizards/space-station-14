@@ -6,10 +6,10 @@ using Content.Server.Database;
 using Content.Server.GameTicking;
 using Content.Shared.Administration;
 using Robust.Server.Player;
-using Robust.Shared.Asynchronous;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Administration.Managers;
 
@@ -25,7 +25,6 @@ public sealed partial class UsernameRuleManager : IUsernameRuleManager, IPostInj
     [Dependency] private readonly ServerDbEntryManager _entryManager = default!;
     [Dependency] private readonly IChatManager _chat = default!;
     [Dependency] private readonly ILogManager _logManager = default!;
-    [Dependency] private readonly ITaskManager _taskManager = default!;
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly IAdminManager _admin = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
@@ -45,7 +44,7 @@ public sealed partial class UsernameRuleManager : IUsernameRuleManager, IPostInj
 
     public async void Initialize()
     {
-        _db.SubscribeToNotifications(OnDatabaseNotification);
+        _db.SubscribeToNotifications<UsernameRuleNotification>(ProcessUsernameRuleNotification, UsernameRuleNotificationChannel);
 
         // needed for deadmin and readmin
         _admin.OnPermsChanged += OnReAdmin;
@@ -58,19 +57,9 @@ public sealed partial class UsernameRuleManager : IUsernameRuleManager, IPostInj
 
         var rules = await _db.GetServerUsernameRulesAsync(false);
 
-        if (rules == null)
-        {
-            _sawmill.Warning("failed to get rules from database");
-            return;
-        }
-
         foreach (var ruleDef in rules)
         {
-            if (ruleDef.Id == null)
-            {
-                _sawmill.Warning(Loc.GetString("rule had Id of null"));
-                continue;
-            }
+            DebugTools.AssertNotNull(ruleDef.Id);
             CacheCompiledRegex(ruleDef.Id ?? -1, ruleDef.Regex, ruleDef.Expression, ruleDef.Message, ruleDef.ExtendToBan);
         }
     }
@@ -437,7 +426,7 @@ public sealed partial class UsernameRuleManager : IUsernameRuleManager, IPostInj
         _net.ServerSendToMany(usernameBanMsg, _admin.ActiveAdmins.Select(a => a.Channel).ToList());
     }
 
-    public void PostInject()
+    void IPostInjectInit.PostInject()
     {
         _sawmill = _logManager.GetSawmill(SawmillId);
     }

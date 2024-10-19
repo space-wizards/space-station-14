@@ -4,6 +4,9 @@ using Robust.Shared.Network;
 
 namespace Content.Server.Administration.Managers;
 
+/// <summary>
+/// Manages username rules; handles checks for banned usernames.
+/// </summary>
 public interface IUsernameRuleManager
 {
     /// <summary>

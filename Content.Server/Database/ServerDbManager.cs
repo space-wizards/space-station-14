@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Npgsql;
 using Prometheus;
+using Robust.Shared.Asynchronous;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Network;
@@ -373,7 +374,14 @@ namespace Content.Server.Database
 
         #region DB Notifications
 
-        void SubscribeToNotifications(Action<DatabaseNotification> handler);
+        /// <summary>
+        /// Adds a wrapped db notification handler which listens to a specified channel.
+        /// The generic type is the type which is generated from the notification json and passed as a parameter to the specified handler
+        /// </summary>
+        /// <typeparam name="T">The struct which the DB notification payload should conform to and is taken as the action parameter</typeparam>
+        /// <param name="handler">The function called with the database payload</param>
+        /// <param name="channel">the channel that should be read from</param>
+        void SubscribeToNotifications<T>(Action<T> handler, string channel);
 
         /// <summary>
         /// Inject a notification as if it was created by the database. This is intended for testing.
@@ -426,6 +434,7 @@ namespace Content.Server.Database
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IResourceManager _res = default!;
         [Dependency] private readonly ILogManager _logMgr = default!;
+        [Dependency] private readonly ITaskManager _taskManager = default!;
 
         private ServerDbBase _db = default!;
         private LoggingProvider _msLogProvider = default!;
@@ -1082,11 +1091,43 @@ namespace Content.Server.Database
             return RunDbCommand(() => _db.RemoveJobWhitelist(player, job));
         }
 
-        public void SubscribeToNotifications(Action<DatabaseNotification> handler)
+
+        private void OnDatabaseNotification<T>(DatabaseNotification notification, string notificationChannel, Action<T> onSuccess)
+        {
+            if (notification.Channel != notificationChannel)
+            {
+                return;
+            }
+
+            if (notification.Payload == null)
+            {
+                //_sawmill.Error("got username rule notification with no payload");
+                return;
+            }
+
+            T data;
+            try
+            {
+                data = JsonSerializer.Deserialize<T>(notification.Payload)
+                    ?? throw new JsonException("Content is null");
+            }
+            catch (JsonException e)
+            {
+                //_sawmill.Error($"Got invalid JSON in username rule notification: {e}");
+                return;
+            }
+
+            _taskManager.RunOnMainThread(() => onSuccess(data));
+        }
+
+        public void SubscribeToNotifications<T>(Action<T> handler, string channel)
         {
             lock (_notificationHandlers)
             {
-                _notificationHandlers.Add(handler);
+                _notificationHandlers.Add(notification =>
+                {
+                    OnDatabaseNotification(notification, channel, handler);
+                });
             }
         }
 
