@@ -3205,3 +3205,12 @@
   id: 396
   time: '2024-10-18T22:46:20.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/519
+- author: honeyed-lemons
+  changes:
+  - message: Adds NT-Cruiser, a small security shuttle
+    type: Add
+  - message: Tweaked the reclaimer's name in the shipyard menu
+    type: Tweak
+  id: 397
+  time: '2024-10-20T06:35:55.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/526
