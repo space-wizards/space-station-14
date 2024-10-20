@@ -374,6 +374,7 @@
     tags:
     - HideContextMenu
     - StationAi
+    - NoConsoleSound
 
 # Hologram projection that the AI's eye tracks.
 - type: entity
@@ -399,9 +400,6 @@
     - state: ai_camera
       shader: unshaded
       map: ["base"]
-  - type: Tag
-    tags:
-    - StationAi
 
 # Borgs
 - type: entity

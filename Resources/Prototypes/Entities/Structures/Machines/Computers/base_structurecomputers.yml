@@ -64,7 +64,7 @@
         pitch: 1.10  # low pitch keyboard sounds feel kinda weird
     blacklist:
       tags:
-      - StationAi
+      - NoConsoleSound
   - type: ContainerContainer
     containers:
       board: !type:Container

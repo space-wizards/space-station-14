@@ -988,6 +988,9 @@
   id: NoBlockAnchoring
 
 - type: Tag
+  id: NoConsoleSound
+
+- type: Tag
   id: NozzleBackTank
 
 - type: Tag

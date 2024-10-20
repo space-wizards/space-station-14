@@ -58,7 +58,7 @@ public abstract class SharedEmitSoundSystem : EntitySystem
 
     private void HandleEmitSoundOnUIOpen(EntityUid uid, EmitSoundOnUIOpenComponent component, AfterActivatableUIOpenEvent args)
     {
-        if (_whitelistSystem.CheckBoth(args.User, component.Blacklist))
+        if (_whitelistSystem.IsBlacklistFail(component.Blacklist, args.User))
         {
             TryEmitSound(uid, component, args.User);
         }
