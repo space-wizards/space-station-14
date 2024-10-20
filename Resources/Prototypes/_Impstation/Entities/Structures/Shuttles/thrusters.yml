@@ -7,11 +7,10 @@
   - type: Thruster
     thrusterType: Angular
     requireSpace: false
-    thrust: 500
+    thrust: 300
     machinePartThrust: Manipulator
   - type: Sprite
-    sprite: Structures/Shuttles/gyroscope.rsi
-    scale: 0.7, 0.7
+    sprite: _Impstation/Structures/Shuttles/minigyroscope.rsi
     snapCardinals: true
     layers:
     - state: base
