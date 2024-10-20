@@ -171,8 +171,8 @@
     - BorgModuleRCD
 
 - type: technology
-  id: MassExcavation
-  name: research-technology-excavation
+  id: AdvancedSalvage
+  name: research-technology-advanced-salvage
   icon:
     sprite: Objects/Tools/handdrilldiamond.rsi
     state: handdrill
