@@ -1358,6 +1358,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<string> WhitelistPrototypeList =
             CVarDef.Create("whitelist.prototype_list", "basicWhitelist", CVar.SERVERONLY);
 
+        /// <summary>
+        /// Defines the whitelist type to use for server whitelists.
+        /// </summary>Empty
+        public static readonly CVarDef<string> ActiveWhitelist =
+            CVarDef.Create("whitelist.active_whitelist", "DefaultWhitelist", CVar.SERVERONLY | CVar.ARCHIVE);
+
         /*
          * VOTE
          */

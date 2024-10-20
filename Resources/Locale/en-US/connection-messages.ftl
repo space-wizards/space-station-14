@@ -1,16 +1,20 @@
-﻿cmd-whitelistadd-desc = Adds the player with the given username to the server whitelist.
-cmd-whitelistadd-help = Usage: whitelistadd <username or User ID>
+﻿cmd-whitelistadd-desc = Adds the player with the given username to the server whitelist. By default whitelists are added to the server's active whitelist.
+cmd-whitelistadd-help = Usage: whitelistadd <username or User ID> [whitelist name]
 cmd-whitelistadd-existing = {$username} is already on the whitelist!
 cmd-whitelistadd-added = {$username} added to the whitelist
+cmd-whitelistadd-adding-failed = Failed to add whitelist. Is the whitelist name correct?
 cmd-whitelistadd-not-found = Unable to find '{$username}'
 cmd-whitelistadd-arg-player = [player]
+cmd-whitelistadd-arg-whitelist-name = [whitelist name]
 
-cmd-whitelistremove-desc = Removes the player with the given username from the server whitelist.
-cmd-whitelistremove-help = Usage: whitelistremove <username or User ID>
+cmd-whitelistremove-desc = Removes the player with the given username from the server whitelist. By default whitelist are removed from the server's active whitelist.
+cmd-whitelistremove-help = Usage: whitelistremove <username or User ID> [whitelist name]
 cmd-whitelistremove-existing = {$username} is not on the whitelist!
 cmd-whitelistremove-removed = {$username} removed from the whitelist
+cmd-whitelistremove-adding-failed = Failed to remove whitelist.
 cmd-whitelistremove-not-found = Unable to find '{$username}'
 cmd-whitelistremove-arg-player = [player]
+cmd-whitelistsremove-arg-whitelist-name = [whitelist name]
 
 cmd-kicknonwhitelisted-desc = Kicks all non-whitelisted players from the server.
 cmd-kicknonwhitelisted-help = Usage: kicknonwhitelisted

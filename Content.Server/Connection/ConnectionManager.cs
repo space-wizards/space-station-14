@@ -144,6 +144,13 @@ namespace Content.Server.Connection
             }
         }
 
+        private async Task<bool> IsWhitelisted(NetUserId player)
+        {
+            var active = _cfg.GetCVar(CCVars.ActiveWhitelist);
+            return await _db.GetWhitelistStatusAsync(player, active);
+
+        }
+
         private void AdminAlertIfSharedConnection(ICommonSession newSession)
         {
             var playerThreshold = _cfg.GetCVar(CCVars.AdminAlertMinPlayersSharingConnection);
@@ -215,7 +222,7 @@ namespace Content.Server.Connection
                 var record = await _db.GetPlayerRecordByUserId(userId);
                 var validAccountAge = record != null &&
                                       record.FirstSeenTime.CompareTo(DateTimeOffset.UtcNow - TimeSpan.FromMinutes(minMinutesAge)) <= 0;
-                var bypassAllowed = _cfg.GetCVar(CCVars.BypassBunkerWhitelist) && await _db.GetWhitelistStatusAsync(userId);
+                var bypassAllowed = _cfg.GetCVar(CCVars.BypassBunkerWhitelist) && await IsWhitelisted(userId);
 
                 // Use the custom reason if it exists & they don't have the minimum account age
                 if (customReason != string.Empty && !validAccountAge && !bypassAllowed)
@@ -273,9 +280,15 @@ namespace Content.Server.Connection
             // Checks for whitelist IF it's enabled AND the user isn't an admin. Admins are always allowed.
             if (_cfg.GetCVar(CCVars.WhitelistEnabled) && adminData is null)
             {
-                if (_whitelists is null)
+                var active = _cfg.GetCVar(CCVars.ActiveWhitelist);
+                var activeValid = await _db.GetWhitelistTypeExistsAsync(active);
+                if (_whitelists is null || !activeValid)
                 {
-                    _sawmill.Error("Whitelist enabled but no whitelists loaded.");
+                    if (_whitelists == null)
+                        _sawmill.Error("Whitelist enabled but no whitelists loaded.");
+
+                    if (!activeValid)
+                        _sawmill.Error("Active whitelist set to non existent type.");
                     // Misconfigured, deny everyone.
                     return (ConnectionDenyReason.Whitelist, Loc.GetString("whitelist-misconfigured"), null);
                 }
@@ -306,7 +319,7 @@ namespace Content.Server.Connection
         private async Task<(bool IsInvalid, string Reason)> IsInvalidConnectionDueToBabyJail(NetUserId userId, NetConnectingArgs e)
         {
             // If you're whitelisted then bypass this whole thing
-            if (await _db.GetWhitelistStatusAsync(userId))
+            if (await IsWhitelisted(userId))
                 return (false, "");
 
             // Initial cvar retrieval

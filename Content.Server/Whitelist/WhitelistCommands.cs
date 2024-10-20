@@ -14,32 +14,41 @@ public sealed class AddWhitelistCommand : LocalizedCommands
 {
     public override string Command => "whitelistadd";
 
+    [Dependency] private readonly IServerDbManager _db = default!;
+    [Dependency] private readonly IPlayerLocator _loc = default!;
+    [Dependency] private readonly IConfigurationManager _config = default!;
+
     public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        if (args.Length == 0)
+        if (args.Length < 1 || args.Length > 2)
         {
-            shell.WriteError(Loc.GetString("shell-need-minimum-one-argument"));
+            shell.WriteError(Loc.GetString("shell-need-between-arguments", ("lower", 1), ("upper", 2)));
             shell.WriteLine(Help);
             return;
         }
 
-        var db = IoCManager.Resolve<IServerDbManager>();
-        var loc = IoCManager.Resolve<IPlayerLocator>();
+        var name = args[0];
+        var whitelistName = args.Length == 2 ? args[1] : _config.GetCVar(CCVars.ActiveWhitelist);
 
-        var name = string.Join(' ', args).Trim();
-        var data = await loc.LookupIdByNameOrIdAsync(name);
+        var data = await _loc.LookupIdByNameOrIdAsync(name);
 
         if (data != null)
         {
             var guid = data.UserId;
-            var isWhitelisted = await db.GetWhitelistStatusAsync(guid);
+            var isWhitelisted = await _db.GetWhitelistStatusAsync(guid, whitelistName);
+
             if (isWhitelisted)
             {
                 shell.WriteLine(Loc.GetString("cmd-whitelistadd-existing", ("username", data.Username)));
                 return;
             }
 
-            await db.AddToWhitelistAsync(guid);
+            if (!await _db.AddToWhitelistAsync(guid, whitelistName))
+            {
+                shell.WriteError(Loc.GetString("cmd-whitelistadd-adding-failed"));
+                return;
+            }
+
             shell.WriteLine(Loc.GetString("cmd-whitelistadd-added", ("username", data.Username)));
             return;
         }
@@ -54,6 +63,11 @@ public sealed class AddWhitelistCommand : LocalizedCommands
             return CompletionResult.FromHint(Loc.GetString("cmd-whitelistadd-arg-player"));
         }
 
+        if (args.Length == 2)
+        {
+            return CompletionResult.FromHint(Loc.GetString("cmd-whitelistadd-arg-whitelist-name"));
+        }
+
         return CompletionResult.Empty;
     }
 }
@@ -61,34 +75,43 @@ public sealed class AddWhitelistCommand : LocalizedCommands
 [AdminCommand(AdminFlags.Ban)]
 public sealed class RemoveWhitelistCommand : LocalizedCommands
 {
+    [Dependency] private readonly IServerDbManager _db = default!;
+    [Dependency] private readonly IPlayerLocator _loc = default!;
+    [Dependency] private readonly IConfigurationManager _config = default!;
+
     public override string Command => "whitelistremove";
 
     public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        if (args.Length == 0)
+        if (args.Length < 1 || args.Length > 2)
         {
-            shell.WriteError(Loc.GetString("shell-need-minimum-one-argument"));
+            shell.WriteError(Loc.GetString("shell-need-between-arguments", ("lower", 1), ("upper", 2)));
             shell.WriteLine(Help);
             return;
         }
 
-        var db = IoCManager.Resolve<IServerDbManager>();
-        var loc = IoCManager.Resolve<IPlayerLocator>();
+        var name = args[0];
+        var whitelistName = args.Length == 2 ? args[1] : _config.GetCVar(CCVars.ActiveWhitelist);
 
-        var name = string.Join(' ', args).Trim();
-        var data = await loc.LookupIdByNameOrIdAsync(name);
+        var data = await _loc.LookupIdByNameOrIdAsync(name);
 
         if (data != null)
         {
             var guid = data.UserId;
-            var isWhitelisted = await db.GetWhitelistStatusAsync(guid);
+            var isWhitelisted = await _db.GetWhitelistStatusAsync(guid, whitelistName);
+
             if (!isWhitelisted)
             {
                 shell.WriteLine(Loc.GetString("cmd-whitelistremove-existing", ("username", data.Username)));
                 return;
             }
 
-            await db.RemoveFromWhitelistAsync(guid);
+            if(!await _db.RemoveFromWhitelistAsync(guid, whitelistName))
+            {
+                shell.WriteError(Loc.GetString("cmd-whitelistremove-adding-failed"));
+                return;
+
+            }
             shell.WriteLine(Loc.GetString("cmd-whitelistremove-removed", ("username", data.Username)));
             return;
         }
@@ -99,9 +122,11 @@ public sealed class RemoveWhitelistCommand : LocalizedCommands
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
         if (args.Length == 1)
-        {
             return CompletionResult.FromHint(Loc.GetString("cmd-whitelistremove-arg-player"));
-        }
+
+
+        if (args.Length == 2)
+            return CompletionResult.FromHint(Loc.GetString("cmd-whitelistsremove-arg-whitelist-name"));
 
         return CompletionResult.Empty;
     }
@@ -112,6 +137,11 @@ public sealed class KickNonWhitelistedCommand : LocalizedCommands
 {
     public override string Command => "kicknonwhitelisted";
 
+    [Dependency] private readonly IConfigurationManager _config = default!;
+    [Dependency] private readonly IPlayerManager _player = default!;
+    [Dependency] private readonly IServerDbManager _db = default!;
+    [Dependency] private readonly IServerNetManager _net = default!;
+
     public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 0)
@@ -121,23 +151,19 @@ public sealed class KickNonWhitelistedCommand : LocalizedCommands
             return;
         }
 
-        var cfg = IoCManager.Resolve<IConfigurationManager>();
-
-        if (!cfg.GetCVar(CCVars.WhitelistEnabled))
+        if (!_config.GetCVar(CCVars.WhitelistEnabled))
             return;
 
-        var player = IoCManager.Resolve<IPlayerManager>();
-        var db = IoCManager.Resolve<IServerDbManager>();
-        var net = IoCManager.Resolve<IServerNetManager>();
+        var active = _config.GetCVar(CCVars.ActiveWhitelist);
 
-        foreach (var session in player.NetworkedSessions)
+        foreach (var session in _player.NetworkedSessions)
         {
-            if (await db.GetAdminDataForAsync(session.UserId) is not null)
+            if (await _db.GetAdminDataForAsync(session.UserId) is not null)
                 continue;
 
-            if (!await db.GetWhitelistStatusAsync(session.UserId))
+            if (!await _db.GetWhitelistStatusAsync(session.UserId, active))
             {
-                net.DisconnectChannel(session.Channel, Loc.GetString("whitelist-not-whitelisted"));
+                _net.DisconnectChannel(session.Channel, Loc.GetString("whitelist-not-whitelisted"));
             }
         }
     }
