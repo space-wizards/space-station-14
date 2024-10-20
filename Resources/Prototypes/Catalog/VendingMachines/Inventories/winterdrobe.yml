@@ -18,6 +18,38 @@
     ClothingOuterCoatBomber: 3
     ClothingHeadHatSantahat: 2
     ClothingHeadHatXmasCrown: 2
+    ClothingUniformTurtleneckColorWhite: 2
+    ClothingUniformTurtleneckColorGrey: 2
+    ClothingUniformTurtleneckColorBlack: 2
+    ClothingUniformTurtleneckColorBlue: 2
+    ClothingUniformTurtleneckColorDarkBlue: 2
+    ClothingUniformTurtleneckColorTeal: 2
+    ClothingUniformTurtleneckColorGreen: 2
+    ClothingUniformTurtleneckColorDarkGreen: 2
+    ClothingUniformTurtleneckColorOrange: 2
+    ClothingUniformTurtleneckColorPink: 2
+    ClothingUniformTurtleneckColorRed: 2
+    ClothingUniformTurtleneckColorYellow: 2
+    ClothingUniformTurtleneckColorPurple: 2
+    ClothingUniformTurtleneckColorLightBrown: 2
+    ClothingUniformTurtleneckColorBrown: 2
+    ClothingUniformTurtleneckColorMaroon: 2
+    ClothingUniformTurtleneckSkirtColorWhite: 2
+    ClothingUniformTurtleneckSkirtColorGrey: 2
+    ClothingUniformTurtleneckSkirtColorBlack: 2
+    ClothingUniformTurtleneckSkirtColorBlue: 2
+    ClothingUniformTurtleneckSkirtColorDarkBlue: 2
+    ClothingUniformTurtleneckSkirtColorTeal: 2
+    ClothingUniformTurtleneckSkirtColorGreen: 2
+    ClothingUniformTurtleneckSkirtColorDarkGreen: 2
+    ClothingUniformTurtleneckSkirtColorOrange: 2
+    ClothingUniformTurtleneckSkirtColorPink: 2
+    ClothingUniformTurtleneckSkirtColorRed: 2
+    ClothingUniformTurtleneckSkirtColorYellow: 2
+    ClothingUniformTurtleneckSkirtColorPurple: 2
+    ClothingUniformTurtleneckSkirtColorLightBrown: 2
+    ClothingUniformTurtleneckSkirtColorBrown: 2
+    ClothingUniformTurtleneckSkirtColorMaroon: 2
 
   emaggedInventory:
     ClothingNeckScarfStripedSyndieGreen: 3

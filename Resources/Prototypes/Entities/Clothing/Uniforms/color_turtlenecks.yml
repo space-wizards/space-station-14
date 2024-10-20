@@ -1,0 +1,491 @@
+# White Turtleneck
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformTurtleneckColorWhite
+  name: white turtleneck
+  description: A generic white turtleneck with no rank markings.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    layers:
+    - state: icon
+    - state: trousers-icon
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      - state: trousers-inhand-left
+      right:
+      - state: inhand-right
+      - state: trousers-inhand-right
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+      - state: trousers-equipped-INNERCLOTHING
+
+# Grey Turtleneck
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformTurtleneckColorGrey
+  name: grey turtleneck
+  description: A tasteful grey turtleneck that reminds you of the good old days.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    layers:
+    - state: icon
+      color: "#b3b3b3"
+    - state: trousers-icon
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#b3b3b3"
+      - state: trousers-inhand-left
+      right:
+      - state: inhand-right
+        color: "#b3b3b3"
+      - state: trousers-inhand-right
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#b3b3b3"
+      - state: trousers-equipped-INNERCLOTHING
+
+# Black Turtleneck
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformTurtleneckColorBlack
+  name: black turtleneck
+  description: A generic black turtleneck with no rank markings.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    layers:
+    - state: icon
+      color: "#3f3f3f"
+    - state: trousers-icon
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#3f3f3f"
+      - state: trousers-inhand-left
+      right:
+      - state: inhand-right
+        color: "#3f3f3f"
+      - state: trousers-inhand-right
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#3f3f3f"
+      - state: trousers-equipped-INNERCLOTHING
+
+# Blue Turtleneck
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformTurtleneckColorBlue
+  name: blue turtleneck
+  description: A generic blue turtleneck with no rank markings.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    layers:
+    - state: icon
+      color: "#52aecc"
+    - state: trousers-icon
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#52aecc"
+      - state: trousers-inhand-left
+      right:
+      - state: inhand-right
+        color: "#52aecc"
+      - state: trousers-inhand-right
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#52aecc"
+      - state: trousers-equipped-INNERCLOTHING
+
+# Dark Blue Turtleneck
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformTurtleneckColorDarkBlue
+  name: dark blue turtleneck
+  description: A generic dark blue turtleneck with no rank markings.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    layers:
+    - state: icon
+      color: "#3285ba"
+    - state: trousers-icon
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#3285ba"
+      - state: trousers-inhand-left
+      right:
+      - state: inhand-right
+        color: "#3285ba"
+      - state: trousers-inhand-right
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#3285ba"
+      - state: trousers-equipped-INNERCLOTHING
+
+# Teal Turtleneck
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformTurtleneckColorTeal
+  name: teal turtleneck
+  description: A generic teal turtleneck with no rank markings.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    layers:
+    - state: icon
+      color: "#77f3b7"
+    - state: trousers-icon
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#77f3b7"
+      - state: trousers-inhand-left
+      right:
+      - state: inhand-right
+        color: "#77f3b7"
+      - state: trousers-inhand-right
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#77f3b7"
+      - state: trousers-equipped-INNERCLOTHING
+
+# Green Turtleneck
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformTurtleneckColorGreen
+  name: green turtleneck
+  description: A generic green turtleneck with no rank markings.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    layers:
+    - state: icon
+      color: "#9ed63a"
+    - state: trousers-icon
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#9ed63a"
+      - state: trousers-inhand-left
+      right:
+      - state: inhand-right
+        color: "#9ed63a"
+      - state: trousers-inhand-right
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#9ed63a"
+      - state: trousers-equipped-INNERCLOTHING
+
+ # Dark Green Turtleneck
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformTurtleneckColorDarkGreen
+  name: dark green turtleneck
+  description: A generic dark green turtleneck with no rank markings.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    layers:
+    - state: icon
+      color: "#79CC26"
+    - state: trousers-icon
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#79CC26"
+      - state: trousers-inhand-left
+      right:
+      - state: inhand-right
+        color: "#79CC26"
+      - state: trousers-inhand-right
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#79CC26"
+      - state: trousers-equipped-INNERCLOTHING
+
+# Orange Turtleneck
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformTurtleneckColorOrange
+  name: orange turtleneck
+  description: A generic orange turtleneck with no rank markings.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    layers:
+    - state: icon
+      color: "#ff8c19"
+    - state: trousers-icon
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#ff8c19"
+      - state: trousers-inhand-left
+      right:
+      - state: inhand-right
+        color: "#ff8c19"
+      - state: trousers-inhand-right
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#ff8c19"
+      - state: trousers-equipped-INNERCLOTHING
+
+# Pink Turtleneck
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformTurtleneckColorPink
+  name: pink turtleneck
+  description: A generic pink turtleneck with no rank markings.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    layers:
+    - state: icon
+      color: "#ffa69b"
+    - state: trousers-icon
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#ffa69b"
+      - state: trousers-inhand-left
+      right:
+      - state: inhand-right
+        color: "#ffa69b"
+      - state: trousers-inhand-right
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#ffa69b"
+      - state: trousers-equipped-INNERCLOTHING
+
+# Red Turtleneck
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformTurtleneckColorRed
+  name: red turtleneck
+  description: A generic red turtleneck with no rank markings.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    layers:
+    - state: icon
+      color: "#eb0c07"
+    - state: trousers-icon
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#eb0c07"
+      - state: trousers-inhand-left
+      right:
+      - state: inhand-right
+        color: "#eb0c07"
+      - state: trousers-inhand-right
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#eb0c07"
+      - state: trousers-equipped-INNERCLOTHING
+
+# Yellow Turtleneck
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformTurtleneckColorYellow
+  name: yellow turtleneck
+  description: A generic yellow turtleneck with no rank markings.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    layers:
+    - state: icon
+      color: "#ffe14d"
+    - state: trousers-icon
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#ffe14d"
+      - state: trousers-inhand-left
+      right:
+      - state: inhand-right
+        color: "#ffe14d"
+      - state: trousers-inhand-right
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#ffe14d"
+      - state: trousers-equipped-INNERCLOTHING
+
+# Purple Turtleneck
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformTurtleneckColorPurple
+  name: purple turtleneck
+  description: A generic light purple turtleneck with no rank markings.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    layers:
+    - state: icon
+      color: "#9f70cc"
+    - state: trousers-icon
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#9f70cc"
+      - state: trousers-inhand-left
+      right:
+      - state: inhand-right
+        color: "#9f70cc"
+      - state: trousers-inhand-right
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#9f70cc"
+      - state: trousers-equipped-INNERCLOTHING
+
+# Light Brown Turtleneck
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformTurtleneckColorLightBrown
+  name: light brown turtleneck
+  description: A generic light brown turtleneck with no rank markings.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    layers:
+    - state: icon
+      color: "#c59431"
+    - state: trousers-icon
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#c59431"
+      - state: trousers-inhand-left
+      right:
+      - state: inhand-right
+        color: "#c59431"
+      - state: trousers-inhand-right
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#c59431"
+      - state: trousers-equipped-INNERCLOTHING
+
+# Brown Turtleneck
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformTurtleneckColorBrown
+  name: brown turtleneck
+  description: A generic brown turtleneck with no rank markings.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    layers:
+    - state: icon
+      color: "#a17229"
+    - state: trousers-icon
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#a17229"
+      - state: trousers-inhand-left
+      right:
+      - state: inhand-right
+        color: "#a17229"
+      - state: trousers-inhand-right
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#a17229"
+      - state: trousers-equipped-INNERCLOTHING
+
+# Maroon Turtleneck
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformTurtleneckColorMaroon
+  name: maroon turtleneck
+  description: A generic maroon turtleneck with no rank markings.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    layers:
+    - state: icon
+      color: "#cc295f"
+    - state: trousers-icon
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#cc295f"
+      - state: trousers-inhand-left
+      right:
+      - state: inhand-right
+        color: "#cc295f"
+      - state: trousers-inhand-right
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#cc295f"
+      - state: trousers-equipped-INNERCLOTHING
