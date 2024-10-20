@@ -278,7 +278,7 @@
   id: CantGoHomeAgain
   name: SoundTeMP - Can't go home again, baby
   path:
-    path: /Audio/Jukebox/cant_go_home_again.ogg
+    path: /Audio/Jukebox/cant_go_home_again_baby.ogg
 
 - type: jukebox
   id: BalladForWhales
