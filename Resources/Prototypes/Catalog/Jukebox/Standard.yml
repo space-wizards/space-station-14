@@ -29,31 +29,31 @@
     path: /Audio/Jukebox/drifting.ogg
 
 - type: jukebox
-  id: starlight
+  id: Starlight
   name: Qwertyquerty - Starlight
   path:
     path: /Audio/Jukebox/starlight.ogg
 
 - type: jukebox
-  id: sunset
+  id: Sunset
   name: PigeonBeans - Sunset
   path:
     path: /Audio/Jukebox/sunset.ogg
 
 - type: jukebox
-  id: mtamientvsspasm
+  id: Mtamientvsspasm
   name: Mt. Amient vs Spasm - Soichi Terada
   path:
-    path: /Audio/Lobby/mt_amient_vs_spasm.ogg
+    path: /Audio/Jukebox/mt_amient_vs_spasm.ogg
 
 - type: jukebox
-  id: moveme
+  id: Moveme
   name: Kohta Takahashi - Move Me
   path:
     path: /Audio/Jukebox/move_me.ogg
 
 - type: jukebox
-  id: shred
+  id: Shred
   name: B. Bravo & Lean Rock - Shred
   path:
     path: /Audio/Jukebox/shred.ogg
@@ -228,7 +228,7 @@
 
 - type: jukebox
   id: Impossible
-  name: Darren Knob - Impossible
+  name: Darren Korb - Impossible
   path:
     path: /Audio/Jukebox/impossible.ogg
 
@@ -261,3 +261,171 @@
   name: KiloWatts - Two Days Off
   path:
     path: /Audio/Jukebox/twodaysoff.ogg
+
+- type: jukebox
+  id: SpaceAsshole
+  name: Space Asshole - Chris Remo
+  path:
+    path: /Audio/Jukebox/space_asshole.ogg
+
+- type: jukebox
+  id: ArmoredInGreen
+  name: Ketsuipachi Arrange - Suburb, Armored in Green
+  path:
+    path: /Audio/Jukebox/armored_in_green.ogg
+
+- type: jukebox
+  id: CantGoHomeAgain
+  name: SoundTeMP - Can't go home again, baby
+  path:
+    path: /Audio/Jukebox/cant_go_home_again.ogg
+
+- type: jukebox
+  id: BalladForWhales
+  name: Jussi Elsilä - Ballad for Whales
+  path:
+    path: /Audio/Jukebox/ballad_for_whales.ogg
+
+- type: jukebox
+  id: Sentidub
+  name: Sentient - Sentidub
+  path:
+    path: /Audio/Jukebox/sentidub.ogg
+
+- type: jukebox
+  id: Epoch
+  name: Aaron Cherof - Epoch
+  path:
+    path: /Audio/Jukebox/epoch.ogg
+
+- type: jukebox
+  id: TheConfontation
+  name: Harry Mack - The Confrontation
+  path:
+    path: /Audio/Jukebox/the_confrontation.ogg
+
+- type: jukebox
+  id: ALongFall
+  name: Masayoshi Soken - A Long Fall
+  path:
+    path: /Audio/Jukebox/the_twinning.ogg
+
+- type: jukebox
+  id: Eudora
+  name: David Bergeaud - Eudora, Logging Site
+  path:
+    path: /Audio/Jukebox/eudora.ogg
+
+- type: jukebox
+  id: LonelyRollingStar
+  name: Saki Kabata - Lonely Rolling Star
+  path:
+    path: /Audio/Jukebox/lonely_rolling_star.ogg
+
+- type: jukebox
+  id: SetMeFree
+  name: Minnesota Fats - Pool Legend, Set Me Free
+  path:
+    path: /Audio/Jukebox/set_me_free.ogg
+
+- type: jukebox
+  id: ILikeItHere
+  name: Alistair Lindsay - I Like It Here
+  path:
+    path: /Audio/Jukebox/i_like_it_here.ogg
+
+- type: jukebox
+  id: Wartrauma
+  name: Barotrauma - Wartrauma
+  path:
+    path: /Audio/Jukebox/wartrauma.ogg
+
+- type: jukebox
+  id: OverclockedWeakness
+  name: Barotrauma - Overclocked Weakness
+  path:
+    path: /Audio/Jukebox/overclocked_weakness.ogg
+
+- type: jukebox
+  id: SamJones
+  name: Leslie Fish - Sam Jones
+  path:
+    path: /Audio/Jukebox/sam_jones.ogg
+
+- type: jukebox
+  id: BioEngineering
+  name: James Primate - Bio-Engineering
+  path:
+    path: /Audio/Jukebox/bio-engineering.ogg
+
+- type: jukebox
+  id: Haluci
+  name: Neil Voss - Haluci Theme
+  path:
+    path: /Audio/Jukebox/haluci.ogg
+
+- type: jukebox
+  id: PillarsOfTheUnderworld
+  name: Guilty Gear Korean - Pillars of the underworld
+  path:
+    path: /Audio/Jukebox/pillars_of_the_underworld.ogg
+
+- type: jukebox
+  id: Music1
+  name: P.N.03 - Music 1
+  path:
+    path: /Audio/Jukebox/music_1.ogg
+
+- type: jukebox
+  id: Map01
+  name: NUTS2.wad - Map 01
+  path:
+    path: /Audio/Jukebox/nuts2map1.ogg
+
+- type: jukebox
+  id: PeaceOfTheWorld
+  name: Dark Chronicle - Peace of the World
+  path:
+    path: /Audio/Jukebox/peace_of_the_world.ogg
+
+- type: jukebox
+  id: Montage
+  name: Ace Combat 3 - Montage 8/40
+  path:
+    path: /Audio/Jukebox/montage.ogg
+
+- type: jukebox
+  id: ClockTower
+  name: Super Monkey Ball 2 - Clock Tower
+  path:
+    path: /Audio/Jukebox/clock_tower.ogg
+
+- type: jukebox
+  id: JoinUs4Happy
+  name: Sonic Adventure - Join Us 4 Happy Time
+  path:
+    path: /Audio/Jukebox/join_us_4_happy_time.ogg
+
+- type: jukebox
+  id: Thanks
+  name: Pilotredsun - Thanks
+  path:
+    path: /Audio/Jukebox/thanks.ogg
+
+- type: jukebox
+  id: Warsaw
+  name: PilotRedSun - Warsaw
+  path:
+    path: /Audio/Jukebox/warsaw.ogg
+
+- type: jukebox
+  id: LosingIsFun
+  name: Dabu & Simon Swerwer - Losing is Fun
+  path:
+    path: /Audio/Jukebox/losing_is_fun.ogg
+
+- type: jukebox
+  id: IlunKinem
+  name: Dabu & Simon Swerwer - ilun Kinem
+  path:
+    path: /Audio/Jukebox/ilun_kinem.ogg
