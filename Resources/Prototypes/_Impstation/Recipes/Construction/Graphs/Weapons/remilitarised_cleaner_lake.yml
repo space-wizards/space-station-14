@@ -1,0 +1,13 @@
+- type: constructionGraph
+  id: UpgradeWeaponCleanerLake
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: upgraded
+          steps:
+            - tag: WeaponCleanerLakeUpgradeKit
+              doAfter: 2
+
+    - node: upgraded
+      entity: WeaponLauncherCleanerLakeRemilitarised
