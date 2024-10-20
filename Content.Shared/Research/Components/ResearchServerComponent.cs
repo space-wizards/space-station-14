@@ -1,5 +1,4 @@
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Research.Components;
@@ -11,15 +10,22 @@ public sealed partial class ResearchServerComponent : Component
     /// The name of the server
     /// </summary>
     [AutoNetworkedField]
-    [DataField("serverName"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public string ServerName = "RDSERVER";
 
     /// <summary>
     /// The amount of points on the server.
     /// </summary>
     [AutoNetworkedField]
-    [DataField("points"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public int Points;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    [AutoNetworkedField]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public int RediscoverCost = 2000;
 
     /// <summary>
     /// A unique numeric id representing the server
@@ -37,10 +43,10 @@ public sealed partial class ResearchServerComponent : Component
     [ViewVariables(VVAccess.ReadOnly)]
     public List<EntityUid> Clients = new();
 
-    [DataField("nextUpdateTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan NextUpdateTime = TimeSpan.Zero;
 
-    [DataField("researchConsoleUpdateTime"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan ResearchConsoleUpdateTime = TimeSpan.FromSeconds(1);
 }
 

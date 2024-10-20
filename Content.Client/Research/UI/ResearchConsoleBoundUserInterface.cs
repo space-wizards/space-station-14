@@ -25,6 +25,11 @@ public sealed class ResearchConsoleBoundUserInterface : BoundUserInterface
         _consoleMenu = this.CreateWindow<ResearchConsoleMenu>();
         _consoleMenu.SetEntity(owner);
 
+        _consoleMenu.OnTechnologyRediscoverPressed += () =>
+        {
+            SendMessage(new ConsoleRediscoverTechnologyMessage());
+        };
+
         _consoleMenu.OnTechnologyCardPressed += id =>
         {
             SendMessage(new ConsoleUnlockTechnologyMessage(id));

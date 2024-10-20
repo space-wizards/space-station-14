@@ -14,10 +14,44 @@ public sealed partial class ResearchSystem
     private void InitializeConsole()
     {
         SubscribeLocalEvent<ResearchConsoleComponent, ConsoleUnlockTechnologyMessage>(OnConsoleUnlock);
+        SubscribeLocalEvent<ResearchConsoleComponent, ConsoleRediscoverTechnologyMessage>(OnRediscoverTechnology);
         SubscribeLocalEvent<ResearchConsoleComponent, BeforeActivatableUIOpenEvent>(OnConsoleBeforeUiOpened);
         SubscribeLocalEvent<ResearchConsoleComponent, ResearchServerPointsChangedEvent>(OnPointsChanged);
         SubscribeLocalEvent<ResearchConsoleComponent, ResearchRegistrationChangedEvent>(OnConsoleRegistrationChanged);
         SubscribeLocalEvent<ResearchConsoleComponent, TechnologyDatabaseModifiedEvent>(OnConsoleDatabaseModified);
+    }
+
+    private void OnRediscoverTechnology(
+        EntityUid uid,
+        ResearchConsoleComponent console,
+        ConsoleRediscoverTechnologyMessage args
+    )
+    {
+        var act = args.Actor;
+
+        if (!this.IsPowered(uid, EntityManager))
+            return;
+
+        if (TryComp<AccessReaderComponent>(uid, out var access) && !_accessReader.IsAllowed(act, uid, access))
+        {
+            _popup.PopupEntity(Loc.GetString("research-console-no-access-popup"), act);
+            return;
+        }
+
+        if (!TryGetClientServer(uid, out var serverEnt, out var serverComponent))
+        {
+            return;
+        }
+
+        if (serverComponent.RediscoverCost > serverComponent.Points)
+        {
+            return;
+        }
+
+        ModifyServerPoints(serverEnt.Value, -serverComponent.RediscoverCost);
+        UpdateTechnologyCards(serverEnt.Value);
+        SyncClientWithServer(uid);
+        UpdateConsoleInterface(uid);
     }
 
     private void OnConsoleUnlock(EntityUid uid, ResearchConsoleComponent component, ConsoleUnlockTechnologyMessage args)
@@ -72,11 +106,11 @@ public sealed partial class ResearchSystem
         if (TryGetClientServer(uid, out _, out var serverComponent, clientComponent))
         {
             var points = clientComponent.ConnectedToServer ? serverComponent.Points : 0;
-            state = new ResearchConsoleBoundInterfaceState(points);
+            state = new ResearchConsoleBoundInterfaceState(points, serverComponent.RediscoverCost);
         }
         else
         {
-            state = new ResearchConsoleBoundInterfaceState(default);
+            state = new ResearchConsoleBoundInterfaceState(default, default);
         }
 
         _uiSystem.SetUiState(uid, ResearchConsoleUiKey.Key, state);

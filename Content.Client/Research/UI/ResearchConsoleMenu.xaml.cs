@@ -20,6 +20,7 @@ namespace Content.Client.Research.UI;
 public sealed partial class ResearchConsoleMenu : FancyWindow
 {
     public Action<string>? OnTechnologyCardPressed;
+    public Action? OnTechnologyRediscoverPressed;
     public Action? OnServerButtonPressed;
 
     [Dependency] private readonly IEntityManager _entity = default!;
@@ -41,6 +42,7 @@ public sealed partial class ResearchConsoleMenu : FancyWindow
         _accessReader = _entity.System<AccessReaderSystem>();
 
         ServerButton.OnPressed += _ => OnServerButtonPressed?.Invoke();
+        RediscoverButton.OnPressed += _ => OnTechnologyRediscoverPressed?.Invoke();
     }
 
     public void SetEntity(EntityUid entity)
@@ -77,6 +79,9 @@ public sealed partial class ResearchConsoleMenu : FancyWindow
 
         var unlockedTech = database.UnlockedTechnologies.Select(x => _prototype.Index<TechnologyPrototype>(x));
         SyncTechnologyList(UnlockedCardsContainer, unlockedTech);
+
+        RediscoverButton.Text =
+            Loc.GetString("research-console-menu-server-rediscover-button", ("cost", state.RediscoverCost));
     }
 
     public void UpdateInformationPanel(ResearchConsoleBoundInterfaceState state)
