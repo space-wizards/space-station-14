@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: DrSmugleaf
-  changes:
-  - message: The Toggle Internals verb no longer shows up in the context menu if no
-      breathing tool is equipped and internals are off.
-    type: Tweak
-  id: 7039
-  time: '2024-08-04T03:34:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30622
 - author: Mervill
   changes:
   - message: Rotten Meat can be collected in trash bags and deleted by the recycler
@@ -3946,3 +3938,10 @@
   id: 7538
   time: '2024-10-20T02:46:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32914
+- author: Calecute
+  changes:
+  - message: wide attacks that deal blunt damage will now deal stamina damage.
+    type: Fix
+  id: 7539
+  time: '2024-10-20T03:41:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32422
