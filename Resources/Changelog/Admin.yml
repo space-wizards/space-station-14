@@ -544,5 +544,28 @@ Entries:
   id: 67
   time: '2024-09-15T01:55:03.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31654
+- author: ElectroJr
+  changes:
+  - message: The `menuvis all` once again makes all entities show up in the right-click
+      context menu.
+    type: Fix
+  id: 68
+  time: '2024-09-23T07:28:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32395
+- author: SlamBamActionman
+  changes:
+  - message: Added admin logging for generated codewords.
+    type: Add
+  id: 69
+  time: '2024-10-09T11:55:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32531
+- author: IProduceWidgets
+  changes:
+  - message: invokeverb should work with smite names now. Find the names in the smite
+      tab on mouse hover.
+    type: Fix
+  id: 70
+  time: '2024-10-16T22:24:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32844
 Name: Admin
 Order: 1

@@ -204,6 +204,8 @@
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepSpurs
+      params:
+        variation: 0.09
 
 - type: entity
   parent: ClothingShoesBootsCowboyBrown

@@ -16,17 +16,8 @@ public sealed partial class PlaytimeStatsEntry : ContainerButton
 
         RoleLabel.Text = role;
         Playtime = playtime;  // store the TimeSpan value directly
-        PlaytimeLabel.Text = ConvertTimeSpanToHoursMinutes(playtime);  // convert to string for display
+        PlaytimeLabel.Text = playtime.ToString(Loc.GetString("ui-playtime-time-format"));  // convert to string for display
         BackgroundColorPanel.PanelOverride = styleBox;
-    }
-
-    private static string ConvertTimeSpanToHoursMinutes(TimeSpan timeSpan)
-    {
-        var hours = (int)timeSpan.TotalHours;
-        var minutes = timeSpan.Minutes;
-
-        var formattedTimeLoc = Loc.GetString("ui-playtime-time-format", ("hours", hours), ("minutes", minutes));
-        return formattedTimeLoc;
     }
 
     public void UpdateShading(StyleBoxFlat styleBox)
