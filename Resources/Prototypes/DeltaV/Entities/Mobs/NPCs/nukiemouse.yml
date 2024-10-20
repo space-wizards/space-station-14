@@ -153,10 +153,6 @@
   - type: ActiveRadio
     channels:
     - Syndicate
-  # make the player a traitor once its taken
-  - type: AutoTraitor
-    giveUplink: false
-    giveObjectives: false
   - type: InteractionPopup
     successChance: 0.6
     interactSuccessString: petting-success-nukie-mouse
@@ -164,3 +160,6 @@
     interactSuccessSpawn: EffectHearts
     interactSuccessSound:
       path: /Audio/Animals/mouse_squeak.ogg
+  # make the player a traitor once its taken
+  - type: AutoTraitor
+    profile: TraitorReinforcement
