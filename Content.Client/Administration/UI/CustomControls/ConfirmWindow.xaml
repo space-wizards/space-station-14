@@ -3,9 +3,6 @@
         <GridContainer Columns="2">
             <Button Name="CancelButton" Text="{Loc confirm-command-cancel}" HorizontalAlignment="Center"/>
             <Button Name="ConfirmButton" Text="{Loc confirm-command-confirm}" HorizontalAlignment="Center"/>
-            <!-- The above can be a command button but results in fewer errors if it is not particularly
-            as a recursive defintion which the command button depends on the command button. Not to mention
-            the fact that the command being invocked by ConfirmButton is dynamic. -->
         </GridContainer>
     </BoxContainer>
 </DefaultWindow>

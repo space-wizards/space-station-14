@@ -13,9 +13,9 @@ public sealed partial class ConfirmWindow : DefaultWindow
     public event Action? OnDisposed;
     public string? Command { get; }
 
-    public ConfirmWindow(string Command)
+    public ConfirmWindow(string command)
     {
-        this.Command = Command;
+        this.Command = command;
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
@@ -32,12 +32,5 @@ public sealed partial class ConfirmWindow : DefaultWindow
             IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand(this.Command);
             Close();
         };
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        OnDisposed?.Invoke();
-        base.Dispose(disposing);
-        OnDisposed = null;
     }
 }
