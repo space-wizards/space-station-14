@@ -15,7 +15,10 @@
     ClothingNeckScarfStripedSyndieGreen: 2
     ClothingNeckScarfStripedSyndieRed: 2
     ClothingShoesBootsWinterSyndicate: 2
-    
+  contrabandInventory:
+    ToyFigurineFootsoldier: 1
+    ToyFigurineNukieElite: 1
+    ToyFigurineNukieCommander: 1
   emaggedInventory:
     ClothingOuterCoatSyndieCapArmored: 1
     ClothingOuterWinterSyndieCapArmored: 1

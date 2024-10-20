@@ -15,3 +15,7 @@
     ClothingOuterWinterMiner: 2
     ClothingNeckScarfStripedBrown: 3
     ClothingShoesBootsWinterCargo: 2
+  contrabandInventory:
+    ToyFigurineCargoTech: 1
+    ToyFigurineSalvage: 1
+    ToyFigurineQuartermaster: 1
