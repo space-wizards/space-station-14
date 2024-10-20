@@ -13,18 +13,15 @@ public interface IClientUsernameBanCacheManager
     /// </summary>
     IReadOnlyList<UsernameCacheLine> BanList { get; }
 
+    /// <summary>
+    /// starts the manager by registering messages and subscribing to client administration changes
+    /// </summary>
     void Initialize();
 
     /// <summary>
     ///     Sends A request to the server to send new data
     /// </summary>
     void RequestUsernameBans();
-
-    /// <summary>
-    ///     Sends a request for the full username ban info
-    /// </summary>
-    /// <param name="id"></param>
-    public void RequestFullUsernameBan(int id);
 }
 
 public readonly record struct UsernameCacheLine(string Expression, int Id, bool ExtendToBan, bool Regex);

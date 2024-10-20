@@ -1,5 +1,5 @@
 <BoxContainer xmlns="https://spacestation14.io"
     Orientation="Horizontal" HorizontalExpand="true">
-    <Label Name="UsernameBanEntryLabel" Text="entry" ClipText="True" HorizontalExpand="True" />
-    <Button Name="PardonUsernameBanButton" Text="Pardon" HorizontalExpand="True" HorizontalAlignment="Right" />
+    <Label Name="UsernameBanEntryLabel" Text="" ClipText="True" HorizontalExpand="True" />
+    <Button Name="PardonUsernameBanButton" Text="{Loc username-ban-panel-pardon}" HorizontalExpand="True" HorizontalAlignment="Right" />
 </BoxContainer>

@@ -52,9 +52,6 @@ public sealed partial class UsernameRuleManager : IUsernameRuleManager, IPostInj
         _net.RegisterNetMessage<MsgUsernameBan>();
         _net.RegisterNetMessage<MsgRequestUsernameBans>(OnRequestBans);
 
-        _net.RegisterNetMessage<MsgFullUsernameBan>();
-        _net.RegisterNetMessage<MsgRequestFullUsernameBan>(OnRequestFullUsernameBan);
-
         var rules = await _db.GetServerUsernameRulesAsync(false);
 
         foreach (var ruleDef in rules)
@@ -80,57 +77,9 @@ public sealed partial class UsernameRuleManager : IUsernameRuleManager, IPostInj
         SendResetUsernameBan(msg.MsgChannel);
     }
 
-    private void OnRequestFullUsernameBan(MsgRequestFullUsernameBan msg)
+    public async Task<ServerUsernameRuleDef?> GetFullBanInfoAsync(int banId)
     {
-        if (!_playerManager.TryGetSessionById(msg.MsgChannel.UserId, out var player))
-        {
-            return;
-        }
-
-        if (!_admin.HasAdminFlag(player, AdminFlags.Ban))
-        {
-            return;
-        }
-
-        _sawmill.Verbose($"Received request for more info on username ban {msg.BanId} from {msg.MsgChannel.UserId}");
-
-        SendFullUsernameBan(msg.MsgChannel, msg.BanId);
-    }
-
-    private async void SendFullUsernameBan(INetChannel channel, int banId)
-    {
-        _sawmill.Verbose($"sending full ban for {banId}");
-
-        var banDef = await _db.GetServerUsernameRuleAsync(banId);
-
-        if (banDef is null)
-        {
-            return;
-        }
-
-        MsgFullUsernameBanContent msgContent = new(
-            banDef.CreationTime.UtcDateTime,
-            banId,
-
-            banDef.Regex,
-            banDef.ExtendToBan,
-            banDef.Retired,
-
-            banDef.RoundId,
-            banDef.RestrictingAdmin,
-            banDef.RetiringAdmin,
-            banDef.RetireTime?.UtcDateTime,
-
-            banDef.Expression,
-            banDef.Message
-        );
-
-        MsgFullUsernameBan msg = new MsgFullUsernameBan()
-        {
-            FullUsernameBan = msgContent
-        };
-
-        _net.ServerSendMessage(msg, channel);
+        return await _db.GetServerUsernameRuleAsync(banId);
     }
 
     private void OnReAdmin(AdminPermsChangedEventArgs args)
@@ -184,6 +133,7 @@ public sealed partial class UsernameRuleManager : IUsernameRuleManager, IPostInj
         var finalMessage = message ?? expression;
 
         _systems.TryGetEntitySystem<GameTicker>(out var ticker);
+
         int? roundId = ticker == null || ticker.RoundId == 0 ? null : ticker.RoundId;
 
         var ruleDef = new ServerUsernameRuleDef(
@@ -243,7 +193,7 @@ public sealed partial class UsernameRuleManager : IUsernameRuleManager, IPostInj
 
         // if the rule is regex ensure that user is host
         if (rule.Regex
-            && removingAdmin is not null
+            && removingAdmin is not null // fairly certain null indicates system
             && player is not null
             && !_admin.HasAdminFlag(player, AdminFlags.Host)
         )

@@ -583,6 +583,7 @@ namespace Content.Server.Database
             var row = new ServerUsernameRule
             {
                 CreationTime = usernameRule.CreationTime.UtcDateTime,
+                RoundId = usernameRule.RoundId,
                 Expression = usernameRule.Expression,
                 Message = usernameRule.Message,
                 RestrictingAdmin = usernameRule.RestrictingAdmin?.UserId,

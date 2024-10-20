@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Content.Server.Database;
 using Robust.Shared.Network;
 
 
@@ -35,6 +36,13 @@ public interface IUsernameRuleManager
     /// <param name="restrictionId">The Id of the restriction being removed</param>
     /// <param name="removingAdmin">The person who removed the restriction</param>
     Task RemoveUsernameRule(int restrictionId, NetUserId? removingAdmin);
+
+    /// <summary>
+    /// acquire the ban def from the database
+    /// </summary>
+    /// <param name="banId">the target ban</param>
+    /// <returns>the ban or null if ban does not exist</returns>
+    Task<ServerUsernameRuleDef?> GetFullBanInfoAsync(int banId);
 
     /// <summary>
     /// Checks cached regex to see if username is presently banned.

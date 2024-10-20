@@ -44,7 +44,6 @@ public sealed partial class UsernameBanListControl : BoxContainer
         button.AddStyleClass(ListContainer.StyleClassListContainerButton);
     }
 
-    // click
     private void UsernameBanListItemPressed(BaseButton.ButtonEventArgs? args, ListData? data)
     {
         if (args == null || data is not UsernameBanListData { Info: var selectedUsernameBan })
@@ -58,8 +57,6 @@ public sealed partial class UsernameBanListControl : BoxContainer
         {
             return;
         }
-
-        _usernameBanCache.RequestFullUsernameBan(selectedId);
 
         if (selectedId == _selectedId)
         {

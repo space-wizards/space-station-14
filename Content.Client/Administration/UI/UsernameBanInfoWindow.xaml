@@ -1,26 +1,43 @@
 <DefaultWindow
     xmlns="https://spacestation14.io"
     Title="Username Ban info"
-    MinWidth="500">
+    MinWidth="750">
     <!-- this formatting could be fixed with a grid container -->
     <BoxContainer Orientation="Vertical">
-        <Label Name="UsernameBanIdLabel" Text="Id:" ClipText="True" HorizontalExpand="True"/>
+        <GridContainer Columns="2">
+            <Label Name="UsernameBanIdLabel" Text="{Loc username-ban-panel-id}" ClipText="True" HorizontalExpand="True"/>
+            <Label Name="UsernameBanIdContentLabel" Text="" ClipText="True" HorizontalExpand="True"/>
 
-        <CheckBox Name="RegexCheckbox" Access="Public" Disabled="True" Text="Regex" />
-        <Label Name="UsernameBanExpressionLabel" Text="Id:" ClipText="True" HorizontalExpand="True"/>
-        <CheckBox Name="ExtendToBanCheckbox" Access="Public" Disabled="True" Text="Extend to ban" />
+            <Label Name="RegexCheckboxLable" Text="{Loc username-ban-panel-regex}" ClipText="True" HorizontalExpand="True"/>
+            <CheckBox Name="RegexCheckbox" Access="Public" Disabled="True" Text="" />
 
-        <Label Name="CreatingAdminLabel" Text="Creator:" ClipText="True" HorizontalExpand="True"/>
-        <Label Name="CreateTimeLabel" Text="Retire Time:" ClipText="True" HorizontalExpand="True"/>
-        <Label Name="RoundIdLabel" Text="Roud Id:" ClipText="True" HorizontalExpand="True"/>
+            <Label Name="UsernameBanExpressionLabel" Text="{Loc username-ban-panel-expression}" ClipText="True" HorizontalExpand="True"/>
+            <Label Name="UsernameBanExpressionContentLabel" Text="" ClipText="True" HorizontalExpand="True"/>
 
-        <CheckBox Name="RetiredCheckbox" Access="Public" Disabled="True" Text="Retired" />
+            <Label Name="ExtendToBanCheckboxLabel" Text="{Loc username-ban-panel-ban}" ClipText="True" HorizontalExpand="True"/>
+            <CheckBox Name="ExtendToBanCheckbox" Access="Public" Disabled="True" Text="Extend to ban" />
 
-        <Label Name="RetiringAdminLabel" Text="Creator:" ClipText="True" HorizontalExpand="True"/>
-        <Label Name="RetireTimeLabel" Text="Retire Time:" ClipText="True" HorizontalExpand="True"/>
+            <Label Name="CreatingAdminLabel" Text="{Loc username-ban-panel-issuer}" ClipText="True" HorizontalExpand="True"/>
+            <Label Name="CreatingAdminContentLabel" Text="" ClipText="True" HorizontalExpand="True"/>
 
-        <Label Name="MessageLabel" Text="Message:" ClipText="True" HorizontalExpand="True"/>
+            <Label Name="CreateTimeLabel" Text="{Loc username-ban-panel-time-issued}" ClipText="True" HorizontalExpand="True"/>
+            <Label Name="CreateTimeContentLabel" Text="" ClipText="True" HorizontalExpand="True"/>
 
-        <Button Name="PardonButton" Access="Public" Disabled="False" Text="Pardon" HorizontalAlignment="Right"/>
+            <Label Name="RoundIdLabel" Text="{Loc username-ban-panel-round}" ClipText="True" HorizontalExpand="True"/>
+            <Label Name="RoundIdContentLabel" Text="" ClipText="True" HorizontalExpand="True"/>
+
+            <Label Name="RetiredCheckboxLabel" Text="{Loc username-ban-panel-retired}" ClipText="True" HorizontalExpand="True"/>
+            <CheckBox Name="RetiredCheckbox" Access="Public" Disabled="True" Text="Retired" />
+
+            <Label Name="RetiringAdminLabel" Text="{Loc username-ban-panel-retirer}:" ClipText="True" HorizontalExpand="True"/>
+            <Label Name="RetiringAdminContentLabel" Text="" ClipText="True" HorizontalExpand="True"/>
+
+            <Label Name="RetireTimeLabel" Text="{Loc username-ban-panel-tine-retired}:" ClipText="True" HorizontalExpand="True"/>
+            <Label Name="RetireTimeContentLabel" Text="" ClipText="True" HorizontalExpand="True"/>
+        </GridContainer>
+
+        <Label Name="MessageLabel" Text="{Loc username-ban-panel-message}" ClipText="True" HorizontalExpand="True"/>
+        <Label Name="MessageContentLabel" Text="" HorizontalExpand="True"/>
+        <Button Name="PardonButton" Access="Public" Disabled="False" Text="{Loc username-ban-panel-pardon}" HorizontalAlignment="Right"/>
     </BoxContainer>
 </DefaultWindow>

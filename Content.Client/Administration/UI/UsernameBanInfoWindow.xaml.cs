@@ -10,25 +10,25 @@ namespace Content.Client.Administration.UI;
 public sealed partial class UsernameBanInfoWindow : DefaultWindow
 {
     private int _banId;
-    public UsernameBanInfoWindow(MsgFullUsernameBanContent ban)
+    public UsernameBanInfoWindow(BanUsernamePanelEuiMsg.FullUsernameRuleInfoReply ban)
     {
         _banId = ban.Id;
         RobustXamlLoader.Load(this);
-        UsernameBanIdLabel.Text = $"Id: {ban.Id}";
+        UsernameBanIdContentLabel.Text = $"{ban.Id}";
         RegexCheckbox.Pressed = ban.Regex;
-        UsernameBanExpressionLabel.Text = $"Expression: {ban.Expression}";
+        UsernameBanExpressionContentLabel.Text = $"{ban.Expression}";
         ExtendToBanCheckbox.Pressed = ban.ExtendToBan;
 
-        CreatingAdminLabel.Text = $"Created by: {ban.RestrictingAdmin}";
-        CreateTimeLabel.Text = $"Created: {ban.CreationTime}";
-        RoundIdLabel.Text = $"Round Id: {ban.RoundId}";
+        CreatingAdminContentLabel.Text = $"{ban.RestrictingAdmin}";
+        CreateTimeContentLabel.Text = $"{ban.CreationTime}";
+        RoundIdContentLabel.Text = $"{ban.RoundId}";
 
         RetiredCheckbox.Pressed = ban.Retired;
 
-        RetiringAdminLabel.Text = $"Retired by: {ban.RetiringAdmin}";
-        RetireTimeLabel.Text = $"Retired: {ban.RetireTime}";
+        RetiringAdminContentLabel.Text = $"{ban.RetiringAdmin}";
+        RetireTimeContentLabel.Text = $"{ban.RetireTime}";
 
-        MessageLabel.Text = $"Message: {ban.Message}";
+        MessageContentLabel.Text = $"{ban.Message}";
 
         PardonButton.OnPressed += _ => OnPardonPressed();
     }

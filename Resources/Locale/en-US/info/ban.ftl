@@ -98,9 +98,21 @@ cmd-ban-username-hint-no-ban = Users who join with this username will be kicked 
 cmd-ban-username-regex-help = Usage: banusernameregex <expression> [reason] [extend to ban (true|false)]
 cmd-ban-username-help = Usage: banusername <username> [reason] [extend to ban (true|false)]
 
+# Username ban panel
+username-ban-panel-pardon = Pardon
+username-ban-panel-id = Id:
+username-ban-panel-regex = Regex:
+username-ban-panel-expression = Expression:
+username-ban-panel-ban = Extend to ban:
+username-ban-panel-issuer = Issuing admin:
+username-ban-panel-time-issued = Issued Time:
+username-ban-panel-round = Round Id:
+username-ban-panel-retired = Retired:
+username-ban-panel-retirer = Retiring admin:
+username-ban-panel-tine-retired = Retired Time:
+username-ban-panel-message = Message:
 
 cmd-username-whitelist-not-in-db = this username was not present in the database
-
 cmd-whitelist-username-help = Usage: {$command} <username>
 
 cmd-pardonusername-help = Usage: pardonusername <ban id 1> <ban id 2> ...
@@ -126,7 +138,7 @@ username-ban-panel-create = Create
 username-ban-panel-view = View
 username-ban-panel-extend = Extend to ban
 username-ban-panel-rule = prohibition rule
-username-ban-panel-regex = regex
+username-ban-panel-create-regex = regex
 username-ban-panel-refresh = Refresh Username Rules
 
 # create log message

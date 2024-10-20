@@ -7,18 +7,15 @@
             <BoxContainer Orientation="Vertical" HorizontalExpand="True">
                 <LineEdit Margin="2" Name="UsernameRuleLine" MinWidth="100" HorizontalExpand="True" PlaceHolder="{Loc username-ban-panel-rule}" />
                 <CheckBox Name="ExtendToBanCheckbox" Margin="2" Text="{Loc username-ban-panel-extend}" Pressed="False" />
-                <CheckBox Name="RegexCheckbox" Margin="2" Text="{Loc username-ban-panel-regex}" Pressed="False" />
+                <CheckBox Name="RegexCheckbox" Margin="2" Text="{Loc username-ban-panel-create-regex}" Pressed="False" />
                 <TextEdit Name="ReasonTextEdit" MinHeight="100" VerticalExpand="True" HorizontalExpand="True" />
                 <Button Name="SubmitButton" Text="{Loc username-ban-panel-submit}" HorizontalExpand="True" />
-                <!-- Ban Command filler -->
             </BoxContainer>
-
 
             <BoxContainer Orientation="Vertical" HorizontalExpand="True">
                 <cc:UsernameBanListControl Name="UsernameBanList" VerticalExpand="True" />
                 <Button Name="RefreshBansButton" Text="{Loc username-ban-panel-refresh}" HorizontalExpand="True"/>
             </BoxContainer>
-
         </TabContainer>
     </BoxContainer>
 </DefaultWindow>

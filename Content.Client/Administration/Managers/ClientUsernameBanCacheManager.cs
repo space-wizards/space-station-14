@@ -1,5 +1,4 @@
 using System.Linq;
-using Content.Client.Administration.UI;
 using Content.Shared.Administration;
 using Robust.Client;
 using Robust.Shared.Network;
@@ -23,9 +22,6 @@ public sealed class ClientUsernameBanCacheManager : IClientUsernameBanCacheManag
 
         _net.RegisterNetMessage<MsgUsernameBan>(ReceiveUsernameBan);
         _net.RegisterNetMessage<MsgRequestUsernameBans>();
-
-        _net.RegisterNetMessage<MsgFullUsernameBan>(ReceiveFullUsernameBan);
-        _net.RegisterNetMessage<MsgRequestFullUsernameBan>();
 
         _client.RunLevelChanged += ClientOnRunLevelChanged;
     }
@@ -59,13 +55,6 @@ public sealed class ClientUsernameBanCacheManager : IClientUsernameBanCacheManag
         UpdatedCache?.Invoke(BanList.ToList());
     }
 
-    private void ReceiveFullUsernameBan(MsgFullUsernameBan msg)
-    {
-        _sawmill.Debug($"spawning window for {msg.FullUsernameBan.Id}");
-        var window = new UsernameBanInfoWindow(msg.FullUsernameBan);
-        window.OpenCentered();
-    }
-
     private void ClientOnRunLevelChanged(object? sender, RunLevelChangedEventArgs e)
     {
         if (e.NewLevel == ClientRunLevel.Initialize)
@@ -82,11 +71,6 @@ public sealed class ClientUsernameBanCacheManager : IClientUsernameBanCacheManag
     public void RequestUsernameBans()
     {
         _net.ClientSendMessage(new MsgRequestUsernameBans());
-    }
-
-    public void RequestFullUsernameBan(int id)
-    {
-        _net.ClientSendMessage(new MsgRequestFullUsernameBan() { BanId = id });
     }
 
     public IReadOnlyList<UsernameCacheLine> BanList => _usernameRulesCache.Values.ToList();

@@ -39,7 +39,7 @@ public sealed class BanUsernamePanelEui : BaseEui
                 CreateUsernameBan(r.RegexRule, r.Reason, r.Ban, r.Regex);
                 break;
             case BanUsernamePanelEuiMsg.GetRuleInfoRequest r:
-                SendInfo(r.RuleId);
+                SendFullUsernameInfo(r.RuleId);
                 break;
         }
     }
@@ -90,8 +90,27 @@ public sealed class BanUsernamePanelEui : BaseEui
         Close();
     }
 
-    private void SendInfo(int ruleId)
+    private async void SendFullUsernameInfo(int ruleId)
     {
-        return;
+        var banData = await _usernameRules.GetFullBanInfoAsync(ruleId);
+        if (banData is null)
+        {
+            return;
+        }
+        var message = new BanUsernamePanelEuiMsg.FullUsernameRuleInfoReply(
+            banData.CreationTime.UtcDateTime,
+            banData.Id ?? -1,
+            banData.Regex,
+            banData.ExtendToBan,
+            banData.Retired,
+            banData.RoundId,
+            banData.RestrictingAdmin,
+            banData.RetiringAdmin,
+            banData.RetireTime?.UtcDateTime,
+            banData.Expression,
+            banData.Message
+        );
+
+        SendMessage(message);
     }
 }
