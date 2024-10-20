@@ -9,6 +9,8 @@
     requireSpace: false
     thrust: 300
     machinePartThrust: Manipulator
+  - type: ApcPowerReceiver
+      powerLoad: 500
   - type: Sprite
     sprite: _Impstation/Structures/Shuttles/minigyroscope.rsi
     snapCardinals: true
