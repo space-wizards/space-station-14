@@ -5,7 +5,7 @@
   suffix: Syndicate
   components:
   - type: Sprite
-    sprite: DeltaV/Structures/Machines/syndicate_fax_machine.rsi
+    sprite: _DeltaV/Structures/Machines/syndicate_fax_machine.rsi
     layers:
       - state: icon
         map: [ "base" ]
