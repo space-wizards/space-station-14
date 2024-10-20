@@ -86,6 +86,18 @@
   - BorgModuleAdvancedCleaning
 
 - type: technology
+  id: MechanizedTreatment
+  name: research-technology-mechanized-treatment
+  icon:
+    sprite: Mobs/Silicon/chassis.rsi
+    state: medical
+  discipline: CivilianServices
+  tier: 1
+  cost: 5000
+  recipeUnlocks:
+  - BorgModuleAdvancedTreatment
+
+- type: technology
   id: MeatManipulation
   name: research-technology-meat-manipulation
   icon:
@@ -131,19 +143,6 @@
   - CryoPodMachineCircuitboard
   - CryostasisBeaker
   - SyringeCryostasis
-
-- type: technology
-  id: MechanizedTreatment
-  name: research-technology-mechanized-treatment
-  icon:
-    sprite: Mobs/Silicon/chassis.rsi
-    state: medical
-  discipline: CivilianServices
-  tier: 2
-  cost: 5000
-  recipeUnlocks:
-  - BorgModuleAdvancedTreatment
-  - BorgModuleDefibrillator
 
 - type: technology
   id: AdvancedCleaning
