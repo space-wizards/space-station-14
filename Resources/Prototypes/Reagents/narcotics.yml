@@ -322,7 +322,7 @@
         key: Muted
         component: Muted
         type: Add
-        time: 5
+        time: 10
         refresh: false
 
 - type: reagent
