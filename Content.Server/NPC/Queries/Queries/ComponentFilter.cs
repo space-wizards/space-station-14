@@ -5,8 +5,14 @@ namespace Content.Server.NPC.Queries.Queries;
 public sealed partial class ComponentFilter : UtilityQueryFilter
 {
     /// <summary>
-    /// Components to filter for.
+    /// Entities must have these components
     /// </summary>
-    [DataField("components", required: true)]
+    [DataField("components")]
     public ComponentRegistry Components = new();
+
+    /// <summary>
+    /// Remove entities which have this component
+    /// </summary>
+    [DataField("excludedComponents")]
+    public ComponentRegistry ExcludedComponents = new();
 }
