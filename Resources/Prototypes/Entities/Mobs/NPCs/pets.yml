@@ -777,7 +777,6 @@
     name: ghost-role-information-smile-name
     description: ghost-role-information-smile-description
     rules: ghost-role-information-nonantagonist-rules
-    raffle: null
   - type: Grammar
     attributes:
       proper: true
