@@ -96,6 +96,12 @@
         amount: 15
         doAfter: 20
 
+    - to: mantle
+      steps:
+      - material: WebSilk
+        amount: 6
+        doAfter: 20
+
     - to: scarf
       steps:
       - material: WebSilk
@@ -156,6 +162,9 @@
 
   - node: scarf
     entity: ClothingNeckScarfStripedWeb
+
+  - node: mantle
+    entity: ClothingNeckMantleWeb
 
   - node: shortscarf
     entity: ClothingNeckScarfStripedZebraWeb
