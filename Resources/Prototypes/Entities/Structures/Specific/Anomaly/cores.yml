@@ -441,7 +441,7 @@
   
 
 - type: entity
-  parent: BaseAnomalyInertCore # Has the same properties as a microreactor battery; cannot be charged at a cell recharger
+  parent: BaseAnomalyInertCore # Self-recharging battery; cannot be charged at a cell recharger
   id: AnomalyCoreElectricityInert
   description: The inert core of an electrical anomaly. Softly crackles as it channels energy inward.
   suffix: Electricity, Inert
@@ -455,7 +455,7 @@
   - type: PowerCell
   - type: BatterySelfRecharger
     autoRecharge: true
-    autoRechargeRate: 12 # takes 1 minute to charge itself back to full
+    autoRechargeRate: 3 # takes 4 minutes to charge itself back to full
   - type: PointLight
     radius: 1.5
     energy: 2.0
@@ -494,6 +494,8 @@
   - type: SmokeOnUse
     duration: 30
     spreadAmount: 50
+  - type: UseDelay
+    delay: 120
 
 - type: entity
   parent: [ BaseAnomalyInertCore, Emag ] # Acts as a single-charge, 5 minute CD emag
