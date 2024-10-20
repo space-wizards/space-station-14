@@ -1,5 +1,5 @@
 - type: entity
-  name: cleaner lake
+  name: shining spring
   parent: [BaseWeaponLauncher, BaseGunWieldable]
   id: WeaponLauncherCleanerLake
   description: A de-militarised piece of military surplus equipment, repurposed for the real troops.
@@ -34,7 +34,7 @@
     node: start
 
 - type: entity
-  name: remilitarised cleaner lake
+  name: remilitarised shining spring
   parent: [WeaponLauncherCleanerLake, BaseGunWieldable]
   id: WeaponLauncherCleanerLakeRemilitarised
   description: A re-militarised piece of military surplus equipment, go nuts.
