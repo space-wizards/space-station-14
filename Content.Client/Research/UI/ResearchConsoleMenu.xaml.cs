@@ -80,6 +80,7 @@ public sealed partial class ResearchConsoleMenu : FancyWindow
         var unlockedTech = database.UnlockedTechnologies.Select(x => _prototype.Index<TechnologyPrototype>(x));
         SyncTechnologyList(UnlockedCardsContainer, unlockedTech);
 
+        RediscoverButton.Disabled = !hasAccess || state.Points < state.RediscoverCost;
         RediscoverButton.Text =
             Loc.GetString("research-console-menu-server-rediscover-button", ("cost", state.RediscoverCost));
     }
