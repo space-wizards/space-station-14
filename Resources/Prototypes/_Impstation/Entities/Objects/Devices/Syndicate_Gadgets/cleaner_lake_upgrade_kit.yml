@@ -1,8 +1,8 @@
 - type: entity
-  name: cleaner lake re-militarisation kit
+  name: Shining spring re-militarisation kit
   parent: [BaseItem, BaseSyndicateContraband]
   id: WeaponCleanerLakeUpgradeKit
-  description: A re-militarisation kit for the cleaner lake.
+  description: A re-militarisation kit for the shining spring.
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
