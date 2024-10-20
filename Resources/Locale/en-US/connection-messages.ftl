@@ -16,6 +16,12 @@ cmd-whitelistremove-not-found = Unable to find '{$username}'
 cmd-whitelistremove-arg-player = [player]
 cmd-whitelistsremove-arg-whitelist-name = [whitelist name]
 
+cmd-listwhitelists-desc = Lists all the whitelists the player currently has.
+cmd-listwhitelists-help = Usage: listwhitelists <player or User ID>
+cmd-listwhitelists-player-not-found = Unable to find '{$username}'
+cmd-listwhitelists-result = {$username} has the following whitelists: {$whitelists}
+cmd-listwhitelists-arg-player = <Player>
+
 cmd-kicknonwhitelisted-desc = Kicks all non-whitelisted players from the server.
 cmd-kicknonwhitelisted-help = Usage: kicknonwhitelisted
 

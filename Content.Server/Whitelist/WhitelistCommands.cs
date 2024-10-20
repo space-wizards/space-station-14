@@ -133,6 +133,46 @@ public sealed class RemoveWhitelistCommand : LocalizedCommands
 }
 
 [AdminCommand(AdminFlags.Ban)]
+    public sealed class ListWhitelissCommand : LocalizedCommands
+    {
+        [Dependency] private readonly IServerDbManager _db = default!;
+        [Dependency] private readonly IPlayerLocator _loc = default!;
+
+        public override string Command => "listwhitelists";
+
+        public override async void Execute(IConsoleShell shell, string argStr, string[] args)
+        {
+            if (args.Length != 1)
+            {
+                shell.WriteError(Loc.GetString("shell-wrong-arguments-number-need-specific", ("properAmount", 1), ("currentAmount", args.Length)));
+                shell.WriteLine(Help);
+                return;
+            }
+
+            var player = await _loc.LookupIdByNameOrIdAsync(args[0]);
+
+            if (player == null)
+            {
+                shell.WriteError(Loc.GetString("cmd-listwhitelists-player-not-found", ("player", args[0])));
+                return;
+            }
+
+            var whitelists = string.Join(", ", await _db.GetPlayerWhitelistsAsync(player.UserId));
+
+           shell.WriteLine(Loc.GetString("cmd-listwhitelists-result", ("username", args[0]), ("whitelists", whitelists)));
+
+        }
+
+        public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+        {
+            if (args.Length == 1)
+                return CompletionResult.FromHint(Loc.GetString("cmd-listwhitelists-arg-player"));
+
+            return CompletionResult.Empty;
+        }
+    }
+
+[AdminCommand(AdminFlags.Ban)]
 public sealed class KickNonWhitelistedCommand : LocalizedCommands
 {
     public override string Command => "kicknonwhitelisted";
