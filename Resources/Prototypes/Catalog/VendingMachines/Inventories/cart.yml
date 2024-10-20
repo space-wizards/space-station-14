@@ -16,3 +16,6 @@
     EncryptionKeyScience: 2
     EncryptionKeySecurity: 1
     EncryptionKeyService: 3
+  contrabandInventory:
+    RubberStampGreytide: 1
+    LuxuryPen: 1
