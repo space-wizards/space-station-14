@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Ian321
-  changes:
-  - message: Help menus now include the linked guides.
-    type: Fix
-  id: 7038
-  time: '2024-08-04T03:32:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30462
 - author: DrSmugleaf
   changes:
   - message: The Toggle Internals verb no longer shows up in the context menu if no
@@ -3945,3 +3938,11 @@
   id: 7537
   time: '2024-10-19T15:31:45.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32532
+- author: Beck Thompson
+  changes:
+  - message: When MMIs and positronic brains are inserted into plushies, their names
+      will be updated to the plushies name (Exactly the same way pAIs do).
+    type: Add
+  id: 7538
+  time: '2024-10-20T02:46:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32914
