@@ -59,6 +59,7 @@ public sealed partial class IdCardConsoleComponent : Component
         "Cryogenics",
         "Engineering",
         "External",
+        "Generator",
         "HeadOfPersonnel",
         "HeadOfSecurity",
         "Hydroponics",

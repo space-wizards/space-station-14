@@ -49,6 +49,7 @@
   - Cargo
   - Atmospherics
   - Medical
+  - Generator
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]
