@@ -299,8 +299,23 @@
     - id: PlushieSharkBlue
       prob: 0.01
       orGroup: Plushies
-    - id: PlushieMoth
+    - id: PlushieMoff
       prob: 0.01
+      orGroup: Plushies
+    - id: PlushieMoffRainbow
+      prob: 0.005
+      orGroup: Plushies
+    - id: PlushieMoffsician
+      prob: 0.005
+      orGroup: Plushies
+    - id: PlushieMoffBar
+      prob: 0.005
+      orGroup: Plushies
+    - id: PlushieMoffBluespace
+      prob: 0.005
+      orGroup: Plushies
+    - id: PlushieMoffrror
+      prob: 0.005
       orGroup: Plushies
     - id: PlushieArachind
       prob: 0.01
