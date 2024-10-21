@@ -275,16 +275,16 @@
   boilingPoint: 254.1
   meltingPoint: 181.2
   physicalDesc: reagent-physical-desc-strong-smelling #Mmm, pickles
-  metabolisms:
   plantMetabolism:
     - !type:PlantAdjustToxins
-      amount: 6.5
+      amount: 4.5
     - !type:PlantAdjustPests
-      amount: -6.5
+      amount: -5
     - !type:PlantAdjustHealth
-      amount: -20
+      amount: -15
+  metabolisms:
     Poison:
-    metabolismRate: 0.20
+      metabolismRate: 0.20
       effects:
       - !type:HealthChange
         damage:
