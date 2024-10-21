@@ -46,7 +46,7 @@
   suffix: Hydroponics
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/hydroponics.rsi
+    sprite: GreyStation/Structures/Doors/Airlocks/Standard/hydroponics.rsi # GreyStation - Resprite
   - type: Wires
     layoutId: AirlockService
 
@@ -213,7 +213,7 @@
   suffix: Hydroponics
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/hydroponics.rsi
+    sprite: GreyStation/Structures/Doors/Airlocks/Glass/hydroponics.rsi # GreyStation - Resprite
   - type: Wires
     layoutId: AirlockService
 
