@@ -134,7 +134,7 @@
     lowPressureMultiplier: 1000
   - type: PointLight
     radius: 7
-    energy: 3
+    energy: 2
 
 - type: entity
   parent: ClothingHeadHardsuitBase
