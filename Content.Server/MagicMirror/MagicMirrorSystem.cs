@@ -11,6 +11,7 @@ using Content.Shared.MagicMirror;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.MagicMirror;
 
@@ -19,6 +20,7 @@ namespace Content.Server.MagicMirror;
 /// </summary>
 public sealed class MagicMirrorSystem : SharedMagicMirrorSystem
 {
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly MarkingManager _markings = default!;
@@ -182,7 +184,7 @@ public sealed class MagicMirrorSystem : SharedMagicMirrorSystem
     }
     private void OnChangeColorDoAfter(EntityUid uid, MagicMirrorComponent component, MagicMirrorChangeColorDoAfterEvent args)
     {
-        if (args.Handled || args.Target == null || args.Cancelled)
+        if (args.Handled || args.Target == null || args.Cancelled || !TryComp(component.Target, out HumanoidAppearanceComponent? humanoid))
             return;
 
         if (component.Target != args.Target)
@@ -201,7 +203,18 @@ public sealed class MagicMirrorSystem : SharedMagicMirrorSystem
                 return;
         }
 
-        _humanoid.SetMarkingColor(component.Target.Value, category, args.Slot, args.Colors);
+        if (_markings.MustMatchSkin(humanoid.Species, HumanoidVisualLayers.Hair, out var alpha, _prototype))
+        {
+            // why do I have to set the alpha here when HumanoidProfileEditor doesn't use the alpha???
+            // mysteries of the universe, idk
+            var hairColor = humanoid.SkinColor;
+            hairColor.A = alpha;
+            _humanoid.SetMarkingColor(component.Target.Value, category, args.Slot, new List<Color>() { hairColor }, humanoid);
+        }
+        else
+        {
+            _humanoid.SetMarkingColor(component.Target.Value, category, args.Slot, args.Colors, humanoid);
+        }
 
         // using this makes the UI feel like total ass
         // que
@@ -361,7 +374,18 @@ public sealed class MagicMirrorSystem : SharedMagicMirrorSystem
         if (string.IsNullOrEmpty(marking))
             return;
 
-        _humanoid.AddMarking(component.Target.Value, marking, Color.Black);
+        // set the color and alpha value on initial addition of the hair or facial hair so that it looks proper for slimes
+        if (_markings.MustMatchSkin(humanoid.Species, HumanoidVisualLayers.Hair, out var alpha, _prototype))
+        {
+            // seriously, why do I have to set the alpha value manually? shouldn't it just inherit the skin color's alpha value?
+            var hairColor = humanoid.SkinColor;
+            hairColor.A = alpha;
+            _humanoid.AddMarking(component.Target.Value, marking, hairColor);
+        } else
+        {
+            _humanoid.AddMarking(component.Target.Value, marking, Color.Black);
+
+        }
 
         UpdateInterface(uid, component.Target.Value, component);
 
