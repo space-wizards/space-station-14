@@ -362,3 +362,18 @@
         - !type:ReagentThreshold
           reagent: Frezon
           min: 1
+
+- type: reagent
+  id: SeaWater
+  name: reagent-name-carbon-seawater
+  desc: reagent-desc-carbon-seawater
+  physicalDesc: reagent-physical-desc-odorless
+  flavor: watery
+  color: "#66ff33"
+  metabolisms:
+    Gas:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Cold: 2 # water, very temperature!!
