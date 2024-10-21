@@ -3214,3 +3214,11 @@
   id: 397
   time: '2024-10-20T06:35:55.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/526
+- author: formlessnameless
+  changes:
+  - message: Added a mini gyroscope for all of your shittle needs. Pester science
+      about it today!
+    type: Add
+  id: 398
+  time: '2024-10-21T00:15:16.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/528
