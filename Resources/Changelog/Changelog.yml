@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Killerqu00
-  changes:
-  - message: Sleeper agents event no longer occurs when evacuation is called.
-    type: Tweak
-  id: 7042
-  time: '2024-08-05T03:17:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30646
 - author: Cojoke-dot
   changes:
   - message: Mice can now use combat mode with a 0 damage attack
@@ -3946,3 +3939,10 @@
   id: 7541
   time: '2024-10-21T03:50:06.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32906
+- author: NoElkaTheGod
+  changes:
+  - message: Station AI can now interact with long range fax machines.
+    type: Tweak
+  id: 7542
+  time: '2024-10-21T12:44:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32929
