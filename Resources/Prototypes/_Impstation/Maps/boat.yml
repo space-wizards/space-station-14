@@ -1,7 +1,7 @@
 - type: gameMap
   id: Boat
   mapName: 'Spooky Whale'
-  mapPath: /Maps/boat.yml
+  mapPath: /Maps/_Impstation/boat.yml
   minPlayers: 50
   maxPlayers: 100
   randomRotation: false

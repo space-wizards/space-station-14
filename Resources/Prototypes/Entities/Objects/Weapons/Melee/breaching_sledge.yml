@@ -5,7 +5,7 @@
   description: A sledgehammer heavily modified and re-calibrated for faster swings, better structural damage, but considerably worse heft against personnel. The red on the hammerhead is spraypaint. Or rust. Or blood.
   components:
   - type: Sprite
-    sprite: Impstation/Prospectors/Weapons/breaching_sledge.rsi
+    sprite: _Impstation/Prospectors/Weapons/breaching_sledge.rsi
     state: icon
   - type: MeleeWeapon
     attackRate: 3
