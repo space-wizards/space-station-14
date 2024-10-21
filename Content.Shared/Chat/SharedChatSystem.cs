@@ -92,11 +92,9 @@ public abstract class SharedChatSystem : EntitySystem
         output = input;
         prefix = string.Empty;
 
-        // Lets ;P pass as it will just throw it into chatsan unless it's smaller (;-; or ;))
-        if (input.StartsWith(RadioCommonPrefix) && input.Length < 3)
+        if (input.StartsWith(RadioCommonPrefix))
         {
-            output = input[1..];
-            prefix = input[..1];
+            // Charsan will handle this properly as ;) => ;) and ;shoot => ;shoot
             return;
         }
 
