@@ -94,7 +94,7 @@ public abstract class SharedChatSystem : EntitySystem
 
         if (input.StartsWith(RadioCommonPrefix))
         {
-            // Charsan will handle this properly as ;) => ;) and ;shoot => ;shoot
+            // Chatsan will handle this properly as ;) => *winks* and ;shoot => ;shoot
             return;
         }
 
@@ -102,6 +102,7 @@ public abstract class SharedChatSystem : EntitySystem
             return;
 
         // lets :) pass as ")" isn't valid key
+        // :c => *emote*; ":c hi" = :c + "hi"
         if (_keyCodes.TryGetValue(input[1], out _) || char.IsWhiteSpace(input[1]))
         {
             output = input[2..];
