@@ -276,13 +276,20 @@
   meltingPoint: 181.2
   physicalDesc: reagent-physical-desc-strong-smelling #Mmm, pickles
   metabolisms:
+  plantMetabolism:
+    - !type:PlantAdjustToxins
+      amount: 6.5
+    - !type:PlantAdjustPests
+      amount: -6.5
+    - !type:PlantAdjustHealth
+      amount: -20
     Poison:
     metabolismRate: 0.20
       effects:
       - !type:HealthChange
         damage:
           types:
-            Poison: 0.85
+            Poison: 0.90
   reactiveEffects:
     Acidic:
       methods: [ Touch ]
@@ -294,6 +301,7 @@
           types:
             Caustic: 0.40
             Heat: 0.20
+            Poison: 0.05
       - !type:Emote
         emote: Scream
         probability: 0.10
