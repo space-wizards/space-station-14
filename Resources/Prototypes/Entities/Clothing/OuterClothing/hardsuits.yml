@@ -768,11 +768,11 @@
   description: A heap of plating and insulation thrown together that just barely constitutes a hardsuit - but if it's good enough for space, it's good enough for you.
   components:
   - type: Sprite
-    sprite: Impstation/Prospectors/prospector-hardsuit.rsi
+    sprite: _Impstation/Prospectors/prospector-hardsuit.rsi
   - type: Item
     size: Huge
   - type: Clothing
-    sprite: Impstation/Prospectors/prospector-hardsuit.rsi
+    sprite: _Impstation/Prospectors/prospector-hardsuit.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.7
     lowPressureMultiplier: 1000

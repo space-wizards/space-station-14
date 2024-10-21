@@ -545,7 +545,7 @@
   description: A helmet cobbled together with cloth, insulation, and metal that barely meets low-pressure safety standards. It'll do.
   components:
   - type: Sprite
-    sprite: Impstation/Prospectors/prospector-hardsuit-helmet.rsi
+    sprite: _Impstation/Prospectors/prospector-hardsuit-helmet.rsi
     layers:
     - state: icon
     - state: icon-unshaded

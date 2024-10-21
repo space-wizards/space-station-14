@@ -507,6 +507,7 @@
       - EmitterCircuitboard
       - ThrusterMachineCircuitboard
       - GyroscopeMachineCircuitboard
+      - MiniGyroscopeMachineCircuitboard
       - MiniGravityGeneratorCircuitboard
       - ShuttleGunKineticCircuitboard
       - GasRecyclerMachineCircuitboard
