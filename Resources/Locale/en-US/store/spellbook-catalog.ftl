@@ -1,4 +1,4 @@
-﻿# Spells
+# Spells
 spellbook-fireball-name = Fireball
 spellbook-fireball-desc = Get most crew exploding with rage when they see this fireball heading toward them!
 
@@ -17,6 +17,9 @@ spellbook-polymorph-rod-desc = Change into an Immovable Rod with limited movemen
 spellbook-charge-name = Charge
 spellbook-charge-desc = Adds a charge back to your wand!
 
+spellbook-lightning-name = Lightning Bolt
+spellbook-lightning-desc = Thunderbolt and lightning, very very frightening!
+
 # Equipment
 
 spellbook-wand-polymorph-door-name = Wand of Entrance
@@ -33,3 +36,6 @@ spellbook-event-summon-ghosts-description = Who ya gonna call?
 # Upgrades
 spellbook-upgrade-fireball-name = Upgrade Fireball
 spellbook-upgrade-fireball-description = Upgrades Fireball to a maximum of level 3!
+
+spellbook-upgrade-lightning-name = Upgrade Lightning Bolt
+spellbook-upgrade-lightning-description = Upgrades Lightning Bolt to a maximum of level 3!
