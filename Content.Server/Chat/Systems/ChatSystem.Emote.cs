@@ -247,7 +247,7 @@ public partial class ChatSystem
             return false;
         }
 
-        var ev = new EmoteEvent(uid, proto);
+        var ev = new EmoteEvent(proto);
         RaiseLocalEvent(uid, ref ev);
 
         return true;
@@ -261,12 +261,10 @@ public partial class ChatSystem
 [ByRefEvent]
 public sealed class EmoteEvent : HandledEntityEventArgs
 {
-    public readonly EntityUid Source;
     public readonly EmotePrototype Emote;
 
-    public EmoteEvent(EntityUid source, EmotePrototype emote)
+    public EmoteEvent(EmotePrototype emote)
     {
-        Source = source;
         Emote = emote;
         Handled = false;
     }
