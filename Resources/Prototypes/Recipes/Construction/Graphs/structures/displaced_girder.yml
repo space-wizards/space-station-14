@@ -1,0 +1,81 @@
+- type: constructionGraph
+  id: DisplacedGirder
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: displacedGirder
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 1
+
+    - node: displacedGirder
+      entity: DisplacedGirder
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 2
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Screwing
+              doAfter: 3
+
+        - to: solidFalseWall
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - tool: Prying
+              doAfter: 3
+            - material: Steel
+              amount: 2
+              doAfter: 3
+
+        - to: reinfFalseWall
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - tool: Cutting
+              doAfter: 0.5
+            - tool: Prying
+              doAfter: 3
+            - material: Plasteel
+              amount: 4
+              doAfter: 3
+
+    - node: solidFalseWall
+      entity: SolidFalseWall
+      edges:
+        - to: displacedGirder
+          conditions:
+            - !type:EntityAnchored {}
+            - !type:DoorWelded {}
+          completed:
+            - !type:GivePrototype
+              prototype: SheetSteel1
+              amount: 2
+          steps:
+            - tool: Prying
+              doAfter: 2
+
+    - node: reinfFalseWall
+      entity: ReinforcedFalseWall
+      edges:
+        - to: displacedGirder
+          conditions:
+            - !type:EntityAnchored {}
+            - !type:DoorWelded {}
+          completed:
+            - !type:GivePrototype
+              prototype: SheetPlasteel1
+              amount: 4
+          steps:
+            - tool: Prying
+              doAfter: 2
+            - tool: Cutting
+              doAfter: 2
