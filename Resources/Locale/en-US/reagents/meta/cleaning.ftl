@@ -4,6 +4,9 @@ reagent-desc-bleach = Heavy duty cleaner that can clean tiles the same as Space 
 reagent-name-space-cleaner = space cleaner
 reagent-desc-space-cleaner = This is able to clean almost all surfaces of almost anything that may dirty them. The janitor is likely to appreciate refills.
 
+reagent-name-universal-solvent = universal solvent
+reagent-desc-universal-solvent = A heavy duty cleaner outlawed in most places due to safety concerns. Exceptionally effective at dissolving skin, scales, and fuzz. Visually identical to space cleaner.
+
 reagent-name-soap = soap
 reagent-desc-soap = I wouldn't clean my mouth out with this if I were you.
 
