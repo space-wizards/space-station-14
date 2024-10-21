@@ -109,6 +109,10 @@ uplink-holoclown-kit-desc = A joint venture between Cybersun and Honk.co. Contai
 uplink-holster-name = Shoulder Holster
 uplink-holster-desc = A deep shoulder holster capable of holding many types of ballistics.
 
+uplink-animal-friends-kit-name = Animal Friends Kit
+uplink-animal-friends-kit-desc = A box containing 4 doses of subjuzine, an alteration of cognizine that forces the injected creature to your will. Also contains an empty syringe and two mice to use it on.
+
+
 uplink-chest-rig-name = Chest Rig
 uplink-chest-rig-desc = Explosion-resistant tactical webbing used for holding traitor goods.
 
