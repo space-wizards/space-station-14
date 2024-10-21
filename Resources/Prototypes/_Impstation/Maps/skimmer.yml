@@ -1,7 +1,7 @@
 - type: gameMap
   id: Skimmer
   mapName: 'Skimmer'
-  mapPath: /Maps/skimmer.yml
+  mapPath: /Maps/_Impstation/skimmer.yml
   minPlayers: 0
   maxPlayers: 12
   randomRotation: false

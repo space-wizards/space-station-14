@@ -1,0 +1,26 @@
+- type: entity
+  id: BulletGrenadeCleaner
+  name: cleaner grenade
+  parent: BaseBulletTrigger
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+      - state: frag
+  - type: SoundOnTrigger
+    sound: /Audio/Items/smoke_grenade_smoke.ogg
+  - type: SmokeOnTrigger
+    duration: 15
+    spreadAmount: 50
+    smokePrototype: Foam
+    solution:
+      reagents:
+      - ReagentId: SpaceCleaner
+        Quantity: 30
+  - type: Ammo
+    muzzleFlash: null
+  - type: PointLight
+    radius: 3.5
+    color: blue
+    energy: 0.5

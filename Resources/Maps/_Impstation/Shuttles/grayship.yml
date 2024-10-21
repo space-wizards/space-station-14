@@ -2011,6 +2011,12 @@ entities:
       parent: 2
     - type: AtmosPipeColor
       color: '#990000FF'
+  - uid: 899
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -7.5,7.5
+      parent: 2
 - proto: GasPipeBend
   entities:
   - uid: 7
@@ -3440,6 +3446,13 @@ entities:
       parent: 2
     - type: AtmosPipeColor
       color: '#990000FF'
+- proto: GasThermoMachineHellfireFreezer
+  entities:
+  - uid: 898
+    components:
+    - type: Transform
+      pos: -7.5,8.5
+      parent: 2
 - proto: GasVentPump
   entities:
   - uid: 152
@@ -3790,6 +3803,12 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -7.5,-8.5
       parent: 2
+  - uid: 900
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 8.5,-8.5
+      parent: 2
 - proto: Gyroscope
   entities:
   - uid: 257
@@ -3885,6 +3904,26 @@ entities:
     components:
     - type: Transform
       pos: -8.5,7.5
+      parent: 2
+- proto: PVC
+  entities:
+  - uid: 895
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -5.6638317,-5.435611
+      parent: 2
+  - uid: 896
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -5.5388317,-5.331372
+      parent: 2
+  - uid: 897
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -5.3513317,-5.2479806
       parent: 2
 - proto: Rack
   entities:
