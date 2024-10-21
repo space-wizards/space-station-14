@@ -239,6 +239,7 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: AntimovLawset
+    lawUploadSound: /Audio/Ambience/Antag/silicon_lawboard_antimov.ogg
 
 - type: entity
   id: NutimovCircuitBoard
@@ -373,6 +374,7 @@
     tags:
     - HideContextMenu
     - StationAi
+    - NoConsoleSound
 
 # Hologram projection that the AI's eye tracks.
 - type: entity
