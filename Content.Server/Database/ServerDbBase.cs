@@ -1052,27 +1052,56 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
 
         #region Whitelist
 
-        public async Task<bool> GetWhitelistStatusAsync(NetUserId player)
+        public async Task<List<string>> GetPlayerWhitelistsAsync(NetUserId player)
         {
             await using var db = await GetDb();
 
-            return await db.DbContext.Whitelist.AnyAsync(w => w.UserId == player);
+            return db.DbContext.Whitelist.Where(w => w.UserId == player).Select(w => w.WhitelistName).ToList();
         }
 
-        public async Task AddToWhitelistAsync(NetUserId player)
+        public async Task<bool> GetWhitelistStatusAsync(NetUserId player, string whitelistName)
         {
             await using var db = await GetDb();
 
-            db.DbContext.Whitelist.Add(new Whitelist { UserId = player });
+            return await db.DbContext.Whitelist.AnyAsync(w => w.UserId == player && w.WhitelistName == whitelistName);
+        }
+
+        public async Task<bool> AddToWhitelistAsync(NetUserId player, string whitelistName)
+        {
+            await using var db = await GetDb();
+
+            // Whitelist type does not exist
+            if (!db.DbContext.WhitelistType.Any(ty => ty.WhitelistName == whitelistName))
+                return false;
+
+            db.DbContext.Whitelist.Add(new Whitelist { UserId = player, WhitelistName = whitelistName});
+
+
             await db.DbContext.SaveChangesAsync();
+            return true;
         }
 
-        public async Task RemoveFromWhitelistAsync(NetUserId player)
+        public async Task<bool> RemoveFromWhitelistAsync(NetUserId player, string whitelistName)
         {
             await using var db = await GetDb();
-            var entry = await db.DbContext.Whitelist.SingleAsync(w => w.UserId == player);
+            Whitelist entry;
+
+            // Whitelist type does not exist
+            if (!db.DbContext.WhitelistType.Any(ty => ty.WhitelistName == whitelistName))
+                return false;
+
+            entry = await db.DbContext.Whitelist.SingleAsync(w => w.UserId == player && w.WhitelistName == whitelistName);
+
             db.DbContext.Whitelist.Remove(entry);
             await db.DbContext.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> GetWhitelistTypeExistsAsync(string whitelistName)
+        {
+            await using var db = await GetDb();
+
+            return db.DbContext.WhitelistType.Any(ty => ty.WhitelistName == whitelistName);
         }
 
         public async Task<DateTimeOffset?> GetLastReadRules(NetUserId player)
