@@ -84,6 +84,35 @@ public abstract class SharedChatSystem : EntitySystem
         return current ?? _prototypeManager.Index<SpeechVerbPrototype>(speech.SpeechVerb);
     }
 
+    public void GetRadioPrefix(EntityUid source,
+        string input,
+        out string output,
+        out string prefix)
+    {
+        output = input;
+        prefix = string.Empty;
+
+        if (input.StartsWith(RadioCommonPrefix))
+        {
+            output = input[1..];
+            prefix = input[..1];
+            return;
+        }
+
+        if (!(input.StartsWith(RadioChannelPrefix) || input.StartsWith(RadioChannelAltPrefix)))
+            return;
+
+        if (input.Length < 2 || char.IsWhiteSpace(input[1]))
+        {
+            output = input[1..];
+            prefix = input[..1];
+            return;
+        }
+
+        output = input[2..];
+        prefix = input[..2];
+    }
+
     /// <summary>
     ///     Attempts to resolve radio prefixes in chat messages (e.g., remove a leading ":e" and resolve the requested
     ///     channel. Returns true if a radio message was attempted, even if the channel is invalid.
