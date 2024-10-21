@@ -1385,6 +1385,10 @@
   flavor: sweet
   color: "#c3d2e0"
   metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2.5
     Medicine:
       effects:
       - !type:HealthChange
@@ -1393,7 +1397,7 @@
             Brute: -0.85
             Burn: -0.65
       - !type:ModifyBloodLevel
-        amount: 3.65
+        amount: 3.25
       - !type:HealthChange
         conditions:
           - !type:ReagentThreshold
