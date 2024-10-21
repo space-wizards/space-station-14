@@ -1,7 +1,3 @@
-using System.Numerics;
-using System.Runtime.CompilerServices;
-using System.Xml;
-using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Projectiles;
@@ -13,11 +9,5 @@ namespace Content.Shared.Projectiles;
 public sealed partial class HasProjectilesEmbeddedComponent : Component
 {
     [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadOnly)]
-
-    private List<EntityUid> _embeddedProjectiles = [];
-
-    public void Add(Entity<EmbeddableProjectileComponent> projectile) => _embeddedProjectiles.Add(projectile);
-    public bool Contains(Entity<EmbeddableProjectileComponent> projectile) => _embeddedProjectiles.Contains(projectile);
-    public void Remove(Entity<EmbeddableProjectileComponent> projectile) => _embeddedProjectiles.Remove(projectile);
-    public bool IsEmpty() => _embeddedProjectiles.Count == 0;
+    public List<EntityUid> EmbeddedProjectiles = [];
 }

@@ -1,21 +1,15 @@
 using System.Numerics;
-using System.Reflection.Metadata.Ecma335;
-using Content.Shared.CombatMode.Pacification;
 using Content.Shared.Damage;
 using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
-using Content.Shared.Mobs.Components;
 using Content.Shared.Throwing;
-using Linguini.Syntax.Ast;
-using Microsoft.Extensions.ObjectPool;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
-using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Serialization;
@@ -91,7 +85,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
     private void Embed(Entity<EmbeddableProjectileComponent> projectile, EntityUid target, EntityUid? user)
     {
         EnsureComp<HasProjectilesEmbeddedComponent>(target, out var embeddeds);
-        embeddeds.Add(projectile);
+        embeddeds.EmbeddedProjectiles.Add(projectile);
 
         var (uid, component) = projectile;
 
@@ -128,14 +122,14 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         var xform = Transform(entity);
 
         // Check that the projectile's parent has any embedded projectiles and that this projectile is one of them.
-        if (!(TryComp<HasProjectilesEmbeddedComponent>(xform.ParentUid, out var c) && c is { } entitiesEmbeddedInParent && entitiesEmbeddedInParent.Contains(entity)))
+        if (!(TryComp<HasProjectilesEmbeddedComponent>(xform.ParentUid, out var c) && c is { } entitiesEmbeddedInParent && entitiesEmbeddedInParent.EmbeddedProjectiles.Contains(entity)))
         {
             return false;
         }
 
         // Remove `entity` from the parent's embedded projectiles, and clean up the parent's embedding component if it's empty.
-        entitiesEmbeddedInParent.Remove(entity);
-        if (entitiesEmbeddedInParent.IsEmpty())
+        entitiesEmbeddedInParent.EmbeddedProjectiles.Remove(entity);
+        if (entitiesEmbeddedInParent.EmbeddedProjectiles.Count == 0)
         {
             EntityManager.RemoveComponent<HasProjectilesEmbeddedComponent>(xform.ParentUid);
         }
