@@ -15,5 +15,25 @@
   Pipenets are used all throughout the station to deliver, remove, or otherwise move gas throughout it.
   Great examples are the station's Distro or Wastenet, which deliver breathable air and remove waste gas, respectively.
 
+  ## How Pipenets Work
+  In Space Station 14, pipenets behave as a whole, defined volume, with input/output points at the ends of the network. Forcing or vacuuming gas in or out using a pump will affect the entire network, not just the pipe it's connected to.
+
+  Pipenets are only seperated by devices capable of interrupting flow, or by certain devices. For example, a Pressure Pump will not allow gas to flow through it unless it's powered and has gas to pump.
+
+  Some examples of devices that separate pipe networks are:
+  - Pressure and Volumetric Pumps
+  - Gas Mixers and Filters
+  - All Valves
+  - Radiators
+
+  An example of a pipenet being seperated into two, distinct pipenets by a pump is shown below:
+
+  <Box>
+    <GuideEntityEmbed Entity="PipeStraight" Caption="Pipenet 1" Rotation="90"/>
+    <GuideEntityEmbed Entity="PipeStraight" Caption="" Rotation="90"/>
+    <GuideEntityEmbed Entity="GasPressurePump" Caption="Network Seperator" Rotation="270"/>
+    <GuideEntityEmbed Entity="PipeStraight" Caption="" Rotation="90"/>
+    <GuideEntityEmbed Entity="PipeStraight" Caption="Pipenet 2" Rotation="90"/>
+  </Box>
 
 </Document>
