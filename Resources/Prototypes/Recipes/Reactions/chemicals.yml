@@ -21,6 +21,19 @@
     Carbon: 1
 
 - type: reaction
+  id: SeawaterElectrolysis
+  source: true
+  requiredMixerCategories:
+  - Electrolysis
+  reactants:
+    SeaWater:
+      amount: 1
+  products:
+    Hydrogen: 1
+    Oxygen: 2
+    TableSalt: 1
+
+- type: reaction
   id: Diethylamine
   reactants:
     Ammonia:
