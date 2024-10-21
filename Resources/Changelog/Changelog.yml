@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: DrSmugleaf
-  changes:
-  - message: Fixed the client sometimes falsely showing the red color flash effect
-      when attacking something that they can't, like allied xenonids.
-    type: Fix
-  id: 7041
-  time: '2024-08-05T03:14:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30661
 - author: Killerqu00
   changes:
   - message: Sleeper agents event no longer occurs when evacuation is called.
@@ -3947,3 +3939,10 @@
   id: 7540
   time: '2024-10-21T03:43:14.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32915
+- author: MendaxxDev
+  changes:
+  - message: Fixed typing sound playing when AI or admin ghosts interacted with consoles.
+    type: Fix
+  id: 7541
+  time: '2024-10-21T03:50:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32906
