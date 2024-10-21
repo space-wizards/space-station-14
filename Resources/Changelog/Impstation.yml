@@ -3239,3 +3239,17 @@
   id: 400
   time: '2024-10-21T00:16:35.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/530
+- author: crekulon
+  changes:
+  - message: web mantle, craftable by arachnids for 6 silk
+    type: Add
+  id: 401
+  time: '2024-10-21T00:19:08.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/531
+- author: KingMudkipIII
+  changes:
+  - message: Added a boatload of new words to the french and russian accent systems.
+    type: Add
+  id: 402
+  time: '2024-10-21T00:18:34.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/522
