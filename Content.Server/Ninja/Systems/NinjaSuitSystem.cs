@@ -1,5 +1,4 @@
 using Content.Server.Emp;
-using Content.Shared.Item;
 using Content.Server.Ninja.Events;
 using Content.Server.Power.Components;
 using Content.Server.PowerCell;
@@ -22,11 +21,6 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
     [Dependency] private readonly SpaceNinjaSystem _ninja = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SharedItemSystem _item = default!;
-
-    [ValidatePrototypeId<ItemSizePrototype>]
-    // The highest item size of a cell that the ninja suit should be able to contain.
-    private const string NinjaSuitInsertableCellSize = "Normal";
 
     public override void Initialize()
     {
@@ -75,13 +69,6 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
         }
 
         var user = Transform(uid).ParentUid;
-
-        // as funny as the concept of inserting weapon-grade power cages into the small and nimble ninja suit is, no.
-        if (!TryComp<ItemComponent>(args.EntityUid, out var itemComp) || _item.GetSizePrototype(itemComp.Size) >= _item.GetSizePrototype(NinjaSuitInsertableCellSize)) {
-            args.Cancel();
-            Popup.PopupEntity(Loc.GetString("ninja-cell-too-large"), user, user);
-            return;
-        }
 
         // can only upgrade power cell, not swap to recharge instantly otherwise ninja could just swap batteries with flashlights in maints for easy power
         if (GetCellScore(args.EntityUid, inserting) <= GetCellScore(batteryUid, battery))
