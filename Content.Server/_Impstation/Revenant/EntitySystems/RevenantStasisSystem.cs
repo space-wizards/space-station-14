@@ -7,8 +7,9 @@ using Content.Server.Ghost.Roles.Components;
 using Content.Server.Kitchen.EntitySystems;
 using Content.Server.Mind;
 using Content.Server.Revenant.Components;
-using Content.Server.VoiceMask;
+using Content.Server.Speech.Components;
 using Content.Shared.Alert;
+using Content.Shared.Chat;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
@@ -20,6 +21,7 @@ using Content.Shared.Speech;
 using Content.Shared.StatusEffect;
 using Content.Shared.Tag;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Revenant.EntitySystems;
 
@@ -34,6 +36,7 @@ public sealed partial class RevenantStasisSystem : EntitySystem
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly TagSystem _tags = default!;
     [Dependency] private readonly ExplosionSystem _explosion = default!;
+    [Dependency] private readonly IPrototypeManager _protoMan = default!;
 
     [ValidatePrototypeId<StatusEffectPrototype>]
     private const string RevenantStasisId = "Stasis";
@@ -49,6 +52,7 @@ public sealed partial class RevenantStasisSystem : EntitySystem
         SubscribeLocalEvent<RevenantStasisComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<RevenantStasisComponent, ConstructionConsumedObjectEvent>(OnCrafted);
         SubscribeLocalEvent<RevenantStasisComponent, GrindAttemptEvent>(OnGrindAttempt);
+        SubscribeLocalEvent<RevenantStasisComponent, TransformSpeakerNameEvent>(OnTransformName);
 
         SubscribeLocalEvent<RevenantStasisComponent, AfterInteractUsingEvent>(OnBibleInteract, before: [typeof(BibleSystem)]);
         SubscribeLocalEvent<RevenantStasisComponent, ExorciseRevenantDoAfterEvent>(OnExorcise);
@@ -69,11 +73,14 @@ public sealed partial class RevenantStasisSystem : EntitySystem
         speech.SpeechVerb = "Ghost";
         Dirty(uid, speech);
 
-        var voice = EnsureComp<VoiceMaskComponent>(uid);
-        voice.VoiceMaskName = Comp<MetaDataComponent>(component.Revenant).EntityName;
-
         if (TryComp<GhostRoleComponent>(uid, out var ghostRole))
             _ghostRoles.UnregisterGhostRole((uid, ghostRole));
+    }
+
+    private void OnTransformName(EntityUid uid, RevenantStasisComponent comp, TransformSpeakerNameEvent args)
+    {
+        args.VoiceName = Name(comp.Revenant);
+        args.SpeechVerb = "Ghost";
     }
 
     private void OnShutdown(EntityUid uid, RevenantStasisComponent component, ComponentShutdown args)
@@ -107,15 +114,11 @@ public sealed partial class RevenantStasisSystem : EntitySystem
     private void OnCrafted(EntityUid uid, RevenantStasisComponent comp, ConstructionConsumedObjectEvent args)
     {
         // Permanently sealed into revenant plushie
-
-        var speech = EnsureComp<SpeechComponent>(args.New);
-        speech.SpeechVerb = "Ghost";
-        Dirty(args.New, speech);
-
         EnsureComp<InputMoverComponent>(args.New);
 
-        var voice = EnsureComp<VoiceMaskComponent>(args.New);
-        voice.VoiceMaskName = Comp<MetaDataComponent>(comp.Revenant).EntityName;
+        var voice = EnsureComp<VoiceOverrideComponent>(args.New);
+        voice.SpeechVerbOverride = "Ghost";
+        voice.NameOverride = Name(comp.Revenant);
 
         if (_mind.TryGetMind(uid, out var mindId, out var _))
             _mind.TransferTo(mindId, args.New);
