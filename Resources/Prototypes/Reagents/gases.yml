@@ -374,13 +374,14 @@
     Gas:
       effects:
       - !type:HealthChange
+        ignoreResistances: true
         damage:
           types:
             Cold: 2 # water, very temperature!!
       - !type:PopupMessage
         type: Local
         messages: [ "water-in-lungs" ]
-        probability: 0.1
+        probability: 0.7
         conditions:
         - !type:ReagentThreshold
           reagent: SeaWater # TODO: add gurgle sound effect while processing seawater through breathing
