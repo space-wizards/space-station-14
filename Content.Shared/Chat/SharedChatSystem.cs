@@ -84,30 +84,33 @@ public abstract class SharedChatSystem : EntitySystem
         return current ?? _prototypeManager.Index<SpeechVerbPrototype>(speech.SpeechVerb);
     }
 
-    public void GetRadioPrefix(EntityUid source,
+    /// <summary>
+    /// Splits the input message into a radio prefix part and the rest to preserve it during sanitization.
+    /// </summary>
+    /// <remarks>
+    /// This is primarily for the chat emote sanitizer, which can match against ":b" as an emote, which is a valid radio keycode.
+    /// </remarks>
+    public void GetRadioKeycodePrefix(EntityUid source,
         string input,
         out string output,
         out string prefix)
     {
-        output = input;
         prefix = string.Empty;
+        output = input;
 
-        if (input.StartsWith(RadioCommonPrefix))
-        {
-            // Chatsan will handle this properly as ;) => *winks* and ;shoot => ;shoot
+        // If the string is less than 2, then it's probably supposed to be an emote.
+        // No one is sending empty radio messages!
+        if (input.Length <= 2)
             return;
-        }
 
         if (!(input.StartsWith(RadioChannelPrefix) || input.StartsWith(RadioChannelAltPrefix)))
             return;
 
-        // lets :) pass as ")" isn't valid key
-        // :c => *emote*; ":c hi" = :c + "hi"
-        if (_keyCodes.TryGetValue(input[1], out _) || char.IsWhiteSpace(input[1]))
-        {
-            output = input[2..];
-            prefix = input[..2];
-        }
+        if (!_keyCodes.TryGetValue(input[1], out _))
+            return;
+
+        prefix = input[..2];
+        output = input[2..];
     }
 
     /// <summary>
