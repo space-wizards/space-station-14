@@ -22,6 +22,7 @@
     CaptainJetpackStealObjective: 0.5
     HandTeleporterStealObjective: 0.5
     EnergyShotgunStealObjective: 0.5
+    DocInterceptObjective: 3.5
 
 - type: weightedRandom
   id: TraitorObjectiveGroupKill
@@ -41,6 +42,8 @@
   weights:
     RandomTraitorAliveObjective: 1
     RandomTraitorProgressObjective: 1
+    DocTradeObjective: 1.25
+    DocHoldObjective: 1.5
 
 #Thief groups
 - type: weightedRandom

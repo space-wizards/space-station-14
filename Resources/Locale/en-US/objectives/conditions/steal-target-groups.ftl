@@ -65,3 +65,16 @@ steal-target-groups-animal-morty = Morty
 steal-target-groups-animal-renault = Renault
 steal-target-groups-animal-shiva = Shiva
 steal-target-groups-animal-tropico = Tropico
+
+# Syndicate, documents
+steal-target-groups-documents-arrest-logs = arrest logs
+steal-target-groups-documents-radio-logs = radio logs
+steal-target-groups-documents-maintence-report = station maintence report
+steal-target-groups-documents-research-report = research report
+steal-target-groups-documents-medical-logs = medical logs
+steal-target-groups-documents-supply-report = supply report
+steal-target-groups-documents-central-command-report = central command report
+steal-target-groups-documents-central-command-audit = central command audit
+steal-target-groups-documents-nuclear-device-report = nuclear device maintaince report
+steal-target-groups-documents-armory-report = armory inspection report
+steal-target-groups-documents-vault-inspection = vault inspection report

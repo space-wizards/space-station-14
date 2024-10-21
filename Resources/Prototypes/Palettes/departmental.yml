@@ -17,3 +17,16 @@
     salvage: "#8d1c9996"
     neutral: "#D4D4D496"
     neutralLight: "#D4D4D428"
+
+- type: palette
+  id: DepartmentalSpecialPick
+  name: DepartmentalSpecialPick
+  colors:
+    medical: "#52B4E9"
+    service: "#9FED58"
+    engineering: "#EFB341"
+    security: "#DE3A3A"
+    science: "#D381C9"
+    chemistry: "#fa7500"
+    virology: "#439909"
+    atmospherics: "#3eb388"
