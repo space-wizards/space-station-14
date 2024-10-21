@@ -36,10 +36,14 @@ namespace Content.Client.Chemistry.UI
                 new ItemSlotButtonPressedEvent(SharedChemMaster.InputSlotName));
             _window.OutputEjectButton.OnPressed += _ => SendMessage(
                 new ItemSlotButtonPressedEvent(SharedChemMaster.OutputSlotName));
-            _window.BufferTransferButton.OnPressed += _ => SendMessage(
-                new ChemMasterSetModeMessage(ChemMasterMode.Transfer));
+            _window.BufferStorageButton.OnPressed += _ => SendMessage(
+                new ChemMasterSetModeMessage(ChemMasterMode.Storage));
+            _window.BufferOutputButton.OnPressed += _ => SendMessage(
+                new ChemMasterSetModeMessage(ChemMasterMode.Output));
             _window.BufferDiscardButton.OnPressed += _ => SendMessage(
                 new ChemMasterSetModeMessage(ChemMasterMode.Discard));
+            _window.OutputBufferDiscardButton.OnPressed += _ => SendMessage(
+                new ChemMasterDiscardBufferMessage(SharedChemMaster.OutputBufferSolutionName));
             _window.CreatePillButton.OnPressed += _ => SendMessage(
                 new ChemMasterCreatePillsMessage(
                     (uint) _window.PillDosage.Value, (uint) _window.PillNumber.Value, _window.LabelLine));
@@ -53,7 +57,7 @@ namespace Content.Client.Chemistry.UI
                 _window.PillTypeButtons[i].OnPressed += _ => SendMessage(new ChemMasterSetPillTypeMessage(pillType));
             }
 
-            _window.OnReagentButtonPressed += (args, button) => SendMessage(new ChemMasterReagentAmountButtonMessage(button.Id, button.Amount, button.IsBuffer));
+            _window.OnReagentButtonPressed += (args, button) => SendMessage(new ChemMasterReagentAmountButtonMessage(button.Id, button.Amount, button.IsBuffer, button.Origin));
         }
 
         /// <summary>
