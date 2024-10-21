@@ -124,4 +124,13 @@ public abstract partial class SharedBorgSystem : EntitySystem
         var sprintDif = movement.BaseWalkSpeed / movement.BaseSprintSpeed;
         args.ModifySpeed(1f, sprintDif);
     }
+
+    /// <summary>
+    /// Sets <see cref="BorgModuleComponent.DefaultModule"/>.
+    /// </summary>
+    public void SetBorgModuleDefault(Entity<BorgModuleComponent> ent, bool newDefault)
+    {
+        ent.Comp.DefaultModule = newDefault;
+        Dirty(ent);
+    }
 }
