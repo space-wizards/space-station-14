@@ -44,8 +44,6 @@
         - SmallMobMask
         layer:
         - SmallMobLayer
-  - type: MobState
-  - type: Deathgasp
   - type: MobStateActions
     actions:
       Critical:
@@ -60,10 +58,6 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 3
     baseSprintSpeed : 4.9
-  - type: Reactive
-    groups:
-      Flammable: [Touch]
-      Extinguish: [Touch]
   - type: InventorySlots
   - type: UserInterface
     interfaces:
@@ -126,7 +120,6 @@
       Female: Mouse
       Unsexed: Mouse
     wilhelmProbability: 0.01
-  - type: CombatMode
   - type: MeleeWeapon
     soundHit:
         path: /Audio/Effects/bite.ogg
@@ -153,10 +146,6 @@
   - type: ActiveRadio
     channels:
     - Syndicate
-  # make the player a traitor once its taken
-  - type: AutoTraitor
-    giveUplink: false
-    giveObjectives: false
   - type: InteractionPopup
     successChance: 0.6
     interactSuccessString: petting-success-nukie-mouse
@@ -164,3 +153,6 @@
     interactSuccessSpawn: EffectHearts
     interactSuccessSound:
       path: /Audio/Animals/mouse_squeak.ogg
+  # make the player a traitor once its taken
+  - type: AutoTraitor
+    profile: TraitorReinforcement

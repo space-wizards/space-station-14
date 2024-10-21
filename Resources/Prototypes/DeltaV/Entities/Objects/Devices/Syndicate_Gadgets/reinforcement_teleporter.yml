@@ -1,5 +1,5 @@
-﻿- type: entity
-  parent: ReinforcementRadioSyndicate
+﻿﻿- type: entity
+  parent: ReinforcementRadio
   id: ReinforcementRadioSyndicateNukieMouse
   name: suspicious moldy cheese
   description: Moldy cheese with a little worm sticking out of it and a... blinking antenna? Might attract an odd mouse.
