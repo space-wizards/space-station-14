@@ -594,16 +594,12 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         if (checkEmote)
         {
-            var shouldSendEmoteText = TryEmoteChatInput(source, action);
-            if (shouldSendEmoteText)
-            {
-                SendInVoiceRange(ChatChannel.Emotes, action, wrappedMessage, source, range, author);
-            }
+            var emoteSucceeded = TryEmoteChatInput(source, action);
+            if (!emoteSucceeded)
+                return;
         }
-        else
-        {
-            SendInVoiceRange(ChatChannel.Emotes, action, wrappedMessage, source, range, author);
-        }
+
+        SendInVoiceRange(ChatChannel.Emotes, action, wrappedMessage, source, range, author);
         if (!hideLog)
             if (name != Name(source))
                 _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Emote from {ToPrettyString(source):user} as {name}: {action}");
