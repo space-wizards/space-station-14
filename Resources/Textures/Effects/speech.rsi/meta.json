@@ -286,6 +286,23 @@
         {
             "name": "robot2"
         },
+		{
+            "name": "security0",
+            "delays": [
+                [
+                    0.2,
+                    0.3,
+                    0.3,
+                    0.5
+                ]
+            ]
+        },
+        {
+            "name": "security1"
+        },
+        {
+            "name": "security2"
+        },
         {
             "name": "slime0",
             "delays": [
