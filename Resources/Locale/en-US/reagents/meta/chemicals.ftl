@@ -39,3 +39,6 @@ reagent-desc-calomel = A mercury chloride mineral that was used as a medicine in
 
 reagent-name-hydrogen-peroxide = hydrogen peroxide
 reagent-desc-hydrogen-peroxide = An ubiquitous chemical substance that is used in several applications.
+
+reagent-name-formaldehyde = formaldehyde
+reagent-desc-formaldehyde = A commonly used pesticide and plant remover, used in several applications.
