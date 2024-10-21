@@ -92,7 +92,8 @@ public abstract class SharedChatSystem : EntitySystem
         output = input;
         prefix = string.Empty;
 
-        if (input.StartsWith(RadioCommonPrefix) && input.Length < 1)
+        // Lets ;P pass as it will just throw it into chatsan unless it's smaller (;-; or ;))
+        if (input.StartsWith(RadioCommonPrefix) && input.Length < 3)
         {
             output = input[1..];
             prefix = input[..1];
@@ -102,6 +103,7 @@ public abstract class SharedChatSystem : EntitySystem
         if (!(input.StartsWith(RadioChannelPrefix) || input.StartsWith(RadioChannelAltPrefix)))
             return;
 
+        // lets :) pass as ")" isn't valid key
         if (_keyCodes.TryGetValue(input[1], out _) || char.IsWhiteSpace(input[1]))
         {
             output = input[2..];
