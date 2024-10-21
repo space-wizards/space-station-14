@@ -21,4 +21,10 @@ public sealed class RotatingLightSystem : SharedRotatingLightSystem
         comp.Enabled = args.Enabled;
         Dirty(uid, comp);
     }
+
+    public void SetEnabled(EntityUid uid, RotatingLightComponent comp, bool enabled)
+    {
+        comp.Enabled = enabled;
+        Dirty(uid, comp);
+    }
 }
