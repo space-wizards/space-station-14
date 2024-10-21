@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Cargo.Components;
 using Content.Server.Labels.Components;
+using Content.Server.Replays;
 using Content.Server.Station.Components;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.BUI;
@@ -12,6 +13,7 @@ using Content.Shared.Emag.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Paper;
+using Content.Shared.Replays;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -211,6 +213,18 @@ namespace Content.Server.Cargo.Systems
             // Log order approval
             _adminLogger.Add(LogType.Action, LogImpact.Low,
                 $"{ToPrettyString(player):user} approved order [orderId:{order.OrderId}, quantity:{order.OrderQuantity}, product:{order.ProductId}, requester:{order.Requester}, reason:{order.Reason}] with balance at {bank.Balance}");
+            _replayEventSystem.RecordReplayEvent(new CargoProductsOrderedReplayEvent
+            {
+                ApprovedBy = _replayEventSystem.GetPlayerInfo(player),
+                Product = new CargoReplayProduct
+                {
+                    ProductId = order.ProductId,
+                    Reason = order.Reason,
+                    OrderedBy = _replayEventSystem.GetPlayerInfo(player)
+                },
+                Severity = ReplayEventSeverity.Medium,
+                EventType = ReplayEventType.CargoProductOrdered,
+            });
 
             orderDatabase.Orders.Remove(order);
             DeductFunds(bank, cost);
@@ -550,4 +564,27 @@ namespace Content.Server.Cargo.Systems
 
         #endregion
     }
+}
+
+[Serializable, DataDefinition]
+public sealed partial class CargoProductsOrderedReplayEvent : ReplayEvent
+{
+    [DataField]
+    public ReplayEventPlayer? ApprovedBy;
+
+    [DataField]
+    public CargoReplayProduct? Product;
+}
+
+[Serializable, DataDefinition]
+public sealed partial class CargoReplayProduct
+{
+    [DataField]
+    public string? ProductId = default!;
+
+    [DataField]
+    public string? Reason = default!;
+
+    [DataField]
+    public ReplayEventPlayer? OrderedBy;
 }
