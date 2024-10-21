@@ -92,7 +92,7 @@ public abstract class SharedChatSystem : EntitySystem
         output = input;
         prefix = string.Empty;
 
-        if (input.StartsWith(RadioCommonPrefix))
+        if (input.StartsWith(RadioCommonPrefix) && input.Length < 1)
         {
             output = input[1..];
             prefix = input[..1];
@@ -102,15 +102,11 @@ public abstract class SharedChatSystem : EntitySystem
         if (!(input.StartsWith(RadioChannelPrefix) || input.StartsWith(RadioChannelAltPrefix)))
             return;
 
-        if (input.Length < 2 || char.IsWhiteSpace(input[1]))
+        if (_keyCodes.TryGetValue(input[1], out _) || char.IsWhiteSpace(input[1]))
         {
-            output = input[1..];
-            prefix = input[..1];
-            return;
+            output = input[2..];
+            prefix = input[..2];
         }
-
-        output = input[2..];
-        prefix = input[..2];
     }
 
     /// <summary>
