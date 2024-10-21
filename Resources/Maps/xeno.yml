@@ -71,6 +71,8 @@ entities:
     - type: Broadphase
     - type: OccluderTree
     - type: LoadedMap
+    - type: Parallax
+      parallax: XenoStation
   - uid: 2
     components:
     - type: MetaData
