@@ -10993,6 +10993,13 @@ entities:
     - type: Transform
       pos: 11.5,-6.5
       parent: 104
+- proto: HandLabeler
+  entities:
+  - uid: 1826
+    components:
+    - type: Transform
+      pos: 7.6685505,-12.075944
+      parent: 104
 - proto: KitchenKnife
   entities:
   - uid: 1061
