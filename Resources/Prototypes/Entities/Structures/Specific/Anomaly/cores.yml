@@ -202,7 +202,7 @@
 
 - type: entity
   parent: BaseAnomalyInertCore
-  id: AnomalyCorePyroclasticInert # Works like a lesser version of an experimental welding tool
+  id: AnomalyCorePyroclasticInert # Works like an improved welding tool
   description: The inert core of a pyroclastic anomaly. Cool to the touch, but radiates searing heat.
   suffix: Pyroclastic, Inert
   components:
@@ -274,12 +274,6 @@
   - type: Welder
   - type: IgnitionSource
     temperature: 700
-  - type: SolutionRegeneration
-    solution: Welder
-    generated:
-      reagents:
-      - ReagentId: WeldingFuel
-        Quantity: .5
   - type: PointLight
     radius: 1.5
     energy: 1.5
@@ -288,7 +282,7 @@
 
 - type: entity
   parent: BaseAnomalyInertCore
-  id: AnomalyCoreGravityInert # Can neutralize a mid-size singularity or tesla
+  id: AnomalyCoreGravityInert
   description: The inert core of a gravitational anomaly. Looks impossibly dense, but feels impossibly light.
   suffix: Gravity, Inert
   components:
@@ -299,12 +293,10 @@
     energy: 10
     color: "#1e070e"
     castShadows: false
-  - type: SinguloFood
-    energy: -500 # Get out of jail free; change your pants and get the power going again
 
 - type: entity
   parent: BaseAnomalyInertCore
-  id: AnomalyCoreIceInert # Slips people, can make a wall after a 30 second doAfter
+  id: AnomalyCoreIceInert # Slips people, can make slippery floors
   description: The inert core of an ice anomaly. Slick, but seems to be freezing itself in place...
   suffix: Ice, Inert
   components:
@@ -332,8 +324,8 @@
         layer:
         - SlipLayer
   - type: SpawnAfterInteract
-    prototype: WallIce
-    doAfter: 30
+    prototype: IceCrust
+    doAfter: 5
 
 - type: entity
   parent: BaseAnomalyInertCore
@@ -441,7 +433,11 @@
   
 
 - type: entity
+<<<<<<< HEAD
   parent: BaseAnomalyInertCore # Self-recharging battery; cannot be charged at a cell recharger
+=======
+  parent: BaseAnomalyInertCore # Has the same properties as a high cap battery
+>>>>>>> cb743991150bff53e0e21d8b432507f558fcadec
   id: AnomalyCoreElectricityInert
   description: The inert core of an electrical anomaly. Softly crackles as it channels energy inward.
   suffix: Electricity, Inert
@@ -450,12 +446,15 @@
     sprite: Structures/Specific/Anomalies/Cores/electric_core.rsi
   - type: Battery
     pricePerJoule: 0.15
-    maxCharge: 720
+    maxCharge: 1080
     startingCharge: 0
   - type: PowerCell
+<<<<<<< HEAD
   - type: BatterySelfRecharger
     autoRecharge: true
     autoRechargeRate: 3 # takes 4 minutes to charge itself back to full
+=======
+>>>>>>> cb743991150bff53e0e21d8b432507f558fcadec
   - type: PointLight
     radius: 1.5
     energy: 2.0
@@ -479,7 +478,7 @@
     castShadows: false
 
 - type: entity
-  parent: [ BaseAnomalyInertCore, BaseShadow, BaseRestrictedContraband ] # Acts as a reusable, 5 minute CD smoke grenade
+  parent: [ BaseAnomalyInertCore, BaseShadow, BaseRestrictedContraband ] # Acts as a reusable, 2 minute CD smoke grenade
   id: AnomalyCoreShadowInert
   description: The inert core of a shadow anomaly. A constant shroud of smoke surrounds it.
   suffix: Shadow, Inert
@@ -495,7 +494,11 @@
     duration: 30
     spreadAmount: 50
   - type: UseDelay
+<<<<<<< HEAD
     delay: 120
+=======
+    delay: 120 # 2 minutes
+>>>>>>> cb743991150bff53e0e21d8b432507f558fcadec
 
 - type: entity
   parent: [ BaseAnomalyInertCore, Emag ] # Acts as a single-charge, 5 minute CD emag
