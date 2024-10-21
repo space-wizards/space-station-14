@@ -20,6 +20,7 @@ comp-stack-becomes-full = Stack is now full.
 # Text related to splitting a stack
 comp-stack-split = You split the stack.
 comp-stack-split-halve = Halve
+comp-stack-split-custom = Split amount...
 comp-stack-split-too-small = Stack is too small to split.
 
 comp-stack-split-size = Max: {$size}
