@@ -464,3 +464,33 @@
         type: Add
         time: 5
         refresh: false
+
+- type: reagent
+  id: Sadness
+  name: reagent-name-sadness
+  group: Narcotics
+  desc: reagent-desc-sadness
+  physicalDesc: reagent-physical-desc-fragrant
+  flavor: horrible
+  color: "#283a71"
+  metabolisms:
+    Narcotic:
+      effects:
+      - !type:Emote
+        emote: Crying
+        showInChat: true
+        probability: 0.1
+      - !type:PopupMessage # still no sanity or mood
+        type: Local
+        visualType: Medium
+        messages:
+        - "sadness-effect-miserable"
+        - "sadness-effect-slow"
+        - "sadness-effect-tears"
+        probability: 0.2
+      - !type:MovespeedModifier
+        walkSpeedModifier: 0.75
+        sprintSpeedModifier: 0.75
+        conditions:
+        - !type:ReagentThreshold
+          min: 5
