@@ -1,5 +1,6 @@
 - type: entity
-  id: SpiderWeb
+  id: SpiderWebBase
+  abstract: true
   name: spider web
   description: It's stringy and sticky.
   placement:
@@ -32,13 +33,14 @@
     - type: Fixtures
       fixtures:
         fix1:
-          hard: false
           density: 7
           shape:
             !type:PhysShapeAabb
             bounds: "-0.5,-0.5,0.5,0.5"
-          layer:
+          mask:
           - MidImpassable
+          layer:
+          - BulletImpassable # blocks bullets and keeps airlocks open
     - type: Damageable
       damageModifierSet: Wood
     - type: Destructible
@@ -70,15 +72,21 @@
         Flammable: [Touch]
         Extinguish: [Touch]
     - type: SpiderWebObject
+
+- type: entity
+  id: SpiderWeb
+  parent: SpiderWebBase
+  components:
     - type: SpeedModifierContacts
       walkSpeedModifier: 0.5
       sprintSpeedModifier: 0.5
       ignoreWhitelist:
         components:
-            - IgnoreSpiderWeb
+          - IgnoreSpiderWeb
 
 - type: entity
   id: SpiderWebClown
+  parent: SpiderWebBase
   name: clown spider web
   description: It's stringy and slippy.
   placement:
@@ -86,31 +94,21 @@
     snap:
       - Wall
   components:
-    - type: MeleeSound
-      soundGroups:
-        Brute:
-          path:
-            "/Audio/Weapons/slash.ogg"
     - type: Sprite
       sprite: Objects/Misc/spiderweb.rsi
       layers:
         - state: spider_web_clown_1
           map: ["spiderWebLayer"]
       drawdepth: WallMountedItems
-    - type: Appearance
     - type: GenericVisualizer
       visuals:
         enum.SpiderWebVisuals.Variant:
           spiderWebLayer:
             1:  {state: spider_web_clown_1}
             2:  {state: spider_web_clown_2}
-    - type: Clickable
-    - type: Transform
-      anchored: true
     - type: Slippery
     - type: StepTrigger
       intersectRatio: 0.2
-    - type: Physics
     - type: Fixtures
       fixtures:
         slips:
@@ -121,14 +119,14 @@
           layer:
           - SlipLayer
         fix1:
+          density: 7
           shape:
             !type:PhysShapeAabb
-            bounds: "-0.4,-0.3,0.4,0.3"
-          density: 1000
+            bounds: "-0.5,-0.5,0.5,0.5"
           mask:
-          - ItemMask
-    - type: Damageable
-      damageModifierSet: Wood
+          - MidImpassable
+          layer:
+          - BulletImpassable
     - type: Destructible
       thresholds:
       - trigger:
@@ -137,22 +135,6 @@
         behaviors:
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
-    - type: Temperature
-      heatDamage:
-        types:
-          Heat: 5
-      coldDamage: {}
-      coldDamageThreshold: 0
-    - type: Flammable
-      fireSpread: true
-      damage:
-        types:
-          Heat: 5
-    - type: Reactive
-      groups:
-        Flammable: [Touch]
-        Extinguish: [Touch]
-    - type: SpiderWebObject
     - type: FlavorProfile
       flavors:
         - sweet
