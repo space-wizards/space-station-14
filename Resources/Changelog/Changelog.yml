@@ -1,26 +1,4 @@
 ﻿Entries:
-- author: Mervill
-  changes:
-  - message: Rotten Meat can be collected in trash bags and deleted by the recycler
-    type: Tweak
-  id: 7040
-  time: '2024-08-04T10:13:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30594
-- author: DrSmugleaf
-  changes:
-  - message: Fixed the client sometimes falsely showing the red color flash effect
-      when attacking something that they can't, like allied xenonids.
-    type: Fix
-  id: 7041
-  time: '2024-08-05T03:14:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30661
-- author: Killerqu00
-  changes:
-  - message: Sleeper agents event no longer occurs when evacuation is called.
-    type: Tweak
-  id: 7042
-  time: '2024-08-05T03:17:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30646
 - author: Cojoke-dot
   changes:
   - message: Mice can now use combat mode with a 0 damage attack
@@ -3945,3 +3923,26 @@
   id: 7539
   time: '2024-10-20T03:41:44.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32422
+- author: Thatonestomf
+  changes:
+  - message: Mute toxin now mutes even after is metabolized, similar to glue
+    type: Tweak
+  - message: Mute toxin is now even more powerful at muting people
+    type: Tweak
+  id: 7540
+  time: '2024-10-21T03:43:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32915
+- author: MendaxxDev
+  changes:
+  - message: Fixed typing sound playing when AI or admin ghosts interacted with consoles.
+    type: Fix
+  id: 7541
+  time: '2024-10-21T03:50:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32906
+- author: NoElkaTheGod
+  changes:
+  - message: Station AI can now interact with long range fax machines.
+    type: Tweak
+  id: 7542
+  time: '2024-10-21T12:44:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32929
