@@ -36,11 +36,7 @@ public sealed class HeadsetSystem : SharedHeadsetSystem
 
         SubscribeLocalEvent<HeadsetComponent, EmpPulseEvent>(OnEmpPulse);
 
-        SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypeReload);
-
         SubscribeLocalEvent<HeadsetComponent, GetVerbsEvent<Verb>>(OnGetVerbs);
-
-        CacheChannels();
     }
 
     private void OnKeysChanged(EntityUid uid, HeadsetComponent component, EncryptionChannelsChangedEvent args)
@@ -124,7 +120,7 @@ public sealed class HeadsetSystem : SharedHeadsetSystem
         if (uid == args.RadioSource)
             return;
 
-        if (!component.SoundChannels.Contains(args.Channel.ID))
+        if (!component.ToggledSoundChannels.Contains(args.Channel.ID))
             return;
 
         _audio.PlayEntity(component.Sound, actor.PlayerSession, uid, new() { Volume = -5 });
@@ -137,11 +133,6 @@ public sealed class HeadsetSystem : SharedHeadsetSystem
             args.Affected = true;
             args.Disabled = true;
         }
-    }
-
-    private void OnPrototypeReload(PrototypesReloadedEventArgs args)
-    {
-        CacheChannels();
     }
 
     private void OnGetVerbs(EntityUid uid, HeadsetComponent component, ref GetVerbsEvent<Verb> args)
@@ -157,9 +148,9 @@ public sealed class HeadsetSystem : SharedHeadsetSystem
 
         foreach ((var channel, var index) in keyHolder.Channels.Select(static (channel, index) => (channel, index)))
         {
-            var name = _channels[channel].LocalizedName;
+            var name = _prototype.Index<RadioChannelPrototype>(channel).LocalizedName;
 
-            var toggled = component.SoundChannels.Contains(channel);
+            var toggled = component.ToggledSoundChannels.Contains(channel);
 
             args.Verbs.Add(new()
             {
@@ -171,16 +162,14 @@ public sealed class HeadsetSystem : SharedHeadsetSystem
         }
     }
 
-    private void CacheChannels()
-    {
-        _channels = _prototype.EnumeratePrototypes<RadioChannelPrototype>().ToFrozenDictionary(prototype => prototype.ID);
-    }
-
+    /// <summary>
+    /// Toggles channel on given headset to on or off.
+    /// </summary>
     public static void ToggleHeadsetSound(Entity<HeadsetComponent> headset, string channel, bool on)
     {
         if (on)
-            headset.Comp.SoundChannels.Add(channel);
+            headset.Comp.ToggledSoundChannels.Add(channel);
         else
-            headset.Comp.SoundChannels.Remove(channel);
+            headset.Comp.ToggledSoundChannels.Remove(channel);
     }
 }

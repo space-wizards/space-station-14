@@ -1,5 +1,6 @@
 using Content.Shared.Inventory;
 using Robust.Shared.Audio;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Radio.Components;
 
@@ -17,9 +18,15 @@ public sealed partial class HeadsetComponent : Component
     [DataField("requiredSlot")]
     public SlotFlags RequiredSlot = SlotFlags.EARS;
 
-    [DataField("sound")]
+    /// <summary>
+    /// Sound of receiving message from toggled channel.
+    /// </summary>
+    [DataField]
     public SoundSpecifier Sound;
 
+    /// <summary>
+    /// Headset will emit sound when receives message from these channels.
+    /// </summary>
     [DataField("soundChannels")]
-    public HashSet<string> SoundChannels = [];
+    public HashSet<ProtoId<RadioChannelPrototype>> ToggledSoundChannels = [];
 }
