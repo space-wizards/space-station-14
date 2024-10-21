@@ -3253,3 +3253,10 @@
   id: 402
   time: '2024-10-21T00:18:34.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/522
+- author: TGRCdev
+  changes:
+  - message: Voice masks actually work again
+    type: Fix
+  id: 403
+  time: '2024-10-21T00:54:11.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/533
