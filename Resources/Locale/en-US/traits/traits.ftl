@@ -24,12 +24,6 @@ trait-paracusia-desc = You hear sounds that aren't really there.
 trait-unrevivable-name = Unrevivable
 trait-unrevivable-desc = You are unable to be revived by defibrillators.
 
-trait-random-unrevivable-name = Random Unrevivable
-trait-random-unrevivable-desc = You are sometimes unable to be revived by defibrillators.
-
-trait-unborgable-name = Unborgable
-trait-unborgable-desc = Your brain is unable to fit into a Man-Machine Interface.
-
 trait-pirate-accent-name = Pirate accent
 trait-pirate-accent-desc = You can't stop speaking like a pirate!
 
@@ -92,3 +86,9 @@ trait-sharpinflection-desc = You mumble... When you aren't shouting!!
 
 trait-monotonous-name = Monotonous
 trait-monotonous-desc = You speak in a way that others see as total disinterest. Always.
+
+trait-basicfrench-name = French (Basic)
+trait-basicfrench-desc = You speak with the cadence of someone who has cast off their vow of silence, with much less word replacements.
+
+trait-basicrussian-name = Russian (Basic)
+trait-basicrussian-desc = You speak with a russian accent, with much less word replacements.

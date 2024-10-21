@@ -33,3 +33,6 @@
 
 - type: vesselCategory
   id: Transport
+
+- type: vesselCategory
+  id: Security
