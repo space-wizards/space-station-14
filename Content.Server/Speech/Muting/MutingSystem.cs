@@ -17,13 +17,13 @@ namespace Content.Server.Speech.Muting
         {
             base.Initialize();
             SubscribeLocalEvent<MutedComponent, SpeakAttemptEvent>(OnSpeakAttempt);
-            SubscribeLocalEvent<MutedComponent, EmoteEvent>(OnEmote, before: [typeof(VocalSystem)], after: [typeof(EmoteBlockerSystem)]);
-            SubscribeLocalEvent<MutedComponent, ScreamActionEvent>(OnScreamAction, before: [typeof(VocalSystem)]);
+            SubscribeLocalEvent<MutedComponent, EmoteEvent>(OnEmote, before: new[] { typeof(VocalSystem) });
+            SubscribeLocalEvent<MutedComponent, ScreamActionEvent>(OnScreamAction, before: new[] { typeof(VocalSystem) });
         }
 
         private void OnEmote(EntityUid uid, MutedComponent component, ref EmoteEvent args)
         {
-            if (args.Handled || args.Blocked)
+            if (args.Handled)
                 return;
 
             //still leaves the text so it looks like they are pantomiming a laugh

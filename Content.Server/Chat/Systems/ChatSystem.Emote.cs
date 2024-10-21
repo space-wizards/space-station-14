@@ -1,9 +1,7 @@
 using System.Collections.Frozen;
-using Content.Server.Alert.Commands;
 using Content.Server.Popups;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Emoting;
-using Content.Shared.Inventory;
 using Content.Shared.Speech;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -91,22 +89,22 @@ public partial class ChatSystem
         string? nameOverride = null,
         bool ignoreActionBlocker = false,
         bool forceEmote = false
-        )
+    )
     {
         if (!forceEmote && !AllowedToUseEmote(source, emote))
             return false;
 
-        var blocked = TryEmoteWithoutChat(source, emote, ignoreActionBlocker);
+        var didEmote = TryEmoteWithoutChat(source, emote, ignoreActionBlocker);
 
         // check if proto has valid message for chat
-        if (!blocked && emote.ChatMessages.Count != 0)
+        if (didEmote && emote.ChatMessages.Count != 0)
         {
             // not all emotes are loc'd, but for the ones that are we pass in entity
             var action = Loc.GetString(_random.Pick(emote.ChatMessages), ("entity", source));
             SendEntityEmote(source, action, range, nameOverride, hideLog: hideLog, checkEmote: false, ignoreActionBlocker: ignoreActionBlocker);
         }
 
-        return blocked;
+        return didEmote;
     }
 
     /// <summary>
@@ -130,7 +128,7 @@ public partial class ChatSystem
         if (!_actionBlocker.CanEmote(uid) && !ignoreActionBlocker)
             return false;
 
-        return InvokeEmoteEvent(uid, proto, showPopupOnFailure: true);
+        return TryInvokeEmoteEvent(uid, proto);
     }
 
     /// <summary>
@@ -170,18 +168,17 @@ public partial class ChatSystem
     /// </summary>
     /// <param name="uid"></param>
     /// <param name="textInput"></param>
-    /// <returns>True if an emote was performed. False if no emote was found in the text, if an emote was found but unavailable, if the emote's completion was cancelled, etc.</returns>
+    /// <returns>True if the chat message should be displayed (because the emote was explicitly cancelled), false if it should not be.</returns>
     private bool TryEmoteChatInput(EntityUid uid, string textInput)
     {
         var actionTrimmedLower = TrimPunctuation(textInput.ToLower());
         if (!_wordEmoteDict.TryGetValue(actionTrimmedLower, out var emote))
-            return false;
+            return true;
 
         if (!AllowedToUseEmote(uid, emote))
-            return false;
+            return true;
 
-        // Don't show a popup on failure since the emote text will go through regardless.
-        return InvokeEmoteEvent(uid, emote, showPopupOnFailure: false);
+        return TryInvokeEmoteEvent(uid, emote);
 
         static string TrimPunctuation(string textInput)
         {
@@ -219,17 +216,41 @@ public partial class ChatSystem
         return true;
     }
 
-    private bool InvokeEmoteEvent(EntityUid uid, EmotePrototype proto, bool showPopupOnFailure)
+    /// <summary>
+    /// Creates and raises <see cref="BeforeEmoteEvent"/> and then <see cref="EmoteEvent"/> to let other systems do things like play audio.
+    /// In the case that the Before event is cancelled, EmoteEvent will NOT be raised, and will optionally show a message to the player
+    /// explaining why the emote didn't happen.
+    /// </summary>
+    /// <param name="uid">The entity which is emoting</param>
+    /// <param name="proto">The emote which is being performed</param>
+    /// <returns>True if the emote was performed, false otherwise.</returns>
+    private bool TryInvokeEmoteEvent(EntityUid uid, EmotePrototype proto)
     {
+        var beforeEv = new BeforeEmoteEvent(uid, proto);
+        RaiseLocalEvent(uid, ref beforeEv);
+
+        if (beforeEv.Cancelled)
+        {
+            if (beforeEv.Blocker != null)
+            {
+                _popupSystem.PopupEntity(Loc.GetString("chat-system-emote-cancelled-blocked",
+                    [("emote", Loc.GetString(proto.Name).ToLower()),
+                    ("blocker", beforeEv.Blocker.Value)]),
+                    uid, uid);
+            }
+            else
+            {
+                _popupSystem.PopupEntity(Loc.GetString("chat-system-emote-cancelled-generic",
+                    ("emote", Loc.GetString(proto.Name).ToLower())),
+                    uid, uid);
+            }
+            return false;
+        }
+
         var ev = new EmoteEvent(uid, proto);
         RaiseLocalEvent(uid, ref ev);
 
-        if (ev.Blocked && showPopupOnFailure)
-        {
-            _popupSystem.PopupEntity(Loc.GetString("emote-blocked", ("emote", Loc.GetString(proto.Name).ToLower())), uid, uid);
-        }
-
-        return ev.Blocked;
+        return true;
     }
 }
 
@@ -238,20 +259,15 @@ public partial class ChatSystem
 ///     Use it to play sound, change sprite or something else.
 /// </summary>
 [ByRefEvent]
-public struct EmoteEvent : IInventoryRelayEvent
+public sealed class EmoteEvent : HandledEntityEventArgs
 {
-    public bool Handled;
     public readonly EntityUid Source;
     public readonly EmotePrototype Emote;
-    public bool Blocked;
 
     public EmoteEvent(EntityUid source, EmotePrototype emote)
     {
         Source = source;
         Emote = emote;
         Handled = false;
-        Blocked = false;
     }
-
-    public SlotFlags TargetSlots => SlotFlags.All;
 }

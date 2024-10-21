@@ -16,7 +16,6 @@ using Content.Shared.Cluwne;
 using Content.Shared.Interaction.Components;
 using Robust.Shared.Audio.Systems;
 using Content.Shared.NameModifier.EntitySystems;
-using Content.Server.Speech;
 
 namespace Content.Server.Cluwne;
 
@@ -38,7 +37,8 @@ public sealed class CluwneSystem : EntitySystem
 
         SubscribeLocalEvent<CluwneComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<CluwneComponent, MobStateChangedEvent>(OnMobState);
-        SubscribeLocalEvent<CluwneComponent, EmoteEvent>(OnEmote, before: [typeof(VocalSystem), typeof(BodyEmotesSystem)], after: [typeof(EmoteBlockerSystem)]);
+        SubscribeLocalEvent<CluwneComponent, EmoteEvent>(OnEmote, before:
+        new[] { typeof(VocalSystem), typeof(BodyEmotesSystem) });
         SubscribeLocalEvent<CluwneComponent, RefreshNameModifiersEvent>(OnRefreshNameModifiers);
     }
 
@@ -85,7 +85,7 @@ public sealed class CluwneSystem : EntitySystem
     /// </summary>
     private void OnEmote(EntityUid uid, CluwneComponent component, ref EmoteEvent args)
     {
-        if (args.Handled || args.Blocked)
+        if (args.Handled)
             return;
         args.Handled = _chat.TryPlayEmoteSound(uid, EmoteSounds, args.Emote);
 

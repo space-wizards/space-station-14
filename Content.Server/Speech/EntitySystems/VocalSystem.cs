@@ -1,9 +1,11 @@
 using Content.Server.Actions;
 using Content.Server.Chat.Systems;
+using Content.Server.Speech.Components;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Humanoid;
 using Content.Shared.Speech;
 using Content.Shared.Speech.Components;
+using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -25,7 +27,7 @@ public sealed class VocalSystem : EntitySystem
         SubscribeLocalEvent<VocalComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<VocalComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<VocalComponent, SexChangedEvent>(OnSexChanged);
-        SubscribeLocalEvent<VocalComponent, EmoteEvent>(OnEmote, after: [typeof(EmoteBlockerSystem)]);
+        SubscribeLocalEvent<VocalComponent, EmoteEvent>(OnEmote);
         SubscribeLocalEvent<VocalComponent, ScreamActionEvent>(OnScreamAction);
     }
 
@@ -52,7 +54,7 @@ public sealed class VocalSystem : EntitySystem
 
     private void OnEmote(EntityUid uid, VocalComponent component, ref EmoteEvent args)
     {
-        if (args.Handled || args.Blocked || !args.Emote.Category.HasFlag(EmoteCategory.Vocal))
+        if (args.Handled || !args.Emote.Category.HasFlag(EmoteCategory.Vocal))
             return;
 
         // snowflake case for wilhelm scream easter egg

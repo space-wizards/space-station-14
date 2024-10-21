@@ -4,7 +4,6 @@ using Content.Server.Body.Systems;
 using Content.Server.Chat;
 using Content.Server.Chat.Systems;
 using Content.Server.Emoting.Systems;
-using Content.Server.Speech;
 using Content.Server.Speech.EntitySystems;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Cloning;
@@ -55,7 +54,8 @@ namespace Content.Server.Zombies
             base.Initialize();
 
             SubscribeLocalEvent<ZombieComponent, ComponentStartup>(OnStartup);
-            SubscribeLocalEvent<ZombieComponent, EmoteEvent>(OnEmote, before: [typeof(VocalSystem), typeof(BodyEmotesSystem)], after: [typeof(EmoteBlockerSystem)]);
+            SubscribeLocalEvent<ZombieComponent, EmoteEvent>(OnEmote, before:
+                new[] { typeof(VocalSystem), typeof(BodyEmotesSystem) });
 
             SubscribeLocalEvent<ZombieComponent, MeleeHitEvent>(OnMeleeHit);
             SubscribeLocalEvent<ZombieComponent, MobStateChangedEvent>(OnMobState);
@@ -158,7 +158,7 @@ namespace Content.Server.Zombies
         private void OnEmote(EntityUid uid, ZombieComponent component, ref EmoteEvent args)
         {
             // always play zombie emote sounds and ignore others
-            if (args.Handled || args.Blocked)
+            if (args.Handled)
                 return;
             args.Handled = _chat.TryPlayEmoteSound(uid, component.EmoteSounds, args.Emote);
         }
