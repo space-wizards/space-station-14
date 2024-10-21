@@ -1,79 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Added potassium iodide. It gives you short term radiation protection
-      and can be found in radiation treatment kits.
-    type: Add
-  - message: Added haloperidol. It removes most stimulating/hallucinogenic drugs from
-      the body and makes you drowsy.
-    type: Add
-  - message: Added the drowsiness status effect. It blurs your vision and makes you
-      randomly fall asleep. Drink some coffee or cola to remove it.
-    type: Add
-  - message: Chloral hydrate now makes you drowsy instead of forcing you to sleep
-      instantly.
-    type: Tweak
-  id: 7034
-  time: '2024-08-02T17:12:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27454
-- author: Blackern5000
-  changes:
-  - message: Winter boots no longer have ugly outlines
-    type: Tweak
-  id: 7035
-  time: '2024-08-02T23:05:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30350
-- author: lzk228
-  changes:
-  - message: Figurines will say phrases on activation.
-    type: Add
-  id: 7036
-  time: '2024-08-03T14:06:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30455
-- author: JoelZimmerman
-  changes:
-  - message: Dank pizza is now cooked with cannabis leaves instead of ambrosia vulgaris.
-    type: Tweak
-  id: 7037
-  time: '2024-08-03T14:07:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30430
-- author: Ian321
-  changes:
-  - message: Help menus now include the linked guides.
-    type: Fix
-  id: 7038
-  time: '2024-08-04T03:32:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30462
-- author: DrSmugleaf
-  changes:
-  - message: The Toggle Internals verb no longer shows up in the context menu if no
-      breathing tool is equipped and internals are off.
-    type: Tweak
-  id: 7039
-  time: '2024-08-04T03:34:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30622
-- author: Mervill
-  changes:
-  - message: Rotten Meat can be collected in trash bags and deleted by the recycler
-    type: Tweak
-  id: 7040
-  time: '2024-08-04T10:13:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30594
-- author: DrSmugleaf
-  changes:
-  - message: Fixed the client sometimes falsely showing the red color flash effect
-      when attacking something that they can't, like allied xenonids.
-    type: Fix
-  id: 7041
-  time: '2024-08-05T03:14:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30661
-- author: Killerqu00
-  changes:
-  - message: Sleeper agents event no longer occurs when evacuation is called.
-    type: Tweak
-  id: 7042
-  time: '2024-08-05T03:17:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30646
 - author: Cojoke-dot
   changes:
   - message: Mice can now use combat mode with a 0 damage attack
@@ -3955,3 +3880,69 @@
   id: 7533
   time: '2024-10-18T13:42:13.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32323
+- author: PJB3005
+  changes:
+  - message: You can now start removing items via stripping while holding something.
+    type: Tweak
+  id: 7534
+  time: '2024-10-18T19:20:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32750
+- author: Beck Thompson
+  changes:
+  - message: Scalpels and shivs now work as knives!
+    type: Add
+  id: 7535
+  time: '2024-10-19T02:40:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32858
+- author: PJB3005
+  changes:
+  - message: Fix more performance issues on long-running game servers, hopefully.
+    type: Fix
+  id: 7536
+  time: '2024-10-19T14:51:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32897
+- author: insoPL
+  changes:
+  - message: Zombies once again have zombie blood.
+    type: Fix
+  id: 7537
+  time: '2024-10-19T15:31:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32532
+- author: Beck Thompson
+  changes:
+  - message: When MMIs and positronic brains are inserted into plushies, their names
+      will be updated to the plushies name (Exactly the same way pAIs do).
+    type: Add
+  id: 7538
+  time: '2024-10-20T02:46:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32914
+- author: Calecute
+  changes:
+  - message: wide attacks that deal blunt damage will now deal stamina damage.
+    type: Fix
+  id: 7539
+  time: '2024-10-20T03:41:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32422
+- author: Thatonestomf
+  changes:
+  - message: Mute toxin now mutes even after is metabolized, similar to glue
+    type: Tweak
+  - message: Mute toxin is now even more powerful at muting people
+    type: Tweak
+  id: 7540
+  time: '2024-10-21T03:43:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32915
+- author: MendaxxDev
+  changes:
+  - message: Fixed typing sound playing when AI or admin ghosts interacted with consoles.
+    type: Fix
+  id: 7541
+  time: '2024-10-21T03:50:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32906
+- author: NoElkaTheGod
+  changes:
+  - message: Station AI can now interact with long range fax machines.
+    type: Tweak
+  id: 7542
+  time: '2024-10-21T12:44:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32929
