@@ -185,6 +185,7 @@ namespace Content.Shared.GameTicking
 
         public string GamemodeTitle { get; }
         public string RoundEndText { get; }
+        public string RoundStats { get; }
         public TimeSpan RoundDuration { get; }
         public int RoundId { get; }
         public int PlayerCount { get; }
@@ -198,6 +199,7 @@ namespace Content.Shared.GameTicking
         public RoundEndMessageEvent(
             string gamemodeTitle,
             string roundEndText,
+            string roundStats,
             TimeSpan roundDuration,
             int roundId,
             int playerCount,
@@ -206,6 +208,7 @@ namespace Content.Shared.GameTicking
         {
             GamemodeTitle = gamemodeTitle;
             RoundEndText = roundEndText;
+            RoundStats = roundStats;
             RoundDuration = roundDuration;
             RoundId = roundId;
             PlayerCount = playerCount;
