@@ -368,7 +368,7 @@
   name: reagent-name-carbon-seawater
   desc: reagent-desc-carbon-seawater
   physicalDesc: reagent-physical-desc-odorless
-  flavor: watery
+  flavor: water and salt
   color: "#135c4f"
   metabolisms:
     Gas:
