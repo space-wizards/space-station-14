@@ -14,9 +14,15 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Specific;
 public sealed partial class PickNearbyInjectableOperator : HTNOperator
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
-    private EntityLookupSystem _lookup = default!;
     private MedibotSystem _medibot = default!;
     private PathfindingSystem _pathfinding = default!;
+
+    private EntityQuery<DamageableComponent> damageQuery = default!;
+    private EntityQuery<InjectableSolutionComponent> injectQuery = default!;
+    private EntityQuery<NPCRecentlyInjectedComponent> recentlyInjected = default!;
+    private EntityQuery<MobStateComponent> mobState = default!;
+    private EntityQuery<EmaggedComponent> emaggedQuery = default!;
+    private EntityQuery<MedibotComponent> medibotQuery = default!;
 
     [DataField("rangeKey")] public string RangeKey = NPCBlackboard.MedibotInjectRange;
 
@@ -35,9 +41,14 @@ public sealed partial class PickNearbyInjectableOperator : HTNOperator
     public override void Initialize(IEntitySystemManager sysManager)
     {
         base.Initialize(sysManager);
-        _lookup = sysManager.GetEntitySystem<EntityLookupSystem>();
         _medibot = sysManager.GetEntitySystem<MedibotSystem>();
         _pathfinding = sysManager.GetEntitySystem<PathfindingSystem>();
+
+        damageQuery = _entManager.GetEntityQuery<DamageableComponent>();
+        injectQuery = _entManager.GetEntityQuery<InjectableSolutionComponent>();
+        recentlyInjected = _entManager.GetEntityQuery<NPCRecentlyInjectedComponent>();
+        mobState = _entManager.GetEntityQuery<MobStateComponent>();
+        emaggedQuery = _entManager.GetEntityQuery<EmaggedComponent>();
     }
 
     public override async Task<(bool Valid, Dictionary<string, object>? Effects)> Plan(NPCBlackboard blackboard,
@@ -51,13 +62,11 @@ public sealed partial class PickNearbyInjectableOperator : HTNOperator
         if (!_entManager.TryGetComponent<MedibotComponent>(owner, out var medibot))
             return (false, null);
 
-        var damageQuery = _entManager.GetEntityQuery<DamageableComponent>();
-        var injectQuery = _entManager.GetEntityQuery<InjectableSolutionComponent>();
-        var recentlyInjected = _entManager.GetEntityQuery<NPCRecentlyInjectedComponent>();
-        var mobState = _entManager.GetEntityQuery<MobStateComponent>();
-        var emaggedQuery = _entManager.GetEntityQuery<EmaggedComponent>();
 
-        foreach (var entity in _lookup.GetEntitiesInRange(owner, range))
+        if (!blackboard.TryGetValue<IEnumerable<KeyValuePair<EntityUid, float>>>("TargetList", out var patients, _entManager))
+            return (false, null);
+
+        foreach (var (entity, _) in patients)
         {
             if (mobState.TryGetComponent(entity, out var state) &&
                 injectQuery.HasComponent(entity) &&
