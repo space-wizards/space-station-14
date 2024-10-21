@@ -32,6 +32,13 @@ public sealed partial class CriminalRecordsConsoleComponent : Component
     public StationRecordsFilter? Filter;
 
     /// <summary>
+    /// Current tab of the filter by criminal status buttons.
+    ///
+    /// </summary>
+    [DataField]
+    public int CurrentTab = 0;
+
+    /// <summary>
     /// Channel to send messages to when someone's status gets changed.
     /// </summary>
     [DataField]
