@@ -62,6 +62,11 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
     public bool IsDragging => _menuDragHelper.IsDragging;
 
     /// <summary>
+    /// Prevent dragging, reassigning, or clearing actions in the actionbar.
+    /// </summary>
+    private bool LockActions = false;
+
+    /// <summary>
     /// Action slot we are currently selecting a target for.
     /// </summary>
     public EntityUid? SelectingTargetFor { get; private set; }
@@ -124,7 +129,33 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
                 if (args.State != BoundKeyState.Down)
                     return false;
 
-                TriggerAction(boundId);
+                var currentlyHovered = UIManager.MouseGetControl(_input.MouseScreenPosition);
+                // If hovering over a window action, perform hover-binding logic
+                if (!LockActions && currentlyHovered is ActionButton button && button.Parent == _window?.ResultsGrid)
+                {
+                    if (_actions.Count > 0)
+                    {
+                        var currentIndex = _actions.IndexOf(button.ActionId);
+                        // Remove the old action button and insert the new one at the desired index.
+                        if (currentIndex >= 0)
+                        {
+                            _actions.RemoveAt(currentIndex);
+                        }
+                        var insertIndex = Math.Min(_actions.Count, boundId);
+                        _actions.Insert(insertIndex, button.ActionId);
+                    }
+                    else
+                    {
+                        _actions.Add(button.ActionId);
+                    }
+                    UpdateActionContainer();
+                }
+                // Otherwise, activate action as normal
+                else
+                {
+                    TriggerAction(boundId);
+                }
+
                 return true;
             }, false, true));
         }
@@ -399,7 +430,13 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         QueueWindowUpdate();
 
         if (_actionsSystem != null)
-            _container?.SetActionData(_actionsSystem, _actions.ToArray());
+            UpdateActionContainer();
+    }
+
+    private void UpdateActionContainer()
+    {
+        if (_actionsSystem != null && _container != null)
+            _container.SetActionData(_actionsSystem, _actions.ToArray());
     }
 
     private void ActionButtonPressed(ButtonEventArgs args)
@@ -514,6 +551,10 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         if (_playerManager.LocalEntity is not { } player)
             return;
 
+        _window.LockActionsButton.Text = LockActions ?
+            Loc.GetString("ui-actionmenu-unlock-button") : Loc.GetString("ui-actionmenu-lock-button");
+        _window.ClearActionsButton.Disabled = LockActions;
+
         var search = _window.SearchBar.Text;
         var filters = _window.FilterButton.SelectedKeys;
         var actions = _actionsSystem.GetClientActions();
@@ -577,7 +618,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         }
 
         if (updateSlots)
-            _container?.SetActionData(_actionsSystem, _actions.ToArray());
+            UpdateActionContainer();
     }
 
     private void DragAction()
@@ -599,13 +640,12 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         if (dragged.Parent is ActionButtonContainer)
             SetAction(dragged, swapAction, false);
 
-        if (_actionsSystem != null)
-            _container?.SetActionData(_actionsSystem, _actions.ToArray());
+        UpdateActionContainer();
 
         _menuDragHelper.EndDrag();
     }
 
-    private void OnClearPressed(ButtonEventArgs args)
+    private void OnClearFilterPressed(ButtonEventArgs args)
     {
         if (_window == null)
             return;
@@ -614,6 +654,17 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         _window.FilterButton.DeselectAll();
         UpdateFilterLabel();
         QueueWindowUpdate();
+    }
+
+    private void OnLockActionsPressed(ButtonEventArgs args)
+    {
+        LockActions = !LockActions;
+        QueueWindowUpdate();
+    }
+    private void OnClearActionsPressed(ButtonEventArgs args)
+    {
+        ClearActions();
+        _actions.Clear();
     }
 
     private void OnSearchChanged(LineEditEventArgs args)
@@ -632,8 +683,12 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         if (args.Function != EngineKeyFunctions.UIClick && args.Function != EngineKeyFunctions.Use)
             return;
 
-        _menuDragHelper.MouseDown(action);
         args.Handle();
+
+        if (LockActions)
+            return;
+
+        _menuDragHelper.MouseDown(action);
     }
 
     private void OnWindowActionUnPressed(GUIBoundKeyEventArgs args, ActionButton dragged)
@@ -654,7 +709,9 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
     {
         if (args.Function == EngineKeyFunctions.UIRightClick)
         {
-            SetAction(button, null);
+            if (!LockActions)
+                SetAction(button, null);
+
             args.Handle();
             return;
         }
@@ -663,6 +720,10 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             return;
 
         args.Handle();
+
+        if (LockActions)
+            return;
+
         if (button.ActionId != null)
         {
             _menuDragHelper.MouseDown(button);
@@ -759,7 +820,9 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         {
             _window.OnOpen -= OnWindowOpened;
             _window.OnClose -= OnWindowClosed;
-            _window.ClearButton.OnPressed -= OnClearPressed;
+            _window.ClearFilterButton.OnPressed -= OnClearFilterPressed;
+            _window.ClearActionsButton.OnPressed -= OnClearActionsPressed;
+            _window.LockActionsButton.OnPressed -= OnLockActionsPressed;
             _window.SearchBar.OnTextChanged -= OnSearchChanged;
             _window.FilterButton.OnItemSelected -= OnFilterSelected;
 
@@ -776,7 +839,9 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
         _window.OnOpen += OnWindowOpened;
         _window.OnClose += OnWindowClosed;
-        _window.ClearButton.OnPressed += OnClearPressed;
+        _window.ClearFilterButton.OnPressed += OnClearFilterPressed;
+        _window.ClearActionsButton.OnPressed += OnClearActionsPressed;
+        _window.LockActionsButton.OnPressed += OnLockActionsPressed;
         _window.SearchBar.OnTextChanged += OnSearchChanged;
         _window.FilterButton.OnItemSelected += OnFilterSelected;
 
@@ -819,7 +884,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             _actions.Add(assign.ActionId);
         }
 
-        _container?.SetActionData(_actionsSystem, _actions.ToArray());
+        UpdateActionContainer();
     }
 
     public void RemoveActionContainer()
@@ -856,7 +921,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             return;
 
         LoadDefaultActions();
-        _container?.SetActionData(_actionsSystem, _actions.ToArray());
+        UpdateActionContainer();
         QueueWindowUpdate();
     }
 
