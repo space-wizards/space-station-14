@@ -1,8 +1,10 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Examine;
+using Content.Shared.Inventory;
 using Content.Shared.Localizations;
+using Content.Shared.Overlays;
 using Content.Shared.Roles;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
@@ -17,8 +19,10 @@ public sealed class ContrabandSystem : EntitySystem
     [Dependency] private readonly IConfigurationManager _configuration = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedIdCardSystem _id = default!;
+    [Dependency] private readonly InventorySystem _inventorySystem = default!;
 
     private bool _contrabandExamineEnabled;
+    private bool _contrabandExamineOnlyInHudEnabled;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -26,11 +30,17 @@ public sealed class ContrabandSystem : EntitySystem
         SubscribeLocalEvent<ContrabandComponent, ExaminedEvent>(OnExamined);
 
         Subs.CVar(_configuration, CCVars.ContrabandExamine, SetContrabandExamine, true);
+        Subs.CVar(_configuration, CCVars.ContrabandExamineOnlyInHud, SetContrabandExamineOnlyInHud, true);
     }
 
     private void SetContrabandExamine(bool val)
     {
         _contrabandExamineEnabled = val;
+    }
+
+    private void SetContrabandExamineOnlyInHud(bool val)
+    {
+        _contrabandExamineOnlyInHudEnabled = val;
     }
 
     public void CopyDetails(EntityUid uid, ContrabandComponent other, ContrabandComponent? contraband = null)
@@ -47,6 +57,25 @@ public sealed class ContrabandSystem : EntitySystem
     {
         if (!_contrabandExamineEnabled)
             return;
+
+        if (_contrabandExamineOnlyInHudEnabled)
+        {
+            if (TryComp<InventoryComponent>(args.Examiner, out var comp) && _inventorySystem.TryGetContainerSlotEnumerator(new Entity<InventoryComponent?>(args.Examiner, comp), out var inventorySlot, SlotFlags.EYES))
+            {
+                if (inventorySlot.NextItem(out var item))
+                {
+                    if (!TryComp<ShowContrabandDetailsComponent>(item, out var jComp)) return;
+                }
+                else
+                {
+                    return;
+                }
+            }
+            else
+            {
+                return;
+            }
+        }
 
         // two strings:
         // one, the actual informative 'this is restricted'
