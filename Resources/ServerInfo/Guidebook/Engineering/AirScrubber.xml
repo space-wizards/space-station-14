@@ -22,7 +22,7 @@
 
   Both of these modes are limited by the Rate setting, which defines the rate (in litres) at which the scrubber sucks gasses from its exposed atmosphere.
 
-  The WideNet setting expands the radius of the scrubbers operating range. Normally the scrubber scrubs the gasses on the single tile it's exposed to.
+  Air scrubbers also have a "WideNet" setting, which expands the radius of the scrubber's operating range. Normally, the scrubber scrubs the atmosphere on the single tile it's exposed to.
   In WideNet mode, the scrubber scrubs gas from the 4 tiles surrounding the scrubber, as shown:
 
   <Box>
@@ -37,10 +37,10 @@
     <GuideEntityEmbed Entity="FloorTileItemSteel" Caption=""/>
   </Box>
 
-  However, scrubbers in WideNet mode use significantly more power than normal scrubbers. For this reason, WideNet scrubbing is not the default option on all scrubbers.
+  This effectively multiplies its total speed, as air scrubbers will now preform their scrubbing work on 5 tiles at once.
 
   Scrubbers linked to an air alarm in auto mode will automatically enable WideNet mode under the air alarm's "Filtering (Wide)" mode when a high concentration of unwanted gasses is detected in the atmosphere.
 
-  WideNet is extremely useful in scrubbing a large amount of tritium from plasma burn chambers.
+  WideNet is extremely useful in quickly scrubbing large amounts of tritium from plasma burn chambers.
 
 </Document>

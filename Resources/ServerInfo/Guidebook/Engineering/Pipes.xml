@@ -14,10 +14,5 @@
 
   However, pipes will [color=red]not connect[/color] to pipes on top of each other. For example, building a bent pipe on top of a straight pipe to form a makeshift T-junction will not work.
 
-  Without pumps, gasses flow through pipes in both directions to balance their respective pressure, volume, and temperature. Some examples to better grasp this idea:
-  - Inducing a vacuum in a pipe (through a passive vent exposed to space, or a pump) will cause gas to move throughout the pipenet to fill the vacuum.
-  - Pushing high pressure gas into a lower pressure pipenet will cause the high pressure gas to spread out to balance pressure in the pipenet.
-  - The station's wastenet is commonly a vacuum to expedite the transport of waste gasses to space or the station's recycler net.
-
   You can color pipes (and most equipment that handles gasses) using a spray painter. This is commonly done to distinguish the air and waste components of the station's Distro pipenet.
 </Document>
