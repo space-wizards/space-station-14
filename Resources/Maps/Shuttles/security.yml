@@ -153,6 +153,16 @@ entities:
         chunkSize: 4
     - type: GasTileOverlay
     - type: RadiationGridResistance
+- proto: AirCanister
+  entities:
+  - uid: 158
+    components:
+    - type: Transform
+      anchored: True
+      pos: 1.5,-5.5
+      parent: 1
+    - type: Physics
+      bodyType: Static
 - proto: AirlockSecurityGlassLocked
   entities:
   - uid: 63
@@ -205,6 +215,14 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 3.5,-5.5
+      parent: 1
+- proto: AtmosDeviceFanDirectional
+  entities:
+  - uid: 157
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -3.5,-0.5
       parent: 1
 - proto: Bed
   entities:
@@ -332,6 +350,16 @@ entities:
     components:
     - type: Transform
       pos: 0.5,-8.5
+      parent: 1
+  - uid: 159
+    components:
+    - type: Transform
+      pos: -1.5,-0.5
+      parent: 1
+  - uid: 160
+    components:
+    - type: Transform
+      pos: -2.5,-0.5
       parent: 1
 - proto: CableHV
   entities:
