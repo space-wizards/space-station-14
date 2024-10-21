@@ -27,6 +27,6 @@ public sealed partial class HeadsetComponent : Component
     /// <summary>
     /// Headset will emit sound when receives message from these channels.
     /// </summary>
-    [DataField("soundChannels")]
+    [DataField("toggledSoundChannels")]
     public HashSet<ProtoId<RadioChannelPrototype>> ToggledSoundChannels = [];
 }

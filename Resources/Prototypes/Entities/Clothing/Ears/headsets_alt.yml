@@ -37,7 +37,7 @@
       - EncryptionKeyCentCom
       - EncryptionKeyStationMaster
   - type: Headset
-    soundChannels:
+    toggledSoundChannels:
     - CentCom
     - Command
     - Syndicate
@@ -56,7 +56,7 @@
       key_slots:
       - EncryptionKeyStationMaster
   - type: Headset
-    soundChannels:
+    toggledSoundChannels:
     - CentCom
     - Command
     - Syndicate

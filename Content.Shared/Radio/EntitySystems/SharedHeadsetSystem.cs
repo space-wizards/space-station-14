@@ -32,7 +32,7 @@ public abstract class SharedHeadsetSystem : EntitySystem
         }
 
         if (TryComp(uid, out EncryptionKeyHolderComponent? keyHolder))
-            args.Args.Channel ??= keyHolder.DefaultChannel;
+            args.Args.Channel ??= keyHolder.DefaultChannel; 
     }
 
     protected virtual void OnGotEquipped(EntityUid uid, HeadsetComponent component, GotEquippedEvent args)
@@ -78,6 +78,7 @@ public abstract class SharedHeadsetSystem : EntitySystem
     /// <summary>
     /// Toggles channel on given headset to on or off.
     /// </summary>
+    /// <param name="on">Whether to toggle this channel as emitting sound.</param>
     public static void ToggleHeadsetSound(Entity<HeadsetComponent> headset, string channel, bool on)
     {
         if (on)
