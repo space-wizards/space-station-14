@@ -1120,6 +1120,11 @@
   description: flavor-complex-paint-thinner
 
 - type: flavor
+  id: russian-roulette
+  flavorType: Complex
+  description: flavor-complex-russian-roulette
+
+- type: flavor
   id: numbingtranquility
   flavorType: Complex
   description: flavor-complex-numbing-tranquility
