@@ -26,6 +26,10 @@
     - cash_500
     - cash_1000
     - cash_1000000
+  - type: UserInterface
+    interfaces:
+      enum.StackCustomSplitUiKey.Key:
+        type: StackCustomSplitBoundUserInterface
   - type: Sprite
     sprite: Objects/Economy/cash.rsi
     state: cash

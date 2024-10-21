@@ -15,6 +15,10 @@
   - type: Stack
     count: 20
     stackType: Telecrystal
+  - type: UserInterface
+    interfaces:
+      enum.StackCustomSplitUiKey.Key:
+        type: StackCustomSplitBoundUserInterface
   - type: StaticPrice
     price: 0
   - type: StackPrice

@@ -49,6 +49,10 @@
   - type: Stack
     stackType: PaperRolling
     count: 5
+  - type: UserInterface
+    interfaces:
+      enum.StackCustomSplitUiKey.Key:
+        type: StackCustomSplitBoundUserInterface
   - type: Sprite
     sprite: Objects/Consumable/Smokeables/Cigarettes/paper.rsi
     state: cigpaper
@@ -79,6 +83,10 @@
   - type: Stack
     stackType: CigaretteFilter
     count: 5
+  - type: UserInterface
+    interfaces:
+      enum.StackCustomSplitUiKey.Key:
+        type: StackCustomSplitBoundUserInterface
   - type: Sprite
     sprite: Objects/Consumable/Smokeables/Cigarettes/paper.rsi
     state: cigfilter
