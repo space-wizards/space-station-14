@@ -99,9 +99,7 @@ public sealed partial class RCDMenu : RadialMenu
             // is visible in the main radial container (as these all start with Visible = false)
             foreach (var child in main.Children)
             {
-                var castChild = child as RadialMenuTextureButton;
-
-                if (castChild is not RadialMenuTextureButton)
+                if (child is not RadialMenuTextureButton castChild)
                     continue;
 
                 if (castChild.TargetLayer == proto.Category)
@@ -169,12 +167,7 @@ public sealed partial class RCDMenu : RadialMenu
     }
 }
 
-public sealed class RCDMenuButton : RadialMenuTextureButton
+public sealed class RCDMenuButton : RadialMenuTextureButtonWithSector
 {
     public ProtoId<RCDPrototype> ProtoId { get; set; }
-
-    public RCDMenuButton()
-    {
-
-    }
 }

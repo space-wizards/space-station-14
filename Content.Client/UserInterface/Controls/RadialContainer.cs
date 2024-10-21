@@ -67,37 +67,77 @@ public class RadialContainer : LayoutContainer
     {
 
     }
-	
-    protected override void Draw(DrawingHandleScreen handle)
+
+    /// <inheritdoc />
+    protected override Vector2 ArrangeOverride(Vector2 finalSize)
     {
-		
         const float baseRadius = 100f;
         const float radiusIncrement = 5f;
-		
-        var children = ReserveSpaceForHiddenChildren ? Children : Children.Where(x => x.Visible);
+
+        var children = ReserveSpaceForHiddenChildren
+            ? Children
+            : Children.Where(x => x.Visible);
+
         var childCount = children.Count();
-		
-		// Add padding from the center at higher child counts so they don't overlap.
-		Radius = baseRadius + (childCount * radiusIncrement);
+
+        // Add padding from the center at higher child counts so they don't overlap.
+        Radius = baseRadius + (childCount * radiusIncrement);
+
+        var isAntiClockwise = RadialAlignment == RAlignment.AntiClockwise;
 
         // Determine the size of the arc, accounting for clockwise and anti-clockwise arrangements
         var arc = AngularRange.Y - AngularRange.X;
-        arc = (arc < 0) ? MathF.Tau + arc : arc;
-        arc = (RadialAlignment == RAlignment.AntiClockwise) ? MathF.Tau - arc : arc;
+        arc = arc < 0
+            ? MathF.Tau + arc
+            : arc;
+        arc = isAntiClockwise
+            ? MathF.Tau - arc
+            : arc;
 
         // Account for both circular arrangements and arc-based arrangements
-        var childMod = MathHelper.CloseTo(arc, MathF.Tau, 0.01f) ? 0 : 1;
+        var childMod = MathHelper.CloseTo(arc, MathF.Tau, 0.01f)
+            ? 0
+            : 1;
 
         // Determine the separation between child elements
         var sepAngle = arc / (childCount - childMod);
-        sepAngle *= (RadialAlignment == RAlignment.AntiClockwise) ? -1f : 1f;
+        sepAngle *= isAntiClockwise
+            ? -1f
+            : 1f;
+
+        var controlCenter = finalSize * 0.5f;
 
         // Adjust the positions of all the child elements
-        foreach (var (i, child) in children.Select((x, i) => (i, x)))
+        var query = children.Select((x, index) => (index, x));
+        foreach (var (childIndex, child) in query)
         {
-            var position = new Vector2(Radius * MathF.Sin(AngularRange.X + sepAngle * i) + Width / 2f - child.Width / 2f, -Radius * MathF.Cos(AngularRange.X + sepAngle * i) + Height / 2f - child.Height / 2f);
+            const float angleOffset = MathF.PI * 0.5f;
+
+            var targetAngleOfChild = AngularRange.X + sepAngle * (childIndex + 0.5f) + angleOffset;
+
+            // flooring values for snapping float values to physical grid -
+            // it prevents gaps and overlapping between different button segments
+            var position = new Vector2(
+                    MathF.Floor(Radius * MathF.Cos(targetAngleOfChild)),
+                    MathF.Floor(-Radius * MathF.Sin(targetAngleOfChild))
+                ) + controlCenter - child.DesiredSize * 0.5f + Position;
+
             SetPosition(child, position);
+
+            // radial menu buttons with sector need to also know in which sector and around which point
+            // they should be rendered, how much space sector should should take etc.
+            if (child is IRadialMenuItemWithSector tb)
+            {
+                tb.AngleSectorFrom = sepAngle * childIndex;
+                tb.AngleSectorTo = sepAngle * (childIndex + 1);
+                tb.AngleOffset = angleOffset;
+                tb.InnerRadius = Radius / 2;
+                tb.OuterRadius = Radius * 2;
+                tb.ParentCenter = controlCenter;
+            }
         }
+
+        return base.ArrangeOverride(finalSize);
     }
 
     /// <summary>
@@ -109,4 +149,5 @@ public class RadialContainer : LayoutContainer
         Clockwise,
         AntiClockwise,
     }
+
 }

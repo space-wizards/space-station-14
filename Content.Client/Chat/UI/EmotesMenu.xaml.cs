@@ -106,7 +106,7 @@ public sealed partial class EmotesMenu : RadialMenu
 }
 
 
-public sealed class EmoteMenuButton : RadialMenuTextureButton
+public sealed class EmoteMenuButton : RadialMenuTextureButtonWithSector
 {
     public ProtoId<EmotePrototype> ProtoId { get; set; }
 }
