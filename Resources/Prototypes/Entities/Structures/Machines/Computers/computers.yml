@@ -426,6 +426,106 @@
 
 - type: entity
   parent: BaseComputerAiAccess
+  id: ComputerGatewayStation
+  name: station gateways control console
+  description: Used to monitor station teleport system operations.
+  components:
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: gateway_station
+    - map: ["computerLayerKeys"]
+      state: telesci_key
+  - type: ApcPowerReceiver
+    powerLoad: 500
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#3493c2"
+  - type: Computer
+    board: StationGatewayControlCircuitboard
+  - type: ActivatableUIRequiresAccess
+  - type: ActivatableUI
+    key: enum.StationGatewayUIKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.StationGatewayUIKey.Key:
+        type: StationGatewayBoundUserInterface
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
+  - type: StationGatewayConsole
+  - type: Storage
+    grid:
+    - 0,0,4,2
+    maxItemSize: Tiny
+    storageOpenSound: /Audio/Machines/door_lock_off.ogg
+    storageCloseSound: /Audio/Machines/door_lock_on.ogg
+    storageInsertSound: /Audio/Machines/id_insert.ogg
+    storageRemoveSound: /Audio/Machines/id_swipe.ogg
+    whitelist:
+      tags:
+      - GatewayChip
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        showEnts: False
+        occludes: True
+        ents: []
+      board: !type:Container
+        showEnts: False
+        occludes: True
+        ents: []
+  - type: AccessReader
+    access: [["Command"]]
+  - type: Lock
+    unlockOnClick: false
+
+- type: entity
+  parent: ComputerGatewayStation
+  id: ComputerGatewayStationFilled
+  suffix: Filled, All Chips
+  components:
+  - type: ContainerFill
+    containers:
+      storagebase:
+      - GatewayChipStation
+      - GatewayChipSalvage
+      - GatewayChipMedical
+      - GatewayChipEngineering
+      - GatewayChipSecurity
+      - GatewayChipScience
+      - GatewayChipCargo
+  
+- type: entity
+  parent: ComputerGatewayStation
+  id: ComputerGatewaySyndicate
+  name: syndicate gateways control console
+  components:
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: gateway_syndicate
+    - map: ["computerLayerKeys"]
+      state: syndie_key
+  - type: PointLight
+    color: "#c61414"
+  - type: Computer
+    board: SyndicateGatewayControlCircuitboard
+  - type: AccessReader
+    access: [["SyndicateAgent"]]
+  - type: StationGatewayConsole
+    gatewayColor: "#c61414"
+  
+- type: entity
+  parent: BaseComputerAiAccess
   id: ComputerResearchAndDevelopment
   name: R&D computer
   description: A computer used to interface with R&D tools.
