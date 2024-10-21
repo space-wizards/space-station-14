@@ -10,6 +10,7 @@ public sealed class IntrinsicUISystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<IntrinsicUIComponent, MapInitEvent>(InitActions);
+        SubscribeLocalEvent<IntrinsicUIComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<IntrinsicUIComponent, ToggleIntrinsicUIEvent>(OnActionToggle);
     }
 
@@ -19,6 +20,15 @@ public sealed class IntrinsicUISystem : EntitySystem
             return;
 
         args.Handled = InteractUI(uid, args.Key, component);
+    }
+
+    private void OnShutdown(EntityUid uid, IntrinsicUIComponent component, ref ComponentShutdown args)
+    {
+        foreach (var actionEntry in component.UIs.Values)
+        {
+            var actionId = actionEntry.ToggleActionEntity;
+            _actionsSystem.RemoveAction(uid, actionId);
+        }
     }
 
     private void InitActions(EntityUid uid, IntrinsicUIComponent component, MapInitEvent args)
