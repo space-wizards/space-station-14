@@ -1,17 +1,16 @@
-using Content.Server.Animals.Systems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Server.Animals.Components;
+namespace Content.Shared.Animals;
 
 /// <summary>
-///     Lets an entity produce wool fibers. Uses hunger if present.
+///     Gives the ability to produce wool fibers;
+///     produces endlessly if the owner does not have a HungerComponent.
 /// </summary>
-
-[RegisterComponent, Access(typeof(WoolySystem))]
+[RegisterComponent, Access(typeof(WoolySystem)), AutoGenerateComponentPause, NetworkedComponent]
 public sealed partial class WoolyComponent : Component
 {
     /// <summary>
@@ -35,24 +34,24 @@ public sealed partial class WoolyComponent : Component
     /// <summary>
     ///     The amount of reagent to be generated on update.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    [DataField]
     public FixedPoint2 Quantity = 25;
 
     /// <summary>
     ///     The amount of nutrient consumed on update.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public float HungerUsage = 10f;
 
     /// <summary>
     ///     How long to wait before growing wool.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public TimeSpan GrowthDelay = TimeSpan.FromMinutes(1);
 
     /// <summary>
     ///     When to next try growing wool.
     /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan NextGrowth = TimeSpan.FromSeconds(0);
+    [DataField, AutoPausedField, Access(typeof(WoolySystem))]
+    public TimeSpan NextGrowth = TimeSpan.Zero;
 }
