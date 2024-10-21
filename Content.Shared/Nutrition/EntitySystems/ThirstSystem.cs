@@ -32,18 +32,9 @@ public sealed class ThirstSystem : EntitySystem
     [ValidatePrototypeId<SatiationIconPrototype>]
     private const string ThirstIconParchedId = "ThirstIconParched";
 
-    private SatiationIconPrototype? _thirstIconOverhydrated = null;
-    private SatiationIconPrototype? _thirstIconThirsty = null;
-    private SatiationIconPrototype? _thirstIconParched = null;
-
     public override void Initialize()
     {
         base.Initialize();
-
-        var tryIndexIcons = _prototype.TryIndex(ThirstIconOverhydratedId, out _thirstIconOverhydrated) &&
-                            _prototype.TryIndex(ThirstIconThirstyId, out _thirstIconThirsty) &&
-                            _prototype.TryIndex(ThirstIconParchedId, out _thirstIconParched);
-        DebugTools.Assert(tryIndexIcons);
 
         SubscribeLocalEvent<ThirstComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
         SubscribeLocalEvent<ThirstComponent, MapInitEvent>(OnMapInit);
@@ -135,15 +126,15 @@ public sealed class ThirstSystem : EntitySystem
         switch (component.CurrentThirstThreshold)
         {
             case ThirstThreshold.OverHydrated:
-                prototype = _thirstIconOverhydrated;
+                _prototype.TryIndex(ThirstIconOverhydratedId, out prototype);
                 break;
 
             case ThirstThreshold.Thirsty:
-                prototype = _thirstIconThirsty;
+                _prototype.TryIndex(ThirstIconThirstyId, out prototype);
                 break;
 
             case ThirstThreshold.Parched:
-                prototype = _thirstIconParched;
+                _prototype.TryIndex(ThirstIconParchedId, out prototype);
                 break;
 
             default:
