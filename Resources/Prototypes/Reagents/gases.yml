@@ -369,7 +369,7 @@
   desc: reagent-desc-carbon-seawater
   physicalDesc: reagent-physical-desc-odorless
   flavor: watery
-  color: "#66ff33"
+  color: "#135c4f"
   metabolisms:
     Gas:
       effects:
@@ -384,13 +384,13 @@
         probability: 0.7
         conditions:
         - !type:ReagentThreshold
-          reagent: SeaWater # TODO: add gurgle sound effect while processing seawater through breathing
+          reagent: SeaWater
           min: 0.5
       - !type:Emote
          conditions:
         - !type:ReagentThreshold
            reagent: SeaWater
            min: 0.5
-         emote: Cough
+         emote: Cough #TODO: add gurgle sound effect while processing seawater through breathing
          showInChat: true
          probability: 0.4
