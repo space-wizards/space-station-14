@@ -1,7 +1,7 @@
 ﻿<Document>
   # Air Vent
   The air vent is a standard vent, found in all rooms that you want to pressurize with a breathable atmosphere.
-  Its primary job is to transfer gasses between the pipenet it's connected to and the atmosphere it's exposed to.
+  Its primary job is to transfer gasses into the atmosphere it's exposed to until it reaches a set pressure.
 
   <Box>
     <GuideEntityEmbed Entity="GasVentPump"/>
@@ -9,41 +9,52 @@
 
   The air vent requires power through a nearby LV cable to function.
 
-  The default behavior of a gas vent is to simply output gas to the exposed atmosphere at a pressure of 101.3 kPa.
-
   The air vent can be welded with any welding tool to stop it from functioning.
 
+  ## Default Operation
+  The default behavior of a gas vent is to simply output gas to the exposed atmosphere at a pressure of 101.3 kPa.
+
+  The speed of the air vent scales with the difference between twice the connected pipenet's pressure and the pressure of the exposed atmosphere. To put it in a word equation:
+  <Box>
+    [italic]Speed = 2 × Pipenet Pressure - Exposed Atmosphere Pressure[/italic]
+  </Box>
+
+  For example, this means that an air vent will be unable to pump to 101.3kPa if the gas inside the vest goes below half that (50.65kPa).
+
+  ## Pressure Lockout
   Air vents will enter [color=red]pressure lockout[/color] when the pressure of the atmosphere it's exposed to is below 80 kPa. This is to prevent wasting useful gasses to space if a room is not sealed. The lights on the air vent will turn [color=yellow]yellow[/color] to highlight this change.
 
   This can be [color=green]overridden[/color] by using a screwdriver on the vent, or setting the mode to Fill on a connected air alarm.
 
-  It is important to note that air vents in [color=red]pressure lockout[/color] still leak out gas. The gas they leak out is relative to the current pressure of the pipenet they're connected to.
+  It is important to note that air vents in [color=red]pressure lockout[/color] still very slowly leak out gas. The amount of gas they leak out is relative to the current pressure of the pipenet they're connected to.
 
   ## Configuration Options
   When linked to an air alarm, air vents gain more functionality.
 
   Air vents have two "vent direction" options: Releasing and Siphoning.
-  - Releasing simply releases gasses into the atmosphere. The pressure it releases the gasses is defined in the "External bound" setting.
-  - Siphoning sucks the air out of the atmosphere and into the connected pipenet. The pressure it sucks is determined by the "Internal bound" setting.
+  - Releasing simply releases gasses into the atmosphere from the connected pipenet.
+  - Siphoning sucks the air out of the atmosphere and into the connected pipenet. The lights on the air vent will turn [color=red]red[/color] to highlight this change.
 
-  An air vent's lights will turn red when in Siphoning mode.
+  ## Pressure Bounds
+  Air vents have a pressure bound system, which controls the pressure at which an air vent will pressurize an atmosphere, or draw from a connected pipenet. These limits are taken into account in both releasing and siphoning modes.
 
-  Vents also have a "Pressure bound" setting, which controls how pressure limits are handled:
+  The "PressureBound" setting has four options:
   - ExternalBound makes the air vent respect the pressure limits defined in the External bound entry.
   - InternalBound makes the air vent respect the pressure limits defined in the Internal bound entry.
   - Both makes the air vent respect the pressure limits defined in both the External and Internal bound entries.
   - NoBound makes the air vent respect no limit.
 
-  If you're still confused, here are some examples. These examples are made in mind with the "Pressure bound" set to Both, so the air vent respects both limits.
-  - An air vent with the External bound pressure set to 101.3 kPa will make it so the air vent cannot pressurize the atmosphere above 101.3 kPa.
-  - An air vent with the Internal bound pressure set to 50 kPa will make it so the air vent cannot draw from its connected pipe below 50 kPa.
+  When the vent is in releasing mode:
+  - If the External bound pressure is set to 101.3 kPa, the air vent will not pressurize the atmosphere above 101.3 kPa.
+  - If the Internal bound pressure is set to 50 kPa, the air vent will not draw gas from the connected pipe if its pressure is below 50 kPa.
 
-  To explain it further (when the vent direction is set to releasing):
-  - You can think of the External bound as the upper limit for the exposed atmosphere. "I will not pump air past this pressure."
-  - You can think of the Internal bound as the lower limit for the connected pipenet. "I will not draw from my source below this pressure."
+  When the vent is in siphoning mode:
+  - If the External bound pressure is set to 101.3 kPa, the air vent will siphon gases until the atmosphere reaches 101.3 kPa.
+  - If the Internal bound pressure is set to 50 kPa, the air vent will not push gases into the pipenet if its pressure is above 50 kPa.
+
+  If you're still confused about PressureBounds, here's a simple way to think about it:
+  - You can think of the External bound as the upper limit for the exposed atmosphere. "I will not pressurize the exposed atmosphere past this pressure, or draw from the atmosphere below this pressure."
+  - You can think of the Internal bound as the lower limit for the connected pipenet. "I will not draw from my source below this pressure, or push air into the pipenet above this pressure."
   - The "Pressure bound" settings simply define which limits to respect or ignore.
 
-  When the vent is set to siphon, these limits are also taken into consideration. For example (if respecting both limits):
-  - A vent with an External bound pressure set to 101.3 kPa will not siphon gasses below 101.3 kPa.
-  - A vent with an Internal bound pressure set to 50 kPa will not push gasses into the pipenet above 50 kPa.
 </Document>
