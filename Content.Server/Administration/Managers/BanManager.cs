@@ -13,7 +13,6 @@ using Content.Shared.Players;
 using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Roles;
 using Robust.Server.Player;
-using Robust.Shared.Asynchronous;
 using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
@@ -37,7 +36,6 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
     [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] private readonly ILogManager _logManager = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly ITaskManager _taskManager = default!;
     [Dependency] private readonly UserDbDataManager _userDbData = default!;
 
     private ISawmill _sawmill = default!;
@@ -53,7 +51,7 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
     {
         _netManager.RegisterNetMessage<MsgRoleBans>();
 
-        _db.SubscribeToNotifications(OnDatabaseNotification);
+        _db.SubscribeToNotifications<BanNotificationData>(ProcessBanNotification, BanNotificationChannel);
 
         _userDbData.AddOnLoadPlayer(CachePlayerData);
         _userDbData.AddOnPlayerDisconnect(ClearPlayerData);

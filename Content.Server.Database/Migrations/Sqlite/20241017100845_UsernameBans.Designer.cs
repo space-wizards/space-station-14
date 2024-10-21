@@ -3,6 +3,7 @@ using System;
 using Content.Server.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Content.Server.Database.Migrations.Sqlite
 {
     [DbContext(typeof(SqliteServerDbContext))]
-    partial class SqliteServerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241017100845_UsernameBans")]
+    partial class UsernameBans
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.0");
@@ -1295,12 +1298,7 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.HasKey("Id")
                         .HasName("PK_server_username_rule");
 
-                    b.ToTable("server_username_rule", null, t =>
-                        {
-                            t.HasCheckConstraint("ActiveRulesDoNotHaveRetireInformation", "retired OR retire_time IS NULL AND retiring_admin IS NULL");
-
-                            t.HasCheckConstraint("InactiveRulesHaveRetireInformation", "NOT retired OR retire_time IS NOT NULL");
-                        });
+                    b.ToTable("server_username_rule", (string)null);
                 });
 
             modelBuilder.Entity("Content.Server.Database.Trait", b =>

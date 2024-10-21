@@ -85,3 +85,61 @@ server-ban-string-never = never
 
 # Kick on ban
 ban-kick-reason = You have been banned
+
+# Username ban
+cmd-ban-username-desc = Ban a username and kick any user with that username.
+cmd-ban-username-invalid-username = this username is invalid: {$reason}
+cmd-ban-username-hint-username = <username>
+cmd-ban-username-hint-regex = <regex>
+cmd-ban-username-hint-reason = [reason]
+cmd-ban-username-hint-upgrade-ban = [(upgrade to ban)true|false]
+cmd-ban-username-hint-ban = Users who join with this username will be banned
+cmd-ban-username-hint-no-ban = Users who join with this username will be kicked (Default)
+cmd-ban-username-regex-help = Usage: banusernameregex <expression> [reason] [extend to ban (true|false)]
+cmd-ban-username-help = Usage: banusername <username> [reason] [extend to ban (true|false)]
+
+# Username ban panel
+username-ban-panel-pardon = Pardon
+username-ban-panel-id = Id:
+username-ban-panel-regex = Regex:
+username-ban-panel-expression = Expression:
+username-ban-panel-ban = Extend to ban:
+username-ban-panel-issuer = Issuing admin:
+username-ban-panel-time-issued = Issued Time:
+username-ban-panel-round = Round Id:
+username-ban-panel-retired = Retired:
+username-ban-panel-retirer = Retiring admin:
+username-ban-panel-tine-retired = Retired Time:
+username-ban-panel-message = Message:
+
+cmd-username-whitelist-not-in-db = this username was not present in the database
+cmd-whitelist-username-help = Usage: {$command} <username>
+
+cmd-pardonusername-help = Usage: pardonusername <ban id 1> <ban id 2> ...
+cmd-pardonusername-send = Sending retire request rule {$id}
+
+# create username ban failed
+cmd-ban-username-missing-minimum-permissions = {$admin} ({$adminId}) tried to create a username rule with no ban flag"
+cmd-ban-username-missing-minimum-permissions-regex = {$admin} ({$adminId}) tried to create a simple username ban with an invalid username ({$expression})
+cmd-ban-username-invalid-simple = {$admin} ({$adminId}) tried to create a simple username ban with an invalid username ({regexRule})
+cmd-ban-username-missing-reason = {$admin} ({$adminId}) is creating a username ban without a reason provided for ({$expression})
+
+# kick on username ban
+ban-username-kick-message = Your username is not permitted on this server. You may rejoin after changing your username.
+ban-username-ban-message = Your username is not permitted on this server. You have been banned.
+ban-username-default-reason-simple = An admin has banned your specific username.
+ban-username-default-reason-regex = An admin has banned a class of usernames which includes your username.
+
+# username ban panel
+username-ban-panel-title = Username Rules
+username-ban-panel-submit = Create Banned Username Rule
+username-ban-panel-reason = Username Restriction Reason
+username-ban-panel-create = Create
+username-ban-panel-view = View
+username-ban-panel-extend = Extend to ban
+username-ban-panel-rule = prohibition rule
+username-ban-panel-create-regex = regex
+username-ban-panel-refresh = Refresh Username Rules
+
+# create log message
+server-username-rule-create = {$admin} created the username rule {$expression} stating: {$message}

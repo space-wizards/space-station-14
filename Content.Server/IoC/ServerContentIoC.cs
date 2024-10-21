@@ -55,6 +55,7 @@ namespace Content.Server.IoC
             IoCManager.Register<IGameMapManager, GameMapManager>();
             IoCManager.Register<RulesManager, RulesManager>();
             IoCManager.Register<IBanManager, BanManager>();
+            IoCManager.Register<IUsernameRuleManager, UsernameRuleManager>();
             IoCManager.Register<ContentNetworkResourceManager>();
             IoCManager.Register<IAdminNotesManager, AdminNotesManager>();
             IoCManager.Register<GhostKickManager>();

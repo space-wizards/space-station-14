@@ -512,20 +512,6 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.ToTable("assigned_user_id", (string)null);
                 });
 
-            modelBuilder.Entity("Content.Server.Database.Blacklist",
-                b =>
-                {
-                    b.Property<Guid>("UserId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("user_id");
-
-                    b.HasKey("UserId")
-                        .HasName("PK_blacklist");
-
-                    b.ToTable("blacklist", (string) null);
-                });
-
             modelBuilder.Entity("Content.Server.Database.BanTemplate", b =>
                 {
                     b.Property<int>("Id")
@@ -569,6 +555,19 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasName("PK_ban_template");
 
                     b.ToTable("ban_template", (string)null);
+                });
+
+            modelBuilder.Entity("Content.Server.Database.Blacklist", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("UserId")
+                        .HasName("PK_blacklist");
+
+                    b.ToTable("blacklist", (string)null);
                 });
 
             modelBuilder.Entity("Content.Server.Database.ConnectionLog", b =>
@@ -1317,6 +1316,68 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.ToTable("server_unban", (string)null);
                 });
 
+            modelBuilder.Entity("Content.Server.Database.ServerUsernameRule", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("server_username_rule_id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("creation_time");
+
+                    b.Property<string>("Expression")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("expression");
+
+                    b.Property<bool>("ExtendToBan")
+                        .HasColumnType("boolean")
+                        .HasColumnName("extend_to_ban");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("message");
+
+                    b.Property<bool>("Regex")
+                        .HasColumnType("boolean")
+                        .HasColumnName("regex");
+
+                    b.Property<Guid?>("RestrictingAdmin")
+                        .HasColumnType("uuid")
+                        .HasColumnName("restricting_admin");
+
+                    b.Property<DateTime?>("RetireTime")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("retire_time");
+
+                    b.Property<bool>("Retired")
+                        .HasColumnType("boolean")
+                        .HasColumnName("retired");
+
+                    b.Property<Guid?>("RetiringAdmin")
+                        .HasColumnType("uuid")
+                        .HasColumnName("retiring_admin");
+
+                    b.Property<int?>("RoundId")
+                        .HasColumnType("integer")
+                        .HasColumnName("round_id");
+
+                    b.HasKey("Id")
+                        .HasName("PK_server_username_rule");
+
+                    b.ToTable("server_username_rule", null, t =>
+                        {
+                            t.HasCheckConstraint("ActiveRulesDoNotHaveRetireInformation", "retired OR retire_time IS NULL AND retiring_admin IS NULL");
+
+                            t.HasCheckConstraint("InactiveRulesHaveRetireInformation", "NOT retired OR retire_time IS NOT NULL");
+                        });
+                });
+
             modelBuilder.Entity("Content.Server.Database.Trait", b =>
                 {
                     b.Property<int>("Id")
@@ -1375,6 +1436,18 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasName("PK_uploaded_resource_log");
 
                     b.ToTable("uploaded_resource_log", (string)null);
+                });
+
+            modelBuilder.Entity("Content.Server.Database.UsernameWhitelist", b =>
+                {
+                    b.Property<string>("Username")
+                        .HasColumnType("text")
+                        .HasColumnName("username");
+
+                    b.HasKey("Username")
+                        .HasName("PK_username_whitelist");
+
+                    b.ToTable("username_whitelist", (string)null);
                 });
 
             modelBuilder.Entity("Content.Server.Database.Whitelist", b =>
