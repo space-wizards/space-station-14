@@ -51,6 +51,7 @@
         layer:
         - MachineLayer
   - type: EntityStorage
+  - type: InternalAir
   - type: ContainerContainer
     containers:
       entity_storage: !type:Container
@@ -144,6 +145,7 @@
       path: /Audio/Items/deconstruct.ogg
     openSound:
       path: /Audio/Items/deconstruct.ogg
+  - type: InternalAir
   - type: ContainerContainer
     containers:
       entity_storage: !type:Container
@@ -255,6 +257,7 @@
         layer:
         - MachineLayer
   - type: EntityStorage
+  - type: InternalAir
   - type: ContainerContainer
     containers:
       entity_storage: !type:Container

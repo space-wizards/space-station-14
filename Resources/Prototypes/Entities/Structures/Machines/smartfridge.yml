@@ -36,6 +36,7 @@
       path: /Audio/Machines/windoor_open.ogg
       params:
         volume: -3
+  - type: InternalAir
   - type: ContainerContainer
     containers:
       entity_storage: !type:Container

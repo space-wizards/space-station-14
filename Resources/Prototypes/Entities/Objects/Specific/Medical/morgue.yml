@@ -48,6 +48,7 @@
       path: /Audio/Misc/zip.ogg
     openSound:
       path: /Audio/Misc/zip.ogg
+  - type: InternalAir
   - type: EntityStorageLayingDownOverride
   - type: PaperLabel
     labelSlot:

@@ -1,5 +1,6 @@
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Storage.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Robust.Shared.Collections;
@@ -15,8 +16,8 @@ public sealed class JetpackSystem : SharedJetpackSystem
     protected override bool CanEnable(EntityUid uid, JetpackComponent component)
     {
         return base.CanEnable(uid, component) &&
-               TryComp<GasTankComponent>(uid, out var gasTank) &&
-               !(gasTank.Air.TotalMoles < component.MoleUsage);
+               TryComp<InternalAirComponent>(uid, out var internalAir) &&
+               !(internalAir.Air.TotalMoles < component.MoleUsage);
     }
 
     public override void Update(float frameTime)
