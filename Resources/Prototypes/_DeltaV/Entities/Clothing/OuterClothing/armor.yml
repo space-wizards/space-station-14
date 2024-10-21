@@ -6,9 +6,9 @@
   description: A large and bulky carrier featuring steel plates that offer decent protection against gunfire.
   components:
   - type: Sprite
-    sprite: DeltaV/Clothing/OuterClothing/Armor/platecarrier.rsi
+    sprite: _DeltaV/Clothing/OuterClothing/Armor/platecarrier.rsi
   - type: Clothing
-    sprite: DeltaV/Clothing/OuterClothing/Armor/platecarrier.rsi
+    sprite: _DeltaV/Clothing/OuterClothing/Armor/platecarrier.rsi
   - type: Armor # Good against gunshots, decent against everything else. Balanced by reduced movement speed.
     modifiers:
       coefficients:
