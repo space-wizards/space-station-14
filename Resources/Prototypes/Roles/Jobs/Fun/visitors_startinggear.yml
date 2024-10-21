@@ -1192,9 +1192,9 @@
   - BriefcaseBrownFilled
 
 - type: startingGear
-  id: VisitorLawyerCentcom
+  id: VisitorLawyerCentcomm
   equipment:
-    jumpsuit: ClothingUniformJumpsuitCentcomAgent
+    jumpsuit: ClothingUniformJumpsuitCentcommAgent
     shoes: ClothingShoesLeather
     gloves: ClothingHandsGlovesLeather
     head: BladedFlatcapBrown
@@ -1203,7 +1203,7 @@
     back: ClothingBackpackSatchelLeather
     belt: ClothingBeltStorageWaistbag
     eyes: ClothingEyesGlassesSunglasses
-    ears: ClothingHeadsetCentCom
+    ears: ClothingHeadsetCentComm
     pocket1: RubberStampLawyer
     pocket2: LuxuryPen
   inhand:

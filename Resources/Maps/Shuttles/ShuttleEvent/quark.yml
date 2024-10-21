@@ -1465,7 +1465,7 @@ entities:
       pos: -3.5023484,3.962566
       parent: 1
     - type: Paper
-      stampState: paper_stamp-centcom
+      stampState: paper_stamp-centcomm
       stampedBy:
       - stampedColor: '#329632FF'
         stampedName: Central Traffic Control

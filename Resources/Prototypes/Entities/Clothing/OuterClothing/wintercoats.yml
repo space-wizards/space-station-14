@@ -167,26 +167,26 @@
 
 - type: entity
   parent: [ ClothingOuterWinterCoatToggleable, BaseCentcommContraband ]
-  id: ClothingOuterWinterCentcom
+  id: ClothingOuterWinterCentcomm
   name: CentComm winter coat
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coat.rsi
     layers:
-    - state: CENTCOM-icon
+    - state: CENTCOMM-icon
   - type: Item
     inhandVisuals:
       left:
-      - state: CENTCOM-inhand-left
+      - state: CENTCOMM-inhand-left
       right:
-      - state: CENTCOM-inhand-right
+      - state: CENTCOMM-inhand-right
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coat.rsi
     clothingVisuals:
       outerClothing:
-      - state: CENTCOM-equipped-OUTERCLOTHING
+      - state: CENTCOMM-equipped-OUTERCLOTHING
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterCentcom
+    clothingPrototype: ClothingHeadHatHoodWinterCentcomm
 
 - type: entity
   parent: ClothingOuterWinterCoat

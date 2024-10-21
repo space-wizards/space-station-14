@@ -8,7 +8,7 @@ public enum MessageType : byte
     #region Player-sendable types
 
     /// <summary>
-    /// Chat for announcements like CentCom telling you to stop sending them memes.
+    /// Chat for announcements like CentComm telling you to stop sending them memes.
     /// </summary>
     Announcement,
     /// <summary>

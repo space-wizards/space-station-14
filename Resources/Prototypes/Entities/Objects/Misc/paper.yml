@@ -444,7 +444,7 @@
     - state: folder-base
 
 - type: entity
-  id: BoxFolderCentCom
+  id: BoxFolderCentComm
   name: CentComm folder
   parent: BoxFolderBase
   suffix: DO NOT MAP
@@ -452,7 +452,7 @@
   components:
   - type: Sprite
     layers:
-    - state: folder-centcom
+    - state: folder-centcomm
     - state: folder-base
 
 - type: entity
@@ -515,7 +515,7 @@
         Blunt: 6
 
 - type: entity
-  id: BoxFolderCentComClipboard
+  id: BoxFolderCentCommClipboard
   parent: BoxFolderClipboard
   name: CentComm clipboard
   description: A luxurious clipboard upholstered with green velvet. Often seen carried by CentComm officials, seldom seen actually used.
