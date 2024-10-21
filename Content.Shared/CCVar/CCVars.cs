@@ -452,6 +452,31 @@ namespace Content.Shared.CCVar
             CVarDef.Create("game.entity_menu_lookup", 0.25f, CVar.CLIENTONLY | CVar.ARCHIVE);
 
         /// <summary>
+        /// If true, substation decay will be enabled
+        /// </summary>
+        public static readonly CVarDef<bool> SubstationDecayEnabled =
+            CVarDef.Create("game.substation_decay_enabled", true, CVar.SERVER | CVar.REPLICATED);
+
+        /// <summary>
+        /// Timeout to substation decay
+        /// </summary>
+        public static readonly CVarDef<int> SubstationDecayTimeout =
+            CVarDef.Create("game.substation_decay_timeout", 300, CVar.SERVER | CVar.REPLICATED);
+
+        /// <summary>
+        /// Substation decay coefficient
+        /// </summary>
+        public static readonly CVarDef<float> SubstationDecayCoefficient =
+            CVarDef.Create("game.substation_decay_coefficient", 300000f, CVar.SERVER | CVar.REPLICATED);
+
+        /// <summary>
+        /// Substation decay timer
+        /// </summary>
+
+        public static readonly CVarDef<float> SubstationDecayTimer =
+            CVarDef.Create("game.substation_decay_timer", 0f, CVar.SERVER | CVar.REPLICATED);
+
+        /// <summary>
         /// Should the clients window show the server hostname in the title?
         /// </summary>
         public static readonly CVarDef<bool> GameHostnameInTitlebar =

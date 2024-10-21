@@ -151,6 +151,13 @@
     Plastic: 100
 
 - type: latheRecipe
+  id: GasTankNitrogenBooster
+  result: GasTankNitrogenBooster
+  completetime: 2
+  materials:
+    Steel: 200
+
+- type: latheRecipe
   id: FauxTileAstroGrass
   result: FloorTileItemAstroGrass
   completetime: 1
