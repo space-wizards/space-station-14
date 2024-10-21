@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "BeatusCrow",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "drop_pod_point"
+    },
+    {
+      "name": "drop_pod_point_brig"
+    },
+    {
+      "name": "drop_pod_point_cap"
+    },
+    {
+      "name": "drop_pod_point_cargo"
+    },
+    {
+      "name": "drop_pod_point_eng"
+    },
+    {
+      "name": "drop_pod_point_med"
+    },
+    {
+      "name": "drop_pod_point_rd"
+    },
+    {
+      "name": "drop_pod_point_sal"
+    },
+    {
+      "name": "drop_pod_lighthouse"
+    }
+  ]
+}
