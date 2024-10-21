@@ -1,18 +1,13 @@
-using System.Collections.Frozen;
-using System.Linq;
 using Content.Server.Chat.Systems;
 using Content.Server.Emp;
-using Content.Server.Interaction;
 using Content.Server.Radio.Components;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Radio;
 using Content.Shared.Radio.Components;
 using Content.Shared.Radio.EntitySystems;
-using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Radio.EntitySystems;
 
@@ -21,10 +16,6 @@ public sealed class HeadsetSystem : SharedHeadsetSystem
     [Dependency] private readonly INetManager _netMan = default!;
     [Dependency] private readonly RadioSystem _radio = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly InteractionSystem _interaction = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-
-    private FrozenDictionary<string, RadioChannelPrototype> _channels = default!;
 
     public override void Initialize()
     {
@@ -35,8 +26,6 @@ public sealed class HeadsetSystem : SharedHeadsetSystem
         SubscribeLocalEvent<WearingHeadsetComponent, EntitySpokeEvent>(OnSpeak);
 
         SubscribeLocalEvent<HeadsetComponent, EmpPulseEvent>(OnEmpPulse);
-
-        SubscribeLocalEvent<HeadsetComponent, GetVerbsEvent<Verb>>(OnGetVerbs);
     }
 
     private void OnKeysChanged(EntityUid uid, HeadsetComponent component, EncryptionChannelsChangedEvent args)
@@ -133,43 +122,5 @@ public sealed class HeadsetSystem : SharedHeadsetSystem
             args.Affected = true;
             args.Disabled = true;
         }
-    }
-
-    private void OnGetVerbs(EntityUid uid, HeadsetComponent component, ref GetVerbsEvent<Verb> args)
-    {
-        if (!args.CanInteract || args.Hands == null)
-            return;
-
-        if (!_interaction.InRangeUnobstructed(args.User, args.Target))
-            return;
-
-        if (!TryComp(uid, out EncryptionKeyHolderComponent? keyHolder))
-            return;
-
-        foreach ((var channel, var index) in keyHolder.Channels.Select(static (channel, index) => (channel, index)))
-        {
-            var name = _prototype.Index<RadioChannelPrototype>(channel).LocalizedName;
-
-            var toggled = component.ToggledSoundChannels.Contains(channel);
-
-            args.Verbs.Add(new()
-            {
-                Text = toggled ? $"[bold]{name}" : name,
-                Priority = index,
-                Category = VerbCategory.ToggleHeadsetSound,
-                Act = () => ToggleHeadsetSound((uid, component), channel, !toggled)
-            });
-        }
-    }
-
-    /// <summary>
-    /// Toggles channel on given headset to on or off.
-    /// </summary>
-    public static void ToggleHeadsetSound(Entity<HeadsetComponent> headset, string channel, bool on)
-    {
-        if (on)
-            headset.Comp.ToggledSoundChannels.Add(channel);
-        else
-            headset.Comp.ToggledSoundChannels.Remove(channel);
     }
 }
