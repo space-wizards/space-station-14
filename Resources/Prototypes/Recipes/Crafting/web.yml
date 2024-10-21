@@ -253,3 +253,19 @@
     sprite: Clothing/Neck/Scarfs/zebraweb.rsi
     state: icon
   objectType: Item
+
+- type: construction
+  name: web mantle
+  id: ClothingNeckMantleWeb
+  graph: WebObjects
+  startNode: start
+  targetNode: mantle
+  category: construction-category-clothing
+  description: "A soft silk mantle, made with similar weaving to the web winter coat. Gets dirty way too quickly."
+  entityWhitelist:
+    tags:
+    - SpiderCraft
+  icon:
+    sprite: Clothing/Neck/mantles/webmantle.rsi
+    state: icon
+  objectType: Item
