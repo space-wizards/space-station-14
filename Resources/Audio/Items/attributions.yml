@@ -139,3 +139,8 @@
   license: "CC0-1.0"
   copyright: "Created by dslrguide, converted to ogg and mono by Themias"
   source: "https://freesound.org/people/dslrguide/sounds/321484"
+
+- files: ["headset.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by Komti (Komti23), converted to ogg and mono by FN (FireNameFN)"
+  source: "https://github.com/space-wizards/space-station-14/pull/32936"
