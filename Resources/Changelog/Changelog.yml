@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Mervill
-  changes:
-  - message: Rotten Meat can be collected in trash bags and deleted by the recycler
-    type: Tweak
-  id: 7040
-  time: '2024-08-04T10:13:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30594
 - author: DrSmugleaf
   changes:
   - message: Fixed the client sometimes falsely showing the red color flash effect
@@ -3945,3 +3938,12 @@
   id: 7539
   time: '2024-10-20T03:41:44.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32422
+- author: Thatonestomf
+  changes:
+  - message: Mute toxin now mutes even after is metabolized, similar to glue
+    type: Tweak
+  - message: Mute toxin is now even more powerful at muting people
+    type: Tweak
+  id: 7540
+  time: '2024-10-21T03:43:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32915
