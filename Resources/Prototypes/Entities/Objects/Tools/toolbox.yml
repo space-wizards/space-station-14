@@ -70,35 +70,54 @@
     sprite: Objects/Tools/Toolboxes/toolbox_yellow.rsi
 
 - type: entity
-  name: electrical toolbox
-  suffix: Syndicate, Turret
-  parent: ToolboxElectrical
-  id: ToolboxElectricalTurret
-  description: A toolbox typically stocked with electrical gear.
+  abstract: true
+  id: ToolboxTurret
   components:
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 100
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
-      - trigger:
-          !type:DamageTrigger
-          damage: 1
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
-          - !type:SpawnEntitiesBehavior
-            spawn:
-              WeaponTurretSyndicateDisposable:
-                min: 1
-                max: 1
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 1
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          WeaponTurretSyndicateDisposable:
+            min: 1
+            max: 1
+  - type: DamageOnLand
+    damage:
+      types:
+        Blunt: 1
   - type: StaticPrice
     price: 1350
+
+- type: entity
+  parent: [ ToolboxEmergency, ToolboxTurret ]
+  id: ToolboxEmergencyTurret
+  suffix: Syndicate, Turret
+
+- type: entity
+  parent: [ ToolboxMechanical, ToolboxTurret ]
+  id: ToolboxMechanicalTurret
+  suffix: Syndicate, Turret
+
+- type: entity
+  parent: [ ToolboxElectrical, ToolboxTurret ]
+  id: ToolboxElectricalTurret
+  suffix: Syndicate, Turret
 
 - type: entity
   name: artistic toolbox
