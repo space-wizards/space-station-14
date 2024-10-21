@@ -13,6 +13,18 @@
       key_slots:
       - EncryptionKeyCommon
   - type: Headset
+    sound: /Audio/Effects/pop.ogg
+    soundChannels:
+    - CentCom
+    - Command
+    - Engineering
+    - Medical
+    - Science
+    - Security
+    - Service
+    - Supply
+    - Syndicate
+    - Freelance
   - type: EncryptionKeyHolder
     keySlots: 4
   - type: Sprite
@@ -86,6 +98,11 @@
       key_slots:
       - EncryptionKeyCentCom
       - EncryptionKeyStationMaster
+  - type: Headset
+    soundChannels:
+    - CentCom
+    - Command
+    - Syndicate
   - type: Sprite
     sprite: Clothing/Ears/Headsets/centcom.rsi
   - type: Clothing
@@ -101,6 +118,11 @@
     containers:
       key_slots:
       - EncryptionKeyStationMaster
+  - type: Headset
+    soundChannels:
+    - CentCom
+    - Command
+    - Syndicate
   - type: Sprite
     sprite: Clothing/Ears/Headsets/command.rsi
   - type: Clothing

@@ -36,6 +36,11 @@
       key_slots:
       - EncryptionKeyCentCom
       - EncryptionKeyStationMaster
+  - type: Headset
+    soundChannels:
+    - CentCom
+    - Command
+    - Syndicate
   - type: Sprite
     sprite: Clothing/Ears/Headsets/centcom.rsi
   - type: Clothing
@@ -50,6 +55,11 @@
     containers:
       key_slots:
       - EncryptionKeyStationMaster
+  - type: Headset
+    soundChannels:
+    - CentCom
+    - Command
+    - Syndicate
   - type: Sprite
     sprite: Clothing/Ears/Headsets/command.rsi
   - type: Clothing

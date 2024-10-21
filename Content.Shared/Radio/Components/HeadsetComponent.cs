@@ -1,4 +1,5 @@
 using Content.Shared.Inventory;
+using Robust.Shared.Audio;
 
 namespace Content.Shared.Radio.Components;
 
@@ -15,4 +16,10 @@ public sealed partial class HeadsetComponent : Component
 
     [DataField("requiredSlot")]
     public SlotFlags RequiredSlot = SlotFlags.EARS;
+
+    [DataField("sound")]
+    public SoundSpecifier Sound;
+
+    [DataField("soundChannels")]
+    public HashSet<string> SoundChannels = [];
 }
