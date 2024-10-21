@@ -17,6 +17,13 @@ namespace Content.Server.StationEvents.Events
     {
         [Dependency] private readonly ApcSystem _apcSystem = default!;
 
+        public override void Initialize()
+        {
+            base.Initialize();
+            SubscribeLocalEvent<PowerGridCheckNotifyComponent, ComponentStartup>(OnApcStartup);
+            SubscribeLocalEvent<PowerGridCheckNotifyComponent, ApcToggleMainBreakerAttemptEvent>(OnApcToggleMainBreaker);
+        }
+
         protected override void Started(EntityUid uid, PowerGridCheckRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
         {
             base.Started(uid, component, gameRule, args);
@@ -36,6 +43,58 @@ namespace Content.Server.StationEvents.Events
             RobustRandom.Shuffle(component.Powered);
 
             component.NumberPerSecond = Math.Max(1, (int)(component.Powered.Count / component.SecondsUntilOff)); // Number of APCs to turn off every second. At least one.
+
+        }
+
+        /// <summary>
+        /// Check if the entity should be affected by an existing
+        /// PowerGridCheckRuleComponent and if so, turns off the APC.
+        /// </summary>
+        private void OnApcStartup(EntityUid apcUid, PowerGridCheckNotifyComponent comp, ComponentStartup args)
+        {
+            if (!TryComp<ApcComponent>(apcUid, out var apcComp))
+            {
+                return;
+            }
+
+            PowerGridCheckRuleComponent? rule = GetRuleAffectingEntity(apcUid);
+            if (rule != null && apcComp.MainBreakerEnabled)
+            {
+                _apcSystem.ApcToggleBreaker(apcUid, apcComp);
+                rule.Unpowered.Add(apcUid);
+            }
+        }
+
+        private void OnApcToggleMainBreaker(EntityUid uid, PowerGridCheckNotifyComponent component, ref ApcToggleMainBreakerAttemptEvent args)
+        {
+            args.Cancelled |= GetRuleAffectingEntity(uid) != null;
+        }
+
+        /// <summary>
+        /// Returns the PowerGridCheckRuleComponent affecting the uid, or null if none
+        /// </summary>
+        private PowerGridCheckRuleComponent? GetRuleAffectingEntity(EntityUid uid)
+        {
+            if (!TryComp(uid, out TransformComponent? xform))
+            {
+                return null;
+            }
+
+            if (!TryComp<StationMemberComponent>(xform.GridUid, out var stationMemberComp))
+            {
+                return null;
+            }
+
+            var activeRules = AllEntityQuery<PowerGridCheckRuleComponent, ActiveGameRuleComponent>();
+            while (activeRules.MoveNext(out var _entity, out var powerGridRule, out var _activeGameRule))
+            {
+                if (stationMemberComp.Station == powerGridRule.AffectedStation)
+                {
+                    return powerGridRule;
+                }
+            }
+
+            return null;
         }
 
         protected override void Ended(EntityUid uid, PowerGridCheckRuleComponent component, GameRuleComponent gameRule, GameRuleEndedEvent args)
