@@ -100,7 +100,8 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 
         sprite.LayerSetVisible(DisposalUnitVisualLayers.Unanchored, state == VisualState.UnAnchored);
         sprite.LayerSetVisible(DisposalUnitVisualLayers.Base, state == VisualState.Anchored);
-        sprite.LayerSetVisible(DisposalUnitVisualLayers.OverlayFlush, state is VisualState.OverlayFlushing or VisualState.OverlayCharging);
+        sprite.LayerSetVisible(DisposalUnitVisualLayers.OverlayFlush, state is VisualState.OverlayFlushing);
+        sprite.LayerSetVisible(DisposalUnitVisualLayers.BaseCharging, state is VisualState.OverlayCharging);
 
         var chargingState = sprite.LayerMapTryGet(DisposalUnitVisualLayers.BaseCharging, out var chargingLayer)
             ? sprite.LayerGetState(chargingLayer)
@@ -128,10 +129,6 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
                             {
                                 // Play the flush animation
                                 new AnimationTrackSpriteFlick.KeyFrame(flushState, 0),
-                                // Return to base state (though, depending on how the unit is
-                                // configured we might get an appearance change event telling
-                                // us to go to charging state)
-                                new AnimationTrackSpriteFlick.KeyFrame(chargingState, (float) unit.FlushDelay.TotalSeconds)
                             }
                         },
                     }
@@ -152,8 +149,6 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
                 _animationSystem.Play(uid, anim, AnimationKey);
             }
         }
-        else if (state == VisualState.OverlayCharging)
-            sprite.LayerSetState(DisposalUnitVisualLayers.OverlayFlush, chargingState);
         else
             _animationSystem.Stop(uid, AnimationKey);
 
