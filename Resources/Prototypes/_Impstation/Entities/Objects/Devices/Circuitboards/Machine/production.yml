@@ -1,0 +1,11 @@
+- type: entity
+  id: MiniGyroscopeMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: mini gyroscope machine board
+  components:
+  - type: MachineBoard
+    prototype: MiniGyroscope
+    stackRequirements:
+      Manipulator: 1
+      Capacitor: 1
+      Glass: 2

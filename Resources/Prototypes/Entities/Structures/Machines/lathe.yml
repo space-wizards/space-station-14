@@ -201,6 +201,8 @@
       - ClothingHeadHatCone
       - FreezerElectronics
       - Flare
+    dynamicRecipes:
+      - Fulton
   - type: EmagLatheRecipes
     emagStaticRecipes:
       - BoxLethalshot
@@ -291,6 +293,7 @@
       - PowerDrill
       - MiningDrill
       - MiningDrillDiamond
+      - FultonBeacon
       - AnomalyScanner
       - AnomalyLocator
       - AnomalyLocatorWide
@@ -507,6 +510,7 @@
       - EmitterCircuitboard
       - ThrusterMachineCircuitboard
       - GyroscopeMachineCircuitboard
+      - MiniGyroscopeMachineCircuitboard
       - MiniGravityGeneratorCircuitboard
       - ShuttleGunKineticCircuitboard
       - GasRecyclerMachineCircuitboard

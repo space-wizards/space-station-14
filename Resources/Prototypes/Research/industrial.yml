@@ -136,6 +136,7 @@
   - ShuttleConsoleCircuitboard
   - ThrusterMachineCircuitboard
   - GyroscopeMachineCircuitboard
+  - MiniGyroscopeMachineCircuitboard
   - MiniGravityGeneratorCircuitboard
 
 - type: technology
@@ -171,8 +172,8 @@
     - BorgModuleRCD
 
 - type: technology
-  id: MassExcavation
-  name: research-technology-excavation
+  id: AdvancedSalvage
+  name: research-technology-advanced-salvage
   icon:
     sprite: Objects/Tools/handdrilldiamond.rsi
     state: handdrill
@@ -183,6 +184,8 @@
     - OreBagOfHolding
     - MiningDrillDiamond
     - AdvancedMineralScannerEmpty
+    - Fulton
+    - FultonBeacon
 
 # Tier 3
 
