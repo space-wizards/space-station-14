@@ -29,11 +29,11 @@
   An example of a pipenet being seperated into two, distinct pipenets by a pump is shown below:
 
   <Box>
-    <GuideEntityEmbed Entity="PipeStraight" Caption="Pipenet 1" Rotation="90"/>
-    <GuideEntityEmbed Entity="PipeStraight" Caption="" Rotation="90"/>
-    <GuideEntityEmbed Entity="GasPressurePump" Caption="Network Seperator" Rotation="270"/>
-    <GuideEntityEmbed Entity="PipeStraight" Caption="" Rotation="90"/>
-    <GuideEntityEmbed Entity="PipeStraight" Caption="Pipenet 2" Rotation="90"/>
+    <GuideEntityEmbed Entity="GasPipeStraight" Caption="Pipenet 1" Rotation="90"/>
+    <GuideEntityEmbed Entity="GasPipeStraight" Caption="" Rotation="90"/>
+    <GuideEntityEmbed Entity="GasPressurePump" Caption="Network Seperator" Rotation="90"/>
+    <GuideEntityEmbed Entity="GasPipeStraight" Caption="" Rotation="90"/>
+    <GuideEntityEmbed Entity="GasPipeStraight" Caption="Pipenet 2" Rotation="90"/>
   </Box>
 
 </Document>
