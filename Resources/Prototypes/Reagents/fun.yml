@@ -380,12 +380,3 @@
       effects:
       - !type:SatiateHunger
         factor: 0.5
-    Poison:
-      - !type:Emote
-        emote: Monkey Screeches
-        showInChat: false
-        force: true
-        probability: 0.1
-        conditions:
-        - !type:ReagentThreshold
-          min: 30
