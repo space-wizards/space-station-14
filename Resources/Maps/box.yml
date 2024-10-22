@@ -13277,8 +13277,6 @@ entities:
       pos: -11.5,-68.5
       parent: 8364
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 26707
   - uid: 14486
@@ -110605,8 +110603,6 @@ entities:
       pos: -15.5,-68.5
       parent: 8364
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 26707
     - type: AtmosPipeColor
@@ -112070,8 +112066,6 @@ entities:
       pos: -13.5,-69.5
       parent: 8364
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 26707
   - uid: 7284
