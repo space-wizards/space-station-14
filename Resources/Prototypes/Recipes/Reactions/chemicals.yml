@@ -576,11 +576,11 @@
   impact: Medium
   minTemp: 418.6
   reactants:
-    Hydrogen:
-      amount: 0.5
+    Silver:
+      amount: 1
     Ethanol:
-      amount: 0.5
+      amount: 1
     Oxygen:
       amount: 1
   products:
-    Formaldehyde: 2
+    Formaldehyde: 3
