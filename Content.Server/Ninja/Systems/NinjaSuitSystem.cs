@@ -22,6 +22,9 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
+    // How much the cell score should be increased per 1 AutoRechargeRate.
+    private const int AutoRechargeValue = 100;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -93,7 +96,7 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
         // if a cell is able to automatically recharge, boost the score drastically depending on the recharge rate,
         // this is to ensure a ninja can still upgrade to a micro reactor cell even if they already have a medium or high.
         if (TryComp<BatterySelfRechargerComponent>(uid, out var selfcomp) && selfcomp.AutoRecharge)
-            return battcomp.MaxCharge + (selfcomp.AutoRechargeRate*100);
+            return battcomp.MaxCharge + (selfcomp.AutoRechargeRate*AutoRechargeValue);
         return battcomp.MaxCharge;
     }
 
