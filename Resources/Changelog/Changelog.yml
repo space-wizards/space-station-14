@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: The biogenerator has been recolored and renamed to the "biocube fabricator."
-    type: Tweak
-  id: 7048
-  time: '2024-08-06T10:51:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30696
 - author: Errant
   changes:
   - message: Vox can be nukies and ninjas again.
@@ -3949,3 +3942,18 @@
   id: 7547
   time: '2024-10-22T17:01:19.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32441
+- author: BramvanZijp
+  changes:
+  - message: The Space Ninja Suit will now give an error popup if you are trying to
+      install a cell that is not better compared to the current cell.
+    type: Add
+  - message: When comparing which power cell is better when trying to swap them, the
+      Space Ninja's Suit will now also consider if the power cells have self-recharge
+      capability.
+    type: Tweak
+  - message: You can no longer fit weapons-grade power cages into the space ninja
+      suit.
+    type: Fix
+  id: 7548
+  time: '2024-10-22T23:36:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32902
