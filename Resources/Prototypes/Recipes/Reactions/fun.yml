@@ -206,7 +206,7 @@
   id: MonkeyPowder
   impact: Low
   reactants:
-    Blood:
+    Protein:
       amount: 2
     Nutriment:
       amount: 2
@@ -227,8 +227,8 @@
   - !type:CreateGas
     gas: Oxygen
   products:
-    Carbon: 0.25
-    Water: 0.45
+    Carbon: 0.2
+    Water: 0.5
 
 - type: reaction
   id: MonkeyCreation
