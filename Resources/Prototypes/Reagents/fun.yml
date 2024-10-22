@@ -374,9 +374,13 @@
   desc: reagent-desc-monkey-powder
   group: Special
   physicalDesc: reagent-physical-desc-powdery
+  flavor: horrible
   color: "#964B00"
   metabolisms:
     Food:
       effects:
       - !type:SatiateHunger
-        factor: 0.5
+        conditions:
+        - !type:OrganType
+          type: Animal
+          shouldHave: false
