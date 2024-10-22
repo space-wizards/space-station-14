@@ -139,11 +139,17 @@
   text: "/ServerInfo/Guidebook/Engineering/AtmosphericsSystems.xml"
   children:
   - PipeNetworks
+  - DeviceMonitoringAndControl
 
 - type: guideEntry
   id: PipeNetworks
   name: guide-entry-pipenetworks
   text: "/ServerInfo/Guidebook/Engineering/PipeNetworks.xml"
+
+- type: guideEntry
+  id: DeviceMonitoringAndControl
+  name: guide-entry-devicemonitoringandcontrol
+  text: "/ServerInfo/Guidebook/Engineering/DeviceMonitoringAndControl.xml"
 
 - type: guideEntry
   id: ShuttleCraft
