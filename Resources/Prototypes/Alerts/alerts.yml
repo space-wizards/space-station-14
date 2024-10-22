@@ -13,6 +13,7 @@
     - alertType: Ensnared
     - category: Buckled
     - alertType: Pulling
+    - alertType: Walking
     - category: Piloting
     - alertType: Corporeal
     - alertType: Stun
@@ -125,6 +126,12 @@
   icons: [ /Textures/Interface/Alerts/Weightless/weightless.png ]
   name: alerts-weightless-name
   description: alerts-weightless-desc
+
+- type: alert
+  id: Walking
+  icons: [ /Textures/Interface/Alerts/Walking/walking.png ]
+  name: alerts-walking-name
+  description: alerts-walking-desc
 
 - type: alert
   id: Stun
