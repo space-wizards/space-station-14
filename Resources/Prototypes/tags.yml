@@ -618,6 +618,12 @@
   id: FirelockElectronics
 
 - type: Tag
+  id: FireExtinguisher
+
+- type: Tag
+  id: FireHelmet
+
+- type: Tag
   id: Flare
 
 - type: Tag
@@ -982,10 +988,16 @@
   id: NoBlockAnchoring
 
 - type: Tag
+  id: NoConsoleSound
+
+- type: Tag
   id: NozzleBackTank
 
 - type: Tag
   id: Nugget # for chicken nuggets
+
+- type: Tag
+  id: FakeNukeDisk
 
 - type: Tag
   id: NukeOpsUplink
@@ -1171,7 +1183,7 @@
 - type: Tag
   id: SecureWindoor
 
-- type: Tag  
+- type: Tag
   id: SecurityHelmet
 
 - type: Tag

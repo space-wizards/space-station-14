@@ -20,6 +20,7 @@ using Content.Shared.Ghost;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Players;
+using Content.Shared.Players.RateLimiting;
 using Content.Shared.Radio;
 using Content.Shared.Whitelist;
 using Robust.Server.Player;
@@ -748,14 +749,15 @@ public sealed partial class ChatSystem : SharedChatSystem
         var newMessage = message.Trim();
         newMessage = SanitizeMessageReplaceWords(newMessage);
 
+        // Sanitize it first as it might change the word order
+        _sanitizer.TrySanitizeEmoteShorthands(newMessage, source, out newMessage, out emoteStr);
+
         if (capitalize)
             newMessage = SanitizeMessageCapital(newMessage);
         if (capitalizeTheWordI)
             newMessage = SanitizeMessageCapitalizeTheWordI(newMessage, "i");
         if (punctuate)
             newMessage = SanitizeMessagePeriod(newMessage);
-
-        _sanitizer.TrySanitizeOutSmilies(newMessage, source, out newMessage, out emoteStr);
 
         return newMessage;
     }
