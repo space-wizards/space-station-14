@@ -570,3 +570,16 @@
       amount: 1
   products:
     HydrogenPeroxide: 2
+
+- type: reaction
+  id: Formaldehyde
+  impact: Low
+  reactants:
+    Carbon:
+      amount: 1
+    Hydrogen:
+      amount: 2
+    Oxygen:
+      amount: 1
+  products:
+    Formaldehyde: 3
