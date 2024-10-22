@@ -592,25 +592,25 @@
 
 - type: entity
   parent: ClothingMaskClownBase
-  id: ClothingMaskSexyClown
-  name: sexy clown mask
-  description: Some naughty clowns think this is what the Honkmother looks like.
+  id: ClothingMaskBlushClown
+  name: blushing clown mask
+  description: Some clowns think this is what the Honkmother looks like.
   components:
   - type: Sprite
-    sprite: Clothing/Mask/sexyclown.rsi
+    sprite: Clothing/Mask/blushclown.rsi
   - type: Clothing
-    sprite: Clothing/Mask/sexyclown.rsi
+    sprite: Clothing/Mask/blushclown.rsi
 
 - type: entity
   parent: ClothingMaskMime
-  id: ClothingMaskSexyMime
-  name: sexy mime mask
-  description: Those ruddy cheeks just want to be rubbed.
+  id: ClothingMaskBlushMime
+  name: blushing mime mask
+  description: Those ruddy cheeks belie the malice emanating from this mask.
   components:
   - type: Sprite
-    sprite: Clothing/Mask/sexymime.rsi
+    sprite: Clothing/Mask/blushmime.rsi
   - type: Clothing
-    sprite: Clothing/Mask/sexymime.rsi
+    sprite: Clothing/Mask/blushmime.rsi
 
 - type: entity
   parent: ClothingMaskMime
