@@ -69,9 +69,10 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
         }
 
         var user = Transform(uid).ParentUid;
+        EntityUid insertingUid = args.EntityUid; // Required to avoid an error.
 
         // can only upgrade power cell, not swap to recharge instantly otherwise ninja could just swap batteries with flashlights in maints for easy power
-        if (GetCellScore(args.EntityUid, inserting) <= GetCellScore(batteryUid, battery))
+        if (GetCellScore(inserting.Owner, inserting) <= GetCellScore(battery.Owner, battery))
         {
             args.Cancel();
             Popup.PopupEntity(Loc.GetString("ninja-cell-downgrade"), user, user);
@@ -88,7 +89,7 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
     }
 
     // this function assigns a score to a power cell depending on the capacity, to be used when comparing which cell is better.
-    private float GetCellScore(EntityUid? uid, BatteryComponent battcomp)
+    private float GetCellScore(EntityUid uid, BatteryComponent battcomp)
     {
         // if a cell is able to automatically recharge, boost the score drastically depending on the recharge rate,
         // this is to ensure a ninja can still upgrade to a micro reactor cell even if they already have a medium or high.
