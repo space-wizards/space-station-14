@@ -246,28 +246,24 @@ namespace Content.Client.Construction.UI
 
                     itemButton.OnToggled += buttonToggledEventArgs =>
                     {
-                        if (_selected is null)
-                            SelectGridButton(itemButton, buttonToggledEventArgs.Pressed);
-                        else
+                        SelectGridButton(itemButton, buttonToggledEventArgs.Pressed);
+
+                        if (buttonToggledEventArgs.Pressed &&
+                            _selected != null &&
+                            _recipeButtons.TryGetValue(_selected.Name, out var oldButton))
                         {
-                            SelectGridButton(itemButton, true);
-                            if (_recipeButtons.TryGetValue(_selected.Name, out var oldButton))
-                            {
-                                oldButton.Pressed = false;
-                                SelectGridButton(oldButton, false);
-                                if (_selected == recipe)
-                                {
-                                    OnGridViewRecipeSelected(this, null);
-                                    return;
-                                }
-                            }
+                            oldButton.Pressed = false;
+                            SelectGridButton(oldButton, false);
                         }
+
                         OnGridViewRecipeSelected(this, buttonToggledEventArgs.Pressed ? recipe : null);
                     };
 
                     recipesGrid.AddChild(itemButtonPanelContainer);
                     _recipeButtons[recipe.Name] = itemButton;
-                    SelectGridButton(itemButton, _selected == recipe);
+                    var isCurrentButtonSelected = _selected == recipe;
+                    itemButton.Pressed = isCurrentButtonSelected;
+                    SelectGridButton(itemButton, isCurrentButtonSelected);
                 }
             }
             else
