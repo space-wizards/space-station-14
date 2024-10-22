@@ -577,10 +577,11 @@
   minTemp: 418.6
   reactants:
     Silver:
-      amount: 0.5
+      amount: 1
     Ethanol:
       amount: 1
-    Oxygen:
+      catalyst: true
+    Carbon:
       amount: 1
   products:
     Formaldehyde: 3
