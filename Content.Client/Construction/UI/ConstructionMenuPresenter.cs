@@ -30,7 +30,6 @@ namespace Content.Client.Construction.UI
         [Dependency] private readonly IPlacementManager _placementManager = default!;
         [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly SpriteSystem _spriteSystem = default!;
 
         private readonly IConstructionMenuView _constructionView;
         private readonly EntityWhitelistSystem _whitelistSystem;
@@ -224,13 +223,15 @@ namespace Content.Client.Construction.UI
             _constructionView.RecipesGridScrollContainer.Visible = _constructionView.GridViewButtonPressed;
             _constructionView.Recipes.Visible = !_constructionView.GridViewButtonPressed;
 
+            var spriteSystem = _systemManager.GetEntitySystem<SpriteSystem>();
+
             if (_constructionView.GridViewButtonPressed)
             {
                 foreach (var recipe in recipes)
                 {
                     var itemButton = new TextureButton
                     {
-                        TextureNormal = _spriteSystem.Frame0(recipe.Icon),
+                        TextureNormal = spriteSystem.Frame0(recipe.Icon),
                         VerticalAlignment = Control.VAlignment.Center,
                         Name = recipe.Name,
                         ToolTip = recipe.Name,
