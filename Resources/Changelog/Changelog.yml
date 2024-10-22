@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Cojoke-dot
-  changes:
-  - message: Mice can now use combat mode with a 0 damage attack
-    type: Tweak
-  id: 7043
-  time: '2024-08-05T03:26:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30487
 - author: TheShuEd
   changes:
   - message: Nanotrasen has introduced recruitment rules. Characters under the age
@@ -3946,3 +3939,17 @@
   id: 7542
   time: '2024-10-21T12:44:43.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32929
+- author: Southbridge
+  changes:
+  - message: Box Station's window between the containment room and TEG has been upgraded
+      to plasma.
+    type: Fix
+  - message: Box Station's Engineering storage room air alarm has been properly connected
+      to nearby devices.
+    type: Fix
+  - message: Box Station's Janitorial disposal chute has been replaced with a working
+      one.
+    type: Fix
+  id: 7543
+  time: '2024-10-22T05:39:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32950
