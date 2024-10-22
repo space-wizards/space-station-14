@@ -69,7 +69,6 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
         }
 
         var user = Transform(uid).ParentUid;
-        EntityUid insertingUid = args.EntityUid; // Required to avoid an error.
 
         // can only upgrade power cell, not swap to recharge instantly otherwise ninja could just swap batteries with flashlights in maints for easy power
         if (GetCellScore(inserting.Owner, inserting) <= GetCellScore(battery.Owner, battery))
