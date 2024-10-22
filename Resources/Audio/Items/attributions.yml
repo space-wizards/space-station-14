@@ -142,5 +142,5 @@
 
 - files: ["headset.ogg"]
   license: "CC0-1.0"
-  copyright: "Created by Komti (Komti23), converted to ogg and mono by FN (FireNameFN)"
+  copyright: "Created by Komti (Komti23), converted to ogg by FN (FireNameFN)"
   source: "https://github.com/space-wizards/space-station-14/pull/32936"
