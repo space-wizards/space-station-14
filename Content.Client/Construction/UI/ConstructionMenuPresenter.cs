@@ -30,6 +30,7 @@ namespace Content.Client.Construction.UI
         [Dependency] private readonly IPlacementManager _placementManager = default!;
         [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly SpriteSystem _spriteSystem = default!;
 
         private readonly IConstructionMenuView _constructionView;
         private readonly EntityWhitelistSystem _whitelistSystem;
@@ -227,11 +228,9 @@ namespace Content.Client.Construction.UI
             {
                 foreach (var recipe in recipes)
                 {
-                    var item = GetItem(recipe, recipesList);
-
                     var itemButton = new TextureButton
                     {
-                        TextureNormal = item.Icon,
+                        TextureNormal = _spriteSystem.Frame0(recipe.Icon),
                         VerticalAlignment = Control.VAlignment.Center,
                         Name = recipe.Name,
                         ToolTip = recipe.Name,
