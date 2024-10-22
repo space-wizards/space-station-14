@@ -1,0 +1,23 @@
+﻿<Document>
+  # Device Monitoring and Control
+  In previous sections, we've discussed Air Vents and Air Scrubbers, and how they can be used to manage the atmosphere in a given area.
+
+  While their default behavior is often sufficient, it is often desirable to have more control over these devices, especially multiple devices over a large area. This is where the Air Alarm comes in.
+
+  <Box>
+    <GuideEntityEmbed Entity="AirAlarm"/>
+  </Box>
+
+  The Air Alarm is a device that enables central monitoring and control over all relevant Atmos devices linked to it. Using the Air Alarm, Atmos can quickly and efficiently manage the atmosphere in a given area.
+
+  ## Linking Devices
+  You can link devices to an Air Alarm by using either a Multitool or Network Configurator in List mode. Click on the device you want to link to save it to the tool, and then click on the air alarm to bring up the linking menu. The linking menu has multiple options:
+  - Set: Overwrites the current list of linked devices with the devices saved on the tool.
+  - Add: Adds the devices saved on the tool to the current list of linked devices.
+  - Clear: Removes all linked devices from the air alarm.
+  - Copy: Copies the list of currently linked devices to the tool.
+  - Show: Draws a line between the air alarm and all linked devices. This is useful for visualizing the area the air alarm covers.
+
+  If you need to clear your tool, you can press (replace with fancy interact control key puller) on the tool to bring up a list of saved devices, and then press the "Clear" button.
+
+</Document>
