@@ -1,17 +1,4 @@
 ﻿Entries:
-- author: SlamBamActionman, PolarTundra
-  changes:
-  - message: Thief's Syndie Kit now comes with a Radio Jammer, a lighter and a Syndicate
-      codeword.
-    type: Add
-  - message: Thief's Agent ID has been moved from the Syndie Kit to the Chameleon
-      Kit.
-    type: Tweak
-  - message: The Syndicate pAI has been removed from the Thief's Syndie Kit.
-    type: Remove
-  id: 7046
-  time: '2024-08-05T08:03:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30446
 - author: EmoGarbage404
   changes:
   - message: Being cold now slows down your character.
@@ -3952,3 +3939,13 @@
   id: 7545
   time: '2024-10-22T13:03:42.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32112
+- author: ScarKy0, Fildrance
+  changes:
+  - message: Using an intellicard on the AI core now swaps the AI between the core
+      and intellicard. (You can evac with the AI!)
+    type: Add
+  - message: Added an intellicard to the RD's locker.
+    type: Add
+  id: 7546
+  time: '2024-10-22T13:49:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32347
