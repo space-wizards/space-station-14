@@ -1,6 +1,6 @@
 using Content.Shared.ReadyManifest;
 
-namespace Content.Client.ReadyManifest;
+namespace Content.Client._Impstation.ReadyManifest;
 
 public sealed class ReadyManifestSystem : EntitySystem
 {

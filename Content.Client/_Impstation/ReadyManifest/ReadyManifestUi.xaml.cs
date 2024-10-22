@@ -11,7 +11,7 @@ using Robust.Client.Utility;
 using Robust.Shared.Player;
 
 
-namespace Content.Client.ReadyManifest;
+namespace Content.Client._Impstation.ReadyManifest;
 
 
 [GenerateTypedNameReferences]

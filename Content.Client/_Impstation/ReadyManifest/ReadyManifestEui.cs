@@ -3,7 +3,7 @@ using Content.Shared.Eui;
 using Content.Shared.ReadyManifest;
 using JetBrains.Annotations;
 
-namespace Content.Client.ReadyManifest;
+namespace Content.Client._Impstation.ReadyManifest;
 
 [UsedImplicitly]
 public sealed class ReadyManifestEui : BaseEui
