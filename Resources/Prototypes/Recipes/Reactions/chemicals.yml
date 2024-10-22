@@ -542,7 +542,7 @@
     Mercury:
       amount: 1
   products:
-    BathSalts: 5
+    BathSalts: 3
 
 - type: reaction
   id: Cyanide
@@ -574,12 +574,15 @@
 - type: reaction
   id: Formaldehyde
   impact: Low
+  minTemp: 418.6
   reactants:
+    Hydrogen:
+      amount: 1.5
     Carbon:
       amount: 1
-    Hydrogen:
-      amount: 2
+    Ethanol:
+      amount: 0.5
     Oxygen:
       amount: 1
   products:
-    Formaldehyde: 3
+    Formaldehyde: 2.5
