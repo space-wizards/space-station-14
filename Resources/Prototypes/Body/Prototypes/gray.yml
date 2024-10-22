@@ -8,8 +8,10 @@
       connections:
       - torso
       organs:
-        brain: OrganHumanBrain
-        eyes: OrganHumanEyes
+        brain: OrganGrayBrain
+        eyes: OrganGrayEyes
+        ears: OrganGrayEars
+        tongue: OrganGrayTongue
     torso:
       part: TorsoGray
       connections:
@@ -18,11 +20,12 @@
       - right_leg
       - left_leg
       organs:
-        heart: OrganHumanHeart
-        lungs: OrganHumanLungs
-        stomach: OrganHumanStomach
-        liver: OrganHumanLiver
-        kidneys: OrganHumanKidneys
+        heart: OrganGrayHeart
+        lungs: OrganGrayLungs
+        stomach: OrganGrayStomach
+        liver: OrganGrayLiver
+        kidneys: OrganGrayKidneys
+        appendix: OrganGrayAppendix
     right_arm:
       part: RightArmGray
       connections:
