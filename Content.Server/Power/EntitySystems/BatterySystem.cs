@@ -114,6 +114,11 @@ namespace Content.Server.Power.EntitySystems
         {
             args.Affected = true;
             UseCharge(uid, args.EnergyConsumption, component);
+            // Apply a cooldown to the entity's self recharge if needed to avoid it immediately self recharging after an EMP.
+            if (TryComp<BatterySelfRechargerComponent>(uid, out var batterySelfRechargerComponent))
+                if (batterySelfRechargerComponent.AutoRechargePause && batterySelfRechargerComponent.AutoRechargePauseTime > 0)
+                    if (args.EnergyConsumption > 0 && batterySelfRechargerComponent.AutoRechargePauseTime > batterySelfRechargerComponent.AutoRechargeCooldown)
+                        SetChargeCooldown(uid, batterySelfRechargerComponent.AutoRechargePauseTime, batterySelfRechargerComponent);
         }
 
         public float UseCharge(EntityUid uid, float value, BatteryComponent? battery = null)
@@ -125,11 +130,11 @@ namespace Content.Server.Power.EntitySystems
             var delta = newValue - battery.CurrentCharge;
             battery.CurrentCharge = newValue;
 
-            if (TryComp<BatterySelfRechargerComponent>(uid, out var batterySelfRechargerComponent)){
-                if (batterySelfRechargerComponent.AutoRechargePause && batterySelfRechargerComponent.AutoRechargePauseTime > 0 && value > 0) {
-                    SetChargeCooldown(uid, Math.Clamp(batterySelfRechargerComponent.AutoRechargeCooldown, batterySelfRechargerComponent.AutoRechargePauseTime, 9999), batterySelfRechargerComponent);
-                }
-            }
+            // Apply a cooldown to the entity's self recharge if needed.
+            if (TryComp<BatterySelfRechargerComponent>(uid, out var batterySelfRechargerComponent))
+                if (batterySelfRechargerComponent.AutoRechargePause && batterySelfRechargerComponent.AutoRechargePauseTime > 0)
+                    if (value > 0 && batterySelfRechargerComponent.AutoRechargePauseTime > batterySelfRechargerComponent.AutoRechargeCooldown)
+                        SetChargeCooldown(uid, batterySelfRechargerComponent.AutoRechargePauseTime, batterySelfRechargerComponent);
 
             var ev = new ChargeChangedEvent(battery.CurrentCharge, battery.MaxCharge);
             RaiseLocalEvent(uid, ref ev);
@@ -166,13 +171,19 @@ namespace Content.Server.Power.EntitySystems
             RaiseLocalEvent(uid, ref ev);
         }
 
+        /// <summary>
+        /// Puts the entity's self recharge on cooldown for the specified time.
+        /// </summary>
         public void SetChargeCooldown(EntityUid uid, float value, BatterySelfRechargerComponent? batteryself = null)
         {
             if (!Resolve(uid, ref batteryself))
                 return;
 
             var old = batteryself.AutoRechargeCooldown;
-            batteryself.AutoRechargeCooldown = Math.Clamp(value, 0, 9999);
+            if (value => 0)
+                batteryself.AutoRechargeCooldown = value;
+            else
+                batteryself.AutoRechargeCooldown = 0;
         }
 
         /// <summary>

@@ -105,6 +105,7 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
             if (!_prototypeManager.TryIndex<EntityPrototype>(fireMode.Prototype, out var prototype))
                 return;
 
+            // TODO: Have this get the info directly from the batteryComponent when power is moved to shared.
             var OldFireCost = projectileBatteryAmmoProviderComponent.FireCost;
             projectileBatteryAmmoProviderComponent.Prototype = fireMode.Prototype;
             projectileBatteryAmmoProviderComponent.FireCost = fireMode.FireCost;
