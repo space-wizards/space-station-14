@@ -580,7 +580,6 @@
       amount: 1
     Ethanol:
       amount: 1
-      catalyst: true
     Carbon:
       amount: 1
   products:
