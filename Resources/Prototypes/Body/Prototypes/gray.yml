@@ -12,6 +12,7 @@
         eyes: OrganGrayEyes
         ears: OrganGrayEars
         tongue: OrganGrayTongue
+        lungs: OrganGrayLungs
     torso:
       part: TorsoGray
       connections:
@@ -21,7 +22,6 @@
       - left_leg
       organs:
         heart: OrganGrayHeart
-        lungs: OrganGrayLungs
         stomach: OrganGrayStomach
         liver: OrganGrayLiver
         kidneys: OrganGrayKidneys
