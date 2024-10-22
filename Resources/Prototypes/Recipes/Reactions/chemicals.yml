@@ -577,7 +577,7 @@
   minTemp: 418.6
   reactants:
     Silver:
-      amount: 1
+      amount: 0.5
     Ethanol:
       amount: 1
     Oxygen:
