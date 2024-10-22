@@ -534,32 +534,32 @@
     layers:
     - state: body-icon
     - state: cuffcrown-icon
-      color: "#eb0c07"
+      color: "#c70000"
     - state: pompom-icon
-      color: "#eb0c07"
+      color: "#c70000"
   - type: Item
     inhandVisuals:
       left:
       - state: body-inhand-left
       - state: cuffcrown-inhand-left
-        color: "#eb0c07"
+        color: "#c70000"
       - state: pompom-inhand-left
-        color: "#eb0c07"
+        color: "#c70000"
       right:
       - state: body-inhand-right
       - state: cuffcrown-inhand-right
-        color: "#eb0c07"
+        color: "#c70000"
       - state: pompom-inhand-right
-        color: "#eb0c07"
+        color: "#c70000"
   - type: Clothing
     sprite: Clothing/Head/Hats/beanie.rsi
     clothingVisuals:
       head:
       - state: body-equipped-HELMET
       - state: cuffcrown-equipped-HELMET
-        color: "#eb0c07"
+        color: "#c70000"
       - state: pompom-equipped-HELMET
-        color: "#eb0c07"
+        color: "#c70000"
 
 - type: entity
   parent: ClothingHeadHatWizardBase
