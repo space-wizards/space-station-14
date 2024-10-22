@@ -573,16 +573,14 @@
 
 - type: reaction
   id: Formaldehyde
-  impact: Low
+  impact: Medium
   minTemp: 418.6
   reactants:
     Hydrogen:
-      amount: 1.5
-    Carbon:
-      amount: 1
+      amount: 0.5
     Ethanol:
       amount: 0.5
     Oxygen:
       amount: 1
   products:
-    Formaldehyde: 2.5
+    Formaldehyde: 2
