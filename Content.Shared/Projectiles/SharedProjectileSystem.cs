@@ -87,26 +87,26 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         EnsureComp<HasProjectilesEmbeddedComponent>(target, out var embeddeds);
         embeddeds.EmbeddedProjectiles.Add(projectile);
 
-        var (uid, component) = projectile;
+        TryComp<PhysicsComponent>(projectile, out var physics);
+        _physics.SetLinearVelocity(projectile, Vector2.Zero, body: physics);
+        _physics.SetBodyType(projectile, BodyType.Static, body: physics);
+        var xform = Transform(projectile);
+        _transform.SetParent(projectile, xform, target);
 
-        TryComp<PhysicsComponent>(uid, out var physics);
-        _physics.SetLinearVelocity(uid, Vector2.Zero, body: physics);
-        _physics.SetBodyType(uid, BodyType.Static, body: physics);
-        var xform = Transform(uid);
-        _transform.SetParent(uid, xform, target);
-
-        if (component.Offset != Vector2.Zero)
+        if (projectile.Comp.Offset != Vector2.Zero)
         {
             var rotation = xform.LocalRotation;
-            if (TryComp<ThrowingAngleComponent>(uid, out var throwingAngleComp))
+            if (TryComp<ThrowingAngleComponent>(projectile, out var throwingAngleComp))
                 rotation += throwingAngleComp.Angle;
-            _transform.SetLocalPosition(uid, xform.LocalPosition + rotation.RotateVec(component.Offset),
+            _transform.SetLocalPosition(projectile, xform.LocalPosition + rotation.RotateVec(projectile.Comp.Offset),
                 xform);
         }
 
-        _audio.PlayPredicted(component.Sound, uid, null);
+        _audio.PlayPredicted(projectile.Comp.Sound, projectile, null);
+        projectile.Comp.EmbeddedIntoUid = target;
         var ev = new EmbedEvent(user, target);
-        RaiseLocalEvent(uid, ref ev);
+        RaiseLocalEvent(projectile, ref ev);
+        Dirty(projectile);
     }
 
     /// <summary>
@@ -143,6 +143,8 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         TryComp<PhysicsComponent>(entity, out var physics);
         _physics.SetBodyType(entity, BodyType.Dynamic, body: physics, xform: xform);
         _transform.AttachToGridOrMap(entity, xform);
+        entity.Comp.EmbeddedIntoUid = null;
+        Dirty(entity);
 
         // Reset whether the projectile has damaged anything if it successfully was removed
         if (TryComp<ProjectileComponent>(entity, out var projectile))
