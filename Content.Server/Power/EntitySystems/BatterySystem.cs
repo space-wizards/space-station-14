@@ -177,7 +177,7 @@ namespace Content.Server.Power.EntitySystems
                 return;
 
             var old = batteryself.AutoRechargeCooldown;
-            if (value => 0)
+            if (value >= 0)
                 batteryself.AutoRechargeCooldown = value;
             else
                 batteryself.AutoRechargeCooldown = 0;
