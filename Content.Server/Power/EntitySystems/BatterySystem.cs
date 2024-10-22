@@ -85,9 +85,6 @@ namespace Content.Server.Power.EntitySystems
             {
                 if (!comp.AutoRecharge) continue;
                 if (batt.IsFullyCharged) {
-                    if (batt.CurrentCharge < batt.MaxCharge){
-                        SetCharge(uid, batt.MaxCharge, batt);
-                    }
                     continue;
                 }
                 if (comp.AutoRechargePause)
