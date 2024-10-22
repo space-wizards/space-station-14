@@ -8,18 +8,48 @@
     },
     "states": [
         {
-            "name": "icon"
+            "name": "body-icon"
         },
         {
-            "name": "equipped-HELMET",
+            "name": "cuffcrown-icon"
+        },
+        {
+            "name": "pompom-icon"
+        },
+        {
+            "name": "body-equipped-HELMET",
             "directions": 4
         },
         {
-            "name": "inhand-left",
+            "name": "cuffcrown-equipped-HELMET",
             "directions": 4
         },
         {
-            "name": "inhand-right",
+            "name": "pompom-equipped-HELMET",
+            "directions": 4
+        },
+        {
+            "name": "body-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "cuffcrown-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "pompom-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "body-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "cuffcrown-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "pompom-inhand-right",
             "directions": 4
         }
     ]
