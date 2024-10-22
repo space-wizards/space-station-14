@@ -523,6 +523,16 @@
       map: ["foldedLayer"]
       visible: false
 
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBeanie
+  name: beanie
+  description: It radiates a homely feeling, if your home is chilly and smells faintly of beer.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/beanie.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/beanie.rsi
 
 - type: entity
   parent: ClothingHeadHatWizardBase
