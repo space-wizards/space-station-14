@@ -6,7 +6,7 @@
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitBasic
   name: basic pressure suit
-  description: A basic, universal pressure suit that protects the wearer against the horrors of the abyss. Beats not having one, at least.
+  description: A basic, universal pressure suit that protects the wearer against the horrors of the abyss. Looks rusted and somewhat damaged, but beats not having one, at least.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
