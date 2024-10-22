@@ -35,7 +35,6 @@ public abstract partial class SharedStationAiSystem : EntitySystem
     [Dependency] private readonly   ItemToggleSystem _toggles = default!;
     [Dependency] private readonly   ActionBlockerSystem _blocker = default!;
     [Dependency] private readonly   MetaDataSystem _metadata = default!;
-    [Dependency] private readonly   SharedActionsSystem _actions = default!;
     [Dependency] private readonly   SharedAirlockSystem _airlocks = default!;
     [Dependency] private readonly   SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly   SharedAudioSystem _audio = default!;
