@@ -41,3 +41,11 @@
   components:
   - type: StaminaDamageOnCollide
     damage: 15
+  - type: Sprite
+    sprite: Objects/Fun/toys.rsi
+    layers:
+      - state: donksoft-dart
+  - type: Tag
+    tags:
+     - BulletFoam
+     - Donksoftfoam

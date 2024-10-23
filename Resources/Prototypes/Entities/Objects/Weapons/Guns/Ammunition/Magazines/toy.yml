@@ -10,3 +10,23 @@
         - BulletFoam
     proto: BulletFoam
     capacity: 100
+  - type: Tag
+    tags:
+    - MagazineFoamBox
+
+- type: entity
+  parent: MagazineLightRifleBox
+  id: MagazineDonksoftBox
+  name: ammunition box (Stun)
+  components:
+  - type: BallisticAmmoProvider
+    mayTransfer: true
+    whitelist:
+      tags:
+        - Donksoftfoam
+        - BulletFoam
+    proto: DonksoftDart
+    capacity: 100
+  - type: Tag
+    tags:
+    - MagazineFoamBox

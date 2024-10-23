@@ -72,7 +72,7 @@
   description: A rather traditionally made LMG with a pleasantly lacquered wooden pistol grip. Uses .30 rifle ammo.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/LMGs/l6.rsi
+    sprite: Objects/Weapons/Guns/LMGs/LMGs/l6.rsi
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
@@ -104,7 +104,7 @@
       soundEmpty:
         path: /Audio/Weapons/Guns/Empty/lmg_empty.ogg
     - type: Sprite
-      sprite: Objects/Weapons/Guns/LMGs/l6.rsi
+      sprite: Objects/Weapons/Guns/LMGs/LMGs/l6.rsi
       layers:
         - state: base
           map: [ "enum.GunVisualLayers.Base" ]
@@ -125,3 +125,55 @@
       autoRecharge: true
       autoRechargeRate: 25
     - type: AmmoCounter
+
+- type: entity
+  name: Donksoft LMG
+  id: WeaponLightMachineGunDonksoft
+  description: When it comes to foam weapons, its Donk or Nothing!
+  parent: [BaseWeaponLightMachineGun, BaseSyndicateContraband]
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/LMGs/LMGs/Donksoftl6.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-3
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: mag
+    steps: 4
+    zeroVisible: true
+  - type: Appearance
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,3,2
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineDonksoftBox
+        insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazineFoamBox
+      gun_chamber:
+        name: Chamber
+        startingItem: DonksoftDart
+        priority: 1
+        whitelist:
+          tags:
+            - BulletFoam
+
+  - type: Gun
+    soundGunshot:
+        path: /Audio/Weapons/Guns/Gunshots/silenced.ogg
+        params:
+          volume: -5
+    soundEmpty:
+        path: /Audio/Weapons/Guns/Empty/lmg_empty.ogg
+        params:
+          volume: -5
+    clumsyProof: true
