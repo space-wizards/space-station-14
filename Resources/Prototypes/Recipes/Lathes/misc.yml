@@ -200,6 +200,13 @@
     Steel: 100
 
 - type: latheRecipe
+  id: FloorRedCircuit
+  result: FloorTileItemRCircuit4
+  completetime: 2
+  materials:
+    Steel: 100
+
+- type: latheRecipe
   id: HandheldStationMap
   result: HandheldStationMapEmpty
   completetime: 2
