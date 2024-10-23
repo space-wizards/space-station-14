@@ -77,6 +77,19 @@ public sealed class DefibrillatorSystem : EntitySystem
         Zap(uid, target, args.User, component);
     }
 
+    /// <summary>
+    ///     Checks if you can actually defib a target.
+    /// </summary>
+    /// <param name="uid">Uid of the defib</param>
+    /// <param name="target">Uid of the target getting defibbed</param>
+    /// <param name="user">Uid of the entity using the defibrillator</param>
+    /// <param name="component">Defib component</param>
+    /// <param name="targetCanBeAlive">
+    ///     If true, the target can be alive. If false, the function will check if the target is alive and will return false if they are.
+    /// </param>
+    /// <returns>
+    ///     Returns true if the target is valid to be defibed, false otherwise.
+    /// </returns>
     public bool CanZap(EntityUid uid, EntityUid target, EntityUid? user = null, DefibrillatorComponent? component = null, bool targetCanBeAlive = false)
     {
         if (!Resolve(uid, ref component))
@@ -107,6 +120,16 @@ public sealed class DefibrillatorSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    ///     Tries to start defibrillating the target. If the target is valid, will start the defib do-after.
+    /// </summary>
+    /// <param name="uid">Uid of the defib</param>
+    /// <param name="target">Uid of the target getting defibbed</param>
+    /// <param name="user">Uid of the entity using the defibrillator</param>
+    /// <param name="component">Defib component</param>
+    /// <returns>
+    ///     Returns true if the defibrillation do-after started, otherwise false.
+    /// </returns>
     public bool TryStartZap(EntityUid uid, EntityUid target, EntityUid user, DefibrillatorComponent? component = null)
     {
         if (!Resolve(uid, ref component))
