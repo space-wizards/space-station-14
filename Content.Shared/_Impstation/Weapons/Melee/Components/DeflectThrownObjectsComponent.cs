@@ -14,5 +14,5 @@ public sealed partial class DeflectThrownObjectsComponent : Component
     public float DeflectSpeed = 25f;
 
     [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
-    public SoundSpecifier DeflectSound = new SoundPathSpecifier("/Audio/Weapons/baseballbatdeflect.ogg");
+    public SoundSpecifier DeflectSound = new SoundPathSpecifier("/Audio/_Impstation/Weapons/baseballbatdeflect.ogg");
 }

@@ -25,7 +25,7 @@
     - type: Gun
       fireRate: 2
       soundGunshot:
-        path: /Audio/Weapons/Guns/Gunshots/raygun.ogg
+        path: /Audio/_Impstation/Weapons/Guns/Gunshots/raygun.ogg
     - type: HitscanBatteryAmmoProvider
       proto: raygun
       fireCost: 20

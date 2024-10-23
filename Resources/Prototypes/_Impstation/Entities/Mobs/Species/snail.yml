@@ -36,7 +36,7 @@
     requiredLegs: 2
   - type: FootstepModifier
     footstepSoundCollection:
-      path: /Audio/Effects/Footsteps/snailstep.ogg
+      path: /Audio/_Impstation/Effects/Footsteps/snailstep.ogg
   - type: NoSlip
   - type: Magboots
   - type: Butcherable

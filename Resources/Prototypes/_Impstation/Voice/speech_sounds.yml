@@ -1,20 +1,20 @@
 - type: speechSounds
   id: Finfin
   saySound:
-    path: /Audio/Animals/finfin1.ogg
+    path: /Audio/_Impstation/Animals/finfin1.ogg
   askSound:
-    path: /Audio/Animals/finfin2.ogg
+    path: /Audio/_Impstation/Animals/finfin2.ogg
   exclaimSound:
-    path: /Audio/Animals/finfin3.ogg
+    path: /Audio/_Impstation/Animals/finfin3.ogg
 
 - type: speechSounds
   id: Bros
   saySound:
-    path: /Audio/Animals/bros_hit.ogg
+    path: /Audio/_Impstation/Animals/bros_hit.ogg
   askSound:
-    path: /Audio/Animals/bros_hit.ogg
+    path: /Audio/_Impstation/Animals/bros_hit.ogg
   exclaimSound:
-    path: /Audio/Animals/bros_hit.ogg
+    path: /Audio/_Impstation/Animals/bros_hit.ogg
 
 - type: speechSounds
   id: Plushie

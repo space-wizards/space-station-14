@@ -21,7 +21,7 @@
       - SemiAuto
       - FullAuto
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/stunlauncher.ogg
+      path: /Audio/_Impstation/Weapons/Guns/Gunshots/stunlauncher.ogg
   - type: ProjectileBatteryAmmoProvider
     proto: BulletDisabler
     fireCost: 200

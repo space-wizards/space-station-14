@@ -1,0 +1,23 @@
+- files:
+  - snailstep.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "Widgetbeck"
+  source: "https://github.com/impstation/imp-station-14/pull/184"
+
+- files:
+  - boots1.ogg
+  - boots2.ogg
+  - boots3.ogg
+  - boots4.ogg
+  license: "CC0-1.0"
+  copyright: "Made by DexD73 freesound.org, modified by Sha-Seng (github)"
+  source: "https://freesound.org/s/583715/"
+
+- files:
+  - highheels1.ogg
+  - highheels2.ogg
+  - highheels3.ogg
+  - highheels4.ogg
+  license: "CC0-1.0"
+  copyright: "Made by MoanALissa32 freesound.org, modified by Sha-Seng (github)"
+  source: "https://freesound.org/s/700080/"
