@@ -163,10 +163,7 @@ public sealed class DrinkSystem : SharedDrinkSystem
     /// </summary>
     private bool TryDrink(EntityUid user, EntityUid target, DrinkComponent drink, EntityUid item)
     {
-        if (!HasComp<BodyComponent>(target))
-            return false;
-
-        if (HasComp<BorgChassisComponent>(target))
+        if (!HasComp<BodyComponent>(target) || HasComp<BorgChassisComponent>(target))
             return false;
 
         if (_openable.IsClosed(item, user))
