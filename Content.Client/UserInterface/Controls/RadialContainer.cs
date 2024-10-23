@@ -8,6 +8,9 @@ namespace Content.Client.UserInterface.Controls;
 [Virtual]
 public class RadialContainer : LayoutContainer
 {
+    private const float BaseRadius = 100f;
+    private const float RadiusIncrement = 5f;
+
     /// <summary>
     /// Specifies the anglular range, in radians, in which child elements will be placed.
     /// The first value denotes the angle at which the first element is to be placed, and
@@ -55,6 +58,17 @@ public class RadialContainer : LayoutContainer
     public float Radius { get; set; } = 100f;
 
     /// <summary>
+    /// Determines radial menu button sectors inner radius, is a multiplier of <see cref="Radius"/>.
+    /// </summary>
+    public float InnerRadiusMultiplier { get; set; } = 0.5f;
+
+    /// <summary>
+    /// Determines radial menu button sectors outer radius, is a multiplier of <see cref="Radius"/>.
+    /// </summary>
+    public float OuterRadiusMultiplier { get; set; } = 1.5f;
+
+
+    /// <summary>
     /// Sets whether the container should reserve a space on the layout for child which are not currently visible
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
@@ -71,9 +85,6 @@ public class RadialContainer : LayoutContainer
     /// <inheritdoc />
     protected override Vector2 ArrangeOverride(Vector2 finalSize)
     {
-        const float baseRadius = 100f;
-        const float radiusIncrement = 5f;
-
         var children = ReserveSpaceForHiddenChildren
             ? Children
             : Children.Where(x => x.Visible);
@@ -81,7 +92,7 @@ public class RadialContainer : LayoutContainer
         var childCount = children.Count();
 
         // Add padding from the center at higher child counts so they don't overlap.
-        Radius = baseRadius + (childCount * radiusIncrement);
+        Radius = BaseRadius + (childCount * RadiusIncrement);
 
         var isAntiClockwise = RadialAlignment == RAlignment.AntiClockwise;
 
@@ -131,8 +142,8 @@ public class RadialContainer : LayoutContainer
                 tb.AngleSectorFrom = sepAngle * childIndex;
                 tb.AngleSectorTo = sepAngle * (childIndex + 1);
                 tb.AngleOffset = angleOffset;
-                tb.InnerRadius = Radius / 2;
-                tb.OuterRadius = Radius * 2;
+                tb.InnerRadius = Radius * InnerRadiusMultiplier;
+                tb.OuterRadius = Radius * OuterRadiusMultiplier;
                 tb.ParentCenter = controlCenter;
             }
         }

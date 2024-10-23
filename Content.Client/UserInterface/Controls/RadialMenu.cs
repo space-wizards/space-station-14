@@ -102,8 +102,8 @@ public class RadialMenu : BaseWindow
         if (child is RadialContainer { Visible: true } container)
         {
             ContextualButton.ParentCenter = MinSize * 0.5f;
-            ContextualButton.InnerRadius = container.Radius * 0.5f;
-            ContextualButton.OuterRadius = container.Radius * 2;
+            ContextualButton.InnerRadius = container.Radius * container.InnerRadiusMultiplier;
+            ContextualButton.OuterRadius = container.Radius * container.OuterRadiusMultiplier;
         }
     }
 
@@ -357,12 +357,12 @@ public class RadialMenuTextureButtonWithSector : RadialMenuTextureButton, IRadia
     /// <summary>
     /// Color of background in non-hovered state.
     /// </summary>
-    public Color BackgroundColor { get; set; } = new Color(173, 216, 230, 70);
+    public Color BackgroundColor { get; set; } = new Color(70, 73, 102, 128);
 
     /// <summary>
     /// Color of background in hovered state.
     /// </summary>
-    public Color HoverBackgroundColor { get; set; } = new Color(173, 216, 230, 100);
+    public Color HoverBackgroundColor { get; set; } = new Color(87, 91, 127, 128);
 
     /// <summary>
     /// Color of button border.
@@ -372,13 +372,13 @@ public class RadialMenuTextureButtonWithSector : RadialMenuTextureButton, IRadia
     /// <summary>
     /// Color of button border when button is hovered.
     /// </summary>
-    public Color HoverBorderColor { get; set; } = new Color(173, 216, 230, 100);
+    public Color HoverBorderColor { get; set; } = new Color(87, 91, 127, 128);
 
     /// <summary>
     /// Color of separator lines.
     /// Separator lines are used to visually separate sector of radial menu items.
     /// </summary>
-    public Color SeparatorColor { get; set; } = new Color(173, 216, 230, 180);
+    public Color SeparatorColor { get; set; } = new Color(128, 128, 128, 128);
 
     /// <inheritdoc />
     float IRadialMenuItemWithSector.AngleSectorFrom
@@ -513,7 +513,7 @@ public class RadialMenuTextureButtonWithSector : RadialMenuTextureButton, IRadia
         bool filled = true
     )
     {
-        const float minimalSegmentSize = MathF.Tau / 32;
+        const float minimalSegmentSize = MathF.Tau / 128f;
 
         var requestedSegmentSize = angleSectorTo - angleSectorFrom;
         var segmentCount = (int)(requestedSegmentSize / minimalSegmentSize) + 1;
@@ -550,7 +550,7 @@ public class RadialMenuTextureButtonWithSector : RadialMenuTextureButton, IRadia
         var type = filled
             ? DrawPrimitiveTopology.TriangleStrip
             : DrawPrimitiveTopology.LineStrip;
-        drawingHandleScreen.DrawPrimitives(type, _sectorPointsForDrawing, color);
+        drawingHandleScreen.DrawPrimitives(type, _sectorPointsForDrawing, Color.ToSrgb(color));
     }
 
     private static void DrawSeparatorLines(
