@@ -22,7 +22,7 @@
 - type: cargoProduct
   id: SciencePoints5K
   icon:
-    sprite: Objects/Specific/Research/researchdisk.rsi
+    sprite: Ronstation/Objects/Specific/Research/researchdisk.rsi
     state: 5kdisk
   product: ResearchDisk5000
   cost: 3000
