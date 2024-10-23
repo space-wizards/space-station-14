@@ -8,7 +8,10 @@
   },
   "states": [
     {
-      "name": "icon"
+      "name": "5kdisk"
+    },
+    {
+      "name": "10kdisk"
     }
   ]
 }
