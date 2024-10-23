@@ -165,6 +165,9 @@ public sealed class DrinkSystem : SharedDrinkSystem
         if (!HasComp<BodyComponent>(target))
             return false;
 
+        if (HasComp<BorgChassisComponent>(target))
+            return false;
+
         if (_openable.IsClosed(item, user))
             return true;
 
