@@ -52,6 +52,12 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
     private ActionButtonContainer? _container;
     private readonly List<EntityUid?> _actions = new();
+    /// <summary>
+    /// "Phantom" actions refer to actions that are retained in the <see cref="_actions"/> array
+    /// for UI purposes (i.e. locking your action bar to prevent buttons from being
+    /// removed/rearraged even if you lose the action container).
+    /// </summary>
+    private readonly List<EntityUid> _phantomActions = new();
     private readonly DragDropHelper<ActionButton> _menuDragHelper;
     private readonly TextureRect _dragShadow;
     private ActionsWindow? _window;
@@ -408,6 +414,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         if (action is BaseTargetActionComponent targetAction && action.Toggled)
             StartTargeting(actionId, targetAction);
 
+        _phantomActions.Remove(actionId);
         if (_actions.Contains(actionId))
             return;
 
@@ -416,11 +423,24 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
     private void OnActionRemoved(EntityUid actionId)
     {
-        if (_container == null)
+        if (_container == null || _actionsSystem == null)
             return;
 
         if (actionId == SelectingTargetFor)
             StopTargeting();
+
+        if (LockActions)
+        {
+            if (_actionsSystem.TryGetActionData(actionId, out var action))
+            {
+                // Don't phantom innate actions that get removed
+                if (action.Container != _playerManager.LocalEntity)
+                {
+                    _phantomActions.Add(actionId);
+                    return;
+                }
+            }
+        }
 
         _actions.RemoveAll(x => x == actionId);
     }
@@ -436,7 +456,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
     private void UpdateActionContainer()
     {
         if (_actionsSystem != null && _container != null)
-            _container.SetActionData(_actionsSystem, _actions.ToArray());
+            _container.SetActionData(_actionsSystem, _actions.ToArray(), _phantomActions.ToArray());
     }
 
     private void ActionButtonPressed(ButtonEventArgs args)
@@ -750,6 +770,11 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         }
 
         _menuDragHelper.EndDrag();
+
+        // Don't try to trigger phantom actions
+        if (button.IsPhantom) {
+            return;
+        }
 
         if (!_actionsSystem.TryGetActionData(button.ActionId, out var baseAction))
             return;

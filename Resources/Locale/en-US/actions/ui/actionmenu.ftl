@@ -9,6 +9,7 @@ ui-actionmenu-clear-filter-button = Clear filter
 ui-actionmenu-lock-button = Lock actionbar
 ui-actionmenu-unlock-button = Unlock actionbar
 ui-actionmenu-clear-actions-button = Clear actionbar
+ui-actionmenu-phantom-action-tooltip = You are missing something required to perform this action
 
 ui-actionmenu-enabled = Enabled
 ui-actionmenu-item = Item
