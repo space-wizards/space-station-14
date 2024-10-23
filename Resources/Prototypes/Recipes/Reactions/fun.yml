@@ -208,8 +208,6 @@
   reactants:
     Protein:
       amount: 2
-    Nutriment:
-      amount: 2
     Sugar:
       amount: 2
     Blood:
@@ -230,15 +228,3 @@
     gas: Oxygen
   products:
     Water: 1
-
-- type: reaction
-  id: MonkeyCreation
-  impact: Low
-  reactants:
-    MonkeyPowder:
-      amount: 50
-    Water:
-      amount: 1
-  effects:
-    - !type:CreateEntityReactionEffect
-      entity: MobMonkey
