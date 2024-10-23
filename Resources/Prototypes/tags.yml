@@ -988,6 +988,9 @@
   id: NoBlockAnchoring
 
 - type: Tag
+  id: NoConsoleSound
+
+- type: Tag
   id: NozzleBackTank
 
 - type: Tag
@@ -1296,6 +1299,9 @@
 
 - type: Tag
   id: Syringe
+
+- type: Tag
+  id: SyringeGunAmmo
 
 - type: Tag
   id: Spellbook
