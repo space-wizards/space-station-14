@@ -147,6 +147,9 @@ public sealed class DefibrillatorSystem : EntitySystem
         });
     }
 
+    /// <summary>
+    ///     Tries to defibrillate the target with the given defibrillator.
+    /// </summary>
     public void Zap(EntityUid uid, EntityUid target, EntityUid user, DefibrillatorComponent? component = null, MobStateComponent? mob = null, MobThresholdsComponent? thresholds = null)
     {
         if (!Resolve(uid, ref component))
