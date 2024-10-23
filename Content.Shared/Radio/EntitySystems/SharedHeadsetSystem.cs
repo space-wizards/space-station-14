@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
@@ -59,7 +58,9 @@ public abstract class SharedHeadsetSystem : EntitySystem
         if (!TryComp(uid, out EncryptionKeyHolderComponent? keyHolder))
             return;
 
-        foreach ((var channel, var index) in keyHolder.Channels.Select(static (channel, index) => (channel, index)))
+        var priority = 0;
+
+        foreach (var channel in keyHolder.Channels)
         {
             var name = _prototype.Index<RadioChannelPrototype>(channel).LocalizedName;
 
@@ -68,7 +69,7 @@ public abstract class SharedHeadsetSystem : EntitySystem
             args.Verbs.Add(new()
             {
                 Text = toggled ? $"[bold]{name}" : name,
-                Priority = index,
+                Priority = priority++,
                 Category = VerbCategory.ToggleHeadsetSound,
                 Act = () => ToggleHeadsetSound((uid, component), channel, !toggled)
             });
