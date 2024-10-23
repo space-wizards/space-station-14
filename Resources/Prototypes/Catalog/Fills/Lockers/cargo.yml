@@ -21,6 +21,7 @@
       prob: 0.3
       rolls: !type:ConstantNumberSelector
         value: 3
+    - id: Gauze
 
 - type: entity
   id: LockerSalvageSpecialistFilledHardsuit
