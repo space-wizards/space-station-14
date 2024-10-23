@@ -101,7 +101,7 @@ public sealed class HeadsetSystem : SharedHeadsetSystem
 
     private void OnHeadsetReceive(EntityUid uid, HeadsetComponent component, ref RadioReceiveEvent args)
     {
-        if (!TryComp(Transform(uid).ParentUid, out ActorComponent? actor))
+        if (!TryComp<ActorComponent>(Transform(uid).ParentUid, out var actor))
             return;
 
         _netMan.ServerSendMessage(args.ChatMsg, actor.PlayerSession.Channel);

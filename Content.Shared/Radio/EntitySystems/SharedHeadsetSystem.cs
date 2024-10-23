@@ -55,7 +55,7 @@ public abstract class SharedHeadsetSystem : EntitySystem
         if (!_interaction.InRangeUnobstructed(args.User, args.Target))
             return;
 
-        if (!TryComp(uid, out EncryptionKeyHolderComponent? keyHolder))
+        if (!TryComp<EncryptionKeyHolderComponent>(uid, out var keyHolder))
             return;
 
         var priority = 0;
