@@ -3709,24 +3709,6 @@ entities:
       parent: 3817
     - type: InstantAction
       container: 3817
-  - uid: 4897
-    components:
-    - type: Transform
-      parent: 4896
-    - type: InstantAction
-      container: 4896
-  - uid: 4899
-    components:
-    - type: Transform
-      parent: 4898
-    - type: InstantAction
-      container: 4898
-  - uid: 5243
-    components:
-    - type: Transform
-      parent: 5139
-    - type: InstantAction
-      container: 5139
 - proto: ActionToggleLight
   entities:
   - uid: 897
@@ -21498,6 +21480,13 @@ entities:
     components:
     - type: Transform
       pos: 39.5,-16.5
+      parent: 1
+- proto: DefaultStationBeaconCryosleep
+  entities:
+  - uid: 4898
+    components:
+    - type: Transform
+      pos: 26.5,7.5
       parent: 1
 - proto: DefaultStationBeaconDetectiveRoom
   entities:
@@ -42215,6 +42204,18 @@ entities:
       parent: 1
     - type: Physics
       canCollide: False
+- proto: Intellicard
+  entities:
+  - uid: 5139
+    components:
+    - type: Transform
+      pos: 83.43209,-32.452187
+      parent: 1
+  - uid: 6795
+    components:
+    - type: Transform
+      pos: 83.43209,-26.467812
+      parent: 1
 - proto: IntercomAll
   entities:
   - uid: 6779
@@ -43059,7 +43060,8 @@ entities:
   - uid: 4500
     components:
     - type: Transform
-      pos: 4.774868,-61.652435
+      rot: 6.283185307179586 rad
+      pos: 4.531615,-62.378483
       parent: 1
 - proto: NitrogenCanister
   entities:
@@ -43340,47 +43342,6 @@ entities:
     - type: Transform
       pos: -8.5,-41.5
       parent: 1
-- proto: PlasmaTankFilled
-  entities:
-  - uid: 4896
-    components:
-    - type: Transform
-      pos: 4.681118,-61.32431
-      parent: 1
-    - type: GasTank
-      toggleActionEntity: 4897
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 4897
-  - uid: 4898
-    components:
-    - type: Transform
-      pos: 4.399868,-61.621185
-      parent: 1
-    - type: GasTank
-      toggleActionEntity: 4899
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 4899
-  - uid: 5139
-    components:
-    - type: Transform
-      pos: 4.306118,-61.38681
-      parent: 1
-    - type: GasTank
-      toggleActionEntity: 5243
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 5243
 - proto: PlasticFlapsAirtightClear
   entities:
   - uid: 2161
@@ -43410,7 +43371,7 @@ entities:
       parent: 1
 - proto: PlayerStationAi
   entities:
-  - uid: 6795
+  - uid: 4899
     components:
     - type: Transform
       pos: 81.5,-29.5
@@ -44974,11 +44935,6 @@ entities:
     components:
     - type: Transform
       pos: 5.5,-44.5
-      parent: 1
-  - uid: 4922
-    components:
-    - type: Transform
-      pos: 4.5,-61.5
       parent: 1
   - uid: 6076
     components:
@@ -50701,6 +50657,11 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 15.5,-44.5
       parent: 1
+  - uid: 4897
+    components:
+    - type: Transform
+      pos: 83.5,-32.5
+      parent: 1
   - uid: 4919
     components:
     - type: Transform
@@ -50716,6 +50677,11 @@ entities:
     components:
     - type: Transform
       pos: 7.5,-34.5
+      parent: 1
+  - uid: 5243
+    components:
+    - type: Transform
+      pos: 83.5,-26.5
       parent: 1
   - uid: 5987
     components:
@@ -51281,12 +51247,24 @@ entities:
     - type: Transform
       pos: 57.5,-15.5
       parent: 1
+- proto: VendingMachineTankDispenserEngineering
+  entities:
+  - uid: 4922
+    components:
+    - type: Transform
+      pos: 4.5,-61.5
+      parent: 1
 - proto: VendingMachineTankDispenserEVA
   entities:
   - uid: 3653
     components:
     - type: Transform
       pos: 44.5,-42.5
+      parent: 1
+  - uid: 4896
+    components:
+    - type: Transform
+      pos: 5.5,-37.5
       parent: 1
 - proto: VendingMachineTheater
   entities:
