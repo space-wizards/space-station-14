@@ -75,6 +75,26 @@
     - sprite: Mobs/Silicon/station_ai.rsi
       state: default
 
+- type: entity
+  id: AiHeldIntellicard
+  description: Components added / removed from an entity that gets inserted into an Intellicard.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Binary
+  - type: ActiveRadio
+    channels:
+    - Binary
+    - Common
+  - type: ActionGrant
+    actions:
+    - ActionAIViewLaws
+  - type: UserInterface
+    interfaces:
+      enum.SiliconLawsUiKey.Key:
+        type: SiliconLawBoundUserInterface
 
 # Ai
 - type: entity
@@ -86,7 +106,8 @@
   - type: StationAiHolder
     slot:
       name: station-ai-mind-slot
-      locked: true
+      locked: false
+      disableEject: true
       whitelist:
         tags:
         - StationAi
@@ -243,6 +264,7 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: AntimovLawset
+    lawUploadSound: /Audio/Ambience/Antag/silicon_lawboard_antimov.ogg
 
 - type: entity
   id: NutimovCircuitBoard
@@ -259,13 +281,16 @@
 # Items
 - type: entity
   id: Intellicard
-  name: Intellicard
+  name: intellicard
   description: A storage device for AIs.
   parent:
   - BaseItem
   - AiHolder
   suffix: Empty
   components:
+  - type: ContainerComp
+    proto: AiHeldIntellicard
+    container: station_ai_mind_slot
   - type: Sprite
     sprite: Objects/Devices/ai_card.rsi
     layers:
@@ -377,7 +402,6 @@
       enum.SiliconLawsUiKey.Key:
         type: SiliconLawBoundUserInterface
   - type: ComplexInteraction
-  - type: DoorRemote
   - type: Actions
   - type: Access
     groups:
@@ -390,6 +414,7 @@
     tags:
     - HideContextMenu
     - StationAi
+    - NoConsoleSound
 
 # Hologram projection that the AI's eye tracks.
 - type: entity

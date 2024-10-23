@@ -52071,6 +52071,18 @@ entities:
     - type: Transform
       pos: -39.575058,56.668564
       parent: 30
+- proto: ClothingHeadHelmetEVALarge
+  entities:
+  - uid: 17784
+    components:
+    - type: Transform
+      pos: -44.636612,58.69058
+      parent: 30
+  - uid: 17786
+    components:
+    - type: Transform
+      pos: -44.478813,58.559113
+      parent: 30
 - proto: ClothingHeadHelmetTemplar
   entities:
   - uid: 16772
@@ -60278,6 +60290,11 @@ entities:
     components:
     - type: Transform
       pos: 32.5,39.5
+      parent: 30
+  - uid: 17783
+    components:
+    - type: Transform
+      pos: 14.5,-17.5
       parent: 30
   - uid: 19407
     components:
