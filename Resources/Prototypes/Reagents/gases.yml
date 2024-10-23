@@ -377,7 +377,8 @@
         ignoreResistances: true
         damage:
           types:
-            Cold: 2 # water, very temperature!!
+            Cold: 7 # water, very temperature!!
+            Asphyxiation: 10
       - !type:PopupMessage
         type: Local
         messages: [ "water-in-lungs" ]
@@ -388,7 +389,7 @@
           min: 0.5
       - !type:Emote
          conditions:
-        - !type:ReagentThreshold
+          - !type:ReagentThreshold
            reagent: SeaWater
            min: 0.5
          emote: Cough #TODO: add gurgle sound effect while processing seawater through breathing
