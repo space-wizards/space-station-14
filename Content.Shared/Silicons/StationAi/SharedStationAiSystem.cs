@@ -288,7 +288,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         AttachEye(ent);
     }
 
-    public void SwitchRemoteMode(Entity<StationAiCoreComponent> ent, bool isRemote)
+    public void SwitchRemoteEntityMode(Entity<StationAiCoreComponent> ent, bool isRemote)
     {
         if (isRemote == ent.Comp.Remote)
             return;
@@ -317,6 +317,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
     {
         if (_net.IsClient)
             return false;
+
         if (ent.Comp.RemoteEntity != null)
             return false;
 
@@ -379,7 +380,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         if (_timing.ApplyingState)
             return;
 
-        SetupEye(ent);
+        SwitchRemoteEntityMode(ent, true);
 
         // Just so text and the likes works properly
         _metadata.SetEntityName(ent.Owner, MetaData(args.Entity).EntityName);
