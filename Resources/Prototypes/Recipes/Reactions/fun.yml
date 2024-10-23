@@ -210,7 +210,9 @@
       amount: 2
     Nutriment:
       amount: 2
-    Potassium:
+    Sugar:
+      amount: 2
+    Blood:
       amount: 2
   products:
     MonkeyPowder: 4
@@ -222,13 +224,12 @@
     HydrogenPeroxide:
       amount: 0.5
     Mold:
-      amount: 0.5
+      amount: 1
   effects:
   - !type:CreateGas
     gas: Oxygen
   products:
-    Carbon: 0.2
-    Water: 0.5
+    Water: 1
 
 - type: reaction
   id: MonkeyCreation
