@@ -112,7 +112,7 @@ public sealed class HeadsetSystem : SharedHeadsetSystem
         if (!component.ToggledSoundChannels.Contains(args.Channel.ID))
             return;
 
-        _audio.PlayEntity(component.Sound, actor.PlayerSession, uid);
+        _audio.PlayEntity(component.Sound, actor.PlayerSession, uid, new() { Variation = 0.025f });
     }
 
     private void OnEmpPulse(EntityUid uid, HeadsetComponent component, ref EmpPulseEvent args)
