@@ -22,6 +22,7 @@
     FoodMeat: 6
   contrabandInventory:
     EggBoxBroken: 1
-    FoodBreadMoldySlice: 2
     FoodBoxDonkpocket: 1
+    FoodFrozenSandwich: 2
+    FoodFrozenSandwichStrawberry: 2
     
