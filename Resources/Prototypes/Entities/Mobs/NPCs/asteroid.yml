@@ -50,22 +50,22 @@
       Dead:
         Base: goliath_dead
   - type: MovementSpeedModifier
-    baseWalkSpeed : 2.00
-    baseSprintSpeed : 2.00
+    baseWalkSpeed : 2
+    baseSprintSpeed : 2
   - type: MobThresholds
     thresholds:
       0: Alive
-      250: Dead
+      175: Dead
   - type: MeleeWeapon
     soundHit:
       path: "/Audio/Weapons/smash.ogg"
     angle: 0
-    attackRate: 0.8
+    attackRate: 1.2
     animation: WeaponArcPunch
     damage:
       types:
-        Slash: 10
-        Piercing: 10
+        Slash: 6
+        Piercing: 6
   - type: NpcFactionMember
     factions:
     - SimpleHostile
@@ -74,9 +74,9 @@
       task: GoliathCompound
     blackboard:
       VisionRadius: !type:Single
-        6
+        8
       AggroVisionRadius: !type:Single
-        10
+        12
   - type: NPCUseActionOnTarget
     actionId: ActionGoliathTentacle
   - type: Tag
@@ -107,8 +107,8 @@
     sound:
       path: "/Audio/Weapons/slash.ogg"
     event: !type:GoliathSummonTentacleAction
-    useDelay: 8
-    range: 10
+    useDelay: 4
+    range: 12
 
 - type: entity
   id: GoliathTentacle
@@ -125,6 +125,7 @@
     layers:
     - state: goliath_tentacle_wiggle
   - type: StunOnContact
+    duration: 2
     blacklist:
       tags:
       - Goliath

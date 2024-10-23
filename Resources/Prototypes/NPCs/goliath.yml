@@ -65,9 +65,6 @@
           preconditions:
             - !type:KeyExistsPrecondition
               key: Target
-            - !type:TargetInRangePrecondition
-              targetKey: Target
-              rangeKey: MeleeRange
           services:
             - !type:UtilityService
               id: MeleeService
