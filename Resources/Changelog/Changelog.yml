@@ -1,60 +1,4 @@
 ﻿Entries:
-- author: Cojoke-dot
-  changes:
-  - message: Mice can now use combat mode with a 0 damage attack
-    type: Tweak
-  id: 7043
-  time: '2024-08-05T03:26:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30487
-- author: TheShuEd
-  changes:
-  - message: Nanotrasen has introduced recruitment rules. Characters under the age
-      of 20 are no longer allowed to take on the role of head.
-    type: Tweak
-  id: 7044
-  time: '2024-08-05T04:25:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30347
-- author: foboscheshir
-  changes:
-  - message: added missing mime mask sprites for Vox - scared and sad.
-    type: Add
-  id: 7045
-  time: '2024-08-05T06:09:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30607
-- author: SlamBamActionman, PolarTundra
-  changes:
-  - message: Thief's Syndie Kit now comes with a Radio Jammer, a lighter and a Syndicate
-      codeword.
-    type: Add
-  - message: Thief's Agent ID has been moved from the Syndie Kit to the Chameleon
-      Kit.
-    type: Tweak
-  - message: The Syndicate pAI has been removed from the Thief's Syndie Kit.
-    type: Remove
-  id: 7046
-  time: '2024-08-05T08:03:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30446
-- author: EmoGarbage404
-  changes:
-  - message: Being cold now slows down your character.
-    type: Add
-  id: 7047
-  time: '2024-08-05T08:07:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29692
-- author: EmoGarbage404
-  changes:
-  - message: The biogenerator has been recolored and renamed to the "biocube fabricator."
-    type: Tweak
-  id: 7048
-  time: '2024-08-06T10:51:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30696
-- author: Errant
-  changes:
-  - message: Vox can be nukies and ninjas again.
-    type: Tweak
-  id: 7049
-  time: '2024-08-06T10:58:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29783
 - author: slarticodefast
   changes:
   - message: Fixed borgs, animals and aghosts being able to enter cryosleep.
@@ -3946,3 +3890,70 @@
   id: 7542
   time: '2024-10-21T12:44:43.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32929
+- author: Southbridge
+  changes:
+  - message: Box Station's window between the containment room and TEG has been upgraded
+      to plasma.
+    type: Fix
+  - message: Box Station's Engineering storage room air alarm has been properly connected
+      to nearby devices.
+    type: Fix
+  - message: Box Station's Janitorial disposal chute has been replaced with a working
+      one.
+    type: Fix
+  id: 7543
+  time: '2024-10-22T05:39:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32950
+- author: Moomoobeef
+  changes:
+  - message: Ammo-boxes no longer appear empty when only one bullet is removed.
+    type: Fix
+  id: 7544
+  time: '2024-10-22T09:00:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32930
+- author: ScarKy0
+  changes:
+  - message: Added the syringe gun and it's respective ammo. Currently Admeme only.
+    type: Add
+  id: 7545
+  time: '2024-10-22T13:03:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32112
+- author: ScarKy0, Fildrance
+  changes:
+  - message: Using an intellicard on the AI core now swaps the AI between the core
+      and intellicard. (You can evac with the AI!)
+    type: Add
+  - message: Added an intellicard to the RD's locker.
+    type: Add
+  id: 7546
+  time: '2024-10-22T13:49:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32347
+- author: Southbridge
+  changes:
+  - message: Nuclear Cola can now be broken down in a centrifuge.
+    type: Add
+  id: 7547
+  time: '2024-10-22T17:01:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32441
+- author: BramvanZijp
+  changes:
+  - message: The Space Ninja Suit will now give an error popup if you are trying to
+      install a cell that is not better compared to the current cell.
+    type: Add
+  - message: When comparing which power cell is better when trying to swap them, the
+      Space Ninja's Suit will now also consider if the power cells have self-recharge
+      capability.
+    type: Tweak
+  - message: You can no longer fit weapons-grade power cages into the space ninja
+      suit.
+    type: Fix
+  id: 7548
+  time: '2024-10-22T23:36:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32902
+- author: UBlueberry
+  changes:
+  - message: The appraisal tool now has in-hand sprites!
+    type: Fix
+  id: 7549
+  time: '2024-10-22T23:51:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32849
