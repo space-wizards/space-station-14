@@ -115,7 +115,6 @@
       color: Red
       enabled: false
       castShadows: false
-    - type: NavMapDoor
 
 - type: entity
   id: Firelock
