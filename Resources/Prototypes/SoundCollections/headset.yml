@@ -1,0 +1,6 @@
+- type: soundCollection
+  id: Headset
+  files:
+    - /Audio/Items/Headset/headset_1.ogg
+    - /Audio/Items/Headset/headset_2.ogg
+    - /Audio/Items/Headset/headset_3.ogg

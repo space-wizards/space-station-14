@@ -13,7 +13,8 @@
       key_slots:
       - EncryptionKeyCommon
   - type: Headset
-    sound: /Audio/Items/headset.ogg
+    sound:
+      collection: Headset
     toggledSoundChannels:
     - CentCom
     - Command
