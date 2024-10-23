@@ -380,7 +380,3 @@
     Food:
       effects:
       - !type:SatiateHunger
-        conditions:
-        - !type:OrganType
-          type: Animal
-          shouldHave: false
