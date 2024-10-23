@@ -102,8 +102,8 @@ public class RadialMenu : BaseWindow
         if (child is RadialContainer { Visible: true } container)
         {
             ContextualButton.ParentCenter = MinSize * 0.5f;
-            ContextualButton.InnerRadius = container.Radius * container.InnerRadiusMultiplier;
-            ContextualButton.OuterRadius = container.Radius * container.OuterRadiusMultiplier;
+            ContextualButton.InnerRadius = container.CalculatedRadius * container.InnerRadiusMultiplier;
+            ContextualButton.OuterRadius = container.CalculatedRadius * container.OuterRadiusMultiplier;
         }
     }
 

@@ -74,7 +74,6 @@ public sealed partial class RCDMenu : RadialMenu
 
             var button = new RCDMenuButton()
             {
-                StyleClasses = { "RadialMenuButton" },
                 SetSize = new Vector2(64f, 64f),
                 ToolTip = tooltip,
                 ProtoId = protoId,

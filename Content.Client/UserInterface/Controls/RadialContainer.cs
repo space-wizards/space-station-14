@@ -1,4 +1,3 @@
-using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
 using System.Linq;
 using System.Numerics;
@@ -8,7 +7,9 @@ namespace Content.Client.UserInterface.Controls;
 [Virtual]
 public class RadialContainer : LayoutContainer
 {
-    private const float BaseRadius = 100f;
+    /// <summary>
+    /// Increment of radius per child element to be rendered.
+    /// </summary>
     private const float RadiusIncrement = 5f;
 
     /// <summary>
@@ -52,21 +53,30 @@ public class RadialContainer : LayoutContainer
     public RAlignment RadialAlignment { get; set; } = RAlignment.Clockwise;
 
     /// <summary>
-    /// Determines how far from the radial container's center that its child elements will be placed
+    /// Radial menu radius determines how far from the radial container's center its child elements will be placed.
+    /// To correctly display dynamic amount of elements control actually resizes depending on amount of child buttons,
+    /// but uses this property as base value for final radius calculation.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    public float Radius { get; set; } = 100f;
+    public float InitialRadius { get; set; } = 100f;
 
     /// <summary>
-    /// Determines radial menu button sectors inner radius, is a multiplier of <see cref="Radius"/>.
+    /// Radial menu radius determines how far from the radial container's center its child elements will be placed.
+    /// This is dynamically calculated (based on child button count) radius, result of <see cref="InitialRadius"/> and
+    /// <see cref="RadiusIncrement"/> multiplied by currently visible child button count.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly)]
+    public float CalculatedRadius { get; private set; }
+
+    /// <summary>
+    /// Determines radial menu button sectors inner radius, is a multiplier of <see cref="InitialRadius"/>.
     /// </summary>
     public float InnerRadiusMultiplier { get; set; } = 0.5f;
 
     /// <summary>
-    /// Determines radial menu button sectors outer radius, is a multiplier of <see cref="Radius"/>.
+    /// Determines radial menu button sectors outer radius, is a multiplier of <see cref="InitialRadius"/>.
     /// </summary>
     public float OuterRadiusMultiplier { get; set; } = 1.5f;
-
 
     /// <summary>
     /// Sets whether the container should reserve a space on the layout for child which are not currently visible
@@ -92,7 +102,7 @@ public class RadialContainer : LayoutContainer
         var childCount = children.Count();
 
         // Add padding from the center at higher child counts so they don't overlap.
-        Radius = BaseRadius + (childCount * RadiusIncrement);
+        CalculatedRadius = InitialRadius + (childCount * RadiusIncrement);
 
         var isAntiClockwise = RadialAlignment == RAlignment.AntiClockwise;
 
@@ -129,8 +139,8 @@ public class RadialContainer : LayoutContainer
             // flooring values for snapping float values to physical grid -
             // it prevents gaps and overlapping between different button segments
             var position = new Vector2(
-                    MathF.Floor(Radius * MathF.Cos(targetAngleOfChild)),
-                    MathF.Floor(-Radius * MathF.Sin(targetAngleOfChild))
+                    MathF.Floor(CalculatedRadius * MathF.Cos(targetAngleOfChild)),
+                    MathF.Floor(-CalculatedRadius * MathF.Sin(targetAngleOfChild))
                 ) + controlCenter - child.DesiredSize * 0.5f + Position;
 
             SetPosition(child, position);
@@ -142,8 +152,8 @@ public class RadialContainer : LayoutContainer
                 tb.AngleSectorFrom = sepAngle * childIndex;
                 tb.AngleSectorTo = sepAngle * (childIndex + 1);
                 tb.AngleOffset = angleOffset;
-                tb.InnerRadius = Radius * InnerRadiusMultiplier;
-                tb.OuterRadius = Radius * OuterRadiusMultiplier;
+                tb.InnerRadius = CalculatedRadius * InnerRadiusMultiplier;
+                tb.OuterRadius = CalculatedRadius * OuterRadiusMultiplier;
                 tb.ParentCenter = controlCenter;
             }
         }
