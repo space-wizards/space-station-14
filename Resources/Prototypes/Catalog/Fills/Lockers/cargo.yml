@@ -16,7 +16,7 @@
     - id: HandheldGPSBasic
     - id: RadioHandheld
     - id: AppraisalTool
-    - id: FireExtinguisher
+    - id: JetpackMiniFilled
     - id: Flare
       prob: 0.3
       rolls: !type:ConstantNumberSelector
