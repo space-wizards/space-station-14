@@ -430,58 +430,59 @@ entities:
       data:
         tiles:
           0,0:
-            0: 29183
+            0: 29119
+            1: 64
           0,-1:
             0: 61747
-            1: 136
+            2: 136
           0,1:
             0: 61815
           -1,0:
             0: 49271
-            1: 4096
+            2: 4096
           -1,1:
             0: 61644
-            1: 17
+            2: 17
           0,2:
             0: 12565
-            2: 514
-            1: 2048
+            1: 514
+            2: 2048
           -1,2:
-            2: 1
+            1: 1
             0: 34828
-            1: 768
+            2: 768
           0,3:
             0: 3
-            1: 64
+            2: 64
           -1,3:
             0: 8
-            1: 64
+            2: 64
           1,0:
             0: 17
-            1: 4096
+            2: 4096
           1,1:
-            1: 49
+            2: 49
             0: 12288
           1,2:
             0: 3
-            1: 320
+            2: 320
           1,-1:
             0: 4096
-            1: 16
+            2: 16
           0,-2:
             0: 13056
-            1: 1024
+            2: 1024
           -1,-2:
             0: 34816
-            1: 1024
+            2: 1024
           -1,-1:
             0: 61576
-            1: 50
+            2: 50
           -2,1:
             0: 49152
-            1: 128
+            2: 128
           -2,2:
-            1: 64
+            2: 64
             0: 8
         uniqueMixes:
         - volume: 2500
@@ -489,21 +490,6 @@ entities:
           moles:
           - 21.824879
           - 82.10312
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-        - volume: 2500
-          immutable: True
-          moles:
-          - 0
-          - 0
           - 0
           - 0
           - 0
@@ -529,83 +515,24 @@ entities:
           - 0
           - 0
           - 0
+        - volume: 2500
+          immutable: True
+          moles:
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
         chunkSize: 4
     - type: GasTileOverlay
     - type: RadiationGridResistance
-  - uid: 4
-    components:
-    - type: MetaData
-      name: solution - injector
-    - type: Transform
-      parent: 3
-    - type: Solution
-      solution:
-        maxVol: 15
-        name: injector
-        reagents:
-        - data: []
-          ReagentId: Ephedrine
-          Quantity: 15
-    - type: ContainedSolution
-      containerName: injector
-      container: 3
-  - uid: 6
-    components:
-    - type: MetaData
-      name: solution - injector
-    - type: Transform
-      parent: 5
-    - type: Solution
-      solution:
-        maxVol: 15
-        name: injector
-        reagents:
-        - data: []
-          ReagentId: Saline
-          Quantity: 15
-    - type: ContainedSolution
-      containerName: injector
-      container: 5
-  - uid: 8
-    components:
-    - type: MetaData
-      name: solution - pen
-    - type: Transform
-      parent: 7
-    - type: Solution
-      solution:
-        maxVol: 20
-        name: pen
-        reagents:
-        - data: []
-          ReagentId: Bicaridine
-          Quantity: 15
-        - data: []
-          ReagentId: TranexamicAcid
-          Quantity: 5
-    - type: ContainedSolution
-      containerName: pen
-      container: 7
-  - uid: 10
-    components:
-    - type: MetaData
-      name: solution - pen
-    - type: Transform
-      parent: 9
-    - type: Solution
-      solution:
-        maxVol: 20
-        name: pen
-        reagents:
-        - data: []
-          ReagentId: Dermaline
-          Quantity: 10
-        - data: []
-          ReagentId: Leporazine
-          Quantity: 10
-    - type: ContainedSolution
-      containerName: pen
-      container: 9
   - uid: 15
     components:
     - type: MetaData
@@ -749,7 +676,7 @@ entities:
       pos: 0.5,2.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -9650.076
+      secondsUntilStateChange: -9732.935
       state: Opening
     - type: AccessReader
       access:
@@ -779,7 +706,7 @@ entities:
       pos: 0.5,-1.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -9645.409
+      secondsUntilStateChange: -9728.268
       state: Opening
     - type: AccessReader
       access:
@@ -1156,20 +1083,6 @@ entities:
       parent: 1
 - proto: BruteAutoInjector
   entities:
-  - uid: 7
-    components:
-    - type: Transform
-      parent: 2
-    - type: SolutionContainerManager
-      solutions: null
-      containers:
-      - pen
-    - type: Physics
-      canCollide: False
-    - type: ContainerContainer
-      containers:
-        solution@pen: !type:ContainerSlot
-          ent: 8
   - uid: 23
     components:
     - type: Transform
@@ -1193,20 +1106,6 @@ entities:
     - type: InsideEntityStorage
 - proto: BurnAutoInjector
   entities:
-  - uid: 9
-    components:
-    - type: Transform
-      parent: 2
-    - type: SolutionContainerManager
-      solutions: null
-      containers:
-      - pen
-    - type: Physics
-      canCollide: False
-    - type: ContainerContainer
-      containers:
-        solution@pen: !type:ContainerSlot
-          ent: 10
   - uid: 26
     components:
     - type: Transform
@@ -3000,6 +2899,24 @@ entities:
     - type: AccessReader
       access:
       - - SyndicateAgent
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.14673
+        moles:
+        - 1.7459903
+        - 6.568249
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
 - proto: LockerSyndicate
   entities:
   - uid: 13
@@ -3071,14 +2988,14 @@ entities:
           showEnts: False
           occludes: True
           ents:
-          - 496
-          - 495
-          - 494
-          - 493
-          - 492
-          - 491
-          - 490
           - 499
+          - 490
+          - 491
+          - 492
+          - 493
+          - 494
+          - 495
+          - 496
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -3102,64 +3019,13 @@ entities:
     - type: Transform
       pos: -1.5,3.5
       parent: 1
-- proto: MedicatedSuture
-  entities:
-  - uid: 11
-    components:
-    - type: Transform
-      parent: 2
-    - type: Physics
-      canCollide: False
 - proto: MedkitCombatFilled
   entities:
   - uid: 2
     components:
     - type: Transform
-      pos: -2.5054932,1.5886326
+      pos: -2.5006485,1.5331173
       parent: 1
-    - type: Storage
-      storedItems:
-        11:
-          position: 0,0
-          _rotation: East
-        12:
-          position: 2,0
-          _rotation: South
-        3:
-          position: 3,0
-          _rotation: South
-        5:
-          position: 0,1
-          _rotation: South
-        7:
-          position: 1,1
-          _rotation: South
-        9:
-          position: 3,1
-          _rotation: South
-    - type: ContainerContainer
-      containers:
-        storagebase: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 11
-          - 12
-          - 3
-          - 5
-          - 7
-          - 9
-    - type: UseDelay
-      delays:
-        default:
-          endTime: 539.9996692
-          startTime: 2381.564285
-          length: 1
-        quickInsert:
-          length: 0.5
-        storage:
-          endTime: 538.9996692
-          startTime: 2381.564285
 - proto: OperatingTable
   entities:
   - uid: 312
@@ -3422,14 +3288,6 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-- proto: RegenerativeMesh
-  entities:
-  - uid: 12
-    components:
-    - type: Transform
-      parent: 2
-    - type: Physics
-      canCollide: False
 - proto: ReinforcedPlasmaWindow
   entities:
   - uid: 354
@@ -3761,50 +3619,6 @@ entities:
           maxVol: 10
           name: null
           reagents: []
-- proto: SyringeEphedrine
-  entities:
-  - uid: 3
-    components:
-    - type: MetaData
-      name: syringe (ephedrine)
-    - type: Transform
-      parent: 2
-    - type: Label
-      currentLabel: ephedrine
-    - type: SolutionContainerManager
-      solutions: null
-      containers:
-      - injector
-    - type: Physics
-      canCollide: False
-    - type: NameModifier
-      baseName: syringe
-    - type: ContainerContainer
-      containers:
-        solution@injector: !type:ContainerSlot
-          ent: 4
-- proto: SyringeSaline
-  entities:
-  - uid: 5
-    components:
-    - type: MetaData
-      name: syringe (saline)
-    - type: Transform
-      parent: 2
-    - type: Label
-      currentLabel: saline
-    - type: SolutionContainerManager
-      solutions: null
-      containers:
-      - injector
-    - type: Physics
-      canCollide: False
-    - type: NameModifier
-      baseName: syringe
-    - type: ContainerContainer
-      containers:
-        solution@injector: !type:ContainerSlot
-          ent: 6
 - proto: TableFancyRed
   entities:
   - uid: 396
