@@ -140,11 +140,15 @@ public abstract class SharedContentEyeSystem : EntitySystem
         Dirty(uid, component);
     }
 
-    public void UpdateEyeOffset(Entity<EyeComponent?> eye)
+    public void UpdateEyeOffset(Entity<ContentEyeComponent, EyeComponent?> eye)
     {
         var ev = new GetEyeOffsetEvent();
         RaiseLocalEvent(eye, ref ev);
-        _eye.SetOffset(eye, ev.Offset, eye);
+
+        var evRelayed = new GetEyeOffsetRelayedEvent();
+        RaiseLocalEvent(eye, ref evRelayed);
+
+        _eye.SetOffset(eye, ev.Offset + evRelayed.Offset, eye);
     }
 
     /// <summary>
