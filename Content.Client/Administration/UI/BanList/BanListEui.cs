@@ -1,4 +1,4 @@
-﻿using System.Numerics;
+using System.Numerics;
 using Content.Client.Administration.UI.BanList.Bans;
 using Content.Client.Administration.UI.BanList.RoleBans;
 using Content.Client.Eui;
@@ -38,7 +38,7 @@ public sealed class BanListEui : BaseEui
         if (_popup != null)
         {
             _popup.Close();
-            _popup.Dispose();
+            _popup.Parent?.RemoveChild(_popup);
             _popup = null;
         }
 

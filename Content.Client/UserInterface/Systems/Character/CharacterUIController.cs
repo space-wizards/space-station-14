@@ -50,7 +50,7 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
     {
         if (_window != null)
         {
-            _window.Dispose();
+            _window.Parent?.RemoveChild(_window);
             _window = null;
         }
 
