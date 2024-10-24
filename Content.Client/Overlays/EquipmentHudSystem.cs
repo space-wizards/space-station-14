@@ -104,7 +104,9 @@ public abstract class EquipmentHudSystem<T> : EntitySystem where T : IComponent
 
     private void RefreshOverlay(EntityUid uid)
     {
-        if (uid != _player.LocalSession?.AttachedEntity)
+        if (_player.LocalSession?.AttachedEntity != null)
+            uid = _player.LocalSession.AttachedEntity.Value;
+        else
             return;
 
         var ev = new RefreshEquipmentHudEvent<T>(TargetSlots);
