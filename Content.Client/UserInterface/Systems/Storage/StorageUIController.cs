@@ -8,9 +8,10 @@ using Content.Client.Verbs.UI;
 using Content.Shared.CCVar;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
-using Content.Shared.Item;
 using Content.Shared.Storage;
+using Robust.Client.GameObjects;
 using Robust.Client.Input;
+using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Client.UserInterface.Controls;
@@ -22,14 +23,24 @@ namespace Content.Client.UserInterface.Systems.Storage;
 
 public sealed class StorageUIController : UIController, IOnSystemChanged<StorageSystem>
 {
+    /*
+     * Things are a bit over the shop but essentially
+     * - Clicking into storagewindow is handled via storagewindow
+     * - Clicking out of it is via ItemGridPiece
+     * - Dragging around is handled here
+     * - Drawing is handled via ItemGridPiece
+     * - StorageSystem handles any sim stuff around open windows.
+     */
+
     [Dependency] private readonly IConfigurationManager _configuration = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IInputManager _input = default!;
-    [UISystemDependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
+    [Dependency] private readonly IPlayerManager _player = default!;
+    [UISystemDependency] private readonly HandsSystem _hands = default!;
+    [UISystemDependency] private readonly StorageSystem _storage = default!;
 
     private readonly DragDropHelper<ItemGridPiece> _menuDragHelper;
 
-    public ItemGridPiece? DraggingGhost;
+    public ItemGridPiece? DraggingGhost => _menuDragHelper.Dragged;
     public Angle DraggingRotation = Angle.Zero;
     public bool StaticStorageUIEnabled;
     public bool OpaqueStorageWindow;
@@ -39,10 +50,20 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
 
     /*
      * TODO:
-     * - Fix the BRRT when opening or w/e it was
+     * - Fix transfer back not working.
+     * - Remove hand pickup.
+     * - Some slots invalid (top-left) on new hotbar thing
+     * - Drag-drop lets you go to invalid tiles in your own bag
+     * - Dragging to new bag still doesn't work
+     * - Add title bar if it allows multi-window.
+     *
      * - Fix the back button so it goes up nested, nested should open at the same spot.
      * - Add cvar to allow nesting or not
      * - Don't forget static attach to hotbargui or whatever, also dear god fix it getting bumped PLEASE.
+     * CVars:
+     * - Static (AKA attach to hotbar)
+     * - Window title
+     * - Multiple allowed
      */
 
     public StorageUIController()
@@ -198,41 +219,72 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
         if (args.Function != ContentKeyFunctions.MoveStoredItem)
             return;
 
-        if (window.StorageEntity is not { } sourceStorage ||
-            !EntityManager.TryGetComponent<StorageComponent>(sourceStorage, out var storageComp))
+        // Want to get the control under the dragged control.
+        // This means we can drag the original control around (and not hide the original).
+        control.MouseFilter = Control.MouseFilterMode.Ignore;
+        var targetControl = UIManager.MouseGetControl(args.PointerLocation);
+        var targetStorage = targetControl as StorageWindow;
+        control.MouseFilter = Control.MouseFilterMode.Pass;
+
+        var localPlayer = _player.LocalEntity;
+
+        // If we tried to drag it on top of another grid piece then cancel out.
+        if (targetControl is ItemGridPiece || window.StorageEntity is not { } sourceStorage || localPlayer == null)
         {
+            window.Reclaim(control.Location, control);
+            args.Handle();
             _menuDragHelper.EndDrag();
             return;
         }
 
-        var targetStorage = UIManager.CurrentlyHovered as StorageWindow;
-
-        if (DraggingGhost is { } draggingGhost)
+        if (_menuDragHelper.IsDragging && DraggingGhost is { } draggingGhost)
         {
             var dragEnt = draggingGhost.Entity;
             var dragLoc = draggingGhost.Location;
 
-            var position = window.GetMouseGridPieceLocation(dragEnt, dragLoc);
-
             // Dragging in the same storage
             // The existing ItemGridPiece just stops rendering but still exists so check if it's hovered.
-            if (targetStorage == window || UIManager.CurrentlyHovered == control)
+            if (targetStorage == window)
             {
+                var position = targetStorage.GetMouseGridPieceLocation(dragEnt, dragLoc);
+                var newLocation = new ItemStorageLocation(DraggingRotation, position);
+
                 EntityManager.RaisePredictiveEvent(new StorageSetItemLocationEvent(
                     EntityManager.GetNetEntity(draggingGhost.Entity),
                     EntityManager.GetNetEntity(sourceStorage),
-                    new ItemStorageLocation(DraggingRotation, position)));
+                    newLocation));
+
+                window.Reclaim(newLocation, control);
             }
             // Dragging to new storage
             else if (targetStorage?.StorageEntity != null && targetStorage != window)
             {
-                /*
-                EntityManager.RaisePredictiveEvent(new StorageSetItemLocationEvent(
-                    EntityManager.GetNetEntity(draggingGhost.Entity),
-                    EntityManager.GetNetEntity(targetStorage.StorageEntity.Value),
-                    new ItemStorageLocation(DraggingRotation, position)));
-                    */
+                var position = targetStorage.GetMouseGridPieceLocation(dragEnt, dragLoc);
+                var newLocation = new ItemStorageLocation(DraggingRotation, position);
+
+                // Check it fits and we can move to hand (no free transfers).
+                if (_storage.ItemFitsInGridLocation(
+                        (dragEnt, null),
+                        (targetStorage.StorageEntity.Value, null),
+                        newLocation))
+                {
+                    // Can drop and move.
+                    EntityManager.RaisePredictiveEvent(new StorageTransferItemEvent(
+                        EntityManager.GetNetEntity(dragEnt),
+                        EntityManager.GetNetEntity(targetStorage.StorageEntity.Value),
+                        newLocation));
+
+                    window.RemoveGrid(control);
+                    targetStorage.Reclaim(newLocation, control);
+                    DraggingRotation = Angle.Zero;
+                }
+                else
+                {
+                    // Cancel it (rather than dropping).
+                    window.Reclaim(dragLoc, control);
+                }
             }
+            // Dropped it randomly so remove it.
             else
             {
                 EntityManager.RaisePredictiveEvent(new StorageRemoveItemEvent(
@@ -241,9 +293,11 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
             }
 
             _menuDragHelper.EndDrag();
-            window.BuildItemPieces();
+            window.FlagDirty();
+            targetStorage?.FlagDirty();
         }
-        else //if we just clicked, then take it out of the bag.
+        // If we just clicked, then take it out of the bag / recursive storage.
+        else
         {
             _menuDragHelper.EndDrag();
             EntityManager.RaisePredictiveEvent(new StorageInteractWithItemEvent(
@@ -259,12 +313,7 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
         if (_menuDragHelper.Dragged is not { } dragged)
             return false;
 
-        DraggingGhost = new ItemGridPiece(
-            (dragged.Entity, EntityManager.GetComponent<ItemComponent>(dragged.Entity)),
-            dragged.Location,
-            EntityManager);
-        DraggingGhost.MouseFilter = Control.MouseFilterMode.Ignore;
-        DraggingGhost.Visible = true;
+        DraggingGhost!.Orphan();
         DraggingRotation = dragged.Location.Rotation;
 
         UIManager.PopupRoot.AddChild(DraggingGhost);
@@ -300,8 +349,6 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
         if (DraggingGhost == null)
             return;
 
-        DraggingGhost.Orphan();
-        DraggingGhost = null;
         DraggingRotation = Angle.Zero;
     }
 

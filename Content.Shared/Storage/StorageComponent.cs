@@ -184,6 +184,26 @@ namespace Content.Shared.Storage
     }
 
     [Serializable, NetSerializable]
+    public sealed class StorageTransferItemEvent : EntityEventArgs
+    {
+        public readonly NetEntity ItemEnt;
+
+        /// <summary>
+        /// Target storage to receive the transfer.
+        /// </summary>
+        public readonly NetEntity StorageEnt;
+
+        public readonly ItemStorageLocation Location;
+
+        public StorageTransferItemEvent(NetEntity itemEnt, NetEntity storageEnt, ItemStorageLocation location)
+        {
+            ItemEnt = itemEnt;
+            StorageEnt = storageEnt;
+            Location = location;
+        }
+    }
+
+    [Serializable, NetSerializable]
     public sealed class StorageInsertItemIntoLocationEvent : EntityEventArgs
     {
         public readonly NetEntity ItemEnt;

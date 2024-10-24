@@ -14,7 +14,7 @@
                       Access="Public"
                       HorizontalAlignment="Center"
                       Margin="10">
-            <storage:StorageContainer
+            <storage:StorageWindow
                 Name="StoragePanel"
                 Visible="False"/>
         </BoxContainer>

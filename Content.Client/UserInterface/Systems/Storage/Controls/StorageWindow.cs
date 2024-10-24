@@ -11,12 +11,14 @@ using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
+using Robust.Shared.Collections;
+using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Client.UserInterface.Systems.Storage.Controls;
 
-public sealed class StorageContainer : BaseWindow
+public sealed class StorageWindow : BaseWindow
 {
     [Dependency] private readonly IEntityManager _entity = default!;
     private readonly StorageUIController _storageController;
@@ -26,6 +28,14 @@ public sealed class StorageContainer : BaseWindow
     private readonly GridContainer _pieceGrid;
     private readonly GridContainer _backgroundGrid;
     private readonly GridContainer _sidebar;
+
+    private readonly Dictionary<EntityUid, (ItemStorageLocation Loc, ItemGridPiece Control)> _pieces = new();
+    private readonly List<Control> _controlGrid = new();
+
+    private ValueList<EntityUid> _contained = new();
+    private ValueList<EntityUid> _toRemove = new();
+
+    private bool _isDirty;
 
     public event Action<GUIBoundKeyEventArgs, ItemGridPiece>? OnPiecePressed;
     public event Action<GUIBoundKeyEventArgs, ItemGridPiece>? OnPieceUnpressed;
@@ -51,9 +61,10 @@ public sealed class StorageContainer : BaseWindow
     private readonly string _sidebarFatTexturePath = "Storage/sidebar_fat";
     private Texture? _sidebarFatTexture;
 
-    public StorageContainer()
+    public StorageWindow()
     {
         IoCManager.InjectDependencies(this);
+        Resizable = false;
 
         _storageController = UserInterfaceManager.GetUIController<StorageUIController>();
 
@@ -135,7 +146,7 @@ public sealed class StorageContainer : BaseWindow
 
     private void BuildGridRepresentation()
     {
-        if (!_entity.TryGetComponent<StorageComponent>(StorageEntity, out var comp) || !comp.Grid.Any())
+        if (!_entity.TryGetComponent<StorageComponent>(StorageEntity, out var comp) || comp.Grid.Count == 0)
             return;
 
         var boundingGrid = comp.Grid.GetBoundingBox();
@@ -145,11 +156,11 @@ public sealed class StorageContainer : BaseWindow
         #region Sidebar
         _sidebar.Children.Clear();
         _sidebar.Rows = boundingGrid.Height + 1;
+
+        // TODO: Move to frameupdate, checks if parent container exists and has storagecomp
         var exitButton = new TextureButton
         {
-            TextureNormal = _entity.System<StorageSystem>().OpenStorageAmount == 1
-                ?_exitTexture
-                : _backTexture,
+            TextureNormal = _exitTexture,
             Scale = new Vector2(2, 2),
         };
         exitButton.OnPressed += _ =>
@@ -203,7 +214,7 @@ public sealed class StorageContainer : BaseWindow
 
         #endregion
 
-        BuildItemPieces();
+        FlagDirty();
     }
 
     public void BuildBackground()
@@ -240,70 +251,117 @@ public sealed class StorageContainer : BaseWindow
         }
     }
 
+    public void Reclaim(ItemStorageLocation location, ItemGridPiece draggingGhost)
+    {
+        draggingGhost.Orphan();
+        _pieces[draggingGhost.Entity] = (location, draggingGhost);
+        draggingGhost.Location = location;
+        var controlIndex = GetGridIndex(draggingGhost);
+        _controlGrid[controlIndex].AddChild(draggingGhost);
+    }
+
+    private int GetGridIndex(ItemGridPiece piece)
+    {
+        return piece.Location.Position.X + piece.Location.Position.Y * _pieceGrid.Columns;
+    }
+
+    public void FlagDirty()
+    {
+        _isDirty = true;
+    }
+
+    public void RemoveGrid(ItemGridPiece control)
+    {
+        _pieces.Remove(control.Entity);
+    }
+
     public void BuildItemPieces()
     {
         if (!_entity.TryGetComponent<StorageComponent>(StorageEntity, out var storageComp))
             return;
 
-        if (!storageComp.Grid.Any())
+        if (storageComp.Grid.Count == 0)
             return;
 
         var boundingGrid = storageComp.Grid.GetBoundingBox();
         var size = _emptyTexture!.Size * 2;
-        var containedEntities = storageComp.Container.ContainedEntities.Reverse().ToArray();
+        _contained.Clear();
+        _contained.AddRange(storageComp.Container.ContainedEntities.Reverse());
 
-        //todo. at some point, we may want to only rebuild the pieces that have actually received new data.
-
-        _pieceGrid.RemoveAllChildren();
-        _pieceGrid.Rows = boundingGrid.Height + 1;
-        _pieceGrid.Columns = boundingGrid.Width + 1;
-        for (var y = boundingGrid.Bottom; y <= boundingGrid.Top; y++)
+        // Build the grid representation
+        if (_pieceGrid.Rows - 1 != boundingGrid.Height || _pieceGrid.Columns - 1 != boundingGrid.Width)
         {
-            for (var x = boundingGrid.Left; x <= boundingGrid.Right; x++)
+            _pieceGrid.Rows = boundingGrid.Height + 1;
+            _pieceGrid.Columns = boundingGrid.Width + 1;
+            _controlGrid.Clear();
+
+            for (var y = boundingGrid.Bottom; y <= boundingGrid.Top; y++)
             {
-                var control = new Control
+                for (var x = boundingGrid.Left; x <= boundingGrid.Right; x++)
                 {
-                    MinSize = size
-                };
-
-                var currentPosition = new Vector2i(x, y);
-
-                foreach (var (itemEnt, itemPos) in storageComp.StoredItems)
-                {
-                    if (itemPos.Position != currentPosition)
-                        continue;
-
-                    if (_entity.TryGetComponent<ItemComponent>(itemEnt, out var itemEntComponent))
+                    var control = new Control
                     {
-                        ItemGridPiece gridPiece;
+                        MinSize = size
+                    };
 
-                        if (_storageController.CurrentlyDragging?.Entity is { } dragging
-                            && dragging == itemEnt)
-                        {
-                            _storageController.CurrentlyDragging.Orphan();
-                            gridPiece = _storageController.CurrentlyDragging;
-                        }
-                        else
-                        {
-                            gridPiece = new ItemGridPiece((itemEnt, itemEntComponent), itemPos, _entity)
-                            {
-                                MinSize = size,
-                                Marked = Array.IndexOf(containedEntities, itemEnt) switch
-                                {
-                                    0 => ItemGridPieceMarks.First,
-                                    1 => ItemGridPieceMarks.Second,
-                                    _ => null,
-                                }
-                            };
-                            gridPiece.OnPiecePressed += OnPiecePressed;
-                            gridPiece.OnPieceUnpressed += OnPieceUnpressed;
-                        }
-
-                        control.AddChild(gridPiece);
-                    }
+                    _controlGrid.Add(control);
+                    _pieceGrid.AddChild(control);
                 }
+            }
+        }
 
-                _pieceGrid.AddChild(control);
+        _toRemove.Clear();
+
+        // Remove entities no longer relevant / Update existing ones
+        foreach (var (ent, data) in _pieces)
+        {
+            if (storageComp.StoredItems.TryGetValue(ent, out var updated))
+            {
+                if (data.Loc.Equals(updated))
+                    continue;
+
+                // Update
+                data.Control.Location = updated;
+                var index = GetGridIndex(data.Control);
+                data.Control.Orphan();
+                _controlGrid[index].AddChild(data.Control);
+                _pieces[ent] = (updated, data.Control);
+                continue;
+            }
+
+            _toRemove.Add(ent);
+        }
+
+        foreach (var ent in _toRemove)
+        {
+            _pieces.Remove(ent, out var data);
+            data.Control.Orphan();
+        }
+
+        // Add new ones
+        foreach (var (ent, loc) in storageComp.StoredItems)
+        {
+            if (_pieces.TryGetValue(ent, out var existing) || existing.Loc.Equals(loc))
+                continue;
+
+            if (_entity.TryGetComponent<ItemComponent>(ent, out var itemEntComponent))
+            {
+                var gridPiece = new ItemGridPiece((ent, itemEntComponent), loc, _entity)
+                {
+                    MinSize = size,
+                    Marked = _contained.IndexOf(ent) switch
+                    {
+                        0 => ItemGridPieceMarks.First,
+                        1 => ItemGridPieceMarks.Second,
+                        _ => null,
+                    }
+                };
+                gridPiece.OnPiecePressed += OnPiecePressed;
+                gridPiece.OnPieceUnpressed += OnPieceUnpressed;
+                var controlIndex = loc.Position.X + loc.Position.Y * (boundingGrid.Width + 1);
+
+                _controlGrid[controlIndex].AddChild(gridPiece);
+                _pieces[ent] = (loc, gridPiece);
             }
         }
     }
@@ -315,6 +373,15 @@ public sealed class StorageContainer : BaseWindow
         if (!IsOpen)
             return;
 
+        if (_isDirty)
+        {
+            _isDirty = false;
+            BuildItemPieces();
+        }
+
+        // TODO: Back button drawing here
+        var containerSystem = _entity.System<SharedContainerSystem>();
+
         var itemSystem = _entity.System<ItemSystem>();
         var storageSystem = _entity.System<StorageSystem>();
         var handsSystem = _entity.System<HandsSystem>();
@@ -324,7 +391,7 @@ public sealed class StorageContainer : BaseWindow
             child.ModulateSelfOverride = Color.FromHex("#222222");
         }
 
-        if (UserInterfaceManager.CurrentlyHovered is StorageContainer con && con != this)
+        if (UserInterfaceManager.CurrentlyHovered is StorageWindow con && con != this)
             return;
 
         if (!_entity.TryGetComponent<StorageComponent>(StorageEntity, out var storageComponent))
@@ -373,7 +440,7 @@ public sealed class StorageContainer : BaseWindow
                 continue;
 
             float spot = 0;
-            var marked = new List<Control>();
+            var marked = new ValueList<Control>();
 
             foreach (var location in locations.Value)
             {
@@ -499,15 +566,5 @@ public sealed class StorageContainer : BaseWindow
                 }
             }
         }
-    }
-
-    public override void Close()
-    {
-        base.Close();
-
-        if (StorageEntity == null)
-            return;
-
-        _entity.System<StorageSystem>().CloseStorageWindow(StorageEntity.Value);
     }
 }
