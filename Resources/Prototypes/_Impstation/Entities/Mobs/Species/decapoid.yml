@@ -1,0 +1,172 @@
+- type: entity
+  save: false
+  name: Urist McCrab
+  parent: BaseMobSpeciesOrganic
+  id: MobDecapoid
+  abstract: true
+  components:
+  - type: SnailSpeed
+    snailSlowdownModifier: 0.8
+  - type: Absorbable
+  - type: Hunger
+  - type: Icon
+    sprite: _Impstation/Mobs/Species/Decapoid/parts.rsi
+    state: full
+  - type: Respirator
+    damage:
+      types:
+        Asphyxiation: 2
+    damageRecovery:
+      types:
+        Asphyxiation: -1.0 # todo: make them breathe water
+  - type: Sprite
+    noRot: true
+    drawdepth: Mobs
+    scale: 1, 1
+  - type: Body
+    prototype: Decapoid
+    requiredLegs: 2
+  - type: FootstepModifier
+    footstepSoundCollection:
+      path: /Audio/Effects/Footsteps/snailstep.ogg # todo: custom sounds
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeatCrab
+      amount: 1
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 120
+        restitution: 0.0
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: Vocal
+    sounds:
+      Male: UnisexSnail
+      Female: UnisexSnail
+      Unsexed: UnisexSnail # todo: custom sounds
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Decapoid
+  - type: DamageVisuals
+    damageOverlayGroups:
+      Brute:
+        sprite: Mobs/Effects/snail_brute_damage.rsi # todo: custom brutes
+        color: "#162581"
+  - type: Reactive
+    groups:
+      Flammable: [ Touch ]
+      Extinguish: [ Touch ]
+      Acidic:  [ Touch ]
+  - type: MovementSpeedModifier
+    baseSprintSpeed: 3.5
+    baseWalkSpeed: 1.5
+    weightlessAcceleration: 1.7
+    weightlessFriction: 1.3
+    weightlessModifier: 1.1
+  - type: Temperature
+    heatDamageThreshold: 380
+    coldDamageThreshold: 0 # immune to spacing
+    currentTemperature: 310
+    specificHeat: 42
+    coldDamage:
+      types:
+        Cold : 0 # immune to spacing.
+    heatDamage:
+      types:
+        Heat : 1
+  - type: TemperatureSpeed
+    thresholds:
+      309: 0.8
+      304: 0.8
+      299: 0.8
+      294: 0.8
+  - type: Bloodstream
+    bloodReagent: CopperBlood 
+  - type: Inventory
+    templateId: decapoid
+    displacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Species/Decapoid/displacement.rsi
+            state: jumpsuit
+      head:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Species/Decapoid/displacement.rsi
+            state: jumpsuit
+      outerClothing:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Species/Decapoid/displacement.rsi
+            state: jumpsuit
+      eyes:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Species/Decapoid/displacement.rsi
+            state: jumpsuit
+      mask:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Species/Decapoid/displacement.rsi
+            state: jumpsuit
+
+  - type: Speech
+    speechSounds: Snail # todo: custom sounds
+  - type: TypingIndicator
+    proto: Snail # todo: custom indicator
+  - type: HumanoidAppearance
+    species: Decapoid
+    hideLayersOnEquip:
+    - Hair
+    - Snout
+
+- type: entity
+  parent: BaseSpeciesDummy
+  id: MobDecapoidDummy
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HumanoidAppearance
+    species: Decapoid
+  - type: Body
+    prototype: Decapoid
+  - type: Inventory
+    templateId: decapoid
+    displacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Species/Decapoid/displacement.rsi
+            state: jumpsuit
+      head:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Species/Decapoid/displacement.rsi
+            state: jumpsuit
+      outerClothing:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Species/Decapoid/displacement.rsi
+            state: jumpsuit
+      eyes:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Species/Decapoid/displacement.rsi
+            state: jumpsuit
+      mask:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Species/Decapoid/displacement.rsi
+            state: jumpsuit
+      back:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Species/Decapoid/displacement.rsi
+            state: jumpsuit
