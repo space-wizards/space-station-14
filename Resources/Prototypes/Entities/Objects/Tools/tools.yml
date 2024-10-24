@@ -338,6 +338,41 @@
     key: enum.RcdUiKey.Key
 
 - type: entity
+  id: RPD
+  parent: RCD
+  name: RPD
+  description: A device used to rapidly pipe things.
+  components:
+  - type: RCD
+    isRpd: true
+    availablePrototypes:
+    - PipeFourway
+    - PipeStraight
+    - PipeBend
+    - PipeTJunction
+    - OutletInjector
+    - ManualValve
+    - VolumetricPump
+    - PressurePump
+    - VentScrubber
+    - PressureValve
+    - DualPortVent
+    - VentGas
+    - VentPassive
+    - MixerGas
+    - Radiator
+    - SignalValve
+    - CanisterPort
+    - FilterGas
+    - Deconstruct
+  - type: LimitedCharges
+    maxCharges: 45
+    charges: 45
+  - type: Sprite
+    sprite: Objects/Tools/rpd.rsi
+
+
+- type: entity
   id: RCDEmpty
   parent: RCD
   suffix: Empty
