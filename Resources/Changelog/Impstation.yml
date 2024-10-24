@@ -3281,3 +3281,10 @@
   id: 406
   time: '2024-10-22T01:05:49.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/534
+- author: mqole
+  changes:
+  - message: Deck of cards added to loadout trinkets.
+    type: Add
+  id: 407
+  time: '2024-10-24T11:57:28.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/541
