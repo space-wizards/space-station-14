@@ -106,8 +106,8 @@ public sealed class HeadsetSystem : SharedHeadsetSystem
 
         _netMan.ServerSendMessage(args.ChatMsg, actor.PlayerSession.Channel);
 
-        //if (uid == args.RadioSource)
-        //    return;
+        if (uid == args.RadioSource)
+            return;
 
         if (!component.ToggledSoundChannels.Contains(args.Channel.ID))
             return;
