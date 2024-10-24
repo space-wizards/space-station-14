@@ -53,7 +53,7 @@ public sealed class OptionsUIController : UIController
         _optionsWindow.MoveToFront();
     }
 
-    public void ToggleWindow()
+    public OptionsMenu ToggleWindow()
     {
         EnsureWindow();
 
@@ -65,5 +65,7 @@ public sealed class OptionsUIController : UIController
         {
             OpenWindow();
         }
+
+        return _optionsWindow;
     }
 }
