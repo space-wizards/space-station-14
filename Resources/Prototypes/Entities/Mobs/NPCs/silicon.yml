@@ -268,6 +268,7 @@
     node: bot
   - type: Absorbent
     pickupAmount: 10
+    useAbsorberSolution: true
   - type: UseDelay
     delay: 2
   - type: SolutionRegeneration
