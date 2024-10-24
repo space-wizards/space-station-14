@@ -62,7 +62,7 @@ namespace Content.Server.Power.EntitySystems
             {
                 Text = Loc.GetString("verb-debug-toggle-need-power"),
                 Category = VerbCategory.Debug,
-                Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/smite.svg.192dpi.png")), // "smite" is a lightning bolt
+                Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/smite.svg.192dpi.png")), // "smite" is a lightning bolt
                 Act = () => component.NeedsPower = !component.NeedsPower
             });
         }
@@ -71,7 +71,8 @@ namespace Content.Server.Power.EntitySystems
         {
             foreach (var receiver in component.LinkedReceivers)
             {
-                receiver.NetworkLoad.LinkedNetwork = default;
+                var comp = Comp<ApcPowerReceiverComponent>(receiver);
+                comp.NetworkLoad.LinkedNetwork = default;
                 component.Net?.QueueNetworkReconnect();
             }
 
@@ -100,7 +101,7 @@ namespace Content.Server.Power.EntitySystems
         {
             if (_recQuery.TryGetComponent(args.Receiver, out var receiver))
             {
-                provider.Comp.AddReceiver(receiver);
+                provider.Comp.AddReceiver((args.Receiver, receiver));
             }
         }
 
@@ -108,13 +109,13 @@ namespace Content.Server.Power.EntitySystems
         {
             if (_recQuery.TryGetComponent(args.Receiver, out var receiver))
             {
-                provider.RemoveReceiver(receiver);
+                provider.RemoveReceiver((args.Receiver, receiver));
             }
         }
 
         private void AddSwitchPowerVerb(EntityUid uid, PowerSwitchComponent component, GetVerbsEvent<AlternativeVerb> args)
         {
-            if(!args.CanAccess || !args.CanInteract)
+            if (!args.CanAccess || !args.CanInteract)
                 return;
 
             if (!HasComp<HandsComponent>(args.User))
@@ -132,7 +133,7 @@ namespace Content.Server.Power.EntitySystems
                 {
                     TogglePower(uid, user: args.User);
                 },
-                Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/Spare/poweronoff.svg.192dpi.png")),
+                Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/Spare/poweronoff.svg.192dpi.png")),
                 Text = Loc.GetString("power-switch-component-toggle-verb"),
                 Priority = -3
             };
