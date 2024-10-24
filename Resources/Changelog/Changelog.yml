@@ -3943,9 +3943,6 @@
     type: Add
   id: 7518
   time: '2024-10-17T01:57:43.0000000+00:00'
-<<<<<<< HEAD
-  url: https://github.com/space-wizards/space-station-14/pull/32848
-=======
   url: https://github.com/space-wizards/space-station-14/pull/32848
 - author: deltanedas
   changes:
@@ -4211,4 +4208,3 @@
   id: 7550
   time: '2024-10-23T12:49:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31910
->>>>>>> upstream/master
