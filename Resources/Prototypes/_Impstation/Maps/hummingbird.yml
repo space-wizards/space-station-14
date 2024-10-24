@@ -12,7 +12,7 @@
           mapNameTemplate: '{0} Hummingbird Station {1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
-            prefixCreator: 'IMP-DC'
+            prefixCreator: '-IMP-DC'
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/Shuttles/emergency_courser.yml
         - type: StationJobs
@@ -39,6 +39,7 @@
             Chemist: [ 2, 2 ]
             MedicalIntern: [ 3, 3 ]
             Paramedic: [ 1, 1 ]
+            Psychologist: [ 1, 1 ]
             #science
             ResearchDirector: [ 1, 1 ]
             Scientist: [ 4, 4 ]
