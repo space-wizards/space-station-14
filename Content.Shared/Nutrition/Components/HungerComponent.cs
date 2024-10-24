@@ -18,7 +18,7 @@ public sealed partial class HungerComponent : Component
     /// </summary>
     [DataField("currentHunger"), ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
-    public float CurrentHunger;
+    public float CurrentHunger = -1f;
 
     /// <summary>
     /// The base amount at which <see cref="CurrentHunger"/> decays.
@@ -62,6 +62,15 @@ public sealed partial class HungerComponent : Component
         { HungerThreshold.Starving, 50.0f },
         { HungerThreshold.Dead, 0.0f }
     };
+
+    /// <summary>
+    /// The minimum and maximum amount that hunger can be randomly set at when an entity is spawned
+    /// </summary>
+    [DataField("hungerMin"), ViewVariables(VVAccess.ReadWrite)]
+    public float hungerVariationMin = 110.0f;
+
+    [DataField("hungerMax"), ViewVariables(VVAccess.ReadWrite)]
+    public float hungerVariationMax = 150.0f;
 
     /// <summary>
     /// A dictionary relating hunger thresholds to corresponding alerts.
