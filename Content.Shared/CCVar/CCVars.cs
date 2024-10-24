@@ -1478,6 +1478,18 @@ namespace Content.Shared.CCVar
             CVarDef.Create("votekick.initiator_ghost_requirement", true, CVar.SERVERONLY);
 
         /// <summary>
+        ///     Should the initiator be whitelisted to initiate a votekick?
+        /// </summary>
+        public static readonly CVarDef<bool> VotekickInitiatorWhitelistedRequirement =
+            CVarDef.Create("votekick.initiator_whitelist_requirement", true, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Should the initiator be able to start a votekick if they are bellow the votekick.voter_playtime requirement?
+        /// </summary>
+        public static readonly CVarDef<bool> VotekickInitiatorTimeRequirement =
+            CVarDef.Create("votekick.initiator_time_requirement", false, CVar.SERVERONLY);
+
+        /// <summary>
         ///     Whether a votekick voter must be a ghost or not.
         /// </summary>
         public static readonly CVarDef<bool> VotekickVoterGhostRequirement =
