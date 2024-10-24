@@ -225,15 +225,13 @@ namespace Content.Client.Construction.UI
             _constructionView.RecipesGridScrollContainer.Visible = _constructionView.GridViewButtonPressed;
             _constructionView.Recipes.Visible = !_constructionView.GridViewButtonPressed;
 
-            var spriteSystem = _systemManager.GetEntitySystem<SpriteSystem>();
-
             if (_constructionView.GridViewButtonPressed)
             {
                 foreach (var recipe in recipes)
                 {
                     var itemButton = new TextureButton
                     {
-                        TextureNormal = spriteSystem.Frame0(recipe.Icon),
+                        TextureNormal = _spriteSystem.Frame0(recipe.Icon),
                         VerticalAlignment = Control.VAlignment.Center,
                         Name = recipe.Name,
                         ToolTip = recipe.Name,
@@ -335,11 +333,10 @@ namespace Content.Client.Construction.UI
 
         private void PopulateInfo(ConstructionPrototype prototype)
         {
-            var spriteSys = _systemManager.GetEntitySystem<SpriteSystem>();
             _constructionView.ClearRecipeInfo();
 
             _constructionView.SetRecipeInfo(
-                prototype.Name, prototype.Description, spriteSys.Frame0(prototype.Icon),
+                prototype.Name, prototype.Description, _spriteSystem.Frame0(prototype.Icon),
                 prototype.Type != ConstructionType.Item,
                 !_favoritedRecipes.Contains(prototype));
 
@@ -352,7 +349,6 @@ namespace Content.Client.Construction.UI
             if (_constructionSystem?.GetGuide(prototype) is not { } guide)
                 return;
 
-            var spriteSys = _systemManager.GetEntitySystem<SpriteSystem>();
 
             foreach (var entry in guide.Entries)
             {
@@ -368,7 +364,7 @@ namespace Content.Client.Construction.UI
                 // The padding needs to be applied regardless of text length... (See PadLeft documentation)
                 text = text.PadLeft(text.Length + entry.Padding);
 
-                var icon = entry.Icon != null ? spriteSys.Frame0(entry.Icon) : Texture.Transparent;
+                var icon = entry.Icon != null ? _spriteSystem.Frame0(entry.Icon) : Texture.Transparent;
                 stepList.AddItem(text, icon, false);
             }
         }
