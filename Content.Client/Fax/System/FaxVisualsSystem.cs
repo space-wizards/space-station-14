@@ -34,7 +34,7 @@ public sealed class FaxVisualsSystem : EntitySystem
             _player.Play(uid,
                 new Animation()
                 {
-                    Length = TimeSpan.FromSeconds(2.4),
+                    Length = TimeSpan.FromSeconds(1.6),
                     AnimationTracks =
                     {
                         new AnimationTrackSpriteFlick()
