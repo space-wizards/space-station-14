@@ -29,7 +29,7 @@
   materials:
     Steel: 200
     Plastic: 100
-    
+
 - type: latheRecipe
   id: Clippers
   result: HydroponicsToolClippers
