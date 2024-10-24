@@ -1,8 +1,8 @@
 using Content.Server.Administration.Components;
 using Content.Shared.Climbing.Components;
+using Content.Shared.Clumsy;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
-using Content.Shared.Clumsy;
 using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Administration.Systems;

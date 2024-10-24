@@ -1,18 +1,18 @@
+using Content.Shared.CCVar;
 using Content.Shared.Chemistry.Hypospray.Events;
-using Content.Shared.Medical;
-using Content.Shared.Weapons.Ranged.Events;
+using Content.Shared.Climbing.Components;
 using Content.Shared.Climbing.Events;
-using Robust.Shared.Random;
-using Robust.Shared.Audio.Systems;
-using Robust.Shared.Audio;
+using Content.Shared.Damage;
+using Content.Shared.IdentityManagement;
+using Content.Shared.Medical;
 using Content.Shared.Popups;
 using Content.Shared.Stunnable;
-using Content.Shared.Damage;
-using Robust.Shared.Timing;
-using Content.Shared.IdentityManagement;
-using Content.Shared.CCVar;
-using Content.Shared.Climbing.Components;
+using Content.Shared.Weapons.Ranged.Events;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
+using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Clumsy;
 
