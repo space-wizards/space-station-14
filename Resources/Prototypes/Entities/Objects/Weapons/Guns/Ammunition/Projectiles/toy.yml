@@ -32,3 +32,20 @@
   - type: ThrowingAngle
     angle: 180
   - type: LandAtCursor
+
+- type: entity
+  id: DonksoftDart
+  description: Ouch thats gotta sting.
+  name: Donksoft dart
+  parent: [BulletFoam, BaseSyndicateContraband]
+  components:
+  - type: StaminaDamageOnCollide
+    damage: 15
+  - type: Sprite
+    sprite: Objects/Fun/toys.rsi
+    layers:
+      - state: donksoft-dart
+  - type: Tag
+    tags:
+     - BulletFoam
+     - Donksoftfoam

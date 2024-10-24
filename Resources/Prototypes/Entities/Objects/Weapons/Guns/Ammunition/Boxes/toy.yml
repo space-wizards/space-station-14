@@ -47,3 +47,16 @@
       - state: mag-1
         map: ["enum.GunVisualLayers.Mag"]
       - state: cap
+
+- type: entity
+  parent: [BoxDonkSoftBox, BaseSyndicateContraband]
+  id: BoxDonksoftstun
+  name: Donksoft's Stunning darts
+  description: Donksoft's best selling toy ammo, now for syndicate agents!
+  components:
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - BulletFoam
+    capacity: 100
+    proto: DonksoftDart
