@@ -97,8 +97,10 @@ public sealed class VotingSystem : EntitySystem
                 return false;
         }
 
+        var active = _cfg.GetCVar(CCVars.ActiveWhitelist);
+
         // Must be whitelisted
-        if (!await _dbManager.GetWhitelistStatusAsync(initiator.UserId))
+        if (!await _dbManager.GetWhitelistStatusAsync(initiator.UserId, active))
             return false;
 
         return true;

@@ -236,11 +236,15 @@ namespace Content.Server.Database
 
         #region Whitelist
 
-        Task<bool> GetWhitelistStatusAsync(NetUserId player);
+        Task<bool> GetWhitelistStatusAsync(NetUserId player, string whiteListName);
 
-        Task AddToWhitelistAsync(NetUserId player);
+        Task<bool> AddToWhitelistAsync(NetUserId player, string whitelistName);
 
-        Task RemoveFromWhitelistAsync(NetUserId player);
+        Task<bool> RemoveFromWhitelistAsync(NetUserId player, string whitelistName);
+
+        Task<List<string>> GetPlayerWhitelistsAsync(NetUserId player);
+
+        Task<bool> GetWhitelistTypeExistsAsync(string whitelistName);
 
         #endregion
 
@@ -732,22 +736,34 @@ namespace Content.Server.Database
             return RunDbCommand(() => _db.CountAdminLogs(round));
         }
 
-        public Task<bool> GetWhitelistStatusAsync(NetUserId player)
+        public Task<bool> GetWhitelistStatusAsync(NetUserId player, string whitelistName)
         {
             DbReadOpsMetric.Inc();
-            return RunDbCommand(() => _db.GetWhitelistStatusAsync(player));
+            return RunDbCommand(() => _db.GetWhitelistStatusAsync(player, whitelistName));
         }
 
-        public Task AddToWhitelistAsync(NetUserId player)
+        public Task<bool> AddToWhitelistAsync(NetUserId player, string whitelistName)
         {
             DbWriteOpsMetric.Inc();
-            return RunDbCommand(() => _db.AddToWhitelistAsync(player));
+            return RunDbCommand(() => _db.AddToWhitelistAsync(player, whitelistName));
         }
 
-        public Task RemoveFromWhitelistAsync(NetUserId player)
+        public Task<bool> RemoveFromWhitelistAsync(NetUserId player, string whitelistName)
         {
             DbWriteOpsMetric.Inc();
-            return RunDbCommand(() => _db.RemoveFromWhitelistAsync(player));
+            return RunDbCommand(() => _db.RemoveFromWhitelistAsync(player, whitelistName));
+        }
+
+        public Task<List<string>> GetPlayerWhitelistsAsync(NetUserId player)
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.GetPlayerWhitelistsAsync(player));
+        }
+
+        public Task<bool> GetWhitelistTypeExistsAsync(string whitelistName)
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.GetWhitelistTypeExistsAsync(whitelistName));
         }
 
         public Task<bool> GetBlacklistStatusAsync(NetUserId player)

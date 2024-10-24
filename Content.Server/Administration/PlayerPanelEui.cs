@@ -6,9 +6,11 @@ using Content.Server.Administration.Systems;
 using Content.Server.Database;
 using Content.Server.EUI;
 using Content.Shared.Administration;
+using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.Eui;
 using Robust.Server.Player;
+using Robust.Shared.Configuration;
 using Robust.Shared.Player;
 
 namespace Content.Server.Administration;
@@ -22,6 +24,7 @@ public sealed class PlayerPanelEui : BaseEui
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly EuiManager _eui = default!;
     [Dependency] private readonly IAdminLogManager _adminLog = default!;
+    [Dependency] private readonly IConfigurationManager _config = default!;
 
     private readonly LocatedPlayerData _targetPlayer;
     private int? _notes;
@@ -170,8 +173,9 @@ public sealed class PlayerPanelEui : BaseEui
 
     // Apparently the Bans flag is also used for whitelists
     if (_admins.HasAdminFlag(Player, AdminFlags.Ban))
-        {
-            _whitelisted = await _db.GetWhitelistStatusAsync(_targetPlayer.UserId);
+    {
+            var active = _config.GetCVar(CCVars.ActiveWhitelist);
+            _whitelisted = await _db.GetWhitelistStatusAsync(_targetPlayer.UserId, active);
             // This won't get associated ip or hwid bans but they were not placed on this account anyways
             _bans = (await _db.GetServerBansAsync(null, _targetPlayer.UserId, null)).Count;
             // Unfortunately role bans for departments and stuff are issued individually. This means that a single role ban can have many individual role bans internally

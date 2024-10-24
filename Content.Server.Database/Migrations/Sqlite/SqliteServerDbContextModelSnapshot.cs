@@ -483,19 +483,6 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.ToTable("assigned_user_id", (string)null);
                 });
 
-            modelBuilder.Entity("Content.Server.Database.Blacklist",
-                b =>
-                {
-                    b.Property<Guid>("UserId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT")
-                        .HasColumnName("user_id");
-
-                    b.HasKey("UserId")
-                        .HasName("PK_blacklist");
-
-                    b.ToTable("blacklist", (string) null);
-                });
             modelBuilder.Entity("Content.Server.Database.BanTemplate", b =>
                 {
                     b.Property<int>("Id")
@@ -537,6 +524,19 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasName("PK_ban_template");
 
                     b.ToTable("ban_template", (string)null);
+                });
+
+            modelBuilder.Entity("Content.Server.Database.Blacklist", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("UserId")
+                        .HasName("PK_blacklist");
+
+                    b.ToTable("blacklist", (string)null);
                 });
 
             modelBuilder.Entity("Content.Server.Database.ConnectionLog", b =>
@@ -1302,14 +1302,33 @@ namespace Content.Server.Database.Migrations.Sqlite
             modelBuilder.Entity("Content.Server.Database.Whitelist", b =>
                 {
                     b.Property<Guid>("UserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT")
                         .HasColumnName("user_id");
 
-                    b.HasKey("UserId")
+                    b.Property<string>("WhitelistName")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasDefaultValue("DefaultWhitelist")
+                        .HasColumnName("whitelist_name");
+
+                    b.HasKey("UserId", "WhitelistName")
                         .HasName("PK_whitelist");
 
+                    b.HasIndex("WhitelistName");
+
                     b.ToTable("whitelist", (string)null);
+                });
+
+            modelBuilder.Entity("Content.Server.Database.WhitelistType", b =>
+                {
+                    b.Property<string>("WhitelistName")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("whitelist_name");
+
+                    b.HasKey("WhitelistName")
+                        .HasName("PK_whitelist_type");
+
+                    b.ToTable("whitelist_type", (string)null);
                 });
 
             modelBuilder.Entity("PlayerRound", b =>
@@ -1760,6 +1779,18 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.Navigation("Profile");
                 });
 
+            modelBuilder.Entity("Content.Server.Database.Whitelist", b =>
+                {
+                    b.HasOne("Content.Server.Database.WhitelistType", "WhitelistType")
+                        .WithMany("Whitelists")
+                        .HasForeignKey("WhitelistName")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_whitelist_whitelist_type__whitelist_type_temp_id");
+
+                    b.Navigation("WhitelistType");
+                });
+
             modelBuilder.Entity("PlayerRound", b =>
                 {
                     b.HasOne("Content.Server.Database.Player", null)
@@ -1886,6 +1917,11 @@ namespace Content.Server.Database.Migrations.Sqlite
             modelBuilder.Entity("Content.Server.Database.ServerRoleBan", b =>
                 {
                     b.Navigation("Unban");
+                });
+
+            modelBuilder.Entity("Content.Server.Database.WhitelistType", b =>
+                {
+                    b.Navigation("Whitelists");
                 });
 #pragma warning restore 612, 618
         }

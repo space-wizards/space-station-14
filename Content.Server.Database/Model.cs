@@ -43,6 +43,7 @@ namespace Content.Server.Database
         public DbSet<AdminMessage> AdminMessages { get; set; } = null!;
         public DbSet<RoleWhitelist> RoleWhitelists { get; set; } = null!;
         public DbSet<BanTemplate> BanTemplate { get; set; } = null!;
+        public DbSet<WhitelistType> WhitelistType { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -327,6 +328,18 @@ namespace Content.Server.Database
                 .HasForeignKey(w => w.PlayerUserId)
                 .HasPrincipalKey(p => p.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Whitelist>()
+                .HasOne(w => w.WhitelistType)
+                .WithMany(ty => ty.Whitelists)
+                .HasForeignKey(w => w.WhitelistName)
+                .HasPrincipalKey(ty => ty.WhitelistName)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Whitelist>()
+                .Property(p => p.WhitelistName)
+                .HasDefaultValue("DefaultWhitelist");
+
         }
 
         public virtual IQueryable<AdminLog> SearchLogs(IQueryable<AdminLog> query, string searchText)
@@ -546,10 +559,24 @@ namespace Content.Server.Database
         public List<RoleWhitelist> JobWhitelists { get; set; } = null!;
     }
 
+    [Table("whitelist_type")]
+    public class WhitelistType
+    {
+        [Required, Key] public string WhitelistName { get; set; }
+        public List<Whitelist> Whitelists { get; set; } = null!;
+    }
+
+
     [Table("whitelist")]
+    [PrimaryKey(nameof(UserId), nameof(WhitelistName))]
     public class Whitelist
     {
-        [Required, Key] public Guid UserId { get; set; }
+        [Required] public Guid UserId { get; set; }
+        [Required, ForeignKey("WhitelistName")]
+        public string WhitelistName { get; set; }
+
+        public WhitelistType WhitelistType { get; set; } = null!;
+
     }
 
     /// <summary>
