@@ -34,6 +34,15 @@
     content: book-text-agrichemkit-manual
 
 - type: entity
+  id: PaperWrittenAnimalFriendsKit
+  name: "animal friends kit instructions"
+  description: A small, handwritten note detailing how to use the animal friends kit.
+  parent: Paper
+  components:
+  - type: Paper
+    content: book-text-animal-friends-kit
+
+- type: entity
   id: PaperWrittenCombatBakeryKit
   name: "combat bakery kit instructions"
   description: "Eat note after reading."
