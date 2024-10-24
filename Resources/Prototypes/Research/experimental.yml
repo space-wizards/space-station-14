@@ -12,6 +12,7 @@
   recipeUnlocks:
   - ProximitySensor
   - ExosuitFabricatorMachineCircuitboard
+  - ClothingEyesHudDiagnostic
 
 - type: technology
   id: BasicAnomalousResearch
