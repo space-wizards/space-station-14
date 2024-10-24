@@ -3288,3 +3288,10 @@
   id: 407
   time: '2024-10-24T11:57:28.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/541
+- author: widgetbeck
+  changes:
+  - message: Added Luggage, a new cargo-purchasable ghostrole familiar.
+    type: Add
+  id: 408
+  time: '2024-10-24T12:00:18.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/542
