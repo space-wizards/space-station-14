@@ -1,8 +1,8 @@
 - type: entity
-  id: CrewMonitoringServer
+  id: SyndicateMonitoringServer
   parent: BaseMachinePowered
-  name: crew monitoring server
-  description: Receives and relays the status of all active suit sensors on the station.
+  name: suspicious crew monitoring server
+  description: Receives and relays the status of all active suit sensors.
   components:
     - type: Sprite
       sprite: Structures/Machines/server.rsi
@@ -29,8 +29,7 @@
       receiveFrequencyId: SuitSensor
       autoConnect: false
     - type: WirelessNetworkConnection
-      range: 10000 # Delta-V Maximises the range for the Crew Monitor Server to make it work for Listening Post
-    - type: StationLimitedNetwork
+      range: 10000 # Mega range for Listening Post
     - type: ApcPowerReceiver
       powerLoad: 200
     - type: ExtensionCableReceiver
@@ -50,15 +49,14 @@
               acts: ["Destruction"]
             - !type:PlaySoundBehavior
               sound:
-                collection: MetalGlassBreak
+                collection: MetalBreak
             - !type:SpawnEntitiesBehavior
               spawn:
                 SheetSteel1:
                   min: 1
                   max: 2
-    - type: AmbientOnPowered
     - type: AmbientSound
-      volume: -9
-      range: 5
+      volume: -1
+      range: 2
       sound:
         path: /Audio/Ambience/Objects/server_fans.ogg

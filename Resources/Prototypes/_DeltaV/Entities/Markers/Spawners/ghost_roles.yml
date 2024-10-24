@@ -1,0 +1,20 @@
+#Delta-V - This file is licensed under AGPLv3
+# Copyright (c) 2024 Delta-V Contributors
+# See AGPLv3.txt for details.
+
+- type: entity # Part of ListeningPost
+  categories: [ HideSpawnMenu, Spawner ]
+  parent: BaseAntagSpawner
+  id: SpawnPointGhostSyndicateListener
+  components:
+  - type: GhostRole
+    name: ghost-role-information-listeningop-name
+    description: ghost-role-information-listeningop-description
+    rules: ghost-role-information-listeningop-rules
+    requirements: # Worth considering these numbers for the goal of making sure someone willing to MRP takes this.
+    - !type:DepartmentTimeRequirement
+      department: Command
+      time: 18000 # 5 hours
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 18000 # 5 hours
