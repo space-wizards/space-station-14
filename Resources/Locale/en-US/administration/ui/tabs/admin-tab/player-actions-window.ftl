@@ -1,5 +1,6 @@
 admin-player-actions-window-title = Player Actions Panel
 admin-player-actions-window-ban = Banning panel
+admin-player-actions-window-ban-username = Username Rules
 admin-player-actions-window-admin-ghost = Admin Ghost
 admin-player-actions-window-teleport = Teleport
 admin-player-actions-window-permissions = Permissions Panel
