@@ -7,6 +7,8 @@ using Content.Shared.Examine;
 using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
+using Content.Shared.Movement.Pulling.Components;
+using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Storage;
 using Content.Shared.Storage.Components;
@@ -15,6 +17,8 @@ using Content.Shared.Verbs;
 using Content.Shared.Wires;
 using JetBrains.Annotations;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Lock;
@@ -31,6 +35,10 @@ public sealed class LockSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _sharedPopupSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+    [Dependency] private readonly FixtureSystem _fixtureSystem = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
+    [Dependency] private readonly PullingSystem _pullingSystem = default!;
 
     /// <inheritdoc />
     public override void Initialize()
@@ -47,6 +55,9 @@ public sealed class LockSystem : EntitySystem
         SubscribeLocalEvent<LockComponent, UnlockDoAfter>(OnDoAfterUnlock);
         SubscribeLocalEvent<LockComponent, StorageInteractAttemptEvent>(OnStorageInteractAttempt);
 
+        SubscribeLocalEvent<LockAnchorComponent, LockToggledEvent>(LockToggledAnchor);
+        SubscribeLocalEvent<LockUnanchorComponent, LockToggledEvent>(LockToggledUnanchor);
+
         SubscribeLocalEvent<LockedWiresPanelComponent, LockToggleAttemptEvent>(OnLockToggleAttempt);
         SubscribeLocalEvent<LockedWiresPanelComponent, AttemptChangePanelEvent>(OnAttemptChangePanel);
         SubscribeLocalEvent<LockedAnchorableComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
@@ -58,6 +69,14 @@ public sealed class LockSystem : EntitySystem
     private void OnStartup(EntityUid uid, LockComponent lockComp, ComponentStartup args)
     {
         _appearanceSystem.SetData(uid, LockVisuals.Locked, lockComp.Locked);
+
+        if (!TryComp<FixturesComponent>(uid, out var fixturesComponent))
+            return;
+
+        var fixture = _fixtureSystem.GetFixtureOrNull(uid, lockComp.LockedFixtureId);
+
+        if (fixture != null)
+            _physicsSystem.SetHard(uid, fixture, lockComp.Locked, fixturesComponent);
     }
 
     private void OnActivated(EntityUid uid, LockComponent lockComp, ActivateInWorldEvent args)
@@ -141,6 +160,16 @@ public sealed class LockSystem : EntitySystem
 
         var ev = new LockToggledEvent(true);
         RaiseLocalEvent(uid, ref ev, true);
+
+        if (!TryComp<FixturesComponent>(uid, out var fixturesComponent))
+            return true;
+
+        var fixture = _fixtureSystem.GetFixtureOrNull(uid, lockComp.LockedFixtureId);
+
+        // Make the fixture hard if we can
+        if (fixture != null)
+            _physicsSystem.SetHard(uid, fixture, true, fixturesComponent);
+
         return true;
     }
 
@@ -172,6 +201,15 @@ public sealed class LockSystem : EntitySystem
 
         var ev = new LockToggledEvent(false);
         RaiseLocalEvent(uid, ref ev, true);
+
+        if (!TryComp<FixturesComponent>(uid, out var fixturesComponent))
+            return;
+
+        var fixture = _fixtureSystem.GetFixtureOrNull(uid, lockComp.LockedFixtureId);
+
+        // Make the fixture not hard if we can
+        if (fixture != null)
+            _physicsSystem.SetHard(uid, fixture, false, fixturesComponent);
     }
 
 
@@ -315,6 +353,38 @@ public sealed class LockSystem : EntitySystem
     {
         if (ent.Comp.Locked)
             args.Cancelled = true;
+    }
+
+    private void LockToggledAnchor(EntityUid uid, LockAnchorComponent component, LockToggledEvent args)
+    {
+        if (!args.Locked)
+            return;
+
+        var transform = Transform(uid);
+
+        // Check to be safe
+        if (transform.GridUid == null || transform.Anchored)
+            return;
+
+        _transformSystem.AnchorEntity(uid, transform);
+
+        // Stop pulling if we are anchored, or we might break something
+        if (TryComp<PullableComponent>(uid, out var pullable))
+            _pullingSystem.TryStopPull(uid, pullable);
+    }
+
+    private void LockToggledUnanchor(EntityUid uid, LockUnanchorComponent component, LockToggledEvent args)
+    {
+        if (args.Locked)
+            return;
+
+        var transform = Transform(uid);
+
+        // Check to be safe
+        if (!transform.Anchored)
+            return;
+
+        _transformSystem.Unanchor(uid, transform);
     }
 
     private void OnLockToggleAttempt(Entity<LockedWiresPanelComponent> ent, ref LockToggleAttemptEvent args)
