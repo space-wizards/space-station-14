@@ -17,6 +17,7 @@
   - type: SubFloorHide
   - type: CollideOnAnchor
   - type: PipeAppearance
+  - type: PipeFill
   - type: Anchorable
   - type: Rotatable
   - type: Destructible

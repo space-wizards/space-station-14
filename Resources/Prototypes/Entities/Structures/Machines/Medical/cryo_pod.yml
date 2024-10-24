@@ -79,6 +79,7 @@
         !type:PortablePipeNode
         nodeGroupID: Pipe
         pipeDirection: South
+  - type: PipeFill
   - type: ItemSlots
     slots:
       beakerSlot:
