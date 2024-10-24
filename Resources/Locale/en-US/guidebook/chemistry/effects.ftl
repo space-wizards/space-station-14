@@ -357,6 +357,19 @@ reagent-effect-guidebook-add-to-solution-reaction =
         *[other] cause
     } chemicals applied to an object to be added to its internal solution container
 
+reagent-effect-guidebook-activate-random =
+    { $chance ->
+        [1] Activates
+        *[other] activate
+    } random set of chemicals based on their quantity and factor, removing them and applying effects:
+    {$cases}
+
+reagent-effect-guidebook-activate-random-activate =
+    {$factor} x { $catalyst ->
+        [true] catalyst {$reagent}
+        *[false] {$reagent}
+    }
+
 reagent-effect-guidebook-plant-attribute =
     { $chance ->
         [1] Adjusts
