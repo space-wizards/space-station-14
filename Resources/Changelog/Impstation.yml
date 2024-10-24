@@ -3260,3 +3260,59 @@
   id: 403
   time: '2024-10-21T00:54:11.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/533
+- author: honeyed-lemons
+  changes:
+  - message: Added Directional Fan and Air Canister to the NT-Cruiser
+    type: Tweak
+  id: 404
+  time: '2024-10-22T01:05:02.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/535
+- author: Darkmajia
+  changes:
+  - message: Heretics can now correctly use appraisal tools for the Ritual of Knowledge.
+    type: Fix
+  id: 405
+  time: '2024-10-22T01:04:44.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/536
+- author: Darkmajia
+  changes:
+  - message: Heretic will no longer instantly cancel lowpop rounds when it is rolled.
+    type: Fix
+  id: 406
+  time: '2024-10-22T01:05:49.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/534
+- author: mqole
+  changes:
+  - message: Deck of cards added to loadout trinkets.
+    type: Add
+  id: 407
+  time: '2024-10-24T11:57:28.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/541
+- author: widgetbeck
+  changes:
+  - message: Added Luggage, a new cargo-purchasable ghostrole familiar.
+    type: Add
+  id: 408
+  time: '2024-10-24T12:00:18.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/542
+- author: Flanburgr, AirFryerBuyOneGetOneFree
+  changes:
+  - message: Added the Syndicate Listening Outpost, whose mission is to spy on the
+      station and aid syndicate agents.
+    type: Add
+  id: 409
+  time: '2024-10-24T12:03:56.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/525
+- author: sususuyo
+  changes:
+  - message: Added in many, many songs suggested by the community over the past month
+    type: Add
+  - message: Sam Jones and Space Asshole are now also in the jukebox
+    type: Add
+  - message: Fixed the volume and format (mono) for Mt. Amient vs Spasm
+    type: Fix
+  - message: Fixed one of the artist names in the jukebox listing (whoops!)
+    type: Fix
+  id: 410
+  time: '2024-10-24T17:08:05.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/527

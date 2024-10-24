@@ -223,6 +223,12 @@
     - NewtonCradle
 
 - type: loadout
+  id: CardBoxBlack
+  storage:
+    back:
+    - CardBoxBlack
+
+- type: loadout
   id: HarmonicaInstrument
   storage:
     back:
