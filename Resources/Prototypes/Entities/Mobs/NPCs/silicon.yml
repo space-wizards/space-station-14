@@ -347,6 +347,21 @@
     pack: MedibotAds
   - type: Inventory
     templateId: medibot
+  - type: DoAfter
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 30
+  - type: Injector
+    injectOnly: true
+    delay: 3
+    delayPerVolume: 0
+    minTransferAmount: 30
+    maxTransferAmount: 30
+    transferAmount: 30
+    needHand: false
+    breakOnHandChange: false
+    movementThreshold: 0.3
 
 - type: entity
   parent:
