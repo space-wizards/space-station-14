@@ -3,4 +3,8 @@
   files:
   - /Audio/Items/Toys/sitcom_laugh.ogg
   - /Audio/Items/Toys/sitcom_laugh2.ogg
-  
+
+- type: soundCollection
+  id: Blackbox
+  files:
+  - /Audio/Voice/log.ogg
