@@ -233,3 +233,75 @@
             Poison: 1
             Caustic: 2
       - !type:Jitter
+
+- type: reagent
+  id: HydrogenPeroxide
+  name: reagent-name-hydrogen-peroxide
+  desc: reagent-desc-hydrogen-peroxide
+  group: Chemical
+  flavor: bitter
+  color: "#cdcdcd"
+  boilingPoint: 302.36
+  meltingPoint: 31.226
+  physicalDesc: reagent-physical-desc-strong-smelling #colorless doesn't return back as a physical description, so this'll do
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Heat: 0.80
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        ignoreResistances: false
+        damage:
+          types:
+            Caustic: 0.50
+            Heat: 0.10
+      - !type:Emote
+        emote: Scream
+        probability: 0.15
+
+- type: reagent
+  id: Formaldehyde
+  name: reagent-name-formaldehyde
+  desc: reagent-desc-formaldehyde
+  group: Chemical
+  color: "#b4004b"
+  boilingPoint: 254.1
+  meltingPoint: 181.2
+  physicalDesc: reagent-physical-desc-strong-smelling #Mmm, pickles
+  plantMetabolism:
+    - !type:PlantAdjustToxins
+      amount: 4.5
+    - !type:PlantAdjustPests
+      amount: -5
+    - !type:PlantAdjustHealth
+      amount: -15
+  metabolisms:
+    Poison:
+      metabolismRate: 0.20
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 0.90
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        ignoreResistances: false
+        damage:
+          types:
+            Caustic: 0.40
+            Heat: 0.20
+            Poison: 0.05
+      - !type:Emote
+        emote: Scream
+        probability: 0.10

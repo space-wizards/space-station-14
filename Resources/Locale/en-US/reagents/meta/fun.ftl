@@ -30,3 +30,6 @@ reagent-desc-weh = Pure essence of lizard plush. Makes you Weh!
 
 reagent-name-ammoniated-sludge = ammoniated sludge
 reagent-desc-ammoniated-sludge = It has an exotic, pungent smell. Makes you scream!
+
+reagent-name-monkey-powder = monkey powder
+reagent-desc-monkey-powder = Just add water! It smells faintly of bananas.

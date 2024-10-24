@@ -542,7 +542,7 @@
     Mercury:
       amount: 1
   products:
-    BathSalts: 5
+    BathSalts: 3
 
 - type: reaction
   id: Cyanide
@@ -557,3 +557,30 @@
       amount: 1
   products:
     Cyanide: 2
+
+- type: reaction
+  id: HydrogenPeroxide
+  impact: Low
+  reactants:
+    Chlorine:
+      amount: 1
+    Oxygen:
+      amount: 1
+    Water:
+      amount: 1
+  products:
+    HydrogenPeroxide: 2
+
+- type: reaction
+  id: Formaldehyde
+  impact: Medium
+  minTemp: 418.6
+  reactants:
+    Silver:
+      amount: 1
+    Ethanol:
+      amount: 1
+    Carbon:
+      amount: 1
+  products:
+    Formaldehyde: 3

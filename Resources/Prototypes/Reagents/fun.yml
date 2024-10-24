@@ -367,3 +367,16 @@
         force: true
         probability: 0.1
       - !type:Jitter
+
+- type: reagent
+  id: MonkeyPowder
+  name: reagent-name-monkey-powder
+  desc: reagent-desc-monkey-powder
+  group: Special
+  physicalDesc: reagent-physical-desc-powdery
+  flavor: horrible
+  color: "#964B00"
+  metabolisms:
+    Food:
+      effects:
+      - !type:SatiateHunger

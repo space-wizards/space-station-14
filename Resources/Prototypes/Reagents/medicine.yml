@@ -1385,15 +1385,32 @@
   flavor: sweet
   color: "#c3d2e0"
   metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2.5
     Medicine:
       effects:
       - !type:HealthChange
         damage:
           groups:
-            Brute: -1.0
-            Burn: -1.0
+            Brute: -0.85
+            Burn: -0.65
       - !type:ModifyBloodLevel
-        amount: 6.5
+        amount: 3.25
+      - !type:HealthChange
+        conditions:
+          - !type:ReagentThreshold
+            min: 16.5
+        damage:
+          types:
+            Asphyxiation: 0.10
+      - !type:MovespeedModifier #too many electrolytes leads to fatigue
+        conditions:
+          - !type:ReagentThreshold
+            min: 20
+        walkSpeedModifier: 0.95
+        sprintSpeedModifier: 0.95
 
 - type: reagent
   id: Ipecybin
@@ -1409,10 +1426,10 @@
       - !type:HealthChange
         damage:
           groups:
-            Toxin: -0.5
-            Airloss: -0.5
-            Brute: -0.5
+            Toxin: -0.65
+            Airloss: -0.45
+            Brute: -0.25
       - !type:ChemVomit
         conditions:
           - !type:ReagentThreshold
-            min: 15
+            min: 12.5
