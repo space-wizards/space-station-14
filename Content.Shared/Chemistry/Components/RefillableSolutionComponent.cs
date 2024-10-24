@@ -22,4 +22,10 @@ public sealed partial class RefillableSolutionComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public FixedPoint2? MaxRefill = null;
+
+    /// <summary>
+    /// Whether the entity should be deleted when the solution is empty.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public bool DeleteOnEmpty = false;
 }
