@@ -575,6 +575,7 @@
     - BorgModuleConstruction
     - BorgModuleService
     - BorgModuleTreatment
+    - BorgModuleDefibrillator
     - BorgModuleCleaning
     - CyborgEndoskeleton
     - LeftArmBorg
@@ -627,7 +628,6 @@
     - BorgModuleMusique
     - BorgModuleClowning
     - BorgModuleDiagnosis
-    - BorgModuleDefibrillator
     - BorgModuleAdvancedTreatment
     - RipleyHarness
     - RipleyLArm
