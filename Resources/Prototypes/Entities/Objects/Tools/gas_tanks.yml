@@ -244,3 +244,23 @@
     slots:
     - Belt
     - suitStorage
+
+- type: entity
+  parent: GasTankRoundBase
+  id: GasTankNitrogenBooster
+  name: nitrogen booster
+  description: A bulky tank filled with nitrogen designed to maintain substations.
+  components:
+  - type: Sprite
+    sprite: Objects/Tanks/nitrogenbooster.rsi
+  - type: Item
+    sprite: Objects/Tanks/nitrogenbooster.rsi
+  - type: GasTank
+    outputPressure: 101.3
+    air:
+      volume: 5
+      temperature: 293.15
+  - type: Tag
+    tags:
+    - NitrogenBooster
+
