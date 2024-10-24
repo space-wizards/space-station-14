@@ -8,7 +8,6 @@ namespace Content.Shared.NPC.Systems;
 
 /// <summary>
 ///     Outlines faction relationships with each other.
-///     part of psionics rework was making this a partial class. Should've already been handled upstream, based on the linter. 
 /// </summary>
 public sealed partial class NpcFactionSystem : EntitySystem
 {
