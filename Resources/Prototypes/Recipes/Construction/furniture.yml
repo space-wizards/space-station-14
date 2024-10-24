@@ -595,6 +595,194 @@
   conditions:
     - !type:TileNotBlocked
 
+#cattrees
+- type: construction
+  name: cat tree
+  id: TargetCatTree
+  graph: TargetCatTree
+  startNode: start
+  targetNode: TargetCatTree
+  category: construction-category-furniture
+  description: A nice scratching post for your four legged friends.
+  icon:
+    sprite: Structures/Furniture/cattree.rsi
+    state: cattree
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: beige cat tree
+  id: TargetCatTreeBeige
+  graph: TargetCatTree
+  startNode: start
+  targetNode: TargetCatTreeBeige
+  category: construction-category-furniture
+  description: A nice scratching post for your four legged friends.
+  icon:
+    sprite: Structures/Furniture/cattree.rsi
+    state: cattree
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: black cat tree
+  id: TargetCatTreeBlack
+  graph: TargetCatTree
+  startNode: start
+  targetNode: TargetCatTreeBlack
+  category: construction-category-furniture
+  description: A nice scratching post for your four legged friends.
+  icon:
+    sprite: Structures/Furniture/cattree.rsi
+    state: cattree
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: blue cat tree
+  id: TargetCatTreeBlue
+  graph: TargetCatTree
+  startNode: start
+  targetNode: TargetCatTreeBlue
+  category: construction-category-furniture
+  description: A nice scratching post for your four legged friends.
+  icon:
+    sprite: Structures/Furniture/cattree.rsi
+    state: cattree
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: cyan cat tree
+  id: TargetCatTreeCyan
+  graph: TargetCatTree
+  startNode: start
+  targetNode: TargetCatTreeCyan
+  category: construction-category-furniture
+  description: A nice scratching post for your four legged friends.
+  icon:
+    sprite: Structures/Furniture/cattree.rsi
+    state: cattree
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: green cat tree
+  id: TargetCatTreeGreen
+  graph: TargetCatTree
+  startNode: start
+  targetNode: TargetCatTreeGreen
+  category: construction-category-furniture
+  description: A nice scratching post for your four legged friends.
+  icon:
+    sprite: Structures/Furniture/cattree.rsi
+    state: cattree
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: pink cat tree
+  id: TargetCatTreePink
+  graph: TargetCatTree
+  startNode: start
+  targetNode: TargetCatTreePink
+  category: construction-category-furniture
+  description: A nice scratching post for your four legged friends.
+  icon:
+    sprite: Structures/Furniture/cattree.rsi
+    state: cattree
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: purple cat tree
+  id: TargetCatTreePurple
+  graph: TargetCatTree
+  startNode: start
+  targetNode: TargetCatTreePurple
+  category: construction-category-furniture
+  description: A nice scratching post for your four legged friends.
+  icon:
+    sprite: Structures/Furniture/cattree.rsi
+    state: cattree
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: red cat tree
+  id: TargetCatTreeRed
+  graph: TargetCatTree
+  startNode: start
+  targetNode: TargetCatTreeRed
+  category: construction-category-furniture
+  description: A nice scratching post for your four legged friends.
+  icon:
+    sprite: Structures/Furniture/cattree.rsi
+    state: cattree
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: skyblue cat tree
+  id: TargetCatTreeSkyblue
+  graph: TargetCatTree
+  startNode: start
+  targetNode: TargetCatTreeSkyblue
+  category: construction-category-furniture
+  description: A nice scratching post for your four legged friends.
+  icon:
+    sprite: Structures/Furniture/cattree.rsi
+    state: cattree
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: white cat tree
+  id: TargetCatTreeWhite
+  graph: TargetCatTree
+  startNode: start
+  targetNode: TargetCatTreeWhite
+  category: construction-category-furniture
+  description: A nice scratching post for your four legged friends.
+  icon:
+    sprite: Structures/Furniture/cattree.rsi
+    state: cattree
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
 #bathroom
 - type: construction
   name: toilet
