@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Shared.Alert;
 using Content.Shared.CCVar;
 using Content.Shared.Follower.Components;
 using Content.Shared.Input;
@@ -20,6 +21,11 @@ namespace Content.Shared.Movement.Systems
     public abstract partial class SharedMoverController
     {
         public bool CameraRotationLocked { get; set; }
+
+        [Dependency] private readonly AlertsSystem _alerts = default!;
+
+        [ValidatePrototypeId<AlertPrototype>]
+        public const string WalkingAlert = "Walking";
 
         private void InitializeInput()
         {
@@ -463,6 +469,11 @@ namespace Content.Shared.Movement.Systems
         public void SetSprinting(Entity<InputMoverComponent> entity, ushort subTick, bool walking)
         {
             // Logger.Info($"[{_gameTiming.CurTick}/{subTick}] Sprint: {enabled}");
+
+            if (walking)
+                _alerts.ShowAlert(entity, WalkingAlert);
+            else
+                _alerts.ClearAlert(entity, WalkingAlert);
 
             SetMoveInput(entity, subTick, walking, MoveButtons.Walk);
         }
