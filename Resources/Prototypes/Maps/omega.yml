@@ -3,7 +3,7 @@
   mapName: 'Omega'
   mapPath: /Maps/omega.yml
   minPlayers: 7
-  maxPlayers: 35
+  maxPlayers: 50
   stations:
     Omega:
       stationProto: StandardNanotrasenStation
