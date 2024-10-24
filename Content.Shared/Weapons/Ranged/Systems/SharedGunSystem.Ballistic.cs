@@ -119,7 +119,7 @@ public abstract partial class SharedGunSystem
         {
             var evInsert = new InteractUsingEvent(args.User, ammo, ammoProvider, coordinates);
             RaiseLocalEvent(ammoProvider, evInsert);
-            UpdateAmmoCount(ammoProvider);
+
         }
 
         List<(EntityUid? Entity, IShootable Shootable)> ammo = new();
@@ -151,6 +151,7 @@ public abstract partial class SharedGunSystem
             }
 
             if (IsClientSide(ent.Value))
+                UpdateAmmoCount(args.Target.Value);
                 Del(ent.Value);
         }
 
