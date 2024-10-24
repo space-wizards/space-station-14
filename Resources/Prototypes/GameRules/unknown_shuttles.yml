@@ -20,7 +20,6 @@
     - id: UnknownShuttleMeatZone
     - id: UnknownShuttleMicroshuttle
     - id: UnknownShuttleSpacebus
-    - id: UnknownShuttleInstigator
 
 - type: entityTable
   id: UnknownShuttlesFreelanceTable
@@ -32,9 +31,9 @@
   id: UnknownShuttlesHostileTable
   table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
     children:
-    - id: LoneOpsSpawn
+    - id: UnknownShuttleInstigator
 
-# Shuttle Game Rules 
+# Shuttle Game Rules
 
 - type: entity
   abstract: true
