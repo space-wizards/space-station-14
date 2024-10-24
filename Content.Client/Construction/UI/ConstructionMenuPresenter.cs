@@ -33,6 +33,7 @@ namespace Content.Client.Construction.UI
 
         private readonly IConstructionMenuView _constructionView;
         private readonly EntityWhitelistSystem _whitelistSystem;
+        private readonly SpriteSystem _spriteSystem;
 
         private ConstructionSystem? _constructionSystem;
         private ConstructionPrototype? _selected;
@@ -86,6 +87,7 @@ namespace Content.Client.Construction.UI
             IoCManager.InjectDependencies(this);
             _constructionView = new ConstructionMenu();
             _whitelistSystem = _entManager.System<EntityWhitelistSystem>();
+            _spriteSystem = _entManager.System<SpriteSystem>();
 
             // This is required so that if we load after the system is initialized, we can bind to it immediately
             if (_systemManager.TryGetEntitySystem<ConstructionSystem>(out var constructionSystem))
@@ -371,15 +373,15 @@ namespace Content.Client.Construction.UI
             }
         }
 
-        private static ItemList.Item GetItem(ConstructionPrototype recipe, ItemList itemList)
+        private ItemList.Item GetItem(ConstructionPrototype recipe, ItemList itemList)
         {
             return new(itemList)
             {
                 Metadata = recipe,
                 Text = recipe.Name,
-                Icon = recipe.Icon.Frame0(),
+                Icon = _spriteSystem.Frame0(recipe.Icon),
                 TooltipEnabled = true,
-                TooltipText = recipe.Description
+                TooltipText = recipe.Description,
             };
         }
 
