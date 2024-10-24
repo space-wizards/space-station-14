@@ -5,7 +5,6 @@ using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
-using Content.Server.Players.RateLimiting;
 using Content.Server.Speech.Components;
 using Content.Server.Speech.EntitySystems;
 using Content.Server.Station.Components;
@@ -594,7 +593,12 @@ public sealed partial class ChatSystem : SharedChatSystem
             ("message", FormattedMessage.RemoveMarkupOrThrow(action)));
 
         if (checkEmote)
-            TryEmoteChatInput(source, action);
+        {
+            var emoteSucceeded = TryEmoteChatInput(source, action);
+            if (!emoteSucceeded)
+                return;
+        }
+
         SendInVoiceRange(ChatChannel.Emotes, action, wrappedMessage, source, range, author);
         if (!hideLog)
             if (name != Name(source))
