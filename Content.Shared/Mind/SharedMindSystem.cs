@@ -10,6 +10,7 @@ using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Objectives.Systems;
+using Content.Shared.Objectives.Components;
 using Content.Shared.Players;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
@@ -348,6 +349,8 @@ public abstract class SharedMindSystem : EntitySystem
         var title = Name(objective);
         _adminLogger.Add(LogType.Mind, LogImpact.Low, $"Objective {objective} ({title}) added to mind of {MindOwnerLoggingString(mind)}");
         mind.Objectives.Add(objective);
+        var evnt = new ObjectiveAddedToMindEvent(mindId, mind);
+        RaiseLocalEvent(objective, ref evnt);
     }
 
     /// <summary>
