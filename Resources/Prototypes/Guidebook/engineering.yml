@@ -13,9 +13,9 @@
   id: Construction
   name: guide-entry-construction
   text: "/ServerInfo/Guidebook/Engineering/Construction.xml"
-  children: 
+  children:
   - AirlockSecurity
-  
+
 - type: guideEntry
   id: AirlockSecurity
   name: guide-entry-airlock-security
@@ -26,12 +26,130 @@
   name: guide-entry-atmospherics
   text: "/ServerInfo/Guidebook/Engineering/Atmospherics.xml"
   children:
+  - GasManipulation
   - Fires
+  - AtmosphericsSystems
+
+- type: guideEntry
+  id: GasManipulation
+  name: guide-entry-gasmanipulation
+  text: "/ServerInfo/Guidebook/Engineering/GasManipulation.xml"
+  children:
+  - AtmosphereInOut
+  - Pipes
+  - Pumps
+  - Valves
+  - MixingAndFiltering
+  - GasCanisters
+
+- type: guideEntry
+  id: Pipes
+  name: guide-entry-pipes
+  text: "/ServerInfo/Guidebook/Engineering/Pipes.xml"
+
+- type: guideEntry
+  id: Pumps
+  name: guide-entry-pumps
+  text: "/ServerInfo/Guidebook/Engineering/Pumps.xml"
+
+- type: guideEntry
+  id: AtmosphereInOut
+  name: guide-entry-atmosphereinout
+  text: "/ServerInfo/Guidebook/Engineering/AtmosphereInOut.xml"
+  children:
+  - AirVent
+  - PassiveVent
+  - AirInjector
+  - AirScrubber
+  - PortableScrubber
+
+- type: guideEntry
+  id: AirVent
+  name: guide-entry-airvent
+  text: "/ServerInfo/Guidebook/Engineering/AirVent.xml"
+
+- type: guideEntry
+  id: PassiveVent
+  name: guide-entry-passivevent
+  text: "/ServerInfo/Guidebook/Engineering/PassiveVent.xml"
+
+- type: guideEntry
+  id: AirInjector
+  name: guide-entry-airinjector
+  text: "/ServerInfo/Guidebook/Engineering/AirInjector.xml"
+
+- type: guideEntry
+  id: AirScrubber
+  name: guide-entry-airscrubber
+  text: "/ServerInfo/Guidebook/Engineering/AirScrubber.xml"
+
+- type: guideEntry
+  id: PortableScrubber
+  name: guide-entry-portablescrubber
+  text: "/ServerInfo/Guidebook/Engineering/PortableScrubber.xml"
+
+- type: guideEntry
+  id: Valves
+  name: guide-entry-valves
+  text: "/ServerInfo/Guidebook/Engineering/Valves.xml"
+  children:
+  - ManualValve
+  - SignalValve
+  - PneumaticValve
+  - PassiveGate
+
+- type: guideEntry
+  id: ManualValve
+  name: guide-entry-manualvalve
+  text: "/ServerInfo/Guidebook/Engineering/ManualValve.xml"
+
+- type: guideEntry
+  id: SignalValve
+  name: guide-entry-signalvalve
+  text: "/ServerInfo/Guidebook/Engineering/SignalValve.xml"
+
+- type: guideEntry
+  id: PneumaticValve
+  name: guide-entry-pneumaticvalve
+  text: "/ServerInfo/Guidebook/Engineering/PneumaticValve.xml"
+
+- type: guideEntry
+  id: PassiveGate
+  name: guide-entry-passivegate
+  text: "/ServerInfo/Guidebook/Engineering/PassiveGate.xml"
+
+- type: guideEntry
+  id: MixingAndFiltering
+  name: guide-entry-mixingandfiltering
+  text: "/ServerInfo/Guidebook/Engineering/MixingAndFiltering.xml"
+
+- type: guideEntry
+  id: GasCanisters
+  name: guide-entry-gascanisters
+  text: "/ServerInfo/Guidebook/Engineering/GasCanisters.xml"
 
 - type: guideEntry
   id: Fires
   name: guide-entry-fires
   text: "/ServerInfo/Guidebook/Engineering/Fires.xml"
+
+- type: guideEntry
+  id: AtmosphericsSystems
+  name: guide-entry-atmosphericssystems
+  text: "/ServerInfo/Guidebook/Engineering/AtmosphericsSystems.xml"
+  children:
+  - PipeNetworks
+  - DeviceMonitoringAndControl
+
+- type: guideEntry
+  id: PipeNetworks
+  name: guide-entry-pipenetworks
+  text: "/ServerInfo/Guidebook/Engineering/PipeNetworks.xml"
+
+- type: guideEntry
+  id: DeviceMonitoringAndControl
+  name: guide-entry-devicemonitoringandcontrol
+  text: "/ServerInfo/Guidebook/Engineering/DeviceMonitoringAndControl.xml"
 
 - type: guideEntry
   id: ShuttleCraft
