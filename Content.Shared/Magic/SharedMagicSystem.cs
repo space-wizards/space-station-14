@@ -1,4 +1,4 @@
-﻿using System.Numerics;
+using System.Numerics;
 using Content.Shared.Actions;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
@@ -7,12 +7,16 @@ using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Humanoid;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Lock;
 using Content.Shared.Magic.Components;
 using Content.Shared.Magic.Events;
 using Content.Shared.Maps;
+using Content.Shared.Mind.Components;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Speech.Muting;
@@ -20,6 +24,7 @@ using Content.Shared.Storage;
 using Content.Shared.Tag;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Systems;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
@@ -53,6 +58,8 @@ public abstract class SharedMagicSystem : EntitySystem
     [Dependency] private readonly LockSystem _lock = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly TagSystem _tag = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     public override void Initialize()
     {
@@ -67,6 +74,7 @@ public abstract class SharedMagicSystem : EntitySystem
         SubscribeLocalEvent<SmiteSpellEvent>(OnSmiteSpell);
         SubscribeLocalEvent<KnockSpellEvent>(OnKnockSpell);
         SubscribeLocalEvent<ChargeSpellEvent>(OnChargeSpell);
+        SubscribeLocalEvent<RandomGlobalSpawnSpellEvent>(OnRandomGlobalSpawnSpell);
 
         // Spell wishlist
         //  A wishlish of spells that I'd like to implement or planning on implementing in a future PR
@@ -501,6 +509,59 @@ public abstract class SharedMagicSystem : EntitySystem
         _gunSystem.UpdateBasicEntityAmmoCount(wand.Value, basicAmmoComp.Count.Value + ev.Charge, basicAmmoComp);
     }
     // End Charge Spells
+    #endregion
+    #region Global Spells
+
+    private void OnRandomGlobalSpawnSpell(RandomGlobalSpawnSpellEvent ev)
+    {
+        if (!_net.IsServer)
+            return;
+
+        if (ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer))
+            return;
+
+        if (ev.Spawns is not { } spawns)
+            return;
+
+        ev.Handled = true;
+        Speak(ev);
+
+        // I stole this from SharedMindSystem GetAliveHumansExcept but...
+        // without the Except. Wiz should get their gun too!
+        // Also querying for TransformComponent,
+        // changing list to TransformComponent instead of EntityUid,
+        // and adding TransformComponent instead of the mind.
+        var allHumans = new List<TransformComponent>();
+        // HumanoidAppearanceComponent is used to prevent mice, pAIs, etc from being chosen
+        var query = EntityQueryEnumerator<MindContainerComponent, MobStateComponent, HumanoidAppearanceComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out var mc, out var mobState, out _, out var body))
+        {
+            // the player needs to have a mind if required
+            if (ev.RequireMind)
+            {
+                if (mc.Mind == null)
+                    continue;
+            }
+
+            // the player has to be alive
+            if (_mobState.IsAlive(uid, mobState))
+                allHumans.Add(body);
+        }
+
+        foreach (var human in allHumans)
+        {
+            var mapCoords = _transform.GetMapCoordinates(human);
+            foreach (var spawn in EntitySpawnCollection.GetSpawns(spawns, _random))
+            {
+                var spawned = Spawn(spawn, mapCoords);
+                _hands.PickupOrDrop(human.Owner, spawned);
+            }
+        }
+
+        // Makes more sense to me for one global noise as opposed to creating a positional noise for each player
+        _audio.PlayGlobal(ev.Sound, ev.Performer);
+    }
+
     #endregion
     // End Spells
     #endregion
