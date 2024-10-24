@@ -8,6 +8,10 @@
     - type: Stack
       stackType: InflatableWall
       count: 10
+    - type: UserInterface
+      interfaces:
+        enum.StackCustomSplitUiKey.Key:
+          type: StackCustomSplitBoundUserInterface
     - type: Sprite
       sprite: Objects/Misc/inflatable_wall.rsi
       state: item_wall
@@ -31,6 +35,10 @@
     - type: Stack
       stackType: InflatableDoor
       count: 4
+    - type: UserInterface
+      interfaces:
+        enum.StackCustomSplitUiKey.Key:
+          type: StackCustomSplitBoundUserInterface
     - type: Sprite
       sprite: Objects/Misc/inflatable_door.rsi
       state: item_door

@@ -28,6 +28,10 @@
   - type: Stack
     stackType: LeavesCannabisDried
     count: 1
+  - type: UserInterface
+    interfaces:
+      enum.StackCustomSplitUiKey.Key:
+        type: StackCustomSplitBoundUserInterface
   - type: SolutionContainerManager
     solutions:
       food:
@@ -47,6 +51,10 @@
   - type: Stack
     stackType: GroundCannabis
     count: 1
+  - type: UserInterface
+    interfaces:
+      enum.StackCustomSplitUiKey.Key:
+        type: StackCustomSplitBoundUserInterface
   - type: SolutionContainerManager
     solutions:
       food:
@@ -65,7 +73,7 @@
       - Smokable
   - type: Item
     size: Tiny
-    
+
 - type: entity
   name: rainbow cannabis leaves
   parent: LeavesCannabis
@@ -214,6 +222,10 @@
   - type: Stack
     stackType: LeavesTobaccoDried
     count: 1
+  - type: UserInterface
+    interfaces:
+      enum.StackCustomSplitUiKey.Key:
+        type: StackCustomSplitBoundUserInterface
   - type: SolutionContainerManager
     solutions:
       food:
@@ -233,6 +245,10 @@
   - type: Stack
     stackType: GroundTobacco
     count: 1
+  - type: UserInterface
+    interfaces:
+      enum.StackCustomSplitUiKey.Key:
+        type: StackCustomSplitBoundUserInterface
   - type: SolutionContainerManager
     solutions:
       food:
