@@ -29,7 +29,7 @@
       isCollidableWhenOpen: false
       openOnMove: false
       airtight: false
-      capacity: 4 #4 Entities seems like a nice comfy fit for a cardboard box.
+      capacity: 5 #4 Entities seems like a nice comfy fit for a cardboard box.
     - type: ContainerContainer
       containers:
         entity_storage: !type:Container
