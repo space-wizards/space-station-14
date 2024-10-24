@@ -1,0 +1,168 @@
+- type: startingGear
+  id: RaiderClaymoreGear
+  parent: RaiderBasicClothing
+  equipment:
+    head: ClothingHeadHelmetBone
+    eyes: ClothingEyesGlassesSunglasses
+    outerClothing: ClothingOuterArmorBone
+    back: Claymore
+    belt: ClothingBeltStorageWaistbag
+    pocket1: PipeBomb
+    pocket2: Gauze
+  storage:
+    belt:
+    - ThrowingKnife
+    - ThrowingKnife
+    - ThrowingKnife
+    - SpaceCash2500
+
+- type: startingGear
+  id: RaiderMosinGear
+  parent: RaiderBasicClothing
+  equipment:
+    outerClothing: ClothingOuterArmorBasic
+    back: SpearBone
+    belt: ClothingBeltStorageWaistbag
+    pocket1: PipeBomb
+  inhand:
+  - WeaponSniperMosin
+  storage:
+    belt:
+    - MagazineBoxLightRifleBig
+    - Gauze
+    - SpaceCash2500
+
+- type: startingGear
+  id: RaiderBowGear
+  parent: RaiderBasicClothing
+  equipment:
+    outerClothing: ClothingOuterArmorBasicSlim
+    back: ClothingBackpackSatchelLeather
+    belt: ClothingBeltQuiverFilled
+    pocket1: KukriKnife
+  inhand:
+    - BowImprovised
+  storage:
+    back:
+    - SmokeGrenade
+    - SmokeGrenade
+    - SmokeGrenade
+    - Gauze
+    - SpaceCash2500
+
+- type: startingGear
+  id: RaiderMedicGear
+  parent: [RaiderBasicEquipment, RaiderBasicClothing]
+  equipment:
+    head: ClothingHeadHatBeretBrigmedic
+    eyes: ClothingEyesHudMedical
+    outerClothing: ClothingOuterArmorBasic
+    back: ClothingBackpackMedical
+    belt: ClothingBeltMedicalEMT
+    pocket1: WeaponPistolViper
+  storage:
+    belt:
+    - MedicatedSuture
+    - MedicatedSuture
+    - RegenerativeMesh
+    - Bloodpack
+    - BruteAutoInjector
+    - BurnAutoInjector
+    - OmnizineChemistryBottle
+    back:
+    - MagazinePistol
+    - MagazinePistol
+    - MagazineBoxPistol
+    - MagazineBoxPistol
+    - SpaceCash5000
+
+- type: startingGear
+  id: RaiderSniperGear
+  parent: [RaiderBasicEquipment, RaiderBasicClothing]
+  equipment:
+    head: ClothingHeadHatBeretMerc
+    eyes: ClothingEyesGlassesSecurity
+    outerClothing: ClothingOuterWinterColorBrown
+    back: WeaponSniperHristov
+    belt: ClothingBeltSyndieHolster
+    pocket1: WeaponRevolverDeckard
+    pocket2: EmergencyMedipen
+  storage:
+    belt:
+    - MagazineBoxAntiMaterielBig
+    - MagazineBoxAntiMaterielBig
+    outerClothing:
+    - SpaceCash5000
+
+- type: startingGear
+  id: RaiderRiflemanGear
+  parent: [RaiderBasicEquipment, RaiderBasicClothing]
+  equipment:
+    head: ClothingHeadBandRed
+    eyes: ClothingEyesGlassesSunglasses
+    outerClothing: ClothingOuterVestWebMerc
+    back: ClothingBackpackMerc
+    belt: ClothingBeltMilitaryWebbing
+    pocket1: WeaponPistolViper
+    pocket2: EmergencyMedipen
+  inhand:
+  - WeaponRifleAk
+  storage:
+    belt:
+    - MagazineLightRifle
+    - MagazineLightRifle
+    - MagazineLightRifle
+    - MagazineLightRifle
+    - MagazineLightRifleUranium
+    back:
+    - MagazinePistol
+    - MagazinePistol
+    - MagazineBoxPistol
+    - MagazineBoxPistol
+    - GrenadeFlashBang
+    - GrenadeFlashBang
+    - GrenadeFlashBang
+    - SpaceCash5000
+
+- type: startingGear
+  id: RaiderDemolitionistGear
+  parent: [RaiderBasicEquipment, RaiderBasicClothing]
+  equipment:
+    head: ClothingHeadHatTrucker
+    eyes: ClothingEyesGlassesMeson
+    outerClothing: ClothingOuterVestWebMerc
+    back: ClothingBackpackSyndicate
+    belt: ClothingBeltMilitaryWebbing
+    pocket1: WeaponPistolViper
+    pocket2: EmergencyMedipen
+  inhand:
+    - WeaponShotgunKammerer
+  storage:
+    belt:
+    - MagazinePistol
+    - MagazinePistol
+    - BoxLethalshot
+    - BoxLethalshot
+    back:
+    - ExGrenade
+    - ExGrenade
+    - ExGrenade
+    - ExGrenade
+    - ExGrenade
+    - ClusterGrenade
+    - ClusterGrenade
+    - SpaceCash5000
+
+- type: startingGear
+  id: RaiderBasicClothing
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCossack
+    shoes: ClothingShoesColorRed
+    gloves: ClothingHandsGlovesColorRed
+    mask: ClothingMaskBandBlack
+
+- type: startingGear
+  id: RaiderBasicEquipment
+  equipment:
+    shoes: ClothingShoesBootsCombatFilled
+    gloves: ClothingHandsGlovesCombat

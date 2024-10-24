@@ -1,0 +1,9 @@
+- type: entity
+  parent: ClothingBeltQuiver
+  id: ClothingBeltQuiverFilled
+  suffix: Filled, DO NOT MAP
+  components:
+  - type: StorageFill
+    contents:
+      - id: ArrowRegular
+        amount: 16

@@ -1,0 +1,81 @@
+- type: entity
+  parent: BaseMobHuman
+  abstract: true
+  id: BaseRaider
+  components:
+  - type: NpcFactionMember
+    factions:
+      - Syndicate
+  - type: InputMover
+
+# Weak raiders. The weapons they get are gimmicky at best, and they have little to no survivability.
+- type: entity
+  name: Weak Raider
+  suffix: Rimworld, Claymore
+  parent: BaseRaider
+  id: MobRaiderClaymore
+  components:
+  - type: Loadout
+    prototypes:
+      - RaiderClaymoreGear
+
+- type: entity
+  name: Weak Raider
+  suffix: Rimworld, Mosin
+  parent: BaseRaider
+  id: MobRaiderMosin
+  components:
+  - type: Loadout
+    prototypes:
+      - RaiderMosinGear
+
+- type: entity
+  name: Weak Raider
+  suffix: Rimworld, Bow
+  parent: BaseRaider
+  id: MobRaiderBow
+  components:
+  - type: Loadout
+    prototypes:
+      - RaiderBowGear
+
+#Okay-ish raiders. They are more than capable of taking on some crew members on their own
+- type: entity
+  name: Raider
+  suffix: Rimworld, Medic
+  parent: BaseRaider
+  id: MobRaiderMedic
+  components:
+  - type: Loadout
+    prototypes:
+      - RaiderMedicGear
+
+- type: entity
+  name: Raider
+  suffix: Rimworld, Sniper
+  parent: BaseRaider
+  id: MobRaiderSniper
+  components:
+  - type: Loadout
+    prototypes:
+      - RaiderSniperGear
+
+- type: entity
+  name: Raider
+  suffix: Rimworld, Rifleman
+  parent: BaseRaider
+  id: MobRaiderRifleman
+  components:
+  - type: Loadout
+    prototypes:
+      - RaiderRiflemanGear
+
+- type: entity
+  name: Raider
+  suffix: Rimworld, Demolitionist
+  parent: BaseRaider
+  id: MobRaiderDemolitionist
+  components:
+  - type: Loadout
+    prototypes:
+      - RaiderDemolitionistGear
