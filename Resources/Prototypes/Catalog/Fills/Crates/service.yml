@@ -33,6 +33,16 @@
       - id: BoxLightbulb
 
 - type: entity
+  id: CrateServiceReplacementDiscoLights
+  parent: CrateGenericSteel
+  name: replacement disco lights crate
+  description: May the disco light of Aether shine upon this station!
+  components:
+  - type: StorageFill
+    contents:
+    - id: BoxLightDisco
+
+- type: entity
   id: CrateMousetrapBoxes
   parent: CrateGenericSteel
   name: mousetraps crate
