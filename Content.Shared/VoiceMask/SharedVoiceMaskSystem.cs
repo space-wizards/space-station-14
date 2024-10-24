@@ -13,11 +13,14 @@ public sealed class VoiceMaskBuiState : BoundUserInterfaceState
 {
     public readonly string Name;
     public readonly string? Verb;
+    public readonly string? Sound;
 
-    public VoiceMaskBuiState(string name, string? verb)
+
+    public VoiceMaskBuiState(string name, string? verb, string? sound)
     {
         Name = name;
         Verb = verb;
+        Sound = sound;
     }
 }
 
@@ -43,5 +46,19 @@ public sealed class VoiceMaskChangeVerbMessage : BoundUserInterfaceMessage
     public VoiceMaskChangeVerbMessage(string? verb)
     {
         Verb = verb;
+    }
+}
+
+/// <summary>
+///     Change the speech noise prototype to override, or null to use the user's default noise.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class VoiceMaskChangeSoundMessage : BoundUserInterfaceMessage
+{
+    public readonly string? Sound;
+
+    public VoiceMaskChangeSoundMessage(string? sound)
+    {
+        Sound = sound;
     }
 }
