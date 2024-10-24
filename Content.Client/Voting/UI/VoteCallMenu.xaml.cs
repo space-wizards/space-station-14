@@ -62,7 +62,7 @@ namespace Content.Client.Voting.UI
 
             Stylesheet = IoCManager.Resolve<IStylesheetManager>().SheetSpace;
             CloseButton.OnPressed += _ => Close();
-            VoteNotTrustedLabel.Text = Loc.GetString("ui-vote-trusted-users-notice", ("timeReq", _cfg.GetCVar(CCVars.VotekickEligibleVoterDeathtime) / 60));
+            VoteNotTrustedLabel.Text = Loc.GetString("ui-vote-trusted-users-notice", ("timeReq", _cfg.GetCVar(CCVars.VotekickEligibleVoterDeathtime)));
 
             foreach (StandardVoteType voteType in Enum.GetValues<StandardVoteType>())
             {
