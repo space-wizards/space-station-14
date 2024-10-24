@@ -30,6 +30,9 @@
     delay: 0.5
   - type: ExplosionResistance
     damageCoefficient: 0.9
+  - type: Fiber
+    fiberMaterial: fibers-textile
+    fiberColor: fibers-grey
 
 - type: entity
   parent: ClothingBackpack

@@ -17,6 +17,8 @@ using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Random;
 using Content.Shared.Verbs;
 using Robust.Shared.Utility;
+using Content.Shared.Storage;
+using Robust.Shared.Containers;
 
 namespace Content.Server.Forensics
 {
@@ -42,6 +44,7 @@ namespace Content.Server.Forensics
             SubscribeLocalEvent<DnaComponent, TransferDnaEvent>(OnTransferDnaEvent);
             SubscribeLocalEvent<DnaSubstanceTraceComponent, SolutionContainerChangedEvent>(OnSolutionChanged);
             SubscribeLocalEvent<CleansForensicsComponent, GetVerbsEvent<UtilityVerb>>(OnUtilityVerb);
+            SubscribeLocalEvent<FiberComponent, EntInsertedIntoContainerMessage>(OnEntInserted);
         }
 
         private void OnSolutionChanged(Entity<DnaSubstanceTraceComponent> ent, ref SolutionContainerChangedEvent ev)
@@ -302,6 +305,14 @@ namespace Content.Server.Forensics
             var recipientComp = EnsureComp<ForensicsComponent>(args.Recipient);
             recipientComp.DNAs.Add(component.DNA);
             recipientComp.CanDnaBeCleaned = args.CanDnaBeCleaned;
+        }
+
+        private void OnEntInserted(Entity<FiberComponent> ent, ref EntInsertedIntoContainerMessage args)
+        {
+            if (!TryComp<ForensicsComponent>(args.Entity, out var targetComp))
+                return;
+
+            targetComp.Fibers.Add(string.IsNullOrEmpty(ent.Comp.FiberColor) ? Loc.GetString("forensic-fibers", ("material", ent.Comp.FiberMaterial)) : Loc.GetString("forensic-fibers-colored", ("color", ent.Comp.FiberColor), ("material", ent.Comp.FiberMaterial)));
         }
 
         #region Public API
