@@ -36,6 +36,13 @@
     state: icon
 
 - type: stealTargetGroup
+  id: HandheldAtmosMonitor
+  name: steal-target-groups-handheld-atmos-monitor
+  sprite:
+    sprite: Objects/Specific/Atmos/handheldatmosmonitor.rsi
+    state: scanner
+
+- type: stealTargetGroup
   id: BoxFolderQmClipboard
   name: steal-target-groups-box-folder-qm-clipboard
   sprite:
