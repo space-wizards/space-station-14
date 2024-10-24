@@ -20,6 +20,10 @@
     BoxCandle: 2
     BoxCandleSmall: 2
     Urn: 5
+  contrabandInventory:
+    FoodBakedBunHotX: 2
+    DrinkWineBottleFull: 1
+    ToyFigurineChaplain: 1
   emaggedInventory:
     ClothingOuterArmorCult: 1
     ClothingHeadHelmetCult: 1
