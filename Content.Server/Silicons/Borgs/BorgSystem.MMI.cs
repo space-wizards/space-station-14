@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Mind.Components;
+using Content.Shared.Roles.Jobs;
 using Content.Shared.Silicons.Borgs.Components;
 using Robust.Shared.Containers;
 
@@ -40,10 +41,17 @@ public sealed partial class BorgSystem
         linked.LinkedMMI = uid;
         Dirty(uid, component);
 
+        _appearance.SetData(uid, MMIVisuals.BrainPresent, true);
+
         if (_mind.TryGetMind(ent, out var mindId, out var mind))
+        {
             _mind.TransferTo(mindId, uid, true, mind: mind);
 
-        _appearance.SetData(uid, MMIVisuals.BrainPresent, true);
+            var job = EnsureComp<JobComponent>(mindId);
+
+            linked.OldJob = job.Prototype;
+            job.Prototype = "Borg";
+        }
     }
 
     private void OnMMIMindAdded(EntityUid uid, MMIComponent component, MindAddedMessage args)
@@ -63,6 +71,10 @@ public sealed partial class BorgSystem
             return;
 
         _mind.TransferTo(mindId, component.LinkedMMI, true, mind: mind);
+        var job = EnsureComp<JobComponent>(mindId);
+
+        component.OldJob = job.Prototype;
+        job.Prototype = "Borg";
     }
 
     private void OnMMILinkedRemoved(EntityUid uid, MMILinkedComponent component, EntGotRemovedFromContainerMessage args)
@@ -75,7 +87,10 @@ public sealed partial class BorgSystem
         RemComp(uid, component);
 
         if (_mind.TryGetMind(linked, out var mindId, out var mind))
+        {
             _mind.TransferTo(mindId, uid, true, mind: mind);
+            EnsureComp<JobComponent>(mindId).Prototype = component.OldJob;
+        }
 
         _appearance.SetData(linked, MMIVisuals.BrainPresent, false);
     }
