@@ -70,12 +70,12 @@ public sealed partial class EmergencyShuttleSystem
     private static readonly Color DangerColor = Color.Red;
 
     /// <summary>
-    /// Have the emergency shuttles been authorised to launch at CentCom?
+    /// Have the emergency shuttles been authorised to launch at CentComm?
     /// </summary>
     private bool _launchedShuttles;
 
     /// <summary>
-    /// Have the emergency shuttles left for CentCom?
+    /// Have the emergency shuttles left for CentComm?
     /// </summary>
     public bool ShuttlesLeft;
 

@@ -125,36 +125,36 @@
 
 - type: entity
   parent: [ ClothingUniformBase, BaseCentcommContraband ]
-  id: ClothingUniformJumpsuitCentcomAgent
+  id: ClothingUniformJumpsuitCentcommAgent
   name: CentComm agent's jumpsuit
   description: A suit worn by CentComm's legal team. Smells of burnt coffee.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/centcom_agent.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/centcomm_agent.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/centcom_agent.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/centcomm_agent.rsi
 
 - type: entity
   parent: [ ClothingUniformBase, BaseCentcommContraband ]
-  id: ClothingUniformJumpsuitCentcomOfficial
+  id: ClothingUniformJumpsuitCentcommOfficial
   name: CentComm official's jumpsuit
   description: It's a jumpsuit worn by CentComm's officials.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/centcom_official.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/centcomm_official.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/centcom_official.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/centcomm_official.rsi
 
 - type: entity
   parent: [ ClothingUniformBase, BaseCentcommContraband ]
-  id: ClothingUniformJumpsuitCentcomOfficer
+  id: ClothingUniformJumpsuitCentcommOfficer
   name: CentComm officer's jumpsuit
   description: It's a jumpsuit worn by CentComm Officers.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/centcom_officer.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/centcomm_officer.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/centcom_officer.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/centcomm_officer.rsi
 
 - type: entity
   parent: ClothingUniformBase
@@ -813,14 +813,14 @@
 
 - type: entity
   parent: ClothingUniformBase
-  id: ClothingUniformJumpsuitCentcomFormal
+  id: ClothingUniformJumpsuitCentcommFormal
   name: central command formal suit
   description: A suit for special occasions.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/centcomformal.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/centcommformal.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/centcomformal.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/centcommformal.rsi
 
 - type: entity
   parent: [ClothingUniformBase, BaseCommandContraband]
