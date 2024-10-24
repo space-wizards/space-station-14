@@ -1,11 +1,13 @@
 using Content.Shared.EntityTable.ValueSelector;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.EntityTable.EntitySelectors;
 
 /// <summary>
 /// Gets the spawn for the entity prototype specified at whatever count specified.
 /// </summary>
+[Serializable, NetSerializable]
 public sealed partial class EntSelector : EntityTableSelector
 {
     public const string IdDataFieldTag = "id";
