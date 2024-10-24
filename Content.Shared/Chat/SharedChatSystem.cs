@@ -275,6 +275,8 @@ public abstract class SharedChatSystem : EntitySystem
     public static string InjectTagAroundString(ChatMessage message, string targetString, string tag, string? tagParameter)
     {
         var rawmsg = message.WrappedMessage;
+        targetString = targetString.Replace("s", "s+");
+        targetString = targetString.Replace("z", "z+");
         rawmsg = Regex.Replace(rawmsg, "(?i)(" + targetString + ")(?-i)(?![^[]*])", $"[{tag}={tagParameter}]$1[/{tag}]");
         return rawmsg;
     }
