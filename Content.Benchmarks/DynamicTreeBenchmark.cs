@@ -44,7 +44,7 @@ namespace Content.Benchmarks
             for (var i = 0; i < Aabbs1.Length; i++)
             {
                 var aabb = Aabbs1[i];
-                _b2Tree.CreateProxy(aabb, i);
+                _b2Tree.CreateProxy(aabb, uint.MaxValue, i);
                 _tree.Add(i);
             }
         }
