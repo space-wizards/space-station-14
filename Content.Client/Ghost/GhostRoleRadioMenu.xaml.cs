@@ -51,7 +51,6 @@ public sealed partial class GhostRoleRadioMenu : RadialMenu
 
             var button = new GhostRoleRadioMenuButton()
             {
-                StyleClasses = { "RadialMenuButton" },
                 SetSize = new Vector2(64, 64),
                 ToolTip = Loc.GetString(ghostRoleProto.Name),
                 ProtoId = ghostRoleProto.ID,
@@ -100,7 +99,7 @@ public sealed partial class GhostRoleRadioMenu : RadialMenu
     }
 }
 
-public sealed class GhostRoleRadioMenuButton : RadialMenuTextureButton
+public sealed class GhostRoleRadioMenuButton : RadialMenuTextureButtonWithSector
 {
     public ProtoId<GhostRolePrototype> ProtoId { get; set; }
 }
