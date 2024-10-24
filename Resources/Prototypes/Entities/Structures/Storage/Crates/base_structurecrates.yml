@@ -38,6 +38,7 @@
         layer:
         - MachineLayer
   - type: EntityStorage
+  - type: InternalAir
   - type: PlaceableSurface
     isPlaceable: false # defaults to closed.
   - type: Damageable
