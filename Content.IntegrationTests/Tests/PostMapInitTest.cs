@@ -63,7 +63,6 @@ namespace Content.IntegrationTests.Tests
             "Oasis",
             "Cog",
             "Xeno", // Xeno map playtest
-            "Packed2", // Harmony test of Packed changes
             "Barratry" // Update of old map
         };
 
