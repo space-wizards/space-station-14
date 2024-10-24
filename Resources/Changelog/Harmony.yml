@@ -381,3 +381,26 @@ Entries:
     changes:
     - type: Add
       message: Added Detroit.
+  - id: 124
+    author: liltenhead
+    time: '2024-10-17T06:12:42.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/124
+    changes:
+    - type: Tweak
+      message: Clarified EORG rules further, and tweaked the AI law change rule.
+  - id: 129
+    author: Unisol
+    time: '2024-10-21T03:39:39.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/129
+    changes:
+    - type: Add
+      message: added a hand labeler to chem lab in nukie outpost
+  - id: 130
+    author: FluffMe
+    time: '2024-10-22T03:13:15.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/130
+    changes:
+    - type: Add
+      message: Added anti-EORG measures.
+    - type: Remove
+      message: Removed "No EORG" popup at round end.
