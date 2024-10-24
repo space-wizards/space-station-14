@@ -174,6 +174,22 @@
   - node: bacon
     entity: FoodMeatBaconCooked
 
+# anomaly meat steak
+- type: constructionGraph
+  id: AnomalyMeatSteak
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: anomaly steak
+      completed:
+      - !type:PlaySound
+        sound: /Audio/Effects/sizzle.ogg
+      steps:
+      - minTemperature: 335
+  - node: anomaly steak
+    entity: FoodMeatAnomalyCooked
+
 # cutlets
 
 - type: constructionGraph
