@@ -333,6 +333,11 @@ public class RadialMenuTextureButtonWithSector : RadialMenuTextureButton, IRadia
     private bool _isWholeCircle;
     private Vector2? _parentCenter;
 
+    private Color _backgroundColor = Color.ToSrgb(new Color(70, 73, 102, 128));
+    private Color _hoverBackgroundColor = Color.ToSrgb(new Color(87, 91, 127, 128));
+    private Color _borderColor = Color.ToSrgb(new Color(173, 216, 230, 70));
+    private Color _hoverBorderColor = Color.ToSrgb(new Color(87, 91, 127, 128));
+
     /// <summary>
     /// Marker, that control should render border of segment. Is false by default.
     /// </summary>
@@ -355,24 +360,40 @@ public class RadialMenuTextureButtonWithSector : RadialMenuTextureButton, IRadia
     public bool DrawSeparators { get; set; } = true;
 
     /// <summary>
-    /// Color of background in non-hovered state.
+    /// Color of background in non-hovered state. Accepts RGB color, works with sRGB for DrawPrimitive internally.
     /// </summary>
-    public Color BackgroundColor { get; set; } = new Color(70, 73, 102, 128);
+    public Color BackgroundColor
+    {
+        get => Color.FromSrgb(_backgroundColor);
+        set => _backgroundColor = Color.ToSrgb(value);
+    }
 
     /// <summary>
-    /// Color of background in hovered state.
+    /// Color of background in hovered state. Accepts RGB color, works with sRGB for DrawPrimitive internally.
     /// </summary>
-    public Color HoverBackgroundColor { get; set; } = new Color(87, 91, 127, 128);
+    public Color HoverBackgroundColor
+    {
+        get => Color.FromSrgb(_hoverBackgroundColor);
+        set => _hoverBackgroundColor = Color.ToSrgb(value);
+    }
 
     /// <summary>
-    /// Color of button border.
+    /// Color of button border. Accepts RGB color, works with sRGB for DrawPrimitive internally.
     /// </summary>
-    public Color BorderColor { get; set; } = new Color(173, 216, 230, 70);
+    public Color BorderColor
+    {
+        get => Color.FromSrgb(_borderColor);
+        set => _borderColor = Color.ToSrgb(value);
+    }
 
     /// <summary>
-    /// Color of button border when button is hovered.
+    /// Color of button border when button is hovered. Accepts RGB color, works with sRGB for DrawPrimitive internally.
     /// </summary>
-    public Color HoverBorderColor { get; set; } = new Color(87, 91, 127, 128);
+    public Color HoverBorderColor
+    {
+        get => Color.FromSrgb(_hoverBorderColor);
+        set => _hoverBorderColor = Color.ToSrgb(value);
+    }
 
     /// <summary>
     /// Color of separator lines.
@@ -437,8 +458,8 @@ public class RadialMenuTextureButtonWithSector : RadialMenuTextureButton, IRadia
         if (DrawBackground)
         {
             var segmentColor = DrawMode == DrawModeEnum.Hover
-                ? HoverBackgroundColor
-                : BackgroundColor;
+                ? _hoverBackgroundColor
+                : _backgroundColor;
 
             DrawAnnulusSector(handle, containerCenter, _innerRadius, _outerRadius, angleFrom, angleTo, segmentColor);
         }
@@ -446,8 +467,8 @@ public class RadialMenuTextureButtonWithSector : RadialMenuTextureButton, IRadia
         if (DrawBorder)
         {
             var borderColor = DrawMode == DrawModeEnum.Hover
-                ? HoverBorderColor
-                : BorderColor;
+                ? _hoverBorderColor
+                : _borderColor;
             DrawAnnulusSector(handle, containerCenter, _innerRadius, _outerRadius, angleFrom, angleTo, borderColor, false);
         }
 
@@ -550,7 +571,7 @@ public class RadialMenuTextureButtonWithSector : RadialMenuTextureButton, IRadia
         var type = filled
             ? DrawPrimitiveTopology.TriangleStrip
             : DrawPrimitiveTopology.LineStrip;
-        drawingHandleScreen.DrawPrimitives(type, _sectorPointsForDrawing, Color.ToSrgb(color));
+        drawingHandleScreen.DrawPrimitives(type, _sectorPointsForDrawing, color);
     }
 
     private static void DrawSeparatorLines(
