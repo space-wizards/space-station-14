@@ -16,6 +16,7 @@
   - Xeno
   - Zombie
   - Revolutionary
+  - Dragon
 
 - type: npcFaction
   id: Mouse
@@ -54,6 +55,7 @@
   - Xeno
   - PetsNT
   - Zombie
+  - Dragon
 
 - type: npcFaction
   id: Xeno
