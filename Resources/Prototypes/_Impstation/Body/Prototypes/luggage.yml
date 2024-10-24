@@ -1,0 +1,14 @@
+- type: body
+  id: Luggage
+  name: "luggage"
+  root: torso
+  slots:
+    torso:
+      part: TorsoAnimal
+      connections:
+      - hands
+      - feet
+    hands:
+      part: HandsLuggage
+    feet:
+      part: FeetAnimal
