@@ -99,6 +99,17 @@
 
 - type: entity
   parent: ClothingHeadBase
+  id: ClothingHeadNukieHeadband
+  name: tactical syndicate headband
+  description: I'm going to be the greatest syndicate agent, believe it!
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/nukie_headband.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/nukie_headband.rsi
+
+- type: entity
+  parent: ClothingHeadBase
   id: ClothingHeadHatRichard
   name: richard
   description: 'Do you like hurting people?'
