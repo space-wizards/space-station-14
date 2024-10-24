@@ -23,7 +23,7 @@
   parent: FlaskBase
   id: DrinkMREFlask
   name: MRE flask
-  description: An old military flask, filled with the finest contents for soldiers.
+  description: A surplus military flask, filled with water of unknown origins.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mreflask.rsi
@@ -32,8 +32,8 @@
       drink:
         reagents:
         - ReagentId: Water
-          Quantity: 50
-  - type: TrashOnSolutionEmpty
+          Quantity: 30
+  - type: TrashOnSolutionEmpty # Likely to be dumped after use
     solution: drink
 
 - type: entity
