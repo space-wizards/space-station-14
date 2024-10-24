@@ -1,12 +1,16 @@
 using System.Linq;
 using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
+using Content.Server.Database;
 using Content.Shared.Chat;
 using Content.Shared.Silicons.StationAi;
 using Content.Shared.StationAi;
+using Content.Shared.Telephone;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
+using static Content.Server.Chat.Systems.ChatSystem;
 
 namespace Content.Server.Silicons.StationAi;
 
@@ -14,8 +18,47 @@ public sealed class StationAiSystem : SharedStationAiSystem
 {
     [Dependency] private readonly IChatManager _chats = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly SharedTransformSystem _xforms = default!;
 
     private readonly HashSet<Entity<StationAiCoreComponent>> _ais = new();
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<ExpandICChatRecipientsEvent>(OnExpandICChatRecipients);
+    }
+
+    private void OnExpandICChatRecipients(ExpandICChatRecipientsEvent ev)
+    {
+        var xformQuery = GetEntityQuery<TransformComponent>();
+        var sourceXform = Transform(ev.Source);
+        var sourcePos = _xforms.GetWorldPosition(sourceXform, xformQuery);
+
+        // This function ensures that chat popups appear on camera views that have connected microphones.
+        var query = EntityManager.EntityQueryEnumerator<StationAiCoreComponent, TransformComponent>();
+        while (query.MoveNext(out var ent, out var entStationAiCore, out var entXform))
+        {
+            var stationAiCore = new Entity<StationAiCoreComponent>(ent, entStationAiCore);
+
+            if (!TryGetInsertedAI(stationAiCore, out var insertedAi) || !TryComp(insertedAi, out ActorComponent? actor))
+                return;
+
+            if (stationAiCore.Comp.RemoteEntity == null || stationAiCore.Comp.Remote)
+                return;
+
+            var xform = Transform(stationAiCore.Comp.RemoteEntity.Value);
+
+            var range = (xform.MapID != sourceXform.MapID)
+                ? -1
+                : (sourcePos - _xforms.GetWorldPosition(xform, xformQuery)).Length();
+
+            if (range < 0 || range > ev.VoiceRange)
+                continue;
+
+            ev.Recipients.TryAdd(actor.PlayerSession, new ICChatRecipientData(range, false));
+        }
+    }
 
     public override bool SetVisionEnabled(Entity<StationAiVisionComponent> entity, bool enabled, bool announce = false)
     {
