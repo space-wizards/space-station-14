@@ -43,7 +43,17 @@ public sealed class JukeboxBoundUserInterface : BoundUserInterface
 
         _menu.OnSongSelected += SelectSong;
 
+        _menu.OnSongQueueAdd += songId =>
+        {
+            SendMessage(new JukeboxAddQueueMessage(songId));
+        };
+
+        _menu.OnQueueRemove += index =>
+        {
+            SendMessage(new JukeboxRemoveQueueMessage(index));
+        };
         _menu.SetTime += SetTime;
+
         PopulateMusic();
         Reload();
     }
@@ -61,17 +71,24 @@ public sealed class JukeboxBoundUserInterface : BoundUserInterface
         if (_protoManager.TryIndex(jukebox.SelectedSongId, out var songProto))
         {
             var length = EntMan.System<AudioSystem>().GetAudioLength(songProto.Path.Path.ToString());
-            _menu.SetSelectedSong(songProto.Name, (float) length.TotalSeconds);
+            _menu.SetSelectedSong(songProto.ID, (float) length.TotalSeconds);
         }
         else
         {
-            _menu.SetSelectedSong(string.Empty, 0f);
+            _menu.SetSelectedSong(null, 0f);
         }
+
+        _menu.PopulateQueue(jukebox.SongIdQueue);
+        _menu.SetIsPlaying(EntMan.System<AudioSystem>().IsPlaying(jukebox.AudioStream));
     }
 
     public void PopulateMusic()
     {
-        _menu?.Populate(_protoManager.EnumeratePrototypes<JukeboxPrototype>());
+        if (_menu == null || !EntMan.TryGetComponent(Owner, out JukeboxComponent? jukebox))
+            return;
+
+        _menu.Populate(_protoManager.EnumeratePrototypes<JukeboxPrototype>());
+        _menu.PopulateQueue(jukebox.SongIdQueue);
     }
 
     public void SelectSong(ProtoId<JukeboxPrototype> songid)

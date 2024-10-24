@@ -16,12 +16,8 @@ namespace Content.Client.Audio.Jukebox;
 public sealed partial class JukeboxMenu : FancyWindow
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
     private AudioSystem _audioSystem;
-
-    /// <summary>
-    /// Are we currently 'playing' or paused for the play / pause button.
-    /// </summary>
-    private bool _playState;
 
     /// <summary>
     /// True if playing, false if paused.
@@ -29,6 +25,8 @@ public sealed partial class JukeboxMenu : FancyWindow
     public event Action<bool>? OnPlayPressed;
     public event Action? OnStopPressed;
     public event Action<ProtoId<JukeboxPrototype>>? OnSongSelected;
+    public event Action<ProtoId<JukeboxPrototype>>? OnSongQueueAdd;
+    public event Action<int>? OnQueueRemove;
     public event Action<float>? SetTime;
 
     private EntityUid? _audio;
@@ -41,28 +39,15 @@ public sealed partial class JukeboxMenu : FancyWindow
         IoCManager.InjectDependencies(this);
         _audioSystem = _entManager.System<AudioSystem>();
 
-        MusicList.OnItemSelected += args =>
-        {
-            var entry = MusicList[args.ItemIndex];
-
-            if (entry.Metadata is not string juke)
-                return;
-
-            OnSongSelected?.Invoke(juke);
-        };
-
-        PlayButton.OnPressed += args =>
-        {
-            OnPlayPressed?.Invoke(!_playState);
-        };
-
-        StopButton.OnPressed += args =>
+        CurrentSong.SetOnPressedStop(args =>
         {
             OnStopPressed?.Invoke();
-        };
+        });
+        CurrentSong.SetOnPressedPlay((song, playPauseState, args) =>
+        {
+            OnPlayPressed?.Invoke(playPauseState);
+        });
         PlaybackSlider.OnReleased += PlaybackSliderKeyUp;
-
-        SetPlayPauseButton(_audioSystem.IsPlaying(_audio), force: true);
     }
 
     public JukeboxMenu(AudioSystem audioSystem)
@@ -86,33 +71,45 @@ public sealed partial class JukeboxMenu : FancyWindow
     /// </summary>
     public void Populate(IEnumerable<JukeboxPrototype> jukeboxProtos)
     {
-        MusicList.Clear();
+        MusicList.RemoveAllChildren();
 
         foreach (var entry in jukeboxProtos)
         {
-            MusicList.AddItem(entry.Name, metadata: entry.ID);
+            // MusicList.AddItem(entry.Name, metadata: entry.ID);
+            var songControl = new JukeboxEntry(entry) {EntryType = JukeboxEntry.JukeboxEntryType.List};
+            songControl.SetOnPressedPlay((song, _, args) =>
+            {
+                if (song == null)
+                    return;
+                OnSongSelected?.Invoke(song.ID);
+                OnPlayPressed?.Invoke(true);
+            });
+
+            songControl.SetOnPressedQueue((song, args) =>
+            {
+                if (song == null)
+                    return;
+
+
+                OnSongQueueAdd?.Invoke(song.ID);
+            });
+
+            MusicList.AddChild(songControl);
         }
     }
 
-    public void SetPlayPauseButton(bool playing, bool force = false)
+    public void SetSelectedSong(ProtoId<JukeboxPrototype>? song, float length)
     {
-        if (_playState == playing && !force)
+        if (song == null)
             return;
 
-        _playState = playing;
-
-        if (playing)
-        {
-            PlayButton.Text = Loc.GetString("jukebox-menu-buttonpause");
+        if (!_prototype.TryIndex(song, out var songProto))
             return;
-        }
 
-        PlayButton.Text = Loc.GetString("jukebox-menu-buttonplay");
-    }
-
-    public void SetSelectedSong(string name, float length)
-    {
-        SetSelectedSongText(name);
+        SongSelected.Text = Loc.GetString("jukebox-menu-selectedsong");
+        PlaybackSlider.Visible = true;
+        CurrentSong.Visible = true;
+        CurrentSong.SetSong(songProto);
         PlaybackSlider.MaxValue = length;
         PlaybackSlider.SetValueWithoutEvent(0);
     }
@@ -148,19 +145,35 @@ public sealed partial class JukeboxMenu : FancyWindow
         {
             PlaybackSlider.SetValueWithoutEvent(0f);
         }
-
-        SetPlayPauseButton(_audioSystem.IsPlaying(_audio, audio));
     }
 
-    public void SetSelectedSongText(string? text)
+    /// <summary>
+    /// Re-populates the queue with avaiable jukebox prototypes.
+    /// </summary>
+    public void PopulateQueue(IEnumerable<ProtoId<JukeboxPrototype>> queue)
     {
-        if (!string.IsNullOrEmpty(text))
+        MusicListQueue.RemoveAllChildren();
+        int i = 0;
+        foreach (var song in queue)
         {
-            SongName.Text = text;
+            if (!_prototype.TryIndex(song, out var songProto))
+                continue;
+
+            i += 1;
+            var songControl = new JukeboxEntry(songProto) {EntryType = JukeboxEntry.JukeboxEntryType.Queue};
+            MusicListQueue.AddChild(songControl);
+
+            songControl.SetOnPressedRemove((source, args) =>
+            {
+                int index = source.GetPositionInParent();
+
+                OnQueueRemove?.Invoke(index);
+            });
         }
-        else
-        {
-            SongName.Text = "---";
-        }
+    }
+
+    public void SetIsPlaying(bool isPlaying)
+    {
+        CurrentSong.PlayPauseState = isPlaying;
     }
 }
