@@ -2,8 +2,11 @@ using System.Numerics;
 using Content.Shared.CCVar;
 using Content.Shared.Follower.Components;
 using Content.Shared.Input;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
+using Content.Shared.NPC;
 using Robust.Shared.GameStates;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
@@ -293,7 +296,7 @@ namespace Content.Shared.Movement.Systems
             // Relayed movement just uses the same keybinds given we're moving the relayed entity
             // the same as us.
 
-            if (TryComp<RelayInputMoverComponent>(entity, out var relayMover))
+            if (RelayQuery.TryComp(entity, out var relayMover))
             {
                 DebugTools.Assert(relayMover.RelayEntity != entity);
                 DebugTools.AssertNotNull(relayMover.RelayEntity);
@@ -326,6 +329,8 @@ namespace Content.Shared.Movement.Systems
 
         private void OnInputInit(Entity<InputMoverComponent> entity, ref ComponentInit args)
         {
+            RefreshActiveInput((entity.Owner, entity.Comp, null));
+
             var xform = Transform(entity.Owner);
 
             if (!xform.ParentUid.IsValid())
@@ -339,7 +344,7 @@ namespace Content.Shared.Movement.Systems
         {
             MoverQuery.TryGetComponent(uid, out var moverComp);
 
-            if (TryComp<RelayInputMoverComponent>(uid, out var relayMover))
+            if (RelayQuery.TryComp(uid, out var relayMover))
             {
                 // if we swap to relay then stop our existing input if we ever change back.
                 if (moverComp != null)
