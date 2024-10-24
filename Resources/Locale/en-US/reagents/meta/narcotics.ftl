@@ -39,3 +39,6 @@ reagent-desc-tear-gas = A chemical that causes severe irritation and crying, com
 
 reagent-name-happiness = happiness
 reagent-desc-happiness = Fills you with ecstatic numbness and causes minor brain damage. Highly addictive. If overdosed causes sudden mood swings.
+
+reagent-name-sadness = sadness
+reagent-desc-sadness = A fragrant chemical that sucks the motivation out of you. Induces a short-term depression when consumed.
