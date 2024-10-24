@@ -2,10 +2,13 @@ using Content.Server.Administration.Logs;
 using Content.Server.Chat.Systems;
 using Content.Server.Power.Components;
 using Content.Server.Radio.Components;
+using Content.Server.Replays;
+using Content.Server.VoiceMask;
 using Content.Shared.Chat;
 using Content.Shared.Database;
 using Content.Shared.Radio;
 using Content.Shared.Radio.Components;
+using Content.Shared.Replays;
 using Content.Shared.Speech;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
@@ -28,6 +31,7 @@ public sealed class RadioSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly ReplayEventSystem _replayEventSystem = default!;
 
     // set used to prevent radio feedback loops.
     private readonly HashSet<string> _messages = new();
@@ -156,6 +160,15 @@ public sealed class RadioSystem : EntitySystem
             _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Radio message from {ToPrettyString(messageSource):user} on {channel.LocalizedName}: {message}");
 
         _replay.RecordServerMessage(chat);
+        _replayEventSystem.RecordReplayEvent(new ChatMessageReplayEvent()
+        {
+            Message = message,
+            Sender = _replayEventSystem.GetPlayerInfo(messageSource),
+            Severity = ReplayEventSeverity.Low,
+            EventType = ReplayEventType.ChatMessageSent,
+            Type = ChatChannel.Radio.ToString(),
+            Channel = channel.ID,
+        }, messageSource);
         _messages.Remove(message);
     }
 

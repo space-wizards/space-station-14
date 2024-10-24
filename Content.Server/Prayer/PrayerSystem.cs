@@ -3,10 +3,12 @@ using Content.Server.Administration.Logs;
 using Content.Server.Bible.Components;
 using Content.Server.Chat.Managers;
 using Content.Server.Popups;
+using Content.Server.Replays;
 using Content.Shared.Database;
 using Content.Shared.Popups;
 using Content.Shared.Chat;
 using Content.Shared.Prayer;
+using Content.Shared.Replays;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
@@ -24,6 +26,7 @@ public sealed class PrayerSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly QuickDialogSystem _quickDialog = default!;
+    [Dependency] private readonly ReplayEventSystem _replayEventSystem = default!;
 
     public override void Initialize()
     {
@@ -58,7 +61,7 @@ public sealed class PrayerSystem : EntitySystem
                 {
                     // Make sure the player's entity and the Prayable entity+component still exist
                     if (actor?.PlayerSession != null && HasComp<PrayableComponent>(uid))
-                        Pray(actor.PlayerSession, comp, message);
+                        Pray(actor.PlayerSession, comp, message, uid);
                 });
             },
             Impact = LogImpact.Low,
@@ -93,11 +96,12 @@ public sealed class PrayerSystem : EntitySystem
     /// <param name="sender">The IPlayerSession who sent the original message</param>
     /// <param name="comp">Prayable component used to make the prayer</param>
     /// <param name="message">Message to be sent to the admin chat</param>
+    /// <param name="source">EntityUid of the entity that was prayed on</param>
     /// <remarks>
     /// You may be wondering, "Why the admin chat, specifically? Nobody even reads it!"
     /// Exactly.
     ///  </remarks>
-    public void Pray(ICommonSession sender, PrayableComponent comp, string message)
+    public void Pray(ICommonSession sender, PrayableComponent comp, string message, EntityUid source)
     {
         if (sender.AttachedEntity == null)
             return;
@@ -106,5 +110,13 @@ public sealed class PrayerSystem : EntitySystem
 
         _chatManager.SendAdminAnnouncement($"{Loc.GetString(comp.NotificationPrefix)} <{sender.Name}>: {message}");
         _adminLogger.Add(LogType.AdminMessage, LogImpact.Low, $"{ToPrettyString(sender.AttachedEntity.Value):player} sent prayer ({Loc.GetString(comp.NotificationPrefix)}): {message}");
+        _replayEventSystem.RecordReplayEvent(new PrayedReplayEvent()
+        {
+            EventType = ReplayEventType.Prayed,
+            Severity = ReplayEventSeverity.Medium,
+            Player = _replayEventSystem.GetPlayerInfo(sender.AttachedEntity.Value),
+            PrayedWith = MetaData(source).EntityName,
+            Message = message
+        }, source);
     }
 }

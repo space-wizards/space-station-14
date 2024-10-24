@@ -8,6 +8,7 @@ using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.GameTicking;
+using Content.Server.Replays;
 using Content.Server.Screens.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
@@ -16,6 +17,7 @@ using Content.Server.Station.Systems;
 using Content.Shared.Database;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.GameTicking;
+using Content.Shared.Replays;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Player;
@@ -42,6 +44,7 @@ namespace Content.Server.RoundEnd
         [Dependency] private readonly EmergencyShuttleSystem _shuttle = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly StationSystem _stationSystem = default!;
+        [Dependency] private readonly ReplayEventSystem _replayEventSystem = default!;
 
         public TimeSpan DefaultCooldownDuration { get; set; } = TimeSpan.FromSeconds(30);
 
@@ -156,6 +159,14 @@ namespace Content.Server.RoundEnd
 
             _countdownTokenSource = new();
 
+            _replayEventSystem.RecordReplayEvent(new ShuttleReplayEvent()
+            {
+                Source = requester == null ? null : _replayEventSystem.GetPlayerInfo(requester.Value),
+                Countdown = (int)countdownTime.TotalSeconds,
+                Severity = ReplayEventSeverity.High,
+                EventType = ReplayEventType.EvacuationShuttleCalled,
+                Time = _gameTiming.CurTick.Value
+            });
             if (requester != null)
             {
                 _adminLogger.Add(LogType.ShuttleCalled, LogImpact.High, $"Shuttle called by {ToPrettyString(requester.Value):user}");
@@ -224,6 +235,12 @@ namespace Content.Server.RoundEnd
             _countdownTokenSource.Cancel();
             _countdownTokenSource = null;
 
+            _replayEventSystem.RecordReplayEvent(new ShuttleReplayEvent()
+            {
+                Source = requester == null ? null : _replayEventSystem.GetPlayerInfo(requester.Value),
+                Severity = ReplayEventSeverity.High,
+                EventType = ReplayEventType.EvacuationShuttleRecalled,
+            });
             if (requester != null)
             {
                 _adminLogger.Add(LogType.ShuttleRecalled, LogImpact.High, $"Shuttle recalled by {ToPrettyString(requester.Value):user}");
