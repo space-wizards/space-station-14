@@ -645,6 +645,7 @@
     entries:
       Taco: CheeseTaco
       Burger: CheeseBurger
+      Skewer: CheeseSkewer
 
 - type: entity
   name: chèvre log

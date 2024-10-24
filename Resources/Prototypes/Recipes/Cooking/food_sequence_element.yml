@@ -36,6 +36,15 @@
   - sprite: Objects/Consumable/Food/skewer.rsi
     state: skewer-rat
 
+# Raw Snake
+
+- type: foodSequenceElement
+  id: MeatSnake
+  name: food-sequence-skewer-content-snake
+  sprites:
+  - sprite: Objects/Consumable/Food/skewer.rsi
+    state: skewer-snake
+
 # Cheese
 
 - type: foodSequenceElement
@@ -53,6 +62,15 @@
   sprites:
   - sprite: Objects/Consumable/Food/taco_sequence.rsi
     state: cheese
+  tags:
+  - Cheese
+
+- type: foodSequenceElement
+  id: CheeseSkewer
+  name: food-sequence-content-cheese
+  sprites:
+  - sprite: Objects/Consumable/Food/ingredients.rsi
+    state: cheesewedge
   tags:
   - Cheese
 
@@ -132,6 +150,17 @@
   sprites:
   - sprite: Objects/Consumable/Food/meat.rsi
     state: chicken-fried
+  tags:
+  - Cooked
+  - Meat
+  - Chicken
+
+- type: foodSequenceElement
+  id: MeatChickenSkewer
+  name: food-sequence-skewer-content-chicken
+  sprites:
+  - sprite: Objects/Consumable/Food/skewer.rsi
+    state: skewer-meat
   tags:
   - Cooked
   - Meat
@@ -270,6 +299,16 @@
 
 - type: foodSequenceElement
   id: MeatBall
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: meatball-cooked
+  tags:
+  - Cooked
+  - Meat
+
+- type: foodSequenceElement
+  id: MeatBallSkewer
+  name: food-sequence-skewer-content-meatball
   sprites:
   - sprite: Objects/Consumable/Food/meat.rsi
     state: meatball-cooked
