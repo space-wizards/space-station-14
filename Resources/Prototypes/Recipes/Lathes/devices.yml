@@ -70,7 +70,7 @@
 - type: latheRecipe
   id: Signaller
   result: RemoteSignaller
-  category: Parts
+  category: Tools
   completetime: 2
   materials:
     Steel: 100
