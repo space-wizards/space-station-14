@@ -1,15 +1,20 @@
 <DefaultWindow xmlns="https://spacestation14.io">
     <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
-        <BoxContainer Orientation="Vertical" HorizontalExpand="True" SizeFlagsStretchRatio="0.4" Margin="0 0 5 0">
+        <BoxContainer Orientation="Vertical" MinWidth="243" Margin="0 0 5 0">
             <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="0 0 0 5">
                 <LineEdit Name="SearchBar" PlaceHolder="Search" HorizontalExpand="True"/>
                 <OptionButton Name="OptionCategories" Access="Public" MinSize="130 0"/>
             </BoxContainer>
             <ItemList Name="Recipes" Access="Public" SelectMode="Single" VerticalExpand="True"/>
+            <ScrollContainer Name="RecipesGridScrollContainer" VerticalExpand="True" Access="Public" Visible="False">
+                <GridContainer Name="RecipesGrid" Columns="5" Access="Public"/>
+            </ScrollContainer>
         </BoxContainer>
-        <BoxContainer Orientation="Vertical" HorizontalExpand="True" SizeFlagsStretchRatio="0.6">
-            <Button Name="FavoriteButton" Visible="false" HorizontalExpand="False"
-                HorizontalAlignment="Right" Margin="0 0 0 15"/>
+        <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+            <BoxContainer Orientation="Horizontal">
+                <Button Name="MenuGridViewButton" ToggleMode="True" Text="{Loc construction-menu-grid-view}"/>
+                <Button Name="FavoriteButton" Visible="false"/>
+            </BoxContainer>
             <Control>
                 <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="0 0 0 5">
                     <BoxContainer Orientation="Horizontal" Align="Center">
