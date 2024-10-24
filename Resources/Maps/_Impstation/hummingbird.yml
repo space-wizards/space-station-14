@@ -5271,7 +5271,8 @@ entities:
           31,13:
             2: 16384
           32,13:
-            1: 61439
+            7: 273
+            1: 61166
           32,12:
             1: 60928
           32,14:
@@ -54619,6 +54620,29 @@ entities:
     - type: Transform
       pos: 76.45932,-31.817017
       parent: 2
+- proto: ClothingHeadHelmetAncient
+  entities:
+  - uid: 23132
+    components:
+    - type: Transform
+      parent: 13394
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 23368
+    components:
+    - type: Transform
+      parent: 23366
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 23372
+    components:
+    - type: Transform
+      parent: 23370
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
 - proto: ClothingHeadHelmetBasic
   entities:
   - uid: 6818
@@ -54789,6 +54813,29 @@ entities:
     - type: Transform
       pos: 37.39354,23.406078
       parent: 2
+- proto: ClothingOuterHardsuitAncientEVA
+  entities:
+  - uid: 23134
+    components:
+    - type: Transform
+      parent: 13394
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 23369
+    components:
+    - type: Transform
+      parent: 23366
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 23373
+    components:
+    - type: Transform
+      parent: 23370
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
 - proto: ClothingOuterWinterMed
   entities:
   - uid: 5636
@@ -57181,7 +57228,7 @@ entities:
       pos: 123.5,-7.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -22601.85
+      secondsUntilStateChange: -23117.17
       state: Closing
 - proto: CurtainsWhiteOpen
   entities:
@@ -66541,6 +66588,27 @@ entities:
     - type: Transform
       pos: 68.47796,42.85089
       parent: 2
+  - uid: 17784
+    components:
+    - type: Transform
+      parent: 13394
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 23367
+    components:
+    - type: Transform
+      parent: 23366
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 23371
+    components:
+    - type: Transform
+      parent: 23370
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
 - proto: Firelock
   entities:
   - uid: 2902
@@ -106461,15 +106529,10 @@ entities:
       parent: 2
 - proto: JetpackBlueFilled
   entities:
-  - uid: 17784
+  - uid: 13179
     components:
     - type: Transform
-      pos: 113.5,-41.5
-      parent: 2
-  - uid: 23132
-    components:
-    - type: Transform
-      pos: 131.5,16.5
+      pos: 59.5,49.5
       parent: 2
 - proto: JetpackMiniFilled
   entities:
@@ -109661,6 +109724,11 @@ entities:
     components:
     - type: Transform
       pos: 81.48847,-15.204627
+      parent: 2
+  - uid: 13178
+    components:
+    - type: Transform
+      pos: 113.5,-41.5
       parent: 2
   - uid: 13491
     components:
@@ -115021,6 +115089,11 @@ entities:
     components:
     - type: Transform
       pos: 28.5,15.5
+      parent: 2
+  - uid: 23374
+    components:
+    - type: Transform
+      pos: 16.5,10.5
       parent: 2
 - proto: RandomBoard
   entities:
@@ -122807,10 +122880,10 @@ entities:
       parent: 2
 - proto: SoapOmega
   entities:
-  - uid: 23134
+  - uid: 23375
     components:
     - type: Transform
-      pos: 53.5,49.5
+      pos: 131.5,16.5
       parent: 2
 - proto: SodaDispenser
   entities:
@@ -125939,6 +126012,104 @@ entities:
     - type: Transform
       pos: 9.5,-10.5
       parent: 2
+- proto: SuitStorageBase
+  entities:
+  - uid: 13394
+    components:
+    - type: Transform
+      pos: 128.5,52.5
+      parent: 2
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.14673
+        moles:
+        - 1.7459903
+        - 6.568249
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+    - type: ContainerContainer
+      containers:
+        entity_storage: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 17784
+          - 23132
+          - 23134
+  - uid: 23366
+    components:
+    - type: Transform
+      pos: 128.5,53.5
+      parent: 2
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.14673
+        moles:
+        - 1.7459903
+        - 6.568249
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+    - type: ContainerContainer
+      containers:
+        entity_storage: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 23367
+          - 23368
+          - 23369
+  - uid: 23370
+    components:
+    - type: Transform
+      pos: 128.5,54.5
+      parent: 2
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.14673
+        moles:
+        - 1.7459903
+        - 6.568249
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+    - type: ContainerContainer
+      containers:
+        entity_storage: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 23371
+          - 23372
+          - 23373
 - proto: SuitStorageCaptain
   entities:
   - uid: 18864
@@ -126043,21 +126214,6 @@ entities:
       parent: 2
 - proto: SuitStorageNTSRA
   entities:
-  - uid: 13178
-    components:
-    - type: Transform
-      pos: 128.5,52.5
-      parent: 2
-  - uid: 13179
-    components:
-    - type: Transform
-      pos: 128.5,53.5
-      parent: 2
-  - uid: 13394
-    components:
-    - type: Transform
-      pos: 128.5,54.5
-      parent: 2
   - uid: 16129
     components:
     - type: Transform
@@ -148740,7 +148896,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -24095.516
+      secondsUntilStateChange: -24610.836
       state: Opening
     - type: Airlock
       autoClose: False
