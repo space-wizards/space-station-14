@@ -1,0 +1,12 @@
+- type: entity
+  name: Syndicate Guard Spawner
+  id: SpawnMobRadioGuard
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobRadioGuard

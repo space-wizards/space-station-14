@@ -10,3 +10,6 @@ ghost-role-information-recruiter-rules =
     Set up shop in maints or use your ship as a portable hiring office!
 
     You are just a recruiter so do not act like a full-on antagonist, i.e. no killing people.
+ghost-role-information-listeningop-name = Listening Post Operative
+ghost-role-information-listeningop-description = You are a Listening Post operative. Get into range, observe the station, intercept communications and assist any operatives in the area!
+ghost-role-information-listeningop-rules =	You are a Syndicate Operative tasked with the continuous reporting and monitoring of the station and its activities, as well as assisting any fellow operatives who may be aboard the station. As an antagonist, do whatever is required for you to complete this task. Make sure your station doesn't fall into enemy hands and DO NOT abandon your station! Hide your existence at any cost!
