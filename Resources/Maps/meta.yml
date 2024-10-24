@@ -10880,7 +10880,7 @@ entities:
       pos: -42.5,29.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -5745.716
+      secondsUntilStateChange: -5834.8745
       state: Opening
     - type: DeviceLinkSink
       invokeCounter: 2
@@ -56105,11 +56105,6 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -73.5,7.5
-      parent: 5350
-  - uid: 6164
-    components:
-    - type: Transform
-      pos: -71.5,-8.5
       parent: 5350
   - uid: 6165
     components:
