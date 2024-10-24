@@ -1,0 +1,7 @@
+- type: soundCollection
+  id: Sheep
+  files:
+    - /Audio/Animals/sheep1.ogg
+    - /Audio/Animals/sheep2.ogg
+    - /Audio/Animals/sheep3.ogg
+
