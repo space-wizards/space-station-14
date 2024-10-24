@@ -1,0 +1,47 @@
+- type: entity
+  id: ClothingNeckSecurityBadge
+  parent: BaseItem
+  name: security officer badge
+  description: In Corporations We Trust.
+  components:
+  - type: Item
+    size: Small
+  - type: Clothing
+    quickEquip: true
+    slots:
+    - neck
+    sprite: Clothing/Neck/Misc/badges.rsi
+  - type: Sprite
+    sprite: Clothing/Neck/Misc/badges.rsi
+    state: sobadge
+  - type: TypingIndicatorClothing
+    proto: security
+  - type: StaticPrice
+    price: 350
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+
+- type: entity
+  parent: ClothingNeckSecurityBadge
+  id: ClothingNeckLargeSecurityBadge
+  name: fancy security officer badge
+  description: In Corporations We Trust.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Misc/badges.rsi
+    state: largebadge
+  - type: StaticPrice
+    price: 500
+    
+- type: entity
+  parent: ClothingNeckSecurityBadge
+  id: ClothingNeckCentcomSecurityBadge
+  name: centcom ranger badge
+  description: In Corporations We Trust.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Misc/badges.rsi
+    state: sherrifstar
+  - type: StaticPrice
+    price: 750
