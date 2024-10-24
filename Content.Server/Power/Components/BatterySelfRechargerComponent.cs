@@ -1,3 +1,5 @@
+using System;
+
 namespace Content.Server.Power.Components
 {
     /// <summary>
@@ -27,8 +29,8 @@ namespace Content.Server.Power.Components
         [ViewVariables(VVAccess.ReadWrite)] [DataField("autoRechargePauseTime")] public float AutoRechargePauseTime { get; set; } = 0f;
 
         /// <summary>
-        /// The current cooldown before the entity goes back to automatically recharging.
+        /// Do not auto recharge if this timestamp has yet to happen, set for the auto recharge pause system.
         /// </summary>
-        [DataField] public float AutoRechargeCooldown { get; set; } = 0f;
+        [DataField] public TimeSpan NextAutoRecharge { get; set; } = TimeSpan.FromSeconds(0f);
     }
 }
