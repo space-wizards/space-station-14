@@ -333,10 +333,10 @@ public class RadialMenuTextureButtonWithSector : RadialMenuTextureButton, IRadia
     private bool _isWholeCircle;
     private Vector2? _parentCenter;
 
-    private Color _backgroundColor = Color.ToSrgb(new Color(70, 73, 102, 128));
-    private Color _hoverBackgroundColor = Color.ToSrgb(new Color(87, 91, 127, 128));
-    private Color _borderColor = Color.ToSrgb(new Color(173, 216, 230, 70));
-    private Color _hoverBorderColor = Color.ToSrgb(new Color(87, 91, 127, 128));
+    private Color _backgroundColorSrgb = Color.ToSrgb(new Color(70, 73, 102, 128));
+    private Color _hoverBackgroundColorSrgb = Color.ToSrgb(new Color(87, 91, 127, 128));
+    private Color _borderColorSrgb = Color.ToSrgb(new Color(173, 216, 230, 70));
+    private Color _hoverBorderColorSrgb = Color.ToSrgb(new Color(87, 91, 127, 128));
 
     /// <summary>
     /// Marker, that control should render border of segment. Is false by default.
@@ -364,8 +364,8 @@ public class RadialMenuTextureButtonWithSector : RadialMenuTextureButton, IRadia
     /// </summary>
     public Color BackgroundColor
     {
-        get => Color.FromSrgb(_backgroundColor);
-        set => _backgroundColor = Color.ToSrgb(value);
+        get => Color.FromSrgb(_backgroundColorSrgb);
+        set => _backgroundColorSrgb = Color.ToSrgb(value);
     }
 
     /// <summary>
@@ -373,8 +373,8 @@ public class RadialMenuTextureButtonWithSector : RadialMenuTextureButton, IRadia
     /// </summary>
     public Color HoverBackgroundColor
     {
-        get => Color.FromSrgb(_hoverBackgroundColor);
-        set => _hoverBackgroundColor = Color.ToSrgb(value);
+        get => Color.FromSrgb(_hoverBackgroundColorSrgb);
+        set => _hoverBackgroundColorSrgb = Color.ToSrgb(value);
     }
 
     /// <summary>
@@ -382,8 +382,8 @@ public class RadialMenuTextureButtonWithSector : RadialMenuTextureButton, IRadia
     /// </summary>
     public Color BorderColor
     {
-        get => Color.FromSrgb(_borderColor);
-        set => _borderColor = Color.ToSrgb(value);
+        get => Color.FromSrgb(_borderColorSrgb);
+        set => _borderColorSrgb = Color.ToSrgb(value);
     }
 
     /// <summary>
@@ -391,8 +391,8 @@ public class RadialMenuTextureButtonWithSector : RadialMenuTextureButton, IRadia
     /// </summary>
     public Color HoverBorderColor
     {
-        get => Color.FromSrgb(_hoverBorderColor);
-        set => _hoverBorderColor = Color.ToSrgb(value);
+        get => Color.FromSrgb(_hoverBorderColorSrgb);
+        set => _hoverBorderColorSrgb = Color.ToSrgb(value);
     }
 
     /// <summary>
@@ -458,8 +458,8 @@ public class RadialMenuTextureButtonWithSector : RadialMenuTextureButton, IRadia
         if (DrawBackground)
         {
             var segmentColor = DrawMode == DrawModeEnum.Hover
-                ? _hoverBackgroundColor
-                : _backgroundColor;
+                ? _hoverBackgroundColorSrgb
+                : _backgroundColorSrgb;
 
             DrawAnnulusSector(handle, containerCenter, _innerRadius, _outerRadius, angleFrom, angleTo, segmentColor);
         }
@@ -467,8 +467,8 @@ public class RadialMenuTextureButtonWithSector : RadialMenuTextureButton, IRadia
         if (DrawBorder)
         {
             var borderColor = DrawMode == DrawModeEnum.Hover
-                ? _hoverBorderColor
-                : _borderColor;
+                ? _hoverBorderColorSrgb
+                : _borderColorSrgb;
             DrawAnnulusSector(handle, containerCenter, _innerRadius, _outerRadius, angleFrom, angleTo, borderColor, false);
         }
 
