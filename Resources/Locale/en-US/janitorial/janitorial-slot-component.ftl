@@ -1,5 +1,6 @@
 # mop bucket
-mop-bucket-slot-component-slot-name-shark = Shark
+mop-bucket-slot-component-slot-name-item = Item
+mop-bucket-slot-component-eject-verb = Take out
 # janitorial trolley
 janitorial-trolley-slot-component-slot-name-plunger = Plunger
 janitorial-trolley-slot-component-slot-name-sign = Sign

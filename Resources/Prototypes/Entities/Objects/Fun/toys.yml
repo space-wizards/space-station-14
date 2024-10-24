@@ -598,6 +598,9 @@
       path: /Audio/Effects/bite.ogg
     angle: 0
     animation: WeaponArcBite # Rrrr!
+  - type: Tag
+    tags:
+      - PlushieCarp
 
 - type: entity
   parent: PlushieCarp
