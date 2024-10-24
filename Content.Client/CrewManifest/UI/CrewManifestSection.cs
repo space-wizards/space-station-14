@@ -48,8 +48,7 @@ public sealed class CrewManifestSection : BoxContainer
             };
 
             var title = new RichTextLabel();
-            title.SetMessage(entry.JobTitle);
-
+            title.SetMessage(entry.LocalizedJobTitle);
 
             if (prototypeManager.TryIndex<JobIconPrototype>(entry.JobIcon, out var jobIcon))
             {
