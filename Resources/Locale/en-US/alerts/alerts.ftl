@@ -28,7 +28,7 @@ alerts-weightless-desc =
     Mag-boots or jetpacks would help you move with more control.
 
 alerts-walking-name = Walking
-alerts-walking-desc = You're in walking mode, moving at a slower speed.
+alerts-walking-desc = You are walking, moving at a slow pace.
 
 alerts-stunned-name = [color=yellow]Stunned[/color]
 alerts-stunned-desc = You're [color=yellow]stunned[/color]! Something is impairing your ability to move or interact with objects.
