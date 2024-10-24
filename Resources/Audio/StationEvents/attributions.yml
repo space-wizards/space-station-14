@@ -77,3 +77,43 @@
   license: "Custom"
   copyright: "EXEC_PAJA/.Misya extracting from Ar Tonelico"
   source: "https://www.youtube.com/watch?v=eoicX3RPf5Q"
+
+- files: ["max_zawazawa.ogg"]
+  license: "Custom"
+  copyright: "Max zawazawa by Hideki Taniuchi"
+  source: "https://www.youtube.com/watch?v=5ds4CjNZeLA"
+
+- files: ["fate.ogg"]
+  license: "Custom"
+  copyright: "Fate by Hideki Taniuchi"
+  source: "https://www.youtube.com/watch?v=hQCNA4nsK50"
+
+- files: ["essence_of_machines.ogg"]
+  license: "Custom"
+  copyright: "The essence of machines by blinch"
+  source: "https://www.youtube.com/watch?v=qjAJ94y3x7E"
+
+- files: ["RUN.ogg"]
+  license: "Custom"
+  copyright: "RUN! by Sophus Alf Agerbæk-Larsen"
+  source: "https://www.youtube.com/watch?v=RmRRfd2-VeM"
+
+- files: ["war_without_reason.ogg"]
+  license: "Custom"
+  copyright: "War without Reason by Heaven Pierce Her"
+  source: "https://www.youtube.com/watch?v=Elj4zDLqJvw"
+
+- files: ["armageddon.ogg"]
+  license: "Custom"
+  copyright: "Armageddon by Emi Evans"
+  source: "https://www.youtube.com/watch?v=vqGz0vNI0FU"
+
+- files: ["forget_about_freeman.ogg"]
+  license: "Custom"
+  copyright: "Forget About Freeman by Joel Nielsen"
+  source: "https://www.youtube.com/watch?v=9OacXUzTNXo"
+
+- files: ["shootem.ogg"]
+  license: "Custom"
+  copyright: "Shoot 'Em by Washboard Rhythm Kings"
+  source: "https://www.youtube.com/watch?v=hx01Bt5BHaM"
