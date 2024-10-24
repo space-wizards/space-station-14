@@ -140,3 +140,38 @@
             - !type:PlaySoundBehavior
               sound:
                 collection: MetalBreak
+
+- type: entity
+  id: DisplacedGirder
+  parent: Girder
+  name: displaced girder
+  description: Girder with altered structure; By adding steel sheets to it, you can easily move them to the side.
+  components:
+  - type: Construction
+    graph: DisplacedGirder
+    node: displacedGirder
+  - type: Sprite
+    sprite: Structures/Doors/false_walls/displaced_girder.rsi
+    state: displaced
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 25
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
