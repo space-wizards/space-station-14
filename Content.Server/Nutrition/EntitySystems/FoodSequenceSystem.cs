@@ -61,7 +61,7 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
         List<MetamorphRecipePrototype> availableRecipes = new();
         foreach (var recipe in _proto.EnumeratePrototypes<MetamorphRecipePrototype>())
         {
-            if (recipe.Key != start.Comp.Key)
+            if (recipe.Key != start.Comp.Key) //Checking against recipes in sequence_metamorph.yml
                 continue;
 
             bool allowed = true;
@@ -115,7 +115,7 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
         if (elementFood.RequireDead && _mobState.IsAlive(element))
             return false;
 
-        //looking for a suitable FoodSequence prototype
+        //looking for a suitable FoodSequence prototype within food_sequence_element.yml
         if (!element.Comp.Entries.TryGetValue(start.Comp.Key, out var elementProto))
             return false;
         if (!_proto.TryIndex(elementProto, out var elementIndexed))
