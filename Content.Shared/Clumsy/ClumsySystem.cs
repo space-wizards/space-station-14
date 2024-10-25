@@ -8,7 +8,6 @@ using Content.Shared.Medical;
 using Content.Shared.Popups;
 using Content.Shared.Stunnable;
 using Content.Shared.Weapons.Ranged.Events;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Random;
@@ -68,10 +67,10 @@ public sealed class ClumsySystem : EntitySystem
         if (!_random.Prob(ent.Comp.ClumsyDefaultCheck))
             return;
 
-        _stun.TryParalyze(ent, TimeSpan.FromSeconds(3f), true);
+        _stun.TryParalyze(ent, ent.Comp.GunShootFailStunTime, true);
 
         // Apply salt to the wound ("Honk!") (No idea what this comment means)
-        _audio.PlayPvs(new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/bang.ogg"), ent);
+        _audio.PlayPvs(ent.Comp.GunShootFailSound, ent);
         _audio.PlayPvs(ent.Comp.ClumsySound, ent);
 
         _popup.PopupEntity(Loc.GetString("gun-clumsy"), ent, ent);
@@ -91,9 +90,7 @@ public sealed class ClumsySystem : EntitySystem
 
         _audio.PlayPredicted(ent.Comp.ClumsySound, ent, ent);
 
-        var secondSound = new SoundCollectionSpecifier("TrayHit");
-        _audio.PlayPredicted(secondSound, ent, ent);
-
+        _audio.PlayPredicted(ent.Comp.TableBonkSound, ent, ent);
 
         var beingClimbedName = Identity.Entity(args.BeingClimbedOn, EntityManager);
         var gettingPutOnTableName = Identity.Entity(args.GettingPutOnTable, EntityManager);

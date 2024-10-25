@@ -10,6 +10,9 @@ namespace Content.Shared.Clumsy;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class ClumsyComponent : Component
 {
+
+    // Standard options. Try to fit these in if you can!
+
     /// <summary>
     ///     Sound to play when clumsy interactions fail.
     /// </summary>
@@ -18,15 +21,35 @@ public sealed partial class ClumsyComponent : Component
 
     /// <summary>
     ///     Default chance to fail a clumsy interaction.
-    ///     If a system needs to use something else, add a new variable here do not modify this percentage.
+    ///     If a system needs to use something else, add a new variable in the component, do not modify this percentage.
     /// </summary>
     [DataField]
     public float ClumsyDefaultCheck = 0.5f;
 
     /// <summary>
     ///     Default stun time.
-    ///     If a system needs to use something else, add a new variable here do not modify this number.
+    ///     If a system needs to use something else, add a new variable in the component, do not modify this number.
     /// </summary>
     [DataField]
     public TimeSpan ClumsyDefaultStunTime = TimeSpan.FromSeconds(2.5);
+
+    // Specific options
+
+    /// <summary>
+    ///     Sound to play after hitting your head on a table. Ouch!
+    /// </summary>
+    [DataField]
+    public SoundCollectionSpecifier TableBonkSound = new SoundCollectionSpecifier("TrayHit");
+
+    /// <summary>
+    ///     Stun time after failing to shoot a gun.
+    /// </summary>
+    [DataField]
+    public TimeSpan GunShootFailStunTime = TimeSpan.FromSeconds(3);
+
+    /// <summary>
+    ///     Noise to play after failing to shoot a gun. Boom!
+    /// </summary>
+    [DataField]
+    public SoundSpecifier GunShootFailSound = new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/bang.ogg");
 }
