@@ -37,7 +37,7 @@
                     <Label Text="{Loc 'atmos-alerts-window-invalid-state'}"/>
                     <TextureRect Stretch="KeepAspectCentered"
                                 TexturePath="/Textures/Interface/NavMap/beveled_circle.png"
-                                Modulate="#32cd32"
+                                Modulate="#31843E"
                                 SetSize="16 16"
                                 Margin="20 0 5 0"/>
                     <Label Text="{Loc 'atmos-alerts-window-normal-state'}"/>
