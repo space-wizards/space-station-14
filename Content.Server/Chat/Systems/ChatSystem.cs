@@ -748,7 +748,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     {
         var newMessage = SanitizeMessageReplaceWords(message.Trim());
 
-        GetRadioKeycodePrefix(source, newMessage, out newMessage, out var prefix);
+        SplitRadioKeycodePrefix(source, newMessage, out newMessage, out var prefix);
 
         // Sanitize it first as it might change the word order
         _sanitizer.TrySanitizeEmoteShorthands(newMessage, source, out newMessage, out emoteStr);
