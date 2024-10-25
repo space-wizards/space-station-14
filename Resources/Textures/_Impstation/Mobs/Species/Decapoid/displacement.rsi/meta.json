@@ -13,6 +13,14 @@
         {
             "name": "jumpsuit",
             "directions": 4
-        }
+        },
+		{
+			"name": "gloves",
+			"directions": 4
+		},
+		{
+			"name": "neck",
+			"directions": 4
+		}
     ]
 }

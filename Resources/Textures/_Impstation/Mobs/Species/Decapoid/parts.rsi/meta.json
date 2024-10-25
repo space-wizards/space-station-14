@@ -46,6 +46,14 @@
     {
       "name": "torso",
       "directions": 4
-    }
+    },
+	{
+	  "name": "front_feet",
+	  "directions": 4
+	},
+	{
+	  "name": "back_feet",
+	  "directions": 4
+	}
   ]
 }

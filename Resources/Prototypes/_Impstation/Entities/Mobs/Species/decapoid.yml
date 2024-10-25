@@ -2,13 +2,14 @@
   save: false
   name: Urist McCrab
   parent: BaseMobSpeciesOrganic
-  id: MobDecapoid
+  id: BaseMobDecapoid
   abstract: true
   components:
   - type: SnailSpeed
     snailSlowdownModifier: 0.8
   - type: Absorbable
   - type: Hunger
+  - type: Thirst
   - type: Icon
     sprite: _Impstation/Mobs/Species/Decapoid/parts.rsi
     state: full
@@ -18,17 +19,56 @@
         Asphyxiation: 2
     damageRecovery:
       types:
-        Asphyxiation: -1.0 # todo: make them breathe water
+        Asphyxiation: -1.0
   - type: Sprite
-    noRot: true
-    drawdepth: Mobs
-    scale: 1, 1
+    layers: # Need to redefine the whole order to draw the legs and claw correctly
+    - map: [ "enum.HumanoidVisualLayers.RFoot" ] # this is the back feet TODO: fix the fact that only the feet render
+    - map: [ "enum.HumanoidVisualLayers.RLeg" ] # this is the back legs
+    - map: [ "enum.HumanoidVisualLayers.Chest" ]
+    - map: [ "enum.HumanoidVisualLayers.Head" ]
+    - map: [ "enum.HumanoidVisualLayers.Snout" ]
+    - map: [ "enum.HumanoidVisualLayers.Eyes" ]
+    - map: [ "enum.HumanoidVisualLayers.RArm" ]
+    - map: [ "enum.HumanoidVisualLayers.LArm" ]
+    - map: [ "enum.HumanoidVisualLayers.RHand" ] # not default
+    - map: [ "jumpsuit" ] # not default
+    - map: [ "gloves" ]
+    - map: [ "shoes" ]
+    - map: [ "ears" ]
+    - map: [ "outerClothing" ]
+    - map: [ "eyes" ]
+    - map: [ "belt" ]
+    - map: [ "id" ]
+    - map: [ "back" ]
+    - map: [ "enum.HumanoidVisualLayers.LLeg" ] # this is the front legs
+    - map: [ "enum.HumanoidVisualLayers.LFoot" ] # this is the front feet 
+    - map: [ "enum.HumanoidVisualLayers.LHand" ] # this is the crab claw. has to render in front of the whole body
+    - map: [ "neck" ]
+    - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
+    - map: [ "enum.HumanoidVisualLayers.Hair" ]
+    - map: [ "enum.HumanoidVisualLayers.HeadSide" ]
+    - map: [ "enum.HumanoidVisualLayers.HeadTop" ]
+    - map: [ "suitstorage" ] # This is not in the default order. - inherited from vox
+    - map: [ "enum.HumanoidVisualLayers.Tail" ]
+    - map: [ "mask" ]
+    - map: [ "head" ]
+    - map: [ "pocket1" ]
+    - map: [ "pocket2" ]
+    - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+      color: "#ffffff"
+      sprite: Objects/Misc/handcuffs.rsi
+      state: body-overlay-2
+      visible: false
+    - map: [ "clownedon" ]
+      sprite: "Effects/creampie.rsi"
+      state: "creampie_human" # default
+      visible: false
   - type: Body
     prototype: Decapoid
     requiredLegs: 2
   - type: FootstepModifier
     footstepSoundCollection:
-      path: /Audio/Effects/Footsteps/snailstep.ogg # todo: custom sounds
+      path: /Audio/_Impstation/Effects/Footsteps/crab_step.ogg # todo: better?
   - type: Butcherable
     butcheringType: Spike
     spawned:
@@ -50,14 +90,14 @@
     sounds:
       Male: UnisexSnail
       Female: UnisexSnail
-      Unsexed: UnisexSnail # todo: custom sounds
+      Unsexed: UnisexSnail # todo: mute when not wearing the vaporizer, uses the borg sfx when wearing it.
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Decapoid
   - type: DamageVisuals
     damageOverlayGroups:
       Brute:
-        sprite: Mobs/Effects/snail_brute_damage.rsi # todo: custom brutes
+        sprite: Mobs/Effects/snail_brute_damage.rsi # todo: custom
         color: "#162581"
   - type: Reactive
     groups:
@@ -66,38 +106,33 @@
       Acidic:  [ Touch ]
   - type: MovementSpeedModifier
     baseSprintSpeed: 3.5
-    baseWalkSpeed: 1.5
-    weightlessAcceleration: 1.7
-    weightlessFriction: 1.3
-    weightlessModifier: 1.1
+    baseWalkSpeed: 1.5 
+    weightlessAcceleration: 1.5 # move more easily in space
+    weightlessFriction: 1 # more control over movement in space?
+    weightlessModifier: 1 
   - type: Temperature
-    heatDamageThreshold: 380
-    coldDamageThreshold: 0 # immune to spacing
+    heatDamageThreshold: 380 # slightly more vulnerable to heat
+    coldDamageThreshold: 0 # immune to space
     currentTemperature: 310
     specificHeat: 42
     coldDamage:
       types:
-        Cold : 0 # immune to spacing.
+        Cold : 0 # immune to space
     heatDamage:
       types:
         Heat : 1
   - type: TemperatureSpeed
     thresholds:
-      309: 0.8
-      304: 0.8
-      299: 0.8
-      294: 0.8
+      309: 1
+      304: 1
+      299: 1
+      294: 1 # todo: make this less stupid, probably just remove the whole component
   - type: Bloodstream
-    bloodReagent: CopperBlood 
+    bloodReagent: CopperBlood # real life crustaceans are in the same clade as spiders and share a blood type
   - type: Inventory
     templateId: decapoid
     displacements:
       jumpsuit:
-        sizeMaps:
-          32:
-            sprite: _Impstation/Mobs/Species/Decapoid/displacement.rsi
-            state: jumpsuit
-      head:
         sizeMaps:
           32:
             sprite: _Impstation/Mobs/Species/Decapoid/displacement.rsi
@@ -107,21 +142,27 @@
           32:
             sprite: _Impstation/Mobs/Species/Decapoid/displacement.rsi
             state: jumpsuit
-      eyes:
+      head: # don't need mask, those are fine
         sizeMaps:
           32:
             sprite: _Impstation/Mobs/Species/Decapoid/displacement.rsi
-            state: jumpsuit
-      mask:
+            state: jumpsuit # todo: custom? (accomodate gills?) 
+      gloves:
         sizeMaps:
           32:
             sprite: _Impstation/Mobs/Species/Decapoid/displacement.rsi
-            state: jumpsuit
+            state: gloves
+      neck:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Species/Decapoid/displacement.rsi
+            state: neck
+            
 
   - type: Speech
-    speechSounds: Snail # todo: custom sounds
+    speechSounds: Snail # todo: custom
   - type: TypingIndicator
-    proto: Snail # todo: custom indicator
+    proto: Snail # todo: custom
   - type: HumanoidAppearance
     species: Decapoid
     hideLayersOnEquip:
@@ -134,18 +175,56 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: HumanoidAppearance
-    species: Decapoid
+    species: Decapoid # is this defined?
   - type: Body
     prototype: Decapoid
+  - type: Sprite
+    layers: # Need to redefine the whole order to draw the legs and claw correctly
+    - map: [ "enum.HumanoidVisualLayers.RFoot" ] # this is the back feet TODO: fix the fact that only the feet render
+    - map: [ "enum.HumanoidVisualLayers.RLeg" ] # this is the back legs
+    - map: [ "enum.HumanoidVisualLayers.Chest" ]
+    - map: [ "enum.HumanoidVisualLayers.Head" ]
+    - map: [ "enum.HumanoidVisualLayers.Snout" ]
+    - map: [ "enum.HumanoidVisualLayers.Eyes" ]
+    - map: [ "enum.HumanoidVisualLayers.RArm" ]
+    - map: [ "enum.HumanoidVisualLayers.LArm" ]
+    - map: [ "enum.HumanoidVisualLayers.RHand" ] # not default
+    - map: [ "jumpsuit" ] # not default
+    - map: [ "gloves" ]
+    - map: [ "shoes" ]
+    - map: [ "ears" ]
+    - map: [ "outerClothing" ]
+    - map: [ "eyes" ]
+    - map: [ "belt" ]
+    - map: [ "id" ]
+    - map: [ "back" ]
+    - map: [ "enum.HumanoidVisualLayers.LLeg" ] # this is the front legs
+    - map: [ "enum.HumanoidVisualLayers.LFoot" ] # this is the front feet 
+    - map: [ "enum.HumanoidVisualLayers.LHand" ] # this is the crab claw. has to render in front of the whole body
+    - map: [ "neck" ]
+    - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
+    - map: [ "enum.HumanoidVisualLayers.Hair" ]
+    - map: [ "enum.HumanoidVisualLayers.HeadSide" ]
+    - map: [ "enum.HumanoidVisualLayers.HeadTop" ]
+    - map: [ "suitstorage" ] # This is not in the default order. - inherited from vox
+    - map: [ "enum.HumanoidVisualLayers.Tail" ]
+    - map: [ "mask" ]
+    - map: [ "head" ]
+    - map: [ "pocket1" ]
+    - map: [ "pocket2" ]
+    - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+      color: "#ffffff"
+      sprite: Objects/Misc/handcuffs.rsi
+      state: body-overlay-2
+      visible: false
+    - map: [ "clownedon" ]
+      sprite: "Effects/creampie.rsi"
+      state: "creampie_human" # default
+      visible: false
   - type: Inventory
     templateId: decapoid
     displacements:
       jumpsuit:
-        sizeMaps:
-          32:
-            sprite: _Impstation/Mobs/Species/Decapoid/displacement.rsi
-            state: jumpsuit
-      head:
         sizeMaps:
           32:
             sprite: _Impstation/Mobs/Species/Decapoid/displacement.rsi
@@ -155,18 +234,18 @@
           32:
             sprite: _Impstation/Mobs/Species/Decapoid/displacement.rsi
             state: jumpsuit
-      eyes:
+      head: # don't need mask, those are fine
         sizeMaps:
           32:
             sprite: _Impstation/Mobs/Species/Decapoid/displacement.rsi
-            state: jumpsuit
-      mask:
+            state: jumpsuit # todo: custom? (accomodate gills?) 
+      gloves:
         sizeMaps:
           32:
             sprite: _Impstation/Mobs/Species/Decapoid/displacement.rsi
-            state: jumpsuit
-      back:
+            state: gloves
+      neck:
         sizeMaps:
           32:
             sprite: _Impstation/Mobs/Species/Decapoid/displacement.rsi
-            state: jumpsuit
+            state: neck

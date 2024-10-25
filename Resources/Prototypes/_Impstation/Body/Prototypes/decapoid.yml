@@ -15,8 +15,8 @@
       connections:
       - right_arm
       - left_arm
-      - front_legs
-      - back_legs
+      - right_leg
+      - left_leg
       organs:
         heart: OrganHumanHeart
         lungs: OrganHumanLungs
@@ -35,7 +35,15 @@
       part: RightHandDecapoid
     left_hand:
       part: LeftHandDecapoid
-    back_legs:
-      part: RightLegDecapoid
-    front_legs:
-      part: LeftLegDecapoid
+    right_leg:
+      part: RightLegDecapoid # back legs
+      connections:
+      - right_foot
+    left_leg:
+      part: LeftLegDecapoid # front legs
+      connections:
+      - left_foot
+    right_foot:
+      part: RightFootDecapoid # back foot TODO: custom back foot
+    left_foot:
+      part: LeftFootDecapoid # front foot TODO: custom front foot

@@ -1,165 +1,97 @@
 - type: entity
   id: PartDecapoid
-  parent: BaseItem
+  parent: [BaseItem, BasePart]
   name: "decapoid body part"
   abstract: true
   components:
-  - type: Damageable
-    damageContainer: Biological
-  - type: BodyPart
-  - type: ContainerContainer
-    containers:
-      bodypart: !type:Container
-        ents: []
-  - type: StaticPrice
-    price: 100
-  - type: Tag
-    tags:
-      - Trash
-  - type: Extractable
-    juiceSolution:
-      reagents:
-      - ReagentId: Fat
-        Quantity: 3
-      - ReagentId: Blood
-        Quantity: 10
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Decapoid/parts.rsi
 
 - type: entity
   id: TorsoDecapoid
   name: "decapoid torso"
-  parent: PartDecapoid
+  parent: [PartDecapoid, BaseTorso]
   components:
-    - type: Sprite
-      sprite: _Impstation/Mobs/Species/Decapoid/parts.rsi
-      state: "torso"
-    - type: Icon
-      sprite: _Impstation/Mobs/Species/Decapoid/parts.rsi
-      state: "torso"
-    - type: BodyPart
-      partType: Torso
-    - type: Extractable
-      juiceSolution:
-        reagents:
-        - ReagentId: Fat
-          Quantity: 3
-        - ReagentId: Blood
-          Quantity: 10
+  - type: Sprite
+    state: "torso"
 
 - type: entity
   id: HeadDecapoid
   name: "decapoid head"
-  parent: PartDecapoid
+  parent: [PartDecapoid, BaseHead]
   components:
-    - type: Sprite
-      sprite: _Impstation/Mobs/Species/Decapoid/parts.rsi
-      state: "head"
-    - type: Icon
-      sprite: _Impstation/Mobs/Species/Decapoid/parts.rsi
-      state: "head"
-    - type: BodyPart
-      partType: Head
-      vital: true
-    - type: Input
-      context: "ghost"
-    - type: Tag
-      tags:
-        - Head
-    - type: Extractable
-      juiceSolution:
-        reagents:
-        - ReagentId: Fat
-          Quantity: 5
-        - ReagentId: Blood
-          Quantity: 10
+  - type: Sprite
+    state: "head"
 
 - type: entity
   id: LeftArmDecapoid
   name: "left decapoid arm"
-  parent: PartDecapoid
+  parent: [PartDecapoid, BaseLeftArm]
   components:
-    - type: Sprite
-      sprite: _Impstation/Mobs/Species/Decapoid/parts.rsi
-      state: "l_arm"
-    - type: Icon
-      sprite: _Impstation/Mobs/Species/Decapoid/parts.rsi
-      state: "l_arm"
-    - type: BodyPart
-      partType: Arm
-      symmetry: Left
+  - type: Sprite
+    state: "l_arm"
 
 - type: entity
   id: RightArmDecapoid
   name: "right decapoid arm"
-  parent: PartDecapoid
+  parent: [PartDecapoid, BaseRightArm]
   components:
-    - type: Sprite
-      sprite: _Impstation/Mobs/Species/Decapoid/parts.rsi
-      state: "r_arm"
-    - type: Icon
-      sprite: _Impstation/Mobs/Species/Decapoid/parts.rsi
-      state: "r_arm"
-    - type: BodyPart
-      partType: Arm
-      symmetry: Right
+  - type: Sprite
+    state: "r_arm"
 
 - type: entity
-  id: LeftHandDecapoid # this is the crab claw - todo: make the crab claw an unremovable item
-  name: "left decapoid hand"
-  parent: PartDecapoid
+  id: LeftHandDecapoid
+  name: "decapoid claw"
+  parent: [PartDecapoid, BaseLeftHand]
   components:
-    - type: Sprite
-      sprite: _Impstation/Mobs/Species/Decapoid/parts.rsi
-      state: "l_hand"
-    - type: Icon
-      sprite: _Impstation/Mobs/Species/Decapoid/parts.rsi
-      state: "l_hand"
-    - type: BodyPart
-      partType: Hand
-      symmetry: Left
+  - type: Sprite
+    state: "l_hand"
 
 - type: entity
   id: RightHandDecapoid
   name: "right decapoid hand"
-  parent: PartDecapoid
+  parent: [PartDecapoid, BaseRightHand]
   components:
-    - type: Sprite
-      sprite: _Impstation/Mobs/Species/Decapoid/parts.rsi
-      state: "r_hand"
-    - type: Icon
-      sprite: _Impstation/Mobs/Species/Decapoid/parts.rsi
-      state: "r_hand"
-    - type: BodyPart
-      partType: Hand
-      symmetry: Right
+  - type: Sprite
+    state: "r_hand"
 
 - type: entity
-  id: LeftLegDecapoid # appearance-wise these are the front legs
+  id: LeftLegDecapoid # these are the front legs
   name: "front decapoid legs"
-  parent: PartDecapoid
+  parent: [PartDecapoid, BaseLeftLeg]
   components:
-    - type: Sprite
-      sprite: _Impstation/Mobs/Species/Decapoid/parts.rsi
-      state: "front_leg"
-    - type: Icon
-      sprite: _Impstation/Mobs/Species/Decapoid/parts.rsi
-      state: "front_leg"
-    - type: BodyPart
-      partType: Leg
-      symmetry: Left
-    - type: MovementBodyPart
+  - type: Sprite
+    state: "front_leg"
 
 - type: entity
-  id: RightLegDecapoid # appearance-wise these are the back legs
+  id: RightLegDecapoid # these are the back legs
   name: "back decapoid legs"
-  parent: PartDecapoid
+  parent: [PartDecapoid, BaseRightLeg]
   components:
-    - type: Sprite
-      sprite: _Impstation/Mobs/Species/Decapoid/parts.rsi
-      state: "back_leg"
-    - type: Icon
-      sprite: _Impstation/Mobs/Species/Decapoid/parts.rsi
-      state: "back_leg"
-    - type: BodyPart
-      partType: Leg
-      symmetry: Right
-    - type: MovementBodyPart
+  - type: Sprite
+    state: "back_leg"
+  - type: BodyPart
+    partType: Leg
+    symmetry: Right
+
+- type: entity
+  id: LeftFootDecapoid # these are the front feet TODO: custom front feet sprites
+  name: "front decapoid feet"
+  parent: [PartDecapoid, BaseLeftFoot]
+  components:
+  - type: Sprite
+    state: "front_feet"
+  - type: BodyPart
+    partType: Foot
+    symmetry: Left
+
+- type: entity
+  id: RightFootDecapoid # these are the back feet TODO: custom back feet sprites
+  name: "back decapoid feet"
+  parent: [PartDecapoid, BaseRightFoot]
+  components:
+  - type: Sprite
+    state: "back_feet"
+  - type: BodyPart
+    partType: Foot
+    symmetry: Right

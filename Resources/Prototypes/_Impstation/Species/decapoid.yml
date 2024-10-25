@@ -25,9 +25,12 @@
     RArm: MobDecapoidRArm
     LHand: MobDecapoidLHand
     RHand: MobDecapoidRHand
-    RLeg: MobDecapoidRLeg # back legs
-    LLeg: MobDecapoidLLeg # front legs
+    LLeg: MobDecapoidLLeg
+    RLeg: MobDecapoidRLeg
+    LFoot: MobDecapoidLFoot
+    RFoot: MobDecapoidRFoot
     Tail: MobHumanoidAnyMarking
+    Snout: MobHumanoidAnyMarking
 
 - type: markingPoints
   id: MobDecapoidMarkingLimits
@@ -50,8 +53,10 @@
       required: false
     Tail:
       points: 1
-      required: true
-      defaultMarkings: [ SnailShellSmall ]
+      required: false
+    Snout:
+      points: 1
+      required: false
     Overlay:
       points: 1
       required: false
@@ -99,28 +104,34 @@
     state: torso
 
 - type: humanoidBaseSprite
-  id: MobDecapoidLLeg # appearance-wise this is the front legs
+  id: MobDecapoidLLeg # this is the front legs
   baseSprite:
     sprite: _Impstation/Mobs/Species/Decapoid/parts.rsi
     state: front_leg
 
 - type: humanoidBaseSprite
-  id: MobDecapoidLHand # this is the crab claw - todo: make the crab claw an unremovable item
+  id: MobDecapoidLHand # this is the crab claw
   baseSprite:
     sprite: _Impstation/Mobs/Species/Decapoid/parts.rsi
     state: l_hand
 
 - type: humanoidBaseSprite
-  id: MobDecapoidLArm
+  id: MobDecapoidLArm # this is the big arm
   baseSprite:
     sprite: _Impstation/Mobs/Species/Decapoid/parts.rsi
     state: l_arm
 
 - type: humanoidBaseSprite
-  id: MobDecapoidRLeg # appearance-wise this is the back legs
+  id: MobDecapoidLFoot # these are the front feet TODO: unique front feet sprite
   baseSprite:
     sprite: _Impstation/Mobs/Species/Decapoid/parts.rsi
-    state: back_leg
+    state: front_feet
+
+- type: humanoidBaseSprite
+  id: MobDecapoidRLeg # this is the front legs
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Decapoid/parts.rsi
+    state: front_leg
 
 - type: humanoidBaseSprite
   id: MobDecapoidRHand
@@ -134,3 +145,8 @@
     sprite: _Impstation/Mobs/Species/Decapoid/parts.rsi
     state: r_arm
 
+- type: humanoidBaseSprite
+  id: MobDecapoidRFoot # these are the back feet TODO: unique back feet sprite
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Decapoid/parts.rsi
+    state: back_feet
