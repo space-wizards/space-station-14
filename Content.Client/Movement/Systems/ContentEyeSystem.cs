@@ -58,9 +58,9 @@ public sealed class ContentEyeSystem : SharedContentEyeSystem
     {
         base.FrameUpdate(frameTime);
         var eyeEntities = AllEntityQuery<ContentEyeComponent, EyeComponent>();
-        while (eyeEntities.MoveNext(out EntityUid entity, out ContentEyeComponent? contentComponent, out EyeComponent? _))
+        while (eyeEntities.MoveNext(out var entity, out ContentEyeComponent? contentComponent, out EyeComponent? eyeComponent))
         {
-            UpdateEyeOffset((entity, Comp<ContentEyeComponent>(entity), Comp<EyeComponent>(entity)));
+            UpdateEyeOffset((entity, contentComponent, eyeComponent));
         }
     }
 }

@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Client.Movement.Components;
 using Content.Client.Movement.Systems;
 using Content.Shared.Camera;
 using Content.Shared.Hands;
@@ -20,7 +21,7 @@ public sealed class WieldableSystem : SharedWieldableSystem
         SubscribeLocalEvent<CursorOffsetRequiresWieldComponent, HeldRelayedEvent<GetEyeOffsetRelayedEvent>>(OnGetEyeOffset);
     }
 
-    private void OnEyeOffsetUnwielded(Entity<CursorOffsetRequiresWieldComponent> entity, ref ItemUnwieldedEvent args)
+    public void OnEyeOffsetUnwielded(Entity<CursorOffsetRequiresWieldComponent> entity, ref ItemUnwieldedEvent args)
     {
         if (!TryComp(entity.Owner, out EyeCursorOffsetComponent? cursorOffsetComp))
             return;
@@ -28,7 +29,7 @@ public sealed class WieldableSystem : SharedWieldableSystem
         cursorOffsetComp.CurrentPosition = Vector2.Zero;
     }
 
-    private void OnGetEyeOffset(Entity<CursorOffsetRequiresWieldComponent> entity, ref HeldRelayedEvent<GetEyeOffsetRelayedEvent> args)
+    public void OnGetEyeOffset(Entity<CursorOffsetRequiresWieldComponent> entity, ref HeldRelayedEvent<GetEyeOffsetRelayedEvent> args)
     {
         if (!TryComp(entity.Owner, out WieldableComponent? wieldableComp))
             return;

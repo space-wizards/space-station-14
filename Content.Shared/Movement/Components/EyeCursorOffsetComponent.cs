@@ -7,13 +7,9 @@ namespace Content.Shared.Movement.Components;
 /// <summary>
 /// Displaces SS14 eye data when given to an entity.
 /// </summary>
-[RegisterComponent] //Needs access restriction
-public sealed partial class EyeCursorOffsetComponent : Component
+[ComponentProtoName("EyeCursorOffset"), NetworkedComponent]
+public abstract partial class SharedEyeCursorOffsetComponent : Component
 {
-    public Vector2 TargetPosition = Vector2.Zero;
-
-    public Vector2 CurrentPosition = Vector2.Zero;
-
     /// <summary>
     /// The amount the view will be displaced when the cursor is positioned at/beyond the max offset distance.
     /// Measured in tiles.
@@ -26,4 +22,11 @@ public sealed partial class EyeCursorOffsetComponent : Component
     /// </summary>
     [DataField]
     public float OffsetSpeed = 0.5f;
+
+    /// <summary>
+    /// The amount the PVS should increase to account for the max offset.
+    /// Should be 1/10 of MaxOffset most of the time.
+    /// </summary>
+    [DataField]
+    public float PvsIncrease = 0.3f;
 }
