@@ -3,7 +3,7 @@
   parent: BaseItem
   id: Crayon
   name: crayon
-  description: A colourful crayon. Looks tasty. Mmmm...
+  description: A colourful crayon! Looks tasty. Mmmm...
   components:
   - type: Sprite
     sprite: Objects/Fun/crayons.rsi
@@ -21,7 +21,7 @@
       enum.CrayonUiKey.Key:
         type: CrayonBoundUserInterface
   - type: Crayon
-    capacity: 25
+    capacity: 50
   - type: Food
   - type: FlavorProfile
     flavors:
@@ -88,7 +88,7 @@
   - type: Crayon
     color: Red
     selectableColor: true
-    capacity: 30
+    capacity: 60
   - type: Tag
     tags:
     - Write
@@ -233,7 +233,7 @@
   parent: BoxCardboard
   id: CrayonBox
   name: crayon box
-  description: It's a box of crayons.
+  description: It's a box of crayons. Do not eat.
   components:
   - type: Sprite
     sprite: Objects/Fun/crayons.rsi
