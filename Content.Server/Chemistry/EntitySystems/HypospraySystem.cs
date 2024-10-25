@@ -87,7 +87,7 @@ public sealed class HypospraySystem : SharedHypospraySystem
         string? msgFormat = null;
 
         // Self event
-        var selfEvent = new SelfBeforeHyposprayInjects(user, entity.Owner, target);
+        var selfEvent = new SelfBeforeHyposprayInjectsEvent(user, entity.Owner, target);
         RaiseLocalEvent(user, selfEvent);
 
         if (selfEvent.Cancelled)
@@ -102,7 +102,7 @@ public sealed class HypospraySystem : SharedHypospraySystem
             return false;
 
         // Target event
-        var targetEvent = new TargetBeforeHyposprayInjects(user, entity.Owner, target);
+        var targetEvent = new TargetEventBeforeHyposprayInjectsEvent(user, entity.Owner, target);
         RaiseLocalEvent(target, targetEvent);
 
         if (targetEvent.Cancelled)

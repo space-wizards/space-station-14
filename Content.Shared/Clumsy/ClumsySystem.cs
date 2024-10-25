@@ -28,15 +28,15 @@ public sealed class ClumsySystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<ClumsyComponent, SelfBeforeHyposprayInjects>(BeforeHyposprayEvent);
-        SubscribeLocalEvent<ClumsyComponent, SelfBeforeDefibrillatorZaps>(BeforeDefibrillatorZapsEvent);
+        SubscribeLocalEvent<ClumsyComponent, SelfBeforeHyposprayInjectsEvent>(BeforeHyposprayEvent);
+        SubscribeLocalEvent<ClumsyComponent, SelfBeforeDefibrillatorZapsEvent>(BeforeDefibrillatorZapsEvent);
         SubscribeLocalEvent<ClumsyComponent, SelfBeforeGunShotEvent>(BeforeGunShotEvent);
         SubscribeLocalEvent<ClumsyComponent, SelfBeforeClimbEvent>(OnBeforeClimbEvent);
     }
 
     // If you add more clumsy interactions add them in this section!
     #region Clumsy interaction events
-    private void BeforeHyposprayEvent(Entity<ClumsyComponent> ent, ref SelfBeforeHyposprayInjects args)
+    private void BeforeHyposprayEvent(Entity<ClumsyComponent> ent, ref SelfBeforeHyposprayInjectsEvent args)
     {
         // Clumsy people sometimes inject themselves! Apparently syringes are clumsy proof...
         if (!_random.Prob(ent.Comp.ClumsyDefaultCheck))
@@ -47,7 +47,7 @@ public sealed class ClumsySystem : EntitySystem
         _audio.PlayPvs(ent.Comp.ClumsySound, ent);
     }
 
-    private void BeforeDefibrillatorZapsEvent(Entity<ClumsyComponent> ent, ref SelfBeforeDefibrillatorZaps args)
+    private void BeforeDefibrillatorZapsEvent(Entity<ClumsyComponent> ent, ref SelfBeforeDefibrillatorZapsEvent args)
     {
         // Clumsy people sometimes defib themselves!
         if (!_random.Prob(ent.Comp.ClumsyDefaultCheck))

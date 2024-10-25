@@ -2,7 +2,7 @@ using Content.Shared.Inventory;
 
 namespace Content.Shared.Chemistry.Hypospray.Events;
 
-public abstract partial class BeforeHyposprayInjectsTarget : CancellableEntityEventArgs, IInventoryRelayEvent
+public abstract partial class BeforeHyposprayInjectsTargetEvent : CancellableEntityEventArgs, IInventoryRelayEvent
 {
     public SlotFlags TargetSlots { get; } = SlotFlags.WITHOUT_POCKET;
     public EntityUid EntityUsingHypospray;
@@ -10,7 +10,7 @@ public abstract partial class BeforeHyposprayInjectsTarget : CancellableEntityEv
     public EntityUid TargetGettingInjected;
     public string? InjectMessageOverride;
 
-    public BeforeHyposprayInjectsTarget(EntityUid user, EntityUid hypospray, EntityUid target)
+    public BeforeHyposprayInjectsTargetEvent(EntityUid user, EntityUid hypospray, EntityUid target)
     {
         EntityUsingHypospray = user;
         Hypospray = hypospray;
@@ -23,16 +23,16 @@ public abstract partial class BeforeHyposprayInjectsTarget : CancellableEntityEv
 ///     This event is raised on the user using the hypospray before the hypospray is injected.
 ///     The event is triggered on the user and all their clothing.
 /// </summary>
-public sealed class SelfBeforeHyposprayInjects : BeforeHyposprayInjectsTarget
+public sealed class SelfBeforeHyposprayInjectsEvent : BeforeHyposprayInjectsTargetEvent
 {
-    public SelfBeforeHyposprayInjects(EntityUid user, EntityUid hypospray, EntityUid target) : base(user, hypospray, target) { }
+    public SelfBeforeHyposprayInjectsEvent(EntityUid user, EntityUid hypospray, EntityUid target) : base(user, hypospray, target) { }
 }
 
 /// <summary>
 ///     This event is raised on the target before the hypospray is injected.
 ///     The event is triggered on the target itself and all its clothing.
 /// </summary>
-public sealed class TargetBeforeHyposprayInjects : BeforeHyposprayInjectsTarget
+public sealed class TargetEventBeforeHyposprayInjectsEvent : BeforeHyposprayInjectsTargetEvent
 {
-    public TargetBeforeHyposprayInjects(EntityUid user, EntityUid hypospray, EntityUid target) : base(user, hypospray, target) { }
+    public TargetEventBeforeHyposprayInjectsEvent(EntityUid user, EntityUid hypospray, EntityUid target) : base(user, hypospray, target) { }
 }

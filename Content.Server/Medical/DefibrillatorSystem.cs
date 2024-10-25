@@ -158,7 +158,7 @@ public sealed class DefibrillatorSystem : EntitySystem
         if (!_powerCell.TryUseActivatableCharge(uid, user: user))
             return;
 
-        var selfEvent = new SelfBeforeDefibrillatorZaps(user, uid, target);
+        var selfEvent = new SelfBeforeDefibrillatorZapsEvent(user, uid, target);
         RaiseLocalEvent(user, selfEvent);
 
         target = selfEvent.DefibTarget;
@@ -167,7 +167,7 @@ public sealed class DefibrillatorSystem : EntitySystem
         if (selfEvent.Cancelled || !CanZap(uid, target, user, component, true))
             return;
 
-        var targetEvent = new TargetBeforeDefibrillatorZaps(user, uid, target);
+        var targetEvent = new TargetBeforeDefibrillatorZapsEvent(user, uid, target);
         RaiseLocalEvent(target, targetEvent);
 
         target = targetEvent.DefibTarget;
