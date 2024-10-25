@@ -150,7 +150,7 @@ public sealed class DefibrillatorSystem : EntitySystem
     /// <summary>
     ///     Tries to defibrillate the target with the given defibrillator.
     /// </summary>
-    public void Zap(EntityUid uid, EntityUid target, EntityUid user, DefibrillatorComponent? component = null, MobStateComponent? mob = null, MobThresholdsComponent? thresholds = null)
+    public void Zap(EntityUid uid, EntityUid target, EntityUid user, DefibrillatorComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
@@ -175,7 +175,8 @@ public sealed class DefibrillatorSystem : EntitySystem
         if (targetEvent.Cancelled || !CanZap(uid, target, user, component, true))
             return;
 
-        if (!Resolve(target, ref mob, ref thresholds, false))
+        if (!TryComp<MobStateComponent>(target, out var mob) ||
+            !TryComp<MobThresholdsComponent>(target, out var thresholds))
             return;
 
         _audio.PlayPvs(component.ZapSound, uid);
