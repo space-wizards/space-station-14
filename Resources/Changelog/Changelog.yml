@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Fixed borgs, animals and aghosts being able to enter cryosleep.
-    type: Fix
-  id: 7050
-  time: '2024-08-06T11:00:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30574
-- author: Flareguy
-  changes:
-  - message: Most hats are now automatically displaced on vox to look more fitting.
-    type: Tweak
-  id: 7051
-  time: '2024-08-06T13:12:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30699
 - author: Errant
   changes:
   - message: Medical Mask sprite now works on vox.
@@ -3957,3 +3943,19 @@
   id: 7549
   time: '2024-10-22T23:51:49.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32849
+- author: chromiumboy
+  changes:
+  - message: The atmospheric alerts computer has been upgraded to visually indicate
+      the rooms of the station that are being monitored by its air and fire alarm
+      systems
+    type: Tweak
+  id: 7550
+  time: '2024-10-23T12:49:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31910
+- author: hyphenationc
+  changes:
+  - message: Snake meat is now properly considered Meat, so Lizards can eat it.
+    type: Fix
+  id: 7551
+  time: '2024-10-24T03:41:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32965
