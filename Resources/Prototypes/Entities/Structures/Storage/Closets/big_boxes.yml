@@ -138,14 +138,13 @@
     - type: EntityStorageVisuals
       stateBaseClosed: littletykescar
       stateDoorOpen: littletykescar_open
-    - type: FootstepModifier
-      footstepSoundCollection:
-        collection: FootstepSkates
     - type: Tag
       tags:
         - DoorBumpOpener
         - FootstepSound
-
+    - type: FootstepModifier
+      footstepSoundCollection:
+        collection: FootstepSkates
 
 
 #For admin spawning only

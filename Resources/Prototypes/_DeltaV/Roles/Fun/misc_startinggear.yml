@@ -1,0 +1,12 @@
+#Misc outfit startingGear definitions.
+
+- type: startingGear
+  id: SyndicateListenerGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitPyjamaSyndicateBlack
+    head: ClothingHeadPyjamaSyndicateBlack
+    ears: ClothingHeadsetAltSyndicateListening
+    gloves: ClothingHandsGlovesCombat
+    shoes: ClothingShoesSlippers
+    id: SyndiListeningPostPDA
+#  innerClothingSkirt: ClothingUniformJumpsuitPyjamaSyndicatePink # I don't think loadouts work for ghost roles anyways

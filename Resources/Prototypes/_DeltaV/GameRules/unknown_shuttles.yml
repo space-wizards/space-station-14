@@ -43,8 +43,5 @@
       - type: NpcFactionMember
         factions:
         - Syndicate
-      mindComponents:
-      - type: RecruiterRole
-        prototype: Recruiter
-      - type: RoleBriefing
-        briefing: Find candidates, conduct interviews and seal the deal by having them sign with your special recruiter's pen.
+      mindRoles:
+      - MindRolePostOperator
