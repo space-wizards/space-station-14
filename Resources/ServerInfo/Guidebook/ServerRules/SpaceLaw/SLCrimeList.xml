@@ -314,7 +314,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        To make, hold, or use minor contraband without authorization.
+        To make, hold, or use minor contraband or subtances without authorization.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -466,7 +466,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        To make, hold, or use major contraband without authorization.
+        To make, hold, or use major contraband or substances without authorization.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -575,7 +575,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        To make, hold, or use Syndicate contraband.
+        To make, hold, or use Syndicate contraband or substances.
       </Box>
     </ColorBox>
     <ColorBox>
