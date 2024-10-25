@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Errant
-  changes:
-  - message: Medical Mask sprite now works on vox.
-    type: Fix
-  id: 7052
-  time: '2024-08-07T03:41:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30702
 - author: Lyroth001
   changes:
   - message: Dragons are immune to flashes
@@ -3959,3 +3952,11 @@
   id: 7551
   time: '2024-10-24T03:41:03.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32965
+- author: slarticodefast
+  changes:
+  - message: Mix 1u aluminium, 1u potassium and 1u sulfur for a flash reaction effect.
+      The radius scales with the reagent amount.
+    type: Add
+  id: 7552
+  time: '2024-10-25T22:47:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32377
