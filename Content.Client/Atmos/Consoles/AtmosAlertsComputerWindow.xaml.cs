@@ -50,7 +50,8 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
     private Color _untrackedEntColor = Color.DimGray;
     private Color _regionBaseColor = new Color(154, 154, 154);
     private Color _inactiveColor = StyleNano.DisabledFore;
-    private Color _goodColor = StyleNano.GoodGreenFore;
+    private Color _statusTextColor = StyleNano.GoodGreenFore;
+    private Color _goodColor = Color.LimeGreen;
     private Color _warningColor = new Color(255, 182, 72);
     private Color _dangerColor = new Color(255, 67, 67);
 
@@ -274,7 +275,7 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
                 VerticalAlignment = VAlignment.Center,
             };
 
-            label.SetMarkup(Loc.GetString("atmos-alerts-window-no-active-alerts", ("color", _goodColor.ToHexNoAlpha())));
+            label.SetMarkup(Loc.GetString("atmos-alerts-window-no-active-alerts", ("color", _statusTextColor.ToHexNoAlpha())));
 
             AlertsTable.AddChild(label);
         }
