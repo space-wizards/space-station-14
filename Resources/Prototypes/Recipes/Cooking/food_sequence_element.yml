@@ -40,7 +40,7 @@
 
 - type: foodSequenceElement
   id: MeatSnake
-  name: food-sequence-skewer-content-snake
+  name: food-sequence-content-snake
   sprites:
   - sprite: Objects/Consumable/Food/skewer.rsi
     state: skewer-snake
