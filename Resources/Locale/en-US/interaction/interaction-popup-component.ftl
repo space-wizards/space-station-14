@@ -8,20 +8,17 @@ petting-success-soft-floofy = You pet {THE($target)} on {POSS-ADJ($target)} soft
 petting-success-bingus = You pet {THE($target)} on {POSS-ADJ($target)} wrinkly little head.
 petting-success-bird = You pet {THE($target)} on {POSS-ADJ($target)} cute feathery head.
 petting-success-carp = You pet {THE($target)} on {POSS-ADJ($target)} fishy little head.
-petting-success-nicecarp = You pet {THE($target)} on {POSS-ADJ($target)} friendly wet head.
 petting-success-cat = You pet {THE($target)} on {POSS-ADJ($target)} fuzzy little head.
 petting-success-corrupted-corgi = In an act of hubris, you pet {THE($target)} on {POSS-ADJ($target)} cursed little head.
 petting-success-crab = You pet {THE($target)} on {POSS-ADJ($target)} smooth little head.
 petting-success-dehydrated-carp = You pet {THE($target)} on {POSS-ADJ($target)} dry little head. {CAPITALIZE(OBJECT($target))} seems to like you now!
 petting-success-dog = You pet {THE($target)} on {POSS-ADJ($target)} soft floofy head.
-petting-success-finfin = You pet {THE($target)} on {POSS-ADJ($target)} friendly little head.
 petting-success-frog = You pet {THE($target)} on {POSS-ADJ($target)} slippery little head.
 petting-success-goat = You pet {THE($target)} on {POSS-ADJ($target)} horned floofy head.
 petting-success-goose = Against all odds, you manage to pet {THE($target)} on {POSS-ADJ($target)} horrible little head.
 petting-success-kangaroo = You pet {THE($target)} on {POSS-ADJ($target)} Strayan head.
 petting-success-possum = You pet {THE($target)} on {POSS-ADJ($target)} horrible little head.
 petting-success-pig = You pet {THE($target)} on {POSS-ADJ($target)} hairy head.
-petting-success-pipi = You pet {THE($target)} on {POSS-ADJ($target)} empty little head.
 petting-success-raccoon = You pet {THE($target)} on {POSS-ADJ($target)} trash eating little head.
 petting-success-reptile = You pet {THE($target)} on {POSS-ADJ($target)} scaly little head.
 petting-success-sloth = You pet {THE($target)} on {POSS-ADJ($target)} slow moving head.
@@ -35,7 +32,6 @@ petting-success-slimes = You pet {THE($target)} on {POSS-ADJ($target)} mucous su
 petting-success-snake = You pet {THE($target)} on {POSS-ADJ($target)} scaly large head.
 petting-success-monkey = You pet {THE($target)} on {POSS-ADJ($target)} mischevious little head.
 petting-success-nymph = You pet {THE($target)} on {POSS-ADJ($target)} wooden little head.
-petting-success-tomato = You reach out to pet {THE($target)}, but it jumps up and kisses your hand first.
 
 petting-failure-generic = You reach out to pet {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BE($target)} aloof towards you.
 
@@ -44,7 +40,6 @@ petting-failure-carp = You reach out to pet {THE($target)}, but {POSS-ADJ($targe
 petting-failure-corrupted-corgi = You reach out to pet {THE($target)}, but think better of it.
 petting-failure-crab = You reach out to pet {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BASIC($target, "snap", "snaps")} {POSS-ADJ($target)} claws in your general direction!
 petting-failure-dehydrated-carp = You pet {THE($target)} on {POSS-ADJ($target)} dry little head.
-petting-failure-finfin = You reach out to pet {THE($target)}, but {POSS-ADJ($target)} strangely human eyes make you pause.
 petting-failure-goat = You reach out to pet {THE($target)}, but {SUBJECT($target)} stubbornly {CONJUGATE-BASIC($target, "refuse", "refuses")}!
 petting-failure-goose = You reach out to pet {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BE($target)} too horrible!
 petting-failure-possum = You reach out to pet {THE($target)}, but are met with hisses and snarls!
@@ -58,7 +53,6 @@ petting-failure-bear = You reach out to pet {THE($target)}, but {SUBJECT($target
 petting-failure-monkey = You reach out to pet {THE($target)}, but {SUBJECT($target)} almost {CONJUGATE-BASIC($target, "bite", "bites")} your fingers!
 petting-failure-nymph = You reach out to pet {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BASIC($target, "move", "moves")} {POSS-ADJ($target)} branches away.
 petting-failure-shadow = You try to pet {THE($target)}, but your hand passes through the cold darkness of {POSS-ADJ($target)} body.
-petting-failure-tomato = You try to pet {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BE($target)} gets so excited it rolls away.
 
 ## Petting silicons
 
@@ -66,10 +60,9 @@ petting-success-honkbot = You pet {THE($target)} on {POSS-ADJ($target)} slippery
 petting-success-mimebot = You pet {THE($target)} on {POSS-ADJ($target)} cold metal head.
 petting-success-cleanbot = You pet {THE($target)} on {POSS-ADJ($target)} damp metal head.
 petting-success-medibot = You pet {THE($target)} on {POSS-ADJ($target)} sterile metal head.
-petting-success-firebot = You pet {THE($target)} on {POSS-ADJ($target)} warm metal head. 
+petting-success-firebot = You pet {THE($target)} on {POSS-ADJ($target)} warm metal head.
 petting-success-generic-cyborg = You pet {THE($target)} on {POSS-ADJ($target)} metal head.
 petting-success-salvage-cyborg = You pet {THE($target)} on {POSS-ADJ($target)} dirty metal head.
-petting-success-cargo-cyborg = You pet {THE($target)} on {POSS-ADJ($target)} scratched metal head.
 petting-success-engineer-cyborg = You pet {THE($target)} on {POSS-ADJ($target)} reflective metal head.
 petting-success-janitor-cyborg = You pet {THE($target)} on {POSS-ADJ($target)} damp metal head.
 petting-success-medical-cyborg = You pet {THE($target)} on {POSS-ADJ($target)} sterile metal head.
