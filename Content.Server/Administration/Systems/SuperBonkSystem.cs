@@ -18,6 +18,7 @@ public sealed class SuperBonkSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<SuperBonkComponent, MobStateChangedEvent>(OnMobStateChanged);
+        SubscribeLocalEvent<SuperBonkComponent, ComponentShutdown>(OnBonkShutdown);
     }
 
     public void StartSuperBonk(EntityUid target, float delay = 0.1f, bool stopWhenDead = false)
@@ -30,7 +31,6 @@ public sealed class SuperBonkSystem : EntitySystem
                 return;
         }
 
-        // Permanently give the clumsy component.
         var hadClumsy = EnsureComp<ClumsyComponent>(target, out _);
 
         var tables = EntityQueryEnumerator<BonkableComponent>();
@@ -97,5 +97,11 @@ public sealed class SuperBonkSystem : EntitySystem
         {
             RemComp<SuperBonkComponent>(uid);
         }
+    }
+
+    private void OnBonkShutdown(EntityUid uid, SuperBonkComponent comp, ComponentShutdown ev)
+    {
+        if (comp.RemoveClumsy)
+            RemComp<ClumsyComponent>(comp.Target);
     }
 }
