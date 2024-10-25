@@ -21,7 +21,7 @@ public sealed partial class ResearchServerComponent : Component
     public int Points;
 
     /// <summary>
-    /// 
+    /// Cost of technology research options reroll.
     /// </summary>
     [AutoNetworkedField]
     [DataField, ViewVariables(VVAccess.ReadWrite)]

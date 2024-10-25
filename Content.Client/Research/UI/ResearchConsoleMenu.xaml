@@ -22,7 +22,7 @@
             </BoxContainer>
             <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalAlignment="Right">
                 <Button Name="ServerButton" Text="{Loc 'research-console-menu-server-selection-button'}" MinHeight="40"/>
-                <Button Name="RediscoverButton" Margin="0 5 0 0" ToolTip="{Loc 'research-console-menu-server-rediscover-tooltip'}"></Button>
+                <Button Name="RediscoverButton" Margin="0 5 0 0" ToolTip="{Loc 'research-console-menu-server-rediscover-tooltip'}" />
             </BoxContainer>
         </BoxContainer>
         <BoxContainer Orientation="Horizontal"

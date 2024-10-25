@@ -32,23 +32,20 @@ public sealed partial class ResearchSystem
         if (!this.IsPowered(uid, EntityManager))
             return;
 
-        if (TryComp<AccessReaderComponent>(uid, out var access) && !_accessReader.IsAllowed(act, uid, access))
+        if (!HasAccess(uid, act))
         {
             _popup.PopupEntity(Loc.GetString("research-console-no-access-popup"), act);
             return;
         }
 
         if (!TryGetClientServer(uid, out var serverEnt, out var serverComponent))
-        {
             return;
-        }
 
-        if (serverComponent.RediscoverCost > serverComponent.Points)
-        {
+        var rediscoverCost = serverComponent.RediscoverCost;
+        if (rediscoverCost > serverComponent.Points)
             return;
-        }
 
-        ModifyServerPoints(serverEnt.Value, -serverComponent.RediscoverCost);
+        ModifyServerPoints(serverEnt.Value, -rediscoverCost);
         UpdateTechnologyCards(serverEnt.Value);
         SyncClientWithServer(uid);
         UpdateConsoleInterface(uid);
@@ -64,7 +61,7 @@ public sealed partial class ResearchSystem
         if (!PrototypeManager.TryIndex<TechnologyPrototype>(args.Id, out var technologyPrototype))
             return;
 
-        if (TryComp<AccessReaderComponent>(uid, out var access) && !_accessReader.IsAllowed(act, uid, access))
+        if (!HasAccess(uid, act))
         {
             _popup.PopupEntity(Loc.GetString("research-console-no-access-popup"), act);
             return;
@@ -86,7 +83,7 @@ public sealed partial class ResearchSystem
             );
             _radio.SendRadioMessage(uid, message, component.AnnouncementChannel, uid, escapeMarkup: false);
         }
-       
+
         SyncClientWithServer(uid);
         UpdateConsoleInterface(uid, component);
     }
@@ -134,4 +131,8 @@ public sealed partial class ResearchSystem
         UpdateConsoleInterface(uid, component);
     }
 
+    private bool HasAccess(EntityUid uid, EntityUid act)
+    {
+        return TryComp<AccessReaderComponent>(uid, out var access) && _accessReader.IsAllowed(act, uid, access);
+    }
 }
