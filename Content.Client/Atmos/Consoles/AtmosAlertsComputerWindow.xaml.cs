@@ -292,7 +292,7 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
                 if (!TryGetSensorRegionColor(regionOwner, alarmState, out var regionColor))
                     continue;
 
-                regionOverlay.Color = regionColor.Value;
+                regionOverlay.Color = regionColor;
 
                 var priority = (_trackedEntity == regionOwner) ? 999 : (int)alarmState;
                 prioritizedRegionOverlays.Add(regionOverlay, priority);
@@ -331,9 +331,9 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
         NavMap.TrackedEntities[metaData.NetEntity] = blip;
     }
 
-    private bool TryGetSensorRegionColor(NetEntity regionOwner, AtmosAlarmType alarmState, [NotNullWhen(true)] out Color? color)
+    private bool TryGetSensorRegionColor(NetEntity regionOwner, AtmosAlarmType alarmState, out Color color)
     {
-        color = null;
+        color = Color.White;
 
         var blip = GetBlipTexture(alarmState);
 
