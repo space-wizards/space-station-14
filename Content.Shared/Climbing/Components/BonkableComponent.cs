@@ -20,5 +20,5 @@ public sealed partial class BonkableComponent : Component
     ///     How much damage to apply on bonk.
     /// </summary>
     [DataField]
-    public DamageSpecifier BonkDamage;
+    public DamageSpecifier? BonkDamage;
 }

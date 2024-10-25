@@ -119,10 +119,11 @@ public sealed class ClumsySystem : EntitySystem
     {
         var stunTime = target.Comp.ClumsyDefaultStunTime;
 
-        if (TryComp<BonkableComponent>(table, out var bonkComp) && bonkComp != null)
+        if (TryComp<BonkableComponent>(table, out var bonkComp))
         {
             stunTime = bonkComp.BonkTime;
-            _damageable.TryChangeDamage(target, bonkComp.BonkDamage, true);
+            if (bonkComp.BonkDamage != null)
+                _damageable.TryChangeDamage(target, bonkComp.BonkDamage, true);
         }
 
         _stun.TryParalyze(target, stunTime, true);
