@@ -18,6 +18,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Configuration;
 using Robust.Shared.Input;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Client.UserInterface.Systems.Storage;
 
@@ -51,7 +52,7 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
     /*
      * TODO:
      * - Fix transfer back not working.
-     * - Remove hand pickup.
+     * - Remove hand pickup animation.
      * - Some slots invalid (top-left) on new hotbar thing
      * - Drag-drop lets you go to invalid tiles in your own bag
      * - Dragging to new bag still doesn't work
@@ -227,6 +228,7 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
         control.MouseFilter = Control.MouseFilterMode.Pass;
 
         var localPlayer = _player.LocalEntity;
+        window.RemoveGrid(control);
 
         // If we tried to drag it on top of another grid piece then cancel out.
         if (targetControl is ItemGridPiece || window.StorageEntity is not { } sourceStorage || localPlayer == null)
@@ -274,7 +276,6 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
                         EntityManager.GetNetEntity(targetStorage.StorageEntity.Value),
                         newLocation));
 
-                    window.RemoveGrid(control);
                     targetStorage.Reclaim(newLocation, control);
                     DraggingRotation = Angle.Zero;
                 }
@@ -292,19 +293,18 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
                     EntityManager.GetNetEntity(sourceStorage)));
             }
 
-            _menuDragHelper.EndDrag();
             window.FlagDirty();
             targetStorage?.FlagDirty();
         }
         // If we just clicked, then take it out of the bag / recursive storage.
         else
         {
-            _menuDragHelper.EndDrag();
             EntityManager.RaisePredictiveEvent(new StorageInteractWithItemEvent(
                 EntityManager.GetNetEntity(control.Entity),
                 EntityManager.GetNetEntity(sourceStorage)));
         }
 
+        _menuDragHelper.EndDrag();
         args.Handle();
     }
 

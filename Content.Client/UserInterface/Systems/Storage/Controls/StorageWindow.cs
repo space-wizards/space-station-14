@@ -253,7 +253,8 @@ public sealed class StorageWindow : BaseWindow
 
     public void Reclaim(ItemStorageLocation location, ItemGridPiece draggingGhost)
     {
-        draggingGhost.Orphan();
+        draggingGhost.OnPiecePressed += OnPiecePressed;
+        draggingGhost.OnPieceUnpressed += OnPieceUnpressed;
         _pieces[draggingGhost.Entity] = (location, draggingGhost);
         draggingGhost.Location = location;
         var controlIndex = GetGridIndex(draggingGhost);
@@ -272,7 +273,10 @@ public sealed class StorageWindow : BaseWindow
 
     public void RemoveGrid(ItemGridPiece control)
     {
+        control.Orphan();
         _pieces.Remove(control.Entity);
+        control.OnPiecePressed -= OnPiecePressed;
+        control.OnPieceUnpressed -= OnPieceUnpressed;
     }
 
     public void BuildItemPieces()
