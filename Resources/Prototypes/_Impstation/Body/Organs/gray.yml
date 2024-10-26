@@ -4,7 +4,7 @@
   abstract: true
   components:
   - type: Sprite
-    sprite: Mobs/Species/Gray/organs.rsi
+    sprite: _Impstation/Mobs/Species/Gray/organs.rsi
   - type: Organ
   - type: Food
   - type: Extractable
