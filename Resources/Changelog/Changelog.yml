@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Lyroth001
-  changes:
-  - message: Dragons are immune to flashes
-    type: Tweak
-  id: 7053
-  time: '2024-08-07T07:42:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30658
 - author: ShadowCommander
   changes:
   - message: Rollerbeds can now be dragged to the player to fold and pick them up.
@@ -3960,3 +3953,11 @@
   id: 7552
   time: '2024-10-25T22:47:12.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32377
+- author: BramvanZijp
+  changes:
+  - message: Fixed the Lone Nuclear Operative mid-round antagonist being extremely
+      rare.
+    type: Fix
+  id: 7553
+  time: '2024-10-26T02:16:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32942
