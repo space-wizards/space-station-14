@@ -31,6 +31,8 @@ namespace Content.Server.Database.Migrations.Sqlite
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_server_username_rule", x => x.server_username_rule_id);
+                    table.CheckConstraint("ActiveRulesDoNotHaveRetireInformation", "retired OR retire_time IS NULL AND retiring_admin IS NULL");
+                    table.CheckConstraint("InactiveRulesHaveRetireInformation", "NOT retired OR retire_time IS NOT NULL");
                 });
 
             migrationBuilder.CreateTable(

@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Content.Server.Database.Migrations.Sqlite
 {
     [DbContext(typeof(SqliteServerDbContext))]
-    [Migration("20241017100845_UsernameBans")]
+    [Migration("20241026224102_UsernameBans")]
     partial class UsernameBans
     {
         /// <inheritdoc />
@@ -1298,7 +1298,12 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.HasKey("Id")
                         .HasName("PK_server_username_rule");
 
-                    b.ToTable("server_username_rule", (string)null);
+                    b.ToTable("server_username_rule", null, t =>
+                        {
+                            t.HasCheckConstraint("ActiveRulesDoNotHaveRetireInformation", "retired OR retire_time IS NULL AND retiring_admin IS NULL");
+
+                            t.HasCheckConstraint("InactiveRulesHaveRetireInformation", "NOT retired OR retire_time IS NOT NULL");
+                        });
                 });
 
             modelBuilder.Entity("Content.Server.Database.Trait", b =>
