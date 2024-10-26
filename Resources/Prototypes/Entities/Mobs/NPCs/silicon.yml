@@ -120,6 +120,8 @@
   - type: Construction
     graph: FireBot
     node: bot
+  - type: SentienceTarget
+    flavorKind: station-event-random-sentience-flavor-mechanical
   - type: HTN
     rootTask:
       task: FirebotCompound
@@ -266,6 +268,8 @@
   - type: Construction
     graph: CleanBot
     node: bot
+  - type: SentienceTarget
+    flavorKind: station-event-random-sentience-flavor-mechanical
   - type: Absorbent
     pickupAmount: 10
   - type: UseDelay
