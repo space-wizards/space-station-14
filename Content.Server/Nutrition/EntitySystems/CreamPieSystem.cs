@@ -49,7 +49,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 {
                     _puddle.TrySpillAt(uid, solution, out _, false);
                 }
-                if (foodComp.Trash.Count == 0)
+                if (foodComp.Trash.Count != 0)
                 {
                     foreach (var trash in foodComp.Trash)
                     {
