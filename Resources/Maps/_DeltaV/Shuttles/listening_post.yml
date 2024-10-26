@@ -35,10 +35,10 @@ entities:
   - uid: 1
     components:
     - type: MetaData
-      name: Listening Post
+      name: Unknown
     - type: Transform
       pos: 22.326925,-7.8882475
-      parent: 437
+      parent: invalid
     - type: MapGrid
       chunks:
         0,0:
@@ -426,10 +426,11 @@ entities:
           -1,-4:
             0: 31
           0,-3:
-            0: 16656
+            0: 272
+            2: 16384
           -1,-3:
             0: 5596
-            2: 2048
+            3: 2048
           0,-2:
             0: 58623
           -1,-2:
@@ -534,6 +535,21 @@ entities:
           - 0
           - 0
         - volume: 2500
+          temperature: 293.15
+          moles:
+          - 21.824873
+          - 82.1031
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
           immutable: True
           moles:
           - 0
@@ -553,18 +569,6 @@ entities:
     - type: RadiationGridResistance
     - type: Shuttle
     - type: NavMap
-  - uid: 437
-    components:
-    - type: MetaData
-      name: Map Entity
-    - type: Transform
-    - type: Map
-      mapPaused: True
-    - type: PhysicsMap
-    - type: GridTree
-    - type: MovedGrids
-    - type: Broadphase
-    - type: OccluderTree
 - proto: AcousticGuitarInstrument
   entities:
   - uid: 17
@@ -766,7 +770,7 @@ entities:
       pos: 6.5,-1.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -545.76306
+      secondsUntilStateChange: -1089.7625
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -784,7 +788,7 @@ entities:
       pos: 7.5,-0.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -1025.1626
+      secondsUntilStateChange: -1569.162
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -797,7 +801,7 @@ entities:
       pos: -1.5,-1.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -1381.3289
+      secondsUntilStateChange: -1925.3282
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -1441,6 +1445,15 @@ entities:
       canCollide: False
     - type: InsideEntityStorage
   - uid: 366
+    components:
+    - type: Transform
+      parent: 363
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+- proto: BoxMagazinePistol
+  entities:
+  - uid: 614
     components:
     - type: Transform
       parent: 363
@@ -2380,30 +2393,15 @@ entities:
           - 241
           - 242
           - 243
-- proto: EncryptionKeyCommand
+- proto: EmpGrenade
   entities:
   - uid: 613
     components:
     - type: Transform
-      parent: 612
+      parent: 363
     - type: Physics
       canCollide: False
-- proto: EncryptionKeyStationMaster
-  entities:
-  - uid: 614
-    components:
-    - type: Transform
-      parent: 612
-    - type: Physics
-      canCollide: False
-- proto: EncryptionKeySyndie
-  entities:
-  - uid: 615
-    components:
-    - type: Transform
-      parent: 612
-    - type: Physics
-      canCollide: False
+    - type: InsideEntityStorage
 - proto: FaxMachineListeningSyndie
   entities:
   - uid: 368
@@ -3240,6 +3238,33 @@ entities:
     - type: Transform
       pos: -5.5,-6.5
       parent: 1
+- proto: GrenadeDummy
+  entities:
+  - uid: 612
+    components:
+    - type: Transform
+      parent: 363
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+- proto: GrenadeFlashBang
+  entities:
+  - uid: 615
+    components:
+    - type: Transform
+      parent: 363
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+- proto: GrenadeShrapnel
+  entities:
+  - uid: 930
+    components:
+    - type: Transform
+      parent: 363
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
 - proto: Grille
   entities:
   - uid: 24
@@ -3419,8 +3444,8 @@ entities:
         immutable: False
         temperature: 293.1496
         moles:
-        - 1.8978093
-        - 7.139378
+        - 1.8978151
+        - 7.1394
         - 0
         - 0
         - 0
@@ -3437,15 +3462,21 @@ entities:
           showEnts: False
           occludes: True
           ents:
-          - 378
-          - 377
-          - 379
-          - 367
-          - 366
-          - 380
-          - 376
-          - 365
           - 118
+          - 365
+          - 376
+          - 380
+          - 366
+          - 367
+          - 379
+          - 437
+          - 612
+          - 613
+          - 614
+          - 377
+          - 615
+          - 930
+          - 378
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -4336,6 +4367,11 @@ entities:
     - type: Transform
       pos: 5.5,0.5
       parent: 1
+  - uid: 934
+    components:
+    - type: Transform
+      pos: 11.5,-3.5
+      parent: 1
 - proto: SpawnPointNukies
   entities:
   - uid: 132
@@ -4506,35 +4542,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 8.5,2.5
       parent: 1
-- proto: TelecomServerFilled
-  entities:
-  - uid: 612
-    components:
-    - type: MetaData
-      desc: When powered and filled with encryption keys it allows radio headset communication. This one's been souped up with the liberal application of proprietary Syndicate Telecrystal technology.
-      name: espionage telecommunications server
-    - type: Transform
-      pos: 4.5,-7.5
-      parent: 1
-    - type: Pullable
-      prevFixedRotation: True
-    - type: ContainerContainer
-      containers:
-        key_slots: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 613
-          - 614
-          - 615
-        machine_board: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        machine_parts: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
 - proto: ToiletEmpty
   entities:
   - uid: 832
@@ -4582,6 +4589,13 @@ entities:
     components:
     - type: Transform
       pos: 4.5,-2.5
+      parent: 1
+- proto: VendingMachineCigs
+  entities:
+  - uid: 931
+    components:
+    - type: Transform
+      pos: 4.5,-7.5
       parent: 1
 - proto: VendingMachineClothing
   entities:
@@ -6675,6 +6689,15 @@ entities:
     - type: Transform
       pos: 6.5,1.5
       parent: 1
+- proto: WeaponPistolViper
+  entities:
+  - uid: 437
+    components:
+    - type: Transform
+      parent: 363
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
 - proto: WeaponShotgunKammerer
   entities:
   - uid: 379
