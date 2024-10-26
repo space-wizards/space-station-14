@@ -9,6 +9,7 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -24,8 +25,7 @@ namespace Content.Shared.Movement.Systems
 
         [Dependency] private readonly AlertsSystem _alerts = default!;
 
-        [ValidatePrototypeId<AlertPrototype>]
-        public const string WalkingAlert = "Walking";
+        public static ProtoId<AlertPrototype> WalkingAlert = "Walking";
 
         private void InitializeInput()
         {
