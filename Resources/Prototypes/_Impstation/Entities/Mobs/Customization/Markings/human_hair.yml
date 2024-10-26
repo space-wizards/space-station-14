@@ -3,5 +3,5 @@
   bodyPart: Hair
   markingCategory: Hair
   sprites:
-    - sprite: _impstation/Mobs/Customization/human_hair.rsi
+    - sprite: _Impstation/Mobs/Customization/human_hair.rsi
       state: gatheredlow
