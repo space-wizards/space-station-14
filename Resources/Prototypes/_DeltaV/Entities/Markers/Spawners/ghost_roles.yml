@@ -21,6 +21,23 @@
         - sprite: Mobs/Species/Human/parts.rsi
           state: full
 
+- type: entity # Part of ListeningPost
+  categories: [ HideSpawnMenu, Spawner ]
+  parent: BaseAntagSpawner
+  id: SpawnPointGhostSyndicateListener
+  components:
+  - type: GhostRole
+    name: ghost-role-information-listeningop-name
+    description: ghost-role-information-listeningop-description
+    rules: ghost-role-information-listeningop-rules
+    requirements: # Worth considering these numbers for the goal of making sure someone willing to MRP takes this.
+    - !type:DepartmentTimeRequirement
+      department: Command
+      time: 18000 # 5 hours
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 18000 # 5 hours
+
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
   parent: BaseAntagSpawner

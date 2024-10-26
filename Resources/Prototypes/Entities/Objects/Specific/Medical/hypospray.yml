@@ -158,7 +158,8 @@
         - ReagentId: TranexamicAcid
           Quantity: 3
   - type: Tag
-    tags: []
+    tags:
+      - EmergencyMedipen # goob edit
 
 - type: entity
   name: poison auto-injector

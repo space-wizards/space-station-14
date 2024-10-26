@@ -211,6 +211,11 @@
     groups:
     - id: Food
     - id: Drink
+  - type: Tag # goob edit
+    tags:
+      - Meat
+      - Organ
+      - Stomach
 
 - type: entity
   id: OrganHumanLiver
@@ -226,6 +231,11 @@
     groups:
     - id: Alcohol
       rateModifier: 0.1 # removes alcohol very slowly along with the stomach removing it as a drink
+  - type: Tag # goob edit
+    tags:
+      - Meat
+      - Organ
+      - Liver
 
 - type: entity
   id: OrganHumanKidneys

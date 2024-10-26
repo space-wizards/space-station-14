@@ -86,7 +86,6 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
 
-
 #For admin spawning only
 - type: entity
   id: GhostBox

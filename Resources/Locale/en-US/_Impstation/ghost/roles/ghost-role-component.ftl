@@ -26,3 +26,6 @@ ghost-role-information-syndie-assaultborg-description = Nuclear operatives needs
 
 ghost-role-information-finfin-name = Fin Fin
 ghost-role-information-finfin-description = Taken from your home planet of Teo by Salvage, you're so adorable that you were adopted by the station instead of sent to Centcomm. It's in your best interest to stay that way.
+
+ghost-role-information-luggage-name = The Luggage
+ghost-role-information-luggage-description = You are The Luggage, a chest made of sapient pearwood, and loyal familiar to the first person you see upon exiting your crate.

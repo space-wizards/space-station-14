@@ -48,7 +48,7 @@
       points: 1
       required: false
     Chest:
-      points: 0
+      points: 1
       required: false
     Undershirt:
       points: 1
