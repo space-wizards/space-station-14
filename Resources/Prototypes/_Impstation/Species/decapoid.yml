@@ -56,7 +56,8 @@
       required: false
     Snout:
       points: 1
-      required: false
+      required: false # set to true
+#      defaultMarkings: [ Gills1 ]
     Overlay:
       points: 1
       required: false

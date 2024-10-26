@@ -8,12 +8,11 @@
   - type: SnailSpeed
     snailSlowdownModifier: 0.8
   - type: Absorbable
-  - type: Hunger
-  - type: Thirst
+  - type: Hunger # removed thirst
   - type: Icon
     sprite: _Impstation/Mobs/Species/Decapoid/parts.rsi
     state: full
-  - type: Respirator
+  - type: Respirator # todo: water vapor respiration. i think vox do that through their organs.
     damage:
       types:
         Asphyxiation: 2
@@ -129,6 +128,8 @@
       294: 1 # todo: make this less stupid, probably just remove the whole component
   - type: Bloodstream
     bloodReagent: CopperBlood # real life crustaceans are in the same clade as spiders and share a blood type
+  - type: Puller
+    needsHands: false # they drag with the claw. no way to remove the walkspeed penalty as far as I can tell.
   - type: Inventory
     templateId: decapoid
     displacements:
