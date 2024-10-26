@@ -972,6 +972,13 @@
     - sprite: Mobs/Customization/human_hair.rsi
       state: fringetail
 - type: marking
+  id: HumanHairGatheredlow
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: Mobs/Customization/human_hair.rsi
+      state: gatheredlow
+- type: marking
   id: HumanHairSidetail
   bodyPart: Hair
   markingCategory: Hair
