@@ -45,6 +45,7 @@
   - type: StatusIcon
   - type: RequireProjectileTarget
     active: False
+  - type: FallSystem
 
 # Used for mobs that have health and can take damage.
 - type: entity
