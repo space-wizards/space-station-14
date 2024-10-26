@@ -801,6 +801,9 @@
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
   - type: CargoOrderConsole
+    AnnouncementChannel: Supply
+    AllowedGroups:
+    - market
   - type: BankClient
   - type: ActiveRadio
     channels:
@@ -821,6 +824,61 @@
     color: "#b89f25"
   - type: AccessReader
     access: [["Cargo"]]
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: DeviceLinkSource
+    range: 200
+    ports:
+      - OrderSender
+  - type: GuideHelp
+    guides:
+    - Cargo
+
+- type: entity
+  id: SyndicateComputerCargoOrders
+  parent: BaseComputerAiAccess
+  name: syndicate cargo request computer
+  description: Used to syndicate order supplies and approve requests.
+  components:
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: request
+    - map: ["computerLayerKeys"]
+      state: tech_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  - type: CargoOrderConsole
+    AnnouncementChannel: Syndicate
+    AllowedGroups:
+    - syndicate_market
+  - type: BankClient
+  - type: ActiveRadio
+    channels:
+    - Syndicate
+  - type: ActivatableUI
+    key: enum.CargoConsoleUiKey.Orders
+  - type: UserInterface
+    interfaces:
+      enum.CargoConsoleUiKey.Orders:
+        type: CargoOrderConsoleBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+  - type: Computer
+    board: SyndicateCargoRequestComputerCircuitboard
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#b89f25"
+  - type: AccessReader
+    access: [["SyndicateAgent"]]
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice

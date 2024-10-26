@@ -86,6 +86,19 @@
 
 - type: entity
   parent: BaseComputerCircuitboard
+  id: SyndicateCargoRequestComputerCircuitboard
+  name: syndicate cargo request computer board
+  description: A computer printed circuit board for a syndicate cargo request computer.
+  components:
+    - type: Sprite
+      state: cpu_supply
+    - type: ComputerBoard
+      prototype: SyndicateComputerCargoOrders
+    - type: StaticPrice
+      price: 750
+
+- type: entity
+  parent: BaseComputerCircuitboard
   id: CargoSaleComputerCircuitboard
   name: cargo sale computer board
   description: A computer printed circuit board for a cargo sale computer.

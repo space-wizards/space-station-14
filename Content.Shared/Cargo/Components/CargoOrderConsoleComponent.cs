@@ -3,6 +3,8 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Content.Shared.Radio;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Cargo.Components;
 
@@ -21,13 +23,15 @@ public sealed partial class CargoOrderConsoleComponent : Component
     /// <summary>
     /// All of the <see cref="CargoProductPrototype.Group"/>s that are supported.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public List<string> AllowedGroups = new() { "market" };
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("AllowedGroups", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
+    public List<string> AllowedGroups = new();
 
     /// <summary>
     /// Radio channel on which order approval announcements are transmitted
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public ProtoId<RadioChannelPrototype> AnnouncementChannel = "Supply";
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("AnnouncementChannel", customTypeSerializer: typeof(PrototypeIdSerializer<RadioChannelPrototype>))]
+    public string AnnouncementChannel = "Cargo";
 }
 
