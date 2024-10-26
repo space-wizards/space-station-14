@@ -313,16 +313,16 @@ public abstract class SharedStorageSystem : EntitySystem
         if (!CanInteract(entity, (uid, storageComp), silent: silent))
             return;
 
+        if (!UI.TryOpenUi(uid, StorageComponent.StorageUiKey.Key, entity))
+            return;
+
         if (!silent)
         {
-            if (!UI.IsUiOpen(uid, StorageComponent.StorageUiKey.Key))
-                Audio.PlayPredicted(storageComp.StorageOpenSound, uid, entity);
+            Audio.PlayPredicted(storageComp.StorageOpenSound, uid, entity);
 
             if (useDelay != null)
                 UseDelay.TryResetDelay((uid, useDelay), id: OpenUiUseDelayID);
         }
-
-        UI.OpenUi(uid, StorageComponent.StorageUiKey.Key, entity);
     }
 
     public virtual void UpdateUI(Entity<StorageComponent?> entity) {}
