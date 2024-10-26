@@ -319,15 +319,32 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 200
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Machines/warning_buzzer.ogg
+          params:
+            volume: 5
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
       behaviors:
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: Damageable
+    damageContainer: Silicon
+  - type: Repairable
+    doAfterDelay: 10
+    allowSelfRepair: false
   - type: ApcPowerReceiver
     powerLoad: 1000
+  - type: ExtensionCableReceiver
+  - type: Anchorable
+  - type: Rotatable
   - type: StationAiCore
   - type: StationAiVision
   - type: InteractionOutline

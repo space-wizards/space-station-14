@@ -264,7 +264,8 @@ public abstract partial class SharedStationAiSystem : EntitySystem
     private void OnCorePower(Entity<StationAiCoreComponent> ent, ref PowerChangedEvent args)
     {
         // TODO: I think in 13 they just straightup die so maybe implement that
-        if (args.Powered)
+        // Currently this would just make AI Eye die whenever the core is unanchored
+        /*if (args.Powered)
         {
             if (!SetupEye(ent))
                 return;
@@ -274,7 +275,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         else
         {
             ClearEye(ent);
-        }
+        }*/
     }
 
     private void OnAiMapInit(Entity<StationAiCoreComponent> ent, ref MapInitEvent args)
