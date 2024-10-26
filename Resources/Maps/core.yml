@@ -18680,8 +18680,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 18.5,-71.5
       parent: 2
-    - type: Apc
-      hasAccess: True
   - uid: 22471
     components:
     - type: MetaData
@@ -63748,6 +63746,13 @@ entities:
     components:
     - type: Transform
       pos: 54.5,-33.5
+      parent: 2
+- proto: DefaultStationBeaconVox
+  entities:
+  - uid: 16173
+    components:
+    - type: Transform
+      pos: -31.5,-2.5
       parent: 2
 - proto: DefaultStationBeaconWardensOffice
   entities:
