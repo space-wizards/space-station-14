@@ -19,9 +19,9 @@
         startingItem: ShellShotgunFlare
         priority: 1
         whitelist:
-          tags:
-            - ShellShotgun
-            - ShellShotgunLight ## TODO: Add a risk of the gun blowing up if using non-light shotgun shells.
+          tags: ## TODO: Add a risk of the gun blowing up if using non-light shotgun shells, and then re-enable them.
+            ## - ShellShotgun
+            - ShellShotgunLight
   - type: ContainerContainer
     containers:
       gun_chamber: !type:ContainerSlot
