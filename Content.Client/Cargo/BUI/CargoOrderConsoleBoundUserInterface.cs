@@ -35,6 +35,9 @@ namespace Content.Client.Cargo.BUI
         [ViewVariables]
         public int OrderCount { get; private set; }
 
+        [ViewVariables]
+        public bool IsSyndicate { get; private set; }
+
         /// <summary>
         /// Currently selected product
         /// </summary>
@@ -51,7 +54,7 @@ namespace Content.Client.Cargo.BUI
 
             var spriteSystem = EntMan.System<SpriteSystem>();
             var dependencies = IoCManager.Instance!;
-            _menu = new CargoConsoleMenu(Owner, EntMan, dependencies.Resolve<IPrototypeManager>(), spriteSystem);
+            _menu = new CargoConsoleMenu(Owner, EntMan, dependencies.Resolve<IPrototypeManager>(), spriteSystem, IsSyndicate);
             var localPlayer = dependencies.Resolve<IPlayerManager>().LocalEntity;
             var description = new FormattedMessage();
 
@@ -118,6 +121,7 @@ namespace Content.Client.Cargo.BUI
             OrderCapacity = cState.Capacity;
             OrderCount = cState.Count;
             BankBalance = cState.Balance;
+            IsSyndicate = cState.IsSyndicate;
 
             AccountName = cState.Name;
 

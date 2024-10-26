@@ -332,6 +332,7 @@ namespace Content.Server.Cargo.Systems
         {
             if (station == null ||
                 !TryComp<StationCargoOrderDatabaseComponent>(station, out var orderDatabase) ||
+                !TryComp<CargoOrderConsoleComponent>(station, out var isSyndicate) ||
                 !TryComp<StationBankAccountComponent>(station, out var bankAccount)) return;
 
             if (_uiSystem.HasUi(consoleUid, CargoConsoleUiKey.Orders))
@@ -341,6 +342,7 @@ namespace Content.Server.Cargo.Systems
                     GetOutstandingOrderCount(orderDatabase),
                     orderDatabase.Capacity,
                     bankAccount.Balance,
+                    isSyndicate.IsSyndicate,
                     orderDatabase.Orders
                 ));
             }

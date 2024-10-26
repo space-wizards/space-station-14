@@ -27,7 +27,7 @@ namespace Content.Client.Cargo.UI
         private readonly List<string> _categoryStrings = new();
         private string? _category;
 
-        public CargoConsoleMenu(EntityUid owner, IEntityManager entMan, IPrototypeManager protoManager, SpriteSystem spriteSystem)
+        public CargoConsoleMenu(EntityUid owner, IEntityManager entMan, IPrototypeManager protoManager, SpriteSystem spriteSystem, bool isSyndicate)
         {
             RobustXamlLoader.Load(this);
             _entityManager = entMan;
@@ -35,7 +35,10 @@ namespace Content.Client.Cargo.UI
             _spriteSystem = spriteSystem;
             _owner = owner;
 
-            Title = Loc.GetString("cargo-console-menu-title");
+            if (isSyndicate)
+                Title = Loc.GetString("cargo-console-menu-syndicate-title");
+            else
+                Title = Loc.GetString("cargo-console-menu-title");
 
             SearchBar.OnTextChanged += OnSearchBarTextChanged;
             Categories.OnItemSelected += OnCategoryItemSelected;

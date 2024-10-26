@@ -1,5 +1,6 @@
 ## UI
 cargo-console-menu-title = Cargo request console
+cargo-console-menu-syndicate-title = Syndicate cargo request console
 cargo-console-menu-account-name-label = Account name:{" "}
 cargo-console-menu-account-name-none-text = None
 cargo-console-menu-shuttle-name-label = Shuttle name:{" "}
