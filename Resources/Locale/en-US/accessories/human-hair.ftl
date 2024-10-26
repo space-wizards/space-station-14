@@ -81,7 +81,6 @@ marking-HumanHairSargeant = Flat Top
 marking-HumanHairFlair = Flair
 marking-HumanHairBigflattop = Flat Top (Big)
 marking-HumanHairFlow = Flow Hair
-marking-HumanHairGatheredlow = Gathered Low
 marking-HumanHairGelled = Gelled Back
 marking-HumanHairGentle = Gentle
 marking-HumanHairHalfbang = Half-banged Hair
