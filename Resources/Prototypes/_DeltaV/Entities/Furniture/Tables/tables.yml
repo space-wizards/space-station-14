@@ -1,0 +1,46 @@
+- type: entity
+  id: TableWoodReinforced
+  parent: TableBase
+  name: reinforced wood table
+  description: A classic wooden table. Extra robust.
+  components:
+  - type: Sprite
+    sprite: _DeltaV/Structures/Furniture/Tables/rwood.rsi
+  - type: Icon
+    sprite: _DeltaV/Structures/Furniture/Tables/rwood.rsi
+  - type: Damageable
+    damageModifierSet: Wood
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 75
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroy
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank:
+            min: 2
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Construction
+    graph: Table
+    node: TableWoodReinforced
+  - type: Tag
+    tags:
+    - Wooden
+  - type: Bonkable
+    # Reinforced tables are extra tough
+    bonkDamage:
+      types:
+        Blunt: 8
+    bonkTime: 3

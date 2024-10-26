@@ -1,0 +1,157 @@
+- type: species
+  id: Gray
+  name: Gray
+  roundStart: true
+  prototype: MobGray
+  sprites: MobGraySprites
+  defaultSkinTone: "#b8b8b8"
+  markingLimits: MobGrayMarkingLimits
+  dollPrototype: MobGrayDummy
+  skinColoration: TintedHues
+  maleFirstNames: names_gray_first
+  femaleFirstNames: names_gray_first
+  lastNames: names_gray_last
+
+# The lack of a layer means that
+# this person cannot have round-start anything
+# applied to that layer. It has to instead
+# be defined as a 'custom base layer'
+# in either the mob's starting marking prototype,
+# or it has to be added in C#.
+- type: speciesBaseSprites
+  id: MobGraySprites
+  sprites:
+    Head: MobGrayHead
+    Chest: MobGrayTorso
+    Eyes: MobGrayEyes
+    LArm: MobGrayLArm
+    RArm: MobGrayRArm
+    LHand: MobGrayLHand
+    RHand: MobGrayRHand
+    LLeg: MobGrayLLeg
+    RLeg: MobGrayRLeg
+    LFoot: MobGrayLFoot
+    RFoot: MobGrayRFoot
+
+- type: markingPoints
+  id: MobGrayMarkingLimits
+  onlyWhitelisted: true
+  points:
+    Head:
+      points: 1
+      required: true
+      defaultMarkings: [ GrayCuteEyes ]
+    HeadTop:
+      points: 1
+      required: false
+    HeadSide:
+      points: 1
+      required: false
+    Chest:
+      points: 1
+      required: false
+    Undershirt:
+      points: 1
+      required: false
+    Underwear:
+      points: 1
+      required: false
+    Legs:
+      points: 0
+      required: false
+    Arms:
+      points: 0
+      required: false
+    Overlay:
+      points: 0
+      required: false
+
+- type: humanoidBaseSprite
+  id: MobGrayEyes
+  baseSprite:
+    sprite: Mobs/Species/Gray/parts.rsi
+    state: eyes
+
+- type: humanoidBaseSprite
+  id: MobGrayHead
+  baseSprite:
+    sprite: Mobs/Species/Gray/parts.rsi
+    state: head_m
+
+- type: humanoidBaseSprite
+  id: MobGrayHeadMale
+  baseSprite:
+    sprite: Mobs/Species/Gray/parts.rsi
+    state: head_m
+
+- type: humanoidBaseSprite
+  id: MobGrayHeadFemale
+  baseSprite:
+    sprite: Mobs/Species/Gray/parts.rsi
+    state: head_f
+
+- type: humanoidBaseSprite
+  id: MobGrayTorso
+  baseSprite:
+    sprite: Mobs/Species/Gray/parts.rsi
+    state: torso_m
+
+- type: humanoidBaseSprite
+  id: MobGrayTorsoMale
+  baseSprite:
+    sprite: Mobs/Species/Gray/parts.rsi
+    state: torso_m
+
+- type: humanoidBaseSprite
+  id: MobGrayTorsoFemale
+  baseSprite:
+    sprite: Mobs/Species/Gray/parts.rsi
+    state: torso_f
+
+- type: humanoidBaseSprite
+  id: MobGrayLLeg
+  baseSprite:
+    sprite: Mobs/Species/Gray/parts.rsi
+    state: l_leg
+
+- type: humanoidBaseSprite
+  id: MobGrayLArm
+  baseSprite:
+    sprite: Mobs/Species/Gray/parts.rsi
+    state: l_arm
+
+- type: humanoidBaseSprite
+  id: MobGrayLHand
+  baseSprite:
+    sprite: Mobs/Species/Gray/parts.rsi
+    state: l_hand
+
+- type: humanoidBaseSprite
+  id: MobGrayLFoot
+  baseSprite:
+    sprite: Mobs/Species/Gray/parts.rsi
+    state: l_foot
+
+- type: humanoidBaseSprite
+  id: MobGrayRLeg
+  baseSprite:
+    sprite: Mobs/Species/Gray/parts.rsi
+    state: r_leg
+
+- type: humanoidBaseSprite
+  id: MobGrayRArm
+  baseSprite:
+    sprite: Mobs/Species/Gray/parts.rsi
+    state: r_arm
+
+- type: humanoidBaseSprite
+  id: MobGrayRHand
+  baseSprite:
+    sprite: Mobs/Species/Gray/parts.rsi
+    state: r_hand
+
+- type: humanoidBaseSprite
+  id: MobGrayRFoot
+  baseSprite:
+    sprite: Mobs/Species/Gray/parts.rsi
+    state: r_foot

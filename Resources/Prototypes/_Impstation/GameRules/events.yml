@@ -1,0 +1,27 @@
+- type: entity
+  id: ChangelingAwakening
+  parent: BaseGameRule
+  components:
+  - type: StationEvent
+    earliestStart: 45
+    minimumPlayers: 30 # roundstart changeling is 15 which seems insane
+    weight: 2 # twice as common as zombies
+    duration: 1
+  - type: ChangelingRule
+  - type: AntagSelection
+    agentName: changeling-roundend-name
+    definitions:
+    - prefRoles: [ Changeling ]
+      max: 1
+      playerRatio: 30
+      blacklist:
+        components:
+        - AntagImmune
+      briefing:
+        text: changeling-midround-role-greeting
+        color: Yellow
+        sound: "/Audio/_Goobstation/Ambience/Antag/changeling_start.ogg"
+      components:
+      - type: Changeling
+      mindRoles:
+      - MindRoleChangeling

@@ -110,13 +110,3 @@ alerts-revenant-essence-desc = The power of souls. It sustains you and is used f
 
 alerts-revenant-corporeal-name = Corporeal
 alerts-revenant-corporeal-desc = You have manifested physically. People around you can see and hurt you.
-
-alerts-revenant-essence-regen-name = Haunting
-alerts-revenant-essence-regen-desc = You are haunting the crew! You have a boosted essence regeneration rate based on how many people you haunted.
-
-alerts-changeling-chemicals-name = Chemicals
-alerts-changeling-chemicals-desc = Spend chemicals to use your abilities. Slowly regenerates.
-
-alerts-changeling-biomass-name = Biomass
-alerts-changeling-biomass-desc =
-    This is your health. If it reaches 0 - it's [color=red]game over[/color]. Absorb humanoids to recover some of it.

@@ -36,8 +36,3 @@
   license: "CC-BY-NC-SA-3.0"
   copyright: "Derived from shriek1.ogg by Errant"
   source: "https://github.com/goonstation/goonstation/tree/eb3e7df6292d23f6af2f18b4372d3a8ba4b0fda7/sound/misc/talk"
-
-- files: ["snail_ask.ogg", "snail_exclaim.ogg", "snail.ogg" ]
-  license: "CC-BY-NC-SA-3.0"
-  copyright: "Widgetbeck"
-  source: "https://github.com/impstation/imp-station-14/pull/184"
