@@ -13752,6 +13752,14 @@ entities:
     - type: Transform
       pos: 118.5,43.5
       parent: 2
+- proto: AtmosDeviceFanDirectional
+  entities:
+  - uid: 23481
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 78.5,18.5
+      parent: 2
 - proto: AtmosDeviceFanTiny
   entities:
   - uid: 3990
@@ -57697,7 +57705,7 @@ entities:
       pos: 123.5,-7.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -26622.049
+      secondsUntilStateChange: -27045.05
       state: Closing
 - proto: CurtainsWhiteOpen
   entities:
@@ -149627,7 +149635,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -28115.715
+      secondsUntilStateChange: -28538.717
       state: Opening
     - type: Airlock
       autoClose: False
