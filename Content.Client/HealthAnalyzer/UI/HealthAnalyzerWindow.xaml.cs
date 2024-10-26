@@ -116,7 +116,6 @@ namespace Content.Client.HealthAnalyzer.UI
             AlertsContainer.Visible = showAlerts;
 
             if (showAlerts)
-                // Wouldn't this end up with these being stuck on after bleeding/etc stops?
                 AlertsContainer.DisposeAllChildren();
 
             if (msg.Unrevivable == true)
