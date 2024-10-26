@@ -1,46 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: The biogenerator has been recolored and renamed to the "biocube fabricator."
-    type: Tweak
-  id: 7048
-  time: '2024-08-06T10:51:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30696
-- author: Errant
-  changes:
-  - message: Vox can be nukies and ninjas again.
-    type: Tweak
-  id: 7049
-  time: '2024-08-06T10:58:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29783
-- author: slarticodefast
-  changes:
-  - message: Fixed borgs, animals and aghosts being able to enter cryosleep.
-    type: Fix
-  id: 7050
-  time: '2024-08-06T11:00:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30574
-- author: Flareguy
-  changes:
-  - message: Most hats are now automatically displaced on vox to look more fitting.
-    type: Tweak
-  id: 7051
-  time: '2024-08-06T13:12:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30699
-- author: Errant
-  changes:
-  - message: Medical Mask sprite now works on vox.
-    type: Fix
-  id: 7052
-  time: '2024-08-07T03:41:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30702
-- author: Lyroth001
-  changes:
-  - message: Dragons are immune to flashes
-    type: Tweak
-  id: 7053
-  time: '2024-08-07T07:42:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30658
 - author: ShadowCommander
   changes:
   - message: Rollerbeds can now be dragged to the player to fold and pick them up.
@@ -3949,3 +3907,57 @@
   id: 7547
   time: '2024-10-22T17:01:19.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32441
+- author: BramvanZijp
+  changes:
+  - message: The Space Ninja Suit will now give an error popup if you are trying to
+      install a cell that is not better compared to the current cell.
+    type: Add
+  - message: When comparing which power cell is better when trying to swap them, the
+      Space Ninja's Suit will now also consider if the power cells have self-recharge
+      capability.
+    type: Tweak
+  - message: You can no longer fit weapons-grade power cages into the space ninja
+      suit.
+    type: Fix
+  id: 7548
+  time: '2024-10-22T23:36:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32902
+- author: UBlueberry
+  changes:
+  - message: The appraisal tool now has in-hand sprites!
+    type: Fix
+  id: 7549
+  time: '2024-10-22T23:51:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32849
+- author: chromiumboy
+  changes:
+  - message: The atmospheric alerts computer has been upgraded to visually indicate
+      the rooms of the station that are being monitored by its air and fire alarm
+      systems
+    type: Tweak
+  id: 7550
+  time: '2024-10-23T12:49:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31910
+- author: hyphenationc
+  changes:
+  - message: Snake meat is now properly considered Meat, so Lizards can eat it.
+    type: Fix
+  id: 7551
+  time: '2024-10-24T03:41:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32965
+- author: slarticodefast
+  changes:
+  - message: Mix 1u aluminium, 1u potassium and 1u sulfur for a flash reaction effect.
+      The radius scales with the reagent amount.
+    type: Add
+  id: 7552
+  time: '2024-10-25T22:47:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32377
+- author: BramvanZijp
+  changes:
+  - message: Fixed the Lone Nuclear Operative mid-round antagonist being extremely
+      rare.
+    type: Fix
+  id: 7553
+  time: '2024-10-26T02:16:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32942
