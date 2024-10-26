@@ -4,7 +4,10 @@ using System.Threading.Tasks;
 using Content.Server.Chat.Managers;
 using Content.Server.Database;
 using Content.Server.GameTicking;
+using Content.Server.Players.RateLimiting;
 using Content.Shared.Administration;
+using Content.Shared.CCVar;
+using Content.Shared.Players.RateLimiting;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
@@ -23,17 +26,19 @@ public sealed partial class UsernameRuleManager : IUsernameRuleManager, IPostInj
     [Dependency] private readonly IServerDbManager _db = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly ServerDbEntryManager _entryManager = default!;
-    [Dependency] private readonly IChatManager _chat = default!;
+    [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly ILogManager _logManager = default!;
-    [Dependency] private readonly INetManager _net = default!;
-    [Dependency] private readonly IAdminManager _admin = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private readonly INetManager _netManager = default!;
+    [Dependency] private readonly IAdminManager _adminManager = default!;
+    [Dependency] private readonly IConfigurationManager _cfgManager = default!;
     [Dependency] private readonly ILocalizationManager _localizationManager = default!;
-    [Dependency] private readonly IEntitySystemManager _systems = default!;
+    [Dependency] private readonly IEntitySystemManager _systemsManager = default!;
+    [Dependency] private readonly PlayerRateLimitManager _rateLimitManager = default!;
 
     private ISawmill _sawmill = default!;
 
     public const string SawmillId = "admin.username";
+    private const string RateLimitKey = "UsernameRule";
 
     // this could be changed to sorted to implement deltas + (deltas would require a removed bool or negative id)
     // id : (regex, regexString, message, ban)
@@ -47,10 +52,12 @@ public sealed partial class UsernameRuleManager : IUsernameRuleManager, IPostInj
         _db.SubscribeToNotifications<UsernameRuleNotification>(ProcessUsernameRuleNotification, UsernameRuleNotificationChannel);
 
         // needed for deadmin and readmin
-        _admin.OnPermsChanged += OnReAdmin;
+        _adminManager.OnPermsChanged += OnReAdmin;
 
-        _net.RegisterNetMessage<MsgUsernameBan>();
-        _net.RegisterNetMessage<MsgRequestUsernameBans>(OnRequestBans);
+        RegisterRateLimits();
+
+        _netManager.RegisterNetMessage<MsgUsernameBan>();
+        _netManager.RegisterNetMessage<MsgRequestUsernameBans>(OnRequestBans);
 
         var rules = await _db.GetServerUsernameRulesAsync(false);
 
@@ -68,13 +75,34 @@ public sealed partial class UsernameRuleManager : IUsernameRuleManager, IPostInj
             return;
         }
 
-        if (!_admin.HasAdminFlag(player, AdminFlags.Ban))
+        if (!_adminManager.HasAdminFlag(player, AdminFlags.Ban))
+        {
+            return;
+        }
+
+        if (RequestRateLimited(player))
         {
             return;
         }
 
         _sawmill.Debug(Loc.GetString("Received username ban refresh request"));
         SendResetUsernameBan(msg.MsgChannel);
+    }
+
+    private void RegisterRateLimits()
+    {
+        _rateLimitManager.Register(
+            RateLimitKey,
+            new RateLimitRegistration(
+                CCVars.RequestUsernameRestrictionPeriod,
+                CCVars.RequestUsernameRestrictionMaxCount,
+                null, null, null
+        ));
+    }
+
+    private bool RequestRateLimited(ICommonSession player)
+    {
+        return _rateLimitManager.CountAction(player, RateLimitKey) == RateLimitStatus.Blocked;
     }
 
     public async Task<ServerUsernameRuleDef?> GetFullBanInfoAsync(int banId)
@@ -132,7 +160,7 @@ public sealed partial class UsernameRuleManager : IUsernameRuleManager, IPostInj
 
         var finalMessage = message ?? expression;
 
-        _systems.TryGetEntitySystem<GameTicker>(out var ticker);
+        _systemsManager.TryGetEntitySystem<GameTicker>(out var ticker);
 
         int? roundId = ticker == null || ticker.RoundId == 0 ? null : ticker.RoundId;
 
@@ -166,7 +194,7 @@ public sealed partial class UsernameRuleManager : IUsernameRuleManager, IPostInj
             ("message", finalMessage));
 
         _sawmill.Info(logMessage);
-        _chat.SendAdminAlert(logMessage);
+        _chatManager.SendAdminAlert(logMessage);
 
         KickMatchingConnectedPlayers(resultId, ruleDef, "new username rule");
     }
@@ -178,7 +206,7 @@ public sealed partial class UsernameRuleManager : IUsernameRuleManager, IPostInj
         // ensure that user has ban
         if (removingAdmin is not null
             && player is not null
-            && !_admin.HasAdminFlag(player, AdminFlags.Ban)
+            && !_adminManager.HasAdminFlag(player, AdminFlags.Ban)
         )
         {
             return;
@@ -195,7 +223,7 @@ public sealed partial class UsernameRuleManager : IUsernameRuleManager, IPostInj
         if (rule.Regex
             && removingAdmin is not null // fairly certain null indicates system
             && player is not null
-            && !_admin.HasAdminFlag(player, AdminFlags.Host)
+            && !_adminManager.HasAdminFlag(player, AdminFlags.Host)
         )
         {
             return;
@@ -215,7 +243,7 @@ public sealed partial class UsernameRuleManager : IUsernameRuleManager, IPostInj
             ("message", rule.Message));
 
         _sawmill.Info(logMessage);
-        _chat.SendAdminAlert(logMessage);
+        _chatManager.SendAdminAlert(logMessage);
 
         await _db.RemoveServerUsernameRuleAsync(restrictionId, removingAdmin, DateTimeOffset.Now);
     }
@@ -232,7 +260,7 @@ public sealed partial class UsernameRuleManager : IUsernameRuleManager, IPostInj
         if (_cachedUsernames.ContainsKey(username))
         {
             var rule = _cachedUsernameRules[_cachedUsernames[username]];
-            var fullMessage = ServerUsernameRuleDef.FormatUsernameViolationMessage(_cfg, _localizationManager, rule.Message);
+            var fullMessage = ServerUsernameRuleDef.FormatUsernameViolationMessage(_cfgManager, _localizationManager, rule.Message);
             return new UsernameBanStatus(fullMessage, rule.ExtendToBan, true);
         }
 
@@ -241,7 +269,7 @@ public sealed partial class UsernameRuleManager : IUsernameRuleManager, IPostInj
         {
             if (rule.CompiledRule?.IsMatch(username) ?? false)
             {
-                var fullMessage = ServerUsernameRuleDef.FormatUsernameViolationMessage(_cfg, _localizationManager, rule.Message);
+                var fullMessage = ServerUsernameRuleDef.FormatUsernameViolationMessage(_cfgManager, _localizationManager, rule.Message);
                 return new UsernameBanStatus(fullMessage, rule.ExtendToBan, true);
             }
         }
@@ -307,7 +335,7 @@ public sealed partial class UsernameRuleManager : IUsernameRuleManager, IPostInj
 
     private void KickForUsernameRuleDef(ICommonSession player, ServerUsernameRuleDef def)
     {
-        var message = def.FormatUsernameViolationMessage(_cfg, _localizationManager);
+        var message = def.FormatUsernameViolationMessage(_cfgManager, _localizationManager);
         player.Channel.Disconnect(message);
     }
 
@@ -340,18 +368,18 @@ public sealed partial class UsernameRuleManager : IUsernameRuleManager, IPostInj
         var resetMessages = CreateResetMessages();
         foreach (var msg in resetMessages)
         {
-            _net.ServerSendMessage(msg, channel);
+            _netManager.ServerSendMessage(msg, channel);
         }
     }
 
     private void SendResetUsernameBan()
     {
         _sawmill.Debug("Sent username bans reset to active admins");
-        var adminChannels = _admin.ActiveAdmins.Select(a => a.Channel).ToList();
+        var adminChannels = _adminManager.ActiveAdmins.Select(a => a.Channel).ToList();
         var resetMessages = CreateResetMessages();
         foreach (var msg in resetMessages)
         {
-            _net.ServerSendToMany(msg, adminChannels);
+            _netManager.ServerSendToMany(msg, adminChannels);
         }
     }
 
@@ -363,7 +391,7 @@ public sealed partial class UsernameRuleManager : IUsernameRuleManager, IPostInj
         };
 
         _sawmill.Debug($"sent new username ban {id} to active admins");
-        _net.ServerSendToMany(usernameBanMsg, _admin.ActiveAdmins.Select(a => a.Channel).ToList());
+        _netManager.ServerSendToMany(usernameBanMsg, _adminManager.ActiveAdmins.Select(a => a.Channel).ToList());
     }
 
     private void SendRemoveUsernameBan(int id)
@@ -374,7 +402,7 @@ public sealed partial class UsernameRuleManager : IUsernameRuleManager, IPostInj
         };
 
         _sawmill.Debug($"sent username ban delete {id} to active admins");
-        _net.ServerSendToMany(usernameBanMsg, _admin.ActiveAdmins.Select(a => a.Channel).ToList());
+        _netManager.ServerSendToMany(usernameBanMsg, _adminManager.ActiveAdmins.Select(a => a.Channel).ToList());
     }
 
     void IPostInjectInit.PostInject()

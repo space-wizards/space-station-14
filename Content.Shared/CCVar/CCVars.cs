@@ -1517,6 +1517,22 @@ namespace Content.Shared.CCVar
             CVarDef.Create("votekick.ban_duration", 180, CVar.SERVERONLY);
 
         /*
+         * Username Restriction Request
+         */
+
+        /// <summary>
+        ///     The period used for rate limintng requests for refresh of username rules (10 min)
+        /// </summary>
+        public static readonly CVarDef<float> RequestUsernameRestrictionPeriod =
+            CVarDef.Create("username_restriction.request_period", 60f * 10, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     The count required to trip a username request rate limit
+        /// </summary>
+        public static readonly CVarDef<int> RequestUsernameRestrictionMaxCount =
+            CVarDef.Create("username_restriction.request_max_count", 2, CVar.SERVERONLY);
+
+        /*
          * BAN
          */
 
