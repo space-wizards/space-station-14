@@ -1,4 +1,4 @@
-﻿using Content.Shared.Whitelist;
+using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
@@ -15,6 +15,9 @@ public sealed partial class CargoBountyPrototype : IPrototype
     /// <inheritdoc/>
     [IdDataField]
     public string ID { get; private set; } = default!;
+
+    [DataField("IsTaipan")]
+    public bool IsTaipan = false;
 
     /// <summary>
     /// The monetary reward for completing the bounty

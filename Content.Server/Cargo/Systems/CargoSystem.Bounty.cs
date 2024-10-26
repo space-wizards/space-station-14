@@ -392,7 +392,10 @@ public sealed partial class CargoSystem
         {
             if (component.Bounties.Any(b => b.Bounty == proto.ID))
                 continue;
-            filteredBounties.Add(proto);
+            if (proto.IsTaipan && component.IsTaipan)
+                filteredBounties.Add(proto);
+            if (!proto.IsTaipan && !component.IsTaipan)
+                filteredBounties.Add(proto);
         }
 
         var pool = filteredBounties.Count == 0 ? allBounties : filteredBounties;

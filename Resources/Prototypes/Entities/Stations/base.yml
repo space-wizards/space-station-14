@@ -11,6 +11,7 @@
     - type: StationBankAccount
     - type: StationCargoOrderDatabase
     - type: StationCargoBountyDatabase
+      IsTaipan: true
 
 - type: entity
   id: BaseStationJobsSpawning

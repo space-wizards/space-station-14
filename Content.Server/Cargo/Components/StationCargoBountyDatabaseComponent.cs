@@ -9,6 +9,9 @@ namespace Content.Server.Cargo.Components;
 [RegisterComponent]
 public sealed partial class StationCargoBountyDatabaseComponent : Component
 {
+    [DataField("IsTaipan")]
+    public bool IsTaipan = false;
+
     /// <summary>
     /// Maximum amount of bounties a station can have.
     /// </summary>

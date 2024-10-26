@@ -1,0 +1,65 @@
+- type: cargoBounty
+  id: TaipanBountyBread
+  IsTaipan: true
+  reward: 11111
+  description: bounty-description-captain-sabre
+  entries:
+  - name: bounty-item-captain-sabre
+    amount: 1
+    whitelist:
+      tags:
+      - CaptainSabre
+    blacklist:
+      tags:
+      - Slice
+
+- type: cargoBounty
+  id: TaipanBountyLime
+  IsTaipan: true
+  reward: 11111
+  description: bounty-description-lime
+  idPrefix: SY
+  entries:
+  - name: bounty-item-lime
+    amount: 7
+    whitelist:
+      tags:
+      - Lime
+
+- type: cargoBounty
+  id: TaipanBountyLung
+  IsTaipan: true
+  reward: 11111
+  description: bounty-description-lung
+  entries:
+  - name: bounty-item-lung
+    amount: 3
+    whitelist:
+      components:
+      - PowerCageMedium
+
+- type: cargoBounty
+  id: TaipanBountyMonkeyCube
+  IsTaipan: true
+  reward: 11111
+  description: bounty-description-monkey-cube
+  idPrefix: SY
+  entries:
+  - name: bounty-item-monkey-cube
+    amount: 3
+    whitelist:
+      tags:
+      - ResearchDisk10000
+
+- type: cargoBounty
+  id: TaipanBountyMouse
+  IsTaipan: true
+  reward: 11111
+  description: bounty-description-mouse
+  idPrefix: TP13-
+  entries:
+  - name: bounty-item-mouse
+    amount: 5
+    whitelist:
+      tags:
+      - Mouse
