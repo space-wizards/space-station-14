@@ -972,13 +972,6 @@
     - sprite: Mobs/Customization/human_hair.rsi
       state: fringetail
 - type: marking
-  id: HumanHairGatheredlow
-  bodyPart: Hair
-  markingCategory: Hair
-  sprites:
-    - sprite: Mobs/Customization/human_hair.rsi
-      state: gatheredlow
-- type: marking
   id: HumanHairSidetail
   bodyPart: Hair
   markingCategory: Hair
@@ -1384,7 +1377,6 @@
   sprites:
     - sprite: Mobs/Customization/human_hair.rsi
       state: longbow
-
 - type: marking
   id: HumanHairFrenchBraid
   bodyPart: Hair
@@ -1392,3 +1384,10 @@
   sprites:
     - sprite: Mobs/Customization/human_hair.rsi
       state: frenchbraid
+- type: marking
+  id: HumanHairGatheredlow
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: _impstation/Mobs/Customization/human_hair.rsi
+      state: gatheredlow
