@@ -13,6 +13,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Stacks;
+using Content.Shared.Nutrition.EntitySystems;
 
 namespace Content.Server.Chemistry.EntitySystems;
 
@@ -20,6 +21,7 @@ public sealed class InjectorSystem : SharedInjectorSystem
 {
     [Dependency] private readonly BloodstreamSystem _blood = default!;
     [Dependency] private readonly ReactiveSystem _reactiveSystem = default!;
+    [Dependency] private readonly OpenableSystem _openable = default!;
 
     public override void Initialize()
     {
@@ -35,10 +37,16 @@ public sealed class InjectorSystem : SharedInjectorSystem
         if (injector.Comp.ToggleState == InjectorToggleMode.Inject)
         {
             if (SolutionContainers.TryGetInjectableSolution(target, out var injectableSolution, out _))
-                return TryInject(injector, target, injectableSolution.Value, user, false);
+                if (injector.Comp.IgnoreClosed || !_openable.IsClosed(target))
+                {
+                    return TryInject(injector, target, injectableSolution.Value, user, false);
+                }
 
             if (SolutionContainers.TryGetRefillableSolution(target, out var refillableSolution, out _))
-                return TryInject(injector, target, refillableSolution.Value, user, true);
+                if (injector.Comp.IgnoreClosed || !_openable.IsClosed(target))
+                {
+                    return TryInject(injector, target, refillableSolution.Value, user, true);
+                }
 
             if (TryComp<BloodstreamComponent>(target, out var bloodstream))
                 return TryInjectIntoBloodstream(injector, (target, bloodstream), user);
@@ -59,7 +67,10 @@ public sealed class InjectorSystem : SharedInjectorSystem
 
             // Draw from an object (food, beaker, etc)
             if (SolutionContainers.TryGetDrawableSolution(target, out var drawableSolution, out _))
-                return TryDraw(injector, target, drawableSolution.Value, user);
+                if (injector.Comp.IgnoreClosed || !_openable.IsClosed(target))
+                {
+                    return TryDraw(injector, target, drawableSolution.Value, user);
+                }
 
             Popup.PopupEntity(Loc.GetString("injector-component-cannot-draw-message",
                 ("target", Identity.Entity(target, EntityManager))), injector.Owner, user);
