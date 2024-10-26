@@ -62944,11 +62944,6 @@ entities:
     - type: Transform
       pos: 35.5,16.5
       parent: 60
-  - uid: 24676
-    components:
-    - type: Transform
-      pos: 11.5,-11.5
-      parent: 60
 - proto: DefaultStationBeaconAICore
   entities:
   - uid: 18703
@@ -63341,6 +63336,13 @@ entities:
     components:
     - type: Transform
       pos: 3.5,-6.5
+      parent: 60
+- proto: DefaultStationBeaconVox
+  entities:
+  - uid: 23890
+    components:
+    - type: Transform
+      pos: 11.5,-11.5
       parent: 60
 - proto: DefaultStationBeaconWardensOffice
   entities:
