@@ -90,7 +90,7 @@ public abstract class SharedChatSystem : EntitySystem
     /// <remarks>
     /// This is primarily for the chat emote sanitizer, which can match against ":b" as an emote, which is a valid radio keycode.
     /// </remarks>
-    public void SplitRadioKeycodePrefix(EntityUid source,
+    public void GetRadioKeycodePrefix(EntityUid source,
         string input,
         out string output,
         out string prefix)
