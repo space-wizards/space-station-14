@@ -1,0 +1,45 @@
+
+- type: entity
+  parent: BaseFlatpack
+  id: CircuitImprinterFlatpack
+  name: circuit imprinter flatpack
+  description: A flatpack used for constructing a circuit imprinter.
+  components:
+  - type: Flatpack
+    entity: CircuitImprinter
+  - type: Sprite
+    layers:
+    - state: base
+    - state: overlay
+      color: "#D381C9"
+    - state: icon-default
+
+- type: entity
+  parent: BaseFlatpack
+  id: AutolatheFlatpack
+  name: autolathe flatpack
+  description: A flatpack used for constructing an autolathe.
+  components:
+  - type: Flatpack
+    entity: Autolathe
+  - type: Sprite
+    layers:
+    - state: base
+    - state: overlay
+      color: "#D381C9"
+    - state: icon-default
+
+- type: entity
+  parent: BaseFlatpack
+  id: ProtolatheFlatpack
+  name: protolathe flatpack
+  description: A flatpack used for constructing a protolathe.
+  components:
+  - type: Flatpack
+    entity: Protolathe
+  - type: Sprite
+    layers:
+    - state: base
+    - state: overlay
+      color: "#D381C9"
+    - state: icon-default

@@ -62,6 +62,7 @@
   id: BaseResearchAndDevelopmentPointSource
   parent: BaseMachinePowered
   name: "base R&D point source"
+  description: For when you need research points.
   # We should make this abstract once there are actual point sources.
   components:
   - type: Sprite
@@ -73,7 +74,7 @@
       map: ["enum.PowerDeviceVisualLayers.Powered"]
   - type: ResearchClient
   - type: ResearchPointSource
-    pointspersecond: 25
+    pointspersecond: 10
     active: true
   - type: PointLight
     radius: 1.5

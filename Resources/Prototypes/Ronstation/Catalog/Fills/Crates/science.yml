@@ -1,0 +1,30 @@
+
+- type: entity
+  id: CrateScienceProtolathe
+  parent: CrateScienceSecure
+  name: protolathe flatpack crate
+  description: Contains a protolathe flatpack. Requires Science access to open.
+  components:
+  - type: StorageFill
+    contents:
+      - id: ProtolatheFlatpack
+
+- type: entity
+  id: CrateScienceCircuitImprinter
+  parent: CrateScienceSecure
+  name: circuit imprinter flatpack crate
+  description: Contains a protolathe flatpack. Requires Science access to open.
+  components:
+  - type: StorageFill
+    contents:
+      - id: CircuitImprinterFlatpack
+
+- type: entity
+  id: CrateScienceAutolathe
+  parent: CrateScienceSecure
+  name: autolathe flatpack crate
+  description: Contains an autolathe flatpack. Requires Science access to open.
+  components:
+  - type: StorageFill
+    contents:
+    - id: AutolatheFlatpack
