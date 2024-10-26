@@ -646,4 +646,4 @@
   suffix: Vox
   components:
   - type: NavMapBeacon
-    defaultText: station-beacon-vox-box
+    defaultText: station-beacon-vox

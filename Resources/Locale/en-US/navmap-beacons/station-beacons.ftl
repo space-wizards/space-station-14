@@ -73,4 +73,4 @@ station-beacon-tools = Tools
 station-beacon-disposals = Disposals
 station-beacon-cryosleep = Cryosleep
 station-beacon-escape-pod = Escape Pod
-station-beacon-vox-box = Vox Box
+station-beacon-vox = Vox Break Room
