@@ -220,7 +220,7 @@ public sealed class RadialMenuContextualCentralTextureButton : TextureButton
     /// <inheritdoc />
     public RadialMenuContextualCentralTextureButton()
     {
-
+        EnableAllKeybinds = true;
     }
 
     /// <inheritdoc />
@@ -258,6 +258,7 @@ public class RadialMenuTextureButton : TextureButton
     /// </summary>
     public RadialMenuTextureButton()
     {
+        EnableAllKeybinds = true;
         OnButtonUp += OnClicked;
     }
 
