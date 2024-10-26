@@ -1073,10 +1073,11 @@
     blacklist:
       tags:
       - NukeOpsUplink
-  - !type:BuyerWhitelistCondition
-    blacklist:
-      components:
-      - SurplusBundle
+  # the impstation special (it's really funny when this happens)
+  #- !type:BuyerWhitelistCondition
+  #  blacklist:
+  #    components:
+  #    - SurplusBundle
 
 - type: listing
   id: UplinkSuperSurplusBundle
@@ -1092,10 +1093,11 @@
     blacklist:
       tags:
       - NukeOpsUplink
-  - !type:BuyerWhitelistCondition
-    blacklist:
-      components:
-      - SurplusBundle
+  # see above
+  #- !type:BuyerWhitelistCondition
+  #  blacklist:
+  #    components:
+  #    - SurplusBundle
 
 - type: listing
   id: UplinkSingarityBeacon

@@ -47,6 +47,7 @@ public sealed class SurplusBundleSystem : EntitySystem
 
         var listings = _store.GetAvailableListings(ent, null, ent.Comp2.Categories)
             .OrderBy(p => p.Cost.Values.Sum())
+            .Where(p => p.Buyable)
             .ToList();
 
         if (listings.Count == 0)
