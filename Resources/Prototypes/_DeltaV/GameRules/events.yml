@@ -10,17 +10,17 @@
   components:
   - type: StationEvent
     earliestStart: 15
-    weight: 5
+    weight: 2
     minimumPlayers: 30
     maxOccurrences: 1
     duration: null
   - type: RuleGrids
   - type: LoadFarGridRule
-    path: /Maps/Shuttles/_DeltaV/listening_post.yml
+    path: /Maps/_DeltaV/Shuttles/listening_post.yml
     distanceModifier: 13
   - type: DebrisSpawnerRule
-    count: 4
-    distanceModifier: 5
+    count: 12
+    distanceModifier: 7
   # TODO: funny trolling or intel related objectives
   - type: AntagLoadProfileRule
   - type: AntagSelection

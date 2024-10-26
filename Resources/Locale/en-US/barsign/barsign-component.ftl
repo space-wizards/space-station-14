@@ -101,7 +101,3 @@ barsign-prototype-description-empbarsign = Something has gone very wrong.
 
 ## SignOff
 barsign-prototype-description-sign-off = This sign doesn't seem to be on.
-
-## imp
-barsign-prototype-name-imp = Imp
-barsign-prototype-description-imp = Looking at this sign gives you the peculiar feeling of being an ant in a bug farm.

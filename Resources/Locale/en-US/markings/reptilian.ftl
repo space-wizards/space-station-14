@@ -1,6 +1,3 @@
-marking-LizardSnoutpiercings-piercings1 = Piercings
-marking-LizardSnoutpiercings = Piercings
-
 marking-LizardFrillsShort-frills_short = Lizard Frills (Short)
 marking-LizardFrillsShort = Lizard Frills (Short)
 
@@ -93,9 +90,6 @@ marking-LizardHornsAyrshire = Lizard Horns (Ayrshire)
 marking-LizardHornsMyrsore-horns_myrsore = Lizard Horns (Myrsore)
 marking-LizardHornsMyrsore = Lizard Horns (Myrsore)
 
-marking-LizardHornsNubby-horns_nubby = Lizard Horns (Nubby)
-marking-LizardHornsNubby = Lizard Horns (Nubby)
-
 marking-LizardHornsBighorn-horns_bighorn = Lizard Horns (Bighorn)
 marking-LizardHornsBighorn = Lizard Horns (Bighorn)
 
@@ -104,10 +98,6 @@ marking-LizardHornsDemonic = Lizard Horns (Demonic)
 
 marking-LizardHornsKoboldEars-horns_kobold_ears = Lizard Ears (Kobold)
 marking-LizardHornsKoboldEars = Lizard Ears (Kobold)
-
-marking-LizardHornsKoboldEarspiercings = Lizard Ears (Kobold, Pierced)
-marking-LizardHornsKoboldEarspiercings-horns_kobold_ears = Ears
-marking-LizardHornsKoboldEarspiercings-horns_kobold_ears_piercings = Piercings
 
 marking-LizardHornsFloppyKoboldEars-horns_floppy_kobold_ears = Lizard Ears (Floppy Kobold)
 marking-LizardHornsFloppyKoboldEars = Lizard Ears (Floppy Kobold)
@@ -121,7 +111,3 @@ marking-LizardChestBackspikes = Lizard Back spikes (Four)
 marking-LizardSnoutSplotch = Lizard Snout (Splotch)
 marking-LizardSnoutSplotch-snout_splotch_primary = Muzzle
 marking-LizardSnoutSplotch-snout_splotch_secondary = Snoot
-
-marking-Fangs = Lizard Fangs
-marking-Fangs-Fangs = Fangs
-
