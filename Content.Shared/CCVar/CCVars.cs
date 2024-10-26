@@ -2102,6 +2102,13 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> OpaqueStorageWindow =
             CVarDef.Create("control.opaque_storage_background", false, CVar.CLIENTONLY | CVar.ARCHIVE);
 
+        /// <summary>
+        /// How many storage windows are allowed to be open at once.
+        /// Recommended that you utilise this in conjunction with <see cref="StaticStorageUI"/>
+        /// </summary>
+        public static readonly CVarDef<int> StorageLimit =
+            CVarDef.Create("control.storage_limit", 1, CVar.REPLICATED | CVar.SERVER);
+
         /*
          * UPDATE
          */

@@ -9,7 +9,6 @@ using Content.Shared.CCVar;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
 using Content.Shared.Storage;
-using Robust.Client.GameObjects;
 using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
@@ -18,7 +17,6 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Configuration;
 using Robust.Shared.Input;
 using Robust.Shared.Timing;
-using Robust.Shared.Utility;
 
 namespace Content.Client.UserInterface.Systems.Storage;
 
@@ -36,7 +34,6 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
     [Dependency] private readonly IConfigurationManager _configuration = default!;
     [Dependency] private readonly IInputManager _input = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
-    [UISystemDependency] private readonly HandsSystem _hands = default!;
     [UISystemDependency] private readonly StorageSystem _storage = default!;
 
     private readonly DragDropHelper<ItemGridPiece> _menuDragHelper;
@@ -51,20 +48,13 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
 
     /*
      * TODO:
-     * - Fix transfer back not working.
-     * - Remove hand pickup animation.
-     * - Some slots invalid (top-left) on new hotbar thing
-     * - Drag-drop lets you go to invalid tiles in your own bag
-     * - Dragging to new bag still doesn't work
      * - Add title bar if it allows multi-window.
      *
      * - Fix the back button so it goes up nested, nested should open at the same spot.
      * - Add cvar to allow nesting or not
      * - Don't forget static attach to hotbargui or whatever, also dear god fix it getting bumped PLEASE.
      * CVars:
-     * - Static (AKA attach to hotbar)
      * - Window title
-     * - Multiple allowed
      */
 
     public StorageUIController()
@@ -77,7 +67,12 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
         base.Initialize();
 
         _configuration.OnValueChanged(CCVars.StaticStorageUI, OnStaticStorageChanged, true);
-        //_configuration.OnValueChanged(CCVars.OpaqueStorageWindow, OnOpaqueWindowChanged, true);
+        _configuration.OnValueChanged(CCVars.OpaqueStorageWindow, OnOpaqueWindowChanged, true);
+    }
+
+    private void OnOpaqueWindowChanged(bool obj)
+    {
+        OpaqueStorageWindow = obj;
     }
 
     private void OnStaticStorageChanged(bool obj)
@@ -107,7 +102,6 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
         {
             window.OpenCenteredLeft();
         }
-
         return window;
     }
 
@@ -234,6 +228,7 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
         if (targetControl is ItemGridPiece || window.StorageEntity is not { } sourceStorage || localPlayer == null)
         {
             window.Reclaim(control.Location, control);
+            window.FlagDirty();
             args.Handle();
             _menuDragHelper.EndDrag();
             return;
@@ -355,7 +350,6 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
     public override void FrameUpdate(FrameEventArgs args)
     {
         base.FrameUpdate(args);
-
         _menuDragHelper.Update(args.DeltaSeconds);
     }
 }

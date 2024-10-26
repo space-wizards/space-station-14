@@ -29,7 +29,8 @@ public sealed class StorageWindow : BaseWindow
     private readonly GridContainer _backgroundGrid;
     private readonly GridContainer _sidebar;
 
-    private readonly Dictionary<EntityUid, (ItemStorageLocation Loc, ItemGridPiece Control)> _pieces = new();
+    // Needs to be nullable in case a piece is in default spot.
+    private readonly Dictionary<EntityUid, (ItemStorageLocation? Loc, ItemGridPiece Control)> _pieces = new();
     private readonly List<Control> _controlGrid = new();
 
     private ValueList<EntityUid> _contained = new();
@@ -322,7 +323,10 @@ public sealed class StorageWindow : BaseWindow
             if (storageComp.StoredItems.TryGetValue(ent, out var updated))
             {
                 if (data.Loc.Equals(updated))
+                {
+                    DebugTools.Assert(data.Control.Location == updated);
                     continue;
+                }
 
                 // Update
                 data.Control.Location = updated;
@@ -345,8 +349,11 @@ public sealed class StorageWindow : BaseWindow
         // Add new ones
         foreach (var (ent, loc) in storageComp.StoredItems)
         {
-            if (_pieces.TryGetValue(ent, out var existing) || existing.Loc.Equals(loc))
+            if (_pieces.TryGetValue(ent, out var existing))
+            {
+                DebugTools.Assert(existing.Loc == loc);
                 continue;
+            }
 
             if (_entity.TryGetComponent<ItemComponent>(ent, out var itemEntComponent))
             {

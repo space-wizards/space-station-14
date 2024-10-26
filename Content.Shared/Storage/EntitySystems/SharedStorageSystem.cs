@@ -3,6 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
+using Content.Shared.CCVar;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
 using Content.Shared.Destructible;
@@ -27,6 +28,7 @@ using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Input.Binding;
@@ -42,27 +44,29 @@ namespace Content.Shared.Storage.EntitySystems;
 
 public abstract class SharedStorageSystem : EntitySystem
 {
+    [Dependency] private   readonly IConfigurationManager _cfg = default!;
     [Dependency] protected readonly IGameTiming Timing = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private   readonly IPrototypeManager _prototype = default!;
     [Dependency] protected readonly IRobustRandom Random = default!;
+    [Dependency] private   readonly ISharedAdminLogManager _adminLog = default!;
+
     [Dependency] protected readonly ActionBlockerSystem ActionBlocker = default!;
-    [Dependency] private readonly EntityLookupSystem _entityLookupSystem = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private   readonly EntityLookupSystem _entityLookupSystem = default!;
+    [Dependency] private   readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private   readonly InventorySystem _inventory = default!;
+    [Dependency] private   readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
-    [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
+    [Dependency] private   readonly SharedContainerSystem _containerSystem = default!;
+    [Dependency] private   readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] protected readonly SharedEntityStorageSystem EntityStorage = default!;
-    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
-    [Dependency] private readonly InventorySystem _inventory = default!;
+    [Dependency] private   readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] protected readonly SharedItemSystem ItemSystem = default!;
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly SharedHandsSystem _sharedHandsSystem = default!;
-    [Dependency] private readonly SharedStackSystem _stack = default!;
+    [Dependency] private   readonly SharedPopupSystem _popupSystem = default!;
+    [Dependency] private   readonly SharedHandsSystem _sharedHandsSystem = default!;
+    [Dependency] private   readonly SharedStackSystem _stack = default!;
     [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
     [Dependency] protected readonly SharedUserInterfaceSystem UI = default!;
     [Dependency] protected readonly UseDelaySystem UseDelay = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
-    [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
 
     private EntityQuery<ItemComponent> _itemQuery;
     private EntityQuery<StackComponent> _stackQuery;
@@ -89,6 +93,11 @@ public abstract class SharedStorageSystem : EntitySystem
     private const string QuickInsertUseDelayID = "quickInsert";
     private const string OpenUiUseDelayID = "storage";
 
+    /// <summary>
+    /// How many storage windows are allowed to be open at once.
+    /// </summary>
+    private int _openStorageLimit = -1;
+
     protected readonly List<string> CantFillReasons = [];
 
     /// <inheritdoc />
@@ -100,6 +109,8 @@ public abstract class SharedStorageSystem : EntitySystem
         _stackQuery = GetEntityQuery<StackComponent>();
         _xformQuery = GetEntityQuery<TransformComponent>();
         _prototype.PrototypesReloaded += OnPrototypesReloaded;
+
+        Subs.CVar(_cfg, CCVars.StorageLimit, OnStorageLimitChanged, true);
 
         Subs.BuiEvents<StorageComponent>(StorageComponent.StorageUiKey.Key, subs =>
         {
@@ -117,6 +128,7 @@ public abstract class SharedStorageSystem : EntitySystem
         SubscribeLocalEvent<StorageComponent, OpenStorageImplantEvent>(OnImplantActivate);
         SubscribeLocalEvent<StorageComponent, AfterInteractEvent>(AfterInteract);
         SubscribeLocalEvent<StorageComponent, DestructionEventArgs>(OnDestroy);
+        SubscribeLocalEvent<BoundUserInterfaceMessageAttempt>(OnBoundUIAttempt);
         SubscribeLocalEvent<StorageComponent, BoundUIOpenedEvent>(OnBoundUIOpen);
         SubscribeLocalEvent<StorageComponent, LockToggledEvent>(OnLockToggled);
         SubscribeLocalEvent<MetaDataComponent, StackCountChangedEvent>(OnStackCountChanged);
@@ -142,6 +154,11 @@ public abstract class SharedStorageSystem : EntitySystem
             .Register<SharedStorageSystem>();
 
         UpdatePrototypeCache();
+    }
+
+    private void OnStorageLimitChanged(int obj)
+    {
+        _openStorageLimit = obj;
     }
 
     private void OnRemove(Entity<StorageComponent> entity, ref ComponentRemove args)
@@ -672,16 +689,23 @@ public abstract class SharedStorageSystem : EntitySystem
         SaveItemLocation(storage!, item.Owner);
     }
 
-    private void OnBoundUIOpen(EntityUid uid, StorageComponent storageComp, BoundUIOpenedEvent args)
+    private void OnBoundUIOpen(Entity<StorageComponent> ent, ref BoundUIOpenedEvent args)
     {
-        UpdateAppearance((uid, storageComp, null));
-        return;
+        UpdateAppearance((ent.Owner, ent.Comp, null));
+    }
 
-        if (Timing.ApplyingState)
+    private void OnBoundUIAttempt(BoundUserInterfaceMessageAttempt args)
+    {
+        if (args.UiKey is not StorageComponent.StorageUiKey.Key ||
+            _openStorageLimit == -1 ||
+            args.Message is not OpenBoundInterfaceMessage)
             return;
 
-        // Close the other storage BUIs. TODO: Singleton or not as cvar
-        if (EntityManager.TryGetComponent(args.Actor, out UserInterfaceUserComponent? userComp))
+        var uid = args.Target;
+        var actor = args.Actor;
+        var count = 0;
+
+        if (EntityManager.TryGetComponent(actor, out UserInterfaceUserComponent? userComp))
         {
             foreach (var (ui, keys) in userComp.OpenInterfaces)
             {
@@ -693,7 +717,13 @@ public abstract class SharedStorageSystem : EntitySystem
                     if (key is not StorageComponent.StorageUiKey)
                         continue;
 
-                    UI.CloseUi(ui, key, args.Actor);
+                    count++;
+
+                    if (count >= _openStorageLimit)
+                    {
+                        args.Cancel();
+                    }
+
                     break;
                 }
             }
