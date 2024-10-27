@@ -1,6 +1,7 @@
 - type: entity
   save: false
   name: Urist McCrab
+  suffix: SpawnsWithInternals
   parent: BaseMobSpeciesOrganic
   id: BaseMobDecapoid
   abstract: true
@@ -98,7 +99,7 @@
   - type: DamageVisuals
     damageOverlayGroups:
       Brute:
-        sprite: Mobs/Effects/snail_brute_damage.rsi # todo: custom
+        sprite: _Impstation/Mobs/Effects/decapoid_brute_damage.rsi 
         color: "#162581"
   - type: Reactive
     groups:
