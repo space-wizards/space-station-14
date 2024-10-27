@@ -79,6 +79,11 @@ public abstract partial class BaseActionComponent : Component
     /// <summary>
     ///     Time interval between action uses.
     /// </summary>
+    [DataField] public bool StartDelay = false;
+
+    /// <summary>
+    ///     Time interval between action uses.
+    /// </summary>
     [DataField("useDelay")] public TimeSpan? UseDelay;
 
     /// <summary>
