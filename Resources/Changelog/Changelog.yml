@@ -1,43 +1,4 @@
 ﻿Entries:
-- author: Errant
-  changes:
-  - message: Medical Mask sprite now works on vox.
-    type: Fix
-  id: 7052
-  time: '2024-08-07T03:41:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30702
-- author: Lyroth001
-  changes:
-  - message: Dragons are immune to flashes
-    type: Tweak
-  id: 7053
-  time: '2024-08-07T07:42:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30658
-- author: ShadowCommander
-  changes:
-  - message: Rollerbeds can now be dragged to the player to fold and pick them up.
-    type: Add
-  id: 7054
-  time: '2024-08-07T09:19:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30002
-- author: Errant
-  changes:
-  - message: Survivors arriving via the Unknown Shuttle event, ERT and CBURN agents,
-      and Death Squad members are now equipped with the appropriate species-specific
-      survival gear.
-    type: Fix
-  - message: Unknown Shuttle event can once again spawn vox characters.
-    type: Tweak
-  id: 7055
-  time: '2024-08-07T09:26:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29746
-- author: IProduceWidgets
-  changes:
-  - message: butter is slippery
-    type: Tweak
-  id: 7056
-  time: '2024-08-07T21:47:03.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29772
 - author: Mervill
   changes:
   - message: Gas Miners now have detailed examine text
@@ -3959,3 +3920,40 @@
   id: 7551
   time: '2024-10-24T03:41:03.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32965
+- author: slarticodefast
+  changes:
+  - message: Mix 1u aluminium, 1u potassium and 1u sulfur for a flash reaction effect.
+      The radius scales with the reagent amount.
+    type: Add
+  id: 7552
+  time: '2024-10-25T22:47:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32377
+- author: BramvanZijp
+  changes:
+  - message: Fixed the Lone Nuclear Operative mid-round antagonist being extremely
+      rare.
+    type: Fix
+  id: 7553
+  time: '2024-10-26T02:16:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32942
+- author: Moomoobeef
+  changes:
+  - message: Bowls no longer make an eating sound when drinking from them.
+    type: Fix
+  id: 7554
+  time: '2024-10-26T04:00:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32819
+- author: SaphireLattice
+  changes:
+  - message: Added a warning about unrevivability in the health analyzer UI.
+    type: Add
+  id: 7555
+  time: '2024-10-26T17:22:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32636
+- author: slarticodefast
+  changes:
+  - message: Fixed pie throwing sound not playing.
+    type: Fix
+  id: 7556
+  time: '2024-10-27T04:25:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33017
