@@ -1,0 +1,218 @@
+- type: entity
+  noSpawn: true
+  id: TranslatorUnpowered
+  parent: BaseItem
+  name: translator
+  description: Translates speech.
+  components:
+  - type: Sprite
+    sprite: _EinsteinEngine/Objects/Devices/translator.rsi
+    state: icon
+    layers:
+    - state: icon
+    - state: translator
+      shader: unshaded
+      visible: false
+      map: [ "enum.ToggleVisuals.Layer", "enum.PowerDeviceVisualLayers.Powered" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
+          True: { visible: true }
+          False: { visible: false }
+  - type: HandheldTranslator
+    enabled: false
+  - type: Clothing # To allow equipping translators on the neck slot
+    slots: [neck, pocket]
+    equipDelay: 0.3
+    unequipDelay: 0.3
+    quickEquip: false # Would conflict
+
+- type: entity
+  noSpawn: true
+  id: Translator
+  parent: [ TranslatorUnpowered, PowerCellSlotMediumItem ]
+  suffix: Powered
+  components:
+  - type: PowerCellDraw
+    drawRate: 1
+
+- type: entity
+  noSpawn: true
+  id: TranslatorEmpty
+  parent: Translator
+  suffix: Empty
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+
+- type: entity
+  noSpawn: true
+  id: TranslatorForeigner
+  parent: [ Translator, PowerCellSlotHighItem ]
+  name: foreigner's translator
+  description: A special-issue translator that helps foreigner's speak and understand this station's primary language.
+
+
+- type: entity
+  id: CanilunztTranslator
+  parent: [ TranslatorEmpty ]
+  name: Canilunzt translator
+  description: Translates speech between Canilunzt and Galactic Common, allowing your local yeepers to communicate with the locals and vice versa!
+  components:
+  - type: HandheldTranslator
+    spoken:
+    - GalacticCommon
+    - Canilunzt
+    understood:
+    - GalacticCommon
+    - Canilunzt
+    requires:
+    - GalacticCommon
+    - Canilunzt
+
+- type: entity
+  id: BubblishTranslator
+  parent: [ TranslatorEmpty ]
+  name: Bubblish translator
+  description: Translates speech between Bubblish and Galactic Common, helping communicate with slimes and slime people.
+  components:
+  - type: HandheldTranslator
+    spoken:
+    - GalacticCommon
+    - Bubblish
+    understood:
+    - GalacticCommon
+    - Bubblish
+    requires:
+    - GalacticCommon
+    - Bubblish
+
+- type: entity
+  id: NekomimeticTranslator
+  parent: [ TranslatorEmpty ]
+  name: Nekomimetic translator
+  description: Translates speech between Nekomimetic and Galactic Common, enabling you to communicate with your pet cats.
+  components:
+  - type: HandheldTranslator
+    spoken:
+    - GalacticCommon
+    - Nekomimetic
+    understood:
+    - GalacticCommon
+    - Nekomimetic
+    requires:
+    - GalacticCommon
+    - Nekomimetic
+
+- type: entity
+  id: DraconicTranslator
+  parent: [ TranslatorEmpty ]
+  name: Draconic translator
+  description: Translates speech between Draconic and Galactic Common, making it easier to understand your local Uniathi.
+  components:
+  - type: HandheldTranslator
+    spoken:
+    - GalacticCommon
+    - Draconic
+    understood:
+    - GalacticCommon
+    - Draconic
+    requires:
+    - GalacticCommon
+    - Draconic
+
+- type: entity
+  id: SolCommonTranslator
+  parent: [ TranslatorEmpty ]
+  name: Sol Common translator
+  description: Translates speech between Sol Common and Galactic Common. Like a true Earthman!
+  components:
+  - type: HandheldTranslator
+    spoken:
+    - GalacticCommon
+    - SolCommon
+    understood:
+    - GalacticCommon
+    - SolCommon
+    requires:
+    - GalacticCommon
+    - SolCommon
+
+- type: entity
+  id: RootSpeakTranslator
+  parent: [ TranslatorEmpty ]
+  name: RootSpeak translator
+  description: Translates speech between RootSpeak and Galactic Common. You may now speak for the trees.
+  components:
+  - type: HandheldTranslator
+    spoken:
+    - GalacticCommon
+    - RootSpeak
+    understood:
+    - GalacticCommon
+    - RootSpeak
+    requires:
+    - GalacticCommon
+    - RootSpeak
+
+- type: entity
+  id: MofficTranslator
+  parent: [ TranslatorEmpty ]
+  name: Moffic translator
+  description: Translates speech between Moffic and Galactic Common, helping you understand the buzzes of your pet mothroach!
+  components:
+  - type: HandheldTranslator
+    spoken:
+    - GalacticCommon
+    - Moffic
+    understood:
+    - GalacticCommon
+    - Moffic
+    requires:
+    - GalacticCommon
+    - Moffic
+
+- type: entity
+  id: XenoTranslator
+  parent: [ TranslatorEmpty ]
+  name: Xeno translator
+  description: Translates speech between Xeno and Galactic Common. This will probably not help you survive an encounter, though.
+  components:
+  - type: HandheldTranslator
+    spoken:
+    - GalacticCommon
+    - Xeno
+    understood:
+    - GalacticCommon
+    - Xeno
+    requires:
+    - GalacticCommon
+
+- type: entity
+  id: AnimalTranslator
+  parent: [ TranslatorEmpty ]
+  name: Animal translator
+  description: Translates all the cutes noises that most animals make into a more understandable form!
+  components:
+  - type: HandheldTranslator
+    understood:
+    - Cat
+    - Dog
+    - Fox
+    - Monkey
+    - Mouse
+    - Chicken
+    - Duck
+    - Cow
+    - Sheep
+    - Kangaroo
+    - Pig
+    - Crab
+    - Kobold
+    requires:
+    - GalacticCommon
+    setLanguageOnInteract: false

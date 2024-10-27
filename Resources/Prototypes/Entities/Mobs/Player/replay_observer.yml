@@ -7,3 +7,4 @@
   - type: MovementSpeedModifier
     baseSprintSpeed: 24
     baseWalkSpeed: 16
+  - type: UniversalLanguageSpeaker

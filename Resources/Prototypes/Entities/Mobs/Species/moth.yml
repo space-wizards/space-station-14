@@ -25,6 +25,13 @@
     accent: zombieMoth
   - type: Speech
     speechVerb: Moth
+  - type: LanguageKnowledge
+    speaks:
+    - GalacticCommon
+    - Moffic
+    understands:
+    - GalacticCommon
+    - Moffic
     allowedEmotes: ['Chitter', 'Squeak']
   - type: TypingIndicator
     proto: moth

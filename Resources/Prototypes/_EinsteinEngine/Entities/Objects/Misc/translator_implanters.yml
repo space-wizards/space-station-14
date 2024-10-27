@@ -1,0 +1,61 @@
+- type: entity
+  id: BaseTranslatorImplanter
+  abstract: true
+  parent: BaseImplantOnlyImplanter
+  name: basic translator implanter
+
+- type: entity
+  id: BasicGalaticCommonTranslatorImplanter
+  parent: BaseTranslatorImplanter
+  name: basic common translator implanter
+  components:
+  - type: Implanter
+    implant: BasicGalacticCommonTranslatorImplant
+
+- type: entity
+  id: AdvancedGalaticCommonTranslatorImplanter
+  parent: BaseTranslatorImplanter
+  name: advanced common translator implanter
+  components:
+  - type: Implanter
+    implant: GalacticCommonTranslatorImplant
+
+- type: entity
+  id: BubblishTranslatorImplanter
+  parent: BaseTranslatorImplanter
+  name: bubblish translator implant
+  components:
+  - type: Implanter
+    implant: BubblishTranslatorImplant
+
+- type: entity
+  id: DraconicTranslatorImplanter
+  parent: [ BaseTranslatorImplanter ]
+  name: draconic translator implant
+  components:
+  - type: Implanter
+    implant: DraconicTranslatorImplant
+
+- type: entity
+  id: SolCommonTranslatorImplanter
+  parent: [ BaseTranslatorImplanter ]
+  name: sol-common translator implant
+  components:
+  - type: Implanter
+    implant: SolCommonTranslatorImplant
+
+- type: entity
+  id: RootSpeakTranslatorImplanter
+  parent: [ BaseTranslatorImplanter ]
+  name: root-speak translator implant
+  components:
+  - type: Implanter
+    implant: RootSpeakTranslatorImplant
+
+- type: entity
+  id: MofficTranslatorImplanter
+  parent: [ BaseTranslatorImplanter ]
+  name: moffic translator implant
+  components:
+  - type: Implanter
+    implant: MofficTranslatorImplant

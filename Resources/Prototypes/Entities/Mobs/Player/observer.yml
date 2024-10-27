@@ -60,7 +60,8 @@
   - type: Tag
     tags:
     - BypassInteractionRangeChecks
-
+  - type: UniversalLanguageSpeaker # Ghosts should understand any language.
+    
 - type: entity
   id: ActionGhostBoo
   name: Boo!
