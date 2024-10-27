@@ -3961,3 +3961,17 @@
   id: 7554
   time: '2024-10-26T04:00:49.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32819
+- author: SaphireLattice
+  changes:
+  - message: Added a warning about unrevivability in the health analyzer UI.
+    type: Add
+  id: 7555
+  time: '2024-10-26T17:22:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32636
+- author: slarticodefast
+  changes:
+  - message: Fixed pie throwing sound not playing.
+    type: Fix
+  id: 7556
+  time: '2024-10-27T04:25:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33017
