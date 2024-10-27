@@ -404,3 +404,22 @@ Entries:
       message: Added anti-EORG measures.
     - type: Remove
       message: Removed "No EORG" popup at round end.
+  - id: 138
+    author: Dogbone10
+    time: '2024-10-24T20:46:00.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/138
+    changes:
+    - type: Add
+      message: The Syndicate has begun funding Paramedic rescue! A Syndicate Paramedic
+        ship is now able to be dispatched in the sector for On-Call Traitors.
+  - id: 141
+    author: TillsterRulz
+    time: '2024-10-27T22:07:52.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/141
+    changes:
+    - type: Add
+      message: The Maints Slasher poster. Just who was this "slasher" and where are
+        they now?
+    - type: Add
+      message: 'PSA: DO NOT GAMBLE poster. Dont get caught microwaving your ID when
+        you see this poster!'
