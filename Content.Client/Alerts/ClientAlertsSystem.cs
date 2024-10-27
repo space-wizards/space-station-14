@@ -26,8 +26,6 @@ public sealed class ClientAlertsSystem : AlertsSystem
         SubscribeLocalEvent<AlertsComponent, LocalPlayerAttachedEvent>(OnPlayerAttached);
         SubscribeLocalEvent<AlertsComponent, LocalPlayerDetachedEvent>(OnPlayerDetached);
         SubscribeLocalEvent<AlertsComponent, ComponentHandleState>(OnHandleState);
-
-        //SubscribeLocalEvent<AlertsComponent, AfterAutoHandleStateEvent>(ClientAlertsHandleState);
     }
     protected override void LoadPrototypes()
     {
@@ -55,7 +53,7 @@ public sealed class ClientAlertsSystem : AlertsSystem
             return;
 
         alerts.Comp.Alerts = cast.Alerts;
-        Logger.Debug("weh");
+
         UpdateHud(alerts);
     }
 
@@ -68,11 +66,6 @@ public sealed class ClientAlertsSystem : AlertsSystem
     {
         UpdateHud(alerts);
     }
-
-    /*private void ClientAlertsHandleState(Entity<AlertsComponent> alerts, ref AfterAutoHandleStateEvent args)
-    {
-        UpdateHud(alerts);
-    }*/
 
     private void UpdateHud(Entity<AlertsComponent> entity)
     {
