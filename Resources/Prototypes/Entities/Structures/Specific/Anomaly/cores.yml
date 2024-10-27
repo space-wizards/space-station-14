@@ -264,6 +264,8 @@
     useSound:
       collection: Welder
     qualities: Welding
+  - type: RefillableSolution
+    solution: Welder
   - type: SolutionContainerManager
     solutions:
       Welder:
@@ -282,7 +284,7 @@
 
 - type: entity
   parent: BaseAnomalyInertCore
-  id: AnomalyCoreGravityInert
+  id: AnomalyCoreGravityInert # TODO: ADD NEW EFFECT
   description: The inert core of a gravitational anomaly. Looks impossibly dense, but feels impossibly light.
   suffix: Gravity, Inert
   components:
@@ -325,7 +327,7 @@
         - SlipLayer
   - type: SpawnAfterInteract
     prototype: IceCrust
-    doAfter: 5
+    doAfter: 2
 
 - type: entity
   parent: BaseAnomalyInertCore
@@ -433,11 +435,7 @@
   
 
 - type: entity
-<<<<<<< HEAD
-  parent: BaseAnomalyInertCore # Self-recharging battery; cannot be charged at a cell recharger
-=======
   parent: BaseAnomalyInertCore # Has the same properties as a high cap battery
->>>>>>> cb743991150bff53e0e21d8b432507f558fcadec
   id: AnomalyCoreElectricityInert
   description: The inert core of an electrical anomaly. Softly crackles as it channels energy inward.
   suffix: Electricity, Inert
@@ -449,12 +447,12 @@
     maxCharge: 1080
     startingCharge: 0
   - type: PowerCell
-<<<<<<< HEAD
-  - type: BatterySelfRecharger
-    autoRecharge: true
-    autoRechargeRate: 3 # takes 4 minutes to charge itself back to full
-=======
->>>>>>> cb743991150bff53e0e21d8b432507f558fcadec
+  - type: Tag
+    tags:
+      - PowerCell
+      - ForceableFollow
+  - type: Appearance
+  - type: PowerCellVisuals
   - type: PointLight
     radius: 1.5
     energy: 2.0
@@ -494,24 +492,16 @@
     duration: 30
     spreadAmount: 50
   - type: UseDelay
-<<<<<<< HEAD
-    delay: 120
-=======
     delay: 120 # 2 minutes
->>>>>>> cb743991150bff53e0e21d8b432507f558fcadec
 
 - type: entity
-  parent: [ BaseAnomalyInertCore, Emag ] # Acts as a single-charge, 5 minute CD emag
+  parent: BaseAnomalyInertCore # TODO: ADD NEW EFFECT
   id: AnomalyCoreTechInert
   description: The inert core of a technological anomaly. Indecipherably complex in its structure.
   suffix: Tech, Inert
   components:
   - type: Sprite
     sprite: Structures/Specific/Anomalies/Cores/tech_core.rsi
-  - type: LimitedCharges
-    maxCharges: 1
-  - type: AutoRecharge
-    rechargeDuration: 300 # 5 minutes
   - type: PointLight
     radius: 1.5
     energy: 2.0
