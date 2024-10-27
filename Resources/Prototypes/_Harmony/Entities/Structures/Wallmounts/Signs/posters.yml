@@ -193,7 +193,7 @@
   parent: PosterBase
   id: PosterHarmonyMaintsSlasher
   name: "SERIAL KILLER'S BODY DISAPPEARS!"
-  description: "A newspaper article detailing how the dead body of a serial killer who wore a welding mask and roamed the maintenance tunnels of Nanotrasen space stations has mysteriously disappeared from the morgue. The nickname given to the killer is highlighter in red, 'The Maints Slasher.'"
+  description: "A newspaper article detailing how the dead body of a serial killer who wore a welding mask and roamed the maintenance tunnels has mysteriously disappeared from the morgue. The nickname given to the killer is highlighted in red, 'The Maints Slasher.'"
   components:
     - type: Sprite
       sprite: _Harmony/Structures/Wallmounts/posters.rsi
