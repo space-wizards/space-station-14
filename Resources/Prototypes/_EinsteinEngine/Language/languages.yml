@@ -35,16 +35,6 @@
     - nah
     - wah
 
-- type: language
-  id: SignLanguage
-  signLanguage: true
-  obfuscation:
-    !type:ReplacementObfuscation
-    replacement:
-    - "language-signlanguage-1"
-    - "language-signlanguage-2"
-
-
 # Spoken by slimes.
 - type: language
   id: Bubblish
@@ -139,6 +129,63 @@
     - st
     - sh
 
+# A mess of broken Japanese, spoken by Felinds and Oni
+- type: language
+  id: Nekomimetic
+  obfuscation:
+    !type:SyllableObfuscation
+    minSyllables: 1
+    maxSyllables: 3 # May be too long even, we'll see.
+    replacement:
+    - neko
+    - nyan
+    - mimi
+    - moe
+    - mofu
+    - fuwa
+    - kyaa
+    - kawaii
+    - poka
+    - munya
+    - puni
+    - munyu
+    - ufufu
+    - icha
+    - doki
+    - kyun
+    - kusu
+    - nya
+    - nyaa
+    - desu
+    - kis
+    - ama
+    - chuu
+    - baka
+    - hewo
+    - boop
+    - gato
+    - kit
+    - sune
+    - yori
+    - sou
+    - baka
+    - chan
+    - san
+    - kun
+    - mahou
+    - yatta
+    - suki
+    - usagi
+    - domo
+    - ori
+    - uwa
+    - zaazaa
+    - shiku
+    - puru
+    - ira
+    - heto
+    - etto
+
 # Spoken by the Lizard race.
 - type: language
   id: Draconic
@@ -232,9 +279,79 @@
     - s
     - s
 
+# Spoken by the Vulpkanin race.
+- type: language
+  id: Canilunzt
+  speech:
+    color: "#b97a57"
+  obfuscation:
+    !type:SyllableObfuscation
+    minSyllables: 1
+    maxSyllables: 4
+    replacement:
+    - rur
+    - ya
+    - cen
+    - rawr
+    - bar
+    - kuk
+    - tek
+    - qat
+    - uk
+    - wu
+    - vuh
+    - tah
+    - tch
+    - schz
+    - auch
+    - ist
+    - ein
+    - entch
+    - zwichs
+    - tut
+    - mir
+    - wo
+    - bis
+    - es
+    - vor
+    - nic
+    - gro
+    - enem
+    - zandt
+    - tzch
+    - noch
+    - hel
+    - ischt
+    - far
+    - wa
+    - baram
+    - iereng
+    - tech
+    - lach
+    - sam
+    - mak
+    - lich
+    - gen
+    - or
+    - ag
+    - eck
+    - gec
+    - stag
+    - onn
+    - bin
+    - ket
+    - jarl
+    - vulf
+    - einech
+    - cresthz
+    - azunein
+    - ghzth
+
 # The common language of the Sol system.
 - type: language
   id: SolCommon
+  speech:
+    color: "#8282fb"
   obfuscation:
     !type:SyllableObfuscation
     minSyllables: 1
@@ -260,6 +377,8 @@
 
 - type: language
   id: RobotTalk
+  speech:
+    fontId: Monospace
   obfuscation:
     !type:SyllableObfuscation
     minSyllables: 1
@@ -442,3 +561,28 @@
     - hiss
     - ss
     - ee
+
+# Example of a sign language. Not currently used anyhow.
+- type: language
+  id: Sign
+  speech:
+    allowRadio: false
+    requireSpeech: false
+    color: "#dddddd"
+    messageWrapOverrides:
+      Speak: chat-sign-language-message-wrap
+      Whisper: chat-sign-language-whisper-wrap
+    speechVerbOverrides:
+    - chat-speech-verb-sign-1
+    - chat-speech-verb-sign-2
+    - chat-speech-verb-sign-3
+  obfuscation:
+    !type:ReplacementObfuscation
+    replacement:
+    - something
+    - a cryptic message to you
+    - a signal to you
+    - a message
+    - a rude expression to you
+    - a sad expression to you
+    - a happy expression to you
