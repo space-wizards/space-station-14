@@ -77,7 +77,7 @@ public abstract partial class BaseActionComponent : Component
     public (TimeSpan Start, TimeSpan End)? Cooldown;
 
     /// <summary>
-    ///     Time interval between action uses.
+    ///     If true, the action will have an initial cooldown applied upon addition.
     /// </summary>
     [DataField] public bool StartDelay = false;
 
