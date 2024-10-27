@@ -1,4 +1,5 @@
 using Content.Shared.Item.ItemToggle.Components;
+using Content.Shared.Light.Components;
 using Content.Shared.Toggleable;
 using ItemTogglePointLightComponent = Content.Shared.Light.Components.ItemTogglePointLightComponent;
 
@@ -26,6 +27,9 @@ public sealed class ItemTogglePointLightSystem : EntitySystem
 
         _appearance.SetData(ent, ToggleableLightVisuals.Enabled, args.Activated);
         _light.SetEnabled(ent.Owner, args.Activated, comp: light);
-        _handheldLight.SetActivated(ent.Owner, args.Activated);
+        if (TryComp<HandheldLightComponent>(ent.Owner, out var handheldLight))
+        {
+            _handheldLight.SetActivated(ent.Owner, args.Activated, handheldLight);
+        }
     }
 }
