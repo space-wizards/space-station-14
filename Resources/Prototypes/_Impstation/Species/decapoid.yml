@@ -1,7 +1,7 @@
 - type: species
   id: Decapoid
   name: species-name-decapoid
-  roundStart: true
+  roundStart: false
   prototype: MobDecapoid
   sprites: MobDecapoidSprites
   defaultSkinTone: "#385878"
@@ -56,8 +56,8 @@
       required: false
     Snout:
       points: 1
-      required: false # set to true
-#      defaultMarkings: [ Gills1 ]
+      required: true # set to true
+      defaultMarkings: [ DecapoidGills1 ]
     Overlay:
       points: 1
       required: false

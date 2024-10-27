@@ -4,7 +4,11 @@
   parent: BaseMobSpeciesOrganic
   id: BaseMobDecapoid
   abstract: true
-  components:
+  components: # todo: mute when not wearing the vaporizer, uses the borg sfx when wearing it.
+  - type: Barotrauma
+    damage:
+      types:
+        blunt: 0 # immune to space
   - type: SnailSpeed
     snailSlowdownModifier: 0.8
   - type: Absorbable
@@ -12,7 +16,10 @@
   - type: Icon
     sprite: _Impstation/Mobs/Species/Decapoid/parts.rsi
     state: full
-  - type: Respirator # todo: water vapor respiration. i think vox do that through their organs.
+  - type: Loadout
+    prototypes:
+      - StartingGearDecapoidClaw
+  - type: Respirator # todo: give the ability to generate their own vapor
     damage:
       types:
         Asphyxiation: 2
@@ -25,7 +32,6 @@
     - map: [ "enum.HumanoidVisualLayers.RLeg" ] # this is the back legs
     - map: [ "enum.HumanoidVisualLayers.Chest" ]
     - map: [ "enum.HumanoidVisualLayers.Head" ]
-    - map: [ "enum.HumanoidVisualLayers.Snout" ]
     - map: [ "enum.HumanoidVisualLayers.Eyes" ]
     - map: [ "enum.HumanoidVisualLayers.RArm" ]
     - map: [ "enum.HumanoidVisualLayers.LArm" ]
@@ -34,6 +40,7 @@
     - map: [ "gloves" ]
     - map: [ "shoes" ]
     - map: [ "ears" ]
+    - map: [ "enum.HumanoidVisualLayers.Snout" ] # not default
     - map: [ "outerClothing" ]
     - map: [ "eyes" ]
     - map: [ "belt" ]
@@ -49,8 +56,8 @@
     - map: [ "enum.HumanoidVisualLayers.HeadTop" ]
     - map: [ "suitstorage" ] # This is not in the default order. - inherited from vox
     - map: [ "enum.HumanoidVisualLayers.Tail" ]
-    - map: [ "mask" ]
     - map: [ "head" ]
+    - map: [ "mask" ]
     - map: [ "pocket1" ]
     - map: [ "pocket2" ]
     - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
@@ -85,12 +92,7 @@
         - MobMask
         layer:
         - MobLayer
-  - type: Vocal
-    sounds:
-      Male: UnisexSnail
-      Female: UnisexSnail
-      Unsexed: UnisexSnail # todo: mute when not wearing the vaporizer, uses the borg sfx when wearing it.
-  - type: Damageable
+  - type: Damageable 
     damageContainer: Biological
     damageModifierSet: Decapoid
   - type: DamageVisuals
@@ -103,6 +105,9 @@
       Flammable: [ Touch ]
       Extinguish: [ Touch ]
       Acidic:  [ Touch ]
+  - type: Vocal
+    sounds:
+      Unsexed: UnisexSilicon
   - type: MovementSpeedModifier
     baseSprintSpeed: 3.5
     baseWalkSpeed: 1.5 
@@ -122,10 +127,16 @@
         Heat : 1
   - type: TemperatureSpeed
     thresholds:
-      309: 1
-      304: 1
-      299: 1
-      294: 1 # todo: make this less stupid, probably just remove the whole component
+      293: 1.0
+      280: 1.0
+      260: 1.0
+  - type: Clumsy
+    clumsyDamage:
+      types:
+        Blunt: 5
+    clumsySound:
+      path: /Audio/_Impstation/Effects/Clumsy/crab_snap.ogg # the game gets really touchy about having that initial forward slash.
+    
   - type: Bloodstream
     bloodReagent: CopperBlood # real life crustaceans are in the same clade as spiders and share a blood type
   - type: Puller
@@ -161,9 +172,9 @@
             
 
   - type: Speech
-    speechSounds: Snail # todo: custom
+    speechSounds: Borg
   - type: TypingIndicator
-    proto: Snail # todo: custom
+    proto: robot # todo: custom
   - type: HumanoidAppearance
     species: Decapoid
     hideLayersOnEquip:

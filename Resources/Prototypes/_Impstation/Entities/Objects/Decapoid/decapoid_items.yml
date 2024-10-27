@@ -16,33 +16,36 @@
     damage:
       types:
         Piercing: 15 # probably nerf this once they're non-antags
-        Structural: 10
+        Structural: 15
     soundHit:
       collection: AlienClaw 
   - type: Unremoveable
 
 - type: entity
-  name: vaporizer harness
-  parent: BaseItem
+  name: vaporizer
+  suffix: Unremoveable # remove this once their speech system works
+  parent: ClothingMaskGas
   id: DecapoidBreathingApparatus
   description: 'A neck-mounted breathing apparatus for decapoids. Moistens your gills, if you have them. Also functions as a brain-to-voice translator.'
   components:
+  - type: Unremoveable # remove this once their speech system works
   - type: Sprite
-    sprite: Objects/Tools/wrench.rsi # todo: custom. obviously. also todo: make it able to take in water, convert it to vapor, and internals that steam into the lungs.
+    sprite: _Impstation/Objects/Decapoid/vaporizer.rsi # todo: custom. obviously. also todo: make it able to take in water, convert it to vapor, and internals that steam into the lungs.
     state: icon
   - type: Clothing
     quickEquip: true
     slots:
-    - neck
-    sprite: Objects/Tools/wrench.rsi
+    - mask
+    sprite: _Impstation/Objects/Decapoid/vaporizer.rsi
+    clothingVisuals:
+      mask:
+      - state: EQUIPPED-neck
+      - state: EQUIPPED-neckUnshaded
+        shader: unshaded
   - type: BreathMask
   - type: HideLayerClothing
     slots:
     - Snout
-  - type: AllowSuitStorage
-    whitelist:
-      tags:
-      - GasTank
      
 
 - type: entity
@@ -53,11 +56,14 @@
   description: 'A small tank that slots neatly into a vaporizer harness and stores the vapor it produces. It can hold 5 L of gas.'
   components: # todo: everything
   - type: Sprite
-    sprite: Objects/Tools/wrench.rsi # todo: custom
+    sprite: Objects/Tanks/generic.rsi # todo: custom
     state: icon
+  - type: Item
+    size: Normal
+    sprite: Objects/Tanks/generic.rsi
   - type: Clothing
     quickEquip: false
-    sprite: Objects/Tools/wrench.rsi # todo: custom
+    sprite: Objects/Tanks/generic.rsi # todo: custom
     slots:
     - Back
     - suitStorage
