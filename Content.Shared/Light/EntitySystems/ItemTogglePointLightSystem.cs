@@ -11,6 +11,7 @@ public sealed class ItemTogglePointLightSystem : EntitySystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedPointLightSystem _light = default!;
+    [Dependency] private readonly SharedHandheldLightSystem _handheldLight = default!;
 
     public override void Initialize()
     {
@@ -25,5 +26,6 @@ public sealed class ItemTogglePointLightSystem : EntitySystem
 
         _appearance.SetData(ent, ToggleableLightVisuals.Enabled, args.Activated);
         _light.SetEnabled(ent.Owner, args.Activated, comp: light);
+        _handheldLight.SetActivated(ent.Owner, args.Activated);
     }
 }
