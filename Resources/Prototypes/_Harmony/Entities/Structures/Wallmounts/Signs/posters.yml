@@ -203,7 +203,7 @@
   parent: PosterBase
   id: PosterHarmonyDoNotGamble
   name: "PSA: DO NOT GAMBLE"
-  description: "Inserting your Nanotrasen issued work ID in to a microwave is a SERIOUS offense. If you are caught 'gambling' with your could be given 30 minutes of brig time or face EXECUTION for this most heinous crime."
+  description: "Inserting your Nanotrasen issued work ID in to a microwave is a SERIOUS offense. If you are caught 'gambling' with your ID you could be given 30 minutes of brig time or face EXECUTION for this most heinous crime."
   components:
     - type: Sprite
       sprite: _Harmony/Structures/Wallmounts/posters.rsi
