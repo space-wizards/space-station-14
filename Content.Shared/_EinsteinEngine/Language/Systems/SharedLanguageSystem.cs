@@ -1,7 +1,6 @@
 using System.Text;
 using Content.Shared.GameTicking;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 
 namespace Content.Shared._EinsteinEngine.Language.Systems;
 

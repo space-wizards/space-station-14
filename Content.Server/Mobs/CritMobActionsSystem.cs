@@ -2,6 +2,7 @@
 using Content.Server.Chat.Systems;
 using Content.Server.Popups;
 using Content.Server.Speech.Muting;
+using Content.Shared.Chat;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -76,7 +77,7 @@ public sealed class CritMobActionsSystem : EntitySystem
                 }
                 lastWords += "...";
 
-                _chat.TrySendInGameICMessage(uid, lastWords, InGameICChatType.Whisper, ChatTransmitRange.Normal, checkRadioPrefix: false, ignoreActionBlocker: true);
+                _chat.TrySendInGameICMessage(uid, lastWords, SharedChatSystem.InGameICChatType.Whisper, SharedChatSystem.ChatTransmitRange.Normal, checkRadioPrefix: false, ignoreActionBlocker: true);
                 _host.ExecuteCommand(actor.PlayerSession, "ghost");
             });
 

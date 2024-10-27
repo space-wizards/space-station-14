@@ -1,5 +1,6 @@
 using Content.Server.Chat.Systems;
 using Content.Shared.Administration;
+using Content.Shared.Chat;
 using Robust.Shared.Console;
 
 namespace Content.Server.Administration.Commands
@@ -34,7 +35,7 @@ namespace Content.Server.Administration.Commands
                 return;
 
             var chat = _e.System<ChatSystem>();
-            chat.TrySendInGameOOCMessage(entity, message, InGameOOCChatType.Dead, false, shell, player);
+            chat.TrySendInGameOOCMessage(entity, message, SharedChatSystem.InGameOOCChatType.Dead, false, shell, player);
         }
     }
 }

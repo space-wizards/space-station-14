@@ -1,13 +1,9 @@
 using System.Linq;
-using System.Text;
 using Content.Server._EinsteinEngine.Language.Events;
-using Content.Server.GameTicking.Events;
 using Content.Shared._EinsteinEngine.Language;
 using Content.Shared._EinsteinEngine.Language.Components;
-using Content.Shared._EinsteinEngine.Language.Events;
 using Content.Shared._EinsteinEngine.Language.Systems;
-using Robust.Shared.Random;
-using UniversalLanguageSpeakerComponent = Content.Shared._EinsteinEngine.Language.Components.Translators.UniversalLanguageSpeakerComponent;
+using UniversalLanguageSpeakerComponent = Content.Shared._EinsteinEngine.Language.Components.UniversalLanguageSpeakerComponent;
 
 namespace Content.Server._EinsteinEngine.Language;
 
@@ -181,14 +177,10 @@ public sealed partial class LanguageSystem : SharedLanguageSystem
         if (TryComp<LanguageKnowledgeComponent>(entity, out var knowledge))
         {
             foreach (var spoken in knowledge.SpokenLanguages)
-            {
                 ev.SpokenLanguages.Add(spoken);
-            }
 
             foreach (var understood in knowledge.UnderstoodLanguages)
-            {
                 ev.UnderstoodLanguages.Add(understood);
-            }
         }
 
         RaiseLocalEvent(entity, ref ev);

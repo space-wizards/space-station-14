@@ -1,5 +1,6 @@
 using Content.Server.Chat.Systems;
 using Content.Shared.Administration;
+using Content.Shared.Chat;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
 
@@ -46,6 +47,6 @@ public sealed class SayLanguageCommand : IConsoleCommand
             return;
         }
 
-        chats.TrySendInGameICMessage(playerEntity, message, InGameICChatType.Speak, ChatTransmitRange.Normal, false, shell, player, languageOverride: language);
+        chats.TrySendInGameICMessage(playerEntity, message, SharedChatSystem.InGameICChatType.Speak, SharedChatSystem.ChatTransmitRange.Normal, false, shell, player, languageOverride: language);
     }
 }

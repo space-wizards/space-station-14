@@ -1,7 +1,6 @@
 using Content.Server._EinsteinEngine.Language.Events;
 using Content.Server.Mind;
 using Content.Shared._EinsteinEngine.Language.Components;
-using Content.Shared._EinsteinEngine.Language.Components.Translators;
 using Content.Shared._EinsteinEngine.Language.Events;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;

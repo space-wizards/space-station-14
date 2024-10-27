@@ -1,4 +1,4 @@
-namespace Content.Shared._EinsteinEngine.Language.Components.Translators;
+namespace Content.Shared._EinsteinEngine.Language.Components;
 
 // <summary>
 //     Signifies that this entity can speak and understand any language.

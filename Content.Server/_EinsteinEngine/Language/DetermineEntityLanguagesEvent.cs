@@ -7,9 +7,12 @@ namespace Content.Server._EinsteinEngine.Language;
 [ByRefEvent]
 public record struct DetermineEntityLanguagesEvent
 {
+    /// <summary>
     ///     The list of all languages the entity may speak.
-    ///     By default, contains the languages this entity speaks intrinsically.    /// </summary>
+    ///     By default, contains the languages this entity speaks intrinsically.
+    /// </summary>
     public HashSet<string> SpokenLanguages = new();
+
     /// <summary>
     ///     The list of all languages the entity may understand.
     ///     By default, contains the languages this entity understands intrinsically.

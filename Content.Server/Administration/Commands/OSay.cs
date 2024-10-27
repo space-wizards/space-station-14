@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Chat.Systems;
 using Content.Shared.Administration;
+using Content.Shared.Chat;
 using Content.Shared.Database;
 using Robust.Shared.Console;
 
@@ -24,7 +25,7 @@ public sealed class OSay : LocalizedCommands
 
         if (args.Length == 2)
         {
-            return CompletionResult.FromHintOptions( Enum.GetNames(typeof(InGameICChatType)),
+            return CompletionResult.FromHintOptions( Enum.GetNames(typeof(SharedChatSystem.InGameICChatType)),
                 Loc.GetString("osay-command-arg-type"));
         }
 
@@ -44,7 +45,8 @@ public sealed class OSay : LocalizedCommands
             return;
         }
 
-        var chatType = (InGameICChatType) Enum.Parse(typeof(InGameICChatType), args[1]);
+        var chatType =
+            (SharedChatSystem.InGameICChatType)Enum.Parse(typeof(SharedChatSystem.InGameICChatType), args[1]);
 
         if (!NetEntity.TryParse(args[0], out var sourceNet) || !_entityManager.TryGetEntity(sourceNet, out var source) || !_entityManager.EntityExists(source))
         {
