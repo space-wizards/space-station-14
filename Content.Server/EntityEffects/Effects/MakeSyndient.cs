@@ -66,12 +66,23 @@ public sealed partial class MakeSyndient : EntityEffect
                         }
                     }
                 }
-                //we have all the DNA in the activated subjuzine. get a random one and find the DNA's source.
-                if (dnaDataList.Count > 0)
-                {
-                    DnaData chosenOne = dnaDataList[0];
 
-                    String chosenName = forensicSys.GetNameFromDNA(chosenOne.DNA);
+                String? chosenName = null;
+
+                for(int i=0; i<dnaDataList.Count; i++)
+                {
+                    DnaData candidate = dnaDataList[i];
+                    String? candidateName = forensicSys.GetNameFromDNA(candidate.DNA);
+
+                    if (candidateName != null)
+                    {
+                        chosenName = candidateName;
+                    }
+                }
+
+                //we have all the DNA in the activated subjuzine. get a random one and find the DNA's source.
+                if (chosenName!=null)
+                {
                     //we FINALLY have the name of the injector. jesus fuck.
                     //now, we build the role name, description, etc.
 
