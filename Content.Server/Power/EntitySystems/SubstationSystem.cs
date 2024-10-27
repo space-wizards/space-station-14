@@ -163,18 +163,13 @@ public sealed class SubstationSystem : EntitySystem
             return;
         }
 
-        if (nitrogenBoosterIntegrity < 30f)
+        var newState = nitrogenBoosterIntegrity switch
         {
-            ChangeState(uid, SubstationIntegrityState.Bad, subs);
-        }
-        else if (nitrogenBoosterIntegrity < 70f)
-        {
-            ChangeState(uid, SubstationIntegrityState.Unhealthy, subs);
-        }
-        else
-        {
-            ChangeState(uid, SubstationIntegrityState.Healthy, subs);
-        }
+            < 30f => SubstationIntegrityState.Bad,
+            < 70f => SubstationIntegrityState.Unhealthy,
+            _ => SubstationIntegrityState.Healthy,
+        };
+        ChangeState(uid, newState, subs);
 
         subs.LastIntegrity = nitrogenBoosterIntegrity;
     }

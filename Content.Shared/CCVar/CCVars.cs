@@ -457,7 +457,6 @@ namespace Content.Shared.CCVar
         /// <summary>
         /// Substation decay timer
         /// </summary>
-
         public static readonly CVarDef<float> SubstationDecayTimer =
             CVarDef.Create("game.substation_decay_timer", 0f, CVar.SERVER | CVar.REPLICATED);
 

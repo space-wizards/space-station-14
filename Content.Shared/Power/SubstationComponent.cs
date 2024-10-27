@@ -3,7 +3,6 @@ namespace Content.Shared.Power;
 [RegisterComponent]
 public sealed partial class SubstationComponent : Component
 {
-
     [ViewVariables(VVAccess.ReadOnly)]
     public float LastIntegrity = 100f;
 

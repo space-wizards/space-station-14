@@ -7,12 +7,12 @@ namespace Content.Client.Power.Substation;
 
 public sealed class SubstationVisualsSystem : VisualizerSystem<SubstationVisualsComponent>
 {
-    protected override void OnAppearanceChange(EntityUid uid, SubstationVisualsComponent component, ref AppearanceChangeEvent args)
+    protected override void OnAppearanceChange(Entity<SubstationVisualsComponent> ent, ref AppearanceChangeEvent args)
     {
-        if(args.Sprite == null || !args.Sprite.LayerMapTryGet(component.LayerMap, out var layer))
+        if (args.Sprite == null || !args.Sprite.LayerMapTryGet(component.LayerMap, out var layer))
             return;
 
-        if(args.AppearanceData.TryGetValue(SubstationVisuals.Screen, out var stateObject)
+        if (args.AppearanceData.TryGetValue(SubstationVisuals.Screen, out var stateObject)
             && stateObject is SubstationIntegrityState
             && component.IntegrityStates.TryGetValue((SubstationIntegrityState)stateObject, out var state))
         {
