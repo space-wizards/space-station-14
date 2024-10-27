@@ -189,3 +189,22 @@
       sprite: _Harmony/Structures/Wallmounts/posters.rsi
       state: harmony_poster19_legit
       
+- type: entity
+  parent: PosterBase
+  id: PosterHarmonyMaintsSlasher
+  name: "SERIAL KILLER'S BODY DISAPPEARS!"
+  description: "A newspaper article detailing how the dead body of a serial killer who wore a welding mask and roamed the maintenance tunnels of Nanotrasen space stations has mysteriously disappeared from the morgue. The nickname given to the killer is highlighter in red, 'The Maints Slasher.'"
+  components:
+    - type: Sprite
+      sprite: _Harmony/Structures/Wallmounts/posters.rsi
+      state: harmony_poster20_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterHarmonyDoNotGamble
+  name: "PSA: DO NOT GAMBLE"
+  description: "Inserting your Nanotrasen issued work ID in to a microwave is a SERIOUS offense. If you are caught 'gambling' with your could be given 30 minutes of brig time or face EXECUTION for this most heinous crime."
+  components:
+    - type: Sprite
+      sprite: _Harmony/Structures/Wallmounts/posters.rsi
+      state: harmony_poster21_legit
