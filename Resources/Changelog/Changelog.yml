@@ -1,22 +1,4 @@
 ﻿Entries:
-- author: Errant
-  changes:
-  - message: Survivors arriving via the Unknown Shuttle event, ERT and CBURN agents,
-      and Death Squad members are now equipped with the appropriate species-specific
-      survival gear.
-    type: Fix
-  - message: Unknown Shuttle event can once again spawn vox characters.
-    type: Tweak
-  id: 7055
-  time: '2024-08-07T09:26:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29746
-- author: IProduceWidgets
-  changes:
-  - message: butter is slippery
-    type: Tweak
-  id: 7056
-  time: '2024-08-07T21:47:03.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29772
 - author: Mervill
   changes:
   - message: Gas Miners now have detailed examine text
@@ -3961,3 +3943,17 @@
   id: 7554
   time: '2024-10-26T04:00:49.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32819
+- author: SaphireLattice
+  changes:
+  - message: Added a warning about unrevivability in the health analyzer UI.
+    type: Add
+  id: 7555
+  time: '2024-10-26T17:22:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32636
+- author: slarticodefast
+  changes:
+  - message: Fixed pie throwing sound not playing.
+    type: Fix
+  id: 7556
+  time: '2024-10-27T04:25:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33017
