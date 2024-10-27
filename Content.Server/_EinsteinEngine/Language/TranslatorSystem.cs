@@ -7,6 +7,7 @@ using Content.Shared._EinsteinEngine.Language.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.PowerCell;
 using Robust.Shared.Containers;
+using Robust.Shared.Timing;
 
 namespace Content.Server._EinsteinEngine.Language;
 
@@ -25,7 +26,7 @@ public sealed class TranslatorSystem : SharedTranslatorSystem
         SubscribeLocalEvent<HoldsTranslatorComponent, DetermineEntityLanguagesEvent>(OnProxyDetermineLanguages);
 
         SubscribeLocalEvent<HandheldTranslatorComponent, EntGotInsertedIntoContainerMessage>(OnTranslatorInserted);
-        SubscribeLocalEvent<HandheldTranslatorComponent, EntGotRemovedFromContainerMessage>(OnTranslatorRemoved);
+        SubscribeLocalEvent<HandheldTranslatorComponent, EntParentChangedMessage>(OnTranslatorParentChanged);
         SubscribeLocalEvent<HandheldTranslatorComponent, ActivateInWorldEvent>(OnTranslatorToggle);
         SubscribeLocalEvent<HandheldTranslatorComponent, PowerCellSlotEmptyEvent>(OnPowerCellSlotEmpty);
     }
@@ -63,8 +64,7 @@ public sealed class TranslatorSystem : SharedTranslatorSystem
 
     private void OnTranslatorInserted(EntityUid translator, HandheldTranslatorComponent component, EntGotInsertedIntoContainerMessage args)
     {
-        if (args.Container.Owner is not {Valid: true} holder
-            || !EntityManager.HasComponent<LanguageSpeakerComponent>(holder))
+        if (args.Container.Owner is not {Valid: true} holder || !HasComp<LanguageSpeakerComponent>(holder))
             return;
 
         var intrinsic = EnsureComp<HoldsTranslatorComponent>(holder);
@@ -73,14 +73,19 @@ public sealed class TranslatorSystem : SharedTranslatorSystem
         _language.UpdateEntityLanguages(holder);
     }
 
-    private void OnTranslatorRemoved(EntityUid translator, HandheldTranslatorComponent component, EntGotRemovedFromContainerMessage args)
+    private void OnTranslatorParentChanged(EntityUid translator, HandheldTranslatorComponent component, EntParentChangedMessage args)
     {
-        if (args.Container.Owner is not {Valid: true} holder
-            || !EntityManager.TryGetComponent<HoldsTranslatorComponent>(holder, out var intrinsic))
+        if (!HasComp<HoldsTranslatorComponent>(args.OldParent))
             return;
 
-        intrinsic.Translators.RemoveWhere(it => it.Owner == translator);
-        _language.UpdateEntityLanguages(holder);
+        // Update the translator on the next tick - this is necessary because there's a good chance the removal from a container
+        // Was caused by the player moving the translator within their inventory rather than removing it.
+        // If that is not the case, then OnProxyDetermineLanguages will remove this translator from HoldsTranslatorComponent.Translators.
+        Timer.Spawn(0, () =>
+        {
+            if (Exists(args.OldParent) && TryComp<LanguageSpeakerComponent>(args.OldParent, out var speaker))
+                _language.UpdateEntityLanguages(args.OldParent.Value, speaker);
+        });
     }
 
     private void OnTranslatorToggle(EntityUid translator, HandheldTranslatorComponent translatorComp, ActivateInWorldEvent args)
@@ -123,6 +128,9 @@ public sealed class TranslatorSystem : SharedTranslatorSystem
         component.Enabled = false;
         _powerCell.SetDrawEnabled(translator, false);
         OnAppearanceChange(translator, component);
+
+        if (_containers.TryGetContainingContainer(translator, out var holderCont) && TryComp<LanguageSpeakerComponent>(holderCont.Owner, out var languageComp))
+            _language.UpdateEntityLanguages(holderCont.Owner, languageComp);
     }
 
     private void CopyLanguages(BaseTranslatorComponent from, DetermineEntityLanguagesEvent to, LanguageKnowledgeComponent knowledge)
