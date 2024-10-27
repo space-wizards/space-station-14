@@ -34,4 +34,10 @@ public sealed class LanguagePrototype : IPrototype
 
     [DataField("fontSize")]
     public int? FontSize;
+
+    /// <summary>
+    /// 	If true, will mark the language as a SignLanguage and will be handled as such.
+    /// </summary>
+    [DataField("signLanguage")]
+    public bool? SignLanguage;
 }

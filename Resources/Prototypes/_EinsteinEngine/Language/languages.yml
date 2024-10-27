@@ -35,6 +35,16 @@
     - nah
     - wah
 
+- type: language
+  id: SignLanguage
+  signLanguage: true
+  obfuscation:
+    !type:ReplacementObfuscation
+    replacement:
+    - "language-signlanguage-1"
+    - "language-signlanguage-2"
+
+
 # Spoken by slimes.
 - type: language
   id: Bubblish
