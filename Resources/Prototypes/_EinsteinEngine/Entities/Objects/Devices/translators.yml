@@ -212,6 +212,7 @@
     - Kangaroo
     - Pig
     - Crab
+    - Hissing
     - Kobold
     requires:
     - GalacticCommon

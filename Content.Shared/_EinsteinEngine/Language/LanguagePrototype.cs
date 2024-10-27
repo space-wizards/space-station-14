@@ -37,8 +37,12 @@ public sealed class LanguagePrototype : IPrototype
 [DataDefinition]
 public sealed partial class SpeechOverrideInfo
 {
+    /// <summary>
+    ///     Color which text in this language will be blended with.
+    ///     Alpha blending is used, which means the alpha component of the color controls the intensity of this color.
+    /// </summary>
     [DataField]
-    public Color Color = Color.White;
+    public Color? Color = null;
 
     [DataField]
     public string? FontId;

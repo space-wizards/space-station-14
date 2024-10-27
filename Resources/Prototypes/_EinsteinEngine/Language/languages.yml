@@ -562,6 +562,19 @@
     - ss
     - ee
 
+- type: language
+  id: Hissing
+  obfuscation:
+    !type:SyllableObfuscation
+    minSyllables: 2
+    maxSyllables: 4
+    replacement:
+    - hss
+    - iss
+    - ss
+    - is
+
+
 # Example of a sign language. Not currently used anyhow.
 - type: language
   id: Sign

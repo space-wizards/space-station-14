@@ -175,11 +175,13 @@ public sealed class TranslatorSystem : SharedTranslatorSystem
         {
             intrinsic.SpokenLanguages = [..comp.SpokenLanguages];
             intrinsic.UnderstoodLanguages = [..comp.UnderstoodLanguages];
+            intrinsic.RequiredLanguages = [..comp.RequiredLanguages];
         }
         else
         {
             intrinsic.SpokenLanguages.Clear();
             intrinsic.UnderstoodLanguages.Clear();
+            intrinsic.RequiredLanguages.Clear();
         }
 
         intrinsic.Enabled = isEnabled;

@@ -2571,6 +2571,11 @@
   - type: Tag
     tags:
     - VimPilot
+  - type: LanguageKnowledge
+    speaks:
+    - Hissing
+    understands:
+    - Hissing
 
 - type: entity
   name: possum
@@ -2645,6 +2650,11 @@
   - type: Tag
     tags:
     - VimPilot
+  - type: LanguageKnowledge
+    speaks:
+    - Hissing
+    understands:
+    - Hissing
 
 - type: entity
   name: fox
@@ -3009,9 +3019,9 @@
     - Syndicate
   - type: LanguageKnowledge
     speaks:
-    - Xeno
+    - Cat
     understands:
-    - Xeno
+    - Cat
     - GalacticCommon
   - type: MeleeWeapon
     altDisarm: false
@@ -3171,6 +3181,11 @@
   - type: Tag
     tags:
     - VimPilot
+  - type: LanguageKnowledge # WHAT DOES THE SLOTH SAY???????
+    speaks:
+    - Hissing
+    understands:
+    - Hissing
 
 - type: entity
   name: ferret
@@ -3225,6 +3240,11 @@
   - type: Tag
     tags:
     - VimPilot
+  - type: LanguageKnowledge
+    speaks:
+    - Hissing
+    understands:
+    - Hissing
 
 - type: entity
   name: hamster
