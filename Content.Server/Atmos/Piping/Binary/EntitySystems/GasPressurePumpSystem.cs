@@ -14,6 +14,7 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Power;
+using Content.Server.Power.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
@@ -30,6 +31,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
+        [Dependency] private readonly PowerReceiverSystem _power = default!;
 
         public override void Initialize()
         {
@@ -68,6 +70,10 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
         private void OnPowerChanged(EntityUid uid, GasPressurePumpComponent component, ref PowerChangedEvent args)
         {
             UpdateAppearance(uid, component);
+            if (TryComp<ApcPowerReceiverComponent>(uid, out var power) && !(power.Powered == component.Enabled)) {
+                //This check is for the case where the power changed event was not from UI toggle, IE anchoring
+                _power.TogglePower(uid);
+            }
         }
 
         private void OnPumpUpdated(EntityUid uid, GasPressurePumpComponent pump, ref AtmosDeviceUpdateEvent args)
@@ -137,6 +143,9 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 $"{ToPrettyString(args.Actor):player} set the power on {ToPrettyString(uid):device} to {args.Enabled}");
             DirtyUI(uid, pump);
             UpdateAppearance(uid, pump);
+            if (TryComp<ApcPowerReceiverComponent>(uid, out var power) && !(power.Powered == pump.Enabled)) {
+                _power.TogglePower(uid, user: args.Actor);
+            }
         }
 
         private void OnOutputPressureChangeMessage(EntityUid uid, GasPressurePumpComponent pump, GasPressurePumpChangeOutputPressureMessage args)
