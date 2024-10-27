@@ -5,6 +5,7 @@ using Content.Shared.Follower.Components;
 using Content.Shared.Input;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
+using Robust.Shared.Configuration;
 using Robust.Shared.GameStates;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
@@ -22,8 +23,6 @@ namespace Content.Shared.Movement.Systems
     public abstract partial class SharedMoverController
     {
         public bool CameraRotationLocked { get; set; }
-
-        [Dependency] private readonly AlertsSystem _alerts = default!;
 
         public static ProtoId<AlertPrototype> WalkingAlert = "Walking";
 
@@ -466,14 +465,9 @@ namespace Content.Shared.Movement.Systems
             component.LastInputSubTick = 0;
         }
 
-        public void SetSprinting(Entity<InputMoverComponent> entity, ushort subTick, bool walking)
+        public virtual void SetSprinting(Entity<InputMoverComponent> entity, ushort subTick, bool walking)
         {
             // Logger.Info($"[{_gameTiming.CurTick}/{subTick}] Sprint: {enabled}");
-
-            if (walking)
-                _alerts.ShowAlert(entity, WalkingAlert);
-            else
-                _alerts.ClearAlert(entity, WalkingAlert);
 
             SetMoveInput(entity, subTick, walking, MoveButtons.Walk);
         }

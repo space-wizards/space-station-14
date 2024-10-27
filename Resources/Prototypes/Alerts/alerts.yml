@@ -129,7 +129,9 @@
 
 - type: alert
   id: Walking
-  icons: [ /Textures/Interface/Alerts/Walking/walking.png ]
+  icons:
+  - sprite: /Textures/Interface/Alerts/walking.rsi
+    state: walking
   name: alerts-walking-name
   description: alerts-walking-desc
 
