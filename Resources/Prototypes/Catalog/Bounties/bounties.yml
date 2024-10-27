@@ -757,7 +757,7 @@
 
 - type: cargoBounty
   id: BountyTeethSharkminnow
-  reward: 1500
+  reward: 1000
   description: bounty-description-tooth-sharkminnow
   entries:
   - name: bounty-item-tooth-sharkminnow
