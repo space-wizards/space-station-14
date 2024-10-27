@@ -194,7 +194,7 @@ entities:
       pos: 0.5,0.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -4977.476
+      secondsUntilStateChange: -4923.5425
       state: Opening
   - uid: 51
     components:
@@ -203,7 +203,7 @@ entities:
       pos: 0.5,2.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -4976.5093
+      secondsUntilStateChange: -4922.5757
       state: Opening
   - uid: 52
     components:
@@ -212,7 +212,7 @@ entities:
       pos: 6.5,2.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -4975.5757
+      secondsUntilStateChange: -4921.642
       state: Opening
   - uid: 53
     components:
@@ -221,7 +221,7 @@ entities:
       pos: 6.5,0.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -4990.5757
+      secondsUntilStateChange: -4936.642
       state: Opening
 - proto: APCBasic
   entities:
@@ -463,78 +463,100 @@ entities:
       rot: 3.141592653589793 rad
       pos: 2.5,-5.5
       parent: 1
-- proto: Catwalk
+- proto: CargoPallet
   entities:
   - uid: 32
     components:
     - type: Transform
-      pos: 2.5,0.5
+      rot: -1.5707963267948966 rad
+      pos: 4.5,1.5
       parent: 1
   - uid: 34
     components:
     - type: Transform
-      pos: 2.5,-1.5
+      rot: -1.5707963267948966 rad
+      pos: 2.5,1.5
       parent: 1
   - uid: 35
     components:
     - type: Transform
-      pos: 2.5,-0.5
+      rot: -1.5707963267948966 rad
+      pos: 2.5,2.5
       parent: 1
   - uid: 62
     components:
     - type: Transform
-      pos: 2.5,2.5
+      rot: -1.5707963267948966 rad
+      pos: 4.5,2.5
       parent: 1
   - uid: 63
     components:
     - type: Transform
-      pos: 2.5,1.5
+      rot: -1.5707963267948966 rad
+      pos: 3.5,2.5
       parent: 1
   - uid: 64
     components:
     - type: Transform
-      pos: 3.5,0.5
+      rot: -1.5707963267948966 rad
+      pos: 2.5,-1.5
       parent: 1
   - uid: 65
     components:
     - type: Transform
-      pos: 4.5,1.5
+      rot: -1.5707963267948966 rad
+      pos: 2.5,-0.5
       parent: 1
   - uid: 66
     components:
     - type: Transform
-      pos: 4.5,0.5
+      rot: -1.5707963267948966 rad
+      pos: 3.5,-0.5
       parent: 1
   - uid: 67
     components:
     - type: Transform
-      pos: 4.5,-0.5
+      rot: -1.5707963267948966 rad
+      pos: 3.5,-1.5
       parent: 1
   - uid: 68
     components:
     - type: Transform
-      pos: 3.5,1.5
+      rot: -1.5707963267948966 rad
+      pos: 4.5,-1.5
       parent: 1
   - uid: 69
     components:
     - type: Transform
-      pos: 4.5,-1.5
+      rot: -1.5707963267948966 rad
+      pos: 4.5,-0.5
       parent: 1
   - uid: 70
     components:
     - type: Transform
-      pos: 4.5,2.5
+      rot: -1.5707963267948966 rad
+      pos: 2.5,0.5
       parent: 1
   - uid: 71
     components:
     - type: Transform
-      pos: 3.5,-1.5
+      rot: -1.5707963267948966 rad
+      pos: 3.5,0.5
       parent: 1
   - uid: 72
     components:
     - type: Transform
-      pos: 3.5,-0.5
+      rot: -1.5707963267948966 rad
+      pos: 4.5,0.5
       parent: 1
+  - uid: 141
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 3.5,1.5
+      parent: 1
+- proto: Catwalk
+  entities:
   - uid: 101
     components:
     - type: Transform
@@ -554,11 +576,6 @@ entities:
     components:
     - type: Transform
       pos: 6.5,-0.5
-      parent: 1
-  - uid: 141
-    components:
-    - type: Transform
-      pos: 3.5,2.5
       parent: 1
 - proto: ChairPilotSeat
   entities:
