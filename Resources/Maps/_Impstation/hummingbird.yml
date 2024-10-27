@@ -57705,7 +57705,7 @@ entities:
       pos: 123.5,-7.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -27045.05
+      secondsUntilStateChange: -27125.395
       state: Closing
 - proto: CurtainsWhiteOpen
   entities:
@@ -62701,6 +62701,18 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 64.5,-27.5
+      parent: 2
+  - uid: 23482
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 63.5,46.5
+      parent: 2
+  - uid: 23483
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 64.5,46.5
       parent: 2
 - proto: DisposalPipeBroken
   entities:
@@ -149635,7 +149647,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -28538.717
+      secondsUntilStateChange: -28619.06
       state: Opening
     - type: Airlock
       autoClose: False
