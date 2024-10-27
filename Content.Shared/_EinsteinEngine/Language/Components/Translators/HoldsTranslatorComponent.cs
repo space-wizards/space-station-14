@@ -5,7 +5,9 @@ namespace Content.Shared._EinsteinEngine.Language.Components.Translators;
 ///   Do not use directly. Use [HandheldTranslatorComponent] instead.
 /// </summary>
 [RegisterComponent]
-public sealed partial class HoldsTranslatorComponent : IntrinsicTranslatorComponent
+public sealed partial class HoldsTranslatorComponent : Component
 {
-    public Component? Issuer = null;
+    [NonSerialized]
+    public HashSet<Entity<HandheldTranslatorComponent>> Translators = new();
+
 }
