@@ -1,0 +1,22 @@
+- type: entity
+  id: Ram
+  parent: BaseItem
+  name: hand ram
+  description: Security! Open up!
+  components:
+    - type: Sprite
+      sprite: /Uploaded/ram.rsi
+      state: icon
+    - type: Item
+      size: Ginormous
+    - type: MeleeWeapon
+      wideAnimationRotation: -90
+      damage:
+        types:
+          Blunt: 15
+          Structural: 100
+      angle: 0
+      animation: WeaponArcThrust
+      soundHit:
+        collection: MetalThud   
+    - type: MultiHandedItem

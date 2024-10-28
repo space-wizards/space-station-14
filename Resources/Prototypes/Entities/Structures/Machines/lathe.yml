@@ -769,6 +769,7 @@
       - WeaponDisablerPractice
       - WeaponLaserCarbinePractice
       - Zipties
+      - Ram
     dynamicRecipes:
       - BoxBeanbag
       - BoxShotgunIncendiary
