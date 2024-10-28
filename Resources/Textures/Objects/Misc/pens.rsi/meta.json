@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/e1142f20f5e4661cb6845cfcf2dd69f864d67432. pen_centcom is a resprited version of pen_cap by PuroSlavKing (Github). Luxury pen is drawn by Ubaser.",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/e1142f20f5e4661cb6845cfcf2dd69f864d67432. pen_centcom is a resprited version of pen_cap by PuroSlavKing (Github). Luxury pen is drawn by Ubaser. Pens CE, RD, HOS, CMO, QM maded by justdie4908(Discord) and ghostovish7728(Discord)",
   "size": {
     "x": 32,
     "y": 32
@@ -54,6 +54,35 @@
     {
       "name": "pen_centcom-inhand-right",
       "directions": 4
+    },
+    {
+      "name": "pen_CE"
+    },
+    {
+      "name": "pen_RD"
+    },
+    {
+      "name": "pen_RD_ink"
+    },
+    {
+      "name": "pen_HOS_on",
+      "delays": [
+        [
+        0.2,
+        0.2,
+        0.2,
+        0.2
+        ]
+      ]
+    },
+    {
+      "name": "pen_HOS_off"
+    },
+    {
+      "name": "pen_QM"
+    },
+    {
+      "name": "pen_CMO"
     }
   ]
 }

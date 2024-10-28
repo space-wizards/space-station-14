@@ -119,3 +119,152 @@
   components:
   - type: Sprite
     state: pen_hop
+
+- type: entity
+  name: ce's pen
+  parent: [Pen, BasePowerCell]
+  id: PenCE
+  description: Keep away from borgs.
+  components:
+  - type: Sprite
+    state: pen_CE
+  - type: Battery
+    maxCharge: 360
+    startingCharge: 360
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 5
+  - type: Tag
+    tags:
+      - PowerCell
+      - Write
+      - Pen
+
+- type: entity
+  name: rd's pen
+  parent: [Pen, WeaponPistolCHIMP]
+  id: PenRD
+  description: Contain it now!
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/pens.rsi
+    layers:
+    - state: pen_RD
+    - state: pen_RD_ink
+      shader: unshaded
+  - type: Battery
+    maxCharge: 3000
+    startingCharge: 3000
+  - type: Gun
+    projectileSpeed: 5
+    fireRate: 0.5
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
+  - type: ProjectileBatteryAmmoProvider
+    proto: AnomalousParticleDeltaStrong
+    fireCost: 1000
+  - type: MagazineVisuals
+    magState: mag
+    steps: 3
+    zeroVisible: true
+  - type: BatteryWeaponFireModes
+    fireModes:
+    - proto: AnomalousParticleDeltaStrong
+      fireCost: 1000
+    - proto: AnomalousParticleEpsilonStrong
+      fireCost: 1000
+    - proto: AnomalousParticleZetaStrong
+      fireCost: 1000
+    - proto: AnomalousParticleSigmaStrong
+      fireCost: 1000
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 5
+
+
+- type: entity
+  name: hos's pen
+  parent: [Pen, Stunbaton]
+  id: PenHOS
+  description: Z-Z-ZAP!
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/pens.rsi
+    layers:
+    - state: pen_HOS_off
+      map: [ "enum.ToggleVisuals.Layer" ]
+  - type: Stunbaton
+    energyPerUse: 2000
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    damage:
+      types:
+        Piercing: 5
+    bluntStaminaDamageFactor: 2.0
+    angle: 60
+    animation: WeaponArcSlash
+  - type: StaminaDamageOnHit
+    damage: 100
+    sound: /Audio/Weapons/egloves.ogg
+  - type: StaminaDamageOnCollide
+    damage: 100
+    sound: /Audio/Weapons/egloves.ogg
+  - type: GenericVisualizer
+    visuals:
+     enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
+          True: {state: pen_HOS_on}
+          False: {state: pen_HOS_off}
+  - type: Battery
+    maxCharge: 2000
+    startingCharge: 2000
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Piercing: 3
+  - type: ThrowingAngle
+    angle: 315
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 1
+
+- type: entity
+  name: luxury qm's pen
+  parent: Pen
+  id: PenQM
+  description: It's nothing personal, it's just business.
+  components:
+  - type: Sprite
+    state: pen_QM
+  - type: AnomalyCore
+    timeToDecay: 6000
+    startPrice: 0
+    endPrice: 20000
+
+- type: entity
+  name: cmo's pen
+  parent: Pen
+  id: PenCMO
+  description: Please don't put mice in there.
+  components:
+  - type: Sprite
+    state: pen_CMO
+  - type: ReagentGrinder
+  - type: ActivatableUI
+    key: enum.ReagentGrinderUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.ReagentGrinderUiKey.Key:
+        type: ReagentGrinderBoundUserInterface
+  - type: ItemSlots
+    slots:
+      beakerSlot:
+        whitelist:
+          tags:
+          - Vial
+  - type: ContainerContainer
+    containers:
+      beakerSlot: !type:ContainerSlot
+      inputContainer: !type:Container
+
+
