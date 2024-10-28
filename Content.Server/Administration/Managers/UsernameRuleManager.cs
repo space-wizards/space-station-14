@@ -134,7 +134,7 @@ public sealed partial class UsernameRuleManager : IUsernameRuleManager, IPostInj
 
         _sawmill.Info($"caching rule {id} {expression}");
 
-        var compiledRegex = regex ? new Regex(expression, RegexOptions.Compiled) : null;
+        var compiledRegex = regex ? new Regex(expression, RegexOptions.IgnoreCase) : null;
 
         if (!regex)
         {
