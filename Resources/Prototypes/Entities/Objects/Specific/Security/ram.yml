@@ -5,7 +5,7 @@
   description: Security! Open up!
   components:
     - type: Sprite
-      sprite: /Uploaded/ram.rsi
+      sprite: Objects/Specific/Security/ram.rsi
       state: icon
     - type: Item
       size: Ginormous
