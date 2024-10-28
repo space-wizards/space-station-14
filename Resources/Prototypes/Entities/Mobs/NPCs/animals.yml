@@ -3381,6 +3381,9 @@
   - type: PreventSpiller
   - type: Damageable
     damageContainer: Biological
+  - type: Tag
+    tags:
+    - Fish
 
 - type: entity
   name: Fish

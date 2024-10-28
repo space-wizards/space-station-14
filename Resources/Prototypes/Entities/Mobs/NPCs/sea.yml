@@ -57,3 +57,6 @@
   - type: PointLight
     radius: 0
     energy: 0
+  - type: Tag
+    tags:
+    - Drifter

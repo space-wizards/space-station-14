@@ -380,6 +380,7 @@
   id: BountySpear
   reward: 8000
   description: bounty-description-spear
+  idPrefix: GT
   entries:
   - name: bounty-item-spear
     amount: 5
@@ -635,6 +636,7 @@
   id: BountyBanana
   reward: 6009
   description: bounty-description-banana
+  idPrefix: honk
   entries:
   - name: bounty-item-banana
     amount: 9
@@ -679,6 +681,7 @@
   id: BountyMedkitBox
   reward: 2300
   description: bounty-description-medkit-box
+  idPrefix: TX-221?
   entries:
   - name: bounty-item-medkit-box
     amount: 4
@@ -724,10 +727,35 @@
   id: BountyMicrowaveMachineBoard
   reward: 4000
   description: bounty-description-microwave-machine-board
+  idPrefix: SG
   entries:
   - name: bounty-item-microwave-machine-board
     amount: 2
     whitelist:
       tags:
       - MicrowaveMachineBoard
+
+- type: cargoBounty
+  id: BountyDrifter
+  reward: 1500
+  description: bounty-description-drifter
+  idPrefix: IP
+  entries:
+  - name: bounty-item-drifter
+    amount: 2
+    whitelist:
+      tags:
+      - Drifter
+
+- type: cargoBounty
+  id: BountyFish
+  reward: 2000
+  description: bounty-description-fish
+  idPrefix: SG
+  entries:
+  - name: bounty-item-fish
+    amount: 4
+    whitelist:
+      tags:
+      - Fish
 
