@@ -1,5 +1,4 @@
 - type: entity
-  noSpawn: true
   id: TranslatorUnpowered
   parent: BaseItem
   name: translator
@@ -30,7 +29,6 @@
     quickEquip: false # Would conflict
 
 - type: entity
-  noSpawn: true
   id: Translator
   parent: [ TranslatorUnpowered, PowerCellSlotMediumItem ]
   suffix: Powered
@@ -39,7 +37,6 @@
     drawRate: 1
 
 - type: entity
-  noSpawn: true
   id: TranslatorEmpty
   parent: Translator
   suffix: Empty
@@ -50,29 +47,10 @@
         name: power-cell-slot-component-slot-name-default
 
 - type: entity
-  noSpawn: true
   id: TranslatorForeigner
   parent: [ Translator, PowerCellSlotHighItem ]
   name: foreigner's translator
   description: A special-issue translator that helps foreigner's speak and understand this station's primary language.
-
-
-- type: entity
-  id: CanilunztTranslator
-  parent: [ TranslatorEmpty ]
-  name: Canilunzt translator
-  description: Translates speech between Canilunzt and Galactic Common, allowing your local yeepers to communicate with the locals and vice versa!
-  components:
-  - type: HandheldTranslator
-    spoken:
-    - GalacticCommon
-    - Canilunzt
-    understood:
-    - GalacticCommon
-    - Canilunzt
-    requires:
-    - GalacticCommon
-    - Canilunzt
 
 - type: entity
   id: BubblishTranslator
@@ -92,21 +70,21 @@
     - Bubblish
 
 - type: entity
-  id: NekomimeticTranslator
+  id: GraySpeakTranslator
   parent: [ TranslatorEmpty ]
-  name: Nekomimetic translator
-  description: Translates speech between Nekomimetic and Galactic Common, enabling you to communicate with your pet cats.
+  name: GraySpeak translator
+  description: Translates speech between Gray Speak and Galactic Common, helping communicate with the Grays.
   components:
   - type: HandheldTranslator
     spoken:
     - GalacticCommon
-    - Nekomimetic
+    - GraySpeak
     understood:
     - GalacticCommon
-    - Nekomimetic
+    - GraySpeak
     requires:
     - GalacticCommon
-    - Nekomimetic
+    - GraySpeak
 
 - type: entity
   id: DraconicTranslator

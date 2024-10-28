@@ -234,7 +234,7 @@
   id: BasicTranslation
   name: research-technology-basic-translation
   icon:
-    sprite: Objects/Devices/translator.rsi
+    sprite: _EinsteinEngine/Objects/Devices/translator.rsi
     state: icon
   discipline: CivilianServices
   tier: 2
@@ -250,7 +250,7 @@
   id: AdvancedTranslation
   name: research-technology-advanced-translation
   icon:
-    sprite: Objects/Devices/translator.rsi
+    sprite: _EinsteinEngine/Objects/Devices/translator.rsi
     state: icon
   discipline: CivilianServices
   tier: 3

@@ -32,7 +32,7 @@
     understands:
     - GalacticCommon
     - Moffic
-    allowedEmotes: ['Chitter', 'Squeak']
+  - allowedEmotes: ['Chitter', 'Squeak']
   - type: TypingIndicator
     proto: moth
   - type: Butcherable

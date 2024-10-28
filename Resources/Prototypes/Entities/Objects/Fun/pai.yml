@@ -76,7 +76,25 @@
     whitelist:
       components:
         - SecretStash
-
+  - type: LanguageKnowledge
+    speaks:
+    - SolCommon
+    - RobotTalk
+    - GraySpeak
+    - Draconic
+    - RootSpeak
+    - Moffic
+    - Bubblish
+    - GalacticCommon
+    understands:
+    - SolCommon
+    - RobotTalk
+    - GraySpeak
+    - Draconic
+    - RootSpeak
+    - Moffic
+    - Bubblish
+    - GalacticCommon
 - type: entity
   parent: [ PersonalAI, BaseSyndicateContraband]
   id: SyndicatePersonalAI
