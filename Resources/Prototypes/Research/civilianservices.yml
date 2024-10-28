@@ -244,7 +244,6 @@
   - DraconicTranslator
   - SolCommonTranslator
   - RootSpeakTranslator
-  - BasicGalaticCommonTranslatorImplanter
   - MofficTranslator
 
 - type: technology
@@ -258,10 +257,4 @@
   cost: 15000
   recipeUnlocks:
   - XenoTranslator
-  - AdvancedGalaticCommonTranslatorImplanter
-  - BubblishTranslatorImplanter
-  - DraconicTranslatorImplanter
-  - SolCommonTranslatorImplanter
-  - RootSpeakTranslatorImplanter
   - AnimalTranslator
-  - MofficTranslatorImplanter
