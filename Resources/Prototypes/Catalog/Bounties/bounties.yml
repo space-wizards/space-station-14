@@ -259,7 +259,7 @@
 
 - type: cargoBounty
   id: BountyMouse
-  reward: 8000
+  reward: 4000
   description: bounty-description-mouse
   idPrefix: SS13-
   entries:
