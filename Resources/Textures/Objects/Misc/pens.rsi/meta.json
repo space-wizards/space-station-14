@@ -59,10 +59,31 @@
       "name": "pen_CE"
     },
     {
+      "name": "o1"
+    },
+    {
+      "name": "o2"
+    },
+    {
       "name": "pen_RD"
     },
     {
-      "name": "pen_RD_ink"
+      "name": "pen_RD_ink-unshaded-0",
+      "delays": [
+        [
+        0.2,
+        0.2
+        ]
+      ]
+    },
+    {
+      "name": "pen_RD_ink-unshaded-1"
+    },
+    {
+      "name": "pen_RD_ink-unshaded-2"
+    },
+    {
+      "name": "pen_RD_ink-unshaded-3"
     },
     {
       "name": "pen_HOS_on",

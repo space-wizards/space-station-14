@@ -122,18 +122,28 @@
 
 - type: entity
   name: ce's pen
-  parent: [Pen, BasePowerCell]
+  parent: [PenEmbeddable, BasePowerCell]
   id: PenCE
   description: Keep away from borgs.
   components:
   - type: Sprite
-    state: pen_CE
+    layers:
+    - map: [ "enum.PowerCellVisualLayers.Base" ]
+      state: pen_CE
+    - map: [ "enum.PowerCellVisualLayers.Unshaded" ]
+      state: o2
+      shader: unshaded
   - type: Battery
     maxCharge: 360
     startingCharge: 360
   - type: BatterySelfRecharger
     autoRecharge: true
     autoRechargeRate: 5
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Piercing: 3
+        Shock: 5
   - type: Tag
     tags:
       - PowerCell
@@ -150,7 +160,9 @@
     sprite: Objects/Misc/pens.rsi
     layers:
     - state: pen_RD
-    - state: pen_RD_ink
+      map: ["enum.GunVisualLayers.Base"]
+    - state: pen_RD_ink-unshaded-0
+      map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: Battery
     maxCharge: 3000
@@ -164,8 +176,8 @@
     proto: AnomalousParticleDeltaStrong
     fireCost: 1000
   - type: MagazineVisuals
-    magState: mag
-    steps: 3
+    magState: pen_RD_ink
+    steps: 4
     zeroVisible: true
   - type: BatteryWeaponFireModes
     fireModes:
@@ -180,6 +192,7 @@
   - type: BatterySelfRecharger
     autoRecharge: true
     autoRechargeRate: 5
+  - type: Appearance
 
 
 - type: entity
@@ -194,7 +207,7 @@
     - state: pen_HOS_off
       map: [ "enum.ToggleVisuals.Layer" ]
   - type: Stunbaton
-    energyPerUse: 2000
+    energyPerUse: 20000
   - type: MeleeWeapon
     wideAnimationRotation: -135
     damage:
@@ -216,8 +229,8 @@
           True: {state: pen_HOS_on}
           False: {state: pen_HOS_off}
   - type: Battery
-    maxCharge: 2000
-    startingCharge: 2000
+    maxCharge: 20000
+    startingCharge: 20000
   - type: DamageOtherOnHit
     damage:
       types:
@@ -226,7 +239,7 @@
     angle: 315
   - type: BatterySelfRecharger
     autoRecharge: true
-    autoRechargeRate: 1
+    autoRechargeRate: 5
 
 - type: entity
   name: luxury qm's pen
@@ -240,6 +253,13 @@
     timeToDecay: 6000
     startPrice: 0
     endPrice: 20000
+  - type: ThrowingAngle
+    angle: 315
+  - type: LandAtCursor
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 7
 
 - type: entity
   name: cmo's pen
