@@ -20,15 +20,15 @@
   - type: ForeignerTrait
     baseTranslator: TranslatorForeigner
 
-#- type: trait
-#  id: SignLanguage
-#  category: Quirks
-#  name: trait-signlanguage-name
-#  description: trait-signlanguage-desc
-#  components:
-#  - type: LanguageKnowledgeModifier
-#    speaks:
-#    - Sign
-#    understands:
-#    - Sign
+- type: trait
+  id: SignLanguage
+  category: Quirks
+  name: trait-signlanguage-name
+  description: trait-signlanguage-desc
+  components:
+  - type: LanguageKnowledgeModifier
+    speaks:
+    - Sign
+    understands:
+    - Sign
 

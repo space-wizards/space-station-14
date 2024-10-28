@@ -63,10 +63,10 @@
   - type: LanguageKnowledge
     speaks:
     - GalacticCommon
-    - GraySpeak
+    ##- GraySpeak
     understands:
     - GalacticCommon
-    - GraySpeak
+    ##- GraySpeak
   - type: Inventory
     templateId: gray
     displacements:
