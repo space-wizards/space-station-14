@@ -27,7 +27,7 @@
   flavor: raktaccino
   color: "#4f2900"
   metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/raktaccino.rsi
+    sprite: Objects/Consumable/Drinks/Impstation/raktaccino.rsi
     state: icon_empty
   metamorphicMaxFillLevels: 1
   metamorphicFillBaseName: fill-
