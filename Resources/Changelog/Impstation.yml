@@ -3367,3 +3367,12 @@
   id: 416
   time: '2024-10-28T23:18:50.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/560
+- author: ruddygreat
+  changes:
+  - message: Surplus crate white / blacklists work again.
+    type: Fix
+  - message: allowed recursive surplus crates again. have fun!
+    type: Tweak
+  id: 417
+  time: '2024-10-28T23:21:35.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/556
