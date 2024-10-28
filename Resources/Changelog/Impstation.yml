@@ -3383,3 +3383,18 @@
   id: 418
   time: '2024-10-28T23:22:57.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/554
+- author: widgetbeck
+  changes:
+  - message: Grays now having organ. Many of organ. Squishy!
+    type: Add
+  id: 419
+  time: '2024-10-28T23:24:34.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/538
+- author: widgetbeck
+  changes:
+  - message: Luggage now has no hands. Sorry! It can still open and close itself and
+      pull items, though.
+    type: Tweak
+  id: 420
+  time: '2024-10-28T23:24:07.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/551
