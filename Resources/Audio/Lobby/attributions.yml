@@ -90,7 +90,7 @@
   source: "https://gitlab.com/vgstation/vgstation/-/tree/Bleeding-Edge/sound/music/login"
 
 - files: ["TrackingDevice.ogg"]
-  license: "custom"
+  license: "Custom"
   copyright: "Tracking Device - Valve by Kelly Bailey"
   source: "https://gitlab.com/vgstation/vgstation/-/tree/Bleeding-Edge/sound/music/login"
 
