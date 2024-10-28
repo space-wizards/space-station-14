@@ -60,6 +60,13 @@
     bloodReagent: Radium
   - type: ReplacementAccent
     accent: gray
+  - type: LanguageKnowledge
+    speaks:
+    - GalacticCommon
+    - GraySpeak
+    understands:
+    - GalacticCommon
+    - GraySpeak
   - type: Inventory
     templateId: gray
     displacements:

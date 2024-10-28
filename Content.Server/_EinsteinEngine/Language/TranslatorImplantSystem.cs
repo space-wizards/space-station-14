@@ -1,6 +1,6 @@
-using Content.Shared.Implants.Components;
-using Content.Shared._EinsteinEngine.Language;
 using Content.Shared._EinsteinEngine.Language.Components;
+using Content.Shared._EinsteinEngine.Language.Events;
+using Content.Shared.Implants.Components;
 using Robust.Shared.Containers;
 
 namespace Content.Server._EinsteinEngine.Language;

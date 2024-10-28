@@ -15,33 +15,264 @@
     minSyllables: 1
     maxSyllables: 3
     replacement:
-    - blah
-    - blah
-    - blah
-    - dingle-doingle
-    - dingle
-    - dangle
-    - jibber-jabber
-    - jubber
-    - bleh
-    - zippity
-    - zoop
-    - wibble
-    - wobble
-    - wiggle
-    - yada
-    - meh
-    - neh
-    - nah
-    - wah
+    - a
+    - ado
+    - ago
+    - aj
+    - ajn
+    - al
+    - alt
+    - am
+    - amas
+    - an
+    - ang
+    - ante
+    - ap
+    - ard
+    - arma
+    - aro
+    - as
+    - aur
+    - aut
+    - aw
+    - ba
+    - bal
+    - bao
+    - be
+    - beau
+    - bel
+    - bi
+    - bit
+    - blu
+    - bo
+    - bod
+    - boj
+    - bojn
+    - bu
+    - but
+    - ca
+    - caj
+    - ce
+    - cer
+    - chun
+    -	ci
+    - cion
+    - coj
+    - cor
+    - da
+    - daj
+    - dan
+    - de
+    - den
+    - dis
+    - do
+    - dor
+    - dorm
+    - eco
+    - ego
+    - ek
+    - eks
+    - en
+    - ero
+    - es
+    - est
+    - et
+    - eve
+    - fa
+    - fe
+    - fel
+    - fla
+    - foj
+    - fra
+    - fraz
+    - fros
+    - ful
+    - fut
+    - ga
+    - gan
+    - gar
+    - gi
+    - gis
+    - go
+    - gran
+    - ha
+    - han
+    - hav
+    - hom
+    - hong
+    - hu
+    - hum
+    - hushi
+    - ia
+    - iaj
+    - ica
+    - id
+    - idon
+    - il
+    - in
+    - ing
+    - io
+    - is
+    - iton
+    - iza
+    - ja
+    - ji
+    - jirou
+    - joj
+    - ka
+    - kaj
+    - kajo
+    - kan
+    - ke
+    - ket
+    - ki
+    - kna
+    - krio
+    - ku
+    - kui
+    - kuk
+    - kun
+    - kur
+    - la
+    - laca
+    - leng
+    - les
+    - li
+    - liao
+    - lib
+    -	ling
+    - lis
+    - lo
+    - lon
+    - long
+    - lu
+    - lud
+    - ma
+    - mal
+    - man
+    - me
+    - mego
+    - mero
+    - mi
+    - mia
+    - min
+    - mo
+    - moj
+    - mola
+    - mon
+    - mul
+    - ne
+    - ner
+    - ni
+    - nio
+    - nu
+    - of
+    - oj
+    - om
+    - ou
+    - pe
+    - pi
+    - plan
+    - pli
+    - po
+    - por
+    - post
+    - pre
+    - prin
+    - pru
+    - pu
+    - pur
+    - qiu
+    - que
+    - ra
+    - ras
+    - re
+    - ri
+    - rig
+    - ril
+    - ro
+    - roj
+    - ron
+    - roso
+    - rou
+    - ru
+    - sa
+    - san
+    - sci
+    - sek
+    - shi
+    - shiia
+    - shiue
+    - shiwu
+    - shu
+    - shui
+    - si
+    - siaj
+    - sku
+    - so
+    - som
+    - sti
+    - str
+    - stre
+    - su
+    - suno
+    - ta
+    - tan
+    - tas
+    - te
+    - tel
+    - tem
+    - the
+    - ti
+    - tian
+    - tita
+    - tiu
+    - to
+    - toj
+    - ton
+    - tran
+    - tre
+    - tri
+    - trin
+    - tro
+    - trus
+    - un
+    - undo
+    - uno
+    - uz
+    - va
+    - var
+    - varm
+    - vas
+    - ve
+    - vek
+    - ven
+    - ves
+    - vi
+    - via
+    - vin
+    - vino
+    - vint
+    - vir
+    - von
+    - vu
+    - whe
+    - wu
+    - yong
+    - zem
+    - zo
+    - zoj
+    - zon
 
 # Spoken by slimes.
 - type: language
   id: Bubblish
+  speech:
+    color: "#DDFFF8"
   obfuscation:
     !type:SyllableObfuscation
     minSyllables: 1
-    maxSyllables: 3
+    maxSyllables: 4
     replacement:
     - blob
     - plop
@@ -52,6 +283,8 @@
 # Spoken by moths.
 - type: language
   id: Moffic
+  speech:
+    color: "#FFF3DD"
   obfuscation:
     !type:SyllableObfuscation
     minSyllables: 2 # Replacements are really short
@@ -118,6 +351,8 @@
 # Spoken by dionas.
 - type: language
   id: RootSpeak
+  speech:
+    color: "#F3FFDD"
   obfuscation:
     !type:SyllableObfuscation
     minSyllables: 1
@@ -129,66 +364,11 @@
     - st
     - sh
 
-# A mess of broken Japanese, spoken by Felinds and Oni
-- type: language
-  id: Nekomimetic
-  obfuscation:
-    !type:SyllableObfuscation
-    minSyllables: 1
-    maxSyllables: 3 # May be too long even, we'll see.
-    replacement:
-    - neko
-    - nyan
-    - mimi
-    - moe
-    - mofu
-    - fuwa
-    - kyaa
-    - kawaii
-    - poka
-    - munya
-    - puni
-    - munyu
-    - ufufu
-    - icha
-    - doki
-    - kyun
-    - kusu
-    - nya
-    - nyaa
-    - desu
-    - kis
-    - ama
-    - chuu
-    - baka
-    - hewo
-    - boop
-    - gato
-    - kit
-    - sune
-    - yori
-    - sou
-    - baka
-    - chan
-    - san
-    - kun
-    - mahou
-    - yatta
-    - suki
-    - usagi
-    - domo
-    - ori
-    - uwa
-    - zaazaa
-    - shiku
-    - puru
-    - ira
-    - heto
-    - etto
-
 # Spoken by the Lizard race.
 - type: language
   id: Draconic
+  speech:
+    color: "#DDFFE0"
   obfuscation:
     !type:SyllableObfuscation
     minSyllables: 2
@@ -279,79 +459,11 @@
     - s
     - s
 
-# Spoken by the Vulpkanin race.
-- type: language
-  id: Canilunzt
-  speech:
-    color: "#b97a57"
-  obfuscation:
-    !type:SyllableObfuscation
-    minSyllables: 1
-    maxSyllables: 4
-    replacement:
-    - rur
-    - ya
-    - cen
-    - rawr
-    - bar
-    - kuk
-    - tek
-    - qat
-    - uk
-    - wu
-    - vuh
-    - tah
-    - tch
-    - schz
-    - auch
-    - ist
-    - ein
-    - entch
-    - zwichs
-    - tut
-    - mir
-    - wo
-    - bis
-    - es
-    - vor
-    - nic
-    - gro
-    - enem
-    - zandt
-    - tzch
-    - noch
-    - hel
-    - ischt
-    - far
-    - wa
-    - baram
-    - iereng
-    - tech
-    - lach
-    - sam
-    - mak
-    - lich
-    - gen
-    - or
-    - ag
-    - eck
-    - gec
-    - stag
-    - onn
-    - bin
-    - ket
-    - jarl
-    - vulf
-    - einech
-    - cresthz
-    - azunein
-    - ghzth
-
 # The common language of the Sol system.
 - type: language
   id: SolCommon
   speech:
-    color: "#8282fb"
+    color: "#F9F0C7"
   obfuscation:
     !type:SyllableObfuscation
     minSyllables: 1
@@ -386,6 +498,247 @@
     replacement:
     - 0
     - 1
+
+# Spoken by grays.
+- type: language
+  id: GraySpeak
+  speech:
+    color: "#BCD3BA"
+  obfuscation:
+    !type:SyllableObfuscation
+    minSyllables: 1
+    maxSyllables: 1
+    replacement:
+    - thusd
+    - gleep
+    - glorm
+    - beego
+    - mochigi
+    - leedar
+    - kibeab
+    - cheego
+    - sipa
+    - yoomba
+    - toupa
+    - nitbal
+    - jorl
+    - glorp
+    - jumba
+    - jambu
+    - mo
+    - tii
+    - gimbo
+    - dom jot
+    - gramba
+    - yaer
+    - gnarp
+    - sipsi
+    - vroma
+    - eitei
+    - deni
+    - booma
+    - nuuka
+    - doomba
+    - lorf
+    - tssshi
+    - glorm-vroma
+    - pisk
+    - piskun
+    - douda
+    - beepi
+    - beepimo
+    - woota
+    - wotua
+    - sqoshi
+    - snekorf
+    - tsshi-suni
+    - suni
+    - erth
+    - kieel
+    - ouu
+    - dreen
+    - oo-moo
+    - mox
+    - bogos
+    - beba
+    - keboo
+    - meilmo
+    - cheezi
+    - glumpi
+    - glumph
+    - schui
+    - goiip
+    - stupee
+    - ortimesi
+    - waba-ku
+    - waba-beepi
+    - brimbi
+    - finni
+    - indurstandar
+    - gloef
+    - dinne
+    - chalkee
+    - bweee
+    - keb
+    - clune
+    - slipi
+    - geena
+    - jamga
+    - ouuti
+    - seben
+    - ei's
+    - eif
+    - graba
+    - graba-u
+    - mobie
+    - tek
+    - mou
+    - zooti
+    - flomi
+    - zigeef
+    - too
+    - tee
+    - milx
+    - jambupisk
+    - thikee
+    - embinum
+    - jazee
+    - vru
+    - keb
+    - thui
+    - wamba't
+    - modeni
+    - not
+    - fum
+    - noot
+    - splorp
+    - sporp
+    - spop
+    - zazz
+    - pushee
+    - deek
+    - tronk
+    - blagh
+    - blaagh
+    - zat
+    - blag
+    - zim
+    - flii
+    - jorp
+    - jurm
+    - beben
+    - toie
+    - tin
+    - plod're
+    - mozz'm
+    - thui-wa
+    - thui-wa're
+    - gleepzz
+    - pu
+    - ziip
+    - frup
+    - pib
+    - quz
+    - woglump
+    - yii
+    - yim
+    - bormpt
+    - twii
+    - zii
+    - bli
+    - zwep
+    - ooo
+    - oom
+    - yeta
+    - lopi
+    - mu
+    - mee
+    - zwee
+    - zwoo
+    - lupi
+    - uumi
+    - ouli
+    - euni
+    - zwu
+    - sebon's
+    - sebon
+    - ei
+    - glump
+    - bogo
+    - pisku
+    - glormun
+    - buugo
+    - beeg
+    - yuumba
+    - yoombun
+    - tuupa
+    - toupun
+    - nitbul
+    - nitbun
+    - wuuta
+    - wootun
+    - moue
+    - glumpun
+    - schuu
+    - schuiun
+    - gnurp
+    - gnarpun
+    - flumi
+    - flumun
+    - blu
+    - blin
+    - glurm
+    - sipsun
+    - supsi
+    - uoo
+    - bebun
+    - buba
+    - grumba
+    - grambun
+    - urth
+    - erthun
+    - fanni
+    - grabun
+    - gruba
+    - leedars
+    - kibeabs
+    - sipas
+    - vromas
+    - eiteis
+    - boomas
+    - nuukas
+    - me-doombas
+    - tssshis
+    - glorm-vromas
+    - beepis
+    - beepimos
+    - sqoshis
+    - snekorfi
+    - tssi-sunis
+    - sunis
+    - cheezis
+    - stupees
+    - ortimesis
+    - waba-kus
+    - waba-beepis
+    - brimbis
+    - dinnes
+    - chalkees
+    - slipis
+    - geenas
+    - pushees
+    - deeks
+    - twiis
+    - pusk
+    - dinnun
+    - dunne
+    - buupi
+    - beepun
+    - duuda
+    - doudun
+    - dom-un
+    - dum jut
+    - oum
 
 # Languages spoken by various critters.
 - type: language

@@ -4,6 +4,7 @@ using Content.Server.PowerCell;
 using Content.Shared._EinsteinEngine.Language;
 using Content.Shared._EinsteinEngine.Language.Components;
 using Content.Shared._EinsteinEngine.Language.Components.Translators;
+using Content.Shared._EinsteinEngine.Language.Events;
 using Content.Shared._EinsteinEngine.Language.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.PowerCell;
@@ -85,7 +86,7 @@ public sealed class TranslatorSystem : SharedTranslatorSystem
         // If that is not the case, then OnProxyDetermineLanguages will remove this translator from HoldsTranslatorComponent.Translators.
         Timer.Spawn(0, () =>
         {
-            if (Exists(args.OldParent) && TryComp<LanguageSpeakerComponent>(args.OldParent, out var speaker))
+            if (Exists(args.OldParent) && HasComp<LanguageSpeakerComponent>(args.OldParent))
                 _language.UpdateEntityLanguages(args.OldParent.Value);
         });
     }
@@ -113,7 +114,6 @@ public sealed class TranslatorSystem : SharedTranslatorSystem
             // Update the current language of the entity if necessary
             if (isEnabled && translatorComp.SetLanguageOnInteract && firstNewLanguage is {})
                 _language.SetLanguage((holder, languageComp), firstNewLanguage);
-
         }
 
         OnAppearanceChange(translator, translatorComp);
@@ -132,7 +132,7 @@ public sealed class TranslatorSystem : SharedTranslatorSystem
         _powerCell.SetDrawEnabled(translator, false);
         OnAppearanceChange(translator, component);
 
-        if (_containers.TryGetContainingContainer(translator, out var holderCont) && TryComp<LanguageSpeakerComponent>(holderCont.Owner, out var languageComp))
+        if (_containers.TryGetContainingContainer(translator, out var holderCont) && HasComp<LanguageSpeakerComponent>(holderCont.Owner))
             _language.UpdateEntityLanguages(holderCont.Owner);
     }
 

@@ -361,15 +361,6 @@
       - SolCommonTranslator
       - RootSpeakTranslator
       - XenoTranslator
-      - BasicGalaticCommonTranslatorImplanter
-      - AdvancedGalaticCommonTranslatorImplanter
-      - BubblishTranslatorImplanter
-      - DraconicTranslatorImplanter
-      - SolCommonTranslatorImplanter
-      - RootSpeakTranslatorImplanter
-      - AnimalTranslator
-      - MofficTranslatorImplanter
-      - MofficTranslator
   - type: EmagLatheRecipes
     emagDynamicRecipes:
       - BoxBeanbag

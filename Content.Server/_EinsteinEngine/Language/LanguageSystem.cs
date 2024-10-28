@@ -13,7 +13,7 @@ public sealed partial class LanguageSystem : SharedLanguageSystem
     public override void Initialize()
     {
         base.Initialize();
-
+        SubscribeLocalEvent<LanguageKnowledgeComponent, MapInitEvent>(OnInitLanguageKnowledge);
         SubscribeLocalEvent<LanguageSpeakerComponent, MapInitEvent>(OnInitLanguageSpeaker);
         SubscribeLocalEvent<LanguageSpeakerComponent, ComponentGetState>(OnGetLanguageState);
         SubscribeLocalEvent<UniversalLanguageSpeakerComponent, DetermineEntityLanguagesEvent>(OnDetermineUniversalLanguages);
@@ -24,6 +24,10 @@ public sealed partial class LanguageSystem : SharedLanguageSystem
     }
 
     #region event handling
+    private void OnInitLanguageKnowledge(Entity<LanguageKnowledgeComponent> ent, ref MapInitEvent args)
+    {
+        EnsureComp<LanguageSpeakerComponent>(ent.Owner);
+    }
 
     private void OnInitLanguageSpeaker(Entity<LanguageSpeakerComponent> ent, ref MapInitEvent args)
     {
