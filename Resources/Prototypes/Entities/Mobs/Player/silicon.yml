@@ -70,6 +70,8 @@
     canShuttle: false
     title: comms-console-announcement-title-station-ai
     color: "#2ed2fd"
+  - type: Speech
+    speechVerb: Robotic
 
 - type: entity
   id: AiHeldIntellicard
