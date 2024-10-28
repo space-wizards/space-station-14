@@ -4,7 +4,7 @@ using Content.Server.Station.Systems;
 using Content.Server.CartridgeLoader;
 using Content.Shared.CartridgeLoader;
 using Content.Shared.CartridgeLoader.Cartridges;
-using Content.Server.Mail.Components;
+using Content.Server.DeltaV.Mail.Components;
 
 namespace Content.Server.DeltaV.CartridgeLoader.Cartridges;
 

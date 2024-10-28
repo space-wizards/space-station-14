@@ -1,9 +1,9 @@
-using Content.Shared.Mail;
+using Content.Shared.DeltaV.Mail;
 using Content.Shared.StatusIcon;
 using Robust.Client.GameObjects;
 using Robust.Shared.Prototypes;
 
-namespace Content.Client.Mail;
+namespace Content.Client.DeltaV.Mail;
 
 /// <summary>
 ///     Display a cool stamp on the parcel based on the job of the recipient.
@@ -26,7 +26,6 @@ namespace Content.Client.Mail;
 public sealed class MailJobVisualizerSystem : VisualizerSystem<MailComponent>
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly SpriteSystem _stateManager = default!;
     [Dependency] private readonly SpriteSystem _spriteSystem = default!;
 
     protected override void OnAppearanceChange(EntityUid uid, MailComponent component, ref AppearanceChangeEvent args)

@@ -1,6 +1,6 @@
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Mail
+namespace Content.Shared.DeltaV.Mail
 {
     /// <summary>
     /// Stores the visuals for mail.

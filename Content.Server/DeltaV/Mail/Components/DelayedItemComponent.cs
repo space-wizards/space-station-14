@@ -1,4 +1,4 @@
-namespace Content.Server.Mail
+namespace Content.Server.DeltaV.Mail.Components
 {
     /// <summary>
     /// A placeholder for another entity, spawned when dropped or placed in someone's hands.

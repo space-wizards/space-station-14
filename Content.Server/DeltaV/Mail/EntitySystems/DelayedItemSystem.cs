@@ -1,8 +1,9 @@
+using Content.Server.DeltaV.Mail.Components;
 using Content.Shared.Damage;
 using Content.Shared.Hands;
 using Robust.Shared.Containers;
 
-namespace Content.Server.Mail
+namespace Content.Server.DeltaV.Mail.EntitySystems
 {
     /// <summary>
     /// A placeholder for another entity, spawned when taken out of a container, with the placeholder deleted shortly after.
