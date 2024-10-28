@@ -3376,3 +3376,10 @@
   id: 417
   time: '2024-10-28T23:21:35.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/556
+- author: hivehum
+  changes:
+  - message: Music sounds worse in the lobby because I hate you.
+    type: Tweak
+  id: 418
+  time: '2024-10-28T23:22:57.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/554
