@@ -42,7 +42,6 @@
     damage:
       types:
         Piercing: 3
-
 #TODO: I want the luxury pen to write a cool font like Merriweather in the future.
 
 - type: entity
@@ -104,7 +103,7 @@
 
 - type: entity
   name: captain's fountain pen
-  parent: PenEmbeddable
+  parent: [PenEmbeddable, BaseCommandContraband]
   id: PenCap
   description: A luxurious fountain pen for the captain of the station.
   components:
@@ -113,7 +112,7 @@
 
 - type: entity
   name: hop's fountain pen
-  parent: PenEmbeddable
+  parent: [PenEmbeddable, BaseCommandContraband]
   id: PenHop
   description: A luxurious fountain pen for the hop of the station.
   components:
@@ -122,7 +121,7 @@
 
 - type: entity
   name: ce's pen
-  parent: [PenEmbeddable, BasePowerCell]
+  parent: [PenEmbeddable, BasePowerCell, BaseCommandContraband]
   id: PenCE
   description: Keep away from borgs.
   components:
@@ -138,7 +137,7 @@
     startingCharge: 360
   - type: BatterySelfRecharger
     autoRecharge: true
-    autoRechargeRate: 5
+    autoRechargeRate: 3
   - type: DamageOtherOnHit
     damage:
       types:
@@ -152,107 +151,90 @@
 
 - type: entity
   name: rd's pen
-  parent: [Pen, WeaponPistolCHIMP]
+  parent: [Pen, BaseCommandContraband]
   id: PenRD
   description: Contain it now!
   components:
   - type: Sprite
     sprite: Objects/Misc/pens.rsi
     layers:
-    - state: pen_RD
-      map: ["enum.GunVisualLayers.Base"]
-    - state: pen_RD_ink-unshaded-0
-      map: ["enum.GunVisualLayers.MagUnshaded"]
-      shader: unshaded
-  - type: Battery
-    maxCharge: 3000
-    startingCharge: 3000
-  - type: Gun
-    projectileSpeed: 5
-    fireRate: 0.5
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
-  - type: ProjectileBatteryAmmoProvider
-    proto: AnomalousParticleDeltaStrong
-    fireCost: 1000
-  - type: MagazineVisuals
-    magState: pen_RD_ink
-    steps: 4
-    zeroVisible: true
-  - type: BatteryWeaponFireModes
-    fireModes:
-    - proto: AnomalousParticleDeltaStrong
-      fireCost: 1000
-    - proto: AnomalousParticleEpsilonStrong
-      fireCost: 1000
-    - proto: AnomalousParticleZetaStrong
-      fireCost: 1000
-    - proto: AnomalousParticleSigmaStrong
-      fireCost: 1000
-  - type: BatterySelfRecharger
-    autoRecharge: true
-    autoRechargeRate: 5
+      - state: pen_RD
+      - state: pen_RD_ink-unshaded
+        shader: unshaded
+        visible: false
+        map: ["enum.ToggleVisuals.Layer"]
   - type: Appearance
-
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
+          True: { visible: true }
+          False: { visible: false }
+  - type: ItemToggle
+  - type: ProximityBeeper
+  - type: ProximityDetector
+    range: 8
+    criteria:
+      components:
+      - Anomaly
+  - type: Beeper
+    isMuted: true
+    minBeepInterval: 0.01
+    maxBeepInterval: 1.00
+    beepSound:
+      path: "/Audio/Items/locator_beep.ogg"
+      params:
+        maxDistance: 1
+        volume: -6
 
 - type: entity
   name: hos's pen
-  parent: [Pen, Stunbaton]
+  parent: Flash
   id: PenHOS
-  description: Z-Z-ZAP!
+  description: "Gentlemen, congratulations. You're everything we've come to expect from years of government training. Now please step this way, as we provide you with our final test: an eye exam..."
   components:
   - type: Sprite
     sprite: Objects/Misc/pens.rsi
     layers:
-    - state: pen_HOS_off
-      map: [ "enum.ToggleVisuals.Layer" ]
-  - type: Stunbaton
-    energyPerUse: 20000
-  - type: MeleeWeapon
-    wideAnimationRotation: -135
-    damage:
-      types:
-        Piercing: 5
-    bluntStaminaDamageFactor: 2.0
-    angle: 60
-    animation: WeaponArcSlash
-  - type: StaminaDamageOnHit
-    damage: 100
-    sound: /Audio/Weapons/egloves.ogg
-  - type: StaminaDamageOnCollide
-    damage: 100
-    sound: /Audio/Weapons/egloves.ogg
+    - state: pen_HOS
+      map: [ "enum.FlashVisuals.BaseLayer" ]
+    - state: flashing
+      map: [ "enum.FlashVisuals.LightLayer" ]
+      visible: false
+      shader: unshaded
+  - type: LimitedCharges
+    maxCharges: 3
+    charges: 3
+  - type: UseDelay
   - type: GenericVisualizer
     visuals:
-     enum.ToggleVisuals.Toggled:
-        enum.ToggleVisuals.Layer:
-          True: {state: pen_HOS_on}
-          False: {state: pen_HOS_off}
-  - type: Battery
-    maxCharge: 20000
-    startingCharge: 20000
-  - type: DamageOtherOnHit
-    damage:
-      types:
-        Piercing: 3
-  - type: ThrowingAngle
-    angle: 315
-  - type: BatterySelfRecharger
-    autoRecharge: true
-    autoRechargeRate: 5
+      enum.FlashVisuals.Burnt:
+        enum.FlashVisuals.BaseLayer:
+          True: {state: pen_HOS_burned}
+      enum.FlashVisuals.Flashing:
+        enum.FlashVisuals.LightLayer:
+          True: {visible: true}
+          False: {visible: false}
+  - type: Appearance
+  - type: Item
+    sprite: Objects/Misc/pens.rsi
+    heldPrefix: pen
+    size: Tiny
+  - type: StealTarget
+    stealGroup: HeadPens
 
 - type: entity
   name: luxury qm's pen
-  parent: Pen
+  parent: [Pen, BaseCommandContraband]
   id: PenQM
   description: It's nothing personal, it's just business.
   components:
   - type: Sprite
     state: pen_QM
   - type: AnomalyCore
-    timeToDecay: 6000
+    timeToDecay: 12000
     startPrice: 0
-    endPrice: 20000
+    endPrice: 10000
   - type: ThrowingAngle
     angle: 315
   - type: LandAtCursor
@@ -263,28 +245,36 @@
 
 - type: entity
   name: cmo's pen
-  parent: Pen
+  parent: [Pen, BaseCommandContraband]
   id: PenCMO
-  description: Please don't put mice in there.
+  description: It hurts!
   components:
   - type: Sprite
-    state: pen_CMO
-  - type: ReagentGrinder
-  - type: ActivatableUI
-    key: enum.ReagentGrinderUiKey.Key
-  - type: UserInterface
-    interfaces:
-      enum.ReagentGrinderUiKey.Key:
-        type: ReagentGrinderBoundUserInterface
-  - type: ItemSlots
-    slots:
-      beakerSlot:
-        whitelist:
-          tags:
-          - Vial
-  - type: ContainerContainer
-    containers:
-      beakerSlot: !type:ContainerSlot
-      inputContainer: !type:Container
-
-
+    layers:
+      - state: pen_CMO
+      - state: pen_CMO_unshaded
+        shader: unshaded
+      - state: pen_CMO_cap
+        visible: true
+        map: ["enum.ToggleVisuals.Layer"]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
+          True: { visible: false }
+          False: { visible: true }
+  - type: ItemToggle
+  - type: ItemToggleMeleeWeapon
+    activatedSoundOnHit:
+      path: /Audio/Effects/lightburn.ogg
+      params:
+        volume: -8
+    activatedDamage:
+        types:
+            Heat: 3
+  - type: MeleeWeapon
+    damage:
+       types:
+        Heat: 0
+    

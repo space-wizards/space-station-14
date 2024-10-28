@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/e1142f20f5e4661cb6845cfcf2dd69f864d67432. pen_centcom is a resprited version of pen_cap by PuroSlavKing (Github). Luxury pen is drawn by Ubaser. CE, RD, HOS, CMO, and QM pens made by justdie4908(Discord) and ghostovish7728(Discord)",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/e1142f20f5e4661cb6845cfcf2dd69f864d67432. pen_centcom is a resprited version of pen_cap by PuroSlavKing (Github). Luxury pen is drawn by Ubaser. Pens CE, RD, HOS, CMO, QM maded by justdie4908(Discord) and ghostovish7728(Discord)",
   "size": {
     "x": 32,
     "y": 32
@@ -68,27 +68,11 @@
       "name": "pen_RD"
     },
     {
-      "name": "pen_RD_ink-unshaded-0",
+      "name": "pen_RD_ink-unshaded",
       "delays": [
         [
         0.2,
-        0.2
-        ]
-      ]
-    },
-    {
-      "name": "pen_RD_ink-unshaded-1"
-    },
-    {
-      "name": "pen_RD_ink-unshaded-2"
-    },
-    {
-      "name": "pen_RD_ink-unshaded-3"
-    },
-    {
-      "name": "pen_HOS_on",
-      "delays": [
-        [
+        0.2,
         0.2,
         0.2,
         0.2,
@@ -97,13 +81,40 @@
       ]
     },
     {
-      "name": "pen_HOS_off"
+      "name": "flashing",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "pen_HOS"
+    },
+    {
+      "name": "pen_HOS_burned"
     },
     {
       "name": "pen_QM"
     },
     {
       "name": "pen_CMO"
+    },
+    {
+      "name": "pen_CMO_unshaded",
+      "delays": [
+        [
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "pen_CMO_cap"
     }
   ]
 }
