@@ -97,9 +97,6 @@ reagent-desc-ethylredoxrazine = Neutralises the effects of alcohol in the blood 
 reagent-name-cognizine = cognizine
 reagent-desc-cognizine = A mysterious chemical which is able to make any non-sentient creature sentient.
 
-reagent-name-subjuzine = subjuzine
-reagent-desc-subjuzine = A devious alteration of cognizine that bends the creature's will to that of whoever injected them.
-
 reagent-name-ethyloxyephedrine = ethyloxyephedrine
 reagent-desc-ethyloxyephedrine = A mildly unstable medicine derived from desoxyephedrine, primarily used to combat narcolepsy.
 
@@ -150,6 +147,3 @@ reagent-desc-potassium-iodide = Will reduce the damaging effects of radiation by
 
 reagent-name-haloperidol = haloperidol
 reagent-desc-haloperidol = Removes most stimulating and hallucinogenic drugs. Reduces druggy effects and jitteriness. Causes drowsiness.
-
-reagent-name-caramexinin = caramexinin
-reagent-desc-caramexinin = An artificial sweetener that treats and prevents Theobromine poisoning in animals.
