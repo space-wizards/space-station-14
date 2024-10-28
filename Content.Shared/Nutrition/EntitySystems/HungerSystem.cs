@@ -56,8 +56,8 @@ public sealed class HungerSystem : EntitySystem
     private void OnMapInit(EntityUid uid, HungerComponent component, MapInitEvent args)
     {
         var amount = _random.Next(
-            (int)component.Thresholds[HungerThreshold.Peckish] + 10,
-            (int)component.Thresholds[HungerThreshold.Okay]);
+            (int) component.Thresholds[HungerThreshold.Peckish] + 10,
+            (int) component.Thresholds[HungerThreshold.Okay]);
         SetHunger(uid, amount, component);
     }
 
@@ -89,10 +89,7 @@ public sealed class HungerSystem : EntitySystem
     {
         var dt = _timing.CurTime - component.LastAuthoritativeHungerChangeTime;
         var value = component.LastAuthoritativeHungerValue - (float)dt.TotalSeconds * component.ActualDecayRate;
-
-        return Math.Clamp(value,
-            component.Thresholds[HungerThreshold.Dead],
-            component.Thresholds[HungerThreshold.Overfed]);
+        return ClampHungerWithinThresholds(component, value);
     }
 
     /// <summary>
@@ -140,9 +137,7 @@ public sealed class HungerSystem : EntitySystem
         }
 
         entity.Comp.LastAuthoritativeHungerChangeTime = _timing.CurTime;
-        entity.Comp.LastAuthoritativeHungerValue = Math.Clamp(value,
-            entity.Comp.Thresholds[HungerThreshold.Dead],
-            entity.Comp.Thresholds[HungerThreshold.Overfed]);
+        entity.Comp.LastAuthoritativeHungerValue = ClampHungerWithinThresholds(entity.Comp, value);
         Dirty(entity);
     }
 
@@ -229,14 +224,10 @@ public sealed class HungerSystem : EntitySystem
     /// <summary>
     /// A check that returns if the entity is below a hunger threshold.
     /// </summary>
-    public bool IsHungerBelowState(EntityUid uid,
-        HungerThreshold threshold,
-        float? food = null,
-        HungerComponent? comp = null)
+    public bool IsHungerBelowState(EntityUid uid, HungerThreshold threshold, float? food = null, HungerComponent? comp = null)
     {
         if (!Resolve(uid, ref comp))
-            return
-                false; // It's never going to go hungry, so it's probably fine to assume that it's not... you know, hungry.
+            return false; // It's never going to go hungry, so it's probably fine to assume that it's not... you know, hungry.
 
         return GetHungerThreshold(comp, food) < threshold;
     }
@@ -257,8 +248,7 @@ public sealed class HungerSystem : EntitySystem
         }
     }
 
-    public bool TryGetStatusIconPrototype(HungerComponent component,
-        [NotNullWhen(true)] out SatiationIconPrototype? prototype)
+    public bool TryGetStatusIconPrototype(HungerComponent component, [NotNullWhen(true)] out SatiationIconPrototype? prototype)
     {
         switch (component.CurrentThreshold)
         {
@@ -277,6 +267,13 @@ public sealed class HungerSystem : EntitySystem
         }
 
         return prototype != null;
+    }
+
+    private static float ClampHungerWithinThresholds(HungerComponent component, float hungerValue)
+    {
+        return Math.Clamp(hungerValue,
+            component.Thresholds[HungerThreshold.Dead],
+            component.Thresholds[HungerThreshold.Overfed]);
     }
 
     public override void Update(float frameTime)
