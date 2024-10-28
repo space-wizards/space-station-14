@@ -247,3 +247,64 @@
   sprites:
   - sprite: _Impstation/Mobs/Customization/scars.rsi
     state: torso_incision
+
+
+- type: marking
+  id: MothBodyClaw
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Moth]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/scars.rsi
+    state: moth_body_claw
+
+- type: marking
+  id: MothBurnLeft
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Moth]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/scars.rsi
+    state: moth_burn_l
+
+- type: marking
+  id: MothBurnRight
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Moth]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/scars.rsi
+    state: moth_burn_r
+
+- type: marking
+  id: MothFaceClaw
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Moth]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/scars.rsi
+    state: moth_face_claw
+
+- type: marking
+  id: MothSlashLeft
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Moth]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/scars.rsi
+    state: moth_slash_l
+
+- type: marking
+  id: MothSlashRight
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Moth]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/scars.rsi
+    state: moth_slash_r
