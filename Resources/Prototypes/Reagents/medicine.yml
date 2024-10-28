@@ -921,40 +921,6 @@
           min: 5
 
 - type: reagent
-  id: Subjuzine
-  name: reagent-name-subjuzine
-  desc: reagent-desc-subjuzine
-  group: Medicine
-  physicalDesc: reagent-physical-desc-enigmatic
-  flavor: magical
-  color: "#a50ed8"
-  metabolisms:
-    Medicine:
-      effects:
-      - !type:MakeSentient
-        conditions:
-        - !type:ReagentThreshold
-          min: 5
-
-
-- type: reagent
-  id: ActivatedSubjuzine
-  name: reagent-name-subjuzine
-  desc: reagent-desc-subjuzine
-  group: Medicine
-  physicalDesc: reagent-physical-desc-enigmatic
-  flavor: magical
-  color: "#911d06"
-  metabolisms:
-    Medicine:
-      effects:
-      - !type:MakeSyndient
-        conditions:
-        - !type:ReagentThreshold
-          min: 5
-
-
-- type: reagent
   id: Ethyloxyephedrine
   name: reagent-name-ethyloxyephedrine
   desc: reagent-desc-ethyloxyephedrine
@@ -1456,23 +1422,3 @@
       - !type:AdjustReagent
         reagent: MindbreakerToxin
         amount: -3.0
-
-- type: reagent
-  id: Caramexinin
-  name: reagent-name-caramexinin
-  desc: reagent-desc-caramexinin
-  physicalDesc: reagent-physical-desc-grainy
-  flavor: sweet
-  color: "#bdfff3"
-  recognizable: true
-  metabolisms:
-    Medicine:
-      metabolismRate: 0.1 #this should metabolise in the same amount of time as a drink in a 5:1 mix
-      effects:
-      - !type:AdjustReagent
-        reagent: Theobromine
-        amount: -0.25
-      - !type:HealthChange
-        damage:
-          types:
-            Poison: -0.2
