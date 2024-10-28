@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Mervill
-  changes:
-  - message: Gas Miners now have detailed examine text
-    type: Tweak
-  id: 7057
-  time: '2024-08-08T02:14:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30480
 - author: BackeTako
   changes:
   - message: "!, \u203D and multiple punctuations now work for Spanish."
@@ -3957,3 +3950,11 @@
   id: 7556
   time: '2024-10-27T04:25:55.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33017
+- author: stalengd
+  changes:
+  - message: Fixed playtime labels not being able to correctly display time greater
+      than 24 hours
+    type: Fix
+  id: 7557
+  time: '2024-10-28T18:00:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32974
