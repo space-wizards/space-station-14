@@ -838,10 +838,11 @@
     - Cargo
 
 - type: entity
-  id: SyndicateComputerCargoOrders
+  id: ComputerCargoOrders
+  suffix: Taipan
   parent: BaseComputerAiAccess
-  name: syndicate cargo request computer
-  description: Used to syndicate order supplies and approve requests.
+  name: taipan cargo request computer
+  description: Used to taipan order supplies and approve requests.
   components:
   - type: Sprite
     layers:
