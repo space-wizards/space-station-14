@@ -365,8 +365,8 @@
 
 - type: reagent
   id: SeaWater
-  name: reagent-name-carbon-seawater
-  desc: reagent-desc-carbon-seawater
+  name: reagent-name-seawater
+  desc: reagent-desc-seawater
   physicalDesc: reagent-physical-desc-odorless
   flavor: water and salt
   color: "#135c4f"
@@ -377,7 +377,8 @@
         ignoreResistances: true
         damage:
           types:
-            Cold: 2 # water, very temperature!!
+            Cold: 15 # water, very temperature!!
+            Asphyxiation: 20
       - !type:PopupMessage
         type: Local
         messages: [ "water-in-lungs" ]
