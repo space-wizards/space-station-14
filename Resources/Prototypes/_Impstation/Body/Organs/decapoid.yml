@@ -1,0 +1,26 @@
+- type: entity
+  id: OrganDecapoidLungs
+  parent: [ OrganHumanLungs, OrganHumanStomach ]
+  name: decapoid respiratory system
+  description: "Extracts dissolved oxygen from water, and utilizes it for cell maintenance."
+  suffix: "decapoid"
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      stomach:
+        maxVol: 50
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+  - type: Stomach
+  - type: Metabolizer
+    metabolizerTypes: [ Decapoid ]
+    maxReagents: 3
+    groups:
+    - id: Food
+    - id: Drink
+    - id: Gas
+      rateModifier: 100.0
+  - type: Lung

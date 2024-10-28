@@ -135,11 +135,13 @@ namespace Content.Server.Forensics
                 dest.Fingerprints.Add(print);
             }
         }
-        public string GetNameFromDNA(string DNA)
+
+        //gets the name of a person from the DNA inside it. RETURNS NULL FOR ANIMALS, OR ANYTHING ELSE WITH UNKNOWN DNA.
+        public string? GetNameFromDNA(string DNA)
         {
             var query = EntityQueryEnumerator<DnaComponent>();
 
-            String outputName = "OH GOD OH FUCK IT'S BROKEN";
+            String? outputName = null;
             //iterate over every DNAcomponent in the server until you find one that matches the given DNA
             while (query.MoveNext(out var sourceUID, out var sourceComp))
             {
@@ -324,7 +326,7 @@ namespace Content.Server.Forensics
             recipientComp.DNAs.Add(component.DNA);
             recipientComp.CanDnaBeCleaned = args.CanDnaBeCleaned;
         }
-
+        
         #region Public API
 
         /// <summary>

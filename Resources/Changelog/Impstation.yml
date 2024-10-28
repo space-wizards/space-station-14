@@ -3344,3 +3344,26 @@
   id: 413
   time: '2024-10-26T02:31:44.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/548
+- author: DinnerCalzone
+  changes:
+  - message: Made various changes to Hummingbird Station for further playtesting.
+      Check the Discord thread or GitHub PR for a full list of changes.
+    type: Tweak
+  id: 414
+  time: '2024-10-28T23:05:34.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/565
+- author: Kandiyaki
+  changes:
+  - message: fixed a bug where Subjuzine would break if activated with a mixture of
+      player and animal DNA.
+    type: Fix
+  id: 415
+  time: '2024-10-28T23:11:06.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/561
+- author: widgetbeck
+  changes:
+  - message: Some new guys. Shh.
+    type: Add
+  id: 416
+  time: '2024-10-28T23:18:50.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/560

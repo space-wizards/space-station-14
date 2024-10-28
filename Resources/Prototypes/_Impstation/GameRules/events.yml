@@ -3,10 +3,11 @@
   parent: BaseGameRule
   components:
   - type: StationEvent
-    earliestStart: 45
+    earliestStart: 35
     minimumPlayers: 30 # roundstart changeling is 15 which seems insane
     weight: 2 # twice as common as zombies
     duration: 1
+    occursDuringRoundEnd: false
   - type: ChangelingRule
   - type: AntagSelection
     agentName: changeling-roundend-name
