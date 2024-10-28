@@ -3398,3 +3398,12 @@
   id: 420
   time: '2024-10-28T23:24:07.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/551
+- author: hivehum & snavian
+  changes:
+  - message: Scars for moths.
+    type: Add
+  - message: Added more marking slots for most races.
+    type: Tweak
+  id: 421
+  time: '2024-10-28T23:33:09.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/552
