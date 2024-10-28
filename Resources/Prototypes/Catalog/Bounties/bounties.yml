@@ -691,11 +691,11 @@
 
 - type: cargoBounty
   id: BountyCardboardBox
-  reward: 2500
+  reward: 1200
   description: bounty-description-cardboard-box
   entries:
   - name: bounty-item-cardboard-box
-    amount: 12
+    amount: 5
     whitelist:
       tags:
       - BoxCardboard
