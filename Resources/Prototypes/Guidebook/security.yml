@@ -27,4 +27,4 @@
 - type: guideEntry
   id: GuideToStationSecurity
   name: guide-entry-guide-to-station-security
-  text: "/ServerInfo/Guidebook/Security/GuideToStationSecurity.xml"
+  text: "/ServerInfo/_Impstation/Guidebook/Security/GuideToStationSecurity.xml"

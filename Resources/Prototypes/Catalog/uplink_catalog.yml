@@ -1073,10 +1073,12 @@
     blacklist:
       tags:
       - NukeOpsUplink
-  - !type:BuyerWhitelistCondition
-    blacklist:
-      components:
-      - SurplusBundle
+  # the impstation special (it's really funny when this happens)
+  # seems to be a roughly 10% chance to hit the juck pot 1 million$ and get a double surplus crate
+  #- !type:BuyerWhitelistCondition
+  #  blacklist:
+  #    components:
+  #    - SurplusBundle
 
 - type: listing
   id: UplinkSuperSurplusBundle
@@ -1092,6 +1094,8 @@
     blacklist:
       tags:
       - NukeOpsUplink
+  # not allowed to be recursive because it set off a chain reaction that crashed my localhost
+  # can still contain normal surplus bundles though smile
   - !type:BuyerWhitelistCondition
     blacklist:
       components:

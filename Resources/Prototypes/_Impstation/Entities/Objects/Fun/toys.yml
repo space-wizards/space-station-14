@@ -1,0 +1,101 @@
+- type: entity
+  parent: BasePlushie
+  id: PlushieFinfin
+  name: fin fin plushie
+  description: A highly marketable plushie of the adorable dolphin-bird recently discovered on the distant planet Teo. Made artificially rare on purpose.
+  components:
+  - type: Sprite
+    state: plushie_finfin
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/_Impstation/Items/Toys/finfin1.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_Impstation/Items/Toys/finfin1.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/_Impstation/Items/Toys/finfin2.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/_Impstation/Items/Toys/finfin2.ogg
+  - type: Item
+    inhandVisuals:
+      left:
+        - state: plushie_finfin-inhand-left
+      right:
+        - state: plushie_finfin-inhand-right
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: FlavorProfile
+    flavors:
+      - finfin
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/_Impstation/Items/Toys/finfinhit.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: FabricScrapSalad
+  name: fabric scrap salad
+  description: Whose clothes are these?
+  components:
+  - type: Sprite
+    state: fabric-scrap-salad
+  - type: Construction
+    graph: FabricScrapSalad
+    node: salad
+
+- type: entity
+  parent: BasePlushie
+  id: YarnNoodles
+  name: yarn noodles
+  description: Looks like someone's failed knitting project.
+  components:
+  - type: Sprite
+    state: yarn-noodles
+  - type: Construction
+    graph: YarnNoodles
+    node: noodles
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieGray
+  name: gray plushie
+  description: Manufactured recently to commemorate the gray exchange program becoming a booming success. It feels plasticky and seems easy to chew on. Thui love keb piskun plushie!!
+  components:
+  - type: Sprite
+    state: plushie_gray
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/_Impstation/Voice/Gray/gray_scream.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_Impstation/Voice/Gray/gray_cry.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/_Impstation/Voice/Gray/gray_scream.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/_Impstation/Voice/Gray/gray_scream.ogg
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/_Impstation/Voice/Gray/gray_scream.ogg
+  - type: Food
+    requiresSpecialDigestion: false
+    useSound:
+      path: /Audio/_Impstation/Voice/Gray/gray_scream.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieUrsaMinor
+  name: ursa minor plushie
+  description: You get the feeling that this plushie is higher ranked than you.
+  components:
+  - type: Sprite
+    state: minor
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: FlavorProfile
+    flavors:
+      - stardust
