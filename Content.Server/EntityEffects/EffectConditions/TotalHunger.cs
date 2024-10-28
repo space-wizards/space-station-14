@@ -1,6 +1,6 @@
 using Content.Shared.EntityEffects;
 using Content.Shared.Nutrition.Components;
-using Content.Shared.FixedPoint;
+using Content.Shared.Nutrition.EntitySystems;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.EntityEffects.EffectConditions;
@@ -15,9 +15,10 @@ public sealed partial class Hunger : EntityEffectCondition
 
     public override bool Condition(EntityEffectBaseArgs args)
     {
-        if (args.EntityManager.TryGetComponent(args.TargetEntity, out HungerComponent? hunger))
+        if (args.EntityManager.TryGetComponent(args.TargetEntity, out HungerComponent? hunger) &&
+            args.EntityManager.SystemOrNull<HungerSystem>() is { } hungerSystem)
         {
-            var total = hunger.CurrentHunger;
+            var total = hungerSystem.GetHunger(hunger);
             if (total > Min && total < Max)
                 return true;
         }

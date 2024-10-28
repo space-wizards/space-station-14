@@ -14,7 +14,7 @@ using Robust.Shared.Random;
 namespace Content.Server.Animals.Systems;
 
 /// <summary>
-///     Gives ability to produce eggs, produces endless if the 
+///     Gives ability to produce eggs, produces endless if the
 ///     owner has no HungerComponent
 /// </summary>
 public sealed class EggLayerSystem : EntitySystem
@@ -79,7 +79,7 @@ public sealed class EggLayerSystem : EntitySystem
         // Allow infinitely laying eggs if they can't get hungry
         if (TryComp<HungerComponent>(uid, out var hunger))
         {
-            if (hunger.CurrentHunger < egglayer.HungerUsage)
+            if (_hunger.GetHunger(hunger) < egglayer.HungerUsage)
             {
                 _popup.PopupEntity(Loc.GetString("action-popup-lay-egg-too-hungry"), uid, uid);
                 return false;
