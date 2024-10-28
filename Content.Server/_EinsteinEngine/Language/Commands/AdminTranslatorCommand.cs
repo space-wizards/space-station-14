@@ -6,6 +6,7 @@ using Content.Shared._EinsteinEngine.Language.Components.Translators;
 using Content.Shared._EinsteinEngine.Language.Systems;
 using Content.Shared.Administration;
 using Robust.Server.Containers;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Toolshed;
 using Robust.Shared.Toolshed.Syntax;
 using Robust.Shared.Toolshed.TypeParsers;
@@ -107,7 +108,7 @@ public sealed class AdminTranslatorCommand : ToolshedCommand
     }
 
     [CommandImplementation("lsspoken")]
-    public IEnumerable<string> ListSpoken([PipedArgument] EntityUid input)
+    public IEnumerable<ProtoId<LanguagePrototype>> ListSpoken([PipedArgument] EntityUid input)
     {
         if (!TryGetTranslatorComp(input, out var translator))
             return [];
@@ -115,7 +116,7 @@ public sealed class AdminTranslatorCommand : ToolshedCommand
     }
 
     [CommandImplementation("lsunderstood")]
-    public IEnumerable<string> ListUnderstood([PipedArgument] EntityUid input)
+    public IEnumerable<ProtoId<LanguagePrototype>> ListUnderstood([PipedArgument] EntityUid input)
     {
         if (!TryGetTranslatorComp(input, out var translator))
             return [];
@@ -123,7 +124,7 @@ public sealed class AdminTranslatorCommand : ToolshedCommand
     }
 
     [CommandImplementation("lsrequired")]
-    public IEnumerable<string> ListRequired([PipedArgument] EntityUid input)
+    public IEnumerable<ProtoId<LanguagePrototype>> ListRequired([PipedArgument] EntityUid input)
     {
         if (!TryGetTranslatorComp(input, out var translator))
             return [];

@@ -1,3 +1,6 @@
+using Content.Shared._EinsteinEngine.Language;
+using Robust.Shared.Prototypes;
+
 namespace Content.Server._EinsteinEngine.Language;
 
 /// <summary>
@@ -11,13 +14,12 @@ public record struct DetermineEntityLanguagesEvent
     ///     The list of all languages the entity may speak.
     ///     By default, contains the languages this entity speaks intrinsically.
     /// </summary>
-    public HashSet<string> SpokenLanguages = new();
-
+    public HashSet<ProtoId<LanguagePrototype>> SpokenLanguages = new();
     /// <summary>
     ///     The list of all languages the entity may understand.
     ///     By default, contains the languages this entity understands intrinsically.
     /// </summary>
-    public HashSet<string> UnderstoodLanguages = new();
+    public HashSet<ProtoId<LanguagePrototype>> UnderstoodLanguages = new();
 
     public DetermineEntityLanguagesEvent() {}
 }

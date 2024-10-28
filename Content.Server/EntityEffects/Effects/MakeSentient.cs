@@ -38,7 +38,7 @@ public sealed partial class MakeSentient : EntityEffect
         if (!knowledge.SpokenLanguages.Contains(fallback))
             knowledge.SpokenLanguages.Add(fallback);
 
-        IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<LanguageSystem>().UpdateEntityLanguages(uid, speaker);
+        IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<LanguageSystem>().UpdateEntityLanguages(uid);
 
         // Stops from adding a ghost role to things like people who already have a mind
         if (entityManager.TryGetComponent<MindContainerComponent>(uid, out var mindContainer) && mindContainer.HasMind)

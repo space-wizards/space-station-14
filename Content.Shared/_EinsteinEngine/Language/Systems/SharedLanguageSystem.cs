@@ -10,7 +10,7 @@ public abstract class SharedLanguageSystem : EntitySystem
     ///     The language used as a fallback in cases where an entity suddenly becomes a language speaker (e.g. the usage of make-sentient)
     /// </summary>
     [ValidatePrototypeId<LanguagePrototype>]
-    public static readonly string FallbackLanguagePrototype = "GalacticCommon";
+    public static readonly string FallbackLanguagePrototype = "TauCetiBasic";
 
     /// <summary>
     ///     The language whose speakers are assumed to understand and speak every language. Should never be added directly.
@@ -31,9 +31,9 @@ public abstract class SharedLanguageSystem : EntitySystem
         Universal = _prototype.Index<LanguagePrototype>("Universal");
     }
 
-    public LanguagePrototype? GetLanguagePrototype(string id)
+    public LanguagePrototype? GetLanguagePrototype(ProtoId<LanguagePrototype> id)
     {
-        _prototype.TryIndex<LanguagePrototype>(id, out var proto);
+        _prototype.TryIndex(id, out var proto);
         return proto;
     }
 
@@ -43,8 +43,7 @@ public abstract class SharedLanguageSystem : EntitySystem
     public string ObfuscateSpeech(string message, LanguagePrototype language)
     {
         var builder = new StringBuilder();
-        var method = language.Obfuscation;
-        method.Obfuscate(builder, message, this);
+        language.Obfuscation.Obfuscate(builder, message, this);
 
         return builder.ToString();
     }
