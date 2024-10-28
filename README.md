@@ -22,7 +22,11 @@ Note that some assets are licensed under the non-commercial [CC-BY-NC-SA 3.0](ht
 
 ## Contributors
 Pixeltheaertist - Project Lead
-verslebas - Programming, Debugging
-Nolius - Programming
+
+Nolius - Programming, Debugging, General help
+
+Verslebas - Programming, Debugging
+
 Lupino - Debugging, General help
-Målingen - Spriting, Lore, General help
+
+Målingen - Spriting, Lore help, General help
