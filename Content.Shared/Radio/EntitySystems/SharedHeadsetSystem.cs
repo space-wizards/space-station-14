@@ -46,13 +46,7 @@ public abstract class SharedHeadsetSystem : EntitySystem
 
     private void OnGetVerbs(EntityUid uid, HeadsetComponent component, ref GetVerbsEvent<Verb> args)
     {
-        if (!args.CanInteract || args.Hands == null)
-            return;
-
-        if (component.IsEquipped && Transform(uid).ParentUid != args.User)
-            return;
-
-        if (!_interaction.InRangeUnobstructed(args.User, args.Target))
+        if (!args.CanComplexInteract || !args.CanAccess)
             return;
 
         if (!TryComp<EncryptionKeyHolderComponent>(uid, out var keyHolder))
