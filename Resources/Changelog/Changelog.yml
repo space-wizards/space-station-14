@@ -1,16 +1,6 @@
 ﻿Entries:
 - author: Plykiya
   changes:
-  - message: Buffed the range of EMP implants from a radius of 1.75 tiles to 2.75
-      tiles.
-    type: Tweak
-  - message: Buffed the range of EMP grenades from a radius of 4 tiles to 5.5 tiles.
-    type: Tweak
-  id: 7060
-  time: '2024-08-08T10:04:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30660
-- author: Plykiya
-  changes:
   - message: You can drop food or drinks from your hands to interrupt eating it, again.
     type: Fix
   - message: Barber scissors are now interrupted if the item is dropped or if the
@@ -3958,3 +3948,10 @@
   id: 7559
   time: '2024-10-29T05:00:29.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33042
+- author: metalgearsloth
+  changes:
+  - message: Fix separated game screen bumping slightly.
+    type: Fix
+  id: 7560
+  time: '2024-10-29T05:07:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33046
