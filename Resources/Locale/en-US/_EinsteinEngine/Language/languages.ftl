@@ -7,7 +7,7 @@ language-GalacticCommon-description = The standard Galatic language, most common
 language-Bubblish-name = Bubblish
 language-Bubblish-description = The language of Slimes. Being a mixture of bubbling noises and pops it's very difficult to speak for humans without the use of mechanical aids.
 
-language-RootSpeak-name = Rootspeak
+language-RootSpeak-name = The Exchange of Ideas
 language-RootSpeak-description = The strange whistling-style language spoken by the Diona.
 
 language-Draconic-name = Draconic

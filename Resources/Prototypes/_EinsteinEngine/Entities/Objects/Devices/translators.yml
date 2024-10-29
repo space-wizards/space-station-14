@@ -106,8 +106,8 @@
 - type: entity
   id: RootSpeakTranslator
   parent: [ TranslatorEmpty ]
-  name: RootSpeak translator
-  description: Translates speech between RootSpeak and Galactic Common. You may now speak for the trees.
+  name: The Exchance of Ideas translator
+  description: Translates speech between The Exchance of Ideas and Galactic Common. You may now speak for the trees.
   components:
   - type: HandheldTranslator
     spoken:
@@ -124,7 +124,7 @@
   id: MofficTranslator
   parent: [ TranslatorEmpty ]
   name: Moffic translator
-  description: Translates speech between Moffic and Galactic Common, helping you understand the buzzes of your pet mothroach!
+  description: Translates speech between Moffic and Galactic Common, helping you understand the buzzes of your pet mothroach, and also Moth people too I guess!
   components:
   - type: HandheldTranslator
     spoken:
