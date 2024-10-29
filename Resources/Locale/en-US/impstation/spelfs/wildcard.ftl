@@ -97,8 +97,8 @@ spelf-mood-cave-dweller-desc = You strongly prefer navigating via flashlight in 
 spelf-mood-daredevil-name = Daredevil
 spelf-mood-daredevil-desc = You do not acknowledge pain or danger to your person in public. To do so would be to demonstrate weakness, and would make you a target.
 
-spelf-mood-folk-hero-name = Folk Hero
-spelf-mood-folk-hero-desc = No one knows it yet, but you are the hero this station needs. You must intervene in any major conflict that occurs, and fight the station’s enemies to the best of your ability.
+spelf-mood-folk-hero-name = {$dagdChanceName}
+spelf-mood-folk-hero-desc = {$dagdChanceDesc}
 
 spelf-mood-blogger-name = Greencomms Blogger
 spelf-mood-blogger-desc = You must keep the station informed about every minute detail of your life.

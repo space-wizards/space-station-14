@@ -20,21 +20,21 @@
     - RadioOnly
     - ProperStorage
     - SwearingGood
-    - StatementOnly
+#    - StatementOnly
     - TheftNeutral
     - Duel
     - Prometheus
     - Klingon
     - SogginsLaw
-    - Imitation
+#    - Imitation
     - Generous
     - FavorsRepaid
     - Bookkeeper
     - SacredBlood
     - GiftReciever
     - NewJob
-    - ThirdPerson
-    - TitleCase
+#    - ThirdPerson
+#    - TitleCase
     - GreySpeak
     - DepartmentTitle
     - Barefoot
@@ -44,6 +44,7 @@
     - EyeForEye
     - Optimist
     - ItemGood
+    - Hypochondriac
 
 - type: spelfMood
   id: PossessiveOfProperty
@@ -62,6 +63,7 @@
   conflicts:
     - LeastImportant
     - DontSpeakToCommand
+    - OnlySpeakToCommand
 
 - type: spelfMood
   id: LeastImportant
@@ -314,7 +316,11 @@
   moodName: spelf-mood-optimist-name
   moodDesc: spelf-mood-optimist-desc
 
-
+# You've been sickly since you were a child. Everything negative you experience is the result of a potentially terminal illness, for which you need immediate medical treatment.
+- type: spelfMood
+  id: Hypochondriac
+  moodName: spelf-mood-hypochondriac-name
+  moodDesc: spelf-mood-hypochondriac-desc
 
 
 

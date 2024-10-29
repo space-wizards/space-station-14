@@ -108,3 +108,6 @@ spelf-mood-eye-for-eye-desc = Retribution should be proportional.
 
 spelf-mood-optimist-name = Optimist
 spelf-mood-optimist-desc = Nothing is ever as bad as it seems. You're able to see the positives in any situation.
+
+spelf-mood-hypochondriac-name = Hypochondriac
+spelf-mood-hypochondriac-desc = You've been sickly since you were a child. Everything negative you experience is the result of a potentially terminal illness, for which you need immediate medical treatment.
