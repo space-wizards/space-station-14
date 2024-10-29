@@ -21,7 +21,7 @@ public sealed class StorageBoundUserInterface : BoundUserInterface
 
         _window = IoCManager.Resolve<IUserInterfaceManager>()
             .GetUIController<StorageUIController>()
-            .CreateStorageWindow();
+            .CreateStorageWindow(Owner);
 
         if (EntMan.TryGetComponent(Owner, out StorageComponent? storage))
         {
@@ -37,11 +37,37 @@ public sealed class StorageBoundUserInterface : BoundUserInterface
         _window?.FlagDirty();
     }
 
+    public void Reclaim()
+    {
+        if (_window == null)
+            return;
+
+        _window.OnClose -= Close;
+        _window.Orphan();
+        _window = null;
+    }
+
     protected override void Dispose(bool disposing)
     {
         base.Dispose(disposing);
-        _window?.Dispose();
-        _window = null;
+
+        Reclaim();
+    }
+
+    public void Hide()
+    {
+        if (_window == null)
+            return;
+
+        _window.Visible = false;
+    }
+
+    public void Show()
+    {
+        if (_window == null)
+            return;
+
+        _window.Visible = true;
     }
 }
 

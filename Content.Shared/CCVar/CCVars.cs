@@ -2109,6 +2109,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<int> StorageLimit =
             CVarDef.Create("control.storage_limit", 1, CVar.REPLICATED | CVar.SERVER);
 
+        /// <summary>
+        /// Whether or not storage can be opened recursively.
+        /// </summary>
+        public static readonly CVarDef<bool> NestedStorage =
+            CVarDef.Create("control.nested_storage", true, CVar.REPLICATED | CVar.SERVER);
+
         /*
          * UPDATE
          */

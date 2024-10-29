@@ -4,8 +4,7 @@ using Content.Client.Animations;
 using Content.Shared.Hands;
 using Content.Shared.Storage;
 using Content.Shared.Storage.EntitySystems;
-using Robust.Client.UserInterface;
-using Robust.Shared.Collections;
+using Robust.Client.Player;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
@@ -15,6 +14,7 @@ namespace Content.Client.Storage.Systems;
 public sealed class StorageSystem : SharedStorageSystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly EntityPickupAnimationSystem _entityPickupAnimation = default!;
 
     private Dictionary<EntityUid, ItemStorageLocation> _oldStoredItems = new();
@@ -66,6 +66,18 @@ public sealed class StorageSystem : SharedStorageSystem
         if (uiDirty && UI.TryGetOpenUi<StorageBoundUserInterface>(uid, StorageComponent.StorageUiKey.Key, out var storageBui))
         {
             storageBui.Refresh();
+            // Make sure nesting still updated.
+            var player = _player.LocalEntity;
+
+            if (NestedStorage && player != null && ContainerSystem.TryGetContainingContainer((uid, null, null), out var container) &&
+                UI.TryGetOpenUi<StorageBoundUserInterface>(container.Owner, StorageComponent.StorageUiKey.Key, out var containerBui))
+            {
+                containerBui.Hide();
+            }
+            else
+            {
+                storageBui.Show();
+            }
         }
     }
 
@@ -74,6 +86,22 @@ public sealed class StorageSystem : SharedStorageSystem
         if (UI.TryGetOpenUi<StorageBoundUserInterface>(entity.Owner, StorageComponent.StorageUiKey.Key, out var sBui))
         {
             sBui.Refresh();
+        }
+    }
+
+    protected override void HideStorageWindow(EntityUid uid, EntityUid actor)
+    {
+        if (UI.TryGetOpenUi<StorageBoundUserInterface>(uid, StorageComponent.StorageUiKey.Key, out var storageBui))
+        {
+            storageBui.Hide();
+        }
+    }
+
+    protected override void ShowStorageWindow(EntityUid uid, EntityUid actor)
+    {
+        if (UI.TryGetOpenUi<StorageBoundUserInterface>(uid, StorageComponent.StorageUiKey.Key, out var storageBui))
+        {
+            storageBui.Show();
         }
     }
 

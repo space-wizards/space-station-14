@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Client.Examine;
 using Content.Client.Hands.Systems;
 using Content.Client.Interaction;
@@ -36,6 +37,11 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
     [Dependency] private readonly IPlayerManager _player = default!;
     [UISystemDependency] private readonly StorageSystem _storage = default!;
 
+    /// <summary>
+    /// Cached positions for opening nested storage.
+    /// </summary>
+    private Dictionary<EntityUid, Vector2> _reservedStorage = new();
+
     private readonly DragDropHelper<ItemGridPiece> _menuDragHelper;
 
     public ItemGridPiece? DraggingGhost => _menuDragHelper.Dragged;
@@ -46,13 +52,15 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
     public bool IsDragging => _menuDragHelper.IsDragging;
     public ItemGridPiece? CurrentlyDragging => _menuDragHelper.Dragged;
 
+    /// <summary>
+    /// If we're currently checking for nested storage temporarily bypass the storage limit.
+    /// </summary>
+    public bool Nesting { get; private set; }
+
     /*
      * TODO:
      * - Add title bar if it allows multi-window.
-     *
-     * - Fix the back button so it goes up nested, nested should open at the same spot.
-     * - Add cvar to allow nesting or not
-     * - Don't forget static attach to hotbargui or whatever, also dear god fix it getting bumped PLEASE.
+
      * CVars:
      * - Window title
      */
@@ -80,7 +88,7 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
         StaticStorageUIEnabled = obj;
     }
 
-    public StorageWindow CreateStorageWindow()
+    public StorageWindow CreateStorageWindow(EntityUid uid)
     {
         var window = new StorageWindow();
         window.MouseFilter = Control.MouseFilterMode.Pass;
@@ -101,7 +109,13 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
         else
         {
             window.OpenCenteredLeft();
+
+            if (_reservedStorage.Remove(uid, out var pos))
+            {
+                LayoutContainer.SetPosition(window, pos);
+            }
         }
+
         return window;
     }
 
@@ -207,6 +221,8 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
             EntityManager.RaisePredictiveEvent(new InteractInventorySlotEvent(EntityManager.GetNetEntity(control.Entity), altInteract: true));
             args.Handle();
         }
+
+        window.FlagDirty();
     }
 
     private void OnPieceUnpressed(GUIBoundKeyEventArgs args, StorageWindow window, ItemGridPiece control)
@@ -223,12 +239,12 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
 
         var localPlayer = _player.LocalEntity;
         window.RemoveGrid(control);
+        window.FlagDirty();
 
         // If we tried to drag it on top of another grid piece then cancel out.
         if (targetControl is ItemGridPiece || window.StorageEntity is not { } sourceStorage || localPlayer == null)
         {
             window.Reclaim(control.Location, control);
-            window.FlagDirty();
             args.Handle();
             _menuDragHelper.EndDrag();
             return;
@@ -288,10 +304,9 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
                     EntityManager.GetNetEntity(sourceStorage)));
             }
 
-            window.FlagDirty();
             targetStorage?.FlagDirty();
         }
-        // If we just clicked, then take it out of the bag / recursive storage.
+        // If we just clicked, then take it out of the bag.
         else
         {
             EntityManager.RaisePredictiveEvent(new StorageInteractWithItemEvent(

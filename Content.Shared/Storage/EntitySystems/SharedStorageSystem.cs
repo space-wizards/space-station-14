@@ -56,7 +56,7 @@ public abstract class SharedStorageSystem : EntitySystem
     [Dependency] private   readonly InventorySystem _inventory = default!;
     [Dependency] private   readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
-    [Dependency] private   readonly SharedContainerSystem _containerSystem = default!;
+    [Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
     [Dependency] private   readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] protected readonly SharedEntityStorageSystem EntityStorage = default!;
     [Dependency] private   readonly SharedInteractionSystem _interactionSystem = default!;
@@ -71,6 +71,12 @@ public abstract class SharedStorageSystem : EntitySystem
     private EntityQuery<ItemComponent> _itemQuery;
     private EntityQuery<StackComponent> _stackQuery;
     private EntityQuery<TransformComponent> _xformQuery;
+    private EntityQuery<UserInterfaceUserComponent> _userQuery;
+
+    /// <summary>
+    /// Whether we're allowed to go up-down storage via UI.
+    /// </summary>
+    public bool NestedStorage = true;
 
     [ValidatePrototypeId<ItemSizePrototype>]
     public const string DefaultStorageMaxItemSize = "Normal";
@@ -82,10 +88,15 @@ public abstract class SharedStorageSystem : EntitySystem
 
     private ItemSizePrototype _defaultStorageMaxItemSize = default!;
 
+    /// <summary>
+    /// Flag for whether we're checking for nested storage interactions.
+    /// </summary>
+    private bool _nestedCheck;
+
     public bool CheckingCanInsert;
 
-    private List<EntityUid> _entList = new();
-    private HashSet<EntityUid> _entSet = new();
+    private readonly List<EntityUid> _entList = new();
+    private readonly HashSet<EntityUid> _entSet = new();
 
     private readonly List<ItemSizePrototype> _sortedSizes = new();
     private FrozenDictionary<string, ItemSizePrototype> _nextSmallest = FrozenDictionary<string, ItemSizePrototype>.Empty;
@@ -108,6 +119,7 @@ public abstract class SharedStorageSystem : EntitySystem
         _itemQuery = GetEntityQuery<ItemComponent>();
         _stackQuery = GetEntityQuery<StackComponent>();
         _xformQuery = GetEntityQuery<TransformComponent>();
+        _userQuery = GetEntityQuery<UserInterfaceUserComponent>();
         _prototype.PrototypesReloaded += OnPrototypesReloaded;
 
         Subs.CVar(_cfg, CCVars.StorageLimit, OnStorageLimitChanged, true);
@@ -139,6 +151,7 @@ public abstract class SharedStorageSystem : EntitySystem
 
         SubscribeLocalEvent<StorageComponent, AreaPickupDoAfterEvent>(OnDoAfter);
 
+        SubscribeAllEvent<OpenNestedStorageEvent>(OnStorageNested);
         SubscribeAllEvent<StorageTransferItemEvent>(OnStorageTransfer);
         SubscribeAllEvent<StorageInteractWithItemEvent>(OnInteractWithItem);
         SubscribeAllEvent<StorageSetItemLocationEvent>(OnSetItemLocation);
@@ -153,7 +166,14 @@ public abstract class SharedStorageSystem : EntitySystem
             .Bind(ContentKeyFunctions.OpenBelt, InputCmdHandler.FromDelegate(HandleOpenBelt, handle: false))
             .Register<SharedStorageSystem>();
 
+        Subs.CVar(_cfg, CCVars.NestedStorage, OnNestedStorageCvar, true);
+
         UpdatePrototypeCache();
+    }
+
+    private void OnNestedStorageCvar(bool obj)
+    {
+        NestedStorage = obj;
     }
 
     private void OnStorageLimitChanged(int obj)
@@ -226,7 +246,7 @@ public abstract class SharedStorageSystem : EntitySystem
 
     private void OnComponentInit(EntityUid uid, StorageComponent storageComp, ComponentInit args)
     {
-        storageComp.Container = _containerSystem.EnsureContainer<Container>(uid, StorageComponent.ContainerId);
+        storageComp.Container = ContainerSystem.EnsureContainer<Container>(uid, StorageComponent.ContainerId);
         UpdateAppearance((uid, storageComp, null));
     }
 
@@ -388,10 +408,30 @@ public abstract class SharedStorageSystem : EntitySystem
         }
         else
         {
-            OpenStorageUI(uid, args.User, storageComp, silent: false);
+            // Handle recursively opening nested storages.
+            if (ContainerSystem.TryGetContainingContainer((args.Target, null, null), out var container) &&
+                UI.IsUiOpen(container.Owner, StorageComponent.StorageUiKey.Key, args.User))
+            {
+                _nestedCheck = true;
+                HideStorageWindow(container.Owner, args.User);
+                OpenStorageUI(uid, args.User, storageComp, silent: true);
+                _nestedCheck = false;
+            }
+            else
+            {
+                OpenStorageUI(uid, args.User, storageComp, silent: false);
+            }
         }
 
         args.Handled = true;
+    }
+
+    protected virtual void HideStorageWindow(EntityUid uid, EntityUid actor)
+    {
+    }
+
+    protected virtual void ShowStorageWindow(EntityUid uid, EntityUid actor)
+    {
     }
 
     /// <summary>
@@ -472,7 +512,7 @@ public abstract class SharedStorageSystem : EntitySystem
             if (args.Target is not { Valid: true } target)
                 return;
 
-            if (_containerSystem.IsEntityInContainer(target)
+            if (ContainerSystem.IsEntityInContainer(target)
                 || target == args.User
                 || !_itemQuery.HasComponent(target))
             {
@@ -523,7 +563,7 @@ public abstract class SharedStorageSystem : EntitySystem
             var entity = GetEntity(args.Entities[i]);
 
             // Check again, situation may have changed for some entities, but we'll still pick up any that are valid
-            if (_containerSystem.IsEntityInContainer(entity)
+            if (ContainerSystem.IsEntityInContainer(entity)
                 || entity == args.Args.User
                 || !_itemQuery.HasComponent(entity))
             {
@@ -568,7 +608,7 @@ public abstract class SharedStorageSystem : EntitySystem
 
     private void OnReclaimed(EntityUid uid, StorageComponent storageComp, GotReclaimedEvent args)
     {
-        _containerSystem.EmptyContainer(storageComp.Container, destination: args.ReclaimerCoordinates);
+        ContainerSystem.EmptyContainer(storageComp.Container, destination: args.ReclaimerCoordinates);
     }
 
     private void OnDestroy(EntityUid uid, StorageComponent storageComp, DestructionEventArgs args)
@@ -576,7 +616,7 @@ public abstract class SharedStorageSystem : EntitySystem
         var coordinates = TransformSystem.GetMoverCoordinates(uid);
 
         // Being destroyed so need to recalculate.
-        _containerSystem.EmptyContainer(storageComp.Container, destination: coordinates);
+        ContainerSystem.EmptyContainer(storageComp.Container, destination: coordinates);
     }
 
     /// <summary>
@@ -649,6 +689,34 @@ public abstract class SharedStorageSystem : EntitySystem
         Audio.PlayPredicted(storage.Comp.StorageRemoveSound, storage, player, _audioParams);
     }
 
+    private void OnStorageNested(OpenNestedStorageEvent msg, EntitySessionEventArgs args)
+    {
+        if (!NestedStorage)
+            return;
+
+        if (!TryGetEntity(msg.InteractedItemUid, out var itemEnt))
+            return;
+
+        _nestedCheck = true;
+
+        var result = ValidateInput(args,
+            msg.StorageUid,
+            msg.InteractedItemUid,
+            out var player,
+            out var storage,
+            out var item);
+
+        if (!result)
+        {
+            _nestedCheck = false;
+            return;
+        }
+
+        HideStorageWindow(storage.Owner, player.Owner);
+        OpenStorageUI(item.Owner, player.Owner, silent: true);
+        _nestedCheck = false;
+    }
+
     private void OnStorageTransfer(StorageTransferItemEvent msg, EntitySessionEventArgs args)
     {
         if (!TryGetEntity(msg.ItemEnt, out var itemEnt))
@@ -698,6 +766,7 @@ public abstract class SharedStorageSystem : EntitySystem
     {
         if (args.UiKey is not StorageComponent.StorageUiKey.Key ||
             _openStorageLimit == -1 ||
+            _nestedCheck ||
             args.Message is not OpenBoundInterfaceMessage)
             return;
 
@@ -705,7 +774,7 @@ public abstract class SharedStorageSystem : EntitySystem
         var actor = args.Actor;
         var count = 0;
 
-        if (EntityManager.TryGetComponent(actor, out UserInterfaceUserComponent? userComp))
+        if (_userQuery.TryComp(actor, out var userComp))
         {
             foreach (var (ui, keys) in userComp.OpenInterfaces)
             {
@@ -743,7 +812,7 @@ public abstract class SharedStorageSystem : EntitySystem
         {
             if (!TryGetAvailableGridSpace((entity.Owner, entity.Comp), (args.Entity, null), out var location))
             {
-                _containerSystem.Remove(args.Entity, args.Container, force: true);
+                ContainerSystem.Remove(args.Entity, args.Container, force: true);
                 return;
             }
 
@@ -915,7 +984,7 @@ public abstract class SharedStorageSystem : EntitySystem
         }
 
         CheckingCanInsert = true;
-        if (!_containerSystem.CanInsert(insertEnt, storageComp.Container))
+        if (!ContainerSystem.CanInsert(insertEnt, storageComp.Container))
         {
             CheckingCanInsert = false;
             reason = null;
@@ -1016,7 +1085,7 @@ public abstract class SharedStorageSystem : EntitySystem
 
         if (!stackAutomatically || !_stackQuery.TryGetComponent(insertEnt, out var insertStack))
         {
-            if (!_containerSystem.Insert(insertEnt, storageComp.Container))
+            if (!ContainerSystem.Insert(insertEnt, storageComp.Container))
                 return false;
 
             if (playSound)
@@ -1042,7 +1111,7 @@ public abstract class SharedStorageSystem : EntitySystem
 
         // Still stackable remaining
         if (insertStack.Count > 0
-            && !_containerSystem.Insert(insertEnt, storageComp.Container)
+            && !ContainerSystem.Insert(insertEnt, storageComp.Container)
             && toInsertCount == insertStack.Count)
         {
             // Failed to insert anything.
@@ -1434,7 +1503,7 @@ public abstract class SharedStorageSystem : EntitySystem
 
     private void OnStackCountChanged(EntityUid uid, MetaDataComponent component, StackCountChangedEvent args)
     {
-        if (_containerSystem.TryGetContainingContainer((uid, null, component), out var container) &&
+        if (ContainerSystem.TryGetContainingContainer((uid, null, component), out var container) &&
             container.ID == StorageComponent.ContainerId)
         {
             UpdateAppearance(container.Owner);

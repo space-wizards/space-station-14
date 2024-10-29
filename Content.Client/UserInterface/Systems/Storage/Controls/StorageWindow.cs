@@ -3,6 +3,7 @@ using System.Linq;
 using System.Numerics;
 using Content.Client.Hands.Systems;
 using Content.Client.Items.Systems;
+using Content.Client.Storage;
 using Content.Client.Storage.Systems;
 using Content.Shared.Input;
 using Content.Shared.Item;
@@ -35,6 +36,8 @@ public sealed class StorageWindow : BaseWindow
 
     private ValueList<EntityUid> _contained = new();
     private ValueList<EntityUid> _toRemove = new();
+
+    private TextureButton? _backButton;
 
     private bool _isDirty;
 
@@ -75,6 +78,7 @@ public sealed class StorageWindow : BaseWindow
 
         _sidebar = new GridContainer
         {
+            Name = "SideBar",
             HSeparationOverride = 0,
             VSeparationOverride = 0,
             Columns = 1
@@ -82,12 +86,14 @@ public sealed class StorageWindow : BaseWindow
 
         _pieceGrid = new GridContainer
         {
+            Name = "PieceGrid",
             HSeparationOverride = 0,
             VSeparationOverride = 0
         };
 
         _backgroundGrid = new GridContainer
         {
+            Name = "BackgroundGrid",
             HSeparationOverride = 0,
             VSeparationOverride = 0
         };
@@ -158,9 +164,9 @@ public sealed class StorageWindow : BaseWindow
         _sidebar.Children.Clear();
         _sidebar.Rows = boundingGrid.Height + 1;
 
-        // TODO: Move to frameupdate, checks if parent container exists and has storagecomp
         var exitButton = new TextureButton
         {
+            Name = "ExitButton",
             TextureNormal = _exitTexture,
             Scale = new Vector2(2, 2),
         };
@@ -177,8 +183,10 @@ public sealed class StorageWindow : BaseWindow
                 args.Handle();
             }
         };
+
         var exitContainer = new BoxContainer
         {
+            Name = "ExitContainer",
             Children =
             {
                 new TextureRect
@@ -194,8 +202,59 @@ public sealed class StorageWindow : BaseWindow
                 }
             }
         };
+
         _sidebar.AddChild(exitContainer);
-        for (var i = 0; i < boundingGrid.Height - 1; i++)
+        var offset = 1;
+
+        if (_entity.System<StorageSystem>().NestedStorage && boundingGrid.Height > 0)
+        {
+            offset += 1;
+
+            _backButton = new TextureButton
+            {
+                TextureNormal = _backTexture,
+                Scale = new Vector2(2, 2),
+            };
+            _backButton.OnPressed += _ =>
+            {
+                var containerSystem = _entity.System<SharedContainerSystem>();
+
+                if (containerSystem.TryGetContainingContainer(StorageEntity.Value, out var container) &&
+                    _entity.TryGetComponent(container.Owner, out StorageComponent? storage))
+                {
+                    Close();
+
+                    if (_entity.System<SharedUserInterfaceSystem>()
+                        .TryGetOpenUi<StorageBoundUserInterface>(container.Owner,
+                            StorageComponent.StorageUiKey.Key,
+                            out var parentBui))
+                    {
+                        parentBui.Show();
+                    }
+                }
+            };
+
+            var backContainer = new BoxContainer
+            {
+                Name = "ExitContainer",
+                Children =
+                {
+                    new TextureRect
+                    {
+                        Texture = boundingGrid.Height > 1 ? _sidebarMiddleTexture : _sidebarBottomTexture,
+                        TextureScale = new Vector2(2, 2),
+                        Children =
+                        {
+                            _backButton,
+                        }
+                    }
+                }
+            };
+
+            _sidebar.AddChild(backContainer);
+        }
+
+        for (var i = 0; i < boundingGrid.Height - offset; i++)
         {
             _sidebar.AddChild(new TextureRect
             {
@@ -390,8 +449,28 @@ public sealed class StorageWindow : BaseWindow
             BuildItemPieces();
         }
 
-        // TODO: Back button drawing here
         var containerSystem = _entity.System<SharedContainerSystem>();
+
+        if (_backButton != null)
+        {
+            if (StorageEntity != null && _entity.System<StorageSystem>().NestedStorage)
+            {
+                if (containerSystem.TryGetContainingContainer(StorageEntity.Value, out var container) &&
+                    _entity.HasComponent<StorageComponent>(container.Owner))
+                {
+                    _backButton.Visible = true;
+                }
+                else
+                {
+                    _backButton.Visible = false;
+                }
+            }
+            // Hide the button.
+            else
+            {
+                _backButton.Visible = false;
+            }
+        }
 
         var itemSystem = _entity.System<ItemSystem>();
         var storageSystem = _entity.System<StorageSystem>();
