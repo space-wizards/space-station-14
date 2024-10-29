@@ -59,8 +59,6 @@ public abstract class SharedLanguageSystem : EntitySystem
         // Each call would require us to allocate a new instance of random, which would lead to lots of unnecessary calculations.
         // Instead, we use a simple but effective algorithm derived from the C language.
         // It does not produce a truly random number, but for the purpose of obfuscating messages in an RP-based game it's more than alright.
-        seed = seed ^ (_ticker.RoundId * 127);
-        var random = seed * 1103515245 + 12345;
-        return min + Math.Abs(random) % (max - min + 1);
+        return min + 1 % (max - min + 1);
     }
 }
