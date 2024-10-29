@@ -21,13 +21,12 @@ public sealed class BanUsernamePanelCommand : LocalizedCommands
             return;
         }
 
-        if (args.Length > 0) {
+        if (args.Length > 0)
+        {
             shell.WriteError(Loc.GetString("shell-takes-no-arguments"));
             shell.WriteLine(Help);
             return;
         }
-
-        // I am not sure why you can transfer the banpanel, but I am not adding that here
 
         _euis.OpenEui(new BanUsernamePanelEui(), player);
     }
