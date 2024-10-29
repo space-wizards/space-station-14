@@ -835,6 +835,24 @@
     - Cargo
 
 - type: entity
+  parent: ComputerCargoOrders
+  id: TaipanComputerCargoOrders
+  suffix: Taipan
+  description: Used to taipan order supplies and approve requests.
+  components:
+  - type: CargoOrderConsole
+    announcementChannel: Syndicate
+    allowedGroups:
+    - syndicate_market
+  - type: ActiveRadio
+    channels:
+    - Syndicate
+  - type: Computer
+    board: SyndicateCargoRequestComputerCircuitboard
+  - type: AccessReader
+    access: [["SyndicateAgent"]]
+
+- type: entity
   id: ComputerCargoBounty
   parent: BaseComputerAiAccess
   name: cargo bounty computer

@@ -85,6 +85,15 @@
       price: 750
 
 - type: entity
+  parent: CargoRequestComputerCircuitboard
+  id: SyndicateCargoRequestComputerCircuitboard
+  suffix: Taipan
+  description: Used to taipan order supplies and approve requests.
+  components:
+    - type: ComputerBoard
+      prototype: TaipanComputerCargoOrders
+
+- type: entity
   parent: BaseComputerCircuitboard
   id: CargoSaleComputerCircuitboard
   name: cargo sale computer board
