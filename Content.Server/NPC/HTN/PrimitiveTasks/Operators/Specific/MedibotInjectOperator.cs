@@ -1,5 +1,6 @@
 using Content.Server.Chat.Systems;
 using Content.Server.NPC.Components;
+using Content.Shared.Chat;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Damage;
 using Content.Shared.Emag.Components;
@@ -82,7 +83,7 @@ public sealed partial class MedibotInjectOperator : HTNOperator
         _solutionContainer.TryAddReagent(injectable.Value, treatment.Reagent, treatment.Quantity, out _);
         _popup.PopupEntity(Loc.GetString("hypospray-component-feel-prick-message"), target, target);
         _audio.PlayPvs(botComp.InjectSound, target);
-        _chat.TrySendInGameICMessage(owner, Loc.GetString("medibot-finish-inject"), InGameICChatType.Speak, hideChat: true, hideLog: true);
+        _chat.TrySendInGameICMessage(owner, Loc.GetString("medibot-finish-inject"), SharedChatSystem.InGameICChatType.Speak, hideChat: true, hideLog: true);
         return HTNOperatorStatus.Finished;
     }
 }

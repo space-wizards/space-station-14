@@ -1,6 +1,7 @@
 using Content.Server.Advertise.Components;
 using Content.Server.Chat.Systems;
 using Content.Server.Power.Components;
+using Content.Shared.Chat;
 using Content.Shared.VendingMachines;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -62,7 +63,7 @@ public sealed class AdvertiseSystem : EntitySystem
             return;
 
         if (_prototypeManager.TryIndex(advert.Pack, out var advertisements))
-            _chat.TrySendInGameICMessage(uid, Loc.GetString(_random.Pick(advertisements.Values)), InGameICChatType.Speak, hideChat: true);
+            _chat.TrySendInGameICMessage(uid, Loc.GetString(_random.Pick(advertisements.Values)), SharedChatSystem.InGameICChatType.Speak, hideChat: true);
     }
 
     public override void Update(float frameTime)

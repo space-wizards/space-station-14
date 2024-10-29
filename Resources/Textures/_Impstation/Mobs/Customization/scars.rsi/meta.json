@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Drawn by Carousel for Impstation",
+    "copyright": "Drawn by Carousel for Impstation; Moth scars drawn by Snavian for Impstation",
     "size": {
       "x": 32,
       "y": 32
@@ -89,6 +89,30 @@
       },
       {
           "name": "torso_incision",
+          "directions": 4
+      },
+      {
+          "name": "moth_body_claw",
+          "directions": 4
+      },
+      {
+          "name": "moth_burn_l",
+          "directions": 4
+      },
+      {
+          "name": "moth_burn_r",
+          "directions": 4
+      },
+      {
+          "name": "moth_face_claw",
+          "directions": 4
+      },
+      {
+          "name": "moth_slash_l",
+          "directions": 4
+      },
+      {
+          "name": "moth_slash_r",
           "directions": 4
       }
     ]

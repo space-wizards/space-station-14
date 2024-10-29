@@ -4,6 +4,7 @@ using Content.Shared.Popups;
 using Content.Shared.Radio;
 using Content.Shared.Speech;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Chat;
@@ -82,6 +83,35 @@ public abstract class SharedChatSystem : EntitySystem
 
         // if no applicable suffix verb return the normal one used by the entity
         return current ?? _prototypeManager.Index<SpeechVerbPrototype>(speech.SpeechVerb);
+    }
+
+    /// <summary>
+    /// Splits the input message into a radio prefix part and the rest to preserve it during sanitization.
+    /// </summary>
+    /// <remarks>
+    /// This is primarily for the chat emote sanitizer, which can match against ":b" as an emote, which is a valid radio keycode.
+    /// </remarks>
+    public void GetRadioKeycodePrefix(EntityUid source,
+        string input,
+        out string output,
+        out string prefix)
+    {
+        prefix = string.Empty;
+        output = input;
+
+        // If the string is less than 2, then it's probably supposed to be an emote.
+        // No one is sending empty radio messages!
+        if (input.Length <= 2)
+            return;
+
+        if (!(input.StartsWith(RadioChannelPrefix) || input.StartsWith(RadioChannelAltPrefix)))
+            return;
+
+        if (!_keyCodes.TryGetValue(char.ToLower(input[1]), out _))
+            return;
+
+        prefix = input[..2];
+        output = input[2..];
     }
 
     /// <summary>
@@ -259,5 +289,45 @@ public abstract class SharedChatSystem : EntitySystem
             return "";
         tagStart += tag.Length + 2;
         return rawmsg.Substring(tagStart, tagEnd - tagStart);
+    }
+
+
+    /// <summary>
+    ///     InGame IC chat is for chat that is specifically ingame (not lobby) but is also in character, i.e. speaking.
+    /// </summary>
+// ReSharper disable once InconsistentNaming
+    [Serializable, NetSerializable]
+    public enum InGameICChatType : byte
+    {
+        Speak,
+        Emote,
+        Whisper,
+        Telepathic
+    }
+
+    /// <summary>
+    ///     InGame OOC chat is for chat that is specifically ingame (not lobby) but is OOC, like deadchat or LOOC.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public enum InGameOOCChatType : byte
+    {
+        Looc,
+        Dead
+    }
+
+    /// <summary>
+    ///     Controls transmission of chat.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public enum ChatTransmitRange : byte
+    {
+        /// Acts normal, ghosts can hear across the map, etc.
+        Normal,
+        /// Normal but ghosts are still range-limited.
+        GhostRangeLimit,
+        /// Hidden from the chat window.
+        HideChat,
+        /// Ghosts can't hear or see it at all. Regular players can if in-range.
+        NoGhosts
     }
 }

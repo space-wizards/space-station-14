@@ -187,6 +187,9 @@ binds:
 - function: OpenCharacterMenu
   type: State
   key: C
+- function: OpenLanguageMenu
+  type: State
+  key: L
 - function: OpenEmotesMenu
   type: State
   key: Y

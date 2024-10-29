@@ -1,5 +1,6 @@
 using Content.Server.Advertise.Components;
 using Content.Server.Chat.Systems;
+using Content.Shared.Chat;
 using Content.Shared.Dataset;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -42,7 +43,7 @@ public sealed partial class SpeakOnUIClosedSystem : EntitySystem
             return false;
 
         var message = Loc.GetString(_random.Pick(messagePack.Values), ("name", Name(entity)));
-        _chat.TrySendInGameICMessage(entity, message, InGameICChatType.Speak, true);
+        _chat.TrySendInGameICMessage(entity, message, SharedChatSystem.InGameICChatType.Speak, true);
         entity.Comp.Flag = false;
         return true;
     }

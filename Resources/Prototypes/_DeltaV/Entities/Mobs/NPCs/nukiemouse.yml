@@ -90,8 +90,12 @@
     spawned:
     - id: FoodMeat
       amount: 1
-  - type: ReplacementAccent
-    accent: mouse
+  - type: LanguageKnowledge
+    speaks:
+    - Mouse
+    understands:
+    - Mouse
+    - GalacticCommon
   - type: Tag
     tags:
     - VimPilot
