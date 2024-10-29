@@ -405,7 +405,6 @@
     state: pda-miner
   - type: CartridgeLoader
     uiKey: enum.PdaUiKey.Key
-    diskSpace: 7 # Has one extra pre-installed program.
     preinstalled:
       - CrewManifestCartridge
       - NotekeeperCartridge
@@ -517,17 +516,6 @@
     borderColor: "#7C5D00"
   - type: Icon
     state: pda-captain
-  - type: CartridgeLoader
-    uiKey: enum.PdaUiKey.Key
-    diskSpace: 10 # Has Four extra pre-installed programs.
-    preinstalled:
-      - CrewManifestCartridge
-      - NotekeeperCartridge
-      - NewsReaderCartridge
-      - MedTekCartridge
-      - WantedListCartridge
-      - LogProbeCartridge
-      - AstroNavCartridge
 
 - type: entity
   parent: BasePDA
@@ -699,7 +687,6 @@
   - type: Icon
     state: pda-hos
   - type: CartridgeLoader
-    diskSpace: 8 # Has two extra pre-installed programs.
     preinstalled:
     - CrewManifestCartridge
     - NotekeeperCartridge
@@ -756,7 +743,7 @@
     state: pda-centcom
   - type: CartridgeLoader
     uiKey: enum.PdaUiKey.Key
-    diskSpace: 10 # Has Four extra pre-installed programs.
+    diskSpace: 16
     preinstalled:
       - CrewManifestCartridge
       - NotekeeperCartridge
@@ -781,7 +768,7 @@
   - type: CartridgeLoader
     uiKey: enum.PdaUiKey.Key
     notificationsEnabled: false
-    diskSpace: 16 # Admeme rights matter.
+    diskSpace: 16
     preinstalled:
       - CrewManifestCartridge
       - NotekeeperCartridge
@@ -879,17 +866,8 @@
     state: pda-syndi
   - type: CartridgeLoader
     uiKey: enum.PdaUiKey.Key
-    diskSpace: 4 # Has two less pre-installed programs.
     preinstalled:
       - NotekeeperCartridge
-    cartridgeSlot:
-      priority: -1
-      name: Cartridge
-      ejectSound: /Audio/Machines/id_swipe.ogg
-      insertSound: /Audio/Machines/id_insert.ogg
-      whitelist:
-        components:
-          - Cartridge
 
 - type: entity
   parent: BaseSecurityPDA
@@ -909,7 +887,7 @@
     state: pda-ert
   - type: CartridgeLoader
     uiKey: enum.PdaUiKey.Key
-    diskSpace: 10 # Has Four extra pre-installed programs.
+    diskSpace: 16
     preinstalled:
       - CrewManifestCartridge
       - NotekeeperCartridge
@@ -1060,7 +1038,6 @@
   - type: Icon
     state: pda-detective
   - type: CartridgeLoader
-    diskSpace: 8 # Has two extra pre-installed programs.
     preinstalled:
     - CrewManifestCartridge
     - NotekeeperCartridge
@@ -1084,7 +1061,6 @@
   - type: Icon
     state: pda-brigmedic
   - type: CartridgeLoader
-    diskSpace: 8 # Has two extra pre-installed programs.
     preinstalled:
     - CrewManifestCartridge
     - NotekeeperCartridge
@@ -1204,15 +1180,6 @@
     state: pda-syndi-agent
   - type: CartridgeLoader
     uiKey: enum.PdaUiKey.Key
-    diskSpace: 5 # Has one less pre-installed program.
     preinstalled:
       - NotekeeperCartridge
       - MedTekCartridge
-    cartridgeSlot:
-      priority: -1
-      name: Cartridge
-      ejectSound: /Audio/Machines/id_swipe.ogg
-      insertSound: /Audio/Machines/id_insert.ogg
-      whitelist:
-        components:
-          - Cartridge

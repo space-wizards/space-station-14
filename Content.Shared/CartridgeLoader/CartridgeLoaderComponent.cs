@@ -32,8 +32,8 @@ public sealed partial class CartridgeLoaderComponent : Component
     /// <summary>
     /// The maximum amount of programs that can be installed on the cartridge loader entity
     /// </summary>
-    [DataField("diskSpace")] // TODO lower this while having pre-installed programs not count to the limit.
-    public int DiskSpace = 6;
+    [DataField("diskSpace")]
+    public int DiskSpace = 8;
 
     /// <summary>
     /// Controls whether the cartridge loader will play notifications if it supports it at all
