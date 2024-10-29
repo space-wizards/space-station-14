@@ -2103,6 +2103,12 @@ namespace Content.Shared.CCVar
             CVarDef.Create("control.opaque_storage_background", false, CVar.CLIENTONLY | CVar.ARCHIVE);
 
         /// <summary>
+        /// Whether or not the storage window has a title of the entity name.
+        /// </summary>
+        public static readonly CVarDef<bool> StorageWindowTitle =
+            CVarDef.Create("control.storage_window_title", false, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+        /// <summary>
         /// How many storage windows are allowed to be open at once.
         /// Recommended that you utilise this in conjunction with <see cref="StaticStorageUI"/>
         /// </summary>

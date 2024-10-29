@@ -52,18 +52,7 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
     public bool IsDragging => _menuDragHelper.IsDragging;
     public ItemGridPiece? CurrentlyDragging => _menuDragHelper.Dragged;
 
-    /// <summary>
-    /// If we're currently checking for nested storage temporarily bypass the storage limit.
-    /// </summary>
-    public bool Nesting { get; private set; }
-
-    /*
-     * TODO:
-     * - Add title bar if it allows multi-window.
-
-     * CVars:
-     * - Window title
-     */
+    public bool WindowTitle { get; private set; } = false;
 
     public StorageUIController()
     {
@@ -76,6 +65,12 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
 
         _configuration.OnValueChanged(CCVars.StaticStorageUI, OnStaticStorageChanged, true);
         _configuration.OnValueChanged(CCVars.OpaqueStorageWindow, OnOpaqueWindowChanged, true);
+        _configuration.OnValueChanged(CCVars.StorageWindowTitle, OnStorageWindowTitle, true);
+    }
+
+    private void OnStorageWindowTitle(bool obj)
+    {
+        WindowTitle = obj;
     }
 
     private void OnOpaqueWindowChanged(bool obj)

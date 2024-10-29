@@ -5,6 +5,7 @@ using Content.Client.Hands.Systems;
 using Content.Client.Items.Systems;
 using Content.Client.Storage;
 using Content.Client.Storage.Systems;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Input;
 using Content.Shared.Item;
 using Content.Shared.Storage;
@@ -29,6 +30,9 @@ public sealed class StorageWindow : BaseWindow
     private readonly GridContainer _pieceGrid;
     private readonly GridContainer _backgroundGrid;
     private readonly GridContainer _sidebar;
+
+    private Control _titleContainer;
+    private Label _titleLabel;
 
     // Needs to be nullable in case a piece is in default spot.
     private readonly Dictionary<EntityUid, (ItemStorageLocation? Loc, ItemGridPiece Control)> _pieces = new();
@@ -98,11 +102,36 @@ public sealed class StorageWindow : BaseWindow
             VSeparationOverride = 0
         };
 
+        _titleLabel = new Label()
+        {
+            HorizontalExpand = true,
+            Name = "StorageLabel",
+            ClipText = true,
+            Text = "Dummy",
+            StyleClasses =
+            {
+                "FancyWindowTitle",
+            }
+        };
+
+        _titleContainer = new PanelContainer()
+        {
+            StyleClasses =
+            {
+                "WindowHeadingBackground"
+            },
+            Children =
+            {
+                _titleLabel
+            }
+        };
+
         var container = new BoxContainer
         {
             Orientation = BoxContainer.LayoutOrientation.Vertical,
             Children =
             {
+                _titleContainer,
                 new BoxContainer
                 {
                     Orientation = BoxContainer.LayoutOrientation.Horizontal,
@@ -147,6 +176,16 @@ public sealed class StorageWindow : BaseWindow
         StorageEntity = entity;
         if (entity == null)
             return;
+
+        if (UserInterfaceManager.GetUIController<StorageUIController>().WindowTitle)
+        {
+            _titleLabel.Text = Identity.Name(entity.Value, _entity);
+            _titleContainer.Visible = true;
+        }
+        else
+        {
+            _titleContainer.Visible = false;
+        }
 
         BuildGridRepresentation();
     }
