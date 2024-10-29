@@ -353,7 +353,7 @@ namespace Content.Server.GameTicking
             {
                 Log.Error($"Error while sending round end Discord message: {e}");
             }
-            SendRoundEndDiscordMessage();
+            SendLastMessagesBeforeDeath();
         }
 
         public void ShowRoundEndScoreboard(string text = "")
