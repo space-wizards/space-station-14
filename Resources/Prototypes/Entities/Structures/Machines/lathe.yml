@@ -769,7 +769,6 @@
       - WeaponDisablerPractice
       - WeaponLaserCarbinePractice
       - Zipties
-      - Ram
     dynamicRecipes:
       - BoxBeanbag
       - BoxShotgunIncendiary
@@ -821,6 +820,7 @@
       - WeaponLaserCannon
       - WeaponLaserCarbine
       - WeaponXrayCannon
+      - Ram
   - type: MaterialStorage
     whitelist:
       tags:
