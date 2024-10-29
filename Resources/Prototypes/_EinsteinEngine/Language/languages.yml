@@ -505,11 +505,10 @@
   obfuscation:
     !type:SyllableObfuscation
     minSyllables: 1
-    maxSyllables: 2
+    maxSyllables: 1
     replacement:
     - murr
     - meow
-    - purr
     - mrow
 
 - type: language
