@@ -46,6 +46,13 @@
     speechVerb: Slime
     speechSounds: Slime
     allowedEmotes: ['Squish']
+  - type: LanguageKnowledge
+    speaks:
+    - GalacticCommon
+    - Bubblish
+    understands:
+    - GalacticCommon
+    - Bubblish
   - type: TypingIndicator
     proto: slime
   - type: Vocal
