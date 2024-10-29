@@ -882,8 +882,8 @@
 
 - type: reagent
   id: Subjuzine
-  name: reagent-name-subjuzine
-  desc: reagent-desc-subjuzine
+  name: reagent-name-inert-subjuzine
+  desc: reagent-desc-inert-subjuzine
   group: Medicine
   physicalDesc: reagent-physical-desc-enigmatic
   flavor: magical
