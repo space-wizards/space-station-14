@@ -9,7 +9,7 @@
   group: market
 
 - type: cargoProduct
-  id: ShittleStarterPack
+  id: ShuttleShittleStarterPack
   icon:
     sprite: Clothing/Head/Helmets/eva_large.rsi
     state: icon

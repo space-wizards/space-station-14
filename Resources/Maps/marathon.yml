@@ -52129,13 +52129,6 @@ entities:
     - type: Transform
       pos: -44.478813,58.559113
       parent: 30
-- proto: ClothingHeadHelmetTemplar
-  entities:
-  - uid: 16772
-    components:
-    - type: Transform
-      pos: -57.48945,10.619459
-      parent: 30
 - proto: ClothingHeadHelmetWizardHelm
   entities:
   - uid: 16234
