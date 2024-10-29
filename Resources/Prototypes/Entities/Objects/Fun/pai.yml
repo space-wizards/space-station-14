@@ -80,7 +80,6 @@
     speaks:
     - SolCommon
     - RobotTalk
-    - GraySpeak
     - Draconic
     - RootSpeak
     - Moffic
@@ -89,7 +88,6 @@
     understands:
     - SolCommon
     - RobotTalk
-    - GraySpeak
     - Draconic
     - RootSpeak
     - Moffic

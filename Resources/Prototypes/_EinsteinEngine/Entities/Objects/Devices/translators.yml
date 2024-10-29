@@ -70,23 +70,6 @@
     - Bubblish
 
 - type: entity
-  id: GraySpeakTranslator
-  parent: [ TranslatorEmpty ]
-  name: GraySpeak translator
-  description: Translates speech between Gray Speak and Galactic Common, helping communicate with the Grays.
-  components:
-  - type: HandheldTranslator
-    spoken:
-    - GalacticCommon
-    - GraySpeak
-    understood:
-    - GalacticCommon
-    - GraySpeak
-    requires:
-    - GalacticCommon
-    - GraySpeak
-
-- type: entity
   id: DraconicTranslator
   parent: [ TranslatorEmpty ]
   name: Draconic translator
