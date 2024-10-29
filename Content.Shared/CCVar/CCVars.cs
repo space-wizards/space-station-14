@@ -457,6 +457,19 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> GameHostnameInTitlebar =
             CVarDef.Create("game.hostname_in_titlebar", true, CVar.SERVER | CVar.REPLICATED);
 
+        /// <summary>
+        /// The number of hours a player must reach to no longer be considered a "new player" for gameplay purposes.
+        /// Used in context with GameNewPlayerAntagPriority and GameNewPlayerAntagPercentage.
+        /// </summary>
+        public static readonly CVarDef<int> GameNewPlayerHoursThreshold =
+            CVarDef.Create("game.new_player_hours_threshold", 50, CVar.SERVER | CVar.REPLICATED);
+
+        /// <summary>
+        /// Should antag gamerules try to prioritize new players first?
+        /// </summary>
+        public static readonly CVarDef<bool> GameNewPlayerAntagPriority =
+            CVarDef.Create("game.new_player_antag_priority", true, CVar.SERVER | CVar.REPLICATED);
+
         /*
          * Discord
          */

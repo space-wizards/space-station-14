@@ -58,7 +58,8 @@ public sealed class AntagPreferenceTest
         Assert.That(sys.IsEntityValid(client.AttachedEntity, def), Is.True);
         pool = sys.GetPlayerPool(rule, sessions, def);
         Assert.That(pool.Count, Is.EqualTo(1));
-        pool.TryPickAndTake(pair.Server.ResolveDependency<IRobustRandom>(), out var picked);
+        Assert.That(pool.First().Count, Is.EqualTo(1));
+        pool.First().TryPickAndTake(pair.Server.ResolveDependency<IRobustRandom>(), out var picked);
         Assert.That(picked, Is.EqualTo(pair.Player));
         Assert.That(sessions.Count, Is.EqualTo(1));
 

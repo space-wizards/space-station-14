@@ -23,5 +23,13 @@ public sealed class AntagSelectionPlayerPool (List<List<ICommonSession>> ordered
         return session != null;
     }
 
+    public void RemoveSessionFromLists(ICommonSession session)
+    {
+        foreach (var pool in orderedPools)
+        {
+            pool.Remove(session);
+        }
+    }
+
     public int Count => orderedPools.Sum(p => p.Count);
 }

@@ -7,11 +7,13 @@ using Content.Server.Ghost.Roles;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Mind;
 using Content.Server.Objectives;
+using Content.Server.Players.PlayTimeTracking;
 using Content.Server.Preferences.Managers;
 using Content.Server.Roles;
 using Content.Server.Roles.Jobs;
 using Content.Server.Shuttles.Components;
 using Content.Shared.Antag;
+using Content.Shared.CCVar;
 using Content.Shared.Clothing;
 using Content.Shared.GameTicking;
 using Content.Shared.GameTicking.Components;
@@ -19,11 +21,13 @@ using Content.Shared.Ghost;
 using Content.Shared.Humanoid;
 using Content.Shared.Mind;
 using Content.Shared.Players;
+using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Roles;
 using Content.Shared.Whitelist;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
@@ -46,6 +50,8 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     [Dependency] private readonly RoleSystem _role = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private readonly PlayTimeTrackingManager _playtimeManager = default!;
 
     // arbitrary random number to give late joining some mild interest.
     public const float LateJoinRandomChance = 0.5f;
@@ -219,7 +225,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         AntagSelectionDefinition def,
         bool midround = false)
     {
-        var playerPool = GetPlayerPool(ent, pool, def);
+        var playerPools = GetPlayerPool(ent, pool, def, _cfg.GetCVar(CCVars.GameNewPlayerAntagPriority));
         var count = GetTargetAntagCount(ent, GetTotalPlayerCount(pool), def);
 
         // if there is both a spawner and players getting picked, let it fall back to a spawner.
@@ -234,12 +240,33 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             picking = false;
         }
 
+        var playerPoolCount = playerPools.Count;
+        var currentPool = 0;
+        var playerPoolPicked = playerPools.First();
+        var newPlayerPriority = _cfg.GetCVar(CCVars.GameNewPlayerAntagPriority);
+
         for (var i = 0; i < count; i++)
         {
             var session = (ICommonSession?)null;
             if (picking)
             {
-                if (!playerPool.TryPickAndTake(RobustRandom, out session) && noSpawner)
+                var nextPool = false;
+                Logger.Debug("currentpool: " + currentPool + " and " + i);
+
+                if (newPlayerPriority && i == Math.Round(count * def.PlayerPriorityPercentage, 0, MidpointRounding.AwayFromZero))
+                    nextPool = true;
+
+                if (playerPoolPicked.Count == 0 || nextPool)
+                {
+                    currentPool++;
+
+                    // If the TryGetValue fails, it means there are no more pools, and the later TryPickAndTake will
+                    // terminate the loop.
+                    if (playerPools.TryGetValue(currentPool, out var newPlayerPool))
+                        playerPoolPicked = newPlayerPool;
+                }
+
+                if (!playerPoolPicked.TryPickAndTake(RobustRandom, out session) && noSpawner)
                 {
                     Log.Warning($"Couldn't pick a player for {ToPrettyString(ent):rule}, no longer choosing antags for this definition");
                     break;
@@ -249,6 +276,15 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
                 {
                     Log.Warning($"Somehow picked {session} for an antag when this rule already selected them previously");
                     continue;
+                }
+
+                if (session != null)
+                {
+                    // Delete the session from all pools, to avoid double-selections.
+                    foreach (var pools in playerPools)
+                    {
+                        pools.RemoveSessionFromLists(session);
+                    }
                 }
             }
 
@@ -369,10 +405,14 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     /// <summary>
     /// Gets an ordered player pool based on player preferences and the antagonist definition.
     /// </summary>
-    public AntagSelectionPlayerPool GetPlayerPool(Entity<AntagSelectionComponent> ent, IList<ICommonSession> sessions, AntagSelectionDefinition def)
+    public List<AntagSelectionPlayerPool> GetPlayerPool(Entity<AntagSelectionComponent> ent, IList<ICommonSession> sessions, AntagSelectionDefinition def, bool useNewPlayerPriority = false)
     {
         var preferredList = new List<ICommonSession>();
         var fallbackList = new List<ICommonSession>();
+        var preferredPrioritizedPlayer = new List<ICommonSession>();
+        var fallbackPrioritizedPlayer = new List<ICommonSession>();
+        var newPlayerHoursThreshold = TimeSpan.FromHours(_cfg.GetCVar(CCVars.GameNewPlayerHoursThreshold));
+
         foreach (var session in sessions)
         {
             if (!IsSessionValid(ent, session, def) || !IsEntityValid(session.AttachedEntity, def))
@@ -380,15 +420,46 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
             if (HasPrimaryAntagPreference(session, def))
             {
+
+                Logger.Debug("1");
                 preferredList.Add(session);
+                if (useNewPlayerPriority && def.PlayerPrioritySelection != NewPlayerPriority.DoNotPrioritize)
+                {
+                    Logger.Debug("2");
+                    var playtime = _playtimeManager.GetPlayTimes(session);
+                    if (playtime.TryGetValue(PlayTimeTrackingShared.TrackerOverall, out TimeSpan overallTime) &&
+                        ((def.PlayerPrioritySelection == NewPlayerPriority.PrioritizeNewPlayer && overallTime <= newPlayerHoursThreshold) ||
+                         (def.PlayerPrioritySelection == NewPlayerPriority.PrioritizeExperiencedPlayer && overallTime > newPlayerHoursThreshold)))
+                    {
+                        Logger.Debug(session.ToString()!);
+                        preferredPrioritizedPlayer.Add(session);
+                    }
+                }
             }
             else if (HasFallbackAntagPreference(session, def))
             {
                 fallbackList.Add(session);
+                if (useNewPlayerPriority)
+                {
+                    var playtime = _playtimeManager.GetPlayTimes(session);
+                    if (playtime.TryGetValue(PlayTimeTrackingShared.TrackerOverall, out TimeSpan overallTime) &&
+                        ((def.PlayerPrioritySelection == NewPlayerPriority.PrioritizeNewPlayer && overallTime <= newPlayerHoursThreshold) ||
+                         (def.PlayerPrioritySelection == NewPlayerPriority.PrioritizeExperiencedPlayer && overallTime > newPlayerHoursThreshold)))
+                    {
+                        fallbackPrioritizedPlayer.Add(session);
+                    }
+                }
             }
         }
 
-        return new AntagSelectionPlayerPool(new() { preferredList, fallbackList });
+        var lists = new List<AntagSelectionPlayerPool>();
+
+        if (useNewPlayerPriority)
+            lists.Add(new AntagSelectionPlayerPool(new() { preferredPrioritizedPlayer, fallbackPrioritizedPlayer }));
+
+        lists.Add(new AntagSelectionPlayerPool(new() { preferredList, fallbackList }));
+
+        return lists;
     }
 
     /// <summary>

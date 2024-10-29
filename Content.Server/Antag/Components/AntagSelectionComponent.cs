@@ -7,6 +7,8 @@ using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations;
 
 namespace Content.Server.Antag.Components;
 
@@ -182,6 +184,40 @@ public partial struct AntagSelectionDefinition()
     /// </remarks>
     [DataField]
     public EntProtoId? SpawnerPrototype;
+
+    /// <summary>
+    /// If CCVar.GameNewPlayerAntagPriority is set to true, this enum is used to select which behavior
+    /// the selection should have; if it should prioritize new players, old players, or no prioritization at all.
+    /// </summary>
+    [DataField]
+    public NewPlayerPriority PlayerPrioritySelection = NewPlayerPriority.PrioritizeNewPlayer;
+
+    /// <summary>
+    /// If CCVar.GameNewPlayerAntagPriority is set to true, this float determines the percentage of the available
+    /// selected antag slots are assigned to the prioritized player pool.
+    /// </summary>
+    [DataField]
+    public float PlayerPriorityPercentage = 0.5f;
+}
+
+
+[Serializable]
+public enum NewPlayerPriority
+{
+    /// <summary>
+    /// Prioritize players with playtime under CCVar.GameNewPlayerHoursThreshold.
+    /// </summary>
+    PrioritizeNewPlayer,
+
+    /// <summary>
+    /// Prioritize players with playtime over CCVar.GameNewPlayerHoursThreshold.
+    /// </summary>
+    PrioritizeExperiencedPlayer,
+
+    /// <summary>
+    /// Do not prioritize any player.
+    /// </summary>
+    DoNotPrioritize,
 }
 
 /// <summary>
