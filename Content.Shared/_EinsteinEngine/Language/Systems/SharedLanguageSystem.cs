@@ -59,6 +59,6 @@ public abstract class SharedLanguageSystem : EntitySystem
         // Each call would require us to allocate a new instance of random, which would lead to lots of unnecessary calculations.
         // Instead, we use a simple but effective algorithm derived from the C language.
         // It does not produce a truly random number, but for the purpose of obfuscating messages in an RP-based game it's more than alright.
-        return min + 1 % (max - min + 1);
+        return min + 12452313 % (max - min + 1);
     }
 }
