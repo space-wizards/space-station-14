@@ -186,3 +186,18 @@
         key: Adrenaline
         component: IgnoreSlowOnDamage
         time: 120
+
+- type: reagent
+  id: Proktium
+  name: reagent-name-proktium
+  desc: reagent-desc-proktium
+  flavor: metallic
+  physicalDesc: reagent-physical-desc-crystalline
+  color: "#7f7e82"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 2 # Good for machines, bad for organs!

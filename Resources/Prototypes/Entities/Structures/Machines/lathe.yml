@@ -59,6 +59,7 @@
   - type: ReagentSpeed
     solution: lube
     modifiers:
+      Proktium: 0.15
       SpaceLube: 0.25
       SpaceGlue: 5
   - type: SolutionContainerManager
@@ -82,6 +83,7 @@
   - type: LatheHeatProducing
   - type: ReagentSpeed
     modifiers:
+      Proktium: 0.3 # Rare substance, minor benefit for how rare it is
       SpaceLube: 0.8 # being faster means less heat so lube needs to be nerfed
       SpaceGlue: 5 # no change from normal lathe, overheat!!!
 
