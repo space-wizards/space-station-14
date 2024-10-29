@@ -11,14 +11,14 @@
 #    cantUnderstand: false # Allows to understand
 #    baseTranslator: TranslatorForeigner
 
-#- type: trait
- # id: Foreigner
- # category: Quirks
- # name: trait-foreigner-name
- # description: trait-foreigner-desc
-#  components:
-#  - type: ForeignerTrait
- #   baseTranslator: TranslatorForeigner
+- type: trait
+  id: Foreigner
+  category: Quirks
+  name: trait-foreigner-name
+  description: trait-foreigner-desc
+  components:
+  - type: ForeignerTrait
+    baseTranslator: TranslatorForeigner
 
 - type: trait
   id: SignLanguage

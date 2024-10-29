@@ -7,7 +7,7 @@ language-GalacticCommon-description = The standard Galatic language, most common
 language-Bubblish-name = Bubblish
 language-Bubblish-description = The language of Slimes. Being a mixture of bubbling noises and pops it's very difficult to speak for humans without the use of mechanical aids.
 
-language-RootSpeak-name = Rootspeak
+language-RootSpeak-name = The Exchange of Ideas
 language-RootSpeak-description = The strange whistling-style language spoken by the Diona.
 
 language-Draconic-name = Draconic
@@ -21,9 +21,6 @@ language-Moffic-description = The language of the mothpeople borders on complete
 
 language-RobotTalk-name = RobotTalk
 language-RobotTalk-description = A language consisting of harsh binary chirps, whistles, hisses, and whines. Organic tongues cannot speak it without aid from special translators.
-
-language-GraySpeak-name = Grey-Speak
-language-GraySpeak-description = The language of the grays, a funny sounding language. Pisk.
 
 language-Sign-name = Galactic Sign Language
 language-Sign-description = GSL for short, this sign language is prevalent among mute and deaf people.
