@@ -34,6 +34,11 @@
     proto: robot
   - type: Speech
     speechSounds: Pai
+  - type: LanguageKnowledge
+    speaks:
+    - GalacticCommon
+    understands:
+    - GalacticCommon
   - type: ItemSlots
     slots:
       brain_slot:
