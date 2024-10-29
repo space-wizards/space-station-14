@@ -97,6 +97,7 @@
     # TODO: Fill this out more.
     whitelist:
       tags:
+        - StationMap
         - Wirecutter
         - Crowbar
         - Screwdriver
