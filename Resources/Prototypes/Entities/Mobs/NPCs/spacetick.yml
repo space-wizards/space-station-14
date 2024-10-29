@@ -2,7 +2,7 @@
   name: space tick
   id: MobTick
   parent: SimpleSpaceMobBase
-  description: It's a space tick, watch out for its nasty bite. CentCom reports that 90 percent of cargo leg amputations are due to space tick bites.
+  description: It's a space tick, watch out for its nasty bite. CentComm reports that 90 percent of cargo leg amputations are due to space tick bites.
   components:
   - type: InputMover
   - type: MobMover

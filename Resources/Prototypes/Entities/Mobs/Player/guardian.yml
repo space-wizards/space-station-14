@@ -148,7 +148,7 @@
   name: Ifrit
   parent: MobGuardianBase
   id: MobIfritGuardian
-  description: A corrupted jinn, ripped from fitra to serve the wizard's petty needs. It stands wicked, tuning into it's owner's life to sustain itself.
+  description: A corrupted jinn, ripped from fitra to serve the wizard's petty needs. It stands wicked, tuning into its owner's life to sustain itself.
   components:
     - type: GhostRole
       allowMovement: true

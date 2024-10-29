@@ -40,6 +40,7 @@ artifact-trigger-hint-regular-gases = Standard atmospheric gases
 artifact-trigger-hint-plasma = Gaseous plasma
 artifact-trigger-hint-land = Active deceleration
 artifact-trigger-hint-examine = Examination
+artifact-trigger-hint-medical = Therapeutic chemicals
 
 xenoarch-trigger-tip-music = Musical vibrations
 xenoarch-trigger-tip-heat = High temperatures

@@ -228,8 +228,8 @@ public partial class NavMapControl : MapGridControl
             {
                 if (!blip.Selectable)
                     continue;
-
-                var currentDistance = (blip.Coordinates.ToMapPos(EntManager, _transformSystem) - worldPosition).Length();
+                
+                var currentDistance = (_transformSystem.ToMapCoordinates(blip.Coordinates).Position - worldPosition).Length();
 
                 if (closestDistance < currentDistance || currentDistance * MinimapScale > MaxSelectableDistance)
                     continue;
@@ -397,7 +397,7 @@ public partial class NavMapControl : MapGridControl
         {
             if (lit && value.Visible)
             {
-                var mapPos = coord.ToMap(EntManager, _transformSystem);
+                var mapPos = _transformSystem.ToMapCoordinates(coord);
 
                 if (mapPos.MapId != MapId.Nullspace)
                 {
@@ -418,7 +418,7 @@ public partial class NavMapControl : MapGridControl
             if (blip.Texture == null)
                 continue;
 
-            var mapPos = blip.Coordinates.ToMap(EntManager, _transformSystem);
+            var mapPos = _transformSystem.ToMapCoordinates(blip.Coordinates);
 
             if (mapPos.MapId != MapId.Nullspace)
             {
@@ -535,7 +535,7 @@ public partial class NavMapControl : MapGridControl
                 // East edge
                 neighborData = 0;
                 if (relativeTile.X != SharedNavMapSystem.ChunkSize - 1)
-                    neighborData = chunk.TileData[i+SharedNavMapSystem.ChunkSize];
+                    neighborData = chunk.TileData[i + SharedNavMapSystem.ChunkSize];
                 else if (_navMap.Chunks.TryGetValue(chunkOrigin + Vector2i.Right, out neighborChunk))
                     neighborData = neighborChunk.TileData[i + SharedNavMapSystem.ChunkSize - SharedNavMapSystem.ArraySize];
 
@@ -548,7 +548,7 @@ public partial class NavMapControl : MapGridControl
                 // South edge
                 neighborData = 0;
                 if (relativeTile.Y != 0)
-                    neighborData = chunk.TileData[i-1];
+                    neighborData = chunk.TileData[i - 1];
                 else if (_navMap.Chunks.TryGetValue(chunkOrigin + Vector2i.Down, out neighborChunk))
                     neighborData = neighborChunk.TileData[i - 1 + SharedNavMapSystem.ChunkSize];
 
@@ -561,7 +561,7 @@ public partial class NavMapControl : MapGridControl
                 // West edge
                 neighborData = 0;
                 if (relativeTile.X != 0)
-                    neighborData = chunk.TileData[i-SharedNavMapSystem.ChunkSize];
+                    neighborData = chunk.TileData[i - SharedNavMapSystem.ChunkSize];
                 else if (_navMap.Chunks.TryGetValue(chunkOrigin + Vector2i.Left, out neighborChunk))
                     neighborData = neighborChunk.TileData[i - SharedNavMapSystem.ChunkSize + SharedNavMapSystem.ArraySize];
 

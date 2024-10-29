@@ -1,9 +1,9 @@
 using Content.Server.Access;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Power.Components;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
+using Content.Shared.Power;
 using Robust.Shared.Physics.Components;
 
 namespace Content.Server.Doors.Systems;

@@ -24,6 +24,8 @@
     bulb: Bulb
     on: false
     hasLampOnSpawn: ServiceLightBulb
+  - type: DamageOnInteract
     damage:
       types:
         Heat: 5
+    popupText: powered-light-component-burn-hand

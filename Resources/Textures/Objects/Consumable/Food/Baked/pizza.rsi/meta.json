@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation and modified by Swept at https://github.com/tgstation/tgstation/commit/40d75cc340c63582fb66ce15bf75a36115f6bdaa",
+  "copyright": "Taken from tgstation and modified by Swept at https://github.com/tgstation/tgstation/commit/40d75cc340c63582fb66ce15bf75a36115f6bdaa, Spicy Rock Pizza modified from margherita pizza by mkanke, cotton made by mlexf (discord 1143460554963427380)",
   "size": {
     "x": 32,
     "y": 32
@@ -42,6 +42,12 @@
     },
     {
       "name": "base-8"
+    },
+    {
+      "name": "cotton-pizza"
+    },
+    {
+      "name": "cotton-slice"
     },
     {
       "name": "dank"
@@ -137,6 +143,12 @@
     {
       "name": "box-inhand-left",
       "directions": 4
+    },
+    {
+      "name": "uranium-pizza"
+    },
+    {
+      "name": "uranium-slice"
     }
   ]
 }

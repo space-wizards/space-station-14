@@ -41,6 +41,16 @@ public abstract partial class BaseActionComponent : Component
     [DataField("iconColor")] public Color IconColor = Color.White;
 
     /// <summary>
+    ///     The original <see cref="IconColor"/> this action was.
+    /// </summary>
+    [DataField] public Color OriginalIconColor;
+
+    /// <summary>
+    ///     The color the action should turn to when disabled
+    /// </summary>
+    [DataField] public Color DisabledIconColor = Color.DimGray;
+
+    /// <summary>
     ///     Keywords that can be used to search for this action in the action menu.
     /// </summary>
     [DataField("keywords")] public HashSet<string> Keywords = new();
@@ -179,6 +189,8 @@ public abstract class BaseActionComponentState : ComponentState
     public SpriteSpecifier? Icon;
     public SpriteSpecifier? IconOn;
     public Color IconColor;
+    public Color OriginalIconColor;
+    public Color DisabledIconColor;
     public HashSet<string> Keywords;
     public bool Enabled;
     public bool Toggled;
@@ -209,6 +221,8 @@ public abstract class BaseActionComponentState : ComponentState
         Icon = component.Icon;
         IconOn = component.IconOn;
         IconColor = component.IconColor;
+        OriginalIconColor = component.OriginalIconColor;
+        DisabledIconColor = component.DisabledIconColor;
         Keywords = component.Keywords;
         Enabled = component.Enabled;
         Toggled = component.Toggled;
