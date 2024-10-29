@@ -114,13 +114,6 @@
       types:
         Asphyxiation: -1.0
     maxSaturation: 15
-  - type: LanguageKnowledge
-    speaks:
-    - GalacticCommon
-    - Bubblish
-    understands:
-    - GalacticCommon
-    - Bubblish
   - type: Inventory
     femaleDisplacements:
       jumpsuit:

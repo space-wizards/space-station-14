@@ -26,13 +26,6 @@
   - type: Speech
     speechVerb: Moth
     allowedEmotes: [ 'Chitter', 'Squeak' ]
-  - type: LanguageKnowledge
-    speaks:
-    - GalacticCommon
-    - Moffic
-    understands:
-    - GalacticCommon
-    - Moffic
   - type: TypingIndicator
     proto: moth
   - type: Butcherable

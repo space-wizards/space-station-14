@@ -103,13 +103,6 @@
     actionPrototype: DionaGibAction
     allowedStates:
     - Dead
-  - type: LanguageKnowledge
-    speaks:
-    - GalacticCommon
-    - RootSpeak
-    understands:
-    - GalacticCommon
-    - RootSpeak
   - type: Inventory
     templateId: diona
     femaleDisplacements:

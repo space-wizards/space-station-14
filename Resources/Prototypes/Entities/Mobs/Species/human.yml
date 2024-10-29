@@ -21,13 +21,6 @@
     hideLayersOnEquip:
     - Hair
     - Snout
-  - type: LanguageKnowledge
-    speaks:
-    - GalacticCommon
-    - SolCommon
-    understands:
-    - GalacticCommon
-    - SolCommon
   - type: Inventory
     femaleDisplacements:
       jumpsuit:

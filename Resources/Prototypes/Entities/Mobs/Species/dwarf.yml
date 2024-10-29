@@ -52,13 +52,6 @@
     accent: dwarf
   - type: Speech
     speechSounds: Bass
-  - type: LanguageKnowledge
-    speaks:
-    - GalacticCommon
-    - SolCommon
-    understands:
-    - GalacticCommon
-    - SolCommon
   - type: HumanoidAppearance
     species: Human
     hideLayersOnEquip:

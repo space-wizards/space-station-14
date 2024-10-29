@@ -66,13 +66,6 @@
       295: 0.6
       285: 0.4
   - type: Wagging
-  - type: LanguageKnowledge
-    speaks:
-    - GalacticCommon
-    - Draconic
-    understands:
-    - GalacticCommon
-    - Draconic
   - type: Inventory
     speciesId: reptilian
     femaleDisplacements:
