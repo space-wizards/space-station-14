@@ -1,3 +1,4 @@
+using Content.Server._EinsteinEngine.Language;
 using Content.Server.Chat.Systems;
 using Content.Server.Speech;
 using Content.Shared.Speech;
@@ -16,6 +17,7 @@ public sealed class SurveillanceCameraSpeakerSystem : EntitySystem
     [Dependency] private readonly SpeechSoundSystem _speechSound = default!;
     [Dependency] private readonly ChatSystem _chatSystem = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly LanguageSystem _language = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -52,6 +54,6 @@ public sealed class SurveillanceCameraSpeakerSystem : EntitySystem
             ("originalName", nameEv.VoiceName));
 
         // log to chat so people can identity the speaker/source, but avoid clogging ghost chat if there are many radios
-        _chatSystem.TrySendInGameICMessage(uid, args.Message, SharedChatSystem.InGameICChatType.Speak, SharedChatSystem.ChatTransmitRange.GhostRangeLimit, nameOverride: name);
+        _chatSystem.TrySendInGameICMessage(uid, args.Message, SharedChatSystem.InGameICChatType.Speak, SharedChatSystem.ChatTransmitRange.GhostRangeLimit, nameOverride: name, languageOverride: _language.GetLanguage(args.Speaker));
     }
 }
