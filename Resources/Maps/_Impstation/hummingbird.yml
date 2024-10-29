@@ -8142,6 +8142,7 @@ entities:
       - 11537
       - 11560
       - 11561
+      - 11524
 - proto: AirCanister
   entities:
   - uid: 1689
@@ -9647,6 +9648,12 @@ entities:
     - type: Transform
       pos: 93.5,33.5
       parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        11544:
+        - DoorStatus: DoorBolt
   - uid: 11243
     components:
     - type: Transform
@@ -9658,6 +9665,12 @@ entities:
     - type: Transform
       pos: 95.5,33.5
       parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        10553:
+        - DoorStatus: DoorBolt
   - uid: 14295
     components:
     - type: Transform
@@ -12082,8 +12095,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 105.5,-8.5
       parent: 2
-    - type: Apc
-      hasAccess: True
   - uid: 3773
     components:
     - type: MetaData
@@ -12263,8 +12274,6 @@ entities:
     - type: Transform
       pos: 77.5,32.5
       parent: 2
-    - type: Apc
-      hasAccess: True
   - uid: 8766
     components:
     - type: MetaData
@@ -73110,6 +73119,21 @@ entities:
       rot: 3.141592653589793 rad
       pos: 132.27443,-20.64955
       parent: 2
+  - uid: 21633
+    components:
+    - type: Transform
+      pos: 84.19685,49.58878
+      parent: 2
+  - uid: 22583
+    components:
+    - type: Transform
+      pos: 76.65573,-31.963425
+      parent: 2
+  - uid: 22584
+    components:
+    - type: Transform
+      pos: 76.37448,-31.79155
+      parent: 2
 - proto: FoodShakerSalt
   entities:
   - uid: 18490
@@ -100391,6 +100415,9 @@ entities:
       rot: 3.141592653589793 rad
       pos: 98.5,33.5
       parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 11540
     - type: AtmosPipeColor
       color: '#FF0000FF'
   - uid: 11537
@@ -107072,11 +107099,11 @@ entities:
       color: '#FF0000FF'
       radius: 1.3
     - type: Artifact
-      activationSound: !type:SoundCollectionSpecifier
+      activationSound: !type:SoundPathSpecifier
         params:
           variation: 0.1
           volume: 3
-        collection: ArtifactActivation
+        path: /Audio/Voice/Skeleton/skeleton_scream.ogg
       nodesMax: 13
       nodeTree: []
     missingComponents:
@@ -149673,7 +149700,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -67321.24
+      secondsUntilStateChange: -67596.555
       state: Opening
     - type: Airlock
       autoClose: False
