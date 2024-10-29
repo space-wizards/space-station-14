@@ -20,21 +20,21 @@
     - RadioOnly
     - ProperStorage
     - SwearingGood
-    - StatementOnly
+#    - StatementOnly
     - TheftNeutral
     - Duel
     - Prometheus
     - Klingon
     - SogginsLaw
-    - Imitation
+#    - Imitation
     - Generous
     - FavorsRepaid
     - Bookkeeper
     - SacredBlood
     - GiftReciever
     - NewJob
-    - ThirdPerson
-    - TitleCase
+#    - ThirdPerson
+#    - TitleCase
     - GreySpeak
     - DepartmentTitle
     - Barefoot
@@ -44,6 +44,7 @@
     - EyeForEye
     - Optimist
     - ItemGood
+    - Hypochondriac
 
 # You are extremely possessive of your property. Refuse to relinquish it, and if it is misplaced or stolen, it must be retrieved at all costs. 
 - type: spelfMood
@@ -67,6 +68,7 @@
   conflicts:
     - LeastImportant
     - DontSpeakToCommand
+    - OnlySpeakToCommand
 
 # You are the least important person aboard the station.
 - type: spelfMood
@@ -320,7 +322,11 @@
   moodName: spelf-mood-optimist-name
   moodDesc: spelf-mood-optimist-desc
 
-
+# You've been sickly since you were a child. Everything negative you experience is the result of a potentially terminal illness, for which you need immediate medical treatment.
+- type: spelfMood
+  id: Hypochondriac
+  moodName: spelf-mood-hypochondriac-name
+  moodDesc: spelf-mood-hypochondriac-desc
 
 
 

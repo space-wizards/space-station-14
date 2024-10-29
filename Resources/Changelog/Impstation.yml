@@ -3344,3 +3344,83 @@
   id: 413
   time: '2024-10-26T02:31:44.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/548
+- author: DinnerCalzone
+  changes:
+  - message: Made various changes to Hummingbird Station for further playtesting.
+      Check the Discord thread or GitHub PR for a full list of changes.
+    type: Tweak
+  id: 414
+  time: '2024-10-28T23:05:34.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/565
+- author: Kandiyaki
+  changes:
+  - message: fixed a bug where Subjuzine would break if activated with a mixture of
+      player and animal DNA.
+    type: Fix
+  id: 415
+  time: '2024-10-28T23:11:06.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/561
+- author: widgetbeck
+  changes:
+  - message: Some new guys. Shh.
+    type: Add
+  id: 416
+  time: '2024-10-28T23:18:50.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/560
+- author: ruddygreat
+  changes:
+  - message: Surplus crate white / blacklists work again.
+    type: Fix
+  - message: allowed recursive surplus crates again. have fun!
+    type: Tweak
+  id: 417
+  time: '2024-10-28T23:21:35.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/556
+- author: hivehum
+  changes:
+  - message: Music sounds worse in the lobby because I hate you.
+    type: Tweak
+  id: 418
+  time: '2024-10-28T23:22:57.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/554
+- author: widgetbeck
+  changes:
+  - message: Grays now having organ. Many of organ. Squishy!
+    type: Add
+  id: 419
+  time: '2024-10-28T23:24:34.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/538
+- author: widgetbeck
+  changes:
+  - message: Luggage now has no hands. Sorry! It can still open and close itself and
+      pull items, though.
+    type: Tweak
+  id: 420
+  time: '2024-10-28T23:24:07.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/551
+- author: hivehum & snavian
+  changes:
+  - message: Scars for moths.
+    type: Add
+  - message: Added more marking slots for most races.
+    type: Tweak
+  id: 421
+  time: '2024-10-28T23:33:09.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/552
+- author: formlessnameless
+  changes:
+  - message: Added mini gyroscope to cargo orders
+    type: Add
+  - message: Added the shittle starter pack, contains everything you need to go die
+      in space!
+    type: Add
+  id: 422
+  time: '2024-10-29T04:42:12.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/572
+- author: widgetbeck
+  changes:
+  - message: Changed
+    type: Tweak
+  id: 423
+  time: '2024-10-29T04:43:04.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/570
