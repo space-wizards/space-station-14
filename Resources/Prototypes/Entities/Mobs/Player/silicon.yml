@@ -70,10 +70,8 @@
     canShuttle: false
     title: comms-console-announcement-title-station-ai
     color: "#2ed2fd"
-  - type: HolographicAvatar
-    layerData:
-    - sprite: Mobs/Silicon/station_ai.rsi
-      state: default
+  - type: Speech
+    speechVerb: Robotic
 
 - type: entity
   id: AiHeldIntellicard
