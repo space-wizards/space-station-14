@@ -48,15 +48,15 @@ public sealed class AntagPreferenceTest
 
         // By default, traitor/antag preferences are disabled, so the pool should be empty.
         var sessions = new List<ICommonSession> { pair.Player! };
-        var pool = sys.GetPlayerPool(rule, sessions, def);
-        Assert.That(pool.Count, Is.EqualTo(0));
+        var pool = sys.GetPlayerPool(rule, sessions, def, false);
+        Assert.That(pool.First().Count, Is.EqualTo(0));
 
         // Opt into the traitor role.
         await pair.SetAntagPreference("Traitor", true);
 
         Assert.That(sys.IsSessionValid(rule, pair.Player, def), Is.True);
         Assert.That(sys.IsEntityValid(client.AttachedEntity, def), Is.True);
-        pool = sys.GetPlayerPool(rule, sessions, def);
+        pool = sys.GetPlayerPool(rule, sessions, def, false);
         Assert.That(pool.Count, Is.EqualTo(1));
         Assert.That(pool.First().Count, Is.EqualTo(1));
         pool.First().TryPickAndTake(pair.Server.ResolveDependency<IRobustRandom>(), out var picked);
@@ -68,8 +68,8 @@ public sealed class AntagPreferenceTest
 
         Assert.That(sys.IsSessionValid(rule, pair.Player, def), Is.True);
         Assert.That(sys.IsEntityValid(client.AttachedEntity, def), Is.True);
-        pool = sys.GetPlayerPool(rule, sessions, def);
-        Assert.That(pool.Count, Is.EqualTo(0));
+        pool = sys.GetPlayerPool(rule, sessions, def, false);
+        Assert.That(pool.First().Count, Is.EqualTo(0));
 
         await server.WaitPost(() => server.EntMan.DeleteEntity(uid));
         await pair.CleanReturnAsync();
