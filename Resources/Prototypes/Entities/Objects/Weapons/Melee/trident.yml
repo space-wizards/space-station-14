@@ -38,3 +38,8 @@
   - type: Item
     size: Ginormous
   - type: DisarmMalus
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - suitStorage
+    - Belt
