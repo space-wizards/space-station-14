@@ -142,6 +142,11 @@ public sealed class RadioSystem : EntitySystem
             if (!isLongRange && transform.MapID != sourceMapId && !radio.GlobalReceive)
             continue;
 
+            if (isLongRange)
+             {
+              channel.LongRange = true;
+             }
+    
             // don't need telecom server for long range channels or handheld radios and intercoms
             var needServer = !isLongRange && !sourceServerExempt;
             if (needServer && !hasActiveServer)
