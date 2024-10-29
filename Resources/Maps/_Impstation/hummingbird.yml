@@ -98163,8 +98163,6 @@ entities:
       pos: 73.5,65.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 11195
       - 11157
@@ -100364,8 +100362,6 @@ entities:
       pos: 83.5,65.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 11195
       - 11157
