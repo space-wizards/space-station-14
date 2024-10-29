@@ -33,6 +33,7 @@
         - GPS
         - WeldingMask
       components:
+        - StationMap
         - SprayPainter
         - NetworkConfigurator
         - RCD
