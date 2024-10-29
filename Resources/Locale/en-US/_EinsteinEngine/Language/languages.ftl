@@ -22,9 +22,6 @@ language-Moffic-description = The language of the mothpeople borders on complete
 language-RobotTalk-name = RobotTalk
 language-RobotTalk-description = A language consisting of harsh binary chirps, whistles, hisses, and whines. Organic tongues cannot speak it without aid from special translators.
 
-language-GraySpeak-name = Grey-Speak
-language-GraySpeak-description = The language of the grays, a funny sounding language. Pisk.
-
 language-Sign-name = Galactic Sign Language
 language-Sign-description = GSL for short, this sign language is prevalent among mute and deaf people.
 
