@@ -3424,3 +3424,14 @@
   id: 423
   time: '2024-10-29T04:43:04.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/570
+- author: honeyed-lemons
+  changes:
+  - message: Language System with so many languages, including gray
+    type: Add
+  - message: Foreigner Trait that makes it so you don't spawn with common
+    type: Add
+  - message: Multiple levels of translator research
+    type: Add
+  id: 424
+  time: '2024-10-29T04:50:40.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/567
