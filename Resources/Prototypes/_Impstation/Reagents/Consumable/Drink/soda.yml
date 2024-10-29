@@ -31,7 +31,7 @@
   physicalDesc: reagent-physical-desc-gender
   flavor: genderfluid
   metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/Impstation/genderfluid.rsi
+    sprite: _Impstation/Objects/Consumable/Drinks/genderfluid.rsi
     state: icon_empty
   metamorphicMaxFillLevels: 4
   metamorphicFillBaseName: fill-
@@ -46,7 +46,7 @@
   flavor: zombieslushie
   color: "#ff6fa8"
   metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/Impstation/zombieslushie.rsi
+    sprite: _Impstation/Objects/Consumable/Drinks/zombieslushie.rsi
     state: icon_empty
   metamorphicMaxFillLevels: 4
   metamorphicFillBaseName: fill-

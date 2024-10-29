@@ -7,7 +7,7 @@
   flavor: horsepussy
   color: "#7BD18C"
   metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/Impstation/thee_horsepussy.rsi
+    sprite: _Impstation/Objects/Consumable/Drinks/thee_horsepussy.rsi
     state: icon_empty
   metamorphicMaxFillLevels: 4
   metamorphicFillBaseName: fill-
@@ -378,7 +378,7 @@
   color: "#68430b"
   recognizable: true
   metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/Impstation/thavenbadglass.rsi
+    sprite: _Impstation/Objects/Consumable/Drinks/thavenbadglass.rsi
     state: icon_empty
   metamorphicMaxFillLevels: 6
   metamorphicFillBaseName: fill-
@@ -399,7 +399,7 @@
   flavor: paintthinner
   color: "#080e17"
   metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/Impstation/starrynight.rsi
+    sprite: _Impstation/Objects/Consumable/Drinks/starrynight.rsi
     state: icon_empty
   metamorphicMaxFillLevels: 4
   metamorphicFillBaseName: fill-
@@ -428,7 +428,7 @@
   flavor: radiation
   color: "#B9FF66"
   metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/Impstation/uapglass.rsi
+    sprite: _Impstation/Objects/Consumable/Drinks/uapglass.rsi
     state: icon_empty
   metamorphicMaxFillLevels: 4
   metamorphicFillBaseName: fill-
