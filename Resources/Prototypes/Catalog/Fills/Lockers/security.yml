@@ -93,7 +93,8 @@
       - id: TrackingImplanter
         amount: 2
       - id: ClothingOuterHardsuitBrigmedic
-      - id: AirTankFilled
+      - id: OxygenTankFilled
+      - id: NitrogenTankFilled
       - id: BoxSterileMask
       - id: ClothingHeadHatBeretBrigmedic
       - id: ClothingOuterCoatAMG
