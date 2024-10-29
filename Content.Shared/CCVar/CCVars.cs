@@ -468,7 +468,7 @@ namespace Content.Shared.CCVar
         /// Should antag gamerules try to prioritize new players first?
         /// </summary>
         public static readonly CVarDef<bool> GameNewPlayerAntagPriority =
-            CVarDef.Create("game.new_player_antag_priority", true, CVar.SERVER | CVar.REPLICATED);
+            CVarDef.Create("game.new_player_antag_priority", false, CVar.SERVER | CVar.REPLICATED);
 
         /*
          * Discord
