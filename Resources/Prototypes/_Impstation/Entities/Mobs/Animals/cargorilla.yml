@@ -1,0 +1,65 @@
+- type: entity
+  name: cargorilla
+  parent: [ SimpleMobBase, MobCombat ]
+  id: MobCargorilla
+  description: A well trained gorilla working in Cargo, try not to piss it off.
+  components:
+  - type: Puller
+    needsHands: false
+  - type: GhostTakeoverAvailable
+  - type: GhostRole
+    makeSentient: true
+    allowSpeech: false
+    allowMovement: true
+    name: ghost-role-information-cargorilla-name
+    description: ghost-role-information-cargorilla-description
+    rules: ghost-role-information-nonantagonist-rules
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: crawling
+      sprite: _Impstation/Mobs/Animals/cargorilla.rsi
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.48
+        density: 200
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: crawling
+      Critical:
+        Base: dead
+      Dead:
+        Base: dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeat
+      amount: 4
+  - type: Bloodstream
+    bloodMaxVolume: 300
+    # modified punch damage
+  - type: MeleeWeapon
+    soundHit:
+      collection: Punch
+    damage:
+      types:
+        Blunt: 12
+        Structural: 8
+    animation: WeaponArcFist
+  - type: NPCRetaliation
+  - type: FactionException
+  - type: NpcFactionMember
+    factions:
+    - Passive
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
