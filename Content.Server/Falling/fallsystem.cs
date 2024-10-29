@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Shared.Ghost;
 using Content.Server.Falling;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Damage;
@@ -20,10 +21,10 @@ namespace Content.Server.Falling
         [Dependency] private readonly DamageableSystem _damageable = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
-        [Dependency] private readonly IRobustRandom _random = default!; // Dependency for random number generation
-        [Dependency] private readonly EntityLookupSystem _lookup = default!; // Add the missing lookup dependency
+        [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly EntityLookupSystem _lookup = default!;
 
-        private const int MaxRandomTeleportAttempts = 20; // Number of attempts to find a valid teleport location
+        private const int MaxRandomTeleportAttempts = 20; // The # of times it's going to try to find a valid spot to randomly teleport an object
 
         public override void Initialize()
         {
@@ -31,12 +32,16 @@ namespace Content.Server.Falling
             SubscribeLocalEvent<FallSystemComponent, EntParentChangedMessage>(OnEntParentChanged);
         }
 
-        private void OnEntParentChanged(EntityUid owner, FallSystemComponent component, EntParentChangedMessage args)
+        private void OnEntParentChanged(EntityUid owner, FallSystemComponent component, EntParentChangedMessage args) // called when the entity changes parents
         {
-            if (args.OldParent == null || args.Transform.GridUid != null || TerminatingOrDeleted(owner))
+            if (args.OldParent == null || args.Transform.GridUid != null || TerminatingOrDeleted(owner)) // If you came from space or are switching to another valid grid, nothing happens.
                 return;
 
-            // Try to find a FallingDestinationComponent; if none found, teleport randomly
+            // Makes sure that ghosts aren't getting teleported during observation
+            if (!args.CanAccess || !HasComp<GhostComponent>(args.User))
+            return;
+
+            // Try to find an object with the FallingDestinationComponent
             var destination = EntityManager.EntityQuery<FallingDestinationComponent>().FirstOrDefault();
             if (destination != null)
             {
@@ -45,22 +50,26 @@ namespace Content.Server.Falling
             }
             else
             {
-                // If no destination is found, teleport randomly within a defined radius
-                TeleportRandomly(owner, component);
+                // If there's no destination, something broke
+                Log.Error($"No valid falling sites available!");
+                return;
             }
 
-            // Apply stun and knockdown effects
-            var stunTime = TimeSpan.FromSeconds(3);
+            // Stuns the fall-ee for five seconds
+            var stunTime = TimeSpan.FromSeconds(5);
             _stun.TryKnockdown(owner, stunTime, refresh: true);
             _stun.TryStun(owner, stunTime, refresh: true);
 
-            // Apply 80 blunt damage to the owner
+            // Defines the damage being dealt
             var damage = new DamageSpecifier
             {
-                DamageDict = { ["Blunt"] = 80f } // Using float for damage
+                DamageDict = { ["Blunt"] = 80f }
             };
             _damageable.TryChangeDamage(owner, damage, origin: owner);
+            // Causes a popup
             _popup.PopupEntity(Loc.GetString("fell-to-seafloor"), owner, PopupType.LargeCaution);
+            // Randomly teleports you in a radius around the landing zone
+            TeleportRandomly(owner, component);
         }
 
         private void TeleportRandomly(EntityUid owner, FallSystemComponent component)
@@ -71,7 +80,7 @@ namespace Content.Server.Falling
             for (var i = 0; i < MaxRandomTeleportAttempts; i++)
             {
                 // Generate a random offset based on a defined radius
-                var offset = _random.NextVector2(component.MaxRandomRadius); // Assume component has MaxRandomRadius
+                var offset = _random.NextVector2(component.MaxRandomRadius);
                 newCoords = coords.Offset(offset);
 
                 // Check if the new coordinates are free of static entities
