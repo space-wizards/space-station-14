@@ -13,6 +13,8 @@
     rules: ghost-role-information-familiar-rules
   - type: Hands
     showInHands: false
+    disableExplosionRecursion: true
+    canBeStripped: false
   - type: ComplexInteraction
   - type: Clumsy # tongue can't manipulate a trigger good
     clumsyDamage:
@@ -54,9 +56,6 @@
     - state: luggage_open
       map: ["enum.StorageVisualLayers.Door"]
   - type: Appearance
-  - type: Body
-    prototype: Luggage
-    requiredLegs: 0 # no legs, only feet.
   - type: MovementSpeedModifier
     baseWalkSpeed : 2.5
     baseSprintSpeed : 4

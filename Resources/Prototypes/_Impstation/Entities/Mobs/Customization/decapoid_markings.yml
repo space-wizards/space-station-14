@@ -1,0 +1,10 @@
+- type: marking
+  id: DecapoidGills1
+  bodyPart: Snout
+  markingCategory: Snout
+  followSkinColor: false
+  forcedColoring: false
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Species/Decapoid/parts.rsi
+    state: gills

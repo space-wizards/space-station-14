@@ -3,7 +3,7 @@ using Content.Client.GameTicking.Managers;
 using Content.Client.LateJoin;
 using Content.Client.Lobby.UI;
 using Content.Client.Message;
-using Content.Client.ReadyManifest;
+using Content.Client._Impstation.ReadyManifest;
 using Content.Client.UserInterface.Systems.Chat;
 using Content.Client.Voting;
 using Robust.Client;
