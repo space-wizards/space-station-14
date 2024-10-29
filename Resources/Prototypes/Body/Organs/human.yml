@@ -186,7 +186,7 @@
     - id: Medicine
     - id: Poison
     - id: Narcotic
-    - type: Tag # goob edit
+  - type: Tag # goob edit
     tags:
     - Meat
     - Organ
