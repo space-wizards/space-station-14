@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: strO0pwafel
-  changes:
-  - message: Fixed inconsistent naming of CentComm.
-    type: Fix
-  id: 7059
-  time: '2024-08-08T10:04:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29217
 - author: Plykiya
   changes:
   - message: Buffed the range of EMP implants from a radius of 1.75 tiles to 2.75
@@ -3958,3 +3951,10 @@
   id: 7558
   time: '2024-10-28T21:25:34.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32876
+- author: deltanedas
+  changes:
+  - message: Fixed lava planet expeditions not working.
+    type: Fix
+  id: 7559
+  time: '2024-10-29T05:00:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33042
