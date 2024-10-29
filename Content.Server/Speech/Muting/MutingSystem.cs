@@ -1,3 +1,4 @@
+using Content.Server._EinsteinEngine.Language;
 using Content.Server.Abilities.Mime;
 using Content.Server.Chat.Systems;
 using Content.Server.Popups;
@@ -12,6 +13,7 @@ namespace Content.Server.Speech.Muting
 {
     public sealed class MutingSystem : EntitySystem
     {
+        [Dependency] private readonly LanguageSystem _languages = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         public override void Initialize()
         {
@@ -47,7 +49,9 @@ namespace Content.Server.Speech.Muting
 
         private void OnSpeakAttempt(EntityUid uid, MutedComponent component, SpeakAttemptEvent args)
         {
-            // TODO something better than this.
+            var language = _languages.GetLanguage(uid);
+            if (!language.SpeechOverride.RequireSpeech)
+                return; // Cannot mute if there's no speech involved
 
             if (HasComp<MimePowersComponent>(uid))
                 _popupSystem.PopupEntity(Loc.GetString("mime-cant-speak"), uid, uid);

@@ -62,6 +62,7 @@
   - type: Tag
     tags:
     - BypassInteractionRangeChecks
+  - type: UniversalLanguageSpeaker # Ghosts should understand any language.
 
 # proto for player ghosts specifically
 - type: entity

@@ -9,6 +9,7 @@ using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Prototypes;
+using Content.Shared.Chat;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;
@@ -96,7 +97,7 @@ public sealed class RespiratorSystem : EntitySystem
                 if (_gameTiming.CurTime >= respirator.LastGaspEmoteTime + respirator.GaspEmoteCooldown)
                 {
                     respirator.LastGaspEmoteTime = _gameTiming.CurTime;
-                    _chat.TryEmoteWithChat(uid, respirator.GaspEmote, ChatTransmitRange.HideChat, ignoreActionBlocker: true);
+                    _chat.TryEmoteWithChat(uid, respirator.GaspEmote, SharedChatSystem.ChatTransmitRange.HideChat, ignoreActionBlocker: true);
                 }
 
                 TakeSuffocationDamage((uid, respirator));

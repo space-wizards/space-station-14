@@ -165,8 +165,11 @@
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepBounce
-  - type: ReplacementAccent
-    accent: kangaroo
+  - type: LanguageKnowledge
+    speaks:
+    - Kangaroo
+    understands:
+    - Kangaroo
 
 - type: entity
   id: MobKangarooSpaceSalvage
@@ -242,8 +245,11 @@
   - type: MeleeChemicalInjector
     solution: melee
     transferAmount: 4
-  - type: ReplacementAccent
-    accent: xeno
+  - type: LanguageKnowledge
+    speaks:
+    - Xeno
+    understands:
+    - Xeno
   - type: InteractionPopup
     successChance: 0.20
     interactSuccessString: petting-success-tarantula
@@ -346,8 +352,11 @@
     - type: MeleeChemicalInjector
       solution: melee
       transferAmount: 6
-    - type: ReplacementAccent
-      accent: xeno
+    - type: LanguageKnowledge
+      speaks:
+      - Xeno
+      understands:
+      - Xeno
     - type: InteractionPopup
       successChance: 0.2
       interactSuccessString: petting-success-snake

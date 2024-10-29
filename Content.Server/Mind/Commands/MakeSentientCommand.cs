@@ -1,7 +1,11 @@
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Emoting;
+using Content.Server._EinsteinEngine.Language;
 using Content.Shared.Examine;
+using Content.Shared._EinsteinEngine.Language;
+using Content.Shared._EinsteinEngine.Language.Components;
+using Content.Shared._EinsteinEngine.Language.Systems;
 using Content.Shared.Mind.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Speech;
@@ -55,6 +59,15 @@ namespace Content.Server.Mind.Commands
             {
                 entityManager.EnsureComponent<SpeechComponent>(uid);
                 entityManager.EnsureComponent<EmotingComponent>(uid);
+
+
+                var language = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<LanguageSystem>();
+                var speaker = entityManager.EnsureComponent<LanguageSpeakerComponent>(uid);
+                // If the entity already speaks some language (like monkey or robot), we do nothing else
+                // Otherwise, we give them the fallback language
+                if (speaker.SpokenLanguages.Count == 0)
+                    language.AddLanguage(uid, SharedLanguageSystem.FallbackLanguagePrototype);
+
             }
 
             entityManager.EnsureComponent<ExaminerComponent>(uid);

@@ -1,0 +1,34 @@
+#- type: trait
+#  id: ForeignerLight
+#  category: Quirks
+#  name: trait-foreignerlight-name
+#  description: trait-foreignerlight-desc
+#  requirements:
+#  - !type:TraitGroupExclusionRequirement
+#    prototypes: [ Foreigner ]
+#  components:
+#  - type: ForeignerTrait
+#    cantUnderstand: false # Allows to understand
+#    baseTranslator: TranslatorForeigner
+
+#- type: trait
+ # id: Foreigner
+ # category: Quirks
+ # name: trait-foreigner-name
+ # description: trait-foreigner-desc
+#  components:
+#  - type: ForeignerTrait
+ #   baseTranslator: TranslatorForeigner
+
+- type: trait
+  id: SignLanguage
+  category: Quirks
+  name: trait-signlanguage-name
+  description: trait-signlanguage-desc
+  components:
+  - type: LanguageKnowledgeModifier
+    speaks:
+    - Sign
+    understands:
+    - Sign
+
