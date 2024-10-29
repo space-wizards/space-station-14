@@ -97,7 +97,6 @@
     # TODO: Fill this out more.
     whitelist:
       tags:
-        - StationMap
         - Wirecutter
         - Crowbar
         - Screwdriver
@@ -114,6 +113,7 @@
         - Multitool
         - AppraisalTool
       components:
+        - StationMap
         - SprayPainter
         - NetworkConfigurator
         - RCD
