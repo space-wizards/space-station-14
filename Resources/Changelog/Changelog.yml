@@ -1,35 +1,4 @@
 ﻿Entries:
-- author: Mervill
-  changes:
-  - message: Gas Miners now have detailed examine text
-    type: Tweak
-  id: 7057
-  time: '2024-08-08T02:14:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30480
-- author: BackeTako
-  changes:
-  - message: "!, \u203D and multiple punctuations now work for Spanish."
-    type: Tweak
-  id: 7058
-  time: '2024-08-08T03:08:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30551
-- author: strO0pwafel
-  changes:
-  - message: Fixed inconsistent naming of CentComm.
-    type: Fix
-  id: 7059
-  time: '2024-08-08T10:04:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29217
-- author: Plykiya
-  changes:
-  - message: Buffed the range of EMP implants from a radius of 1.75 tiles to 2.75
-      tiles.
-    type: Tweak
-  - message: Buffed the range of EMP grenades from a radius of 4 tiles to 5.5 tiles.
-    type: Tweak
-  id: 7060
-  time: '2024-08-08T10:04:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30660
 - author: Plykiya
   changes:
   - message: You can drop food or drinks from your hands to interrupt eating it, again.
@@ -3957,3 +3926,32 @@
   id: 7556
   time: '2024-10-27T04:25:55.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33017
+- author: stalengd
+  changes:
+  - message: Fixed playtime labels not being able to correctly display time greater
+      than 24 hours
+    type: Fix
+  id: 7557
+  time: '2024-10-28T18:00:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32974
+- author: august-sun
+  changes:
+  - message: Extended the minimum round time for meteor swarm events.
+    type: Tweak
+  id: 7558
+  time: '2024-10-28T21:25:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32876
+- author: deltanedas
+  changes:
+  - message: Fixed lava planet expeditions not working.
+    type: Fix
+  id: 7559
+  time: '2024-10-29T05:00:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33042
+- author: metalgearsloth
+  changes:
+  - message: Fix separated game screen bumping slightly.
+    type: Fix
+  id: 7560
+  time: '2024-10-29T05:07:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33046
