@@ -1,0 +1,850 @@
+## See also ../roles.yml and ../spawners.yml
+
+### Visitors with Visitor ID
+
+# Command
+# Following use EventHumanoidMindShielded since they are heads and probably should have mindshields
+
+- type: randomHumanoidSettings
+  id: VisitorHead
+  parent: EventHumanoidMindShielded
+  components:
+    - type: GhostRole
+      name: ghost-role-information-command-name
+      description: ghost-role-information-command-description
+      rules: ghost-role-information-nonantagonist-rules
+      raffle:
+        settings: default
+
+- type: randomHumanoidSettings
+  id: VisitorCaptain
+  parent: VisitorHead
+  components:
+    - type: GhostRole
+      name: job-name-captain
+      description: ghost-role-information-command-description
+    - type: Loadout
+      prototypes: [ VisitorCaptain, VisitorCaptainAlt ]
+      roleLoadout: [ RoleSurvivalStandard ]
+
+- type: randomHumanoidSettings
+  id: VisitorCE
+  parent: VisitorHead
+  components:
+    - type: GhostRole
+      name: job-name-ce
+      description: ghost-role-information-command-description
+    - type: Loadout
+      prototypes: [ VisitorCE, VisitorCEAlt ]
+      roleLoadout: [ RoleSurvivalExtended ]
+
+- type: randomHumanoidSettings
+  id: VisitorCMO
+  parent: VisitorHead
+  components:
+    - type: GhostRole
+      name: job-name-cmo
+      description: ghost-role-information-command-description
+    - type: Loadout
+      prototypes: [ VisitorCMO, VisitorCMOAlt ]
+      roleLoadout: [ RoleSurvivalMedical ]
+
+- type: randomHumanoidSettings
+  id: VisitorHOP
+  parent: VisitorHead
+  components:
+    - type: GhostRole
+      name: job-name-hop
+      description: ghost-role-information-command-description
+    - type: Loadout
+      prototypes: [ VisitorHOP, VisitorHOPAlt ]
+      roleLoadout: [ RoleSurvivalStandard ]
+
+- type: randomHumanoidSettings
+  id: VisitorHOS
+  parent: VisitorHead
+  components:
+    - type: GhostRole
+      name: job-name-hos
+      description: ghost-role-information-command-description
+    - type: Loadout
+      prototypes: [ VisitorHOS, VisitorHOSAlt ]
+      roleLoadout: [ RoleSurvivalSecurity ]
+
+- type: randomHumanoidSettings
+  id: VisitorResearchDirector
+  parent: VisitorHead
+  components:
+    - type: GhostRole
+      name: job-name-rd
+      description: ghost-role-information-command-description
+    - type: Loadout
+      prototypes: [ VisitorRD, VisitorRDAlt ]
+      roleLoadout: [ RoleSurvivalStandard ]
+
+- type: randomHumanoidSettings
+  id: VisitorQM
+  parent: VisitorHead
+  components:
+    - type: GhostRole
+      name: job-name-qm
+      description: ghost-role-information-command-description
+    - type: Loadout
+      prototypes: [ VisitorQM, VisitorQMAlt ]
+      roleLoadout: [ RoleSurvivalStandard ]
+
+# Security
+# Following use EventHumanoidMindShielded since they are heads and probably should have mindshields
+
+- type: randomHumanoidSettings
+  id: VisitorSecurity
+  parent: EventHumanoidMindShielded
+  components:
+    - type: GhostRole
+      name: ghost-role-information-security-name
+      description: ghost-role-information-security-description
+      rules: ghost-role-information-nonantagonist-rules
+      raffle:
+        settings: default
+
+- type: randomHumanoidSettings
+  id: VisitorSecurityCadet
+  parent: VisitorSecurity
+  components:
+    - type: GhostRole
+      name: job-name-cadet
+    - type: Loadout
+      prototypes: [ VisitorSecurityCadet, VisitorSecurityCadetAlt ]
+      roleLoadout: [ RoleSurvivalSecurity ]
+
+- type: randomHumanoidSettings
+  id: VisitorSecurityOfficer
+  parent: VisitorSecurity
+  components:
+    - type: GhostRole
+      name: job-name-security
+    - type: Loadout
+      prototypes: [ VisitorSecurityOfficer, VisitorSecurityOfficerAlt ]
+      roleLoadout: [ RoleSurvivalSecurity ]
+
+- type: randomHumanoidSettings
+  id: VisitorDetective
+  parent: VisitorSecurity
+  components:
+    - type: GhostRole
+      name: job-name-detective
+    - type: Loadout
+      prototypes: [ VisitorDetective, VisitorDetectiveAlt ]
+      roleLoadout: [ RoleSurvivalSecurity ]
+
+- type: randomHumanoidSettings
+  id: VisitorWarden
+  parent: VisitorSecurity
+  components:
+    - type: GhostRole
+      name: job-name-warden
+    - type: Loadout
+      prototypes: [ VisitorWarden, VisitorWardenAlt ]
+      roleLoadout: [ RoleSurvivalSecurity ]
+
+# Cargo
+
+- type: randomHumanoidSettings
+  id: VisitorCargonian
+  parent: EventHumanoid
+  components:
+    - type: GhostRole
+      name: ghost-role-information-cargo-name
+      description: ghost-role-information-cargo-description
+      rules: ghost-role-information-nonantagonist-rules
+      raffle:
+        settings: short
+
+- type: randomHumanoidSettings
+  id: VisitorCargoTechnician
+  parent: VisitorCargonian
+  components:
+    - type: GhostRole
+      name: job-name-cargotech
+    - type: Loadout
+      prototypes: [ VisitorCargoTech, VisitorCargoTechAlt ]
+      roleLoadout: [ RoleSurvivalStandard ]
+
+- type: randomHumanoidSettings
+  id: VisitorSalvageSpecialist
+  parent: VisitorCargonian
+  components:
+    - type: GhostRole
+      name: job-name-salvagespec
+    - type: Loadout
+      prototypes: [ VisitorSalvageSpecialist, VisitorSalvageSpecialistAlt ]
+      roleLoadout: [ RoleSurvivalStandard ]
+
+# Engineering
+
+- type: randomHumanoidSettings
+  id: VisitorEngineering
+  parent: EventHumanoid
+  components:
+    - type: GhostRole
+      name: ghost-role-information-engineering-name
+      description: ghost-role-information-engineering-description
+      rules: ghost-role-information-nonantagonist-rules
+      raffle:
+        settings: short
+
+- type: randomHumanoidSettings
+  id: VisitorAtmosTech
+  parent: VisitorEngineering
+  components:
+    - type: GhostRole
+      name: job-name-atmostech
+    - type: Loadout
+      prototypes: [ VisitorAtmosTech, VisitorAtmosTechAlt ]
+      roleLoadout: [ RoleSurvivalExtended ]
+
+- type: randomHumanoidSettings
+  id: VisitorTechnicalAssistant
+  parent: VisitorEngineering
+  components:
+    - type: GhostRole
+      name: job-name-technical-assistant
+    - type: Loadout
+      prototypes: [ VisitorTechnicalAssistant, VisitorTechnicalAssistantAlt ]
+      roleLoadout: [ RoleSurvivalExtended ]
+
+- type: randomHumanoidSettings
+  id: VisitorEngineer
+  parent: VisitorEngineering
+  components:
+    - type: GhostRole
+      name: job-name-engineer
+    - type: Loadout
+      prototypes: [ VisitorEngineer, VisitorEngineerAlt ]
+      roleLoadout: [ RoleSurvivalExtended ]
+
+# Medical
+
+- type: randomHumanoidSettings
+  id: VisitorMedical
+  parent: EventHumanoid
+  components:
+    - type: GhostRole
+      name: ghost-role-information-medical-name
+      description: ghost-role-information-medical-description
+      rules: ghost-role-information-nonantagonist-rules
+      raffle:
+        settings: short
+
+- type: randomHumanoidSettings
+  id: VisitorMedicalIntern
+  parent: VisitorMedical
+  components:
+    - type: GhostRole
+      name: job-name-intern
+    - type: Loadout
+      prototypes: [ VisitorMedicalIntern, VisitorMedicalInternAlt ]
+      roleLoadout: [ RoleSurvivalMedical ]
+
+- type: randomHumanoidSettings
+  id: VisitorMedicalDoctor
+  parent: VisitorMedical
+  components:
+    - type: GhostRole
+      name: job-name-doctor
+    - type: Loadout
+      prototypes: [ VisitorMedicalDoctor, VisitorMedicalDoctorAlt , VisitorScrubsPurple, VisitorScrubsGreen, VisitorScrubsBlue]
+      roleLoadout: [ RoleSurvivalMedical ]
+
+- type: randomHumanoidSettings
+  id: VisitorParamedic
+  parent: VisitorMedical
+  components:
+    - type: GhostRole
+      name: job-name-paramedic
+    - type: Loadout
+      prototypes: [ VisitorParamedic, VisitorParamedicAlt ]
+      roleLoadout: [ RoleSurvivalMedical ]
+
+- type: randomHumanoidSettings
+  id: VisitorVirologist
+  parent: VisitorMedical
+  components:
+    - type: GhostRole
+      name: ghost-role-information-medical-virologist-name
+    - type: Loadout
+      prototypes: [ VisitorVirologist, VisitorVirologistAlt ]
+      roleLoadout: [ RoleSurvivalMedical ]
+
+- type: randomHumanoidSettings
+  id: VisitorGeneticist
+  parent: VisitorMedical
+  components:
+    - type: GhostRole
+      name: ghost-role-information-medical-geneticist-name
+    - type: Loadout
+      prototypes: [ VisitorGeneticist, VisitorGeneticistAlt ]
+      roleLoadout: [ RoleSurvivalMedical ]
+
+- type: randomHumanoidSettings
+  id: VisitorPsychologist
+  parent: VisitorMedical
+  components:
+    - type: GhostRole
+      name: job-name-psychologist
+    - type: Loadout
+      prototypes: [ VisitorPsychologist, VisitorPsychologistAlt ]
+      roleLoadout: [ RoleSurvivalMedical ]
+
+- type: randomHumanoidSettings
+  id: VisitorChemist
+  parent: VisitorMedical
+  components:
+    - type: GhostRole
+      name: job-name-chemist
+    - type: Loadout
+      prototypes: [ VisitorChemist, VisitorChemistAlt ]
+      roleLoadout: [ RoleSurvivalMedical ]
+
+- type: randomHumanoidSettings
+  id: VisitorDentist
+  parent: VisitorMedical
+  components:
+    - type: GhostRole
+      name: ghost-role-information-medical-dentist-name
+    - type: Loadout
+      prototypes: [ VisitorDentist ]
+      roleLoadout: [ RoleSurvivalMedical ]
+
+# Science
+
+- type: randomHumanoidSettings
+  id: VisitorScience
+  parent: EventHumanoid
+  components:
+    - type: GhostRole
+      name: ghost-role-information-science-name
+      description: ghost-role-information-science-description
+      rules: ghost-role-information-nonantagonist-rules
+      raffle:
+        settings: short
+
+- type: randomHumanoidSettings
+  id: VisitorResearchAssistant
+  parent: VisitorScience
+  components:
+    - type: GhostRole
+      name: job-name-research-assistant
+    - type: Loadout
+      prototypes: [ VisitorResearchAssistant, VisitorResearchAssistantAlt ]
+      roleLoadout: [ RoleSurvivalStandard ]
+
+- type: randomHumanoidSettings
+  id: VisitorScientist
+  parent: VisitorScience
+  components:
+    - type: GhostRole
+      name: job-name-scientist
+    - type: Loadout
+      prototypes: [ VisitorScientist, VisitorScientistAlt ]
+      roleLoadout: [ RoleSurvivalStandard ]
+
+# Civilian
+
+- type: randomHumanoidSettings
+  id: VisitorCivilian
+  parent: EventHumanoid
+  components:
+    - type: GhostRole
+      name: ghost-role-information-civilian-name
+      description: ghost-role-information-civilian-description
+      rules: ghost-role-information-nonantagonist-rules
+      raffle:
+        settings: short
+
+- type: randomHumanoidSettings
+  id: VisitorBartender
+  parent: VisitorCivilian
+  components:
+    - type: GhostRole
+      name: job-name-bartender
+    - type: Loadout
+      prototypes: [ VisitorBartender, VisitorBartenderAlt ]
+      roleLoadout: [ RoleSurvivalStandard ]
+
+- type: randomHumanoidSettings
+  id: VisitorBotanist
+  parent: VisitorCivilian
+  components:
+    - type: GhostRole
+      name: job-name-botanist
+    - type: Loadout
+      prototypes: [ VisitorBotanist, VisitorBotanistAlt ]
+      roleLoadout: [ RoleSurvivalStandard ]
+
+- type: randomHumanoidSettings
+  id: VisitorBoxer
+  parent: VisitorCivilian
+  components:
+    - type: GhostRole
+      name: job-name-boxer
+    - type: Loadout
+      prototypes: [ VisitorBoxer, VisitorBoxerAlt ]
+      roleLoadout: [ RoleSurvivalStandard ]
+
+- type: randomHumanoidSettings
+  id: VisitorChaplain
+  parent: VisitorCivilian
+  components:
+    - type: BibleUser
+    - type: GhostRole
+      name: job-name-chaplain
+    - type: Loadout
+      prototypes: [ VisitorChaplain, VisitorChaplainAlt ]
+      roleLoadout: [ RoleSurvivalStandard ]
+
+- type: randomHumanoidSettings
+  id: VisitorChef
+  parent: VisitorCivilian
+  components:
+    - type: GhostRole
+      name: job-name-chef
+    - type: Loadout
+      prototypes: [ VisitorChef, VisitorChefAlt ]
+      roleLoadout: [ RoleSurvivalStandard ]
+
+- type: randomHumanoidSettings
+  id: VisitorClown
+  parent: VisitorCivilian
+  randomizeName: false
+  components:
+    - type: GhostRole
+      name: job-name-clown
+    - type: Loadout
+      prototypes: [ VisitorClown ]
+      roleLoadout: [ RoleSurvivalClown ]
+    - type: RandomMetadata
+      nameSegments:
+      - names_clown
+      
+- type: randomHumanoidSettings
+  id: VisitorJanitor
+  parent: VisitorCivilian
+  components:
+    - type: GhostRole
+      name: job-name-janitor
+    - type: Loadout
+      prototypes: [ VisitorJanitor, VisitorJanitorAlt ]
+      roleLoadout: [ RoleSurvivalStandard ]
+
+- type: randomHumanoidSettings
+  id: VisitorLawyer
+  parent: VisitorCivilian
+  components:
+    - type: GhostRole
+      name: job-name-lawyer
+    - type: Loadout
+      prototypes: [ VisitorLawyerAltA, VisitorLawyerAltB, VisitorLawyerAltC, VisitorLawyerAltD, VisitorLawyerAltE ]
+      roleLoadout: [ RoleSurvivalStandard ]
+
+- type: randomHumanoidSettings
+  id: VisitorLawyerCentcom
+  parent: VisitorCivilian
+  components:
+    - type: GhostRole
+      name: ghost-role-information-civilian-centcom-lawyer-name
+      description: ghost-role-information-civilian-centcom-lawyer-description
+    - type: Loadout
+      prototypes: [ VisitorLawyerCentcom ]
+      roleLoadout: [ RoleSurvivalStandard ]
+
+- type: randomHumanoidSettings
+  id: VisitorLibrarian
+  parent: VisitorCivilian
+  components:
+    - type: GhostRole
+      name: job-name-librarian
+    - type: Loadout
+      prototypes: [ VisitorLibrarian, VisitorLibrarianAlt ]
+      roleLoadout: [ RoleSurvivalStandard ]
+
+- type: randomHumanoidSettings
+  id: VisitorMusician
+  parent: VisitorCivilian
+  components:
+    - type: GhostRole
+      name: job-name-musician
+    - type: Loadout
+      prototypes: [ VisitorMusicianFancyAltA, VisitorMusicianFancyAltB, VisitorMusicianFancyAltC, VisitorMusicianFancyAltD, VisitorMusicianFancyAltE, VisitorMusicianFancyAltF, VisitorMusicianFancyAltG, VisitorMusicianFancyAltH, VisitorMusicianFancyAltI, VisitorMusicianRelaxedAltA, VisitorMusicianRelaxedAltB, VisitorMusicianRelaxedAltC, VisitorMusicianRelaxedAltD, VisitorMusicianRelaxedAltE, VisitorMusicianRelaxedAltF, VisitorMusicianMariachi ]
+      roleLoadout: [ RoleSurvivalStandard ]
+
+- type: randomHumanoidSettings
+  id: VisitorMusicianFancy
+  parent: VisitorCivilian
+  components:
+    - type: GhostRole
+      name: job-name-musician
+    - type: Loadout
+      prototypes: [ VisitorMusicianFancyAltA, VisitorMusicianFancyAltB, VisitorMusicianFancyAltC, VisitorMusicianFancyAltD, VisitorMusicianFancyAltE, VisitorMusicianFancyAltF, VisitorMusicianFancyAltG, VisitorMusicianFancyAltH, VisitorMusicianFancyAltI ]
+      roleLoadout: [ RoleSurvivalStandard ]
+
+- type: randomHumanoidSettings
+  id: VisitorMusicianRelaxed
+  parent: VisitorCivilian
+  components:
+    - type: GhostRole
+      name: job-name-musician
+    - type: Loadout
+      prototypes: [ VisitorMusicianRelaxedAltA, VisitorMusicianRelaxedAltB, VisitorMusicianRelaxedAltC, VisitorMusicianRelaxedAltD, VisitorMusicianRelaxedAltE, VisitorMusicianRelaxedAltF, VisitorMusicianMariachi ]
+      roleLoadout: [ RoleSurvivalStandard ]
+
+- type: randomHumanoidSettings
+  id: VisitorMime
+  parent: VisitorCivilian
+  components:
+    - type: MimePowers
+    - type: GhostRole
+      name: job-name-mime
+    - type: Loadout
+      prototypes: [ VisitorMime, VisitorMimeAlt ]
+      roleLoadout: [ RoleSurvivalStandard ]
+
+- type: randomHumanoidSettings
+  id: VisitorReporter
+  parent: VisitorCivilian
+  components:
+    - type: GhostRole
+      name: job-name-reporter
+    - type: Loadout
+      prototypes: [ VisitorReporter, VisitorReporterAlt ]
+      roleLoadout: [ RoleSurvivalStandard ]
+
+- type: randomHumanoidSettings
+  id: VisitorServiceWorker
+  parent: VisitorCivilian
+  components:
+    - type: GhostRole
+      name: job-name-serviceworker
+    - type: Loadout
+      prototypes: [ VisitorServiceWorker, VisitorServiceWorkerAlt ]
+      roleLoadout: [ RoleSurvivalStandard ]
+
+- type: randomHumanoidSettings
+  id: VisitorZookeeper
+  parent: VisitorCivilian
+  components:
+    - type: GhostRole
+      name: job-name-zookeeper
+    - type: Loadout
+      prototypes: [ VisitorZookeeper, VisitorZookeeperAlt ]
+      roleLoadout: [ RoleSurvivalStandard ]
+
+- type: randomHumanoidSettings
+  id: ClownTroupeBanana
+  parent: VisitorClown
+  randomizeName: false
+  components:
+    - type: Loadout
+      prototypes: [ BananaClown ]
+      roleLoadout: [ RoleSurvivalClown ]
+
+# Misc
+
+### Visitors missing equipment for challenges
+# CHALLENGE #
+# these are specifically missing QOL equipment and have settings to make them harder.
+# making changes to these should be done with care to avoid unbalancing challenging scenarios.
+
+# Command
+# Following use EventHumanoidMindShielded since they are heads and probably should have mindshields
+
+- type: randomHumanoidSettings
+  id: ChallengeVictimCaptain
+  parent: EventHumanoidMindShielded
+  randomizeName: false
+  components:
+    - type: GhostRole
+      name: ghost-role-information-lost-challenge-commander-name
+      description: ghost-role-information-lost-challenge-commander-description
+      rules: ghost-role-information-lost-challenge-commander-rules
+      raffle:
+        settings: default
+    - type: GhostTakeoverAvailable
+    - type: Loadout
+      prototypes: [ ChallengeVictimCaptain, ChallengeVictimCaptainAlt ] #!! This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
+      roleLoadout: [ RoleSurvivalVoxSupport ]
+    - type: RandomMetadata
+      nameSegments:
+      - names_first
+      - names_last
+
+- type: randomHumanoidSettings
+  id: ChallengeVictimChiefEngineer
+  randomizeName: false
+  components:
+    - type: GhostRole
+      name: ghost-role-information-lost-challenge-commander-name
+      description: ghost-role-information-lost-challenge-commander-description
+      rules: ghost-role-information-lost-challenge-commander-rules
+      raffle:
+        settings: default
+    - type: GhostTakeoverAvailable
+    - type: Loadout
+      prototypes: [ ChallengeVictimCE, ChallengeVictimCEAlt ] #!! This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
+      roleLoadout: [ RoleSurvivalVoxSupport ]
+    - type: RandomMetadata
+      nameSegments:
+      - names_first
+      - names_last
+
+- type: randomHumanoidSettings
+  id: ChallengeVictimCMO
+  randomizeName: false
+  components:
+    - type: GhostRole
+      name: ghost-role-information-lost-challenge-commander-name
+      description: ghost-role-information-lost-challenge-commander-description
+      rules: ghost-role-information-lost-challenge-commander-rules
+      raffle:
+        settings: default
+    - type: GhostTakeoverAvailable
+    - type: Loadout
+      prototypes: [ ChallengeVictimCMO, ChallengeVictimCMOAlt ] #!! This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
+      roleLoadout: [ RoleSurvivalVoxSupport ]
+    - type: RandomMetadata
+      nameSegments:
+      - names_first
+      - names_last
+
+- type: randomHumanoidSettings
+  id: ChallengeVictimHeadOfPersonnel
+  randomizeName: false
+  components:
+    - type: GhostRole
+      name: ghost-role-information-lost-challenge-commander-name
+      description: ghost-role-information-lost-challenge-commander-description
+      rules: ghost-role-information-lost-challenge-commander-rules
+      raffle:
+        settings: default
+    - type: GhostTakeoverAvailable
+    - type: Loadout
+      prototypes: [ ChallengeVictimHOP, ChallengeVictimHOPAlt ] #!! This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
+      roleLoadout: [ RoleSurvivalVoxSupport ]
+    - type: RandomMetadata
+      nameSegments:
+      - names_first
+      - names_last
+
+- type: randomHumanoidSettings
+  id: ChallengeVictimHeadOfSecurity
+  randomizeName: false
+  components:
+    - type: GhostRole
+      name: ghost-role-information-lost-challenge-commander-name
+      description: ghost-role-information-lost-challenge-commander-description
+      rules: ghost-role-information-lost-challenge-commander-rules
+      raffle:
+        settings: default
+    - type: GhostTakeoverAvailable
+    - type: Loadout
+      prototypes: [ ChallengeVictimHOS, ChallengeVictimHOSAlt ] #!! This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
+      roleLoadout: [ RoleSurvivalVoxSupport ]
+    - type: RandomMetadata
+      nameSegments:
+      - names_first
+      - names_last
+
+- type: randomHumanoidSettings
+  id: ChallengeVictimResearchDirector
+  randomizeName: false
+  components:
+    - type: GhostRole
+      name: ghost-role-information-lost-challenge-commander-name
+      description: ghost-role-information-lost-challenge-commander-description
+      rules: ghost-role-information-lost-challenge-commander-rules
+      raffle:
+        settings: default
+    - type: GhostTakeoverAvailable
+    - type: Loadout
+      prototypes: [ ChallengeVictimRD, ChallengeVictimRDAlt ] #!! This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
+      roleLoadout: [ RoleSurvivalVoxSupport ]
+    - type: RandomMetadata
+      nameSegments:
+      - names_first
+      - names_last
+
+- type: randomHumanoidSettings
+  id: ChallengeVictimQuartermaster
+  randomizeName: false
+  components:
+    - type: GhostRole
+      name: ghost-role-information-lost-challenge-commander-name
+      description: ghost-role-information-lost-challenge-commander-description
+      rules: ghost-role-information-lost-challenge-commander-rules
+      raffle:
+        settings: default
+    - type: GhostTakeoverAvailable
+    - type: Loadout
+      prototypes: [ ChallengeVictimQM, ChallengeVictimQMAlt ] #!! This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
+      roleLoadout: [ RoleSurvivalVoxSupport ]
+    - type: RandomMetadata
+      nameSegments:
+      - names_first
+      - names_last
+
+# Security
+# Following use EventHumanoidMindShielded since they are heads and probably should have mindshields
+
+# Cargo
+
+- type: randomHumanoidSettings
+  id: ChallengeCargoTechnician
+  randomizeName: false
+  components:
+    - type: GhostRole
+      name: ghost-role-information-lost-challenge-cargo-technican-name
+      description: ghost-role-information-lost-challenge-cargo-technican-description
+      rules: ghost-role-information-lost-disaster-challenge-cargo-technican-rules
+      raffle:
+        settings: short
+    - type: GhostTakeoverAvailable
+    - type: Loadout
+      prototypes: [ ChallengeCargoTechGearSuit, ChallengeCargoTechGearCoat ] #!! This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
+      roleLoadout: [ RoleSurvivalVoxSupport ]
+    - type: RandomMetadata
+      nameSegments:
+      - names_first
+      - names_last
+
+# Engineering
+
+# Medical
+
+# Science
+
+# Civilian
+
+# Misc
+
+### Syndicate & Hostiles
+
+- type: randomHumanoidSettings
+  id: SyndieSoldierTeamLeader
+  parent: EventHumanoid
+  components:
+    - type: NpcFactionMember
+      factions:
+      - Syndicate
+    - type: NukeOperative
+    - type: GhostRole
+      name: ghost-role-information-syndie-soldier-teamlead-name
+      description: ghost-role-information-syndie-soldier-teamlead-description
+      rules: ghost-role-information-rules-team-antagonist
+      raffle:
+        settings: default
+    - type: Loadout
+      prototypes: [ SyndicateFootsoldierTeamLeaderGear ]
+      roleLoadout: [ RoleSurvivalSyndicate ]
+
+- type: randomHumanoidSettings
+  id: SyndieSoldier
+  parent: EventHumanoid
+  components:
+    - type: NpcFactionMember
+      factions:
+      - Syndicate
+    - type: NukeOperative
+    - type: GhostRole
+      name: ghost-role-information-syndie-soldier-name
+      description: ghost-role-information-syndie-soldier-description
+      rules: ghost-role-information-rules-team-antagonist
+      raffle:
+        settings: default
+    - type: Loadout
+      prototypes: [ SyndicateFootsoldierGear ]
+      roleLoadout: [ RoleSurvivalSyndicate ]
+
+- type: randomHumanoidSettings
+  id: SyndieVisitor
+  parent: EventHumanoid
+  components:
+    - type: NpcFactionMember
+      factions:
+      - Syndicate
+    - type: GhostRole
+      name: ghost-role-information-syndie-disaster-victim-name
+      description: ghost-role-information-syndie-disaster-victim-description
+      rules: ghost-role-information-freeagent-rules
+      raffle:
+        settings: short
+    - type: Loadout
+      prototypes: [ SyndicateOperativeGearCivilian ]
+      roleLoadout: [ RoleSurvivalSyndicate ]
+
+- type: randomHumanoidSettings
+  id: PirateScooner
+  parent: EventHumanoid
+  components:
+    - type: NpcFactionMember
+      factions:
+      - Syndicate
+    - type: GhostRole
+      name: ghost-role-information-pirate-name
+      description: ghost-role-information-pirate-description
+      rules: ghost-role-information-rules-team-antagonist
+      raffle:
+        settings: default
+    - type: Loadout
+      prototypes: [ PirateScoonerAltA, PirateScoonerAltB, PirateScoonerAltC, PirateScoonerAltD ]
+      roleLoadout: [ RoleSurvivalEVA ]
+
+- type: randomHumanoidSettings
+  id: PirateCaptainScooner
+  parent: EventHumanoid
+  components:
+    - type: NpcFactionMember
+      factions:
+      - Syndicate
+    - type: GhostRole
+      name: ghost-role-information-pirate-captain-name
+      description: ghost-role-information-pirate-captain-description
+      rules: ghost-role-information-rules-team-antagonist
+      raffle:
+        settings: default
+    - type: Loadout
+      prototypes: [ PirateCaptainScooner ]
+      roleLoadout: [ RoleSurvivalEVA ]
+
+### Other
+
+- type: randomHumanoidSettings
+  id: VisitorBlackmarketeer
+  parent: EventHumanoid
+  components:
+    - type: GhostRole
+      name: ghost-role-information-blackmarketeer-name
+      description: ghost-role-information-blackmarketeer-description
+      rules: ghost-role-information-freeagent-rules
+      raffle:
+        settings: default
+    - type: Loadout
+      prototypes: [ VisitorBlackmarketeer, VisitorBlackmarketeer ]
+      roleLoadout: [ RoleSurvivalStandard ]
+
+- type: randomHumanoidSettings
+  id: Cossack
+  parent: EventHumanoid
+  components:
+    - type: RussianAccent
+    - type: ScrambledAccent
+    - type: SlurredAccent
+    - type: SouthernAccent
+    - type: GhostRole
+      name: ghost-role-information-cossack-name
+      description: ghost-role-information-cossack-description
+      rules: ghost-role-information-freeagent-rules
+      raffle:
+        settings: default
+    - type: Loadout
+      prototypes: [ CossackGear ]
+      roleLoadout: [ RoleSurvivalEVA ]

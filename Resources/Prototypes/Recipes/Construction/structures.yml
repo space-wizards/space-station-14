@@ -455,7 +455,7 @@
   startNode: start
   targetNode: tintedWindow
   category: construction-category-structures
-  description: Not clear but tough.
+  description: Not clear, but lasers still pass through.
   canBuildInImpassable: true
   conditions:
     - !type:EmptyOrWindowValidInTile
@@ -512,7 +512,7 @@
   targetNode: plasmaWindow
   category: construction-category-structures
   canBuildInImpassable: true
-  description: Clear and even tougher, with a purple tint.
+  description: Clear, with a purple tint.
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
@@ -531,7 +531,7 @@
   targetNode: reinforcedPlasmaWindow
   category: construction-category-structures
   canBuildInImpassable: true
-  description: Fire resistant and even tougher, with a purple tint.
+  description: Clear and even tougher, with a purple tint.
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
@@ -569,7 +569,7 @@
   targetNode: plasmaWindowDiagonal
   category: construction-category-structures
   canBuildInImpassable: true
-  description: Clear and even tougher, with a purple tint.
+  description: Clear, with a purple tint.
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
@@ -587,7 +587,7 @@
   targetNode: reinforcedPlasmaWindowDiagonal
   category: construction-category-structures
   canBuildInImpassable: true
-  description: Fire resistant and even tougher, with a purple tint.
+  description: Clear and even tougher, with a purple tint.
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
@@ -659,7 +659,7 @@
   targetNode: plasmaWindowDirectional
   category: construction-category-structures
   canBuildInImpassable: true
-  description: Clear and even tougher, with a purple tint.
+  description: Clear, with a purple tint.
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
@@ -677,7 +677,7 @@
   targetNode: plasmaReinforcedWindowDirectional
   category: construction-category-structures
   canBuildInImpassable: true
-  description: Fire resistant and even tougher, with a purple tint.
+  description: Clear and even tougher, with a purple tint.
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
@@ -695,7 +695,7 @@
   targetNode: uraniumWindow
   category: construction-category-structures
   canBuildInImpassable: true
-  description: Clear and much tougher than regular glass, with added RadAbsorb to protect you from deadly radiation.
+  description: Clear, with added RadAbsorb to protect you from deadly radiation.
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
@@ -714,7 +714,7 @@
   targetNode: reinforcedUraniumWindow
   category: construction-category-structures
   canBuildInImpassable: true
-  description: Clear and much tougher than regular glass, with added RadAbsorb to protect you from deadly radiation.
+  description: Clear and even tougher, with added RadAbsorb to protect you from deadly radiation.
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
@@ -733,7 +733,7 @@
   targetNode: uraniumWindowDiagonal
   category: construction-category-structures
   canBuildInImpassable: true
-  description: Clear and much tougher than regular glass, with added RadAbsorb to protect you from deadly radiation.
+  description: Clear, with added RadAbsorb to protect you from deadly radiation.
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
@@ -751,7 +751,7 @@
   targetNode: reinforcedUraniumWindowDiagonal
   category: construction-category-structures
   canBuildInImpassable: true
-  description: Clear and much tougher than regular glass, with added RadAbsorb to protect you from deadly radiation.
+  description: Clear and even tougher, with added RadAbsorb to protect you from deadly radiation.
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
@@ -774,6 +774,7 @@
     state: closed
   objectType: Structure
   placementMode: SnapgridCenter
+  canRotate: false
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
@@ -791,6 +792,7 @@
     state: closed
   objectType: Structure
   placementMode: SnapgridCenter
+  canRotate: false
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
@@ -1641,6 +1643,23 @@
     state: plasticflaps
   conditions:
     - !type:TileNotBlocked
+
+- type: construction
+  name: carp statue
+  id: CarpStatue
+  graph: CarpStatue
+  startNode: start
+  targetNode: statue
+  category: construction-category-structures
+  placementMode: SnapgridCenter
+  description: A statue of one of the brave carp that got us where we are today. Made with real teeth!
+  objectType: Structure
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Specific/carp_statue.rsi
+    state: icon
+  conditions:
+  - !type:TileNotBlocked
 
 - type: construction
   name: bananium clown statue

@@ -44,7 +44,7 @@
 
 - type: entity
   id: PelletShotgunSpread
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: PelletShotgun
   components:
   - type: ProjectileSpread
@@ -71,7 +71,7 @@
 
 - type: entity
   id: PelletShotgunIncendiarySpread
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: PelletShotgunIncendiary
   components:
   - type: ProjectileSpread
@@ -95,7 +95,7 @@
 
 - type: entity
   id: PelletShotgunPracticeSpread
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: PelletShotgunPractice
   components:
   - type: ProjectileSpread
@@ -120,7 +120,7 @@
 
 - type: entity
   id: PelletShotgunImprovisedSpread
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: PelletShotgunImprovised
   components:
   - type: ProjectileSpread
@@ -219,7 +219,7 @@
 
 - type: entity
   id: PelletShotgunUraniumSpread
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: PelletShotgunUranium
   components:
   - type: ProjectileSpread
@@ -247,7 +247,7 @@
 
 - type: entity
   id: PelletGrapeshotSpread
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: PelletGrapeshot
   components:
   - type: ProjectileSpread
@@ -278,7 +278,7 @@
 - type: entity
   id: PelletGlassSpread
   parent: PelletGlass
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: ProjectileSpread
     proto: PelletGlass

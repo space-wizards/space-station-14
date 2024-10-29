@@ -11,6 +11,7 @@ using Content.Server.Screens.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.Spawners.Components;
+using Content.Server.Spawners.EntitySystems;
 using Content.Server.Station.Components;
 using Content.Server.Station.Events;
 using Content.Server.Station.Systems;
@@ -21,6 +22,7 @@ using Content.Shared.DeviceNetwork;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Parallax.Biomes;
+using Content.Shared.Preferences;
 using Content.Shared.Salvage;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Tiles;
@@ -45,13 +47,14 @@ public sealed class ArrivalsSystem : EntitySystem
     [Dependency] private readonly IConfigurationManager _cfgManager = default!;
     [Dependency] private readonly IConsoleHost _console = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IChatManager _chat = default!;
+    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly BiomeSystem _biomes = default!;
     [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly MapLoaderSystem _loader = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly ShuttleSystem _shuttles = default!;
@@ -67,11 +70,6 @@ public sealed class ArrivalsSystem : EntitySystem
     /// If enabled then spawns players on an alternate map so they can take a shuttle to the station.
     /// </summary>
     public bool Enabled { get; private set; }
-
-    /// <summary>
-    /// Flags if all players must arrive via the Arrivals system, or if they can spawn in other ways.
-    /// </summary>
-    public bool Forced { get; private set; }
 
     /// <summary>
     /// Flags if all players spawning at the departure terminal have godmode until they leave the terminal.
@@ -94,6 +92,8 @@ public sealed class ArrivalsSystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<PlayerSpawningEvent>(HandlePlayerSpawning, before: new []{ typeof(SpawnPointSystem)}, after: new [] { typeof(ContainerSpawnPointSystem)});
+
         SubscribeLocalEvent<StationArrivalsComponent, StationPostInitEvent>(OnStationPostInit);
 
         SubscribeLocalEvent<ArrivalsShuttleComponent, ComponentStartup>(OnShuttleStartup);
@@ -103,17 +103,17 @@ public sealed class ArrivalsSystem : EntitySystem
         SubscribeLocalEvent<ArrivalsShuttleComponent, FTLStartedEvent>(OnArrivalsFTL);
         SubscribeLocalEvent<ArrivalsShuttleComponent, FTLCompletedEvent>(OnArrivalsDocked);
 
+        SubscribeLocalEvent<PlayerSpawnCompleteEvent>(SendDirections);
+
         _pendingQuery = GetEntityQuery<PendingClockInComponent>();
         _blacklistQuery = GetEntityQuery<ArrivalsBlacklistComponent>();
         _mobQuery = GetEntityQuery<MobStateComponent>();
 
         // Don't invoke immediately as it will get set in the natural course of things.
         Enabled = _cfgManager.GetCVar(CCVars.ArrivalsShuttles);
-        Forced = _cfgManager.GetCVar(CCVars.ForceArrivals);
         ArrivalsGodmode = _cfgManager.GetCVar(CCVars.GodmodeArrivals);
 
         _cfgManager.OnValueChanged(CCVars.ArrivalsShuttles, SetArrivals);
-        _cfgManager.OnValueChanged(CCVars.ForceArrivals, b => Forced = b);
         _cfgManager.OnValueChanged(CCVars.GodmodeArrivals, b => ArrivalsGodmode = b);
 
         // Command so admins can set these for funsies
@@ -335,8 +335,10 @@ public sealed class ArrivalsSystem : EntitySystem
         if (ev.SpawnResult != null)
             return;
 
+        // We use arrivals as the default spawn so don't check for job prio.
+
         // Only works on latejoin even if enabled.
-        if (!Enabled || !Forced && _ticker.RunLevel != GameRunLevel.InRound)
+        if (!Enabled || _ticker.RunLevel != GameRunLevel.InRound)
             return;
 
         if (!HasComp<StationArrivalsComponent>(ev.Station))
@@ -375,6 +377,20 @@ public sealed class ArrivalsSystem : EntitySystem
         // If you're forced to spawn, you're invincible until you leave wherever you were forced to spawn.
         if (ArrivalsGodmode)
             EnsureComp<GodmodeComponent>(ev.SpawnResult.Value);
+    }
+
+    private void SendDirections(PlayerSpawnCompleteEvent ev)
+    {
+        if (!Enabled || !ev.LateJoin || ev.Silent || !_pendingQuery.HasComp(ev.Mob))
+            return;
+
+        var arrival = NextShuttleArrival();
+
+        var message = arrival is not null
+            ? Loc.GetString("latejoin-arrivals-direction-time", ("time", $"{arrival:mm\\:ss}"))
+            : Loc.GetString("latejoin-arrivals-direction");
+
+        _chat.DispatchServerMessage(ev.Player, message);
     }
 
     private bool TryTeleportToMapSpawn(EntityUid player, EntityUid stationId, TransformComponent? transform = null)
@@ -496,9 +512,8 @@ public sealed class ArrivalsSystem : EntitySystem
 
     private void SetupArrivalsStation()
     {
-        var mapId = _mapManager.CreateMap();
-        var mapUid = _mapManager.GetMapEntityId(mapId);
-        _mapManager.AddUninitializedMap(mapId);
+        var mapUid = _mapSystem.CreateMap(out var mapId, false);
+        _metaData.SetEntityName(mapUid, Loc.GetString("map-name-terminal"));
 
         if (!_loader.TryLoad(mapId, _cfgManager.GetCVar(CCVars.ArrivalsMap), out var uids))
         {
@@ -524,7 +539,7 @@ public sealed class ArrivalsSystem : EntitySystem
             AddComp(mapUid, restricted);
         }
 
-        _mapManager.DoMapInitialize(mapId);
+        _mapSystem.InitializeMap(mapId);
 
         // Handle roundstart stations.
         var query = AllEntityQuery<StationArrivalsComponent>();
@@ -582,10 +597,10 @@ public sealed class ArrivalsSystem : EntitySystem
             return;
 
         // Spawn arrivals on a dummy map then dock it to the source.
-        var dummyMap = _mapManager.CreateMap();
+        var dummpMapEntity = _mapSystem.CreateMap(out var dummyMapId);
 
         if (TryGetArrivals(out var arrivals) &&
-            _loader.TryLoad(dummyMap, component.ShuttlePath.ToString(), out var shuttleUids))
+            _loader.TryLoad(dummyMapId, component.ShuttlePath.ToString(), out var shuttleUids))
         {
             component.Shuttle = shuttleUids[0];
             var shuttleComp = Comp<ShuttleComponent>(component.Shuttle);
@@ -597,7 +612,7 @@ public sealed class ArrivalsSystem : EntitySystem
         }
 
         // Don't start the arrivals shuttle immediately docked so power has a time to stabilise?
-        var timer = AddComp<TimedDespawnComponent>(_mapManager.GetMapEntityId(dummyMap));
+        var timer = AddComp<TimedDespawnComponent>(dummpMapEntity);
         timer.Lifetime = 15f;
     }
 }

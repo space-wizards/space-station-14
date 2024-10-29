@@ -292,7 +292,7 @@ public sealed partial class GunSystem : SharedGunSystem
                 {
                     var newuid = Spawn(ammoSpreadComp.Proto, fromEnt);
                     ShootOrThrow(newuid, angles[i].ToVec(), gunVelocity, gun, gunUid, user);
-                    shotProjectiles.Add(ammoEnt);
+                    shotProjectiles.Add(newuid);
                 }
             }
             else

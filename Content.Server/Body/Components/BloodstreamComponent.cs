@@ -111,6 +111,13 @@ namespace Content.Server.Body.Components
         [DataField]
         public SoundSpecifier BloodHealedSound = new SoundPathSpecifier("/Audio/Effects/lightburn.ogg");
 
+        /// <summary>
+        /// The minimum amount damage reduction needed to play the healing sound/popup.
+        /// This prevents tiny amounts of heat damage from spamming the sound, e.g. spacing.
+        /// </summary>
+        [DataField]
+        public float BloodHealedSoundThreshold = -0.1f;
+
         // TODO probably damage bleed thresholds.
 
         /// <summary>

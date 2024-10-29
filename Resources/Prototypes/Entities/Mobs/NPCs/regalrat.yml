@@ -48,6 +48,7 @@
       0: Alive
       200: Dead
   - type: MeleeWeapon
+    altDisarm: false
     soundHit:
         path: /Audio/Weapons/Xeno/alien_claw_flesh1.ogg
     angle: 0
@@ -120,6 +121,7 @@
   - type: Grammar
     attributes:
       gender: male
+  - type: Sharp
 
 - type: entity
   id: MobRatKingBuff
@@ -141,6 +143,7 @@
       0: Alive
       350: Dead
   - type: MeleeWeapon
+    altDisarm: false
     soundHit:
         path: /Audio/Weapons/Xeno/alien_claw_flesh2.ogg
     angle: 0

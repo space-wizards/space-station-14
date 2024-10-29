@@ -54,7 +54,7 @@ public sealed class ResistLockerSystem : EntitySystem
         {
             BreakOnMove = true,
             BreakOnDamage = true,
-            NeedHand = false //No hands 'cause we be kickin'
+            NeedHand = false, //No hands 'cause we be kickin'
         };
 
         resistLockerComponent.IsResisting = true;

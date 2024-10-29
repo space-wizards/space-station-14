@@ -120,7 +120,7 @@
       context: "human"
 
 - type: entity
-  parent: BaseWeaponTurret
+  parent: [BaseWeaponTurret, BaseSyndicateContraband]
   id: WeaponTurretSyndicate
   suffix: Syndicate
   components:

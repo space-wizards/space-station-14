@@ -84,25 +84,27 @@ namespace Content.Server.Database
         {
             await using var db = await GetDbImpl();
 
-            var exempt = await GetBanExemptionCore(db, userId);
-
-            var newPlayer = userId == null || !await PlayerRecordExists(db, userId.Value);
-
-            // SQLite can't do the net masking stuff we need to match IP address ranges.
-            // So just pull down the whole list into memory.
-            var bans = await GetAllBans(db.SqliteDbContext, includeUnbanned: false, exempt);
-
-            return bans.FirstOrDefault(b => BanMatches(b, address, userId, hwId, exempt, newPlayer)) is { } foundBan
-                ? ConvertBan(foundBan)
-                : null;
+            return (await GetServerBanQueryAsync(db, address, userId, hwId, includeUnbanned: false)).FirstOrDefault();
         }
 
-        public override async Task<List<ServerBanDef>> GetServerBansAsync(IPAddress? address,
+        public override async Task<List<ServerBanDef>> GetServerBansAsync(
+            IPAddress? address,
             NetUserId? userId,
-            ImmutableArray<byte>? hwId, bool includeUnbanned)
+            ImmutableArray<byte>? hwId,
+            bool includeUnbanned)
         {
             await using var db = await GetDbImpl();
 
+            return (await GetServerBanQueryAsync(db, address, userId, hwId, includeUnbanned)).ToList();
+        }
+
+        private async Task<IEnumerable<ServerBanDef>> GetServerBanQueryAsync(
+            DbGuardImpl db,
+            IPAddress? address,
+            NetUserId? userId,
+            ImmutableArray<byte>? hwId,
+            bool includeUnbanned)
+        {
             var exempt = await GetBanExemptionCore(db, userId);
 
             var newPlayer = !await db.SqliteDbContext.Player.AnyAsync(p => p.UserId == userId);
@@ -111,10 +113,18 @@ namespace Content.Server.Database
             // So just pull down the whole list into memory.
             var queryBans = await GetAllBans(db.SqliteDbContext, includeUnbanned, exempt);
 
+            var playerInfo = new BanMatcher.PlayerInfo
+            {
+                Address = address,
+                UserId = userId,
+                ExemptFlags = exempt ?? default,
+                HWId = hwId,
+                IsNewPlayer = newPlayer,
+            };
+
             return queryBans
-                .Where(b => BanMatches(b, address, userId, hwId, exempt, newPlayer))
                 .Select(ConvertBan)
-                .ToList()!;
+                .Where(b => BanMatcher.BanMatches(b!, playerInfo))!;
         }
 
         private static async Task<List<ServerBan>> GetAllBans(
@@ -141,31 +151,6 @@ namespace Content.Server.Database
             return await query.ToListAsync();
         }
 
-        private static bool BanMatches(ServerBan ban,
-            IPAddress? address,
-            NetUserId? userId,
-            ImmutableArray<byte>? hwId,
-            ServerBanExemptFlags? exemptFlags,
-            bool newPlayer)
-        {
-            if (!exemptFlags.GetValueOrDefault(ServerBanExemptFlags.None).HasFlag(ServerBanExemptFlags.IP)
-                && address != null
-                && ban.Address is not null
-                && address.IsInSubnet(ban.Address.ToTuple().Value)
-                && (!ban.ExemptFlags.HasFlag(ServerBanExemptFlags.BlacklistedRange) ||
-                     newPlayer))
-            {
-                return true;
-            }
-
-            if (userId is { } id && ban.PlayerUserId == id.UserId)
-            {
-                return true;
-            }
-
-            return hwId is { Length: > 0 } hwIdVar && hwIdVar.AsSpan().SequenceEqual(ban.HWId);
-        }
-
         public override async Task AddServerBanAsync(ServerBanDef serverBan)
         {
             await using var db = await GetDbImpl();
@@ -181,7 +166,8 @@ namespace Content.Server.Database
                 ExpirationTime = serverBan.ExpirationTime?.UtcDateTime,
                 RoundId = serverBan.RoundId,
                 PlaytimeAtNote = serverBan.PlaytimeAtNote,
-                PlayerUserId = serverBan.UserId?.UserId
+                PlayerUserId = serverBan.UserId?.UserId,
+                ExemptFlags = serverBan.ExemptFlags
             });
 
             await db.SqliteDbContext.SaveChangesAsync();
@@ -364,6 +350,7 @@ namespace Content.Server.Database
         }
         #endregion
 
+        [return: NotNullIfNotNull(nameof(ban))]
         private static ServerBanDef? ConvertBan(ServerBan? ban)
         {
             if (ban == null)

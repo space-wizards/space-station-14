@@ -47,8 +47,6 @@
       collection: FootstepDuck
       params:
         variation: 0.07
-  - type: WaddleWhenWorn
-    tumbleIntensity: 10 # smaller than clown shoes
   - type: Construction
     graph: ClothingShoeSlippersDuck
     node: shoes
@@ -116,6 +114,7 @@
     price: 500
   - type: PowerCellDraw
     drawRate: 4
+  - type: ToggleCellDraw
   - type: ItemSlots
     slots:
       cell_slot:

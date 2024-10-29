@@ -33,58 +33,50 @@ public sealed class WeatherSystem : SharedWeatherSystem
     {
         if (args.Length < 2)
         {
-            shell.WriteError($"A");
+            shell.WriteError(Loc.GetString("cmd-weather-error-no-arguments"));
             return;
         }
 
         if (!int.TryParse(args[0], out var mapInt))
-        {
             return;
-        }
 
         var mapId = new MapId(mapInt);
 
         if (!MapManager.MapExists(mapId))
-        {
             return;
-        }
 
-        TimeSpan? endTime = null;
+        if (!_mapSystem.TryGetMap(mapId, out var mapUid))
+            return;
 
-        if (args.Length == 3)
+        var weatherComp = EnsureComp<WeatherComponent>(mapUid.Value);
+
+        //Weather Proto parsing
+        WeatherPrototype? weather = null;
+        if (!args[1].Equals("null"))
         {
-            if (int.TryParse(args[2], out var durationInt))
+            if (!ProtoMan.TryIndex(args[1], out weather))
             {
-                var curTime = Timing.CurTime;
-                var maxTime = TimeSpan.MaxValue;
-
-                // If it's already running then just fade out with how much time we're into the weather.
-                if (_mapSystem.TryGetMap(mapId, out var mapUid) &&
-                    TryComp<WeatherComponent>(mapUid, out var weatherComp) &&
-                    weatherComp.Weather.TryGetValue(args[1], out var existing))
-                {
-                    maxTime = curTime - existing.StartTime;
-                }
-
-                endTime = curTime + TimeSpan.FromSeconds(durationInt);
-
-                if (endTime > maxTime)
-                    endTime = maxTime;
+                shell.WriteError(Loc.GetString("cmd-weather-error-unknown-proto"));
+                return;
             }
         }
 
-        if (args[1].Equals("null"))
+        //Time parsing
+        TimeSpan? endTime = null;
+        if (args.Length == 3)
         {
-            SetWeather(mapId, null, endTime);
+            var curTime = Timing.CurTime;
+            if (int.TryParse(args[2], out var durationInt))
+            {
+                endTime = curTime + TimeSpan.FromSeconds(durationInt);
+            }
+            else
+            {
+                shell.WriteError(Loc.GetString("cmd-weather-error-wrong-time"));
+            }
         }
-        else if (ProtoMan.TryIndex<WeatherPrototype>(args[1], out var weatherProto))
-        {
-            SetWeather(mapId, weatherProto, endTime);
-        }
-        else
-        {
-            shell.WriteError($"Unable to parse weather prototype");
-        }
+
+        SetWeather(mapId, weather, endTime);
     }
 
     private CompletionResult WeatherCompletion(IConsoleShell shell, string[] args)

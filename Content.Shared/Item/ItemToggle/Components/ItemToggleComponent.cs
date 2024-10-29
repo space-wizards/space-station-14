@@ -20,6 +20,12 @@ public sealed partial class ItemToggleComponent : Component
     public bool Activated = false;
 
     /// <summary>
+    /// Can the entity be activated in the world.
+    /// </summary>
+    [DataField]
+    public bool OnActivate = true;
+
+    /// <summary>
     /// If this is set to false then the item can't be toggled by pressing Z.
     /// Use another system to do it then.
     /// </summary>
@@ -52,12 +58,6 @@ public sealed partial class ItemToggleComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
     public SoundSpecifier? SoundFailToActivate;
-
-    /// <summary>
-    /// Whether or not to toggle the entity's lights on or off.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
-    public bool ToggleLight = true;
 }
 
 /// <summary>

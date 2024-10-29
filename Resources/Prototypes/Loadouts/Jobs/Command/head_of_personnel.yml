@@ -1,3 +1,13 @@
+# For mantles
+- type: loadoutEffectGroup
+  id: MasterHoP
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobHeadOfPersonnel
+      time: 72000 #20 hrs
+
 # Professional HoP Time
 - type: loadoutEffectGroup
   id: ProfessionalHoP
@@ -32,6 +42,14 @@
     neck: ClothingNeckCloakHop
 
 - type: loadout
+  id: HoPMantle
+  equipment:
+    neck: ClothingNeckMantleHOP
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MasterHoP
+
+- type: startingGear
   id: HoPMantle
   equipment:
     neck: ClothingNeckMantleHOP

@@ -85,7 +85,7 @@ public sealed partial class ShuttleSystem
         _mapManager.DeleteMap(mapId);
     }
 
-    private bool TryDungeonSpawn(Entity<MapGridComponent?> targetGrid, MapId mapId, DungeonSpawnGroup group, out EntityUid spawned)
+    private bool TryDungeonSpawn(Entity<MapGridComponent?> targetGrid, DungeonSpawnGroup group, out EntityUid spawned)
     {
         spawned = EntityUid.Invalid;
 
@@ -110,11 +110,12 @@ public sealed partial class ShuttleSystem
             spawnCoords = spawnCoords.Offset(_random.NextVector2(distancePadding + group.MinimumDistance, distancePadding + group.MaximumDistance));
         }
 
-        var spawnMapCoords = _transform.ToMapCoordinates(spawnCoords);
+        _mapSystem.CreateMap(out var mapId);
+
         var spawnedGrid = _mapManager.CreateGridEntity(mapId);
 
-        _transform.SetMapCoordinates(spawnedGrid, spawnMapCoords);
-        _dungeon.GenerateDungeon(dungeonProto, spawnedGrid.Owner, spawnedGrid.Comp, Vector2i.Zero, _random.Next());
+        _transform.SetMapCoordinates(spawnedGrid, new MapCoordinates(Vector2.Zero, mapId));
+        _dungeon.GenerateDungeon(dungeonProto, spawnedGrid.Owner, spawnedGrid.Comp, Vector2i.Zero, _random.Next(), spawnCoords);
 
         spawned = spawnedGrid.Owner;
         return true;
@@ -192,7 +193,7 @@ public sealed partial class ShuttleSystem
                 switch (group)
                 {
                     case DungeonSpawnGroup dungeon:
-                        if (!TryDungeonSpawn(targetGrid.Value, mapId, dungeon, out spawned))
+                        if (!TryDungeonSpawn(targetGrid.Value, dungeon, out spawned))
                             continue;
 
                         break;

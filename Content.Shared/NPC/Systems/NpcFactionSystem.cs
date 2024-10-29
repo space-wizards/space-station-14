@@ -101,6 +101,28 @@ public sealed partial class NpcFactionSystem : EntitySystem
     }
 
     /// <summary>
+    /// Adds this entity to the particular faction.
+    /// </summary>
+    public void AddFactions(Entity<NpcFactionMemberComponent?> ent, HashSet<ProtoId<NpcFactionPrototype>> factions, bool dirty = true)
+    {
+        ent.Comp ??= EnsureComp<NpcFactionMemberComponent>(ent);
+
+        foreach (var faction in factions)
+        {
+            if (!_proto.HasIndex(faction))
+            {
+                Log.Error($"Unable to find faction {faction}");
+                continue;
+            }
+
+            ent.Comp.Factions.Add(faction);
+        }
+
+        if (dirty)
+            RefreshFactions((ent, ent.Comp));
+    }
+
+    /// <summary>
     /// Removes this entity from the particular faction.
     /// </summary>
     public void RemoveFaction(Entity<NpcFactionMemberComponent?> ent, string faction, bool dirty = true)

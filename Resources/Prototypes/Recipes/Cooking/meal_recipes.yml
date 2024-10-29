@@ -75,7 +75,7 @@
     FoodTomato: 1
     FoodOnionSlice: 2
 
-- type: microwaveMealRecipe
+- type: microwaveMealRecipe #Added to metamorph recipes
   id: RecipeBrainBurger
   name: brain burger recipe
   result: FoodBurgerBrain
@@ -94,7 +94,7 @@
     FoodMeat: 1
     ClothingHeadHatCatEars: 1
 
-- type: microwaveMealRecipe
+- type: microwaveMealRecipe #Added to metamorph recipes
   id: RecipeCheeseburger
   name: cheeseburger recipe
   result: FoodBurgerCheese
@@ -104,7 +104,7 @@
     FoodMeat: 1
     FoodCheeseSlice: 1
 
-- type: microwaveMealRecipe
+- type: microwaveMealRecipe #Added to metamorph recipes
   id: RecipeChickenSandwich
   name: chicken sandwich recipe
   result: FoodBurgerChicken
@@ -133,7 +133,7 @@
     FoodBreadBun: 1
     FoodMeatCorgi: 1
 
-- type: microwaveMealRecipe
+- type: microwaveMealRecipe #Added to metamorph recipes
   id: RecipeCrabBurger
   name: crab burger recipe
   result: FoodBurgerCrab
@@ -158,7 +158,7 @@
     CrayonGreen: 1
     Flare: 1
 
-- type: microwaveMealRecipe
+- type: microwaveMealRecipe #Added to metamorph recipes
   id: RecipeDuckBurger
   name: duck sandwich recipe
   result: FoodBurgerDuck
@@ -400,6 +400,14 @@
     FoodDough: 1
 
 - type: microwaveMealRecipe
+  id: RecipeBreadCotton
+  name: cotton bread recipe
+  result: FoodBreadCotton
+  time: 10
+  solids:
+    FoodDoughCotton: 1
+
+- type: microwaveMealRecipe
   id: RecipeSausageBread
   name: sausage bread recipe
   result: FoodBreadSausage
@@ -451,13 +459,26 @@
     FoodDough: 1
 
 - type: microwaveMealRecipe
+  id: RecipeBaguetteSword
+  name: baguette sword recipe
+  result: WeaponBaguette
+  secretRecipe: true
+  time: 15
+  reagents:
+    TableSalt: 5
+    Blackpepper: 5
+  solids:
+    FoodDough: 1
+    PartRodMetal1: 1
+
+- type: microwaveMealRecipe
   id: RecipeButteredToast
   name: buttered toast recipe
   result: FoodBreadButteredToast
   time: 5
   solids:
     FoodBreadPlainSlice: 1
-    FoodButter: 1
+    FoodButterSlice: 1
 
 - type: microwaveMealRecipe
   id: RecipeFrenchToast
@@ -478,7 +499,7 @@
   solids:
     FoodBreadPlainSlice: 1
     FoodGarlic: 1
-    FoodButter: 1
+    FoodButterSlice: 1
 
 - type: microwaveMealRecipe
   id: RecipeJellyToast
@@ -601,6 +622,15 @@
     FoodChiliPepper: 2
     FoodTomato: 2
     SheetUranium1: 2
+
+- type: microwaveMealRecipe
+  id: RecipeCottonPizza
+  name: cotton pizza recipe
+  result: FoodPizzaCotton
+  time: 30
+  solids:
+    FoodDoughCottonFlat: 1
+    CottonBol: 4
 
 #Italian
 - type: microwaveMealRecipe
@@ -927,6 +957,29 @@
     FoodBungo: 2
     FoodChiliPepper: 1
 
+- type: microwaveMealRecipe
+  id: RecipeBoiledSnail
+  name: boiled snail recipe
+  result: FoodMeatSnailCooked
+  time: 5
+  reagents:
+    Water: 10
+  solids:
+    FoodMeatSnail: 1
+
+- type: microwaveMealRecipe
+  id: RecipeEscargotSoup
+  name: escargot recipe
+  result: FoodSoupEscargot
+  time: 10
+  reagents:
+    Water: 5
+  solids:
+    FoodBowlBig: 1
+    FoodOnionSlice: 1
+    FoodButter: 1
+    FoodMeatSnailCooked: 1
+
 #Pies
 
 - type: microwaveMealRecipe
@@ -979,15 +1032,15 @@
     FoodBerries: 3
     FoodPlateTin: 1
 
-#- type: microwaveMealRecipe
-#  id: RecipeCherryPie
-#  name: cherry pie recipe
-#  result: FoodPieCherry
-#  time: 15
-#  solids:
-#    FoodDoughPie: 1
-#    FoodCherry: 3 #cherries don't exist yet
-#    FoodPlateTin: 1
+- type: microwaveMealRecipe
+  id: RecipeCherryPie
+  name: cherry pie recipe
+  result: FoodPieCherry
+  time: 15
+  solids:
+    FoodDoughPie: 1
+    FoodCherry: 5
+    FoodPlateTin: 1
 
 - type: microwaveMealRecipe
   id: RecipeFrostyPie
@@ -1007,6 +1060,16 @@
   solids:
     FoodDoughPie: 1
     FoodMeat: 3
+    FoodPlateTin: 1
+
+- type: microwaveMealRecipe
+  id: RecipePumpkinPie
+  name: pumpkin pie recipe
+  result: FoodPiePumpkin
+  time: 15
+  solids:
+    FoodDoughPie: 1
+    FoodPumpkin: 1
     FoodPlateTin: 1
 
 #- type: microwaveMealRecipe
@@ -1218,7 +1281,7 @@
     Flour: 5
     Sugar: 5
   solids:
-    FoodButter: 1
+    FoodButterSlice: 1
     FoodSnackChocolateBar: 1
 
 - type: microwaveMealRecipe
@@ -1230,7 +1293,7 @@
     Flour: 5
     Sugar: 10
   solids:
-    FoodButter: 1
+    FoodButterSlice: 1
 
 - type: microwaveMealRecipe
   id: RecipeRaisinCookie
@@ -1252,7 +1315,7 @@
     Oats: 5
     Sugar: 5
   solids:
-    FoodButter: 1
+    FoodButterSlice: 1
 
 - type: microwaveMealRecipe
   id: RecipeChocolateChipPancake
@@ -1719,6 +1782,14 @@
 # NOT ACTUAL FOOD
 
 - type: microwaveMealRecipe
+  id: RecipeDriedTeaLeaves
+  name: dried tea leaves recipe
+  result: LeavesTeaDried
+  time: 10
+  solids:
+    LeavesTea: 1
+
+- type: microwaveMealRecipe
   id: RecipeDriedTobacco
   name: dried tobacco leaves recipe
   result: LeavesTobaccoDried
@@ -1762,98 +1833,6 @@
     Sugar: 30
     Nitrogen: 10
     Plasma: 10
-
-# Kebabs
-- type: microwaveMealRecipe
-  id: RecipeMeatKebab
-  name: meat kebab recipe
-  result: FoodMeatKebab
-  time: 5
-  solids:
-    FoodMeatCutlet: 3
-    FoodKebabSkewer: 1
-
-- type: microwaveMealRecipe
-  id: RecipeHawaiianKebab
-  name: Hawaiian kebab recipe
-  result: FoodMeatHawaiianKebab
-  time: 5
-  solids:
-    FoodChiliPepper: 1
-    FoodMeatCutlet: 1
-    FoodPineappleSlice: 1
-    FoodKebabSkewer: 1
-
-- type: microwaveMealRecipe
-  id: RecipeFiestaKebab
-  name: fiesta kebab recipe
-  result: FoodMeatFiestaKebab
-  time: 5
-  solids:
-    FoodChiliPepper: 1
-    FoodCorn: 1
-    FoodMeatCutlet: 1
-    FoodTomato: 1
-    FoodKebabSkewer: 1
-
-- type: microwaveMealRecipe
-  id: RecipeRatKebab
-  name: rat kebab recipe
-  result: FoodMeatRatKebab
-  time: 10
-  solids:
-    FoodMeatRat: 1
-    FoodKebabSkewer: 1
-
-- type: microwaveMealRecipe
-  id: RecipeDoubleRatKebab
-  name: double rat kebab recipe
-  result: FoodMeatRatdoubleKebab
-  time: 20
-  solids:
-    FoodMeatRat: 2
-    FoodKebabSkewer: 1
-
-- type: microwaveMealRecipe
-  id: RecipeHumanKebab
-  name: human kebab recipe
-  result: FoodMeatHumanKebab
-  time: 15
-  solids:
-    TorsoHuman: 1
-    FoodKebabSkewer: 1
-
-- type: microwaveMealRecipe
-  id: RecipeLizardKebab
-  name: lizard kebab recipe
-  result: FoodMeatLizardtailKebab
-  time: 15
-  solids:
-    FoodMeatLizard: 1
-    FoodKebabSkewer: 1
-
-- type: microwaveMealRecipe
-  id: RecipeSnakeKebab
-  name: snake kebab recipe
-  result: FoodMeatSnakeKebab
-  time: 15
-  reagents:
-    Wine: 5
-  solids:
-    FoodMeatSnake: 1
-    FoodKebabSkewer: 1
-
-- type: microwaveMealRecipe
-  id: RecipeFoodMealSoftTaco
-  name: soft taco recipe
-  result: FoodMealSoftTaco
-  time: 10
-  solids:
-    FoodDoughSlice: 1
-    FoodTomato: 1
-    FoodOnionSlice: 2
-    FoodCheeseSlice: 1
-    FoodMeatCutlet: 1
 
 - type: microwaveMealRecipe
   id: RecipeFoodBakedChevreChaud
@@ -1990,3 +1969,23 @@
     FoodTomato: 1
     FoodCabbage: 1
     FoodOnionSlice: 2
+
+- type: microwaveMealRecipe
+  id: RecipeCroissant
+  name: croissant recipe
+  result: FoodBakedCroissant
+  time: 5
+  solids:
+    FoodCroissantRaw: 1
+    FoodButterSlice: 1
+
+- type: microwaveMealRecipe
+  id: RecipeThrowingCroissant
+  name: throwing croissant recipe
+  result: WeaponCroissant
+  secretRecipe: true
+  time: 5
+  solids:
+    FoodCroissantRaw: 1
+    FoodButterSlice: 1
+    ShardGlass: 1

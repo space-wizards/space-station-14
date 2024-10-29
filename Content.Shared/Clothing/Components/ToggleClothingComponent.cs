@@ -1,5 +1,7 @@
 using Content.Shared.Actions;
 using Content.Shared.Clothing.EntitySystems;
+using Content.Shared.Item.ItemToggle.Components;
+using Content.Shared.Toggleable;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 

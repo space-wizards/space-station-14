@@ -24,6 +24,7 @@ public sealed class IdCardSystem : SharedIdCardSystem
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<IdCardComponent, BeingMicrowavedEvent>(OnMicrowaved);
     }
 

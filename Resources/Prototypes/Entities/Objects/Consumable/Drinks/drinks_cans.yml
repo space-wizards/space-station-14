@@ -66,6 +66,7 @@
   - type: Tag
     tags:
     - DrinkCan
+  - type: DnaSubstanceTrace
 
 - type: entity
   parent: DrinkCanBaseFull

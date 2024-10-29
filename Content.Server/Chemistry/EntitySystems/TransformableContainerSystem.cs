@@ -1,5 +1,4 @@
 using Content.Server.Chemistry.Components;
-using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.NameModifier.EntitySystems;
@@ -10,7 +9,7 @@ namespace Content.Server.Chemistry.EntitySystems;
 public sealed class TransformableContainerSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionsSystem = default!;
     [Dependency] private readonly MetaDataSystem _metadataSystem = default!;
     [Dependency] private readonly NameModifierSystem _nameMod = default!;
 

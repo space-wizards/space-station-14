@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseItem
+  parent: [BaseItem, BaseSyndicateContraband]
   id: ChameleonProjector
   name: chameleon projector
   description: Holoparasite technology used to create a hard-light replica of any object around you. Disguise is destroyed when picked up or deactivated.
@@ -12,6 +12,7 @@
       components:
       - Anchorable
       - Item
+      - Bot # for funny bot moments
     blacklist:
       components:
       - ChameleonDisguise # no becoming kleiner
