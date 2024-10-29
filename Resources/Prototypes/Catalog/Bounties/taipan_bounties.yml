@@ -1,6 +1,6 @@
 - type: cargoBounty
   id: TaipanBountyBread
-  IsTaipan: true
+  isTaipan: true
   reward: 11111
   description: bounty-description-captain-sabre
   entries:
@@ -15,7 +15,7 @@
 
 - type: cargoBounty
   id: TaipanBountyLime
-  IsTaipan: true
+  isTaipan: true
   reward: 11111
   description: bounty-description-lime
   idPrefix: SY
@@ -28,7 +28,7 @@
 
 - type: cargoBounty
   id: TaipanBountyLung
-  IsTaipan: true
+  isTaipan: true
   reward: 11111
   description: bounty-description-lung
   entries:
@@ -40,7 +40,7 @@
 
 - type: cargoBounty
   id: TaipanBountyMonkeyCube
-  IsTaipan: true
+  isTaipan: true
   reward: 11111
   description: bounty-description-monkey-cube
   idPrefix: SY
@@ -53,13 +53,26 @@
 
 - type: cargoBounty
   id: TaipanBountyMouse
-  IsTaipan: true
+  isTaipan: true
   reward: 11111
   description: bounty-description-mouse
   idPrefix: TP13-
   entries:
   - name: bounty-item-mouse
     amount: 5
+    whitelist:
+      tags:
+      - Mouse
+
+- type: cargoBounty
+  id: TaipanBountyMouseT
+  isTaipan: true
+  reward: 22222
+  description: bounty-description-mouse
+  idPrefix: TP14-
+  entries:
+  - name: bounty-item-mouse
+    amount: 10
     whitelist:
       tags:
       - Mouse

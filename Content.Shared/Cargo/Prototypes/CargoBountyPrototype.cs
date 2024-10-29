@@ -16,7 +16,7 @@ public sealed partial class CargoBountyPrototype : IPrototype
     [IdDataField]
     public string ID { get; private set; } = default!;
 
-    [DataField("IsTaipan")]
+    [DataField]
     public bool IsTaipan = false;
 
     /// <summary>
