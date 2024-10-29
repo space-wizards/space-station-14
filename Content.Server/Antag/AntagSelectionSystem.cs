@@ -251,7 +251,6 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             if (picking)
             {
                 var nextPool = false;
-                Logger.Debug("currentpool: " + currentPool + " and " + i);
 
                 if (newPlayerPriority && i == Math.Round(count * def.PlayerPriorityPercentage, 0, MidpointRounding.AwayFromZero))
                     nextPool = true;
@@ -421,17 +420,14 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             if (HasPrimaryAntagPreference(session, def))
             {
 
-                Logger.Debug("1");
                 preferredList.Add(session);
                 if (useNewPlayerPriority && def.PlayerPrioritySelection != NewPlayerPriority.DoNotPrioritize)
                 {
-                    Logger.Debug("2");
                     var playtime = _playtimeManager.GetPlayTimes(session);
                     if (playtime.TryGetValue(PlayTimeTrackingShared.TrackerOverall, out TimeSpan overallTime) &&
                         ((def.PlayerPrioritySelection == NewPlayerPriority.PrioritizeNewPlayer && overallTime <= newPlayerHoursThreshold) ||
                          (def.PlayerPrioritySelection == NewPlayerPriority.PrioritizeExperiencedPlayer && overallTime > newPlayerHoursThreshold)))
                     {
-                        Logger.Debug(session.ToString()!);
                         preferredPrioritizedPlayer.Add(session);
                     }
                 }
