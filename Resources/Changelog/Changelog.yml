@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: Mervill
-  changes:
-  - message: Gas Miners now have detailed examine text
-    type: Tweak
-  id: 7057
-  time: '2024-08-08T02:14:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30480
-- author: BackeTako
-  changes:
-  - message: "!, \u203D and multiple punctuations now work for Spanish."
-    type: Tweak
-  id: 7058
-  time: '2024-08-08T03:08:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30551
 - author: strO0pwafel
   changes:
   - message: Fixed inconsistent naming of CentComm.
@@ -3957,3 +3943,18 @@
   id: 7556
   time: '2024-10-27T04:25:55.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33017
+- author: stalengd
+  changes:
+  - message: Fixed playtime labels not being able to correctly display time greater
+      than 24 hours
+    type: Fix
+  id: 7557
+  time: '2024-10-28T18:00:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32974
+- author: august-sun
+  changes:
+  - message: Extended the minimum round time for meteor swarm events.
+    type: Tweak
+  id: 7558
+  time: '2024-10-28T21:25:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32876
