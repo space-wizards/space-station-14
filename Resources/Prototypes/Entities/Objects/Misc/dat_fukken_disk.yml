@@ -1,8 +1,8 @@
 - type: entity
-  name: nuclear authentication disk
+  name: Artifact Bypass Code
   parent: BaseItem
   id: NukeDisk
-  description: A nuclear auth disk, capable of arming a nuke if used along with a code. Note from nanotrasen reads "THIS IS YOUR MOST IMPORTANT POSESSION, SECURE DAT FUKKEN DISK!"
+  description: This disk contains the radio signal utilized by the early settlers that re-awakened the dormant artifact. It has been passed down from overseer to overseer. keep it safe.
   components:
   - type: NukeDisk
   - type: SpecialRespawn
@@ -16,7 +16,7 @@
   - type: ArrivalsBlacklist
   - type: WarpPoint
     follow: true
-    location: nuke disk
+    location: Bypass Disk
   - type: Tag
     tags:
     - HighRiskItem
@@ -28,7 +28,7 @@
   parent: BaseItem
   id: NukeDiskFake
   suffix: Fake
-  description: A nuclear auth disk, capable of arming a nuke if used along with a code. Note from nanotrasen reads "THIS IS YOUR MOST IMPORTANT POSESSION, SECURE DAT FUKKEN DISK!"
+  description: This disk contains the radio signal utilized by the early settlers that re-awakened the dormant artifact. It has been passed down from overseer to overseer. keep it safe.
   components:
   - type: Sprite
     sprite: Objects/Misc/nukedisk.rsi
