@@ -46,7 +46,7 @@ public partial class ReplacementObfuscation : ObfuscationMethod
 
     internal override void Obfuscate(StringBuilder builder, string message, SharedLanguageSystem context)
     {
-        var idx = context.PseudoRandomNumber(12345, 0, Replacement.Count - 1);
+        var idx = context.PseudoRandomNumber(message.GetHashCode(), 0, Replacement.Count - 1);
         builder.Append(Replacement[idx]);
     }
 }
