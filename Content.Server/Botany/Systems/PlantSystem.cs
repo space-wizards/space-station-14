@@ -242,17 +242,16 @@ public sealed class PlantSystem : EntitySystem
     /// <summary>
     /// The plant is harvesting itself on a growth tick.
     /// </summary>
-    public void AutoHarvest(EntityUid uid, PlantComponent? component = null, SeedComponent? seed = null)
+    public void AutoHarvest(EntityUid uid, PlantComponent? component = null)
     {
-        if (!Resolve(uid, ref component, ref seed))
+        GetEverything(uid, out component, out var seed, out _);
+        if (component == null || seed == null)
             return;
 
-        var seedData = seed.Seed;
-
-        if (seedData == null || !component.Harvest)
+        if (seed == null || !component.Harvest)
             return;
 
-        _botany.AutoHarvest(seedData, Transform(uid).Coordinates);
+        _botany.AutoHarvest(seed, Transform(uid).Coordinates);
         AfterHarvest(uid, component);
     }
 
