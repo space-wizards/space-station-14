@@ -27,6 +27,8 @@ public sealed class SeedExtractorSystem : EntitySystem
 
         if (!TryComp(args.Used, out ProduceComponent? produce))
             return;
+
+        args.Handled = true;
         if (!_botanySystem.TryGetSeed(produce, out var seed) || seed.Seedless)
         {
             _popupSystem.PopupCursor(Loc.GetString("seed-extractor-component-no-seeds", ("name", args.Used)),
