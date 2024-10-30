@@ -64,8 +64,8 @@
     canEditLabel: true
   - type: TextScreenVisuals
     color: FloralWhite
-    textOffset: 0,8
-    timerOffset: 0,8
+    textOffset: 0,6
+    timerOffset: 0,6
     textLength: 5
     rows: 1
   - type: Sprite

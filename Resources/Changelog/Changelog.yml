@@ -1,81 +1,4 @@
 ﻿Entries:
-- author: Mervill
-  changes:
-  - message: Gas Miners now have detailed examine text
-    type: Tweak
-  id: 7057
-  time: '2024-08-08T02:14:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30480
-- author: BackeTako
-  changes:
-  - message: "!, \u203D and multiple punctuations now work for Spanish."
-    type: Tweak
-  id: 7058
-  time: '2024-08-08T03:08:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30551
-- author: strO0pwafel
-  changes:
-  - message: Fixed inconsistent naming of CentComm.
-    type: Fix
-  id: 7059
-  time: '2024-08-08T10:04:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29217
-- author: Plykiya
-  changes:
-  - message: Buffed the range of EMP implants from a radius of 1.75 tiles to 2.75
-      tiles.
-    type: Tweak
-  - message: Buffed the range of EMP grenades from a radius of 4 tiles to 5.5 tiles.
-    type: Tweak
-  id: 7060
-  time: '2024-08-08T10:04:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30660
-- author: Plykiya
-  changes:
-  - message: You can drop food or drinks from your hands to interrupt eating it, again.
-    type: Fix
-  - message: Barber scissors are now interrupted if the item is dropped or if the
-      user changes hands.
-    type: Tweak
-  id: 7061
-  time: '2024-08-08T11:39:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30361
-- author: TheShuEd
-  changes:
-  - message: Add "thieving beacon" to Thief antag - a device that counts objects within
-      a radius of itself as stolen.
-    type: Add
-  - message: Return thief structures stealing objectives.
-    type: Add
-  - message: Animal theft objectives can no longer appear if the animals are not on
-      the station.
-    type: Fix
-  id: 7062
-  time: '2024-08-08T13:17:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29997
-- author: lzk228
-  changes:
-  - message: RD labcoat added in RD's dresser.
-    type: Add
-  id: 7063
-  time: '2024-08-08T22:50:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30671
-- author: SlamBamActionman
-  changes:
-  - message: Animal DNA now shows up as "unknown DNA" in the Forensic Scanner.
-    type: Tweak
-  - message: Forensic Scanner can now scan fluid containers for DNA in reagents.
-    type: Tweak
-  - message: Fluids keep their DNA data when moved.
-    type: Fix
-  - message: Fluids now stain containers they're in with DNA. Make sure to scrub your
-      blood bucket after use!
-    type: Add
-  - message: Vomit now includes DNA!
-    type: Add
-  id: 7064
-  time: '2024-08-08T23:27:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26699
 - author: themias
   changes:
   - message: Butter can be sliced, cookie and toast recipes now use butter slices.
@@ -3957,3 +3880,68 @@
   id: 7556
   time: '2024-10-27T04:25:55.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33017
+- author: stalengd
+  changes:
+  - message: Fixed playtime labels not being able to correctly display time greater
+      than 24 hours
+    type: Fix
+  id: 7557
+  time: '2024-10-28T18:00:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32974
+- author: august-sun
+  changes:
+  - message: Extended the minimum round time for meteor swarm events.
+    type: Tweak
+  id: 7558
+  time: '2024-10-28T21:25:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32876
+- author: deltanedas
+  changes:
+  - message: Fixed lava planet expeditions not working.
+    type: Fix
+  id: 7559
+  time: '2024-10-29T05:00:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33042
+- author: metalgearsloth
+  changes:
+  - message: Fix separated game screen bumping slightly.
+    type: Fix
+  id: 7560
+  time: '2024-10-29T05:07:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33046
+- author: Blackern5000
+  changes:
+  - message: Proto-kitentic crushers, glaives, and daggers now have more accurate
+      inhand sprites.
+    type: Tweak
+  id: 7561
+  time: '2024-10-30T07:38:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32212
+- author: Blackern5000
+  changes:
+  - message: Security belts now contain a holobarrier projector and a handheld security
+      radio by default rather than tear gas and a flashbang.
+    type: Tweak
+  id: 7562
+  time: '2024-10-30T07:40:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32291
+- author: Blackern5000
+  changes:
+  - message: Added three bottle boxes to the nanomed plus inventory for doctors to
+      carry small amounts of chemicals on their person
+    type: Add
+  id: 7563
+  time: '2024-10-30T07:41:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33018
+- author: Blackern5000
+  changes:
+  - message: Added the interdyne defibrillator, a black-and-red defibrillator that
+      can be used as a melee weapon.
+    type: Add
+  - message: The syndicate medical bundle now contains an interdyne defibrillator,
+      a collection of various instant injectors, tourniquets, and several combat kits.
+      The price has been raised to 24 tc.
+    type: Tweak
+  id: 7564
+  time: '2024-10-30T09:15:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32720
