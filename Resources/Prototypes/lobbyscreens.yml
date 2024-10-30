@@ -1,18 +1,6 @@
 - type: lobbyBackground
-  id: Warden
-  background: /Textures/LobbyScreens/warden.webp
-
-- type: lobbyBackground
-  id: Pharmacy
-  background: /Textures/LobbyScreens/pharmacy.webp
-
-- type: lobbyBackground
   id: SSXIV
   background: /Textures/LobbyScreens/ssxiv.webp
-
-- type: lobbyBackground
-  id: Susstation
-  background: /Textures/LobbyScreens/susstation.webp
 
 - type: lobbyBackground
   id: SkellyVsTheRev
