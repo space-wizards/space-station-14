@@ -1,7 +1,7 @@
 - type: gameMap
   id: Pact
   mapName: 'Pact'
-  mapPath: /Maps/Weaselstation/Pact.yml
+  mapPath: /Maps/Weaselstation/pact.yml
   minPlayers: 5
   maxPlayers: 35
   stations:
