@@ -120,7 +120,6 @@
   abstract: true
   components:
   - type: CartridgeLoader
-    diskSpace: 7 # Has one extra pre-installed program.
     preinstalled:
     - CrewManifestCartridge
     - NotekeeperCartridge
@@ -134,7 +133,6 @@
   components:
   - type: CartridgeLoader
     uiKey: enum.PdaUiKey.Key
-    diskSpace: 7 # Has one extra pre-installed program.
     preinstalled:
       - CrewManifestCartridge
       - NotekeeperCartridge
