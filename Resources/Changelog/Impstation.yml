@@ -3533,3 +3533,11 @@
   id: 434
   time: '2024-10-30T18:01:24.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/587
+- author: formlessnameless
+  changes:
+  - message: Crayons now start with 100 charges instead of 25. Go forth and deface
+      the station! Make the janitor hate you!
+    type: Tweak
+  id: 435
+  time: '2024-10-30T18:15:49.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/589
