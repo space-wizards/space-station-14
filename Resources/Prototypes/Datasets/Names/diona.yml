@@ -80,7 +80,6 @@
   - Taste
   - Acorn
   - Shell
-  - Brew
   - Ice
   - Monsoon
   - Overcast
@@ -132,6 +131,8 @@
   - Empathy
   - Stoicism
   - Competence
+  - Love
+  - Hope
 # Neutral
   - Haste
   - Urgency
@@ -174,6 +175,7 @@
   - Audacity
   - Vivacity
 # Negative
+  - Envy
   - Ineptitude
   - Ignorance
   - Decay
