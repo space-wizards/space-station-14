@@ -14,15 +14,20 @@
   - Vines
   - Branch
   - Branches
+  - Weed
+  - Weeds
   - Rose
   - Dandelion
   - Lilac
+  - Lily
   - Birch
   - Oak
   - Spruce
   - Willow
   - Cyprus
   - Mangrove
+  - Stump
+  - Sap
   - Bayou
   - Bay
   - Lake
@@ -40,6 +45,7 @@
   - Spring
   - Swamp
   - River
+  - Stream
   - Forest
   - Soil
   - Valley
@@ -67,6 +73,7 @@
   - Winter
   - Fruit
   - Leaves
+  - Overgrowth
   - Atmosphere
   - Climate
   - Chill
@@ -76,9 +83,7 @@
   - Cap
   - Saturation
   - Permeation
-  - Hunger
   - Light
-  - Shadow
   - Taste
   - Acorn
   - Shell
@@ -86,7 +91,6 @@
   - Monsoon
   - Overcast
   - Storm
-  - Sap
 - type: dataset
   id: DionaLast
   values:
@@ -118,6 +122,7 @@
   - Ecstasy
   - Cheer
   - Delight
+  - Luxury
   - Euphoria
   - Excitement
   - Satisfaction
@@ -136,6 +141,10 @@
   - Competence
   - Love
   - Hope
+  - Honesty
+  - Generosity
+  - Oppritunity
+  - Motivation
 # Neutral
   - Haste
   - Urgency
@@ -177,6 +186,8 @@
   - Activity
   - Audacity
   - Vivacity
+  - Knowledge
+  - Modification
 # Negative
 # These should be something a diona would still realistically name themselves, i.e not inherintly self deprecating.
   - Envy
@@ -199,7 +210,7 @@
   - Pain
   - Animosity
   - Fury
-  - Disintrest
+  - Disinterest
   - Anger
   - Rage
   - Displeasure
@@ -208,5 +219,5 @@
   - Soreness
   - Frustration
   - Insanity
+  - Chaos
   - Fear
-  - Modification
