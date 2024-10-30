@@ -482,23 +482,40 @@ public sealed class ArrivalsSystem : EntitySystem
         SetupArrivalsStation();
     }
 
-    private void SetupArrivalsStation()
+private void SetupArrivalsStation()
+{
+    var mapId = _mapManager.CreateMap();
+    var mapUid = _mapManager.GetMapEntityId(mapId);
+    _mapManager.AddUninitializedMap(mapId);
+
+    // Load the station grids and ensure necessary components
+    if (!_loader.TryLoad(mapId, _cfgManager.GetCVar(CCVars.ArrivalsMap), out var uids))
     {
-        var mapId = _mapManager.CreateMap();
-        var mapUid = _mapManager.GetMapEntityId(mapId);
-        _mapManager.AddUninitializedMap(mapId);
+        return;
+    }
 
-        if (!_loader.TryLoad(mapId, _cfgManager.GetCVar(CCVars.ArrivalsMap), out var uids))
-        {
-            return;
-        }
+    // Ensure Arrivals Station components are present
+    foreach (var id in uids)
+    {
+        EnsureComp<ArrivalsSourceComponent>(id);
+        EnsureComp<ProtectedGridComponent>(id);
+        EnsureComp<PreventPilotComponent>(id);
+    }
 
-        foreach (var id in uids)
+    // Define a StationConfig for Arrivals
+    var arrivalsStationConfig = new StationConfig
+    {
+        StationPrototype = "Terminal", // Replace with the appropriate station prototype name
+        StationComponentOverrides = new Dictionary<string, object> //EXPERIMENTAL
         {
-            EnsureComp<ArrivalsSourceComponent>(id);
-            EnsureComp<ProtectedGridComponent>(id);
-            EnsureComp<PreventPilotComponent>(id);
+
         }
+    };
+
+    // Initialize the Arrivals station with the specified config and loaded grids
+    var stationSystem = EntitySystem.Get<StationSystem>();
+    stationSystem.InitializeNewStation(arrivalsStationConfig, uids, "Arrivals Station");
+}
 
         // Setup planet arrivals if relevant
         if (_cfgManager.GetCVar(CCVars.ArrivalsPlanet))
