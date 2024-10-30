@@ -1,4 +1,5 @@
 using Content.Server.Botany.Components;
+using Content.Server.Kitchen.Components;
 using Content.Server.Popups;
 using Content.Shared.Botany;
 using Content.Shared.Burial.Components;
@@ -8,6 +9,7 @@ using Content.Shared.Coordinates.Helpers;
 using Content.Shared.EntityEffects;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
+using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
@@ -161,6 +163,7 @@ public sealed class PlantHolderSystem : EntitySystem
                 if (!_botany.TryGetSeed(seeds, out var seed))
                     return;
 
+
                 if (entity.Comp.PlantUid == null)
                 {
                     seed = seed.Clone();
@@ -218,6 +221,7 @@ public sealed class PlantHolderSystem : EntitySystem
 
         if (_tagSystem.HasTag(args.Used, "Hoe"))
         {
+            args.Handled = true;
             if (component.WeedLevel > 0)
             {
                 _popup.PopupCursor(Loc.GetString("plant-holder-component-remove-weeds-message",
@@ -256,6 +260,7 @@ public sealed class PlantHolderSystem : EntitySystem
 
         if (TryComp<ProduceComponent>(args.Used, out var produce))
         {
+            args.Handled = true;
             _popup.PopupCursor(Loc.GetString("plant-holder-component-compost-message",
                 ("owner", uid),
                 ("usingItem", args.Used)), args.User, PopupType.Medium);
