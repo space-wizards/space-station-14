@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: You can drop food or drinks from your hands to interrupt eating it, again.
-    type: Fix
-  - message: Barber scissors are now interrupted if the item is dropped or if the
-      user changes hands.
-    type: Tweak
-  id: 7061
-  time: '2024-08-08T11:39:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30361
 - author: TheShuEd
   changes:
   - message: Add "thieving beacon" to Thief antag - a device that counts objects within
@@ -3955,3 +3945,11 @@
   id: 7560
   time: '2024-10-29T05:07:57.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33046
+- author: Blackern5000
+  changes:
+  - message: Proto-kitentic crushers, glaives, and daggers now have more accurate
+      inhand sprites.
+    type: Tweak
+  id: 7561
+  time: '2024-10-30T07:38:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32212
