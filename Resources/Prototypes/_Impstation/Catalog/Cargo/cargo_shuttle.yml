@@ -1,0 +1,20 @@
+- type: cargoProduct
+  id: ShuttleMiniGyroscope
+  icon:
+    sprite: _Impstation/Structures/Shuttles/minigyroscope.rsi
+    state: base
+  product: CrateEngineeringMiniGyroscope
+  cost: 800
+  category: cargoproduct-category-name-shuttle
+  group: market
+
+- type: cargoProduct
+  id: ShuttleShittleStarterPack
+  icon:
+    sprite: Clothing/Head/Helmets/eva_large.rsi
+    state: icon
+  product: CrateEngineeringShittle
+  cost: 5000
+  category: cargoproduct-category-name-shuttle
+  group: market
+

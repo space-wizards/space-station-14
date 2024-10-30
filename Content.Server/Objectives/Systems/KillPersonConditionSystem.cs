@@ -1,4 +1,5 @@
 using Content.Server.Objectives.Components;
+using Content.Server.Revolutionary.Components;
 using Content.Server.Shuttles.Systems;
 using Content.Server.GameTicking.Rules;
 using Content.Server.Preferences.Managers;
@@ -93,11 +94,10 @@ public sealed class KillPersonConditionSystem : EntitySystem
         }
 
         var allHeads = new List<EntityUid>();
-        foreach (var mind in allHumans)
+        foreach (var person in allHumans)
         {
-            // RequireAdminNotify used as a cheap way to check for command department
-            if (_job.MindTryGetJob(mind, out var prototype) && prototype.RequireAdminNotify)
-                allHeads.Add(mind);
+            if (TryComp<MindComponent>(person, out var mind) && mind.OwnedEntity is { } ent && HasComp<CommandStaffComponent>(ent))
+                allHeads.Add(person);
         }
 
         if (allHeads.Count == 0)
