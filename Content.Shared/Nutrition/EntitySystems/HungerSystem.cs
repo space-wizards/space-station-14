@@ -121,21 +121,14 @@ public sealed class HungerSystem : EntitySystem
     }
 
     /// <summary>
-    /// If on the server, sets <see cref="HungerComponent.LastAuthoritativeHungerValue"/> and
+    /// Sets <see cref="HungerComponent.LastAuthoritativeHungerValue"/> and
     /// <see cref="HungerComponent.LastAuthoritativeHungerChangeTime"/>, and dirties this entity. This "resets" the
     /// starting point for <see cref="GetHunger"/>'s calculation.
-    /// Does nothing on the client.
     /// </summary>
     /// <param name="entity">The entity whose hunger will be set.</param>
     /// <param name="value">The value to set the entity's hunger to.</param>
     private void SetAuthoritativeHungerValue(Entity<HungerComponent> entity, float value)
     {
-        // Don't try to set the authoritative value on the client.
-        if (_net.IsClient)
-        {
-            return;
-        }
-
         entity.Comp.LastAuthoritativeHungerChangeTime = _timing.CurTime;
         entity.Comp.LastAuthoritativeHungerValue = ClampHungerWithinThresholds(entity.Comp, value);
         Dirty(entity);
@@ -151,7 +144,6 @@ public sealed class HungerSystem : EntitySystem
             return;
         component.CurrentThreshold = calculatedHungerThreshold;
         DoHungerThresholdEffects(uid, component);
-        SetAuthoritativeHungerValue((uid, component), GetHunger(component));
     }
 
     private void DoHungerThresholdEffects(EntityUid uid, HungerComponent? component = null, bool force = false)
@@ -179,6 +171,7 @@ public sealed class HungerSystem : EntitySystem
         if (component.HungerThresholdDecayModifiers.TryGetValue(component.CurrentThreshold, out var modifier))
         {
             component.ActualDecayRate = component.BaseDecayRate * modifier;
+            SetAuthoritativeHungerValue((uid, component), GetHunger(component));
         }
 
         component.LastThreshold = component.CurrentThreshold;

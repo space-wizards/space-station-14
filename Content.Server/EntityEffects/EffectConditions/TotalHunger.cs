@@ -15,10 +15,9 @@ public sealed partial class Hunger : EntityEffectCondition
 
     public override bool Condition(EntityEffectBaseArgs args)
     {
-        if (args.EntityManager.TryGetComponent(args.TargetEntity, out HungerComponent? hunger) &&
-            args.EntityManager.SystemOrNull<HungerSystem>() is { } hungerSystem)
+        if (args.EntityManager.TryGetComponent(args.TargetEntity, out HungerComponent? hunger))
         {
-            var total = hungerSystem.GetHunger(hunger);
+            var total = args.EntityManager.System<HungerSystem>().GetHunger(hunger);
             if (total > Min && total < Max)
                 return true;
         }

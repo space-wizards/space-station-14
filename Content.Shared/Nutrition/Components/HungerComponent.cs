@@ -18,7 +18,7 @@ public sealed partial class HungerComponent : Component
     /// This value should be updated relatively infrequently. To get the current hunger, which changes with each update,
     /// use <see cref="HungerSystem.GetHunger"/>.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
     [AutoNetworkedField]
     public float LastAuthoritativeHungerValue;
 
