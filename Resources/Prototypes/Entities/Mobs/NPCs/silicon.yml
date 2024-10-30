@@ -110,13 +110,6 @@
   - type: ProtectedFromStepTriggers
   - type: NoSlip
   - type: Insulated
-  - type: LanguageKnowledge
-    speaks:
-    - GalacticCommon
-    - RobotTalk
-    understands:
-    - GalacticCommon
-    - RobotTalk
 
 - type: entity
   parent: MobSiliconBase

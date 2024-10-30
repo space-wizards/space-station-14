@@ -11,7 +11,6 @@ using Content.Server.Popups;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.CCVar;
-using Content.Shared.Chat;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Cloning;
 using Content.Shared.Damage;
@@ -183,7 +182,7 @@ namespace Content.Server.Cloning
             if (biomassAmount < cloningCost)
             {
                 if (clonePod.ConnectedConsole != null)
-                    _chatSystem.TrySendInGameICMessage(clonePod.ConnectedConsole.Value, Loc.GetString("cloning-console-chat-error", ("units", cloningCost)), SharedChatSystem.InGameICChatType.Speak, false);
+                    _chatSystem.TrySendInGameICMessage(clonePod.ConnectedConsole.Value, Loc.GetString("cloning-console-chat-error", ("units", cloningCost)), InGameICChatType.Speak, false);
                 return false;
             }
 
@@ -199,7 +198,7 @@ namespace Content.Server.Cloning
                 chance *= failChanceModifier;
 
                 if (cellularDmg > 0 && clonePod.ConnectedConsole != null)
-                    _chatSystem.TrySendInGameICMessage(clonePod.ConnectedConsole.Value, Loc.GetString("cloning-console-cellular-warning", ("percent", Math.Round(100 - chance * 100))), SharedChatSystem.InGameICChatType.Speak, false);
+                    _chatSystem.TrySendInGameICMessage(clonePod.ConnectedConsole.Value, Loc.GetString("cloning-console-cellular-warning", ("percent", Math.Round(100 - chance * 100))), InGameICChatType.Speak, false);
 
                 if (_robustRandom.Prob(chance))
                 {

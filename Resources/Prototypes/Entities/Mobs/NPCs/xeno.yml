@@ -119,11 +119,6 @@
     molsPerSecondPerUnitMass: 0.0005
   - type: Speech
     speechVerb: LargeMob
-  - type: LanguageKnowledge
-    speaks:
-    - Xeno
-    understands:
-    - Xeno
 
 - type: entity
   name: praetorian
@@ -233,13 +228,6 @@
   - type: Tag
     tags:
     - CannotSuicide
-  - type: LanguageKnowledge
-    speaks:
-    - GalacticCommon
-    - Xeno
-    understands:
-    - GalacticCommon
-    - Xeno
 
 - type: entity
   name: ravager

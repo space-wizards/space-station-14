@@ -1,5 +1,4 @@
 using Content.Server.Chat.Systems;
-using Content.Shared.Chat;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.EntityEffects;
 using JetBrains.Annotations;
@@ -34,7 +33,7 @@ public sealed partial class Emote : EntityEffect
 
         var chatSys = args.EntityManager.System<ChatSystem>();
         if (ShowInChat)
-            chatSys.TryEmoteWithChat(args.TargetEntity, EmoteId, SharedChatSystem.ChatTransmitRange.GhostRangeLimit, forceEmote: Force);
+            chatSys.TryEmoteWithChat(args.TargetEntity, EmoteId, ChatTransmitRange.GhostRangeLimit, forceEmote: Force);
         else
             chatSys.TryEmoteWithoutChat(args.TargetEntity, EmoteId);
 

@@ -95,12 +95,3 @@
   - type: Wires
     boardName: wires-board-name-computer
     layoutId: ComputerAi
-  - type: LanguageSpeaker
-    currentLanguage: GalacticCommon
-  - type: LanguageKnowledge
-    speaks:
-    - GalacticCommon
-    - RobotTalk
-    understands:
-    - GalacticCommon
-    - RobotTalk

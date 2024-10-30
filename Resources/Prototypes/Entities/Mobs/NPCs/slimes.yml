@@ -113,7 +113,6 @@
   - type: TypingIndicator
     proto: slime
 
-
 - type: entity
   name: basic slime
   id: MobAdultSlimes
@@ -121,11 +120,8 @@
   abstract: true
   description: It looks so much like jelly. I wonder what it tastes like?
   components:
-  - type: LanguageKnowledge
-    speaks:
-    - Bubblish
-    understands:
-    - Bubblish
+  - type: ReplacementAccent
+    accent: slimes
   - type: GhostTakeoverAvailable
   - type: GhostRole
     makeSentient: true

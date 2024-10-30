@@ -7,7 +7,6 @@ using Content.Server.Ghost;
 using Content.Server.Popups;
 using Content.Server.PowerCell;
 using Content.Server.Traits.Assorted;
-using Content.Shared.Chat;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
@@ -151,12 +150,12 @@ public sealed class DefibrillatorSystem : EntitySystem
         if (_rotting.IsRotten(target))
         {
             _chatManager.TrySendInGameICMessage(uid, Loc.GetString("defibrillator-rotten"),
-                SharedChatSystem.InGameICChatType.Speak, true);
+                InGameICChatType.Speak, true);
         }
         else if (HasComp<UnrevivableComponent>(target))
         {
             _chatManager.TrySendInGameICMessage(uid, Loc.GetString("defibrillator-unrevivable"),
-                SharedChatSystem.InGameICChatType.Speak, true);
+                InGameICChatType.Speak, true);
         }
         else
         {
@@ -184,7 +183,7 @@ public sealed class DefibrillatorSystem : EntitySystem
             else
             {
                 _chatManager.TrySendInGameICMessage(uid, Loc.GetString("defibrillator-no-mind"),
-                    SharedChatSystem.InGameICChatType.Speak, true);
+                    InGameICChatType.Speak, true);
             }
         }
 

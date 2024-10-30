@@ -229,11 +229,8 @@
   - type: EggLayer
     eggSpawn:
     - id: FoodEgg
-  - type: LanguageKnowledge
-    speaks:
-    - Chicken
-    understands:
-    - Chicken
+  - type: ReplacementAccent
+    accent: chicken
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-organic
   - type: NpcFactionMember
@@ -524,11 +521,8 @@
       amount: 2
   - type: Extractable
     grindableSolutionName: food
-  - type: LanguageKnowledge
-    speaks:
-    - Moffic
-    understands:
-    - Moffic
+  - type: ReplacementAccent
+    accent: mothroach
   - type: ZombieAccentOverride
     accent: zombieMoth
   - type: Vocal
@@ -667,11 +661,8 @@
   - type: EggLayer
     eggSpawn:
     - id: FoodEgg
-  - type: LanguageKnowledge
-    speaks:
-    - Duck
-    understands:
-    - Duck
+  - type: ReplacementAccent
+    accent: duck
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-organic
   - type: NpcFactionMember
@@ -919,11 +910,8 @@
     interactSuccessSpawn: EffectHearts
     interactSuccessSound:
       path: /Audio/Voice/Arachnid/arachnid_chitter.ogg
-  - type: LanguageKnowledge
-    speaks:
-    - Crab
-    understands:
-    - Crab
+  - type: ReplacementAccent
+    accent: crab
   - type: Bloodstream
     bloodMaxVolume: 50
     bloodReagent: CopperBlood
@@ -1166,11 +1154,8 @@
   - type: Inventory
     speciesId: kangaroo
     templateId: kangaroo
-  - type: LanguageKnowledge
-    speaks:
-    - Kangaroo
-    understands:
-    - Kangaroo
+  - type: ReplacementAccent
+    accent: kangaroo
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -1364,12 +1349,7 @@
   - type: Speech
     speechSounds: Monkey
     speechVerb: Monkey
-  - type: LanguageKnowledge
-    speaks:
-    - Monkey
-    understands:
-    - Monkey
-    - Kobold
+  - type: MonkeyAccent
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-primate
   - type: AlwaysRevolutionaryConvertible
@@ -1405,13 +1385,7 @@
   - type: Speech
     speechSounds: Monkey
     speechVerb: Monkey
-  - type: LanguageKnowledge
-    speaks:
-    - Monkey
-    understands:
-    - Monkey
-    - Kobold
-    - GalacticCommon
+  - type: MonkeyAccent
   - type: NpcFactionMember
     factions:
     - Syndicate
@@ -1453,12 +1427,8 @@
   - type: NameIdentifier
     group: Kobold
   - type: LizardAccent
-  - type: LanguageKnowledge
-    speaks:
-    - Kobold
-    understands:
-    - Kobold
-    - Monkey
+  - type: ReplacementAccent
+    accent: kobold
   - type: Speech
     speechSounds: Lizard
     speechVerb: Reptilian
@@ -1737,11 +1707,8 @@
     spawned:
     - id: FoodMeatRat
       amount: 1
-  - type: LanguageKnowledge
-    speaks:
-    - Mouse
-    understands:
-    - Mouse
+  - type: ReplacementAccent
+    accent: mouse
   - type: Tag
     tags:
     - Trash
@@ -2119,11 +2086,7 @@
   - type: Vocal
     sounds:
       Unsexed: Parrot
-  - type: LanguageKnowledge
-    speaks:
-    - GalacticCommon
-    understands:
-    - GalacticCommon
+  - type: ParrotAccent
   - type: InteractionPopup
     successChance: 0.6
     interactSuccessString: petting-success-bird
@@ -2388,11 +2351,8 @@
   - type: MeleeChemicalInjector
     transferAmount: 0.75
     solution: melee
-  - type: LanguageKnowledge
-    speaks:
-    - Xeno
-    understands:
-    - Xeno
+  - type: ReplacementAccent
+    accent: xeno
   - type: InteractionPopup
     successChance: 0.5
     interactSuccessString: petting-success-tarantula
@@ -2572,11 +2532,6 @@
   - type: Tag
     tags:
     - VimPilot
-  - type: LanguageKnowledge
-    speaks:
-    - Hissing
-    understands:
-    - Hissing
 
 - type: entity
   name: possum
@@ -2651,11 +2606,6 @@
   - type: Tag
     tags:
     - VimPilot
-  - type: LanguageKnowledge
-    speaks:
-    - Hissing
-    understands:
-    - Hissing
 
 - type: entity
   name: fox
@@ -2734,11 +2684,6 @@
   - type: Tag
     tags:
     - VimPilot
-  - type: LanguageKnowledge
-    speaks:
-    - Fox
-    understands:
-    - Fox
 
 - type: entity
   name: corgi
@@ -2781,6 +2726,8 @@
     spawned:
     - id: FoodMeat
       amount: 2
+  - type: ReplacementAccent
+    accent: dog
   - type: InteractionPopup
     interactSuccessString: petting-success-dog
     interactFailureString: petting-failure-generic
@@ -2797,12 +2744,6 @@
   - type: Tag
     tags:
     - VimPilot
-  - type: LanguageKnowledge
-    speaks:
-    - Dog
-    understands:
-    - Dog
-    - GalacticCommon
 
 - type: entity
   name: corrupted corgi
@@ -2934,11 +2875,8 @@
     spawned:
     - id: FoodMeat
       amount: 3
-  - type: LanguageKnowledge
-    speaks:
-    - Cat
-    understands:
-    - Cat
+  - type: ReplacementAccent
+    accent: cat
   - type: InteractionPopup
     successChance: 0.7
     interactSuccessString: petting-success-cat
@@ -3018,12 +2956,6 @@
   - type: NpcFactionMember
     factions:
     - Syndicate
-  - type: LanguageKnowledge
-    speaks:
-    - Cat
-    understands:
-    - Cat
-    - GalacticCommon
   - type: MeleeWeapon
     altDisarm: false
     angle: 0
@@ -3182,11 +3114,6 @@
   - type: Tag
     tags:
     - VimPilot
-  - type: LanguageKnowledge # WHAT DOES THE SLOTH SAY???????
-    speaks:
-    - Hissing
-    understands:
-    - Hissing
 
 - type: entity
   name: ferret
@@ -3241,11 +3168,6 @@
   - type: Tag
     tags:
     - VimPilot
-  - type: LanguageKnowledge
-    speaks:
-    - Hissing
-    understands:
-    - Hissing
 
 - type: entity
   name: hamster
@@ -3343,11 +3265,8 @@
     spawned:
     - id: FoodMeat
       amount: 1
-  - type: LanguageKnowledge
-    speaks:
-    - Mouse
-    understands:
-    - Mouse
+  - type: ReplacementAccent
+    accent: mouse
   - type: Tag
     tags:
     - VimPilot
@@ -3453,11 +3372,8 @@
     interactSuccessSpawn: EffectHearts
     interactSuccessSound:
       path: /Audio/Animals/pig_oink.ogg
-  - type: LanguageKnowledge
-    speaks:
-    - Pig
-    understands:
-    - Pig
+  - type: ReplacementAccent
+    accent: pig
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-organic
   - type: NpcFactionMember
@@ -3547,12 +3463,6 @@
     reformTime: 10
     popupText: diona-reform-attempt
     reformPrototype: MobDionaReformed
-  - type: LanguageKnowledge
-    speaks:
-    - RootSpeak
-    understands:
-    - GalacticCommon
-    - RootSpeak
 
 - type: entity
   parent: MobDionaNymph
