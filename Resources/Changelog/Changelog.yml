@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: RD labcoat added in RD's dresser.
-    type: Add
-  id: 7063
-  time: '2024-08-08T22:50:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30671
 - author: SlamBamActionman
   changes:
   - message: Animal DNA now shows up as "unknown DNA" in the Forensic Scanner.
@@ -3948,3 +3941,11 @@
   id: 7562
   time: '2024-10-30T07:40:33.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32291
+- author: Blackern5000
+  changes:
+  - message: Added three bottle boxes to the nanomed plus inventory for doctors to
+      carry small amounts of chemicals on their person
+    type: Add
+  id: 7563
+  time: '2024-10-30T07:41:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33018
