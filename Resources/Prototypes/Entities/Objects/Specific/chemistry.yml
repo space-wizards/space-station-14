@@ -481,6 +481,20 @@
     solutions:
       food:
         maxVol: 20
+  - type: ExplosionResistance
+    damageCoefficient: 0.025
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:SpillBehavior
+        solution: food
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: SolutionSpiker
     sourceSolution: food
   - type: Extractable
