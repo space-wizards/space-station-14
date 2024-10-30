@@ -35,6 +35,7 @@ marking-LegProstheticLeftMoth = Prosthetic Leg (Left)
 marking-LegTwistingLeftMoth = Twisted Leg Scar (Left)
 marking-LegProstheticRightMoth = Prosthetic Leg (Right)
 marking-LegTwistingRightMoth = Twisted Leg Scar (Right)
+marking-TorsoIncisionMoth = Torso Incision
 
 marking-MothBodyClaw-moth_body_claw = Claw Scars (Torso)
 marking-MothBurnLeft-moth_burn_l = Left-side Burn Scar
@@ -73,3 +74,4 @@ marking-LegProstheticLeftMoth-leg_l_prosthetic_moth = Prosthetic Leg (Left)
 marking-LegTwistingLeftMoth-leg_l_twisting_moth = Twisted Leg Scar (Left)
 marking-LegProstheticRightMoth-leg_r_prosthetic_moth = Prosthetic Leg (Right)
 marking-LegTwistingRightMoth-leg_r_twisting_moth = Twisted Leg Scar (Right)
+marking-TorsoIncisionMoth-torso_incision_moth = Torso Incision

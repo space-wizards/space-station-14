@@ -155,6 +155,10 @@
       {
         "name": "hand_r_prosthetic_moth",
         "directions": 4
+      },
+      {
+        "name": "torso_incision_moth",
+        "directions": 4
       }
     ]
   }

@@ -445,3 +445,13 @@
   sprites:
   - sprite: _Impstation/Mobs/Customization/moth.rsi
     state: leg_r_twisting_moth
+
+- type: marking
+  id: TorsoIncisionMoth
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Moth]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/moth.rsi
+    state: torso_incision_moth
