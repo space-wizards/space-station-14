@@ -22,6 +22,7 @@
       sprite: _Impstation/Mobs/Animals/cargorilla.rsi
   - type: Physics
   - type: BodyEmotes
+    soundsId: Gorilla
   - type: InteractionPopup
     successChance: 0.7
     interactSuccessString: petting-success-cargorilla
@@ -36,6 +37,10 @@
     speechVerb: Monkey
     allowedEmotes: ['Scream', 'Laugh']
   - type: MonkeyAccent
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+  - type: Emoting
   - type: Fixtures
     fixtures:
       fix1:
