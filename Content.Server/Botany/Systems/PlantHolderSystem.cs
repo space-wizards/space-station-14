@@ -162,7 +162,6 @@ public sealed class PlantHolderSystem : EntitySystem
                 if (!_botany.TryGetSeed(seeds, out var seed))
                     return;
 
-
                 if (entity.Comp.PlantUid == null)
                 {
                     seed = seed.Clone();
