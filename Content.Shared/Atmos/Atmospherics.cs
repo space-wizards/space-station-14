@@ -287,7 +287,8 @@ namespace Content.Shared.Atmos
         ///     so it just applies this flat value).
         /// </summary>
         // Original value is 4, buff back when we have proper ways for players to deal with breaches.
-        public const int LowPressureDamage = 1;
+        // Harmony, value changed back to 4.
+        public const int LowPressureDamage = 4;
 
         public const float WindowHeatTransferCoefficient = 0.1f;
 
