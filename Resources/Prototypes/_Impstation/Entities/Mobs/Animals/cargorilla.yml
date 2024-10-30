@@ -9,7 +9,7 @@
   - type: GhostTakeoverAvailable
   - type: GhostRole
     makeSentient: true
-    allowSpeech: false
+    allowSpeech: true
     allowMovement: true
     name: ghost-role-information-cargorilla-name
     description: ghost-role-information-cargorilla-description
@@ -21,6 +21,21 @@
       state: crawling
       sprite: _Impstation/Mobs/Animals/cargorilla.rsi
   - type: Physics
+  - type: BodyEmotes
+  - type: InteractionPopup
+    successChance: 0.7
+    interactSuccessString: petting-success-cargorilla
+    interactFailureString: petting-failure-cargorilla
+    interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/_Impstation/Animals/Gorilla_Laugh.ogg
+    interactFailureSound:
+      path: /Audio/_Impstation/Animals/Gorilla_chuff.ogg
+  - type: Speech
+    speechSounds: Gorilla
+    speechVerb: Monkey
+    allowedEmotes: ['Scream', 'Laugh']
+  - type: MonkeyAccent
   - type: Fixtures
     fixtures:
       fix1:

@@ -1,0 +1,14 @@
+- type: emoteSounds
+  id: Gorilla
+  sounds:
+    Scream:
+      path: /Audio/_Impstation/Animals/Gorilla_Scream.ogg
+    Laugh:
+      path: /Audio/_Impstation/Animals/Gorilla_Laugh.ogg
+    Gasp:
+      path: /Audio/_Impstation/Animals/Gorilla_Gasp.ogg
+    DefaultDeathgasp:
+      path: /Audio/_Impstation/Animals/Gorilla_Scream.ogg
+  params:
+    variation: 0.125
+    pitch: 0.75
