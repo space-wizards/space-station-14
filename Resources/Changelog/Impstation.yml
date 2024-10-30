@@ -3502,3 +3502,27 @@
   id: 430
   time: '2024-10-30T03:17:35.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/584
+- author: TheGrimbeeper
+  changes:
+  - message: Artifacts can now ask for a drink. Talk to your bartender for help!
+    type: Add
+  - message: minor changes to effect probabilities
+    type: Tweak
+  id: 431
+  time: '2024-10-30T16:35:05.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/585
+- author: ruddygreat
+  changes:
+  - message: Restored old vending machine sound & reduced pitch variations on some
+      others
+    type: Tweak
+  id: 432
+  time: '2024-10-30T16:34:26.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/576
+- author: hivehum
+  changes:
+  - message: Removed BROS.
+    type: Tweak
+  id: 433
+  time: '2024-10-30T16:34:16.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/583
