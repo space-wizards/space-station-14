@@ -62,7 +62,8 @@ namespace Content.IntegrationTests.Tests
             "Train",
             "Oasis",
             "Cog",
-            "Uoui" // Weaselstation
+            "Uoui", // Weaselstation
+            "Pact" // Weaselstation
         };
 
         /// <summary>
