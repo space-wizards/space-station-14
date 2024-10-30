@@ -46,3 +46,6 @@
     sprite: Objects/Misc/nukedisk.rsi
     state: icon
   - type: Delaminator
+  - type: Item
+    size: Ginormous
+  - type: MultiHandedItem
