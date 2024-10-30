@@ -162,6 +162,7 @@ public sealed class PlantSystem : EntitySystem
 
     private void OnInteractHand(Entity<PlantComponent> entity, ref InteractHandEvent args)
     {
+        args.Handled = true;
         DoHarvest(entity, args.User);
     }
 
@@ -171,34 +172,22 @@ public sealed class PlantSystem : EntitySystem
     public bool DoHarvest(EntityUid plantEntity, EntityUid user)
     {
         GetEverything(plantEntity, out var plant, out var seed, out var holder);
-        if (plant == null || seed == null || holder == null)
+        if (Deleted(user) || plant == null || seed == null || holder == null || plant.Dead || !plant.Harvest)
             return false;
 
-        if (seed == null || Deleted(user))
-            return false;
-
-        if (plant.Harvest && !plant.Dead)
+        if (TryComp<HandsComponent>(user, out var hands))
         {
-            if (TryComp<HandsComponent>(user, out var hands))
-            {
-                if (!_botany.CanHarvest(seed, hands.ActiveHandEntity))
-                {
-                    return false;
-                }
-            }
-            else if (!_botany.CanHarvest(seed))
+            if (!_botany.CanHarvest(seed, hands.ActiveHandEntity))
             {
                 return false;
             }
-
-            _botany.Harvest(seed, user);
-            AfterHarvest(plantEntity, plant);
-            return true;
         }
-        if (!plant.Dead)
+        else if (!_botany.CanHarvest(seed))
+        {
             return false;
+        }
 
-        RemovePlant(plantEntity);
+        _botany.Harvest(seed, user);
         AfterHarvest(plantEntity, plant);
         return true;
     }
