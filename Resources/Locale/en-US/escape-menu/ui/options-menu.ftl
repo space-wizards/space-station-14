@@ -22,7 +22,19 @@ ui-options-general-discord = Discord
 ui-options-general-cursor = Cursor
 ui-options-general-speech = Speech
 ui-options-general-storage = Storage
+ui-options-general-custom-emotes = Custom emotes
 ui-options-general-accessibility = Accessibility
+
+ui-options-general-custom-emote-1 = General custom emote 1
+ui-options-general-custom-emote-2 = General custom emote 2
+ui-options-general-custom-emote-3 = General custom emote 3
+ui-options-general-custom-emote-4 = General custom emote 4
+ui-options-general-custom-emote-5 = General custom emote 5
+ui-options-general-custom-emote-6 = General custom emote 6
+ui-options-general-custom-emote-7 = General custom emote 7
+ui-options-general-custom-emote-8 = General custom emote 8
+ui-options-general-custom-emote-9 = General custom emote 9
+ui-options-general-custom-emote-10 = General custom emote 10
 
 ## Audio menu
 
