@@ -116,14 +116,14 @@
     state: arm_r_twisting_moth
 
 - type: marking
-  id: ChestBackstabbedMoth
-  bodyPart: Chest
-  markingCategory: Chest
+  id: WingsBackstabbed
+  bodyPart: Tail
+  markingCategory: Tail
   speciesRestriction: [Moth]
   followSkinColor: false
   sprites:
   - sprite: _Impstation/Mobs/Customization/moth.rsi
-    state: chest_backstabbed_moth
+    state: wings_backstabbed
 
 - type: marking
   id: ChestChimeraFemaleMoth
