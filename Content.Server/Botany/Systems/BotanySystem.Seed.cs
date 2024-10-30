@@ -137,6 +137,7 @@ public sealed partial class BotanySystem : EntitySystem
     public IEnumerable<EntityUid> GenerateProduct(SeedData proto, EntityCoordinates position)
     {
         var products = new List<EntityUid>();
+        proto.Unique = false;
 
         for (var i = 0; i < proto.Yield; i++)
         {

@@ -11,8 +11,6 @@ public sealed partial class BotanySystem
         if (!TryGetSeed(produce, out var seed))
             return;
 
-        seed = seed.Clone(); // Ensure all produce have a unique seed.
-
         foreach (var mutation in seed.Mutations)
         {
             if (mutation.AppliesToProduce)

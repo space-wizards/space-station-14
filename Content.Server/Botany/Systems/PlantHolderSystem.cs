@@ -156,6 +156,7 @@ public sealed class PlantHolderSystem : EntitySystem
 
         if (TryComp(args.Used, out SeedComponent? seeds))
         {
+            args.Handled = true;
             if (seeds == null)
                 return;
             if (!hasPlant)
@@ -241,6 +242,7 @@ public sealed class PlantHolderSystem : EntitySystem
 
         if (HasComp<ShovelComponent>(args.Used))
         {
+            args.Handled = true;
             if (hasPlant == true)
             {
                 _popup.PopupCursor(Loc.GetString("plant-holder-component-remove-plant-message",

@@ -43,6 +43,9 @@ public sealed class SeedExtractorSystem : EntitySystem
         var coords = Transform(uid).Coordinates;
 
         var packetSeed = seed;
+        if (amount > 1)
+            packetSeed.Unique = false;
+
         for (var i = 0; i < amount; i++)
         {
             _botanySystem.SpawnSeedPacket(packetSeed, coords, args.User);

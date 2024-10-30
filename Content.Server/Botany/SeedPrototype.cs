@@ -80,7 +80,14 @@ public partial class SeedData
     /// <summary>
     ///     If true, the properties of this seed cannot be modified.
     /// </summary>
-    [DataField] public bool Immutable;
+    [DataField("immutable")] public bool Immutable;
+
+    /// <summary>
+    ///     If true, there is only a single reference to this seed and it's properties can be directly modified without
+    ///     needing to clone the seed.
+    /// </summary>
+    [ViewVariables]
+    public bool Unique = false; // seed-prototypes or yaml-defined seeds for entity prototypes will not generally be unique.
     #endregion
 
     #region Output
@@ -238,6 +245,9 @@ public partial class SeedData
             TurnIntoKudzu = TurnIntoKudzu,
             SplatPrototype = SplatPrototype,
             Mutations = new List<RandomPlantMutation>(),
+
+            // Newly cloned seed is unique. No need to unnecessarily clone if repeatedly modified.
+            Unique = true,
         };
 
         newSeed.Mutations.AddRange(Mutations);
@@ -295,6 +305,9 @@ public partial class SeedData
             CanScream = CanScream,
             TurnIntoKudzu = TurnIntoKudzu,
             SplatPrototype = other.SplatPrototype,
+
+            // Newly cloned seed is unique. No need to unnecessarily clone if repeatedly modified.
+            Unique = true,
         };
 
         // Adding the new chemicals from the new species.

@@ -100,6 +100,7 @@ public sealed class PlantSystem : EntitySystem
 
         if (_tagSystem.HasTag(args.Used, "PlantSampleTaker"))
         {
+            args.Handled = true;
             if (plant == null || seed == null)
             {
                 _popup.PopupCursor(Loc.GetString("plant-holder-component-nothing-to-sample-message"), args.User);
@@ -153,7 +154,10 @@ public sealed class PlantSystem : EntitySystem
         }
 
         if (HasComp<SharpComponent>(args.Used))
+        {
             DoHarvest(entity, args.User);
+            args.Handled = true;
+        }
     }
 
     private void OnInteractHand(Entity<PlantComponent> entity, ref InteractHandEvent args)

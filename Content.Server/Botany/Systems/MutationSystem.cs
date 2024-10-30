@@ -29,6 +29,9 @@ public sealed class MutationSystem : EntitySystem
         {
             if (Random(Math.Min(mutation.BaseOdds * severity, 1.0f)))
             {
+                if (!seed.Unique)
+                    seed = seed.Clone();
+
                 if (mutation.AppliesToPlant)
                 {
                     var args = new EntityEffectBaseArgs(plant, EntityManager);
