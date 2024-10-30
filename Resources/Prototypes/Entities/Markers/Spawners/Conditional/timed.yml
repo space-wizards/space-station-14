@@ -97,5 +97,5 @@
         - MobBros
         - MobSorb
       chance: 0.9
-      minimumEntitiesSpawned: 20
-      maximumEntitiesSpawned: 25
+      minimumEntitiesSpawned: 10
+      maximumEntitiesSpawned: 15
