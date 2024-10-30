@@ -7,11 +7,21 @@
   - Ivy
   - Stalk
   - Petal
+  - Petals
   - Thorn
+  - Thorns
+  - Vine
+  - Vines
   - Rose
   - Dandelion
+  - Lilac
   - Birch
+  - Oak
+  - Spruce
   - Willow
+  - Cyprus
+  - Mangrove
+  - Bayou
   - Bay
   - Lake
   - River
@@ -21,12 +31,66 @@
   - Mountain
   - Peak
   - Garden
+  - Ocean
+  - Arctic
+  - Sea
+  - Lake
+  - Spring
+  - Swamp
+  - River
+  - Forest
   - Soil
+  - Valley
+  - Moor
+  - Steppe
+  - Orchard
+  - Orchid
+  - Glacier
+  - Desert
+  - Tundra
+  - Taiga
+  - Plain
+  - Plains
+  - Plateau
+  - Cliff
+  - Coast
+  - Shore
+  - Jungle
+  - Tropics
   - Flower
-
+  - Grass
+  - Bark
+  - Autumn
+  - Summer
+  - Winter
+  - Cherry
+  - Orange
+  - Fruit
+  - Leaves
+  - Atmosphere
+  - Climate
+  - Chill
+  - Winds
+  - Blossom
+  - Bloom
+  - Cap
+  - Saturation
+  - Permeation
+  - Hunger
+  - Light
+  - Shadow
+  - Taste
+  - Acorn
+  - Shell
+  - Brew
+  - Ice
+  - Monsoon
+  - Overcast
+  - Storm
 - type: dataset
   id: DionaLast
   values:
+# Positive
   - Peace
   - Harmony
   - Relaxation
@@ -48,3 +112,86 @@
   - Equilibrium
   - Composure
   - Control
+  - Bliss
+  - Enjoyment
+  - Optimism
+  - Ecstasy
+  - Cheer
+  - Delight
+  - Euphoria
+  - Excitement
+  - Satisfaction
+  - Cleanliness
+  - Expression
+  - Enrichment
+  - Enthusiam
+  - Brilliance
+# Neutral
+  - Haste
+  - Urgency
+  - Vitality
+  - Hardiness
+  - Vigor
+  - Lethargy
+  - Agility
+  - Dexterity
+  - Perception
+  - Constitution
+  - Wisdom
+  - Charisma
+  - Persistence
+  - Density
+  - Strength
+  - Congestion
+  - Concentration
+  - Intensity
+  - Refinement
+  - Obscurity
+  - Stoicism
+  - Fortitude
+  - Endurance
+  - Patience
+  - Passivity
+  - Indifference
+  - Sleepiness
+  - Neutrality
+  - Fairness
+  - Silliness 
+  - Restraint
+  - Silence
+  - Bewilderment
+  - Tactility
+  - Invisibility
+  - Darkness
+  - Fragility
+  - Action
+  - Awakening
+  - Activity
+  - Audacity
+  - Vivacity
+# Negative
+  - Bitterness
+  - Acidity
+  - Illness
+  - Weakness
+  - Noxiousness
+  - Convlution
+  - Confusion
+  - Agitation
+  - Depression
+  - Despair
+  - Sorrow
+  - Pain
+  - Animosity
+  - Fury
+  - Disintrest
+  - Anger
+  - Rage
+  - Displeasure
+  - Irritation
+  - Resentment
+  - Soreness
+  - Frustration
+  - Insanity
+  - Fear
+  - Modification
