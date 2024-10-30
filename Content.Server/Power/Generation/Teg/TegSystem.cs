@@ -14,6 +14,7 @@ using Content.Shared.Power;
 using Content.Shared.Power.Generation.Teg;
 using Content.Shared.Rounding;
 using Robust.Server.GameObjects;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Power.Generation.Teg;
 
@@ -259,13 +260,18 @@ public sealed class TegSystem : EntitySystem
         // Otherwise, make sure circulator is set to nothing.
         if (!group.IsFullyBuilt)
         {
-            UpdateCirculatorAppearance(uid, false);
+            UpdateCirculatorAppearance((uid, component), false);
         }
     }
 
-    private void UpdateCirculatorAppearance(EntityUid uid, bool powered)
+    private void UpdateCirculatorAppearance(Entity<TegCirculatorComponent?> ent, bool powered)
     {
-        var circ = Comp<TegCirculatorComponent>(uid);
+        if (!Resolve(ent, ref ent.Comp))
+            return;
+
+        var (uid, circ) = ent;
+
+        DebugTools.Assert(circ is not null);
 
         TegCirculatorSpeed speed;
         if (powered && circ.LastPressureDelta > 0 && circ.LastMolesTransferred > 0)
