@@ -21,8 +21,6 @@ public sealed class MutationSystem : EntitySystem
     /// <summary>
     /// For each random mutation, see if it occurs on this plant this check.
     /// </summary>
-    /// <param name="seed"></param>
-    /// <param name="severity"></param>
     public void CheckRandomMutations(EntityUid plant, ref SeedData seed, float severity)
     {
         foreach (var mutation in _randomMutations.mutations)
@@ -42,15 +40,6 @@ public sealed class MutationSystem : EntitySystem
                     seed.Mutations.Add(mutation);
             }
         }
-    }
-
-    /// <summary>
-    /// Checks all defined mutations against a seed to see which of them are applied.
-    /// </summary>
-    public void MutateSeed(EntityUid plant, ref SeedData seed, float severity)
-    {
-
-        CheckRandomMutations(plant, ref seed, severity);
     }
 
     public SeedData Cross(SeedData a, SeedData b)

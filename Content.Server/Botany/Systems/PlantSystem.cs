@@ -165,6 +165,9 @@ public sealed class PlantSystem : EntitySystem
         DoHarvest(entity, args.User);
     }
 
+    /// <summary>
+    /// A player has clicked on a harvestable plant. Make its produce and update tracking.
+    /// </summary>
     public bool DoHarvest(EntityUid plantEntity, EntityUid user)
     {
         GetEverything(plantEntity, out var plant, out var seed, out var holder);
@@ -200,6 +203,9 @@ public sealed class PlantSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    /// Delete this plant and remove it from its plantHolder.
+    /// </summary>
     public void RemovePlant(EntityUid uid)
     {
         GetEverything(uid, out var plant, out _, out var holder);
@@ -233,6 +239,9 @@ public sealed class PlantSystem : EntitySystem
             UpdateSprite(uid, plant);
     }
 
+    /// <summary>
+    /// The plant is harvesting itself on a growth tick.
+    /// </summary>
     public void AutoHarvest(EntityUid uid, PlantComponent? component = null, SeedComponent? seed = null)
     {
         if (!Resolve(uid, ref component, ref seed))
@@ -248,30 +257,21 @@ public sealed class PlantSystem : EntitySystem
     }
 
     /// <summary>
-    /// Force do scream on PlantHolder (like plant is screaming) using seed's ScreamSound specifier (collection or soundPath)
+    /// AAAAAAAAAAAAAHHHHHHHHHHH!
     /// </summary>
-    /// <returns></returns>
-    public bool DoScream(EntityUid plantholder, SeedData? seed = null)
+    public bool DoScream(EntityUid plant, SeedData? seed = null)
     {
         if (seed == null || seed.CanScream == false)
             return false;
 
-        _audio.PlayPvs(seed.ScreamSound, plantholder);
+        _audio.PlayPvs(seed.ScreamSound, plant);
         return true;
     }
 
     public void Update(EntityUid plantuid, PlantComponent? plant = null)
     {
-        if (!Resolve(plantuid, ref plant))
+        if (!GetEverything(plantuid, out plant, out var seed, out var holder) || plant == null || seed == null || holder == null)
             return;
-
-        var holder = GetPlantHolder(plant.PlantHolderUid);
-        if (holder == null)
-            return;
-
-        var seed = GetSeedData(plantuid);
-        if (seed == null)
-            return; //Plant cant do anything without a seed.
 
         plant.Health = MathHelper.Clamp(plant.Health, 0, seed.Endurance);
         // Process mutations
@@ -496,15 +496,9 @@ public sealed class PlantSystem : EntitySystem
         UpdateSprite(plantuid, plant);
     }
 
-    public SeedData? GetSeedData(EntityUid entity)
-    {
-        if (TryComp<PlantComponent>(entity, out var plant))
-            return plant.Seed;
-        return null;
-    }
-
     /// <summary>
-    /// Returns all the components containing data used by the plant.
+    /// Gets all the components containing data used by the plant: Plant, its SeedData for convenience, and its PlantHolder.
+    /// Returns false if any of them weren't found, but components that were present will be available.
     /// </summary>
     public bool GetEverything(EntityUid plantEntity, out PlantComponent? plant, out SeedData? seed, out PlantHolderComponent? holder)
     {
@@ -520,18 +514,12 @@ public sealed class PlantSystem : EntitySystem
         return plantFound && seed != null && holderFound;
     }
 
-    public PlantHolderComponent? GetPlantHolder(EntityUid? plantHolderUid)
-    {
-        if (plantHolderUid == null)
-            return null;
-
-        TryComp<PlantHolderComponent>(plantHolderUid, out var plantHolder);
-        return plantHolder;
-    }
-
+    /// <summary>
+    /// Cease the growth and harvesting of a plant through the conclusion of biological processes.
+    /// </summary>
     public void Die(EntityUid uid, PlantComponent? plant = null)
     {
-        if (!Resolve(uid, ref plant))
+        if (!GetEverything(uid, out plant, out var seed, out var holder) || plant == null)
             return;
 
         plant.Dead = true;
@@ -539,8 +527,6 @@ public sealed class PlantSystem : EntitySystem
         plant.MutationLevel = 0;
         UpdateSprite(uid, plant);
 
-        //get holder and update it too.
-        var holder = GetPlantHolder(plant.PlantHolderUid);
         if (holder != null)
         {
             holder.ImproperHeat = false;
@@ -563,14 +549,13 @@ public sealed class PlantSystem : EntitySystem
         return result;
     }
 
+    /// <summary>
+    /// Adjusts the aging of a plant. Positive amounts make plant older (and harvests soon), negative amounts make the plant delay growth
+    /// (and slows down harvests)
+    /// </summary>
     public void AffectGrowth(EntityUid uid, int amount, PlantComponent? component = null)
     {
-        if (!Resolve(uid, ref component))
-            return;
-
-        var seed = GetSeedData(uid);
-
-        if (seed == null)
+        if (!GetEverything(uid, out component, out var seed, out var _) || component == null || seed == null)
             return;
 
         if (amount > 0)
@@ -595,10 +580,13 @@ public sealed class PlantSystem : EntitySystem
 
         if (seed != null)
         {
-            _mutation.MutateSeed(uid, ref seed, severity);
+            _mutation.CheckRandomMutations(uid, ref seed, severity);
         }
     }
 
+    /// <summary>
+    /// Watch your plant grow.
+    /// </summary>
     public void UpdateSprite(EntityUid uid, PlantComponent? component = null)
     {
         GetEverything(uid, out var plant, out _, out _);

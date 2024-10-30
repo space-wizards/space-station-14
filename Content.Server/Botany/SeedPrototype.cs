@@ -75,6 +75,9 @@ public partial class SeedData
     [DataField]
     public string DisplayName { get; private set; } = "";
 
+    /// <summary>
+    /// Adds an extra line to the end of the seed description if set. Currently unused.
+    /// </summary>
     [DataField] public bool Mysterious;
 
     /// <summary>
@@ -112,49 +115,70 @@ public partial class SeedData
     #endregion
 
     #region Tolerances
-
     [DataField] public float NutrientConsumption = 0.75f;
-
     [DataField] public float WaterConsumption = 0.5f;
     [DataField] public float IdealHeat = 293f;
     [DataField] public float HeatTolerance = 10f;
     [DataField] public float ToxinsTolerance = 4f;
 
     [DataField] public float LowPressureTolerance = 81f;
-
     [DataField] public float HighPressureTolerance = 121f;
-
     [DataField] public float PestTolerance = 5f;
-
     [DataField] public float WeedTolerance = 5f;
-
     [DataField] public float WeedHighLevelThreshold = 10f;
 
     #endregion
 
     #region General traits
 
+    /// <summary>
+    /// The plant's max health.
+    /// </summary>
     [DataField] public float Endurance = 100f;
 
+    /// <summary>
+    /// How many produce are created on harvest.
+    /// </summary>
     [DataField] public int Yield;
+
+    /// <summary>
+    /// The number of growth ticks this plant can be alive for. Plants take high damage levels when Age > Lifespan.
+    /// </summary>
     [DataField] public float Lifespan;
+
+    /// <summary>
+    /// The number of growth ticks it takes for a plant to reach its final growth stage.
+    /// </summary>
     [DataField] public float Maturation;
+
+    /// <summary>
+    /// The number of growth ticks it takes for a plant to be (re-)harvestable. Shouldn't be lower than Maturation.
+    /// </summary>
     [DataField] public float Production;
+
+    /// <summary>
+    /// How many different sprites appear before the plant is fully grown.
+    /// </summary>
     [DataField] public int GrowthStages = 6;
 
+    /// <summary>
+    /// Harvest options are NoRepeat(plant is removed on harvest), Repeat(Plant makes produce every Production ticks),
+    /// and SelfHarvest (Repeat, plus produce is dropped on the ground near the plant automatically)
+    /// </summary>
     [DataField] public HarvestType HarvestRepeat = HarvestType.NoRepeat;
 
+    /// <summary>
+    /// A scalar for sprite size and chemical quantity on the produce. Caps at 100.
+    /// </summary>
     [DataField] public float Potency = 1f;
 
     /// <summary>
-    ///     If true, cannot be harvested for seeds. Balances hybrids and
-    ///     mutations.
+    ///     If true, produce can't be put into the seed maker.
     /// </summary>
     [DataField] public bool Seedless = false;
 
     /// <summary>
-    ///     If false, rapidly decrease health while growing. Used to kill off
-    ///     plants with "bad" mutations.
+    ///     If false, rapidly decrease health while growing. Adds a bit of challenge to keep mutated plants alive via Unviable's frequency.
     /// </summary>
     [DataField] public bool Viable = true;
 
@@ -178,11 +202,24 @@ public partial class SeedData
     [DataField]
     public SoundSpecifier ScreamSound = new SoundCollectionSpecifier("PlantScreams", AudioParams.Default.WithVolume(-10));
 
+    /// <summary>
+    /// If true, AAAAAAAAAAAHHHHHHHHHHH!
+    /// </summary>
     [DataField("screaming")] public bool CanScream;
 
+    /// <summary>
+    /// Which kind of kudzu this plant will turn into if it kuzuifies.
+    /// </summary>
     [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))] public string KudzuPrototype = "WeakKudzu";
 
+    /// <summary>
+    /// If true, this plant turns into it's KudzuPrototype when the PlantHolder's WeedLevel hits this plant's WeedHighLevelThreshold.
+    /// </summary>
     [DataField] public bool TurnIntoKudzu;
+
+    /// <summary>
+    /// Only set on tomatoes and variants. Unused, their entry isn't even defined. Removing in the next commit.
+    /// </summary>
     [DataField] public string? SplatPrototype { get; set; }
 
     #endregion
@@ -198,6 +235,9 @@ public partial class SeedData
     [DataField(customTypeSerializer: typeof(PrototypeIdListSerializer<SeedPrototype>))]
     public List<string> MutationPrototypes = new();
 
+    /// <summary>
+    /// Copies this seed data to a new object. Required so mutations don't get applied to all plants of the same type.
+    /// </summary>
     public SeedData Clone()
     {
         DebugTools.Assert(!Immutable, "There should be no need to clone an immutable seed.");
@@ -253,7 +293,6 @@ public partial class SeedData
         newSeed.Mutations.AddRange(Mutations);
         return newSeed;
     }
-
 
     /// <summary>
     /// Handles copying most species defining data from 'other' to this seed while keeping the accumulated mutations intact.
