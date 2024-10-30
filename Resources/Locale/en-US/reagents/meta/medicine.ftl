@@ -147,6 +147,3 @@ reagent-desc-potassium-iodide = Will reduce the damaging effects of radiation by
 
 reagent-name-haloperidol = haloperidol
 reagent-desc-haloperidol = Removes most stimulating and hallucinogenic drugs. Reduces druggy effects and jitteriness. Causes drowsiness.
-
-reagent-name-caramexinin = caramexinin
-reagent-desc-caramexinin = An artificial sweetener that treats and prevents Theobromine poisoning in animals.
