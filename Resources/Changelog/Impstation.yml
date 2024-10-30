@@ -3526,3 +3526,10 @@
   id: 433
   time: '2024-10-30T16:34:16.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/583
+- author: Sha-Seng
+  changes:
+  - message: Slime gradient hands show in profile now
+    type: Tweak
+  id: 434
+  time: '2024-10-30T18:01:24.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/587
