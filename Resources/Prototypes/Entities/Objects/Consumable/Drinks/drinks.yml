@@ -2361,7 +2361,7 @@
         - ReagentId: UAP
           Quantity: 30
   - type: Icon
-    sprite: Objects/Consumable/Drinks/uapglass.rsi
+    sprite: _Impstation/Objects/Consumable/Drinks/uapglass.rsi
     state: icon
 
 - type: entity
@@ -2377,5 +2377,5 @@
         - ReagentId: TheeHorsepussy
           Quantity: 30
   - type: Icon
-    sprite: Objects/Consumable/Drinks/thee_horsepussy.rsi
+    sprite: _Impstation/Objects/Consumable/Drinks/thee_horsepussy.rsi
     state: icon

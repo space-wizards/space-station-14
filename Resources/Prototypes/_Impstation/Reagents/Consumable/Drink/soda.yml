@@ -1,0 +1,65 @@
+
+- type: reagent
+  id: KingSoda
+  name: reagent-name-kingsoda
+  parent: BaseSoda
+  desc: reagent-desc-kingsoda
+  physicalDesc: reagent-physical-desc-fizzy
+  flavor: kingsoda
+  color: "#9F3400"
+
+- type: reagent
+  id: HummingBird
+  name: reagent-name-hummingbird
+  parent: BaseSoda
+  desc: reagent-desc-hummingbird
+  physicalDesc: reagent-physical-desc-sweet
+  flavor: sweet
+  color: "#cffff8"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/lemonadeglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 6
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
+
+- type: reagent
+  id: Genderfluid
+  name: reagent-name-genderfluid
+  parent: BaseSoda
+  desc: reagent-desc-genderfluid
+  physicalDesc: reagent-physical-desc-gender
+  flavor: genderfluid
+  metamorphicSprite:
+    sprite: _Impstation/Objects/Consumable/Drinks/genderfluid.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
+
+- type: reagent
+  id: ZombieSlushie
+  name: reagent-name-zombieslushie
+  parent: BaseSoda
+  desc: reagent-desc-zombieslushie
+  physicalDesc: reagent-physical-desc-clumpy
+  flavor: zombieslushie
+  color: "#ff6fa8"
+  metamorphicSprite:
+    sprite: _Impstation/Objects/Consumable/Drinks/zombieslushie.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:SatiateHunger
+        factor: 4
+        conditions:
+        - !type:OrganType
+          type: Moth
+          shouldHave: false   
+  fizziness: 0.2

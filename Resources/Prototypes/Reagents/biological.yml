@@ -83,36 +83,6 @@
       volume: 6
 
 - type: reagent
-  id: Mucin
-  name: reagent-name-mucin
-  group: Biological
-  desc: reagent-desc-mucin
-  flavor: snotty
-  color: "#b1d8c1"
-  recognizable: true
-  physicalDesc: reagent-physical-desc-viscous
-  slippery: false
-  viscosity: 0.25
-  metabolisms:
-    Food:
-      effects:
-      - !type:SatiateHunger
-        factor: 1
-  footstepSound:
-    collection: FootstepBlood
-    params:
-      volume: 6
-  tileReactions:
-    - !type:EnsureTileReaction
-      components:
-        - type: Propulsion
-          walkSpeedModifier: 2.75
-          sprintSpeedModifier: 2.75
-          whitelist:
-            components:
-              - SnailSpeed
-
-- type: reagent
   id: Sap
   name: reagent-name-sap
   group: Biological
