@@ -11584,7 +11584,7 @@ entities:
       pos: 24.5,16.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -18243.016
+      secondsUntilStateChange: -18318.04
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -72442,6 +72442,13 @@ entities:
     - type: Transform
       pos: -31.5,4.5
       parent: 8364
+- proto: DefaultStationBeaconVox
+  entities:
+  - uid: 27921
+    components:
+    - type: Transform
+      pos: -42.5,-11.5
+      parent: 8364
 - proto: DefaultStationBeaconWardensOffice
   entities:
   - uid: 27736
@@ -84431,7 +84438,7 @@ entities:
       pos: -34.5,-14.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -12431.553
+      secondsUntilStateChange: -12506.576
       state: Closing
   - uid: 15010
     components:
@@ -84924,7 +84931,7 @@ entities:
       pos: -4.5,-71.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -4179.284
+      secondsUntilStateChange: -4254.308
       state: Closing
 - proto: Fireplace
   entities:
