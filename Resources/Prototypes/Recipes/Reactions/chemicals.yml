@@ -29,8 +29,6 @@
     SeaWater:
       amount: 1
   products:
-    Hydrogen: 1
-    Oxygen: 2
     TableSalt: 1
 
 - type: reaction
@@ -94,7 +92,7 @@
       amount: 1
     Sulfur:
       amount: 1
-    Oxygen: 
+    Oxygen:
       amount: 2
   products:
     SulfuricAcid: 3

@@ -166,5 +166,5 @@
   id: TelecomRelay
   suffix: Tcomms Booster
   components:
-  - type: RelayComponent
+  - type: Relay
 

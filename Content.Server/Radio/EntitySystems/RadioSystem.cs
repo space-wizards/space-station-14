@@ -137,16 +137,21 @@ public sealed class RadioSystem : EntitySystem
                     continue;
             }
 
+            var isRelayActive = IsAnyRelayActive(sourceMapId);
             var isLongRange = channel.LongRange || IsAnyRelayActive(sourceMapId);
-            
+
+            if (!isRelayActive)
+            {
+               channel.LongRange = false; // No relay means not long range
+            }
+            else
+            {
+               channel.LongRange = true; // Relay is active, set long range
+            }
+
             if (!isLongRange && transform.MapID != sourceMapId && !radio.GlobalReceive)
             continue;
 
-            if (isLongRange)
-             {
-              channel.LongRange = true;
-             }
-    
             // don't need telecom server for long range channels or handheld radios and intercoms
             var needServer = !isLongRange && !sourceServerExempt;
             if (needServer && !hasActiveServer)
@@ -187,7 +192,7 @@ public sealed class RadioSystem : EntitySystem
         }
         return false;
     }
-    
+
     private bool IsAnyRelayActive(MapId mapId)
     {
         var relays = EntityQuery<RelayComponent, TransformComponent>();

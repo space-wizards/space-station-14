@@ -38,8 +38,8 @@ namespace Content.Server.Falling
                 return;
 
             // Makes sure that ghosts aren't getting teleported during observation
-            if (!args.CanAccess || !HasComp<GhostComponent>(args.User))
-            return;
+           // if (!args.CanAccess || !HasComp<GhostComponent>(args.User))
+           // return;
 
             // Try to find an object with the FallingDestinationComponent
             var destination = EntityManager.EntityQuery<FallingDestinationComponent>().FirstOrDefault();

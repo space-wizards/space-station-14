@@ -1,7 +1,7 @@
 namespace Content.Shared.Radio.Components;
 
 [RegisterComponent]
-public sealed class RelayComponent : Component
+public sealed partial class RelayComponent : Component
 {
     [DataField("isActive")]
     public bool IsActive = true; // Indicates if the relay is currently active.
