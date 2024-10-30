@@ -1269,7 +1269,6 @@
   id: ParamedicShoes
   name: loadout-group-paramedic-shoes
   loadouts:
-  - BlueShoes
   - MedicalWinterBoots
 
 - type: loadoutGroup
