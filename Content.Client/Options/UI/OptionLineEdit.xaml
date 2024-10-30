@@ -1,0 +1,6 @@
+<Control xmlns="https://spacestation14.io">
+    <BoxContainer Orientation="Horizontal" VerticalExpand="True">
+        <Label Name="NameLabel" MinWidth="230" />
+        <LineEdit Name="LineEdit" Access="Public" MinSize="270 0" VerticalAlignment="Center" />
+    </BoxContainer>
+</Control>
