@@ -18,6 +18,16 @@
       department: Medical
       time: 216000 # 60 hrs
 
+# Paramed Time
+- type: loadoutEffectGroup
+  id: Paramedic
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobMedicalDoctor
+      time: 54000 #15 hrs
+
 # Other Timers
 
 - type: loadoutEffectGroup
@@ -72,6 +82,14 @@
   equipment:
     head: ClothingHeadNurseHat
 
+- type: loadout
+  id: ParamedicHead
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Paramedic
+  equipment:
+    head: ClothingHeadHatParamedicsoft
+
 # Jumpsuit
 - type: loadout
   id: MedicalDoctorJumpsuit
@@ -114,6 +132,21 @@
   equipment:
     jumpsuit: UniformScrubsColorPurple
 
+- type: loadout
+  id: ParamedicJumpsuit
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Paramedic
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitParamedic
+
+- type: loadout
+  id: ParamedicJumpskirt
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Paramedic
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtParamedic
 # Back
 - type: loadout
   id: MedicalDoctorBackpack
@@ -144,6 +177,21 @@
   equipment:
     outerClothing: ClothingOuterCoatLabSeniorPhysician
 
+- type: loadout
+  id: ParamedicWindbreaker
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Paramedic
+  equipment:
+    jumpsuit: ClothingOuterCoatParamedicWB
+
+- type: loadout
+  id: ParamedicWintercoat
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Paramedic
+  equipment:
+    jumpsuit: ClothingOuterWinterPara
 # Shoes
 - type: loadout
   id: MedicalWinterBoots

@@ -170,18 +170,6 @@
 
 - type: entity
   parent: IDCardStandard
-  id: ParamedicIDCard
-  name: paramedic ID card
-  components:
-  - type: Sprite
-    layers:
-    - state: default
-    - state: idparamedic
-  - type: PresetIdCard
-    job: Paramedic
-
-- type: entity
-  parent: IDCardStandard
   id: ChemistIDCard
   name: chemist ID card
   components:
