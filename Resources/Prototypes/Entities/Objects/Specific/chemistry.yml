@@ -447,6 +447,23 @@
     - SyringeGunAmmo
 
 - type: entity
+  parent: MiniSyringe
+  id: MiniSyringeAdmeme
+  suffix: admeme
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 100
+  - type: SolutionInjectWhileEmbedded
+    transferAmount: 100
+    solution: injector
+    updateInterval: 2
+  - type: SolutionInjectOnEmbed
+    transferAmount: 2
+    solution: injector
+
+- type: entity
   parent: BaseSyringe
   id: PrefilledSyringe
   components:
