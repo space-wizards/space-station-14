@@ -63,8 +63,6 @@
   - Autumn
   - Summer
   - Winter
-  - Cherry
-  - Orange
   - Fruit
   - Leaves
   - Atmosphere
@@ -126,20 +124,27 @@
   - Enrichment
   - Enthusiam
   - Brilliance
+  - Determination
+  - Integrity
+  - Justice
+  - Kindness
+  - Bravery
+  - Empathy
+  - Stoicism
+  - Competence
 # Neutral
   - Haste
   - Urgency
   - Vitality
   - Hardiness
   - Vigor
-  - Lethargy
   - Agility
   - Dexterity
   - Perception
-  - Constitution
   - Wisdom
   - Charisma
   - Persistence
+  - Perseverance
   - Density
   - Strength
   - Congestion
@@ -147,7 +152,6 @@
   - Intensity
   - Refinement
   - Obscurity
-  - Stoicism
   - Fortitude
   - Endurance
   - Patience
@@ -170,10 +174,16 @@
   - Audacity
   - Vivacity
 # Negative
+  - Ineptitude
+  - Ignorance
+  - Decay
+  - Lethargy
   - Bitterness
   - Acidity
   - Illness
   - Weakness
+  - Enervation
+  - Fatigue
   - Noxiousness
   - Convlution
   - Confusion
