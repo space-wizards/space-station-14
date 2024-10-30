@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Server.Administration;
 using Content.Server.Administration.Managers;
 using Content.Server.Database;
+using Content.Server.Discord.WebhookMessages;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Presets;
 using Content.Server.Maps;
@@ -27,6 +28,7 @@ namespace Content.Server.Voting.Managers
         [Dependency] private readonly ILogManager _logManager = default!;
         [Dependency] private readonly IBanManager _bans = default!;
         [Dependency] private readonly IServerDbManager _dbManager = default!;
+        [Dependency] private readonly VoteWebhooks _voteWebhooks = default!;
 
         private VotingSystem? _votingSystem;
         private RoleSystem? _roleSystem;
@@ -449,10 +451,13 @@ namespace Content.Server.Voting.Managers
             var vote = CreateVote(options);
             _adminLogger.Add(LogType.Vote, LogImpact.Extreme, $"Votekick for {located.Username} ({targetEntityName}) due to {reason} started, initiated by {initiator}.");
 
+            // Create Discord webhook
+            var webhookState = _voteWebhooks.CreateWebhookIfConfigured(options, _cfg.GetCVar(CCVars.DiscordVotekickWebhook), Loc.GetString("votekick-webhook-name"), options.Title + "\n" + Loc.GetString("votekick-webhook-description", ("initiator", initiatorName), ("target", targetSession)));
+
             // Time out the vote now that we know it will happen
             TimeoutStandardVote(StandardVoteType.Votekick);
 
-            vote.OnFinished += (_, _) =>
+            vote.OnFinished += (_, eventArgs) =>
             {
 
                 var votesYes = vote.VotesPerOption["yes"];
@@ -487,6 +492,7 @@ namespace Content.Server.Voting.Managers
                     {
                         _adminLogger.Add(LogType.Vote, LogImpact.Extreme, $"Votekick for {located.Username} attempted to pass, but an admin was online. Yes: {votesYes} / No: {votesNo}. Yes: {yesVotersString} / No: {noVotersString}");
                         AnnounceCancelledVotekickForVoters(targetEntityName);
+                        _voteWebhooks.UpdateCancelledWebhookIfConfigured(webhookState, Loc.GetString("votekick-webhook-cancelled-admin-online"));
                         return;
                     }
                     // Check if the target is an antag and the vote reason is raiding (this is to prevent false positives)
@@ -494,6 +500,7 @@ namespace Content.Server.Voting.Managers
                     {
                         _adminLogger.Add(LogType.Vote, LogImpact.Extreme, $"Votekick for {located.Username} due to {reason} finished, created by {initiator}, but was cancelled due to the target being an antagonist.");
                         AnnounceCancelledVotekickForVoters(targetEntityName);
+                        _voteWebhooks.UpdateCancelledWebhookIfConfigured(webhookState, Loc.GetString("votekick-webhook-cancelled-antag-target"));
                         return;
                     }
                     // Check if the target is an admin/de-admined admin
@@ -501,6 +508,7 @@ namespace Content.Server.Voting.Managers
                     {
                         _adminLogger.Add(LogType.Vote, LogImpact.Extreme, $"Votekick for {located.Username} due to {reason} finished, created by {initiator}, but was cancelled due to the target being a de-admined admin.");
                         AnnounceCancelledVotekickForVoters(targetEntityName);
+                        _voteWebhooks.UpdateCancelledWebhookIfConfigured(webhookState, Loc.GetString("votekick-webhook-cancelled-admin-target"));
                         return;
                     }
                     else
@@ -515,6 +523,9 @@ namespace Content.Server.Voting.Managers
                             severity = NoteSeverity.High;
                         }
 
+                        // Discord webhook, success
+                        _voteWebhooks.UpdateWebhookIfConfigured(webhookState, eventArgs);
+
                         uint minutes = (uint)_cfg.GetCVar(CCVars.VotekickBanDuration);
 
                         _bans.CreateServerBan(targetUid, target, null, null, targetHWid, minutes, severity, reason);
@@ -522,6 +533,10 @@ namespace Content.Server.Voting.Managers
                 }
                 else
                 {
+
+                    // Discord webhook, failure
+                    _voteWebhooks.UpdateWebhookIfConfigured(webhookState, eventArgs);
+
                     _adminLogger.Add(LogType.Vote, LogImpact.Extreme, $"Votekick failed: Yes: {votesYes} / No: {votesNo}. Yes: {yesVotersString} / No: {noVotersString}");
                     _chatManager.DispatchServerAnnouncement(Loc.GetString("ui-vote-votekick-failure", ("target", targetEntityName), ("reason", reason)));
                 }
