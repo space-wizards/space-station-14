@@ -395,3 +395,10 @@
          emote: Cough #TODO: add gurgle sound effect while processing seawater through breathing
          showInChat: true
          probability: 0.4
+      - !type:AdjustAlert
+        alertType: Drowning
+        conditions:
+          - !type:ReagentThreshold
+            min: 1.5
+        clear: True
+        time: 5
