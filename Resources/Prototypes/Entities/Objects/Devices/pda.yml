@@ -741,7 +741,6 @@
     state: pda-centcom
   - type: CartridgeLoader
     uiKey: enum.PdaUiKey.Key
-    diskSpace: 16
     preinstalled:
       - CrewManifestCartridge
       - NotekeeperCartridge
@@ -766,7 +765,6 @@
   - type: CartridgeLoader
     uiKey: enum.PdaUiKey.Key
     notificationsEnabled: false
-    diskSpace: 16
     preinstalled:
       - CrewManifestCartridge
       - NotekeeperCartridge
@@ -885,7 +883,6 @@
     state: pda-ert
   - type: CartridgeLoader
     uiKey: enum.PdaUiKey.Key
-    diskSpace: 16
     preinstalled:
       - CrewManifestCartridge
       - NotekeeperCartridge
