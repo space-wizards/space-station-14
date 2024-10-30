@@ -341,6 +341,7 @@ public partial class SeedData
             // Newly cloned seed is unique. No need to unnecessarily clone if repeatedly modified.
             Unique = true,
         };
+        newSeed.Mutations.AddRange(Mutations);
 
         // Adding the new chemicals from the new species.
         foreach (var otherChem in other.Chemicals)
