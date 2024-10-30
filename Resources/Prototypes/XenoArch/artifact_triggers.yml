@@ -231,7 +231,7 @@
     groups:
       Acidic: [ Touch ]
     reactions:
-    - reagents: [ Coffee, CafeLatte, Tea, EnergyDrink, VodkaRedBool, PwrGame, FourteenLoko, XenoBasher, IrishBool, BudgetInsuls, WatermelonWakeup, KingSoda, CottonBool, Rubberneck, IcedTea, ArnoldPalmer, Raktaccino ]
+    - reagents: [ Coffee, CafeLatte, Tea, EnergyDrink, VodkaRedBool, PwrGame, FourteenLoko, XenoBasher, IrishBool, BudgetInsulsDrink, WatermelonWakeup, KingSoda, CottonBool, Rubberneck, IcedTea, ArnoldPalmer, Raktaccino ]
       methods: [ Touch ]
       effects:
       - !type:ActivateArtifact
